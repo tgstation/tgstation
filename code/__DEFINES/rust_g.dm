@@ -568,6 +568,34 @@
 	else
 		CRASH(output["content"])
 
+/**
+ * Computes the shortest path between two turfs over a live tgstation-style navmesh, using the
+ * `turf_pathfinder` byondapi feature. Unlike rustg_generate_path_astar (see pathfinder.dm), no
+ * graph is registered ahead of time: Rust locates and reads each turf's nav_pass/nav_blockers
+ * directly during the search, live-evaluating conditional edges (doors, access, pass-flag gates)
+ * via CanAStarPass so they never go stale.
+ *
+ * This calls into a byondapi export rather than a classic rust_g proc, so it needs the "byond:"
+ * prefix and a rust_g build with the `turf_pathfinder` feature enabled (requires BYOND 515+ and a
+ * 32-bit x86 target - see byondapi-sys).
+ *
+ * Requires the codebase to define, per its navmesh: `/turf/var/nav_pass`, `/turf/var/nav_blockers`,
+ * `/turf/proc/nav_bake()`, `atom/CanAStarPass()`, and `/proc/nav_load_chunk(ox, oy, z, chunk_size)`
+ * (the bulk bake+read helper the Rust search calls once per 16x16 chunk it touches).
+ *
+ * Arguments:
+ * * start - The turf to path from
+ * * end - The turf to path to. Must be on the same z-level as start
+ * * pass_info - The mover's /datum/can_pass_info (or compatible datum exposing pass_flags)
+ * * is_flying - TRUE to use the flying nav_pass bits instead of ground
+ * * max_range - Chebyshev distance cap from start, in tiles. 0 for unlimited
+ *
+ * Returns a /list of turfs from start to end (exclusive of neither), or an empty list if no path
+ * exists.
+ */
+#define rustg_nav_astar(start, end, pass_info, is_flying, max_range) \
+	RUSTG_CALL(RUST_G, "byond:rustg_nav_astar_ffi")(start, end, pass_info, is_flying, max_range)
+
 #define rustg_url_encode(text) RUSTG_CALL(RUST_G, "url_encode")("[text]")
 #define rustg_url_decode(text) RUSTG_CALL(RUST_G, "url_decode")(text)
 
