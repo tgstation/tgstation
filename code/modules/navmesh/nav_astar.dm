@@ -7,7 +7,15 @@
  * get_path_to.
  */
 
-/// Open-list node. One per visited turf; g/f updated in place when a cheaper route is found.
+/*
+ * Open-list node. One per visited turf; g/f updated in place when a cheaper route is found.
+ *
+ * No Destroy() override and callers do NOT qdel these: they hold no signals/timers/components, are
+ * only ever referenced by the search's own `nodes` list and each other's `came_from` chain, and are
+ * scoped to a single nav_find_path() call. Dropping the local var refs at proc exit is enough for the
+ * GC to reclaim them; routing every node through full qdel teardown showed up as measurable overhead
+ * (qdel is a proc call plus bookkeeping per object) on searches touching hundreds of nodes.
+ */
 /datum/nav_node
 	var/turf/tile
 	var/datum/nav_node/came_from
@@ -15,6 +23,10 @@
 	var/g_value
 	/// g_value + heuristic.
 	var/f_value
+	/// TRUE once popped and expanded. The heap has no decrease-key, so an improved node is
+	/// re-inserted as a second heap entry; this flag makes the (cheap) stale duplicate a no-op
+	/// on pop instead of re-expanding an already-finalized turf's neighbours.
+	var/closed = FALSE
 
 /datum/nav_node/New(turf/tile, datum/nav_node/came_from, g_value, f_value)
 	src.tile = tile
@@ -22,20 +34,9 @@
 	src.g_value = g_value
 	src.f_value = f_value
 
-/datum/nav_node/Destroy(force)
-	tile = null
-	came_from = null
-	return ..()
-
 /// Heap comparator: smaller f_value = higher priority (the heap is a max-heap, so invert).
 /proc/nav_node_compare(datum/nav_node/a, datum/nav_node/b)
 	return b.f_value - a.f_value
-
-/// Integer octile heuristic scaled to match step costs (cardinal 10, diagonal 14).
-/proc/nav_heuristic(turf/a, turf/b)
-	var/dx = abs(a.x - b.x)
-	var/dy = abs(a.y - b.y)
-	return 10 * (dx + dy) - 6 * min(dx, dy)
 
 /**
  * Find a path from `start` to `goal` for a mover described by `pass_info`, reading only cached
@@ -56,11 +57,14 @@
 	if(max_distance && get_dist(start, goal) > max_distance)
 		return list()
 
-	var/datum/heap/open = new(GLOBAL_PROC_REF(nav_node_compare))
+	// Movement class is fixed for the whole search; resolve the bit selector once.
+	var/is_flying = NAV_IS_FLYING(pass_info)
+
+	var/datum/heap/open = new /datum/heap(GLOBAL_PROC_REF(nav_node_compare))
 	// turf -> /datum/nav_node. Doubles as the visited set and the g-value store.
 	var/list/nodes = list()
 
-	var/datum/nav_node/start_node = new(start, null, 0, nav_heuristic(start, goal))
+	var/datum/nav_node/start_node = new /datum/nav_node(start, null, 0, NAV_HEURISTIC(start, goal))
 	open.insert(start_node)
 	nodes[start] = start_node
 
@@ -68,13 +72,19 @@
 
 	while(!open.is_empty())
 		var/datum/nav_node/current = open.pop()
+		if(current.closed)
+			continue // stale duplicate from an earlier improvement; this turf is already finalized
+		current.closed = TRUE
+		var/turf/current_tile = current.tile
 
-		if(get_dist(current.tile, goal) <= mintargetdist)
+		if(get_dist(current_tile, goal) <= mintargetdist)
 			best = current
 			break
 
+		NAV_ENSURE_BAKED(current_tile) // bake once; the per-dir checks below read bits with no proc call
+
 		for(var/dir in GLOB.alldirs)
-			var/turf/neighbor = get_step(current.tile, dir)
+			var/turf/neighbor = get_step(current_tile, dir)
 			if(isnull(neighbor))
 				continue
 			if(max_distance && get_dist(start, neighbor) > max_distance)
@@ -82,25 +92,27 @@
 
 			var/step_cost
 			if(dir & (dir - 1)) // more than one bit set -> diagonal
-				if(!nav_diagonal_open(current.tile, dir, pass_info))
+				var/diag_ok
+				NAV_DIAGONAL_OPEN(current_tile, dir, is_flying, pass_info, diag_ok)
+				if(!diag_ok)
 					continue
 				step_cost = 14
 			else
-				if(!current.tile.nav_edge_open(dir, pass_info))
+				if(!NAV_EDGE_OPEN_BAKED(current_tile, dir, is_flying, pass_info))
 					continue
 				step_cost = 10
 
 			var/tentative_g = current.g_value + step_cost
 			var/datum/nav_node/existing = nodes[neighbor]
 			if(existing)
-				if(tentative_g >= existing.g_value)
-					continue
+				if(existing.closed || tentative_g >= existing.g_value)
+					continue // finalized, or not an improvement
 				existing.g_value = tentative_g
-				existing.f_value = tentative_g + nav_heuristic(neighbor, goal)
+				existing.f_value = tentative_g + NAV_HEURISTIC(neighbor, goal)
 				existing.came_from = current
 				open.insert(existing) // re-insert; stale copy is filtered by the g-check when popped
 			else
-				var/datum/nav_node/new_node = new(neighbor, current, tentative_g, tentative_g + nav_heuristic(neighbor, goal))
+				var/datum/nav_node/new_node = new /datum/nav_node(neighbor, current, tentative_g, tentative_g + NAV_HEURISTIC(neighbor, goal))
 				nodes[neighbor] = new_node
 				open.insert(new_node)
 
@@ -111,31 +123,9 @@
 			path.Insert(1, trace.tile)
 			trace = trace.came_from
 
-	QDEL_LIST_ASSOC_VAL(nodes)
-	qdel(open)
+	// No qdel: nav_node holds no signals/timers, and both `nodes` and `open` are locals about to go
+	// out of scope, so the GC reclaims everything once this proc returns. See /datum/nav_node header.
 	return path
-
-/**
- * A diagonal step from `origin` in composite dir `dir` is allowed iff at least one of the two
- * L-shaped routes around the corner is fully open (both cardinal hops traversable). Mirrors the
- * corner rule in LinkBlockedWithAccess (code/__HELPERS/paths/path.dm) and mob diagonal movement, so
- * generated paths are actually walkable.
- */
-/proc/nav_diagonal_open(turf/origin, dir, datum/can_pass_info/pass_info)
-	var/turf/dest = get_step(origin, dir)
-	if(isnull(dest))
-		return FALSE
-	var/dir_ns = dir & (NORTH | SOUTH)
-	var/dir_ew = dir & (EAST | WEST)
-	// Route A: cardinal NS first, then EW. Route B: EW first, then NS.
-	for(var/first_dir in list(dir_ns, dir_ew))
-		var/second_dir = (first_dir == dir_ns) ? dir_ew : dir_ns
-		var/turf/midstep = get_step(origin, first_dir)
-		if(isnull(midstep))
-			continue
-		if(origin.nav_edge_open(first_dir, pass_info) && midstep.nav_edge_open(second_dir, pass_info))
-			return TRUE
-	return FALSE
 
 /**
  * Convenience wrapper mirroring get_path_to's shape for easy A/B benchmarking against JPS.
@@ -144,5 +134,5 @@
 /proc/get_nav_path_to(atom/movable/caller_movable, atom/target, max_distance = 30, mintargetdist = 0, list/access = list())
 	if(!caller_movable || !target)
 		return list()
-	var/datum/can_pass_info/pass_info = new(caller_movable, access)
+	var/datum/can_pass_info/pass_info = new /datum/can_pass_info(caller_movable, access)
 	return nav_find_path(get_turf(caller_movable), get_turf(target), pass_info, max_distance, mintargetdist)

@@ -34,23 +34,23 @@
 
 /**
  * The core query: can `pass_info`'s mover step from src to the adjacent turf in cardinal `dir`?
- * Bakes lazily on first touch. This is what A*, the diagonal check, and the fuzz test all call.
- *
- * An edge is traversable iff:
- * - the mover's movement-class static bit is set (no wall / no class-specific mover-independent
- *   blocker like a directional railing), AND
- * - if the edge is conditional, the mover passes every conditional entry (mask entries by pass_flags,
- *   atom entries by a live CanAStarPass).
+ * Bakes lazily on first touch. Convenience proc for non-hot callers (debug tooling, the test pawn);
+ * the A* inner loop uses the NAV_EDGE_OPEN_BAKED macro directly to avoid this proc call.
  */
 /turf/proc/nav_edge_open(dir, datum/can_pass_info/pass_info)
-	if(isnull(nav_pass))
-		nav_bake()
-	var/class_bit = NAV_CLASS_BIT(pass_info, dir)
-	if(!(nav_pass & class_bit))
-		return FALSE
-	if(!(nav_pass & NAV_COND(dir)))
-		return TRUE // open, no conditional blockers
-	// Conditional edge: every entry must permit this specific mover.
+	NAV_ENSURE_BAKED(src)
+	return NAV_EDGE_OPEN_BAKED(src, dir, NAV_IS_FLYING(pass_info), pass_info)
+
+/**
+ * Slow path for a conditional edge: returns TRUE iff `pass_info`'s mover passes every conditional
+ * entry on the outgoing `dir` edge. Only reached when the edge's NAV_COND bit is set (uncommon), so
+ * the proc-call and list-walk cost here is off the common path.
+ *
+ * Entries are either a pass_flags mask (bit-test) or an atom evaluated live via CanAStarPass. Source-
+ * tile border objects evaluate with the forward dir; destination-side atoms with the reverse dir,
+ * mirroring LinkBlockedWithAccess (code/__HELPERS/paths/path.dm).
+ */
+/turf/proc/nav_edge_cond(dir, datum/can_pass_info/pass_info)
 	var/list/entries = nav_blockers?["[dir]"]
 	for(var/entry in entries)
 		SSnavmesh.cond_evaluations++
@@ -59,8 +59,6 @@
 				return FALSE
 		else
 			var/atom/movable/blocker = entry
-			// Source-tile border objects evaluate with the forward dir; things on the destination
-			// (contents or the dest turf itself) with the reverse dir. Mirrors LinkBlockedWithAccess.
 			var/eval_dir = (blocker.loc == src) ? dir : REVERSE_DIR(dir)
 			if(!blocker.CanAStarPass(eval_dir, pass_info))
 				return FALSE
@@ -162,13 +160,12 @@
  * Callers must exclude mobs before calling; mobs are never baked.
  */
 /turf/proc/nav_classify_atom(atom/movable/blocker, list/edge_blockers)
-	// Whitelisted pure pass-flag gates (tables, grilles) -> store a plain mask, no proc call at query time.
-	if(SSnavmesh.mask_whitelist_cache[blocker.type])
-		var/mask = blocker.pass_flags_self & ~NAV_NON_PASS_FLAGS
-		if(mask)
-			edge_blockers += mask
-			return TRUE
-		return FALSE // no real gate; treat as unconditional (rep-evaluate)
+	// Whitelisted pure pass-flag gates (tables, grilles) -> store the exact honoured pass_flag as a
+	// plain mask, so the query is a bit-test with no proc call.
+	var/mask = SSnavmesh.mask_whitelist_cache[blocker.type]
+	if(mask)
+		edge_blockers += mask
+		return TRUE
 
 	// Anything mover-dependent: access doors, ALWAYS_PROC atoms, generic pass_flags_self holders,
 	// or an explicit escape-hatch type. Store the atom and evaluate live.

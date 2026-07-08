@@ -35,3 +35,52 @@
 
 /// Movement class selector for a baked bit given a can_pass_info's movement_type.
 #define NAV_CLASS_BIT(pass_info, dir) (((pass_info).movement_type & MOVETYPES_NOT_TOUCHING_GROUND) ? NAV_FLIGHT(dir) : NAV_GROUND(dir))
+
+// --- hot-path query macros ----------------------------------------------------------------------
+// Pathfinding touches these once per neighbour per expanded node, so they are inlined to dodge proc
+// call overhead. The rare conditional-entry walk stays a proc (nav_edge_cond).
+
+/// TRUE if the mover is in a movement class that reads the flight bits. Compute ONCE per search.
+#define NAV_IS_FLYING(pass_info) (((pass_info).movement_type & MOVETYPES_NOT_TOUCHING_GROUND) ? TRUE : FALSE)
+/// The class bit for a dir given a precomputed is_flying flag (no movement_type re-read).
+#define NAV_CLASS_BIT_FAST(dir, is_flying) ((is_flying) ? NAV_FLIGHT(dir) : NAV_GROUND(dir))
+
+/// Statement macro: ensure a turf's edges are baked before its bits are read.
+#define NAV_ENSURE_BAKED(T) if(isnull((T).nav_pass)) { (T).nav_bake(); }
+
+/// Boolean expression: can a mover step from an ALREADY-BAKED turf T in cardinal `dir`? An edge is
+/// open iff its movement-class bit is set and, when the edge is conditional, the per-mover entry
+/// walk permits it. `is_flying` is the precomputed NAV_IS_FLYING(pass_info).
+#define NAV_EDGE_OPEN_BAKED(T, dir, is_flying, pass_info) ( \
+	((T).nav_pass & NAV_CLASS_BIT_FAST(dir, is_flying)) && \
+	(!((T).nav_pass & NAV_COND(dir)) || (T).nav_edge_cond((dir), (pass_info))) \
+)
+
+/// Integer octile heuristic scaled to step costs (cardinal 10, diagonal 14).
+#define NAV_HEURISTIC(a, b) (10 * (abs((a).x - (b).x) + abs((a).y - (b).y)) - 6 * min(abs((a).x - (b).x), abs((a).y - (b).y)))
+
+/// Statement macro: sets `result` TRUE iff a diagonal step from ALREADY-BAKED `origin` in composite
+/// `dir` can round the corner, i.e. at least one of the two L-routes is clear (both cardinal hops
+/// traversable). Bakes the midstep turfs as needed. Mirrors the corner rule in LinkBlockedWithAccess
+/// (code/__HELPERS/paths/path.dm) so generated paths are actually walkable. `_nav_mid` is a scratch.
+#define NAV_DIAGONAL_OPEN(origin, dir, is_flying, pass_info, result) \
+	do { \
+		result = FALSE; \
+		var/_nav_ns = (dir) & (NORTH | SOUTH); \
+		var/_nav_ew = (dir) & (EAST | WEST); \
+		var/turf/_nav_mid; \
+		if(NAV_EDGE_OPEN_BAKED(origin, _nav_ns, is_flying, pass_info)) { \
+			_nav_mid = get_step(origin, _nav_ns); \
+			if(_nav_mid) { \
+				NAV_ENSURE_BAKED(_nav_mid); \
+				if(NAV_EDGE_OPEN_BAKED(_nav_mid, _nav_ew, is_flying, pass_info)) { result = TRUE; } \
+			} \
+		} \
+		if(!result && NAV_EDGE_OPEN_BAKED(origin, _nav_ew, is_flying, pass_info)) { \
+			_nav_mid = get_step(origin, _nav_ew); \
+			if(_nav_mid) { \
+				NAV_ENSURE_BAKED(_nav_mid); \
+				if(NAV_EDGE_OPEN_BAKED(_nav_mid, _nav_ns, is_flying, pass_info)) { result = TRUE; } \
+			} \
+		} \
+	} while(FALSE)

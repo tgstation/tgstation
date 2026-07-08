@@ -18,7 +18,7 @@
 
 /// Build a can_pass_info for the named debug profile.
 /proc/nav_debug_profile(profile)
-	var/datum/can_pass_info/info = new(null, null, no_id = TRUE)
+	var/datum/can_pass_info/info = new /datum/can_pass_info(null, null, no_id = TRUE)
 	switch(profile)
 		if("flying")
 			info.movement_type = FLYING

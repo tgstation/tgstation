@@ -17,10 +17,13 @@ SUBSYSTEM_DEF(navmesh)
 	/// turf we only consider these types (a wall on our north edge is one of these); everything else
 	/// on our own tile doesn't block leaving.
 	var/list/border_blocker_cache
-	/// Types whose pass_flags_self gate can be represented as a plain bitmask entry (fast path, no
-	/// proc call at query time): tables (PASSTABLE), grilles (PASSGRILLE). Maps type -> TRUE.
+	/// Types whose CanAStarPass gate is a single pass_flag, representable as a plain bitmask entry
+	/// (fast path, no proc call at query time). Assoc: type -> the exact pass_flag the atom honours.
+	/// Note this is NOT pass_flags_self (e.g. a grille's pass_flags_self includes PASSWINDOW but its
+	/// CanAStarPass only honours PASSGRILLE), so the masks are stated explicitly.
 	var/list/mask_whitelist_cache
-	/// Escape hatch: types the conditional heuristic would miss but that must still be evaluated live.
+	/// Escape hatch: types whose CanAStarPass depends on the mover but which the conditional heuristic
+	/// (pass_flags_self / door / ALWAYS_PROC) would miss, so must be stored as live atom entries.
 	var/list/force_conditional_cache
 
 	// --- stats (for benchmarking / debugging) ---
@@ -48,11 +51,19 @@ SUBSYSTEM_DEF(navmesh)
 		/obj/structure/railing,
 		/obj/machinery/door/firedoor/border_only,
 	))
-	mask_whitelist_cache = typecacheof(list(
-		/obj/structure/table,
-		/obj/structure/grille,
+	// type -> exact honoured pass_flag, expanded over subtypes.
+	mask_whitelist_cache = list()
+	for(var/table_type in typesof(/obj/structure/table))
+		mask_whitelist_cache[table_type] = PASSTABLE
+	for(var/grille_type in typesof(/obj/structure/grille))
+		mask_whitelist_cache[grille_type] = PASSGRILLE
+
+	// Dense, mover-dependent, but no pass_flags_self / not a door: the heuristic would bake them as
+	// plain walls. girder honours PASSGRILLE; thing_boss_spike checks requester type.
+	force_conditional_cache = typecacheof(list(
+		/obj/structure/girder,
+		/obj/structure/thing_boss_spike,
 	))
-	force_conditional_cache = typecacheof(list())
 
 	return SS_INIT_SUCCESS
 
