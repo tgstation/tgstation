@@ -22,7 +22,7 @@
 	/// The method for selecting a winner.
 	var/winner_method = VOTE_WINNER_METHOD_SIMPLE
 	/// Should we show details about the number of votes submitted for each option?
-	var/display_statistics = FALSE
+	var/display_statistics = TRUE
 	/// only applicable if `display_statistics` is false, this will let the final vote tally be printed to chat even if it couldn't be seen during the vote
 	var/print_results = TRUE
 
