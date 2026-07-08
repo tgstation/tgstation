@@ -375,7 +375,7 @@
 
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
-	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
+	duration = 30 SECONDS //if you leave for 30 seconds you lose the mark, deal with it
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	/// The bubble that is added to the mob as a visual
@@ -384,10 +384,21 @@
 	var/boosted = FALSE
 	/// How long before the mark is ready to be detonated. Used for both the visual overlay and to determine when it's ready
 	var/ready_delay = 0.8 SECONDS
+	/// Damage dealt when the mark is detonated
+	var/detonation_damage = 50
+	/// PKC that set this mark, for PKC-independent bursts
+	var/obj/item/kinetic_crusher/crusher
 
-/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, was_boosted)
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, was_boosted, obj/item/kinetic_crusher/crusher)
 	. = ..()
 	boosted = was_boosted
+	src.crusher = crusher
+	if (crusher)
+		RegisterSignal(crusher, COMSIG_QDELETING, PROC_REF(on_crusher_destroyed))
+
+/datum/status_effect/crusher_mark/proc/on_crusher_destroyed(datum/source)
+	SIGNAL_HANDLER
+	crusher = null
 
 /datum/status_effect/crusher_mark/on_apply()
 	if(owner.mob_size < MOB_SIZE_LARGE)
@@ -409,7 +420,41 @@
 	if(owner)
 		owner.underlays -= marked_underlay
 	QDEL_NULL(marked_underlay)
+	crusher = null
 	return ..()
+
+/datum/status_effect/crusher_mark/proc/detonate(obj/item/kinetic_crusher/used_crusher, mob/living/user, melee_hit = TRUE)
+	var/datum/status_effect/crusher_damage/crusher_damage_effect = owner.has_status_effect(/datum/status_effect/crusher_damage) || owner.apply_status_effect(/datum/status_effect/crusher_damage)
+	var/target_health = owner.health
+	var/combined_damage = detonation_damage
+	for(var/obj/item/crusher_trophy/crusher_trophy as anything in used_crusher?.trophies)
+		combined_damage += crusher_trophy.on_mark_detonation(owner, user, used_crusher)
+
+	// Trophy effects kill the target, abort
+	if(QDELETED(owner))
+		return
+
+	if(!QDELETED(crusher_damage_effect))
+		crusher_damage_effect.total_damage += target_health - owner.health // We did some damage, but let's not assume how much we did
+
+	new /obj/effect/temp_visual/kinetic_blast(get_turf(owner))
+	var/backstabbed = FALSE
+	var/def_check = owner.getarmor(type = BOMB)
+
+	// Backstab bonus, only if a crusher was used to detonate the mark
+	if(melee_hit && used_crusher && (boosted || (user && check_behind(user, owner) && !HAS_TRAIT(owner, TRAIT_BACKSTAB_IMMUNE))))
+		backstabbed = TRUE
+		combined_damage += used_crusher.backstab_bonus
+		playsound(user, used_crusher.backstab_sound, 100, TRUE)
+
+	if(!QDELETED(crusher_damage_effect))
+		crusher_damage_effect.total_damage += combined_damage
+
+	if (user)
+		SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, owner, used_crusher, backstabbed)
+	owner.apply_damage(combined_damage, BRUTE, blocked = def_check)
+	if (!QDELETED(owner))
+		owner.remove_status_effect(src)
 
 // Object used to apply a underlay to the mob that gets this status applied
 /obj/effect/abstract/crusher_mark

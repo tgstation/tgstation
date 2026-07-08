@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/iron
-	gulag_valid = TRUE
+	gulag_value = 5
 	table_type = /obj/structure/table
 	material_type = /datum/material/iron
 	matter_amount = 4
@@ -317,7 +317,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	armor_type = /datum/armor/sheet_plasteel
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
-	gulag_valid = TRUE
+	gulag_value = 10
 	table_type = /obj/structure/table/reinforced
 	material_flags = NONE
 	matter_amount = 12
@@ -745,22 +745,25 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 /obj/item/stack/sheet/cardboard/fifty
 	amount = 50
 
-/obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/stamp/clown) && !istype(loc, /obj/item/storage))
+/obj/item/stack/sheet/cardboard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stamp/clown) && !istype(loc, /obj/item/storage))
 		var/atom/droploc = drop_location()
-		if(use(1))
-			playsound(I, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
-			to_chat(user, span_notice("You stamp the cardboard! It's a clown box! Honk!"))
-			if (amount >= 0)
-				new/obj/item/storage/box/clown(droploc) //bugfix
-	if(istype(I, /obj/item/stamp/chameleon) && !istype(loc, /obj/item/storage))
+		if(!use(1))
+			return ITEM_INTERACT_BLOCKING
+		playsound(tool, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
+		to_chat(user, span_notice("You stamp the cardboard! It's a clown box! Honk!"))
+		new /obj/item/storage/box/clown(droploc) //bugfix
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stamp/chameleon) && !istype(loc, /obj/item/storage))
 		var/atom/droploc = drop_location()
-		if(use(1))
-			to_chat(user, span_notice("You stamp the cardboard in a sinister way."))
-			if (amount >= 0)
-				new/obj/item/storage/box/syndie_kit(droploc)
-	else
-		. = ..()
+		if(!use(1))
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice("You stamp the cardboard in a sinister way."))
+		new /obj/item/storage/box/syndie_kit(droploc)
+		return ITEM_INTERACT_SUCCESS
+
+	return ..()
 
 /*
  * Bronze
@@ -886,7 +889,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/cup/glass/waterbottle/large/empty, 3, crafting_flags = NONE, category = CAT_CONTAINERS), \
 	new /datum/stack_recipe("colo cups", /obj/item/reagent_containers/cup/glass/colocup, 1, crafting_flags = NONE, category = CAT_CONTAINERS, removed_mats = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)), \
 	new /datum/stack_recipe("mannequin", /obj/structure/mannequin/plastic, 25, time = 5 SECONDS, crafting_flags = CRAFT_ONE_PER_TURF, category = CAT_ENTERTAINMENT), \
-	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2, crafting_flags = NONE, category = CAT_EQUIPMENT), \
+	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2, crafting_flags = CRAFT_SKIP_MATERIALS_PARITY, category = CAT_EQUIPMENT), \
 	new /datum/stack_recipe("warning cone", /obj/item/clothing/head/cone, 2, crafting_flags = NONE, category = CAT_EQUIPMENT), \
 	new /datum/stack_recipe("blank wall sign", /obj/item/sign, 1, crafting_flags = NONE, category = CAT_FURNITURE), \
 	new /datum/stack_recipe("liquid cooler jug", /obj/item/reagent_containers/cooler_jug, 4, time = 5 SECONDS, crafting_flags = NONE, category = CAT_CONTAINERS), \

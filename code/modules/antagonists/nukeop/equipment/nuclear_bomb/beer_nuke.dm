@@ -5,7 +5,7 @@
 	proper_bomb = FALSE
 	is_on_minimap = FALSE
 	/// The keg located within the beer nuke.
-	var/obj/structure/reagent_dispensers/beerkeg/keg
+	var/obj/structure/reagent_dispensers/keg/beer/keg
 	/// Reagent that is produced once the nuke detonates.
 	var/flood_reagent = /datum/reagent/consumable/ethanol/beer
 	/// Round event control we might as well keep track of instead of locating every time

@@ -49,6 +49,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	ammo_band_icon = "+38_ammo_band"
 	ammo_band_color = null
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/ammo_box/speedloader/c38/update_icon_state()
 	. = ..()
@@ -67,6 +68,7 @@
 	desc = parent_type::desc + " TRAC bullets embed a tracking implant within the target's body."
 	ammo_type = /obj/item/ammo_casing/c38/trac
 	ammo_band_color = COLOR_AMMO_TRACK
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/ammo_box/speedloader/c38/match
 	name = "speed loader (.38 Match)"
@@ -79,12 +81,14 @@
 	desc = parent_type::desc + " Rubber rounds are incredibly bouncy and MOSTLY less-lethal, making them great to show off trickshots with."
 	ammo_type = /obj/item/ammo_casing/c38/match/bouncy
 	ammo_band_color = COLOR_AMMO_RUBBER
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5)
 
 /obj/item/ammo_box/speedloader/c38/true
 	name = "speed loader (.38 True Strike)"
 	desc = parent_type::desc + " True Strike bullets bounce towards new targets with surprising accuracy after ricocheting."
 	ammo_type = /obj/item/ammo_casing/c38/match/true
 	ammo_band_color = COLOR_AMMO_TRUESTRIKE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 0.75)
 
 /obj/item/ammo_box/speedloader/c38/dumdum
 	name = "speed loader (.38 DumDum)"
@@ -99,18 +103,21 @@
 	desc = parent_type::desc + " Hot Shot bullets contain an incendiary payload that ignites struck targets."
 	ammo_type = /obj/item/ammo_casing/c38/hotshot
 	ammo_band_color = COLOR_AMMO_HOTSHOT
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.75)
 
 /obj/item/ammo_box/speedloader/c38/iceblox
 	name = "speed loader (.38 Iceblox)"
 	desc = parent_type::desc + " Iceblox bullets contain a cryogenic payload that lower the body temperature of struck targets."
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
 	ammo_band_color = COLOR_AMMO_ICEBLOX
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.75)
 
 /obj/item/ammo_box/speedloader/c38/flare
 	name = "speed loader (.38 Flare)"
 	desc = parent_type::desc + " Flare casings launch a concentrated particle beam towards a target, lighting them up for everyone to see."
 	ammo_type = /obj/item/ammo_casing/c38/flare
 	ammo_band_color = COLOR_AMMO_HELLFIRE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/ammo_box/speedloader/strilka310
 	name = "stripper clip (.310 Strilka)"

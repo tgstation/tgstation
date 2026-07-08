@@ -88,6 +88,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	delete_equipment()
 	update_lips(null, null, null, update = FALSE)
 	cut_overlays(TRUE)
+	clear_filters()
 
 /mob/living/carbon/human/dummy/setup_human_dna()
 	randomize_human_normie(src, randomize_mutations = FALSE)
@@ -98,11 +99,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 // To speed up the preference menu, we apply one height filter to the entire mob,
 // rather than independently applying offsets and filters to each individual overlay
 // This looks good enough to pass the sniff test and saves a lot of time
-/mob/living/carbon/human/dummy/regenerate_icons()
-	. = ..()
-	apply_height(src, ENTIRE_BODY)
-
-/mob/living/carbon/human/dummy/apply_height(image/appearance, upper_torso)
+/mob/living/carbon/human/dummy/apply_height(image/appearance, body_area)
 	if(appearance == src)
 		return ..()
 

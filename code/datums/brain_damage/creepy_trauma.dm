@@ -220,7 +220,7 @@
 	)
 
 	for(var/datum/mind/crewmember as anything in get_crewmember_minds())
-		if(!ishuman(crewmember.current) || crewmember.current.stat == DEAD || !GET_CLIENT(crewmember.current))
+		if(!ishuman(crewmember.current) || crewmember.current.stat == DEAD || crewmember.current == owner || !GET_CLIENT(crewmember.current))
 			continue
 
 		var/job = crewmember.assigned_role.title

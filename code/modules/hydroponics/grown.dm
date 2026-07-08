@@ -66,8 +66,6 @@
 		pixel_x = base_pixel_x + rand(-5, 5)
 		pixel_y = base_pixel_y + rand(-5, 5)
 
-	make_dryable()
-
 	// Go through all traits in their genes and call on_new_plant from them.
 	for(var/datum/plant_gene/trait/trait in seed.genes)
 		trait.on_new_plant(src, loc)
@@ -89,7 +87,7 @@
 		QDEL_NULL(seed)
 	return ..()
 
-/obj/item/food/grown/proc/make_dryable()
+/obj/item/food/grown/make_dryable()
 	AddElement(/datum/element/dryable, type)
 
 /obj/item/food/grown/make_leave_trash()

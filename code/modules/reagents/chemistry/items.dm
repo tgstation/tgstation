@@ -102,6 +102,7 @@
 	icon_state = "pHmeter"
 	icon = 'icons/obj/medical/chemical.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT)
 	///level of detail for output for the meter
 	var/scanmode = DETAILED_CHEM_OUTPUT
 
@@ -173,31 +174,35 @@
 /obj/item/burner/grind_results()
 	return list(/datum/reagent/consumable/ethanol = 5, /datum/reagent/silicon = 10)
 
-/obj/item/burner/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(is_reagent_container(I))
-		if(lit)
-			var/obj/item/reagent_containers/container = I
-			container.reagents.expose_temperature(get_temperature())
-			to_chat(user, span_notice("You heat up the [I] with the [src]."))
-			playsound(user.loc, 'sound/effects/chemistry/heatdam.ogg', 50, TRUE)
-			return
-		else if(I.is_drainable()) //Transfer FROM it TO us. Special code so it only happens when flame is off.
-			var/obj/item/reagent_containers/container = I
-			if(!container.reagents.total_volume)
-				to_chat(user, span_warning("[container] is empty and can't be poured!"))
-				return
+/obj/item/burner/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!is_reagent_container(tool))
+		if(tool.heat >= 1000)
+			set_lit(TRUE)
+			user.visible_message(span_notice("[user] lights up the [src]."))
+			return ITEM_INTERACT_SUCCESS
+		return NONE
 
-			if(reagents.holder_full())
-				to_chat(user, span_warning("[src] is full."))
-				return
+	if(lit)
+		tool.reagents.expose_temperature(get_temperature())
+		to_chat(user, span_notice("You heat up the [tool] with the [src]."))
+		playsound(user.loc, 'sound/effects/chemistry/heatdam.ogg', 50, TRUE)
+		return ITEM_INTERACT_SUCCESS
 
-			var/trans = container.reagents.trans_to(src, container.amount_per_transfer_from_this, transferred_by = user)
-			to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [container]."))
-	if(I.heat < 1000)
-		return
-	set_lit(TRUE)
-	user.visible_message(span_notice("[user] lights up the [src]."))
+	if(tool.is_drainable()) //Transfer FROM it TO us. Special code so it only happens when flame is off.
+		var/obj/item/reagent_containers/container = tool
+		if(!container.reagents.total_volume)
+			to_chat(user, span_warning("[container] is empty and can't be poured!"))
+			return ITEM_INTERACT_BLOCKING
+
+		if(reagents.holder_full())
+			to_chat(user, span_warning("[src] is full."))
+			return ITEM_INTERACT_BLOCKING
+
+		var/trans = container.reagents.trans_to(src, container.amount_per_transfer_from_this, transferred_by = user)
+		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [container]."))
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/burner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!lit)
