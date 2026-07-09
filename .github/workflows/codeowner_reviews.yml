@@ -7,6 +7,7 @@ on:
 
 jobs:
   assign-users:
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-24.04
     timeout-minutes: 5
 
@@ -16,7 +17,6 @@ jobs:
 
      #Request reviews
       - name: Request reviews
-        if: github.event.pull_request.draft == false
         uses: tgstation/code-reviewers@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}

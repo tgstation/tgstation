@@ -43,6 +43,8 @@ GLOBAL_LIST_INIT(tendrils, list())
 	var/datum/looping_sound/heartbeat/soundloop
 	/// Melee attack ability to used in retaliation to melee strikes and whenever it manages to grab someone
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_melee/tendril_melee
+	/// List of all necropolis turfs we've generated -> their original types for cleanup once we are killed
+	var/list/infected_turfs = list()
 
 /mob/living/basic/mining/tendril/Initialize(mapload)
 	. = ..()
@@ -73,7 +75,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 
 	var/turf/our_turf = get_turf(src)
 	for (var/turf/rock in range(4, src))
-		var/dist = sqrt((rock.x - our_turf.x) ** 2 + (rock.y - our_turf.y) ** 2)
+		var/dist = get_dist_euclidean(rock, our_turf)
 		if (dist > 4.5)
 			continue
 
@@ -81,11 +83,13 @@ GLOBAL_LIST_INIT(tendrils, list())
 			rock.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
 
 		if (istype(rock, /turf/open/misc/asteroid) && prob(100 / sqrt(max(1, dist))))
+			infected_turfs[rock] = rock.type
 			rock.ChangeTurf(/turf/open/indestructible/necropolis, null, CHANGETURF_IGNORE_AIR)
 
 /mob/living/basic/mining/tendril/Destroy()
 	GLOB.tendrils -= src
 	QDEL_NULL(soundloop)
+	infected_turfs.Cut()
 
 	if(!SSachievements.achievements_enabled || (flags_1 & ADMIN_SPAWNED_1))
 		return ..()
@@ -97,6 +101,17 @@ GLOBAL_LIST_INIT(tendrils, list())
 		if (!length(GLOB.tendrils))
 			killer.client.give_award(/datum/award/achievement/boss/tendril_exterminator, killer)
 
+	return ..()
+
+/mob/living/basic/mining/tendril/death(gibbed)
+	var/turf/our_turf = get_turf(src)
+	playsound(our_turf, 'sound/effects/tendril_destroyed.ogg', 200, FALSE, 50, TRUE, TRUE)
+	// Change our infected turfs back into regular ones, but only if they haven't been already altered
+	for (var/turf/open/indestructible/necropolis/infected_turf in infected_turfs)
+		var/dist = get_dist_euclidean(our_turf, infected_turf)
+		if (dist > 4.5) // We got moved?
+			continue
+		addtimer(CALLBACK(infected_turf, TYPE_PROC_REF(/turf, ChangeTurf), infected_turfs[infected_turf], null, CHANGETURF_IGNORE_AIR), round(5 - dist, 0.5) * 1 SECONDS)
 	return ..()
 
 /mob/living/basic/mining/tendril/update_overlays()

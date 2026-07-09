@@ -77,6 +77,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	icon_state = "ticketmachine_off"
 	result_path = /obj/machinery/ticket_machine
 	pixel_shift = 32
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4)
 
 ///Increments the counter by one, if there is a ticket after the current one we are serving.
 ///If we have a current ticket, remove it from the top of our tickets list and replace it with the next one if applicable
@@ -178,26 +179,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 			maptext_x = 4
 	maptext = MAPTEXT(current_number) //Finally, apply the maptext
 
-/obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	..()
-	if(istype(I, /obj/item/hand_labeler_refill))
-		if(!(ticket_number >= max_number))
-			to_chat(user, span_notice("[src] refuses [I]! There [max_number - ticket_number == 1 ? "is" : "are"] still [max_number - ticket_number] ticket\s left!"))
-			return
-		to_chat(user, span_notice("You start to refill [src]'s ticket holder (doing this will reset its ticket count!)."))
-		if(do_after(user, 3 SECONDS, target = src))
-			to_chat(user, span_notice("You insert [I] into [src] as it whirs nondescriptly."))
-			qdel(I)
-			ticket_number = 0
-			current_number = 0
-			if(tickets.len)
-				for(var/obj/item/ticket_machine_ticket/ticket in tickets)
-					ticket.audible_message(span_notice("\the [ticket] disperses!"), hearing_distance = SAMETILE_MESSAGE_RANGE)
-					qdel(ticket)
-				tickets.Cut()
-			max_number = initial(max_number)
-			update_appearance()
-			return
+/obj/machinery/ticket_machine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/hand_labeler_refill))
+		return NONE
+
+	if(!(ticket_number >= max_number))
+		to_chat(user, span_notice("[src] refuses [tool]! There [max_number - ticket_number == 1 ? "is" : "are"] still [max_number - ticket_number] ticket\s left!"))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You start to refill [src]'s ticket holder (doing this will reset its ticket count!)."))
+	if(!do_after(user, 3 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You insert [tool] into [src] as it whirs nondescriptly."))
+	qdel(tool)
+	ticket_number = 0
+	current_number = 0
+	if(tickets.len)
+		for(var/obj/item/ticket_machine_ticket/ticket in tickets)
+			ticket.audible_message(span_notice("\the [ticket] disperses!"), hearing_distance = SAMETILE_MESSAGE_RANGE)
+			qdel(ticket)
+		tickets.Cut()
+	max_number = initial(max_number)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ticket_machine/proc/reset_cooldown()
 	ready = TRUE

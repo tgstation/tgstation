@@ -75,6 +75,7 @@
 				what.reagents.trans_to(processed_food, what.reagents.total_volume, multiplier = 1 / cached_multiplier, copy_only = TRUE)
 			if(cached_mats)
 				processed_food.set_custom_materials(cached_mats, 1 / cached_multiplier)
+			SEND_SIGNAL(what, SIGNAL_USED_IN_FOOD_PROCESSOR, processed_food, recipe)
 
 	if(isliving(what))
 		var/mob/living/themob = what
@@ -179,6 +180,10 @@
 			continue
 		total_time += recipe.time
 
+	if(PERFORM_ALL_TESTS(make_vegan_wellington)) //don't waste time, we need that uncooked bacon strip right away
+		complete_processing()
+		return
+
 	var/duration = (total_time / rating_speed)
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, Shake), 1, 0, duration)
 	addtimer(CALLBACK(src, PROC_REF(complete_processing)), duration)
@@ -193,9 +198,8 @@
 	processing = FALSE
 	visible_message(span_notice("\The [src] finishes processing."))
 
-/obj/machinery/processor/verb/eject()
-	set name = "Eject Contents"
-	set src in oview(1)
+GAME_VERB_SRC(/obj/machinery/processor, eject, oview(1), "Eject Contents", null)
+
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	if(!usr.can_perform_action(src))

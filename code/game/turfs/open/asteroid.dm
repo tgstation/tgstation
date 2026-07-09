@@ -234,6 +234,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	floor_variance = 0
 	transform = MAP_SWITCH(TRANSLATE_MATRIX(-8, -8), matrix())
 	smooth_broken = TRUE
+	has_floor_variance = FALSE
 	/// DMI used by unsmoothed turfs for variance
 	var/variant_dmi = null
 	/// Amount of variants this turf has
@@ -259,6 +260,12 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	if(!smoothing_flags)
 		return
 	underlay_appearance.transform = transform
+
+/turf/open/misc/asteroid/basalt/smooth/refill_dug()
+	dug = FALSE
+	broken = FALSE
+	set_smoothed_icon_state(smoothing_junction)
+	update_appearance()
 
 /turf/open/misc/asteroid/basalt/smooth/siderite
 	name = "siderite floor"

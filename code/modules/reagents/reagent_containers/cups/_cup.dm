@@ -44,11 +44,30 @@
 	. = ..()
 	if(heatable)
 		AddElement(/datum/element/reagents_item_heatable)
+	register_context()
 
 /obj/item/reagent_containers/cup/Destroy(force)
 	QDEL_NULL(lid_assembly)
 	QDEL_NULL(attached_cell)
 	return ..()
+
+/obj/item/reagent_containers/cup/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(cell_wired && held_item.tool_behaviour == TOOL_WIRECUTTER)
+		context[SCREENTIP_CONTEXT_LMB] = "Cut wires"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(!can_lid)
+		return
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_ALT_LMB] = lid_assembly ? "Detach assembly" : "Toggle lid"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(isnull(lid_assembly) && istype(held_item, /obj/item/assembly_holder))
+		context[SCREENTIP_CONTEXT_LMB] = "Attach assembly"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(isnull(attached_cell) && !isnull(lid_assembly) && istype(held_item, /obj/item/stock_parts/power_store/cell))
+		context[SCREENTIP_CONTEXT_LMB] = "Attach cell"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/reagent_containers/cup/examine(mob/user)
 	. = ..()
@@ -355,6 +374,10 @@
 	update_appearance()
 	return TRUE
 
+/obj/item/reagent_containers/cup/on_found(mob/finder)
+	. = ..()
+	lid_assembly?.on_found(finder)
+
 /obj/item/reagent_containers/cup/Exited(atom/movable/gone, direction)
 	. = ..()
 	if (gone == lid_assembly)
@@ -470,7 +493,7 @@
 		300 units."
 	icon_state = "beakerbluespace"
 	inhand_icon_state = "beaker_bluespace"
-	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/plasma =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
@@ -729,6 +752,7 @@
 	icon_state = "coffeepot"
 	fill_icon_state = "coffeepot"
 	fill_icon_thresholds = list(0, 1, 30, 60, 100)
+	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/cup/coffeepot/bluespace
 	name = "bluespace coffeepot"
@@ -736,6 +760,7 @@
 	volume = 240
 	icon_state = "coffeepot_bluespace"
 	fill_icon_thresholds = null
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 
 ///Test tubes created by chem master and pandemic and placed in racks
 /obj/item/reagent_containers/cup/tube

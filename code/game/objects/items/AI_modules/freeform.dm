@@ -6,6 +6,7 @@
 /obj/item/ai_module/law/core/freeformcore
 	name = "'Freeform' Core AI Module"
 	laws = list("")
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/ai_module/law/core/freeformcore/configure(mob/user)
 	. = TRUE
@@ -32,6 +33,7 @@
 /obj/item/ai_module/law/supplied/freeform
 	name = "'Freeform' AI Module"
 	laws = list("")
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/ai_module/law/supplied/freeform/configure(mob/user)
 	. = TRUE

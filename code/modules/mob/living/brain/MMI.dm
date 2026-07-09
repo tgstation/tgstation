@@ -5,8 +5,10 @@
 	icon_state = "mmi_off"
 	base_icon_state = "mmi"
 	w_class = WEIGHT_CLASS_NORMAL
+
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	var/braintype = "Cyborg"
-	VAR_FINAL/obj/item/radio/radio = null //Let's give it a radio.
+	VAR_FINAL/obj/item/radio/mmi/radio = null //Let's give it a radio.
 	VAR_FINAL/mob/living/brain/brainmob = null //The current occupant.
 	VAR_FINAL/mob/living/silicon/robot = null //Appears unused.
 	VAR_FINAL/obj/vehicle/sealed/mecha = null //This does not appear to be used outside of reference in mecha.dm.
@@ -23,6 +25,9 @@
 	/// - If placed in an AI, it will override the AI's laws.
 	/// Likewise, the AI's laws will be unmodifiable unless synced to a law rack.
 	var/datum/ai_laws/laws
+
+/obj/item/radio/mmi
+	custom_materials = null
 
 /obj/item/mmi/Initialize(mapload)
 	. = ..()
@@ -265,12 +270,7 @@
 /obj/item/mmi/proc/replacement_ai_name()
 	return brainmob.name
 
-/obj/item/mmi/verb/Toggle_Listening()
-	set name = "Toggle Listening"
-	set desc = "Toggle listening channel on or off."
-	set category = "MMI"
-	set src = usr.loc
-	set popup_menu = FALSE
+GAME_VERB_SRC_DESC(/obj/item/mmi, Toggle_Listening, usr.loc, "Toggle Listening", "Toggle listening channel on or off.", "MMI")
 
 	if(brainmob.stat)
 		to_chat(brainmob, span_warning("Can't do that while incapacitated or dead!"))

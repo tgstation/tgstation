@@ -8,6 +8,7 @@
 	desc = "A small electronic device that can house an integrated circuit."
 	icon_state = "wiremod"
 	assembly_behavior = ASSEMBLY_ALL
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 	/// A reference to any holder to use power from instead of the circuit's own cell
 	var/atom/movable/power_use_proxy

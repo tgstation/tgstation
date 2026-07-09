@@ -201,6 +201,7 @@
 
 /obj/item/ai_module/law/core
 	desc = "An AI Module for programming core laws to an AI."
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/ai_module/law/core/apply_to_combined_lawset(datum/ai_laws/combined_lawset)
 	for(var/law in laws)
