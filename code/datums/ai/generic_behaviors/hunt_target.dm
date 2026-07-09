@@ -9,6 +9,8 @@
 	var/hunt_cooldown = 5 SECONDS
 	/// If TRUE, clears target_key after every hunt regardless of success
 	var/always_reset_target = FALSE
+	/// Target snapshotted in perform() for async subtypes, for perform_async() to read.
+	VAR_PRIVATE/atom/hunt_async_target
 
 /datum/bt_node/ai_behavior/hunt_target/setup(datum/ai_controller/controller)
 	var/atom/hunted = controller.blackboard[target_key]
@@ -35,6 +37,7 @@
 
 /datum/bt_node/ai_behavior/hunt_target/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
+	hunt_async_target = null
 	if(succeeded && cooldown_key)
 		controller.set_blackboard_key(cooldown_key, world.time + hunt_cooldown)
 	else if(target_key)
@@ -48,24 +51,64 @@
 	/// Combat mode to use when interacting with the target
 	var/behavior_combat_mode = TRUE
 
+/datum/bt_node/ai_behavior/hunt_target/interact_with_target/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/async_flags = handle_async()
+	if(async_flags)
+		return async_flags
+
+	var/atom/hunted = controller.blackboard[target_key]
+	if(QDELETED(hunted))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	hunt_async_target = hunted
+	return start_async()
+
+/datum/bt_node/ai_behavior/hunt_target/interact_with_target/perform_async(datum/ai_controller/controller)
+	target_caught(controller.pawn, hunt_async_target)
+	if(!async_still_valid())
+		return
+	finish_async(AI_BEHAVIOR_SUCCEEDED)
+
 /datum/bt_node/ai_behavior/hunt_target/interact_with_target/target_caught(mob/living/hunter, atom/hunted)
-	hunter.ai_controller.ai_interact(target = hunted, combat_mode = behavior_combat_mode) // NEEDS ASYNC WRAPPING
+	hunter.ai_controller.ai_interact(target = hunted, combat_mode = behavior_combat_mode)
 
 /// Uses a cooldown ability from ability_key on the target.
 /datum/bt_node/ai_behavior/hunt_target/use_ability_on_target
 	always_reset_target = TRUE
 	/// Blackboard key holding the /datum/action/cooldown ability to use
 	var/ability_key
+	/// Ability snapshotted in perform(), for perform_async() to read.
+	VAR_PRIVATE/datum/action/cooldown/hunt_async_ability
 
 /datum/bt_node/ai_behavior/hunt_target/use_ability_on_target/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/async_flags = handle_async()
+	if(async_flags)
+		return async_flags
+
 	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
 	if(!ability?.IsAvailable())
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	return ..()
+
+	var/atom/hunted = controller.blackboard[target_key]
+	if(QDELETED(hunted))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	hunt_async_target = hunted
+	hunt_async_ability = ability
+	return start_async()
+
+/datum/bt_node/ai_behavior/hunt_target/use_ability_on_target/perform_async(datum/ai_controller/controller)
+	target_caught(controller.pawn, hunt_async_target)
+	if(!async_still_valid())
+		return
+	finish_async(AI_BEHAVIOR_SUCCEEDED)
+
+/datum/bt_node/ai_behavior/hunt_target/use_ability_on_target/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	hunt_async_ability = null
 
 /datum/bt_node/ai_behavior/hunt_target/use_ability_on_target/target_caught(mob/living/hunter, atom/hunted)
-	var/datum/action/cooldown/ability = hunter.ai_controller.blackboard[ability_key]
-	ability.InterceptClickOn(hunter, null, hunted) // NEEDS ASYNC WRAPPING
+	hunt_async_ability.InterceptClickOn(hunter, null, hunted)
 
 /// Celebrates around the target with a spin animation.
 /datum/bt_node/ai_behavior/hunt_target/snail_people
@@ -79,8 +122,26 @@
 /datum/bt_node/ai_behavior/hunt_target/pull_target
 	always_reset_target = TRUE
 
+/datum/bt_node/ai_behavior/hunt_target/pull_target/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/async_flags = handle_async()
+	if(async_flags)
+		return async_flags
+
+	var/obj/item/hunted = controller.blackboard[target_key]
+	if(QDELETED(hunted))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	hunt_async_target = hunted
+	return start_async()
+
+/datum/bt_node/ai_behavior/hunt_target/pull_target/perform_async(datum/ai_controller/controller)
+	target_caught(controller.pawn, hunt_async_target)
+	if(!async_still_valid())
+		return
+	finish_async(AI_BEHAVIOR_SUCCEEDED)
+
 /datum/bt_node/ai_behavior/hunt_target/pull_target/target_caught(mob/living/hunter, obj/item/hunted)
-	hunter.start_pulling(hunted) // NEEDS ASYNC WRAPPING
+	hunter.start_pulling(hunted)
 
 /// Emotes enjoyment of the target's scent.
 /datum/bt_node/ai_behavior/hunt_target/sniff_flora

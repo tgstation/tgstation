@@ -6,7 +6,7 @@
 	var/mob/living/basic/pawn = controller.pawn
 	if(!istype(pawn) || pawn.stat)
 		return FALSE
-	pawn.emote("deathgasp", intentional = FALSE)
+	INVOKE_ASYNC(pawn, TYPE_PROC_REF(/mob, emote), "deathgasp", intentional = FALSE)
 	ADD_TRAIT(pawn, TRAIT_FAKEDEATH, BASIC_MOB_DEATH_TRAIT)
 	pawn.look_dead()
 
