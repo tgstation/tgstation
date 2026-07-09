@@ -1278,7 +1278,7 @@
 /datum/glass_style/drinking_glass/entropic_brew
 	required_drink_type = /datum/reagent/consumable/ethanol/entropic_brew
 	name = "Entropic Brew"
-	desc = "It's like if someone distilled the existential despair into a glass. Theoretically, you could get drunk off it, but you would certainly regret it."
+	desc = "It's like if someone distilled existential despair into a glass. Theoretically, you could get drunk off it, but you would certainly regret it."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "entropic_brew"
 
