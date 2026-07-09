@@ -19,6 +19,7 @@ SUBSYSTEM_DEF(map_previews)
 	var/list/already_generated = list()
 	var/static/list/preview_blacklist = list(
 		/obj/machinery/computer,
+		/obj/machinery/computer/old,
 	)
 
 	for(var/path in subtypesof(/obj))
@@ -39,22 +40,6 @@ SUBSYSTEM_DEF(map_previews)
 			var/obj/machinery/machine = thingtospawn
 			machine.set_machine_stat(machine.machine_stat & ~NOPOWER)
 			machine.update_appearance()
-
-		if(thingtospawn.icon_state)
-			thingtospawn.icon = icon(thingtospawn.icon, thingtospawn.icon_state, frame = 1)
-		if(length(thingtospawn.overlays))
-			var/list/frozen_overlays = list()
-			for(var/image/overlay as anything in thingtospawn.overlays)
-				if(overlay.plane == EMISSIVE_PLANE || (overlay.blend_mode == BLEND_ADD && overlay.plane != FLOAT_PLANE))
-					continue // skip emissives
-				var/image/frozen = image(icon = icon(overlay.icon, overlay.icon_state, frame = 1), icon_state = overlay.icon_state, layer = overlay.layer, dir = overlay.dir)
-				frozen.color = overlay.color
-				frozen.alpha = overlay.alpha
-				frozen.pixel_x = overlay.pixel_x
-				frozen.pixel_y = overlay.pixel_y
-				frozen_overlays += frozen
-			thingtospawn.overlays.Cut()
-			thingtospawn.overlays += frozen_overlays
 
 		var/key = "[thingtospawn.icon]-[thingtospawn.icon_state]"
 		for(var/image/overlay as anything in thingtospawn.overlays)
