@@ -220,6 +220,8 @@
 		icon_state = "[base_icon_state]-off"
 
 /obj/machinery/computer/piratepad_control
+	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/piratepad_control")
 	name = "cargo hold control terminal"
 	///Message to display on the TGUI window.
 	var/status_report = "Ready for delivery."

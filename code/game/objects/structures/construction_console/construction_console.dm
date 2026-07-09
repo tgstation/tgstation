@@ -14,6 +14,7 @@
 	circuit = /obj/item/circuitboard/computer/base_construction
 	off_action = /datum/action/innate/camera_off/base_construction
 	jump_action = null
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/camera_advanced/base_construction")
 	icon_screen = "mining"
 	icon_keyboard = "rd_key"
 	light_color = LIGHT_COLOR_PINK

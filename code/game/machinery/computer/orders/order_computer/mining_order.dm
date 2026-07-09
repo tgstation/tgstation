@@ -3,8 +3,8 @@
 /obj/machinery/computer/order_console/mining
 	name = "mining equipment order console"
 	desc = "An equipment shop for miners, points collected at an ore redemption machine can be spent here."
-	icon = 'icons/obj/machines/mining_machines.dmi'
-	icon_state = "mining"
+	icon = MAP_SWITCH('icons/obj/machines/mining_machines.dmi', 'icons/obj/fluff/map_previews.dmi')
+	icon_state = MAP_SWITCH("mining", "/obj/machinery/computer/order_console/mining")
 	icon_keyboard = null
 	icon_screen = null
 	circuit = /obj/item/circuitboard/computer/order_console/mining

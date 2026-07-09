@@ -5,6 +5,8 @@
 /obj/machinery/computer/accounting
 	name = "account lookup console"
 	desc = "Used to view crew member accounts and purchases."
+	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/accounting")
 	icon_screen = "accounts"
 	icon_keyboard = "id_key"
 	circuit = /obj/item/circuitboard/computer/accounting

@@ -3,8 +3,8 @@
 	name = "PanD.E.M.I.C 2200"
 	desc = "Used to work with viruses."
 	density = TRUE
-	icon = 'icons/obj/medical/chemical.dmi'
-	icon_state = "pandemic0"
+	icon = MAP_SWITCH('icons/obj/medical/chemical.dmi', 'icons/obj/fluff/map_previews.dmi')
+	icon_state = MAP_SWITCH("pandemic0", "/obj/machinery/computer/pandemic")
 	icon_keyboard = null
 	icon_screen = null
 	base_icon_state = "pandemic"

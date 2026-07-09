@@ -2,6 +2,8 @@
 	name = "exploration drone control console"
 	desc = "Control exploration drones from interstellar distances. Communication lag not included."
 	circuit = /obj/item/circuitboard/computer/exodrone_console
+	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/piratepad_control")
 	//Currently controlled drone
 	var/obj/item/exodrone/controlled_drone
 	/// Have we lost contact with the drone without disconnecting. Unset on user confirmation.

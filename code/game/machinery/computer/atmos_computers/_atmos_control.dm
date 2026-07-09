@@ -2,6 +2,8 @@
 /obj/machinery/computer/atmos_control
 	name = "atmospherics monitoring"
 	desc = "Used to monitor the station's atmospherics sensors."
+	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/atmos_control")
 	icon_screen = "tank"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/atmos_control

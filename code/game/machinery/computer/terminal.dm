@@ -2,6 +2,8 @@
 /obj/machinery/computer/terminal
 	name = "terminal"
 	desc = "A relatively low-tech solution for internal computing, internal network mail, and logging. This model appears to be quite old."
+	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/piratepad_control")
 	circuit = /obj/item/circuitboard/computer/terminal //Deconstruction still wipes contents but this is easier than smashing the console
 	///Text that displays on top of the actual 'lore' funnies.
 	var/upperinfo = "COPYRIGHT 2487 NANOSOFT-TM - DO NOT REDISTRIBUTE"

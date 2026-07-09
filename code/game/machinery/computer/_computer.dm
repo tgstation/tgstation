@@ -22,6 +22,7 @@
 	var/authenticated = FALSE
 	/// Will projectiles be able to pass over this computer?
 	var/projectiles_pass_chance = 65
+	generate_map_preview = TRUE
 
 /datum/armor/machinery_computer
 	fire = 40
