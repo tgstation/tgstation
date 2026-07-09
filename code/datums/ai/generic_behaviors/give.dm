@@ -2,21 +2,15 @@
 /datum/bt_node/ai_behavior/give
 	/// Blackboard key holding the mob to give the held item to.
 	var/target_key
-	/// Set while the do_after delay is gojng on
-	VAR_PRIVATE/is_giving = FALSE
-	/// TRUE once the async give has finished.
-	VAR_PRIVATE/async_give_done = FALSE
-	/// Result flags from the async give.
-	VAR_PRIVATE/async_give_flags = NONE
+	/// Target snapshotted in perform(), for perform_async() to read.
+	VAR_PRIVATE/mob/living/give_target
+	/// Held item snapshotted in perform(), for perform_async() to read.
+	VAR_PRIVATE/obj/item/give_held_item
 
 /datum/bt_node/ai_behavior/give/perform(seconds_per_tick, datum/ai_controller/controller)
-	// do_after in flight stay RUNNING.
-	if(is_giving)
-		return AI_BEHAVIOR_DELAY
-
-	// do_after just finished consume result.
-	if(async_give_done)
-		return AI_BEHAVIOR_DELAY | async_give_flags
+	var/async_flags = handle_async()
+	if(async_flags)
+		return async_flags
 
 	var/mob/living/pawn = controller.pawn
 	var/obj/item/held_item = pawn.get_active_held_item()
@@ -39,20 +33,18 @@
 		span_info("[pawn] starts trying to give [held_item] to [living_target]!"),
 		span_warning("[pawn] tries to give you [held_item]!")
 	)
-	is_giving = TRUE
-	INVOKE_ASYNC(src, PROC_REF(async_give), controller, living_target, held_item)
-	return AI_BEHAVIOR_DELAY
+	give_target = living_target
+	give_held_item = held_item
+	return start_async()
 
-/datum/bt_node/ai_behavior/give/proc/async_give(datum/ai_controller/controller, mob/living/living_target, obj/item/held_item)
+/datum/bt_node/ai_behavior/give/perform_async(datum/ai_controller/controller)
 	var/mob/living/pawn = controller.pawn
+	var/mob/living/living_target = give_target
+	var/obj/item/held_item = give_held_item
 	var/result_flags = AI_BEHAVIOR_FAILED
 	if(do_after(pawn, 1 SECONDS, living_target))
 		result_flags = try_to_give_item(living_target, held_item)
-	if(!is_giving || QDELETED(pawn))
-		return
-	async_give_flags = result_flags
-	async_give_done = TRUE
-	is_giving = FALSE
+	finish_async(result_flags)
 
 /// Returns a list(has_left_pocket, has_right_pocket, has_valid_hand) if the item can be given, null otherwise.
 /datum/bt_node/ai_behavior/give/proc/can_give_item(mob/living/target, obj/item/held_item)
@@ -89,7 +81,6 @@
 
 /datum/bt_node/ai_behavior/give/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
-	is_giving = FALSE
-	async_give_done = FALSE
-	async_give_flags = NONE
+	give_target = null
+	give_held_item = null
 	controller.clear_blackboard_key(target_key)

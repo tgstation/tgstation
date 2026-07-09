@@ -20,21 +20,15 @@
 	var/reach_distance = 10
 	/// How close the reachability path must get to the target (0 = onto/adjacent). Passed to can_reach_target when must_be_reachable is set.
 	var/minimum_distance = 0
-	/// Set while an async reachability search is happening (yea, its a path check :( )
-	VAR_PRIVATE/is_finding_target = FALSE
-	/// Result written by the async search proc before it clears is_finding_target: the found atom, or null for no result.
-	VAR_PRIVATE/atom/async_target_result
-	/// TRUE once the async search has written its result and is ready to be consumed.
-	VAR_PRIVATE/async_search_done = FALSE
+	/// Strategy/range snapshot from the perform() that kicked off the current async search.
+	VAR_PRIVATE/datum/targeting_strategy/search_strategy
+	/// Range snapshot from the perform() that kicked off the current async search.
+	VAR_PRIVATE/search_range
 
 /datum/bt_node/ai_behavior/acquire_target/perform(seconds_per_tick, datum/ai_controller/controller)
-	// Async reachability search in flight  stay RUNNING until it completes.
-	if(is_finding_target)
-		return AI_BEHAVIOR_DELAY
-
-	// Async search just finished  consume the result.
-	if(async_search_done)
-		return AI_BEHAVIOR_DELAY | (isnull(async_target_result) ? AI_BEHAVIOR_FAILED : AI_BEHAVIOR_SUCCEEDED)
+	var/async_flags = handle_async()
+	if(async_flags)
+		return async_flags
 
 	if(!can_search(controller))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -52,15 +46,14 @@
 		return find_and_set_target(controller, strategy, vision_range)
 
 	// Kick off async reachability search.
-	is_finding_target = TRUE
-	INVOKE_ASYNC(src, PROC_REF(async_find_and_set_target), controller, strategy, vision_range)
-	return AI_BEHAVIOR_DELAY
+	search_strategy = strategy
+	search_range = vision_range
+	return start_async()
 
 /datum/bt_node/ai_behavior/acquire_target/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
-	is_finding_target = FALSE
-	async_search_done = FALSE
-	async_target_result = null
+	search_strategy = null
+	search_range = null
 
 /// Returns TRUE to abort the search before it starts (e.g. a detection field is already active).
 /datum/bt_node/ai_behavior/acquire_target/proc/can_search(datum/ai_controller/controller)
@@ -166,8 +159,10 @@
 /datum/bt_node/ai_behavior/acquire_target/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
 	return pick(filtered_targets)
 
-/// Async proc: walks filtered candidates checking reachability (may sleep), then writes the result and sets async_search_done.
-/datum/bt_node/ai_behavior/acquire_target/proc/async_find_and_set_target(datum/ai_controller/controller, datum/targeting_strategy/strategy, range)
+/// perform_async(): walks filtered candidates checking reachability (may sleep), then commits the result via finish_async().
+/datum/bt_node/ai_behavior/acquire_target/perform_async(datum/ai_controller/controller)
+	var/datum/targeting_strategy/strategy = search_strategy
+	var/range = search_range
 	var/mob/living/living_mob = controller.pawn
 	var/datum/target_source/source = GET_TARGET_SOURCE(target_source)
 	var/atom/current_target = controller.blackboard[target_key]
@@ -183,7 +178,7 @@
 			break
 		controller.note_unreachable_target(candidate)
 	// If finish_action fired while we were sleeping, bail without touching anything.
-	if(!is_finding_target || QDELETED(controller) || QDELETED(controller.pawn))
+	if(!async_still_valid())
 		return
 	if(!isnull(target))
 		if(target != controller.blackboard[target_key])
@@ -192,9 +187,7 @@
 	else
 		on_no_valid_candidates(controller, current_target)
 		clear_stale_target(controller, current_target)
-	async_target_result = target
-	async_search_done = TRUE
-	is_finding_target = FALSE
+	finish_async(isnull(target) ? AI_BEHAVIOR_FAILED : AI_BEHAVIOR_SUCCEEDED)
 
 ///Finds a nearby target to interact with, used as a baseline for behaviors that need to interact with something nearby.
 /datum/bt_node/ai_behavior/acquire_target/update_interaction_target

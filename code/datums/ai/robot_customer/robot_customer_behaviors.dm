@@ -34,17 +34,11 @@
 
 /// Places the customer's food order once they are at their seat.
 /datum/bt_node/ai_behavior/robot_customer/order_food
-	/// Set while order_food is happening (sleeps)
-	VAR_PRIVATE/is_ordering = FALSE
-	/// TRUE once the async order has completed.
-	VAR_PRIVATE/async_order_done = FALSE
 
 /datum/bt_node/ai_behavior/robot_customer/order_food/perform(seconds_per_tick, datum/ai_controller/controller)
-	if(is_ordering)
-		return AI_BEHAVIOR_DELAY
-
-	if(async_order_done)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	var/async_flags = handle_async()
+	if(async_flags)
+		return async_flags
 
 	var/mob/living/basic/robot_customer/customer_pawn = controller.pawn
 	var/obj/structure/holosign/robot_seat/seat_marker = controller.blackboard[BB_CUSTOMER_MY_SEAT]
@@ -54,27 +48,20 @@
 		if(my_seat)
 			customer_pawn.setDir(my_seat.dir)
 
+	return start_async()
+
+/datum/bt_node/ai_behavior/robot_customer/order_food/perform_async(datum/ai_controller/controller)
+	var/mob/living/basic/robot_customer/customer_pawn = controller.pawn
 	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 	var/datum/venue/attending_venue = controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
-	is_ordering = TRUE
-	INVOKE_ASYNC(src, PROC_REF(async_order), controller, customer_pawn, attending_venue, customer_data)
-	return AI_BEHAVIOR_DELAY
-
-/datum/bt_node/ai_behavior/robot_customer/order_food/proc/async_order(datum/ai_controller/controller, mob/living/basic/robot_customer/customer_pawn, datum/venue/attending_venue, datum/customer_data/customer_data)
 	var/order
 	if(!QDELETED(customer_pawn) && !QDELETED(attending_venue))
 		order = attending_venue.order_food(customer_pawn, customer_data)
-	if(!is_ordering)
+	if(!async_still_valid())
 		return
 	if(!isnull(order))
 		controller.set_blackboard_key(BB_CUSTOMER_CURRENT_ORDER, order)
-	async_order_done = TRUE
-	is_ordering = FALSE
-
-/datum/bt_node/ai_behavior/robot_customer/order_food/finish_action(datum/ai_controller/controller, succeeded)
-	. = ..()
-	is_ordering = FALSE
-	async_order_done = FALSE
+	finish_async(AI_BEHAVIOR_SUCCEEDED)
 
 
 /// Waits at the seat for food to arrive. Ticks down patience and checks for food placed in front.

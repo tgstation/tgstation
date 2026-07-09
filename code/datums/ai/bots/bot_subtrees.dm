@@ -15,25 +15,17 @@
 	/// How close the path must get to the target (0 = onto/adjacent). Repairbot raises this so it stops next to the walls/girders it repairs.
 	var/minimum_distance = 0
 	time_between_perform = 2 SECONDS
-	/// Set while an async reachability search is going on
-	VAR_PRIVATE/is_searching = FALSE
-	/// TRUE once the async search has written its result.
-	VAR_PRIVATE/async_search_done = FALSE
-	/// Result of the async search: TRUE if a reachable target was found and set.
-	VAR_PRIVATE/async_search_succeeded = FALSE
+	/// Stashed candidate list between perform() and the async worker (not a blackboard value).
+	VAR_PRIVATE/list/candidate_stash
 
 /datum/bt_node/ai_behavior/bot_search/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	if(!istype(controller))
 		stack_trace("attempted to give [controller.pawn] the bot search behavior!")
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	// Async search in flight  stay RUNNING.
-	if(is_searching)
-		return AI_BEHAVIOR_DELAY
-
-	// Async search just finished  consume result.
-	if(async_search_done)
-		return AI_BEHAVIOR_DELAY | (async_search_succeeded ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
+	var/async_flags = handle_async()
+	if(async_flags)
+		return async_flags
 
 	if(isnull(looking_for))
 		looking_for = get_looking_for_typecache()
@@ -57,32 +49,27 @@
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] bot_search ([type]): no valid target found in radius [radius]")
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	is_searching = TRUE
-	INVOKE_ASYNC(src, PROC_REF(async_search), controller, candidates)
-	return AI_BEHAVIOR_DELAY
+	candidate_stash = candidates
+	return start_async()
 
-/datum/bt_node/ai_behavior/bot_search/proc/async_search(datum/ai_controller/basic_controller/bot/controller, list/candidates)
+/datum/bt_node/ai_behavior/bot_search/perform_async(datum/ai_controller/basic_controller/bot/controller)
 	var/mob/living/living_pawn = controller.pawn
 	var/found = FALSE
-	for(var/atom/potential_target as anything in candidates)
-		if(!is_searching || QDELETED(living_pawn))
+	for(var/atom/potential_target as anything in candidate_stash)
+		if(!async_still_valid())
 			break
 		if(controller.set_if_can_reach(key = target_key, target = potential_target, distance = pathing_distance, bypass_add_to_blacklist = bypass_add_blacklist, minimum_distance = minimum_distance))
 			found = TRUE
 			break
-	if(!is_searching)
+	if(!async_still_valid())
 		return
 	if(!found)
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] bot_search ([type]): no reachable target found")
-	async_search_succeeded = found
-	async_search_done = TRUE
-	is_searching = FALSE
+	finish_async(found ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
 
 /datum/bt_node/ai_behavior/bot_search/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
-	is_searching = FALSE
-	async_search_done = FALSE
-	async_search_succeeded = FALSE
+	candidate_stash = null
 
 /datum/bt_node/ai_behavior/bot_search/proc/get_looking_for_typecache()
 	return

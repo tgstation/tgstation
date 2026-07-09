@@ -18,41 +18,23 @@
 
 /// Equip a weapon off the ground
 /datum/bt_node/ai_behavior/monkey_equip/ground
-	/// Set while equip_item is in flight.
-	VAR_PRIVATE/is_equipping = FALSE
-	/// TRUE once the async equip has written its result.
-	VAR_PRIVATE/async_equip_done = FALSE
-	/// Whether equip_item returned TRUE.
-	VAR_PRIVATE/async_equip_succeeded = FALSE
 
 /datum/bt_node/ai_behavior/monkey_equip/ground/setup(datum/ai_controller/controller)
 	var/obj/item/target = controller.blackboard[target_key]
 	return !QDELETED(target)
 
 /datum/bt_node/ai_behavior/monkey_equip/ground/perform(seconds_per_tick, datum/ai_controller/controller)
-	if(is_equipping)
-		return AI_BEHAVIOR_DELAY
+	var/async_flags = handle_async()
+	if(async_flags)
+		return async_flags
 
-	if(async_equip_done)
-		return AI_BEHAVIOR_DELAY | (async_equip_succeeded ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
+	return start_async()
 
-	is_equipping = TRUE
-	INVOKE_ASYNC(src, PROC_REF(async_equip), controller)
-	return AI_BEHAVIOR_DELAY
-
-/datum/bt_node/ai_behavior/monkey_equip/ground/proc/async_equip(datum/ai_controller/controller)
+/datum/bt_node/ai_behavior/monkey_equip/ground/perform_async(datum/ai_controller/controller)
 	var/result = equip_item(controller)
-	if(!is_equipping)
+	if(!async_still_valid())
 		return
-	async_equip_succeeded = result
-	async_equip_done = TRUE
-	is_equipping = FALSE
-
-/datum/bt_node/ai_behavior/monkey_equip/ground/finish_action(datum/ai_controller/controller, success)
-	. = ..()
-	is_equipping = FALSE
-	async_equip_done = FALSE
-	async_equip_succeeded = FALSE
+	finish_async(result ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
 
 /// Pickpocket a weapon from a mob
 /datum/bt_node/ai_behavior/monkey_equip/pickpocket
@@ -238,19 +220,15 @@
 /datum/bt_node/ai_behavior/monkey_attack_mob
 	var/target_key
 	time_between_perform = CLICK_CD_MELEE
-	/// Set while monkey_attack is occuring
-	VAR_PRIVATE/is_attacking = FALSE
-	/// TRUE once the async attack has written its result.
-	VAR_PRIVATE/async_attack_done = FALSE
-	/// Whether the attack should be treated as succeeded.
-	VAR_PRIVATE/async_attack_succeeded = FALSE
+	/// seconds_per_tick from the perform() that kicked off the current async attack.
+	VAR_PRIVATE/attack_seconds_per_tick = 0
+	/// Weapon snapshot from the perform() that kicked off the current async attack.
+	VAR_PRIVATE/obj/item/attack_holding_weapon
 
 /datum/bt_node/ai_behavior/monkey_attack_mob/perform(seconds_per_tick, datum/ai_controller/controller)
-	if(is_attacking)
-		return AI_BEHAVIOR_DELAY
-
-	if(async_attack_done)
-		return AI_BEHAVIOR_DELAY | (async_attack_succeeded ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
+	var/async_flags = handle_async()
+	if(async_flags)
+		return async_flags
 
 	var/mob/living/target = controller.blackboard[target_key]
 	var/mob/living/living_pawn = controller.pawn
@@ -265,13 +243,17 @@
 			holding_weapon = potential_weapon
 			break
 
-	is_attacking = TRUE
-	INVOKE_ASYNC(src, PROC_REF(async_attack), controller, living_pawn, target, seconds_per_tick, holding_weapon)
-	return AI_BEHAVIOR_DELAY
+	attack_seconds_per_tick = seconds_per_tick
+	attack_holding_weapon = holding_weapon
+	return start_async()
 
-/datum/bt_node/ai_behavior/monkey_attack_mob/proc/async_attack(datum/ai_controller/controller, mob/living/living_pawn, mob/living/target, seconds_per_tick, obj/item/holding_weapon)
+/datum/bt_node/ai_behavior/monkey_attack_mob/perform_async(datum/ai_controller/controller)
+	var/mob/living/living_pawn = controller.pawn
+	var/mob/living/target = controller.blackboard[target_key]
+	var/seconds_per_tick = attack_seconds_per_tick
+	var/obj/item/holding_weapon = attack_holding_weapon
 	var/attack_results = monkey_attack(controller, target, seconds_per_tick, holding_weapon && SPT_PROB(MONKEY_ATTACK_DISARM_PROB, seconds_per_tick), holding_weapon)
-	if(!is_attacking || QDELETED(living_pawn))
+	if(!async_still_valid())
 		return
 	var/succeeded = FALSE
 	if(attack_results && !controller.blackboard[BB_MONKEY_AGGRESSIVE])
@@ -282,15 +264,12 @@
 				controller.remove_thing_from_blackboard_key(BB_MONKEY_ENEMIES, target)
 			else
 				controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, hatred_value)
-	async_attack_succeeded = succeeded
-	async_attack_done = TRUE
-	is_attacking = FALSE
+	finish_async(succeeded ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
 
 /datum/bt_node/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
-	is_attacking = FALSE
-	async_attack_done = FALSE
-	async_attack_succeeded = FALSE
+	attack_seconds_per_tick = 0
+	attack_holding_weapon = null
 
 /// Attack with held weapon or bite; try to disarm if target is holding something
 /datum/bt_node/ai_behavior/monkey_attack_mob/proc/monkey_attack(datum/ai_controller/controller, mob/living/target, seconds_per_tick, disarm, holding_weapon)
