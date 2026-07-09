@@ -454,6 +454,7 @@
 		var/obj/item/access_key/key = tool
 		if(!key.attempt_open_door(user, src))
 			return ITEM_INTERACT_BLOCKING
+
 		return ITEM_INTERACT_SUCCESS
 
 	if(!user.combat_mode && istype(tool, /obj/item/fireaxe))
