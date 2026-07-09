@@ -2279,6 +2279,7 @@
 		//TODO: add something like obj/item/food/grown/flower = 1 one you have that kinda subtype done
 	)
 	results=list(
-		/datum/reagent/consumable/ethanol/rubywise_ruin = 50 //TODO: Adjust for soup mechanics
+		/datum/reagent/consumable/ethanol/rubywise_ruin = 50
 	)
-	mix_message = "TODO"
+	mix_message = "The flower becomes dissolute in the bloody mixture as a carnal pefume wafts from the pot."
+	mix_sound = 'sound/effects/changeling_absorb/changeling_absorb5.ogg'

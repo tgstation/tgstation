@@ -789,7 +789,7 @@
 	results=list(/datum/reagent/consumable/ethanol/watchmans_nightcap = 9)
 	required_reagents = list(/datum/reagent/consumable/ethanol/hot_toddy = 3, /datum/reagent/consumable/ethanol/blue_blazer = 3, /datum/reagent/ash = 2, /datum/reagent/luminescent_fluid = 1)
 	required_temp = 900
-	mix_message = "PLACEHOLDER"
+	mix_message = "The familiar blue fire of ethanol shifts and turns strange."
 	mix_sound = 'sound/effects/fire_puff.ogg'
 
 /datum/chemical_reaction/drink/footsoldiers_razor
