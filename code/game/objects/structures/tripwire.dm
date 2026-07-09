@@ -310,6 +310,8 @@
 	desc = "A coil of extremely thick cable that is strong enough to create powerful tripwires."
 	icon = 'icons/obj/tripwire.dmi'
 	icon_state = "tripwire_cable"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	inhand_icon_state = "coil_yellow"
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 	/// The post we're trying to connect at the moment, if any.
