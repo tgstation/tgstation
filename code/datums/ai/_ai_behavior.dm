@@ -12,11 +12,11 @@
 	var/next_perform_time = 0
 	/// TRUE when the last perform() failed and we are waiting out next_perform_time to say we failed
 	var/failed_last_perform = FALSE
-	/// TRUE while an async worker kicked off by start_async() is in flight.
+	/// TRUE while an async perform kicked off by start_async() is going
 	VAR_PRIVATE/async_running = FALSE
-	/// TRUE once the worker committed a result via finish_async(), ready to consume.
+	/// TRUE once async finished and via finish_async
 	VAR_PRIVATE/async_finished = FALSE
-	/// AI_BEHAVIOR_* flags the worker committed.
+	/// AI_BEHAVIOR_* flags that came out of async perform
 	VAR_PRIVATE/async_result_flags = NONE
 
 /datum/bt_node/ai_behavior/has_active_descendants()
