@@ -85,21 +85,19 @@
 		if(tank_volume && (damage_flag == BULLET || damage_flag == LASER))
 			boom()
 
-/obj/structure/reagent_dispensers/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.is_refillable())
-		return FALSE //so we can refill them via their afterattack.
-	if(istype(attacking_item, /obj/item/assembly_holder) && accepts_rig)
+/obj/structure/reagent_dispensers/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/assembly_holder) && accepts_rig)
 		if(rig)
 			balloon_alert(user, "another device is in the way!")
-			return ..()
-		var/obj/item/assembly_holder/holder = attacking_item
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/assembly_holder/holder = tool
 		if(!(locate(/obj/item/assembly/igniter) in holder.assemblies))
-			return ..()
+			return ITEM_INTERACT_BLOCKING
 
 		user.balloon_alert_to_viewers("attaching rig...")
 		add_fingerprint(user)
 		if(!do_after(user, 2 SECONDS, target = src) || !user.transferItemToLoc(holder, src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		rig = holder
 		holder.master = src
 		holder.on_attach()
@@ -111,10 +109,10 @@
 		log_bomber(user, "attached [holder.name] to ", src)
 		last_rigger = user
 		user.balloon_alert_to_viewers("attached rig")
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/stack/sheet/iron) && can_be_tanked)
-		var/obj/item/stack/sheet/iron/metal_stack = attacking_item
+	if(istype(tool, /obj/item/stack/sheet/iron) && can_be_tanked)
+		var/obj/item/stack/sheet/iron/metal_stack = tool
 		metal_stack.use(1)
 		var/obj/structure/reagent_dispensers/plumbed/storage/new_tank = new /obj/structure/reagent_dispensers/plumbed/storage(drop_location())
 		new_tank.reagents.maximum_volume = reagents.maximum_volume
@@ -123,9 +121,9 @@
 		new_tank.update_appearance(UPDATE_OVERLAYS)
 		new_tank.set_anchored(anchored)
 		qdel(src)
-		return FALSE
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/structure/reagent_dispensers/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -294,39 +292,37 @@
 	// if this sucks, feel free to change it, but make sure the damn thing will log. thanks.
 	return ..()
 
-/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_WELDER)
-		return ..()
-
-	var/obj/item/weldingtool/refilling_welder = attacking_item
+/obj/structure/reagent_dispensers/fueltank/welder_act(mob/living/user, obj/item/tool)
+	var/obj/item/weldingtool/refilling_welder = tool
 	if(istype(refilling_welder) && !refilling_welder.welding)
 		if(refilling_welder.reagents.has_reagent(/datum/reagent/fuel, refilling_welder.max_fuel))
 			to_chat(user, span_warning("Your [refilling_welder.name] is already full!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		reagents.trans_to(refilling_welder, refilling_welder.max_fuel, transferred_by = user)
 		user.visible_message(span_notice("[user] refills [user.p_their()] [refilling_welder.name]."), span_notice("You refill [refilling_welder]."))
 		playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 		refilling_welder.update_appearance()
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	var/obj/item/lighter/refilling_lighter = attacking_item
+	var/obj/item/lighter/refilling_lighter = tool
 	if(istype(refilling_lighter) && !refilling_lighter.lit)
 		if(refilling_lighter.reagents.has_reagent(/datum/reagent/fuel, refilling_lighter.maximum_fuel))
 			to_chat(user, span_warning("Your [refilling_lighter.name] is already full!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		reagents.trans_to(refilling_lighter, refilling_lighter.maximum_fuel, transferred_by = user)
 		user.visible_message(span_notice("[user] refills [user.p_their()] [refilling_lighter.name]."), span_notice("You refill [refilling_lighter]."))
 		playsound(src, 'sound/effects/refill.ogg', 25, TRUE)
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	if(!reagents.has_reagent(/datum/reagent/fuel))
 		to_chat(user, span_warning("[src] is out of fuel!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	user.visible_message(
-		span_danger("[user] catastrophically fails at refilling [user.p_their()] [attacking_item.name]!"),
+		span_danger("[user] catastrophically fails at refilling [user.p_their()] [tool.name]!"),
 		span_userdanger("That was stupid of you."))
-	log_bomber(user, "detonated a", src, "via [attacking_item.name]")
+	log_bomber(user, "detonated a", src, "via [tool.name]")
 	boom()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reagent_dispensers/fueltank/large
 	name = "high capacity fuel tank"

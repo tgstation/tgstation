@@ -29,40 +29,8 @@
   text-align: center;
 }
 
-.command {
-  background-color: #948f02;
-}
-
-.security {
-  background-color: #a30000;
-}
-
-.engineering {
-  background-color: #fb5613;
-}
-
-.medical {
-  background-color: #337296;
-}
-
-.science {
-  background-color: #993399;
-}
-
-.supply {
-  background-color: #a8732b;
-}
-
-.silicon {
-  background-color: #ff00ff;
-}
-
 .abstract {
   background-color: #708090;
-}
-
-.service {
-  background-color: #6eaa2c;
 }
 
 .ghostandotherroles {
@@ -73,6 +41,6 @@
   background-color: #6d3f40;
 }
 
-.undefineddepartment {
+.no_department {
   background-color: #111cf7;
 }

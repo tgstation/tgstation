@@ -251,8 +251,16 @@
   FalloutFalcon:
   - code_imp: Ensures some code actually updates overlays instead of return a list
       of them to nobody
+  Ghommie:
+  - bugfix: Custom material floors and walls of a shuttle are no longer lost on departure
+      or arrival.
   JohnFulpWillard:
   - spellcheck: Oldstation rnd notes now update properly when you mix them together.
+  Melbert:
+  - bugfix: Fix airlock pump only working when nonfunctional
+  - qol: Adds an operation to un-widen the chest cavity
+  - qol: '"Fix bones" operation will wipe all surgical states for limbs without skin,
+      acting as an analog to "Mend incision" for species like Plasmamen'
   PapaMichael:
   - bugfix: Blood brothers once again have a 10% chance of being able to recruit a
       team of 3.
@@ -264,6 +272,20 @@
   - bugfix: Fixed particle weather bleeding through z-levels when different weathers
       are present
   - qol: Necropolis stone tiles can no longer be hit
+  TheRyeGuyWhoWillNowDie:
+  - rscadd: Kilostation
+  - rscdel: Wawastation
+  lelandkemble:
+  - code_imp: 20 files have been converted from attackby() to item_interaction()
+  - bugfix: You can no longer repeatedly put anomaly cores into the anomaly core guns
+  - bugfix: A runtime that occured when opening a package with a boxcutter no longer
+      occurs.
+  - code_imp: 30 files have been moved from attackby() to item_interaction()
+  - balance: You can't see out of a perceptomatrix without a core
   sergeirocks100:
   - spellcheck: When untying a neckerchief, the item in question will no longer be
       misspelled as "neckercheif".
+2026-07-08:
+  SmArtKar:
+  - bugfix: Fixed cube monkey cap runtimes
+  - bugfix: Fixed revolvers runtiming when non-player mobs try to spin them

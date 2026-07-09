@@ -17997,7 +17997,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/item/radio/intercom/directional/north,
+/obj/item/radio/intercom/interrogation/outside/directional/north,
 /turf/open/floor/iron/grimy,
 /area/station/security/interrogation)
 "eMm" = (
@@ -51562,7 +51562,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "nJy" = (
-/obj/item/radio/intercom/directional/east,
+/obj/item/radio/intercom/interrogation/inside/directional/east,
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 8
 	},
