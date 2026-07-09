@@ -150,23 +150,6 @@
 
 //Pod objects
 
-//Window
-/obj/structure/window/reinforced/shuttle/survival_pod
-	name = "pod window"
-	icon = 'icons/obj/smooth_structures/pod_window.dmi'
-	icon_state = "pod_window-0"
-	base_icon_state = "pod_window"
-	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
-	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
-
-/obj/structure/window/reinforced/survival_pod
-	name = "pod window"
-	icon = 'icons/obj/mining_zones/survival_pod.dmi'
-	icon_state = "pwindow"
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawner, 0)
-
 //Door
 /obj/machinery/door/airlock/survival_pod
 	name = "Airlock"

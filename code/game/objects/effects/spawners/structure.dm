@@ -171,13 +171,54 @@ again.
 	icon_state = "swindow_spawner"
 	spawn_list = list(/obj/structure/grille/indestructible, /obj/structure/window/reinforced/shuttle/indestructible)
 
-//plastitanium window
+/obj/effect/spawner/structure/window/hollow/titaniumglass/end
+	icon_state = "titaniumwindow_spawner_end"
 
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium
-	name = "plastitanium window spawner"
-	icon_state = "plastitaniumwindow_spawner"
-	spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma/plastitanium)
+/obj/effect/spawner/structure/window/hollow/titaniumglass/end/Initialize(mapload)
+	switch(dir)
+		if(NORTH)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/east, /obj/structure/window/reinforced/survival_pod/spawner/directional/west)
+		if(EAST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/east)
+		if(SOUTH)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/east, /obj/structure/window/reinforced/survival_pod/spawner/directional/west)
+		if(WEST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/directional/north, /obj/structure/window/reinforced/survival_pod/spawner/directional/west)
+	return ..()
 
+/obj/effect/spawner/structure/window/hollow/titaniumglass/middle
+	icon_state = "titaniumwindow_spawner_middle"
+
+/obj/effect/spawner/structure/window/hollow/titaniumglass/middle/Initialize(mapload)
+	switch(dir)
+		if(NORTH,SOUTH)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/directional/north)
+		if(EAST,WEST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/directional/east, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+	return ..()
+
+/obj/effect/spawner/structure/window/hollow/titaniumglass/directional
+	icon_state = "titaniumwindow_spawner_directional"
+
+/obj/effect/spawner/structure/window/hollow/titaniumglass/directional/Initialize(mapload)
+	switch(dir)
+		if(NORTH)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/north)
+		if(NORTHEAST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/east)
+		if(EAST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/east)
+		if(SOUTHEAST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/east)
+		if(SOUTH)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium)
+		if(SOUTHWEST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+		if(WEST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+		if(NORTHWEST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+	return ..()
 
 //ice window
 
@@ -186,6 +227,12 @@ again.
 	icon_state = "icewindow_spawner"
 	spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/fulltile/ice)
 
+//plastitanium window
+
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium
+	name = "plastitanium window spawner"
+	icon_state = "plastitaniumwindow_spawner"
+	spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma/plastitanium)
 
 //survival pod window
 

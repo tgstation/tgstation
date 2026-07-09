@@ -694,6 +694,31 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/spawner, 0)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spawner, 0)
 
+/obj/structure/window/reinforced/survival_pod
+	name = "pod window"
+	icon = 'icons/obj/mining_zones/survival_pod.dmi'
+	icon_state = "pwindow"
+	glass_type = /obj/item/stack/sheet/plastitaniumglass
+	custom_materials = list(/datum/material/alloy/plastitaniumglass = SHEET_MATERIAL_AMOUNT)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawner, 0)
+
+/obj/structure/window/reinforced/survival_pod/unanchored
+	anchored = FALSE
+	state = WINDOW_OUT_OF_FRAME
+
+/obj/structure/window/reinforced/titanium
+	name = "shuttle window"
+	icon_state = "titanium_window"
+	glass_type = /obj/item/stack/sheet/titaniumglass
+	custom_materials = list(/datum/material/alloy/titaniumglass = SHEET_MATERIAL_AMOUNT)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/titanium/spawner, 0)
+
+/obj/structure/window/reinforced/titanium/unanchored
+	anchored = FALSE
+	state = WINDOW_OUT_OF_FRAME
+
 /* Full Tile Windows (more atom_integrity) */
 
 /obj/structure/window/fulltile
@@ -803,7 +828,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	max_integrity = 150
 	glass_amount = 2
 
-//there is a sub shuttle window in survival_pod.dm for mining pods
 /obj/structure/window/reinforced/shuttle//this is called reinforced because it is reinforced w/titanium
 	name = "shuttle window"
 	desc = "A reinforced, air-locked pod window."
@@ -856,6 +880,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER, TOOL_ACT_PRIMARY)
 	AddElement(/datum/element/tool_blocker, TOOL_WRENCH, TOOL_ACT_PRIMARY)
 	AddElement(/datum/element/tool_blocker, TOOL_CROWBAR, TOOL_ACT_PRIMARY)
+
+/obj/structure/window/reinforced/shuttle/survival_pod
+	name = "pod window"
+	icon = 'icons/obj/smooth_structures/pod_window.dmi'
+	icon_state = "pod_window-0"
+	base_icon_state = "pod_window"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+	glass_type = /obj/item/stack/sheet/plastitaniumglass
+	rad_insulation = RAD_EXTREME_INSULATION
+	glass_material_datum = /datum/material/alloy/plastitaniumglass
+
+/obj/structure/window/reinforced/plasma/survival_pod/unanchored
+	anchored = FALSE
+	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/reinforced/plasma/plastitanium
 	name = "plastitanium window"

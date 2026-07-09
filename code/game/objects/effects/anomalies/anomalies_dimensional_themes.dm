@@ -428,7 +428,7 @@
 		/obj/structure/chair = list(/obj/structure/chair/wood = 3, /obj/structure/chair/wood/wings = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1),
 		/obj/structure/table = list(/obj/structure/table/wood = 5, /obj/structure/table/wood/fancy = 1),
-		/obj/structure/platform = list(/obj/structure/platform/wood = 1),
+		/obj/structure/platform = list(/obj/structure/hedge = 1),
 		/obj/structure/railing = list(/obj/structure/railing/wooden_fence = 1),
 		/obj/structure/railing/corner/end = list(/obj/structure/railing/corner/end/wooden_fence = 1),
 	)
@@ -714,7 +714,7 @@
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "shortsword"
 	material = /datum/material/rock
-	replace_walls = list(/turf/closed/wall/mineral/plastitanium/darkpod = 10)
+	replace_walls = list(/turf/closed/wall/mineral/rockbrick = 10)
 	replace_floors = list(/turf/open/floor/hauntium = 1)
 	replace_carpets = list(/turf/open/floor/carpet/human = 10)
 	replace_objs = list(
@@ -735,7 +735,7 @@
 	material = /datum/material/alloy/alien
 	replace_walls = list(/turf/closed/wall/mineral/plastitanium/darkpod = 10)
 	replace_floors = list(/turf/open/floor/hauntium = 1)
-	replace_carpets = list(/turf/open/floor/carpet/human = 10)
+	replace_carpets = list(/turf/open/floor/carpet/red = 1)
 	replace_objs = list(
 		/obj/structure/chair = list(/obj/structure/chair/greyscale = 9, /obj/structure/bed/abductor = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 2),
@@ -749,8 +749,8 @@
 ///Dimension where the station was made by the syndicate
 /datum/dimension_theme/syndicate
 	name = "Syndicate"
-	icon = 'icons/obj/antags/abductor.dmi'
-	icon_state = "sheet-abductor"
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	icon_state = "syndicate-helmet-sealed"
 	material = /datum/material/alloy/alien
 	replace_walls = list(/turf/closed/wall/mineral/plastitanium = 10)
 	replace_floors = list(/turf/open/floor/hauntium = 1)
@@ -771,9 +771,9 @@
 	icon = 'icons/obj/clothing/glasses.dmi'
 	icon_state = "monocle"
 	material = /datum/material/plastic
-	replace_walls = list(/turf/closed/wall/mineral/plastitanium/darkpod = 10)
+	replace_walls = list(/turf/closed/wall/mineral/plastitanium/darkpod = 1)
 	replace_floors = list(/turf/open/floor/hauntium = 1)
-	replace_carpets = list(/turf/open/floor/carpet/human = 10)
+	replace_carpets = list(/turf/open/floor/carpet/carp = 1)
 	replace_objs = list(
 		/obj/structure/chair = list(/obj/structure/chair/greyscale = 9, /obj/structure/bed/abductor = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 2),

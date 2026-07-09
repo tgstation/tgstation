@@ -109,3 +109,25 @@
 	r_hand = /obj/item/chainsaw
 	corpse = /obj/effect/mob_spawn/corpse/human/evil_clown
 	loot = list(/obj/item/chainsaw)
+
+//Evil Clown
+/mob/living/basic/trooper/tormented
+	name = "Clown"
+	desc = "Normally clowns have no malice in their hearths... But this one does."
+	speed = 1.5
+	maxHealth = 120
+	health = 120
+	melee_damage_lower = 13
+	melee_damage_upper = 13
+	unsuitable_cold_damage = 1
+	unsuitable_heat_damage = 1
+	faction = list(FACTION_CLOWN)
+	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
+	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
+	attack_vis_effect = ATTACK_EFFECT_SLASH
+	attack_sound = 'sound/items/weapons/chainsawhit.ogg'
+
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/evil_clown
+	r_hand = /obj/item/chainsaw
+	corpse = /obj/effect/mob_spawn/corpse/human/evil_clown
+	loot = list(/obj/item/chainsaw)

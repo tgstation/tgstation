@@ -480,7 +480,7 @@
 	amount = 30
 
 /obj/item/stack/tile/carpet/bear
-	name = "Bear fur carpet"
+	name = "bear fur carpet"
 	desc = "Bear fur stretched out into a carpet for you to walk on."
 	icon_state = "tile-carpet-bear"
 	turf_type = /turf/open/floor/carpet/bear
@@ -488,7 +488,7 @@
 	tile_reskin_types = null
 
 /obj/item/stack/tile/carpet/polar_bear
-	name = "Polar fur carpet"
+	name = "polar fur carpet"
 	desc = "Polar bear fur stretched out into a carpet for you to walk on."
 	icon_state = "tile-carpet-bear-polar"
 	inhand_icon_state = "tile-silver"
@@ -497,7 +497,7 @@
 	tile_reskin_types = null
 
 /obj/item/stack/tile/carpet/moth
-	name = "Moth fur carpet"
+	name = "moth fur carpet"
 	desc = "Moth fur stretched out into a carpet for you to walk on."
 	icon_state = "tile-carpet-moth"
 	inhand_icon_state = "tile-carpet-moth"
@@ -506,7 +506,7 @@
 	tile_reskin_types = null
 
 /obj/item/stack/tile/carpet/goliath
-	name = "Goliath hide carpet"
+	name = "goliath hide carpet"
 	desc = "Goliath hide plates woven together with watcher sinew to make something aproximating a carpet."
 	icon_state = "tile-carpet-goliath"
 	inhand_icon_state = "tile-carpet-goliath"
@@ -515,7 +515,7 @@
 	tile_reskin_types = null
 
 /obj/item/stack/tile/carpet/carp
-	name = "Carp scales carpet"
+	name = "carp scales carpet"
 	desc = "Carpet made with carp scales. A carp carpet. Carp carp carp."
 	icon_state = "tile-carpet-carp"
 	inhand_icon_state = "tile-carpet-carp"
@@ -524,7 +524,7 @@
 	tile_reskin_types = null
 
 /obj/item/stack/tile/carpet/lizard
-	name = "Lizard scales carpet"
+	name = "lizard scales carpet"
 	desc = "Carpet made with lizard scales. Lizards were most likely harmed making this."
 	icon_state = "tile-carpet-lizard"
 	inhand_icon_state = "tile-carpet-uranium"
@@ -533,7 +533,7 @@
 	tile_reskin_types = null
 
 /obj/item/stack/tile/carpet/human
-	name = "Human skin carpet"
+	name = "human skin carpet"
 	desc = "Carpet made from flayed human skin. Fresh and moist."
 	icon_state = "tile_carpet_human"
 	inhand_icon_state = "tile-carpet-skin"

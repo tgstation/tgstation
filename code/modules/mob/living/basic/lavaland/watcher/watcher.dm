@@ -142,6 +142,7 @@
 	maxHealth = 177
 	health = 177
 	faction = list(FACTION_HOSTILE, FACTION_HOLY)
-	projectile_type = /obj/projectile/temp/watcher/glass_wing
-	gaze_attack = /datum/action/cooldown/mob_cooldown/watcher_gaze/glass
+	projectile_type = /obj/projectile/temp/watcher/angel
+	gaze_attack = /datum/action/cooldown/mob_cooldown/watcher_gaze/angel
 	butcher_results = list(/obj/item/stack/sheet/glass = 5, /obj/item/stack/sheet/bone = 1)
+	ranged_cooldown = 6 SECONDS
