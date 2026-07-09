@@ -260,6 +260,9 @@
 	if(falling_down.toppled) // did you trip directly into a tripwire? We don't want this to chain, however amusing the image might be.
 		return
 
+	if(falling_down.phasing)
+		return
+
 	if(falling_down.dir == dir || falling_down.dir == REVERSE_DIR(dir))
 		return
 
