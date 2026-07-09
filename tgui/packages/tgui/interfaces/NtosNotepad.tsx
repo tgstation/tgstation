@@ -547,7 +547,7 @@ export const NtosNotepad = (props) => {
                   selected={saveExtension}
                   displayText={saveExtension}
                   placeholder="Pick an extension..."
-                  options={[Extensions.TXT, Extensions.NTCODE]}
+                  options={[Extensions.TXT]}
                   onSelected={(extension) => {
                     setSaveExtension(extension);
                   }}
