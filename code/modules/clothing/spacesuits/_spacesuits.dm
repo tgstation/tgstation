@@ -371,7 +371,7 @@
 	if(cell)
 		cell.emp_act(severity)
 
-/obj/item/clothing/head/helmet/space/suicide_act(mob/living/carbon/user)
+/obj/item/clothing/head/helmet/space/suicide_act(mob/living/user)
 	var/datum/gas_mixture/environment = user.loc.return_air()
 	if(HAS_TRAIT(user, TRAIT_RESISTCOLD) || !environment || environment.return_temperature() >= user.get_body_temp_cold_damage_limit())
 		user.visible_message(span_suicide("[user] is beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

@@ -1,0 +1,4 @@
+author: "Ivniinvi"
+delete-after: True
+changes:
+  - bugfix: "Fixed mistake in death commando names."

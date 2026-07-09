@@ -90331,10 +90331,7 @@
 	pixel_x = -5;
 	pixel_y = 4
 	},
-/obj/item/radio/intercom/directional/west{
-	name = "Interrogation Intercom";
-	frequency = 1423
-	},
+/obj/item/radio/intercom/interrogation/outside/directional/west,
 /obj/structure/table/reinforced,
 /obj/item/flashlight/lamp{
 	pixel_x = 11;
@@ -134846,12 +134843,7 @@
 "tQX" = (
 /obj/structure/table/reinforced,
 /obj/item/flashlight/lamp,
-/obj/item/radio/intercom/directional/north{
-	broadcasting = 1;
-	listening = 0;
-	name = "Interrogation Intercom";
-	frequency = 1423
-	},
+/obj/item/radio/intercom/interrogation/inside/directional/north,
 /obj/machinery/light/cold/dim/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

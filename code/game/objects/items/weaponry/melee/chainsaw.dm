@@ -85,10 +85,14 @@
 /obj/item/chainsaw/get_demolition_modifier(obj/target)
 	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? demolition_mod : 0.8
 
-/obj/item/chainsaw/suicide_act(mob/living/carbon/user)
+/obj/item/chainsaw/suicide_act(mob/living/user)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(src, 'sound/items/weapons/genhit1.ogg', 100, TRUE)
+		return BRUTELOSS
+
+	if (!iscarbon(user))
+		user.visible_message(span_suicide("[user] begins to shred [user.p_themselves()] with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		return BRUTELOSS
 
 	user.visible_message(span_suicide("[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

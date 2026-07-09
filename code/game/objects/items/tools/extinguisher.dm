@@ -213,7 +213,7 @@
 /obj/item/extinguisher/advanced/empty
 	starting_water = FALSE
 
-/obj/item/extinguisher/suicide_act(mob/living/carbon/user)
+/obj/item/extinguisher/suicide_act(mob/living/user)
 	if (!safety && (reagents.total_volume >= 1))
 		user.visible_message(span_suicide("[user] puts the nozzle to [user.p_their()] mouth. It looks like [user.p_theyre()] trying to extinguish the spark of life!"))
 		interact_with_atom(user, user)

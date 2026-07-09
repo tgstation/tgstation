@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes an issue that can under certain conditions cause reskinnable items with the toggle component (such as jackets) to have invisible icons upon using the toggle"
