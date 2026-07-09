@@ -7582,9 +7582,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/button/door/directional/south{
-	pixel_x = 9
-	},
 /obj/item/radio/intercom/directional/south{
 	pixel_y = -34
 	},
@@ -28838,10 +28835,12 @@
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "jbV" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Armoury External"
-	},
 /obj/structure/lattice/catwalk,
+/obj/machinery/camera/motion/directional/north{
+	active_power_usage = 0;
+	c_tag = "Armory - External";
+	use_power = 0
+	},
 /turf/open/space/basic,
 /area/space/nearstation)
 "jbZ" = (
@@ -36968,13 +36967,12 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/machinery/camera/directional/east{
-	c_tag = "Satellite Foyer";
-	name = "satellite camera";
-	network = list("minisat")
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/camera/motion/directional/east{
+	network = list("minisat");
+	c_tag = "Satellite Foyer"
 	},
 /turf/open/floor/engine,
 /area/station/ai/satellite/foyer)
@@ -39514,7 +39512,6 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable/layer3,
-/obj/machinery/camera/motion/directional/south,
 /turf/open/floor/engine,
 /area/station/ai/satellite/interior)
 "myp" = (
@@ -69049,6 +69046,11 @@
 /obj/item/kirbyplants/random,
 /obj/machinery/status_display/ai/directional/east,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera/motion/directional/south{
+	c_tag = "ai_upload Consoles";
+	network = list("aiupload");
+	name = "upload camera"
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai/upload/chamber)
 "vPB" = (
@@ -72621,13 +72623,12 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "wSY" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Satellite Antechamber";
-	name = "satellite camera";
-	network = list("minisat")
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable/layer3,
+/obj/machinery/camera/motion/directional/south{
+	c_tag = "Satellite Antechamber";
+	network = list("minisat")
+	},
 /turf/open/floor/engine,
 /area/station/ai/satellite/interior)
 "wTe" = (
@@ -75086,9 +75087,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/camera/directional/south{
+/obj/machinery/camera/motion/directional/south{
 	c_tag = "AI Chamber Door";
-	name = "core camera";
 	network = list("aicore")
 	},
 /turf/open/floor/engine,
