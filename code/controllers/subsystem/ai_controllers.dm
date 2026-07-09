@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(ai_controllers)
 	var/list/currentrun = list()
 	///type of status we are interested in running
 	var/planning_status = AI_STATUS_ON
-	/// CPU cost (in ms) accumulated by the in-progress pass, summed across fires.
+	/// CPU cost accumulated by the in-progress pass, summed across fires.
 	var/summing_cost
 	/// world.time at which the in-progress pass started.
 	var/pass_started
@@ -28,6 +28,10 @@ SUBSYSTEM_DEF(ai_controllers)
 	var/summing_tick_gap
 	/// Display strings for the most expensive controllers of the last completed pass, most expensive first.
 	var/list/most_expensive = list()
+	/// Worst SelectBehaviors cost seen this round.
+	var/worst_controller_cost = 0
+	/// Display string for the controller responsible for worst_controller_cost.
+	var/worst_controller_name
 	/// Running top-cost candidates of the in-progress pass. Assoc list of controller -> SelectBehaviors cost in ms, has a capped amount of entries
 	var/list/summing_expensive = list()
 	/// Cheapest cost in summing_expensive once it's full; a controller must beat this to enter the list.
@@ -64,6 +68,8 @@ SUBSYSTEM_DEF(ai_controllers)
 	msg += "\n  Pass:[pass_size - length(currentrun)]/[pass_size]|AvgPass:[round(average_pass_time * 0.1, 0.1)]s|WorstGap:[round(longest_tick_gap * 0.1, 0.1)]s"
 	if(length(most_expensive))
 		msg += "\n  Top: [most_expensive.Join(" | ")]"
+	if(worst_controller_name)
+		msg += "\n  Slowest bozo of the round: [worst_controller_name]"
 	return ..()
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
@@ -96,6 +102,9 @@ SUBSYSTEM_DEF(ai_controllers)
 
 		///Lets check if this is an expensive controller
 		var/tick_cost = TICK_DELTA_TO_MS(TICK_USAGE_REAL - controller_timer)
+		if(tick_cost > worst_controller_cost)
+			worst_controller_cost = tick_cost
+			worst_controller_name = "[ai_controller.pawn || ai_controller] [round(tick_cost, 0.01)]ms"
 		if(tick_cost > summing_expensive_cutoff)
 			summing_expensive[ai_controller] = tick_cost
 			if(length(summing_expensive) > AI_STAT_EXPENSIVE_TRACKED)

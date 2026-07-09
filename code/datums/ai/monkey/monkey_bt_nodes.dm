@@ -248,7 +248,6 @@
 	return start_async()
 
 /datum/bt_node/ai_behavior/monkey_attack_mob/perform_async(datum/ai_controller/controller)
-	var/mob/living/living_pawn = controller.pawn
 	var/mob/living/target = controller.blackboard[target_key]
 	var/seconds_per_tick = attack_seconds_per_tick
 	var/obj/item/holding_weapon = attack_holding_weapon
