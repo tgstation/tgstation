@@ -21,8 +21,10 @@
 ///from base of [/datum/reagent/proc/on_transfer_creation(reagent, target_holder, new_reagent)]: (datum/reagents/target_holder, datum/reagent/new_reagent)
 #define COMSIG_REAGENT_ON_TRANSFER "reagent_on_transfer"
 
-///from base of [/datum/component/multiple_lives/proc/respawn]: (mob/respawned_mob, gibbed, lives_left)
-#define COMSIG_ON_MULTIPLE_LIVES_RESPAWN "on_multiple_lives_respawn"
+///from base of [/datum/reagents/proc/add_reagent] - Sent before the reagent is added: (reagenttype, amount, reagtemp, data, no_react)
+#define COMSIG_REAGENTS_PRE_ADD_REAGENT "reagents_pre_add_reagent"
+	/// Prevents the reagent from being added.
+	#define COMPONENT_CANCEL_REAGENT_ADD (1<<0)
 
 ///from base of [/datum/reagents/proc/update_total()]
 #define COMSIG_REAGENTS_HOLDER_UPDATED "reagents_update_total"

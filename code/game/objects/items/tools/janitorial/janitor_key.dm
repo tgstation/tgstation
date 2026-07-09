@@ -47,7 +47,7 @@
  */
 /obj/item/access_key/proc/attempt_open_door(mob/living/user, obj/machinery/door/airlock)
 	if(DOING_INTERACTION_WITH_TARGET(user, airlock))
-		return
+		return FALSE
 	user.balloon_alert_to_viewers("fumbles with keys...", "finding key...")
 	user.playsound_local(src, 'sound/items/rattling_keys.ogg', 25, TRUE)
 	if(!do_after(user, 3 SECONDS, airlock))

@@ -124,5 +124,168 @@
   timothymtorres:
   - rscadd: Mobs that are wet become frozen in freezing temperatures
 2026-07-03:
+  CabinetOnFire:
+  - bugfix: Hot springs now use correct args for creating smoke
+  - bugfix: C4 no longer renders below floors when placed on floors
+  Jacquerel:
+  - balance: Adjusted the values of ores from the work camp to make a 1000 point sentence
+      closer to a 10 minute brig timer
+  - map: Moved some lightbulbs around in the work camp so you can see the bars getting
+      printed
+  KingkumaArt:
+  - balance: Increased the damage of base crossbow ammo to and metal h2 to 40. Traitor
+      ammo now takes plasteel to craft, but now has better anti-armor properties.
+  - balance: Traitor rebar crossbow no longer requires being stationary to rack/reload.
+  - bugfix: Fixed rebar crossbows having lower ammo capacity than intended due to
+      a gun code bolt refactor.
+  - bugfix: Fixed Traitor Crossbow reload being instant.
+  - qol: Engi Modsuits can now hold crossbows in their suit storage slot. I thought
+      they could already.
+  - qol: Makeshift rebar quivers can now reload via a GUI button like the syndicate
+      one, but take longer and must be stationary to do so.
   Melbert:
   - rscdel: Fixed jaws of recovery being able to be stored in the paramedic EMT belt
+  TealSeer:
+  - bugfix: fixed being unable to view/modify trim accesses in Access Management app
+  lelandkemble:
+  - map: There's no longer a missing pipe in the disposals loop on icebox
+  - bugfix: hand teleporters can now close portals
+  timothymtorres:
+  - balance: Upload computers in AI Upload Areas no longer require command IDs to
+      use.
+  vinylspiders:
+  - code_imp: tgui-core bumped to v6.1, please report any tgui-related issues
+2026-07-04:
+  Fghj240:
+  - bugfix: nutriment pump implant plus plus plus now has a sideways sprite
+  Ghommie:
+  - bugfix: Fixed the lobby interface NOT being able to show more than ONE button
+      related to station traits like special jobs and the skub trait.
+  LT3:
+  - map: Finished moving the plant outside Metastation medbay's side airlock, an astonishing
+      speed of 1 tile per 8 months.
+  - bugfix: Fixed duplicate priority announcements about a possible resonance cascade
+  - code_imp: Improved supermatter delamination logging
+  LemonInTheDark:
+  - bugfix: Fixed some sillyness with the stale map system
+  - config: MAP_VOTE_MIN_POP_TO_REMEMBER_MAPS -> MAP_VOTE_MINIMUM_POP_TO_REMEMBER_MAPS
+  QuiteLiterallyAnything:
+  - bugfix: Removed a singular stray disposals pipe on Catwalk Station.
+  SmArtKar:
+  - bugfix: Fixed random black siderite/shale tiles appearing after ash storms
+  - bugfix: Fixed rain overlay rendering (only) with particle weather enabled
+  - bugfix: Anchored nutraslop trays
+  TealSeer:
+  - bugfix: fixed mousetrap beaker assemblies not triggering when container is opened
+  XeonMations:
+  - bugfix: Fixed the radio volume slider being missing in game preferences
+  hry-gh:
+  - code_imp: the backend to all verbs in the game has been played with, please report
+      any issues to github
+  lelandkemble:
+  - bugfix: Academy businessman doesn't buy a scanner wand, as it is not a wand
+  - spellcheck: Academy wizard dialogue has been cleared of all glaring spelling and
+      capitalization errors
+  timothymtorres:
+  - bugfix: Fix runtime for spacetime distortion not playing sound
+  - sound: Spacetime distortion portals now play the same sound as the teleporter
+      portals.
+2026-07-05:
+  Ghommie:
+  - bugfix: Fixed the subtle lack of symmetry on the monkey right arm and leg.
+  PapaMichael:
+  - balance: Paradox Clones ghost poll for a specific target; ghosts are now signing
+      up to be a specific person's clone.
+  - admin: If admins spawn a Paradox Clone, they can choose the person to be cloned.
+  SmArtKar:
+  - rscadd: Tendrils now remove their corrupted tiles after death
+  - bugfix: Tendrils got their death sound back
+  TealSeer:
+  - qol: added screentips for beaker assemblies
+  lelandkemble:
+  - bugfix: Wizards can now successfully refund summoning items
+  - bugfix: Holopayment stands can now take payment
+  - code_imp: 21 things have been moved from attackby() to item_interaction()
+  timothymtorres:
+  - balance: Change blood deficiency to start with 85% blood instead of 80%
+  - bugfix: Fix blood deficiency from causing gasping, stamina loss, and blurriness
+  vinylspiders:
+  - bugfix: shadows will no longer get the candidate's prefs applied to their mob
+2026-07-06:
+  Ghommie:
+  - refactor: Refactored a few things with techweb designs (the ones for autolathes,
+      protolathes, circuit printers, mechfabs etc.) to make sure that the materials
+      of items that can be made from these designs more closely match the materials
+      used to make them.
+  - bugfix: Lizard fries no longer need a plate to be made, like all other treats
+      that used to require plates in a distant past.
+  - balance: Tweaked the materials cost of RCD, RDD and RCD cartridges.
+  - image: Oven trays now have a more metallic hue.
+  - balance: Plates printed printed from lathes won't shatter like ceramic ones, in
+      virtue of them being made out of iron instead.
+  RikuTheKiller:
+  - bugfix: Low temperature alerts now appear for basic mobs when the damage being
+      dealt is below 1 but above 0 (e.g. 0.5 DPS).
+  - balance: Blood worms are now breathless again.
+  - balance: Blood worms take damage from low pressures now (increases with growth
+      stage).
+  SmArtKar:
+  - rscadd: Added a magmawing variant of watcher wreaths
+  - rscadd: Magmawing and icewing watchers now drop unique sinew that can be crafted
+      into wreaths or trophies
+  - rscadd: Reworked colossus blaster tubes, and magmawing/icewing wing crusher trophies.
+  - balance: Crusher trophies are no longer random drops, and instead are crafted
+      from mob drops.
+  - balance: Wildhunter knife now refunds a large portion of components used to craft
+      a trophy, and its butchering bonus has been buffed from 10% to 25%
+  - bugfix: Fixed goliath trophy stating it deals 2 times less HP than it does in
+      reality in its description.
+  vinylspiders:
+  - bugfix: in prefs menu, changing your character name will now update your slot
+      button correctly
+  - bugfix: fixes an issue where switching slots would carry over the quirks of a
+      previous slot until you add or remove a quirk
+2026-07-07:
+  Aliceee2ch:
+  - image: Bacon was resprited
+  FalloutFalcon:
+  - code_imp: Ensures some code actually updates overlays instead of return a list
+      of them to nobody
+  Ghommie:
+  - bugfix: Custom material floors and walls of a shuttle are no longer lost on departure
+      or arrival.
+  JohnFulpWillard:
+  - spellcheck: Oldstation rnd notes now update properly when you mix them together.
+  Melbert:
+  - bugfix: Fix airlock pump only working when nonfunctional
+  - qol: Adds an operation to un-widen the chest cavity
+  - qol: '"Fix bones" operation will wipe all surgical states for limbs without skin,
+      acting as an analog to "Mend incision" for species like Plasmamen'
+  PapaMichael:
+  - bugfix: Blood brothers once again have a 10% chance of being able to recruit a
+      team of 3.
+  Robwo:
+  - rscadd: added heads of staff intercoms
+  - image: added color to departmental intercoms
+  - image: added a unique state for syndicate intercoms
+  SmArtKar:
+  - bugfix: Fixed particle weather bleeding through z-levels when different weathers
+      are present
+  - qol: Necropolis stone tiles can no longer be hit
+  TheRyeGuyWhoWillNowDie:
+  - rscadd: Kilostation
+  - rscdel: Wawastation
+  lelandkemble:
+  - code_imp: 20 files have been converted from attackby() to item_interaction()
+  - bugfix: You can no longer repeatedly put anomaly cores into the anomaly core guns
+  - bugfix: A runtime that occured when opening a package with a boxcutter no longer
+      occurs.
+  - code_imp: 30 files have been moved from attackby() to item_interaction()
+  - balance: You can't see out of a perceptomatrix without a core
+  sergeirocks100:
+  - spellcheck: When untying a neckerchief, the item in question will no longer be
+      misspelled as "neckercheif".
+2026-07-08:
+  SmArtKar:
+  - bugfix: Fixed cube monkey cap runtimes
+  - bugfix: Fixed revolvers runtiming when non-player mobs try to spin them

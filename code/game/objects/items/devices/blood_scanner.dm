@@ -15,7 +15,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2, /datum/material/glass=SMALL_MATERIAL_AMOUNT*2)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/blood_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!usable_check(person_scanning = user, scanee = interacting_with))

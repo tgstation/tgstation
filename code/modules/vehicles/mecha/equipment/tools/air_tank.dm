@@ -5,10 +5,11 @@
 	icon_state = "mecha_air_tank"
 	equipment_slot = MECHA_UTILITY
 	can_be_toggled = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	///Whether the pressurization should start automatically when the cabin is sealed airtight
 	var/auto_pressurize_on_seal = TRUE
 	///The internal air tank obj of the mech
-	var/obj/machinery/portable_atmospherics/canister/internal_tank
+	var/obj/machinery/portable_atmospherics/canister/mecha/internal_tank
 	///Volume of this air tank
 	var/volume = TANK_STANDARD_VOLUME * 10
 	///Maximum pressure of this air tank
@@ -24,6 +25,9 @@
 	var/tank_pump_direction = PUMP_IN
 	///Target pressure of the pump
 	var/tank_pump_pressure = ONE_ATMOSPHERE
+
+/obj/machinery/portable_atmospherics/canister/mecha
+	custom_materials = null
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/Initialize(mapload)
 	. = ..()

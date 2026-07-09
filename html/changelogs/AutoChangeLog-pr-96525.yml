@@ -1,9 +1,0 @@
-author: "KingkumaArt"
-delete-after: True
-changes:
-  - balance: "Increased the damage of base crossbow ammo to and metal h2 to 40. Traitor ammo now takes plasteel to craft, but now has better anti-armor properties."
-  - balance: "Traitor rebar crossbow no longer requires being stationary to rack/reload."
-  - bugfix: "Fixed rebar crossbows having lower ammo capacity than intended due to a gun code bolt refactor."
-  - bugfix: "Fixed Traitor Crossbow reload being instant."
-  - qol: "Engi Modsuits can now hold crossbows in their suit storage slot. I thought they could already."
-  - qol: "Makeshift rebar quivers can now reload via a GUI button like the syndicate one, but take longer and must be stationary to do so."

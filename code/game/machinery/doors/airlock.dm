@@ -940,18 +940,17 @@
 
 /obj/machinery/door/airlock/wirecutter_act(mob/living/user, obj/item/tool)
 	if(panel_open && security_level == AIRLOCK_SECURITY_PLASTEEL)
-		. = ITEM_INTERACT_SUCCESS  // everything after this shouldn't result in attackby
 		if(hasPower() && shock(user, 60)) // Protective grille of wiring is electrified
-			return .
+			return ITEM_INTERACT_BLOCKING
 		to_chat(user, span_notice("You start cutting through the outer grille."))
 		if(!tool.use_tool(src, user, 10, volume=100))
-			return .
+			return ITEM_INTERACT_BLOCKING
 		if(!panel_open)  // double check it wasn't closed while we were trying to snip
-			return .
+			return ITEM_INTERACT_BLOCKING
 		user.visible_message(span_notice("[user] cut through [src]'s outer grille."),
 							span_notice("You cut through [src]'s outer grille."))
 		security_level = AIRLOCK_SECURITY_PLASTEEL_O
-		return .
+		return ITEM_INTERACT_SUCCESS
 	if(note)
 		if(IsReachableBy(user))
 			user.visible_message(span_notice("[user] cuts down [note] from [src]."), span_notice("You remove [note] from [src]."))
@@ -1073,85 +1072,98 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/airlock/proc/try_reinforce(mob/user, obj/item/stack/sheet/material, amt_required, new_security_level)
+	if(!HAS_SILICON_ACCESS(user) && isElectrified() && shock(user, 75))
+		return ITEM_INTERACT_BLOCKING
 	if(material.get_amount() < amt_required)
 		to_chat(user, span_warning("You need at least [amt_required] sheets of [material] to reinforce [src]."))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You start reinforcing [src]."))
 	if(!do_after(user, 2 SECONDS, src))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	if(!panel_open || !material.use(amt_required))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	user.visible_message(span_notice("[user] reinforces [src] with [material]."),
 						span_notice("You reinforce [src] with [material]."))
 	security_level = new_security_level
 	update_appearance()
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/door/airlock/attackby(obj/item/C, mob/user, list/modifiers, list/attack_modifiers)
-	if(!HAS_SILICON_ACCESS(user))
-		if(isElectrified() && (C.obj_flags & CONDUCTS_ELECTRICITY) && shock(user, 75))
-			return
+/obj/machinery/door/airlock/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(!HAS_SILICON_ACCESS(user) && isElectrified() && (attacking_item.obj_flags & CONDUCTS_ELECTRICITY) && shock(user, 75))
+		return ATTACK_FAILED
+	return ..()
+
+/obj/machinery/door/airlock/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
 
-	if(is_wire_tool(C) && panel_open)
+	if(is_wire_tool(tool) && panel_open)
 		attempt_wire_interaction(user)
-		return
-	else if(panel_open && security_level == AIRLOCK_SECURITY_NONE && istype(C, /obj/item/stack/sheet))
-		if(istype(C, /obj/item/stack/sheet/iron))
-			return try_reinforce(user, C, 2, AIRLOCK_SECURITY_IRON)
+		return ITEM_INTERACT_SUCCESS
 
-		else if(istype(C, /obj/item/stack/sheet/plasteel))
-			if(!try_reinforce(user, C, 2, AIRLOCK_SECURITY_PLASTEEL))
-				return FALSE
+	if(panel_open && security_level == AIRLOCK_SECURITY_NONE && istype(tool, /obj/item/stack/sheet))
+		if(istype(tool, /obj/item/stack/sheet/iron))
+			return try_reinforce(user, tool, 2, AIRLOCK_SECURITY_IRON)
+
+		if(istype(tool, /obj/item/stack/sheet/plasteel))
+			if(try_reinforce(user, tool, 2, AIRLOCK_SECURITY_PLASTEEL) & ITEM_INTERACT_BLOCKING)
+				return ITEM_INTERACT_BLOCKING
 			modify_max_integrity(max_integrity * AIRLOCK_INTEGRITY_MULTIPLIER)
 			damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
 			update_appearance()
-			return TRUE
+			return ITEM_INTERACT_SUCCESS
 
-	else if(istype(C, /obj/item/pai_cable))
-		var/obj/item/pai_cable/cable = C
+		return NONE
+
+	if(istype(tool, /obj/item/pai_cable))
+		var/obj/item/pai_cable/cable = tool
 		cable.plugin(src, user)
-	else if(istype(C, /obj/item/airlock_painter))
-		change_paintjob(C, user)
-	else if(istype(C, /obj/item/door_seal)) //adding the seal
-		var/obj/item/door_seal/airlockseal = C
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/airlock_painter))
+		change_paintjob(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/door_seal)) //adding the seal
+		var/obj/item/door_seal/airlockseal = tool
 		if(!density)
 			to_chat(user, span_warning("[src] must be closed before you can seal it!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(seal)
 			to_chat(user, span_warning("[src] has already been sealed!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		user.visible_message(span_notice("[user] begins sealing [src]."), span_notice("You begin sealing [src]."))
 		playsound(src, 'sound/items/tools/jaws_pry.ogg', 30, TRUE)
 		if(!do_after(user, airlockseal.seal_time, target = src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(!density)
 			to_chat(user, span_warning("[src] must be closed before you can seal it!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(seal)
 			to_chat(user, span_warning("[src] has already been sealed!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(airlockseal, src))
 			to_chat(user, span_warning("For some reason, you can't attach [airlockseal]!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		playsound(src, 'sound/machines/airlock/airlockforced.ogg', 30, TRUE)
 		user.visible_message(span_notice("[user] finishes sealing [src]."), span_notice("You finish sealing [src]."))
 		seal = airlockseal
 		modify_max_integrity(max_integrity * AIRLOCK_SEAL_MULTIPLIER)
 		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(C, /obj/item/paper) || istype(C, /obj/item/photo))
+	if(istype(tool, /obj/item/paper) || istype(tool, /obj/item/photo))
 		if(note)
 			to_chat(user, span_warning("There's already something pinned to this airlock! Use wirecutters to remove it."))
-			return
-		if(!user.transferItemToLoc(C, src))
-			to_chat(user, span_warning("For some reason, you can't attach [C]!"))
-			return
-		user.visible_message(span_notice("[user] pins [C] to [src]."), span_notice("You pin [C] to [src]."))
-		note = C
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			to_chat(user, span_warning("For some reason, you can't attach [tool]!"))
+			return ITEM_INTERACT_BLOCKING
+		user.visible_message(span_notice("[user] pins [tool] to [src]."), span_notice("You pin [tool] to [src]."))
+		note = tool
 		update_appearance()
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 
 /obj/machinery/door/airlock/try_to_weld(obj/item/weldingtool/W, mob/living/user)

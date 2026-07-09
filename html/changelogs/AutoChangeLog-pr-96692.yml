@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - balance: "Upload computers in AI Upload Areas no longer require command IDs to use."

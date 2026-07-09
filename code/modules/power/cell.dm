@@ -116,7 +116,7 @@
 	icon_state = "hcell"
 	emp_damage_modifier = 3
 	maxcharge = STANDARD_CELL_CHARGE * 10
-	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.6)
 	chargerate = STANDARD_CELL_RATE * 0.75
 
 
@@ -128,7 +128,7 @@
 	icon_state = "scell"
 	emp_damage_modifier = 5
 	maxcharge = STANDARD_CELL_CHARGE * 20
-	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
 	chargerate = STANDARD_CELL_RATE
 
 /obj/item/stock_parts/power_store/cell/super/empty
@@ -139,7 +139,7 @@
 	icon_state = "hpcell"
 	emp_damage_modifier = 5
 	maxcharge = STANDARD_CELL_CHARGE * 30
-	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.7, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.8)
 	chargerate = STANDARD_CELL_RATE * 1.5
 
 /obj/item/stock_parts/power_store/cell/hyper/empty
@@ -151,7 +151,14 @@
 	icon_state = "bscell"
 	emp_damage_modifier = 5
 	maxcharge = STANDARD_CELL_CHARGE * 40
-	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*6)
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.8,
+		/datum/material/titanium = SMALL_MATERIAL_AMOUNT * 3,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.6,
+		/datum/material/diamond = SMALL_MATERIAL_AMOUNT * 1.6,
+		/datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.2,
+		/datum/material/bluespace = SMALL_MATERIAL_AMOUNT,
+	)
 	chargerate = STANDARD_CELL_RATE * 2
 
 /obj/item/stock_parts/power_store/cell/bluespace/empty

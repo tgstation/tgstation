@@ -405,7 +405,7 @@
 	A single bite will transport you back to the taste of yesterday's prison rations. \
 	Contains a serving dish filled with Nutraslop."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/structure/reagent_dispensers/servingdish)
+	contains = list(/obj/structure/reagent_dispensers/servingdish/unanchored)
 	crate_name = "nutraslop serving dish crate"
 
 

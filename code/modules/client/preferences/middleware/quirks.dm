@@ -96,6 +96,7 @@
 
 /datum/preference_middleware/quirks/on_new_character(mob/user)
 	tainted = TRUE
+	preferences.update_static_data(user, always_instant = TRUE)
 
 /datum/preference_middleware/quirks/proc/give_quirk(list/params, mob/user)
 	var/quirk_name = params["quirk"]

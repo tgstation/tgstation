@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	fire = 50
 	acid = 100
 
-/obj/item/stack/sheet/glass/suicide_act(mob/living/carbon/user)
+/obj/item/stack/sheet/glass/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to slice [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
@@ -207,7 +207,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	resistance_flags = ACID_PROOF
 	material_flags = NONE
 	merge_type = /obj/item/stack/sheet/plasmarglass
-	gulag_valid = TRUE
+	gulag_value = 5
 	matter_amount = 8
 	table_type = /obj/structure/table/reinforced/plasmarglass
 	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'

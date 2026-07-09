@@ -1,0 +1,4 @@
+author: "Aliceee2ch"
+delete-after: True
+changes:
+  - bugfix: "Fixed players being able to turn into tendril/dupe necrochests from it by turning it into MOB_SPECIAL biotype."

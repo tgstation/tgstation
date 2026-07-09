@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - code_imp: "tgui-core bumped to v6.1, please report any tgui-related issues"

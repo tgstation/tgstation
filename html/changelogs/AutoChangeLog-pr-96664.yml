@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - map: "There's no longer a missing pipe in the disposals loop on icebox"
