@@ -40,6 +40,22 @@ SUBSYSTEM_DEF(map_previews)
 			machine.set_machine_stat(machine.machine_stat & ~NOPOWER)
 			machine.update_appearance()
 
+		if(thingtospawn.icon_state)
+			thingtospawn.icon = icon(thingtospawn.icon, thingtospawn.icon_state, frame = 1)
+		if(length(thingtospawn.overlays))
+			var/list/frozen_overlays = list()
+			for(var/image/overlay as anything in thingtospawn.overlays)
+				if(overlay.plane == EMISSIVE_PLANE || (overlay.blend_mode == BLEND_ADD && overlay.plane != FLOAT_PLANE))
+					continue // skip emissives
+				var/image/frozen = image(icon = icon(overlay.icon, overlay.icon_state, frame = 1), icon_state = overlay.icon_state, layer = overlay.layer, dir = overlay.dir)
+				frozen.color = overlay.color
+				frozen.alpha = overlay.alpha
+				frozen.pixel_x = overlay.pixel_x
+				frozen.pixel_y = overlay.pixel_y
+				frozen_overlays += frozen
+			thingtospawn.overlays.Cut()
+			thingtospawn.overlays += frozen_overlays
+
 		var/key = "[thingtospawn.icon]-[thingtospawn.icon_state]"
 		for(var/image/overlay as anything in thingtospawn.overlays)
 			key += "-[overlay.icon_state]"
@@ -72,5 +88,5 @@ SUBSYSTEM_DEF(map_previews)
 	if(old_md5 != new_md5)
 		fcopy(holder, filepath)
 #ifdef UNIT_TESTS
-		stack_trace("Generated map previews for '[holder]' were different than what is currently saved. If you see this in a CI run it means you need to run the game once through initialization and commit the resulting file 'icons/obj/fluff/map_previews.dmi'.")
+		stack_trace("Generated map previews were different than what is currently saved. If you see this in a CI run it means you need to run the game once through initialization and commit the resulting file 'icons/obj/fluff/map_previews.dmi'.")
 #endif
