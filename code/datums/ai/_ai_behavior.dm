@@ -108,7 +108,6 @@
 
 ///Override this if you have sleeping behavior, be sure to implement the other async procs in perform()
 /datum/bt_node/ai_behavior/proc/perform_async(datum/ai_controller/controller)
-	SHOULD_NOT_SLEEP(TRUE)
 	return
 
 /// Call from an async worker after its sleeping call, before committing side effects. FALSE means the behavior was aborted/reset mid-flight  bail out without side effects.
