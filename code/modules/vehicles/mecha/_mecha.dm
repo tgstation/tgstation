@@ -218,6 +218,9 @@
 	/// Module selected by default when mech UI is opened
 	var/ui_selected_module_index
 
+	/// Whether we've been knocked down, unable to move
+	var/toppled = FALSE
+
 /datum/armor/sealed_mecha
 	melee = 20
 	bullet = 10

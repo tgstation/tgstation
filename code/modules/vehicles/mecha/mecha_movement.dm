@@ -80,6 +80,10 @@
 		return FALSE
 	if(!direction)
 		return FALSE
+
+	if(toppled)
+		return FALSE
+
 	if(ismovable(loc)) //Mech is inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, direction)
@@ -191,3 +195,11 @@
 	// Delay's a bit faster then standard cameras to "avoid running out of the camera's fov" whatever that means
 	// An EMPd mecha with a lowered view_range on its camera can still sometimes run out into static before updating, however.
 	SScameras.camera_moved(chassis_camera, get_turf(old_loc), get_turf(chassis_camera), 0.5 SECONDS)
+
+/obj/vehicle/sealed/mecha/proc/right_self(fallen_angle)
+	if(!toppled)
+		return
+	toppled = FALSE
+	var/matrix/to_turn = turn(transform, 360 - fallen_angle)
+	animate(src, transform = to_turn, 0.5 SECONDS)
+	playsound(src, 'sound/vehicles/mecha/nominal.ogg', 50)
