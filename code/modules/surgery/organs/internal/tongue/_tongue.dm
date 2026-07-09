@@ -137,8 +137,8 @@
 
 /obj/item/organ/tongue/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
-	if(emote_sounds)
-		RegisterSignal(receiver, COMSIG_MOB_GET_EMOTE_SOUND, PROC_REF(get_tongue_emote_sound))
+	for(var/key in emote_sounds)
+		RegisterSignal(receiver, COMSIG_MOB_EMOTE_SOUND(key), PROC_REF(get_tongue_emote_sound))
 	if(modifies_speech)
 		RegisterSignal(receiver, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	receiver.voice_filter = voice_filter
@@ -153,7 +153,9 @@
 	. = ..()
 
 	temp_say_mod = ""
-	UnregisterSignal(organ_owner, list(COMSIG_MOB_SAY, COMSIG_MOB_GET_EMOTE_SOUND))
+	for(var/key in emote_sounds)
+		UnregisterSignal(organ_owner, COMSIG_MOB_EMOTE_SOUND(key))
+	UnregisterSignal(organ_owner, COMSIG_MOB_SAY)
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(organ_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 	organ_owner.voice_filter = initial(organ_owner.voice_filter)
@@ -181,9 +183,7 @@
 /obj/item/organ/tongue/proc/get_tongue_emote_sound(datum/source, key, list/sounds)
 	SIGNAL_HANDLER
 	var/sound_override = get_emote_sound_from_list(emote_sounds[key], owner)
-	if(sound_override)
-		sounds.len = max(sounds.len, EMOTE_SOUND_TONGUE)
-		sounds[EMOTE_SOUND_TONGUE] = sound_override
+	sounds[sound_override] = EMOTE_SOUND_TONGUE
 
 /obj/item/organ/tongue/lizard
 	name = "forked tongue"

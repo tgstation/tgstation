@@ -22,20 +22,20 @@
 
 /obj/item/clothing/mask/equipped(mob/living/equipper, slot)
 	. = ..()
-	if (emote_sounds && (slot & ITEM_SLOT_MASK))
-		RegisterSignal(equipper, COMSIG_MOB_GET_EMOTE_SOUND, PROC_REF(get_emote_sound))
+	if (!(slot & ITEM_SLOT_MASK))
+		return
+	for(var/key in emote_sounds)
+		RegisterSignal(equipper, COMSIG_MOB_EMOTE_SOUND(key), PROC_REF(get_emote_sound))
 
 /obj/item/clothing/mask/dropped(mob/living/dropper)
 	. = ..()
-	if(emote_sounds)
-		UnregisterSignal(dropper, COMSIG_MOB_GET_EMOTE_SOUND)
+	for(var/key in emote_sounds)
+		UnregisterSignal(dropper, COMSIG_MOB_EMOTE_SOUND(key))
 
 /obj/item/clothing/mask/proc/get_emote_sound(mob/living/source, key, list/sounds)
 	SIGNAL_HANDLER
 	var/sound_override = get_emote_sound_from_list(emote_sounds[key], source)
-	if(sound_override)
-		sounds.len = max(sounds.len, EMOTE_SOUND_MASK)
-		sounds[EMOTE_SOUND_MASK] = sound_override
+	sounds[sound_override] = EMOTE_SOUND_MASK
 
 /obj/item/clothing/mask/attack_self(mob/user)
 	if((clothing_flags & VOICEBOX_TOGGLABLE))

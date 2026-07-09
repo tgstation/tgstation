@@ -265,11 +265,17 @@
  * Returns the sound that will be made while sending the emote.
  */
 /datum/emote/proc/get_sound(mob/living/user)
-	var/list/sounds = list()
-	SEND_SIGNAL(user, COMSIG_MOB_GET_EMOTE_SOUND, key, sounds)
-	var/length = length(sounds)
-	if(length)
-		return sounds[length]
+	var/list/comsig_sounds = list()
+	SEND_SIGNAL(user, COMSIG_MOB_EMOTE_SOUND(key), key, comsig_sounds)
+	if(length(comsig_sounds))
+		var/chosen_sound
+		var/highest_priority = 0
+		for(var/candidate in comsig_sounds)
+			var/priority = comsig_sounds[candidate]
+			if(priority > highest_priority)
+				highest_priority = priority
+				chosen_sound = candidate
+		return chosen_sound
 	var/sound_or_sounds = is_type_in_list(user,  sounds_by_mobtype, zebra = TRUE)
 	if(sound_or_sounds)
 		return get_emote_sound_from_list(sound_or_sounds, user)

@@ -162,7 +162,7 @@
 ///from /mob/living/emote(): ()
 #define COMSIG_MOB_EMOTE "mob_emote"
 ///from base of datum/emote/get_sound(): (key, list/sounds)
-#define COMSIG_MOB_GET_EMOTE_SOUND "living_get_emote_sound"
+#define COMSIG_MOB_EMOTE_SOUND(key) "mob_emote_sound_[key]"
 	#define EMOTE_SOUND_TONGUE 1
 	#define EMOTE_SOUND_MASK 2
 	#define EMOTE_SOUND_STATUS_EFFECT 3

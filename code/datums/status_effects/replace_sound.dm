@@ -15,15 +15,15 @@
 	return ..()
 
 /datum/status_effect/replace_sound/on_apply()
-	RegisterSignal(owner, COMSIG_MOB_GET_EMOTE_SOUND, PROC_REF(on_emote))
+	for(var/key in emote_key_to_sound)
+		RegisterSignal(owner, COMSIG_MOB_EMOTE_SOUND(key), PROC_REF(on_emote))
 	return TRUE
 
 /datum/status_effect/replace_sound/proc/on_emote(datum/source, key, list/sounds)
 	SIGNAL_HANDLER
 	var/sound_override = get_emote_sound_from_list(emote_key_to_sound[key], source)
-	if(sound_override)
-		sounds.len = max(sounds.len, priority)
-		sounds[priority] = sound_override
+	sounds[sound_override] = priority
 
 /datum/status_effect/replace_sound/on_remove()
-	UnregisterSignal(owner, COMSIG_MOB_GET_EMOTE_SOUND)
+	for(var/key in emote_key_to_sound)
+		UnregisterSignal(owner, COMSIG_MOB_EMOTE_SOUND(key))
