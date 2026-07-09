@@ -228,6 +228,9 @@
 	if(.)
 		return .
 
+	if(isprojectile(mover))
+		return TRUE
+
 	if(mover.dir == dir || mover.dir == REVERSE_DIR(dir))
 		return TRUE
 
