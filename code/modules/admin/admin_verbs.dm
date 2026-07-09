@@ -11,7 +11,7 @@
 
 ADMIN_VERB(hide_verbs, R_NONE, "Adminverbs - Hide All", "Hide most of your admin verbs.", ADMIN_CATEGORY_MAIN)
 	user.remove_admin_verbs()
-	add_verb(user, /client/proc/show_verbs)
+	ASSIGN_GAME_VERB(user, /client, show_verbs)
 
 	to_chat(user, span_interface("Almost all of your adminverbs have been hidden."), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Hide All Adminverbs")

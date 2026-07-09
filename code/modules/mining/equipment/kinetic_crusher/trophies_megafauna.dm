@@ -13,7 +13,7 @@
 /obj/item/crusher_trophy/miner_eye/effect_desc()
 	return "mark detonation to grant stun immunity and <b>90%</b> damage reduction for <b>1</b> second"
 
-/obj/item/crusher_trophy/miner_eye/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/miner_eye/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
 	user.apply_status_effect(/datum/status_effect/blooddrunk)
 
@@ -27,7 +27,7 @@
 /obj/item/crusher_trophy/tail_spike/effect_desc()
 	return "mark detonation to do <b>[bonus_value]</b> damage to nearby creatures and push them back"
 
-/obj/item/crusher_trophy/tail_spike/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/tail_spike/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
 	for(var/mob/living/living_target in oview(2, user))
 		if(user.faction_check_atom(living_target) || living_target.stat == DEAD)
@@ -74,11 +74,11 @@
 /obj/item/crusher_trophy/demon_claws/on_melee_hit(mob/living/target, mob/living/user)
 	user.heal_ordered_damage(bonus_value * 0.1, damage_heal_order)
 
-/obj/item/crusher_trophy/demon_claws/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/demon_claws/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
 	user.heal_ordered_damage(bonus_value * 0.4, damage_heal_order)
 
-//colossus
+// Colossus, allows user to fire shots during click CD
 /obj/item/crusher_trophy/blaster_tubes
 	name = "blaster tubes"
 	desc = "The blaster tubes from a colossus's arm. Suitable as a trophy for a kinetic crusher."
@@ -87,26 +87,48 @@
 	denied_type = /obj/item/crusher_trophy/blaster_tubes
 	bonus_value = 15
 	trophy_id = TROPHY_BLASTER_TUBES
-	var/deadly_shot = FALSE
 
 /obj/item/crusher_trophy/blaster_tubes/effect_desc()
-	return "mark detonation to make the next destabilizer shot deal <b>[bonus_value]</b> damage but move slower"
+	return "destabilizer shots to be fire-able freely inbetween swings"
 
-/obj/item/crusher_trophy/blaster_tubes/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
-	if(deadly_shot)
-		marker.name = "deadly [marker.name]"
-		marker.icon_state = "chronobolt"
-		marker.damage = bonus_value
-		marker.speed = 2
-		deadly_shot = FALSE
-
-/obj/item/crusher_trophy/blaster_tubes/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/blaster_tubes/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
-	deadly_shot = TRUE
-	addtimer(CALLBACK(src, PROC_REF(reset_deadly_shot)), 300, TIMER_UNIQUE|TIMER_OVERRIDE)
+	if (!.)
+		return
+	RegisterSignal(crusher, COMSIG_ITEM_EQUIPPED, PROC_REF(on_crusher_equipped))
+	RegisterSignal(crusher, COMSIG_ITEM_DROPPED, PROC_REF(on_crusher_dropped))
+	if (user.get_slot_by_item(crusher) == ITEM_SLOT_HANDS)
+		RegisterSignal(user, COMSIG_MOB_CLICKON, PROC_REF(try_crusher_fire))
 
-/obj/item/crusher_trophy/blaster_tubes/proc/reset_deadly_shot()
-	deadly_shot = FALSE
+/obj/item/crusher_trophy/blaster_tubes/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
+	. = ..()
+	UnregisterSignal(crusher, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	if (ismob(crusher.loc))
+		UnregisterSignal(crusher.loc, COMSIG_MOB_CLICKON)
+
+/obj/item/crusher_trophy/blaster_tubes/proc/on_crusher_equipped(obj/item/kinetic_crusher/source, mob/user, slot)
+	SIGNAL_HANDLER
+
+	if (slot == ITEM_SLOT_HANDS && isliving(user))
+		RegisterSignal(user, COMSIG_MOB_CLICKON, PROC_REF(try_crusher_fire))
+
+/obj/item/crusher_trophy/blaster_tubes/proc/on_crusher_dropped(obj/item/kinetic_crusher/source, mob/user)
+	SIGNAL_HANDLER
+	UnregisterSignal(user, COMSIG_MOB_CLICKON)
+
+/obj/item/crusher_trophy/blaster_tubes/proc/try_crusher_fire(mob/living/user, atom/target, list/modifiers)
+	SIGNAL_HANDLER
+
+	// Only trigger on normal RMB when on cooldown
+	if (user.next_move < world.time || !LAZYACCESS(modifiers, RIGHT_CLICK) || LAZYACCESS(modifiers, SHIFT_CLICK) || LAZYACCESS(modifiers, CTRL_CLICK) || LAZYACCESS(modifiers, ALT_CLICK))
+		return
+
+	if (INCAPACITATED_IGNORING(user, INCAPABLE_STASIS) || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || user.throw_mode || (!LAZYACCESS(modifiers, "catcher") && target.IsObscured()))
+		return
+
+	var/obj/item/kinetic_crusher/crusher = loc
+	if (istype(crusher) && user.get_active_held_item() == crusher) // istype() just in case, crusher handles wielding/CD in its secondary interact on its own
+		crusher.interact_with_atom_secondary(target, user, modifiers) // Standard shot recharge delay is 1.5 seconds (swing + shot CDs would be 1.6) so its fine to not have a penalty
 
 //hierophant
 /obj/item/crusher_trophy/vortex_talisman
@@ -119,7 +141,7 @@
 /obj/item/crusher_trophy/vortex_talisman/effect_desc()
 	return "mark detonation to create a homing hierophant chaser"
 
-/obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
 	if(isliving(target))
 		var/obj/effect/temp_visual/hierophant/chaser/chaser = new(get_turf(user), user, target, 3, TRUE)
@@ -138,7 +160,7 @@
 /obj/item/crusher_trophy/ice_block_talisman/effect_desc()
 	return "mark detonation to freeze a creature in a block of ice for a period, preventing them from moving"
 
-/obj/item/crusher_trophy/ice_block_talisman/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/ice_block_talisman/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
 	target.apply_status_effect(/datum/status_effect/ice_block_talisman)
 
@@ -181,7 +203,7 @@
 /obj/item/crusher_trophy/broodmother_tongue/effect_desc()
 	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a patch of goliath tentacles at the target's location"
 
-/obj/item/crusher_trophy/broodmother_tongue/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/broodmother_tongue/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
 	if(prob(bonus_value) && target.stat != DEAD)
 		new /obj/effect/goliath_tentacle/broodmother/patch(get_turf(target), user)
@@ -216,7 +238,7 @@
 /obj/item/crusher_trophy/legionnaire_spine/effect_desc()
 	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a loyal legion skull"
 
-/obj/item/crusher_trophy/legionnaire_spine/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/legionnaire_spine/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
 	if(!prob(bonus_value) || target.stat == DEAD)
 		return
@@ -254,6 +276,6 @@
 /obj/item/crusher_trophy/flesh_glob/on_melee_hit(mob/living/target, mob/living/user)
 	user.heal_ordered_damage(bonus_value * 0.2, damage_heal_order)
 
-/obj/item/crusher_trophy/flesh_glob/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/flesh_glob/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
 	user.heal_ordered_damage(bonus_value * 0.5, damage_heal_order)

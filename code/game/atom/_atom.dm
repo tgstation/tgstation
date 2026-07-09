@@ -225,7 +225,12 @@
 	if(!mover.generic_canpass)
 		return mover.CanPassThrough(src, REVERSE_DIR(border_dir), .)
 
-/// Returns true or false to allow the mover to move through src
+/**
+ * Returns true or false to allow the mover to move through src
+ * @params
+ * 	mover: The mob trying to move into this atom.
+ * 	border_dir: Typically the direction that mover has in relation to src.
+ */
 /atom/proc/CanAllowThrough(atom/movable/mover, border_dir)
 	SHOULD_CALL_PARENT(TRUE)
 	//SHOULD_BE_PURE(TRUE)
@@ -681,7 +686,7 @@
 	for(var/i = 1 to amount_to_create)
 		var/atom/created_atom = new atom_to_create(drop_location())
 		created_atom.OnCreatedFromProcessing(user, process_item, chosen_option, src)
-		if(custom_materials)
+		if(custom_materials || IS_EDIBLE(src)) //materials are ALWAYS inherited for food, even if the source has none
 			created_atom.set_custom_materials(custom_materials, 1 / amount_to_create)
 		created_atom.pixel_x = pixel_x
 		created_atom.pixel_y = pixel_y

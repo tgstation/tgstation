@@ -27,6 +27,7 @@
 	drop_sound = 'sound/items/handling/tools/rcd_drop.ogg'
 	pickup_sound = 'sound/items/handling/tools/rcd_pickup.ogg'
 	sound_vary = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25)
 
 	/// main category for tile design
 	var/root_category = "Conventional"

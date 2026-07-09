@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	overlay_mic_idle = null
 	overlay_mic_active = null
 
-/obj/item/radio/headset/suicide_act(mob/living/carbon/user)
+/obj/item/radio/headset/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!"))
 	return TOXLOSS
 
@@ -351,7 +351,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/headset_cargo/mining/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/callouts, ITEM_SLOT_EARS, examine_text = span_info("Use ctrl-click to enable or disable callouts."))
+	AddComponent(/datum/component/callouts, ITEM_SLOT_EARS, examine_text = span_info("Use ctrl-click to enable or disable callouts."), active = FALSE)
 
 /obj/item/radio/headset/headset_cargo/mining/equipped(mob/living/carbon/human/user, slot)
 	. = ..()

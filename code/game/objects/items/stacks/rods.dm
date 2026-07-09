@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 /datum/embedding/rods
 	embed_chance = 50
 
-/obj/item/stack/rods/suicide_act(mob/living/carbon/user)
+/obj/item/stack/rods/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to stuff \the [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!"))//it looks like theyre ur mum
 	return BRUTELOSS
 

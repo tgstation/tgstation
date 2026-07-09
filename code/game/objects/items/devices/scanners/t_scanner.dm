@@ -14,10 +14,11 @@
 	sound_vary = TRUE
 	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
 	drop_sound = SFX_GENERIC_DEVICE_DROP
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 	/// Is this T-Ray scanner currently on?
 	var/on = FALSE
 
-/obj/item/t_scanner/suicide_act(mob/living/carbon/user)
+/obj/item/t_scanner/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to emit terahertz-rays into [user.p_their()] brain with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return TOXLOSS
 

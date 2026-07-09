@@ -30,6 +30,10 @@
 	var/datum/weakref/our_alert_ref
 	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
 
+/obj/item/clothing/shoes/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /obj/item/clothing/shoes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	context[SCREENTIP_CONTEXT_ALT_RMB] = "Toggle shoes under uniforms"
@@ -45,7 +49,7 @@
 /datum/armor/clothing_shoes
 	bio = 50
 
-/obj/item/clothing/shoes/suicide_act(mob/living/carbon/user)
+/obj/item/clothing/shoes/suicide_act(mob/living/user)
 	if(prob(50))
 		user.visible_message(span_suicide("[user] begins fastening \the [src] up waaay too tightly! It looks like [user.p_theyre()] trying to commit suicide!"))
 		var/obj/item/bodypart/leg/left = user.get_bodypart(BODY_ZONE_L_LEG)

@@ -1393,18 +1393,13 @@
 		if(!overlay.can_draw_on_bodypart(src, owner))
 			continue
 
-		// Some externals have multiple layers for background, foreground and between
-		for(var/external_layer, actual_layer in overlay.all_layers)
-			if(!(overlay.layers & external_layer))
+		for (var/mutable_appearance/actual_overlay as anything in overlay.get_all_overlays(src))
+			if(dropped || isnull(owner))
+				. += image(actual_overlay, dir = SOUTH)
 				continue
 
-			for (var/mutable_appearance/actual_overlay as anything in overlay.get_overlay(actual_layer, src))
-				if(dropped || isnull(owner))
-					. += image(actual_overlay, dir = SOUTH)
-					continue
-
-				owner.apply_height(actual_overlay, overlay.offset_location)
-				. += actual_overlay
+			owner.apply_height(actual_overlay, overlay.offset_location)
+			. += actual_overlay
 
 	// Then texture everything at once, including bodypart overlays
 	for(var/datum/bodypart_texture/texture as anything in bodypart_textures)

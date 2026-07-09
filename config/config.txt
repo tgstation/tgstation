@@ -655,3 +655,8 @@ GENERATE_ASSETS_IN_INIT
 ## Path from the config folder to the policy json
 POLICY_JSON_PATH policy.json
 
+# Which CIDs will not be considered for stickybans. This is the default CID that Wine spits out,
+# and for the purpose of not default banning all Linux players, we'll just ignore it.
+# People can spoof this CID and ignore that element of stickybans forever, but they can equally
+# just keep generating new ones. Kind of doesn't matter.
+IGNORED_CIDS 4055623708

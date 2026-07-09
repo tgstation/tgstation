@@ -11,6 +11,7 @@
 	inhand_y_dimension = 64
 	force = 8
 	w_class = WEIGHT_CLASS_HUGE
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 
 	/// How far can you cast this
 	var/cast_range = 3
@@ -804,6 +805,7 @@
 	bait_speed_mult = 1.1
 	deceleration_mult = 1.1
 	gravity_mult = 1.2
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/fishing_rod/tech/Initialize(mapload)
 	. = ..()
