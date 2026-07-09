@@ -129,3 +129,19 @@
 	gaze_attack = /datum/action/cooldown/mob_cooldown/watcher_gaze/glass
 	butcher_results = list(/obj/item/stack/sheet/glass = 5, /obj/item/stack/sheet/bone = 1)
 	ranged_cooldown = 2 SECONDS
+
+/// Punched god today yet?
+/mob/living/basic/mining/watcher/angel
+	name = "angel"
+	desc = "Be afraid. Be oh so very afraid."
+	icon_state = "angel"
+	icon_living = "angel"
+	icon_dead = "angel_dead"
+	eye_glow = "angel_glow"
+	speed = 5
+	maxHealth = 177
+	health = 177
+	faction = list(FACTION_HOSTILE, FACTION_HOLY)
+	projectile_type = /obj/projectile/temp/watcher/glass_wing
+	gaze_attack = /datum/action/cooldown/mob_cooldown/watcher_gaze/glass
+	butcher_results = list(/obj/item/stack/sheet/glass = 5, /obj/item/stack/sheet/bone = 1)

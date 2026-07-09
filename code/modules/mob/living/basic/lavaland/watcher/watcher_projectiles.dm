@@ -48,3 +48,8 @@
 	damage_type = BRUTE
 	armor_flag = BULLET
 	temperature = -10
+
+/obj/projectile/temp/watcher/angel
+	name = "angelic feather"
+	damage = 12
+	damage_type = BRAIN

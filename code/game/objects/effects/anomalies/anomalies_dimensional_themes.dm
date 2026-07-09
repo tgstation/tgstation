@@ -30,8 +30,8 @@
 	var/list/replace_eng_carpets = list()
 	var/list/replace_car_carpets = list()
 	var/list/replace_ser_carpets = list()
-	/// Typepath of turf to replace walls with.
-	var/turf/replace_walls = /turf/closed/wall/material
+	/// Weighted list of walls to replace other walls with)
+	var/turf/replace_walls = list(/turf/closed/wall/material = 10)
 	/// List of weighted lists for object replacement. Key is an original typepath, value is a weighted list of typepaths to replace it with.
 	var/list/replace_objs = list(
 		/obj/structure/chair = list(/obj/structure/chair/greyscale = 1),
@@ -138,7 +138,7 @@
 		return FALSE
 	if (isindestructiblewall(affected_turf))
 		return FALSE
-	affected_turf.ChangeTurf(replace_walls, flags = CHANGETURF_INHERIT_MOUNTS)
+	affected_turf.ChangeTurf(pick_weight(replace_walls), flags = CHANGETURF_INHERIT_MOUNTS)
 	return TRUE
 
 
@@ -416,14 +416,14 @@
 	)
 	guardian = list(/mob/living/basic/killer_tomato = 5, /mob/living/basic/trooper/angry_chef = 5)
 
-///Dimension where humans live in harmony with nature. But then the garden gnome nation attacked.
+///Dimension where botany went a little out of hand...
 /datum/dimension_theme/natural
 	name = "Natural"
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "map_flower"
 	window_colour = "#00f7ff"
 	replace_floors = list(/turf/open/floor/grass = 1)
-	replace_walls = /turf/closed/wall/mineral/wood/nonmetal
+	replace_walls = list(/turf/closed/wall/mineral/wood/nonmetal = 10)
 	replace_objs = list(
 		/obj/structure/chair = list(/obj/structure/chair/wood = 3, /obj/structure/chair/wood/wings = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1),
@@ -434,7 +434,7 @@
 	)
 	guardian = list(/mob/living/basic/garden_gnome = 10)
 
-///Dimension where origin countries of major corps are swapped, and Nanostrasen is japanese/chineese.
+///Dimension where the station was made by the Spider Clan
 /datum/dimension_theme/bamboo
 	name = "Bamboo"
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
@@ -628,7 +628,7 @@
 	icon_state = "tile_grass"
 	sound = SFX_CRUNCHY_BUSH_WHACK
 	replace_floors = list(/turf/open/floor/grass = 1)
-	replace_walls = /turf/closed/wall/mineral/wood
+	replace_walls = list(/turf/closed/wall/mineral/wood = 1)
 	replace_objs = list(
 		/obj/structure/chair = list(/obj/structure/chair/wood = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1),
@@ -654,7 +654,7 @@
 	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "sheet-abductor"
 	material = /datum/material/alloy/alien
-	replace_walls = /turf/closed/wall/mineral/abductor
+	replace_walls = list(/turf/closed/wall/mineral/abductor = 1)
 	replace_floors = list(/turf/open/floor/mineral/abductor = 1)
 	replace_objs = list(
 		/obj/structure/chair = list(/obj/structure/chair/greyscale = 9, /obj/structure/bed/abductor = 1),
@@ -672,7 +672,7 @@
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "ratvarian_spear"
 	material = /datum/material/bronze
-	replace_walls = /turf/closed/wall/mineral/bronze
+	replace_walls = list(/turf/closed/wall/mineral/bronze = 1)
 	replace_floors = list(/turf/open/floor/bronze = 1, /turf/open/floor/bronze/flat = 1, /turf/open/floor/bronze/filled = 1)
 	replace_objs = list(
 		/obj/structure/girder = list(/obj/structure/girder/bronze = 1),
@@ -695,7 +695,7 @@
 	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "sheet-abductor"
 	material = /datum/material/alloy/alien
-	replace_walls = /turf/closed/wall/mineral/abductor
+	replace_walls = list(/turf/closed/wall/mineral/plastitanium/darkpod = 10)
 	replace_floors = list(/turf/open/floor/hauntium = 1)
 	replace_carpets = list(/turf/open/floor/carpet/human = 10)
 	replace_objs = list(
@@ -706,4 +706,138 @@
 		/obj/structure/platform = list(/obj/structure/platform/uranium = 1),
 	)
 
-	guardian = list(/mob/living/basic/trooper/abductor/melee = 7, /mob/living/basic/trooper/abductor/ranged = 3)
+	guardian = list(/mob/living/basic/trooper/tormented = 10)
+
+///Medieval dimension
+/datum/dimension_theme/medieval
+	name = "Medieval"
+	icon = 'icons/obj/weapons/sword.dmi'
+	icon_state = "shortsword"
+	material = /datum/material/rock
+	replace_walls = list(/turf/closed/wall/mineral/plastitanium/darkpod = 10)
+	replace_floors = list(/turf/open/floor/hauntium = 1)
+	replace_carpets = list(/turf/open/floor/carpet/human = 10)
+	replace_objs = list(
+		/obj/structure/chair = list(/obj/structure/chair/greyscale = 9, /obj/structure/bed/abductor = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 2),
+		/obj/structure/table = list(/obj/structure/table/greyscale = 9, /obj/structure/table/abductor = 1),
+		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/platform = list(/obj/structure/platform/uranium = 1),
+	)
+
+	guardian = list(/mob/living/basic/trooper/tormented = 10)
+
+///Holy dimension
+/datum/dimension_theme/holy
+	name = "Holy"
+	icon = 'icons/obj/antags/abductor.dmi'
+	icon_state = "sheet-abductor"
+	material = /datum/material/alloy/alien
+	replace_walls = list(/turf/closed/wall/mineral/plastitanium/darkpod = 10)
+	replace_floors = list(/turf/open/floor/hauntium = 1)
+	replace_carpets = list(/turf/open/floor/carpet/human = 10)
+	replace_objs = list(
+		/obj/structure/chair = list(/obj/structure/chair/greyscale = 9, /obj/structure/bed/abductor = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 2),
+		/obj/structure/table = list(/obj/structure/table/greyscale = 9, /obj/structure/table/abductor = 1),
+		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/platform = list(/obj/structure/platform/uranium = 1),
+	)
+
+	guardian = list(/mob/living/basic/mining/watcher/angel = 1)
+
+///Dimension where the station was made by the syndicate
+/datum/dimension_theme/syndicate
+	name = "Syndicate"
+	icon = 'icons/obj/antags/abductor.dmi'
+	icon_state = "sheet-abductor"
+	material = /datum/material/alloy/alien
+	replace_walls = list(/turf/closed/wall/mineral/plastitanium = 10)
+	replace_floors = list(/turf/open/floor/hauntium = 1)
+	replace_carpets = list(/turf/open/floor/carpet/human = 10)
+	replace_objs = list(
+		/obj/structure/chair = list(/obj/structure/chair/greyscale = 9, /obj/structure/bed/abductor = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 2),
+		/obj/structure/table = list(/obj/structure/table/greyscale = 9, /obj/structure/table/abductor = 1),
+		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/platform = list(/obj/structure/platform/uranium = 1),
+	)
+
+	guardian = list(/mob/living/basic/trooper/tormented = 10)
+
+///Dimension where the station was made by the champions of evil
+/datum/dimension_theme/evil
+	name = "Evil"
+	icon = 'icons/obj/clothing/glasses.dmi'
+	icon_state = "monocle"
+	material = /datum/material/plastic
+	replace_walls = list(/turf/closed/wall/mineral/plastitanium/darkpod = 10)
+	replace_floors = list(/turf/open/floor/hauntium = 1)
+	replace_carpets = list(/turf/open/floor/carpet/human = 10)
+	replace_objs = list(
+		/obj/structure/chair = list(/obj/structure/chair/greyscale = 9, /obj/structure/bed/abductor = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 2),
+		/obj/structure/table = list(/obj/structure/table/greyscale = 9, /obj/structure/table/abductor = 1),
+		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/platform = list(/obj/structure/platform/uranium = 1),
+	)
+
+	guardian = list(/mob/living/basic/trooper/tormented = 10)
+
+///Dimension where the cyberpunk style is in fashion
+/datum/dimension_theme/cyber
+	name = "Cyber"
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon_state = "circuit_map"
+	material = /datum/material/alloy/alien
+	replace_walls = list(/turf/closed/wall/mineral/plastitanium/darkpod = 10)
+	replace_floors = list(/turf/open/floor/hauntium = 1)
+	replace_carpets = list(/turf/open/floor/carpet/human = 10)
+	replace_objs = list(
+		/obj/structure/chair = list(/obj/structure/chair/greyscale = 9, /obj/structure/bed/abductor = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 2),
+		/obj/structure/table = list(/obj/structure/table/greyscale = 9, /obj/structure/table/abductor = 1),
+		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/platform = list(/obj/structure/platform/uranium = 1),
+	)
+
+	guardian = list(/mob/living/basic/trooper/tormented = 10)
+
+
+///Dimension where the station was afflicted by the curse of Lavaland's pharoah
+/datum/dimension_theme/desert
+	name = "Desert"
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	icon_state = "pharoah_hat"
+	material = /datum/material/sandstone
+	replace_walls = list(/turf/closed/wall/mineral/sandstone = 1)
+	replace_floors = list(/turf/open/floor/fakesand = 8, /turf/open/floor/sandstone/cobbled = 2)
+	replace_carpets = list(/turf/open/floor/carpet/black = 10)
+	replace_objs = list(
+		/obj/structure/chair = list(/obj/structure/chair/greyscale = 9, /obj/structure/bed/abductor = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 2),
+		/obj/structure/table = list(/obj/structure/table/greyscale = 9, /obj/structure/table/abductor = 1),
+		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/platform = list(/obj/structure/platform/uranium = 1),
+	)
+
+	guardian = list(/mob/living/basic/trooper/tormented = 10)
+
+///The world is scrambled!
+/datum/dimension_theme/chaos
+	name = "Chaos"
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	icon_state = "pharoah_hat"
+	material = /datum/material/sandstone
+	replace_walls = list(/turf/closed/wall/mineral/sandstone = 1)
+	replace_floors = list(/turf/open/floor/fakesand = 8, /turf/open/floor/sandstone/cobbled = 2)
+	replace_carpets = list(/turf/open/floor/carpet/black = 10)
+	replace_objs = list(
+		/obj/structure/chair = list(/obj/structure/chair/greyscale = 9, /obj/structure/bed/abductor = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 2),
+		/obj/structure/table = list(/obj/structure/table/greyscale = 9, /obj/structure/table/abductor = 1),
+		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/platform = list(/obj/structure/platform/uranium = 1),
+	)
+
+	guardian = list(/mob/living/basic/trooper/tormented = 10)
