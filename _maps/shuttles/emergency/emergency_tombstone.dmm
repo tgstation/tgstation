@@ -284,12 +284,6 @@
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
-"qf" = (
-/obj/machinery/door/airlock/grunge{
-	name = "Morgue"
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "qn" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
@@ -311,6 +305,12 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"qS" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Morgue"
+	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "rH" = (
 /obj/structure/closet/crate/coffin,
@@ -373,8 +373,7 @@
 /area/shuttle/escape/brig)
 "we" = (
 /obj/machinery/door/window/brigdoor/left/directional/east{
-	name = "Coroner's Office";
-	req_access = list("morgue_secure")
+	name = "Coroner's Office"
 	},
 /obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/turf_decal/trimline/neutral/warning{
@@ -480,7 +479,7 @@
 /area/shuttle/escape)
 "FZ" = (
 /obj/effect/turf_decal/weather/dirt,
-/obj/item/clothing/head/helmet/skull,
+/obj/effect/decal/remains/human/smokey/maintenance,
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
 "Gf" = (
@@ -546,7 +545,6 @@
 /area/shuttle/escape)
 "MT" = (
 /obj/machinery/door/airlock/maintenance_hatch,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Nw" = (
@@ -613,10 +611,6 @@
 /obj/machinery/door/airlock/grunge{
 	name = "Morgue"
 	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"Sn" = (
-/obj/effect/spawner/costume/plaguedoctor,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ty" = (
@@ -691,6 +685,10 @@
 /obj/item/shovel,
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
+"Yk" = (
+/obj/effect/spawner/costume/plaguedoctor,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "Yp" = (
 /obj/machinery/light/small/dim/directional/east,
 /obj/structure/bodycontainer/morgue/beeper_off{
@@ -703,7 +701,6 @@
 /obj/machinery/door/morgue{
 	name = "Occult Study"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/medical/coroner,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "YF" = (
@@ -926,7 +923,7 @@ qn
 Uu
 "}
 (12,1,1) = {"
-qf
+qS
 qx
 Ws
 Yp
@@ -1171,7 +1168,7 @@ Uu
 Uu
 Uu
 dd
-Sn
+Yk
 dd
 Uu
 Uu
