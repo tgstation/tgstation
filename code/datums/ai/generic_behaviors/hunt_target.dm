@@ -49,7 +49,7 @@
 	var/behavior_combat_mode = TRUE
 
 /datum/bt_node/ai_behavior/hunt_target/interact_with_target/target_caught(mob/living/hunter, atom/hunted)
-	hunter.ai_controller.ai_interact(target = hunted, combat_mode = behavior_combat_mode)
+	hunter.ai_controller.ai_interact(target = hunted, combat_mode = behavior_combat_mode) // NEEDS ASYNC WRAPPING
 
 /// Uses a cooldown ability from ability_key on the target.
 /datum/bt_node/ai_behavior/hunt_target/use_ability_on_target
@@ -65,7 +65,7 @@
 
 /datum/bt_node/ai_behavior/hunt_target/use_ability_on_target/target_caught(mob/living/hunter, atom/hunted)
 	var/datum/action/cooldown/ability = hunter.ai_controller.blackboard[ability_key]
-	ability.InterceptClickOn(hunter, null, hunted)
+	ability.InterceptClickOn(hunter, null, hunted) // NEEDS ASYNC WRAPPING
 
 /// Celebrates around the target with a spin animation.
 /datum/bt_node/ai_behavior/hunt_target/snail_people
@@ -80,7 +80,7 @@
 	always_reset_target = TRUE
 
 /datum/bt_node/ai_behavior/hunt_target/pull_target/target_caught(mob/living/hunter, obj/item/hunted)
-	hunter.start_pulling(hunted)
+	hunter.start_pulling(hunted) // NEEDS ASYNC WRAPPING
 
 /// Emotes enjoyment of the target's scent.
 /datum/bt_node/ai_behavior/hunt_target/sniff_flora

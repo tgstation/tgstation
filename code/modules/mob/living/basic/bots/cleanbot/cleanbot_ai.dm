@@ -79,7 +79,7 @@
 	if(length(speech_list))
 		var/mob/living/living_pawn = controller.pawn
 		if(!QDELETED(living_pawn))
-			living_pawn.say(pick(speech_list), forced = "ai controller")
+			INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/atom/movable, say), pick(speech_list), forced = "ai controller")
 	controller.clear_blackboard_key(target_key)
 
 

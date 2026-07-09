@@ -122,10 +122,9 @@
 	controller.set_blackboard_key(BB_CUSTOMER_LEAVING, TRUE)
 	customer_pawn.update_icon()
 	if(succeeded)
-		customer_pawn.say(pick(customer_data.leave_happy_lines))
+		INVOKE_ASYNC(customer_pawn, TYPE_PROC_REF(/atom/movable, say), pick(customer_data.leave_happy_lines))
 	else
-		customer_pawn.say(pick(customer_data.leave_mad_lines))
-
+		INVOKE_ASYNC(customer_pawn, TYPE_PROC_REF(/atom/movable, say), pick(customer_data.leave_mad_lines))
 
 /// Resolves the venue exit portal from attending_venue.current_visitors and stores it in BB_CUSTOMER_EXIT_PORTAL.
 /datum/bt_node/ai_behavior/robot_customer/find_exit_portal

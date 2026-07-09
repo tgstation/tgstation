@@ -39,4 +39,4 @@
 		if(QDELETED(bane))
 			return
 		var/list/bane_quotes = strings("bane.json", "bane")
-		bane.say(pick(bane_quotes))
+		INVOKE_ASYNC(bane, TYPE_PROC_REF(/atom/movable, say), pick(bane_quotes))
