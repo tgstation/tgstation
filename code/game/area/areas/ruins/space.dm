@@ -788,3 +788,4 @@
 
 //Kilostation
 /area/ruin/space/has_grav/abandoned_warehouse
+	name = "\improper Abandoned Warehouse"
