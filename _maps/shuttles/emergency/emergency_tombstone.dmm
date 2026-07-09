@@ -3,6 +3,7 @@
 /obj/effect/turf_decal/siding/dark_blue{
 	dir = 4
 	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "as" = (
@@ -39,17 +40,16 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/thinplating/dark,
-/obj/structure/rack,
-/obj/item/storage/box/bodybags,
-/obj/item/storage/box/bodybags{
-	pixel_x = 3;
-	pixel_y = 3
-	},
+/obj/structure/table,
+/obj/item/storage/box/gloves,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bR" = (
-/obj/structure/bookcase/random/religion,
-/turf/open/floor/plating,
+/obj/structure/closet/crate/grave/filled,
+/obj/effect/spawner/random/exotic/grave,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/misc/dirt/station,
 /area/shuttle/escape)
 "cb" = (
 /obj/effect/turf_decal/stripes/line{
@@ -66,6 +66,7 @@
 /obj/effect/turf_decal/trimline/blue,
 /obj/structure/mirror/directional/west,
 /obj/structure/sink/directional/east,
+/obj/structure/sign/poster/official/cleanliness/directional/north,
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
 "cu" = (
@@ -109,10 +110,17 @@
 /obj/item/flashlight/flare/torch,
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
+"dF" = (
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "et" = (
-/obj/machinery/portable_atmospherics/canister/miasma,
-/obj/structure/sign/warning/biohazard/directional/north,
-/turf/open/floor/plating,
+/obj/machinery/light/small/directional/south,
+/obj/structure/sign/warning/vacuum/directional/south,
+/turf/open/floor/catwalk_floor,
 /area/shuttle/escape)
 "eW" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner,
@@ -146,8 +154,11 @@
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
 "it" = (
-/obj/structure/closet/jcloset,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/mob/living/basic/mouse,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "iz" = (
 /obj/effect/spawner/random/trash/hobo_squat{
@@ -166,6 +177,7 @@
 	dir = 1
 	},
 /obj/machinery/light/small/dim/directional/south,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
 "jS" = (
@@ -224,6 +236,7 @@
 "mm" = (
 /obj/structure/kitchenspike,
 /obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "mr" = (
@@ -306,15 +319,21 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"qS" = (
-/obj/machinery/door/airlock/grunge{
-	name = "Morgue"
-	},
+"rz" = (
+/obj/structure/closet/jcloset,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "rH" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/misc/dirt/station,
+/area/shuttle/escape)
+"rK" = (
+/obj/machinery/portable_atmospherics/canister/miasma,
+/obj/effect/turf_decal/delivery,
+/obj/structure/sign/warning/biohazard/directional/west,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "si" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
@@ -327,6 +346,12 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"sP" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Morgue"
+	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "th" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -371,6 +396,15 @@
 /obj/structure/sign/warning/hot_temp/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape/brig)
+"wa" = (
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/structure/sign/departments/maint/directional/north,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"wb" = (
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
 "we" = (
 /obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "Coroner's Office"
@@ -401,6 +435,10 @@
 /obj/item/storage/box/bodybags,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"wZ" = (
+/obj/effect/spawner/costume/plaguedoctor,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "xc" = (
 /obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium,
@@ -410,6 +448,11 @@
 	dir = 5
 	},
 /turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"yj" = (
+/obj/structure/closet/crate/grave/filled,
+/obj/effect/spawner/random/exotic/grave,
+/turf/open/misc/dirt/station,
 /area/shuttle/escape)
 "yo" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
@@ -430,6 +473,13 @@
 	},
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
+"Ah" = (
+/obj/structure/bodycontainer/morgue/beeper_off{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
 "Aw" = (
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -448,8 +498,12 @@
 /turf/template_noop,
 /area/template_noop)
 "Cz" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/turf/open/floor/plating,
+/obj/machinery/light/small/dim/directional/west,
+/obj/structure/bodycontainer/morgue/beeper_off{
+	name = "morgue"
+	},
+/obj/structure/sign/clock/directional/west,
+/turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
 "DO" = (
 /obj/effect/turf_decal/trimline/neutral/warning,
@@ -475,6 +529,7 @@
 /obj/structure/mineral_door{
 	name = "Crypt"
 	},
+/obj/structure/barricade/wooden/crude,
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
 "FZ" = (
@@ -483,21 +538,14 @@
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
 "Gf" = (
-/obj/effect/spawner/random/trash/garbage{
-	spawn_scatter_radius = 1;
-	spawn_loot_count = 2;
-	spawn_loot_chance = 50
-	},
-/obj/machinery/light/small/dim/directional/west,
+/mob/living/basic/spider/maintenance,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Gs" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
-/obj/structure/table,
-/obj/item/storage/box/gloves,
-/obj/item/reagent_containers/spray/cleaner,
+/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "GU" = (
@@ -505,6 +553,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
 "Hy" = (
@@ -519,6 +568,7 @@
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 9
 	},
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape/brig)
 "Ih" = (
@@ -526,6 +576,15 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"JE" = (
+/obj/effect/spawner/random/trash/garbage{
+	spawn_scatter_radius = 1;
+	spawn_loot_count = 2;
+	spawn_loot_chance = 50
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "Lv" = (
 /obj/effect/turf_decal/siding/dark_blue{
@@ -578,6 +637,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/machinery/light/small/dim/directional/east,
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Ow" = (
@@ -585,9 +645,12 @@
 /obj/item/shovel,
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
+"Pi" = (
+/obj/effect/turf_decal/weather/dirt,
+/obj/structure/sign/poster/contraband/random/directional/south,
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
 "PM" = (
-/obj/structure/sign/warning/vacuum/directional/south,
-/obj/machinery/light/small/directional/south,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/escape)
 "PP" = (
@@ -629,6 +692,16 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
+"UM" = (
+/obj/structure/closet/crate/grave/fresh,
+/obj/structure/sign/painting/library{
+	pixel_y = 33;
+	dir = 1
+	},
+/obj/effect/spawner/random/exotic/grave,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/misc/dirt/station,
+/area/shuttle/escape)
 "Vl" = (
 /obj/structure/closet/crate/grave/fresh,
 /obj/structure/sign/painting/library{
@@ -659,6 +732,13 @@
 	},
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
+"WE" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/structure/sign/poster/contraband/random/directional/north,
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
 "Xg" = (
 /obj/structure/closet/crate/grave/fresh,
 /obj/structure/sign/painting/library{
@@ -685,10 +765,6 @@
 /obj/item/shovel,
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
-"Yk" = (
-/obj/effect/spawner/costume/plaguedoctor,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "Yp" = (
 /obj/machinery/light/small/dim/directional/east,
 /obj/structure/bodycontainer/morgue/beeper_off{
@@ -698,9 +774,9 @@
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
 "Yt" = (
-/obj/machinery/door/morgue{
-	name = "Occult Study"
-	},
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "YF" = (
@@ -715,6 +791,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 5
 	},
+/obj/item/radio/intercom/directional/east,
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
 "YS" = (
@@ -738,85 +815,85 @@
 (1,1,1) = {"
 Bj
 Bj
-Bj
-Bj
-Bj
 Ih
 Ih
 Bj
 Ih
 Ih
 Bj
+Ih
+Ih
 Bj
-Bj
+Ih
+Ih
 Bj
 Bj
 "}
 (2,1,1) = {"
 Bj
 Bj
-Ih
-Ih
-Bj
+aI
+aI
+lV
 aI
 aI
 iz
 aI
 aI
-Bj
-Ih
-Ih
+vP
+aI
+aI
 Bj
 Bj
 "}
 (3,1,1) = {"
-Bj
-Bj
-aI
-aI
-Bj
 Uu
 Uu
 Uu
 Uu
 Uu
-Bj
-aI
-aI
-Bj
-Bj
-"}
-(4,1,1) = {"
 Uu
 Uu
 Uu
 Uu
-Bj
 Uu
-et
-Gf
-bR
 Uu
-Bj
 Uu
 Uu
 aS
 Uu
 "}
+(4,1,1) = {"
+Uu
+rz
+rK
+Uu
+Aw
+lV
+Aw
+Gf
+vP
+Aw
+Aw
+Uu
+Yt
+et
+Uu
+"}
 (5,1,1) = {"
 Uu
 Aw
-it
-Uu
-lV
-Uu
-Uu
-Yt
-Uu
-Uu
 vP
+Aw
+Aw
 Uu
-Cz
+Uu
+xc
+Uu
+Uu
+JE
+MT
+Aw
 PM
 Uu
 "}
@@ -839,9 +916,9 @@ Uu
 "}
 (7,1,1) = {"
 Uu
-qx
+wa
 vL
-Fi
+Cz
 DO
 wX
 mt
@@ -896,7 +973,7 @@ qM
 qM
 cu
 qM
-qM
+it
 qM
 cu
 qM
@@ -923,7 +1000,7 @@ qn
 Uu
 "}
 (12,1,1) = {"
-qS
+sP
 qx
 Ws
 Yp
@@ -943,7 +1020,7 @@ Uu
 Uu
 Uu
 Uu
-Uu
+wb
 Uu
 RZ
 Uu
@@ -1082,9 +1159,9 @@ mz
 mz
 Uu
 Uu
-so
+WE
 vK
-vD
+Pi
 Uu
 Uu
 FJ
@@ -1103,7 +1180,7 @@ so
 vK
 vD
 Uu
-Xg
+UM
 Ru
 Ow
 aX
@@ -1154,10 +1231,10 @@ Uu
 YF
 Uu
 Uu
-YS
+bR
 Vl
 YS
-YS
+yj
 Uu
 "}
 (26,1,1) = {"
@@ -1168,7 +1245,7 @@ Uu
 Uu
 Uu
 dd
-Yk
+wZ
 dd
 Uu
 Uu
@@ -1186,7 +1263,7 @@ Bj
 Uu
 aj
 Lv
-aj
+dF
 Uu
 Bj
 Bj
@@ -1201,7 +1278,7 @@ Bj
 Bj
 Bj
 mz
-Ab
+Ah
 yJ
 Ab
 mz
