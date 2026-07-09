@@ -85,45 +85,14 @@
 	if(user.put_in_hands(N))
 		to_chat(user, span_notice("You make a circle with your hand."))
 
-/datum/emote/living/carbon/meow
-	key = "meow"
-	key_third_person = "meows"
+/datum/emote/living/carbon/whistle
+	key = "whistle"
+	key_third_person = "whistles"
+	message = "whistles."
+	message_mime = "whistles silently!"
 	vary = TRUE
-	message = "meows!"
-	message_mime = "meows silently."
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	sound = SFX_CAT_MEOW
-
-/datum/emote/living/carbon/meow/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional, params)
-	if(!iscarbon(user) || (!istype(user.get_organ_slot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/cat)))
-		return FALSE
-	return ..()
-
-/datum/emote/living/carbon/purr
-	key = "purr"
-	key_third_person = "purrs"
-	vary = TRUE
-	message = "purrs."
-	emote_type = EMOTE_AUDIBLE
-	sound = SFX_CAT_PURR
-
-/datum/emote/living/carbon/purr/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional, params)
-	if(!iscarbon(user) || (!istype(user.get_organ_slot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/cat)) || HAS_MIND_TRAIT(user, TRAIT_MIMING))
-		return FALSE
-	return ..()
-
-/datum/emote/living/carbon/mchitter
-	key = "chitter"
-	key_third_person = "chitters"
-	message = "chitters!"
-	message_mime = "chitters silently?"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	sound = 'sound/mobs/humanoids/moth/moth_chitter.ogg'
-
-/datum/emote/living/carbon/mchitter/can_run_emote(mob/living/carbon/user, status_check, intentional, params)
-	if(!ismoth(user))
-		return FALSE
-	return ..()
+	sound = 'sound/mobs/humanoids/human/whistle/whistle1.ogg'
 
 /datum/emote/living/carbon/moan
 	key = "moan"
@@ -131,19 +100,6 @@
 	message = "moans!"
 	message_mime = "appears to moan!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-
-/datum/emote/living/carbon/msqueak
-	key = "squeak"
-	key_third_person = "squeaks"
-	message = "squeaks!"
-	message_mime = "squeaks silently?"
-	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	sound = 'sound/mobs/humanoids/moth/moth_squeak.ogg'
-
-/datum/emote/living/carbon/msqueak/can_run_emote(mob/living/carbon/user, status_check, intentional, params)
-	if(!ismoth(user))
-		return FALSE
-	return ..()
 
 /datum/emote/living/carbon/noogie
 	key = "noogie"

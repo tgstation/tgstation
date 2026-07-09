@@ -690,7 +690,7 @@
 	say_mod = "meows"
 	liked_foodtypes = SEAFOOD | ORANGES | BUGS | GORE
 	disliked_foodtypes = GROSS | CLOTH | RAW
-	organ_traits = list(TRAIT_WOUND_LICKER, TRAIT_FISH_EATER, TRAIT_CARPOTOXIN_IMMUNE)
+	organ_traits = list(TRAIT_WOUND_LICKER, TRAIT_FISH_EATER, TRAIT_CARPOTOXIN_IMMUNE, TRAIT_CAT_EMOTES_ALLOWED)
 	languages_native = list(/datum/language/nekomimetic)
 	actions_types = list(/datum/action/item_action/organ_action/go_feral)
 	emote_sounds = list(
@@ -760,6 +760,7 @@
 	disliked_foodtypes = FRUIT | GROSS | BUGS | GORE
 	toxic_foodtypes = MEAT | RAW | SEAFOOD
 	languages_native = list(/datum/language/moffic)
+	organ_traits = list(TRAIT_MOTH_EMOTES_ALLOWED)
 	emote_sounds = list(
 		/datum/emote/living/scream::key = 'sound/mobs/humanoids/moth/scream_moth.ogg',
 		/datum/emote/living/laugh::key = 'sound/mobs/humanoids/moth/moth_laugh1.ogg',

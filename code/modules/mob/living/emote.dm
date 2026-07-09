@@ -860,11 +860,45 @@
 	message_mime = "makes a rude gesture!"
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/carbon/whistle
-	key = "whistle"
-	key_third_person = "whistles"
-	message = "whistles."
-	message_mime = "whistles silently!"
+///Abstract type for emotes that can be run by cats and those with a felinid tongue
+/datum/emote/living/cat
+	abstract_type = /datum/emote/living/cat
+	trait_required = TRAIT_CAT_EMOTES_ALLOWED
+
+/datum/emote/living/cat/meow
+	key = "meow"
+	key_third_person = "meows"
 	vary = TRUE
+	message = "meows!"
+	message_mime = "meows silently."
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	sound = SFX_CAT_MEOW
+
+/datum/emote/living/cat/purr
+	key = "purr"
+	key_third_person = "purrs"
+	vary = TRUE
+	message = "purrs."
+	emote_type = EMOTE_AUDIBLE
+	sound = SFX_CAT_PURR
+
+///Abstract type for emotes that can be run by mothroaches and those with a moth tongue
+/datum/emote/living/moth
+	abstract_type = /datum/emote/living/moth
+	trait_required = TRAIT_MOTH_EMOTES_ALLOWED
+
+/datum/emote/living/moth/mchitter
+	key = "chitter"
+	key_third_person = "chitters"
+	message = "chitters!"
+	message_mime = "chitters silently?"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	sound = 'sound/mobs/humanoids/human/whistle/whistle1.ogg'
+	sound = 'sound/mobs/humanoids/moth/moth_chitter.ogg'
+
+/datum/emote/living/moth/msqueak
+	key = "squeak"
+	key_third_person = "squeaks"
+	message = "squeaks!"
+	message_mime = "squeaks silently?"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	sound = 'sound/mobs/humanoids/moth/moth_squeak.ogg'
