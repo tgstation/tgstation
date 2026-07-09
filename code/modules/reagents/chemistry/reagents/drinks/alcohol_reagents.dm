@@ -3559,7 +3559,7 @@
 	boozepwr = 70
 	color = "#c4eef6"
 	quality = DRINK_FANTASTIC
-	taste_description = "something funny" //TODO:Make text spooky
+	taste_description = "something <span class='hypnophrase'>funny</span>"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -3581,7 +3581,7 @@
 	boozepwr = 1
 	color = "#000000"
 	quality = DRINK_FANTASTIC
-	taste_description = "..." //TODO: something better here
+	taste_description = "an absence"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
