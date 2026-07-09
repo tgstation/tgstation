@@ -41,6 +41,7 @@ SUBSYSTEM_DEF(ai_controllers)
 	///AI controllers, sorted by their status
 	var/list/ai_controllers_by_status = list(
 		AI_STATUS_ON = list(),
+		AI_STATUS_ON_LOW = list(),
 		AI_STATUS_OFF = list(),
 	)
 	///AI controllers, sorted by their z level
@@ -59,7 +60,7 @@ SUBSYSTEM_DEF(ai_controllers)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ai_controllers/stat_entry(msg)
-	msg = "\n  Active:[length(ai_controllers_by_status[planning_status])]|Off:[length(ai_controllers_by_status[AI_STATUS_OFF])]"
+	msg = "\n  Active:[length(SSai_controllers.ai_controllers_by_status[planning_status])]|Off:[length(SSai_controllers.ai_controllers_by_status[AI_STATUS_OFF])]"
 	msg += "\n  Pass:[pass_size - length(currentrun)]/[pass_size]|AvgPass:[round(average_pass_time * 0.1, 0.1)]s|WorstGap:[round(longest_tick_gap * 0.1, 0.1)]s"
 	if(length(most_expensive))
 		msg += "\n  Top: [most_expensive.Join(" | ")]"
@@ -67,7 +68,7 @@ SUBSYSTEM_DEF(ai_controllers)
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
 	if(!resumed)
-		var/list/planning_list = ai_controllers_by_status[planning_status]
+		var/list/planning_list = SSai_controllers.ai_controllers_by_status[planning_status]
 		currentrun = planning_list.Copy()
 		summing_cost = 0
 		summing_tick_gap = 0

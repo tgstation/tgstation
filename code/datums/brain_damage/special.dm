@@ -515,7 +515,7 @@
 
 	owner.ai_controller = new /datum/ai_controller/monkey(owner)
 	owner.ai_controller.continue_processing_when_client = TRUE
-	owner.ai_controller.ai_traits |= CANNOT_GO_IDLE
+	owner.ai_controller.ai_traits |= RUN_WHILE_UNWATCHED
 	owner.ai_controller.force_ai_off()
 
 /datum/brain_trauma/special/primal_instincts/on_lose(silent)

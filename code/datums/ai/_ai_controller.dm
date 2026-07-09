@@ -367,30 +367,16 @@ multiple modular subtrees with behaviors
 
 	recalculate_idle()
 
-///Returns TRUE if ai should be idle
-/datum/ai_controller/proc/should_idle()
-	if(ai_traits & CANNOT_GO_IDLE)
-		return FALSE
+///Returns TRUE if a living mob with a client is in one of our tracked spatial grid cells
+/datum/ai_controller/proc/has_nearby_client()
 	if(isnull(our_cells))
-		return FALSE
-	var/turf/pawn_turf = get_turf(pawn)
-	if(isnull(pawn_turf))
-		return FALSE
-	var/area/pawn_area = get_area(pawn_turf)
-	if(istype(pawn_area, /area/station) || istype(pawn_area, /area/shuttle)) //Never idle in station
 		return FALSE
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
 		if(locate(/mob/living) in grid.client_contents)
-			return FALSE
-
-/*
-#ifdef AI_PERFORMANCE_TESTING
+			return TRUE
 	return FALSE
-#endif
-*/
-	return TRUE
 
-///Check if mob should go into idle (from spatial cells)
+///Check if mob should go into idle/low-priority (from spatial cells)
 /datum/ai_controller/proc/recalculate_idle(datum/exited)
 	if(ai_status == AI_STATUS_OFF)
 		return
@@ -406,17 +392,18 @@ multiple modular subtrees with behaviors
 	if(distance <= interesting_dist) //is our target in between interesting cells?
 		return
 
-	if(should_idle())
-		set_ai_status(AI_STATUS_OFF)
+	reset_ai_status()
 
 /datum/ai_controller/proc/on_client_enter(datum/source, list/target_list)
 	SIGNAL_HANDLER
 
+	if(ai_status == AI_STATUS_ON)
+		return
+
 	if (!(locate(/mob/living) in target_list))
 		return
 
-	if(ai_status == AI_STATUS_OFF)
-		reset_ai_status()
+	reset_ai_status()
 
 /datum/ai_controller/proc/on_client_exit(datum/source, datum/exited)
 	SIGNAL_HANDLER
@@ -444,8 +431,8 @@ multiple modular subtrees with behaviors
 /**
  * Gets the AI status we expect the AI controller to be on at this current moment.
  * Returns AI_STATUS_OFF if it has been forced off, is inhabited by a Client and shouldn't be, is dead and cannot act while dead,
- * or is sleeping for performance (off-station with no clients on its z-level or none nearby; client arrival wakes these automatically).
- * Returns AI_STATUS_ON otherwise.
+ * or is sleeping for performance (off-station with no nearby client and not flagged RUN_WHILE_UNWATCHED; client arrival wakes these automatically).
+ * Otherwise returns AI_STATUS_ON or AI_STATUS_ON_LOW, see get_active_ai_status().
  */
 /datum/ai_controller/proc/get_expected_ai_status()
 
@@ -473,21 +460,35 @@ multiple modular subtrees with behaviors
 			return AI_STATUS_ON
 		return AI_STATUS_OFF
 
-	var/turf/pawn_turf = get_turf(mob_pawn)
 #ifdef TESTING
+	var/turf/pawn_turf = get_turf(mob_pawn)
 	if(!pawn_turf)
 		CRASH("AI controller [src] controlling pawn ([pawn]) is not on a turf.")
 #endif
 	if(!able_to_run)
 		return AI_STATUS_OFF
-	var/area/pawn_area = get_area(pawn_turf)
-	var/on_station_territory = istype(pawn_area, /area/station) || istype(pawn_area, /area/shuttle)
-	// AI actually standing on the station or a shuttle (not just sharing its z-level, e.g. a ruin) always stays awake
-	if(!length(SSmobs.clients_by_zlevel[pawn_turf.z]) && !(ai_traits & CAN_RUN_WITHOUT_CLIENTS) && !on_station_territory)
-		return AI_STATUS_OFF
-	if(should_idle())
-		return AI_STATUS_OFF
-	return AI_STATUS_ON
+	return get_active_ai_status()
+
+/**
+ * Classifies an active AI controller into a priority tier.
+ * Returns AI_STATUS_ON for controllers on station/shuttle territory, with a nearby client,
+ * Returns AI_STATUS_ON_LOW for other active controllers unless they have ALWAYS_HIGH_PRIORITY.
+ * else its AI_STATUS_OFF
+ */
+/datum/ai_controller/proc/get_active_ai_status()
+	var/turf/pawn_turf = get_turf(pawn)
+	var/area/pawn_area = pawn_turf ? get_area(pawn_turf) : null
+	// AI actually standing on the station or a shuttle always stays high priority
+	if(istype(pawn_area, /area/station) || istype(pawn_area, /area/shuttle))
+		return AI_STATUS_ON
+	if(has_nearby_client())
+		return AI_STATUS_ON
+	if(ai_traits & RUN_WHILE_UNWATCHED)
+		if(ai_traits & ALWAYS_HIGH_PRIORITY)
+			return AI_STATUS_ON
+		else
+			return AI_STATUS_ON_LOW
+	return AI_STATUS_OFF
 
 ///Called when the AI controller pawn changes z levels, we check if there's any clients on the new one and wake up the AI if there is.
 /datum/ai_controller/proc/on_changed_z_level(atom/source, turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -1069,7 +1070,7 @@ multiple modular subtrees with behaviors
 				active_node_label = found.label
 				break
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "Active Execution Index", "[active_execution_index] ([active_node_label])")
-	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "AI Status", ai_status == AI_STATUS_ON ? "ON" : "OFF")
+	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "AI Status", ai_status)
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "Able to Run", able_to_run ? "TRUE" : "FALSE")
 
 	// Blackboard snapshot

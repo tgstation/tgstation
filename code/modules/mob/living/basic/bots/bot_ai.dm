@@ -11,7 +11,7 @@
 
 	ai_movement = /datum/ai_movement/jps/bot
 	max_target_distance = AI_BOT_PATH_LENGTH
-	ai_traits = DEFAULT_AI_FLAGS | CANNOT_GO_IDLE
+	ai_traits = DEFAULT_AI_FLAGS | RUN_WHILE_UNWATCHED
 	///keys to be reset when the bot is reset
 	var/list/reset_keys = list(
 		BB_BEACON_TARGET,

@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	// these guys are intended to operate even if nobody's around
-	ai_traits = DEFAULT_AI_FLAGS | CANNOT_GO_IDLE | CAN_RUN_WITHOUT_CLIENTS
+	ai_traits = DEFAULT_AI_FLAGS | RUN_WHILE_UNWATCHED
 
 /datum/targeting_strategy/basic/mook
 	custom_faction_check = TRUE

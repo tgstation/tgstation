@@ -20,7 +20,7 @@
 	// Ai controlling processes expect a seconds_per_tick, supply a real-fake dt
 	var/fake_dt = SSai_controllers.wait * 0.1
 	// Force this fker to be on
-	biter.ai_controller.ai_traits |= CANNOT_GO_IDLE | CAN_RUN_WITHOUT_CLIENTS
+	biter.ai_controller.ai_traits |= RUN_WHILE_UNWATCHED
 	biter.ai_controller.set_ai_status(AI_STATUS_ON)
 
 	// Mouse eating is chance-based, so we set the hunting target directly, yes, this messed with the test from what it was before, but I'm not sure how to do it better :(

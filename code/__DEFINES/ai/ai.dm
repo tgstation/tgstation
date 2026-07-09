@@ -25,8 +25,10 @@
 
 //AI controller flags
 //If you add a new status, be sure to add it to the ai_controllers subsystem's ai_controllers_by_status list.
-///The AI is currently active.
+///The AI is currently active, and is planned by the high priority subsystem.
 #define AI_STATUS_ON "ai_on"
+///The AI is currently active, but is planned by the low priority (background) subsystem.
+#define AI_STATUS_ON_LOW "ai_on_low"
 ///The AI is not running. Cancels any active plans if set.
 #define AI_STATUS_OFF "ai_off"
 
@@ -73,10 +75,10 @@
 #define CAN_ACT_IN_STASIS (1<<3)
 /// Continue processing while aggressively grabbed
 #define CAN_ACT_WHILE_GRABBED (1<<4)
-/// Never pauses when off-station with no players nearby (replaces the old can_idle = FALSE)
-#define CANNOT_GO_IDLE (1<<5)
-/// Keeps running even when there are no clients on its z-level (replaces can_run_without_clients_on_zlevel)
-#define CAN_RUN_WITHOUT_CLIENTS (1<<6)
+/// Keeps planning on low prio when unwatched
+#define RUN_WHILE_UNWATCHED (1<<5)
+/// Always plans at high priority. Only works with RUN_WHILE_UNWATCHED
+#define ALWAYS_HIGH_PRIORITY (1<<6)
 
 /// Flags we expect for most AI controllers
 #define DEFAULT_AI_FLAGS (PAUSE_DURING_DO_AFTER | CAN_ACT_WHILE_GRABBED)
