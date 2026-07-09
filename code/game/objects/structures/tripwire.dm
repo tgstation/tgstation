@@ -275,8 +275,8 @@
 
 	// For disambiguation, damage_value is the mech's health / 5. damage_value is the base for all the rest of the numbers.
 	// damage_value is applied directly as damage to whoever it falls on. That person is also paralyzed for damage_value / 10 seconds.
-	// The pilot of the falling mech recieves damage_value / 5 as a head trauma.
-	// The mech itself recieves damage_value * 0.15 seconds of immobility(can still attack, but can't rotate). (damage_value / 10 * 1.5)
+	// The pilot of the falling mech receives damage_value / 5 as a head trauma.
+	// The mech itself receives damage_value * 0.15 seconds of immobility(can still attack, but can't rotate). (damage_value / 10 * 1.5)
 	falling_down.toppled = TRUE
 	falling_down.forceMove(get_turf(src))
 	var/tripped = falling_down.fall_and_crush(get_step(falling_down, falling_down.dir), damage_value, 15, paralyze_time = damage_value, rotation = falling_angle)
