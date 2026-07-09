@@ -86,6 +86,9 @@ Difficulty: Medium
 	QDEL_NULL(miner_saw)
 	return ..()
 
+/mob/living/basic/boss/blood_drunk_miner/get_hud_x_offset()
+	return 0
+
 /// Returns a list of innate actions for the blood-drunk miner.
 /mob/living/basic/boss/blood_drunk_miner/proc/get_innate_actions()
 	var/list/innate_abilities = list(

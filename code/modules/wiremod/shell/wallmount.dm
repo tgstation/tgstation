@@ -31,3 +31,4 @@
 	icon_state = "wallmount_assembly"
 	result_path = /obj/structure/wallmount_circuit
 	pixel_shift = 32
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)

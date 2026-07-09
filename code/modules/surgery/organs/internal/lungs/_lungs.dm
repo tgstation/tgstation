@@ -92,18 +92,18 @@
 	var/tritium_irradiation_probability_max = 60
 
 	var/cold_message = "your face freezing and an icicle forming"
-	var/cold_level_1_threshold = 260
-	var/cold_level_2_threshold = 200
-	var/cold_level_3_threshold = 120
+	var/cold_level_1_threshold = COLD_LEVEL_1_THRESHOLD
+	var/cold_level_2_threshold = COLD_LEVEL_2_THRESHOLD
+	var/cold_level_3_threshold = COLD_LEVEL_3_THRESHOLD
 	var/cold_level_1_damage = COLD_GAS_DAMAGE_LEVEL_1 //Keep in mind with gas damage levels, you can set these to be negative, if you want someone to heal, instead.
 	var/cold_level_2_damage = COLD_GAS_DAMAGE_LEVEL_2
 	var/cold_level_3_damage = COLD_GAS_DAMAGE_LEVEL_3
 	var/cold_damage_type = BURN
 
 	var/hot_message = "your face burning and a searing heat"
-	var/heat_level_1_threshold = 360
-	var/heat_level_2_threshold = 400
-	var/heat_level_3_threshold = 1000
+	var/heat_level_1_threshold = HEAT_LEVEL_1_THRESHOLD
+	var/heat_level_2_threshold = HEAT_LEVEL_2_THRESHOLD
+	var/heat_level_3_threshold = HEAT_LEVEL_3_THRESHOLD
 	var/heat_level_1_damage = HEAT_GAS_DAMAGE_LEVEL_1
 	var/heat_level_2_damage = HEAT_GAS_DAMAGE_LEVEL_2
 	var/heat_level_3_damage = HEAT_GAS_DAMAGE_LEVEL_3
@@ -944,6 +944,7 @@
 	breath_noise = "a steady whirr"
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
 /obj/item/organ/lungs/cybernetic/emp_act(severity)
@@ -973,10 +974,11 @@
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	safe_oxygen_min = 13
 	emp_vulnerability = 20
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 
-	cold_level_1_threshold = 200
-	cold_level_2_threshold = 140
-	cold_level_3_threshold = 100
+	cold_level_1_threshold = COLD_LEVEL_1_THRESHOLD - 60
+	cold_level_2_threshold = COLD_LEVEL_2_THRESHOLD - 60
+	cold_level_3_threshold = COLD_LEVEL_3_THRESHOLD - 20
 
 /obj/item/organ/lungs/cybernetic/surplus
 	name = "surplus prosthetic lungs"
@@ -1101,8 +1103,8 @@
 	icon_state = "lungs_ethereal"
 	breath_noise = "a low fluorescent hum"
 	heat_level_1_threshold = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // 150C or 433k, in line with ethereal max safe body temperature
-	heat_level_2_threshold = 473
-	heat_level_3_threshold = 1073
+	heat_level_2_threshold = HEAT_LEVEL_2_THRESHOLD + 73
+	heat_level_3_threshold = HEAT_LEVEL_3_THRESHOLD + 73
 
 /obj/item/organ/lungs/ethereal/ethereal_smoker
 	name = "smoker aeration reticulum"

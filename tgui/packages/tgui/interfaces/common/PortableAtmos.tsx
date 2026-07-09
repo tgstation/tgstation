@@ -8,8 +8,22 @@ import {
 
 import { useBackend } from '../../backend';
 
+type StoredTank = {
+  name: string;
+  pressure: number;
+};
+
+export type PortableBasicInfoData = {
+  connected: boolean;
+  holding: StoredTank | null;
+  on: boolean;
+  pressure: number;
+  hasHypernobCrystal: boolean;
+  reactionSuppressionEnabled: boolean;
+};
+
 export const PortableBasicInfo = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<PortableBasicInfoData>();
   const {
     connected,
     holding,
@@ -25,10 +39,11 @@ export const PortableBasicInfo = (props) => {
         buttons={
           <Button
             icon={on ? 'power-off' : 'times'}
-            content={on ? 'On' : 'Off'}
             selected={on}
             onClick={() => act('power')}
-          />
+          >
+            {on ? 'On' : 'Off'}
+          </Button>
         }
       >
         <LabeledList>
@@ -42,13 +57,12 @@ export const PortableBasicInfo = (props) => {
           {!!hasHypernobCrystal && (
             <LabeledList.Item label="Reaction Suppression">
               <Button
-                icon={data.reactionSuppressionEnabled ? 'snowflake' : 'times'}
-                content={
-                  data.reactionSuppressionEnabled ? 'Enabled' : 'Disabled'
-                }
-                selected={data.reactionSuppressionEnabled}
+                icon={reactionSuppressionEnabled ? 'snowflake' : 'times'}
+                selected={reactionSuppressionEnabled}
                 onClick={() => act('reaction_suppression')}
-              />
+              >
+                {reactionSuppressionEnabled ? 'Enabled' : 'Disabled'}
+              </Button>
             </LabeledList.Item>
           )}
         </LabeledList>
@@ -57,12 +71,9 @@ export const PortableBasicInfo = (props) => {
         title="Holding Tank"
         minHeight="82px"
         buttons={
-          <Button
-            icon="eject"
-            content="Eject"
-            disabled={!holding}
-            onClick={() => act('eject')}
-          />
+          <Button icon="eject" disabled={!holding} onClick={() => act('eject')}>
+            Eject
+          </Button>
         }
       >
         {holding ? (

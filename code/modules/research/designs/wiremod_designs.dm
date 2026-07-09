@@ -735,6 +735,10 @@
 		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 5,
 	)
 	build_path = /obj/item/implantcase/circuit
+	transfered_materials = list(
+		/obj/item/implantcase/circuit = /obj/item/implantcase/circuit::custom_materials,
+		/obj/item/implant/circuit = /obj/item/implant/circuit::custom_materials,
+	)
 	build_type = COMPONENT_PRINTER
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS

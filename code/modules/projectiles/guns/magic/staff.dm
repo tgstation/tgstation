@@ -335,7 +335,7 @@
 	user.AddComponent(\
 		/datum/component/face_decal/splat,\
 		icon_state = "creampie",\
-		layers = EXTERNAL_FRONT,\
+		layers = list(EXTERNAL_FRONT = BODY_FRONT_LAYER),\
 	)
 	return SHAME
 

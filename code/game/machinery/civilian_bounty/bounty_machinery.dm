@@ -41,12 +41,13 @@
 	///Cooldown for printing the bounty sheet, and not breaking people's eardrums.
 	COOLDOWN_DECLARE(sheet_printer_cooldown)
 
-/obj/machinery/computer/piratepad_control/civilian/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(isidcard(I))
-		if(id_insert(user, I, inserted_scan_id))
-			inserted_scan_id = I
-			return TRUE
-	return ..()
+/obj/machinery/computer/piratepad_control/civilian/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isidcard(tool))
+		return NONE
+	if(!id_insert(user, tool, inserted_scan_id))
+		return ITEM_INTERACT_BLOCKING
+	inserted_scan_id = tool
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
 	if(istype(I) && istype(I.buffer,/obj/machinery/piratepad/civilian))

@@ -176,7 +176,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	desc = template.desc
 	summon_power = template.power
 	summon_resolve = template.resolve
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/trading_card_summon/get_name_chaser(mob/user, list/name_chaser = list())
 	name_chaser += "Faction: [template.faction]"
@@ -240,7 +240,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 		resolve_color = DEFAULT_RESOLVE_COLOR
 	else
 		resolve_color = modified_color
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/trading_card_summon/Destroy()
 	if(hologram)
@@ -263,7 +263,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	hologram.name = name
 	hologram.alpha = 170
 	hologram.add_atom_colour(team_color, FIXED_COLOUR_PRIORITY)
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/trading_card_summon/blank/get_name_chaser(mob/user, list/name_chaser)
 	name_chaser += "Power/Resolve: [summon_power]/[summon_resolve]"
@@ -272,7 +272,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 /obj/structure/trading_card_summon/blank/modify_stats(mob/living/user)
 	summon_power = num2text(tgui_input_number(user, "Please input power value", "Stat Modification", text2num(summon_power), 25))
 	summon_resolve = num2text(tgui_input_number(user, "Please input resolve value", "Stat Modification", text2num(summon_resolve), 25))
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 #undef STAT_Y
 #undef POWER_X

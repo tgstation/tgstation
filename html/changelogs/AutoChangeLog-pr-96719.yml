@@ -1,4 +1,0 @@
-author: "mcbalaam"
-delete-after: True
-changes:
-  - rscadd: "AIs can now point to things using holopads"

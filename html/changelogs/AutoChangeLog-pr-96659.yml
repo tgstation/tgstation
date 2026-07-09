@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Suffocation damage is slightly more consistent now: You take 3 oxyloss per suffocation tick, reduced for partially successful breaths and or if you are in crit. Alternatively, if you are in crit and you have epinephrine/atropine in your system, it gets nullified entirely."
-  - code_imp: "Cleaned up lungs a bit, particularly relating to abnormal lungs like plasmamen or fish, report any oddities with them."
-  - rscdel: "You no longer have a chance to gasp twice in one suffocation tick."

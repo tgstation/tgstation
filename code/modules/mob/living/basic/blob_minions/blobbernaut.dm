@@ -54,7 +54,7 @@
 /mob/living/basic/blob_minion/blobbernaut/death(gibbed)
 	flick("[icon_state]_death", src)
 	playsound(src, 'sound/mobs/non-humanoids/blobmob/blobbernaut_death.ogg', 100, TRUE)
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 	return ..()
 
 /mob/living/basic/blob_minion/blobbernaut/create_mob_hud()
