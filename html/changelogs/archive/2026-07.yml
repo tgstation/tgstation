@@ -145,10 +145,19 @@
       one, but take longer and must be stationary to do so.
   Melbert:
   - rscdel: Fixed jaws of recovery being able to be stored in the paramedic EMT belt
+  TealSeer:
+  - bugfix: fixed being unable to view/modify trim accesses in Access Management app
   lelandkemble:
   - map: There's no longer a missing pipe in the disposals loop on icebox
+  - bugfix: hand teleporters can now close portals
   timothymtorres:
   - balance: Upload computers in AI Upload Areas no longer require command IDs to
       use.
   vinylspiders:
   - code_imp: tgui-core bumped to v6.1, please report any tgui-related issues
+2026-07-04:
+  LT3:
+  - map: Finished moving the plant outside Metastation medbay's side airlock, an astonishing
+      speed of 1 tile per 8 months.
+  XeonMations:
+  - bugfix: Fixed the radio volume slider being missing in game preferences
