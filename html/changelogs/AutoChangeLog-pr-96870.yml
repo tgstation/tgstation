@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fix the BSRPED potentially bricking reagent containers on removal"
+  - bugfix: "Fix a potential exploit with BSRPED and reagent containers"
