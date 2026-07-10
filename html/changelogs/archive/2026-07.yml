@@ -328,5 +328,7 @@
       with the toggle component (such as jackets) to have invisible icons upon using
       the toggle
 2026-07-10:
+  Melbert:
+  - bugfix: Fix strong arm removal
   lelandkemble:
   - bugfix: Vorpal scythe damage multiplier remains after the first hit
