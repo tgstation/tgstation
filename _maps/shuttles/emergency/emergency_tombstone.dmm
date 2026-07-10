@@ -16,10 +16,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"ay" = (
-/obj/machinery/smartfridge/organ,
-/turf/open/floor/iron/dark/smooth_half,
-/area/shuttle/escape)
 "aI" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
@@ -40,7 +36,12 @@
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
 "bG" = (
-/turf/closed/wall/mineral/plastitanium,
+/obj/effect/turf_decal/tile/dark_green/half{
+	dir = 4
+	},
+/turf/open/floor/iron/freezer/edge{
+	dir = 4
+	},
 /area/shuttle/escape)
 "bR" = (
 /obj/structure/closet/crate/grave/filled,
@@ -74,19 +75,26 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cV" = (
-/obj/effect/turf_decal/trimline/neutral/warning{
-	dir = 8
+/obj/structure/table,
+/obj/item/storage/box/gloves,
+/obj/item/reagent_containers/spray/cleaner,
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
 	},
-/obj/effect/mapping_helpers/dead_body_placer,
-/turf/open/floor/iron/dark/textured_half,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "dd" = (
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "dh" = (
-/obj/structure/table/reinforced,
-/obj/effect/spawner/surgery_tray/full/morgue,
-/turf/open/floor/iron/freezer,
+/obj/effect/turf_decal/tile/dark_green/half{
+	dir = 8
+	},
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/floor/iron/freezer/edge{
+	dir = 8
+	},
 /area/shuttle/escape)
 "dr" = (
 /obj/effect/turf_decal/stripes/line{
@@ -111,6 +119,11 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"eq" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/surgery_tray/full/morgue,
+/turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "et" = (
 /obj/machinery/light/small/directional/south,
@@ -262,14 +275,8 @@
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape/brig)
 "mz" = (
-/obj/structure/table,
-/obj/item/storage/box/gloves,
-/obj/item/reagent_containers/spray/cleaner,
-/obj/effect/turf_decal/siding/thinplating/dark,
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "mZ" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -277,15 +284,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
-"na" = (
-/obj/effect/turf_decal/tile/dark_green/half{
-	dir = 8
-	},
-/obj/machinery/light/small/dim/directional/west,
-/turf/open/floor/iron/freezer/edge{
-	dir = 8
-	},
-/area/shuttle/escape)
 "ni" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/weather/dirt,
@@ -314,12 +312,6 @@
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
-"pF" = (
-/obj/effect/turf_decal/tile/dark_green/anticorner,
-/turf/open/floor/iron/freezer/corner{
-	dir = 1
-	},
-/area/shuttle/escape)
 "qn" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
@@ -343,19 +335,23 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "rz" = (
-/obj/effect/turf_decal/tile/dark_green/anticorner{
-	dir = 4
-	},
-/turf/open/floor/iron/freezer/corner{
+/obj/machinery/computer/operating{
 	dir = 8
 	},
+/turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "rH" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/misc/dirt/station,
 /area/shuttle/escape)
 "rK" = (
-/obj/structure/extinguisher_cabinet,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/closet/l3closet,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"rP" = (
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "si" = (
@@ -412,12 +408,6 @@
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
-"vW" = (
-/obj/machinery/computer/operating{
-	dir = 8
-	},
-/turf/open/floor/iron/freezer,
-/area/shuttle/escape)
 "vZ" = (
 /obj/structure/bodycontainer/crematorium{
 	id = "graveyard_shuttle_crematorium"
@@ -431,7 +421,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "wb" = (
-/obj/machinery/status_display/evac,
+/obj/structure/extinguisher_cabinet,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "we" = (
@@ -463,23 +453,18 @@
 	},
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
-"xP" = (
-/obj/structure/rack,
-/obj/item/storage/box/bodybags{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/bodybags,
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/thinplating/dark,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "yj" = (
 /obj/structure/closet/crate/grave/filled,
 /obj/effect/spawner/random/exotic/grave,
 /turf/open/misc/dirt/station,
+/area/shuttle/escape)
+"ym" = (
+/obj/effect/turf_decal/tile/dark_green/anticorner{
+	dir = 4
+	},
+/turf/open/floor/iron/freezer/corner{
+	dir = 8
+	},
 /area/shuttle/escape)
 "yo" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
@@ -494,10 +479,11 @@
 /obj/machinery/light/small/dim/directional/east,
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
-"zw" = (
-/obj/effect/turf_decal/bot,
+"zA" = (
+/obj/machinery/portable_atmospherics/canister/miasma,
+/obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/closet/l3closet,
+/obj/structure/sign/warning/biohazard/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Ab" = (
@@ -589,14 +575,6 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
-"GX" = (
-/obj/effect/turf_decal/tile/dark_green/half{
-	dir = 4
-	},
-/turf/open/floor/iron/freezer/edge{
-	dir = 4
-	},
-/area/shuttle/escape)
 "Hy" = (
 /obj/item/flashlight/flare/torch,
 /obj/effect/turf_decal/weather/dirt{
@@ -612,6 +590,12 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape/brig)
+"If" = (
+/obj/effect/turf_decal/tile/dark_green/anticorner,
+/turf/open/floor/iron/freezer/corner{
+	dir = 1
+	},
+/area/shuttle/escape)
 "Ih" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
@@ -645,13 +629,6 @@
 /area/shuttle/escape)
 "MT" = (
 /obj/machinery/door/airlock/maintenance_hatch,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"Na" = (
-/obj/machinery/portable_atmospherics/canister/miasma,
-/obj/effect/turf_decal/delivery,
-/obj/effect/decal/cleanable/cobweb,
-/obj/structure/sign/warning/biohazard/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Nw" = (
@@ -708,6 +685,10 @@
 	},
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
+"Qd" = (
+/obj/machinery/smartfridge/organ,
+/turf/open/floor/iron/dark/smooth_half,
+/area/shuttle/escape)
 "Ru" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
@@ -732,8 +713,7 @@
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
 "Uu" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "UA" = (
 /obj/effect/turf_decal/tile/dark_green/half,
@@ -762,6 +742,19 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"VW" = (
+/obj/structure/rack,
+/obj/item/storage/box/bodybags{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/box/bodybags,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Wp" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
@@ -896,24 +889,24 @@ Bj
 (3,1,1) = {"
 Bj
 Bj
-bG
-bG
-bG
-bG
-bG
-bG
-bG
-bG
-bG
-bG
-bG
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
 Bj
 Bj
 "}
 (4,1,1) = {"
 Bj
 Bj
-bG
+Uu
 Aw
 Aw
 lV
@@ -922,115 +915,115 @@ Gf
 vP
 Aw
 Aw
-Na
-bG
+zA
+Uu
 Bj
 Bj
 "}
 (5,1,1) = {"
-bG
-bG
-bG
+Uu
+Uu
+Uu
 Aw
-bG
-bG
-bG
-wb
-bG
-bG
+Uu
+Uu
+Uu
+rP
+Uu
+Uu
 Aw
-bG
-bG
+Uu
+Uu
 aS
-bG
+Uu
 "}
 (6,1,1) = {"
-bG
-zw
-bG
+Uu
+rK
+Uu
 Aw
-bG
-ay
+Uu
+Qd
 ct
-na
+dh
 jl
 MT
 Aw
-bG
+Uu
 Yt
 et
-bG
+Uu
 "}
 (7,1,1) = {"
-bG
+Uu
 Aw
 vP
 Aw
-bG
+Uu
 wX
 mt
-dh
+eq
 UA
-bG
+Uu
 JE
 MT
 Aw
 PM
-bG
+Uu
 "}
 (8,1,1) = {"
-bG
+Uu
 MT
-bG
-bG
-bG
-bG
+Uu
+Uu
+Uu
+Uu
 gm
 we
 NV
-bG
-bG
-bG
-bG
+Uu
+Uu
+Uu
+Uu
 mr
-bG
+Uu
 "}
 (9,1,1) = {"
-bG
+Uu
 wa
 vL
 Cz
 DO
-mz
+cV
 mt
-vW
+rz
 UA
-xP
+VW
 vL
 Fi
 DO
 qn
-bG
+Uu
 "}
 (10,1,1) = {"
-bG
+Uu
 qx
 xt
 si
 iN
 la
-rz
-GX
-pF
+ym
+bG
+If
 la
 xt
 si
 iN
 qn
-bG
+Uu
 "}
 (11,1,1) = {"
-Uu
+mz
 Wp
 mc
 mc
@@ -1044,10 +1037,10 @@ mc
 mc
 mc
 Ei
-Uu
+mz
 "}
 (12,1,1) = {"
-Uu
+mz
 eW
 qM
 qM
@@ -1061,24 +1054,24 @@ qM
 qM
 qM
 yo
-Uu
+mz
 "}
 (13,1,1) = {"
-bG
+Uu
 qx
 fS
 VQ
 Nw
 la
 fS
-cV
+VQ
 Nw
 la
 fS
 VQ
 Nw
 qn
-bG
+Uu
 "}
 (14,1,1) = {"
 sP
@@ -1095,24 +1088,24 @@ Ws
 Yp
 PP
 Gs
-bG
+Uu
 "}
 (15,1,1) = {"
-bG
-bG
-bG
-rK
-bG
-RZ
-bG
+Uu
+Uu
+Uu
 wb
-bG
+Uu
 RZ
-bG
-bG
-bG
-bG
-bG
+Uu
+rP
+Uu
+RZ
+Uu
+Uu
+Uu
+Uu
+Uu
 "}
 (16,1,1) = {"
 kM
@@ -1129,10 +1122,10 @@ vT
 vT
 vT
 px
-bG
+Uu
 "}
 (17,1,1) = {"
-bG
+Uu
 fm
 vK
 th
@@ -1146,10 +1139,10 @@ th
 th
 vK
 ni
-bG
+Uu
 "}
 (18,1,1) = {"
-Uu
+mz
 so
 vD
 rH
@@ -1163,10 +1156,10 @@ rH
 rH
 so
 vD
-Uu
+mz
 "}
 (19,1,1) = {"
-Uu
+mz
 Ny
 vD
 rH
@@ -1180,10 +1173,10 @@ rH
 rH
 so
 FZ
-Uu
+mz
 "}
 (20,1,1) = {"
-Uu
+mz
 so
 vD
 rH
@@ -1197,10 +1190,10 @@ rH
 rH
 so
 vD
-Uu
+mz
 "}
 (21,1,1) = {"
-bG
+Uu
 fm
 vK
 vT
@@ -1214,7 +1207,7 @@ vT
 vT
 vK
 ni
-bG
+Uu
 "}
 (22,1,1) = {"
 as
@@ -1231,24 +1224,24 @@ th
 vK
 th
 Hy
-bG
+Uu
 "}
 (23,1,1) = {"
-bG
-bG
 Uu
 Uu
-bG
-bG
+mz
+mz
+Uu
+Uu
 WE
 vK
 Pi
-bG
-bG
+Uu
+Uu
 FJ
-bG
-bG
-bG
+Uu
+Uu
+Uu
 "}
 (24,1,1) = {"
 MS
@@ -1256,19 +1249,19 @@ jS
 Xl
 AS
 kz
-Uu
+mz
 so
 vK
 vD
-bG
+Uu
 UM
 Ru
 Ow
 aX
-bG
+Uu
 "}
 (25,1,1) = {"
-bG
+Uu
 vZ
 dr
 mZ
@@ -1277,63 +1270,63 @@ MS
 vK
 AA
 vD
-bG
+Uu
 Xg
 so
 vK
 vK
-Uu
+mz
 "}
 (26,1,1) = {"
-bG
+Uu
 cb
 NU
 qr
 qr
-Uu
+mz
 YN
 vK
 GU
-bG
+Uu
 Xv
 th
 ly
 nx
-Uu
+mz
 "}
 (27,1,1) = {"
-bG
+Uu
 mm
 Oa
 HZ
 mx
-bG
-bG
+Uu
+Uu
 YF
-bG
-bG
+Uu
+Uu
 bR
 Vl
 YS
 yj
-bG
+Uu
 "}
 (28,1,1) = {"
-bG
-bG
-bG
-bG
-bG
-bG
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
 dd
 wZ
 dd
-bG
-bG
-bG
-bG
-bG
-bG
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
 "}
 (29,1,1) = {"
 Bj
@@ -1341,11 +1334,11 @@ Bj
 Bj
 Bj
 Bj
-bG
+Uu
 aj
 Lv
 dF
-bG
+Uu
 Bj
 Bj
 Bj
@@ -1358,11 +1351,11 @@ Bj
 Bj
 Bj
 Bj
-Uu
+mz
 Ah
 yJ
 Ab
-Uu
+mz
 Bj
 Bj
 Bj
@@ -1375,11 +1368,11 @@ Bj
 Bj
 Bj
 Bj
-Uu
-Uu
-wb
-Uu
-Uu
+mz
+mz
+rP
+mz
+mz
 Bj
 Bj
 Bj
