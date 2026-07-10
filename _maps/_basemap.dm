@@ -23,7 +23,7 @@
 		#include "map_files\tramstation\tramstation.dmm"
 		#include "map_files\CatwalkStation\CatwalkStation_2023.dmm"
 		#include "map_files\NebulaStation\NebulaStation.dmm"
-		#include "map_files\KiloStation\KiloStation.dmm"
+		//#include "map_files\KiloStation\KiloStation.dmm" // BANDASTATION EDIT: TEMP remove
 		// BANDASTATION EDIT START: Custom maps
 		#include "map_files\Cyberiad\Cyberiad.dmm"
 		// BANDASTATION EDIT END: Custom maps
