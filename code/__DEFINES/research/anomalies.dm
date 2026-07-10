@@ -18,12 +18,6 @@
 /// Chance of anomalies moving every process tick
 #define ANOMALY_MOVECHANCE 45
 
-/// Blacklist of parts which should not appear when bioscrambled, largely because they will make you look totally fucked up
-GLOBAL_LIST_INIT(bioscrambler_parts_blacklist, typecacheof(list(
-	/obj/item/bodypart/chest/larva,
-	/obj/item/bodypart/head/larva,
-)))
-
 /// Blacklist of organs which should not appear when bioscrambled.
 /// Either will look terrible outside of intended host, give you magical powers, are irreversible, or kill you
 GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list (
