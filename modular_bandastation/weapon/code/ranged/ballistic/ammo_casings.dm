@@ -457,3 +457,4 @@
 	icon_state = "rpg_rocket_low_yield"
 	base_icon_state = "rpg_rocket_low_yield"
 	projectile_type = /obj/projectile/bullet/rocket/weak
+

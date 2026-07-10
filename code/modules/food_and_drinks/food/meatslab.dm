@@ -44,8 +44,7 @@
 	var/slab_color = COLOR_RED
 
 
-/obj/item/food/meat/slab/Initialize(mapload)
-	. = ..()
+/obj/item/food/meat/slab/make_dryable()
 	AddElement(/datum/element/dryable,  /obj/item/food/sosjerky/healthy)
 
 /obj/item/food/meat/slab/make_grillable()
@@ -91,14 +90,14 @@
 		/datum/reagent/iron = 3,
 	)
 	tastes = list("rock" = 1)
-	foodtypes = MEAT | RAW | GROSS
+	foodtypes = MEAT | RAW | STONE
 	venue_value = FOOD_MEAT_MUTANT_RARE
 	blood_decal_type = null
 
 /obj/item/food/meat/slab/human/mutant/golem/adamantine
 	icon_state = "agolemmeat"
-	desc = "From the slime pen to the rune to the kitchen, science."
-	foodtypes = MEAT | RAW | GROSS
+	desc = "From the slime pen to the shell to the kitchen, science."
+	foodtypes = MEAT | RAW | STONE
 
 /obj/item/food/meat/slab/human/mutant/lizard
 	icon_state = "lizardmeat"
@@ -116,6 +115,7 @@
 	desc = "All the joys of healthy eating with all the fun of cannibalism."
 	tastes = list("salad" = 1, "wood" = 1)
 	foodtypes = VEGETABLES
+	custom_materials = null
 	venue_value = FOOD_MEAT_MUTANT_RARE
 	blood_decal_type = /obj/effect/decal/cleanable/food/plant_smudge
 
@@ -340,6 +340,7 @@
 	icon_state = "goliathmeat"
 	tastes = list("meat" = 1)
 	foodtypes = RAW | MEAT | TOXIC
+	foodtypes_removed_when_cooked = RAW | TOXIC
 
 /obj/item/food/meat/slab/goliath/Initialize(mapload)
 	. = ..()
@@ -379,6 +380,7 @@
 	)
 	tastes = list("bacon" = 1)
 	foodtypes = RAW | MEAT
+	foodtypes_added_when_cooked = BREAKFAST
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/meat/rawbacon/make_grillable()
@@ -486,6 +488,7 @@
 	icon_state = "pig_meat"
 	tastes = list("pig" = 1)
 	foodtypes = RAW | MEAT | GORE
+	foodtypes_removed_when_cooked = RAW | GORE
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/consumable/nutriment/fat = 5,
@@ -510,6 +513,7 @@
 	name = "blood worm meat"
 	desc = "Who thought eating this would be a good idea? At least it's juicy..."
 	foodtypes = RAW | MEAT | BUGS | GORE
+	foodtypes_removed_when_cooked = RAW | GORE
 	food_reagents = list(
 		/datum/reagent/blood = 30, // What did you expect?
 		/datum/reagent/consumable/nutriment/protein = 5, // Rich in protein.
@@ -539,7 +543,7 @@
 
 /obj/item/food/meat/steak/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ITEM_MICROWAVE_COOKED, PROC_REF(on_microwave_cooked))
+	RegisterSignal(src, COMSIG_ITEM_MICROWAVE_COOKED_RESULT, PROC_REF(on_microwave_cooked))
 
 /obj/item/food/meat/steak/proc/on_microwave_cooked(datum/source, atom/source_item, cooking_efficiency = 1)
 	SIGNAL_HANDLER
@@ -774,7 +778,7 @@
 
 /obj/item/food/meat/cutlet/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ITEM_MICROWAVE_COOKED, PROC_REF(on_microwave_cooked))
+	RegisterSignal(src, COMSIG_ITEM_MICROWAVE_COOKED_RESULT, PROC_REF(on_microwave_cooked))
 
 /obj/item/food/meat/cutlet/Initialize(mapload)
 	. = ..()

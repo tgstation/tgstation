@@ -40,25 +40,28 @@
 			return
 	return ..()
 
-/obj/item/electropack/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/clothing/head/helmet))
-		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit(user)
-		A.icon = 'icons/obj/devices/assemblies.dmi'
+/obj/item/electropack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/clothing/head/helmet))
+		return NONE
+	if(!user.temporarilyRemoveItemFromInventory(tool))
+		to_chat(user, span_warning("[tool] is stuck to your hand, you cannot attach it to [src]!"))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/assembly/shock_kit/torture_device = new /obj/item/assembly/shock_kit(user)
+	torture_device.icon = 'icons/obj/devices/assemblies.dmi'
 
-		if(!user.transferItemToLoc(W, A))
-			to_chat(user, span_warning("[W] is stuck to your hand, you cannot attach it to [src]!"))
-			return
-		W.master = A
-		A.helmet_part = W
+	tool.forceMove(torture_device) // Forcemove() because we've already seen we can move it with the check above and the check above forces us to use forceMove() next
 
-		user.transferItemToLoc(src, A, TRUE)
-		master = A
-		A.electropack_part = src
+	tool.master = torture_device
+	torture_device.helmet_part = tool
 
-		user.put_in_hands(A)
-		A.add_fingerprint(user)
-	else
-		return ..()
+	user.transferItemToLoc(src, torture_device, TRUE)
+	master = torture_device
+	torture_device.electropack_part = src
+
+	user.put_in_hands(torture_device)
+	torture_device.add_fingerprint(user)
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/electropack/receive_signal(datum/signal/signal)
 	if(!signal || signal.data["code"] != code)

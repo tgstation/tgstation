@@ -303,6 +303,9 @@
 	)
 	seed_data["removable_traits"] = list()
 	seed_data["core_traits"] = list()
+	seed_data["distill_reagent"] = ""
+	seed_data["juice_name"] = ""
+	seed_data["grind_results"] = list()
 	for(var/datum/plant_gene/trait/trait in seed.genes)
 		if(trait.mutability_flags & PLANT_GENE_REMOVABLE)
 			seed_data["removable_traits"] += trait.type
@@ -317,7 +320,7 @@
 	var/datum/plant_gene/trait/maxchem/volume_trait = locate(/datum/plant_gene/trait/maxchem) in seed.genes
 	var/datum/plant_gene/trait/modified_volume/volume_unit_trait = locate(/datum/plant_gene/trait/modified_volume) in seed.genes
 	seed_data["volume_mod"] = volume_trait ? volume_trait.rate : 1
-	seed_data["volume_units"] = volume_unit_trait ? volume_unit_trait.new_capcity : PLANT_REAGENT_VOLUME
+	seed_data["volume_units"] = volume_unit_trait ? volume_unit_trait.new_capacity : PLANT_REAGENT_VOLUME
 	seed_data["mutatelist"] = list()
 	for(var/obj/item/seeds/mutant as anything in seed.mutatelist)
 		seed_data["mutatelist"] += initial(mutant.plantname)

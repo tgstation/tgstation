@@ -123,7 +123,11 @@
 /// Body part overlays applied by golem status effects
 /datum/bodypart_overlay/simple/golem_overlay
 	icon = 'icons/mob/human/species/golems.dmi'
-	layers = EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+	)
 	offset_location = ENTIRE_BODY
 	///The bodypart that the overlay is currently applied to
 	var/datum/weakref/attached_bodypart

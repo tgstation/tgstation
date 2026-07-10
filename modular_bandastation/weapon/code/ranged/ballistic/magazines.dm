@@ -331,6 +331,7 @@
 	icon = 'modular_bandastation/weapon/icons/ranged/ammo.dmi'
 	icon_state = "pistol_9x25_standart"
 	base_icon_state = "pistol_9x25_standart"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
 	w_class = WEIGHT_CLASS_TINY
 	ammo_type = /obj/item/ammo_casing/c9x25mm
 	caliber = CALIBER_9x25NT
@@ -357,6 +358,7 @@
 /obj/item/ammo_box/magazine/c9x25mm_pistol/rubber
 	name = "pistol magazine (9x25mm NT rubber)"
 	desc = parent_type::desc + "<br>Содержит нелетальные травматические патроны с резиновой пулей."
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	ammo_band_color = COLOR_AMMO_RUBBER
 	ammo_type = /obj/item/ammo_casing/c9x25mm/rubber
 
@@ -368,6 +370,10 @@
 
 /obj/item/ammo_box/magazine/c9x25mm_pistol/ap
 	name = "pistol magazine (9x25mm NT AP)"
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 1.25,
+	)
 	MAGAZINE_TYPE_ARMORPIERCE
 	ammo_type = /obj/item/ammo_casing/c9x25mm/ap
 
@@ -378,6 +384,10 @@
 
 /obj/item/ammo_box/magazine/c9x25mm_pistol/hp
 	name = "pistol magazine (9x25mm NT HP)"
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 1.25,
+	)
 	MAGAZINE_TYPE_HOLLOWPOINT
 	ammo_type = /obj/item/ammo_casing/c9x25mm/hp
 

@@ -29,7 +29,6 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/goliath
 
-	crusher_loot = /obj/item/crusher_trophy/goliath_tentacle
 	butcher_results = list(/obj/item/food/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
 	/// Icon state to use when tentacles are available
@@ -86,6 +85,9 @@
 	QDEL_NULL(melee_tentacles)
 	QDEL_NULL(tentacle_line)
 	return ..()
+
+/mob/living/basic/mining/goliath/get_hud_x_offset()
+	return -4
 
 /mob/living/basic/mining/goliath/examine(mob/user)
 	. = ..()
@@ -196,7 +198,6 @@
 		This one is clearly ancient, and its tentacles constantly churn the earth around it."
 	maxHealth = 400
 	health = 400
-	crusher_drop_chance = 100
 	/// Don't re-check nearby turfs for this long
 	COOLDOWN_DECLARE(retarget_turfs_cooldown)
 	/// List of places we might spawn a tentacle, if we're alive

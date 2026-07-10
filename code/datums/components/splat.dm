@@ -16,7 +16,7 @@
 
 /datum/component/splat/Initialize(
 	icon_state = "creampie",
-	layer = EXTERNAL_FRONT,
+	layer = list(EXTERNAL_FRONT = BODY_FRONT_LAYER),
 	memory_type = /datum/memory/witnessed_creampie,
 	smudge_type = /obj/effect/decal/cleanable/food/pie_smudge,
 	moodlet_type = /datum/mood_event/creampie,

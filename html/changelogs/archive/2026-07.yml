@@ -27,8 +27,226 @@
   - bugfix: Night shift lighting can be manually enabled through APCs again.
   - bugfix: Night lighting is no longer automatically reenabled during red alert night
       shifts when APCs are drained and recharged.
+  Singul0:
+  - code_imp: Swaps out parrot's sovlful unique item carrying ability with a soulless
+      hand (singular)
+  - bugfix: Fixes specific hands hotkey breaking hands on singlehanded mobs
   Yobrocharlie:
   - rscdel: Removed both mounted guns in the heretic gateway per headmin request
   vinylspiders:
   - code_imp: bodyshape is now accessible in build_worn_overlays() and similar procs.
   - image: lizards now have support female gender shaping for their suits
+2026-07-02:
+  Charlotte-Sugar:
+  - rscadd: Added new hairstyles
+  Fghj240:
+  - rscadd: Added a new cybernetic implant to the black market, the nutrient implant
+      pump plus plus plus
+  - spellcheck: fixed a single typo in logs
+  Gboster-0:
+  - bugfix: fixed random modifiers not working in deathmatch
+  Ghommie:
+  - refactor: refactored food categories (the stuff that tells you if a food item
+      is made of meat, fruits, veggies etc, when examined among other things) a little,
+      allowing them to be passed down to the results of cooking or processing food
+      with a kitchen utensil as well, and not just during crafting.
+  Melbert:
+  - bugfix: Airlock pump "timeout" period no longer gets frozen alongside atmos itself,
+      meaning airlock pumps will always consistently open after ten seconds, no matter
+      if atmos is struggling
+  - bugfix: Fixes some niche issues with settler/spacer looking off
+  - bugfix: Spacer is visible in prefs
+  - balance: 'Suffocation damage is slightly more consistent now: You take 3 oxyloss
+      per suffocation tick, reduced for partially successful breaths and or if you
+      are in crit. Alternatively, if you are in crit and you have epinephrine/atropine
+      in your system, it gets nullified entirely.'
+  - code_imp: Cleaned up lungs a bit, particularly relating to abnormal lungs like
+      plasmamen or fish, report any oddities with them.
+  - rscdel: You no longer have a chance to gasp twice in one suffocation tick.
+  - refactor: Surprise, a follow up refactor to species part rendering, report any
+      oddities with them (wings/snouts/tails/etc)
+  - balance: 'Cursed: Vending machines will have a chance to tip over onto you when
+      you purchase something, rather than passively as you walk around them.'
+  - balance: 'Cursed: Airlocks will now have a chance to crush you if you stand on
+      them when they try to close, rather than passively as you walk through them.'
+  - balance: 'Cursed: Nearby light fixtures will now have a chance to shock you if
+      they break or are turned on/off, rather than passively as you walk around them.'
+  - balance: 'Cursed: Mirror reaction will only trigger if you step up to a mirror,
+      rather than if you step within two tiles of a mirror.'
+  - spellcheck: 'Cursed: Several chat feedback messages have been rewritten to be
+      less "overt" about their nature. (More "final destination", less "a demon is
+      haunting you".)'
+  - admin: Bad luck smite set to "permanent" can no longer be removed by chaplains.
+  - admin: Bad luck smite set to "permanent" won't gib the guy on death if they've
+      experienced one bad luck event.
+  - refactor: Cursed/omen/bad luck has been refactored, report any oddities with it.
+  OrbisAnima:
+  - bugfix: Puts a check on departamental budget cards to not be used with custom
+      vendors.
+  Richard Blonski:
+  - admin: Added Ignored CIDs, a message will appear when a player joins with an Ignored
+      CID.
+  RikuTheKiller:
+  - rscadd: Added Botanical Encyclopedia app for browsing knowledge about plants,
+      which comes pre-installed on all botanist PDAs.
+  SmArtKar:
+  - bugfix: Eigenstate and wilderness z levels now randomize properly
+  - bugfix: Raptor eggs no longer hatch into fully grown raptors
+  - bugfix: Brimdust sac and fluid immersion overlays no longer look weird on humans
+      with extra-wide or tall bodyparts or organs
+  - bugfix: Some mobs now have more sensible health HUD positions
+  - bugfix: Health and security HUD now scales with player height, no more huds clipping
+      into spacer hair
+  - bugfix: Ore veins can no longer spread into gibtonite turfs
+  - qol: Miner callouts are now off by default
+  - bugfix: Miner callouts can now be used to command pets like regular pointing
+  Swan:
+  - bugfix: fixes the chemical tab of the plant analyzer bluescreening on certain
+      seeds.
+  TealSeer:
+  - bugfix: fixed hand teleporters not working
+  - bugfix: fixed screentip for shoes not showing
+  Time-Green:
+  - qol: Gizmo's have some improved feedback to help convey the fact that there's
+      no such thing as 'doing nothing'
+  lelandkemble:
+  - bugfix: It's no longer possible to softlock building a turret(if it ever was)
+  - bugfix: you can no longer stuff the blackbox recorder full with as many blackboxes
+      as you've somehow collected
+  - bugfix: TTVs will no longer remain on your back as a ghost when you cut their
+      wire straps
+  - bugfix: RCLs will now properly update their appearance when given their first
+      coil of cleaners
+  - code_imp: 50 files have been converted from attackby() to item_interaction()
+  - code_imp: Ten files have been moved from attackby() to item_interaction()
+  mcbalaam:
+  - rscadd: AIs can now point to things using holopads
+  timothymtorres:
+  - rscadd: Mobs that are wet become frozen in freezing temperatures
+2026-07-03:
+  CabinetOnFire:
+  - bugfix: Hot springs now use correct args for creating smoke
+  - bugfix: C4 no longer renders below floors when placed on floors
+  Jacquerel:
+  - balance: Adjusted the values of ores from the work camp to make a 1000 point sentence
+      closer to a 10 minute brig timer
+  - map: Moved some lightbulbs around in the work camp so you can see the bars getting
+      printed
+  KingkumaArt:
+  - balance: Increased the damage of base crossbow ammo to and metal h2 to 40. Traitor
+      ammo now takes plasteel to craft, but now has better anti-armor properties.
+  - balance: Traitor rebar crossbow no longer requires being stationary to rack/reload.
+  - bugfix: Fixed rebar crossbows having lower ammo capacity than intended due to
+      a gun code bolt refactor.
+  - bugfix: Fixed Traitor Crossbow reload being instant.
+  - qol: Engi Modsuits can now hold crossbows in their suit storage slot. I thought
+      they could already.
+  - qol: Makeshift rebar quivers can now reload via a GUI button like the syndicate
+      one, but take longer and must be stationary to do so.
+  Melbert:
+  - rscdel: Fixed jaws of recovery being able to be stored in the paramedic EMT belt
+  TealSeer:
+  - bugfix: fixed being unable to view/modify trim accesses in Access Management app
+  lelandkemble:
+  - map: There's no longer a missing pipe in the disposals loop on icebox
+  - bugfix: hand teleporters can now close portals
+  timothymtorres:
+  - balance: Upload computers in AI Upload Areas no longer require command IDs to
+      use.
+  vinylspiders:
+  - code_imp: tgui-core bumped to v6.1, please report any tgui-related issues
+2026-07-04:
+  Fghj240:
+  - bugfix: nutriment pump implant plus plus plus now has a sideways sprite
+  Ghommie:
+  - bugfix: Fixed the lobby interface NOT being able to show more than ONE button
+      related to station traits like special jobs and the skub trait.
+  LT3:
+  - map: Finished moving the plant outside Metastation medbay's side airlock, an astonishing
+      speed of 1 tile per 8 months.
+  - bugfix: Fixed duplicate priority announcements about a possible resonance cascade
+  - code_imp: Improved supermatter delamination logging
+  LemonInTheDark:
+  - bugfix: Fixed some sillyness with the stale map system
+  - config: MAP_VOTE_MIN_POP_TO_REMEMBER_MAPS -> MAP_VOTE_MINIMUM_POP_TO_REMEMBER_MAPS
+  QuiteLiterallyAnything:
+  - bugfix: Removed a singular stray disposals pipe on Catwalk Station.
+  SmArtKar:
+  - bugfix: Fixed random black siderite/shale tiles appearing after ash storms
+  - bugfix: Fixed rain overlay rendering (only) with particle weather enabled
+  - bugfix: Anchored nutraslop trays
+  TealSeer:
+  - bugfix: fixed mousetrap beaker assemblies not triggering when container is opened
+  XeonMations:
+  - bugfix: Fixed the radio volume slider being missing in game preferences
+  hry-gh:
+  - code_imp: the backend to all verbs in the game has been played with, please report
+      any issues to github
+  lelandkemble:
+  - bugfix: Academy businessman doesn't buy a scanner wand, as it is not a wand
+  - spellcheck: Academy wizard dialogue has been cleared of all glaring spelling and
+      capitalization errors
+  timothymtorres:
+  - bugfix: Fix runtime for spacetime distortion not playing sound
+  - sound: Spacetime distortion portals now play the same sound as the teleporter
+      portals.
+2026-07-05:
+  Ghommie:
+  - bugfix: Fixed the subtle lack of symmetry on the monkey right arm and leg.
+  PapaMichael:
+  - balance: Paradox Clones ghost poll for a specific target; ghosts are now signing
+      up to be a specific person's clone.
+  - admin: If admins spawn a Paradox Clone, they can choose the person to be cloned.
+  SmArtKar:
+  - rscadd: Tendrils now remove their corrupted tiles after death
+  - bugfix: Tendrils got their death sound back
+  TealSeer:
+  - qol: added screentips for beaker assemblies
+  lelandkemble:
+  - bugfix: Wizards can now successfully refund summoning items
+  - bugfix: Holopayment stands can now take payment
+  - code_imp: 21 things have been moved from attackby() to item_interaction()
+  timothymtorres:
+  - balance: Change blood deficiency to start with 85% blood instead of 80%
+  - bugfix: Fix blood deficiency from causing gasping, stamina loss, and blurriness
+  vinylspiders:
+  - bugfix: shadows will no longer get the candidate's prefs applied to their mob
+2026-07-06:
+  Ghommie:
+  - refactor: Refactored a few things with techweb designs (the ones for autolathes,
+      protolathes, circuit printers, mechfabs etc.) to make sure that the materials
+      of items that can be made from these designs more closely match the materials
+      used to make them.
+  - bugfix: Lizard fries no longer need a plate to be made, like all other treats
+      that used to require plates in a distant past.
+  - balance: Tweaked the materials cost of RCD, RDD and RCD cartridges.
+  - image: Oven trays now have a more metallic hue.
+  - balance: Plates printed printed from lathes won't shatter like ceramic ones, in
+      virtue of them being made out of iron instead.
+  RikuTheKiller:
+  - bugfix: Low temperature alerts now appear for basic mobs when the damage being
+      dealt is below 1 but above 0 (e.g. 0.5 DPS).
+  - balance: Blood worms are now breathless again.
+  - balance: Blood worms take damage from low pressures now (increases with growth
+      stage).
+  SmArtKar:
+  - rscadd: Added a magmawing variant of watcher wreaths
+  - rscadd: Magmawing and icewing watchers now drop unique sinew that can be crafted
+      into wreaths or trophies
+  - rscadd: Reworked colossus blaster tubes, and magmawing/icewing wing crusher trophies.
+  - balance: Crusher trophies are no longer random drops, and instead are crafted
+      from mob drops.
+  - balance: Wildhunter knife now refunds a large portion of components used to craft
+      a trophy, and its butchering bonus has been buffed from 10% to 25%
+  - bugfix: Fixed goliath trophy stating it deals 2 times less HP than it does in
+      reality in its description.
+  vinylspiders:
+  - bugfix: in prefs menu, changing your character name will now update your slot
+      button correctly
+  - bugfix: fixes an issue where switching slots would carry over the quirks of a
+      previous slot until you add or remove a quirk
+2026-07-07:
+  Robwo:
+  - rscadd: added heads of staff intercoms
+  - image: added color to departmental intercoms
+  - image: added a unique state for syndicate intercoms

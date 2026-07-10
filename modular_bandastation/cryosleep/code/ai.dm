@@ -1,8 +1,4 @@
-/mob/living/silicon/ai/verb/ai_cryo()
-	set name = "AI Unload"
-	set desc = "Перемещает текущий ИИ на сервер хранения, освобождая место для другого."
-	set category = "AI Commands"
-
+GAME_VERB_DESC(/mob/living/silicon/ai, ai_cryo, "AI Unload", "Перемещает текущий ИИ на сервер хранения, освобождая место для другого.", "AI Commands")
 	if(incapacitated)
 		return
 

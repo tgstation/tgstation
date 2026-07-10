@@ -15,6 +15,7 @@
 	drop_sound = 'sound/items/handling/tools/rcd_drop.ogg'
 	pickup_sound = 'sound/items/handling/tools/rcd_pickup.ogg'
 	sound_vary = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 38, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 18, /datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 
 	///category of design selected
 	var/selected_category
@@ -298,6 +299,7 @@
 	icon_state = "plumberer_service"
 	///Extra price because it appears in bartender's vendor
 	custom_premium_price = PAYCHECK_CREW * 6
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 37.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 18.75, /datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 	///Design types for plumbing service constructor
 	var/static/list/service_design_types = list(
 		//Category 1 synthesizers

@@ -98,6 +98,7 @@
 	desc = "Мобильный радионавигационный гигамаяк. Устройство, которое постоянно передает своё местоположение на частотах, обычно используемых для флотской навигации. Используется для создания путевых точек в неизведанных или неосвоенных районах. Необходимо разложить перед использованием."
 	icon = 'icons/obj/machines/navigation_beacon.dmi'
 	icon_state = "beacon_folded"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/folded_navigation_gigabeacon/Initialize(mapload)
 	. = ..()

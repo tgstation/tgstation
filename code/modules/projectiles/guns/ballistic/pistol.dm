@@ -269,7 +269,7 @@
 	name = "\improper Liberator"
 	desc = "A poorly made 3D printed \"gun\", only capable of firing a single shot."
 	icon_state = "doorhickey"
-	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5)
 	bolt_type = BOLT_TYPE_NO_BOLT
 	internal_magazine = TRUE
 	casing_ejector = FALSE

@@ -332,6 +332,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 
 /obj/item/assembly/flash/handheld //this is now the regular pocket flashes
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 7.5)
 
 /obj/item/assembly/flash/armimplant
 	name = "photon projector"

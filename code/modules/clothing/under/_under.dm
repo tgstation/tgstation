@@ -471,7 +471,7 @@
 
 	return all_accessories
 
-///BANDASTATION EDIT: Change in uniform weight with certain accessories
+///BANDASTATION EDIT START: Change in uniform weight with certain accessories
 /obj/item/clothing/under/proc/update_accessory_weight()
 	var/new_w_class = initial(w_class)
 	if(!LAZYLEN(attached_accessories))
@@ -483,11 +483,9 @@
 			new_w_class = max(new_w_class, A.w_class)
 
 	update_weight_class(new_w_class)
+// BANDASTATION EDIT END: Change in uniform weight with certain accessories
 
-/obj/item/clothing/under/verb/toggle()
-	set name = "Adjust Suit Sensors"
-	set category = null // BANDASTATION REPLACEMENT: Original: "Object"
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/under, toggle, usr, "Adjust Suit Sensors", null)
 	var/mob/user_mob = usr
 	if(!can_toggle_sensors(user_mob))
 		return
@@ -555,10 +553,7 @@
 		return
 	pop_accessory(user)
 
-/obj/item/clothing/under/verb/jumpsuit_adjust()
-	set name = "Adjust Jumpsuit Style"
-	set category = null
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/under, jumpsuit_adjust, usr, "Adjust Jumpsuit Style", null)
 
 	if(!can_adjust)
 		balloon_alert(usr, "нельзя сменить стиль!")
