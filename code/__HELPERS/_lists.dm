@@ -292,9 +292,9 @@
 			return list_to_check[type]
 		if(!highest_matched_type || istype(type, highest_matched_type))
 			. = list_to_check[type]
-			highest_matched_type = type
-			if(highest_matched_type == type_tocheck.type)
+			if(type == type_to_check.type) //exact match, early return
 				return
+			highest_matched_type = type
 
 /**
  * Checks for specific paths in a list.
