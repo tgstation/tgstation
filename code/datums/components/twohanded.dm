@@ -456,7 +456,7 @@
 
 	var/list/our_info = list()
 	if(!wielded) // Not currently weilded. Lets remind them that exists.
-		our_info += "It [require_twohands ? "HAS to be" : "should be"] wielded to properly utilize."
+		our_info += "It [require_twohands ? "must be" : "should be"] wielded to properly utilize."
 	if(force_wielded > force_unwielded)
 		our_info += "It deals extra damage when wielded."
 
