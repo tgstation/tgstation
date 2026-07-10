@@ -816,10 +816,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		if(!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 			return NONE
 
-		if(isliving(parent) && user.pulling == parent)
-			var/mob/living/as_living = parent
-			if(as_living.can_be_held)
-				return
+		if(user.trying_to_hold_mob(parent))
+			return
 
 		parent.add_fingerprint(user)
 		INVOKE_ASYNC(src, PROC_REF(open_storage), user)

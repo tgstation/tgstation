@@ -1575,6 +1575,7 @@
 #include "code\datums\elements\bump_click.dm"
 #include "code\datums\elements\burn_when_item_ignition.dm"
 #include "code\datums\elements\can_barricade.dm"
+#include "code\datums\elements\can_be_held.dm"
 #include "code\datums\elements\can_shatter.dm"
 #include "code\datums\elements\caseless.dm"
 #include "code\datums\elements\chain_lightning_attack.dm"

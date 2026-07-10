@@ -1684,4 +1684,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mobs with this trait will always have be a priority target for mining mobs
 #define TRAIT_MINING_AGGRO "mining_aggro"
 
+/// Mob is able to be held in the hands of a mob with hands
+#define TRAIT_CAN_BE_HELD "can_be_held"
+
 // END TRAIT DEFINES
