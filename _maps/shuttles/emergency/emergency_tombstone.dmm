@@ -36,14 +36,13 @@
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
 "bG" = (
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 1
+/obj/effect/turf_decal/tile/dark_green/half{
+	dir = 8
 	},
-/obj/effect/turf_decal/siding/thinplating/dark,
-/obj/structure/table,
-/obj/item/storage/box/gloves,
-/obj/item/reagent_containers/spray/cleaner,
-/turf/open/floor/iron/dark,
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/floor/iron/freezer/edge{
+	dir = 8
+	},
 /area/shuttle/escape)
 "bR" = (
 /obj/structure/closet/crate/grave/filled,
@@ -63,11 +62,11 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "ct" = (
-/obj/effect/turf_decal/trimline/blue,
-/obj/structure/mirror/directional/west,
-/obj/structure/sink/directional/east,
-/obj/structure/sign/poster/official/cleanliness/directional/north,
-/turf/open/floor/iron/dark/textured_half,
+/obj/effect/turf_decal/tile/dark_green/anticorner{
+	dir = 1
+	},
+/obj/structure/sign/poster/official/cleanliness/directional/west,
+/turf/open/floor/iron/freezer/corner,
 /area/shuttle/escape)
 "cu" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
@@ -87,11 +86,10 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "dh" = (
-/obj/effect/turf_decal/trimline/neutral/warning,
-/obj/effect/turf_decal/trimline/neutral/warning{
-	dir = 1
+/obj/machinery/computer/operating{
+	dir = 4
 	},
-/turf/open/floor/iron/dark/textured_half,
+/turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "dr" = (
 /obj/effect/turf_decal/stripes/line{
@@ -148,10 +146,18 @@
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
 "gm" = (
+/obj/structure/mirror/directional/north,
+/obj/structure/sink/directional/south,
+/obj/effect/turf_decal/tile/dark_green/half{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer/edge{
+	dir = 1
+	},
+/area/shuttle/escape)
+"hM" = (
 /obj/machinery/smartfridge/organ,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/iron/dark/textured_half,
+/turf/open/floor/iron/dark/smooth_half,
 /area/shuttle/escape)
 "it" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -173,12 +179,13 @@
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
 "jl" = (
-/obj/machinery/computer/operating{
-	dir = 1
+/obj/effect/turf_decal/tile/dark_green/anticorner{
+	dir = 8
 	},
-/obj/machinery/light/small/dim/directional/south,
-/obj/item/radio/intercom/directional/west,
-/turf/open/floor/iron/dark/textured_half,
+/obj/structure/sign/poster/official/cleanliness/directional/west,
+/turf/open/floor/iron/freezer/corner{
+	dir = 4
+	},
 /area/shuttle/escape)
 "jS" = (
 /obj/effect/turf_decal/stripes/line{
@@ -247,10 +254,12 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/escape)
 "mt" = (
-/obj/structure/table/reinforced,
-/obj/effect/spawner/surgery_tray/full/morgue,
-/obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/floor/iron/dark/textured_half,
+/obj/effect/turf_decal/tile/dark_green/half{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer/edge{
+	dir = 1
+	},
 /area/shuttle/escape)
 "mx" = (
 /obj/effect/turf_decal/trimline/dark_red/warning{
@@ -260,8 +269,12 @@
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape/brig)
 "mz" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/dark_green/half{
+	dir = 4
+	},
+/turf/open/floor/iron/freezer/edge{
+	dir = 4
+	},
 /area/shuttle/escape)
 "mZ" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -297,6 +310,14 @@
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
+"pz" = (
+/obj/effect/turf_decal/tile/dark_green/anticorner{
+	dir = 4
+	},
+/turf/open/floor/iron/freezer/corner{
+	dir = 8
+	},
+/area/shuttle/escape)
 "qn" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
@@ -320,20 +341,16 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "rz" = (
-/obj/structure/closet/jcloset,
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plating,
+/obj/structure/table/reinforced,
+/obj/effect/spawner/surgery_tray/full/morgue,
+/turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "rH" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/misc/dirt/station,
 /area/shuttle/escape)
 "rK" = (
-/obj/machinery/portable_atmospherics/canister/miasma,
-/obj/effect/turf_decal/delivery,
-/obj/structure/sign/warning/biohazard/directional/west,
-/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "si" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
@@ -402,18 +419,18 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "wb" = (
-/obj/structure/extinguisher_cabinet,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"we" = (
-/obj/machinery/door/window/brigdoor/left/directional/east{
-	name = "Coroner's Office"
-	},
-/obj/effect/turf_decal/trimline/neutral/warning,
-/obj/effect/turf_decal/trimline/neutral/warning{
+/obj/structure/table,
+/obj/item/storage/box/gloves,
+/obj/item/reagent_containers/spray/cleaner,
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
-/turf/open/floor/iron/dark/textured_half,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"we" = (
+/obj/structure/table/optable,
+/turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "wu" = (
 /obj/item/flashlight/flare/torch,
@@ -423,17 +440,8 @@
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
 "wX" = (
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/thinplating/dark,
-/obj/structure/rack,
-/obj/item/storage/box/bodybags{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/bodybags,
-/turf/open/floor/iron/dark,
+/obj/machinery/vending/wardrobe/coroner_wardrobe,
+/turf/open/floor/iron/dark/smooth_half,
 /area/shuttle/escape)
 "wZ" = (
 /obj/effect/spawner/costume/plaguedoctor,
@@ -504,6 +512,19 @@
 	},
 /obj/structure/sign/clock/directional/west,
 /turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"CA" = (
+/obj/structure/rack,
+/obj/item/storage/box/bodybags{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/box/bodybags,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "DO" = (
 /obj/effect/turf_decal/trimline/neutral/warning,
@@ -606,6 +627,10 @@
 /obj/machinery/door/airlock/maintenance_hatch,
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"Nt" = (
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape)
 "Nw" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 10
@@ -619,6 +644,12 @@
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
+"NE" = (
+/obj/effect/turf_decal/tile/dark_green/anticorner,
+/turf/open/floor/iron/freezer/corner{
+	dir = 1
+	},
+/area/shuttle/escape)
 "NU" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner,
 /obj/effect/turf_decal/stripes/corner{
@@ -627,10 +658,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "NV" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/machinery/vending/wardrobe/coroner_wardrobe,
-/turf/open/floor/iron/dark/textured_half,
+/obj/item/radio/intercom/directional/south,
+/obj/effect/turf_decal/tile/dark_green/half,
+/turf/open/floor/iron/freezer/edge,
 /area/shuttle/escape)
 "Oa" = (
 /obj/structure/kitchenspike,
@@ -670,6 +700,10 @@
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
+"RG" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape)
 "RZ" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Morgue"
@@ -685,12 +719,12 @@
 /turf/open/misc/asteroid/basalt/wasteland/station,
 /area/shuttle/escape)
 "Uu" = (
-/turf/closed/wall/mineral/titanium,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "UA" = (
-/obj/structure/table/optable,
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/iron/dark/textured_half,
+/obj/effect/turf_decal/tile/dark_green/half,
+/turf/open/floor/iron/freezer/edge,
 /area/shuttle/escape)
 "UM" = (
 /obj/structure/closet/crate/grave/fresh,
@@ -709,6 +743,13 @@
 	},
 /obj/effect/spawner/random/exotic/grave,
 /turf/open/misc/dirt/station,
+/area/shuttle/escape)
+"VB" = (
+/obj/machinery/portable_atmospherics/canister/miasma,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/sign/warning/biohazard/directional/south,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "VQ" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
@@ -802,6 +843,12 @@
 /obj/effect/spawner/random/exotic/grave,
 /turf/open/misc/dirt/station,
 /area/shuttle/escape)
+"Zh" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/closet/l3closet,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "Zj" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
@@ -847,27 +894,27 @@ Bj
 Bj
 "}
 (3,1,1) = {"
-Uu
-Uu
-Uu
-Uu
-Uu
-Uu
-Uu
-Uu
-Uu
-Uu
-Uu
-Uu
-Uu
-aS
-Uu
+Bj
+Bj
+rK
+rK
+rK
+rK
+rK
+rK
+rK
+rK
+rK
+rK
+rK
+Bj
+Bj
 "}
 (4,1,1) = {"
-Uu
-rz
+Bj
+Bj
 rK
-Uu
+Aw
 Aw
 lV
 Aw
@@ -875,81 +922,115 @@ Gf
 vP
 Aw
 Aw
-Uu
-Yt
-et
-Uu
+VB
+rK
+Bj
+Bj
 "}
 (5,1,1) = {"
-Uu
+rK
+rK
+rK
+Aw
+rK
+rK
+rK
+RG
+rK
+rK
+Aw
+rK
+rK
+aS
+rK
+"}
+(6,1,1) = {"
+rK
+Zh
+rK
+Aw
+rK
+hM
+ct
+bG
+jl
+MT
+Aw
+rK
+Yt
+et
+rK
+"}
+(7,1,1) = {"
+rK
 Aw
 vP
 Aw
-Aw
-Uu
-Uu
-xc
-Uu
-Uu
-JE
-MT
-Aw
-PM
-Uu
-"}
-(6,1,1) = {"
-Uu
-MT
-Uu
-Uu
-Uu
-Uu
-ct
-dh
-jl
-Uu
-Uu
-Uu
-Uu
-mr
-Uu
-"}
-(7,1,1) = {"
-Uu
-wa
-vL
-Cz
-DO
+rK
 wX
 mt
 dh
 UA
-bG
+rK
+JE
+MT
+Aw
+PM
+rK
+"}
+(8,1,1) = {"
+rK
+MT
+rK
+rK
+rK
+rK
+gm
+we
+NV
+rK
+rK
+rK
+rK
+mr
+rK
+"}
+(9,1,1) = {"
+rK
+wa
+vL
+Cz
+DO
+wb
+mt
+rz
+UA
+CA
 vL
 Fi
 DO
 qn
-Uu
+rK
 "}
-(8,1,1) = {"
-Uu
+(10,1,1) = {"
+rK
 qx
 xt
 si
 iN
 la
-gm
-we
-NV
+pz
+mz
+NE
 la
 xt
 si
 iN
 qn
-Uu
+rK
 "}
-(9,1,1) = {"
-mz
+(11,1,1) = {"
+Uu
 Wp
 mc
 mc
@@ -963,10 +1044,10 @@ mc
 mc
 mc
 Ei
-mz
+Uu
 "}
-(10,1,1) = {"
-mz
+(12,1,1) = {"
+Uu
 eW
 qM
 qM
@@ -980,10 +1061,10 @@ qM
 qM
 qM
 yo
-mz
-"}
-(11,1,1) = {"
 Uu
+"}
+(13,1,1) = {"
+rK
 qx
 fS
 VQ
@@ -997,9 +1078,9 @@ fS
 VQ
 Nw
 qn
-Uu
+rK
 "}
-(12,1,1) = {"
+(14,1,1) = {"
 sP
 qx
 Ws
@@ -1014,26 +1095,26 @@ Ws
 Yp
 PP
 Gs
-Uu
+rK
 "}
-(13,1,1) = {"
-Uu
-Uu
-Uu
-wb
-Uu
+(15,1,1) = {"
+rK
+rK
+rK
+Nt
+rK
 RZ
-Uu
-xc
-Uu
+rK
+RG
+rK
 RZ
-Uu
-Uu
-Uu
-Uu
-Uu
+rK
+rK
+rK
+rK
+rK
 "}
-(14,1,1) = {"
+(16,1,1) = {"
 kM
 ok
 vT
@@ -1048,10 +1129,10 @@ vT
 vT
 vT
 px
-Uu
+rK
 "}
-(15,1,1) = {"
-Uu
+(17,1,1) = {"
+rK
 fm
 vK
 th
@@ -1065,10 +1146,10 @@ th
 th
 vK
 ni
-Uu
+rK
 "}
-(16,1,1) = {"
-mz
+(18,1,1) = {"
+Uu
 so
 vD
 rH
@@ -1082,10 +1163,10 @@ rH
 rH
 so
 vD
-mz
+Uu
 "}
-(17,1,1) = {"
-mz
+(19,1,1) = {"
+Uu
 Ny
 vD
 rH
@@ -1099,10 +1180,10 @@ rH
 rH
 so
 FZ
-mz
+Uu
 "}
-(18,1,1) = {"
-mz
+(20,1,1) = {"
+Uu
 so
 vD
 rH
@@ -1116,10 +1197,10 @@ rH
 rH
 so
 vD
-mz
-"}
-(19,1,1) = {"
 Uu
+"}
+(21,1,1) = {"
+rK
 fm
 vK
 vT
@@ -1133,9 +1214,9 @@ vT
 vT
 vK
 ni
-Uu
+rK
 "}
-(20,1,1) = {"
+(22,1,1) = {"
 as
 wu
 th
@@ -1150,44 +1231,44 @@ th
 vK
 th
 Hy
-Uu
+rK
 "}
-(21,1,1) = {"
+(23,1,1) = {"
+rK
+rK
 Uu
 Uu
-mz
-mz
-Uu
-Uu
+rK
+rK
 WE
 vK
 Pi
-Uu
-Uu
+rK
+rK
 FJ
-Uu
-Uu
-Uu
+rK
+rK
+rK
 "}
-(22,1,1) = {"
+(24,1,1) = {"
 MS
 jS
 Xl
 AS
 kz
-mz
+Uu
 so
 vK
 vD
-Uu
+rK
 UM
 Ru
 Ow
 aX
-Uu
+rK
 "}
-(23,1,1) = {"
-Uu
+(25,1,1) = {"
+rK
 vZ
 dr
 mZ
@@ -1196,97 +1277,63 @@ MS
 vK
 AA
 vD
-Uu
+rK
 Xg
 so
 vK
 vK
-mz
-"}
-(24,1,1) = {"
 Uu
+"}
+(26,1,1) = {"
+rK
 cb
 NU
 qr
 qr
-mz
+Uu
 YN
 vK
 GU
-Uu
+rK
 Xv
 th
 ly
 nx
-mz
-"}
-(25,1,1) = {"
 Uu
+"}
+(27,1,1) = {"
+rK
 mm
 Oa
 HZ
 mx
-Uu
-Uu
+rK
+rK
 YF
-Uu
-Uu
+rK
+rK
 bR
 Vl
 YS
 yj
-Uu
+rK
 "}
-(26,1,1) = {"
-Uu
-Uu
-Uu
-Uu
-Uu
-Uu
+(28,1,1) = {"
+rK
+rK
+rK
+rK
+rK
+rK
 dd
 wZ
 dd
-Uu
-Uu
-Uu
-Uu
-Uu
-Uu
-"}
-(27,1,1) = {"
-Bj
-Bj
-Bj
-Bj
-Bj
-Uu
-aj
-Lv
-dF
-Uu
-Bj
-Bj
-Bj
-Bj
-Bj
-"}
-(28,1,1) = {"
-Bj
-Bj
-Bj
-Bj
-Bj
-mz
-Ah
-yJ
-Ab
-mz
-Bj
-Bj
-Bj
-Bj
-Bj
+rK
+rK
+rK
+rK
+rK
+rK
 "}
 (29,1,1) = {"
 Bj
@@ -1294,11 +1341,45 @@ Bj
 Bj
 Bj
 Bj
-mz
-mz
-xc
-mz
-mz
+rK
+aj
+Lv
+dF
+rK
+Bj
+Bj
+Bj
+Bj
+Bj
+"}
+(30,1,1) = {"
+Bj
+Bj
+Bj
+Bj
+Bj
+Uu
+Ah
+yJ
+Ab
+Uu
+Bj
+Bj
+Bj
+Bj
+Bj
+"}
+(31,1,1) = {"
+Bj
+Bj
+Bj
+Bj
+Bj
+Uu
+Uu
+RG
+Uu
+Uu
 Bj
 Bj
 Bj
