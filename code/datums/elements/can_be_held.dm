@@ -30,6 +30,7 @@
 		return
 
 	holder_to_be.mob_try_pickup(source)
+	INVOKE_ASYNC(holder_to_be, PROC_REF(mob_try_pickup), source)
 	return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
 
