@@ -79,8 +79,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		return
 
 	//Make sure that the top and bottom locations in the diagonal are floors. Anything else may get in the way of several tests.
-	TEST_ASSERT(isfloorturf(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not a floor ([run_loc_floor_bottom_left])")
-	TEST_ASSERT(isfloorturf(run_loc_floor_top_right), "run_loc_floor_top_right was not a floor ([run_loc_floor_top_right])")
+	TEST_ASSERT(isindestructiblefloor(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not a floor ([run_loc_floor_bottom_left])")
+	TEST_ASSERT(isindestructiblefloor(run_loc_floor_top_right), "run_loc_floor_top_right was not a floor ([run_loc_floor_top_right])")
 
 /datum/unit_test/Destroy()
 	QDEL_LIST(allocated)
