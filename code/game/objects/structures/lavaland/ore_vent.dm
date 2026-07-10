@@ -669,6 +669,10 @@
 	if(!mapload)
 		vent_size_setup(random = TRUE) // We only do this here specific to random distribution ore vents, and within mapload we handle this manually within SSore_generation.
 
+/obj/structure/ore_vent/random/LateInitialize()
+	. = ..()
+	if(!length(mineral_breakdown))
+		CRASH("We generated an ore vent, and after init, it had no mineral breakdown!")
 
 /obj/structure/ore_vent/random/icebox //The one that shows up on the top level of icebox
 	icon_state = "ore_vent_ice"

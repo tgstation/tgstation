@@ -1,4 +1,0 @@
-author: "antropod"
-delete-after: True
-changes:
-  - bugfix: "Fixes material tiles spawned by disposals underneath the floor"

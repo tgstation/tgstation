@@ -1,4 +1,0 @@
-author: "PapaMichael"
-delete-after: True
-changes:
-  - qol: "AIs save their \"previous camera\" (accessed by pressing the '0' key) when tracking a mob."

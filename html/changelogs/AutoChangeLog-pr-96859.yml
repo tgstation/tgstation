@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Ore vents spawn less rubble and are more consistent at excavating the surrounding area"
-  - balance: "Cleanable decals can no longer be hit (not cleaned, just hit) if the user has combat mode on."
