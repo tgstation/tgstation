@@ -283,6 +283,14 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 	return pick_weight(prob_list)
 
+/// Updates the presence of the can_be_held element based on what we want from the raptor
+/mob/living/basic/raptor/proc/update_holdability(bool)
+	if(bool && !has_element(/datum/element/can_be_held))
+		AddElement(/datum/element/can_be_held)
+
+	if(!bool && has_element(/datum/element/can_be_held))
+		RemoveElement(/datum/element/can_be_held)
+
 /mob/living/basic/raptor/proc/on_picked_up(mob/living/basic/raptor/source, mob/living/user, obj/item/mob_holder/holder)
 	SIGNAL_HANDLER
 	// Our inventory code sucks so we have to do this
@@ -364,16 +372,16 @@ GLOBAL_LIST_EMPTY(raptor_population)
 			base_pixel_w = initial(base_pixel_w)
 			mob_size = initial(mob_size)
 
-	can_be_held = initial(density)
 	density = initial(density)
 	move_resist = initial(move_resist)
 	can_breed = initial(can_breed)
+	toggle_holdability(initial(density))
 
 	if (new_stage == RAPTOR_ADULT)
 		// Adults need to be tamed with skill rather than snacks
 		qdel(GetComponent(/datum/component/tameable))
 	else // Make us teeny-tiny
-		can_be_held = TRUE
+		toggle_holdability(TRUE)
 		density = FALSE
 		can_breed = FALSE
 		move_resist = MOVE_RESIST_DEFAULT
@@ -389,7 +397,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	var/obj/item/mob_holder/holder = null
 	if (istype(loc, /obj/item/mob_holder))
 		holder = loc
-		if (!can_be_held)
+		if (!HAS_TRAIT(src, TRAIT_CAN_BE_HELD))
 			holder.release()
 			holder = null
 
