@@ -1,0 +1,12 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Knockdown, stun, and paralyze now have a 66% chance to interrupt speech (down from 100%)"
+  - balance: "Immobilize and Incapacitate now has a 0% chance to trigger interrupt speech (down from 100%)"
+  - balance: "Sleep and Unconscious still has a 100% chance to trigger interrupt speech"
+  - balance: "Chance to interrupt speech from a stun makes a second roll based on stun severity: >6 second stuns have a 100% chance, >2 second stuns have a 66% chance, and <2 second stuns have a 0% chance"
+  - balance: "Shove knockdown is unaffected by these changes, and always interrupts speech"
+  - balance: "Having speech interrupted from stuns no longer causes you to choke on cigarettes unless the stun effect was high severity (>30 seconds)"
+  - balance: "Chance of interrupting speech on punch was modified from 100% at 9 damage to 66% at 9 damage and 100% at 12 damage"
+  - bugfix: "When your speech is interrupted from death, it now cuts off abruptly, rather than appending a generic interrupt indicator"
+  - bugfix: "Fixed a bug where you repeat your last said line if your speech is interrupted after opening your say box, but before typing anything"

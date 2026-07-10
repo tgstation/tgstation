@@ -158,9 +158,13 @@
 		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5,
 		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 5,
 	)
+	transfered_materials = list(
+		/obj/item/implantcase/circuit = /obj/item/implantcase/circuit::custom_materials,
+		/obj/item/implant/circuit = /obj/item/implant/circuit::custom_materials,
+	)
 	build_path = /obj/item/implantcase/circuit
 
-//This design has a different path but it's still kind of a shell.
+//This design has a different path but it's still a wiremod design.
 /datum/design/board/bci_implanter
 	name = "Brain-Computer Interface Manipulation Chamber"
 	desc = "A machine that, when given a brain-computer interface, will implant it into an occupant. Otherwise, will remove any brain-computer interfaces they already have."

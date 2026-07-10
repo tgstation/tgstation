@@ -13,6 +13,10 @@
 	var/food_multiplier = 1
 	/// Whether to copy the materials from the input to the output
 	var/preserve_materials = TRUE
+	///The food types will be added to the resulting food (if the input is food) when processed.
+	var/added_foodtypes = NONE
+	///The food types will be removed from the resulting food (if the input is food) when processed.
+	var/removed_foodtypes = NONE
 
 /datum/food_processor_process/meat
 	input = /obj/item/food/meat/slab
@@ -23,6 +27,7 @@
 		/obj/item/food/meat/slab/bear,
 		/obj/item/food/meat/slab/chicken)
 	food_multiplier = MEATSLAB_PROCESSED_AMOUNT
+	removed_foodtypes = GORE
 
 /datum/food_processor_process/cutlet
 	input = /obj/item/food/meat/cutlet/plain
@@ -31,6 +36,8 @@
 		/obj/item/food/meat/cutlet/bear,
 		/obj/item/food/meat/cutlet/chicken)
 	output = /obj/item/food/raw_meatball
+	removed_foodtypes = GORE
+	added_foodtypes = RAW //you know what? *uncooks your cutlet*
 
 /datum/food_processor_process/meat/human
 	input = /obj/item/food/meat/slab/human
@@ -45,6 +52,7 @@
 /datum/food_processor_process/meat/corgi
 	input = /obj/item/food/meat/slab/corgi
 	output = /obj/item/food/raw_meatball/corgi
+	removed_foodtypes = GORE
 	blacklist = null
 
 /datum/food_processor_process/meat/xeno
@@ -77,37 +85,38 @@
 	input = /obj/item/food/meat/cutlet/chicken
 	output = /obj/item/food/raw_meatball/chicken
 
-/datum/food_processor_process/fishmeat
-	input = /obj/item/food/fishmeat/carp
-	output = /obj/item/food/fishmeat
-	blacklist = null
-
 /datum/food_processor_process/bacon
 	input = /obj/item/food/meat/rawcutlet
 	output = /obj/item/food/meat/rawbacon
+	removed_foodtypes = GORE
 
 /datum/food_processor_process/potatowedges
 	input = /obj/item/food/grown/potato/wedges
 	output = /obj/item/food/fries
+	added_foodtypes = FRIED
 
 /datum/food_processor_process/tempeh
 	input = /obj/item/food/tempehstarter
 	output = /obj/item/food/tempeh
 	food_multiplier = 2
+	removed_foodtypes = GROSS
 
 /datum/food_processor_process/spidereggs
 	input = /obj/item/food/spidereggs
 	blacklist = list(/obj/item/food/spidereggs/processed)
 	output = /obj/item/food/spidereggs/processed
+	removed_foodtypes = TOXIC | BUGS // food types that standard humans don't like
 
 /datum/food_processor_process/potato
 	input = /obj/item/food/grown/potato
 	blacklist = list(/obj/item/food/grown/potato/sweet, /obj/item/food/grown/potato/wedges)
 	output = /obj/item/food/tatortot
+	added_foodtypes = FRIED
 
 /datum/food_processor_process/carrot
 	input = /obj/item/food/grown/carrot
 	output = /obj/item/food/carrotfries
+	added_foodtypes = FRIED
 
 /datum/food_processor_process/soybeans
 	input = /obj/item/food/grown/soybeans
@@ -120,10 +129,13 @@
 /datum/food_processor_process/corn
 	input = /obj/item/food/grown/corn
 	output = /obj/item/food/tortilla
+	added_foodtypes = GRAIN //classified as grain when processed
+	removed_foodtypes = VEGETABLES
 
 /datum/food_processor_process/tortilla
 	input = /obj/item/food/tortilla
 	output = /obj/item/food/cornchips
+	added_foodtypes = JUNKFOOD|FRIED
 
 /datum/food_processor_process/parsnip
 	input = /obj/item/food/grown/parsnip
@@ -143,3 +155,4 @@
 /datum/food_processor_process/canned_ink
 	input = /obj/item/food/ink_sac
 	output = /obj/item/food/canned/squid_ink
+	removed_foodtypes = RAW

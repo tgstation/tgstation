@@ -56,6 +56,6 @@
 	id = "comp_module"
 	build_path = /obj/item/circuit_component/module
 	category = list(
-		//This one is just a wrapper to make things a bit tidier so itdoesn't belong in any specific subcategory
+		//This one is just a wrapper to make things a bit tidier so it doesn't belong in any specific subcategory
 		RND_CATEGORY_CIRCUITRY_CORE
 	)

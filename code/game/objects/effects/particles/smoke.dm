@@ -127,7 +127,7 @@
 	fadein = 0.4 SECONDS
 	position = generator(GEN_BOX, list(-17,-15,0), list(24,15,0), NORMAL_RAND)
 	scale = generator(GEN_VECTOR, list(0.9,0.9), list(1.1,1.1), NORMAL_RAND)
-	drift = generator(GEN_SPHERE, list(-0.01,0), list(0.01,0.01), UNIFORM_RAND)
+	drift = generator(GEN_SPHERE, -0.01 , 0.01, UNIFORM_RAND)
 	spin = generator(GEN_NUM, -2, 2, NORMAL_RAND)
 	gravity = list(0.05, 0.28)
 	friction = 0.3

@@ -1,5 +1,6 @@
 /// Singleton representing a category of jobs forming a department.
 /datum/job_department
+	abstract_type = /datum/job_department
 	/// Department as displayed on different menus.
 	var/department_name = DEPARTMENT_UNASSIGNED
 	/// Bitflags associated to the specific department.
@@ -10,8 +11,6 @@
 	var/department_experience_type = null
 	/// The order in which this department appears on menus, in relation to other departments.
 	var/display_order = 0
-	/// The header color to be displayed in the ban panel, classes defined in banpanel.css
-	var/label_class = "undefineddepartment"
 	/// The color used in TGUI or similar menus.
 	var/ui_color = "#9689db"
 	/// Job singleton datums associated to this department. Populated on job initialization.
@@ -54,6 +53,10 @@
 	var/static/list/nation_suffixes = list("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")
 	return pick(nation_prefixes) + pick(nation_suffixes)
 
+/// Returns a simplifed spaceless string for use in stuff like CSS.
+/datum/job_department/proc/get_label_class()
+	return LOWER_TEXT(replacetext(department_name, " ", "_"))
+
 /// A special assistant only department, primarily for use by the preferences menu
 /datum/job_department/assistant
 	department_name = DEPARTMENT_ASSISTANT
@@ -70,6 +73,7 @@
 	department_name = DEPARTMENT_CAPTAIN
 	department_bitflags = DEPARTMENT_BITFLAG_CAPTAIN
 	department_head = /datum/job/captain
+	ui_color = "#6681a5"
 	primary_work_area = /area/station/command
 
 /datum/job_department/command
@@ -78,7 +82,6 @@
 	department_head = /datum/job/captain
 	department_experience_type = EXP_TYPE_COMMAND
 	display_order = 1
-	label_class = "command"
 	ui_color = "#6681a5"
 	primary_work_area = /area/station/command
 
@@ -88,7 +91,6 @@
 	department_head = /datum/job/head_of_security
 	department_experience_type = EXP_TYPE_SECURITY
 	display_order = 2
-	label_class = "security"
 	ui_color = "#d46a78"
 	nation_prefixes = list("Securi", "Beepski", "Shitcuri", "Red", "Stunba", "Flashbango", "Flasha", "Stanfordi")
 	primary_work_area = /area/station/security
@@ -111,7 +113,6 @@
 	department_head = /datum/job/chief_engineer
 	department_experience_type = EXP_TYPE_ENGINEERING
 	display_order = 3
-	label_class = "engineering"
 	ui_color = "#dfb567"
 	nation_prefixes = list("Atomo", "Engino", "Power", "Teleco")
 	primary_work_area = /area/station/engineering
@@ -129,7 +130,6 @@
 	department_head = /datum/job/chief_medical_officer
 	department_experience_type = EXP_TYPE_MEDICAL
 	display_order = 4
-	label_class = "medical"
 	ui_color = "#65b2bd"
 	nation_prefixes = list("Mede", "Healtha", "Recova", "Chemi", "Viro", "Psych")
 	primary_work_area = /area/station/medical
@@ -149,7 +149,6 @@
 	department_head = /datum/job/research_director
 	department_experience_type = EXP_TYPE_SCIENCE
 	display_order = 5
-	label_class = "science"
 	ui_color = "#c973c9"
 	nation_prefixes = list("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
 	primary_work_area = /area/station/science
@@ -169,7 +168,6 @@
 	department_head = /datum/job/quartermaster
 	department_experience_type = EXP_TYPE_SUPPLY
 	display_order = 6
-	label_class = "supply"
 	ui_color = "#cf9c6c"
 	nation_prefixes = list("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
 	primary_work_area = /area/station/cargo
@@ -182,7 +180,6 @@
 	department_head = /datum/job/head_of_personnel
 	department_experience_type = EXP_TYPE_SERVICE
 	display_order = 7
-	label_class = "service"
 	ui_color = "#7cc46a"
 	nation_prefixes = list("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
 	primary_work_area = /area/station/service
@@ -197,7 +194,6 @@
 	department_head = /datum/job/ai
 	department_experience_type = EXP_TYPE_SILICON
 	display_order = 8
-	label_class = "silicon"
 	ui_color = "#5dbda0"
 
 /datum/job_department/silicon/generate_nation_name()

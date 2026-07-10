@@ -175,39 +175,44 @@
 	else
 		disconnect_from_network()
 
-/obj/machinery/power/port_gen/pacman/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(O, sheet_path))
-		var/obj/item/stack/addstack = O
-		var/amount = min((max_sheets - sheets), addstack.amount)
-		if(amount < 1)
-			to_chat(user, span_notice("\The [src] is full!"))
-			return
-		to_chat(user, span_notice("You add [amount] sheets to \the [src]."))
-		sheets += amount
-		addstack.use(amount)
-		return
-	else if(!active)
-		if(O.tool_behaviour == TOOL_WRENCH)
-			if(!anchored && !isinspace())
-				set_anchored(TRUE)
-				to_chat(user, span_notice("You secure the generator to the floor."))
-			else if(anchored)
-				set_anchored(FALSE)
-				to_chat(user, span_notice("You unsecure the generator from the floor."))
+/obj/machinery/power/port_gen/pacman/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, sheet_path))
+		return ..()
+	var/obj/item/stack/addstack = tool
+	var/amount = min((max_sheets - sheets), addstack.amount)
+	if(amount < 1)
+		to_chat(user, span_notice("\The [src] is full!"))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You add [amount] sheets to \the [src]."))
+	sheets += amount
+	addstack.use(amount)
+	return ITEM_INTERACT_SUCCESS
 
-			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-			return
-		else if(O.tool_behaviour == TOOL_SCREWDRIVER)
-			toggle_panel_open()
-			O.play_tool_sound(src)
-			if(panel_open)
-				to_chat(user, span_notice("You open the access panel."))
-			else
-				to_chat(user, span_notice("You close the access panel."))
-			return
-		else if(default_deconstruction_crowbar(user, O))
-			return
-	return ..()
+/obj/machinery/power/port_gen/screwdriver_act(mob/living/user, obj/item/tool)
+	if(active)
+		return NONE
+	toggle_panel_open()
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the access panel."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/power/port_gen/wrench_act(mob/living/user, obj/item/tool)
+	if(active)
+		return NONE
+	if(!anchored && !isinspace())
+		set_anchored(TRUE)
+		to_chat(user, span_notice("You secure the generator to the floor."))
+		return ITEM_INTERACT_SUCCESS
+
+	set_anchored(FALSE)
+	to_chat(user, span_notice("You unsecure the generator from the floor."))
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/power/port_gen/crowbar_act(mob/living/user, obj/item/tool)
+	if(active)
+		return NONE
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/power/port_gen/pacman/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

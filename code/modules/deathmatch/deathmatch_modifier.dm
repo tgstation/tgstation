@@ -530,7 +530,7 @@
 		var/datum/deathmatch_modifier/modifier = GLOB.deathmatch_game.modifiers[pick_n_take(modifiers_pool)]
 		modifier.on_select(lobby)
 		modifier.on_start_game(lobby)
-		lobby += modifier.type
+		lobby.modifiers += modifier.type
 		modifiers_pool -= modifier.blacklisted_modifiers
 		if(!length(modifiers_pool))
 			return

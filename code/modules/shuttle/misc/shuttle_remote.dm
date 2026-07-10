@@ -4,6 +4,7 @@
 	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "shuttleremote"
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	/// if the docks may be changed
 	var/may_change_docks = TRUE //if this is set to FALSE make sure the shuttle it will be linked to does NOT get to have multiple instances of itself
 	/// the port where the shuttle leaves to

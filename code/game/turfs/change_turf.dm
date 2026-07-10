@@ -25,6 +25,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		copy_to_turf.icon_state = icon_state
 	if(copy_to_turf.icon != icon)
 		copy_to_turf.icon = icon
+	if(length(custom_materials))
+		copy_to_turf.set_custom_materials(custom_materials)
 	if(LAZYLEN(atom_colours))
 		copy_to_turf.atom_colours = atom_colours.Copy()
 		copy_to_turf.update_atom_colour()

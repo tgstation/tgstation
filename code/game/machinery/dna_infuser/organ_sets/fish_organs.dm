@@ -377,14 +377,14 @@
 /datum/bodypart_overlay/simple/gills
 	icon = 'icons/mob/human/fish_features.dmi'
 	icon_state = "gills"
-	layers = EXTERNAL_ADJACENT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 	draw_on_husks = HUSK_OVERLAY_GRAYSCALE
 
-/datum/bodypart_overlay/simple/gills/get_image(image_layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/simple/gills/get_image(obj/item/bodypart/limb, layer_index, layer_real)
 	return image(
 		icon = icon,
-		icon_state = "[icon_state]_[mutant_bodyparts_layertext(image_layer)]",
-		layer = image_layer,
+		icon_state = "[icon_state]_[layer_index]",
+		layer = layer_real,
 	)
 
 /// Subtype of gills that allow the mob to optionally breathe water.

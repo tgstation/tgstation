@@ -183,10 +183,7 @@
  *
  * required uiref ref The UI that was closed.
  */
-/client/verb/uiclose(window_id as text)
-	// Name the verb, and hide it from the user panel.
-	set name = "uiclose"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, uiclose, "uiclose", window_id as text)
 	var/mob/user = src?.mob
 	if(!user)
 		return

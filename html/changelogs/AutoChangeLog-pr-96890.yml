@@ -1,0 +1,4 @@
+author: "TheRealWoodside"
+delete-after: True
+changes:
+  - bugfix: "Fixed Skittish behaving strangely with lockers not against a wall, and crates in general."

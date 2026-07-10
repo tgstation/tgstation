@@ -11,6 +11,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	/// Which mode is the scanner currently on?
 	var/scanning_mode = SCAN_EXPORTS
 	/// A list of all available export scanner modes.
