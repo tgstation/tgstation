@@ -29,8 +29,7 @@
 	if(!holder_to_be.trying_to_hold_mob(source))
 		return
 
-	holder_to_be.mob_try_pickup(source)
-	INVOKE_ASYNC(holder_to_be, PROC_REF(mob_try_pickup), source)
+	INVOKE_ASYNC(holder_to_be, TYPE_PROC_REF(/mob/living, mob_try_pickup), source)
 	return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
 

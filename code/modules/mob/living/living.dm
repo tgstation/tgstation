@@ -1990,11 +1990,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	name = "[name] ([identifier])"
 	real_name = name
 
-/// Used to determine if the src mob is attempting to hold the target mob in their hands, a gate before we even work on mob_try_pickup.
+/// Used to determine if the src mob is attempting to hold the target mob in their hands, a gate before we even work on mob_try_pickup via the drag-n-drop route
 /// Ultimately, this is just a nice helper to be used in conjunction with /datum/element/can_be_held to avoid signal-based collision in a lot of places...
 /// Note that the only intended way for TRAIT_CAN_BE_HELD is via the aforementioned element, which shall fail on non-living targets, so that's the typecheck.
-/mob/living/proc/trying_to_hold_mob(mob/living/target)
-	return HAS_TRAIT(target, TRAIT_CAN_BE_HELD) && grab_state == GRAB_AGGRESSIVE && pulling == target
+/mob/proc/trying_to_hold_mob(mob/living/target)
+	return isliving(src) &&HAS_TRAIT(target, TRAIT_CAN_BE_HELD) && grab_state == GRAB_AGGRESSIVE && pulling == target
 
 /mob/living/proc/mob_pickup(mob/living/user)
 	var/obj/item/mob_holder/holder = new inhand_holder_type(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
