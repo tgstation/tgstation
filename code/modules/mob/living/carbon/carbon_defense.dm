@@ -701,7 +701,7 @@
 /mob/living/carbon/proc/init_bioscrambler_lists()
 	var/list/body_parts = typesof(/obj/item/bodypart/chest) + typesof(/obj/item/bodypart/head) + subtypesof(/obj/item/bodypart/arm) + subtypesof(/obj/item/bodypart/leg)
 	for(var/obj/item/bodypart/part as anything in body_parts)
-		if(BODYPART_CAN_BE_BIOSCRAMBLED(part))
+		if(!is_type_in_typecache(part, GLOB.bioscrambler_parts_blacklist) && BODYPART_CAN_BE_BIOSCRAMBLED(part))
 			continue
 		body_parts -= part
 	GLOB.bioscrambler_valid_parts = body_parts
