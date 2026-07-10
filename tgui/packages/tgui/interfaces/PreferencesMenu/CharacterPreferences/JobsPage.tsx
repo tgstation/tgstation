@@ -1,6 +1,7 @@
 import { sortBy } from 'es-toolkit';
 import type { CSSProperties, ReactNode } from 'react';
 import { useBackend } from 'tgui/backend';
+import { Color } from 'tgui-core/color';
 import { Box, Button, Section, Stack, Tooltip } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
@@ -248,7 +249,15 @@ function Department(props: DepartmentProps) {
   );
 
   return (
-    <Box style={{ '--department-color': department.color } as CSSProperties}>
+    <Box
+      style={
+        {
+          '--department-color': Color.fromHex(department.color)
+            .darken(10)
+            .toString(),
+        } as CSSProperties
+      }
+    >
       <Stack fill vertical g={0}>
         {jobsForDepartment.map(([jobName, job]) => {
           return (
