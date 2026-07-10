@@ -40,6 +40,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, TRUE) /// BANDASTATION EDIT
 		/obj/item/paper,
 		/obj/item/photo,
 		/obj/item/tcgcard,
+		/obj/item/paperplane,
 	)
 	/// List of types which should be allowed to be faxed if hacked
 	var/static/list/exotic_types = list(

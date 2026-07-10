@@ -173,12 +173,12 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	//Determines if we are entitled to setting/resetting our timer.
 	//Only reset SCYTHE_EMPOWERED with an empowerment that would grant that.
 	//Only reset SCTHE_SATED if hitting at least simple mobs or nonmonkey carbons.
-	var/allow_timer_set = FALSE
 
-	if(empowerment < potential_empowerment || empowerment == potential_empowerment) //Reset the timer only if our potential empowerment is equivalent or stronger than our current empowerment
-		allow_timer_set = TRUE
+	if(empowerment > potential_empowerment) //If the new is weaker than the old, don't reset the timer and don't change our power
+		return
+
 	empowerment = potential_empowerment
-	if(potential_empowerment != SCYTHE_WEAK && allow_timer_set) //And finally, if the empowerment was improved and wasn't too weak to get an empowerment, we set/reset our timer
+	if(potential_empowerment != SCYTHE_WEAK) //And finally, if it wasn't too weak to get an empowerment, we set/reset our timer
 		addtimer(CALLBACK(src, PROC_REF(scythe_empowerment_end)), (4 MINUTES / empowerment), TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/item/vorpalscythe/proc/scythe_empowerment_end()

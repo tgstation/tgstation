@@ -24,8 +24,9 @@ export const CrewManifest = (props) => {
       <Window.Content scrollable>
         {Object.entries(manifest).map(([dept, crew]) => (
           <Section
-            className={`CrewManifest--${dept}`}
+            className={`CrewManifest--Section`}
             key={dept}
+            style={{'--department-color': positions[dept].color}}
             title={
               (DEPARTMENTS_RU[dept] || dept) +
               (dept !== 'Misc'

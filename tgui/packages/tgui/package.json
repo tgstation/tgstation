@@ -18,7 +18,7 @@
 		"react-dom": "^19.1.0",
 		"react-zoom-pan-pinch": "^3.7.0",
 		"react-json-tree": "^0.20.0",
-		"tgui-core": "^6.1.0",
+		"tgui-core": "^6.1.1",
 		"tgui-dev-server": "workspace:*"
 	},
 	"private": true

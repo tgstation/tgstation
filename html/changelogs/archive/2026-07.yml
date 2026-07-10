@@ -246,7 +246,113 @@
   - bugfix: fixes an issue where switching slots would carry over the quirks of a
       previous slot until you add or remove a quirk
 2026-07-07:
+  Aliceee2ch:
+  - image: Bacon was resprited
+  FalloutFalcon:
+  - code_imp: Ensures some code actually updates overlays instead of return a list
+      of them to nobody
+  Ghommie:
+  - bugfix: Custom material floors and walls of a shuttle are no longer lost on departure
+      or arrival.
+  JohnFulpWillard:
+  - spellcheck: Oldstation rnd notes now update properly when you mix them together.
+  Melbert:
+  - bugfix: Fix airlock pump only working when nonfunctional
+  - qol: Adds an operation to un-widen the chest cavity
+  - qol: '"Fix bones" operation will wipe all surgical states for limbs without skin,
+      acting as an analog to "Mend incision" for species like Plasmamen'
+  PapaMichael:
+  - bugfix: Blood brothers once again have a 10% chance of being able to recruit a
+      team of 3.
   Robwo:
   - rscadd: added heads of staff intercoms
   - image: added color to departmental intercoms
   - image: added a unique state for syndicate intercoms
+  SmArtKar:
+  - bugfix: Fixed particle weather bleeding through z-levels when different weathers
+      are present
+  - qol: Necropolis stone tiles can no longer be hit
+  TheRyeGuyWhoWillNowDie:
+  - rscadd: Kilostation
+  - rscdel: Wawastation
+  lelandkemble:
+  - code_imp: 20 files have been converted from attackby() to item_interaction()
+  - bugfix: You can no longer repeatedly put anomaly cores into the anomaly core guns
+  - bugfix: A runtime that occured when opening a package with a boxcutter no longer
+      occurs.
+  - code_imp: 30 files have been moved from attackby() to item_interaction()
+  - balance: You can't see out of a perceptomatrix without a core
+  sergeirocks100:
+  - spellcheck: When untying a neckerchief, the item in question will no longer be
+      misspelled as "neckercheif".
+2026-07-08:
+  SmArtKar:
+  - bugfix: Fixed cube monkey cap runtimes
+  - bugfix: Fixed revolvers runtiming when non-player mobs try to spin them
+2026-07-09:
+  Aliceee2ch:
+  - bugfix: Fixed players being able to turn into tendril/dupe necrochests from it
+      by turning it into MOB_SPECIAL biotype.
+  FalloutFalcon:
+  - refactor: Job sorting is based on department
+  - qol: All panels displaying jobs now use a consistent color pallet
+  Ivniinvi:
+  - bugfix: Fixed mistake in death commando names.
+  Jacquerel:
+  - balance: Anything with hands can now use the things it is holding to commit suicide
+  Melbert:
+  - bugfix: Fix the BSRPED potentially bricking reagent containers on removal
+  - bugfix: Fix a potential exploit with BSRPED and reagent containers
+  - bugfix: Fix mask height offset
+  - rscadd: Vending machines tilt after falling a z level
+  - bugfix: Fix false walls being distinguisable via examine
+  Odairu:
+  - rscadd: fax machines now accept paper airplanes
+  PapaMichael:
+  - qol: AIs save their "previous camera" (accessed by pressing the '0' key) when
+      tracking a mob.
+  SmArtKar:
+  - qol: Ore vents spawn less rubble and are more consistent at excavating the surrounding
+      area
+  - balance: Cleanable decals can no longer be hit (not cleaned, just hit) if the
+      user has combat mode on.
+  - bugfix: Fixed goldgrubs leaving floating emissives after dying
+  - bugfix: Fixed xenobio consoles not being able to spawn monkeys
+  antropod:
+  - bugfix: Fixes material tiles spawned by disposals underneath the floor
+  lelandkemble:
+  - map: Interrogation room radios are now interrogation room radios
+  vinylspiders:
+  - bugfix: clicking on a searchable dropdown item to select it should now work
+  - bugfix: fixes an issue that can under certain conditions cause reskinnable items
+      with the toggle component (such as jackets) to have invisible icons upon using
+      the toggle
+2026-07-10:
+  Jacquerel:
+  - balance: Heparin and Nitrous Oxide now make nosebleeds worse, and also make you
+      bleed more if someone very convincing tells you to start doing it.
+  Melbert:
+  - bugfix: Fix strong arm removal
+  - balance: Knockdown, stun, and paralyze now have a 66% chance to interrupt speech
+      (down from 100%)
+  - balance: Immobilize and Incapacitate now has a 0% chance to trigger interrupt
+      speech (down from 100%)
+  - balance: Sleep and Unconscious still has a 100% chance to trigger interrupt speech
+  - balance: 'Chance to interrupt speech from a stun makes a second roll based on
+      stun severity: >6 second stuns have a 100% chance, >2 second stuns have a 66%
+      chance, and <2 second stuns have a 0% chance'
+  - balance: Shove knockdown is unaffected by these changes, and always interrupts
+      speech
+  - balance: Having speech interrupted from stuns no longer causes you to choke on
+      cigarettes unless the stun effect was high severity (>30 seconds)
+  - balance: Chance of interrupting speech on punch was modified from 100% at 9 damage
+      to 66% at 9 damage and 100% at 12 damage
+  - bugfix: When your speech is interrupted from death, it now cuts off abruptly,
+      rather than appending a generic interrupt indicator
+  - bugfix: Fixed a bug where you repeat your last said line if your speech is interrupted
+      after opening your say box, but before typing anything
+  TheRealWoodside:
+  - bugfix: Fixed Skittish behaving strangely with lockers not against a wall, and
+      crates in general.
+  lelandkemble:
+  - bugfix: Vorpal scythe damage multiplier remains after the first hit

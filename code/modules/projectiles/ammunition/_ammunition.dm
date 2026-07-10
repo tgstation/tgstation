@@ -134,26 +134,32 @@
 	if(!loaded_projectile)
 		loaded_projectile = new projectile_type(src, src)
 
-/obj/item/ammo_casing/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/ammo_box))
-		var/obj/item/ammo_box/box = I
-		if(isturf(loc))
-			var/boolets = 0
-			for(var/obj/item/ammo_casing/bullet in loc)
-				if (box.stored_ammo.len >= box.max_ammo)
-					break
-				if (bullet.loaded_projectile)
-					if (box.give_round(bullet, 0))
-						boolets++
-				else
-					continue
-			if (boolets > 0)
-				box.update_appearance()
-				to_chat(user, span_notice("Вы собрали [boolets] патрон[declension_ru(boolets, "", "а", "ов")]. [capitalize(box.declent_ru(NOMINATIVE))] теперь содержит [box.stored_ammo.len] патрон[declension_ru(box.stored_ammo.len, "", "а", "ов")]."))
-			else
-				to_chat(user, span_warning("Вам не удаётся ничего собрать!"))
-	else
-		return ..()
+/obj/item/ammo_casing/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/ammo_box))
+		return NONE
+	if(!isturf(loc))
+		return ITEM_INTERACT_BLOCKING
+	if(!collect_into_box(user, tool))
+		return ITEM_INTERACT_BLOCKING
+	return ITEM_INTERACT_SUCCESS
+
+/// Collects the casing and its like on its tile into the passed box, TRUE if anything collected.
+/obj/item/ammo_casing/proc/collect_into_box(mob/living/user, obj/item/ammo_box/box)
+	var/boolets = 0
+	for(var/obj/item/ammo_casing/bullet in loc)
+		if (box.stored_ammo.len >= box.max_ammo)
+			break
+		if (!bullet.loaded_projectile)
+			continue
+		if (box.give_round(bullet, 0))
+			boolets++
+
+	if (!boolets)
+		to_chat(user, span_warning("Вам не удаётся ничего собрать!"))
+		return FALSE
+	box.update_appearance()
+	to_chat(user, span_notice("Вы собрали [boolets] патрон[declension_ru(boolets, "", "а", "ов")]. [capitalize(box.declent_ru(NOMINATIVE))] теперь содержит [box.stored_ammo.len] патрон[declension_ru(box.stored_ammo.len, "", "а", "ов")]."))
+	return TRUE
 
 /obj/item/ammo_casing/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	bounce_away(FALSE, NONE)

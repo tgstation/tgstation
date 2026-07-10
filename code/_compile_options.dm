@@ -187,6 +187,11 @@
 #define DO_NOT_DEFER_ASSETS
 //Test at full capacity, the extra cost doesn't matter
 #define TIMER_DEBUG
+
+// Checks if unit tests are being run locally or well, not
+#if !defined(CIBUILDING) && !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
+#define RUNNING_LOCAL_TESTS
+#endif
 #endif
 
 #ifdef TGS

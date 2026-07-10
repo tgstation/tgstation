@@ -36,7 +36,7 @@
 		icon_state = icon_empty
 	return ..()
 
-/obj/item/reagent_containers/condiment/suicide_act(mob/living/carbon/user)
+/obj/item/reagent_containers/condiment/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[capitalize(user.declent_ru(NOMINATIVE))] пытается проглотить [declent_ru(ACCUSATIVE)] целиком! Кажется, [ru_p_they()] не знает, как работает еда!"))
 	return OXYLOSS
 

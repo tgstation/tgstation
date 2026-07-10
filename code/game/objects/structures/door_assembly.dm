@@ -56,7 +56,7 @@
 /obj/structure/door_assembly/multi_tile/Initialize(mapload)
 	. = ..()
 	set_bounds()
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/door_assembly/multi_tile/Move()
 	. = ..()

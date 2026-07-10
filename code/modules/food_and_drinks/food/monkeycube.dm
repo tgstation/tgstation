@@ -33,7 +33,16 @@
 		holder.dropItemToGround(src)
 
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
-	var/mob/living/bananas = new spawned_mob(drop_location(), TRUE, spammer) // funny that we pass monkey init args to non-monkey mobs, that's totally a future issue
+	var/mob/living/bananas = null
+	if (ispath(spawned_mob, /mob/living/carbon/human/species/monkey))
+		var/cap = CONFIG_GET(number/monkeycap)
+		if (LAZYLEN(SSmobs.cubemonkeys) < cap)
+			bananas = new spawned_mob(drop_location(), TRUE)
+		else if (spammer)
+			to_chat(spammer, span_warning("Bluespace harmonics prevent the creation of more than [cap] monkeys on the station at one time!"))
+	else
+		bananas = new(drop_location())
+
 	if (!QDELETED(bananas))
 		ADD_TRAIT(bananas, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 		SET_FACTION_AND_ALLIES_FROM(bananas, src)

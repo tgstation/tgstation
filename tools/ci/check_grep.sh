@@ -256,6 +256,13 @@ if $grep 'var\/(turf|mob|obj|atom\/movable).+ as anything in o?(view|range|heare
 	st=1
 fi;
 
+part "update_overlays() called without using return value"
+if $grep '^\t+update_overlays\(\)$' "${code_files[@]}"; then
+	echo
+	echo -e "${RED}ERROR: update_overlays() is being called without using the return value. Use update_appearance(UPDATE_OVERLAYS) instead if you dont understand what this means.${NC}"
+	st=1
+fi;
+
 part "common spelling mistakes"
 if $grep -i 'centcomm' "${code_files[@]}"; then
 	echo

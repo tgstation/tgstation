@@ -1349,7 +1349,8 @@
 	if(!can_bleed())
 		to_chat(src, span_notice("У вас болит голова."))
 		return
-	head.adjustBleedStacks(5)
+	var/add_stacks = HAS_TRAIT(src, TRAIT_BLOOD_FOUNTAIN) ? 7 : 5
+	head.adjustBleedStacks(add_stacks)
 	visible_message(span_notice("У [declent_ru(GENITIVE)] пошла кровь из носа."), span_warning("У вас пошла кровь из носа."))
 
 /mob/living/carbon/check_hit_limb_zone_name(hit_zone)

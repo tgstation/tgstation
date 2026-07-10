@@ -32,6 +32,9 @@
 		},
 		"Explorer": {
 			"spawn_positions": 4
+		},
+		"Chaplain": {
+			"has_monastery": 1
 		}
 	}
 }

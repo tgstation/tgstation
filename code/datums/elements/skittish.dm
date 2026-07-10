@@ -59,3 +59,5 @@
 	closet_turf.visible_message(span_warning("[scooby] dives into [closet]!"))
 	// If you run into a locker, you don't want to run out immediately
 	scooby.Immobilize(0.5 SECONDS)
+
+	return COMPONENT_INTERCEPT_BUMPED

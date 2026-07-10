@@ -181,53 +181,53 @@
 		genetic_damage_pulse()
 		return
 
-/obj/machinery/computer/dna_console/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/computer/dna_console/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// Store chromosomes in the console if there's room
-	if (istype(item, /obj/item/chromosome))
-		item.forceMove(src)
-		stored_chromosomes += item
-		to_chat(user, span_notice("You insert [item]."))
-		return
+	if (istype(tool, /obj/item/chromosome))
+		tool.forceMove(src)
+		stored_chromosomes += tool
+		to_chat(user, span_notice("You insert [tool]."))
+		return ITEM_INTERACT_SUCCESS
 
 	// Insert data disk if console disk slot is empty
 	// Swap data disk if there is one already a disk in the console
-	if (istype(item, /obj/item/disk/data)) //INSERT SOME DISKETTES
+	if (istype(tool, /obj/item/disk/data)) //INSERT SOME DISKETTES
 		// Insert disk into DNA Console
-		if (!user.transferItemToLoc(item,src))
-			return
+		if (!user.transferItemToLoc(tool,src))
+			return ITEM_INTERACT_BLOCKING
 		// If insertion was successful and there's already a diskette in the console, eject the old one.
 		if(diskette)
 			eject_disk(user)
 		// Set the new diskette.
-		diskette = item
-		to_chat(user, span_notice("You insert [item]."))
-		return
+		diskette = tool
+		to_chat(user, span_notice("You insert [tool]."))
+		return ITEM_INTERACT_SUCCESS
 
 	// Recycle non-activator used injectors
 	// Turn activator used injectors (aka research injectors) to chromosomes
-	if(istype(item, /obj/item/dnainjector/activator))
-		var/obj/item/dnainjector/activator/activator = item
-		if(activator.used)
-			if(activator.research && activator.filled)
-				if(prob(60))
-					var/c_typepath = generate_chromosome()
-					var/obj/item/chromosome/CM = new c_typepath (src)
-					stored_chromosomes += CM
-					to_chat(user,span_notice("[capitalize(CM.name)] added to storage."))
-				else
-					to_chat(user, span_notice("There was not enough genetic data to extract a viable chromosome."))
-			if(activator.crispr_charge)
-				crispr_charges++
-				to_chat(user, span_notice("CRISPR charge added."))
-			qdel(item)
-			to_chat(user,span_notice("Recycled [item]."))
-			return
-		else
+	if(istype(tool, /obj/item/dnainjector/activator))
+		var/obj/item/dnainjector/activator/activator = tool
+		if(!activator.used)
 			//recycle unused activators
-			qdel(item)
-			to_chat(user, span_notice("Recycled unused [item]."))
-			return
-	return ..()
+			qdel(tool)
+			to_chat(user, span_notice("Recycled unused [tool]."))
+			return ITEM_INTERACT_SUCCESS
+		if(activator.research && activator.filled)
+			if(prob(60))
+				var/c_typepath = generate_chromosome()
+				var/obj/item/chromosome/CM = new c_typepath (src)
+				stored_chromosomes += CM
+				to_chat(user,span_notice("[capitalize(CM.name)] added to storage."))
+			else
+				to_chat(user, span_notice("There was not enough genetic data to extract a viable chromosome."))
+		if(activator.crispr_charge)
+			crispr_charges++
+			to_chat(user, span_notice("CRISPR charge added."))
+		qdel(tool)
+		to_chat(user,span_notice("Recycled [tool]."))
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/machinery/computer/dna_console/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))

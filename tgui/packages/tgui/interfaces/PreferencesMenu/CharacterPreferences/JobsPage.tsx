@@ -1,7 +1,7 @@
 import { sortBy } from 'es-toolkit';
-import type { CSSProperties, PropsWithChildren, ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { useBackend } from 'tgui/backend';
-import { Button, Section, Stack, Tooltip } from 'tgui-core/components';
+import { Box, Button, Section, Stack, Tooltip } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { JOBS_RU } from '../../../bandastation/ru_jobs'; // BANDASTATION EDIT
@@ -220,7 +220,7 @@ function JobRow(props: JobRowProps) {
 
 type DepartmentProps = {
   department: string;
-} & PropsWithChildren;
+};
 
 function Department(props: DepartmentProps) {
   const { department: name } = props;
@@ -248,22 +248,24 @@ function Department(props: DepartmentProps) {
   );
 
   return (
-    <Stack fill vertical g={0}>
-      {jobsForDepartment.map(([jobName, job]) => {
-        return (
-          <JobRow
-            key={jobName}
-            name={jobName}
-            job={job}
-            className={classes([
-              className,
-              `${className}--${name.replace(' ', '')}`,
-              jobName === department.head && 'head',
-            ])}
-          />
-        );
-      })}
-    </Stack>
+    <Box style={{ '--department-color': department.color } as CSSProperties}>
+      <Stack fill vertical g={0}>
+        {jobsForDepartment.map(([jobName, job]) => {
+          return (
+            <JobRow
+              key={jobName}
+              name={jobName}
+              job={job}
+              className={classes([
+                className,
+                `${className}--${name.replace(' ', '')}`,
+                jobName === department.head && 'head',
+              ])}
+            />
+          );
+        })}
+      </Stack>
+    </Box>
   );
 }
 

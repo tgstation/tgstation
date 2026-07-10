@@ -33,7 +33,7 @@
 	//Wait for animation to end
 	addtimer(CALLBACK(src, PROC_REF(spawn_carp)), 0.6 SECONDS)
 
-/obj/item/toy/plush/carpplushie/dehy_carp/suicide_act(mob/living/carbon/human/user)
+/obj/item/toy/plush/carpplushie/dehy_carp/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts eating [src]. Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	if(!istype(user))

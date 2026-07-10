@@ -288,6 +288,18 @@
 		SStgui.update_uis(src)
 		return ITEM_INTERACT_SUCCESS
 
+	if(isidcard(tool))
+		if(!id_lock)
+			id_lock = WEAKREF(tool)
+			balloon_alert(user, "successfully locked")
+			return ITEM_INTERACT_SUCCESS
+		if(tool != id_lock.resolve())
+			balloon_alert(user, "locked by another id")
+			return ITEM_INTERACT_BLOCKING
+		id_lock = null
+		balloon_alert(user, "successfully unlocked")
+		return ITEM_INTERACT_SUCCESS
+
 	if(!panel_open || !is_wire_tool(tool))
 		return NONE
 	wires.interact(user)
@@ -348,23 +360,6 @@
 		y_add = 32 + manipulator_arm.calculate_item_offset(FALSE, pixels_to_offset = 16)
 	)
 
-/obj/machinery/big_manipulator/attackby(obj/item/some_item, mob/user, params)
-	. = ..()
-	if(!isidcard(some_item))
-		return
-
-	var/obj/item/card/id/clicked_by_this_id = some_item
-
-	if(!id_lock)
-		id_lock = WEAKREF(clicked_by_this_id)
-		balloon_alert(user, "successfully locked")
-		return
-	var/obj/item/card/id/resolve_id = id_lock.resolve()
-	if(clicked_by_this_id != resolve_id)
-		balloon_alert(user, "locked by another id")
-		return
-	id_lock = null
-	balloon_alert(user, "successfully unlocked")
 
 /// Attaching the arm effect to the core.
 /obj/machinery/big_manipulator/proc/create_manipulator_arm()
