@@ -134,7 +134,7 @@
 /datum/element/eyestab/proc/label_readout(obj/item/source, list/readout)
 	SIGNAL_HANDLER
 
-	readout += "It deals extra damage and special effects when targeting eyes."
+	readout += "It deals additional damage when targeting the eyes."
 
 #undef CLUMSY_ATTACK_SELF_CHANCE
 #undef EYESTAB_BLEEDING_THRESHOLD

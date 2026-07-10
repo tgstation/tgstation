@@ -33,4 +33,4 @@
 /datum/element/lifesteal/proc/label_readout(obj/item/source, list/readout)
 	SIGNAL_HANDLER
 
-	readout += "It steals health and grants it to yourself against any living foe."
+	readout += "It heals you upon damaging living enemies."

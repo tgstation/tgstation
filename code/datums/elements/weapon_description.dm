@@ -73,7 +73,7 @@
 
 	// Doesn't show the base notes for items that have the override notes variable set to true
 	if(!source.override_notes)
-		if(source.damtype)
+		if(source.damtype != BRUTE)
 			readout += "By default, it deals [source.damtype] damage."
 
 		if(source.force >= REAL_WEAPON_CUTOFF)

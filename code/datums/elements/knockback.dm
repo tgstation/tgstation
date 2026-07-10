@@ -74,4 +74,4 @@
 /datum/element/knockback/proc/label_readout(obj/item/source, list/readout)
 	SIGNAL_HANDLER
 
-	readout += "It knocks foes back [throw_distance] tiles when struck."
+	readout += "It knocks targets back [throw_distance] tiles when struck."

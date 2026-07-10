@@ -49,4 +49,4 @@
 /datum/element/chain_lightning_attack/proc/label_readout(obj/item/source, list/readout)
 	SIGNAL_HANDLER
 
-	readout += "It's attacks deal shock damage to a enemy and jump to other targets."
+	readout += "Its attacks deal shock damage to the target, which jumps to other targets."
