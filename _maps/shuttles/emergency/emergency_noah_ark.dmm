@@ -1,0 +1,1828 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/dark/station,
+/area/shuttle/escape)
+"aI" = (
+/obj/structure/chair,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"aS" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/mob/living/basic/chick,
+/turf/open/floor/hay,
+/area/shuttle/escape)
+"aX" = (
+/obj/structure/chair/sofa/corp/corner{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"bG" = (
+/obj/structure/table,
+/obj/item/defibrillator/loaded,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bT" = (
+/obj/structure/beebox/premade/random,
+/turf/open/misc/grass,
+/area/shuttle/escape)
+"cb" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/mob/living/basic/mining/legion/snow/spawner_made,
+/turf/open/misc/ice/coldroom,
+/area/shuttle/escape)
+"ct" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/escape)
+"cu" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"cw" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/water/beach,
+/area/shuttle/escape)
+"cF" = (
+/obj/structure/chair/sofa/corp/corner{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"cV" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Casino Infirmary"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"dd" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/floor/hay,
+/area/shuttle/escape)
+"dh" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/floor/glass/reinforced/plasma,
+/area/shuttle/escape)
+"dp" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/grass/fairy,
+/area/shuttle/escape)
+"dr" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/mob/living/basic/mining/legion/snow/spawner_made,
+/turf/open/misc/ice/coldroom,
+/area/shuttle/escape)
+"dy" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"ep" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/misc/beach/sand,
+/area/shuttle/escape)
+"et" = (
+/obj/structure/chair/sofa/corp{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"eW" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"fm" = (
+/obj/structure/water_source/puddle,
+/turf/open/misc/dirt/dark/station,
+/area/shuttle/escape)
+"fS" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/item/fish/angelfish,
+/turf/open/water/beach,
+/area/shuttle/escape)
+"ga" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"gm" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/mob/living/basic/frog,
+/turf/open/water/beach,
+/area/shuttle/escape)
+"gE" = (
+/mob/living/basic/spider/giant,
+/turf/open/floor/plating/elevatorshaft,
+/area/shuttle/escape)
+"hg" = (
+/turf/open/lava/smooth/weak,
+/area/shuttle/escape)
+"it" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Brig"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"iy" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/floor/glass/plasma,
+/area/shuttle/escape)
+"iz" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/item/clothing/mask/muzzle,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"iV" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/floor/glass/plasma,
+/area/shuttle/escape)
+"jE" = (
+/obj/structure/chair/sofa/corp/right{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"jS" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/floor/plating/snowed/standard_air,
+/area/shuttle/escape)
+"kk" = (
+/mob/living/basic/snail,
+/turf/open/floor/engine,
+/area/shuttle/escape)
+"kz" = (
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_y = 12;
+	pixel_x = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/dark/station,
+/area/shuttle/escape)
+"kA" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/escape)
+"kO" = (
+/mob/living/basic/crab/evil/kreb,
+/turf/open/misc/beach/sand,
+/area/shuttle/escape)
+"la" = (
+/mob/living/basic/clown/mutant/glutton,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/escape)
+"lo" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/glass,
+/area/shuttle/escape)
+"lr" = (
+/obj/structure/railing,
+/turf/open/misc/asteroid/snow/standard_air,
+/area/shuttle/escape)
+"lx" = (
+/mob/living/basic/flesh_spider,
+/turf/open/floor/plating/elevatorshaft,
+/area/shuttle/escape)
+"ly" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/misc/ironsand,
+/area/shuttle/escape)
+"lB" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/misc/ice/coldroom,
+/area/shuttle/escape)
+"lV" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
+"mc" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"mm" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/grass/fairy,
+/area/shuttle/escape)
+"mn" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt,
+/area/shuttle/escape)
+"mt" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/mob/living/basic/mining/wolf,
+/turf/open/floor/plating/snowed/standard_air,
+/area/shuttle/escape)
+"mz" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"mT" = (
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ni" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/floor/glass,
+/area/shuttle/escape)
+"nx" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/mob/living/basic/cow,
+/turf/open/misc/sandy_dirt,
+/area/shuttle/escape)
+"oc" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/lava/plasma,
+/area/shuttle/escape)
+"ok" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/item/clothing/suit/jacket/straight_jacket,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"oz" = (
+/obj/structure/railing/corner,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"oB" = (
+/obj/structure/railing,
+/turf/open/floor/glass/reinforced/plasma,
+/area/shuttle/escape)
+"pg" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/misc/asteroid/basalt,
+/area/shuttle/escape)
+"pp" = (
+/mob/living/basic/mining/ice_demon,
+/turf/open/lava/plasma,
+/area/shuttle/escape)
+"qj" = (
+/obj/machinery/computer/station_alert{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"qr" = (
+/obj/machinery/disposal/delivery_chute{
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"qx" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
+"qG" = (
+/obj/structure/railing,
+/turf/open/misc/ironsand,
+/area/shuttle/escape)
+"qW" = (
+/obj/structure/bed/dogbed,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"rH" = (
+/obj/item/reagent_containers/cup/bucket/wooden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/dark/station,
+/area/shuttle/escape)
+"rV" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/item/fishing_rod,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"sd" = (
+/mob/living/basic/creature,
+/turf/open/floor/glass/reinforced/plasma,
+/area/shuttle/escape)
+"si" = (
+/obj/structure/table,
+/obj/item/scalpel{
+	pixel_y = 12
+	},
+/obj/item/circular_saw,
+/obj/item/retractor{
+	pixel_x = 4
+	},
+/obj/item/hemostat{
+	pixel_x = -4
+	},
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/surgicaldrill,
+/obj/item/cautery,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"so" = (
+/mob/living/basic/mining/brimdemon,
+/turf/open/lava/smooth/weak,
+/area/shuttle/escape)
+"sw" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/misc/sandy_dirt,
+/area/shuttle/escape)
+"vi" = (
+/obj/structure/table/optable,
+/obj/item/surgical_drapes,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"vv" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/slimepotion/sentience,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"vD" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/standard_air,
+/area/shuttle/escape)
+"vK" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/mob/living/carbon/human/species/monkey,
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/escape)
+"vL" = (
+/mob/living/basic/clown/clownhulk,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/escape)
+"vQ" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/mob/living/carbon/human/species/monkey,
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/escape)
+"vT" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"wv" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"wK" = (
+/obj/item/fish/chasm_crab,
+/turf/open/lava/smooth/weak,
+/area/shuttle/escape)
+"xc" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/misc/ironsand,
+/area/shuttle/escape)
+"xg" = (
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/clothing/head/collectable/police,
+/obj/structure/table/reinforced,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"xl" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/toxin{
+	pixel_x = -3
+	},
+/obj/item/storage/medkit/o2{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"xt" = (
+/obj/structure/railing,
+/turf/open/floor/glass/plasma,
+/area/shuttle/escape)
+"xI" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/glass,
+/area/shuttle/escape)
+"yc" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "misclab";
+	name = "Test Chamber Blast Door"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/engine,
+/area/shuttle/escape)
+"yl" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/grass,
+/area/shuttle/escape)
+"yo" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/lava/plasma,
+/area/shuttle/escape)
+"yy" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/misc/grass,
+/area/shuttle/escape)
+"yF" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/shuttle/escape)
+"yH" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"yJ" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/misc/ice/coldroom,
+/area/shuttle/escape)
+"zc" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"zp" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Ab" = (
+/mob/living/basic/cow,
+/turf/open/misc/sandy_dirt,
+/area/shuttle/escape)
+"Aw" = (
+/mob/living/basic/gorilla,
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/escape)
+"AA" = (
+/obj/structure/railing,
+/turf/open/floor/hay,
+/area/shuttle/escape)
+"AS" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Bb" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/escape)
+"Bf" = (
+/mob/living/basic/deer,
+/turf/open/misc/ironsand,
+/area/shuttle/escape)
+"Bj" = (
+/turf/template_noop,
+/area/template_noop)
+"BY" = (
+/mob/living/basic/garden_gnome,
+/turf/open/floor/glass/plasma,
+/area/shuttle/escape)
+"Cg" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/mob/living/basic/chicken,
+/turf/open/floor/hay,
+/area/shuttle/escape)
+"Ch" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/floor/glass,
+/area/shuttle/escape)
+"Cz" = (
+/obj/item/toy/beach_ball/branded,
+/turf/open/water/deep_beach,
+/area/shuttle/escape)
+"Dv" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"DA" = (
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"DO" = (
+/obj/docking_port/mobile/emergency{
+	dir = 2;
+	name = "Casino emergency shuttle"
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Ei" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/misc/ice/coldroom,
+/area/shuttle/escape)
+"Ew" = (
+/obj/structure/table/wood/fancy/purple,
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"Fi" = (
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"Fl" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/glass/plasma,
+/area/shuttle/escape)
+"Fv" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/mob/living/basic/crab,
+/turf/open/misc/beach/sand,
+/area/shuttle/escape)
+"FJ" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/misc/grass,
+/area/shuttle/escape)
+"FZ" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Gs" = (
+/turf/open/floor/mineral/bananium,
+/area/shuttle/escape)
+"Gz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 9
+	},
+/mob/living/basic/lightgeist,
+/turf/open/floor/grass/fairy,
+/area/shuttle/escape)
+"Hl" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
+"Hy" = (
+/mob/living/basic/clown/clownhulk/honkmunculus,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/escape)
+"HS" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/glass/reinforced/plasma,
+/area/shuttle/escape)
+"HZ" = (
+/mob/living/basic/butterfly,
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/floor/grass/fairy,
+/area/shuttle/escape)
+"Ih" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"JZ" = (
+/obj/machinery/computer/communications{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"KG" = (
+/obj/structure/chair/sofa/corp/left,
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"Lb" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Ll" = (
+/mob/living/basic/mining/goliath,
+/turf/open/misc/asteroid/basalt,
+/area/shuttle/escape)
+"Lv" = (
+/obj/machinery/stasis,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Lz" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/floor/glass/reinforced/plasma,
+/area/shuttle/escape)
+"LL" = (
+/obj/item/food/syndicake,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Mb" = (
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"MO" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "misclab";
+	name = "Test Chamber Blast Door"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/engine,
+/area/shuttle/escape)
+"MS" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/shuttle/escape)
+"MT" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/grass,
+/area/shuttle/escape)
+"MX" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/bottle/epinephrine{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/cup/bottle/multiver{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/cup/bottle/epinephrine{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/bottle/multiver{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = 4;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/obj/machinery/wall_healer/free/directional/east,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Ny" = (
+/obj/machinery/recharger{
+	active_power_usage = 0;
+	idle_power_usage = 0;
+	use_power = 0
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"NN" = (
+/mob/living/basic/mining/gutlunch/milk,
+/turf/open/lava/smooth/weak,
+/area/shuttle/escape)
+"NU" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/sandy_dirt,
+/area/shuttle/escape)
+"NV" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/glass/reinforced/plasma,
+/area/shuttle/escape)
+"Oa" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/item/fishing_rod,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Ow" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt,
+/area/shuttle/escape)
+"Pb" = (
+/obj/item/fish/pufferfish,
+/turf/open/water/deep_beach,
+/area/shuttle/escape)
+"Pf" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/glass,
+/area/shuttle/escape)
+"Pu" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"PM" = (
+/mob/living/basic/carp/passive,
+/turf/open/water/deep_beach,
+/area/shuttle/escape)
+"PP" = (
+/mob/living/basic/hivebot,
+/turf/open/floor/glass,
+/area/shuttle/escape)
+"PQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed/maint,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"PS" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/mob/living/basic/mining/polarbear,
+/turf/open/floor/plating/snowed/standard_air,
+/area/shuttle/escape)
+"Qk" = (
+/mob/living/basic/cow/moonicorn,
+/turf/open/floor/grass/fairy,
+/area/shuttle/escape)
+"QY" = (
+/mob/living/basic/faithless,
+/turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
+"Ru" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"RQ" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/floor/hay,
+/area/shuttle/escape)
+"RZ" = (
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Sb" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/mob/living/basic/goose,
+/turf/open/misc/ironsand,
+/area/shuttle/escape)
+"Sk" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/misc/asteroid/snow/standard_air,
+/area/shuttle/escape)
+"Sl" = (
+/obj/structure/railing,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Ty" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Uu" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"UA" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/mob/living/basic/goat,
+/turf/open/misc/ironsand,
+/area/shuttle/escape)
+"Vl" = (
+/mob/living/basic/regal_rat,
+/turf/open/floor/engine,
+/area/shuttle/escape)
+"VQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bedsheetbin/empty/basket,
+/turf/open/misc/dirt/dark/station,
+/area/shuttle/escape)
+"VT" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/lava/plasma,
+/area/shuttle/escape)
+"Wp" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/escape)
+"Ws" = (
+/obj/structure/railing,
+/turf/open/misc/grass,
+/area/shuttle/escape)
+"WW" = (
+/mob/living/basic/clown/honkling,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/escape)
+"Xl" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/turf/open/misc/ice/coldroom,
+/area/shuttle/escape)
+"Xr" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Xv" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/glass/plasma,
+/area/shuttle/escape)
+"XR" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"XW" = (
+/obj/machinery/door/window/brigdoor/security,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"XY" = (
+/obj/machinery/shower/directional/south,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Yc" = (
+/turf/open/misc/dirt/dark/station,
+/area/shuttle/escape)
+"Yp" = (
+/obj/structure/railing,
+/turf/open/floor/plating/elevatorshaft,
+/area/shuttle/escape)
+"YE" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/mob/living/basic/butterfly,
+/turf/open/floor/grass/fairy,
+/area/shuttle/escape)
+"YF" = (
+/obj/structure/railing,
+/turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
+"YS" = (
+/mob/living/basic/chick,
+/turf/open/floor/hay,
+/area/shuttle/escape)
+"YX" = (
+/obj/structure/railing,
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/escape)
+"Zj" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+Bj
+Bj
+Bj
+Ih
+Ih
+Ih
+Bj
+Ih
+Ih
+Ih
+Ih
+Ih
+Bj
+Ih
+Ih
+Ih
+Bj
+Bj
+Bj
+"}
+(2,1,1) = {"
+Bj
+Bj
+Uu
+Dv
+Dv
+Dv
+Uu
+Dv
+Dv
+Dv
+Dv
+Dv
+Uu
+Dv
+Dv
+Dv
+Uu
+Bj
+Bj
+"}
+(3,1,1) = {"
+Bj
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Bj
+"}
+(4,1,1) = {"
+Bj
+Uu
+gE
+Yp
+XR
+Uu
+mT
+mT
+mT
+mT
+mT
+mT
+mT
+mT
+mT
+MS
+kk
+Uu
+Bj
+"}
+(5,1,1) = {"
+Bj
+Uu
+lx
+Yp
+mT
+mT
+mT
+Uu
+Uu
+Uu
+Uu
+Uu
+mT
+Uu
+aI
+MS
+Vl
+Uu
+Bj
+"}
+(6,1,1) = {"
+Uu
+Uu
+Uu
+Uu
+wv
+Uu
+mT
+Uu
+WW
+Gs
+Gs
+Uu
+mT
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+"}
+(7,1,1) = {"
+Uu
+RZ
+RZ
+RZ
+RZ
+Uu
+mT
+Uu
+Gs
+kA
+vL
+Uu
+mT
+Uu
+RZ
+RZ
+RZ
+RZ
+Uu
+"}
+(8,1,1) = {"
+Uu
+Xr
+Xr
+RZ
+RZ
+Uu
+mT
+Uu
+Hy
+Wp
+la
+Uu
+mT
+wv
+RZ
+RZ
+Xr
+Xr
+Uu
+"}
+(9,1,1) = {"
+mz
+Xv
+iy
+RZ
+RZ
+Uu
+Uu
+Uu
+yc
+MO
+yc
+Uu
+Uu
+Uu
+RZ
+RZ
+ni
+xI
+mz
+"}
+(10,1,1) = {"
+mz
+BY
+xt
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+Lb
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+Pf
+PP
+mz
+"}
+(11,1,1) = {"
+mz
+Fl
+iV
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+Lb
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+Ch
+lo
+mz
+"}
+(12,1,1) = {"
+Uu
+FZ
+FZ
+RZ
+cu
+Hl
+qx
+Zj
+zp
+Lb
+cu
+Lz
+HS
+dh
+zp
+RZ
+FZ
+FZ
+Uu
+"}
+(13,1,1) = {"
+ga
+RZ
+RZ
+RZ
+cu
+lV
+QY
+YF
+zp
+qr
+cu
+NV
+sd
+oB
+zp
+RZ
+RZ
+RZ
+Uu
+"}
+(14,1,1) = {"
+Uu
+Uu
+Uu
+ga
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+cV
+Uu
+Uu
+Uu
+"}
+(15,1,1) = {"
+ga
+RZ
+RZ
+RZ
+cu
+aS
+YS
+AA
+zp
+RZ
+cu
+NU
+Ab
+Uu
+xl
+Fi
+Lv
+Lv
+Uu
+"}
+(16,1,1) = {"
+Uu
+Xr
+Xr
+RZ
+cu
+RQ
+Cg
+dd
+zp
+RZ
+cu
+nx
+sw
+Uu
+bG
+Fi
+Fi
+Fi
+Uu
+"}
+(17,1,1) = {"
+mz
+vQ
+Bb
+RZ
+RZ
+RZ
+RZ
+RZ
+Yc
+kz
+Yc
+RZ
+RZ
+mz
+Fi
+Fi
+Gz
+YE
+mz
+"}
+(18,1,1) = {"
+mz
+Aw
+YX
+RZ
+RZ
+RZ
+RZ
+RZ
+aj
+fm
+VQ
+RZ
+RZ
+cV
+Fi
+Fi
+dp
+Qk
+mz
+"}
+(19,1,1) = {"
+mz
+ct
+vK
+RZ
+RZ
+RZ
+RZ
+RZ
+Yc
+rH
+aj
+RZ
+RZ
+mz
+Fi
+Fi
+HZ
+mm
+mz
+"}
+(20,1,1) = {"
+Uu
+FZ
+FZ
+RZ
+cu
+yy
+yl
+FJ
+zp
+RZ
+cu
+ep
+yF
+Uu
+XY
+Fi
+Fi
+Fi
+Uu
+"}
+(21,1,1) = {"
+DO
+RZ
+RZ
+RZ
+cu
+MT
+bT
+Ws
+zp
+RZ
+cu
+Fv
+kO
+Uu
+MX
+Fi
+si
+vi
+Uu
+"}
+(22,1,1) = {"
+Uu
+Uu
+Uu
+ga
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+it
+Uu
+Uu
+Uu
+"}
+(23,1,1) = {"
+ga
+RZ
+RZ
+RZ
+cu
+cb
+Ei
+dr
+zp
+RZ
+cu
+VT
+pp
+Uu
+Ru
+dy
+dy
+Ny
+Uu
+"}
+(24,1,1) = {"
+Uu
+Xr
+Xr
+RZ
+cu
+lB
+Xl
+yJ
+zp
+RZ
+cu
+yo
+oc
+Uu
+Ru
+oz
+AS
+xg
+Uu
+"}
+(25,1,1) = {"
+mz
+UA
+ly
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+mz
+LL
+Sl
+Pu
+yH
+mz
+"}
+(26,1,1) = {"
+mz
+Bf
+qG
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+it
+dy
+XW
+DA
+PQ
+mz
+"}
+(27,1,1) = {"
+mz
+Sb
+xc
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+RZ
+mz
+LL
+Sl
+iz
+ok
+mz
+"}
+(28,1,1) = {"
+Uu
+FZ
+FZ
+RZ
+cu
+jS
+vD
+Sk
+zp
+RZ
+cu
+pg
+Ow
+Uu
+dy
+eW
+zc
+zc
+Uu
+"}
+(29,1,1) = {"
+Uu
+RZ
+RZ
+RZ
+cu
+PS
+mt
+lr
+zp
+RZ
+cu
+mn
+Ll
+Uu
+Ty
+Ty
+Ty
+Ty
+Uu
+"}
+(30,1,1) = {"
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+ga
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+"}
+(31,1,1) = {"
+Bj
+Bj
+mz
+so
+hg
+Oa
+Mb
+Mb
+Mb
+Mb
+Mb
+Mb
+Mb
+rV
+fS
+PM
+mz
+Bj
+Bj
+"}
+(32,1,1) = {"
+Bj
+Bj
+mz
+NN
+hg
+Oa
+Mb
+aX
+et
+et
+et
+cF
+Mb
+rV
+gm
+Cz
+mz
+Bj
+Bj
+"}
+(33,1,1) = {"
+Bj
+Bj
+mz
+hg
+wK
+Oa
+Mb
+KG
+Ew
+Ew
+Ew
+jE
+Mb
+rV
+cw
+Pb
+mz
+Bj
+Bj
+"}
+(34,1,1) = {"
+Bj
+Bj
+Uu
+Uu
+Uu
+vv
+Mb
+Mb
+Mb
+mc
+Mb
+Mb
+Mb
+vv
+Uu
+Uu
+Uu
+Bj
+Bj
+"}
+(35,1,1) = {"
+Bj
+Bj
+Bj
+Bj
+Uu
+vv
+vv
+qW
+JZ
+vT
+qj
+qW
+vv
+vv
+Uu
+Bj
+Bj
+Bj
+Bj
+"}
+(36,1,1) = {"
+Bj
+Bj
+Bj
+Bj
+Uu
+mz
+mz
+mz
+Uu
+Uu
+Uu
+mz
+mz
+mz
+Uu
+Bj
+Bj
+Bj
+Bj
+"}
+(37,1,1) = {"
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+"}
