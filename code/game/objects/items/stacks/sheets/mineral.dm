@@ -178,7 +178,7 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	material_type = /datum/material/plasma
 	walltype = /turf/closed/wall/mineral/plasma
 
-/obj/item/stack/sheet/mineral/plasma/suicide_act(mob/living/carbon/user)
+/obj/item/stack/sheet/mineral/plasma/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins licking \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return TOXLOSS//dont you kids know that stuff is toxic?
 

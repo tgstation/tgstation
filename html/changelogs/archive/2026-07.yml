@@ -289,3 +289,46 @@
   SmArtKar:
   - bugfix: Fixed cube monkey cap runtimes
   - bugfix: Fixed revolvers runtiming when non-player mobs try to spin them
+2026-07-09:
+  Aliceee2ch:
+  - bugfix: Fixed players being able to turn into tendril/dupe necrochests from it
+      by turning it into MOB_SPECIAL biotype.
+  FalloutFalcon:
+  - refactor: Job sorting is based on department
+  - qol: All panels displaying jobs now use a consistent color pallet
+  Ivniinvi:
+  - bugfix: Fixed mistake in death commando names.
+  Jacquerel:
+  - balance: Anything with hands can now use the things it is holding to commit suicide
+  Melbert:
+  - bugfix: Fix the BSRPED potentially bricking reagent containers on removal
+  - bugfix: Fix a potential exploit with BSRPED and reagent containers
+  - bugfix: Fix mask height offset
+  - rscadd: Vending machines tilt after falling a z level
+  - bugfix: Fix false walls being distinguisable via examine
+  Odairu:
+  - rscadd: fax machines now accept paper airplanes
+  PapaMichael:
+  - qol: AIs save their "previous camera" (accessed by pressing the '0' key) when
+      tracking a mob.
+  SmArtKar:
+  - qol: Ore vents spawn less rubble and are more consistent at excavating the surrounding
+      area
+  - balance: Cleanable decals can no longer be hit (not cleaned, just hit) if the
+      user has combat mode on.
+  - bugfix: Fixed goldgrubs leaving floating emissives after dying
+  - bugfix: Fixed xenobio consoles not being able to spawn monkeys
+  antropod:
+  - bugfix: Fixes material tiles spawned by disposals underneath the floor
+  lelandkemble:
+  - map: Interrogation room radios are now interrogation room radios
+  vinylspiders:
+  - bugfix: clicking on a searchable dropdown item to select it should now work
+  - bugfix: fixes an issue that can under certain conditions cause reskinnable items
+      with the toggle component (such as jackets) to have invisible icons upon using
+      the toggle
+2026-07-10:
+  Melbert:
+  - bugfix: Fix strong arm removal
+  lelandkemble:
+  - bugfix: Vorpal scythe damage multiplier remains after the first hit
