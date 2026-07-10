@@ -31,7 +31,9 @@ SUBSYSTEM_DEF(map_previews)
 		worklist += path
 
 	var/turf/preview_turf = locate(1, 1, 1)
-	var/icon/holder = icon()
+
+	var/filepath = "icons/obj/fluff/map_previews.dmi"
+	var/icon/holder = fexists(filepath) ? icon(filepath) : icon('icons/obj/fluff/map_previews_template.dmi')
 
 	for(var/path in worklist)
 		var/obj/thingtospawn = new path(preview_turf)
@@ -66,12 +68,13 @@ SUBSYSTEM_DEF(map_previews)
 			holder.Insert(preview_frame, icon_name, dir)
 		qdel(thingtospawn)
 
-	var/filepath = "icons/obj/fluff/map_previews.dmi"
-	// copypasted from greyscale_previews because it works i guess?
+	var/tmp_path = "tmp/map_previews.dmi"
+	fcopy(holder, tmp_path)
+
 	var/old_md5 = rustg_hash_file(RUSTG_HASH_MD5, filepath)
-	var/new_md5 = rustg_hash_file(RUSTG_HASH_MD5, holder)
+	var/new_md5 = rustg_hash_file(RUSTG_HASH_MD5, tmp_path)
 	if(old_md5 != new_md5)
-		fcopy(holder, filepath)
+		fcopy(tmp_path, filepath)
 #ifdef UNIT_TESTS
 		stack_trace("Generated map previews were different than what is currently saved. If you see this in a CI run it means you need to run the game once through initialization and commit the resulting file 'icons/obj/fluff/map_previews.dmi'.")
 #endif
