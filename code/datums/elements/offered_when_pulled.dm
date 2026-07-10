@@ -1,19 +1,25 @@
-/**For items automatically offered to a player when they pull on another mob. Primarily used by the janitorial cleaning suite.*/
+/**For items automatically offered to a player when they pull a borg.*/
 
-/datum/element/offered_when_pulled
+/datum/element/borg_item_offered_when_pulled
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
+	var/mob/living/silicon/robot
+	var/obj/item/borg_item
 
-/datum/element/offered_when_pulled/Attach(datum/target)
-	if(!isliving(target))
+/datum/element/borg_item_offered_when_pulled/Attach(datum/target, mob/living/silicon/robot/borg)
+	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_LIVING_GET_PULLED, PROC_REF(on_pulled))
+	if(!istype(borg))
+		CRASH("Element assigned to [target], but was not assigned a ref for type /mob/living/silicon/robot to attach COMSIG_LIVING_GET_PULLED")
+	RegisterSignal(borg, COMSIG_LIVING_GET_PULLED, PROC_REF(on_pulled))
+	robot = borg
+	borg_item = target
 	return ..()
 
-/datum/element/offered_when_pulled/Detach(datum/source, ...)
+/datum/element/borg_item_offered_when_pulled/Detach(datum/source, ...)
 	. = ..()
-	UnregisterSignal(source, COMSIG_LIVING_GET_PULLED)
+	UnregisterSignal(robot, COMSIG_LIVING_GET_PULLED)
 
-/datum/element/offered_when_pulled/proc/on_pulled(mob/living/holder, mob/living/puller)
+/datum/element/borg_item_offered_when_pulled/proc/on_pulled(mob/living/holder, mob/living/puller)
 	SIGNAL_HANDLER
-	for(var/obj/item/items in holder.get_all_contents())
-		if(HAS_TRAIT(items, TRAIT_OFFERED_WHEN_PULLED))
-			holder.give(puller, items)
+	holder.give(puller, borg_item)

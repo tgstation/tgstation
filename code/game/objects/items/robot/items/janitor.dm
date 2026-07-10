@@ -15,9 +15,8 @@
 		return INITIALIZE_HINT_QDEL
 	var/obj/item/robot_model/janitor/model = locate() in robot.get_contents()
 	module_list = WEAKREF(model)
-	robot.AddElement(/datum/element/offered_when_pulled)
+	AddElementTrait(TRAIT_OFFERED_WHEN_PULLED, TRAIT_OFFERED_WHEN_PULLED, /datum/element/borg_item_offered_when_pulled, robot)
 	ADD_TRAIT(src, TRAIT_BORG_GIVE, TRAIT_BORG_GIVE)
-	ADD_TRAIT(src, TRAIT_OFFERED_WHEN_PULLED, TRAIT_OFFERED_WHEN_PULLED)
 	hose = new(src)
 	hose.cleaner_box = WEAKREF(src)
 	hose.AddComponent( \
@@ -121,7 +120,7 @@
 	attack_verb_simple = list("suck", "vacuum", "smack", "dust off", "beat")
 	force = 12
 
-	var/datum/beam/fishing_line/vacuum/borg_hose
+	var/datum/beam/held/vacuum/borg_hose
 	var/datum/weakref/cleaner_box
 	var/obj/item/storage/bag/trash/bag
 	var/cleaning = FALSE
@@ -189,7 +188,7 @@
 	cleaner_resolved.update_icon(UPDATE_OVERLAYS)
 
 /obj/item/vacuum_item/proc/generate_hose(mob/living/offerer, mob/living/taker)
-	var/datum/beam/fishing_line/vacuum/generated_borg_hose = new(taker, offerer, icon_state = "hosebeam", max_distance = 7, emissive = FALSE, beam_layer = BELOW_MOB_LAYER)
+	var/datum/beam/held/vacuum/generated_borg_hose = new(taker, offerer, icon_state = "hosebeam", max_distance = 7, emissive = FALSE, beam_layer = BELOW_MOB_LAYER)
 	var/index = taker.get_held_index_of_item(src)
 	generated_borg_hose.lefthand = IS_LEFT_INDEX(index)
 	INVOKE_ASYNC(generated_borg_hose, TYPE_PROC_REF(/datum/beam, Start))
@@ -209,7 +208,7 @@
 	SIGNAL_HANDLER
 	retract_hose()
 
-/datum/beam/fishing_line/vacuum
+/datum/beam/held/vacuum
 	righthand_s_px = -7
 	righthand_s_py = -3
 

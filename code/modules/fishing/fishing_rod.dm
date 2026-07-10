@@ -31,7 +31,7 @@
 	var/atom/movable/currently_hooked
 
 	/// Fishing line visual for the hooked item
-	var/datum/beam/fishing_line/fishing_line
+	var/datum/beam/held/fishing_line
 
 	/// Are we currently casting
 	var/casting = FALSE
@@ -918,7 +918,7 @@
 	owner = null
 	return ..()
 
-/datum/beam/fishing_line
+/datum/beam/held
 	// Is the fishing rod held in left side hand
 	var/lefthand = FALSE
 
@@ -947,21 +947,21 @@
 	var/lefthand_n_px = 13
 	var/lefthand_n_py = 15
 
-/datum/beam/fishing_line/Start()
+/datum/beam/held/Start()
 	update_offsets(origin.dir)
 	. = ..()
 	RegisterSignal(origin, COMSIG_ATOM_DIR_CHANGE, PROC_REF(handle_dir_change))
 
-/datum/beam/fishing_line/Destroy()
+/datum/beam/held/Destroy()
 	UnregisterSignal(origin, COMSIG_ATOM_DIR_CHANGE)
 	. = ..()
 
-/datum/beam/fishing_line/proc/handle_dir_change(atom/movable/source, olddir, newdir)
+/datum/beam/held/proc/handle_dir_change(atom/movable/source, olddir, newdir)
 	SIGNAL_HANDLER
 	update_offsets(newdir)
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/beam, redrawing))
 
-/datum/beam/fishing_line/proc/update_offsets(user_dir)
+/datum/beam/held/proc/update_offsets(user_dir)
 	switch(user_dir)
 		if(SOUTH)
 			override_origin_pixel_x = lefthand ? lefthand_s_px : righthand_s_px
