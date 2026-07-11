@@ -153,19 +153,22 @@
 /// Use power from the cell.
 /// Args:
 /// - used: Amount of power in joules to use.
-/// - force: If true, uses the remaining power from the cell if there isn't enough power to supply the demand.
 /// Returns: The power used from the cell in joules.
-/obj/item/stock_parts/power_store/use(used, force = FALSE)
-	var/power_used = min(used, charge)
-	if(power_used > 0 && try_explode())
-		return 0 // The cell decided to explode so we won't be able to use it.
+/obj/item/stock_parts/power_store/use(used)
+    var/power_used = min(used, charge)
 
-	charge -= power_used
-	if(!force && charge < used)
-		return 0
-	if(!istype(loc, /obj/machinery/power/apc))
-		SSblackbox.record_feedback("tally", "cell_used", 1, type)
-	return power_used
+    if(power_used <= 0) // The cell is already empty or no power was used
+        return 0
+
+    if(try_explode()) // The cell decided to explode so we won't be able to use it
+        return 0
+
+    charge -= power_used
+
+    if(!istype(loc, /obj/machinery/power/apc))
+        SSblackbox.record_feedback("tally", "cell_used", 1, type)
+
+    return power_used
 
 /// Recharge the cell.
 /// Args:
