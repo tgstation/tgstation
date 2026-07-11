@@ -794,7 +794,7 @@
 
 /datum/chemical_reaction/drink/footsoldiers_razor
 	results=list(/datum/reagent/consumable/ethanol/footsoldiers_razor = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/patron = 3, /datum/reagent/consumable/coffee = 2, /datum/reagent/consumable/ethanol/fernet = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/silver = 1, /datum/reagent/medicine/epinephrine = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/patron = 3, /datum/reagent/consumable/coffee = 2, /datum/reagent/consumable/ethanol/fernet = 2, /datum/reagent/consumable/ethanol/kahlua = 2, /datum/reagent/consumable/blackpepper = 1, /datum/reagent/silver = 1, /datum/reagent/medicine/epinephrine = 1)
 	mix_message = "As the scent of coffee and agave swirls around you, you feel that it's a good day to die."
 	mix_sound = 'sound/items/unsheath.ogg'
 
