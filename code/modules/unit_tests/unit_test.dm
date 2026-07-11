@@ -138,7 +138,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /datum/unit_test/proc/restore_atmos()
 	var/area/working_area = run_loc_floor_bottom_left.loc
 	var/list/turf/to_restore = working_area.get_turfs_from_all_zlevels()
-	for(var/turf/restore in to_restore)
+	for(var/turf/open/restore in to_restore)
 		var/datum/gas_mixture/GM = SSair.parse_gas_string(restore.initial_gas_mix, /datum/gas_mixture/turf)
 		restore.copy_air(GM)
 		restore.temperature = initial(restore.temperature)
