@@ -22,6 +22,8 @@
 	var/recent_examine_damage_cooldown = 10 SECONDS
 	/// A list of REFs to people who recently examined us
 	var/list/recent_examiner_refs = list()
+	/// The 1920s English/Welsh name appended to the end of the maid's title.
+	var/antiquated_name
 
 /mob/living/basic/heretic_summon/maid_in_the_mirror/Initialize(mapload)
 	. = ..()
@@ -35,10 +37,22 @@
 	GRANT_ACTION(/datum/action/cooldown/spell/jaunt/mirror_walk)
 	ADD_TRAIT(src, TRAIT_UNHITTABLE_BY_LASERS, INNATE_TRAIT)
 
+	if(!length(GLOB.mirror_maid_names))
+		GLOB.mirror_maid_names = initial(GLOB.mirror_maid_names)
+
+	antiquated_name = pick(GLOB.mirror_maid_names)
+	update_name()
+
 /mob/living/basic/heretic_summon/maid_in_the_mirror/death(gibbed)
 	var/turf/death_turf = get_turf(src)
 	death_turf.TakeTemperature(-40) // Spooky
 	return ..()
+
+/mob/living/basic/heretic_summon/maid_in_the_mirror/update_name(updates)
+	. = ..()
+	name = "Mirror Maid [antiquated_name]"
+	real_name = name
+	GLOB.mirror_maid_names.Remove(antiquated_name)
 
 // Examining them will harm them, on a cooldown.
 /mob/living/basic/heretic_summon/maid_in_the_mirror/examine(mob/user)
