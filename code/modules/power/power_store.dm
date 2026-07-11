@@ -159,9 +159,10 @@
 	var/power_used = min(used, charge)
 	if(power_used > 0 && try_explode())
 		return 0 // The cell decided to explode so we won't be able to use it.
+
+	charge -= power_used
 	if(!force && charge < used)
 		return 0
-	charge -= power_used
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
 	return power_used
