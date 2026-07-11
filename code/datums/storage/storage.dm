@@ -795,6 +795,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_mousedrop_onto(datum/source, atom/over_object, mob/user)
 	SIGNAL_HANDLER
 
+	if(SEND_SIGNAL(parent, COMSIG_STORAGE_DUMP_PRE_TRANSFER, src, over_object, user) & CANCEL_STORAGE_DUMP)
+		return COMPONENT_CANCEL_MOUSEDROP_ONTO
+
 	if(ismecha(user.loc) || user.incapacitated || !user.canUseStorage())
 		return NONE
 
@@ -815,9 +818,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(over_object == user)
 		if(!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 			return NONE
-
-		if(user.trying_to_hold_mob(parent))
-			return
 
 		parent.add_fingerprint(user)
 		INVOKE_ASYNC(src, PROC_REF(open_storage), user)

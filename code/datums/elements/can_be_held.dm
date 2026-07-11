@@ -11,27 +11,45 @@
 	ADD_TRAIT(source, TRAIT_CAN_BE_HELD, ELEMENT_TRAIT(type))
 
 	RegisterSignal(source, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_mousedrop_onto))
+	RegisterSignal(source, COMSIG_MOB_STRIP_MENU_OPEN, PROC_REF(on_strip_menu_open))
+	RegisterSignal(source, COMSIG_STORAGE_DUMP_PRE_TRANSFER, PROC_REF(on_attempt_storage_dump))
 
 /datum/element/can_be_held/Detach(datum/source)
 	REMOVE_TRAIT(source, TRAIT_CAN_BE_HELD, ELEMENT_TRAIT(type))
 	UnregisterSignal(source, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_mousedrop_onto))
+	UnregisterSignal(source, COMSIG_MOB_STRIP_MENU_OPEN, PROC_REF(on_strip_menu_open))
+	UnregisterSignal(source, COMSIG_STORAGE_DUMP_PRE_TRANSFER, PROC_REF(on_attempt_storage_dump))
 	return ..()
+
+/// Used to determine the "intent" of the action that the user mob is trying to employ on the target.
+/datum/element/can_be_held/proc/trying_to_hold_mob(mob/living/user, mob/living/target)
+	return isliving(user) && HAS_TRAIT(target, TRAIT_CAN_BE_HELD) && user.grab_state == GRAB_AGGRESSIVE && user.pulling == target
 
 /// Handles the mob being dropped onto the user mob.
 /datum/element/can_be_held/proc/on_mousedrop_onto(datum/source, atom/over, mob/user)
 	SIGNAL_HANDLER
-
-	if(!isliving(user))
+	if(trying_to_hold_mob(user, source))
 		return
 
-	var/mob/living/holder_to_be = user
-
-	if(!holder_to_be.trying_to_hold_mob(source))
-		return
-
-	INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, mob_try_pickup), holder_to_be)
+	INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, mob_try_pickup), user)
 	return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
+/datum/element/can_be_held/proc/on_strip_menu_open(datum/source, atom/over, mob/user)
+	SIGNAL_HANDLER
+	if(trying_to_hold_mob(user, source))
+		return
+
+	INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, mob_try_pickup), user)
+	return COMPONENT_BLOCK_STRIP_MENU_OPEN
+
+
+/datum/element/can_be_held/proc/on_attempt_storage_dump(datum/source, atom/over, mob/user)
+	SIGNAL_HANDLER
+	if(trying_to_hold_mob(user, source))
+		return
+
+	INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, mob_try_pickup), user)
+	return CANCEL_STORAGE_DUMP
 
 
 
