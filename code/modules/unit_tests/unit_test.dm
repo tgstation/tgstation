@@ -59,6 +59,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/static/list/uncreatables = null
 	/// Reference to the blank z-level containing our testing enviroment
 	var/static/datum/space_level/reservation
+	/// If this unit test requires a normal turf to run.
+	var/normal_floor_required = FALSE
 
 /proc/cmp_unit_test_priority(datum/unit_test/a, datum/unit_test/b)
 	return initial(a.priority) - initial(b.priority)
@@ -84,6 +86,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	TEST_ASSERT(isindestructiblefloor(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not an indestructable floor ([run_loc_floor_bottom_left])")
 	TEST_ASSERT(isindestructiblefloor(run_loc_floor_top_right), "run_loc_floor_top_right was not an indestructable floor ([run_loc_floor_top_right])")
 
+	if(normal_floor_required)
+		for(var/turf/turf in Z_TURFS(run_loc_floor_bottom_left.z))
+			turf.replace_baseturf(/turf/open/indestructible, /turf/open/floor)
+
 /datum/unit_test/Destroy()
 	QDEL_LIST(allocated)
 	// clear the test area
@@ -92,6 +98,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 			if (istype(content, /obj/effect/landmark))
 				continue
 			qdel(content)
+		if(normal_floor_required)
+			turf.replace_baseturf(/turf/open/floor, /turf/open/indestructible)
 	return ..()
 
 /datum/unit_test/proc/Run()
@@ -130,7 +138,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /datum/unit_test/proc/restore_atmos()
 	var/area/working_area = run_loc_floor_bottom_left.loc
 	var/list/turf/to_restore = working_area.get_turfs_from_all_zlevels()
-	for(var/turf/open/restore in to_restore)
+	for(var/turf/restore in to_restore)
 		var/datum/gas_mixture/GM = SSair.parse_gas_string(restore.initial_gas_mix, /datum/gas_mixture/turf)
 		restore.copy_air(GM)
 		restore.temperature = initial(restore.temperature)

@@ -8,6 +8,10 @@
  * the test again on our turf containing our single frame, deconstructing the machines! This should also not spawn
  * any stacked machine frames.
  */
+/datum/unit_test/frame_stacking
+	normal_floor_required = TRUE
+	test_flags = UNIT_TEST_FOCUS
+
 /datum/unit_test/frame_stacking/Run()
 	// First test - RCDs stacking frames.
 	var/obj/item/construction/rcd/rcd = allocate(/obj/item/construction/rcd/combat/admin)
