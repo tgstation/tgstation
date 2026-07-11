@@ -1,4 +1,4 @@
-#define EXPECTED_FLOOR_TYPE /turf/open/floor/iron
+#define EXPECTED_FLOOR_TYPE /turf/open/indestructible
 // Do this instead of just ChangeTurf to guarantee that baseturfs is completely default on-init behavior
 #define RESET_TO_EXPECTED(turf) \
 	turf.ChangeTurf(EXPECTED_FLOOR_TYPE);\
