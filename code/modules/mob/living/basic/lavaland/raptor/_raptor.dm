@@ -78,6 +78,8 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	var/datum/raptor_inheritance/inherited_stats = null
 	/// Current happiness value of the raptor
 	var/happiness_percentage = 0
+	/// The ability for this raptor to be picked up and held. Defaults to FALSE as it's meant to be in lockstep with the element being added/removed.
+	var/could_be_held = FALSE
 
 /mob/living/basic/raptor/Initialize(mapload, datum/raptor_color/color_type, datum/raptor_inheritance/passed_stats)
 	. = ..()
@@ -285,11 +287,13 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 /// Updates the presence of the can_be_held element based on what we want from the raptor
 /mob/living/basic/raptor/proc/update_holdability(bool)
-	if(bool && !HAS_TRAIT(src, TRAIT_CAN_BE_HELD))
+	if(bool && !could_be_held)
 		AddElement(/datum/element/can_be_held)
+		could_be_held = TRUE
 
-	if(!bool && HAS_TRAIT(src, TRAIT_CAN_BE_HELD))
+	if(!bool && could_be_held)
 		RemoveElement(/datum/element/can_be_held)
+		could_be_held = FALSE
 
 /mob/living/basic/raptor/proc/on_picked_up(mob/living/basic/raptor/source, mob/living/user, obj/item/mob_holder/holder)
 	SIGNAL_HANDLER
@@ -397,7 +401,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	var/obj/item/mob_holder/holder = null
 	if (istype(loc, /obj/item/mob_holder))
 		holder = loc
-		if (!HAS_TRAIT(src, TRAIT_CAN_BE_HELD))
+		if (!could_be_held)
 			holder.release()
 			holder = null
 

@@ -8,20 +8,17 @@
 	if(!isliving(source))
 		return ELEMENT_INCOMPATIBLE
 
-	ADD_TRAIT(source, TRAIT_CAN_BE_HELD, ELEMENT_TRAIT(type))
-
 	RegisterSignal(source, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_mousedrop_onto))
 	RegisterSignal(source, COMSIG_MOB_STRIP_MENU_OPEN, PROC_REF(on_strip_menu_open))
 	RegisterSignal(source, COMSIG_STORAGE_DUMP_PRE_TRANSFER, PROC_REF(on_attempt_storage_dump))
 
 /datum/element/can_be_held/Detach(datum/source)
-	REMOVE_TRAIT(source, TRAIT_CAN_BE_HELD, ELEMENT_TRAIT(type))
 	UnregisterSignal(source, list(COMSIG_MOUSEDROP_ONTO, COMSIG_MOB_STRIP_MENU_OPEN, COMSIG_STORAGE_DUMP_PRE_TRANSFER))
 	return ..()
 
 /// Used to determine the "intent" of the action that the user mob is trying to employ on the target.
 /datum/element/can_be_held/proc/trying_to_hold_mob(mob/living/user, mob/living/target)
-	return isliving(user) && HAS_TRAIT(target, TRAIT_CAN_BE_HELD) && user.grab_state == GRAB_AGGRESSIVE && user.pulling == target
+	return isliving(user) && user.grab_state == GRAB_AGGRESSIVE && user.pulling == target
 
 /// Handles the mob being dropped onto the user mob.
 /datum/element/can_be_held/proc/on_mousedrop_onto(datum/source, atom/over, mob/user)
