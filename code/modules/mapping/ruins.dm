@@ -75,7 +75,7 @@
  * @param ruin_type The type of ruins that are spawning (ZTRAIT_SPACE_RUINS, ZTRAIT_ICE_RUINS, ZTRAIT_LAVA_RUINS, etc.)
  */
 /proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins, clear_below = FALSE, mineral_budget = 15, mineral_budget_update, ruins_type = ZTRAIT_STATION)
-#ifndef RUNNING_LOCAL_TESTS
+#if defined(RUNNING_LOCAL_TESTS) && defined(UNIT_TESTS)
 	if(PERFORM_ALL_TESTS(maptest_log_mapping) && SSmapping.current_map.is_unit_test_map)
 		return log_mapping("Skipping ruin seeding due to running on unit test map in workflow enviorment.")
 #endif
