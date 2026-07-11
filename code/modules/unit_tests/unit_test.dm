@@ -71,7 +71,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		reservation = template.load_new_z()
 
 	if(test_flags & UNIT_TEST_FOCUS)
-		warning("[src] has UNIT_TEST_FOCUS present inside var/test_flags.")
+		log_world("::warning::[src] has UNIT_TEST_FOCUS present inside var/test_flags.")
 	uncreatables ||= build_list_of_uncreatables()
 
 	allocated = list()
