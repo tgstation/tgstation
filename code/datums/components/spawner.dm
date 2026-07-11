@@ -26,7 +26,6 @@
 		CRASH("invalid spawn_types to spawn specified for spawner component!")
 	src.spawn_time = spawn_time
 	src.spawn_types = spawn_types
-	src.weighted_list = weighted_list
 	src.faction = faction
 	src.spawn_text = spawn_text
 	src.max_spawned = max_spawned
