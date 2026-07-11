@@ -15,7 +15,7 @@
 		return INITIALIZE_HINT_QDEL
 	var/obj/item/robot_model/janitor/model = locate() in robot.get_contents()
 	module_list = WEAKREF(model)
-	AddElementTrait(TRAIT_OFFERED_WHEN_PULLED, TRAIT_OFFERED_WHEN_PULLED, /datum/element/borg_item_offered_when_pulled, robot)
+	AddComponent(/datum/component/borg_item_offered_when_pulled, robot)
 	ADD_TRAIT(src, TRAIT_BORG_GIVE, TRAIT_BORG_GIVE)
 	hose = new(src)
 	hose.cleaner_box = WEAKREF(src)
