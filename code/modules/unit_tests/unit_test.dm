@@ -87,8 +87,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	TEST_ASSERT(isindestructiblefloor(run_loc_floor_top_right), "run_loc_floor_top_right was not an indestructable floor ([run_loc_floor_top_right])")
 
 	if(normal_floor_required)
-		for(var/turf/turf in Z_TURFS(run_loc_floor_bottom_left.z))
-			turf.replace_baseturf(/turf/open/indestructible, /turf/open/floor)
+		for(var/turf/turf in get_area_turfs(run_loc_floor_bottom_left.loc))
+			if(!isopenturf(turf))
+				continue
+			turf.ChangeTurf(/turf/open/floor)
 
 /datum/unit_test/Destroy()
 	QDEL_LIST(allocated)
@@ -98,8 +100,11 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 			if (istype(content, /obj/effect/landmark))
 				continue
 			qdel(content)
-		if(normal_floor_required)
-			turf.replace_baseturf(/turf/open/floor, /turf/open/indestructible)
+	if(normal_floor_required)
+		for(var/turf/turf in get_area_turfs(run_loc_floor_bottom_left.loc))
+			if(!isopenturf(turf))
+				continue
+			turf.ChangeTurf(/turf/open/indestructible)
 	return ..()
 
 /datum/unit_test/proc/Run()
