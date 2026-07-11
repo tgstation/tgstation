@@ -98,9 +98,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 				continue
 			qdel(content)
 	if(normal_floor_required)
-		for(var/turf/turf in get_area_turfs(run_loc_floor_bottom_left.loc))
-			if(!isopenturf(turf))
-				continue
+		for(var/turf/open/turf in get_area_turfs(run_loc_floor_bottom_left.loc))
 			turf.ChangeTurf(/turf/open/indestructible)
 	return ..()
 
