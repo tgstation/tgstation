@@ -50,7 +50,7 @@ GAME_VERB_DESC(/mob/living/basic/snake/syndicate, chasetail, "Помахать �
 
 /mob/living/basic/snake/syndicate/rouge/Initialize(mapload, special_reagent)
 	. = ..()
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/snake/syndicate/rouge/update_overlays()
 	. = ..()
