@@ -127,7 +127,7 @@
 	if (!do_after(user, behead_time, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))
 		return TRUE
 
-	if (!head.dismember(silent = FALSE))
+	if (head.dismember(silent = FALSE))
 		playsound(src, 'sound/items/weapons/chainsawhit.ogg', vol = 100, vary = TRUE)
 	else
 		user.visible_message(span_warning("[target_mob]'s head is attached too firmly to cut off!"))
