@@ -128,6 +128,8 @@
 		return TRUE
 
 	if (!head.dismember(silent = FALSE))
+		playsound(src, 'sound/items/weapons/chainsawhit.ogg', vol = 100, vary = TRUE)
+	else
 		user.visible_message(span_warning("[target_mob]'s head is attached too firmly to cut off!"))
 
 	return TRUE
