@@ -26,7 +26,7 @@
 /// Handles the mob being dropped onto the user mob.
 /datum/element/can_be_held/proc/on_mousedrop_onto(datum/source, atom/over, mob/user)
 	SIGNAL_HANDLER
-	if(trying_to_hold_mob(user, source))
+	if(!trying_to_hold_mob(user, source))
 		return
 
 	INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, mob_try_pickup), user)
@@ -34,7 +34,7 @@
 
 /datum/element/can_be_held/proc/on_strip_menu_open(datum/source, atom/over, mob/user)
 	SIGNAL_HANDLER
-	if(trying_to_hold_mob(user, source))
+	if(!trying_to_hold_mob(user, source))
 		return
 
 	INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, mob_try_pickup), user)
@@ -43,7 +43,7 @@
 
 /datum/element/can_be_held/proc/on_attempt_storage_dump(datum/source, atom/over, mob/user)
 	SIGNAL_HANDLER
-	if(trying_to_hold_mob(user, source))
+	if(!trying_to_hold_mob(user, source))
 		return
 
 	INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, mob_try_pickup), user)
