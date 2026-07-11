@@ -112,7 +112,7 @@
 		/obj/item/stack/ore/diamond = 5,
 		/obj/item/stack/sheet/sinew/icewing = 3,
 	)
-	crusher_loot = /obj/item/crusher_trophy/watcher_wing/ice_wing
+	crusher_loot = /obj/item/crusher_trophy/ice_wing
 	crusher_drop_chance = 100
 
 /// Much less durable, high damage projectiles

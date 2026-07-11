@@ -225,6 +225,31 @@
 /obj/structure/chair/comfy/lime
 	color = rgb(193, 248, 104)
 
+/obj/structure/chair/comfy/egg
+	name = "egg chair"
+	icon_state = "eggchair"
+	color = rgb(255, 255, 255)
+	resistance_flags = FLAMMABLE
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
+
+/obj/structure/chair/comfy/egg/red
+	color = rgb(157, 54, 54)
+
+/obj/structure/chair/comfy/egg/purple
+	color = rgb(74, 21, 149)
+
+/obj/structure/chair/comfy/egg/blue
+	color = rgb(68, 130, 171)
+
+/obj/structure/chair/comfy/egg/green
+	color = rgb(27, 124, 41)
+
+/obj/structure/chair/comfy/egg/yellow
+	color = rgb(183, 179, 66)
+
+/obj/structure/chair/comfy/egg/orange
+	color = rgb(181, 128, 4)
+
 /obj/structure/chair/comfy/shuttle
 	name = "shuttle seat"
 	desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights."
@@ -292,6 +317,14 @@
 	icon_state = "carp_chair"
 	buildstacktype = /obj/item/stack/sheet/animalhide/carp
 	fishing_modifier = -12
+	custom_materials = null
+
+/obj/structure/chair/comfy/lizard
+	name = "lizardscale chair"
+	desc = "A luxurious chair, with rather morbid implications."
+	icon_state = "lizard_chair"
+	buildstacktype = /obj/item/stack/sheet/animalhide/carbon/lizard
+	fishing_modifier = -6
 	custom_materials = null
 
 /obj/structure/chair/office
@@ -387,6 +420,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	buildstackamount = 2
 	item_chair = /obj/item/chair/stool/bamboo
 	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 2)
+
+/obj/structure/chair/stool/rock
+	name = "rock stool"
+	desc = "Bit rough to sit on."
+	icon_state = "rock_stool"
+	buildstackamount = 1
+	item_chair = /obj/item/chair/stool/rock
+	custom_materials = list(/datum/material/rock = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/chair
 	name = "chair"
@@ -527,6 +568,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	icon_state = "bar_toppled"
 	inhand_icon_state = "stool_bar"
 	origin_type = /obj/structure/chair/stool/bar
+
+/obj/item/chair/stool/rock
+	name = "rock_stool"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	icon_state = "rock_stool_toppled"
+	inhand_icon_state = "minimeteor" /// I love re-using assets.
+	origin_type = /obj/structure/chair/stool/rock
 
 /obj/item/chair/stool/bamboo
 	name = "bamboo stool"

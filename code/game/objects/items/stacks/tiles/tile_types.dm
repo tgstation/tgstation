@@ -1739,7 +1739,7 @@
 	icon_state = null
 	turf_type = /turf/open/floor/glass
 	inhand_icon_state = "tile-glass"
-	merge_type = /obj/item/stack/tile/glass/stained_glass
+	merge_type = /obj/item/stack/tile/stained_glass
 	mats_per_unit = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT * 0.25, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.075,)
 
 /obj/item/stack/tile/stained_glass/red
@@ -1747,8 +1747,8 @@
 	singular_name = "red stained glass floor tile"
 	desc = "Glass floor, stained red. Not with blood, hopefuly."
 	icon_state = "tile_sglass_red"
-	turf_type = /turf/open/floor/stained_glass/red
-	merge_type = /obj/item/stack/tile/glass/stained_glass/red
+	turf_type = /turf/open/floor/glass/stained_red
+	merge_type = /obj/item/stack/tile/stained_glass/red
 
 /obj/item/stack/tile/stained_glass/orange
 	name = "orange stained glass floor"
@@ -1756,7 +1756,7 @@
 	desc = "Glass floor, stained orange. Somebody spilled their orange juice?"
 	icon_state = "tile_sglass_orange"
 	turf_type = /turf/open/floor/glass/stained_orange
-	merge_type = /obj/item/stack/tile/glass/stained_glass/orange
+	merge_type = /obj/item/stack/tile/stained_glass/orange
 
 /obj/item/stack/tile/stained_glass/yellow
 	name = "yellow stained glass floor"
@@ -1764,7 +1764,7 @@
 	desc = "Glass floor, stained yellow. Probably by some mellow fellow."
 	icon_state = "tile_sglass_yellow"
 	turf_type = /turf/open/floor/glass/stained_yellow
-	merge_type = /obj/item/stack/tile/glass/stained_glass/yellow
+	merge_type = /obj/item/stack/tile/stained_glass/yellow
 
 /obj/item/stack/tile/stained_glass/green
 	name = "green stained glass floor"
@@ -1772,7 +1772,7 @@
 	desc = "Glass floor, stained green. That's what you get when putting liquid uranium at the edge of your table."
 	icon_state = "tile_sglass_green"
 	turf_type = /turf/open/floor/glass/stained_green
-	merge_type = /obj/item/stack/tile/glass/stained_glass/green
+	merge_type = /obj/item/stack/tile/stained_glass/green
 
 /obj/item/stack/tile/stained_glass/blue
 	name = "blue stained glass floor"
@@ -1780,7 +1780,7 @@
 	desc = "Glass floor, stained blue. With tears of someone feeling blue, obviously."
 	icon_state = "tile_sglass_blue"
 	turf_type = /turf/open/floor/glass/stained_blue
-	merge_type = /obj/item/stack/tile/glass/stained_glass/blue
+	merge_type = /obj/item/stack/tile/stained_glass/blue
 
 /obj/item/stack/tile/stained_glass/purple
 	name = "purple stained glass floor"
@@ -1788,7 +1788,7 @@
 	desc = "Glass floor, stained purple. It tastes purple, too."
 	icon_state = "tile_sglass_purple"
 	turf_type = /turf/open/floor/glass/stained_purple
-	merge_type = /obj/item/stack/tile/glass/stained_glass/purple
+	merge_type = /obj/item/stack/tile/stained_glass/purple
 
 /obj/item/stack/tile/stained_glass/white
 	name = "white stained glass floor"
@@ -1796,7 +1796,7 @@
 	desc = "Glass floor, stained white. Or perhaps it was bleached?"
 	icon_state = "tile_sglass_white"
 	turf_type = /turf/open/floor/glass/stained_white
-	merge_type = /obj/item/stack/tile/glass/stained_glass/white
+	merge_type = /obj/item/stack/tile/stained_glass/white
 
 /obj/item/stack/tile/stained_glass/black
 	name = "black stained glass floor"
@@ -1804,4 +1804,4 @@
 	desc = "Glass floor, stained black. A space squid inked it."
 	icon_state = "tile_sglass_black"
 	turf_type = /turf/open/floor/glass/stained_black
-	merge_type = /obj/item/stack/tile/glass/stained_glass/black
+	merge_type = /obj/item/stack/tile/stained_glass/black

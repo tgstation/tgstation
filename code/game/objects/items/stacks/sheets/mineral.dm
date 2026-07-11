@@ -78,6 +78,9 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 GLOBAL_LIST_INIT(rock_recipes, list ( \
 	new/datum/stack_recipe("stone tile", /obj/item/stack/tile/stone, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
 	new/datum/stack_recipe("stone wall filler", /obj/item/stack/wall_filling/rock/basic, 2, 1, 10, crafting_flags = NONE, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("rock stool", /obj/structure/chair/stool/rock, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("rock stumpt table", /obj/structure/table/rockstumpt, 3, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("rock tomb", /obj/structure/closet/crate/coffin/rock, 5, time = 1.5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
 	))
 
 /obj/item/stack/sheet/mineral/rock/get_main_recipes()

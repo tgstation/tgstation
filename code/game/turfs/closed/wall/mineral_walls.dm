@@ -109,6 +109,14 @@
 	base_icon_state = "cobbled_wall"
 	sheet_type = /obj/item/stack/wall_filling/rock/cobbled
 
+/turf/closed/wall/mineral/rockbrick/pillar
+	name = "pillared rock wall"
+	desc = "A pillared wall composed out of rock."
+	icon = 'icons/turf/walls/rock_pillar_wall.dmi'
+	icon_state = "rock_pillar_wall-0"
+	base_icon_state = "rock_pillar_wall"
+	sheet_type = /obj/item/stack/wall_filling/rock/pillar
+
 /turf/closed/wall/mineral/uranium
 	article = "a"
 	name = "uranium wall"

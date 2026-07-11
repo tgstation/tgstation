@@ -429,7 +429,14 @@
 /obj/projectile/beam/laser/evil
 	name = "evil laser"
 	icon_state = "evil_laser"
-	damage_type = OXY
+	damage = 10
 	wound_bonus = 0
 	speed = 1.5
 	light_color = "#bb00ff"
+
+/obj/projectile/beam/laser/evil/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!isliving(target))
+		return
+	var/mob/living/victim = target
+	victim.adjust_oxy_loss(10)

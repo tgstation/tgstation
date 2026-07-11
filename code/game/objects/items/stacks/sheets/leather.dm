@@ -177,6 +177,7 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 
 GLOBAL_LIST_INIT(lizard_recipes, list ( \
 	new/datum/stack_recipe("lizard carpet", /obj/item/stack/tile/carpet/lizard, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("lizard chair", /obj/structure/chair/comfy/lizard, 2, crafting_flags = NONE, category = CAT_FURNITURE), \
 	))
 
 /obj/item/stack/sheet/animalhide/carbon/lizard/get_main_recipes()

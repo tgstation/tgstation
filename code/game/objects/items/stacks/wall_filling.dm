@@ -147,3 +147,10 @@ GLOBAL_LIST_EMPTY(wall_reskin_lists)
 	icon_state = "cobbled-wall-fill"
 	desc = "A filling for a cobbled rock wall. Caveman style, modern resistance."
 	merge_type = /obj/item/stack/wall_filling/rock/cobbled
+
+/obj/item/stack/wall_filling/rock/pillar
+	name = "pillared rock wall filling"
+	singular_name = "pillared rock wall filler"
+	icon_state = "pillared-wall-fill"
+	desc = "A filling for a pillared rock wall. Greek? Roman? Does it really matter?"
+	merge_type = /obj/item/stack/wall_filling/rock/pillar

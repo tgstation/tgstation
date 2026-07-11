@@ -328,12 +328,10 @@
 	name = "laser space carp"
 	desc = "A successful Champions of Evil experiment in weaponized space carp technology, it now shoots LAZERS."
 	icon = 'icons/mob/simple/carp.dmi'
-	maxHealth = 40
-	health = 40
+	maxHealth = 31
+	health = 31
 
-	ai_controller = /datum/ai_controller/basic_controller/carp/ranged
-
-	var/mutable_appearance/lazer_overlay = mutable_appearance('icons/mob/simple/carp.dmi', "fricken_lazer")
+	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged
 
 /mob/living/basic/carp/laser/Initialize(mapload)
 	. = ..()
@@ -343,4 +341,8 @@
 		projectile_sound = 'sound/items/weapons/laser.ogg',\
 		cooldown_time = 2.5 SECONDS,\
 	)
-	new_overlays += lazer_overlay
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/basic/carp/laser/update_overlays()
+	. = ..()
+	. += mutable_appearance('icons/mob/simple/carp.dmi', "fricken_lazer")

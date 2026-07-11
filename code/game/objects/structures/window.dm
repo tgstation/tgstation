@@ -893,7 +893,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/titanium/spawner, 0
 	rad_insulation = RAD_EXTREME_INSULATION
 	glass_material_datum = /datum/material/alloy/plastitaniumglass
 
-/obj/structure/window/reinforced/plasma/survival_pod/unanchored
+/obj/structure/window/reinforced/shuttle/survival_pod/unanchored
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
 

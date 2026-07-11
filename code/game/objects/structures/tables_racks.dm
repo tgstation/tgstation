@@ -522,6 +522,20 @@
 	UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
 	LAZYREMOVE(attached_items, thing)
 
+///Rock stumpt
+/obj/structure/table/rockstumpt
+	name = "rock stumpt"
+	desc = "Looks like a rock roughly shaped into a stone table. Or a meteor cut in half, you may never know."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "rockstumpt"
+	custom_materials = list(/datum/material/rock = SHEET_MATERIAL_AMOUNT * 2)
+
+	can_flip = FALSE
+
 /*
  * Glass tables
  */
@@ -660,6 +674,23 @@
 	buildstack = stack_used.type
 
 /obj/structure/table/wood/poker/narsie_act()
+	..(FALSE)
+
+/obj/structure/table/wood/kitchen //Also no specialties, Just a mapping object.
+	name = "kitchen counter"
+	desc = "A wooden table with rock counter for ease of cleaning and cutting atop of it."
+	icon = 'icons/obj/smooth_structures/kitchen_counter.dmi'
+	icon_state = "kitchen_counter-0"
+	base_icon_state = "kitchen_counter"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	buildstack = /obj/item/stack/sheet/mineral/rock
+
+	can_flip = FALSE
+
+/obj/structure/table/wood/kitchen/apply_stack_properties(obj/item/stack/stack_used)
+	buildstack = stack_used.type
+
+/obj/structure/table/wood/kitchen/narsie_act()
 	..(FALSE)
 
 /obj/structure/table/wood/fancy
@@ -836,6 +867,17 @@
 
 	do_sparks(3, TRUE, src)
 	return TRUE
+
+/obj/structure/table/rock
+	name = "rock"
+	desc = "A aesthetic rock table. Fit for a garden, for sure."
+	icon = 'icons/obj/smooth_structures/rock_table.dmi'
+	icon_state = "rock_table-0"
+	base_icon_state = "rock_table"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	buildstack = /obj/item/stack/sheet/mineral/rock
+
+	can_flip = FALSE
 
 /obj/structure/table/bronze
 	name = "bronze table"

@@ -317,6 +317,15 @@
 	mineral = /obj/item/stack/wall_filling/rock/cobbled
 	walltype = /turf/closed/wall/mineral/rockbrick/cobbled
 
+/obj/structure/falsewall/rockbrick/pillar
+	name = "pillared rock wall"
+	desc = "A pillared wall composed out of rock."
+	fake_icon = 'icons/turf/walls/rock_pillar_wall.dmi'
+	icon_state = "rock_pillar_wall-open"
+	base_icon_state = "rock_pillar_wall"
+	mineral = /obj/item/stack/wall_filling/rock/pillar
+	walltype = /turf/closed/wall/mineral/rockbrick/pillar
+
 /obj/structure/falsewall/sandstone
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating. Rough."

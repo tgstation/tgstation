@@ -66,11 +66,25 @@
 	back = /obj/item/storage/backpack
 
 /datum/outfit/corpse_disco
+	name = "Corpse Disco"
 	glasses = /obj/item/clothing/glasses/sunglasses
 	suit = /obj/item/clothing/suit/toggle/lawyer
 	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	shoes = /obj/item/clothing/shoes/laceup
 	ears = /obj/item/instrument/piano_synth/headphones
+
+/datum/outfit/corpse_mummy
+	name = "Grunt Mummy"
+	mask = /obj/item/clothing/mask/mummy
+	uniform = /obj/item/clothing/under/costume/mummy
+
+/datum/outfit/corpse_pharoah
+	name = "Pharoah Mummy"
+	mask = /obj/item/clothing/mask/mummy
+	head = /obj/item/clothing/head/costume/pharaoh
+	suit = /obj/item/clothing/suit/costume/nemes
+	uniform = /obj/item/clothing/under/costume/mummy
+	back =	/obj/item/nullrod/egyptian
 
 /datum/outfit/corpse_disco/post_equip(mob/living/carbon/human/Zombert, visuals_only = FALSE)
 	var/hair_list = list("Afro" = 7, "Afro 2" = 6, "Afro (Large)" = 2,  "Afro (Huge)" = 1, "Short Hair 80s" = 4)
@@ -81,6 +95,16 @@
 	name = "Grooving Corpse"
 	desc = "Dead as disco; performing sick moves to viral 80s tunes with electric boogaloo vengance. How thrilling."
 	outfit = /datum/outfit/corpse_disco
+
+/mob/living/basic/zombie/rotten/mummy
+	name = "Undead Mummy"
+	desc = "Yes it needs the specification of 'undead'; normal mummies don't walk and bite people, now do they?"
+	outfit = /datum/outfit/corpse_mummy
+
+/mob/living/basic/zombie/pharoah
+	name = "Undead Pharoah"
+	desc = "To think about the fact this tattered corpse in wraps was once a powerful noble... Or a larper with really strange last will."
+	outfit = /datum/outfit/corpse_pharoah
 
 /datum/ai_planning_subtree/random_speech/zombie
 	speech_chance = 1

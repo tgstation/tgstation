@@ -119,3 +119,5 @@
 		return /obj/structure/table/wood
 	if(istype(our_stack, /obj/item/stack/tile/carpet))
 		return /obj/structure/table/wood/poker
+	if(istype(our_stack, /obj/item/stack/sheet/mineral/rock))
+		return /obj/structure/table/wood/kitchen

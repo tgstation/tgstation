@@ -177,13 +177,13 @@ again.
 /obj/effect/spawner/structure/window/hollow/titaniumglass/end/Initialize(mapload)
 	switch(dir)
 		if(NORTH)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/east, /obj/structure/window/reinforced/survival_pod/spawner/directional/west)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/east, /obj/structure/window/reinforced/survival_pod/spawner/directional/west)
 		if(EAST)
 			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/east)
 		if(SOUTH)
 			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/east, /obj/structure/window/reinforced/survival_pod/spawner/directional/west)
 		if(WEST)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/directional/north, /obj/structure/window/reinforced/survival_pod/spawner/directional/west)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/north, /obj/structure/window/reinforced/survival_pod/spawner/directional/west)
 	return ..()
 
 /obj/effect/spawner/structure/window/hollow/titaniumglass/middle
@@ -192,9 +192,9 @@ again.
 /obj/effect/spawner/structure/window/hollow/titaniumglass/middle/Initialize(mapload)
 	switch(dir)
 		if(NORTH,SOUTH)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/directional/north)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/north)
 		if(EAST,WEST)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/directional/east, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/east, /obj/structure/window/reinforced/titanium/spawner/directional/west)
 	return ..()
 
 /obj/effect/spawner/structure/window/hollow/titaniumglass/directional
