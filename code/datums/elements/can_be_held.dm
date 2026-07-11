@@ -16,9 +16,7 @@
 
 /datum/element/can_be_held/Detach(datum/source)
 	REMOVE_TRAIT(source, TRAIT_CAN_BE_HELD, ELEMENT_TRAIT(type))
-	UnregisterSignal(source, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_mousedrop_onto))
-	UnregisterSignal(source, COMSIG_MOB_STRIP_MENU_OPEN, PROC_REF(on_strip_menu_open))
-	UnregisterSignal(source, COMSIG_STORAGE_DUMP_PRE_TRANSFER, PROC_REF(on_attempt_storage_dump))
+	UnregisterSignal(source, list(COMSIG_MOUSEDROP_ONTO, COMSIG_MOB_STRIP_MENU_OPEN, COMSIG_STORAGE_DUMP_PRE_TRANSFER))
 	return ..()
 
 /// Used to determine the "intent" of the action that the user mob is trying to employ on the target.
