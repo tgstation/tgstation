@@ -358,3 +358,8 @@
       crates in general.
   lelandkemble:
   - bugfix: Vorpal scythe damage multiplier remains after the first hit
+2026-07-11:
+  Melbert:
+  - image: Re-saturates the occupations tab
+  lelandkemble:
+  - bugfix: fixed the janitor keyring being unable to open doors

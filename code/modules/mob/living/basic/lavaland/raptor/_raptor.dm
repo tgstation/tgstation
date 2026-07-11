@@ -379,7 +379,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	density = initial(density)
 	move_resist = initial(move_resist)
 	can_breed = initial(can_breed)
-	update_holdability(initial(density))
+	update_holdability(initial(could_be_held))
 
 	if (new_stage == RAPTOR_ADULT)
 		// Adults need to be tamed with skill rather than snacks

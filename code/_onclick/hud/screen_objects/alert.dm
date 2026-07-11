@@ -86,6 +86,8 @@
 	alerts -= category
 	if(client && hud_used)
 		hud_used.reorganize_alerts()
+		for(var/mob/viewer as anything in observers)
+			viewer.client?.screen -= alert
 		client.screen -= alert
 	qdel(alert)
 
