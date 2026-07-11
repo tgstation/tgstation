@@ -5,7 +5,7 @@
 	},
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "as" = (
 /obj/docking_port/mobile/emergency{
 	dir = 2;
@@ -15,26 +15,26 @@
 	name = "Cemetery"
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "aI" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "aS" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /turf/open/floor/catwalk_floor,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "aX" = (
 /obj/item/statuebust,
 /obj/structure/table/wood,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "bG" = (
 /obj/effect/turf_decal/tile/dark_green/half{
 	dir = 4
@@ -42,13 +42,13 @@
 /turf/open/floor/iron/freezer/edge{
 	dir = 4
 	},
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "bR" = (
 /obj/structure/closet/crate/grave/filled,
 /obj/effect/spawner/random/exotic/grave,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/misc/dirt/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "cb" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -66,14 +66,14 @@
 	},
 /obj/structure/sign/poster/official/cleanliness/directional/west,
 /turf/open/floor/iron/freezer/corner,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "cu" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/thinplating/dark/corner,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "cV" = (
 /obj/structure/table,
 /obj/item/storage/box/gloves,
@@ -83,10 +83,10 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "dd" = (
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "dh" = (
 /obj/effect/turf_decal/tile/dark_green/half{
 	dir = 8
@@ -95,7 +95,7 @@
 /turf/open/floor/iron/freezer/edge{
 	dir = 8
 	},
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "dr" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -112,35 +112,35 @@
 	},
 /obj/item/flashlight/flare/torch,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "dF" = (
 /obj/effect/turf_decal/siding/dark_blue{
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "eq" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/surgery_tray/full/morgue,
 /turf/open/floor/iron/freezer,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "et" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/sign/warning/vacuum/directional/south,
 /turf/open/floor/catwalk_floor,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "eW" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "fm" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "fx" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
@@ -148,13 +148,13 @@
 /obj/effect/turf_decal/weather/dirt,
 /obj/item/storage/fancy/candle_box,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "fS" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 9
 	},
 /turf/open/floor/iron/dark/textured_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "gm" = (
 /obj/structure/mirror/directional/north,
 /obj/structure/sink/directional/south,
@@ -164,26 +164,26 @@
 /turf/open/floor/iron/freezer/edge{
 	dir = 1
 	},
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "it" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /mob/living/basic/mouse,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "iz" = (
 /obj/effect/spawner/random/trash/hobo_squat{
 	spawn_loot_chance = 50
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "iN" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 6
 	},
 /turf/open/floor/iron/dark/textured_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "jl" = (
 /obj/effect/turf_decal/tile/dark_green/anticorner{
 	dir = 8
@@ -192,7 +192,7 @@
 /turf/open/floor/iron/freezer/corner{
 	dir = 4
 	},
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "jS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -211,7 +211,7 @@
 	name = "Cemetery"
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "kR" = (
 /obj/effect/turf_decal/weather/dirt,
 /obj/effect/turf_decal/weather/dirt{
@@ -219,33 +219,33 @@
 	},
 /obj/item/storage/fancy/candle_box,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "la" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/thinplating/dark,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "ly" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
 /obj/item/flashlight/lantern,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "lV" = (
 /obj/effect/spawner/random/trash/graffiti{
 	spawn_loot_chance = 50
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "mc" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "mm" = (
 /obj/structure/kitchenspike,
 /obj/effect/turf_decal/bot,
@@ -258,7 +258,7 @@
 	dir = 8
 	},
 /turf/open/floor/catwalk_floor,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "mt" = (
 /obj/effect/turf_decal/tile/dark_green/half{
 	dir = 1
@@ -266,7 +266,7 @@
 /turf/open/floor/iron/freezer/edge{
 	dir = 1
 	},
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "mx" = (
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 10
@@ -277,7 +277,7 @@
 "mz" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "mZ" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
@@ -288,7 +288,7 @@
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "nx" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
@@ -297,27 +297,27 @@
 	pixel_x = 19
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "ok" = (
 /obj/item/flashlight/flare/torch,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "px" = (
 /obj/item/flashlight/flare/torch,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "qn" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "qr" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
@@ -327,64 +327,64 @@
 "qx" = (
 /obj/effect/turf_decal/siding/thinplating/dark,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "qM" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "rz" = (
 /obj/machinery/computer/operating{
 	dir = 8
 	},
 /turf/open/floor/iron/freezer,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "rH" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/misc/dirt/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "rK" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/closet/l3closet,
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "rP" = (
 /obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "si" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "so" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "sP" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Morgue"
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "th" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "vD" = (
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "vK" = (
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "vL" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 1
@@ -393,7 +393,7 @@
 	name = "morgue"
 	},
 /turf/open/floor/iron/dark/textured_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "vP" = (
 /obj/effect/spawner/random/trash/garbage{
 	spawn_scatter_radius = 1;
@@ -401,13 +401,13 @@
 	spawn_loot_chance = 50
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "vT" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "vZ" = (
 /obj/structure/bodycontainer/crematorium{
 	id = "graveyard_shuttle_crematorium"
@@ -419,45 +419,45 @@
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/structure/sign/departments/maint/directional/north,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "wb" = (
 /obj/structure/extinguisher_cabinet,
 /turf/closed/wall/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "we" = (
 /obj/structure/table/optable,
 /turf/open/floor/iron/freezer,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "wu" = (
 /obj/item/flashlight/flare/torch,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 5
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "wX" = (
 /obj/machinery/vending/wardrobe/coroner_wardrobe,
 /turf/open/floor/iron/dark/smooth_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "wZ" = (
 /obj/effect/spawner/costume/plaguedoctor,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "xc" = (
 /obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "xt" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 5
 	},
 /turf/open/floor/iron/dark/textured_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "yj" = (
 /obj/structure/closet/crate/grave/filled,
 /obj/effect/spawner/random/exotic/grave,
 /turf/open/misc/dirt/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "ym" = (
 /obj/effect/turf_decal/tile/dark_green/anticorner{
 	dir = 4
@@ -465,47 +465,47 @@
 /turf/open/floor/iron/freezer/corner{
 	dir = 8
 	},
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "yo" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "yJ" = (
 /obj/machinery/computer/emergency_shuttle{
 	dir = 8
 	},
 /obj/machinery/light/small/dim/directional/east,
 /turf/open/floor/iron/dark/textured_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "zA" = (
 /obj/machinery/portable_atmospherics/canister/miasma,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/sign/warning/biohazard/directional/south,
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Ab" = (
 /obj/structure/bodycontainer/morgue/beeper_off{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Ah" = (
 /obj/structure/bodycontainer/morgue/beeper_off{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/dark/textured_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Aw" = (
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "AA" = (
 /obj/item/flashlight/flare/torch,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "AS" = (
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 5
@@ -523,50 +523,50 @@
 	},
 /obj/structure/sign/clock/directional/west,
 /turf/open/floor/iron/dark/textured_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "DO" = (
 /obj/effect/turf_decal/trimline/neutral/warning,
 /obj/structure/bodycontainer/morgue/beeper_off{
 	name = "morgue"
 	},
 /turf/open/floor/iron/dark/textured_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Ei" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Fi" = (
 /obj/machinery/light/small/dim/directional/west,
 /obj/structure/bodycontainer/morgue/beeper_off{
 	name = "morgue"
 	},
 /turf/open/floor/iron/dark/textured_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "FJ" = (
 /obj/structure/mineral_door{
 	name = "Crypt"
 	},
 /obj/structure/barricade/wooden/crude,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "FZ" = (
 /obj/effect/turf_decal/weather/dirt,
 /obj/effect/decal/remains/human/smokey/maintenance,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Gf" = (
 /mob/living/basic/spider/maintenance,
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Gs" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/structure/tank_holder/extinguisher,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "GU" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/weather/dirt{
@@ -574,14 +574,14 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Hy" = (
 /obj/item/flashlight/flare/torch,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "HZ" = (
 /obj/structure/closet/crate/coffin,
 /obj/effect/turf_decal/trimline/dark_red/warning{
@@ -595,13 +595,13 @@
 /turf/open/floor/iron/freezer/corner{
 	dir = 1
 	},
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Ih" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "JE" = (
 /obj/effect/spawner/random/trash/garbage{
 	spawn_scatter_radius = 1;
@@ -610,7 +610,7 @@
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Lv" = (
 /obj/effect/turf_decal/siding/dark_blue{
 	dir = 4
@@ -619,31 +619,31 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "MS" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Crematorium"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "MT" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Nw" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 10
 	},
 /turf/open/floor/iron/dark/textured_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Ny" = (
 /obj/item/clothing/head/helmet/skull,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "NU" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner,
 /obj/effect/turf_decal/stripes/corner{
@@ -655,7 +655,7 @@
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/tile/dark_green/half,
 /turf/open/floor/iron/freezer/edge,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Oa" = (
 /obj/structure/kitchenspike,
 /obj/effect/turf_decal/bot,
@@ -668,15 +668,15 @@
 /obj/structure/table/wood,
 /obj/item/shovel,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Pi" = (
 /obj/effect/turf_decal/weather/dirt,
 /obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "PM" = (
 /turf/open/floor/catwalk_floor,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "PP" = (
 /obj/effect/turf_decal/trimline/neutral/warning,
 /obj/structure/bodycontainer/morgue/beeper_off{
@@ -684,11 +684,11 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Qd" = (
 /obj/machinery/smartfridge/organ,
 /turf/open/floor/iron/dark/smooth_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Ru" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
@@ -697,13 +697,13 @@
 	pixel_y = 44
 	},
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "RZ" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Morgue"
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Ty" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
@@ -711,14 +711,14 @@
 /obj/effect/turf_decal/weather/dirt,
 /obj/item/flashlight/flare/torch,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Uu" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "UA" = (
 /obj/effect/turf_decal/tile/dark_green/half,
 /turf/open/floor/iron/freezer/edge,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "UM" = (
 /obj/structure/closet/crate/grave/fresh,
 /obj/structure/sign/painting/library{
@@ -728,7 +728,7 @@
 /obj/effect/spawner/random/exotic/grave,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/misc/dirt/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Vl" = (
 /obj/structure/closet/crate/grave/fresh,
 /obj/structure/sign/painting/library{
@@ -736,13 +736,13 @@
 	},
 /obj/effect/spawner/random/exotic/grave,
 /turf/open/misc/dirt/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "VQ" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "VW" = (
 /obj/structure/rack,
 /obj/item/storage/box/bodybags{
@@ -755,13 +755,13 @@
 	},
 /obj/effect/turf_decal/siding/thinplating/dark,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Wp" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Ws" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 1
@@ -771,14 +771,14 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "WE" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Xg" = (
 /obj/structure/closet/crate/grave/fresh,
 /obj/structure/sign/painting/library{
@@ -787,7 +787,7 @@
 	},
 /obj/effect/spawner/random/exotic/grave,
 /turf/open/misc/dirt/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Xl" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -804,7 +804,7 @@
 	},
 /obj/item/shovel,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Yp" = (
 /obj/machinery/light/small/dim/directional/east,
 /obj/structure/bodycontainer/morgue/beeper_off{
@@ -812,20 +812,20 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_half,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Yt" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "YF" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Secure Morgue"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "YN" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/weather/dirt{
@@ -833,7 +833,7 @@
 	},
 /obj/item/radio/intercom/directional/east,
 /turf/open/misc/asteroid/basalt/wasteland/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "YS" = (
 /obj/structure/closet/crate/grave/filled,
 /obj/structure/sign/painting/library{
@@ -841,7 +841,7 @@
 	},
 /obj/effect/spawner/random/exotic/grave,
 /turf/open/misc/dirt/station,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 "Zj" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
@@ -850,7 +850,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/area/shuttle/escape/tombstone)
 
 (1,1,1) = {"
 Bj
