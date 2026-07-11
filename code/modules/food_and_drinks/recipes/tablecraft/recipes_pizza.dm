@@ -42,6 +42,7 @@
 		/obj/item/food/cheese/wedge = 1,
 	)
 	result = /obj/item/food/pizza/mushroom/raw
+	unit_test_spawn_extras = list(/obj/item/food/grown/mushroom/chanterelle = 5) //generic mushrooms
 
 /datum/crafting_recipe/food/pizza/vegetable
 	reqs = list(

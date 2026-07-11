@@ -204,6 +204,7 @@
 	removed_foodtypes = RAW|BREAKFAST
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_RICE
+	unit_test_spawn_extras = list(/obj/item/food/grown/mushroom/chanterelle = 1) //generic mushrooms
 
 /datum/crafting_recipe/food/bulgogi_noodles
 	name = "Bulgogi noodles"

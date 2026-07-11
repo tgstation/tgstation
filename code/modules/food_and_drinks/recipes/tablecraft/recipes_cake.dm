@@ -159,7 +159,7 @@
 	added_foodtypes = GROSS
 	dish_category = DISH_CAKE
 	meal_category = MEAL_DESSERT
-	unit_test_spawn_extras = list(/obj/item/circuitboard/machine/vendor = 1) //cannot spawn the abstract circuit board
+	unit_test_spawn_extras = list(/obj/item/circuitboard/machine/vendor = 2) //cannot spawn the abstract circuit board
 
 /datum/crafting_recipe/food/berry_chocolate_cake
 	name = "strawberry chocolate cake"

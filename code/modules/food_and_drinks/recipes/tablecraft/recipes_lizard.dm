@@ -385,6 +385,7 @@
 	result = /obj/item/food/pizza/flatbread/mushroom
 	cuisine_category = CUISINE_LIZARD
 	dish_category = DISH_BREAD
+	unit_test_spawn_extras = list(/obj/item/food/grown/mushroom/chanterelle = 3) //generic mushrooms
 
 /datum/crafting_recipe/food/nutty_flatbread
 	name = "Nut paste flatbread"

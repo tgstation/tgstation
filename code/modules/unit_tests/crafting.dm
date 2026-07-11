@@ -66,7 +66,7 @@
 			continue
 
 		// A recipe might accept an abstract base type as its reqs - e.g. obj/item/food/grown - signifying it can use any item of that type.
-		// However, we cannot create those abstract base types... but we also cannot pick a random subtype everytime either, 
+		// However, we cannot create those abstract base types... but we also cannot pick a random subtype everytime either,
 		// as sutypes can have different custom_materials between them, so doing that will lead us to sporiadic errors.
 		// The safest course of action is to make the contributor pick a valid subtype (as generic as possible. please) to use in its place.
 		var/datum/req_path_datum = req_path
