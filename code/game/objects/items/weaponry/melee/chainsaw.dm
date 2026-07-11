@@ -121,6 +121,9 @@
 		return ..()
 
 	var/obj/item/bodypart/head = target_mob.get_bodypart(BODY_ZONE_HEAD)
+	if (!head)
+		return ..()
+
 	playsound(src, 'sound/items/weapons/chainsawhit.ogg', vol = 100, vary = TRUE)
 	target_mob.balloon_alert(user, "cutting off head...")
 
@@ -130,7 +133,7 @@
 	if (head.dismember(silent = FALSE))
 		playsound(src, 'sound/items/weapons/chainsawhit.ogg', vol = 100, vary = TRUE)
 	else
-		user.visible_message(span_warning("[target_mob]'s head is attached too firmly to cut off!"))
+		to_chat(user, span_warning("[target_mob]'s head is attached too firmly to cut off!"))
 
 	return TRUE
 
