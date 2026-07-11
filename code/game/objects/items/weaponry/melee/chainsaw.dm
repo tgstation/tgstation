@@ -120,13 +120,6 @@
 	if (user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
 
-	if (HAS_TRAIT(target_mob, TRAIT_NODISMEMBER))
-		return ..()
-
-	var/obj/item/bodypart/head = target_mob.get_bodypart(BODY_ZONE_HEAD)
-	if (head.bodypart_flags & BODYPART_UNREMOVABLE)
-		return ..()
-
 	playsound(src, 'sound/items/weapons/chainsawhit.ogg', vol = 100, vary = TRUE)
 
 	target_mob.balloon_alert(user, "cutting off head...")
