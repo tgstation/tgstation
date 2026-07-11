@@ -10,7 +10,6 @@
  */
 /datum/unit_test/frame_stacking
 	normal_floor_required = TRUE
-	test_flags = UNIT_TEST_FOCUS
 
 /datum/unit_test/frame_stacking/Run()
 	// First test - RCDs stacking frames.

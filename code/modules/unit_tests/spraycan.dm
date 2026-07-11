@@ -1,7 +1,6 @@
 /// Tests spray painting the ground to create graffiti.
 /datum/unit_test/spraypainting
 	normal_floor_required = TRUE
-	test_flags = UNIT_TEST_FOCUS
 
 /datum/unit_test/spraypainting/Run()
 	var/mob/living/carbon/human/consistent/artist = EASY_ALLOCATE()

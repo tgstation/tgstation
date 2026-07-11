@@ -71,7 +71,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		reservation = template.load_new_z()
 
 	if(test_flags & UNIT_TEST_FOCUS)
-		log_world("::warning::[src] has UNIT_TEST_FOCUS present inside var/test_flags.")
+		log_world("::error::[src] has UNIT_TEST_FOCUS present inside var/test_flags. This is a reminder to remove it from your commit!") // So CI fails.
 	uncreatables ||= build_list_of_uncreatables()
 
 	allocated = list()
@@ -85,7 +85,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//Make sure that the top and bottom locations in the diagonal are floors. Anything else may get in the way of several tests.
 	TEST_ASSERT(isindestructiblefloor(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not an indestructable floor ([run_loc_floor_bottom_left])")
 	TEST_ASSERT(isindestructiblefloor(run_loc_floor_top_right), "run_loc_floor_top_right was not an indestructable floor ([run_loc_floor_top_right])")
-
 	if(normal_floor_required)
 		for(var/turf/turf in get_area_turfs(run_loc_floor_bottom_left.loc))
 			if(!isopenturf(turf))
