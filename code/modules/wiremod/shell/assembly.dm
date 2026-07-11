@@ -80,7 +80,7 @@
 			return COMPONENT_OVERRIDE_POWER_USAGE
 	if(iscyborg(power_use_proxy))
 		var/mob/living/silicon/robot/borg = power_use_proxy
-		if(borg.cell?.use(power_to_use, force = TRUE))
+		if(borg.cell?.use(power_to_use))
 			return COMPONENT_OVERRIDE_POWER_USAGE
 
 /obj/item/assembly/wiremod/examine(mob/user)

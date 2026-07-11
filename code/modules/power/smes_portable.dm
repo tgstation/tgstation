@@ -295,7 +295,7 @@
 	///Drain the charge
 	var/charge_adjust = STANDARD_BATTERY_CHARGE / severity
 	for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
-		charge_adjust -= power_cell.use(charge_adjust, TRUE)
+		charge_adjust -= power_cell.use(charge_adjust)
 		if(!charge_adjust)
 			break
 

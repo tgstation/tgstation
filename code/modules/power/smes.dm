@@ -179,7 +179,7 @@
 		if(give)
 			amount_adjusted = power_cell.give(charge_adjust)
 		else
-			amount_adjusted = power_cell.use(charge_adjust, TRUE)
+			amount_adjusted = power_cell.use(charge_adjust)
 
 		. += amount_adjusted
 		charge_adjust -= amount_adjusted

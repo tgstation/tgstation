@@ -133,7 +133,7 @@
 		return
 	ammo_pack.overheat++
 	if(ammo_pack.battery)
-		var/transferred = ammo_pack.battery.use(cell.maxcharge - cell.charge, force = TRUE)
+		var/transferred = ammo_pack.battery.use(cell.maxcharge - cell.charge)
 		cell.give(transferred)
 
 

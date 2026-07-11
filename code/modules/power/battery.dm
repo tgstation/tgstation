@@ -88,5 +88,5 @@
 	chargerate = INFINITY
 	ratingdesc = FALSE
 
-/obj/item/stock_parts/power_store/battery/infinite/use(used, force = FALSE)
+/obj/item/stock_parts/power_store/battery/infinite/use(used)
 	return used

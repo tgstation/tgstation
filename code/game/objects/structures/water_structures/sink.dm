@@ -197,7 +197,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		playsound(src, 'sound/machines/sink-faucet.ogg', 50)
 
 		var/obj/item/melee/baton/security/baton = tool
-		if(istype(baton) && baton.active && baton.cell?.use(baton.cell_hit_cost, force = TRUE))
+		if(istype(baton) && baton.active && baton.cell?.use(baton.cell_hit_cost))
 			flick("baton_active", src)
 			user.Paralyze(baton.knockdown_time)
 			user.set_stutter(baton.knockdown_time)

@@ -357,7 +357,7 @@
 		if(cell)
 			WR.crowbar_salvage += cell
 			cell.forceMove(WR)
-			cell.use(rand(0, cell.charge), TRUE)
+			cell.use(rand(0, cell.charge))
 			cell = null
 	return ..()
 

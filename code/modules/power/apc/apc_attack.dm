@@ -63,7 +63,7 @@
 		var/stomach_used_charge = stomach_cell.used_charge()
 		var/potential_charge = min(our_available_charge, stomach_used_charge)
 		var/to_drain = min(ETHEREAL_APC_POWER_GAIN, potential_charge)
-		var/energy_drained = cell.use(to_drain, force = TRUE)
+		var/energy_drained = cell.use(to_drain)
 		used_stomach.adjust_charge(energy_drained)
 
 		if(stomach_cell.used_charge() <= 0)

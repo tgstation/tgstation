@@ -178,7 +178,7 @@
 
 /obj/machinery/power/singularity_beacon/syndicate/no_escape/process()
 	if(cell.charge())
-		cell.use(energy_used, force = TRUE)
+		cell.use(energy_used)
 
 		if(!no_escape_event)
 			var/area/escape_shuttle_area = get_area(src)

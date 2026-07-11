@@ -174,7 +174,7 @@
 		var/datum/gas_mixture/turf_gasmix = turf.return_air()
 		turf_gasmix.temperature += delta_energy / turf_gasmix.heat_capacity()
 		air_update_turf(FALSE, FALSE)
-	cell.use((required_energy * length(turfs)) / efficiency, force = TRUE)
+	cell.use((required_energy * length(turfs)) / efficiency)
 
 /obj/machinery/space_heater/RefreshParts()
 	. = ..()
@@ -401,7 +401,7 @@
 
 		beaker.reagents.adjust_thermal_energy(delta_energy)
 		beaker.reagents.handle_reactions()
-		cell.use(required_energy / efficiency, force = TRUE)
+		cell.use(required_energy / efficiency)
 	update_appearance()
 
 /obj/machinery/space_heater/improvised_chem_heater/ui_data()

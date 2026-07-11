@@ -155,20 +155,20 @@
 /// - used: Amount of power in joules to use.
 /// Returns: The power used from the cell in joules.
 /obj/item/stock_parts/power_store/use(used)
-    var/power_used = min(used, charge)
+	var/power_used = min(used, charge)
 
-    if(power_used <= 0) // The cell is already empty or no power was used
-        return 0
+	if(power_used <= 0) // The cell is already empty or no power was used
+		return 0
 
-    if(try_explode()) // The cell decided to explode so we won't be able to use it
-        return 0
+	if(try_explode()) // The cell decided to explode so we won't be able to use it
+		return 0
 
-    charge -= power_used
+	charge -= power_used
 
-    if(!istype(loc, /obj/machinery/power/apc))
-        SSblackbox.record_feedback("tally", "cell_used", 1, type)
+	if(!istype(loc, /obj/machinery/power/apc))
+		SSblackbox.record_feedback("tally", "cell_used", 1, type)
 
-    return power_used
+	return power_used
 
 /// Recharge the cell.
 /// Args:
@@ -241,7 +241,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	use((STANDARD_CELL_CHARGE /severity) * emp_damage_modifier , force = TRUE)
+	use((STANDARD_CELL_CHARGE /severity) * emp_damage_modifier)
 
 /obj/item/stock_parts/power_store/ex_act(severity, target)
 	. = ..()
@@ -325,7 +325,7 @@
 		var/scaled_stomach_used_charge = stomach_cell.used_charge() / ETHEREAL_CELL_POWER_GAIN_FACTOR
 		var/potential_charge = min(our_charge, scaled_stomach_used_charge)
 		var/to_drain = min(ETHEREAL_CELL_POWER_DRAIN, potential_charge)
-		var/energy_drained = use(to_drain, force = TRUE)
+		var/energy_drained = use(to_drain)
 		used_stomach.adjust_charge(energy_drained * ETHEREAL_CELL_POWER_GAIN_FACTOR)
 		update_appearance(UPDATE_OVERLAYS)
 

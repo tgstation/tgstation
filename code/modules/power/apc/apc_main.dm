@@ -579,7 +579,7 @@
 		var/grid_used = min(terminal?.surplus(), total_static_energy_usage)
 		terminal?.add_load(grid_used)
 		if(total_static_energy_usage > grid_used && !QDELETED(cell))
-			cell.use(total_static_energy_usage - grid_used, force = TRUE)
+			cell.use(total_static_energy_usage - grid_used)
 
 /obj/machinery/power/apc/proc/late_process(seconds_per_tick)
 	if(icon_update_needed)

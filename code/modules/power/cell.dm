@@ -166,7 +166,7 @@
 	chargerate = INFINITY
 	ratingdesc = FALSE
 
-/obj/item/stock_parts/power_store/cell/infinite/use(used, force = FALSE)
+/obj/item/stock_parts/power_store/cell/infinite/use(used)
 	return used
 
 /obj/item/stock_parts/power_store/cell/infinite/abductor

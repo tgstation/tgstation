@@ -74,7 +74,7 @@
 			return
 		var/transferred = src.cell.give(min(0.1 * STANDARD_CELL_CHARGE, circuit.cell.charge))
 		if (transferred)
-			circuit.cell.use(transferred, force=TRUE)
+			circuit.cell.use(transferred)
 
 /**
  * Called when the shell item shoots something
@@ -98,4 +98,4 @@
 	var/obj/item/gun/energy/fired_gun = source
 	var/transferred = fired_gun.cell.give(min(0.1 * STANDARD_CELL_CHARGE, parent.cell.charge))
 	if(transferred)
-		parent.cell.use(transferred, force = TRUE)
+		parent.cell.use(transferred)

@@ -161,7 +161,7 @@
 	var/obj/item/stock_parts/power_store/charge_source = charge_source()
 	if(isnull(charge_source))
 		return FALSE
-	. = charge_source.use(amount, TRUE)
+	. = charge_source.use(amount)
 	if(.)
 		mod.update_charge_alert()
 	return .
