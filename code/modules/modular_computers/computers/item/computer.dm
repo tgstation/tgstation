@@ -791,6 +791,7 @@
 	if(looping_sound)
 		soundloop.stop()
 	if(physical && loud)
+		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 		physical.visible_message(span_notice("\The [src] shuts down."))
 	enabled = FALSE
 	update_appearance()
