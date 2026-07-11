@@ -5,6 +5,8 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	/// Do we check the outdoorsness of our spawn tile?
 	var/outdoor_only = TRUE
+	/// Are we waiting for a mob to spawn so we can link to it?
+	var/registered_spawn_signal = FALSE
 	// Spawn somewhere in an area around the spawner rather than dead on it
 	var/respawn_range = 3
 	/// Min time from storm to spawn a mob
@@ -38,7 +40,7 @@
 				filtered_mobs += path
 		valid_mobs = filtered_mobs
 
-	if (!our_mob?.resolve())
+	if (!our_mob?.resolve() && !registered_spawn_signal)
 		make_mob()
 
 	// We're just going to go ahead and assume these won't move after being spawned
@@ -51,6 +53,7 @@
 
 	if (istype(initial_spawn, /obj/effect/spawner/random))
 		RegisterSignal(get_turf(src), COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(get_spawned_mob))
+		registered_spawn_signal = TRUE
 	else
 		register_spawn(src, initial_spawn)
 
@@ -85,6 +88,7 @@
 	var/turf/spawn_turf = pick(valid_locations)
 	// Bit roundabout but it's the only way of intercepting mob spawners
 	RegisterSignal(spawn_turf, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(get_spawned_mob))
+	registered_spawn_signal = TRUE
 	new spawn_path(spawn_turf)
 
 /// Intercept the next mob spawned on the turf, because we might have spawned an object which spawns a mob instead
@@ -94,6 +98,7 @@
 		return
 
 	UnregisterSignal(source, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
+	registered_spawn_signal = FALSE
 	register_spawn(source, new_spawn)
 	play_spawn_animation(new_spawn, source)
 

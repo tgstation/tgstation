@@ -32,7 +32,7 @@
 	throw_speed = 1
 	throw_range = 4
 	demolition_mod = 1.25
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	actions_types = list(/datum/action/item_action/set_internals)
 	action_slots = ALL
 	armor_type = /datum/armor/item_tank

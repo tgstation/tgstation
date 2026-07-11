@@ -58,6 +58,42 @@ other types of metals and chemistry for reagents).
 	/// For protolathe designs that don't require reagents: If they can be exported to autolathes with a design disk or not.
 	var/autolathe_exportable = TRUE
 
+	/**
+	 * A variable for if and how we want the printed object to receive the materials that were used to print it.
+	 *
+	 * * DESIGN_INHERIT_MATS: default setting, this will also be unit tested to ensure that the object built from an unupgraded protolathe
+	 * has the same materials of an object of the same type only instantiated in a generic way.
+	 * * DESIGN_INHERIT_MATS_SPECIAL: get the materials, but don't perform unit test checks
+	 * * DESIGN_DONT_INHERIT_MATS: The printed object won't have the materials that were used to print it.
+	 *
+	 * P.S. unit test checks for materials are not performed on designs that use /datum/material_requirement.
+	 * The only thing we would've to check in that case would be the amounts but not the types, and that isn't worth it.
+	 */
+	var/inherit_materials = DESIGN_INHERIT_MATS
+	// If true, the efficiency of this design won't be influenced by the tier of the stock parts of the machine printing it
+	var/fixed_cost_efficiency = FALSE
+
+	/**
+	 * If set, instead of transfering the contents of the materials var to the item(s), this list will be used.
+	 * This is useful for printed items that possess fewer mats than those used in the process of printing them,
+	 * Or items that in turn contain more items that can be extracted and recycled singularly.
+	 *
+	 * Here's an example of how it's supposed to be structured:
+	 *	transfered_materials = list(
+	 *		/obj/item/printed = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.5),
+	 *		/obj/item/inside_printed = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.5),
+	 *	)
+	 *
+	 * A few things to consider though:
+	 * 1) It shouldn't include materials not present in the 'materials' variable.
+	 * 2) The sum of each material in the lists shouldn't surpass what present in the 'materials' list.
+	 * 3) It's incompatible with material_slot and material_requirement datums. This might change in the future, i dunno.
+	 * 4) this does nothing if 'inherit_materials' is set to DESIGN_DONT_INHERIT_MATS.
+	 *
+	 * I've set a few unit test checks to make sure that things don't go wrong anyway, so don't worry too much about it
+	 */
+	var/list/transfered_materials
+
 /datum/design/error_design
 	name = "ERROR"
 	desc = "This usually means something in the database has corrupted. If this doesn't go away automatically, inform Central Command so their techs can fix this ASAP(tm)"
@@ -80,6 +116,14 @@ other types of metals and chemistry for reagents).
 
 	materials = temp_list
 
+	for(var/object, mats in transfered_materials)
+		temp_list = list()
+		var/list/mat_list = mats
+		for(var/mat_type in mat_list)
+			var/datum/material/mat = SSmaterials.get_material(mat_type)
+			temp_list[mat] = mat_list[mat_type]
+		transfered_materials[object] = temp_list
+
 /datum/design/proc/icon_html(client/user)
 	var/datum/asset/spritesheet_batched/sheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	sheet.send(user)
@@ -92,9 +136,9 @@ other types of metals and chemistry for reagents).
 	return isnull(desc) ? initial(object_build_item_path.desc) : desc
 
 /// Produce the resulting item, optionally with a specfic amount if we're a stack design
-/datum/design/proc/create_result(atom/drop_loc, list/custom_materials, amount = null)
-	if (!ispath(build_path, /obj/item/stack) && !isnull(amount))
-		CRASH("[src] create_result was passed an amount, despite not being a stack design!")
+/datum/design/proc/create_result(atom/drop_loc, list/custom_materials, amount)
+	if (!ispath(build_path, /obj/item/stack) && amount > 1)
+		CRASH("[src] create_result was passed an amount higher than 1, despite not being a stack design!")
 
 	if (!ispath(build_path, /obj/item/stack))
 		return new build_path(drop_loc)
@@ -102,6 +146,40 @@ other types of metals and chemistry for reagents).
 	if (isnull(amount))
 		amount = 1
 	return new build_path(drop_loc, amount)
+
+///A proc that handles transfering the materials to the target object and anything it contains that isn't abstract. You can check the doc for var/list/transfered_materials for how it works.
+/datum/design/proc/transfer_materials(list/custom_materials, multiplier, atom/target_object)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	ASSERT(islist(custom_materials), "design/transfer_materials() called with invalid 'custom_materials' arg value")
+	ASSERT(multiplier, "design/transfer_materials() called with invalid 'multiplier' arg value")
+	ASSERT(isatom(target_object), "design/transfer_materials() called with invalid 'target_object' arg value")
+
+	if(!length(transfered_materials)) //most common case where the object is just one thing and 'transferred_materials' is null
+		simple_transfer_materials(custom_materials, multiplier, target_object)
+		return
+
+	var/list/recursive_contents = target_object.get_all_contents_type(/obj/item)
+
+	for(var/obj/item/object as anything in recursive_contents)
+		if(object.item_flags & ABSTRACT) //skip abstract entities
+			continue
+		if(!(object.type in transfered_materials))
+			stack_trace("[object.type] missing from the 'transfered_materials' list of the design. Edit the 'transfered_materials' var of [type], or give it the ABSTRACT item flag if appropriate.")
+			continue
+		simple_transfer_materials(transfered_materials[object.type], multiplier, object)
+
+///Called by [proc/transfer_materials] in two places and it's basically the meat and bone of the function. Having it as a separate proc reduces copypaste a little.
+/datum/design/proc/simple_transfer_materials(list/custom_materials, multiplier, atom/target_object)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	PRIVATE_PROC(TRUE)
+
+	if(isstack(target_object))
+		var/obj/item/stack/stack = target_object
+		stack.mats_per_unit = SSmaterials.get_material_set_cache(custom_materials, multiplier / stack.amount)
+		stack.update_custom_materials()
+	else
+		target_object.set_custom_materials(custom_materials, multiplier)
 
 ////////////////////////////////////////
 //Disks for transporting design datums//

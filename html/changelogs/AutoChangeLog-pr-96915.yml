@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Refactored accessory rendering, fixing missing overlay updates and making them affected by height"
+  - bugfix: "More than one accessory can now render above worn suits"

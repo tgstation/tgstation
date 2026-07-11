@@ -111,7 +111,7 @@
 	sprite_height = 3
 	beauty = FISH_BEAUTY_NULL
 
-/obj/item/fish/holo/checkered/suicide_act(mob/living/carbon/user)
+/obj/item/fish/holo/checkered/suicide_act(mob/living/user)
 	if(!iscarbon(user))
 		return ..()
 
