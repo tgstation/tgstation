@@ -323,26 +323,3 @@
 /mob/living/basic/carp/passive/proc/on_attacked(mob/living/attacker)
 	for(var/mob/living/basic/carp/passive/schoolmate in oview(src, 9))
 		schoolmate.ai_controller?.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker, world.time)
-
-/mob/living/basic/carp/laser
-	name = "laser space carp"
-	desc = "A successful Champions of Evil experiment in weaponized space carp technology, it now shoots LAZERS."
-	icon = 'icons/mob/simple/carp.dmi'
-	maxHealth = 31
-	health = 31
-
-	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged
-
-/mob/living/basic/carp/laser/Initialize(mapload)
-	. = ..()
-	AddComponent(\
-		/datum/component/ranged_attacks,\
-		projectile_type = /obj/projectile/beam/laser/evil,\
-		projectile_sound = 'sound/items/weapons/laser.ogg',\
-		cooldown_time = 2.5 SECONDS,\
-	)
-	update_appearance(UPDATE_OVERLAYS)
-
-/mob/living/basic/carp/laser/update_overlays()
-	. = ..()
-	. += mutable_appearance('icons/mob/simple/carp.dmi', "fricken_lazer")

@@ -84,39 +84,6 @@
 	custom_materials = list(/datum/material/sandstone = SHEET_MATERIAL_AMOUNT*2)
 	rust_resistance = RUST_RESISTANCE_BASIC
 
-/turf/closed/wall/mineral/rockbrick
-	name = "rock brick wall"
-	desc = "A wall composed out of rock bricks, which doesn't look at all like the rough iron wall."
-	icon = 'icons/turf/walls/rockbrick_wall.dmi'
-	icon_state = "rockbrick_wall-0"
-	base_icon_state = "rockbrick_wall"
-	sheet_type = /obj/item/stack/sheet/mineral/rock
-	hardness = 45 //just slightly harder than sandstone
-	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_STONE_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
-	canSmoothWith = SMOOTH_GROUP_STONE_WALLS
-	custom_materials = list(/datum/material/rock = SHEET_MATERIAL_AMOUNT*2)
-	rust_resistance = RUST_RESISTANCE_BASIC
-
-/turf/closed/wall/mineral/rockbrick/wall_fill
-	sheet_type = /obj/item/stack/wall_filling/rock/basic
-
-/turf/closed/wall/mineral/rockbrick/cobbled
-	name = "cobbled rock wall"
-	desc = "A wall composed out of rock."
-	icon = 'icons/turf/walls/cobbled_wall.dmi'
-	icon_state = "cobbled_wall-0"
-	base_icon_state = "cobbled_wall"
-	sheet_type = /obj/item/stack/wall_filling/rock/cobbled
-
-/turf/closed/wall/mineral/rockbrick/pillar
-	name = "pillared rock wall"
-	desc = "A pillared wall composed out of rock."
-	icon = 'icons/turf/walls/rock_pillar_wall.dmi'
-	icon_state = "rock_pillar_wall-0"
-	base_icon_state = "rock_pillar_wall"
-	sheet_type = /obj/item/stack/wall_filling/rock/pillar
-
 /turf/closed/wall/mineral/uranium
 	article = "a"
 	name = "uranium wall"

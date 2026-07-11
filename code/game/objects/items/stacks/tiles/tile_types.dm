@@ -1447,40 +1447,6 @@
 	turf_type = /turf/open/floor/neo/cyan
 	merge_type = /obj/item/stack/tile/neo/cyan
 
-/obj/item/stack/tile/stone
-	name = "stone brick tile"
-	icon_state = "tile_stone"
-	inhand_icon_state = "tile"
-	singular_name = "stone brick floor tile"
-	mats_per_unit = list(/datum/material/rock = HALF_SHEET_MATERIAL_AMOUNT / 2)
-	turf_type = /turf/open/floor/stone
-	merge_type = /obj/item/stack/tile/stone
-	desc = "Odd, really, how it looks exactly like the iron walls yet is stone instead of iron. Now, if that's really more of a complaint about\
-		the ironness of walls or the stoneness of the floors, that's really up to you. But have you really ever seen iron that dull? I mean, it\
-		makes sense for the station to have dull metal walls but we're talking how a rudimentary iron wall would be. Medieval ages didn't even\
-		use iron walls, iron walls are actually not even something that exists because iron is an expensive and not-so-great thing to build walls\
-		out of. It only makes sense in the context of space because you're trying to keep a freezing vacuum out. Is anyone following me on this? \
-		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
-	tile_reskin_types = list(
-		/obj/item/stack/tile/stone,
-		/obj/item/stack/tile/stone/cobbled,
-		/obj/item/stack/tile/stone/tiled,
-	)
-
-/obj/item/stack/tile/stone/cobbled
-	name = "cobbled stone tile"
-	icon_state = "stone_cobbled"
-	singular_name = "stone brick floor tile"
-	turf_type = /turf/open/floor/stone/cobbled
-	merge_type = /obj/item/stack/tile/stone/cobbled
-
-/obj/item/stack/tile/stone/tiled
-	name = "stone brick tile"
-	icon_state = "stone_tiled"
-	singular_name = "stone brick floor tile"
-	turf_type = /turf/open/floor/stone/tiled
-	merge_type = /obj/item/stack/tile/stone/tiled
-
 /obj/item/stack/tile/sandstone
 	name = "sandstone brick tile"
 	icon_state = "tile_sandstone"

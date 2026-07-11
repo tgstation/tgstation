@@ -352,23 +352,9 @@
 		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
 	icon_state = "stone_floor"
 	custom_materials = list(/datum/material/rock=SMALL_MATERIAL_AMOUNT*5)
-	floor_tile = /obj/item/stack/tile/stone
 
 /turf/open/floor/stone/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-
-/turf/open/floor/stone/cobbled
-	name = "cobbled stone floor"
-	icon_state = "stone_cobbled"
-	desc = "Cobbled stone tile. Not cobblestone, that's a different thing. And universe."
-	floor_tile = /obj/item/stack/tile/stone/cobbled
-
-/turf/open/floor/stone/tiled
-	name = "stone tile"
-	desc = "You feel a strange nostalgia from looking at this..."
-	icon_state = "rockvault"
-	base_icon_state = "rockvault"
-	floor_tile = /obj/item/stack/tile/stone/tiled
 
 /turf/open/floor/sandstone
 	name = "sandstone brick floor"

@@ -292,40 +292,6 @@
 	smoothing_groups = SMOOTH_GROUP_BANANIUM_WALLS + SMOOTH_GROUP_WALLS
 	canSmoothWith = SMOOTH_GROUP_BANANIUM_WALLS
 
-/obj/structure/falsewall/rockbrick
-	name = "rock brick wall"
-	desc = "A wall composed out of rock bricks, which doesn't look at all like the rough iron wall."
-	fake_icon = 'icons/turf/walls/rockbrick_wall.dmi'
-	icon_state = "rockbrick_wall-open"
-	base_icon_state = "rockbrick_wall"
-	mineral = /obj/item/stack/sheet/mineral/rock
-	walltype = /turf/closed/wall/mineral/rockbrick
-	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_STONE_WALLS + SMOOTH_GROUP_WALLS
-	canSmoothWith = SMOOTH_GROUP_STONE_WALLS
-
-/obj/structure/falsewall/rockbrick/wall_fill
-	mineral = /obj/item/stack/wall_filling/rock/basic
-	walltype = /turf/closed/wall/mineral/rockbrick/wall_fill
-
-/obj/structure/falsewall/rockbrick/cobbled
-	name = "cobbled rock wall"
-	desc = "A wall composed out of rock."
-	fake_icon = 'icons/turf/walls/cobbled_wall.dmi'
-	icon_state = "cobbled_wall-open"
-	base_icon_state = "cobblede_wall"
-	mineral = /obj/item/stack/wall_filling/rock/cobbled
-	walltype = /turf/closed/wall/mineral/rockbrick/cobbled
-
-/obj/structure/falsewall/rockbrick/pillar
-	name = "pillared rock wall"
-	desc = "A pillared wall composed out of rock."
-	fake_icon = 'icons/turf/walls/rock_pillar_wall.dmi'
-	icon_state = "rock_pillar_wall-open"
-	base_icon_state = "rock_pillar_wall"
-	mineral = /obj/item/stack/wall_filling/rock/pillar
-	walltype = /turf/closed/wall/mineral/rockbrick/pillar
-
 /obj/structure/falsewall/sandstone
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating. Rough."

@@ -186,17 +186,6 @@
 	can_weld_shut = FALSE
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
 
-/obj/structure/closet/crate/coffin/rock
-	name = "tomb"
-	icon_state = "tomb"
-	base_icon_state = "tomb"
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	max_integrity = 300
-	material_drop = /obj/item/stack/sheet/mineral/rock
-	open_sound = 'sound/effects/stonedoor_openclose.ogg'
-	close_sound = 'sound/effects/stonedoor_openclose.ogg'
-	custom_materials = list(/datum/material/rock = SHEET_MATERIAL_AMOUNT * 5)
-
 /obj/structure/closet/crate/trashcart //please make this a generic cart path later after things calm down a little
 	desc = "A heavy, metal trashcart with wheels."
 	name = "trash cart"

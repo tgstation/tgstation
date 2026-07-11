@@ -864,11 +864,11 @@ GLOBAL_LIST_INIT(bone_recipes, list(
 	pickup_sound = null
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
-/obj/item/stack/sheet/plastic/get_main_recipes()
+/obj/item/stack/sheet/bone/get_main_recipes()
 	. = ..()
 	. += GLOB.bone_recipes
 
-/obj/item/stack/sheet/plastic/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+/obj/item/stack/sheet/bone/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
 
 	// As bone and sinew have just a little too many recipes for this, we'll just split them up.
@@ -888,6 +888,14 @@ GLOBAL_LIST_INIT(bone_recipes, list(
 	)
 
 GLOBAL_LIST_INIT(plastic_recipes, list(
+	new/datum/stack_recipe_list("egg chairs", list( \
+		new/datum/stack_recipe("red egg chair", /obj/structure/chair/comfy/egg/red, 2, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		new/datum/stack_recipe("orange egg chair", /obj/structure/chair/comfy/egg/orange, 2, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		new/datum/stack_recipe("yellow egg chair", /obj/structure/chair/comfy/egg/yellow, 2, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		new/datum/stack_recipe("green egg chair", /obj/structure/chair/comfy/egg/green, 2, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		new/datum/stack_recipe("blue egg chair", /obj/structure/chair/comfy/egg/blue, 2, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		new/datum/stack_recipe("purple egg chair", /obj/structure/chair/comfy/egg/purple, 2, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		)), \
 	new /datum/stack_recipe("plastic floor tile", /obj/item/stack/tile/plastic, 1, 4, 20, time = 2 SECONDS, crafting_flags = NONE, category = CAT_TILES), \
 	new /datum/stack_recipe("light tram tile", /obj/item/stack/thermoplastic/light, 1, 4, 20, time = 2 SECONDS, crafting_flags = NONE, category = CAT_TILES), \
 	new /datum/stack_recipe("dark tram tile", /obj/item/stack/thermoplastic, 1, 4, 20, time = 2 SECONDS, crafting_flags = NONE, category = CAT_TILES), \

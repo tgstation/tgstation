@@ -7,8 +7,6 @@
 	var/spawn_text
 	/// List of atom types to spawn, picked randomly
 	var/list/spawn_types
-	/// Is our list weighted?
-	var/weighted_list
 	/// Faction to grant to mobs (only applies to mobs)
 	var/list/faction
 	/// List of weak references to things we have already created
@@ -67,10 +65,7 @@
 	var/atom/spawner = parent
 	COOLDOWN_START(src, spawn_delay, spawn_time)
 	var/chosen_mob_type
-	if(weighted_list)
-		chosen_mob_type = pick_weight(spawn_types)
-	else
-		chosen_mob_type = pick(spawn_types)
+	chosen_mob_type = pick(spawn_types)
 	var/adjusted_spawn_count = 1
 	var/max_spawn_this_attempt = min(max_spawn_per_attempt, max_spawned - spawned_total)
 	if (max_spawn_this_attempt > 1)

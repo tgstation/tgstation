@@ -956,4 +956,3 @@
 		MATERIAL_BEAUTY = 0.8,
 	)
 	texture_layer_icon_state = "sand"
-	sheet_type = /obj/item/stack/sheet/mineral/rock

@@ -159,7 +159,6 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_PLASMA_WALLS S_OBJ(6) ///turf/closed/wall/mineral/plasma, /obj/structure/falsewall/plasma
 #define SMOOTH_GROUP_BANANIUM_WALLS S_OBJ(7) ///turf/closed/wall/mineral/bananium, /obj/structure/falsewall/bananium
 #define SMOOTH_GROUP_SANDSTONE_WALLS S_OBJ(8) ///turf/closed/wall/mineral/sandstone, /obj/structure/falsewall/sandstone
-#define SMOOTH_GROUP_STONE_WALLS S_OBJ(9) ///turf/closed/wall/mineral/rockbrick, /obj/structure/falsewall/rockbrick
 #define SMOOTH_GROUP_WOOD_WALLS S_OBJ(10) ///turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood
 #define SMOOTH_GROUP_IRON_WALLS S_OBJ(11) ///turf/closed/wall/mineral/iron, /obj/structure/falsewall/iron
 #define SMOOTH_GROUP_ABDUCTOR_WALLS S_OBJ(12) ///turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor

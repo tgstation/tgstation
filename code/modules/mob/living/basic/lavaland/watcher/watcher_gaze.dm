@@ -219,30 +219,3 @@
 		thrower = owner,
 		force = MOVE_FORCE_EXTREMELY_STRONG,
 	)
-
-/// Glasswing glare opens wounds
-/datum/action/cooldown/mob_cooldown/watcher_gaze/glass
-	name = "Sharp Stare"
-	desc = "After a delay, rip a deep wound in everyone looking at you."
-
-/datum/action/cooldown/mob_cooldown/watcher_gaze/glass/apply_effect(mob/living/viewer)
-	if(!istype(viewer, /mob/living/carbon))
-		return
-	var/mob/living/carbon/victim = viewer
-	var/obj/item/bodypart/to_wound = pick(victim.get_bodyparts())
-	to_chat(victim, span_warning("The watcher's gazer rips your [to_wound] assunder!"))
-	victim.cause_wound_of_type_and_severity(WOUND_SLASH, to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_CRITICAL)
-
-/// Angelic glare puts you to sleep
-/datum/action/cooldown/mob_cooldown/watcher_gaze/angel
-	name = "Angelic Stare"
-	desc = "After a delay, put everyone looking at you to sleep."
-
-/datum/action/cooldown/mob_cooldown/watcher_gaze/angel/apply_effect(mob/living/viewer)
-	if(!istype(viewer, /mob/living/carbon))
-		return
-	var/mob/living/carbon/victim = viewer
-	var/obj/item/bodypart/to_wound = pick(victim.get_bodyparts())
-	to_chat(victim, span_warning("The watcher's gazer rips your [to_wound] assunder!"))
-	victim.cause_wound_of_type_and_severity(WOUND_SLASH, to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_CRITICAL)
-

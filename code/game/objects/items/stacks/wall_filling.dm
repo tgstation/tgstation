@@ -123,34 +123,3 @@ GLOBAL_LIST_EMPTY(wall_reskin_lists)
 	icon_state = "redpod-wall-fill"
 	desc = "A filling for a red dark shuttle wall. Quite the menacing vibe."
 	merge_type = /obj/item/stack/wall_filling/plastitanium/redpod
-
-/obj/item/stack/wall_filling/rock
-	name = "rock brick wall filling"
-	singular_name = "rock brick  wall filler"
-	desc = "A filling for a standard rock brick wall."
-	icon_state = "stone-wall-fill"
-	inhand_icon_state = null
-	mats_per_unit = list(/datum/material/rock=SHEET_MATERIAL_AMOUNT*2)
-	merge_type = /obj/item/stack/wall_filling/rock
-	made_from = /obj/item/stack/sheet/mineral/rock
-	wall_reskin_types = list(
-		/obj/item/stack/wall_filling/rock/basic,
-		/obj/item/stack/wall_filling/rock/cobbled,
-	)
-
-/obj/item/stack/wall_filling/rock/basic
-	merge_type = /obj/item/stack/wall_filling/rock/basic
-
-/obj/item/stack/wall_filling/rock/cobbled
-	name = "cobbled rock wall filling"
-	singular_name = "cobbled rock wall filler"
-	icon_state = "cobbled-wall-fill"
-	desc = "A filling for a cobbled rock wall. Caveman style, modern resistance."
-	merge_type = /obj/item/stack/wall_filling/rock/cobbled
-
-/obj/item/stack/wall_filling/rock/pillar
-	name = "pillared rock wall filling"
-	singular_name = "pillared rock wall filler"
-	icon_state = "pillared-wall-fill"
-	desc = "A filling for a pillared rock wall. Greek? Roman? Does it really matter?"
-	merge_type = /obj/item/stack/wall_filling/rock/pillar

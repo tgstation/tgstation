@@ -42,14 +42,3 @@
 		return
 	target.apply_status_effect(/datum/status_effect/freon/watcher)
 
-/obj/projectile/temp/watcher/glass_wing
-	name = "glass blast"
-	damage = 15
-	damage_type = BRUTE
-	armor_flag = BULLET
-	temperature = -10
-
-/obj/projectile/temp/watcher/angel
-	name = "angelic feather"
-	damage = 12
-	damage_type = BRAIN

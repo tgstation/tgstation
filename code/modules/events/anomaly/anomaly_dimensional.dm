@@ -37,18 +37,3 @@
 /datum/event_admin_setup/listed_options/anomaly_dimensional/apply_to_event(datum/round_event/anomaly/anomaly_dimensional/event)
 	event.anomaly_theme = chosen
 
-/datum/round_event_control/anomaly/anomaly_dimensional/big
-	name = "Anomaly: Dimensional Rift"
-	typepath = /datum/round_event_control/anomaly/anomaly_dimensional/big
-
-	min_players = 20
-	max_occurrences = 2
-	weight = 9
-	description = "This anomaly converts larges swathes of the station into a given theme."
-	min_wizard_trigger_potency = 3
-	max_wizard_trigger_potency = 7
-
-/datum/round_event/anomaly/anomaly_dimensional/announce(fake)
-	if(isnull(impact_area))
-		impact_area = placer.findValidArea()
-	priority_announce("A rift is causing an unnaturally large energy flux on [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.name].", "Anomaly Alert")

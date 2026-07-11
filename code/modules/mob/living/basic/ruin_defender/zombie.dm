@@ -65,61 +65,10 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	back = /obj/item/storage/backpack
 
-/datum/outfit/corpse_disco
-	name = "Corpse Disco"
-	glasses = /obj/item/clothing/glasses/sunglasses
-	suit = /obj/item/clothing/suit/toggle/lawyer
-	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
-	shoes = /obj/item/clothing/shoes/laceup
-	ears = /obj/item/instrument/piano_synth/headphones
-
-/datum/outfit/corpse_mummy
-	name = "Grunt Mummy"
-	mask = /obj/item/clothing/mask/mummy
-	uniform = /obj/item/clothing/under/costume/mummy
-
-/datum/outfit/corpse_pharoah
-	name = "Pharoah Mummy"
-	mask = /obj/item/clothing/mask/mummy
-	head = /obj/item/clothing/head/costume/pharaoh
-	suit = /obj/item/clothing/suit/costume/nemes
-	uniform = /obj/item/clothing/under/costume/mummy
-	back =	/obj/item/nullrod/egyptian
-
-/datum/outfit/corpse_disco/post_equip(mob/living/carbon/human/Zombert, visuals_only = FALSE)
-	var/hair_list = list("Afro" = 7, "Afro 2" = 6, "Afro (Large)" = 2,  "Afro (Huge)" = 1, "Short Hair 80s" = 4)
-	Zombert.set_hairstyle(pick_weight(hair_list))
-	Zombert.set_haircolor(random_color())
-
-/mob/living/basic/zombie/rotten/disco
-	name = "Grooving Corpse"
-	desc = "Dead as disco; performing sick moves to viral 80s tunes with electric boogaloo vengance. How thrilling."
-	outfit = /datum/outfit/corpse_disco
-
-/mob/living/basic/zombie/rotten/mummy
-	name = "Undead Mummy"
-	desc = "Yes it needs the specification of 'undead'; normal mummies don't walk and bite people, now do they?"
-	outfit = /datum/outfit/corpse_mummy
-
-/mob/living/basic/zombie/pharoah
-	name = "Undead Pharoah"
-	desc = "To think about the fact this tattered corpse in wraps was once a powerful noble... Or a larper with really strange last will."
-	outfit = /datum/outfit/corpse_pharoah
-
 /datum/ai_planning_subtree/random_speech/zombie
 	speech_chance = 1
 	emote_hear = list("groans.", "moans.", "grunts.")
 	emote_see = list("twitches.", "shudders.")
-
-/datum/ai_planning_subtree/random_speech/zombie/rotten/disco
-	speech_chance = 3
-	emote_hear = list("groans.", "moans.", "grunts.", "attempts to sing.", "hums.")
-	emote_see = list("twitches.", "shudders.", "strikes a dance pose.")
-	speak = list(
-		"No one's gonna save you from the beast about to strike.",
-		"Let me hold you tight.",
-		"I can thrill you more than any ghoul would ever dare try.",
-	)
 
 /datum/ai_controller/basic_controller/zombie
 	blackboard = list(

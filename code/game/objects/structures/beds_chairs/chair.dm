@@ -421,14 +421,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	item_chair = /obj/item/chair/stool/bamboo
 	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 2)
 
-/obj/structure/chair/stool/rock
-	name = "rock stool"
-	desc = "Bit rough to sit on."
-	icon_state = "rock_stool"
-	buildstackamount = 1
-	item_chair = /obj/item/chair/stool/rock
-	custom_materials = list(/datum/material/rock = SHEET_MATERIAL_AMOUNT)
-
 /obj/item/chair
 	name = "chair"
 	desc = "Bar brawl essential."
@@ -568,14 +560,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	icon_state = "bar_toppled"
 	inhand_icon_state = "stool_bar"
 	origin_type = /obj/structure/chair/stool/bar
-
-/obj/item/chair/stool/rock
-	name = "rock_stool"
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	icon_state = "rock_stool_toppled"
-	inhand_icon_state = "minimeteor" /// I love re-using assets.
-	origin_type = /obj/structure/chair/stool/rock
 
 /obj/item/chair/stool/bamboo
 	name = "bamboo stool"

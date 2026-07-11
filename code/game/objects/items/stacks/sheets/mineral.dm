@@ -58,39 +58,6 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	amount = 30
 
 /*
- * Stone
- */
-
-/obj/item/stack/sheet/mineral/rock
-	name = "rock brick"
-	desc = "This rocks."
-	singular_name = "rock sheet"
-	icon_state = "sheet-rock"
-	inhand_icon_state = null
-	throw_speed = 3
-	throw_range = 5
-	mats_per_unit = list(/datum/material/rock = SHEET_MATERIAL_AMOUNT)
-	material_type = /datum/material/rock
-	merge_type = /obj/item/stack/sheet/mineral/rock
-	drop_sound = SFX_STONE_DROP
-	pickup_sound = SFX_STONE_PICKUP
-
-GLOBAL_LIST_INIT(rock_recipes, list ( \
-	new/datum/stack_recipe("stone tile", /obj/item/stack/tile/stone, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
-	new/datum/stack_recipe("stone wall filler", /obj/item/stack/wall_filling/rock/basic, 2, 1, 10, crafting_flags = NONE, category = CAT_STRUCTURE), \
-	new/datum/stack_recipe("rock stool", /obj/structure/chair/stool/rock, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("rock stumpt table", /obj/structure/table/rockstumpt, 3, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("rock tomb", /obj/structure/closet/crate/coffin/rock, 5, time = 1.5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
-	))
-
-/obj/item/stack/sheet/mineral/rock/get_main_recipes()
-	. = ..()
-	. += GLOB.rock_recipes
-
-/obj/item/stack/sheet/mineral/rock/thirty
-	amount = 30
-
-/*
  * Sandbags
  */
 

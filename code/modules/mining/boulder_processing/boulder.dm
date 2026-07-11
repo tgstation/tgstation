@@ -180,7 +180,6 @@
 		if(!user.Adjacent(src))
 			return
 		durability--
-		new /obj/item/stack/sheet/mineral/rock (user?.drop_location(), 2)
 		user.apply_damage(4 * skill_modifier, STAMINA)
 	if(durability <= 0)
 		convert_to_ore()

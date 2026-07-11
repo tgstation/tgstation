@@ -1,2 +1,0 @@
-output_name = "kitchen_counter"
-template = "bitmask/diagonal_32x32.toml"
