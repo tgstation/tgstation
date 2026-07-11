@@ -86,9 +86,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	TEST_ASSERT(isindestructiblefloor(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not an indestructable floor ([run_loc_floor_bottom_left])")
 	TEST_ASSERT(isindestructiblefloor(run_loc_floor_top_right), "run_loc_floor_top_right was not an indestructable floor ([run_loc_floor_top_right])")
 	if(normal_floor_required)
-		for(var/turf/turf in get_area_turfs(run_loc_floor_bottom_left.loc))
-			if(!isopenturf(turf))
-				continue
+		for(var/turf/open/turf in get_area_turfs(run_loc_floor_bottom_left.loc))
 			turf.ChangeTurf(/turf/open/floor)
 
 /datum/unit_test/Destroy()
