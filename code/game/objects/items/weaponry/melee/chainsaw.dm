@@ -120,9 +120,10 @@
 	if (user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
 
+	var/obj/item/bodypart/head = target_mob.get_bodypart(BODY_ZONE_HEAD)
 	playsound(src, 'sound/items/weapons/chainsawhit.ogg', vol = 100, vary = TRUE)
-
 	target_mob.balloon_alert(user, "cutting off head...")
+
 	if (!do_after(user, behead_time, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))
 		return TRUE
 
