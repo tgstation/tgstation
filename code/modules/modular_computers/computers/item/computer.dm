@@ -422,6 +422,14 @@
 		if(response == "Yes")
 			turn_on(user)
 
+/obj/item/modular_computer/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_CONTENTS)
+		return
+
+	if(internal_cell)
+		internal_cell.emp_act(severity)
+
 /obj/item/modular_computer/emag_act(mob/user, obj/item/card/emag/emag_card, forced)
 	if(!enabled && !forced)
 		balloon_alert(user, "turn it on first!")
