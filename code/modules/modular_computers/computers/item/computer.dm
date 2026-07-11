@@ -429,6 +429,7 @@
 
 	if(internal_cell)
 		internal_cell.emp_act(severity)
+		handle_power(1 SECONDS)
 
 /obj/item/modular_computer/emag_act(mob/user, obj/item/card/emag/emag_card, forced)
 	if(!enabled && !forced)
