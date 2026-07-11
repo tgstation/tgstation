@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Image, Input, Section, Tooltip } from 'tgui-core/components';
+import { Button, Input, Section } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
@@ -27,7 +27,7 @@ export const NtosEmojipedia = (props) => {
       <NtosWindow.Content scrollable>
         <Section
           // required: follow semantic versioning every time you touch this file
-          title={`Emojipedia V2.7.10${filter ? ` - ${filter}` : ''}`}
+          title={`Emojipedia V2.8.10${filter ? ` - ${filter}` : ''}`}
           buttons={
             <>
               <Input
@@ -44,15 +44,23 @@ export const NtosEmojipedia = (props) => {
           }
         >
           {filteredEmojis.map((emoji) => (
-            <Tooltip key={emoji.name} content={emoji.name}>
-              <Image
-                m={0}
-                className={classes(['emojipedia16x16', emoji.name])}
-                onClick={() => {
-                  copyText(emoji.name);
-                }}
-              />
-            </Tooltip>
+            <Button
+              verticalAlign
+              key={emoji.name}
+              tooltip={emoji.name}
+              width="16px"
+              height="16px"
+              className={classes(['emojipedia16x16', emoji.name])}
+              m={1.5}
+              onClick={() => {
+                copyText(emoji.name);
+              }}
+              style={{
+                imageRendering: 'pixelated',
+                transform: 'scale(2)',
+                verticalAlign: 'middle',
+              }}
+            />
           ))}
         </Section>
       </NtosWindow.Content>
