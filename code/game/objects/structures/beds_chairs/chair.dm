@@ -232,24 +232,6 @@
 	resistance_flags = FLAMMABLE
 	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
 
-/obj/structure/chair/comfy/egg/red
-	color = rgb(157, 54, 54)
-
-/obj/structure/chair/comfy/egg/purple
-	color = rgb(74, 21, 149)
-
-/obj/structure/chair/comfy/egg/blue
-	color = rgb(68, 130, 171)
-
-/obj/structure/chair/comfy/egg/green
-	color = rgb(27, 124, 41)
-
-/obj/structure/chair/comfy/egg/yellow
-	color = rgb(183, 179, 66)
-
-/obj/structure/chair/comfy/egg/orange
-	color = rgb(181, 128, 4)
-
 /obj/structure/chair/comfy/shuttle
 	name = "shuttle seat"
 	desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights."
