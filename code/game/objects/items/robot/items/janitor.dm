@@ -57,6 +57,7 @@
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFERING, offerer) & COMPONENT_OFFER_INTERRUPT)
 		return
 	if(hose.loc != src && !istype(hose.loc, /mob/living)) // Error handling
+		stack_trace("[src] has been offered with [hose] not present inside its contents or inside a mob's loc variable. Location: [isnull(loc) ? "NULLSPACE" : "[hose.loc], X: [hose.x], Y: [hose.y], Z:[hose.z]"]")
 		deployed = FALSE
 		hose.forceMove(src)
 	if(locked || deployed)
@@ -201,11 +202,17 @@
 	. += span_notice("<b>Interact</b> to switch to [cleaning ? "<b>vacuum</b>" : "<b>cleaning</b>"] mode.")
 /obj/item/vacuum_item/proc/on_update()
 	SIGNAL_HANDLER
+	var/mob/living/mob = borg_hose.origin
+	if(istype(mob))
+		var/index = mob.is_holding(src)
+		borg_hose.lefthand = IS_LEFT_INDEX(index)
 	if(prob(10))
 		playsound(src, 'sound/items/vacuum/vacuum_hose.ogg', 50, TRUE)
 
-/obj/item/vacuum_item/proc/on_drop()
+/obj/item/vacuum_item/proc/on_drop(obj/item/vacuum, mob/living/user)
 	SIGNAL_HANDLER
+	if(user == loc)
+		return
 	retract_hose()
 
 /datum/beam/held/vacuum
