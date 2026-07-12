@@ -76,7 +76,7 @@
 	. = ..()
 	if (!. || !phasing)
 		return
-	balloon_alert(owner, "not while phasing!")
+	balloon_alert(user, "not while phasing!")
 	return FALSE
 
 /datum/action/vehicle/sealed/mecha/mech_switch_damtype

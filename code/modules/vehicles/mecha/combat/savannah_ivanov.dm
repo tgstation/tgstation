@@ -84,7 +84,7 @@
 	. = ..()
 	if (!. || !flying)
 		return
-	balloon_alert(owner, "not while airborne!")
+	balloon_alert(user, "not while airborne!")
 	return FALSE
 
 ///Savannah Skyfall
