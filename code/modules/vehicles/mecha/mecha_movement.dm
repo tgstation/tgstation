@@ -75,48 +75,23 @@
 /obj/vehicle/sealed/mecha/vehicle_move(direction, forcerotate = FALSE)
 	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 		return FALSE
+
 	COOLDOWN_START(src, cooldown_vehicle_move, movedelay)
+
 	if(completely_disabled)
 		return FALSE
+
 	if(!direction)
 		return FALSE
+
+	if(!can_move(direction))
+		return FALSE
+
 	if(ismovable(loc)) //Mech is inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, direction)
-	var/obj/machinery/portable_atmospherics/canister/internal_tank = get_internal_tank()
-	if(internal_tank?.connected_port)
-		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
-			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Unable to move while connected to the air system port!")]")
-			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
-		return FALSE
+
 	if(!Process_Spacemove(direction))
-		return FALSE
-	if(zoom_mode)
-		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
-			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Unable to move while in zoom mode!")]")
-			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
-		return FALSE
-	var/list/missing_parts = list()
-	if(isnull(cell))
-		missing_parts += "power cell"
-	if(isnull(capacitor))
-		missing_parts += "capacitor"
-	if(isnull(servo))
-		missing_parts += "servo"
-	if(length(missing_parts))
-		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
-			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing [english_list(missing_parts)].")]")
-			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
-		return FALSE
-	if((step_energy_drain != 0) && !use_energy(step_energy_drain))
-		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
-			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Insufficient power to move!")]")
-			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
-		return FALSE
-	if(lavaland_only && is_mining_level(z))
-		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
-			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Invalid Environment.")]")
-			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
 
 	var/olddir = dir
@@ -148,20 +123,46 @@
 	//Otherwise just walk normally
 	. = try_step_multiz(direction)
 
-	if(phasing)
-		use_energy(phasing_energy_drain)
 	if(strafe)
 		setDir(olddir)
 
+/// Check if anything is blocking our movement
+/obj/vehicle/sealed/mecha/proc/can_move(direction)
+	var/obj/machinery/portable_atmospherics/canister/internal_tank = get_internal_tank()
+	if(internal_tank?.connected_port)
+		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
+			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Unable to move while connected to the air system port!")]")
+			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
+		return FALSE
+
+	var/list/missing_parts = list()
+	if(isnull(cell))
+		missing_parts += "power cell"
+	if(isnull(capacitor))
+		missing_parts += "capacitor"
+	if(isnull(servo))
+		missing_parts += "servo"
+
+	if(length(missing_parts))
+		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
+			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing [english_list(missing_parts)].")]")
+			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
+		return FALSE
+
+	if((step_energy_drain != 0) && !use_energy(step_energy_drain))
+		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
+			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Insufficient power to move!")]")
+			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
+		return FALSE
+	return TRUE
+
 /obj/vehicle/sealed/mecha/Bump(atom/obstacle)
 	. = ..()
-	if(phasing) //Theres only one cause for phasing canpass fails
-		to_chat(occupants, "[icon2html(src, occupants)][span_warning("A dull, universal force is preventing you from [phasing] here!")]")
-		spark_system.start()
-		return
 	if(.) //mech was thrown/door/whatever
 		return
+	try_bumpsmash(obstacle)
 
+/obj/vehicle/sealed/mecha/proc/try_bumpsmash(atom/obstacle)
 	// Whether or not we're on our mecha melee cooldown
 	var/on_cooldown = TIMER_COOLDOWN_RUNNING(src, COOLDOWN_MECHA_MELEE_ATTACK)
 
@@ -172,6 +173,7 @@
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown * 0.3)
 		if(!obstacle || obstacle.CanPass(src, get_dir(obstacle, src) || dir)) // The else is in case the obstacle is in the same turf.
 			step(src,dir)
+
 	if(isobj(obstacle))
 		var/obj/obj_obstacle = obstacle
 		if(!obj_obstacle.anchored && obj_obstacle.move_resist <= move_force)
