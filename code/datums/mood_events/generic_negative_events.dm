@@ -106,7 +106,7 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/table/add_effects()
-	if(isfelinid(owner)) //Holy snowflake batman!
+	if(HAS_TRAIT(owner, TRAIT_CATLIKE_INSTINCT)) //Holy snowflake batman!
 		var/mob/living/carbon/human/feline = owner
 		feline.wag_tail(3 SECONDS)
 		description = "They want to play on the table!"
@@ -526,7 +526,7 @@
 
 /datum/mood_event/bapped/add_effects()
 	// Felinids apparently hate being hit over the head with cardboard
-	if(isfelinid(owner))
+	if(HAS_TRAIT(owner, TRAIT_CATLIKE_INSTINCT))
 		mood_change = -2
 
 /datum/mood_event/encountered_evil

@@ -61,6 +61,7 @@
 	RegisterSignal(new_ethereal, COMSIG_ATOM_SABOTEUR_ACT, PROC_REF(hit_by_saboteur))
 	RegisterSignal(new_ethereal, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(new_ethereal, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(refresh_light_color))
+	RegisterSignal(new_ethereal, COMSIG_CARBON_BODYPART_UPDATED, PROC_REF(update_bodypart_color))
 	ethereal_light = new_ethereal.mob_light(light_type = /obj/effect/dummy/lighting_obj/moblight/species)
 	refresh_light_color(new_ethereal)
 
@@ -78,6 +79,7 @@
 		COMSIG_ATOM_SABOTEUR_ACT,
 		COMSIG_LIGHT_EATER_ACT,
 		COMSIG_LIVING_HEALTH_UPDATE,
+		COMSIG_CARBON_BODYPART_UPDATED,
 	))
 	QDEL_NULL(ethereal_light)
 	return ..()
@@ -122,6 +124,12 @@
 		ethereal.set_facial_haircolor(dead_color, override = TRUE, update = FALSE)
 		ethereal.set_haircolor(dead_color, override = TRUE, update = FALSE)
 		ethereal.update_body()
+
+/datum/species/ethereal/proc/update_bodypart_color(datum/source, obj/item/bodypart/part, dropping_limb, is_creating)
+	SIGNAL_HANDLER
+	if(part.limb_id != SPECIES_ETHEREAL)
+		return
+	part.species_color = current_color
 
 /datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/source, severity, protection)
 	SIGNAL_HANDLER

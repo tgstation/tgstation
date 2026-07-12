@@ -111,8 +111,7 @@
 	var/mob/living/target = interacting_with
 	if(target.mob_size > max_occupant_weight)
 		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(isfelinid(H))
+			if(HAS_TRAIT(target, TRAIT_CATLIKE_INSTINCT))
 				to_chat(user, span_warning("You'd need a lot of catnip and treats, plus maybe a laser pointer, for that to work."))
 			else
 				to_chat(user, span_warning("Humans, generally, do not fit into pet carriers."))

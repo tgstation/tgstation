@@ -78,7 +78,7 @@
 	if(levels <= 1 && can_help_themselves)
 		var/obj/item/organ/wings/gliders = get_organ_by_type(/obj/item/organ/wings)
 		if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
-			var/graceful_landing = HAS_TRAIT(src, TRAIT_CATLIKE_GRACE)
+			var/graceful_landing = HAS_TRAIT(src, TRAIT_CATLIKE_INSTINCT)
 
 			if(graceful_landing)
 				add_movespeed_modifier(/datum/movespeed_modifier/landed_on_feet)
@@ -97,7 +97,7 @@
 	// Smaller mobs with catlike grace can ignore damage (EG: cats)
 	var/small_surface_area = mob_size <= MOB_SIZE_SMALL
 	var/skip_knockdown = FALSE
-	if(HAS_TRAIT(src, TRAIT_CATLIKE_GRACE) && (small_surface_area || usable_legs >= 2) && body_position == STANDING_UP && can_help_themselves)
+	if(HAS_TRAIT(src, TRAIT_CATLIKE_INSTINCT) && (small_surface_area || usable_legs >= 2) && body_position == STANDING_UP && can_help_themselves)
 		. |= ZIMPACT_NO_MESSAGE|ZIMPACT_NO_SPIN
 		skip_knockdown = TRUE
 		if(small_surface_area)
