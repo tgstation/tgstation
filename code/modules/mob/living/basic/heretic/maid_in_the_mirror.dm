@@ -24,6 +24,9 @@
 	var/list/recent_examiner_refs = list()
 	/// The 1920s English/Welsh name appended to the end of the maid's title.
 	var/antiquated_name
+	/// A large list of names. One is randomly chosen upon mirror maid creation and removed
+	/// to prevent duplicates. Once empty, the list is restored to its original state.
+	var/static/list/antiquated_names = GLOB.mirror_maid_names.Copy()
 
 /mob/living/basic/heretic_summon/maid_in_the_mirror/Initialize(mapload)
 	. = ..()
@@ -37,10 +40,10 @@
 	GRANT_ACTION(/datum/action/cooldown/spell/jaunt/mirror_walk)
 	ADD_TRAIT(src, TRAIT_UNHITTABLE_BY_LASERS, INNATE_TRAIT)
 
-	if(!length(GLOB.mirror_maid_names))
-		GLOB.mirror_maid_names = initial(GLOB.mirror_maid_names)
+	if(!length(antiquated_names))
+		antiquated_names = GLOB.mirror_maid_names.Copy()
 
-	antiquated_name = pick(GLOB.mirror_maid_names)
+	antiquated_name = pick(antiquated_names)
 	update_name()
 
 /mob/living/basic/heretic_summon/maid_in_the_mirror/death(gibbed)
@@ -52,7 +55,7 @@
 	. = ..()
 	name = "Mirror Maid [antiquated_name]"
 	real_name = name
-	GLOB.mirror_maid_names.Remove(antiquated_name)
+	antiquated_names.Remove(antiquated_name)
 
 // Examining them will harm them, on a cooldown.
 /mob/living/basic/heretic_summon/maid_in_the_mirror/examine(mob/user)
