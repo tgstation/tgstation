@@ -73,9 +73,8 @@
 	return
 
 /obj/item/borg/cleaner_box/on_offer_taken(mob/living/offerer, mob/living/taker)
-	if(!HAS_TRAIT(taker, TRAIT_CAN_HOLD_ITEMS))
-		return TRUE
-	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
+	. = ..()
+	if(.)
 		return TRUE
 	hose.bag = istype(loc, /mob/living/silicon) ? pick(loc.get_all_contents_type(/obj/item/storage/bag/trash)) : locate(/obj/item/storage/bag/trash) in module_list.resolve()
 	if(!hose.bag)
