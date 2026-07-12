@@ -18,6 +18,7 @@
 	for (var/datum/lazy_template/deathmatch/template as anything in subtypesof(/datum/lazy_template/deathmatch))
 		var/map_name = initial(template.name)
 		maps[map_name] = new template
+	maps = sort_list(maps)
 	loadouts = subtypesof(/datum/outfit/deathmatch_loadout)
 	modifiers = sortTim(init_subtypes_w_path_keys(/datum/deathmatch_modifier), GLOBAL_PROC_REF(cmp_deathmatch_mods), associative = TRUE)
 

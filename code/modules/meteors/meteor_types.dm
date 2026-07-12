@@ -394,27 +394,20 @@
 	hits = 2
 	heavy = TRUE
 	meteorsound = 'sound/effects/blob/blobattack.ogg'
-	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/tongue, /obj/item/organ/appendix/)
+	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/appendix)
 	var/meteorgibs = /obj/effect/gibspawner/generic
 	threat = 2
 	signature = "culinary material"
 
 /obj/effect/meteor/meaty/Initialize(mapload)
-	for(var/path in meteordrop)
-		if(path == /obj/item/food/meat/slab/human/mutant)
-			meteordrop -= path
-			meteordrop += pick(subtypesof(path))
-
-	for(var/path in meteordrop)
-		if(path == /obj/item/organ/tongue)
-			meteordrop -= path
-			meteordrop += pick(typesof(path))
+	if(type == /obj/effect/meteor/meaty)
+		meteordrop += pick(subtypesof(/obj/item/food/meat/slab/human/mutant))
+		meteordrop += pick(typesof(/obj/item/organ/tongue))
 	return ..()
 
 /obj/effect/meteor/meaty/make_debris()
 	..()
 	new meteorgibs(get_turf(src))
-
 
 /obj/effect/meteor/meaty/ram_turf(turf/T)
 	if(!isspaceturf(T))
