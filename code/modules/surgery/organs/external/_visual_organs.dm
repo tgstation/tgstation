@@ -90,13 +90,10 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 /obj/item/organ/update_overlays()
 	. = ..()
 
-	if(!use_mob_sprite_as_obj_sprite)
+	if(!use_mob_sprite_as_obj_sprite || isnull(bodypart_owner) || isnull(bodypart_overlay))
 		return
 
-	//Build the mob sprite and use it as our overlay
-	for(var/external_layer, actual_layer in bodypart_overlay.all_layers)
-		if(bodypart_overlay.layers & external_layer)
-			. += bodypart_overlay.get_overlay(actual_layer, bodypart_owner)
+	. += bodypart_overlay.get_all_overlays(bodypart_owner)
 
 ///The horns of a lizard!
 /obj/item/organ/horns
@@ -115,7 +112,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
 
 /datum/bodypart_overlay/mutant/horns
-	layers = EXTERNAL_ADJACENT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 	feature_key = FEATURE_HORNS
 	dyable = TRUE
 	draw_on_husks = HUSK_OVERLAY_NORMAL
@@ -141,7 +138,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
 
 /datum/bodypart_overlay/mutant/frills
-	layers = EXTERNAL_ADJACENT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 	feature_key = FEATURE_FRILLS
 	offset_location = UPPER_BODY
 
@@ -153,22 +150,22 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	if(LAZYLEN(limb?.owner?.hair_masks))
 		. += jointext(limb.owner.hair_masks, ",")
 
-/datum/bodypart_overlay/mutant/frills/get_image(image_layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/mutant/frills/get_image(obj/item/bodypart/limb, layer_index, layer_real)
 	if(!LAZYLEN(limb?.owner?.hair_masks))
 		return ..()
 
 	var/list/hair_masks_to_use = limb.owner.hair_masks
-	var/icon_state_to_use = build_icon_state(image_layer, limb)
+	var/icon_state_to_use = build_icon_state(layer_index, limb)
 	var/frill_cache_key = "[sprite_datum.type]-[icon_state_to_use]-[jointext(hair_masks_to_use, ",")]"
 	var/static/list/cached_frill_icons
 	var/icon/cached_icon = LAZYACCESS(cached_frill_icons, frill_cache_key)
 	if(isnull(cached_icon))
-		cached_icon = icon(sprite_datum.icon, build_icon_state(image_layer, limb))
+		cached_icon = icon(sprite_datum.icon, build_icon_state(layer_index, limb))
 		for(var/datum/hair_mask/mask as anything in hair_masks_to_use)
 			cached_icon.Blend(icon(mask::icon, mask::icon_state), ICON_ADD)
 		LAZYSET(cached_frill_icons, frill_cache_key, cached_icon)
 
-	var/mutable_appearance/uncached_appearance = mutable_appearance(cached_icon, layer = image_layer)
+	var/mutable_appearance/uncached_appearance = mutable_appearance(cached_icon, layer = layer_real)
 	if(sprite_datum.center)
 		center_image(uncached_appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
 	return uncached_appearance
@@ -210,7 +207,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	return ..()
 
 /datum/bodypart_overlay/mutant/snout
-	layers = EXTERNAL_ADJACENT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 	feature_key = FEATURE_SNOUT
 	draw_on_husks = HUSK_OVERLAY_GRAYSCALE
 	offset_location = UPPER_BODY
@@ -280,7 +277,10 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 
 ///Moth antennae datum, with full burning functionality
 /datum/bodypart_overlay/mutant/antennae
-	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER
+	)
 	feature_key = FEATURE_MOTH_ANTENNAE
 	dyable = TRUE
 	offset_location = UPPER_BODY
@@ -319,7 +319,10 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 
 ///Podperson bodypart overlay, with special coloring functionality to render the flowers in the inverse color
 /datum/bodypart_overlay/mutant/pod_hair
-	layers = EXTERNAL_FRONT|EXTERNAL_ADJACENT
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER
+	)
 	feature_key = FEATURE_POD_HAIR
 	dyable = TRUE
 	offset_location = UPPER_BODY
@@ -329,8 +332,8 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	///The individual rgb colors are subtracted from this to get the color shifted layer
 	var/color_inverse_base = 255
 
-/datum/bodypart_overlay/mutant/pod_hair/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
-	if(draw_layer != all_layers[color_swapped_layer])
+/datum/bodypart_overlay/mutant/pod_hair/color_image(image/overlay, obj/item/bodypart/limb, layer_index)
+	if(layer_index != color_swapped_layer)
 		return ..()
 
 	var/color_to_use = dye_color || draw_color

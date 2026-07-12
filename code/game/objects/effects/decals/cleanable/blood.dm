@@ -50,6 +50,8 @@
 				can_hold_viruses = TRUE
 				break
 	. = ..(diseases = can_hold_viruses ? diseases : null)
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	if(islist(blood_or_dna))
 		add_blood_DNA(blood_or_dna)
 	else if(istype(blood_or_dna, /datum/blood_type))

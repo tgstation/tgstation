@@ -182,43 +182,11 @@
 	if(piles[seed_id])
 		has_seed_data = TRUE
 	else
-		seed_data = list()
-		seed_data["icon"] = sanitize_css_class_name("[initial(to_add.icon)][initial(to_add.icon_state)]")
+		seed_data = generate_seed_data_from(to_add)
 		seed_data["name"] = capitalize(replacetext(to_add.name,"pack of ", ""));
-		seed_data["lifespan"] = to_add.lifespan
-		seed_data["endurance"] = to_add.endurance
-		seed_data["maturation"] = to_add.maturation
-		seed_data["production"] = to_add.production
-		seed_data["yield"] = to_add.yield
-		seed_data["potency"] = to_add.potency
-		seed_data["instability"] = to_add.instability
+		seed_data["icon"] = initial(to_add.icon)
+		seed_data["icon_state"] = initial(to_add.icon_state)
 		seed_data["refs"] = list(WEAKREF(to_add))
-		seed_data["traits"] = list()
-		for(var/datum/plant_gene/trait/trait in to_add.genes)
-			seed_data["traits"] += trait.type
-		seed_data["reagents"] = list()
-		for(var/datum/plant_gene/reagent/reagent in to_add.genes)
-			seed_data["reagents"] += list(list(
-				"name" = reagent.name,
-				"rate" = reagent.rate
-			))
-		var/datum/plant_gene/trait/maxchem/volume_trait = locate(/datum/plant_gene/trait/maxchem) in to_add.genes
-		var/datum/plant_gene/trait/modified_volume/volume_unit_trait = locate(/datum/plant_gene/trait/modified_volume) in to_add.genes
-		seed_data["volume_mod"] = volume_trait ? volume_trait.rate : 1
-		seed_data["volume_units"] = volume_unit_trait ? volume_unit_trait.new_capcity : PLANT_REAGENT_VOLUME
-		seed_data["mutatelist"] = list()
-		for(var/obj/item/seeds/mutant as anything in to_add.mutatelist)
-			seed_data["mutatelist"] += initial(mutant.plantname)
-		if(to_add.product)
-			var/obj/item/food/grown/product = new to_add.product
-			var/datum/reagent/product_distill_reagent = product.distill_reagent
-			seed_data["distill_reagent"] = initial(product_distill_reagent.name)
-			var/datum/reagent/product_juice_typepath = product.juice_typepath()
-			seed_data["juice_name"] = initial(product_juice_typepath.name)
-			seed_data["grind_results"] = list()
-			for(var/datum/reagent/reagent as anything in product.grind_results())
-				seed_data["grind_results"] += initial(reagent.name)
-			qdel(product)
 
 	if(!isnull(taking_from))
 		if(ismob(taking_from))
@@ -307,8 +275,3 @@
 					found_seed.forceMove(drop_location())
 					visible_message(span_notice("[found_seed] falls onto the floor."), null, span_hear("You hear a soft clatter."), COMBAT_MESSAGE_RANGE)
 				. = TRUE
-
-/obj/machinery/seed_extractor/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/spritesheet_batched/seeds)
-	)

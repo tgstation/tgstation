@@ -75,9 +75,6 @@
 	/// The affected biotype, if the reagent damages/heals toxin damage of an affected mob.
 	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
 	var/affected_biotype = MOB_ORGANIC
-	/// The affected respiration type, if the reagent damages/heals oxygen damage of an affected mob.
-	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
-	var/affected_respiration_type = ALL
 	/// A list of traits to apply while the reagent is being metabolized.
 	var/list/metabolized_traits
 	/// A list of traits to apply while the reagent is in a mob.

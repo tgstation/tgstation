@@ -60,10 +60,15 @@
 	unit_name = "fueltank"
 	export_types = list(/obj/structure/reagent_dispensers/fueltank)
 
-/datum/export/reagent_dispenser/beer
-	unit_name = "beer keg"
+/datum/export/reagent_dispenser/alcohol_keg
+	unit_name = "alcohol keg"
 	contents_cost = CARGO_CRATE_VALUE * 3.5
-	export_types = list(/obj/structure/reagent_dispensers/beerkeg)
+	export_types = list(/obj/structure/reagent_dispensers/keg/beer, /obj/structure/reagent_dispensers/keg/whiskey, /obj/structure/reagent_dispensers/keg/rum)
+
+/datum/export/reagent_dispenser/gold_keg
+	unit_name = "premium keg"
+	contents_cost = CARGO_CRATE_VALUE * 6.5
+	export_types = list(/obj/structure/reagent_dispensers/keg/gold)
 
 /datum/export/pipedispenser
 	cost = CARGO_CRATE_VALUE * 2.5

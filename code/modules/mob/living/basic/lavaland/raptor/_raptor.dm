@@ -139,6 +139,9 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		return
 	return ..()
 
+/mob/living/basic/raptor/get_hud_x_offset()
+	return -4
+
 /mob/living/basic/raptor/examine(mob/user)
 	. = ..()
 	if (stat == DEAD)
@@ -361,7 +364,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 			base_pixel_w = initial(base_pixel_w)
 			mob_size = initial(mob_size)
 
-	can_be_held = initial(density)
+	can_be_held = initial(can_be_held)
 	density = initial(density)
 	move_resist = initial(move_resist)
 	can_breed = initial(can_breed)

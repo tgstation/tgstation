@@ -155,6 +155,7 @@
 /obj/item/disk/data
 	name = "\improper DNA data disk"
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 0.5)
 	var/list/genetic_makeup_buffer = list()
 	var/list/mutations = list()
 	var/max_mutations = 10

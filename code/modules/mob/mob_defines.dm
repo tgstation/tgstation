@@ -216,3 +216,7 @@
 
 	/// A ref of the area we're taking our ambient loop from.
 	var/area/ambience_tracked_area
+
+	/// Sound tokens currently playing for this mob.
+	/// Managed by /datum/sound_token and the soundtoken subsystem
+	var/list/datum/sound_token/sound_tokens

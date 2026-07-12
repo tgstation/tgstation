@@ -109,7 +109,6 @@
 		/obj/item/food/fries = 1,
 		/obj/item/food/meat/cutlet = 2,
 		/datum/reagent/consumable/bbqsauce = 5,
-		/obj/item/plate = 1,
 	)
 	result = /obj/item/food/lizard_fries
 	cuisine_category = CUISINE_LIZARD

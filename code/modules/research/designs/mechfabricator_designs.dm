@@ -1077,12 +1077,12 @@
 	name = "Plasma Generator"
 	id = "mech_generator"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/generator
+	build_path = /obj/item/mecha_parts/mecha_equipment/generator/printed
 	materials = list(
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/silver=SHEET_MATERIAL_AMOUNT,
-		/datum/material/plasma=SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/plasma=SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	construction_time = 10 SECONDS
 	category = list(

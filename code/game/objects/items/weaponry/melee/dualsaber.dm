@@ -85,13 +85,15 @@
 	icon_state = inhand_icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "dualsaber[saber_color][HAS_TRAIT(src, TRAIT_WIELDED)]" : "dualsaber0"
 	return ..()
 
-/obj/item/dualsaber/suicide_act(mob/living/carbon/user)
+/obj/item/dualsaber/suicide_act(mob/living/user)
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		user.visible_message(span_suicide("[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!"))
 
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
-		var/obj/item/organ/brain/B = user.get_organ_slot(ORGAN_SLOT_BRAIN)
-		B.organ_flags &= ~ORGAN_VITAL //this cant possibly be a good idea
+		var/obj/item/organ/brain/mybrain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
+		if (mybrain)
+			mybrain.organ_flags &= ~ORGAN_VITAL //this cant possibly be a good idea
+
 		var/randdir
 		for(var/i in 1 to 24)//like a headless chicken!
 			if(user.is_holding(src))

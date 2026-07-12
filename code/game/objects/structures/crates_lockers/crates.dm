@@ -450,13 +450,13 @@
 	icon_state = "gold"
 	base_icon_state = "gold"
 
-/obj/structure/closet/crate/goldcrate/PopulateContents()
+//subtype that comes with roundstart items.
+/obj/structure/closet/crate/goldcrate/stocked/PopulateContents()
 	..()
 	new /obj/item/storage/belt/champion(src)
 
-/obj/structure/closet/crate/goldcrate/populate_contents_immediate()
+/obj/structure/closet/crate/goldcrate/stocked/populate_contents_immediate()
 	. = ..()
-
 	for(var/i in 1 to 3)
 		new /obj/item/stack/sheet/mineral/gold(src, 1, FALSE)
 

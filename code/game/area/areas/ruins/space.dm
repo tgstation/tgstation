@@ -785,3 +785,7 @@
 
 /area/ruin/space/has_grav/film_studio/starboard
 	name = "\improper Film Studio Starboard Wing"
+
+//Kilostation
+/area/ruin/space/has_grav/abandoned_warehouse
+	name = "\improper Abandoned Warehouse"
