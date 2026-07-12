@@ -146,6 +146,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
+		tainted_character_profiles = TRUE
 		character_preview_view = create_character_preview_view(user)
 		ui = new(user, src, "PreferencesMenu")
 		ui.set_autoupdate(FALSE)
@@ -178,8 +179,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/ui_static_data(mob/user)
 	var/list/data = list()
-
-	data["character_profiles"] = create_character_profiles()
 
 	data["character_preview_view"] = character_preview_view.assigned_map
 	data["overflow_role"] = SSjob.get_job_type(SSjob.overflow_role).title

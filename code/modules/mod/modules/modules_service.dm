@@ -11,6 +11,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/bikehorn)
 	cooldown_time = 1 SECONDS
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 5)
 
 /obj/item/mod/module/bikehorn/on_use(mob/activator)
 	playsound(src, 'sound/items/bikehorn.ogg', 100, FALSE)
@@ -38,6 +39,7 @@
 	incompatible_modules = list(/obj/item/mod/module/microwave_beam, /obj/item/mod/module/organizer)
 	cooldown_time = 4 SECONDS
 	required_slots = list(ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/uranium = SMALL_MATERIAL_AMOUNT * 5)
 
 /obj/item/mod/module/microwave_beam/on_select_use(atom/target)
 	. = ..()
@@ -71,6 +73,7 @@
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/waddle)
 	required_slots = list(ITEM_SLOT_FEET)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 5)
 
 /obj/item/mod/module/waddle/on_part_activation()
 	var/obj/item/shoes = mod.get_part_from_slot(ITEM_SLOT_FEET)
@@ -95,6 +98,7 @@
 	device = /obj/item/reagent_containers/spray/mister/janitor
 	volume = 100
 	active_power_cost = DEFAULT_CHARGE_DRAIN
+	custom_materials = list(/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/mod/module/mister/cleaner/Initialize(mapload)
 	. = ..()

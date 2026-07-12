@@ -14,6 +14,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 7
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	var/stream_mode = FALSE //whether we use the more focused mode
 	var/current_range = 3 //the range of tiles the sprayer will reach.
 	var/spray_range = 3 //the range of tiles the sprayer will reach when in spray mode.
@@ -226,11 +227,12 @@ GAME_VERB_SRC(/obj/item/reagent_containers/spray, empty, usr, "Empty Spray Bottl
 	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 50)
 	pickup_sound = 'sound/items/handling/pepper_spray/pepper_spray_pick_up.ogg'
 	drop_sound = 'sound/items/handling/pepper_spray/pepper_spray_drop.ogg'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/spray/pepper/empty //for protolathe printing
 	list_reagents = null
 
-/obj/item/reagent_containers/spray/pepper/suicide_act(mob/living/carbon/user)
+/obj/item/reagent_containers/spray/pepper/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins huffing \the [src]! It looks like [user.p_theyre()] getting a dirty high!"))
 	return OXYLOSS
 
@@ -447,6 +449,7 @@ GAME_VERB_SRC(/obj/item/reagent_containers/spray, empty, usr, "Empty Spray Bottl
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	volume = 100
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/spray/medical/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/med_spray)

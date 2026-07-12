@@ -138,3 +138,4 @@
 	inhand_icon_state = "bolter_wrench"
 	icon_angle = -90
 	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)

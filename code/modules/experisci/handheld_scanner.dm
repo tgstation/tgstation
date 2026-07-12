@@ -14,6 +14,7 @@
 	sound_vary = TRUE
 	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
 	drop_sound = SFX_GENERIC_DEVICE_DROP
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/experi_scanner/Initialize(mapload)
 	..()
@@ -32,7 +33,7 @@
 		experiment_signals = handheld_signals, \
 	)
 
-/obj/item/experi_scanner/suicide_act(mob/living/carbon/user)
+/obj/item/experi_scanner/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is giving in to the Great Toilet Beyond! It looks like [user.p_theyre()] trying to commit suicide!"))
 
 	forceMove(drop_location())
@@ -48,7 +49,7 @@
 	addtimer(CALLBACK(src, PROC_REF(make_meat_toilet), user), 5 SECONDS)
 	return MANUAL_SUICIDE
 
-/obj/item/experi_scanner/proc/make_meat_toilet(mob/living/carbon/user)
+/obj/item/experi_scanner/proc/make_meat_toilet(mob/living/user)
 	///The toilet we're about to unleash unto this cursed plane of existence
 	new /obj/structure/toilet/greyscale/flesh (drop_location(), user) //the toilet's Initialize proc will handle the rest from here.
 

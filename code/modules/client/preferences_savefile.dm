@@ -348,6 +348,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	var/tree_key = "character[slot]"
 	var/list/save_data = savefile.get_entry(tree_key)
+	if(isnull(save_data))
+		for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
+			if (preference.savefile_identifier != PREFERENCE_CHARACTER)
+				continue
+			value_cache -= preference.type
+		return FALSE
+
 	var/data_validity_integer = check_savedata_version(save_data)
 	if(IS_DATA_OBSOLETE(data_validity_integer)) //fatal, can't load any data
 		return FALSE
@@ -437,6 +444,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (!load_character(new_slot))
 		tainted_character_profiles = TRUE
 		randomise_appearance_prefs()
+		all_quirks = list()
+		recently_updated_keys |= /datum/preference/name/real_name
 		save_character()
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)

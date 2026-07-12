@@ -296,7 +296,10 @@
 /obj/item/radio/intercom/syndicate
 	name = "syndicate intercom"
 	desc = "Talk smack through this."
+	icon_state = "intercom_syndicate"
 	command = TRUE
+	icon_off = "intercom_syndicate-p"
+	overlay_speaker_active = "intercom_receive_syndicate"
 	special_channels = RADIO_SPECIAL_SYNDIE
 
 // Syndicate intercom that also has freefrange on top of syndicate channel
@@ -346,39 +349,90 @@
 	desc = "A station intercom primarily intended for speaking with members of a department."
 	keylock = RADIO_KEYSLOT_EMAGGABLE_LOCK
 	abstract_type = /obj/item/radio/intercom/departmental
+	var/stripe_color = null
 
 /obj/item/radio/intercom/departmental/Initialize(mapload)
 	. = ..()
 	if(length(keyslot?.channels) >= 1)
 		set_frequency(GLOB.default_radio_channels[keyslot.channels[1]])
 
+/obj/item/radio/intercom/departmental/update_overlays()
+	. = ..()
+	if(!stripe_color)
+		return
+	var/mutable_appearance/stripe = mutable_appearance(icon, "intercom_stripe")
+	stripe.color = stripe_color
+	. += stripe
+
 /obj/item/radio/intercom/departmental/cargo
 	name = "cargo intercom"
 	keyslot = /obj/item/encryptionkey/headset_cargo
+	stripe_color = "#956929"
 
 /obj/item/radio/intercom/departmental/command
 	name = "command intercom"
 	keyslot = /obj/item/encryptionkey/headset_com
+	stripe_color = "#486091"
 
 /obj/item/radio/intercom/departmental/engineering
 	name = "engineering intercom"
 	keyslot = /obj/item/encryptionkey/headset_eng
+	stripe_color = "#EFB341"
 
 /obj/item/radio/intercom/departmental/medical
 	name = "medical intercom"
 	keyslot = /obj/item/encryptionkey/headset_med
+	stripe_color = "#52B4E9"
 
 /obj/item/radio/intercom/departmental/science
 	name = "science intercom"
 	keyslot = /obj/item/encryptionkey/headset_sci
+	stripe_color = "#D381C9"
 
 /obj/item/radio/intercom/departmental/security
 	name = "security intercom"
 	keyslot = /obj/item/encryptionkey/headset_sec
+	stripe_color = "#DE3A3A"
 
 /obj/item/radio/intercom/departmental/service
 	name = "service intercom"
 	keyslot = /obj/item/encryptionkey/headset_service
+	stripe_color = "#83ca41"
+
+// Heads of staff variants
+/obj/item/radio/intercom/departmental/head
+	icon_state = "intercom_command"
+	command = TRUE
+
+/obj/item/radio/intercom/departmental/head/ce
+	name = "\proper the chief engineer's intercom"
+	keyslot = /obj/item/encryptionkey/heads/ce
+	stripe_color = "#EFB341"
+
+/obj/item/radio/intercom/departmental/head/cmo
+	name = "\proper the chief medical officer's intercom"
+	keyslot = /obj/item/encryptionkey/heads/cmo
+	stripe_color = "#52B4E9"
+
+/obj/item/radio/intercom/departmental/head/hop
+	name = "\proper the head of personnel's intercom"
+	keyslot = /obj/item/encryptionkey/heads/hop
+	stripe_color = "#83ca41"
+
+/obj/item/radio/intercom/departmental/head/hos
+	name = "\proper the head of security's intercom"
+	keyslot = /obj/item/encryptionkey/heads/hos
+	stripe_color = "#DE3A3A"
+
+/obj/item/radio/intercom/departmental/head/qm
+	name = "\proper the quartermaster's intercom"
+	keyslot = /obj/item/encryptionkey/heads/qm
+	stripe_color = "#956929"
+
+/obj/item/radio/intercom/departmental/head/rd
+	name = "\proper the research director's intercom"
+	keyslot = /obj/item/encryptionkey/heads/rd
+	stripe_color = "#D381C9"
 
 #define INTERCOM_OFFSET 27
 
@@ -404,5 +458,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/medical, INTER
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/science, INTERCOM_OFFSET)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/security, INTERCOM_OFFSET)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/service, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/head/ce, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/head/cmo, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/head/hop, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/head/hos, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/head/qm, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/head/rd, INTERCOM_OFFSET)
 
 #undef INTERCOM_OFFSET

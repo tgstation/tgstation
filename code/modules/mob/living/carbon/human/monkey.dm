@@ -3,14 +3,9 @@
 	race = /datum/species/monkey
 	ai_controller = /datum/ai_controller/monkey
 
-/mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned = FALSE, mob/spawner)
+/mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned = FALSE)
 	ADD_TRAIT(src, TRAIT_BORN_MONKEY, INNATE_TRAIT)
 	if (cubespawned)
-		var/cap = CONFIG_GET(number/monkeycap)
-		if (LAZYLEN(SSmobs.cubemonkeys) > cap)
-			if (spawner)
-				to_chat(spawner, span_warning("Bluespace harmonics prevent the spawning of more than [cap] monkeys on the station at one time!"))
-			return INITIALIZE_HINT_QDEL
 		SSmobs.cubemonkeys += src
 	return ..()
 
@@ -21,7 +16,7 @@
 /mob/living/carbon/human/species/monkey/angry
 	ai_controller = /datum/ai_controller/monkey/angry
 
-/mob/living/carbon/human/species/monkey/angry/Initialize(mapload, cubespawned = FALSE, mob/spawner)
+/mob/living/carbon/human/species/monkey/angry/Initialize(mapload, cubespawned = FALSE)
 	. = ..()
 	if(prob(10))
 		INVOKE_ASYNC(src, PROC_REF(give_ape_escape_helmet))
