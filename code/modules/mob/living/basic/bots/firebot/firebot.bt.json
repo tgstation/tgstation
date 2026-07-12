@@ -77,7 +77,7 @@
 									"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 									"vars": {
 										"target_key": "BB_CURRENT_TARGET",
-										"target_source": "/datum/target_source/oview_single_type/living_mob/firebot_people",
+										"target_source": "/datum/target_source/firebot_targets",
 										"targeting_strategy": "/datum/targeting_strategy/extinguishable_person",
 										"ignore_list_key": "BB_TEMPORARY_IGNORE_LIST",
 										"must_be_reachable": true,

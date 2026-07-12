@@ -46,15 +46,18 @@
 	return ..()
 
 /// Gathers nearby living mobs to extinguish; empty unless people-extinguishing is on, range clamped to adjacent tiles when stationary.
-/datum/target_source/oview_single_type/living_mob/firebot_people
+/datum/target_source/firebot_targets
 
-/datum/target_source/oview_single_type/living_mob/firebot_people/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
+/datum/target_source/firebot_targets/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
 	var/mob/living/basic/bot/firebot/bot_pawn = pawn
 	if(!(bot_pawn.firebot_mode_flags & FIREBOT_EXTINGUISH_PEOPLE))
 		return list()
 	if(bot_pawn.firebot_mode_flags & FIREBOT_STATIONARY_MODE)
 		range = 1
-	return ..(pawn, controller, range)
+	var/list/candidates = list()
+	for(var/mob/living/candidate in oview(range, pawn))
+		candidates += candidate
+	return candidates
 
 /// Valid if the mob is on fire (or anyone, while emagged) and is a type this firebot is allowed to extinguish.
 /datum/targeting_strategy/extinguishable_person/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)

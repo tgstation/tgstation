@@ -15,7 +15,7 @@
 	var/scan_level
 	var/precision_coeff = 1
 	var/message_cooldown
-	var/breakout_time = 1200
+	var/breakout_time = 5 SECONDS
 	var/obj/machinery/computer/dna_console/linked_console = null
 
 /obj/machinery/dna_scannernew/RefreshParts()
@@ -70,7 +70,7 @@
 	open_machine()
 
 /obj/machinery/dna_scannernew/container_resist_act(mob/living/user)
-	if(HAS_TRAIT(user, TRAIT_PRIMITIVE))
+	if(HAS_TRAIT(user, TRAIT_PRIMITIVE) || user.ai_controller)
 		if(locked)
 			return //Your primitive brain cant escape a dna scanner noob
 	else if(!locked) //Not locked and not primitive? escape immediately
@@ -82,7 +82,7 @@
 		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
 		span_hear("You hear a metallic creaking from [src]."))
 	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked || HAS_TRAIT(user, TRAIT_PRIMITIVE))
+		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked || HAS_TRAIT(user, TRAIT_PRIMITIVE) || user.ai_controller)
 			return
 		locked = FALSE
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \

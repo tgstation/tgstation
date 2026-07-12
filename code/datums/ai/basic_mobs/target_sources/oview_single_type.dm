@@ -1,128 +1,58 @@
-/// Gathers nearby atoms via oview(), returning every atom matching a fixed typepath.
+/**
+ * Gathers all targets of a type in the area. This is a define so we can do cheap loops over oview with astype. Yeah it sucks.
+ * You can do /datum/target_source/oview_single_type/[sub_type] to use it
+ */
+#define OVIEW_TARGET_SOURCE(subtype, path) \
+/datum/target_source/oview_single_type/##subtype/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range) { \
+	var/list/candidates = list(); \
+	for(var/##path/candidate in oview(range, pawn)) { \
+		candidates += candidate; \
+	} \
+	return candidates; \
+}
+
+/// Abstract parent for target sources that return every nearby atom of a single fixed type.
+/// Subtypes are generated with the OVIEW_TARGET_SOURCE() macro above.
 /datum/target_source/oview_single_type
-	var/single_typepath
 
-/datum/target_source/oview_single_type/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
-	var/list/candidates = list()
-	for(var/atom/candidate as anything in oview(range, pawn))
-		if(istype(candidate, single_typepath))
-			candidates += candidate
-	return candidates
+OVIEW_TARGET_SOURCE(carbon_mob, mob/living/carbon)
+OVIEW_TARGET_SOURCE(human_mob, mob/living/carbon/human)
+OVIEW_TARGET_SOURCE(living_mob, mob/living)
+OVIEW_TARGET_SOURCE(disposal_unit, obj/machinery/disposal)
+OVIEW_TARGET_SOURCE(paper, obj/item/paper)
+OVIEW_TARGET_SOURCE(watering_can, obj/item/reagent_containers/cup/watering_can)
+OVIEW_TARGET_SOURCE(ore_stand, obj/structure/ore_container/material_stand)
+OVIEW_TARGET_SOURCE(flora_tree, obj/structure/flora/tree)
+OVIEW_TARGET_SOURCE(vent_pump, obj/machinery/atmospherics/components/unary/vent_pump)
+OVIEW_TARGET_SOURCE(tribal_chief, mob/living/basic/mining/mook/worker/tribal_chief)
+OVIEW_TARGET_SOURCE(apc, obj/machinery/power/apc)
+OVIEW_TARGET_SOURCE(machine, obj/machinery)
+OVIEW_TARGET_SOURCE(beehive, obj/structure/beebox)
+OVIEW_TARGET_SOURCE(penguin_egg, obj/item/food/egg/penguin_egg)
+OVIEW_TARGET_SOURCE(raptor, mob/living/basic/raptor)
+OVIEW_TARGET_SOURCE(raptor_trough, obj/structure/ore_container/food_trough/raptor_trough)
+OVIEW_TARGET_SOURCE(gutlunch_trough, obj/structure/ore_container/food_trough/gutlunch_trough)
+OVIEW_TARGET_SOURCE(mouse, mob/living/basic/mouse)
+OVIEW_TARGET_SOURCE(oven, obj/machinery/oven/range)
+OVIEW_TARGET_SOURCE(cable, obj/structure/cable)
+OVIEW_TARGET_SOURCE(donut, obj/item/food/donut)
+OVIEW_TARGET_SOURCE(hydroponics, obj/machinery/hydroponics)
+OVIEW_TARGET_SOURCE(cheese, obj/item/food/cheese)
+OVIEW_TARGET_SOURCE(piano_synth, obj/item/instrument/piano_synth)
+OVIEW_TARGET_SOURCE(orbie, mob/living/basic/orbie)
+OVIEW_TARGET_SOURCE(ore_vent, obj/structure/ore_vent)
+OVIEW_TARGET_SOURCE(mushroom_food, obj/item/food/grown/mushroom)
+OVIEW_TARGET_SOURCE(ore, obj/item/stack/ore)
+OVIEW_TARGET_SOURCE(minebot_target, obj/effect/temp_visual/minebot_target)
+OVIEW_TARGET_SOURCE(node_drone, mob/living/basic/node_drone)
+OVIEW_TARGET_SOURCE(icy_rock, obj/structure/flora/rock/icy)
+OVIEW_TARGET_SOURCE(ice_whelp, mob/living/basic/mining/ice_whelp)
+OVIEW_TARGET_SOURCE(hivebot, mob/living/basic/hivebot)
+OVIEW_TARGET_SOURCE(carrot, obj/item/food/grown/carrotlike/carrot)
+OVIEW_TARGET_SOURCE(ants, obj/effect/decal/cleanable/ants)
+OVIEW_TARGET_SOURCE(cat_house, obj/structure/cat_house)
+OVIEW_TARGET_SOURCE(honeycomb, obj/item/food/honeycomb)
+OVIEW_TARGET_SOURCE(kitten, mob/living/basic/pet/cat/kitten)
+OVIEW_TARGET_SOURCE(deer_animals, mob/living/basic/deer)
 
-/datum/target_source/oview_single_type/carbon_mob
-	single_typepath = /mob/living/carbon
-
-/datum/target_source/oview_single_type/human_mob
-	single_typepath = /mob/living/carbon/human
-
-/datum/target_source/oview_single_type/living_mob
-	single_typepath = /mob/living
-
-/datum/target_source/oview_single_type/disposal_unit
-	single_typepath = /obj/machinery/disposal
-
-/datum/target_source/oview_single_type/paper
-	single_typepath = /obj/item/paper
-
-/datum/target_source/oview_single_type/watering_can
-	single_typepath = /obj/item/reagent_containers/cup/watering_can
-
-/datum/target_source/oview_single_type/ore_stand
-	single_typepath = /obj/structure/ore_container/material_stand
-
-/datum/target_source/oview_single_type/flora_tree
-	single_typepath = /obj/structure/flora/tree
-
-/datum/target_source/oview_single_type/vent_pump
-	single_typepath = /obj/machinery/atmospherics/components/unary/vent_pump
-
-/datum/target_source/oview_single_type/tribal_chief
-	single_typepath = /mob/living/basic/mining/mook/worker/tribal_chief
-
-/datum/target_source/oview_single_type/apc
-	single_typepath = /obj/machinery/power/apc
-
-/datum/target_source/oview_single_type/machine
-	single_typepath = /obj/machinery
-
-/datum/target_source/oview_single_type/beehive
-	single_typepath = /obj/structure/beebox
-
-/datum/target_source/oview_single_type/penguin_egg
-	single_typepath = /obj/item/food/egg/penguin_egg
-
-/datum/target_source/oview_single_type/raptor
-	single_typepath = /mob/living/basic/raptor
-
-/datum/target_source/oview_single_type/raptor_trough
-	single_typepath = /obj/structure/ore_container/food_trough/raptor_trough
-
-/datum/target_source/oview_single_type/gutlunch_trough
-	single_typepath = /obj/structure/ore_container/food_trough/gutlunch_trough
-
-/datum/target_source/oview_single_type/mouse
-	single_typepath = /mob/living/basic/mouse
-
-/datum/target_source/oview_single_type/oven
-	single_typepath = /obj/machinery/oven/range
-
-/datum/target_source/oview_single_type/cable
-	single_typepath = /obj/structure/cable
-
-/datum/target_source/oview_single_type/donut
-	single_typepath = /obj/item/food/donut
-
-/datum/target_source/oview_single_type/hydroponics
-	single_typepath = /obj/machinery/hydroponics
-
-/datum/target_source/oview_single_type/cheese
-	single_typepath = /obj/item/food/cheese
-
-/datum/target_source/oview_single_type/piano_synth
-	single_typepath = /obj/item/instrument/piano_synth
-
-/datum/target_source/oview_single_type/orbie
-	single_typepath = /mob/living/basic/orbie
-
-/datum/target_source/oview_single_type/ore_vent
-	single_typepath = /obj/structure/ore_vent
-
-/datum/target_source/oview_single_type/mushroom_food
-	single_typepath = /obj/item/food/grown/mushroom
-
-/datum/target_source/oview_single_type/ore
-	single_typepath = /obj/item/stack/ore
-
-/datum/target_source/oview_single_type/minebot_target
-	single_typepath = /obj/effect/temp_visual/minebot_target
-
-/datum/target_source/oview_single_type/node_drone
-	single_typepath = /mob/living/basic/node_drone
-
-/datum/target_source/oview_single_type/icy_rock
-	single_typepath = /obj/structure/flora/rock/icy
-
-/datum/target_source/oview_single_type/ice_whelp
-	single_typepath = /mob/living/basic/mining/ice_whelp
-
-/datum/target_source/oview_single_type/hivebot
-	single_typepath = /mob/living/basic/hivebot
-
-/datum/target_source/oview_single_type/carrot
-	single_typepath = /obj/item/food/grown/carrot
-
-/datum/target_source/oview_single_type/ants
-	single_typepath = /obj/effect/decal/cleanable/ants
-
-/datum/target_source/oview_single_type/cat_house
-	single_typepath = /obj/structure/cat_house
-
-/datum/target_source/oview_single_type/honeycomb
-	single_typepath = /obj/item/food/honeycomb
-
-/datum/target_source/oview_single_type/kitten
-	single_typepath = /mob/living/basic/pet/cat/kitten
-
-/// Gathers nearby deer (alive or dead).
-/datum/target_source/oview_single_type/deer_animals
-	single_typepath = /mob/living/basic/deer
+#undef OVIEW_TARGET_SOURCE
