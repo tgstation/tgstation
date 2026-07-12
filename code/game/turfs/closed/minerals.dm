@@ -212,12 +212,16 @@
 	return ..()
 
 /turf/closed/mineral/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if (!ISADVANCEDTOOLUSER(user))
-		to_chat(usr, span_warning("You don't have the dexterity to do this!"))
-		return ITEM_INTERACT_BLOCKING
-
 	if(tool.tool_behaviour != TOOL_MINING)
-		return NONE
+		return ..()
+
+	return manual_mine(user, tool)
+
+///Mining manually with a hand tool or something masquerading as one
+/turf/closed/mineral/proc/manual_mine(mob/living/user, obj/item/tool, exp_multiplier = 1)
+	if (!ISADVANCEDTOOLUSER(user))
+		to_chat(user, span_warning("You don't have the dexterity to do this!"))
+		return ITEM_INTERACT_BLOCKING
 
 	if (!isturf(user.loc))
 		return ITEM_INTERACT_BLOCKING
@@ -226,14 +230,14 @@
 		return ITEM_INTERACT_BLOCKING
 
 	TIMER_COOLDOWN_START(src, REF(user), tool_mine_speed)
-	if(!tool.use_tool(src, user, tool_mine_speed, volume=50))
+	if(!tool.use_tool(src, user, tool_mine_speed, volume = 50))
 		TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
 		return ITEM_INTERACT_BLOCKING
 
 	if(!ismineralturf(src))
 		return ITEM_INTERACT_BLOCKING
 
-	gets_drilled(user, exp_multiplier = 1)
+	gets_drilled(user, exp_multiplier)
 	SSblackbox.record_feedback("tally", "pick_used_mining", 1, tool.type)
 	return ITEM_INTERACT_SUCCESS
 

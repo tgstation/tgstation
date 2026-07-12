@@ -209,7 +209,7 @@
 	var/has_ore = !isnull(rock.mineral_type)
 	if (has_ore)
 		toolspeed /= 2
-	rock.attackby(src, bumper, null, null, exp_multiplier)
+	rock.manual_mine(bumper, src, exp_multiplier)
 	if (has_ore)
 		toolspeed *= 2
 

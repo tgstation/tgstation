@@ -141,8 +141,6 @@
 
 		return ITEM_INTERACT_SUCCESS
 
-	return .
-
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
 	if(overfloor_placed && pry_tile(I, user))
 		return TRUE

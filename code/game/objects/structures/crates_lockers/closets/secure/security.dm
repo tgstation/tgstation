@@ -206,20 +206,20 @@
 	if(!secure || !istype(tool, /obj/item/card/id))
 		return ..()
 
-	if(!istype(tool, /obj/item/card/id/advanced/prisoner))
-		var/list/id_access = astype(tool, /obj/item/card/id).GetAccess()
-		if(!id_card || !(ACCESS_BRIG in id_access))
-			return ITEM_INTERACT_BLOCKING
-
-		clear_access()
-		return ITEM_INTERACT_SUCCESS
-
 	if(!isnull(id_card))
 		return ITEM_INTERACT_BLOCKING
 
 	say("Prisoner ID linked to locker.")
 	id_card = WEAKREF(tool)
 	name = "genpop storage locker - [astype(tool, /obj/item/card/id/advanced/prisoner).registered_name]"
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/closet/secure_closet/brig/genpop/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	var/list/id_access = astype(tool, /obj/item/card/id).GetAccess()
+	if(!id_card || !(ACCESS_BRIG in id_access))
+		return NONE
+
+	clear_access()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/closet/secure_closet/brig/genpop/proc/clear_access()
