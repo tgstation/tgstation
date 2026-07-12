@@ -59,7 +59,7 @@
 		human.set_jitter_if_lower(12 SECONDS * bone_amount)
 		human.set_stutter(6.5 SECONDS * bone_amount)
 		human.adjust_stamina_loss(3 * bone_amount * stam_dam_mult)
-	if(iszombie(human))
+	if(human.has_status_effect(/datum/status_effect/zombie))
 		human.adjust_stamina_loss(25)
 		human.Paralyze(15) //zombies can't resist the doot
 	return bone_amount

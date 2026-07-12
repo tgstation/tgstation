@@ -177,7 +177,7 @@
 	. = ..()
 	if(isnull(owner))
 		return
-	if(is_husked)
+	if(is_husked && is_husked != HUSKED_ZOMBIE)
 		ADD_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)
 	else
 		REMOVE_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)

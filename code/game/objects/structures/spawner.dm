@@ -204,14 +204,14 @@
 
 /obj/structure/spawner/nether/examine(mob/user)
 	. = ..()
-	if(isskeleton(user) || iszombie(user))
+	if(isskeleton(user) || user.has_status_effect(/datum/status_effect/zombie))
 		. += "A direct link to another dimension full of creatures very happy to see you. [span_nicegreen("You can see your house from here!")]"
 	else
 		. += "A direct link to another dimension full of creatures not very happy to see you. [span_warning("Entering the link would be a very bad idea.")]"
 
 /obj/structure/spawner/nether/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(isskeleton(user) || iszombie(user))
+	if(isskeleton(user) || user.has_status_effect(/datum/status_effect/zombie))
 		to_chat(user, span_notice("You don't feel like going home yet..."))
 	else
 		user.visible_message(span_warning("[user] is violently pulled into the link!"), \

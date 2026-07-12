@@ -1684,4 +1684,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mobs with this trait will always have be a priority target for mining mobs
 #define TRAIT_MINING_AGGRO "mining_aggro"
 
+/// Mob does not regulate core temperature
+#define TRAIT_COLD_BLOODED "cold_blooded"
+
+/// Mob is always considered dead when checking objectives
+#define TRAIT_NEVER_CONSIDERED_ALIVE "never_considered_alive"
+
 // END TRAIT DEFINES

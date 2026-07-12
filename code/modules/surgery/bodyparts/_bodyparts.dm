@@ -44,7 +44,7 @@
 	var/bodypart_flags = BODYPART_VIRGIN
 
 	///Whether the bodypart (and the owner) is husked.
-	var/is_husked = FALSE
+	var/is_husked = NONE
 	///Whether the bodypart (and the owner) is invisible through invisibleman trait.
 	var/is_invisible = FALSE
 	///The ID of a species used to generate the icon. Needs to match the icon_state portion in the limbs file!
@@ -333,6 +333,9 @@
 		return butcher_drops
 	if (butcher_drop_cache[type] && !force)
 		return butcher_drop_cache[type]
+	if(is_husked == HUSKED_ZOMBIE)
+		return list(/obj/item/food/meat/slab/human/mutant/zombie = base_meat_amount)
+
 	var/datum/species/species = GLOB.species_list[species_id || limb_id]
 	if (!species || !species.meat || !base_meat_amount)
 		return null
@@ -1166,13 +1169,13 @@
 			bodypart_flags &= ~BODYPART_VIRGIN
 		if(!(bodypart_flags & BODYPART_UNHUSKABLE) && owner && HAS_TRAIT(owner, TRAIT_HUSK))
 			dmg_overlay_type = "" //no damage overlay shown when husked
-			is_husked = TRUE
+			is_husked = HAS_TRAIT_FROM_ONLY(owner, TRAIT_HUSK, /datum/status_effect/zombie::id) ? HUSKED_ZOMBIE : HUSKED_BURN
 		else if(owner && HAS_TRAIT(owner, TRAIT_INVISIBLE_MAN))
 			dmg_overlay_type = "" //no damage overlay shown when invisible since the wounds themselves are invisible.
 			is_invisible = TRUE
 		else
 			dmg_overlay_type = initial(dmg_overlay_type)
-			is_husked = FALSE
+			is_husked = NONE
 			is_invisible = FALSE
 
 	update_draw_color()
@@ -1335,7 +1338,7 @@
 		. += huskify_image(thing_to_husk = limb)
 		if(aux)
 			. += huskify_image(thing_to_husk = aux)
-		draw_color = husk_color
+		draw_color = is_husked == HUSKED_ZOMBIE ? "#006009" : husk_color
 	else
 		update_draw_color()
 
