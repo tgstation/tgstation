@@ -728,6 +728,7 @@
 	if(!isturf(target) && !isturf(target.loc)) // Prevents inventory from being drilled
 		return
 	if(can_interact_with(target, user, modifiers))
+		return
 	if(src == target)
 		return
 	var/dir_to_target = get_dir(src,target)
