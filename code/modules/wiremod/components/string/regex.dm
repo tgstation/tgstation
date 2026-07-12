@@ -23,12 +23,15 @@
 
 /obj/item/circuit_component/compare/contains/regex/proc/make_regex()
 	var/regex_text = needle.value
-	if(!regex_text)
+	if(!length(regex_text))
 		current_regex = null
 		return
-	var/sanitized_text = sanitize(html_encode(regex_text))
+	//basic checks to ensure that this isn't some fucked up or malicious input
+	regex_text = validate_regex_user_input(regex_text)
+	if(isnull(regex_text))
+		return
 	var/flags = replacetext(regex_flags.value, regex(@"[^igm]"), "")
-	current_regex = regex(sanitized_text, flags)
+	current_regex = regex(regex_text, flags)
 
 /obj/item/circuit_component/compare/contains/regex/do_comparisons()
 	var/to_search = haystack.value
@@ -39,7 +42,11 @@
 
 /obj/item/circuit_component/compare/contains/regex/get_ui_notices()
 	. = ..()
-	. += create_ui_notice("used regex: https://www.byond.com/docs/ref/#/{notes}/regex", "info")
+	. += create_ui_notice("used regex: https://www.byond.com/docs/ref/#/{notes}/regex", "blue", "book")
+	. += create_ui_notice("maximum regex length: [MAX_REGEX_INPUT_LEN]", "orange", "info")
+	. += create_ui_notice("excessive backslash usage will be trimmed", "orange", "info")
+	. += create_ui_notice("look-behind patterns are currently disabled", "red", "xmark")
+	.
 
 /**
  * # Regex Replace Component
@@ -62,3 +69,4 @@
 		return
 	var/to_replace = replacement.value
 	return current_regex.Replace(to_search, to_replace)
+

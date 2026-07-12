@@ -1283,3 +1283,45 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	if(lowercase_regex.Find(input))
 		return FALSE
 	return TRUE
+
+/**
+ * Run a few checks to validate a text input from the player to be used as needle for a regular expression datum.
+ * By design, the inputs cannot be unreasonably large, any sequence of backslashes bigger than two is trimmed, one if the backlashes are next to a parenthesis.
+ * Fixed byte length patterns are forbidden as well as they're another source of runtime issues. The purpose is to only allow inputs that wouldn't result in
+ * an invalid regex or anything that can be used to harm the server. If this repeatedly fails to do its job, then we should reconsider a few things.
+ */
+/proc/validate_regex_user_input(input)
+	// Disallow excessively long regexes as they may have been made in bad faith.
+	if(length_char(input) > MAX_REGEX_INPUT_LEN)
+		return null
+
+	// Nuke escape characters stacking, as that could be used to circumvent the next steps (plus if you need more than two, chances are you are something wrong)
+	var/static/regex/trim_backslash = new(@"\\{3,}", "g")
+	input = trim_backslash.Replace(input, @"\\")
+	var/static/regex/trim_escape_parenthesis = new (@"\\{2}(\(|\[|\{|\)|\]|\})", "g")
+	input = trim_escape_parenthesis.Replace(input, @"\\$1")
+
+
+	// Ensure that the number or left hand parenthesis matches the number of right hand ones, otherwise it'd generate runtime errors.
+	var/static/regex/left_hand_regex = new(@"(?<!\\)[\(\[\{]", "g")
+	var/static/regex/right_hand_regex = new(@"(?<!\\)[\)\]\}]", "g")
+	if(left_hand_regex.Count(input) != right_hand_regex.Count(input))
+		return null
+
+	// The look-behind patterns require a fixed byte length, which is another pain in the ass to implement, so let's just forbid it.
+	var/static/regex/no_fixed_byte_len_regex = new(@"(?<!\\)\(\?<(=|!)", "g")
+	if(no_fixed_byte_len_regex.Find(input))
+		return null
+
+	return input
+
+
+/regex/proc/Count(haystack)
+	next = 0
+	var/count = 0
+	var/length_stack = length_char(haystack)
+	while(next <= length_stack)
+		if(!Find_char(haystack, next))
+			return count
+		count++
+	return count
