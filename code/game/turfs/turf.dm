@@ -894,15 +894,20 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	nav_pass = null
 	nav_blockers = null
 	SSnavmesh.queue_turf_bake(src)
+	// Push a baked-flag-clear value so Rust's turfmap cache rebakes on next lookup instead of serving
+	// the stale still-baked bits it holds until the async re-bake above lands. 0 == baked flag clear.
+	rustg_turfmap_update(x, y, z, 0)
 	for(var/dir in GLOB.cardinals)
 		var/turf/neighbor = get_step(src, dir)
 		if(neighbor)
 			neighbor.nav_pass = null
 			neighbor.nav_blockers = null
 			SSnavmesh.queue_turf_bake(neighbor)
+			rustg_turfmap_update(neighbor.x, neighbor.y, neighbor.z, 0)
 
-///Compute all directions of this turf for pathability
-/turf/proc/nav_bake()
+///Compute all directions of this turf for pathability. `skip_rust_push` lets the mass prebake path
+///suppress per-turf FFI and bulk-push instead (see /datum/controller/subsystem/navmesh/proc/prebake_z).
+/turf/proc/nav_bake(skip_rust_push = FALSE)
 	var/packed = NAV_BAKED
 	var/list/blockers = null
 
@@ -918,6 +923,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	nav_pass = packed
 	nav_blockers = blockers
+	// Keep Rust's turfmap cache in sync with the freshly baked bits. Skipped by the mass prebake, which
+	// bulk-pushes the whole z-level in one FFI call instead.
+	if(!skip_rust_push)
+		rustg_turfmap_update(x, y, z, packed)
 
 /*
 * Classifies the outgoing edge from src to dest in direction `dir`, returning the OR of the relevant

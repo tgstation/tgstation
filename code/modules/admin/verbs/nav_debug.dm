@@ -55,16 +55,16 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 		return
 	var/datum/can_pass_info/info = nav_debug_profile(profile)
 
-	// Rust-side A* over the live navmesh (rust-g's turf_pathfinder feature). Synchronous, so a single
+	// Rust-side A* over the live navmesh (rust-g's turfmap_pathfinder feature). Synchronous, so a single
 	// before/after TICK_USAGE_REAL snapshot is valid. Wrapped in try/catch because this needs a rust-g
-	// build with turf_pathfinder enabled; falls back to reporting "unavailable" against a stock rust-g
+	// build with turfmap_pathfinder enabled; falls back to reporting "unavailable" against a stock rust-g
 	// DLL instead of crashing the verb.
 	var/list/rustg_nav_path
 	var/rustg_nav_ms
 	var/rustg_nav_available = TRUE
 	var/rustg_nav_start = TICK_USAGE_REAL
 	try
-		rustg_nav_path = rustg_nav_astar(start, goal, info, NAV_IS_FLYING(info), 200)
+		rustg_nav_path = rustg_turfmap_pathfinder(start, goal, info, NAV_IS_FLYING(info), 200)
 	catch
 		rustg_nav_available = FALSE
 		rustg_nav_path = list()
@@ -97,7 +97,7 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 		new /obj/effect/temp_visual/nav_marker(step)
 
 	to_chat(user, span_boldnotice("JPS (OLD): [length(jps_path) ? "[length(jps_path)] steps" : "NO PATH"] in [jps_ms]ms. \
-		Rust A*: [rustg_nav_available ? "[length(rustg_nav_path) ? "[length(rustg_nav_path)] steps" : "NO PATH"] in [rustg_nav_ms]ms" : "unavailable (rust-g missing turf_pathfinder)"]"))
+		Rust A*: [rustg_nav_available ? "[length(rustg_nav_path) ? "[length(rustg_nav_path)] steps" : "NO PATH"] in [rustg_nav_ms]ms" : "unavailable (rust-g missing turfmap_pathfinder)"]"))
 
 ADMIN_VERB(navmesh_inspect_turf, R_DEBUG, "Navmesh: Inspect Turf", "Prints the baked navmesh data for your current turf.", ADMIN_CATEGORY_DEBUG)
 	var/turf/here = get_turf(user.mob)

@@ -570,8 +570,9 @@
 
 /**
  * Computes the shortest path between two turfs over a live tgstation-style navmesh, using the
- * `turf_pathfinder` byondapi feature. This reads each turfs nav_pass and nav_blockers. Which NEED to be implemented on the DM side.
- *
+ * `turfmap_pathfinder` byondapi feature. Reads Rust's persistent nav_pass cache (kept in sync by
+ * rustg_turfmap_update / rustg_turfmap_bulk_update below), falling back to a live BYOND read + bake
+ * only for coords the cache doesn't hold baked.
  *
  * Arguments:
  * * start - The turf to path from
@@ -580,11 +581,25 @@
  * * is_flying - TRUE to use the flying nav_pass bits instead of ground
  * * max_range - Chebyshev distance cap from start, in tiles. 0 for unlimited
  *
- * Returns a /list of turfs from start to end (exclusive of neither), or an empty list if no path
- * exists.
+ * Returns a /list of turfs from start to end (exclusive of neither), or an empty list if no path exists.
  */
-#define rustg_nav_astar(start, end, pass_info, is_flying, max_range) \
-	RUSTG_CALL(RUST_G, "byond:rustg_nav_astar_ffi")(start, end, pass_info, is_flying, max_range)
+#define rustg_turfmap_pathfinder(start, end, pass_info, is_flying, max_range) \
+	RUSTG_CALL(RUST_G, "byond:rustg_turfmap_pathfinder_ffi")(start, end, pass_info, is_flying, max_range)
+
+/**
+ * Pushes a single turf's nav_pass bitfield into Rust's persistent (x, y, z) cache. Call right after a
+ * turf (re)bakes, and at any site that marks a turf dirty - pushing a value with the baked flag clear
+ * is the invalidation signal that makes the next pathfinder lookup rebake instead of trusting stale bits.
+ */
+#define rustg_turfmap_update(x, y, z, nav_pass) \
+	RUSTG_CALL(RUST_G, "byond:rustg_turfmap_update_ffi")(x, y, z, nav_pass)
+
+/**
+ * Bulk form of rustg_turfmap_update for z-level-load / round-start floods. `flat_list` is
+ * [x1, y1, z1, nav_pass1, x2, y2, z2, nav_pass2, ...]; its length must be a multiple of 4.
+ */
+#define rustg_turfmap_bulk_update(flat_list) \
+	RUSTG_CALL(RUST_G, "byond:rustg_turfmap_bulk_update_ffi")(flat_list)
 
 #define rustg_url_encode(text) RUSTG_CALL(RUST_G, "url_encode")("[text]")
 #define rustg_url_decode(text) RUSTG_CALL(RUST_G, "url_decode")(text)
