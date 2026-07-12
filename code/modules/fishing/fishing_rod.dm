@@ -541,7 +541,7 @@
 		SStgui.update_uis(src)
 		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/item/fishing_rod/ui_data(mob/user)
 	. = ..()
