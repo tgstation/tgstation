@@ -1,0 +1,4 @@
+author: "StrangeWeirdKitten, Toriate (sprites)"
+delete-after: True
+changes:
+  - rscadd: "Janitor borgs now have a crew operated end that allows their squishy overlords to do some cleaning themselves."

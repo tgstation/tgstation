@@ -49,6 +49,7 @@
 
 			departments[department_name] = list(
 				"head" = department_head_type && initial(department_head_type.title),
+				"color" = department_type.ui_color, // Prob shouldnt be here.
 			)
 
 		jobs[job.title] = list(

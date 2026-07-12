@@ -42,9 +42,6 @@
 	var/max_number_of_accessories = 5
 	/// A list of all accessories attached to us.
 	var/list/obj/item/clothing/accessory/attached_accessories
-	/// The overlay of the accessory we're demonstrating. Only index 1 will show up.
-	/// This is the overlay on the MOB, not the item itself.
-	var/mutable_appearance/accessory_overlay
 
 /datum/armor/clothing_under
 	bio = 10
@@ -110,16 +107,13 @@
 
 	return changed ? CONTEXTUAL_SCREENTIP_SET : .
 
-
 /obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return
-
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
-	if(accessory_overlay)
-		. += accessory_overlay
+	. += get_accessory_overlays()
 
 /obj/item/clothing/under/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
@@ -389,25 +383,15 @@
 
 /// Removes the passed accesory from our accessories list
 /obj/item/clothing/under/proc/remove_accessory(obj/item/clothing/accessory/removed, update = TRUE)
-
-
 	// Remove it from the list before detaching
 	LAZYREMOVE(attached_accessories, removed)
+	removed.detach(src, update)
 
-	removed.detach(src)
-
-	if(update)
-		update_accessory_overlay()
-
-/// Handles creating, updating and cutting the worn overlay mutable appearance.
-/obj/item/clothing/under/proc/update_accessory_overlay()
-	if(!length(attached_accessories))
-		accessory_overlay = null
-	else
-		accessory_overlay = mutable_appearance()
-		for(var/obj/item/clothing/accessory/accessory as anything in attached_accessories)
-			accessory_overlay.overlays += accessory.generate_accessory_overlay(src)
-	update_appearance() // so we update the suit inventory overlay too
+/// Get a list of all accessory overlays
+/obj/item/clothing/under/proc/get_accessory_overlays()
+	. = list()
+	for(var/obj/item/clothing/accessory/accessory as anything in attached_accessories)
+		. += accessory.generate_accessory_overlay(src)
 
 /obj/item/clothing/under/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -420,7 +404,10 @@
 	for(var/obj/item/clothing/accessory/worn_accessory as anything in attached_accessories)
 		remove_accessory(worn_accessory, update = FALSE)
 		worn_accessory.forceMove(drop_to)
-	update_accessory_overlay()
+
+	if (ishuman(loc))
+		var/mob/living/carbon/human/wearer = loc
+		wearer.update_clothing(slot_flags)
 
 /obj/item/clothing/under/atom_destruction(damage_flag)
 	dump_attachments()

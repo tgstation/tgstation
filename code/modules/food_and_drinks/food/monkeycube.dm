@@ -41,7 +41,7 @@
 		else if (spammer)
 			to_chat(spammer, span_warning("Bluespace harmonics prevent the creation of more than [cap] monkeys on the station at one time!"))
 	else
-		bananas = new(drop_location())
+		bananas = new spawned_mob(drop_location())
 
 	if (!QDELETED(bananas))
 		ADD_TRAIT(bananas, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
