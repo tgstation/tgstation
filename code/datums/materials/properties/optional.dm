@@ -120,18 +120,18 @@
 	if (isliving(target))
 		target.adjust_fire_stacks(source.get_property(id))
 
-/// Deals additional burn damage to vampires, property value determines damage
-/datum/material_property/vampires_bane
-	name = "Vampires' Bane"
-	id = MATERIAL_VAMPIRES_BANE
+/// Deals additional burn damage to mobs with the UNHOLY_BANEABLE trait (just vampires right now), property value determines damage
+/datum/material_property/unholy_bane
+	name = "Unholy Creatures' Bane"
+	id = MATERIAL_UNHOLY_BANE
 
-/datum/material_property/vampires_bane/get_descriptor(value)
-	return "vampires' bane"
+/datum/material_property/unholy_bane/get_descriptor(value)
+	return "unholy creatures' bane"
 
-/datum/material_property/vampires_bane/get_tooltip(value)
-	return "Deals [value] additional burn damage to vampires on contact"
+/datum/material_property/unholy_bane/get_tooltip(value)
+	return "Deals [value] additional burn damage to unholy creatures (vampires namely) on contact"
 
-/datum/material_property/vampires_bane/attach_to(datum/material/material)
+/datum/material_property/unholy_bane/attach_to(datum/material/material)
 	. = ..()
 	material.track_flags |= MATERIAL_TRACK_CONTACT | MATERIAL_TRACK_IMPACT
 	var/static/list/interaction_signals = list(
@@ -142,10 +142,10 @@
 	)
 	RegisterSignals(material, interaction_signals, PROC_REF(on_contact))
 
-/datum/material_property/vampires_bane/proc/on_contact(datum/material/source, atom/object, mob/living/target, mob/living/user, def_zone, skin_contact)
+/datum/material_property/unholy_bane/proc/on_contact(datum/material/source, atom/object, mob/living/target, mob/living/user, def_zone, skin_contact)
 	SIGNAL_HANDLER
 
-	if (!isvampire(target) || (!skin_contact && !source.get_property(MATERIAL_PENETRATING)))
+	if (!HAS_TRAIT(target, TRAIT_UNHOLY_BANEABLE) || (!skin_contact && !source.get_property(MATERIAL_PENETRATING)))
 		return
 
 	to_chat(target, span_userdanger("Contact with [object] sears your undead flesh!"))

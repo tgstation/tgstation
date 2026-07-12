@@ -1684,4 +1684,24 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mobs with this trait will always have be a priority target for mining mobs
 #define TRAIT_MINING_AGGRO "mining_aggro"
 
+/// Don't show the thinking indicator and therefore the typing indicator when we are about to type something...
+#define TRAIT_HIDE_THINKING_INDICATOR "hide_thinking_indicator"
+
+// species-specific traits, used in place of deprecable is_species() checks. Feel free to use them for other things as well
+#define TRAIT_NIGHTMARISH "nightmarish"
+/// Allow the mob to utilize most but not all abductor equipment. Complemented by TRAIT_ABDUCTOR_KNOWLEDGE for the antagonists.
+#define TRAIT_ABDUCTOR_KNOWLEDGE "abductor_knowledge"
+/// Allow the mob to be instantly scanned at a distance with the abductor scanner gizmo. FOr abductors and cows.
+#define TRAIT_ABDUCTOR_QUICK_SCAN "abductor_quick_scan"
+/// The creature is weak to silver (or any material with the unholy bane property). Namely for vampires.
+#define TRAIT_UNHOLY_BANEABLE "unholy_baneable"
+/// Weak to garlic
+#define TRAIT_GARLIC_BANEABLE "garlic_baneable"
+/// Allows the mob to use the spooky instruments that turn people into spooky scary skeletons, while being immune to them
+#define TRAIT_SPOOKY_INSTRUMENT_PLAYER "spooky_instrument_player"
+/// Allows flypeople to re-ingest what has come out of their mouth.
+#define TRAIT_VOMIT_SLURPER "vomit_slurper"
+/// It looks, sounds and smells like a ghost.
+#define TRAIT_GHOSTLY_MOB "ghostly_mob"
+
 // END TRAIT DEFINES

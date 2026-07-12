@@ -115,7 +115,12 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define isdummy(A) (istype(A, /mob/living/carbon/human/dummy))
 
-//Human sub-species
+/**
+ * Human sub-species checks.
+ * NOTE: our long term objective is to move away from hardcoded species checks in favor of traits, components, organs and bodyparts!
+ * It's more reusable and modulable code overall. If you think you're better off using traits etc. in place of an is_species check,
+ * then do just that.
+ */
 #define isabductor(A) (is_species(A, /datum/species/abductor))
 #define isspirit(A) (is_species(A, /datum/species/spirit))
 #define isgolem(A) (is_species(A, /datum/species/golem))
@@ -136,7 +141,6 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define ismonkey(A) (is_species(A, /datum/species/monkey))
 #define isandroid(A) (is_species(A, /datum/species/android))
 #define isnightmare(A) (is_species(A, /datum/species/shadow/nightmare))
-
 
 //More carbon mobs
 #define isalien(A) (istype(A, /mob/living/carbon/alien))

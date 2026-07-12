@@ -40,7 +40,7 @@
 	var/mob/living/living_pawn = controller.pawn
 
 	for(var/mob/living/potential_friend in oview(9, living_pawn))
-		if(!isashwalker(potential_friend))
+		if(!potential_friend.has_faction(living_pawn.faction))
 			continue
 		if(living_pawn.has_ally(REF(potential_friend)))
 			continue

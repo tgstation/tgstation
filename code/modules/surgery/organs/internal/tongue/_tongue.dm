@@ -361,6 +361,7 @@
 	desc = "A mysterious structure that allows for instant communication between users. Pretty impressive until you need to eat something."
 	icon_state = "tongueayylmao"
 	say_mod = "gibbers"
+	organ_traits = list(TRAIT_HIDE_THINKING_INDICATOR)
 	sense_of_taste = FALSE
 	modifies_speech = TRUE
 	var/mothership

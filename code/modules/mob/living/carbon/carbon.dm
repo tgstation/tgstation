@@ -326,16 +326,16 @@
 				span_danger("[src] throws up all over [p_them()]self!"),
 				span_userdanger("You throw up all over yourself!"),
 			)
-			add_mood_event("vomit", /datum/mood_event/vomitself)
+			if(!(vomit_flags & MOB_VOMIT_NO_MOOD))
+				add_mood_event("vomit", /datum/mood_event/vomitself)
 		distance = 0
-	else
-		if(message)
-			visible_message(
-				span_danger("[src] throws up!"),
-				span_userdanger("You throw up!"),
-			)
-			if(!isflyperson(src))
-				add_mood_event("vomit", /datum/mood_event/vomit)
+	else if(message)
+		visible_message(
+			span_danger("[src] throws up!"),
+			span_userdanger("You throw up!"),
+		)
+		if(!(vomit_flags & MOB_VOMIT_NO_MOOD))
+			add_mood_event("vomit", /datum/mood_event/vomit)
 
 	if(stun)
 		var/stun_time = 8 SECONDS

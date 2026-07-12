@@ -59,6 +59,6 @@
 /mob/living/basic/mining/proc/on_attacked(datum/source, atom/attacker, attack_flags)
 	SIGNAL_HANDLER
 
-	if(!isashwalker(attacker) || !has_faction(FACTION_ASHWALKER))
+	if(!has_faction(FACTION_ASHWALKER) || !astype(attacker, /mob/living)?.has_faction(FACTION_ASHWALKER))
 		return
 	remove_faction(FACTION_ASHWALKER)

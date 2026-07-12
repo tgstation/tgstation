@@ -65,34 +65,41 @@
 	QDEL_NULL(mineral_overlay)
 	return ..()
 
+///If we find 3 or more golem parts, then we can say that the status effect overlays are noticeable enough, so we won't need the outline filter.
+#define MAX_GOLEM_PARTS_FOUND_FOR_FILTER 2
+
 /datum/status_effect/golem/on_apply()
 	. = ..()
-	if (!ishuman(owner))
-		return FALSE
 	if (owner.has_status_effect(/datum/status_effect/golem))
 		return FALSE
 	if (applied_fluff)
 		to_chat(owner, span_notice(applied_fluff))
-	if (!overlay_state_prefix || !iscarbon(owner))
+	if (!overlay_state_prefix)
 		return TRUE
 
-	if(isgolem(owner))
+	var/golem_parts_found = 0
+	for (var/obj/item/bodypart/part in owner.get_bodyparts())
+		// these overlays won't look good on anything but golem limbs
+		if (part.limb_id != SPECIES_GOLEM)
+			continue
+		var/datum/bodypart_overlay/simple/golem_overlay/overlay = new()
+		overlay.add_to_bodypart(overlay_state_prefix, part)
+		active_overlays += overlay
+		golem_parts_found++
+	if(golem_parts_found)
 		var/mob/living/carbon/golem_owner = owner
-		for (var/obj/item/bodypart/part in golem_owner.get_bodyparts())
-			// these overlays won't look good on anything but golem limbs
-			if (part.limb_id != SPECIES_GOLEM)
-				continue
-			var/datum/bodypart_overlay/simple/golem_overlay/overlay = new()
-			overlay.add_to_bodypart(overlay_state_prefix, part)
-			active_overlays += overlay
 		golem_owner.update_body_parts()
-	else
-		owner.add_filter("[id]_filter", 2, outline_filter("color" = filter_color, "size" = 1.25))
-		var/the_filter = owner.get_filter("[id]_filter")
-		animate(the_filter, alpha = 0) // start at 0 alpha
-		animate(the_filter, alpha = 150, time = 7.5 SECONDS, loop = -1, easing = SINE_EASING) // fade in and out
-		animate(alpha = 50, time = 7.5 SECONDS, loop = -1, easing = SINE_EASING)
+		if(golem_parts_found > MAX_GOLEM_PARTS_FOUND_FOR_FILTER)
+			return TRUE
+
+	owner.add_filter("[id]_filter", 2, outline_filter("color" = filter_color, "size" = 1.25))
+	var/the_filter = owner.get_filter("[id]_filter")
+	animate(the_filter, alpha = 0) // start at 0 alpha
+	animate(the_filter, alpha = 150, time = 7.5 SECONDS, loop = -1, easing = SINE_EASING) // fade in and out
+	animate(alpha = 50, time = 7.5 SECONDS, loop = -1, easing = SINE_EASING)
 	return TRUE
+
+#undef MAX_GOLEM_PARTS_FOUND_FOR_FILTER
 
 /datum/status_effect/golem/on_creation(mob/living/new_owner, multiplier = 1)
 	///instead of straight out multiplying the duration, we use exponents to flatten the duration so it doesn't become exceedingly long for golems
@@ -478,11 +485,6 @@
 	var/glow_power = 1
 	var/glow_color = LIGHT_COLOR_DEFAULT
 	var/obj/effect/dummy/lighting_obj/moblight/lightbulb
-
-/datum/status_effect/golem_lightbulb/on_creation(mob/living/new_owner, ...)
-	if(!isgolem(new_owner))
-		duration *= 0.3
-	return ..()
 
 /datum/status_effect/golem_lightbulb/on_apply()
 	. = ..()

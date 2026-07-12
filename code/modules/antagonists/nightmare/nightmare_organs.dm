@@ -161,7 +161,7 @@
 	respawn_progress = 0
 
 /obj/item/organ/heart/nightmare/get_availability(datum/species/owner_species, mob/living/owner_mob)
-	if(isnightmare(owner_mob))
+	if(HAS_TRAIT(owner_mob, TRAIT_NIGHTMARISH))
 		return TRUE
 	return ..()
 

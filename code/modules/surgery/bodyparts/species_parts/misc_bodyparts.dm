@@ -61,6 +61,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	wing_types = null
+	bodypart_traits = list(TRAIT_ABDUCTOR_QUICK_SCAN)
 
 /obj/item/bodypart/chest/abductor/get_butt_sprite()
 	return icon('icons/mob/butts.dmi', BUTT_SPRITE_GREY)
