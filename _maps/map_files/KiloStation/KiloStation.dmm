@@ -3114,7 +3114,7 @@
 	pixel_x = -7;
 	pixel_y = 8
 	},
-/obj/item/food/grown/watermelon,
+/obj/item/food/grown/melonlike/watermelon,
 /obj/item/food/grown/wheat,
 /obj/item/food/grown/whitebeet,
 /obj/item/food/grown/apple,
