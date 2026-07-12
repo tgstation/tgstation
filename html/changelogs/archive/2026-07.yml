@@ -363,9 +363,39 @@
   - image: Re-saturates the occupations tab
   - bugfix: Bioscrambler can no longer decapitate you (or remove any of your limbs
       for that matter)
+  - bugfix: Fixed a bug where contractions were treated as rarer words than they should
+      be for the sake of partial language understanding
+  - balance: 'Tweaked the formula of partial language understanding: Less common words
+      are penalized less, more common words are rewarded more. In other words more
+      words will be understood on average.'
+  - balance: Common Second Language numbers were tweaked according to the new formula.
+      Now "75%", "50%", "25%".
+  - balance: Humans can now take Common Second Language. Doing so also grants Galactic
+      Uncommon.
+  - rscadd: Partially understood sentences now get an altered language icon in chat
+      and runechat, indicating that only some of the words were translated.
   SmArtKar:
   - bugfix: Adult raptors can no longer be picked up
   TheRyeGuyWhoWillNowDie:
   - spellcheck: Updated the station plaques for kilo and wawa
   lelandkemble:
   - bugfix: fixed the janitor keyring being unable to open doors
+  necromanceranne:
+  - balance: The pipegun types now deal more damage. Good luck.
+  - balance: 'New Junk Round: Sometimes, your pipegun will fire an entire ant colony
+      into your enemies bloodstream. Die, asshole. Ants.'
+2026-07-12:
+  Jacquerel:
+  - bugfix: You can cut off the heads of corpses using a chainsaw
+  - balance: You have to turn it on first
+  Melbert:
+  - bugfix: Fixes a few potential exploits in the message monitor
+  - balance: Message monitors located off station can no longer change the station's
+      message monitor password
+  SmArtKar:
+  - refactor: Refactored accessory rendering, fixing missing overlay updates and making
+      them affected by height
+  - bugfix: More than one accessory can now render above worn suits
+  - bugfix: Fixed non-monkey monkeycube spawns
+  TheRyeGuyWhoWillNowDie:
+  - admin: Event intervention time is now 20 seconds from 10
