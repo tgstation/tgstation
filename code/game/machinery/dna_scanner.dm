@@ -15,7 +15,7 @@
 	var/scan_level
 	var/precision_coeff = 1
 	var/message_cooldown
-	var/breakout_time = 5 SECONDS
+	var/breakout_time = 120 SECONDS
 	var/obj/machinery/computer/dna_console/linked_console = null
 
 /obj/machinery/dna_scannernew/RefreshParts()
