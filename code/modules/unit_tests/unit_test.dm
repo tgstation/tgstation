@@ -59,6 +59,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/static/list/uncreatables = null
 	/// Reference to the blank z-level containing our testing enviroment
 	var/static/datum/space_level/reservation
+	/// If this unit test requires a normal turf to run.
+	var/normal_floor_required = FALSE
 
 /proc/cmp_unit_test_priority(datum/unit_test/a, datum/unit_test/b)
 	return initial(a.priority) - initial(b.priority)
@@ -68,6 +70,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		var/datum/map_template/unit_tests/template = new
 		reservation = template.load_new_z()
 
+	if(test_flags & UNIT_TEST_FOCUS)
+		log_world("::error::[src] has UNIT_TEST_FOCUS present inside var/test_flags. This is a reminder to remove it from your commit!") // So CI fails.
 	uncreatables ||= build_list_of_uncreatables()
 
 	allocated = list()
@@ -79,8 +83,11 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		return
 
 	//Make sure that the top and bottom locations in the diagonal are floors. Anything else may get in the way of several tests.
-	TEST_ASSERT(isfloorturf(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not a floor ([run_loc_floor_bottom_left])")
-	TEST_ASSERT(isfloorturf(run_loc_floor_top_right), "run_loc_floor_top_right was not a floor ([run_loc_floor_top_right])")
+	TEST_ASSERT(isindestructiblefloor(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not an indestructable floor ([run_loc_floor_bottom_left])")
+	TEST_ASSERT(isindestructiblefloor(run_loc_floor_top_right), "run_loc_floor_top_right was not an indestructable floor ([run_loc_floor_top_right])")
+	if(normal_floor_required)
+		for(var/turf/open/turf in get_area_turfs(run_loc_floor_bottom_left.loc))
+			turf.ChangeTurf(/turf/open/floor)
 
 /datum/unit_test/Destroy()
 	QDEL_LIST(allocated)
@@ -90,6 +97,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 			if (istype(content, /obj/effect/landmark))
 				continue
 			qdel(content)
+	if(normal_floor_required)
+		for(var/turf/open/turf in get_area_turfs(run_loc_floor_bottom_left.loc))
+			turf.ChangeTurf(/turf/open/indestructible)
 	return ..()
 
 /datum/unit_test/proc/Run()

@@ -113,44 +113,42 @@
     }
 
     &__departments {
-          &.head {
-            background: colors.bg(var(--department-color));
+      &.head {
+        background: colors.bg(var(--department-color));
 
-            .job-name {
-              font-weight: bold;
-            }
-          }
-
-          background: var(--department-color);
-          border: var(--border-thickness-small) outset var(--department-color);
-          color: black;
-
-          > * {
-            height: calc(100% + 0.2em);
-            padding-bottom: 0.2em;
-          }
-
-          .options {
-            margin-right: var(--space-xxs);
-            background: hsla(0, 0%, 0%, 0.2);
-            height: 100%;
-          }
-
-        &--Captain {
-          border: var(--border-thickness-medium)
-            outset
-            hsla(60, 100%, 39.2%, 1);
-
-          &:first-child {
-            border-top: var(--border-thickness-medium)
-              outset
-              hsla(60, 100%, 39.2%, 1);
-          }
-
-          .job-name {
-            font-size: 17px;
-          }
+        .job-name {
+          font-weight: bold;
         }
+      }
+
+      background: colors.fg(var(--department-color));
+      border: var(--border-thickness-small) outset
+        colors.fg(var(--department-color));
+      color: black;
+
+      > * {
+        height: calc(100% + 0.2em);
+        padding-bottom: 0.2em;
+      }
+
+      .options {
+        margin-right: var(--space-xxs);
+        background: hsla(0, 0%, 0%, 0.2);
+        height: 100%;
+      }
+
+      &--Captain {
+        border: var(--border-thickness-medium) outset hsla(60, 100%, 39.2%, 1);
+
+        &:first-child {
+          border-top: var(--border-thickness-medium) outset
+            hsla(60, 100%, 39.2%, 1);
+        }
+
+        .job-name {
+          font-size: 17px;
+        }
+      }
 
       &__priority {
         border: var(--border-thickness-tiny) solid hsla(0, 0%, 0%, 0.3);

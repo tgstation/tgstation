@@ -3,7 +3,6 @@
  */
 
 /datum/unit_test/boulder_processing
-	test_flags = UNIT_TEST_FOCUS
 
 /datum/unit_test/boulder_processing/Run()
 	var/turf/refinery_loc = get_step(run_loc_floor_bottom_left, EAST)

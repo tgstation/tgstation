@@ -3,7 +3,7 @@
 	desc = "A heavily encoded damage control coordination stream, with special flags for hats."
 	spans = list(SPAN_ROBOT)
 	key = "d"
-	flags = NO_STUTTER
+	flags = LANGUAGE_NO_STUTTER
 	syllables = list(".", "|")
 	// ...|..||.||||.|.||.|.|.|||.|||
 	space_chance = 0
