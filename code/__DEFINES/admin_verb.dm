@@ -85,7 +85,7 @@ _ADMIN_VERB_CONTEXT(verb_path_name, verb_permissions, verb_name, verb_desc, verb
  * This is an example of how to use the above macro:
  * ```
  * ADMIN_VERB(name_of_verb, R_ADMIN, "Verb Name", "Verb Desc", "Verb Category")
- *     VERB_ARG(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
+ *     VERB_ARG_TYPED(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
  *     to_chat(user, "Hello [target]!")
  * ```
  * Note the implied `client/user` argument that is injected into the verb.

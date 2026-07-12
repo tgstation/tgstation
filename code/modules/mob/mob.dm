@@ -544,7 +544,7 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
  * for why this isn't atom/verb/examine()
  */
 GAME_VERB_CONTEXT(/mob, examinate, "Examine", "", null, /atom)
-	VERB_ARG(examinify, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF, VERB_ARG_SOURCE_VIEW, /atom)
+	VERB_ARG_TYPED(examinify, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF, VERB_ARG_SOURCE_VIEW, /atom)
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(run_examinate), examinify))
 

@@ -1,5 +1,5 @@
 ADMIN_VERB(makepAI, R_FUN, "Make pAI", "Specify a location to spawn a pAI device, then specify a key to play that pAI", ADMIN_CATEGORY_FUN)
-	VERB_ARG(target, VERB_ARG_TYPE_TURF, VERB_ARG_SOURCE_VIEW, /turf)
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_TURF, VERB_ARG_SOURCE_VIEW, /turf)
 
 	var/list/available = list()
 	for(var/mob/player as anything in GLOB.player_list)

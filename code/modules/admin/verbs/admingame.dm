@@ -2,7 +2,7 @@ ADMIN_VERB(cmd_player_panel, R_ADMIN, "Player Panel", "See all players and their
 	user.holder.player_panel_new()
 
 ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", /mob)
-	VERB_ARG(player, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
+	VERB_ARG_TYPED(player, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	log_admin("[key_name(user)] checked the individual player panel for [key_name(player)][isobserver(user.mob)?"":" while in game"].")
 
 	if(!player)
@@ -153,7 +153,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", /m
 	BLACKBOX_LOG_ADMIN_VERB("Player Panel")
 
 ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupants PP", /obj)
-	VERB_ARG(target, VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_WORLD, /obj)
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_WORLD, /obj)
 	var/list/options = list()
 
 	// Vehicles
@@ -224,7 +224,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupan
 		return
 
 GAME_VERB_PROC(/client, cmd_admin_godmode, "Godmode", "Admin.Game")
-	VERB_ARG(mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
+	VERB_ARG_TYPED(mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(!check_rights(R_ADMIN))
 		return
 
@@ -448,7 +448,7 @@ ADMIN_VERB(combo_hud, R_ADMIN, "Toggle Combo HUD", "Toggles the Admin Combo HUD.
 #undef ADMIN_HUDS
 
 ADMIN_VERB(show_traitor_panel, R_ADMIN, "Show Traitor Panel", "Edit mobs's memory and role", ADMIN_CATEGORY_MAIN)
-	VERB_ARG(target_mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
+	VERB_ARG_TYPED(target_mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/datum/mind/target_mind = target_mob.mind
 	if(!target_mind)
 		to_chat(user, "This mob has no mind!", confidential = TRUE)
@@ -460,7 +460,7 @@ ADMIN_VERB(show_traitor_panel, R_ADMIN, "Show Traitor Panel", "Edit mobs's memor
 	BLACKBOX_LOG_ADMIN_VERB("Traitor Panel")
 
 ADMIN_VERB(show_skill_panel, R_ADMIN, "Show Skill Panel", "Edit mobs's experience and skill levels", ADMIN_CATEGORY_MAIN)
-	VERB_ARG(target_mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
+	VERB_ARG_TYPED(target_mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/datum/mind/target_mind
 	if(istype(target_mob, /datum/mind))
 		target_mind = target_mob
