@@ -80,6 +80,13 @@
 		return FALSE
 	return TRUE
 
+/obj/vehicle/sealed/mecha/savannah_ivanov/can_interact_with(atom/target, mob/user, list/modifiers)
+	. = ..()
+	if (!. || !flying)
+		return
+	balloon_alert(owner, "not while airborne!")
+	return FALSE
+
 ///Savannah Skyfall
 /datum/action/vehicle/sealed/mecha/skyfall
 	name = "Savannah Skyfall"

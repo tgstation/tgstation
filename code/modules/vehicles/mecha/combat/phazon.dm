@@ -72,6 +72,13 @@
 	else
 		phasing_energy_drain = initial(phasing_energy_drain)
 
+/obj/vehicle/sealed/mecha/phazon/can_interact_with(atom/target, mob/user, list/modifiers)
+	. = ..()
+	if (!. || !phasing)
+		return
+	balloon_alert(owner, "not while phasing!")
+	return FALSE
+
 /datum/action/vehicle/sealed/mecha/mech_switch_damtype
 	name = "Reconfigure arm microtool arrays"
 	button_icon_state = "mech_damtype_brute"
