@@ -25,7 +25,7 @@
 	/// The 1920s English/Welsh name appended to the end of the maid's title.
 	var/antiquated_name
 	/// A large list of names. One is randomly chosen upon mirror maid creation and removed
-	/// to prevent duplicates. Once empty, the list is restored to its original state.
+	/// to prevent duplicates. If somehow emptied, the list is restored to its original state.
 	var/static/list/antiquated_names = GLOB.mirror_maid_names.Copy()
 
 /mob/living/basic/heretic_summon/maid_in_the_mirror/Initialize(mapload)
