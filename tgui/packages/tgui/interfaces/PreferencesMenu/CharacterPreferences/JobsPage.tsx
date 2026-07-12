@@ -192,11 +192,23 @@ type JobRowProps = {
   name: string;
   dragging: number;
   setDragging: (dragging: number) => void;
+  hoveringOver: string;
+  setHoveringOver: (hoveringOver: string) => void;
 };
 
 function JobRow(props: JobRowProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { className, job, name, isTop, isOnly, dragging, setDragging } = props;
+  const {
+    className,
+    job,
+    name,
+    isTop,
+    isOnly,
+    dragging,
+    setDragging,
+    hoveringOver,
+    setHoveringOver,
+  } = props;
   const {
     character_profiles,
     overflow_role,
@@ -262,11 +274,11 @@ function JobRow(props: JobRowProps) {
         borderTop: `${isTop ? null : '0px'}`,
       }}
     >
-      <Stack align="top">
+      <Stack align="top" g={0}>
         <Stack.Item grow={1.5}>
-          <Stack vertical g={0}>
+          <Stack vertical g={0} fill>
             <Stack.Item
-              className="job-name"
+              className={`job-name${hoveringOver === name ? ' hovered' : ''}`}
               pl={'0.3em'}
               pt={'0.2em'}
               pb={isOnly ? '0.2em' : 0}
@@ -274,12 +286,19 @@ function JobRow(props: JobRowProps) {
               onDragOver={(e) => {
                 e.preventDefault();
               }}
+              onDragEnter={(e) => {
+                setHoveringOver(name);
+              }}
+              //   onDragLeave={(e) => {
+              //     setHoveringOver('');
+              //   }}
               onDrop={() => {
                 act('set_job_to_profile', {
                   job: name,
                   profile: dragging + 1, // +1 because UI is 0-indexed but DM is 1-indexed
                 });
                 setDragging(-1);
+                setHoveringOver('');
               }}
             >
               <Tooltip content={job.description} position="bottom-start">
@@ -325,6 +344,8 @@ type DepartmentProps = {
   department: string;
   dragging: number;
   setDragging: (dragging: number) => void;
+  hoveringOver: string;
+  setHoveringOver: (hoveringOver: string) => void;
 } & PropsWithChildren;
 
 function Department(props: DepartmentProps) {
@@ -370,6 +391,8 @@ function Department(props: DepartmentProps) {
               isOnly={jobsForDepartment.length === 1}
               dragging={dragging}
               setDragging={setDragging}
+              hoveringOver={props.hoveringOver}
+              setHoveringOver={props.setHoveringOver}
             />
           );
         })}
@@ -417,10 +440,11 @@ function JoblessRoleDropdown(props) {
 
 type CharacterSectionsProps = {
   setDragging: (dragging: number) => void;
+  setHoveringOver: (hoveringOver: string) => void;
 };
 
 function CharacterSection(props: CharacterSectionsProps) {
-  const { setDragging } = props;
+  const { setDragging, setHoveringOver } = props;
   const { data } = useBackend<PreferencesMenuData>();
   const { character_profiles } = data;
 
@@ -455,7 +479,10 @@ function CharacterSection(props: CharacterSectionsProps) {
                         draggable
                         color="transparent"
                         onDragStart={() => setDragging(index)}
-                        onDragEnd={() => setDragging(-1)}
+                        onDragEnd={() => {
+                          setDragging(-1);
+                          setHoveringOver('');
+                        }}
                       >
                         {profile}
                       </Button>
@@ -480,12 +507,16 @@ function CharacterSection(props: CharacterSectionsProps) {
 
 export function JobsPage() {
   const [dragging, setDragging] = useState(-1);
+  const [hoveringOver, setHoveringOver] = useState('');
 
   return (
     <>
       <Stack>
         <Stack.Item grow>
-          <CharacterSection setDragging={setDragging} />
+          <CharacterSection
+            setDragging={setDragging}
+            setHoveringOver={setHoveringOver}
+          />
         </Stack.Item>
         <Stack.Item>
           <JoblessRoleDropdown />
@@ -501,21 +532,29 @@ export function JobsPage() {
                   department="Engineering"
                   dragging={dragging}
                   setDragging={setDragging}
+                  hoveringOver={hoveringOver}
+                  setHoveringOver={setHoveringOver}
                 />
                 <Department
                   department="Science"
                   dragging={dragging}
                   setDragging={setDragging}
+                  hoveringOver={hoveringOver}
+                  setHoveringOver={setHoveringOver}
                 />
                 <Department
                   department="Silicon"
                   dragging={dragging}
                   setDragging={setDragging}
+                  hoveringOver={hoveringOver}
+                  setHoveringOver={setHoveringOver}
                 />
                 <Department
                   department="Assistant"
                   dragging={dragging}
                   setDragging={setDragging}
+                  hoveringOver={hoveringOver}
+                  setHoveringOver={setHoveringOver}
                 />
               </Stack>
             </Stack.Item>
@@ -526,16 +565,22 @@ export function JobsPage() {
                   department="Captain"
                   dragging={dragging}
                   setDragging={setDragging}
+                  hoveringOver={hoveringOver}
+                  setHoveringOver={setHoveringOver}
                 />
                 <Department
                   department="Service"
                   dragging={dragging}
                   setDragging={setDragging}
+                  hoveringOver={hoveringOver}
+                  setHoveringOver={setHoveringOver}
                 />
                 <Department
                   department="Cargo"
                   dragging={dragging}
                   setDragging={setDragging}
+                  hoveringOver={hoveringOver}
+                  setHoveringOver={setHoveringOver}
                 />
               </Stack>
             </Stack.Item>
@@ -546,11 +591,15 @@ export function JobsPage() {
                   department="Security"
                   dragging={dragging}
                   setDragging={setDragging}
+                  hoveringOver={hoveringOver}
+                  setHoveringOver={setHoveringOver}
                 />
                 <Department
                   department="Medical"
                   dragging={dragging}
                   setDragging={setDragging}
+                  hoveringOver={hoveringOver}
+                  setHoveringOver={setHoveringOver}
                 />
               </Stack>
             </Stack.Item>

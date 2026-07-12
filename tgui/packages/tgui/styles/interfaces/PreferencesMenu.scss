@@ -111,13 +111,15 @@
     > * {
       flex: 1;
     }
-
     &__departments {
       &.head {
         background: colors.bg(var(--department-color));
 
         .job-name {
           font-weight: bold;
+          &.hovered {
+            background: colors.hover(colors.bg(var(--department-color)));
+          }
         }
       }
 
@@ -126,12 +128,16 @@
         colors.fg(var(--department-color));
       color: black;
 
-          .options {
-            padding-right: var(--space-xxs);
-            padding-bottom: 0.2em;
-            background: hsla(0, 0%, 0%, 0.2);
-          }
+      .options {
+        padding-right: var(--space-xxs);
+        padding-bottom: 0.2em;
+        background: hsla(0, 0%, 0%, 0.2);
+      }
+      .job-name {
+        &.hovered {
+          background: colors.hover(colors.fg(var(--department-color)));
         }
+      }
 
       &--Captain {
         border: var(--border-thickness-medium) outset hsla(60, 100%, 39.2%, 1);
@@ -143,6 +149,9 @@
 
         .job-name {
           font-size: 17px;
+          &.hovered {
+            background: colors.hover(colors.fg(var(--department-color)));
+          }
         }
       }
 
