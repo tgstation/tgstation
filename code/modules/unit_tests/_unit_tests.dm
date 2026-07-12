@@ -274,7 +274,6 @@
 #include "outfit_sanity.dm"
 #include "oxyloss_suffocation.dm"
 #include "paintings.dm"
-#include "pick_up_and_hold_pet.dm"
 #include "pills.dm"
 #include "plane_double_transform.dm"
 #include "plane_dupe_detector.dm"
