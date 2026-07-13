@@ -329,6 +329,7 @@
 		else if(HAS_TRAIT(rod.bait, TRAIT_BASIC_QUALITY_BAIT))
 			bait_modifier += 4
 
+	// up to a ~25% bonus
 	return skill_modifier + bait_modifier
 
 /obj/item/fishing_hook/anomaly/proc/dimensional_catch_bonus(obj/item/fishing_rod/rod, obj/item/caught, mob/living/user)
@@ -337,7 +338,7 @@
 	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED))
 		return
 
-	if(!prob(12 + get_probability_bonuses(rod, user)))
+	if(!prob(25 + get_probability_bonuses(rod, user)))
 		return
 
 	var/obj/item/fish/caught_fish = caught
@@ -357,7 +358,7 @@
 	)
 
 	// adds chance of inheriting rod materials
-	if((rod.material_flags & MATERIAL_EFFECTS))
+	if(rod.material_flags & MATERIAL_EFFECTS)
 		for(var/rod_material_type, rod_material_amount in rod.custom_materials)
 			material_weights[rod_material_type] = 40 * (rod_material_amount / values_sum(rod.custom_materials))
 
@@ -372,7 +373,7 @@
 /obj/item/fishing_hook/anomaly/proc/bioscrambler_catch_bonus(obj/item/fishing_rod/rod, obj/item/caught, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED) || !prob(20 + get_probability_bonuses(rod, user)))
+	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED) || !prob(25 + get_probability_bonuses(rod, user)))
 		return
 
 	var/list/random_pool = list()
@@ -389,7 +390,7 @@
 /obj/item/fishing_hook/anomaly/proc/pyro_catch_effect(obj/item/fishing_rod/rod, obj/item/caught, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED) || !prob(80 + get_probability_bonuses(rod, user)))
+	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED) || !prob(85 + get_probability_bonuses(rod, user)))
 		return
 
 	var/alist/fry_times = alist(
@@ -403,7 +404,7 @@
 /obj/item/fishing_hook/anomaly/proc/ectoplasm_catch_effect(obj/item/fishing_rod/rod, obj/item/caught, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED) || !prob(20 + get_probability_bonuses(rod, user)))
+	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED) || !prob(50 + get_probability_bonuses(rod, user)))
 		return
 
 	caught.AddComponent(/datum/component/haunted_item, \
@@ -416,7 +417,7 @@
 /obj/item/fishing_hook/anomaly/proc/hallucination_catch_effect(obj/item/fishing_rod/rod, obj/item/caught, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED) || !prob(20 + get_probability_bonuses(rod, user)))
+	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED) || !prob(50 + get_probability_bonuses(rod, user)))
 		return
 
 	caught.transform = caught.transform.Scale(pick(0.5, 0.75, 1, 1.25, 1.5))
