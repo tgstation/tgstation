@@ -422,7 +422,7 @@
 	name = "Plastic Katana"
 	id = "toy_katana"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/toy/katana
 	category = list(
 		RND_CATEGORY_HACKED,
