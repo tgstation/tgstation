@@ -170,7 +170,7 @@
 
 	..()
 
-/obj/structure/beebox/interact(mob/user)
+/obj/structure/beebox/interact(mob/living/user)
 	. = ..()
 	if(!user.bee_friendly())
 		//Time to get stung!
