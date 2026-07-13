@@ -97,7 +97,7 @@
 		role_name_text = "alien larva",
 		chat_text_border_icon = /mob/living/carbon/alien/larva,
 	)
-	on_poll_concluded(gib_on_success, chosen_one)
+	INVOKE_ASYNC(src, PROC_REF(on_poll_concluded), gib_on_success, chosen_one)
 
 /// Poll has concluded with a suitor
 /obj/item/organ/body_egg/alien_embryo/proc/on_poll_concluded(gib_on_success, mob/dead/observer/ghost)
