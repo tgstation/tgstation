@@ -115,9 +115,9 @@
 	if(iscarbon(new_owner))
 		//increase the duration for each stone bodypart, while reducing the benefit of higher multipliers in relation to the inscreased duration
 		duration_mult = 0.1
-		for(var/obj/item/bodypart/part as anything in owner.get_bodyparts())
-			if (part.biological_state & BIO_STONE)
-				duration_mult += duration_mult_per_bodypart
+		for(var/obj/item/bodypart/part as anything in new_owner.get_bodyparts())
+			if(part.biological_state & BIO_STONE)
+				duration_mult += duration_mult_per_bodypart // should be 1 at 6 stone-y bodyparts
 				exponent = max(0.2, exponent - 0.05) // 0.2 at 6 bodyparts
 	else if(new_owner.mob_biotypes & MOB_MINERAL)
 		exponent = 0.2
