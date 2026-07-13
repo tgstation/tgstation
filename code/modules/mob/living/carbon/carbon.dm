@@ -476,44 +476,37 @@
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 
-	var/obj/item/clothing/glasses/glasses = get_item_by_slot(ITEM_SLOT_EYES)
-	if(istype(glasses))
-		new_sight |= glasses.vision_flags
-		if(glasses.invis_override)
-			set_invis_see(glasses.invis_override)
-		else
-			set_invis_see(min(glasses.invis_view, see_invisible))
-		if(!isnull(glasses.lighting_cutoff))
-			lighting_cutoff = max(lighting_cutoff, glasses.lighting_cutoff)
-		if(length(glasses.color_cutoffs))
-			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, glasses.color_cutoffs)
-
-	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
-		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_HIGH)
-
-	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
-		new_sight |= SEE_TURFS
-		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
-
-	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
-		new_sight |= SEE_MOBS
-		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
-
-	if (HAS_TRAIT(src, TRAIT_MINOR_NIGHT_VISION))
-		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_LOW)
-
-	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
-		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-
-	if(HAS_TRAIT(src, TRAIT_ECHOLOCATOR))
-		new_sight |= SEE_MOBS|SEE_TURFS
-		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_FULLBRIGHT)
+	new_sight |= get_sight_and_cutoffs()
 
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
 		new_sight = NONE
 
 	set_sight(new_sight)
 	return ..()
+
+/// Modifies lighting_cutoff/lighting_color_cutoffs/see_invisible and returns additional sight flags to apply
+/mob/living/carbon/proc/get_sight_and_cutoffs()
+	. = NONE
+	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_HIGH)
+
+	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
+		. |= SEE_TURFS
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
+
+	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
+		. |= SEE_MOBS
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
+
+	if (HAS_TRAIT(src, TRAIT_MINOR_NIGHT_VISION))
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_LOW)
+
+	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
+		. |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+
+	if(HAS_TRAIT(src, TRAIT_ECHOLOCATOR))
+		. |= SEE_MOBS|SEE_TURFS
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_FULLBRIGHT)
 
 /**
  * Calculates how visually impaired the mob is by their equipment and other factors
