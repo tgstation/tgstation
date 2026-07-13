@@ -315,8 +315,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	QDEL_NULL(mob_smoke)
 	how_long_have_we_been_smokin = 0 SECONDS
 
-/obj/item/cigarette/proc/on_forcesay(mob/living/source)
+/obj/item/cigarette/proc/on_forcesay(mob/living/source, major)
 	SIGNAL_HANDLER
+
+	if(!major)
+		return
 	source.apply_status_effect(/datum/status_effect/choke, src, lit, choke_forever ? -1 : rand(25 SECONDS, choke_time_max))
 
 /obj/item/cigarette/proc/on_mob_dir_change(mob/living/source, old_dir, new_dir)

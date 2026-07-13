@@ -18,8 +18,12 @@
 	var/datum/crafting_recipe/food/beef_wellington/recipe = locate() in GLOB.cooking_recipes
 
 	// bake_a_cake should already check that batters and doughes can be made, so let's not waste time making the dough from scratch
-	for(var/ingredient in recipe.reqs)
-		var/amount = recipe.reqs[ingredient]
+	var/list/to_spawn = recipe.reqs | recipe.unit_test_spawn_extras
+	for(var/ingredient in to_spawn)
+		var/datum/ingredient_path = ingredient
+		if(ingredient_path::abstract_type == ingredient_path) //skip abstract types
+			continue
+		var/amount = to_spawn[ingredient]
 		if(ispath(ingredient, /datum/reagent))
 			beaker.reagents.add_reagent(ingredient, amount)
 		else if(ispath(ingredient, /obj/item/food/meat)) //we will use vegetable variants for this

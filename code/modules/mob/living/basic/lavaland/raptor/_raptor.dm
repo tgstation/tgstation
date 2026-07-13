@@ -364,7 +364,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 			base_pixel_w = initial(base_pixel_w)
 			mob_size = initial(mob_size)
 
-	can_be_held = initial(density)
+	can_be_held = initial(can_be_held)
 	density = initial(density)
 	move_resist = initial(move_resist)
 	can_breed = initial(can_breed)
