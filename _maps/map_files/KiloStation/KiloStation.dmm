@@ -9587,7 +9587,11 @@
 	},
 /obj/machinery/firealarm/directional/north,
 /obj/structure/cable,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/directional/north{
+	c_tag = "Supermatter Engine";
+	name = "supermatter camera";
+	network = list("engine")
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "dgu" = (
