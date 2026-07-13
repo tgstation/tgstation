@@ -19,7 +19,6 @@ have ways of interacting with a specific mob and control it.
 		BB_MONKEY_GUN_NEURONS_ACTIVATED = FALSE,
 		BB_MONKEY_GUN_WORKED = TRUE,
 		BB_SONG_LINES = MONKEY_SONG,
-		BB_RESISTING = FALSE,
 		BB_MONKEY_GIVE_CHANCE = 5,
 		BB_MONKEY_PICKUP_IS_PICKPOCKET = null,
 		BB_MONKEY_IDLE_COMMON_EMOTES = list("screech", "roar"),

@@ -13,7 +13,6 @@
 #define BB_MONKEY_TARGET_MONKEYS "BB_monkey_target_monkeys"
 #define BB_MONKEY_DISPOSING "BB_monkey_disposing"
 #define BB_MONKEY_RECRUIT_COOLDOWN "BB_monkey_recruit_cooldown"
-#define BB_RESISTING "BB_resisting"
 /// Monkey is not necessarily a wild animal so it won't resort to fighting over food and such
 #define BB_MONKEY_TAMED "BB_monkey_tamed"
 /// Chance to give our held item to a nearby mob

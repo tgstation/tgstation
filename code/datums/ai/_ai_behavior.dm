@@ -110,11 +110,11 @@
 /datum/bt_node/ai_behavior/proc/perform_async(datum/ai_controller/controller)
 	return
 
-/// Call from an async worker after its sleeping call, before committing side effects. FALSE means the behavior was aborted/reset mid-flight  bail out without side effects.
+/// Call from an async behavior after its sleeping call, before committing side effects. FALSE means the behavior was aborted/reset mid-flight  bail out without side effects.
 /datum/bt_node/ai_behavior/proc/async_still_valid()
 	return async_running && !QDELETED(owning_controller?.pawn)
 
-/// Call from an async worker to commit its result. No-op if the behavior was aborted mid-flight.
+/// Call from an async behavior to commit its result. No-op if the behavior was aborted mid-flight.
 /datum/bt_node/ai_behavior/proc/finish_async(result_flags)
 	if(!async_still_valid())
 		return
