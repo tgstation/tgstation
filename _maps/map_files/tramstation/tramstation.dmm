@@ -6354,18 +6354,6 @@
 /obj/effect/landmark/start/cyborg,
 /turf/open/floor/iron/dark,
 /area/station/science/lower)
-"bfj" = (
-/obj/machinery/flasher/directional/west{
-	id = "AI"
-	},
-/obj/machinery/camera/motion/directional/west{
-	c_tag = "Secure - AI Upload"
-	},
-/obj/machinery/ai_slipper{
-	uses = 8
-	},
-/turf/open/floor/circuit/red,
-/area/station/ai/upload/chamber)
 "bfr" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/junction/flip{
@@ -15484,23 +15472,6 @@
 "elr" = (
 /turf/closed/wall,
 /area/station/commons/dorms)
-"elt" = (
-/obj/machinery/status_display/evac/directional/east,
-/obj/structure/table/wood/fancy/green,
-/obj/effect/spawner/round_default_module,
-/obj/item/ai_module/law/supplied/freeform{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/ai_module/law/supplied/freeform{
-	pixel_y = 1;
-	pixel_x = -2
-	},
-/obj/item/ai_module/law/supplied/freeform{
-	pixel_y = 2
-	},
-/turf/open/floor/circuit/green,
-/area/station/ai/upload/chamber)
 "elB" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
@@ -18022,11 +17993,6 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/science/lower)
-"fiO" = (
-/obj/structure/table,
-/obj/item/aicard,
-/turf/open/floor/iron/dark,
-/area/station/engineering/storage/tech)
 "fiP" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/electrical{
@@ -20235,19 +20201,6 @@
 /obj/structure/sign/calendar/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
-"fYz" = (
-/obj/structure/table,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/aicard,
-/obj/item/circuitboard/aicore,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/item/circuitboard/machine/ai_law_rack/small{
-	pixel_y = -2
-	},
-/turf/open/floor/iron/cafeteria,
-/area/station/command/heads_quarters/rd)
 "fYB" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/catwalk_floor,
@@ -23944,6 +23897,11 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood/large,
 /area/station/service/theater)
+"hrM" = (
+/obj/structure/table,
+/obj/item/aicard,
+/turf/open/floor/iron/dark,
+/area/station/engineering/storage/tech)
 "hrS" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/newscaster/directional/south,
@@ -24344,6 +24302,10 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
+"hCq" = (
+/obj/item/radio/intercom/interrogation/inside/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/security/interrogation)
 "hCv" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/iron/cafeteria,
@@ -25078,12 +25040,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/armory)
-"hPv" = (
-/obj/machinery/status_display/ai/directional/east,
-/obj/structure/table/wood/fancy/green,
-/obj/effect/spawner/random/aimodule/harmless,
-/turf/open/floor/circuit/green,
-/area/station/ai/upload/chamber)
 "hPA" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -26301,6 +26257,17 @@
 	},
 /turf/open/floor/glass,
 /area/station/command/meeting_room)
+"imQ" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/table/wood/fancy/blue,
+/obj/item/ai_module/law/supplied/freeform,
+/obj/effect/spawner/random/aimodule/neutral,
+/obj/machinery/door/window/left/directional/east{
+	name = "Neutral Modules";
+	req_access = list("captain")
+	},
+/turf/open/floor/circuit,
+/area/station/ai/upload/chamber)
 "inn" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -35636,6 +35603,23 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"lpo" = (
+/obj/machinery/status_display/evac/directional/east,
+/obj/structure/table/wood/fancy/green,
+/obj/effect/spawner/round_default_module,
+/obj/item/ai_module/law/supplied/freeform{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/ai_module/law/supplied/freeform{
+	pixel_y = 1;
+	pixel_x = -2
+	},
+/obj/item/ai_module/law/supplied/freeform{
+	pixel_y = 2
+	},
+/turf/open/floor/circuit/green,
+/area/station/ai/upload/chamber)
 "lpu" = (
 /obj/structure/table,
 /obj/item/camera,
@@ -38128,6 +38112,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"meq" = (
+/obj/machinery/status_display/ai/directional/east,
+/obj/structure/table/wood/fancy/green,
+/obj/effect/spawner/random/aimodule/harmless,
+/turf/open/floor/circuit/green,
+/area/station/ai/upload/chamber)
 "mer" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/blue{
@@ -38569,13 +38559,6 @@
 /obj/machinery/meter,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"mmY" = (
-/obj/machinery/camera/motion/directional/east,
-/obj/machinery/ai_law_rack/base/core{
-	pixel_y = 12
-	},
-/turf/open/floor/circuit/green,
-/area/station/ai/upload/chamber)
 "mns" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 1
@@ -41343,6 +41326,13 @@
 /obj/structure/sign/calendar/directional/north,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
+"noS" = (
+/obj/item/radio/intercom/directional/east{
+	name = "ai intercom";
+	frequency = 1447
+	},
+/turf/open/floor/circuit/green,
+/area/station/ai/upload/chamber)
 "noW" = (
 /obj/structure/table/optable{
 	id_tag = "lowersurgery"
@@ -43904,6 +43894,18 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"omC" = (
+/obj/machinery/flasher/directional/west{
+	id = "AI"
+	},
+/obj/machinery/camera/motion/directional/west{
+	c_tag = "Secure - AI Upload"
+	},
+/obj/machinery/ai_slipper{
+	uses = 8
+	},
+/turf/open/floor/circuit/red,
+/area/station/ai/upload/chamber)
 "omH" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -44528,6 +44530,11 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/engine)
+"oAB" = (
+/obj/structure/table,
+/obj/item/radio/intercom/interrogation/outside,
+/turf/open/floor/iron/dark,
+/area/station/security/interrogation)
 "oAG" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/stripes{
@@ -45658,6 +45665,14 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
+"oYM" = (
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/obj/machinery/ai_slipper{
+	uses = 8
+	},
+/turf/open/floor/circuit,
+/area/station/ai/upload/chamber)
 "oYS" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/disposalpipe/segment{
@@ -53779,16 +53794,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics_engine)
-"rPq" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/table/wood/fancy/red,
-/obj/effect/spawner/random/aimodule/harmful,
-/obj/machinery/door/window/left/directional/east{
-	name = "Dangerous Modules";
-	req_access = list("captain")
-	},
-/turf/open/floor/circuit/red,
-/area/station/ai/upload/chamber)
 "rPs" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -58718,17 +58723,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
-"tAG" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/table/wood/fancy/blue,
-/obj/item/ai_module/law/supplied/freeform,
-/obj/effect/spawner/random/aimodule/neutral,
-/obj/machinery/door/window/left/directional/east{
-	name = "Neutral Modules";
-	req_access = list("captain")
-	},
-/turf/open/floor/circuit,
-/area/station/ai/upload/chamber)
 "tAH" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -60095,6 +60089,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"tYY" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/aicard,
+/obj/item/circuitboard/aicore,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/circuitboard/machine/ai_law_rack/small{
+	pixel_y = -2
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/command/heads_quarters/rd)
 "tZf" = (
 /obj/structure/rack,
 /obj/item/pickaxe,
@@ -64971,6 +64978,16 @@
 	},
 /turf/open/floor/plating,
 /area/station/commons/vacant_room)
+"vBG" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/table/wood/fancy/red,
+/obj/effect/spawner/random/aimodule/harmful,
+/obj/machinery/door/window/left/directional/east{
+	name = "Dangerous Modules";
+	req_access = list("captain")
+	},
+/turf/open/floor/circuit/red,
+/area/station/ai/upload/chamber)
 "vBM" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -68619,6 +68636,13 @@
 /obj/structure/weightmachine,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
+"wSY" = (
+/obj/machinery/camera/motion/directional/east,
+/obj/machinery/ai_law_rack/base/core{
+	pixel_y = 12
+	},
+/turf/open/floor/circuit/green,
+/area/station/ai/upload/chamber)
 "wTa" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
@@ -70538,13 +70562,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/plating,
 /area/station/security/processing)
-"xGM" = (
-/obj/item/radio/intercom/directional/east{
-	name = "ai intercom";
-	frequency = 1447
-	},
-/turf/open/floor/circuit/green,
-/area/station/ai/upload/chamber)
 "xGX" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 8
@@ -71793,14 +71810,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
-"yeH" = (
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/obj/machinery/ai_slipper{
-	uses = 8
-	},
-/turf/open/floor/circuit,
-/area/station/ai/upload/chamber)
 "yeN" = (
 /obj/structure/closet/secure_closet/medical3,
 /obj/item/clothing/glasses/hud/health,
@@ -101463,7 +101472,7 @@ jnq
 lQg
 tsa
 khV
-fiO
+hrM
 kdb
 gSf
 pkp
@@ -121793,12 +121802,12 @@ vjT
 fjn
 mBW
 hJl
-rPq
+vBG
 hJl
 reC
 xnS
 hJl
-tAG
+imQ
 hJl
 iix
 iix
@@ -122051,10 +122060,10 @@ xAx
 nYL
 hJl
 pMi
-bfj
+omC
 jWf
 liZ
-yeH
+oYM
 sKA
 hJl
 aaa
@@ -122565,10 +122574,10 @@ qDL
 dIK
 hJl
 hJl
-hPv
-xGM
-mmY
-elt
+meq
+noS
+wSY
+lpo
 hJl
 hJl
 aaa
@@ -160009,12 +160018,12 @@ uIt
 uIt
 uIt
 jKq
-pTr
+hCq
 drq
 ohd
 gWD
 iRZ
-ohd
+oAB
 avG
 gwR
 tFJ
@@ -183972,7 +183981,7 @@ jIO
 bCx
 uvB
 rBb
-fYz
+tYY
 kye
 tes
 kye

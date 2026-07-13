@@ -37,6 +37,12 @@
 	bodyshape = BODYSHAPE_MONKEY
 	acceptable_bodyshape = BODYSHAPE_MONKEY
 	dmg_overlay_type = SPECIES_MONKEY
+	bodypart_traits = list(
+		TRAIT_PASSTABLE,
+		TRAIT_VENTCRAWLER_NUDE,
+		TRAIT_NO_AUGMENTS,
+		TRAIT_NO_UNDERWEAR,
+	)
 
 /obj/item/bodypart/chest/monkey/Initialize(mapload)
 	worn_neck_offset = new(
@@ -45,6 +51,15 @@
 		offset_y = list("south" = 1),
 	)
 	return ..()
+
+/obj/item/bodypart/chest/monkey/update_mob_heights(mob/living/carbon/holder)
+	if(HAS_TRAIT(holder, TRAIT_DWARF))
+		return MONKEY_HEIGHT_DWARF
+
+	if(HAS_TRAIT(holder, TRAIT_TOO_TALL))
+		return MONKEY_HEIGHT_TALL
+
+	return MONKEY_HEIGHT_MEDIUM
 
 /obj/item/bodypart/arm/left/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'

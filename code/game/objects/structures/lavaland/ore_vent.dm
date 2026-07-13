@@ -252,20 +252,20 @@
 		for(var/turf/rock in oview(i))
 
 			if(istype(rock, /turf/closed/mineral)) //Solid wall checks: Mine out the wall, but start skipping more as we move farther away.
-				if(prob(50 + (i * 8)))
+				if(prob((i * 15) - 25))
 					continue
 				var/turf/closed/mineral/drillable = rock
 				drillable.gets_drilled(user)
-				if(prob(50))
+				if(prob(15))
 					new /obj/effect/decal/cleanable/rubble(rock) // Only throw rubble when we actually mine something, and not all the time.
 				continue //skip the rest of the checks
 
-			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // Open rock floors: make rubble decals occasionally.
+			if(istype(rock, /turf/open/misc/asteroid) && prob(10)) // Open rock floors: make rubble decals occasionally.
 				new /obj/effect/decal/cleanable/rubble(rock)
 				continue
 
 			if(istype(rock, /turf/open/lava)) // Lava turfs, skip as we get farther away, otherwise produce a boulder and make it a platform, lasting the whole wave.
-				if(prob(30 + (i * 8))) // We want to skip these less than the mining walls, since lava is more common to deal with.
+				if(prob((i * 15) - 35)) // We want to skip these less than the mining walls, since lava is more common to deal with.
 					continue
 
 				var/obj/item/boulder/produced = produce_boulder(FALSE)
@@ -669,6 +669,10 @@
 	if(!mapload)
 		vent_size_setup(random = TRUE) // We only do this here specific to random distribution ore vents, and within mapload we handle this manually within SSore_generation.
 
+/obj/structure/ore_vent/random/LateInitialize()
+	. = ..()
+	if(!length(mineral_breakdown))
+		CRASH("We generated an ore vent, and after init, it had no mineral breakdown!")
 
 /obj/structure/ore_vent/random/icebox //The one that shows up on the top level of icebox
 	icon_state = "ore_vent_ice"

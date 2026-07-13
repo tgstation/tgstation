@@ -45,8 +45,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//Quirk list
 	var/list/all_quirks = list()
 
-	//Job preferences 2.0 - indexed by job title , no key or value implies never
+	/**
+	 * List of job titles to their priority level, JP_LOW, JP_MEDIUM, JP_HIGH
+	 * If a job is absent from the list, it is considered to be "JP_NEVER"
+	 */
 	var/list/job_preferences = list()
+	/**
+	 * Lazylist of job titles to character slot numbers
+	 * When rolling for a job, if that job is present in this list, we load that slot instead of the active slot
+	 */
+	var/list/job_assigned_profiles
 
 	/// The current window, PREFERENCE_TAB_* in [`code/__DEFINES/preferences.dm`]
 	var/current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
@@ -400,15 +408,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/datum/job/overflow_role = SSjob.overflow_role
 		var/overflow_role_title = initial(overflow_role.title)
 
-		for(var/other_job in job_preferences)
-			if(job_preferences[other_job] == JP_HIGH)
+		for(var/other_job, other_level in job_preferences)
+			if(other_level == JP_HIGH)
 				// Overflow role needs to go to NEVER, not medium!
 				if(other_job == overflow_role_title)
-					job_preferences[other_job] = null
+					job_preferences -= other_job
 				else
 					job_preferences[other_job] = JP_MEDIUM
 
-	if(level == null)
+	if(isnull(level))
 		job_preferences -= job.title
 	else
 		job_preferences[job.title] = level

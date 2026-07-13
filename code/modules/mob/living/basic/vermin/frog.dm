@@ -31,7 +31,6 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
 	worn_slot_flags = ITEM_SLOT_HEAD
 	head_icon = 'icons/mob/clothing/head/pets_head.dmi'
@@ -60,6 +59,7 @@
 	AddElement(/datum/element/venomous, poison_type, poison_per_bite)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_FROG, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	AddElement(/datum/element/can_be_held)
 	if (minion_type)
 		AddElement(/datum/element/regal_rat_minion, converted_path = minion_type, success_balloon = "ribbit", pet_commands = GLOB.regal_rat_minion_commands)
 
