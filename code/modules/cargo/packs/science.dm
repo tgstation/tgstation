@@ -121,3 +121,15 @@
 	contains = list(/obj/item/mod/core/standard = 3)
 	crate_name = "\improper MOD core crate"
 	crate_type = /obj/structure/closet/crate/nakamura
+
+/datum/supply_pack/science/gizmo
+	name = "Gizmo research crate"
+	desc = "Three weird science gizmo thinga-majiggers? We don't know what they do."
+	cost = CARGO_CRATE_VALUE * 5
+	access = ACCESS_SCIENCE
+	access_view = ACCESS_SCIENCE
+	contains = list(
+		/obj/machinery/gizmo = 1,
+		/obj/effect/spawner/random/gizmo = 2,
+	)
+	crate_name = "\improper Gizmo research crate"

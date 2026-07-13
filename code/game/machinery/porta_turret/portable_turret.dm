@@ -782,6 +782,19 @@ DEFINE_BITFIELD(turret_flags, list(
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 	AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "turret", FALSE)
+	add_minimap_blip(src, MINIMAP_SYNDIE_TURRET_BLIP, "sentry_passive")
+
+/obj/machinery/porta_turret/syndicate/proc/update_turret_minimap_icon(new_icon_state)
+	var/atom/movable/screen/minimap_element/blip/blip = get_minimap_blip(MINIMAP_SYNDIE_TURRET_BLIP, src)
+	if(isnull(blip))
+		return
+	blip.icon_state = new_icon_state
+
+/obj/machinery/porta_turret/syndicate/shootAt(atom/movable/target)
+	. = ..()
+	if(raised && (obj_flags & EMAGGED || last_fired == world.time))
+		update_turret_minimap_icon("sentry_firing")
+		addtimer(CALLBACK(src, PROC_REF(update_turret_minimap_icon), "sentry_passive"), shot_delay + 1 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/machinery/porta_turret/syndicate/setup()
 	return

@@ -117,8 +117,8 @@
 
 /obj/projectile/bullet/arrow/holy/Initialize(mapload)
 	. = ..()
-	//50 damage to revenants
-	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 30)
+	// 50 damage to revenants
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_SPIRIT, added_damage = 30)
 
 /// plastic arrows
 // completely dogshit quality and they break when they hit something.
@@ -190,5 +190,4 @@
 
 /obj/projectile/bullet/arrow/ashen/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 0, added_damage = 40)
-
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_MINING, added_damage = 40)

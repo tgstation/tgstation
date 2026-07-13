@@ -144,13 +144,11 @@
 /obj/machinery/modular_shield_generator/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(user, tool)
 
-/obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, list/modifiers)
-
-	if(is_wire_tool(W) && panel_open)
-		wires.interact(user)
-		return TRUE
-
-	return ..()
+/obj/machinery/modular_shield_generator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!panel_open || !is_wire_tool(tool))
+		return NONE
+	wires.interact(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/modular_shield_generator/multitool_act(mob/living/user, obj/item/multitool/multi)
 	multi.set_buffer(src)

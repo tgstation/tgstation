@@ -1,5 +1,6 @@
 /// Tests that all subsystems that need to properly initialize.
 /datum/unit_test/subsystem_init
+	test_flags = UNIT_TEST_MAP_TEST
 
 /datum/unit_test/subsystem_init/Run()
 	for(var/datum/controller/subsystem/subsystem as anything in Master.subsystems)

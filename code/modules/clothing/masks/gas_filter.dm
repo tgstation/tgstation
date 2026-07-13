@@ -17,6 +17,7 @@
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "gas_atmos_filter"
 	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT)
 	///Amount of filtering points available
 	var/filter_status = 100
 	///strength of the filter against high filtering gases
@@ -68,28 +69,31 @@
 	var/danger_points = 0
 
 	for(var/gas_id in breath.gases)
+		var/iterating_gas = breath.gases[gas_id]
+		if(!iterating_gas)
+			continue
 		if(gas_id in high_filtering_gases)
-			if(breath.gases[gas_id][MOLES] > HIGH_FILTERING_MOLES)
-				breath.set_gas(gas_id, max(breath.gases[gas_id][MOLES] - filter_strength_high * filter_efficiency * HIGH_FILTERING_RATIO, 0))
+			if(iterating_gas[MOLES] > HIGH_FILTERING_MOLES)
+				breath.set_gas(gas_id, max(iterating_gas[MOLES] - filter_strength_high * filter_efficiency * HIGH_FILTERING_RATIO, 0))
 				danger_points += 1
 				continue
-			breath.set_gas(gas_id, max(breath.gases[gas_id][MOLES] - filter_strength_high * filter_efficiency * LOW_FILTERING_RATIO, 0))
+			breath.set_gas(gas_id, max(iterating_gas[MOLES] - filter_strength_high * filter_efficiency * LOW_FILTERING_RATIO, 0))
 			danger_points += 0.2
 			continue
 		if(gas_id in mid_filtering_gases)
-			if(breath.gases[gas_id][MOLES] > MID_FILTERING_MOLES)
-				breath.set_gas(gas_id, max(breath.gases[gas_id][MOLES] - filter_strength_mid * filter_efficiency * HIGH_FILTERING_RATIO, 0))
+			if(iterating_gas[MOLES] > MID_FILTERING_MOLES)
+				breath.set_gas(gas_id, max(iterating_gas[MOLES] - filter_strength_mid * filter_efficiency * HIGH_FILTERING_RATIO, 0))
 				danger_points += 1.25
 				continue
-			breath.set_gas(gas_id, max(breath.gases[gas_id][MOLES] - filter_strength_mid * filter_efficiency * LOW_FILTERING_RATIO, 0))
+			breath.set_gas(gas_id, max(iterating_gas[MOLES] - filter_strength_mid * filter_efficiency * LOW_FILTERING_RATIO, 0))
 			danger_points += 0.25
 			continue
 		if(gas_id in low_filtering_gases)
-			if(breath.gases[gas_id][MOLES] > LOW_FILTERING_MOLES)
-				breath.set_gas(gas_id, max(breath.gases[gas_id][MOLES] - filter_strength_low * filter_efficiency * HIGH_FILTERING_RATIO, 0))
+			if(iterating_gas[MOLES] > LOW_FILTERING_MOLES)
+				breath.set_gas(gas_id, max(iterating_gas[MOLES] - filter_strength_low * filter_efficiency * HIGH_FILTERING_RATIO, 0))
 				danger_points += 1.5
 				continue
-			breath.set_gas(gas_id, max(breath.gases[gas_id][MOLES] - filter_strength_low * filter_efficiency * LOW_FILTERING_RATIO, 0))
+			breath.set_gas(gas_id, max(iterating_gas[MOLES] - filter_strength_low * filter_efficiency * LOW_FILTERING_RATIO, 0))
 			danger_points += 0.5
 			continue
 

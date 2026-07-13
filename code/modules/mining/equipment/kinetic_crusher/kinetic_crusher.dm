@@ -119,12 +119,11 @@
 	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
 		. += span_notice("It has \a [crusher_trophy] attached, which causes [crusher_trophy.effect_desc()].")
 
-/obj/item/kinetic_crusher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/crusher_trophy))
-		var/obj/item/crusher_trophy/crusher_trophy = attacking_item
-		crusher_trophy.add_to(src, user)
-		return
-	return ..()
+/obj/item/kinetic_crusher/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/crusher_trophy))
+		astype(tool, /obj/item/crusher_trophy).add_to(src, user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/kinetic_crusher/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -199,33 +198,8 @@
 	if(QDELETED(target))
 		return
 	var/datum/status_effect/crusher_mark/mark = target.has_status_effect(/datum/status_effect/crusher_mark)
-	if(!mark)
-		return
-	var/boosted_mark = mark.boosted
-	if(!target.remove_status_effect(mark))
-		return
-	// Detonation effect
-	var/datum/status_effect/crusher_damage/crusher_damage_effect = target.has_status_effect(/datum/status_effect/crusher_damage) || target.apply_status_effect(/datum/status_effect/crusher_damage)
-	var/target_health = target.health
-	var/combined_damage = detonation_damage
-	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
-		combined_damage += crusher_trophy.on_mark_detonation(target, user)
-	if(QDELETED(target))
-		return
-	if(!QDELETED(crusher_damage_effect))
-		crusher_damage_effect.total_damage += target_health - target.health //we did some damage, but let's not assume how much we did
-	new /obj/effect/temp_visual/kinetic_blast(get_turf(target))
-	var/backstabbed = FALSE
-	var/def_check = target.getarmor(type = BOMB)
-	// Backstab bonus
-	if(check_behind(user, target) || boosted_mark)
-		backstabbed = TRUE
-		combined_damage += backstab_bonus
-		playsound(user, backstab_sound, 100, TRUE) //Seriously who spelled it wrong
-	if(!QDELETED(crusher_damage_effect))
-		crusher_damage_effect.total_damage += combined_damage
-	SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, target, src, backstabbed)
-	target.apply_damage(combined_damage, BRUTE, blocked = def_check)
+	if(mark)
+		mark.detonate(src, user)
 
 /obj/item/kinetic_crusher/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!istype(interacting_with, /obj/item/crusher_trophy))
@@ -260,6 +234,7 @@
 	SEND_SIGNAL(src, COMSIG_CRUSHER_FIRED_BLAST, target, user, destabilizer)
 	destabilizer.icon = projectile_icon
 	destabilizer.icon_state = projectile_icon_state
+	destabilizer.detonation_damage = detonation_damage
 	for(var/obj/item/crusher_trophy/attached_trophy as anything in trophies)
 		attached_trophy.on_projectile_fire(destabilizer, user)
 	destabilizer.aim_projectile(target, user, modifiers)
@@ -327,6 +302,8 @@
 	var/boosted = FALSE
 	/// Should this projectile go through allied mobs?
 	var/ignore_allies = FALSE
+	/// Mark detonation damage
+	var/detonation_damage = 50
 
 /obj/projectile/destabilizer/Initialize(mapload)
 	. = ..()
@@ -365,7 +342,12 @@
 		if(QDELETED(target))
 			return ..()
 		var/mob/living/living_target = target
-		living_target.apply_status_effect(/datum/status_effect/crusher_mark, boosted)
+		var/datum/status_effect/crusher_mark/crusher_mark = living_target.apply_status_effect(/datum/status_effect/crusher_mark, boosted, used_crusher)
+		if (!crusher_mark)
+			return ..()
+		crusher_mark.detonation_damage = detonation_damage
+		for(var/obj/item/crusher_trophy/crusher_trophy as anything in used_crusher?.trophies)
+			crusher_trophy.on_mark_applied(target, firer, crusher_mark)
 		return ..()
 
 	var/target_turf = get_turf(target)

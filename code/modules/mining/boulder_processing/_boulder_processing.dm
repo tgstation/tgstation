@@ -22,10 +22,6 @@
 	var/points_held = 0
 	///The action verb to display to players
 	var/action = "processing"
-
-
-	/// What list of reagents should we look at when we boost the effectiveness of this machinery? Assign a value to a chem as well, eg: /datum/reagent/water = 1 is a 10% boost
-	var/list/booster_list = list()
 	/// What reagent should be produced when a boost chemical is replaced by the booster_reagent?
 	var/datum/reagent/waste_chemical = /datum/reagent/water
 
@@ -107,6 +103,7 @@
 /obj/machinery/bouldertech/examine_more(mob/user)
 	. = ..()
 
+	var/list/datum/reagents/booster_list = get_booster_reagents()
 	if(length(booster_list))
 		. += span_notice("This machine's output is boosted by <b>chemical intake:</b><br>")
 		for(var/datum/reagent/increment as anything in booster_list)
@@ -121,7 +118,7 @@
 	icon_state ="[base_icon_state][suffix]"
 
 /obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
-	if(!anchored)
+	if(!anchored || !(dir == border_dir || dir == REVERSE_DIR(border_dir)))
 		return FALSE
 	if(istype(mover, /obj/item/stack/sheet))
 		return TRUE
@@ -254,6 +251,12 @@
 
 	refining_efficiency = initial(refining_efficiency) //Reset refining efficiency to 100%.
 
+///Returns a map of reagent -> boost amount to increase this machines efficiency
+/obj/machinery/bouldertech/proc/get_booster_reagents()
+	RETURN_TYPE(/list/datum/reagents)
+
+	return list()
+
 /**
  * Checks if this machine can process this material
  * Arguments
@@ -380,7 +383,7 @@
 			if(istype(chosen_boulder, /obj/item/boulder/artifact))
 				points_held = round((points_held + MINER_POINT_MULTIPLIER)) /// Artifacts give bonus points!
 			chosen_boulder.break_apart()
-			return//We've processed all the materials in the boulder, so we can just destroy it in break_apart.
+			return //We've processed all the materials in the boulder, so we can just destroy it in break_apart.
 
 		chosen_boulder.processed_by = src
 

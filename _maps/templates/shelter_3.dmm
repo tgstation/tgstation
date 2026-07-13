@@ -64,7 +64,7 @@
 /area/misc/survivalpod)
 "l" = (
 /obj/structure/table/wood/fancy/black,
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /turf/open/floor/pod/dark,
 /area/misc/survivalpod)
 "m" = (

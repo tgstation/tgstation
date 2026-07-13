@@ -66,7 +66,7 @@
 	//number of ingredients who's requested amounts has been satisfied
 	var/completed_ingredients = 0
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
-		var/ingredient_type = ingredient.type
+		var/datum/ingredient_type = ingredient.type
 		do
 		{
 			var/ingredient_count = reqs_copy[ingredient_type]
@@ -91,7 +91,7 @@
 
 			//means we have to look for subtypes
 			else if(isnull(ingredient_count))
-				ingredient_type = type2parent(ingredient_type)
+				ingredient_type = ingredient_type::parent_type
 
 			//means we have no more remaining ingredients so bail, can happen if multiple ingredients of the same type/subtype are in the pot
 			else
@@ -302,7 +302,7 @@
 /obj/item/soup_test_kit/Initialize(mapload)
 	..()
 	new /obj/item/food/meatball(loc)
-	new /obj/item/food/grown/carrot(loc)
+	new /obj/item/food/grown/carrotlike/carrot(loc)
 	new /obj/item/food/grown/potato(loc)
 	new /obj/item/reagent_containers/cup/soup_pot(loc)
 	return INITIALIZE_HINT_QDEL
@@ -394,7 +394,7 @@
 	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/meatball = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/potato = 1,
 	)
 	results = list(
@@ -418,7 +418,7 @@
 /datum/chemical_reaction/food/soup/vegetable_soup
 	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/corn = 1,
 		/obj/item/food/grown/eggplant = 1,
 		/obj/item/food/grown/potato = 1,
@@ -978,7 +978,7 @@
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/meat/cutlet = 3,
 		/obj/item/food/grown/potato = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/eggplant = 1,
 		/obj/item/food/grown/mushroom = 1,
 	)
@@ -1166,8 +1166,8 @@
 	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/grown/peas = 2,
-		/obj/item/food/grown/parsnip = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/parsnip = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 	)
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/pea = 30,
@@ -1250,7 +1250,7 @@
 	required_ingredients = list(
 		/obj/item/food/boiledegg = 1,
 		/obj/item/food/meat/cutlet = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/onion = 1,
 	)
 	results = list(
@@ -1307,7 +1307,7 @@
 /datum/chemical_reaction/food/soup/chicken_noodle_soup
 	required_reagents = list(/datum/reagent/water = 30)
 	required_ingredients = list(
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/meat/slab/chicken = 1,
 		/obj/item/food/spaghetti/boiledspaghetti = 1,
 	)
@@ -1338,7 +1338,7 @@
 	required_ingredients = list(
 		/obj/item/food/grown/corn = 1,
 		/obj/item/food/grown/potato = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/meat/bacon = 1,
 	)
 	results = list(
@@ -1532,7 +1532,7 @@
 	required_ingredients = list(
 		/obj/item/grown/cotton = 1, // Why are you buying clothes at the soup store?!
 		/obj/item/food/grown/onion = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/eggplant = 1,
 		/obj/item/food/oven_baked_corn = 1,
 	)
@@ -1658,8 +1658,8 @@
 	required_ingredients = list(
 		/obj/item/food/grown/oat = 1,
 		/obj/item/food/grown/potato/sweet = 1,
-		/obj/item/food/grown/parsnip = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/parsnip = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 	)
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/moth_oats = 30,
@@ -1863,6 +1863,17 @@
 		/datum/reagent/water/salt = 10,
 	)
 	resulting_food_path = /obj/item/food/spaghetti/boilednoodles
+	ingredient_reagent_multiplier = 0
+
+// Space Ramen
+/datum/chemical_reaction/food/soup/beef_ramen
+	required_reagents = list(
+		/datum/reagent/consumable/beef_flavour = 5
+	)
+	required_ingredients = list(
+		/obj/item/food/spaghetti/ramen_dry = 1
+	)
+	resulting_food_path = /obj/item/food/spaghetti/ramen_beef
 	ingredient_reagent_multiplier = 0
 
 // Dashi Broth
@@ -2114,7 +2125,7 @@
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/grown/cabbage = 1,
 		/obj/item/food/grown/onion = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/meat/cutlet = 1,
 	)
 	results = list(

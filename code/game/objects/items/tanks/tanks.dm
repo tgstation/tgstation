@@ -32,7 +32,7 @@
 	throw_speed = 1
 	throw_range = 4
 	demolition_mod = 1.25
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	actions_types = list(/datum/action/item_action/set_internals)
 	action_slots = ALL
 	armor_type = /datum/armor/item_tank
@@ -199,15 +199,15 @@
 	to_chat(user, span_warning("There isn't enough pressure in [src] to commit suicide with..."))
 	return SHAME
 
-/obj/item/tank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/tank/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	if(istype(attacking_item, /obj/item/assembly_holder))
-		if(tank_assembly)
-			balloon_alert(user, "something already attached!")
-			return ITEM_INTERACT_BLOCKING
-		bomb_assemble(attacking_item, user)
-		return ITEM_INTERACT_SUCCESS
-	return ..()
+	if(!istype(tool, /obj/item/assembly_holder))
+		return NONE
+	if(tank_assembly)
+		balloon_alert(user, "something already attached!")
+		return ITEM_INTERACT_BLOCKING
+	bomb_assemble(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/tank/wrench_act(mob/living/user, obj/item/tool)
 	if(tank_assembly)

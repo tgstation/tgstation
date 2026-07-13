@@ -39,8 +39,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		req_amount = 3, \
 		time = 4 SECONDS, \
 		crafting_flags = CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, \
-		desc = span_cult_bold("Daemon Forge: Can make Nar'Sien Hardened Armor, Flagellant's Robes, \
-			and Eldritch Longswords. Emits Light."), \
+		desc = span_cult_bold("Daemon Forge: Can make Nar'Sien Hardened Armor and Eldritch Longswords. Emits Light."), \
 		required_noun = "runed metal sheet", \
 		category = CAT_CULT, \
 	), \

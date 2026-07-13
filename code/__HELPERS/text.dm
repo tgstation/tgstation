@@ -286,6 +286,16 @@
 
 	return TRUE
 
+/proc/filter_illegal_filename_chars(name)
+	var/regex/illegal_chars = new("\[\\/:*?\"<>|]", "g")
+	return !findtext(name, illegal_chars)
+
+/proc/filter_filename_pda(name)
+	if(is_ic_filtered_for_pdas(name) || is_soft_ic_filtered_for_pdas(name))
+		return FALSE
+	if(!filter_illegal_filename_chars(name))
+		return FALSE
+	return TRUE
 
 //html_encode helper proc that returns the smallest non null of two numbers
 //or 0 if they're both null (needed because of findtext returning 0 when a value is not present)

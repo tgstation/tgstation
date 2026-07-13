@@ -5,8 +5,10 @@
 	icon_state = "mmi_off"
 	base_icon_state = "mmi"
 	w_class = WEIGHT_CLASS_NORMAL
+
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	var/braintype = "Cyborg"
-	var/obj/item/radio/radio = null //Let's give it a radio.
+	var/obj/item/radio/mmi/radio = null //Let's give it a radio.
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
 	var/obj/vehicle/sealed/mecha = null //This does not appear to be used outside of reference in mecha.dm.
@@ -17,10 +19,12 @@
 	/// Whether the brainmob can move. Doesnt usually matter but SPHERICAL POSIBRAINSSS
 	var/immobilize = TRUE
 
+/obj/item/radio/mmi
+	custom_materials = null
+
 /obj/item/mmi/Initialize(mapload)
 	. = ..()
 	radio = new(src) //Spawns a radio inside the MMI.
-	radio.set_broadcasting(FALSE) //researching radio mmis turned the robofabs into radios because this didnt start as 0.
 	laws.set_laws_config()
 
 /obj/item/mmi/Destroy()
@@ -259,12 +263,7 @@
 /obj/item/mmi/proc/replacement_ai_name()
 	return brainmob.name
 
-/obj/item/mmi/verb/Toggle_Listening()
-	set name = "Toggle Listening"
-	set desc = "Toggle listening channel on or off."
-	set category = "MMI"
-	set src = usr.loc
-	set popup_menu = FALSE
+GAME_VERB_SRC_DESC(/obj/item/mmi, Toggle_Listening, usr.loc, "Toggle Listening", "Toggle listening channel on or off.", "MMI")
 
 	if(brainmob.stat)
 		to_chat(brainmob, span_warning("Can't do that while incapacitated or dead!"))

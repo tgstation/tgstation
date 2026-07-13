@@ -2,10 +2,7 @@ GLOBAL_LIST_EMPTY(escape_menus)
 
 /// Opens the escape menu.
 /// Verb, hardcoded to Escape, set in the client skin.
-/client/verb/open_escape_menu()
-	set name = "Open Escape Menu"
-	set hidden = TRUE
-
+GAME_VERB_HIDDEN(/client, open_escape_menu, "Open Escape Menu")
 	var/current_escape_menu = GLOB.escape_menus[ckey]
 	if (!isnull(current_escape_menu))
 		qdel(current_escape_menu)
@@ -72,10 +69,12 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	START_PROCESSING(SSescape_menu, src)
 
 /datum/escape_menu/Destroy(force)
+	// Deleted in page holder
+	detail_screen = null
+	resource_panels = null
 	STOP_PROCESSING(SSescape_menu, src)
 	QDEL_NULL(base_holder)
 	QDEL_NULL(page_holder)
-	resource_panels = null // list contents were already qdeled in QDEL_NULL(page_holder), so we can safely null this
 
 	var/datum/our_hud = our_hud_ref?.resolve()
 	if(our_hud)

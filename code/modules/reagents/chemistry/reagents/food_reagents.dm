@@ -726,7 +726,7 @@
 
 	var/obj/effect/decal/cleanable/food/flour/flour_decal = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/food/flour)
 	if(flour_decal)
-		flour_decal.reagents.add_reagent(/datum/reagent/consumable/flour, reac_volume)
+		flour_decal.init_reagents(/datum/reagent/consumable/flour, reac_volume)
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
@@ -1358,3 +1358,23 @@
 	taste_description = "metallic salt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/consumable/gizmo_goop
+	name = "Gizmo Goop"
+	description = "A thick, grey goup that is supposedly 'nutritious'."
+	color = "#707070"
+	taste_description = "goop"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	nutriment_factor = 0.5
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/consumable/beef_flavour
+	name = "Beef Space Ramen Flavouring"
+	description = "Powdered beef flavouring with enough salt to preserve a corpse."
+	nutriment_factor = 5
+	color = "#5f3e00" // rgb: 115, 16, 8
+	taste_description = "beef"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	default_container = /obj/item/reagent_containers/condiment/pack/beef_flavour
+

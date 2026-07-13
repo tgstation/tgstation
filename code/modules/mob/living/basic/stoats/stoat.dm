@@ -19,7 +19,6 @@
 	response_help_simple = "pet"
 	verb_say = "chips"
 	verb_ask = "chips curiously"
-	can_be_held = TRUE
 	verb_exclaim = "chips loudly"
 	verb_yell = "chips loudly"
 	faction = list(FACTION_NEUTRAL)
@@ -47,6 +46,7 @@
 	AddComponent(/datum/component/tameable, food_types = eatable_food, tame_chance = 70, bonus_tame_chance = 0)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(eatable_food))
 	AddElement(/datum/element/wears_collar)
+	AddElement(/datum/element/can_be_held)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	if(can_breed)
 		add_breeding_component()
@@ -65,15 +65,15 @@
 		/mob/living/basic/stoat/kit = 100 // Placeholder until we get proper baby stoats
 	)
 	AddComponent(\
-	/datum/component/breed,\
-	can_breed_with = typecacheof(list(/mob/living/basic/stoat)),\
-	baby_paths = baby_paths,\
+		/datum/component/breed,\
+		can_breed_with = typecacheof(list(/mob/living/basic/stoat)),\
+		baby_paths = baby_paths,\
 	)
 
 /mob/living/basic/stoat/kit
 	name = "\improper stoat kit"
 	real_name = "stoat"
-	desc = "They're a stoat kit!"
+	desc = "An apex predator, but friend-shaped, and tiny..."
 	icon_state = "kit_stoat"
 	icon_living = "kit_stoat"
 	icon_dead = "kit_stoat_dead"
@@ -82,3 +82,15 @@
 	ai_controller = /datum/ai_controller/basic_controller/stoat/kit
 	mob_size = MOB_SIZE_SMALL
 	can_breed = FALSE
+
+/mob/living/basic/stoat/kit/Initialize(mapload)
+	. = ..()
+	AddComponent(\
+		/datum/component/growth_and_differentiation,\
+		growth_time = 20 MINUTES,\
+		growth_path = /mob/living/basic/stoat,\
+		growth_probability = 100,\
+		lower_growth_value = 0.5,\
+		upper_growth_value = 1,\
+		signals_to_kill_on = list(COMSIG_MOB_CLIENT_LOGIN),\
+	)

@@ -770,6 +770,7 @@
 	name = "spray can"
 	icon_state = "spraycan"
 	worn_icon_state = "spraycan"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 
 	icon_capped = "spraycan_cap"
 	icon_uncapped = "spraycan"
@@ -863,7 +864,7 @@
 		set_painting_tool_color(COLOR_SILVER)
 	update_appearance()
 	if(actually_paints)
-		user.AddComponent(/datum/component/face_decal, "spray", EXTERNAL_ADJACENT, paint_color)
+		user.AddComponent(/datum/component/face_decal, "spray", list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER), paint_color)
 	reagents.trans_to(user, used, volume_multiplier, transferred_by = user, methods = VAPOR)
 	return OXYLOSS
 
@@ -921,7 +922,7 @@
 			flash_color(carbon_target, flash_color=paint_color, flash_time=40)
 		if(ishuman(carbon_target) && actually_paints)
 			var/mob/living/carbon/human/human_target = carbon_target
-			human_target.AddComponent(/datum/component/face_decal, "spray", EXTERNAL_ADJACENT, paint_color)
+			human_target.AddComponent(/datum/component/face_decal, "spray", list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER), paint_color)
 		use_charges(user, 10, FALSE)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.expose(carbon_target, VAPOR, fraction * volume_multiplier)

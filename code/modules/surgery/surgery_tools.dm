@@ -160,7 +160,8 @@
 	inhand_icon_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	hitsound = 'sound/items/weapons/circsawhit.ogg'
+	hitsound = 'sound/items/tools/drill_hit.ogg'
+	usesound = 'sound/items/tools/drill_use.ogg'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*3)
 	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = SURGICAL_TOOL
@@ -333,6 +334,7 @@
 	drop_sound = SFX_CLOTH_DROP
 	pickup_sound = SFX_CLOTH_PICKUP
 	gender = PLURAL
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/surgical_drapes/Initialize(mapload)
 	. = ..()
@@ -588,7 +590,7 @@
 	if(HAS_MIND_TRAIT(user, TRAIT_MORBID)) //Freak
 		user.add_mood_event("morbid_dismemberment", /datum/mood_event/morbid_dismemberment)
 
-/obj/item/shears/suicide_act(mob/living/carbon/user)
+/obj/item/shears/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	var/timer = 1 SECONDS
 	for(var/obj/item/bodypart/thing in user.get_bodyparts())
@@ -608,7 +610,7 @@
 	icon_angle = 135
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5,  /datum/material/glass = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25)
 	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_SMALL
@@ -633,7 +635,7 @@
 	icon_state = "bloodfilter"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT, /datum/material/glass=HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver=SMALL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("pumps", "siphons")
@@ -729,7 +731,7 @@
 
 /obj/item/scalpel/cruel/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = MOB_UNDEAD, damage_multiplier = 1) //Just in case one of the tennants get uppity
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_UNDEAD, damage_multiplier = 2) //Just in case one of the tennants get uppity
 
 /obj/item/surgicaldrill/cruel
 	name = "tearing drill"

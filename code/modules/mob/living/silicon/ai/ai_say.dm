@@ -30,14 +30,17 @@
 		return FALSE
 	. = ..()
 	if(.)
+		do_tts_message(message, language, message_mods, list(), list())
 		return .
 	if(message_mods[MODE_HEADSET])
 		if(radio)
 			radio.talk_into(src, message, , spans, language, message_mods)
+			do_tts_message(message, language, message_mods, list(), list())
 		return NOPASS
 	else if(message_mods[RADIO_EXTENSION] in GLOB.default_radio_channels)
 		if(radio)
 			radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
+			do_tts_message(message, language, message_mods, list(), list())
 			return NOPASS
 	return FALSE
 
@@ -65,11 +68,7 @@
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX
 #define VOX_DELAY 600
-/mob/living/silicon/ai/verb/announcement_help()
-
-	set name = "Announcement Help"
-	set desc = "Display a list of vocal words to announce to the crew."
-	set category = "AI Commands"
+GAME_VERB_DESC(/mob/living/silicon/ai, announcement_help, "Announcement Help", "Display a list of vocal words to announce to the crew.", "AI Commands")
 
 	if(incapacitated)
 		return

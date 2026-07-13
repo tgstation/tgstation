@@ -344,11 +344,37 @@
 
 /datum/chemical_reaction/foam
 	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water = 1)
+	// Does the foam slip you?
+	var/slippery = TRUE
+	// How long the foam lasts for
+	var/lifetime = 8 SECONDS
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
 
+/datum/chemical_reaction/foam/hollow
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water/hollowwater = 1)
+	lifetime = 24 SECONDS
+
+/datum/chemical_reaction/foam/salt
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water/salt = 1)
+	lifetime = 1 SECONDS
+	slippery = FALSE
+
+/datum/chemical_reaction/foam/ice
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/consumable/ice = 1)
+	slippery = FALSE
+
+/datum/chemical_reaction/foam/soda
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/consumable/sodawater = 1)
+	lifetime = 1 SECONDS
+
+/datum/chemical_reaction/foam/holy
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water/holywater = 1)
+	lifetime = 24 SECONDS
+	slippery = FALSE
+
 /datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	holder.create_foam(/datum/effect_system/fluid_spread/foam, 2 * created_volume, notification = span_danger("The solution spews out foam!"), log = TRUE)
+	holder.create_foam(/datum/effect_system/fluid_spread/foam, 2 * created_volume, notification = span_danger("The solution spews out foam!"), log = TRUE, lifetime = src.lifetime, slippery = src.slippery)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/metalfoam
@@ -632,7 +658,9 @@
 		else
 			maybe_monkey.vomit(VOMIT_CATEGORY_BLOOD)
 			to_chat(maybe_monkey, span_danger("You vomit out blood, making you feel grossly monkeyish."))
-	new /mob/living/carbon/human/species/monkey(location, TRUE)
+
+	if (LAZYLEN(SSmobs.cubemonkeys) < CONFIG_GET(number/monkeycap))
+		new /mob/living/carbon/human/species/monkey(location, TRUE)
 
 /datum/chemical_reaction/angry_monkey
 	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/inverse/bath_salts = 10)
@@ -649,7 +677,9 @@
 		else
 			maybe_monkey.vomit(VOMIT_CATEGORY_BLOOD)
 			to_chat(maybe_monkey, span_danger("You vomit out blood, making you feel grossly monkeyish."))
-	new /mob/living/carbon/human/species/monkey/angry(location, TRUE)
+
+	if (LAZYLEN(SSmobs.cubemonkeys) < CONFIG_GET(number/monkeycap))
+		new /mob/living/carbon/human/species/monkey/angry(location, TRUE)
 
 //water electrolysis
 /datum/chemical_reaction/electrolysis
@@ -1014,7 +1044,7 @@
 	var/list/items = list()
 	for(var/obj/item/item in range(location, 3))
 		items += item
-	shuffle(items)
+	shuffle_inplace(items)
 	for(var/obj/item/item in items)
 		do_teleport(item, location, 3, no_effects=TRUE)
 		lets_not_go_crazy -= 1

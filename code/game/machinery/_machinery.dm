@@ -102,6 +102,7 @@
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	initial_language_holder = /datum/language_holder/speaking_machine
 	armor_type = /datum/armor/obj_machinery
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 	///see code/__DEFINES/stat.dm
 	var/machine_stat = NONE
@@ -185,12 +186,15 @@
 	if(occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
 
-	if((resistance_flags & INDESTRUCTIBLE) && component_parts){ // This is needed to prevent indestructible machinery still blowing up. If an explosion occurs on the same tile as the indestructible machinery without the PREVENT_CONTENTS_EXPLOSION_1 flag, /datum/controller/subsystem/explosions/proc/propagate_blastwave will call ex_act on all movable atoms inside the machine, including the circuit board and component parts. However, if those parts get deleted, the entire machine gets deleted, allowing for INDESTRUCTIBLE machines to be destroyed. (See #62164 for more info)
+	if((resistance_flags & INDESTRUCTIBLE) && component_parts) // This is needed to prevent indestructible machinery still blowing up. If an explosion occurs on the same tile as the indestructible machinery without the PREVENT_CONTENTS_EXPLOSION_1 flag, /datum/controller/subsystem/explosions/proc/propagate_blastwave will call ex_act on all movable atoms inside the machine, including the circuit board and component parts. However, if those parts get deleted, the entire machine gets deleted, allowing for INDESTRUCTIBLE machines to be destroyed. (See #62164 for more info)
 		flags_1 |= PREVENT_CONTENTS_EXPLOSION_1
-	}
+
+	if(critical_machine)
+		AddElement(/datum/element/block_area_power_fail)
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_MACHINES_GLITCHED) && mapload)
 		randomize_language_if_on_station()
+
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_MACHINE, src)
 
 	return INITIALIZE_HINT_LATELOAD
@@ -1290,8 +1294,18 @@
 		set_machine_stat(vval)
 		datum_flags |= DF_VAR_EDITED
 		return TRUE
+	if(vname == NAMEOF(src, critical_machine))
+		if(critical_machine == !!vval) // boolean cast in case a badmin tries to set it to 2 for some reason
+			return FALSE
+		critical_machine = !!vval
+		if(critical_machine)
+			AddElement(/datum/element/block_area_power_fail)
+		else
+			RemoveElement(/datum/element/block_area_power_fail)
+		datum_flags |= DF_VAR_EDITED
+		return TRUE
 
-	return ..()
+	. = ..()
 
 /**
  * Alerts the AI that a hack is in progress.

@@ -1,5 +1,6 @@
 ///Detects movables that may have been accidentally placed in space, as well as movables which do not have the proper nearspace area (meaning they aren't lit properly.)
 /datum/unit_test/maptest_mapping_nearstation_test
+	test_flags = UNIT_TEST_MAP_TEST
 	priority = TEST_PRE
 
 /datum/unit_test/maptest_mapping_nearstation_test/Run()

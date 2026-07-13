@@ -40,6 +40,11 @@
 	hud_possible = list(ANTAG_HUD)
 	sight = SEE_TURFS | SEE_MOBS
 
+	//purplish tint night vision because the voidwalker is purple
+	lighting_cutoff_red = 30
+	lighting_cutoff_green = 15
+	lighting_cutoff_blue = 30
+
 	/// Color of our regen outline
 	var/regenerate_colour = COLOR_GRAY
 
@@ -104,7 +109,7 @@
 	charge.Grant(src)
 
 	// Glass passing is handled by the glass passer component
-	passtable_on(src, type)
+	ADD_TRAIT(src, TRAIT_PASSWINDOW, INNATE_TRAIT)
 
 	// Voidwalker lore is that radio's actually attracted them, so they should be able to listen to it
 	var/obj/item/radio/internal_radio = new /obj/item/radio(src)

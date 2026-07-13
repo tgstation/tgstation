@@ -24,17 +24,8 @@
 	var/atom/target = controller.blackboard[target_key]
 	if (isnull(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	if (!target.IsReachableBy(controller.pawn))
-		controller.clear_blackboard_key(BB_BASIC_MOB_MELEE_COOLDOWN_TIMER)
-		return AI_BEHAVIOR_INSTANT
 
-	var/can_attack_time = controller.blackboard[BB_BASIC_MOB_MELEE_COOLDOWN_TIMER]
-	if (isnull(can_attack_time))
-		var/blackboard_delay = controller.blackboard[BB_BASIC_MOB_MELEE_DELAY]
-		var/attack_delay = isnull(blackboard_delay) ? DEFAULT_ATTACK_DELAY : blackboard_delay
-		controller.set_blackboard_key(BB_BASIC_MOB_MELEE_COOLDOWN_TIMER, world.time + attack_delay)
-		return AI_BEHAVIOR_INSTANT
-	if (can_attack_time > world.time)
+	if (!can_attack(controller, target))
 		return AI_BEHAVIOR_INSTANT
 
 	if (isliving(controller.pawn))
@@ -55,6 +46,23 @@
 	if(terminate_after_action)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY
+
+/datum/ai_behavior/basic_melee_attack/proc/can_attack(datum/ai_controller/controller, atom/target)
+	if (!target.IsReachableBy(controller.pawn))
+		controller.clear_blackboard_key(BB_BASIC_MOB_MELEE_COOLDOWN_TIMER)
+		return FALSE
+
+	var/can_attack_time = controller.blackboard[BB_BASIC_MOB_MELEE_COOLDOWN_TIMER]
+	if (isnull(can_attack_time))
+		var/blackboard_delay = controller.blackboard[BB_BASIC_MOB_MELEE_DELAY]
+		var/attack_delay = isnull(blackboard_delay) ? DEFAULT_ATTACK_DELAY : blackboard_delay
+		controller.set_blackboard_key(BB_BASIC_MOB_MELEE_COOLDOWN_TIMER, world.time + attack_delay)
+		return FALSE
+
+	if (can_attack_time > world.time)
+		return FALSE
+
+	return TRUE
 
 /datum/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
@@ -78,7 +86,7 @@
 	/// range we will try chasing the target before giving up
 	var/chase_range = 9
 	///do we care about avoiding friendly fire?
-	var/avoid_friendly_fire =  FALSE
+	var/avoid_friendly_fire = FALSE
 
 /datum/ai_behavior/basic_ranged_attack/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()

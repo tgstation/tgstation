@@ -1,7 +1,7 @@
 /datum/biome/lavaland
 	open_turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
 	closed_turf_type = /turf/closed/mineral/volcanic
-
+	mob_exclusion_radius = 7
 
 /datum/biome/lavaland/basalt
 	closed_turf_type = /turf/closed/mineral/random/volcanic
@@ -20,9 +20,7 @@
 		/mob/living/basic/mining/lobstrosity/lava = 20,
 		/obj/effect/spawner/random/lavaland_mob/raptor = 15,
 		/mob/living/basic/mining/goldgrub = 15,
-		/obj/structure/spawner/lavaland = 1,
-		/obj/structure/spawner/lavaland/goliath = 3,
-		/obj/structure/spawner/lavaland/legion = 3,
+		/mob/living/basic/mining/tendril = 7,
 	)
 
 	flora_types = list(
@@ -45,7 +43,9 @@
 /datum/biome/lavaland/shale
 	open_turf_type = /turf/open/misc/asteroid/basalt/smooth/shale/lava_land_surface
 	closed_turf_type = /turf/closed/mineral/random/volcanic/shale
+	fauna_density = 6
 	flora_density = 5
+	feature_density = 0.25
 
 	// Higher chance of lobstrocities, goldgrubs and brimdemons, but no bileworms
 	fauna_types = list(
@@ -57,9 +57,7 @@
 		/mob/living/basic/mining/lobstrosity/lava = 40,
 		/obj/effect/spawner/random/lavaland_mob/raptor = 15,
 		/mob/living/basic/mining/goldgrub = 35,
-		/obj/structure/spawner/lavaland = 2,
-		/obj/structure/spawner/lavaland/goliath = 3,
-		/obj/structure/spawner/lavaland/legion = 3,
+		/mob/living/basic/mining/tendril = 8,
 	)
 
 	flora_types = list(
@@ -80,7 +78,9 @@
 /datum/biome/lavaland/red_rock
 	open_turf_type = /turf/open/misc/asteroid/basalt/smooth/siderite/lava_land_surface
 	closed_turf_type = /turf/closed/mineral/random/volcanic/red_rock
+	fauna_density = 6
 	flora_density = 4
+	feature_density = 0.25
 
 	// Bileworms, raptors and watchers, but few goliaths
 	fauna_types = list(
@@ -93,9 +93,7 @@
 		/mob/living/basic/mining/lobstrosity/lava = 25,
 		/obj/effect/spawner/random/lavaland_mob/raptor = 20,
 		/mob/living/basic/mining/goldgrub = 15,
-		/obj/structure/spawner/lavaland = 2,
-		/obj/structure/spawner/lavaland/goliath = 1,
-		/obj/structure/spawner/lavaland/legion = 3,
+		/mob/living/basic/mining/tendril = 6,
 	)
 
 	flora_types = list(

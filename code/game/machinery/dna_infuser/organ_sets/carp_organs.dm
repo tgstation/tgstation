@@ -11,7 +11,7 @@
 	bonus_deactivate_text = span_notice("Your DNA is once again mostly yours, and so fades your ability to space-swim...")
 	bonus_traits = list(TRAIT_SPACEWALK)
 	bonus_biotype = MOB_AQUATIC
-	limb_overlay = /datum/bodypart_overlay/texture/carpskin
+	limb_texture = /datum/bodypart_texture/carpskin
 	color_overlay_priority = LIMB_COLOR_CARP_INFUSION
 
 ///Carp lungs! You can breathe in space! Oh... you can't breathe on the station, you need low oxygen environments.
@@ -120,6 +120,7 @@
 	greyscale_colors = CARP_COLORS
 	can_smoothen_out = FALSE
 	shade_color = "blue"
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_FERAL_BITER)
 
 	///Timer counting down. When finished, the owner gets a bad moodlet.
 	var/cooldown_timer

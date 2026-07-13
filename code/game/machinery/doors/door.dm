@@ -28,6 +28,8 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.2
 
+	tacmap_color = TACMAP_DOOR
+
 	/// The animation we're currently playing, if any
 	var/animation
 	var/visible = TRUE
@@ -111,7 +113,7 @@
 	if(multi_tile)
 		set_bounds()
 		set_filler()
-		update_overlays()
+		update_appearance(UPDATE_OVERLAYS)
 	air_update_turf(TRUE, TRUE)
 	register_context()
 	if(elevator_mode)
@@ -127,7 +129,7 @@
 		flags_1 &= ~PREVENT_CLICK_UNDER_1
 
 	if(glass)
-		passwindow_on(src, INNATE_TRAIT)
+		pass_flags |= PASSWINDOW
 	//doors only block while dense though so we have to use the proc
 	real_explosion_block = explosion_block
 	update_explosive_block()
@@ -322,43 +324,44 @@
 		return
 	return ..()
 
+/obj/machinery/door/allowed(mob/accessor)
+	return ..() || emergency
+
+/// A mob is trying to open or close the door
 /obj/machinery/door/proc/try_to_activate_door(mob/user, access_bypass = FALSE, bumped = FALSE)
 	add_fingerprint(user)
 	if(operating || (obj_flags & EMAGGED))
-		return
+		return FALSE
 
 	if(!bumped && !can_open_with_hands)
-		return
+		return FALSE
 
 	if(elevator_mode && elevator_status != LIFT_PLATFORM_UNLOCKED)
-		return
+		return FALSE
 
-	var/access_check = access_bypass
-	if(emergency)
-		access_check = TRUE
-	else if(unrestricted_side(user) && !delayed_unres_open)
-		access_check = TRUE
-	else if(!requiresID())
-		access_check = TRUE
-	else if(allowed(user)) // You
-		access_check = TRUE
-	else for(var/mob/living/human_backpack in user.buckled_mobs)
-		if(allowed(human_backpack)) // Your partner in crime
-			access_check = TRUE
-			break
-
-	if(!access_check && unrestricted_side(user) && attempt_delayed_unres_open(user))
-		access_check = TRUE
-
-	if(access_check)
+	// note: if the ID wire is cut no ID cards are checked at all! (This is intentional!)
+	if(access_bypass || (requiresID() && user_can_activate_door(user)))
 		if(density)
 			open()
 		else
 			close()
 		return TRUE
 
-	else if(!operating && density)
+	if(!operating && density)
 		run_animation(DOOR_DENY_ANIMATION)
+	return FALSE
+
+/// Used in try_to_activate_door
+/obj/machinery/door/proc/user_can_activate_door(mob/user)
+	PRIVATE_PROC(TRUE)
+	if(allowed(user))
+		return TRUE
+	for(var/mob/living/human_backpack in user.buckled_mobs)
+		if(allowed(human_backpack))
+			return TRUE
+	if(unrestricted_side(user))
+		return !delayed_unres_open || attempt_delayed_unres_open(user)
+	return FALSE
 
 /// Allows for specific side of airlocks to be unrestricted (IE, can exit maint freely, but need access to enter)
 /obj/machinery/door/proc/unrestricted_side(mob/opener)
@@ -446,20 +449,28 @@
 /obj/machinery/door/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
 	try_to_crowbar(null, user, FALSE)
 
-/obj/machinery/door/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/access_key))
-		var/obj/item/access_key/key = weapon
-		return key.attempt_open_door(user, src)
-	else if(!user.combat_mode && istype(weapon, /obj/item/fireaxe))
-		try_to_crowbar(weapon, user, FALSE)
-		return TRUE
-	else if(weapon.item_flags & NOBLUDGEON || user.combat_mode)
-		return ..()
-	else if(!user.combat_mode && istype(weapon, /obj/item/stack/sheet/mineral/wood))
-		return ..() // we need this so our can_barricade element can be called using COMSIG_ATOM_ATTACKBY
-	else if(try_to_activate_door(user))
-		return TRUE
-	return ..()
+/obj/machinery/door/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/access_key))
+		var/obj/item/access_key/key = tool
+		if(!key.attempt_open_door(user, src))
+			return ITEM_INTERACT_BLOCKING
+
+		return ITEM_INTERACT_SUCCESS
+
+	if(!user.combat_mode && istype(tool, /obj/item/fireaxe))
+		try_to_crowbar(tool, user, FALSE)
+		return ITEM_INTERACT_SUCCESS
+
+	if(tool.item_flags & NOBLUDGEON || user.combat_mode)
+		return NONE
+
+	if(istype(tool, /obj/item/stack/sheet/mineral/wood))
+		return NONE // we need this so our can_barricade element can be called using COMSIG_ATOM_ATTACKBY
+
+	if(try_to_activate_door(user))
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/machinery/door/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	// allows you to crowbar doors while in combat mode

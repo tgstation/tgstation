@@ -27,4 +27,4 @@
 		COOLDOWN_START(controller, announcement_spam_protection, 30 SECONDS)
 
 /datum/round_event/grid_check/start()
-	power_fail(30, 120)
+	power_fail(60, 240) // 1 to 4 minutes

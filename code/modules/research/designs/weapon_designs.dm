@@ -635,8 +635,8 @@
 	desc = "A dirt cheap 3D printed gun. Only holds one bullet, and is infamous for sometimes exploding on it's user."
 	id = "liberator_gun"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 15)
-	build_path = /obj/item/gun/ballistic/automatic/pistol/doorhickey
+	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5)
+	build_path = /obj/item/gun/ballistic/automatic/pistol/doohickey
 	category = list(RND_CATEGORY_IMPORTED)
 
 /datum/design/stun_boomerang

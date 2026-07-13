@@ -32,18 +32,17 @@
 /obj/item/light/grind_results()
 	return list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10)
 
-/obj/item/light/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-
-	if(istype(attacking_item, /obj/item/lightreplacer))
-		var/obj/item/lightreplacer/lightreplacer = attacking_item
-		lightreplacer.attackby(src, user)
+/obj/item/light/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/lightreplacer))
+		return NONE
+	tool.item_interaction(user, src)
+	return ITEM_INTERACT_SUCCESS
 
 /// Returns true if bulb is intact
 /obj/item/light/proc/is_intact()
 	return status == LIGHT_OK
 
-/obj/item/light/suicide_act(mob/living/carbon/user)
+/obj/item/light/suicide_act(mob/living/user)
 	if (status == LIGHT_BROKEN)
 		user.visible_message(span_suicide("[user] begins to stab [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	else

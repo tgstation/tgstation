@@ -81,7 +81,7 @@
 	icon_state = "polycrystal"
 	inhand_icon_state = null
 	material_flags = MATERIAL_NO_DESCRIPTORS
-	gulag_valid = TRUE
+	gulag_value = 100
 	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("bluespace polybashes", "bluespace polybatters", "bluespace polybludgeons", "bluespace polythrashes", "bluespace polysmashes")
 	attack_verb_simple = list("bluespace polybash", "bluespace polybatter", "bluespace polybludgeon", "bluespace polythrash", "bluespace polysmash")

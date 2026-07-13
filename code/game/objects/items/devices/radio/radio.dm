@@ -422,6 +422,8 @@
 			// left hands are odd slots
 			if (idx && (idx % 2) == (message_mods[RADIO_EXTENSION] == MODE_L_HAND))
 				return
+	if (message_mods[MODE_TTS_IDENTIFIER])
+		filtered_mods[MODE_TTS_IDENTIFIER] = message_mods[MODE_TTS_IDENTIFIER]
 	talk_into(speaker, raw_message, spans=spans, language=message_language, message_mods=filtered_mods)
 
 /// Checks if this radio can receive on the given frequency.
@@ -495,7 +497,6 @@
 	data["subspace"] = subspace_transmission
 	data["subspaceSwitchable"] = subspace_switchable
 	data["headset"] = FALSE
-	data["radio_noises"] = (user.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
 
 	return data
 
@@ -504,7 +505,6 @@
 	if(.)
 		return
 
-	var/mob/user = ui.user
 	switch(action)
 		if("frequency")
 			if(freqlock != RADIO_FREQENCY_UNLOCKED)
@@ -555,15 +555,6 @@
 				else
 					recalculateChannels()
 				. = TRUE
-		if("set_radio_volume")
-			if(!user.client)
-				return
-			user.client.prefs.write_preference(GLOB.preference_entries[/datum/preference/numeric/volume/sound_radio_noise], params["volume"])
-			//let them know what it'll sound like
-			//we get their read prefs instead of just taking the params beacuse write_preference is what handles ensuring
-			//there's no href exploits.
-			var/volume_modifier = (user.client.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
-			SEND_SOUND(user, sound('sound/items/radio/radio_receive.ogg', volume = volume_modifier))
 
 /obj/item/radio/examine(mob/user)
 	. = ..()

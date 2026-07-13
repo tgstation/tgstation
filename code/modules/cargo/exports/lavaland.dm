@@ -45,6 +45,7 @@
 		/obj/item/jacobs_ladder,
 		/obj/item/borg/upgrade/modkit/lifesteal,
 		/obj/item/clockwork_alloy,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/bdm,
 	)
 
 /datum/export/lavaland/major //valuable chest/ruin loot, minor megafauna loot

@@ -119,7 +119,7 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	force = 15
 	throwforce = 10
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 9)
 	attack_verb_continuous = list("slices", "dices", "chops", "cubes", "minces", "juliennes", "chiffonades", "batonnets")
 	attack_verb_simple = list("slice", "dice", "chop", "cube", "mince", "julienne", "chiffonade", "batonnet")
 	w_class = WEIGHT_CLASS_NORMAL
@@ -326,7 +326,7 @@
 	icon_angle = -45
 	custom_materials = null
 
-/obj/item/knife/shiv/carrot/suicide_act(mob/living/carbon/user)
+/obj/item/knife/shiv/carrot/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] forcefully drives \the [src] into [user.p_their()] eye! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
@@ -429,6 +429,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF
 	force = 0
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 	/// Used on Initialize, how much time to cut cable restraints and zipties.
 	var/snap_time_weak_handcuffs = 0 SECONDS
 	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.

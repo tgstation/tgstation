@@ -213,7 +213,7 @@
 	if(!hud_used || !client)
 		return
 
-	if(hud_used.hud_shown != HUD_STYLE_STANDARD)
+	if(hud_used.hud_version != HUD_STYLE_STANDARD)
 		return
 
 	for(var/datum/action/action as anything in actions)

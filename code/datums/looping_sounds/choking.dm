@@ -10,3 +10,4 @@
 	vary = TRUE
 	// Same as above
 	ignore_walls = FALSE
+	use_sound_tokens = TRUE

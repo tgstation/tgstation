@@ -147,6 +147,9 @@
 	/// Generally for niche objects, atoms blacklisted can spawn if enabled by spawner.
 	var/spawn_blacklisted = FALSE
 
+	/// What color this shows up as on the tactical map
+	var/tacmap_color = TACMAP_SOLID
+
 /**
  * Top level of the destroy chain for most atoms
  *
@@ -231,7 +234,12 @@
 	if(!mover.generic_canpass)
 		return mover.CanPassThrough(src, REVERSE_DIR(border_dir), .)
 
-/// Returns true or false to allow the mover to move through src
+/**
+ * Returns true or false to allow the mover to move through src
+ * @params
+ * 	mover: The mob trying to move into this atom.
+ * 	border_dir: Typically the direction that mover has in relation to src.
+ */
 /atom/proc/CanAllowThrough(atom/movable/mover, border_dir)
 	SHOULD_CALL_PARENT(TRUE)
 	//SHOULD_BE_PURE(TRUE)
@@ -351,7 +359,14 @@
  */
 /atom/proc/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	SHOULD_CALL_PARENT(TRUE)
+
+	if(isliving(crafter))
+		var/mob/living/person = crafter
+		if(person.mind)
+			ADD_TRAIT(src, TRAIT_HANDMADE, REF(person.mind))
+
 	SEND_SIGNAL(src, COMSIG_ATOM_ON_CRAFT, components, current_recipe)
+
 	var/list/remaining_parts = LAZYLISTDUPLICATE(current_recipe?.parts)
 	var/list/parts_by_type = LAZYLISTDUPLICATE(remaining_parts)
 	for(var/parttype in parts_by_type) //necessary for our is_type_in_list() call with the zebra arg set to true
@@ -445,6 +460,10 @@
 
 ///Is this atom within 1 tile of another atom
 /atom/proc/HasProximity(atom/movable/proximity_check_mob as mob|obj)
+	return
+
+/// has a previously nearby atom moved away
+/atom/proc/OnProximityExit(atom/movable/proximity_check_mob as mob|obj)
 	return
 
 /// Sets the wire datum of an atom
@@ -676,7 +695,7 @@
 	for(var/i = 1 to amount_to_create)
 		var/atom/created_atom = new atom_to_create(drop_location())
 		created_atom.OnCreatedFromProcessing(user, process_item, chosen_option, src)
-		if(custom_materials)
+		if(custom_materials || IS_EDIBLE(src)) //materials are ALWAYS inherited for food, even if the source has none
 			created_atom.set_custom_materials(custom_materials, 1 / amount_to_create)
 		created_atom.pixel_x = pixel_x
 		created_atom.pixel_y = pixel_y
@@ -700,7 +719,7 @@
 
 	SEND_SIGNAL(src, COMSIG_ATOM_CREATEDBY_PROCESSING, original_atom, chosen_option)
 	if(user.mind)
-		ADD_TRAIT(src, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
+		ADD_TRAIT(src, TRAIT_HANDMADE, REF(user.mind))
 
 ///Connect this atom to a shuttle
 /atom/proc/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)

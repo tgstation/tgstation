@@ -230,6 +230,10 @@
 	timeout = 3 SECONDS
 	hidden = TRUE
 
+/datum/mood_event/creeping/dead
+	mood_change = 8
+	timeout = 0
+
 /datum/mood_event/revolution
 	description = "VIVA LA REVOLUTION!"
 	mood_change = 3
@@ -302,6 +306,10 @@
 	mood_change = 5
 	timeout = 3 MINUTES
 	event_flags = MOOD_EVENT_SPIRITUAL
+
+/datum/mood_event/sacrifice_good/add_effects(...)
+	if(owner.mind?.holy_role && GLOB.deity)
+		description = "[GLOB.deity] is pleased with this offering!"
 
 /datum/mood_event/artok
 	description = "It's nice to see people are making art around here."
@@ -701,3 +709,8 @@
 	description = "What a night! I can't wait to do it all again!"
 	mood_change = 2
 	timeout = 10 MINUTES
+
+/datum/mood_event/gizmo_positive
+	description = "I hear a voice whispering kind words in my ear!"
+	mood_change = 3
+	timeout = 30 SECONDS

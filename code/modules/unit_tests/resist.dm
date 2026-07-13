@@ -10,7 +10,7 @@
 	TEST_ASSERT_EQUAL(human.fire_stacks, 5, "Human does not have 5 fire stacks pre-resist")
 
 	// Stop, drop, and roll has a sleep call. This would delay the test, and is not necessary.
-	call_async(human, /mob/living/verb/resist)
+	human.execute_resist()
 
 	//since resist() is a verb that possibly queues its actual execution for the next tick, we need to make the subsystem that handles the delayed execution process
 	//the callback. either that or sleep ourselves and see if it ran.

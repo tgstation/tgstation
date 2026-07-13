@@ -162,6 +162,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	item_flags = NOBLUDGEON
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2)
 
 /// The label item applied when labelling something
 /obj/item/label

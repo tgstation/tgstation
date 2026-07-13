@@ -56,4 +56,4 @@
 	if(dispense_returned)
 		return
 	if(istype(vended_item, /obj/item/food))
-		ADD_TRAIT(vended_item, TRAIT_FOOD_CHEF_MADE, VENDING_MACHINE_TRAIT)
+		ADD_TRAIT(vended_item, TRAIT_HANDMADE, VENDING_MACHINE_TRAIT)

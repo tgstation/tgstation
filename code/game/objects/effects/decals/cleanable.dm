@@ -82,12 +82,16 @@
 	RETURN_TYPE(/datum/reagents)
 	if (reagents)
 		return reagents
+	return init_reagents(decal_reagent, reagent_amount)
 
-	if (!decal_reagent)
+/obj/effect/decal/cleanable/proc/init_reagents(reagent = null, amount = null)
+	RETURN_TYPE(/datum/reagents)
+
+	if (!reagent)
 		return
 
-	create_reagents(reagent_amount)
-	reagents.add_reagent(decal_reagent, reagent_amount)
+	create_reagents(amount)
+	reagents.add_reagent(reagent, amount)
 	return reagents
 
 /obj/effect/decal/cleanable/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -118,6 +122,14 @@
 		var/datum/blood_type/blood_type = blood_DNA[blood_key]
 		if (blood_type.reagent_type == /datum/reagent/blood)
 			return TRUE
+
+/obj/effect/decal/cleanable/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
+	if (!isliving(user))
+		return ..()
+	var/mob/living/as_living = user
+	if (as_living.combat_mode)
+		return TRUE
+	return ..()
 
 /// Creates a cleanable decal on a turf
 /// Use this if your decal is one of one, and thus we should not spawn it if it's there already

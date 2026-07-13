@@ -6,6 +6,7 @@
 	ambience_index = AMBIENCE_DANGER
 	airlock_wires = /datum/wires/airlock/security
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	tacmap_color = TACMAP_AREA_SECURITY
 
 /area/station/security/office
 	name = "\improper Security Office"

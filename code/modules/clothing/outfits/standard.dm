@@ -421,7 +421,7 @@
 	back = /obj/item/mod/control/pre_equipped/debug
 	backpack_contents = list(
 		/obj/item/melee/energy/axe = 1,
-		/obj/item/storage/part_replacer/bluespace/tier4 = 1,
+		/obj/item/storage/part_replacer/bluespace/AdminDebug = 1,
 		/obj/item/gun/magic/wand/resurrection/debug = 1,
 		/obj/item/gun/magic/wand/death/debug = 1,
 		/obj/item/debug/human_spawner = 1,
@@ -452,7 +452,7 @@
 	back = /obj/item/mod/control/pre_equipped/administrative
 	backpack_contents = list(
 		/obj/item/melee/energy/axe = 1,
-		/obj/item/storage/part_replacer/bluespace/tier4 = 1,
+		/obj/item/storage/part_replacer/bluespace/AdminDebug = 1,
 		/obj/item/gun/magic/wand/resurrection/debug = 1,
 		/obj/item/gun/magic/wand/death/debug = 1,
 		/obj/item/debug/human_spawner = 1,

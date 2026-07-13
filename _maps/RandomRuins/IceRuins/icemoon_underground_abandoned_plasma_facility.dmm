@@ -204,7 +204,7 @@
 /turf/open/floor/iron,
 /area/ruin/plasma_facility/operations)
 "dB" = (
-/mob/living/simple_animal/hostile/asteroid/polarbear{
+/mob/living/basic/mining/polarbear{
 	name = "Baloo"
 	},
 /turf/open/misc/asteroid/snow/icemoon,
@@ -1414,7 +1414,7 @@
 "yp" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/item/knife/kitchen,
-/obj/item/food/grown/carrot,
+/obj/item/food/grown/carrotlike/carrot,
 /obj/item/food/grown/potato,
 /obj/item/food/meat/slab/human/mutant/zombie,
 /obj/item/food/meat/slab/human/mutant/zombie,

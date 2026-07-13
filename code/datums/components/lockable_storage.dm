@@ -226,11 +226,14 @@
 	. = ..()
 	if(action != "keypad")
 		return TRUE
+
+	var/atom/source = parent
+	playsound(source, SFX_TERMINAL_TYPE, 50, FALSE)
+
 	var/digit = params["digit"]
 	switch(digit)
 		//locking it back up
 		if("C")
-			var/atom/source = parent
 			numeric_input = ""
 			//you can't lock it if it's already locked or lacks a lock code.
 			if(source.atom_storage.locked || isnull(lock_code))
@@ -249,7 +252,6 @@
 			//unlocking the current code.
 			if(numeric_input != lock_code)
 				return TRUE
-			var/atom/source = parent
 			source.atom_storage.set_locked(STORAGE_NOT_LOCKED)
 			numeric_input = ""
 			return TRUE

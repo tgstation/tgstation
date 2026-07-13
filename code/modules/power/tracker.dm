@@ -160,6 +160,7 @@
 
 /obj/item/electronics/tracker
 	name = "tracker electronics"
+	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT)
 
 #undef TRACKER_Z_OFFSET
 #undef TRACKER_EDGE_Z_OFFSET

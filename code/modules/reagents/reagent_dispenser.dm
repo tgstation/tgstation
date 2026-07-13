@@ -35,6 +35,8 @@
 	var/last_rigger = ""
 	/// is it climbable? some of our wall-mounted dispensers should not have this
 	var/climbable = FALSE
+	/// Flags passed to the reagents datum upon creation
+	var/reagent_flags = DRAINABLE | AMOUNT_VISIBLE
 
 // This check is necessary for assemblies to automatically detect that we are compatible
 /obj/structure/reagent_dispensers/IsSpecialAssembly()
@@ -83,21 +85,19 @@
 		if(tank_volume && (damage_flag == BULLET || damage_flag == LASER))
 			boom()
 
-/obj/structure/reagent_dispensers/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.is_refillable())
-		return FALSE //so we can refill them via their afterattack.
-	if(istype(attacking_item, /obj/item/assembly_holder) && accepts_rig)
+/obj/structure/reagent_dispensers/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/assembly_holder) && accepts_rig)
 		if(rig)
 			balloon_alert(user, "another device is in the way!")
-			return ..()
-		var/obj/item/assembly_holder/holder = attacking_item
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/assembly_holder/holder = tool
 		if(!(locate(/obj/item/assembly/igniter) in holder.assemblies))
-			return ..()
+			return ITEM_INTERACT_BLOCKING
 
 		user.balloon_alert_to_viewers("attaching rig...")
 		add_fingerprint(user)
 		if(!do_after(user, 2 SECONDS, target = src) || !user.transferItemToLoc(holder, src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		rig = holder
 		holder.master = src
 		holder.on_attach()
@@ -109,10 +109,10 @@
 		log_bomber(user, "attached [holder.name] to ", src)
 		last_rigger = user
 		user.balloon_alert_to_viewers("attached rig")
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/stack/sheet/iron) && can_be_tanked)
-		var/obj/item/stack/sheet/iron/metal_stack = attacking_item
+	if(istype(tool, /obj/item/stack/sheet/iron) && can_be_tanked)
+		var/obj/item/stack/sheet/iron/metal_stack = tool
 		metal_stack.use(1)
 		var/obj/structure/reagent_dispensers/plumbed/storage/new_tank = new /obj/structure/reagent_dispensers/plumbed/storage(drop_location())
 		new_tank.reagents.maximum_volume = reagents.maximum_volume
@@ -121,9 +121,9 @@
 		new_tank.update_appearance(UPDATE_OVERLAYS)
 		new_tank.set_anchored(anchored)
 		qdel(src)
-		return FALSE
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/structure/reagent_dispensers/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -152,7 +152,7 @@
 	UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
 
 /obj/structure/reagent_dispensers/Initialize(mapload)
-	create_reagents(tank_volume, DRAINABLE | AMOUNT_VISIBLE)
+	create_reagents(tank_volume, reagent_flags)
 	if(reagent_id)
 		reagents.add_reagent(reagent_id, tank_volume)
 	. = ..()
@@ -292,39 +292,37 @@
 	// if this sucks, feel free to change it, but make sure the damn thing will log. thanks.
 	return ..()
 
-/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_WELDER)
-		return ..()
-
-	var/obj/item/weldingtool/refilling_welder = attacking_item
+/obj/structure/reagent_dispensers/fueltank/welder_act(mob/living/user, obj/item/tool)
+	var/obj/item/weldingtool/refilling_welder = tool
 	if(istype(refilling_welder) && !refilling_welder.welding)
 		if(refilling_welder.reagents.has_reagent(/datum/reagent/fuel, refilling_welder.max_fuel))
 			to_chat(user, span_warning("Your [refilling_welder.name] is already full!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		reagents.trans_to(refilling_welder, refilling_welder.max_fuel, transferred_by = user)
 		user.visible_message(span_notice("[user] refills [user.p_their()] [refilling_welder.name]."), span_notice("You refill [refilling_welder]."))
 		playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 		refilling_welder.update_appearance()
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	var/obj/item/lighter/refilling_lighter = attacking_item
+	var/obj/item/lighter/refilling_lighter = tool
 	if(istype(refilling_lighter) && !refilling_lighter.lit)
 		if(refilling_lighter.reagents.has_reagent(/datum/reagent/fuel, refilling_lighter.maximum_fuel))
 			to_chat(user, span_warning("Your [refilling_lighter.name] is already full!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		reagents.trans_to(refilling_lighter, refilling_lighter.maximum_fuel, transferred_by = user)
 		user.visible_message(span_notice("[user] refills [user.p_their()] [refilling_lighter.name]."), span_notice("You refill [refilling_lighter]."))
 		playsound(src, 'sound/effects/refill.ogg', 25, TRUE)
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	if(!reagents.has_reagent(/datum/reagent/fuel))
 		to_chat(user, span_warning("[src] is out of fuel!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	user.visible_message(
-		span_danger("[user] catastrophically fails at refilling [user.p_their()] [attacking_item.name]!"),
+		span_danger("[user] catastrophically fails at refilling [user.p_their()] [tool.name]!"),
 		span_userdanger("That was stupid of you."))
-	log_bomber(user, "detonated a", src, "via [attacking_item.name]")
+	log_bomber(user, "detonated a", src, "via [tool.name]")
 	boom()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reagent_dispensers/fueltank/large
 	name = "high capacity fuel tank"
@@ -358,6 +356,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	desc = "A machine that cools and dispenses liquids to drink. The 'hot' handle doesn't seem to do anything."
 	icon_state = "water_cooler"
 	anchored = TRUE
+	reagent_flags = DRAINABLE | TRANSPARENT
 	tank_volume = 200
 	can_be_tanked = FALSE
 	max_integrity = 150
@@ -374,7 +373,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	if(prob(2) && mapload)
 		reagents.convert_reagent(/datum/reagent/water, /datum/reagent/consumable/fruit_punch)
 	create_jug()
-	refresh_appearance()
+	update_appearance()
 
 /obj/structure/reagent_dispensers/water_cooler/Destroy()
 	. = ..()
@@ -400,7 +399,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 		if(!do_after(user, 5 SECONDS, src))
 			return
 		tipped = FALSE
-		refresh_appearance()
+		update_appearance()
 		return
 
 
@@ -418,6 +417,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	var/obj/item/reagent_containers/cup/glass/sillycup/new_cup = new(get_turf(src))
 	user.put_in_hands(new_cup)
 	paper_cups--
+
+/obj/structure/reagent_dispensers/water_cooler/update_icon_state()
+	. = ..()
+	if(tipped)
+		icon_state = "water_cooler_disgraced"
+	else
+		if(!our_jug)
+			icon_state = "water_cooler_forlorn"
+		else
+			icon_state = "water_cooler"
 
 /obj/structure/reagent_dispensers/water_cooler/update_overlays()
 	. = ..()
@@ -508,7 +517,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	balloon_alert(user, "attached")
 	user.log_message("attached a [new_jug] to [src] at [AREACOORD(src)] containing ([new_jug.reagents.get_reagent_log_string()])", LOG_ATTACK)
 	add_fingerprint(user)
-	refresh_appearance()
+	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reagent_dispensers/water_cooler/boom()
@@ -520,18 +529,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	eject_jug(throw_away = TRUE)
 	playsound(src, 'sound/effects/glass/glassbash.ogg', 100)
 	tip_over()
-
-/obj/structure/reagent_dispensers/water_cooler/proc/refresh_appearance()
-	if(tipped)
-		icon_state = "water_cooler_disgraced"
-	else
-		if(!our_jug)
-			icon_state = "water_cooler_forlorn"
-		else
-			icon_state = "water_cooler"
-
-	update_overlays()
-	update_appearance()
 
 ///Creates an empty jug inside of the cooler. Doesn't need to be filled bc it absorbs the cooler's reagent on eject.
 /obj/structure/reagent_dispensers/water_cooler/proc/create_jug()
@@ -555,12 +552,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 		reagents.trans_to(our_jug.reagents, tank_volume)
 
 	our_jug = null
-	refresh_appearance()
+	update_appearance()
 
 ///Handles the visual stuff related to the cooler itself tipping.
 /obj/structure/reagent_dispensers/water_cooler/proc/tip_over()
 	tipped = TRUE
-	refresh_appearance()
+	update_appearance()
 
 ///Pre-tipped version for mapping.
 /obj/structure/reagent_dispensers/water_cooler/fallen
@@ -588,17 +585,75 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	desc = "A machine that dispenses fruit punch to drink. This juice is unbearably sweet, and can only be safely consumed in the presence of a liquid cooler. Engage with caution."
 	reagent_id = /datum/reagent/consumable/fruit_punch
 
-/obj/structure/reagent_dispensers/beerkeg
-	name = "beer keg"
-	desc = "Beer is liquid bread, it's good for you..."
-	icon_state = "beer"
-	reagent_id = /datum/reagent/consumable/ethanol/beer
+/obj/structure/reagent_dispensers/keg
+	name = "keg"
+	desc = "A keg, usually filled with some low-grade, Nanotrasen brewed alcoholic drink."
+	icon_state = "keg"
 	openable = TRUE
+	var/keg_print
 
-/obj/structure/reagent_dispensers/beerkeg/blob_act(obj/structure/blob/B)
+/obj/structure/reagent_dispenders/keg/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/structure/reagent_dispensers/keg/update_overlays()
+	. = ..()
+	if(keg_print)
+		. += keg_print
+
+/obj/structure/reagent_dispensers/keg/blob_act(obj/structure/blob/B)
 	explosion(src, heavy_impact_range = 3, light_impact_range = 5, flame_range = 10, flash_range = 7)
 	if(!QDELETED(src))
 		qdel(src)
+
+/obj/structure/reagent_dispensers/keg/beer
+	name = "beer keg"
+	desc = "Beer is liquid bread, it's good for you..."
+	keg_print = "keg_beer"
+	reagent_id = /datum/reagent/consumable/ethanol/beer
+
+/obj/structure/reagent_dispensers/keg/whiskey
+	name = "irish whiskey keg"
+	desc = "<i>Too much of anything is bad, but too much good whiskey is barely enough.\"</i> - Mark Twain"
+	keg_print = "keg_irish"
+	reagent_id = /datum/reagent/consumable/ethanol/whiskey
+
+/obj/structure/reagent_dispensers/keg/rum
+	name = "rum keg"
+	desc = "A keg of not just any rum, oh no. It's the famous Captain Pete's Spiced Rum. It's GRIFF in a bottle... or keg, dare I say."
+	keg_print = "keg_pirate"
+	reagent_id = /datum/reagent/consumable/ethanol/rum/aged
+
+/obj/structure/reagent_dispensers/keg/gold
+	name = "gold keg"
+	desc = "A gaudy, gold-coated keg. It's easy to assume that whatever is inside it must be quite valuable indeed."
+	icon_state = "keg_gold"
+
+/obj/structure/reagent_dispensers/keg/gold/rum
+	name = "vintage rum keg"
+	desc = "A keg of Captain Pete's Spiced Rum from over half a century ago. Old recipe, strong and authentic flavor, y'aaarrrr..."
+	keg_print = "keg_pirate"
+	reagent_id = /datum/reagent/consumable/ethanol/rum/aged
+
+/obj/structure/reagent_dispensers/keg/gold/irish
+	name = "special irish drink keg"
+	desc = "A keg full of a cocktail drink made from imported irish whiskey."
+	keg_print = "keg_irish"
+
+/obj/structure/reagent_dispensers/keg/gold/irish/Initialize(mapload)
+	reagent_id = pick(
+		/datum/reagent/consumable/ethanol/irishcoffee,
+		/datum/reagent/consumable/ethanol/irish_cream,
+		/datum/reagent/consumable/ethanol/irishcarbomb,
+		/datum/reagent/consumable/ethanol/b52,
+	)
+	return ..()
+
+/obj/structure/reagent_dispensers/keg/gold/trappist
+	name = "trappist beer keg"
+	desc = "A keg of <i>Mont de Requin Trappistes Bleu</i>. A beer normally brewed under guidelines so strict that there are only a handful of two of certified trappist beer breweries, none in the Spinward Sector."
+	keg_print = "keg_beer"
+	reagent_id = /datum/reagent/consumable/ethanol/trappist
 
 /obj/structure/reagent_dispensers/wall/virusfood
 	name = "virus food dispenser"
@@ -626,6 +681,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "serving"
 	reagent_id = /datum/reagent/consumable/nutraslop
+	anchored = TRUE
+
+/obj/structure/reagent_dispensers/servingdish/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/reagent_dispensers/servingdish/unanchored
+	anchored = FALSE
 
 /obj/structure/reagent_dispensers/plumbed
 	name = "stationary water tank"

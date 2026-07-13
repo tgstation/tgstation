@@ -933,6 +933,8 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			old_area.turfs_to_uncontain_by_zlevel[crds.z] += crds
 			area_instance.turfs_by_zlevel[crds.z] += crds
 		area_instance.contents.Add(crds)
+		if(!isnull(old_area) && !old_area.has_contained_turfs())
+			qdel(old_area)
 
 		if(GLOB.use_preloader)
 			world.preloader_load(area_instance)

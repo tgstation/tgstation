@@ -1,14 +1,14 @@
 /datum/religion_rites/banish_nightmare
 	name = "Banish Nightmare"
-	desc = "Banish the corpse of a Nightmare or its heart back from whence it came, protecting the dreams of \
-		the station and earning favor. If a heart is present, you will be rewarded with a special blessing."
+	desc = "Banish the corpse of a Nightmare (or its heart) back from whence it came. In protecting the dreams of \
+		the station, you will earn favor. If a heart is present, you will be rewarded with a special blessing."
 	favor_cost = 0
 	ritual_length = 20 SECONDS
 
 /datum/religion_rites/banish_nightmare/New()
 	. = ..()
 	ritual_invocations = list(
-		"We have bested a terrible Nightmare that plagued our station!..",
+		"We have bested a terrible Nightmare, a plague upon our station!..",
 		"With the power of [GLOB.deity], we cast it out!..",
 		"This invader of dreams has no place here...",
 		"May it trouble our flock no longer.",
@@ -27,7 +27,7 @@
 			break
 
 	if(!has_nightmare)
-		to_chat(user, span_warning("There is no corpse or heart of a Nightmare to banish!"))
+		to_chat(user, span_warning("There is no Nightmare corpse or heart to banish!"))
 		return FALSE
 
 	return ..()

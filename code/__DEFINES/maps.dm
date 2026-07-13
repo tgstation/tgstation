@@ -135,7 +135,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 ///Z level traits for Deep Space
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
 ///Z level traits for
-#define ZTRAITS_WILDS list(\
+#define ZTRAITS_ICY_WILDS list(\
 	ZTRAIT_LINKAGE = GRIDLINKED, \
 	ZTRAIT_ICE_RUINS = TRUE, \
 	ZTRAIT_SNOWSTORM = FALSE, \

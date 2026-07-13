@@ -43,6 +43,10 @@ export const SETTINGS_TABS = [
     id: 'statPanel',
     name: 'Stat Panel',
   },
+  {
+    id: 'websocket',
+    name: 'Websocket',
+  },
 ] as const;
 
 export const FONTS_DISABLED = 'Default';

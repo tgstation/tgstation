@@ -56,6 +56,7 @@
 	icon_state = "eye_implant_medical"
 	HUD_traits = list(TRAIT_MEDICAL_HUD)
 	hud_color = "#1D8FEC"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/organ/cyberimp/eyes/hud/security
 	name = "security HUD implant"
@@ -63,6 +64,7 @@
 	icon_state = "eye_implant_security"
 	HUD_traits = list(TRAIT_SECURITY_HUD)
 	hud_color = "#9A151E"
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6)
 
 /obj/item/organ/cyberimp/eyes/hud/diagnostic
 	name = "diagnostic HUD implant"
@@ -70,6 +72,7 @@
 	icon_state = "eye_implant_diagnostic"
 	HUD_traits = list(TRAIT_DIAGNOSTIC_HUD, TRAIT_BOT_PATH_HUD)
 	hud_color = "#CC6E33"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.6)
 
 /obj/item/organ/cyberimp/eyes/hud/security/syndicate
 	name = "contraband security HUD implant"

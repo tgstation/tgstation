@@ -36,7 +36,6 @@
 	GLOB.gutlunch_count++
 	if(greyscale_config)
 		set_greyscale(colors = list(pick(possible_colors)))
-	AddElement(/datum/element/ai_retaliate)
 	if(can_breed)
 		add_breeding_component()
 

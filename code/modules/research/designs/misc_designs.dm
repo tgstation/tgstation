@@ -107,6 +107,10 @@
 	id = "weldingmask"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
+	transfered_materials = list(
+		/obj/item/clothing/mask/gas/welding = /obj/item/clothing/mask/gas/welding::custom_materials,
+		/obj/item/gas_filter = /obj/item/gas_filter::custom_materials,
+	)
 	build_path = /obj/item/clothing/mask/gas/welding
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
@@ -135,7 +139,11 @@
 	desc = "This awesome mug will ensure your coffee never stays cold!"
 	id = "mauna_mug"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
+	transfered_materials = list(
+		/obj/item/reagent_containers/cup/maunamug = /obj/item/reagent_containers/cup/maunamug::custom_materials,
+		/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell::custom_materials,
+	)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
@@ -825,6 +833,10 @@
 	id = "inspector"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/uranium =SHEET_MATERIAL_AMOUNT)
+	transfered_materials = list(
+		/obj/item/inspector = /obj/item/inspector::custom_materials,
+		/obj/item/stock_parts/power_store/cell/crap = /obj/item/stock_parts/power_store/cell/crap::custom_materials,
+	)
 	build_path = /obj/item/inspector
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY

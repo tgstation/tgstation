@@ -28,17 +28,3 @@
 
 	if(HAS_TRAIT(mymob, TRAIT_CAN_THROW_ITEMS))
 		add_screen_object(/atom/movable/screen/throw_catch, HUD_MOB_THROW, HUD_GROUP_HOTKEYS, ui_style, ui_drop_throw)
-
-/datum/hud/dextrous/persistent_inventory_update()
-	if(!mymob)
-		return
-	var/mob/living/owner = mymob
-	if(hud_version != HUD_STYLE_NOHUD)
-		for(var/obj/item/held in owner.held_items)
-			held.screen_loc = ui_hand_position(owner.get_held_index_of_item(held))
-			owner.client.screen += held
-		return
-
-	for(var/obj/item/held in owner.held_items)
-		held.screen_loc = null
-		owner.client.screen -= held

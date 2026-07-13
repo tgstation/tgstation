@@ -439,7 +439,7 @@
 		var/beepskys_cry = "Level 10 infraction alert!"
 		to_chat(victim, "[span_name("[name]")] exclaims, \"[span_robot("[beepskys_cry]")]")
 		if(victim.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
-			victim.create_chat_message(src, raw_message = beepskys_cry, spans = list("robotic"))
+			victim.create_chat_message(src, raw_message = beepskys_cry, spans = list(SPAN_ROBOT))
 
 // Used by Veteran Security Advisor job.
 /datum/brain_trauma/special/ptsd

@@ -25,8 +25,8 @@
 	var/account_id
 	///Amount of money that's been crabbed, if you lose enough from one series of CRAB-17's, you get a negative moodlet.
 	var/money_crabbed
-	///Is there a CRAB 17 on the station draining funds? Prevents manual fund transfer. pink levels are rising
-	var/being_dumped = FALSE
+	///Lazylist of CRAB 17s on the station draining funds. Prevents manual fund transfer. pink levels are rising
+	var/list/being_dumped
 	///Reference to the current civilian bounty that the account is working on.
 	var/datum/bounty/civilian_bounty
 	///If player is currently picking a civilian bounty to do, these options are held here to prevent soft-resetting through the UI.
@@ -117,15 +117,15 @@
 /**
  * Sets the bank_account to behave as though a CRAB-17 event is happening.
  */
-/datum/bank_account/proc/dumpeet()
-	being_dumped = TRUE
+/datum/bank_account/proc/dumpeet(obj/structure/checkoutmachine/dump_machine)
+	LAZYADD(being_dumped, dump_machine)
 	money_crabbed = 0
 
 /**
  * Stops the dumping of the bank account.
  */
-/datum/bank_account/proc/stop_dump()
-	being_dumped = FALSE
+/datum/bank_account/proc/stop_dump(obj/structure/checkoutmachine/dump_machine)
+	LAZYREMOVE(being_dumped, dump_machine)
 	if(money_crabbed < NO_MY_MONEY)
 		return
 	for(var/obj/card as anything in bank_cards)

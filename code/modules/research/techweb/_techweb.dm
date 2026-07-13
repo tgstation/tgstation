@@ -22,8 +22,6 @@
 	var/list/researched_designs = list()
 	/// Custom inserted designs like from disks that should survive recalculation.
 	var/list/custom_designs = list()
-	/// Already boosted nodes that can't be boosted again. node id = path of boost object.
-	var/list/boosted_nodes = list()
 	/// Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.
 	var/list/hidden_nodes = list()
 	/// List of items already deconstructed for research points, preventing infinite research point generation.
@@ -433,9 +431,10 @@
 /datum/techweb/proc/boost_techweb_node(datum/techweb_node/node, list/pointlist)
 	if(!istype(node))
 		return FALSE
-	LAZYINITLIST(boosted_nodes[node.id])
-	for(var/point_type in pointlist)
-		boosted_nodes[node.id][point_type] = max(boosted_nodes[node.id][point_type], pointlist[point_type])
+	LAZYINITLIST(node.discount_boosts)
+	for(var/point_type in pointlist) // Essentially applies the greater boost(s) between the newer and any existing.
+		node.discount_boosts[point_type] = max(node.discount_boosts[point_type], pointlist[point_type])
+	node.discount_boosted = TRUE
 	unhide_node(node)
 	update_node_status(node)
 	return TRUE

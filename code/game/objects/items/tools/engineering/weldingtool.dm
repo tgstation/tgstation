@@ -30,7 +30,7 @@
 	toolspeed = 1
 	wound_bonus = 10
 	exposed_wound_bonus = 15
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.3)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2)
 	/// Whether the welding tool is on or off.
 	var/welding = FALSE
 	/// Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
@@ -261,13 +261,13 @@
 			START_PROCESSING(SSobj, src)
 		else
 			balloon_alert(user, "no fuel!")
-			switched_off(user)
+			switched_off()
 	else
 		playsound(loc, deactivation_sound, 50, TRUE)
-		switched_off(user)
+		switched_off()
 
 /// Switches the welder off
-/obj/item/weldingtool/proc/switched_off(mob/user)
+/obj/item/weldingtool/proc/switched_off()
 	set_welding(FALSE)
 
 	force = 3
@@ -344,7 +344,7 @@
 	icon_state = "indwelder"
 	inhand_icon_state = "indwelder"
 	max_fuel = 40
-	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.6)
 
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()
 	return

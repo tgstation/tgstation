@@ -15,6 +15,7 @@
 	attack_verb_continuous = list("mops", "bashes", "bludgeons", "whacks")
 	attack_verb_simple = list("mop", "bash", "bludgeon", "whack")
 	resistance_flags = FLAMMABLE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	var/mopcount = 0
 	///Maximum volume of reagents it can hold.
 	var/max_reagent_volume = 15
@@ -36,6 +37,7 @@
 /obj/item/mop/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cleaner, mopspeed, pre_clean_callback=CALLBACK(src, PROC_REF(should_clean)), on_cleaned_callback=CALLBACK(src, PROC_REF(apply_reagents)))
+	AddComponent(/datum/component/walking_aid)
 	create_reagents(max_reagent_volume)
 	GLOB.janitor_devices += src
 
@@ -83,6 +85,7 @@
 	throwforce = 14
 	throw_range = 4
 	mopspeed = 0.8 SECONDS
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	var/refill_enabled = TRUE //Self-refill toggle for when a janitor decides to mop with something other than water.
 	/// Amount of reagent to refill per second
 	var/refill_rate = 0.5

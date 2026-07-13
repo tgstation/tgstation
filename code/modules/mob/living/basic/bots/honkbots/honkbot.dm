@@ -4,7 +4,7 @@
 	icon_state = "honkbot"
 	base_icon_state = "honkbot"
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
-	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.8, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.8, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	req_access = list(ACCESS_ROBOTICS, ACCESS_THEATRE, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	ai_controller = /datum/ai_controller/basic_controller/bot/honkbot
@@ -25,8 +25,6 @@
 	stun_sound = 'sound/items/airhorn/AirHorn.ogg'
 	baton_type = /obj/item/bikehorn/airhorn
 	cuff_type = /obj/item/restraints/handcuffs/cable/zipties/fake
-
-
 
 /mob/living/basic/bot/secbot/honkbot/Initialize(mapload)
 	. = ..()
@@ -121,3 +119,6 @@
 	honkbot_assembly.created_name = name
 	new /obj/item/assembly/prox_sensor(drop_location)
 	drop_part(baton_type, drop_location)
+
+/mob/living/basic/bot/secbot/honkbot/nopatrol
+	bot_mode_flags = parent_type::bot_mode_flags & ~BOT_MODE_AUTOPATROL

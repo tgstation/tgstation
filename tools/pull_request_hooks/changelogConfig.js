@@ -9,112 +9,112 @@
  */
 export const CHANGELOG_ENTRIES = [
   [
-    ["rscadd", "add", "adds"],
+    ['rscadd', 'add', 'adds'],
     {
       placeholders: [
-        "Added new mechanics or gameplay changes",
-        "Added more things",
+        'Added new mechanics or gameplay changes',
+        'Added more things',
       ],
     },
   ],
 
   [
-    ["bugfix", "fix", "fixes"],
+    ['bugfix', 'fix', 'fixes'],
     {
-      placeholders: ["fixed a few things"],
+      placeholders: ['fixed a few things'],
     },
   ],
 
   [
-    ["rscdel", "del", "dels"],
+    ['rscdel', 'del', 'dels'],
     {
-      placeholders: ["Removed old things"],
+      placeholders: ['Removed old things'],
     },
   ],
 
   [
-    ["qol"],
+    ['qol'],
     {
-      placeholders: ["made something easier to use"],
+      placeholders: ['made something easier to use'],
     },
   ],
 
   [
-    ["sound"],
+    ['sound'],
     {
-      placeholders: ["added/modified/removed audio or sound effects"],
+      placeholders: ['added/modified/removed audio or sound effects'],
     },
   ],
 
   [
-    ["image"],
+    ['image'],
     {
-      placeholders: ["added/modified/removed some icons or images"],
+      placeholders: ['added/modified/removed some icons or images'],
     },
   ],
 
   [
-    ["map"],
+    ['map'],
     {
-      placeholders: ["added/modified/removed map content"],
+      placeholders: ['added/modified/removed map content'],
     },
   ],
 
   [
-    ["spellcheck", "typo"],
+    ['spellcheck', 'typo'],
     {
-      placeholders: ["fixed a few typos"],
+      placeholders: ['fixed a few typos'],
     },
   ],
 
   [
-    ["balance"],
+    ['balance'],
     {
-      placeholders: ["rebalanced something"],
+      placeholders: ['rebalanced something'],
     },
   ],
 
   [
-    ["code_imp", "code"],
+    ['code_imp', 'code'],
     {
-      placeholders: ["changed some code"],
+      placeholders: ['changed some code'],
     },
   ],
 
   [
-    ["refactor"],
+    ['refactor'],
     {
-      placeholders: ["refactored some code"],
+      placeholders: ['refactored some code'],
     },
   ],
 
   [
-    ["config"],
+    ['config'],
     {
-      placeholders: ["changed some config setting"],
+      placeholders: ['changed some config setting'],
     },
   ],
 
   [
-    ["admin"],
+    ['admin'],
     {
-      placeholders: ["messed with admin stuff"],
+      placeholders: ['messed with admin stuff'],
     },
   ],
 
   [
-    ["server"],
+    ['server'],
     {
-      placeholders: ["something server ops should know"],
+      placeholders: ['something server ops should know'],
     },
   ],
 ];
 
 // Valid changelog openers
-export const CHANGELOG_OPEN_TAGS = [":cl:", "??"];
+export const CHANGELOG_OPEN_TAGS = [':cl:', '??'];
 
 // Valid changelog closers
-export const CHANGELOG_CLOSE_TAGS = ["/:cl:", "/ :cl:", ":/cl:", "/??", "/ ??"];
+export const CHANGELOG_CLOSE_TAGS = ['/:cl:', '/ :cl:', ':/cl:', '/??', '/ ??'];
 
 // Placeholder value for an author
-export const CHANGELOG_AUTHOR_PLACEHOLDER_NAME = "optional name here";
+export const CHANGELOG_AUTHOR_PLACEHOLDER_NAME = 'optional name here';

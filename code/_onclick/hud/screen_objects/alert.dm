@@ -86,6 +86,8 @@
 	alerts -= category
 	if(client && hud_used)
 		hud_used.reorganize_alerts()
+		for(var/mob/viewer as anything in observers)
+			viewer.client?.screen -= alert
 		client.screen -= alert
 	qdel(alert)
 
@@ -408,6 +410,8 @@
 	var/screentip_override_text
 	/// Whether the offered item can be examined by shift-clicking the alert
 	var/examinable = TRUE
+	/// Whether this item should bypass active hand checks.
+	var/bypass_active_hand = FALSE
 
 /atom/movable/screen/alert/give/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -486,8 +490,12 @@
 	var/mob/living/taker = owner
 	var/mob/living/offerer = offer.owner
 	var/obj/item/receiving = offer.offered_item
-	taker.take(offerer, receiving)
+	taker.take(offerer, receiving, bypass_active_hand)
 	SEND_SIGNAL(offerer, COMSIG_LIVING_ITEM_GIVEN, taker, receiving)
+
+/// Mostly for borgs to offer items.
+/atom/movable/screen/alert/give/borg
+	bypass_active_hand = TRUE
 
 /atom/movable/screen/alert/give/highfive
 	additional_desc_text = "Click this alert to slap it."
@@ -1203,10 +1211,11 @@
 	if(!screenmob.client)
 		return FALSE
 	var/list/alerts = mymob.alerts
-	if(!hud_shown)
+	if(hud_version != HUD_STYLE_STANDARD)
 		for(var/i in 1 to alerts.len)
 			screenmob.client.screen -= alerts[alerts[i]]
 		return TRUE
+
 	var/user_pref_hud = ui_style2icon(mymob.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 	for(var/i in 1 to length(alerts))
 		var/atom/movable/screen/alert/alert = alerts[alerts[i]]

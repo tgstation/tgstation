@@ -24,6 +24,7 @@
 /obj/item/organ/monster_core/rush_gland/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	RegisterSignal(organ_owner, COMSIG_GOLIATH_TENTACLED_GRABBED, PROC_REF(trigger_organ_action_on_sig))
+	RegisterSignal(organ_owner, COMSIG_TENDRIL_TENTACLED_GRABBED, PROC_REF(trigger_organ_action_on_sig))
 
 /obj/item/organ/monster_core/rush_gland/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()

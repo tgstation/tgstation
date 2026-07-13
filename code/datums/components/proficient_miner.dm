@@ -41,7 +41,12 @@
 		INVOKE_ASYNC(src, PROC_REF(slow_mine), user, target)
 		return
 
+	var/mob/living/driver = null
+	if (pass_driver && length(user.buckled_mobs))
+		driver = user.buckled_mobs[1]
+
 	last_bumpmine_tick = world.time
+	SEND_SIGNAL(parent, COMSIG_PROFICIENT_MINER_MINED, mineral_wall, driver || user)
 	mineral_wall.gets_drilled(source)
 
 /datum/component/proficient_miner/proc/slow_mine(mob/living/user, turf/closed/mineral/mineral_wall)
@@ -65,4 +70,5 @@
 		playsound(user, pick(mine_sounds), 50)
 
 	if(istype(mineral_wall))
+		SEND_SIGNAL(parent, COMSIG_PROFICIENT_MINER_MINED, mineral_wall, driver || user)
 		mineral_wall.gets_drilled(driver || user)

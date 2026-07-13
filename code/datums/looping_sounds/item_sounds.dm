@@ -2,16 +2,19 @@
 	mid_sounds = list('sound/effects/clock_tick.ogg' = 1)
 	mid_length = 0.35 SECONDS
 	volume = 25
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/reverse_bear_trap_beep
 	mid_sounds = list('sound/machines/beep/beep.ogg' = 1)
 	mid_length = 6 SECONDS
 	volume = 10
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/siren
 	mid_sounds = list('sound/items/weeoo1.ogg' = 1)
 	mid_length = 1.5 SECONDS
 	volume = 20
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/tape_recorder_hiss
 	mid_sounds = list('sound/items/taperecorder/taperecorder_hiss_mid.ogg' = 1)
@@ -29,6 +32,7 @@
 	falloff_exponent = 10
 	falloff_distance = 1
 	volume = 5
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/chainsaw
 	start_sound = list('sound/items/weapons/chainsaw_start.ogg' = 1)
@@ -39,6 +43,7 @@
 	end_volume = 35
 	volume = 40
 	ignore_walls = FALSE
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/beesmoke
 	mid_sounds = list('sound/items/weapons/beesmoke.ogg' = 1)
@@ -59,3 +64,4 @@
 	end_volume = 15
 	ignore_walls = FALSE
 	reserve_random_channel = TRUE
+	use_sound_tokens = TRUE

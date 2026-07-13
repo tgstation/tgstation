@@ -60,6 +60,11 @@
 /// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
 
+/// From /obj/item/bodypart/proc/update_limb(): (dropping_limb, is_creating)
+#define COMSIG_BODYPART_UPDATED "bodypart_updated"
+/// From /datum/component/butchering/create_replacement_limb(): (replacement limb)
+#define COMSIG_BODYPART_BUTCHERED "bodypart_butchered"
+
 /// Sent to a limb when something *attempts* to change its surgery state (old_state, new_state, changed_states)
 #define COMSIG_BODYPART_UPDATING_SURGERY_STATE "bodypart_updating_surgery_state"
 
@@ -116,6 +121,8 @@
 #define COMSIG_CARBON_REMOVE_OVERLAY "carbon_remove_overlay"
 ///Called when a carbon checks their mood
 #define COMSIG_CARBON_MOOD_CHECK "carbon_mod_check"
+///Called when a carbon is adding a fire overlay
+#define COMSIG_CARBON_GET_FIRE_OVERLAY "carbon_get_fire_overlay"
 
 // /mob/living/carbon/human signals
 
@@ -148,7 +155,7 @@
 #define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
 
 ///From mob/living/carbon/human/suicide()
-#define COMSIG_HUMAN_SUICIDE_ACT "human_suicide_act"
+#define COMSIG_LIVING_SUICIDE_ACT "human_suicide_act"
 
 ///from base of /mob/living/carbon/regenerate_limbs(): (excluded_limbs)
 #define COMSIG_CARBON_REGENERATE_LIMBS "living_regen_limbs"
@@ -162,7 +169,7 @@
 	/// Return to skip oxyloss and similar effects from blood level
 	#define HANDLE_BLOOD_NO_OXYLOSS (1<<2)
 
-/// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced) iodk where it should go
+/// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced): (var/obj/item/bodypart/limping_leg)
 #define COMSIG_CARBON_LIMPING "mob_limp_check"
 	#define COMPONENT_CANCEL_LIMP (1<<0)
 
@@ -212,3 +219,5 @@
 #define COMSIG_START_DREAMING "start_dreaming"
 /// A mob has finished dreaming: (datum/dream/finished_dream)
 #define COMSIG_END_DREAMING "end_dreaming"
+/// From /mob/living/carbon/item_coverage_changed: (added_slots, removed_slots)
+#define COMSIG_CARBON_ITEM_COVERAGE_CHANGED "carbon_item_coverage_changed"

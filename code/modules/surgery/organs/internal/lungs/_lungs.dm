@@ -7,8 +7,6 @@
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_SMALL
 
-	var/respiration_type = NONE // The type(s) of gas this lung needs for respiration
-
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY * 0.9 // fails around 16.5 minutes, lungs are one of the last organs to die (of the ones we have)
 
@@ -21,6 +19,8 @@
 	cell_line = CELL_LINE_ORGAN_LUNGS
 	cells_minimum = 1
 	cells_maximum = 2
+
+	visual = FALSE
 
 	var/failed = FALSE
 	var/operated = FALSE //whether we can still have our damages fixed through surgery
@@ -92,38 +92,28 @@
 	var/tritium_irradiation_probability_max = 60
 
 	var/cold_message = "your face freezing and an icicle forming"
-	var/cold_level_1_threshold = 260
-	var/cold_level_2_threshold = 200
-	var/cold_level_3_threshold = 120
+	var/cold_level_1_threshold = COLD_LEVEL_1_THRESHOLD
+	var/cold_level_2_threshold = COLD_LEVEL_2_THRESHOLD
+	var/cold_level_3_threshold = COLD_LEVEL_3_THRESHOLD
 	var/cold_level_1_damage = COLD_GAS_DAMAGE_LEVEL_1 //Keep in mind with gas damage levels, you can set these to be negative, if you want someone to heal, instead.
 	var/cold_level_2_damage = COLD_GAS_DAMAGE_LEVEL_2
 	var/cold_level_3_damage = COLD_GAS_DAMAGE_LEVEL_3
 	var/cold_damage_type = BURN
 
 	var/hot_message = "your face burning and a searing heat"
-	var/heat_level_1_threshold = 360
-	var/heat_level_2_threshold = 400
-	var/heat_level_3_threshold = 1000
+	var/heat_level_1_threshold = HEAT_LEVEL_1_THRESHOLD
+	var/heat_level_2_threshold = HEAT_LEVEL_2_THRESHOLD
+	var/heat_level_3_threshold = HEAT_LEVEL_3_THRESHOLD
 	var/heat_level_1_damage = HEAT_GAS_DAMAGE_LEVEL_1
 	var/heat_level_2_damage = HEAT_GAS_DAMAGE_LEVEL_2
 	var/heat_level_3_damage = HEAT_GAS_DAMAGE_LEVEL_3
 	var/heat_damage_type = BURN
 
-	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
-
 	var/breath_noise = "steady in- and exhalation"
 
-// assign the respiration_type
 /obj/item/organ/lungs/Initialize(mapload)
 	. = ..()
 	breath_out = new(BREATH_VOLUME)
-
-	if(safe_nitro_min)
-		respiration_type |= RESPIRATION_N2
-	if(safe_oxygen_min)
-		respiration_type |= RESPIRATION_OXYGEN
-	if(safe_plasma_min)
-		respiration_type |= RESPIRATION_PLASMA
 
 	// Sets up what gases we want to react to, and in what way
 	// always is always processed, while_present is called when the gas is in the breath, and on_loss is called right after a gas is lost
@@ -262,7 +252,7 @@
 
 	breathe_gas_volume(breath, /datum/gas/oxygen, /datum/gas/carbon_dioxide)
 	// Heal mob if not in crit.
-	if(breather.health >= breather.crit_threshold && breather.oxyloss)
+	if(breather.stat != SOFT_CRIT && breather.stat != HARD_CRIT && breather.get_oxy_loss())
 		breather.adjust_oxy_loss(-5)
 
 /// Maximum Oxygen effects. "Too much O2!"
@@ -734,32 +724,28 @@
 /obj/item/organ/lungs/proc/handle_suffocation(mob/living/carbon/human/suffocator = null, breath_pp = 0, safe_breath_min = 0, mole_count = 0)
 	. = 0
 	// Can't suffocate without a Human, or without minimum breath pressure.
-	if(!suffocator || !safe_breath_min)
+	if(isnull(suffocator) || safe_breath_min <= 0)
 		return
 	// Mob is suffocating.
 	suffocator.failed_last_breath = TRUE
 	// Give them a chance to notice something is wrong.
-	if(prob(20))
+	if(prob(25))
 		suffocator.emote("gasp")
-	// If mob is at critical health, check if they can be damaged further.
-	if(suffocator.health < suffocator.crit_threshold)
-		// Mob is immune to damage at critical health.
-		if(HAS_TRAIT(suffocator, TRAIT_NOCRITDAMAGE))
-			return
-		// Reagents like Epinephrine stop suffocation at critical health.
-		if(suffocator.reagents.has_reagent(crit_stabilizing_reagent, needs_metabolizing = TRUE))
-			return
-	// Low pressure.
-	if(breath_pp)
-		var/ratio = safe_breath_min / breath_pp
-		suffocator.apply_damage(min(5 * ratio, HUMAN_MAX_OXYLOSS), OXY)
-		return mole_count * ratio / 6
-	// Zero pressure.
-	if(suffocator.health >= suffocator.crit_threshold)
-		suffocator.apply_damage(HUMAN_MAX_OXYLOSS, OXY)
-	else
-		suffocator.apply_damage(HUMAN_CRIT_MAX_OXYLOSS, OXY)
 
+	// note: this is where crit damage is handled for mobs that breathe
+	var/oxy_damage_dealt = SUFFOCATION_OXYLOSS
+	if(breath_pp > 0)
+		// we got a partial breath, scale the damage based on how much we got
+		oxy_damage_dealt *= ((safe_breath_min - breath_pp) / safe_breath_min)
+		. = mole_count
+
+	// in hard crit, suffocation damage is reduced significantly (or to zero if the relevant trait is present)
+	if(suffocator.stat == SOFT_CRIT || suffocator.stat == HARD_CRIT)
+		oxy_damage_dealt *= (HAS_TRAIT(suffocator, TRAIT_NOCRITDAMAGE) ? 0 : SUFFOCATION_OXYLOSS_CRIT_MODIFIER)
+
+	if(oxy_damage_dealt > 0)
+		suffocator.apply_damage(oxy_damage_dealt, OXY)
+	return .
 
 /obj/item/organ/lungs/proc/handle_breath_temperature(datum/gas_mixture/breath, mob/living/carbon/human/breather) // called by human/life, handles temperatures
 	var/breath_temperature = breath.temperature
@@ -958,6 +944,7 @@
 	breath_noise = "a steady whirr"
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
 /obj/item/organ/lungs/cybernetic/emp_act(severity)
@@ -987,10 +974,11 @@
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	safe_oxygen_min = 13
 	emp_vulnerability = 20
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 
-	cold_level_1_threshold = 200
-	cold_level_2_threshold = 140
-	cold_level_3_threshold = 100
+	cold_level_1_threshold = COLD_LEVEL_1_THRESHOLD - 60
+	cold_level_2_threshold = COLD_LEVEL_2_THRESHOLD - 60
+	cold_level_3_threshold = COLD_LEVEL_3_THRESHOLD - 20
 
 /obj/item/organ/lungs/cybernetic/surplus
 	name = "surplus prosthetic lungs"
@@ -1115,8 +1103,8 @@
 	icon_state = "lungs_ethereal"
 	breath_noise = "a low fluorescent hum"
 	heat_level_1_threshold = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // 150C or 433k, in line with ethereal max safe body temperature
-	heat_level_2_threshold = 473
-	heat_level_3_threshold = 1073
+	heat_level_2_threshold = HEAT_LEVEL_2_THRESHOLD + 73
+	heat_level_3_threshold = HEAT_LEVEL_3_THRESHOLD + 73
 
 /obj/item/organ/lungs/ethereal/ethereal_smoker
 	name = "smoker aeration reticulum"

@@ -9,6 +9,7 @@
 /obj/item/ai_module/supplied
 	name = "Optional Law board"
 	var/lawpos = 50
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/ai_module/supplied/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	var/lawpostemp = lawpos

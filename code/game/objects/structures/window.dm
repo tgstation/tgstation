@@ -18,6 +18,7 @@
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.5
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	tacmap_color = TACMAP_WINDOW
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = FALSE
 	var/heat_resistance = 800
