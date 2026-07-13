@@ -42,6 +42,7 @@
 	SSaugury.register_doom(src, threat)
 	SpinAnimation()
 	chase_target(target)
+	setup_extra_drops()
 	AddComponent(
 		/datum/component/meteor_combat, \
 		CALLBACK(src, PROC_REF(redirect)), \
@@ -87,6 +88,9 @@
 	var/datum/move_loop/new_loop = GLOB.move_manager.move_towards(src, chasing, delay, home, lifetime)
 	if(new_loop)
 		RegisterSignal(new_loop, COMSIG_MOVELOOP_STOP, PROC_REF(on_loop_stopped))
+
+/obj/effect/meteor/proc/setup_extra_drops()
+	return
 
 /obj/effect/meteor/proc/on_loop_stopped(datum/source)
 	SIGNAL_HANDLER
@@ -399,11 +403,7 @@
 	threat = 2
 	signature = "culinary material"
 
-/obj/effect/meteor/meaty/Initialize(mapload)
-	setup_extra_drops()
-	return ..()
-
-/obj/effect/meteor/meaty/proc/setup_extra_drops()
+/obj/effect/meteor/meaty/setup_extra_drops()
 	meteordrop += pick(subtypesof(/obj/item/food/meat/slab/human/mutant))
 	meteordrop += pick(typesof(/obj/item/organ/tongue))
 
