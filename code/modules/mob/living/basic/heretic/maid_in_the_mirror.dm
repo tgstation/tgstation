@@ -43,7 +43,7 @@
 	if(!length(antiquated_names))
 		antiquated_names = GLOB.mirror_maid_names.Copy()
 
-	antiquated_name = pick(antiquated_names)
+	antiquated_name = pick_n_take(antiquated_names)
 	update_name()
 
 /mob/living/basic/heretic_summon/maid_in_the_mirror/death(gibbed)
