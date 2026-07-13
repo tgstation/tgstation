@@ -1,7 +1,7 @@
 /datum/deathmatch_controller
 	/// Assoc list of all lobbies (ckey = lobby)
 	var/list/datum/deathmatch_lobby/lobbies = list()
-	/// All deathmatch map templates
+	/// All deathmatch map templates (map_name = map_ref), sorted alphabetically
 	var/list/datum/lazy_template/deathmatch/maps = list()
 	/// All loadouts
 	var/list/datum/outfit/loadouts

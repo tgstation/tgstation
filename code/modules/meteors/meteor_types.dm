@@ -400,10 +400,12 @@
 	signature = "culinary material"
 
 /obj/effect/meteor/meaty/Initialize(mapload)
-	if(type == /obj/effect/meteor/meaty)
-		meteordrop += pick(subtypesof(/obj/item/food/meat/slab/human/mutant))
-		meteordrop += pick(typesof(/obj/item/organ/tongue))
+	setup_extra_drops()
 	return ..()
+
+/obj/effect/meteor/meaty/proc/setup_extra_drops()
+	meteordrop += pick(subtypesof(/obj/item/food/meat/slab/human/mutant))
+	meteordrop += pick(typesof(/obj/item/organ/tongue))
 
 /obj/effect/meteor/meaty/make_debris()
 	..()
@@ -424,9 +426,8 @@
 	meteorgibs = /obj/effect/gibspawner/xeno
 	signature = "exotic culinary material"
 
-/obj/effect/meteor/meaty/xeno/Initialize(mapload)
+/obj/effect/meteor/meaty/xeno/setup_extra_drops()
 	meteordrop += subtypesof(/obj/item/organ/alien)
-	return ..()
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)
 	if(!isspaceturf(T))
