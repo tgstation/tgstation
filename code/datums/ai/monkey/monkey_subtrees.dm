@@ -56,7 +56,7 @@
 			controller.queue_behavior(/datum/ai_behavior/recruit_monkeys, BB_MONKEY_CURRENT_ATTACK_TARGET)
 			return
 
-		if(SPT_PROB(ismonkey(living_pawn) ? 25 : 10, seconds_per_tick))
+		if(SPT_PROB(HAS_TRAIT(living_pawn, TRAIT_LESSER_HUMANOID) ? 25 : 10, seconds_per_tick))
 			controller.queue_behavior(/datum/ai_behavior/battle_screech/monkey)
 		controller.queue_behavior(/datum/ai_behavior/monkey_attack_mob, BB_MONKEY_CURRENT_ATTACK_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
@@ -81,7 +81,7 @@
 	for(var/mob/living/carbon/human/human_mob in oview(5, living_pawn))
 		if(istype(human_mob.mind?.assigned_role, /datum/job/bartender))
 			return //  my boss is on duty!
-		if(human_mob.stat != CONSCIOUS || ismonkey(human_mob))
+		if(human_mob.stat != CONSCIOUS || HAS_TRAIT(human_mob, TRAIT_LESSER_HUMANOID))
 			continue
 		if(!human_mob.get_empty_held_indexes())
 			continue

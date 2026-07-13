@@ -1682,6 +1682,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Cannot be backstabbed with a crusher
 #define TRAIT_BACKSTAB_IMMUNE "backstab_immune"
 
+/// Mobs that are of a lesser species, like monkeys, compared to other humanoid species
+#define TRAIT_LESSER_HUMANOID "lesser_humanoid"
+/// Is an ape, gorilla, a man of the jungle, an ook ook fellow
+#define TRAIT_SIMIAN "simian"
+
 /// Makes the owner immune from the pacification from synthpax
 #define TRAIT_SYNTHPAX_IMMUNE "synthpax_immune"
 

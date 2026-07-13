@@ -90,7 +90,7 @@
 
 /// Returns the kind of legion we make out of the target
 /mob/living/basic/mining/legion_brood/proc/get_legion_type(mob/living/carbon/human/target)
-	if (ismonkey(target))
+	if (HAS_TRAIT(target, TRAIT_LESSER_HUMANOID))
 		return /mob/living/basic/mining/legion/monkey
 	if (HAS_TRAIT(target, TRAIT_DWARF))
 		return /mob/living/basic/mining/legion/dwarf
@@ -136,6 +136,6 @@
 	has_emissive = FALSE
 
 /mob/living/basic/mining/legion_brood/snow/get_legion_type(mob/living/target)
-	if (ismonkey(target))
+	if (HAS_TRAIT(target, TRAIT_LESSER_HUMANOID))
 		return /mob/living/basic/mining/legion/monkey/snow
 	return /mob/living/basic/mining/legion/snow

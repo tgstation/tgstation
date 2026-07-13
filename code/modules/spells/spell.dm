@@ -187,7 +187,7 @@
 	if(ishuman(owner))
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
 			var/mob/living/carbon/human/human_owner = owner
-			if(!(human_owner.wear_suit?.clothing_flags & CASTING_CLOTHES) && !ismonkey(human_owner)) // Monkeys don't need robes to cast as they are inherently imbued with power from the banana dimension
+			if(!(human_owner.wear_suit?.clothing_flags & CASTING_CLOTHES) && !HAS_TRAIT(human_owner, TRAIT_LESSER_HUMANOID)) // Monkeys don't need robes to cast as they are inherently imbued with power from the banana dimension
 				if(feedback)
 					to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE

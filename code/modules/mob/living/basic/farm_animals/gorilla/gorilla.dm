@@ -55,7 +55,7 @@
 
 /mob/living/basic/gorilla/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_CHUNKYFINGERS), ROUNDSTART_TRAIT)
+	add_traits(list(TRAIT_SIMIAN, TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_CHUNKYFINGERS), INNATE_TRAIT)
 	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	AddElement(/datum/element/dextrous, can_throw = TRUE)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_BAREFOOT)

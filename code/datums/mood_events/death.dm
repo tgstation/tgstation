@@ -59,7 +59,7 @@
 
 /// Checks if the dead mob is a pet
 /datum/mood_event/conditional/see_death/proc/is_pet(mob/dead_mob)
-	return istype(dead_mob, /mob/living/basic/pet) || ismonkey(dead_mob)
+	return istype(dead_mob, /mob/living/basic/pet) || HAS_TRAIT(dead_mob, TRAIT_LESSER_HUMANOID)
 
 /datum/mood_event/conditional/see_death/be_refreshed(datum/mood/home, mob/dead_mob, dusted, gibbed)
 	if(can_stack_effect(dead_mob))

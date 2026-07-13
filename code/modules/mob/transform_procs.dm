@@ -8,7 +8,7 @@
 	if (transformation_timer || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
-	if(ismonkey(src))
+	if(HAS_TRAIT(src, TRAIT_LESSER_HUMANOID))
 		return
 
 	if(instant)
@@ -48,7 +48,7 @@
 	if (transformation_timer || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
-	if(!ismonkey(src))
+	if(!HAS_TRAIT(src, TRAIT_LESSER_HUMANOID))
 		return
 
 	if(instant)

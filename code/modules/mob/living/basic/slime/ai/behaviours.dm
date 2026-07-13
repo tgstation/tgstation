@@ -49,7 +49,7 @@
 		return can_see(hunter, dinner, radius)
 
 	//A bit pickier
-	if((islarva(dinner) || ismonkey(dinner)) || (ishuman(dinner) || isalienadult(dinner) && SPT_PROB(2.5, seconds_per_tick)))
+	if((islarva(dinner) || HAS_TRAIT(dinner, TRAIT_LESSER_HUMANOID)) || (ishuman(dinner) || isalienadult(dinner) && SPT_PROB(2.5, seconds_per_tick)))
 		return can_see(hunter, dinner, radius)
 
 	//We are not THAT hungry

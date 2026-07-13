@@ -1049,7 +1049,7 @@
 
 ///Proc used to make monkey roles able to function like crew, but not be able to shift into humans easily.
 /mob/living/carbon/human/proc/crewlike_monkify()
-	if(!ismonkey(src))
+	if(!HAS_TRAIT(src, TRAIT_LESSER_HUMANOID))
 		set_species(/datum/species/monkey)
 	// Can't make them human or nonclever. At least not with the easy and boring way out.
 	dna.add_mutation(/datum/mutation/clever, MUTATION_SOURCE_CREW_MONKEY)

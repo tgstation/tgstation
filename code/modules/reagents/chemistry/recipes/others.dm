@@ -652,7 +652,7 @@
 	var/mob/living/carbon/maybe_monkey = holder.my_atom
 	var/location = maybe_monkey.drop_location()
 	if(iscarbon(maybe_monkey))
-		if(ismonkey(maybe_monkey))
+		if(HAS_TRAIT(maybe_monkey, TRAIT_LESSER_HUMANOID))
 			maybe_monkey.gib(DROP_ALL_REMAINS)
 			to_chat(maybe_monkey, span_danger("You body is torn to shreds as a monkey bursts out of you!"))
 		else
@@ -671,7 +671,7 @@
 	var/mob/living/carbon/maybe_monkey = holder.my_atom
 	var/location = maybe_monkey.drop_location()
 	if(iscarbon(maybe_monkey))
-		if(ismonkey(maybe_monkey))
+		if(HAS_TRAIT(maybe_monkey, TRAIT_LESSER_HUMANOID))
 			maybe_monkey.gib(DROP_ALL_REMAINS)
 			to_chat(maybe_monkey, span_danger("You body is torn to shreds as a pissed off monkey bursts out of you!"))
 		else

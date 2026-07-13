@@ -24,7 +24,7 @@
 	if(!user || HAS_TRAIT(user, TRAIT_NO_TRANSFORM))
 		return FALSE
 	..()
-	return ismonkey(user) ? unmonkey(user) : become_monkey(user)
+	return HAS_TRAIT(user, TRAIT_LESSER_HUMANOID) ? unmonkey(user) : become_monkey(user)
 
 /// Stop being a monkey
 /datum/action/changeling/lesserform/proc/unmonkey(mob/living/carbon/human/user)
@@ -63,7 +63,7 @@
 	build_all_button_icons(update_flags = UPDATE_BUTTON_NAME | UPDATE_BUTTON_ICON)
 
 /datum/action/changeling/lesserform/update_button_name(atom/movable/screen/movable/action_button/button, force)
-	if (ismonkey(owner))
+	if (HAS_TRAIT(owner, TRAIT_LESSER_HUMANOID))
 		name = "Human Form"
 		desc = "We change back into a human. Costs 5 chemicals."
 	else
@@ -72,5 +72,5 @@
 	return ..()
 
 /datum/action/changeling/lesserform/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force)
-	button_icon_state = ismonkey(owner) ? "human_form" : initial(button_icon_state)
+	button_icon_state = HAS_TRAIT(owner, TRAIT_LESSER_HUMANOID) ? "human_form" : initial(button_icon_state)
 	return ..()

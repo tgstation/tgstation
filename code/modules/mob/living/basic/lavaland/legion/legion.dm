@@ -80,7 +80,7 @@
 /mob/living/basic/mining/legion/proc/consume(mob/living/carbon/human/consumed)
 	new /obj/effect/gibspawner/generic(consumed.loc)
 	gender = consumed.gender
-	if (!ismonkey(consumed) || consumed == GLOB.the_one_and_only_punpun)
+	if (!HAS_TRAIT(consumed, TRAIT_LESSER_HUMANOID) || consumed == GLOB.the_one_and_only_punpun)
 		name = consumed.real_name
 	consumed.investigate_log("has been killed by hivelord infestation.", INVESTIGATE_DEATHS)
 	consumed.death()
