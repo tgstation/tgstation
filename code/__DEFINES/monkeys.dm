@@ -33,7 +33,7 @@
 /// amount of aggro to add if someone stole the food we wanted
 #define MONKEY_FOOD_HATRED_AMOUNT 2
 /// probability of reducing aggro by one when the monkey attacks
-#define MONKEY_HATRED_REDUCTION_PROB 20
+#define MONKEY_HATRED_REDUCTION_PROB 40
 
 /// Monkey was calmed, such as from weed
 #define MONKEY_CALMED_HATRED_AMOUNT -2

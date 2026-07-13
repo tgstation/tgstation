@@ -257,7 +257,7 @@
 	var/succeeded = FALSE
 	if(attack_results && !controller.blackboard[BB_MONKEY_AGGRESSIVE])
 		succeeded = TRUE
-		if(SPT_PROB(MONKEY_HATRED_REDUCTION_PROB, seconds_per_tick))
+		if(prob(MONKEY_HATRED_REDUCTION_PROB))
 			var/hatred_value = controller.blackboard[BB_MONKEY_ENEMIES][target] - 1
 			if(hatred_value <= 0)
 				controller.remove_thing_from_blackboard_key(BB_MONKEY_ENEMIES, target)
