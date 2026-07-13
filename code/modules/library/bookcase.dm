@@ -159,9 +159,7 @@
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
-
-
-	return ..()
+	return NONE
 
 /obj/structure/bookcase/crowbar_act(mob/living/user, obj/item/tool)
 	switch(state)
@@ -185,20 +183,25 @@
 			update_appearance()
 			return ITEM_INTERACT_SUCCESS
 
+	return NONE
+
 /obj/structure/bookcase/wrench_act(mob/living/user, obj/item/tool)
-	if(state == BOOKCASE_UNANCHORED)
-		if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
-			return ITEM_INTERACT_BLOCKING
+	switch(state)
+		if(BOOKCASE_UNANCHORED)
+			if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
+				return ITEM_INTERACT_BLOCKING
 
-		balloon_alert(user, "wrenched in place")
-		set_anchored(TRUE)
-		return ITEM_INTERACT_SUCCESS
+			balloon_alert(user, "wrenched in place")
+			set_anchored(TRUE)
+			return ITEM_INTERACT_SUCCESS
 
-	if(state == BOOKCASE_ANCHORED)
-		tool.play_tool_sound(src, 100)
-		balloon_alert(user, "unwrenched the frame")
-		set_anchored(FALSE)
-		return ITEM_INTERACT_SUCCESS
+		if(BOOKCASE_ANCHORED)
+			tool.play_tool_sound(src, 100)
+			balloon_alert(user, "unwrenched the frame")
+			set_anchored(FALSE)
+			return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/bookcase/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

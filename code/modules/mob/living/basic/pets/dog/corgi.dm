@@ -117,14 +117,19 @@
 		return ..()
 
 	if(shaved)
-		to_chat(user, span_warning("You can't shave this corgi, [p_they()] has already been shaved!"))
+		to_chat(user, span_warning("You can't shave this corgi, [p_they()] [p_have()] already been shaved!"))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!can_be_shaved)
 		to_chat(user, span_warning("You can't shave this corgi, [p_they()] [p_do()]n't have a fur coat!"))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] starts to shave [src] using \the [tool]."), span_notice("You start to shave [src] using \the [tool]..."))
+	user.visible_message(
+		span_notice("[user] starts to shave [src] using \the [tool]."),
+		span_notice("You start to shave [src] using \the [tool]..."),
+		span_hear("You hear electric buzzing."),
+	)
+
 	if(!do_after(user, 5 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
 

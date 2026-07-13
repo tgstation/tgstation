@@ -461,8 +461,10 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(!do_after(user, 3 SECONDS, target = src) || !paicard)
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] uses [tool] to pull [paicard] out of [initial(src.name)]!"), \
-						span_notice("You pull [paicard] out of [initial(src.name)] with [tool]."))
+	user.visible_message(
+		span_notice("[user] uses [tool] to pull [paicard] out of [initial(src.name)]!"),
+		span_notice("You pull [paicard] out of [initial(src.name)] with [tool]."),
+	)
 
 	ejectpai(user)
 	return ITEM_INTERACT_SUCCESS
