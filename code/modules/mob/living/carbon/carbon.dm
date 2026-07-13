@@ -476,7 +476,8 @@
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 
-	if(glasses)
+	var/obj/item/clothing/glasses/glasses = get_item_by_slot(ITEM_SLOT_EYES)
+	if(istype(glasses))
 		new_sight |= glasses.vision_flags
 		if(glasses.invis_override)
 			set_invis_see(glasses.invis_override)
@@ -486,7 +487,6 @@
 			lighting_cutoff = max(lighting_cutoff, glasses.lighting_cutoff)
 		if(length(glasses.color_cutoffs))
 			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, glasses.color_cutoffs)
-
 
 	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
 		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_HIGH)
@@ -1169,9 +1169,6 @@
 	if (ismecha(loc))
 		return FALSE
 
-	if (wearing_shock_proof_gloves())
-		return FALSE
-
 	if(!get_powernet_info_from_source(power_source))
 		return FALSE
 
@@ -1179,10 +1176,6 @@
 		return FALSE
 
 	return TRUE
-
-/// Returns if the carbon is wearing shock proof gloves
-/mob/living/carbon/proc/wearing_shock_proof_gloves()
-	return gloves?.siemens_coefficient == 0
 
 /// Modifies max_skillchip_count and updates active skillchips
 /mob/living/carbon/proc/adjust_skillchip_complexity_modifier(delta)
@@ -1268,8 +1261,6 @@
 		return TRUE
 	if((acid_power * acid_volume) < ACID_LEVEL_HANDBURN)
 		return TRUE
-	if(gloves?.resistance_flags & (UNACIDABLE | ACID_PROOF))
-		return TRUE
 	return FALSE
 
 /**
@@ -1280,8 +1271,6 @@
 	if((burning_atom == src) || (burning_atom.loc == src))
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_RESISTHEAT) || HAS_TRAIT(src, TRAIT_RESISTHEATHANDS))
-		return TRUE
-	if(gloves?.max_heat_protection_temperature >= BURNING_ITEM_MINIMUM_TEMPERATURE)
 		return TRUE
 	return FALSE
 

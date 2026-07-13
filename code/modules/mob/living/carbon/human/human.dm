@@ -1075,6 +1075,21 @@
 		return FALSE
 	return head_covered || HAS_TRAIT(src, TRAIT_HEAD_ATMOS_SEALED)
 
+/mob/living/carbon/human/should_electrocute(power_source)
+	if (gloves?.siemens_coefficient == 0)
+		return FALSE
+	return ..()
+
+/mob/living/carbon/human/can_touch_acid(atom/acided_atom, acid_power, acid_volume)
+	if(gloves?.resistance_flags & (UNACIDABLE | ACID_PROOF))
+		return TRUE
+	return ..()
+
+/mob/living/carbon/human/can_touch_burning(atom/burning_atom, acid_power, acid_volume)
+	if(gloves?.max_heat_protection_temperature >= BURNING_ITEM_MINIMUM_TEMPERATURE)
+		return TRUE
+	return ..()
+
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor
 
