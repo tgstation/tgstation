@@ -44,18 +44,13 @@
 		antiquated_names = GLOB.mirror_maid_names.Copy()
 
 	antiquated_name = pick_n_take(antiquated_names)
-	update_name()
+	name = "Mirror Maid [antiquated_name]"
+	real_name = name
 
 /mob/living/basic/heretic_summon/maid_in_the_mirror/death(gibbed)
 	var/turf/death_turf = get_turf(src)
 	death_turf.TakeTemperature(-40) // Spooky
 	return ..()
-
-/mob/living/basic/heretic_summon/maid_in_the_mirror/update_name(updates)
-	. = ..()
-	name = "Mirror Maid [antiquated_name]"
-	real_name = name
-	antiquated_names.Remove(antiquated_name)
 
 // Examining them will harm them, on a cooldown.
 /mob/living/basic/heretic_summon/maid_in_the_mirror/examine(mob/user)
