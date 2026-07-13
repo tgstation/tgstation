@@ -50,6 +50,8 @@
 			//Breathing, if applicable
 			handle_breathing(seconds_per_tick)
 			handle_ssd(seconds_per_tick) // BANDASTATION ADD - SSD INDICATOR
+			if(isnull(loc)) // Mice can die and become items from breathing
+				return
 
 		// Handle temperature/pressure differences between body and environment
 		var/datum/gas_mixture/environment = loc.return_air()

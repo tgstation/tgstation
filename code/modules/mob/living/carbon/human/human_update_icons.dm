@@ -452,7 +452,7 @@ There are several things that need to be remembered:
 			mutant_override = FALSE
 
 		var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null, bodyshape = bodyshape)
-		apply_height(mask_overlay, LOWER_BODY)
+		apply_height(mask_overlay, UPPER_BODY)
 		my_head.worn_mask_offset?.apply_offset(mask_overlay)
 	// BANDASTATION EDIT STOP - SPECIES CLOTHING ICONS
 		overlays_standing[FACEMASK_LAYER] = mask_overlay
@@ -515,7 +515,7 @@ There are several things that need to be remembered:
 	return icon(female_clothing_icon)
 
 /// Modifies a sprite to conform to custom body shapes
-/obj/item/proc/get_bodyshape_icon(icon/base_icon, key, bodyshape)
+/obj/item/proc/get_bodyshape_icon(icon/base_icon, key, greyscale_colors, bodyshape)
 	ASSERT(istext(key), "get_bodyshape_icon: no key passed")
 	if((bodyshape & BODYSHAPE_DIGITIGRADE) && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
 		if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
@@ -671,6 +671,7 @@ generate/load female uniform sprites matching all previously decided variables
 		building_icon = get_bodyshape_icon(
 			base_icon = building_icon || icon(file2use, t_state),
 			key = "[t_state]-[file2use]-[female_uniform]",
+			greyscale_colors = greyscale_colors,
 			bodyshape = bodyshape,
 		)
 	if(building_icon)

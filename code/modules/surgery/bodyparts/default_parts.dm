@@ -95,58 +95,6 @@
 
 	return icon('icons/mob/butts.dmi', human_owner.physique == FEMALE ? BUTT_SPRITE_HUMAN_FEMALE : BUTT_SPRITE_HUMAN_MALE)
 
-/obj/item/bodypart/chest/monkey
-	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
-	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'
-	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
-	husk_type = "monkey"
-	icon_state = "default_monkey_chest"
-	limb_id = SPECIES_MONKEY
-	should_draw_greyscale = FALSE
-	is_dimorphic = FALSE
-	wound_resistance = -10
-	bodyshape = BODYSHAPE_MONKEY
-	acceptable_bodyshape = BODYSHAPE_MONKEY
-	dmg_overlay_type = SPECIES_MONKEY
-
-/obj/item/bodypart/chest/monkey/Initialize(mapload)
-	worn_neck_offset = new(
-		attached_part = src,
-		feature_key = OFFSET_NECK,
-		offset_y = list("south" = 1),
-	)
-	return ..()
-
-/obj/item/bodypart/chest/alien
-	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
-	icon_state = "alien_chest"
-	limb_id = BODYPART_ID_ALIEN
-	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
-	bodyshape = BODYSHAPE_HUMANOID
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-	bodypart_flags = BODYPART_UNREMOVABLE
-	max_damage = LIMB_MAX_HP_ALIEN_CORE
-	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
-	acceptable_bodyshape = BODYSHAPE_HUMANOID
-	wing_types = null
-	biological_state = BIO_STANDARD_ALIEN
-
-/obj/item/bodypart/chest/larva
-	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
-	icon_state = "larva_chest"
-	limb_id = BODYPART_ID_LARVA
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-	bodypart_flags = BODYPART_UNREMOVABLE
-	max_damage = LIMB_MAX_HP_ALIEN_LARVA
-	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
-	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
-	acceptable_bodytype = BODYTYPE_LARVA_PLACEHOLDER
-	wing_types = null
-
 /// Parent Type for arms, should not appear in game.
 /obj/item/bodypart/arm
 	abstract_type = /obj/item/bodypart/arm
@@ -352,41 +300,6 @@
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_L_ARM))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_L_ARM), PROC_REF(on_owner_paralysis_gain))
 
-/obj/item/bodypart/arm/left/monkey
-	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
-	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'
-	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
-	husk_type = "monkey"
-	icon_state = "default_monkey_l_arm"
-	limb_id = SPECIES_MONKEY
-	should_draw_greyscale = FALSE
-	bodyshape = BODYSHAPE_MONKEY
-	wound_resistance = -10
-	px_x = -5
-	px_y = -3
-	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 3
-	unarmed_damage_high = 8
-	unarmed_effectiveness = 5
-	appendage_noun = "paw"
-
-/obj/item/bodypart/arm/left/alien
-	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
-	icon_state = "alien_l_arm"
-	limb_id = BODYPART_ID_ALIEN
-	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
-	bodyshape = BODYSHAPE_HUMANOID
-	px_x = 0
-	px_y = 0
-	bodypart_flags = BODYPART_UNREMOVABLE
-	can_be_disabled = FALSE
-	max_damage = LIMB_MAX_HP_ALIEN_LIMBS
-	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
-	should_draw_greyscale = FALSE
-	appendage_noun = "scythe-like hand"
-	biological_state = BIO_STANDARD_ALIEN
-
 /obj/item/bodypart/arm/right
 	name = "right arm"
 	desc = "Over 87% of humans are right handed. That figure is much lower \
@@ -434,41 +347,6 @@
 	REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_ARM)
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_R_ARM))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_R_ARM), PROC_REF(on_owner_paralysis_gain))
-
-/obj/item/bodypart/arm/right/monkey
-	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
-	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'
-	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
-	husk_type = "monkey"
-	icon_state = "default_monkey_r_arm"
-	limb_id = SPECIES_MONKEY
-	bodyshape = BODYSHAPE_MONKEY
-	should_draw_greyscale = FALSE
-	wound_resistance = -10
-	px_x = 5
-	px_y = -3
-	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 3
-	unarmed_damage_high = 8
-	unarmed_effectiveness = 0
-	appendage_noun = "paw"
-
-/obj/item/bodypart/arm/right/alien
-	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
-	icon_state = "alien_r_arm"
-	limb_id = BODYPART_ID_ALIEN
-	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
-	bodyshape = BODYSHAPE_HUMANOID
-	px_x = 0
-	px_y = 0
-	bodypart_flags = BODYPART_UNREMOVABLE
-	can_be_disabled = FALSE
-	max_damage = LIMB_MAX_HP_ALIEN_LIMBS
-	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
-	should_draw_greyscale = FALSE
-	appendage_noun = "scythe-like hand"
-	biological_state = BIO_STANDARD_ALIEN
 
 /// Parent Type for legs, should not appear in game.
 /obj/item/bodypart/leg
@@ -603,39 +481,6 @@
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_L_LEG))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_L_LEG), PROC_REF(on_owner_paralysis_gain))
 
-/obj/item/bodypart/leg/left/monkey
-	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
-	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'
-	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
-	husk_type = "monkey"
-	icon_state = "default_monkey_l_leg"
-	limb_id = SPECIES_MONKEY
-	should_draw_greyscale = FALSE
-	bodyshape = BODYSHAPE_MONKEY
-	wound_resistance = -10
-	px_y = 4
-	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 2
-	unarmed_damage_high = 3
-	unarmed_effectiveness = 5
-	footprint_sprite = FOOTPRINT_SPRITE_PAWS
-
-/obj/item/bodypart/leg/left/alien
-	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
-	icon_state = "alien_l_leg"
-	limb_id = BODYPART_ID_ALIEN
-	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
-	bodyshape = BODYSHAPE_HUMANOID
-	px_x = 0
-	px_y = 0
-	bodypart_flags = BODYPART_UNREMOVABLE
-	can_be_disabled = FALSE
-	max_damage = LIMB_MAX_HP_ALIEN_LIMBS
-	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
-	should_draw_greyscale = FALSE
-	biological_state = BIO_STANDARD_ALIEN
-
 /obj/item/bodypart/leg/right
 	name = "right leg"
 	desc = "You put your right leg in, your right leg out. In, out, in, out, \
@@ -682,37 +527,3 @@
 	REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_LEG)
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_R_LEG))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_R_LEG), PROC_REF(on_owner_paralysis_gain))
-
-
-/obj/item/bodypart/leg/right/monkey
-	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
-	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'
-	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
-	husk_type = "monkey"
-	icon_state = "default_monkey_r_leg"
-	limb_id = SPECIES_MONKEY
-	should_draw_greyscale = FALSE
-	bodyshape = BODYSHAPE_MONKEY
-	wound_resistance = -10
-	px_y = 4
-	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 2
-	unarmed_damage_high = 3
-	unarmed_effectiveness = 5
-	footprint_sprite = FOOTPRINT_SPRITE_PAWS
-
-/obj/item/bodypart/leg/right/alien
-	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
-	icon_state = "alien_r_leg"
-	limb_id = BODYPART_ID_ALIEN
-	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
-	bodyshape = BODYSHAPE_HUMANOID
-	px_x = 0
-	px_y = 0
-	bodypart_flags = BODYPART_UNREMOVABLE
-	can_be_disabled = FALSE
-	max_damage = LIMB_MAX_HP_ALIEN_LIMBS
-	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
-	should_draw_greyscale = FALSE
-	biological_state = BIO_STANDARD_ALIEN

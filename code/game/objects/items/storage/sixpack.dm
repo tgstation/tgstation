@@ -10,7 +10,7 @@
 	max_integrity = 500
 	storage_type = /datum/storage/sixcan
 
-/obj/item/storage/cans/suicide_act(mob/living/carbon/user)
+/obj/item/storage/cans/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins popping open a final cold one with the boys! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return BRUTELOSS
 

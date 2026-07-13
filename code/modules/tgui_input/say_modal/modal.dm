@@ -100,6 +100,7 @@
 		PRAY_CHANNEL,
 	)
 	// BANDASTATION ADDITION END - Mentors
+	saved_text = ""
 	if(!(payload["channel"] in no_thinking_bubble_channels)) // BANDASTATION EDIT - Mentors: (payload["channel"] in no_thinking_bubble_channels && payload["channel"] != PRAY_CHANNEL)
 		start_thinking()
 	if(!client.typing_indicators)

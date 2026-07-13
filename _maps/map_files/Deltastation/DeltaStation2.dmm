@@ -9960,10 +9960,7 @@
 /area/station/command/corporate_showroom)
 "csD" = (
 /obj/structure/chair/office,
-/obj/item/radio/intercom/directional/north{
-	frequency = 1423;
-	name = "Interrogation Intercom"
-	},
+/obj/item/radio/intercom/interrogation/outside/directional/north,
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 4
 	},
@@ -78200,12 +78197,7 @@
 	c_tag = "Security - Interrogation";
 	network = list("ss13","interrogation")
 	},
-/obj/item/radio/intercom/directional/south{
-	broadcasting = 1;
-	frequency = 1423;
-	listening = 0;
-	name = "Interrogation Intercom"
-	},
+/obj/item/radio/intercom/interrogation/inside/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)

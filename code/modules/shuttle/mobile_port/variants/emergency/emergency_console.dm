@@ -42,10 +42,11 @@
 		if(hijack_announce)
 			. += span_warning("It is probably best to fortify your position as to be uninterrupted during the attempt, given the automatic announcements..")
 
-/obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,list/modifiers)
-	if(isidcard(I))
-		say("Please equip your ID card into your ID slot to authenticate.")
-	. = ..()
+/obj/machinery/computer/emergency_shuttle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isidcard(tool))
+		return NONE
+	say("Please equip your ID card into your ID slot to authenticate.")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/emergency_shuttle/ui_state(mob/user)
 	return GLOB.human_adjacent_state

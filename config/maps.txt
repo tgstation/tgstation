@@ -50,10 +50,10 @@ map cyberiad
 	votable
 endmap
 
-map kilostation
-	maxplayers 40
-	votable
-endmap
+#map kilostation
+#	maxplayers 40
+#	votable
+#endmap
 
 map wawastation
     minplayers 50

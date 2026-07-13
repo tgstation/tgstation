@@ -11,7 +11,7 @@
 	var/spamcheck = 0
 	var/list/voicespan = list(SPAN_COMMAND)
 
-/obj/item/megaphone/suicide_act(mob/living/carbon/user)
+/obj/item/megaphone/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is uttering [user.p_their()] last words into \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	spamcheck = 0//so they dont have to worry about recharging
 	user.say("АААААААААААААА!!!!", forced="megaphone suicide")//he must have died while coding this

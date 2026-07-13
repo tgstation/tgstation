@@ -3,6 +3,7 @@
 	"map_name": "Kilo Station",
 	"map_path": "map_files/KiloStation",
 	"map_file": "KiloStation.dmm",
+	"exclude_from_ci": true,
 	"shuttles": {
 		"emergency": "emergency_kilo",
 		"ferry": "ferry_kilo",
@@ -32,6 +33,9 @@
 		},
 		"Explorer": {
 			"spawn_positions": 4
+		},
+		"Chaplain": {
+			"has_monastery": 1
 		}
 	}
 }

@@ -829,6 +829,9 @@
 				span_userdanger("Вы сбиты с ног от толчка [declent_ru(GENITIVE)]!"), span_hear("Вы слышите агрессивное шарканье с последующим громким стуком!"), COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, span_danger("Вы толкаете [target.declent_ru(ACCUSATIVE)], сбивая [target.ru_p_them()] с ног!"))
 			log_combat(src, target, "shoved", "[knocked_down ? "knocking them down[weapon ? " with [weapon]" : ""]" : ""]")
+			if(ishuman(target))
+				var/mob/living/carbon/human/human_target = target
+				human_target.force_say()
 			return
 
 	if(shove_flags & SHOVE_CAN_KICK_SIDE) //KICK HIM IN THE NUTS

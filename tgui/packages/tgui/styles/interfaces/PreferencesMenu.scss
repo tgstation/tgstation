@@ -1,19 +1,4 @@
-@use 'sass:map';
 @use '../base.scss';
-
-$department_map: (
-  'Assistant': var(--color-gray),
-  'Captain': var(--color-command),
-  'Cargo': var(--color-cargo),
-  'Security': var(--color-security),
-  'Engineering': var(--color-engineering),
-  'Medical': var(--color-medical),
-  'Science': var(--color-science),
-  'Service': var(--color-service),
-  'Silicon': var(--color-silicon),
-  'NTRepresentation': var(--color-centcom),
-  'Justice': var(--color-justice),
-);
 
 .ColorInput {
   &__Text {
@@ -27,6 +12,12 @@ $department_map: (
     border: 2px solid hsl(from var(--color-primary) h s calc(l + 5));
     transform: scale(0.75);
   }
+}
+
+.ChoicedSelection {
+  padding: var(--space-m);
+  background-color: var(--color-base);
+  box-shadow: 0 0.5em 1em hsla(0, 0%, 0%, 0.5);
 }
 
 // MARK: PreferencesPage
@@ -250,15 +241,15 @@ $department_map: (
 .PreferencesMenu {
   &__Department {
     --text-shadow: 1px 1px 2px hsla(0, 0%, 0%, 0.75);
-    --head-color: oklch(from var(--background-color) calc(l * 0.85) c h);
-    --border-color: oklch(from var(--background-color) calc(l * 1.1) c h);
+    --head-color: oklch(from var(--department-color) calc(l * 0.85) c h);
+    --border-color: oklch(from var(--department-color) calc(l * 1.1) c h);
     --border-color-darker: oklch(from var(--border-color) calc(l * 0.8) c h);
     --button-width: 40px;
     --button-gap: 0.33rem;
 
     user-select: none;
     overflow: hidden;
-    background-color: var(--background-color);
+    background-color: var(--department-color);
     border: var(--border-thickness-tiny) solid;
     border-color: var(--border-color) var(--border-color-darker)
       var(--border-color-darker) var(--border-color);
@@ -302,7 +293,7 @@ $department_map: (
         &:before {
           content: '';
           position: absolute;
-          background-color: var(--background-color);
+          background-color: var(--department-color);
           inset: calc(-1 * var(--button-gap) + 1px);
           z-index: -2;
         }
@@ -360,21 +351,15 @@ $department_map: (
       border-radius: var(--border-radius-medium);
     }
 
-    @each $department-name, $color in $department_map {
-      &--#{$department-name} {
-        --background-color: #{$color};
-      }
-    }
-
     &--Captain {
       position: relative;
       border-color: hsla(0, 0%, 100%, 0.15) hsla(0, 0%, 0%, 0.2)
         hsla(0, 0%, 0%, 0.2) hsla(0, 0%, 100%, 0.15);
       background: linear-gradient(
         in oklch 45deg,
-        var(--background-color) 15%,
-        oklch(from var(--background-color) calc(l * 1.5) c h) 20%,
-        var(--background-color) 25%
+        var(--department-color) 15%,
+        oklch(from var(--department-color) calc(l * 1.5) c h) 20%,
+        var(--department-color) 25%
       );
       background-size: 250%;
       animation: captain 4s infinite ease-in-out;
@@ -383,7 +368,7 @@ $department_map: (
         content: '';
         position: absolute;
         inset: 0;
-        background-color: var(--background-color);
+        background-color: var(--department-color);
         z-index: 0;
       }
 

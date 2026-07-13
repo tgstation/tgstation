@@ -46666,7 +46666,7 @@
 	pixel_x = 8;
 	pixel_y = -1
 	},
-/obj/item/radio/intercom/directional/east,
+/obj/item/radio/intercom/interrogation/outside/directional/east,
 /turf/open/floor/iron/grimy,
 /area/station/security/interrogation)
 "pVE" = (
@@ -63589,12 +63589,7 @@
 /obj/structure/table,
 /obj/item/folder/red,
 /obj/item/taperecorder,
-/obj/item/radio/intercom/directional/south{
-	broadcasting = 1;
-	frequency = 1423;
-	listening = 0;
-	name = "Interrogation Intercom"
-	},
+/obj/item/radio/intercom/interrogation/inside/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "vFx" = (
