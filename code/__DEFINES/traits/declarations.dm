@@ -994,6 +994,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SKIP_BASIC_REACH_CHECK "skip_basic_reach_check"
 /// Increases chance of this brain getting special traumas, makes them harder to cure
 #define TRAIT_SPECIAL_TRAUMA_BOOST "special_trauma_boost"
+/// If this item is offered when something is pulled.
+#define TRAIT_OFFERED_WHEN_PULLED "offered_when_pulled"
+/// If the item has a special mob/living/give() interaction.
+#define TRAIT_BORG_GIVE "give_borg_item"
 
 //---- Heretic Traits
 /// Hides the heretic overlay that outs them as the heretic

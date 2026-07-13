@@ -30055,8 +30055,8 @@
 /area/station/maintenance/port/fore)
 "iBi" = (
 /obj/structure/table,
-/obj/item/food/grown/carrot,
-/obj/item/food/grown/carrot{
+/obj/item/food/grown/carrotlike/carrot,
+/obj/item/food/grown/carrotlike/carrot{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -58364,7 +58364,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "qvx" = (
-/obj/item/food/grown/carrot,
+/obj/item/food/grown/carrotlike/carrot,
 /turf/open/misc/asteroid/snow/standard_air,
 /area/station/science/cytology)
 "qvE" = (
