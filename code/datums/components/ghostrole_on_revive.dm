@@ -174,7 +174,7 @@
 	UnregisterSignal(parent_mob, COMSIG_LIVING_GHOSTROLE_INFO)
 
 // Block formaldehyde from being metabolized, Coroner QoL
-/datum/component/ghostrole_on_revive/proc/block_formaldehyde_metabolism(mob/living/source, datum/reagent/chem)
+/datum/component/ghostrole_on_revive/proc/block_formaldehyde_metabolism(mob/living/source, datum/reagent/chem, seconds_per_tick, metabolization_ratio)
 	SIGNAL_HANDLER
 
 	if(istype(chem, /datum/reagent/toxin/formaldehyde))

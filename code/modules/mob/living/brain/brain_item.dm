@@ -594,12 +594,10 @@
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_MOB_REAGENT_TICK)
 
-/obj/item/organ/brain/abductor/proc/handle_peanut_butter(mob/living/carbon/organ_owner, datum/reagent/reagent, seconds_per_tick)
+/obj/item/organ/brain/abductor/proc/handle_peanut_butter(mob/living/carbon/organ_owner, datum/reagent/reagent, seconds_per_tick, metabolization_ratio)
 	SIGNAL_HANDLER
 	if(!istype(reagent, /datum/reagent/consumable/peanut_butter))
 		return
-	var/metabolized_volume = reagent.compute_metabolization(owner, seconds_per_tick)
-	var/metabolization_ratio = REM * metabolized_volume
 	organ_owner.add_mood_event("ET_pieces", /datum/mood_event/et_pieces, reagent.name)
 	organ_owner.set_drugginess_if_lower(15 SECONDS * metabolization_ratio * seconds_per_tick)
 

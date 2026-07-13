@@ -326,15 +326,14 @@
 				span_danger("[src] throws up all over [p_them()]self!"),
 				span_userdanger("You throw up all over yourself!"),
 			)
-			if(!(vomit_flags & MOB_VOMIT_NO_MOOD))
-				add_mood_event("vomit", /datum/mood_event/vomitself)
+			add_mood_event("vomit", /datum/mood_event/vomitself)
 		distance = 0
 	else if(message)
 		visible_message(
 			span_danger("[src] throws up!"),
 			span_userdanger("You throw up!"),
 		)
-		if(!(vomit_flags & MOB_VOMIT_NO_MOOD))
+		if(!HAS_TRAIT(src, TRAIT_VOMIT_SLURPER))
 			add_mood_event("vomit", /datum/mood_event/vomit)
 
 	if(stun)

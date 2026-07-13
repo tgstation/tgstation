@@ -566,7 +566,7 @@
 	icon = 'icons/mob/human/species/golems.dmi'
 	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_head"
-	biological_state = BIO_BONE
+	biological_state = BIO_BONE|BIO_STONE
 	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
 	bodyshape = BODYSHAPE_GOLEM
 	limb_id = SPECIES_GOLEM
@@ -609,7 +609,7 @@
 	icon = 'icons/mob/human/species/golems.dmi'
 	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_chest"
-	biological_state = BIO_BONE
+	biological_state = BIO_BONE|BIO_STONE
 	acceptable_bodytype = BODYTYPE_GOLEM
 	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
 	bodyshape = BODYSHAPE_GOLEM
@@ -635,7 +635,7 @@
 	icon = 'icons/mob/human/species/golems.dmi'
 	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_l_arm"
-	biological_state = (BIO_BONE|BIO_JOINTED)
+	biological_state = (BIO_BONE|BIO_JOINTED|BIO_STONE)
 	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
 	bodyshape = BODYSHAPE_GOLEM
 	limb_id = SPECIES_GOLEM
@@ -672,7 +672,7 @@
 	icon = 'icons/mob/human/species/golems.dmi'
 	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_r_arm"
-	biological_state = (BIO_BONE|BIO_JOINTED)
+	biological_state = (BIO_BONE|BIO_JOINTED|BIO_STONE)
 	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
 	bodyshape = BODYSHAPE_GOLEM
 	limb_id = SPECIES_GOLEM
@@ -709,7 +709,7 @@
 	icon = 'icons/mob/human/species/golems.dmi'
 	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_l_leg"
-	biological_state = (BIO_BONE|BIO_JOINTED)
+	biological_state = (BIO_BONE|BIO_JOINTED|BIO_STONE)
 	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
 	bodyshape = BODYSHAPE_GOLEM
 	limb_id = SPECIES_GOLEM
@@ -726,7 +726,7 @@
 	icon = 'icons/mob/human/species/golems.dmi'
 	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_r_leg"
-	biological_state = (BIO_BONE|BIO_JOINTED)
+	biological_state = (BIO_BONE|BIO_JOINTED|BIO_STONE)
 	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
 	bodyshape = BODYSHAPE_GOLEM
 	limb_id = SPECIES_GOLEM

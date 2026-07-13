@@ -959,8 +959,6 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 #define MOB_VOMIT_KNOCKDOWN (1<<4)
 /// Flag which will make the proc skip certain checks when it comes to forcing a vomit.
 #define MOB_VOMIT_FORCE (1<<5)
-/// Flag that disables the bad mood event from vomiting
-#define MOB_VOMIT_NO_MOOD (1<<6)
 
 /// The default. Gives you might typically expect to happen when you vomit.
 #define VOMIT_CATEGORY_DEFAULT (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM | MOB_VOMIT_STUN)

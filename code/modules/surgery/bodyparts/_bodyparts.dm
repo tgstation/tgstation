@@ -1844,6 +1844,8 @@
 
 /// Returns the generic description of our BIO_INTERNAL feature(s), prioritizing certain ones over others. Returns error on failure.
 /obj/item/bodypart/proc/get_internal_description()
+	if(biological_state & BIO_STONE)
+		return "bedrock"
 	if (biological_state & BIO_BONE)
 		return "bone"
 	if (biological_state & BIO_METAL)

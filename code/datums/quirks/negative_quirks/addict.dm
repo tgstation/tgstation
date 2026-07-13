@@ -221,7 +221,7 @@
 /datum/quirk/item_quirk/addict/alcoholic/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK)
 
-/datum/quirk/item_quirk/addict/alcoholic/proc/check_brandy(mob/source, datum/reagent/booze)
+/datum/quirk/item_quirk/addict/alcoholic/proc/check_brandy(mob/source, datum/reagent/booze, seconds_per_tick, metabolization_rate)
 	SIGNAL_HANDLER
 
 	//we don't care if it is not alcohol

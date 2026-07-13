@@ -124,7 +124,7 @@
 		return TRUE
 	if(istype(mover, /obj/item/boulder))
 		return can_process_boulder(mover)
-	if(istype(mover, /mob/living))
+	if(isliving(mover))
 		return can_process_living_mob(mover)
 	return ..()
 

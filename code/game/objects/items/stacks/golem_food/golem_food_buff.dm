@@ -14,7 +14,7 @@
 	if (!exclusive)
 		return TRUE
 	var/datum/status_effect/golem/existing = consumer.has_status_effect(/datum/status_effect/golem)
-	return !existing || istype(existing, status_effect)
+	return !existing || !existing.exclusive || istype(existing, status_effect)
 
 /// Called when someone actually eats this
 /datum/golem_food_buff/proc/on_consumption(mob/living/carbon/consumer, atom/movable/consumed, multiplier = 1)
@@ -83,8 +83,9 @@
 /datum/golem_food_buff/lightbulb
 	nutrition = 0
 	exclusive = FALSE
-	status_effect = /datum/status_effect/golem_lightbulb
+	status_effect = /datum/status_effect/golem/lightbulb
 	added_info = "Not nutritious, but gives you a healthy glow if eaten."
+	exclusive = FALSE
 
 /datum/golem_food_buff/gibtonite
 	exclusive = FALSE
