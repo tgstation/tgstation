@@ -822,6 +822,8 @@
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	var/list/alt_continuous = list("stabs", "pierces", "impales")
 	var/list/alt_simple = list("stab", "pierce", "impale")
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
+
 
 /obj/item/toy/katana/Initialize(mapload)
 	. = ..()
