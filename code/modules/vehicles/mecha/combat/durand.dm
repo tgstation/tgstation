@@ -39,7 +39,7 @@
 
 /obj/vehicle/sealed/mecha/durand/Initialize(mapload)
 	. = ..()
-	shield = new(src)
+	shield = new(src, src)
 	vis_contents += shield
 
 /obj/vehicle/sealed/mecha/durand/Destroy()
@@ -191,9 +191,9 @@
 	/// Our link back to the durand
 	var/obj/vehicle/sealed/mecha/durand/chassis
 
-/obj/durand_shield/Initialize(mapload)
+/obj/durand_shield/Initialize(mapload, obj/vehicle/sealed/mecha/durand/chassis)
 	. = ..()
-	src.chassis = loc
+	src.chassis = chassis
 
 /obj/durand_shield/Destroy()
 	if(chassis)
