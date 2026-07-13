@@ -824,7 +824,6 @@
 	var/list/alt_simple = list("stab", "pierce", "impale")
 	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 
-
 /obj/item/toy/katana/Initialize(mapload)
 	. = ..()
 	alt_continuous = string_list(alt_continuous)
