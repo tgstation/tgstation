@@ -441,12 +441,12 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * * replace_current - boolean, *generally* force the organ to be deleted whether or not they pass the species' ability to keep that organ.
  */
 /obj/item/organ/proc/get_replaceability(obj/item/organ/new_organ_type, obj/item/organ/expected_organ_type, datum/species/old_species, replace_current = TRUE)
-	// we dont want to remove organs that were not from the old species (such as from freak surgery or prosthetics)
-	if(replace_current || type == expected_organ_type)
-		return TRUE
-
 	// we don't want to remove organs that are the same as the new one
 	if(type == new_organ_type)
+		return FALSE
+
+	// we dont want to remove organs that were not from the old species (such as from freak surgery or prosthetics)
+	if(replace_current || type == expected_organ_type)
 		return TRUE
 
 	return FALSE
