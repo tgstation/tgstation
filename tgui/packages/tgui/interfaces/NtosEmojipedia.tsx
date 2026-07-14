@@ -53,7 +53,7 @@ export const NtosEmojipedia = (props) => {
               className={classes(['emojipedia16x16', emoji.name])}
               m={1.5}
               onClick={() => {
-                copyText(emoji.name);
+                copyText(`:${emoji.name}:`);
               }}
               style={{
                 imageRendering: 'pixelated',
