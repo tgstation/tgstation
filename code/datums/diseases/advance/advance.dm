@@ -513,6 +513,6 @@
 /datum/disease/advance/get_immunity_recovery()
 	var/recovery_bonus = 0
 	for(var/datum/symptom/each_symptom as anything in symptoms)
-		if(each_symptom.name in affected_mob.symptom_resistances && !each_symptom.neutered)
+		if((each_symptom.name in affected_mob.symptom_resistances) && !each_symptom.neutered)
 			recovery_bonus += DISEASE_SYMPTOM_IMMUNITY_RECOVERY_BONUS
 	return recovery_bonus
