@@ -42,10 +42,9 @@ SUBSYSTEM_DEF(admin_verbs)
 			qdel(verb_singleton, force = TRUE)
 			continue
 
-		verb_singleton.metadata = new
 		var/list/pending = GLOB.____pending_verb_args[verb_type]
 		if(pending)
-			verb_singleton.metadata.arguments = pending
+			verb_singleton.arguments = pending
 		admin_verbs_by_type[verb_type] = verb_singleton
 		admin_verbs_by_verb_path[verb_singleton.get_verb_path()] = verb_singleton
 		if(verb_singleton.visibility_flag)
@@ -124,12 +123,12 @@ SUBSYSTEM_DEF(admin_verbs)
 		structured_args = extra_args[1]
 	else if(length(extra_args))
 		// Map positional args to metadata argument names in order
-		var/list/meta_args = verb_singleton.metadata?.arguments
+		var/list/meta_args = verb_singleton.arguments
 		for(var/i in 1 to min(length(extra_args), length(meta_args)))
 			var/datum/verb_arg_metadata/arg = meta_args[i]
 			structured_args[arg.name] = extra_args[i]
 
-	if(length(verb_singleton.metadata?.arguments))
+	if(length(verb_singleton.arguments))
 		structured_args = collect_verb_args(admin, verb_singleton, structured_args)
 		if(isnull(structured_args))
 			return
@@ -146,7 +145,7 @@ SUBSYSTEM_DEF(admin_verbs)
 	collected -= "__context_target__"
 	var/context_used = FALSE
 
-	for(var/datum/verb_arg_metadata/arg in verb_singleton.metadata.arguments)
+	for(var/datum/verb_arg_metadata/arg in verb_singleton.arguments)
 		if(!isnull(collected[arg.name]))
 			continue
 		if(!context_used && !isnull(context_target) && arg.source == VERB_ARG_SOURCE_WORLD)

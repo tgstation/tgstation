@@ -140,7 +140,7 @@
 		else
 			var/datum/admin_verb/av = SSadmin_verbs.admin_verbs_by_verb_path[verb_path]
 			if(av)
-				arg_list = av.metadata?.arguments
+				arg_list = av.arguments
 		if(!length(arg_list))
 			return TRUE
 		var/datum/verb_arg_metadata/entity_arg
@@ -164,7 +164,7 @@
 
 		var/datum/admin_verb/admin_meta = SSadmin_verbs.admin_verbs_by_verb_path[verb_path]
 		if(admin_meta)
-			var/list/resolved_args = resolve_invoke_args(payload["args"], admin_meta.metadata?.arguments)
+			var/list/resolved_args = resolve_invoke_args(payload["args"], admin_meta.arguments)
 			SSadmin_verbs.dynamic_invoke_verb(client, admin_meta.type, resolved_args)
 			return TRUE
 		var/datum/verb_metadata/meta = SSverbs.verbs_by_verb_path[verb_path]

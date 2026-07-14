@@ -134,7 +134,7 @@ SUBSYSTEM_DEF(verbs)
 		var/datum/admin_verb/av = SSadmin_verbs.admin_verbs_by_verb_path[verb_path]
 		if(av)
 			entry["type"] = "[av.get_verb_path()]"
-			for(var/datum/verb_arg_metadata/arg in av.metadata?.arguments)
+			for(var/datum/verb_arg_metadata/arg in av.arguments)
 				var/list/arg_entry = list("name" = arg.name, "arg_type" = arg.arg_type, "source" = arg.source)
 				if(length(arg.options))
 					arg_entry["options"] = arg.options

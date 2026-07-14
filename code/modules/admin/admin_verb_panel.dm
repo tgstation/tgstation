@@ -47,7 +47,7 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 			"arguments" = list(),
 		)
 
-		for(var/datum/verb_arg_metadata/arg in verb.metadata?.arguments)
+		for(var/datum/verb_arg_metadata/arg in verb.arguments)
 			var/list/arg_entry = list(
 				"name" = arg.name,
 				"arg_type" = arg.arg_type,
@@ -76,11 +76,11 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 		return list()
 
 	var/datum/admin_verb/verb = SSadmin_verbs.admin_verbs_by_type[selected_verb_type]
-	if(!verb || !length(verb.metadata?.arguments))
+	if(!verb || !length(verb.arguments))
 		return list()
 
 	var/datum/verb_arg_metadata/entity_arg
-	for(var/datum/verb_arg_metadata/arg in verb.metadata.arguments)
+	for(var/datum/verb_arg_metadata/arg in verb.arguments)
 		if(arg.arg_type & VERB_ARG_TYPE_ENTITY)
 			entity_arg = arg
 			break
