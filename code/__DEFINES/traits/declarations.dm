@@ -536,8 +536,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MARTIAL_ARTS_IMMUNE "martial_arts_immune"
 /// Immune to being afflicted by time stop (spell)
 #define TRAIT_TIME_STOP_IMMUNE "time_stop_immune"
-/// Revenants draining you only get a very small benefit.
-#define TRAIT_WEAK_SOUL "weak_soul"
 /// This mob has no soul
 #define TRAIT_NO_SOUL "no_soul"
 /// Prevents mob from riding mobs when buckled onto something

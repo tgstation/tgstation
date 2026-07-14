@@ -671,7 +671,7 @@
 				future_pancake.apply_damage(DOOR_CRUSH_DAMAGE * 1.5, BRUTE, BODY_ZONE_CHEST, wound_bonus = door_wounding, attacking_item = src) //Xenos go into crit after aproximately the same amount of crushes as humans.
 				future_pancake.emote("roar")
 			else if(ishuman(future_pancake)) //For humans
-				future_pancake.emote("scream")
+				future_pancake.emote(HAS_TRAIT(future_pancake, TRAIT_SIMIAN) ? "screch" : "scream")
 				future_pancake.apply_damage(DOOR_CRUSH_DAMAGE, BRUTE, BODY_ZONE_CHEST, wound_bonus = door_wounding, attacking_item = src)
 				future_pancake.Paralyze(10 SECONDS)
 			else //for simple_animals & borgs

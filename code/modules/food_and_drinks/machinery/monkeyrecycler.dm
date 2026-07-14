@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 /obj/machinery/monkey_recycler/mouse_drop_receive(mob/living/target, mob/living/user, params)
 	if(!istype(target))
 		return
-	if(HAS_TRAIT(target, TRAIT_LESSER_HUMANOID))
+	if(ismonkey(target))
 		stuff_monkey_in(target, user)
 
 /obj/machinery/monkey_recycler/proc/stuff_monkey_in(mob/living/carbon/human/target, mob/living/user)

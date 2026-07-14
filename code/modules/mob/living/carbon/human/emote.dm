@@ -195,8 +195,7 @@
 	var/obj/item/organ/tail/oranges_accessory = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 	if(oranges_accessory.wag_flags & WAG_WAGGING)
 		. = "stops wagging"
-	else
-		. += " [user.p_their()] tail."
+	. += " [user.p_their()] tail."
 
 /datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check, intentional, params)
 	var/obj/item/organ/tail/tail = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)

@@ -1288,7 +1288,7 @@
 	if (!ishuman(affected_mob))
 		return
 	var/mob/living/carbon/human/human_mob = affected_mob
-	if (HAS_TRAIT(human_mob, TRAIT_LESSER_HUMANOID))
+	if (ismonkey(human_mob))
 		if (!HAS_TRAIT(human_mob, TRAIT_BORN_MONKEY))
 			//This is the only time mutadone should remove monkeyism
 			human_mob.dna.remove_mutation(/datum/mutation/race, GLOB.standard_mutation_sources)
