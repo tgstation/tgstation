@@ -299,7 +299,7 @@
 /// Check whether we can recycle the target monkey. Optionally takes in a user to display errors to.
 /obj/machinery/computer/camera_advanced/xenobio/proc/can_recycle_target_monkey(mob/living/carbon/human/target_human, mob/living/user)
 	PRIVATE_PROC(TRUE)
-	if(!HAS_TRAIT(target_human, TRAIT_LESSER_HUMANOID))
+	if(!ismonkey(target_human))
 		if(user)
 			target_human.balloon_alert(user, "not a monkey!")
 		return FALSE
@@ -542,7 +542,7 @@
 	if(isopenturf(target))
 		ctrl_click_turf(user, target)
 		return COMSIG_MOB_CANCEL_CLICKON
-	else if(HAS_TRAIT(target, TRAIT_LESSER_HUMANOID))
+	else if(ismonkey(target))
 		ctrl_click_monkey(user, target)
 		return COMSIG_MOB_CANCEL_CLICKON
 	else if(isslime(target))
