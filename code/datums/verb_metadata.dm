@@ -19,13 +19,13 @@
 	var/source
 	var/list/options
 
-/datum/verb_arg_metadata/New(arg_name, arg_arg_type, arg_type_path, arg_source, list/arg_options)
+/datum/verb_arg_metadata/New(name, arg_type, type_path, source, list/options)
 	. = ..()
-	name = arg_name
-	arg_type = arg_arg_type
-	type_path = arg_type_path
-	source = arg_source
-	options = arg_options
+	src.name = name
+	src.arg_type = arg_type
+	src.type_path = type_path
+	src.source = source
+	src.options = options
 
 /datum/verb_arg_metadata/proc/get_targets(client/viewer)
 	switch(source)
