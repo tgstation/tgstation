@@ -28,6 +28,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	can_be_held = TRUE
+	held_state = "chick"
 	gold_core_spawnable = FRIENDLY_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/chick
 

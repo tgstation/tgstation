@@ -61,6 +61,7 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/animal_variety, "chicken", pick("brown", "black", "white"), modify_pixels = TRUE)
+
 	AddComponent(\
 		/datum/component/egg_layer,\
 		/obj/item/food/egg/organic,\
@@ -104,4 +105,16 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/random_speech/chicken,
 	)
+
+/mob/living/basic/chicken/white
+	icon_state = "chicken_white"
+	held_state = "chicken_white"
+
+/mob/living/basic/chicken/black
+	icon_state = "chicken_black"
+	held_state = "chicken_black"
+
+/mob/living/basic/chicken/brown
+	icon_state = "chicken_brown"
+	held_state = "chicken_brown"
 
