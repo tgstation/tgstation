@@ -106,7 +106,7 @@ GLOBAL_LIST_EMPTY(shared_crew_bounties)
 				else
 					chosen_type = /datum/bounty/reagent/chemical_complex
 			if(CIV_JOB_VIRO)
-				if(prob(70))
+				if(prob(75))
 					chosen_type = pick(subtypesof(/datum/bounty/item/medical))
 				else
 					chosen_type = pick(subtypesof(/datum/bounty/virus))
