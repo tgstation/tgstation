@@ -153,7 +153,7 @@
 	if(!skin_contact && !source.get_property(MATERIAL_PENETRATING))
 		armor_block = target.run_armor_check(def_zone, WOUND, armour_penetration = object.armour_penetration, silent = TRUE, weak_against_armor = TRUE)
 
-	if(armor_block > 66)
+	if(armor_block > 50)
 		return
 
 	to_chat(target, span_userdanger("Contact with [object] sears your undead flesh!"))
