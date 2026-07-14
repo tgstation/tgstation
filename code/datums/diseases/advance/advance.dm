@@ -505,9 +505,10 @@
 /datum/disease/advance/cure(add_resistance = TRUE)
 	if(severity == DISEASE_SEVERITY_UNCURABLE)
 		return
-	for(var/datum/symptom/each_symptom as anything in symptoms)
-		if(!each_symptom.neutered)
-			LAZYOR(affected_mob.symptom_resistances, each_symptom.name)
+	if(add_resistance == TRUE)
+		for(var/datum/symptom/each_symptom as anything in symptoms)
+			if(!each_symptom.neutered)
+				LAZYOR(affected_mob.symptom_resistances, each_symptom.name)
 	.=..()
 
 /datum/disease/advance/get_immunity_recovery()
