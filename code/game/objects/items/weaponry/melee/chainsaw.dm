@@ -111,6 +111,9 @@
 	return BRUTELOSS
 
 /obj/item/chainsaw/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return ..()
+
 	if (target_mob.stat != DEAD)
 		return ..()
 
@@ -118,17 +121,19 @@
 		return ..()
 
 	var/obj/item/bodypart/head = target_mob.get_bodypart(BODY_ZONE_HEAD)
-	if (!head?.can_dismember())
+	if (!head)
 		return ..()
 
-	playsound(user, 'sound/items/weapons/slice.ogg', vol = 80, vary = TRUE)
-
+	playsound(src, 'sound/items/weapons/chainsawhit.ogg', vol = 100, vary = TRUE)
 	target_mob.balloon_alert(user, "cutting off head...")
+
 	if (!do_after(user, behead_time, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))
 		return TRUE
 
 	if (head.dismember(silent = FALSE))
-		user.put_in_hands(head)
+		playsound(src, 'sound/items/weapons/chainsawhit.ogg', vol = 100, vary = TRUE)
+	else
+		to_chat(user, span_warning("[target_mob]'s head is attached too firmly to cut off!"))
 
 	return TRUE
 

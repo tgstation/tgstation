@@ -18,7 +18,6 @@
 	health = 15
 	maxHealth = 15
 	mob_size = MOB_SIZE_SMALL
-	can_be_held = TRUE
 	density = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	speak_emote = list("sniffles", "twitches")
@@ -55,6 +54,7 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "hop")
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown", "black", "white"), TRUE)
+	AddElement(/datum/element/can_be_held)
 	if(prob(20)) // bunny
 		name = "bunny"
 
@@ -91,7 +91,7 @@
 	var/list/feed_messages = list("[p_they()] nibbles happily.", "[p_they()] noms happily.")
 	AddComponent(/datum/component/egg_layer,\
 		/obj/item/surprise_egg,\
-		list(/obj/item/food/grown/carrot),\
+		list(/obj/item/food/grown/carrotlike/carrot),\
 		feed_messages,\
 		list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling."),\
 		initial_egg_amount,\
