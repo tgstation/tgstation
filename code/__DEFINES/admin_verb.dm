@@ -104,6 +104,7 @@ _ADMIN_VERB_CONTEXT(verb_path_name, verb_permissions, verb_name, verb_desc, verb
 #define ADMIN_CATEGORY_GAME "Admin.Game"
 #define ADMIN_CATEGORY_SHUTTLE "Admin.Shuttle"
 #define ADMIN_CATEGORY_SERVER "Server"
+#define ADMIN_CATEGORY_OBJECT "Object"
 #define ADMIN_CATEGORY_MAPPING "Mapping"
 #define ADMIN_CATEGORY_DEBUG "Debug"
 #define ADMIN_CATEGORY_PROFILE "Profile"

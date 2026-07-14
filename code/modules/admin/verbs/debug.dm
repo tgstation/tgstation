@@ -13,7 +13,7 @@ ADMIN_VERB(air_status, R_DEBUG, "Air Status In Location", "Gets the air status f
 	atmos_scan(user.mob, user_turf, silent = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Air Status In Location")
 
-ADMIN_VERB(cmd_admin_robotize, R_FUN, "Make Cyborg", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_FUN)
+ADMIN_VERB(cmd_admin_robotize, R_FUN, "Make Cyborg", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
 	VERB_ARG_TYPED(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(!SSticker.HasRoundStarted())
 		tgui_alert(user, "Wait until the game starts")
@@ -184,7 +184,7 @@ ADMIN_VERB(cmd_assume_direct_control, R_ADMIN, "Assume Direct Control", "Assume 
 		qdel(adminmob)
 	BLACKBOX_LOG_ADMIN_VERB("Assume Direct Control")
 
-ADMIN_VERB(cmd_give_direct_control, R_ADMIN, "Give Direct Control", "Give direct control of a mob to another player.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(cmd_give_direct_control, R_ADMIN, "Give Direct Control", "Give direct control of a mob to another player.", ADMIN_CATEGORY_GAME)
 	VERB_ARG_TYPED(M, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(!M)
 		return
@@ -480,11 +480,11 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, "Rejuvenate", /mob/l
 	admin_ticket_log(M, msg)
 	BLACKBOX_LOG_ADMIN_VERB("Rejuvenate")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_delete, R_DEBUG|R_SPAWN, "Delete", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_DEBUG, /atom)
+ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_delete, R_DEBUG|R_SPAWN, "Delete", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, /atom)
 	VERB_ARG_TYPED(target, VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_TURF, VERB_ARG_SOURCE_WORLD, /atom)
 	user.admin_delete(target)
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_check_contents, R_ADMIN, "Check Contents", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_MAIN, /mob/living)
+ADMIN_VERB_AND_CONTEXT_MENU(cmd_check_contents, R_ADMIN, "Check Contents", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, /mob/living)
 	VERB_ARG_TYPED(mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob/living)
 	var/list/mob_contents = mob.get_contents()
 	for(var/content in mob_contents)

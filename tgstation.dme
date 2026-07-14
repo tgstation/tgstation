@@ -3238,7 +3238,6 @@
 #include "code\modules\admin\spawn_panel\spawn_handling.dm"
 #include "code\modules\admin\spawn_panel\spawn_panel.dm"
 #include "code\modules\admin\verb_datums\_admin_verb_datum.dm"
-#include "code\modules\admin\verb_datums\admin_verb_metadata.dm"
 #include "code\modules\admin\verbs\admin.dm"
 #include "code\modules\admin\verbs\admin_newscaster.dm"
 #include "code\modules\admin\verbs\adminevents.dm"
