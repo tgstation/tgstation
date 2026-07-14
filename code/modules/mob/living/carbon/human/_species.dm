@@ -291,11 +291,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/obj/item/organ/new_organ = get_mutant_organ_type_for_slot(slot)
 		var/old_organ_type = old_species?.get_mutant_organ_type_for_slot(slot)
 
-		if(existing_organ)
-			if(!existing_organ.get_replaceability(new_organ, old_organ_type, old_species, replace_current))
-				continue
+		if(existing_organ && !existing_organ.get_replaceability(new_organ, old_organ_type, old_species, replace_current))
+			continue
 		// if we have an extra organ that before changing that the species didnt have, remove it
 		else if(!new_organ)
+			if(existing_organ)
+				existing_organ.Remove(organ_holder)
+				qdel(existing_organ)
 			continue
 
 		if(visual_only && (!initial(new_organ.bodypart_overlay) && !initial(new_organ.visual)))
