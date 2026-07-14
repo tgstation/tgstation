@@ -217,6 +217,10 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	if(cur_flags & NO_RUINS)
 		new_turf.turf_flags |= NO_RUINS
 
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace/normal_atmos
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = FALSE
+
 /turf/open/misc/asteroid/lowpressure
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	baseturfs = /turf/open/misc/asteroid/lowpressure
