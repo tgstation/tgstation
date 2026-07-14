@@ -79,7 +79,7 @@
 	var/amount = rand(10, 13)
 	set_custom_materials(list(pick_weight(gulag_minerals) = SHEET_MATERIAL_AMOUNT * amount))
 
-///lowgrade boulder, Exists as an admin spawn for testing
+///lowgrade boulder, Exists as an admin spawn for testing and unit testing.
 /obj/item/boulder/shabby
 	name = "shabby boulder"
 	desc = "A bizarre, twisted boulder. Wait, wait no, it's just a rock."

@@ -23,7 +23,7 @@
 	else
 		to_chat(finder, span_notice("It's grown quite large, and writhes slightly as you look at it."))
 		if(prob(10))
-			attempt_grow(gib_on_success = FALSE)
+			INVOKE_ASYNC(src, PROC_REF(attempt_grow), gib_on_success = FALSE)
 
 /obj/item/organ/body_egg/alien_embryo/on_life(seconds_per_tick)
 	. = ..()
@@ -78,7 +78,7 @@
 /obj/item/organ/body_egg/alien_embryo/egg_process()
 	if(stage == 6 && prob(50))
 		// If we are mid surgery we won't gib the mob, isn't that neat?
-		attempt_grow(gib_on_success = !LIMB_HAS_SURGERY_STATE(bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED))
+		INVOKE_ASYNC(src, PROC_REF(attempt_grow), gib_on_success = !LIMB_HAS_SURGERY_STATE(bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED))
 
 /// Attempt to burst an alien outside of the host, getting a ghost to play as the xeno.
 /obj/item/organ/body_egg/alien_embryo/proc/attempt_grow(gib_on_success = TRUE)

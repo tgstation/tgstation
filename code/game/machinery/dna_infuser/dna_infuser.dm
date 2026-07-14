@@ -172,7 +172,7 @@
 		return NONE
 	// if the machine already has a infusion target, or the target is not valid then no adding.
 	if(!is_valid_infusion(tool, user))
-		return ITEM_INTERACT_BLOCKING
+		return ..() //research scanning is so back
 	if(!user.transferItemToLoc(tool, src))
 		to_chat(user, span_warning("[tool] is stuck to your hand!"))
 		return ITEM_INTERACT_BLOCKING

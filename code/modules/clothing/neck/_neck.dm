@@ -154,7 +154,7 @@
 	if(!istype(undershirt) || !LAZYLEN(undershirt.attached_accessories))
 		return
 	if(alternate_worn_layer)
-		. += undershirt.accessory_overlay
+		. += undershirt.get_accessory_overlays()
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"
@@ -241,7 +241,7 @@
 	. = ..()
 	AddElement(/datum/element/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
-/obj/item/clothing/neck/stethoscope/suicide_act(mob/living/carbon/user)
+/obj/item/clothing/neck/stethoscope/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] won't hear much!"))
 	return OXYLOSS
 

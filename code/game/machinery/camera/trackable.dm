@@ -72,6 +72,7 @@
 		return
 	tracked_mob = track
 	if(tracked_mob)
+		SEND_SIGNAL(src, COMSIG_TRACKABLE_TRACKING_STARTED, tracked_mob)
 		RegisterSignal(tracked_mob, COMSIG_QDELETING, PROC_REF(target_deleted))
 		RegisterSignal(tracked_mob, COMSIG_MOVABLE_MOVED, PROC_REF(target_moved))
 		RegisterSignal(tracked_mob, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(glide_size_changed))

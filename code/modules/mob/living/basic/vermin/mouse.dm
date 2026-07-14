@@ -11,7 +11,6 @@
 	density = FALSE
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	mob_size = MOB_SIZE_TINY
-	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	gold_core_spawnable = FRIENDLY_SPAWN
@@ -78,6 +77,7 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	make_tameable()
 	AddComponent(/datum/component/swarming, 16, 16) //max_x, max_y
+	AddElement(/datum/element/can_be_held)
 
 /mob/living/basic/mouse/proc/make_tameable()
 	if (HAS_TRAIT(src, TRAIT_TAMED))

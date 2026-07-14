@@ -129,7 +129,7 @@
 		flags_1 &= ~PREVENT_CLICK_UNDER_1
 
 	if(glass)
-		passwindow_on(src, INNATE_TRAIT)
+		pass_flags |= PASSWINDOW
 	//doors only block while dense though so we have to use the proc
 	real_explosion_block = explosion_block
 	update_explosive_block()
@@ -454,6 +454,7 @@
 		var/obj/item/access_key/key = tool
 		if(!key.attempt_open_door(user, src))
 			return ITEM_INTERACT_BLOCKING
+
 		return ITEM_INTERACT_SUCCESS
 
 	if(!user.combat_mode && istype(tool, /obj/item/fireaxe))

@@ -267,7 +267,7 @@
 		return
 
 	var/cap = CONFIG_GET(number/monkeycap)
-	if (LAZYLEN(SSmobs.cubemonkeys) < cap)
+	if (LAZYLEN(SSmobs.cubemonkeys) >= cap)
 		to_chat(user, span_warning("Bluespace harmonics prevent the creation of more than [cap] monkeys on the station at one time!"))
 		return
 
