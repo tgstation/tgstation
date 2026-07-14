@@ -23,7 +23,7 @@ export const NtosEmojipedia = (props) => {
   const filteredEmojis = emoji_list.filter(search);
 
   return (
-    <NtosWindow width={600} height={800}>
+    <NtosWindow width={600} height={640}>
       <NtosWindow.Content scrollable>
         <Section
           // required: follow semantic versioning every time you touch this file
