@@ -3,7 +3,6 @@
 /obj/machinery/computer/arcade/orion_trail
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("arcade", "/obj/machinery/computer/arcade")
 	circuit = /obj/item/circuitboard/computer/arcade/orion_trail
 

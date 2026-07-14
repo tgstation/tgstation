@@ -6,7 +6,6 @@
 /obj/machinery/computer/crew
 	name = "crew monitoring console"
 	desc = "Used to monitor active health sensors built into most of the crew's uniforms."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/crew")
 	icon_screen = "crew"
 	icon_keyboard = "med_key"

@@ -8,7 +8,6 @@
 /obj/machinery/computer/records/security
 	name = "security records console"
 	desc = "Used to view and edit personnel's security records."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/warrant")
 	icon_screen = "security"
 	icon_keyboard = "security_key"

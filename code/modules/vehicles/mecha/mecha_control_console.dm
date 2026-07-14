@@ -1,7 +1,6 @@
 /obj/machinery/computer/mecha
 	name = "exosuit control console"
 	desc = "Used to remotely locate or lockdown exosuits."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/mecha")
 	icon_screen = "mecha"
 	icon_keyboard = "tech_key"

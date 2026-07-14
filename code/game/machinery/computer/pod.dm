@@ -133,7 +133,6 @@
 
 /obj/machinery/computer/pod/old
 	name = "\improper DoorMex control console"
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("oldcomp", "/obj/machinery/computer/pod/old")
 	icon_screen = "library"
 	icon_keyboard = null

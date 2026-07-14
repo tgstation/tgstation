@@ -30,7 +30,6 @@
 	name = "civilian bounty control terminal"
 	desc = "A console for assigning civilian bounties to inserted ID cards, and for controlling the bounty pad for export."
 	status_report = "Ready for delivery."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/piratepad_control/civilian")
 	icon_screen = "civ_bounty"
 	icon_keyboard = "id_key"

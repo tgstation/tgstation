@@ -1,7 +1,6 @@
 /obj/machinery/computer/robotics
 	name = "robotics control console"
 	desc = "Used to remotely lockdown linked Cyborgs and Drones."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/robotics")
 	icon_screen = "robot"
 	icon_keyboard = "rd_key"

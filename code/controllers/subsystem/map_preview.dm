@@ -22,18 +22,17 @@ SUBSYSTEM_DEF(map_previews)
 		/obj/machinery/computer/old,
 	)
 
-	for(var/path in subtypesof(/obj))
-		var/obj/typepath = path
+	for(var/obj/typepath as anything in subtypesof(/obj))
 		if(!initial(typepath.generate_map_preview))
 			continue
-		if(path in preview_blacklist)
+		if(typepath in preview_blacklist)
 			continue
-		worklist += path
+		worklist += typepath
 
 	var/turf/preview_turf = locate(1, 1, 1)
 
 	var/filepath = "icons/obj/fluff/map_previews.dmi"
-	var/icon/holder = fexists(filepath) ? icon(filepath) : icon('icons/obj/fluff/map_previews_template.dmi')
+	var/icon/holder = icon('icons/obj/fluff/map_previews_template.dmi')
 
 	for(var/path in worklist)
 		var/obj/thingtospawn = new path(preview_turf)
@@ -61,7 +60,7 @@ SUBSYSTEM_DEF(map_previews)
 			if(!preview_frame)
 				continue
 #ifdef UNIT_TESTS
-			if(preview_frame.Width() > 32 || preview_frame.Height() > 32)
+			if(preview_frame.get_cached_width() > ICON_SIZE_X || preview_frame.get_cached_height() > ICON_SIZE_Y)
 				stack_trace("Map preview generation for '[icon_name]' produced an icon larger than 32x32.")
 				continue
 #endif
@@ -71,7 +70,7 @@ SUBSYSTEM_DEF(map_previews)
 	var/tmp_path = "tmp/map_previews.dmi"
 	fcopy(holder, tmp_path)
 
-	var/old_md5 = rustg_hash_file(RUSTG_HASH_MD5, filepath)
+	var/old_md5 = fexists(filepath) ? rustg_hash_file(RUSTG_HASH_MD5, filepath) : ""
 	var/new_md5 = rustg_hash_file(RUSTG_HASH_MD5, tmp_path)
 	if(old_md5 != new_md5)
 		fcopy(tmp_path, filepath)

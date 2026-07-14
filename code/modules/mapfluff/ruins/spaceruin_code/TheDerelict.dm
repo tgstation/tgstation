@@ -45,7 +45,6 @@
 /obj/machinery/computer/vaultcontroller
 	name = "vault controller"
 	desc = "It seems to be powering and controlling the vault locks."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/vaultcontroller")
 	icon_screen = "power"
 	icon_keyboard = "power_key"

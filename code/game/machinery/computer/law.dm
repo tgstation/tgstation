@@ -2,7 +2,6 @@
 
 /obj/machinery/computer/upload
 	var/mob/living/silicon/current = null //The target of future law uploads
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/upload")
 	icon_screen = "command"
 	time_to_unscrew = 6 SECONDS

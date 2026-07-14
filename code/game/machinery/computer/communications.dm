@@ -10,7 +10,6 @@
 /obj/machinery/computer/communications
 	name = "communications console"
 	desc = "A console used for high-priority announcements and emergencies."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/communications")
 	icon_screen = "comm"
 	icon_keyboard = "tech_key"

@@ -34,7 +34,6 @@
 
 /obj/machinery/computer/terminal/sulaco
 	tguitheme = "abductor"
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 
 /obj/machinery/computer/terminal/sulaco/overwatch
 	name = "overwatch console"
@@ -54,7 +53,6 @@
 /obj/machinery/computer/terminal/sulaco/helm
 	name = "helms computer"
 	desc = "The navigation console for the Sulaco."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate")
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"

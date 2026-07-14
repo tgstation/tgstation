@@ -2,7 +2,6 @@
 	name = "quantum console"
 
 	circuit = /obj/item/circuitboard/computer/quantum_console
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/quantum_console")
 	icon_keyboard = "mining"
 	icon_screen = "bitrunning"

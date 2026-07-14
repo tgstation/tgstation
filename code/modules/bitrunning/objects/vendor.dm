@@ -1,8 +1,8 @@
 /obj/machinery/computer/order_console/bitrunning
 	name = "bitrunning supplies order console"
 	desc = "NexaCache(tm)! Dubiously authentic gear for the digital daredevil."
-	icon = MAP_SWITCH('icons/obj/machines/bitrunning.dmi', 'icons/obj/fluff/map_previews.dmi')
-	icon_state = MAP_SWITCH("vendor", "/obj/machinery/computer/order_console/bitrunning")
+	icon = 'icons/obj/machines/bitrunning.dmi'
+	icon_state = "vendor"
 	icon_keyboard = null
 	icon_screen = null
 	circuit = /obj/item/circuitboard/computer/order_console/bitrunning
@@ -14,6 +14,7 @@
 	35% cheaper than express delivery."}
 	express_tooltip = @{"Sends your purchases instantly."}
 	credit_type = MONEY_BITRUNNING_SYMBOL
+	generate_map_preview = FALSE
 
 	order_categories = list(
 		CATEGORY_BITRUNNING_FLAIR,

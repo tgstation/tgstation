@@ -1,7 +1,6 @@
 /obj/machinery/computer/records/medical
 	name = "medical records console"
 	desc = "This can be used to check medical records."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/records/medical")
 	icon_screen = "medcomp"
 	icon_keyboard = "med_key"

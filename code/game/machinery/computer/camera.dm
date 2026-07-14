@@ -3,7 +3,6 @@
 /obj/machinery/computer/security
 	name = "security camera console"
 	desc = "Used to access the various cameras on the station."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/warrant")
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
@@ -192,7 +191,6 @@
 /obj/machinery/computer/security/wooden_tv
 	name = "security camera monitor"
 	desc = "An old TV hooked into the station's camera network."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("television", "/obj/machinery/computer/security/wooden_tv")
 	icon_keyboard = null
 	icon_screen = "detective_tv"
@@ -201,7 +199,6 @@
 /obj/machinery/computer/security/mining
 	name = "outpost camera console"
 	desc = "Used to access the various cameras on the outpost."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/security/mining")
 	icon_screen = "mining"
 	icon_keyboard = "mining_key"

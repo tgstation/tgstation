@@ -3,13 +3,14 @@
 	name = "PanD.E.M.I.C 2200"
 	desc = "Used to work with viruses."
 	density = TRUE
-	icon = MAP_SWITCH('icons/obj/medical/chemical.dmi', 'icons/obj/fluff/map_previews.dmi')
-	icon_state = MAP_SWITCH("pandemic0", "/obj/machinery/computer/pandemic")
+	icon = 'icons/obj/medical/chemical.dmi'
+	icon_state = "pandemic0"
 	icon_keyboard = null
 	icon_screen = null
 	base_icon_state = "pandemic"
 	resistance_flags = ACID_PROOF
 	circuit = /obj/item/circuitboard/computer/pandemic
+	generate_map_preview = FALSE
 
 	/// Whether the pandemic is ready to make another culture/vaccine
 	var/wait = FALSE

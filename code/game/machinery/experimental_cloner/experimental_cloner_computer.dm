@@ -3,7 +3,6 @@
 	name = "experimental cloner control console"
 	desc = "It scans DNA structures."
 	circuit = /obj/item/circuitboard/computer/experimental_cloner
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/crew")
 	icon_screen = "crew"
 	icon_keyboard = "med_key"

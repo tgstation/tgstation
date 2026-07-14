@@ -1,7 +1,6 @@
 /obj/machinery/computer/apc_control
 	name = "power flow control console"
 	desc = "Used to remotely control the flow of power to different parts of the station."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/apc_control")
 	icon_screen = "solar"
 	icon_keyboard = "power_key"

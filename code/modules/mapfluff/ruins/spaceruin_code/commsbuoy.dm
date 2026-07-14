@@ -129,7 +129,6 @@
 
 /obj/machinery/computer/terminal/nt_commsbuoy
 	name = "satellite dish operations terminal"
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/terminal/nt_commsbuoy")
 	icon_screen = "comm"
 	tguitheme = "ntos"

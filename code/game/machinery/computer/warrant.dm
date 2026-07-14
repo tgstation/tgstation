@@ -1,7 +1,6 @@
 /obj/machinery/computer/warrant
 	name = "security warrant console"
 	desc = "Used to view outstanding warrants."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/warrant")
 	icon_screen = "security"
 	icon_keyboard = "security_key"

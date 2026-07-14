@@ -4,7 +4,6 @@
 /obj/machinery/computer/teleporter
 	name = "teleporter control console"
 	desc = "Used to control a linked teleportation Hub and Station."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/launchpad")
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"

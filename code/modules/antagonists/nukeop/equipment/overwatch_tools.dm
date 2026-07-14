@@ -20,7 +20,6 @@ Happy hunting!
 	name = "overwatch camera console"
 	desc = "Allows you to view members of your operative team via their bodycam feeds. We call them 'bodycams', but they're actually a swarm of tiny, near-imperceptible camera drones that follow each target. \
 		It is believed that adversaries either don't notice the drones, or avoid attacking them in hopes that they'll capture footage of their combat prowess against our operatives."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/security/overwatch")
 	icon_screen = "commsyndie"
 	icon_keyboard = "syndie_key"

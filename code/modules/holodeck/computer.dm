@@ -32,7 +32,6 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 /obj/machinery/computer/holodeck
 	name = "holodeck control console"
 	desc = "A computer used to control a nearby holodeck."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/holodeck")
 	icon_screen = "holocontrol"
 

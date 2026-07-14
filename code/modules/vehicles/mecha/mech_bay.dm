@@ -94,7 +94,6 @@
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"
 	desc = "Displays the status of mechs connected to the recharge station."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/mech_bay_power_console")
 	icon_screen = "recharge_comp"
 	icon_keyboard = "rd_key"

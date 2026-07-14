@@ -6,7 +6,6 @@
 	name = "telecommunications monitoring console"
 	desc = "Monitors the details of the telecommunications network it's synced with."
 	circuit = /obj/item/circuitboard/computer/comm_monitor
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/telecomms/monitor")
 	icon_screen = "comm_monitor"
 

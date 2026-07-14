@@ -1,5 +1,4 @@
 /obj/machinery/computer/old
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/piratepad_control")
 	name = "old computer"
 	circuit = /obj/item/circuitboard/computer

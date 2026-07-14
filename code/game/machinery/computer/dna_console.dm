@@ -74,7 +74,6 @@
 /obj/machinery/computer/dna_console
 	name = "DNA Console"
 	desc = "From here you can research mysteries of the DNA!"
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/dna_console")
 	icon_screen = "dna"
 	icon_keyboard = "med_key"

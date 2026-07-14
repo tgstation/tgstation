@@ -4,7 +4,6 @@ GLOBAL_LIST_EMPTY(order_console_products)
 /obj/machinery/computer/order_console
 	name = "Orders Console"
 	desc = "An interface for ordering specific ingredients from Cargo, with an express option at the cost of more money."
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/order_console")
 	icon_screen = "request"
 	icon_keyboard = "generic_key"

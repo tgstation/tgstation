@@ -1,5 +1,4 @@
 /obj/machinery/computer/sat_control
-	icon = MAP_SWITCH('icons/obj/machines/computer.dmi', 'icons/obj/fluff/map_previews.dmi')
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/piratepad_control")
 	name = "satellite control"
 	desc = "Used to control the satellite network."
