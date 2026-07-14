@@ -334,11 +334,12 @@ multiple modular subtrees with behaviors
 	RegisterSignal(pawn, COMSIG_QDELETING, PROC_REF(on_pawn_qdeleted))
 	RegisterSignal(pawn, COMSIG_EVLOGGING_ENABLED, PROC_REF(on_pawn_evlogging_enabled))
 	RegisterSignal(pawn, COMSIG_EVLOGGING_DISABLED, PROC_REF(on_pawn_evlogging_disabled))
-	update_able_to_run()
-	setup_able_to_run()
 
 	our_cells = new(interesting_dist, interesting_dist, 1)
 	set_new_cells()
+
+	update_able_to_run()
+	setup_able_to_run()
 
 	RegisterSignal(pawn, COMSIG_MOVABLE_MOVED, PROC_REF(update_grid))
 
@@ -555,8 +556,11 @@ multiple modular subtrees with behaviors
 	if(current_type == override_subtree)
 		return
 
+	if(slot.override_node)
+		slot.override_node.reset_tick_state()
+		QDEL_NULL(slot.override_node)
+
 	if(isnull(override_subtree))
-		slot.override_node = null
 		finalize_tree()
 		SEND_SIGNAL(pawn, COMSIG_AI_OVERRIDE_SLOT_CHANGED(id), null)
 		return

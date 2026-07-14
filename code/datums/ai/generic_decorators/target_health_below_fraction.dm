@@ -11,7 +11,7 @@
 	var/mob/living/target = owning_controller?.blackboard[key]
 	if(isliving(target))
 		observed_mob = target
-		RegisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_signal_changed))
+		RegisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_signal_changed), override = TRUE)
 	RegisterSignals(pawn, list(COMSIG_AI_BLACKBOARD_KEY_SET(key), COMSIG_AI_BLACKBOARD_KEY_CLEARED(key)), PROC_REF(on_mob_key_changed))
 	return TRUE
 
@@ -23,13 +23,15 @@
 
 /datum/bt_node/decorator/target_health_below_fraction/proc/on_mob_key_changed(atom/source, ...)
 	SIGNAL_HANDLER
+	var/mob/living/target = owning_controller?.blackboard[key]
+	if(target == observed_mob)
+		return
 	if(observed_mob)
 		UnregisterSignal(observed_mob, COMSIG_LIVING_HEALTH_UPDATE)
 		observed_mob = null
-	var/mob/living/target = owning_controller?.blackboard[key]
 	if(isliving(target))
 		observed_mob = target
-		RegisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_signal_changed))
+		RegisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_signal_changed), override = TRUE)
 	if(owning_controller)
 		on_observed_change(owning_controller, null)
 

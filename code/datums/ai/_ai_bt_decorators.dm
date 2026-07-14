@@ -31,6 +31,13 @@
 
 
 /datum/bt_node/decorator/Destroy()
+	if(observers_registered)
+		unregister_observe_signals(owning_controller?.pawn)
+		if(is_polled)
+			LAZYREMOVE(owning_controller?.polling_observers, src)
+			is_polled = FALSE
+		observers_registered = FALSE
+		has_observer_signals = FALSE
 	QDEL_NULL(child)
 	return ..()
 

@@ -13,7 +13,7 @@
 	var/obj/item/target = owning_controller?.blackboard[key]
 	if(target)
 		observed_item = target
-		RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_signal_changed))
+		RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_signal_changed), override = TRUE)
 	RegisterSignals(pawn, list(COMSIG_AI_BLACKBOARD_KEY_SET(key), COMSIG_AI_BLACKBOARD_KEY_CLEARED(key)), PROC_REF(on_item_key_changed))
 	return TRUE
 
@@ -26,13 +26,15 @@
 /// Fires when the blackboard key changes. Rebinds the move observer to the new item and re-evaluates.
 /datum/bt_node/decorator/item_inside_pawn/proc/on_item_key_changed(atom/source, ...)
 	SIGNAL_HANDLER
+	var/obj/item/target = owning_controller?.blackboard[key]
+	if(target == observed_item)
+		return
 	if(observed_item)
 		UnregisterSignal(observed_item, COMSIG_MOVABLE_MOVED)
 		observed_item = null
-	var/obj/item/target = owning_controller?.blackboard[key]
 	if(target)
 		observed_item = target
-		RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_signal_changed))
+		RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_signal_changed), override = TRUE)
 	if(owning_controller)
 		on_observed_change(owning_controller, null)
 
