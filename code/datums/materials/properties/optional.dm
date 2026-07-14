@@ -151,7 +151,7 @@
 	var/burn_damage = source.get_property(id) * clamp((object.custom_materials[source] / (2 * SHEET_MATERIAL_AMOUNT)), 0.5, 2)
 	var/armor_block = 0
 	if(!skin_contact && !source.get_property(MATERIAL_PENETRATING))
-		armor_block = target.run_armor_check(def_zone, WOUND, armour_penetration = object.armour_penetration, silent = TRUE, weak_against_armor = TRUE)
+		armor_block = target.run_armor_check(def_zone, WOUND, armour_penetration = astype(object, /obj/item)?.armour_penetration || 0, silent = TRUE, weak_against_armour = TRUE)
 
 	if(armor_block > 50)
 		return
