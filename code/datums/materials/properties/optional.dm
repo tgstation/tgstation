@@ -120,7 +120,7 @@
 	if (isliving(target))
 		target.adjust_fire_stacks(source.get_property(id))
 
-/// Deals additional burn damage to vampires, property value determines damage
+/// Deals additional burn damage to vampires, property value times material volume determines damage
 /datum/material_property/vampires_bane
 	name = "Vampires' Bane"
 	id = MATERIAL_VAMPIRES_BANE
@@ -129,7 +129,7 @@
 	return "vampires' bane"
 
 /datum/material_property/vampires_bane/get_tooltip(value)
-	return "Deals [value] additional burn damage to vampires on contact"
+	return "Deals [value * 0.5] to [value * 2] additional burn damage to vampires on contact (based on material volume)"
 
 /datum/material_property/vampires_bane/attach_to(datum/material/material)
 	. = ..()
@@ -149,7 +149,8 @@
 		return
 
 	to_chat(target, span_userdanger("Contact with [object] sears your undead flesh!"))
-	target.apply_damage(source.get_property(id), BURN, def_zone, wound_bonus = 10, wound_clothing = FALSE)
+	playsound(target, SFX_SIZZLE, 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	target.apply_damage(source.get_property(id) * clamp((object.custom_materials[source] / (2 * SHEET_MATERIAL_AMOUNT)), 0.5, 2), BURN, def_zone, wound_bonus = 10, wound_clothing = FALSE)
 
 /// Teleports targets who come into active contact with the material around, property value determines teleport radius and damage taken per teleport
 /datum/material_property/teleporting
