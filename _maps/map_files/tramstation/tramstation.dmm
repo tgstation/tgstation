@@ -5695,19 +5695,12 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
-/obj/item/book/manual/wiki/plumbing{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/item/plunger,
-/obj/item/plunger,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/machinery/reagentgrinder,
+/obj/item/stack/sheet/mineral/plasma{
+	pixel_y = 10
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "aQO" = (
@@ -18389,6 +18382,17 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/construction/plumbing,
 /obj/item/construction/plumbing,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/book/manual/wiki/plumbing{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/plunger,
+/obj/item/plunger,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "foS" = (
@@ -23180,15 +23184,11 @@
 /turf/open/floor/iron,
 /area/station/security/processing)
 "hdM" = (
-/obj/structure/table,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
-/obj/machinery/reagentgrinder,
-/obj/item/stack/sheet/mineral/plasma{
-	pixel_y = 10
-	},
 /obj/structure/cable,
+/obj/machinery/limbgrower,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "hdT" = (

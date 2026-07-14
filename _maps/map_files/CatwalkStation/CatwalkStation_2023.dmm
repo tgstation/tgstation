@@ -1876,13 +1876,16 @@
 	dir = 1
 	},
 /obj/structure/table,
+/obj/structure/sign/poster/official/periodic_table/directional/east,
 /obj/item/stack/sheet/mineral/plasma{
-	pixel_y = 5
+	pixel_x = -3
 	},
 /obj/item/stack/sheet/mineral/plasma{
 	pixel_x = 2
 	},
-/obj/structure/sign/poster/official/periodic_table/directional/east,
+/obj/item/stack/sheet/mineral/plasma{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "azt" = (
@@ -48681,12 +48684,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/autoname/directional/south,
-/obj/structure/table,
-/obj/item/stack/sheet/mineral/plasma{
-	pixel_x = 7;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/science,
+/obj/machinery/limbgrower,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "mUt" = (
@@ -65695,6 +65693,7 @@
 	pixel_y = 7
 	},
 /obj/machinery/newscaster/directional/south,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "rxy" = (

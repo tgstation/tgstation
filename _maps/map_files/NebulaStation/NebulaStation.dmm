@@ -58658,16 +58658,8 @@
 /area/station/maintenance/department/bridge)
 "iFC" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/table/glass,
-/obj/item/reagent_containers/cup/beaker/large{
-	pixel_x = -9;
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/cup/beaker{
-	pixel_x = 8;
-	pixel_y = 8
-	},
 /obj/machinery/door/firedoor/border_only,
+/obj/machinery/limbgrower,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/medical/chemistry)
 "iFH" = (
@@ -115629,6 +115621,14 @@
 /obj/structure/table/glass,
 /obj/item/reagent_containers/syringe,
 /obj/machinery/door/firedoor/border_only,
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_x = -9;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/cup/beaker{
+	pixel_x = 8;
+	pixel_y = 8
+	},
 /turf/open/floor/iron/dark/herringbone,
 /area/station/medical/chemistry)
 "rbO" = (

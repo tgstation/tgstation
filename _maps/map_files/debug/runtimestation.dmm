@@ -1251,6 +1251,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"ns" = (
+/obj/machinery/limbgrower,
+/turf/open/floor/iron,
+/area/station/medical/chemistry)
 "nT" = (
 /obj/structure/table,
 /obj/machinery/light/directional/south,
@@ -7540,7 +7544,7 @@ sT
 IV
 IV
 Ce
-Ce
+ns
 qH
 QV
 bE

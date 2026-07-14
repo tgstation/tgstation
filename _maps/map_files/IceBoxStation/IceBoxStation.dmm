@@ -43465,21 +43465,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/table/reinforced,
-/obj/item/plunger{
-	pixel_x = 3
-	},
-/obj/item/plunger{
-	pixel_x = -3
-	},
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
-/obj/item/stack/ducts/fifty,
+/obj/machinery/limbgrower,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "msu" = (
@@ -66737,6 +66723,20 @@
 	},
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/light/directional/east,
+/obj/item/stack/ducts/fifty,
+/obj/item/plunger{
+	pixel_x = 3
+	},
+/obj/item/plunger{
+	pixel_x = -3
+	},
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
