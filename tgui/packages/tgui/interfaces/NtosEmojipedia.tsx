@@ -27,7 +27,7 @@ export const NtosEmojipedia = (props) => {
       <NtosWindow.Content scrollable>
         <Section
           // required: follow semantic versioning every time you touch this file
-          title={`Emojipedia V2.8.10${filter ? ` - ${filter}` : ''}`}
+          title={`Emojipedia V3.7.10${filter ? ` - ${filter}` : ''}`}
           buttons={
             <>
               <Input
