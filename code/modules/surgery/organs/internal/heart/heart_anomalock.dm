@@ -10,6 +10,7 @@
 	beat_noise = "an astonishing <b>BZZZ</b> of immense electrical power"
 	bleed_prevention = TRUE
 	toxification_probability = 0
+	blood_regeneration_multiplier = 9
 
 	COOLDOWN_DECLARE(survival_cooldown)
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 5, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
@@ -111,8 +112,6 @@
 	if(!core)
 		return
 
-	owner.adjust_blood_volume(5 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
-
 	if(owner.health <= owner.crit_threshold)
 		activate_survival(owner)
 
@@ -158,6 +157,7 @@
 	balloon_alert(user, "core installed")
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	add_organ_trait(TRAIT_SHOCKIMMUNE)
+	blood_regeneration_multiplier = 21
 	update_icon_state()
 	return ITEM_INTERACT_SUCCESS
 
