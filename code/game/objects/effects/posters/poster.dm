@@ -152,6 +152,8 @@
 	var/printable = FALSE
 	///What type should we put back in the rolled poster when we get cut down
 	var/cutdown_type
+	/// Type of remains we leave after being torn
+	var/tear_type = /obj/structure/sign/poster/ripped
 
 	var/poster_item_name = "hypothetical poster"
 	var/poster_item_desc = "This hypothetical poster item should not exist, let's be honest here."
@@ -290,7 +292,7 @@
 	playsound(src.loc, 'sound/items/poster/poster_ripped.ogg', 100, TRUE)
 	spring_trap(user)
 
-	var/obj/structure/sign/poster/ripped/torn_poster = new(loc)
+	var/obj/structure/sign/poster/torn_poster = new tear_type(loc)
 	torn_poster.pixel_y = pixel_y
 	torn_poster.pixel_x = pixel_x
 	torn_poster.add_fingerprint(user)
