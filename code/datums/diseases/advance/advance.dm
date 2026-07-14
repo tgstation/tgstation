@@ -507,7 +507,7 @@
 		return
 	for(var/datum/symptom/each_symptom as anything in symptoms)
 		if(!each_symptom.neutered)
-			LAZYOR(affected_mob.symptom_resistances, each_symptom)
+			LAZYOR(affected_mob.symptom_resistances, each_symptom.name)
 	.=..()
 
 /datum/disease/advance/get_immunity_recovery()
