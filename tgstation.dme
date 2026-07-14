@@ -2571,6 +2571,7 @@
 #include "code\game\objects\effects\spawners\random\animalhide.dm"
 #include "code\game\objects\effects\spawners\random\armory.dm"
 #include "code\game\objects\effects\spawners\random\bedsheet.dm"
+#include "code\game\objects\effects\spawners\random\biome_mobs.dm"
 #include "code\game\objects\effects\spawners\random\bureaucracy.dm"
 #include "code\game\objects\effects\spawners\random\clothing.dm"
 #include "code\game\objects\effects\spawners\random\contraband.dm"
