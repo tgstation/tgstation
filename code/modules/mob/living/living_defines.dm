@@ -190,6 +190,7 @@
 	/// list of all diseases in a mob
 	var/list/diseases
 	var/list/disease_resistances
+	var/list/symptom_resistances
 
 	///Whether the mob is slowed down when dragging another prone mob
 	var/slowed_by_drag = TRUE
