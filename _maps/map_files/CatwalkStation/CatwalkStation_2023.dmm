@@ -6435,6 +6435,7 @@
 	pixel_x = -3;
 	pixel_y = -4
 	},
+/obj/item/storage/pill_bottle/sepsisillin,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/virology)
 "bGm" = (
