@@ -25,6 +25,11 @@
 	///Same as handcuffs but for legs. Bear traps use this.
 	var/obj/item/legcuffed = null
 
+	///How many times we've pointed without speaking or manually emoting, risks dislocating our arm if too high
+	var/point_spam_count = 0
+	///world.time at which the current point spam counting window expires
+	var/point_spam_window_end = 0
+
 	/// Measure of how disgusted we are. See DISGUST_LEVEL_GROSS and friends
 	var/disgust = 0
 	/// How disgusted we were LAST time we processed disgust. Helps prevent unneeded work

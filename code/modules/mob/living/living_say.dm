@@ -167,6 +167,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(!try_speak(original_message, ignore_spam, forced, filterproof))
 		return
 
+	if(iscarbon(src))
+		var/mob/living/carbon/carbon_speaker = src
+		carbon_speaker.point_spam_count = 0
+
 	language ||= message_mods[LANGUAGE_EXTENSION] || get_selected_language()
 
 	var/succumbed = FALSE

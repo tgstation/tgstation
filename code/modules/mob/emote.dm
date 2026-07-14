@@ -39,6 +39,9 @@
 		emote.run_emote(src, param, type_override, intentional)
 		SEND_SIGNAL(src, COMSIG_MOB_EMOTE, emote, act, type_override, message, intentional)
 		SEND_SIGNAL(src, COMSIG_MOB_EMOTED(emote.key))
+		if(intentional && iscarbon(src))
+			var/mob/living/carbon/carbon_emoter = src
+			carbon_emoter.point_spam_count = 0
 		return TRUE
 	if(intentional && !silenced && !force_silence)
 		to_chat(src, span_notice("Unusable emote '[act]'. Say *help for a list."))

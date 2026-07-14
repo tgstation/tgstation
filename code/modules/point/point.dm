@@ -106,6 +106,15 @@
  *
  * overridden here and in /mob/dead/observer for different point span classes and sanity checks
  */
+///How many times a carbon can point within one spam window before risking a dislocated arm
+#define POINT_SPAM_LIMIT 30
+///How long a point spam counting window lasts
+#define POINT_SPAM_WINDOW (30 SECONDS)
+///Additional chance to dislocate the pointing arm for each point past the limit
+#define POINT_SPAM_CHANCE_PER_POINT 10
+///Point count at which we warn the pointer that their arm is starting to ache
+#define POINT_SPAM_ACHE_THRESHOLD 20
+
 GAME_VERB(/mob, pointed, "Point To", null, atom/A as mob|obj|turf in view(client.view, src))
 
 	if(isnull(A) || istype(A, /obj/effect/temp_visual/point) || isarea(A))
@@ -133,6 +142,39 @@ GAME_VERB(/mob, pointed, "Point To", null, atom/A as mob|obj|turf in view(client
 			else
 				to_chat(src, span_warning("You need to wait before pointing again!"))
 				return FALSE
+		// pointing this much without saying anything is terrible for your rotator cuff
+		if(world.time > our_carbon.point_spam_window_end)
+			our_carbon.point_spam_count = 0
+			our_carbon.point_spam_window_end = world.time + POINT_SPAM_WINDOW
+		our_carbon.point_spam_count++
+		switch(our_carbon.point_spam_count)
+			if(POINT_SPAM_ACHE_THRESHOLD)
+				to_chat(our_carbon, span_warning("Your arm is starting to ache from all this pointing."))
+			if(POINT_SPAM_LIMIT)
+				to_chat(our_carbon, span_boldwarning("Your shoulder is throbbing painfully. Maybe you should say something instead."))
+		if(prob((our_carbon.point_spam_count - POINT_SPAM_LIMIT) * POINT_SPAM_CHANCE_PER_POINT))
+			var/obj/item/bodypart/pointing_arm = our_carbon.hand_bodyparts[our_carbon.active_hand_index]
+			pointing_arm ||= our_carbon.get_bodypart(BODY_ZONE_R_ARM) || our_carbon.get_bodypart(BODY_ZONE_L_ARM)
+			if(!isnull(pointing_arm))
+				var/datum/wound/blunt/bone/moderate/dislocation = new
+				dislocation.apply_wound(pointing_arm, silent = TRUE, wound_source = "pointing too much")
+				if(!QDELETED(dislocation))
+					our_carbon.point_spam_count = 0
+					our_carbon.visible_message(
+						span_danger("[our_carbon]'s [pointing_arm.plaintext_zone] pops out of its socket from all that pointing!"),
+						span_userdanger("Your [pointing_arm.plaintext_zone] pops out of its socket from all that pointing!"),
+					)
+					playsound(our_carbon, 'sound/effects/wounds/crack1.ogg', 70, TRUE)
+					INVOKE_ASYNC(our_carbon, TYPE_PROC_REF(/mob, emote), "scream")
+					if(pointing_arm.held_index)
+						var/obj/item/held_item = our_carbon.held_items[pointing_arm.held_index]
+						if(held_item)
+							our_carbon.dropItemToGround(held_item)
 	point_at(pointing_at, TRUE)
 
 	return TRUE
+
+#undef POINT_SPAM_LIMIT
+#undef POINT_SPAM_WINDOW
+#undef POINT_SPAM_CHANCE_PER_POINT
+#undef POINT_SPAM_ACHE_THRESHOLD
