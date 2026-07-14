@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(map_previews)
 			if(!preview_frame)
 				continue
 #ifdef UNIT_TESTS
-			if(preview_frame.get_cached_width() > ICON_SIZE_X || preview_frame.get_cached_height() > ICON_SIZE_Y)
+			if(preview_frame.Width() > ICON_SIZE_X || preview_frame.Height() > ICON_SIZE_Y)
 				stack_trace("Map preview generation for '[icon_name]' produced an icon larger than 32x32.")
 				continue
 #endif
