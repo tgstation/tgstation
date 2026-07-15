@@ -1,0 +1,4 @@
+author: "antropod"
+delete-after: True
+changes:
+  - refactor: "Atmos refactor & speedup by utilizing BYOND 516 vector functions"

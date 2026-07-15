@@ -173,10 +173,9 @@
 			src.atmos_overlay_types = null
 		return
 
-	var/list/gases = air.gases
-
+	var/list/moles = air.moles
 	var/list/new_overlay_types
-	GAS_OVERLAYS(gases, new_overlay_types, src)
+	GAS_OVERLAYS(moles, new_overlay_types, src)
 
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
@@ -306,7 +305,7 @@
 				our_excited_group = excited_group //update our cache
 		if(our_excited_group && enemy_excited_group && enemy_tile.excited) //If you're both excited, no need to compare right?
 			should_share_air = TRUE
-		else if(our_air.compare(enemy_air, ARCHIVE)) //Lets see if you're up for it
+		else if(our_air.compare(enemy_air, /*cmp_archive = */ TRUE)) //Lets see if you're up for it
 			SSair.add_to_active(enemy_tile) //Add yourself young man
 			var/datum/excited_group/existing_group = our_excited_group || enemy_excited_group || new
 			if(!our_excited_group)
@@ -334,7 +333,7 @@
 		var/datum/gas_mixture/planetary_mix = SSair.planetary[initial_gas_mix]
 		// archive ourself again so we don't accidentally share more gas than we currently have
 		LINDA_CYCLE_ARCHIVE(src)
-		if(our_air.compare(planetary_mix, ARCHIVE))
+		if(our_air.compare(planetary_mix, /*cmp_archive = */ TRUE))
 			if(!our_excited_group)
 				var/datum/excited_group/new_group = new
 				new_group.add_turf(src)
@@ -471,7 +470,7 @@
 	var/datum/gas_mixture/shared_mix = new
 
 	//make local for sanic speed
-	var/list/shared_gases = shared_mix.gases
+	var/list/shared_cached_moles = shared_mix.moles
 	var/list/turf_list = src.turf_list
 	var/turflen = turf_list.len
 	var/imumutable_in_group = FALSE
@@ -485,14 +484,14 @@
 			if(istype(group_member.air, /datum/gas_mixture/immutable))
 				imumutable_in_group = TRUE
 				shared_mix.copy_from(group_member.air) //This had better be immutable young man
-				shared_gases = shared_mix.gases //update the cache
+				shared_cached_moles = shared_mix.moles //update the cache
 				break
 			// If we're planetary use THAT mix, and stop here
 			if(group_member.planetary_atmos)
 				imumutable_in_group = TRUE
 				var/datum/gas_mixture/planetary_mix = SSair.planetary[group_member.initial_gas_mix]
 				shared_mix.copy_from(planetary_mix)
-				shared_gases = shared_mix.gases // Cache update
+				shared_cached_moles = shared_mix.moles // Cache update
 				break
 		//"borrowing" this code from merge(), I need to play with the temp portion. Lets expand it out
 		//temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
@@ -500,15 +499,13 @@
 		energy += mix.temperature * capacity
 		heat_cap += capacity
 
-		var/list/giver_gases = mix.gases
-		for(var/giver_id in giver_gases)
-			ASSERT_GAS_IN_LIST(giver_id, shared_gases)
-			shared_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
+		for(var/gas_id, amount in mix.moles)
+			shared_cached_moles[gas_id] += amount
 
 	if(!imumutable_in_group)
 		shared_mix.temperature = energy / heat_cap
-		for(var/id in shared_gases)
-			shared_gases[id][MOLES] /= turflen
+		for(var/gas_id in shared_cached_moles)
+			shared_cached_moles[gas_id] /= turflen
 		shared_mix.garbage_collect()
 
 	for(var/turf/open/group_member as anything in turf_list)
