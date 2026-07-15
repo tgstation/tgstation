@@ -325,6 +325,7 @@ You can use :I / .I to speak through any intercom within arm's reach. This allow
 You can use :L / .L or :R / .R to speak through an item being held in your left or right hand respectively. This allows you to talk into a station-bounced radio without manually turning on its microphone, or even to pretend to be a toy!
 You can use a machine in the vault to deposit cash or rob Cargo's department funds.
 You can use a multitool in your hand to track the area's local APC.
+You can use a multitool on an ethereal to check their charge!
 You can use a screwdriver to remove an encryption key from a radio headset. The key can then be installed into your own headset, an intercom, or even a station-bounced radio, allowing you to eavesdrop on secure communications.
 You can use an upgraded microwave to charge your PDA!
 You don't need to destroy a Spacecoin machine to make your funds stop draining. Swiping your ID on it will stop the withdrawal.
