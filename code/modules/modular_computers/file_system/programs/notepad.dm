@@ -11,11 +11,8 @@
 	circuit_comp_type = /obj/item/circuit_component/mod_program/notepad
 
 	var/opened_file_uid
-
 	var/opened_file_on_disk = FALSE
-
 	var/opened_file_name = "Untitled"
-
 	var/written_note = "Congratulations on your station upgrading to the new NtOS and Thinktronic based collaboration effort, \
 		bringing you the best in electronics and software since 2467!\n\
 		To help with navigation, we have provided the following definitions:\n\
@@ -55,20 +52,22 @@
 		load_text_file(file)
 		return
 
-	var/datum/computer_file/data/text/new_file = null
-	if(!extension || extension == "TXT")
-		new_file = new()
-	if(!new_file)
-		return
-
+	var/datum/computer_file/data/text/new_file = create_text_file(extension)
 	new_file.filename = name
 	new_file.stored_text = note
 	new_file.calculate_size()
 	var/file_stored = target_disk ? target_disk.add_file(new_file) : computer.store_file(new_file, user)
 	if(!file_stored)
+		to_chat(user, span_warning("Error occured while saving the file!"))
+		qdel(new_file)
 		return
 
 	load_text_file(new_file)
+
+/datum/computer_file/program/notepad/proc/create_text_file(extension)
+	if(extension == "LOG")
+		return new /datum/computer_file/data/text/logfile()
+	return new /datum/computer_file/data/text()
 
 /datum/computer_file/program/notepad/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
