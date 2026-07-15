@@ -44,7 +44,8 @@
 		. += span_notice("Those could work as a [damage_value] throwing weapon.")
 
 /obj/item/stack/wall_filling/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.tool_behaviour == TOOL_WELDER)
+	if (!W.tool_behaviour == TOOL_WELDER)
+	   return ..()
 		if(!made_from)
 			to_chat(user, span_warning("You can not reform this!"))
 			stack_trace("A wall filling of type [type] doesn't have its made_from set.")
