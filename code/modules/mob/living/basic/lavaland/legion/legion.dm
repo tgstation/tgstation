@@ -85,7 +85,7 @@
 	desc = initial(desc)
 	if(!stored_mob || !desc_word_to_replace)
 		return
-	var/replacement = lowertext(astype(stored_mob, /mob/living/carbon)?.dna?.species?.name) || initial(stored_mob.name)
+	var/replacement = LOWER_TEXT(astype(stored_mob, /mob/living/carbon)?.dna?.species?.name) || initial(stored_mob.name)
 	desc = replacetext(desc, desc_word_to_replace, replacement)
 
 
