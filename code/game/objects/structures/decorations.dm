@@ -683,7 +683,7 @@
 	icon = /obj/structure/flora/ash/cap_shroom::icon
 	icon_state = /obj/structure/flora/ash/cap_shroom::icon_state
 
-obj/structure/decoration/mushroom/cap_shroom/first
+/obj/structure/decoration/mushroom/cap_shroom/first
 
 /obj/structure/decoration/mushroom/cap_shroom/second
 	icon_state = "r_mushroom2"
@@ -705,7 +705,7 @@ obj/structure/decoration/mushroom/cap_shroom/first
 	icon = /obj/structure/flora/ash/stem_shroom::icon
 	icon_state = /obj/structure/flora/ash/stem_shroom::icon_state
 
-obj/structure/decoration/mushroom/stem_shroom/first
+/obj/structure/decoration/mushroom/stem_shroom/first
 
 /obj/structure/decoration/mushroom/stem_shroom/second
 	icon_state = "t_mushroom1"
@@ -727,7 +727,7 @@ obj/structure/decoration/mushroom/stem_shroom/first
 	icon = /obj/structure/flora/ash/stem_shroom::icon
 	icon_state = /obj/structure/flora/ash/seraka::icon_state
 
-obj/structure/decoration/mushroom/seraka/first
+/obj/structure/decoration/mushroom/seraka/first
 
 /obj/structure/decoration/mushroom/seraka/second
 	icon_state = "seraka_mushroom2"
@@ -743,7 +743,7 @@ obj/structure/decoration/mushroom/seraka/first
 	icon = /obj/structure/flora/ash/glowgrowth::icon
 	icon_state = /obj/structure/flora/ash/glowgrowth::icon_state
 
-obj/structure/decoration/mushroom/glowgrowth/first
+/obj/structure/decoration/mushroom/glowgrowth/first
 
 /obj/structure/decoration/mushroom/glowgrowth/second
 	icon_state = "glowgrowth2"
@@ -762,7 +762,7 @@ obj/structure/decoration/mushroom/glowgrowth/first
 	icon = /obj/structure/flora/ash/cacti::icon
 	icon_state = /obj/structure/flora/ash/cacti::icon_state
 
-obj/structure/decoration/cacti/first
+/obj/structure/decoration/cacti/first
 
 /obj/structure/decoration/cacti/second
 	icon_state = "cactus2"
@@ -784,7 +784,7 @@ obj/structure/decoration/cacti/first
 	icon = /obj/structure/flora/ash/fireblossom::icon
 	icon_state = /obj/structure/flora/ash/fireblossom::icon_state
 
-obj/structure/decoration/fireblossom/first
+/obj/structure/decoration/fireblossom/first
 
 /obj/structure/decoration/fireblossom/second
 	icon_state = "fireblossom2"
