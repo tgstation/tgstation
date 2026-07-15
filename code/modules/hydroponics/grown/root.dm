@@ -1,3 +1,37 @@
+/obj/item/food/grown/carrotlike
+	seed = /obj/item/seeds/carrot
+	name = "carrot?"
+	desc = "What is this? It's not a carrot, that's for sure. You should tell someone about this."
+	icon_state = "carrot"
+	abstract_type = /obj/item/food/grown/carrotlike
+	/// What do we get from inadequately sharpening this?
+	var/shiv_type = null
+	/// What do we get from adequately sharpening this?
+	var/blade_type = null
+	/// What do we call our new weapon?
+	var/blade_string = null
+	/// What do we subtract from potency when rolling for the better blade?
+	var/potency_minimum = 50
+
+/obj/item/food/grown/carrotlike/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.get_sharpness())
+		return NONE
+
+	/// The blade our "carrot" will turn into once sharpened
+	var/obj/item/blade
+	/// Chance for it to become better than a shiv
+	var/sword_chance = (max(0, seed.potency - potency_minimum) / 50)
+	if (prob(sword_chance))
+		blade = new blade_type
+		to_chat(user, span_notice("You sharpen \the [src] into a [blade_string] with [tool]."))
+	else
+		blade = new shiv_type
+		to_chat(user, span_notice("You sharpen \the [src] into a shiv with [tool]."))
+	remove_item_from_storage(user)
+	qdel(src)
+	user.put_in_hands(blade)
+	return ITEM_INTERACT_SUCCESS
+
 // Carrot
 /obj/item/seeds/carrot
 	name = "carrot seed pack"
@@ -5,7 +39,7 @@
 	icon_state = "seed-carrot"
 	species = "carrot"
 	plantname = "Carrots"
-	product = /obj/item/food/grown/carrot
+	product = /obj/item/food/grown/carrotlike/carrot
 	maturation = 10
 	production = 1
 	yield = 5
@@ -16,7 +50,7 @@
 	reagents_add = list(/datum/reagent/medicine/oculine = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 	genes = list(/datum/plant_gene/trait/soil_lover)
 
-/obj/item/food/grown/carrot
+/obj/item/food/grown/carrotlike/carrot
 	seed = /obj/item/seeds/carrot
 	name = "carrot"
 	desc = "It's good for the eyes!"
@@ -25,26 +59,12 @@
 	foodtypes = VEGETABLES
 	wine_power = 30
 
-/obj/item/food/grown/carrot/juice_typepath()
+	shiv_type = /obj/item/knife/shiv/carrot
+	blade_type = /obj/item/claymore/carrot
+	blade_string = "sword"
+
+/obj/item/food/grown/carrotlike/carrot/juice_typepath()
 	return /datum/reagent/consumable/carrotjuice
-
-/obj/item/food/grown/carrot/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!I.get_sharpness())
-		return ..()
-
-	/// The blade carrot will turn into once sharpened
-	var/obj/item/carrot_blade
-	/// Chance for it to become a sword rather than a shiv
-	var/carrot_sword_chance = (max(0, seed.potency - 50) / 50)
-	if (prob(carrot_sword_chance))
-		carrot_blade = new /obj/item/claymore/carrot
-		to_chat(user, span_notice("You sharpen the carrot into a sword with [I]."))
-	else
-		carrot_blade = new /obj/item/knife/shiv/carrot
-		to_chat(user, span_notice("You sharpen the carrot into a shiv with [I]."))
-	remove_item_from_storage(user)
-	qdel(src)
-	user.put_in_hands(carrot_blade)
 
 // Parsnip
 /obj/item/seeds/carrot/parsnip
@@ -53,12 +73,12 @@
 	icon_state = "seed-parsnip"
 	species = "parsnip"
 	plantname = "Parsnip"
-	product = /obj/item/food/grown/parsnip
+	product = /obj/item/food/grown/carrotlike/parsnip
 	icon_dead = "carrot-dead"
 	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/aluminium = 0.05)
 
-/obj/item/food/grown/parsnip
+/obj/item/food/grown/carrotlike/parsnip
 	seed = /obj/item/seeds/carrot/parsnip
 	name = "parsnip"
 	desc = "Closely related to carrots."
@@ -66,27 +86,12 @@
 	foodtypes = VEGETABLES
 	wine_power = 35
 
-/obj/item/food/grown/parsnip/juice_typepath()
+	shiv_type = /obj/item/knife/shiv/parsnip
+	blade_type = /obj/item/melee/parsnip_sabre
+	blade_string = "sabre"
+
+/obj/item/food/grown/carrotlike/parsnip/juice_typepath()
 	return /datum/reagent/consumable/parsnipjuice
-
-/obj/item/food/grown/parsnip/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!I.get_sharpness())
-		return ..()
-
-	/// The blade parsnip will turn into once sharpened
-	var/obj/item/parsnip_blade
-	/// Chance for it to become a sabre rather than a shiv
-	var/parsnip_sabre_chance = (max(0, seed.potency - 50) / 50)
-	if (prob(parsnip_sabre_chance))
-		parsnip_blade = new /obj/item/melee/parsnip_sabre
-		to_chat(user, span_notice("You sharpen the parsnip into a sabre with [I]."))
-	else
-		parsnip_blade = new /obj/item/knife/shiv/parsnip
-		to_chat(user, span_notice("You sharpen the parsnip into a shiv with [I]."))
-	remove_item_from_storage(user)
-	qdel(src)
-	user.put_in_hands(parsnip_blade)
-
 
 // Cahn'root
 /obj/item/seeds/carrot/cahnroot
@@ -95,7 +100,7 @@
 	icon_state = "seed-cahn'root"
 	species = "cahn'root"
 	plantname = "Cahn'root"
-	product = /obj/item/food/grown/cahnroot
+	product = /obj/item/food/grown/carrotlike/cahnroot
 	genes = list(/datum/plant_gene/trait/soil_lover, /datum/plant_gene/trait/plant_type/weed_hardy)
 	endurance = 50
 	instability = 10
@@ -105,7 +110,7 @@
 	rarity = 10
 	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
 
-/obj/item/food/grown/cahnroot
+/obj/item/food/grown/carrotlike/cahnroot
 	seed = /obj/item/seeds/carrot/cahnroot
 	name = "cahn'root"
 	desc = "Heavily modified version of terran carrot, originally made to survive the scarciest of environments by an enterprising scientist of Moth Flotilla, Cahn'Mang."
@@ -114,26 +119,13 @@
 	tastes = list("sweet dirt" = 1)
 	distill_reagent = /datum/reagent/consumable/rootbeer
 
-/obj/item/food/grown/cahnroot/juice_typepath()
+	shiv_type = /obj/item/knife/shiv/root
+	blade_type = /obj/item/knife/combat/root
+	blade_string = "dagger"
+	potency_minimum = 25
+
+/obj/item/food/grown/carrotlike/cahnroot/juice_typepath()
 	return null
-
-/obj/item/food/grown/cahnroot/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!I.get_sharpness())
-		return ..()
-
-	/// The blade cahn'root will turn into once sharpened
-	var/obj/item/knife/root_blade
-	/// Chance for it to become a dagger rather than a shiv
-	var/root_dagger_chance = (max(0, seed.potency - 25) / 50)
-	if (prob(root_dagger_chance))
-		root_blade = new /obj/item/knife/combat/root
-		to_chat(user, span_notice("You sharpen the cahn'root into a dagger with [I]."))
-	else
-		root_blade = new /obj/item/knife/shiv/root
-		to_chat(user, span_notice("You sharpen the cahn'root into a shiv with [I]."))
-	remove_item_from_storage(user)
-	qdel(src)
-	user.put_in_hands(root_blade)
 
 // White-Beet
 /obj/item/seeds/whitebeet

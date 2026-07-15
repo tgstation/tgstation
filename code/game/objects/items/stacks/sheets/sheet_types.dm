@@ -210,7 +210,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	. = ..()
 	. += GLOB.metal_recipes
 
-/obj/item/stack/sheet/iron/suicide_act(mob/living/carbon/user)
+/obj/item/stack/sheet/iron/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins whacking [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
@@ -889,7 +889,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/cup/glass/waterbottle/large/empty, 3, crafting_flags = NONE, category = CAT_CONTAINERS), \
 	new /datum/stack_recipe("colo cups", /obj/item/reagent_containers/cup/glass/colocup, 1, crafting_flags = NONE, category = CAT_CONTAINERS, removed_mats = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)), \
 	new /datum/stack_recipe("mannequin", /obj/structure/mannequin/plastic, 25, time = 5 SECONDS, crafting_flags = CRAFT_ONE_PER_TURF, category = CAT_ENTERTAINMENT), \
-	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2, crafting_flags = NONE, category = CAT_EQUIPMENT), \
+	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2, crafting_flags = CRAFT_SKIP_MATERIALS_PARITY, category = CAT_EQUIPMENT), \
 	new /datum/stack_recipe("warning cone", /obj/item/clothing/head/cone, 2, crafting_flags = NONE, category = CAT_EQUIPMENT), \
 	new /datum/stack_recipe("blank wall sign", /obj/item/sign, 1, crafting_flags = NONE, category = CAT_FURNITURE), \
 	new /datum/stack_recipe("liquid cooler jug", /obj/item/reagent_containers/cooler_jug, 4, time = 5 SECONDS, crafting_flags = NONE, category = CAT_CONTAINERS), \

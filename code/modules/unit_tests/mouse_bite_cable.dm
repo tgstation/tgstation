@@ -1,5 +1,6 @@
 /// Unit Test to ensure that a mouse bites a cable, gets shocked, and dies.
 /datum/unit_test/mouse_bite_cable
+	normal_floor_required = TRUE
 
 /datum/unit_test/mouse_bite_cable/Run()
 	// use dummy subtype that will bypass the probability check to bite on a cable

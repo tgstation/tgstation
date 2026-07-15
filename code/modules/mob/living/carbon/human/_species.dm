@@ -893,14 +893,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/kicking = (atk_effect == ATTACK_EFFECT_KICK)
 	var/final_armor_block = armor_block
 	if(kicking || grappled) //kicks and punches when grappling bypass armor slightly.
-		if(damage >= 9)
+		if(damage >= 12 || (damage >= 9 && prob(66)))
 			target.force_say()
 		log_combat(user, target, grappled ? "grapple punched" : "kicked")
 		final_armor_block -= limb_accuracy
 		target.apply_damage(damage, attack_type, affecting, final_armor_block, attack_direction = attack_direction, sharpness = limb_sharpness)
 	else // Normal attacks do not gain the benefit of armor penetration.
 		target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction, sharpness = limb_sharpness)
-		if(damage >= 9)
+		if(damage >= 12 || (damage >= 9 && prob(66)))
 			target.force_say()
 		log_combat(user, target, "punched")
 
@@ -1340,12 +1340,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if((suit_flags & STOPSPRESSUREDAMAGE) && (head_flags & STOPSPRESSUREDAMAGE))
 		return
 
-	for(var/gas_id in environment.gases)
-		var/gas_amount = environment.gases[gas_id][MOLES]
-		switch(gas_id)
-			if(/datum/gas/antinoblium) // Antinoblium - irradiates the target.
-				if(gas_amount >= MOLES_GAS_VISIBLE && SPT_PROB(1, gas_amount * seconds_per_tick))
-					SSradiation.irradiate(human)
+	var/antinoblium_moles = environment.moles[/datum/gas/antinoblium]
+	if (antinoblium_moles >= MOLES_GAS_VISIBLE && SPT_PROB(1, antinoblium_moles * seconds_per_tick))
+		SSradiation.irradiate(human)
 
 ////////////
 //  Stun  //
@@ -2039,20 +2036,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(needs_update && !(hooman.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
 		hooman.update_body_parts()
-
-/**
- * Calculates the expected height values for this species
- *
- * Return a height value corresponding to a specific height filter
- * Return null to just use the mob's base height
- */
-/datum/species/proc/update_species_heights(mob/living/carbon/human/holder)
-	if(HAS_TRAIT(holder, TRAIT_DWARF))
-		return HUMAN_HEIGHT_DWARF
-
-	if(HAS_TRAIT(holder, TRAIT_TOO_TALL))
-		return HUMAN_HEIGHT_TALLEST
-
 	return null
 
 /**

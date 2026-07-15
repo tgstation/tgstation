@@ -119,32 +119,35 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	air_contents.merge(removed)
 	trunk_check()
 
-/obj/machinery/disposal/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/disposal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	if(!pressure_charging && !full_pressure && !flush)
-		if(I.tool_behaviour == TOOL_SCREWDRIVER)
-			toggle_panel_open()
-			I.play_tool_sound(src)
-			to_chat(user, span_notice("You [panel_open ? "remove":"attach"] the screws around the power connection."))
-			return
-		else if(I.tool_behaviour == TOOL_WELDER && panel_open)
-			if(!I.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
-				return
-
-			to_chat(user, span_notice("You start slicing the floorweld off \the [src]..."))
-			if(I.use_tool(src, user, 20, volume=SMALL_MATERIAL_AMOUNT) && panel_open)
-				to_chat(user, span_notice("You slice the floorweld off \the [src]."))
-				deconstruct()
-			return
-
-	if(!user.combat_mode || (I.item_flags & NOBLUDGEON))
-		if(I.item_flags & ABSTRACT)
-			return
-		if(place_item_in_disposal(I, user))
+	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
+		if(tool.item_flags & ABSTRACT)
+			return ITEM_INTERACT_BLOCKING
+		if(place_item_in_disposal(tool, user))
 			update_appearance()
-			return TRUE //no afterattack
-	else
-		return ..()
+			return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/machinery/disposal/screwdriver_act(mob/living/user, obj/item/tool)
+	if(pressure_charging || full_pressure || flush)
+		return NONE
+	toggle_panel_open()
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("You [panel_open ? "remove":"attach"] the screws around the power connection."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/disposal/welder_act(mob/living/user, obj/item/tool)
+	if(pressure_charging || full_pressure || flush || !panel_open)
+		return NONE
+	if(!tool.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You start slicing the floorweld off \the [src]..."))
+	if(!tool.use_tool(src, user, 20, volume=SMALL_MATERIAL_AMOUNT) || !panel_open)
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You slice the floorweld off \the [src]."))
+	deconstruct()
+	return ITEM_INTERACT_SUCCESS
 
 /// The regal rat spawns ratty treasures from the disposal
 /obj/machinery/disposal/proc/rat_rummage(mob/living/basic/regal_rat/king)
@@ -449,35 +452,31 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	if(mapload && prob(CONTAINS_ANIMAL_CHANCE) && GLOB.disposals_animals_spawned < MAXIMUM_ANIMAL_SPAWNS)
 		spawn_contained_animal()
 
-// attack by item places it in to disposal
-/obj/machinery/disposal/bin/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
-		var/obj/item/storage/bag/trash/bag = weapon
-		to_chat(user, span_warning("You empty the bag."))
-		bag.atom_storage.remove_all(src)
-		update_appearance()
-	else
+/obj/machinery/disposal/bin/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/storage/bag/trash))
 		return ..()
-// handle machine interaction
+	var/obj/item/storage/bag/trash/bag = tool
+	to_chat(user, span_warning("You empty the bag."))
+	bag.atom_storage.remove_all(src)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/disposal/bin/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/dest_tagger))
-		var/obj/item/dest_tagger/new_tagger = weapon
-		if(mounted_tagger)
-			balloon_alert(user, "already has a tagger!")
-			return
-		if(HAS_TRAIT(new_tagger, TRAIT_NODROP) || !user.transferItemToLoc(new_tagger, src))
-			balloon_alert(user, "stuck to your hand!")
-			return
-		new_tagger.moveToNullspace()
-		user.visible_message(span_notice("[user] snaps \the [new_tagger] onto [src]!"))
-		balloon_alert(user, "tagger returned")
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-		mounted_tagger = new_tagger
-		update_appearance()
-		return
-	else
+/obj/machinery/disposal/bin/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/dest_tagger))
 		return ..()
+	if(mounted_tagger)
+		balloon_alert(user, "already has a tagger!")
+		return ITEM_INTERACT_BLOCKING
+	if(HAS_TRAIT(tool, TRAIT_NODROP) || !user.transferItemToLoc(tool, src))
+		balloon_alert(user, "stuck to your hand!")
+		return ITEM_INTERACT_BLOCKING
+	tool.moveToNullspace()
+	user.visible_message(span_notice("[user] snaps \the [tool] onto [src]!"))
+	balloon_alert(user, "tagger returned")
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	mounted_tagger = tool
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/disposal/bin/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()

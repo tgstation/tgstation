@@ -498,7 +498,7 @@
 /obj/structure/closet/crate/freezer,
 /obj/item/food/grown/potato,
 /obj/item/food/grown/potato,
-/obj/item/food/grown/carrot,
+/obj/item/food/grown/carrotlike/carrot,
 /obj/item/food/grown/onion,
 /obj/item/food/grown/garlic,
 /turf/open/floor/iron/white,

@@ -1,4 +1,4 @@
-#define RANDOM_EVENT_ADMIN_INTERVENTION_TIME (10 SECONDS)
+#define RANDOM_EVENT_ADMIN_INTERVENTION_TIME (20 SECONDS)
 
 //this singleton datum is used by the events controller to dictate how it selects events
 /datum/round_event_control

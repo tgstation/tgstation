@@ -1349,7 +1349,8 @@
 	if(!can_bleed())
 		to_chat(src, span_notice("You get a headache."))
 		return
-	head.adjustBleedStacks(5)
+	var/add_stacks = HAS_TRAIT(src, TRAIT_BLOOD_FOUNTAIN) ? 7 : 5
+	head.adjustBleedStacks(add_stacks)
 	visible_message(span_notice("[src] gets a nosebleed."), span_warning("You get a nosebleed."))
 
 /mob/living/carbon/check_hit_limb_zone_name(hit_zone)

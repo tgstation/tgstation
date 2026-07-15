@@ -225,6 +225,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	matter = 100
 	max_matter = 100
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4, /datum/material/gold = SHEET_MATERIAL_AMOUNT)
 
 #undef LIGHT_TUBE_COST
 #undef FLOOR_LIGHT_COST

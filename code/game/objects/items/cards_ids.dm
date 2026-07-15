@@ -35,7 +35,7 @@
 	///What is our honorific name/title combo to be displayed?
 	var/honorific_title
 
-/obj/item/card/suicide_act(mob/living/carbon/user)
+/obj/item/card/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to swipe [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
@@ -68,6 +68,8 @@
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	armor_type = /datum/armor/card_id
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	item_flags = parent_type::item_flags | NO_MAT_REDEMPTION // A little clemency to the people who fumble and misclick stuff, even if it's already easy enough to destroy one.
 
 	/// The name registered on the card (for example: Dr Bryan See)
 	var/registered_name = null

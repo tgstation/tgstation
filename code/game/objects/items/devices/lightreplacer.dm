@@ -44,6 +44,7 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 8
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 1.5)
 
 	/// How many uses does our light replacer have?
 	var/uses = 10
@@ -331,6 +332,7 @@
 	bluespace_toggle = TRUE
 	actions_types = list(/datum/action/item_action/lightreplacer_scan)
 	action_slots = ALL
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 3, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 1.5)
 	COOLDOWN_DECLARE(lightreplacer_spot_cooldown)
 
 /obj/item/lightreplacer/blue/emag_act()

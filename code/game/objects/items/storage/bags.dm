@@ -34,6 +34,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	storage_type = /datum/storage/bag/trash
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 	///If true, can be inserted into the janitor cart
 	var/insertable = TRUE
 
@@ -88,6 +89,7 @@
 	inhand_icon_state = "bluetrashbag"
 	item_flags = NO_MAT_REDEMPTION
 	storage_type = /datum/storage/bag/trash/bluespace
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/uranium = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/storage/bag/trash/bluespace/cyborg
 	insertable = FALSE
@@ -243,6 +245,7 @@
 	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
 	icon_state = "satchel_bspace"
 	storage_type = /datum/storage/bag/ore/holding
+	custom_materials = list(/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/storage/bag/plants
 	name = "plant bag"
@@ -256,6 +259,7 @@
 	name = "portable seed extractor"
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	icon_state = "portaseeder"
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
 
 /obj/item/storage/bag/plants/portaseeder/Initialize(mapload)
 	. = ..()
@@ -516,8 +520,8 @@
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE|ITEM_SLOT_NECK
 	resistance_flags = FLAMMABLE
 	storage_type = /datum/storage/bag/rebar_quiver
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.15, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
 	actions_types = list(/datum/action/item_action/reload_rebar)
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 6.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
 
 
 /obj/item/storage/bag/rebar_quiver/Initialize(mapload)

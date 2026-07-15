@@ -426,7 +426,7 @@
 		return
 	var/obj/item/toy/plush/narplush/P = locate() in range(1, src)
 	if(P && istype(P.loc, /turf/open) && !P.clashing)
-		clash_of_the_plushies(P)
+		INVOKE_ASYNC(src, PROC_REF(clash_of_the_plushies), P)
 
 /obj/item/toy/plush/ratplush/proc/clash_of_the_plushies(obj/item/toy/plush/narplush/P)
 	clash_target = P
@@ -511,7 +511,7 @@
 	. = ..()
 	var/obj/item/toy/plush/ratplush/P = locate() in range(1, src)
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
-		P.clash_of_the_plushies(src)
+		INVOKE_ASYNC(P, TYPE_PROC_REF(/obj/item/toy/plush/ratplush, clash_of_the_plushies), src)
 
 /obj/item/toy/plush/lizard_plushie
 	name = "lizard plushie"

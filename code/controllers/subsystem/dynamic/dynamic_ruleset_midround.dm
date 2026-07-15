@@ -733,23 +733,50 @@
 	preview_antag_datum = /datum/antagonist/paradox_clone
 	midround_type = LIGHT_MIDROUND
 	pref_flag = ROLE_PARADOX_CLONE
-	ruleset_flags = RULESET_INVADER
+	ruleset_flags = RULESET_INVADER|RULESET_ADMIN_CONFIGURABLE
 	weight = 5
 	min_pop = 10
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/effect/bluespace_stream
 	/// Chance of getting another clone for the price of free
 	var/bonus_clone_chance = 20
+	/// Weakref to the crewmember we picked to clone, chosen before the ghost poll so it can name them
+	var/datum/weakref/clone_target_ref
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/New(list/dynamic_config)
 	. = ..()
 	max_antag_cap += prob(bonus_clone_chance)
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/can_be_selected()
+	if(clone_target_ref && isnull(clone_target_ref.resolve())) // our chosen original was deleted while we were polling, bail
+		return FALSE
 	return ..() && !isnull(find_clone()) && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
 
+#define RANDOM_CLONE_TARGET "Random"
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/configure_ruleset(mob/admin)
+	var/list/admin_pool = list("[RULESET_CONFIG_CANCEL]" = TRUE, "[RANDOM_CLONE_TARGET]" = TRUE)
+	for(var/mob/living/carbon/human/target as anything in find_clone_candidates())
+		admin_pool["[target.real_name], the [target.mind.assigned_role.title]"] = target
+	var/picked = tgui_input_list(admin, "Select a crewmember to clone", "Clone Target", admin_pool)
+	if(!picked || picked == RULESET_CONFIG_CANCEL)
+		return RULESET_CONFIG_CANCEL
+	if(picked != RANDOM_CLONE_TARGET)
+		clone_target_ref = WEAKREF(admin_pool[picked])
+	return null
+
+#undef RANDOM_CLONE_TARGET
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/collect_candidates()
+	var/mob/living/carbon/human/original = clone_target_ref?.resolve() || find_clone()
+	if(isnull(original))
+		return list()
+	clone_target_ref = WEAKREF(original)
+	candidate_role = "clone of [original.real_name] ([original.mind.assigned_role.title])"
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/create_execute_args()
-	return list(find_clone())
+	return list(clone_target_ref.resolve())
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/create_ruleset_body()
 	return // handled by assign_role() entirely
@@ -765,6 +792,13 @@
 	bad_version.put_in_hands(new /obj/item/storage/toolbox/mechanical()) //so they dont get stuck in maints
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/proc/find_clone()
+	var/list/possible_targets = find_clone_candidates()
+	if(length(possible_targets))
+		return pick(possible_targets)
+	return null
+
+/// Returns every crewmember currently valid to be cloned
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/proc/find_clone_candidates()
 	var/list/possible_targets = list()
 
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
@@ -774,9 +808,7 @@
 			continue
 		possible_targets += player
 
-	if(length(possible_targets))
-		return pick(possible_targets)
-	return null
+	return possible_targets
 
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker
 	name = "Voidwalker"
