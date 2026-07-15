@@ -304,6 +304,15 @@
 	smoothing_groups = SMOOTH_GROUP_SANDSTONE_WALLS + SMOOTH_GROUP_WALLS
 	canSmoothWith = SMOOTH_GROUP_SANDSTONE_WALLS
 
+/obj/structure/falsewall/sandstone/ornate
+	name = "ornate sandstone wall"
+	desc = "A ornate wall with sandstone plating. Smooth."
+	fake_icon = 'icons/turf/walls/sandstone_ornate_wall.dmi'
+	icon_state = "sandstone_ornate_wall-open"
+	base_icon_state = "sandstone_ornate_wall"
+	mineral = /obj/item/stack/sheet/mineral/sandstone
+	walltype = /turf/closed/wall/mineral/sandstone
+
 /obj/structure/falsewall/wood
 	name = "wooden wall"
 	desc = "A wall with wooden plating. Stiff."

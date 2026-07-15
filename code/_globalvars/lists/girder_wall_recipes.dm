@@ -46,6 +46,8 @@ GLOBAL_LIST_INIT(material_girder_wall_recipes, init_material_girder_wall_recipes
 			/obj/structure/falsewall/diamond,
 			/obj/structure/falsewall/bananium,
 			/obj/structure/falsewall/sandstone,
+			/obj/structure/falsewall/sandstone/wall_fill,
+			/obj/structure/falsewall/sandstone/ornate,
 			/obj/structure/falsewall/uranium,
 			/obj/structure/falsewall/plasma,
 			/obj/structure/falsewall/wood,
@@ -73,6 +75,8 @@ GLOBAL_LIST_INIT(material_girder_wall_recipes, init_material_girder_wall_recipes
 			/obj/structure/tram/alt/diamond,
 			/obj/structure/tram/alt/bananium,
 			/obj/structure/tram/alt/sandstone,
+			/obj/structure/tram/alt/sandstone/wall_fill,
+			/obj/structure/tram/alt/sandstone/darkpod,
 			/obj/structure/tram/alt/uranium,
 			/obj/structure/tram/alt/plasma,
 			/obj/structure/tram/alt/wood,
@@ -81,6 +85,10 @@ GLOBAL_LIST_INIT(material_girder_wall_recipes, init_material_girder_wall_recipes
 			/obj/structure/tram/alt/abductor,
 			/obj/structure/tram/alt/titanium,
 			/obj/structure/tram/alt/plastitanium,
+			/obj/structure/falsewall/plastitanium/wall_fill,
+			/obj/structure/falsewall/plastitanium/darkpod,
+			/obj/structure/falsewall/plastitanium/redpod,
+			/obj/structure/falsewall/plastitanium/survival,
 		)
 	)
 
