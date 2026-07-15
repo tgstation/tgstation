@@ -78,8 +78,8 @@
 	transmittable = -1
 	level = 9
 	severity = 6
-	symptom_delay_min = 25
-	symptom_delay_max = 50
+	symptom_delay_min = 24
+	symptom_delay_max = 48
 	symptom_cure = /datum/reagent/inverse/penthrite
 	cure_color = "red"
 	threshold_descs = list() // Set in New() so the compiler doesn't complain about non-constant expressions
@@ -92,7 +92,7 @@
 	for(var/datum/reagent/poison as anything in chems)
 		list_of_names += poison::name
 	threshold_descs = list(
-		"Resistance 8" = "Additionally synthesizes [english_list(list_of_names)] inside the host.",
+		"Resistance 7" = "Additionally synthesizes [english_list(list_of_names)] inside the host.",
 		"Stage Speed 9" = "Increases the frequency of inflicted wounds.",
 		"Transmission 8" = "Randomly increases the severity of inflicted wounds and quantity of chems synthesized."
 	)
@@ -101,7 +101,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(our_disease.totalResistance() >= 8)
+	if(our_disease.totalResistance() >= 7)
 		adding_chems = TRUE
 	if(our_disease.totalStageSpeed() >= 9)
 		symptom_delay_min = 16

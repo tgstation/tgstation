@@ -47,6 +47,6 @@
 				to_chat(M, span_warning("[pick("You feel dizzy.", "Your head spins.")]"))
 		else
 			to_chat(M, span_userdanger("A wave of dizziness washes over you!"))
-			M.adjust_dizzy_up_to(30 SECONDS, 60 SECONDS)
+			M.adjust_dizzy_up_to(40 SECONDS, 80 SECONDS)
 			if(power >= 2)
-				M.set_drugginess(40 SECONDS)
+				M.set_drugginess(60 SECONDS)
