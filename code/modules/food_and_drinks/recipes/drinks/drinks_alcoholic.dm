@@ -824,5 +824,7 @@
 /datum/chemical_reaction/drink/emptiest_glass
 	results=list(/datum/reagent/consumable/ethanol/emptiest_glass = 4)
 	required_reagents = list(/datum/reagent/consumable/ice = 1, /datum/reagent/consumable/ethanol/last_word = 1, /datum/reagent/consumable/nothing = 1, /datum/reagent/cryostylane = 1)
+	is_cold_recipe = TRUE
+	required_temp = 250
 	mix_message = "The world seems just a bit paler, for a moment."
-	mix_sound = 'sound/announcer/alarm/clownops.ogg' //TODO: replace with clip from the ascension waltz
+	mix_sound = 'sound/music/antag/heretic/VoidsEmbrace_short.ogg'
