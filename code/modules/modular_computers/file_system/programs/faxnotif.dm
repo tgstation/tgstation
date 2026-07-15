@@ -25,7 +25,7 @@
 	var/our_id = target.fax_id
 
 	if(!connected_faxes[our_id])
-		target.fax_listeners[REF(src)] = WEAKREF(src)
+		LAZYSET(target.fax_listeners, REF(src), WEAKREF(src))
 
 	var/list/fax_info = list()
 	var/area/our_area = get_area(target)
@@ -50,7 +50,7 @@
 	var/datum/weakref/fax_ref = fax_info["ref"]
 	var/obj/machinery/fax/our_fax = fax_ref.resolve()
 	if (our_fax)
-		our_fax.fax_listeners -= REF(src)
+		LAZYREMOVE(our_fax.fax_listeners, REF(src))
 
 	connected_faxes -= fax_id
 

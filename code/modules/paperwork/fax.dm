@@ -32,8 +32,8 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	var/allow_exotic_faxes = FALSE
 	/// This is where the dispatch and reception history for each fax is stored.
 	var/list/fax_history = list()
-	/// Assoc list of (FaxBond ref string = FaxBond weakref) connected to us
-	var/list/fax_listeners = list()
+	/// Lazy assoc list of (FaxBond ref string = FaxBond weakref) connected to us
+	var/list/fax_listeners
 	/// List of types which should always be allowed to be faxed
 	var/static/list/allowed_types = list(
 		/obj/item/canvas,
@@ -443,7 +443,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	history_add("Receive", sender_name)
 	addtimer(CALLBACK(src, PROC_REF(vend_item), loaded), 1.9 SECONDS)
 	SEND_SIGNAL(src, COMSIG_FAX_MESSAGE_RECEIVED, sender_name)
-	if(length(fax_listeners))
+	if(LAZYLEN(fax_listeners))
 		alert_listeners(sender_name)
 
 /**
