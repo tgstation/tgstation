@@ -38,7 +38,7 @@
 	return TRUE
 
 /**
- * Disconnects a fax given its ID (if it was connected before), removing it from a list and unregistering relevant signal
+ * Disconnects a fax given its ID (if it was connected before), removing it from the relevant lists.
  * Arguments:
  * * fax_id - fax id to disconnect from our PDA
  */
