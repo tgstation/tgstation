@@ -78,8 +78,8 @@
 	transmittable = -1
 	level = 9
 	severity = 6
-	symptom_delay_min = 24
-	symptom_delay_max = 48
+	symptom_delay_min = 30
+	symptom_delay_max = 45
 	symptom_cure = /datum/reagent/inverse/penthrite
 	cure_color = "red"
 	threshold_descs = list() // Set in New() so the compiler doesn't complain about non-constant expressions
@@ -104,8 +104,8 @@
 	if(our_disease.totalResistance() >= 7)
 		adding_chems = TRUE
 	if(our_disease.totalStageSpeed() >= 9)
-		symptom_delay_min = 16
-		symptom_delay_max = 32
+		symptom_delay_min = 20
+		symptom_delay_max = 30
 	if(our_disease.totalTransmittable() >= 8)
 		crit_slash = TRUE
 
@@ -140,10 +140,9 @@
 				carbon_host.emote("scream")
 				if(adding_chems)
 					add_reagents(carbon_host) // Crit slashes add twice as many chems
-	else
-		to_chat(carbon_host, span_userdanger(warning))
+	to_chat(carbon_host, span_userdanger(warning))
 	carbon_host.cause_wound_of_type_and_severity(WOUND_SLASH, victim_limb, wound_severity)
 
 /datum/symptom/hypertension/proc/add_reagents(mob/living/carbon/carbon_host)
 	for(var/datum/reagent/reagent_to_add as anything in chems)
-		carbon_host.reagents.add_reagent(reagent_to_add, 2.5)
+		carbon_host.reagents.add_reagent(reagent_to_add, 3)
