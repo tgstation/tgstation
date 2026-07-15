@@ -45,7 +45,6 @@
 
 /obj/item/stack/wall_filling/item_interaction(mob/living/user, obj/item/Tool, list/modifiers)
 	if (!Tool.tool_behaviour == TOOL_WELDER)
-	   return ..()
 		if(!made_from)
 			to_chat(user, span_warning("You can not reform this!"))
 			stack_trace("A wall filling of type [type] doesn't have its made_from set.")
