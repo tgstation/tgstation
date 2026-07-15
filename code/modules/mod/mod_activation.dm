@@ -118,7 +118,7 @@
 	if(HAS_TRAIT(stored_item, TRAIT_NODROP))
 		return FALSE
 	var/obj/item/clothing/new_clothing = new_suit
-	if(is_type_in_typecache(stored_item, GLOB.any_suit_storage) || stored_item.w_class == WEIGHT_CLASS_TINY)
+	if((stored_item.suit_storage_containee_flags & new_clothing.suit_storage_container_flags) || stored_item.w_class == WEIGHT_CLASS_TINY)
 		return TRUE
 	if(stored_item.w_class > WEIGHT_CLASS_BULKY)
 		return FALSE

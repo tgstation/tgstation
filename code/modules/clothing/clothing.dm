@@ -27,6 +27,8 @@
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
 	var/list/allowed
+	///For items that aren't in allowed, what flags does this item have, when used as suit storage?
+	var/suit_storage_container_flags = SUIT_STORAGE_BASIC
 
 	var/can_be_bloody = TRUE
 

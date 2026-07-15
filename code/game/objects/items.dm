@@ -101,6 +101,9 @@
 	var/w_class = WEIGHT_CLASS_NORMAL
 	///This is used to determine on which slots an item can fit.
 	var/slot_flags = NONE
+	/// What suit_storage_container_flags allow holding this item in suit storage? (set to NONE to disable suit storing this item)
+	var/suit_storage_containee_flags = NONE
+
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
 	/// This var exists as a weird proxy "owner" ref

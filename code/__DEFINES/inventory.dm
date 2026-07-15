@@ -199,6 +199,18 @@ DEFINE_BITFIELD(no_equip_flags, list(
 /// The index of the entry in 'afk_thefts' with the time it happened
 #define AFK_THEFT_TIME 3
 
+/// Suit storage variables; when storing items in the suit pocket, the item is given a 'suit storage flag' which must be matched
+/// by the suit storage the player wishes to use it with.
+#define SUIT_STORAGE_BASIC (1<<0)
+#define SUIT_STORAGE_DETECTIVE (1<<1)
+#define SUIT_STORAGE_SECURITY_ARMOR (1<<2)
+#define SUIT_STORAGE_SECURITY_COAT (1<<3)
+#define SUIT_STORAGE_CHAPLAIN (1<<4)
+#define SUIT_STORAGE_MINING (1<<5)
+#define SUIT_STORAGE_PERSONAL_CARRY (1<<6)
+#define SUIT_STORAGE_IMPROV_GUN (1<<7)
+#define SUIT_STORAGE_TOOL_ITEMS (1<<8)
+
 /// A list of things that any suit storage can hold
 /// Should consist of ubiquitous, non-specialized items
 /// or items that are meant to be "suit storage agnostic" as
