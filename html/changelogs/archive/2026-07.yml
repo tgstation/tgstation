@@ -455,6 +455,8 @@
   - qol: the character job slot assignment menu will fade out while you are dragging
       a character, to allow you to access jobs that might render behind it
 2026-07-15:
+  antropod:
+  - refactor: Atmos refactor & speedup by utilizing BYOND 516 vector functions
   san7890:
   - refactor: Picking up your pets (or any holdable mob) requires an aggressive grab
       now.
