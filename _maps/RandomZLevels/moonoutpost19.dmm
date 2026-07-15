@@ -4959,7 +4959,7 @@
 	name = "\improper Historical Ripley MK-II wreckage"
 	},
 /obj/effect/decal/cleanable/blood/oil,
-/obj/item/food/grown/moonflower{
+/obj/item/food/grown/flower/moonflower{
 	pixel_x = 7;
 	pixel_y = -18
 	},

@@ -146806,7 +146806,7 @@
 /area/station/commons/dorms/laundry)
 "vFX" = (
 /obj/structure/table/glass,
-/obj/item/food/grown/rose{
+/obj/item/food/grown/flower/rose{
 	pixel_y = 8
 	},
 /turf/open/floor/iron/dark/herringbone,
