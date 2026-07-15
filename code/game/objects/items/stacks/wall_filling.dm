@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(wall_reskin_lists)
 		user.put_in_active_hand(choice)
 	qdel(src)
 
-/obj/item/stack/wall_filling/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=2)
+/obj/item/stack/wall_filling/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	if(wall_reskin_types)
 		wall_reskin_types = wall_reskin_list(wall_reskin_types)
