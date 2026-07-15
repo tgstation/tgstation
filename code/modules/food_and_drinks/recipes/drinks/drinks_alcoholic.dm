@@ -814,7 +814,7 @@
 	results=list(/datum/reagent/consumable/ethanol/lunacy = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/suffering_bastard = 4, /datum/reagent/consumable/ethanol/absinthe = 2, /datum/reagent/consumable/ethanol/moonshine = 2, /datum/reagent/mercury = 1, /datum/reagent/iron = 1)
 	mix_message = "Someone stretches their mouth into a rictus grin. It might even be you."
-	//mix_sound = 'sound/effects/moon_parade_quiet.ogg' TODO: Make this a thing
+	mix_sound = 'sound/effects/moon_parade_short.ogg'
 
 /datum/chemical_reaction/drink/entropic_brew
 	results=list(/datum/reagent/consumable/ethanol/entropic_brew = 15)
