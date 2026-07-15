@@ -4,7 +4,7 @@
 	name = "wall filling"
 	singular_name = "wall filler"
 	desc = "An empty wall filling. This should not exist."
-	///wall-fillings will generaly use the inhands of the sheet they are made from.
+	//wall-fillings will generaly use the inhands of the sheet they are made from.
 	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
 	icon = 'icons/obj/stack_objects.dmi'
