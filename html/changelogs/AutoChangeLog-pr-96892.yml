@@ -1,0 +1,4 @@
+author: "FeudeyTF"
+delete-after: True
+changes:
+  - qol: "Notepad can edit and save text files"
