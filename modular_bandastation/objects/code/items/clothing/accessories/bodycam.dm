@@ -66,7 +66,7 @@
 			var/datum/component/pausable_bodycam/comp = user.GetComponent(/datum/component/pausable_bodycam)
 			if(comp)
 				comp.set_broken(TRUE)
-		uniform.update_accessory_overlay()
+		uniform.update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/clothing/accessory/bodycam/proc/do_break()
 	broken = TRUE
@@ -93,7 +93,7 @@
 		if(comp)
 			comp.set_broken(FALSE, camera_on)
 	if(istype(uniform))
-		uniform.update_accessory_overlay()
+		uniform.update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
 /obj/item/clothing/accessory/bodycam/attackby(obj/item/item, mob/user, list/modifiers)
