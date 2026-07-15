@@ -38,6 +38,12 @@
 	/// Which functional (i.e. flightpotion) wing types (if any) does this bodypart support? If count is >1 a radial menu is used to choose between all icons in list
 	var/list/wing_types = list(/obj/item/organ/wings/functional/angel)
 
+/obj/item/bodypart/chest/apply_ownership(mob/living/carbon/new_owner)
+	. = ..()
+	if(ishuman(new_owner))
+		var/mob/living/carbon/human/humie = new_owner
+		humie.update_mob_height()
+
 /obj/item/bodypart/chest/get_butcher_drops(force = FALSE)
 	. = ..()
 	if(!isnull(butcher_drops) && !force)
@@ -66,6 +72,21 @@
 	if((!HAS_TRAIT(owner, TRAIT_CURSED) && owner.stat < HARD_CRIT) || !contents.len)
 		return FALSE
 	return ..()
+
+/**
+ * Calculates the expected height values for the holder of this bodypart
+ *
+ * Return a height value corresponding to a specific height filter
+ * Return null to just use the mob's base height
+ */
+/obj/item/bodypart/chest/proc/update_mob_heights(mob/living/carbon/holder)
+	if(HAS_TRAIT(holder, TRAIT_DWARF))
+		return HUMAN_HEIGHT_DWARF
+
+	if(HAS_TRAIT(holder, TRAIT_TOO_TALL))
+		return HUMAN_HEIGHT_TALLEST
+
+	return null
 
 /obj/item/bodypart/chest/Destroy()
 	QDEL_NULL(cavity_item)

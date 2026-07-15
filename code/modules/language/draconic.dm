@@ -2,7 +2,7 @@
 	name = "Draconic"
 	desc = "Общий язык унатхов, состоящий из шипящих и дребезжащих звуков."
 	key = "o"
-	flags = TONGUELESS_SPEECH
+	flags = LANGUAGE_TONGUELESS_SPEECH
 	space_chance = 12
 	sentence_chance = 0
 	between_word_sentence_chance = 10

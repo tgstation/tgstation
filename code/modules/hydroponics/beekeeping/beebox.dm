@@ -146,24 +146,26 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/beebox/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/honey_frame))
-		var/obj/item/honey_frame/frame = item
-		if(honey_frames.len < BEEBOX_MAX_FRAMES)
-			visible_message(span_notice("[user] adds a frame to the apiary."))
-			if(!user.transferItemToLoc(frame, src))
-				return
-			honey_frames += frame
-		else
+/obj/structure/beebox/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/honey_frame))
+		var/obj/item/honey_frame/frame = tool
+		if(honey_frames.len == BEEBOX_MAX_FRAMES)
 			to_chat(user, span_warning("There's no room for any more frames in the apiary!"))
-		return
+			return ITEM_INTERACT_BLOCKING
 
-	if(istype(item, /obj/item/queen_bee))
+		if(!user.transferItemToLoc(frame, src))
+			return ITEM_INTERACT_BLOCKING
+
+		visible_message(span_notice("[user] adds a frame to the apiary."))
+		honey_frames += frame
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/queen_bee))
 		if(queen_bee)
 			to_chat(user, span_warning("This hive already has a queen!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 
-		var/obj/item/queen_bee/new_queen = item
+		var/obj/item/queen_bee/new_queen = tool
 		user.temporarilyRemoveItemFromInventory(new_queen)
 
 		bees += new_queen.queen
@@ -171,25 +173,24 @@
 
 		new_queen.queen.forceMove(src)
 
-		if(queen_bee)
-			visible_message(span_notice("[user] sets [queen_bee] down inside the apiary, making it their new home."))
-			var/relocated = 0
-			for(var/mob/living/basic/bee/relocating_bee as anything in bees)
-				if(relocating_bee.reagent_incompatible(queen_bee))
-					bees -= relocating_bee
-					relocating_bee.beehome = null
-					if(relocating_bee.loc == src)
-						relocating_bee.forceMove(drop_location())
-					relocated++
-			if(relocated)
-				to_chat(user, span_warning("This queen has a different reagent to some of the bees who live here, those bees will not return to this apiary!"))
-
-		else
+		if(!queen_bee)
 			to_chat(user, span_warning("The queen bee disappeared! Disappearing bees have been in the news lately..."))
+			return ITEM_INTERACT_BLOCKING
 
-		return
+		visible_message(span_notice("[user] sets [queen_bee] down inside the apiary, making it their new home."))
+		var/relocated = 0
+		for(var/mob/living/basic/bee/relocating_bee as anything in bees)
+			if(relocating_bee.reagent_incompatible(queen_bee))
+				bees -= relocating_bee
+				relocating_bee.beehome = null
+				if(relocating_bee.loc == src)
+					relocating_bee.forceMove(drop_location())
+				relocated++
+		if(relocated)
+			to_chat(user, span_warning("This queen has a different reagent to some of the bees who live here, those bees will not return to this apiary!"))
+		return ITEM_INTERACT_SUCCESS
 
-	..()
+	return NONE
 
 /obj/structure/beebox/interact(mob/user)
 	. = ..()

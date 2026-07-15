@@ -39,6 +39,12 @@ export enum JobPriority {
   High = 3,
 }
 
+type JobPreference = {
+  job: string;
+  priority: JobPriority | null;
+  assigned_profile_slot: number | null;
+};
+
 export type Name = {
   can_randomize: BooleanLike;
   explanation: string;
@@ -184,7 +190,7 @@ export type PreferencesMenuData = {
       required_playtime: number;
     }
   >;
-  job_preferences: Record<string, JobPriority>;
+  job_preferences: JobPreference[];
 
   keybindings: Record<string, string[]>;
   overflow_role: string;
@@ -204,8 +210,6 @@ export type PreferencesMenuData = {
   window: PrefsWindow;
 
   // BANDASTATION ADDITION START
-  pref_job_slots?: Record<string, number>;
-  profile_index?: Record<string, string>;
   donator_level: number;
   tts_seed: string;
   tts_enabled: BooleanLike;

@@ -177,7 +177,7 @@
 			/obj/item/food/grown/apple,
 			/obj/item/food/grown/banana,
 			/obj/item/food/grown/cabbage,
-			/obj/item/food/grown/carrot,
+			/obj/item/food/grown/carrotlike/carrot,
 			/obj/item/food/grown/cherries,
 			/obj/item/food/grown/chili,
 			/obj/item/food/grown/corn,
@@ -215,7 +215,7 @@
 
 /obj/item/storage/box/ingredients/vegetarian/PopulateContents()
 	for(var/i in 1 to 2)
-		new /obj/item/food/grown/carrot(src)
+		new /obj/item/food/grown/carrotlike/carrot(src)
 	new /obj/item/food/grown/apple(src)
 	new /obj/item/food/grown/corn(src)
 	new /obj/item/food/grown/eggplant(src)
@@ -241,7 +241,7 @@
 		new /obj/item/food/grown/citrus/orange(src)
 	new /obj/item/food/grown/citrus/lemon(src)
 	new /obj/item/food/grown/citrus/lime(src)
-	new /obj/item/food/grown/watermelon(src)
+	new /obj/item/food/grown/melonlike/watermelon(src)
 
 /obj/item/storage/box/ingredients/sweets
 	theme_name = "sweets"
@@ -313,7 +313,7 @@
 
 /obj/item/storage/box/ingredients/salads/PopulateContents()
 	new /obj/item/food/grown/cabbage(src)
-	new /obj/item/food/grown/carrot(src)
+	new /obj/item/food/grown/carrotlike/carrot(src)
 	new /obj/item/food/grown/olive(src)
 	new /obj/item/food/grown/onion/red(src)
 	new /obj/item/food/grown/onion/red(src)

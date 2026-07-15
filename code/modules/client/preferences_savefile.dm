@@ -245,10 +245,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	chat_toggles = savefile.get_entry("chat_toggles", chat_toggles)
 	toggles = savefile.get_entry("toggles", toggles)
 	ignoring = savefile.get_entry("ignoring", ignoring)
-	// BANDASTATION ADDITION - START - Pref Job Slots
-	pref_job_slots = savefile.get_entry("pref_job_slots", pref_job_slots)
-	job_preferences = savefile.get_entry("job_preferences", job_preferences)
-	// BANDASTATION ADDITION - END
+	job_assigned_profiles = savefile.get_entry("job_assigned_profiles", savefile.get_entry("pref_job_slots", job_assigned_profiles))
 
 	// OOC commendations
 	hearted_until = savefile.get_entry("hearted_until", hearted_until)
@@ -284,17 +281,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
-	// BANDASTATION ADDITION - START - Pref Job Slots
-	pref_job_slots = SANITIZE_LIST(pref_job_slots)
-	job_preferences = SANITIZE_LIST(job_preferences)
-	// BANDASTATION ADDITION - END
-
-	// BANDASTATION ADDITION - START - Pref Job Slots
-	//Validate job prefs
-	for(var/j in job_preferences)
-		if(job_preferences[j] != JP_LOW && job_preferences[j] != JP_MEDIUM && job_preferences[j] != JP_HIGH)
-			job_preferences -= j
-	// BANDASTATION ADDITION - END
+	job_assigned_profiles = SANITIZE_LIST(job_assigned_profiles)
+	for(var/job, slot in job_assigned_profiles)
+		if(!isnum(slot) || slot < 1 || slot > max_save_slots)
+			job_assigned_profiles -= job
 
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 
@@ -349,26 +339,22 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	savefile.set_entry("key_bindings", key_bindings)
 	savefile.set_entry("hearted_until", (hearted_until > world.realtime ? hearted_until : null))
 	savefile.set_entry("favorite_outfits", favorite_outfits)
-	// BANDASTATION ADDITION - START
-	savefile.set_entry("pref_job_slots", pref_job_slots)
-	savefile.set_entry("job_preferences", job_preferences)
-	// BANDASTATION ADDITION - END
+	savefile.set_entry("job_assigned_profiles", job_assigned_profiles)
 	savefile.save()
 	return TRUE
 
-/datum/preferences/proc/load_character(slot)
+/datum/preferences/proc/load_character(slot = default_slot)
 	SHOULD_NOT_SLEEP(TRUE)
-	if(!slot)
-		slot = default_slot
 	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
+	var/original_default_slot = default_slot
 	if(slot != default_slot)
 		default_slot = slot
 		savefile.set_entry("default_slot", slot)
 
 	var/tree_key = "character[slot]"
 	var/list/save_data = savefile.get_entry(tree_key)
-	if(isnull(save_data))
-		for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
+	if(isnull(save_data)) // This is the case where we have a new character slot being switched to
+		for (var/datum/preference/preference as anything in get_preferences_in_priority_order()) // clear the cache in this case
 			if (preference.savefile_identifier != PREFERENCE_CHARACTER)
 				continue
 			value_cache -= preference.type
@@ -376,6 +362,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	var/data_validity_integer = check_savedata_version(save_data)
 	if(IS_DATA_OBSOLETE(data_validity_integer)) //fatal, can't load any data
+		default_slot = original_default_slot
+		savefile.set_entry("default_slot", original_default_slot)
 		return FALSE
 
 	// Read everything into cache
@@ -391,7 +379,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	randomise = save_data?["randomise"]
 
 	//Load prefs
-	// job_preferences = save_data?["job_preferences"] // BANDASTATION MOVED - Pref Job Slots
+	job_preferences = save_data?["job_preferences"]
+	if(isnull(job_preferences))
+		job_preferences = savefile.get_entry("job_preferences")
 
 	//Custom emote panel
 	custom_emote_panel = save_data?["custom_emote_panel"] // BANDASTATION ADD - Emote Panel
@@ -406,17 +396,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Sanitize
 	randomise = SANITIZE_LIST(randomise)
-	// job_preferences = SANITIZE_LIST(job_preferences) // BANDASTATION MOVED - Pref Job Slots
+	job_preferences = SANITIZE_LIST(job_preferences)
 	all_quirks = SANITIZE_LIST(all_quirks)
 
 	custom_emote_panel = SANITIZE_LIST(custom_emote_panel) // BANDASTATION ADD - Emote Panel
 
 	//Validate job prefs
-	// BANDASTATION MOVED - START - Pref Job Slots
-	// for(var/j in job_preferences)
-	// 	if(job_preferences[j] != JP_LOW && job_preferences[j] != JP_MEDIUM && job_preferences[j] != JP_HIGH)
-	// 		job_preferences -= j
-	// BANDASTATION MOVED - END
+	for(var/job, priority in job_preferences)
+		if(priority != JP_LOW && priority != JP_MEDIUM && priority != JP_HIGH)
+			job_preferences -= job
 
 	all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks))
 	validate_quirks()
@@ -456,7 +444,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	save_data["randomise"] = randomise
 
 	//Write prefs
-	// save_data["job_preferences"] = job_preferences // BANDASTATION MOVED - Pref Job Slots
+	save_data["job_preferences"] = job_preferences
 
 	// BANDASTATION ADD - Emote Panel
 	save_data["custom_emote_panel"] = custom_emote_panel // BANDASTATION ADD - Emote Panel

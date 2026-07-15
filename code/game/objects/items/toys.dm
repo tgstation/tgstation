@@ -820,6 +820,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "slices")
 	attack_verb_simple = list("attack", "slash", "slice")
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 	var/list/alt_continuous = list("stabs", "pierces", "impales")
 	var/list/alt_simple = list("stab", "pierce", "impale")
 

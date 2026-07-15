@@ -14,7 +14,7 @@ import {
   type PreferencesMenuData,
 } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
-import { JobSlotDropdown } from './JobSlotDropdown'; // BANDASTATION ADD - Pref Job Slots
+import { JobSlotDropdown } from './JobSlotDropdown';
 
 function sortJobs(entries: [string, Job][], head?: string) {
   return sortBy(entries, [
@@ -89,7 +89,7 @@ function createCreateSetPriorityFromName(jobName: string): CreateSetPriority {
 type PriorityButtonsProps = {
   createSetPriority: CreateSetPriority;
   isOverflow: boolean;
-  priority: JobPriority;
+  priority: JobPriority | null;
 };
 
 function PriorityButtons(props: PriorityButtonsProps) {
@@ -164,6 +164,11 @@ function JobRow(props: JobRowProps) {
   const { data } = useBackend<PreferencesMenuData>();
   const { className, job, name } = props;
 
+  const jobPreference = data.job_preferences.find((pref) => pref.job === name);
+  const priority = jobPreference?.priority ?? null;
+  const isOverflow = data.overflow_role === name;
+  const createSetPriority = createCreateSetPriorityFromName(name);
+
   let rightSide: ReactNode;
   const experienceNeeded = data.job_required_experience?.[name];
   const daysLeft = data.job_days_left ? data.job_days_left[name] : 0;
@@ -189,10 +194,6 @@ function JobRow(props: JobRowProps) {
   } else if (data.job_bans && data.job_bans.indexOf(name) !== -1) {
     rightSide = <Stack.Item className="restricted ban">Забанен</Stack.Item>;
   } else {
-    const priority = data.job_preferences[name];
-    const isOverflow = data.overflow_role === name;
-    const createSetPriority = createCreateSetPriorityFromName(name);
-
     rightSide = (
       <>
         <PriorityButtons
@@ -235,10 +236,6 @@ function Department(props: DepartmentProps) {
   const { departments, jobs } = data.jobs;
   const department = departments[name];
 
-  // This isn't necessarily a bug, it's like this
-  // so that you can remove entire departments without
-  // having to edit the UI.
-  // This is used in events, for instance.
   if (!department) {
     return null;
   }

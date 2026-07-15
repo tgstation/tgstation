@@ -2,7 +2,7 @@
 	name = "Galactic Uncommon"
 	desc = "Второй по распространённости язык человечества."
 	key = "!"
-	flags = TONGUELESS_SPEECH
+	flags = LANGUAGE_TONGUELESS_SPEECH
 	space_chance = 20
 	sentence_chance = 0
 	between_word_sentence_chance = 10
