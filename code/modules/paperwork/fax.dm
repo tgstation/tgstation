@@ -452,6 +452,8 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
  * * sender_name - Name of fax sender, used in the PDA message.
 */
 /obj/machinery/fax/proc/alert_listeners(sender_name)
+	set waitfor = FALSE
+
 	var/list/targets = list()
 	for(var/refstring, weakref in fax_listeners)
 		var/datum/weakref/app_ref = weakref
@@ -470,7 +472,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 		"targets" = targets,
 		"automated" = TRUE
 	))
-	signal.broadcast()
+	signal.send_to_receivers()
 
 /**
  * Procedure for animating an object entering or leaving the fax machine.
