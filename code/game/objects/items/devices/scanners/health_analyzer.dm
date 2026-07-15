@@ -439,12 +439,12 @@
 		else
 			cure_text = disease.cure_text
 		render_list += "<span class='alert ml-1'>\
-			<b>Warning: [disease.form] detected</b><br>\
+			[conditional_tooltip("<b>Warning: [disease.form] detected</b>", "Treat by taking the cure, [/datum/reagent/medicine/spaceacillin::name], staying full, and resting", tochat)]<br>\
 			<div class='ml-2'>\
 			Name: [disease.name].<br>\
 			Type: [disease.spread_text].<br>\
 			Stage: [disease.stage]/[disease.max_stages].<br>\
-			Possible Cure: [cure_text]</div>\
+			Cure: [cure_text]</div>\
 			</span>"
 
 	// Time of death
@@ -798,7 +798,7 @@
 						disease_cure = each_cure::name
 						break // We only get one
 			render += "<span class='alert ml-1'><b>Warning: [disease.form] detected</b><br>\
-			<div class='ml-2'>Name: [disease.name].<br>Type: [disease.spread_text].<br>Stage: [disease.stage]/[disease.max_stages].<br>Possible Cure: [disease_cure]</div>\
+			<div class='ml-2'>Name: [disease.name].<br>Type: [disease.spread_text].<br>Stage: [disease.stage]/[disease.max_stages].<br>Cure: [disease_cure]</div>\
 			</span>"
 
 	if(!length(render))
