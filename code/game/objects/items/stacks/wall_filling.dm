@@ -1,4 +1,4 @@
-///Wall-fillings; stuff so that on mineral can make more than one type of wall.
+// Wall-fillings; items you can re-skin in hand and place onto griders to create different wall types.
 
 /obj/item/stack/wall_filling
 	name = "wall filling"
@@ -43,16 +43,16 @@
 			return
 		. += span_notice("Those could work as a [damage_value] throwing weapon.")
 
-/obj/item/stack/wall_filling/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if (!W.tool_behaviour == TOOL_WELDER)
+/obj/item/stack/wall_filling/item_interaction(mob/living/user, obj/item/Tool, list/modifiers)
+	if (!Tool.tool_behaviour == TOOL_WELDER)
 	   return ..()
 		if(!made_from)
 			to_chat(user, span_warning("You can not reform this!"))
 			stack_trace("A wall filling of type [type] doesn't have its made_from set.")
 			return
-		if(W.use_tool(src, user, 0, volume=40))
-			user.visible_message(span_notice("[user] shaped [src] into [made_from] with [W]."), \
-				span_notice("You shaped [src] into [made_from] with [W]."), \
+		if(Tool.use_tool(src, user, 0, volume=40))
+			user.visible_message(span_notice("[user] shaped [src] into [made_from] with [Tool]."), \
+				span_notice("You shaped [src] into [made_from] with [Tool]."), \
 				span_hear("You hear welding."))
 			var/holding = user.is_holding(src)
 			use(1)
