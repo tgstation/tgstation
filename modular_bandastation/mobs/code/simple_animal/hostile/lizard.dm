@@ -46,7 +46,6 @@
 	maximum_survivable_temperature = T0C + 200
 
 	gold_core_spawnable = HOSTILE_SPAWN
-	can_be_held = FALSE
 
 	ai_controller = /datum/ai_controller/basic_controller/lizard/big
 

@@ -27,7 +27,6 @@
 	butcher_results = list(/obj/item/food/meat = 2)
 
 	held_state = "possum"
-	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_NORMAL
 	held_lh = 'modular_bandastation/mobs/icons/inhands/mobs_lefthand.dmi'
 	held_rh = 'modular_bandastation/mobs/icons/inhands/mobs_righthand.dmi'
@@ -40,6 +39,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	add_traits(list(TRAIT_FENCE_CLIMBER), INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/can_be_held)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 
 /mob/living/basic/possum/attack_animal(mob/living/simple_animal/user, list/modifiers)

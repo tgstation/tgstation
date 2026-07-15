@@ -18,7 +18,6 @@
 	health = 10
 
 	// holder
-	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_EARS
 	held_lh = 'modular_bandastation/mobs/icons/inhands/mobs_lefthand.dmi'
 	held_rh = 'modular_bandastation/mobs/icons/inhands/mobs_righthand.dmi'
@@ -31,6 +30,7 @@
 
 /mob/living/basic/mouse/hamster/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 	if(can_breed)
 		add_breeding_component()
 
