@@ -607,3 +607,189 @@
 	. = ..()
 	icon_state = "rocks[rand(1, 3)]"
 	update_appearance()
+
+/obj/structure/decoration/rock/volcano
+	name = "plastic volcano pore"
+	desc = "A lovingly painted miniature plastic volcano."
+	icon = /obj/structure/flora/rock/volcano::icon
+	icon_state = /obj/structure/flora/rock/volcano::icon_state
+
+/obj/structure/decoration/rock/volcano/first
+
+/obj/structure/decoration/rock/volcano/second
+	icon_state = "volcano_2"
+
+/obj/structure/decoration/rock/volcano/third
+	icon_state = "volcano_3"
+
+/obj/structure/decoration/rock/volcano/fourth
+	icon_state = "volcano_4"
+
+/obj/structure/decoration/rock/volcano/fifth
+	icon_state = "volcano_5"
+
+/obj/structure/decoration/rock/volcano/style_random/Initialize(mapload)
+	. = ..()
+	icon_state = "volcano_[rand(1, 5)]"
+	update_appearance()
+
+/obj/structure/decoration/mushroom/large
+	name = "plastic large mushrooms"
+	desc = "A realistic plastic depiction of an ash mushroom from the depths of the Lavaland. This variation doesn't want to eat you."
+	icon = /obj/structure/flora/ash::icon
+	icon_state = /obj/structure/flora/ash::icon_state
+
+/obj/structure/decoration/mushroom/large/first
+
+/obj/structure/decoration/mushroom/large/second
+	icon_state = "l_mushroom2"
+
+/obj/structure/decoration/mushroom/large/third
+	icon_state = "l_mushroom3"
+
+/obj/structure/decoration/mushroom/large/fourth
+	icon_state = "l_mushroom4"
+
+/obj/structure/decoration/mushroom/large/style_random/Initialize(mapload)
+	. = ..()
+	icon_state = "l_mushroom[rand(1, 4)]"
+	update_appearance()
+
+/obj/structure/decoration/mushroom/leaf_shroom
+	name = "plastic leafy mushrooms"
+	desc = "Plastic imitation of leaf-like structured mushrooms. What a strange manifestation of nature."
+	icon = /obj/structure/flora/ash/leaf_shroom::icon
+	icon_state = /obj/structure/flora/ash/leaf_shroom::icon_state
+
+/obj/structure/decoration/mushroom/leaf_shroom/first
+
+/obj/structure/decoration/mushroom/leaf_shroom/second
+	icon_state = "s_mushroom2"
+
+/obj/structure/decoration/mushroom/leaf_shroom/third
+	icon_state = "s_mushroom3"
+
+/obj/structure/decoration/mushroom/leaf_shroom/fourth
+	icon_state = "s_mushroom4"
+
+/obj/structure/decoration/mushroom/leaf_shroom/style_random/Initialize(mapload)
+	. = ..()
+	icon_state = "s_mushroom[rand(1, 4)]"
+	update_appearance()
+
+/obj/structure/decoration/mushroom/cap_shroom
+	name = "plastic tall mushrooms"
+	desc = "Several tall mushrooms. Not poisoned but still not edible."
+	icon = /obj/structure/flora/ash/cap_shroom::icon
+	icon_state = /obj/structure/flora/ash/cap_shroom::icon_state
+
+obj/structure/decoration/mushroom/cap_shroom/first
+
+/obj/structure/decoration/mushroom/cap_shroom/second
+	icon_state = "r_mushroom2"
+
+/obj/structure/decoration/mushroom/cap_shroom/third
+	icon_state = "r_mushroom3"
+
+/obj/structure/decoration/mushroom/cap_shroom/fourth
+	icon_state = "r_mushroom4"
+
+/obj/structure/decoration/mushroom/cap_shroom/style_random/Initialize(mapload)
+	. = ..()
+	icon_state = "r_mushroom[rand(1, 4)]"
+	update_appearance()
+
+/obj/structure/decoration/mushroom/stem_shroom
+	name = "plastic numerous mushrooms"
+	desc = "A large number of plastic mushrooms. The glowing is sold separately."
+	icon = /obj/structure/flora/ash/stem_shroom::icon
+	icon_state = /obj/structure/flora/ash/stem_shroom::icon_state
+
+obj/structure/decoration/mushroom/stem_shroom/first
+
+/obj/structure/decoration/mushroom/stem_shroom/second
+	icon_state = "t_mushroom1"
+
+/obj/structure/decoration/mushroom/stem_shroom/third
+	icon_state = "t_mushroom2"
+
+/obj/structure/decoration/mushroom/stem_shroom/fourth
+	icon_state = "t_mushroom3"
+
+/obj/structure/decoration/mushroom/stem_shroom/style_random/Initialize(mapload)
+	. = ..()
+	icon_state = "t_mushroom[rand(1, 4)]"
+	update_appearance()
+
+/obj/structure/decoration/mushroom/seraka
+	name = "plastic seraka mushrooms"
+	desc = "A small cluster of plastic mushrooms. Contains microplastics and is not suitable for making tea."
+	icon = /obj/structure/flora/ash/stem_shroom::icon
+	icon_state = /obj/structure/flora/ash/seraka::icon_state
+
+obj/structure/decoration/mushroom/seraka/first
+
+/obj/structure/decoration/mushroom/seraka/second
+	icon_state = "seraka_mushroom2"
+
+/obj/structure/decoration/mushroom/seraka/style_random/Initialize(mapload)
+	. = ..()
+	icon_state = "seraka_mushroom[rand(1, 2)]"
+	update_appearance()
+
+/obj/structure/decoration/mushroom/glowgrowth
+	name = "plastic glowgrowth colony"
+	desc = "A large plastic immitation of bioluminescent fungi colony. Not so bioluminescent."
+	icon = /obj/structure/flora/ash/glowgrowth::icon
+	icon_state = /obj/structure/flora/ash/glowgrowth::icon_state
+
+obj/structure/decoration/mushroom/glowgrowth/first
+
+/obj/structure/decoration/mushroom/glowgrowth/second
+	icon_state = "glowgrowth2"
+
+/obj/structure/decoration/mushroom/glowgrowth/third
+	icon_state = "glowgrowth3"
+
+/obj/structure/decoration/mushroom/glowgrowth/style_random/Initialize(mapload)
+	. = ..()
+	icon_state = "glowgrowth[rand(1, 3)]"
+	update_appearance()
+
+/obj/structure/decoration/cacti
+	name = "plastic cacti"
+	desc = "Several plastic cacti. The spines are dulled due to complaints from parents."
+	icon = /obj/structure/flora/ash/cacti::icon
+	icon_state = /obj/structure/flora/ash/cacti::icon_state
+
+obj/structure/decoration/cacti/first
+
+/obj/structure/decoration/cacti/second
+	icon_state = "cactus2"
+
+/obj/structure/decoration/cacti/third
+	icon_state = "cactus3"
+
+/obj/structure/decoration/cacti/fourth
+	icon_state = "cactus4"
+
+/obj/structure/decoration/cacti/style_random/Initialize(mapload)
+	. = ..()
+	icon_state = "cactus[rand(1, 4)]"
+	update_appearance()
+
+/obj/structure/decoration/fireblossom
+	name = "plastic fire blossom"
+	desc = "An odd flower that doesn't grow or wither."
+	icon = /obj/structure/flora/ash/fireblossom::icon
+	icon_state = /obj/structure/flora/ash/fireblossom::icon_state
+
+obj/structure/decoration/fireblossom/first
+
+/obj/structure/decoration/fireblossom/second
+	icon_state = "fireblossom2"
+
+/obj/structure/decoration/fireblossom/style_random/Initialize(mapload)
+	. = ..()
+	icon_state = "fireblossom[rand(1, 2)]"
+	update_appearance()
