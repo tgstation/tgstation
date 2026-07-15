@@ -808,7 +808,7 @@
 	results=list(/datum/reagent/consumable/ethanol/openthroat_draught = 15)
 	required_reagents = list(/datum/reagent/consumable/ethanol/trappist = 5, /datum/reagent/consumable/ethanol/poets_dream = 3, /datum/reagent/consumable/shamblers = 2, /datum/reagent/consumable/wellcheers = 2, /datum/reagent/consumable/eggwhite = 2, /datum/reagent/consumable/eggyolk = 1)
 	mix_message = "Distant conversation can be heard, from somewhere unknown. Did someone leave a door open?"
-	//mix_sound = 'sound/music/antag/heretic/heretic_gain_quiet.ogg'
+	mix_sound = 'sound/effects/eldritch_crowd.ogg'
 
 /datum/chemical_reaction/drink/lunacy
 	results=list(/datum/reagent/consumable/ethanol/lunacy = 10)

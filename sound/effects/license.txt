@@ -17,3 +17,5 @@ https://freesound.org/people/lolamadeus/sounds/179341/, -- License: Creative Com
 https://freesound.org/people/fthrll/sounds/522200/, -- License: Creative Commons 0
 https://freesound.org/people/Hankof/sounds/655630/, -- License: Creative Commons 0
 }
+
+eldritch_crowd.ogg made from a distorted and reversed clip from "Pub in Cambridge by domasmo -- https://freesound.org/s/376456/ -- License: Creative Commons 0"
