@@ -448,7 +448,6 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 
 /**
  * Called when a fax is received, iterates through subscribed Faxbonds and notifies them.
- * Also removes dead weakrefs from fax_listeners as it iterates.
  * Arguments:
  * * sender_name - Name of fax sender, used in the PDA message.
 */
