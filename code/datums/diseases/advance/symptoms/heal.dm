@@ -58,7 +58,7 @@
 	resistance = -2
 	stage_speed = 0
 	transmittable = 1
-	level = 6
+	level = 8
 	passive_message = span_notice("You miss the feeling of starlight on your skin.")
 	var/nearspace_penalty = 0.3
 	threshold_descs = list(
@@ -229,7 +229,7 @@
 	resistance = -2
 	stage_speed = 2
 	transmittable = 1
-	level = 7
+	level = 9
 	required_organ = ORGAN_SLOT_STOMACH
 	threshold_descs = list(
 		"Stealth 3" = "Reduces hunger rate.",
@@ -408,7 +408,7 @@
 	resistance = -1
 	stage_speed = 0
 	transmittable = 1
-	level = 6
+	level = 4
 	passive_message = span_notice("Your skin feels oddly dry...")
 	required_organ = ORGAN_SLOT_LIVER
 	threshold_descs = list(
@@ -578,7 +578,7 @@
 	resistance = -2
 	stage_speed = 2
 	transmittable = -3
-	level = 6
+	level = 7
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	passive_message = span_notice("Your skin glows faintly for a moment.")
@@ -619,7 +619,7 @@
 	resistance = 3
 	stage_speed = 3
 	transmittable = 2
-	level = 4
+	level = 9
 	base_message_chance = 0
 	symptom_delay_min = 1
 	symptom_delay_max = 1

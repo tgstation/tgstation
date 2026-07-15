@@ -13,7 +13,7 @@
 	resistance = 5
 	stage_speed = -3
 	transmittable = 0
-	level = 3
+	level = 4
 	symptom_cure = null
 
 /*Viral evolution
