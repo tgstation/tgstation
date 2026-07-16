@@ -747,6 +747,9 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	if(contain_turfs)
 		build_area_turfs(z_value, filled_with_space)
 
+	if(SSweather.initialized)
+		SSweather.generate_holders(z_value, z_value)
+
 /datum/controller/subsystem/mapping/proc/build_area_turfs(z_level, space_guaranteed)
 	// If we know this is filled with default tiles, we can use the default area
 	// Faster
@@ -806,9 +809,6 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 		var/list/gas_info = GLOB.meta_gas_info[gas_type]
 		if(initial(gas_type.moles_visible) != null)
 			gas_info[META_GAS_OVERLAY] += generate_gas_overlays(gen_from, new_offset, gas_type)
-
-	if(SSweather.initialized)
-		SSweather.generate_holders(gen_from, new_offset)
 
 /datum/controller/subsystem/mapping/proc/create_plane_offsets(gen_from, new_offset)
 	for(var/plane_offset in gen_from to new_offset)
