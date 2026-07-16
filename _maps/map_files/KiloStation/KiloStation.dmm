@@ -9587,6 +9587,11 @@
 	},
 /obj/machinery/firealarm/directional/north,
 /obj/structure/cable,
+/obj/machinery/camera/directional/north{
+	c_tag = "Supermatter Engine";
+	name = "supermatter camera";
+	network = list("engine")
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "dgu" = (
@@ -67861,17 +67866,6 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/station/science/xenobiology)
-"vzQ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/camera/directional/south{
-	c_tag = "Supermatter Engine";
-	name = "supermatter camera";
-	network = list("engine")
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/engine)
 "vzV" = (
 /obj/structure/sign/poster/official/anniversary_vintage_reprint/directional/north,
 /obj/machinery/camera/directional/north{
@@ -111822,7 +111816,7 @@ tkO
 okp
 uvG
 piZ
-vzQ
+uvG
 lOX
 hqW
 jbZ

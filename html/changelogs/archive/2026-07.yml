@@ -472,10 +472,35 @@
   - qol: Notepad can edit and save text files
   Fghj240:
   - bugfix: cyberheart blood regeneration properly scales with heart damage
+  - bugfix: Many chemical reactions are no longer exothermic.
+  - rscadd: Medical doctors and CMOs can get old virologist bounties
+  - spellcheck: Changed "transmissible" to "transmission" in virologist bounties
+  - spellcheck: Strongarms crate decription now mentions "humanoid" instead of "human"
+      arms.
   JohnFulpWillard:
   - qol: Better Emojipedia UI, better emojis, some more emojis.
+  LT3:
+  - qol: Stamping a paper now automatically closes the paper UI
+  Melbert:
+  - code_imp: Cleaned up radio TTS handling a bit, maybe it'll perform better, report
+      anything weird
+  - balance: '"Holy whip" null rod no longer arbitrarily does 2x brute damage to vampires'
+  - balance: '"Holy whip" null rod is now made of silver, which does bonus burn damage
+      to vampires (~1.67x damage now)'
+  - balance: Silver material weapons deal more burn damage to vampires on average
+      now (from 5 flat to 4-16, depending on volume of silver in the weapon)
+  - balance: Silver material weapons are no longer completely blocked by any form
+      of clothing, instead now reduced / blocked by wound armor
+  Nitrix119:
+  - bugfix: Renaming input/output ports on a circuit module no longer crashes the
+      UI.
+  - admin: Renaming an argument on the Proc Call circuit component no longer crashes
+      the UI.
   SmArtKar:
   - bugfix: Fixed atmos diffs and incorrect atmos in lavaland hermit ruin
+  - refactor: Moved a lot of human-specific inventory code onto human mobs, report
+      if inventories break!
+  - bugfix: Fixed mechs being unable to interact with stuff
   lelandkemble:
   - qol: crowbarring a transit tube pod out of a transit tube now provides messaging
       when successful or unsuccessful
@@ -483,3 +508,16 @@
       longer reinforces the reinforced plating what was reinforced mid-reinforcement
   - code_imp: 30 files (maybe 29) (maybe 28) (depends what order you're seeing these
       changelogs in) have been converted from attackby() to item_interaction()
+  - bugfix: you now can only use a wirecutter to take down a reinforced falsewall
+  - bugfix: meatspikes no longer runtime on construction
+  - bugfix: you no longer have to use a verb that you can't use to flip windoor assemblies
+  - qol: you can right click a gun locker to close it
+  - code_imp: 50 files have been moved from attackby() to item_interaction()
+  timothymtorres:
+  - balance: Modular computers (PDAs) now shutdown when out of power
+  - bugfix: PDA flashlights now turn off when out of power
+  - sound: Added a terminal off switch sound to PDAs when power runs out
+  - map: Fix Kilo engineering camera
+  vinylspiders:
+  - bugfix: fixed an issue that would prevent an emped mech from being able to melee
+      attack a target

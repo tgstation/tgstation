@@ -727,7 +727,7 @@
 		return
 	if(!isturf(target) && !isturf(target.loc)) // Prevents inventory from being drilled
 		return
-	if(can_interact_with(target, user, modifiers))
+	if(!can_interact_with(target, user, modifiers))
 		return
 	if(src == target)
 		return
