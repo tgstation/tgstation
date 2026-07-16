@@ -158,6 +158,13 @@ if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' "${code_files[@]}"; then
 	st=1
 fi;
 
+part "manual verb definition"
+if $grep '\tset\s*(name|desc|category|hidden|popup_menu|instant)\s*=\s*(.*)\s' "${code_files[@]}" -g '!code/__DEFINES/**' -g '!code/__HELPERS/**' -g '!tools/**'; then
+	echo
+	echo -e "${RED}ERROR: Found a manual verb attribute set. Use GAME_VERB() or ADMIN_VERB() instead.${NC}"
+	st=1
+fi;
+
 part "improperly pathed static lists"
 if $grep -i 'var/list/static/.*' "${code_files[@]}"; then
 	echo
@@ -182,6 +189,13 @@ if $grep -i '(add_traits|remove_traits)\(.+,\s*src\)' "${code_files[@]}"; then
 	echo
 	echo -e "${RED}ERROR: Using 'src' as trait sources. Source must be a string key - dont't use references to datums as sources, perhaps use 'REF(src)'.${NC}"
 	st=1
+fi;
+
+part "incorrect shuffle() usage"
+if $grep '^\t+shuffle\(.*\)$' "${code_files[@]}"; then
+    echo
+    echo -e "${RED}ERROR: shuffle() return was not assigned, use shuffle_inplace() instead if you wish to mutate the passed list!${NC}"
+    st=1
 fi;
 
 part "ensure proper lowertext usage"
@@ -239,6 +253,13 @@ part "as anything on internal functions"
 if $grep 'var\/(turf|mob|obj|atom\/movable).+ as anything in o?(view|range|hearers)\(' "${code_files[@]}"; then
 	echo
 	echo -e "${RED}ERROR: 'as anything' typed for loop over an internal function. These functions have some internal optimization that relies on the loop not having 'as anything' in it.${NC}"
+	st=1
+fi;
+
+part "update_overlays() called without using return value"
+if $grep '^\t+update_overlays\(\)$' "${code_files[@]}"; then
+	echo
+	echo -e "${RED}ERROR: update_overlays() is being called without using the return value. Use update_appearance(UPDATE_OVERLAYS) instead if you dont understand what this means.${NC}"
 	st=1
 fi;
 

@@ -11,7 +11,7 @@
 	icon_state = "mecha_drill"
 	equipment_slot = MECHA_UTILITY
 	can_be_toggled = TRUE
-	equip_cooldown = 15
+	equip_cooldown = 1.5 SECONDS
 	energy_drain = 0.01 * STANDARD_CELL_CHARGE
 	force = 15
 	harmful = TRUE
@@ -19,6 +19,7 @@
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 0.9
 	mech_flags = EXOSUIT_MODULE_WORKING | EXOSUIT_MODULE_COMBAT
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	var/drill_delay = 7
 	var/drill_level = DRILL_BASIC
 
@@ -128,9 +129,9 @@
 	// Drilling a turf is a one-and-done procedure.
 	if(isturf(target))
 		var/turf/T = target
+		. = ..()
 		T.drill_act(src, source)
-
-		return ..()
+		return
 
 	// Drilling objects and mobs is a repeating procedure.
 	while(do_after_mecha(target, source, drill_delay))
@@ -152,6 +153,11 @@
 			break
 
 	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/drill/get_equip_cooldown(atom/target)
+	if (isturf(target))
+		return equip_cooldown * 0.1
+	return equip_cooldown
 
 /turf/proc/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
 	return
@@ -223,6 +229,7 @@
 	drill_level = DRILL_HARDENED
 	force = 15
 	toolspeed = 0.7
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 3.25)
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner
 	name = "exosuit mining scanner"
@@ -231,6 +238,7 @@
 	equip_cooldown = 1.5 SECONDS
 	equipment_slot = MECHA_UTILITY
 	mech_flags = EXOSUIT_MODULE_WORKING
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25)
 	var/scanning_time = 0
 	COOLDOWN_DECLARE(area_scan_cooldown)
 
@@ -248,7 +256,7 @@
 		return
 	if(!LAZYLEN(chassis.occupants))
 		return
-	scanning_time = world.time + equip_cooldown
+	scanning_time = world.time + get_equip_cooldown()
 	mineral_scan_pulse(get_turf(src), scanner = src)
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/get_snowflake_data()

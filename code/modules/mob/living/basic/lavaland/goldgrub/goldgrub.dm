@@ -87,6 +87,9 @@
 	if(has_emissive)
 		update_appearance(UPDATE_OVERLAYS)
 
+/mob/living/basic/mining/goldgrub/get_hud_x_offset()
+	return -4
+
 /mob/living/basic/mining/goldgrub/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
 	SIGNAL_HANDLER
 
@@ -158,6 +161,11 @@
 	. = ..()
 	if(has_emissive)
 		. += emissive_appearance(icon, "[icon_state]_e", src)
+
+/mob/living/basic/mining/goldgrub/death(gibbed)
+	. = ..()
+	if (!QDELETED(src) && has_emissive)
+		update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/mining/goldgrub/baby
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'

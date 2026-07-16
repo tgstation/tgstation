@@ -27,6 +27,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -45,6 +46,11 @@
 	disabling_threshold_percentage = 1
 	bodypart_flags = BODYPART_UNHUSKABLE
 	butcher_replacement = null
+
+/obj/item/bodypart/arm/left/robot/generate_icon_key()
+	. = ..()
+	if(limb_id == BODYPART_ID_ROBOTIC)
+		. += should_draw_greyscale ? icon_greyscale : icon_static
 
 /obj/item/bodypart/arm/right/robot
 	name = "cyborg right arm"
@@ -62,6 +68,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -81,6 +88,11 @@
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
 	butcher_replacement = null
+
+/obj/item/bodypart/arm/right/robot/generate_icon_key()
+	. = ..()
+	if(limb_id == BODYPART_ID_ROBOTIC)
+		. += should_draw_greyscale ? icon_greyscale : icon_static
 
 /obj/item/bodypart/leg/left/robot
 	name = "cyborg left leg"
@@ -98,6 +110,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -117,6 +130,11 @@
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
 	butcher_replacement = null
+
+/obj/item/bodypart/leg/left/robot/generate_icon_key()
+	. = ..()
+	if(limb_id == BODYPART_ID_ROBOTIC)
+		. += should_draw_greyscale ? icon_greyscale : icon_static
 
 /obj/item/bodypart/leg/left/robot/emp_effect(severity, protection)
 	. = ..()
@@ -148,6 +166,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -167,6 +186,11 @@
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
 	butcher_replacement = null
+
+/obj/item/bodypart/leg/right/robot/generate_icon_key()
+	. = ..()
+	if(limb_id == BODYPART_ID_ROBOTIC)
+		. += should_draw_greyscale ? icon_greyscale : icon_static
 
 /obj/item/bodypart/leg/right/robot/emp_effect(severity, protection)
 	. = ..()
@@ -197,6 +221,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 20)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -221,6 +246,13 @@
 
 	var/wired = FALSE
 	var/obj/item/stock_parts/power_store/cell = null
+
+/obj/item/bodypart/chest/robot/generate_icon_key()
+	. = ..()
+	// When we reskin cybernetic limbs, we solely change their icon, nothing else
+	// So we need to include the relevant icon in the cache key
+	if(limb_id == BODYPART_ID_ROBOTIC)
+		. += should_draw_greyscale ? icon_greyscale : icon_static
 
 /obj/item/bodypart/chest/robot/emp_effect(severity, protection)
 	. = ..()
@@ -375,6 +407,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -397,6 +430,11 @@
 
 	var/obj/item/assembly/flash/handheld/flash1 = null
 	var/obj/item/assembly/flash/handheld/flash2 = null
+
+/obj/item/bodypart/head/robot/generate_icon_key()
+	. = ..()
+	if(limb_id == BODYPART_ID_ROBOTIC)
+		. += should_draw_greyscale ? icon_greyscale : icon_static
 
 #define EMP_GLITCH "EMP_GLITCH"
 
@@ -558,6 +596,7 @@
 	max_damage = LIMB_MAX_HP_ADVANCED
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
 	is_emissive = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/bodypart/arm/right/robot/advanced
 	name = "advanced robotic right arm"
@@ -570,6 +609,7 @@
 	max_damage = LIMB_MAX_HP_ADVANCED
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
 	is_emissive = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/bodypart/leg/left/robot/advanced
 	name = "advanced robotic left leg"
@@ -582,6 +622,7 @@
 	max_damage = LIMB_MAX_HP_ADVANCED
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
 	is_emissive = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/bodypart/leg/right/robot/advanced
 	name = "advanced robotic right leg"
@@ -594,6 +635,7 @@
 	max_damage = LIMB_MAX_HP_ADVANCED
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
 	is_emissive = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG

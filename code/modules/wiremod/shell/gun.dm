@@ -16,6 +16,7 @@
 	automatic_charge_overlays = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	gun_flags = NOT_A_REAL_GUN
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT)
 
 /obj/item/ammo_casing/energy/wiremod_gun
 	projectile_type = /obj/projectile/energy/wiremod_gun

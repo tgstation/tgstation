@@ -15,8 +15,6 @@ Format:
 	webmap_url (link to the a webmap to see the map in the user's browser)
 endmap
 
-# When adding or removing maps be sure to also add/remove from ci_config_maps.txt
-
 # Production-level maps.
 
 map deltastation
@@ -52,9 +50,9 @@ map nebulastation
 	votable
 endmap
 
-map wawastation
+map kilostation
 	votable
-	minplayers 40
+	maxplayers 40
 endmap
 
 # Debug-only maps.

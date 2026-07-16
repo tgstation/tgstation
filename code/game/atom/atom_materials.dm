@@ -556,6 +556,31 @@
 /atom/proc/get_custom_material_amount()
 	return isnull(custom_materials) ? 0 : counterlist_sum(custom_materials)
 
+/**
+ * Returns a list with the sum of the materials of the source and its contents for each mat type.
+ * If contents_type is set, only consider contained objects of that type (plus src).
+ * Any object that has any of the traits in skip_traits will also be skipped.
+ */
+/atom/proc/get_contents_custom_materials(contents_type, list/skip_traits)
+	var/list/contained = ispath(contents_type) ? get_all_contents_type(contents_type) : get_all_contents()
+	if(skip_traits && !islist(skip_traits))
+		skip_traits = list(skip_traits)
+	var/list/all_mats = list()
+	for(var/atom/atom as anything in contained)
+		if(!length(atom.custom_materials))
+			continue
+		if(skip_traits)
+			var/skip = FALSE
+			for(var/trait in skip_traits)
+				if(HAS_TRAIT(atom, trait))
+					skip = TRUE
+					break
+			if(skip)
+				continue
+		for(var/material in atom.custom_materials)
+			all_mats[material] += atom.custom_materials[material]
+	return all_mats
+
 /// A simple proc that iterates through each material that the object is made of and spawns some stacks based on their amount and associated sheet/ore type.
 /atom/proc/drop_custom_materials(multiplier = 1)
 	for(var/datum/material/material as anything in custom_materials)
@@ -609,26 +634,29 @@
 	var/index = 1
 	var/mats_len = length(mats_list)
 	for(var/datum/material/mat as anything in mats_list)
-		var/amount_string = ""
-		if(as_sheets)
-			var/amount = sheets_from_value(mats_list[mat])
-			switch(amount)
-				if(0 to 0.49)
-					amount_string = "SMALL_MATERIAL_AMOUNT * " + num2text(amount * 10)
-				if(0.5)
-					amount_string = "HALF_SHEET_MATERIAL_AMOUNT"
-				if(1)
-					amount_string = "SHEET_MATERIAL_AMOUNT"
-				else
-					amount_string = "SHEET_MATERIAL_AMOUNT * " + num2text(amount)
-		else
-			amount_string = "[mats_list[mat]]"
+		var/amount_string = as_sheets ? transcribe_mat_value_as_sheet(mats_list[mat]) : "[mats_list[mat]]"
 		text += "[mat.type] = " + amount_string
 		if(index < mats_len)
 			text += ", "
 		index++
 	text += ")"
 	return text
+
+/proc/transcribe_mat_value_as_sheet(value)
+	var/amount = sheets_from_value(value)
+	switch(amount)
+		if(0 to 0.09)
+			return "SMALL_MATERIAL_AMOUNT * " + num2text(amount * 10)
+		if(0.1)
+			return "SMALL_MATERIAL_AMOUNT"
+		if(0.11 to 0.49)
+			return "SMALL_MATERIAL_AMOUNT * " + num2text(amount * 10)
+		if(0.5)
+			return "HALF_SHEET_MATERIAL_AMOUNT"
+		if(1)
+			return "SHEET_MATERIAL_AMOUNT"
+		else
+			return "SHEET_MATERIAL_AMOUNT * " + num2text(amount)
 
 /// Convert a raw material amount into
 /// "SHEET_MATERIAL_AMOUNT", or "* N", with rounding rules.

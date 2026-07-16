@@ -1,5 +1,5 @@
 /mob/living/carbon/human/Initialize(mapload)
-	add_verb(src, /mob/living/proc/mob_sleep)
+	ASSIGN_GAME_VERB(src, /mob/living, mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
 	icon_state = "" //Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
@@ -637,7 +637,7 @@
 	if(dna?.species)
 		add_atom_colour(COLOR_BLACK, TEMPORARY_COLOUR_PRIORITY)
 		var/mutable_appearance/shock_animation_dna = mutable_appearance(icon, "electrocuted_base", appearance_flags = RESET_COLOR|KEEP_APART)
-		apply_height_filters(shock_animation_dna)
+		apply_height(shock_animation_dna, ENTIRE_BODY)
 		zap_appearance = shock_animation_dna
 
 	// Otherwise do a generic animation

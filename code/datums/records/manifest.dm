@@ -217,7 +217,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 			if(open_slots < 1)
 				continue
 			open += open_slots
-		positions[department.department_name] = list("exceptions" = exceptions, "open" = open)
+		positions[department.department_name] = list("exceptions" = exceptions, "open" = open, "color" = department.ui_color)
 
 	return list(
 		"manifest" = get_manifest(),

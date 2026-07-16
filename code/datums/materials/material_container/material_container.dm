@@ -222,6 +222,9 @@
 	var/material_amount = OPTIMAL_COST(get_item_material_amount(target) * multiplier)
 	if(!material_amount)
 		return MATERIAL_INSERT_ITEM_NO_MATS
+	if(HAS_TRAIT(weapon, TRAIT_IGNORED_BY_MAT_REDEMPTION))
+		qdel(weapon)
+		return MATERIAL_INSERT_ITEM_NO_MATS
 	var/obj/item/stack/item_stack
 	if(isstack(weapon) && !has_space(material_amount)) //not enough space split and feed as many sheets possible
 		item_stack = weapon
@@ -293,10 +296,10 @@
 		//e.g. projectiles inside bullets are not objects
 		if(!istype(target_item))
 			continue
-		//can't allow abstract, hologram items
-		if((target_item.item_flags & ABSTRACT) || (target_item.flags_1 & HOLOGRAM_1))
+		//can't allow abstract, hologram items, or if they item is designed to be ignored by the mat container without throwing warnings and stuff (unlike NO_MAT_REDEMPTION flag).
+		if((target_item.item_flags & ABSTRACT) || (target_item.flags_1 & HOLOGRAM_1) || HAS_TRAIT(target_item, TRAIT_IGNORED_BY_MAT_REDEMPTION))
 			continue
-		//user defined conditions
+		//user defined conditions for the object the material container datum is attached to
 		if(SEND_SIGNAL(src, COMSIG_MATCONTAINER_PRE_USER_INSERT, target_item, user) & MATCONTAINER_BLOCK_INSERT)
 			continue
 		//item is either indestructible, not allowed for redemption or not in the allowed types
@@ -684,7 +687,8 @@
  */
 /datum/material_container/proc/retrieve_stack(stack_amt, datum/material/material, atom/target = null, atom/context = parent, alist/user_data)
 	//do we support sheets of this material
-	if(!material.sheet_type)
+	var/type_to_retrieve = material.sheet_type || material.ore_type
+	if(!type_to_retrieve)
 		return 0 //Add greyscale sheet handling here later
 	if(!can_hold_material(material))
 		return 0
@@ -703,7 +707,6 @@
 	//eject sheets based on available amount after each iteration
 	var/count = 0
 	while(stack_amt > 0)
-		var/type_to_retrieve = material.sheet_type || material.ore_type
 		//don't merge yet. we need to do stuff with it first
 		var/obj/item/stack/new_stack = new type_to_retrieve(target, min(stack_amt, MAX_STACK_SIZE), FALSE)
 		if(istype(new_stack, /obj/item/stack/sheet))

@@ -172,6 +172,8 @@
 	var/list/species_exception = null
 	///This is a bitfield that defines what variations exist for bodyparts like Digi legs. See: code\_DEFINES\inventory.dm
 	var/supports_variations_flags = NONE
+	/// This is a bitfield that defines which bodyshapes this item is capable of rendering, used by build_worn_icon()
+	var/bodyshapes_with_variations = NONE
 
 	///Items can by default thrown up to 10 tiles by TK users
 	tk_throw_range = 10
@@ -257,7 +259,7 @@
 
 	// Handle adding item associated actions
 	for(var/path in actions_types)
-		add_item_action(path)
+		INVOKE_ASYNC(src, PROC_REF(add_item_action), path)
 	actions_types = null
 
 	if(force_string)
@@ -399,9 +401,7 @@
 	if(greyscale_config_inhand_right)
 		righthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_right, greyscale_colors)
 
-/obj/item/verb/move_to_top()
-	set name = "Move To Top"
-	set src in oview(1)
+GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", null)
 
 	if(!isturf(loc) || usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || anchored)
 		return
@@ -820,9 +820,7 @@
 
 	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self, ignore_equipped, indirect_action = indirect_action)
 
-/obj/item/verb/verb_pickup()
-	set src in oview(1)
-	set name = "Pick up"
+GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 
 	if(usr.incapacitated || !Adjacent(usr))
 		return
@@ -1499,7 +1497,7 @@
  * * taker - the living mob trying to accept the offer
  */
 /obj/item/proc/on_offer_taken(mob/living/offerer, mob/living/taker)
-	if(!(HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS) && HAS_TRAIT(taker, TRAIT_CAN_HOLD_ITEMS)))
+	if(!HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS) && !HAS_TRAIT(src, TRAIT_BORG_GIVE) && HAS_TRAIT(taker, TRAIT_CAN_HOLD_ITEMS))
 		return TRUE // both must be able to hold items for this to make sense
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE

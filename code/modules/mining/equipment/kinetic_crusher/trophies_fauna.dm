@@ -10,12 +10,13 @@
 	denied_type = /obj/item/crusher_trophy/watcher_wing
 	trophy_id = TROPHY_WATCHER
 	bonus_value = 5
-	wildhunter_drop = /obj/item/stack/sheet/sinew
+	wildhunter_drops = list(/obj/item/stack/sheet/sinew = 7)
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 10, /datum/material/bone = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/crusher_trophy/watcher_wing/effect_desc()
 	return "mark detonation to prevent certain creatures from using certain attacks for <b>[bonus_value*0.1]</b> second\s"
 
-/obj/item/crusher_trophy/watcher_wing/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/watcher_wing/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
 	if(!ishostile(target))
 		return
@@ -28,31 +29,97 @@
 		hostile_animal.ranged_cooldown = bonus_value + world.time
 
 //magmawing watcher
-/obj/item/crusher_trophy/blaster_tubes/magma_wing
+/obj/item/crusher_trophy/magma_wing
 	name = "magmawing watcher wing"
 	desc = "A still-searing wing from a magmawing watcher. Suitable as a trophy for a kinetic crusher."
 	icon_state = "magma_wing"
-	gender = NEUTER
-	bonus_value = 5
-	wildhunter_drop = /obj/item/stack/sheet/sinew
+	denied_type = /obj/item/crusher_trophy/magma_wing
+	wildhunter_drops = list(/obj/item/stack/sheet/sinew/magmawing = 3)
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 6, /datum/material/bone = SHEET_MATERIAL_AMOUNT * 3)
+	/// List of mobs we've marked
+	var/list/mob/living/marked_targets = list()
 
-/obj/item/crusher_trophy/blaster_tubes/magma_wing/effect_desc()
-	return "mark detonation to make the next destabilizer shot deal <b>[bonus_value]</b> damage"
+/obj/item/crusher_trophy/magma_wing/Destroy(force)
+	marked_targets.Cut()
+	return ..()
 
-/obj/item/crusher_trophy/blaster_tubes/magma_wing/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
-	if(deadly_shot)
-		marker.name = "heated [marker.name]"
-		marker.icon_state = "lava"
-		marker.damage = bonus_value
-		deadly_shot = FALSE
+/obj/item/crusher_trophy/magma_wing/effect_desc()
+	return "attacks of marked enemies to cause mark detonation"
+
+/obj/item/crusher_trophy/magma_wing/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
+	. = ..()
+	for (var/mob/living/mark_on as anything in marked_targets)
+		UnregisterSignal(mark_on, list(COMSIG_LIVING_STATUS_REMOVED, COMSIG_HOSTILE_POST_ATTACKINGTARGET, COMSIG_QDELETING))
+	marked_targets.Cut()
+
+/obj/item/crusher_trophy/magma_wing/on_mark_applied(mob/living/target, mob/living/user, datum/status_effect/crusher_mark)
+	. = ..()
+	// Shouldn't happen, but just in case
+	if (marked_targets[target])
+		return
+	marked_targets[target] = TRUE
+	RegisterSignal(target, COMSIG_LIVING_STATUS_REMOVED, PROC_REF(on_status_removed))
+	RegisterSignal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_hostile_attacking))
+	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_deleted))
+
+/obj/item/crusher_trophy/magma_wing/proc/on_status_removed(mob/living/source, datum/status_effect/removed)
+	SIGNAL_HANDLER
+
+	if (istype(removed, /datum/status_effect/crusher_mark))
+		UnregisterSignal(source, list(COMSIG_LIVING_STATUS_REMOVED, COMSIG_HOSTILE_POST_ATTACKINGTARGET, COMSIG_QDELETING))
+		marked_targets -= source
+
+/obj/item/crusher_trophy/magma_wing/proc/on_target_deleted(mob/living/source)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(source, list(COMSIG_LIVING_STATUS_REMOVED, COMSIG_HOSTILE_POST_ATTACKINGTARGET, COMSIG_QDELETING))
+	marked_targets -= source
+
+/obj/item/crusher_trophy/magma_wing/proc/on_hostile_attacking(mob/living/source, atom/target, result)
+	SIGNAL_HANDLER
+
+	if (!isliving(target) || !istype(loc, /obj/item/kinetic_crusher))
+		return
+
+	var/mob/living/living_target = target
+	var/datum/status_effect/crusher_mark/crusher_mark = source.has_status_effect(/datum/status_effect/crusher_mark)
+	var/mob/living/crusher_user = null
+	var/obj/item/kinetic_crusher/used_crusher = loc
+	// Count hits on crusher wielder as detonations caused by them
+	if (living_target.get_active_held_item() == used_crusher)
+		crusher_user = living_target
+	if (!isnull(crusher_mark))
+		playsound(source, used_crusher.backstab_sound, 100, TRUE) // Give feedback that a detonation has occured
+		crusher_mark.detonate(used_crusher, crusher_user, melee_hit = FALSE)
 
 //icewing watcher
-/obj/item/crusher_trophy/watcher_wing/ice_wing
+/obj/item/crusher_trophy/ice_wing
 	name = "icewing watcher wing"
 	desc = "A carefully preserved frozen wing from an icewing watcher. Suitable as a trophy for a kinetic crusher."
 	icon_state = "ice_wing"
-	bonus_value = 8
-	wildhunter_drop = /obj/item/stack/sheet/sinew
+	bonus_value = 2
+	denied_type = /obj/item/crusher_trophy/ice_wing
+	wildhunter_drops = list(/obj/item/stack/sheet/sinew/icewing = 3)
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 6, /datum/material/bone = SHEET_MATERIAL_AMOUNT * 3)
+
+/obj/item/crusher_trophy/ice_wing/effect_desc()
+	return "user to backstep [bonus_value] tile\s when detonating a mark"
+
+/obj/item/crusher_trophy/ice_wing/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
+	. = ..()
+	if (!user)
+		return
+	var/step_dir = get_dir(target, user)
+	for (var/i in 1 to bonus_value)
+		var/turf/open/behind_user = get_step(user, step_dir)
+		if (!istype(behind_user) || behind_user.is_blocked_turf(source_atom = user))
+			return
+		// Don't backstep into chasms, lava or fire
+		if (ischasm(behind_user) || islava(behind_user) || (locate(/obj/effect/hotspot) in behind_user))
+			return
+		// Don't try further moves if you fail once
+		if (!user.Move(behind_user, step_dir, FALSE, FALSE))
+			return
 
 //legion
 /obj/item/crusher_trophy/legion_skull
@@ -61,7 +128,8 @@
 	icon_state = "legion_skull"
 	denied_type = /obj/item/crusher_trophy/legion_skull
 	bonus_value = 3
-	wildhunter_drop = /obj/item/organ/monster_core/regenerative_core/legion // if you killed blood drunk you can afford stabilizer potions sooo....
+	// No wildhunter drop to prevent refresh cheese
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/crusher_trophy/legion_skull/effect_desc()
 	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> second\s faster"
@@ -84,21 +152,18 @@
 	denied_type = /obj/item/crusher_trophy/goliath_tentacle
 	bonus_value = 2
 	trophy_id = TROPHY_GOLIATH_TENTACLE
-	wildhunter_drop = /obj/item/stack/sheet/animalhide/goliath_hide
+	wildhunter_drops = list(/obj/item/stack/sheet/animalhide/goliath_hide = 3)
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 8)
 	/// Your missing health is multiplied by this value to find the bonus damage
 	var/missing_health_ratio = 0.1
-	/// Amount of health you must lose to gain damage, according to the examine text. Cached so we don't recalculate it every examine.
-	var/missing_health_desc
-
-/obj/item/crusher_trophy/goliath_tentacle/Initialize(mapload)
-	. = ..()
-	missing_health_desc = 1 / missing_health_ratio / bonus_value
 
 /obj/item/crusher_trophy/goliath_tentacle/effect_desc()
-	return "mark detonation to do <b>[bonus_value]</b> more damage for every <b>[missing_health_desc]</b> health you are missing"
+	return "mark detonation to do <b>[bonus_value]</b> more damage for every <b>[1 / missing_health_ratio]</b> health you are missing"
 
-/obj/item/crusher_trophy/goliath_tentacle/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/goliath_tentacle/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
+	if (!user)
+		return
 	var/missing_health = user.maxHealth - user.health
 	missing_health *= missing_health_ratio //bonus is active at all times, even if you're above 90 health
 	missing_health *= bonus_value //multiply the remaining amount by bonus_value
@@ -109,16 +174,17 @@
 /obj/item/crusher_trophy/lobster_claw
 	name = "lobster claw"
 	icon_state = "lobster_claw"
-	desc = "A lobster claw."
+	desc = "A lobster claw. Suitable as a trophy for a kinetic crusher."
 	denied_type = /obj/item/crusher_trophy/lobster_claw
 	trophy_id = TROPHY_LOBSTER_CLAW
 	bonus_value = 1
-	wildhunter_drop = /obj/item/organ/monster_core/rush_gland
+	// No wildhunter drop to prevent refresh cheese
+	custom_materials = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT * 12, /datum/material/bone = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/crusher_trophy/lobster_claw/effect_desc()
 	return "mark detonation to briefly rebuke the target for [bonus_value] second[bonus_value > 1 ? "s" : ""]"
 
-/obj/item/crusher_trophy/lobster_claw/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/lobster_claw/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
 	target.apply_status_effect(/datum/status_effect/rebuked, bonus_value SECONDS)
 
@@ -129,14 +195,14 @@
 	desc = "A fang from a brimdemon's corpse."
 	denied_type = /obj/item/crusher_trophy/brimdemon_fang
 	trophy_id = TROPHY_BRIMDEMON_FANG
-	wildhunter_drop = /obj/item/organ/monster_core/brimdust_sac
+	// No wildhunter drop to prevent refresh cheese
 	/// Cartoon punching vfx
 	var/static/list/comic_phrases = list("BOOM", "BANG", "KABLOW", "KAPOW", "OUCH", "BAM", "KAPOW", "WHAM", "POW", "KABOOM")
 
 /obj/item/crusher_trophy/brimdemon_fang/effect_desc()
 	return "mark detonation to create visual and audiosensory effects at the target"
 
-/obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
 	target.loc.balloon_alert_to_viewers("[pick(comic_phrases)]!")
 	playsound(target, 'sound/mobs/non-humanoids/brimdemon/brimdemon_crush.ogg', 100)
@@ -148,7 +214,8 @@
 	icon_state = "bileworm_spewlet"
 	desc = "A baby bileworm. Suitable as a trophy for a kinetic crusher."
 	denied_type = /obj/item/crusher_trophy/bileworm_spewlet
-	wildhunter_drop = /obj/item/stack/sheet/animalhide/bileworm
+	wildhunter_drops = list(/obj/item/stack/sheet/animalhide/bileworm = 3)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 12)
 	///item ability that handles the effect
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/ability
 
@@ -172,7 +239,7 @@
 /obj/item/crusher_trophy/bileworm_spewlet/effect_desc()
 	return "mark detonation launches projectiles in cardinal directions on a 10 second cooldown. Also gives you an AOE when mining minerals"
 
-/obj/item/crusher_trophy/bileworm_spewlet/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/bileworm_spewlet/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
 	//ability itself handles cooldowns.
 	ability.InterceptClickOn(user, null, target)
@@ -238,7 +305,7 @@
 /obj/item/crusher_trophy/ice_demon_cube/effect_desc()
 	return "mark detonation to unleash demonic ice clones upon the target"
 
-/obj/item/crusher_trophy/ice_demon_cube/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/ice_demon_cube/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
 	if(isnull(target) || !COOLDOWN_FINISHED(src, summon_cooldown))
 		return
@@ -271,7 +338,7 @@
 /obj/item/crusher_trophy/wolf_ear/effect_desc()
 	return "mark detonation to gain a slight speed boost temporarily"
 
-/obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
 	user.apply_status_effect(/datum/status_effect/speed_boost, 1 SECONDS)
 
@@ -286,7 +353,7 @@
 /obj/item/crusher_trophy/bear_paw/effect_desc()
 	return "mark detonation to attack twice if you are below half your life"
 
-/obj/item/crusher_trophy/bear_paw/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/bear_paw/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
 	if(user.health / user.maxHealth > 0.5)
 		return
@@ -301,7 +368,7 @@
 	icon_state = "raptor_feather"
 	denied_type = /obj/item/crusher_trophy/raptor_feather
 	trophy_id = TROPHY_RAPTOR_FEATHER
-	wildhunter_drop = /obj/item/food/meat/slab/chicken
+	wildhunter_drops = list(/obj/item/food/meat/slab/chicken = 1)
 
 /obj/item/crusher_trophy/raptor_feather/effect_desc()
 	return "your shots to go through your allies"

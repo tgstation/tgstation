@@ -108,7 +108,7 @@
 		return FALSE
 
 	listeners[listener_mob] = NONE
-	listener_mob.client.sound_tokens += src
+	LAZYOR(listener_mob.sound_tokens, src)
 	if(source != listener_mob) //this is possible...yea... :/
 		RegisterSignal(listener_mob, COMSIG_QDELETING, PROC_REF(listener_deleted))
 	RegisterSignals(listener_mob, list(SIGNAL_ADDTRAIT(TRAIT_DEAF), SIGNAL_REMOVETRAIT(TRAIT_DEAF)), PROC_REF(listener_deafness_update))
@@ -119,9 +119,7 @@
 /datum/sound_token/proc/remove_listener(mob/listener_mob)
 
 	listeners -= listener_mob
-
-	if(listener_mob.client)
-		listener_mob.client.sound_tokens -= src
+	LAZYREMOVE(listener_mob.sound_tokens, src)
 
 	UnregisterSignal(listener_mob, list(COMSIG_QDELETING, SIGNAL_ADDTRAIT(TRAIT_DEAF),SIGNAL_REMOVETRAIT(TRAIT_DEAF)))
 	SEND_SOUND(listener_mob, null_sound)
@@ -160,7 +158,7 @@
 /datum/sound_token/proc/send_listener_sound(mob/listener_mob, update_sound)
 	PRIVATE_PROC(TRUE)
 
-	sound.status = SOUND_STREAM|sound_status|listeners[listener_mob]
+	sound.status = sound_status|listeners[listener_mob]
 	if(update_sound)
 		sound.status |= SOUND_UPDATE
 	else

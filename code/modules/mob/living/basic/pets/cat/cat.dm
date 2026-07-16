@@ -24,7 +24,6 @@
 	response_harm_simple = "kick"
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/cat
 	held_state = "cat2"
 	attack_verb_continuous = "claws"
@@ -91,6 +90,7 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "purr", /datum/mood_event/pet_animal)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/can_be_held)
 	add_cell_sample()
 	add_verb(src, /mob/living/proc/toggle_resting)
 	add_traits(list(TRAIT_CATLIKE_GRACE, TRAIT_VENTCRAWLER_ALWAYS, TRAIT_WOUND_LICKER, TRAIT_COLORBLIND), INNATE_TRAIT)

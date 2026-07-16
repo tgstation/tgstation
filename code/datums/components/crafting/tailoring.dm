@@ -47,7 +47,7 @@
 	name = "Durathread Geomancer Robe"
 	result = /obj/item/clothing/suit/wizrobe/durathread/earth
 	reqs = list(/obj/item/clothing/suit/wizrobe/durathread = 1,
-				/obj/item/food/grown/cahnroot = 1,
+				/obj/item/food/grown/carrotlike/cahnroot = 1,
 				/obj/item/food/grown/potato = 3)
 	time = 2 SECONDS
 	category = CAT_CLOTHING
@@ -253,21 +253,21 @@
 /datum/crafting_recipe/prisonsuit
 	name = "Prisoner Uniform (Suit)"
 	result = /obj/item/clothing/under/rank/prisoner
-	reqs = list(/obj/item/stack/sheet/cloth = 3, /obj/item/stack/license_plates = 1)
+	reqs = list(/obj/item/stack/sheet/cloth = 3, /obj/item/stack/license_plates/filled = 1)
 	time = 2 SECONDS
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/prisonskirt
 	name = "Prisoner Uniform (Skirt)"
 	result = /obj/item/clothing/under/rank/prisoner/skirt
-	reqs = list(/obj/item/stack/sheet/cloth = 3, /obj/item/stack/license_plates = 1)
+	reqs = list(/obj/item/stack/sheet/cloth = 3, /obj/item/stack/license_plates/filled = 1)
 	time = 2 SECONDS
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/prisonshoes
 	name = "Orange Prison Shoes"
 	result = /obj/item/clothing/shoes/sneakers/orange
-	reqs = list(/obj/item/stack/sheet/cloth = 2, /obj/item/stack/license_plates = 1)
+	reqs = list(/obj/item/stack/sheet/cloth = 2, /obj/item/stack/license_plates/filled = 1)
 	time = 1 SECONDS
 	category = CAT_CLOTHING
 
@@ -360,9 +360,19 @@
 	time = 2 SECONDS
 	reqs = list(
 		/obj/item/stack/sheet/bone = 1,
-		/obj/item/stack/sheet/sinew = 1,
+		/obj/item/stack/sheet/sinew/icewing = 3,
 		/obj/item/stack/ore/diamond = 2,
-		/obj/item/crusher_trophy/watcher_wing/ice_wing = 1,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/magmawing
+	name = "Magmawing Wreath"
+	result = /obj/item/clothing/neck/wreath/magmawing
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/bone = 1,
+		/obj/item/stack/sheet/sinew/magmawing = 3,
+		/obj/item/stack/ore/diamond = 2,
 	)
 	category = CAT_CLOTHING
 
