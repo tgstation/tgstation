@@ -130,60 +130,60 @@
 // There are a few factors that depends on other factors. So pay close attention on which values are interlinked.
 
 /// How much energy we get from external factors that are applied immediately.
-#define SM_POWER_EXTERNAL_IMMEDIATE "External Power Gain"
+#define SM_POWER_EXTERNAL_IMMEDIATE "Внешнее увеличение мощности"
 /// How much energy we get from external factors that are applied over time.
-#define SM_POWER_EXTERNAL_TRICKLE "External Power Trickle"
+#define SM_POWER_EXTERNAL_TRICKLE "Внешнее питание малым током"
 /// How much energy is gained from the temperature. Enabled by gas.
-#define SM_POWER_HEAT "Gas Heat Power Gain"
+#define SM_POWER_HEAT "Увеличение тепловой мощности газа"
 /// How much energy the SM loses. Happens over time.
 /// Order matters here. We depend on current power + power gained from the factors above for the loss calc.
-#define SM_POWER_POWERLOSS "Internal Power Decay"
+#define SM_POWER_POWERLOSS "Внутреннее снижение мощности"
 /// How much of the energy the SM loses is recouped. From gas factors here.
 /// Order matters here. We depend on the powerloss amount.
-#define SM_POWER_POWERLOSS_GAS "Gas Power Decay Negation"
+#define SM_POWER_POWERLOSS_GAS "Компенсация спада газовой мощности"
 /// How much of the energy the SM loses is recouped. From the psychologist this time.
 /// Order matters here. We depend on the powerloss amount.
-#define SM_POWER_POWERLOSS_SOOTHED "Psychologist Power Decay Negation"
+#define SM_POWER_POWERLOSS_SOOTHED "Компенсация психологом потери мощности"
 
 // These four internal damage factors, heat, power, moles, and heal heat dont depend on each other, but they are interlinked.
 // They are going to be scaled to have a maximum damage hardcap of 1.8 per tick.
 /// How many damage we take from heat.
-#define SM_DAMAGE_HEAT "Heating Damage"
+#define SM_DAMAGE_HEAT "Термическое повреждение"
 /// How many damage we take from too much internal energy.
-#define SM_DAMAGE_POWER "Charge Damage"
+#define SM_DAMAGE_POWER "Повреждение от заряда"
 /// How many damage we take from too much moles around us.
-#define SM_DAMAGE_MOLES "Molar Damage"
+#define SM_DAMAGE_MOLES "Молярное повреждение"
 /// How many we healed. Happens when temp is low.
-#define SM_DAMAGE_HEAL_HEAT "Low Temperature Healing"
+#define SM_DAMAGE_HEAL_HEAT "Восстановление с помощью охлаждения"
 /// How many damage do we take from external factors.
 /// This one is discrete.
-#define SM_DAMAGE_EXTERNAL "External Damage"
+#define SM_DAMAGE_EXTERNAL "Внешнее повреждение"
 /// How many damage do we take from space exposure. Here to prevent people from spacing SM chambers.
 /// Also discrete.
-#define SM_DAMAGE_SPACED "Space Exposure Damage"
+#define SM_DAMAGE_SPACED "Повреждение от воздействия космоса"
 
 /// How much waste multiplier we get just from existing.
-#define SM_WASTE_BASE "Base Waste Multiplier"
+#define SM_WASTE_BASE "Множитель базовых отходов"
 /// How much waste multiplier we get because of the gases around us.
-#define SM_WASTE_GAS "Gas Waste Multiplier"
+#define SM_WASTE_GAS "Множитель газовых отходов"
 /// How much waste multiplier we (don't) get because there is a psychologist.
-#define SM_WASTE_SOOTHED "Psychologist Waste Multiplier"
+#define SM_WASTE_SOOTHED "Множитель отходов (психолог)"
 
 /// How many kelvins we get before taking damage, Given by god.
-#define SM_TEMP_LIMIT_BASE "Base Heat Resistance"
+#define SM_TEMP_LIMIT_BASE "Базовая термостойкость"
 /// How many extra kelvins we get before taking damage, this time from gases.
 /// Order matters, depends on base resistance.
-#define SM_TEMP_LIMIT_GAS "Gas Heat Resistance"
+#define SM_TEMP_LIMIT_GAS "Термостойкость к нагреву газа"
 /// How many extra kelvins we get before taking damage, this time from psychologist.
-#define SM_TEMP_LIMIT_SOOTHED "Psychologist Heat Resistance"
+#define SM_TEMP_LIMIT_SOOTHED "Психологическая термостойкость"
 /// How many extra kelvins we get before taking damage because our moles are low. I know, this is fucking hilarious.
 /// Order matters, depends on base resistance.
-#define SM_TEMP_LIMIT_LOW_MOLES "Low Moles Heat Resistance"
+#define SM_TEMP_LIMIT_LOW_MOLES "Термостойкость при низком уровне молей"
 
 /// How much we are multiplying our zap energy.
-#define SM_ZAP_BASE "Base Zap Transmission"
+#define SM_ZAP_BASE "Базовая передача импульса"
 /// How much we are multiplying our zap energy because of gas factors.
-#define SM_ZAP_GAS "Gas Zap Transmission Modifier"
+#define SM_ZAP_GAS "Модификатор передачи газового импульса"
 /// Delamination types.
 #define CASCADE_DELAMINATION "cascade"
 #define SINGULARITY_DELAMINATION "singularity"

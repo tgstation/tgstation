@@ -143,7 +143,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
         >
           <Stack vertical>
             <SupermatterEntry
-              title="Integrity"
+              title="Целостность"
               alwaysShowChevron
               content={
                 <ProgressBar
@@ -176,7 +176,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
               }
             />
             <SupermatterEntry
-              title="Internal Energy"
+              title="Внутренняя энергия"
               alwaysShowChevron
               content={
                 <ProgressBar
@@ -212,7 +212,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
               }
             />
             <SupermatterEntry
-              title="Zap Power Transmission"
+              title="Импульсная передача энергии"
               alwaysShowChevron
               content={
                 <ProgressBar
@@ -245,7 +245,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
               }
             />
             <SupermatterEntry
-              title="Absorbed Moles"
+              title="Поглощённые моли"
               content={
                 <ProgressBar
                   value={gas_total_moles}
@@ -262,7 +262,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
               }
             />
             <SupermatterEntry
-              title="Temperature"
+              title="Температура"
               content={
                 <ProgressBar
                   value={logScale(gas_temperature)}
@@ -280,7 +280,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
               }
             />
             <SupermatterEntry
-              title="Temperature Limit"
+              title="Температурный предел"
               alwaysShowChevron
               content={`${temp_limit} K`}
               detail={
@@ -298,7 +298,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
               }
             />
             <SupermatterEntry
-              title="Waste Multiplier"
+              title="Множитель отходов"
               alwaysShowChevron
               content={
                 <ProgressBar
@@ -329,7 +329,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
               }
             />
             <SupermatterEntry
-              title="Absorption Ratio"
+              title="Коэффициент поглощения"
               content={`${absorbed_ratio * 100}%`}
             />
           </Stack>
@@ -339,13 +339,13 @@ export const SupermatterContent = (props: SupermatterProps) => {
         <Section
           fill
           scrollable
-          title="Gases"
+          title="Газы"
           buttons={
             <Button
               icon={allGasActive ? 'times' : 'book-open'}
               onClick={() => setAllGasActive(!allGasActive)}
             >
-              {allGasActive ? 'Hide Gases' : 'Show All Gases'}
+              {allGasActive ? 'Скрыть газы' : 'Показать все газы'}
             </Button>
           }
         >
@@ -371,7 +371,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
                       {gas_metadata[gas_path].numeric_data.length ? (
                         <>
                           <Box mb={1}>
-                            At <b>100% Composition</b> gives:
+                            При <b>100% составе</b> даёт:
                           </Box>
                           <LabeledList>
                             {gas_metadata[gas_path].numeric_data.map(
@@ -399,11 +399,11 @@ export const SupermatterContent = (props: SupermatterProps) => {
                           </LabeledList>
                         </>
                       ) : (
-                        'Has no composition effects'
+                        'Не имеет воздействия на состав'
                       )}
                     </>
                   ) : (
-                    'Has no effects'
+                    'Без эффектов'
                   )
                 }
               />

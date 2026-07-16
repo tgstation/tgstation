@@ -19,21 +19,21 @@
 		if(sm_gas.power_transmission)
 			var/list/si_derived_data = siunit_isolated(sm_gas.power_transmission * BASE_POWER_TRANSMISSION_RATE, "W/MeV", 2)
 			numeric_data += list(list(
-				"name" = "Power Transmission Bonus",
+				"name" = "Бонус передачи мощности",
 				"amount" = si_derived_data["coefficient"],
 				"unit" = si_derived_data["unit"],
 				"positive" = TRUE,
 			))
 		if(sm_gas.heat_modifier)
 			numeric_data += list(list(
-				"name" = "Waste Multiplier",
+				"name" = "Множитель отходов",
 				"amount" = 100 * sm_gas.heat_modifier,
 				"unit" = "%",
 				"positive" = FALSE,
 			))
 		if(sm_gas.heat_resistance)
 			numeric_data += list(list(
-				"name" = "Heat Resistance",
+				"name" = "Термостойкость",
 				"amount" = 100 * sm_gas.heat_resistance,
 				"unit" = "%",
 				"positive" = TRUE,
@@ -41,14 +41,14 @@
 		if(sm_gas.heat_power_generation)
 			var/list/si_derived_data = siunit_isolated(sm_gas.heat_power_generation * GAS_HEAT_POWER_SCALING_COEFFICIENT MEGA SECONDS / SSair.wait, "eV/K/s", 2)
 			numeric_data += list(list(
-				"name" = "Heat Power Gain",
+				"name" = "Прирост тепловой мощности",
 				"amount" = si_derived_data["coefficient"],
 				"unit" = si_derived_data["unit"],
 				"positive" = TRUE,
 			))
 		if(sm_gas.powerloss_inhibition)
 			numeric_data += list(list(
-				"name" = "Power Decay Negation",
+				"name" = "Компенсация снижения мощности",
 				"amount" = 100 * sm_gas.powerloss_inhibition,
 				"unit" = "%",
 				"positive" = TRUE,
@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 	heat_modifier = 1
 	heat_power_generation = 1
 	powerloss_inhibition = 1
-	desc = "When absorbed by the Supermatter and exposed to oxygen, Pluoxium will be generated."
+	desc = "При поглощении суперматерией и воздействии кислорода будет образовываться плюоксий."
 
 /// Can be on Oxygen or CO2, but better lump it here since CO2 is rarer.
 /datum/sm_gas/carbon_dioxide/extra_effects(obj/machinery/power/supermatter_crystal/sm)
@@ -151,7 +151,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 	heat_modifier = 4
 	power_transmission = -0.2
 	heat_power_generation = 1
-	desc = "Will emit nuclear particles at compositions above 40%"
+	desc = "Будет проявлять радиоактивность при содержании выше 40%."
 
 /// Start to emit radballs at a maximum of 30% chance per tick
 /datum/sm_gas/bz/extra_effects(obj/machinery/power/supermatter_crystal/sm)
@@ -167,7 +167,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 /datum/sm_gas/miasma
 	gas_path = /datum/gas/miasma
 	heat_power_generation = 0.5
-	desc = "Will be consumed by the Supermatter to generate power."
+	desc = "Будет поглощено суперматерией для выработки энергии."
 
 ///Miasma is really just microscopic particulate. It gets consumed like anything else that touches the crystal.
 /datum/sm_gas/miasma/extra_effects(obj/machinery/power/supermatter_crystal/sm)
@@ -213,7 +213,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 	heat_modifier = 7
 	power_transmission = 2
 	heat_power_generation = 1
-	desc = "Will generate electrical zaps."
+	desc = "Будет создавать электрические импульсы."
 
 /datum/sm_gas/zauker/extra_effects(obj/machinery/power/supermatter_crystal/sm)
 	if(!prob(sm.gas_percentage[/datum/gas/zauker] * 100))

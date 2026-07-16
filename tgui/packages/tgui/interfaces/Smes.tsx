@@ -56,7 +56,7 @@ export const Smes = () => {
   return (
     <Window width={340} height={350}>
       <Window.Content>
-        <Section title="Stored Energy">
+        <Section title="Накопленная энергия">
           <ProgressBar
             value={capacityPercent * 0.01}
             ranges={{
@@ -67,26 +67,26 @@ export const Smes = () => {
           />
         </Section>
         <Section
-          title="Input"
+          title="Ввод"
           buttons={
             <Button
               icon={inputAttempt ? 'sync-alt' : 'times'}
               selected={inputAttempt}
               onClick={() => act('tryinput')}
             >
-              {inputAttempt ? 'Auto' : 'Off'}
+              {inputAttempt ? 'Авто' : 'Выкл'}
             </Button>
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Charge Mode">
+            <LabeledList.Item label="Режим зарядки">
               <Box color={inputState}>
-                {(capacityPercent >= 100 && 'Fully Charged') ||
-                  (inputting && 'Charging') ||
-                  'Not Charging'}
+                {(capacityPercent >= 100 && 'Полностью заряжен') ||
+                  (inputting && 'Заряжается') ||
+                  'Не заряжается'}
               </Box>
             </LabeledList.Item>
-            <LabeledList.Item label="Target Input">
+            <LabeledList.Item label="Целевой ввод">
               <Stack fill>
                 <Stack.Item>
                   <Button
@@ -146,34 +146,34 @@ export const Smes = () => {
                 </Stack.Item>
               </Stack>
             </LabeledList.Item>
-            <LabeledList.Item label="Available">
+            <LabeledList.Item label="Доступно">
               {formatPower(inputAvailable)}
             </LabeledList.Item>
           </LabeledList>
         </Section>
         <Section
-          title="Output"
+          title="Вывод"
           buttons={
             <Button
               icon={outputAttempt ? 'power-off' : 'times'}
               selected={outputAttempt}
               onClick={() => act('tryoutput')}
             >
-              {outputAttempt ? 'On' : 'Off'}
+              {outputAttempt ? 'Вкл' : 'Выкл'}
             </Button>
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Output Mode">
+            <LabeledList.Item label="Режим вывода">
               <Box color={outputState}>
                 {outputting
-                  ? 'Sending'
+                  ? 'Передача'
                   : charge > 0
-                    ? 'Not Sending'
-                    : 'No Charge'}
+                    ? 'Нет передачи'
+                    : 'Нет заряда'}
               </Box>
             </LabeledList.Item>
-            <LabeledList.Item label="Target Output">
+            <LabeledList.Item label="Целевой вывод">
               <Stack fill>
                 <Stack.Item>
                   <Button
@@ -232,7 +232,7 @@ export const Smes = () => {
                 </Stack.Item>
               </Stack>
             </LabeledList.Item>
-            <LabeledList.Item label="Outputting">
+            <LabeledList.Item label="Текущий вывод">
               {formatPower(outputUsed)}
             </LabeledList.Item>
           </LabeledList>
