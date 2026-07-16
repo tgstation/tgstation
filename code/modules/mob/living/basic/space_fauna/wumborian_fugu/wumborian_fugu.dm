@@ -35,6 +35,7 @@
 	friendly_verb_continuous = "floats near"
 	friendly_verb_simple = "float near"
 	speak_emote = list("puffs")
+	movement_type = FLOATING
 	faction = list(FACTION_MINING)
 	see_in_dark = 8
 	// Nice and dark purple, to match le vibes
