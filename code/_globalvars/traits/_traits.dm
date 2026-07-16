@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 	),
 	/client = list(
 		"TRAIT_PARALLAX_DISPLAYED" = TRAIT_PARALLAX_DISPLAYED(""),
-	)
+	),
 	/datum/controller/global_vars = list(
 		"TRAIT_DISTORTION_IN_USE" = TRAIT_DISTORTION_IN_USE(0),
 	),
