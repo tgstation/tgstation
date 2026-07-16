@@ -8,13 +8,13 @@
 	abstract_type = /obj/structure/tripwire
 
 /obj/structure/tripwire/post
-	name = "tripwire post"
-	desc = "A sturdy post made to support one end of a heavy-duty cable."
+	name = "stanchion"
+	desc = "A sturdy post made to support one end of a large cable."
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5)
 	/// The post that the other end of this post's tripwire, if any. Also serves as a check for if we have a tripwire.
 	var/obj/structure/tripwire/post/opposing_post
 	/// The wire or wires between us and the opposing post. Only one post in the pair will have this list filled.
 	var/list/obj/structure/tripwire/cable/tripwires = list()
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5)
 
 /obj/structure/tripwire/post/Initialize(mapload)
 	. = ..()
@@ -33,9 +33,15 @@
 		opposing_post.clear_wire()
 		opposing_post = null
 	for(var/tripwire in tripwires)
-		tripwires -= tripwire
+		UnregisterSignal(tripwire, COMSIG_QDELETING)
 		qdel(tripwire)
+	tripwires = list()
 	update_appearance(UPDATE_ICON)
+
+/obj/structure/tripwire/post/proc/wire_qdeleted(datum/source)
+	tripwires -= source
+	UnregisterSignal(source, COMSIG_QDELETING)
+	clear_wire()
 
 /obj/structure/tripwire/post/proc/connect_to_post(obj/structure/tripwire/post/connected_post, new_direction)
 	dir = new_direction
@@ -144,7 +150,8 @@
 
 		new_wire.dir = (distance_extended > (distance_between / 2)) ? direction_to_extend : REVERSE_DIR(direction_to_extend) // Switch directions once we're halfway there
 
-		new_wire.primary_post = src
+
+		RegisterSignal(new_wire, COMSIG_QDELETING, PROC_REF(wire_qdeleted))
 		tripwires += new_wire
 
 	// HOW DID WE GET HERE WE SHOULD NEVER GET HERE BURN IT ALL
@@ -153,7 +160,7 @@
 
 /obj/structure/tripwire/post/wrench_act(mob/living/user, obj/item/tool)
 	if(opposing_post)
-		balloon_alert(user, "can't unanchor while wired!")
+		balloon_alert(user, "unwire first!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.use_tool(src, user, 0))
@@ -161,8 +168,6 @@
 
 	balloon_alert(user, "[anchored ? "un" : ""]anchored")
 	set_anchored(!anchored)
-	if(!anchored)
-		UnregisterSignal(get_turf(src), COMSIG_ATOM_ENTERED)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tripwire/post/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
@@ -182,21 +187,13 @@
 	return ..()
 
 /obj/structure/tripwire/cable
-	name = "tripwire"
+	name = "heavy cable"
 	desc = "A very thick cable made to withstand great force."
 	icon_state = "tripwire_1"
-	/// We only hold one post, only one post is needed for cleanup.
-	var/obj/structure/tripwire/post/primary_post
 
 /obj/structure/tripwire/cable/Initialize(mapload)
 	. = ..()
 	RegisterSignal(get_turf(src), COMSIG_ATOM_ENTERED, PROC_REF(on_entered)) // No need for connect_loc, we won't be moving.
-
-/obj/structure/tripwire/cable/Destroy(force)
-	if(!QDELETED(primary_post) && primary_post.opposing_post) // Obviously, the fact that we exist means that there was a connected post. This check is whether we're the first wire to be destroyed.
-		primary_post.tripwires -= src
-		primary_post.clear_wire()
-	return ..()
 
 /obj/structure/tripwire/cable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.sharpness)
@@ -215,12 +212,13 @@
 					span_notice("You finish cutting \the [src]."), \
 					span_hear("You hear a final snip."))
 	new /obj/item/stack/cable_coil(drop_location(), 20)
-	primary_post.clear_wire()
+	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tripwire/cable/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
-	primary_post?.clear_wire()
-	return ..()
+	. = ..()
+	if(!QDELING(src))
+		qdel(src)
 
 /obj/structure/tripwire/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -237,6 +235,9 @@
 	if(!mover.has_gravity())
 		return TRUE
 
+	if(mover.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
+		return TRUE
+
 	if(iscarbon(mover))
 		var/mob/living/carbon/moving_carbon = mover
 		if(moving_carbon.body_position == LYING_DOWN) // Crawl under it. Bonus of allowing dragging dying people.
@@ -251,6 +252,8 @@
 
 		return TRUE
 
+	return FALSE
+
 
 /obj/structure/tripwire/proc/on_entered(datum/source, atom/movable/entered)
 	if(!ismecha(entered))
@@ -260,7 +263,7 @@
 	if(falling_down.toppled) // did you trip directly into a tripwire? We don't want this to chain, however amusing the image might be.
 		return
 
-	if(falling_down.phasing)
+	if(astype(falling_down, /obj/vehicle/sealed/mecha/phazon)?.phasing)
 		return
 
 	if(falling_down.dir == dir || falling_down.dir == REVERSE_DIR(dir))
@@ -310,7 +313,7 @@
 
 /obj/item/tripwire_cable
 	name = "sturdy cable"
-	desc = "A coil of extremely thick cable that is strong enough to create powerful tripwires."
+	desc = "A coil of extremely thick cable that can withstand great force."
 	icon = 'icons/obj/tripwire.dmi'
 	icon_state = "tripwire_cable"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
