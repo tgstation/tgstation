@@ -285,6 +285,37 @@
 	current_action = GUILLOTINE_ACTION_IDLE
 	return FALSE
 
+/obj/structure/guillotine/automatic
+	name = "automatic guillotine"
+	desc = "A large structure that can and will remove heads of whomever falls under its blade."
+	resistance_flags = INDESTRUCTIBLE
+
+/obj/structure/guillotine/automatic/post_buckle_mob(mob/living/potential_victim)
+	if (!ishuman(potential_victim))
+		return
+
+	var/mob/living/carbon/human/victim = potential_victim
+
+	if (victim.dna)
+		if (victim.dna.species)
+			var/datum/species/S = victim.dna.species
+
+			if (istype(S))
+				victim.render_only_head()
+				victim.remove_overlay(BODY_ADJ_LAYER)
+				victim.pixel_y += -GUILLOTINE_HEAD_OFFSET // Offset their body so it looks like they're in the guillotine
+				victim.layer += GUILLOTINE_LAYER_DIFF
+				drop_blade(victim)
+				raise_blade()
+			else
+				unbuckle_all_mobs()
+		else
+			unbuckle_all_mobs()
+	else
+		unbuckle_all_mobs()
+
+	..()
+
 #undef GUILLOTINE_BLADE_MAX_SHARP
 #undef GUILLOTINE_DECAP_MIN_SHARP
 #undef GUILLOTINE_ANIMATION_LENGTH

@@ -127,6 +127,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
+"wv" = (
+/obj/structure/guillotine/automatic,
+/turf/open/indestructible/necropolis/air,
+/area/shuttle/shuttle_arena)
 "xA" = (
 /obj/effect/forcefield/arena_shuttle,
 /turf/open/indestructible/necropolis/air,
@@ -245,6 +249,11 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/stone,
+/area/shuttle/shuttle_arena)
+"Qz" = (
+/obj/effect/landmark/shuttle_arena_entrance,
+/obj/structure/guillotine/automatic,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "QZ" = (
 /obj/structure/stone_tile/block{
@@ -678,7 +687,7 @@ ar
 qp
 dz
 bE
-dz
+Qz
 qp
 ar
 ar
@@ -980,7 +989,7 @@ ar
 ar
 ar
 ar
-ar
+wv
 ar
 ar
 ar
@@ -1290,7 +1299,7 @@ yX
 yX
 rX
 rX
-ar
+wv
 ar
 ar
 ar
@@ -1324,7 +1333,7 @@ ar
 ar
 ar
 ar
-ar
+wv
 rX
 ar
 ar
@@ -1352,7 +1361,7 @@ UN
 UN
 iH
 ar
-ar
+wv
 ar
 ar
 ar
@@ -1460,7 +1469,7 @@ ar
 ar
 ar
 ar
-ar
+wv
 ar
 ar
 ar
@@ -1741,7 +1750,7 @@ LY
 IT
 Kb
 Kb
-ar
+wv
 ar
 ar
 ar
@@ -1964,7 +1973,7 @@ LY
 ar
 ar
 ar
-ar
+wv
 ar
 LY
 LY
@@ -2406,7 +2415,7 @@ ar
 ar
 ar
 ar
-ar
+wv
 ar
 ar
 rX
@@ -2516,7 +2525,7 @@ dz
 ar
 rX
 rX
-ar
+wv
 ar
 ar
 ar
@@ -2736,7 +2745,7 @@ yX
 rX
 rX
 rX
-ar
+wv
 ar
 ar
 rX
@@ -2939,7 +2948,7 @@ ar
 ar
 ar
 ar
-ar
+wv
 ar
 ar
 ar
@@ -3048,7 +3057,7 @@ rX
 rX
 ar
 ar
-ar
+wv
 rX
 yX
 yX
