@@ -2,6 +2,8 @@
 /datum/preference_middleware/quirks
 	/// Used to track whether or not we need to update changes in ui_data
 	var/tainted = TRUE
+	/// Remember what the last species we chose was, to avoid having to validate quirks again
+	var/previous_species_value
 	/// The current selected quirks, saved so we can cheaply resend them in ui_data only when necessary, without having to use expensive update_static_data() calls
 	var/list/cached_selected_quirks
 	/// The current species compatibility, saved so we can cheaply resend them in ui_data only when necessary, without having to use expensive update_static_data() calls
@@ -33,8 +35,9 @@
 		return TRUE
 
 /datum/preference_middleware/quirks/post_set_preference(mob/user, preference, value)
-	if(preference != "species")
+	if(preference != "species" || value == previous_species_value)
 		return
+
 	tainted = TRUE
 	preferences.validate_quirks()
 
@@ -102,6 +105,7 @@
 
 /datum/preference_middleware/quirks/on_new_character(mob/user)
 	tainted = TRUE
+	previous_species_value = null
 
 /datum/preference_middleware/quirks/proc/give_quirk(list/params, mob/user)
 	var/quirk_name = params["quirk"]
