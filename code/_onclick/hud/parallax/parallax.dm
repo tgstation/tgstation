@@ -492,8 +492,8 @@
 
 /atom/movable/screen/parallax_layer/planet/proc/on_z_change(atom/source)
 	SIGNAL_HANDLER
-	var/turf/viewing_from = get_turf(home.perspective)
-	if(!viewing_from)
+	var/turf/viewing_from = get_turf(home?.perspective)
+	if(isnull(viewing_from))
 		return
 	SetInvisibility(is_station_level(viewing_from.z) ? INVISIBILITY_NONE : INVISIBILITY_ABSTRACT, id=type)
 

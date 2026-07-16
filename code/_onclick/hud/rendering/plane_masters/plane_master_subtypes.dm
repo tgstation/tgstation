@@ -125,28 +125,34 @@
 		narsie_start_midway(GLOB.narsie_effect_last_modified) // We assume we're on the start, so we can use this number
 	offset_increase(0, SSmapping.max_plane_offset)
 
-/atom/movable/screen/plane_master/parallax/set_home(datum/plane_master_group/home)
+/atom/movable/screen/plane_master/parallax/show_to(mob/mymob)
 	. = ..()
-	if(home)
-		RegisterSignal(home, COMSIG_PLANE_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
-		hud_changed(null, null, home.our_hud)
+	if(!.)
+		return
 
-/atom/movable/screen/plane_master/parallax/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
-	SIGNAL_HANDLER
-	if(old_hud?.mymob?.client)
-		UnregisterSignal(old_hud.mymob.client, list(SIGNAL_ADDTRAIT(TRAIT_PARALLAX_DISPLAYED(assigned_map)), SIGNAL_REMOVETRAIT(TRAIT_PARALLAX_DISPLAYED(assigned_map))), PROC_REF(parallax_updated))
-	if(new_hud?.mymob?.client)
-		RegisterSignals(new_hud.mymob.client, list(SIGNAL_ADDTRAIT(TRAIT_PARALLAX_DISPLAYED(assigned_map)), SIGNAL_REMOVETRAIT(TRAIT_PARALLAX_DISPLAYED(assigned_map))), PROC_REF(parallax_updated))
-		parallax_updated(new_hud.mymob.client)
+	// Huds have a 1 to 1 for mobs so we're just gonna hook to this mob's potential clients forever!
+	// We have to do it this way instead of just using show_to/hide from because otherwise we immediately remove the signals as soon as we hide ourselves
+	// Perhaps we need separate "hook to mob" and "display" procs?
+	var/list/parallax_signals = list(
+		SIGNAL_ADDTRAIT(TRAIT_PARALLAX_DISPLAYED(assigned_map)) = PROC_REF(parallax_updated),
+		SIGNAL_REMOVETRAIT(TRAIT_PARALLAX_DISPLAYED(assigned_map)) = PROC_REF(parallax_updated)
+	)
+	AddComponent(/datum/component/connect_client_behalf, mymob, parallax_signals)
+	if(!isnull(mymob.client))
+		update_connections(mymob.client, TRUE)
 
 /atom/movable/screen/plane_master/parallax/proc/parallax_updated(client/source)
 	SIGNAL_HANDLER
-	if(isnull(source.mob))
+	update_connections(source)
+
+/atom/movable/screen/plane_master/parallax/proc/update_connections(client/updating, displayed_already = FALSE)
+	if(isnull(updating?.mob))
 		return
-	if(HAS_TRAIT(source, TRAIT_PARALLAX_DISPLAYED(assigned_map)))
-		show_to(source.mob)
+	if(HAS_TRAIT(updating, TRAIT_PARALLAX_DISPLAYED(assigned_map)))
+		if(!displayed_already)
+			show_to(updating.mob)
 	else
-		hide_from(source.mob)
+		hide_from(updating.mob)
 
 /atom/movable/screen/plane_master/parallax/proc/on_offset_increase(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER
