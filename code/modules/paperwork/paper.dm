@@ -509,6 +509,8 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 	)
 
 /obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
+	if(!user.client) //bro stop trying to open UI on AI man ur gonna drive me nuts man comeon man
+		return
 	if(resistance_flags & ON_FIRE)
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
