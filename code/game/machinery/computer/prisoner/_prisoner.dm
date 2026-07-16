@@ -1,4 +1,5 @@
 /obj/machinery/computer/prisoner
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/prisoner/gulag_teleporter_computer")
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_LITERACY
 	/// ID card currently inserted into the computer.
 	VAR_FINAL/obj/item/card/id/advanced/prisoner/contained_id

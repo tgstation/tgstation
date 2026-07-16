@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Moved a lot of human-specific inventory code onto human mobs, report if inventories break!"
