@@ -84,6 +84,17 @@
 	custom_materials = list(/datum/material/sandstone = SHEET_MATERIAL_AMOUNT*2)
 	rust_resistance = RUST_RESISTANCE_BASIC
 
+/turf/closed/wall/mineral/sandstone/wall_fill
+	sheet_type = /obj/item/stack/wall_filling/sandstone/basic
+
+/turf/closed/wall/mineral/sandstone/ornate
+	name = "ornate sandstone wall"
+	desc = "A wall with ornate sandstone plating. Smooth."
+	icon = 'icons/turf/walls/sandstone_ornate_wall.dmi'
+	icon_state = "sandstone_ornate_wall-0"
+	base_icon_state = "sandstone_ornate_wall"
+	sheet_type = /obj/item/stack/wall_filling/sandstone/ornate
+
 /turf/closed/wall/mineral/uranium
 	article = "a"
 	name = "uranium wall"

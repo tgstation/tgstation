@@ -18,7 +18,6 @@
 	///item released when deconstructed
 	var/item_deconstruct = /obj/item/stack/rods
 	///green railing type to be made by wrapping grass around this.
-	var/green_equivalent = /obj/structure/railing/green
 
 /datum/armor/structure_railing
 	melee = 35
@@ -35,21 +34,18 @@
 	density = FALSE
 	climbable = FALSE
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
-	green_equivalent = /obj/structure/railing/green/corner
 
 /obj/structure/railing/corner/unbreakable
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/structure/railing/corner/end //end of a segment of railing without making a loop
 	icon_state = "railing_end"
-	green_equivalent = /obj/structure/railing/green/corner/end
 
 /obj/structure/railing/corner/end/unbreakable
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/structure/railing/corner/end/flip //same as above but flipped around
 	icon_state = "railing_end_flip"
-	green_equivalent = /obj/structure/railing/green/corner/end/flip
 
 /obj/structure/railing/corner/end/flip/unbreakable
 	resistance_flags = INDESTRUCTIBLE
@@ -177,7 +173,6 @@
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
-	green_equivalent = FALSE
 
 /obj/structure/railing/wooden_fence/Initialize(mapload)
 	. = ..()
