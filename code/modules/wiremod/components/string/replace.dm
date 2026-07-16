@@ -13,7 +13,7 @@
 
 /obj/item/circuit_component/compare/contains/replace/populate_custom_ports()
 	. = ..()
-	needle = add_input_port("Replacement", PORT_TYPE_STRING)
+	replacement = add_input_port("Replacement", PORT_TYPE_STRING)
 
 /obj/item/circuit_component/compare/contains/replace/do_comparisons()
 	var/to_find = needle.value
