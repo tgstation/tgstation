@@ -1,0 +1,8 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "you now can only use a wirecutter to take down a reinforced falsewall"
+  - bugfix: "meatspikes no longer runtime on construction"
+  - bugfix: "you no longer have to use a verb that you can't use to flip windoor assemblies"
+  - qol: "you can right click a gun locker to close it"
+  - code_imp: "50 files have been moved from attackby() to item_interaction()"

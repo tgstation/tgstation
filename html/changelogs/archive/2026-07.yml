@@ -476,6 +476,8 @@
   - qol: Better Emojipedia UI, better emojis, some more emojis.
   SmArtKar:
   - bugfix: Fixed atmos diffs and incorrect atmos in lavaland hermit ruin
+  - refactor: Moved a lot of human-specific inventory code onto human mobs, report
+      if inventories break!
   lelandkemble:
   - qol: crowbarring a transit tube pod out of a transit tube now provides messaging
       when successful or unsuccessful

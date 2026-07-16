@@ -193,7 +193,7 @@
 
 /datum/supply_pack/medical/arm_implants
 	name = "Strong-Arm Implant Set"
-	desc = "A crate containing two implants, which can be surgically implanted to empower the strength of human arms. Warranty void if exposed to electromagnetic pulses."
+	desc = "A crate containing two implants, which can be surgically implanted to empower the strength of humanoid arms. Warranty void if exposed to electromagnetic pulses."
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/item/organ/cyberimp/arm/strongarm = 2)
 	crate_name = "\improper Strong-Arm implant crate"

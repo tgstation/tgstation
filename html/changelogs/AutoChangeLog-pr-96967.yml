@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "\"Holy whip\" null rod no longer arbitrarily does 2x brute damage to vampires"
+  - balance: "\"Holy whip\" null rod is now made of silver, which does bonus burn damage to vampires (~1.67x damage now)"
+  - balance: "Silver material weapons deal more burn damage to vampires on average now (from 5 flat to 4-16, depending on volume of silver in the weapon)"
+  - balance: "Silver material weapons are no longer completely blocked by any form of clothing, instead now reduced / blocked by wound armor"
