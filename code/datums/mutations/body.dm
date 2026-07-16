@@ -814,13 +814,9 @@
 		/datum/reagent/medicine,
 		/datum/reagent/drug,
 	)) - typecacheof(list(
-		/datum/reagent/medicine/adminordrazine,
-		/datum/reagent/medicine/epinephrine,
 		/datum/reagent/medicine/mannitol,
 		/datum/reagent/medicine/mutadone,
-		/datum/reagent/medicine/sansufentanyl,
-		/datum/reagent/medicine/salglu_solution,
-	))
+	)) - GLOB.allergy_reagent_blacklist
 
 /datum/mutation/chemical_allergy/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
