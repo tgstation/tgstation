@@ -39,6 +39,7 @@
 		return
 
 	tainted = TRUE
+	previous_species_value = value
 	preferences.validate_quirks()
 
 /datum/preference_middleware/quirks/proc/get_species_compatibility()
