@@ -13,7 +13,7 @@
 /obj/item/circuitboard/computer/aiupload
 	name = "AI Upload"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/computer/upload/aiA
+	build_path = /obj/machinery/computer/upload/ai
 	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	req_one_access = list(ACCESS_AI_UPLOAD)
 
