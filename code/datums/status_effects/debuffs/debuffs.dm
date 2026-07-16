@@ -15,6 +15,9 @@
 	processing_speed = STATUS_EFFECT_PRIORITY
 	remove_on_fullheal = TRUE
 	heal_flag_necessary = HEAL_CC_STATUS
+	/// Chance of triggering a force_say
+	var/force_say_chance = 66
+	/// If TRUE we run update_stat on apply/remove
 	var/needs_update_stat = FALSE
 	/// Suffixes attached to the force_say when applied, uses the "hurt" suffixes by default
 	var/list/alter_phrases
@@ -39,14 +42,14 @@
 	if(!.)
 		return
 
-	force_say()
+	try_force_say()
 
-/datum/status_effect/incapacitating/proc/force_say()
+/datum/status_effect/incapacitating/proc/try_force_say()
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/mob/living/carbon/human/human = owner
-	if(istype(human))
-		human.force_say(alter_phrases, immediate = TRUE)
+	if(istype(human) && prob(force_say_chance) && (duration >= 6 SECONDS || (duration >= 2 SECONDS && prob(66))) )
+		human.force_say(alter_phrases, immediate = TRUE, major = (duration >= 30 SECONDS))
 
 //STUN
 /datum/status_effect/incapacitating/stun
@@ -80,6 +83,7 @@
 //IMMOBILIZED
 /datum/status_effect/incapacitating/immobilized
 	id = "immobilized"
+	force_say_chance = 0
 
 /datum/status_effect/incapacitating/immobilized/on_apply()
 	. = ..()
@@ -111,6 +115,7 @@
 /// This status effect represents anything that leaves a character unable to perform basic tasks (interrupting do-afters, for example), but doesn't incapacitate them further than that (no stuns etc..)
 /datum/status_effect/incapacitating/incapacitated
 	id = "incapacitated"
+	force_say_chance = 0
 
 // What happens when you get the incapacitated status. You get TRAIT_INCAPACITATED added to you for the duration of the status effect.
 /datum/status_effect/incapacitating/incapacitated/on_apply()
@@ -129,6 +134,7 @@
 /datum/status_effect/incapacitating/unconscious
 	id = "unconscious"
 	needs_update_stat = TRUE
+	force_say_chance = 100
 
 /datum/status_effect/incapacitating/unconscious/on_apply()
 	. = ..()
@@ -152,6 +158,7 @@
 	needs_update_stat = TRUE
 	tick_interval = 2 SECONDS
 	alter_phrases = list("Zzz...", "ZZz...", "ZZZ...", "zzZ...", "zZZ...", "ZzZ...", "zzz...", "zZz...", "mimimimimimi...")
+	force_say_chance = 100
 
 /datum/status_effect/incapacitating/sleeping/on_apply()
 	. = ..()
@@ -171,9 +178,9 @@
 		tick_interval = initial(tick_interval)
 	return ..()
 
-/datum/status_effect/incapacitating/sleeping/force_say()
+/datum/status_effect/incapacitating/sleeping/try_force_say()
 	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
-		..()
+		return ..()
 
 ///If the mob is sleeping and gain the TRAIT_SLEEPIMMUNE we remove the TRAIT_KNOCKEDOUT and stop the tick() from happening
 /datum/status_effect/incapacitating/sleeping/proc/on_owner_insomniac(mob/living/source)
@@ -375,7 +382,7 @@
 
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
-	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
+	duration = 30 SECONDS //if you leave for 30 seconds you lose the mark, deal with it
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	/// The bubble that is added to the mob as a visual
@@ -384,10 +391,21 @@
 	var/boosted = FALSE
 	/// How long before the mark is ready to be detonated. Used for both the visual overlay and to determine when it's ready
 	var/ready_delay = 0.8 SECONDS
+	/// Damage dealt when the mark is detonated
+	var/detonation_damage = 50
+	/// PKC that set this mark, for PKC-independent bursts
+	var/obj/item/kinetic_crusher/crusher
 
-/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, was_boosted)
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, was_boosted, obj/item/kinetic_crusher/crusher)
 	. = ..()
 	boosted = was_boosted
+	src.crusher = crusher
+	if (crusher)
+		RegisterSignal(crusher, COMSIG_QDELETING, PROC_REF(on_crusher_destroyed))
+
+/datum/status_effect/crusher_mark/proc/on_crusher_destroyed(datum/source)
+	SIGNAL_HANDLER
+	crusher = null
 
 /datum/status_effect/crusher_mark/on_apply()
 	if(owner.mob_size < MOB_SIZE_LARGE)
@@ -409,7 +427,41 @@
 	if(owner)
 		owner.underlays -= marked_underlay
 	QDEL_NULL(marked_underlay)
+	crusher = null
 	return ..()
+
+/datum/status_effect/crusher_mark/proc/detonate(obj/item/kinetic_crusher/used_crusher, mob/living/user, melee_hit = TRUE)
+	var/datum/status_effect/crusher_damage/crusher_damage_effect = owner.has_status_effect(/datum/status_effect/crusher_damage) || owner.apply_status_effect(/datum/status_effect/crusher_damage)
+	var/target_health = owner.health
+	var/combined_damage = detonation_damage
+	for(var/obj/item/crusher_trophy/crusher_trophy as anything in used_crusher?.trophies)
+		combined_damage += crusher_trophy.on_mark_detonation(owner, user, used_crusher)
+
+	// Trophy effects kill the target, abort
+	if(QDELETED(owner))
+		return
+
+	if(!QDELETED(crusher_damage_effect))
+		crusher_damage_effect.total_damage += target_health - owner.health // We did some damage, but let's not assume how much we did
+
+	new /obj/effect/temp_visual/kinetic_blast(get_turf(owner))
+	var/backstabbed = FALSE
+	var/def_check = owner.getarmor(type = BOMB)
+
+	// Backstab bonus, only if a crusher was used to detonate the mark
+	if(melee_hit && used_crusher && (boosted || (user && check_behind(user, owner) && !HAS_TRAIT(owner, TRAIT_BACKSTAB_IMMUNE))))
+		backstabbed = TRUE
+		combined_damage += used_crusher.backstab_bonus
+		playsound(user, used_crusher.backstab_sound, 100, TRUE)
+
+	if(!QDELETED(crusher_damage_effect))
+		crusher_damage_effect.total_damage += combined_damage
+
+	if (user)
+		SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, owner, used_crusher, backstabbed)
+	owner.apply_damage(combined_damage, BRUTE, blocked = def_check)
+	if (!QDELETED(owner))
+		owner.remove_status_effect(src)
 
 // Object used to apply a underlay to the mob that gets this status applied
 /obj/effect/abstract/crusher_mark
@@ -892,7 +944,7 @@
 			if(!prob(1)) // 99%
 				to_chat(victim, span_userdanger("You're covered in MORE ants!"))
 			else // 1%
-				victim.say("AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/ants)
+				INVOKE_ASYNC(victim, TYPE_PROC_REF(/atom/movable, say), "AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/ants)
 		ants_remaining += amount_left
 	. = ..()
 

@@ -22,6 +22,7 @@
 	gender = PLURAL
 	vision_flags = NONE
 	color_cutoffs = null
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT)
 	/// List of selectable modes that can be used by the goggles
 	var/list/modes = list(MODE_NONE, MODE_MESON, MODE_TRAY)
 	/// The current mode string that is selected from the modes list (used for icons)
@@ -154,6 +155,7 @@
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	range = 2
 	modes = list(MODE_NONE, MODE_TRAY, MODE_PIPE_CONNECTABLE, MODE_ATMOS_THERMAL) // atmos techs now finally have 3 modes on their  goggles!
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/glasses/meson/engine/tray/dropped(mob/user)
 	. = ..()

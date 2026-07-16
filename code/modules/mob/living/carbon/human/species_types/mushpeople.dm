@@ -102,7 +102,7 @@
 
 /// Bodypart overlay for the mushroom cap organ
 /datum/bodypart_overlay/mutant/mushroom_cap
-	layers = EXTERNAL_ADJACENT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 	feature_key = FEATURE_MUSH_CAP
 	dyable = TRUE
 	offset_location = UPPER_BODY

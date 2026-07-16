@@ -8,7 +8,7 @@
 	locked = TRUE // fake parent
 	conflicts = list(/datum/mutation/adaptation)
 	mutation_traits = list(TRAIT_WADDLING)
-	offset_location = FULL_BODY
+	offset_location = ENTIRE_BODY
 
 /datum/mutation/adaptation/New(datum/mutation/copymut)
 	. = ..()

@@ -62,14 +62,14 @@
 	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(start_chemming))
 	return PROCESS_KILL
 
-/obj/structure/geyser/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(item, /obj/item/mining_scanner) && !istype(item, /obj/item/t_scanner/adv_mining_scanner))
+/obj/structure/geyser/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/mining_scanner) && !istype(tool, /obj/item/t_scanner/adv_mining_scanner))
 		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
-		return ..() //this runs the plunger code
+		return NONE //this runs the plunger code
 
 	if(discovered)
 		to_chat(user, span_warning("This geyser has already been discovered!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, span_notice("You discovered the geyser and mark it on the GPS system!"))
 	playsound(src, 'sound/machines/beep/twobeep_high.ogg', 30)
@@ -83,13 +83,11 @@
 
 	AddComponent(/datum/component/gps, true_name) //put it on the gps so miners can mark it and chemists can profit off of it
 
-	if(isliving(user))
-		var/mob/living/living = user
-
-		var/obj/item/card/id/card = living.get_idcard()
-		if(card)
-			to_chat(user, span_notice("[point_value] mining points have been paid out!"))
-			card.registered_account.mining_points += point_value
+	var/obj/item/card/id/card = user.get_idcard()
+	if(card)
+		to_chat(user, span_notice("[point_value] mining points have been paid out!"))
+		card.registered_account.mining_points += point_value
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/geyser/wittel
 	reagent_id = /datum/reagent/wittel
@@ -135,6 +133,7 @@
 	icon_state = "plunger"
 	worn_icon_state = "plunger"
 	icon_angle = 90
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.5)
 
 	slot_flags = ITEM_SLOT_MASK
 	flags_inv = HIDESNOUT
