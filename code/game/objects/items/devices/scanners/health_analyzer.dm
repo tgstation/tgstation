@@ -389,22 +389,22 @@
 			if (blood_type.restoration_chem == /datum/reagent/iron)
 				recommendation += "[/datum/reagent/medicine/salglu_solution::name]"
 			if (length(recommendation))
-				recommendation += "[blood_type.get_blood_name()] transufion"
+				recommendation += "[blood_type.get_blood_name()] transfusion"
 			else
-				recommendation += "immediate [blood_type.get_blood_name()] transufion"
+				recommendation += "immediate [blood_type.get_blood_name()] transfusion"
 			level_format = conditional_tooltip(level_format, "Recommendation: [english_list(recommendation, and_text = " or ")].", tochat)
 		else
 			level_format = "[blood_percent]%, [cached_blood_volume] cl"
 
 		if (blood_type.get_type())
-			blood_type_format = "type: [blood_type.get_type()]"
+			blood_type_format = "[blood_type.get_type()]"
 			if(tochat && length(blood_type.compatible_types))
 				var/list/compatible_types_readable = list()
 				for(var/datum/blood_type/comp_blood_type as anything in blood_type.compatible_types)
 					compatible_types_readable |= initial(comp_blood_type.name)
 				blood_type_format = span_tooltip("Can receive from types [english_list(compatible_types_readable)].", blood_type_format)
 
-		render_list += "<span class='[cached_blood_volume < BLOOD_VOLUME_SAFE ? "alert" : "info"] ml-1'>[blood_type.get_blood_name()] level: [level_format],</span> <span class='info'>[blood_type_format]</span><br>"
+		render_list += "<span class='[cached_blood_volume < BLOOD_VOLUME_SAFE ? "alert" : "info"] ml-1'>[blood_type.get_blood_name()] level: [level_format]</span> <span class='info'>[blood_type_format]</span><br>"
 
 	var/blood_alcohol_content = target.get_blood_alcohol_content()
 	if(blood_alcohol_content > 0)
@@ -413,6 +413,27 @@
 			render_list += "<span class='alert ml-1'>[blood_type?.get_blood_name() || "Blood"] alcohol content: <b>CRITICAL [blood_alcohol_content]%</b></span><br>"
 		else
 			render_list += "<span class='info ml-1'>[blood_type?.get_blood_name() || "Blood"] alcohol content: [blood_alcohol_content]%</span><br>"
+
+	// Ethereal Charge
+	if(istype(target.get_organ_slot(ORGAN_SLOT_STOMACH), /obj/item/organ/stomach/ethereal))
+		var/obj/item/organ/stomach/ethereal/battery_stomach = target.get_organ_slot(ORGAN_SLOT_STOMACH)
+		var/charge = battery_stomach.cell.charge
+		var/charge_dangerous = charge > ETHEREAL_CHARGE_FULL || charge < ETHEREAL_CHARGE_LOWPOWER
+		var/charge_format = "[display_power(charge)] / [display_power(ETHEREAL_CHARGE_FULL)]"
+
+		if(charge_dangerous)
+			var/recommendation = "Recommendation: "
+			switch(charge)
+				if(-INFINITY to ETHEREAL_CHARGE_LOWPOWER)
+					recommendation += "charging by LE-fortified food"
+				if(ETHEREAL_CHARGE_FULL to ETHEREAL_CHARGE_OVERLOAD)
+					recommendation += "discharge into nearest undercapacity APC"
+				if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
+					recommendation += "preparation for violent electrocardiac discharge event"
+					recommendation = uppertext(recommendation)
+			charge_format = span_tooltip("[recommendation] followed with toxins treatment.", charge_format)
+
+		render_list += "<span class='[charge_dangerous ? "alert" : "info"] ml-1'>Electrical charge: [charge_format]</span><br>"
 
 	//Diseases
 	var/disease_hr = FALSE

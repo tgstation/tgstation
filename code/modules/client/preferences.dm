@@ -93,8 +93,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// Used to avoid expensive READ_FILE every time a preference is retrieved.
 	var/value_cache = list()
 
-	/// If set to TRUE, will update character_profiles on the next ui_data tick.
+	/// If set to TRUE, will update cached_character_profiles on the next ui_data tick.
 	var/tainted_character_profiles = FALSE
+	/// The character profiles, saved so we can cheaply recompute them in ui_data only when necessary, without having to use expensive update_static_data calls.
+	var/list/cached_character_profiles
 
 /datum/preferences/Destroy(force)
 	QDEL_NULL(character_preview_view)
@@ -172,9 +174,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/ui_data(mob/user)
 	var/list/data = list()
 
-	if (tainted_character_profiles)
-		data["character_profiles"] = create_character_profiles()
+	if (tainted_character_profiles || isnull(cached_character_profiles))
+		cached_character_profiles = create_character_profiles()
 		tainted_character_profiles = FALSE
+
+	data["character_profiles"] = cached_character_profiles
 
 	data["character_preferences"] = compile_character_preferences(user)
 
@@ -289,6 +293,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	save_character()
 	save_preferences()
 	QDEL_NULL(character_preview_view)
+	cached_character_profiles = null
 
 /datum/preferences/Topic(href, list/href_list)
 	. = ..()
