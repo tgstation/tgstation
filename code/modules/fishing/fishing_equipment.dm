@@ -162,7 +162,7 @@
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "hook"
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.2)
+	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.2)
 
 	/// A bitfield of traits that this fishing hook has, checked by fish traits and the minigame
 	var/fishing_hook_traits
