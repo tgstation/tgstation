@@ -130,7 +130,6 @@
 		var/atom/movable/screen/splash/Spl = new(null, null, boarder.client, TRUE)
 		Spl.fade(TRUE)
 		boarder.playsound_local(get_turf(boarder), 'sound/announcer/ApproachingTG.ogg', 25)
-	boarder.update_parallax_teleport()
 
 /area/shuttle/pod_1
 	name = "Escape Pod One"

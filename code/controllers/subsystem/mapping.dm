@@ -807,6 +807,9 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 		if(initial(gas_type.moles_visible) != null)
 			gas_info[META_GAS_OVERLAY] += generate_gas_overlays(gen_from, new_offset, gas_type)
 
+	if(SSweather.initialized)
+		SSweather.generate_holders(gen_from, new_offset)
+
 /datum/controller/subsystem/mapping/proc/create_plane_offsets(gen_from, new_offset)
 	for(var/plane_offset in gen_from to new_offset)
 		for(var/atom/movable/screen/plane_master/master_type as anything in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate)

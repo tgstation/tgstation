@@ -23,8 +23,8 @@
 	var/severity = 0
 	/// Last tick during which we've changed our visual severity
 	var/last_severity_tick = 0
-	/// List of weather object lists (as we can have multiple if emissives are involved) by plane offset
-	var/list/weather_objects = list()
+	/// alist of weather object lists (as we can have multiple if emissives are involved) by z level
+	var/alist/weather_objects = alist()
 	/// Direction of our wind
 	var/wind_sign = 0
 
@@ -33,27 +33,29 @@
 	if (isnull(particle_type) && isnull(emissive_type))
 		CRASH("[src] ([type]) attempted to initialize without normal or emissive particle types!")
 
-	for (var/offset in 0 to SSmapping.max_plane_offset)
+	for(var/z_level in impacted_z_levels)
+		var/offset = GET_Z_PLANE_OFFSET(z_level)
 		var/list/object_list = list()
 		if (particle_type)
 			var/obj/effect/abstract/weather_holder/holder = new()
 			SET_PLANE_W_SCALAR(holder, RENDER_PLANE_PARTICLE_WEATHER, offset)
 			holder.particles = new particle_type()
-			object_list[holder] = impacted_z_levels
+			object_list += holder
 
 		if (emissive_type)
 			var/obj/effect/abstract/weather_holder/holder = new()
 			holder.particles = new emissive_type()
 			SET_PLANE_W_SCALAR(holder, RENDER_PLANE_EMISSIVE_PARTICLE_WEATHER, offset)
-			object_list[holder] = impacted_z_levels
+			object_list += holder
 
-		weather_objects += list(object_list)
+		SSweather.add_weather_objects(object_list, z_level)
 
-	SSweather.add_weather_objects(weather_objects)
+		weather_objects[z_level] += object_list
 
 /datum/weather/particle/Destroy()
-	SSweather.remove_weather_objects(weather_objects)
-	for(var/list/object_list as anything in weather_objects)
+	for(var/z_level in weather_objects)
+		var/list/object_list = weather_objects[z_level]
+		SSweather.remove_weather_objects(object_list, z_level)
 		QDEL_LIST(object_list)
 	weather_objects = null
 	return ..()
@@ -96,7 +98,7 @@
 		wind_sign = pick(-1, 1)
 
 	severity = new_severity
-	for (var/list/holder_list as anything in weather_objects)
+	for (var/_z_level, holder_list in weather_objects)
 		for (var/obj/effect/abstract/weather_holder/holder as anything in holder_list)
 			var/particles/weather/particle_effect = holder.particles
 			particle_effect.animate_severity(severity / MAXIMUM_WEATHER_SEVERITY, wind_sign)
@@ -120,6 +122,9 @@
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/// Only exists for disambiguation reasons
+/obj/effect/abstract/weather_holder/z_level
 
 /particles/weather
 	spawning = 0
