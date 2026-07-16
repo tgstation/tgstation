@@ -62,6 +62,7 @@
 	department_name = DEPARTMENT_ASSISTANT
 	department_bitflags = DEPARTMENT_BITFLAG_ASSISTANT
 	nation_prefixes = list("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
+	ui_color = "#808080"
 	// Don't add department_head! Assistants names should not be in bold.
 
 /datum/job_department/assistant/generate_nation_name()
@@ -73,7 +74,7 @@
 	department_name = DEPARTMENT_CAPTAIN
 	department_bitflags = DEPARTMENT_BITFLAG_CAPTAIN
 	department_head = /datum/job/captain
-	ui_color = "#6681a5"
+	ui_color = "#2a79c8"
 	primary_work_area = /area/station/command
 
 /datum/job_department/command
@@ -82,7 +83,7 @@
 	department_head = /datum/job/captain
 	department_experience_type = EXP_TYPE_COMMAND
 	display_order = 1
-	ui_color = "#6681a5"
+	ui_color = "#fcd203"
 	primary_work_area = /area/station/command
 
 /datum/job_department/security
@@ -91,7 +92,7 @@
 	department_head = /datum/job/head_of_security
 	department_experience_type = EXP_TYPE_SECURITY
 	display_order = 2
-	ui_color = "#d46a78"
+	ui_color = "#d92626"
 	nation_prefixes = list("Securi", "Beepski", "Shitcuri", "Red", "Stunba", "Flashbango", "Flasha", "Stanfordi")
 	primary_work_area = /area/station/security
 	department_delivery_areas = list(
@@ -113,7 +114,7 @@
 	department_head = /datum/job/chief_engineer
 	department_experience_type = EXP_TYPE_ENGINEERING
 	display_order = 3
-	ui_color = "#dfb567"
+	ui_color = "#f26c0d"
 	nation_prefixes = list("Atomo", "Engino", "Power", "Teleco")
 	primary_work_area = /area/station/engineering
 	department_delivery_areas = list(
@@ -130,7 +131,7 @@
 	department_head = /datum/job/chief_medical_officer
 	department_experience_type = EXP_TYPE_MEDICAL
 	display_order = 4
-	ui_color = "#65b2bd"
+	ui_color = "#00b3b3"
 	nation_prefixes = list("Mede", "Healtha", "Recova", "Chemi", "Viro", "Psych")
 	primary_work_area = /area/station/medical
 	department_delivery_areas = list(
@@ -149,7 +150,7 @@
 	department_head = /datum/job/research_director
 	department_experience_type = EXP_TYPE_SCIENCE
 	display_order = 5
-	ui_color = "#c973c9"
+	ui_color = "#b333cc"
 	nation_prefixes = list("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
 	primary_work_area = /area/station/science
 	department_delivery_areas = list(
@@ -168,7 +169,7 @@
 	department_head = /datum/job/quartermaster
 	department_experience_type = EXP_TYPE_SUPPLY
 	display_order = 6
-	ui_color = "#cf9c6c"
+	ui_color = "#a96a3c"
 	nation_prefixes = list("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
 	primary_work_area = /area/station/cargo
 	head_of_staff_access = ACCESS_QM
@@ -180,7 +181,7 @@
 	department_head = /datum/job/head_of_personnel
 	department_experience_type = EXP_TYPE_SERVICE
 	display_order = 7
-	ui_color = "#7cc46a"
+	ui_color = "#1fad4e"
 	nation_prefixes = list("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
 	primary_work_area = /area/station/service
 	department_delivery_areas = list(/area/station/hallway/secondary/service, /area/station/service/bar/atrium)
@@ -194,7 +195,7 @@
 	department_head = /datum/job/ai
 	department_experience_type = EXP_TYPE_SILICON
 	display_order = 8
-	ui_color = "#5dbda0"
+	ui_color = "#d9268e"
 
 /datum/job_department/silicon/generate_nation_name()
 	return "United Nations" //For nations ruleset specifically, because all other sources of nation creation cannot choose silicons

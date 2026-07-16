@@ -154,7 +154,7 @@
 	if(!istype(undershirt) || !LAZYLEN(undershirt.attached_accessories))
 		return
 	if(alternate_worn_layer)
-		. += undershirt.accessory_overlay
+		. += undershirt.get_accessory_overlays()
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"

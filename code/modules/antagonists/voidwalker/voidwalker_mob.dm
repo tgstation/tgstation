@@ -109,7 +109,7 @@
 	charge.Grant(src)
 
 	// Glass passing is handled by the glass passer component
-	passtable_on(src, type)
+	ADD_TRAIT(src, TRAIT_PASSWINDOW, INNATE_TRAIT)
 
 	// Voidwalker lore is that radio's actually attracted them, so they should be able to listen to it
 	var/obj/item/radio/internal_radio = new /obj/item/radio(src)

@@ -107,17 +107,16 @@
 		SSore_generation.processed_vents -= src
 	return ..()
 
-/obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(.)
-		return TRUE
-	if(!is_type_in_list(attacking_item, scanning_equipment))
-		return TRUE
+/obj/structure/ore_vent/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!is_type_in_list(tool, scanning_equipment))
+		return NONE
+
 	if(tapped)
 		balloon_alert_to_viewers("vent tapped!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
+
 	scan_and_confirm(user)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ore_vent/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -669,6 +668,10 @@
 	if(!mapload)
 		vent_size_setup(random = TRUE) // We only do this here specific to random distribution ore vents, and within mapload we handle this manually within SSore_generation.
 
+/obj/structure/ore_vent/random/LateInitialize()
+	. = ..()
+	if(!length(mineral_breakdown))
+		CRASH("We generated an ore vent, and after init, it had no mineral breakdown!")
 
 /obj/structure/ore_vent/random/icebox //The one that shows up on the top level of icebox
 	icon_state = "ore_vent_ice"

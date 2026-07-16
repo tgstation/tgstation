@@ -498,10 +498,10 @@
 
 /obj/item/organ/cyberimp/arm/strongarm/on_bodypart_remove(obj/item/bodypart/arm)
 	. = ..()
-	arm.unarmed_damage_low += lower_punch_damage
-	arm.unarmed_damage_high += upper_punch_damage
-	arm.unarmed_effectiveness += punch_effectiveness_added
-	arm.unarmed_grab_damage_bonus += bonus_grab_damage
+	arm.unarmed_damage_low -= lower_punch_damage
+	arm.unarmed_damage_high -= upper_punch_damage
+	arm.unarmed_effectiveness -= punch_effectiveness_added
+	arm.unarmed_grab_damage_bonus -= bonus_grab_damage
 
 /obj/item/organ/cyberimp/arm/strongarm/emp_act(severity)
 	. = ..()

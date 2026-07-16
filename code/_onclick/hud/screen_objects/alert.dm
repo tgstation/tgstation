@@ -86,6 +86,8 @@
 	alerts -= category
 	if(client && hud_used)
 		hud_used.reorganize_alerts()
+		for(var/mob/viewer as anything in observers)
+			viewer.client?.screen -= alert
 		client.screen -= alert
 	qdel(alert)
 
@@ -408,6 +410,8 @@
 	var/screentip_override_text
 	/// Whether the offered item can be examined by shift-clicking the alert
 	var/examinable = TRUE
+	/// Whether this item should bypass active hand checks.
+	var/bypass_active_hand = FALSE
 
 /atom/movable/screen/alert/give/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -486,8 +490,12 @@
 	var/mob/living/taker = owner
 	var/mob/living/offerer = offer.owner
 	var/obj/item/receiving = offer.offered_item
-	taker.take(offerer, receiving)
+	taker.take(offerer, receiving, bypass_active_hand)
 	SEND_SIGNAL(offerer, COMSIG_LIVING_ITEM_GIVEN, taker, receiving)
+
+/// Mostly for borgs to offer items.
+/atom/movable/screen/alert/give/borg
+	bypass_active_hand = TRUE
 
 /atom/movable/screen/alert/give/highfive
 	additional_desc_text = "Click this alert to slap it."
@@ -1154,13 +1162,13 @@
 	if(!.)
 		return
 
-	var/mob/living/carbon/carbon_owner = owner
+	var/mob/living/carbon/human/human_owner = owner
 
-	if(!carbon_owner.can_resist() || !carbon_owner.shoes)
+	if(!human_owner.can_resist() || !human_owner.shoes)
 		return
 
-	carbon_owner.changeNext_move(CLICK_CD_RESIST)
-	carbon_owner.shoes.handle_tying(carbon_owner)
+	human_owner.changeNext_move(CLICK_CD_RESIST)
+	human_owner.shoes.handle_tying(human_owner)
 
 /atom/movable/screen/alert/shoes/untied
 	name = "Untied Shoes"
