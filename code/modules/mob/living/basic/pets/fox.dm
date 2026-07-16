@@ -58,6 +58,7 @@
 	AddElement(/datum/element/tiny_mob_hunter, MOB_SIZE_SMALL)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/can_be_held)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_FOX, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /datum/ai_controller/basic_controller/fox
 	blackboard = list(

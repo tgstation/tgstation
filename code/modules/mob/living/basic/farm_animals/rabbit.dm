@@ -55,6 +55,7 @@
 	AddElement(/datum/element/pet_bonus, "hop")
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown", "black", "white"), TRUE)
 	AddElement(/datum/element/can_be_held)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_RABBIT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	if(prob(20)) // bunny
 		name = "bunny"
 
