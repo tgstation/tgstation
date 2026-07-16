@@ -116,7 +116,6 @@
 	icon_living = initial(icon_living)
 	icon_dead = initial(icon_dead)
 	held_state = icon_state
-	AddElement(/datum/element/can_be_held)
 
 /mob/living/basic/chicken/cock/cool
 	name = "крутух"

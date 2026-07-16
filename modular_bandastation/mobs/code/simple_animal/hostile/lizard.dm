@@ -51,6 +51,7 @@
 
 /mob/living/basic/lizard/big/Initialize(mapload)
 	. = ..()
+	RemoveElement(/datum/element/can_be_held)
 	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_FENCE_CLIMBER, INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)

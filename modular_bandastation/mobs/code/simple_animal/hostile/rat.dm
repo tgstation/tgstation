@@ -20,7 +20,6 @@
 
 /mob/living/basic/mouse/rat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/can_be_held)
 	switch(body_color)
 		if("white")
 			desc = /mob/living/basic/mouse/rat/white::desc

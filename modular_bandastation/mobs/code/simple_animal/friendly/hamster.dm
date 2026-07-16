@@ -30,7 +30,6 @@
 
 /mob/living/basic/mouse/hamster/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/can_be_held)
 	if(can_breed)
 		add_breeding_component()
 
