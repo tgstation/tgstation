@@ -2581,7 +2581,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/perform_hand_swap(held_index)
 	//safeguard for one-handed mobs lol
-	if(num_hands == 1)
+	if(length(held_items) == 1)
 		held_index = 1
 
 	return ..()
