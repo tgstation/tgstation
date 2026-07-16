@@ -27,6 +27,7 @@
 	var/specific_transport_id = TRAMSTATION_LINE_1
 	/// If the sign is adjusted for split type tram windows
 	var/split_mode = FALSE
+	generate_map_preview = FALSE
 
 /obj/machinery/computer/tram_controls/split
 	circuit = /obj/item/circuitboard/computer/tram_controls/split

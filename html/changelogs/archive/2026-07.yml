@@ -455,6 +455,8 @@
   - qol: the character job slot assignment menu will fade out while you are dragging
       a character, to allow you to access jobs that might render behind it
 2026-07-15:
+  Aliceee2ch:
+  - qol: Made machinery with overlays actually be properly displayed in SDMM editor.
   Melbert:
   - rscadd: On April Fools, or if you're exceptionally (un)lucky, ripping up a certain
       poster will reveal a certain other poster underneath
@@ -463,3 +465,21 @@
   san7890:
   - refactor: Picking up your pets (or any holdable mob) requires an aggressive grab
       now.
+  theselfish:
+  - spellcheck: Dogwhistle has been removed from a bounty description.
+2026-07-16:
+  FeudeyTF:
+  - qol: Notepad can edit and save text files
+  Fghj240:
+  - bugfix: cyberheart blood regeneration properly scales with heart damage
+  JohnFulpWillard:
+  - qol: Better Emojipedia UI, better emojis, some more emojis.
+  SmArtKar:
+  - bugfix: Fixed atmos diffs and incorrect atmos in lavaland hermit ruin
+  lelandkemble:
+  - qol: crowbarring a transit tube pod out of a transit tube now provides messaging
+      when successful or unsuccessful
+  - bugfix: reinforcing plating that is then reinforced into reinforced plating no
+      longer reinforces the reinforced plating what was reinforced mid-reinforcement
+  - code_imp: 30 files (maybe 29) (maybe 28) (depends what order you're seeing these
+      changelogs in) have been converted from attackby() to item_interaction()
