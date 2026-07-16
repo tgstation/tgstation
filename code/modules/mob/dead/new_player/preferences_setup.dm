@@ -86,10 +86,10 @@
 	var/datum/job/preview_job
 	var/highest_pref = 0
 
-	for(var/job in job_preferences)
-		if(job_preferences[job] > highest_pref)
+	for(var/job, priority in job_preferences)
+		if(priority > highest_pref)
 			preview_job = SSjob.get_job(job)
-			highest_pref = job_preferences[job]
+			highest_pref = priority
 
 	return preview_job
 
@@ -126,4 +126,6 @@
 				continue
 			mannequin.add_quirk(quirk_type, parent, announce = FALSE)
 
+	// Height is applied universally once to save on filters
+	mannequin.apply_height(mannequin, ENTIRE_BODY)
 	return mannequin.appearance

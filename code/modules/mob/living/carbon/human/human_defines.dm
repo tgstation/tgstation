@@ -57,6 +57,14 @@
 	var/jumpsuit_style = PREF_SUIT //suit/skirt
 
 	//Equipment slots
+	var/obj/item/back = null
+	var/obj/item/head = null
+	var/obj/item/clothing/gloves = null
+	var/obj/item/clothing/ears = null
+	var/obj/item/clothing/glasses/glasses = null
+	var/obj/item/clothing/shoes/shoes = null
+	var/obj/item/clothing/neck/wear_neck = null
+	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/wear_suit = null
 	var/obj/item/clothing/w_uniform = null
 	var/obj/item/belt = null
@@ -93,3 +101,12 @@
 
 	/// Tracks how long in seconds we've been in a low pressure environment
 	VAR_FINAL/seconds_in_low_pressure = 0
+
+	/// Combined width of our body sprite
+	VAR_PRIVATE/cached_body_width = ICON_SIZE_X
+	/// Combined height of our body sprite
+	VAR_PRIVATE/cached_body_height = ICON_SIZE_Y
+	/// Leftmost offset of our overlays
+	var/cached_body_min_x_offset = 0
+	/// Rightmost offset of our overlays
+	var/cached_body_min_y_offset = 0

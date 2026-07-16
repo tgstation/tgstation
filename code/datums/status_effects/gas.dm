@@ -1,6 +1,6 @@
 /datum/status_effect/freon
 	id = "frozen"
-	duration = 100
+	duration = 10 SECONDS
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/freon
 	var/icon/cube
@@ -10,6 +10,11 @@
 	name = "Frozen Solid"
 	desc = "You're frozen inside an ice cube, and cannot move! You can still do stuff, like shooting. Resist out of the cube!"
 	icon_state = "frozen"
+
+/datum/status_effect/freon/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	return ..()
 
 /datum/status_effect/freon/on_apply()
 	. = ..()
@@ -21,7 +26,6 @@
 		to_chat(owner, span_userdanger("You become frozen in a cube!"))
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
 	owner.add_overlay(cube)
-
 
 /datum/status_effect/freon/tick(seconds_between_ticks)
 	if(can_melt && owner.bodytemperature >= owner.get_body_temp_normal())
@@ -47,7 +51,7 @@
 	return ..()
 
 /datum/status_effect/freon/watcher
-	duration = 8
+	duration = 0.8 SECONDS
 	can_melt = FALSE
 
 /datum/status_effect/freon/watcher/extended

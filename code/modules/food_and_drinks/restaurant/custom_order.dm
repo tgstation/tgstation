@@ -44,7 +44,7 @@
 /datum/custom_order/moth_clothing/New(mob/living/basic/robot_customer/customer, datum/venue/our_venue)
 	var/datum/weakref/portal_ref = our_venue.current_visitors[customer]
 	var/obj/machinery/restaurant_portal/portal = portal_ref.resolve()
-	var/mob/living/carbon/buffet = portal?.turned_on_portal?.resolve()
+	var/mob/living/carbon/human/buffet = portal?.turned_on_portal?.resolve()
 	if (!istype(buffet)) // Always asks for the clothes that you have on, but this is a fallback.
 		wanted_clothing_type = pick_weight(list(
 			/obj/item/clothing/head/utility/chefhat = 3,

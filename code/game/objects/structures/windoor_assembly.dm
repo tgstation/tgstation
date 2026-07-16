@@ -1,3 +1,5 @@
+#define WINDOOR_LEFT "l"
+#define WINDOOR_RIGHT "r"
 
 /obj/structure/windoor_assembly
 	icon = 'icons/obj/doors/windoor.dmi'
@@ -20,20 +22,21 @@
 
 	//Vars to help with the icon's name
 	///Does the windoor open to the left or right?
-	var/facing = "l"
+	var/facing = WINDOOR_LEFT
 	///Whether or not this creates a secure windoor
 	var/secure = FALSE
 	/**
-	  * Windoor (window door) assembly -Nodrak
-	  * Step 1: Create a windoor out of rglass
-	  * Step 2: Add r-glass to the assembly to make a secure windoor (Optional)
-	  * Step 3: Rotate or Flip the assembly to face and open the way you want
-	  * Step 4: Wrench the assembly in place
-	  * Step 5: Add cables to the assembly
-	  * Step 6: Set access for the door.
-	  * Step 7: Crowbar the door to complete
+	  * Windoor (window door) assembly -Nodrak      ----------- with comments clarifying what's actually happening, and how we know what step we're on
+	  * Step 1: Create a windoor out of rglass                                       -no variables modified. Destroy via welder
+	  * Step 2: Add r-glass to the assembly to make a secure windoor (Optional)      -tracked by secure, can be done anytime before cables_added is TRUE. Cannot be undone
+	  * Step 3: Rotate or Flip the assembly to face and open the way you want        -tracked by facing, can be done any time before anchoring via wrench right click
+	  * Step 4: Wrench the assembly in place                                         -tracked by anchored, no requisites, undone with wrench as well if cabling not yet inserted
+	  * Step 5: Add cables to the assembly									         -tracked by cables_added, requires being anchored, undoable with wirecutters with no requisites until full completion
+	  * Step 6: Set access for the door.                                             -tracked by electronics, requires cabling to install electronics, undoable with screwdriver requiring cabling to remain
+	  * Step 7: Crowbar the door to complete                                         -requires cabling & electronics, not undoable. obviously.
 	 */
-	var/state = "01"
+
+	var/cables_added = FALSE
 
 
 /obj/structure/windoor_assembly/Initialize(mapload, set_dir)
@@ -60,7 +63,7 @@
 	move_update_air(T)
 
 /obj/structure/windoor_assembly/update_icon_state()
-	icon_state = "[facing]_[secure ? "secure_" : ""]windoor_assembly[state]"
+	icon_state = "[facing]_[secure ? "secure_" : ""]windoor_assembly[cables_added ? "02" : "01"]"
 	return ..()
 
 /obj/structure/windoor_assembly/CanAllowThrough(atom/movable/mover, border_dir)
@@ -98,199 +101,262 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/structure/windoor_assembly/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/windoor_assembly/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	//I really should have spread this out across more states but thin little windoors are hard to sprite.
 	add_fingerprint(user)
-	switch(state)
-		if("01")
-			if(W.tool_behaviour == TOOL_WELDER && !anchored)
-				if(!W.tool_start_check(user, amount=1))
-					return
+	if(!cables_added)
+		//Adding plasteel makes the assembly a secure windoor assembly. Step 2 (optional) complete.
+		if(istype(tool, /obj/item/stack/sheet/plasteel) && !secure)
+			var/obj/item/stack/sheet/plasteel/reinforcement = tool
+			if(reinforcement.get_amount() < 2)
+				to_chat(user, span_warning("You need more plasteel to do this!"))
+				return ITEM_INTERACT_BLOCKING
 
-				user.visible_message(span_notice("[user] disassembles the windoor assembly."),
-					span_notice("You start to disassemble the windoor assembly..."))
+			to_chat(user, span_notice("You start to reinforce the windoor with plasteel..."))
 
-				if(W.use_tool(src, user, 40, volume=50))
-					to_chat(user, span_notice("You disassemble the windoor assembly."))
-					var/obj/item/stack/sheet/rglass/RG = new (get_turf(src), 5)
-					if (!QDELETED(RG))
-						RG.add_fingerprint(user)
-					if(secure)
-						var/obj/item/stack/rods/R = new (get_turf(src), 4)
-						if (!QDELETED(R))
-							R.add_fingerprint(user)
-					qdel(src)
-				return
+			if(!do_after(user, 4 SECONDS, target = src))
+				return ITEM_INTERACT_BLOCKING
 
-			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
-			if(W.tool_behaviour == TOOL_WRENCH && !anchored)
-				for(var/obj/machinery/door/window/WD in loc)
-					if(WD.dir == dir)
-						to_chat(user, span_warning("There is already a windoor in that location!"))
-						return
-				user.visible_message(span_notice("[user] secures the windoor assembly to the floor."),
-					span_notice("You start to secure the windoor assembly to the floor..."))
+			if(!src || secure || reinforcement.get_amount() < 2)
+				return ITEM_INTERACT_BLOCKING
 
-				if(W.use_tool(src, user, 40, volume=100))
-					if(anchored)
-						return
-					for(var/obj/machinery/door/window/WD in loc)
-						if(WD.dir == dir)
-							to_chat(user, span_warning("There is already a windoor in that location!"))
-							return
-					to_chat(user, span_notice("You secure the windoor assembly."))
-					set_anchored(TRUE)
-					if(secure)
-						name = "secure anchored windoor assembly"
-					else
-						name = "anchored windoor assembly"
-
-			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
-			else if(W.tool_behaviour == TOOL_WRENCH && anchored)
-				user.visible_message(span_notice("[user] unsecures the windoor assembly to the floor."),
-					span_notice("You start to unsecure the windoor assembly to the floor..."))
-
-				if(W.use_tool(src, user, 40, volume=100))
-					if(!anchored)
-						return
-					to_chat(user, span_notice("You unsecure the windoor assembly."))
-					set_anchored(FALSE)
-					if(secure)
-						name = "secure windoor assembly"
-					else
-						name = "windoor assembly"
-
-			//Adding plasteel makes the assembly a secure windoor assembly. Step 2 (optional) complete.
-			else if(istype(W, /obj/item/stack/sheet/plasteel) && !secure)
-				var/obj/item/stack/sheet/plasteel/P = W
-				if(P.get_amount() < 2)
-					to_chat(user, span_warning("You need more plasteel to do this!"))
-					return
-				to_chat(user, span_notice("You start to reinforce the windoor with plasteel..."))
-
-				if(do_after(user,40, target = src))
-					if(!src || secure || P.get_amount() < 2)
-						return
-
-					P.use(2)
-					to_chat(user, span_notice("You reinforce the windoor."))
-					secure = TRUE
-					if(anchored)
-						name = "secure anchored windoor assembly"
-					else
-						name = "secure windoor assembly"
-
-			//Adding cable to the assembly. Step 5 complete.
-			else if(istype(W, /obj/item/stack/cable_coil) && anchored)
-				user.visible_message(span_notice("[user] wires the windoor assembly."), span_notice("You start to wire the windoor assembly..."))
-
-				if(do_after(user, 4 SECONDS, target = src))
-					if(!src || !anchored || src.state != "01")
-						return
-					var/obj/item/stack/cable_coil/CC = W
-					if(!CC.use(1))
-						to_chat(user, span_warning("You need more cable to do this!"))
-						return
-					to_chat(user, span_notice("You wire the windoor."))
-					state = "02"
-					if(secure)
-						name = "secure wired windoor assembly"
-					else
-						name = "wired windoor assembly"
+			reinforcement.use(2)
+			to_chat(user, span_notice("You reinforce the windoor."))
+			secure = TRUE
+			if(anchored)
+				name = "secure anchored windoor assembly"
 			else
-				return ..()
+				name = "secure windoor assembly"
+			update_appearance()
+			return ITEM_INTERACT_SUCCESS
 
-		if("02")
+		//Adding cable to the assembly. Step 5 complete.
+		if(istype(tool, /obj/item/stack/cable_coil) && anchored)
+			user.visible_message(span_notice("[user] wires the windoor assembly."), span_notice("You start to wire the windoor assembly..."))
 
-			//Removing wire from the assembly. Step 5 undone.
-			if(W.tool_behaviour == TOOL_WIRECUTTER)
-				user.visible_message(span_notice("[user] cuts the wires from the airlock assembly."), span_notice("You start to cut the wires from airlock assembly..."))
+			if(!do_after(user, 4 SECONDS, target = src))
+				return ITEM_INTERACT_BLOCKING
 
-				if(W.use_tool(src, user, 40, volume=100))
-					if(state != "02")
-						return
+			if(!anchored || cables_added)
+				return ITEM_INTERACT_BLOCKING
 
-					to_chat(user, span_notice("You cut the windoor wires."))
-					new/obj/item/stack/cable_coil(get_turf(user), 1)
-					state = "01"
-					if(secure)
-						name = "secure anchored windoor assembly"
-					else
-						name = "anchored windoor assembly"
+			var/obj/item/stack/cable_coil/wiring = tool
+			if(!wiring.use(1))
+				to_chat(user, span_warning("You need more cable to do this!"))
+				return ITEM_INTERACT_BLOCKING
 
-			//Adding airlock electronics for access. Step 6 complete.
-			else if(istype(W, /obj/item/electronics/airlock))
-
-				W.play_tool_sound(src, 100)
-				user.visible_message(span_notice("[user] installs the electronics into the airlock assembly."),
-					span_notice("You start to install electronics into the airlock assembly..."))
-
-				if(do_after(user, 4 SECONDS, target = src))
-
-					if(!user.transferItemToLoc(W, src))
-						return
-					if(!src || electronics)
-						W.forceMove(drop_location())
-						return
-					to_chat(user, span_notice("You install the airlock electronics."))
-					name = "near finished windoor assembly"
-					electronics = W
-
-			//Screwdriver to remove airlock electronics. Step 6 undone.
-			else if(W.tool_behaviour == TOOL_SCREWDRIVER)
-				if(!electronics)
-					return
-
-				user.visible_message(span_notice("[user] removes the electronics from the airlock assembly."),
-					span_notice("You start to uninstall electronics from the airlock assembly..."))
-
-				if(W.use_tool(src, user, 40, volume=100) && electronics)
-					to_chat(user, span_notice("You remove the airlock electronics."))
-					name = "wired windoor assembly"
-					var/obj/item/electronics/airlock/ae
-					ae = electronics
-					electronics = null
-					ae.forceMove(drop_location())
-
-			//Crowbar to complete the assembly, Step 7 complete.
-			else if(W.tool_behaviour == TOOL_CROWBAR)
-				if(!electronics)
-					to_chat(usr, span_warning("The assembly is missing electronics!"))
-					return
-				user.visible_message(span_notice("[user] pries the windoor into the frame."),
-					span_notice("You start prying the windoor into the frame..."))
-
-				if(W.use_tool(src, user, 40, volume=100) && electronics)
-					set_density(TRUE) //Shouldn't matter but just incase
-					to_chat(user, span_notice("You finish the windoor."))
-					finish_door()
-
+			to_chat(user, span_notice("You wire the windoor."))
+			cables_added = TRUE
+			if(secure)
+				name = "secure wired windoor assembly"
 			else
-				return ..()
+				name = "wired windoor assembly"
+			update_appearance()
+			return ITEM_INTERACT_SUCCESS
 
-	//Update to reflect changes(if applicable)
+		return NONE
+
+	//cables_added TRUE beyond this point
+
+	//Adding airlock electronics for access. Step 6 complete.
+	if(istype(tool, /obj/item/electronics/airlock))
+
+		tool.play_tool_sound(src, 100)
+		user.visible_message(span_notice("[user] installs the electronics into the airlock assembly."),
+							span_notice("You start to install electronics into the airlock assembly..."))
+
+		if(!do_after(user, 4 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+
+		if(!src || electronics)
+			tool.forceMove(drop_location())
+			return ITEM_INTERACT_BLOCKING
+
+		to_chat(user, span_notice("You install the airlock electronics."))
+		name = "near finished windoor assembly"
+		electronics = tool
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+//dissasemble entirely unworked assembly
+/obj/structure/windoor_assembly/welder_act(mob/living/user, obj/item/tool)
+	if(cables_added)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	if(!anchored)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	if(!tool.tool_start_check(user, amount=1))
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice("[user] disassembles the windoor assembly."),
+						span_notice("You start to disassemble the windoor assembly..."))
+
+	if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You disassemble the windoor assembly."))
+	var/obj/item/stack/sheet/rglass/dropped_glass = new (get_turf(src), 5)
+	if(!QDELETED(dropped_glass))
+		dropped_glass.add_fingerprint(user)
+	if(secure)
+		var/obj/item/stack/rods/dropped_rods = new (get_turf(src), 4)
+		if(!QDELETED(dropped_rods))
+			dropped_rods.add_fingerprint(user)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
+
+//secure or unsecure unworked assembly
+/obj/structure/windoor_assembly/wrench_act(mob/living/user, obj/item/tool)
+	if(cables_added)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	if(!anchored)
+		for(var/obj/machinery/door/window/competitor in loc)
+			if(competitor.dir == dir)
+				to_chat(user, span_warning("There is already a windoor in that location!"))
+				return ITEM_INTERACT_BLOCKING
+
+		user.visible_message(span_notice("[user] secures the windoor assembly to the floor."),
+							span_notice("You start to secure the windoor assembly to the floor..."))
+		if(!tool.use_tool(src, user, 4 SECONDS, volume=100))
+			return ITEM_INTERACT_BLOCKING
+
+		if(anchored)
+			return ITEM_INTERACT_BLOCKING
+
+		for(var/obj/machinery/door/window/competitor in loc)
+			if(competitor.dir == dir)
+				to_chat(user, span_warning("There is already a windoor in that location!"))
+				return ITEM_INTERACT_BLOCKING
+
+		to_chat(user, span_notice("You secure the windoor assembly."))
+		set_anchored(TRUE)
+		if(secure)
+			name = "secure anchored windoor assembly"
+		else
+			name = "anchored windoor assembly"
+		return ITEM_INTERACT_SUCCESS
+
+	//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
+	user.visible_message(span_notice("[user] unsecures the windoor assembly to the floor."),
+						span_notice("You start to unsecure the windoor assembly to the floor..."))
+
+	if(!tool.use_tool(src, user, 4 SECONDS, volume=100))
+		return ITEM_INTERACT_BLOCKING
+	if(!anchored)
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You unsecure the windoor assembly."))
+	set_anchored(FALSE)
+	if(secure)
+		name = "secure windoor assembly"
+	else
+		name = "windoor assembly"
+	return ITEM_INTERACT_SUCCESS
+
+//Flips the windoor assembly, determines whether the door opens to the left or the right
+/obj/structure/windoor_assembly/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(anchored)
+		return NONE
+	if(facing == WINDOOR_LEFT)
+		to_chat(usr, span_notice("The windoor will now slide to the right."))
+		facing = WINDOOR_RIGHT
+	else
+		facing = WINDOOR_LEFT
+		to_chat(usr, span_notice("The windoor will now slide to the left."))
+
 	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+//remove cabling
+/obj/structure/windoor_assembly/wirecutter_act(mob/living/user, obj/item/tool)
+	if(!cables_added)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	user.visible_message(span_notice("[user] cuts the wires from the airlock assembly."), \
+						span_notice("You start to cut the wires from airlock assembly..."))
+	if(!tool.use_tool(src, user, 4 SECONDS, volume=100))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!cables_added)
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You cut the windoor wires."))
+	new/obj/item/stack/cable_coil(get_turf(user), 1)
+	cables_added = FALSE
+	if(secure)
+		name = "secure anchored windoor assembly"
+	else
+		name = "anchored windoor assembly"
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+//remove airlock electronics
+/obj/structure/windoor_assembly/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!cables_added)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	if(!electronics)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	user.visible_message(span_notice("[user] removes the electronics from the airlock assembly."),
+						span_notice("You start to uninstall electronics from the airlock assembly..."))
+
+	if(!tool.use_tool(src, user, 4 SECONDS, volume=100) && electronics)
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You remove the airlock electronics."))
+	name = "wired windoor assembly"
+	var/obj/item/electronics/airlock/scrap
+	scrap = electronics
+	electronics = null
+	scrap.forceMove(drop_location())
+	return ITEM_INTERACT_SUCCESS
+
+//finishes door
+/obj/structure/windoor_assembly/crowbar_act(mob/living/user, obj/item/tool)
+	if(!cables_added)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	if(!electronics)
+		to_chat(usr, span_warning("The assembly is missing electronics!"))
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice("[user] pries the windoor into the frame."),
+						span_notice("You start prying the windoor into the frame..."))
+
+	if(!tool.use_tool(src, user, 4 SECONDS, volume=100) || !electronics)
+		return ITEM_INTERACT_BLOCKING
+	set_density(TRUE) //Shouldn't matter but just incase <-- in case what?
+	to_chat(user, span_notice("You finish the windoor."))
+	finish_door()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/windoor_assembly/examine(mob/user)
 	. = ..()
 	if(!anchored)
 		. += span_notice("\The [src] can be [span_boldnotice("wrenched")] down.")
 		. += span_notice("\The [src] could also be [span_boldnotice("cut apart")] with a [span_boldnotice("welder")].")
-		return
-	switch(state)
-		if("01")
-			. += span_notice("\The [src] needs [span_boldnotice("wiring")], or could be [span_boldnotice("un-wrenched")] from the floor.")
-		if("02")
-			if(!electronics)
-				. += span_notice("\The [src] needs [span_boldnotice("airlock electronics")] to continue installation, or [span_boldnotice("wirecutters")] to take apart.")
-			else
-				. += span_notice("\The [src] is ready to be [span_boldnotice("levered")] into place with a [span_boldnotice("crowbar")].")
+		return .
+
+	if(!cables_added)
+		. += span_notice("\The [src] needs [span_boldnotice("wiring")], or could be [span_boldnotice("un-wrenched")] from the floor.")
+		return .
+
+	if(!electronics)
+		. += span_notice("\The [src] needs [span_boldnotice("airlock electronics")] to continue installation, or [span_boldnotice("wirecutters")] to take apart.")
+		return .
+
+	. += span_notice("\The [src] is ready to be [span_boldnotice("levered")] into place with a [span_boldnotice("crowbar")].")
 
 /obj/structure/windoor_assembly/proc/finish_door()
 	var/obj/machinery/door/window/windoor
 	if(secure)
 		windoor = new /obj/machinery/door/window/brigdoor(loc)
-		if(facing == "l")
+		if(facing == WINDOOR_LEFT)
 			windoor.icon_state = "leftsecureopen"
 			windoor.base_state = "leftsecure"
 		else
@@ -299,7 +365,7 @@
 
 	else
 		windoor = new /obj/machinery/door/window(loc)
-		if(facing == "l")
+		if(facing == WINDOOR_LEFT)
 			windoor.icon_state = "leftopen"
 			windoor.base_state = "left"
 		else
@@ -334,32 +400,12 @@
 
 	qdel(src)
 
-
-//Flips the windoor assembly, determines whather the door opens to the left or the right
-/obj/structure/windoor_assembly/verb/flip()
-	set name = "Flip Windoor Assembly"
-	set src in oview(1)
-	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
-		return
-
-	if(isliving(usr))
-		var/mob/living/L = usr
-		if(!(L.mobility_flags & MOBILITY_USE))
-			return
-
-	if(facing == "l")
-		to_chat(usr, span_notice("The windoor will now slide to the right."))
-		facing = "r"
-	else
-		facing = "l"
-		to_chat(usr, span_notice("The windoor will now slide to the left."))
-
-	update_appearance()
-	return
-
 /obj/structure/windoor_assembly/nameformat(input, user)
 	created_name = input
 	return input
 
 /obj/structure/windoor_assembly/rename_reset()
 	created_name = initial(created_name)
+
+#undef WINDOOR_LEFT
+#undef WINDOOR_RIGHT

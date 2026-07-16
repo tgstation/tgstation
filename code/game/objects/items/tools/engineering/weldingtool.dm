@@ -30,7 +30,7 @@
 	toolspeed = 1
 	wound_bonus = 10
 	exposed_wound_bonus = 15
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.3)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2)
 	/// Whether the welding tool is on or off.
 	var/welding = FALSE
 	/// Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
@@ -122,12 +122,12 @@
 	flamethrower_screwdriver(tool, user)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/weldingtool/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(tool, /obj/item/stack/rods))
-		flamethrower_rods(tool, user)
-	else
-		. = ..()
+/obj/item/weldingtool/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/rods))
+		return NONE
+	flamethrower_rods(tool, user)
 	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/weldingtool/cyborg_unequip(mob/user)
 	if(!isOn())
@@ -344,7 +344,7 @@
 	icon_state = "indwelder"
 	inhand_icon_state = "indwelder"
 	max_fuel = 40
-	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.6)
 
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()
 	return

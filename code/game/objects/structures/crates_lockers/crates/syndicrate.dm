@@ -43,17 +43,18 @@
 	qdel(src)
 
 ///ensures that the syndicrate can only be unlocked by opening it with a syndicrate_key
-/obj/structure/closet/crate/secure/syndicrate/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(item, /obj/item/syndicrate_key) || created_items)
+/obj/structure/closet/crate/secure/syndicrate/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/syndicrate_key) || created_items)
 		return ..()
 	created_items = TRUE
 	for(var/item_path in unlock_contents)
 		new item_path(src)
 	unlock_contents = list()
-	qdel(item)
+	qdel(tool)
 	to_chat(user, span_notice("You twist the key into both locks at once, opening the crate."))
 	playsound(src, 'sound/machines/airlock/boltsup.ogg', 50, vary = FALSE)
 	togglelock(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/closet/crate/secure/syndicrate/togglelock(mob/living/user, silent)
 	if(broken || !created_items)
@@ -67,8 +68,8 @@
 	)
 	update_appearance()
 
-/obj/structure/closet/crate/secure/syndicrate/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/structure/closet/crate/secure/syndicrate/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/syndicrate_key
 	name = "syndicrate key"

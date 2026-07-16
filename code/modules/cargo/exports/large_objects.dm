@@ -60,10 +60,15 @@
 	unit_name = "fueltank"
 	export_types = list(/obj/structure/reagent_dispensers/fueltank)
 
-/datum/export/reagent_dispenser/beer
-	unit_name = "beer keg"
+/datum/export/reagent_dispenser/alcohol_keg
+	unit_name = "alcohol keg"
 	contents_cost = CARGO_CRATE_VALUE * 3.5
-	export_types = list(/obj/structure/reagent_dispensers/beerkeg)
+	export_types = list(/obj/structure/reagent_dispensers/keg/beer, /obj/structure/reagent_dispensers/keg/whiskey, /obj/structure/reagent_dispensers/keg/rum)
+
+/datum/export/reagent_dispenser/gold_keg
+	unit_name = "premium keg"
+	contents_cost = CARGO_CRATE_VALUE * 6.5
+	export_types = list(/obj/structure/reagent_dispensers/keg/gold)
 
 /datum/export/pipedispenser
 	cost = CARGO_CRATE_VALUE * 2.5
@@ -121,7 +126,7 @@
 	var/datum/gas_mixture/canister_mix = canister.return_air()
 	if(!canister_mix.total_moles())
 		return 0
-	var/canister_gas = canister_mix.gases
+	var/cached_moles = canister_mix.moles
 
 	var/static/list/gases_to_check = list(
 		/datum/gas/bz,
@@ -141,10 +146,10 @@
 	)
 
 	var/worth = cost
-	for(var/gasID in gases_to_check)
-		canister_mix.assert_gas(gasID)
-		if(canister_gas[gasID][MOLES] > 0)
-			worth += get_gas_value(gasID, canister_gas[gasID][MOLES])
+	for(var/gas_id in gases_to_check)
+		canister_mix.assert_gas(gas_id)
+		if(cached_moles[gas_id] > 0)
+			worth += get_gas_value(gas_id, cached_moles[gas_id])
 			if(worth > MAX_GAS_CREDITS)
 				worth = MAX_GAS_CREDITS
 				break

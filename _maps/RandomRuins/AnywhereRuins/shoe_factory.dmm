@@ -264,8 +264,9 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "shoe_factory_entrance"
 	},
-/obj/effect/mapping_helpers/airlock_note_placer,
-/obj/item/paper/fluff/ruins/shoe_factory/osha_shutdown,
+/obj/effect/mapping_helpers/airlock_note_placer{
+	note_path = /obj/item/paper/fluff/ruins/shoe_factory/osha_shutdown
+	},
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -823,8 +824,9 @@
 	cycle_id = "shoe_factory_entrance"
 	},
 /obj/machinery/door/airlock/external/ruin,
-/obj/effect/mapping_helpers/airlock_note_placer,
-/obj/item/paper/fluff/ruins/shoe_factory/osha_shutdown,
+/obj/effect/mapping_helpers/airlock_note_placer{
+	note_path = /obj/item/paper/fluff/ruins/shoe_factory/osha_shutdown
+	},
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},

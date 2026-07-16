@@ -33,9 +33,13 @@
 
 /obj/structure/falsewall/Initialize(mapload)
 	. = ..()
-	var/obj/item/stack/initialized_mineral = new mineral // Okay this kinda sucks.
-	set_custom_materials(initialized_mineral.mats_per_unit, mineral_amount)
-	qdel(initialized_mineral)
+	// minerals are only applied to fake mineral walls
+	// ...yes, real iron walls are not actually made of iron
+	if(ispath(walltype, /turf/closed/wall/mineral))
+		var/obj/item/stack/initialized_mineral = new mineral // Okay this kinda sucks.
+		set_custom_materials(initialized_mineral.mats_per_unit, mineral_amount)
+		qdel(initialized_mineral)
+
 	air_update_turf(TRUE, TRUE)
 	update_appearance()
 
@@ -116,16 +120,16 @@
 
 
 /obj/structure/falsewall/welder_act(mob/living/user, obj/item/tool)
-	if(tool.use_tool(src, user, 0 SECONDS, volume=50))
-		dismantle(user, TRUE)
-		return ITEM_INTERACT_SUCCESS
-	return
+	if(!tool.use_tool(src, user, 0 SECONDS, volume=50))
+		return ITEM_INTERACT_BLOCKING
+	dismantle(user, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/falsewall/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(!opening)
-		return ..()
-	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
-	return
+/obj/structure/falsewall/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(opening)
+		to_chat(user, span_warning("You must wait until the door has stopped moving!"))
+		return ITEM_INTERACT_BLOCKING // honest to god no idea what the point of this blocker is, I'm just the messenger
+	return NONE
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
 	user.visible_message(span_notice("[user] dismantles the false wall."), span_notice("You dismantle the false wall."))
@@ -145,9 +149,11 @@
 /obj/structure/falsewall/get_dumping_location()
 	return null
 
+/obj/structure/falsewall/examine_descriptor(mob/user)
+	return "wall"
+
 /obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
-	to_chat(user, span_notice("The outer plating is <b>welded</b> firmly in place."))
-	return null
+	return span_notice("The outer plating is <b>welded</b> firmly in place.")
 
 /obj/structure/falsewall/mouse_drop_receive(mob/living/dropping, mob/user, params)
 	. = ..()
@@ -168,13 +174,14 @@
 	smoothing_flags = SMOOTH_BITMASK
 
 /obj/structure/falsewall/reinforced/examine_status(mob/user)
-	to_chat(user, span_notice("The outer <b>grille</b> is fully intact."))
-	return null
+	return span_notice("The outer <b>grille</b> is fully intact.")
 
-/obj/structure/falsewall/reinforced/attackby(obj/item/tool, mob/user)
-	..()
-	if(tool.tool_behaviour == TOOL_WIRECUTTER)
-		dismantle(user, TRUE, tool)
+/obj/structure/falsewall/reinforced/wirecutter_act(mob/living/user, obj/item/tool)
+	dismantle(user, TRUE, tool)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/falsewall/reinforced/welder_act(mob/living/user, obj/item/tool)
+	return NONE
 
 /*
  * Uranium Falsewalls

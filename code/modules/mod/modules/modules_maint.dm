@@ -67,7 +67,7 @@
 
 	var/turf/wearer_turf = get_turf(src)
 	var/datum/gas_mixture/air = wearer_turf.return_air()
-	if(!(air.gases[/datum/gas/water_vapor] && (air.gases[/datum/gas/water_vapor][MOLES]) >= 5))
+	if(air.moles[/datum/gas/water_vapor] < 5)
 		return //return if there aren't more than 5 Moles of Water Vapor in the air
 	snap_signal()
 
@@ -341,7 +341,7 @@
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(on_talk))
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(on_someone_buckled))
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
-	passtable_on(mod.wearer, REF(src))
+	ADD_TRAIT(mod.wearer, TRAIT_PASSTABLE, REF(src))
 	check_upstairs() //todo at some point flip your screen around
 
 /obj/item/mod/module/atrocinator/deactivate(mob/activator, display_message = TRUE, deleting = FALSE)
@@ -359,7 +359,7 @@
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_PREBUCKLE)
 	step_count = 0
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
-	passtable_off(mod.wearer, REF(src))
+	REMOVE_TRAIT(mod.wearer, TRAIT_PASSTABLE, REF(src))
 	var/turf/open/openspace/current_turf = get_turf(mod.wearer)
 	if(istype(current_turf))
 		current_turf.zFall(mod.wearer, falling_from_move = TRUE)

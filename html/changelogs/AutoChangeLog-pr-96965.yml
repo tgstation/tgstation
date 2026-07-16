@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixed an issue that would prevent an emped mech from being able to melee attack a target"

@@ -305,18 +305,20 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/cigarette/dropped(mob/dropee)
 	. = ..()
 	// Moving the cigarette from mask to hands (or pocket I guess) will emit a larger puff of smoke
-	if(!QDELETED(src) && !QDELETED(dropee) && how_long_have_we_been_smokin >= 4 SECONDS && iscarbon(dropee) && iscarbon(loc))
-		var/mob/living/carbon/smoker = dropee
+	if(!QDELETED(src) && !QDELETED(dropee) && how_long_have_we_been_smokin >= 4 SECONDS && dropee == loc && iscarbon(dropee))
 		// This relies on the fact that dropped is called before slot is nulled
-		if(src == smoker.wear_mask && !smoker.incapacitated)
-			long_exhale(smoker)
+		if(dropee.get_item_by_slot(ITEM_SLOT_MASK) == src && !dropee.incapacitated)
+			long_exhale(dropee)
 
 	UnregisterSignal(dropee, list(COMSIG_HUMAN_FORCESAY, COMSIG_ATOM_DIR_CHANGE))
 	QDEL_NULL(mob_smoke)
 	how_long_have_we_been_smokin = 0 SECONDS
 
-/obj/item/cigarette/proc/on_forcesay(mob/living/source)
+/obj/item/cigarette/proc/on_forcesay(mob/living/source, major)
 	SIGNAL_HANDLER
+
+	if(!major)
+		return
 	source.apply_status_effect(/datum/status_effect/choke, src, lit, choke_forever ? -1 : rand(25 SECONDS, choke_time_max))
 
 /obj/item/cigarette/proc/on_mob_dir_change(mob/living/source, old_dir, new_dir)
@@ -344,22 +346,24 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	user.visible_message(span_suicide("[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer."))
 	return (TOXLOSS|OXYLOSS)
 
-/obj/item/cigarette/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/cigarette/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(lit)
-		return ..()
+		return NONE
 
-	var/lighting_text = W.ignition_effect(src, user)
+	var/lighting_text = tool.ignition_effect(src, user)
 	if(!lighting_text)
-		return ..()
+		return NONE
 
 	if(!check_oxygen(user)) //cigarettes need oxygen
 		balloon_alert(user, "no air!")
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
-	if(smoketime > 0)
-		light(lighting_text)
-	else
+	if(!smoketime)
 		to_chat(user, span_warning("There is nothing to smoke!"))
+		return ITEM_INTERACT_BLOCKING
+
+	light(lighting_text)
+	return ITEM_INTERACT_SUCCESS
 
 /// Checks that we have enough air to smoke
 /obj/item/cigarette/proc/check_oxygen(mob/user)
@@ -368,9 +372,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/datum/gas_mixture/air = return_air()
 	if (!isnull(air) && air.has_gas(/datum/gas/oxygen, 1))
 		return TRUE
-	if (!iscarbon(user))
+	if (!ishuman(user))
 		return FALSE
-	var/mob/living/carbon/the_smoker = user
+	var/mob/living/carbon/human/the_smoker = user
 	return the_smoker.can_breathe_helmet()
 
 /obj/item/cigarette/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -461,7 +465,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	if(iscarbon(loc))
 		var/mob/living/carbon/smoker = loc
-		if(src == smoker.wear_mask)
+		if(smoker.get_item_by_slot(ITEM_SLOT_MASK) == src)
 			make_mob_smoke(smoker)
 
 /obj/item/cigarette/extinguish()
@@ -558,7 +562,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			reagents.remove_all(to_smoke)
 			return
 	else
-		if(src != smoker.wear_mask)
+		if(smoker.get_item_by_slot(ITEM_SLOT_MASK) != src)
 			reagents.remove_all(to_smoke)
 			return
 
@@ -971,18 +975,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(cig_smoke)
 
-/obj/item/cigarette/pipe/attackby(obj/item/thing, mob/user, list/modifiers, list/attack_modifiers)
-	if(!(istype(thing, /obj/item/food/grown) || istype(thing, /obj/item/food/drug)))
+/obj/item/cigarette/pipe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!(istype(tool, /obj/item/food/grown) || istype(tool, /obj/item/food/drug)))
 		return ..()
 
 	if(packeditem)
 		to_chat(user, span_warning("It is already packed!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	var/obj/item/to_smoke = thing
+	var/obj/item/to_smoke = tool
 	if(istype(to_smoke, /obj/item/food/grown) && !HAS_TRAIT(to_smoke, TRAIT_DRIED))
 		to_chat(user, span_warning("It has to be dried first!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, span_notice("You stuff [to_smoke] into [src]."))
 	smoketime = 13 MINUTES
@@ -991,6 +995,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(to_smoke.reagents)
 		to_smoke.reagents.trans_to(src, to_smoke.reagents.total_volume, transferred_by = user)
 	qdel(to_smoke)
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/item/cigarette/pipe/attack_self(mob/user)
@@ -1175,7 +1180,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 
 	var/mob/living/carbon/vaper = loc
-	if(!iscarbon(vaper) || src != vaper.wear_mask)
+	if(!iscarbon(vaper) || vaper.get_item_by_slot(ITEM_SLOT_MASK) != src)
 		reagents.remove_all(REAGENTS_METABOLISM)
 		return
 

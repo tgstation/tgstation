@@ -110,7 +110,7 @@
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
-/obj/item/clothing/head/helmet/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/head/helmet/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
@@ -283,6 +283,7 @@
 	flags_inv = HIDEHAIR|HIDEEARS|HIDESNOUT
 	resistance_flags = FIRE_PROOF
 	dog_fashion = null
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3.6)
 
 /datum/armor/balloon
 	melee = 10

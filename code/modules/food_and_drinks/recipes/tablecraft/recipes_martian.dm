@@ -149,7 +149,7 @@
 		/obj/item/food/boiledrice = 1,
 		/obj/item/food/onion_slice = 1,
 		/obj/item/food/sausage/american = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/peas = 1,
 		/datum/reagent/consumable/ketchup = 5,
 		/datum/reagent/consumable/worcestershire = 2,
@@ -204,6 +204,7 @@
 	removed_foodtypes = RAW|BREAKFAST
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_RICE
+	unit_test_spawn_extras = list(/obj/item/food/grown/mushroom/chanterelle = 1) //generic mushrooms
 
 /datum/crafting_recipe/food/bulgogi_noodles
 	name = "Bulgogi noodles"
@@ -225,7 +226,7 @@
 	reqs = list(
 		/obj/item/food/spaghetti/boilednoodles = 1,
 		/obj/item/food/grown/cabbage = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/onion_slice = 1,
 		/obj/item/food/katsu_fillet = 1,
 		/datum/reagent/consumable/worcestershire = 3,
@@ -276,7 +277,7 @@
 		/datum/reagent/consumable/curry_powder = 3,
 		/obj/item/food/meat/slab = 1,
 		/obj/item/food/grown/onion = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/potato = 1,
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)

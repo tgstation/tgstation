@@ -117,7 +117,7 @@
 		/obj/item/stack/sheet/glass = 1,
 	)
 	category = CAT_CHEMISTRY
-
+	crafting_flags = parent_type::crafting_flags | CRAFT_MUST_BE_LEARNED | CRAFT_SKIP_MATERIALS_PARITY
 
 /datum/crafting_recipe/chem_separator
 	name = "chemical separator"

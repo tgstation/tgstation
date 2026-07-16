@@ -123,6 +123,14 @@
 		if (blood_type.reagent_type == /datum/reagent/blood)
 			return TRUE
 
+/obj/effect/decal/cleanable/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
+	if (!isliving(user))
+		return ..()
+	var/mob/living/as_living = user
+	if (as_living.combat_mode)
+		return TRUE
+	return ..()
+
 /// Creates a cleanable decal on a turf
 /// Use this if your decal is one of one, and thus we should not spawn it if it's there already
 /// Returns either the existing cleanable, the one we created, or null if we can't spawn on that turf
