@@ -78,7 +78,7 @@
 	name = "Quantum Medicine"
 	description = "Rare and experimental particles, that apparently swap the user's body with one from an alternate dimension where it's completely healthy."
 	taste_description = "science"
-	full_heal_flags = ~(HEAL_ADMIN|HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_ALL_REAGENTS|HEAL_ORGANS)
+	full_heal_flags = (ADMIN_HEAL_ALL)
 
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
