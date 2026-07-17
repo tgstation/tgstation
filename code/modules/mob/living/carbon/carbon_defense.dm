@@ -2,7 +2,7 @@
 
 /mob/living/carbon/get_eye_protection()
 	. = ..()
-	if(is_blind() && !is_blind_from(list(TRAIT_KNOCKEDOUT, HYPNOCHAIR_TRAIT)))
+	if(is_blind() && !is_blind_from(list(TRAIT_STATUS_EFFECT(/datum/status_effect/knocked_out::Id), HYPNOCHAIR_TRAIT)))
 		return INFINITY //For all my homies that can not see in the world
 	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)

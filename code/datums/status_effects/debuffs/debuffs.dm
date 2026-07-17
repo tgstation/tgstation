@@ -716,7 +716,7 @@
 	alert_type = null
 
 /datum/status_effect/spasms/tick(seconds_between_ticks)
-	if(HAS_TRAIT(owner, TRAIT_KNOCKEDOUT) || owner.incapacitated || HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
+	if(owner.incapacitated || HAS_TRAIT(owner, TRAIT_KNOCKEDOUT) || HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
 		return
 	if(!prob(15))
 		return
@@ -960,9 +960,9 @@
 	var/mob/living/carbon/human/victim = owner
 	if(isnum(amount_left) && ants_remaining >= 1 && victim.stat < HARD_CRIT)
 		if(!HAS_TRAIT(victim, TRAIT_KNOCKEDOUT)) // Unconscious people won't get messages
-			if(!prob(1)) // 99%
+			if(prob(99))
 				to_chat(victim, span_userdanger("You're covered in MORE ants!"))
-			else // 1%
+			else
 				INVOKE_ASYNC(victim, TYPE_PROC_REF(/atom/movable, say), "AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/ants)
 		ants_remaining += amount_left
 	. = ..()
