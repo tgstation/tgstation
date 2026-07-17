@@ -305,7 +305,7 @@
 /datum/mood_event/too_slow/add_effects(param)
 	var/people_laughing_at_you = 1 // start with 1 in case they're on the same tile or something
 	for(var/mob/living/carbon/iter_carbon in oview(owner, 7))
-		if(!IS_UNCONSCIOUS_OR_CRIT(iter_carbon))
+		if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(iter_carbon))
 			people_laughing_at_you++
 			if(people_laughing_at_you > 7)
 				break

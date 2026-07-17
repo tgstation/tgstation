@@ -435,7 +435,7 @@
 	return TRUE
 
 /mob/manual_emote(text, log_emote = null)
-	if (IS_UNCONSCIOUS_OR_CRIT(src))
+	if (IS_UNCONSCIOUS_CRIT_OR_DEAD(src))
 		return FALSE
 	if (isnull(log_emote))
 		log_emote = !isnull(client)

@@ -31,7 +31,7 @@
 			if (feedback)
 				owner.balloon_alert(owner, "can't speak!")
 			return FALSE
-	if((check_flags & AB_CHECK_CONSCIOUS) && IS_UNCONSCIOUS_OR_CRIT(owner))
+	if((check_flags & AB_CHECK_CONSCIOUS) && IS_UNCONSCIOUS_CRIT_OR_DEAD(owner))
 		if (feedback)
 			if(owner.stat == DEAD)
 				owner.balloon_alert(owner, "dead!")

@@ -802,7 +802,7 @@
 	var/list/possible_targets = list()
 
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
-		if(!player.client || !player.mind || IS_UNCONSCIOUS_OR_CRIT(player))
+		if(!player.client || !player.mind || IS_UNCONSCIOUS_CRIT_OR_DEAD(player))
 			continue
 		if(!(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 			continue

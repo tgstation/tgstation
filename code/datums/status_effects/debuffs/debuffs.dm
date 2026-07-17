@@ -882,7 +882,7 @@
 /datum/status_effect/fake_virus/on_apply()
 	if(HAS_TRAIT(owner, TRAIT_VIRUSIMMUNE))
 		return FALSE
-	if(IS_UNCONSCIOUS_OR_CRIT(owner))
+	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(owner))
 		return FALSE
 	return TRUE
 

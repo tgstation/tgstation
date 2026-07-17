@@ -102,7 +102,7 @@
 	if(transfer_in_progress)
 		to_chat(user, span_warning("There's already a transfer in progress!"))
 		return FALSE
-	if(interaction != AI_TRANS_TO_CARD || IS_UNCONSCIOUS_OR_CRIT(occupier))
+	if(interaction != AI_TRANS_TO_CARD || IS_UNCONSCIOUS_CRIT_OR_DEAD(occupier))
 		return FALSE
 	var/turf/user_turf = get_turf(user)
 	if(!user_turf)

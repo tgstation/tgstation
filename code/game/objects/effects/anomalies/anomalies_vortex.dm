@@ -19,7 +19,7 @@
 			return //DON'T DELETE YOURSELF GOD DAMN
 		if(!O.anchored)
 			var/mob/living/target = locate() in view(4,src)
-			if(target && !IS_UNCONSCIOUS_OR_CRIT(target))
+			if(target && !IS_UNCONSCIOUS_CRIT_OR_DEAD(target))
 				O.throw_at(target, 7, 5)
 		else
 			SSexplosions.med_mov_atom += O

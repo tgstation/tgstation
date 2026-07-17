@@ -325,7 +325,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/get_shove_flags(mob/living/shover, obj/item/weapon)
 	. = ..()
-	if(isnull(weapon) || IS_UNCONSCIOUS_OR_CRIT(src))
+	if(isnull(weapon) || IS_UNCONSCIOUS_CRIT_OR_DEAD(src))
 		. &= ~(SHOVE_CAN_MOVE|SHOVE_CAN_HIT_SOMETHING)
 
 /mob/living/silicon/robot/welder_act(mob/living/user, obj/item/tool)

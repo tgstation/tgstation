@@ -13,7 +13,7 @@
 	if(low_power_mode)
 		if(cell?.charge)
 			low_power_mode = FALSE
-	else if(!IS_UNCONSCIOUS_OR_CRIT(src))
+	else if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(src))
 		use_energy(seconds_per_tick)
 
 /mob/living/silicon/robot/proc/use_energy(seconds_per_tick)

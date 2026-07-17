@@ -91,7 +91,7 @@
 		return
 
 	var/mob/living/carbon/current_avatar = avatar_ref?.resolve()
-	if(isnull(current_avatar) || IS_UNCONSCIOUS_OR_CRIT(current_avatar)) // We need a viable avatar
+	if(isnull(current_avatar) || IS_UNCONSCIOUS_CRIT_OR_DEAD(current_avatar)) // We need a viable avatar
 		current_avatar = server.start_new_connection(neo, netsuit)
 		if(isnull(current_avatar))
 			balloon_alert(neo, "out of bandwidth!")

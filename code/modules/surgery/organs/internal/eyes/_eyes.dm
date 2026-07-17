@@ -270,8 +270,9 @@
 
 /// Similar to get_status_text, but appends the text after the damage report, for additional status info
 /obj/item/organ/eyes/get_status_appendix(scanpower, add_tooltips)
-	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
-		return
+	if(owner.stat == DEAD || IS_UNCONSCIOUS(owner))
+		return // you're blind when dead or unconscious so it's redundant to show it
+
 	if(owner.is_blind())
 		if(scanpower >= SCANPOWER_ADVANCED)
 			if(owner.is_blind_from(QUIRK_TRAIT))

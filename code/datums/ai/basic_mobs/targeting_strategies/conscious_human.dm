@@ -5,9 +5,9 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!istype(the_target, /mob/living/carbon/human))
+	if(!ishuman(the_target))
 		return FALSE
 	var/mob/living/carbon/human/human_target = the_target
-	if(IS_DEAD_OR_INCAP(human_target) || !human_target.mind)
+	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(human_target) || human_target.incapacitated || isnull(human_target.mind))
 		return FALSE
 	return TRUE

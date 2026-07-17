@@ -60,7 +60,7 @@
 	if(!istype(patient) || patient.stat == DEAD)
 		return FALSE
 	var/mob/living/basic/bot/medbot/bot_pawn = living_mob
-	if((bot_pawn.bot_access_flags & BOT_COVER_EMAGGED) && patient.stat == CONSCIOUS)
+	if((bot_pawn.bot_access_flags & BOT_COVER_EMAGGED) && patient.stat == STABLE)
 		return TRUE
 	if(bot_pawn.damage_type_healer == HEAL_ALL_DAMAGE)
 		return patient.get_total_damage() > bot_pawn.heal_threshold

@@ -147,7 +147,7 @@
 	for(var/datum/antagonist/heretic/heretic in GLOB.antagonists)
 		if(!heretic.ascended || isnull(heretic.owner?.current))
 			continue
-		if(IS_UNCONSCIOUS_OR_CRIT(heretic.owner.current))
+		if(IS_UNCONSCIOUS_CRIT_OR_DEAD(heretic.owner.current))
 			return list(
 				"the doors of the Mansus loom ahead of you",
 				"intricately decorated - but cracked, broken, and sealed shut",
@@ -192,7 +192,7 @@
 		return heretic_text
 
 	for(var/datum/antagonist/wizard/wizard in GLOB.antagonists)
-		if(isnull(wizard.owner?.current) || IS_UNCONSCIOUS_OR_CRIT(wizard.owner.current))
+		if(isnull(wizard.owner?.current) || IS_UNCONSCIOUS_CRIT_OR_DEAD(wizard.owner.current))
 			return
 		if(wizard.ritual?.times_completed < GRAND_RITUAL_RUNES_WARNING_POTENCY)
 			if(prob(1))
@@ -249,7 +249,7 @@
 			))
 
 	for(var/mob/living/carbon/human/clone as anything in GLOB.human_list)
-		if(clone != dreamer && clone.real_name == dreamer.real_name && !IS_UNCONSCIOUS_OR_CRIT(clone) && prob(50))
+		if(clone != dreamer && clone.real_name == dreamer.real_name && !IS_UNCONSCIOUS_CRIT_OR_DEAD(clone) && prob(50))
 			return list(
 				"you see yourself",
 				"in a foggy mirror",

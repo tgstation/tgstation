@@ -42,7 +42,7 @@
 	if (!viewer.mind)
 		return
 	// If you're not conscious you're too busy or dead to look at propaganda
-	if (IS_UNCONSCIOUS_OR_CRIT(viewer))
+	if (IS_UNCONSCIOUS_CRIT_OR_DEAD(viewer))
 		return
 	if(viewer.is_blind())
 		return

@@ -97,7 +97,7 @@
 	var/message
 	if(busy)
 		message = "it won't budge!"
-	else if(IS_UNCONSCIOUS_OR_CRIT(user))
+	else if(IS_UNCONSCIOUS_CRIT_OR_DEAD(user))
 		message = "you don't have the energy!"
 	if(!isnull(message))
 		if (COOLDOWN_FINISHED(src, message_cooldown))

@@ -274,7 +274,7 @@
 	carbon_victim.balloon_alert(caster, "[chosen_organ] removed")
 	carbon_victim.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_DARK_RED)
 	playsound(victim, 'sound/effects/dismember.ogg', 50, TRUE)
-	if(!IS_UNCONSCIOUS_OR_CRIT(carbon_victim))
+	if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(carbon_victim))
 		carbon_victim.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
 		carbon_victim.emote("scream")
 
@@ -358,7 +358,7 @@
 	victim.balloon_alert(caster, "[inserted_organ] inserted")
 	victim.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_DARK_RED)
 	playsound(victim, 'sound/effects/dismember.ogg', 50, TRUE)
-	if(!IS_UNCONSCIOUS_OR_CRIT(victim))
+	if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(victim))
 		victim.emote("scream")
 		if(!using_on_self)
 			victim.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)

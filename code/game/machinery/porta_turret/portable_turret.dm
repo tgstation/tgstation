@@ -472,7 +472,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		if(turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS)//if it's set to check for simple animals
 			if(isanimal_or_basicmob(A))
 				var/mob/living/animal = A
-				if(IS_UNCONSCIOUS_OR_CRIT(animal) || in_faction(animal)) //don't target if dead or in faction
+				if(IS_UNCONSCIOUS_CRIT_OR_DEAD(animal) || in_faction(animal)) //don't target if dead or in faction
 					continue
 				targets += animal
 				continue
@@ -488,7 +488,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 			if(iscyborg(sillycone))
 				var/mob/living/silicon/robot/sillyconerobot = A
-				if(IS_UNCONSCIOUS_OR_CRIT(sillyconerobot))
+				if(IS_UNCONSCIOUS_CRIT_OR_DEAD(sillyconerobot))
 					continue
 				if(in_faction(sillyconerobot)) // borgs in faction are friendly
 					continue

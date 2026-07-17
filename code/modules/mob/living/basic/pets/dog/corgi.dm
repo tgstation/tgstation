@@ -127,7 +127,7 @@
 			shaved = TRUE
 			icon_living = "[icon_living]_shaved"
 			icon_dead = "[icon_living]_shaved_dead"
-			if(!IS_UNCONSCIOUS_OR_CRIT(src))
+			if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(src))
 				icon_state = icon_living
 			else
 				icon_state = icon_dead
@@ -472,7 +472,7 @@
 
 ///Checks whether Ian has survived the round or not
 /mob/living/basic/pet/dog/corgi/ian/proc/check_ian_survival()
-	if(!IS_UNCONSCIOUS_OR_CRIT(src) && !memory_saved)
+	if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(src) && !memory_saved)
 		Write_Memory(FALSE)
 
 //NARS-IAN! SQ-Q-QooEglor-r'EEn-nl-luEEEf-f-fth-h

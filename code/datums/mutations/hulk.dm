@@ -242,7 +242,7 @@
 	var/turf/T = get_edge_target_turf(the_hulk, the_hulk.dir)
 	if(!isturf(T))
 		return
-	if(!IS_UNCONSCIOUS_OR_CRIT(yeeted_person))
+	if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(yeeted_person))
 		yeeted_person.emote("scream")
 	yeeted_person.throw_at(T, 10, 6, the_hulk, TRUE, TRUE)
 	log_combat(the_hulk, yeeted_person, "has thrown by tail")

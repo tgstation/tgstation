@@ -225,7 +225,7 @@
 		victim.balloon_alert(src, "is dead!")
 		return FALSE
 
-	if(!IS_UNCONSCIOUS_OR_CRIT(victim)) //we're still beating them up!!
+	if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(victim)) //we're still beating them up!!
 		return TRUE
 
 	if(!istype(get_turf(victim), home_turf) && !(locate(kidnapping_decal) in get_turf(victim)))

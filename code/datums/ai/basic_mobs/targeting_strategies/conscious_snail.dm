@@ -6,7 +6,7 @@
 	if(!.)
 		return FALSE
 	var/mob/living/carbon/candidate = target
-	if(!istype(candidate) || candidate.stat != CONSCIOUS)
+	if(!istype(candidate) || IS_UNCONSCIOUS_CRIT_OR_DEAD(candidate))
 		return FALSE
 	if(!is_species(candidate, /datum/species/snail))
 		return FALSE

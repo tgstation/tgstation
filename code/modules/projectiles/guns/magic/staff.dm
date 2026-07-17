@@ -111,7 +111,7 @@
 
 	if (QDELETED(user))
 		return MANUAL_SUICIDE
-	if (!IS_UNCONSCIOUS_OR_CRIT(user))
+	if (!IS_UNCONSCIOUS_CRIT_OR_DEAD(user))
 		return SHAME
 	if (user.stat != DEAD)
 		user.death() // If you got put into crit by the mobs we'll finish you off

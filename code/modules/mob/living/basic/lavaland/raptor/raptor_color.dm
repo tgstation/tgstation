@@ -234,7 +234,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 /obj/item/mob_holder/purple_raptor/proc/can_fly(silent = FALSE)
 	var/mob/living/carbon/human/user = loc
-	if (!istype(user) || IS_UNCONSCIOUS_OR_CRIT(user) || user.body_position == LYING_DOWN || isnull(user.client))
+	if (!istype(user) || IS_UNCONSCIOUS_CRIT_OR_DEAD(user) || user.body_position == LYING_DOWN || isnull(user.client))
 		return FALSE
 
 	var/turf/location = get_turf(user)

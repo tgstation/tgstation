@@ -59,6 +59,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_TREAT_UNCONSCIOUS_AS_HARDCRIT = TRUE,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

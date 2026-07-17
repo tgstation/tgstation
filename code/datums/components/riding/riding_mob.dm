@@ -773,7 +773,7 @@
 		raptor.ai_controller.set_blackboard_key(BB_INJURED_RAPTOR, source)
 
 	for (var/mob/living/possible_hostile in view(5, raptor))
-		if (IS_UNCONSCIOUS_OR_CRIT(possible_hostile) || possible_hostile.invisibility > raptor.see_invisible || source.faction_check_atom(possible_hostile))
+		if (IS_UNCONSCIOUS_CRIT_OR_DEAD(possible_hostile) || possible_hostile.invisibility > raptor.see_invisible || source.faction_check_atom(possible_hostile))
 			continue
 		raptor.ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEE_TARGET, possible_hostile)
 		break

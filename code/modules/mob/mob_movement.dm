@@ -4,7 +4,7 @@
  * This is a hidden verb, likely for binding with winset for hotkeys
  */
 GAME_VERB_HIDDEN(/client, drop_item, "drop item")
-	if(!iscyborg(mob) && !IS_UNCONSCIOUS_OR_CRIT(mob))
+	if(!iscyborg(mob) && !IS_UNCONSCIOUS_CRIT_OR_DEAD(mob))
 		mob.dropItemToGround(mob.get_active_held_item())
 	return
 /**

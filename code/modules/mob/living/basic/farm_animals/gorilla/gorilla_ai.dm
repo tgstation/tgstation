@@ -4,6 +4,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_TREAT_UNCONSCIOUS_AS_HARDCRIT = TRUE,
 		BB_EMOTE_KEY = "ooga",
 		BB_EMOTE_CHANCE = 40,
 	)

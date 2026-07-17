@@ -149,17 +149,17 @@
 		face_atom(target) //Looks better if they keep looking at you when dodging
 
 /mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
-	if(!IS_UNCONSCIOUS_OR_CRIT(src) && !target && AIStatus != AI_OFF && !client && user)
+	if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(src) && !target && AIStatus != AI_OFF && !client && user)
 		FindTarget(list(user))
 	return ..()
 
 /mob/living/simple_animal/hostile/electrocute_act(shock_damage, source, siemens_coeff, flags)
-	if(!IS_UNCONSCIOUS_OR_CRIT(src) && !target && AIStatus != AI_OFF && !client && isatom(source)) // strings are sometimes used in electrocute_act()
+	if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(src) && !target && AIStatus != AI_OFF && !client && isatom(source)) // strings are sometimes used in electrocute_act()
 		FindTarget(list(source))
 	return ..()
 
 /mob/living/simple_animal/hostile/bullet_act(obj/projectile/proj)
-	if(!IS_UNCONSCIOUS_OR_CRIT(src) && !target && AIStatus != AI_OFF && !client)
+	if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(src) && !target && AIStatus != AI_OFF && !client)
 		if(proj.firer && get_dist(src, proj.firer) <= aggro_vision_range)
 			FindTarget(list(proj.firer))
 		Goto(proj.starting, move_to_delay, 3)
@@ -267,7 +267,7 @@
 				if(L in friends)
 					return FALSE
 			else
-				if((faction_check && !attack_same) || IS_UNCONSCIOUS_OR_CRIT(L))
+				if((faction_check && !attack_same) || IS_UNCONSCIOUS_CRIT_OR_DEAD(L))
 					return FALSE
 			return TRUE
 
@@ -374,7 +374,7 @@
 
 /mob/living/simple_animal/hostile/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(!ckey && !IS_UNCONSCIOUS_OR_CRIT(src) && search_objects < 3 && . > 0)//Not unconscious, and we don't ignore mobs
+	if(!ckey && !IS_UNCONSCIOUS_CRIT_OR_DEAD(src) && search_objects < 3 && . > 0)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
 			LoseTarget()
 			LoseSearchObjects()

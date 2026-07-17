@@ -403,7 +403,7 @@
 
 GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", null)
 
-	if(!isturf(loc) || IS_UNCONSCIOUS_OR_CRIT(usr) || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || anchored)
+	if(!isturf(loc) || IS_UNCONSCIOUS_CRIT_OR_DEAD(usr) || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || anchored)
 		return
 
 	if(isliving(usr))

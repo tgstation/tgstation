@@ -122,5 +122,5 @@
 /// Signal proc for [COMSIG_MOB_STATCHANGE], to throw us out of the jaunt if we lose consciousness.
 /obj/effect/dummy/phased_mob/proc/on_stat_change(mob/living/source, new_stat, old_stat)
 	SIGNAL_HANDLER
-	if(source == jaunter && IS_UNCONSCIOUS_OR_CRIT(source))
+	if(source == jaunter && IS_UNCONSCIOUS_CRIT_OR_DEAD(source))
 		eject_jaunter()

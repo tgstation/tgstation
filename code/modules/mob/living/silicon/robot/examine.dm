@@ -36,7 +36,7 @@
 	if(cell && cell.charge <= 0)
 		. += span_warning("[p_Their()] battery indicator is blinking red!")
 
-	if(stat != DEAD && IS_UNCONSCIOUS(src))
+	if(IS_UNCONSCIOUS_AND_ALIVE(src))
 		. += span_warning("[p_They()] do[p_es()]n't seem to be responding.")
 
 	switch(stat)

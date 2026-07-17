@@ -208,14 +208,14 @@
 	// Over 81, we will gain constant toxloss
 	if(drunk_value >= 81)
 		owner.adjust_tox_loss(1)
-		if(!IS_UNCONSCIOUS_OR_CRIT(owner) && prob(5))
+		if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(owner) && prob(5))
 			to_chat(owner, span_warning("Maybe you should lie down for a bit..."))
 
 	// Over 91, we gain even more toxloss, brain damage, and have a chance of dropping into a long sleep
 	if(drunk_value >= 91)
 		owner.adjust_tox_loss(1)
 		owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.4)
-		if(!IS_UNCONSCIOUS_OR_CRIT(owner))
+		if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(owner))
 			attempt_to_blackout()
 
 	// And finally, over 100 - let's be honest, you shouldn't be alive by now.

@@ -15,7 +15,7 @@
 		trigger_seizure()
 
 /datum/mutation/epilepsy/proc/trigger_seizure()
-	if(IS_UNCONSCIOUS_OR_CRIT(owner))
+	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(owner))
 		return
 	owner.visible_message(span_danger("[owner] starts having a seizure!"), span_userdanger("You have a seizure!"))
 	owner.Unconscious(200 * GET_MUTATION_POWER(src))
@@ -90,7 +90,7 @@
 	power_coeff = 1
 
 /datum/mutation/cough/on_life(seconds_per_tick)
-	if(SPT_PROB(2.5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(owner))
+	if(SPT_PROB(2.5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && !IS_UNCONSCIOUS_CRIT_OR_DEAD(owner))
 		owner.drop_all_held_items()
 		owner.emote("cough")
 		if(GET_MUTATION_POWER(src) > 1)
@@ -107,7 +107,7 @@
 	text_lose_indication = span_notice("The screaming in your mind fades.")
 
 /datum/mutation/paranoia/on_life(seconds_per_tick)
-	if(SPT_PROB(2.5, seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(owner))
+	if(SPT_PROB(2.5, seconds_per_tick) && !IS_UNCONSCIOUS_CRIT_OR_DEAD(owner))
 		owner.emote("scream")
 		if(prob(25))
 			owner.adjust_hallucinations(40 SECONDS)
@@ -215,7 +215,7 @@
 	synchronizer_coeff = 1
 
 /datum/mutation/tourettes/on_life(seconds_per_tick)
-	if(SPT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(owner) && !owner.IsStun())
+	if(SPT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && !IS_UNCONSCIOUS_CRIT_OR_DEAD(owner) && !owner.IsStun())
 		switch(rand(1, 3))
 			if(1)
 				owner.emote("twitch")
@@ -695,13 +695,13 @@
 
 /datum/mutation/inexorable/proc/check_health(...)
 	SIGNAL_HANDLER
-	if(owner.health > owner.crit_threshold || IS_UNCONSCIOUS_OR_CRIT(owner))
+	if(owner.health > owner.crit_threshold || IS_UNCONSCIOUS_CRIT_OR_DEAD(owner))
 		REMOVE_TRAIT(owner, TRAIT_FORCE_WHISPER, REF(src))
 	else
 		ADD_TRAIT(owner, TRAIT_FORCE_WHISPER, REF(src))
 
 /datum/mutation/inexorable/on_life(seconds_per_tick)
-	if(owner.health > owner.crit_threshold || IS_UNCONSCIOUS_OR_CRIT(owner) || HAS_TRAIT(owner, TRAIT_STASIS))
+	if(owner.health > owner.crit_threshold || IS_UNCONSCIOUS_CRIT_OR_DEAD(owner) || HAS_TRAIT(owner, TRAIT_STASIS))
 		return
 	if(HAS_TRAIT(owner, TRAIT_NOCRITDAMAGE) && owner.health <= owner.hardcrit_threshold + 10)
 		return

@@ -124,7 +124,7 @@
 	if (!isdog(target) || user.combat_mode)
 		return ..()
 	var/mob/living/basic/pet/dog/dog_target = target
-	if (IS_UNCONSCIOUS_OR_CRIT(dog_target))
+	if (IS_UNCONSCIOUS_CRIT_OR_DEAD(dog_target))
 		return ..()
 	dog_target.emote("spin")
 	dog_target.fully_heal()

@@ -81,7 +81,7 @@
 #undef BILEWORM_JUMP_FRAMES
 
 /datum/action/cooldown/mob_cooldown/resurface/proc/burrow_again(mob/living/burrower, atom/target)
-	if (!QDELETED(burrower) && !IS_UNCONSCIOUS_OR_CRIT(burrower))
+	if (!QDELETED(burrower) && !IS_UNCONSCIOUS_CRIT_OR_DEAD(burrower))
 		// Burrow immediatelly after being stunned out of the first jump to avoid chainstuns
 		burrow(burrower, target, force = TRUE)
 

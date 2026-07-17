@@ -850,7 +850,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/result = NONE
 
 	if(patient)
-		was_sleeping = (patient.stat != DEAD && IS_UNCONSCIOUS(patient))
+		was_sleeping = IS_UNCONSCIOUS_AND_ALIVE(patient)
 		update_surgery_mood(patient, SURGERY_STATE_STARTED)
 		SEND_SIGNAL(patient, COMSIG_ATOM_SURGERY_STARTED, src, operating_on, tool)
 

@@ -461,7 +461,7 @@
 	if(dupe.stat == DEAD) //Is it alive?
 		return FALSE
 
-	if(IS_UNCONSCIOUS_OR_CRIT(dupe)) //Is it awake?
+	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(dupe)) //Is it awake?
 		return FALSE
 
 	if(dupe.mind && dupe.mind.active) //Is it unoccupied?
@@ -475,7 +475,7 @@
 /datum/action/innate/swap_body/proc/swap_to_dupe(datum/mind/M, mob/living/carbon/human/dupe)
 	if(!can_swap(dupe)) //sanity check
 		return
-	if(!IS_UNCONSCIOUS_OR_CRIT(M.current))
+	if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(M.current))
 		M.current.visible_message(span_notice("[M.current] stops moving and starts staring vacantly into space."),
 			span_notice("You stop moving this body..."))
 	else

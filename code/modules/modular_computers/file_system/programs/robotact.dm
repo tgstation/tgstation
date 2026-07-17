@@ -151,7 +151,7 @@
 			cyborg.checklaws()
 
 		if("alertPower")
-			if(!IS_UNCONSCIOUS_OR_CRIT(cyborg))
+			if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(cyborg))
 				if(!cyborg.cell || !cyborg.cell.charge)
 					cyborg.visible_message(span_notice("The power warning light on [span_name("[cyborg]")] flashes urgently."), \
 						"You announce you are operating in low power mode.")
@@ -178,7 +178,7 @@
 			cyborg.toggle_headlamp(FALSE, TRUE)
 
 		if("selfDestruct")
-			if(IS_UNCONSCIOUS_OR_CRIT(cyborg) || cyborg.lockcharge) //No detonation while stunned or locked down
+			if(IS_UNCONSCIOUS_CRIT_OR_DEAD(cyborg) || cyborg.lockcharge) //No detonation while stunned or locked down
 				return
 			if(cyborg.emagged || istype(cyborg, /mob/living/silicon/robot/model/syndicate)) //This option shouldn't even be showing otherwise
 				cyborg.self_destruct(cyborg)

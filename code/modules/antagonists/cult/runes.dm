@@ -158,7 +158,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 				continue
 			if(!cultist.can_speak(allow_mimes = TRUE))
 				continue
-			if(IS_UNCONSCIOUS_OR_CRIT(cultist))
+			if(IS_UNCONSCIOUS_CRIT_OR_DEAD(cultist))
 				continue
 			invokers += cultist
 
@@ -1023,7 +1023,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		to_chat(new_human, span_cult_italic("<b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar'Sie, and you are to serve them at all costs.</b>"))
 
 		while(!QDELETED(src) && !QDELETED(user) && !QDELETED(new_human) && (user in T))
-			if(IS_UNCONSCIOUS_OR_CRIT(user))
+			if(IS_UNCONSCIOUS_CRIT_OR_DEAD(user))
 				break
 			user.apply_damage(0.1, BRUTE)
 			sleep(0.1 SECONDS)

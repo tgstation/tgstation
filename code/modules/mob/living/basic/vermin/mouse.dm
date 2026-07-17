@@ -190,7 +190,7 @@
 /mob/living/basic/mouse/proc/on_entered(datum/source, atom/movable/entered)
 	SIGNAL_HANDLER
 
-	if(ishuman(entered) && !IS_UNCONSCIOUS_OR_CRIT(src))
+	if(ishuman(entered) && !IS_UNCONSCIOUS_CRIT_OR_DEAD(src))
 		to_chat(entered, span_notice("[icon2html(src, entered)] Squeak!"))
 
 /// Called when a mouse is hand-fed some cheese, it will stop being afraid of humans

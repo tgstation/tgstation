@@ -908,7 +908,7 @@
 	if(user.is_holding(src))
 		user.dropItemToGround(src)
 	for(var/mob/living/carbon/human/viewing_mob in viewers(2, user))
-		if(IS_UNCONSCIOUS_OR_CRIT(viewing_mob) || viewing_mob == user)
+		if(IS_UNCONSCIOUS_CRIT_OR_DEAD(viewing_mob) || viewing_mob == user)
 			continue
 		viewing_mob.say("Is something wrong? [first_name(user.name)]... you're sweating.", forced = "psycho")
 		break
