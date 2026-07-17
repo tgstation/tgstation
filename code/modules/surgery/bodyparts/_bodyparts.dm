@@ -337,7 +337,6 @@
 		return null
 	if(is_husked == HUSKED_ZOMBIE)
 		return list(/obj/item/food/meat/slab/human/mutant/zombie = base_meat_amount)
-
 	var/datum/species/species = GLOB.species_list[species_id || limb_id]
 	if (isnull(species?.meat))
 		return null
