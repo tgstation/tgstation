@@ -1468,7 +1468,7 @@
 		return
 	building = TRUE
 	to_chat(user, span_notice("You start constructing a rack..."))
-	if(do_after(user, 5 SECONDS, target = user, progress=TRUE))
+	if(do_after(user, 5 SECONDS, target = user))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/obj/structure/rack/R = new /obj/structure/rack(get_turf(src))
