@@ -390,3 +390,6 @@
 
 /// From /mob/living/proc/refresh_gravity() : (new_gravity, old_gravity)
 #define COMSIG_LIVING_GRAVITY_CHANGED "living_gravity_changed"
+
+/// From /mob/living/changeNext_move() : (next_move, delay)
+#define COMSIG_LIVING_CHANGENEXT_MOVE "living_changenext_move"
