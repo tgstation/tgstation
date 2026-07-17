@@ -25,11 +25,13 @@
 	. = ..()
 	RegisterSignal(stomach_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
 	RegisterSignal(stomach_owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
+	RegisterSignal(stomach_owner, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_multitool_act))
 
 /obj/item/organ/stomach/ethereal/on_mob_remove(mob/living/carbon/stomach_owner)
 	. = ..()
 	UnregisterSignal(stomach_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 	UnregisterSignal(stomach_owner, COMSIG_LIVING_ELECTROCUTE_ACT)
+	UnregisterSignal(stomach_owner, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	stomach_owner.clear_mood_event("charge")
 	stomach_owner.clear_alert(ALERT_ETHEREAL_CHARGE)
 	stomach_owner.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
@@ -48,6 +50,24 @@
 		return
 	adjust_charge(shock_damage * siemens_coeff * 2)
 	to_chat(owner, span_notice("You absorb some of the shock into your body!"))
+
+/obj/item/organ/stomach/ethereal/proc/on_multitool_act(atom/source, mob/user, obj/item/tool)
+	SIGNAL_HANDLER
+
+	return multitool_act(user, tool)
+
+/obj/item/organ/stomach/ethereal/multitool_act(mob/living/user, obj/item/tool)
+	. = ..()
+	// Intentionally formatted in the exact same way as multitooling a cable for comedic effect.
+	// It's as if the multitool is mistaking the ethereal/biological battery for a cable.
+	var/power_info
+	if(cell.charge > 0)
+		power_info = span_danger("Total power: [display_power(cell.charge)]\nLoad: [(owner && (owner.stat != DEAD)) ? display_power(ETHEREAL_DISCHARGE_RATE) : 0]\nExcess power: [display_power(max(0, (cell.charge - ETHEREAL_CHARGE_FULL)))]")
+	else
+		power_info = span_danger("The [owner ? owner.name : name] is not powered.")
+
+	to_chat(user, power_info)
+	return ITEM_INTERACT_SUCCESS
 
 /**Changes the energy of the crystal stomach.
 * Args:

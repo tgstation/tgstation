@@ -27,7 +27,6 @@
 	response_harm_simple = "kick"
 	speak_emote = list("barks", "woofs")
 	faction = list(FACTION_NEUTRAL)
-	can_be_held = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/dog
 	// The dog attack pet command can raise melee attack above 0
 	attack_verb_continuous = "bites"
@@ -74,6 +73,7 @@
 	AddElement(/datum/element/pet_bonus, "woof")
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/unfriend_attacker, untamed_reaction = "%SOURCE% fixes %TARGET% with a look of betrayal.")
+	AddElement(/datum/element/can_be_held)
 	var/static/list/food_types = list(
 		/obj/item/food/meat/slab/human/mutant/skeleton,
 		/obj/item/stack/sheet/bone,

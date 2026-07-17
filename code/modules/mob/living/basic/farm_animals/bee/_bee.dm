@@ -36,7 +36,6 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	density = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
 	environment_smash  = ENVIRONMENT_SMASH_NONE
 	habitable_atmos = null
@@ -71,6 +70,7 @@
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/basic_allergenic_attack, allergen = BUGS, allergen_chance = 33, histamine_add = 5)
+	AddElement(/datum/element/can_be_held)
 
 /mob/living/basic/bee/mob_pickup(mob/living/picker)
 	if(flags_1 & HOLOGRAM_1)

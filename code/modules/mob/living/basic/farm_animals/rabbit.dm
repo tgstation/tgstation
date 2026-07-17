@@ -18,7 +18,6 @@
 	health = 15
 	maxHealth = 15
 	mob_size = MOB_SIZE_SMALL
-	can_be_held = TRUE
 	density = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	speak_emote = list("sniffles", "twitches")
@@ -55,6 +54,7 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "hop")
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown", "black", "white"), TRUE)
+	AddElement(/datum/element/can_be_held)
 	if(prob(20)) // bunny
 		name = "bunny"
 
