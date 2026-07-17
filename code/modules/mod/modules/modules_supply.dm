@@ -727,7 +727,7 @@
 
 /obj/item/mod/module/sphere_transform/proc/on_statchange(datum/source)
 	SIGNAL_HANDLER
-	if(mod.wearer.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(mod.wearer))
 		deactivate()
 
 /obj/projectile/bullet/mining_missile

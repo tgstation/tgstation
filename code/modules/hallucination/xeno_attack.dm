@@ -4,7 +4,7 @@
 	hallucination_tier = HALLUCINATION_TIER_RARE
 
 /datum/hallucination/xeno_attack/start()
-	if(HAS_TRAIT(hallucinator, TRAIT_KNOCKEDOUT))
+	if(IS_UNCONSCIOUS(hallucinator))
 		return FALSE
 
 	var/turf/xeno_attack_source

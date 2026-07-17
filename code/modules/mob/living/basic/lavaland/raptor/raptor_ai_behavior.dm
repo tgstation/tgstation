@@ -31,7 +31,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/mob/living/rider = living_mob.buckled_mobs[1]
-	if (rider.stat == CONSCIOUS || rider.stat == DEAD || rider.health >= rider.maxHealth)
+	if (!IS_UNCONSCIOUS_OR_CRIT(rider) || rider.stat == DEAD || rider.health >= rider.maxHealth)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	controller.set_blackboard_key(hunting_target_key, rider)

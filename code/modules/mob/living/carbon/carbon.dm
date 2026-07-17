@@ -687,7 +687,7 @@
 		else if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
 			set_stat(SOFT_CRIT)
 		else
-			set_stat(CONSCIOUS)
+			set_stat(STABLE)
 	update_damage_hud()
 	update_health_hud()
 	update_stamina_hud()

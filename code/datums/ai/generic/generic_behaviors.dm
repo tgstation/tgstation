@@ -41,7 +41,7 @@
 	if(QDELETED(batman) || get_dist(batman, big_guy) >= give_up_distance)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	if(batman.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(batman))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 	big_guy.start_pulling(batman)

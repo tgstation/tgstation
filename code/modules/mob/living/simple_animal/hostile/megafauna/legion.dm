@@ -153,7 +153,7 @@
 	if(!. || !ishuman(target))
 		return
 	var/mob/living/living_target = target
-	if(HAS_TRAIT(living_target, TRAIT_KNOCKEDOUT) && living_target.stat != DEAD)
+	if(IS_UNCONSCIOUS(living_target) && living_target.stat != DEAD)
 		var/mob/living/basic/mining/legion_brood/legion = new(loc)
 		legion.infest(living_target)
 

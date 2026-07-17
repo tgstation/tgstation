@@ -101,9 +101,9 @@
 		. += "ai-fixer-empty"
 		return
 
-	if(occupier.stat == HARD_CRIT || HAS_TRAIT(occupier, TRAIT_KNOCKEDOUT))
+	if(occupier.stat == HARD_CRIT || IS_UNCONSCIOUS(occupier))
 		. += "ai-fixer-404"
-	else if(occupier.stat == CONSCIOUS)
+	else if(!IS_UNCONSCIOUS_OR_CRIT(occupier))
 		. += "ai-fixer-full"
 
 /obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)

@@ -62,7 +62,7 @@
 	return ..()
 
 /datum/hallucination/delusion/start()
-	if(!hallucinator.client || HAS_TRAIT(hallucinator, TRAIT_KNOCKEDOUT))
+	if(!hallucinator.client || IS_UNCONSCIOUS(hallucinator))
 		return FALSE
 
 	feedback_details += "Delusion: [delusion_name]"

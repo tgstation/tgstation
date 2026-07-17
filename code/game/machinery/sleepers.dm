@@ -184,7 +184,7 @@
 	if(mob_occupant)
 		data["occupant"]["name"] = mob_occupant.name
 		switch(mob_occupant.stat)
-			if(CONSCIOUS)
+			if(STABLE)
 				data["occupant"]["stat"] = "Conscious"
 				data["occupant"]["statstate"] = "good"
 			if(SOFT_CRIT)

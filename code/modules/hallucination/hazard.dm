@@ -8,7 +8,7 @@
 	var/hazard_type = /obj/effect/client_image_holder/hallucination/danger
 
 /datum/hallucination/hazard/start()
-	if(HAS_TRAIT(hallucinator, TRAIT_KNOCKEDOUT))
+	if(IS_UNCONSCIOUS(hallucinator))
 		return FALSE
 
 	var/list/possible_points = list()

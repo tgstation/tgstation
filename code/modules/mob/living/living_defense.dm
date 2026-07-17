@@ -887,7 +887,7 @@
 		return FALSE
 	if(has_status_effect(/datum/status_effect/hallucination) || has_status_effect(/datum/status_effect/drugginess))
 		return TRUE
-	if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
+	if(IS_UNCONSCIOUS(src))
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		return TRUE

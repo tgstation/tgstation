@@ -57,7 +57,7 @@
 	for(var/mob/living/carbon/human/treatable_target in oview(search_range, controller.pawn))
 		if(LAZYACCESS(ignore_keys, treatable_target) || treatable_target.stat == DEAD)
 			continue
-		if((access_flags & BOT_COVER_EMAGGED) && treatable_target.stat == CONSCIOUS)
+		if((access_flags & BOT_COVER_EMAGGED) && !IS_UNCONSCIOUS_OR_CRIT(treatable_target))
 			controller.set_if_can_reach(key = BB_PATIENT_TARGET, target = treatable_target, distance = BOT_PATIENT_PATH_LIMIT, bypass_add_to_blacklist = (search_range == 1))
 			break
 		if((heal_type == HEAL_ALL_DAMAGE))
@@ -126,7 +126,7 @@
 
 /datum/ai_behavior/tend_to_patient/proc/check_if_healed(mob/living/carbon/human/patient, threshold, damage_type_healer, access_flags)
 	if(access_flags & BOT_COVER_EMAGGED)
-		return (patient.stat > CONSCIOUS)
+		return (patient.stat != STABLE)
 	var/patient_damage = (damage_type_healer == HEAL_ALL_DAMAGE) ? patient.get_total_damage() : patient.get_current_damage_of_type(damagetype = damage_type_healer)
 	return (patient_damage <= threshold)
 
@@ -190,7 +190,7 @@
 /datum/ai_behavior/find_hunt_target/patient_in_crit
 
 /datum/ai_behavior/find_hunt_target/patient_in_crit/valid_dinner(mob/living/source, mob/living/carbon/human/patient, radius)
-	if(!HAS_TRAIT(patient, TRAIT_KNOCKEDOUT) || isnull(patient.mind))
+	if(!IS_UNCONSCIOUS(patient) || isnull(patient.mind))
 		return FALSE
 	return can_see(source, patient, radius)
 

@@ -503,7 +503,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	affected_mob.add_traits(trait_buffs, type)
-	affected_mob.set_stat(CONSCIOUS) //This doesn't touch knocked out
+	affected_mob.set_stat(STABLE)
 	affected_mob.updatehealth()
 	affected_mob.update_sight()
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, STAT_TRAIT)

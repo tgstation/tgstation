@@ -36,11 +36,11 @@
 	if(cell && cell.charge <= 0)
 		. += span_warning("[p_Their()] battery indicator is blinking red!")
 
-	if(stat != DEAD && HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
+	if(stat != DEAD && IS_UNCONSCIOUS(src))
 		. += span_warning("[p_They()] do[p_es()]n't seem to be responding.")
 
 	switch(stat)
-		if(CONSCIOUS)
+		if(STABLE)
 			if(shell)
 				. += "[p_They()] appear[p_s()] to be an [deployed ? "active" : "empty"] AI shell."
 			else if(!client)

@@ -268,7 +268,7 @@
 				return
 			if(ishuman(human_or_ghost_user))
 				var/mob/living/carbon/human/human_user = human_or_ghost_user
-				if(human_user.stat || human_user == src) //|| !human_user.canmove || human_user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
+				if(IS_UNCONSCIOUS_OR_CRIT(human_user) || human_user == src) //|| !human_user.canmove || human_user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 					return   //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
 			// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
 				var/obj/item/clothing/glasses/hud/security/user_glasses = human_user.glasses
@@ -520,7 +520,7 @@
 		if (DOING_INTERACTION_WITH_TARGET(src,target))
 			return FALSE
 
-		if (target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))
+		if (IS_DEAD_OR_FAKING(target))
 			balloon_alert(src, "[target.p_they()] [target.p_are()] dead!")
 			return FALSE
 
@@ -881,7 +881,7 @@
 	return ..()
 
 /mob/living/carbon/human/mouse_buckle_handling(mob/living/M, mob/living/user)
-	if(pulling != M || grab_state != GRAB_AGGRESSIVE || stat != CONSCIOUS)
+	if(pulling != M || grab_state != GRAB_AGGRESSIVE || IS_UNCONSCIOUS_OR_CRIT(src))
 		return FALSE
 
 	//If they dragged themselves to you and you're currently aggressively grabbing them try to piggyback
@@ -896,7 +896,7 @@
 
 //src is the user that will be carrying, target is the mob to be carried
 /mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/target)
-	return (istype(target) && target.stat == CONSCIOUS)
+	return (istype(target) && !IS_UNCONSCIOUS_OR_CRIT(target))
 
 /mob/living/carbon/human/proc/can_be_firemanned(mob/living/carbon/target)
 	return ishuman(target) && target.body_position == LYING_DOWN

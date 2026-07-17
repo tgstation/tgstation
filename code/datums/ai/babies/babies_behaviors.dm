@@ -32,7 +32,7 @@
 		if(!HAS_TRAIT(other, TRAIT_MOB_BREEDER) || other.ckey)
 			continue
 
-		if(other.stat != CONSCIOUS) //Check if it's conscious FIRST.
+		if(IS_UNCONSCIOUS_OR_CRIT(other)) //Check if it's conscious FIRST.
 			continue
 
 		if(other.gender != living_pawn.gender && !(other.flags_1 & HOLOGRAM_1)) //Better safe than sorry ;_;
@@ -59,7 +59,7 @@
 
 /datum/ai_behavior/make_babies/perform(seconds_per_tick, datum/ai_controller/controller, target_key, child_types_key)
 	var/mob/target = controller.blackboard[target_key]
-	if(QDELETED(target) || target.stat != CONSCIOUS)
+	if(QDELETED(target) || IS_UNCONSCIOUS_OR_CRIT(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	controller.ai_interact(target = target, combat_mode = FALSE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

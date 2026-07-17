@@ -25,7 +25,7 @@
 
 	var/mob/living/scanned = interacting_with
 
-	if(scanned.stat != DEAD && !HAS_TRAIT(scanned, TRAIT_FAKEDEATH)) // good job, you found a loophole
+	if(!IS_DEAD_OR_FAKING(scanned)) // good job, you found a loophole
 		to_chat(user, span_deadsay("[icon2html(src, user)] ERROR! CANNOT SCAN LIVE CADAVERS. PROCURE HEALTH ANALYZER OR TERMINATE PATIENT."))
 		return ITEM_INTERACT_BLOCKING
 

@@ -279,7 +279,7 @@
 
 /mob/living/silicon/pai/on_knockedout_trait_loss(datum/source)
 	. = ..()
-	set_stat(CONSCIOUS)
+	set_stat(STABLE)
 	update_stat()
 
 /**

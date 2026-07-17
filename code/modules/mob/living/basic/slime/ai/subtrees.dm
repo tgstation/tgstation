@@ -16,7 +16,7 @@
 	if(!istype(slime_pawn))
 		return
 
-	if(slime_pawn.stat) //dead slimes make no smiles
+	if(IS_UNCONSCIOUS_OR_CRIT(slime_pawn)) //dead slimes make no smiles
 		return
 
 	controller.queue_behavior(/datum/ai_behavior/perform_change_slime_face)

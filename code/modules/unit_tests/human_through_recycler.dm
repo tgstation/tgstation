@@ -10,7 +10,7 @@
 
 	// okay, let's first test the basics of how an emagged recycler should operate
 	TEST_ASSERT_NULL(QDELETED(assistant), "Assistant was deleted by the emagged recycler!") // The assistant should not be deleted by the recycler.
-	if(!HAS_TRAIT(assistant, TRAIT_KNOCKEDOUT))
+	if(!IS_UNCONSCIOUS(assistant))
 		TEST_FAIL("Assistant was not made unconscious by the emagged recycler!") // crush_living() on the recycler should have made the assistant unconscious or worse.
 	// crush_living() on the recycler should have applied the crush_damage to the assistant.
 	var/damage_incurred = assistant.get_brute_loss()

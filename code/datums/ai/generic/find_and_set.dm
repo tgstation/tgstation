@@ -159,7 +159,7 @@
 	for (var/mob/living/dead_pal in oview(search_range, controller.pawn))
 		if (!isturf(dead_pal.loc))
 			continue
-		if (!dead_pal.stat || dead_pal.health > 0)
+		if (!IS_UNCONSCIOUS_OR_CRIT(dead_pal) || dead_pal.health > 0)
 			continue
 		if (living_pawn.see_invisible < dead_pal.invisibility)
 			continue
@@ -178,7 +178,7 @@
 /datum/ai_behavior/find_and_set/conscious_person/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/customers = list()
 	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
-		if(IS_DEAD_OR_INCAP(target) || !target.mind)
+		if(target.incapacitated || !target.mind)
 			continue
 		customers += target
 

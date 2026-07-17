@@ -119,7 +119,7 @@
 
 	// flee from anyone who attacked us and we didn't beat down
 	for(var/mob/living/L in view(living_pawn, MONKEY_FLEE_VISION))
-		if(controller.blackboard[BB_MONKEY_ENEMIES][L] && L.stat == CONSCIOUS)
+		if(controller.blackboard[BB_MONKEY_ENEMIES][L] && !IS_UNCONSCIOUS_OR_CRIT(L))
 			target = L
 			break
 

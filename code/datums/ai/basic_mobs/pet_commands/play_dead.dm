@@ -4,7 +4,7 @@
 /datum/ai_behavior/play_dead/setup(datum/ai_controller/controller)
 	. = ..()
 	var/mob/living/basic/basic_pawn = controller.pawn
-	if(!istype(basic_pawn) || basic_pawn.stat) // Can't act dead if you're dead
+	if(!istype(basic_pawn) || IS_UNCONSCIOUS_OR_CRIT(basic_pawn)) // Can't act dead if you're dead
 		return
 	basic_pawn.emote("deathgasp", intentional=FALSE)
 	ADD_TRAIT(basic_pawn, TRAIT_FAKEDEATH, BASIC_MOB_DEATH_TRAIT)
@@ -18,7 +18,7 @@
 /datum/ai_behavior/play_dead/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	var/mob/living/basic/basic_pawn = controller.pawn
-	if(QDELETED(basic_pawn) || basic_pawn.stat) // imagine actually dying while playing dead. hell, imagine being the kid waiting for your pup to get back up :(
+	if(QDELETED(basic_pawn) || IS_UNCONSCIOUS_OR_CRIT(basic_pawn)) // imagine actually dying while playing dead. hell, imagine being the kid waiting for your pup to get back up :(
 		return
 	basic_pawn.visible_message(span_notice("[basic_pawn] miraculously springs back to life!"))
 	REMOVE_TRAIT(basic_pawn, TRAIT_FAKEDEATH, BASIC_MOB_DEATH_TRAIT)

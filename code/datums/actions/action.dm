@@ -179,11 +179,11 @@
 		return FALSE
 	if(action_disabled)
 		return FALSE
-	if((check_flags & AB_CHECK_CONSCIOUS) && (owner.stat != CONSCIOUS || HAS_TRAIT(owner, TRAIT_KNOCKEDOUT)))
+	if((check_flags & AB_CHECK_CONSCIOUS) && IS_UNCONSCIOUS_OR_CRIT(owner))
 		if (feedback)
 			if(owner.stat == DEAD)
 				owner.balloon_alert(owner, "dead!")
-			else if(HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
+			else if(IS_UNCONSCIOUS(owner))
 				owner.balloon_alert(owner, "unconscious!")
 			else
 				owner.balloon_alert(owner, "in critical!")

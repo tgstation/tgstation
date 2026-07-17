@@ -462,7 +462,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/attack_self(mob/living/user)
 	. = ..()
-	if(!ishuman(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+	if(!ishuman(user) || IS_UNCONSCIOUS_OR_CRIT(user) || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 
 	playsound(loc, 'sound/items/weapons/handcuffs.ogg', 30, TRUE, -3)

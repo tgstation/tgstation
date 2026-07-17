@@ -3,7 +3,7 @@
 	var/mob/living/batman = controller.blackboard[BB_BANE_BATMAN]
 	if(QDELETED(batman))
 		for(var/mob/living/possibly_the_dark_knight in oview(7, controller.pawn))
-			if(IS_DEAD_OR_INCAP(possibly_the_dark_knight)) //I HAVE BROKEN THE BAT
+			if(possibly_the_dark_knight.incapacitated) //I HAVE BROKEN THE BAT
 				continue
 			controller.set_blackboard_key(BB_BANE_BATMAN, possibly_the_dark_knight)
 			batman = possibly_the_dark_knight

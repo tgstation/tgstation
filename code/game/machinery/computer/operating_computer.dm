@@ -114,7 +114,7 @@
 	if(!is_operational)
 		return UI_CLOSE
 	// if you're knocked out, ie anesthetic... definitely a no-go
-	if(HAS_TRAIT(user, TRAIT_KNOCKEDOUT))
+	if(IS_UNCONSCIOUS(user))
 		return UI_CLOSE
 	// the patient itself should be blocked from viewing the computer
 	if(user.body_position == LYING_DOWN)
@@ -171,7 +171,7 @@
 	var/mob/living/patient = table.patient
 
 	switch(patient.stat)
-		if(CONSCIOUS)
+		if(STABLE)
 			data["patient"]["stat"] = "Conscious"
 			data["patient"]["statstate"] = "good"
 		if(SOFT_CRIT)

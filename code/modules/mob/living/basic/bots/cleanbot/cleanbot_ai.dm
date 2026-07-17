@@ -106,7 +106,7 @@
 	for(var/mob/living/carbon/human/human_target in oview(search_range, controller.pawn))
 		if(LAZYACCESS(ignore_list, human_target))
 			continue
-		if(human_target.stat != CONSCIOUS || isnull(human_target.mind))
+		if(IS_UNCONSCIOUS_OR_CRIT(human_target) || isnull(human_target.mind))
 			continue
 		return human_target
 	return null
@@ -181,7 +181,7 @@
 /datum/ai_behavior/find_and_set/friendly_janitor/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/mob/living/living_pawn = controller.pawn
 	for(var/mob/living/carbon/human/human_target in oview(search_range, living_pawn))
-		if(human_target.stat != CONSCIOUS || isnull(human_target.mind))
+		if(IS_UNCONSCIOUS_OR_CRIT(human_target) || isnull(human_target.mind))
 			continue
 		if(!HAS_TRAIT(human_target, TRAIT_CLEANBOT_WHISPERER))
 			continue

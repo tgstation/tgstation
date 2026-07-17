@@ -20,6 +20,6 @@
 		if(health <= -maxHealth || !get_organ_by_type(/obj/item/organ/brain))
 			death()
 			return
-		set_stat(CONSCIOUS)
+		set_stat(STABLE)
 	update_damage_hud()
 	update_health_hud()

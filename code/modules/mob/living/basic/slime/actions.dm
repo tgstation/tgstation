@@ -39,11 +39,16 @@
 
 ///Turns a baby slime into an adult slime
 /datum/action/innate/slime/evolve/Activate()
-	var/mob/living/basic/slime/slime_owner = owner
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
+		if(owner.stat == DEAD)
+			owner.balloon_alert(owner, "dead!")
+		else if(IS_UNCONSCIOUS(owner))
+			owner.balloon_alert(owner, "unconscious!")
+		else
+			owner.balloon_alert(owner, "in critical!")
+		return FALSE
 
-	if(slime_owner.stat)
-		slime_owner.balloon_alert(slime_owner, "unconscious!")
-		return
+	var/mob/living/basic/slime/slime_owner = owner
 	if(slime_owner.life_stage == SLIME_LIFE_STAGE_ADULT)
 		slime_owner.balloon_alert(slime_owner, "already adult!")
 		return
@@ -78,9 +83,14 @@
 ///Splits the slime into multiple children if possible
 /mob/living/basic/slime/proc/reproduce()
 
-	if(stat != CONSCIOUS)
-		balloon_alert(src, "not conscious!")
-		return
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
+		if(stat == DEAD)
+			balloon_alert(src, "dead!")
+		else if(IS_UNCONSCIOUS(src))
+			balloon_alert(src, "unconscious!")
+		else
+			balloon_alert(src, "in critical!")
+		return FALSE
 
 	if(!isopenturf(loc))
 		balloon_alert(src, "not here!")

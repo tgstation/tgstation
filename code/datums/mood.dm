@@ -386,7 +386,7 @@
 
 	if(user != mob_parent)
 		return
-	if(HAS_TRAIT(user, TRAIT_KNOCKEDOUT))
+	if(IS_UNCONSCIOUS(user))
 		return
 	print_mood(user)
 

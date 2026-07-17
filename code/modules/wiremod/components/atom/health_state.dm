@@ -44,14 +44,14 @@
 	var/state = organism.stat
 	switch(current_option)
 		if("Alive")
-			return state != DEAD
+			return !IS_DEAD_OR_FAKING(organism)
+		if("Deceased")
+			return IS_DEAD_OR_FAKING(organism)
 		if("Asleep")
-			return state == CONSCIOUS && HAS_TRAIT(organism, TRAIT_KNOCKEDOUT)
+			return IS_UNCONSCIOUS_AND_ALIVE(organism) && state == STABLE
 		if("Unconscious")
-			return state != DEAD && HAS_TRAIT(organism, TRAIT_KNOCKEDOUT)
+			return IS_UNCONSCIOUS_AND_ALIVE(organism)
 		if("Critical")
 			return state == SOFT_CRIT || state == HARD_CRIT
-		if("Deceased")
-			return state == DEAD
 	//Unknown state, something fucked up really bad - just return false
 	return FALSE

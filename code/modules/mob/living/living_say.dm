@@ -139,7 +139,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/say_radio_or_mode = saymode || message_mods[RADIO_EXTENSION]
 	if(say_radio_or_mode)
 		var/mob_stat_limit = GLOB.message_modes_stat_limits[say_radio_or_mode]
-		if(stat > (isnull(mob_stat_limit) ? CONSCIOUS : mob_stat_limit))
+		if(stat > (isnull(mob_stat_limit) ? STABLE : mob_stat_limit))
 			saymode = null
 			message_mods -= RADIO_EXTENSION
 
@@ -148,13 +148,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		say_dead(original_message, message_mods[MANNEQUIN_CONTROLLED])
 		return
 
-	if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
-		// this is what stops you from talking while asleep
-		if(stat != SOFT_CRIT)
-			return
-		// this is what allows you to deathgasp in hard crit
-		if(!message_mods[WHISPER_MODE])
-			return
+	// this is what stops you from talking while asleep, and also what allows you to deathgasp in hard crit
+	if(IS_UNCONSCIOUS(src) && (stat != HARD_CRIT || !message_mods[WHISPER_MODE]))
+		return
 
 	if(HAS_TRAIT(src, TRAIT_FORCE_WHISPER))
 		message_mods[WHISPER_MODE] = MODE_WHISPER
@@ -176,6 +172,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(!message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		if(message_mods[WHISPER_MODE] == MODE_WHISPER)
 			message_range = 1
+			// this is where deathgasping is processed
 			if(stat == HARD_CRIT)
 				var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 				// If we cut our message short, abruptly end it with a-..
@@ -302,7 +299,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	var/speaker_is_signing = HAS_TRAIT(speaker, TRAIT_SIGN_LANG)
 	var/use_runechat = client?.prefs.read_preference(/datum/preference/toggle/enable_runechat)
-	if (HAS_TRAIT(src, TRAIT_KNOCKEDOUT) && stat != DEAD)
+	if (IS_UNCONSCIOUS(src) && stat != DEAD)
 		use_runechat = FALSE
 	else if (!ismob(speaker) && !client?.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs))
 		use_runechat = FALSE

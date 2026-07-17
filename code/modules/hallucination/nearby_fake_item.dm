@@ -21,7 +21,7 @@
 
 /datum/hallucination/nearby_fake_item/start()
 	// This hallucination is purely visual, so we don't need to bother for clientless mobs
-	if(!hallucinator.client || HAS_TRAIT(hallucinator, TRAIT_KNOCKEDOUT))
+	if(!hallucinator.client || IS_UNCONSCIOUS(hallucinator))
 		return FALSE
 
 	var/list/mob_pool = list()

@@ -78,7 +78,7 @@
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/find_hunt_target/human_to_headbutt/valid_dinner(mob/living/source, mob/living/carbon/human/dinner, radius, datum/ai_controller/controller, seconds_per_tick)
-	if(dinner.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(dinner))
 		return FALSE
 	if(isnull(dinner.get_bodypart(BODY_ZONE_R_LEG)) && isnull(dinner.get_bodypart(BODY_ZONE_L_LEG))) //no legs to headbutt!
 		return FALSE
@@ -89,4 +89,3 @@
 
 /datum/ai_behavior/hunt_target/headbutt_leg/target_caught(mob/living/hunter, atom/hunted)
 	hunter.manual_emote("playfully headbutts [hunted]'s legs!")
-

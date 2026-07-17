@@ -1342,7 +1342,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 	if(!istype(target))
 		CRASH("Missing target arg for can_perform_action")
 
-	if(stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		to_chat(src, span_warning("You are not conscious enough for this action!"))
 		return FALSE
 
@@ -2415,7 +2415,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/list/added_traits = list()
 
 	switch(stat) // Current stat
-		if(CONSCIOUS)
+		if(STABLE)
 			log_combat(src, src, "left crit")
 
 		if(SOFT_CRIT)

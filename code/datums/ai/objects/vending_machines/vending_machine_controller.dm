@@ -48,7 +48,7 @@
 		if(blackboard[BB_VENDING_TILT_COOLDOWN] > world.time)
 			return
 		for(var/mob/living/living_target in oview(vision_range, pawn))
-			if(living_target.stat || living_target.incorporeal_move) //They're already fucked up or incorporeal
+			if(IS_UNCONSCIOUS_OR_CRIT(living_target) || living_target.incorporeal_move) //They're already fucked up or incorporeal
 				continue
 			set_blackboard_key(BB_VENDING_CURRENT_TARGET, living_target)
 			queue_behavior(/datum/ai_behavior/vendor_crush, BB_VENDING_CURRENT_TARGET)

@@ -59,7 +59,7 @@
 /datum/ai_behavior/find_and_set/human_beg/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/locate_items = controller.blackboard[BB_HUNTABLE_PREY]
 	for(var/mob/living/carbon/human/human_target in oview(search_range, controller.pawn))
-		if(human_target.stat != CONSCIOUS || isnull(human_target.mind))
+		if(IS_UNCONSCIOUS_OR_CRIT(human_target) || isnull(human_target.mind))
 			continue
 		for (var/obj/item/held_item in human_target.held_items)
 			if (is_type_in_typecache(held_item, locate_items))

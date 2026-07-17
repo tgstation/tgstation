@@ -48,7 +48,7 @@
 	/// Trait that is required to use this emote.
 	var/trait_required
 	/// In which state can you use this emote? (Check stat.dm for a full list of them)
-	var/stat_allowed = CONSCIOUS
+	var/stat_allowed = STABLE
 
 	var/can_use_flags = NONE
 	/// Sound to play when emote is called.
@@ -361,7 +361,7 @@
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
 	if(status_check && !is_type_in_typecache(user, mob_type_ignore_stat_typecache))
-		if(HAS_TRAIT(user, TRAIT_KNOCKEDOUT) && !(can_use_flags & EMOTE_CANUSE_UNCONSCIOUS))
+		if(IS_UNCONSCIOUS(user) && !(can_use_flags & EMOTE_CANUSE_UNCONSCIOUS))
 			if(intentional)
 				to_chat(user, span_warning("You cannot [key] while unconscious!"))
 			return FALSE
@@ -435,7 +435,7 @@
 	return TRUE
 
 /mob/manual_emote(text, log_emote = null)
-	if (stat != CONSCIOUS)
+	if (IS_UNCONSCIOUS_OR_CRIT(src))
 		return FALSE
 	if (isnull(log_emote))
 		log_emote = !isnull(client)

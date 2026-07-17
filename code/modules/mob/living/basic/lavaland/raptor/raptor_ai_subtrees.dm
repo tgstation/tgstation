@@ -38,7 +38,7 @@
 
 	var/mob/living/buckled_to = raptor.buckled_mobs[1]
 	// Flee if our owner is badly injured and out
-	if (buckled_to.stat != CONSCIOUS && buckled_to.stat != DEAD)
+	if (IS_UNCONSCIOUS_OR_CRIT(buckled_to) && buckled_to.stat != DEAD)
 		return ..()
 
 /datum/ai_planning_subtree/find_and_hunt_target/care_for_young

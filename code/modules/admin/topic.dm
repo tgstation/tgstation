@@ -703,7 +703,7 @@
 			var/mob/living/lifer = subject
 			var/status
 			switch (subject.stat)
-				if(CONSCIOUS)
+				if(STABLE)
 					status = "Alive"
 				if(SOFT_CRIT)
 					status = "<font color='orange'><b>Critical</b></font>"

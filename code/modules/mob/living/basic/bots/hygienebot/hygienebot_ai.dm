@@ -75,7 +75,7 @@
 		if(found_target)
 			break
 
-		if(isnull(wash_potential.mind) || wash_potential.stat != CONSCIOUS)
+		if(isnull(wash_potential.mind) || IS_UNCONSCIOUS_OR_CRIT(wash_potential))
 			continue
 
 		if(LAZYACCESS(ignore_list, wash_potential))

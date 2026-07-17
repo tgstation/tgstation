@@ -29,7 +29,7 @@
 /datum/ai_behavior/find_hunt_target/snail_people/valid_dinner(mob/living/source, mob/living/carbon/potential_snail, radius, datum/ai_controller/controller, seconds_per_tick)
 	if(!istype(potential_snail))
 		return FALSE
-	if(potential_snail.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(potential_snail))
 		return FALSE
 	if(!is_species(potential_snail, /datum/species/snail))
 		return FALSE

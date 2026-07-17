@@ -44,7 +44,7 @@
 		living_pawn.set_combat_mode(FALSE)
 		return
 
-	if(!selected_enemy.stat) //He's up, get him!
+	if(!IS_UNCONSCIOUS_OR_CRIT(selected_enemy)) //He's up, get him!
 		if(living_pawn.health < MONKEY_FLEE_HEALTH) //Time to skeddadle
 			controller.queue_behavior(/datum/ai_behavior/monkey_flee)
 			return SUBTREE_RETURN_FINISH_PLANNING //I'm running fuck you guys
@@ -81,7 +81,7 @@
 	for(var/mob/living/carbon/human/human_mob in oview(5, living_pawn))
 		if(istype(human_mob.mind?.assigned_role, /datum/job/bartender))
 			return //  my boss is on duty!
-		if(human_mob.stat != CONSCIOUS || ismonkey(human_mob))
+		if(IS_UNCONSCIOUS_OR_CRIT(human_mob) || ismonkey(human_mob))
 			continue
 		if(!human_mob.get_empty_held_indexes())
 			continue

@@ -1,9 +1,5 @@
-/*
-	Used with the various stat variables (mob, machines)
-*/
-
-//mob/var/stat things
-#define CONSCIOUS 0
+// Mob health stats
+#define STABLE 0
 #define SOFT_CRIT 1
 #define HARD_CRIT 2
 #define DEAD 3

@@ -12,7 +12,7 @@
 	return ..()
 
 /datum/hallucination/eyes_in_dark/start()
-	if(!hallucinator.client || HAS_TRAIT(hallucinator, TRAIT_KNOCKEDOUT))
+	if(!hallucinator.client || IS_UNCONSCIOUS(hallucinator))
 		return FALSE
 
 	if(hallucinator.lighting_cutoff >= 2.5)
