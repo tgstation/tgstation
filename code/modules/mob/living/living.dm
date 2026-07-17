@@ -19,6 +19,7 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 	gravity_setup()
+	init_unconscious_appearance()
 
 /mob/living/prepare_huds()
 	..()
@@ -27,6 +28,10 @@
 /mob/living/proc/prepare_data_huds()
 	med_hud_set_health()
 	med_hud_set_status()
+
+/// Inits the unconscious alt appearance for when other mobs see us while unconscious
+/mob/living/proc/init_unconscious_appearance()
+	return
 
 /mob/living/Destroy()
 	for(var/datum/status_effect/effect as anything in status_effects)
@@ -405,9 +410,7 @@
 		log_combat(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 
-	pulling = AM
-	AM.set_pulledby(src)
-
+	set_pulling(AM)
 	SEND_SIGNAL(src, COMSIG_LIVING_START_PULL, AM, state, force)
 
 	if(!supress_message)
@@ -2394,60 +2397,72 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(. <= UNCONSCIOUS || new_stat >= UNCONSCIOUS)
 		update_eyes()
 
-	switch(.) //Previous stat.
+	// All the traits associated with any of a mob's stat
+	// Adding any traits below should also be done in here
+	var/list/removed_traits = list(
+		TRAIT_FLOORED,
+		TRAIT_HANDS_BLOCKED,
+		TRAIT_IMMOBILIZED,
+		TRAIT_INCAPACITATED,
+		TRAIT_KNOCKEDOUT,
+		TRAIT_DEAF,
+	)
+	// All the traits associated with the mob's current stat
+	var/list/added_traits = list()
+
+	switch(stat)
 		if(CONSCIOUS)
-			if(stat >= UNCONSCIOUS)
-				ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-			add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED, TRAIT_FLOORED), STAT_TRAIT)
-		if(SOFT_CRIT)
-			if(stat >= UNCONSCIOUS)
-				ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT) //adding trait sources should come before removing to avoid unnecessary updates
-			if(pulledby)
-				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
-		if(UNCONSCIOUS)
-			if(stat != HARD_CRIT)
-				cure_blind(UNCONSCIOUS_TRAIT)
-		if(HARD_CRIT)
-			if(stat != UNCONSCIOUS)
-				cure_blind(UNCONSCIOUS_TRAIT)
-			REMOVE_TRAIT(src, TRAIT_DEAF, STAT_TRAIT)
-		if(DEAD)
-			REMOVE_TRAIT(src, TRAIT_DEAF, STAT_TRAIT)
-			remove_from_dead_mob_list()
-			add_to_alive_mob_list()
-	switch(stat) //Current stat.
-		if(CONSCIOUS)
-			if(. >= UNCONSCIOUS)
-				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-			remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_CRITICAL_CONDITION), STAT_TRAIT)
 			log_combat(src, src, "regained consciousness")
+
 		if(SOFT_CRIT)
-			if(pulledby)
-				ADD_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT) //adding trait sources should come before removing to avoid unnecessary updates
-			if(. >= UNCONSCIOUS)
-				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+			added_traits.Add(
+				TRAIT_FLOORED,
+				TRAIT_HANDS_BLOCKED,
+				TRAIT_INCAPACITATED,
+			)
 			log_combat(src, src, "entered soft crit")
+
 		if(UNCONSCIOUS)
-			if(. != HARD_CRIT)
-				become_blind(UNCONSCIOUS_TRAIT)
-			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
-				ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
-			else
-				REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+			added_traits.Add(
+				TRAIT_FLOORED,
+				TRAIT_HANDS_BLOCKED,
+				TRAIT_INCAPACITATED,
+				TRAIT_KNOCKEDOUT,
+			)
 			log_combat(src, src, "lost consciousness")
+
 		if(HARD_CRIT)
-			if(. != UNCONSCIOUS)
-				become_blind(UNCONSCIOUS_TRAIT)
-			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
-			ADD_TRAIT(src, TRAIT_DEAF, STAT_TRAIT)
+			added_traits.Add(
+				TRAIT_DEAF,
+				TRAIT_FLOORED,
+				TRAIT_HANDS_BLOCKED,
+				TRAIT_IMMOBILIZED,
+				TRAIT_INCAPACITATED,
+				TRAIT_KNOCKEDOUT,
+			)
 			log_combat(src, src, "entered hard crit")
+
 		if(DEAD)
-			REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
-			ADD_TRAIT(src, TRAIT_DEAF, STAT_TRAIT)
-			remove_from_alive_mob_list()
-			add_to_dead_mob_list()
+			added_traits.Add(
+				TRAIT_DEAF,
+				TRAIT_FLOORED,
+				TRAIT_HANDS_BLOCKED,
+				TRAIT_IMMOBILIZED,
+				TRAIT_INCAPACITATED,
+				TRAIT_KNOCKEDOUT,
+			)
 			log_combat(src, src, "died")
+
+	if(stat == DEAD)
+		remove_from_alive_mob_list()
+		add_to_dead_mob_list()
+	else if(. == DEAD)
+		remove_from_dead_mob_list()
+		add_to_alive_mob_list()
+
+	add_traits(added_traits, STAT_TRAIT)
+	remove_traits(removed_traits - added_traits, STAT_TRAIT)
+	update_succumb_action()
 
 ///Reports the event of the change in value of the buckled variable.
 /mob/living/proc/set_buckled(new_buckled)
@@ -3042,3 +3057,17 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		remove_verb(src, /mob/living/verb/pulled)
 	else
 		add_verb(src, /mob/living/verb/pulled)
+
+/// Generic helper to add a static-y humanoid appearance shown to other mobs when unconscious
+/mob/living/proc/add_generic_humanoid_static_appearance()
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/image/static_image = image('icons/effects/effects.dmi', src, "static")
+	static_image.override = TRUE
+	static_image.name = "unknown humanoid"
+	add_alt_appearance(
+		/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity,
+		"[REF(src)]_unconscious",
+		static_image,
+		NONE,
+	)

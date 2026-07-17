@@ -1059,3 +1059,20 @@
 		buckled_mob.Paralyze(1 SECONDS)
 		unbuckle_mob(buckled_mob)
 	do_sparks(5, 0, src)
+
+/mob/living/silicon/robot/init_unconscious_appearance()
+	var/image/static_overlay = image('icons/effects/effects.dmi', null, "static_base")
+	static_overlay.blend_mode = BLEND_INSET_OVERLAY
+
+	var/image/static_image = image('icons/mob/silicon/robots.dmi', src, "robot")
+	static_image.appearance_flags |= KEEP_TOGETHER
+	static_image.overlays += static_overlay
+	static_image.override = TRUE
+	static_image.name = "unknown cyborg"
+	static_image.add_filter("static_outline", 1, outline_filter(size = 1, color = COLOR_DARK))
+	add_alt_appearance(
+		/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity,
+		"[REF(src)]_unconscious",
+		static_image,
+		NONE,
+	)

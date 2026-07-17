@@ -44,9 +44,6 @@
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_STASIS), PROC_REF(on_stasis_trait_loss))
 
 	RegisterSignals(src, list(
-		SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION),
-		SIGNAL_REMOVETRAIT(TRAIT_CRITICAL_CONDITION),
-
 		SIGNAL_ADDTRAIT(TRAIT_NODEATH),
 		SIGNAL_REMOVETRAIT(TRAIT_NODEATH),
 	), PROC_REF(update_succumb_action))
@@ -87,12 +84,22 @@
 	SIGNAL_HANDLER
 	if(stat < UNCONSCIOUS)
 		set_stat(UNCONSCIOUS)
+	become_blind(UNCONSCIOUS_TRAIT)
+	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_BLOCK_SECHUD, TRAIT_BLOCK_MEDHUD), TRAIT_KNOCKEDOUT)
+	for(var/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/uncon_aa in GLOB.active_alternate_appearances)
+		if(uncon_aa.target == src)
+			continue
+		uncon_aa.show_to(src)
 
 /// Called when [TRAIT_KNOCKEDOUT] is removed from the mob.
 /mob/living/proc/on_knockedout_trait_loss(datum/source)
 	SIGNAL_HANDLER
 	if(stat <= UNCONSCIOUS)
 		update_stat()
+	cure_blind(UNCONSCIOUS_TRAIT)
+	remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_BLOCK_SECHUD, TRAIT_BLOCK_MEDHUD), TRAIT_KNOCKEDOUT)
+	for(var/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/uncon_aa in GLOB.active_alternate_appearances)
+		uncon_aa.hide_from(src, absolute = TRUE)
 
 /// Called when [TRAIT_DEATHCOMA] is added to the mob.
 /mob/living/proc/on_deathcoma_trait_gain(datum/source)

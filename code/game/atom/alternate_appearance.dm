@@ -233,3 +233,17 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	if(IS_HERETIC_OR_MONSTER(viewer))
 		return TRUE
 	return FALSE
+
+/// Hud specifically used for mobs when unconscious to hide other humans
+/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity
+
+/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/New(key, image/shown_image, options)
+	. = ..()
+	RegisterSignal(target, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(turn_image))
+
+/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/proc/turn_image(datum/source, ...)
+	SIGNAL_HANDLER
+	image.transform = target.transform
+
+/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/mobShouldSee(mob/M)
+	return FALSE // this hud is managed manually, so don't show it generically

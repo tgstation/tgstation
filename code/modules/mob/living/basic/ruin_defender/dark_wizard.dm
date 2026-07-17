@@ -53,6 +53,9 @@
 
 	new /obj/item/clothing/head/wizard/hood(src) // Having this hat in our contents allows us to cast wizard spells
 
+/mob/living/basic/paper_wizard/init_unconscious_appearance()
+	add_generic_humanoid_static_appearance()
+
 /datum/ai_controller/basic_controller/dark_wizard
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,

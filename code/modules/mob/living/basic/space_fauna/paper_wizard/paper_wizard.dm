@@ -35,6 +35,9 @@
 	grant_loot()
 	AddElement(/datum/element/effect_trail, /obj/effect/temp_visual/paper_scatter)
 
+/mob/living/basic/paper_wizard/init_unconscious_appearance()
+	add_generic_humanoid_static_appearance()
+
 /mob/living/basic/paper_wizard/proc/grant_abilities()
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/spell/conjure/wizard_summon_minions = BB_WIZARD_SUMMON_MINIONS,
