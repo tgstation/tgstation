@@ -530,6 +530,8 @@
   - balance: Aggressive healing has much lower stats
   - map: Added sepsisillin pills to virology
   - spellcheck: Clarified the description of aggressive healing
+  Happyowl93:
+  - bugfix: People with missing limb can again use the remaining good one.
   LT3:
   - bugfix: Tram signs only update on signals from their linked tram
   LemonInTheDark:
@@ -541,6 +543,8 @@
       breaching the Atmos pump room.
   TealSeer:
   - bugfix: fixed FaxBond not sending notifications when faxes are received
+  krookodilehunter:
+  - rscadd: Chickens can be picked up and held now! Sprites by mms142
   lelandkemble:
   - rscadd: Added craftable anti-mech tripwires. A mech that foolishly steps on one
       will fall down and be immobilized temporarily. Don't let it fall on you!
