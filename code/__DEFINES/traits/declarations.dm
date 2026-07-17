@@ -232,8 +232,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LIVERLESS_METABOLISM "liverless_metabolism"
 /// This carbon can't be overdosed by chems
 #define TRAIT_OVERDOSEIMMUNE "overdose_immune"
-/// Humans with this trait cannot be turned into zombies
-#define TRAIT_NO_ZOMBIFY "no_zombify"
 /// Carbons with this trait can't have their DNA copied by diseases nor changelings
 #define TRAIT_NO_DNA_COPY "no_dna_copy"
 /// Carbons with this trait can't have their DNA scrambled by genetics or a disease retrovirus.
