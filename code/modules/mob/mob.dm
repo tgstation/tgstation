@@ -251,7 +251,7 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
 				if(type & MSG_VISUAL && is_blind())
 					return FALSE
 	// voice muffling
-	if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) && stat != DEAD)
+	if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
 		if(type & MSG_AUDIBLE) //audio
 			to_chat(src, "<I>... You can almost hear something ...</I>")
 		return FALSE

@@ -184,7 +184,7 @@
 	else
 		cloak_image.transform = turn(cloak_image.transform, -90)
 
-/// Signal proc for [COMSIG_MOB_STATCHANGE], going past soft crit will stop the effect
+/// Signal proc for [SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT], falling unconscious (from hard crit or otherwise) will stop the effect
 /datum/status_effect/shadow_cloak/proc/on_stat_change(datum/source, new_stat, old_stat)
 	SIGNAL_HANDLER
 

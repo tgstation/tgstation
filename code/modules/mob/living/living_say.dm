@@ -143,21 +143,20 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			saymode = null
 			message_mods -= RADIO_EXTENSION
 
-	switch(stat)
-		if(SOFT_CRIT)
-			message_mods[WHISPER_MODE] = MODE_WHISPER
-		if(DEAD)
-			say_dead(original_message, message_mods[MANNEQUIN_CONTROLLED])
-			return
+	// this is what stops you from talking while dead
+	if(stat == DEAD)
+		say_dead(original_message, message_mods[MANNEQUIN_CONTROLLED])
+		return
 
 	if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
-		if(stat == HARD_CRIT)
-			if(!message_mods[WHISPER_MODE])
-				return
-		else
+		// this is what stops you from talking while asleep
+		if(stat != SOFT_CRIT)
+			return
+		// this is what allows you to deathgasp in hard crit
+		if(!message_mods[WHISPER_MODE])
 			return
 
-	if(HAS_TRAIT(src, TRAIT_SOFTSPOKEN) && !HAS_TRAIT(src, TRAIT_SIGN_LANG)) // softspoken trait only applies to spoken languages
+	if(HAS_TRAIT(src, TRAIT_SOFTSPOKEN))
 		message_mods[WHISPER_MODE] = MODE_WHISPER
 
 	if(client && SSlag_switch.measures[SLOWMODE_SAY] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES) && !forced && src == usr)

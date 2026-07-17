@@ -69,15 +69,18 @@ GAME_VERB_HIDDEN(/mob/living, suicide, "suicide")
 		to_chat(src, span_warning("You can't commit suicide here! You can ghost if you'd like."))
 		return FALSE
 
-	switch(stat)
-		if(CONSCIOUS)
-			return TRUE
-		if(SOFT_CRIT)
-			to_chat(src, span_warning("You can't commit suicide while in a critical condition!"))
-		if(UNCONSCIOUS, HARD_CRIT)
-			to_chat(src, span_warning("You need to be conscious to commit suicide!"))
-		if(DEAD)
-			to_chat(src, span_warning("You're already dead!"))
+	if(stat == CONSCIOUS)
+		return TRUE
+
+	if(stat == DEAD)
+		to_chat(src, span_warning("You're already dead!"))
+		return FALSE
+
+	if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
+		to_chat(src, span_warning("You need to be conscious to commit suicide!"))
+		return FALSE
+
+	to_chat(src, span_warning("You can't commit suicide while in a critical condition!"))
 	return FALSE
 
 /// Inserts in logging and death + mind dissociation when we're fully done with ending the life of our mob, as well as adjust the health. We will disallow re-entering the body when this is called.

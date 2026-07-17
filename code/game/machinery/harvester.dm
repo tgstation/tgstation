@@ -97,7 +97,7 @@
 
 	var/mob/living/carbon/carbon_occupant = occupant
 
-	if(!HAS_TRAIT(carbon_occupant, TRAIT_KNOCKEDOUT))
+	if(carbon_occupant.client && carbon_occupant.stat <= HARD_CRIT)
 		notify_ghosts(
 			"[carbon_occupant.real_name] is about to be ground up by a malfunctioning organ harvester!",
 			source = src,

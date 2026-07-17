@@ -2404,12 +2404,12 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	// All the traits associated with any of a mob's stat
 	// Adding any traits below should also be done in here
 	var/list/removed_traits = list(
-		TRAIT_CRITICAL_CONDITION,
 		TRAIT_DEAF,
 		TRAIT_FLOORED,
 		TRAIT_HANDS_BLOCKED,
 		TRAIT_INCAPACITATED,
 		TRAIT_KNOCKEDOUT,
+		TRAIT_SOFTSPOKEN,
 	)
 	// All the traits associated with the mob's current stat
 	var/list/added_traits = list()
@@ -2424,6 +2424,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 				TRAIT_FLOORED,
 				TRAIT_HANDS_BLOCKED,
 				TRAIT_INCAPACITATED,
+				TRAIT_SOFTSPOKEN,
 			)
 
 		if(HARD_CRIT)

@@ -576,6 +576,8 @@
 	SEND_SIGNAL(old_pulling, COMSIG_ATOM_NO_LONGER_PULLED, src)
 	SEND_SIGNAL(src, COMSIG_ATOM_NO_LONGER_PULLING, old_pulling)
 
+#define PULLED_WHILE_SOFTCRIT_TRAIT "pulled_while_softcrit"
+
 /atom/movable/proc/pulled_mob_stat_change(mob/living/pulled_mob, new_stat, ...)
 	SIGNAL_HANDLER
 
@@ -616,6 +618,7 @@
 	. = pulledby
 	pulledby = new_pulledby
 
+#undef PULLED_WHILE_SOFTCRIT_TRAIT
 
 /atom/movable/proc/Move_Pulled(atom/moving_atom)
 	if(!pulling)

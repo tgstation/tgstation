@@ -95,7 +95,7 @@
 /// Called when [TRAIT_KNOCKEDOUT] is removed from the mob.
 /mob/living/proc/on_knockedout_trait_loss(datum/source)
 	SIGNAL_HANDLER
-	cure_blindness(TRAIT_KNOCKEDOUT)
+	cure_blind(TRAIT_KNOCKEDOUT)
 	remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_BLOCK_SECHUD, TRAIT_BLOCK_MEDHUD, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_KNOCKEDOUT)
 	update_eyes() // updates eyelids
 	for(var/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/uncon_aa in GLOB.active_alternate_appearances)

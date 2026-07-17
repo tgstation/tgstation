@@ -312,7 +312,7 @@
 	tick_interval = 10 SECONDS
 
 /datum/status_effect/eldritch_painting/weeping/on_tick(seconds_between_ticks)
-	if(HAS_TRAIT(owner, TRAIT_KNOCKEDOUT) || HAS_TRAIT(owner, TRAIT_CRITICAL_CONDITION))
+	if(HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
 		return
 
 	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping status effect")

@@ -141,9 +141,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	else
 		if(!can_see(watcher, src, 7))
 			return FALSE
-	if(watcher.is_blind())
-		return FALSE
-	if(!isobserver(watcher) && HAS_TRAIT(watcher, TRAIT_KNOCKEDOUT))
+	if(watcher.is_blind() || HAS_TRAIT(watcher, TRAIT_KNOCKEDOUT))
 		return FALSE
 	return TRUE
 

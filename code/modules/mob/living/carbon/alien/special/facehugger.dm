@@ -76,7 +76,7 @@
 	if(!real)//So that giant red text about probisci doesn't show up.
 		return
 	switch(stat)
-		if(DEAD,UNCONSCIOUS)
+		if(DEAD, UNCONSCIOUS)
 			. += span_bolddanger("[src] is not moving.")
 		if(CONSCIOUS)
 			. += span_bolddanger("[src] seems to be active!")
