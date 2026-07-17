@@ -521,3 +521,30 @@
   vinylspiders:
   - bugfix: fixed an issue that would prevent an emped mech from being able to melee
       attack a target
+2026-07-17:
+  Fghj240:
+  - qol: Ghosts can see alien embryo stage and all virus symptoms when health scanning
+  - code_imp: Health scanners now support multiple scan levels
+  - bugfix: Fixes medical kiosks not being able to identify advanced disease cures.
+  - rscdel: Removed ImmunoSilence and its trait
+  - balance: Aggressive healing has much lower stats
+  - map: Added sepsisillin pills to virology
+  - spellcheck: Clarified the description of aggressive healing
+  Happyowl93:
+  - bugfix: People with missing limb can again use the remaining good one.
+  LT3:
+  - bugfix: Tram signs only update on signals from their linked tram
+  LemonInTheDark:
+  - bugfix: Starlight will light rock walls adjacent to space... better.
+  Lotte103:
+  - map: Added Thermomachines and Plasma Cannister to the HFR Room on Catwalk
+  - map: Replaced glass windows with reinforced plasmaglass windows in Atmos and Ordnance
+      on Catwalk. Improving safety and allowing Atmos to operate the gas turbine without
+      breaching the Atmos pump room.
+  TealSeer:
+  - bugfix: fixed FaxBond not sending notifications when faxes are received
+  krookodilehunter:
+  - rscadd: Chickens can be picked up and held now! Sprites by mms142
+  lelandkemble:
+  - rscadd: Added craftable anti-mech tripwires. A mech that foolishly steps on one
+      will fall down and be immobilized temporarily. Don't let it fall on you!

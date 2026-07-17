@@ -256,7 +256,7 @@
 	else
 		return span_info("This one is completely devoid of life.")
 
-/obj/item/organ/brain/get_status_appendix(advanced, add_tooltips)
+/obj/item/organ/brain/get_status_appendix(scanpower, add_tooltips)
 	var/list/trauma_text
 	for(var/datum/brain_trauma/trauma as anything in traumas)
 		var/trauma_desc = ""

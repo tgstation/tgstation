@@ -155,7 +155,7 @@
 	if(SPT_PROB(stage_prob * slowdown * bad_immune, seconds_per_tick))
 		update_stage(min(stage + 1, max_stages))
 
-	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE && !HAS_TRAIT(affected_mob, TRAIT_NO_SELF_CURE))
+	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
 		switch(severity)
 			if(DISEASE_SEVERITY_POSITIVE)
 				if(slowdown < 1 || (!(HAS_TRAIT(affected_mob, TRAIT_NOHUNGER)) && (affected_mob.satiety < DISEASE_SATIETY_THRESHOLD || affected_mob.nutrition < NUTRITION_LEVEL_STARVING)))

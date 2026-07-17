@@ -860,7 +860,7 @@
 		return span_boldwarning("Your lungs feel extremely tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and every breath is a struggle"].")
 	return span_boldwarning("It feels extremely tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and every breath is a struggle"].")
 
-/obj/item/organ/lungs/get_status_appendix(advanced, add_tooltips)
+/obj/item/organ/lungs/get_status_appendix(scanpower, add_tooltips)
 	var/initial_pressure_mult = initial(received_pressure_mult)
 	if (received_pressure_mult == initial_pressure_mult)
 		return

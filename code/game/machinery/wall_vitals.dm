@@ -45,7 +45,7 @@
 	light_color = LIGHT_COLOR_FAINT_CYAN
 
 	/// Whether we perform an advanced scan on examine or not
-	var/advanced = FALSE
+	var/scanpower = SCANPOWER_BASIC
 	/// If TRUE, also append a chemical scan to the readout
 	var/chemscan = TRUE
 	/// Typepath to spawn when deconstructed
@@ -80,7 +80,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader, 32)
 	desc = "A screen that displays the vitals of a patient. \
 		Performs a more detailed scan of the patient than a basic display."
 	frame = /obj/item/wallframe/status_display/vitals/advanced
-	advanced = TRUE
+	scanpower = SCANPOWER_ADVANCED
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 
@@ -226,7 +226,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 	else if(HAS_TRAIT(user, TRAIT_DUMB) || !user.can_read(src, reading_check_flags = READING_CHECK_LITERACY, silent = TRUE))
 		. += span_warning("You try to comprehend the display, but it's too complex for you to understand.")
 	else
-		. += healthscan(user, patient, mode = SCANNER_CONDENSED, advanced = src.advanced, tochat = FALSE)
+		. += healthscan(user, patient, mode = SCANNER_CONDENSED, scanpower = src.scanpower, tochat = FALSE)
 		. += chemscan(user, patient, tochat = FALSE)
 
 /obj/machinery/vitals_reader/add_context(atom/source, list/context, obj/item/held_item, mob/user)

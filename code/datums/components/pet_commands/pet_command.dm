@@ -148,7 +148,6 @@
 	if (!can_see(parent, potential_target, sense_radius))
 		return FALSE
 
-	parent.ai_controller.CancelActions()
 	set_command_target(parent, potential_target)
 	return TRUE
 
@@ -156,8 +155,11 @@
 /datum/pet_command/proc/set_command_active(mob/living/parent, mob/living/commander, radial_command = FALSE)
 	parent.ai_controller.clear_blackboard_key(BB_CURRENT_PET_TARGET)
 
-	parent.ai_controller.CancelActions() // Stop whatever you're doing and do this instead
+	var/datum/pet_command/previous = parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND]
+	if(previous && previous != src)
+		previous.command_ended(parent.ai_controller)
 	parent.ai_controller.set_blackboard_key(BB_ACTIVE_PET_COMMAND, src)
+	execute_action(parent.ai_controller) // Install the BT override subtree for this command
 	if (command_feedback)
 		parent.balloon_alert_to_viewers("[command_feedback]") // If we get a nicer runechat way to do this, refactor this
 	if(!radial_command)
@@ -169,6 +171,12 @@
 	RegisterSignal(commander, COMSIG_MOB_CLICKON, PROC_REF(click_on_target))
 	commander.client?.mouse_override_icon = 'icons/effects/mouse_pointers/pet_paw.dmi'
 	commander.update_mouse_pointer()
+
+
+/// Called when this command is replaced by another command or otherwise deactivated. Extend to add cleanup logic.
+/datum/pet_command/proc/command_ended(datum/ai_controller/controller)
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, null)
+	return
 
 /datum/pet_command/proc/click_on_target(mob/living/source, atom/target, list/modifiers)
 	SIGNAL_HANDLER
@@ -215,7 +223,7 @@
 	if (!parent)
 		return FALSE
 
-	parent.ai_controller.CancelActions()
+	parent.ai_controller.cancel_current_plan()
 	if(!look_for_target(friend, potential_target) || !set_command_target(parent, potential_target))
 		return FALSE
 	parent.visible_message(span_warning("[parent] follows [friend]'s gesture towards [potential_target] [pointed_reaction]!"))

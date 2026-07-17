@@ -1,74 +1,71 @@
-///subtree to steal items
-/datum/ai_planning_subtree/hoard_items
-	var/theft_chance = 5
+/// Accepts open turfs which aren't space, aren't blocked, and are within hoarding range. Used to pick a parrot's nest.
+/datum/targeting_strategy/parrot_hoard_location
 
-/datum/ai_planning_subtree/hoard_items/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/living_pawn = controller.pawn
+/datum/targeting_strategy/parrot_hoard_location/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/turf/open/candidate = target
+	if(!istype(candidate) || is_space_or_openspace(candidate))
+		return FALSE
+	if(candidate.is_blocked_turf(source_atom = living_mob))
+		return FALSE
+	return TRUE
 
-	var/turf/myspace = controller.blackboard[BB_HOARD_LOCATION]
+/// Accepts small items lying on a turf away from the nest, or non-ally humans holding a small valuable. Used to pick something to steal.
+/datum/targeting_strategy/parrot_hoard_item
 
-	if(isnull(myspace) || myspace.is_blocked_turf(source_atom = controller.pawn) || get_dist(myspace, controller.pawn) > controller.blackboard[BB_HOARD_LOCATION_RANGE])
-		controller.queue_behavior(/datum/ai_behavior/find_and_set/hoard_location, BB_HOARD_LOCATION, /turf/open)
-		return
+/datum/targeting_strategy/parrot_hoard_item/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(isnull(controller))
+		return FALSE
 
-	//we have an item, go drop!
-	var/list/our_contents = living_pawn.contents - typecache_filter_list(living_pawn.contents, controller.blackboard[BB_IGNORE_ITEMS])
-	if(length(our_contents))
-		controller.queue_behavior(/datum/ai_behavior/travel_towards/and_drop, BB_HOARD_LOCATION)
-		return SUBTREE_RETURN_FINISH_PLANNING
+	var/list/ignore_items = controller.blackboard[BB_IGNORE_ITEMS]
+	if(is_type_in_typecache(target, ignore_items))
+		return FALSE
 
-	if(controller.blackboard_key_exists(BB_HOARD_ITEM_TARGET))
-		controller.queue_behavior(/datum/ai_behavior/basic_melee_attack/interact_once, BB_HOARD_ITEM_TARGET, BB_TARGETING_STRATEGY)
-		return SUBTREE_RETURN_FINISH_PLANNING
-
-	if(!SPT_PROB(theft_chance, seconds_per_tick))
-		return
-	controller.queue_behavior(/datum/ai_behavior/find_and_set/hoard_item, BB_HOARD_ITEM_TARGET)
-
-/datum/ai_behavior/find_and_set/hoard_location
-
-/datum/ai_behavior/find_and_set/hoard_location/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
-	for(var/turf/open/candidate in oview(search_range, controller.pawn))
-		if(is_space_or_openspace(candidate))
-			continue
-		if(candidate.is_blocked_turf(source_atom = controller.pawn))
-			continue
-		return candidate
-
-	return null
-
-/datum/ai_behavior/find_and_set/hoard_item
-	action_cooldown = 5 SECONDS
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-
-/datum/ai_behavior/find_and_set/hoard_item/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
-	if(!controller.blackboard_key_exists(BB_HOARD_LOCATION))
-		return null
 	var/turf/nest_turf = controller.blackboard[BB_HOARD_LOCATION]
-	var/mob/living/living_pawn = controller.pawn
-	for(var/atom/potential_victim in oview(search_range, controller.pawn))
-		if(is_type_in_typecache(potential_victim, controller.blackboard[BB_IGNORE_ITEMS]))
-			continue
-		if(potential_victim.loc == nest_turf)
-			continue
-		if(isitem(potential_victim))
-			var/obj/item/item_steal = potential_victim
-			if(item_steal.w_class <= WEIGHT_CLASS_SMALL)
-				return potential_victim
-		if(!ishuman(potential_victim))
-			continue
-		if(living_pawn.has_ally(potential_victim))
-			continue //dont steal from friends
-		if(holding_valuable(controller, potential_victim))
-			controller.set_blackboard_key(BB_ALWAYS_IGNORE_FACTION, TRUE)
-			return potential_victim
+	if(target.loc == nest_turf)
+		return FALSE
 
-	return null
+	if(isitem(target))
+		var/obj/item/loose_item = target
+		return loose_item.w_class <= WEIGHT_CLASS_SMALL
 
-/datum/ai_behavior/find_and_set/hoard_item/proc/holding_valuable(datum/ai_controller/controller, mob/living/human_target)
+	if(!ishuman(target))
+		return FALSE
+	if(living_mob.has_ally(target)) // dont steal from friends
+		return FALSE
+	return holding_valuable(controller, target)
+
+/datum/targeting_strategy/parrot_hoard_item/proc/holding_valuable(datum/ai_controller/controller, mob/living/human_target)
+	var/list/ignore_items = controller.blackboard[BB_IGNORE_ITEMS]
 	for(var/obj/item/potential_item in human_target.held_items)
-		if(is_type_in_typecache(potential_item, controller.blackboard[BB_IGNORE_ITEMS]))
+		if(is_type_in_typecache(potential_item, ignore_items))
 			continue
 		if(potential_item.w_class <= WEIGHT_CLASS_SMALL)
 			return TRUE
 	return FALSE
+
+/// Finds something for the parrot to steal. Temporarily ignores faction when eyeing a person's belongings.
+/datum/bt_node/ai_behavior/acquire_target/parrot_hoard_item
+	target_source = /datum/target_source/oview
+	targeting_strategy = /datum/targeting_strategy/parrot_hoard_item
+	time_between_perform = 5 SECONDS
+
+/datum/bt_node/ai_behavior/acquire_target/parrot_hoard_item/on_target_found(datum/ai_controller/controller, atom/target, datum/targeting_strategy/strategy)
+	if(ishuman(target))
+		controller.set_blackboard_key(BB_ALWAYS_IGNORE_FACTION, TRUE)
+
+/// Single-hit grab variant which resets the faction-ignore flag once we are done stealing.
+/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/parrot
+
+/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/parrot/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	controller.set_blackboard_key(BB_ALWAYS_IGNORE_FACTION, FALSE)
+
+/// Find a nest, carry loot home, then go steal more.
+/datum/bt_node/subtree/parrot_hoard
+	behavior_tree_json = "code/modules/mob/living/basic/pets/parrot/parrot_ai/parrot_hoard.bt.json"
