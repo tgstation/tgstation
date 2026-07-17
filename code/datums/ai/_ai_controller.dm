@@ -620,6 +620,7 @@ multiple modular subtrees with behaviors
 	living_pawn.set_combat_mode(old_combat_mode)
 	return TRUE
 
+
 ///This is where you decide what actions are taken by the AI.
 /datum/ai_controller/proc/SelectBehaviors(seconds_per_tick)
 	SHOULD_NOT_SLEEP(TRUE)
