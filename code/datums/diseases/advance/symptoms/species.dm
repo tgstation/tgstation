@@ -16,8 +16,6 @@
 	level = 5
 	severity = 0
 	symptom_cure = null
-	immunity_proof = TRUE
-	neutered = TRUE
 
 /datum/symptom/undead_adaptation/OnAdd(datum/disease/advance/A)
 	A.process_dead = TRUE
@@ -46,7 +44,6 @@
 	severity = 0
 	symptom_cure = null
 	immunity_proof = TRUE
-	neutered = TRUE
 
 /datum/symptom/inorganic_adaptation/OnAdd(datum/disease/advance/A)
 	A.infectable_biotypes |= MOB_MINERAL | MOB_ROBOTIC // Plasmamen, golems, and androids.
