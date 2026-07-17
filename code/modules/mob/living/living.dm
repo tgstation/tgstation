@@ -2402,13 +2402,12 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 
 	// All the traits associated with any of a mob's stat
-	// Adding anny traits below should also be done in here
+	// Adding any traits below should also be done in here
 	var/list/removed_traits = list(
 		TRAIT_CRITICAL_CONDITION,
 		TRAIT_DEAF,
 		TRAIT_FLOORED,
 		TRAIT_HANDS_BLOCKED,
-		TRAIT_IMMOBILIZED,
 		TRAIT_INCAPACITATED,
 		TRAIT_KNOCKEDOUT,
 	)
@@ -2422,7 +2421,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(SOFT_CRIT)
 			log_combat(src, src, "entered soft crit")
 			added_traits.Add(
-				TRAIT_CRITICAL_CONDITION,
 				TRAIT_FLOORED,
 				TRAIT_HANDS_BLOCKED,
 				TRAIT_INCAPACITATED,
@@ -2431,11 +2429,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(HARD_CRIT)
 			log_combat(src, src, "entered hard crit")
 			added_traits.Add(
-				TRAIT_CRITICAL_CONDITION,
 				TRAIT_DEAF,
 				TRAIT_FLOORED,
 				TRAIT_HANDS_BLOCKED,
-				TRAIT_IMMOBILIZED,
 				TRAIT_INCAPACITATED,
 				TRAIT_KNOCKEDOUT,
 			)
@@ -2446,7 +2442,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 				TRAIT_DEAF,
 				TRAIT_FLOORED,
 				TRAIT_HANDS_BLOCKED,
-				TRAIT_IMMOBILIZED,
 				TRAIT_INCAPACITATED,
 				TRAIT_KNOCKEDOUT,
 			)
@@ -2460,14 +2455,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	add_traits(added_traits, STAT_TRAIT)
 	remove_traits(removed_traits - added_traits, STAT_TRAIT)
-
-	if(stat == DEAD)
-		remove_from_alive_mob_list()
-		add_to_dead_mob_list()
-	else if(. == DEAD)
-		remove_from_dead_mob_list()
-		add_to_alive_mob_list()
-
 	update_succumb_action()
 
 ///Reports the event of the change in value of the buckled variable.
