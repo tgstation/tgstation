@@ -45,7 +45,7 @@
 	if(active_disease.totalResistance() >= 15) //strong enough to stun (occasionally)
 		power = 2
 	if(active_disease.totalStageSpeed() >= 6) //cough more often
-		symptom_delay_max = 10
+		symptom_delay = 6
 
 /datum/symptom/cough/Activate(datum/disease/advance/active_disease)
 	. = ..()
