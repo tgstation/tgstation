@@ -299,7 +299,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	var/speaker_is_signing = HAS_TRAIT(speaker, TRAIT_SIGN_LANG)
 	var/use_runechat = client?.prefs.read_preference(/datum/preference/toggle/enable_runechat)
-	if (IS_UNCONSCIOUS(src) && stat != DEAD)
+	if (IS_UNCONSCIOUS_AND_ALIVE(src))
 		use_runechat = FALSE
 	else if (!ismob(speaker) && !client?.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs))
 		use_runechat = FALSE
