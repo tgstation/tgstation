@@ -20,6 +20,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
+	worn_icon_state = "sheet-glass"
 	inhand_icon_state = "sheet-glass"
 	mats_per_unit = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT)
 	armor_type = /datum/armor/sheet_glass
@@ -99,6 +100,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	desc = "A glass sheet made out of a plasma-silicate alloy. It looks extremely tough and heavily fire resistant."
 	singular_name = "plasma glass sheet"
 	icon_state = "sheet-pglass"
+	worn_icon_state = "sheet-pglass"
 	inhand_icon_state = "sheet-pglass"
 	mats_per_unit = list(/datum/material/alloy/plasmaglass=SHEET_MATERIAL_AMOUNT)
 	material_type = /datum/material/alloy/plasmaglass
@@ -161,6 +163,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	desc = "Glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
+	worn_icon_state = "sheet-rglass"
 	inhand_icon_state = "sheet-rglass"
 	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 0.5, /datum/material/glass=SHEET_MATERIAL_AMOUNT)
 	armor_type = /datum/armor/sheet_rglass
@@ -201,6 +204,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	desc = "A glass sheet made out of a plasma-silicate alloy and a rod matrix. It looks hopelessly tough and nearly fire-proof!"
 	singular_name = "reinforced plasma glass sheet"
 	icon_state = "sheet-prglass"
+	worn_icon_state = "sheet-prglass"
 	inhand_icon_state = "sheet-prglass"
 	mats_per_unit = list(/datum/material/alloy/plasmaglass=SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.5)
 	armor_type = /datum/armor/sheet_plasmarglass
@@ -238,6 +242,7 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	desc = "A glass sheet made out of a titanium-silicate alloy."
 	singular_name = "titanium glass sheet"
 	icon_state = "sheet-titaniumglass"
+	worn_icon_state = "sheet-tglass"
 	inhand_icon_state = "sheet-titaniumglass"
 	mats_per_unit = list(/datum/material/alloy/titaniumglass=SHEET_MATERIAL_AMOUNT)
 	material_type = /datum/material/alloy/titaniumglass
@@ -269,6 +274,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	desc = "A glass sheet made out of a plasma-titanium-silicate alloy."
 	singular_name = "plastitanium glass sheet"
 	icon_state = "sheet-plastitaniumglass"
+	worn_icon_state = "sheet-ptglass"
 	inhand_icon_state = "sheet-plastitaniumglass"
 	mats_per_unit = list(/datum/material/alloy/plastitaniumglass=SHEET_MATERIAL_AMOUNT)
 	material_type = /datum/material/alloy/plastitaniumglass
@@ -300,6 +306,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	w_class = WEIGHT_CLASS_TINY
 	force = 5
 	throwforce = 10
+	worn_icon_state = "purified_soulstone"
 	inhand_icon_state = "shard-glass"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -420,6 +427,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	force = 6
 	throwforce = 11
 	icon_state = "plasmalarge"
+	worn_icon_state = "mystic_soulstone"
 	inhand_icon_state = "shard-plasma"
 	custom_materials = list(/datum/material/alloy/plasmaglass=SHEET_MATERIAL_AMOUNT)
 	icon_prefix = "plasma"
@@ -432,6 +440,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	desc = "A nasty looking shard of titanium infused glass."
 	throwforce = 12
 	icon_state = "titaniumlarge"
+	worn_icon_state = "shard_white"
 	inhand_icon_state = "shard-titanium"
 	custom_materials = list(/datum/material/alloy/titaniumglass=SHEET_MATERIAL_AMOUNT)
 	icon_prefix = "titanium"
@@ -445,6 +454,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	force = 7
 	throwforce = 12
 	icon_state = "plastitaniumlarge"
+	worn_icon_state = "mystic_soulstone"
 	inhand_icon_state = "shard-plastitanium"
 	custom_materials = list(/datum/material/alloy/plastitaniumglass=SHEET_MATERIAL_AMOUNT)
 	icon_prefix = "plastitanium"
