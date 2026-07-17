@@ -28,7 +28,7 @@
 	layer = MOB_LAYER
 	max_integrity = 100
 	slowdown = 2
-	clothing_traits = list(TRAIT_SOFTSPOKEN)
+	clothing_traits = list(TRAIT_FORCE_WHISPER)
 	var/facehugger_state = FACEHUGGER_AWAKE
 
 	var/sterile = FALSE

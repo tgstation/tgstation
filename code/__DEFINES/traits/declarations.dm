@@ -90,7 +90,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mute. Can't talk.
 #define TRAIT_MUTE "mute"
 /// Softspoken. Always whisper.
-#define TRAIT_SOFTSPOKEN "softspoken"
+#define TRAIT_FORCE_WHISPER "softspoken"
 /// Gibs on death and slips like ice.
 #define TRAIT_CURSED "cursed"
 /// Emotemute. Can't... emote.

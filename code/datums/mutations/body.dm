@@ -691,14 +691,14 @@
 	if(.)
 		return
 	UnregisterSignal(owner, COMSIG_LIVING_HEALTH_UPDATE)
-	REMOVE_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
+	REMOVE_TRAIT(owner, TRAIT_FORCE_WHISPER, REF(src))
 
 /datum/mutation/inexorable/proc/check_health(...)
 	SIGNAL_HANDLER
 	if(owner.health > owner.crit_threshold || owner.stat != CONSCIOUS)
-		REMOVE_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
+		REMOVE_TRAIT(owner, TRAIT_FORCE_WHISPER, REF(src))
 	else
-		ADD_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
+		ADD_TRAIT(owner, TRAIT_FORCE_WHISPER, REF(src))
 
 /datum/mutation/inexorable/on_life(seconds_per_tick)
 	if(owner.health > owner.crit_threshold || owner.stat != CONSCIOUS || HAS_TRAIT(owner, TRAIT_STASIS))

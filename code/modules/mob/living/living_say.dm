@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(!message_mods[WHISPER_MODE])
 			return
 
-	if(HAS_TRAIT(src, TRAIT_SOFTSPOKEN))
+	if(HAS_TRAIT(src, TRAIT_FORCE_WHISPER))
 		message_mods[WHISPER_MODE] = MODE_WHISPER
 
 	if(client && SSlag_switch.measures[SLOWMODE_SAY] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES) && !forced && src == usr)

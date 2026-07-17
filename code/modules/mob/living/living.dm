@@ -2409,7 +2409,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		TRAIT_HANDS_BLOCKED,
 		TRAIT_INCAPACITATED,
 		TRAIT_KNOCKEDOUT,
-		TRAIT_SOFTSPOKEN,
+		TRAIT_FORCE_WHISPER,
 	)
 	// All the traits associated with the mob's current stat
 	var/list/added_traits = list()
@@ -2424,7 +2424,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 				TRAIT_FLOORED,
 				TRAIT_HANDS_BLOCKED,
 				TRAIT_INCAPACITATED,
-				TRAIT_SOFTSPOKEN,
+				TRAIT_FORCE_WHISPER,
 			)
 
 		if(HARD_CRIT)
