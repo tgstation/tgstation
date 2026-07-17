@@ -439,7 +439,7 @@
 		else
 			cure_text = disease.cure_text
 		render_list += "<span class='alert ml-1'>\
-			[conditional_tooltip("<b>Warning: [disease.form] detected</b>", "Treat by taking the cure, [/datum/reagent/medicine/spaceacillin::name], staying full, and resting", tochat)]<br>\
+			[conditional_tooltip("<b>Warning: [disease.form] detected</b>", "Supply listed cure or [/datum/reagent/medicine/spaceacillin::name], or treat with food and rest.", tochat)]<br>\
 			<div class='ml-2'>\
 			Name: [disease.name].<br>\
 			Type: [disease.spread_text].<br>\
