@@ -125,7 +125,7 @@
 	transfer_digitigrade(replacement)
 
 /datum/component/digitigrade_limb/proc/transfer_digitigrade(obj/item/bodypart/replacement)
-	if(!(replacement.bodypart_flags & BODYPART_RETAIN_DIGITIGRADE))
+	if(!(replacement.bodypart_flags & BODYPART_DIGITIGRADE_COMPATIBLE))
 		return
 	free_id = "[initial(replacement.limb_id)]_[BODYPART_ID_DIGITIGRADE]"
 	replacement.TakeComponent(src)

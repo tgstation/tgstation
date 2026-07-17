@@ -46,7 +46,7 @@
 /obj/item/bodypart/leg/left/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
-	bodypart_flags = parent_type::bodypart_flags | BODYPART_RETAIN_DIGITIGRADE
+	bodypart_flags = parent_type::bodypart_flags | BODYPART_DIGITIGRADE_COMPATIBLE
 
 /obj/item/bodypart/leg/left/lizard/update_digitigrade()
 	. = ..()
@@ -56,7 +56,7 @@
 /obj/item/bodypart/leg/right/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
-	bodypart_flags = parent_type::bodypart_flags | BODYPART_RETAIN_DIGITIGRADE
+	bodypart_flags = parent_type::bodypart_flags | BODYPART_DIGITIGRADE_COMPATIBLE
 
 /obj/item/bodypart/leg/right/lizard/update_digitigrade()
 	. = ..()

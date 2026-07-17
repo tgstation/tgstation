@@ -91,8 +91,8 @@
 #define BODYPART_VIRGIN (1<<4)
 /// Not a full bodypart, but in fact is part of a missing limb
 #define BODYPART_STUMP (1<<5)
-/// Allow potential digitigrade status of legs to be retained after a replace_body() call (primarily species change)
-#define BODYPART_RETAIN_DIGITIGRADE (1<<6)
+/// This leg type has a generic digitigrade counterpart ("[limb_id]_[BODYPART_ID_DIGITIGRADE]"). Nothing stops you from adding the digitigrade_limb componant though.
+#define BODYPART_DIGITIGRADE_COMPATIBLE (1<<6)
 
 // Bodypart change blocking flags
 ///Bodypart does not get replaced during set_species()
