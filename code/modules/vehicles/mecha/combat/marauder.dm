@@ -24,6 +24,15 @@
 	)
 	bumpsmash = TRUE
 
+	/// Reusable smoke generator system
+	var/datum/effect_system/fluid_spread/smoke/smoke_system
+	/// Remaining smoke charges
+	var/smoke_charges = 5
+	/// Cooldown between using smoke
+	var/smoke_cooldown = 10 SECONDS
+	/// Bool for zoom on/off
+	var/zoom_mode = FALSE
+
 /datum/armor/mecha_marauder
 	melee = 70
 	bullet = 60
@@ -32,6 +41,14 @@
 	bomb = 50
 	fire = 100
 	acid = 100
+
+/obj/vehicle/sealed/mecha/marauder/Initialize(mapload, built_manually)
+	. = ..()
+	smoke_system = new(src, 3, holder = src)
+
+/obj/vehicle/sealed/mecha/marauder/Destroy()
+	QDEL_NULL(smoke_system)
+	return ..()
 
 /obj/vehicle/sealed/mecha/marauder/generate_actions()
 	. = ..()
@@ -54,9 +71,39 @@
 	servo = new /obj/item/stock_parts/servo/femto(src)
 	update_part_values()
 
+/obj/vehicle/sealed/mecha/marauder/remove_occupant(mob/driver)
+	. = ..()
+	zoom_mode = FALSE
+
+/obj/vehicle/sealed/mecha/marauder/can_move(direction)
+	. = ..()
+	if(!. || !zoom_mode)
+		return
+
+	if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
+		to_chat(occupants, "[icon2html(src, occupants)][span_warning("Unable to move while in zoom mode!")]")
+		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
+	return FALSE
+
 /datum/action/vehicle/sealed/mecha/mech_smoke
 	name = "Smoke"
 	button_icon_state = "mech_smoke"
+
+/datum/action/vehicle/sealed/mecha/mech_smoke/IsAvailable(feedback)
+	. = ..()
+	if (!.)
+		return
+
+	var/obj/vehicle/sealed/mecha/marauder/maradeur = chassis
+	if(!TIMER_COOLDOWN_FINISHED(maradeur, COOLDOWN_MECHA_SMOKE))
+		if (feedback)
+			owner.balloon_alert(owner, "smoke charges on cooldown!")
+		return FALSE
+
+	if (!maradeur.smoke_charges)
+		if (feedback)
+			owner.balloon_alert(owner, "out of smoke charges!")
+		return FALSE
 
 /datum/action/vehicle/sealed/mecha/mech_smoke/Trigger(mob/clicker, trigger_flags)
 	. = ..()
@@ -64,10 +111,11 @@
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return
-	if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_SMOKE) && chassis.smoke_charges>0)
-		chassis.smoke_system.start()
-		chassis.smoke_charges--
-		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_SMOKE, chassis.smoke_cooldown)
+	var/obj/vehicle/sealed/mecha/marauder/maradeur = chassis
+	if(TIMER_COOLDOWN_FINISHED(maradeur, COOLDOWN_MECHA_SMOKE) && maradeur.smoke_charges)
+		maradeur.smoke_system.start()
+		maradeur.smoke_charges--
+		TIMER_COOLDOWN_START(maradeur, COOLDOWN_MECHA_SMOKE, maradeur.smoke_cooldown)
 
 /datum/action/vehicle/sealed/mecha/mech_zoom
 	name = "Zoom"
@@ -79,11 +127,12 @@
 		return
 	if(!owner.client || !chassis || !(owner in chassis.occupants))
 		return
-	chassis.zoom_mode = !chassis.zoom_mode
-	button_icon_state = "mech_zoom_[chassis.zoom_mode ? "on" : "off"]"
-	chassis.log_message("Toggled zoom mode.", LOG_MECHA)
-	to_chat(owner, "[icon2html(chassis, owner)]<font color='[chassis.zoom_mode?"blue":"red"]'>Zoom mode [chassis.zoom_mode?"en":"dis"]abled.</font>")
-	if(chassis.zoom_mode)
+	var/obj/vehicle/sealed/mecha/marauder/maradeur = chassis
+	maradeur.zoom_mode = !maradeur.zoom_mode
+	button_icon_state = "mech_zoom_[maradeur.zoom_mode ? "on" : "off"]"
+	maradeur.log_message("Toggled zoom mode.", LOG_MECHA)
+	to_chat(owner, "[icon2html(maradeur, owner)]<font color='[maradeur.zoom_mode ? "blue" : "red"]'>Zoom mode [maradeur.zoom_mode ? "en" : "dis"]abled.</font>")
+	if(maradeur.zoom_mode)
 		owner.client.view_size.setTo(4.5)
 		SEND_SOUND(owner, sound('sound/vehicles/mecha/imag_enh.ogg', volume=50))
 	else

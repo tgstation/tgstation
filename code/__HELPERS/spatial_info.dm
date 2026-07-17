@@ -208,24 +208,26 @@
 				. -= target
 				break
 
+/**
+ * Returns a list of mobs who are in hearing range of every radio in the list of radios given
+ */
 /proc/get_hearers_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	for(var/obj/item/radio/radio as anything in radios)
 		. |= get_hearers_in_LOS(radio.canhear_range, radio)
 
-/proc/get_hearers_in_radio_ranges_track_radios(list/obj/item/radio/radios, frequency)
+/**
+ * Returns a list of mobs who can hear any of the radios given in the given radio list, indexed by the radio.
+ * More expensive than get_hearers_in_radio_ranges()
+ */
+/proc/get_hearers_in_radio_ranges_track_radios(list/obj/item/radio/radios)
 	. = list()
-	.[TTS_GHOST_RADIO] = list()
-	// Returns a list of mobs who can hear any of the radios given in @radios, indexed by the radio. More expensive, but needed for radio TTS to sound good.
+	// Returns a list of mobs who can hear any of the radios given in @radios, indexed by the radio. More expensive than get_hearers_in_radio_ranges()
 	for(var/obj/item/radio/radio as anything in radios)
 		var/list/possible_hearers = get_hearers_in_LOS(radio.canhear_range, radio)
-		var/list/weakref_hearers = list()
-		for(var/ref in possible_hearers)
-			weakref_hearers += WEAKREF(ref)
-		if(LAZYLEN(possible_hearers))
-			.[WEAKREF(radio)] = filter_tts_listeners(weakref_hearers, frequency)
-
+		if(length(possible_hearers))
+			.[radio] = possible_hearers
 
 /// A filter to be applied to get_hearers_in_x, that removes any non-mob hearers, converting them to their relevant mob if one exists (such as dullahan heads).
 /// Modifies input list.

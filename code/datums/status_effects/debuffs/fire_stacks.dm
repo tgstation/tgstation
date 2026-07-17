@@ -183,7 +183,7 @@
 		return TRUE
 
 	var/datum/gas_mixture/air = owner.loc.return_air()
-	if(!air.gases[/datum/gas/oxygen] || air.gases[/datum/gas/oxygen][MOLES] < 1)
+	if(air.moles[/datum/gas/oxygen] < 1)
 		qdel(src)
 		return TRUE
 

@@ -23346,6 +23346,10 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
+/obj/item/storage/pill_bottle/sepsisillin{
+	pixel_x = -6;
+	pixel_y = 2
+	},
 /obj/item/storage/box/syringes,
 /turf/open/floor/iron,
 /area/station/medical/virology)
