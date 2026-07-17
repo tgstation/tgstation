@@ -49,7 +49,7 @@
 		return
 	if(!(src in owner.organs))
 		Remove(owner)
-	if(owner.mob_biotypes & MOB_MINERAL)//does not process in inorganic things
+	if(!(owner.mob_biotypes & MOB_ORGANIC) || HAS_TRAIT(owner, TRAIT_UNHUSKABLE)) // does not process in inorganic things
 		return
 	if (causes_damage && !owner.has_status_effect(/datum/status_effect/zombie) && owner.stat != DEAD)
 		owner.adjust_tox_loss(0.5 * seconds_per_tick)

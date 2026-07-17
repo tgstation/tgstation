@@ -2,15 +2,7 @@
 	// 1spooky
 	name = "High-Functioning Zombie"
 	id = SPECIES_ZOMBIE
-	// mutanttongue = /obj/item/organ/tongue/zombie
-	// mutantstomach = null
-	// mutantheart = null
-	// mutantliver = null
-	// mutantlungs = null
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
-	// bodytemp_normal = T0C // They have no natural body heat, the environment regulates body temp
-	// bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_EXIST // Take damage at fire temp
-	// bodytemp_cold_damage_limit = MINIMUM_TEMPERATURE_TO_MOVE // take damage below minimum movement temp
 
 /datum/species/zombie/check_roundstart_eligible()
 	if(check_holidays(HALLOWEEN))
@@ -50,14 +42,6 @@
 	))
 
 	return to_add
-
-// /datum/species/zombie/infectious
-// 	name = "Infectious Zombie"
-// 	id = SPECIES_ZOMBIE_INFECTIOUS
-// 	examine_limb_id = SPECIES_ZOMBIE
-// 	damage_modifier = 20 // 120 damage to KO a zombie, which kills it
-// 	mutanteyes = /obj/item/organ/eyes/zombie
-// 	mutanttongue = /obj/item/organ/tongue/zombie
 
 /datum/status_effect/zombie
 	id = "zombified"
@@ -119,29 +103,24 @@
 	VAR_PRIVATE/datum/weakref/removed_tongue
 
 /datum/status_effect/zombie/on_apply()
-	if(!ishuman(owner))
+	if(!ishuman(owner) || HAS_TRAIT(owner, TRAIT_UNHUSKABLE))
 		return FALSE
 
 	var/mob/living/carbon/human/new_zombie = owner
-	var/list/combined_traits = unique_traits | zombie_traits
-	if(TRAIT_COMBAT_MODE_LOCK in combined_traits)
-		new_zombie.set_combat_mode(TRUE)
-
 	LAZYADD(new_zombie.physiology.max_stun_len, max_stun_length)
 	new_zombie.physiology.stamina_mod *= stamina_modifier // Zombie stam resist
 	new_zombie.physiology.damage_resistance += damage_modifier
-	new_zombie.add_traits(combined_traits, TRAIT_STATUS_EFFECT(id))
+	new_zombie.add_traits(unique_traits | zombie_traits, TRAIT_STATUS_EFFECT(id))
 	new_zombie.add_movespeed_modifier(movespeed_mod)
 	new_zombie.lighting_cutoff_red = 25
 	new_zombie.lighting_cutoff_green = 35
 	new_zombie.lighting_cutoff_blue = 5
+	new_zombie.set_combat_mode(TRUE, silent = TRUE, force = TRUE)
 
 	add_zombie_biotypes()
 	RegisterSignal(new_zombie, COMSIG_SPECIES_GAIN, PROC_REF(zombie_species_changed))
 
-	// Deal with the source of this zombie corruption
-	// Infection organ needs to be handled separately from mutant_organs
-	// because it persists through species transitions
+	// Ensures we have an infection organ even if we were applied by something else
 	var/obj/item/organ/zombie_infection/infection = new_zombie.get_organ_slot(ORGAN_SLOT_ZOMBIE)
 	if(isnull(infection))
 		infection = new()
