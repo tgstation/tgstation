@@ -222,9 +222,9 @@
 	var/list/bodypart_effects
 	/// The cached info about the blood this organ belongs to, set during on_removal()
 	var/list/blood_dna_info
-	/// What items we drop whenever we're butchered
-	/// If unset, the bodyparot cannot be butchered
-	var/list/butcher_drops = null
+	/// Lazy assoc list of [item type] = [amount] that we drop when butchered.
+	/// Overrides whatever we would drop normally based on our species datum.
+	var/list/butcher_drops_override
 	/// What skeleton limb, if any, we replace ourselves with when butchered?
 	var/obj/item/bodypart/butcher_replacement = null
 	/// How much meat do we add to butcher_drops when automatically generating them from our species datum?
@@ -278,11 +278,6 @@
 		add_surgical_state(innate_state)
 
 	name = "[limb_id] [parse_zone(body_zone)]"
-	// There's a lot of bodyparts in the world, and we don't need to have separate drops on each and every one of them
-	var/list/drop_results = get_butcher_drops()
-	if (length(drop_results))
-		butcher_drops = string_list(drop_results)
-		butcher_drop_cache[type] = butcher_drops
 	update_limb(TRUE)
 	update_icon_dropped()
 	refresh_bleed_rate()
@@ -326,21 +321,19 @@
 		return FALSE
 	return  ..()
 
-/// Returns an assoc list of items dropped when the limb is butchered
-/// force - Force an update of drops ignoring the cache
-/obj/item/bodypart/proc/get_butcher_drops(force = FALSE)
-	if(!isnull(butcher_drops) && !force)
-		return butcher_drops
-	if (butcher_drop_cache[type] && !force)
-		return butcher_drop_cache[type]
-	if(base_meat_amount <= 0)
+/// Returns a lazy assoc list of items dropped when the limb is butchered
+/obj/item/bodypart/proc/get_butcher_drops()
+	var/meat_to_spawn = max(base_meat_amount, values_sum(butcher_drops_override))
+	if(meat_to_spawn <= 0)
 		return null
 	if(is_husked == HUSKED_ZOMBIE)
-		return list(/obj/item/food/meat/slab/human/mutant/zombie = base_meat_amount)
+		return list(/obj/item/food/meat/slab/human/mutant/zombie = meat_to_spawn)
+	if(length(butcher_drops_override))
+		return butcher_drops_override
 	var/datum/species/species = GLOB.species_list[species_id || limb_id]
-	if (isnull(species?.meat))
-		return null
-	return list(species.meat = base_meat_amount)
+	if (!isnull(species?.meat))
+		return list(species.meat = meat_to_spawn)
+	return null
 
 /obj/item/bodypart/proc/on_forced_removal(atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER

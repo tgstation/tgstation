@@ -486,7 +486,7 @@
 /obj/item/organ/tongue/zombie/on_life(seconds_per_tick)
 	. = ..()
 	if(owner.stat == CONSCIOUS && SPT_PROB(2, seconds_per_tick))
-		playsound(owner, pick(spooks), 50, TRUE, 10)
+		playsoundtoken(owner, pick(spooks), 50, TRUE, 10)
 
 /obj/item/organ/tongue/alien
 	name = "alien tongue"
