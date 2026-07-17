@@ -87,7 +87,7 @@
 		for(var/s in symptoms)
 			var/datum/symptom/symptom_datum = s
 			if(symptom_datum.Start(src)) //this will return FALSE if the symptom is neutered
-				symptom_datum.next_activation = world.time + (rand(symptom_datum.symptom_delay_min SECONDS, symptom_datum.symptom_delay_max SECONDS) * DISEASE_SYMPTOM_FREQUENCY_MODIFIER)
+				symptom_datum.next_activation = world.time + (rand(symptom_datum.symptom_delay * (1 - symptom_datum.delay_variation) SECONDS, symptom_datum.symptom_delay * (1 + symptom_datum.delay_variation) SECONDS) * DISEASE_SYMPTOM_FREQUENCY_MODIFIER)
 			symptom_datum.on_stage_change(src)
 
 	for(var/s in symptoms)
