@@ -202,7 +202,6 @@ Slimecrossing Potions
 		return ITEM_INTERACT_BLOCKING
 	user.do_attack_animation(interacting_with)
 	revive_target.revive(HEAL_ALL)
-	revive_target.set_stat(STABLE)
 	revive_target.visible_message(span_notice("[revive_target] is filled with renewed vigor and blinks awake!"))
 	revive_target.maxHealth -= 10 //Revival isn't healthy.
 	revive_target.health -= 10
