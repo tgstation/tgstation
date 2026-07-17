@@ -142,3 +142,9 @@
 		S.lose_teleport_target()
 
 	senders = list()
+
+/// wirecutter makes it lose all its senders
+/obj/machinery/portable_atmospherics/gas_receiver/wirecutter_act(mob/living/user, obj/item/I)
+	lose_senders()
+	to_chat(user, span_warning("All scrubbers has been disconnected from receiver."))
+	return ITEM_INTERACT_SUCCESS
