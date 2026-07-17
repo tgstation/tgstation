@@ -100,8 +100,6 @@
 	switch(patient.stat)
 		if(CONSCIOUS)
 			patient_state = "Conscious"
-		if(UNCONSCIOUS)
-			patient_state = "Unconscious"
 		if(DEAD)
 			patient_state = "*Dead*"
 		if(SOFT_CRIT, HARD_CRIT)

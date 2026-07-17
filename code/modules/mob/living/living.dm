@@ -884,7 +884,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
 		set_suicide(FALSE)
-		set_stat(UNCONSCIOUS) //the mob starts unconscious,
+		set_stat(HARD_CRIT) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
 		if(full_heal_flags & HEAL_ADMIN)
 			get_up(TRUE)
@@ -1158,10 +1158,11 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 			resist_restraints() //trying to remove cuffs.
 
 /mob/proc/resist_grab(moving_resist)
-	return 1 //returning 0 means we successfully broke free
+	return FALSE
 
 /mob/living/resist_grab(moving_resist)
-	. = TRUE
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+		return FALSE
 
 	var/list/grab_stats = list(
 		// Our effective grab state.
@@ -1210,17 +1211,23 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 			to_chat(pulledby, span_warning("[src] breaks free of your grip!"))
 			log_combat(pulledby, src, "broke grab")
 			pulledby.stop_pulling()
-			return FALSE
-		else
-			adjust_stamina_loss(damage_on_resist_fail) //Do some stamina damage if we fail to resist
-			visible_message(span_danger("[src] struggles as they fail to break free of [pulledby]'s grip!"), \
-							span_warning("You struggle as you fail to break free of [pulledby]'s grip!"), null, null, pulledby)
-			to_chat(pulledby, span_danger("[src] struggles as they fail to break free of your grip!"))
+			return TRUE
+
+		adjust_stamina_loss(damage_on_resist_fail) //Do some stamina damage if we fail to resist
+		visible_message(
+			span_danger("[src] struggles as they fail to break free of [pulledby]'s grip!"),
+			span_warning("You struggle as you fail to break free of [pulledby]'s grip!"),
+			null,
+			null,
+			pulledby,
+		)
+		to_chat(pulledby, span_danger("[src] struggles as they fail to break free of your grip!"))
 		if(moving_resist && client) //we resisted by trying to move
 			client.move_delay = world.time + 4 SECONDS
-	else
-		pulledby.stop_pulling()
 		return FALSE
+
+	pulledby.stop_pulling()
+	return TRUE
 
 /mob/living/proc/resist_buckle()
 	buckled.user_unbuckle_mob(src,src)
@@ -2391,48 +2398,40 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/set_stat(new_stat)
 	. = ..()
-	if(isnull(.))
+	if(isnull(.) || . == stat)
 		return
 
-	if(. <= UNCONSCIOUS || new_stat >= UNCONSCIOUS)
-		update_eyes()
-
 	// All the traits associated with any of a mob's stat
-	// Adding any traits below should also be done in here
+	// Adding anny traits below should also be done in here
 	var/list/removed_traits = list(
+		TRAIT_CRITICAL_CONDITION,
+		TRAIT_DEAF,
 		TRAIT_FLOORED,
 		TRAIT_HANDS_BLOCKED,
 		TRAIT_IMMOBILIZED,
 		TRAIT_INCAPACITATED,
 		TRAIT_KNOCKEDOUT,
-		TRAIT_DEAF,
 	)
 	// All the traits associated with the mob's current stat
 	var/list/added_traits = list()
 
-	switch(stat)
+	switch(stat) // Current stat
 		if(CONSCIOUS)
-			log_combat(src, src, "regained consciousness")
+			log_combat(src, src, "left crit")
 
 		if(SOFT_CRIT)
-			added_traits.Add(
-				TRAIT_FLOORED,
-				TRAIT_HANDS_BLOCKED,
-				TRAIT_INCAPACITATED,
-			)
 			log_combat(src, src, "entered soft crit")
-
-		if(UNCONSCIOUS)
 			added_traits.Add(
+				TRAIT_CRITICAL_CONDITION,
 				TRAIT_FLOORED,
 				TRAIT_HANDS_BLOCKED,
 				TRAIT_INCAPACITATED,
-				TRAIT_KNOCKEDOUT,
 			)
-			log_combat(src, src, "lost consciousness")
 
 		if(HARD_CRIT)
+			log_combat(src, src, "entered hard crit")
 			added_traits.Add(
+				TRAIT_CRITICAL_CONDITION,
 				TRAIT_DEAF,
 				TRAIT_FLOORED,
 				TRAIT_HANDS_BLOCKED,
@@ -2440,9 +2439,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 				TRAIT_INCAPACITATED,
 				TRAIT_KNOCKEDOUT,
 			)
-			log_combat(src, src, "entered hard crit")
 
 		if(DEAD)
+			log_combat(src, src, "died")
 			added_traits.Add(
 				TRAIT_DEAF,
 				TRAIT_FLOORED,
@@ -2451,7 +2450,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 				TRAIT_INCAPACITATED,
 				TRAIT_KNOCKEDOUT,
 			)
-			log_combat(src, src, "died")
 
 	if(stat == DEAD)
 		remove_from_alive_mob_list()
@@ -2462,6 +2460,14 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	add_traits(added_traits, STAT_TRAIT)
 	remove_traits(removed_traits - added_traits, STAT_TRAIT)
+
+	if(stat == DEAD)
+		remove_from_alive_mob_list()
+		add_to_dead_mob_list()
+	else if(. == DEAD)
+		remove_from_dead_mob_list()
+		add_to_alive_mob_list()
+
 	update_succumb_action()
 
 ///Reports the event of the change in value of the buckled variable.
@@ -2495,14 +2501,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/set_pulledby(new_pulledby)
 	. = ..()
 	update_incapacitated()
-	if(. == FALSE) //null is a valid value here, we only want to return if FALSE is explicitly passed.
-		return
-	if(pulledby)
-		if(!. && stat == SOFT_CRIT)
-			ADD_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
-	else if(. && stat == SOFT_CRIT)
-		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
-
 
 /// Updates the grab state of the mob and updates movespeed
 /mob/living/setGrabState(newstate)

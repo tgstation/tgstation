@@ -275,7 +275,7 @@
 		to_chat(owner, span_warning("That's not food!"))
 		return
 	var/mob/living/living_target = target_atom
-	if(living_target.stat < UNCONSCIOUS)
+	if(!HAS_TRAIT(living_target, TRAIT_KNOCKEDOUT))
 		to_chat(owner, span_warning("No way you're eating that while it's still kicking! It should at least be unconscious first."))
 		return
 	burrow_and_devour(owner, living_target)

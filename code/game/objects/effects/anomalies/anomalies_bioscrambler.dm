@@ -65,7 +65,7 @@
 			continue
 		if (HAS_TRAIT(target, TRAIT_GODMODE))
 			continue
-		if (target.stat >= UNCONSCIOUS)
+		if (HAS_TRAIT(target, TRAIT_KNOCKEDOUT))
 			continue // Don't just haunt a corpse
 		var/distance_from_target = get_dist(src, target)
 		if(distance_from_target >= closest_distance)

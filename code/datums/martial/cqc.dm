@@ -125,7 +125,7 @@
 		return FALSE
 
 	attacker.do_attack_animation(defender)
-	if(defender.body_position == LYING_DOWN && !defender.IsUnconscious() && defender.get_stamina_loss() >= 100)
+	if(defender.body_position == LYING_DOWN && !HAS_TRAIT(defender, TRAIT_KNOCKEDOUT) && defender.get_stamina_loss() >= 100)
 		log_combat(attacker, defender, "knocked out (Head kick)(CQC)")
 		defender.visible_message(
 			span_danger("[attacker] kicks [defender]'s head, knocking [defender.p_them()] out!"),
@@ -155,7 +155,7 @@
 		var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 		defender.throw_at(throw_target, 1, 14, attacker)
 		defender.apply_damage(10, attacker.get_attack_type())
-		if(defender.body_position == LYING_DOWN && !defender.IsUnconscious())
+		if(defender.body_position == LYING_DOWN && !HAS_TRAIT(defender, TRAIT_KNOCKEDOUT))
 			defender.adjust_stamina_loss(45)
 		log_combat(attacker, defender, "kicked (CQC)")
 

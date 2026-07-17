@@ -16,7 +16,7 @@
 	/// List of sources which prevent SIGHT_BYPASS from working
 	var/static/list/blocking_sources = list(
 		QUIRK_TRAIT, // Meant to be completely immutable
-		UNCONSCIOUS_TRAIT, // Duh
+		TRAIT_KNOCKEDOUT, // Duh
 	)
 
 /datum/status_effect/grouped/blindness/on_apply()

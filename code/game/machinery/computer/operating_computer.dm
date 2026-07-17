@@ -114,7 +114,7 @@
 	if(!is_operational)
 		return UI_CLOSE
 	// if you're knocked out, ie anesthetic... definitely a no-go
-	if(user.stat >= UNCONSCIOUS || HAS_TRAIT(user, TRAIT_KNOCKEDOUT))
+	if(HAS_TRAIT(user, TRAIT_KNOCKEDOUT))
 		return UI_CLOSE
 	// the patient itself should be blocked from viewing the computer
 	if(user.body_position == LYING_DOWN)
@@ -177,7 +177,7 @@
 		if(SOFT_CRIT)
 			data["patient"]["stat"] = "Critical Condition"
 			data["patient"]["statstate"] = "average"
-		if(UNCONSCIOUS, HARD_CRIT)
+		if(HARD_CRIT)
 			data["patient"]["stat"] = "Unconscious"
 			data["patient"]["statstate"] = "average"
 		if(DEAD)

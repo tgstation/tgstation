@@ -496,7 +496,7 @@
 				mob_occupant.adjust_fire_loss(rand(20, 36))
 			else
 				mob_occupant.adjust_fire_loss(rand(10, 16))
-			if(iscarbon(mob_occupant) && mob_occupant.stat < UNCONSCIOUS)
+			if(iscarbon(mob_occupant) && !HAS_TRAIT(mob_occupant, TRAIT_KNOCKEDOUT))
 				//Awake, organic and screaming
 				mob_occupant.emote("scream")
 		addtimer(CALLBACK(src, PROC_REF(cook)), 5 SECONDS)

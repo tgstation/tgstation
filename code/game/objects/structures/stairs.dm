@@ -337,7 +337,7 @@
 /obj/structure/stairs/proc/can_fall_down_stairs(mob/living/falling)
 	if(falling.buckled || falling.pulledby)
 		return FALSE
-	if(falling.stat >= UNCONSCIOUS) // if you shove someone unconscious down the stairs, they'd probably roll
+	if(HAS_TRAIT(falling, TRAIT_KNOCKEDOUT)) // if you shove someone unconscious down the stairs, they'd probably roll
 		return TRUE
 	if(falling.has_status_effect(/datum/status_effect/staggered)) // off balance
 		return TRUE

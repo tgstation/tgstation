@@ -375,13 +375,13 @@ Diagnostic HUDs!
 		set_hud_image_state(DIAG_HUD, "huddiag[RoundDiagBar(health/maxHealth)]")
 
 /mob/living/silicon/proc/diag_hud_set_status()
-	switch(stat)
-		if(CONSCIOUS)
-			set_hud_image_state(DIAG_STAT_HUD, "hudstat")
-		if(UNCONSCIOUS, HARD_CRIT)
-			set_hud_image_state(DIAG_STAT_HUD, "hudoffline")
-		else
-			set_hud_image_state(DIAG_STAT_HUD, "huddead2")
+	if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
+		set_hud_image_state(DIAG_STAT_HUD, "hudoffline")
+		return
+	if(stat == DEAD)
+		set_hud_image_state(DIAG_STAT_HUD, "huddead2")
+		return
+	set_hud_image_state(DIAG_STAT_HUD, "hudstat")
 
 //Borgie battery tracking!
 /mob/living/silicon/robot/proc/diag_hud_set_borgcell()

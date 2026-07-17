@@ -953,7 +953,7 @@
 		if(total_damage < max_damage)
 			last_maxed = FALSE
 		else
-			if(!last_maxed && owner.stat < UNCONSCIOUS)
+			if(!last_maxed && !HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
 				INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "scream")
 			last_maxed = TRUE
 		set_disabled(FALSE, update_limbs) // we only care about the paralysis trait
@@ -962,7 +962,7 @@
 	// we're now dealing solely with limbs that can be disabled through pure damage, AKA robot parts
 	if(total_damage >= max_damage * disabling_threshold_percentage)
 		if(!last_maxed)
-			if(owner.stat < UNCONSCIOUS)
+			if(!HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
 				INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "scream")
 			last_maxed = TRUE
 		set_disabled(TRUE, update_limbs)

@@ -176,7 +176,7 @@
 	if(!valid_to_attach(victim))
 		return
 
-	if(victim.stat < UNCONSCIOUS) //sorry bro you gotta be awake
+	if(!HAS_TRAIT(victim, TRAIT_KNOCKEDOUT)) //sorry bro you gotta be awake
 		victim.say("AAAA!!") //triggers muffled speech and also visual feedback i guess
 	// early returns and validity checks done: attach.
 	attached++

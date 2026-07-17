@@ -164,7 +164,7 @@
 /datum/brain_trauma/special/obsessed/proc/is_defensive()
 	if(time_spend_creeping >= 20 SECONDS)
 		return TRUE
-	if(obsession.stat >= UNCONSCIOUS)
+	if(HAS_TRAIT(obsession, TRAIT_KNOCKEDOUT) || obsession.stat >= SOFT_CRIT)
 		return (owner in viewers(7, obsession))
 	return FALSE
 

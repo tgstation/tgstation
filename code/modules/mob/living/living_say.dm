@@ -146,13 +146,15 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	switch(stat)
 		if(SOFT_CRIT)
 			message_mods[WHISPER_MODE] = MODE_WHISPER
-		if(UNCONSCIOUS)
-			return
-		if(HARD_CRIT)
-			if(!message_mods[WHISPER_MODE])
-				return
 		if(DEAD)
 			say_dead(original_message, message_mods[MANNEQUIN_CONTROLLED])
+			return
+
+	if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
+		if(stat == HARD_CRIT)
+			if(!message_mods[WHISPER_MODE])
+				return
+		else
 			return
 
 	if(HAS_TRAIT(src, TRAIT_SOFTSPOKEN) && !HAS_TRAIT(src, TRAIT_SIGN_LANG)) // softspoken trait only applies to spoken languages
@@ -301,7 +303,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	var/speaker_is_signing = HAS_TRAIT(speaker, TRAIT_SIGN_LANG)
 	var/use_runechat = client?.prefs.read_preference(/datum/preference/toggle/enable_runechat)
-	if (stat == UNCONSCIOUS || stat == HARD_CRIT)
+	if (HAS_TRAIT(src, TRAIT_KNOCKEDOUT) && stat != DEAD)
 		use_runechat = FALSE
 	else if (!ismob(speaker) && !client?.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs))
 		use_runechat = FALSE

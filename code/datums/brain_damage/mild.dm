@@ -17,7 +17,7 @@
 	var/uncapped = FALSE
 
 /datum/brain_trauma/mild/hallucinations/on_life(seconds_per_tick)
-	if(owner.stat >= UNCONSCIOUS)
+	if(HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
 		return
 	if(HAS_TRAIT(owner, TRAIT_RDS_SUPPRESSED))
 		owner.remove_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)

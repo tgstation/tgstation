@@ -49,6 +49,8 @@
 	var/trait_required
 	/// In which state can you use this emote? (Check stat.dm for a full list of them)
 	var/stat_allowed = CONSCIOUS
+
+	var/can_use_flags = NONE
 	/// Sound to play when emote is called.
 	var/sound
 	/// Does this emote vary in pitch?
@@ -359,22 +361,31 @@
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
 	if(status_check && !is_type_in_typecache(user, mob_type_ignore_stat_typecache))
-		if(user.stat > stat_allowed)
-			if(!intentional)
-				return FALSE
-			switch(user.stat)
-				if(SOFT_CRIT)
-					to_chat(user, span_warning("You cannot [key] while in a critical condition!"))
-				if(UNCONSCIOUS, HARD_CRIT)
-					to_chat(user, span_warning("You cannot [key] while unconscious!"))
-				if(DEAD)
-					to_chat(user, span_warning("You cannot [key] while dead!"))
+		if(HAS_TRAIT(user, TRAIT_KNOCKEDOUT) && !(can_use_flags & EMOTE_CANUSE_UNCONSCIOUS))
+			if(intentional)
+				to_chat(user, span_warning("You cannot [key] while unconscious!"))
 			return FALSE
-		if(hands_use_check && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-			if(!intentional)
-				return FALSE
-			to_chat(user, span_warning("You cannot use your hands to [key] right now!"))
+		if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) && !(can_use_flags & EMOTE_CANUSE_REQUIRE_HANDS))
+			if(intentional)
+				to_chat(user, span_warning("You cannot use your hands to [key] right now!"))
 			return FALSE
+
+		switch(user.stat)
+			if(SOFT_CRIT)
+				if(!(can_use_flags & EMOTE_CANUSE_SOFTCRIT))
+					if(intentional)
+						to_chat(user, span_warning("You cannot [key] while in a critical condition!"))
+					return FALSE
+			if(HARD_CRIT)
+				if(!(can_use_flags & EMOTE_CANUSE_HARDCRIT))
+					if(intentional)
+						to_chat(user, span_warning("You cannot [key] while in a critical condition!"))
+					return FALSE
+			if(DEAD)
+				if(!(can_use_flags & EMOTE_CANUSE_DEAD))
+					if(intentional)
+						to_chat(user, span_warning("You cannot [key] while dead!"))
+					return FALSE
 
 	if(HAS_TRAIT(user, TRAIT_EMOTEMUTE))
 		return FALSE

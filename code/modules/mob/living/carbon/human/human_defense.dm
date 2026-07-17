@@ -546,7 +546,7 @@
 	return ..()
 
 /mob/living/carbon/human/check_self_for_injuries()
-	if(stat >= UNCONSCIOUS)
+	if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
 		return
 	var/list/combined_msg = list()
 

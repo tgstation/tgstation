@@ -1208,7 +1208,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		burn_damage = burn_damage * heatmod * humi.physiology.heat_mod * 0.5 * seconds_per_tick
 
 		// 40% for level 3 damage on humans to scream in pain
-		if (humi.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4)
+		if (!HAS_TRAIT(humi, TRAIT_KNOCKEDOUT) && (prob(burn_damage) * 10) / 4)
 			INVOKE_ASYNC(humi, TYPE_PROC_REF(/mob, emote), "scream")
 
 		// Apply the damage to all body parts

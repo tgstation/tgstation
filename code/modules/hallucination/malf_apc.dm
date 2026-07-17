@@ -11,7 +11,7 @@
 	VAR_PRIVATE/image/hacked_image
 
 /datum/hallucination/malf_apc/start()
-	if(!hallucinator.client || hallucinator.stat >= UNCONSCIOUS)
+	if(!hallucinator.client || HAS_TRAIT(hallucinator, TRAIT_KNOCKEDOUT))
 		return FALSE
 
 	var/num_ais = 0

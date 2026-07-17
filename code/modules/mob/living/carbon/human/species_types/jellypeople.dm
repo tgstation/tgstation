@@ -390,7 +390,9 @@
 		switch(body.stat)
 			if(CONSCIOUS)
 				stat = "Conscious"
-			if(SOFT_CRIT to HARD_CRIT) // Also includes UNCONSCIOUS
+			if(SOFT_CRIT)
+				stat = "Critical"
+			if(HARD_CRIT)
 				stat = "Unconscious"
 			if(DEAD)
 				stat = "Dead"

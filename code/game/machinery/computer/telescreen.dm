@@ -143,7 +143,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 			return FALSE
 	if(watcher.is_blind())
 		return FALSE
-	if(!isobserver(watcher) && watcher.stat >= UNCONSCIOUS)
+	if(!isobserver(watcher) && HAS_TRAIT(watcher, TRAIT_KNOCKEDOUT))
 		return FALSE
 	return TRUE
 
@@ -571,4 +571,3 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/monaster
 /obj/item/wallframe/telescreen/monastery
 	name = "monastery telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/monastery
-

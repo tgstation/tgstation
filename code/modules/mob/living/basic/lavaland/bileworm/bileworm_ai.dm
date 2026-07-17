@@ -47,7 +47,7 @@
 		return
 
 	var/mob/living/living_target = target
-	if(living_target.stat < UNCONSCIOUS)
+	if(!HAS_TRAIT(living_target, TRAIT_KNOCKEDOUT))
 		return
 
 	controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_clear_target, BB_BILEWORM_DEVOUR, BB_BASIC_MOB_EXECUTION_TARGET)

@@ -57,7 +57,7 @@
 /datum/market_item/hostage/spawn_item(loc, datum/market_purchase/purchase)
 	var/mob/living/mob = item
 	UnregisterSignal(mob, COMSIG_LIVING_RETURN_FROM_CAPTURE)
-	if(!mob.IsUnconscious())
+	if(!HAS_TRAIT(mob, TRAIT_KNOCKEDOUT))
 		to_chat(mob, span_boldnicegreen("You have been <u>bought</u> back to the station. Be grateful to whoever got you out of the holding facility early."))
 	if(!ishuman(item))
 		return ..()

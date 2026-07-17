@@ -42,7 +42,7 @@
 /obj/machinery/quantum_server/proc/notify_spawned_threats()
 	for(var/datum/weakref/baddie_ref as anything in spawned_threat_refs)
 		var/mob/living/baddie = baddie_ref.resolve()
-		if(isnull(baddie?.mind) || baddie.stat >= UNCONSCIOUS)
+		if(isnull(baddie?.mind) || HAS_TRAIT(baddie, TRAIT_KNOCKEDOUT))
 			continue
 
 		var/atom/movable/screen/alert/bitrunning/alert = baddie.throw_alert(

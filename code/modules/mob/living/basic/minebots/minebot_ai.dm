@@ -114,7 +114,7 @@
 
 /datum/ai_behavior/find_and_set/unconscious_human/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
-		if(target.stat >= UNCONSCIOUS && target.mind)
+		if(HAS_TRAIT(target, TRAIT_KNOCKEDOUT) && target.mind)
 			return target
 	return null
 
@@ -359,5 +359,3 @@
 		var/mob/living/living_pawn = controller.pawn
 		living_pawn.set_combat_mode(TRUE)
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
-
-
