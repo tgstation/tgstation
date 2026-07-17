@@ -481,6 +481,7 @@
 	limb_id = BODYPART_ID_BONE
 	disabling_threshold_percentage = 0
 	bodypart_disabled = TRUE
+	bodypart_flags = parent_type::bodypart_flags | BODYPART_RETAIN_DIGITIGRADE
 
 /obj/item/bodypart/leg/left/skeleton/nonfunctional/Initialize(mapload)
 	. = ..()
@@ -490,6 +491,7 @@
 	limb_id = BODYPART_ID_BONE
 	disabling_threshold_percentage = 0
 	bodypart_disabled = TRUE
+	bodypart_flags = parent_type::bodypart_flags | BODYPART_RETAIN_DIGITIGRADE
 
 /obj/item/bodypart/leg/right/skeleton/nonfunctional/Initialize(mapload)
 	. = ..()

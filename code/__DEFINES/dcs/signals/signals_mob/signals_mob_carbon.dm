@@ -64,6 +64,8 @@
 #define COMSIG_BODYPART_UPDATED "bodypart_updated"
 /// From /datum/component/butchering/create_replacement_limb(): (replacement limb)
 #define COMSIG_BODYPART_BUTCHERED "bodypart_butchered"
+/// From /datum/species/replace_body(): (replacement limb)
+#define COMSIG_BODYPART_SPECIES_REPLACE "bodypart_species_replace"
 
 /// Sent to a limb when something *attempts* to change its surgery state (old_state, new_state, changed_states)
 #define COMSIG_BODYPART_UPDATING_SURGERY_STATE "bodypart_updating_surgery_state"

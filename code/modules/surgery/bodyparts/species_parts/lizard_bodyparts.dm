@@ -46,31 +46,19 @@
 /obj/item/bodypart/leg/left/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
+	bodypart_flags = parent_type::bodypart_flags | BODYPART_RETAIN_DIGITIGRADE
+
+/obj/item/bodypart/leg/left/lizard/update_digitigrade()
+	. = ..()
+	footprint_sprite = (bodytype & BODYTYPE_DIGITIGRADE) ? FOOTPRINT_SPRITE_CLAWS : initial(footprint_sprite)
+	footstep_type = (bodytype & BODYTYPE_DIGITIGRADE) ? FOOTSTEP_MOB_CLAW : initial(footstep_type)
 
 /obj/item/bodypart/leg/right/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
+	bodypart_flags = parent_type::bodypart_flags | BODYPART_RETAIN_DIGITIGRADE
 
-/obj/item/bodypart/leg/left/digitigrade
-	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
-	limb_id = BODYPART_ID_DIGITIGRADE
-	species_id = SPECIES_LIZARD
-	bodyshape = BODYSHAPE_HUMANOID
-	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
-	footstep_type = FOOTSTEP_MOB_CLAW
-
-/obj/item/bodypart/leg/left/digitigrade/Initialize(mapload)
+/obj/item/bodypart/leg/right/lizard/update_digitigrade()
 	. = ..()
-	AddComponent(/datum/component/digitigrade_limb, SPECIES_LIZARD, initial(limb_id))
-
-/obj/item/bodypart/leg/right/digitigrade
-	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
-	limb_id = BODYPART_ID_DIGITIGRADE
-	species_id = SPECIES_LIZARD
-	bodyshape = BODYSHAPE_HUMANOID
-	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
-	footstep_type = FOOTSTEP_MOB_CLAW
-
-/obj/item/bodypart/leg/right/digitigrade/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/digitigrade_limb, SPECIES_LIZARD, initial(limb_id))
+	footprint_sprite = (bodytype & BODYTYPE_DIGITIGRADE) ? FOOTPRINT_SPRITE_CLAWS : initial(footprint_sprite)
+	footstep_type = (bodytype & BODYTYPE_DIGITIGRADE) ? FOOTSTEP_MOB_CLAW : initial(footstep_type)

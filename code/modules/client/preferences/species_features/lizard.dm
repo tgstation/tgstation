@@ -88,23 +88,9 @@
 	if(!isdummy(target) || target.dna.species.digitigrade_customization == DIGITIGRADE_NEVER)
 		return
 
-	var/list/correct_legs = target.dna.species.bodypart_overrides.Copy() & list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
-
-	if(value == DIGITIGRADE_LEGS)
-		correct_legs[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
-		correct_legs[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
-
-	for(var/obj/item/bodypart/old_part as anything in target.get_bodyparts())
-		if(old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES)
-			continue
-
-		var/path = correct_legs[old_part.body_zone]
-		if(!path)
-			continue
-		var/obj/item/bodypart/new_part = new path()
-		new_part.replace_limb(target)
-		new_part.update_limb(is_creating = TRUE)
-		qdel(old_part)
+	var/list/legs = list(target.get_bodypart(BODY_ZONE_R_LEG), target.get_bodypart(BODY_ZONE_L_LEG))
+	for(var/obj/item/bodypart/leg/leg in legs)
+		leg.update_digitigrade()
 
 /datum/preference/choiced/lizard_legs/is_accessible(datum/preferences/preferences)
 	if(!..())

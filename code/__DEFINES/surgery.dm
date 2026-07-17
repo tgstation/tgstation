@@ -52,54 +52,6 @@
 /// Scarring on the left eye
 #define LEFT_EYE_SCAR (1<<1)
 
-/// Helper to figure out if a limb is organic
-#define IS_ORGANIC_LIMB(limb) (limb.bodytype & BODYTYPE_ORGANIC)
-/// Helper to figure out if a limb is robotic
-#define IS_ROBOTIC_LIMB(limb) (limb.bodytype & BODYTYPE_ROBOTIC)
-/// Helper to figure out if a limb is a peg limb
-#define IS_PEG_LIMB(limb) (limb.bodytype & BODYTYPE_PEG)
-
-/// Is the bodypart a stump
-#define IS_STUMP(limb) (limb.bodypart_flags & BODYPART_STUMP)
-
-// Flags for the bodypart_flags var on /obj/item/bodypart
-/// Bodypart cannot be dismembered or amputated
-#define BODYPART_UNREMOVABLE (1<<0)
-/// Bodypart is a pseudopart (like a chainsaw arm)
-#define BODYPART_PSEUDOPART (1<<1)
-/// Bodypart did not match the owner's default bodypart limb_id when surgically implanted
-#define BODYPART_IMPLANTED (1<<2)
-/// Bodypart never displays as a husk
-#define BODYPART_UNHUSKABLE (1<<3)
-/// Bodypart has never been added to a mob
-#define BODYPART_VIRGIN (1<<4)
-/// Not a full bodypart, but in fact is part of a missing limb
-#define BODYPART_STUMP (1<<5)
-
-// Bodypart change blocking flags
-///Bodypart does not get replaced during set_species()
-#define BP_BLOCK_CHANGE_SPECIES (1<<0)
-
-// Flags for the head_flags var on /obj/item/bodypart/head
-/// Head can have hair
-#define HEAD_HAIR (1<<0)
-/// Head can have facial hair
-#define HEAD_FACIAL_HAIR (1<<1)
-/// Head can have lips
-#define HEAD_LIPS (1<<2)
-/// Head can have eye sprites
-#define HEAD_EYESPRITES (1<<3)
-/// Head will have colored eye sprites
-#define HEAD_EYECOLOR (1<<4)
-/// Head can have eyeholes when missing eyes
-#define HEAD_EYEHOLES (1<<5)
-/// Head can have debrain overlay
-#define HEAD_DEBRAIN (1<<6)
-/// Head will never be disfigured by damage
-#define HEAD_NO_DISFIGURE (1<<7)
-/// Default for most heads
-#define HEAD_DEFAULT_FEATURES (HEAD_HAIR|HEAD_FACIAL_HAIR|HEAD_LIPS|HEAD_EYESPRITES|HEAD_EYECOLOR|HEAD_EYEHOLES|HEAD_DEBRAIN)
-
 /// Checks if the mob is lying down if they can lie down, otherwise always passes
 #define IS_LYING_OR_CANNOT_LIE(mob) ((mob.mobility_flags & MOBILITY_LIEDOWN) ? (mob.body_position == LYING_DOWN) : TRUE)
 
@@ -187,3 +139,103 @@ DEFINE_BITFIELD(operation_flags, list(
 #define FORMAT_LIMB_OWNER(limb) (limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb)
 /// Used in string formatting to print an organ's location as "John" or "the human chest"
 #define FORMAT_ORGAN_OWNER(organ) (organ.owner || organ.loc)
+
+// Bodypart surgery state
+/// An incision has been made into the skin
+#define SURGERY_SKIN_CUT (1<<0)
+/// Skin has been pulled back - 99% of surgeries require this
+#define SURGERY_SKIN_OPEN (1<<1)
+/// Blood vessels are accessible, cut, and bleeding
+#define SURGERY_VESSELS_UNCLAMPED (1<<2)
+/// Blood vessels are accessible but clamped
+#define SURGERY_VESSELS_CLAMPED (1<<3)
+/// Indicates either an incision has been made into the organs present in the limb or organs have been incised from the limb
+#define SURGERY_ORGANS_CUT (1<<4)
+/// Holes have been drilled in our bones, exclusive with sawed
+#define SURGERY_BONE_DRILLED (1<<5)
+/// Bones have been sawed apart
+#define SURGERY_BONE_SAWED (1<<6)
+/// Used in advanced plastic surgery: Has plastic been applied
+#define SURGERY_PLASTIC_APPLIED (1<<7)
+/// Used in prosthetic surgery: Is the prosthetic unsecured
+#define SURGERY_PROSTHETIC_UNSECURED (1<<8)
+/// Used for cavity implants
+#define SURGERY_CAVITY_WIDENED (1<<9)
+
+DEFINE_BITFIELD(surgery_state, list(
+	"SKIN CUT" = SURGERY_SKIN_CUT,
+	"SKIN OPEN" = SURGERY_SKIN_OPEN,
+	"VESSELS UNCLAMPED" = SURGERY_VESSELS_UNCLAMPED,
+	"VESSELS CLAMPED" = SURGERY_VESSELS_CLAMPED,
+	"ORGANS CUT" = SURGERY_ORGANS_CUT,
+	"BONE DRILLED" = SURGERY_BONE_DRILLED,
+	"BONE SAWED" = SURGERY_BONE_SAWED,
+	"PLASTIC APPLIED" = SURGERY_PLASTIC_APPLIED,
+	"PROSTHETIC UNSECURED" = SURGERY_PROSTHETIC_UNSECURED,
+	"CAVITY OPENED" = SURGERY_CAVITY_WIDENED,
+))
+
+/// For use in translating bitfield to human readable strings. Keep in the correct order!
+#define SURGERY_STATE_READABLE list(\
+	"Skin is cut" = SURGERY_SKIN_CUT, \
+	"Skin is open" = SURGERY_SKIN_OPEN, \
+	"Blood vessels are unclamped" = SURGERY_VESSELS_UNCLAMPED, \
+	"Blood vessels are clamped" = SURGERY_VESSELS_CLAMPED, \
+	"Organs are cut" = SURGERY_ORGANS_CUT, \
+	"Bone is drilled" = SURGERY_BONE_DRILLED, \
+	"Bone is sawed" = SURGERY_BONE_SAWED, \
+	"Plastic is applied" = SURGERY_PLASTIC_APPLIED, \
+	"Prosthetic is unsecured" = SURGERY_PROSTHETIC_UNSECURED, \
+	"Cavity is opened wide" = SURGERY_CAVITY_WIDENED, \
+)
+
+/// For use in translating bitfield to steps required for surgery. Keep in the correct order!
+#define SURGERY_STATE_GUIDES(must_must_not) list(\
+	"the skin [must_must_not] be cut" = SURGERY_SKIN_CUT, \
+	"the skin [must_must_not] be open" = SURGERY_SKIN_OPEN, \
+	"the blood vessels [must_must_not] be unclamped" = SURGERY_VESSELS_UNCLAMPED, \
+	"the blood vessels [must_must_not] be clamped" = SURGERY_VESSELS_CLAMPED, \
+	"the organs [must_must_not] be cut" = SURGERY_ORGANS_CUT, \
+	"the bone [must_must_not] be drilled" = SURGERY_BONE_DRILLED, \
+	"the bone [must_must_not] be sawed" = SURGERY_BONE_SAWED, \
+	"plastic [must_must_not] be applied" = SURGERY_PLASTIC_APPLIED, \
+	"the prosthetic [must_must_not] be unsecured" = SURGERY_PROSTHETIC_UNSECURED, \
+	"the chest cavity [must_must_not] be opened wide" = SURGERY_CAVITY_WIDENED, \
+)
+
+// Yes these are glorified bitflag manipulation macros, they're meant to make reading surgical operations a bit easier
+/// Checks if the input surgery state has all of the bitflags passed
+#define HAS_SURGERY_STATE(input_state, check_state) ((input_state & (check_state)) == (check_state))
+/// Checks if the input surgery state has any of the bitflags passed
+#define HAS_ANY_SURGERY_STATE(input_state, check_state) ((input_state & (check_state)))
+/// Checks if the limb has all of the bitflags passed
+#define LIMB_HAS_SURGERY_STATE(limb, check_state) HAS_SURGERY_STATE(limb?.surgery_state, check_state)
+/// Checks if the limb has any of the bitflags passed
+#define LIMB_HAS_ANY_SURGERY_STATE(limb, check_state) HAS_ANY_SURGERY_STATE(limb?.surgery_state, check_state)
+
+/// All states that concern itself with the skin
+#define ALL_SURGERY_SKIN_STATES (SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN)
+/// All states that concern itself with the blood vessels
+#define ALL_SURGERY_VESSEL_STATES (SURGERY_VESSELS_UNCLAMPED|SURGERY_VESSELS_CLAMPED)
+/// All states that concern itself with the bones
+#define ALL_SURGERY_BONE_STATES (SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED)
+/// All states that concern itself with internal organs
+#define ALL_SURGERY_ORGAN_STATES (SURGERY_ORGANS_CUT)
+
+/// These states are automatically cleared when the surgery is closed for ease of use
+#define ALL_SURGERY_STATES_UNSET_ON_CLOSE (ALL_SURGERY_SKIN_STATES|ALL_SURGERY_VESSEL_STATES|ALL_SURGERY_BONE_STATES|ALL_SURGERY_ORGAN_STATES|SURGERY_CAVITY_WIDENED)
+/// Surgery state required for a limb with a certain zone to... be... fished... in...
+#define ALL_SURGERY_FISH_STATES(for_zone) (SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|(for_zone == BODY_ZONE_CHEST ? SURGERY_BONE_SAWED : NONE))
+
+/// Surgery states flipped on automatically if the bodypart lacks a form of skin
+#define SKINLESS_SURGERY_STATES (SURGERY_SKIN_OPEN)
+// (These are normally mutually exclusive, but as a bonus for lacking bones, you can do drill and saw operations simultaneously!)
+/// Surgery states flipped on automatically if the bodypart lacks bones
+#define BONELESS_SURGERY_STATES (SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED)
+/// Surgery states flipped on automatically if the bodypart lacks vessels
+#define VESSELLESS_SURGERY_STATES (SURGERY_VESSELS_CLAMPED|SURGERY_ORGANS_CUT)
+
+/// How much blood is lost from unclamped vessels?
+#define UNCLAMPED_VESSELS_BLEEDING 1.5
+/// How much blood is lost from clamped vessels or cut organs?
+#define CLAMPED_VESSELS_BLEEDING 0.2
