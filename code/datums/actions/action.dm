@@ -179,15 +179,14 @@
 		return FALSE
 	if(action_disabled)
 		return FALSE
-	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
+	if((check_flags & AB_CHECK_CONSCIOUS) && (owner.stat != CONSCIOUS || HAS_TRAIT(owner, TRAIT_KNOCKEDOUT)))
 		if (feedback)
-			switch(owner.stat)
-				if(SOFT_CRIT)
-					owner.balloon_alert(owner, "downed!")
-				if(DEAD)
-					owner.balloon_alert(owner, "dead!")
-				else
-					owner.balloon_alert(owner, "unconscious!")
+			if(owner.stat == DEAD)
+				owner.balloon_alert(owner, "dead!")
+			else if(HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
+				owner.balloon_alert(owner, "unconscious!")
+			else
+				owner.balloon_alert(owner, "in critical!")
 		return FALSE
 	if((check_flags & AB_CHECK_HANDS_BLOCKED) && HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
 		if (feedback)
