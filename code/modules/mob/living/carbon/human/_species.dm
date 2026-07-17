@@ -371,7 +371,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	human_who_gained_species.living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS //Don't call update_body_parts() for every single bodypart overlay added.
 
 	// Drop the items the new species can't wear
-	human_who_gained_species.mob_biotypes = inherent_biotypes
+	human_who_gained_species.mob_biotypes |= inherent_biotypes
 	human_who_gained_species.butcher_results = knife_butcher_results?.Copy()
 
 	//update body zones to match what they are supposed to have
@@ -446,6 +446,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	human.living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS //Don't call update_body_parts() for every single bodypart overlay removed.
 	human.butcher_results = null
+	human.mob_biotypes &= ~inherent_biotypes
 	for(var/trait in inherent_traits)
 		REMOVE_TRAIT(human, trait, SPECIES_TRAIT)
 
