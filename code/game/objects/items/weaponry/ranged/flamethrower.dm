@@ -230,8 +230,8 @@
 	var/datum/gas_mixture/tank_mix = ptank.return_air()
 	var/datum/gas_mixture/air_transfer = tank_mix.remove_ratio(release_amount)
 
-	if(air_transfer.gases[/datum/gas/plasma])
-		var/moles = air_transfer.gases[/datum/gas/plasma][MOLES] * 5 //Suffering
+	if(air_transfer.moles[/datum/gas/plasma])
+		var/moles = air_transfer.moles[/datum/gas/plasma] * 5 //Suffering
 		air_transfer.set_gas(/datum/gas/plasma, moles)
 	target.assume_air(air_transfer)
 	//Burn it based on transferred gas

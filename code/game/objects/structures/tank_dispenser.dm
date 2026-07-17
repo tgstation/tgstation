@@ -59,31 +59,29 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/tank_dispenser/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	var/full
-	if(istype(I, /obj/item/tank/internals/plasma))
-		if(plasmatanks < TANK_DISPENSER_CAPACITY)
-			plasmatanks++
-		else
-			full = TRUE
-	else if(istype(I, /obj/item/tank/internals/oxygen))
-		if(oxygentanks < TANK_DISPENSER_CAPACITY)
-			oxygentanks++
-		else
-			full = TRUE
-	else if(!user.combat_mode || (I.item_flags & NOBLUDGEON))
-		balloon_alert(user, "can't insert!")
-		return
+/obj/structure/tank_dispenser/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/tank/internals/plasma))
+		if(plasmatanks == TANK_DISPENSER_CAPACITY)
+			balloon_alert(user, "it is full!")
+			return ITEM_INTERACT_BLOCKING
+		plasmatanks++
+	else if(istype(tool, /obj/item/tank/internals/oxygen))
+		if(oxygentanks == TANK_DISPENSER_CAPACITY)
+			balloon_alert(user, "it is full!")
+			return ITEM_INTERACT_BLOCKING
+		oxygentanks++
 	else
-		return ..()
-	if(full)
-		balloon_alert(user, "it is full!")
-		return
+		if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
+			balloon_alert(user, "can't insert!")
+			return ITEM_INTERACT_BLOCKING
+		return NONE
 
-	if(!user.transferItemToLoc(I, src))
-		return
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
 	balloon_alert(user, "tank inserted")
 	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tank_dispenser/atom_deconstruct(disassembled = TRUE)
 	for(var/X in src)

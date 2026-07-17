@@ -337,19 +337,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	savefile.save()
 	return TRUE
 
-/datum/preferences/proc/load_character(slot)
+/datum/preferences/proc/load_character(slot = default_slot)
 	SHOULD_NOT_SLEEP(TRUE)
-	if(!slot)
-		slot = default_slot
 	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
+	var/original_default_slot = default_slot
 	if(slot != default_slot)
 		default_slot = slot
 		savefile.set_entry("default_slot", slot)
 
 	var/tree_key = "character[slot]"
 	var/list/save_data = savefile.get_entry(tree_key)
-	if(isnull(save_data))
-		for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
+	if(isnull(save_data)) // This is the case where we have a new character slot being switched to
+		for (var/datum/preference/preference as anything in get_preferences_in_priority_order()) // clear the cache in this case
 			if (preference.savefile_identifier != PREFERENCE_CHARACTER)
 				continue
 			value_cache -= preference.type
@@ -357,6 +356,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	var/data_validity_integer = check_savedata_version(save_data)
 	if(IS_DATA_OBSOLETE(data_validity_integer)) //fatal, can't load any data
+		default_slot = original_default_slot
+		savefile.set_entry("default_slot", original_default_slot)
 		return FALSE
 
 	// Read everything into cache
@@ -388,9 +389,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	all_quirks = SANITIZE_LIST(all_quirks)
 
 	//Validate job prefs
-	for(var/j in job_preferences)
-		if(job_preferences[j] != JP_LOW && job_preferences[j] != JP_MEDIUM && job_preferences[j] != JP_HIGH)
-			job_preferences -= j
+	for(var/job, priority in job_preferences)
+		if(priority != JP_LOW && priority != JP_MEDIUM && priority != JP_HIGH)
+			job_preferences -= job
 
 	all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks))
 	validate_quirks()

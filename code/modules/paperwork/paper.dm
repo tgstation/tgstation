@@ -693,6 +693,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 
 			update_appearance()
+			ui.close()
 			update_static_data_for_all_viewers()
 			return TRUE
 		if("add_text")

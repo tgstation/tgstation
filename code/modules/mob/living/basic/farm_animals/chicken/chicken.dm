@@ -31,6 +31,8 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	maxHealth = 15
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
+	held_lh = 'icons/mob/inhands/pets_held_lh.dmi'
+	held_rh = 'icons/mob/inhands/pets_held_rh.dmi'
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	ai_controller = /datum/ai_controller/basic_controller/chicken
@@ -60,6 +62,8 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/animal_variety, "chicken", pick("brown", "black", "white"), modify_pixels = TRUE)
+	AddElement(/datum/element/can_be_held)
+
 	AddComponent(\
 		/datum/component/egg_layer,\
 		/obj/item/food/egg/organic,\

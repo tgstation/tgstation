@@ -16,7 +16,6 @@
 	maxHealth = 25
 	speed = 1.25
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD
 
 	verb_say = "flutters"
@@ -60,6 +59,7 @@
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "squeak")
+	AddElement(/datum/element/can_be_held)
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 

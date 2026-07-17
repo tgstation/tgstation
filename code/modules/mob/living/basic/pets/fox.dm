@@ -19,7 +19,6 @@
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = TRUE
 	held_state = "fox"
 	melee_damage_lower = 5
 	melee_damage_upper = 5
@@ -58,6 +57,7 @@
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/tiny_mob_hunter, MOB_SIZE_SMALL)
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/can_be_held)
 
 /datum/ai_controller/basic_controller/fox
 	blackboard = list(

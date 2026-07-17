@@ -27,6 +27,8 @@
 	maxHealth = 3
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
+	held_lh = 'icons/mob/inhands/pets_held_lh.dmi'
+	held_rh = 'icons/mob/inhands/pets_held_rh.dmi'
 	gold_core_spawnable = FRIENDLY_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/chick
 
@@ -56,6 +58,7 @@
 	AddElement(/datum/element/pet_bonus, "chirp")
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/can_be_held)
 
 	if(!isnull(grow_as)) // we don't have a set time to grow up beyond whatever RNG dictates, and if we somehow get a client, all growth halts.
 		AddComponent(\
@@ -71,7 +74,7 @@
 
 /// We don't grow into a chicken if we're not conscious.
 /mob/living/basic/chick/proc/ready_to_grow()
-	return (stat == CONSCIOUS)
+	return (stat == CONSCIOUS)	&& !istype(loc, /obj/item/mob_holder)
 
 /// Variant of chick that just spawns in the holodeck so you can pet it. Doesn't grow up.
 /mob/living/basic/chick/permanent

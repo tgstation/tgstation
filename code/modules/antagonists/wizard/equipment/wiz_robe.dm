@@ -64,7 +64,7 @@
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
 
-/obj/item/clothing/head/wizard/chanterelle/fr
+/obj/item/clothing/head/wizard/chanterelle/fireproof
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/head/wizard/marisa
