@@ -51,14 +51,17 @@
 		to_chat(user, span_warning("You can not reform this!"))
 		stack_trace("A wall filling of type [type] doesn't have its made_from set.")
 		return
-	if(tool.use_tool(src, user, 0, volume=40))
-		user.visible_message(span_notice("[user] shaped [src] into [made_from] with [tool]."), \
-			span_notice("You shaped [src] into [made_from] with [tool]."), \
-			span_hear("You hear welding."))
-		var/holding = user.is_holding(src)
-		use(1)
-		if(holding && QDELETED(src))
-			user.put_in_hands(made_from)
+	if(!tool.use_tool(src, user, 0, volume=40))
+		return
+	var/obj/item/new_item = new made_from(user.drop_location(), 2)
+	user.visible_message(span_notice("[user] shaped [src] into [new_item] with [tool]."), \
+		span_notice("You shaped [src] into [new_item] with [tool]."), \
+		span_hear("You hear welding."))
+	var/holding = user.is_holding(src)
+	use(1)
+	if(holding && QDELETED(src))
+		user.put_in_hands(new_item)
+	return ITEM_INTERACT_SUCCESS
 
 GLOBAL_LIST_EMPTY(wall_reskin_lists)
 
