@@ -65,7 +65,7 @@
 /datum/action/cooldown/mob_cooldown/watcher_gaze/proc/proxmon_cleanup()
 	if (!QDELETED(proximity_monitor))
 		QDEL_NULL(proximity_monitor)
-	for (var/victim_ref as anything in tracked_mobs)
+	for (var/victim_ref in tracked_mobs)
 		var/mob/living/victim = locate(victim_ref)
 		if (victim)
 			UnregisterSignal(victim, list(COMSIG_ATOM_POST_DIR_CHANGE, COMSIG_MOB_STATCHANGE))
