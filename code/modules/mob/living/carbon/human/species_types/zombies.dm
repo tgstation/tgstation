@@ -108,10 +108,11 @@
 
 	var/mob/living/carbon/human/new_zombie = owner
 	LAZYADD(new_zombie.physiology.max_stun_len, max_stun_length)
+	if(!isnull(movespeed_mod))
+		new_zombie.add_movespeed_modifier(movespeed_mod)
 	new_zombie.physiology.stamina_mod *= stamina_modifier // Zombie stam resist
 	new_zombie.physiology.damage_resistance += damage_modifier
 	new_zombie.add_traits(unique_traits | zombie_traits, TRAIT_STATUS_EFFECT(id))
-	new_zombie.add_movespeed_modifier(movespeed_mod)
 	new_zombie.lighting_cutoff_red = 25
 	new_zombie.lighting_cutoff_green = 35
 	new_zombie.lighting_cutoff_blue = 5
@@ -172,10 +173,11 @@
 	qdel(was_zombie.GetComponent(/datum/component/mutant_hands))
 	qdel(was_zombie.GetComponent(/datum/component/regenerator))
 	LAZYREMOVE(was_zombie.physiology.max_stun_len, max_stun_length)
+	if(!isnull(movespeed_mod))
+		was_zombie.remove_movespeed_modifier(movespeed_mod)
 	was_zombie.physiology.stamina_mod /= stamina_modifier
 	was_zombie.physiology.damage_resistance -= damage_modifier
 	was_zombie.remove_traits(zombie_traits | unique_traits, TRAIT_STATUS_EFFECT(id))
-	was_zombie.remove_movespeed_modifier(movespeed_mod)
 	was_zombie.lighting_cutoff_red = initial(was_zombie.lighting_cutoff_red)
 	was_zombie.lighting_cutoff_green = initial(was_zombie.lighting_cutoff_green)
 	was_zombie.lighting_cutoff_blue = initial(was_zombie.lighting_cutoff_blue)
