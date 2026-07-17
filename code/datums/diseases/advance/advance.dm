@@ -517,3 +517,15 @@
 		if((each_symptom.name in affected_mob.symptom_resistances) && !each_symptom.neutered)
 			recovery_bonus += DISEASE_SYMPTOM_IMMUNITY_RECOVERY_BONUS
 	return recovery_bonus
+
+/datum/disease/advance/proc/generate_cure_text(cure_count)
+	var/remedies = list()
+	for(var/datum/symptom/each_symptom as anything in symptoms)
+		if(length(remedies) >= cure_count)
+			break
+		if(!each_symptom.symptom_cure)
+			continue
+		var/datum/reagent/each_cure = each_symptom.symptom_cure
+		if(!each_symptom.neutered && !(each_cure::name in remedies))
+			remedies += each_cure::name
+	return english_list(remedies, nothing_text = "Nothing")

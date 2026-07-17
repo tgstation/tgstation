@@ -1,7 +1,7 @@
 #define TEST_CHECK_BREATH_MESSAGE(lungs_organ, message) "[lungs_organ.type]/check_breath() [message]"
 #define TEST_ALERT_THROW_MESSAGE(lungs_organ, alert_name) TEST_CHECK_BREATH_MESSAGE(lungs_organ, "failed to throw alert [alert_name] when expected.")
 #define TEST_ALERT_INHIBIT_MESSAGE(lungs_organ, alert_name) TEST_CHECK_BREATH_MESSAGE(lungs_organ, "threw alert [alert_name] when it wasn't expected.")
-#define GET_MOLES(gas_mixture, gas_type) (gas_mixture.gases[gas_type] ? gas_mixture.gases[gas_type][MOLES] : 0)
+#define GET_MOLES(gas_mixture, gas_type) (gas_mixture.moles[gas_type] || 0)
 
 /// Tests the standard, plasmaman, and lavaland lungs organ to ensure breathing and suffocation behave as expected.
 /// Performs a check on each main (can be life-sustaining) gas, and ensures gas alerts are only thrown when expected.
@@ -174,7 +174,7 @@
 	test_mix.temperature = T20C
 	for(var/datum/gas/gas_type as anything in gas_to_percent)
 		test_mix.add_gas(gas_type)
-		test_mix.gases[gas_type][MOLES] = (ONE_ATMOSPHERE * 2500 / (R_IDEAL_GAS_EQUATION * T20C) * gas_to_percent[gas_type])
+		test_mix.moles[gas_type] = (ONE_ATMOSPHERE * 2500 / (R_IDEAL_GAS_EQUATION * T20C) * gas_to_percent[gas_type])
 	return test_mix
 
 /// Set up an O2/N2 gas mix which is "ideal" for organic life.

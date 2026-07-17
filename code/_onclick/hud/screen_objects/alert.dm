@@ -1162,13 +1162,13 @@
 	if(!.)
 		return
 
-	var/mob/living/carbon/carbon_owner = owner
+	var/mob/living/carbon/human/human_owner = owner
 
-	if(!carbon_owner.can_resist() || !carbon_owner.shoes)
+	if(!human_owner.can_resist() || !human_owner.shoes)
 		return
 
-	carbon_owner.changeNext_move(CLICK_CD_RESIST)
-	carbon_owner.shoes.handle_tying(carbon_owner)
+	human_owner.changeNext_move(CLICK_CD_RESIST)
+	human_owner.shoes.handle_tying(human_owner)
 
 /atom/movable/screen/alert/shoes/untied
 	name = "Untied Shoes"

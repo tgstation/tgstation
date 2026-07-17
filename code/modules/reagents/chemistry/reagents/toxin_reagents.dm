@@ -496,12 +496,12 @@
 		if(exposed_mob.adjust_tox_loss(damage * 20, required_biotype = affected_biotype))
 			return
 
-	if(!(methods & VAPOR) || !iscarbon(exposed_mob))
+	if(!(methods & VAPOR) || !ishuman(exposed_mob))
 		return
 
-	var/mob/living/carbon/exposed_carbon = exposed_mob
-	if(!exposed_carbon.wear_mask)
-		exposed_carbon.adjust_tox_loss(damage, required_biotype = affected_biotype)
+	var/mob/living/carbon/human/exposed_human = exposed_mob
+	if(!exposed_human.wear_mask)
+		exposed_human.adjust_tox_loss(damage, required_biotype = affected_biotype)
 
 /datum/reagent/toxin/plantbgone/weedkiller
 	name = "Weed Killer"
@@ -1374,7 +1374,7 @@
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/affected_mob)
 	. = ..()
-	affected_mob.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
+	INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/atom/movable, say), "oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()

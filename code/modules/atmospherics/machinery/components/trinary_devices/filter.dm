@@ -98,7 +98,7 @@
 	if(filtering)
 		var/datum/gas_mixture/filtered_out = new
 
-		for(var/gas in removed.gases & filter_type)
+		for(var/gas in removed.moles & filter_type)
 			var/datum/gas_mixture/removing = removed.remove_specific_ratio(gas, 1)
 			if(removing)
 				filtered_out.merge(removing)
@@ -133,9 +133,9 @@
 	data["max_rate"] = round(MAX_TRANSFER_RATE)
 
 	data["filter_types"] = list()
-	for(var/path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[path]
-		data["filter_types"] += list(list("gas_id" = gas[META_GAS_ID], "enabled" = (path in filter_type)))
+	var/cached_gas_info = GLOB.meta_gas_info
+	for(var/path in cached_gas_info[META_GAS_ID])
+		data["filter_types"] += list(list("gas_id" = cached_gas_info[META_GAS_ID][path], "enabled" = (path in filter_type)))
 
 	return data
 
@@ -168,7 +168,7 @@
 				change = "added"
 			else
 				change = "removed"
-			var/gas_name = GLOB.meta_gas_info[gas_id2path(params["val"])][META_GAS_NAME]
+			var/gas_name = GLOB.meta_gas_info[META_GAS_NAME][gas_id2path(params["val"])]
 			usr.investigate_log("[change] [gas_name] from the filter type.", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_appearance(UPDATE_ICON)
