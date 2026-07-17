@@ -333,11 +333,13 @@
 		return butcher_drops
 	if (butcher_drop_cache[type] && !force)
 		return butcher_drop_cache[type]
+	if(base_meat_amount <= 0)
+		return null
 	if(is_husked == HUSKED_ZOMBIE)
 		return list(/obj/item/food/meat/slab/human/mutant/zombie = base_meat_amount)
 
 	var/datum/species/species = GLOB.species_list[species_id || limb_id]
-	if (!species || !species.meat || !base_meat_amount)
+	if (isnull(species?.meat))
 		return null
 	return list(species.meat = base_meat_amount)
 
