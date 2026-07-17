@@ -787,7 +787,7 @@
 	return ..()
 
 /mob/living/carbon/can_be_revived()
-	if(HAS_TRAIT(src, TRAIT_HUSK))
+	if(HAS_TRAIT_NOT_FROM(src, TRAIT_HUSK, /datum/status_effect/zombie::id))
 		return FALSE
 	if(!HAS_TRAIT(src, TRAIT_BRAINLESS_CARBON) && !get_organ_by_type(/obj/item/organ/brain))
 		return FALSE

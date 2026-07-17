@@ -56,7 +56,7 @@
 	var/zombie_hand = /obj/item/mutant_hand/zombie
 	/// The movespeed modifier to apply to the zombie - if null, no movespeed modifier will be applied
 	var/movespeed_mod = /datum/movespeed_modifier/zombie
-	/// % Reduction to all psycial damage the zombie takes
+	/// % Reduction to all physical damage the zombie takes
 	var/damage_modifier = 20
 	/// Multiplier to all stamina damage the zombie types
 	var/stamina_modifier = 0.33
@@ -115,10 +115,10 @@
 	new_zombie.lighting_cutoff_red = 25
 	new_zombie.lighting_cutoff_green = 35
 	new_zombie.lighting_cutoff_blue = 5
+	new_zombie.update_sight()
 	new_zombie.set_combat_mode(TRUE, silent = TRUE, force = TRUE)
-
+	set_zombie_temperature()
 	add_zombie_biotypes()
-	RegisterSignal(new_zombie, COMSIG_SPECIES_GAIN, PROC_REF(zombie_species_changed))
 
 	// Ensures we have an infection organ even if we were applied by something else
 	var/obj/item/organ/zombie_infection/infection = new_zombie.get_organ_slot(ORGAN_SLOT_ZOMBIE)
@@ -126,8 +126,6 @@
 		infection = new()
 		infection.Insert(new_zombie)
 		RegisterSignal(infection, COMSIG_ORGAN_REMOVED, PROC_REF(organ_removed))
-
-	RegisterSignal(infection, COMSIG_LIVING_DEATH, PROC_REF(zombie_died_somehow))
 
 	var/obj/item/organ/tongue/old_tongue = new_zombie.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!QDELETED(old_tongue))
@@ -156,7 +154,9 @@
 		)
 
 	new_zombie.become_husk(id)
-	new_zombie.update_sight()
+
+	RegisterSignal(new_zombie, COMSIG_SPECIES_GAIN, PROC_REF(zombie_species_changed))
+	RegisterSignal(new_zombie, COMSIG_LIVING_DEATH, PROC_REF(zombie_died_somehow))
 
 	return TRUE
 
@@ -179,8 +179,9 @@
 	was_zombie.lighting_cutoff_red = initial(was_zombie.lighting_cutoff_red)
 	was_zombie.lighting_cutoff_green = initial(was_zombie.lighting_cutoff_green)
 	was_zombie.lighting_cutoff_blue = initial(was_zombie.lighting_cutoff_blue)
-	was_zombie.cure_husk(id)
 	was_zombie.update_sight()
+	was_zombie.cure_husk(id)
+	restore_zombie_temperature()
 	remove_zombie_biotypes()
 
 /datum/status_effect/zombie/proc/add_zombie_biotypes()
@@ -196,6 +197,16 @@
 	owner.mob_biotypes &= ~added_biotypes
 	owner.mob_biotypes |= removed_biotypes
 
+/datum/status_effect/zombie/proc/set_zombie_temperature()
+	var/mob/living/carbon/human/zombie = owner
+	zombie.dna.species.bodytemp_normal = T0C
+	zombie.dna.species.bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
+
+/datum/status_effect/zombie/proc/restore_zombie_temperature()
+	var/mob/living/carbon/human/zombie = owner
+	zombie.dna.species.bodytemp_normal = initial(zombie.dna.species.bodytemp_normal)
+	zombie.dna.species.bodytemp_heat_damage_limit = initial(zombie.dna.species.bodytemp_heat_damage_limit)
+
 /datum/status_effect/zombie/proc/organ_removed(obj/item/organ/zombie_infection/infection, ...)
 	SIGNAL_HANDLER
 	qdel(src)
@@ -210,6 +221,8 @@
 
 /datum/status_effect/zombie/proc/zombie_species_changed(mob/living/carbon/human/zombie, ...)
 	SIGNAL_HANDLER
+
+	set_zombie_temperature()
 	add_zombie_biotypes()
 
 /datum/status_effect/zombie/mindless
@@ -240,4 +253,4 @@
 	multiplicative_slowdown = 1.0
 
 /datum/movespeed_modifier/zombie/mindless
-	multiplicative_slowdown = 1.75
+	multiplicative_slowdown = parent_type::multiplicative_slowdown + 0.5
