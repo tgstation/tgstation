@@ -660,7 +660,7 @@
 #define SILENCE_RANGED_MESSAGE (1<<0)
 
 /// Returns whether or not the given mob can succumb
-#define CAN_SUCCUMB(target) (target.stat >= SOFT_CRIT && !HAS_TRAIT(target, TRAIT_NODEATH))
+#define CAN_SUCCUMB(target) ((target.stat == SOFT_CRIT || target.stat == HARD_CRIT) && !HAS_TRAIT(target, TRAIT_NODEATH))
 
 // Body position defines.
 /// Mob is standing up, usually associated with lying_angle value of 0.
