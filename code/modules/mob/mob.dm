@@ -1212,6 +1212,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 				search_pda = 0
 
 /mob/proc/update_stat()
+	SIGNAL_HANDLER
 	return
 
 /mob/proc/update_health_hud()

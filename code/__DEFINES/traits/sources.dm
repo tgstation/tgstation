@@ -64,7 +64,6 @@
 /// inherited from riding vehicles
 #define VEHICLE_TRAIT "vehicle"
 #define INNATE_TRAIT "innate"
-#define CRIT_HEALTH_TRAIT "crit_health"
 #define OXYLOSS_TRAIT "oxyloss"
 /// Trait sorce for "was recently shocked by something"
 #define WAS_SHOCKED "was_shocked"

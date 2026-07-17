@@ -16,6 +16,17 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GENELESS), PROC_REF(on_geneless_trait_gain))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NO_SPLIT_PERSONALITY), PROC_REF(on_no_split_personality_trait_gain))
 
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NO_OXYLOSS_PASSOUT), SIGNAL_REMOVETRAIT(TRAIT_NO_OXYLOSS_PASSOUT)), PROC_REF(check_passout))
+
+	RegisterSignal(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_NOHARDCRIT),
+		SIGNAL_REMOVETRAIT(TRAIT_NOHARDCRIT),
+		SIGNAL_ADDTRAIT(TRAIT_NOSOFTCRIT),
+		SIGNAL_REMOVETRAIT(TRAIT_NOSOFTCRIT),
+		SIGNAL_ADDTRAIT(TRAIT_NODEATH), // redundant as adding the trait won't change stat, but just being thorough
+		SIGNAL_REMOVETRAIT(TRAIT_NODEATH),
+	), PROC_REF(update_stat))
+
 /**
  * On gain of TRAIT_AGENDER
  *

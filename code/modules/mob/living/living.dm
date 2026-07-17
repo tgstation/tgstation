@@ -883,6 +883,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 		fully_heal(full_heal_flags)
 
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
+		REMOVE_TRAIT(src, TRAIT_DISSECTED, AUTOPSY_TRAIT)
 		set_suicide(FALSE)
 		set_stat(HARD_CRIT) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
@@ -1018,9 +1019,11 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 /// Checks if we are actually able to ressuscitate this mob.
 /// (We don't want to revive then to have them instantly die again)
 /mob/living/proc/can_be_revived()
-	if(health <= HEALTH_THRESHOLD_DEAD)
-		return FALSE
-	return TRUE
+	if(HAS_TRAIT(src, TRAIT_NODEATH))
+		return TRUE
+	if(health > HEALTH_THRESHOLD_DEAD)
+		return TRUE
+	return FALSE
 
 /mob/living/proc/update_damage_overlays()
 	return
