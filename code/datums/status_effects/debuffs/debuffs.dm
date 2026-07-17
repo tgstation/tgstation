@@ -133,7 +133,6 @@
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
 	id = "unconscious"
-	needs_update_stat = TRUE
 	force_say_chance = 100
 
 /datum/status_effect/incapacitating/unconscious/on_apply()
@@ -146,10 +145,30 @@
 	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
-/datum/status_effect/incapacitating/unconscious/tick(seconds_between_ticks)
-	if(owner.get_stamina_loss())
-		owner.adjust_stamina_loss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
+/// Handles the effects of being knocked out - don't apply directly, all you should be doing is using [TRAIT_KNOCKEDOUT]
+/datum/status_effect/knocked_out
+	id = "is_knocked_out"
+	alert_type = null
 
+/datum/status_effect/knocked_out/on_apply()
+	owner.become_blind(TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_BLOCK_SECHUD, TRAIT_BLOCK_MEDHUD, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_STATUS_EFFECT(id))
+	owner.update_eyes() // updates eyelids
+	for(var/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/uncon_aa in GLOB.active_alternate_appearances)
+		if(uncon_aa.target == owner)
+			continue
+		uncon_aa.show_to(owner)
+	return TRUE
+
+/datum/status_effect/knocked_out/on_remove()
+	owner.cure_blind(TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_BLOCK_SECHUD, TRAIT_BLOCK_MEDHUD, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_STATUS_EFFECT(id))
+	owner.update_eyes() // updates eyelids
+	for(var/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/uncon_aa in GLOB.active_alternate_appearances)
+		uncon_aa.hide_from(owner, absolute = TRUE)
+
+/datum/status_effect/knocked_out/tick(seconds_between_ticks)
+	owner.adjust_stamina_loss(-3 * seconds_between_ticks)
 
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping

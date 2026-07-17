@@ -73,7 +73,7 @@
 	owner.adjust_drowsiness(20 SECONDS)
 
 /datum/status_effect/slumber_party/tick(seconds_between_ticks)
-	if(owner.stat != UNCONSCIOUS)
+	if(!HAS_TRAIT(owner, TRAIT_KNOCKEDOUT) || owner.stat == DEAD) // if we wake up, clean up
 		qdel(src)
 		return
 

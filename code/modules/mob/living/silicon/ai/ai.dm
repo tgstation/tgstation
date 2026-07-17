@@ -1110,7 +1110,6 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 	static_image.appearance_flags |= KEEP_TOGETHER
 	static_image.overlays += static_overlay
 	static_image.override = TRUE
-	static_image.add_filter("static_outline", 1, outline_filter(size = 1, color = COLOR_DARK))
 	static_image.name = "unknown AI"
 	add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity,

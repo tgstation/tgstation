@@ -72,7 +72,7 @@
 	return FALSE
 
 /datum/status_effect/organ_set_bonus/stoat/proc/is_friendly_mob(mob/living/target)
-	if(target.stat >= UNCONSCIOUS)
+	if(HAS_TRAIT(target, TRAIT_KNOCKEDOUT))
 		return FALSE
 	if(istype(target, /mob/living/basic/stoat))
 		return owner.gender != MALE || target.gender != MALE

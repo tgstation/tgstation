@@ -82,24 +82,18 @@
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
 	SIGNAL_HANDLER
-	become_blind(TRAIT_KNOCKEDOUT)
-	add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_BLOCK_SECHUD, TRAIT_BLOCK_MEDHUD, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_KNOCKEDOUT)
-	update_eyes() // updates eyelids
-	for(var/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/uncon_aa in GLOB.active_alternate_appearances)
-		if(uncon_aa.target == src)
-			continue
-		uncon_aa.show_to(src)
+
+	apply_status_effect(/datum/status_effect/knocked_out)
+
 	if(stat <= SOFT_CRIT)
 		log_combat(src, src, "lost consciousness")
 
 /// Called when [TRAIT_KNOCKEDOUT] is removed from the mob.
 /mob/living/proc/on_knockedout_trait_loss(datum/source)
 	SIGNAL_HANDLER
-	cure_blind(TRAIT_KNOCKEDOUT)
-	remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_BLOCK_SECHUD, TRAIT_BLOCK_MEDHUD, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_KNOCKEDOUT)
-	update_eyes() // updates eyelids
-	for(var/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/uncon_aa in GLOB.active_alternate_appearances)
-		uncon_aa.hide_from(src, absolute = TRUE)
+
+	remove_status_effect(/datum/status_effect/knocked_out)
+
 	if(stat <= SOFT_CRIT)
 		log_combat(src, src, "regained consciousness")
 

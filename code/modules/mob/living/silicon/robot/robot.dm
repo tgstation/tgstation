@@ -1058,7 +1058,6 @@
 	static_image.overlays += static_overlay
 	static_image.override = TRUE
 	static_image.name = "unknown cyborg"
-	static_image.add_filter("static_outline", 1, outline_filter(size = 1, color = COLOR_DARK))
 	add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity,
 		"[REF(src)]_unconscious",

@@ -417,17 +417,9 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 	switch(severity)
 		if(EMP_HEAVY)
-			emp_knockout(16 SECONDS)
+			Unconscious(16 SECONDS)
 		if(EMP_LIGHT)
-			emp_knockout(6 SECONDS)
-
-#define TRAIT_SOURCE_EMP "emp"
-
-/mob/living/silicon/robot/proc/emp_knockout(deciseconds)
-	ADD_TRAIT(src, TRAIT_KNOCKEDOUT, TRAIT_SOURCE_EMP)
-	addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_KNOCKEDOUT, TRAIT_SOURCE_EMP), deciseconds, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
-
-#undef TRAIT_SOURCE_EMP
+			Unconscious(6 SECONDS)
 
 /mob/living/silicon/robot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(user == src)//To prevent syndieborgs from emagging themselves

@@ -365,7 +365,7 @@
 			if(intentional)
 				to_chat(user, span_warning("You cannot [key] while unconscious!"))
 			return FALSE
-		if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) && !(can_use_flags & EMOTE_CANUSE_REQUIRE_HANDS))
+		if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) && (can_use_flags & EMOTE_CANUSE_REQUIRE_HANDS))
 			if(intentional)
 				to_chat(user, span_warning("You cannot use your hands to [key] right now!"))
 			return FALSE
