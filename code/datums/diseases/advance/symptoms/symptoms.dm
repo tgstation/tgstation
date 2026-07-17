@@ -45,6 +45,8 @@
 	var/cure_color = "green"
 	///A remedied symptom has no effect and contributes to the cure
 	var/remedied = FALSE
+	///Whether or not mobs can gain immunity to this symptom after recovering from a disease with it
+	var/immunity_proof = FALSE
 
 /datum/symptom/New()
 	var/list/S = SSdisease.list_symptoms

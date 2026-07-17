@@ -507,7 +507,7 @@
 		return
 	if(add_resistance == TRUE)
 		for(var/datum/symptom/each_symptom as anything in symptoms)
-			if(!each_symptom.neutered)
+			if(!each_symptom.neutered && !each_symptom.immunity_proof)
 				LAZYOR(affected_mob.symptom_resistances, each_symptom.name)
 	.=..()
 
