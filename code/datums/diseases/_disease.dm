@@ -157,7 +157,7 @@
 		if(half_stage)
 			half_stage = FALSE
 			update_stage(min(stage + 1, max_stages))
-		else
+		else if(stage <= max_stages)
 			half_stage = TRUE
 
 	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
