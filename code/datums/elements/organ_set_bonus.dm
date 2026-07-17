@@ -147,7 +147,7 @@
 	owner.update_body()
 
 ///We need to recalculate the mob biotypes, so first, remove the added biotypes from the mob before the new species changes the standard biotypes.
-/datum/status_effect/organ_set_bonus/proc/on_species_gain(mob/living/carbon/human, datum/species/new_species, datum/species/old_species)
+/datum/status_effect/organ_set_bonus/proc/on_species_loss(mob/living/carbon/human, datum/species/new_species, datum/species/old_species)
 	SIGNAL_HANDLER
 	human.mob_biotypes &= ~biotype_added
 	biotype_added = NONE
