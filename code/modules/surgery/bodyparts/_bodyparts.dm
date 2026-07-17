@@ -1412,17 +1412,43 @@
 	SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
 	return .
 
+/**
+ * Takes in an image and greyscales it to later be recolored to look like a husk
+ *
+ * Then returns a separate image/MA that is the blood overlay for the husk
+ * May return multiple if the blood overlay has an emissive associated
+ */
 /obj/item/bodypart/proc/huskify_image(image/thing_to_husk)
 	var/icon/husk_icon = new(thing_to_husk.icon)
 	husk_icon.ColorTone(HUSK_COLOR_TONE)
 	thing_to_husk.icon = husk_icon
-	var/mutable_appearance/husk_blood = mutable_appearance(icon_husk, "[husk_type]_husk_[body_zone]", appearance_flags = RESET_COLOR)
-	// BLEND_INSET_OVERLAY on KEEP_TOGETHER atoms masks itself with the atom, so we cannot add this as an overlay to our limb to have it automatically mask
+
+	var/mutable_appearance/husk_blood = mutable_appearance(icon_husk, "[husk_type]_husk_[body_zone]", thing_to_husk.layer, appearance_flags = RESET_COLOR)
+	. = list(husk_blood)
+
+	// BLEND_INSET_OVERLAY on KEEP_TOGETHER atoms masks itself with the atom,
+	// so we cannot add this as an overlay to our limb to have it automatically mask
 	husk_blood.blend_mode = BLEND_INSET_OVERLAY
 	husk_blood.dir = thing_to_husk.dir
-	husk_blood.layer = thing_to_husk.layer
-	husk_blood.color = LAZYLEN(blood_dna_info) ? get_color_from_blood_list(blood_dna_info) : BLOOD_COLOR_RED
-	return husk_blood
+
+	if(LAZYLEN(blood_dna_info))
+		husk_blood.color = get_color_from_blood_list(blood_dna_info)
+
+		var/average_emissive_alpha = 0
+		for(var/dna, blood_type in blood_dna_info)
+			average_emissive_alpha += astype(blood_type, /datum/blood_type)?.get_emissive_alpha(src)
+
+		average_emissive_alpha /= LAZYLEN(blood_dna_info)
+		if(average_emissive_alpha > 0)
+			var/mutable_appearance/husk_blood_em = emissive_appearance(husk_blood.icon, husk_blood.icon_state, loc || owner || src, husk_blood.layer, average_emissive_alpha)
+			husk_blood_em.blend_mode = BLEND_INSET_OVERLAY
+			husk_blood_em.dir = husk_blood.dir
+			. += husk_blood_em
+
+	else
+		husk_blood.color = BLOOD_COLOR_RED
+
+	return .
 
 /**
  * Adds a bodypart overlay to the limb
