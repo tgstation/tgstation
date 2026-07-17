@@ -3,6 +3,7 @@
 	name = "High-Functioning Zombie"
 	id = SPECIES_ZOMBIE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
+	mutanttongue = /obj/item/organ/tongue/zombie // not necessary as status effect gives it, but for tests
 
 /datum/species/zombie/check_roundstart_eligible()
 	if(check_holidays(HALLOWEEN))
