@@ -558,7 +558,7 @@
 		else if (IS_UNCONSCIOUS(mob_occupant))
 			occupant_data["stat"] = "Unconscious"
 		else
-			occupant_data["stat"] = "Conscious"
+			occupant_data["stat"] = "Stable"
 
 		occupant_data["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
 

@@ -99,7 +99,7 @@
 	var/patient_state
 	switch(patient.stat)
 		if(STABLE)
-			patient_state = "Conscious"
+			patient_state = "Stable"
 		if(DEAD)
 			patient_state = "*Dead*"
 		if(SOFT_CRIT, HARD_CRIT)

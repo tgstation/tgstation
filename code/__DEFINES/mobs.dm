@@ -1129,8 +1129,14 @@ GLOBAL_LIST_INIT(regal_rat_minion_commands, list(
 // mob.stat                                          -> IS_UNCONSCIOUS_CRIT_OR_DEAD(mob)
 // mob.stat == CONSCIOUS                             -> !IS_UNCONSCIOUS_CRIT_OR_DEAD(mob)
 // mob.stat != CONSCIOUS                             -> IS_UNCONSCIOUS_CRIT_OR_DEAD(mob)
+// mob.stat > CONSCIOUS                              -> IS_UNCONSCIOUS_CRIT_OR_DEAD(mob)
 // mob.appears_alive()                               -> !IS_DEAD_OR_FAKING(mob)
 // mob.stat == UNCONSCIOUS || mob.stat == HARD_CRIT  -> IS_UNCONSCIOUS_AND_ALIVE(mob)
 // mob.stat == DEAD                                  -> no change
 // mob.stat != DEAD                                  -> no change
+// mob.stat >= SOFT_CRIT                             -> IS_UNCONSCIOUS_CRIT_OR_DEAD(mob)
+// mob.stat > SOFT_CRIT                              -> IS_UNCONSCIOUS(mob)
+// mob.stat < SOFT_CRIT                              -> !IS_UNCONSCIOUS_CRIT_OR_DEAD(mob)
+// mob.stat <= SOFT_CRIT                             -> !IS_UNCONSCIOUS(mob)
+// mob.stat == SOFT_CRIT                             -> no change
 // IS_DEAD_OR_INCAP(mob)                             -> mob.incapacitated

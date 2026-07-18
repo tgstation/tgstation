@@ -576,15 +576,15 @@
 	SEND_SIGNAL(old_pulling, COMSIG_ATOM_NO_LONGER_PULLED, src)
 	SEND_SIGNAL(src, COMSIG_ATOM_NO_LONGER_PULLING, old_pulling)
 
-#define PULLED_WHILE_SOFTCRIT_TRAIT "pulled_while_softcrit"
+#define PULLED_WHILE_CRIT_TRAIT "pulled_while_softcrit"
 
 /atom/movable/proc/pulled_mob_stat_change(mob/living/pulled_mob, new_stat, ...)
 	SIGNAL_HANDLER
 
 	if(new_stat >= SOFT_CRIT)
-		ADD_TRAIT(pulled_mob, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
+		ADD_TRAIT(pulled_mob, TRAIT_IMMOBILIZED, PULLED_WHILE_CRIT_TRAIT)
 	else
-		REMOVE_TRAIT(pulled_mob, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
+		REMOVE_TRAIT(pulled_mob, TRAIT_IMMOBILIZED, PULLED_WHILE_CRIT_TRAIT)
 
 /atom/movable/proc/set_pulling(new_pulling)
 	if(new_pulling == pulling)
@@ -603,13 +603,13 @@
 	if(ismob(.))
 		var/mob/was_pulled_mob = .
 		UnregisterSignal(was_pulled_mob, COMSIG_MOB_STATCHANGE)
-		REMOVE_TRAIT(was_pulled_mob, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
+		REMOVE_TRAIT(was_pulled_mob, TRAIT_IMMOBILIZED, PULLED_WHILE_CRIT_TRAIT)
 
 	if(ismob(pulling))
 		var/mob/pulled_mob = pulling
 		RegisterSignal(pulling, COMSIG_MOB_STATCHANGE, PROC_REF(pulled_mob_stat_change))
 		if(pulled_mob.stat >= SOFT_CRIT)
-			ADD_TRAIT(pulled_mob, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
+			ADD_TRAIT(pulled_mob, TRAIT_IMMOBILIZED, PULLED_WHILE_CRIT_TRAIT)
 
 ///Reports the event of the change in value of the pulledby variable.
 /atom/movable/proc/set_pulledby(new_pulledby)
@@ -618,7 +618,7 @@
 	. = pulledby
 	pulledby = new_pulledby
 
-#undef PULLED_WHILE_SOFTCRIT_TRAIT
+#undef PULLED_WHILE_CRIT_TRAIT
 
 /atom/movable/proc/Move_Pulled(atom/moving_atom)
 	if(!pulling)

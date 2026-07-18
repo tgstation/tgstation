@@ -1832,7 +1832,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 		if(ishuman(target))
 			var/mob/living/carbon/human/victim_human = target
 			if(victim_human.key && !victim_human.client) // AKA braindead
-				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
+				if(!IS_UNCONSCIOUS(victim_human) && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
 					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
 					LAZYADD(victim_human.afk_thefts, new_entry)
 

@@ -389,11 +389,9 @@
 		var/stat = "error"
 		switch(body.stat)
 			if(STABLE)
-				stat = "Conscious"
-			if(SOFT_CRIT)
+				stat = "Stable"
+			if(SOFT_CRIT, HARD_CRIT)
 				stat = "Critical"
-			if(HARD_CRIT)
-				stat = "Unconscious"
 			if(DEAD)
 				stat = "Dead"
 		var/occupied

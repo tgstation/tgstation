@@ -185,17 +185,31 @@
 		data["occupant"]["name"] = mob_occupant.name
 		switch(mob_occupant.stat)
 			if(STABLE)
-				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["stat"] = "Stable"
 				data["occupant"]["statstate"] = "good"
 			if(SOFT_CRIT)
-				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["stat"] = "Critical"
 				data["occupant"]["statstate"] = "average"
 			if(HARD_CRIT)
-				data["occupant"]["stat"] = "Unconscious"
-				data["occupant"]["statstate"] = "average"
+				data["occupant"]["stat"] = "Critical"
+				data["occupant"]["statstate"] = "bad"
 			if(DEAD)
 				data["occupant"]["stat"] = "Dead"
 				data["occupant"]["statstate"] = "bad"
+
+		if(mob_occupant.stat == DEAD)
+			data["occupant"]["stat"] = "Dead"
+			data["occupant"]["statstate"] = "bad"
+		else if (mob_occupant.stat == HARD_CRIT || mob_occupant.stat == SOFT_CRIT)
+			data["occupant"]["stat"] = "Critical"
+			data["occupant"]["statstate"] = mob_occupant.stat == HARD_CRIT ? "bad" : "average"
+		else if (IS_UNCONSCIOUS(mob_occupant))
+			data["occupant"]["stat"] = "Unconscious"
+			data["occupant"]["statstate"] = "average"
+		else
+			data["occupant"]["stat"] = "Stable"
+			data["occupant"]["statstate"] = "good"
+
 		data["occupant"]["health"] = mob_occupant.health
 		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
 		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD

@@ -95,7 +95,7 @@
 	if(target.stat != DEAD)
 		to_chat(target, span_warning("You feel a horribly unpleasant draining sensation as your grip on life weakens..."))
 	if(target.stat == SOFT_CRIT)
-		target.Stun(46)
+		target.Stun(4.6 SECONDS)
 
 	apply_status_effect(/datum/status_effect/revenant/revealed, 5 SECONDS)
 	apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 5 SECONDS)
