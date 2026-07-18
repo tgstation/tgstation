@@ -97,7 +97,7 @@
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_girder",
 										"vars": {
-											"time_between_perform": "1 SECONDS",
+											"time_between_perform": 0,
 											"target_key": "BB_CURRENT_TARGET",
 											"minimum_distance": 1
 										}
