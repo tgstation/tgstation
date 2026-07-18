@@ -219,14 +219,15 @@
 	/// The area our perspective is currently in
 	var/area/perspective_area
 
-/atom/movable/screen/parallax_home/Initialize(mapload, datum/hud/hud_owner, client/owner, submap = "")
+/atom/movable/screen/parallax_home/Initialize(mapload, datum/hud/hud_owner, client/owner, submap = null)
 	. = ..()
 	src.owner = owner
 	owner.parallax_instances += src
 	src.submap = submap
-	if(submap)
+	if(!isnull(submap))
 		src.submap_text = "[submap]:"
-	screen_loc = "[submap_text][screen_loc]"
+	if(!isnull(submap_text))
+		screen_loc = "[submap_text][screen_loc]"
 
 /atom/movable/screen/parallax_home/Destroy()
 	REMOVE_TRAIT(owner, TRAIT_PARALLAX_DISPLAYED(submap), TRAIT_GENERIC)
@@ -376,7 +377,8 @@
 	if(QDELETED(owner)) // If this typepath all starts to harddel your culprit is likely this
 		return INITIALIZE_HINT_QDEL
 
-	screen_loc = "[home.submap_text][screen_loc]"
+	if(!isnull(home.submap_text))
+		screen_loc = "[home.submap_text][screen_loc]"
 
 	// I do not want to know bestie
 	var/view = owner.view || world.view

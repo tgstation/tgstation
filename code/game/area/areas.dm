@@ -464,9 +464,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /// Ensures areas render their weather properly
 /area/update_icon()
 	. = ..()
-	for(var/datum/weather/W as anything in SSweather.processing)
-		if(W.stage != END_STAGE && (src in W.impacted_areas))
-			W.update_areas()
+	for(var/datum/weather/weather as anything in SSweather.processing)
+if(weather.stage != END_STAGE && (src in weather.impacted_areas))
+weather.update_areas()
 
 /// Sets the area's parallax movedir (the direction parallax will animate in while in the area)
 /area/proc/set_parallax_movedir(new_dir)
