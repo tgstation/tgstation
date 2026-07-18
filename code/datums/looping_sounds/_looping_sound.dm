@@ -72,6 +72,7 @@
 	///The sound token instance for this looping sound.
 	var/datum/sound_token/sound_token_instance
 	///Opt-out of native sound repeat even if this loop would otherwise qualify for it. Relevant if you need to know timings about when the loop ends for example.
+	var/never_native_repeat = FALSE
 	///Whether we're currently using native sound.repeat instead of re-firing on the SSsound_loops timer.
 	var/native_repeat_active = FALSE
 
