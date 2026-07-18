@@ -272,7 +272,7 @@
 	turf_type = /turf/open/floor/mineral/mythril
 	mineralType = "mythril"
 	mats_per_unit = list(/datum/material/mythril=SHEET_MATERIAL_AMOUNT*0.25)
-	merge_type = /obj/item/stack/tile/mineral/mythril
+	merge_type /obj/item/stack/tile/mineral/mythril
 
 
 ///glassed variants of bunch of the floors which otherwise might not be the best to walk through.
@@ -284,6 +284,7 @@
 /obj/item/stack/tile/mineral/glassed
 	/// Determines what stack floor type this splits into.
 	var/floorType = null
+	merge_type = /obj/item/stack/tile/mineral/glassed
 
 /obj/item/stack/tile/mineral/glassed/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour == TOOL_WELDER)
