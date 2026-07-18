@@ -37,10 +37,6 @@
 		"mmi_posi",
 		"mmi",
 		"mmi_m",
-		"advanced_l_arm",
-		"advanced_r_arm",
-		"advanced_l_leg",
-		"advanced_r_leg",
 		"borg_upgrade_rename",
 		"borg_upgrade_restart",
 	)

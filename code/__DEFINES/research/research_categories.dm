@@ -196,7 +196,6 @@
 #define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY "/Cybernetic Utility Implants"
 #define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_MISC "/Cybernetic Miscellaneous Implants"
 #define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_SECURITY "/Cybernetic Security Implants"
-#define RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS "/Cybernetic Advanced Limbs"
 
 // Limb Categories
 #define RND_CATEGORY_LIMBS_DIGITIGRADE "digitigrade"
