@@ -329,6 +329,10 @@
 /obj/item/clothing/mask/facehugger/toy/die()
 	return
 
+#undef FACEHUGGER_AWAKE
+#undef FACEHUGGER_ASLEEP
+#undef FACEHUGGER_DEAD
+
 #undef MIN_ACTIVE_TIME
 #undef MAX_ACTIVE_TIME
 
