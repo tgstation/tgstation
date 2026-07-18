@@ -1328,19 +1328,6 @@
 		if(burnstate)
 			. += image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, dir = SOUTH)
 
-	if(is_husked)
-		. += huskify_image(thing_to_husk = limb)
-		if(aux)
-			. += huskify_image(thing_to_husk = aux)
-		draw_color = is_husked == HUSKED_ZOMBIE ? "#006009" : husk_color
-	else
-		update_draw_color()
-
-	if(draw_color)
-		limb.color = "[draw_color]"
-		if(aux_zone)
-			aux.color = "[draw_color]"
-
 	var/atom/location = loc || owner || src
 	if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 		var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, layer = limb.layer, alpha = limb.alpha)
@@ -1365,6 +1352,19 @@
 			if (dropped)
 				aux_em = image(aux_em, dir = SOUTH)
 			. += aux_em
+
+	if(is_husked)
+		. += huskify_image(thing_to_husk = limb)
+		if(aux)
+			. += huskify_image(thing_to_husk = aux)
+		draw_color = is_husked == HUSKED_ZOMBIE ? "#006009" : husk_color
+	else
+		update_draw_color()
+
+	if(draw_color)
+		limb.color = "[draw_color]"
+		if(aux_zone)
+			aux.color = "[draw_color]"
 
 	// No need to handle leg layering if dropped, we only face south anyways
 	if(!dropped && ((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG)))
@@ -1431,23 +1431,24 @@
 	husk_blood.blend_mode = BLEND_INSET_OVERLAY
 	husk_blood.dir = thing_to_husk.dir
 
-	if(LAZYLEN(blood_dna_info))
-		husk_blood.color = get_color_from_blood_list(blood_dna_info)
-
-		var/average_emissive_alpha = 0
-		for(var/dna, blood_type in blood_dna_info)
-			average_emissive_alpha += astype(blood_type, /datum/blood_type)?.get_emissive_alpha(src)
-
-		average_emissive_alpha /= LAZYLEN(blood_dna_info)
-		if(average_emissive_alpha > 0)
-			var/mutable_appearance/husk_blood_em = emissive_appearance(husk_blood.icon, husk_blood.icon_state, loc || owner || src, husk_blood.layer, average_emissive_alpha)
-			husk_blood_em.blend_mode = BLEND_INSET_OVERLAY
-			husk_blood_em.dir = husk_blood.dir
-			. += husk_blood_em
-
-	else
+	if(!LAZYLEN(blood_dna_info))
 		husk_blood.color = BLOOD_COLOR_RED
+		return .
 
+	husk_blood.color = get_color_from_blood_list(blood_dna_info)
+
+	var/average_emissive_alpha = 0
+	for(var/dna, blood_type in blood_dna_info)
+		average_emissive_alpha += astype(blood_type, /datum/blood_type)?.get_emissive_alpha(src)
+
+	if(!average_emissive_alpha)
+		return .
+
+	average_emissive_alpha /= LAZYLEN(blood_dna_info)
+	var/mutable_appearance/husk_blood_em = emissive_appearance(husk_blood.icon, husk_blood.icon_state, loc || owner || src, husk_blood.layer, average_emissive_alpha)
+	husk_blood_em.blend_mode = BLEND_INSET_OVERLAY
+	husk_blood_em.dir = husk_blood.dir
+	. += husk_blood_em
 	return .
 
 /**
