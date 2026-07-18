@@ -304,13 +304,13 @@ def main() -> int:
 
         # either write or check depending on flag
         if check_mode:
-            existing = compiled_path.read_text(encoding='utf-8') if compiled_path.exists() else ''
+            existing = compiled_path.read_text(encoding='utf-8', newline='') if compiled_path.exists() else ''
             if existing != compiled_text:
                 print(f'OUT OF DATE: {compiled_path.relative_to(repo_root)}', file=sys.stderr)
                 dirty += 1
         else:
             compiled_path.parent.mkdir(parents=True, exist_ok=True)
-            compiled_path.write_text(compiled_text, encoding='utf-8')
+            compiled_path.write_text(compiled_text, encoding='utf-8', newline='')
 
     # Remove stale compiled files that no longer correspond to a source tree —
     stale = [p for p in generated_dir.rglob('*.compiled.json') if p not in generated_paths]
