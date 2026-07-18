@@ -198,5 +198,3 @@ DEFINE_BITFIELD(surgery_state, list(
 
 /// For scaling the effectiveness of certain effects to the total bodypart count
 #define GET_BODYPART_COEFFICIENT(X) round(X.len / BODYPARTS_DEFAULT_MAXIMUM , 0.1)
-/// Check if it's full body. These are mostly here so we can change just one place when we ever add more limbs (?)
-#define IS_FULL_BODY(X) (X.len == BODYPARTS_DEFAULT_MAXIMUM)
