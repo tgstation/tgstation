@@ -36,7 +36,7 @@
 	var/datum/cell_tracker/cell_tracker
 	///Should we destroy the datum when the sound is done?
 	var/delete_on_end = FALSE
-	///Whether the master sound loops natively via sound.repeat, rather than being re-sent on a timer.
+	///Do we repeat the sound using sound.repeat?
 	var/repeating = FALSE
 
 /datum/sound_token/New(atom/_source, _sound, _range = 10, _volume = 50, _falloff_exponent = SOUND_FALLOFF_EXPONENT, _falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, _allowed_listeners, _sound_duration_override, _delete_on_end, _repeating)
