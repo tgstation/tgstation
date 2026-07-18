@@ -113,6 +113,7 @@
 	)
 	category = CAT_WEAPON_AMMO
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+	unit_test_spawn_extras = list(/obj/item/stack/sheet/iron = 5) //the sheet type is abstract
 
 /datum/crafting_recipe/arrow
 	name = "Arrow"

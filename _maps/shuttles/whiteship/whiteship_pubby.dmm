@@ -113,12 +113,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
-"eI" = (
-/obj/machinery/holopad/secure,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/plastitanium/pod/light,
-/area/shuttle/abandoned)
 "eU" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -126,12 +120,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/shuttle/abandoned)
-"fr" = (
-/obj/structure/frame/computer,
-/obj/item/shard,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned)
 "gN" = (
 /obj/effect/turf_decal/trimline/purple/filled/end,
@@ -233,14 +221,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/abandoned)
-"kZ" = (
-/obj/structure/closet/crate/radiation,
-/obj/item/lazarus_injector,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/broken/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/plastitanium/pod/light,
-/area/shuttle/abandoned)
 "lO" = (
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/crate/science,
@@ -256,25 +236,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/diagonal,
-/area/shuttle/abandoned)
-"lS" = (
-/obj/structure/table,
-/obj/machinery/button/door/directional/north{
-	id = "whiteship_bridge";
-	name = "Bridge Blast Door Control";
-	pixel_y = 28
-	},
-/obj/machinery/recharger,
-/turf/open/floor/mineral/plastitanium/pod/light,
-/area/shuttle/abandoned)
-"lV" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	y_offset = 2;
-	x_offset = -8
-	},
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned)
 "mh" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
@@ -326,10 +287,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/shuttle/abandoned)
-"oI" = (
-/obj/structure/bookcase/manuals/research_and_development,
-/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/abandoned)
 "oT" = (
 /obj/effect/turf_decal/trimline/purple/filled/end{
@@ -460,6 +417,36 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/purple,
 /area/shuttle/abandoned)
+"sb" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/item/stack/tile/mineral/plastitanium/light{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/item/stack/tile/mineral/plastitanium/pod/light{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/abandoned)
 "sl" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "whiteship_bridge"
@@ -553,6 +540,15 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
+"vD" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	y_offset = 2;
+	x_offset = -8
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium/pod/dark,
+/area/shuttle/abandoned)
 "vJ" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/decal/cleanable/dirt,
@@ -631,6 +627,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
+"Bw" = (
+/obj/structure/table,
+/obj/machinery/button/door/directional/north{
+	id = "whiteship_bridge";
+	name = "Bridge Blast Door Control";
+	pixel_y = 28
+	},
+/obj/machinery/recharger,
+/turf/open/floor/mineral/plastitanium/pod/light,
+/area/shuttle/abandoned)
 "Bz" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -660,13 +666,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
-"CL" = (
-/obj/effect/turf_decal/trimline/purple/filled/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/purple/filled/corner,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/door_assembly/door_assembly_com,
+"CH" = (
+/obj/machinery/holopad/secure,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/abandoned)
@@ -799,6 +801,16 @@
 /obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
+"Ia" = (
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/door_assembly/door_assembly_com,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium/pod/light,
+/area/shuttle/abandoned)
 "Il" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -879,11 +891,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/abandoned)
-"Lf" = (
-/obj/machinery/computer/shuttle/white_ship/bridge,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/plastitanium/pod/dark,
-/area/shuttle/abandoned)
 "Lg" = (
 /obj/structure/sign/warning/vacuum/external/directional/east,
 /obj/machinery/suit_storage_unit/standard_unit,
@@ -898,19 +905,21 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/abandoned)
-"MS" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
+"Nj" = (
+/obj/structure/table,
+/obj/item/camera{
+	pixel_x = 9;
+	pixel_y = 6
 	},
-/obj/item/stack/tile/mineral/plastitanium/light{
-	pixel_x = 6;
-	pixel_y = -4
+/obj/item/paper_bin{
+	pixel_x = -4
 	},
-/obj/structure/chair/office{
-	dir = 8
+/obj/item/pen{
+	pixel_x = -4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/obj/machinery/light/small/empty/directional/west,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/abandoned)
 "Np" = (
 /obj/effect/turf_decal/siding/purple{
@@ -931,6 +940,14 @@
 	},
 /obj/effect/decal/cleanable/plasma,
 /turf/open/floor/iron/white/diagonal,
+/area/shuttle/abandoned)
+"Ns" = (
+/obj/structure/closet/crate/radiation,
+/obj/item/lazarus_injector,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/broken/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/abandoned)
 "Ny" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -998,6 +1015,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/rack_parts,
 /turf/open/floor/iron/white/diagonal,
+/area/shuttle/abandoned)
+"PT" = (
+/obj/structure/bookcase/manuals/research_and_development,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/abandoned)
 "Ra" = (
 /obj/effect/turf_decal/trimline/purple/filled/end{
@@ -1133,6 +1154,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
+"VQ" = (
+/obj/machinery/computer/shuttle/white_ship/bridge,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium/pod/dark,
+/area/shuttle/abandoned)
 "Xd" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -1181,6 +1207,12 @@
 /obj/item/mop,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
+"Yg" = (
+/obj/structure/frame/computer,
+/obj/item/shard,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium/pod/dark,
+/area/shuttle/abandoned)
 "YP" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/siding/purple{
@@ -1200,22 +1232,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/diagonal,
-/area/shuttle/abandoned)
-"ZP" = (
-/obj/structure/table,
-/obj/item/camera{
-	pixel_x = 9;
-	pixel_y = 6
-	},
-/obj/item/paper_bin{
-	pixel_x = -4
-	},
-/obj/item/pen{
-	pixel_x = -4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/empty/directional/west,
-/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/abandoned)
 "ZT" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -1330,7 +1346,7 @@ Sc
 zY
 jT
 jT
-ZP
+Nj
 jT
 rl
 yu
@@ -1349,8 +1365,8 @@ UX
 (7,1,1) = {"
 jT
 Sc
-oI
-MS
+PT
+sb
 jT
 Rm
 ah
@@ -1368,7 +1384,7 @@ UX
 "}
 (8,1,1) = {"
 sl
-fr
+Yg
 rV
 NI
 jT
@@ -1388,10 +1404,10 @@ Sc
 "}
 (9,1,1) = {"
 Fw
-Lf
+VQ
 Cy
 al
-CL
+Ia
 FS
 sy
 Sc
@@ -1408,7 +1424,7 @@ Sc
 "}
 (10,1,1) = {"
 Fw
-lV
+vD
 Np
 nQ
 jT
@@ -1429,8 +1445,8 @@ Sc
 (11,1,1) = {"
 jT
 Sc
-lS
-eI
+Bw
+CH
 jT
 ef
 NW
@@ -1450,7 +1466,7 @@ UX
 zY
 jT
 jT
-kZ
+Ns
 jT
 Ny
 RO

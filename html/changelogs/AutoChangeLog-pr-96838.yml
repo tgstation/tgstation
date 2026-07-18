@@ -1,0 +1,6 @@
+author: "YesterdaysPromise"
+delete-after: True
+changes:
+  - refactor: "Podfloors (floors normaly seen in Survival Pods of miners) are now considered a subtype of plastitanium tiles, and thus craftable."
+  - rscadd: "To match with plastitanium, pofloors recieved 2 red variants."
+  - rscadd: "Plastitanium can now make a new wall-filling item which you can reskin in hand to make regular plastitanium walls, pod walls, as well as added unmarked pod walls ('dark shuttle') and red unmarked pod walls ('dark red shuttle')."

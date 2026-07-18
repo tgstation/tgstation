@@ -85,13 +85,15 @@
 	icon_state = inhand_icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "dualsaber[saber_color][HAS_TRAIT(src, TRAIT_WIELDED)]" : "dualsaber0"
 	return ..()
 
-/obj/item/dualsaber/suicide_act(mob/living/carbon/user)
+/obj/item/dualsaber/suicide_act(mob/living/user)
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		user.visible_message(span_suicide("[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!"))
 
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
-		var/obj/item/organ/brain/B = user.get_organ_slot(ORGAN_SLOT_BRAIN)
-		B.organ_flags &= ~ORGAN_VITAL //this cant possibly be a good idea
+		var/obj/item/organ/brain/mybrain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
+		if (mybrain)
+			mybrain.organ_flags &= ~ORGAN_VITAL //this cant possibly be a good idea
+
 		var/randdir
 		for(var/i in 1 to 24)//like a headless chicken!
 			if(user.is_holding(src))
@@ -190,10 +192,8 @@
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return ""
 	var/in_mouth = ""
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(C.wear_mask)
-			in_mouth = ", barely missing [user.p_their()] nose"
+	if(iscarbon(user) && user.get_item_by_slot(ITEM_SLOT_MASK))
+		in_mouth = ", barely missing [user.p_their()] nose"
 	. = span_rose("[user] swings [user.p_their()] [name][in_mouth]. [user.p_They()] light[user.p_s()] [A.loc == user ? "[user.p_their()] [A.name]" : A] in the process.")
 	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
 	add_fingerprint(user)
@@ -212,14 +212,13 @@
 /obj/item/dualsaber/purple
 	possible_colors = list("purple")
 
-/obj/item/dualsaber/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!hacked)
-			hacked = TRUE
-			to_chat(user, span_warning("2XRNBW_ENGAGE"))
-			saber_color = "rainbow"
-			update_appearance()
-		else
-			to_chat(user, span_warning("It's starting to look like a triple rainbow - no, nevermind."))
-	else
-		return ..()
+/obj/item/dualsaber/multitool_act(mob/living/user, obj/item/tool)
+	if(hacked)
+		to_chat(user, span_warning("It's starting to look like a triple rainbow - no, nevermind."))
+		return ITEM_INTERACT_BLOCKING
+	hacked = TRUE
+	to_chat(user, span_warning("2XRNBW_ENGAGE"))
+	saber_color = "rainbow"
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+

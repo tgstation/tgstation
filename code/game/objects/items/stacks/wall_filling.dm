@@ -1,10 +1,10 @@
-///Wall-fillings; stuff so that on mineral can make more than one type of wall.
+// Wall-fillings; items you can re-skin in hand and place onto griders to create different wall types.
 
 /obj/item/stack/wall_filling
 	name = "wall filling"
 	singular_name = "wall filler"
 	desc = "An empty wall filling. This should not exist."
-	///wall-fillings will generaly use the inhands of the sheet they are made from.
+	//wall-fillings will generaly use the inhands of the sheet they are made from.
 	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
 	icon = 'icons/obj/stack_objects.dmi'
@@ -17,6 +17,7 @@
 	novariants = TRUE
 	material_flags = MATERIAL_EFFECTS
 	usable_for_construction = TRUE
+	merge_type = /obj/item/stack/wall_filling
 	/// the main thing it exists for, list of fillings to reskin into.
 	var/list/wall_reskin_types
 	/// what it should be broken down back into when using a welder. Provided as a path.
@@ -42,25 +43,28 @@
 			return
 		. += span_notice("Those could work as a [damage_value] throwing weapon.")
 
-/obj/item/stack/wall_filling/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.tool_behaviour == TOOL_WELDER)
-		if(!made_from)
-			to_chat(user, span_warning("You can not reform this!"))
-			stack_trace("A wall filling of type [type] doesn't have its made_from set.")
-			return
-		if(W.use_tool(src, user, 0, volume=40))
-			user.visible_message(span_notice("[user] shaped [src] into [made_from] with [W]."), \
-				span_notice("You shaped [src] into [made_from] with [W]."), \
-				span_hear("You hear welding."))
-			var/holding = user.is_holding(src)
-			use(1)
-			if(holding && QDELETED(src))
-				user.put_in_hands(made_from)
-	else
+/obj/item/stack/wall_filling/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (tool.tool_behaviour != TOOL_WELDER)
 		return ..()
 
+	if(!made_from)
+		to_chat(user, span_warning("You can not reform this!"))
+		stack_trace("A wall filling of type [type] doesn't have its made_from set.")
+		return
+	if(!tool.use_tool(src, user, 0, volume=40))
+		return
+	var/obj/item/new_item = new made_from(user.drop_location(), 2)
+	user.visible_message(span_notice("[user] shaped [src] into [new_item] with [tool]."), \
+		span_notice("You shaped [src] into [new_item] with [tool]."), \
+		span_hear("You hear welding."))
+	var/holding = user.is_holding(src)
+	use(1)
+	if(holding && QDELETED(src))
+		user.put_in_hands(new_item)
+	return ITEM_INTERACT_SUCCESS
 
 GLOBAL_LIST_EMPTY(wall_reskin_lists)
+
 /**
  * Yup, literally copied over from tile reskinning, except we don't need a dir as walls don't rotate, so, that much simpler.
  */
@@ -83,6 +87,11 @@ GLOBAL_LIST_EMPTY(wall_reskin_lists)
 	if(!QDELETED(choice))
 		user.put_in_active_hand(choice)
 	qdel(src)
+
+/obj/item/stack/wall_filling/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
+	. = ..()
+	if(wall_reskin_types)
+		wall_reskin_types = wall_reskin_list(wall_reskin_types)
 
 /obj/item/stack/wall_filling/sandstone
 	name = "sandstone wall filling"

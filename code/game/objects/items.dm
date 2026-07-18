@@ -259,7 +259,7 @@
 
 	// Handle adding item associated actions
 	for(var/path in actions_types)
-		add_item_action(path)
+		INVOKE_ASYNC(src, PROC_REF(add_item_action), path)
 	actions_types = null
 
 	if(force_string)
@@ -1497,7 +1497,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
  * * taker - the living mob trying to accept the offer
  */
 /obj/item/proc/on_offer_taken(mob/living/offerer, mob/living/taker)
-	if(!(HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS) && HAS_TRAIT(taker, TRAIT_CAN_HOLD_ITEMS)))
+	if(!HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS) && !HAS_TRAIT(src, TRAIT_BORG_GIVE) && HAS_TRAIT(taker, TRAIT_CAN_HOLD_ITEMS))
 		return TRUE // both must be able to hold items for this to make sense
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE

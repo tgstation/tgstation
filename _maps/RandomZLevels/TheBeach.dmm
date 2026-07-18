@@ -157,6 +157,18 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/awaymission/beach)
+"bV" = (
+/obj/structure/table/wood,
+/obj/item/food/grown/melonlike/watermelon{
+	pixel_y = 13;
+	pixel_x = 6
+	},
+/obj/item/food/grown/melonlike/watermelon{
+	pixel_y = 8;
+	pixel_x = -4
+	},
+/turf/open/misc/beach/sand,
+/area/awaymission/beach)
 "bY" = (
 /obj/structure/fluff/beach_umbrella/cap,
 /turf/open/misc/beach/sand,
@@ -185,15 +197,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/carpet/cyan,
 /area/awaymission/beach)
-"cv" = (
-/obj/structure/table/wood,
-/obj/item/food/grown/watermelon{
-	pixel_y = 8;
-	pixel_x = 6
-	},
-/obj/item/food/watermelonslice,
-/turf/open/misc/beach/sand,
-/area/awaymission/beach)
 "cw" = (
 /obj/structure/flora/tree/palm{
 	pixel_y = 24
@@ -216,6 +219,15 @@
 /obj/item/toy/beach_ball,
 /turf/open/misc/beach/coast/corner{
 	dir = 4
+	},
+/area/awaymission/beach)
+"cJ" = (
+/obj/effect/turf_decal/sand{
+	density = 1
+	},
+/obj/effect/decal/fakelattice,
+/turf/open/floor/mineral/plastitanium/pod/light{
+	density = 1
 	},
 /area/awaymission/beach)
 "cR" = (
@@ -2298,15 +2310,6 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/awaymission/beach)
-"Dv" = (
-/obj/item/storage/bag/tray,
-/obj/item/food/grown/watermelon{
-	pixel_y = 4;
-	pixel_x = -1
-	},
-/obj/effect/turf_decal/stripes/red/box,
-/turf/open/misc/beach/sand,
-/area/awaymission/beach)
 "Dy" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/item/stack/arcadeticket{
@@ -2567,18 +2570,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/beach)
-"FH" = (
-/obj/structure/table/wood,
-/obj/item/food/grown/watermelon{
-	pixel_y = 13;
-	pixel_x = 6
-	},
-/obj/item/food/grown/watermelon{
-	pixel_y = 8;
-	pixel_x = -4
-	},
-/turf/open/misc/beach/sand,
-/area/awaymission/beach)
 "FK" = (
 /obj/item/toy/seashell{
 	pixel_x = 12;
@@ -2775,6 +2766,15 @@
 /area/awaymission/beach)
 "Il" = (
 /obj/machinery/vending/autodrobe,
+/turf/open/misc/beach/sand,
+/area/awaymission/beach)
+"Is" = (
+/obj/structure/table/wood,
+/obj/item/food/grown/melonlike/watermelon{
+	pixel_y = 8;
+	pixel_x = 6
+	},
+/obj/item/food/watermelonslice,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "It" = (
@@ -3288,6 +3288,15 @@
 	},
 /obj/item/clothing/suit/jacket/leather/biker,
 /turf/open/floor/wood,
+/area/awaymission/beach)
+"OF" = (
+/obj/item/storage/bag/tray,
+/obj/item/food/grown/melonlike/watermelon{
+	pixel_y = 4;
+	pixel_x = -1
+	},
+/obj/effect/turf_decal/stripes/red/box,
+/turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "OG" = (
 /obj/effect/turf_decal/siding/dark_red/corner,
@@ -3836,15 +3845,6 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
-/area/awaymission/beach)
-"Wi" = (
-/obj/effect/turf_decal/sand{
-	density = 1
-	},
-/obj/effect/decal/fakelattice,
-/turf/open/floor/mineral/plastitanium/pod/light{
-	density = 1
-	},
 /area/awaymission/beach)
 "Wk" = (
 /obj/structure/billboard/space_cola,
@@ -20725,7 +20725,7 @@ VY
 VY
 fz
 fu
-Wi
+cJ
 VY
 VY
 VY
@@ -29189,7 +29189,7 @@ xv
 xv
 xv
 VY
-FH
+bV
 VY
 VY
 VY
@@ -29446,8 +29446,8 @@ tJ
 YM
 VY
 VY
-cv
-Dv
+Is
+OF
 VY
 VY
 VY

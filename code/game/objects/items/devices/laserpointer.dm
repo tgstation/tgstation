@@ -237,7 +237,7 @@
 			//Intensity of the laser dot to pass to flash_act
 			var/severity = pick(0, 1, 2)
 			var/always_fail = FALSE
-			if(istype(target_humanoid.glasses, /obj/item/clothing/glasses/eyepatch) && prob(50))
+			if(istype(target_humanoid.get_item_by_slot(ITEM_SLOT_EYES), /obj/item/clothing/glasses/eyepatch) && prob(50))
 				always_fail = TRUE
 
 			//chance to actually hit the eyes depends on internal component

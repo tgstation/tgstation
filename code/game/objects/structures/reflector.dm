@@ -131,34 +131,42 @@
 
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/reflector/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/reflector/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(admin)
-		return
+		return ITEM_INTERACT_BLOCKING
 	//Finishing the frame
-	else if(istype(W, /obj/item/stack/sheet))
-		if(finished)
-			return
-		var/obj/item/stack/sheet/S = W
-		if(istype(S, /obj/item/stack/sheet/glass))
-			if(S.use(5))
-				new /obj/structure/reflector/single(drop_location())
-				qdel(src)
-			else
-				to_chat(user, span_warning("You need five sheets of glass to create a reflector!"))
-				return
-		if(istype(S, /obj/item/stack/sheet/rglass))
-			if(S.use(10))
-				new /obj/structure/reflector/double(drop_location())
-				qdel(src)
-			else
-				to_chat(user, span_warning("You need ten sheets of reinforced glass to create a double reflector!"))
-				return
-		if(istype(S, /obj/item/stack/sheet/mineral/diamond))
-			if(S.use(1))
-				new /obj/structure/reflector/box(drop_location())
-				qdel(src)
-	else
-		return ..()
+	if(!istype(tool, /obj/item/stack/sheet))
+		return NONE
+
+	if(finished)
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/sheet/using_stack = tool
+	if(istype(using_stack, /obj/item/stack/sheet/glass))
+		if(!using_stack.use(5))
+			to_chat(user, span_warning("You need five sheets of glass to create a reflector!"))
+			return ITEM_INTERACT_BLOCKING
+
+		new /obj/structure/reflector/single(drop_location())
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(using_stack, /obj/item/stack/sheet/rglass))
+		if(!using_stack.use(10))
+			to_chat(user, span_warning("You need ten sheets of reinforced glass to create a double reflector!"))
+			return ITEM_INTERACT_BLOCKING
+
+		new /obj/structure/reflector/double(drop_location())
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(using_stack, /obj/item/stack/sheet/mineral/diamond))
+		if(!using_stack.use(1))
+			return ITEM_INTERACT_BLOCKING
+
+		new /obj/structure/reflector/box(drop_location())
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reflector/proc/rotate(mob/user)
 	if (!can_rotate || admin)

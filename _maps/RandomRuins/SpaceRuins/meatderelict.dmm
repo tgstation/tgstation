@@ -1868,7 +1868,7 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/flora/bush/fullgrass/style_random,
-/obj/item/food/grown/carrot{
+/obj/item/food/grown/carrotlike/carrot{
 	preserved_food = 1
 	},
 /turf/open/floor/grass,

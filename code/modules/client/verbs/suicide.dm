@@ -5,13 +5,26 @@ GAME_VERB_HIDDEN(/mob/living, suicide, "suicide")
 	handle_suicide()
 
 /// Actually handles the bare basics of the suicide process. Message type is the message we want to dispatch in the world regarding the suicide, using the defines in this file.
-/// Override this ENTIRELY if you want to add any special behavior to your suicide handling, if you fuck up the order of operations then shit will break.
+/// The order of operations here is important, if you want to make specific behaviour for a kind of mob killing itself you likely want to override perform_basic_suicide()
 /mob/living/proc/handle_suicide()
-	SHOULD_CALL_PARENT(FALSE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!suicide_alert())
 		return
 
 	set_suicide(TRUE)
+
+	var/obj/item/held_item = get_active_held_item()
+	var/damage_type = SEND_SIGNAL(src, COMSIG_LIVING_SUICIDE_ACT) || held_item?.suicide_act(src)
+
+	if(damage_type)
+		if(apply_suicide_damage(held_item, damage_type))
+			final_checkout(held_item, apply_damage = FALSE)
+		return
+
+	perform_basic_suicide()
+
+/// Kill yourself without any items
+/mob/living/proc/perform_basic_suicide()
 	send_applicable_messages()
 	final_checkout()
 
@@ -68,7 +81,7 @@ GAME_VERB_HIDDEN(/mob/living, suicide, "suicide")
 	return FALSE
 
 /// Inserts in logging and death + mind dissociation when we're fully done with ending the life of our mob, as well as adjust the health. We will disallow re-entering the body when this is called.
-/// The suicide_tool variable is currently only used for humans in order to allow suicide log to properly put stuff in investigate log.
+/// The suicide_tool variable is used in order to allow suicide log to properly put stuff in investigate log.
 /// Set apply_damage to FALSE in order to not do damage (in case it's handled elsewhere in the verb or another proc that the suicide tree calls). Will dissociate client from mind and ghost the player regardless.
 /mob/living/proc/final_checkout(obj/item/suicide_tool, apply_damage = TRUE)
 	if(apply_damage) // enough to really drive home the point that they are DEAD.
@@ -100,8 +113,31 @@ GAME_VERB_HIDDEN(/mob/living, suicide, "suicide")
 /// The actual proc that will apply the damage to the suiciding mob. damage_type is the actual type of damage we want to deal, if that matters.
 /// Return TRUE if we actually apply any real damage, FALSE otherwise.
 /mob/living/proc/apply_suicide_damage(obj/item/suicide_tool, damage_type = NONE)
-	adjust_oxy_loss(max(maxHealth * 2 - get_tox_loss() - get_fire_loss() - get_brute_loss() - get_oxy_loss(), 0))
-	return TRUE
+	if (damage_type == NONE)
+		adjust_oxy_loss(max(maxHealth * 2 - get_tox_loss() - get_fire_loss() - get_brute_loss() - get_oxy_loss(), 0))
+		return TRUE
+
+	if(damage_type & SHAME)
+		adjust_stamina_loss(max_stamina)
+		if (!has_status_effect(/datum/status_effect/incapacitating/stamcrit))
+			Paralyze(10 SECONDS, ignore_canstun = TRUE) // No will to go on, for 10 seconds
+		set_suicide(FALSE)
+		add_mood_event("shameful_suicide", /datum/mood_event/shameful_suicide)
+		return FALSE
+
+	if(damage_type & MANUAL_SUICIDE_NONLETHAL)
+		set_suicide(FALSE)
+		return FALSE
+
+	if(damage_type & MANUAL_SUICIDE) // Assume that the suicide tool will handle the death.
+		suicide_log(suicide_tool)
+		return FALSE
+
+	if(damage_type & (BRUTELOSS | FIRELOSS | OXYLOSS | TOXLOSS))
+		handle_suicide_damage_spread(damage_type)
+		return TRUE
+
+	return FALSE
 
 /// If we want to apply multiple types of damage to a carbon mob based on the way they suicide, this is the proc that handles that.
 /// Currently only compatible with Brute, Burn, Toxin, and Suffocation Damage. damage_type is the bitflag that carries the information.

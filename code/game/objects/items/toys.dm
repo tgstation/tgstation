@@ -444,7 +444,11 @@
 	icon_state = "singularity_s1"
 	item_flags = NO_PIXEL_RANDOM_DROP
 
-/obj/item/toy/spinningtoy/suicide_act(mob/living/carbon/human/user)
+/obj/item/toy/spinningtoy/suicide_act(mob/living/user)
+	if (!iscarbon(user))
+		user.visible_message(span_suicide("[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.spin(8 SECONDS, 1)
+		return BRUTELOSS
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 	if(!myhead)
 		user.visible_message(span_suicide("[user] tries consuming [src]... but [user.p_they()] [user.p_have()] no mouth!")) // and i must scream
@@ -816,6 +820,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "slices")
 	attack_verb_simple = list("attack", "slash", "slice")
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 	var/list/alt_continuous = list("stabs", "pierces", "impales")
 	var/list/alt_simple = list("stab", "pierce", "impale")
 

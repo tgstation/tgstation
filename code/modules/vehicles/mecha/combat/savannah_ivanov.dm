@@ -37,8 +37,8 @@
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 1,
 	)
-	//no tax on flying, since the power cost is in the leap itself.
-	phasing_energy_drain = 0
+	/// Are we currently in the middle of a skyfall jump?
+	var/flying = FALSE
 
 /datum/armor/mecha_savannah_ivanov
 	melee = 45
@@ -71,6 +71,22 @@
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/skyfall, VEHICLE_CONTROL_DRIVE)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/ivanov_strike, VEHICLE_CONTROL_EQUIPMENT)
 
+// Pass through obstacles freely if we're flying
+/obj/vehicle/sealed/mecha/savannah_ivanov/CanPassThrough(atom/blocker, movement_dir, blocker_opinion)
+	if(!flying || throwing)
+		return ..()
+	var/turf/destination_turf = get_step(loc, movement_dir)
+	if(!check_teleport_valid(src, destination_turf) || SSmapping.level_trait(destination_turf.z, ZTRAIT_NOPHASE))
+		return FALSE
+	return TRUE
+
+/obj/vehicle/sealed/mecha/savannah_ivanov/can_interact_with(atom/target, mob/user, list/modifiers)
+	. = ..()
+	if (!. || !flying)
+		return
+	balloon_alert(user, "not while airborne!")
+	return FALSE
+
 ///Savannah Skyfall
 /datum/action/vehicle/sealed/mecha/skyfall
 	name = "Savannah Skyfall"
@@ -86,17 +102,18 @@
 		return
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
-	if(chassis.phasing)
+	var/obj/vehicle/sealed/mecha/savannah_ivanov/savannah = chassis
+	if(savannah.flying)
 		to_chat(owner, span_warning("You're already airborne!"))
 		return
-	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_SKYFALL))
-		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_SKYFALL)
+	if(TIMER_COOLDOWN_RUNNING(savannah, COOLDOWN_MECHA_SKYFALL))
+		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(savannah, COOLDOWN_MECHA_SKYFALL)
 		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before attempting to Skyfall."))
 		return
 	if(skyfall_charge_level)
 		abort_skyfall()
 		return
-	chassis.balloon_alert(owner, "charging skyfall...")
+	savannah.balloon_alert(owner, "charging skyfall...")
 	INVOKE_ASYNC(src, PROC_REF(skyfall_charge_loop))
 
 /**
@@ -146,7 +163,8 @@
 	new /obj/effect/skyfall_landingzone(launch_turf, chassis)
 	chassis.resistance_flags |= INDESTRUCTIBLE //not while jumping at least
 	chassis.mecha_flags |= QUIET_STEPS|QUIET_TURNS|CANNOT_INTERACT
-	chassis.phasing = "flying"
+	var/obj/vehicle/sealed/mecha/savannah_ivanov/savannah = chassis
+	savannah.flying = TRUE
 	chassis.movedelay = 1
 	chassis.set_density(FALSE)
 	chassis.layer = ABOVE_ALL_MOB_LAYER
@@ -177,7 +195,8 @@
 	playsound(chassis, 'sound/effects/explosion/explosion1.ogg', 50, 1)
 	chassis.resistance_flags &= ~INDESTRUCTIBLE
 	chassis.mecha_flags &= ~(QUIET_STEPS|QUIET_TURNS|CANNOT_INTERACT)
-	chassis.phasing = initial(chassis.phasing)
+	var/obj/vehicle/sealed/mecha/savannah_ivanov/savannah = chassis
+	savannah.flying = FALSE
 	chassis.movedelay = initial(chassis.movedelay)
 	chassis.set_density(TRUE)
 	chassis.layer = initial(chassis.layer)

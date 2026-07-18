@@ -32,7 +32,7 @@
 	var/atom/movable/currently_hooked
 
 	/// Fishing line visual for the hooked item
-	var/datum/beam/fishing_line/fishing_line
+	var/datum/beam/held/fishing_line
 
 	/// Are we currently casting
 	var/casting = FALSE
@@ -58,8 +58,6 @@
 	///Prevents spamming the line casting, without affecting the player's click cooldown.
 	COOLDOWN_DECLARE(casting_cd)
 
-	///The chance of catching fish made of the same material of the fishing rod (if MATERIAL_EFFECTS is enabled)
-	var/material_fish_chance = 10
 	///The multiplier of how much experience is gained when fishing with this rod.
 	var/experience_multiplier = 1
 	///The multiplier of the completion gain during the minigame
@@ -162,12 +160,7 @@
 	list_clear_nulls(block)
 	. += boxed_message(block.Join("\n"))
 
-	if(get_percent && (material_flags & MATERIAL_EFFECTS) && length(custom_materials))
-		. += boxed_message(span_info("Right now, fish caught by this fishing rod have a [get_material_fish_chance(user)]% of being made of its same materials."))
-
 	block = list()
-	if(HAS_TRAIT(src, TRAIT_ROD_ATTRACT_SHINY_LOVERS))
-		block += span_info("This fishing rod will attract shiny-loving fish.")
 	if(HAS_TRAIT(src, TRAIT_ROD_IGNORE_ENVIRONMENT))
 		block += span_info("Environment and light shouldn't be an issue with this rod.")
 	if(HAS_TRAIT_NOT_FROM(src, TRAIT_ROD_REMOVE_FISHING_DUD, INNATE_TRAIT)) // Duds are innately removed by baits, we all know that.
@@ -220,12 +213,6 @@
 /obj/item/fishing_rod/proc/on_reward_caught(atom/movable/reward, mob/user)
 	if(isnull(reward))
 		return
-	var/isfish = isfish(reward)
-	if((material_flags & MATERIAL_EFFECTS) && isfish && length(custom_materials) && HAS_TRAIT(reward, TRAIT_FISH_JUST_SPAWNED))
-		if(prob(get_material_fish_chance(user)))
-			var/obj/item/fish/fish = reward
-			var/datum/material/material = get_master_material()
-			fish.set_custom_materials(list(material.type = fish.weight))
 	// catching things that aren't fish or alive mobs doesn't consume baits.
 	if(isnull(bait) || HAS_TRAIT(bait, TRAIT_BAIT_UNCONSUMABLE))
 		return
@@ -234,7 +221,7 @@
 		if(caught_mob.stat == DEAD)
 			return
 	else
-		if(!isfish)
+		if(!isfish(reward))
 			return
 		var/obj/item/fish/fish = reward
 		if(HAS_TRAIT(bait, TRAIT_POISONOUS_BAIT) && !HAS_TRAIT(fish, TRAIT_FISH_TOXIN_IMMUNE))
@@ -248,19 +235,6 @@
 
 	qdel(bait)
 	update_icon()
-
-///Returns the probability that a fish caught by this (custom material) rod will be of the same material.
-/obj/item/fishing_rod/proc/get_material_fish_chance(mob/user)
-	var/material_chance = material_fish_chance
-	if(bait)
-		if(HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT))
-			material_chance += 16
-		else if(HAS_TRAIT(bait, TRAIT_GOOD_QUALITY_BAIT))
-			material_chance += 8
-		else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
-			material_chance += 4
-	material_chance += user.mind?.get_skill_level(/datum/skill/fishing) * 1.5
-	return material_chance
 
 /obj/item/fishing_rod/proc/should_bane_fish_infusions(mob/living/target)
 	return force > 0 && HAS_TRAIT(target, TRAIT_WATER_ADAPTATION)
@@ -329,7 +303,7 @@
 	fishing_line.lefthand = IS_LEFT_INDEX(firer.get_held_index_of_item(src))
 	RegisterSignal(fishing_line, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(check_los))
 	RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(clear_line))
-	INVOKE_ASYNC(fishing_line, TYPE_PROC_REF(/datum/beam/, Start))
+	INVOKE_ASYNC(fishing_line, TYPE_PROC_REF(/datum/beam, Start))
 	if(QDELETED(fishing_line))
 		return null
 	firer.update_held_items()
@@ -789,7 +763,6 @@
 	deceleration_mult = 1.2
 	bounciness_mult = 0.3
 	gravity_mult = 1.2
-	material_fish_chance = 33 //if somehow you metalgen it.
 	bait_height_mult = 1.4
 
 /obj/item/fishing_rod/tech
@@ -919,64 +892,3 @@
 		QDEL_NULL(owner.fishing_line)
 	owner = null
 	return ..()
-
-/datum/beam/fishing_line
-	// Is the fishing rod held in left side hand
-	var/lefthand = FALSE
-
-	// Make these inline with final sprites
-	var/righthand_s_px = 13
-	var/righthand_s_py = 16
-
-	var/righthand_e_px = 18
-	var/righthand_e_py = 16
-
-	var/righthand_w_px = -20
-	var/righthand_w_py = 18
-
-	var/righthand_n_px = -14
-	var/righthand_n_py = 16
-
-	var/lefthand_s_px = -13
-	var/lefthand_s_py = 15
-
-	var/lefthand_e_px = 24
-	var/lefthand_e_py = 18
-
-	var/lefthand_w_px = -17
-	var/lefthand_w_py = 16
-
-	var/lefthand_n_px = 13
-	var/lefthand_n_py = 15
-
-/datum/beam/fishing_line/Start()
-	update_offsets(origin.dir)
-	. = ..()
-	RegisterSignal(origin, COMSIG_ATOM_DIR_CHANGE, PROC_REF(handle_dir_change))
-
-/datum/beam/fishing_line/Destroy()
-	UnregisterSignal(origin, COMSIG_ATOM_DIR_CHANGE)
-	. = ..()
-
-/datum/beam/fishing_line/proc/handle_dir_change(atom/movable/source, olddir, newdir)
-	SIGNAL_HANDLER
-	update_offsets(newdir)
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/beam, redrawing))
-
-/datum/beam/fishing_line/proc/update_offsets(user_dir)
-	switch(user_dir)
-		if(SOUTH)
-			override_origin_pixel_x = lefthand ? lefthand_s_px : righthand_s_px
-			override_origin_pixel_y = lefthand ? lefthand_s_py : righthand_s_py
-		if(EAST)
-			override_origin_pixel_x = lefthand ? lefthand_e_px : righthand_e_px
-			override_origin_pixel_y = lefthand ? lefthand_e_py : righthand_e_py
-		if(WEST)
-			override_origin_pixel_x = lefthand ? lefthand_w_px : righthand_w_px
-			override_origin_pixel_y = lefthand ? lefthand_w_py : righthand_w_py
-		if(NORTH)
-			override_origin_pixel_x = lefthand ? lefthand_n_px : righthand_n_px
-			override_origin_pixel_y = lefthand ? lefthand_n_py : righthand_n_py
-
-	override_origin_pixel_x += origin.pixel_x
-	override_origin_pixel_y += origin.pixel_y

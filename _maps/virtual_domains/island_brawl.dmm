@@ -70,15 +70,6 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/virtual_domain)
-"aZ" = (
-/obj/structure/table/wood,
-/obj/item/food/grown/watermelon{
-	pixel_y = 8;
-	pixel_x = 6
-	},
-/obj/item/food/watermelonslice,
-/turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
 "ba" = (
 /obj/effect/landmark/bitrunning/curiosity_spawn,
 /turf/open/floor/iron/dark/textured_large,
@@ -92,6 +83,18 @@
 	},
 /obj/structure/table/glass,
 /turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"bg" = (
+/obj/structure/table/wood,
+/obj/item/food/grown/melonlike/watermelon{
+	pixel_y = 13;
+	pixel_x = 6
+	},
+/obj/item/food/grown/melonlike/watermelon{
+	pixel_y = 8;
+	pixel_x = -4
+	},
+/turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "bp" = (
 /obj/effect/turf_decal/siding/wood{
@@ -517,9 +520,6 @@
 	},
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
-"fI" = (
-/turf/open/floor/mineral/plastitanium/pod,
-/area/virtual_domain/protected_space/fullbright)
 "fJ" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -582,15 +582,6 @@
 "gw" = (
 /turf/open/floor/carpet/cyan,
 /area/virtual_domain)
-"gA" = (
-/obj/effect/turf_decal/sand{
-	density = 1
-	},
-/obj/effect/decal/fakelattice,
-/turf/open/floor/mineral/plastitanium/pod/light{
-	density = 1
-	},
-/area/virtual_domain/fullbright)
 "gB" = (
 /obj/effect/landmark/bitrunning/curiosity_spawn,
 /turf/open/floor/plastic,
@@ -782,15 +773,6 @@
 /obj/structure/chair/plastic{
 	dir = 8
 	},
-/turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
-"iY" = (
-/obj/item/storage/bag/tray,
-/obj/item/food/grown/watermelon{
-	pixel_y = 4;
-	pixel_x = -1
-	},
-/obj/effect/turf_decal/stripes/red/box,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "jb" = (
@@ -1122,18 +1104,6 @@
 	},
 /turf/open/water/beach,
 /area/virtual_domain)
-"oq" = (
-/obj/structure/table/wood,
-/obj/item/food/grown/watermelon{
-	pixel_y = 13;
-	pixel_x = 6
-	},
-/obj/item/food/grown/watermelon{
-	pixel_y = 8;
-	pixel_x = -4
-	},
-/turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
 "os" = (
 /obj/structure/flora/tree/palm/style_2{
 	pixel_y = 12;
@@ -1552,6 +1522,10 @@
 	dir = 4
 	},
 /area/virtual_domain/fullbright)
+"ts" = (
+/obj/effect/landmark/bitrunning/permanent_exit,
+/turf/open/floor/mineral/plastitanium/pod/dark,
+/area/virtual_domain/protected_space/fullbright)
 "tw" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -1809,6 +1783,9 @@
 /obj/item/clothing/head/soft/green,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
+"xb" = (
+/turf/open/floor/mineral/plastitanium/pod/light,
+/area/virtual_domain/protected_space/fullbright)
 "xe" = (
 /obj/effect/turf_decal/sand,
 /obj/machinery/door/airlock/wood{
@@ -2341,9 +2318,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/virtual_domain)
-"DK" = (
-/turf/open/floor/mineral/plastitanium/pod/light,
-/area/virtual_domain/protected_space/fullbright)
 "DL" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical{
@@ -2410,6 +2384,15 @@
 	pixel_y = 19;
 	pixel_x = 7
 	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"El" = (
+/obj/item/storage/bag/tray,
+/obj/item/food/grown/melonlike/watermelon{
+	pixel_y = 4;
+	pixel_x = -1
+	},
+/obj/effect/turf_decal/stripes/red/box,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "Er" = (
@@ -2580,10 +2563,6 @@
 	},
 /turf/open/floor/plating,
 /area/virtual_domain)
-"GD" = (
-/obj/effect/landmark/bitrunning/permanent_exit,
-/turf/open/floor/mineral/plastitanium/pod/dark,
-/area/virtual_domain/protected_space/fullbright)
 "GI" = (
 /turf/open/floor/iron/dark/textured_large,
 /area/virtual_domain)
@@ -3925,6 +3904,15 @@
 	},
 /turf/open/floor/plastic,
 /area/virtual_domain)
+"Ve" = (
+/obj/structure/table/wood,
+/obj/item/food/grown/melonlike/watermelon{
+	pixel_y = 8;
+	pixel_x = 6
+	},
+/obj/item/food/watermelonslice,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
 "Vs" = (
 /obj/structure/table/wood,
 /obj/item/pai_card{
@@ -4004,6 +3992,9 @@
 /obj/structure/marker_beacon/teal,
 /turf/open/water/beach,
 /area/virtual_domain/fullbright)
+"Xb" = (
+/turf/open/floor/mineral/plastitanium/pod,
+/area/virtual_domain/protected_space/fullbright)
 "Xe" = (
 /obj/structure/table/bronze,
 /obj/structure/sign/poster/random/directional/east,
@@ -4176,6 +4167,15 @@
 	pixel_y = 16
 	},
 /turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Zm" = (
+/obj/effect/turf_decal/sand{
+	density = 1
+	},
+/obj/effect/decal/fakelattice,
+/turf/open/floor/mineral/plastitanium/pod/light{
+	density = 1
+	},
 /area/virtual_domain/fullbright)
 "Zn" = (
 /obj/item/reagent_containers/cup/soda_cans/dr_gibb{
@@ -8759,7 +8759,7 @@ ka
 ka
 QY
 fY
-gA
+Zm
 ka
 ka
 ka
@@ -9652,8 +9652,8 @@ JN
 JN
 ka
 tD
-DK
-fI
+xb
+Xb
 jP
 hu
 lP
@@ -9734,8 +9734,8 @@ ka
 JN
 JN
 tD
-fI
-GD
+Xb
+ts
 ew
 hu
 sO
@@ -9817,7 +9817,7 @@ ka
 ka
 tD
 jP
-fI
+Xb
 SP
 hu
 lP
@@ -11448,7 +11448,7 @@ eK
 eK
 eK
 ka
-oq
+bg
 ka
 ka
 ka
@@ -11530,8 +11530,8 @@ MT
 PH
 ka
 ka
-aZ
-iY
+Ve
+El
 ka
 ka
 ka
