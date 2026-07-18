@@ -131,8 +131,8 @@
 
 /datum/element/weapon_description/proc/wound_bonus_readable(value)
 	switch(value)
-		if(-INFINITY to -50)
-			return "ABSYMAL DOGSHIT"
+		if(CANT_WOUND to -50)
+			return "INCAPABLE"
 		if(-49 to -25)
 			return "TERRIBLE"
 		if(-24 to -5)

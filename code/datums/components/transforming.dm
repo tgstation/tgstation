@@ -365,8 +365,3 @@
 	sharpness_on = SHARP_EDGED
 	if (!active)
 		return COMPONENT_BLOCK_SHARPEN_SHARPNESS
-
-/datum/component/transforming/proc/label_readout(obj/item/source, list/readout)
-	SIGNAL_HANDLER
-
-	readout += "It's a \"transforming\" weapon that functions diffrently when activated."
