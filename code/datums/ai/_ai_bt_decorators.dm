@@ -134,7 +134,7 @@
  * Return TRUE if the decorator's condition would pass, FALSE otherwise.
  */
 /datum/bt_node/decorator/proc/evaluate_for_observer(datum/ai_controller/controller)
-	return !!check_condition(controller) != !!invert
+	return !!check_condition(controller) != invert
 
 /**
  * Called by the controller's observer handler when a watched blackboard key changes.
