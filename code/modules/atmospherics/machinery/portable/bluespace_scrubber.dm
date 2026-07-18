@@ -6,29 +6,37 @@
 
 	var/obj/machinery/portable_atmospherics/gas_receiver/target = null
 
+/obj/machinery/portable_atmospherics/scrubber/bluespace/Destroy()
+	set_teleport_target(null)
+	return ..()
+
 ///Links scrubber with a bluespace gas receiver with multitool
 /obj/machinery/portable_atmospherics/scrubber/bluespace/multitool_act(mob/living/user, obj/item/multitool/M)
 	if(!istype(M.buffer, /obj/machinery/portable_atmospherics/gas_receiver))
 		to_chat(user, span_warning("Invalid buffer."))
 		return ITEM_INTERACT_BLOCKING
 
-	if(target)
-		lose_teleport_target()
-
 	set_teleport_target(M.buffer)
 
 	to_chat(user, span_green("You successfully link [src] to the [M.buffer]."))
 	return ITEM_INTERACT_SUCCESS
 
-///Lose our previous target and make our previous target lose us.
-/obj/machinery/portable_atmospherics/scrubber/bluespace/proc/lose_teleport_target()
-	target.senders.Remove(src)
-	target = null
-
-///Set a receiving gas object
-/obj/machinery/portable_atmospherics/scrubber/bluespace/proc/set_teleport_target(new_target)
+///Set a receiving gas object, cleaning up any previous link first.
+/obj/machinery/portable_atmospherics/scrubber/bluespace/proc/set_teleport_target(obj/machinery/portable_atmospherics/gas_receiver/new_target)
+	if(target)
+		//Clear the old link (and its qdel signal) before we point somewhere new
+		UnregisterSignal(target, COMSIG_QDELETING)
+		target.unregister_sender(src)
 	target = new_target
-	target.senders.Add(src)
+	if(target)
+		//If our target is ever deleted, drop our reference to it
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(clear_teleport_target))
+		target.register_sender(src)
+
+///Signal handler for our target being deleted, clears our reference to it.
+/obj/machinery/portable_atmospherics/scrubber/bluespace/proc/clear_teleport_target(datum/source)
+	SIGNAL_HANDLER
+	set_teleport_target(null)
 
 ///Transfer our scrubbed gas into the linked gas receiver's air
 /obj/machinery/portable_atmospherics/scrubber/bluespace/proc/transfer_gas(datum/gas_mixture/receiver_air)
@@ -77,6 +85,10 @@
 	///We only grab one machine per process, so store which one is next
 	var/next_index = 1
 
+/obj/machinery/portable_atmospherics/gas_receiver/Destroy()
+	lose_senders()
+	return ..()
+
 /obj/machinery/portable_atmospherics/gas_receiver/on_deconstruction(disassembled)
 	var/turf/local_turf = get_turf(src)
 	local_turf.assume_air(air_contents)
@@ -123,25 +135,30 @@
 			next_index = 1
 
 		var/obj/machinery/portable_atmospherics/scrubber/bluespace/S = senders[next_index]
-		if(QDELETED(S))
-			senders.Remove(S)
-			return
-
 		S.transfer_gas(air_contents)
 
 		next_index++
 
 		use_energy(active_power_usage * seconds_per_tick)
 
+///Track a scrubber that has linked to us, listening for its deletion so we can drop it.
+/obj/machinery/portable_atmospherics/gas_receiver/proc/register_sender(obj/machinery/portable_atmospherics/scrubber/bluespace/sender)
+	if(sender in senders)
+		return
+	senders += sender
+	RegisterSignal(sender, COMSIG_QDELETING, PROC_REF(unregister_sender))
+
+///Stop tracking a scrubber, also fired as a signal handler when a sender is deleted.
+/obj/machinery/portable_atmospherics/gas_receiver/proc/unregister_sender(datum/source)
+	SIGNAL_HANDLER
+	senders -= source
+	UnregisterSignal(source, COMSIG_QDELETING)
+
 ///Notify all scrubbers to forget us
 /obj/machinery/portable_atmospherics/gas_receiver/proc/lose_senders()
-	for(var/A in senders)
-		var/obj/machinery/portable_atmospherics/scrubber/bluespace/S = A
-		if(S == null)
-			continue
-		S.lose_teleport_target()
-
-	senders = list()
+	//Copy the list since each scrubber removes itself from senders as we go
+	for(var/obj/machinery/portable_atmospherics/scrubber/bluespace/S as anything in senders.Copy())
+		S.set_teleport_target(null)
 
 /// wirecutter makes it lose all its senders
 /obj/machinery/portable_atmospherics/gas_receiver/wirecutter_act(mob/living/user, obj/item/I)
