@@ -59,17 +59,9 @@
 /obj/structure/window/reinforced/plasma/spawner{dir = 4} : /obj/structure/window/reinforced/plasma/spawner/directional/east{@OLD;dir=@SKIP}
 /obj/structure/window/reinforced/plasma/spawner{dir = 8} : /obj/structure/window/reinforced/plasma/spawner/directional/west{@OLD;dir=@SKIP}
 
-# Survival Pod (Plastitanium Glass)
+# Survival Pod
 
 /obj/structure/window/reinforced/survival_pod/spawner{dir = 1} : /obj/structure/window/reinforced/survival_pod/spawner/directional/north{@OLD;dir=@SKIP}
 /obj/structure/window/reinforced/survival_pod/spawner{dir = @UNSET} : /obj/structure/window/reinforced/survival_pod/spawner/directional/south{@OLD;dir=@SKIP}
 /obj/structure/window/reinforced/survival_pod/spawner{dir = 4} : /obj/structure/window/reinforced/survival_pod/spawner/directional/east{@OLD;dir=@SKIP}
 /obj/structure/window/reinforced/survival_pod/spawner{dir = 8} : /obj/structure/window/reinforced/survival_pod/spawner/directional/west{@OLD;dir=@SKIP}
-
-# Titanium Glass
-
-/obj/structure/window/reinforced/titanium/spawner{dir = 1} : /obj/structure/window/reinforced/titanium/spawner/directional/north{@OLD;dir=@SKIP}
-/obj/structure/window/reinforced/titanium/spawner{dir = @UNSET} : /obj/structure/window/reinforced/titanium/spawner/directional/south{@OLD;dir=@SKIP}
-/obj/structure/window/reinforced/titanium/spawner{dir = 4} : /obj/structure/window/reinforced/titanium/spawner/directional/east{@OLD;dir=@SKIP}
-/obj/structure/window/reinforced/titanium/spawner{dir = 8} : /obj/structure/window/reinforced/titanium/spawner/directional/west{@OLD;dir=@SKIP}
-
