@@ -91,8 +91,8 @@
 			readout += "It has [span_warning("[weapon_tag_convert(source.armour_penetration)]")] armor-piercing capability and [span_warning("[weapon_tag_convert(source.block_chance)]")] blocking capability."
 		if(source.wound_bonus || source.exposed_wound_bonus)
 			readout += "It is [span_warning(wound_bonus_readable(source.wound_bonus))] at wounding armor but [span_warning(wound_bonus_readable(source.exposed_wound_bonus))] at wounding flesh."
-		if(source.demolition_mod != 1)
-			readout += "It has a [span_tooltip("demolition modifiers affect the damamge dealt to machines and other objects", "demolition modifier")] of [span_warning("[source.demolition_mod * 100]%")]."
+		if(demo_mod_readable(source.demolition_mod))
+			readout += "It is [span_warning(demo_mod_readable(source.demolition_mod))] at destorying machinery."
 	// Custom manual notes
 	if(source.offensive_notes)
 		readout += source.offensive_notes
@@ -131,7 +131,7 @@
 
 /datum/element/weapon_description/proc/wound_bonus_readable(value)
 	switch(value)
-		if(CANT_WOUND to -50)
+		if(-INFINITY to -50)
 			return "INCAPABLE"
 		if(-49 to -25)
 			return "TERRIBLE"
@@ -147,3 +147,14 @@
 			return "INSANE"
 		else
 			return "WEIRD"
+
+/datum/element/weapon_description/proc/demo_mod_readable(value)
+	switch(value)
+		if(0 to 0.5)
+			return "very ineffective"
+		if(0.5 to 0.75)
+			return "ineffective"
+		if(1.25 to 1.5)
+			return "effective"
+		if(1.5 to INFINITY)
+			return "very effective"
