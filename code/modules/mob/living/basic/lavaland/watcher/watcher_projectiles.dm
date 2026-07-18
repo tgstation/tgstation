@@ -41,4 +41,3 @@
 	if(!HAS_TRAIT(target, TRAIT_RESISTCOLD))
 		return
 	target.apply_status_effect(/datum/status_effect/freon/watcher)
-

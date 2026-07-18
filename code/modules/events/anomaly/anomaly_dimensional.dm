@@ -36,4 +36,3 @@
 
 /datum/event_admin_setup/listed_options/anomaly_dimensional/apply_to_event(datum/round_event/anomaly/anomaly_dimensional/event)
 	event.anomaly_theme = chosen
-

@@ -21,7 +21,7 @@
 	var/spawn_distance_exclude
 	COOLDOWN_DECLARE(spawn_delay)
 
-/datum/component/spawner/Initialize(spawn_types = list(), weighted_list = FALSE, spawn_time = 30 SECONDS, max_spawned = 5, max_spawn_per_attempt = 1 , faction = list(FACTION_MINING), spawn_text = null, datum/callback/spawn_callback = null, spawn_distance = 1, spawn_distance_exclude = 0, initial_spawn_delay = 0 SECONDS)
+/datum/component/spawner/Initialize(spawn_types = list(), spawn_time = 30 SECONDS, max_spawned = 5, max_spawn_per_attempt = 1 , faction = list(FACTION_MINING), spawn_text = null, datum/callback/spawn_callback = null, spawn_distance = 1, spawn_distance_exclude = 0, initial_spawn_delay = 0 SECONDS)
 	if (!islist(spawn_types))
 		CRASH("invalid spawn_types to spawn specified for spawner component!")
 	src.spawn_time = spawn_time
@@ -63,8 +63,7 @@
 		return
 	var/atom/spawner = parent
 	COOLDOWN_START(src, spawn_delay, spawn_time)
-	var/chosen_mob_type
-	chosen_mob_type = pick(spawn_types)
+	var/chosen_mob_type = pick(spawn_types)
 	var/adjusted_spawn_count = 1
 	var/max_spawn_this_attempt = min(max_spawn_per_attempt, max_spawned - spawned_total)
 	if (max_spawn_this_attempt > 1)

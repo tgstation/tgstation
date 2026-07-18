@@ -293,7 +293,7 @@
 			return
 		if(W.use_tool(src, user, 0, volume=40))
 			var/floor_type = text2path("/obj/item/stack/tile/mineral/[floorType]")
-			var/obj/item/stack/tile/mineral/new_item = new floor_type(user.drop_location)
+			var/obj/item/stack/tile/mineral/new_item = new floor_type(user.drop_location())
 			user.visible_message(span_notice("[user] split [src] into [new_item] and glass tiles with [W]."), \
 				span_notice("You shaped [src] into [new_item] with [W]."), \
 				span_hear("You hear welding."))

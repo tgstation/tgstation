@@ -17,7 +17,6 @@
 	var/climbable = TRUE
 	///item released when deconstructed
 	var/item_deconstruct = /obj/item/stack/rods
-	///green railing type to be made by wrapping grass around this.
 
 /datum/armor/structure_railing
 	melee = 35
@@ -193,9 +192,7 @@
 	layer = (direction & NORTH) ? MOB_LAYER : initial(layer)
 
 /obj/structure/railing/corner/end/wooden_fence
-	icon = 'icons/obj/structures.dmi'
 	icon_state = "wooden_railing_corner"
 
 /obj/structure/railing/corner/end/flip/wooden_fence
-	icon = 'icons/obj/structures.dmi'
 	icon_state = "wooden_railing_corner_flipped"
