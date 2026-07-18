@@ -205,7 +205,7 @@
 	merge_type = /obj/item/stack/tile/mineral/telecrystal/tiled
 
 /obj/item/stack/tile/mineral/telecrystal/s
-	icon_state = "telecrystal_tiled_s"
+	icon_state = "telecrystal_s"
 	turf_type = /turf/open/floor/mineral/telecrystal/s
 	merge_type = /obj/item/stack/tile/mineral/telecrystal/s
 
@@ -374,7 +374,7 @@
 	name = "bluespace tile"
 	singular_name = "bluespace floor tile"
 	desc = "A glassed tile made out of bluespace crystals. Save to walk on even barefoot."
-	icon_state = "bluespace"
+	icon_state = "tile_bluespace_c"
 	inhand_icon_state = "tile-bluespace"
 	turf_type = /turf/open/floor/mineral/glassed/bluespace
 	floorType = "bluespace"

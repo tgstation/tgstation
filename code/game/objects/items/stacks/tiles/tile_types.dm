@@ -535,7 +535,7 @@
 /obj/item/stack/tile/carpet/human
 	name = "human skin carpet"
 	desc = "Carpet made from flayed human skin. Fresh and moist."
-	icon_state = "tile_carpet_human"
+	icon_state = "tile_carpet_skin"
 	inhand_icon_state = "tile-carpet-skin"
 	turf_type = /turf/open/floor/carpet/human
 	merge_type = /obj/item/stack/tile/carpet/human
