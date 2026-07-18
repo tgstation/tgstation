@@ -500,7 +500,7 @@
 	name = "moth fur carpet"
 	desc = "Moth fur stretched out into a carpet for you to walk on."
 	icon_state = "tile-carpet-moth"
-	inhand_icon_state = "tile-carpet-bananium"
+	inhand_icon_state = "tile-bananium"
 	turf_type = /turf/open/floor/carpet/moth
 	merge_type = /obj/item/stack/tile/carpet/moth
 	tile_reskin_types = null
