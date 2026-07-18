@@ -434,6 +434,8 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 
 	tgui_say.initialize()
 
+	initialize_escape_menu()
+
 	if(alert_mob_dupe_login && !holder)
 		// Notify admins if the connecting player's CID is configured to be ignored by stickybans
 		if (SSstickyban && (computer_id in SSstickyban.ignored_cids))
