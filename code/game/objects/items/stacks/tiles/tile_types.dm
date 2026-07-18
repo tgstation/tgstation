@@ -500,7 +500,7 @@
 	name = "moth fur carpet"
 	desc = "Moth fur stretched out into a carpet for you to walk on."
 	icon_state = "tile-carpet-moth"
-	inhand_icon_state = "tile-carpet-moth"
+	inhand_icon_state = "tile-carpet-bananium"
 	turf_type = /turf/open/floor/carpet/moth
 	merge_type = /obj/item/stack/tile/carpet/moth
 	tile_reskin_types = null
@@ -527,7 +527,7 @@
 	name = "lizard scales carpet"
 	desc = "Carpet made with lizard scales. Lizards were most likely harmed making this."
 	icon_state = "tile-carpet-lizard"
-	inhand_icon_state = "tile-carpet-uranium"
+	inhand_icon_state = "tile-uranium"
 	turf_type = /turf/open/floor/carpet/lizard
 	merge_type = /obj/item/stack/tile/carpet/lizard
 	tile_reskin_types = null
