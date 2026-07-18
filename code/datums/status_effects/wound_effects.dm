@@ -258,10 +258,8 @@
 
 /datum/status_effect/wound/blunt/robotic/moderate
 	id = "loose"
-
 /datum/status_effect/wound/blunt/robotic/severe
 	id = "unfastening"
-
 /datum/status_effect/wound/blunt/robotic/critical
 	id = "collapse"
 

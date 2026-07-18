@@ -8,7 +8,7 @@
 	examine_desc = "has caved in, with internal components visible through gaps in the metal"
 	severity = WOUND_SEVERITY_CRITICAL
 	treat_text = "Use a rapid construction device."
-	treat_text_short = "Heat via welder and then "
+	treat_text_short = "Heat via welder, mold with gloves, apply screwdriver, then apply welder"
 	disabling = TRUE
 
 	simple_treat_text = "If on the <b>chest</b>, <b>walk</b>, <b>grasp it</b>, <b>splint</b>, <b>rest</b> or <b>buckle yourself</b> to something to reduce movement effects. \
