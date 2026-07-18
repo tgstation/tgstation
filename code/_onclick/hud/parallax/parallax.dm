@@ -188,9 +188,9 @@
 	screen_loc = "CENTER-7,CENTER-7"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	/// The submap we are displaying on
-	var/submap = ""
+	var/submap = null
 	/// The submap string to draw with, if any
-	var/submap_text = ""
+	var/submap_text = null
 	/// Layers we are currently displaying
 	var/list/atom/movable/screen/parallax_layer/parallax_layers = list()
 	/// Pallet of layers we CAN display if we choose to, depending on our client's prefs
