@@ -190,6 +190,12 @@
 	icon_state = "pill17"
 	list_reagents = list(/datum/reagent/medicine/spaceacillin = 1.5) //1 minute since 0.05 every tick.
 
+/obj/item/reagent_containers/applicator/pill/sepsisillin
+	name = "sepsisillin pill"
+	desc = "Not to be confused with spaceacillin. Increases vulnerability to viruses, bacteria, and parasites."
+	icon_state = "pill11"
+	list_reagents = list(/datum/reagent/inverse/spaceacillin = 10)
+
 /obj/item/reagent_containers/applicator/pill/stimulant
 	name = "stimulant pill"
 	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"

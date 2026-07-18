@@ -1,5 +1,0 @@
-author: "Nitrix119"
-delete-after: True
-changes:
-  - bugfix: "Renaming input/output ports on a circuit module no longer crashes the UI."
-  - admin: "Renaming an argument on the Proc Call circuit component no longer crashes the UI."

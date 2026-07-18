@@ -60,21 +60,17 @@
 
 /// Opportunistically hops in and out of vents, if it can find one. We aren't interested in attacking due to how weak we are, we gotta be quick and hidey.
 /datum/ai_controller/basic_controller/spiderling
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/spider/spiderlings/spiderling.bt.json"
 	blackboard = list(
-		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/larger, // Run away from mobs bigger than we are
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/larger, // Run away from mobs bigger than we are
 		BB_VENTCRAWL_COOLDOWN = 20 SECONDS, // enough time to get splatted while we're out in the open.
 		BB_TIME_TO_GIVE_UP_ON_VENT_PATHING = 30 SECONDS,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_HEAR = list("chitters."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/insect/chitter.ogg'),
+			BB_SPEAK_CHANCE = 5,
+		),
 	)
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
-
-	// We understand that vents are nice little hidey holes through epigenetic inheritance, so we'll use them.
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity/pacifist,
-		/datum/ai_planning_subtree/target_retaliate/to_flee,
-		/datum/ai_planning_subtree/flee_target/from_flee_key,
-		/datum/ai_planning_subtree/opportunistic_ventcrawler,
-		/datum/ai_planning_subtree/random_speech/insect,
-	)
