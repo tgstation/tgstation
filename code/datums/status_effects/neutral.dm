@@ -299,7 +299,7 @@
 	return taker.IsReachableBy(owner) && !taker.incapacitated && additional_taker_check(taker)
 
 /**
- * Additional checks added to `CanReach()` and `IS_CRIT_OR_INCAPACITATED()` in `is_taker_elligible()`.
+ * Additional checks added to `CanReach()` and `incapacitated` in `is_taker_elligible()`.
  * Should be what you override instead of `is_taker_elligible()`. By default, checks if the
  * taker can hold items.
  *

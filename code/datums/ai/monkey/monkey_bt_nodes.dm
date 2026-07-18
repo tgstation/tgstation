@@ -198,7 +198,7 @@
 				continue
 			if(possible_enemy.has_faction(list(FACTION_MONKEY, FACTION_JUNGLE)) && !controller.blackboard[BB_MONKEY_TARGET_MONKEYS])
 				continue
-			if(IS_UNCONSCIOUS_CRIT_OR_DEAD(possible_enemy)) // Dont bother, theyre fucked.
+			if(possible_enemy.incapacitated) // Dont bother, theyre fucked.
 				continue
 		valids[possible_enemy] = CEILING(100 / (get_dist(living_pawn, possible_enemy) || 1), 1)
 
