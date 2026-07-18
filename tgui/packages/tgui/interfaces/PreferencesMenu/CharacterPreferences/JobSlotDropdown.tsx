@@ -4,7 +4,6 @@ import { Dropdown, Tooltip } from 'tgui-core/components';
 import type { PreferencesMenuData } from '../types';
 
 const SLOT_ICONS = {
-  '-1': 'fa-random',
   0: 'user',
   1: 'fa-1',
   2: 'fa-2',
@@ -25,32 +24,57 @@ export const JobSlotDropdown = (props: JobSlotDropdownProps) => {
   const { data, act } = useBackend<PreferencesMenuData>();
   const { name } = props;
 
-  const prefJobSlots = data.pref_job_slots ?? {};
-  const profileIndex = data.profile_index ?? {};
+  const currentProfileName = data.character_profiles[data.active_slot - 1];
+  const assignedProfileSlot =
+    data.job_preferences.find((pref) => pref.job === name)?.assigned_profile_slot ??
+    null;
+  const currentSlotNumber = assignedProfileSlot ?? 0;
+  const currentSlotName =
+    currentSlotNumber > 0
+      ? data.character_profiles[currentSlotNumber - 1]
+      : currentProfileName;
 
-  const currentSlotNumber = prefJobSlots[name] ?? 0;
-  const currentSlotName = profileIndex[currentSlotNumber] ?? '';
-
-  const slotOptions = Object.entries(profileIndex).map(([key, slotName]) => ({
-    value: key,
-    displayText: String(slotName) as React.ReactNode,
-  }));
+  const slotOptions = [
+    {
+      value: 0,
+      displayText: currentProfileName
+        ? `Активный персонаж (${currentProfileName})`
+        : 'Активный персонаж',
+    },
+    ...data.character_profiles.flatMap((profile, index) =>
+      profile
+        ? [
+            {
+              value: index + 1,
+              displayText: `${index + 1}. ${profile}`,
+            },
+          ]
+        : [],
+    ),
+  ];
+  const selectedOption = slotOptions.find(
+    (option) => option.value === currentSlotNumber,
+  );
 
   return (
-    <Tooltip content={currentSlotName} position="top-end">
+    <Tooltip
+      content={currentSlotName ?? 'Активный персонаж'}
+      position="top-end"
+    >
       <div>
         <Dropdown
           noChevron
           iconOnly
-          icon={SLOT_ICONS[currentSlotNumber]}
+          icon={SLOT_ICONS[currentSlotNumber] ?? 'user'}
           width="auto"
           menuWidth="auto"
-          selected={currentSlotName}
+          selected={selectedOption?.displayText}
           options={slotOptions}
-          onSelected={(value: number) => {
-            act('set_job_slot', {
+          onSelected={(value: number | string) => {
+            const slot = Number(value);
+            act('set_job_to_profile', {
               job: name,
-              slot: Number(value),
+              profile: slot > 0 ? slot : -1,
             });
           }}
         />

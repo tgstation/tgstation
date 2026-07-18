@@ -414,6 +414,27 @@
 		else
 			render_list += "Содержание алкоголя в [blood_type?.get_blood_name() || "Blood"]: [blood_alcohol_content]%</span><br>"
 
+	// Ethereal Charge
+	if(istype(target.get_organ_slot(ORGAN_SLOT_STOMACH), /obj/item/organ/stomach/ethereal))
+		var/obj/item/organ/stomach/ethereal/battery_stomach = target.get_organ_slot(ORGAN_SLOT_STOMACH)
+		var/charge = battery_stomach.cell.charge
+		var/charge_dangerous = charge > ETHEREAL_CHARGE_FULL || charge < ETHEREAL_CHARGE_LOWPOWER
+		var/charge_format = "[display_power(charge)] / [display_power(ETHEREAL_CHARGE_FULL)]"
+
+		if(charge_dangerous)
+			var/recommendation = "Recommendation: "
+			switch(charge)
+				if(-INFINITY to ETHEREAL_CHARGE_LOWPOWER)
+					recommendation += "charging by LE-fortified food"
+				if(ETHEREAL_CHARGE_FULL to ETHEREAL_CHARGE_OVERLOAD)
+					recommendation += "discharge into nearest undercapacity APC"
+				if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
+					recommendation += "preparation for violent electrocardiac discharge event"
+					recommendation = uppertext(recommendation)
+			charge_format = span_tooltip("[recommendation] followed with toxins treatment.", charge_format)
+
+		render_list += "<span class='[charge_dangerous ? "alert" : "info"] ml-1'>Electrical charge: [charge_format]</span><br>"
+
 	//Diseases
 	var/disease_hr = FALSE
 	for(var/datum/disease/disease as anything in target.diseases)

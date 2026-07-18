@@ -1,3 +1,62 @@
+/obj/item/food/grown/melonlike
+	seed = /obj/item/seeds/watermelon
+	name = "melon?"
+	desc = "You felt like this was a melon, but it definitely isn't. You should tell somebody about this."
+	icon_state = "watermelon"
+	inhand_icon_state = "watermelon"
+	abstract_type = /obj/item/food/grown/melonlike
+	/// chestplate made by hollowing out the melon
+	var/chestplate_type = null
+	/// fire-resistant version of above
+	var/fire_resistant_chestplate_type = null
+	/// headgear received by hollowing out the melon
+	var/helmet_type = null
+	/// fire-resistant version of above
+	var/fire_resistant_helmet_type = null
+	/// pulp received by hollowing out the melon
+	var/pulp_type = null
+	/// slices received by cutting the melon
+	var/slice_type = null
+
+/obj/item/food/grown/melonlike/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 5, 20, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
+
+/obj/item/food/grown/melonlike/make_dryable()
+	return //No drying
+
+/obj/item/food/grown/melonlike/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/kitchen/spoon))
+		return NONE
+
+	var/pulp_count = 1
+	if(seed)
+		pulp_count += round(seed.potency / 25)
+
+	user.balloon_alert(user, "scooped out [pulp_count] pulp(s)")
+	for(var/i in 1 to pulp_count)
+		new pulp_type(user.loc)
+
+	/// The piece of armour melon turns into; either chetsplate or helmet
+	var/obj/item/clothing/received_armor
+	if (prob(max(0, seed.potency - 50) / 50))
+		if(seed.resistance_flags & FIRE_PROOF)
+			received_armor = new fire_resistant_chestplate_type
+		else
+			received_armor = new chestplate_type
+		to_chat(user, span_notice("You hollow \the [src] into a helmet with [tool]."))
+	else
+		if(seed.resistance_flags & FIRE_PROOF)
+			received_armor = new fire_resistant_helmet_type
+		else
+			received_armor = new helmet_type
+		to_chat(user, span_notice("You hollow \the [src] into a chestplate with [tool]."))
+
+	remove_item_from_storage(user)
+	qdel(src)
+	user.put_in_hands(received_armor)
+	return ITEM_INTERACT_SUCCESS
+
+
 // Watermelon
 /obj/item/seeds/watermelon
 	name = "watermelon seed pack"
@@ -5,7 +64,7 @@
 	icon_state = "seed-watermelon"
 	species = "watermelon"
 	plantname = "Watermelon Vines"
-	product = /obj/item/food/grown/watermelon
+	product = /obj/item/food/grown/melonlike/watermelon
 	lifespan = 50
 	endurance = 40
 	instability = 20
@@ -22,7 +81,7 @@
 	qdel(src)
 	return MANUAL_SUICIDE
 
-/obj/item/food/grown/watermelon
+/obj/item/food/grown/melonlike/watermelon
 	seed = /obj/item/seeds/watermelon
 	name = "watermelon"
 	desc = "It's full of watery goodness."
@@ -33,46 +92,15 @@
 	foodtypes = FRUIT
 	wine_power = 40
 
-/obj/item/food/grown/watermelon/juice_typepath()
+	fire_resistant_chestplate_type = /obj/item/clothing/suit/armor/durability/watermelon/fire_resist
+	chestplate_type = /obj/item/clothing/suit/armor/durability/watermelon
+	fire_resistant_helmet_type = /obj/item/clothing/head/helmet/durability/watermelon/fire_resist
+	helmet_type = /obj/item/clothing/head/helmet/durability/watermelon
+	pulp_type = /obj/item/food/watermelonmush
+	slice_type = /obj/item/food/watermelonslice
+
+/obj/item/food/grown/melonlike/watermelon/juice_typepath()
 	return /datum/reagent/consumable/watermelonjuice
-
-/obj/item/food/grown/watermelon/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/watermelonslice, 5, 20, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
-
-/obj/item/food/grown/watermelon/make_dryable()
-	return //No drying
-
-/obj/item/food/grown/watermelon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(I, /obj/item/kitchen/spoon))
-		return ..()
-
-	var/melon_pulp_count = 1
-	if(seed)
-		melon_pulp_count += round(seed.potency / 25)
-
-	user.balloon_alert(user, "scooped out [melon_pulp_count] pulp(s)")
-	for(var/i in 1 to melon_pulp_count)
-		new /obj/item/food/watermelonmush(user.loc)
-
-	/// The piece of armour melon turns into; either chetsplate or helmet
-	var/obj/item/clothing/melon_armour
-	/// Chance for the armour to be a chestplate instead of the helmet
-	var/melon_chestplate_chance = (max(0, seed.potency - 50) / 50)
-	if (prob(melon_chestplate_chance))
-		if(seed.resistance_flags & FIRE_PROOF)
-			melon_armour = new /obj/item/clothing/suit/armor/durability/watermelon/fire_resist
-		else
-			melon_armour = new /obj/item/clothing/suit/armor/durability/watermelon
-		to_chat(user, span_notice("You hollow the melon into a helmet with [I]."))
-	else
-		if(seed.resistance_flags & FIRE_PROOF)
-			melon_armour = new /obj/item/clothing/head/helmet/durability/watermelon/fire_resist
-		else
-			melon_armour = new /obj/item/clothing/head/helmet/durability/watermelon
-		to_chat(user, span_notice("You hollow the melon into a chestplate with [I]."))
-	remove_item_from_storage(user)
-	qdel(src)
-	user.put_in_hands(melon_armour)
 
 // Holymelon
 /obj/item/seeds/watermelon/holy
@@ -81,14 +109,14 @@
 	icon_state = "seed-holymelon"
 	species = "holymelon"
 	plantname = "Holy Melon Vines"
-	product = /obj/item/food/grown/holymelon
+	product = /obj/item/food/grown/melonlike/holymelon
 	genes = list(/datum/plant_gene/trait/glow/yellow, /datum/plant_gene/trait/anti_magic)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/water/holywater = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = PLANT_MODERATELY_RARE
 	graft_gene = /datum/plant_gene/trait/glow/yellow
 
-/obj/item/food/grown/holymelon
+/obj/item/food/grown/melonlike/holymelon
 	seed = /obj/item/seeds/watermelon/holy
 	name = "holymelon"
 	desc = "The water within this melon has been blessed by some deity that's particularly fond of watermelon."
@@ -100,58 +128,26 @@
 	wine_power = 70 //Water to wine, baby.
 	wine_flavor = "divinity"
 
-/obj/item/food/grown/holymelon/juice_typepath()
+	fire_resistant_chestplate_type = /obj/item/clothing/suit/armor/durability/holymelon/fire_resist
+	chestplate_type = /obj/item/clothing/suit/armor/durability/holymelon
+	fire_resistant_helmet_type = /obj/item/clothing/head/helmet/durability/holymelon/fire_resist
+	helmet_type = /obj/item/clothing/head/helmet/durability/holymelon
+	pulp_type = /obj/item/food/holymelonmush
+	slice_type = /obj/item/food/holymelonslice
+
+/obj/item/food/grown/melonlike/holymelon/juice_typepath()
 	return /datum/reagent/water/holywater
 
-/obj/item/food/grown/holymelon/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/holymelonslice, 5, 20, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
-
-/obj/item/food/grown/holymelon/make_dryable()
-	return //No drying
-
-/obj/item/food/grown/holymelon/make_edible()
+/obj/item/food/grown/melonlike/holymelon/make_edible()
 	. = ..()
 	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_holyness)))
-
-
-/obj/item/food/grown/holymelon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(I, /obj/item/kitchen/spoon))
-		return ..()
-
-	var/holymelon_pulp_count = 1
-	if(seed)
-		holymelon_pulp_count += round(seed.potency / 25)
-
-	user.balloon_alert(user, "scooped out [holymelon_pulp_count] pulp(s)")
-	for(var/i in 1 to holymelon_pulp_count)
-		new /obj/item/food/holymelonmush(user.loc)
-
-	/// The piece of armour holymelon turns into; either chetsplate or helmet
-	var/obj/item/clothing/holymelon_armour
-	/// Chance for the armour to be a chestplate instead of the helmet
-	var/holymelon_chestplate_chance = (max(0, seed.potency - 50) / 50)
-	if (prob(holymelon_chestplate_chance))
-		if(seed.resistance_flags & FIRE_PROOF)
-			holymelon_armour = new /obj/item/clothing/suit/armor/durability/holymelon/fire_resist
-		else
-			holymelon_armour = new /obj/item/clothing/suit/armor/durability/holymelon
-		to_chat(user, span_notice("You hollow the holymelon into a helmet with [I]."))
-	else
-		if(seed.resistance_flags & FIRE_PROOF)
-			holymelon_armour = new /obj/item/clothing/head/helmet/durability/holymelon/fire_resist
-		else
-			holymelon_armour = new /obj/item/clothing/head/helmet/durability/holymelon
-		to_chat(user, span_notice("You hollow the holymelon into a chestplate with [I]."))
-	remove_item_from_storage(user)
-	qdel(src)
-	user.put_in_hands(holymelon_armour)
 
 /*
  * Callback to be used with the edible component.
  * Checks whether or not the person eating the holymelon
  * is a holy_role (chaplain), as chaplains love holymelons.
  */
-/obj/item/food/grown/holymelon/proc/check_holyness(mob/mob_eating)
+/obj/item/food/grown/melonlike/holymelon/proc/check_holyness(mob/mob_eating)
 	if(!ishuman(mob_eating))
 		return
 	var/mob/living/carbon/human/holy_person = mob_eating
@@ -168,7 +164,7 @@
 	icon_state = "seed-barrelmelon"
 	species = "barrelmelon"
 	plantname = "Barrel Melon Vines"
-	product = /obj/item/food/grown/barrelmelon
+	product = /obj/item/food/grown/melonlike/barrelmelon
 	genes = list(/datum/plant_gene/trait/brewing)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/ethanol/ale = 0.2, /datum/reagent/consumable/nutriment = 0.1)
@@ -176,7 +172,7 @@
 	graft_gene = /datum/plant_gene/trait/brewing
 
 /// Barrel melon Fruit
-/obj/item/food/grown/barrelmelon
+/obj/item/food/grown/melonlike/barrelmelon
 	seed = /obj/item/seeds/watermelon/barrel
 	name = "barrelmelon"
 	desc = "The nutriments within this melon have been compressed and fermented into rich alcohol."
@@ -184,38 +180,10 @@
 	inhand_icon_state = "barrelmelon"
 	distill_reagent = /datum/reagent/medicine/antihol //You can call it a integer overflow.
 
-/obj/item/food/grown/barrelmelon/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/barrelmelonslice, 5, 20, screentip_verb = "Chop")
+	fire_resistant_chestplate_type = /obj/item/clothing/suit/armor/durability/barrelmelon/fire_resist
+	chestplate_type = /obj/item/clothing/suit/armor/durability/barrelmelon
+	fire_resistant_helmet_type = /obj/item/clothing/head/helmet/durability/barrelmelon/fire_resist
+	helmet_type = /obj/item/clothing/head/helmet/durability/barrelmelon
+	pulp_type = /obj/item/food/barrelmelonmush
+	slice_type = /obj/item/food/barrelmelonslice
 
-/obj/item/food/grown/barrelmelon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(I, /obj/item/kitchen/spoon))
-		return ..()
-
-	var/barrelmelon_pulp_count = 1
-	if(seed)
-		barrelmelon_pulp_count += round(seed.potency / 25)
-
-	user.balloon_alert(user, "scooped out [barrelmelon_pulp_count] pulp(s)")
-	for(var/i in 1 to barrelmelon_pulp_count)
-		new /obj/item/food/barrelmelonmush(user.loc)
-
-	/// The piece of armour barrelmelon turns into; either chetsplate or helmet
-	var/obj/item/clothing/barrelmelon_armour
-	/// Chance for the armour to be a chestplate instead of the helmet
-	var/barrelmelon_chestplate_chance = (max(0, seed.potency - 50) / 50)
-	if (prob(barrelmelon_chestplate_chance))
-		if(seed.resistance_flags & FIRE_PROOF)
-			barrelmelon_armour = new /obj/item/clothing/suit/armor/durability/barrelmelon/fire_resist
-		else
-			barrelmelon_armour = new /obj/item/clothing/suit/armor/durability/barrelmelon
-		to_chat(user, span_notice("You hollow the barrelmelon into a helmet with [I]."))
-	else
-		if(seed.resistance_flags & FIRE_PROOF)
-			barrelmelon_armour = new /obj/item/clothing/head/helmet/durability/barrelmelon/fire_resist
-		else
-			barrelmelon_armour = new /obj/item/clothing/head/helmet/durability/barrelmelon
-		to_chat(user, span_notice("You hollow the barrelmelon into a chestplate with [I]."))
-
-	remove_item_from_storage(user)
-	qdel(src)
-	user.put_in_hands(barrelmelon_armour)

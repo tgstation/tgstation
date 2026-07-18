@@ -130,7 +130,7 @@
  * Arguments:
  * * offered - The player being offered the item (optional, if null the offer is to everyone around)
  */
-/mob/living/proc/give(mob/living/offered)
+/mob/living/proc/give(mob/living/offered, obj/item/item_bypass)
 	if(has_status_effect(/datum/status_effect/offering))
 		to_chat(src, span_warning("Вы уже передаёте что-то!"))
 		return
@@ -139,9 +139,9 @@
 		to_chat(src, span_warning("Вы не можете передать что-то в вашем положении!"))
 		return
 
-	var/obj/item/offered_item = get_active_held_item()
+	var/obj/item/offered_item = item_bypass ? item_bypass : get_active_held_item()
 	// if it's an abstract item, should consider it to be non-existent (unless it's a HAND_ITEM, which means it's an obj/item that is just a representation of our hand)
-	if(!offered_item || ((offered_item.item_flags & ABSTRACT) && !(offered_item.item_flags & HAND_ITEM)))
+	if(!offered_item || ((offered_item.item_flags & ABSTRACT && !HAS_TRAIT(offered_item, TRAIT_BORG_GIVE)) && !HAS_TRAIT(offered_item, TRAIT_OFFERED_WHEN_PULLED) && !(offered_item.item_flags & HAND_ITEM)))
 		to_chat(src, span_warning("Вы не держите ничего, чтобы передать!"))
 		return
 
@@ -190,7 +190,7 @@
  * * offerer - The living mob giving the original item
  * * offered_item - The item being given by the offerer
  */
-/mob/living/proc/take(mob/living/offerer, obj/item/offered_item)
+/mob/living/proc/take(mob/living/offerer, obj/item/offered_item, bypass)
 	clear_alert("[offerer]")
 	if(IS_DEAD_OR_INCAP(src))
 		to_chat(src, span_warning("Вы не можете ничего взять в вашем положении!"))
@@ -198,7 +198,7 @@
 	if(get_dist(src, offerer) > 1)
 		to_chat(src, span_warning("[offerer.declent_ru(NOMINATIVE)] вне досягаемости!"))
 		return
-	if(!offered_item || offerer.get_active_held_item() != offered_item)
+	if(!offered_item || offerer.get_active_held_item() != offered_item && !bypass)
 		to_chat(src, span_warning("[offerer.declent_ru(NOMINATIVE)] у [genderize_ru(offerer.gender, "него", "неё", "него", "них")] больше нет предмета в руке, который [offerer.ru_p_they()] предлагал[genderize_ru(offerer.gender, "", "а", "о", "и")]!"))
 		return
 	if(!get_empty_held_indexes())

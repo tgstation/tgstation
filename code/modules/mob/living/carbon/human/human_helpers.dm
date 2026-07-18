@@ -283,7 +283,8 @@
  */
 /mob/living/carbon/human/proc/update_mob_height()
 	var/old_height = mob_height
-	mob_height = dna?.species?.update_species_heights(src) || base_mob_height
+	var/obj/item/bodypart/chest/chest = get_bodypart(BODY_ZONE_CHEST)
+	mob_height = chest?.update_mob_heights(src) || base_mob_height
 	if(old_height != mob_height)
 		regenerate_icons()
 		readjust_atom_huds()

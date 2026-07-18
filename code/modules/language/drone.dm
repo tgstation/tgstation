@@ -3,7 +3,7 @@
 	desc = "Сильно закодированный поток координации контроля повреждений со специальными флагами для шляп."
 	spans = list(SPAN_ROBOT)
 	key = "d"
-	flags = NO_STUTTER
+	flags = LANGUAGE_NO_STUTTER
 	syllables = list(".", "|")
 	// ...|..||.||||.|.||.|.|.|||.|||
 	space_chance = 0

@@ -13,7 +13,6 @@
 	possible_body_colors = list("white", "gray", "irish")
 
 	// holder
-	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_EARS
 	held_lh = 'modular_bandastation/mobs/icons/inhands/mobs_lefthand.dmi'
 	held_rh = 'modular_bandastation/mobs/icons/inhands/mobs_righthand.dmi'

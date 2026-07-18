@@ -10,7 +10,7 @@
 	between_word_space_chance = 75
 	additional_syllable_low = 0
 	additional_syllable_high = 0
-	flags = TONGUELESS_SPEECH
+	flags = LANGUAGE_TONGUELESS_SPEECH
 	syllables = list(
 		"в", "од", "ной", "нед", "еле", "дн", "ей", "да", "ны", "ет", "мес", "ят",
 		"че", "бу", "пол", "е", "ели", "ный", "се", "год", "я", "дом", "аш", "зав",

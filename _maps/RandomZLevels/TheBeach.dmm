@@ -187,7 +187,7 @@
 /area/awaymission/beach)
 "cv" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/watermelon{
+/obj/item/food/grown/melonlike/watermelon{
 	pixel_y = 8;
 	pixel_x = 6
 	},
@@ -2300,7 +2300,7 @@
 /area/awaymission/beach)
 "Dv" = (
 /obj/item/storage/bag/tray,
-/obj/item/food/grown/watermelon{
+/obj/item/food/grown/melonlike/watermelon{
 	pixel_y = 4;
 	pixel_x = -1
 	},
@@ -2569,11 +2569,11 @@
 /area/awaymission/beach)
 "FH" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/watermelon{
+/obj/item/food/grown/melonlike/watermelon{
 	pixel_y = 13;
 	pixel_x = 6
 	},
-/obj/item/food/grown/watermelon{
+/obj/item/food/grown/melonlike/watermelon{
 	pixel_y = 8;
 	pixel_x = -4
 	},
