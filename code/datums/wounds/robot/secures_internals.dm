@@ -74,9 +74,6 @@
 /datum/wound/blunt/robotic/secures_internals/proc/item_can_secure_internals(obj/item/potential_treater)
 	return (potential_treater.tool_behaviour == TOOL_SCREWDRIVER || potential_treater.tool_behaviour == TOOL_WRENCH || istype(potential_treater, /obj/item/stack/medical/bone_gel))
 
-/// The brute damage done to this limb (doubled on essential limbs) when it is crowbarred open
-#define CROWBAR_OPEN_BRUTE_DAMAGE 15
-
 /**
  * Available during the "secure internals" step of T2 and T3. Requires a crowbar. Low-quality ghetto option.
  *
