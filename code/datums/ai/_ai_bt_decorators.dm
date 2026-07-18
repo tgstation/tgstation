@@ -99,7 +99,7 @@
 	if((no_ticking_condition || is_polled) && child_active)
 		child_ticked = TRUE
 		result = child.tick(controller, seconds_per_tick)
-	else if(!!check_condition(controller) == !!invert)
+	else if(!!check_condition(controller) == invert)
 		result = BT_FAILURE
 	else
 		child_ticked = TRUE
