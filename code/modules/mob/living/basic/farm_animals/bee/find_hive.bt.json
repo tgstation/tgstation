@@ -1,0 +1,43 @@
+{
+	"dm_type": "/datum/bt_node/subtree/find_hive",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+		"invert": false,
+		"key": "BB_TARGET_HOME"
+	},
+	"child": {
+		"type": "decorator",
+		"decorator": "/datum/bt_node/decorator/bb_key_set",
+		"vars": {
+			"key": "BB_CURRENT_HOME",
+			"invert": true
+		},
+		"child": {
+			"type": "sequence",
+			"children": [
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+					"vars": {
+						"target_key": "BB_CURRENT_HOME",
+						"required_dist": 1,
+						"finish_on_arrival": false
+					}
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/inhabit_hive"
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/clear_key",
+					"vars": {
+						"key": "BB_TARGET_HOME"
+					}
+				}
+			]
+		}
+	}
+}

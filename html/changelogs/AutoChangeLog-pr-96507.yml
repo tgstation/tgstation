@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Adds anomalous lure hook, a fishing hook which accepts (almost) any type of anomaly core, causing unique effects depending on the core used."
+  - rscdel: "Material fishing rods no longer innately catch material fish, you need a dimensional anomaly core in an anomalous lure hook to catch material fish now."

@@ -297,8 +297,8 @@
 		if(!distcheck || get_dist(location, chilly) < blast) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air
 			air.temperature = temperature
 
-		if(air.gases[/datum/gas/plasma])
-			var/mole_count = air.gases[/datum/gas/plasma][MOLES]
+		if(air.moles[/datum/gas/plasma])
+			var/mole_count = air.moles[/datum/gas/plasma]
 			air.adjust_gas(/datum/gas/nitrogen, mole_count)
 			air.adjust_gas(/datum/gas/plasma, -mole_count)
 			air.garbage_collect()

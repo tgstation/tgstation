@@ -46,7 +46,6 @@
 	lighting_cutoff_red = 30
 	lighting_cutoff_green = 35
 	lighting_cutoff_blue = 25
-	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD
 	inhand_holder_type = /obj/item/mob_holder/drone
 	/// `TRUE` if we have picked our visual appearance, `FALSE` otherwise (default)
@@ -154,6 +153,8 @@
 	RegisterSignal(listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
 	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, TYPE_PROC_REF(/datum/alarm_listener, prevent_alarm_changes))
 	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, TYPE_PROC_REF(/datum/alarm_listener, allow_alarm_changes))
+
+	AddElement(/datum/element/can_be_held)
 
 /mob/living/basic/drone/med_hud_set_health()
 	set_hud_image_state(DIAG_HUD, "huddiag[RoundDiagBar(health/maxHealth)]")

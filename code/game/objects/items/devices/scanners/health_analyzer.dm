@@ -29,8 +29,8 @@
 	var/mode = SCANNER_VERBOSE
 	/// HEALTH/WOUND
 	var/scanmode = SCANMODE_HEALTH
-	/// Advanced health analyzer
-	var/advanced = FALSE
+	/// Health analyzing power
+	var/scanpower = SCANPOWER_BASIC
 	/// If this analyzer will give a bonus to wound treatments apon woundscan.
 	var/give_wound_treatment_bonus = FALSE
 	var/last_scan_text
@@ -47,7 +47,7 @@
 	if(src.mode != SCANNER_NO_MODE)
 		. += span_notice("Alt-click [src] to toggle the limb damage readout. Ctrl-shift-click to print readout report.")
 
-/obj/item/healthanalyzer/suicide_act(mob/living/carbon/user)
+/obj/item/healthanalyzer/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!"))
 	return BRUTELOSS
 
@@ -90,7 +90,7 @@
 		last_scan_text = floor_text
 		return
 
-	if(ispodperson(M) && !advanced)
+	if(ispodperson(M) && !scanpower <= SCANPOWER_ADVANCED)
 		to_chat(user, span_info("[M]'s biological structure is too complex for the health analyzer."))
 		return
 
@@ -101,7 +101,7 @@
 	var/readability_check = user.can_read(src) && !user.is_blind()
 	switch (scanmode)
 		if (SCANMODE_HEALTH)
-			last_scan_text = healthscan(user, M, mode, advanced, tochat = readability_check)
+			last_scan_text = healthscan(user, M, mode, scanpower, tochat = readability_check)
 			if((M.health / M.maxHealth) > CLEAN_BILL_OF_HEALTH_RATIO)
 				last_healthy_scanned = WEAKREF(M)
 			else
@@ -148,7 +148,7 @@
  * advanced - Whether it will give more advanced details, such as husk source.
  * tochat - Whether to immediately post the result into the chat of the user, otherwise it will return the results.
  */
-/proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, advanced = FALSE, tochat = TRUE)
+/proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, scanpower = SCANPOWER_BASIC, tochat = TRUE)
 	if(user.incapacitated)
 		return
 
@@ -170,14 +170,14 @@
 
 	render_list += "[span_info("Analyzing results for <b>[target]</b> ([round_timestamp()]):")]<br><span class='info ml-1'>Overall status: [mob_status]</span><br>"
 
-	if(!advanced && target.has_reagent(/datum/reagent/inverse/technetium))
-		advanced = TRUE
+	if(!scanpower == SCANPOWER_BASIC && target.has_reagent(/datum/reagent/inverse/technetium))
+		scanpower = SCANPOWER_ADVANCED
 
-	SEND_SIGNAL(target, COMSIG_LIVING_HEALTHSCAN, render_list, advanced, user, mode, tochat)
+	SEND_SIGNAL(target, COMSIG_LIVING_HEALTHSCAN, render_list, scanpower, user, mode, tochat)
 
 	// Husk detection
 	if(HAS_TRAIT(target, TRAIT_HUSK))
-		if(advanced)
+		if(scanpower >= SCANPOWER_ADVANCED)
 			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
 				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Irreparable. Under normal circumstances, revival can only proceed via brain transplant.", tochat)].</span><br>"
 			else if(HAS_TRAIT_FROM(target, TRAIT_HUSK, SKELETON_TRAIT))
@@ -191,7 +191,7 @@
 			render_list += "<span class='alert ml-1'>Subject has been husked.</span><br>"
 
 	if(target.get_stamina_loss())
-		if(advanced)
+		if(scanpower >= SCANPOWER_ADVANCED)
 			render_list += "<span class='alert ml-1'>Fatigue level: [target.get_stamina_loss()]%.</span><br>"
 		else
 			render_list += "<span class='alert ml-1'>Subject appears to be suffering from fatigue.</span><br>"
@@ -212,7 +212,7 @@
 		var/mob/living/carbon/carbontarget = target
 		if(LAZYLEN(carbontarget.quirks))
 			render_list += "<span class='info ml-1'>Subject Major Disabilities: [carbontarget.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY, from_scan = TRUE)].</span><br>"
-			if(advanced)
+			if(scanpower >= SCANPOWER_ADVANCED)
 				render_list += "<span class='info ml-1'>Subject Minor Disabilities: [carbontarget.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY, TRUE)].</span><br>"
 
 	// Body part damage report
@@ -294,7 +294,7 @@
 			<table class='ml-2'>\
 			<tr>\
 			<td style='width:8em;'><font color='#ff0000'><b>Organ:</b></font></td>\
-			[advanced ? "<td style='width:4em;'><font color='#ff0000'><b>Dmg</b></font></td>" : ""]\
+			[scanpower >= SCANPOWER_ADVANCED ? "<td style='width:4em;'><font color='#ff0000'><b>Dmg</b></font></td>" : ""]\
 			<td style='width:30em;'><font color='#ff0000'><b>Status</b></font></td>\
 			</tr>"
 
@@ -306,19 +306,19 @@
 				if(missing_organs[sorted_slot])
 					render = TRUE
 					toReport += "<tr><td><font color='#cc3333'>[missing_organs[sorted_slot]]:</font></td>\
-						[advanced ? "<td><font color='#ff3333'>-</font></td>" : ""]\
+						[scanpower >= SCANPOWER_ADVANCED ? "<td><font color='#ff3333'>-</font></td>" : ""]\
 						<td><font color='#cc3333'>Missing</font></td></tr>"
 				continue
 			if(mode != SCANNER_VERBOSE && !organ.show_on_condensed_scans())
 				continue
-			var/status = organ.get_status_text(advanced, tochat)
-			var/appendix = organ.get_status_appendix(advanced, tochat)
+			var/status = organ.get_status_text(scanpower, tochat)
+			var/appendix = organ.get_status_appendix(scanpower, tochat)
 			if(status || appendix)
 				status ||= "<font color='#ffcc33'>OK</font>" // otherwise flawless organs have no status reported by default
 				render = TRUE
 				toReport += "<tr>\
 					<td><font color='#cc3333'>[capitalize(organ.name)]:</font></td>\
-					[advanced ? "<td><font color='#ff3333'>[organ.damage > 0 ? ceil(organ.damage) : "0"]</font></td>" : ""]\
+					[scanpower >= SCANPOWER_ADVANCED ? "<td><font color='#ff3333'>[organ.damage > 0 ? ceil(organ.damage) : "0"]</font></td>" : ""]\
 					<td>[status]</td>\
 					</tr>"
 				if(appendix)
@@ -345,7 +345,7 @@
 		render_list += "<hr>"
 
 		//Genetic stability
-		if(advanced && humantarget.has_dna() && humantarget.dna.stability != initial(humantarget.dna.stability))
+		if(scanpower >= SCANPOWER_ADVANCED && humantarget.has_dna() && humantarget.dna.stability != initial(humantarget.dna.stability))
 			render_list += "<span class='info ml-1'>Genetic Stability: [humantarget.dna.stability]%.</span><br>"
 
 		//body temperature
@@ -389,22 +389,22 @@
 			if (blood_type.restoration_chem == /datum/reagent/iron)
 				recommendation += "[/datum/reagent/medicine/salglu_solution::name]"
 			if (length(recommendation))
-				recommendation += "[blood_type.get_blood_name()] transufion"
+				recommendation += "[blood_type.get_blood_name()] transfusion"
 			else
-				recommendation += "immediate [blood_type.get_blood_name()] transufion"
+				recommendation += "immediate [blood_type.get_blood_name()] transfusion"
 			level_format = conditional_tooltip(level_format, "Recommendation: [english_list(recommendation, and_text = " or ")].", tochat)
 		else
 			level_format = "[blood_percent]%, [cached_blood_volume] cl"
 
 		if (blood_type.get_type())
-			blood_type_format = "type: [blood_type.get_type()]"
+			blood_type_format = "[blood_type.get_type()]"
 			if(tochat && length(blood_type.compatible_types))
 				var/list/compatible_types_readable = list()
 				for(var/datum/blood_type/comp_blood_type as anything in blood_type.compatible_types)
 					compatible_types_readable |= initial(comp_blood_type.name)
 				blood_type_format = span_tooltip("Can receive from types [english_list(compatible_types_readable)].", blood_type_format)
 
-		render_list += "<span class='[cached_blood_volume < BLOOD_VOLUME_SAFE ? "alert" : "info"] ml-1'>[blood_type.get_blood_name()] level: [level_format],</span> <span class='info'>[blood_type_format]</span><br>"
+		render_list += "<span class='[cached_blood_volume < BLOOD_VOLUME_SAFE ? "alert" : "info"] ml-1'>[blood_type.get_blood_name()] level: [level_format]</span> <span class='info'>[blood_type_format]</span><br>"
 
 	var/blood_alcohol_content = target.get_blood_alcohol_content()
 	if(blood_alcohol_content > 0)
@@ -413,6 +413,27 @@
 			render_list += "<span class='alert ml-1'>[blood_type?.get_blood_name() || "Blood"] alcohol content: <b>CRITICAL [blood_alcohol_content]%</b></span><br>"
 		else
 			render_list += "<span class='info ml-1'>[blood_type?.get_blood_name() || "Blood"] alcohol content: [blood_alcohol_content]%</span><br>"
+
+	// Ethereal Charge
+	if(istype(target.get_organ_slot(ORGAN_SLOT_STOMACH), /obj/item/organ/stomach/ethereal))
+		var/obj/item/organ/stomach/ethereal/battery_stomach = target.get_organ_slot(ORGAN_SLOT_STOMACH)
+		var/charge = battery_stomach.cell.charge
+		var/charge_dangerous = charge > ETHEREAL_CHARGE_FULL || charge < ETHEREAL_CHARGE_LOWPOWER
+		var/charge_format = "[display_power(charge)] / [display_power(ETHEREAL_CHARGE_FULL)]"
+
+		if(charge_dangerous)
+			var/recommendation = "Recommendation: "
+			switch(charge)
+				if(-INFINITY to ETHEREAL_CHARGE_LOWPOWER)
+					recommendation += "charging by LE-fortified food"
+				if(ETHEREAL_CHARGE_FULL to ETHEREAL_CHARGE_OVERLOAD)
+					recommendation += "discharge into nearest undercapacity APC"
+				if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
+					recommendation += "preparation for violent electrocardiac discharge event"
+					recommendation = uppertext(recommendation)
+			charge_format = span_tooltip("[recommendation] followed with toxins treatment.", charge_format)
+
+		render_list += "<span class='[charge_dangerous ? "alert" : "info"] ml-1'>Electrical charge: [charge_format]</span><br>"
 
 	//Diseases
 	var/disease_hr = FALSE
@@ -425,17 +446,13 @@
 		var/cure_text
 		if(istype(disease, /datum/disease/advance))
 			var/datum/disease/advance/advanced_disease = disease
-			var/remedies = list()
-			var/remedy_limit = advanced ? 3 : 2
-			for(var/datum/symptom/each_symptom as anything in advanced_disease.symptoms)
-				if(!each_symptom.symptom_cure)
-					continue
-				var/datum/reagent/each_cure = each_symptom.symptom_cure
-				if(!each_symptom.neutered && !(each_cure::name in remedies))
-					remedies += each_cure::name
-				if(length(remedies) >= remedy_limit)
-					break
-			cure_text = english_list(remedies, nothing_text = "Nothing")
+			var/cure_count = 2
+			switch(scanpower)
+				if(SCANPOWER_ADVANCED)
+					cure_count = 3
+				if(SCANPOWER_SUPER)
+					cure_count = INFINITY
+			cure_text = advanced_disease.generate_cure_text(cure_count)
 		else
 			cure_text = disease.cure_text
 		render_list += "<span class='alert ml-1'>\
@@ -603,8 +620,14 @@
 	name = "advanced health analyzer"
 	icon_state = "health_adv"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
-	advanced = TRUE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75)
+	scanpower = SCANPOWER_ADVANCED
+
+/obj/item/healthanalyzer/super
+	name = "super health analyzer"
+	icon_state = "health_super"
+	desc = "A health scanner for debuggers. Functions the same as ghost healthscans."
+	scanpower = SCANPOWER_SUPER
 
 #define AID_EMOTION_NEUTRAL "neutral"
 #define AID_EMOTION_HAPPY "happy"
@@ -792,11 +815,7 @@
 			var/disease_cure = disease.cure_text
 			if(istype(disease, /datum/disease/advance))
 				var/datum/disease/advance/advanced_disease = disease
-				for(var/datum/symptom/each_symptom as anything in advanced_disease.symptoms)
-					if(!each_symptom.neutered && each_symptom.symptom_cure)
-						var/datum/reagent/each_cure = each_symptom.symptom_cure
-						disease_cure = each_cure::name
-						break // We only get one
+				disease_cure = advanced_disease.generate_cure_text(1)
 			render += "<span class='alert ml-1'><b>Warning: [disease.form] detected</b><br>\
 			<div class='ml-2'>Name: [disease.name].<br>Type: [disease.spread_text].<br>Stage: [disease.stage]/[disease.max_stages].<br>Possible Cure: [disease_cure]</div>\
 			</span>"

@@ -13,6 +13,7 @@
 	/// The kind of wallframe that this telescreen drops
 	var/frame_type = /obj/item/wallframe/telescreen
 	projectiles_pass_chance = 100
+	generate_map_preview = FALSE
 
 /obj/machinery/computer/security/telescreen/Initialize(mapload)
 	. = ..()

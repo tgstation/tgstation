@@ -310,3 +310,9 @@
 	var/matrix/to_turn = turn(transform, -tilted_rotation)
 	animate(src, transform = to_turn, 0.2 SECONDS)
 	tilted_rotation = 0
+
+/obj/machinery/vending/onZImpact(turf/impacted_turf, levels, impact_flags)
+	impact_flags |= ZIMPACT_NO_MESSAGE
+	if(fall_and_crush(impacted_turf, squish_damage, paralyze_time = 6 SECONDS, crush_dir = UP, rotation = pick(90, 270)) & SUCCESSFULLY_FELL_OVER)
+		impact_flags |= ZIMPACT_NO_SPIN
+	return ..()

@@ -1414,7 +1414,7 @@
 "yp" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/item/knife/kitchen,
-/obj/item/food/grown/carrot,
+/obj/item/food/grown/carrotlike/carrot,
 /obj/item/food/grown/potato,
 /obj/item/food/meat/slab/human/mutant/zombie,
 /obj/item/food/meat/slab/human/mutant/zombie,

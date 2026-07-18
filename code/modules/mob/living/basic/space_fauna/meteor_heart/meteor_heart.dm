@@ -43,7 +43,7 @@
 		/datum/action/cooldown/mob_cooldown/spine_traps = BB_METEOR_HEART_SPINE_TRAPS,
 	)
 	grant_actions_by_list(innate_actions)
-	ai_controller.set_ai_status(AI_STATUS_OFF)
+	ai_controller.force_ai_off()
 
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(aggro))
@@ -62,7 +62,7 @@
 /mob/living/basic/meteor_heart/proc/aggro()
 	if (ai_controller.ai_status == AI_STATUS_ON)
 		return
-	ai_controller.reset_ai_status()
+	ai_controller.clear_forced_off()
 	if (!ai_controller.ai_status == AI_STATUS_ON)
 		return
 	icon_state = "heart_aggro"
@@ -70,7 +70,7 @@
 
 /// Called when we stop being mad
 /mob/living/basic/meteor_heart/proc/deaggro()
-	ai_controller.set_ai_status(AI_STATUS_OFF)
+	ai_controller.force_ai_off()
 	icon_state = "heart"
 	soundloop.set_mid_length(HEARTBEAT_NORMAL)
 

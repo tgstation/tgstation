@@ -102,7 +102,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize(mapload)
 	. = ..()
 	spawned_beacon_ref = WEAKREF(new /obj/effect/hierophant(loc))
-	AddComponent(/datum/component/boss_music, 'sound/music/boss/hiero_boss.ogg', COMSIG_HOSTILE_FOUND_TARGET) // change to COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_CURRENT_TARGET) in basic conversion
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/hiero_boss.ogg', COMSIG_HOSTILE_FOUND_TARGET) // change to COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_TARGET) in basic conversion
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
 	QDEL_NULL(spawned_beacon_ref)
@@ -442,7 +442,7 @@ Difficulty: Hard
 	blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
 	visible_message(span_hierophant("\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\""))
 	visible_message(span_hierophant_warning("[src] shrinks, releasing a massive burst of energy!"))
-	hierophant_burst(null, get_turf(src), 10)
+	INVOKE_ASYNC(src, PROC_REF(hierophant_burst), null, get_turf(src), 10)
 	set_stat(CONSCIOUS) // deathgasp won't run if dead, stupid
 	..()
 

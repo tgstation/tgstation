@@ -1,0 +1,61 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/frog/trash",
+	"type": "selector",
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity"
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree",
+			"override_id": "SUBPLAN_ID_PET_COMMAND"
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "parallel",
+					"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+					"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+					"repeat_secondary": true,
+					"repeat_secondary_delay": "1 SECONDS",
+					"finish_on_primary": true,
+					"children": [
+						{
+							"type": "selector",
+							"children": [
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/frog_engage_target"
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/random_walk"
+								}
+							]
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/random_speech/frog"
+						}
+					]
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets",
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+					}
+				}
+			]
+		}
+	]
+}

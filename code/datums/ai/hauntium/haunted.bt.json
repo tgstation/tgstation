@@ -1,0 +1,107 @@
+{
+	"dm_type": "/datum/ai_controller/haunted",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/item_being_held",
+			"vars": {
+				"observer_abort": "BT_ABORT_BOTH"
+			},
+			"child": {
+				"type": "selector",
+				"children": [
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_set",
+						"vars": {
+							"key": "BB_LIKES_EQUIPPER",
+							"observer_abort": "BT_ABORT_SELF"
+						},
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/wait",
+							"vars": {
+								"duration": 0
+							}
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/item_escape_grasp"
+					}
+				]
+			}
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"observer_abort": "BT_ABORT_BOTH",
+								"key": "BB_HAUNT_TARGET"
+							},
+							"child": {
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": true,
+								"finish_on_primary": true,
+								"children": [
+									{
+										"type": "subplan",
+										"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+										"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+										"loop_delay": "2 SECONDS",
+										"children": [
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/throw_attack/haunted",
+												"vars": {
+													"target_key": "BB_HAUNT_TARGET",
+													"throw_count_key": "BB_HAUNTED_THROW_ATTEMPT_COUNT",
+													"haunt_list_key": "BB_TO_HAUNT_LIST"
+												}
+											}
+										]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"vars": {
+											"target_key": "BB_HAUNT_TARGET",
+											"required_dist": 3,
+											"finish_on_arrival": false
+										}
+									}
+								]
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/idle_ghost_item"
+						}
+					]
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/pick_haunt_target",
+					"vars": {
+						"target_key": "BB_HAUNT_TARGET",
+						"haunt_list_key": "BB_TO_HAUNT_LIST"
+					}
+				}
+			]
+		}
+	]
+}

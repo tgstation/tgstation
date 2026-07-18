@@ -33,11 +33,9 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/electropack/attack_hand(mob/user, list/modifiers)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(src == C.back)
-			to_chat(user, span_warning("You need help taking this off!"))
-			return
+	if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
+		to_chat(user, span_warning("You need help taking this off!"))
+		return
 	return ..()
 
 /obj/item/electropack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

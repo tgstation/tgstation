@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	pixel_w = -8
 	base_pixel_w = -8
 	status_flags = NONE
-	mob_biotypes = MOB_ORGANIC | MOB_SKELETAL | MOB_MINING
+	mob_biotypes = MOB_ORGANIC | MOB_SKELETAL | MOB_MINING | MOB_SPECIAL
 	basic_mob_flags = DEL_ON_DEATH | IMMUNE_TO_FISTS
 	mob_size = MOB_SIZE_HUGE
 	maxHealth = 800
@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 		return
 
 	var/beat_rate = HEARTBEAT_NORMAL
-	if (ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+	if (ai_controller?.blackboard[BB_CURRENT_TARGET])
 		beat_rate = round(HEARTBEAT_FRANTIC + health / maxHealth * (HEARTBEAT_FAST - HEARTBEAT_FRANTIC), 0.05 SECONDS)
 
 	if (beat_rate != soundloop.mid_length)

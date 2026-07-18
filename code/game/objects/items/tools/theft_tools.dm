@@ -23,11 +23,11 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/nuke_core/attackby(obj/item/nuke_core_container/container, mob/user)
-	if(istype(container))
-		container.load(src, user)
-	else
-		return ..()
+/obj/item/nuke_core/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/nuke_core_container))
+		return NONE
+	astype(tool, /obj/item/nuke_core_container).load(src, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/nuke_core/process()
 	if(cooldown < world.time - 60)
@@ -72,15 +72,17 @@
 		if(ismob(loc))
 			to_chat(loc, span_warning("[src] is sealed, [core]'s radiation is contained."))
 
-/obj/item/nuke_core_container/attackby(obj/item/nuke_core/core, mob/user)
-	if(istype(core))
-		if(!user.temporarilyRemoveItemFromInventory(core))
-			to_chat(user, span_warning("The [core] is stuck to your hand!"))
-			return
-		else
-			load(core, user)
-	else
-		return ..()
+/obj/item/nuke_core_container/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/nuke_core))
+		return NONE
+
+	if(!user.temporarilyRemoveItemFromInventory(tool))
+		to_chat(user, span_warning("The [tool] is stuck to your hand!"))
+		return ITEM_INTERACT_BLOCKING
+
+	load(tool, user)
+	return ITEM_INTERACT_SUCCESS
+
 
 //snowflake screwdriver, works as a key to start nuke theft, traitor only
 /obj/item/screwdriver/nuke
@@ -177,24 +179,27 @@
 /obj/item/nuke_core/supermatter_sliver/can_be_pulled(user, force) // no drag memes
 	return FALSE
 
-/obj/item/nuke_core/supermatter_sliver/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/hemostat/supermatter))
-		var/obj/item/hemostat/supermatter/tongs = W
+/obj/item/nuke_core/supermatter_sliver/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/hemostat/supermatter))
+		var/obj/item/hemostat/supermatter/tongs = tool
 		if (tongs.sliver)
 			to_chat(user, span_warning("\The [tongs] is already holding a supermatter sliver!"))
-			return FALSE
+			return ITEM_INTERACT_BLOCKING
 		forceMove(tongs)
 		tongs.sliver = src
 		tongs.update_appearance()
 		to_chat(user, span_notice("You carefully pick up [src] with [tongs]."))
-	else if(istype(W, /obj/item/scalpel/supermatter) || istype(W, /obj/item/nuke_core_container/supermatter/)) // we don't want it to dust
-		return
-	else
-		to_chat(user, span_notice("As it touches \the [src], both \the [src] and \the [W] burst into dust!"))
-		radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
-		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
-		qdel(W)
-		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/scalpel/supermatter) || istype(tool, /obj/item/nuke_core_container/supermatter/)) // we don't want it to dust
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("As it touches \the [src], both \the [src] and \the [tool] burst into dust!"))
+	radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
+	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+	qdel(tool)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/nuke_core/supermatter_sliver/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!isliving(hit_atom))

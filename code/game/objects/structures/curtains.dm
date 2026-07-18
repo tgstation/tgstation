@@ -42,11 +42,11 @@
 	icon_state = "[icon_type]-[open ? "open" : "closed"]"
 	return ..()
 
-/obj/structure/curtain/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/toy/crayon))
-		color = tgui_color_picker(user, "", "Choose Color", color)
-	else
-		return ..()
+/obj/structure/curtain/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/toy/crayon))
+		return NONE
+	color = tgui_color_picker(user, "", "Choose Color", color)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/curtain/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
