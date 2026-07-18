@@ -43,7 +43,7 @@
 		return
 	set_forced_color(new_ethereal)
 	var/obj/item/organ/heart/ethereal/ethereal_heart = new_ethereal.get_organ_slot(ORGAN_SLOT_HEART)
-	ethereal_heart.ethereal_color = new_ethereal.dna.features[FEATURE_MUTANT_COLOR]
+	ethereal_heart.set_ethereal_color(new_ethereal.dna.features[FEATURE_MUTANT_COLOR])
 	// Trigger a refresh as lazy attached limbs do not cause those
 	var/datum/status_effect/grouped/bodypart_effect/ethereal_glow/glow_status = new_ethereal.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow)
 	if (!isnull(glow_status))

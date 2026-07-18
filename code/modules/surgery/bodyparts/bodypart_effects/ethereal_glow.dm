@@ -76,9 +76,15 @@
 	else
 		healthmod = (100 - ethereal.health) / 100 * 0.25
 
+	var/used_color = ethereal.dna.features[FEATURE_MUTANT_COLOR]
+	// If we don't have a mutant color but do have an ethereal heart (humans with transplanted limbs & organs), use the heart's color
+	if(!HAS_TRAIT(owner, TRAIT_MUTANT_COLORS) && istype(owner.get_organ_slot(ORGAN_SLOT_HEART), /obj/item/organ/heart/ethereal))
+		var/obj/item/organ/heart/ethereal/heart = owner.get_organ_slot(ORGAN_SLOT_HEART)
+		used_color = heart.ethereal_color
+
 	if(!emageffect)
 		var/static/list/skin_color = rgb2num("#eda495")
-		var/list/colors = rgb2num(ethereal.dna.features[FEATURE_MUTANT_COLOR])
+		var/list/colors = rgb2num(used_color)
 		var/list/built_color = list()
 		for(var/i in 1 to 3)
 			built_color += skin_color[i] + ((colors[i] - skin_color[i]) * healthmod)
