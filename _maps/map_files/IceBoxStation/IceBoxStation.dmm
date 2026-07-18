@@ -54441,6 +54441,7 @@
 /area/station/command/bridge)
 "ppQ" = (
 /obj/structure/table,
+/obj/item/reagent_containers/spray/dinitrogen_plasmide,
 /obj/item/clothing/gloves/latex,
 /obj/item/surgical_drapes,
 /obj/item/razor,

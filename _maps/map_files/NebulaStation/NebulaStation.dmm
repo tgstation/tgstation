@@ -155479,6 +155479,7 @@
 	},
 /obj/structure/rack,
 /obj/item/storage/box/bodybags,
+/obj/item/reagent_containers/spray/dinitrogen_plasmide,
 /obj/item/clothing/gloves/latex,
 /obj/item/tank/internals/anesthetic,
 /obj/item/healthanalyzer,
