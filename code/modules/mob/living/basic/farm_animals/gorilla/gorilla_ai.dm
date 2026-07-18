@@ -17,3 +17,6 @@
 		BB_EMOTE_KEY = "ooga",
 		BB_EMOTE_CHANCE = 60,
 	)
+
+/datum/bt_node/subtree/bar_gorilla_combat
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/gorilla/bar_gorilla_combat.bt.json"

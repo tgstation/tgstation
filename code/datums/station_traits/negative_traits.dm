@@ -229,7 +229,7 @@
 
 /datum/station_trait/revenge_of_pun_pun/proc/arm_monke()
 	SIGNAL_HANDLER
-	var/mob/living/carbon/human/species/monkey/punpun/punpun = GLOB.the_one_and_only_punpun
+	var/mob/living/punpun = GLOB.the_one_and_only_punpun
 	if(!punpun)
 		return
 	var/weapon_type = pick_weight(weapon_types)
@@ -246,6 +246,10 @@
 		QDEL_NULL(punpun.ai_controller)
 
 	new /datum/ai_controller/monkey/angry(punpun)
+
+	if(istype(punpun, /mob/living/basic/gorilla/bar)) //bit hacky but we gotta keep em gorrilafied
+		var/mob/living/basic/gorilla/bar/bargorilla = punpun
+		bargorilla.gorrilify_punpun_ai()
 
 	var/area/place = get_area(punpun)
 
