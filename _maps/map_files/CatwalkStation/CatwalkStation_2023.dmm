@@ -1271,14 +1271,14 @@
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "arv" = (
-/obj/effect/turf_decal/tile/dark_blue/anticorner{
-	dir = 4
-	},
 /obj/structure/table,
 /obj/item/reagent_containers/spray/dinitrogen_plasmide,
 /obj/item/healthanalyzer{
 	pixel_x = -7;
 	pixel_y = 13
+	},
+/obj/effect/turf_decal/tile/dark_blue/anticorner{
+	dir = 4
 	},
 /obj/item/clothing/mask/breath/medical{
 	pixel_x = 5;
