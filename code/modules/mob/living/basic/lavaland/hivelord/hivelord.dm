@@ -60,7 +60,7 @@
 /mob/living/basic/mining/hivelord/proc/complete_spawn(turf/spawn_turf)
 	var/mob/living/brood = new death_spawn_type(spawn_turf)
 	SET_FACTION_AND_ALLIES_FROM(brood, src)
-	brood.ai_controller?.set_blackboard_key(ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+	brood.ai_controller?.set_blackboard_key(ai_controller.blackboard[BB_CURRENT_TARGET])
 	brood.dir = get_dir(src, spawn_turf)
 
 /mob/living/basic/mining/hivelord/RangedAttack(atom/atom_target, modifiers)

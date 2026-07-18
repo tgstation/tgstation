@@ -50,7 +50,7 @@
 	var/distance = get_dist(ability_user, attacker)
 	if (distance < min_range || distance > max_range)
 		return
-	if (targeting && !targeting.can_attack(victim, attacker))
+	if (targeting && !targeting.is_valid_target(victim, attacker))
 		return
 	INVOKE_ASYNC(ability, TYPE_PROC_REF(/datum/action/cooldown, InterceptClickOn), ability_user, null, (target_self) ? ability_user : attacker)
 

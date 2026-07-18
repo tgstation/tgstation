@@ -20,20 +20,6 @@
 	jaunt_type = /obj/effect/dummy/phased_mob/spell_jaunt/red
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/ash_shift
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/ash_shift/out
-	/// If we are on fire while wearing ash robes, we can empower our next cast
-	var/empowered_cast = FALSE
-
-/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/Grant(mob/grant_to)
-	. = ..()
-	RegisterSignal(grant_to, COMSIG_FIRE_STACKS_UPDATED, PROC_REF(update_status_on_signal))
-
-/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/Remove(mob/remove_from)
-	. = ..()
-	UnregisterSignal(remove_from, COMSIG_FIRE_STACKS_UPDATED)
-
-/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/do_jaunt(mob/living/cast_on)
-	jaunt_duration = (empowered_cast ? 1.5 SECONDS : initial(jaunt_duration))
-	return ..()
 
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/do_steam_effects()
 	return

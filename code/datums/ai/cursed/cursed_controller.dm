@@ -6,14 +6,13 @@
  * Added by /datum/element/cursed, and as such will try to remove this element and go dormant when it finds a victim to curse
  */
 /datum/ai_controller/cursed
+	behavior_tree_json = "code/datums/ai/cursed/cursed.bt.json"
 	movement_delay = 0.4 SECONDS
 	blackboard = list(
 		BB_CURSE_TARGET,
 		BB_TARGET_SLOT,
 		BB_CURSED_THROW_ATTEMPT_COUNT
 	)
-	planning_subtrees = list(/datum/ai_planning_subtree/cursed)
-	idle_behavior = /datum/idle_behavior/idle_ghost_item
 
 /datum/ai_controller/cursed/TryPossessPawn(atom/new_pawn)
 	if(!isitem(new_pawn))
