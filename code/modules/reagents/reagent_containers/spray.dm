@@ -467,4 +467,4 @@ GAME_VERB_SRC(/obj/item/reagent_containers/spray, empty, usr, "Empty Spray Bottl
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "sprayer_med_yellow"
 	list_reagents = list(/datum/reagent/dinitrogen_plasmide = 100)
-	var/reagents_temperature = 20
+	reagents_temperature = 20
