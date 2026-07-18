@@ -633,7 +633,7 @@ SUBSYSTEM_DEF(tts)
 		return request.is_complete() && request_blips.is_complete() && request_blips_radio.is_complete() && request_radio.is_complete() && request_radio_gibberish.is_complete()
 
 /proc/filter_tts_listeners(list/listeners, radio_frequency = null)
-	if(!SStts.tts_enabled || !listeners)
+	if((!SStts.tts_enabled && !SStts220.is_enabled) || !listeners) // BANDASTATION EDIT: TTS radio listener filter
 		return
 
 	if(isweakref(listeners))

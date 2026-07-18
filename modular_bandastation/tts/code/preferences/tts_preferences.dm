@@ -25,20 +25,6 @@
 		return create_informed_default_value(preferences)
 	return input
 
-/datum/preference/numeric/volume/sound_tts_volume_radio
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_tts_volume_radio"
-	savefile_identifier = PREFERENCE_PLAYER
-
-	minimum = 0
-	maximum = 200
-
-/datum/preference/numeric/volume/sound_tts_volume_radio/apply_to_client_updated(client/client, value)
-	client.mob.set_sound_channel_volume(CHANNEL_TTS_RADIO, value)
-
-/datum/preference/numeric/volume/sound_tts_volume_radio/create_default_value()
-	return maximum / 2
-
 /datum/preference/numeric/volume/sound_tts_volume_announcement
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_tts_volume_announcement"

@@ -231,7 +231,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/tts_message_to_use = tts_message || message
 
 
-	if(SStts.tts_enabled && voice && !message_mods[MODE_CUSTOM_SAY_ERASE_INPUT] && !HAS_TRAIT(src, TRAIT_SIGN_LANG) && !HAS_TRAIT(src, TRAIT_UNKNOWN_VOICE))
+	// BANDASTATION EDIT START: TTS radio identifiers
+	if((SStts.tts_enabled || SStts220.is_enabled) && voice && !message_mods[MODE_CUSTOM_SAY_ERASE_INPUT] && !HAS_TRAIT(src, TRAIT_SIGN_LANG) && !HAS_TRAIT(src, TRAIT_UNKNOWN_VOICE))
+	// BANDASTATION EDIT END
 		var/list/filter = list()
 		var/list/special_filter = list()
 		if(length(voice_filter) > 0)
@@ -396,7 +398,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/show_message_success = show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, avoid_highlight)
 
 	// BANDASTATION ADDITION START - TTS
-	if(show_message_success && radio_freq != FREQ_ENTERTAINMENT)
+	if(show_message_success && !radio_freq)
 		var/message_to_tts = LAZYACCESS(message_mods, MODE_TTS_MESSAGE_OVERRIDE) || raw_message
 		speaker.cast_tts(
 			src,

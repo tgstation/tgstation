@@ -136,7 +136,7 @@
 
 /datum/component/tts_component/proc/cast_tts(
 	atom/speaker,
-	mob/listener,
+	listener,
 	message,
 	atom/location,
 	is_local = TRUE,
@@ -147,31 +147,45 @@
 	postSFX,
 	tts_seed_override,
 	tts_channel_override,
-	check_deafness = TRUE
+	check_deafness = TRUE,
+	radio_freq
 )
 
 	SIGNAL_HANDLER
 
 	if(!message)
 		return
-	var/datum/preferences/prefs = listener?.client?.prefs
-	if(prefs?.read_preference(/datum/preference/choiced/sound_tts) != TTS_SOUND_ENABLED || prefs?.read_preference(/datum/preference/numeric/volume/sound_tts_volume) == 0)
-		return
-	if(check_deafness && HAS_TRAIT(listener, TRAIT_DEAF))
-		return
+	var/volume_preference = is_radio ? /datum/preference/numeric/volume/sound_tts_radio_volume : /datum/preference/numeric/volume/sound_tts_volume
 	if(!speaker)
 		speaker = parent
-	if(!location)
-		location = parent
+	var/list/input_listeners = islist(listener) ? listener : list(listener)
+	var/tts_listeners = list()
+	for(var/mob/current_listener as anything in input_listeners)
+		var/datum/preferences/prefs = current_listener?.client?.prefs
+		if(prefs?.read_preference(/datum/preference/choiced/sound_tts) != TTS_SOUND_ENABLED || prefs?.read_preference(volume_preference) == 0)
+			continue
+		if(check_deafness && HAS_TRAIT(current_listener, TRAIT_DEAF))
+			continue
+		if(is_radio && current_listener == speaker && !prefs.read_preference(/datum/preference/toggle/sound_tts_hear_self_radio))
+			continue
+		tts_listeners += current_listener
+	if(!length(tts_listeners))
+		return
+	if(isnull(additional_effects))
+		additional_effects = list()
+	else
+		additional_effects = additional_effects.Copy()
 	if(is_radio)
 		additional_effects |= /datum/singleton/sound_effect/radio
-		is_local = FALSE
-		if(listener == speaker) // don't hear both radio and whisper from yourself
-			return
+		// Global to listener, not positioned at the speaker
+		if(!location)
+			is_local = FALSE
+	if(!location)
+		location = parent
 
 	var/list/tts_args = list()
 	tts_args[TTS_CAST_SPEAKER] = speaker
-	tts_args[TTS_CAST_LISTENER] = listener
+	tts_args[TTS_CAST_LISTENER] = tts_listeners
 	tts_args[TTS_CAST_MESSAGE] = message
 	tts_args[TTS_CAST_LOCATION] = location
 	tts_args[TTS_CAST_LOCAL] = is_local
