@@ -43,10 +43,7 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_STASIS), PROC_REF(on_stasis_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_STASIS), PROC_REF(on_stasis_trait_loss))
 
-	RegisterSignals(src, list(
-		SIGNAL_ADDTRAIT(TRAIT_NODEATH),
-		SIGNAL_REMOVETRAIT(TRAIT_NODEATH),
-	), PROC_REF(update_succumb_action))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NODEATH), SIGNAL_REMOVETRAIT(TRAIT_NODEATH)), PROC_REF(on_nodeath))
 
 	RegisterSignal(src, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_movement_type_flag_enabled))
 	RegisterSignal(src, COMSIG_MOVETYPE_FLAG_DISABLED, PROC_REF(on_movement_type_flag_disabled))
@@ -237,13 +234,18 @@
 	SIGNAL_HANDLER
 	update_incapacitated()
 
+/// Called when [TRAIT_NODEATH] is added or removed from the mob
+/mob/living/proc/on_nodeath()
+	SIGNAL_HANDLER
+	update_succumb_action()
+	update_stat()
+
 /**
  * Called when traits that alter succumbing are added/removed.
  *
  * Will show or hide the succumb alert prompt.
  */
 /mob/living/proc/update_succumb_action()
-	SIGNAL_HANDLER
 	if (CAN_SUCCUMB(src) || HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
 		throw_alert(ALERT_SUCCUMB, /atom/movable/screen/alert/succumb)
 	else

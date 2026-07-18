@@ -23,8 +23,6 @@
 		SIGNAL_REMOVETRAIT(TRAIT_NOHARDCRIT),
 		SIGNAL_ADDTRAIT(TRAIT_NOSOFTCRIT),
 		SIGNAL_REMOVETRAIT(TRAIT_NOSOFTCRIT),
-		SIGNAL_ADDTRAIT(TRAIT_NODEATH), // redundant as adding the trait won't change stat, but just being thorough
-		SIGNAL_REMOVETRAIT(TRAIT_NODEATH),
 	), PROC_REF(update_stat))
 
 /**
