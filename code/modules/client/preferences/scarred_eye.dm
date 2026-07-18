@@ -16,5 +16,5 @@
 
 	return /datum/quirk/item_quirk/scarred_eye::name in preferences.all_quirks
 
-/datum/preference/choiced/scarred_eye/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/scarred_eye/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return

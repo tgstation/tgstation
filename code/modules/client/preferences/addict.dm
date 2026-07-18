@@ -27,7 +27,7 @@
 		return FALSE
 	return /datum/quirk/item_quirk/addict/junkie::name in preferences.all_quirks
 
-/datum/preference/choiced/junkie/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/junkie/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return
 
 /datum/preference/choiced/smoker
@@ -47,7 +47,7 @@
 		return FALSE
 	return /datum/quirk/item_quirk/addict/smoker::name in preferences.all_quirks
 
-/datum/preference/choiced/smoker/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/smoker/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return
 
 /datum/preference/choiced/alcoholic
@@ -67,5 +67,5 @@
 		return FALSE
 	return /datum/quirk/item_quirk/addict/alcoholic::name in preferences.all_quirks
 
-/datum/preference/choiced/alcoholic/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/alcoholic/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return

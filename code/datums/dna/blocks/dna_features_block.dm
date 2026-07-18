@@ -8,16 +8,6 @@
 /datum/dna_block/feature/mutant_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
 	target.dna.features[feature_key] = sanitize_hexcolor(get_block(dna_hash))
 
-/datum/dna_block/feature/ethereal_color
-	block_length = DNA_BLOCK_SIZE_COLOR
-	feature_key = FEATURE_ETHEREAL_COLOR
-
-/datum/dna_block/feature/ethereal_color/create_unique_block(mob/living/carbon/human/target)
-	return sanitize_hexcolor(target.dna.features[FEATURE_ETHEREAL_COLOR], include_crunch = FALSE)
-
-/datum/dna_block/feature/ethereal_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
-	target.dna.features[feature_key] = sanitize_hexcolor(get_block(dna_hash))
-
 /// Features tied to a sprite accessory
 /datum/dna_block/feature/accessory
 	abstract_type = /datum/dna_block/feature/accessory
