@@ -57,6 +57,14 @@
 	var/jumpsuit_style = PREF_SUIT //suit/skirt
 
 	//Equipment slots
+	var/obj/item/back = null
+	var/obj/item/head = null
+	var/obj/item/clothing/gloves = null
+	var/obj/item/clothing/ears = null
+	var/obj/item/clothing/glasses/glasses = null
+	var/obj/item/clothing/shoes/shoes = null
+	var/obj/item/clothing/neck/wear_neck = null
+	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/wear_suit = null
 	var/obj/item/clothing/w_uniform = null
 	var/obj/item/belt = null

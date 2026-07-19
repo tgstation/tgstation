@@ -69,6 +69,7 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter/psyker
 	name = "psyker navigation warper"
 	desc = "Использует усиленные мозговые волны, чтобы определить и нанести на карту точное местоположение шаттла псайкеров."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter/psyker")
 	icon_screen = "recharge_comp_on"
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON //blind friendly
 	x_offset = 0

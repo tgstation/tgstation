@@ -1,0 +1,64 @@
+{
+	"dm_type": "/datum/bt_node/subtree/pet_command/breed",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"key": "BB_CURRENT_PET_TARGET",
+		"observer_abort": "BT_ABORT_BOTH"
+	},
+	"child": {
+		"type": "decorator",
+		"decorator": "/datum/bt_node/decorator/key_in_typelist",
+		"vars": {
+			"key": "BB_CURRENT_PET_TARGET",
+			"typelist_key": "BB_BABIES_PARTNER_TYPES"
+		},
+		"child": {
+			"type": "sequence",
+			"children": [
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+					"vars": {
+						"target_key": "BB_CURRENT_PET_TARGET",
+						"required_dist": 1,
+						"finish_on_arrival": true
+					}
+				},
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/keys_different_gender",
+							"vars": {
+								"invert": true,
+								"key_a": "BB_MY_PAWN",
+								"key_b": "BB_CURRENT_PET_TARGET"
+							},
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/perform_emote",
+								"vars": {
+									"emote": "Seems confused"
+								}
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/ai_interact",
+							"vars": {
+								"target_key": "BB_CURRENT_PET_TARGET",
+								"combat_mode": false
+							}
+						}
+					]
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/clear_pet_command"
+				}
+			]
+		}
+	}
+}

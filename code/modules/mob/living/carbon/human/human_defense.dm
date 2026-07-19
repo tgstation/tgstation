@@ -18,7 +18,6 @@
 		organnum++
 	return (armorval/max(organnum, 1))
 
-
 /mob/living/carbon/human/proc/check_armor(obj/item/bodypart/def_zone, damage_type)
 	if(!damage_type)
 		return 0
@@ -728,3 +727,39 @@
 		if(methods == NONE)
 			return
 	return ..()
+
+
+/mob/living/carbon/human/is_mouth_covered(check_flags = ALL)
+	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & HEADCOVERSMOUTH))
+		return head
+	if((check_flags & ITEM_SLOT_MASK) && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH))
+		return wear_mask
+	return null
+
+/mob/living/carbon/human/is_eyes_covered(check_flags = ALL)
+	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & HEADCOVERSEYES))
+		return head
+	if((check_flags & ITEM_SLOT_MASK) && wear_mask && (wear_mask.flags_cover & MASKCOVERSEYES))
+		return wear_mask
+	if((check_flags & ITEM_SLOT_EYES) && glasses && (glasses.flags_cover & GLASSESCOVERSEYES))
+		return glasses
+	return null
+
+/mob/living/carbon/human/is_pepper_proof(check_flags = ALL)
+	. = ..()
+	if (.)
+		return
+	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & PEPPERPROOF))
+		return head
+	if((check_flags & ITEM_SLOT_MASK) && wear_mask && (wear_mask.flags_cover & PEPPERPROOF))
+		return wear_mask
+
+/mob/living/carbon/human/get_eye_protection()
+	. = ..()
+	if(isclothing(head)) // Adds head protection
+		var/obj/item/clothing/helmet = head
+		. += helmet.flash_protect
+	if(isclothing(glasses)) // Glasses
+		. += glasses.flash_protect
+	if(isclothing(wear_mask)) // Mask
+		. += wear_mask.flash_protect

@@ -1,0 +1,143 @@
+{
+	"dm_type": "/datum/bt_node/subtree/repairbot_find_target",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bot_is_emagged",
+			"vars": {
+				"invert": false
+			},
+			"child": {
+				"type": "selector",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_robot",
+						"vars": {
+							"target_key": "BB_ROBOT_TARGET",
+							"minimum_distance": 1
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/bot_search/deconstructable",
+						"vars": {
+							"target_key": "BB_DECONSTRUCT_TARGET",
+							"minimum_distance": 1
+						}
+					}
+				]
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"observer_abort": "BT_ABORT_NONE",
+				"invert": true,
+				"key": "BB_CURRENT_TARGET"
+			},
+			"child": {
+				"type": "selector",
+				"children": [
+					{
+						"type": "sequence",
+						"children": [
+							{
+								"type": "selector",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/breached",
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"minimum_distance": 1
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/bot_search/refillable_target",
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"minimum_distance": 1
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_grille_target",
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"minimum_distance": 1
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf",
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"minimum_distance": 1
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_window_fix",
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"minimum_distance": 1
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_girder",
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"minimum_distance": 1
+										}
+									}
+								]
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
+								"vars": {
+									"target_key": "BB_REPAIRBOT_INTERACTION_TYPE",
+									"value": "REPAIRBOT_INTERACTION_INTERACT"
+								}
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/cancel_current_plan"
+							}
+						]
+					},
+					{
+						"type": "sequence",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_wall_target",
+								"vars": {
+									"target_key": "BB_CURRENT_TARGET",
+									"minimum_distance": 1
+								}
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
+								"vars": {
+									"target_key": "BB_REPAIRBOT_INTERACTION_TYPE",
+									"value": "REPAIRBOT_INTERACTION_BUILD_GIRDERS"
+								}
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/cancel_current_plan"
+							}
+						]
+					}
+				]
+			}
+		}
+	]
+}

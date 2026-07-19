@@ -231,7 +231,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/tts_message_to_use = tts_message || message
 
 
-	if(SStts.tts_enabled && voice && !message_mods[MODE_CUSTOM_SAY_ERASE_INPUT] && !HAS_TRAIT(src, TRAIT_SIGN_LANG) && !HAS_TRAIT(src, TRAIT_UNKNOWN_VOICE))
+	// BANDASTATION EDIT START: TTS radio identifiers
+	if((SStts.tts_enabled || SStts220.is_enabled) && voice && !message_mods[MODE_CUSTOM_SAY_ERASE_INPUT] && !HAS_TRAIT(src, TRAIT_SIGN_LANG) && !HAS_TRAIT(src, TRAIT_UNKNOWN_VOICE))
+	// BANDASTATION EDIT END
 		var/list/filter = list()
 		var/list/special_filter = list()
 		if(length(voice_filter) > 0)
@@ -368,13 +370,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 		message = deaf_message
 
-		var/show_message_success = show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
-		if(show_message_success && understood)
-			return HEAR_HEARD | HEAR_UNDERSTOOD
-		else if (show_message_success && !understood)
-			return HEAR_HEARD
-		else
-			return FALSE
+		var/hearflags = NONE
+		if(show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight))
+			hearflags |= HEAR_HEARD
+		if(understood)
+			hearflags |= HEAR_UNDERSTOOD
+		return hearflags
 
 	if(speaker != src)
 		if(!radio_freq) //These checks have to be separate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
@@ -393,10 +394,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, message_mods)
-	var/show_message_success = show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, avoid_highlight)
+
+	var/hearflags = NONE
+	if(show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, avoid_highlight))
+		hearflags |= HEAR_HEARD
 
 	// BANDASTATION ADDITION START - TTS
-	if(show_message_success && radio_freq != FREQ_ENTERTAINMENT)
+	if((hearflags & HEAR_HEARD) && !radio_freq)
 		var/message_to_tts = LAZYACCESS(message_mods, MODE_TTS_MESSAGE_OVERRIDE) || raw_message
 		speaker.cast_tts(
 			src,
@@ -409,12 +413,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		)
 	// BANDASTATION ADDITION END - TTS
 
-	if(show_message_success && understood)
-		return HEAR_HEARD | HEAR_UNDERSTOOD
-	else if (show_message_success && !understood)
-		return HEAR_HEARD
-	else
-		return FALSE
+	if(understood)
+		hearflags |= HEAR_UNDERSTOOD
+	return hearflags
 
 /mob/living/send_speech(message_raw, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language = null, list/message_mods = list(), forced = null, tts_message, list/tts_filter)
 	var/whisper_range = 0

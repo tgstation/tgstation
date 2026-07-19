@@ -208,10 +208,10 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
 
 	var/t = "[span_notice("Coordinates: [x],[y] ")]\n"
 	t += "[span_danger("Temperature: [environment.temperature] ")]\n"
-	for(var/id in environment.gases)
-		var/gas = environment.gases[id]
-		if(gas[MOLES])
-			t+="[span_notice("[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] ")]\n"
+	var/list/cached_gas_name = GAS_META[META_GAS_NAME]
+	for(var/gas_id, gas_moles in environment.moles)
+		if(gas_moles)
+			t += "[span_notice("[cached_gas_name[gas_id]]: [gas_moles] ")]\n"
 
 	to_chat(usr, t)
 
@@ -447,6 +447,11 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
 ///Get the item on the mob in the storage slot identified by the id passed in
 /mob/proc/get_item_by_slot(slot_id) as /obj/item
 	return null
+
+/mob/proc/get_items_by_slots(slot_ids)
+	. = list()
+	for (var/slot_id in bitfield_to_list(slot_ids))
+		. += get_item_by_slot(slot_id)
 
 /// Gets what slot the item on the mob is held in.
 /// Returns null if the item isn't in any slots on our mob.
@@ -1379,9 +1384,6 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 
 	if(href_list[VV_HK_GIVE_AI])
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_ai_controller, src)
-
-	if(href_list[VV_HK_GIVE_AI_SPEECH])
-		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_ai_speech, src)
 
 	if(href_list[VV_HK_GIVE_MOB_ACTION])
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_mob_action, src)

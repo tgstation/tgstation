@@ -27,6 +27,7 @@
 	var/specific_transport_id = TRAMSTATION_LINE_1
 	/// If the sign is adjusted for split type tram windows
 	var/split_mode = FALSE
+	generate_map_preview = FALSE
 
 /obj/machinery/computer/tram_controls/split
 	circuit = /obj/item/circuitboard/computer/tram_controls/split
@@ -156,6 +157,9 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		icon_screen = null
 		update_appearance()
+		return
+
+	if(controller && (controller?.specific_transport_id != specific_transport_id))
 		return
 
 	if(isnull(controller) || !controller.controller_operational)

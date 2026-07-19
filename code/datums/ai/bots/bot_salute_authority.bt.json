@@ -1,0 +1,29 @@
+{
+	"dm_type": "/datum/bt_node/subtree/bot_salute_authority",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/cooldown",
+	"vars": {
+		"cooldown_key": "BB_SALUTE_COOLDOWN",
+		"cooldown_duration": "60 SECONDS"
+	},
+	"child": {
+		"type": "sequence",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/find_valid_authority",
+				"vars": {
+					"target_key": "BB_SALUTE_TARGET"
+				}
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/salute_authority",
+				"vars": {
+					"target_key": "BB_SALUTE_TARGET",
+					"salute_keys": "BB_SALUTE_MESSAGES"
+				}
+			}
+		]
+	}
+}

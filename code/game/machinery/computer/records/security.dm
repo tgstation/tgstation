@@ -8,6 +8,7 @@
 /obj/machinery/computer/records/security
 	name = "security records console"
 	desc = "Used to view and edit personnel's security records."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/warrant")
 	icon_screen = "security"
 	icon_keyboard = "security_key"
 	req_one_access = list(ACCESS_SECURITY, ACCESS_HOP)
@@ -17,13 +18,14 @@
 	var/printing = FALSE
 
 /obj/machinery/computer/records/security/syndie
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/records/security/syndie")
 	icon_keyboard = "syndie_key"
 	req_one_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/computer/records/security/laptop
 	name = "security laptop"
 	desc = "A cheap Nanotrasen security laptop, it functions as a security records console. It's bolted to the table."
-	icon_state = "laptop"
+	icon_state = MAP_SWITCH("laptop", "/obj/machinery/computer/records/security/laptop")
 	icon_screen = "seclaptop"
 	icon_keyboard = "laptop_key"
 	pass_flags = PASSTABLE

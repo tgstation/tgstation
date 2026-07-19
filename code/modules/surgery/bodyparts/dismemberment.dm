@@ -200,7 +200,7 @@
 		arm_owner.dropItemToGround(lost_cuffs, force = TRUE)
 	arm_owner.hud_used?.update_inventory_slot(ITEM_SLOT_HANDS, held_index)
 	if(arm_owner.num_hands == 0)
-		arm_owner.dropItemToGround(arm_owner.gloves, force = TRUE)
+		arm_owner.dropItemToGround(arm_owner.get_item_by_slot(ITEM_SLOT_GLOVES), force = TRUE)
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 
 /obj/item/bodypart/leg/drop_limb(special, dismembered, move_to_floor = TRUE)
@@ -209,12 +209,12 @@
 	if(special || !leg_owner)
 		return
 	leg_owner.dropItemToGround(leg_owner.legcuffed, force = TRUE)
-	leg_owner.dropItemToGround(leg_owner.shoes, force = TRUE)
+	leg_owner.dropItemToGround(leg_owner.get_item_by_slot(ITEM_SLOT_FEET), force = TRUE)
 
 /obj/item/bodypart/head/drop_limb(special, dismembered, move_to_floor = TRUE)
 	if(!special)
 		//Drop all worn head items
-		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
+		for(var/obj/item/head_item as anything in owner.get_items_by_slots(ITEM_SLOT_EYES | ITEM_SLOT_EARS | ITEM_SLOT_MASK | ITEM_SLOT_HEAD))
 			owner.dropItemToGround(head_item, force = TRUE)
 
 	//Handle dental implants

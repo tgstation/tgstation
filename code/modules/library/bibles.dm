@@ -274,11 +274,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			SEND_SIGNAL(target_mob, COMSIG_LIVING_BLESSED, user, src, bless_result)
 			return
 
-	if(iscarbon(target_mob))
-		var/mob/living/carbon/carbon_target = target_mob
-		if(!istype(carbon_target.head, /obj/item/clothing/head/helmet))
-			carbon_target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5, 60)
-			carbon_target.balloon_alert(carbon_target, "you feel dumber!")
+	if(ishuman(target_mob))
+		var/mob/living/carbon/human/human_target = target_mob
+		if(!istype(human_target.head, /obj/item/clothing/head/helmet))
+			human_target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5, 60)
+			human_target.balloon_alert(human_target, "you feel dumber!")
 	target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
 			span_userdanger("[user] beats [target_mob] over the head with [src]!"))
 	playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)

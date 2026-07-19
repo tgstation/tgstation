@@ -19,6 +19,7 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole
 	name = "R&D Console"
 	desc = "A console used to interface with R&D tools."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/rdconsole")
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
 	circuit = /obj/item/circuitboard/computer/rdconsole

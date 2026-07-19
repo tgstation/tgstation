@@ -13,7 +13,7 @@
 	throw_range = 7
 	demolition_mod = 1.25
 	w_class = WEIGHT_CLASS_BULKY
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.5)
 	attack_verb_continuous = list("robusts")
 	attack_verb_simple = list("robust")
 	hitsound = 'sound/items/weapons/smash.ogg'

@@ -11,13 +11,13 @@
 "c" = (
 /obj/item/gps/computer,
 /obj/structure/tubes,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "d" = (
 /obj/structure/tubes,
 /obj/structure/rack,
 /obj/item/survivalcapsule,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "e" = (
 /obj/structure/chair/comfy/shuttle{
@@ -32,7 +32,7 @@
 /obj/item/bedsheet/black{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "g" = (
 /obj/structure/rack,
@@ -40,7 +40,7 @@
 /obj/item/clothing/suit/space/orange,
 /obj/item/clothing/head/helmet/space/fragile,
 /obj/item/clothing/head/helmet/space/fragile,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "h" = (
 /obj/effect/decal/cleanable/rubble,
@@ -66,7 +66,7 @@
 /area/lavaland/surface/outdoors)
 "m" = (
 /obj/machinery/door/airlock/survival_pod/glass,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "n" = (
 /turf/closed/wall/mineral/titanium{
@@ -80,7 +80,7 @@
 /obj/structure/rack,
 /obj/item/storage/toolbox/emergency,
 /obj/item/storage/toolbox/emergency,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "q" = (
 /turf/closed/wall/mineral/titanium/interior,
@@ -92,7 +92,7 @@
 /turf/open/floor/mineral/titanium/blue/lavaland_atmos,
 /area/ruin/unpowered)
 "s" = (
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "t" = (
 /obj/structure/flora/tree/stump,
@@ -167,11 +167,11 @@
 	desc = "A heated storage unit. This one's seen better days.";
 	name = "dusty survival pod storage"
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "K" = (
 /obj/structure/fans,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "L" = (
 /obj/item/storage/toolbox/fishing,
@@ -182,10 +182,10 @@
 /obj/item/pickaxe/emergency,
 /obj/item/pickaxe/emergency,
 /obj/item/crowbar/large/emergency,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "N" = (
-/turf/closed/wall/mineral/titanium/survival/pod,
+/turf/closed/wall/mineral/plastitanium/survival/pod,
 /area/ruin/powered)
 "O" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -205,11 +205,11 @@
 "S" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/black,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "T" = (
 /obj/structure/tubes,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "U" = (
 /obj/item/bait_can/worm/premium,
@@ -218,7 +218,7 @@
 "V" = (
 /obj/structure/table/survival_pod,
 /obj/item/food/meat/steak/goliath,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "W" = (
 /turf/closed/mineral/volcanic/lava_land_surface/biome_replace,

@@ -2704,6 +2704,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
+/obj/item/storage/pill_bottle/sepsisillin,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "aWH" = (

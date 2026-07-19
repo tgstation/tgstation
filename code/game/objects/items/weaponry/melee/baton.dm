@@ -596,22 +596,24 @@
 		tool.play_tool_sound(src)
 	return TRUE
 
-/obj/item/melee/baton/security/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/stock_parts/power_store/cell))
-		var/obj/item/stock_parts/power_store/cell/active_cell = item
-		if(cell)
-			to_chat(user, span_warning("[capitalize(declent_ru(NOMINATIVE))] уже имеет батарею!"))
-		else
-			if(active_cell.maxcharge < cell_hit_cost)
-				to_chat(user, span_notice("[capitalize(declent_ru(NOMINATIVE))] нуждается в более емкой батарее."))
-				return
-			if(!user.transferItemToLoc(item, src))
-				return
-			cell = item
-			to_chat(user, span_notice("Вы вставляете батарею в [capitalize(declent_ru(ACCUSATIVE))]."))
-			update_appearance()
-	else
-		return ..()
+/obj/item/melee/baton/security/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
+		return NONE
+	if(cell)
+		to_chat(user, span_warning("[capitalize(declent_ru(NOMINATIVE))] уже имеет батарею!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(astype(tool, /obj/item/stock_parts/power_store/cell).maxcharge < cell_hit_cost)
+		to_chat(user, span_notice("[capitalize(declent_ru(NOMINATIVE))] нуждается в более емкой батарее."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
+	cell = tool
+	to_chat(user, span_notice("Вы вставляете батарею в [capitalize(declent_ru(ACCUSATIVE))]."))
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/baton/security/proc/tryremovecell(mob/user)
 	if(cell && can_remove_cell)
@@ -837,37 +839,38 @@
 /obj/item/melee/baton/security/cattleprod/add_deep_lore()
 	return
 
-/obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)//handles sticking a crystal onto a stunprod to make an improved cattleprod
-	if(!istype(item, /obj/item/stack))
+/obj/item/melee/baton/security/cattleprod/item_interaction(mob/living/user, obj/item/tool, list/modifiers)//handles sticking a crystal onto a stunprod to make an improved cattleprod
+	if(!istype(tool, /obj/item/stack))
 		return ..()
 
 	if(!can_upgrade)
 		user.visible_message(span_warning("[capitalize(declent_ru(NOMINATIVE))] уже улучшен!"))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
 	if(cell)
 		user.visible_message(span_warning("Вы не можете вставить кристалл в [declent_ru(ACCUSATIVE)] пока установлен источник питания!"))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
 	var/our_prod
-	if(istype(item, /obj/item/stack/ore/bluespace_crystal))
-		var/obj/item/stack/ore/bluespace_crystal/our_crystal = item
+	if(istype(tool, /obj/item/stack/ore/bluespace_crystal))
+		var/obj/item/stack/ore/bluespace_crystal/our_crystal = tool
 		our_crystal.use(1)
 		our_prod = /obj/item/melee/baton/security/cattleprod/teleprod
 
-	else if(istype(item, /obj/item/stack/telecrystal))
-		var/obj/item/stack/telecrystal/our_crystal = item
+	else if(istype(tool, /obj/item/stack/telecrystal))
+		var/obj/item/stack/telecrystal/our_crystal = tool
 		our_crystal.use(1)
 		our_prod = /obj/item/melee/baton/security/cattleprod/telecrystalprod
 	else
-		to_chat(user, span_notice("Вы не думаете, что [item.declent_ru(NOMINATIVE)] способен хоть как-то улучшить [declent_ru(ACCUSATIVE)]."))
-		return ..()
+		to_chat(user, span_notice("Вы не думаете, что [tool.declent_ru(NOMINATIVE)] способен хоть как-то улучшить [declent_ru(ACCUSATIVE)]."))
+		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("Вы крепко вставляете [item.declent_ru(ACCUSATIVE)] в [sparkler.declent_ru(ACCUSATIVE)]."))
+	to_chat(user, span_notice("Вы крепко вставляете [tool.declent_ru(ACCUSATIVE)] в [sparkler.declent_ru(ACCUSATIVE)]."))
 	remove_item_from_storage(user)
 	qdel(src)
 	var/obj/item/melee/baton/security/cattleprod/brand_new_prod = new our_prod(user.loc)
 	user.put_in_hands(brand_new_prod)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/baton/security/cattleprod/try_stun(mob/living/target, mob/living/user, harmbatonning)
 	return ..() && sparkler.activate()

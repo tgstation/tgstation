@@ -84,7 +84,7 @@
 	// This is the amount of moles in a default canister
 	var/moleCount = (initial(fakeCanister.maximum_pressure) * initial(fakeCanister.filled)) * initial(fakeCanister.volume) / (R_IDEAL_GAS_EQUATION * T20C)
 
-	for(var/gasType in GLOB.meta_gas_info)
+	for(var/gasType in GLOB.meta_gas_info[META_GAS_ID])
 		var/datum/gas/gas = gasType
 		var/name = initial(gas.name)
 		if(!initial(gas.purchaseable))
