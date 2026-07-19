@@ -1956,10 +1956,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			continue
 
 		var/path = new_species.bodypart_overrides?[old_part.body_zone]
-		var/obj/item/bodypart/new_part
+		if(path == old_part.type) //Some species have the same bodyparts. (e.g. human and felinids, lizards and their subspecies), so just update the limb.
+			old_part.update_limb(is_creating = TRUE)
+			continue
+
 		if(path)
-			new_part = new path()
-			SEND_SIGNAL(old_part, COMSIG_BODYPART_SPECIES_REPLACE, new_part, new_species)
+			var/obj/item/bodypart/new_part = new path()
 			new_part.replace_limb(target)
 			new_part.update_limb(is_creating = TRUE)
 			new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)

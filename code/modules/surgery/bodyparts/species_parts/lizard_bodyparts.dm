@@ -46,19 +46,29 @@
 /obj/item/bodypart/leg/left/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
-	bodypart_flags = parent_type::bodypart_flags | BODYPART_DIGITIGRADE_COMPATIBLE
 
-/obj/item/bodypart/leg/left/lizard/update_digitigrade()
+/obj/item/bodypart/leg/left/lizard/Initialize(mapload)
 	. = ..()
-	footprint_sprite = (bodytype & BODYTYPE_DIGITIGRADE) ? FOOTPRINT_SPRITE_CLAWS : initial(footprint_sprite)
-	footstep_type = (bodytype & BODYTYPE_DIGITIGRADE) ? FOOTSTEP_MOB_CLAW : initial(footstep_type)
+	AddElement(/datum/element/digitigrade_compatible, FOOTPRINT_SPRITE_CLAWS, FOOTSTEP_MOB_CLAW)
 
 /obj/item/bodypart/leg/right/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
-	bodypart_flags = parent_type::bodypart_flags | BODYPART_DIGITIGRADE_COMPATIBLE
 
-/obj/item/bodypart/leg/right/lizard/update_digitigrade()
+/obj/item/bodypart/leg/right/lizard/Initialize(mapload)
 	. = ..()
-	footprint_sprite = (bodytype & BODYTYPE_DIGITIGRADE) ? FOOTPRINT_SPRITE_CLAWS : initial(footprint_sprite)
-	footstep_type = (bodytype & BODYTYPE_DIGITIGRADE) ? FOOTSTEP_MOB_CLAW : initial(footstep_type)
+	AddElement(/datum/element/digitigrade_compatible, FOOTPRINT_SPRITE_CLAWS, FOOTSTEP_MOB_CLAW)
+
+///For the limb grower and all your mapping purposes: the digitigrade version of lizard left legs. Please don't use them in species code or human code at all.
+/obj/item/bodypart/leg/left/lizard/digitigrade
+
+/obj/item/bodypart/leg/left/lizard/digitigrade/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/digitigrade_limb, "[initial(limb_id)]_[BODYPART_ID_DIGITIGRADE]", limb_id)
+
+///For the limb grower and all your mapping purposes: the digitigrade version of lizard right legs. Please don't use them in species code or human code at all.
+/obj/item/bodypart/leg/right/lizard/digitigrade
+
+/obj/item/bodypart/leg/right/lizard/digitigrade/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/digitigrade_limb, "[initial(limb_id)]_[BODYPART_ID_DIGITIGRADE]", limb_id)

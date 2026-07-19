@@ -23,7 +23,7 @@
 	/// Our internal techweb for limbgrower designs.
 	var/datum/techweb/autounlocking/stored_research
 	/// All the categories of organs we can print.
-	var/list/categories = list(SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, RND_CATEGORY_LIMBS_OTHER, RND_CATEGORY_LIMBS_DIGITIGRADE)
+	var/list/categories = list(SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, RND_CATEGORY_LIMBS_OTHER)
 	///Designs imported from technology disks that we can print.
 	var/list/imported_designs = list()
 
@@ -257,7 +257,7 @@
 
 	var/built_typepath = being_built.build_path
 	if(ispath(built_typepath, /obj/item/bodypart))
-		build_limb(create_buildpath())
+		build_limb(astype(being_built, /datum/design/bodypart)?.build_limb_from_cat ? create_buildpath() : built_typepath)
 	else
 		//Just build whatever it is
 		new built_typepath(loc)
@@ -279,7 +279,7 @@
 	//i need to create a body part manually using a set icon (otherwise it doesn't appear)
 	var/obj/item/bodypart/limb
 	limb = new buildpath(loc)
-	limb.name = "\improper synthetic [selected_category] [limb.plaintext_zone]"
+	limb.name = "synthetic [limb.name]"
 	limb.limb_id = selected_category
 	limb.species_color = "#62A262"
 	limb.update_icon_dropped()

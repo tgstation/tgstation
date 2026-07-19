@@ -199,7 +199,6 @@
 #define RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS "/Cybernetic Advanced Limbs"
 
 // Limb Categories
-#define RND_CATEGORY_LIMBS_DIGITIGRADE "digitigrade"
 #define RND_CATEGORY_LIMBS_OTHER "Other Limbs"
 
 /// Biogenerator Categories

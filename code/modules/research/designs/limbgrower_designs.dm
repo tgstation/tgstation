@@ -2,37 +2,46 @@
 //////////Limb Grower Designs ///////
 /////////////////////////////////////
 
-/datum/design/leftarm
+/datum/design/bodypart
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
+	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL)
+	///Whether the finalized path of the bodypart to print should depend on the selected category.
+	var/build_limb_from_cat = TRUE
+
+/datum/design/bodypart/leftarm
 	name = "Left Arm"
 	id = "arm/left"
-	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/arm/left
-	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL)
 
-/datum/design/rightarm
+/datum/design/bodypart/rightarm
 	name = "Right Arm"
 	id = "arm/right"
-	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/arm/right
-	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL)
 
-/datum/design/leftleg
+/datum/design/bodypart/leftleg
 	name = "Left Leg"
 	id = "leg/left"
-	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/leg/left
-	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, RND_CATEGORY_LIMBS_DIGITIGRADE)
 
-/datum/design/rightleg
+/datum/design/bodypart/rightleg
 	name = "Right Leg"
 	id = "leg/right"
-	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/leg/right
-	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, RND_CATEGORY_LIMBS_DIGITIGRADE)
+
+/datum/design/bodypart/leftleg/lizard_digi
+	name = "Digitigrade Left Leg"
+	id = "leg/left/lizard_digi"
+	category = list(SPECIES_LIZARD)
+	build_path = /obj/item/bodypart/leg/left/lizard/digitigrade
+	build_limb_from_cat = FALSE
+
+/datum/design/bodypart/rightleg/lizard_digi
+	name = "Digitigrade Right Leg"
+	id = "leg/right/lizard_digi"
+	category = list(SPECIES_LIZARD)
+	build_path = /obj/item/bodypart/leg/right/lizard/digitigrade
+	build_limb_from_cat = FALSE
 
 //Non-limb limb designs
 

@@ -2,11 +2,13 @@
 /datum/component/digitigrade_limb
 	/// Id when not wearing digitigrade squishing clothing
 	var/free_id
+	/// Id when wearing digitigrade squishing clothing
+	var/squashed_id
 
 	/// Lazylist of refs that are squishing this limb
 	VAR_PRIVATE/list/squashing_us
 
-/datum/component/digitigrade_limb/Initialize(free_id)
+/datum/component/digitigrade_limb/Initialize(free_id, squashed_id)
 	if(!istype(parent, /obj/item/bodypart/leg))
 		return COMPONENT_INCOMPATIBLE
 
@@ -17,29 +19,28 @@
 	limb.bodytype |= BODYTYPE_DIGITIGRADE
 
 	src.free_id = free_id
+	src.squashed_id = squashed_id || initial(limb.limb_id)
 
 	RegisterSignal(parent, COMSIG_BODYPART_UPDATED, PROC_REF(update_limb_id_comsig))
 	RegisterSignal(parent, COMSIG_BODYPART_ATTACHED, PROC_REF(on_attach))
-	RegisterSignal(parent, COMSIG_BODYPART_REMOVED, PROC_REF(on_remove))
-	RegisterSignal(parent, COMSIG_BODYPART_BUTCHERED, PROC_REF(on_butchered))
-	RegisterSignal(parent, COMSIG_BODYPART_SPECIES_REPLACE, PROC_REF(on_replace_body_part_changed))
 
 	if(ishuman(limb.owner))
 		on_attach(limb, limb.owner)
 
+	limb.name = "digitigrade [limb.name]"
+
 /datum/component/digitigrade_limb/Destroy()
 	UnregisterSignal(parent, list(
-		COMSIG_BODYPART_SPECIES_REPLACE,
 		COMSIG_BODYPART_UPDATED,
 		COMSIG_BODYPART_ATTACHED,
 		COMSIG_BODYPART_REMOVED,
-		COMSIG_BODYPART_BUTCHERED,
 	))
 
 	var/obj/item/bodypart/limb = parent
 	if(!QDELING(parent) && ishuman(limb.owner))
 		on_remove(limb, limb.owner)
 	limb.bodytype &= ~BODYTYPE_DIGITIGRADE
+	limb.name = "[limb.limb_id] [parse_zone(limb.body_zone)]"
 	return ..()
 
 /datum/component/digitigrade_limb/proc/on_attach(obj/item/bodypart/limb, mob/living/carbon/new_limb_owner)
@@ -109,32 +110,15 @@
 	return FALSE
 
 /// This is just ran on update_limb() to ensure we always have the correct ID
-/datum/component/digitigrade_limb/proc/update_limb_id_comsig()
+/datum/component/digitigrade_limb/proc/update_limb_id_comsig(obj/item/bodypart/leg/source, dropping_limb, is_creating)
 	SIGNAL_HANDLER
 	update_limb_id(sprite_update = FALSE)
-
-/// Digitigrade limbs that are butchered add the component to the replacement limb
-/datum/component/digitigrade_limb/proc/on_butchered(datum/source, obj/item/bodypart/replacement)
-	SIGNAL_HANDLER
-	transfer_digitigrade(replacement)
-
-/datum/component/digitigrade_limb/proc/on_replace_body_part_changed(datum/source, obj/item/bodypart/replacement, datum/species/new_species)
-	SIGNAL_HANDLER
-	if(new_species.digitigrade_customization == DIGITIGRADE_NEVER) //Hypothetical scenario of a lizard sub-species whose lizardly legs are never digitigrade.
-		return
-	transfer_digitigrade(replacement)
-
-/datum/component/digitigrade_limb/proc/transfer_digitigrade(obj/item/bodypart/replacement)
-	if(!(replacement.bodypart_flags & BODYPART_DIGITIGRADE_COMPATIBLE))
-		return
-	free_id = "[initial(replacement.limb_id)]_[BODYPART_ID_DIGITIGRADE]"
-	replacement.TakeComponent(src)
 
 /datum/component/digitigrade_limb/proc/update_limb_id(sprite_update = TRUE)
 	var/obj/item/bodypart/limb = parent
 	var/old_id = limb.limb_id
 	if(QDELETED(src) || LAZYLEN(squashing_us))
-		limb.limb_id = initial(limb.limb_id)
+		limb.limb_id = squashed_id
 		limb.remove_bodyshape(BODYSHAPE_DIGITIGRADE)
 
 	else

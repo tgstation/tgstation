@@ -87,10 +87,7 @@
 	// (Because digi legs are ONLY handled on species change)
 	if(!isdummy(target) || target.dna.species.digitigrade_customization == DIGITIGRADE_NEVER)
 		return
-
-	var/list/legs = list(target.get_bodypart(BODY_ZONE_R_LEG), target.get_bodypart(BODY_ZONE_L_LEG))
-	for(var/obj/item/bodypart/leg/leg in legs)
-		leg.update_digitigrade()
+	target.dna.species.replace_body(target, target.dna.species)
 
 /datum/preference/choiced/lizard_legs/is_accessible(datum/preferences/preferences)
 	if(!..())

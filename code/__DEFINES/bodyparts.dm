@@ -91,7 +91,7 @@
 #define BODYPART_VIRGIN (1<<4)
 /// Not a full bodypart, but in fact is part of a missing limb
 #define BODYPART_STUMP (1<<5)
-/// This leg type has a generic digitigrade counterpart ("[limb_id]_[BODYPART_ID_DIGITIGRADE]"). Nothing stops you from adding the digitigrade_limb componant though.
+/// This leg type is compatible with dna-based digitigrade legs. DON'T ADD THIS DIRECTLY TO THE LEG PATHS, use the digitigrade_compatible element instead.
 #define BODYPART_DIGITIGRADE_COMPATIBLE (1<<6)
 
 // Bodypart change blocking flags

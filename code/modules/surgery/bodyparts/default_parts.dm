@@ -432,22 +432,6 @@
 	else if(!bodypart_disabled)
 		owner.set_usable_legs(owner.usable_legs + 1)
 
-/obj/item/bodypart/leg/update_limb(dropping_limb = FALSE, is_creating = FALSE)
-	//We want to check the owner dna in this case, to know if the legs should be digitigrade...
-	if(is_creating && owner?.dna?.species)
-		update_digitigrade()
-	return ..()
-
-///Add or remove the digitigrade limb component depending on the dna and species
-/obj/item/bodypart/leg/proc/update_digitigrade()
-	var/datum/species/species = owner.dna.species
-	if(species.digitigrade_customization == DIGITIGRADE_FORCED || (species.digitigrade_customization == DIGITIGRADE_OPTIONAL && owner.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS))
-		if(bodytype & BODYTYPE_DIGITIGRADE) //already digitigrade
-			return
-		AddComponent(/datum/component/digitigrade_limb, "[initial(limb_id)]_[BODYPART_ID_DIGITIGRADE]")
-	else if(bodytype & BODYTYPE_DIGITIGRADE) //was digitigrade, shouldn't be digitigrade any longer
-		qdel(GetComponent(/datum/component/digitigrade_limb))
-
 /obj/item/bodypart/leg/animate_atom_living(mob/living/owner)
 	var/mob/living/basic/kicker = ..()
 	kicker.attack_vis_effect = ATTACK_EFFECT_KICK
