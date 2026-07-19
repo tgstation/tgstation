@@ -85,10 +85,14 @@
 /obj/item/chainsaw/get_demolition_modifier(obj/target)
 	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? demolition_mod : 0.8
 
-/obj/item/chainsaw/suicide_act(mob/living/carbon/user)
+/obj/item/chainsaw/suicide_act(mob/living/user)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(src, 'sound/items/weapons/genhit1.ogg', 100, TRUE)
+		return BRUTELOSS
+
+	if (!iscarbon(user))
+		user.visible_message(span_suicide("[user] begins to shred [user.p_themselves()] with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		return BRUTELOSS
 
 	user.visible_message(span_suicide("[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -107,6 +111,9 @@
 	return BRUTELOSS
 
 /obj/item/chainsaw/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return ..()
+
 	if (target_mob.stat != DEAD)
 		return ..()
 
@@ -114,17 +121,19 @@
 		return ..()
 
 	var/obj/item/bodypart/head = target_mob.get_bodypart(BODY_ZONE_HEAD)
-	if (!head?.can_dismember())
+	if (!head)
 		return ..()
 
-	playsound(user, 'sound/items/weapons/slice.ogg', vol = 80, vary = TRUE)
-
+	playsound(src, 'sound/items/weapons/chainsawhit.ogg', vol = 100, vary = TRUE)
 	target_mob.balloon_alert(user, "cutting off head...")
+
 	if (!do_after(user, behead_time, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))
 		return TRUE
 
 	if (head.dismember(silent = FALSE))
-		user.put_in_hands(head)
+		playsound(src, 'sound/items/weapons/chainsawhit.ogg', vol = 100, vary = TRUE)
+	else
+		to_chat(user, span_warning("[target_mob]'s head is attached too firmly to cut off!"))
 
 	return TRUE
 

@@ -150,6 +150,10 @@
 	prox_monitor = new(src, 0, FALSE)
 	update_appearance()
 
+/obj/item/shuttle_blueprints/Destroy(force)
+	QDEL_NULL(prox_monitor)
+	return ..()
+
 /obj/item/shuttle_blueprints/equipped(mob/user, slot, initial)
 	. = ..()
 	var/static/list/connections = list(COMSIG_ITEM_PRE_ATTACK = PROC_REF(christen_check))

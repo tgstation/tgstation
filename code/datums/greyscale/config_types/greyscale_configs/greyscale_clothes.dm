@@ -702,7 +702,7 @@
 
 /datum/greyscale_config/digitigrade
 	name = "Digitigrade Clothes"
-	icon_file = 'icons/mob/clothing/digi_template_equpiment.dmi'
+	icon_file = 'icons/mob/clothing/digi_template_equipment.dmi'
 	json_config = 'code/datums/greyscale/json_configs/digitigrade.json'
 
 /datum/greyscale_config/digitigrade_underwear

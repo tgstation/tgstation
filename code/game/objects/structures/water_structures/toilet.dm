@@ -417,7 +417,7 @@
 	desc = "A horrendous mass of fused flesh resembling a standard-issue HT-451 model toilet. How it manages to function as one is beyond you. \
 	This one seems to be made out of the flesh of a devoted employee of the RnD department."
 
-/obj/structure/toilet/greyscale/flesh/Initialize(mapload, mob/living/carbon/suicide)
+/obj/structure/toilet/greyscale/flesh/Initialize(mapload, mob/living/suicide)
 	. = ..()
 	///The suicide victim's brain that will be placed inside the toilet's cistern
 	var/obj/item/organ/brain/toilet_brain
@@ -432,8 +432,9 @@
 		toilet_brain = new(drop_location())
 		set_custom_materials(list(/datum/material/meat = SHEET_MATERIAL_AMOUNT))
 
-	toilet_brain.forceMove(src)
-	add_cistern_item(toilet_brain)
+	if (toilet_brain)
+		toilet_brain.forceMove(src)
+		add_cistern_item(toilet_brain)
 
 //this also prevents the toilet from dropping meat sheets. if you want to cheese the meat exepriments, sacrifice more people
 /obj/structure/toilet/greyscale/flesh/atom_deconstruct(dissambled = TRUE)

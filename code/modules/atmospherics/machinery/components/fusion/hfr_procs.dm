@@ -167,7 +167,7 @@
 
 	internal_fusion.assert_gas(/datum/gas/antinoblium)
 
-	moderator_internal.assert_gases(arglist(GLOB.meta_gas_info))
+	moderator_internal.assert_gases(arglist(GLOB.meta_gas_info[META_GAS_ID]))
 
 	if (!selected_fuel)
 		return
@@ -241,7 +241,7 @@
 		return FALSE
 	for(var/gas_type in selected_fuel.requirements)
 		internal_fusion.assert_gas(gas_type)
-		if(internal_fusion.gases[gas_type][MOLES] < FUSION_MOLE_THRESHOLD)
+		if(internal_fusion.moles[gas_type] < FUSION_MOLE_THRESHOLD)
 			return FALSE
 	return TRUE
 
@@ -261,7 +261,7 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_gas_requirements()
 	var/datum/gas_mixture/contents = linked_input.airs[1]
 	for(var/gas_type in selected_fuel.requirements)
-		if(!contents.gases[gas_type] || !contents.gases[gas_type][MOLES])
+		if(!contents.moles[gas_type])
 			return FALSE
 	return TRUE
 

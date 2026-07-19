@@ -151,15 +151,15 @@
 		for(var/turf/rock in oview(i)) // This collects a list of rings of turfs (in a growing radius of i) that we'll applying logic to "drill" below.
 
 			if(istype(rock, /turf/closed/mineral))
-				if(prob(50 + (i * 8)))
+				if(prob((i * 15) - 25))
 					continue
 				var/turf/closed/mineral/drillable = rock
 				drillable.gets_drilled(user)
-				if(prob(50))
+				if(prob(15))
 					new /obj/effect/decal/cleanable/rubble(rock)
 				continue
 
-			if(istype(rock, /turf/open/misc/asteroid) && prob(35))
+			if(istype(rock, /turf/open/misc/asteroid) && prob(10))
 				new /obj/effect/decal/cleanable/rubble(rock)
 				continue
 		sleep(0.6 SECONDS)

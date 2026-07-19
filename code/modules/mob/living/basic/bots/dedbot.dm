@@ -49,30 +49,19 @@
 	grant_actions_by_list(innate_actions)
 
 /datum/ai_controller/basic_controller/bot/dedbot
+	behavior_tree_json = "code/modules/mob/living/basic/bots/dedbot.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = DEAD,
 		BB_AGGRO_RANGE = 2,
 	)
 	ai_movement = /datum/ai_movement/jps/bot
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/targeted_mob_ability/exenterate,
-		/datum/ai_planning_subtree/respond_to_summon,
-		/datum/ai_planning_subtree/find_patrol_beacon,
-	)
 	max_target_distance = AI_BOT_PATH_LENGTH
-	///keys to be reset when the bot is reseted
 	reset_keys = list(
 		BB_BEACON_TARGET,
 		BB_PREVIOUS_BEACON_TARGET,
 		BB_BOT_SUMMON_TARGET,
 	)
-
-/datum/ai_planning_subtree/targeted_mob_ability/exenterate
-	ability_key = BB_DEDBOT_SLASH
-	finish_planning = FALSE
 
 /datum/action/cooldown/mob_cooldown/exenterate
 	name = "Exenterate"
