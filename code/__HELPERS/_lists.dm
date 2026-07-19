@@ -290,7 +290,7 @@
 			return TRUE
 		if(return_first_match || type == type_to_check.type)
 			return list_to_check[type]
-		if(!highest_matched_type || istype(type, highest_matched_type))
+		if(!highest_matched_type || ispath(type, highest_matched_type))
 			. = list_to_check[type]
 			highest_matched_type = type
 
