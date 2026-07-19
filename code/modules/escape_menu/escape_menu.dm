@@ -12,6 +12,9 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 	var/client/client
 	var/datum/tgui_window/window
 
+	/// If we've already notified the user that their BYOND version is not cool with transparent browsers
+	var/version_warned
+
 /datum/escape_menu/New(client/client)
 	src.client = client
 	window = new(client, "escape_menu")
@@ -132,6 +135,10 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 	var/action = payload["action"]
 	switch(action)
 		if("opened")
+			if(!version_warned && client.byond_build < 1680)
+				to_chat(client, span_warning("Your BYOND version is not up-to-date enough to render the escape menu, please update to 516.1680 or higher."))
+				version_warned = TRUE
+
 			START_PROCESSING(SSescape_menu, src)
 		if("closed")
 			STOP_PROCESSING(SSescape_menu, src)
