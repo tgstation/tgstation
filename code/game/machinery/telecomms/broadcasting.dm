@@ -106,6 +106,15 @@
 	copy.levels = levels
 	return copy
 
+// BANDASTATION EDIT START: tts_component gate
+/datum/signal/subspace/vocal/proc/should_queue_radio()
+	if(!SStts220.is_enabled || frequency == FREQ_ENTERTAINMENT)
+		return FALSE
+
+	var/atom/movable/signal_source = virt?.GetSource()
+	return !isnull(signal_source?.get_tts_seed())
+// BANDASTATION EDIT END: tts_component gate
+
 /// This is the meat function for making radios hear vocal transmissions.
 /datum/signal/subspace/vocal/broadcast()
 	set waitfor = FALSE
@@ -158,42 +167,81 @@
 	for(var/obj/item/radio/called_radio as anything in radios)
 		called_radio.on_receive_message(data)
 	var/list/message_mods = data["mods"]
-
 	var/tts_radio_id = LAZYACCESS(message_mods, MODE_TTS_IDENTIFIER)
-	// Flat list of mobs who can hear the message
-	var/list/receive
-	// Assoc list of weakref to a radio to list of weakrefs to mobs who can hear the message
-	var/list/receive_radios
+	var/should_do_modular_radio_tts = should_queue_radio()
+	var/should_do_radio_tts = tts_radio_id || should_do_modular_radio_tts
 
-	if(tts_radio_id) // only do this if we have a TTS identifier to save on perf
+	var/list/receive = list()
+	var/list/receive_radios
+	if(should_do_radio_tts)
 		receive = list()
 		receive_radios = list()
 		for(var/radio, radio_hearers in get_hearers_in_radio_ranges_track_radios(radios))
 			receive |= radio_hearers
-			var/datum/weakref/radio_ref = WEAKREF(radio)
-			for(var/mob/possible_hearer in radio_hearers)
-				if(!isnull(possible_hearer.client) && can_hear_radio_tts(possible_hearer, frequency))
-					receive_radios[radio_ref] ||= list()
-					receive_radios[radio_ref] += WEAKREF(possible_hearer)
+			var/list/filtered_radio_hearers = filter_tts_listeners(radio_hearers, frequency)
+			if(length(filtered_radio_hearers))
+				receive_radios[WEAKREF(radio)] = filtered_radio_hearers
 
 	else
 		receive = get_hearers_in_radio_ranges(radios)
 
+	// BANDASTATION EDIT START: TTS listener lists store weakrefs
 	// Add observers who have ghost radio enabled.
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
 		if(get_chat_toggles(ghost.client) & CHAT_GHOSTRADIO)
 			receive |= ghost
-			if(tts_radio_id && can_hear_radio_tts(ghost, frequency))
-				receive_radios[TTS_GHOST_RADIO] ||= list()
-				receive_radios[TTS_GHOST_RADIO] += WEAKREF(ghost)
+			if(should_do_radio_tts)
+				LAZYADD(receive_radios[TTS_GHOST_RADIO], WEAKREF(ghost))
 
-	if(tts_radio_id && length(receive_radios))
+	if(should_do_radio_tts)
+		var/list/filtered_ghost_hearers = filter_tts_listeners(receive_radios[TTS_GHOST_RADIO], frequency)
+		if(length(filtered_ghost_hearers))
+			receive_radios[TTS_GHOST_RADIO] = filtered_ghost_hearers
+		else
+			receive_radios -= TTS_GHOST_RADIO
+	if(SStts.tts_enabled && tts_radio_id && !should_do_modular_radio_tts && length(receive_radios))
 		SStts.queued_radio_messages[tts_radio_id] = receive_radios
 		SStts.queued_radio_messages_compression[tts_radio_id] = compression
+	// BANDASTATION EDIT END: TTS listener lists store weakrefs
 
 	// Render the message and have everybody hear it.
 	// Always call this on the virtualspeaker to avoid issues.
 	var/spans = data["spans"]
+
+	// BANDASTATION EDIT START: TTS radio playback
+	if(should_do_modular_radio_tts && length(receive_radios))
+		for(var/radio_ref in receive_radios)
+			if(!length(receive_radios[radio_ref]))
+				continue
+			var/atom/radio_source
+			if(radio_ref != TTS_GHOST_RADIO)
+				var/datum/weakref/radio_weakref = radio_ref
+				radio_source = radio_weakref.resolve()
+				if(QDELETED(radio_source))
+					continue
+			var/list/radio_listeners = list()
+			for(var/hearer_ref in receive_radios[radio_ref])
+				var/datum/weakref/hearer_weakref = hearer_ref
+				var/mob/radio_listener = hearer_weakref.resolve()
+				if(!radio_listener)
+					continue
+				var/message_to_tts = isobserver(radio_listener) ? message : radio_listener.translate_language(virt, language, message, spans, message_mods)
+				if(message_to_tts == message)
+					message_to_tts = LAZYACCESS(message_mods, MODE_TTS_MESSAGE_OVERRIDE) || message_to_tts
+				LAZYADD(radio_listeners[message_to_tts], radio_listener)
+			for(var/message_to_tts in radio_listeners)
+				virt.cast_tts(
+					radio_listeners[message_to_tts],
+					message_to_tts,
+					location = radio_source,
+					is_local = !isnull(radio_source),
+					is_radio = TRUE,
+					effects = LAZYACCESS(message_mods, MODE_TTS_FILTERS),
+					tts_seed_override = LAZYACCESS(message_mods, MODE_TTS_SEED_OVERRIDE),
+					channel_override = CHANNEL_TTS_RADIO,
+					radio_freq = frequency,
+				)
+	// BANDASTATION EDIT END: TTS radio playback
 
 	for(var/atom/movable/hearer as anything in receive)
 		if(!hearer)

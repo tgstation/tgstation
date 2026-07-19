@@ -74,20 +74,21 @@ export const sound_tts: FeatureChoiced = {
 };
 
 export const sound_tts_radio: FeatureChoiced = {
-  name: 'Enable TTS Over Radio',
-  category: 'SOUND',
+  name: 'TTS - Включить поверх радио',
+  category: 'Звук',
   description: `
-    When enabled, be able to hear text-to-speech sounds in game over radio channels.
-    When set to "Departmental Radio Only", text to speech over the radio will only play for departmental radio channels. Anything that isn't Common.
-    When disabled, text to speech will not play over radio sources.
+    Когда включено, вы будете слышать text-to-speech звуки в игре поверх радио каналов.
+    Когда режим выставлен в "Только радио отделов", text-to-speech звуки поверх радио будут слышны только для каналов отделов, и любых частот которые не являются Общей.
+    Когда выключено, text-to-speech не будет слышно поверх радио.
   `,
   component: FeatureDropdownInput,
 };
 
 export const sound_tts_hear_self_radio: FeatureToggle = {
-  name: 'Enable TTS Hear Self Over Radio',
-  category: 'SOUND',
-  description: 'When enabled, hear yourself over the radio when Text to Speech and TTS Over Radio is enabled.',
+  name: 'TTS - слышать себя в рации',
+  category: 'Звук',
+  description:
+    'Когда включено, вы будете слышать себя в рации когда говорите в неё.',
   component: CheckboxInput,
 };
 
@@ -95,13 +96,6 @@ export const sound_tts_volume: Feature<number> = {
   name: 'TTS - громкость',
   category: 'Звук',
   description: 'Громкость text-to-speech.',
-  component: FeatureSliderInput,
-};
-
-export const sound_tts_volume_radio: Feature<number> = {
-  name: 'TTS - громкость рации',
-  category: 'Звук',
-  description: 'Громкость text-to-speech для рации.',
   component: FeatureSliderInput,
 };
 
@@ -120,9 +114,10 @@ export const sound_tts_volume_telepathy: Feature<number> = {
 };
 
 export const sound_tts_radio_volume: Feature<number> = {
-  name: 'TTS Radio Volume',
-  category: 'SOUND',
-  description: 'The volume that radio text-to-speech sounds will play at. This is independent of regular TTS volume.',
+  name: 'TTS - громкость рации',
+  category: 'Звук',
+  description:
+    'Громкость text-to-speech для рации. Громкость независима от обычной громкости text-to-speech.',
   component: FeatureSliderInput,
 };
 

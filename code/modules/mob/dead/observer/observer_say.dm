@@ -90,7 +90,7 @@
 		avoid_highlighting = speaker == src)
 
 	// BANDASTATION ADDITION START - TTS
-	if(isnull(message_mods[MODE_CUSTOM_SAY_EMOTE]) && isnull(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT]) && radio_freq != FREQ_ENTERTAINMENT)
+	if(isnull(message_mods[MODE_CUSTOM_SAY_EMOTE]) && isnull(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT]) && !radio_freq)
 		var/tts_message = message_mods[MODE_TTS_MESSAGE_OVERRIDE] || raw_message
 		speaker.cast_tts(
 			src,
