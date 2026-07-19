@@ -61,7 +61,7 @@ ADMIN_VERB(browse_jukebox_music, R_SERVER, "Jukebox Browse Music", "Browse music
 /// Recache the songs from config then force replace all the songs.
 /proc/refresh_jukebox_songs()
 	var/refreshed = FALSE
-	for(var/obj/machinery/jukebox/jukebox in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/jukebox))
+	for(var/obj/machinery/jukebox/jukebox as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/jukebox))
 		if(!refreshed)
 			jukebox.music_player.load_songs_from_config(TRUE)
 			refreshed = TRUE
