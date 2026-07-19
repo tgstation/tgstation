@@ -443,7 +443,7 @@
 	icon_state = "survival_pod_walls-open"
 	base_icon_state = "survival_pod_walls"
 	mineral = /obj/item/stack/wall_filling/plastitanium/survivalpod
-	walltype = /turf/closed/wall/mineral/plastitanium/survival
+	walltype = /turf/closed/wall/mineral/plastitanium/survival/pod
 	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
 

@@ -61,7 +61,7 @@ GLOBAL_LIST_INIT(material_girder_wall_recipes, init_material_girder_wall_recipes
 			/obj/structure/falsewall/plastitanium/wall_fill,
 			/obj/structure/falsewall/plastitanium/darkpod,
 			/obj/structure/falsewall/plastitanium/redpod,
-			/obj/structure/falsewall/plastitanium/survival,
+			/turf/closed/wall/mineral/plastitanium/survival/pod,
 			/obj/structure/falsewall/bone,
 			/obj/structure/falsewall/runite,
 			/obj/structure/falsewall/adamantine,
