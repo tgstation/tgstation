@@ -264,7 +264,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 		to_chat(user, span_notice("You start placing the window..."))
-		if(!do_after(user,20, target = src))
+		if(!do_after(user, 2 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!src.loc || !anchored) //Grille broken or unanchored while waiting
