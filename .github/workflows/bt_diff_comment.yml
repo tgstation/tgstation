@@ -26,7 +26,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload images and comment
-        uses: tgstation/BehaviorTreeG2@main
+        uses: tgstation/BehaviorTreeG@main
         with:
           mode: publish
           token: ${{ secrets.GITHUB_TOKEN }}

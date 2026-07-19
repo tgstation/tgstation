@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Render diffs
-        uses: tgstation/BehaviorTreeG2@main
+        uses: tgstation/BehaviorTreeG@main
         with:
           mode: render
           token: ${{ secrets.GITHUB_TOKEN }}
