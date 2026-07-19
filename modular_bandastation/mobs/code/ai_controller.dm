@@ -10,15 +10,21 @@
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/random_speech/base_animal,	// - что будет говорить и показывает в качестве эмоций
+	behavior_nodes = list(
+		BT_DESC_TYPE = /datum/bt_node/composite/parallel,
+		BT_DESC_CHILDREN = list(
+			list(BT_DESC_TYPE = /datum/bt_node/subtree/simple_skittish_combat),
+			list(BT_DESC_TYPE = /datum/bt_node/ai_behavior/random_speech/base_animal),
+		),
+		"failure_policy" = BT_PARALLEL_FAILURE_CHILD_ONE,
+		"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,
+		"repeat_secondary" = TRUE,
+		"repeat_secondary_delay" = 1 SECONDS,
+		"finish_on_primary" = TRUE,
 	)
 
-/datum/ai_planning_subtree/random_speech/base_animal
+/datum/bt_node/ai_behavior/random_speech/base_animal
 	speech_chance = 3
 	speak = list("Вэх!", "Вэх.") // Что говорит
 	emote_hear = list("говорит.") // Что показывается когда говорит
@@ -26,16 +32,17 @@
 
 // =========== Петух ===========
 /datum/ai_controller/basic_controller/chicken/cock
-	planning_subtrees = list(
-		// Addition subtrees
-		/datum/ai_planning_subtree/capricious_retaliate,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-
-		// Parent subtrees
-		// /datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,	// no flee anymore
-		// /datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/random_speech/chicken,
+	behavior_nodes = list(
+		BT_DESC_TYPE = /datum/bt_node/composite/parallel,
+		BT_DESC_CHILDREN = list(
+			list(BT_DESC_TYPE = /datum/bt_node/subtree/simple_capricious_combat),
+			list(BT_DESC_TYPE = /datum/bt_node/ai_behavior/random_speech_blackboard),
+		),
+		"failure_policy" = BT_PARALLEL_FAILURE_CHILD_ONE,
+		"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,
+		"repeat_secondary" = TRUE,
+		"repeat_secondary_delay" = 1 SECONDS,
+		"finish_on_primary" = TRUE,
 	)
 
 // =========== Опоссум ===========
@@ -46,17 +53,21 @@
 
 	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/capricious_retaliate,
-		/datum/ai_planning_subtree/target_retaliate,
-		// /datum/ai_planning_subtree/find_food, // Food is not selected
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/random_speech/possum,
+	behavior_nodes = list(
+		BT_DESC_TYPE = /datum/bt_node/composite/parallel,
+		BT_DESC_CHILDREN = list(
+			list(BT_DESC_TYPE = /datum/bt_node/subtree/simple_capricious_combat),
+			list(BT_DESC_TYPE = /datum/bt_node/ai_behavior/random_speech/possum),
+		),
+		"failure_policy" = BT_PARALLEL_FAILURE_CHILD_ONE,
+		"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,
+		"repeat_secondary" = TRUE,
+		"repeat_secondary_delay" = 1 SECONDS,
+		"finish_on_primary" = TRUE,
 	)
 
-/datum/ai_planning_subtree/random_speech/possum
+/datum/bt_node/ai_behavior/random_speech/possum
 	speech_chance = 3
 	emote_hear = list("Хсаааа!", "Хссс!")
 	emote_see = list("трясет головой.", "гонится за хвостом.", "пялится.", "озирается.")
@@ -70,17 +81,27 @@
 
 	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity, // Нельзя запереть, попытается выбраться
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/random_speech/lizard/big,
+	behavior_nodes = list(
+		BT_DESC_TYPE = /datum/bt_node/composite/parallel,
+		BT_DESC_CHILDREN = list(
+			list(
+				BT_DESC_TYPE = /datum/bt_node/composite/selector,
+				BT_DESC_CHILDREN = list(
+					list(BT_DESC_TYPE = /datum/bt_node/subtree/escape_captivity),
+					list(BT_DESC_TYPE = /datum/bt_node/subtree/simple_hostile_combat),
+				),
+			),
+			list(BT_DESC_TYPE = /datum/bt_node/ai_behavior/random_speech/lizard/big),
+		),
+		"failure_policy" = BT_PARALLEL_FAILURE_CHILD_ONE,
+		"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,
+		"repeat_secondary" = TRUE,
+		"repeat_secondary_delay" = 1 SECONDS,
+		"finish_on_primary" = TRUE,
 	)
 
-/datum/ai_planning_subtree/random_speech/lizard/big
+/datum/bt_node/ai_behavior/random_speech/lizard/big
 	speech_chance = 1
 	speak = list("ГРРР!", "Гррр!", "Рыр!", "Грх!")
 	emote_hear = list("рычит.", "ворчит.", "грохочет.")
@@ -88,44 +109,29 @@
 	sound = list('modular_bandastation/mobs/sound/lizard_angry1.ogg', 'modular_bandastation/mobs/sound/lizard_angry2.ogg', 'modular_bandastation/mobs/sound/lizard_angry3.ogg')
 
 // =========== Крысы ===========
-/datum/ai_planning_subtree/random_speech/mouse/rat
+/datum/bt_node/ai_behavior/random_speech/mouse/rat
 	sound = list('modular_bandastation/mobs/sound/rat_talk.ogg')
 
 /datum/ai_controller/basic_controller/mouse/rat/syndi
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cheese,
-		/datum/ai_planning_subtree/random_speech/mouse/rat/syndi,
-		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables,
-	)
+	behavior_nodes = list()
 
-/datum/ai_planning_subtree/random_speech/mouse/rat/syndi
+/datum/bt_node/ai_behavior/random_speech/mouse/rat/syndi
 	speech_chance = 2
 	speak = list("Слава Синдикату!", "Смерть НаноТрейзен!", "Отдавайте сыр!", "Слава Сыркату!", "Смерть за сыр!")
 
 // =========== Хряки ===========
 /datum/ai_controller/basic_controller/pig/big
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/capricious_retaliate,
-		/datum/ai_planning_subtree/target_retaliate,
-		// /datum/ai_planning_subtree/find_food, // Food is not selected
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/random_speech/pig/big,
-	)
+	behavior_nodes = list()
 
-/datum/ai_planning_subtree/random_speech/pig/big
+/datum/bt_node/ai_behavior/random_speech/pig/big
 	sound = list('modular_bandastation/mobs/sound/pig_talk1.ogg', 'modular_bandastation/mobs/sound/pig_talk2.ogg')
 
 // =========== Зомби звуки ===========
 
-/datum/ai_planning_subtree/random_speech/zombie
+/datum/bt_node/ai_behavior/random_speech/zombie
 	sound = list('modular_bandastation/mobs/sound/zombie_idle1.ogg', 'modular_bandastation/mobs/sound/zombie_idle3.ogg')
 
-/datum/ai_planning_subtree/random_speech/zombie/fast
+/datum/bt_node/ai_behavior/random_speech/zombie/fast
 	sound = list('modular_bandastation/mobs/sound/fast_zombie_idle1.ogg', 'modular_bandastation/mobs/sound/fast_zombie_idle2.ogg')
 
 // =========== ... ===========
