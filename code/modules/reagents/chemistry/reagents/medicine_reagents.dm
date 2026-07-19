@@ -72,7 +72,7 @@
 	affected_mob.heal_bodypart_damage(brute = 2.5 * metabolization_ratio * seconds_per_tick, burn = 2.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjust_tox_loss(-2.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype)
 	// Heal everything! That we want to. But really don't heal reagents. Otherwise we'll lose ... us.
-	affected_mob.fully_heal(full_heal_flags) // there is no need to return UPDATE_MOB_HEALTH because this proc calls updatehealth()
+	affected_mob.fully_heal(full_heal_flags & ~HEAL_ALL_REAGENTS) // there is no need to return UPDATE_MOB_HEALTH because this proc calls updatehealth()
 
 /datum/reagent/medicine/adminordrazine/quantum_heal
 	name = "Quantum Medicine"
