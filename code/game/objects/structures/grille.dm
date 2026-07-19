@@ -232,7 +232,6 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/grille/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(tool, /obj/item/stack/rods) && broken)
 		if(!do_after(user, 1 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
