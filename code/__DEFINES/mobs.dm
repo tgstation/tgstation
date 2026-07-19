@@ -245,8 +245,6 @@
 #define DIGITIGRADE_NEVER 0
 ///The species can have digitigrade legs in generation
 #define DIGITIGRADE_OPTIONAL 1
-///The species is forced to have digitigrade legs in generation.
-#define DIGITIGRADE_FORCED 2
 
 // Preferences for leg types
 /// Legs that are normal

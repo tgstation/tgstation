@@ -180,15 +180,15 @@ Lizard subspecies: ASHWALKERS
 	)
 	inherent_factions = list(FACTION_ASHWALKER)
 	species_language_holder = /datum/language_holder/lizard/ash
-	digitigrade_customization = DIGITIGRADE_FORCED
+	digitigrade_customization = DIGITIGRADE_NEVER
 	examine_limb_id = SPECIES_LIZARD
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/lizard,
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/lizard/ashwalker,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/lizard/ashwalker,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/lizard,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/lizard/digitigrade,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard/digitigrade,
 	)
 
 /datum/species/lizard/ashwalker/get_physical_attributes()

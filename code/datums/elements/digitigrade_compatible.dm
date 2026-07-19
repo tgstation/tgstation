@@ -26,12 +26,11 @@
 ///Add or remove the digitigrade limb component depending on the dna and species
 /datum/element/digitigrade_compatible/proc/on_limb_updated(obj/item/bodypart/leg/source, dropping_limb, is_creating)
 	SIGNAL_HANDLER
-	if(!is_creating || !source.owner?.dna?.species) //This more or less ensures the rest of this proc is only run by species/replace_body() and regenerate_limbs()
+	if(!is_creating || !source.owner?.dna) //This more or less ensures the rest of this proc is only run by species/replace_body() and regenerate_limbs()
 		return
 
 	var/datum/dna/dna = source.owner.dna
-	var/datum/species/species = dna.species
-	if(species.digitigrade_customization == DIGITIGRADE_FORCED || (species.digitigrade_customization == DIGITIGRADE_OPTIONAL && dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS))
+	if(dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)
 		if(source.bodytype & BODYTYPE_DIGITIGRADE) //already digitigrade, likely because the component was added to the new bodypart from the old one.
 			return
 		source.AddComponent(/datum/component/digitigrade_limb, "[initial(source.limb_id)]_[BODYPART_ID_DIGITIGRADE]", source.limb_id)
@@ -42,7 +41,6 @@
 	SIGNAL_HANDLER
 	if(!istype(new_component, /datum/component/digitigrade_limb))
 		return
-	RegisterSignal(source, COMSIG_BODYPART_BUTCHERED, PROC_REF(on_butchered))
 
 	if(digi_footprint_sprite)
 		source.footprint_sprite = digi_footprint_sprite
@@ -55,13 +53,5 @@
 		revert_to_normal(source)
 
 /datum/element/digitigrade_compatible/proc/revert_to_normal(obj/item/bodypart/leg/source)
-	UnregisterSignal(source, COMSIG_BODYPART_BUTCHERED)
 	source.footprint_sprite = initial(source.footprint_sprite)
 	source.footstep_type = initial(source.footstep_type)
-
-/// Digitigrade limbs that are butchered add the component to the replacement limb
-/datum/element/digitigrade_compatible/proc/on_butchered(obj/item/bodypart/leg/source, obj/item/bodypart/leg/replacement)
-	SIGNAL_HANDLER
-	if(!(replacement.bodypart_flags & BODYPART_DIGITIGRADE_COMPATIBLE)) //aka replacement doesn't have the digitigrade_compatible element
-		return
-	replacement.AddComponent(/datum/component/digitigrade_limb, "[initial(replacement.limb_id)]_[BODYPART_ID_DIGITIGRADE]", replacement.limb_id)

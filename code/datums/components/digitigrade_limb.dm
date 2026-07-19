@@ -24,6 +24,7 @@
 	RegisterSignal(parent, COMSIG_BODYPART_UPDATED, PROC_REF(update_limb_id_comsig))
 	RegisterSignal(parent, COMSIG_BODYPART_ATTACHED, PROC_REF(on_attach))
 	RegisterSignal(parent, COMSIG_BODYPART_REMOVED, PROC_REF(on_remove))
+	RegisterSignal(parent, COMSIG_BODYPART_BUTCHERED, PROC_REF(on_butchered))
 
 	if(ishuman(limb.owner))
 		on_attach(limb, limb.owner)
@@ -35,6 +36,7 @@
 		COMSIG_BODYPART_UPDATED,
 		COMSIG_BODYPART_ATTACHED,
 		COMSIG_BODYPART_REMOVED,
+		COMSIG_BODYPART_BUTCHERED,
 	))
 
 	var/obj/item/bodypart/limb = parent
@@ -139,3 +141,11 @@
 			thing.update_slot_icon()
 	// Updates underwear and mob sprites
 	limb.owner.update_body()
+
+/// Digitigrade limbs that are butchered add the component to the replacement limb
+/datum/component/digitigrade_limb/proc/on_butchered(obj/item/bodypart/leg/source, obj/item/bodypart/leg/replacement)
+	SIGNAL_HANDLER
+	//check if the replacement can be digitigrade and isn't already digitigrade.
+	if(!(replacement.bodypart_flags & BODYPART_DIGITIGRADE_COMPATIBLE) || (replacement.bodytype & BODYTYPE_DIGITIGRADE))
+		return
+	replacement.AddComponent(/datum/component/digitigrade_limb, "[initial(replacement.limb_id)]_[BODYPART_ID_DIGITIGRADE]", replacement.limb_id)

@@ -46,28 +46,40 @@
 /obj/item/bodypart/leg/left/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
+	///Whether this leg can be digitigrade or plantigrade depending on the relative dna feature
+	var/digitigrade_conversion = TRUE
 
 /obj/item/bodypart/leg/left/lizard/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/digitigrade_compatible, FOOTPRINT_SPRITE_CLAWS, FOOTSTEP_MOB_CLAW)
+	if(digitigrade_conversion)
+		AddElement(/datum/element/digitigrade_compatible, FOOTPRINT_SPRITE_CLAWS, FOOTSTEP_MOB_CLAW)
 
 /obj/item/bodypart/leg/right/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
+	///Whether this leg can be digitigrade or plantigrade depending on the relative dna feature
+	var/digitigrade_conversion = TRUE
 
 /obj/item/bodypart/leg/right/lizard/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/digitigrade_compatible, FOOTPRINT_SPRITE_CLAWS, FOOTSTEP_MOB_CLAW)
+	if(digitigrade_conversion)
+		AddElement(/datum/element/digitigrade_compatible, FOOTPRINT_SPRITE_CLAWS, FOOTSTEP_MOB_CLAW)
 
-///For the limb grower and all your mapping purposes: the digitigrade version of lizard left legs. Please don't use them in species code or human code at all.
+///Printable from limb growers and forced on ashwalkers: the digitigrade version of lizard left legs that cannot be converted back to plantigrade on species change or dna manipulation.
 /obj/item/bodypart/leg/left/lizard/digitigrade
+	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
+	footstep_type = FOOTSTEP_MOB_CLAW
+	digitigrade_conversion = FALSE //always digitigrade, we don't care about DNA
 
 /obj/item/bodypart/leg/left/lizard/digitigrade/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/digitigrade_limb, "[initial(limb_id)]_[BODYPART_ID_DIGITIGRADE]", limb_id)
 
-///For the limb grower and all your mapping purposes: the digitigrade version of lizard right legs. Please don't use them in species code or human code at all.
+///Printable from limb growers and forced on ashwalkers: the digitigrade version of lizard right legs that cannot be converted back to plantigrade on species change or dna manipulation.
 /obj/item/bodypart/leg/right/lizard/digitigrade
+	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
+	footstep_type = FOOTSTEP_MOB_CLAW
+	digitigrade_conversion = FALSE //always digitigrade, we don't care about DNA
 
 /obj/item/bodypart/leg/right/lizard/digitigrade/Initialize(mapload)
 	. = ..()
