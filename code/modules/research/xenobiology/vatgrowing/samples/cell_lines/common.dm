@@ -127,7 +127,7 @@
 
 	suppressive_reagents = list(
 		/datum/reagent/toxin = -1,
-		datum/reagent/baldium = -3,
+		/datum/reagent/baldium = -3,
 		/datum/reagent/consumable/sugar = -2,
 	)
 
