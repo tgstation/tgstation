@@ -114,8 +114,7 @@ SUBSYSTEM_DEF(weather)
 /datum/controller/subsystem/weather/proc/remove_weather_objects(list/old_objects, z_level)
 	var/alist/holders_by_plane = z_particles[z_level]
 	if(isnull(holders_by_plane))
-		stack_trace("No particle holder slot found for z level [z_level]")
-		return
+		CRASH("No particle holder slot found for z level [z_level]")
 
 	for(var/plane in holders_by_plane)
 		var/obj/effect/abstract/weather_holder/z_level/holder = holders_by_plane[plane]
