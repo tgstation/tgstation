@@ -244,7 +244,7 @@
 		return
 	var/mob/living/basic/mining/legion_brood/minion = new (user.loc)
 	minion.assign_creator(user)
-	minion.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
+	minion.ai_controller.set_blackboard_key(BB_CURRENT_TARGET, target)
 
 /obj/item/crusher_trophy/legionnaire_spine/attack_self(mob/user)
 	if(!isliving(user))

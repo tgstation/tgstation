@@ -197,11 +197,11 @@
 	if(!.)
 		return
 
-	for(var/mob/living/carbon/M in view(6, myloc))
-		if(!istype(M.wear_mask, /obj/item/clothing/mask/gas/clown_hat) && !istype(M.wear_mask, /obj/item/clothing/mask/gas/mime) )
-			if(!M.wear_mask || M.dropItemToGround(M.wear_mask))
+	for(var/mob/living/carbon/human/victim in view(6, myloc))
+		if(!istype(victim.wear_mask, /obj/item/clothing/mask/gas/clown_hat) && !istype(victim.wear_mask, /obj/item/clothing/mask/gas/mime))
+			if(!victim.wear_mask || victim.dropItemToGround(victim.wear_mask))
 				var/obj/item/clothing/mask/fakemoustache/sticky/the_stash = new /obj/item/clothing/mask/fakemoustache/sticky()
-				M.equip_to_slot_or_del(the_stash, ITEM_SLOT_MASK, TRUE, TRUE, TRUE, TRUE)
+				victim.equip_to_slot_or_del(the_stash, ITEM_SLOT_MASK, TRUE, TRUE, TRUE, TRUE)
 
 /obj/item/clothing/mask/fakemoustache/sticky
 	var/unstick_time = 600

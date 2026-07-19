@@ -5,7 +5,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/virtual_domain/safehouse)
 "b" = (
 /obj/modular_map_connector,
@@ -26,7 +26,7 @@
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain/safehouse)
 "i" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -40,16 +40,16 @@
 /obj/structure/railing/corner/end{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain/safehouse)
 "p" = (
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/virtual_domain/safehouse)
 "r" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 9
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain/safehouse)
 "u" = (
 /obj/structure/railing,
@@ -66,7 +66,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/bitrunning/hololadder_spawn,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/safehouse)
 "C" = (
 /turf/closed/wall,
@@ -79,7 +79,7 @@
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 1
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/virtual_domain/safehouse)
 "E" = (
 /obj/effect/turf_decal/trimline/yellow/line{
@@ -87,7 +87,7 @@
 	},
 /obj/effect/decal/cleanable/generic,
 /obj/effect/landmark/bitrunning/hololadder_spawn,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/safehouse)
 "G" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -102,7 +102,7 @@
 	dir = 5
 	},
 /obj/effect/landmark/bitrunning/hololadder_spawn,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/safehouse)
 "J" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -115,28 +115,28 @@
 "K" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/virtual_domain/safehouse)
 "M" = (
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain/safehouse)
 "O" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain/safehouse)
 "R" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain/safehouse)
 "U" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/departments/cargo/directional/west,
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/virtual_domain/safehouse)
 "W" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -161,13 +161,13 @@
 	pixel_y = 6;
 	pixel_x = -10
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain/safehouse)
 "Z" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain/safehouse)
 
 (1,1,1) = {"

@@ -40,7 +40,7 @@
 /obj/machinery/computer/arcade/battle
 	name = "battle arcade"
 	desc = "Explore vast worlds and conquer."
-	icon_state = "arcade"
+	icon_state = MAP_SWITCH("arcade", "/obj/machinery/computer/arcade/battle")
 	icon_screen = "fighters"
 	circuit = /obj/item/circuitboard/computer/arcade/battle
 

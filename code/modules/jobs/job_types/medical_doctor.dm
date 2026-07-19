@@ -19,7 +19,7 @@
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_MEDICAL_DOCTOR
-	bounty_types = CIV_JOB_MED
+	bounty_types = CIV_JOB_MED_VIRO
 	departments_list = list(
 		/datum/job_department/medical,
 		)

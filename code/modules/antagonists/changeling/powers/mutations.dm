@@ -658,9 +658,9 @@
 	if(!istype(tool, /obj/item/organ/monster_core/regenerative_core/legion) || !holds_reagents)
 		return NONE
 	visible_message(span_boldwarning("As [user] shoves [tool] into [src], [src] begins to mutate."))
-	var/mob/living/carbon/wearer = loc
+	var/mob/living/carbon/human/wearer = loc
 	playsound(wearer, 'sound/effects/blob/attackblob.ogg', 60, TRUE)
-	wearer.temporarilyRemoveItemFromInventory(wearer.head, TRUE)
+	wearer.temporarilyRemoveItemFromInventory(src, TRUE)
 	wearer.equip_to_slot_if_possible(new /obj/item/clothing/head/helmet/changeling_hivehead/legion(wearer), ITEM_SLOT_HEAD, 1, 1, 1)
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS
@@ -704,9 +704,9 @@
 ///Stuff we want to do to our minions. This is in its own proc so subtypes can override this behaviour.
 /datum/action/cooldown/hivehead_spawn_minions/proc/minion_additional_changes(mob/living/basic/minion)
 	var/mob/living/basic/bee/summoned_bee = minion
-	var/mob/living/carbon/wearer = owner
-	if(istype(summoned_bee) && length(wearer.head.reagents.reagent_list))
-		summoned_bee.assign_reagent(pick(wearer.head.reagents.reagent_list))
+	var/obj/item/clothing/head/helmet/changeling_hivehead/hivehead = owner.get_item_by_slot(ITEM_SLOT_HEAD)
+	if(istype(summoned_bee) && istype(hivehead) && length(hivehead.reagents.reagent_list))
+		summoned_bee.assign_reagent(pick(hivehead.reagents.reagent_list))
 
 /obj/item/clothing/head/helmet/changeling_hivehead/legion
 	name = "legion hive head"

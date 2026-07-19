@@ -195,6 +195,9 @@
 	/// Module selected by default when mech UI is opened
 	var/ui_selected_module_index
 
+	/// Whether we've been knocked down, unable to move
+	var/toppled = FALSE
+
 /datum/armor/sealed_mecha
 	melee = 20
 	bullet = 10
@@ -727,7 +730,7 @@
 		return
 	if(!isturf(target) && !isturf(target.loc)) // Prevents inventory from being drilled
 		return
-	if(can_interact_with(target, user, modifiers))
+	if(!can_interact_with(target, user, modifiers))
 		return
 	if(src == target)
 		return

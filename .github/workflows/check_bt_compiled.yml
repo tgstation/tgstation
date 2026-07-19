@@ -1,0 +1,24 @@
+name: Check BT Compiled JSON
+
+on:
+  pull_request:
+    paths:
+      - "code/**/*.bt.json"
+      - "code/_generated/behavior_trees/**"
+      - "code/__DEFINES/**"
+      - "tools/build_bt.py"
+
+jobs:
+  check_bt_compiled:
+    name: Verify BT compiled JSON is up to date
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Check compiled BT files are up to date
+        run: python tools/build_bt.py --check

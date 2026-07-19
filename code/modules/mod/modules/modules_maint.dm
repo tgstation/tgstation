@@ -67,7 +67,7 @@
 
 	var/turf/wearer_turf = get_turf(src)
 	var/datum/gas_mixture/air = wearer_turf.return_air()
-	if(!(air.gases[/datum/gas/water_vapor] && (air.gases[/datum/gas/water_vapor][MOLES]) >= 5))
+	if(air.moles[/datum/gas/water_vapor] < 5)
 		return //return if there aren't more than 5 Moles of Water Vapor in the air
 	snap_signal()
 

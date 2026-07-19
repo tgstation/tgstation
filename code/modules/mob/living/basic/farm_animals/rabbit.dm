@@ -55,21 +55,23 @@
 	AddElement(/datum/element/pet_bonus, "hop")
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown", "black", "white"), TRUE)
 	AddElement(/datum/element/can_be_held)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_RABBIT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	if(prob(20)) // bunny
 		name = "bunny"
 
 /datum/ai_controller/basic_controller/rabbit
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/rabbit.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SAY = list("Mrrp.", "CHIRP!", "Mrrp?"),
+			BB_EMOTE_HEAR = list("hops."),
+			BB_EMOTE_SEE = list("hops around.", "bounces up and down."),
+			BB_SPEAK_CHANCE = 10,
+		),
 	)
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/rabbit,
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-		)
 
 
 /// The easter subtype of rabbits, will lay eggs and say Eastery catchphrases.
@@ -100,11 +102,15 @@
 	)
 
 /datum/ai_controller/basic_controller/rabbit/easter
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/rabbit/easter,
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-		)
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SAY = list("Hop into Easter!", "Come get your eggs!", "Prizes for everyone!"),
+			BB_EMOTE_HEAR = list("hops."),
+			BB_EMOTE_SEE = list("hops around.", "bounces up and down."),
+			BB_SPEAK_CHANCE = 10,
+		),
+	)
 
 
 /// Same deal as the standard easter subtype, but these ones are able to brave the cold of space with their handy gas mask.
@@ -120,8 +126,12 @@
 	unsuitable_cold_damage = 0 // Zero because we are meant to survive in space.
 
 /datum/ai_controller/basic_controller/rabbit/easter/space
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/rabbit/easter/space,
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-		)
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SAY = list("Hmph mmph mmmph!", "Mmphe mmphe mmphe!", "Hmm mmm mmm!"),
+			BB_EMOTE_HEAR = list("hops."),
+			BB_EMOTE_SEE = list("hops around.", "bounces up and down."),
+			BB_SPEAK_CHANCE = 10,
+		),
+	)

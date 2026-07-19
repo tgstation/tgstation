@@ -30,7 +30,7 @@
 		/obj/item/disk/tech_disk/debug=1,
 		/obj/item/flashlight/emp/debug=1,
 		/obj/item/geiger_counter=1,
-		/obj/item/healthanalyzer/advanced=1,
+		/obj/item/healthanalyzer/super=1,
 		/obj/item/modular_computer/pda/heads/captain=1,
 		/obj/item/pipe_dispenser=1,
 		/obj/item/stack/spacecash/c1000=50,

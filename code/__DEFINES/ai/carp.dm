@@ -6,6 +6,8 @@
 #define BB_CARP_MIGRATION_PATH "BB_carp_migration_path"
 /// Current target turf in your migration
 #define BB_CARP_MIGRATION_TARGET "BB_carp_migration_target"
+/// Turf of a carp rift we've decided to ride towards
+#define BB_CARP_RIFT_DESTINATION "BB_carp_rift_destination"
 
 /// Targeting keys for magicarp spells
 #define BB_MAGICARP_SPELL_TARGET "BB_magicarp_spell_target"

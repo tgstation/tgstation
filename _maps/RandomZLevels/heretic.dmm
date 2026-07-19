@@ -139,7 +139,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "aK" = (
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/beach/heretic)
 "aL" = (
 /obj/structure/fluff/tram_rail{
@@ -210,7 +210,7 @@
 /obj/machinery/computer/records/security{
 	dir = 4
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/beach/heretic)
 "bc" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
@@ -1243,7 +1243,7 @@
 "gC" = (
 /obj/structure/table,
 /obj/machinery/recharger,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/beach/heretic)
 "gF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -1303,7 +1303,7 @@
 /obj/machinery/computer/crew{
 	dir = 4
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/beach/heretic)
 "gU" = (
 /obj/machinery/conveyor/auto{
@@ -1485,7 +1485,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/beach/heretic)
 "hM" = (
 /obj/machinery/door/airlock{
@@ -2458,7 +2458,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/toxin,
 /obj/item/storage/medkit/toxin,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/beach/heretic)
 "na" = (
 /obj/structure/flora/bush/jungle/a/style_random,
@@ -3024,7 +3024,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit,
 /obj/item/storage/medkit,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/beach/heretic)
 "pH" = (
 /obj/structure/fluff/tram_rail/anchor,
@@ -3383,7 +3383,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/brute,
 /obj/item/storage/medkit/brute,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/beach/heretic)
 "rC" = (
 /obj/structure/chair/wood{
@@ -3498,7 +3498,7 @@
 /turf/open/floor/black,
 /area/awaymission/caves/heretic_laboratory_clean)
 "se" = (
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/beach/heretic)
 "sf" = (
 /obj/machinery/vending/donksofttoyvendor,
@@ -4364,7 +4364,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "wF" = (
 /obj/machinery/suit_storage_unit,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/beach/heretic)
 "wH" = (
 /obj/structure/table/glass,
@@ -4766,7 +4766,7 @@
 "yk" = (
 /obj/structure/curtain/cloth/fancy/mechanical/start_closed,
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/beach/heretic)
 "yo" = (
 /obj/structure/disposalpipe/segment,
@@ -5270,7 +5270,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "Be" = (
 /obj/machinery/gateway,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/beach/heretic)
 "Bf" = (
 /obj/item/clothing/head/collectable/welding,
@@ -5391,7 +5391,7 @@
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
 "BV" = (
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/beach/heretic)
 "BW" = (
 /obj/machinery/door/airlock/highsecurity{
@@ -6321,7 +6321,7 @@
 /area/awaymission/caves/heretic_laboratory_clean)
 "GD" = (
 /obj/structure/rack,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/beach/heretic)
 "GE" = (
 /obj/machinery/light/directional/east,
@@ -6908,7 +6908,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/beach/heretic)
 "Jy" = (
 /obj/effect/mob_spawn/corpse/human/old_pirate_captain,
@@ -7092,7 +7092,7 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/clothing/head/utility/welding,
 /obj/item/clothing/head/utility/welding,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/beach/heretic)
 "Km" = (
 /obj/machinery/light/directional/east,
@@ -7263,7 +7263,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "Ln" = (
 /obj/machinery/door/airlock/titanium,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/beach/heretic)
 "Lo" = (
 /obj/item/paper_bin,
@@ -7868,7 +7868,7 @@
 "OP" = (
 /obj/machinery/light/directional/north,
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/beach/heretic)
 "OQ" = (
 /obj/machinery/vending/boozeomat,
@@ -7939,7 +7939,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "Ph" = (
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/beach/heretic)
 "Pj" = (
 /obj/machinery/light/directional/south,
@@ -8026,7 +8026,7 @@
 "PK" = (
 /obj/machinery/door/airlock/titanium,
 /obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/beach/heretic)
 "PL" = (
 /obj/structure/window/spawner/directional/east,
