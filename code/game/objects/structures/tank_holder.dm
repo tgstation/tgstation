@@ -45,17 +45,27 @@
 		. += span_notice("It is empty.")
 	. += span_notice("It is held together by some <b>screws</b>.")
 
-/obj/structure/tank_holder/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/structure/tank_holder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)
-		return ..()
-	if(W.tool_behaviour == TOOL_WRENCH)
-		to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))
-		if(W.use_tool(src, user, 20, volume=50))
-			to_chat(user, span_notice("You successfully [anchored ? "unwrench" : "wrench"] [src]."))
-			set_anchored(!anchored)
-	else if(!SEND_SIGNAL(W, COMSIG_CONTAINER_TRY_ATTACH, src, user))
-		to_chat(user, span_warning("[W] does not fit in [src]."))
-	return
+		return NONE
+
+	if(!SEND_SIGNAL(tool, COMSIG_CONTAINER_TRY_ATTACH, src, user))
+		to_chat(user, span_warning("[tool] does not fit in [src]."))
+		return ITEM_INTERACT_BLOCKING
+
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/tank_holder/wrench_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+
+	to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))
+	if(!tool.use_tool(src, user, 20, volume=50))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You successfully [anchored ? "unwrench" : "wrench"] [src]."))
+	set_anchored(!anchored)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tank_holder/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())

@@ -366,13 +366,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 		message = deaf_message
 
-		var/show_message_success = show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
-		if(show_message_success && understood)
-			return HEAR_HEARD | HEAR_UNDERSTOOD
-		else if (show_message_success && !understood)
-			return HEAR_HEARD
-		else
-			return FALSE
+		var/hearflags = NONE
+		if(show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight))
+			hearflags |= HEAR_HEARD
+		if(understood)
+			hearflags |= HEAR_UNDERSTOOD
+		return hearflags
 
 	if(speaker != src)
 		if(!radio_freq) //These checks have to be separate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
@@ -391,13 +390,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, message_mods)
-	var/show_message_success = show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, avoid_highlight)
-	if(show_message_success && understood)
-		return HEAR_HEARD | HEAR_UNDERSTOOD
-	else if (show_message_success && !understood)
-		return HEAR_HEARD
-	else
-		return FALSE
+
+	var/hearflags = NONE
+	if(show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, avoid_highlight))
+		hearflags |= HEAR_HEARD
+	if(understood)
+		hearflags |= HEAR_UNDERSTOOD
+	return hearflags
 
 /mob/living/send_speech(message_raw, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language = null, list/message_mods = list(), forced = null, tts_message, list/tts_filter)
 	var/whisper_range = 0

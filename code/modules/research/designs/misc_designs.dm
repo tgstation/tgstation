@@ -1216,3 +1216,15 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/anomalous_fishing_hook
+	name = "Anomalous Fishing Hook"
+	desc = "A fishing hook with a slot for an anomaly core. Depending on the core inserted, it can have various effects on the rod or the fish caught."
+	id = "anomalous_fishing_hook"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.2)
+	build_path = /obj/item/fishing_hook/anomaly
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE

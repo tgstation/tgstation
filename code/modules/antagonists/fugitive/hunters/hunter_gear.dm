@@ -69,6 +69,7 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter/psyker
 	name = "psyker navigation warper"
 	desc = "Uses amplified brainwaves to designate and map a precise transit location for the psyker shuttle."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter/psyker")
 	icon_screen = "recharge_comp_on"
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON //blind friendly
 	x_offset = 0

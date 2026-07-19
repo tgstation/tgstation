@@ -47,7 +47,6 @@
 
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	grant_actions_by_list(innate_actions)
-	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, ai_controller.blackboard[BB_WHELP_STRAIGHTLINE_FIRE])
 
 /mob/living/basic/mining/ice_whelp/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()

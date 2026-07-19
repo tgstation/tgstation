@@ -187,17 +187,19 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
-/obj/item/shield/riot/attackby(obj/item/attackby_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attackby_item, /obj/item/stack/sheet/mineral/titanium))
-		if (atom_integrity >= max_integrity)
-			to_chat(user, span_warning("[src] is already in perfect condition."))
-			return
-		var/obj/item/stack/sheet/mineral/titanium/titanium_sheet = attackby_item
-		titanium_sheet.use(1)
-		atom_integrity = max_integrity
-		to_chat(user, span_notice("You repair [src] with [titanium_sheet]."))
-		return
-	return ..()
+/obj/item/shield/riot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/sheet/mineral/titanium))
+		return NONE
+
+	if (atom_integrity >= max_integrity)
+		to_chat(user, span_warning("[src] is already in perfect condition."))
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/sheet/mineral/titanium/titanium_sheet = tool
+	titanium_sheet.use(1)
+	atom_integrity = max_integrity
+	to_chat(user, span_notice("You repair [src] with [titanium_sheet]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/shield/riot/flash
 	name = "strobe shield"
@@ -263,22 +265,26 @@
 	owner?.update_held_items()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE)) //.5 second delay so the inhands sprite finishes its anim since inhands don't support flick().
 
-/obj/item/shield/riot/flash/attackby(obj/item/attackby_item, mob/user)
-	if(istype(attackby_item, /obj/item/assembly/flash/handheld))
-		var/obj/item/assembly/flash/handheld/flash = attackby_item
-		if(flash.burnt_out)
-			to_chat(user, span_warning("No sense replacing it with a broken bulb!"))
-			return
-		else
-			to_chat(user, span_notice("You begin to replace the bulb..."))
-			if(do_after(user, 2 SECONDS, target = user))
-				if(QDELETED(flash) || flash.burnt_out)
-					return
-				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-				qdel(embedded_flash)
-				flash.forceMove(src)
-				return
-	return ..()
+/obj/item/shield/riot/flash/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/assembly/flash/handheld))
+		return ..()
+
+	var/obj/item/assembly/flash/handheld/flash = tool
+	if(flash.burnt_out)
+		to_chat(user, span_warning("No sense replacing it with a broken bulb!"))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You begin to replace the bulb..."))
+	if(!do_after(user, 2 SECONDS, target = user))
+		return ITEM_INTERACT_BLOCKING
+
+	if(QDELETED(flash) || flash.burnt_out)
+		return ITEM_INTERACT_BLOCKING
+
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	qdel(embedded_flash)
+	flash.forceMove(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/shield/riot/flash/emp_act(severity)
 	. = ..()
@@ -460,17 +466,19 @@
 	shield_break_leftover = /obj/item/stack/rods/ten
 	armor_type = /datum/armor/item_shield/ballistic
 
-/obj/item/shield/ballistic/attackby(obj/item/attackby_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attackby_item, /obj/item/stack/sheet/mineral/titanium))
-		if (atom_integrity >= max_integrity)
-			to_chat(user, span_warning("[src] is already in perfect condition."))
-			return
-		var/obj/item/stack/sheet/mineral/titanium/titanium_sheet = attackby_item
-		titanium_sheet.use(1)
-		atom_integrity = max_integrity
-		to_chat(user, span_notice("You repair [src] with [titanium_sheet]."))
-		return
-	return ..()
+/obj/item/shield/ballistic/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/sheet/mineral/titanium))
+		return NONE
+
+	if (atom_integrity >= max_integrity)
+		to_chat(user, span_warning("[src] is already in perfect condition."))
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/sheet/mineral/titanium/titanium_sheet = tool
+	titanium_sheet.use(1)
+	atom_integrity = max_integrity
+	to_chat(user, span_notice("You repair [src] with [titanium_sheet]."))
+	return ITEM_INTERACT_SUCCESS
 
 /datum/armor/item_shield/improvised
 	melee = 40

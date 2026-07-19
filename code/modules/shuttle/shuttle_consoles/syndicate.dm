@@ -4,6 +4,7 @@
 	name = "syndicate shuttle terminal"
 	desc = "The terminal used to control the syndicate transport shuttle."
 	circuit = /obj/item/circuitboard/computer/syndicate_shuttle
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate")
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
 	light_color = COLOR_SOFT_RED
@@ -56,6 +57,7 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate
 	name = "syndicate shuttle navigation computer"
 	desc = "Used to designate a precise transit location for the syndicate shuttle."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate")
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
 	shuttleId = "syndicate"

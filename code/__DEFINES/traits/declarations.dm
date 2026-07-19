@@ -196,8 +196,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VIRUS_RESISTANCE "virus_resistance"
 /// Causes viruses, infected burns, and parasites to spread more effectively and faster, like an inverse of the above.
 #define TRAIT_IMMUNODEFICIENCY "immunodeficiency"
-/// Prevents viruses from curing naturaly
-#define TRAIT_NO_SELF_CURE "noselfcure"
 #define TRAIT_GENELESS "geneless"
 #define TRAIT_PIERCEIMMUNE "pierce_immunity"
 #define TRAIT_NODISMEMBER "dismember_immunity"
@@ -994,6 +992,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SKIP_BASIC_REACH_CHECK "skip_basic_reach_check"
 /// Increases chance of this brain getting special traumas, makes them harder to cure
 #define TRAIT_SPECIAL_TRAUMA_BOOST "special_trauma_boost"
+/// If this item is offered when something is pulled.
+#define TRAIT_OFFERED_WHEN_PULLED "offered_when_pulled"
+/// If the item has a special mob/living/give() interaction.
+#define TRAIT_BORG_GIVE "give_borg_item"
 
 //---- Heretic Traits
 /// Hides the heretic overlay that outs them as the heretic

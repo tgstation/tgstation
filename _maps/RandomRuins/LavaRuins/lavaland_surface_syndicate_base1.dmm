@@ -605,6 +605,7 @@
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/item/storage/pill_bottle/sepsisillin,
 /turf/open/floor/iron/white/side{
 	dir = 9
 	},

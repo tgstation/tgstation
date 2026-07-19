@@ -1029,7 +1029,8 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 		if (!buckled.anchored)
 			buckled.moving_from_pull = moving_from_pull
 			. = buckled.Move(newloc, direct, glide_size)
-			buckled.moving_from_pull = null
+			if(buckled) //buckled can become unbuckled, apparently
+				buckled.moving_from_pull = null
 		return
 
 	var/old_direction = dir
@@ -1960,10 +1961,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	//Check the amount of clients exists on the Z level we're leaving from,
 	//this excludes us because at this point we are not registered to any z level.
 	var/old_level_new_clients = (registered_z ? SSmobs.clients_by_zlevel[registered_z].len : null)
-	//No one is left after we're gone, shut off inactive ones
+	//No one is left after we're gone, recalculate AI status so eligible ones shut off
 	if(registered_z && old_level_new_clients == 0)
-		for(var/datum/ai_controller/controller as anything in GLOB.ai_controllers_by_zlevel[registered_z])
-			controller.set_ai_status(AI_STATUS_OFF)
+		for(var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[registered_z])
+			controller.set_ai_status(controller.get_expected_ai_status())
 
 	if(new_z)
 		//Check the amount of clients exists on the Z level we're moving towards, excluding ourselves.
@@ -1973,7 +1974,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		SSmobs.clients_by_zlevel[new_z] += src
 
 		if(new_level_old_clients == 0) //No one was here before, wake up all the AIs.
-			for (var/datum/ai_controller/controller as anything in GLOB.ai_controllers_by_zlevel[new_z])
+			for (var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[new_z])
 				//We don't set them directly on, for instances like AIs acting while dead and other cases that may exist in the future.
 				//This isn't a problem for AIs with a client since the client will prevent this from being called anyway.
 				controller.set_ai_status(controller.get_expected_ai_status())
@@ -1984,26 +1985,17 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	..()
 	update_z(new_turf?.z)
 
-/mob/living/mouse_drop_receive(atom/dropping, atom/user, params)
-	var/mob/living/U = user
-	if(isliving(dropping))
-		var/mob/living/M = dropping
-		if(M.can_be_held && U.pulling == M)
-			M.mob_try_pickup(U)//blame kevinz
-			return//dont open the mobs inventory if you are picking them up
-	return ..()
+/mob/living/proc/set_name()
+	if(identifier == 0)
+		identifier = rand(1, 999)
+	name = "[name] ([identifier])"
+	real_name = name
 
 /mob/living/proc/mob_pickup(mob/living/user)
 	var/obj/item/mob_holder/holder = new inhand_holder_type(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
 	SEND_SIGNAL(src, COMSIG_LIVING_SCOOPED_UP, user, holder)
 	user.visible_message(span_warning("[user] scoops up [src]!"))
 	user.put_in_hands(holder)
-
-/mob/living/proc/set_name()
-	if(identifier == 0)
-		identifier = rand(1, 999)
-	name = "[name] ([identifier])"
-	real_name = name
 
 /mob/living/proc/mob_try_pickup(mob/living/user, instant=FALSE)
 	if(!ishuman(user) && (user.mob_size <= mob_size || user.num_hands == 0))
@@ -2590,7 +2582,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/perform_hand_swap(held_index)
 	//safeguard for one-handed mobs lol
-	if(num_hands == 1)
+	if(length(held_items) == 1)
 		held_index = 1
 
 	return ..()
