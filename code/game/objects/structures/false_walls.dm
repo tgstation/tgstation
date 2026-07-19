@@ -314,6 +314,7 @@
 /obj/structure/falsewall/sandstone/wall_fill
 	mineral = /obj/item/stack/wall_filling/sandstone/basic
 	walltype = /turf/closed/wall/mineral/sandstone/wall_fill
+	mineral_amount = 1
 
 /obj/structure/falsewall/sandstone/ornate
 	name = "ornate sandstone wall"
@@ -322,6 +323,7 @@
 	icon_state = "sandstone_ornate_wall-open"
 	base_icon_state = "sandstone_ornate_wall"
 	mineral = /obj/item/stack/wall_filling/sandstone/ornate
+	mineral_amount = 1
 	walltype = /turf/closed/wall/mineral/sandstone/ornate
 
 /obj/structure/falsewall/wood
@@ -421,6 +423,7 @@
 	icon_state = "dark_pod_walls-open"
 	base_icon_state = "dark_pod_walls"
 	mineral = /obj/item/stack/wall_filling/plastitanium/pod
+	mineral_amount = 1
 	walltype = /turf/closed/wall/mineral/plastitanium/darkpod
 	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
@@ -432,6 +435,7 @@
 	icon_state = "red_pod_walls-open"
 	base_icon_state = "red_pod_walls"
 	mineral = /obj/item/stack/wall_filling/plastitanium/redpod
+	mineral_amount = 1
 	walltype = /turf/closed/wall/mineral/plastitanium/redpod
 	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
@@ -443,7 +447,8 @@
 	icon_state = "survival_pod_walls-open"
 	base_icon_state = "survival_pod_walls"
 	mineral = /obj/item/stack/wall_filling/plastitanium/survivalpod
-	walltype = /turf/closed/wall/mineral/plastitanium/survival/pod
+	mineral_amount = 1
+	walltype = /turf/closed/wall/mineral/plastitanium/survival
 	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
 
