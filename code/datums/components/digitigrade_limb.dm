@@ -23,6 +23,7 @@
 
 	RegisterSignal(parent, COMSIG_BODYPART_UPDATED, PROC_REF(update_limb_id_comsig))
 	RegisterSignal(parent, COMSIG_BODYPART_ATTACHED, PROC_REF(on_attach))
+	RegisterSignal(parent, COMSIG_BODYPART_REMOVED, PROC_REF(on_remove))
 
 	if(ishuman(limb.owner))
 		on_attach(limb, limb.owner)
