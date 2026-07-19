@@ -5,7 +5,6 @@
 	icon_state = "rose"
 	abstract_type = /obj/item/food/grown/flower
 	foodtypes = VEGETABLES
-	seed = /obj/item/seeds/rose
 
 // Poppy
 /obj/item/seeds/poppy
