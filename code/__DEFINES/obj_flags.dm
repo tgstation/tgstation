@@ -141,4 +141,3 @@
 #define INCLUDE_PROSTHETICS (1<<3)
 /// Include items that are not "real" items, such as hand items
 #define INCLUDE_ABSTRACT (1<<4)
-#define INCLUDE_SUIT_STORAGE (1<<5)
