@@ -433,7 +433,7 @@
 		summoned = mob_to_summon
 	else
 		summoned = new mob_to_summon(loc)
-	summoned.ai_controller?.set_ai_status(AI_STATUS_OFF)
+	summoned.ai_controller?.force_ai_off()
 	// Fade in the summon while the ghost poll is ongoing.
 	// Also don't let them mess with the summon while waiting
 	summoned.alpha = 0
@@ -456,6 +456,7 @@
 
 	summoned.ghostize(FALSE)
 	summoned.PossessByPlayer(chosen_one.key)
+	summoned.ai_controller?.clear_forced_off() //the client keeps the AI off from here; if they disconnect the AI may take back over
 
 	user.log_message("created a [summoned.name], controlled by [key_name(chosen_one)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")

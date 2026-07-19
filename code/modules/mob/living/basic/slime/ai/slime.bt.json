@@ -1,0 +1,212 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/slime",
+	"type": "selector",
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity"
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/ability_available",
+			"vars": {
+				"ability_key": "BB_SLIME_EVOLVE"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
+				"vars": {
+					"ability_key": "BB_SLIME_EVOLVE"
+				}
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/ability_available",
+			"vars": {
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+				"ability_key": "BB_SLIME_REPRODUCE"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
+				"vars": {
+					"ability_key": "BB_SLIME_REPRODUCE"
+				}
+			}
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree",
+			"override_id": "SUBPLAN_ID_PET_COMMAND"
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"observer_abort": "BT_ABORT_BOTH",
+								"key": "BB_SLIME_EAT_TARGET"
+							},
+							"child": {
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": true,
+								"finish_on_primary": true,
+								"children": [
+									{
+										"type": "subplan",
+										"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+										"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+										"children": [
+											{
+												"type": "selector",
+												"children": [
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/feed_on_slime_target",
+														"vars": {
+															"target_key": "BB_SLIME_EAT_TARGET"
+														}
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+														"vars": {
+															"target_key": "BB_SLIME_EAT_TARGET",
+															"targeting_strategy": "BB_TARGETING_STRATEGY",
+															"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+														}
+													}
+												]
+											}
+										]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"vars": {
+											"target_key": "BB_SLIME_EAT_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": false
+										}
+									}
+								]
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"observer_abort": "BT_ABORT_BOTH",
+								"key": "BB_CURRENT_TARGET"
+							},
+							"child": {
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": true,
+								"finish_on_primary": true,
+								"children": [
+									{
+										"type": "subplan",
+										"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+										"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+										"children": [
+											{
+												"type": "selector",
+												"children": [
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/feed_on_slime_target",
+														"vars": {
+															"target_key": "BB_CURRENT_TARGET"
+														}
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+														"vars": {
+															"target_key": "BB_CURRENT_TARGET",
+															"targeting_strategy": "BB_TARGETING_STRATEGY",
+															"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+														}
+													}
+												]
+											}
+										]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": false
+										}
+									}
+								]
+							}
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/random_walk"
+						}
+					]
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list",
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION",
+						"check_faction": false
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/slime_wants_to_eat",
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+						"vars": {
+							"target_key": "BB_SLIME_EAT_TARGET",
+							"targeting_strategy": "/datum/targeting_strategy/slime_food",
+							"target_source": "/datum/target_source/oview_living_no_slimes",
+							"vision_range": 7,
+							"must_be_reachable": true
+						}
+					}
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/random_speech_loop"
+				},
+				{
+					"type": "subplan",
+					"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+					"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+					"loop_delay": "1 SECONDS",
+					"children": [
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/change_slime_face"
+						}
+					]
+				}
+			]
+		}
+	]
+}

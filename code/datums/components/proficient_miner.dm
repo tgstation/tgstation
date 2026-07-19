@@ -15,14 +15,27 @@
 
 /datum/component/proficient_miner/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(on_bump))
+	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
 
 /datum/component/proficient_miner/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MOVABLE_BUMP)
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_BUMP, COMSIG_LIVING_UNARMED_ATTACK))
+
+/datum/component/proficient_miner/proc/on_unarmed_attack(mob/living/source, atom/target, proximity, modifiers)
+	SIGNAL_HANDLER
+
+	if(!proximity)
+		return
+	try_mine(source, target)
 
 /datum/component/proficient_miner/proc/on_bump(atom/movable/source, atom/target)
 	SIGNAL_HANDLER
 
-	if(!ismineralturf(target) || last_bumpmine_tick == world.time)
+	if(last_bumpmine_tick == world.time)
+		return
+	try_mine(source, target)
+
+/datum/component/proficient_miner/proc/try_mine(atom/movable/source, atom/target)
+	if(!ismineralturf(target))
 		return
 
 	var/mob/living/user = null

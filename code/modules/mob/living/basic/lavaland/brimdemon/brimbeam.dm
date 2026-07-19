@@ -7,7 +7,7 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 	click_to_activate = TRUE
-	cooldown_time = 5 SECONDS
+	cooldown_time = 3 SECONDS
 	melee_cooldown_time = 0
 	/// How far does our beam go?
 	var/beam_range = 10

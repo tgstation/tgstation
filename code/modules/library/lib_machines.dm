@@ -20,7 +20,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
  */
 /obj/machinery/computer/libraryconsole
 	name = "library visitor console"
-	icon_state = "oldcomp"
+	icon_state = MAP_SWITCH("oldcomp", "/obj/machinery/computer/pod/old")
 	icon_screen = "library"
 	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
@@ -282,7 +282,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	verb_exclaim = "beeps"
 	pass_flags = PASSTABLE
 
-	icon_state = "oldcomp"
+	icon_state = MAP_SWITCH("oldcomp", "/obj/machinery/computer/pod/old")
 	icon_screen = "library"
 	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole

@@ -127,7 +127,8 @@
 	apply_tint(TRUE)
 
 /datum/component/clothing_dirt/proc/is_protected(mob/living/carbon/wearer)
-	return wearer.head && wearer.head != parent && (wearer.head.flags_cover & PEPPERPROOF)
+	var/obj/item/head_cover = wearer.get_item_by_slot(ITEM_SLOT_HEAD)
+	return istype(head_cover) && head_cover != parent && (head_cover.flags_cover & PEPPERPROOF)
 
 /datum/component/clothing_dirt/proc/remove_tint(updates = TRUE)
 	if(!tint_applied)

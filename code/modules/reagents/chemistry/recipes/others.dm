@@ -3,11 +3,13 @@
 	results = list(/datum/reagent/space_cleaner/sterilizine = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/c2/multiver = 1, /datum/reagent/chlorine = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+	thermic_constant = 50
 
 /datum/chemical_reaction/lube
 	results = list(/datum/reagent/lube = 4)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/silicon = 1, /datum/reagent/oxygen = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+	thermic_constant = 50
 
 /datum/chemical_reaction/lube/superlube
 	results = list(/datum/reagent/lube/superlube = 3)
@@ -28,11 +30,13 @@
 	results = list(/datum/reagent/impedrezene = 2)
 	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/oxygen = 1, /datum/reagent/consumable/sugar = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_ORGAN
+	thermic_constant = 50
 
 /datum/chemical_reaction/cryptobiolin
 	results = list(/datum/reagent/cryptobiolin = 3)
 	required_reagents = list(/datum/reagent/potassium = 1, /datum/reagent/oxygen = 1, /datum/reagent/consumable/sugar = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+	thermic_constant = 50
 
 /datum/chemical_reaction/glycerol
 	results = list(/datum/reagent/glycerol = 1)
@@ -43,6 +47,7 @@
 	results = list(/datum/reagent/consumable/salt = 2)
 	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/chlorine = 1) // That's what I said! Sodium Chloride!
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_FOOD | REACTION_TAG_COMPONENT
+	thermic_constant = 50
 
 /datum/chemical_reaction/sodiumchloride/pre_reaction_other_checks(datum/reagents/holder)
 	. = ..()
@@ -172,6 +177,7 @@
 	results = list(/datum/reagent/mulligan = 1)
 	required_reagents = list(/datum/reagent/mutationtoxin/jelly = 1, /datum/reagent/toxin/mutagen = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
+	thermic_constant = 50
 
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
@@ -194,12 +200,10 @@
 /datum/chemical_reaction/virus_food_plasma
 	results = list(/datum/reagent/toxin/plasma/plasmavirusfood = 1)
 	required_reagents = list(/datum/reagent/toxin/plasma = 1, /datum/reagent/consumable/virus_food = 1)
-	thermic_constant = 20 // To avoid the plasma boiling
 
 /datum/chemical_reaction/virus_food_plasma_synaptizine
 	results = list(/datum/reagent/toxin/plasma/plasmavirusfood/weak = 2)
 	required_reagents = list(/datum/reagent/medicine/synaptizine = 1, /datum/reagent/toxin/plasma/plasmavirusfood = 1)
-	thermic_constant = 20 // To avoid the plasma boiling
 
 /datum/chemical_reaction/virus_food_mutagen_sugar
 	results = list(/datum/reagent/toxin/mutagen/mutagenvirusfood/sugar = 2)
@@ -341,6 +345,7 @@
 	required_reagents = list(/datum/reagent/fluorine = 2, /datum/reagent/carbon = 2, /datum/reagent/toxin/acid = 1)
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
+	thermic_constant = 50
 
 /datum/chemical_reaction/foam
 	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water = 1)
@@ -425,11 +430,13 @@
 	optimal_ph_max = 12
 	H_ion_release = -0.02 //handmade is more neutral
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_PLANT | REACTION_TAG_COMPONENT
+	thermic_constant = 50
 
 /datum/chemical_reaction/diethylamine
 	results = list(/datum/reagent/diethylamine = 2)
 	required_reagents = list (/datum/reagent/ammonia = 1, /datum/reagent/consumable/ethanol = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_PLANT | REACTION_TAG_COMPONENT
+	thermic_constant = 50
 
 /datum/chemical_reaction/space_cleaner
 	results = list(/datum/reagent/space_cleaner = 2)
@@ -464,6 +471,7 @@
 	results = list(/datum/reagent/acetone = 3)
 	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/fuel = 1, /datum/reagent/oxygen = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPONENT
+	thermic_constant = 50
 
 /datum/chemical_reaction/carpet
 	results = list(/datum/reagent/carpet = 2)
@@ -570,6 +578,7 @@
 	results = list(/datum/reagent/phenol = 3)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/chlorine = 1, /datum/reagent/fuel/oil = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPONENT
+	thermic_constant = 50
 
 /datum/chemical_reaction/ash
 	results = list(/datum/reagent/ash = 1)
@@ -937,7 +946,6 @@
 	overheat_temp = 0
 	optimal_ph_min = 0
 	optimal_ph_max = 14
-	thermic_constant = 0
 	H_ion_release = 0
 	rate_up_lim = 50
 	purity_min = 0
@@ -953,7 +961,6 @@
 	overheat_temp = NO_OVERHEAT
 	optimal_ph_min = 0
 	optimal_ph_max = 14
-	thermic_constant = 0
 	H_ion_release = 0
 	rate_up_lim = 50
 	purity_min = 0
@@ -970,7 +977,6 @@
 	overheat_temp = NO_OVERHEAT
 	optimal_ph_min = 0
 	optimal_ph_max = 14
-	thermic_constant = 0
 	H_ion_release = 0
 	rate_up_lim = 50
 	purity_min = 0

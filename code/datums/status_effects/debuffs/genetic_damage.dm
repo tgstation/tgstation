@@ -46,11 +46,11 @@
 		qdel(src)
 		return
 
-/datum/status_effect/genetic_damage/proc/on_healthscan(datum/source, list/render_list, advanced, mob/user, mode, tochat)
+/datum/status_effect/genetic_damage/proc/on_healthscan(datum/source, list/render_list, scanpower, mob/user, mode, tochat)
 	SIGNAL_HANDLER
 
 	var/message = ""
-	if(advanced)
+	if(scanpower >= SCANPOWER_ADVANCED)
 		message = "Genetic damage: [round(total_damage / minimum_before_tox_damage * 100, 0.1)]%"
 	else if(total_damage >= minimum_before_tox_damage)
 		message = "Severe genetic damage detected."

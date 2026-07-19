@@ -81,7 +81,6 @@
 /// Default view range for finding targets.
 #define DEFAULT_SCAN_RANGE 7
 //Amount of time that must pass after a Commissioned bot gets saluted to get another.
-#define BOT_COMMISSIONED_SALUTE_DELAY (60 SECONDS)
 
 //Bot mode defines displaying how Bots act
 ///The Bot is currently active, and will do whatever it is programmed to do.

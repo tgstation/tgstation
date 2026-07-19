@@ -1,0 +1,4 @@
+author: "QuiteLiterallyAnything"
+delete-after: True
+changes:
+  - bugfix: "Broken mirrors no longer produce an intact mirror upon deconstruction."

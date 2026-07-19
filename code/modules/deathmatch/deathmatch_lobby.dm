@@ -360,8 +360,6 @@
 	.["maps"] = list()
 	for (var/map_key in GLOB.deathmatch_game.maps)
 		.["maps"] += map_key
-	.["maps"] = sort_list(.["maps"])
-
 
 /datum/deathmatch_lobby/ui_data(mob/user)
 	var/list/data = list()

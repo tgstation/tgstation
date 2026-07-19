@@ -146,13 +146,9 @@
 				if(ishuman(living_user))
 					context[SCREENTIP_CONTEXT_LMB] = "Knock"
 					return CONTEXTUAL_SCREENTIP_SET
-			else
-				if(ismonkey(living_user))
-					context[SCREENTIP_CONTEXT_LMB] = "Attack"
-					return CONTEXTUAL_SCREENTIP_SET
-				if(ishuman(living_user))
-					context[SCREENTIP_CONTEXT_LMB] = "Bash"
-					return CONTEXTUAL_SCREENTIP_SET
+			else if(ishuman(living_user))
+				context[SCREENTIP_CONTEXT_LMB] = "Bash"
+				return CONTEXTUAL_SCREENTIP_SET
 		else if(issilicon(living_user))
 			context[SCREENTIP_CONTEXT_LMB] = "Close"
 			return CONTEXTUAL_SCREENTIP_SET
@@ -286,7 +282,7 @@
 
 	if(environment.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		return FIRELOCK_ALARM_TYPE_HOT
-	if(environment.gases[/datum/gas/antinoblium] && environment.gases[/datum/gas/antinoblium][MOLES] > MINIMUM_MOLE_COUNT)
+	if(environment.moles[/datum/gas/antinoblium] > MINIMUM_MOLE_COUNT)
 		return FIRELOCK_ALARM_TYPE_HOT
 	if(environment.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
 		return FIRELOCK_ALARM_TYPE_COLD
