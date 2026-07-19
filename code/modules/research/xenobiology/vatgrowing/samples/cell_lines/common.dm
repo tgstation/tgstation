@@ -115,20 +115,20 @@
 /datum/micro_organism/cell_line/sheep
 	desc = "Ovis cells"
 	required_reagents = list(
-	/datum/reagent/consumable/nutriment/protein,
-	/datum/reagent/consumable/nutriment
+		/datum/reagent/consumable/nutriment/protein,
+		/datum/reagent/consumable/nutriment,
 	)
 
 	supplementary_reagents = list(
-	/datum/reagent/growthserum = 3,
-	/datum/reagent/consumable/nutriment/vitamin = 1,
-	/datum/reagent/barbers_aid = 4
+		/datum/reagent/growthserum = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/barbers_aid = 4,
 	)
 
 	suppressive_reagents = list(
-	/datum/reagent/toxin = -1,
-	/datum/reagent/baldium = -3,
-	/datum/reagent/consumable/sugar = -2
+		/datum/reagent/toxin = -1,
+		datum/reagent/baldium = -3,
+		/datum/reagent/consumable/sugar = -2,
 	)
 
 	virus_suspectibility = 1
@@ -217,17 +217,20 @@
 	desc = "Vulpes cells"
 	required_reagents = list(
 		/datum/reagent/consumable/nutriment/protein,
-		/datum/reagent/consumable/liquidgibs)
+		/datum/reagent/consumable/liquidgibs,
+	)
 
 	supplementary_reagents = list(
 		/datum/reagent/growthserum = 3,
-		/datum/reagent/consumable/nutriment/vitamin = 3)
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
 
 	suppressive_reagents = list(
 		/datum/reagent/consumable/garlic = -2,
 		/datum/reagent/consumable/coco = -2,
 		/datum/reagent/consumable/corn_syrup = -2,
-		/datum/reagent/consumable/flour = -3)
+		/datum/reagent/consumable/flour = -3,
+	)
 
 	virus_suspectibility = 1
 	resulting_atom = /mob/living/basic/pet/fox
@@ -236,57 +239,62 @@
 	desc = "Ermine cells"
 	required_reagents = list(
 		/datum/reagent/consumable/nutriment/protein,
-		/datum/reagent/consumable/liquidgibs)
+		/datum/reagent/consumable/liquidgibs,
+	)
 
 	supplementary_reagents = list(
 		/datum/reagent/consumable/eggyolk = 3,
 		/datum/reagent/consumable/eggwhite = 2,
 		/datum/reagent/growthserum = 2,
-		/datum/reagent/consumable/nutriment/vitamin = 1)
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 
 	suppressive_reagents = list(
 		/datum/reagent/consumable/garlic = -2,
 		/datum/reagent/consumable/coco = -2,
-		/datum/reagent/consumable/corn_syrup = -2)
+		/datum/reagent/consumable/corn_syrup = -2,
+	)
 
 	virus_suspectibility = 2
 	resulting_atom = /mob/living/basic/stoat
 
 /datum/micro_organism/cell_line/rabbit
 	desc = "Lepus cells"
-	required_reagents = list(
-		/datum/reagent/consumable/nutriment/protein)
+	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
 
 	supplementary_reagents = list(
 		/datum/reagent/growthserum = 2,
 		/datum/reagent/consumable/nutriment = 1,
 		/datum/reagent/blood = 2, // we really need a Holy Grenade with this one
-		/datum/reagent/consumable/nutriment/vitamin = 1)
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 
 	suppressive_reagents = list(
 		/datum/reagent/consumable/garlic = -2,
 		/datum/reagent/consumable/tomatojuice = -1,
 		/datum/reagent/consumable/potato_juice = -1,
 		/datum/reagent/consumable/lemonjuice = -1,
-		/datum/reagent/consumable/limejuice = -1)
+		/datum/reagent/consumable/limejuice = -1,
+	)
 
 	virus_suspectibility = 5
 	resulting_atom = /mob/living/basic/rabbit
 
 /datum/micro_organism/cell_line/mothroach
 	desc = "Lepidoptera cells"
-	required_reagents = list(
-		/datum/reagent/consumable/nutriment/protein)
+	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
 
 	supplementary_reagents = list(
 		/datum/reagent/cellulose = 4,
 		/datum/reagent/consumable/nutriment = 1,
-		/datum/reagent/consumable/nutriment/vitamin = 1)
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 
 	suppressive_reagents = list(
 		/datum/reagent/toxin/pestkiller = -2,
 		/datum/reagent/consumable/poisonberryjuice = -4,
-		/datum/reagent/consumable/ethanol/bug_spray = -4)
+		/datum/reagent/consumable/ethanol/bug_spray = -4,
+	)
 
 	virus_suspectibility = 1
 	resulting_atom = /mob/living/basic/mothroach
@@ -359,11 +367,13 @@
 	supplementary_reagents = list(
 		/datum/reagent/water/salt = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
-		/datum/reagent/medicine/strange_reagent/fishy_reagent = 10)
+		/datum/reagent/medicine/strange_reagent/fishy_reagent = 10,
+	)
 
 	suppressive_reagents = list(
 		/datum/reagent/toxin/bungotoxin = -6,
-		/datum/reagent/carbondioxide = -3)
+		/datum/reagent/carbondioxide = -3,
+	)
 
 	virus_suspectibility = 1
 	resulting_atom = /mob/living/basic/pet/penguin/baby
@@ -397,14 +407,16 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,	// Mostly similar to mouse supplementary reagents.
 		/datum/reagent/consumable/nutriment/fat/oil = 2,
 		/datum/reagent/consumable/rice = 1,
-		/datum/reagent/consumable/eggyolk = 1)
+		/datum/reagent/consumable/eggyolk = 1,
+	)
 
 	suppressive_reagents = list(
 		/datum/reagent/consumable/corn_syrup = -6,
 		/datum/reagent/consumable/sugar = -3,
 		/datum/reagent/consumable/salt = -3,
 		/datum/reagent/consumable/tomatojuice = -1,
-		/datum/reagent/sulfur = -3) //sulfur repels lizards too.
+		/datum/reagent/sulfur = -3, //sulfur repels lizards too.
+	)
 
 	resulting_atom = /mob/living/basic/lizard
 
