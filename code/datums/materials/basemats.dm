@@ -91,7 +91,7 @@
 		MATERIAL_ELECTRICAL = 9,
 		MATERIAL_THERMAL = 4,
 		MATERIAL_CHEMICAL = 4,
-		MATERIAL_UNHOLY_BANE = 5,
+		MATERIAL_UNHOLY_BANE = 8,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	ore_type = /obj/item/stack/ore/silver

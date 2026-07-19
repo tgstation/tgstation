@@ -25,7 +25,7 @@
 	pixel_y = 4
 	},
 /obj/item/storage/toolbox/emergency,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/arrival)
 "g" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst/right{
@@ -35,7 +35,7 @@
 /area/shuttle/arrival)
 "j" = (
 /obj/structure/closet/firecloset/full,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/arrival)
 "k" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -44,43 +44,43 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/tank/internals/emergency_oxygen,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/arrival)
 "n" = (
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/arrival)
 "q" = (
 /obj/structure/closet/wardrobe/grey,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/arrival)
 "r" = (
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/arrival)
 "s" = (
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/arrival)
 "t" = (
-/turf/closed/wall/mineral/titanium/survival,
+/turf/closed/wall/mineral/plastitanium/survival,
 /area/shuttle/arrival)
 "u" = (
 /obj/effect/turf_decal/trimline/red/corner,
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 8
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/arrival)
 "v" = (
 /obj/structure/closet/wardrobe/mixed,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/arrival)
 "w" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst/left{
@@ -92,14 +92,14 @@
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/arrival)
 "z" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/arrival)
 "A" = (
 /obj/effect/turf_decal/trimline/red/warning{
@@ -108,7 +108,7 @@
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 4
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/arrival)
 "C" = (
 /obj/effect/turf_decal/trimline/red/corner{
@@ -117,7 +117,7 @@
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 1
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/arrival)
 "D" = (
 /obj/machinery/power/shuttle_engine/propulsion{
@@ -132,7 +132,7 @@
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/arrival)
 "F" = (
 /obj/structure/chair/comfy/shuttle,
@@ -150,7 +150,7 @@
 	dir = 1
 	},
 /obj/machinery/light/red/directional/south,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/arrival)
 "L" = (
 /obj/machinery/power/shuttle_engine/heater{
@@ -163,7 +163,7 @@
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/arrival)
 "N" = (
 /obj/structure/chair/comfy/shuttle,
@@ -171,7 +171,7 @@
 /area/shuttle/arrival)
 "P" = (
 /obj/effect/turf_decal/trimline/red/warning,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/arrival)
 "V" = (
 /obj/structure/chair/comfy/shuttle,
@@ -180,7 +180,7 @@
 /area/shuttle/arrival)
 "W" = (
 /obj/effect/turf_decal/trimline/red/corner,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/arrival)
 "Z" = (
 /obj/effect/spawner/structure/window/survival_pod,

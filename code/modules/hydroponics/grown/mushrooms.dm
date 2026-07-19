@@ -195,19 +195,21 @@
 	desc = "<I>Cantharellus Cibarius</I>: These jolly yellow little shrooms sure look tasty!"
 	icon_state = "chanterelle"
 
-/obj/item/food/grown/mushroom/chanterelle/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(I, /obj/item/kitchen/spoon))
-		return ..()
-	if(seed.potency < 95)
-		return ..()
+/obj/item/food/grown/mushroom/chanterelle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/kitchen/spoon))
+		return NONE
 
-	to_chat(user, span_notice("You hollow up the chanterelle with [I]."))
+	if(seed.potency < 95)
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You hollow out the chanterelle with [tool]."))
 	remove_item_from_storage(user)
 	if(seed.resistance_flags & FIRE_PROOF)
-		user.put_in_hands(new /obj/item/clothing/head/wizard/chanterelle/fr())
+		user.put_in_hands(new /obj/item/clothing/head/wizard/chanterelle/fireproof())
 	else
 		user.put_in_hands(new /obj/item/clothing/head/wizard/chanterelle())
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 //Jupiter Cup
 /obj/item/seeds/chanter/jupitercup

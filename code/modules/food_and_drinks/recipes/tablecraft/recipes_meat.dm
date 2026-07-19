@@ -100,7 +100,7 @@
 	name = "Stewed soymeat"
 	reqs = list(
 		/obj/item/food/soydope = 2,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/stewedsoymeat

@@ -93,7 +93,7 @@ export const ProcCallMenu = (props) => {
                         datatype: type,
                       })
                     }
-                    onEnter={(e, value) =>
+                    onEnter={(value) =>
                       act('rename_argument', {
                         index: index + 1,
                         name: value,

@@ -91,6 +91,6 @@
 		balloon_alert(src, "feeding stopped")
 	remove_offsets(FEEDING_OFFSET)
 	layer = initial(layer)
-	buckled.unbuckle_mob(src,force=TRUE)
+	INVOKE_ASYNC(buckled, TYPE_PROC_REF(/atom/movable, unbuckle_mob), src, force=TRUE)
 
 #undef FEEDING_OFFSET

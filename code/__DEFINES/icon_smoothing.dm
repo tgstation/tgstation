@@ -141,7 +141,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_RED_ROCK_WALLS S_TURF(62) ///turf/closed/mineral/asteroid, /turf/closed/mineral/random/stationside/asteroid
 #define SMOOTH_GROUP_SHALE_WALLS S_TURF(63) ///turf/closed/mineral/random/volcanic/shale
 #define SMOOTH_GROUP_BOSS_WALLS S_TURF(64) ///turf/closed/indestructible/riveted/boss
-#define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(65) ///turf/closed/wall/mineral/titanium/survival
+#define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(65) ///turf/closed/wall/mineral/plastitanium/survival
 #define SMOOTH_GROUP_TURF_OPEN_CLIFF S_TURF(66) ///turf/open/cliff
 #define SMOOTH_GROUP_HIEROPHANT S_TURF(67) ///turf/closed/indestructible/riveted/hierophant
 #define SMOOTH_GROUP_PLASTINUM_WALLS S_TURF(68) ///turf/closed/indestructible/riveted/plastinum
@@ -164,7 +164,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_ABDUCTOR_WALLS S_OBJ(11) ///turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor
 #define SMOOTH_GROUP_TITANIUM_WALLS S_OBJ(12) ///turf/closed/wall/mineral/titanium, /obj/structure/falsewall/titanium
 #define SMOOTH_GROUP_PLASTITANIUM_WALLS S_OBJ(14) ///turf/closed/wall/mineral/plastitanium, /obj/structure/falsewall/plastitanium
-#define SMOOTH_GROUP_SURVIVAL_TITANIUM_POD S_OBJ(15) ///turf/closed/wall/mineral/titanium/survival/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/reinforced/shuttle/survival_pod
+#define SMOOTH_GROUP_SURVIVAL_TITANIUM_POD S_OBJ(15) ///turf/closed/wall/mineral/plastitanium/survival/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/reinforced/shuttle/survival_pod
 #define SMOOTH_GROUP_HIERO_WALL S_OBJ(16) ///obj/effect/temp_visual/elite_tumor_wall, /obj/effect/temp_visual/hierophant/wall
 #define SMOOTH_GROUP_BAMBOO_WALLS S_OBJ(17) //![/turf/closed/wall/mineral/bamboo, /obj/structure/falsewall/bamboo]
 

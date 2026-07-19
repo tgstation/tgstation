@@ -1,0 +1,245 @@
+{
+	"dm_type": "/datum/ai_controller/monkey",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"repeat_secondary_delay": "1 SECONDS",
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/escape_captivity"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/monkey_combat"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/monkey_serve_food"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/generic_hunger"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/generic_play_instrument"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/monkey_shenanigans"
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/monkey_idle"
+				}
+			]
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_CURRENT_TARGET",
+				"invert": true
+			},
+			"child": {
+				"type": "selector",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/monkey_set_combat_target",
+						"vars": {
+							"attack_target_key": "BB_CURRENT_TARGET",
+							"enemies_key": "BB_monkey_enemies"
+						}
+					},
+					{
+						"type": "sequence",
+						"children": [
+							{
+								"type": "selector",
+								"children": [
+									{
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/bb_key_true",
+										"vars": {
+											"key": "BB_MONKEY_WANNA_PRESS_SOME_SHIT"
+										},
+										"child": {
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+											"vars": {
+												"target_key": "BB_monkey_current_press_target",
+												"targeting_strategy": "/datum/targeting_strategy/anything",
+												"target_source": "/datum/target_source/monkey_press_target",
+												"vision_range": 2
+											}
+										}
+									},
+									{
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/bb_key_true",
+										"vars": {
+											"invert": true,
+											"key": "BB_MONKEY_WANNA_PRESS_SOME_SHIT"
+										},
+										"child": {
+											"type": "decorator",
+											"decorator": "/datum/bt_node/decorator/random_chance",
+											"vars": {
+												"chance": 0.2
+											},
+											"child": {
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
+												"vars": {
+													"target_key": "BB_MONKEY_WANNA_PRESS_SOME_SHIT",
+													"value": true
+												}
+											}
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/succeed"
+									}
+								]
+							},
+							{
+								"type": "selector",
+								"children": [
+									{
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/target_is_holding_item",
+										"vars": {
+											"key": "BB_MY_PAWN"
+										},
+										"child": {
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+											"vars": {
+												"target_key": "BB_monkey_current_give_target",
+												"targeting_strategy": "/datum/targeting_strategy/anything",
+												"target_source": "/datum/target_source/oview_single_type/human_mob",
+												"vision_range": 2
+											}
+										}
+									},
+									{
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/target_is_holding_item",
+										"vars": {
+											"invert": true,
+											"key": "BB_MY_PAWN"
+										},
+										"child": {
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/clear_key",
+											"vars": {
+												"key": "BB_monkey_current_give_target"
+											}
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/succeed"
+									}
+								]
+							},
+							{
+								"type": "selector",
+								"children": [
+									{
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/is_holding_target",
+										"vars": {
+											"key": "BB_SONG_INSTRUMENT"
+										},
+										"child": {
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/succeed"
+										}
+									},
+									{
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/bb_key_set",
+										"vars": {
+											"key": "BB_monkey_tamed"
+										},
+										"child": {
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+											"vars": {
+												"target_key": "BB_SONG_INSTRUMENT",
+												"targeting_strategy": "/datum/targeting_strategy/pickup_item",
+												"target_source": "/datum/target_source/held_items_typed/instrument"
+											}
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/succeed"
+									}
+								]
+							},
+							{
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/pawn_nutrition_below",
+								"child": {
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+									"vars": {
+										"cooldown_key": "BB_NEXT_HUNGRY"
+									},
+									"child": {
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+										"vars": {
+											"target_key": "bb_food_target",
+											"targeting_strategy": "/datum/targeting_strategy/pickup_item/food_or_drink",
+											"target_source": "/datum/target_source/held_items_then_oview",
+											"vision_range": 2
+										}
+									}
+								}
+							},
+							{
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/bb_key_set",
+								"vars": {
+									"invert": true,
+									"key": "BB_monkey_tamed"
+								},
+								"child": {
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target/monkey_find_weapon",
+									"vars": {
+										"target_key": "BB_monkey_pickuptarget",
+										"target_source": "/datum/target_source/monkey_weapon_upgrade",
+										"targeting_strategy": "/datum/targeting_strategy/monkey_weapon_upgrade",
+										"vision_range": 5
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target/monkey_find_weapon",
+			"vars": {
+				"target_key": "BB_monkey_pickuptarget",
+				"target_source": "/datum/target_source/monkey_weapon_upgrade",
+				"targeting_strategy": "/datum/targeting_strategy/monkey_weapon_upgrade",
+				"vision_range": 5
+			}
+		}
+	]
+}

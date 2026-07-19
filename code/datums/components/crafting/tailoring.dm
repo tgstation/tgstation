@@ -47,7 +47,7 @@
 	name = "Durathread Geomancer Robe"
 	result = /obj/item/clothing/suit/wizrobe/durathread/earth
 	reqs = list(/obj/item/clothing/suit/wizrobe/durathread = 1,
-				/obj/item/food/grown/cahnroot = 1,
+				/obj/item/food/grown/carrotlike/cahnroot = 1,
 				/obj/item/food/grown/potato = 3)
 	time = 2 SECONDS
 	category = CAT_CLOTHING
