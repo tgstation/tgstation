@@ -660,3 +660,8 @@
 	description = "I hear a voice whispering, and I don't like what it says."
 	mood_change = -3
 	timeout = 30 SECONDS
+
+/datum/mood_event/cement
+	description = span_warning("I was forced to eat cement...")
+	mood_change = -6
+	timeout = 4 MINUTES

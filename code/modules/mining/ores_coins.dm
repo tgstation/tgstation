@@ -172,6 +172,29 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		return TRUE
 	return FALSE
 
+/obj/item/stack/ore/glass/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	. = ..()
+	if (.)
+		return
+
+	if(!target.is_dunkable())
+		return NONE
+
+	var/datum/reagent/cement/cement = target.reagents?.has_reagent(/datum/reagent/cement, check_subtypes=TRUE)
+	if (!cement)
+		return NONE
+
+	var/sand_to_use = min(floor(cement.volume / cement.units_per_aggregate), amount)
+	if (!sand_to_use)
+		to_chat(user, span_warning("You don't have enough [cement.name] to mix with [src]."))
+		return ITEM_INTERACT_BLOCKING
+
+	use(sand_to_use)
+	target.reagents.convert_reagent(cement.type, cement.concrete_type, conversion_volume = sand_to_use * cement.units_per_aggregate)
+	user.visible_message(span_warning("[user] slips something into [target]!"), span_notice("You dissolve [src] in [target]."), null, 2)
+	playsound(target, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
+
 /obj/item/stack/ore/glass/thirty
 	amount = 30
 
@@ -188,6 +211,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	singular_name = "siderite dust pile"
 	mine_experience = 0
 	merge_type = /obj/item/stack/ore/glass/siderite
+
+/obj/item/stack/ore/glass/concrete_powder
+	name = "concrete powder"
+	icon_state = "concrete_powder"
+	singular_name = "concrete powder pile"
+	mine_experience = 0
+	merge_type = /obj/item/stack/ore/glass/concrete_powder
 
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
