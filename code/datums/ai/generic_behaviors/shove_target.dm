@@ -31,7 +31,6 @@
 	if(!free_up_hand(living_pawn))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	living_pawn.face_atom(living_target)
 	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), living_target, TRUE, list(RIGHT_CLICK = TRUE))
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
