@@ -1,6 +1,7 @@
 /// This is what controls whether a limb should be digitigrade based on dna. This doesn't stop legs from having the digitigrade_limb component added in some other way though.
 /datum/element/digitigrade_compatible
 	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 	var/digi_footprint_sprite
 	var/digi_footstep_type
 
