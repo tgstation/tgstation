@@ -1,0 +1,83 @@
+{
+	"dm_type": "/datum/bt_node/subtree/generic_play_instrument",
+	"bindings": {
+		"bulu13xf": {
+			"label": "volume",
+			"default": "50"
+		}
+	},
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"key": "BB_SONG_INSTRUMENT"
+	},
+	"child": {
+		"type": "selector",
+		"children": [
+			{
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/bb_key_true",
+				"vars": {
+					"invert": true,
+					"key": "BB_INSTRUMENT_UP_ASS"
+				},
+				"child": {
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/is_holding_target",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+						"invert": true,
+						"key": "BB_SONG_INSTRUMENT"
+					},
+					"child": {
+						"type": "sequence",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+								"vars": {
+									"target_key": "BB_SONG_INSTRUMENT"
+								}
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/pick_up",
+								"vars": {
+									"target_key": "BB_SONG_INSTRUMENT"
+								}
+							}
+						]
+					}
+				}
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/keep_playing_instrument",
+				"vars": {
+					"song_instrument_key": "BB_SONG_INSTRUMENT"
+				}
+			},
+			{
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/setup_instrument",
+						"vars": {
+							"song_instrument_key": "BB_SONG_INSTRUMENT",
+							"song_lines_key": "song_lines"
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/play_instrument",
+						"vars": {
+							"song_instrument_key": "BB_SONG_INSTRUMENT",
+							"volume": "$bulu13xf"
+						}
+					}
+				]
+			}
+		]
+	}
+}

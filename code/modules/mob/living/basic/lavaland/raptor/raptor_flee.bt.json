@@ -1,0 +1,41 @@
+{
+	"dm_type": "/datum/bt_node/subtree/raptor_flee",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_true",
+			"vars": {
+				"observer_abort": "BT_ABORT_BOTH",
+				"key": "BB_RAPTOR_COWARDLY"
+			},
+			"child": {
+				"type": "subtree",
+				"subtype": "/datum/bt_node/subtree/run_away_from_target"
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/pawn_health_below",
+			"vars": {
+				"observer_abort": "BT_ABORT_BOTH",
+				"health_blackboard_key": "BB_RAPTOR_FLEE_THRESHOLD"
+			},
+			"child": {
+				"type": "subtree",
+				"subtype": "/datum/bt_node/subtree/run_away_from_target"
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/check_rider_stat",
+			"vars": {
+				"observer_abort": "BT_ABORT_BOTH"
+			},
+			"child": {
+				"type": "subtree",
+				"subtype": "/datum/bt_node/subtree/run_away_from_target"
+			}
+		}
+	]
+}
