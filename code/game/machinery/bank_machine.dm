@@ -2,6 +2,7 @@
 	name = "bank machine"
 	desc = "A machine used to deposit and withdraw station funds."
 	circuit = /obj/item/circuitboard/computer/bankmachine
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/bank_machine")
 	icon_screen = "vault"
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_VAULT)

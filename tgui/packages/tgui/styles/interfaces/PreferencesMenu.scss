@@ -111,6 +111,20 @@
     > * {
       flex: 1;
     }
+
+    &__characterMenu {
+      box-shadow: var(--dropdown-menu-blur);
+      background-color: var(--dropdown-menu-background);
+      border: var(--dropdown-menu-border);
+      border-radius: var(--dropdown-menu-border-radius);
+      transition: opacity 0.35s ease-out;
+
+      &--hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+
     &__departments {
       &.head {
         background: colors.bg(var(--department-color));

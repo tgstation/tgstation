@@ -54,10 +54,10 @@
 	))
 
 /// Signal proc for [COMSIG_LIVING_HEALTHSCAN]. Show we're hallucinating to (advanced) scanners.
-/datum/status_effect/hallucination/proc/on_health_scan(datum/source, list/render_list, advanced, mob/user, mode, tochat)
+/datum/status_effect/hallucination/proc/on_health_scan(datum/source, list/render_list, scanpower, mob/user, mode, tochat)
 	SIGNAL_HANDLER
 
-	if(!advanced)
+	if(scanpower <= SCANPOWER_BASIC)
 		return
 	render_list += "<span class='info ml-1'>"
 	render_list += conditional_tooltip("Subject is hallucinating.", "Supply antipsychotic medication, such as [/datum/reagent/medicine/haloperidol::name] or [/datum/reagent/medicine/synaptizine::name].", tochat)

@@ -69,7 +69,7 @@
 	if(!held_item)
 		INVOKE_ASYNC(bumping, TYPE_PROC_REF(/mob, ClickOn), src)
 	else if(held_item.tool_behaviour == TOOL_MINING)
-		attackby(held_item, bumping)
+		item_interaction(bumping, held_item)
 
 /turf/closed/mineral/proc/spread_vein(ore_type)
 	if(!ispath(ore_type, /obj/item/stack/ore))
@@ -204,6 +204,17 @@
 	scan_state_overlay.pixel_y = 224
 	scan_overlay.add_overlay(scan_state_overlay)
 
+/turf/closed/mineral/set_smoothed_icon_state(new_junction)
+	var/old_junction = smoothing_junction
+	. = ..()
+	if(new_junction != ALL_SMOOTHING_JUNCTIONS || (!isnull(old_junction) && old_junction != new_junction))
+		update_appearance(UPDATE_OVERLAYS)
+
+/turf/closed/mineral/update_overlays()
+	. = ..()
+	if(smoothing_junction != ALL_SMOOTHING_JUNCTIONS)
+		. += fast_emissive_blocker(src)
+
 /turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	if(turf_type)
 		underlay_appearance.icon = initial(turf_type.icon)
@@ -211,29 +222,35 @@
 		return TRUE
 	return ..()
 
-/turf/closed/mineral/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers, exp_multiplier = 1)
+/turf/closed/mineral/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.tool_behaviour != TOOL_MINING)
+		return ..()
+
+	return manual_mine(user, tool)
+
+///Mining manually with a hand tool or something masquerading as one
+/turf/closed/mineral/proc/manual_mine(mob/living/user, obj/item/tool, exp_multiplier = 1)
 	if (!ISADVANCEDTOOLUSER(user))
-		to_chat(usr, span_warning("You don't have the dexterity to do this!"))
-		return
+		to_chat(user, span_warning("You don't have the dexterity to do this!"))
+		return ITEM_INTERACT_BLOCKING
 
-	if(I.tool_behaviour != TOOL_MINING)
-		return
-
-	var/turf/T = user.loc
-	if (!isturf(T))
-		return
+	if (!isturf(user.loc))
+		return ITEM_INTERACT_BLOCKING
 
 	if(TIMER_COOLDOWN_RUNNING(src, REF(user))) //prevents mining turfs in progress
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	TIMER_COOLDOWN_START(src, REF(user), tool_mine_speed)
-	if(!I.use_tool(src, user, tool_mine_speed, volume=50))
+	if(!tool.use_tool(src, user, tool_mine_speed, volume = 50))
 		TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(ismineralturf(src))
-		gets_drilled(user, exp_multiplier)
-		SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
+	if(!ismineralturf(src))
+		return ITEM_INTERACT_BLOCKING
+
+	gets_drilled(user, exp_multiplier)
+	SSblackbox.record_feedback("tally", "pick_used_mining", 1, tool.type)
+	return ITEM_INTERACT_SUCCESS
 
 /turf/closed/mineral/attack_hand(mob/user)
 	var/mining_arms = HAS_TRAIT(user, TRAIT_FIST_MINING)
@@ -1066,19 +1083,19 @@
 	det_time = rand(8,10) //So you don't know exactly when the hot potato will explode
 	. = ..()
 
-/turf/closed/mineral/gibtonite/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers, exp_multiplier = 1)
+/turf/closed/mineral/gibtonite/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/previous_stage = stage
-	if(istype(attacking_item, /obj/item/goliath_infuser_hammer) && stage == GIBTONITE_ACTIVE)
-		user.visible_message(span_notice("[user] digs [attacking_item] to [src]..."), span_notice("Your tendril hammer instictively digs and wraps around [src] to stop it..."))
+	if(istype(tool, /obj/item/goliath_infuser_hammer) && stage == GIBTONITE_ACTIVE)
+		user.visible_message(span_notice("[user] digs [tool] to [src]..."), span_notice("Your tendril hammer instictively digs and wraps around [src] to stop it..."))
 		defuse(user)
-	else if(istype(attacking_item, /obj/item/mining_scanner) || istype(attacking_item, /obj/item/t_scanner/adv_mining_scanner) && stage == GIBTONITE_ACTIVE)
-		user.visible_message(span_notice("[user] holds [attacking_item] to [src]..."), span_notice("You use [attacking_item] to locate where to cut off the chain reaction and attempt to stop it..."))
+	else if(istype(tool, /obj/item/mining_scanner) || istype(tool, /obj/item/t_scanner/adv_mining_scanner) && stage == GIBTONITE_ACTIVE)
+		user.visible_message(span_notice("[user] holds [tool] to [src]..."), span_notice("You use [tool] to locate where to cut off the chain reaction and attempt to stop it..."))
 		defuse(user)
 	. = ..()
-	if(istype(attacking_item, /obj/item/clothing/gloves/gauntlets) && previous_stage == GIBTONITE_UNSTRUCK && stage == GIBTONITE_ACTIVE && istype(user))
+	if(istype(tool, /obj/item/clothing/gloves/gauntlets) && previous_stage == GIBTONITE_UNSTRUCK && stage == GIBTONITE_ACTIVE && istype(user))
 		user.Immobilize(0.5 SECONDS)
 		user.throw_at(get_ranged_target_turf(src, get_dir(src, user), 5), range = 5, speed = 3, spin = FALSE)
-		user.visible_message(span_danger("[user] hit gibtonite with [attacking_item.name], launching [user.p_them()] back!"), span_danger("You've struck gibtonite! Your [attacking_item.name] launched you back!"))
+		user.visible_message(span_danger("[user] hit gibtonite with [tool.name], launching [user.p_them()] back!"), span_danger("You've struck gibtonite! Your [tool.name] launched you back!"))
 
 /turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null)
 	if(stage != GIBTONITE_UNSTRUCK)
@@ -1224,15 +1241,16 @@
 	base_icon_state = "rock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
-/turf/closed/mineral/strong/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers, exp_multiplier = 1)
+/turf/closed/mineral/strong/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!ishuman(user))
 		to_chat(usr, span_warning("Only a more advanced species could break a rock such as this one!"))
-		return FALSE
-	if(user.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER)
-		. = ..()
-	else
-		to_chat(usr, span_warning("The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner."))
+		return ITEM_INTERACT_BLOCKING
 
+	if(!user.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER)
+		to_chat(usr, span_warning("The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner."))
+		return ITEM_INTERACT_BLOCKING
+
+	return ..()
 
 /turf/closed/mineral/strong/gets_drilled(mob/user, exp_multiplier = 0)
 	if(istype(user))

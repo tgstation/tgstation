@@ -1,0 +1,1 @@
+{"type":"/datum/bt_node/ai_behavior/acquire_target/update_interaction_target","target_key":"BB_TARGET_FOOD","targeting_strategy":"/datum/targeting_strategy/goose_edible","target_source":"/datum/target_source/oview_items","vision_range":1}

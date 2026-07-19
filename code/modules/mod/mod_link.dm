@@ -277,8 +277,8 @@
 		call_link(user, mod_link)
 
 /obj/item/clothing/neck/link_scryer/proc/get_user()
-	var/mob/living/carbon/user = loc
-	return istype(user) && user.wear_neck == src ? user : null
+	var/mob/living/user = loc
+	return istype(user) && user.get_item_by_slot(ITEM_SLOT_NECK) == src ? user : null
 
 /obj/item/clothing/neck/link_scryer/proc/can_call()
 	var/mob/living/user = loc
