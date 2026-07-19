@@ -29,17 +29,17 @@
 	id = "leg/right"
 	build_path = /obj/item/bodypart/leg/right
 
-/datum/design/bodypart/leftleg/lizard_digi
+/datum/design/bodypart/l_leg_lizard_digi
 	name = "Digitigrade Left Leg"
 	id = "leg/left/lizard_digi"
-	category = list(SPECIES_LIZARD)
+	category = list(RND_CATEGORY_INITIAL, SPECIES_LIZARD)
 	build_path = /obj/item/bodypart/leg/left/lizard/digitigrade
 	build_limb_from_cat = FALSE
 
-/datum/design/bodypart/rightleg/lizard_digi
+/datum/design/bodypart/r_leg_lizard_digi
 	name = "Digitigrade Right Leg"
 	id = "leg/right/lizard_digi"
-	category = list(SPECIES_LIZARD)
+	category = list(RND_CATEGORY_INITIAL, SPECIES_LIZARD)
 	build_path = /obj/item/bodypart/leg/right/lizard/digitigrade
 	build_limb_from_cat = FALSE
 
