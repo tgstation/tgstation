@@ -39,7 +39,10 @@ export function AdminPage({ serverState, onNavigate, onAction }: Props) {
 function BackButton({ onClick }: { onClick: () => void }) {
   return (
     <button className="escape-menu__back-button" onClick={onClick}>
-      <span className="escape-menu-icons40x40 back" />
+      <div className="escape-menu__icon-button">
+        <span className="escape-menu-icons40x40 template" />
+        <span className="escape-menu-icons40x40 back escape-menu__icon-overlay" />
+      </div>
       <span>Back</span>
     </button>
   );

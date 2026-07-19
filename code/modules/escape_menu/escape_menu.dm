@@ -35,10 +35,18 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 	send_init()
 
 /datum/escape_menu/Destroy(force)
+	STOP_PROCESSING(SSescape_menu, src)
 	window?.unsubscribe(src)
 	window = null
 	client = null
 	return ..()
+
+/datum/escape_menu/process(seconds_per_tick)
+	send_update(list(
+		"serverTime" = server_timestamp(format = "hh:mm:ss"),
+		"shiftTime" = (SSticker.round_start_time == 0) ? "Pre-Game" : round_timestamp(),
+		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
+	))
 
 /datum/escape_menu/proc/on_client_qdel()
 	SIGNAL_HANDLER
@@ -99,8 +107,8 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 	window.send_message("init", list(
 		"stationName" = station_name(),
 		"roundId" = GLOB.round_id || "Unset",
-		"serverTime" = world.timeofday,
-		"shiftTime" = (SSticker.round_start_time == 0) ? null : round_timestamp(),
+		"serverTime" = server_timestamp(format = "hh:mm:ss"),
+		"shiftTime" = (SSticker.round_start_time == 0) ? "Pre-Game" : round_timestamp(),
 		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
 		"mapName" = SSmapping.current_map?.return_map_name(webmap_included = TRUE) || "Loading...",
 		"canLeaveBody" = isliving(client?.mob),
@@ -123,6 +131,10 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 
 	var/action = payload["action"]
 	switch(action)
+		if("opened")
+			START_PROCESSING(SSescape_menu, src)
+		if("closed")
+			STOP_PROCESSING(SSescape_menu, src)
 		if("character")
 			client?.prefs.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
 			client?.prefs.update_static_data(client?.mob)

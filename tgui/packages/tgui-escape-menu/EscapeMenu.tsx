@@ -14,8 +14,8 @@ export type ServerState = {
   stationName: string;
   roundId: string;
   mapName: string;
-  serverTime: number;
-  shiftTime: string | null;
+  serverTime: string;
+  shiftTime: string;
   timeDilation: string;
   canLeaveBody: boolean;
   canAdminHelp: boolean;
@@ -75,6 +75,7 @@ function sendAction(action: string) {
 
 function openMenu(dispatch: React.Dispatch<Action>) {
   playOpenSounds();
+  sendAction('opened');
   dispatch({ type: 'open' });
 }
 
@@ -82,6 +83,7 @@ function closeMenu(dispatch: React.Dispatch<Action>) {
   Byond.winset('mapwindow.escape_menu', { 'is-visible': false });
   Byond.winset('map', { focus: true });
   playCloseSounds();
+  sendAction('closed');
   dispatch({ type: 'close' });
 }
 
@@ -172,20 +174,12 @@ export function EscapeMenu() {
   );
 }
 
-function formatTime(deciseconds: number): string {
-  const totalSeconds = Math.floor(deciseconds / 10);
-  const h = String(Math.floor(totalSeconds / 3600) % 24).padStart(2, '0');
-  const m = String(Math.floor(totalSeconds / 60) % 60).padStart(2, '0');
-  const s = String(totalSeconds % 60).padStart(2, '0');
-  return `${h}:${m}:${s}`;
-}
-
 function Details({ serverState }: { serverState: ServerState }) {
   return (
     <div className="escape-menu__details">
       <div>Round ID: {serverState.roundId || 'Unset'}</div>
-      <div>Server Time: {formatTime(serverState.serverTime)}</div>
-      <div>Shift Time: {serverState.shiftTime ?? 'Pre-Game'}</div>
+      <div>Server Time: {serverState.serverTime}</div>
+      <div>Shift Time: {serverState.shiftTime}</div>
       <div>Map: {serverState.mapName || 'Loading...'}</div>
       <div>Time Dilation: {serverState.timeDilation}%</div>
     </div>

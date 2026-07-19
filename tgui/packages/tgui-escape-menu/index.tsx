@@ -2,9 +2,8 @@ import './styles/main.scss';
 
 import { loadMappings, loadStyleSheet } from 'common/assets';
 import { createRoot, type Root } from 'react-dom/client';
-
-import { EscapeMenu } from './EscapeMenu';
 import { assetMap } from './assets';
+import { EscapeMenu } from './EscapeMenu';
 
 let reactRoot: Root | null = null;
 

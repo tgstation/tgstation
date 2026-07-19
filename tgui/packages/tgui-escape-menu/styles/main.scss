@@ -12,6 +12,12 @@ body,
   overflow: hidden;
   background: transparent !important;
   background-color: transparent !important;
+  cursor: default !important;
+}
+
+* {
+  cursor: default !important;
+  user-select: none;
 }
 
 .escape-menu {
@@ -24,7 +30,7 @@ body,
   &__overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.65);
     z-index: 0;
   }
 
@@ -37,18 +43,18 @@ body,
 
   &__title {
     position: absolute;
-    top: 40px;
-    left: 40px;
+    top: 50px;
+    left: 50px;
   }
 
   &__subtitle {
-    font-size: 16px;
+    font-size: 18px;
     color: #ccc;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
   }
 
   &__station-name {
-    font-size: 48px;
+    font-size: 56px;
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   }
@@ -58,22 +64,22 @@ body,
     top: 20px;
     right: 20px;
     text-align: right;
-    font-size: 16px;
-    line-height: 1.4;
+    font-size: 18px;
+    line-height: 1.5;
     color: #ddd;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
   }
 
   &__buttons {
     position: absolute;
-    top: 160px;
-    left: 40px;
+    top: 200px;
+    left: 50px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
 
     &--page {
-      top: 120px;
+      top: 140px;
     }
   }
 
@@ -82,10 +88,10 @@ body,
     border: none;
     color: white;
     font-family: 'Pixellari', monospace;
-    font-size: 42px;
+    font-size: 48px;
     font-weight: bold;
     text-align: left;
-    padding: 4px 8px;
+    padding: 2px 8px;
     cursor: pointer;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 
@@ -114,17 +120,17 @@ body,
     background: none;
     border: none;
     color: white;
-    font-family: 'Pixellari', monospace;
-    font-size: 18px;
+    font-family: 'Grand9K Pixel', monospace;
+    font-size: 14px;
     cursor: pointer;
     padding: 8px 16px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 8px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    gap: 2px;
 
     &:hover {
-      text-decoration: underline;
+      filter: brightness(1.3);
     }
   }
 
@@ -134,40 +140,30 @@ body,
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
-    gap: 40px;
+    gap: 60px;
   }
 
   &__large-button {
-    background: rgba(0, 0, 0, 0.4);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: none;
+    border: none;
     color: white;
     font-family: 'Pixellari', monospace;
-    padding: 24px 32px;
+    padding: 0;
     cursor: pointer;
     text-align: center;
-    min-width: 160px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    transition:
-      border-color 0.2s,
-      background 0.2s;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.5);
+      filter: brightness(1.3);
     }
   }
 
   &__large-button-label {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: bold;
-  }
-
-  &__large-button-desc {
-    font-size: 12px;
-    color: #aaa;
   }
 
   &__quit {
@@ -179,7 +175,7 @@ body,
   }
 
   &__quit-prompt {
-    font-size: 42px;
+    font-size: 48px;
     margin-bottom: 24px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   }
@@ -192,46 +188,11 @@ body,
 
   &__resources {
     position: absolute;
-    bottom: 20px;
+    bottom: 30px;
     right: 20px;
-    display: flex;
-    align-items: flex-end;
-    gap: 8px;
   }
 
-  &__resource-toggle {
-    background: none;
-    border: none;
-    color: white;
-    padding: 0;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-
-    &:hover {
-      filter: brightness(1.3);
-    }
-  }
-
-  &__resource-label {
-    font-family: 'Grand9K Pixel', monospace;
-    font-size: 10px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-  }
-
-  &__resource-list {
-    display: flex;
-    gap: 20px;
-    flex-direction: row-reverse;
-    align-items: flex-end;
-
-    &--collapsing .escape-menu__resource-button {
-      animation: resource-slide-out 0.4s cubic-bezier(0.33, 1, 0.68, 1) both;
-    }
-  }
-
+  &__resource-toggle,
   &__resource-button {
     background: none;
     border: none;
@@ -241,12 +202,16 @@ body,
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
-    animation: resource-slide-in 0.4s cubic-bezier(0.33, 1, 0.68, 1) both;
+    gap: 4px;
+    width: 70px;
 
     &:hover {
       filter: brightness(1.3);
     }
+  }
+
+  &__resource-button {
+    animation: resource-slide-in 0.4s cubic-bezier(0.33, 1, 0.68, 1) both;
 
     @for $i from 1 through 8 {
       &:nth-child(#{$i}) {
@@ -255,14 +220,33 @@ body,
     }
   }
 
+  &__resource-label,
   &__resource-button-label {
     font-family: 'Grand9K Pixel', monospace;
-    white-space: nowrap;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  &__resource-list {
+    position: absolute;
+    top: 0;
+    right: 78px;
+    display: flex;
+    gap: 8px;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+
+    &--collapsing .escape-menu__resource-button {
+      animation: resource-slide-out 0.4s cubic-bezier(0.33, 1, 0.68, 1) both;
+    }
   }
 
   &__icon-button {
     position: relative;
     display: inline-block;
+    transform: scale(1.5);
+    transform-origin: center bottom;
+    image-rendering: pixelated;
   }
 
   &__icon-overlay {
