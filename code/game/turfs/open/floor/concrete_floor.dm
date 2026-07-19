@@ -29,7 +29,7 @@
 		/turf/open/floor/concrete/tiles
 	)
 
-/turf/open/floor/concrete/Initialize()
+/turf/open/floor/concrete/Initialize(mapload)
 	. = ..()
 	if(has_variation)
 		icon_state = "[base_icon_state]_[rand(1,4)]"
