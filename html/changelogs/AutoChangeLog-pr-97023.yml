@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Watcher gaze visuals no longer flicker if you turn around after the ability has already been activated and is finishing the animation"
+  - bugfix: "Fixed watcher gaze runtimes"

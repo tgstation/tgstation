@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixed an issue that would cause preview icons to randomly become corrupt or invisible if they met certain criteria"
+  - admin: "select equipment now just shows one direction of previews, greatly reducing lag"
