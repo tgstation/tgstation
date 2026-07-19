@@ -77,7 +77,7 @@
 		return NONE
 
 	if(!user.temporarilyRemoveItemFromInventory(tool))
-			to_chat(user, span_warning("[capitalize(tool.declent_ru(NOMINATIVE))] застревает на вашей руке!"))
+		to_chat(user, span_warning("[capitalize(tool.declent_ru(NOMINATIVE))] застревает на вашей руке!"))
 		return ITEM_INTERACT_BLOCKING
 
 	load(tool, user)
