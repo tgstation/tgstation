@@ -505,7 +505,7 @@
 	result = /obj/item/clothing/head/costume/garland/rainbowbunch
 	time = 1 SECONDS
 	reqs = list(
-		/obj/item/food/grown/rainbow_flower = 5,
+		/obj/item/food/grown/flower/rainbow_flower = 5,
 		/obj/item/stack/cable_coil = 3,
 	)
 	category = CAT_CLOTHING

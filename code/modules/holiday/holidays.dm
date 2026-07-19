@@ -476,7 +476,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		/obj/item/clothing/under/color/jumpskirt/rainbow,
 		/obj/item/clothing/under/color/rainbow,
 		/obj/item/food/egg/rainbow,
-		/obj/item/food/grown/rainbow_flower,
+		/obj/item/food/grown/flower/rainbow_flower,
 		/obj/item/food/snowcones/rainbow,
 		/obj/item/toy/crayon/rainbow,
 	)
