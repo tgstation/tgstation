@@ -52,8 +52,6 @@
 	stagger_aftershock_knockdown_ratio = 0.5
 	stagger_aftershock_knockdown_movement_ratio = 0.3
 
-	percussive_repair_chance = 10
-
 	a_or_from = "a"
 
 	/// Has the first stage of our treatment been completed? E.g. RCDed, manually molded...
@@ -81,7 +79,7 @@
 	if(!superstructure_remedied)
 		if(istype(item, /obj/item/construction/rcd))
 			return rcd_superstructure(item, user)
-		if(uses_percussive_maintenance() && istype(item, /obj/item/plunger))
+		if(!superstructure_remedied && limb_malleable() && istype(item, /obj/item/plunger))
 			return plunge(item, user)
 		if(item.tool_behaviour == TOOL_WELDER && !limb_malleable() && isliving(victim.pulledby))
 			var/mob/living/living_puller = victim.pulledby
@@ -351,23 +349,6 @@
 		limb.receive_damage(brute = 5, damage_source = treating_plunger)
 
 	return TRUE
-
-/datum/wound/blunt/robotic/secures_internals/critical/handle_percussive_maintenance_success(attacking_item, mob/living/user)
-	var/your_or_other = (user == victim ? "your" : "[victim]'s")
-	victim.visible_message(span_green("[victim]'s [limb.plaintext_zone] gets smashed into a proper shape!"), \
-		span_green("Your [limb.plaintext_zone] gets smashed into a proper shape!"))
-
-	var/user_message = "[capitalize(your_or_other)] [limb.plaintext_zone]'s superstructure has been reset, but the internals still need to be secured and welded into place."
-	to_chat(user, span_green(user_message))
-
-	set_superstructure_status(TRUE)
-
-/datum/wound/blunt/robotic/secures_internals/critical/handle_percussive_maintenance_failure(attacking_item, mob/living/user)
-	to_chat(victim, span_danger("Your [limb.plaintext_zone] only deforms more from the impact..."))
-	limb.receive_damage(brute = 1, damage_source = attacking_item, wound_bonus = CANT_WOUND)
-
-/datum/wound/blunt/robotic/secures_internals/critical/uses_percussive_maintenance()
-	return (!superstructure_remedied && limb_malleable())
 
 /// Transitions our steps by setting both superstructure and secure internals readiness.
 /datum/wound/blunt/robotic/secures_internals/critical/proc/set_superstructure_status(remedied)

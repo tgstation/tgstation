@@ -72,11 +72,6 @@
 	/// If we are currently oscillating. If true, we cannot stagger().
 	var/oscillating = FALSE
 
-	/// % chance for hitting our limb to fix something.
-	var/percussive_repair_chance = 10
-	/// Damage must be over this to proc percussive maintenance.
-	var/percussive_damage_min = 0
-
 	/// The time, in world time, that we will be allowed to do another movement shake. Useful because it lets us prioritize attacked shakes over movement shakes.
 	var/time_til_next_movement_shake_allowed = 0
 
@@ -194,14 +189,6 @@
 				oscillation_damage *= ROBOTIC_WOUND_DETERMINATION_STAGGER_MOVEMENT_MULT
 			if ((stagger_damage >= chest_attacked_stagger_minimum_score) && prob(oscillation_damage * chest_attacked_stagger_chance_ratio))
 				stagger(stagger_damage * oscillation_mult, attack_direction, attacking_item, shift = stagger_damage * stagger_shake_shift_ratio)
-
-	if(!uses_percussive_maintenance() || damage < percussive_damage_min || damagetype != BRUTE || sharpness)
-		return
-	if (prob(percussive_repair_chance * (HAS_TRAIT(src, TRAIT_WOUND_SCANNED) ? 1.5 : 1)))
-		victim.visible_message(span_green("[victim]'s [limb.plaintext_zone] rattles from the impact, but looks a lot more secure!"), span_green("Your [limb.plaintext_zone] rattles into place!"))
-		remove_wound()
-	else
-		to_chat(victim, span_warning("Your [limb.plaintext_zone] rattles around."))
 
 #undef OSCILLATION_ATTACKED_LYING_DOWN_EFFECT_MULT
 
@@ -353,8 +340,6 @@
 
 /// If this wound can be treated in its current state by just hitting it with a low force object. Exists for conditional logic, e.g. "Should we respond
 /// to percussive maintenance right now?". Critical blunt uses this to only react when the limb is malleable and superstructure is broken.
-/datum/wound/blunt/robotic/proc/uses_percussive_maintenance()
-	return FALSE
 
 #undef ROBOTIC_WOUND_DETERMINATION_MOVEMENT_EFFECT_MOD
 #undef ROBOTIC_WOUND_DETERMINATION_STAGGER_MOVEMENT_MULT

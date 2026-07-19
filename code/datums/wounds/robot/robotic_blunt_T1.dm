@@ -17,14 +17,15 @@
 	limp_chance = 30
 	series_threshold_penalty = 15
 	a_or_from = "from"
+	/// % chance for hitting our limb to fix something.
+	var/percussive_repair_chance = 12
+	/// Damage must be over this to proc percussive maintenance.
+	var/percussive_damage_min = 0
 
 /datum/wound_pregen_data/blunt_metal/loose_screws
 	abstract = FALSE
 	wound_path_to_generate = /datum/wound/blunt/robotic/moderate
 	threshold_minimum = 35
-
-/datum/wound/blunt/robotic/moderate/uses_percussive_maintenance()
-	return TRUE
 
 /datum/wound/blunt/robotic/moderate/treat(obj/item/potential_treater, mob/user)
 	if (potential_treater.tool_behaviour == TOOL_SCREWDRIVER)
@@ -32,6 +33,16 @@
 		return TRUE
 
 	return ..()
+
+/datum/wound/blunt/robotic/moderate/victim_attacked(datum/source, damage, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
+	. = ..()
+	if(damage < percussive_damage_min || damagetype != BRUTE || sharpness)
+		return
+	if (prob(percussive_repair_chance))
+		victim.visible_message(span_green("[victim]'s [limb.plaintext_zone] rattles from the impact, but looks a lot more secure!"), span_green("Your [limb.plaintext_zone] rattles into place!"))
+		remove_wound()
+	else
+		to_chat(victim, span_warning("Your [limb.plaintext_zone] rattles around."))
 
 /// The main treatment for T1 blunt. Uses a screwdriver, guaranteed to always work, better with a diag hud. Removes the wound.
 /datum/wound/blunt/robotic/moderate/proc/fasten_screws(obj/item/screwdriver_tool, mob/user)
