@@ -4230,7 +4230,7 @@
 /area/station/engineering/supermatter/room)
 "baR" = (
 /obj/structure/rack,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "baV" = (
 /obj/machinery/portable_atmospherics/canister/air,
@@ -7746,7 +7746,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "bSC" = (
 /obj/item/kirbyplants/random,
@@ -15861,7 +15861,7 @@
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "dNx" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -17337,7 +17337,7 @@
 "ehE" = (
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "ehR" = (
 /obj/structure/rack,
@@ -17349,7 +17349,7 @@
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "eia" = (
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "eio" = (
 /obj/structure/disposalpipe/segment,
@@ -22148,7 +22148,7 @@
 "fsE" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "fsH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -25859,7 +25859,7 @@
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "gmt" = (
 /obj/effect/decal/cleanable/dirt,
@@ -33560,7 +33560,7 @@
 /area/station/maintenance/fore)
 "idy" = (
 /obj/effect/spawner/random/structure/shipping_container/station_appropriate,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "idC" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -34266,7 +34266,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "imT" = (
 /obj/machinery/door/firedoor,
@@ -36370,7 +36370,7 @@
 "iOT" = (
 /obj/effect/turf_decal/loading_area,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "iOX" = (
 /obj/structure/cable,
@@ -36457,7 +36457,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "iQE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -41319,7 +41319,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "kbc" = (
 /turf/open/floor/iron/stairs{
@@ -47204,7 +47204,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "luq" = (
 /obj/structure/sign/poster/random/directional/east,
@@ -51869,7 +51869,7 @@
 "mDM" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "mDR" = (
 /obj/effect/decal/cleanable/dirt,
@@ -57247,7 +57247,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "nTq" = (
 /obj/structure/bookcase,
@@ -66172,7 +66172,7 @@
 /area/station/science/robotics/lab)
 "qad" = (
 /obj/machinery/light/cold/directional/north,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "qah" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -66229,7 +66229,7 @@
 /area/station/security/prison)
 "qaB" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "qaD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -67825,7 +67825,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "qyl" = (
 /obj/machinery/photocopier/prebuilt,
@@ -70417,7 +70417,7 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/light/cold/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "rgo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -70790,7 +70790,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "rkA" = (
 /obj/structure/closet/crate/bin,
@@ -74408,7 +74408,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "sew" = (
 /obj/structure/chair{
@@ -80617,7 +80617,7 @@
 /obj/machinery/light/cold/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "tHc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -82757,7 +82757,7 @@
 /area/station/service/bar/atrium/ghetto)
 "ugz" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "ugE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -90823,7 +90823,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 1
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "wji" = (
 /obj/structure/disposalpipe/segment{
@@ -94698,7 +94698,7 @@
 /area/station/commons/fitness)
 "xgo" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/station/maintenance/ghetto/storage)
 "xgp" = (
 /obj/effect/decal/cleanable/dirt,
