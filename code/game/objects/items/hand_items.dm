@@ -461,7 +461,7 @@
 		return
 	if (user.body_position != LYING_DOWN)
 		return
-	var/obj/item/clothing/shoes/item_to_strip = target_human.shoes
+	var/obj/item/item_to_strip = target_human.shoes
 	user.visible_message(span_warning("[user] starts stealing [target_human]'s [item_to_strip.name]!"), \
 		span_danger("You start stealing [target_human]'s [item_to_strip.name]..."))
 	to_chat(target_human, span_userdanger("[user] starts stealing your [item_to_strip.name]!"))

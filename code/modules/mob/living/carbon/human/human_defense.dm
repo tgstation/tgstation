@@ -756,10 +756,5 @@
 
 /mob/living/carbon/human/get_eye_protection()
 	. = ..()
-	if(isclothing(head)) // Adds head protection
-		var/obj/item/clothing/helmet = head
-		. += helmet.flash_protect
-	if(isclothing(glasses)) // Glasses
-		. += glasses.flash_protect
-	if(isclothing(wear_mask)) // Mask
-		. += wear_mask.flash_protect
+	for (var/obj/item/clothing/clothing in get_equipped_items())
+		. += clothing.flash_protect

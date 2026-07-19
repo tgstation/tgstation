@@ -1686,4 +1686,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mobs with this trait will always have be a priority target for mining mobs
 #define TRAIT_MINING_AGGRO "mining_aggro"
 
+/// Allows the wearer to cast spells that require robes and hats
+#define TRAIT_CASTING_CLOTHING "casting_clothing"
+
 // END TRAIT DEFINES
