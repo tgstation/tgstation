@@ -107,7 +107,7 @@
 	while (status == ACTION_WORKING && world.time < end_time)
 		sleep(world.tick_lag)
 
-	if (status == ACTION_WORKING) // Ended up firing first due to SS falling behind, manually fire off a process to call all checks and ensure completion
+	if (status == ACTION_WORKING) // Due to how MC handles sleeping, await will tick first before the subsystem itself, so we need to tick ourselves one last time if we haven't been aborted
 		process()
 
 	. = (status == ACTION_SUCCEEDED)
