@@ -20,6 +20,9 @@ SUBSYSTEM_DEF(mapping)
 	///Assoc list of all ruins spawned, key center of ruin spawn -> value ruin instance
 	var/list/active_ruins = alist()
 
+	///Ordered list of ruins that have been reserved. Each entry is list(ruin template, central turf, clear_below). Populated by seedRuins(), consumed by load_reserved_ruins().
+	var/list/reserved_ruins = list()
+
 	///List of ruins, separated by their theme
 	var/list/themed_ruins = list()
 
@@ -161,8 +164,10 @@ SUBSYSTEM_DEF(mapping)
 	loading_ruins = FALSE
 #endif
 
-	// Run map generation after ruin generation to prevent issues
+	// Run map generation after ruin space is reserved, since this space is used for the cave gen.
 	run_map_terrain_generation()
+	// Now that terrain generation is done, actually load the ruin maps in.
+	load_reserved_ruins()
 	// Generate our rivers, we do this here so the map doesn't load on top of them
 	setup_rivers()
 	// now that the terrain is generated, including rivers, we can safely populate it with objects and mobs
@@ -275,6 +280,15 @@ SUBSYSTEM_DEF(mapping)
 		// Create a proportional budget by multiplying the amount of space ruin levels in the current map over the default amount
 		var/proportional_budget = round(CONFIG_GET(number/space_budget) * (space_ruins.len / DEFAULT_SPACE_RUIN_LEVELS))
 		seedRuins(space_ruins, proportional_budget, list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS], mineral_budget = 0, ruins_type = ZTRAIT_SPACE_RUINS)
+
+///loads all of the ruins we previously reserved space for
+/datum/controller/subsystem/mapping/proc/load_reserved_ruins()
+	for(var/list/reservation in reserved_ruins)
+		var/datum/map_template/ruin/reserved_ruin = reservation[1]
+		var/turf/central_turf = reservation[2]
+		var/clear_below = reservation[3]
+		reserved_ruin.load_reserved(central_turf, clear_below)
+	reserved_ruins.Cut()
 
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
 /// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic
