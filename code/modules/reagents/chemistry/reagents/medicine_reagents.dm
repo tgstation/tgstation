@@ -952,7 +952,8 @@
 /datum/reagent/medicine/inacusiate/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
 	if(creation_purity >= 1)
-		ADD_TRAIT(affected_mob, TRAIT_GOOD_HEARING, type)
+		affected_mob.eavesdrop_range += 7
+		LAZYSET(data, "impoved_eavesdropping", TRUE)
 		if(!HAS_TRAIT(affected_mob, TRAIT_DEAF))
 			to_chat(affected_mob, span_nicegreen("You can feel your hearing drastically improve!"))
 
@@ -968,7 +969,9 @@
 
 /datum/reagent/medicine/inacusiate/on_mob_delete(mob/living/affected_mob)
 	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_GOOD_HEARING, type)
+	if(!LAZYACCESS(data, "improved_eavesdropping"))
+		return
+	affected_mob.eavesdrop_range -= 7
 	if(!HAS_TRAIT(affected_mob, TRAIT_DEAF))
 		to_chat(affected_mob, span_notice("Your hearing returns to its normal acuity."))
 

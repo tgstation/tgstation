@@ -696,7 +696,7 @@
 	name = "split babbelfish halves"
 	icon_state = "babbearfish"
 	desc = "Both halves of a babbelfish after being twisted apart. The legends claim inserting these can unlock your psychic potential. It probably wasn't worth hearing that wail, though."
-	organ_traits = list(TRAIT_XRAY_HEARING, TRAIT_GOOD_HEARING)
+	organ_traits = list(TRAIT_XRAY_HEARING)
 
 	healing_factor = STANDARD_ORGAN_HEALING * 5
 	decay_factor = 0
@@ -776,6 +776,7 @@
 		expiration = CALLBACK(src, PROC_REF(on_expire)), \
 	)
 
+	organ_owner.eavesdrop_range += 7
 	if(HAS_MIND_TRAIT(organ_owner, TRAIT_TOWER_OF_BABEL))
 		to_chat(organ_owner, span_noticealien("You don't feel that much different this time. Looks like your brain has attuned to the [src]'s effect."))
 		return
@@ -810,6 +811,7 @@
 	. = ..()
 
 	// Reset
+	organ_owner.eavesdrop_range -= 7
 	organ_owner.remove_all_languages(source = LANGUAGE_ALL)
 	organ_owner.copy_languages(removal_holder)
 	to_chat(organ_owner, span_notice("You feel significantly more mundane."))

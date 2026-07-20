@@ -219,9 +219,16 @@
 	icon_state = "ears-c-cat-green"
 	desc = "Allows the user to more easily hear whispers. The user becomes extremely vulnerable to loud noises, however."
 	damage_multiplier = 3 // 4 would be excessive
-	organ_traits = list(TRAIT_GOOD_HEARING)
 	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears/cybernetic/green
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
+
+/obj/item/organ/ears/cat/cybernetic/whisper/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	organ_owner.eavesdrop_range += 7
+
+/obj/item/organ/ears/cat/cybernetic/whisper/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	organ_owner.eavesdrop_range -= 7
 
 /obj/item/organ/ears/cat/cybernetic/xray
 	name = "wall-penetrating cybernetic cat ears"
@@ -311,10 +318,15 @@
 	desc = "Allows the user to more easily hear whispers. The user becomes extra vulnerable to loud noises, however."
 	// Same sensitivity as felinid ears
 	damage_multiplier = 2
-	// The original idea was to use signals to do this not traits. Unfortunately, the star effect used for whispers applies before any relevant signals
-	// This seems like the least invasive solution
-	organ_traits = list(TRAIT_GOOD_HEARING)
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
+
+/obj/item/organ/ears/cybernetic/whisper/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	organ_owner.eavesdrop_range += 7
+
+/obj/item/organ/ears/cybernetic/whisper/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	organ_owner.eavesdrop_range -= 7
 
 /obj/item/organ/ears/cybernetic/volume
 	name = "volume-adjusting cybernetic ears"

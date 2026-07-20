@@ -21,6 +21,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	light_power = 0.6
 	light_on = FALSE
 	shift_to_open_context_menu = FALSE
+	eavesdrop_range = INFINITY
 	var/can_reenter_corpse
 	///This variable is set to 1 when you enter the game as an observer.
 	///If you died in the game and are a ghost - this will remain as FALSE.
@@ -149,7 +150,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	SSpoints_of_interest.make_point_of_interest(src)
 	ADD_TRAIT(src, TRAIT_HEAR_THROUGH_DARKNESS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_GOOD_HEARING, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_DETECT_STORM, INNATE_TRAIT)
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
