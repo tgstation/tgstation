@@ -163,10 +163,10 @@ SUBSYSTEM_DEF(mapping)
 
 	// Run map generation after ruin space is reserved, since this space is used for the cave gen.
 	run_map_terrain_generation()
-	// Now that terrain generation is done, actually load the ruin maps in.
-	load_reserved_ruins()
 	// Generate our rivers, we do this here so the map doesn't load on top of them
 	setup_rivers()
+	// Now that terrain generation is done, actually load the ruin maps in.
+	load_reserved_ruins()
 	// now that the terrain is generated, including rivers, we can safely populate it with objects and mobs
 	run_map_terrain_population()
 	// Add the first transit level
