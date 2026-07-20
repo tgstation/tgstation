@@ -202,7 +202,6 @@
 		user?.visible_message(span_green("[user] finishes securing the internals of [their_or_other] [limb.plaintext_zone]!"), \
 			span_green("You finish securing the internals of [your_or_other] [limb.plaintext_zone]!"))
 		to_chat(user, span_green("[capitalize(your_or_other)] [limb.plaintext_zone]'s internals are now secure, but still need to be welded into place."))
-		ready_to_secure_internals = FALSE
 		ready_to_resolder = TRUE
 	else
 		user?.visible_message(span_danger("[user] screws up and accidentally damages [their_or_other] [limb.plaintext_zone]!"))
@@ -262,7 +261,7 @@
 
 	if (ready_to_resolder)
 		. = "Apply a welder to the limb to finalize repairs."
-	else if (ready_to_secure_internals)
+	else
 		. = "Use a screwdriver, wrench, or bone gel to secure the internals of the limb. A diagnostic hud or wound scanner will help. \
 		In absence of those, a crowbar may be used."
 
