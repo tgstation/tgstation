@@ -667,7 +667,7 @@ SUBSYSTEM_DEF(tts)
  * * radio_frequency - The frequency of the radio TTS message
  */
 /proc/can_hear_radio_tts(mob/hearer, radio_frequency)
-	if(!SStts.tts_enabled)
+	if(!SStts.tts_enabled && !SStts220.is_enabled) // BANDASTATION EDIT: Spatial TTS
 		return FALSE
 
 	if(HAS_TRAIT(hearer, TRAIT_DEAF))

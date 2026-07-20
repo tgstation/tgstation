@@ -178,9 +178,12 @@
 		receive_radios = list()
 		for(var/radio, radio_hearers in get_hearers_in_radio_ranges_track_radios(radios))
 			receive |= radio_hearers
-			var/list/filtered_radio_hearers = filter_tts_listeners(radio_hearers, frequency)
-			if(length(filtered_radio_hearers))
-				receive_radios[WEAKREF(radio)] = filtered_radio_hearers
+			// BANDASTATION EDIT START: Spatial TTS
+			var/datum/weakref/radio_ref = WEAKREF(radio)
+			for(var/mob/possible_hearer in radio_hearers)
+				if(can_hear_radio_tts(possible_hearer, frequency))
+					LAZYADD(receive_radios[radio_ref], WEAKREF(possible_hearer))
+			// BANDASTATION EDIT START: Spatial TTS
 
 	else
 		receive = get_hearers_in_radio_ranges(radios)
@@ -191,14 +194,8 @@
 		if(get_chat_toggles(ghost.client) & CHAT_GHOSTRADIO)
 			receive |= ghost
 			if(should_do_radio_tts)
-				LAZYADD(receive_radios[TTS_GHOST_RADIO], WEAKREF(ghost))
-
-	if(should_do_radio_tts)
-		var/list/filtered_ghost_hearers = filter_tts_listeners(receive_radios[TTS_GHOST_RADIO], frequency)
-		if(length(filtered_ghost_hearers))
-			receive_radios[TTS_GHOST_RADIO] = filtered_ghost_hearers
-		else
-			receive_radios -= TTS_GHOST_RADIO
+				if(can_hear_radio_tts(ghost, frequency))
+					LAZYADD(receive_radios[TTS_GHOST_RADIO], WEAKREF(ghost))
 	if(SStts.tts_enabled && tts_radio_id && !should_do_modular_radio_tts && length(receive_radios))
 		SStts.queued_radio_messages[tts_radio_id] = receive_radios
 		SStts.queued_radio_messages_compression[tts_radio_id] = compression
