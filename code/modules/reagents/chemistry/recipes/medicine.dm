@@ -8,6 +8,7 @@
 	purity_min = 0.1
 	rate_up_lim = 35
 	reaction_tags = REACTION_TAG_HEALING | REACTION_TAG_EASY
+	thermic_constant = 50
 
 /datum/chemical_reaction/medicine/leporazine
 	results = list(/datum/reagent/medicine/leporazine = 2)
@@ -438,9 +439,3 @@
 	results = list(/datum/reagent/medicine/naloxone = 4)
 	required_reagents = list(/datum/reagent/medicine/morphine = 1, /datum/reagent/hydrogen_peroxide = 1, /datum/reagent/bromine = 1, /datum/reagent/consumable/ethanol = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
-
-/datum/chemical_reaction/medicine/immunosilence
-	results = list(/datum/reagent/medicine/immunosilence = 1)
-	required_reagents = list(/datum/reagent/medicine/diphenhydramine = 1, /datum/reagent/ammonia = 1)
-	reaction_tags = REACTION_TAG_EASY
-

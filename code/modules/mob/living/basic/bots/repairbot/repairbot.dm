@@ -9,7 +9,6 @@
 	layer = BELOW_MOB_LAYER
 	anchored = FALSE
 	health = 35
-	can_be_held = TRUE
 	maxHealth = 35
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.8, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	path_image_color = "#80dae7"
@@ -93,6 +92,7 @@
 	our_screwdriver = new(src)
 	our_rods = new(src, our_rods::max_amount)
 	set_color(toolbox_color)
+	AddElement(/datum/element/can_be_held)
 	START_PROCESSING(SSobj, src)
 
 /mob/living/basic/bot/repairbot/proc/set_color(new_color)

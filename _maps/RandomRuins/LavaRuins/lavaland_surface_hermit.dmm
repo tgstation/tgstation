@@ -10,10 +10,10 @@
 /area/ruin/powered)
 "e" = (
 /obj/item/clothing/suit/space/orange,
-/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace/normal_atmos,
 /area/ruin/powered)
 "f" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace/normal_atmos,
 /area/ruin/powered)
 "g" = (
 /turf/open/misc/asteroid{
@@ -57,7 +57,7 @@
 /obj/item/seeds/plump,
 /obj/item/food/grown/mushroom/glowshroom,
 /obj/item/seeds/tower,
-/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace/normal_atmos,
 /area/ruin/powered)
 "n" = (
 /obj/machinery/hydroponics/soil,
@@ -71,7 +71,7 @@
 /obj/item/storage/bag/plants/portaseeder,
 /obj/item/storage/bag/ore,
 /obj/item/storage/medkit/regular,
-/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace/normal_atmos,
 /area/ruin/powered)
 "q" = (
 /obj/structure/glowshroom/single,
@@ -81,13 +81,13 @@
 /obj/structure/rack,
 /obj/item/pickaxe/emergency,
 /obj/item/tank/internals/oxygen,
-/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace/normal_atmos,
 /area/ruin/powered)
 "s" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "t" = (
-/turf/closed/wall/mineral/titanium/survival/pod,
+/turf/closed/wall/mineral/plastitanium/survival/pod,
 /area/ruin/powered)
 "u" = (
 /obj/structure/bed/pod,
@@ -96,18 +96,18 @@
 /area/ruin/powered)
 "v" = (
 /obj/structure/fans,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "w" = (
 /obj/machinery/smartfridge/survival_pod/preloaded,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "x" = (
 /obj/effect/mob_spawn/ghost_role/human/hermit,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "y" = (
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "z" = (
 /obj/machinery/light/small/directional/east,
@@ -121,13 +121,13 @@
 /area/ruin/powered)
 "B" = (
 /obj/structure/table/survival_pod,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "C" = (
 /obj/structure/tubes,
 /obj/item/crowbar,
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "D" = (
 /obj/effect/decal/cleanable/blood/footprints{
@@ -135,7 +135,7 @@
 	},
 /obj/machinery/door/airlock/survival_pod/glass,
 /obj/structure/fans/tiny,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "E" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst{
@@ -174,7 +174,7 @@
 /area/ruin/powered)
 "M" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace/normal_atmos,
 /area/ruin/powered)
 "P" = (
 /turf/template_noop,
