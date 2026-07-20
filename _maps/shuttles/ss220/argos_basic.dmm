@@ -11,7 +11,7 @@
 /obj/effect/turf_decal/siding/dark/inner_corner{
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/argos)
 "aJ" = (
 /turf/open/floor/glass/reinforced,
@@ -54,7 +54,7 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/argos)
 "dp" = (
 /turf/open/floor/iron/dark/smooth_edge{
@@ -164,7 +164,7 @@
 	dir = 1
 	},
 /obj/machinery/recharge_station,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/argos)
 "lc" = (
 /obj/machinery/holopad/secure,
@@ -193,7 +193,7 @@
 /obj/machinery/door/window/brigdoor/left/directional/east{
 	req_access = list("cent_general")
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/argos)
 "qb" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/argos,
@@ -409,7 +409,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/argos)
 "BE" = (
 /obj/machinery/light/directional/west,
@@ -422,7 +422,7 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/argos)
 "DA" = (
 /obj/structure/table/optable,
@@ -566,7 +566,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/argos)
 "NJ" = (
 /obj/machinery/newscaster/directional/east,

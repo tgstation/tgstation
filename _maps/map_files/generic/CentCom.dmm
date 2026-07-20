@@ -2803,7 +2803,7 @@
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/machinery/photocopier/gratis/prebuilt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin/soo)
 "anx" = (
 /obj/effect/turf_decal/tile/brown/fourcorners,
@@ -6575,7 +6575,7 @@
 "aFa" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/fax/admin,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin/soo)
 "aFb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
@@ -7229,7 +7229,7 @@
 	pixel_y = -4
 	},
 /obj/structure/sign/flag/nanotrasen/directional/south,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin/soo)
 "aHu" = (
 /obj/effect/turf_decal/caution/stand_clear/red{
@@ -7767,7 +7767,7 @@
 /obj/item/clothing/accessory/medal/bronze_heart,
 /obj/item/gun/ballistic/revolver/golden,
 /obj/machinery/status_display/ai/directional/north,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin/soo)
 "aJo" = (
 /obj/structure/table/wood,
@@ -7846,7 +7846,7 @@
 "aJA" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/computer/security/wooden_tv,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin/soo)
 "aJB" = (
 /obj/structure/railing/corner{
@@ -7885,7 +7885,7 @@
 	},
 /obj/structure/light_fake/spot/directional/south,
 /obj/machinery/newscaster/directional/south,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin/soo)
 "aJH" = (
 /obj/machinery/vending/nta/light,
@@ -10613,7 +10613,7 @@
 /obj/machinery/modular_computer/preset/id/centcom{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin/soo)
 "aUP" = (
 /obj/machinery/duct,
@@ -12855,7 +12855,7 @@
 /area/centcom/central_command_areas/courtroom)
 "cVD" = (
 /obj/machinery/computer/communications,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin)
 "cVY" = (
 /obj/effect/turf_decal/siding/wideplating/dark/corner{
@@ -13974,7 +13974,7 @@
 	pixel_x = 10;
 	pixel_y = -4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin)
 "fcN" = (
 /obj/structure/light_fake/spot/directional/east,
@@ -16556,7 +16556,7 @@
 "lfr" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/fancy/donut_box,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin)
 "lgT" = (
 /obj/effect/turf_decal/tile/dark/fourcorners{
@@ -17695,7 +17695,7 @@
 "nYw" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/fax/admin,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin)
 "nZI" = (
 /obj/machinery/door/airlock/multi_tile/public/glass{
@@ -20806,7 +20806,7 @@
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/machinery/photocopier/gratis/prebuilt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin)
 "tVr" = (
 /obj/structure/table/reinforced/titaniumglass,
