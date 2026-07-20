@@ -31,7 +31,7 @@
 		return new /datum/tgs_message_content("Error: Unknown error trying to get your discord id.")
 
 	var/datum/admins/linked_admin
-	var/admin_ckey = ckey(SSdiscord.lookup_ckey(discord_id))
+	var/admin_ckey = ckey(SScentral.can_run() ? SScentral.lookup_ckey(discord_id) : SSdiscord.lookup_ckey(discord_id)) // BANDASTATION EDIT: TGS chat bot discord validation
 
 	if (admin_ckey)
 		linked_admin = GLOB.admin_datums[admin_ckey] || GLOB.deadmins[admin_ckey]
@@ -96,19 +96,22 @@
 /datum/tgs_chat_command/validated/adminwho/Validated_Run(datum/tgs_chat_user/sender, params)
 	return new /datum/tgs_message_content(tgsadminwho())
 
+// BANDASTATION EDIT START: Disable SDQL chat bot command
 /datum/tgs_chat_command/validated/sdql
 	name = "sdql"
-	help_text = "Runs an SDQL query"
+	help_text = "Runs an SDQL query. Disabled. Use in-game SDQL instead."
 	admin_only = TRUE
 	required_rights = R_DEBUG
 
 /datum/tgs_chat_command/validated/sdql/Validated_Run(datum/tgs_chat_user/sender, params)
-	var/list/results = HandleUserlessSDQL(sender.friendly_name, params)
-	if(!results)
-		return new /datum/tgs_message_content("Query produced no output")
-	var/list/text_res = results.Copy(1, 3)
-	var/list/refs = results.len > 3 ? results.Copy(4) : null
-	return new /datum/tgs_message_content("[text_res.Join("\n")][refs ? "\nRefs: [refs.Join(" ")]" : ""]")
+	// var/list/results = HandleUserlessSDQL(sender.friendly_name, params)
+	// if(!results)
+	// 	return new /datum/tgs_message_content("Query produced no output")
+	// var/list/text_res = results.Copy(1, 3)
+	// var/list/refs = results.len > 3 ? results.Copy(4) : null
+	// return new /datum/tgs_message_content("[text_res.Join("\n")][refs ? "\nRefs: [refs.Join(" ")]" : ""]")
+	return new /datum/tgs_message_content("SDQL command is disabled. Use in-game SDQL instead.")
+// BANDASTATION EDIT END: Disable SDQL chat bot command
 
 /datum/tgs_chat_command/validated/tgsstatus
 	name = "status"

@@ -457,7 +457,7 @@ MINUTE_CLICK_LIMIT 400
 #CHAT_NEW_GAME_NOTIFICATIONS
 
 ## Uncomment this flag to validate admin commands from discord by requiring they come from linked discord accounts and that those discord accounts link to a ckey with the right admin permissions.
-# SECURE_CHAT_COMMANDS
+SECURE_CHAT_COMMANDS
 
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
 #DEBUG_ADMIN_HREFS

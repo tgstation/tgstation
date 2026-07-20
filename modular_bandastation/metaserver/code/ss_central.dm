@@ -100,6 +100,18 @@ SUBSYSTEM_DEF(central)
 	if(player && interview)
 		interview.ui_interact(player)
 
+/datum/controller/subsystem/central/proc/lookup_ckey(discord_id)
+	var/endpoint = "[CONFIG_GET(string/ss_central_url)]/players/discord/[discord_id]"
+	var/datum/http_response/response = SShttp.make_sync_request(RUSTG_HTTP_METHOD_GET, endpoint, "", list())
+	if(response.errored || response.status_code != 200 && response.status_code != 404)
+		stack_trace("Failed to get player by discord: HTTP status code [response.status_code] - [response.error] - [response.body]")
+		return
+	if(response.status_code == 404)
+		return
+
+	var/list/data = json_decode(response.body)
+	return data["ckey"]
+
 /datum/controller/subsystem/central/proc/is_player_discord_linked(ckey)
 	var/datum/persistent_client/pclient = GLOB.persistent_clients_by_ckey[ckey]
 
