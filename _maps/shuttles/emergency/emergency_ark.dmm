@@ -36,7 +36,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bT" = (
-/obj/structure/beebox/premade/random,
+/obj/effect/spawner/random/biome_mob/grass/shuttle_only,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "cb" = (
@@ -70,7 +70,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cw" = (
-/turf/open/water/beach,
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/item/toy/seashell,
+/turf/open/misc/beach/coast,
 /area/shuttle/escape)
 "cF" = (
 /obj/structure/chair/sofa/corp/corner{
@@ -145,12 +149,11 @@
 /turf/open/floor/iron/smooth,
 /area/shuttle/escape)
 "ep" = (
-/obj/structure/flora/coconuts,
-/obj/item/toy/seashell,
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/turf/open/misc/beach/sand,
+/obj/structure/flora/bush/grassy/style_random,
+/turf/open/misc/dirt/dark/station,
 /area/shuttle/escape)
 "et" = (
 /obj/structure/chair/sofa/corp{
@@ -301,10 +304,11 @@
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "kO" = (
-/obj/structure/flora/bush/sparsegrass/style_random,
-/obj/item/clothing/shoes/sandal/beach,
-/obj/effect/spawner/random/biome_mob/beach,
-/turf/open/misc/beach/sand,
+/obj/item/food/grown/banana,
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/effect/spawner/random/biome_mob/jungle/shuttle_only,
+/turf/open/misc/grass/jungle/station,
 /area/shuttle/escape)
 "ld" = (
 /obj/machinery/light/directional/west,
@@ -322,7 +326,7 @@
 /turf/open/misc/asteroid/snow/standard_air,
 /area/shuttle/escape)
 "lx" = (
-/obj/effect/spawner/random/biome_mob/maint,
+/obj/effect/spawner/random/biome_mob/maint/shuttle_only,
 /turf/open/floor/plating/elevatorshaft,
 /area/shuttle/escape)
 "ly" = (
@@ -379,7 +383,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/obj/effect/spawner/random/biome_mob/snow,
+/obj/effect/spawner/random/biome_mob/snow/shuttle_only,
 /turf/open/floor/plating/snowed/standard_air,
 /area/shuttle/escape)
 "mz" = (
@@ -412,17 +416,8 @@
 /turf/open/floor/iron/smooth,
 /area/shuttle/escape)
 "nx" = (
-/obj/effect/turf_decal/sand/volcanic,
-/obj/effect/turf_decal/siding/wood{
-	dir = 5
-	},
-/obj/structure/water_source/puddle,
-/obj/item/reagent_containers/cup/bucket/wooden{
-	pixel_y = 12;
-	pixel_x = 10
-	},
 /obj/structure/flora/bush/stalky/style_random,
-/turf/open/misc/dirt/dark/station,
+/turf/open/misc/beach/coast,
 /area/shuttle/escape)
 "oc" = (
 /obj/structure/flora/rock/pile/siderite/style_random,
@@ -457,7 +452,7 @@
 /turf/open/misc/basalt/safe,
 /area/shuttle/escape)
 "pp" = (
-/obj/effect/spawner/random/biome_mob/lavaland,
+/obj/effect/spawner/random/biome_mob/lavaland/shuttle_only,
 /turf/open/misc/asteroid/basalt/smooth/siderite,
 /area/shuttle/escape)
 "pw" = (
@@ -471,6 +466,14 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"pC" = (
+/obj/effect/turf_decal/sand/volcanic,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/flora/bush/stalky/style_random,
+/turf/open/misc/dirt/dark/station,
 /area/shuttle/escape)
 "pI" = (
 /obj/item/kirbyplants/organic/plant21,
@@ -533,7 +536,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "sd" = (
-/obj/effect/spawner/random/biome_mob/hostile,
+/obj/effect/spawner/random/biome_mob/hostile/shuttle_only,
 /turf/open/floor/glass/reinforced/plasma,
 /area/shuttle/escape)
 "si" = (
@@ -556,15 +559,16 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "sw" = (
-/obj/structure/flora/rock/pile/style_2,
-/obj/structure/flora/bush/sparsegrass/style_random,
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
 	},
-/turf/open/misc/dirt/dark/station,
+/obj/structure/flora/rock/pile/jungle/style_random,
+/obj/item/toy/beach_ball/branded,
+/turf/open/water/beach,
 /area/shuttle/escape)
 "sT" = (
 /obj/structure/closet/crate/critter,
+/obj/effect/spawner/random/biome_mob/maint/shuttle_only,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "tE" = (
@@ -757,10 +761,12 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "yF" = (
+/obj/structure/flora/rock/pile/style_2,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /obj/effect/turf_decal/siding/wood{
-	dir = 8
+	dir = 6
 	},
-/turf/open/misc/beach/sand,
+/turf/open/misc/dirt/dark/station,
 /area/shuttle/escape)
 "yH" = (
 /obj/effect/turf_decal/siding/thinplating/terracotta{
@@ -808,9 +814,9 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "Ab" = (
-/obj/effect/spawner/random/biome_mob/grass,
-/obj/structure/flora/bush/sparsegrass/style_random,
-/turf/open/misc/dirt/dark/station,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/effect/spawner/random/biome_mob/jungle/shuttle_only,
+/turf/open/misc/grass/jungle/station,
 /area/shuttle/escape)
 "Af" = (
 /obj/structure/chair/comfy/shuttle{
@@ -823,9 +829,17 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Aw" = (
-/obj/effect/spawner/random/biome_mob/jungle,
-/obj/structure/flora/grass/jungle/a/style_2,
-/turf/open/misc/grass/jungle/station,
+/obj/effect/turf_decal/sand/plating/volcanic,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/water_source/puddle,
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_y = 6;
+	pixel_x = 10
+	},
+/obj/effect/spawner/random/biome_mob/grass/shuttle_only,
+/turf/open/misc/dirt/dark/station,
 /area/shuttle/escape)
 "AA" = (
 /obj/effect/decal/cleanable/dirt,
@@ -853,7 +867,7 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/weather/dirt,
-/obj/effect/spawner/random/biome_mob/grass,
+/obj/structure/beebox/premade/random,
 /turf/open/misc/sandy_dirt,
 /area/shuttle/escape)
 "Bj" = (
@@ -864,7 +878,7 @@
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "BY" = (
-/obj/effect/spawner/random/biome_mob/hostile,
+/obj/effect/spawner/random/biome_mob/hostile/shuttle_only,
 /turf/open/floor/glass/plasma,
 /area/shuttle/escape)
 "Cf" = (
@@ -889,9 +903,8 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "Cz" = (
-/obj/item/toy/beach_ball/branded,
-/obj/effect/spawner/random/biome_mob/beach,
-/turf/open/water/deep_beach,
+/obj/effect/spawner/random/biome_mob/beach/shuttle_only,
+/turf/open/water/beach,
 /area/shuttle/escape)
 "CP" = (
 /obj/machinery/light/directional/west,
@@ -934,7 +947,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/obj/effect/spawner/random/biome_mob/snow,
+/obj/effect/spawner/random/biome_mob/snow/shuttle_only,
 /turf/open/floor/fakeice,
 /area/shuttle/escape)
 "Ep" = (
@@ -971,11 +984,8 @@
 /turf/open/floor/iron/smooth,
 /area/shuttle/escape)
 "Fv" = (
-/obj/structure/flora/tree/palm/style_random,
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/turf/open/misc/beach/sand,
+/obj/structure/flora/grass/jungle/a/style_2,
+/turf/open/misc/grass/jungle/station,
 /area/shuttle/escape)
 "FG" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1075,7 +1085,7 @@
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
-/obj/effect/spawner/random/biome_mob/lavaland,
+/obj/effect/spawner/random/biome_mob/lavaland/shuttle_only,
 /turf/open/misc/basalt/safe,
 /area/shuttle/escape)
 "Lv" = (
@@ -1198,16 +1208,14 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "NN" = (
-/obj/effect/spawner/random/biome_mob/lavaland,
+/obj/effect/spawner/random/biome_mob/lavaland/shuttle_only,
 /turf/open/lava/smooth/weak,
 /area/shuttle/escape)
 "NU" = (
-/obj/structure/flora/bush/pointy/style_random,
-/obj/effect/turf_decal/sand/plating/volcanic,
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/turf/open/misc/dirt/dark/station,
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/style_random,
+/turf/open/misc/grass/jungle/station,
 /area/shuttle/escape)
 "NV" = (
 /obj/structure/railing/unbreakable{
@@ -1253,11 +1261,14 @@
 /turf/open/floor/iron/smooth,
 /area/shuttle/escape)
 "PM" = (
-/obj/structure/flora/rock/pile/jungle/style_random,
-/turf/open/water/deep_beach,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/flora/bush/flowers_pp/style_random,
+/turf/open/misc/dirt/dark/station,
 /area/shuttle/escape)
 "PP" = (
-/obj/effect/spawner/random/biome_mob/hostile,
+/obj/effect/spawner/random/biome_mob/hostile/shuttle_only,
 /turf/open/floor/glass,
 /area/shuttle/escape)
 "PQ" = (
@@ -1275,7 +1286,7 @@
 /turf/open/floor/plating/snowed/standard_air,
 /area/shuttle/escape)
 "Qk" = (
-/obj/effect/spawner/random/biome_mob/fairy,
+/obj/effect/spawner/random/biome_mob/fairy/shuttle_only,
 /turf/open/floor/grass/fairy,
 /area/shuttle/escape)
 "Qt" = (
@@ -1295,7 +1306,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "QY" = (
-/obj/effect/spawner/random/biome_mob/hostile,
+/obj/effect/spawner/random/biome_mob/hostile/shuttle_only,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "Ru" = (
@@ -1341,8 +1352,8 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Sm" = (
-/obj/structure/flora/bush/stalky/style_random,
-/turf/open/water/beach,
+/obj/item/clothing/shoes/sandal/beach,
+/turf/open/misc/beach/sand,
 /area/shuttle/escape)
 "SK" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -1382,7 +1393,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Vl" = (
-/obj/effect/spawner/random/biome_mob/maint,
+/obj/effect/spawner/random/biome_mob/maint/shuttle_only,
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "VQ" = (
@@ -1526,14 +1537,13 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "YS" = (
-/obj/effect/spawner/random/biome_mob/grass,
+/obj/effect/spawner/random/biome_mob/grass/shuttle_only,
 /turf/open/floor/hay,
 /area/shuttle/escape)
 "YX" = (
-/obj/item/food/grown/banana,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/flora/bush/flowers_pp/style_random,
-/turf/open/misc/grass/jungle/station,
+/turf/open/misc/dirt/dark/station,
 /area/shuttle/escape)
 "Zj" = (
 /obj/structure/railing/corner,
@@ -1882,8 +1892,8 @@ dd
 zp
 RZ
 DR
-nx
-sw
+ct
+vK
 Uu
 bG
 Ci
@@ -1893,8 +1903,8 @@ Uu
 "}
 (17,1,1) = {"
 mz
-vQ
-Bb
+ep
+PM
 fs
 HS
 Lz
@@ -1935,8 +1945,8 @@ mz
 "}
 (19,1,1) = {"
 mz
-ct
-vK
+pC
+yF
 fs
 VT
 qx
@@ -1966,8 +1976,8 @@ FJ
 zp
 RZ
 DR
-ep
-yF
+vQ
+Bb
 Uu
 XY
 eH
@@ -2200,8 +2210,8 @@ Mb
 Mb
 Bv
 rV
-cw
-PM
+nx
+Pb
 mz
 Bj
 Bj
@@ -2243,7 +2253,7 @@ jE
 Bv
 rV
 Sm
-Pb
+sw
 mz
 Bj
 Bj

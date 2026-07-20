@@ -53,16 +53,7 @@
 		/mob/living/basic/mushroom,
 		/mob/living/basic/seedling,
 		/mob/living/basic/garden_gnome,
-	)
-
-/obj/effect/spawner/random/biome_mob/jungle
-	loot = list(
-		/mob/living/carbon/human/species/monkey = 60,
-		/mob/living/basic/gorilla/lesser = 20,
-		/mob/living/basic/frog = 5,
-		/mob/living/basic/sloth = 5,
-		/mob/living/basic/lizard = 5,
-		/mob/living/basic/axolotl = 5,
+		/mob/living/basic/cow/moonicorn,
 	)
 
 /obj/effect/spawner/random/biome_mob/snow
@@ -79,6 +70,14 @@
 		/mob/living/basic/mining/legion/snow,
 		/mob/living/basic/tree,
 		/mob/living/basic/festivus,
+	)
+
+/obj/effect/spawner/random/biome_mob/jungle
+	loot = list(
+		/mob/living/carbon/human/species/monkey,
+		/mob/living/basic/gorilla/lesser,
+		/mob/living/basic/sloth,
+		/mob/living/basic/lizard,
 	)
 
 /obj/effect/spawner/random/biome_mob/lavaland
@@ -120,20 +119,7 @@
 		/mob/living/basic/frog,
 		/mob/living/basic/cockroach,
 		/mob/living/basic/cockroach/bloodroach,
-	)
-
-/obj/effect/spawner/random/biome_mob/clown
-	spawn_loot_count = 3
-	loot = list(
-		/mob/living/basic/clown/fleshclown,
-		/mob/living/basic/clown/clownhulk,
-		/mob/living/basic/clown/longface,
-		/mob/living/basic/clown/clownhulk/chlown,
-		/mob/living/basic/clown/clownhulk/honkmunculus,
-		/mob/living/basic/clown/mutant/glutton,
-		/mob/living/basic/clown/banana,
-		/mob/living/basic/clown/honkling,
-		/mob/living/basic/clown/lube,
+		/mob/living/basic/axolotl,
 	)
 
 /obj/effect/spawner/random/biome_mob/hostile
@@ -192,5 +178,60 @@
 		/mob/living/basic/alien/drone,
 		/mob/living/basic/alien/sentinel,
 		/mob/living/basic/alien,
-		/mob/living/basic/cow/moonicorn,
 	)
+
+/obj/effect/spawner/random/biome_mob/clown
+	spawn_loot_count = 3
+	loot = list(
+		/mob/living/basic/clown/fleshclown,
+		/mob/living/basic/clown/clownhulk,
+		/mob/living/basic/clown/longface,
+		/mob/living/basic/clown/clownhulk/chlown,
+		/mob/living/basic/clown/clownhulk/honkmunculus,
+		/mob/living/basic/clown/mutant/glutton,
+		/mob/living/basic/clown/banana,
+		/mob/living/basic/clown/honkling,
+		/mob/living/basic/clown/lube,
+	)
+
+// we need to make special escape shuttle subtypes that use global lists to avoid duplicates
+
+GLOBAL_LIST_INIT(mob_spawner_biome_grass, /obj/effect/spawner/random/biome_mob/grass::loot.Copy())
+/obj/effect/spawner/random/biome_mob/grass/shuttle_only/Initialize(mapload)
+	loot = GLOB.mob_spawner_biome_grass
+	return ..()
+
+GLOBAL_LIST_INIT(mob_spawner_biome_fairy, /obj/effect/spawner/random/biome_mob/fairy::loot.Copy())
+/obj/effect/spawner/random/biome_mob/fairy/shuttle_only/Initialize(mapload)
+	loot = GLOB.mob_spawner_biome_fairy
+	return ..()
+
+GLOBAL_LIST_INIT(mob_spawner_biome_jungle, /obj/effect/spawner/random/biome_mob/jungle::loot.Copy())
+/obj/effect/spawner/random/biome_mob/jungle/shuttle_only/Initialize(mapload)
+	loot = GLOB.mob_spawner_biome_jungle
+	return ..()
+
+GLOBAL_LIST_INIT(mob_spawner_biome_snow, /obj/effect/spawner/random/biome_mob/snow::loot.Copy())
+/obj/effect/spawner/random/biome_mob/snow/shuttle_only/Initialize(mapload)
+	loot = GLOB.mob_spawner_biome_snow
+	return ..()
+
+GLOBAL_LIST_INIT(mob_spawner_biome_lavaland, /obj/effect/spawner/random/biome_mob/lavaland::loot.Copy())
+/obj/effect/spawner/random/biome_mob/lavaland/shuttle_only/Initialize(mapload)
+	loot = GLOB.mob_spawner_biome_lavaland
+	return ..()
+
+GLOBAL_LIST_INIT(mob_spawner_biome_beach, /obj/effect/spawner/random/biome_mob/beach::loot.Copy())
+/obj/effect/spawner/random/biome_mob/beach/shuttle_only/Initialize(mapload)
+	loot = GLOB.mob_spawner_biome_beach
+	return ..()
+
+GLOBAL_LIST_INIT(mob_spawner_biome_maint, /obj/effect/spawner/random/biome_mob/maint::loot.Copy())
+/obj/effect/spawner/random/biome_mob/maint/shuttle_only/Initialize(mapload)
+	loot = GLOB.mob_spawner_biome_maint
+	return ..()
+
+GLOBAL_LIST_INIT(mob_spawner_biome_hostile, /obj/effect/spawner/random/biome_mob/hostile::loot.Copy())
+/obj/effect/spawner/random/biome_mob/hostile/shuttle_only/Initialize(mapload)
+	loot = GLOB.mob_spawner_biome_hostile
+	return ..()
