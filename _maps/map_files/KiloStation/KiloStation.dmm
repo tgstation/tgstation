@@ -29222,8 +29222,10 @@
 /turf/open/space/basic,
 /area/space)
 "jhr" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/medbay/lobby)
 "jhv" = (
@@ -65217,13 +65219,6 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/station/science/auxlab)
-"uHg" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/turf/open/floor/iron/showroomfloor,
-/area/station/medical/medbay/lobby)
 "uHv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
@@ -98896,7 +98891,7 @@ eYH
 xEm
 gxN
 tCd
-uHg
+cel
 cel
 vsR
 kHG
