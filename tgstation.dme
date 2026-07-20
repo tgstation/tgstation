@@ -2340,7 +2340,6 @@
 #include "code\datums\wounds\robot\robotic_blunt_T2.dm"
 #include "code\datums\wounds\robot\robotic_blunt_T3.dm"
 #include "code\datums\wounds\robot\robotic_burns.dm"
-#include "code\datums\wounds\robot\secures_internals.dm"
 #include "code\datums\wounds\scars\_scars.dm"
 #include "code\game\atoms_movable.dm"
 #include "code\game\communications.dm"
