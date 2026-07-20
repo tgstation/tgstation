@@ -1,0 +1,5 @@
+author: "PetyaFX"
+delete-after: True
+changes:
+  - config: "Включена валидация использования админ команд в конфиге."
+  - rscdel: "Отключена команда SDQL запроса через чат бота."
