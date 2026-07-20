@@ -13,6 +13,7 @@
 	//Not very capable under normal circumstances, try as they might.
 	flight_level = WINGS_FLIGHTLESS
 	has_open_sprite = FALSE
+	flap_sound = 'sound/mobs/humanoids/moth/moth_flutter.ogg'
 
 	///Are we burned?
 	var/burnt = FALSE
@@ -29,9 +30,6 @@
 /obj/item/organ/wings/moth/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
 	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL))
-
-/obj/item/organ/wings/moth/make_flap_sound(mob/living/carbon/wing_owner)
-	playsound(wing_owner, 'sound/mobs/humanoids/moth/moth_flutter.ogg', 50, TRUE)
 
 /obj/item/organ/wings/moth/can_soften_fall()
 	return !burnt
@@ -99,20 +97,19 @@
 #undef MOTH_WING_FORCE
 
 
+// These look like moth wings. They sound like moth wings. They are not moth wings by any shared interaction besides their flap sounds.
+// Don't try it. Burn states, driftability, forced sprite accessory overrides...
+
 ///mothra wings, which relate to moths.
-/obj/item/organ/wings/moth/mothra
+/obj/item/organ/wings/mothra
 	name = "mothra wings"
 	desc = "Fly like the mighty mothra of legend once did."
 	sprite_accessory_override = /datum/sprite_accessory/wings/mothra
-	flight_level = WINGS_AIRWORTHY
-	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/functional
-	has_open_sprite = TRUE
+	flap_sound = 'sound/mobs/humanoids/moth/moth_flutter.ogg'
 
 ///megamoth wings, which relate to moths as an alternate choice. they're both pretty cool.
-/obj/item/organ/wings/moth/megamoth
+/obj/item/organ/wings/megamoth
 	name = "megamoth wings"
 	desc = "Don't get murderous."
 	sprite_accessory_override = /datum/sprite_accessory/wings/megamoth
-	flight_level = WINGS_AIRWORTHY
-	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/functional
-	has_open_sprite = TRUE
+	flap_sound = 'sound/mobs/humanoids/moth/moth_flutter.ogg'

@@ -1,4 +1,4 @@
-#define FUNCTIONAL_WING_FORCE 2.25 NEWTONS
+#define DEFAULT_WING_FORCE 2.25 NEWTONS
 
 ///Wing base type. doesn't really do anything
 /obj/item/organ/wings
@@ -25,20 +25,37 @@
 	var/flight_level = WINGS_AIRWORTHY
 	///Does this wing type have open/close sprite variants
 	var/has_open_sprite = TRUE
+	///Sound played on the *flap emote, if any
+	var/flap_sound
 
-	var/drift_force = FUNCTIONAL_WING_FORCE
+	var/drift_force = DEFAULT_WING_FORCE
 
 ///Checks if the wings can soften short falls
 /obj/item/organ/wings/proc/can_soften_fall()
 	return TRUE
 
-///Implement as needed to play a sound effect on *flap emote
+///Set flap_sound to play the sound when emoting *flap
 /obj/item/organ/wings/proc/make_flap_sound(mob/living/carbon/wing_owner)
-	return
+	if(isnull(flap_sound))
+		return
+	playsound(wing_owner, flap_sound, 50, TRUE)
 
 /obj/item/organ/wings/Initialize(mapload)
 	. = ..()
-	if(flight_level == WINGS_FLIGHTLESS)
+	setup_jetpack()
+	if(flight_level > WINGS_FLIGHTLESS)
+		// only flightful wings get orange juice
+		food_reagents = list(/datum/reagent/flightpotion = 5)
+
+/**
+ * update proc to kick our jetpack component whenever circumstances change
+ *
+ * Flightless wings never generate lift of their own, drifting in 0G and hook
+ * the organ being implanted/removed. Anything airworthy flies under its own power, so we
+ * hook the wings being opened/closed instead
+ */
+/obj/item/organ/wings/proc/setup_jetpack()
+	if(flight_level <= WINGS_FLIGHTLESS)
 		AddComponent( \
 			/datum/component/jetpack, \
 			TRUE, \
@@ -49,29 +66,28 @@
 			CALLBACK(src, PROC_REF(allow_flight)), \
 			null, \
 		)
-	else
-		AddComponent( \
-			/datum/component/jetpack, \
-			TRUE, \
-			drift_force, \
-			COMSIG_WINGS_OPENED, \
-			COMSIG_WINGS_CLOSED, \
-			null, \
-			CALLBACK(src, PROC_REF(can_fly)), \
-			CALLBACK(src, PROC_REF(can_fly)), \
-		)
-		// only flightful wings get orange juice
-		food_reagents = list(/datum/reagent/flightpotion = 5)
+		return
+
+	AddComponent( \
+		/datum/component/jetpack, \
+		TRUE, \
+		drift_force, \
+		COMSIG_WINGS_OPENED, \
+		COMSIG_WINGS_CLOSED, \
+		null, \
+		CALLBACK(src, PROC_REF(can_fly)), \
+		CALLBACK(src, PROC_REF(can_fly)), \
+	)
 
 /obj/item/organ/wings/Destroy()
 	QDEL_NULL(fly)
 	return ..()
 
+///You only get the juice if your wings are worth a damn
 /obj/item/organ/wings/grind_results()
-	if(flight_level > WINGS_FLIGHTLESS)
-		. = list(/datum/reagent/flightpotion = 5)
-	else
-		. = null
+	if(flight_level <= WINGS_FLIGHTLESS)
+		return null
+	return list(/datum/reagent/flightpotion = 5)
 
 /obj/item/organ/wings/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
@@ -91,16 +107,25 @@
 	return ..()
 
 /obj/item/organ/wings/proc/set_flight(mob/living/carbon/organ_owner, state = null)
-	if(!isnull(state))
+	organ_owner ||= owner
+	if(!isnull(state) && state != flight_level)
+		//Force landing while old binds are still live
+		if(wings_open && !isnull(organ_owner))
+			toggle_flight(organ_owner)
 		flight_level = state
+		setup_jetpack()
 	update_flight(organ_owner)
 
-/obj/item/organ/wings/proc/update_flight(mob/living/carbon/organ_owner = null)
-	fly?.Remove(owner)
-	if(wings_open)
-		toggle_flight(owner)
+/obj/item/organ/wings/proc/update_flight(mob/living/carbon/organ_owner)
+	organ_owner ||= owner
+	if(isnull(organ_owner))
+		return
 
-	if(!organ_owner || flight_level <= WINGS_FLIGHTLESS)
+	fly?.Remove(organ_owner)
+	if(wings_open)
+		toggle_flight(organ_owner)
+
+	if(flight_level <= WINGS_FLIGHTLESS)
 		return
 	if(QDELETED(fly))
 		fly = new
@@ -320,4 +345,4 @@
 	desc = "How does something so squishy even fly?"
 	sprite_accessory_override = /datum/sprite_accessory/wings/slime
 
-#undef FUNCTIONAL_WING_FORCE
+#undef DEFAULT_WING_FORCE
