@@ -26,8 +26,6 @@
 	///Does this wing type have open/close sprite variants
 	var/has_open_sprite = TRUE
 
-	food_reagents = list(/datum/reagent/flightpotion = 5)
-
 	var/drift_force = FUNCTIONAL_WING_FORCE
 
 ///Checks if the wings can soften short falls
@@ -62,13 +60,18 @@
 			CALLBACK(src, PROC_REF(can_fly)), \
 			CALLBACK(src, PROC_REF(can_fly)), \
 		)
+		// only flightful wings get orange juice
+		food_reagents = list(/datum/reagent/flightpotion = 5)
 
 /obj/item/organ/wings/Destroy()
 	QDEL_NULL(fly)
 	return ..()
 
 /obj/item/organ/wings/grind_results()
-	return list(/datum/reagent/flightpotion = 5)
+	if(flight_level > WINGS_FLIGHTLESS)
+		. = list(/datum/reagent/flightpotion = 5)
+	else
+		. = null
 
 /obj/item/organ/wings/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
