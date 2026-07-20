@@ -115,65 +115,22 @@ SUBSYSTEM_DEF(admin_verbs)
 		to_chat(admin, span_adminnotice("You lack the permissions to do this."))
 		return
 
-	// Build structured_args from whatever the caller passed
-	var/list/structured_args = list()
 	var/list/extra_args = args.Copy(3)
+	var/list/positional_args
 	if(length(extra_args) == 1 && islist(extra_args[1]))
-		// Caller passed an explicit assoc list (e.g. context menu hints)
-		structured_args = extra_args[1]
+		positional_args = extra_args[1]
 	else if(length(extra_args))
-		// Map positional args to metadata argument names in order
-		var/list/meta_args = verb_singleton.arguments
-		for(var/i in 1 to min(length(extra_args), length(meta_args)))
-			var/datum/verb_arg_metadata/arg = meta_args[i]
-			structured_args[arg.name] = extra_args[i]
+		positional_args = extra_args
 
-	if(length(verb_singleton.arguments))
-		structured_args = collect_verb_args(admin, verb_singleton, structured_args)
-		if(isnull(structured_args))
-			return
+	var/list/structured_args = ____collect_verb_args(admin, verb_singleton.name, verb_singleton.arguments, positional_args)
+	if(isnull(structured_args))
+		return
 
 	var/old_usr = usr
 	usr = admin.mob
 	verb_singleton.__avd_do_verb(admin, structured_args)
 	usr = old_usr
 	SSblackbox.record_feedback("tally", "dynamic_admin_verb_invocation", 1, "[verb_type]")
-
-/datum/controller/subsystem/admin_verbs/proc/collect_verb_args(client/admin, datum/admin_verb/verb_singleton, list/hints)
-	var/list/collected = hints?.Copy() || list()
-	var/context_target = collected["__context_target__"]
-	collected -= "__context_target__"
-	var/context_used = FALSE
-
-	for(var/datum/verb_arg_metadata/arg in verb_singleton.arguments)
-		if(!isnull(collected[arg.name]))
-			continue
-		if(!context_used && !isnull(context_target) && arg.source == VERB_ARG_SOURCE_WORLD)
-			collected[arg.name] = context_target
-			context_used = TRUE
-			continue
-		var/value = prompt_for_arg(admin, verb_singleton.name, arg)
-		if(isnull(value))
-			return null
-		collected[arg.name] = value
-	return collected
-
-/datum/controller/subsystem/admin_verbs/proc/prompt_for_arg(client/admin, verb_name, datum/verb_arg_metadata/arg)
-	if(arg.arg_type & VERB_ARG_TYPE_NUM)
-		return tgui_input_number(admin, arg.name, verb_name)
-	if(arg.arg_type & VERB_ARG_TYPE_TEXT)
-		return tgui_input_text(admin, arg.name, verb_name)
-	if(arg.arg_type & VERB_ARG_TYPE_MESSAGE)
-		return tgui_input_text(admin, arg.name, verb_name, multiline = TRUE)
-	if(arg.arg_type & VERB_ARG_TYPE_SOUND)
-		return input(admin, arg.name, verb_name) as null|sound
-	if(arg.arg_type & VERB_ARG_TYPE_MOB)
-		return tgui_input_list(admin, arg.name, verb_name, sort_names(GLOB.mob_list))
-	if(arg.arg_type & VERB_ARG_TYPE_AREA)
-		return tgui_input_list(admin, arg.name, verb_name, get_sorted_areas())
-	if(arg.arg_type & VERB_ARG_TYPE_OBJ)
-		return tgui_input_list(admin, arg.name, verb_name, sort_names(GLOB.mob_list))
-	return null
 
 /**
  * Assosciates and/or resyncs an admin with their accessible admin verbs.

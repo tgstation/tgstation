@@ -53,7 +53,7 @@
 	set hidden = FALSE; \
 	set popup_menu = TRUE; \
 	set category = ##verb_category; \
-	SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/##verb_path_name, list("__context_target__" = __context_target)); \
+	SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/##verb_path_name, list(VERB_ARG_CONTEXT_TARGET_KEY = __context_target)); \
 }; \
 /datum/admin_verb/##verb_path_name/__avd_do_verb(client/user, list/structured_args)
 

@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(verbs)
 /datum/controller/subsystem/verbs/proc/initialize_verb_types()
 	for(var/datum/verb_metadata/verb_type as anything in subtypesof(/datum/verb_metadata))
 		var/datum/verb_metadata/meta = new verb_type
-		var/list/pending = GLOB.____pending_verb_args[verb_type]
+		var/list/pending = GLOB.____pending_verb_args[meta.body_path]
 		if(pending)
 			meta.arguments = pending
 		verbs_by_type[verb_type] = meta
@@ -32,33 +32,6 @@ SUBSYSTEM_DEF(verbs)
 	var/datum/verb_metadata/meta = verbs_by_verb_path[verb_path]
 	if(isnull(meta))
 		CRASH("invoke_verb called for '[verb_path]' with no metadata registered")
-	var/list/structured_args = list()
-	// Check for context menu target (only present in assoc lists from context menu stubs)
-	var/context_target
-	if(length(positional_args) && ("__context_target__" in positional_args))
-		context_target = positional_args["__context_target__"]
-	if(context_target)
-		positional_args -= "__context_target__"
-	// Map positional args to metadata arg names
-	if(length(positional_args) && length(meta.arguments))
-		for(var/i in 1 to min(length(positional_args), length(meta.arguments)))
-			var/datum/verb_arg_metadata/arg = meta.arguments[i]
-			structured_args[arg.name] = positional_args[i]
-	// Auto-fill context target into first entity arg
-	if(context_target && length(meta.arguments))
-		for(var/datum/verb_arg_metadata/arg in meta.arguments)
-			if(isnull(structured_args[arg.name]) && (arg.source == VERB_ARG_SOURCE_WORLD || arg.source == VERB_ARG_SOURCE_VIEW))
-				structured_args[arg.name] = context_target
-				break
-	if(length(meta.arguments))
-		structured_args = collect_args(target, meta, structured_args)
-		if(isnull(structured_args))
-			return
-	call(target, meta.body_path)(structured_args)
-
-/datum/controller/subsystem/verbs/proc/collect_args(target, datum/verb_metadata/meta, list/collected)
-	if(!collected)
-		collected = list()
 	var/client/user_client
 	if(istype(target, /client))
 		user_client = target
@@ -66,35 +39,12 @@ SUBSYSTEM_DEF(verbs)
 		var/mob/mob_target = target
 		user_client = mob_target.client
 	if(!user_client)
-		return null
-	for(var/datum/verb_arg_metadata/arg in meta.arguments)
-		if(!isnull(collected[arg.name]))
-			continue
-		var/value = prompt_for_arg(user_client, meta.name, arg)
-		if(isnull(value))
-			return null
-		collected[arg.name] = value
-	return collected
+		return
 
-/datum/controller/subsystem/verbs/proc/prompt_for_arg(client/user, verb_name, datum/verb_arg_metadata/arg)
-	if(arg.source == VERB_ARG_SOURCE_LIST && length(arg.options))
-		return tgui_input_list(user, arg.name, verb_name, arg.options)
-	if(arg.arg_type & VERB_ARG_TYPE_NUM)
-		return tgui_input_number(user, arg.name, verb_name)
-	if(arg.arg_type & VERB_ARG_TYPE_TEXT)
-		return tgui_input_text(user, arg.name, verb_name)
-	if(arg.arg_type & VERB_ARG_TYPE_MESSAGE)
-		return tgui_input_text(user, arg.name, verb_name, multiline = TRUE)
-	if(arg.arg_type & VERB_ARG_TYPE_SOUND)
-		return input(user, arg.name, verb_name) as null|sound
-	if(arg.arg_type & VERB_ARG_TYPE_MOB)
-		return tgui_input_list(user, arg.name, verb_name, sort_names(GLOB.mob_list))
-	if(arg.arg_type & VERB_ARG_TYPE_AREA)
-		return tgui_input_list(user, arg.name, verb_name, get_sorted_areas())
-	if(arg.arg_type & (VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_ATOM | VERB_ARG_TYPE_TURF))
-		if(user.mob)
-			return tgui_input_list(user, arg.name, verb_name, view(user.view, user.mob))
-	return null
+	var/list/structured_args = ____collect_verb_args(user_client, meta.name, meta.arguments, positional_args)
+	if(isnull(structured_args))
+		return
+	call(target, meta.body_path)(structured_args)
 
 /datum/controller/subsystem/verbs/proc/assign_verb(target, datum/verb_metadata/verb_type)
 	// When launching via dreamseeker and not dreamdaemon, client is created first before any of the subsystems init

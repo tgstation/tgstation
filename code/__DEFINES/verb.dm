@@ -1,3 +1,5 @@
+#define VERB_ARG_CONTEXT_TARGET_KEY "__context_target__"
+
 /**
  * Defines a game verb with an associated /datum/verb_metadata.
  *
@@ -50,7 +52,7 @@ _GAME_VERB(owner_type, verb_path_name, verb_name, verb_desc, verb_category, TRUE
 	set hidden = FALSE; \
 	set popup_menu = TRUE; \
 	set category = ##verb_category; \
-	if(__context_target) { var/list/__args = args.Copy(); __args += list("__context_target__" = __context_target); INVOKE_ASYNC(SSverbs, TYPE_PROC_REF(/datum/controller/subsystem/verbs, invoke_verb), src, ##owner_type/verb/##verb_path_name, __args); } \
+	if(__context_target) { var/list/__args = args.Copy(); __args += list(VERB_ARG_CONTEXT_TARGET_KEY = __context_target); INVOKE_ASYNC(SSverbs, TYPE_PROC_REF(/datum/controller/subsystem/verbs, invoke_verb), src, ##owner_type/verb/##verb_path_name, __args); } \
 	else { INVOKE_ASYNC(SSverbs, TYPE_PROC_REF(/datum/controller/subsystem/verbs, invoke_verb), src, ##owner_type/verb/##verb_path_name, args); }; \
 }; \
 ##owner_type/proc/__gvb_##verb_path_name(list/structured_args)
@@ -178,7 +180,6 @@ _GAME_VERB_GLOBAL_PROC(verb_path_name, verb_name, verb_desc, verb_category, FALS
 	var/static/____reg_##name = ____register_verb_arg(__TYPE__, __PROC__, #name, arg_type, type_path, source); \
 	var##type_path/##name = structured_args[#name]
 
-// Argument type bitflags. Combine with | for multi-type args.
 #define VERB_ARG_TYPE_TEXT (1<<0)
 #define VERB_ARG_TYPE_NUM (1<<1)
 #define VERB_ARG_TYPE_MESSAGE (1<<2)

@@ -213,6 +213,11 @@
 		return client.mob
 	return null
 
+/**
+ * public
+ *
+ * Sends a round restart notification.
+ */
 /datum/tgui_panel/proc/send_roundrestart()
 	window.send_message("roundrestart")
 

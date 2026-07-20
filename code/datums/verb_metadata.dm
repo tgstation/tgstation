@@ -19,6 +19,52 @@
 	var/source
 	var/list/options
 
+/datum/verb_arg_metadata/proc/prompt(client/user, verb_name)
+	if(source == VERB_ARG_SOURCE_LIST && length(options))
+		return tgui_input_list(user, name, verb_name, options)
+	if(arg_type & VERB_ARG_TYPE_NUM)
+		return tgui_input_number(user, name, verb_name)
+	if(arg_type & VERB_ARG_TYPE_TEXT)
+		return tgui_input_text(user, name, verb_name)
+	if(arg_type & VERB_ARG_TYPE_MESSAGE)
+		return tgui_input_text(user, name, verb_name, multiline = TRUE)
+	if(arg_type & VERB_ARG_TYPE_SOUND)
+		return input(user, name, verb_name) as null|sound
+	if(arg_type & VERB_ARG_TYPE_TYPEPATH)
+		return input(user, name, verb_name) as null|anything in typesof(type_path)
+	var/list/targets = get_targets(user)
+	if(length(targets))
+		return tgui_input_list(user, name, verb_name, sort_names(targets))
+	return null
+
+/proc/____collect_verb_args(client/user, verb_name, list/arguments, list/positional_args)
+	var/list/structured_args = list()
+
+	var/context_target
+	if(length(positional_args) && (VERB_ARG_CONTEXT_TARGET_KEY in positional_args))
+		context_target = positional_args[VERB_ARG_CONTEXT_TARGET_KEY]
+		positional_args -= VERB_ARG_CONTEXT_TARGET_KEY
+
+	if(length(positional_args) && length(arguments))
+		for(var/i in 1 to min(length(positional_args), length(arguments)))
+			var/datum/verb_arg_metadata/arg = arguments[i]
+			structured_args[arg.name] = positional_args[i]
+
+	if(!isnull(context_target) && length(arguments))
+		for(var/datum/verb_arg_metadata/arg in arguments)
+			if(isnull(structured_args[arg.name]) && (arg.source == VERB_ARG_SOURCE_WORLD || arg.source == VERB_ARG_SOURCE_VIEW))
+				structured_args[arg.name] = context_target
+				break
+
+	for(var/datum/verb_arg_metadata/arg in arguments)
+		if(!isnull(structured_args[arg.name]))
+			continue
+		var/value = arg.prompt(user, verb_name)
+		if(isnull(value))
+			return null
+		structured_args[arg.name] = value
+	return structured_args
+
 /datum/verb_arg_metadata/New(name, arg_type, type_path, source, list/options)
 	. = ..()
 	src.name = name
