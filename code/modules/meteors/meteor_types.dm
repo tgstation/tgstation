@@ -42,6 +42,7 @@
 	SSaugury.register_doom(src, threat)
 	SpinAnimation()
 	chase_target(target)
+	setup_extra_drops()
 	AddComponent(
 		/datum/component/meteor_combat, \
 		CALLBACK(src, PROC_REF(redirect)), \
@@ -87,6 +88,9 @@
 	var/datum/move_loop/new_loop = GLOB.move_manager.move_towards(src, chasing, delay, home, lifetime)
 	if(new_loop)
 		RegisterSignal(new_loop, COMSIG_MOVELOOP_STOP, PROC_REF(on_loop_stopped))
+
+/obj/effect/meteor/proc/setup_extra_drops()
+	return
 
 /obj/effect/meteor/proc/on_loop_stopped(datum/source)
 	SIGNAL_HANDLER
@@ -394,27 +398,18 @@
 	hits = 2
 	heavy = TRUE
 	meteorsound = 'sound/effects/blob/blobattack.ogg'
-	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/tongue, /obj/item/organ/appendix/)
+	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/appendix)
 	var/meteorgibs = /obj/effect/gibspawner/generic
 	threat = 2
 	signature = "culinary material"
 
-/obj/effect/meteor/meaty/Initialize(mapload)
-	for(var/path in meteordrop)
-		if(path == /obj/item/food/meat/slab/human/mutant)
-			meteordrop -= path
-			meteordrop += pick(subtypesof(path))
-
-	for(var/path in meteordrop)
-		if(path == /obj/item/organ/tongue)
-			meteordrop -= path
-			meteordrop += pick(typesof(path))
-	return ..()
+/obj/effect/meteor/meaty/setup_extra_drops()
+	meteordrop += pick(subtypesof(/obj/item/food/meat/slab/human/mutant))
+	meteordrop += pick(typesof(/obj/item/organ/tongue))
 
 /obj/effect/meteor/meaty/make_debris()
 	..()
 	new meteorgibs(get_turf(src))
-
 
 /obj/effect/meteor/meaty/ram_turf(turf/T)
 	if(!isspaceturf(T))
@@ -431,9 +426,8 @@
 	meteorgibs = /obj/effect/gibspawner/xeno
 	signature = "exotic culinary material"
 
-/obj/effect/meteor/meaty/xeno/Initialize(mapload)
+/obj/effect/meteor/meaty/xeno/setup_extra_drops()
 	meteordrop += subtypesof(/obj/item/organ/alien)
-	return ..()
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)
 	if(!isspaceturf(T))

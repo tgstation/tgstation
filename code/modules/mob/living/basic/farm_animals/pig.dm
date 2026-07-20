@@ -50,7 +50,7 @@
 
 ///wrapper for the tameable component addition so you can have non tamable cow subtypes
 /mob/living/basic/pig/proc/make_tameable()
-	var/list/food_types = string_list(list(/obj/item/food/grown/carrot))
+	var/list/food_types = string_list(list(/obj/item/food/grown/carrotlike/carrot))
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15)
 
 /mob/living/basic/pig/tamed(mob/living/tamer, atom/food)
@@ -59,18 +59,17 @@
 	visible_message(span_notice("[src] snorts respectfully."))
 
 /datum/ai_controller/basic_controller/pig
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/pig.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SAY = list("oink?", "oink", "snurf"),
+			BB_EMOTE_HEAR = list("snorts."),
+			BB_EMOTE_SEE = list("sniffs around."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/pig/pig1.ogg', 'sound/mobs/non-humanoids/pig/pig2.ogg'),
+			BB_SPEAK_CHANCE = 3,
+		),
 	)
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/random_speech/pig,
-	)

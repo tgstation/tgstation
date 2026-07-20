@@ -65,17 +65,18 @@
 			LAZYADD(uncreatables_found, req_path)
 			continue
 
+		// A recipe might accept an abstract base type as its reqs - e.g. obj/item/food/grown - signifying it can use any item of that type.
+		// However, we cannot create those abstract base types... but we also cannot pick a random subtype everytime either,
+		// as sutypes can have different custom_materials between them, so doing that will lead us to sporiadic errors.
+		// The safest course of action is to make the contributor pick a valid subtype (as generic as possible. please) to use in its place.
+		var/datum/req_path_datum = req_path
+		if(req_path_datum.abstract_type == req_path)
+			LAZYADD(uncreatables_found, req_path)
+			continue
+
 		if(ispath(req_path, /obj/item/stack)) //it's a stack
 			new req_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
 			continue
-
-		// Some recipes might accept an abstract base type as its reqs - e.g. obj/item/food/grown - signifying it can use any item of that type.
-		// Let's not actually create those abstract base types though, and instead pick a random subtype to use.
-		var/datum/req_path_datum = req_path
-		if(req_path_datum.abstract_type == req_path)
-			var/list/subtypes = valid_subtypesof(req_path_datum)
-			if(length(subtypes))
-				req_path = pick(subtypes)
 
 		//it's any other item
 		for(var/iteration in 1 to amount)
@@ -122,9 +123,11 @@
 		tool.moveToNullspace()
 
 	if(istext(result) || isnull(result)) //construct_item() returned a text string telling us why it failed.
-		TEST_FAIL("[recipe.type] couldn't be crafted during unit test[result || ", result is null for some reason!"]")
 		if(uncreatables_found)
-			TEST_FAIL("The following objects that shouldn't be instantiated during unit tests were found in [recipe]: [english_list(uncreatables_found)]")
+			TEST_FAIL("Abstract types found in the requirements of [recipe.type]: [english_list(uncreatables_found)]. \
+				Use the unit_test_spawn_extras list var of the recipe to spawn non-abstract subtypes instead.")
+		else
+			TEST_FAIL("[recipe.type] couldn't be crafted during unit test[result || ", result is null for some reason!"]")
 		clear_trash()
 		return
 	//enforcing materials parity between crafted and spawned for turfs would be more trouble than worth here

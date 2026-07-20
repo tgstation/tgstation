@@ -47,11 +47,9 @@
 
 /obj/item/clothing/head/costume/foilhat/mouse_drop_dragged(atom/over_object, mob/user)
 	//God Im sorry
-	if(!warped && iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(src == C.head)
-			to_chat(C, span_userdanger("Why would you want to take this off? Do you want them to get into your mind?!"))
-			return
+	if(!warped && user.get_item_by_slot(ITEM_SLOT_HEAD) == src)
+		to_chat(user, span_userdanger("Why would you want to take this off? Do you want them to get into your mind?!"))
+		return
 	return ..()
 
 /obj/item/clothing/head/costume/foilhat/dropped(mob/user)
@@ -80,11 +78,9 @@
 		to_chat(target, span_warning("Your zealous conspirationism rapidly dissipates as the donned hat warps up into a ruined mess. All those theories starting to sound like nothing but a ridicolous fanfare."))
 
 /obj/item/clothing/head/costume/foilhat/attack_hand(mob/user, list/modifiers)
-	if(!warped && iscarbon(user))
-		var/mob/living/carbon/wearer = user
-		if(src == wearer.head)
-			to_chat(user, span_userdanger("Why would you want to take this off? Do you want them to get into your mind?!"))
-			return
+	if(!warped && user.get_item_by_slot(ITEM_SLOT_HEAD) == src)
+		to_chat(user, span_userdanger("Why would you want to take this off? Do you want them to get into your mind?!"))
+		return
 	return ..()
 
 /obj/item/clothing/head/costume/foilhat/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)

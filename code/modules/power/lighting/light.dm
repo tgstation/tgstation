@@ -750,6 +750,11 @@
 			continue
 		INVOKE_ASYNC(src, PROC_REF(flicker))
 
+/obj/machinery/light/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(!QDELING(src))
+		update(FALSE)
+
 /obj/machinery/light/floor
 	name = "floor light"
 	desc = "A lightbulb you can walk on without breaking it, amazing."

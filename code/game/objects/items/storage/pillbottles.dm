@@ -205,3 +205,9 @@
 		A warning label reads: <b>Take in moderation</b>."
 	spawn_count = 7
 	spawn_type = /obj/item/reagent_containers/applicator/pill/prescription_stimulant
+
+/obj/item/storage/pill_bottle/sepsisillin
+	name = "bottle of sepsisillin pills"
+	desc = "Contains immune system suppressants, for assisting virology research. Do not confuse with spaceacillin."
+	spawn_count = 7
+	spawn_type = /obj/item/reagent_containers/applicator/pill/sepsisillin

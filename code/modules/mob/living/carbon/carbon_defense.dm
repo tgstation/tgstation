@@ -5,17 +5,9 @@
 	if(is_blind() && !is_blind_from(list(UNCONSCIOUS_TRAIT, HYPNOCHAIR_TRAIT)))
 		return INFINITY //For all my homies that can not see in the world
 	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
-	if(eyes)
-		. += eyes.flash_protect
-	else
+	if(!eyes)
 		return INFINITY //Can't get flashed without eyes
-	if(isclothing(head)) //Adds head protection
-		var/obj/item/clothing/helmet = head
-		. += helmet.flash_protect
-	if(isclothing(glasses)) //Glasses
-		. += glasses.flash_protect
-	if(isclothing(wear_mask)) //Mask
-		. += wear_mask.flash_protect
+	. += eyes.flash_protect
 
 /mob/living/carbon/sound_damage(damage, deafen)
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
@@ -32,41 +24,15 @@
 	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	return ..() + ears?.bang_protect
 
-/mob/living/carbon/is_mouth_covered(check_flags = ALL)
-	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & HEADCOVERSMOUTH))
-		return head
-	if((check_flags & ITEM_SLOT_MASK) && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH))
-		return wear_mask
-
-	return null
-
-/mob/living/carbon/is_eyes_covered(check_flags = ALL)
-	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & HEADCOVERSEYES))
-		return head
-	if((check_flags & ITEM_SLOT_MASK) && wear_mask && (wear_mask.flags_cover & MASKCOVERSEYES))
-		return wear_mask
-	if((check_flags & ITEM_SLOT_EYES) && glasses && (glasses.flags_cover & GLASSESCOVERSEYES))
-		return glasses
-
-	return null
-
 /mob/living/carbon/is_pepper_proof(check_flags = ALL)
 	var/obj/item/organ/eyes/eyes = get_organ_by_type(/obj/item/organ/eyes)
 	if(eyes && eyes.pepperspray_protect)
 		return eyes
-	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & PEPPERPROOF))
-		return head
-	if((check_flags & ITEM_SLOT_MASK) && wear_mask && (wear_mask.flags_cover & PEPPERPROOF))
-		return wear_mask
-
-	return null
 
 /mob/living/carbon/is_ears_covered()
 	for(var/obj/item/worn_thing as anything in get_equipped_items(INCLUDE_ABSTRACT))
 		if(worn_thing.flags_cover & EARS_COVERED)
 			return worn_thing
-
-	return null
 
 /mob/living/carbon/check_projectile_dismemberment(obj/projectile/proj, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
@@ -364,8 +330,8 @@
 		else
 			add_mood_event("tailpulled", /datum/mood_event/tailpulled)
 
-	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && (istype(head, /obj/item/clothing/head/costume/kitty) || istype(head, /obj/item/clothing/head/collectable/kitty)))
-		var/obj/item/clothing/head/faketail = head
+	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && (istype(get_item_by_slot(ITEM_SLOT_HEAD), /obj/item/clothing/head/costume/kitty) || istype(get_item_by_slot(ITEM_SLOT_HEAD), /obj/item/clothing/head/collectable/kitty)))
+		var/obj/item/clothing/head/faketail = get_item_by_slot(ITEM_SLOT_HEAD) // Should probably be COMSIG_CARBON_PRE_MISC_HELP
 		helper.visible_message(span_danger("[helper] pulls on [src]'s tail... and it rips off!"), \
 					null, span_hear("You hear a ripping sound."), DEFAULT_MESSAGE_RANGE, list(helper, src))
 		to_chat(helper, span_danger("You pull on [src]'s tail... and it rips off!"))
@@ -517,21 +483,6 @@
 
 	else if(damage == 0 && prob(20)) // just enough protection
 		to_chat(src, span_notice("Something bright flashes in the corner of your vision!"))
-
-/mob/living/carbon/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
-	if(damage_type != BRUTE && damage_type != BURN)
-		return
-	damage_amount *= 0.5 //0.5 multiplier for balance reason, we don't want clothes to be too easily destroyed
-	if(!def_zone || def_zone == BODY_ZONE_HEAD)
-		var/obj/item/clothing/hit_clothes
-		if(wear_mask)
-			hit_clothes = wear_mask
-		if(wear_neck)
-			hit_clothes = wear_neck
-		if(head)
-			hit_clothes = head
-		if(hit_clothes)
-			hit_clothes.take_damage(damage_amount, damage_type, damage_flag, 0)
 
 /mob/living/carbon/adjust_oxy_loss(amount, updating_health = TRUE, forced, required_biotype)
 	if(!forced && HAS_TRAIT(src, TRAIT_NOBREATH))

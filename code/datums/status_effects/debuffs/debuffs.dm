@@ -944,7 +944,7 @@
 			if(!prob(1)) // 99%
 				to_chat(victim, span_userdanger("You're covered in MORE ants!"))
 			else // 1%
-				victim.say("AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/ants)
+				INVOKE_ASYNC(victim, TYPE_PROC_REF(/atom/movable, say), "AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/ants)
 		ants_remaining += amount_left
 	. = ..()
 

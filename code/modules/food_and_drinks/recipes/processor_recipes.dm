@@ -114,7 +114,7 @@
 	added_foodtypes = FRIED
 
 /datum/food_processor_process/carrot
-	input = /obj/item/food/grown/carrot
+	input = /obj/item/food/grown/carrotlike/carrot
 	output = /obj/item/food/carrotfries
 	added_foodtypes = FRIED
 
@@ -138,7 +138,7 @@
 	added_foodtypes = JUNKFOOD|FRIED
 
 /datum/food_processor_process/parsnip
-	input = /obj/item/food/grown/parsnip
+	input = /obj/item/food/grown/carrotlike/parsnip
 	output = /obj/item/food/roastparsnip
 
 /datum/food_processor_process/mob/slime

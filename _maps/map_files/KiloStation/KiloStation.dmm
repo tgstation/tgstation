@@ -3114,7 +3114,7 @@
 	pixel_x = -7;
 	pixel_y = 8
 	},
-/obj/item/food/grown/watermelon,
+/obj/item/food/grown/melonlike/watermelon,
 /obj/item/food/grown/wheat,
 /obj/item/food/grown/whitebeet,
 /obj/item/food/grown/apple,
@@ -9587,6 +9587,11 @@
 	},
 /obj/machinery/firealarm/directional/north,
 /obj/structure/cable,
+/obj/machinery/camera/directional/north{
+	c_tag = "Supermatter Engine";
+	name = "supermatter camera";
+	network = list("engine")
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "dgu" = (
@@ -27869,6 +27874,23 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/table,
+/obj/item/storage/box/disks{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/storage/box/bodybags{
+	pixel_x = -8;
+	pixel_y = 9
+	},
+/obj/item/storage/box/gloves{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/obj/item/flesh_shears{
+	pixel_x = -10;
+	pixel_y = -5
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/genetics)
 "iMr" = (
@@ -66109,6 +66131,10 @@
 	dir = 1
 	},
 /obj/machinery/light/cold/directional/east,
+/obj/item/storage/pill_bottle/sepsisillin{
+	pixel_x = -5;
+	pixel_y = -2
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "uYM" = (
@@ -67861,17 +67887,6 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/station/science/xenobiology)
-"vzQ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/camera/directional/south{
-	c_tag = "Supermatter Engine";
-	name = "supermatter camera";
-	network = list("engine")
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/engine)
 "vzV" = (
 /obj/structure/sign/poster/official/anniversary_vintage_reprint/directional/north,
 /obj/machinery/camera/directional/north{
@@ -111822,7 +111837,7 @@ tkO
 okp
 uvG
 piZ
-vzQ
+uvG
 lOX
 hqW
 jbZ

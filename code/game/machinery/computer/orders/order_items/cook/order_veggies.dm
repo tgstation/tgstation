@@ -11,7 +11,7 @@
 
 /datum/orderable_item/veggies/carrot
 	name = "Carrot"
-	purchase_path = /obj/item/food/grown/carrot
+	purchase_path = /obj/item/food/grown/carrotlike/carrot
 
 /datum/orderable_item/veggies/eggplant
 	name = "Eggplant"
@@ -40,7 +40,7 @@
 
 /datum/orderable_item/veggies/watermelon
 	name = "Watermelon"
-	purchase_path = /obj/item/food/grown/watermelon
+	purchase_path = /obj/item/food/grown/melonlike/watermelon
 
 /datum/orderable_item/veggies/corn
 	name = "Corn"
@@ -113,7 +113,7 @@
 
 /datum/orderable_item/veggies/parsnip
 	name = "Parsnip"
-	purchase_path = /obj/item/food/grown/parsnip
+	purchase_path = /obj/item/food/grown/carrotlike/parsnip
 
 /datum/orderable_item/veggies/redbeet
 	name = "Red Beet"

@@ -1,7 +1,7 @@
 #define MAXIMUM_GUTLUNCH_POP 20
 /datum/ai_controller/basic_controller/gutlunch
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
+	behavior_tree_json = ABSTRACT_AI_CLASS
 
 /datum/ai_controller/basic_controller/gutlunch/gutlunch_warrior
 	blackboard = list(
@@ -10,99 +10,22 @@
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/mining/gutlunch/milk),
 		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/mining/gutlunch/grub),
 		BB_MAX_CHILDREN = 5,
+		BB_FUCKS = TRUE,
 	)
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/target_retaliate/check_faction,
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/befriend_ashwalkers,
-		/datum/ai_planning_subtree/make_babies/gutlunch,
-	)
-
-/datum/ai_planning_subtree/make_babies/gutlunch/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(GLOB.gutlunch_count >= MAXIMUM_GUTLUNCH_POP)
-		return
-	return ..()
-
-///find ashwalkers and add them to the list of masters
-/datum/ai_planning_subtree/befriend_ashwalkers
-
-/datum/ai_planning_subtree/befriend_ashwalkers/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	controller.queue_behavior(/datum/ai_behavior/befriend_ashwalkers)
-
-/datum/ai_behavior/befriend_ashwalkers
-	action_cooldown = 5 SECONDS
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-
-/datum/ai_behavior/befriend_ashwalkers/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	var/mob/living/living_pawn = controller.pawn
-
-	for(var/mob/living/potential_friend in oview(9, living_pawn))
-		if(!isashwalker(potential_friend))
-			continue
-		if(living_pawn.has_ally(REF(potential_friend)))
-			continue
-		living_pawn.befriend(potential_friend)
-		to_chat(potential_friend, span_nicegreen("[living_pawn] looks at you with endearing eyes!"))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/gutlunchers/gutlunch_warrior.bt.json"
 
 /datum/ai_controller/basic_controller/gutlunch/gutlunch_baby
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/mining/gutlunch/milk),
 	)
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity/pacifist,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/look_for_adult,
-	)
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/gutlunchers/gutlunch_baby.bt.json"
 
 /datum/ai_controller/basic_controller/gutlunch/gutlunch_milk
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity/pacifist,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/find_and_hunt_target/food_trough
-	)
-
-///consume food!
-/datum/ai_planning_subtree/find_and_hunt_target/food_trough
-	target_key = BB_TROUGH_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/food_trough
-	finding_behavior = /datum/ai_behavior/find_hunt_target/food_trough
-	hunt_targets = list(/obj/structure/ore_container/food_trough/gutlunch_trough)
-	hunt_chance = 75
-	hunt_range = 9
-
-
-/datum/ai_planning_subtree/find_and_hunt_target/food_trough/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(!controller.blackboard[BB_CHECK_HUNGRY])
-		return
-	return ..()
-
-/datum/ai_behavior/find_hunt_target/food_trough
-
-/datum/ai_behavior/find_hunt_target/food_trough/valid_dinner(mob/living/basic/source, obj/target, radius)
-	if(isnull(target))
-		return FALSE
-
-	if(isnull(locate(/obj/item/stack/ore) in target))
-		return FALSE
-
-	return can_see(source, target, radius)
-
-/datum/ai_behavior/hunt_target/interact_with_target/food_trough
-	always_reset_target = TRUE
-	behavior_combat_mode = FALSE
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/gutlunchers/gutlunch_milk.bt.json"
 
 /datum/pet_command/mine_walls
 	command_name = "Mine"
@@ -121,10 +44,7 @@
 	return ..()
 
 /datum/pet_command/mine_walls/execute_action(datum/ai_controller/controller)
-	if(controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
-		controller.queue_behavior(/datum/ai_behavior/mine_wall, BB_CURRENT_PET_TARGET)
-		return SUBTREE_RETURN_FINISH_PLANNING
-	controller.queue_behavior(/datum/ai_behavior/find_mineral_wall, BB_CURRENT_PET_TARGET)
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/mine_walls)
 
 /datum/pet_command/mine_walls/retrieve_command_text(atom/living_pet, atom/target)
 	return "signals [living_pet] to start mining!"
@@ -137,5 +57,54 @@
 		parent.balloon_alert_to_viewers("can't reproduce anymore!")
 		return FALSE
 	return ..()
+
+/// Interacts with the food trough to eat ore, then clears the hungry flag.
+/datum/bt_node/ai_behavior/hunt_target/interact_with_target/food_trough
+	always_reset_target = TRUE
+	behavior_combat_mode = FALSE
+
+/datum/bt_node/ai_behavior/hunt_target/interact_with_target/food_trough/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	if(succeeded)
+		controller.clear_blackboard_key(BB_CHECK_HUNGRY)
+
+///Find nearby ashwalkers. we love lizards.
+/datum/bt_node/ai_behavior/befriend_ashwalkers
+	time_between_perform = 5 SECONDS
+
+/datum/bt_node/ai_behavior/befriend_ashwalkers/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/mob/living/living_pawn = controller.pawn
+	for(var/mob/living/potential_friend in oview(9, living_pawn))
+		if(!isashwalker(potential_friend) || living_pawn.has_ally(REF(potential_friend)))
+			continue
+		living_pawn.befriend(potential_friend)
+		to_chat(potential_friend, span_nicegreen("[living_pawn] looks at you with endearing eyes!"))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+
+/// Searches for and moves to a parent mob (of types in BB_FIND_MOM_TYPES), sets BB_FOUND_MOM.
+/datum/bt_node/ai_behavior/find_parent
+	var/mom_types_key
+	var/found_mom_key
+
+/datum/bt_node/ai_behavior/find_parent/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/mob/living_pawn = controller.pawn
+	var/list/mom_types = controller.blackboard[mom_types_key]
+	if(!length(mom_types))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	for(var/mob/mother in oview(7, living_pawn))
+		if(!is_type_in_list(mother, mom_types))
+			continue
+		controller.set_blackboard_key(found_mom_key, mother)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+//
+
+/// Mine walls pet command subtree: find mineral wall -> move to it -> mine it -> clear command.
+/datum/bt_node/subtree/pet_command/mine_walls
+	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_mine_walls.bt.json"
+
 
 #undef MAXIMUM_GUTLUNCH_POP
