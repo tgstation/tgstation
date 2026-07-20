@@ -39,27 +39,36 @@
 	owner.visible_message(span_warning("[owner]'s eye glows ominously!"))
 	if (do_after(owner, delay = wait_delay, target = owner, hidden = TRUE))
 		trigger_effect()
+		proxmon_cleanup()
 	else
 		deltimer(stage_timer)
 		clear_current_overlay()
+		proxmon_cleanup()
+		tracked_mobs.Cut()
 	StartCooldown()
-	tracked_mobs.Cut()
-	QDEL_NULL(proximity_monitor)
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/Destroy()
+	proxmon_cleanup()
 	tracked_mobs.Cut()
-	QDEL_NULL(proximity_monitor)
 	deltimer(stage_timer)
 	clear_current_overlay()
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/Remove(mob/removed_from)
+	proxmon_cleanup()
 	tracked_mobs.Cut()
-	QDEL_NULL(proximity_monitor)
 	deltimer(stage_timer)
 	clear_current_overlay()
 	return ..()
+
+/datum/action/cooldown/mob_cooldown/watcher_gaze/proc/proxmon_cleanup()
+	if (!QDELETED(proximity_monitor))
+		QDEL_NULL(proximity_monitor)
+	for (var/victim_ref in tracked_mobs)
+		var/mob/living/victim = locate(victim_ref)
+		if (victim)
+			UnregisterSignal(victim, list(COMSIG_ATOM_POST_DIR_CHANGE, COMSIG_MOB_STATCHANGE))
 
 /// Do some effects to whoever is looking at us
 /datum/action/cooldown/mob_cooldown/watcher_gaze/proc/trigger_effect()
@@ -68,7 +77,7 @@
 	for (var/mob/living/viewer in viewers(effect_radius, owner))
 		if (!valid_target(viewer))
 			continue
-		if (!apply_effect(viewer))
+		if (!apply_effect(viewer) || !viewer.client)
 			continue
 		var/image/flashed_overlay = image(
 			icon = 'icons/effects/eldritch.dmi',
@@ -100,6 +109,7 @@
 /// Animate our effect out
 /datum/action/cooldown/mob_cooldown/watcher_gaze/proc/hide_eye()
 	show_indicator_overlay("eye_close")
+	tracked_mobs.Cut()
 	stage_timer = addtimer(CALLBACK(src, PROC_REF(clear_current_overlay)), animation_time, TIMER_STOPPABLE)
 
 /// Display an animated overlay over our head to indicate what's going on

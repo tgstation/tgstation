@@ -15,6 +15,7 @@
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_robot",
 						"vars": {
+							"time_between_perform": 0,
 							"target_key": "BB_ROBOT_TARGET",
 							"minimum_distance": 1
 						}
@@ -51,6 +52,7 @@
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/breached",
 										"vars": {
+											"time_between_perform": 0,
 											"target_key": "BB_CURRENT_TARGET",
 											"minimum_distance": 1
 										}
@@ -59,6 +61,7 @@
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/refillable_target",
 										"vars": {
+											"time_between_perform": 0,
 											"target_key": "BB_CURRENT_TARGET",
 											"minimum_distance": 1
 										}
@@ -67,6 +70,7 @@
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_grille_target",
 										"vars": {
+											"time_between_perform": 0,
 											"target_key": "BB_CURRENT_TARGET",
 											"minimum_distance": 1
 										}
@@ -75,6 +79,7 @@
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf",
 										"vars": {
+											"time_between_perform": 0,
 											"target_key": "BB_CURRENT_TARGET",
 											"minimum_distance": 1
 										}
@@ -83,6 +88,7 @@
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_window_fix",
 										"vars": {
+											"time_between_perform": 0,
 											"target_key": "BB_CURRENT_TARGET",
 											"minimum_distance": 1
 										}
@@ -91,6 +97,7 @@
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_girder",
 										"vars": {
+											"time_between_perform": 0,
 											"target_key": "BB_CURRENT_TARGET",
 											"minimum_distance": 1
 										}
@@ -118,6 +125,7 @@
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_wall_target",
 								"vars": {
+									"time_between_perform": 0,
 									"target_key": "BB_CURRENT_TARGET",
 									"minimum_distance": 1
 								}

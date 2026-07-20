@@ -431,6 +431,26 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return TRUE
 
+/**
+ * Perform a series of get to see if this organ is elegible to be replaced by regenerate_orgas. While get_availability is for the new_organ
+ * this one is, conversely, for the old organ.
+ *
+ * * new_organ_type - the type of the new organ we ought to replace this with.
+ * * expected_organ_type - the old organ for this slot that the old species is supposed to have, which may or may not match what the mob currently has.
+ * * species - the old species datum, present if the regenerate_organs proc has been called as a result of a species change.
+ * * replace_current - boolean, *generally* force the organ to be deleted whether or not they pass the species' ability to keep that organ.
+ */
+/obj/item/organ/proc/get_replaceability(obj/item/organ/new_organ_type, obj/item/organ/expected_organ_type, datum/species/old_species, replace_current = TRUE)
+	// we don't want to remove organs that are the same as the new one
+	if(type == new_organ_type)
+		return FALSE
+
+	// we dont want to remove organs that were not from the old species (such as from freak surgery or prosthetics)
+	if(replace_current || type == expected_organ_type)
+		return TRUE
+
+	return FALSE
+
 /// Called before organs are replaced in regenerate_organs with new ones
 /obj/item/organ/proc/before_organ_replacement(obj/item/organ/replacement)
 	SHOULD_CALL_PARENT(TRUE)

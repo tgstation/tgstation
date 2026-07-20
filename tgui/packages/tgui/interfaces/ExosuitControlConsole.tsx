@@ -11,9 +11,25 @@ import { toFixed } from 'tgui-core/math';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
+type Mech = {
+  name: string;
+  integrity: number;
+  charge: number | null;
+  airtank: number | null;
+  pilot: string[];
+  location: string | null;
+  emp_recharging: boolean;
+  tracker_ref: string;
+  cargo_space?: number;
+};
+
+type ExosuitControlConsoleData = {
+  mechs: Mech[];
+};
+
 export const ExosuitControlConsole = (props) => {
-  const { act, data } = useBackend();
-  const { mechs = [] } = data;
+  const { act, data } = useBackend<ExosuitControlConsoleData>();
+  const { mechs } = data;
   return (
     <Window width={500} height={500}>
       <Window.Content scrollable>
@@ -26,17 +42,17 @@ export const ExosuitControlConsole = (props) => {
               <>
                 <Button
                   icon="envelope"
-                  content="Message"
-                  disabled={!mech.pilot}
+                  disabled={mech.pilot.length < 1}
                   onClick={() =>
                     act('send_message', {
                       tracker_ref: mech.tracker_ref,
                     })
                   }
-                />
+                >
+                  Message
+                </Button>
                 <Button
                   icon="wifi"
-                  content={mech.emp_recharging ? 'Recharging...' : 'EMP Burst'}
                   color="bad"
                   disabled={mech.emp_recharging}
                   onClick={() =>
@@ -44,7 +60,9 @@ export const ExosuitControlConsole = (props) => {
                       tracker_ref: mech.tracker_ref,
                     })
                   }
-                />
+                >
+                  {mech.emp_recharging ? 'Recharging...' : 'EMP Burst'}
+                </Button>
               </>
             }
           >
@@ -61,40 +79,44 @@ export const ExosuitControlConsole = (props) => {
                 </Box>
               </LabeledList.Item>
               <LabeledList.Item label="Charge">
-                <Box
-                  color={
-                    (mech.charge <= 30 && 'bad') ||
-                    (mech.charge <= 70 && 'average') ||
-                    'good'
-                  }
-                >
-                  {(typeof mech.charge === 'number' && `${mech.charge}%`) ||
-                    'Not Found'}
-                </Box>
+                {mech.charge !== null ? (
+                  <Box
+                    color={
+                      (mech.charge <= 30 && 'bad') ||
+                      (mech.charge <= 70 && 'average') ||
+                      'good'
+                    }
+                  >
+                    {mech.charge}%
+                  </Box>
+                ) : (
+                  <Box>Not Found</Box>
+                )}
               </LabeledList.Item>
               <LabeledList.Item label="Airtank">
-                {(typeof mech.airtank === 'number' && (
+                {mech.airtank !== null ? (
                   <AnimatedNumber
                     value={mech.airtank}
                     format={(value) => `${toFixed(value, 2)} kPa`}
                   />
-                )) ||
-                  'Not Equipped'}
+                ) : (
+                  'Not Equipped'
+                )}
               </LabeledList.Item>
               <LabeledList.Item label="Pilot">
-                {(mech.pilot.length > 0 &&
-                  mech.pilot.map((pilot) => (
-                    <Box key={pilot} inline>
-                      {pilot}
-                      {mech.pilot.length > 1 ? '|' : ''}
-                    </Box>
-                  ))) ||
-                  'None'}
+                {mech.pilot.length > 0
+                  ? mech.pilot.map((pilot) => (
+                      <Box key={pilot} inline>
+                        {pilot}
+                        {mech.pilot.length > 1 ? '|' : ''}
+                      </Box>
+                    ))
+                  : 'None'}
               </LabeledList.Item>
               <LabeledList.Item label="Location">
                 {mech.location || 'Unknown'}
               </LabeledList.Item>
-              {mech.cargo_space >= 0 && (
+              {mech.cargo_space !== undefined && (
                 <LabeledList.Item label="Used Cargo Space">
                   <Box
                     color={

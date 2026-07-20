@@ -115,7 +115,7 @@
 /mob/living/basic/pet/dog/corgi/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/razor))
 		if(shaved)
-			to_chat(user, span_warning("You can't shave this corgi, [p_they()] has already been shaved!"))
+			to_chat(user, span_warning("You can't shave this corgi, [p_they()] [p_have()] already been shaved!"))
 			return
 		if(!can_be_shaved)
 			to_chat(user, span_warning("You can't shave this corgi, [p_they()] [p_do()]n't have a fur coat!"))

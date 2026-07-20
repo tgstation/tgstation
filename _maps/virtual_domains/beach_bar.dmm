@@ -22,7 +22,7 @@
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "aE" = (
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/fullbright)
 "aZ" = (
 /obj/machinery/light/small/directional/east,
@@ -137,7 +137,7 @@
 "fr" = (
 /obj/item/melee/skateboard/hoverboard,
 /obj/machinery/light/directional/west,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/fullbright)
 "gh" = (
 /obj/structure/flora/bush/stalky/style_random,
@@ -157,7 +157,7 @@
 /area/virtual_domain/fullbright)
 "hk" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/fullbright)
 "hE" = (
 /obj/structure/sign/departments/restroom/directional/east,
@@ -193,7 +193,7 @@
 	density = 1
 	},
 /obj/effect/decal/fakelattice,
-/turf/open/floor/pod/light{
+/turf/open/floor/mineral/plastitanium/pod/light{
 	density = 1
 	},
 /area/virtual_domain/fullbright)
@@ -228,7 +228,7 @@
 /area/virtual_domain/fullbright)
 "lq" = (
 /obj/item/melee/skateboard/hoverboard,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/fullbright)
 "lB" = (
 /obj/item/toy/seashell,
@@ -471,7 +471,7 @@
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "xw" = (
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain/fullbright)
 "xJ" = (
 /obj/structure/closet/cabinet,
@@ -553,7 +553,7 @@
 /area/virtual_domain/fullbright)
 "zw" = (
 /obj/structure/punching_bag,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain/fullbright)
 "zI" = (
 /obj/structure/marker_beacon/indigo,
@@ -589,7 +589,7 @@
 "AI" = (
 /obj/structure/table/reinforced,
 /obj/machinery/reagentgrinder,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/fullbright)
 "AP" = (
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
@@ -633,7 +633,7 @@
 /area/virtual_domain/fullbright)
 "BQ" = (
 /obj/machinery/seed_extractor,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/fullbright)
 "Cb" = (
 /obj/machinery/light/directional/north,
@@ -714,7 +714,7 @@
 /obj/structure/table/reinforced,
 /obj/item/secateurs,
 /obj/item/reagent_containers/cup/bottle/nutrient/ez,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/fullbright)
 "FS" = (
 /obj/effect/turf_decal/sand,
@@ -894,7 +894,7 @@
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
 	name = "old sink"
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/fullbright)
 "OZ" = (
 /obj/structure/marker_beacon/teal,
@@ -994,7 +994,7 @@
 /area/virtual_domain/fullbright)
 "Uq" = (
 /obj/structure/weightmachine/weightlifter,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain/fullbright)
 "UU" = (
 /obj/structure/flora/bush/large/style_random,

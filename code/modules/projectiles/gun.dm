@@ -199,7 +199,7 @@
 			if(pin.pin_removable)
 				. += span_info("[pin] looks like [pin.p_they()] could be removed with some <b>tools</b>.")
 			else
-				. += span_info("[pin] looks like [pin.p_theyre()] firmly locked in, [pin.p_they()] looks impossible to remove.")
+				. += span_info("[pin] looks like [pin.p_theyre()] firmly locked in, [pin.p_they()] look[pin.p_s()] impossible to remove.")
 		else
 			. += "It doesn't have a <b>firing pin</b> installed, and won't fire."
 
