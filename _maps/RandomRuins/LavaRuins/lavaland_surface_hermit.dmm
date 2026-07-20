@@ -87,7 +87,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "t" = (
-/turf/closed/wall/mineral/titanium/survival/pod,
+/turf/closed/wall/mineral/plastitanium/survival/pod,
 /area/ruin/powered)
 "u" = (
 /obj/structure/bed/pod,
@@ -96,18 +96,18 @@
 /area/ruin/powered)
 "v" = (
 /obj/structure/fans,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "w" = (
 /obj/machinery/smartfridge/survival_pod/preloaded,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "x" = (
 /obj/effect/mob_spawn/ghost_role/human/hermit,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "y" = (
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "z" = (
 /obj/machinery/light/small/directional/east,
@@ -121,13 +121,13 @@
 /area/ruin/powered)
 "B" = (
 /obj/structure/table/survival_pod,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "C" = (
 /obj/structure/tubes,
 /obj/item/crowbar,
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "D" = (
 /obj/effect/decal/cleanable/blood/footprints{
@@ -135,7 +135,7 @@
 	},
 /obj/machinery/door/airlock/survival_pod/glass,
 /obj/structure/fans/tiny,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered)
 "E" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst{

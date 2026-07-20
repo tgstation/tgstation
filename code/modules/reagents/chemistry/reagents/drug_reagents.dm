@@ -583,7 +583,7 @@
 		psychonaut.apply_status_effect(/datum/status_effect/tower_of_babel)
 
 /datum/reagent/drug/blastoff
-	name = "bLaStOoF"
+	name = "bLaSToFF"
 	description = "A drug for the hardcore party crowd said to enhance one's abilities on the dance floor.\nMost old heads refuse to touch this stuff, perhaps because memories of the luna discotheque incident are seared into their brains."
 	color = "#9015a9"
 	taste_description = "holodisk cleaner"

@@ -94,7 +94,7 @@
 		return
 
 	if (HAS_MIND_TRAIT(flashed, TRAIT_UNCONVERTABLE))
-		flashed.balloon_alert(source, "[flashed.p_they()] resist!")
+		flashed.balloon_alert(source, "[flashed.p_they()] resist[flashed.p_s()]!")
 		return
 
 	if (!team.add_brother(flashed, key_name(source))) // Shouldn't happen given the former, more specific checks but just in case

@@ -27874,6 +27874,23 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/table,
+/obj/item/storage/box/disks{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/storage/box/bodybags{
+	pixel_x = -8;
+	pixel_y = 9
+	},
+/obj/item/storage/box/gloves{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/obj/item/flesh_shears{
+	pixel_x = -10;
+	pixel_y = -5
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/genetics)
 "iMr" = (

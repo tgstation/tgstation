@@ -58,7 +58,7 @@
 		description = "[friend.name] is way too nice for this station."
 		return
 
-	description = "[friend.name] is great to be around, [friend.p_they()] makes me feel so happy!"
+	description = "[friend.name] is great to be around, [friend.p_they()] make[friend.p_s()] me feel so happy!"
 
 /datum/mood_event/warmhug
 	description = "Warm cozy hugs are the best!"
@@ -544,7 +544,7 @@
 	if(!morbid)
 		description = "It felt nice to pet \the [fish]."
 	else
-		description = "I caress \the [fish] as [fish.p_they()] squirms under my touch, blissfully unaware of how cruel this world is."
+		description = "I caress \the [fish] as [fish.p_they()] squirm[fish.p_s()] under my touch, blissfully unaware of how cruel this world is."
 
 /datum/mood_event/kobun
 	description = "You are all loved by the Universe. I’m not alone, and you aren’t either."

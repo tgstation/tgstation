@@ -246,7 +246,7 @@
 			if(istype(disease, /datum/disease/advance))
 				var/datum/disease/advance/advanced_disease = disease
 				cure_text = advanced_disease.generate_cure_text(2)
-			sickness_data = "\nName: [disease.name].\nType: [disease.spread_text].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [cure_text]"
+			sickness_data = "\nName: [disease.name].\nType: [disease.spread_text].\nStage: [disease.stage]/[disease.max_stages].\nCure: [cure_text]"
 
 	if(patient.can_bleed()) //Blood levels Information
 		blood_name = LOWER_TEXT(blood_type.get_blood_name())
