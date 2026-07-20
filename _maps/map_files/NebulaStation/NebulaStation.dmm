@@ -15106,7 +15106,7 @@
 /obj/item/seeds/potato,
 /obj/item/seeds/apple,
 /obj/item/grown/corncob,
-/obj/item/food/grown/carrot,
+/obj/item/food/grown/carrotlike/carrot,
 /obj/item/food/grown/wheat,
 /obj/item/food/grown/pumpkin{
 	pixel_y = 5
@@ -56776,7 +56776,7 @@
 /area/station/maintenance/department/cargo)
 "iqZ" = (
 /obj/item/fish/pufferfish,
-/obj/item/food/grown/carrot{
+/obj/item/food/grown/carrotlike/carrot{
 	pixel_x = 7;
 	preserved_food = 1
 	},
@@ -66204,6 +66204,7 @@
 	pixel_y = 2
 	},
 /obj/item/storage/box/syringes,
+/obj/item/storage/pill_bottle/sepsisillin,
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "jLY" = (
@@ -76786,7 +76787,7 @@
 /area/space/nearstation)
 "lnV" = (
 /obj/item/food/grown/wheat,
-/obj/item/food/grown/watermelon,
+/obj/item/food/grown/melonlike/watermelon,
 /obj/item/food/grown/citrus/orange,
 /obj/item/food/grown/grapes,
 /obj/structure/table/glass,

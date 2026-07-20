@@ -31,6 +31,7 @@
 	networks = list(CAMERANET_NETWORK_SS13)
 	circuit = /obj/item/circuitboard/computer/xenobiology
 
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/camera_advanced/xenobio")
 	icon_screen = "slime_comp"
 	icon_keyboard = "rd_key"
 

@@ -877,6 +877,9 @@ ADMIN_VERB(give_ai_speech, R_FUN, "Give Random AI Speech", ADMIN_VERB_NO_DESCRIP
 ADMIN_VERB(open_event_logger, R_DEBUG, "Open Event Logger", "Open the event logger interface.", ADMIN_CATEGORY_DEBUG)
 	GLOB.event_logger.ui_interact(user.mob)
 
+ADMIN_VERB(view_behavior_tree, R_DEBUG, "View Behavior Tree", "Inspect the AI behavior tree of a mob.", ADMIN_CATEGORY_DEBUG)
+	GLOB.bt_viewer.ui_interact(user.mob)
+
 ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an item to the black market for purchase.", ADMIN_CATEGORY_EVENTS)
 	VERB_ARG(object, VERB_ARG_TYPE_TYPEPATH, VERB_ARG_SOURCE_INPUT)
 	if(!object)
