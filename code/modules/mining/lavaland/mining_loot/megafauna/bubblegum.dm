@@ -45,6 +45,7 @@
 	greyscale_config = /datum/greyscale_config/heck_suit
 	greyscale_config_worn = /datum/greyscale_config/heck_suit/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_MINING
 
 /datum/armor/hooded_hostile_environment
 	melee = 70
@@ -59,7 +60,6 @@
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 	AddElement(/datum/element/gags_recolorable)
-	allowed = GLOB.mining_suit_allowed
 
 /obj/item/clothing/suit/hooded/hostile_environment/process(seconds_per_tick)
 	var/mob/living/carbon/wearer = loc

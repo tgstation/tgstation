@@ -505,6 +505,7 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 2
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_MINING
 	inbuilt_modules = list(/obj/item/mod/module/ash_accretion, /obj/item/mod/module/sphere_transform)
 	variants = list(
 		"mining" = list(
@@ -572,10 +573,6 @@
 			),
 		),
 	)
-
-/datum/mod_theme/mining/New()
-	.=..()
-	allowed_suit_storage = GLOB.mining_suit_allowed
 
 /datum/armor/mod_theme_mining
 	melee = 20

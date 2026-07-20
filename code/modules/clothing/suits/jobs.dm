@@ -126,6 +126,7 @@
 	blood_overlay_type = "coat"
 	armor_type = /datum/armor/jacket_det_suit
 	flags_inv = HIDEBELT
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_DETECTIVE
 
 /datum/armor/jacket_det_suit
 	melee = 25
@@ -133,10 +134,6 @@
 	laser = 25
 	energy = 35
 	acid = 45
-
-/obj/item/clothing/suit/toggle/jacket/det_trench/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.detective_vest_allowed
 
 /obj/item/clothing/suit/toggle/jacket/det_trench/noir
 	name = "noir trenchcoat"
@@ -150,10 +147,7 @@
 	icon_state = "det_blazer"
 	armor_type = /datum/armor/jacket_det_suit
 	inhand_icon_state = null
-
-/obj/item/clothing/suit/jacket/det_suit/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.detective_vest_allowed
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_DETECTIVE
 
 /obj/item/clothing/suit/jacket/det_suit/noir
 	name = "noir blazer jacket"

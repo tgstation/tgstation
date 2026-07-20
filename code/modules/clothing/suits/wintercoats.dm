@@ -133,6 +133,7 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/wintercoat_centcom
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/centcom
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_SECURITY_WINTERCOAT
 
 /datum/armor/wintercoat_centcom
 	melee = 35
@@ -143,10 +144,6 @@
 	bio = 10
 	fire = 10
 	acid = 60
-
-/obj/item/clothing/suit/hooded/wintercoat/centcom/Initialize(mapload)
-	. = ..()
-	allowed += GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/centcom
 	icon_state = "hood_centcom"
@@ -172,6 +169,7 @@
 	inhand_icon_state = "coatcaptain"
 	armor_type = /datum/armor/wintercoat_captain
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_SECURITY_WINTERCOAT
 
 /datum/armor/wintercoat_captain
 	melee = 25
@@ -180,10 +178,6 @@
 	energy = 40
 	bomb = 25
 	acid = 50
-
-/obj/item/clothing/suit/hooded/wintercoat/captain/Initialize(mapload)
-	. = ..()
-	allowed += GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/captain
 	icon_state = "hood_captain"
@@ -209,6 +203,7 @@
 		/obj/item/stamp,
 	)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/hop
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_SECURITY_WINTERCOAT
 
 /datum/armor/wintercoat_hop
 	melee = 10
@@ -217,10 +212,6 @@
 	energy = 25
 	bomb = 10
 	acid = 35
-
-/obj/item/clothing/suit/hooded/wintercoat/hop/Initialize(mapload)
-	. = ..()
-	allowed += GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/hop
 	icon_state = "hood_hop"
@@ -269,6 +260,7 @@
 	inhand_icon_state = "coatsecurity"
 	armor_type = /datum/armor/wintercoat_security
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_SECURITY_WINTERCOAT
 
 /datum/armor/wintercoat_security
 	melee = 25
@@ -277,10 +269,6 @@
 	energy = 40
 	bomb = 25
 	acid = 45
-
-/obj/item/clothing/suit/hooded/wintercoat/security/Initialize(mapload)
-	. = ..()
-	allowed += GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/security
 	desc = "A red, armour-padded winter hood. Definitely not bulletproof, especially not the part where your face goes."

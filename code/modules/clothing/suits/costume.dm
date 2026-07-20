@@ -46,10 +46,7 @@
 	strip_delay = 4 SECONDS
 	equip_delay_other = 2 SECONDS
 	species_exception = null
-
-/obj/item/clothing/suit/costume/pirate/armored/Initialize(mapload)
-	. = ..()
-	allowed += GLOB.security_vest_allowed
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_SECURITY_ARMOR
 
 /obj/item/clothing/suit/costume/pirate/captain
 	name = "pirate captain coat"
@@ -81,10 +78,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor_type = /datum/armor/costume_justice
-
-/obj/item/clothing/suit/costume/justice/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.security_vest_allowed
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_SECURITY_ARMOR
 
 /datum/armor/costume_justice
 	melee = 35
@@ -131,10 +125,7 @@
 	inhand_icon_state = "imperium_monk"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT|HIDEBELT
-
-/obj/item/clothing/suit/costume/imperium_monk/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.chaplain_suit_allowed
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_CHAPLAIN
 
 /obj/item/clothing/suit/costume/chickensuit
 	name = "chicken suit"
@@ -161,10 +152,7 @@
 	inhand_icon_state = null
 	toggle_noun = "wings"
 	body_parts_covered = ARMS|CHEST
-
-/obj/item/clothing/suit/toggle/owlwings/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.security_vest_allowed
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_SECURITY_ARMOR
 
 /obj/item/clothing/suit/toggle/owlwings/griffinwings
 	name = "griffon cloak"
@@ -627,11 +615,11 @@
 	greyscale_colors = "#313B82#CCCFF0"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	species_exception = list(/datum/species/golem)
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_PERSONAL_CARRY
 
 /obj/item/clothing/suit/costume/hawaiian/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/adjust_fishing_difficulty, -5)
-	allowed += GLOB.personal_carry_allowed
 
 /obj/item/clothing/suit/costume/football_armor
 	name = "football protective gear"
@@ -649,10 +637,7 @@
 	name = "comedian coat"
 	desc = "I mean, don’t you have to be funny to be a comedian?"
 	icon_state = "joker_coat"
-
-/obj/item/clothing/suit/costume/joker/Initialize(mapload)
-	. = ..()
-	allowed += GLOB.personal_carry_allowed
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_PERSONAL_CARRY
 
 /obj/item/clothing/suit/costume/deckers
 	name = "decker hoodie"

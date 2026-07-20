@@ -29,6 +29,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	transparent_protection = HIDEGLOVES|HIDESUITSTORAGE|HIDEJUMPSUIT|HIDESHOES
 	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 10)
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_MINING
 
 /datum/armor/cloak_drake
 	melee = 65
@@ -40,10 +41,6 @@
 	fire = 100
 	acid = 100
 	wound = 10
-
-/obj/item/clothing/suit/hooded/cloak/drake/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.mining_suit_allowed
 
 /obj/item/clothing/head/hooded/cloakhood/drake
 	name = "drake helm"

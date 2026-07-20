@@ -14,6 +14,7 @@
 	max_integrity = 250
 	resistance_flags = NONE
 	armor_type = /datum/armor/suit_armor
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_SECURITY_ARMOR
 
 /datum/armor/suit_armor
 	melee = 35
@@ -24,11 +25,6 @@
 	fire = 50
 	acid = 50
 	wound = 10
-
-/obj/item/clothing/suit/armor/Initialize(mapload)
-	. = ..()
-	if(!allowed)
-		allowed = GLOB.security_vest_allowed
 
 /obj/item/clothing/suit/armor/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -403,10 +399,7 @@
 	icon_state = "detective-armor"
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
-
-/obj/item/clothing/suit/armor/vest/det_suit/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.detective_vest_allowed
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_DETECTIVE
 
 /obj/item/clothing/suit/armor/swat
 	name = "MK.I SWAT Suit"

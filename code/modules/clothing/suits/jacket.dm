@@ -15,10 +15,7 @@
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	species_exception = list(/datum/species/golem)
-
-/obj/item/clothing/suit/jacket/Initialize(mapload)
-	. = ..()
-	allowed += GLOB.personal_carry_allowed
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_PERSONAL_CARRY
 
 /obj/item/clothing/suit/toggle/jacket
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
@@ -67,10 +64,7 @@
 	blood_overlay_type = "coat"
 	flags_inv = HIDEBELT
 	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR // I know kung-fu
-
-/obj/item/clothing/suit/toggle/jacket/trenchcoat/Initialize(mapload)
-	. = ..()
-	allowed += GLOB.improvised_firearm_allowed
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_IMPROV_GUN
 
 /obj/item/clothing/suit/jacket/blazer
 	name = "blazer jacket"
@@ -115,10 +109,7 @@
 	desc = "Aviators not included."
 	icon_state = "bomberjacket"
 	inhand_icon_state = "brownjsuit"
-
-/obj/item/clothing/suit/jacket/bomber/Initialize(mapload)
-	. = ..()
-	allowed += GLOB.improvised_firearm_allowed
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_IMPROV_GUN
 
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
@@ -127,10 +118,7 @@
 	inhand_icon_state = "hostrench"
 	resistance_flags = NONE
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
-
-/obj/item/clothing/suit/jacket/leather/Initialize(mapload)
-	. = ..()
-	allowed += GLOB.improvised_firearm_allowed
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_IMPROV_GUN
 
 /obj/item/clothing/suit/jacket/leather/biker
 	name = "biker jacket"
@@ -164,10 +152,7 @@
 	desc = "A canvas jacket styled after classical American military garb. Feels sturdy, yet comfortable."
 	icon_state = "militaryjacket"
 	inhand_icon_state = null
-
-/obj/item/clothing/suit/jacket/miljacket/Initialize(mapload)
-	. = ..()
-	allowed += GLOB.improvised_firearm_allowed
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_IMPROV_GUN
 
 /obj/item/clothing/suit/jacket/letterman
 	name = "letterman jacket"
@@ -175,10 +160,7 @@
 	icon_state = "letterman"
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
-
-/obj/item/clothing/suit/jacket/letterman/Initialize(mapload)
-	. = ..()
-	allowed += GLOB.improvised_firearm_allowed
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_IMPROV_GUN
 
 /obj/item/clothing/suit/jacket/letterman_red
 	name = "red letterman jacket"
@@ -186,10 +168,7 @@
 	icon_state = "letterman_red"
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
-
-/obj/item/clothing/suit/jacket/letterman_red/Initialize(mapload)
-	. = ..()
-	allowed += GLOB.improvised_firearm_allowed
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_IMPROV_GUN
 
 /obj/item/clothing/suit/jacket/letterman_syndie
 	name = "blood-red letterman jacket"
@@ -197,10 +176,7 @@
 	icon_state = "letterman_s"
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
-
-/obj/item/clothing/suit/jacket/letterman_syndie/Initialize(mapload)
-	. = ..()
-	allowed += GLOB.improvised_firearm_allowed
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_IMPROV_GUN
 
 /obj/item/clothing/suit/jacket/letterman_nanotrasen
 	name = "blue letterman jacket"
@@ -208,7 +184,4 @@
 	icon_state = "letterman_n"
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
-
-/obj/item/clothing/suit/jacket/letterman_nanotrasen/Initialize(mapload)
-	. = ..()
-	allowed += GLOB.improvised_firearm_allowed
+	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_IMPROV_GUN
