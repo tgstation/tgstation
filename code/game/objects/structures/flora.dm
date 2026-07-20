@@ -325,14 +325,14 @@
 	. = ..()
 	var/turf/my_turf = get_turf(src)
 	if(has_gravity(my_turf)) // If a tree falls in the forest, it makes a sound unless it doesn't have gravity.
-		playsound(my_turf, 'sound/effects/meteorimpact.ogg', 100 , FALSE, extrarange = TREE_FALL_EXTRARANGE, ignore_walls = TRUE)
+		playsound(my_turf, 'sound/effects/meteorimpact.ogg', 100 , FALSE, extrarange = TREE_FALL_EXTRARANGE)
 	var/obj/structure/flora/tree/stump/new_stump = new(my_turf)
 	new_stump.name = "[name] stump"
 
 /obj/structure/flora/tree/uproot(mob/living/user)
 	..()
 	if(has_gravity(get_turf(src)))
-		playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , FALSE, extrarange = TREE_FALL_EXTRARANGE, ignore_walls = TRUE)
+		playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , FALSE, extrarange = TREE_FALL_EXTRARANGE)
 
 /obj/structure/flora/tree/stump
 	name = "stump"
