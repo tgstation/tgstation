@@ -162,10 +162,9 @@
 	if(tt.target_zone != BODY_ZONE_HEAD)
 		return
 	if(iscarbon(hit_atom))
-		var/mob/living/carbon/H = hit_atom
-		if(!H.wear_mask)
-			H.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
-			H.visible_message(span_warning("The plunger slams into [H]'s face!"), span_warning("The plunger suctions to your face!"))
+		var/mob/living/carbon/victim = hit_atom
+		if(victim.equip_to_slot_if_possible(src, ITEM_SLOT_MASK, disable_warning = TRUE))
+			victim.visible_message(span_warning("The plunger slams into [victim]'s face!"), span_warning("The plunger suctions to your face!"))
 
 /obj/item/plunger/attack_self(mob/user)
 	. = ..()

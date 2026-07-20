@@ -10,6 +10,8 @@
 	custom_materials = null
 	assembly_behavior = ASSEMBLY_FUNCTIONAL_OUTPUT
 	var/obj/effect/anomaly/anomaly_type = /obj/effect/anomaly
+	/// Color of the core's glow
+	var/core_color = COLOR_WHITE
 
 /obj/item/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
 	if(!signal)
@@ -44,6 +46,7 @@
 	desc = "The neutralized core of a pyroclastic anomaly. It feels warm to the touch. It'd probably be valuable for research."
 	icon_state = "pyro_core"
 	anomaly_type = /obj/effect/anomaly/pyro
+	core_color = COLOR_BRIGHT_ORANGE
 
 /obj/item/assembly/signaler/anomaly/pyro/signal()
 	var/turf/our_turf = get_turf(src)
@@ -58,6 +61,7 @@
 	desc = "The neutralized core of a gravitational anomaly. It feels much heavier than it looks. It'd probably be valuable for research."
 	icon_state = "grav_core"
 	anomaly_type = /obj/effect/anomaly/grav
+	core_color = COLOR_LIME
 
 /obj/item/assembly/signaler/anomaly/grav/signal()
 	for(var/obj/object in orange(2, get_turf(src)))
@@ -72,6 +76,7 @@
 	desc = "The neutralized core of a flux anomaly. Touching it makes your skin tingle. It'd probably be valuable for research."
 	icon_state = "flux_core"
 	anomaly_type = /obj/effect/anomaly/flux
+	core_color = COLOR_YELLOW
 
 /obj/item/assembly/signaler/anomaly/flux/signal()
 	tesla_zap(get_turf(src), 0, 10 KILO JOULES, 5 KILO JOULES, ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_GENERATES_POWER)
@@ -82,6 +87,7 @@
 	icon_state = "anomaly_core"
 	anomaly_type = /obj/effect/anomaly/bluespace
 	activation_cooldown = 15 SECONDS // Slightly longer than reactive teleport armor cooldown
+	core_color = COLOR_DARK_CYAN
 
 /obj/item/assembly/signaler/anomaly/bluespace/signal()
 	var/atom/movable/to_teleport = get_teleportable_container(src, container_flags = TELEPORT_CONTAINER_INCLUDE_SEALED_MODSUIT)
@@ -97,6 +103,7 @@
 	icon_state = "vortex_core"
 	anomaly_type = /obj/effect/anomaly/bhole
 	activation_cooldown = 5 SECONDS
+	core_color = COLOR_PURPLE
 	var/turf_contents_pull_chance = 33
 	var/turf_destroy_chance = 25
 	var/max_explosion_force = EXPLODE_HEAVY
@@ -139,6 +146,7 @@
 	icon_state = "bioscrambler_core"
 	anomaly_type = /obj/effect/anomaly/bioscrambler
 	activation_cooldown = 10 SECONDS
+	core_color = COLOR_OLIVE_GREEN
 
 /obj/item/assembly/signaler/anomaly/bioscrambler/signal()
 	new /obj/effect/temp_visual/circle_wave/bioscrambler(get_turf(src))
@@ -151,6 +159,7 @@
 	icon_state = "hallucination_core"
 	anomaly_type = /obj/effect/anomaly/hallucination
 	activation_cooldown = 10 SECONDS
+	core_color = COLOR_SOFT_RED
 
 /obj/item/assembly/signaler/anomaly/hallucination/signal()
 	visible_hallucination_pulse(get_turf(src), 2, 20 SECONDS, 1 MINUTES)
@@ -161,6 +170,7 @@
 	icon_state = "dimensional_core"
 	anomaly_type = /obj/effect/anomaly/dimensional
 	activation_cooldown = 15 SECONDS // A bit longer than reactive barricade armor cooldown
+	core_color = COLOR_WHITE
 
 /obj/item/assembly/signaler/anomaly/dimensional/signal()
 	var/turf/our_turf = get_turf(src)
@@ -182,6 +192,7 @@
 	icon_state = "dimensional_core"
 	anomaly_type = /obj/effect/anomaly/ectoplasm
 	activation_cooldown = 60 SECONDS // A bit longer than reactive posession armor cooldown
+	core_color = COLOR_WHITE
 
 /obj/item/assembly/signaler/anomaly/ectoplasm/signal()
 	haunt_outburst(get_turf(src), 2, 33, 30 SECONDS)
@@ -191,6 +202,7 @@
 	desc = "The neutralized core of a weather anomaly. The sound of thunder can be heard in the distance. It'd probably be valuable for research."
 	icon_state = "weather_core"
 	anomaly_type = /obj/effect/anomaly/weather
+	core_color = COLOR_BLUE
 
 	/// Used in weather towers to track uses before depleting
 	var/charges = 8

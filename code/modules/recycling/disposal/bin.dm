@@ -22,7 +22,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	var/full_pressure = FALSE
 	/// Is the pressure charging
 	var/pressure_charging = TRUE
-	// True if flush handle is pulled
+	/// True if flush handle is pulled
 	var/flush = FALSE
 	/// The attached pipe trunk
 	var/obj/structure/disposalpipe/trunk/trunk = null

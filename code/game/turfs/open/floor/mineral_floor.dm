@@ -155,6 +155,8 @@
 /turf/open/floor/mineral/titanium/tiled/purple/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+
+
 //PLASTITANIUM (syndieshuttle)
 /turf/open/floor/mineral/plastitanium
 	name = "shuttle floor"
@@ -175,6 +177,27 @@
 
 /turf/open/floor/mineral/plastitanium/red/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/plastitanium/pod
+	name = "pod floor"
+	icon_state = "podfloor"
+	floor_tile = /obj/item/stack/tile/mineral/plastitanium/pod
+
+/turf/open/floor/mineral/plastitanium/pod/light
+	icon_state = "podfloor_light"
+	floor_tile = /obj/item/stack/tile/mineral/plastitanium/pod/light
+
+/turf/open/floor/mineral/plastitanium/pod/dark
+	icon_state = "podfloor_dark"
+	floor_tile = /obj/item/stack/tile/mineral/plastitanium/pod/dark
+
+/turf/open/floor/mineral/plastitanium/pod/redlight
+	icon_state = "podfloor_red_light"
+	floor_tile = /obj/item/stack/tile/mineral/plastitanium/pod/redlight
+
+/turf/open/floor/mineral/plastitanium/pod/red
+	icon_state = "podfloor_red"
+	floor_tile = /obj/item/stack/tile/mineral/plastitanium/pod/red
 
 //Used in SnowCabin.dm
 /turf/open/floor/mineral/plastitanium/red/snow_cabin

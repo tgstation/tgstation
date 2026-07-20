@@ -137,9 +137,11 @@ GLOBAL_LIST_EMPTY(starlight)
 
 	if(istype(tool, /obj/item/stack/rods))
 		build_with_rods(tool, user)
-	else if(ismetaltile(tool))
+		return ITEM_INTERACT_SUCCESS
+
+	if(ismetaltile(tool))
 		build_with_floor_tiles(tool, user)
-	return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /turf/open/space/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
