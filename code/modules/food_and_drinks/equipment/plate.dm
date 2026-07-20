@@ -53,7 +53,7 @@
 	if(!contents.len)
 		return
 	var/obj/item/object_to_eat = contents[1]
-	target.item_interaction(user, object_to_eat)
+	object_to_eat.melee_attack_chain(user, target)
 	return TRUE //No normal attack
 
 /obj/item/plate/IsContainedAtomAccessible(atom/contained, atom/movable/user)

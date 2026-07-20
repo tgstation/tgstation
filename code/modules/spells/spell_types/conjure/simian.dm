@@ -91,7 +91,7 @@
 	// Load the ammo
 	if(istype(weapon, /obj/item/gun/syringe/blowgun))
 		var/obj/item/reagent_containers/syringe/crude/tribal/dart = new(summoned_monkey)
-		weapon.item_interaction(summoned_monkey, dart)
+		astype(weapon, /obj/item/gun/syringe/blowgun).attempt_insert_syringe(summoned_monkey, dart)
 
 	// Wield the weapon!
 	if(is_type_in_list(weapon, list(/obj/item/spear, /obj/item/fireaxe)))

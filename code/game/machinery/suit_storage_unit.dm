@@ -424,7 +424,7 @@
 			else
 				var/obj/item/in_hands = user.get_active_held_item()
 				if (in_hands)
-					item_interaction(user, in_hands)
+					in_hands.melee_attack_chain(user, src)
 				update_icon()
 
 	interact(user)
