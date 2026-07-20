@@ -750,9 +750,7 @@
 	LAZYREMOVE(learned_crafting_recipes, GLOB.crafting_recipes_by_typepath[recipe])
 
 /datum/mind/proc/has_crafting_recipe(potential_recipe)
-	if(!ispath(potential_recipe, /datum/crafting_recipe))
-		stack_trace("Non-crafting recipe passed to has_crafting_recipe")
-		return FALSE
+	ASSERT(ispath(potential_recipe, /datum/crafting_recipe), "Non-crafting recipe passed to has_crafting_recipe")
 	if(locate(potential_recipe) in learned_crafting_recipes)
 		return TRUE
 	if(locate(potential_recipe) in learned_cooking_recipes)
