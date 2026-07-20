@@ -607,3 +607,11 @@
       or invisible if they met certain criteria
   - admin: select equipment now just shows one direction of previews, greatly reducing
       lag
+2026-07-20:
+  Aliceee2ch:
+  - spellcheck: Fixed blastoff misspelling.
+  FalloutFalcon:
+  - admin: Adding music as an admin rebuilds the list THAT round instead of having
+      to wait for the next
+  PapaMichael:
+  - spellcheck: More verbs match their pronouns

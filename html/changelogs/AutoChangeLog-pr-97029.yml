@@ -1,4 +1,0 @@
-author: "FalloutFalcon"
-delete-after: True
-changes:
-  - admin: "Adding music as an admin rebuilds the list THAT round instead of having to wait for the next"
