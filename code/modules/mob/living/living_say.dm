@@ -310,7 +310,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/speaker_name = span_name("[message_mods[MODE_SPEAKER_NAME_OVERRIDE] || speaker]")
 
 	// Infinite range implies something like telecomms, ie something that should never be distance modified
-	if(message_range != INFINITY)
+	if(message_range != INFINITY && !HAS_TRAIT(src, TRAIT_GOOD_HEARING))
 		var/raw_dist = get_dist(speaker, src)
 		// Check for projected whispers, calculate distance from the projected tile if so
 		if(message_mods[WHISPER_MODE])
@@ -320,7 +320,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 		// How far we are we outside the message range?
 		var/outside_dist = max(raw_dist - message_range, 0)
-		// Out of message range AND out of eavesdrop range
+		// Out of message range AND out of eavesdrop range - interrupt message entirely
 		if(outside_dist > eavesdrop_range)
 			// Can't see them speak either. No message
 			if(is_blind() || HAS_TRAIT(speaker, TRAIT_INVISIBLE_MAN))
@@ -347,7 +347,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				message = deaf_message
 				return show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
 			return FALSE
-
+		// Out of message range but within eavesdrop range - alter displayed message
 		if(outside_dist > 0)
 			raw_message = stars(raw_message)
 

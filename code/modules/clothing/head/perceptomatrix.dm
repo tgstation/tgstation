@@ -36,8 +36,7 @@
 		/datum/material/uranium = SHEET_MATERIAL_AMOUNT,
 		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	/// Tracks if we've applied the eavesdropping bonus
-	VAR_FINAL/improved_eavesdropping = FALSE
+
 	/// If we have a core or not
 	var/core_installed = FALSE
 	/// Active components to add onto the mob, deleted and created on core installation/removal
@@ -49,6 +48,7 @@
 		TRAIT_TRUE_NIGHT_VISION,
 		TRAIT_SIGHT_BYPASS,
 		TRAIT_EXPANDED_FOV,
+		TRAIT_GOOD_HEARING,
 		/* mental protection */
 		TRAIT_PERCEPTUAL_TRAUMA_BYPASS,
 		TRAIT_RDS_SUPPRESSED,
@@ -82,16 +82,10 @@
 	if(slot & ITEM_SLOT_HEAD)
 		RegisterSignal(user, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(pre_cast_core_check))
 		user.update_sight()
-		if(!improved_eavesdropping)
-			user.eavesdrop_range += 7
-			improved_eavesdropping = TRUE
 
 /obj/item/clothing/head/helmet/perceptomatrix/dropped(mob/living/user, silent)
 	UnregisterSignal(user, COMSIG_MOB_BEFORE_SPELL_CAST)
 	user.update_sight()
-	if(improved_eavesdropping)
-		user.eavesdrop_range -= 7
-		improved_eavesdropping = FALSE
 	..()
 
 // Prevent casting the spell w/o the core.
@@ -110,25 +104,13 @@
 		QDEL_LIST(active_components)
 		RemoveElement(/datum/element/wearable_client_colour, /datum/client_colour/perceptomatrix, ITEM_SLOT_HEAD, HELMET_TRAIT, forced = TRUE)
 		tint = INFINITY
-		if(iscarbon(loc))
-			var/mob/living/carbon/wearer = loc
-			wearer.update_tint()
-			if(improved_eavesdropping)
-				wearer.eavesdrop_range -= 7
-				improved_eavesdropping = FALSE
-
+		astype(loc, /mob/living/carbon)?.update_tint()
 		return
 
 	clothing_flags = PERCEPTOMATRIX_ACTIVE_FLAGS
 	attach_clothing_traits(additional_clothing_traits)
 	tint = 0
-
-	if(iscarbon(loc))
-		var/mob/living/carbon/wearer = loc
-		wearer.update_tint()
-		if(!improved_eavesdropping)
-			wearer.eavesdrop_range += 7
-			improved_eavesdropping = TRUE
+	astype(loc, /mob/living/carbon)?.update_tint()
 
 	// When someone makes TRAIT_DEAF an element, or status effect, or whatever, give this item a way to bypass said deafness.
 	// just blocking future instances of deafness isn't what the item is meant to do but there's no proper way to do it otherwise at the moment.
