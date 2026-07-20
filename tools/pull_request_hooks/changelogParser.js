@@ -1,4 +1,4 @@
-import * as changelogConfig from "./changelogConfig.js";
+import * as changelogConfig from './changelogConfig.js';
 
 const REGEX_CHANGELOG_LINE = /^(\w+): (.+)$/;
 
@@ -66,7 +66,7 @@ export function parseChangelog(text) {
   if (text == null) {
     return undefined;
   }
-  const lines = text.split("\n").map((line) => line.trim());
+  const lines = text.split('\n').map((line) => line.trim());
 
   for (let index = 0; index < lines.length; index++) {
     const line = lines[index];

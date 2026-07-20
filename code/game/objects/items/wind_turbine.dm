@@ -243,31 +243,33 @@
 		update_appearance()
 	return ..()
 
-/obj/item/portable_wind_turbine/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/stock_parts/capacitor))
+/obj/item/portable_wind_turbine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stock_parts/capacitor))
 		if (cap)
 			balloon_alert(user, "already has a capacitor!")
-			return TRUE
-		user.transferItemToLoc(attacking_item, src)
-		cap = attacking_item
-		balloon_alert(user, "inserted the [attacking_item]")
-		return TRUE
-	if(!is_type_in_typecache(attacking_item, allowed_devices))
-		return ..()
+			return ITEM_INTERACT_BLOCKING
+		user.transferItemToLoc(tool, src)
+		cap = tool
+		balloon_alert(user, "inserted the [tool]")
+		return ITEM_INTERACT_SUCCESS
+
+	if(!is_type_in_typecache(tool, allowed_devices))
+		return NONE
+
 	if(isnull(cap))
 		balloon_alert(user, "no capacitor inserted!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	if(charging)
 		balloon_alert(user, "already charging something!")
-		return TRUE
-	if(istype(attacking_item, /obj/item/gun/energy))
-		var/obj/item/gun/energy/energy_gun = attacking_item
+		return ITEM_INTERACT_BLOCKING
+	if(istype(tool, /obj/item/gun/energy))
+		var/obj/item/gun/energy/energy_gun = tool
 		if(!energy_gun.can_charge)
 			balloon_alert(user, "not rechargable!")
-			return TRUE
-	user.transferItemToLoc(attacking_item, src)
-	charging = attacking_item
-	return TRUE
+			return ITEM_INTERACT_BLOCKING
+	user.transferItemToLoc(tool, src)
+	charging = tool
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/portable_wind_turbine/attack_hand(mob/user, list/modifiers)
 	if(loc == user || (istype(loc, /turf) && !isnull(charging)))
@@ -345,7 +347,7 @@
 	if (istype(charging, /obj/item/melee/baton/security/))
 		. += mutable_appearance(icon, "baton")
 
-/obj/item/portable_wind_turbine/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/portable_wind_turbine/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if (isinhands)
 		return

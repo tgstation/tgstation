@@ -39,6 +39,7 @@
 	RegisterSignal(soul, COMSIG_MOB_ATTACK_RANGED_SECONDARY, PROC_REF(on_secondary_attack))
 	RegisterSignal(src, COMSIG_ATOM_INTEGRITY_CHANGED, PROC_REF(on_integrity_change))
 	AddComponent(/datum/component/bane, affected_biotypes = MOB_PLANT, damage_multiplier = 1.5)
+	AddComponent(/datum/component/walking_aid)
 
 /obj/item/soulscythe/examine(mob/user)
 	. = ..()

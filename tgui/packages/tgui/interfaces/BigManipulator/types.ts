@@ -33,8 +33,9 @@ export interface ManipulatorTask {
   use_post_interaction?: string;
   worker_use_rmb?: BooleanLike;
   worker_combat_mode?: BooleanLike;
+  skip_anchored?: BooleanLike;
   // interact only
-  // (worker_interaction, use_post_interaction, worker_use_rmb, worker_combat_mode shared with dropoff)
+  // (worker_interaction, use_post_interaction, worker_use_rmb, worker_combat_mode, skip_anchored shared with dropoff)
   time?: number;
 }
 

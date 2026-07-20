@@ -1368,3 +1368,13 @@
 	nutriment_factor = 0.5
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
+/datum/reagent/consumable/beef_flavour
+	name = "Beef Space Ramen Flavouring"
+	description = "Powdered beef flavouring with enough salt to preserve a corpse."
+	nutriment_factor = 5
+	color = "#5f3e00" // rgb: 115, 16, 8
+	taste_description = "beef"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	default_container = /obj/item/reagent_containers/condiment/pack/beef_flavour
+

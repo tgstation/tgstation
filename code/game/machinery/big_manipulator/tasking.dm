@@ -13,6 +13,8 @@
 
 // Moves through the list, skipping tasks that can't run.
 /datum/tasking_strategy/sequential
+	/// Separate index for candidate selection to avoid corrupting the task index.
+	var/candidate_index = 1
 
 /datum/tasking_strategy/sequential/get_next_task(list/tasks, obj/machinery/big_manipulator/manipulator)
 	if(!length(tasks))
@@ -33,16 +35,18 @@
 /datum/tasking_strategy/sequential/get_next_candidate(list/candidates)
 	if(!length(candidates))
 		return null
-	if(current_index < 1 || current_index > length(candidates))
-		current_index = 1
-	var/candidate = candidates[current_index]
-	current_index++
-	if(current_index > length(candidates))
-		current_index = 1
+	if(candidate_index < 1 || candidate_index > length(candidates))
+		candidate_index = 1
+	var/candidate = candidates[candidate_index]
+	candidate_index++
+	if(candidate_index > length(candidates))
+		candidate_index = 1
 	return candidate
 
 // Stays on the current task until it can run.
 /datum/tasking_strategy/strict
+	/// Separate index for candidate selection to avoid corrupting the task index.
+	var/candidate_index = 1
 
 /datum/tasking_strategy/strict/get_next_task(list/tasks, obj/machinery/big_manipulator/manipulator)
 	if(!length(tasks))
@@ -60,10 +64,10 @@
 /datum/tasking_strategy/strict/get_next_candidate(list/candidates)
 	if(!length(candidates))
 		return null
-	if(current_index < 1 || current_index > length(candidates))
-		current_index = 1
-	var/candidate = candidates[current_index]
-	current_index++
-	if(current_index > length(candidates))
-		current_index = 1
+	if(candidate_index < 1 || candidate_index > length(candidates))
+		candidate_index = 1
+	var/candidate = candidates[candidate_index]
+	candidate_index++
+	if(candidate_index > length(candidates))
+		candidate_index = 1
 	return candidate

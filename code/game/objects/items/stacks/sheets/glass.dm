@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	fire = 50
 	acid = 100
 
-/obj/item/stack/sheet/glass/suicide_act(mob/living/carbon/user)
+/obj/item/stack/sheet/glass/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to slice [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
@@ -49,37 +49,42 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	. = ..()
 	. += GLOB.glass_recipes
 
-/obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/stack/sheet/glass/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/lightreplacer))
-		var/obj/item/lightreplacer/lightreplacer = W
-		lightreplacer.attackby(src, user)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/CC = W
-		if (get_amount() < 1 || CC.get_amount() < 5)
+	if(istype(tool, /obj/item/lightreplacer))
+		var/obj/item/lightreplacer/lightreplacer = tool
+		lightreplacer.item_interaction(user, src, modifiers)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = tool
+		if (get_amount() < 1 || coil.get_amount() < 5)
 			to_chat(user, span_warning("You need five lengths of coil and one sheet of glass to make wired glass!"))
-			return
-		CC.use(5)
+			return ITEM_INTERACT_BLOCKING
+		coil.use(5)
 		use(1)
 		to_chat(user, span_notice("You attach wire to \the [src]."))
 		var/obj/item/stack/light_w/new_tile = new(user.loc)
 		if (!QDELETED(new_tile))
 			new_tile.add_fingerprint(user)
-		return
-	if(istype(W, /obj/item/stack/rods))
-		var/obj/item/stack/rods/V = W
-		if (V.get_amount() >= 1 && get_amount() >= 1)
-			var/obj/item/stack/sheet/rglass/RG = new (get_turf(user))
-			if(!QDELETED(RG))
-				RG.add_fingerprint(user)
-			var/replace = user.get_inactive_held_item() == src
-			V.use(1)
-			use(1)
-			if(QDELETED(src) && replace && !QDELETED(RG))
-				user.put_in_hands(RG)
-		else
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stack/rods))
+		var/obj/item/stack/rods/rods = tool
+		if (rods.get_amount() < 1 || get_amount() < 1) // the hell kind of check is this, how would this happen
 			to_chat(user, span_warning("You need one rod and one sheet of glass to make reinforced glass!"))
-		return
+			return ITEM_INTERACT_BLOCKING
+
+		var/obj/item/stack/sheet/rglass/new_glass = new (get_turf(user))
+		if(!QDELETED(new_glass))
+			new_glass.add_fingerprint(user)
+		var/replace = user.get_inactive_held_item() == src
+		rods.use(1)
+		use(1)
+		if(QDELETED(src) && replace && !QDELETED(new_glass))
+			user.put_in_hands(new_glass)
+		return ITEM_INTERACT_SUCCESS
+
 	return ..()
 
 GLOBAL_LIST_INIT(pglass_recipes, list ( \
@@ -116,25 +121,27 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	. = ..()
 	. += GLOB.pglass_recipes
 
-/obj/item/stack/sheet/plasmaglass/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/stack/sheet/plasmaglass/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-
-	if(istype(W, /obj/item/stack/rods))
-		var/obj/item/stack/rods/V = W
-		if (V.get_amount() >= 1 && get_amount() >= 1)
-			var/obj/item/stack/sheet/plasmarglass/RG = new (get_turf(user))
-			if (!QDELETED(RG))
-				RG.add_fingerprint(user)
-			var/replace = user.get_inactive_held_item() == src
-			V.use(1)
-			use(1)
-			if(QDELETED(src) && replace)
-				user.put_in_hands(RG)
-		else
-			to_chat(user, span_warning("You need one rod and one sheet of plasma glass to make reinforced plasma glass!"))
-			return
-	else
+	if(!istype(tool, /obj/item/stack/rods))
 		return ..()
+
+	var/obj/item/stack/rods/rods = tool
+	if (rods.get_amount() < 1 || get_amount() < 1)
+		to_chat(user, span_warning("You need one rod and one sheet of plasma glass to make reinforced plasma glass!"))
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/sheet/plasmarglass/RG = new (get_turf(user))
+	if (!QDELETED(RG))
+		RG.add_fingerprint(user)
+	var/replace = user.get_inactive_held_item() == src
+	rods.use(1)
+	use(1)
+	if(QDELETED(src) && replace)
+		user.put_in_hands(RG)
+	return ITEM_INTERACT_SUCCESS
+
+
 
 /*
  * Reinforced glass sheets
@@ -174,9 +181,9 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	fire = 70
 	acid = 100
 
-/obj/item/stack/sheet/rglass/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/stack/sheet/rglass/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	..()
+	. = ..()
 
 /obj/item/stack/sheet/rglass/get_main_recipes()
 	. = ..()
@@ -200,7 +207,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	resistance_flags = ACID_PROOF
 	material_flags = NONE
 	merge_type = /obj/item/stack/sheet/plasmarglass
-	gulag_valid = TRUE
+	gulag_value = 5
 	matter_amount = 8
 	table_type = /obj/structure/table/reinforced/plasmarglass
 	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
@@ -370,24 +377,27 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	to_chat(user, span_warning("[src] cuts into your hand!"))
 	jab.apply_damage(force * 0.5, BRUTE, user.get_active_hand(), attacking_item = src)
 
-/obj/item/shard/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/lightreplacer))
-		var/obj/item/lightreplacer/lightreplacer = item
+/obj/item/shard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/lightreplacer))
+		var/obj/item/lightreplacer/lightreplacer = tool
 		lightreplacer.attackby(src, user)
-	else if(istype(item, /obj/item/stack/sheet/cloth))
-		var/obj/item/stack/sheet/cloth/cloth = item
-		to_chat(user, span_notice("You begin to wrap the [cloth] around the [src]..."))
-		if(do_after(user, craft_time, target = src))
-			var/obj/item/knife/shiv/shiv = new shiv_type
-			shiv.set_custom_materials(custom_materials)
-			cloth.use(1)
-			to_chat(user, span_notice("You wrap the [cloth] around the [src], forming a makeshift weapon."))
-			remove_item_from_storage(src, user)
-			qdel(src)
-			user.put_in_hands(shiv)
+		return ITEM_INTERACT_SUCCESS
 
-	else
-		return ..()
+	if(!istype(tool, /obj/item/stack/sheet/cloth))
+		return NONE
+
+	var/obj/item/stack/sheet/cloth/cloth = tool
+	to_chat(user, span_notice("You begin to wrap the [cloth] around the [src]..."))
+	if(!do_after(user, craft_time, target = src))
+		return ITEM_INTERACT_FAILURE
+
+	var/obj/item/knife/shiv/shiv = new shiv_type
+	shiv.set_custom_materials(custom_materials)
+	cloth.use(1)
+	to_chat(user, span_notice("You wrap the [cloth] around the [src], forming a makeshift weapon."))
+	qdel(src)
+	user.put_in_hands(shiv)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/shard/welder_act(mob/living/user, obj/item/I)
 	if(I.use_tool(src, user, 0, volume=50))

@@ -10,7 +10,7 @@
 ///from the ranged_attacks component for basic mobs: (mob/living/basic/firer, atom/target, modifiers)
 #define COMSIG_BASICMOB_POST_ATTACK_RANGED "basicmob_post_attack_ranged"
 
-/// Sent from /datum/ai_planning_subtree/parrot_as_in_repeat() : ()
+/// Sent from /datum/bt_node/ai_behavior/parrot_repeat_speech/perform(): ()
 #define COMSIG_NEEDS_NEW_PHRASE "parrot_needs_new_phrase"
 	#define NO_NEW_PHRASE_AVAILABLE (1<<0) //! Cancel to try again later for when we actually get a new phrase
 
@@ -35,3 +35,6 @@
 	#define COMPONENT_CANCEL_RAPTOR_GROWTH (1<<0)
 // Called when the revenant is to be released from its prison : (cause)
 #define COMSIG_REVENANT_RELEASE "revenant_release"
+
+/// Called when a proficient_miner mob mines a tile
+#define COMSIG_PROFICIENT_MINER_MINED "proficient_miner_mined"

@@ -13,6 +13,7 @@
 	incompatible_modules = list(/obj/item/mod/module/gps)
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/mod/module/gps/Initialize(mapload)
 	. = ..()
@@ -36,6 +37,7 @@
 	overlay_state_inactive = "module_clamp"
 	overlay_state_active = "module_clamp_on"
 	required_slots = list(ITEM_SLOT_GLOVES, ITEM_SLOT_BACK)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	/// Time it takes to load a crate.
 	var/load_time = 3 SECONDS
 	/// The max amount of crates you can carry.
@@ -136,6 +138,7 @@
 	overlay_state_active = "module_drill"
 	required_slots = list(ITEM_SLOT_GLOVES)
 	toolspeed = 0.25
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 	/// Are we currently in passive sphere mode?
 	var/ballin = FALSE
 	/// Last tick when we bumpmined. Prevents diagonal bumpnining being thrice as fast as normal
@@ -209,7 +212,7 @@
 	var/has_ore = !isnull(rock.mineral_type)
 	if (has_ore)
 		toolspeed /= 2
-	rock.attackby(src, bumper, null, null, exp_multiplier)
+	rock.manual_mine(bumper, src, exp_multiplier)
 	if (has_ore)
 		toolspeed *= 2
 
@@ -250,6 +253,7 @@
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
 	required_slots = list(ITEM_SLOT_BACK)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7.5)
 	/// Are we currently dropping off ores? Used to prevent the bag from instantly picking up ores after dropping them
 	var/dropping_ores = FALSE
 
@@ -370,6 +374,7 @@
 	complexity = 2
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/disposal_connector)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT)
 	var/disposal_tag = NONE
 
 /obj/item/mod/module/disposal_connector/Initialize(mapload)
@@ -576,8 +581,8 @@
 
 /obj/item/mod/module/sphere_transform
 	name = "MOD sphere transform module"
-	desc = "A module able to move the suit's parts around, turning it and the user into a sphere. \
-		The sphere can move quickly, even through lava, and launch mining micromissile to decimate terrain and fauna alike."
+	desc = "A module able to move the suit's parts around, turning it and the user into a sphere. If the modsuit is insulated with bileworm skin, the user will be protected from lava while active. \
+		The sphere can move quickly, even through lava, and launch mining micromissiles to decimate terrain and fauna alike."
 	icon_state = "sphere"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
@@ -658,6 +663,8 @@
 	mod.wearer.add_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/damage_slowdown)
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/sphere)
 	RegisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE, PROC_REF(on_statchange))
+	RegisterSignal(mod.wearer, COMSIG_CARBON_GET_FIRE_OVERLAY, PROC_REF(replace_fire_overlay))
+	mod.wearer.update_appearance(UPDATE_ICON)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().add_other_armor(armor_mod))
 
@@ -672,9 +679,22 @@
 	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/sphere)
-	UnregisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE)
+	UnregisterSignal(mod.wearer, list(COMSIG_MOB_STATCHANGE, COMSIG_CARBON_GET_FIRE_OVERLAY))
+	mod.wearer.update_appearance(UPDATE_ICON)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
+
+/obj/item/mod/module/sphere_transform/proc/replace_fire_overlay(datum/source, stacks, on_fire, fire_icon, list/overrides)
+	SIGNAL_HANDLER
+
+	var/mutable_appearance/fire_overlay = mutable_appearance(
+		'icons/mob/effects/onfire.dmi',
+		fire_icon,
+		-HIGHEST_LAYER,
+		appearance_flags = RESET_COLOR|KEEP_APART,
+	)
+	fire_overlay.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/modsuit/mod_modules.dmi', "ball_mask"), flags = MASK_INVERSE))
+	overrides += fire_overlay
 
 /obj/item/mod/module/sphere_transform/used(mob/activator)
 	if(!lavaland_equipment_pressure_check(get_turf(src)))

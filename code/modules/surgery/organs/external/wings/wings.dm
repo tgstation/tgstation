@@ -181,7 +181,7 @@
 		human.add_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
 		human.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
 		human.AddElement(/datum/element/forced_gravity, 0)
-		passtable_on(human, SPECIES_FLIGHT_TRAIT)
+		ADD_TRAIT(human, TRAIT_PASSTABLE, SPECIES_FLIGHT_TRAIT)
 		open_wings()
 		to_chat(human, span_notice("You beat your wings and begin to hover gently above the ground..."))
 		human.set_resting(FALSE, TRUE)
@@ -192,7 +192,7 @@
 	human.remove_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
 	human.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
 	human.RemoveElement(/datum/element/forced_gravity, 0)
-	passtable_off(human, SPECIES_FLIGHT_TRAIT)
+	REMOVE_TRAIT(human, TRAIT_PASSTABLE, SPECIES_FLIGHT_TRAIT)
 	to_chat(human, span_notice("You settle gently back onto the ground..."))
 	close_wings()
 	human.refresh_gravity()
@@ -233,12 +233,17 @@
 
 ///Bodypart overlay of default wings. Does not have any wing functionality
 /datum/bodypart_overlay/mutant/wings
-	layers = ALL_EXTERNAL_OVERLAYS
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+	)
 	feature_key = FEATURE_WINGS
+	offset_location = ENTIRE_BODY
 	/// Slot we check against
 	var/slot_blocker = HIDEJUMPSUIT
 
-/datum/bodypart_overlay/mutant/wings/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
+/datum/bodypart_overlay/mutant/wings/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & slot_blocker)
 
 /datum/bodypart_overlay/mutant/wings/proc/open_wings()
@@ -269,7 +274,7 @@
 	feature_key = initial(feature_key)
 	set_appearance_from_name(sprite_datum.name)
 
-/datum/bodypart_overlay/mutant/wings/functional/generate_icon_cache(obj/item/bodypart/limb)
+/datum/bodypart_overlay/mutant/wings/functional/icon_render_key(obj/item/bodypart/limb)
 	. = ..()
 	. += wings_open ? "open" : "closed"
 

@@ -81,6 +81,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	AddElement(/datum/element/nullrod_core, chaplain_spawnable = FALSE, rune_remove_line = "TO DUST WITH YE!! AWAY!!") // The implant is the actual item the chappie can select
 	AddComponent(/datum/component/bane, affected_biotypes = MOB_PLANT, damage_multiplier = 1.5) //also good at killing plants
 	AddComponent(/datum/component/butchering, speed = 3 SECONDS, effectiveness = 125)
+	AddComponent(/datum/component/walking_aid)
 
 /obj/item/vorpalscythe/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(ismonkey(target) && !target.mind) //Don't empower from hitting monkeys. Hit a corgi or something, I don't know.
@@ -172,12 +173,12 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	//Determines if we are entitled to setting/resetting our timer.
 	//Only reset SCYTHE_EMPOWERED with an empowerment that would grant that.
 	//Only reset SCTHE_SATED if hitting at least simple mobs or nonmonkey carbons.
-	var/allow_timer_set = FALSE
 
-	if(empowerment < potential_empowerment || empowerment == potential_empowerment) //Reset the timer only if our potential empowerment is equivalent or stronger than our current empowerment
-		allow_timer_set = TRUE
+	if(empowerment > potential_empowerment) //If the new is weaker than the old, don't reset the timer and don't change our power
+		return
+
 	empowerment = potential_empowerment
-	if(potential_empowerment != SCYTHE_WEAK && allow_timer_set) //And finally, if the empowerment was improved and wasn't too weak to get an empowerment, we set/reset our timer
+	if(potential_empowerment != SCYTHE_WEAK) //And finally, if it wasn't too weak to get an empowerment, we set/reset our timer
 		addtimer(CALLBACK(src, PROC_REF(scythe_empowerment_end)), (4 MINUTES / empowerment), TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/item/vorpalscythe/proc/scythe_empowerment_end()

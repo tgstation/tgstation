@@ -137,14 +137,18 @@
 		return FALSE
 
 	var/obj/item/held_item = obj_resolve
-	var/atom/type_to_use = destination_task.find_type_priority()
+	var/atom/type_to_use = destination_task.find_type_priority(destination_task.skip_anchored)
 
 	if(isnull(type_to_use))
-		check_for_cycle_end_drop(destination_task, FALSE, work_done_at_point)
+		drop_held_after_use(destination_task)
 		return FALSE
 
 	if(isitem(type_to_use) && !destination_task.check_filters_for_atom(type_to_use))
-		check_for_cycle_end_drop(destination_task, FALSE, work_done_at_point)
+		drop_held_after_use(destination_task)
+		return FALSE
+
+	if(istype(destination_task, /datum/manipulator_task/cargo/interact) && destination_task.should_use_filters && isitem(type_to_use) && !destination_task.check_filters_for_atom(type_to_use))
+		drop_held_after_use(destination_task)
 		return FALSE
 
 	var/original_loc = held_item.loc
@@ -153,9 +157,10 @@
 	if(held_item.GetComponent(/datum/component/two_handed))
 		held_item.attack_self(monkey_resolve)
 
+	var/old_combat_mode = monkey_resolve.combat_mode
 	monkey_resolve.combat_mode = destination_task.worker_combat_mode
 	held_item.melee_attack_chain(monkey_resolve, type_to_use, list(RIGHT_CLICK = destination_task.worker_use_rmb ? TRUE : FALSE))
-	monkey_resolve.combat_mode = FALSE
+	monkey_resolve.combat_mode = old_combat_mode
 	do_attack_animation(destination_turf)
 	manipulator_arm.do_attack_animation(destination_turf)
 
@@ -217,7 +222,7 @@
 			obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
 			finish_manipulation()
 		else
-			schedule_next_cycle()
+			addtimer(CALLBACK(src, PROC_REF(try_use_thing), destination_task, TRUE), BASE_INTERACTION_TIME * 2)
 
 /obj/machinery/big_manipulator/proc/throw_thing(datum/manipulator_task/cargo/dropoff_base/throw/throw_task)
 	var/drop_turf = throw_task.interaction_turf
@@ -241,21 +246,19 @@
 		finish_manipulation()
 		return
 
-	var/atom/type_to_use = destination_task.find_type_priority()
+	var/atom/type_to_use = destination_task.find_type_priority(destination_task.skip_anchored)
 	if(isnull(type_to_use))
 		check_end_of_use_for_use_with_empty_hand(destination_task, FALSE)
 		return
 
-	if(isitem(type_to_use))
-		var/obj/item/interact_with_item = type_to_use
-		var/resolve_loc = interact_with_item.loc
-		monkey_resolve.put_in_active_hand(interact_with_item)
-		interact_with_item.attack_self(monkey_resolve)
-		interact_with_item.forceMove(resolve_loc)
-	else
-		monkey_resolve.combat_mode = destination_task.worker_combat_mode
-		monkey_resolve.UnarmedAttack(type_to_use)
-		monkey_resolve.combat_mode = FALSE
+	if(destination_task.should_use_filters && isitem(type_to_use) && !destination_task.check_filters_for_atom(type_to_use))
+		check_end_of_use_for_use_with_empty_hand(destination_task, FALSE)
+		return
+
+	var/old_combat_mode = monkey_resolve.combat_mode
+	monkey_resolve.combat_mode = destination_task.worker_combat_mode
+	monkey_resolve.UnarmedAttack(type_to_use, modifiers = list(RIGHT_CLICK = destination_task.worker_use_rmb ? TRUE : FALSE))
+	monkey_resolve.combat_mode = old_combat_mode
 
 	var/turf/dest_turf = destination_task.interaction_turf
 	if(dest_turf)
@@ -277,6 +280,10 @@
 
 /// Completes the current manipulation action and schedules the next step.
 /obj/machinery/big_manipulator/proc/finish_manipulation()
+	if(held_object)
+		var/obj/resolved = held_object.resolve()
+		if(resolved && resolved.loc == src)
+			resolved.forceMove(drop_location())
 	held_object = null
 	manipulator_arm.update_claw(null)
 	current_task = null

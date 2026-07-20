@@ -260,17 +260,25 @@
 		hands += I.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE, bodyshape = bodyshape)
 	return hands
 
+/mob/living/carbon/proc/get_fire_icon_state(stacks, on_fire)
+	return "[dna?.species.fire_overlay || "human"]_[stacks > MOB_BIG_FIRE_STACK_THRESHOLD ? "big_fire" : "small_fire"]"
+
 /mob/living/carbon/get_fire_overlay(stacks, on_fire)
-	var/fire_icon = "[dna?.species.fire_overlay || "human"]_[stacks > MOB_BIG_FIRE_STACK_THRESHOLD ? "big_fire" : "small_fire"]"
+	var/fire_icon = get_fire_icon_state(stacks, on_fire)
+	var/list/overrides = list()
+	SEND_SIGNAL(src, COMSIG_CARBON_GET_FIRE_OVERLAY, stacks, on_fire, fire_icon, overrides)
+	if (length(overrides))
+		return overrides[1]
 
-	if(!GLOB.fire_appearances[fire_icon])
-		GLOB.fire_appearances[fire_icon] = mutable_appearance(
-			'icons/mob/effects/onfire.dmi',
-			fire_icon,
-			-HIGHEST_LAYER,
-			appearance_flags = RESET_COLOR|KEEP_APART,
-		)
+	if(GLOB.fire_appearances[fire_icon])
+		return GLOB.fire_appearances[fire_icon]
 
+	GLOB.fire_appearances[fire_icon] = mutable_appearance(
+		'icons/mob/effects/onfire.dmi',
+		fire_icon,
+		-HIGHEST_LAYER,
+		appearance_flags = RESET_COLOR|KEEP_APART,
+	)
 	return GLOB.fire_appearances[fire_icon]
 
 /mob/living/carbon/update_damage_overlays()
@@ -294,6 +302,7 @@
 	if(isnull(damage_overlay))
 		return
 
+	apply_height(damage_overlay, ENTIRE_BODY)
 	overlays_standing[DAMAGE_LAYER] = damage_overlay
 	apply_overlay(DAMAGE_LAYER)
 
@@ -316,38 +325,9 @@
 	if(isnull(wound_overlay))
 		return
 
+	apply_height(wound_overlay, ENTIRE_BODY)
 	overlays_standing[WOUND_LAYER] = wound_overlay
 	apply_overlay(WOUND_LAYER)
-
-/mob/living/carbon/update_worn_mask()
-	remove_overlay(FACEMASK_LAYER)
-	hud_used?.update_inventory_slot(ITEM_SLOT_MASK)
-
-	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
-		return
-
-	if(wear_mask && !(obscured_slots & HIDEMASK))
-		overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
-		overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi', bodyshape = bodyshape)
-
-	apply_overlay(FACEMASK_LAYER)
-
-/mob/living/carbon/update_worn_neck()
-	remove_overlay(NECK_LAYER)
-	hud_used?.update_inventory_slot(ITEM_SLOT_NECK)
-
-	if(wear_neck && !(obscured_slots & HIDENECK))
-		overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/mob/clothing/neck.dmi', bodyshape = bodyshape)
-	apply_overlay(NECK_LAYER)
-
-/mob/living/carbon/update_worn_back()
-	remove_overlay(BACK_LAYER)
-	hud_used?.update_inventory_slot(ITEM_SLOT_BACK)
-
-	if(back)
-		overlays_standing[BACK_LAYER] = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi', bodyshape = bodyshape)
-
-	apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/update_worn_legcuffs()
 	remove_overlay(LEGCUFF_LAYER)
@@ -360,19 +340,6 @@
 	apply_overlay(LEGCUFF_LAYER)
 	throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
-/mob/living/carbon/update_worn_head()
-	remove_overlay(HEAD_LAYER)
-	hud_used?.update_inventory_slot(ITEM_SLOT_HEAD)
-
-	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
-		return
-
-	if(head && !(obscured_slots & HIDEHEADGEAR))
-		overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi', bodyshape = bodyshape)
-
-	apply_overlay(HEAD_LAYER)
-
-
 /mob/living/carbon/update_worn_handcuffs()
 	remove_overlay(HANDCUFF_LAYER)
 	hud_used?.update_inventory_slot(ITEM_SLOT_HANDS)
@@ -380,7 +347,7 @@
 		var/mutable_appearance/handcuff_overlay = mutable_appearance('icons/mob/simple/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
 		if(handcuffed.blocks_emissive != EMISSIVE_BLOCK_NONE)
 			handcuff_overlay.overlays += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, src, alpha = handcuff_overlay.alpha)
-
+		apply_height(handcuff_overlay, LOWER_BODY) // low hanging
 		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
 		apply_overlay(HANDCUFF_LAYER)
 
@@ -390,21 +357,21 @@
 /// Overlays for the worn overlay so you can overlay while you overlay
 /// eg: ammo counters, primed grenade flashing, etc.
 /// "icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
-/obj/item/proc/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
+/obj/item/proc/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/list)
 
 	. = list()
 	if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 		. += emissive_blocker(standing.icon, standing.icon_state, src)
-	SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAYS, ., standing, isinhands, icon_file)
+	SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAYS, ., standing, isinhands, icon_file, bodyshape)
 
 /// worn_overlays to use when you'd want to use KEEP_APART. Don't use KEEP_APART neither there nor here, as it would break floating overlays
-/obj/item/proc/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file)
+/obj/item/proc/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file, bodyshape = NONE)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/list)
 	. = list()
-	SEND_SIGNAL(src, COMSIG_ITEM_GET_SEPARATE_WORN_OVERLAYS, ., standing, draw_target, isinhands, icon_file)
+	SEND_SIGNAL(src, COMSIG_ITEM_GET_SEPARATE_WORN_OVERLAYS, ., standing, draw_target, isinhands, icon_file, bodyshape)
 
 ///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
 ///Returns an integer representing the number of limbs that were updated.
@@ -491,10 +458,14 @@
 	if(is_invisible)
 		. += "invisible"
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-		if(!overlay.can_draw_on_bodypart(src, owner, is_husked))
-			continue
-		. += overlay.generate_icon_cache(src)
-	if(ishuman(owner))
+		if(overlay.can_draw_on_bodypart(src, owner))
+			. += overlay.icon_render_key(src)
+	for(var/datum/bodypart_texture/texture as anything in bodypart_textures)
+		if(texture.can_texture_bodypart(src))
+			. += texture.icon_render_key()
+	if(isdummy(owner)) // dummies always cache as default height because they have optimizations
+		. += "[/mob/living/carbon/human::mob_height]"
+	else if(ishuman(owner)) // otherwise cache height because we apply height filters to bodypart images
 		var/mob/living/carbon/human/human_owner = owner
 		. += "[human_owner.mob_height]"
 	SEND_SIGNAL(src, COMSIG_BODYPART_GENERATE_ICON_KEY, .)
@@ -518,12 +489,13 @@
 	. += body_zone
 	if(is_invisible)
 		. += "invisible"
-	. += "[LAZYLEN(blood_dna_info) ? get_color_from_blood_list(blood_dna_info) : BLOOD_COLOR_RED]"
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-		if(!overlay.can_draw_on_bodypart(src, owner, TRUE))
-			continue
-		. += overlay.generate_icon_cache(src)
-	if(ishuman(owner))
+		if(overlay.can_draw_on_bodypart(src, owner))
+			. += overlay.icon_render_key(src)
+	. += "[LAZYLEN(blood_dna_info) ? get_color_from_blood_list(blood_dna_info) : BLOOD_COLOR_RED]"
+	if(isdummy(owner)) // dummies always cache as default height because they have optimizations
+		. += "[/mob/living/carbon/human::mob_height]"
+	else if(ishuman(owner)) // otherwise cache height because we apply height filters to bodypart images
 		var/mob/living/carbon/human/human_owner = owner
 		. += "[human_owner.mob_height]"
 	return .

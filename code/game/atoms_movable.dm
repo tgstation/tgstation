@@ -113,6 +113,12 @@
 	/// The pitch adjustment that this movable uses when speaking.
 	var/pitch = 0
 
+	/// The base set of blips to use for blip calculation.
+	var/blip_base = "male"
+
+	/// The blip variant to use for blip calculation.
+	var/blip_number = "1"
+
 	/// Datum that keeps all data related to zero-g drifting and handles related code/comsigs
 	var/datum/drift_handler/drift_handler
 
@@ -950,7 +956,7 @@
 	if(!bumped_atom)
 		CRASH("Bump was called with no argument.")
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, bumped_atom) & COMPONENT_INTERCEPT_BUMPED)
-		return
+		return TRUE
 	. = ..()
 	if(!QDELETED(throwing))
 		throwing.finalize(hit = TRUE, target = bumped_atom)
@@ -1598,6 +1604,10 @@
 /atom/movable/proc/has_language(language, flags_to_check)
 	return get_language_holder().has_language(language, flags_to_check)
 
+/// Checks if atom has the language. If spoken is true, only checks if atom can speak the language.
+/atom/movable/proc/has_partial_language(language)
+	return get_language_holder().has_partial_language(language)
+
 /// Checks if atom can speak the language.
 /atom/movable/proc/can_speak_language(language)
 	return get_language_holder().can_speak_language(language)
@@ -1622,6 +1632,10 @@
 /// Gets a random spoken language, useful for forced speech and such.
 /atom/movable/proc/get_random_spoken_language()
 	return get_language_holder().get_random_spoken_language()
+
+/// Gets a list of all understood languages, excluding any blocked languages
+/atom/movable/proc/get_understood_languages() as /list
+	return get_language_holder().get_understood_languages() || list()
 
 /// Copies all languages into the supplied atom/language holder. Source should be overridden when you
 /// do not want the language overwritten by later atom updates or want to avoid blocked languages.
@@ -1738,6 +1752,8 @@
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_PARTICLES, "Edit Particles")
 	VV_DROPDOWN_OPTION(VV_HK_DEADCHAT_PLAYS, "Start/Stop Deadchat Plays")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
+	if(SStts.tts_enabled)
+		VV_DROPDOWN_OPTION(VV_HK_SET_TTS_VOICE, "Modify TTS Voice")
 
 /atom/movable/vv_do_topic(list/href_list)
 	. = ..()
@@ -1793,6 +1809,14 @@
 		to_chat(usr, span_notice("Deadchat now control [src]."))
 		log_admin("[key_name(usr)] has added deadchat control to [src]")
 		message_admins(span_notice("[key_name(usr)] has added deadchat control to [src]"))
+
+	if(href_list[VV_HK_SET_TTS_VOICE])
+		var/chosen_voice = tgui_input_list(usr, "Choose a voice to use.", "Choose a voice.", SStts.available_speakers)
+		if(!chosen_voice)
+			return
+		voice = chosen_voice
+		log_admin("[key_name(usr)] has set [src]'s voice as [chosen_voice].")
+		message_admins(span_notice("[key_name(usr)] has set [src]'s voice as [chosen_voice]."))
 
 /**
 * A wrapper for setDir that should only be able to fail by living mobs.

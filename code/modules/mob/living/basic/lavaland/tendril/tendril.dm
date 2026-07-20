@@ -13,11 +13,11 @@ GLOBAL_LIST_INIT(tendrils, list())
 	pixel_w = -8
 	base_pixel_w = -8
 	status_flags = NONE
-	mob_biotypes = MOB_ORGANIC | MOB_SKELETAL | MOB_MINING
+	mob_biotypes = MOB_ORGANIC | MOB_SKELETAL | MOB_MINING | MOB_SPECIAL
 	basic_mob_flags = DEL_ON_DEATH | IMMUNE_TO_FISTS
 	mob_size = MOB_SIZE_HUGE
-	maxHealth = 1200
-	health = 1200
+	maxHealth = 800
+	health = 800
 
 	friendly_verb_continuous = "flails at"
 	friendly_verb_simple = "flail at"
@@ -43,16 +43,17 @@ GLOBAL_LIST_INIT(tendrils, list())
 	var/datum/looping_sound/heartbeat/soundloop
 	/// Melee attack ability to used in retaliation to melee strikes and whenever it manages to grab someone
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_melee/tendril_melee
+	/// List of all necropolis turfs we've generated -> their original types for cleanup once we are killed
+	var/list/infected_turfs = list()
 
 /mob/living/basic/mining/tendril/Initialize(mapload)
 	. = ..()
 	GLOB.tendrils += src
-	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/death_drops, /obj/structure/closet/crate/necropolis/tendril)
 	AddComponent(/datum/component/ai_target_timer)
 	AddComponent(/datum/component/gps, "Eerie Signal")
 	AddComponent(/datum/component/basic_mob_attack_telegraph, display_telegraph_overlay = FALSE, telegraph_duration = 0.4 SECONDS)
-	AddComponent(/datum/component/regenerator, regeneration_delay = 30 SECONDS, brute_per_second = 20)
+	AddComponent(/datum/component/regenerator, regeneration_delay = 30 SECONDS, brute_per_second = 20, outline_colour = COLOR_CULT_RED)
 	add_traits(list(TRAIT_BACKSTAB_IMMUNE, TRAIT_IMMOBILIZED), INNATE_TRAIT)
 
 	var/static/list/abilities = list(
@@ -74,7 +75,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 
 	var/turf/our_turf = get_turf(src)
 	for (var/turf/rock in range(4, src))
-		var/dist = sqrt((rock.x - our_turf.x) ** 2 + (rock.y - our_turf.y) ** 2)
+		var/dist = get_dist_euclidean(rock, our_turf)
 		if (dist > 4.5)
 			continue
 
@@ -82,11 +83,13 @@ GLOBAL_LIST_INIT(tendrils, list())
 			rock.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
 
 		if (istype(rock, /turf/open/misc/asteroid) && prob(100 / sqrt(max(1, dist))))
+			infected_turfs[rock] = rock.type
 			rock.ChangeTurf(/turf/open/indestructible/necropolis, null, CHANGETURF_IGNORE_AIR)
 
 /mob/living/basic/mining/tendril/Destroy()
 	GLOB.tendrils -= src
 	QDEL_NULL(soundloop)
+	infected_turfs.Cut()
 
 	if(!SSachievements.achievements_enabled || (flags_1 & ADMIN_SPAWNED_1))
 		return ..()
@@ -98,6 +101,17 @@ GLOBAL_LIST_INIT(tendrils, list())
 		if (!length(GLOB.tendrils))
 			killer.client.give_award(/datum/award/achievement/boss/tendril_exterminator, killer)
 
+	return ..()
+
+/mob/living/basic/mining/tendril/death(gibbed)
+	var/turf/our_turf = get_turf(src)
+	playsound(our_turf, 'sound/effects/tendril_destroyed.ogg', 200, FALSE, 50, TRUE, TRUE)
+	// Change our infected turfs back into regular ones, but only if they haven't been already altered
+	for (var/turf/open/indestructible/necropolis/infected_turf in infected_turfs)
+		var/dist = get_dist_euclidean(our_turf, infected_turf)
+		if (dist > 4.5) // We got moved?
+			continue
+		addtimer(CALLBACK(infected_turf, TYPE_PROC_REF(/turf, ChangeTurf), infected_turfs[infected_turf], null, CHANGETURF_IGNORE_AIR), round(5 - dist, 0.5) * 1 SECONDS)
 	return ..()
 
 /mob/living/basic/mining/tendril/update_overlays()
@@ -118,7 +132,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 		return
 
 	var/beat_rate = HEARTBEAT_NORMAL
-	if (ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+	if (ai_controller?.blackboard[BB_CURRENT_TARGET])
 		beat_rate = round(HEARTBEAT_FRANTIC + health / maxHealth * (HEARTBEAT_FAST - HEARTBEAT_FRANTIC), 0.05 SECONDS)
 
 	if (beat_rate != soundloop.mid_length)

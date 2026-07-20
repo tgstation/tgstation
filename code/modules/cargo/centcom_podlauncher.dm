@@ -715,10 +715,8 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 /datum/centcom_podlauncher/proc/launch(turf/target_turf) //Game time started
 	if (isnull(target_turf))
 		return
-	var/obj/structure/closet/supplypod/centcompod/toLaunch = duplicate_object(temp_pod) //Duplicate the temp_pod (which we have been varediting or configuring with the UI) and store the result
+	var/obj/structure/closet/supplypod/centcompod/toLaunch = duplicate_object(temp_pod, GLOB.areas_by_type[/area/centcom/central_command_areas/supplypod/supplypod_temp_holding]) //Duplicate the temp_pod (which we have been varediting or configuring with the UI) and store the result
 	toLaunch.update_appearance()//we update_appearance() here so that the door doesnt "flicker on" right after it lands
-	var/shippingLane = GLOB.areas_by_type[/area/centcom/central_command_areas/supplypod/supplypod_temp_holding]
-	toLaunch.forceMove(shippingLane)
 	if (launchClone) //We arent launching the actual items from the bay, rather we are creating clones and launching those
 		if(launchRandomItem)
 			var/launch_candidate = pick_n_take(launchList)

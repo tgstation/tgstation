@@ -47,14 +47,12 @@
 
 /obj/item/organ/heart/Remove(mob/living/carbon/heartless, special, movement_flags)
 	. = ..()
-	if(!special)
-		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 12 SECONDS)
+	if(!special && !QDELETED(src))
+		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 12 SECONDS, TIMER_DELETE_ME)
 	beat = BEAT_NONE
 	owner?.stop_sound_channel(CHANNEL_HEARTBEAT)
 
 /obj/item/organ/heart/proc/stop_if_unowned()
-	if(QDELETED(src))
-		return
 	if(IS_ROBOTIC_ORGAN(src))
 		return
 	if(isnull(owner))
@@ -109,7 +107,7 @@
 /obj/item/organ/heart/proc/is_beating()
 	return beating
 
-/obj/item/organ/heart/get_status_text(advanced, add_tooltips, colored)
+/obj/item/organ/heart/get_status_text(scanpower, add_tooltips, colored)
 	if(owner.has_status_effect(/datum/status_effect/heart_attack))
 		return conditional_tooltip("<font color='#cc3333'>Myocardial Infarction</font>", "Apply defibrillation immediately. Similar electric shocks may work in emergencies.", add_tooltips)
 	if((!beating && !(organ_flags & ORGAN_FAILING) && owner.needs_heart() && owner.stat != DEAD))
@@ -213,6 +211,7 @@
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.75 //This also hits defib timer, so a bit higher than its less important counterparts
 	failing_desc = "seems to be broken."
 	beat_noise = "a steady fsssh of hydraulics"
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	/// Whether or not we have a stabilization available. This prevents our owner from entering softcrit for an amount of time.
 	var/stabilization_available = FALSE
 	/// How long our stabilization lasts for.
@@ -300,6 +299,7 @@
 	toxification_probability = 0
 	bleed_prevention = TRUE
 	emp_vulnerability = 20
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/organ/heart/cybernetic/surplus
 	name = "surplus prosthetic heart"

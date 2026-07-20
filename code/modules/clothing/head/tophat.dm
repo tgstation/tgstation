@@ -44,5 +44,6 @@
 	throwforce = 0
 	resistance_flags = FIRE_PROOF
 	dog_fashion = null
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3.6)
 
 #undef RABBIT_CD_TIME

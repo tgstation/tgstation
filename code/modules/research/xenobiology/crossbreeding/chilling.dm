@@ -113,7 +113,7 @@ Chilling extracts:
 		var/datum/gas_mixture/G = T.air
 		if(istype(G))
 			G.assert_gas(/datum/gas/plasma)
-			G.gases[/datum/gas/plasma][MOLES] = 0
+			G.moles[/datum/gas/plasma] = 0
 			filtered = TRUE
 			G.garbage_collect()
 			T.air_update_turf(FALSE, FALSE)

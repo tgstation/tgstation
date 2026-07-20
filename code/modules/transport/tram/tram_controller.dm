@@ -65,6 +65,9 @@
 	///previous trams that have been destroyed
 	var/list/tram_history
 
+	///cooldown on tram announcement system
+	COOLDOWN_DECLARE(announce_cooldown)
+
 /datum/tram_mfg_info
 	///serial number of this tram (what round ID it first appeared in)
 	var/serial_number
@@ -270,7 +273,7 @@
 		set_status_code(EMERGENCY_STOP, FALSE)
 		playsound(paired_cabinet, 'sound/machines/synth/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
-
+	nav_beacon.tram_loop.start()
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
 		if(transport_module.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
 			return //we don't care to undo cover_locked controls, though, as that will resolve itself
@@ -349,10 +352,22 @@
 		else
 			recovery_activate_count = max(recovery_activate_count - 1, 0)
 
+		if(travel_remaining < 39 && (COOLDOWN_FINISHED(src, announce_cooldown)))
+			make_announcement("The next station is: [destination_platform].")
+			COOLDOWN_START(src, announce_cooldown, 4 SECONDS)
+
 		scheduled_move = world.time + internal_movement_delay
 
 /datum/transport_controller/linear/tram/proc/set_tram_speed(new_speed)
 	internal_movement_delay = round(clamp(50 / new_speed, 0.5, 5), 0.1)
+
+/datum/transport_controller/linear/tram/proc/make_announcement(broadcast)
+	if(SStts.tts_enabled)
+		nav_beacon.voice = SStts.tram_voice
+	else
+		playsound(nav_beacon, 'sound/machines/tram/info_chime.ogg', 100, vary = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 1.4)
+
+	nav_beacon.say(broadcast)
 
 /**
  * Tram stops normally, performs post-trip actions and updates the tram registration.
@@ -360,13 +375,16 @@
 /datum/transport_controller/linear/tram/proc/normal_stop()
 	cycle_doors(CYCLE_OPEN)
 	log_transport("TC: [specific_transport_id] trip completed. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
+	nav_beacon.tram_loop.stop()
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(platform_arrival_jingle)), 2.5 SECONDS)
 	if((controller_status & SYSTEM_FAULT) && (nav_beacon.loc == destination_platform.loc)) //position matches between controller and tram, we're back on track
 		set_status_code(SYSTEM_FAULT, FALSE)
 		playsound(paired_cabinet, 'sound/machines/synth/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
 		log_transport("TC: [specific_transport_id] position data successfully reset.")
 	idle_platform = destination_platform
+
 	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
 	current_speed = 0
@@ -379,6 +397,7 @@
 /datum/transport_controller/linear/tram/proc/degraded_stop()
 	crash_fx()
 	log_transport("TC: [specific_transport_id] trip completed with a degraded status. Info: [TC_TS_STATUS] nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
+	nav_beacon.tram_loop.stop()
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
 	if(controller_status & SYSTEM_FAULT)
 		set_status_code(SYSTEM_FAULT, FALSE)
@@ -418,7 +437,7 @@
 		var/throw_direction = travel_direction
 		for(var/obj/structure/transport/linear/tram/module in transport_modules)
 			module.estop_throw(throw_direction)
-
+	nav_beacon.tram_loop.stop()
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(cycle_doors), CYCLE_OPEN), 2 SECONDS)
 	idle_platform = null
@@ -711,6 +730,32 @@
 			stack_trace("Tram receieved invalid travel direction [travel_dir]. Cancelling dispatch.")
 
 	return FALSE
+
+/// Plays the arrival jingle associated with the platform
+/datum/transport_controller/linear/tram/proc/platform_arrival_jingle()
+	var/our_channel = SSsounds.random_available_channel()
+	var/sound/jingle = sound(
+		idle_platform.arrival_sound,
+		FALSE,
+		0,
+		our_channel,
+		60
+	)
+	var/list/hearers = playsound(idle_platform, jingle, 60, FALSE, 0, extrarange = 7)
+	new /datum/threed_sound(
+		new_parent = idle_platform,
+		new_sound = jingle,
+		current_listeners = hearers,
+		can_add_new_listeners = FALSE,
+		volume = 60,
+		sound_range = SOUND_RANGE - 3,
+		sound_length = 3 SECONDS,
+		channel = our_channel,
+		preference_volume = /datum/preference/numeric/volume/sound_instruments,
+		preference_signal = null,
+		falloff_exponent = SOUND_FALLOFF_EXPONENT,
+		falloff_distance = 5
+	)
 
 /**
  * Moves the tram when hit by an immovable rod

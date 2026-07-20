@@ -1913,7 +1913,7 @@
 /area/station/commons/vacant_room)
 "agH" = (
 /obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/holiday/bar_keg,
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
@@ -5539,15 +5539,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
-"aPm" = (
-/obj/structure/table/glass,
-/obj/machinery/fax{
-	name = "Chief Medical Officer's Fax Machine";
-	fax_name = "Chief Medical Officer's Office"
-	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/command/heads_quarters/cmo)
 "aPs" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
@@ -7550,12 +7541,6 @@
 	name = "Holodeck Projector Floor"
 	},
 /area/station/holodeck/rec_center)
-"bEz" = (
-/obj/structure/closet/crate/goldcrate,
-/obj/effect/turf_decal/bot_white/right,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/command/vault)
 "bEM" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
@@ -9455,6 +9440,12 @@
 	dir = 4
 	},
 /area/station/command/eva)
+"cgn" = (
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/fax/heads/cmo,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/cmo)
 "cgw" = (
 /obj/machinery/computer/operating{
 	dir = 8
@@ -14570,6 +14561,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
+"dSQ" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/machinery/fax/heads/ce,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/ce)
 "dSU" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark/smooth_edge{
@@ -17676,6 +17675,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningdock/oresilo)
+"fcm" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/table/wood,
+/obj/machinery/light/warm/directional/north,
+/obj/machinery/fax/heads/hop,
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/hop)
 "fdc" = (
 /obj/machinery/brm,
 /obj/machinery/conveyor{
@@ -20207,7 +20213,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "fYw" = (
-/obj/machinery/computer/upload/borg{
+/obj/machinery/computer/upload/borg/no_lock{
 	dir = 8
 	},
 /obj/machinery/status_display/ai/directional/east,
@@ -21785,6 +21791,15 @@
 /obj/effect/turf_decal/siding/thinplating/dark,
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"gCo" = (
+/obj/structure/table,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/structure/sign/calendar/directional/west,
+/obj/machinery/fax/heads/qm,
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/qm)
 "gCq" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -26194,6 +26209,11 @@
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/lower)
+"ilb" = (
+/obj/structure/table,
+/obj/item/radio/intercom/interrogation/outside,
+/turf/open/floor/iron/dark,
+/area/station/security/interrogation)
 "ild" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -26818,7 +26838,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/tram/mid)
 "ixC" = (
-/obj/machinery/computer/upload/ai{
+/obj/machinery/computer/upload/ai/no_lock{
 	dir = 8
 	},
 /obj/machinery/status_display/evac/directional/east,
@@ -30210,6 +30230,37 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
 /area/station/commons/lounge)
+"jER" = (
+/obj/structure/table,
+/obj/machinery/button/door/directional/south{
+	name = "Science Lockdown Toggle";
+	pixel_x = -6;
+	id = "Sciencelockdown";
+	req_access = list("research")
+	},
+/obj/machinery/button/door/directional/south{
+	name = "Research Lab Shutter Control";
+	pixel_x = 6;
+	id = "rndlab1";
+	req_access = list("research")
+	},
+/obj/machinery/button/door/directional/south{
+	name = "Xenobiology Containmenr Blast Door";
+	pixel_x = -6;
+	pixel_y = -34;
+	id = "xenobiomain";
+	req_access = list("xenobiology")
+	},
+/obj/machinery/button/door/directional/south{
+	name = "Test Chamber Blast Doors";
+	pixel_x = 6;
+	pixel_y = -34;
+	id = "misclab";
+	req_access = list("xenobiology")
+	},
+/obj/machinery/fax/heads/rd,
+/turf/open/floor/iron/cafeteria,
+/area/station/command/heads_quarters/rd)
 "jFh" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -31135,40 +31186,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/storage)
-"jXF" = (
-/obj/structure/table,
-/obj/machinery/fax{
-	name = "Research Director's Fax Machine";
-	fax_name = "Research Director's Office"
-	},
-/obj/machinery/button/door/directional/south{
-	name = "Science Lockdown Toggle";
-	pixel_x = -6;
-	id = "Sciencelockdown";
-	req_access = list("research")
-	},
-/obj/machinery/button/door/directional/south{
-	name = "Research Lab Shutter Control";
-	pixel_x = 6;
-	id = "rndlab1";
-	req_access = list("research")
-	},
-/obj/machinery/button/door/directional/south{
-	name = "Xenobiology Containmenr Blast Door";
-	pixel_x = -6;
-	pixel_y = -34;
-	id = "xenobiomain";
-	req_access = list("xenobiology")
-	},
-/obj/machinery/button/door/directional/south{
-	name = "Test Chamber Blast Doors";
-	pixel_x = 6;
-	pixel_y = -34;
-	id = "misclab";
-	req_access = list("xenobiology")
-	},
-/turf/open/floor/iron/cafeteria,
-/area/station/command/heads_quarters/rd)
 "jXG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -37251,7 +37268,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "lQz" = (
-/mob/living/simple_animal/bot/mulebot,
+/mob/living/basic/bot/mulebot,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	location = "QM #2";
@@ -41060,6 +41077,7 @@
 	},
 /obj/item/storage/box/syringes,
 /obj/structure/sign/clock/directional/north,
+/obj/item/storage/pill_bottle/sepsisillin,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "nlm" = (
@@ -42305,7 +42323,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "nIC" = (
-/mob/living/simple_animal/bot/mulebot,
+/mob/living/basic/bot/mulebot,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	location = "QM #6";
@@ -48524,7 +48542,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai/satellite/interior)
 "pXq" = (
-/mob/living/simple_animal/bot/mulebot,
+/mob/living/basic/bot/mulebot,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	location = "QM #3";
@@ -51833,6 +51851,12 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
+"rgh" = (
+/obj/structure/closet/crate/goldcrate/stocked,
+/obj/effect/turf_decal/bot_white/right,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/command/vault)
 "rgo" = (
 /obj/machinery/bouldertech/refinery{
 	dir = 4
@@ -53129,7 +53153,7 @@
 /turf/closed/wall,
 /area/station/engineering/atmospherics_engine)
 "rCs" = (
-/mob/living/simple_animal/bot/mulebot,
+/mob/living/basic/bot/mulebot,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	location = "QM #1";
@@ -55616,17 +55640,6 @@
 /obj/item/reagent_containers/syringe,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
-"suM" = (
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/obj/machinery/fax{
-	name = "Chief Engineer's Fax Machine";
-	fax_name = "Chief Engineer's Office"
-	},
-/turf/open/floor/iron/dark,
-/area/station/command/heads_quarters/ce)
 "suR" = (
 /obj/structure/table/wood,
 /obj/structure/window/reinforced/spawner/directional/south{
@@ -57854,6 +57867,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
+"tli" = (
+/obj/structure/table/wood,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
+/obj/machinery/fax/heads/hos,
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/hos)
 "tlP" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -58014,15 +58033,6 @@
 /obj/machinery/light/small/dim/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/left)
-"toY" = (
-/obj/structure/table/wood,
-/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
-/obj/machinery/fax{
-	name = "Head of Security's Fax Machine";
-	fax_name = "Head of Security's Office"
-	},
-/turf/open/floor/carpet,
-/area/station/command/heads_quarters/hos)
 "tpm" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -59375,6 +59385,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
+"tMf" = (
+/obj/item/radio/intercom/interrogation/inside/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/security/interrogation)
 "tMg" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -67334,18 +67348,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
-"wuC" = (
-/obj/structure/table,
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 8
-	},
-/obj/structure/sign/calendar/directional/west,
-/obj/machinery/fax{
-	name = "Quartermaster's Fax Machine";
-	fax_name = "Quartermaster's Office"
-	},
-/turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
 "wuE" = (
 /obj/structure/railing/corner{
 	dir = 4
@@ -67907,6 +67909,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/explab)
+"wDA" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/table/wood,
+/obj/item/radio/intercom/directional/east,
+/obj/machinery/fax/heads/captain,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/captain)
 "wDB" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -68255,16 +68264,6 @@
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
-"wKk" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/table/wood,
-/obj/item/radio/intercom/directional/east,
-/obj/machinery/fax{
-	name = "Captain's Fax Machine";
-	fax_name = "Captain's Office"
-	},
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/captain)
 "wKm" = (
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/trimline/red/filled/corner,
@@ -70868,16 +70867,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lower)
-"xNl" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/table/wood,
-/obj/machinery/fax{
-	name = "Head of Personnel's Fax Machine";
-	fax_name = "Head of Personnel's Office"
-	},
-/obj/machinery/light/warm/directional/north,
-/turf/open/floor/carpet,
-/area/station/command/heads_quarters/hop)
 "xNm" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /turf/open/floor/iron,
@@ -89880,7 +89869,7 @@ rUR
 rUR
 aaa
 rUR
-bEz
+rgh
 dAL
 lQM
 abM
@@ -104835,7 +104824,7 @@ wqY
 tMP
 cHW
 qoX
-suM
+dSQ
 sHH
 sHH
 sHH
@@ -152596,7 +152585,7 @@ jAi
 mSx
 tHv
 wHT
-xNl
+fcm
 dqm
 bZZ
 wHT
@@ -158724,7 +158713,7 @@ aaa
 rmB
 pxf
 bWb
-toY
+tli
 wpM
 auP
 auY
@@ -160020,12 +160009,12 @@ uIt
 uIt
 uIt
 jKq
-pTr
+tMf
 drq
 ohd
 gWD
 iRZ
-ohd
+ilb
 avG
 gwR
 tFJ
@@ -160044,7 +160033,7 @@ aVj
 ltw
 sWY
 hhJ
-wKk
+wDA
 phl
 sSx
 xJH
@@ -167543,7 +167532,7 @@ kZC
 mBq
 dsw
 aOJ
-aPm
+cgn
 wWa
 qIc
 dQI
@@ -181377,7 +181366,7 @@ ePw
 dAx
 oum
 nAH
-wuC
+gCo
 kCM
 whL
 eKt
@@ -182960,7 +182949,7 @@ rGj
 tes
 rGj
 wcB
-jXF
+jER
 pbH
 mAL
 nKU

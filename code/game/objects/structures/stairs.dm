@@ -4,6 +4,8 @@
 
 /// Range within which stair indicators will appear for approaching mobs
 #define STAIR_INDICATOR_RANGE 3
+/// Minimum tile spacing between stair minimap blips
+#define STAIR_BLIP_MIN_DISTANCE 2
 
 // dir determines the direction of travel to go upwards
 // stairs require /turf/open/openspace as the tile above them to work, unless your stairs have 'force_open_above' set to TRUE
@@ -27,6 +29,8 @@
 	VAR_FINAL/turf/directly_above
 	/// If TRUE, we have left/middle/right sprites.
 	var/has_merged_sprites = TRUE
+	/// Current atoms used as this stair's minimap blip targets.
+	var/list/minimap_blip_targets
 	/// Lazyassoc list of weakef to mob viewing stair indicators to their images
 	VAR_PRIVATE/list/mob_to_image
 
@@ -63,6 +67,7 @@
 		force_open_above()
 		build_signal_listener()
 	update_surrounding()
+	update_minimap_blip()
 
 	var/static/list/exit_connections = list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit_stairs),
@@ -78,6 +83,7 @@
 
 
 /obj/structure/stairs/Destroy()
+	clear_minimap_blips()
 	if(directly_above)
 		UnregisterSignal(directly_above, COMSIG_TURF_MULTIZ_NEW)
 		directly_above = null
@@ -104,6 +110,47 @@
 
 	for(var/obj/structure/stairs/stair in get_step(src, turn(dir, -90)))
 		stair.update_appearance()
+	update_minimap_blip()
+
+/obj/structure/stairs/proc/update_minimap_blip()
+	var/bottom_state = isTerminator() ? "stairs_up" : "stairs_down"
+	var/top_state = (bottom_state == "stairs_up") ? "stairs_down" : "stairs_up"
+	var/turf/current_turf = get_turf(src)
+
+	clear_minimap_blips()
+	if(isnull(current_turf))
+		return
+
+	add_minimap_blip_if_valid(current_turf, bottom_state)
+	add_minimap_blip_if_valid(get_step_multiz(current_turf, UP), top_state)
+
+/obj/structure/stairs/proc/clear_minimap_blips()
+	if(!islist(minimap_blip_targets))
+		return
+	for(var/atom/target as anything in minimap_blip_targets)
+		remove_minimap_blip(MINIMAP_STAIR_BLIP, target)
+	LAZYCLEARLIST(minimap_blip_targets)
+
+/obj/structure/stairs/proc/add_minimap_blip_if_valid(atom/target, state)
+	if(isnull(target))
+		return
+	if(!should_place_minimap_blip(target))
+		return
+
+	var/atom/movable/screen/minimap_element/blip/blip = get_minimap_blip(MINIMAP_STAIR_BLIP, target)
+	if(!isnull(blip))
+		blip.icon_state = state
+	else
+		add_minimap_blip(target, MINIMAP_STAIR_BLIP, state)
+	LAZYADD(minimap_blip_targets, target)
+
+/obj/structure/stairs/proc/should_place_minimap_blip(atom/target)
+	var/turf/target_turf = get_turf(target)
+	if(isnull(target_turf))
+		return FALSE
+	if(length(get_minimap_blips_in_area(MINIMAP_STAIR_BLIP, target_turf, STAIR_BLIP_MIN_DISTANCE)))
+		return FALSE
+	return TRUE
 
 /obj/structure/stairs/update_icon_state()
 	. = ..()
@@ -374,39 +421,50 @@
 /obj/structure/stairs_frame/atom_deconstruct(disassembled = TRUE)
 	new frame_stack(get_turf(src), frame_stack_amount)
 
-/obj/structure/stairs_frame/attackby(obj/item/attacked_by, mob/user, list/modifiers, list/attack_modifiers)
-	if(!isstack(attacked_by))
-		return ..()
+/obj/structure/stairs_frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isstack(tool))
+		return NONE
 	if(!anchored)
-		user.balloon_alert(user, "secure frame first")
-		return TRUE
-	var/obj/item/stack/material = attacked_by
+		user.balloon_alert(user, "secure the frame first!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/material = tool
 	if(material.stairs_type)
 		if(material.get_amount() < 10)
 			to_chat(user, span_warning("You need ten [material.name] sheets to do this!"))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		if(locate(/obj/structure/stairs) in loc)
 			to_chat(user, span_warning("There's already stairs built here!"))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		to_chat(user, span_notice("You start adding [material] to [src]..."))
 		if(!do_after(user, 10 SECONDS, target = src) || !material.use(10) || (locate(/obj/structure/table) in loc))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		make_new_stairs(material.stairs_type)
-	else if(istype(material, /obj/item/stack/sheet))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(material, /obj/item/stack/sheet))
 		if(material.get_amount() < 10)
 			to_chat(user, span_warning("You need ten sheets to do this!"))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		if(locate(/obj/structure/stairs) in loc)
 			to_chat(user, span_warning("There's already stairs built here!"))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		to_chat(user, span_notice("You start adding [material] to [src]..."))
 		if(!do_after(user, 10 SECONDS, target = src) || !material.use(10) || (locate(/obj/structure/table) in loc))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		var/list/material_list = list()
 		if(material.material_type)
 			material_list[material.material_type] = SHEET_MATERIAL_AMOUNT * 10
 		make_new_stairs(/obj/structure/stairs/material, material_list)
-	return TRUE
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/stairs_frame/proc/make_new_stairs(stairs_type, custom_materials)
 	var/obj/structure/stairs/new_stairs = new stairs_type(loc)
@@ -420,3 +478,4 @@
 #undef STAIR_TERMINATOR_YES
 
 #undef STAIR_INDICATOR_RANGE
+#undef STAIR_BLIP_MIN_DISTANCE

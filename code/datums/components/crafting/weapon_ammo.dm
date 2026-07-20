@@ -25,8 +25,9 @@
 	name = "jagged iron rod"
 	result = /obj/item/ammo_casing/rebar/syndie
 	reqs = list(
-		/obj/item/stack/rods = 1,
+		/obj/item/stack/sheet/plasteel = 1,
 	)
+	result_amount = 2
 	tool_behaviors = list(TOOL_WIRECUTTER)
 	time = 0.1 SECONDS
 	category = CAT_WEAPON_AMMO
@@ -112,6 +113,7 @@
 	)
 	category = CAT_WEAPON_AMMO
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+	unit_test_spawn_extras = list(/obj/item/stack/sheet/iron = 5) //the sheet type is abstract
 
 /datum/crafting_recipe/arrow
 	name = "Arrow"

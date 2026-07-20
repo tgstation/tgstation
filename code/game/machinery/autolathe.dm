@@ -210,11 +210,10 @@
 /obj/machinery/autolathe/ui_data(mob/user)
 	var/list/data = list()
 
-	data["materials"] = list()
+	data["materials"] = materials.ui_data()
 	data["materialtotal"] = materials.total_amount()
 	data["materialsmax"] = materials.max_amount
 	data["active"] = busy
-	data["materials"] = materials.ui_data()
 
 	return data
 
@@ -222,6 +221,27 @@
 	. = ..()
 	if(.)
 		return
+
+	if (action == "eject")
+		var/datum/material/material = locate(params["ref"])
+		if(!istype(material))
+			return
+
+		var/amount = params["amount"]
+		if(isnull(amount))
+			return
+
+		amount = text2num(amount)
+		if(isnull(amount))
+			return
+
+		//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benefit from it
+		if(!directly_use_energy(ROUND_UP((amount / MAX_STACK_SIZE) * 0.4 * initial(active_power_usage))))
+			say("No power to dispense sheets")
+			return
+
+		materials.retrieve_stack(amount, material)
+		return TRUE
 
 	//sanity checks to start printing
 	if(action != "make")
@@ -306,7 +326,7 @@
 		materials_needed[material] += amount_needed
 
 	//checks for available materials
-	var/material_cost_coefficient = ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency
+	var/material_cost_coefficient = (ispath(design.build_path, /obj/item/stack) || design.fixed_cost_efficiency) ? 1 : creation_efficiency
 	if(!materials.has_materials(materials_needed, material_cost_coefficient, build_count))
 		say("Not enough materials to begin production.")
 		return
@@ -389,22 +409,22 @@
 	materials.use_materials(materials_needed, material_cost_coefficient, is_stack ? items_remaining : 1)
 
 	var/atom/movable/created
+	var/number_to_make = 1
 	if(is_stack)
 		var/obj/item/stack/stack_item = initial(design.build_path)
 		var/max_stack_amount = initial(stack_item.max_amount)
-		var/number_to_make = (initial(stack_item.amount) * items_remaining)
+		number_to_make = (initial(stack_item.amount) * items_remaining)
 		while(number_to_make > max_stack_amount)
 			created = design.create_result(target, materials_needed, amount = max_stack_amount)
 			if(isitem(created))
 				created.pixel_x = created.base_pixel_x + rand(-6, 6)
 				created.pixel_y = created.base_pixel_y + rand(-6, 6)
 			number_to_make -= max_stack_amount
-		created = design.create_result(target, materials_needed, amount = number_to_make)
-	else
-		created = design.create_result(target, materials_needed)
-		if (length(slots_chosen))
-			created.set_material_slots(slots_chosen)
-		split_materials_uniformly(materials_needed, material_cost_coefficient, created)
+	created = design.create_result(target, materials_needed, amount = number_to_make)
+	if (length(slots_chosen))
+		created.set_material_slots(slots_chosen)
+	if(design.inherit_materials != DESIGN_DONT_INHERIT_MATS)
+		design.transfer_materials(materials_needed, material_cost_coefficient, created)
 
 	if(isitem(created))
 		created.pixel_x = created.base_pixel_x + rand(-6, 6)

@@ -14,6 +14,7 @@
 	incompatible_modules = list(/obj/item/mod/module/stealth)
 	cooldown_time = 5 SECONDS
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 5)
 	/// Whether or not the cloak turns off on bumping.
 	var/bumpoff = TRUE
 	/// The alpha applied when the cloak is on.
@@ -547,7 +548,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 //BOTS, overloads them and causes a explosion
-/mob/living/simple_animal/bot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+/mob/living/basic/bot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	to_chat(src, span_boldwarning("Your circutry suddenly begins heating up!"))
 	if(!do_after(ninja, 1.5 SECONDS, target = src, hidden = TRUE))
 		return COMPONENT_CANCEL_ATTACK_CHAIN

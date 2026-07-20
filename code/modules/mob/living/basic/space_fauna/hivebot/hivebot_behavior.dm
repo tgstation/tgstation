@@ -1,35 +1,17 @@
-/datum/ai_behavior/find_and_set/hive_partner
+/// Moves to the hive partner in BB_HIVE_PARTNER, relays a message, then clears the key.
+/// The partner is found by a separate acquire_target leaf in the controller tree.
+/datum/bt_node/subtree/relay_to_hive_partner
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/hivebot/relay_to_hive_partner.bt.json"
 
-/datum/ai_behavior/find_and_set/hive_partner/search_tactic(datum/ai_controller/controller, locate_path, search_range = 10)
-	var/mob/living/living_pawn = controller.pawn
-	var/list/hive_partners = list()
-	for(var/mob/living/target in oview(search_range, living_pawn))
-		if(!istype(target, locate_path))
-			continue
-		if(target.stat == DEAD)
-			continue
-		hive_partners += target
-
-	if(length(hive_partners))
-		return pick(hive_partners)
-
-/// behavior that allow us to go communicate with other hivebots
-/datum/ai_behavior/relay_message
-	///length of the message we will relay
+/// Says a random binary string to a hive partner. Movement to the partner is handled
+/// in the tree via a move_to_target leaf; the target key is cleared by a clear_key leaf.
+/datum/bt_node/ai_behavior/relay_message
+	/// Blackboard key holding the hive partner to talk at.
+	var/target_key
+	/// Number of bits in the message we relay.
 	var/length_of_message = 4
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT| AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-
-/datum/ai_behavior/relay_message/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	var/mob/living/target = controller.blackboard[target_key]
-	// It stopped existing
-	if(QDELETED(target))
-		return FALSE
-	set_movement_target(controller, target)
-
-
-/datum/ai_behavior/relay_message/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/relay_message/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/target = controller.blackboard[target_key]
 	var/mob/living/living_pawn = controller.pawn
 
@@ -38,31 +20,13 @@
 	var/message_relayed = ""
 	for(var/i in 1 to length_of_message)
 		message_relayed += prob(50) ? "1" : "0"
-	living_pawn.say(message_relayed, forced = "AI Controller")
+	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/atom/movable, say), message_relayed, forced = "AI Controller")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/relay_message/finish_action(datum/ai_controller/controller, succeeded, target_key)
-	. = ..()
-	controller.clear_blackboard_key(target_key)
-
-/datum/ai_behavior/find_hunt_target/repair_machines
-
-/datum/ai_behavior/find_hunt_target/repair_machines/valid_dinner(mob/living/source, obj/machinery/repair_target, radius)
-	if(repair_target.get_integrity() >= repair_target.max_integrity)
-		return FALSE
-
-	return can_see(source, repair_target, radius)
-
-/datum/ai_behavior/hunt_target/repair_machines
+/// Repairs a damaged machine once in range. Finding the machine is a separate
+/// acquire_target leaf; movement is a move_to_target leaf.
+/datum/bt_node/ai_behavior/hunt_target/repair_machines
 	always_reset_target = TRUE
 
-/datum/ai_behavior/hunt_target/repair_machines/target_caught(mob/living/basic/hivebot/mechanic/hunter, obj/machinery/repair_target)
+/datum/bt_node/ai_behavior/hunt_target/repair_machines/target_caught(mob/living/basic/hivebot/mechanic/hunter, obj/machinery/repair_target)
 	hunter.repair_machine(repair_target)
-
-/datum/ai_behavior/basic_ranged_attack/hivebot
-	action_cooldown = 3 SECONDS
-	avoid_friendly_fire = TRUE
-
-/datum/ai_behavior/basic_ranged_attack/hivebot_rapid
-	action_cooldown = 1.5 SECONDS
-	avoid_friendly_fire = TRUE

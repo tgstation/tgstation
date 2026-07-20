@@ -90,7 +90,7 @@
  * tipper - the mob who tipped us
  */
 /mob/living/basic/cow/proc/after_cow_tipped(mob/living/carbon/tipper)
-	addtimer(CALLBACK(src, PROC_REF(set_tip_react_blackboard), tipper), rand(10 SECONDS, 20 SECONDS))
+		addtimer(CALLBACK(src, PROC_REF(set_tip_react_blackboard), tipper), rand(10 SECONDS, 20 SECONDS))
 
 /*
  * We've been waiting long enough, we're going to tell our AI to begin pleading.

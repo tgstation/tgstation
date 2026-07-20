@@ -2,6 +2,7 @@
 
 GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	/datum/strippable_item/parrot_headset,
+	/datum/strippable_item/hand/left,
 )))
 
 
@@ -44,9 +45,6 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	///Headset for Poly to yell at engineers :)
 	var/obj/item/radio/headset/ears = null
-
-	///Parrots are kleptomaniacs. This variable ... stores the item a parrot is holding.
-	var/obj/item/held_item = null
 
 	/// The blackboard key we use to store the string we're repeating
 	var/speech_blackboard_key = BB_PARROT_REPEAT_STRING
@@ -97,6 +95,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/strippable, GLOB.strippable_parrot_items)
 	AddElement(/datum/element/simple_flying)
+	AddElement(/datum/element/dextrous, can_throw = TRUE, hands_count = 1)
 	AddComponent(/datum/component/listen_and_repeat, desired_phrases = get_static_list_of_phrases(), blackboard_key = BB_PARROT_REPEAT_STRING)
 	AddComponent(/datum/component/tameable, food_types = edibles, tame_chance = 100, bonus_tame_chance = 0)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
@@ -110,15 +109,9 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	// should have cleaned these up on death, but let's be super safe in case that didn't happen
 	if(!QDELETED(ears))
 		QDEL_NULL(ears)
-	if(!QDELETED(held_item))
-		QDEL_NULL(held_item)
 	return ..()
 
 /mob/living/basic/parrot/death(gibbed)
-	if(held_item)
-		held_item.forceMove(drop_location())
-		held_item = null
-
 	if(ears)
 		ears.forceMove(drop_location())
 		ears = null
@@ -133,30 +126,27 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 /mob/living/basic/parrot/examine(mob/user)
 	. = ..()
+	var/obj/item/held_item = get_active_held_item()
 	. += "It appears to [isnull(held_item) ? "not be holding anything." : "be holding \a [held_item]."]"
 
 	if(stat != DEAD)
 		return
 
 	if(HAS_MIND_TRAIT(user, TRAIT_NAIVE))
-		. += pick(
+		. += span_notice(pick(
 			"It seems tired and shagged out after a long squawk.",
 			"It seems to be pining for the fjords.",
 			"It's resting. It's a beautiful bird. Lovely plumage.",
-		)
+		))
 	else
-		. += pick(
+		. += span_danger(pick(
 			"This is a late parrot.",
 			"This is an ex-parrot.",
 			"This parrot is no more.",
-		)
+		))
 
 /mob/living/basic/parrot/say_dead(message)
 	return // this is so flarped
-
-/mob/living/basic/parrot/get_status_tab_items()
-	. = ..()
-	. += "Held Item: [held_item]"
 
 /mob/living/basic/parrot/radio(message, list/message_mods = list(), list/spans, language) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
 	. = ..()
@@ -184,13 +174,11 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		return
 	icon_state = HAS_TRAIT(src, TRAIT_PARROT_PERCHED) ? icon_sit : icon_living
 
-/// Proc that we just use to see if we're rightclicking something for perch behavior or dropping the item we currently ahve
-/mob/living/basic/parrot/resolve_right_click_attack(atom/target, list/modifiers)
-	if(!start_perching(target))
-		return SECONDARY_ATTACK_CALL_NORMAL
-	if(!isnull(held_item))
-		drop_held_item(gently = TRUE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/// Proc that we just use to see if we're dragging onto stomething something for perch behavior or dropping the item we currently have
+/mob/living/basic/parrot/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	. = ..()
+	if(!start_perching(over))
+		balloon_alert(user, "not a perching spot!")
 
 /// Proc that handles sending the signal and returning a valid phrase to say. Will not do anything if we don't have a stat or if we're cliented.
 /// Will return either a string or null.
@@ -285,33 +273,34 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(.)
 		return
 
-	if(isitem(target) && steal_from_ground(target))
-		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
-
 	if(iscarbon(target) && steal_from_mob(target))
 		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /// Picks up an item from the ground and puts it in our claws. Returns TRUE if we picked it up, FALSE otherwise.
-/mob/living/basic/parrot/proc/steal_from_ground(obj/item/target)
-	if(!isnull(held_item))
-		balloon_alert(src, "already holding something!")
-		return FALSE
-
-	if(target.w_class > WEIGHT_CLASS_SMALL)
+/mob/living/basic/parrot/put_in_hand_check(obj/item/item_to_pick_up)
+	if(item_to_pick_up.w_class > WEIGHT_CLASS_SMALL)
 		balloon_alert(src, "too big to pick up!")
 		return FALSE
 
-	pick_up_item(target)
-	visible_message(
-		span_notice("[src] grabs [held_item]!"),
-		span_notice("You grab [held_item]!"),
-		span_hear("You hear the sounds of wings flapping furiously."),
-	)
+	return ..()
+
+/mob/living/basic/parrot/put_in_hand(obj/item/target, hand_index, forced = FALSE, ignore_anim = TRUE, visuals_only = FALSE)
+	if(istype(target, /obj/item/food/cracker))
+		consume_cracker(target)
+		qdel(target)
+		return
+
+	if(..())
+		visible_message(
+			span_notice("[src] grabs [target]!"),
+			span_notice("You grab [target]!"),
+			span_hear("You hear the sounds of wings flapping furiously."),
+		)
 	return TRUE
 
 /// Looks for an item that we can snatch and puts it in our claws. Returns TRUE if we picked it up, FALSE otherwise.
 /mob/living/basic/parrot/proc/steal_from_mob(mob/living/carbon/victim)
-	if(!isnull(held_item))
+	if(!isnull(get_active_held_item()))
 		balloon_alert(src, "already holding something!")
 		return FALSE
 
@@ -322,12 +311,12 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		if(!victim.temporarilyRemoveItemFromInventory(stealable))
 			continue
 
+		dropItemToGround(stealable)
 		visible_message(
-			span_notice("[src] grabs [held_item] out of [victim]'s hand!"),
-			span_notice("You snag [held_item] out of [victim]'s hand!"),
+			span_notice("[src] wrestles [stealable] out of [victim]'s hand!"),
+			span_notice("You wrestles [stealable] out of [victim]'s hand!"),
 			span_hear("You hear the sounds of wings flapping furiously."),
 		)
-		pick_up_item(stealable)
 		return TRUE
 
 	return FALSE
@@ -370,41 +359,24 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), message = return_value, forced = "parrot oneliner on attack")
 
-/// Handles picking up the item we're holding, done in its own proc because of a snowflake edge case we need to account for. No additional logic beyond that.
-/// Returns TRUE if we picked it up, FALSE otherwise.
-/mob/living/basic/parrot/proc/pick_up_item(obj/item/target)
-	if(istype(target, /obj/item/food/cracker))
-		consume_cracker(target)
-		qdel(target)
-		return
-
-	target.forceMove(src)
-	held_item = target
-
 /// Handles dropping items we're holding. Gently is a special modifier we can use for special interactions.
 /mob/living/basic/parrot/proc/drop_held_item(gently = TRUE)
-	if(isnull(held_item))
+	if(get_num_held_items() == 0)
 		balloon_alert(src, "nothing to drop!")
 		return
 
 	if(stat != CONSCIOUS) // don't gotta do shit
 		return
 
-	if(!gently && isgrenade(held_item))
-		var/obj/item/grenade/bomb = held_item
+	if(!gently && isgrenade(get_active_held_item()))
+		var/obj/item/grenade/bomb = get_active_held_item()
 		balloon_alert(src, "bombs away!") // you'll likely die too so we can get away with the `!` here
 		bomb.forceMove(drop_location())
 		bomb.detonate()
 		return
 
 	balloon_alert(src, "dropped item")
-	held_item.forceMove(drop_location())
-
-/mob/living/basic/parrot/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone != held_item)
-		return
-	held_item = null
+	drop_all_held_items(drop_location())
 
 /mob/living/basic/parrot/vv_edit_var(var_name, vval)
 	. = ..() // give admins an easier time when it comes to fucking with poly

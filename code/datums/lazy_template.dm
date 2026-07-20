@@ -81,6 +81,17 @@
 		var/turf/bottom_left = reservation.bottom_left_turfs[z_idx]
 		var/turf/top_right = reservation.top_right_turfs[z_idx]
 
+		// Make our turfs dead to atmos
+		// Cache for sonic speed
+		var/list/to_rebuild = SSair.adjacent_rebuild
+		for(var/turf/contained_turf as anything in block(bottom_left, top_right))
+			SSair.remove_from_active(contained_turf)
+			to_rebuild -= contained_turf
+			for(var/turf/sub_turf as anything in contained_turf.atmos_adjacent_turfs)
+				sub_turf.atmos_adjacent_turfs?.Remove(contained_turf)
+			contained_turf.atmos_adjacent_turfs?.Cut()
+			CHECK_TICK
+
 		load_map(
 			file(load_path),
 			bottom_left.x,
@@ -104,6 +115,10 @@
 				loaded_atom_movables |= thing
 
 	SSatoms.InitializeAtoms(loaded_areas + loaded_atom_movables + loaded_turfs)
+	for(var/turf/turf as anything in loaded_turfs)
+		CALCULATE_ADJACENT_TURFS(turf, NORMAL_TURF)
+		CHECK_TICK
+
 	SSlighting.setup_static_lighting_if_needed(loaded_turfs)
 	SSmachines.setup_template_powernets(loaded_cables)
 	SSair.setup_template_machinery(loaded_atmospherics)

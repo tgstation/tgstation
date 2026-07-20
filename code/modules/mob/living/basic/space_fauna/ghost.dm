@@ -94,18 +94,12 @@
 				name = "ghost of [pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
 
 /datum/ai_controller/basic_controller/ghost
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/ghost.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 
 /// Weaker variant of ghosts. Meant to be summoned in swarms via the ectoplasmic anomaly and associated ghost portal.
 /mob/living/basic/ghost/swarm

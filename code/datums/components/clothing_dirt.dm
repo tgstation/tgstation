@@ -89,7 +89,7 @@
 	dirt_overlay.color = dirt_color
 	overlays += dirt_overlay
 
-/datum/component/clothing_dirt/proc/on_separate_worn_overlays(obj/item/source, list/overlays, mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+/datum/component/clothing_dirt/proc/on_separate_worn_overlays(obj/item/source, list/overlays, mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file, bodyshape = NONE)
 	SIGNAL_HANDLER
 
 	if (isinhands || !dirtiness || !dirt_state || !(source.flags_cover & PEPPERPROOF))
@@ -127,7 +127,8 @@
 	apply_tint(TRUE)
 
 /datum/component/clothing_dirt/proc/is_protected(mob/living/carbon/wearer)
-	return wearer.head && wearer.head != parent && (wearer.head.flags_cover & PEPPERPROOF)
+	var/obj/item/head_cover = wearer.get_item_by_slot(ITEM_SLOT_HEAD)
+	return istype(head_cover) && head_cover != parent && (head_cover.flags_cover & PEPPERPROOF)
 
 /datum/component/clothing_dirt/proc/remove_tint(updates = TRUE)
 	if(!tint_applied)

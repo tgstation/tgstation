@@ -7,6 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	force = 7
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 	/// Multiplier that determines the speed at which this inducer works at.
 	var/power_transfer_multiplier = 1

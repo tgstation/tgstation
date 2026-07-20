@@ -16,7 +16,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_NECK
-	custom_materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*1.5)
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5)
 	custom_price = PAYCHECK_CREW * 2
 
 	/// Cooldown before we can take another picture.
@@ -127,15 +127,15 @@
 		if(loc != user)
 			to_chat(user, span_warning("You must be holding the camera to continue!"))
 			return FALSE
-		desired_x = tgui_input_number(user, "Set camera half width Aperture", "Zoom", picture_size_x, CAMERA_PICTURE_SIZE_HARD_LIMIT, 2)
+		desired_x = tgui_input_number(user, "Set camera half width Aperture", "Zoom", picture_size_x, CAMERA_PICTURE_SIZE_HARD_LIMIT, 1)
 		if(!desired_x || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_PAI) || loc != user)
 			return FALSE
-		desired_y = tgui_input_number(user, "Set camera half height Aperture", "Zoom", picture_size_y, CAMERA_PICTURE_SIZE_HARD_LIMIT, 2)
+		desired_y = tgui_input_number(user, "Set camera half height Aperture", "Zoom", picture_size_y, CAMERA_PICTURE_SIZE_HARD_LIMIT, 1)
 		if(!desired_y || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_PAI) || loc != user)
 			return FALSE
 
-	picture_size_x = clamp(desired_x, 2, CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	picture_size_y = clamp(desired_y, 2, CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	picture_size_x = clamp(desired_x, 1, CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	picture_size_y = clamp(desired_y, 1, CAMERA_PICTURE_SIZE_HARD_LIMIT)
 
 	if(user)
 		to_chat(user, span_notice("The dimensions of the picture will be [EXAMINE_HINT("[APERTURE_TO_METERS(picture_size_x)]x[APERTURE_TO_METERS(picture_size_y)]")]"))

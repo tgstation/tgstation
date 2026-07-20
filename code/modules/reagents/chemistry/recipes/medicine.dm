@@ -8,6 +8,7 @@
 	purity_min = 0.1
 	rate_up_lim = 35
 	reaction_tags = REACTION_TAG_HEALING | REACTION_TAG_EASY
+	thermic_constant = 50
 
 /datum/chemical_reaction/medicine/leporazine
 	results = list(/datum/reagent/medicine/leporazine = 2)

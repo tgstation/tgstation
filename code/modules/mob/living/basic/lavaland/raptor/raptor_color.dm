@@ -128,7 +128,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 // Purple raptors never "fully" grow up, and remain usable as backpacks
 /datum/raptor_color/purple/setup_adult(mob/living/basic/raptor/raptor)
-	raptor.can_be_held = TRUE
+	raptor.update_holdability(TRUE)
 	raptor.density = FALSE
 	raptor.move_resist = MOVE_RESIST_DEFAULT
 	raptor.held_w_class = WEIGHT_CLASS_BULKY
@@ -271,7 +271,8 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	// Raptors won't have the best of times keeping up tall humans or fatties up in the air
 	var/struggling = HAS_TRAIT(user, TRAIT_FAT) || user.mob_height > HUMAN_HEIGHT_SHORTEST
 	if (wings_open)
-		wings_underlay = user.apply_height_offsets(mutable_appearance(worn_icon, "raptor_purple_wings", -BODY_BEHIND_LAYER, user), UPPER_BODY)
+		wings_underlay = mutable_appearance(worn_icon, "raptor_purple_wings", -BODY_BEHIND_LAYER, user)
+		user.apply_height(wings_underlay, UPPER_BODY)
 		user.add_overlay(wings_underlay)
 		user.physiology.stun_mod *= 2
 		user.add_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), REF(src))
@@ -280,7 +281,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 		else
 			user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor)
 		user.AddElement(/datum/element/forced_gravity, 0)
-		passtable_on(user, REF(src))
+		ADD_TRAIT(user, TRAIT_PASSTABLE, REF(src))
 		to_chat(user, span_notice("You begin gently hovering above ground as [held_mob] on your back starts furiously flapping [held_mob.p_their()] wings[struggling ? ", struggling to keep you up in the air" : ""]!"))
 		user.set_resting(FALSE, TRUE)
 		user.refresh_gravity()
@@ -296,7 +297,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor/slow)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor)
 	user.RemoveElement(/datum/element/forced_gravity, 0)
-	passtable_off(user, REF(src))
+	REMOVE_TRAIT(user, TRAIT_PASSTABLE, REF(src))
 	to_chat(user, span_notice("You settle gently back onto the ground[struggling ? ", [held_mob] on your back breathing out a sigh of releif" : ""]..."))
 	user.refresh_gravity()
 	STOP_PROCESSING(SSprocessing, src)

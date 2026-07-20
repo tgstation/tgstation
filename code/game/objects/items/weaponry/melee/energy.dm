@@ -87,10 +87,8 @@
 		return ""
 
 	var/in_mouth = ""
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		if(carbon_user.wear_mask)
-			in_mouth = ", barely missing [carbon_user.p_their()] nose"
+	if(ishuman(user) && user.get_item_by_slot(ITEM_SLOT_MASK))
+		in_mouth = ", barely missing [user.p_their()] nose"
 	. = span_rose("[user] swings [user.p_their()] [name][in_mouth]. [user.p_They()] light[user.p_s()] [user.p_their()] [atom.name] in the process.")
 	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
 	add_fingerprint(user)
@@ -125,7 +123,6 @@
 	else
 		heat = initial(heat)
 		STOP_PROCESSING(SSobj, src)
-
 	tool_behaviour = (active ? TOOL_SAW : NONE) //Lets energy weapons cut trees. Also lets them do bonecutting surgery, which is kinda metal!
 	if(user)
 		balloon_alert(user, "[name] [active ? "enabled":"disabled"]")
@@ -410,6 +407,9 @@
 	alt_sharpness = NONE
 	alt_force_mod = -12
 	alt_hitsound = SFX_SWING_HIT
+	worn_icon_state = "energysurplus"
+	slot_flags = ITEM_SLOT_BELT
+	light_color = LIGHT_COLOR_LIGHT_CYAN
 	/// Battery used to determine how many hits we can make before our sword switches off and can't be turned back on without a do_after.
 	var/charge = 20
 	/// Our battery maximum.
@@ -547,6 +547,13 @@
 	playsound(src, 'sound/items/baton/telescopic_baton_folded_pickup.ogg', 40, TRUE)
 	COOLDOWN_START(src, jiggle_cooldown, 1 SECONDS)
 	return TRUE
+
+/obj/item/melee/energy/sword/surplus/on_transform(obj/item/source, mob/user, active)
+	. = ..()
+	if(active)
+		slot_flags &= ~ITEM_SLOT_BELT
+	else
+		slot_flags |= ITEM_SLOT_BELT
 
 // Null rod variants
 

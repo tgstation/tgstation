@@ -1,15 +1,10 @@
 /datum/ai_controller/basic_controller/bot/vibebot
+	behavior_tree_json = "code/modules/mob/living/basic/bots/vibebot/vibebot.bt.json"
 	blackboard = list(
 		BB_UNREACHABLE_LIST_COOLDOWN = 2 MINUTES,
 		BB_VIBEBOT_HAPPY_SONG = VIBEBOT_CHEER_SONG,
 		BB_VIBEBOT_GRIM_SONG = VIBEBOT_GRIM_MUSIC,
 		BB_VIBEBOT_BIRTHDAY_SONG = VIBEBOT_HAPPY_BIRTHDAY,
-	)
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity/pacifist,
-		/datum/ai_planning_subtree/respond_to_summon,
-		/datum/ai_planning_subtree/find_party_friends,
-		/datum/ai_planning_subtree/find_patrol_beacon,
 	)
 	reset_keys = list(
 		BB_BEACON_TARGET,
@@ -45,43 +40,36 @@
 	song.start_playing(pawn)
 	addtimer(CALLBACK(song, TYPE_PROC_REF(/datum/song, stop_playing)), 10 SECONDS) //in 10 seconds, stop playing music
 
-///subtree we use to find party friends in general
-/datum/ai_planning_subtree/find_party_friends
 
-/datum/ai_planning_subtree/find_party_friends/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/static/list/type_to_search = typecacheof(list(/mob/living/carbon/human))
-	if(!controller.blackboard_key_exists(BB_VIBEBOT_PARTY_TARGET))
-		controller.queue_behavior(/datum/ai_behavior/bot_search/party_friends, BB_VIBEBOT_PARTY_TARGET, type_to_search)
-		return
+/// Valid if the target is a conscious human who's in a bad mood or having a birthday  someone who could use cheering up.
+/datum/targeting_strategy/conscious_human/party_friend/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/mob/living/carbon/human/human_target = target
+	return human_target.mob_mood?.mood_level < MOOD_LEVEL_NEUTRAL || HAS_TRAIT(human_target, TRAIT_BIRTHDAY_BOY)
 
-	controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_clear_target/vibebot_party, BB_VIBEBOT_PARTY_ABILITY, BB_VIBEBOT_PARTY_TARGET)
-	return SUBTREE_RETURN_FINISH_PLANNING
+/datum/bt_node/ai_behavior/vibebot_party
+	var/ability_key
+	var/target_key
 
-///behavior we use to party with people
-/datum/ai_behavior/targeted_mob_ability/and_clear_target/vibebot_party
-	behavior_flags = AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_REQUIRE_MOVEMENT
+/datum/bt_node/ai_behavior/vibebot_party/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
+	var/mob/living/living_target = controller.blackboard[target_key]
+	if(QDELETED(living_target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	if(get_dist(controller.pawn, living_target) > 1)
+		return AI_BEHAVIOR_INSTANT
+	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
+	if(ability)
+		INVOKE_ASYNC(ability, TYPE_PROC_REF(/datum/action, Trigger), living_target)
+	var/mob/living/living_pawn = controller.pawn
+	living_pawn.manual_emote("celebrates with [living_target]!")
+	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob, emote), "flip")
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/targeted_mob_ability/and_clear_target/vibebot_party/setup(datum/ai_controller/controller, ability_key, target_key)
+/datum/bt_node/ai_behavior/vibebot_party/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return FALSE
-	set_movement_target(controller, target)
-
-/datum/ai_behavior/targeted_mob_ability/and_clear_target/vibebot_party/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded, ability_key, target_key)
-	var/atom/target = controller.blackboard[target_key]
-	controller.add_to_blacklist(target)
-	if(succeeded)
-		var/mob/living/living_pawn = controller.pawn
-		living_pawn.manual_emote("celebrates with [target]!")
-		living_pawn.emote("flip")
-	return ..()
-
-///behavior that searches for party friends
-/datum/ai_behavior/bot_search/party_friends
-	action_cooldown = 5 SECONDS
-
-/datum/ai_behavior/bot_search/party_friends/valid_target(datum/ai_controller/basic_controller/bot/controller, mob/living/carbon/human/my_target)
-	if(my_target.stat != CONSCIOUS || isnull(my_target.mind))
-		return FALSE
-	return (my_target.mob_mood.mood_level < MOOD_LEVEL_NEUTRAL || HAS_TRAIT(my_target, TRAIT_BIRTHDAY_BOY))
+	if(!isnull(target))
+		controller.add_to_blacklist(target)
+	controller.clear_blackboard_key(target_key)

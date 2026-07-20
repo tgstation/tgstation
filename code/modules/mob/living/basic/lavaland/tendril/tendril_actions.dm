@@ -7,7 +7,7 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 	click_to_activate = FALSE
-	cooldown_time = 8 SECONDS
+	cooldown_time = 12 SECONDS
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
 	projectile_type = /obj/projectile/tentacle_lash
@@ -24,12 +24,12 @@
 			telegraph.dir = swipe_dir
 			line_turf = get_step(line_turf, swipe_dir)
 
-	SLEEP_CHECK_DEATH(0.8 SECONDS, owner)
+	SLEEP_CHECK_DEATH(1.2 SECONDS, owner)
 
 	for (var/swipe_dir in GLOB.cardinals)
 		shoot_projectile(get_turf(owner), get_step(owner, swipe_dir), dir2angle(swipe_dir), owner)
 
-	SLEEP_CHECK_DEATH(1.6 SECONDS, owner)
+	SLEEP_CHECK_DEATH(1.8 SECONDS, owner)
 
 	for (var/swipe_dir in GLOB.diagonals)
 		var/turf/open/line_turf = get_step(owner, swipe_dir)
@@ -40,7 +40,7 @@
 			telegraph.dir = swipe_dir
 			line_turf = get_step(line_turf, swipe_dir)
 
-	SLEEP_CHECK_DEATH(0.8 SECONDS, owner)
+	SLEEP_CHECK_DEATH(1.2 SECONDS, owner)
 
 	for (var/swipe_dir in GLOB.diagonals)
 		shoot_projectile(get_turf(owner), get_step(owner, swipe_dir), dir2angle(swipe_dir), owner)
@@ -55,7 +55,8 @@
 	name = "tentacle spike"
 	icon_state = "tentacle_spike"
 	pass_flags = PASSTABLE
-	damage = 5 // +10 from the grab
+	damage = 10 // +10 from the grab
+	speed = 1
 	armor_flag = MELEE
 	range = 7
 	hit_prone_targets = TRUE
@@ -69,6 +70,8 @@
 	var/duration = 1.2 SECONDS
 	/// Damage dealt to targets who get snatched from entering the beam or being hit directly
 	var/snatch_damage = 10
+	/// How much faster do we retract
+	var/retract_speed = 2.5
 
 /obj/projectile/tentacle_lash/stab
 	damage = 15
@@ -86,6 +89,21 @@
 
 /obj/projectile/tentacle_lash/Destroy()
 	QDEL_NULL(tentacle_beam)
+	if (QDELETED(firer) || !isturf(loc))
+		return ..()
+	// Animate tentacle retraction for visual flair
+	var/turf/our_turf = loc
+	var/turf/firer_turf = get_turf(firer)
+	var/obj/effect/abstract/holder = new(firer_turf)
+	holder.icon = icon
+	holder.icon_state = icon_state
+	holder.transform = transform
+	holder.pixel_x = (firer_turf.x - our_turf.x) * ICON_SIZE_X + pixel_x
+	holder.pixel_y = (firer_turf.y - our_turf.y) * ICON_SIZE_Y + pixel_y
+	holder.Beam(firer, "goliath_tentacle", emissive = FALSE)
+	var/anim_time = sqrt((holder.pixel_x / ICON_SIZE_X) ** 2 + (holder.pixel_y / ICON_SIZE_Y) ** 2) / (speed * SSprojectiles.wait * retract_speed)
+	animate(holder, pixel_x = 0, pixel_y = 0, time = anim_time)
+	QDEL_IN_CLIENT_TIME(holder, anim_time)
 	return ..()
 
 // Don't range out, stop and persist until we're done
@@ -143,13 +161,13 @@
 	button_icon_state = "spikes_stabbing"
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
-	cooldown_time = 8 SECONDS
+	cooldown_time = 12 SECONDS
 	click_to_activate = TRUE
 	shared_cooldown = NONE
 	/// Lazy list of references to spike trails
 	var/list/active_chasers
 	/// Health percentage threshold at which we send out wide charsers after the main target
-	var/wide_chaser_threshold = 0.7
+	var/wide_chaser_threshold = 0.6
 
 /datum/action/cooldown/mob_cooldown/tendril_chaser/Grant(mob/granted_to)
 	. = ..()
@@ -176,7 +194,7 @@
 		ResetCooldown()
 
 /datum/action/cooldown/mob_cooldown/tendril_chaser/Activate(atom/target)
-	. = ..()
+	disable_cooldown_actions()
 	var/primary_type = /obj/effect/temp_visual/effect_trail/tendril_chaser
 	if (isliving(owner))
 		var/mob/living/as_living = owner
@@ -187,6 +205,9 @@
 	LAZYADD(active_chasers, WEAKREF(chaser))
 	RegisterSignal(chaser, COMSIG_QDELETING, PROC_REF(on_chaser_destroyed))
 	playsound(owner, 'sound/effects/magic/demon_attack1.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
+	SLEEP_CHECK_DEATH(0.6 SECONDS, owner)
+	StartCooldown()
+	enable_cooldown_actions()
 
 /// Remove a spike trail from our list of active trails
 /datum/action/cooldown/mob_cooldown/tendril_chaser/proc/on_chaser_destroyed(atom/chaser)
@@ -195,8 +216,8 @@
 
 /obj/effect/temp_visual/effect_trail/tendril_chaser
 	duration = 10 SECONDS
-	move_speed = 4
-	spawned_effect = /obj/effect/temp_visual/emerging_ground_spike/tendril
+	move_speed = 5
+	spawned_effect = /obj/effect/temp_visual/emerging_ground_spike/tendril/chaser
 	/// Do we spawn spikes around ourselves as well or only on our own turf?
 	var/area_spawn = FALSE
 
@@ -211,7 +232,7 @@
 	if (!area_spawn)
 		var/turf/spawn_turf = get_turf(src)
 		if (!(locate(/obj/effect/temp_visual/emerging_ground_spike/tendril) in spawn_turf) && isopenturf(spawn_turf))
-			new spawned_effect(spawn_turf)
+			new spawned_effect(spawn_turf, src)
 		return
 
 	for (var/spawn_dir in GLOB.cardinals)
@@ -219,31 +240,31 @@
 			continue
 		var/turf/spawn_loc = get_step(src, spawn_dir)
 		if (!(locate(/obj/effect/temp_visual/emerging_ground_spike/tendril) in spawn_loc) && isopenturf(spawn_loc))
-			new spawned_effect(spawn_loc)
+			new spawned_effect(spawn_loc, src)
 
 /obj/effect/temp_visual/emerging_ground_spike/tendril
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "spikes_stabbing"
-	duration = 0.7 SECONDS
+	duration = 0.8 SECONDS
 	position_variance = 3
-	impale_damage = 10
+	impale_damage = 15
 	damage_blacklist_typecache = list(
 		/mob/living/basic/mining/tendril,
 	)
 	impale_wound_bonus = CANT_WOUND
-	// Have we hit someone yet?
+	/// Have we hit someone yet?
 	var/hit_loser = FALSE
-
-/obj/effect/temp_visual/emerging_ground_spike/tendril/single
-	icon_state = "spike"
-	duration = 1 SECONDS
-	harm_delay = 0.25 SECONDS
-	position_variance = 5
+	/// For how long after emerging can we hit someone after harm_delay?
+	var/hit_entry = 0.35 SECONDS
 
 /obj/effect/temp_visual/emerging_ground_spike/tendril/impale()
 	. = ..()
 	hit_loser |= .
 	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+	addtimer(CALLBACK(src, PROC_REF(stop_impaling)), hit_entry)
+
+/obj/effect/temp_visual/emerging_ground_spike/tendril/proc/stop_impaling()
+	UnregisterSignal(loc, COMSIG_ATOM_ENTERED)
 
 /obj/effect/temp_visual/emerging_ground_spike/tendril/proc/on_entered(atom/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
@@ -255,6 +276,39 @@
 		playsound(src, 'sound/items/weapons/slice.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
 		hit_loser = TRUE
 
+/obj/effect/temp_visual/emerging_ground_spike/tendril/single
+	icon_state = "spike"
+	duration = 1.2 SECONDS
+	harm_delay = 0.3 SECONDS
+	hit_entry = 0.45 SECONDS
+	position_variance = 5
+
+/// Subtype which deletes the chaser once it hits the target
+/obj/effect/temp_visual/emerging_ground_spike/tendril/chaser
+	/// Chaser that spawned us
+	var/obj/effect/temp_visual/effect_trail/tendril_chaser/spawner
+
+/obj/effect/temp_visual/emerging_ground_spike/tendril/chaser/Initialize(mapload, spawner)
+	. = ..()
+	src.spawner = spawner
+	RegisterSignal(spawner, COMSIG_QDELETING, PROC_REF(on_spawner_destroy))
+
+/obj/effect/temp_visual/emerging_ground_spike/tendril/chaser/proc/on_spawner_destroy(datum/source)
+	SIGNAL_HANDLER
+	spawner = null
+
+/obj/effect/temp_visual/emerging_ground_spike/tendril/chaser/Destroy()
+	spawner = null
+	return ..()
+
+/obj/effect/temp_visual/emerging_ground_spike/tendril/chaser/harm_mob(mob/living/victim)
+	// Don't multihit mobs by spikes from the same chaser
+	if (!spawner)
+		return FALSE
+	. = ..()
+	if (.)
+		qdel(spawner)
+
 /datum/action/cooldown/mob_cooldown/tendril_cross_spikes
 	name = "Cross Spikes"
 	desc = "Create a wave of spikes around yourself, impaling anyone caught in it."
@@ -263,7 +317,7 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 	click_to_activate = FALSE
-	cooldown_time = 10 SECONDS
+	cooldown_time = 12 SECONDS
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
 	/// Range in which we create spikes

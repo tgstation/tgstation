@@ -513,8 +513,6 @@
 /datum/symptom/heal/plasma/CanHeal(datum/disease/advance/our_disease)
 	var/mob/living/carbon/carbon_host = our_disease.affected_mob
 	var/datum/gas_mixture/environment
-	var/list/gases
-
 	. = 0
 
 	// Check internals
@@ -525,16 +523,14 @@
 	if(internals_tank)
 		var/datum/gas_mixture/tank_contents = internals_tank.return_air()
 		if(tank_contents && round(tank_contents.return_pressure())) // make sure the tank is not empty or 0 pressure
-			if(tank_contents.gases[/datum/gas/plasma])
+			if(tank_contents.moles[/datum/gas/plasma])
 				// higher tank distribution pressure leads to more healing, but once you get to about 15kpa you reach the max
 				. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, internals_tank.distribute_pressure * HEALING_PER_BREATH_PRESSURE)
 	else // Check environment
 		if(carbon_host.loc)
 			environment = carbon_host.loc.return_air()
-		if(environment)
-			gases = environment.gases
-			if(gases[/datum/gas/plasma])
-				. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
+		if(environment && environment.moles[/datum/gas/plasma])
+			. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, environment.moles[/datum/gas/plasma] * HEALING_PER_MOL)
 
 	// Check for reagents in bloodstream
 	if(carbon_host.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
@@ -610,3 +606,31 @@
 
 /datum/symptom/heal/radiation/can_generate_randomly()
 	return ..() && !HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA) // Because people can never really suffer enough
+
+/datum/symptom/heal/aggressive_healing
+	name = "Aggressive Healing"
+	desc = "The virus heals damaged tissues in a way that appears threatening to the immune system."
+	severity = 1
+	stealth = -4
+	resistance = 1
+	stage_speed = 0
+	transmittable = -1
+	level = 4
+	base_message_chance = 0
+	symptom_delay_min = 1
+	symptom_delay_max = 1
+	symptom_cure = null
+	power = 2
+
+	threshold_descs = list(
+		"Severity > 1" = "For each point of severity, the healing provided by the virus increases.",
+	)
+	///Increases the healing effect (if active) of the virus by this amount for each severity level above 1
+	var/severity_heal_bonus = 0.25
+
+/datum/symptom/heal/aggressive_healing/CanHeal(datum/disease/advance/our_disease)
+	return power + our_disease.totalSeverity() * severity_heal_bonus
+
+/datum/symptom/heal/aggressive_healing/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
+	carbon_host.heal_overall_damage(actual_power, actual_power, required_bodytype = healable_bodytypes)
+	return TRUE

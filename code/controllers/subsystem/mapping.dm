@@ -17,6 +17,9 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ruins_templates = list()
 
+	///Assoc list of all ruins spawned, key center of ruin spawn -> value ruin instance
+	var/list/active_ruins = alist()
+
 	///List of ruins, separated by their theme
 	var/list/themed_ruins = list()
 
@@ -141,7 +144,7 @@ SUBSYSTEM_DEF(mapping)
 	if(current_map.wilderness_levels)
 		var/list/FailedZs = list()
 
-		LoadGroup(FailedZs, "Wilderness Area", current_map.wilderness_directory, current_map.maps_to_spawn, default_traits = ZTRAITS_WILDS, height_autosetup = FALSE)
+		LoadGroup(FailedZs, "Wilderness Area", current_map.wilderness_directory, current_map.wilderness_maps_to_spawn, default_traits = current_map.wilderness_z_traits, height_autosetup = FALSE)
 
 		if(LAZYLEN(FailedZs))
 			CRASH("Ice wilds failed to load!")
@@ -799,10 +802,9 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 		GLOB.starlight_objects += starlight_object(offset)
 		GLOB.starlight_overlays += starlight_overlay(offset)
 
-	for(var/datum/gas/gas_type as anything in GLOB.meta_gas_info)
-		var/list/gas_info = GLOB.meta_gas_info[gas_type]
+	for(var/datum/gas/gas_type as anything in GLOB.meta_gas_info[META_GAS_ID])
 		if(initial(gas_type.moles_visible) != null)
-			gas_info[META_GAS_OVERLAY] += generate_gas_overlays(gen_from, new_offset, gas_type)
+			GLOB.meta_gas_info[META_GAS_OVERLAY][gas_type] += generate_gas_overlays(gen_from, new_offset, gas_type)
 
 /datum/controller/subsystem/mapping/proc/create_plane_offsets(gen_from, new_offset)
 	for(var/plane_offset in gen_from to new_offset)

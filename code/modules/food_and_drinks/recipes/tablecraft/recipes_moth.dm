@@ -54,7 +54,7 @@
 		/obj/item/food/tofu = 1,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/boiledrice = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/onion_slice = 1
 	)
 	result = /obj/item/food/squeaking_stir_fry
@@ -203,20 +203,6 @@
 	cuisine_category = CUISINE_MOTHIC
 	meal_category = MEAL_APPETIZER
 
-/datum/crafting_recipe/food/hua_mulan_congee
-	name = "Hua Mulan congee"
-	reqs = list(
-		/datum/reagent/consumable/nutriment/soup/rice_porridge = 10,
-		/obj/item/food/meat/bacon = 1,
-		/obj/item/food/friedegg = 2,
-		/obj/item/reagent_containers/cup/bowl = 1,
-	)
-	result = /obj/item/food/bowled/hua_mulan_congee
-	removed_foodtypes = BREAKFAST
-	added_foodtypes = GRAIN
-	cuisine_category = CUISINE_MOTHIC
-	dish_category = DISH_RICE
-
 /datum/crafting_recipe/food/fried_eggplant_polenta
 	name = "Fried eggplant and polenta"
 	reqs = list(
@@ -251,7 +237,7 @@
 		/datum/reagent/consumable/vinegar = 2,
 		/obj/item/food/breadslice/plain = 1,
 		/obj/item/food/grilled_cheese = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/mothic_salad = 1,
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
@@ -264,7 +250,7 @@
 	reqs = list(
 		/datum/reagent/consumable/nutriment/fat/oil/olive = 2,
 		/datum/reagent/consumable/vinegar = 2,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/mothic_salad = 1,
 		/obj/item/grown/cotton = 2,
 		/obj/item/reagent_containers/cup/bowl = 1,

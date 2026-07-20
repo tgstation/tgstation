@@ -1,0 +1,25 @@
+{
+	"dm_type": "/datum/bt_node/subtree/carp_passive_selection",
+	"type": "selector",
+	"children": [
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets",
+			"vars": {
+				"target_key": "BB_CURRENT_TARGET",
+				"targeting_strategy": "BB_TARGETING_STRATEGY",
+				"hiding_location_key": "BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION"
+			}
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list/nearest",
+			"vars": {
+				"target_key": "BB_CURRENT_TARGET",
+				"targeting_strategy": "BB_FLEE_TARGETING_STRATEGY",
+				"hiding_location_key": "BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION",
+				"check_faction": false
+			}
+		}
+	]
+}

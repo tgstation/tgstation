@@ -13,32 +13,18 @@
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5)
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "thrash")
+	/// The amount of slowdown to reduce for a limbless leg
+	var/limbless_slowdown_modifier = 0.6 // reduces slowdown by 40%
+	/// Does this cause waddling when held
+	var/causes_waddling = FALSE
 
-/obj/item/cane/examine(mob/user, thats)
+/obj/item/cane/Initialize(mapload)
 	. = ..()
-	. += span_notice("This item can be used to support your weight, preventing limping from any broken bones on your legs you may have.")
+	AddComponent(/datum/component/walking_aid, limbless_slowdown_modifier, get_walking_aid_required_trait(), causes_waddling)
 
-/obj/item/cane/equipped(mob/living/user, slot, initial)
-	..()
-	if(!(slot & ITEM_SLOT_HANDS))
-		return
-	movement_support_add(user)
-
-/obj/item/cane/dropped(mob/living/user, silent = FALSE)
-	. = ..()
-	movement_support_del(user)
-
-/obj/item/cane/proc/movement_support_add(mob/living/user)
-	RegisterSignal(user, COMSIG_CARBON_LIMPING, PROC_REF(handle_limping))
-	return TRUE
-
-/obj/item/cane/proc/movement_support_del(mob/living/user)
-	UnregisterSignal(user, list(COMSIG_CARBON_LIMPING))
-	return TRUE
-
-/obj/item/cane/proc/handle_limping(mob/living/user)
-	SIGNAL_HANDLER
-	return COMPONENT_CANCEL_LIMP
+/// Determines if a trait is required to be used as a walking aid (ex. foldable canes)
+/obj/item/cane/proc/get_walking_aid_required_trait()
+	return null
 
 /obj/item/cane/crutch
 	name = "medical crutch"
@@ -55,41 +41,12 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5)
 	attack_verb_continuous = list("bludgeons", "whacks", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "thrash")
+	limbless_slowdown_modifier = 0.4 // reduces slowdown by 60%
+	causes_waddling = TRUE
 
 /obj/item/cane/crutch/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/cuffable_item)
-
-/obj/item/cane/crutch/examine(mob/user, thats)
-	. = ..()
-	// tacked on after the cane string
-	. += span_notice("As a crutch, it can also help lessen the slowdown incurred by missing a leg.")
-
-/obj/item/cane/crutch/movement_support_add(mob/living/user)
-	. = ..()
-	if(!.)
-		return
-	RegisterSignal(user, COMSIG_LIVING_LIMBLESS_SLOWDOWN, PROC_REF(handle_slowdown))
-	user.update_usable_leg_status()
-	user.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
-
-/obj/item/cane/crutch/movement_support_del(mob/living/user)
-	. = ..()
-	if(!.)
-		return
-	UnregisterSignal(user, list(COMSIG_LIVING_LIMBLESS_SLOWDOWN, COMSIG_CARBON_LIMPING))
-	user.update_usable_leg_status()
-	REMOVE_TRAIT(user, TRAIT_WADDLING, REF(src))
-
-/obj/item/cane/crutch/proc/handle_slowdown(mob/living/user, limbless_slowdown, list/slowdown_mods)
-	SIGNAL_HANDLER
-	var/leg_amount = user.usable_legs
-	// Don't do anything if the number is equal (or higher) to the usual.
-	if(leg_amount >= user.default_num_legs)
-		return
-	// If we have at least one leg and it's less than the default, reduce slowdown by 60%.
-	if(leg_amount && (leg_amount < user.default_num_legs))
-		slowdown_mods += 0.4
 
 /obj/item/cane/crutch/wood
 	name = "wooden crutch"
@@ -124,15 +81,16 @@
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
-/obj/item/cane/white/handle_limping(mob/living/user)
-	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? COMPONENT_CANCEL_LIMP : NONE
+// White canes only provide support while extended
+/obj/item/cane/white/get_walking_aid_required_trait()
+	return TRAIT_TRANSFORM_ACTIVE
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
  * Gives feedback to the user and makes it show up inhand.
  */
-/obj/item/cane/white/proc/on_transform(obj/item/source, mob/user, active)
+/obj/item/cane/white/proc/on_transform(obj/item/source, mob/living/user, active)
 	SIGNAL_HANDLER
 
 	if(user)

@@ -220,6 +220,7 @@
 		icon_state = "[base_icon_state]-off"
 
 /obj/machinery/computer/piratepad_control
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/piratepad_control")
 	name = "cargo hold control terminal"
 	///Message to display on the TGUI window.
 	var/status_report = "Ready for delivery."
@@ -379,7 +380,7 @@
 			continue
 		for(var/mob/living/hidden as anything in hidden_mobs)
 			///Sell mobs, but leave their contents intact.
-			export_single_item(hidden, apply_elastic = FALSE, dry_run = dry_run, external_report = report)
+			export_single_item(hidden, apply_elastic = FALSE, dry_run = dry_run, external_report = report, export_markets = list(EXPORT_MARKET_STATION, EXPORT_MARKET_PIRACY))
 		///there are still licing mobs inside that item. Stop, don't sell it ffs.
 		if(locate(/mob/living) in item_on_pad.get_all_contents())
 			continue

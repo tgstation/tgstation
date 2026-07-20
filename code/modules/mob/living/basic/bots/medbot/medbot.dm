@@ -14,7 +14,7 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	status_flags = (CANPUSH | CANSTUN)
 	ai_controller = /datum/ai_controller/basic_controller/bot/medbot
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.5)
 
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_MEDICAL)
 	radio_key = /obj/item/encryptionkey/headset_med
@@ -468,6 +468,9 @@
 
 /mob/living/basic/bot/medbot/nukie/Initialize(mapload, new_skin)
 	. = ..()
+	var/datum/action/minimap/nuclear/tacmap_action = new
+	tacmap_action.Grant(src)
+	add_minimap_blip(src, MINIMAP_NUKEOP_BLIP, "mediborg")
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_DISARMED, PROC_REF(nuke_disarm))
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, PROC_REF(nuke_arm))
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_DETONATING, PROC_REF(nuke_detonate))

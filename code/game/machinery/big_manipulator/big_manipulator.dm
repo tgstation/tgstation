@@ -288,6 +288,18 @@
 		SStgui.update_uis(src)
 		return ITEM_INTERACT_SUCCESS
 
+	if(isidcard(tool))
+		if(!id_lock)
+			id_lock = WEAKREF(tool)
+			balloon_alert(user, "successfully locked")
+			return ITEM_INTERACT_SUCCESS
+		if(tool != id_lock.resolve())
+			balloon_alert(user, "locked by another id")
+			return ITEM_INTERACT_BLOCKING
+		id_lock = null
+		balloon_alert(user, "successfully unlocked")
+		return ITEM_INTERACT_SUCCESS
+
 	if(!panel_open || !is_wire_tool(tool))
 		return NONE
 	wires.interact(user)
@@ -348,23 +360,6 @@
 		y_add = 32 + manipulator_arm.calculate_item_offset(FALSE, pixels_to_offset = 16)
 	)
 
-/obj/machinery/big_manipulator/attackby(obj/item/some_item, mob/user, params)
-	. = ..()
-	if(!isidcard(some_item))
-		return
-
-	var/obj/item/card/id/clicked_by_this_id = some_item
-
-	if(!id_lock)
-		id_lock = WEAKREF(clicked_by_this_id)
-		balloon_alert(user, "successfully locked")
-		return
-	var/obj/item/card/id/resolve_id = id_lock.resolve()
-	if(clicked_by_this_id != resolve_id)
-		balloon_alert(user, "locked by another id")
-		return
-	id_lock = null
-	balloon_alert(user, "successfully unlocked")
 
 /// Attaching the arm effect to the core.
 /obj/machinery/big_manipulator/proc/create_manipulator_arm()
@@ -500,26 +495,26 @@
 			var/datum/manipulator_task/cargo/dropoff_base/use/t = task
 			td["turf"] = "[t.offset_dx],[t.offset_dy]"
 			td["filters_status"] = t.should_use_filters
-			td["filtering_mode"] = t.filtering_mode
 			td["item_filters"] = _collect_filter_names(t.atom_filters)
 			td["settings_list"] = _collect_priorities(t.interaction_priorities)
 			td["worker_interaction"] = t.worker_interaction
 			td["use_post_interaction"] = t.use_post_interaction
 			td["worker_use_rmb"] = t.worker_use_rmb
 			td["worker_combat_mode"] = t.worker_combat_mode
+			td["skip_anchored"] = t.skip_anchored
 
 		else if(istype(task, /datum/manipulator_task/cargo/interact))
 			td["task_type"] = TASK_TYPE_INTERACT
 			var/datum/manipulator_task/cargo/interact/t = task
 			td["turf"] = "[t.offset_dx],[t.offset_dy]"
 			td["filters_status"] = t.should_use_filters
-			td["filtering_mode"] = t.filtering_mode
 			td["item_filters"] = _collect_filter_names(t.atom_filters)
 			td["settings_list"] = _collect_priorities(t.interaction_priorities)
 			td["worker_interaction"] = t.worker_interaction
 			td["use_post_interaction"] = t.use_post_interaction
 			td["worker_use_rmb"] = t.worker_use_rmb
 			td["worker_combat_mode"] = t.worker_combat_mode
+			td["skip_anchored"] = t.skip_anchored
 
 		else if(istype(task, /datum/manipulator_task/simple/wait))
 			td["task_type"] = TASK_TYPE_WAIT
@@ -587,7 +582,10 @@
 			return TRUE
 
 		if("unbuckle")
-			unbuckle_all_mobs()
+			var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker?.resolve()
+			if(poor_monkey)
+				poor_monkey.drop_all_held_items()
+				poor_monkey.forceMove(get_turf(src))
 			monkey_worker = null
 			return TRUE
 
@@ -812,6 +810,8 @@
 			return TRUE
 
 		if("cycle_filtering_mode")
+			if(istype(target_task, /datum/manipulator_task/cargo/dropoff_base/use) || istype(target_task, /datum/manipulator_task/cargo/interact))
+				return FALSE
 			if(!istype(target_task, /datum/manipulator_task/cargo))
 				return FALSE
 			var/datum/manipulator_task/cargo/ct = target_task
@@ -894,6 +894,17 @@
 			if(istype(target_task, /datum/manipulator_task/cargo/interact))
 				var/datum/manipulator_task/cargo/interact/cycle_target_task = target_task
 				cycle_target_task.worker_combat_mode = !cycle_target_task.worker_combat_mode
+				return TRUE
+			return FALSE
+
+		if("toggle_skip_anchored")
+			if(istype(target_task, /datum/manipulator_task/cargo/dropoff_base/use))
+				var/datum/manipulator_task/cargo/dropoff_base/use/unanchor_target = target_task
+				unanchor_target.skip_anchored = !unanchor_target.skip_anchored
+				return TRUE
+			if(istype(target_task, /datum/manipulator_task/cargo/interact))
+				var/datum/manipulator_task/cargo/interact/unanchor_target = target_task
+				unanchor_target.skip_anchored = !unanchor_target.skip_anchored
 				return TRUE
 			return FALSE
 

@@ -87,10 +87,11 @@
 /**
  * Makes the player force say what's in their current input box.
  * Arguments:
- * 	alter_phrases - Optional list of alternate suffixes to blurt out
- * 	immediate - If [TRUE], the say must be invoked inline due to side effects that may cause the mob to be unable to speak
+ * * alter_phrases - Optional list of alternate suffixes to blurt out
+ * * immediate - If [TRUE], the say must be invoked inline due to side effects that may cause the mob to be unable to speak
+ * * major - If [TRUE], a "major action" triggered the force say, which may have additional side effects
  */
-/mob/living/carbon/human/proc/force_say(list/alter_phrases = null, immediate = FALSE)
+/mob/living/carbon/human/proc/force_say(list/alter_phrases = null, immediate = FALSE, major = TRUE)
 	if(stat != CONSCIOUS || !client?.tgui_say?.window_open)
 		return FALSE
 	client.tgui_say.force_say(alter_phrases, immediate)
@@ -98,7 +99,7 @@
 		log_speech_indicators("[key_name(client)] FORCED to stop typing, indicators enabled.")
 	else
 		log_speech_indicators("[key_name(client)] FORCED to stop typing, indicators DISABLED.")
-	SEND_SIGNAL(src, COMSIG_HUMAN_FORCESAY)
+	SEND_SIGNAL(src, COMSIG_HUMAN_FORCESAY, major)
 
 /**
  * Gets whatever text is currently in this mob's say box and returns it.

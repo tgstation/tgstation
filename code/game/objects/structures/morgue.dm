@@ -566,16 +566,18 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		to_chat(user, span_warning("That's not connected to anything!"))
 	add_fingerprint(user)
 
-/obj/structure/tray/attackby(obj/P, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(P, /obj/item/riding_offhand))
-		return ..()
+/obj/structure/tray/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/riding_offhand))
+		return NONE
 
-	var/obj/item/riding_offhand/riding_item = P
+	var/obj/item/riding_offhand/riding_item = tool
 	var/mob/living/carried_mob = riding_item.rider
 	if(carried_mob == user) //Piggyback user.
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	user.unbuckle_mob(carried_mob)
 	mouse_drop_receive(carried_mob, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tray/mouse_drop_receive(atom/movable/O as mob|obj, mob/user, params)
 	if(!ismovable(O) || O.anchored || O.loc == user)

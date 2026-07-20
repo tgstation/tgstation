@@ -150,28 +150,18 @@
 	var/current_y = screen_start_y
 	var/turf/our_turf = get_turf(real_location)
 
-	for(var/i in 1 to length(usable_modules))
-		var/atom/movable/item = usable_modules[i]
-		if(item in robot_model.robot.held_items)
-			current_x++
-			if(current_x - screen_start_x < columns)
-				continue
-			current_x = screen_start_x
-
-			current_y++
-			if(current_y - screen_start_y >= rows)
-				break
-			//Module is currently active
-			continue
-
-		item.mouse_opacity = MOUSE_OPACITY_OPAQUE
-		SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
-		item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
+	for(var/obj/item/item in usable_modules)
+		//Only for non active modules
+		if(item.item_flags & IN_STORAGE)
+			item.mouse_opacity = MOUSE_OPACITY_OPAQUE
+			SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
+			item.screen_loc = "[current_x]:[screen_pixel_x + item.base_pixel_x],[current_y]:[screen_pixel_y + item.base_pixel_y]"
 
 		current_x++
 		if(current_x - screen_start_x < columns)
 			continue
 		current_x = screen_start_x
+
 		current_y++
 		if(current_y - screen_start_y >= rows)
 			break

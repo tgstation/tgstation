@@ -16,6 +16,7 @@
 	light_color = COLOR_BLUE_LIGHT
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement
 	brightness_on = 0
+	voice_filter = "highpass=f=300,lowpass=f=3500,aecho=0.8:0.9:70|140:0.3|0.15,alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 	/// What sign face prefixes we have icons for
 	var/static/list/available_faces = list()
 	/// The sign face we're displaying
@@ -26,6 +27,7 @@
 	var/specific_transport_id = TRAMSTATION_LINE_1
 	/// If the sign is adjusted for split type tram windows
 	var/split_mode = FALSE
+	generate_map_preview = FALSE
 
 /obj/machinery/computer/tram_controls/split
 	circuit = /obj/item/circuitboard/computer/tram_controls/split
@@ -157,6 +159,9 @@
 		update_appearance()
 		return
 
+	if(controller && (controller?.specific_transport_id != specific_transport_id))
+		return
+
 	if(isnull(controller) || !controller.controller_operational)
 		icon_screen = "[base_icon_state]_broken"
 		update_appearance()
@@ -232,21 +237,22 @@
 
 /obj/machinery/computer/tram_controls/proc/call_response(controller, list/relevant, response_code, response_info)
 	SIGNAL_HANDLER
-	switch(response_code)
-		if(REQUEST_SUCCESS)
-			say("The next station is: [response_info]")
+	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
+	if(tram)
+		if(SStts.tts_enabled)
+			tram.nav_beacon.voice = SStts.tram_voice
 
-		if(REQUEST_FAIL)
+		if(response_code == REQUEST_FAIL)
 			if(!LAZYFIND(relevant, src))
 				return
 
 			switch(response_info)
 				if(NOT_IN_SERVICE)
-					say("The tram is not in service. Please contact the nearest engineer.")
+					tram.nav_beacon.say("The tram is not in service. Please contact the nearest engineer.")
 				if(INVALID_PLATFORM)
-					say("Configuration error. Please contact the nearest engineer.")
+					tram.nav_beacon.say("Configuration error. Please contact the nearest engineer.")
 				if(INTERNAL_ERROR)
-					say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
+					tram.nav_beacon.say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
 				else
 					return
 

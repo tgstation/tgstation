@@ -350,7 +350,11 @@
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
 /obj/machinery/light/proc/set_on(turn_on)
+	var/was_on = on
 	on = (turn_on && status == LIGHT_OK)
+	if(on == was_on)
+		return
+	SEND_SIGNAL(src, COMSIG_LIGHT_FIXTURE_TOGGLED, on)
 	update()
 
 /obj/machinery/light/get_cell()
@@ -377,21 +381,20 @@
 
 
 
-// attack with item - insert light (if right type), otherwise try to break the light
-
-/obj/machinery/light/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
+// insert light (if right type), otherwise try to break the light
+/obj/machinery/light/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// attempt to insert light
 	if(istype(tool, /obj/item/light))
 		if(status == LIGHT_OK)
 			to_chat(user, span_warning("There is a [fitting] already inserted!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		add_fingerprint(user)
 		var/obj/item/light/light_object = tool
 		if(!istype(light_object, light_type))
 			to_chat(user, span_warning("This type of light requires a [fitting]!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(!user.temporarilyRemoveItemFromInventory(light_object))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		add_fingerprint(user)
 		if(status != LIGHT_EMPTY)
@@ -410,26 +413,31 @@
 
 		qdel(light_object)
 
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	// attempt to stick weapon into light socket
 	if(status != LIGHT_EMPTY || user.combat_mode)
-		return ..()
-	if(tool.tool_behaviour == TOOL_SCREWDRIVER) //If it's a screwdriver open it.
-		tool.play_tool_sound(src, 75)
-		user.visible_message(span_notice("[user.name] opens [src]'s casing."), \
-			span_notice("You open [src]'s casing."), span_hear("You hear a noise."))
-		deconstruct(disassembled = TRUE)
-		return
+		return NONE
 
 	if(tool.item_flags & ABSTRACT)
-		return
+		return NONE
 
 	to_chat(user, span_userdanger("You stick \the [tool] into the light socket!"))
 	if(has_power() && (tool.obj_flags & CONDUCTS_ELECTRICITY))
 		do_sparks(3, TRUE, src)
 		if (prob(75))
 			electrocute_mob(user, get_area(src), src, (rand(7,10) * 0.1), TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/light/screwdriver_act(mob/living/user, obj/item/tool)
+	if(status != LIGHT_EMPTY || user.combat_mode)
+		return NONE
+	tool.play_tool_sound(src, 75)
+	user.visible_message(span_notice("[user.name] opens [src]'s casing."), \
+						span_notice("You open [src]'s casing."), \
+						span_hear("You hear unscrewing."))
+	deconstruct(disassembled = TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/light/on_deconstruction(disassembled)
 
@@ -685,6 +693,7 @@
 	var/was_ok = (status == LIGHT_OK || status == LIGHT_BURNED)
 	status = LIGHT_BROKEN
 
+	SEND_SIGNAL(src, COMSIG_LIGHT_FIXTURE_BROKEN, was_ok)
 	if(!skip_sound_and_sparks)
 		if(was_ok)
 			playsound(loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
@@ -740,6 +749,11 @@
 		if(!istype(get_area(src), area_type))
 			continue
 		INVOKE_ASYNC(src, PROC_REF(flicker))
+
+/obj/machinery/light/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(!QDELING(src))
+		update(FALSE)
 
 /obj/machinery/light/floor
 	name = "floor light"

@@ -374,8 +374,9 @@
 	now_pushing = FALSE
 
 /mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
-	if(!AM || !src)
+	if(!src)
 		return FALSE
+	ASSERT(ismovable(AM), "[src] attempted to pull [AM ? "[AM], a nonmovable atom" : "a null object"]")
 	if(!(AM.can_be_pulled(src, force)))
 		return FALSE
 	if(throwing || !(mobility_flags & MOBILITY_PULL))
@@ -514,9 +515,7 @@
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
-/mob/living/verb/pulled(atom/movable/thing_pulled as mob|obj in oview(1))
-	set name = "Pull"
-
+GAME_VERB(/mob/living, pulled, "Pull", null, atom/movable/thing_pulled as mob|obj in oview(1))
 	if(istype(thing_pulled) && Adjacent(thing_pulled))
 		start_pulling(thing_pulled)
 
@@ -540,8 +539,7 @@
 	log_message("points at [pointing_at]", LOG_EMOTE)
 	visible_message(span_infoplain("[span_name("[src]")] points at [pointing_at]."), span_notice("You point at [pointing_at]."))
 
-/mob/living/verb/succumb(whispered as num|null)
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/mob/living, succumb, "succumb", whispered as num|null)
 	if (!CAN_SUCCUMB(src))
 		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
 			if(whispered)
@@ -599,9 +597,7 @@
 
 // MOB PROCS //END
 
-/mob/living/proc/mob_sleep()
-	set name = "Sleep"
-	set hidden = TRUE
+GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 
 	if(IsSleeping())
 		to_chat(src, span_warning("You are already sleeping!"))
@@ -972,10 +968,11 @@
 	if(heal_flags & HEAL_STAM)
 		set_stamina_loss(0, updating_stamina = FALSE, forced = TRUE)
 
-	// I don't really care to keep this under a flag
-	set_nutrition(NUTRITION_LEVEL_FED + 50)
-	overeatduration = 0
-	satiety = 0
+	// Only aheals really do this right now, so this flag should be fine for the time being
+	if(heal_flags & HEAL_ADMIN)
+		set_nutrition(NUTRITION_LEVEL_FED + 50)
+		overeatduration = 0
+		satiety = 0
 
 	// These should be tracked by status effects
 	losebreath = 0
@@ -1032,7 +1029,8 @@
 		if (!buckled.anchored)
 			buckled.moving_from_pull = moving_from_pull
 			. = buckled.Move(newloc, direct, glide_size)
-			buckled.moving_from_pull = null
+			if(buckled) //buckled can become unbuckled, apparently
+				buckled.moving_from_pull = null
 		return
 
 	var/old_direction = dir
@@ -1134,7 +1132,9 @@
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
-	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_RESIST) & COMPONENT_BLOCK_RESIST)
+		return
+
 	//resisting grabs (as if it helps anyone...)
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED) && pulledby)
 		log_combat(src, pulledby, "resisted grab")
@@ -1161,12 +1161,20 @@
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
 
-	//Our effective grab state. GRAB_PASSIVE is equal to 0, so if we have no other altering factors to our grab state, we can break free immediately on resist.
-	var/effective_grab_state = pulledby.grab_state
-	//The amount of damage inflicted on a failed resist attempt.
-	var/damage_on_resist_fail = rand(7, 13)
-	// Base chance to escape a grab. Divided by effective grab state
-	var/escape_chance = BASE_GRAB_RESIST_CHANCE
+	var/list/grab_stats = list(
+		// Our effective grab state.
+		// GRAB_PASSIVE is equal to 0, so if we have no other altering factors to our grab state, we can break free immediately on resist.
+		pulledby.grab_state,
+		/// The amount of damage inflicted on a failed resist attempt.
+		rand(7, 13),
+		// Base chance to escape a grab. Divided by effective grab state.
+		BASE_GRAB_RESIST_CHANCE,
+	)
+	SEND_SIGNAL(pulledby, COMSIG_MOVABLE_GRABBED_RESISTING, src, grab_stats)
+
+	var/effective_grab_state = grab_stats[GRAB_STAT_EFFECTIVE_STATE]
+	var/damage_on_resist_fail = grab_stats[GRAB_STAT_FAIL_DAMAGE]
+	var/escape_chance = grab_stats[GRAB_STAT_ESCAPE_CHANCE]
 
 	if(body_position == LYING_DOWN) //If prone, treat the grab state as one higher
 		effective_grab_state++
@@ -1180,26 +1188,14 @@
 	if(HAS_TRAIT(src, TRAIT_GRABRESISTANCE)) //If we have grab resistance from some source, treat the grab state as one lower.
 		effective_grab_state--
 
-	//If our puller is a human, and they have an active hand they're grabbing with (please don't ask how people grab without hands), then apply their unarmed values to the grab values
-	if(pulledby && ishuman(pulledby))
+	// If our puller is a human, and they have an active hand they're grabbing with (please don't ask how people grab without hands), then apply their unarmed values to the grab values
+	if(ishuman(pulledby))
 		var/mob/living/carbon/human/human_puller = pulledby
 		var/obj/item/bodypart/grabbing_bodypart = human_puller.get_active_hand()
 		if(grabbing_bodypart)
 			damage_on_resist_fail += (rand(grabbing_bodypart.unarmed_damage_low, grabbing_bodypart.unarmed_damage_high)) + grabbing_bodypart.unarmed_grab_damage_bonus
 			effective_grab_state += grabbing_bodypart.unarmed_grab_state_bonus
 			escape_chance += grabbing_bodypart.unarmed_grab_escape_chance_bonus
-
-		//If our puller is a drunken brawler, they add more damage based on their own damage taken so long as they're drunk and treat the grab state as one higher
-		var/puller_drunkenness = human_puller.get_drunk_amount()
-		if(puller_drunkenness && HAS_TRAIT(human_puller, TRAIT_DRUNKEN_BRAWLER))
-			damage_on_resist_fail += clamp((human_puller.get_fire_loss() + human_puller.get_brute_loss()) / 10, 3, 20)
-			effective_grab_state++
-
-		var/datum/martial_art/puller_art = GET_ACTIVE_MARTIAL_ART(human_puller)
-		if(puller_art?.can_use(human_puller))
-			damage_on_resist_fail += puller_art.grab_damage_modifier
-			effective_grab_state += puller_art.grab_state_modifier
-			escape_chance += puller_art.grab_escape_chance_modifier
 
 	//We only resist our grab state if we are currently in a grab equal to or greater than GRAB_AGGRESSIVE (1). Otherwise, break out immediately!
 	if(effective_grab_state >= GRAB_AGGRESSIVE)
@@ -1965,10 +1961,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	//Check the amount of clients exists on the Z level we're leaving from,
 	//this excludes us because at this point we are not registered to any z level.
 	var/old_level_new_clients = (registered_z ? SSmobs.clients_by_zlevel[registered_z].len : null)
-	//No one is left after we're gone, shut off inactive ones
+	//No one is left after we're gone, recalculate AI status so eligible ones shut off
 	if(registered_z && old_level_new_clients == 0)
-		for(var/datum/ai_controller/controller as anything in GLOB.ai_controllers_by_zlevel[registered_z])
-			controller.set_ai_status(AI_STATUS_OFF)
+		for(var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[registered_z])
+			controller.set_ai_status(controller.get_expected_ai_status())
 
 	if(new_z)
 		//Check the amount of clients exists on the Z level we're moving towards, excluding ourselves.
@@ -1978,7 +1974,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		SSmobs.clients_by_zlevel[new_z] += src
 
 		if(new_level_old_clients == 0) //No one was here before, wake up all the AIs.
-			for (var/datum/ai_controller/controller as anything in GLOB.ai_controllers_by_zlevel[new_z])
+			for (var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[new_z])
 				//We don't set them directly on, for instances like AIs acting while dead and other cases that may exist in the future.
 				//This isn't a problem for AIs with a client since the client will prevent this from being called anyway.
 				controller.set_ai_status(controller.get_expected_ai_status())
@@ -1989,26 +1985,17 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	..()
 	update_z(new_turf?.z)
 
-/mob/living/mouse_drop_receive(atom/dropping, atom/user, params)
-	var/mob/living/U = user
-	if(isliving(dropping))
-		var/mob/living/M = dropping
-		if(M.can_be_held && U.pulling == M)
-			M.mob_try_pickup(U)//blame kevinz
-			return//dont open the mobs inventory if you are picking them up
-	return ..()
+/mob/living/proc/set_name()
+	if(identifier == 0)
+		identifier = rand(1, 999)
+	name = "[name] ([identifier])"
+	real_name = name
 
 /mob/living/proc/mob_pickup(mob/living/user)
 	var/obj/item/mob_holder/holder = new inhand_holder_type(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
 	SEND_SIGNAL(src, COMSIG_LIVING_SCOOPED_UP, user, holder)
 	user.visible_message(span_warning("[user] scoops up [src]!"))
 	user.put_in_hands(holder)
-
-/mob/living/proc/set_name()
-	if(identifier == 0)
-		identifier = rand(1, 999)
-	name = "[name] ([identifier])"
-	real_name = name
 
 /mob/living/proc/mob_try_pickup(mob/living/user, instant=FALSE)
 	if(!ishuman(user) && (user.mob_size <= mob_size || user.num_hands == 0))
@@ -2593,6 +2580,12 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	else if(!(movement_type & (FLYING | FLOATING)) && !usable_hands && !usable_legs) //Lost a hand, not flying, no hands left, no legs.
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 
+/mob/living/perform_hand_swap(held_index)
+	//safeguard for one-handed mobs lol
+	if(length(held_items) == 1)
+		held_index = 1
+
+	return ..()
 
 /// Whether or not this mob will escape from storages while being picked up/held.
 /mob/living/proc/will_escape_storage()

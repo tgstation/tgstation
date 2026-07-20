@@ -2,13 +2,14 @@ import {
   Box,
   Button,
   Collapsible,
+  ImageButton,
   ProgressBar,
   Section,
   Stack,
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
-
 import { Experiment } from '../../ExperimentConfigure';
+import { MaterialCostSequence } from '../../Fabrication/MaterialCostSequence';
 import { useRemappedBackend } from '../helpers';
 import { useTechWebRoute } from '../hooks';
 import { LockedExperiment } from '../LockedExperiment';
@@ -26,6 +27,9 @@ export function TechNode(props: Props) {
   const {
     node_cache,
     design_cache,
+    SHEET_MATERIAL_AMOUNT,
+    build_types,
+    department_flags,
     experiments,
     points = [],
     nodes,
@@ -201,10 +205,48 @@ export function TechNode(props: Props) {
       </Box>
       <Box className="Techweb__NodeUnlockedDesigns" mb={2}>
         {design_ids.map((k, i) => (
-          <Button
+          <ImageButton
             key={k}
-            className={`${design_cache[k].class} Techweb__DesignIcon`}
-            tooltip={design_cache[k].name}
+            className={`$Techweb__DesignIcon`}
+            imageSize={32}
+            asset={['', design_cache[k].class]}
+            tooltip={
+              <Stack vertical>
+                <Stack.Item mt={0.3} ml={0.3}>
+                  {design_cache[k].name}
+                </Stack.Item>
+                <Stack.Item mt={-2} mb={-2} ml={-3}>
+                  <ul>
+                    <li>
+                      {Object.keys(build_types)
+                        .filter((key) => design_cache[k].build_types & +key)
+                        .map((key) => build_types[key])
+                        .join(', ')}
+                    </li>
+                    {!!Object.keys(department_flags).find(
+                      (key) => !(+key & design_cache[k].department_flags),
+                    ) && (
+                      <li>
+                        {Object.keys(department_flags)
+                          .filter(
+                            (key) => design_cache[k].department_flags & +key,
+                          )
+                          .map((key) => department_flags[key])
+                          .join(', ')}
+                      </li>
+                    )}
+                  </ul>
+                </Stack.Item>
+                <Stack.Divider />
+                <Stack.Item mt={-1}>
+                  <MaterialCostSequence
+                    design={design_cache[k]}
+                    amount={1}
+                    SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+                  />
+                </Stack.Item>
+              </Stack>
+            }
             tooltipPosition={i % 15 < 7 ? 'right' : 'left'}
           />
         ))}

@@ -18,7 +18,7 @@
 
 	var/list/starting_signals = list()
 	var/list/ending_signals = list()
-	for(var/datum/weather/weather_type as anything in typesof(/datum/weather))
+	for(var/datum/weather/weather_type as anything in valid_subtypesof(/datum/weather))
 		starting_signals += COMSIG_WEATHER_TELEGRAPH(weather_type)
 		ending_signals += COMSIG_WEATHER_END(weather_type)
 

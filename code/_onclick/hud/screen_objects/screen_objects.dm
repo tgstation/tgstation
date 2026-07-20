@@ -94,7 +94,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	RegisterSignal(hud, COMSIG_QDELETING, PROC_REF(on_hud_delete))
 
 /// Returns the mob this is being displayed to, if any
-/atom/movable/screen/proc/get_mob()
+/atom/movable/screen/proc/get_mob() as /mob
 	return hud?.mymob
 
 /atom/movable/screen/proc/on_hud_delete(datum/source)
