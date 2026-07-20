@@ -155,8 +155,7 @@
 		part.flags_cover = category[UNSEALED_COVER] || NONE
 		part.visor_flags_cover = category[SEALED_COVER] || NONE
 		REMOVE_TRAITS_IN(part, MOD_THEME_TRAIT)
-		for (var/trait in category[MOD_PART_TRAITS])
-			ADD_TRAIT(part, trait, MOD_THEME_TRAIT)
+		part.add_traits(category[MOD_PART_TRAITS], MOD_THEME_TRAIT)
 		if(mod.get_part_datum(part).sealed)
 			part.clothing_flags |= part.visor_flags
 			part.flags_inv |= part.visor_flags_inv
