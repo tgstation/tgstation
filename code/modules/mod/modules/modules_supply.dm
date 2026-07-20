@@ -182,7 +182,7 @@
 		return
 
 	if(drain_power(use_energy_cost))
-		melee_attack_chain(mod.wearer, target)
+		target.base_item_interaction(mod.wearer, src)
 
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER

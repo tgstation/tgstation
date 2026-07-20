@@ -42,7 +42,7 @@
 	var/turf/open/floor/plating/bare_floor = pry_tile(tool, user, TRUE)
 	if(!istype(bare_floor))
 		return
-	bare_floor.item_interaction(user, newtile, modifiers)
+	bare_floor.base_item_interaction(user, newtile, modifiers)
 
 /turf/open/floor/wood/pry_tile(obj/item/C, mob/user, silent = FALSE)
 	C.play_tool_sound(src, 80)
