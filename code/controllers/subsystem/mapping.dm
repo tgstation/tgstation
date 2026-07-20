@@ -287,8 +287,19 @@ SUBSYSTEM_DEF(mapping)
 		var/datum/map_template/ruin/reserved_ruin = reservation[1]
 		var/turf/central_turf = reservation[2]
 		var/clear_below = reservation[3]
-		reserved_ruin.load_reserved(central_turf, clear_below)
+		load_ruin_now(reserved_ruin, central_turf, clear_below)
 	reserved_ruins.Cut()
+
+/**
+ * Immediately loads a single reserved ruin's map, and runs terrain generation for any
+ * of the areas, since they get spawned AFTER normal terrain gen runs its pass
+ */
+/datum/controller/subsystem/mapping/proc/load_ruin_now(datum/map_template/ruin/reserved_ruin, turf/central_turf, clear_below)
+	var/starting_area_count = GLOB.areas.len
+	reserved_ruin.load_reserved(central_turf, clear_below)
+	for(var/i in starting_area_count + 1 to GLOB.areas.len)
+		var/area/ruin_area = GLOB.areas[i]
+		ruin_area.RunTerrainGeneration()
 
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
 /// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic

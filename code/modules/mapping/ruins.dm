@@ -224,7 +224,7 @@
 			SSmapping.active_ruins[locate(bottom_left_x, bottom_left_y, placed_turf.z)] = current_pick
 
 			if(immediate_load)
-				current_pick.load_reserved(placed_turf, clear_below)
+				SSmapping.load_ruin_now(current_pick, placed_turf, clear_below)
 			else
 				///Queue up the actual map load for after terrain generation, so cave/biome gen doesn't overwrite the ruin
 				SSmapping.reserved_ruins += list(list(current_pick, placed_turf, clear_below))
