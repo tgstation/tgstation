@@ -307,6 +307,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		use_runechat = FALSE
 
 	var/message = ""
+	var/speaker_name = span_name("[message_mods[MODE_SPEAKER_NAME_OVERRIDE] || speaker]")
+
 	// Infinite range implies something like telecomms, ie something that should never be distance modified
 	if(message_range != INFINITY)
 		var/raw_dist = get_dist(speaker, src)

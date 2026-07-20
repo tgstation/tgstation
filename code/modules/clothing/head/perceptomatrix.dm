@@ -127,7 +127,7 @@
 		var/mob/living/carbon/wearer = loc
 		wearer.update_tint()
 		if(!improved_eavesdropping)
-			awearer.eavesdrop_range += 7
+			wearer.eavesdrop_range += 7
 			improved_eavesdropping = TRUE
 
 	// When someone makes TRAIT_DEAF an element, or status effect, or whatever, give this item a way to bypass said deafness.

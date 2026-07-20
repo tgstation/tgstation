@@ -21,7 +21,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	light_power = 0.6
 	light_on = FALSE
 	shift_to_open_context_menu = FALSE
-	eavesdrop_range = INFINITY
 	var/can_reenter_corpse
 	///This variable is set to 1 when you enter the game as an observer.
 	///If you died in the game and are a ghost - this will remain as FALSE.
