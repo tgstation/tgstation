@@ -13543,7 +13543,6 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
-/obj/effect/turf_decal/caution/stand_clear,
 /obj/machinery/door/airlock/public/glass{
 	name = "Chapel Hallway"
 	},
@@ -15918,7 +15917,6 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/caution/stand_clear,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central/fore)
@@ -16104,14 +16102,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
-"fmQ" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/caution/stand_clear,
-/obj/machinery/door/airlock/public/glass{
-	name = "Chapel Hallway"
-	},
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/fore)
 "fmV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -44134,7 +44124,6 @@
 	id = "brigfrontdoor";
 	name = "Front Security Blast Door"
 	},
-/obj/effect/turf_decal/caution/stand_clear,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "odd" = (
@@ -47366,7 +47355,6 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/turf_decal/caution/stand_clear,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
@@ -52008,7 +51996,6 @@
 /area/station/maintenance/port/lesser)
 "qIv" = (
 /obj/machinery/door/firedoor,
-/obj/effect/turf_decal/caution/stand_clear,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -57891,7 +57878,6 @@
 /area/ruin/space/has_grav/abandoned_warehouse)
 "suo" = (
 /obj/machinery/door/firedoor,
-/obj/effect/turf_decal/caution/stand_clear,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/aft)
@@ -72144,6 +72130,13 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"wKc" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/security/brig)
 "wKN" = (
 /obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
@@ -73516,7 +73509,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
-/obj/effect/turf_decal/caution/stand_clear,
 /obj/machinery/door/airlock/public/glass{
 	name = "Chapel Hallway"
 	},
@@ -97700,7 +97692,7 @@ oFo
 hJp
 lGs
 xex
-dSv
+wKc
 gjg
 oKW
 aHD
@@ -100985,7 +100977,7 @@ vTD
 wdD
 btd
 kMs
-fmQ
+nkQ
 huc
 vxb
 kEz
