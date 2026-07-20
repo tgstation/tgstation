@@ -24,12 +24,12 @@
 ///Set a receiving gas object, cleaning up any previous link first.
 /obj/machinery/portable_atmospherics/scrubber/bluespace/proc/set_teleport_target(obj/machinery/portable_atmospherics/gas_receiver/new_target)
 	if(target)
-		//Clear the old link (and its qdel signal) before we point somewhere new
+		///Clear the old link before link new
 		UnregisterSignal(target, COMSIG_QDELETING)
 		target.unregister_sender(src)
 	target = new_target
 	if(target)
-		//If our target is ever deleted, drop our reference to it
+		///If our target is ever deleted, drop our reference to it
 		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(clear_teleport_target))
 		target.register_sender(src)
 
@@ -45,28 +45,28 @@
 
 	var/list/cached_moles = air_contents.moles
 
-	//contains all of the gas we're pulling out of our air_contents, gets merged into the receiver
+	///contains all of the gas we're pulling out of our air_contents, gets merged into the receiver
 	var/datum/gas_mixture/filtered_out = new
 
 	filtered_out.temperature = air_contents.temperature
 
-	//maximum percentage of our stored gas we can transfer
+	///maximum percentage of our stored gas we can transfer
 	var/removal_ratio = 1
 
 	var/total_moles_to_remove = 0
 	for(var/gas_id in cached_moles & scrubbing)
 		total_moles_to_remove += cached_moles[gas_id]
 
-	if(!total_moles_to_remove)//no gases to remove
+	if(!total_moles_to_remove)
 		return FALSE
 
 	for(var/gas_id in cached_moles & scrubbing)
 		var/transferred_moles = max(QUANTIZE(cached_moles[gas_id] * removal_ratio * (cached_moles[gas_id] / total_moles_to_remove)), min(MOLAR_ACCURACY*1000, cached_moles[gas_id]))
 
-		filtered_out.moles[gas_id] += transferred_moles
-		cached_moles[gas_id] -= transferred_moles
+		filtered_out.adjust_gas(gas_id, transferred_moles)
+		air_contents.adjust_gas(gas_id, -transferred_moles)
 
-	//Hand the filtered gases over to the receiver
+	///Hand the filtered gases over to the receiver
 	receiver_air.merge(filtered_out)
 
 ///GAS RECEIVER
@@ -156,8 +156,8 @@
 
 ///Notify all scrubbers to forget us
 /obj/machinery/portable_atmospherics/gas_receiver/proc/lose_senders()
-	//Copy the list since each scrubber removes itself from senders as we go
-	for(var/obj/machinery/portable_atmospherics/scrubber/bluespace/S as anything in senders.Copy())
+	///Copy the list since each scrubber removes itself from senders as we go
+	for(var/obj/machinery/portable_atmospherics/scrubber/bluespace/S as scrubber in senders.Copy())
 		S.set_teleport_target(null)
 
 /// wirecutter makes it lose all its senders
