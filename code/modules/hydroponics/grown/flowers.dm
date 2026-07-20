@@ -1,7 +1,7 @@
 //Flower - base type
 /obj/item/food/grown/flower
 	name = "Flower"
-	desc = "By any other name...?"
+	desc = "By any other name...? This doesn't look right, you should tell someone about this."
 	icon_state = "rose"
 	abstract_type = /obj/item/food/grown/flower
 	foodtypes = VEGETABLES
