@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Tooltip } from 'tgui-core/components';
 
 import type { ResourceLink } from '../EscapeMenu';
 
@@ -60,6 +61,7 @@ export function HomePage({
           onClick={() => onNavigate('admin')}
           disabled={!serverState.canAdminHelp}
           blinking={serverState.hasTicketNotification}
+          tooltip={serverState.hasTicketNotification ? 'An admin is trying to talk to you!' : undefined}
         >
           Admin Help
         </MenuButton>
@@ -80,17 +82,17 @@ export function HomePage({
             }
           >
             {serverState.resources.map((resource) => (
-              <button
-                key={resource.id}
-                className="escape-menu__resource-button"
-                title={resource.tooltip}
-                onClick={() => onAction(`resource_${resource.id}`)}
-              >
-                <IconButton iconClass={resource.id} />
-                <span className="escape-menu__resource-button-label">
-                  {resource.label}
-                </span>
-              </button>
+              <Tooltip key={resource.id} position="top" content={resource.tooltip}>
+                <button
+                  className="escape-menu__resource-button"
+                  onClick={() => onAction(`resource_${resource.id}`)}
+                >
+                  <IconButton iconClass={resource.id} />
+                  <span className="escape-menu__resource-button-label">
+                    {resource.label}
+                  </span>
+                </button>
+              </Tooltip>
             ))}
           </div>
         )}
@@ -122,6 +124,7 @@ type MenuButtonProps = {
   onClick: () => void;
   disabled?: boolean;
   blinking?: boolean;
+  tooltip?: string;
 };
 
 function MenuButton({
@@ -129,8 +132,9 @@ function MenuButton({
   onClick,
   disabled,
   blinking,
+  tooltip,
 }: MenuButtonProps) {
-  return (
+  const button = (
     <button
       className={
         'escape-menu__menu-button' +
@@ -142,4 +146,10 @@ function MenuButton({
       {children}
     </button>
   );
+
+  if (tooltip) {
+    return <Tooltip content={tooltip}>{button}</Tooltip>;
+  }
+
+  return button;
 }

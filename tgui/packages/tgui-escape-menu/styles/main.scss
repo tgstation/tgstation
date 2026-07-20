@@ -1,6 +1,10 @@
 @use 'sass:meta';
 
 @include meta.load-css('~tgui/styles/reset');
+@include meta.load-css('~tgui-core/styles/base.scss');
+@include meta.load-css('~tgui-core/styles/colors.scss');
+@include meta.load-css('~tgui-core/styles/vars-components.scss');
+@include meta.load-css('~tgui-core/styles/components/Tooltip.scss');
 
 html,
 body,
@@ -18,6 +22,11 @@ body,
 * {
   cursor: default !important;
   user-select: none;
+}
+
+.Tooltip {
+  font-family: 'Pixellari', monospace;
+  transform: translateY(-16px);
 }
 
 .escape-menu {
