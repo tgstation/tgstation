@@ -58,7 +58,6 @@ SUBSYSTEM_DEF(mapping)
 	/// The largest plane offset we've generated so far
 	var/max_plane_offset = 0
 
-	var/loading_ruins = FALSE
 	var/list/turf/unused_turfs = list() //Not actually unused turfs they're unused but reserved for use for whatever requests them. "[zlevel_of_turf]" = list(turfs)
 	var/list/datum/turf_reservations //list of turf reservations
 	var/list/used_turfs = list() //list of turf = datum/turf_reservation
@@ -159,9 +158,7 @@ SUBSYSTEM_DEF(mapping)
 	else if (SSmapping.current_map.load_all_away_missions) // we're likely in a local testing environment, so punch it.
 		load_all_away_missions()
 
-	loading_ruins = TRUE
 	setup_ruins()
-	loading_ruins = FALSE
 #endif
 
 	// Run map generation after ruin space is reserved, since this space is used for the cave gen.
