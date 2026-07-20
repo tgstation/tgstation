@@ -657,42 +657,33 @@ SUBSYSTEM_DEF(tts)
 	else
 		return request.is_complete() && request_blips.is_complete() && request_blips_radio.is_complete() && request_radio.is_complete() && request_radio_gibberish.is_complete()
 
-/proc/filter_tts_listeners(list/listeners, radio_frequency = null)
-	if((!SStts.tts_enabled && !SStts220.is_enabled) || !listeners) // BANDASTATION EDIT: TTS radio listener filter
-		return
-
-	if(isweakref(listeners))
-		listeners = list(listeners)
-	var/list/filtered_listeners = list()
-
-	for(var/listener as anything in listeners)
-		var/datum/weakref/listener_ref
-		var/mob/possible_listener
-		if(isweakref(listener))
-			listener_ref = listener
-			possible_listener = listener_ref.resolve()
-		else if(ismob(listener))
-			possible_listener = listener
-			listener_ref = WEAKREF(possible_listener)
-		else
-			continue
-		if(!ismob(possible_listener) || !possible_listener.client)
-			continue
-		var/tts_pref = possible_listener.client?.prefs.read_preference(/datum/preference/choiced/sound_tts)
-		var/radio_tts_pref = possible_listener.client?.prefs.read_preference(/datum/preference/choiced/sound_tts_radio)
-		if(tts_pref == TTS_SOUND_OFF)
-			continue
-		if(isliving(possible_listener) && (possible_listener.stat >= UNCONSCIOUS || HAS_TRAIT(possible_listener, TRAIT_DEAF)))
-			continue
-		if(radio_tts_pref == TTS_SOUND_NO_RADIO)
-			continue
-		if(radio_tts_pref == TTS_SOUND_DEPARTMENTAL_RADIO && radio_frequency == FREQ_COMMON)
-			continue
-		filtered_listeners += listener_ref
-
-	return filtered_listeners
-
 #undef TTS_REQUEST_REF
 #undef TTS_REQUEST_EXPIRE
+
+/**
+ * Checks if the passed mob can hear radio TTS
+ *
+ * * hearer - The mob to check if they can hear radio TTS
+ * * radio_frequency - The frequency of the radio TTS message
+ */
+/proc/can_hear_radio_tts(mob/hearer, radio_frequency)
+	if(!SStts.tts_enabled)
+		return FALSE
+
+	if(HAS_TRAIT(hearer, TRAIT_DEAF))
+		return FALSE
+
+	var/tts_pref = hearer.client?.prefs.read_preference(/datum/preference/choiced/sound_tts) || TTS_SOUND_OFF
+	if(tts_pref == TTS_SOUND_OFF)
+		return FALSE
+
+	var/radio_tts_pref = hearer.client?.prefs.read_preference(/datum/preference/choiced/sound_tts_radio) || TTS_SOUND_NO_RADIO
+	switch(radio_tts_pref)
+		if(TTS_SOUND_NO_RADIO)
+			return FALSE
+		if(TTS_SOUND_DEPARTMENTAL_RADIO) // don't give them the full common firehose if they turned it off
+			return radio_frequency != FREQ_COMMON
+
+	return TRUE
 
 #undef SHIFT_DATA_ARRAY
