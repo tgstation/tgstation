@@ -49,6 +49,8 @@
 	var/list/inbuilt_modules = list()
 	/// Allowed items in the chestplate's suit storage.
 	var/list/allowed_suit_storage = list()
+	/// Item flags used for suit storage, if an item isn't already in allowed_suit_storage.
+	var/list/suit_storage_container_flags = SUIT_STORAGE_BASIC
 	/// List of variants and items created by them, with the flags we set.
 	var/list/variants = list(
 		"standard" = list(
@@ -117,6 +119,7 @@
 		if(isclothing(mod_part) && mod_part.slot_flags == ITEM_SLOT_OCLOTHING)
 			var/obj/item/clothing/chestplate = mod_part
 			chestplate.allowed |= allowed_suit_storage
+			chestplate.suit_storage_container_flags = suit_storage_container_flags
 		var/datum/mod_part/part_datum = new()
 		part_datum.set_item(mod_part)
 		mod.mod_parts["[mod_part.slot_flags]"] = part_datum
