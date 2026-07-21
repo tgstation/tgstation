@@ -37,7 +37,7 @@
 	strip_delay = 3 SECONDS
 	equip_delay_other = 4 SECONDS
 	var/hit_reflect_chance = 50
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_SECURITY_ARMOR
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_SECURITY_ARMOR
 
 /obj/item/clothing/suit/hooded/ablative/IsReflect(def_zone)
 	if(!(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))) //If not shot where ablative is covering you, you don't get the reflection bonus!

@@ -85,7 +85,7 @@
 /obj/item/clothing/suit/bio_suit/security
 	armor_type = /datum/armor/bio_suit_security
 	icon_state = "bio_security"
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_SECURITY_ARMOR
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_SECURITY_ARMOR
 
 /datum/armor/bio_suit_security
 	melee = 25

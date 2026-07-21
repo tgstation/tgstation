@@ -44,7 +44,7 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	armor_type = /datum/armor/hooded_explorer
 	resistance_flags = FIRE_PROOF
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_MINING
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_MINING
 
 /obj/item/clothing/suit/hooded/explorer/Initialize(mapload)
 	. = ..()
@@ -123,7 +123,7 @@
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/hooded_goliath
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_MINING
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_MINING
 
 /datum/armor/hooded_goliath
 	melee = 60
@@ -193,7 +193,7 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 6)
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_MINING
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_MINING
 
 /obj/item/clothing/suit/armor/bone/Initialize(mapload)
 	. = ..()

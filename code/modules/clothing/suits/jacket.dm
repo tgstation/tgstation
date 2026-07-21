@@ -15,7 +15,7 @@
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	species_exception = list(/datum/species/golem)
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_PERSONAL_CARRY
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_PERSONAL_CARRY
 
 /obj/item/clothing/suit/toggle/jacket
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
@@ -64,7 +64,7 @@
 	blood_overlay_type = "coat"
 	flags_inv = HIDEBELT
 	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR // I know kung-fu
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_IMPROV_GUN
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_IMPROV_GUN
 
 /obj/item/clothing/suit/jacket/blazer
 	name = "blazer jacket"
@@ -109,7 +109,7 @@
 	desc = "Aviators not included."
 	icon_state = "bomberjacket"
 	inhand_icon_state = "brownjsuit"
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_IMPROV_GUN
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_IMPROV_GUN
 
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
@@ -118,7 +118,7 @@
 	inhand_icon_state = "hostrench"
 	resistance_flags = NONE
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_IMPROV_GUN
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_IMPROV_GUN
 
 /obj/item/clothing/suit/jacket/leather/biker
 	name = "biker jacket"
@@ -152,7 +152,7 @@
 	desc = "A canvas jacket styled after classical American military garb. Feels sturdy, yet comfortable."
 	icon_state = "militaryjacket"
 	inhand_icon_state = null
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_IMPROV_GUN
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_IMPROV_GUN
 
 /obj/item/clothing/suit/jacket/letterman
 	name = "letterman jacket"
@@ -160,7 +160,7 @@
 	icon_state = "letterman"
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_IMPROV_GUN
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_IMPROV_GUN
 
 /obj/item/clothing/suit/jacket/letterman_red
 	name = "red letterman jacket"
@@ -168,7 +168,7 @@
 	icon_state = "letterman_red"
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_IMPROV_GUN
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_IMPROV_GUN
 
 /obj/item/clothing/suit/jacket/letterman_syndie
 	name = "blood-red letterman jacket"
@@ -176,7 +176,7 @@
 	icon_state = "letterman_s"
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_IMPROV_GUN
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_IMPROV_GUN
 
 /obj/item/clothing/suit/jacket/letterman_nanotrasen
 	name = "blue letterman jacket"
@@ -184,4 +184,4 @@
 	icon_state = "letterman_n"
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_IMPROV_GUN
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_IMPROV_GUN

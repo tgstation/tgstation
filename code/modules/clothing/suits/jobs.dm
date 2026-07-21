@@ -126,7 +126,7 @@
 	blood_overlay_type = "coat"
 	armor_type = /datum/armor/jacket_det_suit
 	flags_inv = HIDEBELT
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_DETECTIVE
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_DETECTIVE
 
 /datum/armor/jacket_det_suit
 	melee = 25
@@ -147,7 +147,7 @@
 	icon_state = "det_blazer"
 	armor_type = /datum/armor/jacket_det_suit
 	inhand_icon_state = null
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_DETECTIVE
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_DETECTIVE
 
 /obj/item/clothing/suit/jacket/det_suit/noir
 	name = "noir blazer jacket"

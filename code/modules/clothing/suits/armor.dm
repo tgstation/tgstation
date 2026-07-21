@@ -14,7 +14,7 @@
 	max_integrity = 250
 	resistance_flags = NONE
 	armor_type = /datum/armor/suit_armor
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_SECURITY_ARMOR
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_SECURITY_ARMOR
 
 /datum/armor/suit_armor
 	melee = 35
@@ -399,7 +399,7 @@
 	icon_state = "detective-armor"
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_DETECTIVE
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_DETECTIVE
 
 /obj/item/clothing/suit/armor/swat
 	name = "MK.I SWAT Suit"

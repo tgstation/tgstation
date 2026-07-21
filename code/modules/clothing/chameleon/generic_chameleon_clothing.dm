@@ -63,7 +63,7 @@ do { \
 	armor_type = /datum/armor/suit_chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/suit)
 	action_slots = ALL
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_SECURITY_ARMOR
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_SECURITY_ARMOR
 
 /obj/item/clothing/suit/chameleon/broken
 

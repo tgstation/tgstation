@@ -29,7 +29,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	transparent_protection = HIDEGLOVES|HIDESUITSTORAGE|HIDEJUMPSUIT|HIDESHOES
 	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 10)
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_MINING
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_MINING
 
 /datum/armor/cloak_drake
 	melee = 65

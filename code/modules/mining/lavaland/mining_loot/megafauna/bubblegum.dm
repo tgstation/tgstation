@@ -45,7 +45,7 @@
 	greyscale_config = /datum/greyscale_config/heck_suit
 	greyscale_config_worn = /datum/greyscale_config/heck_suit/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_MINING
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_MINING
 
 /datum/armor/hooded_hostile_environment
 	melee = 70

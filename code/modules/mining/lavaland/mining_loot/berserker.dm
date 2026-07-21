@@ -23,7 +23,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	clothing_flags = THICKMATERIAL|HEADINTERNALS
-	suit_storage_container_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_MINING
+	suit_storage_container_flags = parent_type::suit_storage_container_flags | SUIT_STORAGE_MINING
 
 /datum/armor/hooded_berserker
 	melee = 30
