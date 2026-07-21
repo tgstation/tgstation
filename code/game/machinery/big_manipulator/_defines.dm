@@ -36,10 +36,6 @@
 #define POINT_OVERFLOW_HELD "TO HELD"
 #define POINT_OVERFLOW_FORBIDDEN "FORBID"
 
-// What should the manipulator do after there's nothing else to interact with on this point anymore
-#define POST_INTERACTION_DROP_AT_POINT "AT DROPOFF"
-
-
 #define PICKUP_EAGER "Always Pick Up"
 #define PICKUP_CAN_WAIT "Wait For Suiting"
 
