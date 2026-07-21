@@ -37,6 +37,7 @@
 	icon_state = "hivelord_core"
 	actions_types = list(/datum/action/cooldown/monster_core_action)
 
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_MINING
 	item_flags = NOBLUDGEON
 	slot = ORGAN_SLOT_MONSTER_CORE
 	organ_flags = ORGAN_ORGANIC

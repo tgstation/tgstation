@@ -6,6 +6,7 @@
 	icon_state = "debug"
 	abstract_type = /obj/item/gun/ballistic
 	w_class = WEIGHT_CLASS_NORMAL
+	suit_storage_containee_flags = SUIT_STORAGE_DETECTIVE | SUIT_STORAGE_SECURITY_ARMOR | SUIT_STORAGE_SECURITY_WINTERCOAT
 	pickup_sound = 'sound/items/handling/gun/gun_pick_up.ogg'
 	drop_sound = 'sound/items/handling/gun/gun_drop.ogg'
 	sound_vary = TRUE

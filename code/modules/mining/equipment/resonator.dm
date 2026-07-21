@@ -12,6 +12,7 @@
 	force = 15
 	throwforce = 10
 	slot_flags = ITEM_SLOT_BELT
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_MINING
 
 	/// the mode of the resonator; has three modes: auto (1), manual (2), and matrix (3)
 	var/mode = RESONATOR_MODE_AUTO

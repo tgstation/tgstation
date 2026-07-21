@@ -9,7 +9,7 @@
  */
 /obj/item/tank/internals
 	interaction_flags_click = FORBID_TELEKINESIS_REACH|NEED_HANDS|ALLOW_RESTING
-
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_MINING
 
 /// Allows carbon to toggle internals via AltClick of the equipped tank.
 /obj/item/tank/internals/click_alt(mob/user)
@@ -130,6 +130,7 @@
 	icon_state = "plasmaman_tank"
 	inhand_icon_state = "plasmaman_tank"
 	tank_holder_icon_state = null
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_BASIC | SUIT_STORAGE_DETECTIVE | SUIT_STORAGE_SECURITY_ARMOR | SUIT_STORAGE_CHAPLAIN
 	force = 10
 	distribute_pressure = TANK_PLASMAMAN_RELEASE_PRESSURE
 
@@ -172,6 +173,7 @@
 	worn_icon = null
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_BASIC | SUIT_STORAGE_DETECTIVE | SUIT_STORAGE_SECURITY_ARMOR | SUIT_STORAGE_CHAPLAIN
 	w_class = WEIGHT_CLASS_SMALL
 	force = 4
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE

@@ -171,6 +171,7 @@
 	worn_icon_state = "cigpack"
 	throwforce = 2
 	slot_flags = ITEM_SLOT_BELT
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_CHAPLAIN
 	spawn_type = /obj/item/flashlight/flare/candle
 	spawn_count = 5
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
@@ -191,6 +192,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	slot_flags = ITEM_SLOT_BELT
+	suit_storage_containee_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_DETECTIVE
 	spawn_type = /obj/item/cigarette/space_cigarette
 	spawn_count = 6
 	custom_price = PAYCHECK_CREW

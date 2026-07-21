@@ -21,6 +21,7 @@
 	force = 0 //You can't hit stuff unless wielded
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_MINING
 	throwforce = 5
 	throw_speed = 4
 	armour_penetration = 10

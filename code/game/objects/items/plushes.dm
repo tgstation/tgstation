@@ -7,6 +7,7 @@
 	attack_verb_continuous = list("thumps", "whomps", "bumps")
 	attack_verb_simple = list("thump", "whomp", "bump")
 	w_class = WEIGHT_CLASS_SMALL
+	suit_storage_containee_flags = SUIT_STORAGE_BASIC
 	resistance_flags = FLAMMABLE
 	floor_placeable = TRUE
 	var/list/squeak_override //Weighted list; If you want your plush to have different squeak sounds use this

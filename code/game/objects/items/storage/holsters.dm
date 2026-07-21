@@ -6,6 +6,7 @@
 	inhand_icon_state = "holster"
 	worn_icon_state = "holster"
 	alternate_worn_layer = UNDER_SUIT_LAYER
+	suit_storage_containee_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_PERSONAL_CARRY
 	w_class = WEIGHT_CLASS_BULKY
 	storage_type = /datum/storage/holster
 
@@ -22,6 +23,7 @@
 	name = "energy shoulder holsters"
 	desc = "A rather plain pair of shoulder holsters with a bit of insulated padding inside. Designed to hold energy weaponry."
 	storage_type = /datum/storage/holster/energy
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_DETECTIVE | SUIT_STORAGE_SECURITY_ARMOR | SUIT_STORAGE_SECURITY_WINTERCOAT
 
 /obj/item/storage/belt/holster/energy/thermal
 	name = "thermal shoulder holsters"
@@ -57,6 +59,7 @@
 	name = "detective's holster"
 	desc = "A holster able to carry handguns and some ammo. WARNING: Badasses only."
 	w_class = WEIGHT_CLASS_BULKY
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_DETECTIVE | SUIT_STORAGE_SECURITY_ARMOR | SUIT_STORAGE_SECURITY_WINTERCOAT
 	storage_type = /datum/storage/holster/detective
 
 /obj/item/storage/belt/holster/detective/full/PopulateContents()
@@ -95,6 +98,7 @@
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
 	w_class = WEIGHT_CLASS_BULKY
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_DETECTIVE | SUIT_STORAGE_SECURITY_ARMOR | SUIT_STORAGE_SECURITY_WINTERCOAT
 	storage_type = /datum/storage/holster/nukie
 
 /obj/item/storage/belt/holster/nukie/cowboy

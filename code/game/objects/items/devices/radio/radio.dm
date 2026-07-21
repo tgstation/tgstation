@@ -17,6 +17,7 @@
 
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
+	suit_storage_containee_flags = SUIT_STORAGE_BASIC
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL

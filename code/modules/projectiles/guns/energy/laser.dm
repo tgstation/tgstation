@@ -259,6 +259,7 @@
 	desc = "A retro laser gun modified to fire harmless blue beams of light. Sound effects included!"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
 	item_flags = NONE
+	suit_storage_containee_flags = SUIT_STORAGE_BASIC
 	clumsy_check = FALSE
 	pin = /obj/item/firing_pin/tag/blue
 	ammo_x_offset = 2
@@ -277,6 +278,7 @@
 	desc = "A retro laser gun modified to fire harmless beams red of light. Sound effects included!"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
 	item_flags = NONE
+	suit_storage_containee_flags = SUIT_STORAGE_BASIC
 	clumsy_check = FALSE
 	pin = /obj/item/firing_pin/tag/red
 	ammo_x_offset = 2

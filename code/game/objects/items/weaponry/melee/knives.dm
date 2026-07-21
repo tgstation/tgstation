@@ -19,6 +19,7 @@
 	force = 10
 	demolition_mod = 0.75
 	w_class = WEIGHT_CLASS_SMALL
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_MINING
 	throwforce = 10
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	throw_speed = 3
@@ -161,6 +162,7 @@
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "cut")
 	slot_flags = ITEM_SLOT_MASK
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_SECURITY_ARMOR
 
 /datum/embedding/combat_knife
 	pain_mult = 4

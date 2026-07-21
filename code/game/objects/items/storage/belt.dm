@@ -679,6 +679,7 @@
 /obj/item/storage/belt/sheath
 	desc = "holds like, blades and stuff. You should not be seeing this."
 	w_class = WEIGHT_CLASS_BULKY
+	suit_storage_containee_flags = SUIT_STORAGE_BASIC
 	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
 	var/stored_blade
 	actions_types = list(/datum/action/innate/blade_counter)

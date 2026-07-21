@@ -7,6 +7,7 @@
 	icon_angle = -45
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_MINING
 	force = 15
 	throwforce = 10
 	demolition_mod = 1.15

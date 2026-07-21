@@ -8,6 +8,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "gun"
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_MINING
 	item_flags = NOBLUDGEON
 	///overlay when the hook is retracted
 	var/static/mutable_appearance/hook_overlay = mutable_appearance(icon = 'icons/obj/mining.dmi', icon_state = "grapple_gun_hooked")

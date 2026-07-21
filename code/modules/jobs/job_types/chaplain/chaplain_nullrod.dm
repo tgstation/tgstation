@@ -40,6 +40,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	throw_range = 4
 	throwforce = 10
 	slot_flags = ITEM_SLOT_BELT
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_CHAPLAIN
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = UNIQUE_RENAME
 	wound_bonus = -10
@@ -596,6 +597,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 15
 	obj_flags = parent_type::obj_flags | UNIQUE_RENAME
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_CHAPLAIN
 	offspring_type = /obj/item/toy/plush/carpplushie
 	divine = TRUE
 

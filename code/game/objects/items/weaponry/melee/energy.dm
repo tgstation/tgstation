@@ -562,6 +562,7 @@
 /obj/item/melee/energy/sword/nullrod
 	name = "light energy sword"
 	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_CHAPLAIN
 	throw_speed = 3
 	throw_range = 4
 	block_chance = 30

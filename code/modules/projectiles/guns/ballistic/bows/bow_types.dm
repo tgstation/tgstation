@@ -21,6 +21,7 @@
 	base_icon_state = "holybow"
 	worn_icon_state = "holybow"
 	slot_flags = ITEM_SLOT_BACK
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_CHAPLAIN
 	obj_flags = UNIQUE_RENAME
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/bow/holy
 	projectile_damage_multiplier = 0.6
@@ -48,6 +49,7 @@
 	base_icon_state = "ashenbow"
 	worn_icon_state = "ashenbow"
 	slot_flags = ITEM_SLOT_BACK
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_MINING
 	obj_flags = UNIQUE_RENAME
 	projectile_damage_multiplier = 0.5
 	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 6)

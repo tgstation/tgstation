@@ -25,6 +25,7 @@
 	max_idle_programs = 2
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
+	suit_storage_containee_flags = SUIT_STORAGE_BASIC
 	has_light = TRUE //LED flashlight!
 	comp_light_luminosity = 2.3 //this is what old PDAs were set to
 	looping_sound = FALSE

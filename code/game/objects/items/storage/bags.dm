@@ -100,6 +100,7 @@
 	worn_icon_state = "satchel"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_MINING
 	storage_type = /datum/storage/bag/ore
 	/// If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 	var/spam_protection = FALSE
@@ -342,6 +343,7 @@
 	icon = 'icons/obj/service/library.dmi'
 	icon_state = "bookbag"
 	worn_icon_state = "bookbag"
+	suit_storage_containee_flags = SUIT_STORAGE_BASIC
 	resistance_flags = FLAMMABLE
 	storage_type = /datum/storage/bag/books
 

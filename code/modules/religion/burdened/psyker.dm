@@ -132,6 +132,7 @@
 	icon_state = "lucky"
 	force = 10
 	fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_CHAPLAIN
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/revchap
 	obj_flags = UNIQUE_RENAME
 	custom_materials = null

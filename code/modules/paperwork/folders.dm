@@ -4,6 +4,7 @@
 	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "folder"
 	w_class = WEIGHT_CLASS_SMALL
+	suit_storage_containee_flags = SUIT_STORAGE_BASIC
 	pressure_resistance = 2
 	resistance_flags = FLAMMABLE
 	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC

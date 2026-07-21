@@ -3,6 +3,7 @@
 	desc = "A small, easily concealable 9mm handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_SMALL
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_PERSONAL_CARRY
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m9mm
 	can_suppress = TRUE
 	burst_size = 1

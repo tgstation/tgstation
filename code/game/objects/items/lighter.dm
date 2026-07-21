@@ -8,6 +8,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_DETECTIVE
 	resistance_flags = FIRE_PROOF
 	custom_price = PAYCHECK_CREW * 1.1
 	light_system = OVERLAY_LIGHT

@@ -6,6 +6,7 @@
 	worn_icon_state = "las_musket"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket)
 	slot_flags = ITEM_SLOT_BACK
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_IMPROV_GUN
 	obj_flags = UNIQUE_RENAME
 	weapon_weight = WEAPON_HEAVY
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.2, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.2)
@@ -50,6 +51,7 @@
 	name = "smoothbore disabler"
 	desc = "A hand-crafted disabler, using a hard knock on an energy cell to fire the stunner laser. A lack of proper focusing means it has no accuracy whatsoever."
 	icon_state = "smoothbore"
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_PERSONAL_CARRY | SUIT_STORAGE_IMPROV_GUN
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler/smoothbore)
 	shaded_charge = 1
 	charge_sections = 1

@@ -5,6 +5,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_ID
+	suit_storage_containee_flags = SUIT_STORAGE_BASIC
 	storage_type = /datum/storage/wallet
 
 	var/obj/item/card/id/front_id = null

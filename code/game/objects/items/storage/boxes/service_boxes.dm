@@ -77,6 +77,7 @@
 	worn_icon_state = "lighter"
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
+	suit_storage_containee_flags = SUIT_STORAGE_BASIC
 	drop_sound = 'sound/items/handling/matchbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/matchbox_pickup.ogg'
 	custom_price = PAYCHECK_CREW * 0.4

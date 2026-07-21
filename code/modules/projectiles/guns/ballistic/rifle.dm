@@ -306,6 +306,7 @@
 	inhand_icon_state = "pipegun"
 	worn_icon_state = "pipegun"
 	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_IMPROV_GUN
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 8, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
 

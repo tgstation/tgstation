@@ -11,6 +11,7 @@
 	throw_range = 2
 	w_class = WEIGHT_CLASS_TINY
 	full_w_class = WEIGHT_CLASS_TINY
+	suit_storage_containee_flags = SUIT_STORAGE_BASIC
 	resistance_flags = FLAMMABLE
 	var/value = 0
 

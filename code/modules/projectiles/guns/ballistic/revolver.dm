@@ -2,6 +2,7 @@
 	name = "\improper .357 revolver"
 	desc = "A suspicious revolver. Uses .357 ammo."
 	icon_state = "revolver"
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_PERSONAL_CARRY
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder
 	fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
 	load_sound = 'sound/items/weapons/gun/revolver/load_bullet.ogg'

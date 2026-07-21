@@ -6,6 +6,7 @@
 	pickup_sound = 'sound/items/handling/gun/gun_pick_up.ogg'
 	drop_sound = 'sound/items/handling/gun/gun_drop.ogg'
 	sound_vary = TRUE
+	suit_storage_containee_flags = SUIT_STORAGE_DETECTIVE | SUIT_STORAGE_SECURITY_ARMOR | SUIT_STORAGE_SECURITY_WINTERCOAT
 
 	/// What type of power cell this uses
 	var/obj/item/stock_parts/power_store/cell

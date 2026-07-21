@@ -17,6 +17,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
+	suit_storage_containee_flags = SUIT_STORAGE_BASIC | SUIT_STORAGE_DETECTIVE | SUIT_STORAGE_MINING
 	custom_materials = list(
 		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5,
 		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2,
@@ -591,6 +592,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_CHAPLAIN
 	heat = 1000
 	light_range = 2
 	light_power = 1.5
