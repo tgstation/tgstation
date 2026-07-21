@@ -573,6 +573,7 @@
 	name = "security pen"
 	desc = "This is a red ink pen exclusively provided to members of the Security Department. Its opposite end features a built-in holographic projector designed for issuing arrest prompts to individuals."
 	icon_state = "pen_sec"
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_SECURITY_ARMOR
 	COOLDOWN_DECLARE(holosign_cooldown)
 
 /obj/item/pen/red/security/examine(mob/user)

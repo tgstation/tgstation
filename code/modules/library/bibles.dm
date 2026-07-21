@@ -74,6 +74,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	force_string = "holy"
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_CHAPLAIN
 	unique = TRUE
 	carved_storage_type = /datum/storage/carved_book/bible
 

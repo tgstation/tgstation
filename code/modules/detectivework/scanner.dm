@@ -13,6 +13,7 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
+	suit_storage_containee_flags = SUIT_STORAGE_DETECTIVE
 	/// if the scanner is currently busy processing
 	var/scanner_busy = FALSE
 	var/list/log_data = list()

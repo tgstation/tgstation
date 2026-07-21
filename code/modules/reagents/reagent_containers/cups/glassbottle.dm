@@ -394,6 +394,7 @@
 	icon_state = "holyflask"
 	inhand_icon_state = "holyflask"
 	broken_inhand_icon_state = "broken_holyflask"
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_CHAPLAIN
 	list_reagents = list(/datum/reagent/water/holywater = 100)
 
 /obj/item/reagent_containers/cup/glass/bottle/holywater/add_message_overlay()

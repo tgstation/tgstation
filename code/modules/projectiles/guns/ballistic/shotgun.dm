@@ -106,6 +106,7 @@
 	icon_state = "cshotgunc"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com/compact
 	w_class = WEIGHT_CLASS_BULKY
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_DETECTIVE | SUIT_STORAGE_SECURITY_ARMOR | SUIT_STORAGE_SECURITY_WINTERCOAT
 	weapon_weight = WEAPON_MEDIUM
 
 //component for seclight attachment

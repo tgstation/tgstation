@@ -11,6 +11,7 @@
 	reach = 2
 	throw_range = 4
 	w_class = WEIGHT_CLASS_NORMAL
+	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_MINING
 	attack_verb_continuous = list("whacks", "flails", "bludgeons")
 	attack_verb_simple = list("whack", "flail", "bludgeon")
 	resistance_flags = FLAMMABLE

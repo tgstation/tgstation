@@ -220,6 +220,7 @@ GAME_VERB_SRC(/obj/item/reagent_containers/spray, empty, usr, "Empty Spray Bottl
 	inhand_icon_state = "pepperspray"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+	suit_storage_containee_flags = SUIT_STORAGE_DETECTIVE | SUIT_STORAGE_SECURITY_ARMOR | SUIT_STORAGE_SECURITY_WINTERCOAT
 	volume = 50
 	stream_range = 4
 	amount_per_transfer_from_this = 5
