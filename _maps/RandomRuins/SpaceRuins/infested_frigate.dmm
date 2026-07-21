@@ -127,6 +127,7 @@
 	desc = "Resin just thin enough to let light pass through, but it's congealing in the same way as the thicker stuff.";
 	name = "viscous resin membrane"
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "bZ" = (
@@ -844,6 +845,7 @@
 	name = "viscous resin";
 	desc = "The resin is thick and it keeps collapsing on itself."
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "nU" = (
@@ -1413,6 +1415,7 @@
 	desc = "Resin just thin enough to let light pass through, but it's congealing in the same way as the thicker stuff.";
 	name = "viscous resin membrane"
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "wJ" = (
@@ -1656,6 +1659,7 @@
 	name = "viscous resin";
 	desc = "The resin is thick and it keeps collapsing on itself."
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "Ah" = (
@@ -2247,6 +2251,7 @@
 	name = "viscous resin";
 	desc = "The resin is thick and it keeps collapsing on itself."
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "KC" = (
@@ -2588,6 +2593,7 @@
 	minimum_growtime = 120000;
 	growtime = 150000
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "Pj" = (
@@ -2639,6 +2645,7 @@
 /obj/effect/decal/cleanable/glass{
 	dir = 1
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "Qm" = (
