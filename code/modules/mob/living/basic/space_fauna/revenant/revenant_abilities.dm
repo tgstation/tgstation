@@ -416,10 +416,12 @@
 	name = "Vortex"
 	desc = "Causes nearby objects to dump their contents and get sucked towards your location."
 	button_icon_state = "r_vortex"
-	cooldown_time = 20 SECONDS
+	cooldown_time = 15 SECONDS
 	aoe_radius = 1 // only dump contents close by
-	cast_amount = 10
-	unlock_amount = 0
+	unlock_amount = 45
+	cast_amount = 30
+	stun_duration = 2 SECONDS
+	reveal_duration = 5 SECONDS
 
 /datum/action/cooldown/spell/aoe/revenant/vortex/cast_on_thing_in_aoe(turf/target_turf, mob/living/basic/revenant/caster)
 	for(var/obj/item/storage/cursed_storage in target_turf)
@@ -442,10 +444,11 @@
 	name = "Scatter"
 	desc = "Causes nearby objects to dump their contents and get thrown away from your location."
 	button_icon_state = "r_scatter"
-	cooldown_time = 20 SECONDS
-	aoe_radius = 1
-	cast_amount = 10
-	unlock_amount = 0
+	cooldown_time = 25 SECONDS
+	unlock_amount = 60
+	cast_amount = 55
+	stun_duration = 3 SECONDS
+	reveal_duration = 5 SECONDS
 
 /datum/action/cooldown/spell/aoe/revenant/vortex/scatter/movement_effect(atom/cast_on)
 	goonchem_vortex(get_turf(cast_on), TRUE, 5) // pushing is much stronger than pulling
