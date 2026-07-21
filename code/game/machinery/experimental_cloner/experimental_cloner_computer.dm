@@ -3,6 +3,7 @@
 	name = "experimental cloner control console"
 	desc = "It scans DNA structures."
 	circuit = /obj/item/circuitboard/computer/experimental_cloner
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/crew")
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
 	light_color = LIGHT_COLOR_GREEN

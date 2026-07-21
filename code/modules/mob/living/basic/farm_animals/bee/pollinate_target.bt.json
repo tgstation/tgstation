@@ -1,0 +1,27 @@
+{
+	"dm_type": "/datum/bt_node/subtree/pollinate_target",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+		"key": "BB_TARGET_HYDRO"
+	},
+	"child": {
+		"type": "sequence",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+				"vars": {
+					"target_key": "BB_TARGET_HYDRO",
+					"required_dist": 1,
+					"finish_on_arrival": true
+				}
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/pollinate_hydro"
+			}
+		]
+	}
+}

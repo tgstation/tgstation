@@ -11,6 +11,7 @@
 	drop_sound = 'sound/items/evidence_bag/evidence_bag_drop.ogg'
 	pickup_sound = 'sound/items/evidence_bag/evidence_bag_pickup.ogg'
 	sound_vary = TRUE
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT)
 
 /obj/item/evidencebag/Initialize(mapload)
 	. = ..()

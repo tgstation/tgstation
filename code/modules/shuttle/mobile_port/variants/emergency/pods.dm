@@ -23,8 +23,8 @@
 	name = "pod control computer"
 	locked = TRUE
 	possible_destinations = "pod_asteroid"
-	icon = 'icons/obj/machines/wallmounts.dmi'
-	icon_state = "pod_off"
+	icon = MAP_SWITCH('icons/obj/machines/wallmounts.dmi', 'icons/obj/fluff/map_previews.dmi')
+	icon_state = MAP_SWITCH("pod_off", "/obj/machinery/computer/shuttle/pod")
 	circuit = /obj/item/circuitboard/computer/emergency_pod
 	light_color = LIGHT_COLOR_BLUE
 	density = FALSE
