@@ -128,6 +128,10 @@
 		infection.Insert(new_zombie)
 		RegisterSignal(infection, COMSIG_ORGAN_REMOVED, PROC_REF(organ_removed))
 
+	var/obj/item/bodypart/head/head = new_zombie.get_bodypart(BODY_ZONE_HEAD)
+	if(!QDELETED(head))
+		head.can_dismember = TRUE
+
 	var/obj/item/organ/tongue/old_tongue = new_zombie.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!QDELETED(old_tongue))
 		old_tongue.Remove(new_zombie, special = TRUE)
@@ -158,17 +162,24 @@
 
 	RegisterSignal(new_zombie, COMSIG_SPECIES_GAIN, PROC_REF(zombie_species_changed))
 	RegisterSignal(new_zombie, COMSIG_LIVING_DEATH, PROC_REF(zombie_died_somehow))
+	RegisterSignal(new_zombie, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(zombie_limb_gained))
+	RegisterSignal(new_zombie, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(zombie_limb_lost))
 
 	return TRUE
 
 /datum/status_effect/zombie/on_remove()
 	var/mob/living/carbon/human/was_zombie = owner
+
 	var/obj/item/organ/tongue/zombie/old_tongue = was_zombie.get_organ_slot(ORGAN_SLOT_TONGUE)
 	var/obj/item/organ/tongue/removed_tongue_real = removed_tongue?.resolve()
 	if(!QDELETED(old_tongue))
 		qdel(old_tongue)
 	if(!QDELETED(removed_tongue_real))
 		removed_tongue_real.Insert(was_zombie, special = TRUE)
+
+	var/obj/item/bodypart/head/head = was_zombie.get_bodypart(BODY_ZONE_HEAD)
+	if(!QDELETED(head))
+		head.can_dismember = initial(head.can_dismember)
 
 	qdel(was_zombie.GetComponent(/datum/component/mutant_hands))
 	qdel(was_zombie.GetComponent(/datum/component/regenerator))
@@ -185,6 +196,16 @@
 	was_zombie.cure_husk(id)
 	restore_zombie_temperature()
 	remove_zombie_biotypes()
+
+	var/obj/item/organ/zombie_infection/infection = was_zombie.get_organ_slot(ORGAN_SLOT_ZOMBIE)
+	if(!QDELETED(infection))
+		UnregisterSignal(infection, COMSIG_ORGAN_REMOVED)
+		qdel(infection)
+
+	UnregisterSignal(was_zombie, COMSIG_SPECIES_GAIN)
+	UnregisterSignal(was_zombie, COMSIG_LIVING_DEATH)
+	UnregisterSignal(was_zombie, COMSIG_CARBON_POST_ATTACH_LIMB)
+	UnregisterSignal(was_zombie, COMSIG_CARBON_POST_REMOVE_LIMB)
 
 /datum/status_effect/zombie/proc/add_zombie_biotypes()
 	if(!(owner.mob_biotypes & MOB_UNDEAD))
@@ -209,8 +230,19 @@
 	zombie.dna.species.bodytemp_normal = initial(zombie.dna.species.bodytemp_normal)
 	zombie.dna.species.bodytemp_heat_damage_limit = initial(zombie.dna.species.bodytemp_heat_damage_limit)
 
+/datum/status_effect/zombie/proc/zombie_limb_gained(mob/living/carbon/human/zombie, obj/item/bodypart/head/limb)
+	SIGNAL_HANDLER
+	if(istype(limb))
+		limb.can_dismember = TRUE
+
+/datum/status_effect/zombie/proc/zombie_limb_lost(mob/living/carbon/human/zombie, obj/item/bodypart/head/limb)
+	SIGNAL_HANDLER
+	if(istype(limb))
+		limb.can_dismember = initial(limb.can_dismember)
+
 /datum/status_effect/zombie/proc/organ_removed(obj/item/organ/zombie_infection/infection, ...)
 	SIGNAL_HANDLER
+	UnregisterSignal(infection, COMSIG_ORGAN_REMOVED)
 	qdel(src)
 
 /datum/status_effect/zombie/proc/zombie_died_somehow(mob/living/carbon/human/zombie, gibbed)
@@ -219,7 +251,7 @@
 		return
 
 	var/obj/item/organ/zombie_infection/infection = owner.get_organ_slot(ORGAN_SLOT_ZOMBIE)
-	qdel(infection)
+	qdel(infection) // this will in turn qdel this status effect
 
 /datum/status_effect/zombie/proc/zombie_species_changed(mob/living/carbon/human/zombie, ...)
 	SIGNAL_HANDLER

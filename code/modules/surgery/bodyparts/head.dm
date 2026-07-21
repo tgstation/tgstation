@@ -84,7 +84,7 @@
 	var/datum/worn_feature_offset/worn_face_offset
 
 	/// Can this head be dismembered normally?
-	VAR_PROTECTED/can_dismember = FALSE
+	var/can_dismember = FALSE
 
 /obj/item/bodypart/head/Initialize(mapload)
 	. = ..()

@@ -20,6 +20,9 @@
 	var/husk_type = "humanoid"
 	///The color to multiply the greyscaled husk sprites by. Can be null. Old husk sprite chest color is #A6A6A6
 	var/husk_color = "#A6A6A6"
+	/// The color to multiply the zombie husk sprites by.
+	var/zombie_color = "#006009"
+
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	/// The mob that "owns" this limb
 	/// DO NOT MODIFY DIRECTLY. Use update_owner()
@@ -1357,7 +1360,7 @@
 		. += huskify_image(thing_to_husk = limb)
 		if(aux)
 			. += huskify_image(thing_to_husk = aux)
-		draw_color = is_husked == HUSKED_ZOMBIE ? "#006009" : husk_color
+		draw_color = is_husked == HUSKED_ZOMBIE ? zombie_color : husk_color
 	else
 		update_draw_color()
 
