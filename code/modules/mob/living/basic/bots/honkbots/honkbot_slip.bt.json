@@ -1,0 +1,77 @@
+{
+	"dm_type": "/datum/bt_node/subtree/honkbot_slip",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/can_see_target",
+	"vars": {
+		"observer_abort": "BT_ABORT_BOTH",
+		"key": "BB_SLIPPERY_TARGET",
+		"range": 5
+	},
+	"child": {
+		"type": "decorator",
+		"decorator": "/datum/bt_node/decorator/can_see_target",
+		"vars": {
+			"observer_abort": "BT_ABORT_BOTH",
+			"key": "BB_SLIP_TARGET",
+			"range": 5
+		},
+		"child": {
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/pawn_has_gravity",
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "BB_SLIP_TARGET",
+							"required_dist": 1,
+							"finish_on_arrival": true,
+							"movement_type": "/datum/ai_movement/basic_avoidance"
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/grab_target",
+						"vars": {
+							"target_key": "BB_SLIP_TARGET"
+						}
+					},
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/is_grabbing_target",
+						"vars": {
+							"observer_abort": "BT_ABORT_SELF",
+							"key": "BB_SLIP_TARGET"
+						},
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+							"vars": {
+								"target_key": "BB_SLIPPERY_TARGET",
+								"required_dist": 0,
+								"finish_on_arrival": true,
+								"movement_type": "/datum/ai_movement/basic_avoidance"
+							}
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/release_and_slip",
+						"vars": {
+							"victim_key": "BB_SLIP_TARGET"
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/perform_emote",
+						"vars": {
+							"emote": "flip"
+						}
+					}
+				]
+			}
+		}
+	}
+}

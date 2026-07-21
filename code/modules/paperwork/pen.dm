@@ -575,6 +575,7 @@
 	icon_state = "pen_sec"
 	suit_storage_containee_flags = parent_type::suit_storage_containee_flags | SUIT_STORAGE_SECURITY_ARMOR
 	COOLDOWN_DECLARE(holosign_cooldown)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT)
 
 /obj/item/pen/red/security/examine(mob/user)
 	. = ..()

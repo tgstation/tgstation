@@ -14,6 +14,7 @@
 	35% cheaper than express delivery."}
 	express_tooltip = @{"Sends your purchases instantly."}
 	credit_type = MONEY_BITRUNNING_SYMBOL
+	generate_map_preview = FALSE
 
 	order_categories = list(
 		CATEGORY_BITRUNNING_FLAIR,

@@ -27,6 +27,9 @@
 	return values
 
 /datum/preference/choiced/species/apply_to_human(mob/living/carbon/human/target, value)
+	if(value == target.dna.species.type) // we're already this species
+		return
+
 	target.set_species(value, icon_update = FALSE, pref_load = TRUE)
 
 /datum/preference/choiced/species/compile_constant_data()

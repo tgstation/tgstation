@@ -524,7 +524,10 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	attack_verb_continuous = list("whips", "lashes")
 	attack_verb_simple = list("whip", "lash")
 	hitsound = 'sound/items/weapons/chainhit.ogg'
-	menu_description = "A whip. Deals extra damage to vampires. Fits in pockets. Can be worn on the belt."
+	menu_description = "A whip forged from silver. Deals extra damage to vampires. Fits in pockets. Can be worn on the belt."
+	material_flags = MATERIAL_EFFECTS
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 3, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
+	material_slots = list(/datum/material_slot/weapon_head = /datum/material/silver, /datum/material_slot/handle = /datum/material/iron)
 
 // Atheist's Fedora - Wear it on your head. No melee damage, massive throw force.
 

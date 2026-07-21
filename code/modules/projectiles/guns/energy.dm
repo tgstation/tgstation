@@ -104,6 +104,7 @@
 	if(cell && resistance_flags & INDESTRUCTIBLE)
 		cell.resistance_flags |= INDESTRUCTIBLE
 	cell.resistance_flags |= BOMB_PROOF
+	cell.custom_materials = null //do not give printed energy guns more mats than they already have.
 	update_ammo_types()
 	recharge_newshot(TRUE)
 	if(selfcharge)

@@ -73,6 +73,7 @@
 	usesound = 'sound/items/weapons/drill.ogg'
 	hitsound = 'sound/items/weapons/drill.ogg'
 	desc = "An electric mining drill for the especially scrawny."
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/pickaxe/drill/Initialize(mapload)
 	. = ..()
@@ -84,6 +85,7 @@
 	inhand_icon_state = "diamonddrill"
 	toolspeed = 0.2
 	desc = "Yours is the drill that will pierce the heavens!"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
@@ -93,6 +95,7 @@
 	usesound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts."
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 3, /datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/silver = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/pickaxe/improvised
 	name = "improvised pickaxe"
@@ -105,7 +108,7 @@
 	toolspeed = 3 //3 times slower than a normal pickaxe
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6) //This number used to be insane and I'm just going to save your sanity and not tell you what it was.
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.05, /datum/material/plastic = SMALL_MATERIAL_AMOUNT) //This number used to be insane and I'm just going to save your sanity and not tell you what it was.
 
 /obj/item/shovel
 	name = "shovel"
@@ -324,7 +327,7 @@
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 	slowdown = 3
 	attack_speed = 1.2 SECONDS
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.6, /datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 8.6, /datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	/// The factor at which the recoil becomes less.
 	var/recoil_factor = 3
 	/// Wether we knock down and launch away out enemies when we attack.

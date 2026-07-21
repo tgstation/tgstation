@@ -286,26 +286,49 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	drop_sound = 'sound/effects/meatslap.ogg'
 	pickup_sound = 'sound/effects/meatslap.ogg'
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	/// Trophy crafting recipe for this type of sinew
+	var/trophy_type = /datum/crafting_recipe/crusher_trophy/watcher_wing
 
 /obj/item/stack/sheet/sinew/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
-
 	// As bone and sinew have just a little too many recipes for this, we'll just split them up.
 	// Sinew slapcrafting will mostly-sinew recipes, and bones will have mostly-bones recipes.
-	var/static/list/slapcraft_recipe_list = list(\
-		/datum/crafting_recipe/goliathcloak, /datum/crafting_recipe/skilt, /datum/crafting_recipe/drakecloak,\
-		)
-
+	var/list/slapcraft_recipe_list = list(
+		/datum/crafting_recipe/goliathcloak,
+		/datum/crafting_recipe/skilt,
+		/datum/crafting_recipe/drakecloak,
+	)
+	if (trophy_type)
+		slapcraft_recipe_list += trophy_type
 	AddElement(
 		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
+		slapcraft_recipes = string_list(slapcraft_recipe_list),\
 	)
+
+/obj/item/stack/sheet/sinew/icewing
+	name = "icewing watcher sinew"
+	desc = "Ice-cold filaments which presumably came from an icewing watcher's wings."
+	singular_name = "icewing watcher sinew"
+	icon_state = "sinew_icewing"
+	novariants = TRUE
+	merge_type = /obj/item/stack/sheet/sinew/icewing
+	trophy_type = /datum/crafting_recipe/crusher_trophy/icewing_watcher_wing
+
+/obj/item/stack/sheet/sinew/magmawing
+	name = "magmawing watcher sinew"
+	desc = "Fiery filaments which presumably came from a magmawing watcher's wings."
+	singular_name = "magmawing watcher sinew"
+	icon_state = "sinew_magmawing"
+	novariants = TRUE
+	merge_type = /obj/item/stack/sheet/sinew/magmawing
+	trophy_type = /datum/crafting_recipe/crusher_trophy/magmawing_watcher_wing
 
 /obj/item/stack/sheet/sinew/wolf
 	name = "wolf sinew"
 	desc = "Long stringy filaments which came from the insides of a wolf."
 	singular_name = "wolf sinew"
 	merge_type = /obj/item/stack/sheet/sinew/wolf
+	trophy_type = null
 
 GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	new/datum/stack_recipe("sinew restraints", /obj/item/restraints/handcuffs/cable/sinew, 1, crafting_flags = NONE, category = CAT_EQUIPMENT), \
@@ -314,7 +337,6 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 /obj/item/stack/sheet/sinew/get_main_recipes()
 	. = ..()
 	. += GLOB.sinew_recipes
-
 
 /*Plates*/
 /obj/item/stack/sheet/animalhide/goliath_hide

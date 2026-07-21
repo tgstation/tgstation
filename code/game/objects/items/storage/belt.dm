@@ -16,7 +16,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
 
-/obj/item/storage/belt/suicide_act(mob/living/carbon/user)
+/obj/item/storage/belt/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 

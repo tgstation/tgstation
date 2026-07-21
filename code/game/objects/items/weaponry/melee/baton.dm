@@ -597,22 +597,24 @@
 		tool.play_tool_sound(src)
 	return TRUE
 
-/obj/item/melee/baton/security/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/stock_parts/power_store/cell))
-		var/obj/item/stock_parts/power_store/cell/active_cell = item
-		if(cell)
-			to_chat(user, span_warning("[src] already has a cell!"))
-		else
-			if(active_cell.maxcharge < cell_hit_cost)
-				to_chat(user, span_notice("[src] requires a higher capacity cell."))
-				return
-			if(!user.transferItemToLoc(item, src))
-				return
-			cell = item
-			to_chat(user, span_notice("You install a cell in [src]."))
-			update_appearance()
-	else
-		return ..()
+/obj/item/melee/baton/security/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
+		return NONE
+	if(cell)
+		to_chat(user, span_warning("[src] already has a cell!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(astype(tool, /obj/item/stock_parts/power_store/cell).maxcharge < cell_hit_cost)
+		to_chat(user, span_notice("[src] requires a higher capacity cell."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
+	cell = tool
+	to_chat(user, span_notice("You install a cell in [src]."))
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/baton/security/proc/tryremovecell(mob/user)
 	if(cell && can_remove_cell)
@@ -838,37 +840,38 @@
 /obj/item/melee/baton/security/cattleprod/add_deep_lore()
 	return
 
-/obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)//handles sticking a crystal onto a stunprod to make an improved cattleprod
-	if(!istype(item, /obj/item/stack))
+/obj/item/melee/baton/security/cattleprod/item_interaction(mob/living/user, obj/item/tool, list/modifiers)//handles sticking a crystal onto a stunprod to make an improved cattleprod
+	if(!istype(tool, /obj/item/stack))
 		return ..()
 
 	if(!can_upgrade)
 		user.visible_message(span_warning("This prod is already improved!"))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
 	if(cell)
 		user.visible_message(span_warning("You can't put the crystal onto the stunprod while it has a power cell installed!"))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
 	var/our_prod
-	if(istype(item, /obj/item/stack/ore/bluespace_crystal))
-		var/obj/item/stack/ore/bluespace_crystal/our_crystal = item
+	if(istype(tool, /obj/item/stack/ore/bluespace_crystal))
+		var/obj/item/stack/ore/bluespace_crystal/our_crystal = tool
 		our_crystal.use(1)
 		our_prod = /obj/item/melee/baton/security/cattleprod/teleprod
 
-	else if(istype(item, /obj/item/stack/telecrystal))
-		var/obj/item/stack/telecrystal/our_crystal = item
+	else if(istype(tool, /obj/item/stack/telecrystal))
+		var/obj/item/stack/telecrystal/our_crystal = tool
 		our_crystal.use(1)
 		our_prod = /obj/item/melee/baton/security/cattleprod/telecrystalprod
 	else
-		to_chat(user, span_notice("You don't think \the [item] will do anything to improve \the [src]."))
-		return ..()
+		to_chat(user, span_notice("You don't think \the [tool] will do anything to improve \the [src]."))
+		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("You place \the [item] firmly into \the [sparkler]."))
+	to_chat(user, span_notice("You place \the [tool] firmly into \the [sparkler]."))
 	remove_item_from_storage(user)
 	qdel(src)
 	var/obj/item/melee/baton/security/cattleprod/brand_new_prod = new our_prod(user.loc)
 	user.put_in_hands(brand_new_prod)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/baton/security/cattleprod/try_stun(mob/living/target, mob/living/user, harmbatonning)
 	return ..() && sparkler.activate()
