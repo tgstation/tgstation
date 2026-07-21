@@ -181,6 +181,7 @@
 #include "emp_flashlight.dm"
 #include "ethereal_revival.dm"
 #include "explosion_action.dm"
+#include "fermenting_barrel_plumbing.dm"
 #include "firedoor_regions.dm"
 #include "fish_unit_tests.dm"
 #include "flyperson.dm"

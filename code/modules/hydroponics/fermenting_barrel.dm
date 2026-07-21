@@ -31,6 +31,7 @@
 /obj/structure/fermenting_barrel/Initialize(mapload)
 	. = ..()
 	create_reagents(600, DRAINABLE)
+	AddComponent(/datum/component/plumbing/tank)
 	soundloop = new(src, fermenting)
 	soundloop.volume = sound_volume
 	register_context()
