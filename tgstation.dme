@@ -1145,6 +1145,7 @@
 #include "code\datums\ai\generic_decorators\keys_different_gender.dm"
 #include "code\datums\ai\generic_decorators\mob_stat_at_least.dm"
 #include "code\datums\ai\generic_decorators\no_humans_watching.dm"
+#include "code\datums\ai\generic_decorators\optional.dm"
 #include "code\datums\ai\generic_decorators\pawn_buckled_to_obj.dm"
 #include "code\datums\ai\generic_decorators\pawn_contained_in_obj.dm"
 #include "code\datums\ai\generic_decorators\pawn_farther_than_from_key.dm"
