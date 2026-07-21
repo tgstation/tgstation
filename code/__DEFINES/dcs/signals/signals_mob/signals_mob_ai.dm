@@ -14,3 +14,6 @@
 
 ///Signal sent off of ai/movement/proc/start_moving_towards
 #define COMSIG_MOB_AI_MOVEMENT_STARTED "mob_ai_movement_started"
+
+///Signal sent off of ai/movement/proc/increment_pathing_failures
+#define COMSIG_MOB_AI_MOVEMENT_FAILED "mob_ai_movement_failed"

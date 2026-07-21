@@ -20,13 +20,6 @@ import {
 } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
 
-function sortJobs(entries: [string, Job][], head?: string) {
-  return sortBy(entries, [
-    ([key, _]) => (key === head ? -1 : 1),
-    ([key, _]) => key,
-  ]);
-}
-
 const PRIORITY_BUTTON_SIZE = '18px';
 
 type PriorityButtonProps = {
@@ -355,7 +348,7 @@ function Department(props: DepartmentProps) {
   const data = useServerPrefs();
   if (!data) return;
 
-  const { departments, jobs } = data.jobs;
+  const { departments, jobs, jobs_sorted} = data.jobs;
   const department = departments[name];
 
   // This isn't necessarily a bug, it's like this
@@ -366,10 +359,9 @@ function Department(props: DepartmentProps) {
     return null;
   }
 
-  const jobsForDepartment = sortJobs(
-    Object.entries(jobs).filter(([_, job]) => job.department === name),
-    department.head,
-  );
+  const jobsForDepartment = jobs_sorted
+    .map((jobName) => [jobName, jobs[jobName]] as const)
+    .filter(([, job]) => job.department === name);
 
   return (
     <Stack.Item

@@ -1,6 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - balance: "Modular computers (PDAs) now shutdown when out of power"
-  - bugfix: "PDA flashlights now turn off when out of power"
-  - sound: "Added a terminal off switch sound to PDAs when power runs out"
