@@ -33,7 +33,7 @@
 	active_generator.process(1)
 	TEST_ASSERT(active_generator.active, "Mech generator shut down prematurely")
 	TEST_ASSERT(our_mech.cell.charge > starting_charge, "Mech generator did not produce any power for its mech")
-	TEST_ASSERT(QDELETED(our_mech.fuel), "Mech generator did not consume its fuel when activated")
+	TEST_ASSERT(!active_generator.fuel.amount, "Mech generator did not consume its fuel when activated")
 
 	active_generator.process(1)
 	TEST_ASSERT(!active_generator.active, "Mech generator did not shut down despite being out of fuel")
