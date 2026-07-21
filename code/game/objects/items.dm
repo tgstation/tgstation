@@ -102,6 +102,7 @@
 	///This is used to determine on which slots an item can fit.
 	var/slot_flags = NONE
 	/// What suit_storage_container_flags allow holding this item in suit storage? (set to NONE to disable suit storing this item)
+	/// See code\__DEFINES\inventory.dm for flags
 	var/suit_storage_containee_flags = NONE
 
 	pass_flags = PASSTABLE
