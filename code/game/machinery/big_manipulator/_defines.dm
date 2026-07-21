@@ -3,11 +3,6 @@
 #define INTERACT_USE "USE"
 #define INTERACT_THROW "THROW"
 
-// What should be picked up from the point
-#define TAKE_ITEMS 1
-#define TAKE_CLOSETS 2
-#define TAKE_HUMANS 3
-
 #define MIN_SPEED_MULTIPLIER_TIER_1 0.5
 #define MIN_SPEED_MULTIPLIER_TIER_2 0.4
 #define MIN_SPEED_MULTIPLIER_TIER_3 0.3
@@ -26,11 +21,11 @@
 
 // How should the worker interact with the point
 #define WORKER_SINGLE_USE "SINGLE TIME"
-#define WORKER_EMPTY_USE "EMPTY HAND"
 #define WORKER_NORMAL_USE "NORMAL"
 
 #define BASE_POWER_USAGE 0.2
 #define BASE_INTERACTION_TIME 0.3 SECONDS
+#define BASE_TASK_DELAY 0.3 SECONDS
 
 /// How long will the manipulator wait if there's nothing to do
 #define CYCLE_SKIP_TIMEOUT 1 SECONDS
@@ -43,9 +38,6 @@
 
 // What should the manipulator do after there's nothing else to interact with on this point anymore
 #define POST_INTERACTION_DROP_AT_POINT "AT DROPOFF"
-#define POST_INTERACTION_DROP_AT_MACHINE "AT MACHINE"
-#define POST_INTERACTION_DROP_NEXT_FITTING "AT ANY FITTING"
-#define POST_INTERACTION_WAIT "CONTINUE"
 
 
 #define PICKUP_EAGER "Always Pick Up"
@@ -56,6 +48,7 @@
 #define TASK_TYPE_THROW "throw"
 #define TASK_TYPE_USE "use"
 #define TASK_TYPE_INTERACT "interact"
+#define TASK_TYPE_MOVE "move"
 #define TASK_TYPE_WAIT "wait"
 
 #define TASKING_SEQUENTIAL "Sequential"

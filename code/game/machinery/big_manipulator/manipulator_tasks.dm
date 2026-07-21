@@ -40,6 +40,23 @@
 		time_seconds = serialized_data["time_seconds"]
 	return
 
+// ===== MOVE =====
+
+/datum/manipulator_task/cargo/move
+	name = "move"
+
+/datum/manipulator_task/cargo/move/fill_priority_list(manipulator_tier)
+	return list()
+
+/datum/manipulator_task/cargo/move/can_run(obj/machinery/big_manipulator/manipulator)
+	return is_valid()
+
+/datum/manipulator_task/cargo/move/run_task(obj/machinery/big_manipulator/manipulator)
+	manipulator.rotate_to_point(src, src, PROC_REF(try_move))
+
+/datum/manipulator_task/cargo/move/proc/try_move(obj/machinery/big_manipulator/manipulator)
+	manipulator.schedule_next_cycle()
+
 // ===== BASE CARGO =====
 
 /datum/manipulator_task/cargo
@@ -48,11 +65,6 @@
 	var/offset_dy
 	var/should_use_filters = FALSE
 	var/list/atom_filters = list()
-	var/filtering_mode = TAKE_ITEMS
-	var/list/type_filters = list(
-		/obj/item,
-		/obj/structure/closet,
-	)
 	var/list/interaction_priorities = list()
 
 /datum/manipulator_task/cargo/New(turf/new_turf, manipulator_tier, serialized_data)
@@ -66,8 +78,6 @@
 
 		should_use_filters = !!serialized_data["should_use_filters"]
 		atom_filters = serialized_data["atom_filters"] || list()
-		filtering_mode = serialized_data["filtering_mode"]
-		type_filters = serialized_data["type_filters"] || list()
 
 		var/list/prios_data = serialized_data["interaction_priorities"]
 		if(islist(prios_data))
@@ -166,19 +176,12 @@
 	if(!target || target.anchored || HAS_TRAIT(target, TRAIT_NODROP))
 		return FALSE
 
-	switch(filtering_mode)
-		if(TAKE_CLOSETS)
-			return iscloset(target)
-		if(TAKE_HUMANS)
-			return ishuman(target)
-		if(TAKE_ITEMS)
-			if(!should_use_filters)
-				return isitem(target)
-			for(var/filter_path in atom_filters)
-				if(istype(target, filter_path))
-					return TRUE
-			return FALSE
+	if(!should_use_filters)
+		return isitem(target)
 
+	for(var/filter_path in atom_filters)
+		if(istype(target, filter_path))
+			return TRUE
 	return FALSE
 
 /datum/manipulator_task/cargo/can_run(obj/machinery/big_manipulator/manipulator)
@@ -192,8 +195,6 @@
 	)
 	data["should_use_filters"] = should_use_filters
 	data["atom_filters"] = atom_filters
-	data["filtering_mode"] = filtering_mode
-	data["type_filters"] = type_filters
 	data["interaction_priorities"] = list()
 	for(var/datum/manipulator_priority/prio as anything in interaction_priorities)
 		data["interaction_priorities"] += list(list(
@@ -215,7 +216,40 @@
 	var/pickup_eagerness = PICKUP_CAN_WAIT
 
 /datum/manipulator_task/cargo/pickup/fill_priority_list(manipulator_tier)
-	return list()
+	var/list/priorities = list(
+		new /datum/manipulator_priority/pickup/items,
+		new /datum/manipulator_priority/pickup/closets,
+	)
+	if(manipulator_tier >= 4)
+		priorities += new /datum/manipulator_priority/pickup/humans
+	return priorities
+
+/datum/manipulator_task/cargo/pickup/check_filters_for_atom(atom/movable/target)
+	if(!target || target.anchored || HAS_TRAIT(target, TRAIT_NODROP))
+		return FALSE
+
+	var/matched_priority = FALSE
+	for(var/datum/manipulator_priority/pickup/prio in interaction_priorities)
+		if(!prio.active)
+			continue
+		if(istype(target, prio.atom_typepath))
+			if(ishuman(target))
+				var/mob/living/carbon/human/human_target = target
+				if(human_target.stat == DEAD)
+					continue
+			matched_priority = TRUE
+			break
+
+	if(!matched_priority)
+		return FALSE
+
+	if(should_use_filters && length(atom_filters))
+		for(var/filter_path in atom_filters)
+			if(istype(target, filter_path))
+				return TRUE
+		return FALSE
+
+	return TRUE
 
 /datum/manipulator_task/cargo/pickup/can_run(obj/machinery/big_manipulator/manipulator)
 	if(!..())
@@ -413,7 +447,6 @@
 /datum/manipulator_task/cargo/dropoff_base/use
 	name = "use"
 	var/worker_interaction = WORKER_NORMAL_USE
-	var/use_post_interaction = POST_INTERACTION_DROP_AT_POINT
 	var/worker_combat_mode = FALSE
 	var/worker_use_rmb = FALSE
 	var/skip_anchored = FALSE
@@ -424,6 +457,7 @@
 		new /datum/manipulator_priority/interact/with_structure,
 		new /datum/manipulator_priority/interact/with_machinery,
 		new /datum/manipulator_priority/interact/with_items,
+		new /datum/manipulator_priority/interact/with_turf,
 	)
 	if(manipulator_tier == 4)
 		priorities += new /datum/manipulator_priority/interact/with_vehicles
@@ -439,7 +473,6 @@
 /datum/manipulator_task/cargo/dropoff_base/use/serialize()
 	var/list/data = ..()
 	data["worker_interaction"] = worker_interaction
-	data["use_post_interaction"] = use_post_interaction
 	data["worker_combat_mode"] = worker_combat_mode
 	data["worker_use_rmb"] = worker_use_rmb
 	data["skip_anchored"] = skip_anchored
@@ -449,7 +482,6 @@
 	..(new_turf, manipulator_tier, serialized_data)
 	if(serialized_data)
 		worker_interaction = serialized_data["worker_interaction"]
-		use_post_interaction = serialized_data["use_post_interaction"]
 		worker_combat_mode = !!serialized_data["worker_combat_mode"]
 		worker_use_rmb = !!serialized_data["worker_use_rmb"]
 		skip_anchored = !!serialized_data["skip_anchored"]
@@ -462,8 +494,7 @@
 
 /datum/manipulator_task/cargo/interact
 	name = "interact"
-	var/worker_interaction = WORKER_EMPTY_USE
-	var/use_post_interaction = POST_INTERACTION_DROP_AT_POINT
+	var/worker_interaction = WORKER_NORMAL_USE
 	var/worker_combat_mode = FALSE
 	var/worker_use_rmb = FALSE
 	var/skip_anchored = FALSE
@@ -474,6 +505,7 @@
 		new /datum/manipulator_priority/interact/with_structure,
 		new /datum/manipulator_priority/interact/with_machinery,
 		new /datum/manipulator_priority/interact/with_items,
+		new /datum/manipulator_priority/interact/with_turf,
 	)
 	if(manipulator_tier == 4)
 		priorities += new /datum/manipulator_priority/interact/with_vehicles
@@ -490,7 +522,6 @@
 /datum/manipulator_task/cargo/interact/serialize()
 	var/list/data = ..()
 	data["worker_interaction"] = worker_interaction
-	data["use_post_interaction"] = use_post_interaction
 	data["worker_combat_mode"] = worker_combat_mode
 	data["worker_use_rmb"] = worker_use_rmb
 	data["skip_anchored"] = skip_anchored
@@ -500,7 +531,6 @@
 	..(new_turf, manipulator_tier, serialized_data)
 	if(serialized_data)
 		worker_interaction = serialized_data["worker_interaction"]
-		use_post_interaction = serialized_data["use_post_interaction"]
 		worker_combat_mode = !!serialized_data["worker_combat_mode"]
 		worker_use_rmb = !!serialized_data["worker_use_rmb"]
 		skip_anchored = !!serialized_data["skip_anchored"]
