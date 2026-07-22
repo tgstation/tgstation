@@ -79,8 +79,6 @@
 
 	/// overlay when speaker is on
 	var/overlay_speaker_idle = "s_idle"
-	/// overlay when receiving a message
-	var/overlay_speaker_active = "s_active"
 
 	/// overlay when mic is on
 	var/overlay_mic_idle = "m_idle"
@@ -450,8 +448,6 @@
 	SEND_SIGNAL(src, COMSIG_RADIO_RECEIVE_MESSAGE, data)
 	if(!isliving(loc))
 		return
-
-	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
 
 	var/mob/living/holder = loc
 	var/volume_modifier = (holder.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
