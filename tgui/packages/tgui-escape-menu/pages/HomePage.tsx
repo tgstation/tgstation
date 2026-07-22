@@ -13,7 +13,7 @@ type ServerState = {
 
 type Props = {
   serverState: ServerState;
-  onNavigate: (page: 'admin' | 'leave_body' | 'quit') => void;
+  onNavigate: (page: 'admin' | 'players' | 'leave_body' | 'quit') => void;
   onAction: (action: string) => void;
   showResources: boolean;
   onToggleResources: () => void;
@@ -57,11 +57,15 @@ export function HomePage({
         <MenuButton onClick={() => onAction('resume')}>Resume</MenuButton>
         <MenuButton onClick={() => onAction('character')}>Character</MenuButton>
         <MenuButton onClick={() => onAction('settings')}>Settings</MenuButton>
+        <MenuButton onClick={() => onNavigate('players')}>Players</MenuButton>
         <MenuButton
           onClick={() => onNavigate('admin')}
-          disabled={!serverState.canAdminHelp}
           blinking={serverState.hasTicketNotification}
-          tooltip={serverState.hasTicketNotification ? 'An admin is trying to talk to you!' : undefined}
+          tooltip={
+            serverState.hasTicketNotification
+              ? 'An admin is trying to talk to you!'
+              : undefined
+          }
         >
           Admin Help
         </MenuButton>
@@ -82,7 +86,11 @@ export function HomePage({
             }
           >
             {serverState.resources.map((resource) => (
-              <Tooltip key={resource.id} position="top" content={resource.tooltip}>
+              <Tooltip
+                key={resource.id}
+                position="top"
+                content={resource.tooltip}
+              >
                 <button
                   className="escape-menu__resource-button"
                   onClick={() => onAction(`resource_${resource.id}`)}

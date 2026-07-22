@@ -1,3 +1,5 @@
+import { Tooltip } from 'tgui-core/components';
+
 type Props = {
   serverState: {
     canAdminHelp: boolean;
@@ -22,8 +24,16 @@ export function AdminPage({ serverState, onNavigate, onAction }: Props) {
         <MenuButton
           onClick={() => onAction('view_ticket')}
           blinking={serverState.hasTicketNotification}
+          tooltip={
+            serverState.hasTicketNotification
+              ? 'An admin is trying to talk to you!'
+              : undefined
+          }
         >
           View Latest Ticket
+        </MenuButton>
+        <MenuButton onClick={() => onAction('admin_notice')}>
+          See Admin Notices
         </MenuButton>
         <MenuButton onClick={() => onAction('pray')}>Pray</MenuButton>
         {serverState.canSeeNotes && (
@@ -53,6 +63,7 @@ type MenuButtonProps = {
   onClick: () => void;
   disabled?: boolean;
   blinking?: boolean;
+  tooltip?: string;
 };
 
 function MenuButton({
@@ -60,8 +71,9 @@ function MenuButton({
   onClick,
   disabled,
   blinking,
+  tooltip,
 }: MenuButtonProps) {
-  return (
+  const button = (
     <button
       className={
         'escape-menu__menu-button' +
@@ -73,4 +85,10 @@ function MenuButton({
       {children}
     </button>
   );
+
+  if (tooltip) {
+    return <Tooltip content={tooltip}>{button}</Tooltip>;
+  }
+
+  return button;
 }

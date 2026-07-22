@@ -6,9 +6,18 @@ import { playCloseSounds, playOpenSounds } from './audio';
 import { AdminPage } from './pages/AdminPage';
 import { HomePage } from './pages/HomePage';
 import { LeaveBodyPage } from './pages/LeaveBodyPage';
+import { PlayersPage } from './pages/PlayersPage';
 import { QuitPage } from './pages/QuitPage';
 
-type Page = 'home' | 'admin' | 'leave_body' | 'quit';
+type Page = 'home' | 'admin' | 'players' | 'leave_body' | 'quit';
+
+export type PlayerInfo = {
+  ckey: string;
+  displayName: string;
+  rank?: string;
+  feedbackLink?: string;
+  ignored: boolean;
+};
 
 export type ServerState = {
   stationName: string;
@@ -22,6 +31,9 @@ export type ServerState = {
   canSeeNotes: boolean;
   hasTicketNotification: boolean;
   resources: ResourceLink[];
+  admins: PlayerInfo[];
+  players: PlayerInfo[];
+  ignoredOffline: string[];
 };
 
 export type ResourceLink = {
@@ -69,8 +81,8 @@ const initialState: State = {
   serverState: null,
 };
 
-function sendAction(action: string) {
-  Byond.sendMessage('action', { action });
+function sendAction(action: string, payload?: Record<string, unknown>) {
+  Byond.sendMessage('action', { action, ...payload });
 }
 
 function openMenu(dispatch: React.Dispatch<Action>) {
@@ -123,16 +135,21 @@ export function EscapeMenu() {
 
   const navigate = (page: Page) => dispatch({ type: 'navigate', page });
 
-  const handleAction = (action: string) => {
+  const handleAction = (action: string, payload?: Record<string, unknown>) => {
     if (action === 'resume') {
       closeMenu(dispatch);
       return;
     }
-    sendAction(action);
+    sendAction(action, payload);
     if (
-      ['character', 'settings', 'create_ticket', 'pray', 'see_notes'].includes(
-        action,
-      )
+      [
+        'character',
+        'settings',
+        'create_ticket',
+        'pray',
+        'see_notes',
+        'admin_notice',
+      ].includes(action)
     ) {
       closeMenu(dispatch);
     }
@@ -158,6 +175,13 @@ export function EscapeMenu() {
         )}
         {state.page === 'admin' && (
           <AdminPage
+            serverState={state.serverState}
+            onNavigate={navigate}
+            onAction={handleAction}
+          />
+        )}
+        {state.page === 'players' && (
+          <PlayersPage
             serverState={state.serverState}
             onNavigate={navigate}
             onAction={handleAction}

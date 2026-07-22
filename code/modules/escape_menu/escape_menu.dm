@@ -49,6 +49,9 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 		"serverTime" = server_timestamp(format = "hh:mm:ss"),
 		"shiftTime" = (SSticker.round_start_time == 0) ? "Pre-Game" : round_timestamp(),
 		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
+		"admins" = build_admin_list(),
+		"players" = build_player_list(),
+		"ignoredOffline" = build_ignored_offline(),
 	))
 
 /datum/escape_menu/proc/on_client_qdel()
@@ -118,8 +121,41 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 		"canAdminHelp" = (/client/verb/adminhelp in client?.verbs),
 		"canSeeNotes" = CONFIG_GET(flag/see_own_notes),
 		"hasTicketNotification" = !isnull(client?.current_ticket) && !client.current_ticket.player_replied,
+		"admins" = build_admin_list(),
+		"players" = build_player_list(),
+		"ignoredOffline" = build_ignored_offline(),
 		"resources" = resources,
 	))
+
+/datum/escape_menu/proc/build_admin_list()
+	var/list/result = list()
+	for(var/client/admin as anything in GLOB.admins)
+		result += list(list(
+			"ckey" = admin.ckey,
+			"displayName" = admin.holder?.fakekey || admin.ckey,
+			"rank" = admin.holder?.rank_names(),
+			"feedbackLink" = admin.holder?.feedback_link(),
+			"ignored" = (admin.ckey in client?.prefs?.ignoring),
+		))
+	return result
+
+/datum/escape_menu/proc/build_player_list()
+	var/list/result = list()
+	for(var/client/player as anything in GLOB.clients - GLOB.admins)
+		result += list(list(
+			"ckey" = player.ckey,
+			"displayName" = player.ckey,
+			"ignored" = (player.ckey in client?.prefs?.ignoring),
+		))
+	return result
+
+/datum/escape_menu/proc/build_ignored_offline()
+	var/list/result = list()
+	if(client?.prefs?.ignoring)
+		for(var/ignored_key in client.prefs.ignoring)
+			if(!(ignored_key in GLOB.directory))
+				result += ignored_key
+	return result
 
 /datum/escape_menu/proc/send_update(list/data)
 	window.send_message("state", data)
@@ -186,5 +222,17 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 			client?.config()
 		if("resource_changelog")
 			client?.changelog()
+		if("admin_notice")
+			client?.admin_notice()
+		if("toggle_ignore")
+			var/ckey = payload["ckey"]
+			if(!ckey)
+				return TRUE
+			if(ckey in client?.prefs?.ignoring)
+				client.prefs.ignoring -= ckey
+			else
+				LAZYADD(client.prefs.ignoring, ckey)
+			client.prefs.save_preferences()
+			to_chat(client, span_notice("[ckey] has been [(ckey in client.prefs.ignoring) ? "" : "un"]ignored in OOC."))
 
 	return TRUE
