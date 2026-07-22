@@ -35,6 +35,7 @@
 	trait_to_give = STATION_TRAIT_PUN_PUN_GYM_DAY
 	blacklist = list(/datum/station_trait/job/pun_pun) //We should make these two work together later, itd be funny.
 
+
 /datum/station_trait/spider_infestation
 	name = "Spider Infestation"
 	trait_type = STATION_TRAIT_NEUTRAL
