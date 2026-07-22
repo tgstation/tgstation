@@ -296,8 +296,8 @@
 
 	QDEL_NULL(hotspot)
 	var/datum/gas_mixture/air = location.air
-	if (air.gases[/datum/gas/plasma])
-		var/scrub_amt = min(30, air.gases[/datum/gas/plasma][MOLES]) //Absorb some plasma
+	if (air.moles[/datum/gas/plasma])
+		var/scrub_amt = min(30, air.moles[/datum/gas/plasma]) //Absorb some plasma
 		air.adjust_gas(/datum/gas/plasma, -scrub_amt)
 		absorbed_plasma += scrub_amt
 	if (air.temperature > T20C)
@@ -452,10 +452,10 @@
 		for(var/obj/effect/hotspot/fire in location)
 			qdel(fire)
 
-		var/list/gases = air.gases
-		for(var/gas_type in gases)
-			if(!(ignored_gases[gas_type]))
-				gases[gas_type][MOLES] = 0
+		var/list/cached_moles = air.moles
+		for(var/gas_id in cached_moles)
+			if(!(ignored_gases[gas_id]))
+				cached_moles[gas_id] = 0
 		air.garbage_collect()
 
 	for(var/obj/machinery/atmospherics/components/unary/comp in location)

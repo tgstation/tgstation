@@ -28,7 +28,7 @@
 /obj/structure/fans/tiny,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "an" = (
 /obj/structure/railing{
@@ -44,7 +44,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "ao" = (
 /obj/machinery/door/poddoor/shutters/window{
@@ -118,7 +118,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "aP" = (
 /obj/structure/fluff/sat_dish{
@@ -258,7 +258,7 @@
 /obj/structure/railing{
 	dir = 5
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "ca" = (
 /obj/effect/turf_decal/stripes/line{
@@ -281,7 +281,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "ck" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -294,16 +294,16 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "co" = (
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/trimline/dark_blue/line,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "cq" = (
 /obj/effect/landmark/bitrunning/cache_spawn,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "cr" = (
 /obj/structure/barricade/sandbags,
@@ -386,7 +386,7 @@
 	set_luminosity = 6
 	},
 /obj/effect/landmark/bitrunning/mob_segment,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "cK" = (
 /obj/machinery/computer{
@@ -465,7 +465,7 @@
 /obj/structure/railing{
 	dir = 10
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "cY" = (
 /obj/machinery/light/directional/north,
@@ -523,7 +523,7 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "dr" = (
 /obj/structure/railing{
@@ -536,7 +536,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "dt" = (
 /obj/structure/railing/platform/corner{
@@ -565,7 +565,7 @@
 /area/virtual_domain)
 "dA" = (
 /obj/machinery/light/directional/south,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "dH" = (
 /obj/machinery/light/small/directional/west,
@@ -583,7 +583,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "dZ" = (
 /obj/machinery/door/airlock/highsecurity,
@@ -728,7 +728,7 @@
 "ff" = (
 /obj/structure/barricade/sandbags,
 /obj/structure/railing,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "fh" = (
 /obj/structure/sink/directional/west,
@@ -868,7 +868,7 @@
 /obj/structure/chair/sofa/bench/right{
 	dir = 8
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "gc" = (
 /obj/structure/fluff/fake_camera{
@@ -928,7 +928,7 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "gy" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1013,7 +1013,7 @@
 /area/virtual_domain)
 "he" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "hl" = (
 /obj/structure/cable,
@@ -1066,13 +1066,13 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "hI" = (
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "hP" = (
 /obj/effect/baseturf_helper/reinforced_plating{
@@ -1350,12 +1350,12 @@
 /area/virtual_domain)
 "jr" = (
 /obj/effect/gibspawner/human/bodypartless,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "ju" = (
 /obj/effect/turf_decal/trimline/dark_blue/line,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "jz" = (
 /obj/effect/turf_decal/siding/thinplating{
@@ -1395,7 +1395,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "jL" = (
 /obj/structure/chair/office{
@@ -1413,7 +1413,7 @@
 /obj/structure/railing{
 	dir = 6
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "ke" = (
 /obj/structure/railing/platform/reinforced{
@@ -1434,7 +1434,7 @@
 /area/virtual_domain)
 "kl" = (
 /obj/structure/fans/tiny,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "kn" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -1455,7 +1455,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "kt" = (
 /obj/machinery/door/airlock/maintenance_hatch,
@@ -1473,12 +1473,12 @@
 /obj/effect/turf_decal/caution{
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "kx" = (
 /obj/structure/railing,
 /obj/structure/barricade/sandbags,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "ky" = (
 /obj/structure/bed/maint,
@@ -1603,7 +1603,7 @@
 /obj/structure/railing{
 	dir = 6
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "lx" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -1626,7 +1626,7 @@
 "lz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "lA" = (
 /obj/structure/railing{
@@ -1635,7 +1635,7 @@
 /obj/structure/fans/tiny,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "lC" = (
 /obj/effect/turf_decal/tile/dark_red/half{
@@ -1674,7 +1674,7 @@
 /area/virtual_domain)
 "lQ" = (
 /obj/effect/landmark/bitrunning/mob_segment,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "lS" = (
 /obj/item/clipboard{
@@ -1790,7 +1790,7 @@
 "mF" = (
 /obj/structure/guncase/wt550,
 /obj/effect/turf_decal/bot_red,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "mH" = (
 /obj/structure/table/wood,
@@ -1868,7 +1868,7 @@
 	dir = 1
 	},
 /obj/structure/barricade/sandbags,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "mZ" = (
 /obj/effect/turf_decal/stripes/line,
@@ -2062,7 +2062,7 @@
 /area/virtual_domain)
 "oA" = (
 /obj/effect/landmark/bitrunning/mob_segment,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "oG" = (
 /obj/structure/hedge,
@@ -2349,7 +2349,7 @@
 	set_luminosity = 6
 	},
 /obj/structure/railing,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "qr" = (
 /obj/effect/turf_decal/stripes/line{
@@ -2382,7 +2382,7 @@
 "qM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "qV" = (
 /obj/machinery/door/window/brigdoor/left/directional/east,
@@ -2400,12 +2400,12 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "rc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/bitrunning/mob_segment,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "re" = (
 /obj/structure/chair/comfy/black{
@@ -2422,7 +2422,7 @@
 "rh" = (
 /obj/structure/railing,
 /obj/structure/sign/warning/secure_area/directional/north,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "rk" = (
 /obj/structure/chair/sofa/corp/left{
@@ -2458,7 +2458,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "rB" = (
 /obj/effect/turf_decal/stripes/white/line,
@@ -2468,7 +2468,7 @@
 "rD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "rH" = (
 /obj/structure/chair/office{
@@ -2641,14 +2641,14 @@
 /obj/structure/railing{
 	dir = 9
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "sW" = (
 /obj/structure/railing{
 	dir = 1
 	},
 /obj/structure/table,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "sX" = (
 /obj/machinery/light/small/directional/east,
@@ -2822,7 +2822,7 @@
 	},
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/barricade/security,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "uv" = (
 /obj/structure/lattice,
@@ -2834,7 +2834,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "uB" = (
 /obj/effect/mapping_helpers/bombable_wall,
@@ -2847,7 +2847,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "uI" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2861,7 +2861,7 @@
 	pixel_y = 0
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "uN" = (
 /turf/open/floor/plating,
@@ -2890,7 +2890,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "vd" = (
 /obj/machinery/button/door/indestructible{
@@ -2933,7 +2933,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "vp" = (
 /obj/structure/railing/platform/reinforced{
@@ -3159,7 +3159,7 @@
 	dir = 6
 	},
 /obj/structure/barricade/sandbags,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "ww" = (
 /obj/effect/turf_decal/siding/wood/cherry{
@@ -3196,7 +3196,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "wK" = (
 /obj/structure/chair/comfy/shuttle{
@@ -3225,7 +3225,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "xc" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3262,12 +3262,12 @@
 	dir = 8
 	},
 /obj/structure/barricade/sandbags,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "xv" = (
 /obj/structure/barricade/sandbags,
 /obj/structure/railing/corner,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "xy" = (
 /obj/effect/light_emitter{
@@ -3282,7 +3282,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "xF" = (
 /obj/effect/gibspawner/human/bodypartless,
@@ -3300,7 +3300,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "xK" = (
 /obj/structure/railing/corner{
@@ -3308,7 +3308,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "xM" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner{
@@ -3334,7 +3334,7 @@
 /obj/structure/fluff/fake_camera{
 	dir = 10
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "xU" = (
 /obj/effect/gibspawner/human/bodypartless,
@@ -3403,7 +3403,7 @@
 	dir = 10
 	},
 /obj/structure/barricade/sandbags,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "yk" = (
 /obj/effect/turf_decal/trimline/white/line,
@@ -3472,7 +3472,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "yE" = (
 /obj/machinery/door/poddoor{
@@ -3518,7 +3518,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 8
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "yL" = (
 /turf/open/floor/carpet/green,
@@ -3564,7 +3564,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "ze" = (
 /obj/structure/table/wood/fancy/black,
@@ -3654,7 +3654,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "zC" = (
 /obj/effect/turf_decal/stripes/line,
@@ -3674,7 +3674,7 @@
 /area/virtual_domain)
 "zF" = (
 /obj/effect/turf_decal/trimline/dark_blue/line,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "zJ" = (
 /obj/structure/fans/tiny,
@@ -3686,7 +3686,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "zQ" = (
 /obj/effect/light_emitter{
@@ -3694,7 +3694,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "zS" = (
 /obj/effect/turf_decal/caution/red{
@@ -3715,7 +3715,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/bitrunning/mob_segment,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "Ae" = (
 /obj/structure/railing/corner/end/flip,
@@ -3738,7 +3738,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Al" = (
 /obj/machinery/power/shuttle_engine/heater{
@@ -3764,7 +3764,7 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "Au" = (
 /obj/structure/fluff/oldturret{
@@ -3772,7 +3772,7 @@
 	name = "turret";
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "Az" = (
 /obj/structure/railing{
@@ -3780,7 +3780,7 @@
 	},
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "AB" = (
 /obj/effect/turf_decal/tile/dark_blue/half{
@@ -3812,7 +3812,7 @@
 "AE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "AT" = (
 /obj/structure/flora/rock/pile/style_random,
@@ -4021,7 +4021,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "CG" = (
 /turf/open/floor/carpet/black,
@@ -4031,7 +4031,7 @@
 	dir = 10
 	},
 /obj/structure/barricade/security,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "CM" = (
 /obj/structure/fluff/oldturret{
@@ -4039,7 +4039,7 @@
 	name = "turret"
 	},
 /obj/structure/railing,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "CN" = (
 /obj/effect/turf_decal/delivery/red,
@@ -4128,7 +4128,7 @@
 	dir = 10
 	},
 /obj/structure/barricade/security,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Dn" = (
 /obj/structure/chair/office{
@@ -4482,7 +4482,7 @@
 /obj/structure/fluff/fake_camera{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Fz" = (
 /obj/structure/table,
@@ -4556,7 +4556,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "FY" = (
 /turf/open/floor/iron/textured_half{
@@ -4690,7 +4690,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "Hh" = (
 /obj/structure/filingcabinet,
@@ -4842,7 +4842,7 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "HS" = (
 /obj/structure/table/wood,
@@ -4968,7 +4968,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "IQ" = (
 /obj/structure/closet/crate/secure/weapon,
@@ -4990,14 +4990,14 @@
 	dir = 5
 	},
 /obj/structure/barricade/sandbags,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Ji" = (
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/trimline/dark_blue/line,
 /obj/effect/turf_decal/trimline/dark_blue/line,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Jo" = (
 /obj/effect/turf_decal/stripes/red/line,
@@ -5056,14 +5056,14 @@
 /obj/structure/railing{
 	dir = 5
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "JX" = (
 /obj/structure/closet/secure_closet/tac{
 	req_access = null
 	},
 /obj/effect/turf_decal/bot_red,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Kb" = (
 /obj/machinery/computer{
@@ -5090,7 +5090,7 @@
 	set_luminosity = 6
 	},
 /obj/effect/landmark/bitrunning/mob_segment,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Kn" = (
 /obj/effect/turf_decal/line/dark_blue/line{
@@ -5119,10 +5119,10 @@
 /area/virtual_domain)
 "Ks" = (
 /obj/machinery/door/airlock/highsecurity,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "Ku" = (
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "KG" = (
 /obj/machinery/door/poddoor/shutters/window{
@@ -5229,7 +5229,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "Lb" = (
 /obj/effect/turf_decal/tile/brown/half{
@@ -5263,7 +5263,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Lk" = (
 /obj/effect/light_emitter{
@@ -5500,7 +5500,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Mm" = (
 /obj/structure/table/wood,
@@ -5564,7 +5564,7 @@
 "ME" = (
 /obj/structure/railing,
 /obj/structure/barricade/sandbags,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "MP" = (
 /obj/effect/turf_decal/stripes/line{
@@ -5664,7 +5664,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Ns" = (
 /turf/open/misc/dirt/jungle/wasteland,
@@ -5764,7 +5764,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "NS" = (
 /obj/machinery/door/poddoor/shutters/window{
@@ -5789,7 +5789,7 @@
 /area/virtual_domain)
 "NW" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "NX" = (
 /obj/machinery/door/poddoor/preopen{
@@ -5821,7 +5821,7 @@
 	dir = 4
 	},
 /obj/structure/barricade/sandbags,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Oh" = (
 /obj/effect/turf_decal/stripes/line{
@@ -5873,7 +5873,7 @@
 /area/virtual_domain)
 "Op" = (
 /obj/machinery/light/directional/north,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "Ot" = (
 /obj/effect/turf_decal/siding/wood/cherry{
@@ -5928,7 +5928,7 @@
 /turf/closed/wall/r_wall,
 /area/virtual_domain)
 "OK" = (
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "OO" = (
 /obj/effect/turf_decal/tile/brown/anticorner{
@@ -6024,7 +6024,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Pr" = (
 /obj/structure/cable,
@@ -6177,7 +6177,7 @@
 /area/virtual_domain/safehouse)
 "Qg" = (
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "Ql" = (
 /obj/structure/railing/platform/reinforced{
@@ -6251,7 +6251,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "QM" = (
 /obj/effect/turf_decal/trimline/white/line{
@@ -6282,7 +6282,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "Rg" = (
 /obj/effect/turf_decal/caution{
@@ -6400,7 +6400,7 @@
 /obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 8
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "RR" = (
 /obj/structure/fluff/fake_camera{
@@ -6410,7 +6410,7 @@
 /area/virtual_domain/protected_space/fullbright)
 "RS" = (
 /obj/structure/barricade/sandbags,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "RU" = (
 /obj/effect/gibspawner/human/bodypartless,
@@ -6437,7 +6437,7 @@
 /obj/structure/chair/sofa/bench/left{
 	dir = 8
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Sq" = (
 /obj/structure/sign/warning,
@@ -6452,7 +6452,7 @@
 /area/virtual_domain)
 "Su" = (
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Sz" = (
 /obj/item/radio/intercom/command/directional/north,
@@ -6465,7 +6465,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 4
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "SF" = (
 /obj/structure/railing{
@@ -6473,7 +6473,7 @@
 	},
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/barricade/security,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "SG" = (
 /obj/structure/barricade/sandbags,
@@ -6499,7 +6499,7 @@
 /area/virtual_domain)
 "SV" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "SW" = (
 /obj/item/kirbyplants/organic/plant10,
@@ -6513,7 +6513,7 @@
 /area/virtual_domain)
 "Tf" = (
 /obj/structure/floodlight_frame,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "Th" = (
 /obj/structure/railing/platform/reinforced/corner,
@@ -6549,7 +6549,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "TO" = (
 /obj/structure/railing/platform/reinforced/corner{
@@ -6570,7 +6570,7 @@
 "TX" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "TY" = (
 /obj/structure/chair/office{
@@ -6593,12 +6593,12 @@
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 8
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Uc" = (
 /obj/structure/guncase/shotgun,
 /obj/effect/turf_decal/bot_red,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Ue" = (
 /obj/structure/railing{
@@ -6607,7 +6607,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/barricade/security,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Uo" = (
 /obj/effect/decal/cleanable/dirt,
@@ -6623,7 +6623,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Ut" = (
 /obj/effect/light_emitter{
@@ -6642,13 +6642,13 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Uv" = (
 /obj/machinery/door/poddoor{
 	id = "inka_base_east"
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "UC" = (
 /obj/effect/turf_decal/delivery,
@@ -6701,7 +6701,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "UZ" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -6759,7 +6759,7 @@
 /obj/machinery/door/poddoor{
 	id = "inka_base_north_2"
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "Vz" = (
 /obj/effect/turf_decal/tile/brown/half{
@@ -6890,7 +6890,7 @@
 "VW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/bitrunning/mob_segment,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "VZ" = (
 /obj/machinery/computer{
@@ -6914,7 +6914,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "Wo" = (
 /obj/structure/rack,
@@ -7228,7 +7228,7 @@
 	dir = 9
 	},
 /obj/structure/barricade/security,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "YL" = (
 /obj/structure/railing{
@@ -7239,7 +7239,7 @@
 /area/virtual_domain)
 "YM" = (
 /obj/machinery/light/directional/west,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "YR" = (
 /obj/structure/platform/iron,
@@ -7256,7 +7256,7 @@
 /area/virtual_domain)
 "YW" = (
 /obj/structure/table,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "YY" = (
 /obj/structure/fluff/oldturret{
@@ -7310,7 +7310,7 @@
 	pixel_x = -32
 	},
 /obj/effect/landmark/bitrunning/mob_segment,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 "ZA" = (
 /obj/structure/sign/nanotrasen{
@@ -7352,12 +7352,12 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "ZL" = (
 /obj/structure/fans/tiny,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain)
 "ZM" = (
 /obj/effect/turf_decal/tile/brown/half{
@@ -7375,7 +7375,7 @@
 	dir = 9
 	},
 /obj/structure/barricade/security,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain)
 
 (1,1,1) = {"

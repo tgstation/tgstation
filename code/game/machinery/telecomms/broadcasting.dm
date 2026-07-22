@@ -115,10 +115,6 @@
 	return !isnull(signal_source?.get_tts_seed())
 // BANDASTATION EDIT END: tts_component gate
 
-/// Past this amount of compression, the resulting gibberish will actually
-/// replace characters, making it even harder to understand.
-#define COMPRESSION_REPLACE_CHARACTER_THRESHOLD 30
-
 /// This is the meat function for making radios hear vocal transmissions.
 /datum/signal/subspace/vocal/broadcast()
 	set waitfor = FALSE
@@ -171,23 +167,38 @@
 	for(var/obj/item/radio/called_radio as anything in radios)
 		called_radio.on_receive_message(data)
 	var/list/message_mods = data["mods"]
-	var/should_do_modular_radio_tts = should_queue_radio() // BANDASTATION EDIT: Modular radio TTS does not rely on MODE_TTS_IDENTIFIER
-	// From the list of radios, find all mobs who can hear those.
-	var/list/receive = get_hearers_in_radio_ranges(radios)
-	var/list/receive_radios = null
+	var/tts_radio_id = LAZYACCESS(message_mods, MODE_TTS_IDENTIFIER)
+	var/should_do_modular_radio_tts = should_queue_radio()
+	var/should_do_radio_tts = tts_radio_id || should_do_modular_radio_tts
 
-	if(LAZYACCESS(message_mods, MODE_TTS_IDENTIFIER) || should_do_modular_radio_tts) // BANDASTATION EDIT: Modular radio TTS keys off tts_component, not legacy voice identifiers
-		receive_radios = get_hearers_in_radio_ranges_track_radios(radios, frequency)
+	var/list/receive = list()
+	var/list/receive_radios
+	if(should_do_radio_tts)
+		receive = list()
+		receive_radios = list()
+		for(var/radio, radio_hearers in get_hearers_in_radio_ranges_track_radios(radios))
+			receive |= radio_hearers
+			// BANDASTATION EDIT START: Spatial TTS
+			var/datum/weakref/radio_ref = WEAKREF(radio)
+			for(var/mob/possible_hearer in radio_hearers)
+				if(can_hear_radio_tts(possible_hearer, frequency))
+					LAZYADD(receive_radios[radio_ref], WEAKREF(possible_hearer))
+			// BANDASTATION EDIT START: Spatial TTS
+
+	else
+		receive = get_hearers_in_radio_ranges(radios)
 
 	// BANDASTATION EDIT START: TTS listener lists store weakrefs
 	// Add observers who have ghost radio enabled.
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
 		if(get_chat_toggles(ghost.client) & CHAT_GHOSTRADIO)
 			receive |= ghost
-			if(LAZYACCESS(message_mods, MODE_TTS_IDENTIFIER) || should_do_modular_radio_tts)
-				receive_radios[TTS_GHOST_RADIO] |= WEAKREF(ghost)
-	if(LAZYACCESS(message_mods, MODE_TTS_IDENTIFIER) || should_do_modular_radio_tts)
-		receive_radios[TTS_GHOST_RADIO] = filter_tts_listeners(receive_radios[TTS_GHOST_RADIO], frequency)
+			if(should_do_radio_tts)
+				if(can_hear_radio_tts(ghost, frequency))
+					LAZYADD(receive_radios[TTS_GHOST_RADIO], WEAKREF(ghost))
+	if(SStts.tts_enabled && tts_radio_id && !should_do_modular_radio_tts && length(receive_radios))
+		SStts.queued_radio_messages[tts_radio_id] = receive_radios
+		SStts.queued_radio_messages_compression[tts_radio_id] = compression
 	// BANDASTATION EDIT END: TTS listener lists store weakrefs
 
 	// Render the message and have everybody hear it.
@@ -195,16 +206,10 @@
 	var/spans = data["spans"]
 
 	// BANDASTATION EDIT START: TTS radio playback
-
-	// if(LAZYACCESS(message_mods, MODE_TTS_IDENTIFIER))
-	// 	receive_radios[TTS_GHOST_RADIO] = filter_tts_listeners(receive_radios[TTS_GHOST_RADIO], frequency)
-	// 	for(var/radio in receive_radios)
-	// 		LAZYSET(SStts.queued_radio_messages[message_mods[MODE_TTS_IDENTIFIER]], radio, receive_radios[radio])
-	// 	LAZYSET(SStts.queued_radio_messages_compression, message_mods[MODE_TTS_IDENTIFIER], compression)
-
-	// Play radio TTS from the receiving radio, not from the speaker
-	if(should_do_modular_radio_tts)
+	if(should_do_modular_radio_tts && length(receive_radios))
 		for(var/radio_ref in receive_radios)
+			if(!length(receive_radios[radio_ref]))
+				continue
 			var/atom/radio_source
 			if(radio_ref != TTS_GHOST_RADIO)
 				var/datum/weakref/radio_weakref = radio_ref
@@ -264,5 +269,3 @@
 		log_telecomms("[virt.source] [log_text] [loc_name(get_turf(virt.source))]")
 
 	QDEL_IN(virt, 5 SECONDS)  // Make extra sure the virtualspeaker gets qdeleted
-
-#undef COMPRESSION_REPLACE_CHARACTER_THRESHOLD

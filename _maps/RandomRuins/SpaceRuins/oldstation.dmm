@@ -5105,7 +5105,7 @@
 /obj/machinery/shower/directional/west{
 	has_water_reclaimer = 0
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/ancientstation/delta/biolab)
 "BS" = (
 /obj/effect/decal/cleanable/dirt,

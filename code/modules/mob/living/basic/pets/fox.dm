@@ -68,24 +68,11 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/target_retaliate/to_flee,
-		/datum/ai_planning_subtree/flee_target/from_flee_key,
-		/datum/ai_planning_subtree/simple_find_target/not_while_observed,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/random_speech/fox,
-	)
+	behavior_tree_json = "code/modules/mob/living/basic/pets/fox.bt.json"
 
 // An AI controller for more docile foxes.
 /datum/ai_controller/basic_controller/fox/docile
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate/to_flee,
-		/datum/ai_planning_subtree/flee_target/from_flee_key,
-		/datum/ai_planning_subtree/random_speech/fox,
-	)
+	behavior_tree_json = "code/modules/mob/living/basic/pets/fox_docile.bt.json"
 
 // The captain's fox, Renault
 /mob/living/basic/pet/fox/renault

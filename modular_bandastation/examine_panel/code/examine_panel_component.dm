@@ -41,7 +41,10 @@
 	/// The first 1-FLAVOR_PREVIEW_LIMIT characters in the mob's "flavor_text" DNA feature. FLAVOR_PREVIEW_LIMIT is defined in flavor_defines.dm.
 	var/preview_text = copytext_char(flavor_text, 1, FLAVOR_PREVIEW_LIMIT)
 	// What examine_tgui.dm uses to determine if flavor text appears as "Obscured".
-	var/face_obscured = (source.wear_mask && (source.wear_mask.flags_inv & HIDEFACE)) || (source.head && (source.head.flags_inv & HIDEFACE))
+	var/face_obscured = FALSE
+	if(ishuman(source))
+		var/mob/living/carbon/human/human_source = source
+		face_obscured = (human_source.wear_mask && (human_source.wear_mask.flags_inv & HIDEFACE)) || (human_source.head && (human_source.head.flags_inv & HIDEFACE))
 
 	if (!(face_obscured))
 		flavor_text_link = span_notice("[preview_text]... <a href='byond://?src=[REF(src)];lookup_info=open_examine_panel'>Раскрыть описание</a>")

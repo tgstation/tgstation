@@ -433,6 +433,9 @@
 2026-07-14:
   ArcaneMusic:
   - bugfix: Lights will now update themselves when moving Z-levels.
+  CabinetOnFire:
+  - bugfix: Fixed some sleeping procs that could run in procs that arent allowed to
+      sleep
   Gboster-0:
   - code_imp: optimized deathmatch lobbies and meaty ores a tiny bit
   Ghommie:
@@ -451,3 +454,123 @@
   vinylspiders:
   - qol: the character job slot assignment menu will fade out while you are dragging
       a character, to allow you to access jobs that might render behind it
+2026-07-15:
+  Aliceee2ch:
+  - qol: Made machinery with overlays actually be properly displayed in SDMM editor.
+  Melbert:
+  - rscadd: On April Fools, or if you're exceptionally (un)lucky, ripping up a certain
+      poster will reveal a certain other poster underneath
+  antropod:
+  - refactor: Atmos refactor & speedup by utilizing BYOND 516 vector functions
+  san7890:
+  - refactor: Picking up your pets (or any holdable mob) requires an aggressive grab
+      now.
+  theselfish:
+  - spellcheck: Dogwhistle has been removed from a bounty description.
+2026-07-16:
+  FeudeyTF:
+  - qol: Notepad can edit and save text files
+  Fghj240:
+  - bugfix: cyberheart blood regeneration properly scales with heart damage
+  - bugfix: Many chemical reactions are no longer exothermic.
+  - rscadd: Medical doctors and CMOs can get old virologist bounties
+  - spellcheck: Changed "transmissible" to "transmission" in virologist bounties
+  - spellcheck: Strongarms crate decription now mentions "humanoid" instead of "human"
+      arms.
+  JohnFulpWillard:
+  - qol: Better Emojipedia UI, better emojis, some more emojis.
+  LT3:
+  - qol: Stamping a paper now automatically closes the paper UI
+  Melbert:
+  - code_imp: Cleaned up radio TTS handling a bit, maybe it'll perform better, report
+      anything weird
+  - balance: '"Holy whip" null rod no longer arbitrarily does 2x brute damage to vampires'
+  - balance: '"Holy whip" null rod is now made of silver, which does bonus burn damage
+      to vampires (~1.67x damage now)'
+  - balance: Silver material weapons deal more burn damage to vampires on average
+      now (from 5 flat to 4-16, depending on volume of silver in the weapon)
+  - balance: Silver material weapons are no longer completely blocked by any form
+      of clothing, instead now reduced / blocked by wound armor
+  Nitrix119:
+  - bugfix: Renaming input/output ports on a circuit module no longer crashes the
+      UI.
+  - admin: Renaming an argument on the Proc Call circuit component no longer crashes
+      the UI.
+  SmArtKar:
+  - bugfix: Fixed atmos diffs and incorrect atmos in lavaland hermit ruin
+  - refactor: Moved a lot of human-specific inventory code onto human mobs, report
+      if inventories break!
+  - bugfix: Fixed mechs being unable to interact with stuff
+  lelandkemble:
+  - qol: crowbarring a transit tube pod out of a transit tube now provides messaging
+      when successful or unsuccessful
+  - bugfix: reinforcing plating that is then reinforced into reinforced plating no
+      longer reinforces the reinforced plating what was reinforced mid-reinforcement
+  - code_imp: 30 files (maybe 29) (maybe 28) (depends what order you're seeing these
+      changelogs in) have been converted from attackby() to item_interaction()
+  - bugfix: you now can only use a wirecutter to take down a reinforced falsewall
+  - bugfix: meatspikes no longer runtime on construction
+  - bugfix: you no longer have to use a verb that you can't use to flip windoor assemblies
+  - qol: you can right click a gun locker to close it
+  - code_imp: 50 files have been moved from attackby() to item_interaction()
+  timothymtorres:
+  - balance: Modular computers (PDAs) now shutdown when out of power
+  - bugfix: PDA flashlights now turn off when out of power
+  - sound: Added a terminal off switch sound to PDAs when power runs out
+  - map: Fix Kilo engineering camera
+  vinylspiders:
+  - bugfix: fixed an issue that would prevent an emped mech from being able to melee
+      attack a target
+2026-07-17:
+  Fghj240:
+  - qol: Ghosts can see alien embryo stage and all virus symptoms when health scanning
+  - code_imp: Health scanners now support multiple scan levels
+  - bugfix: Fixes medical kiosks not being able to identify advanced disease cures.
+  - rscdel: Removed ImmunoSilence and its trait
+  - balance: Aggressive healing has much lower stats
+  - map: Added sepsisillin pills to virology
+  - spellcheck: Clarified the description of aggressive healing
+  Happyowl93:
+  - bugfix: People with missing limb can again use the remaining good one.
+  LT3:
+  - bugfix: Tram signs only update on signals from their linked tram
+  LemonInTheDark:
+  - bugfix: Starlight will light rock walls adjacent to space... better.
+  Lotte103:
+  - map: Added Thermomachines and Plasma Cannister to the HFR Room on Catwalk
+  - map: Replaced glass windows with reinforced plasmaglass windows in Atmos and Ordnance
+      on Catwalk. Improving safety and allowing Atmos to operate the gas turbine without
+      breaching the Atmos pump room.
+  TealSeer:
+  - bugfix: fixed FaxBond not sending notifications when faxes are received
+  krookodilehunter:
+  - rscadd: Chickens can be picked up and held now! Sprites by mms142
+  lelandkemble:
+  - rscadd: Added craftable anti-mech tripwires. A mech that foolishly steps on one
+      will fall down and be immobilized temporarily. Don't let it fall on you!
+2026-07-18:
+  CabinetOnFire, Iamgoofball, SmartKar, Ben10omintrix:
+  - refactor: Replaces our AI system with behavior trees, porting all datum/ai to
+      it
+  Ghommie:
+  - balance: humanized monkeys (that were born as monkeys) should have their primitive
+      ape brain untouched (not an advanced tool user unless they have the clever trait).
+  Melbert:
+  - rscadd: Adds anomalous lure hook, a fishing hook which accepts (almost) any type
+      of anomaly core, causing unique effects depending on the core used.
+  - rscdel: Material fishing rods no longer innately catch material fish, you need
+      a dimensional anomaly core in an anomalous lure hook to catch material fish
+      now.
+  YesterdaysPromise:
+  - refactor: Podfloors (floors normaly seen in Survival Pods of miners) are now considered
+      a subtype of plastitanium tiles, and thus craftable.
+  - rscadd: To match with plastitanium, pofloors recieved 2 red variants.
+  - rscadd: Plastitanium can now make a new wall-filling item which you can reskin
+      in hand to make regular plastitanium walls, pod walls, as well as added unmarked
+      pod walls ('dark shuttle') and red unmarked pod walls ('dark red shuttle').
+  lelandkemble:
+  - bugfix: Wumborian Fugu floats
+  - bugfix: RCDing space works again
+  nPocToDark:
+  - rscadd: Curse of Ra is back. Now you can buy some pharaon costumes in DeusVend
+      (premium)

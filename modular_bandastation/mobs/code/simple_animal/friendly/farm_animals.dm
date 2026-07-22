@@ -63,7 +63,6 @@
 /mob/living/basic/chicken/Initialize(mapload)
 	. = ..()
 	held_state = icon_state
-	AddElement(/datum/element/can_be_held)
 
 /mob/living/basic/chick
 	icon = 'modular_bandastation/mobs/icons/farm_animals.dmi'
@@ -77,7 +76,6 @@
 
 /mob/living/basic/chick/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/can_be_held)
 
 /mob/living/basic/chicken/cock
 	name = "петух"

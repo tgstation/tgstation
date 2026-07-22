@@ -154,11 +154,7 @@
 	install_default_programs()
 	register_context()
 	update_appearance()
-	if(mapload)
-		return INITIALIZE_HINT_LATELOAD
-	else
-		if(SStts.tts_enabled)
-			voice = SStts.computer_voice
+	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/modular_computer/LateInitialize()
 	if(SStts.tts_enabled)
@@ -800,6 +796,7 @@
 	if(looping_sound)
 		soundloop.stop()
 	if(physical && loud)
+		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 		physical.visible_message(span_notice("[declent_ru(NOMINATIVE)] выключается."))
 	enabled = FALSE
 	update_appearance()

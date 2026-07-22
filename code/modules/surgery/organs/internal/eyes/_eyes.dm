@@ -271,11 +271,11 @@
 #define OFFSET_Y 2
 
 /// Similar to get_status_text, but appends the text after the damage report, for additional status info
-/obj/item/organ/eyes/get_status_appendix(advanced, add_tooltips)
+/obj/item/organ/eyes/get_status_appendix(scanpower, add_tooltips)
 	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
 		return
 	if(owner.is_blind())
-		if(advanced)
+		if(scanpower >= SCANPOWER_ADVANCED)
 			if(owner.is_blind_from(QUIRK_TRAIT))
 				return conditional_tooltip("Субъект полностью слеп.", "Не поддаётся лечению в обычных условиях.", add_tooltips)
 			if(owner.is_blind_from(EYE_SCARRING_TRAIT))
@@ -288,7 +288,7 @@
 				return conditional_tooltip("Субъект слеп из-за повреждения глаз.", "Восстановите хирургически, используйте медикаменты, такие как [/datum/reagent/medicine/oculine::name], или защитите глаза повязкой.", add_tooltips)
 		return "Субъект слеп."
 	if(owner.is_nearsighted())
-		if(advanced)
+		if(scanpower >= SCANPOWER_ADVANCED)
 			if(owner.is_nearsighted_from(QUIRK_TRAIT))
 				return conditional_tooltip("Субъект страдает от постоянной близорукости.", "Не поддаётся лечению в обычных условиях. Очки с диоптриями смягчат эффект.", add_tooltips)
 			if(owner.is_nearsighted_from(TRAIT_RIGHT_EYE_SCAR) || owner.is_nearsighted_from(TRAIT_LEFT_EYE_SCAR))

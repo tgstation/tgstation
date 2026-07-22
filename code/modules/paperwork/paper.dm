@@ -425,6 +425,8 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 	)
 
 /obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
+	if(!user.client) //bro stop trying to open UI on AI man ur gonna drive me nuts man comeon man
+		return
 	if(resistance_flags & ON_FIRE)
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -628,6 +630,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 
 			update_appearance()
+			ui.close()
 			update_static_data_for_all_viewers()
 			return TRUE
 		if("add_text")

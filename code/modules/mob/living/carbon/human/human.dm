@@ -1075,6 +1075,35 @@
 		return FALSE
 	return head_covered || HAS_TRAIT(src, TRAIT_HEAD_ATMOS_SEALED)
 
+/mob/living/carbon/human/should_electrocute(power_source)
+	if (gloves?.siemens_coefficient == 0)
+		return FALSE
+	return ..()
+
+/mob/living/carbon/human/can_touch_acid(atom/acided_atom, acid_power, acid_volume)
+	if(gloves?.resistance_flags & (UNACIDABLE | ACID_PROOF))
+		return TRUE
+	return ..()
+
+/mob/living/carbon/human/can_touch_burning(atom/burning_atom, acid_power, acid_volume)
+	if(gloves?.max_heat_protection_temperature >= BURNING_ITEM_MINIMUM_TEMPERATURE)
+		return TRUE
+	return ..()
+
+/mob/living/carbon/human/get_sight_and_cutoffs()
+	. = ..()
+	if(!istype(glasses))
+		return
+	. |= glasses.vision_flags
+	if(glasses.invis_override)
+		set_invis_see(glasses.invis_override)
+	else
+		set_invis_see(min(glasses.invis_view, see_invisible))
+	if(!isnull(glasses.lighting_cutoff))
+		lighting_cutoff = max(lighting_cutoff, glasses.lighting_cutoff)
+	if(length(glasses.color_cutoffs))
+		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, glasses.color_cutoffs)
+
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor
 

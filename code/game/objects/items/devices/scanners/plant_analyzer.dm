@@ -116,7 +116,7 @@
 		span_notice("Вы анализируете жизненные показатели [scanned_mob].")
 		)
 
-	healthscan(user, scanned_mob, advanced = TRUE)
+	healthscan(user, scanned_mob, scanpower = SCANPOWER_ADVANCED)
 	add_fingerprint(user)
 
 /*

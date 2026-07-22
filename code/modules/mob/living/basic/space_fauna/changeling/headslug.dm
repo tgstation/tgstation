@@ -95,8 +95,8 @@
 /// This is a bit neutered since these aren't intended to exist outside of player control, but it's a bit weird to just have these guys be completely stationary.
 /// No attacking or anything like that, though. Just something so they seem alive.
 /datum/ai_controller/basic_controller/headslug
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/changeling/headslug.bt.json"
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 /// Neutered version to prevent people from turning themselves into changelings with sentience potions or transformation
 /mob/living/basic/headslug/beakless

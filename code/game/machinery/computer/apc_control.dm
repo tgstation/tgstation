@@ -1,6 +1,7 @@
 /obj/machinery/computer/apc_control
 	name = "power flow control console"
 	desc = "Используется для удалённого управления потоком энергии на разные части станции."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/apc_control")
 	icon_screen = "solar"
 	icon_keyboard = "power_key"
 	req_access = list(ACCESS_CE)

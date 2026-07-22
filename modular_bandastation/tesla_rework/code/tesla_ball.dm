@@ -199,8 +199,7 @@
 	total_moles = env.total_moles()
 	temp = env.return_temperature()
 
-	if (env.has_gas(/datum/gas/plasma))
-		plasma_moles = env.gases[/datum/gas/plasma][MOLES]
+	plasma_moles = env.moles[/datum/gas/plasma] || 0
 
 /obj/tesla_ball/examine(mob/user)
 	. = ..()
@@ -505,4 +504,3 @@
 #undef TESLA_ZAP_POWER_RATIO
 #undef TESLA_MIN_ENERGY
 #undef TESLA_EMITTER_HIT_ENERGY
-

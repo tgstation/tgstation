@@ -29,8 +29,8 @@
 	var/mode = SCANNER_VERBOSE
 	/// HEALTH/WOUND
 	var/scanmode = SCANMODE_HEALTH
-	/// Advanced health analyzer
-	var/advanced = FALSE
+	/// Health analyzing power
+	var/scanpower = SCANPOWER_BASIC
 	/// If this analyzer will give a bonus to wound treatments apon woundscan.
 	var/give_wound_treatment_bonus = FALSE
 	var/last_scan_text
@@ -90,7 +90,7 @@
 		last_scan_text = floor_text
 		return
 
-	if(ispodperson(M) && !advanced)
+	if(ispodperson(M) && !scanpower <= SCANPOWER_ADVANCED)
 		to_chat(user, span_info("Биологическая структура [M.declent_ru(GENITIVE)] слишком сложна для анализатора здоровья."))
 		return
 
@@ -101,7 +101,7 @@
 	var/readability_check = user.can_read(src) && !user.is_blind()
 	switch (scanmode)
 		if (SCANMODE_HEALTH)
-			last_scan_text = healthscan(user, M, mode, advanced, tochat = readability_check)
+			last_scan_text = healthscan(user, M, mode, scanpower, tochat = readability_check)
 			if((M.health / M.maxHealth) > CLEAN_BILL_OF_HEALTH_RATIO)
 				last_healthy_scanned = WEAKREF(M)
 			else
@@ -148,7 +148,7 @@
  * advanced - Whether it will give more advanced details, such as husk source.
  * tochat - Whether to immediately post the result into the chat of the user, otherwise it will return the results.
  */
-/proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, advanced = FALSE, tochat = TRUE)
+/proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, scanpower = SCANPOWER_BASIC, tochat = TRUE)
 	if(user.incapacitated)
 		return
 
@@ -170,14 +170,14 @@
 
 	render_list += "[span_info("Анализ результатов для <b>[target.declent_ru(GENITIVE)]</b> ([round_timestamp()]):")]<br><span class='info ml-1'>Общее состояние: [mob_status]</span><br>"
 
-	if(!advanced && target.has_reagent(/datum/reagent/inverse/technetium))
-		advanced = TRUE
+	if(!scanpower == SCANPOWER_BASIC && target.has_reagent(/datum/reagent/inverse/technetium))
+		scanpower = SCANPOWER_ADVANCED
 
-	SEND_SIGNAL(target, COMSIG_LIVING_HEALTHSCAN, render_list, advanced, user, mode, tochat)
+	SEND_SIGNAL(target, COMSIG_LIVING_HEALTHSCAN, render_list, scanpower, user, mode, tochat)
 
 	// Husk detection
 	if(HAS_TRAIT(target, TRAIT_HUSK))
-		if(advanced)
+		if(scanpower >= SCANPOWER_ADVANCED)
 			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
 				render_list += "<span class='alert ml-1'>Субъект был превращён в хаска [conditional_tooltip("поглощением", "Необратимо. При обычных обстоятельствах оживление возможно только путём пересадки мозга.", tochat)].</span><br>"
 			else if(HAS_TRAIT_FROM(target, TRAIT_HUSK, SKELETON_TRAIT))
@@ -191,7 +191,7 @@
 			render_list += "<span class='alert ml-1'>Субъект был превращён в хаска.</span><br>"
 
 	if(target.get_stamina_loss())
-		if(advanced)
+		if(scanpower >= SCANPOWER_ADVANCED)
 			render_list += "<span class='alert ml-1'>Уровень усталости: [target.get_stamina_loss()]%.</span><br>"
 		else
 			render_list += "<span class='alert ml-1'>Субъект страдает от переутомления.</span><br>"
@@ -212,7 +212,7 @@
 		var/mob/living/carbon/carbontarget = target
 		if(LAZYLEN(carbontarget.quirks))
 			render_list += "<span class='info ml-1'>Значительные отклонения субъекта: [carbontarget.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY, from_scan = TRUE)].</span><br>"
-			if(advanced)
+			if(scanpower >= SCANPOWER_ADVANCED)
 				render_list += "<span class='info ml-1'>Незначительные отклонения субъекта: [carbontarget.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY, TRUE)].</span><br>"
 
 	// Body part damage report
@@ -294,7 +294,7 @@
 			<table class='ml-2'>\
 			<tr>\
 			<td style='width:8em;'><font color='#ff0000'><b>Орган:</b></font></td>\
-			[advanced ? "<td style='width:4em;'><font color='#ff0000'><b>Урон</b></font></td>" : ""]\
+			[scanpower >= SCANPOWER_ADVANCED ? "<td style='width:4em;'><font color='#ff0000'><b>Урон</b></font></td>" : ""]\
 			<td style='width:30em;'><font color='#ff0000'><b>Состояние</b></font></td>\
 			</tr>"
 
@@ -306,19 +306,19 @@
 				if(missing_organs[sorted_slot])
 					render = TRUE
 					toReport += "<tr><td><font color='#cc3333'>[missing_organs[sorted_slot]]:</font></td>\
-						[advanced ? "<td><font color='#ff3333'>-</font></td>" : ""]\
+						[scanpower >= SCANPOWER_ADVANCED ? "<td><font color='#ff3333'>-</font></td>" : ""]\
 						<td><font color='#cc3333'>Отсутствует</font></td></tr>"
 				continue
 			if(mode != SCANNER_VERBOSE && !organ.show_on_condensed_scans())
 				continue
-			var/status = organ.get_status_text(advanced, tochat)
-			var/appendix = organ.get_status_appendix(advanced, tochat)
+			var/status = organ.get_status_text(scanpower, tochat)
+			var/appendix = organ.get_status_appendix(scanpower, tochat)
 			if(status || appendix)
 				status ||= "<font color='#ffcc33'>OK</font>" // otherwise flawless organs have no status reported by default
 				render = TRUE
 				toReport += "<tr>\
 					<td><font color='#cc3333'>[capitalize(organ.name)]:</font></td>\
-					[advanced ? "<td><font color='#ff3333'>[organ.damage > 0 ? ceil(organ.damage) : "0"]</font></td>" : ""]\
+					[scanpower >= SCANPOWER_ADVANCED ? "<td><font color='#ff3333'>[organ.damage > 0 ? ceil(organ.damage) : "0"]</font></td>" : ""]\
 					<td>[status]</td>\
 					</tr>"
 				if(appendix)
@@ -345,7 +345,7 @@
 		render_list += "<hr>"
 
 		//Genetic stability
-		if(advanced && humantarget.has_dna() && humantarget.dna.stability != initial(humantarget.dna.stability))
+		if(scanpower >= SCANPOWER_ADVANCED && humantarget.has_dna() && humantarget.dna.stability != initial(humantarget.dna.stability))
 			render_list += "<span class='info ml-1'>Генетическая стабильность: [humantarget.dna.stability]%.</span><br>"
 
 		//body temperature
@@ -446,17 +446,13 @@
 		var/cure_text
 		if(istype(disease, /datum/disease/advance))
 			var/datum/disease/advance/advanced_disease = disease
-			var/remedies = list()
-			var/remedy_limit = advanced ? 3 : 2
-			for(var/datum/symptom/each_symptom as anything in advanced_disease.symptoms)
-				if(!each_symptom.symptom_cure)
-					continue
-				var/datum/reagent/each_cure = each_symptom.symptom_cure
-				if(!each_symptom.neutered && !(each_cure::name in remedies))
-					remedies += each_cure::name
-				if(length(remedies) >= remedy_limit)
-					break
-			cure_text = english_list(remedies, nothing_text = "Nothing")
+			var/cure_count = 2
+			switch(scanpower)
+				if(SCANPOWER_ADVANCED)
+					cure_count = 3
+				if(SCANPOWER_SUPER)
+					cure_count = INFINITY
+			cure_text = advanced_disease.generate_cure_text(cure_count)
 		else
 			cure_text = disease.cure_text
 		render_list += "<span class='alert ml-1'>\
@@ -624,8 +620,14 @@
 	name = "advanced health analyzer"
 	icon_state = "health_adv"
 	desc = "Ручной сканер тела, способный с высокой точностью определять жизненно важные показатели субъекта."
-	advanced = TRUE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75)
+	scanpower = SCANPOWER_ADVANCED
+
+/obj/item/healthanalyzer/super
+	name = "super health analyzer"
+	icon_state = "health_super"
+	desc = "A health scanner for debuggers. Functions the same as ghost healthscans."
+	scanpower = SCANPOWER_SUPER
 
 #define AID_EMOTION_NEUTRAL "neutral"
 #define AID_EMOTION_HAPPY "happy"
@@ -813,13 +815,9 @@
 			var/disease_cure = disease.cure_text
 			if(istype(disease, /datum/disease/advance))
 				var/datum/disease/advance/advanced_disease = disease
-				for(var/datum/symptom/each_symptom as anything in advanced_disease.symptoms)
-					if(!each_symptom.neutered && each_symptom.symptom_cure)
-						var/datum/reagent/each_cure = each_symptom.symptom_cure
-						disease_cure = each_cure::name
-						break // We only get one
-			render += "<span class='alert ml-1'><b>Внимание: [disease.form]</b><br>\
-			<div class='ml-2'>Имя: [disease.name].<br>Распространение: [disease.spread_text].<br>Стадия: [disease.stage]/[disease.max_stages].<br>Возможное лекарство: [disease_cure]</div>\
+				disease_cure = advanced_disease.generate_cure_text(1)
+			render += "<span class='alert ml-1'><b>Внимание: [disease.form] detected</b><br>\
+			<div class='ml-2'>Name: [disease.name].<br>Распространение: [disease.spread_text].<br>Стадия: [disease.stage]/[disease.max_stages].<br>Возможное лекарство: [disease_cure]</div>\
 			</span>"
 
 	if(!length(render))

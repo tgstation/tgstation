@@ -428,7 +428,7 @@
 /area/centcom/central_command_areas/maintance)
 "abT" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/centcom/central_command_areas/supply)
 "abU" = (
 /obj/structure/sign/flag/nanotrasen/directional/west,
@@ -539,7 +539,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/centcom/central_command_areas/supply)
 "acy" = (
 /obj/effect/turf_decal/stripes/line{
@@ -577,7 +577,7 @@
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/supply)
 "acH" = (
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/centcom/central_command_areas/supply)
 "acJ" = (
 /obj/docking_port/stationary{
@@ -1335,7 +1335,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/centcom/central_command_areas/supply)
 "afY" = (
 /obj/structure/chair{
@@ -2803,7 +2803,7 @@
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/machinery/photocopier/gratis/prebuilt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin/soo)
 "anx" = (
 /obj/effect/turf_decal/tile/brown/fourcorners,
@@ -3478,7 +3478,7 @@
 "aqN" = (
 /obj/machinery/door/poddoor/shutters/indestructible/preopen,
 /obj/effect/turf_decal/loading_area,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/centcom/central_command_areas/supply)
 "aqP" = (
 /obj/vehicle/ridden/janicart,
@@ -3756,7 +3756,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/centcom/central_command_areas/supply)
 "asl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
@@ -3998,7 +3998,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/centcom/central_command_areas/supply)
 "atB" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -6235,7 +6235,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/centcom/central_command_areas/supply)
 "aDQ" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -6575,7 +6575,7 @@
 "aFa" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/fax/admin,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin/soo)
 "aFb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
@@ -7229,7 +7229,7 @@
 	pixel_y = -4
 	},
 /obj/structure/sign/flag/nanotrasen/directional/south,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin/soo)
 "aHu" = (
 /obj/effect/turf_decal/caution/stand_clear/red{
@@ -7634,7 +7634,7 @@
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 4
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/centcom/central_command_areas/supply)
 "aIT" = (
 /obj/structure/sign/warning/directional/east,
@@ -7767,7 +7767,7 @@
 /obj/item/clothing/accessory/medal/bronze_heart,
 /obj/item/gun/ballistic/revolver/golden,
 /obj/machinery/status_display/ai/directional/north,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin/soo)
 "aJo" = (
 /obj/structure/table/wood,
@@ -7846,7 +7846,7 @@
 "aJA" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/computer/security/wooden_tv,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin/soo)
 "aJB" = (
 /obj/structure/railing/corner{
@@ -7885,7 +7885,7 @@
 	},
 /obj/structure/light_fake/spot/directional/south,
 /obj/machinery/newscaster/directional/south,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin/soo)
 "aJH" = (
 /obj/machinery/vending/nta/light,
@@ -8009,7 +8009,7 @@
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 4
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/centcom/central_command_areas/supply)
 "aKe" = (
 /obj/structure/chair/sofa/bench/right{
@@ -8990,7 +8990,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/centcom/central_command_areas/supply)
 "aNc" = (
 /obj/effect/turf_decal/siding/yellow/corner{
@@ -10613,7 +10613,7 @@
 /obj/machinery/modular_computer/preset/id/centcom{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin/soo)
 "aUP" = (
 /obj/machinery/duct,
@@ -11503,7 +11503,7 @@
 /area/centcom/central_command_areas/engine)
 "aYB" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/centcom/central_command_areas/supply)
 "aYC" = (
 /obj/vehicle/sealed/mecha/ripley/cargo,
@@ -11682,7 +11682,7 @@
 	dir = 10
 	},
 /obj/effect/spawner/random/structure/shipping_container/station_appropriate,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/centcom/central_command_areas/supply)
 "aZh" = (
 /obj/structure/tank_dispenser/oxygen,
@@ -12855,7 +12855,7 @@
 /area/centcom/central_command_areas/courtroom)
 "cVD" = (
 /obj/machinery/computer/communications,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin)
 "cVY" = (
 /obj/effect/turf_decal/siding/wideplating/dark/corner{
@@ -13974,7 +13974,7 @@
 	pixel_x = 10;
 	pixel_y = -4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin)
 "fcN" = (
 /obj/structure/light_fake/spot/directional/east,
@@ -16556,7 +16556,7 @@
 "lfr" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/fancy/donut_box,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin)
 "lgT" = (
 /obj/effect/turf_decal/tile/dark/fourcorners{
@@ -17695,7 +17695,7 @@
 "nYw" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/fax/admin,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin)
 "nZI" = (
 /obj/machinery/door/airlock/multi_tile/public/glass{
@@ -20806,7 +20806,7 @@
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/machinery/photocopier/gratis/prebuilt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/cabin)
 "tVr" = (
 /obj/structure/table/reinforced/titaniumglass,

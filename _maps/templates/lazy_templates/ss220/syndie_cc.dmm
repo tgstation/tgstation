@@ -2539,7 +2539,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/centcom/syndicate_base/jail)
 "fMl" = (
 /obj/machinery/light/small/directional/south,
@@ -5045,7 +5045,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/centcom/syndicate_base/jail)
 "lTh" = (
 /obj/structure/closet/cabinet{
@@ -6394,7 +6394,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/centcom/syndicate_base/jail)
 "oGr" = (
 /obj/structure/flora/bush/generic/style_random,
