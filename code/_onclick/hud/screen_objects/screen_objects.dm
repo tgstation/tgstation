@@ -974,6 +974,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	var/list/current_animated = LAZYLISTDUPLICATE(animated_zones)
 
 	for(var/part_zone, body_part_untyped in owner.get_bodyparts_by_zones())
+		// I hate that we "allow" support for more than 2 hands in the codebase
+		if(!limbs[part_zone])
+			continue
 		var/icon_key = 0
 		var/obj/item/bodypart/body_part = body_part_untyped
 		var/list/overridable_key = list(icon_key)

@@ -1,5 +1,4 @@
 /obj/item/food/grown/melonlike
-	seed = /obj/item/seeds/watermelon
 	name = "melon?"
 	desc = "You felt like this was a melon, but it definitely isn't. You should tell somebody about this."
 	icon_state = "watermelon"

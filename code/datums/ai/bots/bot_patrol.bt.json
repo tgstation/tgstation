@@ -81,7 +81,7 @@
 			"type": "leaf",
 			"behavior": "/datum/bt_node/ai_behavior/wait",
 			"vars": {
-				"duration": "1 SECONDS"
+				"duration": "5 SECONDS"
 			}
 		}
 	]

@@ -563,3 +563,46 @@
 		if(rcd_equip.internal_rcd.install_upgrade(rcd_upgrade, user))
 			return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
+
+
+/obj/vehicle/sealed/mecha/atom_destruction()
+	spark_system?.start()
+	loc.assume_air(cabin_air)
+
+	var/mob/living/silicon/ai/unlucky_ai
+	for(var/mob/living/occupant as anything in occupants)
+		if(!isAI(occupant))
+			mob_exit(occupant, forced = TRUE)
+			if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..
+				occupant.SetSleeping(destruction_sleep_duration)
+			continue
+
+		var/mob/living/silicon/ai/ai = occupant
+		if(ai.linked_core || ai.can_shunt) // we probably shouldnt gib AIs with a core or shunting abilities
+			mob_exit(ai, silent = TRUE, forced = TRUE) // so we dont ghost the AI
+			continue
+
+		unlucky_ai = occupant
+		ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
+		ai.gib(DROP_ALL_REMAINS) //No wreck, no AI to recover
+
+	if(ore_box)
+		INVOKE_ASYNC(ore_box, TYPE_PROC_REF(/obj/structure/ore_box, dump_box_contents))
+
+	if(wreckage)
+		var/obj/structure/mecha_wreckage/wreck = new wreckage(loc, unlucky_ai)
+		for(var/obj/item/mecha_parts/mecha_equipment/equipment in flat_equipment)
+			if(equipment.detachable && prob(30))
+				wreck.crowbar_salvage += equipment
+				equipment.detach(wreck) //detaches from src into wreck
+				equipment.active = TRUE
+			else
+				equipment.detach(loc)
+				qdel(equipment)
+
+		if(cell)
+			wreck.crowbar_salvage += cell
+			cell.forceMove(wreck)
+			cell.use(rand(0, cell.charge), TRUE)
+			cell = null
+	return ..()

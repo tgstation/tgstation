@@ -233,17 +233,16 @@ function Department(props: DepartmentProps) {
     return;
   }
 
-  const { departments, jobs } = data.jobs;
+  const { departments, jobs, jobs_sorted } = data.jobs;
   const department = departments[name];
 
   if (!department) {
     return null;
   }
 
-  const jobsForDepartment = sortJobs(
-    Object.entries(jobs).filter(([_, job]) => job.department === name),
-    department.head,
-  );
+  const jobsForDepartment = jobs_sorted
+    .map((jobName) => [jobName, jobs[jobName]] as const)
+    .filter(([, job]) => job.department === name);
 
   return (
     <Box

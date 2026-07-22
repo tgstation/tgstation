@@ -574,3 +574,74 @@
   nPocToDark:
   - rscadd: Curse of Ra is back. Now you can buy some pharaon costumes in DeusVend
       (premium)
+2026-07-19:
+  CabinetOnFire:
+  - bugfix: Some looping sounds no longer runtime when stopping/starting
+  - bugfix: Repairbots fix windows and other things reliably again
+  Fghj240:
+  - spellcheck: changed "possible cure" to "cure" in healthscans to show they can't
+      be wrong
+  - qol: Health analyzer has hover text for disease curing strategies
+  Hatterhat:
+  - qol: The botanical chemical dispenser (as seen on the lifebringer ship) is now
+      also capable of dispensing Enduro Grow and Liquid Earthquake.
+  Kashargul:
+  - bugfix: biome install being skipped after a dependency update
+  QuiteLiterallyAnything:
+  - bugfix: Broken mirrors no longer produce an intact mirror upon deconstruction.
+  SmArtKar:
+  - qol: Watcher gaze visuals no longer flicker if you turn around after the ability
+      has already been activated and is finishing the animation
+  - bugfix: Fixed watcher gaze runtimes
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: kilo genetics now has gene disks and a flesh reshaper
+  nPocToDark:
+  - rscadd: Rabbits, stoats, MOTHROACHES, sheeps, foxes, lizards and penguins now
+      available to growing in cytology growing vats.
+  vinylspiders:
+  - bugfix: species quirk incompatibilities will now update immediately without the
+      need to add/remove a quirk to force a ui update
+  - code_imp: quirks backend improved, it will no longer send full updates constantly
+      and be faster
+  - bugfix: fixed an issue that would cause preview icons to randomly become corrupt
+      or invisible if they met certain criteria
+  - admin: select equipment now just shows one direction of previews, greatly reducing
+      lag
+2026-07-20:
+  Aliceee2ch:
+  - spellcheck: Fixed blastoff misspelling.
+  FalloutFalcon:
+  - admin: Adding music as an admin rebuilds the list THAT round instead of having
+      to wait for the next
+  PapaMichael:
+  - spellcheck: More verbs match their pronouns
+  SmArtKar:
+  - bugfix: Fixed the Four Hands wizard perk
+  - bugfix: Fixed quick tile replacement
+2026-07-21:
+  CabinetOnFire:
+  - bugfix: Fixes cats getting permanent zoomies after being chased away by a superior
+      male
+  - bugfix: Fixes mechs not qdel'ing when destroyed if they spawn a wreck
+  FalloutFalcon:
+  - qol: per department sorting for character setup matches latejoin menu
+  SmArtKar:
+  - bugfix: Removed unnecessary click delay from window placement
+  lelandkemble:
+  - code_imp: Edible food unit test doesn't check abstract type food, abstract type
+      food doesn't have seeds.
+  timothymtorres:
+  - rscadd: Add water bottles to booze-o-mat non-alcoholic category
+  vinylspiders:
+  - bugfix: peeking into a hilberts hotel room while it gets deleted will now kick
+      you out properly
+  - bugfix: fixed an issue where the lights would stay dark after reloading the same
+      hilberts hotel room
+2026-07-22:
+  CabinetOnFire:
+  - refactor: Ruin loading should now be more robust and should spawn less orphaned
+      genturfs
+  lelandkemble:
+  - code_imp: converted calls to attackby() to calls to item_interaction()
+  - bugfix: MODsuit drill module manual activation works again
+  - bugfix: you can put c4s on safes
