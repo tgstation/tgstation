@@ -1,0 +1,5 @@
+author: "CabinetOnFire"
+delete-after: True
+changes:
+  - rscadd: "Monkeys now know how to yakety sax and how to shove people into walls"
+  - bugfix: "Monkeys no longer trip on monkeys."
