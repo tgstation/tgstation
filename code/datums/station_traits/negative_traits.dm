@@ -247,10 +247,6 @@
 
 	new /datum/ai_controller/monkey/angry(punpun)
 
-	if(istype(punpun, /mob/living/basic/gorilla/bar)) //bit hacky but we gotta keep em gorrilafied
-		var/mob/living/basic/gorilla/bar/bargorilla = punpun
-		bargorilla.gorrilify_punpun_ai()
-
 	var/area/place = get_area(punpun)
 
 	var/list/area_open_turfs = list()

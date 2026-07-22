@@ -34,7 +34,6 @@
 	report_message = "Following a clerical error in our primate requisition form, your bar's simian has been upgraded to a bigger primate. We have elected not to correct this."
 	trait_to_give = STATION_TRAIT_PUN_PUN_GYM_DAY
 	blacklist = list(/datum/station_trait/job/pun_pun) //We should make these two work together later, itd be funny.
-	force = TRUE
 
 /datum/station_trait/spider_infestation
 	name = "Spider Infestation"

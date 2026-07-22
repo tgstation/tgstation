@@ -185,10 +185,18 @@ GLOBAL_LIST_INIT(strippable_gorilla_items, create_strippable_list(list(
 
 /mob/living/basic/gorilla/bar/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_PAWN_POSSESSED_BY_AI_CONTROLLER, PROC_REF(on_possessed_by_ai_controller))
 	gorrilify_punpun_ai()
 
 	if(!GLOB.the_one_and_only_punpun)
 		GLOB.the_one_and_only_punpun = src
+
+/// Signal handler for when an ai controller possesses us, reapplies our gorilla-specific ai tweaks if it's a monkey controller
+/mob/living/basic/gorilla/bar/proc/on_possessed_by_ai_controller(datum/source, datum/ai_controller/source_controller)
+	SIGNAL_HANDLER
+	if(!istype(source_controller, /datum/ai_controller/monkey))
+		return
+	gorrilify_punpun_ai()
 
 /mob/living/basic/gorilla/bar/proc/gorrilify_punpun_ai()
 	ai_controller?.override_blackboard_key(BB_SONG_LINES, GORILLA_SONG)
