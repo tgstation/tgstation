@@ -13,10 +13,10 @@
 	if(!isliving(living_pawn) || !isliving(living_target))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	if(!prob(shove_chance))
+	if(world.time < living_pawn.next_move)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	if(world.time < living_pawn.next_move)
+	if(!prob(shove_chance))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	if(!living_target.IsReachableBy(living_pawn))

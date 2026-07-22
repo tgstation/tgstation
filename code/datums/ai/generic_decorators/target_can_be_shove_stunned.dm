@@ -21,10 +21,10 @@
 	if(shove_flags & (SHOVE_KNOCKDOWN_BLOCKED | SHOVE_CAN_KICK_SIDE))
 		return FALSE
 
-	return shove_would_be_blocked(living_pawn, living_target)
+	return shove_will_knockdown(living_pawn, living_target)
 
-/// Whether the target has nowhere to be pushed, which is what turns a shove into a knockdown.
-/datum/bt_node/decorator/target_can_be_shove_stunned/proc/shove_would_be_blocked(mob/living/living_pawn, mob/living/living_target)
+/// Whether the target has nowhere to be pushed, which is what turns a shove into a knockdown. (and thus succesful)
+/datum/bt_node/decorator/target_can_be_shove_stunned/proc/shove_will_knockdown(mob/living/living_pawn, mob/living/living_target)
 	var/shove_dir = get_dir(living_pawn.loc, living_target.loc)
 	var/turf/target_turf = get_turf(living_target)
 	var/turf/shove_turf = get_step(target_turf, shove_dir)
