@@ -10,7 +10,7 @@
 	var/reagents
 	///Details of how we inject our venom
 	var/injection_flags
-	///How much of the reagent added. if it's a list, it'll pick a range with the range being list(lower_value, upper_value)
+	/// How much of the reagent added.. if it's a list, it'll pick a range with the range being list(lower_value, upper_value)
 	var/list/amount_added
 	///Does this trigger when thrown?
 	var/thrown_effect = FALSE

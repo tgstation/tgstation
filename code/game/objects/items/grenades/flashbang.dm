@@ -7,7 +7,7 @@
 	possible_fuse_time = list("3", "4", "5")
 	//how many tiles away the mob will be affected by the flashbang.
 	var/flashbang_range = 7
-	//The devision for the sweetspot culations. if set to 1, the sweetspot is ostensibly the flashbang range.
+	// The devision for the sweetspot culations.. if set to 1, the sweetspot is ostensibly the flashbang range.
 	var/sweetspot_divider = 3
 	//The light emitted by this flashbang to indicate the sweetspot.
 	var/flashbang_light = LIGHT_COLOR_INTENSE_RED
@@ -158,7 +158,7 @@
 
 	// only checking if they're on top of the tile, cause being one tile over will be its own punishment
 
-// Grenade that releases more shrapnel the more times you use it in hand between priming and detonation (sorta like the 9bang from MW3), for admin goofs
+// Grenade that releases more shrapnel the more times you use it in h. Between priming. Detonation sort of like the 9bang from MW3), f. Admin goofs
 /obj/item/grenade/primer
 	name = "rotfrag grenade"
 	desc = "A grenade that generates more shrapnel the more you rotate it in your hand after pulling the pin. This one releases shrapnel shards."

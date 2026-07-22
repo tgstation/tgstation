@@ -21,13 +21,13 @@ can next move
 */
 
 /datum/actionspeed_modifier
-	/// Whether or not this is a variable modifier. Variable modifiers can NOT be ever auto-cached. ONLY CHECKED VIA INITIAL(), EFFECTIVELY READ ONLY (and for very good reason)
+	/// Whether or not this is a variable modifier.. Variable modifiers can NOT be ever auto-cached.. ONLY CHECKED VIA INITIAL(), EFFECTIVELY READ ONLY (and for very good reason)
 	var/variable = FALSE
 
-	/// Unique ID. You can never have different modifications with the same ID. By default, this SHOULD NOT be set. Only set it for cases where you're dynamically making modifiers/need to have two types overwrite each other. If unset, uses path (converted to text) as ID.
+	/// Unique ID.. You can never have different modifications with the same ID.. By default, this SHOULD NOT be set.. Only set it for cases where you're dynamically making modifiers/need to have two types overwrite each other.. If unset, uses path (converted to text) as ID.
 	var/id
 
-	/// Higher ones override lower priorities. This is NOT used for ID, ID must be unique, if it isn't unique the newer one overwrites automatically if overriding.
+	/// Higher ones override lower priorities.. This is NOT used for ID, ID must be unique, if it isn't unique the newer one overwrites automatically if overriding.
 	var/priority = 0
 	var/flags = NONE
 
@@ -48,7 +48,7 @@ can next move
 
 GLOBAL_LIST_EMPTY(actionspeed_modification_cache)
 
-/// Grabs a STATIC MODIFIER datum from cache. YOU MUST NEVER EDIT THESE DATUMS, OR IT WILL AFFECT ANYTHING ELSE USING IT TOO!
+/// Grabs a STATIC MODIFIER datum from cache.. YOU MUST NEVER EDIT THESE DATUMS, OR IT WILL AFFECT ANYTHING ELSE USING IT TOO!
 /proc/get_cached_actionspeed_modifier(modtype)
 	if(!ispath(modtype, /datum/actionspeed_modifier))
 		CRASH("[modtype] is not a actionspeed modification typepath.")
@@ -60,7 +60,7 @@ GLOBAL_LIST_EMPTY(actionspeed_modification_cache)
 		actionspeed_mod = GLOB.actionspeed_modification_cache[modtype] = new modtype
 	return actionspeed_mod
 
-///Add a action speed modifier to a mob. If a variable subtype is passed in as the first argument, it will make a new datum. If ID conflicts, it will overwrite the old ID.
+/// Add a action speed modifier to a mob.. If a variable subtype is passed in as the first argument, it will make a new datum.. If ID conflicts, it will overwrite the old ID.
 /mob/proc/add_actionspeed_modifier(datum/actionspeed_modifier/type_or_datum, update = TRUE)
 	if(ispath(type_or_datum))
 		if(!initial(type_or_datum.variable))
@@ -146,7 +146,7 @@ GLOBAL_LIST_EMPTY(actionspeed_modification_cache)
 		key = datum_type_id.id
 	return LAZYACCESS(actionspeed_modification, key)
 
-/// Go through the list of actionspeed modifiers and calculate a final actionspeed. ANY ADD/REMOVE DONE IN UPDATE_actionspeed MUST HAVE THE UPDATE ARGUMENT SET AS FALSE!
+/// Go through the list of actionspeed modifiers and calculate a final actionspeed.. ANY ADD/REMOVE DONE IN UPDATE_actionspeed MUST HAVE THE UPDATE ARGUMENT SET AS FALSE!
 /mob/proc/update_actionspeed()
 	. = 0
 	var/list/conflict_tracker = list()

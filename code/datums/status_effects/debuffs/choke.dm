@@ -109,7 +109,7 @@
 	var/atom/movable/choking_on = choking_on_ref?.resolve()
 	if(choking_on && iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
-		// This will yeet the thing we're choking on out of us
+		// This will throw the thing we're choking on out of us
 		carbon_owner.vomit(vomit_flags = (VOMIT_CATEGORY_DEFAULT | MOB_VOMIT_FORCE), lost_nutrition = 20, distance = 2)
 
 /datum/status_effect/choke/proc/on_vomit(mob/source, distance, force)
@@ -117,7 +117,7 @@
 	var/atom/movable/choking_on = choking_on_ref?.resolve()
 	if(choking_on)
 		choking_on_ref = null
-		choking_on.forceMove(get_turf(source)) // Gotta be on a tile to throw yourself bestie
+		choking_on.forceMove(get_turf(source)) // Got to be on a tile to throw yourself bestie
 		var/atom/target = get_edge_target_turf(source, source.dir)
 		choking_on.throw_at(target, distance, 1, source)
 
@@ -188,7 +188,7 @@
 	if(!thrusting_continues(victim, aggressor, before_work = TRUE))
 		return
 	aggressor.start_pulling(victim)
-	// I want the thing to look vaugely like the heimlich. Sue me
+	// I want the thing to look vaugely like the heimlich.. Sue me
 	victim.setDir(aggressor.dir)
 
 	var/hand_name = "hand"
@@ -251,7 +251,7 @@
 			victim.balloon_alert(aggressor, "must be able to move them!")
 			return FALSE
 
-		// Similarly, but also this is a burden of knowhow that's cringe
+		// Similarly, but also this is a burden of knowhow that's uncomfortable
 		if(aggressor.dir != get_dir(aggressor, victim))
 			victim.balloon_alert(aggressor, "must be facing them!")
 			return FALSE
@@ -261,8 +261,8 @@
 			victim.balloon_alert(aggressor, "must be facing the same way!")
 			return FALSE
 
-	// If we ain't starting, deal a tad bit of brute, as a treat
-	// Note, we attempt to process 10 times a second, so over 7 seconds this'll deal 14 brute
+	// If we is not starting, deal a tad bit of brute, as a treat
+	// Note, we try to process 10 times a second, so over 7 seconds this'll deal 14 brute
 	if(!before_work)
 		victim.adjust_brute_loss(0.2)
 	return TRUE
@@ -278,7 +278,7 @@
 		do_vfx(client_owner)
 
 /datum/status_effect/choke/proc/deal_damage(seconds_between_ticks)
-	owner.losebreath += 1 * seconds_between_ticks // 1 breath loss a second. This will deal additional breath damage, and prevent breathing
+	owner.losebreath += 1 * seconds_between_ticks // 1 breath loss a second.. This will deal additional breath damage, and prevent breathing
 	if(flaming)
 		owner.apply_damage(2 * seconds_between_ticks, BURN, BODY_ZONE_HEAD, attacking_item = "choking")
 		owner.apply_damage(2 * seconds_between_ticks, STAMINA)
@@ -288,8 +288,8 @@
 	delta_x = WRAP(delta_x + rand(1, 6), -13, 13)
 	var/old_y = delta_y
 	delta_y = WRAP(delta_y + rand(1, 6), -13, 13)
-	// We run on fast process, which procs us once every 0.2 seconds. We want to move every 0.05, so we do 4 animates
-	// In other news, ANIMATION_RELATIVE does not work on client.pixel_x/y. Thanks byond
+	// We run on fast process, which procs us once every 0.2 seconds.. We want to move every 0.05, so we do 4 animates
+	// In other news, ANIMATION_RELATIVE does not work on client.pixel_x/y.. Thanks byond
 	animate(vfx_on, pixel_x = vfx_on.pixel_x + (delta_x - old_x), pixel_y = vfx_on.pixel_y + (delta_y - old_y), time = 0.05 SECONDS, flags = ANIMATION_PARALLEL)
 	for(var/i in 1 to 3)
 		old_x = delta_x

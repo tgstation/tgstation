@@ -6,9 +6,9 @@
 	var/atom/to_spawn
 	/// Amount to spawn on shovel
 	var/amount
-	/// What should we tell the user they did? (Eg: "You dig up the turf.")
+	/// What should we tell the user they did?. for example "You dig up the turf.")
 	var/action_text
-	/// What should we tell other people what the user did? (Eg: "Guy digs up the turf.")
+	/// What should we tell other people what the user did?. for example "Guy digs up the turf.")
 	var/action_text_third_person
 	/// Percentage chance of receiving a bonus worm
 	var/worm_chance

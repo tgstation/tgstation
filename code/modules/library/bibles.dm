@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(biblenames, list(
 	"Guru Granth Sahib",
 	"Kojiki",
 ))
-//If you get these two lists not matching in size, there will be runtimes and I will hurt you in ways you couldn't even begin to imagine
+// If you get these two lists not matching in size, there will be runtimes. I will hurt you in ways you couldn't even begin to imagine
 // if your bible has no custom itemstate, use one of the existing ones
 GLOBAL_LIST_INIT(biblestates, list(
 	"bible",
@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	if(!deity_name)
 		return
 	var/datum/component/omen/existing_omen = user.GetComponent(/datum/component/omen)
-	//DOUBLE CURSED?! Just straight up gib the guy.
+	// DOUBLE CURSED?!. Just straight up gib the guy.
 	if(existing_omen)
 		to_chat(user, span_userdanger("[deity_name] <b>SMITE</b> thee!"))
 		add_memory_in_range(user, 7, /datum/memory/witnessed_gods_wrath, protagonist = user, deuteragonist = src, antagonist = deity_name)

@@ -49,10 +49,10 @@
 	// no hat -> try equipping like normal (via parent)
 	if(!istype(existing) || (existing.clothing_flags & STACKABLE_HELMET_EXEMPT))
 		return ..()
-	// try removing the existing hat. if fail -> try equipping like normal
+	// try removing the existing hat.. if fail -> try equipping like normal
 	if(!quirk_holder.temporarilyRemoveItemFromInventory(existing))
 		return ..()
-	// try to place the wig. if fail -> try equipping like normal
+	// try to place the wig.. if fail -> try equipping like normal
 	if(!quirk_holder.equip_to_slot_if_possible(quirk_item, ITEM_SLOT_HEAD, qdel_on_fail = FALSE, indirect_action = TRUE))
 		return ..()
 

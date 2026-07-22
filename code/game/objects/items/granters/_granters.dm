@@ -63,7 +63,7 @@
 /obj/item/book/granter/proc/on_reading_stopped(mob/living/user)
 	to_chat(user, span_notice("You stop reading..."))
 
-/// Called when the reading is completely finished. This is where the actual granting should happen.
+/// Called when the reading is completely finished.. This is where the actual granting should happen.
 /obj/item/book/granter/proc/on_reading_finished(mob/living/user)
 	to_chat(user, span_notice("You finish reading [name]!"))
 
@@ -80,7 +80,7 @@
 /// Effects that occur whenever the book is read when it has no uses left.
 /obj/item/book/granter/proc/recoil(mob/living/user)
 
-/// Checks if the user can learn whatever this granter... grants
+/// Checks if the user can learn whatever this granter.... grants
 /obj/item/book/granter/proc/can_learn(mob/living/user)
 	return TRUE
 

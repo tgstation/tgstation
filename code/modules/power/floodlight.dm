@@ -148,7 +148,7 @@
 
 	/// List of power usage multipliers
 	var/list/light_setting_list = list(0, 5, 10, 15)
-	/// Constant coeff. for power usage
+	/// Constant coeff.. for power usage
 	var/light_power_coefficient = 200
 	/// Intensity of the floodlight.
 	var/setting = FLOODLIGHT_OFF

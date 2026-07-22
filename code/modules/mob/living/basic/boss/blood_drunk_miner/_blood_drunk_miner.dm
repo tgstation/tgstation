@@ -30,7 +30,7 @@ Difficulty: Medium
 	gps_name = "Resonant Signal"
 	death_message = "falls to the ground, decaying into glowing particles."
 	death_sound = SFX_BODYFALL
-	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
+	move_force = MOVE_FORCE_NORMAL // Miner beeing able to just move structures like bolted doors and glass looks kind of strange
 
 	ai_controller = /datum/ai_controller/blood_drunk_miner
 
@@ -48,7 +48,7 @@ Difficulty: Medium
 
 	/// Their little saw
 	var/obj/item/melee/cleaving_saw/miner/miner_saw
-	/// How many hits of our saw we inflict on the target when we melee on them. Get mutated via the transform weapon ability.
+	/// How many hits of our saw we inflict on the target when we melee on them.. Get mutated via the transform weapon ability.
 	var/rapid_melee_hits = 5
 	/// How long must we wait between ranged attacks
 	var/ranged_attack_cooldown_duration = 1.6 SECONDS
@@ -73,7 +73,7 @@ Difficulty: Medium
 
 	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg', COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_TARGET))
 
-/// Block deletion of their saw under normal circumstances. It is fused to their hands as far as we're concerned.
+/// Block deletion of their saw under normal circumstances.. It is fused to their hands as far as we're concerned.
 /mob/living/basic/boss/blood_drunk_miner/proc/on_saw_deleted(datum/source, force)
 	SIGNAL_HANDLER
 
@@ -122,7 +122,7 @@ Difficulty: Medium
 		changeNext_move(adjustment_amount) //attacking it interrupts it attacking, but only briefly
 	return ..()
 
-/// Handles spawning a death effect when the blood-drunk miner dies. Tied to COMSIG_LIVING_DROP_LOOT so the timings of spawning the effect should approximately work out with the loot appearing.
+/// Handles spawning a death effect when the blood-drunk miner dies.. Tied to COMSIG_LIVING_DROP_LOOT so the timings of spawning the effect should approximately work out with the loot appearing.
 /mob/living/basic/boss/blood_drunk_miner/proc/death_effect(datum/source, list/spawn_loot, gibbed)
 	SIGNAL_HANDLER
 	new /obj/effect/temp_visual/dir_setting/miner_death(loc, dir)
@@ -145,7 +145,7 @@ Difficulty: Medium
 /mob/living/basic/boss/blood_drunk_miner/proc/on_saw_premove(datum/source, atom/new_location)
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
-/// Handles our attack behavior when we're doing melee attacks to override the default basic melee attack behavior when our AI calls upon us to use it.
+/// Handles our attack behavi. When we're doing melee attacks to override the default basic melee attack behavi. When our AI calls upon us to use it.
 /// Namely, we just use the miner saw to rapidly hit the target multiple times
 /mob/living/basic/boss/blood_drunk_miner/proc/attack_override(mob/living/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER

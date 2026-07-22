@@ -10,7 +10,7 @@
 	STAT_ENTRY[STAT_ENTRY_TIME] += STAT_TIME;\
 	STAT_ENTRY[STAT_ENTRY_COUNT] += 1;
 
-// Cost tracking macros, to be used in one proc. If you're using this raw you'll want to use global lists
+// Cost tracking macros, to be used in one proc... If you're using this raw you'll want to use global lists
 // If you don't you'll need another way of reading it
 #define INIT_COST(costs, counting) \
 	var/list/_costs = costs; \
@@ -18,7 +18,7 @@
 	var/_usage = TICK_USAGE; \
 	var/_cost = 0;
 
-// STATIC cost tracking macro. Uses static lists instead of the normal global ones
+// STATIC cost tracking macro... Uses static lists instead of the normal global ones
 // Good for debug stuff, and for running before globals init
 #define INIT_COST_STATIC(...) \
 	var/static/list/hidden_static_list_for_fun1 = list(); \

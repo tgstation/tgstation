@@ -7,7 +7,7 @@
 	/// The amount to metabolize per second
 	var/metabolization_amount = REAGENTS_METABOLISM
 
-	/// A bitfield of valid slots. If this is not provided, then it will
+	/// A bitfield of valid slots.. If this is not provided, then it will
 	/// use the `slot_flags` of the item.
 	var/slots_to_check
 

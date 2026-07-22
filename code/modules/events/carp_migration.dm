@@ -26,7 +26,7 @@
 	var/hasAnnounced = FALSE
 	/// Most common mob type to spawn, must be a child of /mob/living/basic/carp
 	var/carp_type = /mob/living/basic/carp
-	/// Rarer mob type to spawn, must also be a child of /mob/living/basic/carp. If one of these is created, it will take priority to show ghosts.
+	/// Rarer mob type to spawn, must also be a child of /mob/living/basic/carp.. If one of these is created, it will take priority to show ghosts.
 	var/boss_type = /mob/living/basic/carp/mega
 	/// What to describe detecting near the station
 	var/fluff_signal = "Unknown biological entities"

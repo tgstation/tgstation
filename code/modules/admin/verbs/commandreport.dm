@@ -40,7 +40,7 @@ ADMIN_VERB(create_command_report, R_ADMIN, "Create Command Report", "Create a co
 	var/played_sound = DEFAULT_ANNOUNCEMENT_SOUND
 	/// The colour of the announcement when sent
 	var/announcement_color = "default"
-	/// The subheader to include when sending the announcement. Keep blank to not include a subheader
+	/// The subheader to include when sending the announcement.. Keep blank to not include a subheader
 	var/subheader = ""
 	/// A static list of preset names that can be chosen.
 	var/list/preset_names = list(CENTCOM_PRESET, SYNDICATE_PRESET, WIZARD_PRESET, CUSTOM_PRESET)

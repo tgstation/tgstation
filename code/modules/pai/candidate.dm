@@ -11,7 +11,7 @@
 	var/description
 	/// User's ckey
 	var/ckey
-	/// User's pAI name. If blank, ninja name.
+	/// User's pAI name.. If blank, ninja name.
 	var/name
 	/// If the user has hit "submit"
 	var/ready = FALSE

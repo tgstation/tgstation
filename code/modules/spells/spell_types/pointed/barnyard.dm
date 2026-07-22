@@ -46,7 +46,7 @@
 		span_userdanger("Your face burns up, and shortly after the fire you realise you have the face of a [cursed_mask.animal_type]!"),
 	)
 
-	// Can't drop? Nuke it
+	// Can't drop?. Nuke it
 	if(!cast_on.dropItemToGround(cast_on.wear_mask))
 		qdel(cast_on.wear_mask)
 

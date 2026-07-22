@@ -68,7 +68,7 @@
 		return
 	honey_food.forceMove(get_turf(src))
 
-//SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
+// SPACE BEARS!. SQUEEEEEEEE~ OW!. FUCK!. IT BIT MY HAND OFF!!
 /mob/living/basic/bear/hudson
 	name = "Hudson"
 	gender = MALE
@@ -117,7 +117,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	armored = TRUE
 
-/mob/living/basic/bear/butter //The mighty companion to Cak. Several functions used from it.
+/mob/living/basic/bear/butter // The mighty companion to Cak.. Several functions used from it.
 	name = "Terrygold"
 	icon_state = "butterbear"
 	icon_living = "butterbear"
@@ -156,7 +156,7 @@
 	)
 	AddElement(/datum/element/consumable_mob, reagents_list = on_consume)
 
-/mob/living/basic/bear/butter/attack_hand(mob/living/user, list/modifiers) //Borrowed code from Cak, feeds people if they hit you. More nutriment but less vitamin to represent BUTTER.
+/mob/living/basic/bear/butter/attack_hand(mob/living/user, list/modifiers) // Borrowed code from Cak, feeds people if they hit you.. More nutriment but less vitamin to represent BUTTER.
 	. = ..()
 	if(user.combat_mode && user.reagents && !stat)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment, 1)

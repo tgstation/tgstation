@@ -31,7 +31,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	melee_damage_upper = 18
 	health = 50
 	maxHealth = 50
-	speed = 10 // speed is fucking weird man. they aren't fast though don't worry
+	speed = 10 // speed is fucking weird man.. they aren't fast though don't worry
 	butcher_results = list(/obj/item/food/meat/slab = 3)
 
 	ai_controller = /datum/ai_controller/basic_controller/sloth
@@ -84,7 +84,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	butcher_results = list(/obj/item/toy/spinningtoy = 1)
 	gold_core_spawnable = NO_SPAWN
 
-/// They're really passive in game, so they just wanna get away if you start smacking them. No trees in space from them to use for clawing your eyes out, but they will try if desperate.
+/// They're really passive in game, so they just want to get away if you start smacking them.. No trees in space from them to use for clawing your eyes out, but they will try if desperate.
 /datum/ai_controller/basic_controller/sloth
 	behavior_tree_json = "code/modules/mob/living/basic/pets/sloth.bt.json"
 	blackboard = list(

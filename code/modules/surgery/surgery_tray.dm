@@ -96,7 +96,7 @@
 	for(var/surgery_tool in surgery_overlays)
 		. |= surgery_overlays[surgery_tool]
 
-///Sets the surgery tray's deployment state. Silent if user is null.
+/// Sets the surgery tray's deployment state.. Silent if user is null.
 /obj/item/surgery_tray/proc/set_tray_mode(new_mode, mob/user)
 	is_portable = new_mode
 	density = !is_portable

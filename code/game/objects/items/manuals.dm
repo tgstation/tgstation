@@ -9,7 +9,7 @@
 /obj/item/book/manual/hydroponics_pod_people
 	name = "The Human Harvest: From Seed to Market"
 	icon_state ="bookHydroponicsPodPeople"
-	starting_author = "Farmer John" // Whoever wrote the paper or book, can be changed by pen or PC. It is not automatically assigned.
+	starting_author = "Farmer John" // Whoever wrote the paper or book, can be changed by pen or PC.. It is not automatically assigned.
 	starting_title = "The Human Harvest: From Seed to Market"
 	//book contents below
 	starting_content = "\

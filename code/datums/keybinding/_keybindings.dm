@@ -7,7 +7,7 @@
 	var/category = CATEGORY_MISC
 	var/weight = WEIGHT_LOWEST
 	var/keybind_signal
-	///Boolean on whether players are able to edit this keybinding. Used for BYOND built-in binds we wish to
+	/// Boolean on whether players are able to edit this keybinding.. Used for BYOND built-in binds we wish to
 	///tell the player of its existence, but don't want it being edited because BYOND doesn't let us.
 	var/can_edit = TRUE
 

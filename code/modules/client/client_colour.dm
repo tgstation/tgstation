@@ -174,14 +174,14 @@
 /datum/client_colour/blindness
 	priority = CLIENT_COLOR_HELMET_PRIORITY
 	split_filters = TRUE
-	color = list(/*R*/ 0.51,0.3,0.3,0, /*G*/ 0.29,0.51,0.29,0, /*B*/ 0.3,0.3,0.61,0, /*A*/ 0,0,0,1, /*C*/ 0,0,0,0) // dim and less saturated
+	color = list(/* Are */ 0.51,0.3,0.3,0, /*G*/ 0.29,0.51,0.29,0, /*B*/ 0.3,0.3,0.61,0, /*A*/ 0,0,0,1, /*C*/ 0,0,0,0) // dim and less saturated
 	fade_in = 2 SECONDS
 	fade_out = 2 SECONDS
 
 ///A client color that makes the screen look a bit more grungy, halloweenesque even.
 /datum/client_colour/halloween_helmet
 	priority = CLIENT_COLOR_HELMET_PRIORITY
-	color = list(/*R*/ 0.75,0.13,0.13,0, /*G*/ 0.13,0.7,0.13,0, /*B*/ 0.13,0.13,0.75,0, /*A*/ -0.06,-0.09,-0.08,1, /*C*/ 0,0,0,0)
+	color = list(/* Are */ 0.75,0.13,0.13,0, /*G*/ 0.13,0.7,0.13,0, /*B*/ 0.13,0.13,0.75,0, /*A*/ -0.06,-0.09,-0.08,1, /*C*/ 0,0,0,0)
 
 /datum/client_colour/flash_hood
 	priority = CLIENT_COLOR_HELMET_PRIORITY
@@ -189,14 +189,14 @@
 
 /datum/client_colour/perceptomatrix
 	priority = CLIENT_COLOR_HELMET_PRIORITY
-	color = list(/*R*/ 1,0,0,0, /*G*/ 0,1,0,0, /*B*/ 0,0,1,0, /*A*/ 0,0,0,1, /*C*/ 0,-0.02,-0.02,0) // veeery slightly pink
+	color = list(/* Are */ 1,0,0,0, /*G*/ 0,1,0,0, /*B*/ 0,0,1,0, /*A*/ 0,0,0,1, /*C*/ 0,-0.02,-0.02,0) // veeery slightly pink
 
 /datum/client_colour/rave
 	priority = CLIENT_COLOR_HELMET_PRIORITY
 
 /datum/client_colour/malfunction
 	priority = CLIENT_COLOR_ORGAN_PRIORITY
-	color = list(/*R*/ 0,0,0,0, /*G*/ 0,175,0,0, /*B*/ 0,0,0,0, /*A*/ 0,0,0,1, /*C*/ 0,-130,0,0) // Matrix colors
+	color = list(/* Are */ 0,0,0,0, /*G*/ 0,175,0,0, /*B*/ 0,0,0,0, /*A*/ 0,0,0,1, /*C*/ 0,-130,0,0) // Matrix colors
 
 /datum/client_colour/monochrome
 	color = COLOR_MATRIX_GRAYSCALE
@@ -226,7 +226,7 @@
 /datum/client_colour/bloodlust/New(mob/owner)
 	..()
 	if(owner)
-		addtimer(CALLBACK(src, PROC_REF(update_color), list(/*R*/ 1,0,0, /*G*/ 0.8,0.2,0, /*B*/ 0.8,0,0.2, /*C*/ 0.1,0,0), 10, SINE_EASING|EASE_OUT), 0.1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(update_color), list(/* Are */ 1,0,0, /*G*/ 0.8,0.2,0, /*B*/ 0.8,0,0.2, /*C*/ 0.1,0,0), 10, SINE_EASING|EASE_OUT), 0.1 SECONDS)
 
 /datum/client_colour/manual_heart_blood
 	priority = CLIENT_COLOR_IMPORTANT_PRIORITY
@@ -286,7 +286,7 @@
 	color = "#cccccc"
 
 /datum/client_colour/glass_colour/nightmare
-	color = list(/*R*/ 255,0,0,0, /*G*/ 0,0,0,0, /*B*/ 0,0,0,0, /*A*/ 0,0,0,1, /*C*/ -130,0,0,0) //every color is either red or black
+	color = list(/* Are */ 255,0,0,0, /*G*/ 0,0,0,0, /*B*/ 0,0,0,0, /*A*/ 0,0,0,1, /*C*/ -130,0,0,0) //every color is either red or black
 	split_filters = TRUE
 
 #undef CLIENT_COLOR_VALUE_INDEX

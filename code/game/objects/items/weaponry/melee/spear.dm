@@ -14,7 +14,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	throwforce = 20
 	throw_speed = 4
-	demolition_mod = 0.75 // Note: This is significant, as this needs to be low enough that any possible force adjustments from better spears does not go over airlock deflection. See AIRLOCK_DAMAGE_DEFLECTION_N.
+	demolition_mod = 0.75 // Note: This is significant, as this needs to be low enough that any possible force adjustments from better spears does not go over airlock deflection.. See AIRLOCK_DAMAGE_DEFLECTION_N.
 	embed_type = /datum/embedding/spear
 	armour_penetration = 5
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.15)
@@ -74,7 +74,7 @@
 	add_headpike_component()
 	update_appearance()
 
-// I dunno man
+// I do not know man
 /obj/item/spear/proc/add_headpike_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpike)
 
@@ -499,7 +499,7 @@
 /*
  * Bone Spear
  */
-/obj/item/spear/bonespear //Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
+/obj/item/spear/bonespear // Blatant imitation of spear, but made out of bone.. Not valid for explosive modification.
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	icon_state = "bone_spear0"
@@ -628,11 +628,11 @@
 	animate(owner, pixel_y = owner.pixel_y + 60, time = (2 SECONDS), easing = CIRCULAR_EASING|EASE_OUT)
 	animate(pixel_y = initial(owner.pixel_y), time = (1 SECONDS), easing = CIRCULAR_EASING|EASE_IN)
 
-	jump_timer = addtimer(CALLBACK(src, PROC_REF(land), /*do_effects = */TRUE, /*mob_override = */owner), 3 SECONDS, TIMER_STOPPABLE)
+	jump_timer = addtimer(CALLBACK(src, PROC_REF(land), /* do_effects = */TRUE, /* mob_override = */owner), 3 SECONDS, TIMER_STOPPABLE)
 
 /datum/action/item_action/skybulge/update_status_on_signal(datum/source, new_stat, old_stat)
 	if(!isnull(jump_timer) && !IsAvailable())
-		INVOKE_ASYNC(src, PROC_REF(land), /*do_effects = */FALSE, /*mob_override = */source)
+		INVOKE_ASYNC(src, PROC_REF(land), /* do_effects = */FALSE, /* mob_override = */source)
 		deltimer(jump_timer)
 	return ..()
 
@@ -681,7 +681,7 @@
 			living_target.SetKnockdown(1 SECONDS)
 
 ///Called when the person holding us is trying to attack something mid-jump.
-///You're technically in mid-air, so block any attempts at getting extra hits in.
+/// You're technically in mid-air, so block any tries at getting extra hits in.
 /datum/action/item_action/skybulge/proc/on_attack_during_jump(atom/source, mob/living/target_mob, mob/living/user, params)
 	SIGNAL_HANDLER
 	return COMPONENT_CANCEL_ATTACK_CHAIN

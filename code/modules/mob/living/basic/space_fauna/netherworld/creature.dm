@@ -57,7 +57,7 @@
 
 	// This loop will, at most, loop twice.
 	for(var/atom/check in check_list)
-		for(var/mob/living/mob_target in oview(src, 7)) // They probably cannot see us if we cannot see them... can they?
+		for(var/mob/living/mob_target in oview(src, 7)) // They probably cannot see us if we cannot see them.... can they?
 			if(mob_target.client && !mob_target.is_blind() && !HAS_TRAIT(mob_target, TRAIT_UNOBSERVANT))
 				return mob_target
 		for(var/obj/vehicle/sealed/mecha/mecha_mob_target in oview(src, 7))
@@ -66,7 +66,7 @@
 					return mechamob_target
 	return null
 
-/// Jaunt spell used by creature. Can only jaunt or unjaunt if nothing can see you.
+/// Jaunt spell used by creature.. Can only jaunt or unjaunt if nothing can see you.
 /datum/action/cooldown/spell/jaunt/creature_teleport
 	name = "Uncanny Movement"
 	desc = "Enter or leave an alternate plane where you can travel through walls. You can only enter or emerge if unobserved."

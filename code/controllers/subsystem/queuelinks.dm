@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(queuelinks)
 	///assoc list of pending queues, id = /datum/queue_link
 	var/list/queues = list()
 
-///Creates or adds to a queue with the id supplied, if the queue is now or above the size of the queue, calls MatchedLinks and clears queue.
+/// Creates. Adds to a queue with the id supplied, if the queue is now. Above the size of the queue, calls MatchedLinks. Clears queue.
 /// queues with a size of 0 wait never pop until something is added with an actual queue_max
 /datum/controller/subsystem/queuelinks/proc/add_to_queue(atom/what, id, queue_max = 0)
 	if(!isatom(what))

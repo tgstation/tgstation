@@ -2,9 +2,9 @@
 #define CRAFTING_MACHINERY_CONSUME 1
 ///If the structure is used/deleted in the crafting process
 #define CRAFTING_STRUCTURE_CONSUME 1
-///If the machine is only "used" i.e. it checks to see if it's nearby and allows crafting, but doesn't delete it
+/// If the machine is only "used" i.e... it checks to see if it's nearby and allows crafting, but doesn't delete it
 #define CRAFTING_MACHINERY_USE 0
-///If the structure is only "used" i.e. it checks to see if it's nearby and allows crafting, but doesn't delete it
+/// If the structure is only "used" i.e... it checks to see if it's nearby and allows crafting, but doesn't delete it
 #define CRAFTING_STRUCTURE_USE 0
 
 //stack recipe placement check types
@@ -22,7 +22,7 @@
 #define CRAFT_IS_FULLTILE (1<<2)
 /// If this craft should run the direction check, for use when building things like directional windows where you can have more than one per turf
 #define CRAFT_CHECK_DIRECTION (1<<3)
-/// If the craft requires a floor below
+/// If the craft needs a floor below
 #define CRAFT_ON_SOLID_GROUND (1<<4)
 /// If the craft checks that there are objects with density in the same turf when being built
 #define CRAFT_CHECK_DENSITY (1<<5)
@@ -31,7 +31,7 @@
 #define CRAFT_TRANSFERS_REAGENT_COMPONENTS (1<<6)
 /// Crafting clears all reagents present in the finished product
 #define CRAFT_CLEARS_REAGENTS (1<<7)
-/// For the crafting unit test, we don't check if the custom materials of an item are the same when crafted and spawned should its recipe have this flag.
+/// F.. The crafting unit test, we don't check if the custom materials of an item are the same when crafted.. Spawned should its recipe have this flag.
 #define CRAFT_SKIP_MATERIALS_PARITY (1<<8)
 /// Exclusive to the personal_crafting component, skips the time spent crafting the recipe.
 #define CRAFT_IGNORE_DO_AFTER (1<<9)
@@ -62,17 +62,17 @@
 	#define DISH_BURRITO "Burrito" // also includes wraps/enchilada
 	#define DISH_CAKE "Cake"
 	#define DISH_CANDY "Candy"
-	#define DISH_CONDIMENT "Condiment" // catch-all for sauces, dressings, sides, etc
+	#define DISH_CONDIMENT "Condiment" // catch-all for sauces, dressings, sides, and so on
 	#define DISH_COOKIE "Cookie"
-	#define DISH_FROZEN "Frozen" // catch-all for ice cream, popsicles, etc
+	#define DISH_FROZEN "Frozen" // catch-all for ice cream, popsicles, and so on
 	#define DISH_MEAT "Meat" // anything often served on its own as a "meat dish" (like steak), though it may include tofu
 	#define DISH_NOODLES "Noodles"
 	#define DISH_PASTRY "Pastry"
 	#define DISH_PIE "Pie"
 	#define DISH_PIZZA "Pizza"
 	#define DISH_RICE "Rice" // practically anything with rice in it
-	#define DISH_SALAD "Salad" // often includes salad adjacent (ie: coleslaw, stir fry)
-	#define DISH_SANDWICH "Sandwich" // divorced from burger for better filtering. also, yes, includes hotdogs.
+	#define DISH_SALAD "Salad" // often includes salad adjacent that is coleslaw, stir fry)
+	#define DISH_SANDWICH "Sandwich" // divorced from burger for better filtering... also, yes, includes hotdogs.
 	#define DISH_SOUP "Soup"
 	#define DISH_SUSHI "Sushi"
 	#define DISH_TACO "Taco"

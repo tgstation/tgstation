@@ -12,7 +12,7 @@
 	var/obj/item/food/cookie/real_cookie = allocate(/obj/item/food/cookie, hologram_closet)
 	// And a real human being.
 	var/mob/living/carbon/human/assistant = allocate(/mob/living/carbon/human/consistent, hologram_closet)
-	// Abstract cookie won't be recycled. But will be deleted if the contents of hologram aren't managed.
+	// Abstract cookie won't be recycled.. But will be deleted if the contents of hologram aren't managed.
 	real_cookie.item_flags |= ABSTRACT
 	// Process the hologram through the recycler.
 	hologram_closet.forceMove(get_turf(recycler))

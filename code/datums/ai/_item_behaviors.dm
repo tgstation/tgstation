@@ -1,4 +1,4 @@
-///yeet yourself at a thing
+/// throw yourself at a thing
 /datum/bt_node/ai_behavior/throw_attack
 	/// Sound played on each throw.
 	var/attack_sound = 'sound/items/haunted/ghostitemattack.ogg'
@@ -24,7 +24,7 @@
 		return on_throws_exhausted(controller, throw_target, target_key, throw_count_key)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-/// Clears target and resets throw count. Override to add extra on-exhaust logic.
+/// Clears target and resets throw count.. Override to add extra on-exhaust logic.
 /datum/bt_node/ai_behavior/throw_attack/proc/on_throws_exhausted(datum/ai_controller/controller, atom/throw_target, target_key, throw_count_key)
 	controller.clear_blackboard_key(target_key)
 	controller.set_blackboard_key(throw_count_key, 0)

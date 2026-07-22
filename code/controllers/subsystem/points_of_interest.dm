@@ -4,9 +4,9 @@ SUBSYSTEM_DEF(points_of_interest)
 
 	ss_flags = SS_NO_FIRE | SS_NO_INIT
 
-	/// List of mob POIs. This list is automatically sorted.
+	/// List of mob POIs.. This list is automatically sorted.
 	var/list/datum/point_of_interest/mob_poi/mob_points_of_interest = list()
-	/// List of non-mob POIs. This list is automatically sorted.
+	/// List of non-mob POIs.. This list is automatically sorted.
 	var/list/datum/point_of_interest/other_points_of_interest = list()
 	/// List of all value:POI datums by their key:target refs.
 	var/list/datum/point_of_interest/points_of_interest_by_target_ref = list()
@@ -165,7 +165,7 @@ SUBSYSTEM_DEF(points_of_interest)
 
 /// Simple helper datum for points of interest.
 /datum/point_of_interest
-	/// The specific point of interest this datum references. This won't hard del as the POI element will be removed from the target when it qdels, which will clear this reference.
+	/// The specific point of interest this datum references.. This won't hard del as the POI element will be removed from the target when it qdels, which will clear this reference.
 	var/atom/target
 	/// The type of POI this datum references.
 	var/poi_type = /atom
@@ -176,7 +176,7 @@ SUBSYSTEM_DEF(points_of_interest)
 
 	target = poi_target
 
-/// Validates the POI. Returns TRUE if the POI has valid state, returns FALSE if the POI has invalid state.
+/// Validates the POI.. Returns TRUE if the POI has valid state, returns FALSE if the POI has invalid state.
 /datum/point_of_interest/proc/validate()
 	// In nullspace, invalid as a POI.
 	if(!target.loc)
@@ -184,7 +184,7 @@ SUBSYSTEM_DEF(points_of_interest)
 
 	return TRUE
 
-/// Comparison proc used to sort POIs. Override to implement logic used doing binary sort insertions.
+/// Comparison proc used to sort POIs.. Override to add logic used doing binary sort insertions.
 /datum/point_of_interest/proc/compare_to(datum/point_of_interest/rhs)
 	return cmp_name_asc(target, rhs.target)
 
@@ -210,7 +210,7 @@ SUBSYSTEM_DEF(points_of_interest)
 
 	return TRUE
 
-/// Mob POIs are sorted by a simple priority list depending on their type. When their type priority is identical, they're sub-sorted by name.
+/// Mob POIs are sorted by a simple priority list depending on their type.. When their type priority is identical, they're sub-sorted by name.
 /datum/point_of_interest/mob_poi/compare_to(datum/point_of_interest/mob_poi/rhs)
 	var/sort_difference = get_type_sort_priority() - rhs.get_type_sort_priority()
 
@@ -221,7 +221,7 @@ SUBSYSTEM_DEF(points_of_interest)
 	else
 		return sort_difference
 
-/// Priority list broadly stolen from /proc/sortmobs(). Lower numbers are higher priorities when sorted and appear closer to the top or start of lists.
+/// Priority list broadly stolen from /proc/sortmobs().. Lower numbers are higher priorities when sorted and appear closer to the top or start of lists.
 /datum/point_of_interest/mob_poi/proc/get_type_sort_priority()
 	if(isAI(target))
 		return 0

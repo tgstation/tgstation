@@ -39,7 +39,7 @@
 	UnregisterSignal(target, list(COMSIG_PROJECTILE_PREHIT, COMSIG_ATOM_PREHITBY))
 	return ..()
 
-/// Modify or ignore bullet damage based on projectile properties
+/// Modify or ignore bullet damage good on projectile properties
 /datum/element/ranged_armour/proc/pre_bullet_impact(atom/parent, obj/projectile/bullet)
 	SIGNAL_HANDLER
 	if (bullet.damage >= minimum_projectile_force || (bullet.damage_type in vulnerable_projectile_types))
@@ -50,7 +50,7 @@
 	bullet.damage *= below_projectile_multiplier
 	parent.visible_message(span_danger("[parent] seems resistant to [bullet]!"))
 
-/// Ignore thrown damage based on projectile properties. There's no elegant way to multiply the damage because throwforce is persistent.
+/// Ignore thrown damage good on projectile properties.. There's no elegant way to multiply the damage because throwforce is persistent.
 /datum/element/ranged_armour/proc/pre_thrown_impact(atom/parent, obj/item/hit_atom, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
 	if (!isitem(hit_atom) || HAS_TRAIT(hit_atom, TRAIT_BYPASS_RANGED_ARMOR))

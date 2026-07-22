@@ -3,7 +3,7 @@
 ///The game should immediately end in a Town Victory due to lack of evils, but we can verify that both the PDA and the ghost
 ///successfully managed to get into the round.
 /datum/unit_test/mafia
-	///Boolean on whether the Mafia game started or not. Will Fail if it hasn't.
+	/// Boolean on whether the Mafia game started or not.. Will Fail if it hasn't.
 	var/mafia_game_started = FALSE
 
 /datum/unit_test/mafia/Run()

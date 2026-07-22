@@ -74,7 +74,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 		icon = SStitle.icon
 		handle_generic_titlescreen_sizes()
 
-///helper proc that will center the screen if the icon is changed to a generic width, to make admins have to fudge around with pixel_x less. returns null
+/// helper proc that will center the screen if the icon is changed to a generic width, to make admins have to fudge around with pixel_x less.. returns null
 /turf/closed/indestructible/splashscreen/proc/handle_generic_titlescreen_sizes()
 	var/icon/size_check = icon(SStitle.icon, icon_state)
 	var/width = size_check.Width()
@@ -239,7 +239,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/fakedoor/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 
-///These should look like normal rocks, however they cannot be mined
+/// These should look like normal rocks, but they cannot be mined
 /turf/closed/indestructible/rock
 	name = "dense rock"
 	desc = "An extremely densely-packed rock, most mining tools or explosives would never get through this."

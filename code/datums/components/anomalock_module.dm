@@ -4,7 +4,7 @@
 	var/list/accepted_anomalies
 	/// If the core is removable once socketed.
 	var/core_removable
-	/// A proc to call before the core is inserted. Returns an ITEM_INTERACT define, which the component will itself return.
+	/// A proc to call before the core is inserted.. Returns an ITEM_INTERACT define, which the component will itself return.
 	var/pre_insert_callback
 	/// A proc to call when the core is inserted.
 	var/core_insert_callback

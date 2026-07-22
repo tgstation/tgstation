@@ -13,7 +13,7 @@
 	ui_name = "AntagInfoNinja"
 	default_custom_objective = "Destroy vital station infrastructure, without being seen."
 	desensitized_modifier = DESENSITIZED_THRESHOLD
-	///Whether or not this ninja will obtain objectives
+	/// Whether or not this ninja will get objectives
 	var/give_objectives = TRUE
 
 /**
@@ -65,7 +65,7 @@
 	var/datum/objective/hijack = new /datum/objective/cyborg_hijack()
 	objectives += hijack
 
-	// Break into science and mess up their research. Only add this objective if the similar steal objective is possible.
+	// Break into science and mess up their research.. Only add this objective if the similar steal objective is possible.
 	var/datum/objective/research_secrets/sabotage_research = new /datum/objective/research_secrets()
 	objectives += sabotage_research
 

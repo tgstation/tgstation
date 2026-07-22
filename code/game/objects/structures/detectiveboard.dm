@@ -100,7 +100,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			var/list/data_evidence = list("ref" = REF(evidence), "name" = evidence.name, "type" = evidence.evidence_type, "description" = evidence.description, "x"=evidence.x, "y"=evidence.y)
 			var/list/data_connections = list()
 			for(var/datum/evidence/connection in evidence.connections)
-				data_connections += REF(connection) // TODO: create array of strings
+				data_connections += REF(connection) // To do create array of strings
 			data_evidence["connections"] = data_connections
 			switch(evidence.evidence_type)
 				if(EVIDENCE_TYPE_PHOTO)

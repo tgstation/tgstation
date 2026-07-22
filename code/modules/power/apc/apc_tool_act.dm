@@ -43,7 +43,7 @@
 			shock_source = terminal?.powernet || cell
 
 	if(shock_source && metal && (panel_open || opened)) //Now you're cooking with electricity
-		if(!electrocute_mob(user, shock_source, src, siemens_coeff = 1, dist_check = TRUE))//People with insulated gloves just attack the APC normally. They're just short of magical anyway
+		if(!electrocute_mob(user, shock_source, src, siemens_coeff = 1, dist_check = TRUE))// People with insulated gloves just attack the APC normally.. They're just short of magical anyway
 			return NONE
 		do_sparks(5, TRUE, src)
 		user.visible_message(span_notice("[user.name] shoves [tool] into the internal components of [src], erupting into a cascade of sparks!"))
@@ -51,7 +51,7 @@
 			cell.use(cell.charge)
 		return ITEM_INTERACT_SUCCESS
 
-/// Called when we interact with the APC with a cell, attempts to insert it
+/// Called when we interact with the APC with a cell, tries to insert it
 /obj/machinery/power/apc/proc/cell_act(mob/living/user, obj/item/stock_parts/power_store/new_cell)
 	if(!opened)
 		return NONE
@@ -97,7 +97,7 @@
 		return FALSE
 	return TRUE
 
-/// Called when we interact with the APC with a cable, attempts to wire the APC and create a terminal
+/// Called when we interact with the APC with a cable, tries to wire the APC and create a terminal
 /obj/machinery/power/apc/proc/cable_act(mob/living/user, obj/item/stack/cable_coil/installing_cable, is_right_clicking)
 	if(!opened)
 		return NONE
@@ -136,7 +136,7 @@
 	terminal.connect_to_network()
 	return ITEM_INTERACT_SUCCESS
 
-/// Called when we interact with the APC with APC electronics, attempts to install the board
+/// Called when we interact with the APC with APC electronics, tries to install the board
 /obj/machinery/power/apc/proc/electronics_act(mob/living/user, obj/item/electronics/apc/installing_board)
 	if(!opened)
 		return NONE

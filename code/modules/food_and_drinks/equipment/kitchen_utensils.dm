@@ -193,7 +193,7 @@
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
-/* Trays  moved to /obj/item/storage/bag */
+/* Trays moved to /obj/item/storage/bag */
 
 /obj/item/kitchen/spoon
 	name = "spoon"
@@ -328,7 +328,7 @@
 	icon_state = "plastic_spoon"
 	force = 0
 	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 1.2)
-	toolspeed = 75 // The plastic spoon takes 5 minutes to dig through a single mineral turf... It's one, continuous, breakable, do_after...
+	toolspeed = 75 // The plastic spoon takes 5 minutes to dig through a single mineral turf.... It's one, continuous, breakable, do_after...
 	custom_price = PAYCHECK_LOWER * 1
 	pickup_sound = null
 	drop_sound = null

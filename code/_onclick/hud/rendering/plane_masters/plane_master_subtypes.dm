@@ -61,7 +61,7 @@
 	plane = PLANE_SPACE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_UNLIT_GAME, RENDER_PLANE_LIGHT_MASK)
-	critical = PLANE_CRITICAL_FUCKO_PARALLAX // goes funny when touched. no idea why I don't trust byond
+	critical = PLANE_CRITICAL_FUCKO_PARALLAX // goes funny when touched.. no idea why I don't trust byond
 
 /atom/movable/screen/plane_master/parallax_white/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
@@ -113,7 +113,7 @@
 /atom/movable/screen/plane_master/parallax/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	if(offset != 0)
-		// You aren't the source? don't change yourself
+		// You aren't the source?. don't change yourself
 		critical = PLANE_CRITICAL_FUCKO_PARALLAX
 		return
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_increase))
@@ -153,7 +153,7 @@
 	// Parallax will be mirrored down to any new planes that are added, so it will properly render across mirage borders
 	for(var/offset in old_offset to new_offset)
 		if(offset != 0)
-			// Overlay so we don't multiply twice, and thus fuck up our rendering
+			// Overlay so we don't multiply twice, and so fuck up our rendering
 			add_relay_to(GET_NEW_PLANE(plane, offset), BLEND_OVERLAY)
 
 // Hacky shit to ensure parallax works in perf mode
@@ -207,8 +207,8 @@
 		return
 
 	var/static/list/grey_parallax = list(0.4,0.4,0.4,0, 0.4,0.4,0.4,0, 0.4,0.4,0.4,0, 0,0,0,1, -0.1,-0.1,-0.1,0)
-	// We're gonna animate ourselves grey
-	// Then, once it's done, about 40 seconds into the event itself, we're gonna start doin some shit. see below
+	// We're going to animate ourselves grey
+	// Then, once it's done, about 40 seconds into the event itself, we're going to start doin some shit.. see below
 	animate(src, color = grey_parallax, time = animate_time)
 
 /atom/movable/screen/plane_master/parallax/proc/narsie_unsummoned()
@@ -440,13 +440,13 @@
 
 /atom/movable/screen/plane_master/emissive/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
-	/// Okay, so what we're doing here is making all emissives convert to white for actual emissive masking (i.e. adding light so objects glow)
+	/// Okay, so what we're doing here is making all emissives convert to white for actual emissive masking (i.e.. adding light so objects glow)
 	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE, offset), relay_color = list(1,1,1,0, 1,1,1,0, 0,0,0,0, 0,0,0,1, 0,0,0,0))
-	/// But for the bloom plate we convert only the red color into full white, this way we can have emissives in green channel unaffected by bloom
+	/// But f. The bloom plate we convert only the red col. Into full white, this way we can have emissives in green channel unaffected by bloom
 	/// which allows us to selectively bloom only a part of our emissives
 	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE_BLOOM, offset), relay_color = list(255,255,255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0))
 	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE_BLOOM_MASK, offset), relay_color = list(1,1,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0))
-	// Blue channel is dedicated to specular, i.e. our bootleg implementation of shiny objects
+	// Blue channel is dedicated to specular, i.e.. our bootleg code of shiny objects
 	// We map it onto alpha so we can use the mask plate in an alpha mask filter to cut out only the shiny bits
 	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_SPECULAR_MASK, offset), relay_color = list(0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0, 1,1,1,0))
 

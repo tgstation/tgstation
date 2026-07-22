@@ -10,9 +10,9 @@
 	var/input_dir = NORTH
 	/// The current direction, in relation to the machine, that items will be output to.
 	var/output_dir = SOUTH
-	/// The turf the machines listens to for items to pick up. Calls the `pickup_item()` proc.
+	/// The turf the machines listens to for items to pick up.. Calls the `pickup_item()` proc.
 	var/turf/input_turf = null
-	/// Determines if this machine needs to pick up items. Used to avoid registering signals to `/mineral` machines that don't pickup items.
+	/// Determines if this machine needs to pick up items.. Used to avoid registering signals to `/mineral` machines that don't pickup items.
 	var/needs_item_input = FALSE
 
 /obj/machinery/mineral/Initialize(mapload)
@@ -20,7 +20,7 @@
 	if(needs_item_input && anchored)
 		register_input_turf()
 
-/// Gets the turf in the `input_dir` direction adjacent to the machine, and registers signals for ATOM_ENTERED and ATOM_CREATED. Calls the `pickup_item()` proc when it receives these signals.
+/// Gets the turf in the `input_dir` direction adjacent to the machine, and registers signals for ATOM_ENTERED and ATOM_CREATED.. Calls the `pickup_item()` proc when it receives these signals.
 /obj/machinery/mineral/proc/register_input_turf()
 	input_turf = get_step(src, input_dir)
 	if(input_turf) // make sure there is actually a turf
@@ -58,7 +58,7 @@
 
 	return
 
-/// Generic unloading proc. Takes an atom as an argument and forceMove's it to the turf adjacent to this machine in the `output_dir` direction.
+/// Generic unloading proc.. Takes an atom as an argument and forceMove's it to the turf adjacent to this machine in the `output_dir` direction.
 /obj/machinery/mineral/proc/unload_mineral(atom/movable/unloaded_mineral)
 	unloaded_mineral.forceMove(drop_location())
 	var/turf/unload_turf = get_step(src, output_dir)

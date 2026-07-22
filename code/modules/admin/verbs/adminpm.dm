@@ -4,13 +4,13 @@
 // HEY FUCKO, IMPORTANT NOTE!
 // This file, and pretty much everything that directly handles ahelps, is VERY important
 // An admin pm dropping by coding error is disastorus, because it gives no feedback to admins, so they think they're being ignored
-// It is imparitive that this does not happen. Therefore, runtimes are not allowed in this file
-// Additionally, any runtimes here would cause admin tickets to leak into the runtime logs
+// It is imparitive that this does not happen.. So runtimes are not allowed in this file
+// Also any runtimes here would cause admin tickets to leak into the runtime logs
 // This is less of a big deal, but still bad
 //
 // In service of this goal of NO RUNTIMES then, we make ABSOLUTELY sure to never trust the nullness of a value
-// That's why variables are so separated from logic here. It's not a good pattern typically, but it helps make assumptions clear here
-// We also make SURE to fail loud, IE: if something stops the message from reaching the recipient, the sender HAS to know
+// That's why variables are so separated from logic here.. It's not a good pattern typically, but it helps make assumptions clear here
+// We also make SURE to fail loud, that is if something stops the message from reaching the recipient, the sender HAS to know
 // If you "refactor" this to make it "cleaner" I will send you to hell
 
 ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_pm_context, R_NONE, "Admin PM Mob", mob/target in world)
@@ -81,7 +81,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 	var/datum/admin_help/recipient_ticket = recipient?.current_ticket
 	// Any past interactions with the recipient ticket
 	var/datum/admin_help/recipient_interactions = recipient_ticket?.ticket_interactions
-	// Any opening interactions with the recipient ticket, IE: interactions started before the ticket first receives a response
+	// Any opening interactions with the recipient ticket, that is interactions started before the ticket first receives a response
 	var/datum/admin_help/opening_interactions = recipient_ticket?.opening_responders
 	// Our recipient's admin holder, if one exists
 	var/datum/admins/recipient_holder = recipient?.holder
@@ -142,7 +142,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
 //Fetching a message if needed.
-//whom here is a client, a ckey, or [EXTERNAL_PM_USER] if this is from tgs. message is the default message to send
+// whom here is a client, a ckey, or [EXTERNAL_PM_USER] if this is from tgs.. message is the default message to send
 /client/proc/cmd_admin_pm(whom, message)
 	if(prefs.muted & MUTE_ADMINHELP)
 		to_chat(src,
@@ -151,7 +151,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 			confidential = TRUE)
 		return
 
-	if(!holder && !current_ticket) //no ticket? https://www.youtube.com/watch?v=iHSPf6x1Fdo
+	if(!holder && !current_ticket) // no ticket?. https://www.youtube.com/watch?v=iHSPf6x1Fdo
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
 			html = span_danger("You can no longer reply to this ticket, please open another one by using the Adminhelp verb if need be."),
@@ -339,7 +339,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 
 	// The sound preferences of the recipient, at least that's how we'll be using it here
 	var/sound_prefs = recipient?.prefs?.toggles
-	// Stores a bit of html that contains the ckey of the recipient, its mob's name if any exist, and a link to reply to them with
+	// Stores a bit of html that contains the ckey of the recipient, its mob's name if any exist. A link to reply to them with
 	var/their_name_with_link = key_name(recipient, TRUE, TRUE)
 	// Stores a bit of html with our ckey highlighted as a reply link
 	var/link_to_us = key_name(src, TRUE, FALSE)
@@ -351,7 +351,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 	var/recip_ckey = recipient?.ckey
 	// Our current ticket, can (supposedly) be null here
 	var/datum/admin_help/ticket = current_ticket
-	// The recipient's current ticket, could in theory? maybe? be null here
+	// The recipient's current ticket, could in theory?. maybe?. be null here
 	var/datum/admin_help/recipient_ticket = recipient?.current_ticket
 	// I use -1 as a default for both of these
 	// Our ticket ID
@@ -365,12 +365,12 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 	// Only admins can perform boinks
 	if(our_holder)
 		full_boink = TRUE
-	// Tickets will only generate for the non admin/admin being boinked. This check is to ensure boinked admins don't send the same
+	// Tickets will only generate for the non admin/admin being boinked.. This check is to ensure boinked admins don't send the same
 	// ADMINISTRAITOR PRIVATE MESSAGE text to their boinker every time they respond
 	if(recipient_holder && ticket)
 		full_boink = FALSE
 
-	// If we're gonna boink em, do it now
+	// If we're going to boink em, do it now
 	// It is worth noting this will always generate the target a ticket if they don't already have one (tickets will generate if a player ahelps automatically, outside this logic)
 	// So past this point, because of our block above here, we can be reasonably guarenteed that the user will have a ticket
 	if(full_boink)
@@ -425,9 +425,9 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 		ticket.MessageNoRecipient(send_message)
 		return TRUE
 
-	// Ok by this point the recipient has to be an admin, and this is either an admin on admin event, or a player replying to an admin
+	// Ok by this point the recipient has to be an admin. This is either an admin on admin event. A player replying to an admin
 
-	// You're replying to a ticket that is closed. Bad move. You must have started replying before the close, and then got input()'d
+	// You're replying to a ticket that is closed.. Bad move.. You must have started replying before the close, and then got input()'d
 	// Lets be nice and pass this off to a new ticket, as we recomend above
 	if(!ticket)
 		to_chat(src,
@@ -441,7 +441,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 		GLOB.admin_help_ui_handler.perform_adminhelp(src, raw_message, FALSE)
 		return FALSE
 
-	// Let's play some music for the admin, only if they want it tho
+	// Let's play some music for the admin, only if they want it though
 	if(sound_prefs & SOUND_ADMINHELP)
 		SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
 
@@ -502,7 +502,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 		return
 
 	// First we filter, because these procs can be called by anyone with debug, and I don't trust that check
-	// gotta make sure none's fucking about
+	// got to make sure none's fucking about
 	log_message = adminpm_filter_text(ambiguious_recipient, log_message)
 	if(!log_message)
 		return
@@ -590,11 +590,11 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 	var/ambiguious_target = disambiguate_client(requested_ckey)
 
 	var/client/recipient
-	// This might seem like hiding a failure condition, but we want to be able to send commands to the ticket without the client being logged in
+	// This might seem like hiding a failure condition. We want to be able to send commands to the ticket without the client being logged in
 	if(istype(ambiguious_target, /client))
 		recipient = ambiguious_target
 
-	// The ticket we want to talk about here. Either the target's active ticket, or the last one it had
+	// The ticket we want to talk about here.. Either the target's active ticket, or the last one it had
 	var/datum/admin_help/ticket
 	if(recipient)
 		ticket = recipient.current_ticket
@@ -692,7 +692,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 
 	// The ckey of our recipient, with a reply link, and their mob if one exists
 	var/recipient_name_linked = key_name_admin(recipient)
-	// The ckey of our recipient, with their mob if one exists. No link
+	// The ckey of our recipient, with their mob if one exists.. No link
 	var/recipient_name = key_name_admin(recipient)
 
 	message_admins("External message from [sender] to [recipient_name_linked] : [message]")

@@ -14,7 +14,7 @@
 	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OFFLINE
 	reagents = /datum/reagents/plumbing
 
-	///Plumbing machinery is always gonna need reagents, so we might aswell put it here
+	/// Plumbing machinery is always going to need reagents, so we might aswell put it here
 	var/buffer = 50
 	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
 	var/reagent_flags = TRANSPARENT | NO_REACT

@@ -13,7 +13,7 @@
 	var/datum/techweb/linked_techweb
 	/// Unpublished, temporary paper datum.
 	var/datum/scientific_paper/paper_to_be
-	/// Here to reduce load. Corresponds to the tab in the UI.
+	/// Here to reduce load.. Corresponds to the tab in the UI.
 	var/current_tab = 1
 	/// The file under consideration.
 	var/datum/computer_file/data/ordnance/selected_file
@@ -88,13 +88,13 @@
 	data["has_techweb"] = !!linked_techweb
 
 	switch(current_tab)
-		// First page. Form submission.
+		// First page.. Form submission.
 		if(1)
 			data["fileList"] = list()
 			data["expList"] = list()
 			data["allowedTiers"] = list()
 			data["allowedPartners"] =  list()
-			// Both the file and experiment list are assoc lists. ID as value, display name as keys.
+			// Both the file and experiment list are assoc lists.. ID as value, display name as keys.
 			for(var/datum/computer_file/data/ordnance/ordnance_file in computer.get_files(include_disk_files = TRUE))
 				data["fileList"] += list(ordnance_file.filename = ordnance_file.uid)
 			if(selected_file)
@@ -115,7 +115,7 @@
 			data["selectedPartner"] = data["partner"]
 			data -= "partner"
 
-		// Second page. View previous
+		// Second page.. View previous
 		if(2)
 			data["publishedPapers"] = list()
 			if(!linked_techweb)
@@ -189,7 +189,7 @@
 		if("change_tab")
 			current_tab = params["new_tab"]
 			return TRUE
-		if("select_file") // Selecting new file will necessitate a change in paper type. This will be done on select_experiment and not here.
+		if("select_file") // Selecting new file will need a change in paper type.. This will be done on select_experiment and not here.
 			if(selected_file)
 				UnregisterSignal(selected_file, COMSIG_COMPUTER_FILE_DELETE)
 			paper_to_be.set_experiment() // Clears the paper info.

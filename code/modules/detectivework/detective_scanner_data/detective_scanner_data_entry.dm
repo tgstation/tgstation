@@ -6,7 +6,7 @@
 	var/category
 	/// Order this entry will be displayed in TGUI and paper report
 	var/display_order = 0
-	/// List of data for this entry. Displayed in UIs and paper report
+	/// List of data for this entry.. Displayed in UIs and paper report
 	var/list/data = list()
 
 /datum/detective_scanner_data_entry/New(category, display_order, data)

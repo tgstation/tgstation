@@ -10,9 +10,9 @@
 	var/network_name = "Mind Link"
 	/// The color of the network when talking in chat
 	var/chat_color
-	/// A list of all signals that will call qdel() on our component if triggered. Optional.
+	/// A list of all signals that will call qdel() on our component if triggered.. Optional.
 	var/list/signals_which_destroy_us
-	/// A callback invoked after an unlink is done. Optional.
+	/// A callback invoked after an unlink is done.. Optional.
 	var/datum/callback/post_unlink_callback
 	/// The icon file given to the speech action handed out.
 	var/speech_action_icon = 'icons/mob/actions/actions_slime.dmi'
@@ -24,9 +24,9 @@
 	var/speech_action_overlay_state = "bg_alien_border"
 	/// Whether messages should show a balloon alert or not.
 	var/show_balloon_alert = FALSE
-	/// The master's speech action. The owner of the link shouldn't lose this as long as the link remains.
+	/// The master's speech action.. The owner of the link shouldn't lose this as long as the link remains.
 	VAR_FINAL/datum/action/innate/linked_speech/master_speech
-	/// An assoc list of [mob/living]s to [datum/action/innate/linked_speech]s. All the mobs that are linked to our network.
+	/// An assoc list of [mob/living]s to [datum/action/innate/linked_speech]s.. All the mobs that are linked to our network.
 	VAR_FINAL/list/mob/living/linked_mobs = list()
 
 /datum/component/mind_linker/Initialize(
@@ -165,7 +165,7 @@
 	// Optional for this subtype
 	link_message,
 	unlink_message,
-	// Required for this subtype
+	// Needed for this subtype
 	linker_action_path,
 )
 

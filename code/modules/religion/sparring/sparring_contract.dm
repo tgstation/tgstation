@@ -13,7 +13,7 @@
 	var/arena_condition = /area/station/service/chapel
 	///what stakes the fight will have
 	var/stakes_condition = STAKES_NONE
-	///who has signed this contract. fills itself with WEAKREFS, to prevent hanging references
+	/// who has signed this contract.. fills itself with WEAKREFS, to prevent hanging references
 	var/list/datum/weakref/signed_by = list(null, null)
 
 /obj/item/sparring_contract/Initialize(mapload)

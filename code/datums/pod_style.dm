@@ -1,5 +1,5 @@
 /// Datum holding information about pod type visuals, VFX, name and description
-/// These are not created anywhere and thus should not be assigned procs, only being used as data storage
+/// These are not created anywhere and so should not be assigned procs, only being used as data storage
 /datum/pod_style
 	/// Name that pods of this style will be named by default
 	var/name = "supply pod"
@@ -11,7 +11,7 @@
 	var/shape = POD_SHAPE_NORMAL
 	/// Base icon state assigned to this pod
 	var/icon_state = "pod"
-	/// Whenever this pod should have a door overlay added to it. Uses [icon_state]_door sprite
+	/// Whenever this pod should have a door overlay added to it.. Uses [icon_state]_door sprite
 	var/has_door = TRUE
 	/// Decals added to this pod, if any
 	var/decal_icon = "default"

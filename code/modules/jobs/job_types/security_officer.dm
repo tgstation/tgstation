@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	if (!targets.len)
 		return
 
-	// I thought it would be great, if AAS also modifies PDA messages. Especially because it's AASs message.
+	// I thought it would be great, if AAS also modifies PDA messages.. Especially because it's AASs message.
 	var/datum/signal/subspace/messaging/tablet_message/signal = new(announcement_system, list(
 		"fakename" = "Security Department Update",
 		"fakejob" = "Automated Announcement System",

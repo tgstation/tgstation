@@ -20,7 +20,7 @@
 	/// Default beauty of the aquarium, without anything inside it
 	var/default_beauty = 150
 
-	///Tracks the fluid type of our aquarium component. Used for the icon suffix of some overlays and splashing water when broken.
+	/// Tracks the fluid type of our aquarium component.. Used for the icon suffix of some overlays and splashing water when broken.
 	var/fluid_type = AQUARIUM_FLUID_FRESHWATER
 
 	///The initial mode for the aquarium component
@@ -134,7 +134,7 @@
 
 	custom_price = PAYCHECK_CREW * 9
 
-	///Tracks the fluid type of our aquarium component. Used for overlays
+	/// Tracks the fluid type of our aquarium component.. Used for overlays
 	var/fluid_type = AQUARIUM_FLUID_FRESHWATER
 
 	///Fish which size exceed this value cannot be inserted
@@ -255,7 +255,7 @@
 	if(HAS_TRAIT_FROM(src, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, INNATE_TRAIT))
 		. += span_warning("It's cramped in there. There's no more room for fish to reproduce and grow!")
 
-///The lawyer's own pet goldfish's fish tank. It used to be an aquarium, but now it can be held and carried around.
+/// The lawyer's own pet goldfish's fish tank.. It used to be an aquarium, but now it can be held and carried around.
 /obj/item/fish_tank/lawyer
 	init_mode = AQUARIUM_MODE_SAFE
 

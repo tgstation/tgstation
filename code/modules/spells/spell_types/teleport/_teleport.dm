@@ -11,7 +11,7 @@
 
 	/// What channel the teleport is done under.
 	var/teleport_channel = TELEPORT_CHANNEL_MAGIC
-	/// Whether we force the teleport to happen (ie, it cannot be blocked by noteleport areas or blessings or whatever)
+	/// Whether we force the teleport to happen that is it cannot be blocked by noteleport areas or blessings or whatever)
 	var/force_teleport = FALSE
 	/// A list of flags related to determining if our destination target is valid or not.
 	var/destination_flags = NONE
@@ -93,9 +93,9 @@
 	destination_flags = TELEPORT_SPELL_SKIP_BLOCKED
 	/// The last area we chose to teleport / where we're currently teleporting to, if mid-cast
 	var/last_chosen_area_name
-	/// If FALSE, the caster can select the destination area. If TRUE, they will teleport to somewhere randomly instead.
+	/// If FALSE, the caster can select the destination area.. If TRUE, they will teleport to somewhere randomly instead.
 	var/randomise_selection = FALSE
-	/// If the invocation appends the selected area when said. Requires invocation mode shout or whisper.
+	/// If the invocation appends the selected area when said.. Needs invocation mode shout or whisper.
 	var/invocation_says_area = TRUE
 
 /datum/action/cooldown/spell/teleport/area_teleport/get_destinations(atom/center)

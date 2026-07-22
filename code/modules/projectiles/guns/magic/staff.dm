@@ -190,7 +190,7 @@
 	max_charges = 10
 	recharge_rate = 2
 	no_den_usage = TRUE
-	school = SCHOOL_FORBIDDEN //this staff is evil. okay? it just is. look at this projectile type list. this is wrong.
+	school = SCHOOL_FORBIDDEN // this staff is evil.. okay?. it just is.. look at this projectile type list.. this is wrong.
 
 	/// List of all projectiles we can fire from our staff.
 	/// Doesn't contain all subtypes of magic projectiles, unlike what it looks like
@@ -290,7 +290,7 @@
 		/obj/projectile/meteor,
 		/obj/projectile/neurotoxin,
 		/obj/projectile/plasma,
-	) //if you ever try to expand this list, avoid adding bullets/energy projectiles, this ain't supposed to be a gun... unless it's funny
+	) // if you ever try to expand this list, avoid adding bullets/energy projectiles, this is not supposed to be a gun.... unless it's funny
 
 /// Creates and opens doors
 /obj/item/gun/magic/staff/door
@@ -370,7 +370,7 @@
 
 /obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
+		final_block_chance = 0 // Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword.. Or a road roller, if one happened to hit you.
 	return ..()
 
 /obj/item/gun/magic/staff/spellblade/do_suicide(mob/living/user)

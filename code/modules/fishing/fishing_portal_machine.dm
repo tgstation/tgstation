@@ -252,7 +252,7 @@
 	if(old_value)
 		deactivate()
 
-///Create a radial menu from a list of available fish sources. If only the default is available, activate it right away.
+/// Create a radial menu from a list of available fish sources.. If only the default is available, activate it right away.
 /obj/machinery/fishing_portal_generator/proc/select_fish_source(mob/user)
 	var/datum/fish_source/portal/default = GLOB.preset_fish_sources[/datum/fish_source/portal]
 	var/list/available_fish_sources = list(default.radial_name = default)

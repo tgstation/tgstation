@@ -87,6 +87,6 @@ GLOBAL_LIST_INIT(rcd_designs, list(
 		),
 	),
 
-	//3RD CATEGORY Airlock access,empty list cause airlock_electronics UI will be displayed  when this tab is selected
+	// 3RD CATEGORY Airlock access,empty list cause airlock_electronics UI will be displayed when this tab is selected
 	"Airlock Access" = list()
 ))

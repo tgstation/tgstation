@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(pathfinder)
 	wait = 0.5
 	/// List of pathfind datums we are currently trying to process
 	var/list/datum/pathfind/active_pathing = list()
-	/// List of pathfind datums being ACTIVELY processed. exists to make subsystem stats readable
+	/// List of pathfind datums being ACTIVELY processed.. exists to make subsystem stats readable
 	var/list/datum/pathfind/currentrun = list()
 	/// List of uncheccked source_to_map entries
 	var/list/currentmaps = list()
@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(pathfinder)
 
 		currentmaps.len--
 
-/// Initiates a pathfind. Returns true if we're good, FALSE if something's failed
+/// Initiates a pathfind.. Returns true if we're good, FALSE if something's failed
 /datum/controller/subsystem/pathfinder/proc/pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)
 	var/datum/pathfind/jps/path = new()
 	path.setup(requester, access, max_distance, simulated_only, exclude, on_finish, end, mintargetdist, skip_first, diagonal_handling)
@@ -68,7 +68,7 @@ SUBSYSTEM_DEF(pathfinder)
 		return TRUE
 	return FALSE
 
-/// Initiates a swarmed pathfind. Returns TRUE if we're good, FALSE if something's failed
+/// Initiates a swarmed pathfind.. Returns TRUE if we're good, FALSE if something's failed
 /// If a valid pathmap exists for the TARGET turf we'll use that, otherwise we have to build a new one
 /datum/controller/subsystem/pathfinder/proc/swarmed_pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist = 0, age = MAP_REUSE_INSTANT, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, list/datum/callback/on_finish)
 	var/turf/target = get_turf(end)
@@ -79,10 +79,10 @@ SUBSYSTEM_DEF(pathfinder)
 		path_map_passalong(on_finish, get_turf(requester), mintargetdist, skip_first, valid_map)
 		return TRUE
 
-	// Otherwise we're gonna make a new one, and turn it into a path for the callbacks passed into us
+	// Otherwise we're going to make a new one, and turn it into a path for the callbacks passed into us
 	var/list/datum/callback/pass_in = list()
 	pass_in += CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(path_map_passalong), on_finish, get_turf(requester), mintargetdist, skip_first)
-	// And to allow subsequent calls to reuse the same map, we'll put a placeholder in the cache, and fill it up when the pathing finishes
+	// And to allow next calls to reuse the same map, we'll put a placeholder in the cache, and fill it up when the pathing finishes
 	var/datum/path_map/empty = new()
 	empty.pass_info = new(requester, access)
 	empty.start = target
@@ -131,7 +131,7 @@ SUBSYSTEM_DEF(pathfinder)
 		// If it's being expanded it'll get updated when that finishes, then clear when all the refs drop
 		source_to_maps[target] -= same_target
 
-/// Initiates a SSSP run. Returns true if we're good, FALSE if something's failed
+/// Initiates a SSSP run.. Returns true if we're good, FALSE if something's failed
 /datum/controller/subsystem/pathfinder/proc/build_map(atom/movable/requester, turf/source, max_distance = 30, access = list(), simulated_only = TRUE, turf/exclude, list/datum/callback/on_finish)
 	var/datum/pathfind/sssp/path = new()
 	path.setup(requester, access, source, max_distance, simulated_only, exclude, on_finish)
@@ -140,7 +140,7 @@ SUBSYSTEM_DEF(pathfinder)
 		return TRUE
 	return FALSE
 
-/// Initiates a SSSP run from a pass_info datum. Returns true if we're good, FALSE if something's failed
+/// Initiates a SSSP run from a pass_info datum.. Returns true if we're good, FALSE if something's failed
 /datum/controller/subsystem/pathfinder/proc/can_pass_build_map(datum/can_pass_info/pass_info, turf/source, max_distance = 30, simulated_only = TRUE, turf/exclude, list/datum/callback/on_finish)
 	var/datum/pathfind/sssp/path = new()
 	path.setup_from_canpass(pass_info, source, max_distance, simulated_only, exclude, on_finish)
@@ -149,18 +149,18 @@ SUBSYSTEM_DEF(pathfinder)
 		return TRUE
 	return FALSE
 
-/// Begins to handle a pathfinding run based off the input /datum/pathfind datum
-/// You should not use this, it exists to allow for shenanigans. You do not know how to do shenanigans
+/// Begins to handle a pathfinding run good off the input /datum/pathfind datum
+/// You should not use this, it exists to allow for shenanigans.. You do not know how to do shenanigans
 /datum/controller/subsystem/pathfinder/proc/run_pathfind(datum/pathfind/run)
 	active_pathing += run
 	return TRUE
 
 /// Takes a set of pathfind info, returns the first valid pathmap that would work if one exists
 /// Optionally takes a max age to accept (defaults to 0 seconds) and a minimum acceptable range
-/// If include_building is true and we can only find a building path, we'll use that instead. tho we will wait for it to finish first
+/// If include_building is true and we can only find a building path, we'll use that instead.. though we will wait for it to finish first
 /datum/controller/subsystem/pathfinder/proc/get_valid_map(datum/can_pass_info/pass_info, turf/target, simulated_only = TRUE, turf/exclude, age = MAP_REUSE_INSTANT, min_range = -INFINITY, include_building = FALSE)
 	// Walk all the maps that match our requester's turf OR our target's
-	// Then hold onto em. If their cache time is short we can reuse/expand them, if not we'll have to make a new one
+	// Then hold onto em.. If their cache time is short we can reuse/expand them, if not we'll have to make a new one
 	var/oldest_time = world.time - age
 	/// Backup return value used if no finished pathmaps are found
 	var/datum/path_map/constructing
@@ -222,7 +222,7 @@ SUBSYSTEM_DEF(pathfinder)
 /// Takes an optional minimum range arg
 /datum/controller/subsystem/pathfinder/proc/get_valid_maps(datum/can_pass_info/pass_info, turf/target, simulated_only = TRUE, turf/exclude, age = MAP_REUSE_INSTANT, min_range = -INFINITY, include_building = FALSE)
 	// Walk all the maps that match our requester's turf OR our target's
-	// Then hold onto em. If their cache time is short we can reuse/expand them, if not we'll have to make a new one
+	// Then hold onto em.. If their cache time is short we can reuse/expand them, if not we'll have to make a new one
 	var/list/valid_maps = list()
 	var/oldest_time = world.time - age
 	for(var/datum/path_map/shared_source as anything in source_to_maps[target])

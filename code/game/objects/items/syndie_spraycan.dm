@@ -14,7 +14,7 @@
 	var/paint_color = "#780000"
 	var/static/list/no_draw_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
 
-	/// Are we currently drawing? Used to prevent spam clicks for do_while
+	/// Are we currently drawing?. Used to prevent spam clicks for do_while
 	var/drawing_rune = FALSE
 	/// Set to true if we finished drawing something, this spraycan is now useless
 	var/expended = FALSE

@@ -1,11 +1,11 @@
 /atom/movable
-	/// Whether the atom allows mobs to be buckled to it. Can be ignored in [/atom/movable/proc/buckle_mob()] if force = TRUE
+	/// Whether the atom allows mobs to be buckled to it.. Can be ignored in [/atom/movable/proc/buckle_mob()] if force = TRUE
 	var/can_buckle = FALSE
 	/// Bed-like behaviour, forces mob.lying = buckle_lying if not set to [NO_BUCKLE_LYING].
 	var/buckle_lying = NO_BUCKLE_LYING
-	/// Bed-like behaviour, sets mob dir to buckle_dir if not set to [BUCKLE_MATCH_DIR]. If set to [BUCKLE_MATCH_DIR], makes mob dir match ours.
+	/// Bed-like behaviour, sets mob dir to buckle_dir if not set to [BUCKLE_MATCH_DIR].. If set to [BUCKLE_MATCH_DIR], makes mob dir match ours.
 	var/buckle_dir = BUCKLE_MATCH_DIR
-	/// Require people to be handcuffed before being able to buckle. eg: pipes
+	/// Need people to be handcuffed before being able to buckle.. for example pipes
 	var/buckle_requires_restraints = FALSE
 	/// The mobs currently buckled to this atom
 	var/list/mob/living/buckled_mobs = null //list()
@@ -32,7 +32,7 @@
 			if(user_unbuckle_mob(buckled_mobs[1],user))
 				return TRUE
 
-//literally just the above extension of attack_hand(), but for silicons instead (with an adjacency check, since attack_robot() being called doesn't mean that you're adjacent to something)
+// literally just the above extension of attack_hand(). F. Silicons instead (with an adjacency check, since attack_robot() being called doesn't mean that you're adjacent to something)
 /atom/movable/attack_robot(mob/living/user)
 	. = ..()
 	if(.)
@@ -86,10 +86,10 @@
 	if(!is_buckle_possible(M, force, check_loc))
 		return FALSE
 
-	// This signal will check if the mob is mounting this atom to ride it. There are 3 possibilities for how this goes
-	// 1. This movable doesn't have a ridable element and can't be ridden, so nothing gets returned, so continue on
-	// 2. There's a ridable element but we failed to mount it for whatever reason (maybe it has no seats left, for example), so we cancel the buckling
-	// 3. There's a ridable element and we were successfully able to mount, so keep it going and continue on with buckling
+	// This signal will check if the mob is mounting this atom to ride it.. There are 3 possibilities for how this goes
+	// 1.. This movable doesn't have a ridable element and can't be ridden, so nothing gets returned, so continue on
+	// 2.. There's a ridable element. We failed to mount it f. Whatever reason (maybe it has no seats left, f. Example), so we cancel the buckling
+	// 3.. There's a ridable element and we were successfully able to mount, so keep it going and continue on with buckling
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PREBUCKLE, M, force, buckle_mob_flags) & COMPONENT_BLOCK_BUCKLE)
 		return FALSE
 
@@ -259,11 +259,11 @@
 	if(LAZYLEN(buckled_mobs) >= max_buckled_mobs)
 		return FALSE
 
-	// Stacking buckling leads to lots of jank and issues, better to just nix it entirely
+	// Stacking buckling leads to lots of low quality code and issues, better to just nix it entirely
 	if(target.has_buckled_mobs())
 		return FALSE
 
-	// If the buckle requires restraints, make sure the target is actually restrained.
+	// If the buckle needs restraints, make sure the target is actually restrained.
 	if(buckle_requires_restraints && !HAS_TRAIT(target, TRAIT_RESTRAINED))
 		return FALSE
 
@@ -312,13 +312,13 @@
  * * check_loc - TRUE if src and M have to be on the same turf, false otherwise
  */
 /atom/movable/proc/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
-	// Is buckling even possible? Do a full suite of checks.
+	// Is buckling even possible?. Do a full suite of checks.
 	if(!is_user_buckle_possible(M, user, check_loc))
 		return FALSE
 
 	add_fingerprint(user)
 
-	// If the mob we're attempting to buckle is not stood on this atom's turf and it isn't the user buckling themselves,
+	// If the mob we're trying to buckle is not stood on this atom's turf and it isn't the user buckling themselves,
 	// we'll try it with a 2 second do_after delay.
 	if(M != user && (get_turf(M) != get_turf(src)))
 		M.visible_message(span_warning("[user] starts buckling [M] to [src]!"),\
@@ -327,7 +327,7 @@
 		if(!do_after(user, buckle_delay, M))
 			return FALSE
 
-		// Sanity check before we attempt to buckle. Is everything still in a kosher state for buckling after the 3 seconds have elapsed?
+		// Sanity check before we try to buckle.. Is everything still in a kosher state for buckling after the 3 seconds have elapsed?
 		// Covers situations where, for example, the chair was moved or there's some other issue.
 		if(!is_user_buckle_possible(M, user, check_loc))
 			return FALSE

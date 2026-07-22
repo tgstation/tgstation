@@ -233,7 +233,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/chem_volume = 30
 	/// The reagents that this cigarette starts with.
 	var/list/list_reagents = list(/datum/reagent/drug/nicotine = 15)
-	/// Should we smoke all of the chems in the cig before it runs out. Splits each puff to take a portion of the overall chems so by the end you'll always have consumed all of the chems inside.
+	/// Should we smoke all of the chems in the cig before it runs out.. Splits each puff to take a portion of the overall chems so by the end you'll always have consumed all of the chems inside.
 	var/smoke_all = FALSE
 	/// How much damage this deals to the lungs per drag.
 	var/lung_harm = 1
@@ -499,7 +499,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(!(REVERSE_DIR(guy.dir) & smoker.dir))
 			continue
 		guy_infront = guy
-		// in case we get a living first, we wanna prioritize humans
+		// in case we get a living first, we want to prioritize humans
 		if(ishuman(guy_infront))
 			break
 
@@ -861,7 +861,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	//the compiled icon state is how it appears when it's on.
 	//That's how we want it to show on orbies (little virtual PDA pets).
-	//However we should reset their appearance on runtime.
+	// But we should reset their appearance on runtime.
 	update_appearance(UPDATE_ICON_STATE)
 
 
@@ -886,7 +886,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/cigarette/cigar/premium
 	name = "premium cigar"
-	//this is the version that actually spawns in premium cigar cases, the distinction is made so that the smoker quirk can differentiate between the default cigar box and its subtypes
+	// this is the version that actually spawns in premium cigar cases, the distinction is made so that the smoker quirk can differentiate between the default cigar box. Its subtypes
 
 /obj/item/cigarette/cigar/cohiba
 	name = "\improper Cohiba Robusto cigar"

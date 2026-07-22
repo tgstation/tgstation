@@ -20,7 +20,7 @@
 		parent_turret = null
 	return ..()
 
-//The below code is pretty much just recoded from the initial turret object. It's necessary but uncommented because it's exactly the same!
+// The below code is pretty much just recoded from the initial turret object.. It's necessary but uncommented because it's exactly the same!
 //>necessary
 //I'm not fixing it because i'm fucking bored of this code already, but someone should just reroute these to the parent turret's procs.
 

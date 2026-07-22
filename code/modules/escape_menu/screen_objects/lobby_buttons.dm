@@ -46,7 +46,7 @@
 	hovered = TRUE
 
 	// The UX on this is pretty shit, but it's okay enough for now.
-	// Regularly goes way too far from your cursor. Not designed for large icons.
+	// Regularly goes way too far from your cursor.. Not designed for large icons.
 	openToolTip(usr, src, params, content = tooltip_text)
 
 /atom/movable/screen/escape_menu/lobby_button/MouseExited(location, control, params)

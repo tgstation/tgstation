@@ -2,7 +2,7 @@
 #define BIOME_RANDOM_SQUARE_DRIFT 2
 
 /datum/map_generator/jungle_generator
-	///2D list of all biomes based on heat and humidity combos.
+	/// 2D list of all biomes good on heat and humidity combos.
 	var/list/possible_biomes = list(
 	BIOME_LOW_HEAT = list(
 		BIOME_LOW_HUMIDITY = /datum/biome/plains,
@@ -48,7 +48,7 @@
 
 
 		var/datum/biome/selected_biome
-		if(height <= 0.85) //If height is less than 0.85, we generate biomes based on the heat and humidity of the area.
+		if(height <= 0.85) // If height is less than 0.85, we generate biomes good on the heat and humidity of the area.
 			var/humidity = text2num(rustg_noise_get_at_coordinates("[humidity_seed]", "[drift_x]", "[drift_y]"))
 			var/heat = text2num(rustg_noise_get_at_coordinates("[heat_seed]", "[drift_x]", "[drift_y]"))
 			var/heat_level //Type of heat zone we're in LOW-MEDIUM-HIGH
@@ -86,7 +86,7 @@
 
 	map_generator = /datum/map_generator/jungle_generator
 
-/// This turf doesn't actually do anything beyond provide contrast for mappers and be very visible when stuff breaks in game. The actual areas are what drive cave generation.
+/// This turf doesn't actually do anything beyond provide contrast for mappers and be very visible when stuff breaks in game.. The actual areas are what drive cave generation.
 /turf/open/genturf
 	name = "green ungenerated turf"
 	desc = "If you see this, and you're not a ghost, yell at coders"

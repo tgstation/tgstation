@@ -35,7 +35,7 @@
 	if(ismob(gone))
 		remove_occupant(gone)
 
-// so that we can check the access of the vehicle's occupants. Ridden vehicles do this in the riding component, but these don't have that
+// so that we can check the access of the vehicle's occupants.. Ridden vehicles do this in the riding component, but these don't have that
 /obj/vehicle/sealed/Bump(atom/A)
 	. = ..()
 	if(istype(A, /obj/machinery/door))

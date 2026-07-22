@@ -1,4 +1,4 @@
-/// Used for unit tests only. Skipped in UI.
+/// Used for unit tests only.. Skipped in UI.
 /datum/lazy_template/virtual_domain/test_only
 	name = "Test Only"
 	key = "test_only"

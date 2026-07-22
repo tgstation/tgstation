@@ -1,4 +1,4 @@
-/// Stops a mob from hitting someone in crit. doesn't account for projectiles or spells
+/// Stops a mob from hitting someone in crit.. doesn't account for projectiles or spells
 /datum/element/no_crit_hitting
 
 /datum/element/no_crit_hitting/Attach(datum/target)

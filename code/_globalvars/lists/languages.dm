@@ -1,14 +1,14 @@
 /// List of language prototypes to reference, assoc [type] = prototype
 GLOBAL_LIST_INIT_TYPED(language_datum_instances, /datum/language, init_language_prototypes())
-/// List if all language typepaths learnable, IE, those with keys
+/// List if all language typepaths learnable, that is those with keys
 GLOBAL_LIST_INIT(all_languages, init_all_languages())
 /// /List of language prototypes to reference, assoc "name" = typepath
 GLOBAL_LIST_INIT(language_types_by_name, init_language_types_by_name())
 /// ~1400 element long list containing the 1000 most common words in the English language in alphabetical order.
-/// Indexed by word, value is the rank of the word in the list. So accessing it is fasta.
+/// Indexed by word, value is the rank of the word in the list.. So accessing it is fasta.
 GLOBAL_LIST_INIT(most_common_words_alphabetical, init_common_words_by_alphabetical())
 /// ~1000 element long list containing the 1000 most common words in the English language in frequency order.
-/// Indexed by word, value is the rank of the word in the list. So accessing it is fasta.
+/// Indexed by word, value is the rank of the word in the list.. So accessing it is fasta.
 GLOBAL_LIST_INIT(most_common_words_frequency, init_common_words_by_frequency())
 
 /proc/init_language_prototypes()

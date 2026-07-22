@@ -1,4 +1,4 @@
-// Used by /turf/open/chasm and subtypes to implement the "dropping" mechanic
+// Used by /turf/open/chasm and subtypes to add the "dropping" mechanic
 /datum/component/chasm
 	var/turf/target_turf
 	var/obj/effect/abstract/chasm_storage/storage

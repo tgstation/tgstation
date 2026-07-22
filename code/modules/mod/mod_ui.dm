@@ -108,7 +108,7 @@
 			var/obj/item/mod/module/module = locate(params["ref"]) in modules
 			if(!module)
 				return
-			module.on_select(ui.user) // We can now 
+			module.on_select(ui.user) // We can now
 		if("configure")
 			var/obj/item/mod/module/module = locate(params["ref"]) in modules
 			if(!module)

@@ -13,7 +13,7 @@
 	name = "crimson medallion"
 	desc = "A blood-red focusing glass that provides a link to the world beyond, and worse. Its eye is constantly twitching and gazing in all directions. It almost seems to be silently screaming..."
 	icon_state = "crimson_medallion"
-	/// The aura healing component. Used to delete it when taken off.
+	/// The aura healing component.. Used to delete it when taken off.
 	var/datum/component/component
 	/// If active or not, used to add and remove its cult and heretic buffs.
 	var/active = FALSE
@@ -69,7 +69,7 @@
 
 	// If boosted enable is set, to prevent false dropped() calls from repeatedly nuking the max spells.
 	var/datum/action/innate/cult/blood_magic/magic_holder = locate() in user.actions
-	// Remove the last spell if over new limit, as we will reduce our max spell amount. Done beforehand as it causes a index out of bounds runtime otherwise.
+	// Remove the last spell if over new limit, as we will reduce our max spell amount.. Done beforehand as it causes a index out of bounds runtime otherwise.
 	if(magic_holder?.magic_enhanced)
 		QDEL_NULL(magic_holder.spells[ENHANCED_BLOODCHARGE])
 	magic_holder?.magic_enhanced = FALSE
@@ -85,7 +85,7 @@
 	var/heal_amt = user.adjust_brute_loss(-50)
 	user.adjust_fire_loss( -(50 - abs(heal_amt)) ) // no double dipping
 
-	// I want it to poison the user but I also think it'd be neat if they got their juice as well. But that cancels most of the damage out. So I dunno.
+	// I want it to poison the user but I also think it'd be neat if they got their juice as well.. But that cancels most of the damage out.. So I do not know
 	user.reagents?.add_reagent(/datum/reagent/fuel/unholywater, rand(6, 10))
 	user.reagents?.add_reagent(/datum/reagent/eldritch, rand(6, 10))
 	qdel(src)
@@ -216,7 +216,7 @@
 	SIGNAL_HANDLER
 	channel_amulet(attacker, victim)
 
-/// Makes whoever the target is a bit more insane. If they are insane enough, they will be zombified into a moon zombie
+/// Makes whoever the target is a bit more insane.. If they are insane enough, they will be zombified into a moon zombie
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/channel_amulet(mob/user, atom/target)
 
 	if(!isliving(user))

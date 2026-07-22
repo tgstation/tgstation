@@ -24,7 +24,7 @@
 	var/cache_g = LIGHTING_SOFT_THRESHOLD
 	var/cache_b = LIGHTING_SOFT_THRESHOLD
 
-	///the maximum of lum_r, lum_g, and lum_b. if this is > 1 then the three cached color values are divided by this
+	/// the maximum of lum_r, lum_g, and lum_b.. if this is > 1 then the three cached color values are divided by this
 	var/largest_color_luminosity = 0
 
 	///whether we are to be added to SSlighting's corners_queue list for an update
@@ -38,8 +38,8 @@
 	src.y = y + 0.5
 	src.z = z
 
-	// Alright. We're gonna take a set of coords, and from them do a loop clockwise
-	// To build out the turfs adjacent to us. This is pretty fast
+	// Alright.. We're going to take a set of coords, and from them do a loop clockwise
+	// To build out the turfs adjacent to us.. This is pretty fast
 	var/turf/process_next = locate(x, y, z)
 	if(process_next)
 		master_SW = process_next
@@ -51,7 +51,7 @@
 		// So this is pretty damn fast
 		process_next = locate(x, y + 1, z)
 
-	// Ok, if we have a north turf, go there. otherwise, onto the next
+	// Ok, if we have a north turf, go there.. otherwise, onto the next
 	if(process_next)
 		master_NW = process_next
 		process_next.lighting_corner_SE = src
@@ -60,7 +60,7 @@
 	else
 		process_next = locate(x + 1, y + 1, z)
 
-	// Etc etc
+	// And so on and so on
 	if(process_next)
 		master_NE = process_next
 		process_next.lighting_corner_SW = src
@@ -86,7 +86,7 @@
 	for (var/datum/light_source/light_source as anything in affecting)
 		light_source.recalc_corner(src)
 
-// God that was a mess, now to do the rest of the corner code! Hooray!
+// God that was a mess, now to do the rest of the corner code!. Hooray!
 /datum/lighting_corner/proc/update_lumcount(delta_r, delta_g, delta_b)
 
 #ifdef VISUALIZE_LIGHT_UPDATES

@@ -35,7 +35,7 @@
 	var/transmit_enabled = TRUE
 	/// List of dishes currently inside
 	var/list/dish_drive_contents
-	/// Distance this is capable of sucking dishes up over. (2 + servo tier)
+	/// Distance this is capable of sucking dishes up over.. (2 + servo tier)
 	var/suck_distance = 0
 
 	COOLDOWN_DECLARE(time_since_dishes)

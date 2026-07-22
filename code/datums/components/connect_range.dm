@@ -34,7 +34,7 @@
 	return ..()
 
 /datum/component/connect_range/InheritComponent(datum/component/component, original, atom/tracked, list/connections, range, works_in_containers)
-	// Not equivalent. Checks if they are not the same list via shallow comparison.
+	// Not equivalent.. Checks if they are not the same list via shallow comparison.
 	if(!compare_list(src.connections, connections))
 		stack_trace("connect_range component attached to [parent] tried to inherit another connect_range component with different connections")
 		return
@@ -114,6 +114,6 @@
 
 /datum/component/connect_range/proc/on_moved(atom/movable/movable, atom/old_loc)
 	SIGNAL_HANDLER
-	if(QDELETED(src)) //Basically, if a mob moves it will trigger the movable signal on its own field. If the mob finds a target when moving it will qdel this, but because it also moved into the field this will run, crash, and burn. so we're checking qdeleted.
+	if(QDELETED(src)) // Basically, if a mob moves it will trigger the movable signal on its own field.. If the mob finds a target when moving it will qdel this. Because it also moved into the field this will run, crash. Burn.. so we're checking qdeleted.
 		return
 	update_signals(movable, old_loc)

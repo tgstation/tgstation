@@ -35,7 +35,7 @@
 	var/datum/worn_feature_offset/worn_suit_offset
 	/// Offset to apply to equipment worn on the neck
 	var/datum/worn_feature_offset/worn_neck_offset
-	/// Which functional (i.e. flightpotion) wing types (if any) does this bodypart support? If count is >1 a radial menu is used to choose between all icons in list
+	/// Which functional (i.e.. flightpotion) wing types (if any) does this bodypart support?. If count is >1 a radial menu is used to choose between all icons in list
 	var/list/wing_types = list(/obj/item/organ/wings/functional/angel)
 
 /obj/item/bodypart/chest/apply_ownership(mob/living/carbon/new_owner)
@@ -146,7 +146,7 @@
 	var/datum/worn_feature_offset/worn_glove_offset
 	/// Datum describing how to offset things held in the hands of this arm, the x offset IS functional here
 	var/datum/worn_feature_offset/held_hand_offset
-	/// The noun to use when referring to this arm's appendage, e.g. "hand" or "paw"
+	/// The noun to use when referring to this arm's appendage, e.g.. "hand" or "paw"
 	var/appendage_noun = "hand"
 
 	biological_state = BIO_STANDARD_JOINTED
@@ -382,22 +382,22 @@
 	can_be_disabled = TRUE
 	unarmed_attack_effect = ATTACK_EFFECT_KICK
 	body_zone = BODY_ZONE_L_LEG
-	unarmed_attack_verbs = list("kick") // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
+	unarmed_attack_verbs = list("kick") // The lovely kick, typically only accessable by attacking a grouded foe.. 1.5 times better than the punch.
 	unarmed_attack_verbs_continuous = list("kicks")
 	unarmed_damage_low = 7
 	unarmed_damage_high = 15
 	unarmed_effectiveness = 15
 	biological_state = BIO_STANDARD_JOINTED
-	/// A speed modifier we apply to the owner when attached, if any. Positive numbers make it move slower, negative numbers make it move faster.
+	/// A speed modifier we apply to the owner when attached, if any.. Positive numbers make it move slower, negative numbers make it move faster.
 	var/speed_modifier = 0
 	/// Datum describing how to offset things worn on the foot of this leg, note that an x offset won't do anything here
 	var/datum/worn_feature_offset/worn_foot_offset
 	/// Used by the bloodysoles component to make footprints
 	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
-	/// What does our footsteps (barefoot) sound like? Only BAREFOOT, CLAW, HEAVY, and SHOE (or null, I guess) are valid
+	/// What does our footsteps (barefoot) sound like?. Only BAREFOOT, CLAW, HEAVY, and SHOE (or null, I guess) are valid
 	var/footstep_type = FOOTSTEP_MOB_BAREFOOT
 	/// You can set this to a list of sounds to pick from when a footstep is played rather than use the footstep types
-	/// Requires special formatting: list(list(sounds, go, here), volume, range modifier)
+	/// Needs special formatting: list(list(sounds, go, here), volume, range modifier)
 	var/list/special_footstep_sounds
 
 /obj/item/bodypart/leg/Initialize(mapload)

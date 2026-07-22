@@ -64,7 +64,7 @@
 	/// Weight is calculated by the sum of all of our content's weight classes.
 	var/max_total_storage = WEIGHT_CLASS_SMALL * 7
 
-	/// Whether the storage is currently locked (inaccessible). See [code/__DEFINES/storage.dm]
+	/// Whether the storage is currently locked (inaccessible).. See [code/__DEFINES/storage.dm]
 	var/locked = STORAGE_NOT_LOCKED
 
 	/// Whether we open when attack_handed (clicked on with an empty hand).
@@ -75,7 +75,7 @@
 
 	/// If TRUE, we can click on items with the storage object to pick them up and insert them.
 	var/allow_quick_gather = FALSE
-	/// The mode for collection when allow_quick_gather is enabled. See [code/__DEFINES/storage.dm]
+	/// The mode for collection when allow_quick_gather is enabled.. See [code/__DEFINES/storage.dm]
 	var/collection_mode = COLLECT_EVERYTHING
 
 	/// If TRUE, we can use-in-hand the storage object to dump all of its contents.
@@ -92,7 +92,7 @@
 	var/can_hold_description
 
 	/// The preposition used when inserting items into this storage.
-	/// IE: You put things *in* a bag, but *on* a plate.
+	/// that is You put things *in* a bag, but *on* a plate.
 	var/insert_preposition = "in"
 
 	/// If TRUE, chat messages for inserting/removing items will not be shown.
@@ -299,7 +299,7 @@
 
 /// Almost 100% of the time the lists passed into set_holdable are reused for each instance
 /// Just fucking cache it 4head
-/// Yes I could generalize this, but I don't want anyone else using it. in fact, DO NOT COPY THIS
+/// Yes I could generalize this, but I don't want anyone else using it.. in fact, DO NOT COPY THIS
 /// If you find yourself needing this pattern, you're likely better off using static typecaches
 /// I'm not because I do not trust implementers of the storage component to use them, BUT
 /// IF I FIND YOU USING THIS PATTERN IN YOUR CODE I WILL BREAK YOU ACROSS MY KNEES
@@ -390,7 +390,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(QDELETED(to_insert) || !istype(to_insert))
 		return FALSE
 
-	//stops you from putting stuff like off-hand thingy inside. Hologram storages can accept only hologram items
+	// stops you from putting stuff like off-hand thingy inside.. Hologram storages can accept only hologram items
 	if(to_insert.item_flags & ABSTRACT)
 		return FALSE
 	if(parent.flags_1 & HOLOGRAM_1)
@@ -551,7 +551,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		if(!attempt_insert(thing, user, override = TRUE)) // Note can_be_inserted still makes noise when the answer is no
 			if(real_location.contents.len >= max_slots)
 				break
-			rejections += thing.type // therefore full bags are still a little spammy
+			rejections += thing.type // so full bags are still a little spammy
 			continue
 
 		if (TICK_CHECK)
@@ -605,7 +605,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(istype(thing) && ismob(parent.loc))
 		var/mob/mob_parent = parent.loc
-		thing.dropped(mob_parent, /*silent = */TRUE)
+		thing.dropped(mob_parent, /* silent = */TRUE)
 
 	if(remove_to_loc)
 		reset_item(thing)
@@ -871,7 +871,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		SEND_SIGNAL(src, COMSIG_STORAGE_DUMP_POST_TRANSFER, dest_object, user)
 		return
 
-	// Storage to loc transfer requires a do_after
+	// Storage to loc transfer needs a do_after
 	to_chat(user, span_notice("You start dumping out the contents of [parent] onto [dest_object]..."))
 	if(!do_after(user, 2 SECONDS, target = dest_object))
 		return
@@ -947,7 +947,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return COMPONENT_NO_AFTERATTACK
 
 
-/// Alt click on the storage item. Default: Open the storage.
+/// Alt click on the storage item.. Default: Open the storage.
 /datum/storage/proc/on_click_alt(datum/source, mob/user)
 	SIGNAL_HANDLER
 
@@ -1205,7 +1205,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	changed.visible_message(span_warning("[changed] falls out of [parent]!"), vision_distance = COMBAT_MESSAGE_RANGE)
 
-///Assign a new value to the locked variable. If it's higher than NOT_LOCKED, close the UIs and update the appearance of the parent.
+/// Assign a new value to the locked variable.. If it's higher than NOT_LOCKED, close the UIs and update the appearance of the parent.
 /datum/storage/proc/set_locked(new_locked)
 	if(locked == new_locked)
 		return

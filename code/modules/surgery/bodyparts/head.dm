@@ -29,13 +29,13 @@
 	base_meat_amount = 0
 	stump_typepath = /obj/item/bodypart/head/stump
 
-	/// Do we show the information about missing organs upon being examined? Defaults to TRUE, useful for Dullahan heads.
+	/// Do we show the information about missing organs upon being examined?. Defaults to TRUE, useful for Dullahan heads.
 	var/show_organs_on_examine = TRUE
 
 	//Limb appearance info:
 	/// Replacement name
 	var/real_name = ""
-	/// Flags related to appearance, such as hair, lips, etc
+	/// Flags related to appearance, such as hair, lips, and so on
 	var/head_flags = HEAD_DEFAULT_FEATURES
 
 	/// Hair style
@@ -69,7 +69,7 @@
 	///Current lipstick trait, if any (such as TRAIT_KISS_OF_DEATH)
 	var/stored_lipstick_trait
 
-	/// How many teeth the head's species has, humans have 32 so that's the default. Used for a limit to dental pill implants.
+	/// How many teeth the head's species has, humans have 32 so that's the default.. Used for a limit to dental pill implants.
 	var/teeth_count = 32
 
 	/// Offset to apply to equipment worn on the ears

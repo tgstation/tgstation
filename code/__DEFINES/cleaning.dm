@@ -1,9 +1,9 @@
 
 // Cleaning flags
 
-/// Return to prevent clean attempts
+/// Return to prevent clean tries
 #define CLEAN_BLOCKED (1<<0)
-/// Return to allow clean attempts
+/// Return to allow clean tries
 /// This is (currently) the same as returning null / none but more explicit
 #define CLEAN_ALLOWED (1<<1)
 /// Return to prevent XP gain
@@ -42,7 +42,7 @@
 #define CLEAN_RAD CLEAN_TYPE_RADIATION
 #define CLEAN_ALL ALL
 
-// Footprint sprites to use when making footprints in blood, oil, etc.
+// Footprint sprites to use when making footprints in blood, oil, and so on
 #define FOOTPRINT_SPRITE_SHOES "shoes"
 #define FOOTPRINT_SPRITE_PAWS "paws"
 #define FOOTPRINT_SPRITE_CLAWS "claws"

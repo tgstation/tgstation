@@ -1,7 +1,7 @@
 /datum/export/material
 	abstract_type = /datum/export/material
 	cost = 5 // Cost per SHEET_MATERIAL_AMOUNT, which is 100cm3 as of May 2023.
-	k_hit_percentile = 0.2 / MAX_STACK_SIZE //Meaning selling 1 full stack of materials will decrease subsequent sales by 20%
+	k_hit_percentile = 0.2 / MAX_STACK_SIZE // Meaning selling 1 full stack of materials will decrease next sales by 20%
 	k_recovery_time = 8 MINUTES
 	message = "cm3 of developer's tears. Please, report this on github"
 	amount_report_multiplier = SHEET_MATERIAL_AMOUNT
@@ -13,7 +13,7 @@
 	)
 	/// Material id we are trying to export.
 	var/datum/material/material_id = null
-	/// Whether we use the shared static export types or not. Set to FALSE when using different export types.
+	/// Whether we use the shared static export types or not.. Set to FALSE when using different export types.
 	var/use_shared_exports = TRUE
 // Yes, it's a base type containing export_types.
 // But it has no material_id, so any applies_to check will return false, and these types reduce amount of copypasta a lot
@@ -63,7 +63,7 @@
 		amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
 	return round(amount / SHEET_MATERIAL_AMOUNT)
 
-// Materials. Static materials exist as parent types, while materials subject to the stock market have a fluid cost as determined by material/market types
+// Materials.. Static materials exist as parent types, while materials subject to the stock market have a fluid cost as determined by material/market types
 // If you're adding a new material to the stock market, make sure its export type is added here.
 
 /datum/export/material/plasma
@@ -137,7 +137,7 @@
 	if(!sheets)
 		return
 
-	//This formula should impact lower quantity materials greater, and higher quantity materials less. Still, it's  a bit rough. Tweaking may be needed.
+	// This formula should impact lower quantity materials greater, and higher quantity materials less.. Still, it's a bit rough.. Tweaking may be needed.
 	//decrease the market price
 	SSstock_market.adjust_material_price(material_id, -SSstock_market.materials_prices[material_id] * (sheets / (sheets + SSstock_market.materials_quantity[material_id])))
 	//increase the stock

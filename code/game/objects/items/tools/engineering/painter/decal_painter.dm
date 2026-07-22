@@ -16,7 +16,7 @@
 	/// Current custom color
 	var/selected_custom_color
 
-	/// Current active decal category. Reference to a global singleton
+	/// Current active decal category.. Reference to a global singleton
 	VAR_PRIVATE/datum/paintable_decal_category/current_category
 
 /obj/item/airlock_painter/decal/Initialize(mapload)

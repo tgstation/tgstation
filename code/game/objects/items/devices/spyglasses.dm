@@ -1,17 +1,17 @@
-//detective spyglasses. meant to be an example for map_popups.dm
+// detective spyglasses.. meant to be an example for map_popups.dm
 /obj/item/clothing/glasses/sunglasses/spy
 	desc = "Made by Nerd. Co's infiltration and surveillance department. Upon closer inspection, there's a small screen in each lens."
 	actions_types = list(/datum/action/item_action/activate_remote_view)
 	var/obj/item/clothing/accessory/spy_bug/linked_bug
 
-/obj/item/clothing/glasses/sunglasses/spy/proc/show_to_user(mob/user)//this is the meat of it. most of the map_popup usage is in this.
+/obj/item/clothing/glasses/sunglasses/spy/proc/show_to_user(mob/user)// this is the meat of it.. most of the map_popup usage is in this.
 	var/client/cool_guy = user?.client
 	if(!cool_guy)
 		return
 	if(!linked_bug)
 		user.audible_message(span_warning("[src] lets off a shrill beep!"))
 		return
-	if(cool_guy.screen_maps["spypopup_map"]) //alright, the popup this object uses is already IN use, so the window is open. no point in doing any other work here, so we're good.
+	if(cool_guy.screen_maps["spypopup_map"]) // alright, the popup this object uses is already IN use, so the window is open.. no point in doing any other work here, so we're good.
 		return
 	cool_guy.setup_popup("spypopup", 3, 3, 2, "S.P.Y")
 	linked_bug.cam_screen.display_to(user)
@@ -54,7 +54,7 @@
 	var/obj/item/clothing/glasses/sunglasses/spy/linked_glasses
 	/// Our camera display popup
 	var/atom/movable/screen/map_view/cam_screen
-	/// How far can we actually see? Ranges higher than one can be used to see through walls.
+	/// How far can we actually see?. Ranges higher than one can be used to see through walls.
 	var/cam_range = 1
 	/// Detects when we move to update the camera view
 	var/datum/movement_detector/tracker

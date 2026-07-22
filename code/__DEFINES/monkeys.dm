@@ -16,7 +16,7 @@
 // Probability per Life tick that the monkey will:
 /// probability that monkey aggro against the mob pulling it
 #define MONKEY_PULL_AGGRO_PROB 5
-/// probability that monkey will get into mischief, i.e. finding/stealing items
+/// probability that monkey will get into mischief, i.e... finding/stealing items
 #define MONKEY_SHENANIGAN_PROB 20
 /// probability that monkey will disarm an armed attacker
 #define MONKEY_ATTACK_DISARM_PROB 20

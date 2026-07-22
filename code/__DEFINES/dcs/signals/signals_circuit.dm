@@ -1,4 +1,4 @@
-// Circuit signals. Format:
+// Circuit signals... Format:
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
@@ -22,10 +22,10 @@
 /// Sent when a circuit is removed from its shell
 #define COMSIG_CIRCUIT_SHELL_REMOVED "circuit_shell_removed"
 
-/// Send to [/obj/item/circuit_component] when it is added to a circuit. (/obj/item/integrated_circuit)
+/// Send to [/obj/item/circuit_component] when it is added to a circuit... (/obj/item/integrated_circuit)
 #define COMSIG_CIRCUIT_COMPONENT_ADDED "circuit_component_added"
 
-/// Sent to [/obj/item/circuit_component] when it is removed from a circuit. (/obj/item/integrated_circuit)
+/// Sent to [/obj/item/circuit_component] when it is removed from a circuit... (/obj/item/integrated_circuit)
 #define COMSIG_CIRCUIT_COMPONENT_REMOVED "circuit_component_removed"
 
 /// Called when the integrated circuit's cell is set.
@@ -44,18 +44,18 @@
 #define COMSIG_CIRCUIT_PRE_POWER_USAGE "circuit_pre_power_usage"
 	#define COMPONENT_OVERRIDE_POWER_USAGE (1<<0)
 
-/// Called right before the integrated circuit data is converted to json. Allows modification to the data right before it is returned.
+/// Called right before the integrated circuit data is converted to json... Allows modification to the data right before it is returned.
 #define COMSIG_CIRCUIT_PRE_SAVE_TO_JSON "circuit_pre_save_to_json"
 
 /// Called when the integrated circuit is loaded.
 #define COMSIG_CIRCUIT_POST_LOAD "circuit_post_load"
 
-/// Sent to an atom when a [/obj/item/usb_cable] attempts to connect to something. (/obj/item/usb_cable/usb_cable, /mob/user)
+/// Sent to an atom when a [/obj/item/usb_cable] tries to connect to something... (/obj/item/usb_cable/usb_cable, /mob/user)
 #define COMSIG_ATOM_USB_CABLE_TRY_ATTACH "usb_cable_try_attach"
-	/// Attaches the USB cable to the atom. If the USB cables moves away, it will disconnect.
+	/// Attaches the USB cable to the atom... If the USB cables moves away, it will disconnect.
 	#define COMSIG_USB_CABLE_ATTACHED (1<<0)
 
-	/// Attaches the USB cable to a circuit. Producers of this are expected to set the usb_cable's
+	/// Attaches the USB cable to a circuit... Producers of this are expected to set the usb_cable's
 	/// `attached_circuit` variable.
 	#define COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT (1<<1)
 

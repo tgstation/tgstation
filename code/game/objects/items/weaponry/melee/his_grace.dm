@@ -3,7 +3,7 @@
 //The wielder of His Grace is immune to stuns and gradually heals.
 //If the wielder fails to feed His Grace in time, He will devour them and become incredibly aggressive.
 //Leaving His Grace alone for some time will reset His thirst and put Him to sleep.
-//Using His Grace effectively requires extreme speed and care.
+// Using His Grace effectively needs extreme speed and care.
 /obj/item/his_grace
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
@@ -134,7 +134,7 @@
 	else
 		. += span_his_grace("[src] is latched closed.")
 
-/obj/item/his_grace/relaymove(mob/living/user, direction) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
+/obj/item/his_grace/relaymove(mob/living/user, direction) // Allows changelings, and so on to climb out of Him after they revive, provided He isn't active
 	if(!awakened)
 		user.forceMove(get_turf(src))
 		user.visible_message(span_warning("[user] scrambles out of [src]!"), span_notice("You climb out of [src]!"))
@@ -186,7 +186,7 @@
 		else
 			consume(L)
 
-/obj/item/his_grace/proc/awaken(mob/user) //Good morning, Mr. Grace.
+/obj/item/his_grace/proc/awaken(mob/user) // Good morning, Mr.. Grace.
 	if(awakened)
 		return
 	awakened = TRUE
@@ -212,7 +212,7 @@
 
 	spasm_animation()
 
-/obj/item/his_grace/proc/drowse() //Good night, Mr. Grace.
+/obj/item/his_grace/proc/drowse() // Good night, Mr.. Grace.
 	if(!awakened || ascended)
 		return
 	var/turf/T = get_turf(src)
@@ -230,7 +230,7 @@
 	bloodthirst = 0
 	update_appearance()
 
-/obj/item/his_grace/proc/consume(mob/living/meal) //Here's your dinner, Mr. Grace.
+/obj/item/his_grace/proc/consume(mob/living/meal) // Here's your dinner, Mr.. Grace.
 	if(!meal)
 		return
 	var/victims = 0

@@ -44,7 +44,7 @@
 	SIGNAL_HANDLER
 	var/atom/atom_parent = parent
 	if (atom_parent.loc != chosen_one)
-		qdel(src) // Hey! How did you do that?
+		qdel(src) // Hey!. How did you do that?
 		return
 	if (entered_area.type != /area/centcom/central_command_areas/evacuation)
 		return // Don't istype because taking pods doesn't count

@@ -121,7 +121,7 @@
 	//if no cargo access then force private purchase
 	var/is_ordering_private = ordering_private || !can_buy_via_budget
 
-	//find current order based on ordering mode & player
+	// find current order good on ordering mode & player
 	var/datum/supply_order/current_order = find_order(user, is_ordering_private)
 
 	var/material_data
@@ -230,7 +230,7 @@
 		return
 	var/can_buy_via_budget = (ACCESS_CARGO in used_id_card?.GetAccess())
 
-	//if multiple users open the UI some of them may not have the required access so we recheck
+	// if multiple users open the UI some of them may not have the needed access so we recheck
 	var/is_ordering_private = ordering_private
 	if(!can_buy_via_budget) //no cargo access then force private purchase
 		is_ordering_private = TRUE
@@ -349,7 +349,7 @@
 	icon_state = "stock_block"
 	/// How many credits was this worth when created?
 	var/export_value = 0
-	/// Is this stock block currently updating its value with the market (aka fluid)?
+	/// Is this stock block currently updating its value with the market also known as fluid)?
 	var/fluid = FALSE
 
 /obj/item/stock_block/Initialize(mapload)

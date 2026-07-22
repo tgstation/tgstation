@@ -3,7 +3,7 @@
 	if(istype(W, /obj/item/ai_module))
 		var/obj/item/ai_module/MOD = W
 		disconnect_shell()
-		if(!mind) //A player mind is required for law procs to run antag checks.
+		if(!mind) // A player mind is needed for law procs to run antag checks.
 			to_chat(user, span_warning("[src] is entirely unresponsive!"))
 			return
 		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one

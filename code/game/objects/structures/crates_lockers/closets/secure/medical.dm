@@ -126,7 +126,7 @@
 	new /obj/item/reagent_containers/dropper(src)
 	new /obj/item/reagent_containers/cup/bottle/acidic_buffer(src) //hopefully they get the hint
 
-/obj/structure/closet/secure_closet/chemical/heisenberg //contains one of each beaker, syringe etc.
+/obj/structure/closet/secure_closet/chemical/heisenberg // contains one of each beaker, syringe and so on
 	name = "advanced chemical closet"
 	req_access = list(ACCESS_PLUMBING)
 

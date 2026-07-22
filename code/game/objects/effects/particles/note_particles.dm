@@ -1,4 +1,4 @@
-///musical notes! Try to use these sparingly, gents.
+/// musical notes!. Try to use these sparingly, gents.
 /particles/musical_notes
 	icon = 'icons/effects/particles/notes/note.dmi'
 	icon_state = list(

@@ -1,4 +1,4 @@
-/// The number of voters required for CTF to enable
+/// The number of voters needed for CTF to enable
 #define CTF_REQUIRED_PLAYERS 4
 
 /// The game ID for normal ghost CTF

@@ -35,7 +35,7 @@
 		return
 
 	// It's entirely possible we have multiple screwy huds on one mob.
-	// Defer to priority to determine which to show. If our's is lower, don't show it.
+	// Defer to priority to determine which to show.. If our's is lower, don't show it.
 	for(var/datum/status_effect/grouped/screwy_hud/other_screwy_hud in source.status_effects)
 		if(other_screwy_hud.priority > priority)
 			return

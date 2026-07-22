@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	return ChangeTurf(path, new_baseturf, flags)
 
 // Creates a new turf
-// new_baseturfs can be either a single type or list of types, formated the same as baseturfs. see turf.dm
+// new_baseturfs can be either a single type or list of types, formated the same as baseturfs.. see turf.dm
 /turf/proc/ChangeTurf(path, list/new_baseturfs, flags)
 	switch(path)
 		if(null)
@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			// no warning though because this can happen naturaly as a result of it being built on top of
 			path = /turf/open/space
 
-	if(!GLOB.use_preloader && path == type && !(flags & CHANGETURF_FORCEOP) && (baseturfs == new_baseturfs)) // Don't no-op if the map loader requires it to be reconstructed, or if this is a new set of baseturfs
+	if(!GLOB.use_preloader && path == type && !(flags & CHANGETURF_FORCEOP) && (baseturfs == new_baseturfs)) // Don't no-op if the map loader needs it to be reconstructed, or if this is a new set of baseturfs
 		return src
 
 	if(flags & CHANGETURF_SKIP)
@@ -114,7 +114,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	// WARNING WARNING
 	// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS
-	// It's possible because turfs are fucked, and if you have one in a list and it's replaced with another one, the list ref points to the new turf
+	// It's possible because turfs are fucked. If you have one in a list. It's replaced with another one, the list ref points to the new turf
 	if(old_listen_lookup)
 		LAZYOR(new_turf._listen_lookup, old_listen_lookup)
 	if(old_signal_procs)
@@ -277,7 +277,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	for(var/turf/open/turf in turf_list)
 		//Cache?
 		var/datum/gas_mixture/turf/mix = turf.air
-		//"borrowing" this code from merge(), I need to play with the temp portion. Lets expand it out
+		// "borrowing" this code from merge(), I need to play with the temp portion.. Lets expand it out
 		//temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
 		var/capacity = mix.heat_capacity()
 		energy += mix.temperature * capacity
@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		turf.update_visuals()
 		SSair.add_to_active(turf)
 
-/// Attempts to replace a tile with lattice. Amount is the amount of tiles to scrape away.
+/// Tries to replace a tile with lattice.. Amount is the amount of tiles to scrape away.
 /turf/proc/attempt_lattice_replacement(amount = 2)
 	if (!lattice_underneath)
 		ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)

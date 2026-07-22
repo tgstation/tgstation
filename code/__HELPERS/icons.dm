@@ -368,11 +368,11 @@ world
 //Used in the OLD chem colour mixing algorithm
 /proc/GetColors(hex)
 	hex = uppertext(hex)
-	// No alpha set? Default to full alpha.
+	// No alpha set?. Default to full alpha.
 	if(length(hex) == 7)
 		hex += "FF"
-	var/hi1 = text2ascii(hex, 2) // R
-	var/lo1 = text2ascii(hex, 3) // R
+	var/hi1 = text2ascii(hex, 2) // Are
+	var/lo1 = text2ascii(hex, 3) // Are
 	var/hi2 = text2ascii(hex, 4) // G
 	var/lo2 = text2ascii(hex, 5) // G
 	var/hi3 = text2ascii(hex, 6) // B
@@ -386,10 +386,10 @@ world
 
 /// Create a single [/icon] from a given [/atom] or [/image].
 ///
-/// Very low-performance. Should usually only be used for HTML, where BYOND's
-/// appearance system (overlays/underlays, etc.) is not available.
+/// Very low-performance.. Should usually only be used for HTML, where BYOND's
+/// appearance system (overlays/underlays, and so on is not available.
 ///
-/// Only the first argument is required.
+/// Only the first argument is needed
 /proc/getFlatIcon(image/appearance, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE, parentcolor)
 	// Loop through the underlays, then overlays, sorting them into the layers list
 	#define PROCESS_OVERLAYS_OR_UNDERLAYS(flat, process, base_layer) \
@@ -457,7 +457,7 @@ world
 		//Try to remove/optimize this section if you can, it's a CPU hog.
 		//Determines if there're directionals.
 		if (curdir != SOUTH)
-			// icon states either have 1, 4 or 8 dirs. We only have to check
+			// icon states either have 1, 4 or 8 dirs.. We only have to check
 			// one of NORTH, EAST or WEST to know that this isn't a 1-dir icon_state since they just have SOUTH.
 			if(!length(icon_states(icon(curicon, curstate, NORTH))))
 				base_icon_dir = SOUTH
@@ -474,7 +474,7 @@ world
 	var/curblend = appearance.blend_mode || defblend
 
 	if(appearance.overlays.len || appearance.underlays.len)
-		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
+		// Layers will be a sorted list of icons/overlays, good on the order in which they are displayed
 		var/list/layers = list()
 		var/image/copy
 		// Add the atom's icon itself, without pixel_x/y offsets.
@@ -518,7 +518,7 @@ world
 			if(layer_image.alpha == 0)
 				continue
 
-			if(layer_image == copy) // 'layer_image' is an /image based on the object being flattened.
+			if(layer_image == copy) // 'layer_image' is an /image good on the object being flattened.
 				curblend = BLEND_OVERLAY
 				add = icon(layer_image.icon, layer_image.icon_state, base_icon_dir)
 				if(appearance.color)
@@ -587,14 +587,14 @@ world
 
 	#undef PROCESS_OVERLAYS_OR_UNDERLAYS
 
-/proc/getIconMask(atom/atom_to_mask)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
+/proc/getIconMask(atom/atom_to_mask)// By yours truly.. Creates a dynamic mask for a mob/whatever.. /N
 	var/icon/alpha_mask = new(atom_to_mask.icon, atom_to_mask.icon_state)//So we want the default icon and icon state of atom_to_mask.
-	for(var/iterated_image in atom_to_mask.overlays)//For every image in overlays. var/image/image will not work, don't try it.
+	for(var/iterated_image in atom_to_mask.overlays)// For every image in overlays.. var/image/image will not work, don't try it.
 		var/image/image = iterated_image
 		if(image.layer > atom_to_mask.layer)
 			continue//If layer is greater than what we need, skip it.
 		var/icon/image_overlay = new(image.icon, image.icon_state)//Blend only works with icon objects.
-		//Also, icons cannot directly set icon_state. Slower than changing variables but whatever.
+		// Also, icons cannot directly set icon_state.. Slower than changing variables but whatever.
 		alpha_mask.Blend(image_overlay, ICON_OR)//OR so they are lumped together in a nice overlay.
 	return alpha_mask//And now return the mask.
 
@@ -632,10 +632,10 @@ world
 /mob/proc/AddCamoOverlay(atom/A)//A is the atom which we are using as the overlay.
 	var/icon/opacity_icon = new(A.icon, A.icon_state)//Don't really care for overlays/underlays.
 	//Now we need to culculate overlays+underlays and add them together to form an image for a mask.
-	var/icon/alpha_mask = getIconMask(src)//getFlatIcon(src) is accurate but SLOW. Not designed for running each tick. This is also a little slow since it's blending a bunch of icons together but good enough.
-	opacity_icon.AddAlphaMask(alpha_mask)//Likely the main source of lag for this proc. Probably not designed to run each tick.
-	opacity_icon.ChangeOpacity(0.4)//Front end for MapColors so it's fast. 0.5 means half opacity and looks the best in my opinion.
-	for(var/i in 1 to 5)//And now we add it as overlays. It's faster than creating an icon and then merging it.
+	var/icon/alpha_mask = getIconMask(src)// getFlatIcon(src) is accurate but SLOW.. Not designed for running each tick.. This is also a little slow since it's blending a bunch of icons together but good enough.
+	opacity_icon.AddAlphaMask(alpha_mask)// Likely the main source of lag for this proc.. Probably not designed to run each tick.
+	opacity_icon.ChangeOpacity(0.4)// Front end for MapColors so it's fast.. 0.5 means half opacity and looks the best in my opinion.
+	for(var/i in 1 to 5)// And now we add it as overlays.. It's faster than creating an icon and then merging it.
 		var/image/camo_image = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)//So it's above other stuff but below weapons and the like.
 		switch(i)//Now to determine offset so the result is somewhat blurred.
 			if(2)
@@ -677,7 +677,7 @@ world
 	return blank_icon
 
 
-//Dwarf fortress style icons based on letters (defaults to the first letter of the Atom's name)
+// Dwarf fortress style icons good on letters (defaults to the first letter of the Atom's name)
 //By vg's ComicIronic
 /proc/getLetterImage(atom/A, letter= "", uppercase = 0)
 	if(!A)
@@ -877,13 +877,13 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		return TRUE
 	return FALSE
 
-/// given an icon object, dmi file path, or atom/image/mutable_appearance, attempts to find and return an associated dmi file path.
+/// given an icon object, dmi file path, or atom/image/mutable_appearance, tries to find and return an associated dmi file path.
 /// a weird quirk about dm is that /icon objects represent both compile-time or dynamic icons in the rsc,
 /// but stringifying rsc references returns a dmi file path
 /// ONLY if that icon represents a completely unchanged dmi file from when the game was compiled.
-/// so if the given object is associated with an icon that was in the rsc when the game was compiled, this returns a path. otherwise it returns ""
+/// so if the given object is associated with an icon that was in the rsc when the game was compiled, this returns a path.. otherwise it returns ""
 /proc/get_icon_dmi_path(icon/icon)
-	/// the dmi file path we attempt to return if the given object argument is associated with a stringifiable icon
+	/// the dmi file path we try to return if the given object argument is associated with a stringifiable icon
 	/// if successful, this looks like "icons/path/to/dmi_file.dmi"
 	var/icon_path = ""
 
@@ -895,7 +895,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 	if(isicon(icon) && isfile(icon))
 		//icons compiled in from 'icons/path/to/dmi_file.dmi' at compile time are weird and aren't really /icon objects,
-		///but they pass both isicon() and isfile() checks. they're the easiest case since stringifying them gives us the path we want
+		/// but they pass both isicon() and isfile() checks.. they're the easiest case since stringifying them gives us the path we want
 		var/icon_ref = text_ref(icon)
 		var/locate_icon_string = "[locate(icon_ref)]"
 
@@ -961,7 +961,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	if(!length(targets))
 		return
 
-	//check if the given object is associated with a dmi file in the icons folder. if it is then we don't need to do a lot of work
+	// check if the given object is associated with a dmi file in the icons folder.. if it is then we don't need to do a lot of work
 	//for asset generation to get around byond limitations
 	var/icon_path = get_icon_dmi_path(thing)
 
@@ -1034,7 +1034,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 		return "<img class='icon icon-misc' src='data:image/png;base64,[icon_base64]'>"
 
-	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
+	// Either an atom or somebody fucked up and is going to get a runtime, which I'm fine with.
 	var/atom/target_atom = target
 	var/key = "[istype(target_atom.icon, /icon) ? "[REF(target_atom.icon)]" : target_atom.icon]:[target_atom.icon_state]"
 
@@ -1050,7 +1050,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 	return "<img class='icon icon-[target_atom.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
 
-//Costlier version of icon2html() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
+// Costlier version of icon2html() that uses getFlatIcon() to account for overlays, underlays, and so on Use with extreme moderation, ESPECIALLY on mobs.
 /proc/costly_icon2html(thing, target, sourceonly = FALSE)
 	if (!thing)
 		return
@@ -1191,14 +1191,14 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		icon_metadata_cache[file_string] = metadata_result
 		return metadata_result
 
-/// Checks whether a given icon state exists in a given icon file. If `file` and `state` both exist,
+/// Checks whether a given icon state exists in a given icon file.. If `file` and `state` both exist,
 /// this will return `TRUE` - otherwise, it will return `FALSE`.
 ///
 /// If you want a stack trace to be output when the given state/file doesn't exist, use
 /// `/proc/icon_exists_or_scream()`.
 /proc/icon_exists(file, state)
 	if(isnull(file) || isnull(state))
-		return FALSE //This is common enough that it shouldn't panic, imo.
+		return FALSE // This is common enough that it shouldn't panic, in my opinion
 
 	if(isnull(GLOB.icon_states_cache_lookup[file]))
 		compile_icon_states_cache(file)
@@ -1274,9 +1274,9 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if(istype(icon_path, /datum/universal_icon))
 		var/datum/universal_icon/u_icon = icon_path
 		icon_path = u_icon.icon_file
-	// Icons can be a real file(), a rsc backed file(), a dynamic rsc (dyn.rsc) reference (known as a cache reference in byond docs), or an /icon which is pointing to one of those.
-	// Runtime generated dynamic icons are an unbounded concept cache identity wise, the same icon can exist millions of ways and holding them in a list as a key can lead to unbounded memory usage if called often by consumers.
-	// Check distinctly that this is something that has this unspecified concept, and thus that we should not cache.
+	// Icons can be a real file(), a rsc backed file(), a dynamic rsc (dyn.rsc) reference (known as a cache reference in byond docs). An /icon which is pointing to one of those.
+	// Runtime generated dynamic icons are an unbounded concept cache identity wise, the same icon can exist millions of ways. Holding them in a list as a key can lead to unbounded memory usage if called often by consumers.
+	// Check distinctly that this is something that has this unspecified concept, and so that we should not cache.
 	if (!istext(icon_path) && (!isfile(icon_path) || !length("[icon_path]")))
 		var/icon/my_icon = icon(icon_path)
 		return list("width" = my_icon.Width(), "height" = my_icon.Height())
@@ -1296,9 +1296,9 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 /// Returns a list containing the width and height of an icon file, without using rustg for pure function calls
 /proc/get_icon_dimensions_pure(icon_path)
-	// Icons can be a real file(), a rsc backed file(), a dynamic rsc (dyn.rsc) reference (known as a cache reference in byond docs), or an /icon which is pointing to one of those.
-	// Runtime generated dynamic icons are an unbounded concept cache identity wise, the same icon can exist millions of ways and holding them in a list as a key can lead to unbounded memory usage if called often by consumers.
-	// Check distinctly that this is something that has this unspecified concept, and thus that we should not cache.
+	// Icons can be a real file(), a rsc backed file(), a dynamic rsc (dyn.rsc) reference (known as a cache reference in byond docs). An /icon which is pointing to one of those.
+	// Runtime generated dynamic icons are an unbounded concept cache identity wise, the same icon can exist millions of ways. Holding them in a list as a key can lead to unbounded memory usage if called often by consumers.
+	// Check distinctly that this is something that has this unspecified concept, and so that we should not cache.
 	if (!isfile(icon_path) || !length("[icon_path]"))
 		var/icon/my_icon = icon(icon_path)
 		return list("width" = my_icon.Width(), "height" = my_icon.Height())

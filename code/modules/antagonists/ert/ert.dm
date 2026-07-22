@@ -74,7 +74,7 @@
 	mission = missionobj
 	objectives |= mission
 
-/datum/antagonist/ert/security // kinda handled by the base template but here for completion
+/datum/antagonist/ert/security // kind of handled by the base template but here for completion
 
 /datum/antagonist/ert/security/red
 	outfit = /datum/outfit/centcom/ert/security/alert

@@ -43,7 +43,7 @@
 	if(overriding)
 		return
 	overriding = TRUE
-	// We register here because our later set render source will always trigger a refresh and thus let us capture appearances properly
+	// We register here because our later set render source will always trigger a refresh and so let us capture appearances properly
 	// Assuming there's an overlay light on the other side
 	RegisterSignal(parent, COMSIG_ATOM_OVERLAY_LIGHT_APPLIED, PROC_REF(light_applied))
 	RegisterSignal(parent, COMSIG_ATOM_OVERLAY_LIGHT_REMOVED, PROC_REF(light_removed))
@@ -81,7 +81,7 @@
 
 	var/old_target = primary_intercept.render_target
 	var/old_cone_target = cone_intercept.render_target
-	// This will halt any animations we have ongoing so if you care about that you've gotta react to it properly
+	// This will halt any animations we have ongoing so if you care about that you've got to react to it properly
 	primary_intercept.appearance = visible_mask
 	cone_intercept.appearance = cone
 	// set ourselves up to render back onto the visible mask
@@ -111,7 +111,7 @@
 	light_holder.vis_contents -= cone_intercept
 	holder_ref = null
 
-/// Just... cause it's better then not having a bespoke type
+/// Just.... cause it's better then not having a bespoke type
 /obj/effect/abstract/light_middleman
 
 // Procs for reuse on multiple types
@@ -123,7 +123,7 @@
 	/// Applies a nice random flicker to flares and their subtypes which will I hope sell the fire effect better
 	var/list/random_times = list()
 	for(var/i in 1 to 17)
-		// Makes a nice upside down U distribution
+		// Makes a nice upside down You distribution
 		var/random_down = LERP(-0.075 SECONDS, 0.075 SECONDS, ANCHORED_INVERSE_CAUCHY(0.55))
 		var/random_bottom = LERP(-0.05 SECONDS, 0.05 SECONDS, ANCHORED_INVERSE_CAUCHY(0.55))
 		var/random_up = LERP(-0.075 SECONDS, 0.075 SECONDS, ANCHORED_INVERSE_CAUCHY(0.55))

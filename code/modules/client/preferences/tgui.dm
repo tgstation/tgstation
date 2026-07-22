@@ -4,7 +4,7 @@
 	savefile_key = "tgui_input"
 	savefile_identifier = PREFERENCE_PLAYER
 
-/// Large button preference. Error text is in tooltip.
+/// Large button preference.. Error text is in tooltip.
 /datum/preference/toggle/tgui_input_large
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "tgui_input_large"
@@ -27,7 +27,7 @@
 		// Force it to reload either way
 		tgui.send_full_update(client.mob)
 
-/// Changes layout in some UI's, like Vending, Smartfridge etc. Making it list or grid
+/// Changes layout in some UI's, like Vending, Smartfridge and so on Making it list or grid
 /datum/preference/choiced/tgui_layout
 	savefile_key = "tgui_layout"
 	savefile_identifier = PREFERENCE_PLAYER

@@ -2,7 +2,7 @@
  * Contains the eldritch robes for heretics, a suit of armor that they can make via a ritual
  */
 
-// Eldritch armor. Looks cool, hood lets you cast heretic spells.
+// Eldritch armor.. Looks cool, hood lets you cast heretic spells.
 /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	name = "ominous armor"
 	desc = "A ragged, dusty set of robes. Strange eyes line the inside."
@@ -29,7 +29,7 @@
 	if(!IS_HERETIC(user))
 		robes_side_effect(user)
 		return
-	// Heretic equipped the robes? Grant them the effects
+	// Heretic equipped the robes?. Grant them the effects
 	on_robes_gained(user)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/dropped(mob/living/user)
@@ -424,7 +424,7 @@
 	icon_state = "flesh_armor"
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/flesh
 	armor_type = /datum/armor/eldritch_armor/flesh
-	/// The aura healing component. Used to delete it when taken off.
+	/// The aura healing component.. Used to delete it when taken off.
 	var/datum/component/healing_aura
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh/on_robes_gained(mob/living/user)
@@ -546,8 +546,8 @@
 	var/static/list/self_message_list = list(
 		"Your body ripples as still water freshly disturbed. The sensation is exquisite, and you have %ATTACKER to thank.",
 		"A bell tolls. %ATTACKER has struck the hour and you tick to that tune.",
-		//"You are needed in [area name]. You need to be there. %ATTACKER might want you to stay, but you are needed in [area name].",
-		//"You see %ATTACKER strike a [name of animal]. The face of the beast is a mirror of your own. How strange.",
+		// "You are needed in [area name].. You need to be there.. %ATTACKER might want you to stay, but you are needed in [area name].",
+		// "You see %ATTACKER strike a [name of animal].. The face of the beast is a mirror of your own.. How strange.",
 		"%ATTACKER bumps you and you spill your tea. It's fine. You've plenty of cups.",
 		"You hear a roaring crash. The waves hit the boat. The sea is vast and dark. You see %ATTACKER striking the water, cursing its master.",
 		"Sequins scatter into the air around %ATTACKER. The sequins...",
@@ -804,7 +804,7 @@
 	update_health(our_brain)
 	RegisterSignal(our_brain, COMSIG_ORGAN_ADJUST_DAMAGE, PROC_REF(update_health))
 
-/// Changes the icon based on the brain health of the wearer
+/// Changes the icon good on the brain health of the wearer
 /atom/movable/screen/moon_health/proc/update_health(obj/item/organ/brain, damage_amount, maximum, required_organ_flag)
 	SIGNAL_HANDLER
 	if(!brain.owner || !ishuman(brain.owner))
@@ -831,7 +831,7 @@
 			icon_state = base_icon_state + "_6"
 
 // Rust
-// Gains more armor while standing on top of rust. Has an animated overlay
+// Gains more armor while standing on top of rust.. Has an animated overlay
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust
 	name = "\improper Salvaged Remains"
 	desc = "Touching the folds of this plain robe seem to fill you with unease. \
@@ -1111,7 +1111,7 @@
 	acid = 40
 	wound = 40
 
-// Void cloak. Turns invisible with the hood up, lets you hide stuff.
+// Void cloak.. Turns invisible with the hood up, lets you hide stuff.
 /obj/item/clothing/head/hooded/cult_hoodie/void
 	name = "void hood"
 	desc = "Black like tar, reflecting no light. Runic symbols line the outside. \
@@ -1217,7 +1217,7 @@
 	. = ..()
 	make_invisible()
 
-/// Makes our cloak "invisible". Not the wearer, the cloak itself.
+/// Makes our cloak "invisible".. Not the wearer, the cloak itself.
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_invisible()
 	add_traits(list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), REF(src))
 	RemoveElement(/datum/element/heretic_focus)

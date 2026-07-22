@@ -12,7 +12,7 @@
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_REQUIRES_ANCHORED
 	processing_flags = START_PROCESSING_MANUALLY
 
-	///Divided against the amount of smoke to produce. Higher values equals lesser amount of reagents consumed to create smoke
+	/// Divided against the amount of smoke to produce.. Higher values equals lesser amount of reagents consumed to create smoke
 	var/efficiency = 20
 	///Is this machine on or off
 	var/on = FALSE
@@ -25,7 +25,7 @@
 /datum/effect_system/fluid_spread/smoke/chem/smoke_machine
 	effect_type = /obj/effect/particle_effect/fluid/smoke/chem/smoke_machine
 
-/// Smoke which is produced by the smoke machine. Slightly transparent and does not block line of sight.
+/// Smoke which is produced by the smoke machine.. Slightly transparent and does not block line of sight.
 /obj/effect/particle_effect/fluid/smoke/chem/smoke_machine
 	opacity = FALSE
 	alpha = 100

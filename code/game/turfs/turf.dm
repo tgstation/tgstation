@@ -1,6 +1,6 @@
 GLOBAL_LIST_EMPTY(station_turfs)
 
-/// Any floor or wall. What makes up the station and the rest of the map.
+/// Any floor or wall.. What makes up the station and the rest of the map.
 /turf
 	icon = 'icons/turf/floors.dmi'
 	abstract_type = /turf
@@ -18,14 +18,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	/// If there's a tile over a basic floor that can be ripped out
 	var/overfloor_placed = FALSE
-	/// How accessible underfloor pieces such as wires, pipes, etc are on this turf. Can be HIDDEN, VISIBLE, or INTERACTABLE.
+	/// How accessible underfloor pieces such as wires, pipes, and so on are on this turf.. Can be HIDDEN, VISIBLE, or INTERACTABLE.
 	var/underfloor_accessibility = UNDERFLOOR_HIDDEN
-	/// If there is a lattice underneat this turf. Used for the attempt_lattice_replacement proc to determine if it should place lattice.
+	/// If there is a lattice underneat this turf.. Used for the attempt_lattice_replacement proc to determine if it should place lattice.
 	var/lattice_underneath = TRUE
 
 	// baseturfs can be either a list or a single turf type.
 	// In class definition like here it should always be a single type.
-	// A list will be created in initialization that figures out the baseturf's baseturf etc.
+	// A list will be created in initialization that figures out the baseturf's baseturf and so on
 	// In the case of a list it is sorted from bottom layer to top.
 	// This shouldn't be modified directly, use the helper procs.
 	var/list/baseturfs = /turf/baseturf_bottom
@@ -41,7 +41,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// Optimization, not for setting outside of initialize
 	var/init_air = TRUE
 
-	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
+	var/list/image/blueprint_data // for the station blueprints, images of objects for example pipes
 
 	var/list/explosion_throw_details
 
@@ -50,7 +50,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/bullet_bounce_sound = 'sound/items/weapons/gun/general/mag_bullet_remove.ogg' //sound played when a shell casing is ejected ontop of the turf.
 	var/bullet_sizzle = FALSE //used by ammo_casing/bounce_away() to determine if the shell casing should make a sizzle sound when it's ejected over the turf
-							//IE if the turf is supposed to be water, set TRUE.
+							// that is if the turf is supposed to be water, set TRUE.
 
 	var/tiled_turf = FALSE // use tiled water and dirt decals
 
@@ -93,7 +93,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///This turf's resistance to getting rusted
 	var/rust_resistance = RUST_RESISTANCE_BASIC
 
-	/// How pathing algorithm will check if this turf is passable by itself (not including content checks). By default it's just density check.
+	/// How pathing algorithm will check if this turf is passable by itself (not including content checks).. By default it's just density check.
 	/// WARNING: Currently to use a density shortcircuiting this does not support dense turfs with special allow through function
 	var/pathing_pass_method = TURF_PATHING_PASS_DENSITY
 
@@ -106,7 +106,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// How much explosive resistance this turf is providing to itself
 	/// Defaults to -1, interpreted as initial(explosive_resistance)
 	/// This is an optimization to prevent turfs from needing to set these on init
-	/// This would either be expensive, or impossible to manage. Let's just avoid it yes?
+	/// This would either be expensive, or impossible to manage.. Let's just avoid it yes?
 	/// Never directly access this, use get_explosive_block() instead
 	var/inherent_explosive_resistance = -1
 
@@ -189,7 +189,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	return INITIALIZE_HINT_NORMAL
 
-/// Initializes our adjacent turfs. If you want to avoid this, do not override it, instead set init_air to FALSE
+/// Initializes our adjacent turfs.. If you want to avoid this, do not override it, instead set init_air to FALSE
 /turf/proc/Initalize_Atmos(time)
 	CALCULATE_ADJACENT_TURFS(src, NORMAL_TURF)
 
@@ -225,7 +225,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// WARNING WARNING
 /// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS
-/// It's possible because turfs are fucked, and if you have one in a list and it's replaced with another one, the list ref points to the new turf
+/// It's possible because turfs are fucked. If you have one in a list. It's replaced with another one, the list ref points to the new turf
 /// We do it because moving signals over was needlessly expensive, and bloated a very commonly used bit of code
 /turf/_clear_signal_refs()
 	return
@@ -255,7 +255,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	//changes to make after turf has moved
 	on_change_area(old_area, new_area)
 
-/// Allows for reactions to an area change without inherently requiring change_area() be called (I hate maploading)
+/// Allows for reactions to an area change without inherently needing change_area() be called (I hate maploading)
 /turf/proc/on_change_area(area/old_area, area/new_area)
 	transfer_area_lighting(old_area, new_area)
 
@@ -295,7 +295,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 				continue
 
 		// If the thing is dense AND we're including mobs or the thing isn't a mob AND if there's a source atom and
-		// it cannot pass through the thing on the turf,  we consider the turf blocked.
+		// it cannot pass through the thing on the turf, we consider the turf blocked.
 		if(movable_content.density && (!exclude_mobs || !ismob(movable_content)))
 			if(source_atom && movable_content.CanPass(source_atom, get_dir(src, source_atom)))
 				continue
@@ -356,14 +356,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		falling.set_currently_z_moving(FALSE, TRUE)
 		return FALSE
 
-	// So it doesn't trigger other zFall calls. Cleared on zMove.
+	// So it doesn't trigger other zFall calls.. Cleared on zMove.
 	falling.set_currently_z_moving(CURRENTLY_Z_FALLING)
 	falling.zMove(null, target, ZMOVE_CHECK_PULLEDBY)
 	target.zImpact(falling, levels, src)
 
 	return TRUE
 
-///Called each time the target falls down a z level possibly making their trajectory come to a halt. see __DEFINES/movement.dm.
+/// Called each time the target falls down a z level possibly making their trajectory come to a halt.. see __DEFINES/movement.dm.
 /turf/proc/zImpact(atom/movable/falling, levels = 1, turf/prev_turf, flags = NONE)
 	var/list/falling_movables = falling.get_z_move_affected()
 	var/list/falling_mov_names
@@ -419,7 +419,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	return NONE
 
-//There's a lot of QDELETED() calls here if someone can figure out how to optimize this but not runtime when something gets deleted by a Bump/CanPass/Cross call, lemme know or go ahead and fix this mess - kevinz000
+// There's a lot of QDELETED() calls here if someone can figure out how to optimize this. Not runtime when something gets deleted by a Bump/CanPass/Cross call, let me know. Go ahead. Fix this mess - kevinz000
 /turf/Enter(atom/movable/mover)
 	// Do not call ..()
 	// Byond's default turf/Enter() doesn't have the behaviour we want with Bump()
@@ -531,9 +531,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/Distance(turf/T)
 	return get_dist(src,T)
 
-//  This Distance proc assumes that only cardinal movement is
-//  possible. It results in more efficient (CPU-wise) pathing
-//  for bots and anything else that only moves in cardinal dirs.
+// This Distance proc assumes that only cardinal movement is
+// possible.. It results in more efficient (CPU-wise) pathing
+// for bots and anything else that only moves in cardinal dirs.
 /turf/proc/Distance_cardinal(turf/T)
 	if(!src || !T)
 		return FALSE

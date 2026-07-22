@@ -1,6 +1,6 @@
 
 
-//Values for antag preferences, event roles, etc. unified here
+// Values for antag preferences, event roles, and so on unified here
 
 
 

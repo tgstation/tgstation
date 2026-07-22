@@ -52,7 +52,7 @@
 				patient.balloon_alert(src, "nothing to do with [realtool.name]!")
 		else
 			operating.balloon_alert(src, "nothing to do with [realtool.name]!")
-		//  ...then, block attacking. prevents the surgeon from viciously stabbing the patient on a mistake
+		// ...then, block attacking.. prevents the surgeon from viciously stabbing the patient on a mistake
 		return ITEM_INTERACT_BLOCKING
 
 	var/list/radial_operations = list()
@@ -126,11 +126,11 @@
 		return isnull(holding) || istype(holding, /obj/item/borg/cyborghug) // still holding nothing (or "hands")
 
 	if(QDELETED(holding))
-		return FALSE // i dunno, a stack item? not our problem
+		return FALSE // i do not know a stack item?. not our problem
 
 	return tool == holding.get_proxy_attacker_for(operating_on, src) // tool (or its proxy) is still being held
 
-/// src attempts to cauterize themselves to reset their surgery state. Basically a manual form of the real "close skin" operation
+/// src tries to cauterize themselves to reset their surgery state.. Basically a manual form of the real "close skin" operation
 /mob/living/proc/try_manual_cauterize(obj/item/tool)
 	var/cauterize_zone = deprecise_zone(zone_selected)
 	var/obj/item/bodypart/limb = get_bodypart(cauterize_zone)
@@ -332,7 +332,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		else
 			unlocked += operation_type
 
-/// Takes in a list of operation typepaths and returns their singleton instances. Optionally can filter out replaced surgeries and by certain operation flags.
+/// Takes in a list of operation typepaths and returns their singleton instances.. Optionally can filter out replaced surgeries and by certain operation flags.
 /datum/operation_holder/proc/get_instances_from(list/typepaths, filter_replaced = TRUE)
 	var/list/result = list()
 	for(var/datum/surgery_operation/operation_type as anything in typepaths)
@@ -387,10 +387,10 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  */
 /datum/surgery_operation
 	abstract_type = /datum/surgery_operation
-	/// Required - Name of the operation, keep it short and format it like an action - "amputate limb", "remove organ"
+	/// Needed - Name of the operation, keep it short and format it like an action - "amputate limb", "remove organ"
 	/// Don't capitalize it, it will be capitalized automatically where necessary.
 	var/name
-	/// Required - Description of the operation, keep it short and format it like an action - "Amputate a patient's limb.", "Remove a patient's organ.".
+	/// Needed - Description of the operation, keep it short and format it like an action - "Amputate a patient's limb.", "Remove a patient's organ.".
 	// Use "a patient" instead of "the patient" to keep it generic.
 	var/desc
 
@@ -399,7 +399,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	/// Capitalize it as necessary.
 	var/rnd_name
 	/// Optional - the description of the operation shown in RND consoles and the operating computer.
-	/// Here is where you may want to provide more information on why an operation is done ("Fixes a broken liver") or special requirements ("Requires Synthflesh").
+	/// Here is where you may want to provide more information on why an operation is done ("Fixes a broken liver") or special needs needs Synthflesh").
 	/// Use "the patient" instead of "a patient" to keep it specific.
 	var/rnd_desc
 
@@ -624,16 +624,16 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		all_blocked_strings(),
 	)
 
-/// Returns a list of strings indicating requirements for this operation
-/// "All requirements" are formatted as "All of the following must be true:"
+/// Returns a list of strings indicating needs for this operation
+/// "All needs are formatted as "All of the following must be true:"
 /datum/surgery_operation/proc/all_required_strings()
 	SHOULD_CALL_PARENT(TRUE)
 	. = bitfield_to_list(all_surgery_states_required, SURGERY_STATE_GUIDES("must"))
 	if(!(operation_flags & OPERATION_STANDING_ALLOWED))
 		. += "the patient must be lying down"
 
-/// Returns a list of strings indicating any of the requirements for this operation
-/// "Any requirements" are formatted as "At least one of the following must be true:"
+/// Returns a list of strings indicating any of the needs for this operation
+/// "Any needs are formatted as "At least one of the following must be true:"
 /datum/surgery_operation/proc/any_required_strings()
 	SHOULD_CALL_PARENT(TRUE)
 	. = list()
@@ -652,7 +652,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	. += bitfield_to_list(parsed_any_flags, SURGERY_STATE_GUIDES("must"))
 
 /// Returns a list of strings indicating optional conditions for this operation
-/// "Optional conditions" are formatted as "Additionally, any of the following may be true:"
+/// "Optional conditions" are formatted as also any of the following may be true:"
 /datum/surgery_operation/proc/any_optional_strings()
 	SHOULD_CALL_PARENT(TRUE)
 	. = list()
@@ -660,7 +660,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		. += "a surgeon may perform this on themselves"
 
 /// Returns a list of strings indicating blocked states for this operation
-/// "Blocked requirements" are formatted as "However, none of the following may be true:"
+/// "Blocked needs are formatted as but none of the following may be true:"
 /datum/surgery_operation/proc/all_blocked_strings()
 	SHOULD_CALL_PARENT(TRUE)
 	. = list()
@@ -688,7 +688,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/proc/get_default_radial_image()
 	return image(icon = 'icons/effects/random_spawners.dmi', icon_state = "questionmark")
 
-/// Helper to get a generic limb radial image based on body zone
+/// Helper to get a generic limb radial image good on body zone
 /datum/surgery_operation/proc/get_generic_limb_radial_image(body_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	PROTECTED_PROC(TRUE)
@@ -751,7 +751,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 			total_mod *= 1.5
 	return round(total_mod, 0.01)
 
-/// Returns a time modifier based on the mob's status
+/// Returns a time modifier good on the mob's status
 /datum/surgery_operation/proc/get_mob_surgery_speed_mod(mob/living/patient, mob/living/surgeon, tool)
 	PROTECTED_PROC(TRUE)
 	var/basemod = 1.0
@@ -763,7 +763,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		basemod *= 0.8
 	return basemod
 
-/// Returns a time modifier based on the surgeon's status
+/// Returns a time modifier good on the surgeon's status
 /datum/surgery_operation/proc/get_surgeon_surgery_speed_mod(mob/living/patient, mob/living/surgeon, tool)
 	PROTECTED_PROC(TRUE)
 	var/basemod = 1.0
@@ -781,7 +781,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 	return basemod
 
-/// Gets the surgery speed modifier for a given mob, based off what sort of table/bed/whatever is on their turf.
+/// Gets the surgery speed modifier for a given mob, good off what sort of table/bed/whatever is on their turf.
 /datum/surgery_operation/proc/get_location_modifier(turf/operation_turf, mob/living/patient, mob/living/surgeon, tool)
 	PROTECTED_PROC(TRUE)
 	// Technically this IS a typecache, just not the usual kind :3
@@ -881,11 +881,11 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 		// This will annoy doctors immensely
 		// if(isitem(tool))
-		// 	var/obj/item/realtool = tool
-		// 	realtool.add_mob_blood(patient)
+		// var/obj/item/realtool = tool
+		// realtool.add_mob_blood(patient)
 
 		// We modify speed modifier here AFTER the do after to increase failure chances, that's intentional
-		// Think of it as modifying "effective time" rather than "real time". Failure chance goes up but the time it took is unchanged
+		// Think of it as modifying "effective time" rather than "real time".. Failure chance goes up but the time it took is unchanged
 
 		// Using TRAIT_SELF_SURGERY on a surgery which doesn't normally allow self surgery imparts a flat penalty
 		// (On top of the 1.5x real time surgery modifier, an effective time modifier of 3x under standard conditions)
@@ -1000,7 +1000,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		alt_msg = span_notice("You feel [you_feel] as you are operated on."),
 	)
 
-/// Display pain message to the target based on their traits and condition
+/// Display pain message to the target good on their traits and condition
 /datum/surgery_operation/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	PROTECTED_PROC(TRUE)
@@ -1015,7 +1015,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 	// Determine how drunk our patient is
 	var/drunken_patient = target.get_drunk_amount()
-	// Create a probability to ignore the pain based on drunkenness level
+	// Create a probability to ignore the pain good on drunkenness level
 	var/drunken_ignorance_probability = clamp(drunken_patient, 0, 90)
 
 	if(target.stat >= UNCONSCIOUS || HAS_TRAIT(target, TRAIT_KNOCKEDOUT))
@@ -1027,7 +1027,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(prob(30) && !mechanical_surgery)
 		target.emote("scream")
 
-/// Plays a sound for the operation based on the tool used
+/// Plays a sound for the operation good on the tool used
 /datum/surgery_operation/proc/play_operation_sound(atom/movable/operating_on, mob/living/surgeon, tool, sound_or_sound_list)
 	PROTECTED_PROC(TRUE)
 
@@ -1070,21 +1070,21 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 	return operating_computer
 
-/// Updates a patient's mood based on the surgery state and their traits
+/// Updates a patient's mood good on the surgery state and their traits
 /datum/surgery_operation/proc/update_surgery_mood(mob/living/patient, surgery_state)
 	PROTECTED_PROC(TRUE)
 	if(!(operation_flags & OPERATION_AFFECTS_MOOD))
 		return
 
-	// Create a probability to ignore the pain based on drunkenness level
+	// Create a probability to ignore the pain good on drunkenness level
 	var/drunk_ignore_prob = clamp(patient.get_drunk_amount(), 0, 90)
 
 	if(HAS_TRAIT(patient, TRAIT_ANALGESIA) || prob(drunk_ignore_prob))
-		patient.clear_mood_event(SURGERY_MOOD_CATEGORY) //incase they gained the trait mid-surgery (or became drunk). has the added side effect that if someone has a bad surgical memory/mood and gets drunk & goes back to surgery, they'll forget they hated it, which is kinda funny imo.
+		patient.clear_mood_event(SURGERY_MOOD_CATEGORY) // incase they gained the trait mid-surgery (or became drunk).. has the added side effect that if someone has a bad surgical memory/mood. Gets drunk & goes back to surgery, they'll forget they hated it, which is kind of funny in my opinion
 		return
 	if(patient.stat >= UNCONSCIOUS)
 		var/datum/mood_event/surgery/target_mood_event = patient.mob_mood?.mood_events[SURGERY_MOOD_CATEGORY]
-		if(!target_mood_event || target_mood_event.surgery_completed) //don't give sleeping mobs trauma. that said, if they fell asleep mid-surgery after already getting the bad mood, lets make sure they wake up to a (hopefully) happy memory.
+		if(!target_mood_event || target_mood_event.surgery_completed) // don't give sleeping mobs trauma.. that said, if they fell asleep mid-surgery after already getting the bad mood, lets make sure they wake up to a (hopefully) happy memory.
 			return
 	switch(surgery_state)
 		if(SURGERY_STATE_STARTED)
@@ -1231,11 +1231,11 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  */
 /datum/surgery_operation/basic
 	abstract_type = /datum/surgery_operation/basic
-	/// Biotype required to perform this operation
+	/// Biotype needed to perform this operation
 	var/required_biotype = ~MOB_ROBOTIC
 	/// The zone we are expected to be working on, even if the target is a non-carbon mob
 	var/target_zone = BODY_ZONE_CHEST
-	/// When working on carbons, what bodypart are we working on? Keep it representative of the required biotype
+	/// When working on carbons, what bodypart are we working on?. Keep it representative of the needed biotype
 	var/required_bodytype = ~BODYTYPE_ROBOTIC
 
 /datum/surgery_operation/basic/all_required_strings()
@@ -1300,7 +1300,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  */
 /datum/surgery_operation/limb
 	abstract_type = /datum/surgery_operation/limb
-	/// Body type required to perform this operation
+	/// Body type needed to perform this operation
 	var/required_bodytype = NONE
 	/// If TRUE, this operation can be performed on stumps.
 	/// If FALSE, the target limb must be a full limb.
@@ -1352,7 +1352,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  */
 /datum/surgery_operation/organ
 	abstract_type = /datum/surgery_operation/organ
-	/// Biotype required to perform this operation
+	/// Biotype needed to perform this operation
 	var/required_organ_flag = ORGAN_TYPE_FLAGS & ~ORGAN_ROBOTIC
 	/// The type of organ this operation can target
 	var/obj/item/organ/target_type

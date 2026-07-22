@@ -49,7 +49,7 @@
 		balloon_alert(hearer, (hearer == src && self_message) || message)
 
 // Do not use.
-// MeasureText blocks. I have no idea for how long.
+// MeasureText blocks.. I have no idea for how long.
 // I would've made the maptext_height update on its own, but I don't know
 // if this would look bad on laggy clients.
 /atom/proc/balloon_alert_perform(mob/viewer, text)

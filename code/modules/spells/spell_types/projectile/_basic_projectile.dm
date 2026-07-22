@@ -7,7 +7,7 @@
  * and aoe projectile spells in the future.
  */
 /datum/action/cooldown/spell/basic_projectile
-	/// How far we try to fire the basic projectile. Blocked by dense objects.
+	/// How far we try to fire the basic projectile.. Blocked by dense objects.
 	var/projectile_range = 7
 	/// The projectile type fired at all people around us
 	var/obj/projectile/projectile_type = /obj/projectile/magic/aoe/magic_missile

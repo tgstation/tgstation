@@ -271,7 +271,7 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/pen/attack(mob/living/M, mob/user, list/modifiers, list/attack_modifiers)
-	if(force) // If the pen has a force value, call the normal attack procs. Used for e-daggers and captain's pen mostly.
+	if(force) // If the pen has a force value, call the normal attack procs.. Used for e-daggers and captain's pen mostly.
 		return ..()
 	if(!M.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
 		return FALSE
@@ -529,7 +529,7 @@
 /obj/item/pen/screwdriver
 	desc = "A pen with an extendable screwdriver tip. This one has a yellow cap."
 	icon_state = "pendriver"
-	toolspeed = 1.2  // gotta have some downside
+	toolspeed = 1.2  // got to have some downside
 	dart_insert_projectile_icon_state = "overlay_pendriver"
 
 /obj/item/pen/screwdriver/get_all_tool_behaviours()

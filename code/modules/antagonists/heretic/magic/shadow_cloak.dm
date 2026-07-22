@@ -28,7 +28,7 @@
 	return ..()
 
 /datum/action/cooldown/spell/shadow_cloak/is_valid_target(atom/cast_on)
-	if(HAS_TRAIT(cast_on, TRAIT_HULK)) // Hulks are not stealthy. Need not apply
+	if(HAS_TRAIT(cast_on, TRAIT_HULK)) // Hulks are not stealthy.. Need not apply
 		cast_on.balloon_alert(cast_on, "cannot cast while hulk!")
 		return FALSE
 	return isliving(cast_on)
@@ -121,8 +121,8 @@
 	)
 	StartCooldown(uncloak_time / 3)
 
-/// Shadow cloak effect. Conceals the owner in a cloud of purple smoke, making them unidentifiable.
-/// Also comes with some other buffs and debuffs - faster movespeed, slower actionspeed, etc.
+/// Shadow cloak effect.. Conceals the owner in a cloud of purple smoke, making them unidentifiable.
+/// Also comes with some other buffs and debuffs - faster movespeed, slower actionspeed, and so on
 /datum/status_effect/shadow_cloak
 	id = "shadow_cloak"
 	alert_type = null
@@ -206,7 +206,7 @@
 	if(damage_sustained < damage_before_reveal)
 		return
 
-	// Otherwise, we have a probability based on how much damage sustained to self delete
+	// Otherwise, we have a probability good on how much damage sustained to self delete
 	if(prob(damage_sustained))
 		qdel(src)
 

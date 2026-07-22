@@ -70,11 +70,11 @@
 	prompt_ghost = FALSE
 	/// Prevents spawning from this mob_spawn until TRUE, set by the egg growing
 	var/ready = FALSE
-	/// The amount the egg cluster has grown.  Is able to produce a spider when it hits 100.
+	/// The amount the egg cluster has grown.. Is able to produce a spider when it hits 100.
 	var/amount_grown = 0
-	/// The mother's directive at the time the egg was produced.  Passed onto the child.
+	/// The mother's directive at the time the egg was produced.. Passed onto the child.
 	var/directive = ""
-	///	Type of the cluster that the spawner spawns
+	/// Type of the cluster that the spawner spawns
 	var/cluster_type = /obj/structure/spider/eggcluster
 	/// Physical structure housing the spawner
 	var/obj/structure/spider/eggcluster/egg

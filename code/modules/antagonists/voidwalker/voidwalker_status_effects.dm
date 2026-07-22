@@ -1,4 +1,4 @@
-/// THE GRAVITY!!! IT WEIGHS!!!
+/// THE GRAVITY!!!. IT WEIGHS!!!
 /datum/movespeed_modifier/grounded_voidwalker
 	multiplicative_slowdown = 1.1
 

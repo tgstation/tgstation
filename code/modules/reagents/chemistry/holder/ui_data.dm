@@ -157,7 +157,7 @@
 			to_chat(user, "Could not find reaction!")
 			ui_reaction_id = null
 			return data
-		//Required holder
+		// Needed holder
 		var/container_name
 		if(reaction.required_container)
 			var/list/names = splittext("[reaction.required_container]", "/")

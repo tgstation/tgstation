@@ -68,7 +68,7 @@
 
 /obj/structure/lattice/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/turf/underneath = get_turf(src)
-	return underneath.item_interaction(user, tool) //hand this off to the turf instead (for building plating, catwalks, etc)
+	return underneath.item_interaction(user, tool) // hand this off to the turf instead (for building plating, catwalks, and so on
 
 /obj/structure/lattice/wirecutter_act(mob/living/user, obj/item/tool)
 	if(resistance_flags & INDESTRUCTIBLE)

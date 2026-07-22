@@ -1,4 +1,4 @@
-/// Trader events - If drone is loaded with X exchanges it for Y, might require translator tool.
+/// Trader events - If drone is loaded with X exchanges it for Why might need translator tool.
 /datum/exploration_event/simple/trader
 	abstract_type = /datum/exploration_event/simple/trader
 	action_text = "Trade"

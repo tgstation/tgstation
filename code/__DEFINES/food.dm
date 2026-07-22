@@ -166,7 +166,7 @@ GLOBAL_ALIST_INIT(food_buffs, alist(
 #define FOOD_IN_CONTAINER (1<<0)
 /// Finger food can be eaten while walking / running around
 #define FOOD_FINGER_FOOD (1<<1)
-/// Examining this edible won't show infos on food types, bites and remote tasting etc.
+/// Examining this edible won't show infos on food types, bites and remote tasting and so on
 #define FOOD_NO_EXAMINE (1<<2)
 /// This food item doesn't track bitecounts, use responsibly.
 #define FOOD_NO_BITECOUNT (1<<3)
@@ -199,7 +199,7 @@ DEFINE_BITFIELD(food_flags, list(
 #define FOOD_TOXIC 3
 #define FOOD_ALLERGIC 4
 
-///Venue reagent requirement
+/// Venue reagent need
 #define VENUE_BAR_MINIMUM_REAGENTS 10
 
 ///***Food price classes***
@@ -236,7 +236,7 @@ DEFINE_BITFIELD(food_flags, list(
 #define FRYING_TIME_WARNING (120 SECONDS)
 
 
-/// Flavour defines (also names) for GLOB.ice_cream_flavours list access. Safer from mispelling than plain text.
+/// Flavour defines (also names) for GLOB.ice_cream_flavours list access... Safer from mispelling than plain text.
 #define ICE_CREAM_VANILLA "vanilla"
 #define ICE_CREAM_CHOCOLATE "chocolate"
 #define ICE_CREAM_STRAWBERRY "strawberry"
@@ -264,7 +264,7 @@ DEFINE_BITFIELD(food_flags, list(
 /// Point at which soups begin to burn at
 #define SOUP_BURN_TEMP 540
 
-/// Serving size of soup. Plus or minus five units.
+/// Serving size of soup... Plus or minus five units.
 #define SOUP_SERVING_SIZE 25
 
 // Venues for the barbots.

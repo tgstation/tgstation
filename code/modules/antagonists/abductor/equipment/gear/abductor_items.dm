@@ -262,8 +262,8 @@
 	icon_state = "shrink_ray"
 	automatic_charge_overlays = FALSE
 	fire_delay = 3 SECONDS
-	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
-	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
+	selfcharge = 1// shot costs 200 energy, has a max capacity of 1000 for 5 shots.. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it?. (abductors need this to be set so the gun is usable for them)
 
 /obj/item/gun/energy/shrink_ray/suicide_act(mob/living/user)
 	. = ..()
@@ -655,7 +655,7 @@ Return to step 11 of normal process."}
 	toolspeed = 0.25
 	tool_behaviour = null
 	usesound = 'sound/items/pshoom/pshoom.ogg'
-	///A list of all the tools we offer. Stored as "Tool" for the key, and the icon/icon_state as the value.
+	/// A list of all the tools we offer.. Stored as "Tool" for the key, and the icon/icon_state as the value.
 	var/list/tool_list = list()
 	///Which toolset do we have active currently?
 	var/active_toolset = TOOLSET_MEDICAL

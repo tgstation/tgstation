@@ -437,7 +437,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/iron = 2,
 	)
-	junkiness = 5 //Homemade or not, sunflower seets are always kinda junky
+	junkiness = 5 // Homemade or not, sunflower seets are always kind of junky
 	foodtypes = JUNKFOOD | NUTS
 	trash_type = /obj/item/trash/semki/healthy
 	crafting_complexity = FOOD_COMPLEXITY_1

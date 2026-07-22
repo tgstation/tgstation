@@ -50,7 +50,7 @@
 	return ..()
 
 /obj/item/melee/baseball_bat/attack(mob/living/target, mob/living/user)
-	// we obtain the relative direction from the bat itself to the target
+	// we get the relative direction from the bat itself to the target
 	var/relative_direction = get_cardinal_dir(src, target)
 	var/atom/throw_target = get_edge_target_turf(target, relative_direction)
 	. = ..()

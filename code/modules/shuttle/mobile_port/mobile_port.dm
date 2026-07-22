@@ -15,25 +15,25 @@
 	var/current_engine_power = 0
 	///How much engine power (thrust) the shuttle starts with at mapload.
 	var/initial_engine_power = 0
-	///Speed multiplier based on station alert level
+	/// Speed multiplier good on station alert level
 	var/alert_coeff = ALERT_COEFF_BLUE
 	///used as a timer (if you want time left to complete move, use timeLeft proc)
 	var/timer
 	var/last_timer_length
 	///current shuttle mode
 	var/mode = SHUTTLE_IDLE
-	///time spent in transit (deciseconds). Should not be lower then 10 seconds without editing the animation of the hyperspace ripples.
+	/// time spent in transit (deciseconds).. Should not be lower then 10 seconds without editing the animation of the hyperspace ripples.
 	var/callTime = 10 SECONDS
-	/// time spent "starting the engines". Also rate limits how often we try to reserve transit space if its ever full of transiting shuttles.
+	/// time spent "starting the engines".. Also rate limits how often we try to reserve transit space if its ever full of transiting shuttles.
 	var/ignitionTime = 5.5 SECONDS
 	/// time spent after arrival before being able to begin ignition
 	var/rechargeTime = 0 SECONDS
 	/// time spent after transit 'landing' before actually arriving
 	var/prearrivalTime = 0 SECONDS
 
-	/// The direction the shuttle prefers to travel in, ie what direction the animation will cause it to appear to be traveling in
+	/// The direction the shuttle prefers to travel in, that is what direction the animation will cause it to appear to be traveling in
 	var/preferred_direction = NORTH
-	/// relative direction of the docking port from the front of the shuttle. NORTH is towards front, EAST would be starboard side, WEST port, etc.
+	/// relative direction of the docking port from the front of the shuttle.. NORTH is towards front, EAST would be starboard side, WEST port, and so on
 	var/port_direction = NORTH
 
 	var/obj/docking_port/stationary/destination
@@ -58,7 +58,7 @@
 
 	var/list/underlying_areas_by_turf = list()
 
-	///How many turfs this shuttle has. Used to check against max shuttle size when expanding expandable shuttles.
+	/// How many turfs this shuttle has.. Used to check against max shuttle size when expanding expandable shuttles.
 	var/turf_count = 0
 
 /obj/docking_port/mobile/Initialize(mapload, list/areas)
@@ -229,7 +229,7 @@
 		for(var/atom/individual_atoms in place)
 			individual_atoms.connect_to_shuttle(TRUE, src, dock)
 
-//this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
+// this is a hook for custom behaviour.. Maybe at some point we could add checks to see if engines are intact
 /obj/docking_port/mobile/proc/canMove()
 	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_SHUTTLE_SHOULD_MOVE) & BLOCK_SHUTTLE_MOVE)
@@ -264,7 +264,7 @@
 			return SHUTTLE_SOMEONE_ELSE_DOCKED
 		else
 		// This isn't an error, per se, but we can't let the shuttle code
-		// attempt to move us where we currently are, it will get weird.
+		// try to move us where we currently are, it will get weird.
 			return SHUTTLE_ALREADY_DOCKED
 
 	return SHUTTLE_CAN_DOCK
@@ -655,7 +655,7 @@
 		. = "unknown"
 
 
-// attempts to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle
+// tries to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle
 /obj/docking_port/mobile/proc/get_control_console()
 	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
 		var/obj/machinery/computer/shuttle/shuttle_computer = locate(/obj/machinery/computer/shuttle) in shuttle_area
@@ -733,7 +733,7 @@
 		var/delta = new_value - initial_engine_power
 		var/change_per_engine = (1 - ENGINE_COEFF_MIN) / ENGINE_DEFAULT_MAXSPEED_ENGINES // 5 by default
 		if(initial_engine_power > 0)
-			change_per_engine = (1 - ENGINE_COEFF_MIN) / initial_engine_power // or however many it had
+			change_per_engine = (1 - ENGINE_COEFF_MIN) / initial_engine_power // or but many it had
 		return clamp(1 - delta * change_per_engine,ENGINE_COEFF_MIN, ENGINE_COEFF_MAX)
 	if(new_value < initial_engine_power)
 		var/delta = initial_engine_power - new_value
@@ -797,7 +797,7 @@
 	for(var/item in removees)
 		event_list.Remove(item)
 
-/// Give a typepath of a shuttle event to add to the shuttle. If added during endgame transit, will insta start the event
+/// Give a typepath of a shuttle event to add to the shuttle.. If added during endgame transit, will insta start the event
 /obj/docking_port/mobile/proc/add_shuttle_event(typepath)
 	var/datum/shuttle_event/event = new typepath (src)
 	event_list.Add(event)

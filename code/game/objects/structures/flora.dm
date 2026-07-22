@@ -6,9 +6,9 @@
 	anchored = TRUE
 	drag_slowdown = 1.3
 
-	/// If set, the flora will have this as its name after being harvested. When the flora becomes harvestable again, it reverts to its initial(name)
+	/// If set, the flora will have this as its name after being harvested.. When the flora becomes harvestable again, it reverts to its initial(name)
 	var/harvested_name
-	/// If set, the flora will have this as its description after being harvested. When the flora becomes harvestable again, it regerts to its initial(desc)
+	/// If set, the flora will have this as its description after being harvested.. When the flora becomes harvestable again, it regerts to its initial(desc)
 	var/harvested_desc
 
 	/// If the user is able to harvest this with their hands
@@ -22,7 +22,7 @@
 	var/uprooted = FALSE
 	var/previous_rotation = 0
 
-	/// If false, the flora won't be able to be harvested at all. If it's true, go through checks normally to determine if the flora is able to be harvested
+	/// If false, the flora won't be able to be harvested at all.. If it's true, go through checks normally to determine if the flora is able to be harvested
 	var/harvestable = TRUE
 	/// The low end of how many harvested items you get
 	var/harvest_amount_low = 1
@@ -120,7 +120,7 @@
 	return ..()
 
 /obj/structure/flora/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	var/use_default_sound = TRUE //Because I don't wanna do unnecessary bitflag checks in a single if statement, while also allowing for multiple sounds to be played
+	var/use_default_sound = TRUE // Because I don't want to do unnecessary bitflag checks in a single if statement, while also allowing for multiple sounds to be played
 	if(flora_flags & FLORA_HERBAL)
 		playsound(src, SFX_CRUNCHY_BUSH_WHACK, 50, vary = FALSE)
 		use_default_sound = FALSE
@@ -224,22 +224,22 @@
 	//This bit of code determines what should be shown to the user when this is harvested
 	var/message = harvest_message_med || harvest_message_high || harvest_message_low
 	if(user && message)
-		if(harvest_message_true_thresholds) //Old method of how the harvest messages worked. Useful depending on the context you want to implement
+		if(harvest_message_true_thresholds) // Old method of how the harvest messages worked.. Useful depending on the context you want to add
 			if(products_created == harvest_amount_low && harvest_message_low)
 				message = harvest_message_low
 			if(products_created == harvest_amount_high && harvest_message_high)
 				message = harvest_message_high
-		else //New method of determining the message to display. Separates the messages into 3 different viable "regions"
-			//[   ][   ][   ] the default message depends on whether or not something's nulled out
+		else // New method of determining the message to display.. Separates the messages into 3 different viable "regions"
+			// [ ][ ][ ] the default message depends on whether or not something's nulled out
 			var/comparison = products_created - harvest_amount_low //avoiding unnecessary math
 			var/middle_value = round((harvest_amount_high - harvest_amount_low)/2) + harvest_amount_low //mathy shit, gets the middle between two values
-			//[***][   ][   ]
+			// [***][ ][ ]
 			if(comparison < (middle_value - harvest_amount_low)/2 && harvest_message_low) //more mathy shit, gets the middle between middle_value and harvest_amount_low
 				message = harvest_message_low
-			//[   ][   ][***]
+			// [ ][ ][***]
 			if(comparison > (harvest_amount_high - middle_value)/2 && harvest_message_high) //the middle between middle_value and harvest_amount_high
 				message = harvest_message_high
-			//[   ][***][   ] use the default message if none of the above applies
+			// [ ][***][ ] use the default message if none of the above applies
 
 		to_chat(user, span_notice(message))
 
@@ -1183,7 +1183,7 @@
 	icon_state = "rocks[rand(1, 3)]"
 	update_appearance()
 
-//TODO: Make new sprites for these. the pallete in the icons are grey, and a white color here still makes them grey
+// To do Make new sprites for these.. the pallete in the icons are grey, and a white color here still makes them grey
 /obj/structure/flora/rock/icy
 	name = "icy rock"
 	icon_state = "basalt1"

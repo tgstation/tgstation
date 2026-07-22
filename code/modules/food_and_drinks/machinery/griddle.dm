@@ -40,7 +40,7 @@
 	. = default_deconstruction_crowbar(user, I)
 	if(.)
 		return
-	// this is dead code... default_deconstruction_crowbar will never fail
+	// this is dead code.... default_deconstruction_crowbar will never fail
 	variant = rand(1, 3)
 	update_appearance()
 
@@ -54,7 +54,7 @@
 	SIGNAL_HANDLER
 
 	if(griddled_objects.len >= max_items || !istype(exposing_reagent, /datum/reagent/consumable/pancakebatter) || reac_volume < 5)
-		return NONE //make sure you have space... it's actually batter... and a proper amount of it.
+		return NONE // make sure you have space.... it's actually batter.... and a proper amount of it.
 
 	for(var/pancakes in 1 to FLOOR(reac_volume, 5) step 5) //this adds as many pancakes as you possibly could make, with 5u needed per pancake
 		var/obj/item/food/pancakes/raw/new_pancake = new(src)
@@ -75,7 +75,7 @@
 	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 		return
 	if(user.transferItemToLoc(I, src, silent = FALSE))
-		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+		// Clamp it so that the icon never moves more than 16 pixels in either direction so leaving the table turf)
 		I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
 		I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
 		to_chat(user, span_notice("You place [I] on [src]."))
@@ -100,7 +100,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(!istype(item, /obj/item/storage/bag/tray))
-		// Non-tray dumping requires a do_after
+		// Non-tray dumping needs a do_after
 		to_chat(user, span_notice("You start dumping out the contents of [item] into [src]..."))
 		if(!do_after(user, 2 SECONDS, target = item))
 			return ITEM_INTERACT_BLOCKING

@@ -35,9 +35,9 @@
 /// Suit sensor is present and is forced to display information (used on prisoner jumpsuits)
 #define LOCKED_SENSORS 2
 
-/// Wrapper for adding clothing based traits
+/// Wrapper for adding clothing good traits
 #define ADD_CLOTHING_TRAIT(mob, trait) ADD_TRAIT(mob, trait, "[CLOTHING_TRAIT]_[REF(src)]")
-/// Wrapper for removing clothing based traits
+/// Wrapper for removing clothing good traits
 #define REMOVE_CLOTHING_TRAIT(mob, trait) REMOVE_TRAIT(mob, trait, "[CLOTHING_TRAIT]_[REF(src)]")
 
 /// How much integrity does a shirt lose every time we bite it?
@@ -69,7 +69,7 @@
 /// Backpack type: Leather satchel
 #define LSATCHEL "Leather Satchel"
 
-//Defines for space suits. The respective define is also an icon.
+// Defines for space suits... The respective define is also an icon.
 #define SPACESUIT_NO_ICON "none"
 #define SPACESUIT_CELL_MISSING "missing"
 #define SPACESUIT_CELL_EMPTY "empty"

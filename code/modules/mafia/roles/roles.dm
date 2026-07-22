@@ -32,7 +32,7 @@
 	///The Mafia innate action panel that allows players to view the game's state.
 	var/datum/action/innate/mafia_panel/mafia_panel
 
-	///how many votes submitted when you vote. used in voting and deciding victory.
+	/// how many votes submitted when you vote.. used in voting and deciding victory.
 	var/vote_power = 1
 	///what they get equipped with when they are revealed
 	var/datum/outfit/revealed_outfit = /datum/outfit/mafia/assistant

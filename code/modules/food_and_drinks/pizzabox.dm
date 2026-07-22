@@ -365,7 +365,7 @@
 	can_open_on_fall = FALSE
 	foldable = FALSE
 	boxtag = "Your Favourite" //used to give it a tag overlay, shouldn't be seen by players
-	///List of pizzas this box can spawn. Weighted by chance to be someone's favorite.
+	/// List of pizzas this box can spawn.. Weighted by chance to be someone's favorite.
 	var/list/pizza_types = list(
 		/obj/item/food/pizza/meat = 10,
 		/obj/item/food/pizza/mushroom = 10,
@@ -376,7 +376,7 @@
 		/obj/item/food/pizza/donkpocket = 3,
 		/obj/item/food/pizza/dank = 1,
 	)
-	///List of ckeys and their favourite pizzas. e.g. pizza_preferences[ckey] = /obj/item/food/pizza/meat
+	/// List of ckeys and their favourite pizzas.. e.g.. pizza_preferences[ckey] = /obj/item/food/pizza/meat
 	var/static/list/pizza_preferences
 
 /obj/item/pizzabox/infinite/Initialize(mapload)
@@ -386,7 +386,7 @@
 
 /obj/item/pizzabox/infinite/examine(mob/user)
 	if(!open && ishuman(user))
-		attune_pizza(user) //pizza tag changes based on examiner
+		attune_pizza(user) // pizza tag changes good on examiner
 	. = ..()
 	if(isobserver(user))
 		. += span_deadsay("This pizza box is anomalous, and will produce infinite pizza.")

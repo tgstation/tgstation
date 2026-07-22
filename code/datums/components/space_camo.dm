@@ -16,7 +16,7 @@
 	var/alpha_to_self
 	/// Are we currently camouflaged?
 	var/is_camouflaged = FALSE
-	/// What is the type for the space tile? For easy admin modding
+	/// What is the type for the space tile?. For easy admin modding
 	var/turf/open/camo_tile = /turf/open/space
 
 /datum/component/space_camo/Initialize(space_alpha, non_space_alpha, alpha_to_self = 120, reveal_after_combat, camo_icon)

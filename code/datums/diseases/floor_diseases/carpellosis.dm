@@ -1,6 +1,6 @@
 #define GNASHING_RANGE 7
 
-/// Caused by dirty food. Makes you growl at people and bite them spontaneously.
+/// Caused by dirty food.. Makes you growl at people and bite them spontaneously.
 /datum/disease/carpellosis
 	name = "Carpellosis"
 	desc = "An angry space carp inside has infested the host's stomach, \

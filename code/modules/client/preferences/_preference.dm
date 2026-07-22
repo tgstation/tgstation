@@ -24,7 +24,7 @@
 /// Used for preferences that rely on body setup being finalized.
 #define PREFERENCE_PRORITY_LATE_BODY_TYPE 7
 
-/// Equipping items based on preferences.
+/// Equipping items good on preferences.
 /// Should happen after species and body type to make sure it looks right.
 /// Mostly redundant, but a safety net for saving/loading.
 #define PREFERENCE_PRIORITY_LOADOUT 8
@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	var/should_update_preview = TRUE
 
 /// Called on the saved input when retrieving.
-/// Also called by the value sent from the user through UI. Do not trust it.
+/// Also called by the value sent from the user through UI.. Do not trust it.
 /// Input is the value inside the savefile, output is to tell other code
 /// what the value is.
 /// This is useful either for more optimal data saving or for migrating
@@ -342,7 +342,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	var/datum/species/species = GLOB.species_prototypes[species_type]
 	return (savefile_key in species.get_features())
 
-/// Checks if this preference is relevant and thus visible to the passed preferences object.
+/// Checks if this preference is relevant and so visible to the passed preferences object.
 /datum/preference/proc/has_relevant_feature(datum/preferences/preferences)
 	if(isnull(relevant_inherent_trait) && isnull(relevant_organ) && isnull(relevant_head_flag) && isnull(relevant_body_markings))
 		return TRUE
@@ -374,7 +374,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Used for preferences such as clothing.
 /datum/preference/choiced
 	/// If this is TRUE, an icon will be generated for every value.
-	/// If you implement this, you must implement `icon_for(value)` for every possible value.
+	/// If you add this, you must add `icon_for(value)` for every possible value.
 	var/should_generate_icons = FALSE
 
 	var/list/cached_values
@@ -414,7 +414,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /// Returns a list of every possible value.
 /// This must be overriden by `/datum/preference/choiced` subtypes.
-/// If `should_generate_icons` is TRUE, then you will also need to implement `icon_for(value)`
+/// If `should_generate_icons` is TRUE, then you will also need to add `icon_for(value)`
 /// for every possible value.
 /datum/preference/choiced/proc/init_possible_values()
 	CRASH("`init_possible_values()` was not implemented for [type]!")
@@ -458,12 +458,12 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	return data
 
-/// This subtype handles a lot of boilerplate for implementing a species preference tied to a feature key / sprite accessory
+/// This subtype handles a lot of boilerplate for adding a species preference tied to a feature key / sprite accessory
 /datum/preference/choiced/species_feature
 	abstract_type = /datum/preference/choiced/species_feature
 	/// What feature key does this feature represent?
 	/// Does not need to be set, it will infer it from either relevant_organ or relevant_body_markings.
-	/// However you can set it manually if you have a more complex feature.
+	/// But you can set it manually if you have a more complex feature.
 	var/feature_key
 
 /datum/preference/choiced/species_feature/New()

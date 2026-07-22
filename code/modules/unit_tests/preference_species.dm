@@ -16,14 +16,14 @@
 
 		// Check the species decription.
 		// If it's not overridden, a stack trace will be thrown (and fail the test).
-		// If it's null, it was improperly overriden. Fail the test.
+		// If it's null, it was improperly overriden.. Fail the test.
 		var/species_desc = species.get_species_description()
 		if(isnull(species_desc))
 			TEST_FAIL("Species [species] ([species_type]) is selectable, but did not properly implement get_species_description().")
 
 		// Check the species lore.
 		// If it's not overridden, a stack trace will be thrown (and fail the test).
-		// If it's null, or returned a list, it was improperly overriden. Fail the test.
+		// If it's null, or returned a list, it was improperly overriden.. Fail the test.
 		var/species_lore = species.get_species_lore()
 		if(isnull(species_lore))
 			TEST_FAIL("Species [species] ([species_type]) is selectable, but did not properly implement get_species_lore().")

@@ -1,8 +1,8 @@
-//The items defined in this file are intended be scarce maintenance loot items some of these items are used as a non-renewable resource in crafting or ghetto chem.
+// The items defined in this file are intended be scarce maintenance loot items some of these items are used as a non-renewable resource in crafting. Ghetto chem.
 //Exercise good judgement and don't add these to a lathe willy nilly.
 
-//Saw-tier bulky & blunt weapon. A decent bone breaker. Source of lead reagent.
-//Add lead material to this once implemented.
+// Saw-tier bulky & blunt weapon.. A decent bone breaker.. Source of lead reagent.
+// Add lead material to this once added
 /obj/item/lead_pipe
 	name = "lead pipe"
 	icon = 'icons/obj/maintenance_loot.dmi'
@@ -29,8 +29,8 @@
 /obj/item/lead_pipe/grind_results()
 	return list(/datum/reagent/lead = 20)
 
-//A good battery early in the shift. Source of lead & sulfuric acid reagents.
-//Add lead material to this once implemented.
+// A good battery early in the shift.. Source of lead & sulfuric acid reagents.
+// Add lead material to this once added
 /obj/item/stock_parts/power_store/cell/lead
 	name = "lead-acid battery"
 	desc = "A primitive battery. It is quite large and feels unexpectedly heavy."

@@ -17,7 +17,7 @@
 	TEST_ASSERT_NOTNULL(alert_to_click, "Taker had no alert to click to accept the high five offer")
 	TEST_ASSERT_NOTNULL(bystander_alert_we_dont_click, "Bystander had no alert from the high fiver offer")
 
-	alert_to_click.handle_transfer() // high five happens here with the taker only. Can't call click but this is close
+	alert_to_click.handle_transfer() // high five happens here with the taker only.. Can't call click but this is close
 
 	TEST_ASSERT_NULL(offer_guy.has_status_effect(/datum/status_effect/offering/no_item_received/high_five), \
 		"Offerer still has the high five offer status effect after a high five was completed")

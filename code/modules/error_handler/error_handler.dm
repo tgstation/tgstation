@@ -11,7 +11,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		log_world("uncaught runtime error: [E]")
 		return ..()
 
-	//this is snowflake because of a byond bug (ID:2306577), do not attempt to call non-builtin procs in this block OR BEFORE IT
+	// this is snowflake because of a byond bug (ID:2306577), do not try to call non-builtin procs in this block OR BEFORE IT
 	if(copytext(E.name, 1, 32) == "Maximum recursion level reached")//32 == length() of that string + 1
 		var/list/proc_path_to_count = list()
 		var/crashed = FALSE
@@ -21,7 +21,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 				proc_path_to_count[stack_entry.proc] += 1
 				stack_entry = stack_entry.caller
 		catch
-			//union job. avoids crashing the stack again
+			// union job.. avoids crashing the stack again
 			//I just do not trust this construct to work reliably
 			crashed = TRUE
 
@@ -34,7 +34,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 			split += "  [path] = [proc_path_to_count[path]]"
 		E.desc = jointext(split, "\n")
 		SEND_TEXT(world.log, "\[[time2text(world.timeofday,"hh:mm:ss")]\] Runtime Error: [E.name]\n[E.desc]")
-		//log to world while intentionally triggering the byond bug. this does not DO anything, it just errors
+		// log to world while intentionally triggering the byond bug.. this does not DO anything, it just errors
 		//(seemingly because of the extra proc call to logger inside log_world interestingly enough)
 		log_world("runtime error: [E.name]\n[E.desc]")
 		//if we got to here without silently ending, the byond bug has been fixed.
@@ -81,7 +81,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	var/silencing = FALSE
 
 	// We can runtime before config is initialized because BYOND initialize objs/map before a bunch of other stuff happens.
-	// This is a bunch of workaround code for that. Hooray!
+	// This is a bunch of workaround code for that.. Hooray!
 	var/configured_error_cooldown
 	var/configured_error_limit
 	var/configured_error_silence_time
@@ -100,7 +100,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 	//Each occurence of a unique error adds to its cooldown time...
 	cooldown = max(0, cooldown - (world.time - last_seen)) + configured_error_cooldown
-	// ... which is used to silence an error if it occurs too often, too fast
+	// .... which is used to silence an error if it occurs too often, too fast
 	if(cooldown > configured_error_cooldown * configured_error_limit)
 		cooldown = -1
 		silencing = TRUE
@@ -143,7 +143,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 					desclines.Add(usrinfo)
 					usrinfo = null
 				continue // Our usr info is better, replace it
-			if(copytext(line, 1, 3) != "  ")//3 == length("  ") + 1
+			if(copytext(line, 1, 3) != "  ")// 3 == length(" ") + 1
 				desclines += ("  " + line) // Pad any unpadded lines, so they look pretty
 			else
 				desclines += line

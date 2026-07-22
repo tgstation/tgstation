@@ -23,7 +23,7 @@
 	/// A percentage of how much rgb to "max" on the lighting plane
 	/// This lets us brighten darkness without washing out bright color
 	var/lighting_cutoff = null
-	/// Similar to lighting_cutoff, except it has individual r g and b components in the same 0-100 scale
+	/// Similar to lighting_cutoff, except it has individual are g and b components in the same 0-100 scale
 	var/list/color_cutoffs = null
 	/// The current hud icons
 	var/list/icon/current = list()
@@ -379,7 +379,7 @@
 	icon_state = "glasses_circle"
 	inhand_icon_state = null
 
-//Here lies green glasses, so ugly they died. RIP
+// Here lies green glasses, so ugly they died.. RIP
 
 /obj/item/clothing/glasses/sunglasses
 	name = "sunglasses"

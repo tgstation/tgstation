@@ -34,7 +34,7 @@
 
 /// Initializes a holder from the contents of a disposal unit
 /obj/structure/disposalholder/proc/init(obj/machinery/disposal/D)
-	gas = D.air_contents// transfer gas resv. into holder object
+	gas = D.air_contents// transfer gas resv.. into holder object
 
 	//Check for any living mobs trigger hasmob.
 	//hasmob effects whether the package goes to cargo or its tagged destination.
@@ -44,8 +44,8 @@
 		hasmob = TRUE
 		RegisterSignal(M, COMSIG_LIVING_RESIST, PROC_REF(struggle_prep))
 
-	//Checks 1 contents level deep. This means that players can be sent through disposals mail...
-	//...but it should require a second person to open the package. (i.e. person inside a wrapped locker)
+	// Checks 1 contents level deep.. This means that players can be sent through disposals mail...
+	// ...but it should need a second person to open the package.. (i.e.. person inside a wrapped locker)
 	for(var/obj/O in D)
 		if(locate(/mob/living) in O)
 			hasmob = TRUE
@@ -144,7 +144,7 @@
 	transport_cylinder.spew_forth()
 	transport_cylinder.take_damage(transport_cylinder.max_integrity)
 
-//failsafe in the case the holder is somehow forcemoved somewhere that's not a disposal pipe. Otherwise the above loop breaks.
+// failsafe in the case the holder is somehow forcemoved somewhere that's not a disposal pipe.. Otherwise the above loop breaks.
 /obj/structure/disposalholder/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	var/static/list/pipes_typecache = typecacheof(/obj/structure/disposalpipe)

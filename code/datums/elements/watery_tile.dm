@@ -67,7 +67,7 @@
 	SIGNAL_HANDLER
 	source.remove_status_effect(/datum/status_effect/watery_tile_wetness)
 
-///Added by the watery_tile element. Keep adding wet stacks over time until removed from the watery turf.
+/// Added by the watery_tile element.. Keep adding wet stacks over time until removed from the watery turf.
 /datum/status_effect/watery_tile_wetness
 	id = "watery_tile_wetness"
 	alert_type = null

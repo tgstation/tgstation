@@ -10,7 +10,7 @@
 	/// Cached assoc list of job outfit datums by their names that we can select
 	/// If you intend on editing this, ensure you are copying it first
 	var/list/outfit_options
-	/// Assoc list of custom outfit names ("Custom outfit 1", "Custom outfit 2", etc) to list of all item typepaths saved in that outfit
+	/// Assoc list of custom outfit names ("Custom outfit 1", "Custom outfit 2", and so on to list of all item typepaths saved in that outfit
 	var/list/custom_outfits
 	/// Cap on how many custom outfits we can save
 	var/max_custom_oufits = 10

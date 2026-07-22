@@ -15,7 +15,7 @@ GLOBAL_DATUM(current_test, /datum/unit_test)
 GLOBAL_VAR_INIT(failed_any_test, FALSE)
 /// When unit testing, all logs sent to log_mapping are stored here and retrieved in log_mapping unit test.
 GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
-/// Global assoc list of required mapping items, [item typepath] to [required item datum].
+/// Global assoc list of needed mapping items, [item typepath] to needed item datum].
 GLOBAL_LIST_EMPTY(required_map_items)
 
 GLOBAL_LIST_EMPTY(test_run_times)
@@ -39,7 +39,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/test_flags = UNIT_TEST_BASIC
 	/// The priority of the test, the larger it is the later it fires
 	var/priority = TEST_DEFAULT
-	/// How many times this unit test will run. Use the TEST_REPEAT() macro
+	/// How many times this unit test will run.. Use the TEST_REPEAT() macro
 	var/times_to_run = 1
 
 	// internal shit
@@ -49,7 +49,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/turf/run_loc_floor_bottom_left
 	/// The top right floor turf of the testing zone
 	var/turf/run_loc_floor_top_right
-	/// A list of instances created by this unit test. Use allocate()
+	/// A list of instances created by this unit test.. Use allocate()
 	var/list/allocated
 	/// Lazy list of why this unit test failed.
 	var/list/fail_reasons
@@ -59,7 +59,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/static/list/uncreatables = null
 	/// Reference to the blank z-level containing our testing enviroment
 	var/static/datum/space_level/reservation
-	/// If this unit test requires a normal turf to run.
+	/// If this unit test needs a normal turf to run.
 	var/normal_floor_required = FALSE
 
 /proc/cmp_unit_test_priority(datum/unit_test/a, datum/unit_test/b)
@@ -79,10 +79,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	run_loc_floor_bottom_left = get_turf(locate(/obj/effect/landmark/unit_test_bottom_left) in GLOB.landmarks_list)
 	run_loc_floor_top_right = get_turf(locate(/obj/effect/landmark/unit_test_top_right) in GLOB.landmarks_list)
 
-	if(priority > TEST_CREATE_AND_DESTROY) //the create and destroy test WILL wreck havok in the unit test room. You CANNOT stop the inevitable.
+	if(priority > TEST_CREATE_AND_DESTROY) // the create and destroy test WILL wreck havok in the unit test room.. You CANNOT stop the inevitable.
 		return
 
-	//Make sure that the top and bottom locations in the diagonal are floors. Anything else may get in the way of several tests.
+	// Make sure that the top and bottom locations in the diagonal are floors.. Anything else may get in the way of several tests.
 	TEST_ASSERT(isindestructiblefloor(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not an indestructable floor ([run_loc_floor_bottom_left])")
 	TEST_ASSERT(isindestructiblefloor(run_loc_floor_top_right), "run_loc_floor_top_right was not an indestructable floor ([run_loc_floor_top_right])")
 	if(normal_floor_required)
@@ -126,7 +126,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		else if (arguments[1] == null)
 			arguments[1] = run_loc_floor_bottom_left
 	var/instance
-	// Byond will throw an index out of bounds if arguments is empty in that arglist call. Sigh
+	// Byond will throw an index out of bounds if arguments is empty in that arglist call.. Sigh
 	if(length(arguments))
 		instance = new type(arglist(arguments))
 	else
@@ -181,7 +181,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	return output
 
-/// Logs a test message. Will use GitHub action syntax found at https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
+/// Logs a test message.. Will use GitHub action syntax found at https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
 /datum/unit_test/proc/log_for_test(text, priority, file, line)
 	var/map_name = SSmapping.current_map.map_name
 
@@ -280,11 +280,11 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/mob/dview,
 		//Template type
 		/obj/item/bodypart,
-		//This is meant to fail extremely loud every single time it occurs in any environment in any context, and it falsely alarms when this unit test iterates it. Let's not spawn it in.
+		// This is meant to fail extremely loud every single time it occurs in any environment in any context. It falsely alarms when this unit test iterates it.. Let's not spawn it in.
 		/obj/merge_conflict_marker,
 		//Not meant to spawn without the machine wand
 		/obj/effect/bug_moving,
-		//Single use case holder atom requiring a user
+		// Single use case holder atom needing a user
 		/atom/movable/looking_holder,
 		//Should not exist outside of holders
 		/obj/effect/decal/cleanable/blood/trail,
@@ -309,9 +309,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/item/modular_computer/processor)
 	//Very finiky, blacklisting to make things easier
 	returnable_list += typesof(/obj/item/poster/wanted)
-	//Needs clients / mobs to observe it to exist. Also includes hallucinations.
+	// Needs clients / mobs to observe it to exist.. Also includes hallucinations.
 	returnable_list += typesof(/obj/effect/client_image_holder)
-	//Same to above. Needs a client / mob / hallucination to observe it to exist.
+	// Same to above.. Needs a client / mob / hallucination to observe it to exist.
 	returnable_list += typesof(/obj/projectile/hallucination)
 	returnable_list += typesof(/obj/item/hallucinated)
 	//We don't have a pod
@@ -327,11 +327,11 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/mob/eye/camera/remote/base_construction)
 	//See above
 	returnable_list += typesof(/mob/eye/camera/remote/shuttle_docker)
-	//Hangs a ref post invoke async, which we don't support. Could put a qdeleted check but it feels hacky
+	// Hangs a ref post invoke async, which we don't support.. Could put a qdeleted check but it feels hacky
 	returnable_list += typesof(/obj/effect/anomaly/grav/high)
 	//See above
 	returnable_list += typesof(/obj/effect/timestop)
-	//Sparks can ignite a number of things, causing a fire to burn the floor away. Only you can prevent CI fires
+	// Sparks can ignite a number of things, causing a fire to burn the floor away.. Only you can prevent CI fires
 	returnable_list += typesof(/obj/effect/particle_effect/sparks)
 	//See above - These are one of those things.
 	returnable_list += typesof(/obj/effect/decal/cleanable/fuel_pool)
@@ -339,7 +339,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/mob/living/silicon/robot/model)
 	//This lad also sleeps
 	returnable_list += typesof(/obj/item/hilbertshotel)
-	//this boi spawns turf changing stuff, and it stacks and causes pain. Let's just not
+	// this boi spawns turf changing stuff, and it stacks and causes pain.. Let's just not
 	returnable_list += typesof(/obj/effect/sliding_puzzle)
 	//these can explode and cause the turf to be destroyed at unexpected moments
 	returnable_list += typesof(/obj/effect/mine)
@@ -353,7 +353,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/docking_port)
 	//Asks for a shuttle that may not exist, let's leave it alone
 	returnable_list += typesof(/obj/item/pinpointer/shuttle)
-	//This spawns beams as a part of init, which can sleep past an async proc. This hangs a ref, and fucks us. It's only a problem here because the beam sleeps with CHECK_TICK
+	// This spawns beams as a part of init, which can sleep past an async proc.. This hangs a ref, and fucks us.. It's only a problem here because the beam sleeps with CHECK_TICK
 	returnable_list += typesof(/obj/structure/alien/resin/flower_bud)
 	//Needs a linked mecha
 	returnable_list += typesof(/obj/effect/skyfall_landingzone)
@@ -395,10 +395,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/list/focused_tests = list()
 	for (var/datum/unit_test/potential_test as anything in subtypesof(/datum/unit_test))
 // if you're doing this locally, do ALL of it
-// otherwise, we gotta split em up
+// otherwise, we got to split em up
 #ifndef RUNNING_LOCAL_TESTS
 		// If the test has [UNIT_TEST_DEBUG_MAP_ONLY] and we aren't the primary unit test map, skip it.
-		// HOWEVER, some unit tests are incompatible with the primary testing map, so we must offload them a secondary one with no blacklisted tests.
+		// But some unit tests are incompatible with the primary testing map, so we must offload them a secondary one with no blacklisted tests.
 		// If we didn't find a primary unit test map then we are likely a solo runner.
 		if((potential_test::test_flags & UNIT_TEST_DEBUG_MAP_ONLY) && \
 			!isnull(primary_unit_test_map) && \

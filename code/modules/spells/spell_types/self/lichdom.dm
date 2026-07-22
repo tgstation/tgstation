@@ -77,7 +77,7 @@
 		human_cast_on.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(human_cast_on), ITEM_SLOT_ICLOTHING)
 
 
-	// No soul. You just sold it
+	// No soul.. You just sold it
 	ADD_TRAIT(cast_on, TRAIT_NO_SOUL, LICH_TRAIT)
 	// You only get one phylactery.
 	qdel(src)

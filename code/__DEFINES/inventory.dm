@@ -1,30 +1,30 @@
-/*ALL DEFINES RELATED TO INVENTORY OBJECTS, MANAGEMENT, ETC, GO HERE*/
+/* ALL DEFINES RELATED TO INVENTORY OBJECTS, MANAGEMENT, And so on GO HERE */
 
 //ITEM INVENTORY WEIGHT, FOR w_class
-/// Usually items smaller then a human hand, (e.g. playing cards, lighter, scalpel, coins/holochips)
+/// Usually items smaller then a human hand, (e.g... playing cards, lighter, scalpel, coins/holochips)
 #define WEIGHT_CLASS_TINY 1
-/// Pockets can hold small and tiny items, (e.g. flashlight, multitool, grenades, GPS device)
+/// Pockets can hold small and tiny items, (e.g... flashlight, multitool, grenades, GPS device)
 #define WEIGHT_CLASS_SMALL 2
-/// Standard backpacks can carry tiny, small & normal items, (e.g. fire extinguisher, stun baton, gas mask, metal sheets)
+/// Standard backpacks can carry tiny, small & normal items, (e.g... fire extinguisher, stun baton, gas mask, metal sheets)
 #define WEIGHT_CLASS_NORMAL 3
-/// Items that can be wielded or equipped but not stored in an inventory, (e.g. defibrillator, backpack, space suits)
+/// Items that can be wielded or equipped but not stored in an inventory, (e.g... defibrillator, backpack, space suits)
 #define WEIGHT_CLASS_BULKY 4
-/// Usually represents objects that require two hands to operate, (e.g. shotgun, two-handed melee weapons)
+/// Usually represents objects that need two hands to operate, (e.g... shotgun, two-handed melee weapons)
 #define WEIGHT_CLASS_HUGE 5
-/// Essentially means it cannot be picked up or placed in an inventory, (e.g. mech parts, safe)
+/// Essentially means it cannot be picked up or placed in an inventory, (e.g... mech parts, safe)
 #define WEIGHT_CLASS_GIGANTIC 6
 
 /// Weight class that can fit in pockets
 #define POCKET_WEIGHT_CLASS WEIGHT_CLASS_SMALL
 
 //Inventory depth: limits how many nested storage items you can access directly.
-//1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
+// 1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, and so on
 #define REACH_DEPTH_SELF 1
-/// A storage depth ontop of SELF. REACH_DEPTH_STORAGE(1) would allow an item inside of a backpack you are carrying.
+/// A storage depth ontop of SELF... REACH_DEPTH_STORAGE(1) would allow an item inside of a backpack you are carrying.
 #define REACH_DEPTH_STORAGE(level) (level + REACH_DEPTH_SELF)
 
 //ITEM INVENTORY SLOT BITMASKS
-/// Suit slot (armors, costumes, space suits, etc.)
+/// Suit slot (armors, costumes, space suits, and so on
 #define ITEM_SLOT_OCLOTHING (1<<0)
 /// Jumpsuit slot
 #define ITEM_SLOT_ICLOTHING (1<<1)
@@ -36,7 +36,7 @@
 #define ITEM_SLOT_EARS (1<<4)
 /// Mask slot
 #define ITEM_SLOT_MASK (1<<5)
-/// Head slot (helmets, hats, etc.)
+/// Head slot (helmets, hats, and so on
 #define ITEM_SLOT_HEAD (1<<6)
 /// Shoe slot
 #define ITEM_SLOT_FEET (1<<7)
@@ -86,7 +86,7 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define ITEM_SLOT_ON_BODY (ITEM_SLOT_ICLOTHING | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_EYES | ITEM_SLOT_EARS | \
 	ITEM_SLOT_MASK | ITEM_SLOT_HEAD | ITEM_SLOT_FEET | ITEM_SLOT_ID | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_NECK )
 
-//Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
+// Bit flags for the flags_inv variable, which determine when a piece of clothing hides another... that is a helmet hiding glasses.
 //Make sure to update obscured_slots if you add more.
 #define HIDEGLOVES (1<<0)
 #define HIDESUITSTORAGE (1<<1)
@@ -154,7 +154,7 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define FEMALE_UNIFORM_FULL (1<<0)
 /// For when you really need to avoid the game cutting off that one pixel between the legs, to avoid the comeback of the infamous "dixel".
 #define FEMALE_UNIFORM_TOP_ONLY (1<<1)
-/// For when you don't want the "breast" effect to be applied (the one that cuts two pixels in the middle of the front of the uniform when facing east or west).
+/// F.. When you don't want the "breast" effect to be applied (the one that cuts two pixels in the middle of the front of the uniform when facing east.. West).
 #define FEMALE_UNIFORM_NO_BREASTS (1<<2)
 
 //flags for alternate styles: These are hard sprited so don't set this if you didn't put the effort in

@@ -4,7 +4,7 @@
 #define DECOMPOSITION_TIME_RAW (5 MINUTES)
 #define DECOMPOSITION_TIME_GROSS (7 MINUTES)
 
-///Makes things decompose when exposed to germs. Requires /datum/component/germ_sensitive to detect exposure.
+/// Makes things decompose when exposed to germs.. Needs /datum/component/germ_sensitive to detect exposure.
 /datum/component/decomposition
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	/// Makes sure maploaded food only starts decomposing if a player's EVER picked it up before

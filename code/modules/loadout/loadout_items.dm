@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 /datum/loadout_item
 	/// The abstract parent of this loadout item, to determine which items to not instantiate
 	abstract_type = /datum/loadout_item
-	/// The category of the loadout item. Set automatically in New
+	/// The category of the loadout item.. Set automatically in New
 	VAR_FINAL/datum/loadout_category/category
 	/// Displayed name of the loadout item.
 	/// Defaults to the item's name if unset.
@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	/// Doesn't verify that the item_path actually has these reskins
 	var/datum/atom_skin/reskin_datum
 	/// A list of greyscale colors that are used for items that have greyscale support, but don't allow full customization.
-	/// This is an assoc list of /datum/job_department -> colors, or /datum/job -> colors, allowing for preset colors based on player chosen job.
+	/// This is an assoc list of /datum/job_department -> colors, or /datum/job -> colors, allowing for preset colors good on player chosen job.
 	/// Jobs are prioritized over departments.
 	/// Note: You don't need to set a color for every job or department!
 	var/list/job_greyscale_palettes
@@ -208,7 +208,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], loadout)
 	return TRUE // always update UI
 
-/// When passed an outfit, attempts to select a job-appropriate color from job_greyscale_palettes
+/// When passed an outfit, tries to select a job-appropriate color from job_greyscale_palettes
 /datum/loadout_item/proc/get_job_color(datum/outfit/base_outfit)
 	if(!istype(base_outfit, /datum/outfit/job))
 		return job_greyscale_palettes[/datum/job] // default color

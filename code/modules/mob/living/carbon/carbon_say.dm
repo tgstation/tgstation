@@ -1,7 +1,7 @@
 /mob/living/carbon/can_speak(allow_mimes = FALSE)
 	// If we're not a nobreath species, and we don't have lungs, we can't talk
 	if(dna?.species && !HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT) && !get_organ_slot(ORGAN_SLOT_LUNGS))
-		// How do species that don't breathe, talk? Magic, that's what.
+		// How do species that don't breathe, talk?. Magic, that's what.
 		return FALSE
 
 	return ..()

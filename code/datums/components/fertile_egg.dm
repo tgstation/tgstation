@@ -17,7 +17,7 @@
 	/// Maximum growth rate per tick
 	var/maximum_growth_rate
 
-	/// Total growth required before hatching.
+	/// Total growth needed before hatching.
 	var/total_growth_required
 
 	/// The current amount of growth.
@@ -26,14 +26,14 @@
 	/// List of locations which, if set, the egg will only develop if in those locations.
 	var/list/location_allowlist
 
-	/// If true, being in an unsuitable location spoils the egg (ie. kills the component). If false, it just pauses the egg's development.
+	/// If true, being in an unsuitable location spoils the egg that is kills the component).. If false, it just pauses the egg's development.
 	var/spoilable
 
 	///callback after the egg hatches
 	var/datum/callback/post_hatch
 
 /datum/component/fertile_egg/Initialize(embryo_type, minimum_growth_rate, maximum_growth_rate, total_growth_required, current_growth, location_allowlist, spoilable, examine_message, post_hatch)
-	// Quite how an _area_ can be a fertile egg is an open question, but it still has a location. Technically.
+	// Quite how an _area_ can be a fertile egg is an open question, but it still has a location.. Technically.
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 

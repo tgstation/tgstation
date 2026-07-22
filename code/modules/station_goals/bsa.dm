@@ -4,8 +4,8 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 
 // Crew has to build a bluespace cannon
 // Cargo orders part for high price
-// Requires high amount of power
-// Requires high level stock parts
+// Needs high amount of power
+// Needs high level stock parts
 /datum/station_goal/bluespace_cannon
 	name = "Bluespace Artillery"
 
@@ -150,7 +150,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	icon_state = "cannon_west"
 	var/static/mutable_appearance/top_layer
 	var/ex_power = 3
-	var/power_used_per_shot = 2000000 //enough to kil standard apc - todo : make this use wires instead and scale explosion power with it
+	var/power_used_per_shot = 2000000 // enough to kil standard apc - to do : make this use wires instead and scale explosion power with it
 	pixel_y = -32
 	pixel_x = -192
 	bound_width = 352

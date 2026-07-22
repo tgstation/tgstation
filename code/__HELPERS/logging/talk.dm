@@ -49,7 +49,7 @@
 /proc/log_whisper(text, list/data)
 	logger.Log(LOG_CATEGORY_GAME_WHISPER, text, data)
 
-/// Helper for logging of messages with only one sender and receiver (i.e. mind links)
+/// Helper for logging of messages with only one sender and receiver (i.e.. mind links)
 /proc/log_directed_talk(atom/source, atom/target, message, message_type, tag)
 	if(!tag)
 		stack_trace("Unspecified tag for private message")

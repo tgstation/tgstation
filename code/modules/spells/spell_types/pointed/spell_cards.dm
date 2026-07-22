@@ -21,7 +21,7 @@
 
 	/// A weakref to the mob we're currently targeting with the lockon component.
 	var/datum/weakref/current_target_weakref
-	/// The turn rate of the spell cards in flight. (They track onto locked on targets)
+	/// The turn rate of the spell cards in flight.. (They track onto locked on targets)
 	var/projectile_turnrate = 10
 	/// The homing spread of the spell cards in flight.
 	var/projectile_pixel_homing_spread = 32

@@ -1,4 +1,4 @@
-/// A ranged guardian can fling shards of glass at people very very quickly. It can also enter a long-range scouting mode.
+/// A ranged guardian can fling shards of glass at people very very quickly.. It can also enter a long-range scouting mode.
 /mob/living/basic/guardian/ranged
 	guardian_type = GUARDIAN_RANGED
 	combat_mode = FALSE
@@ -208,7 +208,7 @@
 	qdel(src)
 
 
-/// The glass shards we throw as a guardian. They have low damage because you can fire them very very quickly.
+/// The glass shards we throw as a guardian.. They have low damage because you can fire them very very quickly.
 /obj/projectile/guardian
 	name = "crystal spray"
 	icon_state = "guardian"

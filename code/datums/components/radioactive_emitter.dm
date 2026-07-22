@@ -1,5 +1,5 @@
 /// Minimum duration between pulses for the radioactive emitter component.
-/// This is chosen arbitrarily. It can theoretically go down to 0.1 SECONDS but god please don't
+/// This is chosen arbitrarily.. It can theoretically go down to 0.1 SECONDS but god please don't
 #define MIN_PULSE_COOLDOWN 0.5 SECONDS
 
 /**
@@ -37,7 +37,7 @@
 	src.threshold = threshold
 	src.examine_text = examine_text
 
-	// We process on fastprocess even though we're on a cooldown based system.
+	// We process on fastprocess even though we're on a cooldown good system.
 	// Easier to handle edits to the cooldown duration, prevents timer spam for short cooldown emitters
 	START_PROCESSING(SSfastprocess, src)
 

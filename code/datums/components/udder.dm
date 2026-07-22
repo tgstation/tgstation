@@ -11,7 +11,7 @@
 
 //udder_type and reagent_produced_typepath are typepaths, not reference
 /datum/component/udder/Initialize(udder_type = /obj/item/udder, datum/callback/on_milk_callback, datum/callback/on_generate_callback, reagent_produced_override)
-	if(!isliving(parent)) //technically is possible to drop this on carbons... but you wouldn't do that to me, would you?
+	if(!isliving(parent)) // technically is possible to drop this on carbons.... but you wouldn't do that to me, would you?
 		return COMPONENT_INCOMPATIBLE
 	udder = new udder_type(null)
 	udder.add_features(parent, on_generate_callback, reagent_produced_override)
@@ -73,7 +73,7 @@
 	var/mob/living/udder_mob
 	///optional proc to callback to when the udder generates milk
 	var/datum/callback/on_generate_callback
-	///do we require some food to generate milk?
+	/// do we need some food to generate milk?
 	var/require_consume_type
 	///how long does each food consumption allow us to make milk
 	var/require_consume_timer = 2 MINUTES

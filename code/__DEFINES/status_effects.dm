@@ -14,7 +14,7 @@
 /// Use in status effect "tick_interval" to guarantee that tick() gets called on every process()
 #define STATUS_EFFECT_AUTO_TICK 0
 
-/// Indicates this status effect is an abstract type, ie not instantiated
+/// Indicates this status effect is an abstract type, that is not instantiated
 /// Doesn't actually do anything in practice, primarily just a marker / used in unit tests,
 /// so don't worry if your abstract status effect doesn't actually set this
 #define STATUS_EFFECT_ID_ABSTRACT "abstract"
@@ -36,7 +36,7 @@
 #define CURSE_GRASPING (1<<2)
 
 //Incapacitated status effect flags
-/// If the mob is normal incapacitated. Should never need this, just avoids issues if we ever overexpand this
+/// If the mob is normal incapacitated... Should never need this, just avoids issues if we ever overexpand this
 #define TRADITIONAL_INCAPACITATED (1<<0)
 /// If the incapacitated status effect is being caused by restraints (handcuffs)
 #define INCAPABLE_RESTRAINTS (1<<1)

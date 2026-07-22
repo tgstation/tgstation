@@ -171,7 +171,7 @@
 	if(active)
 		deactivate_shields()
 
-///generates the forcefield based on the given radius and calls calculate_regen to update the regen value accordingly
+/// generates the forcefield good on the given radius and calls calculate_regen to update the regen value accordingly
 /obj/machinery/modular_shield_generator/proc/activate_shields()
 	if(active || (machine_stat & NOPOWER))//bug or did admin call proc on already active shield gen?
 		return
@@ -180,7 +180,7 @@
 	active = TRUE
 	initiating = TRUE
 	var/color_shield = cached_color_filter || color
-	if(radius >= 10) //the shield is large so we are going to use the midpoint formula and clamp it to the lowest full number in order to save processing power
+	if(radius >= 10) // the shield is large so we are going to use the midpoint formula. Clamp it to the lowest full number in order to save processing power
 		LAZYADD(inside_shield, circle_range_turfs(src, radius - 1))//in the future we might want to apply an effect to turfs inside the shield
 		LAZYADD(list_of_turfs, get_perimeter(src, radius))
 
@@ -346,7 +346,7 @@
 	max_strength = innate_strength + max_strength_boost
 	begin_processing()
 
-///Calculates the regeneration based on the status of the generator and boosts from network, modifiers go here
+/// Calculates the regeneration good on the status of the generator and boosts from network, modifiers go here
 /obj/machinery/modular_shield_generator/proc/calculate_regeneration()
 
 	max_regeneration = innate_regen + regen_boost
@@ -366,7 +366,7 @@
 	if(!exterior_only && internal_penalty)
 		current_regeneration *= 0.5
 
-///Reduces the strength of the shield based on the given integer
+/// Reduces the strength of the shield good on the given integer
 /obj/machinery/modular_shield_generator/proc/shield_drain(damage_amount)
 	stored_strength -= damage_amount
 	begin_processing()
@@ -411,7 +411,7 @@
 		return FALSE
 	return TRUE
 
-///we shield a tile and step forward until we either run out of max radius or hit a closed turf, every turf we shield is a penalty towards regen
+/// we shield a tile. Step forward until we either run out of max radius. Hit a closed turf, every turf we shield is a penalty towards regen
 /obj/machinery/modular_shield_generator/gate/activate_shields()
 	if(active || (machine_stat & NOPOWER))//bug or did admin call proc on already active shield gen?
 		return

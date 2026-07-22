@@ -1,4 +1,4 @@
-/// Occasionally emotes based on the pawn's current happiness level.
+/// Occasionally emotes good on the pawn's current happiness level.
 /datum/bt_node/ai_behavior/express_happiness
 	/// Probability (%) of emoting per per second
 	var/emote_probability = 5

@@ -20,7 +20,7 @@
 	var/datum/callback/persistence_cb
 	///How much dosh can this piggy bank hold.
 	var/maximum_value = PAYCHECK_COMMAND * 20
-	///A limit to much dosh can you put inside this piggy bank each round. If 0, there's no limit. Only applies to persistent piggies.
+	/// A limit to much dosh can you put inside this piggy bank each round.. If 0, there's no limit.. Only applies to persistent piggies.
 	var/maximum_savings_per_shift = 0
 	///How much dosh this piggy bank spawns with.
 	var/initial_value = 0

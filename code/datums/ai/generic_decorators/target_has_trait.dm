@@ -1,4 +1,4 @@
-/// Gates child on the atom held in a blackboard key having a given trait. Use "invert": true to gate on the trait being absent.
+/// Gates child on the atom held in a blackboard key having a given trait.. Use "invert": true to gate on the trait being absent.
 /datum/bt_node/decorator/target_has_trait
 	/// Blackboard key holding the atom to check.
 	var/key = null
@@ -21,7 +21,7 @@
 		observed_target = null
 	UnregisterSignal(pawn, list(COMSIG_AI_BLACKBOARD_KEY_SET(key), COMSIG_AI_BLACKBOARD_KEY_CLEARED(key)))
 
-/// Fires when the blackboard key changes. Rebinds trait signals to the new target and re-evaluates.
+/// Fires when the blackboard key changes.. Rebinds trait signals to the new target and re-evaluates.
 /datum/bt_node/decorator/target_has_trait/proc/on_target_key_changed(atom/source, ...)
 	SIGNAL_HANDLER
 	var/atom/target = owning_controller?.blackboard[key]

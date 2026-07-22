@@ -1,8 +1,8 @@
-///An element that forbids mobs without a required skill level from equipping the item.
+/// An element that forbids mobs without a needed skill level from equipping the item.
 /datum/element/skill_reward
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	///The required skill the user has to have to equip the item.
+	/// The needed skill the user has to have to equip the item.
 	var/associated_skill
 
 /datum/element/skill_reward/Attach(datum/target, associated_skill)

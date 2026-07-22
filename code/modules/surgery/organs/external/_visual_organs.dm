@@ -7,10 +7,10 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	///The overlay datum that actually draws stuff on the limb
 	var/datum/bodypart_overlay/mutant/bodypart_overlay
 
-	///With what DNA block do we mutate in mutate_feature() ? For genetics
+	/// With what DNA block do we mutate in mutate_feature() ?. For genetics
 	var/datum/dna_block/dna_block
 
-	///Set to EXTERNAL_BEHIND, EXTERNAL_FRONT or EXTERNAL_ADJACENT if you want to draw one of those layers as the object sprite. FALSE to use your own
+	/// Set to EXTERNAL_BEHIND, EXTERNAL_FRONT or EXTERNAL_ADJACENT if you want to draw one of those layers as the object sprite.. FALSE to use your own
 	///This will not work if it doesn't have a limb to generate its icon with
 	var/use_mob_sprite_as_obj_sprite = FALSE
 
@@ -76,7 +76,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	var/datum/dna_block/feature/feature_block = GLOB.dna_feature_blocks[dna_block]
 	bodypart_overlay.set_appearance_from_name(feature_list[deconstruct_block(feature_block.get_block(features), feature_list.len)])
 
-///If you need to change an external_organ for simple one-offs, use this. Pass the accessory type : /datum/accessory/something
+/// If you need to change an external_organ for simple one-offs, use this.. Pass the accessory type : /datum/accessory/something
 /obj/item/organ/proc/simple_change_sprite(accessory_type)
 	var/datum/sprite_accessory/typed_accessory = accessory_type //we only take types for maintainability
 
@@ -251,7 +251,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 /obj/item/organ/antennae/proc/try_burn_antennae(mob/living/carbon/human/human)
 	SIGNAL_HANDLER
 
-	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
+	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) // do not go into the extremely hot light.. you will not survive
 		to_chat(human, span_danger("Your precious antennae burn to a crisp!"))
 
 		burn_antennae()
@@ -286,7 +286,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	offset_location = UPPER_BODY
 	///Accessory datum of the burn sprite
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_antennae/burnt_off
-	///Are we burned? If so we draw differently
+	/// Are we burned?. If so we draw differently
 	var/burnt = FALSE
 
 /datum/bodypart_overlay/mutant/antennae/New()
@@ -327,7 +327,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	dyable = TRUE
 	offset_location = UPPER_BODY
 
-	///This layer will be colored differently than the rest of the organ. So we can get differently colored flowers or something
+	/// This layer will be colored differently than the rest of the organ.. So we can get differently colored flowers or something
 	var/color_swapped_layer = EXTERNAL_FRONT
 	///The individual rgb colors are subtracted from this to get the color shifted layer
 	var/color_inverse_base = 255

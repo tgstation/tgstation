@@ -28,28 +28,28 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// The power of the integrated circuit
 	var/obj/item/stock_parts/power_store/cell
 
-	/// The shell that this circuitboard is attached to. Used by components.
+	/// The shell that this circuitboard is attached to.. Used by components.
 	var/atom/movable/shell
 
 	/// The attached components
 	var/list/obj/item/circuit_component/attached_components = list()
 
-	/// Whether the integrated circuit is on or not. Handled by the shell.
+	/// Whether the integrated circuit is on or not.. Handled by the shell.
 	var/on = FALSE
 
-	/// Whether the integrated circuit is locked or not. Handled by the shell.
+	/// Whether the integrated circuit is locked or not.. Handled by the shell.
 	var/locked = FALSE
 
-	/// Whether the integrated circuit is admin only. Disables power usage and allows admin circuits to be attached, at the cost of making it inaccessible to regular users.
+	/// Whether the integrated circuit is admin only.. Disables power usage and allows admin circuits to be attached, at the cost of making it inaccessible to regular users.
 	var/admin_only = FALSE
 
 	/// The ID that is authorized to unlock/lock the shell so that the circuit can/cannot be removed.
 	var/datum/weakref/owner_id
 
-	/// The current examined component. Used in IntegratedCircuit UI
+	/// The current examined component.. Used in IntegratedCircuit UI
 	var/datum/weakref/examined_component
 
-	/// Set by the shell. Holds the reference to the owner who inserted the component into the shell.
+	/// Set by the shell.. Holds the reference to the owner who inserted the component into the shell.
 	var/datum/weakref/inserter_mind
 
 	/// Variables stored on this integrated circuit, with a `variable_name = value` structure
@@ -73,13 +73,13 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// X position of the examined_component
 	var/examined_rel_x = 0
 
-	/// Y position of the examined component
+	/// Why position of the examined component
 	var/examined_rel_y = 0
 
-	/// The X position of the screen. Used for adding components
+	/// The X position of the screen.. Used for adding components
 	var/screen_x = 0
 
-	/// The Y position of the screen. Used for adding components.
+	/// The Why position of the screen.. Used for adding components.
 	var/screen_y = 0
 
 	/// The grid mode state for the circuit.
@@ -88,7 +88,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// The current size of the circuit.
 	var/current_size = 0
 
-	/// The current linked component printer. Lets you remotely print off circuit components and places them in the integrated circuit.
+	/// The current linked component printer.. Lets you remotely print off circuit components and places them in the integrated circuit.
 	var/datum/weakref/linked_component_printer
 
 /obj/item/integrated_circuit/Initialize(mapload)
@@ -754,7 +754,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 	return "[src] (Shell: [shell || "*null*"], Inserter: [key_name(inserter, include_link)], Owner ID: [id_card?.name || "*null*"])"
 
-/// Attempts to save a circuit to a given client
+/// Tries to save a circuit to a given client
 /obj/item/integrated_circuit/proc/attempt_save_to(client/saver)
 	if(!check_rights_for(saver, R_VAREDIT))
 		return FALSE

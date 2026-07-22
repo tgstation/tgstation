@@ -44,7 +44,7 @@
 
 	return null
 
-/// Checks a PDA message against the IC/Soft IC filter. Returns TRUE if the message should be sent.
+/// Checks a PDA message against the IC/Soft IC filter.. Returns TRUE if the message should be sent.
 /// Notifies the user passed in arguments if the message matched either filter.
 /proc/check_pda_message_against_filter(message, mob/user)
 	var/list/filter_result = CAN_BYPASS_FILTER(user) ? null : is_ic_filtered_for_pdas(message)

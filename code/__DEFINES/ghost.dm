@@ -39,7 +39,7 @@
 #define GHOST_MAX_VIEW_RANGE_MEMBER 14
 
 // DEADCHAT MESSAGE TYPES //
-/// Deadchat notification for important round events (RED_ALERT, shuttle EVAC, communication announcements, etc.)
+/// Deadchat notification for important round events (RED_ALERT, shuttle EVAC, communication announcements, and so on
 #define DEADCHAT_ANNOUNCEMENT "announcement"
 /// Deadchat notification for new players who join the round at arrivals
 #define DEADCHAT_ARRIVALRATTLE "arrivalrattle"
@@ -65,9 +65,9 @@
 #define GHOST_HEALTH (1<<2)
 #define GHOST_CHEM (1<<3)
 #define GHOST_GAS (1<<4)
-/// Represents tray view. Not a real view flag, as tray is not persistent, but used as an identifier for one.
+/// Represents tray view... Not a real view flag, as tray is not persistent, but used as an identifier for one.
 #define GHOST_TRAY (1<<5)
-/// Repesents darkness level setting. Not a real view flag, as darkness level cycles through values, but used as an identifier for one.
+/// Repesents darkness level setting... Not a real view flag, as darkness level cycles through values, but used as an identifier for one.
 #define GHOST_DARKNESS_LEVEL (1<<6)
 
 #define ALL_GHOST_FLAGS list( \

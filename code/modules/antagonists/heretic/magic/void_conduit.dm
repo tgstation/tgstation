@@ -86,7 +86,7 @@
 
 	new /obj/effect/temp_visual/circle_wave/void_conduit(get_turf(src))
 
-///Applies the effects of the pulse "hitting" something. Freezes non-heretic, destroys airlocks/windows
+/// Applies the effects of the pulse "hitting" something.. Freezes non-heretic, destroys airlocks/windows
 /obj/structure/void_conduit/proc/handle_effects(list/turfs)
 	for(var/turf/affected_turf as anything in turfs)
 		for(var/atom/thing_to_affect as anything in affected_turf.contents)

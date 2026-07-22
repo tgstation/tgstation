@@ -21,7 +21,7 @@
 /datum/material/pizza/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
 	make_edible(source, mat_amount)
-	ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //the fishing rod itself is the bait... sorta.
+	ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) // the fishing rod itself is the bait.... sort of
 
 /datum/material/pizza/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()

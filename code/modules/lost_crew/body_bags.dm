@@ -10,7 +10,7 @@
 	icon_state = "bodybag_lost"
 	foldedbag_path = /obj/item/bodybag/lost_crew
 
-/// Filled with one body. If folded, gives the parent type so we dont make infinite corpses
+/// Filled with one body.. If folded, gives the parent type so we dont make infinite corpses
 /obj/structure/closet/body_bag/lost_crew/with_body
 	/// Whether or not we spawn a paper with everything thats happened to the body
 	var/debug = FALSE

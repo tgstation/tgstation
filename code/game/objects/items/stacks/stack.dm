@@ -18,24 +18,24 @@
 	abstract_type = /obj/item/stack
 	/// A list to all recipies this stack item can create.
 	var/list/datum/stack_recipe/recipes
-	/// What's the name of just 1 of this stack. You have a stack of leather, but one piece of leather
+	/// What's the name of just 1 of this stack.. You have a stack of leather, but one piece of leather
 	var/singular_name
 	/// How much is in this stack?
 	var/amount = 1
 	/// How much is allowed in this stack?
-	// Also see stack recipes initialisation. "max_res_amount" must be equal to this max_amount
+	// Also see stack recipes initialisation.. "max_res_amount" must be equal to this max_amount
 	var/max_amount = 50
-	/// If TRUE, this stack is a module used by a cyborg (doesn't run out like normal / etc)
+	/// If TRUE, this stack is a module used by a cyborg (doesn't run out like normal / and so on
 	var/is_cyborg = FALSE
-	/// Related to above. If present, the energy we draw from when using stack items, for cyborgs
+	/// Related to above.. If present, the energy we draw from when using stack items, for cyborgs
 	var/datum/robot_energy_storage/source
-	/// Related to above. How much energy it costs from storage to use stack items
+	/// Related to above.. How much energy it costs from storage to use stack items
 	var/cost = 1
 	/// This path and its children should merge with this stack, defaults to src.type
 	var/merge_type = null
 	/// The weight class the stack has at amount > 2/3rds max_amount
 	var/full_w_class = WEIGHT_CLASS_NORMAL
-	/// Determines whether the item should update its sprites based on amount.
+	/// Determines whether the item should update its sprites good on amount.
 	var/novariants = TRUE
 	/// List that tells you how much is in a single unit.
 	var/list/mats_per_unit
@@ -60,7 +60,7 @@
 
 	/// Can this stack be used for contruction of girders?
 	var/usable_for_construction = FALSE
-	/// Does this stack require a unique girder in order to make a wall?
+	/// Does this stack need a unique girder in order to make a wall?
 	var/has_unique_girder = FALSE
 	///What type of wall does this sheet spawn
 	var/walltype
@@ -289,7 +289,7 @@
 	data["icon"] = result.icon
 	data["icon_state"] = result.icon_state
 
-	// DmIcon cannot paint images. So, if we have grayscale sprite, we need ready base64 image.
+	// DmIcon cannot paint images.. if we have grayscale sprite, we need ready base64 image.
 	if(R.result_image)
 		data["image"] = R.result_image
 
@@ -388,7 +388,7 @@
 
 	if(!selection)
 		return
-	// Run normal UI interact if we wanna see the full list
+	// Run normal UI interact if we want to see the full list
 	if(selection == FULL_LIST)
 		ui_interact(builder)
 		return
@@ -577,7 +577,7 @@
 
 	return TRUE
 
-/obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return 0 = borked; return 1 = had enough
+/obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return 0 = broken return 1 = had enough
 	if(check && is_zero_amount(delete_if_zero = TRUE))
 		return FALSE
 	if(is_cyborg)
@@ -650,7 +650,7 @@
 	// We don't only use istype here, since that will match subtypes, and stack things that shouldn't stack
 	if(!istype(check, merge_type) || check.merge_type != merge_type)
 		return FALSE
-	if(mats_per_unit ~! check.mats_per_unit) // ~! in case of lists this operator checks only keys, but not values
+	if(mats_per_unit ~! check.mats_per_unit) // ~!. in case of lists this operator checks only keys, but not values
 		return FALSE
 	if(is_cyborg) // No merging cyborg stacks into other stacks
 		return FALSE
@@ -719,7 +719,7 @@
 	use(transfer, transfer = TRUE, check = FALSE)
 	target_stack.add(transfer)
 	if(target_stack.mats_per_unit != mats_per_unit) // We get the average value of mats_per_unit between two stacks getting merged
-		var/list/temp_mats_list = list() // mats_per_unit is passed by ref into this coil, and that same ref is used in other places. If we didn't make a new list here we'd end up contaminating those other places, which leads to batshit behavior
+		var/list/temp_mats_list = list() // mats_per_unit is passed by ref into this coil, and that same ref is used in other places.. If we didn't make a new list here we'd end up contaminating those other places, which leads to batshit behavior
 		for(var/mat_type in target_stack.mats_per_unit)
 			temp_mats_list[mat_type] = (target_stack.mats_per_unit[mat_type] * (target_stack.amount - transfer) + mats_per_unit[mat_type] * transfer) / target_stack.amount
 		target_stack.mats_per_unit = temp_mats_list
@@ -811,4 +811,4 @@
 	add_fingerprint_list(GET_ATOM_FINGERPRINTS(from))
 	add_hiddenprint_list(GET_ATOM_HIDDENPRINTS(from))
 	fingerprintslast = from.fingerprintslast
-	//TODO bloody overlay
+	// To do bloody overlay

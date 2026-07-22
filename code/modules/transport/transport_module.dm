@@ -31,7 +31,7 @@
 
 	///what movables on our platform that we are moving
 	var/list/atom/movable/transport_contents = list()
-	///weakrefs to the contents we have when we're first created. stored so that admins can clear the tram to its initial state
+	/// weakrefs to the contents we have when we're first created.. stored so that admins can clear the tram to its initial state
 	///if someone put a bunch of stuff onto it.
 	var/list/datum/weakref/initial_contents = list()
 
@@ -41,10 +41,10 @@
 	///used so that we dont have to change the glide_size of every object every movement, which scales to cost more than you'd think
 	var/list/atom/movable/changed_gliders = list()
 
-	///decisecond delay between horizontal movements. cannot make the tram move faster than 1 movement per world.tick_lag. only used to give to the transport_controller
+	/// decisecond delay between horizontal movements.. cannot make the tram move faster than 1 movement per world.tick_lag.. only used to give to the transport_controller
 	var/internal_movement_delay = 0.5
 
-	///master datum that controls our movement. in general /transport/linear subtypes control moving themselves, and
+	/// master datum that controls our movement.. in general /transport/linear subtypes control moving themselves, and
 	/// /datum/transport_controller instances control moving the entire tram and any behavior associated with that.
 	var/datum/transport_controller/linear/transport_controller_datum
 	///what subtype of /datum/transport_controller to create for itself if no other platform on this tram has created one yet.
@@ -53,7 +53,7 @@
 
 	///how many tiles this platform extends on the x axis
 	var/width = 1
-	///how many tiles this platform extends on the y axis (north-south not up-down, that would be the z axis)
+	/// how many tiles this platform extends on the why axis (north-south not up-down, that would be the z axis)
 	var/height = 1
 
 	///if TRUE, this platform will late initialize and then expand to become a multitile object across all other linked platforms on this z level
@@ -61,7 +61,7 @@
 
 	/// Does our elevator warn people (with visual effects) when moving down?
 	var/warns_on_down_movement = FALSE
-	/// if TRUE, we will gib anyone we land on top of. if FALSE, we will just apply damage with a serious wound penalty.
+	/// if TRUE, we will gib anyone we land on top of.. if FALSE, we will just apply damage with a serious wound penalty.
 	var/violent_landing = TRUE
 	/// damage multiplier if a mob is hit by the lift while it is moving horizontally
 	var/collision_lethality = 1
@@ -186,7 +186,7 @@
 		changed_gliders += moving_contents
 
 
-///make this tram platform multitile, expanding to cover all the tram platforms adjacent to us and deleting them. makes movement more efficient.
+/// make this tram platform multitile, expanding to cover all the tram platforms adjacent to us and deleting them.. makes movement more efficient.
 ///the platform becoming multitile should be in the lower left corner since thats assumed to be the loc of multitile objects
 /obj/structure/transport/linear/proc/create_modular_set(min_x, min_y, max_x, max_y, z)
 
@@ -215,7 +215,7 @@
 	width = (max_x - min_x) + 1
 	height = (max_y - min_y) + 1
 
-	///list of turfs we dont go over. if for whatever reason we encounter an already multitile lift platform
+	/// list of turfs we dont go over.. if for whatever reason we encounter an already multitile lift platform
 	///we add all of its locs to this list so we dont add that lift platform multiple times as we iterate through its locs
 	var/list/locs_to_skip = locs.Copy()
 
@@ -281,8 +281,8 @@
 	update_appearance()
 	return TRUE
 
-///returns an unordered list of all lift platforms adjacent to us. used so our transport_controller_datum can control all connected platforms.
-///includes platforms directly above or below us as well. only includes platforms with an identical transport_id to our own.
+/// returns an unordered list of all lift platforms adjacent to us.. used so our transport_controller_datum can control all connected platforms.
+/// includes platforms directly above or below us as well.. only includes platforms with an identical transport_id to our own.
 /obj/structure/transport/linear/proc/module_adjacency(datum/transport_controller/transport_controller_datum)
 	. = list()
 	for(var/direction in GLOB.cardinals_multiz)
@@ -291,7 +291,7 @@
 			continue
 		. += neighbor
 
-///main proc for moving the lift in the direction [travel_direction]. handles horizontal and/or vertical movement for multi platformed lifts and multitile lifts.
+/// main proc for moving the lift in the direction [travel_direction].. handles horizontal and/or vertical movement for multi platformed lifts and multitile lifts.
 /obj/structure/transport/linear/proc/travel(travel_direction)
 	var/list/things_to_move = transport_contents
 	var/turf/destination
@@ -334,7 +334,7 @@
 			for(var/mob/living/crushed in dest_turf.contents)
 				to_chat(crushed, span_userdanger("You are crushed by [src]!"))
 				if(violent_landing)
-					// Violent landing = gibbed. But the nicest kind of gibbing, keeping everything intact.
+					// Violent landing = gibbed.. But the nicest kind of gibbing, keeping everything intact.
 					crushed.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 					crushed.gib(DROP_ALL_REMAINS)
 				else
@@ -361,7 +361,7 @@
 				playsound(hit_wall, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 
 	else
-		///potentially finds a spot to throw the victim at for daring to be hit by a tram. is null if we havent found anything to throw
+		/// potentially finds a spot to throw the victim at for daring to be hit by a tram.. is null if we havent found anything to throw
 		var/atom/throw_target
 
 		for(var/turf/dest_turf as anything in entering_locs)
@@ -414,7 +414,7 @@
 
 			for(var/mob/living/victim_living in dest_turf.contents)
 				var/damage_multiplier = victim_living.maxHealth * 0.01
-				var/extra_ouch = FALSE // if emagged you're gonna have a really bad time
+				var/extra_ouch = FALSE // if emagged you're going to have a really bad time
 				if(internal_movement_delay <= 1) // slow trams don't cause extra damage
 					for(var/obj/structure/tram/spoiler/my_spoiler in transport_contents)
 						if(istype(victim_living.buckled, /obj/structure/fluff/tram_rail))
@@ -487,7 +487,7 @@
 ///this is like calling forceMove() on everything in movers and ourselves, except nothing in movers
 ///has destination.Entered() and origin.Exited() called on them, as only our movement can be perceived.
 ///none of the movers are able to react to the movement of any other mover, saving a lot of needless processing cost
-///and is more sensible. without this, if you and a banana are on the same platform, when that platform moves you will slip
+/// and is more sensible.. without this, if you and a banana are on the same platform, when that platform moves you will slip
 ///on the banana even if youre not moving relative to it.
 /obj/structure/transport/linear/proc/group_move(list/atom/movable/movers, movement_direction)
 	if(movement_direction == NONE)
@@ -528,7 +528,7 @@
 		//another O(n) set of read operations, not ideal given datum var read times.
 		//ideally we would only need to do this check once per tile with contents (which is constant per tram, while contents can scale infinitely)
 		//and then the only O(n) process is calling these procs for each contents that actually changes areas
-		//but that approach is probably a lot buggier. itd be nice to have it figured out though
+		// but that approach is probably a lot buggier.. itd be nice to have it figured out though
 		mover_old_loc = mover.loc
 		mover_old_area = mover_old_loc.loc
 
@@ -604,9 +604,9 @@
 
 		if(consider_anything_past)
 			foreign_contents_in_loc.len -= consider_anything_past
-			//hey cool this works, neat. this takes from the opposite side of the list that youd expect but its easy so idc
+			// hey cool this works, neat.. this takes from the opposite side of the list that youd expect but its easy so idc
 			//also this means that if you use consider_anything_past then foreign mobs are less likely to be deleted than foreign objects
-			//because internally the contents list is 2 linked lists of obj contents - mob contents, thus mobs are always last in the order
+			// because internally the contents list is 2 linked lists of obj contents - mob contents, so mobs are always last in the order
 			//when you iterate it.
 
 		foreign_contents += foreign_contents_in_loc
@@ -618,16 +618,16 @@
 
 /// Callback / general proc to check if the lift is usable by the passed mob.
 /obj/structure/transport/linear/proc/can_open_lift_radial(mob/living/user, starting_position)
-	// Gotta be a living mob
+	// Got to be a living mob
 	if(!isliving(user))
 		return FALSE
-	// Gotta be awake and aware
+	// Got to be awake and aware
 	if(user.incapacitated)
 		return FALSE
 	// Maintain the god given right to fight an elevator
 	if(user.combat_mode)
 		return FALSE
-	// Gotta be by the lift
+	// Got to be by the lift
 	if(!user.Adjacent(src))
 		return FALSE
 	// If the lift moves while the radial is open close that shit

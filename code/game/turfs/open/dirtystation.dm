@@ -1,11 +1,11 @@
-//Janitors!  Janitors, janitors, janitors!  -Sayu
+// Janitors!. Janitors, janitors, janitors!. -Sayu
 
 
 //Conspicuously not-recent versions of suspicious cleanables
 
 //This file was made not awful by Xhuis on September 13, 2016
 
-//Making the station dirty, one tile at a time. Called by master controller's setup_objects
+// Making the station dirty, one tile at a time.. Called by master controller's setup_objects
 
 /turf/open/floor/proc/MakeDirty()
 	// We start with a 1/3 chance of having this proc called by Initialize()
@@ -35,10 +35,10 @@
 		return
 
 
-	if(prob(80)) //mid dirt  - 1/15
+	if(prob(80)) // mid dirt - 1/15
 		return
 
-		//Construction zones. Blood, sweat, and oil.  Oh, and dirt. A small colony of space-ants or two will pop up
+		// Construction zones.. Blood, sweat, and oil.. Oh, and dirt.. A small colony of space-ants or two will pop up
 	var/static/list/engine_dirt_areas = typecacheof(list(
 		/area/station/engineering,
 		/area/station/command/heads_quarters/ce,
@@ -64,7 +64,7 @@
 					new /obj/effect/decal/cleanable/ants(src)
 		return
 
-		//Bathrooms. Blood, vomit, and shavings in the sinks.
+		// Bathrooms.. Blood, vomit, and shavings in the sinks.
 	var/static/list/bathroom_dirt_areas = typecacheof(list(
 		/area/station/commons/toilet,
 		/area/awaymission/research/interior/bathroom,
@@ -90,10 +90,10 @@
 		return
 
 
-	if(prob(75)) //low dirt  - 1/60
+	if(prob(75)) // low dirt - 1/60
 		return
 
-		//Areas where gibs will be present. Robusting probably happened some time ago.
+		// Areas where gibs will be present.. Robusting probably happened some time ago.
 	var/static/list/gib_covered_areas = typecacheof(list(
 		/area/station/ai/satellite,
 		/area/station/security,
@@ -107,7 +107,7 @@
 				new /obj/effect/decal/cleanable/blood/old(src)
 		return
 
-		//Kitchen areas. Broken eggs, flour, spilled milk (no crying allowed.), ants.
+		// Kitchen areas.. Broken eggs, flour, spilled milk (no crying allowed.), ants.
 	var/static/list/kitchen_dirt_areas = typecacheof(list(
 		/area/station/service/kitchen,
 		/area/station/service/cafeteria,
@@ -122,7 +122,7 @@
 			new /obj/effect/decal/cleanable/ants(src)
 		return
 
-		//Medical areas. Mostly clean by space-OSHA standards, but has some blood and oil spread about.
+		// Medical areas.. Mostly clean by space-OSHA standards, but has some blood and oil spread about.
 	var/static/list/medical_dirt_areas = typecacheof(list(
 		/area/station/medical,
 		/area/station/command/heads_quarters/cmo,
@@ -140,7 +140,7 @@
 				new /obj/effect/decal/cleanable/vomit/old(src)
 		return
 
-		//Science messes. Mostly green glowy stuff -WHICH YOU SHOULD NOT INJEST-.
+		// Science messes.. Mostly green glowy stuff -WHICH YOU SHOULD NOT INJEST-.
 	var/static/list/science_dirt_areas = typecacheof(list(
 		/area/station/science,
 		/area/station/command/heads_quarters/rd,

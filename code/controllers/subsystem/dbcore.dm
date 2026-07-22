@@ -10,11 +10,11 @@ SUBSYSTEM_DEF(dbcore)
 	var/schema_mismatch = 0
 	var/db_minor = 0
 	var/db_major = 0
-	/// Number of failed connection attempts this try. Resets after the timeout or successful connection
+	/// Number of failed connection tries this try.. Resets after the timeout or successful connection
 	var/failed_connections = 0
 	/// Max number of consecutive failures before a timeout (here and not a define so it can be vv'ed mid round if needed)
 	var/max_connection_failures = 5
-	/// world.time that connection attempts can resume
+	/// world.time that connection tries can resume
 	var/failed_connection_timeout = 0
 	/// Total number of times connections have had to be timed out.
 	var/failed_connection_timeout_count = 0
@@ -23,11 +23,11 @@ SUBSYSTEM_DEF(dbcore)
 
 	var/max_concurrent_queries = 25
 
-	/// Number of all queries, reset to 0 when logged in SStime_track. Used by SStime_track
+	/// Number of all queries, reset to 0 when logged in SStime_track.. Used by SStime_track
 	var/all_queries_num = 0
-	/// Number of active queries, reset to 0 when logged in SStime_track. Used by SStime_track
+	/// Number of active queries, reset to 0 when logged in SStime_track.. Used by SStime_track
 	var/queries_active_num = 0
-	/// Number of standby queries, reset to 0 when logged in SStime_track. Used by SStime_track
+	/// Number of standby queries, reset to 0 when logged in SStime_track.. Used by SStime_track
 	var/queries_standby_num = 0
 
 	/// All the current queries that exist.
@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(dbcore)
 	msg = "\n  P:[length(all_queries)]|Active:[length(queries_active)]|Standby:[length(queries_standby)]"
 	return ..()
 
-/// Resets the tracking numbers on the subsystem. Used by SStime_track.
+/// Resets the tracking numbers on the subsystem.. Used by SStime_track.
 /datum/controller/subsystem/dbcore/proc/reset_tracking()
 	all_queries_num = 0
 	queries_active_num = 0
@@ -295,7 +295,7 @@ SUBSYSTEM_DEF(dbcore)
 		last_error = result["data"]
 		log_sql("Connect() failed | [last_error]")
 		++failed_connections
-		//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect for a time.
+		// If it failed to establish a connection more than 5 times in a row, don't bother trying to connect for a time.
 		if(failed_connections > max_connection_failures)
 			failed_connection_timeout_count++
 			//basic exponential backoff algorithm

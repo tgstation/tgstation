@@ -15,7 +15,7 @@
 /// Generates an auto formatted template user.
 /// Your autowiki should ideally be a *lot* of these.
 /// It lets wiki editors edit it much easier later, without having to enter repo.
-/// Parameters will be passed in by name. That means your template should expect
+/// Parameters will be passed in by name.. That means your template should expect
 /// something that looks like `{{ Autowiki_Circuit|name=Combiner|description=This combines }}`
 /// Lists, which must be array-like (no keys), will be turned into a flat list with their key and a number,
 /// such that list("food" = list("fruit", "candy")) -> food1=fruit|food2=candy

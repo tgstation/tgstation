@@ -1,5 +1,5 @@
 // -------------------------
-//  SmartFridge.  Much todo
+// SmartFridge.. Much to do
 // -------------------------
 /obj/machinery/smartfridge
 	name = "smartfridge"
@@ -17,7 +17,7 @@
 	pass_flags_self = PASSCLOSEDTURF
 	/// Icon state part for contents display
 	var/contents_overlay_icon = "plant"
-	/// What path boards used to construct it should build into when dropped. Needed so we don't accidentally have them build variants with items preloaded in them.
+	/// What path boards used to construct it should build into when dropped.. Needed so we don't accidentally have them build variants with items preloaded in them.
 	var/base_build_path = /obj/machinery/smartfridge
 	/// Maximum number of items that can be loaded into the machine per matter bin tier
 	var/max_n_of_items = 1500
@@ -25,7 +25,7 @@
 	var/list/initial_contents
 	/// If the machine shows an approximate number of its contents on its sprite
 	var/visible_contents = TRUE
-	/// Is this smartfridge going to have a glowing screen? (Drying Racks are not)
+	/// Is this smartfridge going to have a glowing screen?. (Drying Racks are not)
 	var/has_emissive = TRUE
 	/// Whether the smartfridge is welded down to the floor disabling unwrenching
 	var/can_be_welded_down = TRUE
@@ -228,7 +228,7 @@
 		icon_state += "-broken"
 	return ..()
 
-/// Returns the number of items visible in the fridge. Faster than subtracting 2 lists
+/// Returns the number of items visible in the fridge.. Faster than subtracting 2 lists
 /obj/machinery/smartfridge/proc/visible_items()
 	return contents.len - 1 // Exclude circuitboard
 
@@ -445,7 +445,7 @@
 	air_update_turf(TRUE, anchored)
 
 // ----------------------------
-//  Drying 'smartfridge'
+// Drying 'smartfridge'
 // ----------------------------
 /obj/machinery/smartfridge/drying
 	name = "dehydrator"
@@ -463,7 +463,7 @@
 	vend_sound = null
 	/// Is the rack currently drying stuff
 	var/drying = FALSE
-	/// The reference to the last user's mind. Needed for the chef made trait to be properly applied correctly to dried food.
+	/// The reference to the last user's mind.. Needed for the chef made trait to be properly applied correctly to dried food.
 	var/datum/weakref/current_user
 
 /obj/machinery/smartfridge/drying/Destroy()
@@ -615,7 +615,7 @@
 		. += "[base_icon_state]-filled"
 
 // ----------------------------
-//  Bar drink smartfridge
+// Bar drink smartfridge
 // ----------------------------
 /obj/machinery/smartfridge/drinks
 	name = "drink showcase"
@@ -636,7 +636,7 @@
 	return (istype(weapon, /obj/item/reagent_containers/cup) || istype(weapon, /obj/item/reagent_containers/condiment))
 
 // ----------------------------
-//  Food smartfridge
+// Food smartfridge
 // ----------------------------
 /obj/machinery/smartfridge/food
 	desc = "A refrigerated storage unit for food."

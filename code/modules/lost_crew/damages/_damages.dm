@@ -1,15 +1,15 @@
-// Unique damage types we can apply for blacklisting, so we dont remove all organs twice etc
+// Unique damage types we can apply for blacklisting, so we dont remove all organs twice and so on
 #define CORPSE_DAMAGE_ORGAN_DECAY "organ decay"
 #define CORPSE_DAMAGE_ORGAN_LOSS "organ loss"
 #define CORPSE_DAMAGE_LIMB_LOSS "limb loss"
 
-/// The main style controller for new dead bodies! Determines the character, lore, possible causes of death, decay and every other modifier!
+/// The main style controller for new dead bodies!. Determines the character, lore, possible causes of death, decay and every other modifier!
 /datum/corpse_damage_class
 	/// Message sent to the recovered crew, constructed from the different death lores
 	var/list/death_lore = list()
 	/// Lore we give on revival, this is the first line
 	var/area_lore = "I was doing something"
-	/// Weight given to this class. Setting this is all that's needed for it to be rollable
+	/// Weight given to this class.. Setting this is all that's needed for it to be rollable
 	var/weight
 	/// Different character archetypes we can spawn
 	var/list/possible_character_types
@@ -21,14 +21,14 @@
 	var/list/possible_causes_of_death
 	/// Goddamn space vultures stealing my organs
 	var/list/post_mortem_effects
-	/// A random decay we apply. Defined here so we can vary it (i.e. a spaced body has less decay than one in a warm jungle)
+	/// A random decay we apply.. Defined here so we can vary it (i.e.. a spaced body has less decay than one in a warm jungle)
 	var/list/decays = list(/datum/corpse_damage/post_mortem/organ_decay)
 	/// When healthscanned, this is the minimum time that shows
 	var/lore_death_time_min = 1 DAYS
 	/// When healthscanned, this is the maximum time that shows
 	var/lore_death_time_max = 5 YEARS
 
-/// Generate and apply a possible character (species etc)
+/// Generate and apply a possible character (species and so on
 /datum/corpse_damage_class/proc/apply_character(mob/living/carbon/human/fashion_corpse, list/protected_objects, list/recovered_items, list/datum/callback/on_revive_and_player_occupancy, list/body_data)
 	var/datum/corpse_character/character = pick_weight(possible_character_types)
 	character = new character()
@@ -129,7 +129,7 @@
 	/// if TRUE this can only be the only cause of death, and not multiple at once
 	var/no_bonus_roll = FALSE
 
-/// Tear IT UPPP!!! Apply any damages to the body that we need to
+/// Tear IT UPPP!!!. Apply any damages to the body that we need to
 /datum/corpse_damage/proc/apply_to_body(mob/living/carbon/human/body, severity, list/storage)
 	return
 

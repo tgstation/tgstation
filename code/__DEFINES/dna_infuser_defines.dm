@@ -10,7 +10,7 @@
 #define DNA_MUTANT_TIER_ONE 1
 /// tier 2 mutants, harder to make infusions
 #define DNA_MUTANT_TIER_TWO 2
-/// tier 3 mutants, requires cooperation with vatgrowing xenobiologists, outwardly and plainly strong. SOON
+/// tier 3 mutants, needs cooperation with vatgrowing xenobiologists, outwardly and plainly strong... SOON
 #define DNA_MUTANT_TIER_THREE 3
 
 /// dna infuser won't upgrade past this tier

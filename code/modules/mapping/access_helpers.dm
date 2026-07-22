@@ -21,7 +21,7 @@
 	var/list/access = list()
 	return access
 
-// -------------------- Req Any (Only requires ONE of the given accesses to open)
+// -------------------- Req Any (Only needs ONE of the given accesses to open)
 // -------------------- Command access helpers
 /obj/effect/mapping_helpers/airlock/access/any/command
 	icon_state = "access_helper_com"
@@ -528,7 +528,7 @@
 	access_list += list(ACCESS_CENT_SPECOPS)
 	return access_list
 
-// -------------------- Req All (Requires ALL of the given accesses to open)
+// -------------------- Req All needs ALL of the given accesses to open)
 // -------------------- Command access helpers
 /obj/effect/mapping_helpers/airlock/access/all/command
 	icon_state = "access_helper_com"

@@ -19,7 +19,7 @@
 ///Alert when a Cyborg gets disconnected from their AI.
 #define AI_NOTIFICATION_CYBORG_DISCONNECTED 5
 
-//transfer_ai() defines. Main proc in ai_core.dm
+// transfer_ai() defines... Main proc in ai_core.dm
 ///Downloading AI to InteliCard
 #define AI_TRANS_TO_CARD 1
 ///Uploading AI from InteliCard
@@ -60,7 +60,7 @@
 #define SKIN_HAT_OFFSET "skin_hat_offset"
 #define SKIN_TRAITS "skin_traits"
 
-/** Simple Animal BOT defines */
+/** * * Simple Animal BOT defines */
 
 //Assembly defines
 #define ASSEMBLY_FIRST_STEP 1
@@ -247,7 +247,7 @@ DEFINE_BITFIELD(repairbot_flags, list(
 #define MEDBOT_DECLARE_CRIT (1<<0)
 ///If the bot will stand still, only healing those next to it.
 #define MEDBOT_STATIONARY_MODE (1<<1)
-///Whether the bot will randomly speak from time to time. This will not actually prevent all speech.
+/// Whether the bot will randomly speak from time to time... This will not actually prevent all speech.
 #define MEDBOT_SPEAK_MODE (1<<2)
 /// is the bot currently tipped over?
 #define MEDBOT_TIPPED_MODE (1<<3)

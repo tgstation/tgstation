@@ -4,9 +4,9 @@
 	exp_tag = "Material Scan"
 	total_requirement = 8
 	possible_types = list(/obj/structure/chair, /obj/structure/toilet, /obj/structure/table, /turf/closed/wall, /turf/open/floor)
-	///List of materials that can be required.
+	/// List of materials that can be needed
 	var/possible_material_types = list()
-	///List of materials actually required, indexed by the atom that is required.
+	/// List of materials actually needed indexed by the atom that is needed
 	var/required_materials = list()
 
 /datum/experiment/scanning/random/material/New(datum/techweb/techweb)

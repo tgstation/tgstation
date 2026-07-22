@@ -5,7 +5,7 @@
 
 /obj/item/circuitboard
 	name = "circuit board"
-	/// extension that is applied after the initial name AKA (Computer/Machine Board)
+	/// extension that is applied after the initial name Also known as (Computer/Machine Board)
 	var/name_extension = null
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "circuit_map"
@@ -19,7 +19,7 @@
 	var/build_path = null
 	/// whether or not the circuit board will build into a vendor whose products cost nothing (used for offstation vending machines mostly)
 	var/all_products_free = FALSE
-	///determines if the board requires specific levels of parts. (ie specifically a femto menipulator vs generic manipulator)
+	/// determines if the board needs specific levels of parts.. that is specifically a femto menipulator vs generic manipulator)
 	var/specific_parts = FALSE
 
 /obj/item/circuitboard/Initialize(mapload)
@@ -34,7 +34,7 @@
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/machine)
 	if(LAZYLEN(machine.component_parts))
-		// This really shouldn't happen. If it somehow does, print out a stack trace and gracefully handle it.
+		// This really shouldn't happen.. If it somehow does, print out a stack trace and gracefully handle it.
 		stack_trace("apply_defauly_parts called on machine that already had component_parts: [machine]")
 
 		// Remove references of components so it doesn't trigger Exited logic and remove existing parts.
@@ -47,7 +47,7 @@
 	forceMove(machine)
 
 	if(machine.circuit != src)
-		// This really shouldn't happen. If it somehow does, print out a stack trace and gracefully handle it.
+		// This really shouldn't happen.. If it somehow does, print out a stack trace and gracefully handle it.
 		stack_trace("apply_default_parts called from a circuit board that does not belong to machine: [machine]")
 
 		QDEL_NULL(machine.circuit)
@@ -82,7 +82,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 	name_extension = "(Machine Board)"
 	/// Whether this machine must be anchored to be constructed.
 	var/needs_anchored = TRUE
-	/// Components required by the machine.
+	/// Components needed by the machine.
 	/// Example: list(/obj/item/stock_parts/matter_bin = 5)
 	var/list/req_components
 	/// Default replacements for req_components, to be used in apply_default_parts instead of req_components types
@@ -172,7 +172,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 		var/component_name
 		var/component_amount = req_components[component_path]
 
-		//e.g. "glass sheet" vs. "glass"
+		// e.g.. "glass sheet" vs.. "glass"
 		if(ispath(component_path, /obj/item/stack))
 			var/obj/item/stack/stack_path = component_path
 			component_name = initial(stack_path.singular_name)

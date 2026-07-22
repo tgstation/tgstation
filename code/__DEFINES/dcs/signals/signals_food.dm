@@ -60,7 +60,7 @@
 ///Sent to the newly spawned object when it's grilled on a griddle.
 #define COMSIG_ITEM_GRILLED_RESULT "item_grilled_result"
 
-///Called when the object is grilled by the grill (not to be confused by the griddle, but oh gee the two should be merged in one)
+/// Called when the object is grilled by the grill (not to be confused by the griddle.. Oh gee the two should be merged in one)
 #define COMSIG_ITEM_BARBEQUE_GRILLED "item_barbeque_grilled"
 
 // Baking foods (oven)

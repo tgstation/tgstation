@@ -161,7 +161,7 @@
 	var/drowsy_per_second = 2 SECONDS
 	/// At what point of drowsiness do we knock out the owner
 	var/drowsy_knockout = 5 SECONDS // Actually more like 8 seconds, because you need 4 ticks to reach this
-	/// Can this bolt cause sleeping? Used to prevent sleep stacking by shooting multiple bolts
+	/// Can this bolt cause sleeping?. Used to prevent sleep stacking by shooting multiple bolts
 	var/can_sleep = TRUE
 
 /datum/embedding/rebar_healium/on_successful_embed(mob/living/carbon/victim, obj/item/bodypart/target_limb)

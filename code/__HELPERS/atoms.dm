@@ -56,7 +56,7 @@
 	if(our_turf && include_turf) //At this point, only the turf is left, provided it exists.
 		. += our_turf
 
-///Step-towards method of determining whether one atom can see another. Similar to viewers()
+/// Step-towards method of determining whether one atom can see another.. Similar to viewers()
 ///note: this is a line of sight algorithm, view() does not do any sort of raycasting and cannot be emulated by it accurately
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
@@ -302,7 +302,7 @@ rough example of the "cone" made by the 3 dirs checked
 	chosen = matches[chosen]
 	return chosen
 
-///Creates new items inside an atom based on a list
+/// Creates new items inside an atom good on a list
 /proc/generate_items_inside(list/items_list, where_to)
 	for(var/each_item in items_list)
 		for(var/i in 1 to items_list[each_item])
@@ -368,7 +368,7 @@ rough example of the "cone" made by the 3 dirs checked
 /proc/pass(...)
 	return
 
-/// Returns an x and y value require to reverse the transformations made to center an oversized icon
+/// Returns an x and why value need to reverse the transformations made to center an oversized icon
 /atom/proc/get_oversized_icon_offsets()
 	if (!base_pixel_x && !base_pixel_y && !base_pixel_w && !base_pixel_z)
 		return list("x" = 0, "y" = 0)

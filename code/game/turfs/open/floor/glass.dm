@@ -19,7 +19,7 @@
 	var/list/glow_stuff
 	/// How much alpha to leave when cutting away emissive blockers
 	var/alpha_to_leave = 255
-	/// Color of starlight to use. Defaults to STARLIGHT_COLOR if not set
+	/// Color of starlight to use.. Defaults to STARLIGHT_COLOR if not set
 	var/starlight_color
 
 /turf/open/floor/glass/broken_states()
@@ -40,9 +40,9 @@
 	UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
 
 /// If this turf is at the bottom of the local rendering stack
-/// Then we're gonna make it emissive block so the space below glows
+/// Then we're going to make it emissive block so the space below glows
 /turf/open/floor/glass/proc/setup_glow()
-	if(GET_TURF_PLANE_OFFSET(src) != GET_LOWEST_STACK_OFFSET(z)) // We ain't the bottom brother
+	if(GET_TURF_PLANE_OFFSET(src) != GET_LOWEST_STACK_OFFSET(z)) // We is not the bottom brother
 		return
 	// We assume no parallax means no space means no light
 	if(SSmapping.level_trait(z, ZTRAIT_NOPARALLAX))

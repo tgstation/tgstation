@@ -8,7 +8,7 @@
 	var/description
 	/// The URL that the title
 	var/url
-	/// The colour that appears on the top of the embed. This is an integer and is the color code of the embed.
+	/// The colour that appears on the top of the embed.. This is an integer and is the color code of the embed.
 	var/color
 	/// The footer that appears on the embed
 	var/footer

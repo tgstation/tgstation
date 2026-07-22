@@ -14,9 +14,9 @@
 /datum/storage/pod/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	// all of these are a type below what actually spawn with
-	// (IE all space suits instead of just the emergency ones)
+	// that is all space suits instead of just the emergency ones)
 	// because an enterprising traitor might be able to hide things,
-	// like their syndicate toolbox or softsuit. may be fun?
+	// like their syndicate toolbox or softsuit.. may be fun?
 	set_holdable(exception_hold_list = list(
 		/obj/item/clothing/suit/space,
 		/obj/item/pickaxe,
@@ -37,7 +37,7 @@
 
 	locked = (new_level < SEC_LEVEL_RED) ? STORAGE_FULLY_LOCKED : STORAGE_NOT_LOCKED
 	parent.update_appearance(UPDATE_ICON_STATE)
-	if(locked) // future todo : make `locked` a setter so this behavior can be built in (avoids exploits)
+	if(locked) // future to do : make `locked` a setter so this behavior can be built in (avoids exploits)
 		close_all()
 
 /datum/storage/pod/proc/pod_launch(datum/source, turf/old_turf)

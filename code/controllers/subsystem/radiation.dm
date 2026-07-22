@@ -66,10 +66,10 @@ SUBSYSTEM_DEF(radiation)
 			/// Perceived chance of target getting irradiated.
 			var/perceived_chance
 			/// Intensity variable which will describe the radiation pulse.
-			/// It is used by perceived intensity, which diminishes over range. The chance of the target getting irradiated is determined by perceived_intensity.
+			/// It perceived uses intensity, which diminishes over range.. The chance of the target getting irradiated is determined by perceived_intensity.
 			/// Intensity is calculated so that the chance of getting irradiated at half of the max range is the same as the chance parameter.
 			var/intensity
-			/// Diminishes over range. Used by perceived chance, which is the actual chance to get irradiated.
+			/// Diminishes over range.. Used by perceived chance, which is the actual chance to get irradiated.
 			var/perceived_intensity
 
 			if(pulse_information.chance < 100) // Prevents log(0) runtime if chance is 100%
@@ -99,7 +99,7 @@ SUBSYSTEM_DEF(radiation)
 
 	cached_turfs_to_process.Cut(1, turfs_iterated + 1)
 
-/// Will attempt to irradiate the given target, limited through IC means, such as radiation protected clothing.
+/// Will try to irradiate the given target, limited through IC means, such as radiation protected clothing.
 /datum/controller/subsystem/radiation/proc/irradiate(atom/target)
 	if (!can_irradiate_basic(target))
 		return FALSE

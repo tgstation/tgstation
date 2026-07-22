@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		/datum/pet_command/follow,
 		/datum/pet_command/fetch,
 	)
-	/// Can we wear a collar? If so, what is our icon state prefix for it?
+	/// Can we wear a collar?. If so, what is our icon state prefix for it?
 	var/collar_state = "raptor"
 	/// Raptor color datum assigned to this raptor, this is a singleton
 	var/datum/raptor_color/raptor_color = null
@@ -78,7 +78,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	var/datum/raptor_inheritance/inherited_stats = null
 	/// Current happiness value of the raptor
 	var/happiness_percentage = 0
-	/// The ability for this raptor to be picked up and held. Defaults to FALSE as it's meant to be in lockstep with the element being added/removed.
+	/// The ability for this raptor to be picked up and held.. Defaults to FALSE as it's meant to be in lockstep with the element being added/removed.
 	var/could_be_held = FALSE
 
 /mob/living/basic/raptor/Initialize(mapload, datum/raptor_color/color_type, datum/raptor_inheritance/passed_stats)
@@ -285,7 +285,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 	return pick_weight(prob_list)
 
-/// Updates the presence of the can_be_held element based on what we want from the raptor
+/// Updates the presence of the can_be_held element good on what we want from the raptor
 /mob/living/basic/raptor/proc/update_holdability(bool)
 	if(bool && !could_be_held)
 		AddElement(/datum/element/can_be_held)
@@ -340,7 +340,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		change_growth_stage(growth_stage == RAPTOR_BABY ? RAPTOR_YOUNG : RAPTOR_ADULT)
 		growth_progress = 0
 
-/// Changes the raptor to a new growth stage. Only should be done forwards, or on raptor init as the first thing before everything else
+/// Changes the raptor to a new growth stage.. Only should be done forwards, or on raptor init as the first thing before everything else
 /// Sorry for the monolith, but splitting it up results in even worse looking code with a ton of duplicate calls and assignments
 /// And making a *second* datum is just insanity
 /mob/living/basic/raptor/proc/change_growth_stage(new_stage, prev_stage = growth_stage)

@@ -41,10 +41,10 @@
 		if(checked_object.block_superconductivity())
 			atmos_supeconductivity |= direction
 			target_turf.atmos_supeconductivity |= opposite_direction
-			return FALSE //no need to keep going, we got all we asked (Is this even faster? fuck you it's soul)
+			return FALSE // no need to keep going, we got all we asked (Is this even faster?. fuck you it's soul)
 
 	//Superconductivity is a bitfield of directions we can't conduct with
-	//Yes this is really weird. Fuck you
+	// Yes this is really weird.. Fuck you
 	atmos_supeconductivity &= ~direction
 	target_turf.atmos_supeconductivity &= ~opposite_direction
 
@@ -55,10 +55,10 @@
 
 /// This proc is a more deeply optimized version of immediate_calculate_adjacent_turfs
 /// It contains dumbshit, and also stuff I just can't do at runtime
-/// If you're not editing behavior, just read that proc. It's less bad
+/// If you're not editing behavior, just read that proc.. It's less bad
 /turf/proc/init_immediate_calculate_adjacent_turfs()
 	//Basic optimization, if we can't share why bother asking other people ya feel?
-	// You know it's gonna be stupid when they include a unit test in the atmos code
+	// You know it's going to be stupid when they include a unit test in the atmos code
 	// Yes, inlining the string concat does save 0.1 seconds
 	#ifdef UNIT_TESTS
 	ASSERT(UP == 16)
@@ -67,10 +67,10 @@
 	LAZYINITLIST(src.atmos_adjacent_turfs)
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
 	var/canpass = CANATMOSPASS(src, src, FALSE)
-	// I am essentially inlineing two get_dir_multizs here, because they're way too slow on their own. I'm sorry brother
+	// I am essentially inlineing two get_dir_multizs here, because they're way too slow on their own.. I'm sorry brother
 	var/list/z_traits = SSmapping.multiz_levels[z]
 	for(var/direction in GLOB.cardinals_multiz)
-		// Yes this is a reimplementation of get_step_mutliz. It's faster tho. fuck you
+		// Yes this is a reimplementation of get_step_mutliz.. It's faster though fuck you
 		// Oh also yes UP and DOWN do just point to +1 and -1 and not z offsets
 		// Multiz is shitcode welcome home
 		var/turf/current_turf = (direction & (UP|DOWN)) ? \
@@ -86,7 +86,7 @@
 			continue
 		// The assumption is that ONLY DURING INIT if two tiles have the same cycle, there's no way canpass(a->b) will be different then canpass(b->a), so this is faster
 		// Saves like 1.2 seconds
-		// Note: current cycle here goes DOWN as we sleep. this is to ensure we can use the >= logic in the first step of process_cell
+		// Note: current cycle here goes DOWN as we sleep.. this is to ensure we can use the >= logic in the first step of process_cell
 		// It's not a massive thing, and I'm sorry for the cursed code, but it be this way
 		if(current_turf.current_cycle <= current_cycle)
 			continue

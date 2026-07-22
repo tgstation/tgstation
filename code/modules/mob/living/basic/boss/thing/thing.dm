@@ -44,7 +44,7 @@
 
 	/// if true, this boss may only be killed proper in its ruin by the associated machines as part of the bossfight.
 	var/maploaded = TRUE
-	/// where we spawned. not set if not maploaded
+	/// where we spawned.. not set if not maploaded
 	var/turf/spawn_loc
 	/// return timer
 	var/return_timer
@@ -176,7 +176,7 @@
 	emote("roar")
 	SEND_SIGNAL(src, COMSIG_MEGAFAUNA_THETHING_PHASEUPDATED)
 
-/// Immediately set out blackboard target key (if empty) to whoever attacks us; this is primarily because it has a lowered aggro range and a high sight range
+/// Immediately set out blackboard target key (if empty) to whoever attacks us; this is primarily because it has a lowered aggro range. A high sight range
 /mob/living/basic/boss/thing/proc/immediate_aggro(datum/source, mob/attacker, flags)
 	SIGNAL_HANDLER
 	if(isnull(ai_controller) || stat || !istype(attacker) || ai_controller.blackboard_key_exists(BB_CURRENT_TARGET))

@@ -15,7 +15,7 @@
 	/// The techweb the printer will get researched designs from
 	var/datum/techweb/techweb
 
-	/// The current unlocked circuit component designs. Used by integrated circuits to print off circuit components remotely.
+	/// The current unlocked circuit component designs.. Used by integrated circuits to print off circuit components remotely.
 	var/list/current_unlocked_designs = list()
 
 	/// The efficiency of this machine

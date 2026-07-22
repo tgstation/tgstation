@@ -13,10 +13,10 @@
 	/// Determines the type of damage overlay that will be used for the tile
 	var/damaged_dmi = null
 	var/broken = FALSE
-	/// Are broken overlays smoothed? if they are we have to change a little bit about how we render them
+	/// Are broken overlays smoothed?. if they are we have to change a little bit about how we render them
 	var/smooth_broken = FALSE
 	var/burnt = FALSE
-	/// Are burnt overlays smoothed? if they are we have to change a little bit about how we render them
+	/// Are burnt overlays smoothed?. if they are we have to change a little bit about how we render them
 	var/smooth_burnt = FALSE
 
 	/// Custom destination for mirages
@@ -603,9 +603,9 @@
 /turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperiness from the tile instead of the natural drying over time
 	qdel(GetComponent(/datum/component/wet_floor))
 
-/// Builds with rods. This doesn't exist to be overridden, just to remove duplicate logic for turfs that want
+/// Builds with rods.. This doesn't exist to be overridden, just to remove duplicate logic for turfs that want
 /// To support floor tile creation
-/// I'd make it a component, but one of these things is space. So no.
+/// I'd make it a component, but one of these things is space.. So no.
 /turf/open/proc/build_with_rods(obj/item/stack/rods/used_rods, mob/user)
 	var/obj/structure/lattice/catwalk_bait = locate(/obj/structure/lattice, src)
 	var/obj/structure/lattice/catwalk/existing_catwalk = locate(/obj/structure/lattice/catwalk, src)

@@ -1,4 +1,4 @@
-// This element should be applied to wall-mounted machines/structures, so that if the support structure it's "hanging" from is broken or deconstructed, the wall-hung structure will deconstruct.
+// This element should be applied to wall-mounted machines/structures, so that if the support structure it's "hanging" from is broken. Deconstructed, the wall-hung structure will deconstruct.
 /datum/component/atom_mounted
 	/// The closed turf our object is currently linked to.
 	var/atom/hanging_support_atom
@@ -104,12 +104,12 @@
 	hanging_parent.visible_message(message = span_warning("\The [hanging_parent] falls apart!"), vision_distance = 5)
 	hanging_parent.deconstruct(FALSE)
 
-/// Returns a list of potential turfs to mount on. This should not check if those turfs are valid but only locate them
+/// Returns a list of potential turfs to mount on.. This should not check if those turfs are valid but only locate them
 /obj/proc/get_turfs_to_mount_on()
 	PROTECTED_PROC(TRUE)
 	RETURN_TYPE(/list/turf)
 
-	//Infer using icon offsets. Can support diagonal mounting
+	// Infer using icon offsets.. Can support diagonal mounting
 	var/pixel_direction = NONE
 	if(pixel_x > (ICON_SIZE_X / 2))
 		pixel_direction |= EAST

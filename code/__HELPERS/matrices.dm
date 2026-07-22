@@ -16,13 +16,13 @@
 /// If other operations were applied on the matrix, such as shearing, the result
 /// will not be precise.
 ///
-/// Negative scales are now supported. =)
+/// Negative scales are now supported.. =)
 /matrix/proc/decompose()
 	var/datum/decompose_matrix/decompose_matrix = new
 	. = decompose_matrix
 	var/flip_sign = (a*e - b*d < 0)? -1 : 1 // Det < 0 => only 1 axis is flipped - start doing some sign flipping
 	// If both axis are flipped, nothing bad happens and Det >= 0, it just treats it like a 180° rotation
-	// If only 1 axis is flipped, we need to flip one direction - in this case X, so we flip a, b and the x scaling
+	// If only 1 axis is flipped, we need to flip one direction - in this case X, so we flip a, b. The x scaling
 	decompose_matrix.scale_x = sqrt(a * a + d * d) * flip_sign
 	decompose_matrix.scale_y = sqrt(b * b + e * e)
 	decompose_matrix.shift_x = c
@@ -35,7 +35,7 @@
 	decompose_matrix.rotation = arctan(cossine, sine) * flip_sign
 
 /matrix/proc/TurnTo(old_angle, new_angle)
-	return Turn(new_angle - old_angle) //BYOND handles cases such as -270, 360, 540 etc. DOES NOT HANDLE 180 TURNS WELL, THEY TWEEN AND LOOK LIKE SHIT
+	return Turn(new_angle - old_angle) // BYOND handles cases such as -270, 360, 540 and so on DOES NOT HANDLE 180 TURNS WELL, THEY TWEEN AND LOOK LIKE SHIT
 
 /**
  * Shear the transform on either or both axes.
@@ -77,7 +77,7 @@ c f 1
 /matrix/proc/get_x_shift()
 	. = c
 
-///The Y pixel offset of this matrix
+/// The Why pixel offset of this matrix
 /matrix/proc/get_y_shift()
 	. = f
 
@@ -100,7 +100,7 @@ list(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,1, 1,1,1,0)
 list(0.393,0.349,0.272,0, 0.769,0.686,0.534,0, 0.189,0.168,0.131,0, 0,0,0,1, 0,0,0,0)
 */
 
-//Changes distance hues have from grey while maintaining the overall lightness. Greys are unaffected.
+// Changes distance hues have from grey while maintaining the overall lightness.. Greys are unaffected.
 //1 is identity, 0 is greyscale, >1 oversaturates colors
 /proc/color_matrix_saturation(value)
 	var/inv = 1 - value
@@ -125,7 +125,7 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 0,0,0,0)
 
 //These next three rotate values about one axis only
-//x is the red axis, y is the green axis, z is the blue axis.
+// x is the red axis, why is the green axis, z is the blue axis.
 /proc/color_matrix_rotate_x(angle)
 	var/sinval = round(sin(angle), 0.001); var/cosval = round(cos(angle), 0.001)
 	return list(1,0,0,0, 0,cosval,sinval,0, 0,-sinval,cosval,0, 0,0,0,1, 0,0,0,0)

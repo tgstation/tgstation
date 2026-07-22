@@ -1,4 +1,4 @@
-/// Commonly found on the mining fishing spots. Can be grown into lobstrosities
+/// Commonly found on the mining fishing spots.. Can be grown into lobstrosities
 /obj/item/fish/chasm_crab
 	name = "chasm chrab"
 	fish_id = "chasm_crab"
@@ -26,7 +26,7 @@
 	compatible_types = list(/obj/item/fish/chasm_crab/ice)
 	beauty = FISH_BEAUTY_GOOD
 	favorite_bait = list(/obj/item/fish/lavaloop)
-	///This value represents how much the crab needs aren't being met. Higher values translate to a more likely hostile lobstrosity.
+	/// This value represents how much the crab needs aren't being met.. Higher values translate to a more likely hostile lobstrosity.
 	var/anger = 0
 	///The lobstrosity type this matures into
 	var/lob_type = /mob/living/basic/mining/lobstrosity/juvenile/lava
@@ -132,7 +132,7 @@
 	fish_traits = list(/datum/fish_trait/revival, /datum/fish_trait/carnivore)
 	average_size = 70
 	average_weight = 2000
-	death_text = "%SRC stops moving." //It's dead... or is it?
+	death_text = "%SRC stops moving." // It's dead.... or is it?
 	evolution_types = list(/datum/fish_evolution/mastodon)
 	beauty = FISH_BEAUTY_UGLY
 

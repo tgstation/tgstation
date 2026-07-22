@@ -15,7 +15,7 @@
 				TEST_FAIL("[input_type] is in the 'input_obj_or_mob' list for [infuser_entry.type] but doesn't have TRAIT_VALID_DNA_INFUSION.")
 
 /// Checks that all "organ_set_bonus" status effects have unique "id" vars.
-/// Required to ensure that the status effects are treated as "unique".
+/// Needed to ensure that the status effects are treated as "unique".
 /datum/unit_test/organ_set_bonus_id
 
 /datum/unit_test/organ_set_bonus_id/Run()
@@ -43,7 +43,7 @@
 		var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)
 		var/list/obj/item/organ/inserted_organs = list()
 
-		// Attempt to insert entire list of mutant organs for the given infusion_entry.
+		// Try to insert entire list of mutant organs for the given infusion_entry.
 		for(var/obj/item/organ/organ as anything in output_organs)
 			organ = new organ()
 			organ.Insert(lab_rat, special = TRUE, movement_flags = DELETE_IF_REPLACED)
@@ -57,7 +57,7 @@
 		// If threshold_desc is filled-in, it implies the organ_set_bonus Status Effect should be activated.
 		// Without it, we'll assume there isn't a Status Effect to look for.
 		var/has_threshold = (infuser_entry.threshold_desc != DNA_INFUSION_NO_THRESHOLD)
-		// How many organs the Status Effect requires to be inserted before it will activate.
+		// How many organs the Status Effect needs to be inserted before it will activate.
 		var/total_organs_needed = added_status?.organs_needed || 0
 		// How many organs are available from the infuser entry.
 		var/total_organs = length(infuser_entry.output_organs)

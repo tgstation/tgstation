@@ -24,7 +24,7 @@
 	var/can_adjust = TRUE
 	/// If adjusted what style are we currently using?
 	var/adjusted = NORMAL_STYLE
-	/// For adjusted/rolled-down jumpsuits. FALSE = exposes chest and arms, TRUE = exposes arms only
+	/// For adjusted/rolled-down jumpsuits.. FALSE = exposes chest and arms, TRUE = exposes arms only
 	var/alt_covers_chest = FALSE
 	/// The variable containing the flags for how the woman uniform cropping is supposed to interact with the sprite.
 	var/female_sprite_flags = FEMALE_UNIFORM_FULL
@@ -52,7 +52,7 @@
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		set_sensor_mode(pick(SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_LIVING, SENSOR_LIVING, SENSOR_COORDS, SENSOR_COORDS, SENSOR_OFF))
-	//ensure we add or remove relevant clothing traits based on base sensor status and mode
+	// ensure we add or remove relevant clothing traits good on base sensor status and mode
 	update_wearer_status()
 
 	register_context()
@@ -266,7 +266,7 @@
 		do_sparks(number = 2, cardinal_only = FALSE, source = src)
 		addtimer(CALLBACK(src, PROC_REF(sensor_malfunction)), rand(BROKEN_SPARKS_MIN, BROKEN_SPARKS_MAX * 0.5), TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
 
-/// Changes whether the suit sensor has a sensor, or if it's broken, etc. and handles updating mob status if applicable
+/// Changes whether the suit sensor has a sensor, or if it's broken, and so on and handles updating mob status if applicable
 /obj/item/clothing/under/proc/set_has_sensor(new_has_sensor)
 	if(new_has_sensor == has_sensor)
 		return FALSE

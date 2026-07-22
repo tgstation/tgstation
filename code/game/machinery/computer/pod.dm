@@ -64,7 +64,7 @@
 
 /obj/machinery/computer/pod/ui_data(mob/user)
 	var/list/data = list()
-	// If the cooldown has finished, just display the time. If the cooldown hasn't finished, display the cooldown.
+	// If the cooldown has finished, just display the time.. If the cooldown hasn't finished, display the cooldown.
 	var/display_time = COOLDOWN_FINISHED(src, massdriver_countdown) ? time : COOLDOWN_TIMELEFT(src, massdriver_countdown) * 0.1
 	data["connected"] = connected ? TRUE : FALSE
 	data["seconds"] = round(display_time % 60)
@@ -147,7 +147,7 @@
 /obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver
 	id = MASSDRIVER_ORDNANCE
 
-//for maps where pod doors are outside of the standard 4 tile controller detection range (ie Pubbystation)
+// for maps where pod doors are outside of the standard 4 tile controller detection range that is Pubbystation)
 /obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver/longrange
 	range = 6
 

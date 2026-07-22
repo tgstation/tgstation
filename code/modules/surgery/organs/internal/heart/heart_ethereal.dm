@@ -3,7 +3,7 @@
 	icon_state = "ethereal_heart-on"
 	base_icon_state = "ethereal_heart"
 	beat_noise = "a pulsing crackle"
-	visual = TRUE //This is used by the ethereal species for color
+	visual = TRUE // This the uses ethereal species for color
 	desc = "A crystal-like organ that functions similarly to a heart for Ethereals. It can revive its owner."
 
 	///Cooldown for the next time we can crystalize
@@ -108,7 +108,7 @@
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown) || ethereal.stat != DEAD)
 		return //Should probably not happen, but lets be safe.
 
-	if(ismob(location) || isitem(location) || iseffect(location) || HAS_TRAIT_FROM(src, TRAIT_HUSK, CHANGELING_DRAIN)) //Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, etc.
+	if(ismob(location) || isitem(location) || iseffect(location) || HAS_TRAIT_FROM(src, TRAIT_HUSK, CHANGELING_DRAIN)) // Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, and so on
 		to_chat(ethereal, span_warning("You were unable to finish your crystallization, for obvious reasons."))
 		stop_crystalization_process(ethereal, FALSE)
 		return
@@ -170,9 +170,9 @@
 	anchored = TRUE
 	///The organ this crystal belongs to
 	var/obj/item/organ/heart/ethereal/ethereal_heart
-	///Timer for the healing process. Stops if destroyed.
+	/// Timer for the healing process.. Stops if destroyed.
 	var/crystal_heal_timer
-	///Is the crystal still being built? True by default, gets changed after a timer.
+	/// Is the crystal still being built?. True by default, gets changed after a timer.
 	var/being_built = TRUE
 
 /obj/structure/ethereal_crystal/relaymove()
@@ -227,7 +227,7 @@
 		. += mutable_appearance(icon, icon_state = "[icon_state]_shine", appearance_flags = RESET_COLOR|KEEP_APART)
 
 /obj/structure/ethereal_crystal/proc/heal_ethereal()
-	// revive will regenerate organs, so our heart refence is going to be null'd. Unreliable
+	// revive will regenerate organs, so our heart refence is going to be null'd.. Unreliable
 	var/mob/living/carbon/regenerating = ethereal_heart.owner
 
 	playsound(get_turf(regenerating), 'sound/mobs/humanoids/ethereal/ethereal_revive.ogg', 100)

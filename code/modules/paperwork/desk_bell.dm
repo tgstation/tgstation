@@ -18,7 +18,7 @@
 	var/broken_ringer = FALSE
 	/// The cooldown for ringing the bell
 	COOLDOWN_DECLARE(ring_cooldown)
-	/// The length of the cooldown. Setting it to 0 will skip all cooldowns alltogether.
+	/// The length of the cooldown.. Setting it to 0 will skip all cooldowns alltogether.
 	var/ring_cooldown_length = 0.3 SECONDS // This is here to protect against tinnitus.
 	/// The sound the bell makes
 	var/ring_sound = 'sound/machines/microwave/microwave-end.ogg'
@@ -108,7 +108,7 @@
 	if(broken_ringer)
 		return FALSE
 	check_clapper(user)
-	// The lack of varying is intentional. The only variance occurs on the strike the bell breaks.
+	// The lack of varying is intentional.. The only variance occurs on the strike the bell breaks.
 	playsound(src, ring_sound, 70, vary = broken_ringer, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	flick("desk_bell_ring", src)
 	times_rang++
@@ -120,7 +120,7 @@
 	var/obj/item/inhand_desk_bell/held_bell = new (user, src)
 	user.put_in_hands(held_bell, del_on_fail = FALSE)
 
-// A warning to all who enter; the ringing sound STACKS. It won't be deafening because it only goes every decisecond,
+// A warning to all who enter; the ringing sound STACKS.. It won't be deafening because it only goes every decisecond,
 // but I did feel like my ears were going to start bleeding when I tested it with my autoclicker.
 /obj/structure/desk_bell/speed_demon
 	desc = "The cornerstone of any customer service job. This one's been modified for hyper-performance."

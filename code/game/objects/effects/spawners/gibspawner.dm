@@ -14,7 +14,7 @@
 	if(sound_to_play && isnum(sound_vol))
 		playsound(src, sound_to_play, sound_vol, TRUE)
 
-	var/list/dna_to_add //find the dna to pass to the spawned gibs. do note this can be null if the mob doesn't have blood. add_blood_DNA() has built in null handling.
+	var/list/dna_to_add // find the dna to pass to the spawned gibs.. do note this can be null if the mob doesn't have blood.. add_blood_DNA() has built in null handling.
 	if(blood_dna_info)
 		dna_to_add = blood_dna_info
 	else if(source_mob)

@@ -43,7 +43,7 @@
 	return HAS_TRAIT(H, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)
 
 /datum/action/innate/teleport_in
-///Is the amount of time required between uses
+/// Is the amount of time needed between uses
 	var/abductor_pad_cooldown = 8 SECONDS
 ///Is used to compare to world.time in order to determine if the action should early return
 	var/use_delay
@@ -88,7 +88,7 @@
 	console.TeleporterRetrieve()
 
 /datum/action/innate/teleport_self
-///Is the amount of time required between uses
+/// Is the amount of time needed between uses
 	var/teleport_self_cooldown = 9 SECONDS
 	var/use_delay
 	name = "Send Self"

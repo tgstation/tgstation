@@ -11,7 +11,7 @@
 	bonus_deactivate_text = span_notice("Your DNA is no longer majority rat, and so fades your ventilation skills...")
 	bonus_traits = list(TRAIT_VENTCRAWLER_NUDE)
 
-///way better night vision, super sensitive. lotta things work like this, huh?
+/// way better night vision, super sensitive.. lotta things work like this, huh?
 /obj/item/organ/eyes/night_vision/rat
 	name = "mutated rat-eyes"
 	desc = "Rat DNA infused into what was once a normal pair of eyes."
@@ -96,7 +96,7 @@
 	post_init_icon_state = "tongue"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
-	liked_foodtypes = DAIRY //mmm, cheese. doesn't especially like anything else
+	liked_foodtypes = DAIRY // mmm, cheese.. doesn't especially like anything else
 	disliked_foodtypes = NONE //but a rat can eat anything without issue
 	toxic_foodtypes = NONE
 

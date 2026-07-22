@@ -104,8 +104,8 @@ Notes:
 	last_target = null
 	return ..()
 
-//Open a tooltip for user, at a location based on params
-//Theme is a CSS class in tooltip.html, by default this wrapper chooses a CSS class based on the user's UI_style (Midnight, Plasmafire, Retro, etc)
+// Open a tooltip for user, at a location good on params
+// Theme is a CSS class in tooltip.html, by default this wrapper chooses a CSS class good on the user's UI_style (Midnight, Plasmafire, Retro. So on
 //Includes sanity.checks
 /proc/openToolTip(mob/user = null, atom/movable/tip_src = null, params = null, title = "", content = "", theme = "")
 	if(!istype(user) || !user.client?.tooltips)

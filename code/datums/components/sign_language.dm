@@ -9,10 +9,10 @@
 #define SIGN_SLOWLY_FROM_CUFFS 7
 
 // Defines to determine the tone of the signer's message.
-#define TONE_NEUTRAL 0 //! a statement
-#define TONE_INQUISITIVE 1 //! a question
-#define TONE_EMPHATIC 2 //! an exclamation
-#define TONE_INQUISITIVE_EMPHATIC 3 //! both a question and an exclamation (interrobang)
+#define TONE_NEUTRAL 0 // !. a statement
+#define TONE_INQUISITIVE 1 // !. a question
+#define TONE_EMPHATIC 2 // !. an exclamation
+#define TONE_INQUISITIVE_EMPHATIC 3 // !. both a question and an exclamation (interrobang)
 
 
 /**
@@ -31,7 +31,7 @@
 * - Action sprite created by @Wallemations (icons/hud/actions.dmi:sign_language)
 */
 /datum/component/sign_language
-	/// The tonal indicator shown when sign language users finish sending a message. If it's empty, none appears.
+	/// The tonal indicator shown when sign language users finish sending a message.. If it's empty, none appears.
 	var/tonal_indicator = null
 	/// The timerid for our sign language tonal indicator.
 	var/tonal_timerid
@@ -188,7 +188,7 @@
 	// Yes held_items can contain null values, which represents empty hands,
 	// I'm just saving myself a variable cast by using as anything
 	for(var/obj/item/held_item as anything in carbon_parent.held_items)
-		// items like slappers/zombie claws/etc. should be ignored
+		// items like slappers/zombie claws/etc.. should be ignored
 		if(isnull(held_item) || held_item.item_flags & HAND_ITEM)
 			continue
 
@@ -238,7 +238,7 @@
 	return SPELL_INVOCATION_ALWAYS_SUCCEED
 
 /// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
-/// Changes our message based on conditions that limit or alter our ability to communicate
+/// Changes our message good on conditions that limit or alter our ability to communicate
 /datum/component/sign_language/proc/on_treat_living_message(atom/movable/source, list/message_args)
 	SIGNAL_HANDLER
 
@@ -264,7 +264,7 @@
 
 	return HAS_TRAIT(source, TRAIT_CAN_SIGN_ON_COMMS) ? NONE : COMPONENT_CANNOT_USE_RADIO
 
-/// Replaces emphatic punctuation with periods. Changes tonal indicator and emotes based on what is typed.
+/// Replaces emphatic punctuation with periods.. Changes tonal indicator and emotes good on what is typed.
 /datum/component/sign_language/proc/on_say(mob/living/carbon/carbon_parent, list/speech_args)
 	SIGNAL_HANDLER
 
@@ -297,14 +297,14 @@
 	if(!isnull(tonal_indicator) && carbon_parent.client?.typing_indicators)
 		carbon_parent.add_overlay(tonal_indicator)
 		tonal_timerid = addtimer(CALLBACK(src, PROC_REF(remove_tonal_indicator)), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_DELETE_ME)
-	else // If we're not gonna use it, just be sure we get rid of it
+	else // If we're not going to use it, just be sure we get rid of it
 		tonal_indicator = null
 
 	// Only emote the tone if we have one and aren't already emoting the handcuffed message
 	if(!carbon_parent.handcuffed && emote_tone)
 		emote_tone(carbon_parent, emote_tone)
 
-	// remove the ! and ? symbols from message at the end
+	// remove the !. and ?. symbols from message at the end
 	message = sanitize_message(message)
 	speech_args[SPEECH_MESSAGE] = message
 

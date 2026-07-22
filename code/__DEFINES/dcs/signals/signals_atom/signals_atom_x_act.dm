@@ -1,4 +1,4 @@
-// Atom x_act() procs signals. Format:
+// Atom x_act() procs signals... Format:
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
@@ -8,7 +8,7 @@
 	#define COMPONENT_CANCEL_EX_ACT (1<<0)
 ///from the [EX_ACT] wrapper macro: (severity, target)
 #define COMSIG_ATOM_EX_ACT "atom_ex_act"
-///from base of atom/emp_act(severity): (severity). return EMP protection flags
+/// from base of atom/emp_act(severity): (severity)... return EMP protection flags
 #define COMSIG_ATOM_PRE_EMP_ACT "atom_emp_act"
 ///from base of atom/emp_act(severity): (severity, protection)
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"

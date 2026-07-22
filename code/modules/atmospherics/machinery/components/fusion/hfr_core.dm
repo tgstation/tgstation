@@ -87,7 +87,7 @@
 	var/heat_output_max = 0
 	///How much the reaction can heat itself
 	var/heat_output_min = 0
-	///The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
+	/// The amount of heat that is finally emitted, good on the power output.. Min and max are variables that depends of the modifier
 	var/heat_output = 0
 
 	///Check if the user want to remove the waste gases
@@ -111,7 +111,7 @@
 	var/critical_threshold_proximity = 0
 	///Store the integrity for calculations
 	var/critical_threshold_proximity_archived = 0
-	///Our "Shit is no longer fucked" message. We send it when critical_threshold_proximity is less then critical_threshold_proximity_archived
+	/// Our "Shit is no longer fucked" message.. We send it when critical_threshold_proximity is less then critical_threshold_proximity_archived
 	var/safe_alert = "Main containment field returning to safe operating parameters."
 	///The point at which we should start sending messeges about the critical_threshold_proximity to the engi channels.
 	var/warning_point = 50

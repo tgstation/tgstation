@@ -174,9 +174,9 @@
 
 /datum/reagent/drug/methamphetamine/on_new(data)
 	. = ..()
-	//the more pure, the less non-blue colors get involved - best case scenario is rgb(135, 200, 250) AKA #78C8FA
-	//worst case scenario is rgb(250, 250, 250) AKA #FAFAFA
-	//minimum purity of meth is 50%, therefore we base values on that
+	// the more pure, the less non-blue colors get involved - best case scenario is rgb(135, 200, 250) Also known as #78C8FA
+	// worst case scenario is rgb(250, 250, 250) Also known as #FAFAFA
+	// minimum purity of meth is 50%, so we base values on that
 	var/effective_impurity = min(1, (1 - creation_purity)/0.5)
 	//yes i know that purity doesn't actually affect how meth works at all but this is so funny
 	color = BlendRGB(initial(color), "#FAFAFA", effective_impurity)
@@ -538,14 +538,14 @@
 
 	// Info for non-matrix plebs like me!
 
-	// This doesn't change the RGB matrixes directly at all. Instead, it shifts all the colors' Hue by 33%,
-	// Shifting them up the color wheel, turning R to G, G to B, B to R, making a psychedelic effect.
-	// The second moves them two colors up instead, turning R to B, G to R, B to G.
+	// This doesn't change the RGB matrixes directly at all.. Instead, it shifts all the colors' Hue by 33%,
+	// Shifting them up the color wheel, turning Are to G, G to B, B to Are making a psychedelic effect.
+	// The second moves them two colors up instead, turning Are to B, G to Are B to G.
 	// The third does a full spin, or resets it back to normal.
 	// Imagine a triangle on the color wheel with the points located at the color peaks, rotating by 90 degrees each time.
-	// The value with decimals is the Hue. The rest are Saturation, Luminosity, and Alpha, though they're unused here.
+	// The value with decimals is the Hue.. The rest are Saturation, Luminosity, and Alpha, though they're unused here.
 
-	// The filters were initially named _green, _blue, _red, despite every filter changing all the colors. It caused me a 2-years-long headache.
+	// The filters were initially named _green, _blue, _red, despite every filter changing all the colors.. It caused me a 2-years-long headache.
 
 	var/list/col_filter_identity = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.000,0,0,0)
 	var/list/col_filter_shift_once = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.333,0,0,0)
@@ -755,7 +755,7 @@
 		animate(filter, loop = -1, size = 0.02, time = 2 SECONDS, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
 		animate(size = 0, time = 6 SECONDS, easing = SINE_EASING)
 
-///This proc turns the living mob passed as the arg "invisible_man"s invisible by giving him the invisible man trait and updating his body, this changes the sprite of all his organic limbs to a 1 alpha version.
+/// This proc turns the living mob passed as the arg "invisible_man"s invisible by giving him the invisible man trait. Updating his body, this changes the sprite of all his organic limbs to a 1 alpha version.
 /datum/reagent/drug/saturnx/proc/turn_man_invisible(mob/living/carbon/invisible_man, requires_liver = TRUE)
 	if(requires_liver)
 		if(!invisible_man.get_organ_slot(ORGAN_SLOT_LIVER))
@@ -893,7 +893,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 				if(kronkaine_fiend.HasDisease(/datum/disease/adrenal_crisis))
 					break
 				kronkaine_fiend.visible_message(span_bolddanger("[kronkaine_fiend.name] suddenly tenses up, it looks like the shock is causing their body to shut down!"), span_userdanger("The sudden shock in combination with the cocktail of drugs and purgatives in your body makes your adrenal system go haywire. Uh oh!"))
-				kronkaine_fiend.ForceContractDisease(new /datum/disease/adrenal_crisis(), FALSE, TRUE) //We punish players for purging, since unchecked purging would allow players to reap the stamina healing benefits without any drawbacks. This also has the benefit of making haloperidol a counter, like it is supposed to be.
+				kronkaine_fiend.ForceContractDisease(new /datum/disease/adrenal_crisis(), FALSE, TRUE) // We punish players for purging, since unchecked purging would allow players to reap the stamina healing benefits without any drawbacks.. This also has the benefit of making haloperidol a counter, like it is supposed to be.
 				break
 	need_mob_update = kronkaine_fiend.adjust_stamina_loss(-0.54 * volume * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
@@ -911,7 +911,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	. = ..()
 	SEND_SOUND(affected_mob, sound('sound/effects/health/fastbeat.ogg', repeat = TRUE, channel = CHANNEL_HEARTBEAT, volume = 90))
 
-///dirty kronkaine, aka gore. far worse overdose effects.
+/// dirty kronkaine, also known as gore.. far worse overdose effects.
 /datum/reagent/drug/kronkaine/gore
 	name = "Gore"
 	description = "Dirty Kronkaine. You have to be pretty dumb to take this. Don't. Overdose."
@@ -976,7 +976,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 		greatest_fear = /datum/hallucination/delusion/preset/seccies
 
 	if(greatest_fear)
-		// 5 minutes = 15 units, roughly. we cancel the hallucination early when we exit the mob, anyway
+		// 5 minutes = 15 units, roughly.. we cancel the hallucination early when we exit the mob, anyway
 		active_hallucination_weakref = WEAKREF(affected_mob.cause_hallucination(greatest_fear, name, duration = 5 MINUTES, skip_nearby = !overdosed))
 	else
 		// if they're just some random schmuck, give them random hallucinations

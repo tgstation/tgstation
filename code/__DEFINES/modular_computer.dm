@@ -16,7 +16,7 @@
  * program_flags
  * Used by programs to tell the ModPC any special functions it has.
  */
-///If the program requires NTNet to be online for it to work.
+/// If the program needs NTNet to be online for it to work.
 #define PROGRAM_REQUIRES_NTNET (1<<0)
 ///The program can be downloaded from the default NTNet downloader store.
 #define PROGRAM_ON_NTNET_STORE (1<<1)

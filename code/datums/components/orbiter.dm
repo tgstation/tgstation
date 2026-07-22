@@ -11,7 +11,7 @@
 //radius: range to orbit at, radius of the circle formed by orbiting (in pixels)
 //clockwise: whether you orbit clockwise or anti clockwise
 //rotation_speed: how fast to rotate (how many ds should it take for a rotation to complete)
-//rotation_segments: the resolution of the orbit circle, less = a more block circle, this can be used to produce hexagons (6 segments) triangles (3 segments), and so on, 36 is the best default.
+// rotation_segments: the resolution of the orbit circle, less = a more block circle, this can be used to produce hexagons (6 segments) triangles (3 segments). So on, 36 is the best default.
 //pre_rotation: Chooses to rotate src 90 degress towards the orbit dir (clockwise/anticlockwise), useful for things to go "head first" like ghosts
 /datum/component/orbiter/Initialize(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 	if(!istype(orbiter) || !isatom(parent) || isarea(parent))
@@ -194,7 +194,7 @@
 	if(!istype(A) || !get_turf(A) || A == src)
 		return
 	if (HAS_TRAIT(A, TRAIT_ORBITING_FORBIDDEN))
-		// Stealth-mins have an empty name, don't want "You cannot orbit   at this time."
+		// Stealth-mins have an empty name, don't want "You cannot orbit at this time."
 		to_chat(src, span_notice("You cannot orbit ["[A]" || "them"] at this time."))
 		return
 	orbit_target = A
@@ -202,7 +202,7 @@
 
 /atom/movable/proc/stop_orbit(datum/component/orbiter/orbits, refreshing = FALSE)
 	if(refreshing)
-		return //Only null the target if we're actually stopping the orbit for real, not if we're merely shuttle moving(or orbiting the same thing again). We will never get it back unless the orbit is fully deleted and reinstated.
+		return // Only null the target if we're actually stopping the orbit for real, not if we're merely shuttle moving(or orbiting the same thing again).. We will never get it back unless the orbit is fully deleted and reinstated.
 	orbit_target = null
 
 

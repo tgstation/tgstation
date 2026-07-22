@@ -13,9 +13,9 @@
 	///ID using the UID.
 	var/id
 
-	///Associative list of all messages sent in the conversation. id > message
+	/// Associative list of all messages sent in the conversation.. id > message
 	var/list/messages = list()
-	///ID used for next message, increments each use. Convert to string before use.
+	/// ID used for next message, increments each use.. Convert to string before use.
 	var/next_message_id = 0
 
 	///The "Administrator" of the channel, the creator starts as channel's operator by default.
@@ -69,7 +69,7 @@
 	active_clients.Add(new_user)
 	if(!silent)
 		add_status_message("[new_user.username] has joined the channel.")
-	// No operator, so we assume the channel was empty. Assign this user as operator, without the message, since you're the creator.
+	// No operator, so we assume the channel was empty.. Assign this user as operator, without the message, since you're the creator.
 	if(!channel_operator)
 		changeop(new_user, silent = TRUE)
 

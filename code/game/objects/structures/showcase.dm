@@ -1,7 +1,7 @@
 #define SHOWCASE_CONSTRUCTED 1
 #define SHOWCASE_SCREWDRIVERED 2
 
-/*Completely generic structures for use by mappers to create fake objects, i.e. display rooms*/
+/* Completely generic structures for use by mappers to create fake objects, i.e.. display rooms */
 /obj/structure/showcase
 	name = "showcase"
 	icon = 'icons/obj/fluff/general.dmi'
@@ -134,7 +134,7 @@
 
 //Deconstructing
 //Showcases can be any sprite, so it makes sense that they can't be constructed.
-//However if a player wants to move an existing showcase or remove one, this is for that.
+// But if a player wants to move an existing showcase or remove one, this is for that.
 
 /obj/structure/showcase/screwdriver_act(mob/living/user, obj/item/tool)
 	if(anchored)

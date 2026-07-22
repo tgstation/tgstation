@@ -7,7 +7,7 @@
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
-	// Feel free to add more bespoke signals here if this gets implemented for more than just a few funny mobs
+	// Feel free to add more bespoke signals here if this gets added for more than just a few funny mobs
 	RegisterSignals(target, list(COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE), PROC_REF(update_cliff_walking))
 
 	update_cliff_walking(target)

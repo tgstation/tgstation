@@ -1,9 +1,9 @@
 /datum/customer_data
-	///The types of food this robot likes in a assoc list of venue type | weighted list. does NOT include subtypes.
+	/// The types of food this robot likes in a assoc list of venue type | weighted list.. does NOT include subtypes.
 	var/list/orderable_objects = list()
 	///The amount a robot pays for each food he likes in an assoc list type | payment
 	var/list/order_prices = list()
-	///Datum AI used for the robot. Should almost never be overwritten unless theyre subtypes of ai_controller/robot_customer
+	/// Datum AI used for the robot.. Should almost never be overwritten unless theyre subtypes of ai_controller/robot_customer
 	var/datum/ai_controller/ai_controller_used = /datum/ai_controller/robot_customer
 	///Patience of the AI, how long they will wait for their meal.
 	var/total_patience = 600 SECONDS
@@ -304,7 +304,7 @@
 
 // The whole gag is taking off your hat and giving it to the customer.
 // If it takes any more effort, it loses a bit of the comedy.
-// Therefore, only show up if it's reasonable for that gag to happen.
+// So only show up if it's reasonable for that gag to happen.
 /datum/customer_data/moth/can_use(datum/venue/venue, obj/machinery/restaurant_portal/portal)
 	var/mob/living/carbon/human/buffet = portal.turned_on_portal?.resolve()
 	if (!istype(buffet))

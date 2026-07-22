@@ -12,18 +12,18 @@
  */
 /datum/bt_node/subtree
 	node_type = BT_NODE_SUBTREE
-	/// Repo-relative path to the .bt.json source file for this subtree (e.g. "code/datums/ai/bots/bot_patrol.bt.json").
+	/// Repo-relative path to the .bt.json source file for this subtree (e.g.. "code/datums/ai/bots/bot_patrol.bt.json").
 	/// resolve_node_children() derives the compiled path from this and loads the tree at runtime.
 	var/behavior_tree_json = null
 	/// list of BT node descriptors defining this subtree's root.
 	/// resolve_node_children() builds `root` from this during tree construction.
 	var/list/behavior_nodes = null
-	/// The internal root node. Populated by resolve_node_children(). Do not set directly.
+	/// The internal root node.. Populated by resolve_node_children().. Do not set directly.
 	var/datum/bt_node/root = null
 	/// Set this to allow runtime overriding of this subtree, useful for things like pet commands!
 	var/override_id = null
-	/// Active override subtree. When set, tick() delegates to this node instead of root.
-	/// Set to null to deactivate the override. Managed by set_behavior_tree_override() only.
+	/// Active override subtree.. When set, tick() delegates to this node instead of root.
+	/// Set to null to deactivate the override.. Managed by set_behavior_tree_override() only.
 	var/datum/bt_node/subtree/override_node = null
 	///Any bindings this subtree has; assigned by the json
 	var/list/bindings = null

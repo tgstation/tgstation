@@ -329,7 +329,7 @@
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "shaker"
 	possible_transfer_amounts = list(5,10,20,1)
-	// Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
+	// Lots of reagents all regenerating at once, so the charge cost is lower.. They also regenerate faster.
 	charge_cost = 0.02 * STANDARD_CELL_CHARGE
 	recharge_time = 3
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP //Water stays wet, ice stays ice
@@ -424,13 +424,13 @@
 	return ITEM_INTERACT_SUCCESS
 
 
-/obj/item/reagent_containers/borghypo/condiment_synthesizer // Solids! Condiments! The borger uprising!
+/obj/item/reagent_containers/borghypo/condiment_synthesizer // Solids!. Condiments!. The borger uprising!
 	name = "Condiment Synthesizer"
 	desc = "An advanced condiment synthesizer"
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "flour"
 	possible_transfer_amounts = list(5,10,20,1)
-	// Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
+	// Lots of reagents all regenerating at once, so the charge cost is lower.. They also regenerate faster.
 	charge_cost = 0.04 * STANDARD_CELL_CHARGE //Costs double the power of the borgshaker due to synthesizing solids
 	recharge_time = 6 //Double the recharge time too, for the same reason.
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP

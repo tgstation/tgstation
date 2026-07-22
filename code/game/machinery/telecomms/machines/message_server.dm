@@ -1,4 +1,4 @@
-// A decorational representation of SSblackbox, usually placed alongside the message server. Also contains a traitor theft item.
+// A decorational representation of SSblackbox, usually placed alongside the message server.. Also contains a traitor theft item.
 /obj/machinery/blackbox_recorder
 	name = "Blackbox Recorder"
 	icon = 'icons/obj/machines/telecomms.dmi'
@@ -96,7 +96,7 @@
 	var/decryptkey = "password"
 	/// Init reads this and adds world.time, then becomes 0 when that time has
 	/// passed and the machine works.
-	/// Basically, if it's not 0, it's calibrating and therefore non-functional.
+	/// Basically, if it's not 0, it's calibrating and so non-functional.
 	var/calibrating = 15 MINUTES
 	/// List of all the computers monitoring this server
 	var/list/obj/machinery/computer/message_monitor/listening_computers = list()
@@ -215,7 +215,7 @@ GLOBAL_VAR(preset_station_message_server_key)
 	var/display_name = get_messenger_name(locate(data["ref"]))
 	return display_name ? display_name : STRINGIFY_PDA_TARGET(data["fakename"], data["fakejob"])
 
-/// Returns the formatted message contained in this message. Use this to apply
+/// Returns the formatted message contained in this message.. Use this to apply
 /// any processing to it if it needs to be formatted in a specific way.
 /datum/signal/subspace/messaging/tablet_message/proc/format_message()
 	return data["message"]
@@ -246,7 +246,7 @@ GLOBAL_VAR(preset_station_message_server_key)
 	var/message = "Blank"
 	/// The attached photo path, if any.
 	var/picture_asset_key
-	/// Whether or not it's an automated message. Defaults to `FALSE`.
+	/// Whether or not it's an automated message.. Defaults to `FALSE`.
 	var/automated = FALSE
 
 

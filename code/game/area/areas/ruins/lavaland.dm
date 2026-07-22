@@ -1,5 +1,5 @@
 //Lavaland Ruins
-//NOTICE: /unpowered means you never get power. Thanks Fikou
+// NOTICE: /unpowered means you never get power.. Thanks Fikou
 
 /area/ruin/powered/beach
 

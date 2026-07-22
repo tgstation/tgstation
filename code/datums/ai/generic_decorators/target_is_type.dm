@@ -1,4 +1,4 @@
-/// Gates child on the atom held in a blackboard key being an instance of a given typepath. Use "invert": true for the opposite.
+/// Gates child on the atom held in a blackboard key being an instance of a given typepath.. Use "invert": true for the opposite.
 /datum/bt_node/decorator/target_is_type
 	/// Blackboard key holding the atom to check.
 	var/key = BB_CURRENT_TARGET

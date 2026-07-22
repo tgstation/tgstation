@@ -134,7 +134,7 @@
 	INVOKE_ASYNC(src, PROC_REF(hack_open), source, user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-///Does a do_after to hack the storage open, takes a long time cause idk.
+/// Does a do_after to temporary solution the storage open, takes a long time cause I do not know
 /datum/component/lockable_storage/proc/hack_open(atom/source, mob/user, obj/item/tool)
 	if(!tool.use_tool(parent, user, 40 SECONDS, volume = 50))
 		return

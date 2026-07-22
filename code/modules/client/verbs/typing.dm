@@ -28,7 +28,7 @@
 		start_typing()
 
 
-/** Sets the mob as "thinking" - with indicator and the TRAIT_THINKING_IN_CHARACTER trait */
+/** * Sets the mob as "thinking" - with indicator and the TRAIT_THINKING_IN_CHARACTER trait */
 /client/proc/start_thinking()
 	if(!typing_indicators)
 		return FALSE
@@ -38,7 +38,7 @@
 	ADD_TRAIT(mob, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
 	mob.create_thinking_indicator()
 
-/** Removes typing/thinking indicators and flags the mob as not thinking */
+/** * Removes typing/thinking indicators and flags the mob as not thinking */
 /client/proc/stop_thinking()
 	mob?.remove_all_indicators()
 

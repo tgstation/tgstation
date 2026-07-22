@@ -1,4 +1,4 @@
-/// Click dragging (thing) will force move (thing). A good use-case example for this would be clicking on a tile with a blood decal.
+/// Click dragging (thing) will force move (thing).. A good use-case example for this would be clicking on a tile with a blood decal.
 /datum/element/force_move_pulled
 
 /datum/element/force_move_pulled/Attach(datum/target)

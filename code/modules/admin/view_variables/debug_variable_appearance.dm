@@ -2,7 +2,7 @@
 /image/vv_get_header()
 	. = list()
 	var/icon_name = "<b>[icon || "null"]</b><br/>"
-	. += replacetext(icon_name, "icons/obj", "") // shortens the name. We know the path already.
+	. += replacetext(icon_name, "icons/obj", "") // shortens the name.. We know the path already.
 	if(icon)
 		. += icon_state ? "\"[icon_state]\"" : "(icon_state = null)"
 
@@ -41,7 +41,7 @@
 	appearance_ref = REF(appearance_father)
 
 // This means if the appearance loses refs before a click it's gone, but that's consistent to other datums so it's fine
-// Need to ref the APPEARANCE because we just free on our own, which sorta fucks this operation up you know?
+// Need to ref the APPEARANCE because we just free on our own, which sort of fucks this operation up you know?
 /mutable_appearance/appearance_mirror/get_vv_link_ref()
 	return appearance_ref
 
@@ -49,7 +49,7 @@
 	var/static/datum/beloved = new()
 	if(beloved.vars.Find(var_name)) // If datums have it, get out
 		return FALSE
-	// If it is one of the two args on /image, yeet (I am sorry)
+	// If it is one of the two args on /image, throw (I am sorry)
 	if(var_name == NAMEOF(src, realized_overlays))
 		return FALSE
 	if(var_name == NAMEOF(src, realized_underlays))

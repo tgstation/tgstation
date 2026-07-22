@@ -3,9 +3,9 @@
 	exp_tag = "Reagent Scan"
 	allowed_experimentors = list(/obj/item/experi_scanner, /obj/item/scanner_wand)
 	required_atoms = list(/obj/item/reagent_containers = 1)
-	/// The reagent required to present in the scanned container
+	/// The reagent needed to present in the scanned container
 	var/datum/reagent/required_reagent = /datum/reagent/water
-	/// The minimum required purity of required_reagent
+	/// The minimum needed purity of required_reagent
 	var/min_purity = 0
 
 /datum/experiment/scanning/reagent/final_contributing_index_checks(datum/component/experiment_handler/experiment_handler, atom/target, typepath)

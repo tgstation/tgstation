@@ -3,7 +3,7 @@
 	faction = list(FACTION_HOSTILE)
 	stop_automated_movement_when_pulled = 0
 	obj_damage = 40
-	environment_smash = ENVIRONMENT_SMASH_STRUCTURES // Set to ENVIRONMENT_SMASH_STRUCTURES to break closets,tables,racks, etc; ENVIRONMENT_SMASH_WALLS for walls; ENVIRONMENT_SMASH_RWALLS for rwalls
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES // Set to ENVIRONMENT_SMASH_STRUCTURES to break closets,tables,racks, and so on ENVIRONMENT_SMASH_WALLS for walls; ENVIRONMENT_SMASH_RWALLS for rwalls
 	///The current target of our attacks, use GiveTarget and LoseTarget to set this var
 	var/atom/target
 	///Does this mob use ranged attacks?
@@ -39,7 +39,7 @@
 	///Probability that the mob will taunt
 	var/taunt_chance = 0
 
-	///Number of melee attacks between each npc pool tick. Spread evenly.
+	/// Number of melee attacks between each npc pool tick.. Spread evenly.
 	var/rapid_melee = 1
 	///If target is close enough start preparing to hit them if we have rapid_melee enabled
 	var/melee_queue_distance = 4
@@ -54,26 +54,26 @@
 	var/ranged_ignores_vision = FALSE
 	///Should the ranged mob check for friendlies when shooting
 	var/check_friendly_fire = FALSE
-	///If our mob runs from players when they're too close, set in tile distance. By default, mobs do not retreat.
+	/// If our mob runs from players when they're too close, set in tile distance.. By default, mobs do not retreat.
 	var/retreat_distance = null
-	///Minimum approach distance, so ranged mobs chase targets down, but still keep their distance set in tiles to the target, set higher to make mobs keep distance
+	/// Minimum approach distance, so ranged mobs chase targets down. Still keep their distance set in tiles to the target, set higher to make mobs keep distance
 	var/minimum_distance = 1
 
 
 //These vars are related to how mobs locate and target
-	///By default, mobs have a simple searching method, set this to TRUE for the more scrutinous searching (stat_attack, stat_exclusive, etc), should be disabled on most mobs
+	/// By default, mobs have a simple searching method, set this to TRUE f. The more scrutinous searching (stat_attack, stat_exclusive. So on should be disabled on most mobs
 	var/robust_searching = FALSE
-	///How big of an area to search for targets in, a vision of 9 attempts to find targets as soon as they walk into screen view
+	/// How big of an area to search f. Targets in, a vision of 9 tries to find targets as soon as they walk into screen view
 	var/vision_range = 9
-	///If a mob is aggro, we search in this radius. Defaults to 9 to keep in line with original simple mob aggro radius
+	/// If a mob is aggro, we search in this radius.. Defaults to 9 to keep in line with original simple mob aggro radius
 	var/aggro_vision_range = 9
-	///If we want to consider objects when searching around, set this to 1. If you want to search for objects while also ignoring mobs until hurt, set it to 2. To completely ignore mobs, even when attacked, set it to 3
+	/// If we want to consider objects when searching around, set this to 1.. If you want to search for objects while also ignoring mobs until hurt, set it to 2.. To completely ignore mobs, even when attacked, set it to 3
 	var/search_objects = 0
 	///Timer for regaining our old search_objects value after being attacked
 	var/search_objects_timer_id
 	///The delay between being attacked and gaining our old search_objects value back
 	var/search_objects_regain_time = 3 SECONDS
-	///Mobs ignore mob/living targets with a stat lower than that of stat_attack. If set to DEAD, then they'll include corpses in their targets, if to HARD_CRIT they'll keep attacking until they kill, and so on.
+	/// Mobs ignore mob/living targets with a stat lower than that of stat_attack.. If set to DEAD, then they'll include corpses in their targets, if to HARD_CRIT they'll keep attacking until they kill, and so on.
 	var/stat_attack = CONSCIOUS
 	///Mobs with this set to TRUE will exclusively attack things defined by stat_attack, stat_attack DEAD means they will only attack corpses
 	var/stat_exclusive = FALSE
@@ -81,8 +81,8 @@
 	var/attack_same = FALSE
 
 	//Use GET_TARGETS_FROM(mob) to access this
-	//Attempting to call GET_TARGETS_FROM(mob) when this var is null will just return mob as a base
-	///all range/attack/etc. calculations should be done from the atom this weakrefs, useful for Vehicles and such.
+	// Trying to call GET_TARGETS_FROM(mob) when this var is null will just return mob as a base
+	/// all range/attack/etc.. calculations should be done from the atom this weakrefs, useful for Vehicles and such.
 	var/datum/weakref/targets_from
 	///id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timer_id
@@ -224,7 +224,7 @@
 	return
 
 /mob/living/simple_animal/hostile/proc/PickTarget(list/Targets)//Step 3, pick amongst the possible, attackable targets
-	if(target != null)//If we already have a target, but are told to pick again, calculate the lowest distance between all possible, and pick from the lowest distance targets
+	if(target != null)// If we already have a target. Are told to pick again, calculate the lowest distance between all possible. Pick from the lowest distance targets
 		var/atom/target_from = GET_TARGETS_FROM(src)
 		for(var/pos_targ in Targets)
 			var/atom/A = pos_targ
@@ -326,7 +326,7 @@
 			LoseTarget()
 			return 0
 		var/target_distance = get_dist(target_from,target)
-		if(ranged) //We ranged? Shoot at em
+		if(ranged) // We ranged?. Shoot at em
 			if(!target.Adjacent(target_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
 		if(!Process_Spacemove(0)) //Drifting
@@ -350,7 +350,7 @@
 		return 0
 	if(environment_smash)
 		if(target.loc != null && get_dist(target_from, target.loc) <= vision_range) //We can't see our target, but he's in our vision range still
-			if(ranged_ignores_vision && ranged_cooldown <= world.time) //we can't see our target... but we can fire at them!
+			if(ranged_ignores_vision && ranged_cooldown <= world.time) // we can't see our target.... but we can fire at them!
 				OpenFire(target)
 			if(environment_smash >= ENVIRONMENT_SMASH_WALLS) //If we're capable of smashing through walls, forget about vision completely after finding our target
 				Goto(target,move_to_delay,minimum_distance)

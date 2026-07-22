@@ -11,7 +11,7 @@
 	)
 
 	guaranteed_active_gizmodes = list(
-		/datum/gizpulse/ominous, //it may warn you, it may immediately explode. Who knows!
+		/datum/gizpulse/ominous, // it may warn you, it may immediately explode.. Who knows!
 	)
 
 	min_modes = 1

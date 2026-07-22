@@ -10,7 +10,7 @@
 /datum/action/cooldown/guardian/check_type
 	name = "Check Type"
 	desc = "A reminder on what your abilities are."
-	//this is based off of the antag ui icon, if that changes then change this too please.
+	// this is good off of the antag ui icon, if that changes then change this too please.
 	button_icon_state = /datum/action/antag_info::button_icon_state
 	default_button_position = SCRN_OBJ_INSERT_FIRST
 

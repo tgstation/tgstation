@@ -46,7 +46,7 @@
 		// replacing any final periods with exclamation marks (so long as it's not an ellipsis)
 		if(char == "." && i == num_chars && !has_ellipsis)
 			final_word += "!"
-		// or if it's the vowel we found, we're gonna repeat it a few times (holding the note)
+		// or if it's the vowel we found, we're going to repeat it a few times (holding the note)
 		else if(char == last_vowel)
 			for(var/j in 1 to 4)
 				final_word += char

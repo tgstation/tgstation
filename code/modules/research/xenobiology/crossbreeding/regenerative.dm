@@ -276,7 +276,7 @@ Regenerative extracts:
 	colour = SLIME_TYPE_ADAMANTINE
 	effect_desc = "Fully heals the target and boosts their armor."
 
-/obj/item/slimecross/regenerative/adamantine/core_effect(mob/living/target, mob/user) //WIP - Find out why this doesn't work.
+/obj/item/slimecross/regenerative/adamantine/core_effect(mob/living/target, mob/user) // Work in progress - Find out why this doesn't work.
 	target.apply_status_effect(/datum/status_effect/slimeskin)
 
 /obj/item/slimecross/regenerative/rainbow

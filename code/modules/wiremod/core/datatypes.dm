@@ -13,10 +13,10 @@ GLOBAL_LIST_INIT_TYPED(circuit_datatypes, /datum/circuit_datatype, generate_circ
  * A circuit datatype. Used to determine the datatype of a port and also handle any additional behaviour.
  */
 /datum/circuit_datatype
-	/// The key. Used to identify the datatype. Should be a define.
+	/// The key.. Used to identify the datatype.. Should be a define.
 	var/datatype
 
-	/// The color of the port in the UI. Doesn't work with hex colours.
+	/// The color of the port in the UI.. Doesn't work with hex colours.
 	var/color = "blue"
 
 	/// The flags of the circuit datatype

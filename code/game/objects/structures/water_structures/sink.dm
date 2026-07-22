@@ -10,7 +10,7 @@
 	var/busy = FALSE
 	///Capacity of this sink
 	var/capacity = 100
-	///What kind of reagent is produced by this sink by default? (We now have actual plumbing, Arcane, August 2020)
+	/// What kind of reagent is produced by this sink by default?. (We now have actual plumbing, Arcane, August 2020)
 	var/dispensedreagent = /datum/reagent/water
 	///Material to drop when broken or deconstructed.
 	var/buildstacktype = /obj/item/stack/sheet/iron

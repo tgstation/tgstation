@@ -1,4 +1,4 @@
-/obj/item/ai_module/syndicate // This one doesn't inherit from ion boards because it doesn't call ..() in transmitInstructions. ~Miauw
+/obj/item/ai_module/syndicate // This one doesn't inherit from ion boards because it doesn't call ..() in transmitInstructions.. ~Miauw
 	name = "Hacked AI Module"
 	desc = "An AI Module for hacking additional laws to an AI. This board bypasses all access restrictions on the upload console."
 	laws = list("")
@@ -21,7 +21,7 @@
 	..()
 
 /obj/item/ai_module/syndicate/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
-	// ..()    //We don't want this module reporting to the AI who dun it. --NEO
+	// ..() //We don't want this module reporting to the AI who dun it.. --NEO
 	if(law_datum.owner)
 		to_chat(law_datum.owner, span_warning("BZZZZT"))
 		if(!overflow)

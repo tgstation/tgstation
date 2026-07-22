@@ -2,7 +2,7 @@
 /datum/element/easy_ignite
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY|ELEMENT_BESPOKE // because turfs
 	argument_hash_start_idx = 2
-	/// Temp required for ignition
+	/// Temp needed for ignition
 	var/required_temp = 480
 
 /datum/element/easy_ignite/Attach(datum/target, required_temp = 480)

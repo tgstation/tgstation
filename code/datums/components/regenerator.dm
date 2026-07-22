@@ -17,7 +17,7 @@
 	var/tox_per_second
 	/// Oxygen reagined every second
 	var/oxy_per_second
-	/// If TRUE, we'll try to heal wounds as well. Useless for non-humans.
+	/// If TRUE, we'll try to heal wounds as well.. Useless for non-humans.
 	var/heals_wounds = FALSE
 	/// List of damage types we don't care about, in case you want to only remove this with fire damage or something
 	var/list/ignore_damage_types
@@ -110,7 +110,7 @@
 		return
 
 	var/mob/living/living_parent = parent
-	// Heal bonus for being in crit. Only applies to carbons
+	// Heal bonus for being in crit.. Only applies to carbons
 	var/heal_mod = HAS_TRAIT(living_parent, TRAIT_CRITICAL_CONDITION) ? 2 : 1
 
 	var/need_mob_update = FALSE

@@ -21,7 +21,7 @@ GLOBAL_PROTECT(href_token)
 
 	var/spamcooldown = 0
 
-	///Randomly generated signature used for security records authorization name. Not code security critical
+	/// Randomly generated signature used for security records authorization name.. Not code security critical
 	var/admin_signature
 
 	/// Code security critcal token used for authorizing href topic calls

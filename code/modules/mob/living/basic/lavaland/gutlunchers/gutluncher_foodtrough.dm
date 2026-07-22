@@ -5,7 +5,7 @@
 	var/list/list_of_materials = list()
 	///x offsets for materials to be placed
 	var/list/x_offsets = list()
-	///y offsets for materials to be placed
+	/// why offsets for materials to be placed
 	var/list/y_offsets = list()
 
 /obj/structure/ore_container/food_trough/Entered(atom/movable/mover)

@@ -77,7 +77,7 @@
 				context[SCREENTIP_CONTEXT_RMB] = "Upload Techweb"
 				return CONTEXTUAL_SCREENTIP_SET
 
-///Called when attempting to connect the machine to a techweb, forgetting the old.
+/// Called when trying to connect the machine to a techweb, forgetting the old.
 /obj/machinery/rnd/proc/connect_techweb(datum/techweb/new_techweb)
 	if(stored_research)
 		log_research("[src] disconnected from techweb [stored_research] when connected to [new_techweb].")

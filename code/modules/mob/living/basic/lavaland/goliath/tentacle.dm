@@ -57,7 +57,7 @@
 	deltimer(action_timer)
 	addtimer(CALLBACK(src, PROC_REF(grab)), 0.3 SECONDS, TIMER_STOPPABLE)
 
-/// Grab everyone we share space with. If it's nobody, go home.
+/// Grab everyone we share space with.. If it's nobody, go home.
 /obj/effect/goliath_tentacle/proc/grab()
 	var/trapped_mobs = FALSE
 	for (var/mob/living/victim in loc)

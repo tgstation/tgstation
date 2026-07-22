@@ -2,7 +2,7 @@
 /datum/unit_test/mob_spawn
 
 /datum/unit_test/mob_spawn/Run()
-	// The ghost role that we're going to iterate over. defined all the way up here for easy/cleaner static analysis
+	// The ghost role that we're going to iterate over.. defined all the way up here for easy/cleaner static analysis
 	var/obj/effect/mob_spawn/ghost_role/ghost_role
 
 	//these are not expected to be filled out as they are base prototypes

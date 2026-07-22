@@ -33,7 +33,7 @@
 	return ..()
 
 /mob/living/basic/pet/gondola/gondolapod/death()
-	QDEL_NULL(linked_pod) //Will cause the open() proc for the linked supplypod to be called with the "broken" parameter set to true, meaning that it will dump its contents on death
+	QDEL_NULL(linked_pod) // Will cause the open() proc f. The linked supplypod to be called with the "broken" parameter set to true, meaning that it will dump its contents on death
 	return ..()
 
 /mob/living/basic/pet/gondola/gondolapod/create_gondola()

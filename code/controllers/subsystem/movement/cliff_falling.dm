@@ -47,7 +47,7 @@ MOVEMENT_SUBSYSTEM_DEF(cliff_falling)
 
 	UnregisterSignal(deletee, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_MOVABLE_PRE_MOVE))
 
-/// Check if we can move! We do this mostly to determine falling behaviour and make sure we're moving to valid tiles
+/// Check if we can move!. We do this mostly to determine falling behaviour and make sure we're moving to valid tiles
 /datum/controller/subsystem/movement/cliff_falling/proc/check_move(atom/movable/mover, turf/target)
 	SIGNAL_HANDLER
 

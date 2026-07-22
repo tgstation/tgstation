@@ -16,7 +16,7 @@
 
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(stop_rolling))
 	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(body_position_changed))
-	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id)) // they're kinda busy!
+	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id)) // they're kind of busy!
 
 	bar = new(owner, MAX_FIRE_STACKS, owner, get_bar_progress())
 	start_rolling()
@@ -64,7 +64,7 @@
 	bar.update(get_bar_progress())
 	return owner.fire_stacks <= 0
 
-/// Called when we just, stop rolling, due to movement or other reasons. Maybe still on fire, maybe not.
+/// Called when we just, stop rolling, due to movement or other reasons.. Maybe still on fire, maybe not.
 /datum/status_effect/stop_drop_roll/proc/stop_rolling(datum/source, ...)
 	SIGNAL_HANDLER
 

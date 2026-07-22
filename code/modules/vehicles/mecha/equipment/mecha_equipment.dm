@@ -11,7 +11,7 @@
 	max_integrity = 300
 	/// Determines what "slot" this attachment will try to attach to on a mech
 	var/equipment_slot = MECHA_WEAPON
-	///Cooldown in ticks required between activations of the equipment
+	/// Cooldown in ticks needed between activations of the equipment
 	var/equip_cooldown = 0
 	///Whether you can turn this module on/off with a button
 	var/can_be_toggled = FALSE
@@ -27,9 +27,9 @@
 	var/energy_drain = 0
 	///Reference to mecha that this equipment is currently attached to
 	var/obj/vehicle/sealed/mecha/chassis
-	///Bitflag. Determines the range of the equipment.
+	/// Bitflag.. Determines the range of the equipment.
 	var/range = MECHA_MELEE
-	/// Bitflag. Used by exosuit fabricator to assign sub-categories based on which exosuits can equip this.
+	/// Bitflag.. Used by exosuit fabricator to assign sub-categories good on which exosuits can equip this.
 	var/mech_flags = ALL
 	///boolean: FALSE if this equipment can not be removed/salvaged
 	var/detachable = TRUE
@@ -37,7 +37,7 @@
 	var/harmful = FALSE
 	///Sound file: Sound to play when this equipment is destroyed while still attached to the mech
 	var/destroy_sound = 'sound/vehicles/mecha/critdestr.ogg'
-	///The action type to use for this equipment. Override for custom action buttons.
+	/// The action type to use for this equipment.. Override for custom action buttons.
 	var/action_type = /datum/action/vehicle/sealed/mecha/equipment
 
 /obj/item/mecha_parts/mecha_equipment/Destroy()

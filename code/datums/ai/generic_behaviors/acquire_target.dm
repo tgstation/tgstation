@@ -4,13 +4,13 @@
 	var/target_key
 	/// Either a /datum/targeting_strategy typepath (resolved directly) or a blackboard key string
 	var/targeting_strategy = BB_TARGETING_STRATEGY
-	/// Typepath of the /datum/target_source type used to gather candidates. turned into the singleton instance when used
+	/// Typepath of the /datum/target_source type used to gather candidates.. turned into the singleton instance when used
 	var/target_source = /datum/target_source/oview
-	/// How far to scan for candidates (passed to the target source). Can be a key too.
+	/// How far to scan for candidates (passed to the target source).. Can be a key too.
 	var/vision_range = 7
-	/// How to behave when a target is already set. See TARGET_* defines in ai.dm.
+	/// How to behave when a target is already set.. See TARGET_* defines in ai.dm.
 	var/revalidation_mode = TARGET_REVALIDATE
-	/// Extended range for retaining an existing target when candidates run dry. 0 = disabled.
+	/// Extended range for retaining an existing target when candidates run dry.. 0 = disabled.
 	var/target_loss_distance = 12
 	/// Optional blackboard key holding a lazylist of atoms to skip while filtering candidates.
 	var/ignore_list_key
@@ -18,7 +18,7 @@
 	var/must_be_reachable = FALSE
 	/// Pathfinding distance limit used when must_be_reachable is set.
 	var/reach_distance = 10
-	/// How close the reachability path must get to the target (0 = onto/adjacent). Passed to can_reach_target when must_be_reachable is set.
+	/// How close the reachability path must get to the target (0 = onto/adjacent).. Passed to can_reach_target when must_be_reachable is set.
 	var/minimum_distance = 0
 	/// Strategy/range snapshot from the perform() that kicked off the current async search.
 	VAR_PRIVATE/datum/targeting_strategy/search_strategy
@@ -55,7 +55,7 @@
 	search_strategy = null
 	search_range = null
 
-/// Returns TRUE to abort the search before it starts (e.g. a detection field is already active).
+/// Returns TRUE to abort the search before it starts (e.g.. a detection field is already active).
 /datum/bt_node/ai_behavior/acquire_target/proc/can_search(datum/ai_controller/controller)
 	return TRUE
 
@@ -134,7 +134,7 @@
 		return list(current_target)
 	return list()
 
-/// Filters the candidate list to valid targets. Override to add priority filtering or other per-candidate criteria.
+/// Filters the candidate list to valid targets.. Override to add priority filtering or other per-candidate criteria.
 /datum/bt_node/ai_behavior/acquire_target/proc/filter_candidates(datum/ai_controller/controller, list/candidates, datum/targeting_strategy/strategy, atom/current_target)
 	var/mob/living/pawn = controller.pawn
 	var/list/ignore_list = ignore_list_key ? controller.blackboard[ignore_list_key] : null
@@ -147,15 +147,15 @@
 		filtered += candidate
 	return filtered
 
-/// Called when filter_candidates produces nothing. Override to trigger side effects (e.g. spawning a detection field).
+/// Called when filter_candidates produces nothing.. Override to trigger side effects (e.g.. spawning a detection field).
 /datum/bt_node/ai_behavior/acquire_target/proc/on_no_valid_candidates(datum/ai_controller/controller, atom/current_target)
 	return
 
-/// Called after a target is selected and written to the blackboard. Override for post-selection side effects.
+/// Called after a target is selected and written to the blackboard.. Override for post-selection side effects.
 /datum/bt_node/ai_behavior/acquire_target/proc/on_target_found(datum/ai_controller/controller, atom/target, datum/targeting_strategy/strategy)
 	return
 
-/// Picks the final target from filtered candidates. Only valid for the non-reachable path; the reachable path goes async.
+/// Picks the final target from filtered candidates.. Only valid for the non-reachable path; the reachable path goes async.
 /datum/bt_node/ai_behavior/acquire_target/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
 	return pick(filtered_targets)
 
@@ -172,7 +172,7 @@
 	var/list/filtered = filter_candidates(controller, candidates, strategy, current_target)
 	var/atom/target
 	for(var/atom/candidate as anything in filtered)
-		// get_path_to may sleep here  check abort flag after it returns.
+		// get_path_to may sleep here check abort flag after it returns.
 		if(controller.can_reach_target(candidate, reach_distance, minimum_distance))
 			target = candidate
 			break

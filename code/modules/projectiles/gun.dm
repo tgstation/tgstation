@@ -46,7 +46,7 @@
 	var/can_suppress = FALSE
 	var/suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
 	var/suppressed_volume = 60
-	/// Whether a gun can be unsuppressed. for ballistics, also determines if it generates a suppressor overlay
+	/// Whether a gun can be unsuppressed.. for ballistics, also determines if it generates a suppressor overlay
 	var/can_unsuppress = TRUE
 
 	var/clumsy_check = TRUE
@@ -63,13 +63,13 @@
 	/// firing cooldown, true if this gun shouldn't be allowed to manually fire
 	var/fire_cd = 0
 	var/weapon_weight = WEAPON_LIGHT
-	///Can we hold up our target with this? Default to yes
+	/// Can we hold up our target with this?. Default to yes
 	var/can_hold_up = TRUE
 	/// If TRUE, and we aim at ourselves, it will initiate a do after to fire at ourselves.
 	/// If FALSE it will just try to fire at ourselves straight up.
 	var/doafter_self_shoot = TRUE
 
-	/// If TRUE, will fire ITEM_INTERACT_BLOCKING (melee, etc) if the gun has a round already in the chamber, and is waiting to be fired (but cant, usually due to waiting on fire_delay).
+	/// If TRUE, will fire ITEM_INTERACT_BLOCKING (melee. So on if the gun has a round already in the chamber. Is waiting to be fired (. Cant, usually due to waiting on fire_delay).
 	/// If FALSE, nothing changed.
 	var/chambered_attack_block = FALSE
 
@@ -79,12 +79,12 @@
 	/// Even snowflakier way to modify projectile wounding bonus/potential for projectiles fired from this gun.
 	var/projectile_wound_bonus = 0
 
-	/// The most reasonable way to modify projectile speed values for projectile fired from this gun. Honest.
+	/// The most reasonable way to modify projectile speed values for projectile fired from this gun.. Honest.
 	/// Lower values are worse, higher values are better.
 	var/projectile_speed_multiplier = 1
 
 	var/spread = 0 //Spread induced by the gun itself.
-	var/randomspread = 1 //Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
+	var/randomspread = 1 // Set to 0 for shotguns.. This is used for weapons that don't fire all their bullets at once.
 	var/dual_wield_spread = 24 //additional spread when dual wielding
 
 	///Screen shake when the weapon is fired
@@ -95,7 +95,7 @@
 	var/recoil_deviation = 20
 	/// Used as the min value when calculating recoil
 	/// Affected by a player's min_recoil_multiplier preference, so keep in mind it can ultimately be 0 regardless
-	/// Often utilized as a "purely visual" form of recoil (as it can be disabled)
+	/// Often used as a "purely visual" form of recoil (as it can be disabled)
 	var/min_recoil = 0
 
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -110,7 +110,7 @@
 
 	var/pb_knockback = 0
 
-	/// What this gun says when it's gonna shoot inside mail.
+	/// What this gun says when it's going to shoot inside mail.
 	var/about_to_shoot_inside_mail_text = "Its trigger is already pulled!"
 
 	/// Cooldown for the visible message sent from gun flipping.
@@ -182,7 +182,7 @@
 			return
 		toss_gun_hard(thrower, hit_atom)
 
-/obj/item/gun/proc/toss_gun_hard(mob/living/thrower, mob/living/target) //throw a gun at them. They don't expect it.
+/obj/item/gun/proc/toss_gun_hard(mob/living/thrower, mob/living/target) // throw a gun at them.. They don't expect it.
 	if(isnull(thrower))
 		return FALSE
 	if(!HAS_TRAIT(thrower, TRAIT_TOSS_GUN_HARD))

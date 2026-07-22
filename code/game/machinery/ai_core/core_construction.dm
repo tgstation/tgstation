@@ -145,7 +145,7 @@
 			UPDATE_STATE(CORE_STATE_GLASSED)
 			return ITEM_INTERACT_SUCCESS
 
-/// Handles the interaction chain the same as item_interaction. Exists to isolate construction behaviour from other item behaviour.
+/// Handles the interaction chain the same as item_interaction.. Exists to isolate construction behaviour from other item behaviour.
 /obj/structure/ai_core/proc/construction_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/circuitboard/aicore))
 		return install_board(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING

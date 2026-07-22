@@ -53,7 +53,7 @@
 	. = ..()
 
 	var/delta_time = DELTA_WORLD_TIME(SSmobs)
-	//Instantly healing to max health in a single tick would be silly. If it takes 8 seconds to fire, then something's fucked.
+	// Instantly healing to max health in a single tick would be silly.. If it takes 8 seconds to fire, then something's fucked.
 	var/delta_time_capped = min(delta_time, 8)
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(!(locate(/obj/structure/alien/weeds) in owner.loc))
@@ -288,7 +288,7 @@
 		newy += at_least(rand(-4, 4), 1)
 		// Here's a bit after the hit, we've got maybe 2 ticks to add a bit more juice
 		animate(pixel_x = newy, pixel_y = newx, 0.1 SECONDS)
-		// Now we're gonna walk back to rest in maybe 3 ticks?
+		// Now we're going to walk back to rest in maybe 3 ticks?
 		animate(pixel_x = oldx, pixel_y = oldx, 0.5 SECONDS)
 
 		shake_camera(user, 0.1 SECONDS, 0.5)

@@ -36,7 +36,7 @@
 	AddElement(/datum/element/ai_retaliate)
 	ADD_TRAIT(src, TRAIT_MEDICAL_HUD, INNATE_TRAIT)
 
-/// Hostile NPC version. Heals nearby constructs and cult structures, avoids targets that aren't extremely hurt.
+/// Hostile NPC version.. Heals nearby constructs and cult structures, avoids targets that aren't extremely hurt.
 /mob/living/basic/construct/artificer/hostile
 	ai_controller = /datum/ai_controller/basic_controller/artificer
 	smashes_walls = FALSE

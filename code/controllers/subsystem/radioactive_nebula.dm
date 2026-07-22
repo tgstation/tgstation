@@ -44,7 +44,7 @@ SUBSYSTEM_DEF(radioactive_nebula)
 
 	ADD_TRAIT(target, TRAIT_RADIOACTIVE_NEBULA_FAKE_IRRADIATED, REF(src))
 
-	if(iscarbon(target))//Don't actually make EVERY. SINGLE. THING. RADIOACTIVE. Just irradiate people
+	if(iscarbon(target))// Don't actually make EVERY.. SINGLE.. THING.. RADIOACTIVE.. Just irradiate people
 		target.AddComponent( \
 			/datum/component/radioactive_exposure, \
 			minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME, \
@@ -71,7 +71,7 @@ SUBSYSTEM_DEF(radioactive_nebula)
 
 			CHECK_TICK
 
-/// Remove the fake radiation. The compontent we add to mobs handles its own removal
+/// Remove the fake radiation.. The compontent we add to mobs handles its own removal
 /datum/controller/subsystem/radioactive_nebula/proc/fake_unirradiate(atom/movable/leaver)
 	REMOVE_TRAIT(leaver, TRAIT_RADIOACTIVE_NEBULA_FAKE_IRRADIATED, REF(src))
 	leaver.remove_filter(GLOW_NEBULA)

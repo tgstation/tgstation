@@ -147,7 +147,7 @@
 		if(aiRestorePowerRoutine == POWER_RESTORATION_APC_FOUND)
 			to_chat(src, span_notice("Alert cancelled. Power has been restored."))
 			if(apc_override)
-				to_chat(src, span_notice("APC backdoor has been closed.")) //Fluff for why we have to hack every time.
+				to_chat(src, span_notice("APC backdoor has been closed.")) // Fluff for why we have to temporary solution every time.
 		else
 			to_chat(src, span_notice("Alert cancelled. Power has been restored without our assistance."))
 		setAiRestorePowerRoutine(POWER_RESTORATION_OFF)

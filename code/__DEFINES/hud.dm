@@ -1,4 +1,4 @@
-//HUD styles.  Index order defines how they are cycled in F12.
+// HUD styles... Index order defines how they are cycled in F12.
 /// Standard hud
 #define HUD_STYLE_STANDARD 1
 /// Reduced hud (just hands and intent switcher)
@@ -19,7 +19,7 @@
 #define VIEWPORT_USE_PREF "use_pref"
 #define WIDESCREEN_VIEWPORT_SIZE "19x15"
 #define SQUARE_VIEWPORT_SIZE "15x15"
-/// Largest viewport possible, required for checking if someone can see an object
+/// Largest viewport possible, needed for checking if someone can see an object
 #define LARGEST_VIEWPORT_SIZE WIDESCREEN_VIEWPORT_SIZE
 
 // Hud group keys

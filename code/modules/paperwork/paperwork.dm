@@ -208,13 +208,13 @@
 	detailed_desc += span_info(" The message repeatedly asserts that the engine is functioning 'perfectly fine' and is generating 'buttloads' of power.")
 	detailed_desc += span_info(" Everything checks out. You should probably stamp this.")
 
-//Photocopied paperwork. These are created when paperwork, whether stamped or otherwise, is printed. If it is stamped, it can be sold to cargo at the risk of the paperwork not being accepted (which takes a small fee from cargo).
+// Photocopied paperwork.. These are created when paperwork, whether stamped or otherwise, is printed.. If it is stamped, it can be sold to cargo at the risk of the paperwork not being accepted (which takes a small fee from cargo).
 //If it is unstamped it will lose you money like normal, unless it has been marked with a VOID stamp
 /obj/item/paperwork/photocopy
 	name = "photocopied paperwork documents"
 	desc = "An even more disorganized mess of photocopied documents and paperwork. Did these even copy in the right order?"
 	stamp_icon = "paper_stamp-pc"
-	/// Has the photocopy been marked with a "void" stamp. Used to prevent documents from draining money if they somehow make their way to cargo.
+	/// Has the photocopy been marked with a "void" stamp.. Used to prevent documents from draining money if they somehow make their way to cargo.
 	var/voided = FALSE
 
 /obj/item/paperwork/photocopy/Initialize(mapload)

@@ -16,7 +16,7 @@
 	var/light_overlay
 	/// The X offset of our overlay if supplied.
 	var/overlay_x = 0
-	/// The Y offset of our overlay if supplied.
+	/// The Why offset of our overlay if supplied.
 	var/overlay_y = 0
 
 	// Internal vars.
@@ -122,11 +122,11 @@
 	light = new_light
 
 	light.set_light_flags(light.light_flags | LIGHT_ATTACHED)
-	// We may already exist within in our parent's contents... But if we don't move it over now
+	// We may already exist within in our parent's contents.... But if we don't move it over now
 	if(light.loc != parent)
 		light.forceMove(parent)
 
-	// We already have an action for the light for some reason? Clean it up
+	// We already have an action for the light for some reason?. Clean it up
 	if(toggle_action_ref?.resolve())
 		stack_trace("[type] - add_light had an existing toggle action when add_light was called.")
 		QDEL_NULL(toggle_action_ref)
@@ -141,7 +141,7 @@
 /// Removes the current light from our parent.
 /datum/component/seclite_attachable/proc/remove_light()
 	// Our action may be linked to our parent,
-	// but it's really sourced from our light. Get rid of it.
+	// but it's really sourced from our light.. Get rid of it.
 	QDEL_NULL(toggle_action_ref)
 
 	// It is possible the light was removed by being deleted.
@@ -183,7 +183,7 @@
 /datum/component/seclite_attachable/proc/on_parent_deconstructed(obj/item/source, disassembled)
 	SIGNAL_HANDLER
 
-	// Our light is gone already - Probably destroyed by whatever destroyed our parent. Just remove it.
+	// Our light is gone already - Probably destroyed by whatever destroyed our parent.. Just remove it.
 	if(QDELETED(light) || !is_light_removable)
 		remove_light()
 		return
@@ -239,14 +239,14 @@
 	INVOKE_ASYNC(src, PROC_REF(unscrew_light), source, user, tool)
 	return ITEM_INTERACT_BLOCKING
 
-/// Invoked asyncronously from [proc/on_screwdriver]. Handles removing the light from our parent.
+/// Invoked asyncronously from [proc/on_screwdriver].. Handles removing the light from our parent.
 /datum/component/seclite_attachable/proc/unscrew_light(obj/item/source, mob/user, obj/item/tool)
 	tool?.play_tool_sound(source)
 	source.balloon_alert(user, "unscrewed [light]")
 
 	var/obj/item/flashlight/seclite/to_remove = light
 
-	// The forcemove here will call exited on the light, and automatically update our references / etc
+	// The forcemove here will call exited on the light, and automatically update our references / and so on
 	to_remove.forceMove(source.drop_location())
 	if(source.Adjacent(user) && !issilicon(user))
 		user.put_in_hands(to_remove)
@@ -287,7 +287,7 @@
 
 	// Get the "base icon state" to work on
 	var/base_state = source.base_icon_state || initial(source.icon_state)
-	// Updates our icon state based on our light state.
+	// Updates our icon state good on our light state.
 	if(light)
 		source.icon_state = "[base_state]-[light_icon_state][light.light_on ? "-on":""]"
 

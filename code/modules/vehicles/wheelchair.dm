@@ -147,7 +147,7 @@
 	bomb_attached = null
 	update_appearance()
 
-/// A reward item for obtaining 5K hardcore random points. Do not use for anything else
+/// A reward item for getting 5K hardcore random points.. Do not use for anything else
 /obj/vehicle/ridden/wheelchair/gold
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
 	desc = "Damn, must've been through a lot."
@@ -188,7 +188,7 @@
 	wheelchair_unfolded.add_fingerprint(user)
 	qdel(src)
 
-///A reward item for obtaining 5K hardcore random points. Do not use for anything else
+/// A reward item for getting 5K hardcore random points.. Do not use for anything else
 /obj/item/wheelchair/gold
 	name = "gold wheelchair"
 	desc = "A collapsed, shiny wheelchair that can be carried around."

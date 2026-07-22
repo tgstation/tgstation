@@ -1,5 +1,5 @@
-//Augmented Eyesight: Gives you X-ray vision or protection from flashes. Also, high DNA cost because of how powerful it is.
-//Possible todo: make a custom message for directing a penlight/flashlight at the eyes - not sure what would display though.
+// Augmented Eyesight: Gives you X-ray vision or protection from flashes.. Also, high DNA cost because of how powerful it is.
+// Possible to do make a custom message for directing a penlight/flashlight at the eyes - not sure what would display though.
 
 /datum/action/changeling/augmented_eyesight
 	name = "Augmented Eyesight"

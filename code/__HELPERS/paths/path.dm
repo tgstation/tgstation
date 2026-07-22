@@ -94,7 +94,7 @@
 	/// The callbacks to invoke when we're done working, passing in the completed product
 	/// Invoked in order
 	var/list/datum/callback/on_finish
-	/// Datum that holds the canpass info of this pathing attempt. This is what CanAstarPass sees
+	/// Datum that holds the canpass info of this pathing try This is what CanAstarPass sees
 	var/datum/can_pass_info/pass_info
 
 /datum/pathfind/Destroy(force)
@@ -214,9 +214,9 @@
 */
 /turf/proc/LinkBlockedWithAccess(turf/destination_turf, datum/can_pass_info/pass_info)
 	if(destination_turf.x != x && destination_turf.y != y) //diagonal
-		var/in_dir = get_dir(destination_turf,src) // eg. northwest (1+8) = 9 (00001001)
-		var/first_step_direction_a = in_dir & 3 // eg. north   (1+8)&3 (0000 0011) = 1 (0000 0001)
-		var/first_step_direction_b = in_dir & 12 // eg. west   (1+8)&12 (0000 1100) = 8 (0000 1000)
+		var/in_dir = get_dir(destination_turf,src) // for example northwest (1+8) = 9 (00001001)
+		var/first_step_direction_a = in_dir & 3 // for example north (1+8)&3 (0000 0011) = 1 (0000 0001)
+		var/first_step_direction_b = in_dir & 12 // for example west (1+8)&12 (0000 1100) = 8 (0000 1000)
 
 		for(var/first_step_direction in list(first_step_direction_a,first_step_direction_b))
 			var/turf/midstep_turf = get_step(destination_turf,first_step_direction)
@@ -230,8 +230,8 @@
 	switch(destination_turf.pathing_pass_method)
 		// This is already assumed to be true
 		//if(TURF_PATHING_PASS_DENSITY)
-		//	if(destination_turf.density)
-		//		return TRUE
+		// if(destination_turf.density)
+		// return TRUE
 		if(TURF_PATHING_PASS_PROC)
 			if(!destination_turf.CanAStarPass(actual_dir, pass_info))
 				return TRUE
@@ -272,18 +272,18 @@
 	/// If we have no id, public airlocks are walls
 	var/no_id = FALSE
 
-	/// What we can pass through. Mirrors /atom/movable/pass_flags
+	/// What we can pass through.. Mirrors /atom/movable/pass_flags
 	var/pass_flags = NONE
-	/// What access we have, airlocks, windoors, etc
+	/// What access we have, airlocks, windoors, and so on
 	var/list/access = null
-	/// What sort of movement do we have. Mirrors /atom/movable/movement_type
+	/// What sort of movement do we have.. Mirrors /atom/movable/movement_type
 	var/movement_type = NONE
 	/// Are we being thrown?
 	var/thrown = FALSE
 	/// Are we anchored
 	var/anchored = FALSE
 
-	/// Are we a ghost? (they have effectively unique pathfinding)
+	/// Are we a ghost?. (they have effectively unique pathfinding)
 	var/is_observer = FALSE
 	/// Are we a living mob?
 	var/is_living = FALSE
@@ -313,7 +313,7 @@
 
 	/// Weakref to the requester used to generate this info
 	/// Should not use this almost ever, it's for context and to allow for proc chains that
-	/// Require a movable
+	/// Need a movable
 	var/datum/weakref/requester_ref = null
 
 /datum/can_pass_info/New(atom/movable/construct_from, list/access, no_id = FALSE, call_depth = 0)

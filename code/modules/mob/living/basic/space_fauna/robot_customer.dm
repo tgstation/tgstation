@@ -58,7 +58,7 @@
 
 	grime_carried = prob(2) ? 20 : pick(0, 0, 0, 0, rand(0, 2), rand(0, 3), rand(2, 4), 6)
 
-///Clean up on the mobs seat etc when its deleted (Either by murder or because it left)
+/// Clean up on the mobs seat and so on when its deleted (Either by murder or because it left)
 /mob/living/basic/robot_customer/Destroy()
 	var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	var/obj/structure/holosign/robot_seat/our_seat = ai_controller.blackboard[BB_CUSTOMER_MY_SEAT]

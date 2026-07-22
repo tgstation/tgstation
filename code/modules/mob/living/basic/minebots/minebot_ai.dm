@@ -68,7 +68,7 @@
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 
-/// Sends a radio SOS message for a dead or unconscious miner. Clears the target key on finish.
+/// Sends a radio SOS message for a dead or unconscious miner.. Clears the target key on finish.
 /datum/bt_node/ai_behavior/send_sos_message
 	time_between_perform = 2 MINUTES
 	var/target_key = BB_NEARBY_DEAD_MINER
@@ -111,7 +111,7 @@
 	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/// Turns off combat mode then interacts with a nearby ore to collect it. Clears the target key on finish.
+/// Turns off combat mode then interacts with a nearby ore to collect it.. Clears the target key on finish.
 /datum/bt_node/ai_behavior/collect_ore/minebot
 	var/target_key = BB_ORE_TARGET
 
@@ -129,7 +129,7 @@
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 
-/// befriend_target variant that fails immediately if the target is already an ally  used to gate the drone-defend block.
+/// befriend_target variant that fails immediately if the target is already an ally used to gate the drone-defend block.
 /datum/bt_node/ai_behavior/befriend_target/check_ally
 
 /datum/bt_node/ai_behavior/befriend_target/check_ally/perform(seconds_per_tick, datum/ai_controller/controller)
@@ -139,7 +139,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	return ..()
 
-/// BT-native ranged attack for the minebot. Avoids friendly fire.
+/// BT-native ranged attack for the minebot.. Avoids friendly fire.
 /datum/bt_node/ai_behavior/basic_ranged_attack/minebot
 	avoid_friendly_fire = TRUE
 

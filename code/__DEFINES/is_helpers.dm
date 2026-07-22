@@ -16,7 +16,7 @@
 GLOBAL_VAR_INIT(magic_appearance_detecting_image, new /image) // appearances are awful to detect safely, but this seems to be the best way ~ninjanomnom
 #define isappearance(thing) (!isimage(thing) && !ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing))
 
-// The filters list has the same ref type id as a filter, but isnt one and also isnt a list, so we have to check if the thing has Cut() instead
+// The filters list has the same ref type id as a filter.. Isnt one.. Also isnt a list, so we have to check if the thing has Cut() instead
 GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
 #define isfilter(thing) (!hascall(thing, "Cut") && TYPEID(thing) == GLOB.refid_filter)
 
@@ -25,7 +25,7 @@ GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
 #define isalist(A) (istype(A, /alist))
 
 //Turfs
-//#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
+// #define isturf(A) (istype(A, /turf)) This is actually a byond built-in... Added here for completeness sake.
 
 GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 	/turf/open/space,
@@ -159,9 +159,9 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define iscyborg(A) (istype(A, /mob/living/silicon/robot))
 #define ispAI(A) (istype(A, /mob/living/silicon/pai))
 
-///This is used to see if you have Silicon access. This includes things like Admins, Drones, Bots, and Human wands.
+/// This is used to see if you have Silicon access... This includes things like Admins, Drones, Bots, and Human wands.
 #define HAS_SILICON_ACCESS(possible_silicon) (HAS_TRAIT(possible_silicon, TRAIT_SILICON_ACCESS) || isAdminGhostAI(possible_silicon))
-///This is used to see if you have the access of an AI. This doesn't mean you are an AI, just have the same access as one.
+/// This is used to see if you have the access of an AI... This doesn't mean you are an AI, just have the same access as one.
 #define HAS_AI_ACCESS(possible_ai) (HAS_TRAIT(possible_ai, TRAIT_AI_ACCESS) || isAdminGhostAI(possible_ai))
 
 // basic mobs

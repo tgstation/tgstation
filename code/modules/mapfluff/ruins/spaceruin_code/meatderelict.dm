@@ -108,7 +108,7 @@
 	density = TRUE
 	icon = 'icons/obj/machines/engine/other.dmi'
 	icon_state = "smes"
-	/// do we currently want to shock diagonal tiles? if not, we shock cardinals
+	/// do we currently want to shock diagonal tiles?. if not, we shock cardinals
 	var/throw_diagonals = FALSE
 	/// flags we apply to the shock
 	var/shock_flags = SHOCK_KNOCKDOWN | SHOCK_NOGLOVES

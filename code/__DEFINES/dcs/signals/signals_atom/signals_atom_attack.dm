@@ -1,4 +1,4 @@
-// Atom attack signals. Format:
+// Atom attack signals... Format:
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
@@ -33,9 +33,9 @@
 #define COMSIG_ATOM_TAKE_DAMAGE "atom_take_damage"
 	/// Return bitflags for the above signal which prevents the atom taking any damage.
 	#define COMPONENT_NO_TAKE_DAMAGE (1<<0)
-/* Attack signals. They should share the returned flags, to standardize the attack chain. */
+/* Attack signals... They should share the returned flags, to standardize the attack chain. */
 /// tool_act -> pre_attack -> target.attackby (item.attack) -> afterattack
-	///Ends the attack chain. If sent early might cause posterior attacks not to happen.
+	/// Ends the attack chain... If sent early might cause posterior attacks not to happen.
 	#define COMPONENT_CANCEL_ATTACK_CHAIN (1<<0)
 	///Skips the specific attack step, continuing for the next one to happen.
 	#define COMPONENT_SKIP_ATTACK (1<<1)
@@ -57,7 +57,7 @@
 #define COMSIG_ATOM_ATTACK_LARVA "atom_attack_larva"
 ///from relay_attackers element: (atom/attacker, attack_flags, direction)
 #define COMSIG_ATOM_WAS_ATTACKED "atom_was_attacked"
-///Called before a atom gets something tilted on them. If [COMPONENT_IMMUNE_TO_TILT_AND_CRUSH] is returned in a signal, the atom will be unaffected: (atom/target, atom/source)
+/// Called before a atom gets something tilted on them... If [COMPONENT_IMMUNE_TO_TILT_AND_CRUSH] is returned in a signal, the atom will be unaffected: (atom/target, atom/source)
 #define COMSIG_PRE_TILT_AND_CRUSH "atom_pre_tilt_and_crush"
 	#define COMPONENT_IMMUNE_TO_TILT_AND_CRUSH (1<<0)
 ///Called when a atom gets something tilted on them: (atom/target, atom/source)

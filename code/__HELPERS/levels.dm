@@ -41,11 +41,11 @@
 		return FALSE
 
 	if(is_mining_level(what_turf.z))
-		// Always assume Lavaland / mining level is a planet. (Asteroid mining crying right now)
+		// Always assume Lavaland / mining level is a planet.. (Asteroid mining crying right now)
 		return TRUE
 
 	if(is_station_level(what_turf.z))
-		// Station levels rely on the map config, I.E. Icebox is planetary but Meta is not
+		// Station levels rely on the map config, I.E.. Icebox is planetary but Meta is not
 		return SSmapping.is_planetary()
 
 	if(is_centcom_level(what_turf.z))
@@ -60,7 +60,7 @@
 		// Reserved levels are primarily shuttles aside from syndie base
 		return FALSE
 
-	// Finally, more specific checks are ran for edge cases, such as lazily loaded map templates or away missions. Not perfect.
+	// Finally, more specific checks are ran for edge cases, such as lazily loaded map templates or away missions.. Not perfect.
 	return istype(what_turf) && what_turf.planetary_atmos && what_turf.has_gravity()
 
 /**

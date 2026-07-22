@@ -220,7 +220,7 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 	product_info[TRADER_PRODUCT_INFO_QUANTITY] -= 1
 	trader.say(trader_data.return_trader_phrase(BUY_PHRASE))
 
-///Calculates the value of money in the hand of the buyer and spends it if it's sufficient
+/// Calculates the value of money in the hand of the buyer and spends it if it's enough
 /datum/component/trader/proc/spend_buyer_offhand_money(mob/customer, the_cost)
 	var/value = 0
 	var/obj/item/holochip/cash = customer.is_holding_item_of_type(/obj/item/holochip)
@@ -260,7 +260,7 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 	if(isnull(selling))
 		return FALSE
 	var/list/product_info
-	//Keep track of the typepath; rather mundane but it's required for correctly modifying the wanted_items
+	// Keep track of the typepath; rather mundane but it's needed for correctly modifying the wanted_items
 	//should a product be sellable because even if it doesn't have a entry because it's a child of a parent that is present on the list
 	var/typepath_for_product_info
 

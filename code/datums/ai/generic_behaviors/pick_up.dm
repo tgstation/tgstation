@@ -1,4 +1,4 @@
-/// Picks up a blackboard-keyed item. Pair with move_to_target in the BT tree for navigation.
+/// Picks up a blackboard-keyed item.. Pair with move_to_target in the BT tree for navigation.
 /datum/bt_node/ai_behavior/pick_up
 	time_between_perform = 2 SECONDS
 	/// Blackboard key holding the item to pick up.

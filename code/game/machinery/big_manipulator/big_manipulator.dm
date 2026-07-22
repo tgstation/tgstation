@@ -29,7 +29,7 @@
 	var/obj/item/disk/manipulator/task_disk = null
 	/// The manipulator's arm.
 	var/obj/effect/big_manipulator_arm/manipulator_arm = null
-	/// Is the power access wire cut? Disables the power button if `TRUE`.
+	/// Is the power access wire cut?. Disables the power button if `TRUE`.
 	var/power_access_wire_cut = FALSE
 
 	/// How many tasks total we can have.
@@ -52,7 +52,7 @@
 	/// Tasking strategy instance.
 	var/datum/tasking_strategy/master_tasking
 
-/// Attempts to find a suitable turf near the manipulator for creating a cargo task.
+/// Tries to find a suitable turf near the manipulator for creating a cargo task.
 /obj/machinery/big_manipulator/proc/find_suitable_turf()
 	var/turf/base = get_turf(src)
 	for(var/turf/checked_turf in orange(base, 1))
@@ -60,7 +60,7 @@
 			return checked_turf
 	return null
 
-/// Attempts to create a new task and assign it to the list.
+/// Tries to create a new task and assign it to the list.
 /obj/machinery/big_manipulator/proc/create_new_task(mob/user, task_type, turf/new_turf)
 	if(length(tasks) >= interaction_point_limit)
 		balloon_alert(user, "task limit reached!")
@@ -409,7 +409,7 @@
 			tasks -= cargo_task
 			qdel(cargo_task)
 
-/// Attempts to press the power button.
+/// Tries to press the power button.
 /obj/machinery/big_manipulator/proc/try_press_on(mob/living/carbon/human/user)
 	if(power_access_wire_cut)
 		balloon_alert(user, "unresponsive!")

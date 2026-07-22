@@ -20,7 +20,7 @@
 	AddComponent(/datum/component/gps/item, "MOD0", state = GLOB.deep_inventory_state, overlay_state = FALSE)
 
 /obj/item/mod/module/gps/on_use(mob/activator)
-	attack_self(mod.wearer) // todo: refactor to make compatable with pAIs.  Maybe ui_interact(activator)
+	attack_self(mod.wearer) // to do refactor to make compatable with pAIs.. Maybe ui_interact(activator)
 
 ///Hydraulic Clamp - Lets you pick up and drop crates.
 /obj/item/mod/module/clamp
@@ -141,7 +141,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 	/// Are we currently in passive sphere mode?
 	var/ballin = FALSE
-	/// Last tick when we bumpmined. Prevents diagonal bumpnining being thrice as fast as normal
+	/// Last tick when we bumpmined.. Prevents diagonal bumpnining being thrice as fast as normal
 	var/last_bumpmine_tick = -1
 	/// Mining skill experience multiplier for bumpmining
 	var/exp_multiplier = 1
@@ -254,7 +254,7 @@
 	allow_flags = MODULE_ALLOW_INACTIVE
 	required_slots = list(ITEM_SLOT_BACK)
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7.5)
-	/// Are we currently dropping off ores? Used to prevent the bag from instantly picking up ores after dropping them
+	/// Are we currently dropping off ores?. Used to prevent the bag from instantly picking up ores after dropping them
 	var/dropping_ores = FALSE
 
 /obj/item/mod/module/orebag/on_equip()
@@ -603,11 +603,11 @@
 	)
 	/// Has the module been upgraded with bileworm hide plating?
 	var/hide_upgrade = FALSE
-	/// How much hide is required to reinforce the MOD
+	/// How much hide is needed to reinforce the MOD
 	var/hide_amount = 2 // These are rather rare as of now, should be increased later once other methods of crossing lava are removed
 
 /datum/armor/mod_sphere_transform
-	melee = 20 // Can get up to 70 armor when ash covered and ballin, which is as good as a HECK suit... but you can't really attack anymore
+	melee = 20 // Can get up to 70 armor when ash covered and ballin, which is as good as a HECK suit.... but you can't really attack anymore
 	bomb = 20
 
 /obj/item/mod/module/sphere_transform/on_install()

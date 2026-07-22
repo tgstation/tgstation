@@ -35,7 +35,7 @@
 
 	/// An asssociative list of chats we have started, format: chatref -> pda_chat.
 	var/list/saved_chats
-	/// Whose chatlogs we currently have open. If we are in the contacts list, this is null.
+	/// Whose chatlogs we currently have open.. If we are in the contacts list, this is null.
 	var/viewing_messages_of = null
 
 	/// The current ringtone (displayed in the chat when a message is received).
@@ -138,7 +138,7 @@
 	for(var/datum/tgui/window as anything in computer.open_uis)
 		SSassets.transport.send_assets(window.user, data)
 
-/// Set the ringtone if possible. Also handles encoding.
+/// Set the ringtone if possible.. Also handles encoding.
 /datum/computer_file/program/messenger/proc/set_ringtone(new_ringtone, mob/user)
 	new_ringtone = trim(html_encode(new_ringtone), MESSENGER_RINGTONE_MAX_LENGTH)
 	if(!new_ringtone)
@@ -336,7 +336,7 @@
 
 	static_data["can_spam"] = spam_mode
 	static_data["is_silicon"] = issilicon(user)
-	static_data["remote_silicon"] = (isAI(user) || iscyborg(user)) && !istype(computer, /obj/item/modular_computer/pda/silicon) //Silicon is accessing a PDA on the ground, not their internal one. Avoiding pAIs in this check.
+	static_data["remote_silicon"] = (isAI(user) || iscyborg(user)) && !istype(computer, /obj/item/modular_computer/pda/silicon) // Silicon is accessing a PDA on the ground, not their internal one.. Avoiding pAIs in this check.
 	static_data["alert_able"] = alert_able
 
 	return static_data
@@ -426,7 +426,7 @@
 	if(send_message(user, message, chats, everyone = TRUE))
 		COOLDOWN_START(src, last_text_everyone, 2 MINUTES)
 
-/// Creates a chat and adds it to saved_chats. Supports fake users. Returns the newly created chat.
+/// Creates a chat and adds it to saved_chats.. Supports fake users.. Returns the newly created chat.
 /datum/computer_file/program/messenger/proc/create_chat(recipient_ref, name, job)
 	var/datum/computer_file/program/messenger/recipient = null
 
@@ -470,7 +470,7 @@
 
 	return emoji_parse(message)
 
-/// Sends a message to targets via PDA. When sending to everyone, set `everyone` to true so the message is formatted accordingly
+/// Sends a message to targets via PDA.. When sending to everyone, set `everyone` to true so the message is formatted accordingly
 /datum/computer_file/program/messenger/proc/send_message(atom/source, message, list/targets, everyone = FALSE)
 	var/mob/living/sender
 	if(isliving(source))
@@ -693,7 +693,7 @@
 	if(computer.loc && isliving(computer.loc))
 		receievers += computer.loc
 
-	// resolving w/o nullcheck here, assume the messenger exists if a real person sent a message
+	// resolving without nullcheck here, assume the messenger exists if a real person sent a message
 	var/datum/computer_file/program/messenger/sender_messenger = chat.recipient?.resolve()
 
 	var/sender_title = is_fake_user ? STRINGIFY_PDA_TARGET(fake_name, fake_job) : get_messenger_name(sender_messenger)

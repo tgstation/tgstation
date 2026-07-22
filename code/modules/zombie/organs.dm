@@ -38,7 +38,7 @@
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	if(iszombie(new_owner) && old_species && !special)
-		// There isn't a clean way to change species during organ or bodypart removals. In lieau of a beter solution, this will do
+		// There isn't a clean way to change species during organ or bodypart removals.. In lieau of a beter solution, this will do
 		spawn(0)
 			new_owner.set_species(old_species)
 	if(timer_id)

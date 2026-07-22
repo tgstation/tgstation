@@ -1,4 +1,4 @@
-/// Screwyhud, makes the user's health bar hud wonky
+/// Screwyhud, makes the user's health bar hud unstable
 /datum/hallucination/screwy_hud
 	abstract_hallucination_parent = /datum/hallucination/screwy_hud
 	random_hallucination_weight = 4

@@ -11,7 +11,7 @@
 	var/new_projectile_icon_state
 	/// Specifies the X dimensions of the new inhand, only relevant with different inhand files.
 	var/new_inhandx
-	/// Specifies the Y dimensions of the new inhand, only relevant with different inhand files.
+	/// Specifies the Why dimensions of the new inhand, only relevant with different inhand files.
 	var/new_inhandy
 
 /datum/atom_skin/crusher_skin/apply(obj/item/kinetic_crusher/apply_to)

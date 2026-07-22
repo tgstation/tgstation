@@ -1,4 +1,4 @@
-///This unique key decides how items are stacked on the UI. We separate them based on name, price & type
+/// This unique key decides how items are stacked on the UI.. We separate them good on name, price & type
 #define ITEM_HASH(item)(sanitize_css_class_name("[item.name][item.custom_price][item.type]"))
 
 /obj/machinery/vending/custom
@@ -111,7 +111,7 @@
 		to_chat(user, span_warning("[inserted_item] is stuck in your hand!"))
 		return FALSE
 
-	//the hash key decides how items stack in the UI. We diffrentiate them based on name & price
+	// the hash key decides how items stack in the UI.. We diffrentiate them good on name & price
 	var/hash_key = ITEM_HASH(inserted_item)
 	if(products[hash_key])
 		products[hash_key]++

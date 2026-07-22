@@ -17,7 +17,7 @@
  * -Sayu
  */
 
-//  Generic non-item
+// Generic non-item
 /obj/item/storage/bag
 	abstract_type = /obj/item/storage/bag
 	slot_flags = ITEM_SLOT_BELT
@@ -50,7 +50,7 @@
 	if(!(locate(/obj/item) in src))
 		return
 
-	// Otherwise, we're gonna dump into the dest object
+	// Otherwise, we're going to dump into the dest object
 	var/turf/dump_onto = get_turf(dest_object)
 	user.visible_message(
 		span_notice("[user] dumps the contents of [src] all out on \the [dump_onto]"),
@@ -107,7 +107,7 @@
 	var/spam_protection = FALSE
 	/// Mob we're currently tracking
 	var/mob/listening_to = null
-	/// Are we currently dropping off ores? Used to prevent the bag from instantly picking up ores after dropping them
+	/// Are we currently dropping off ores?. Used to prevent the bag from instantly picking up ores after dropping them
 	var/dropping_ores = FALSE
 	/// Cooldown on balloon alerts when picking ore
 	COOLDOWN_DECLARE(ore_bag_balloon_cooldown)
@@ -307,7 +307,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	storage_type = /datum/storage/bag/sheet_snatcher_debug
 
-// Copy-pasted from the former /obj/item/storage/box/material, w/ small additions like rods, cardboard, plastic.
+// Copy-pasted from the former /obj/item/storage/box/material, with small additions like rods, cardboard, plastic.
 // "Only 20 uranium 'cause of radiation"
 /obj/item/storage/bag/sheetsnatcher/debug/PopulateContents()
 	// amount should be null if it should spawn with the type's default amount
@@ -370,7 +370,7 @@
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
-	// Drop all the things. All of them.
+	// Drop all the things.. All of them.
 	var/list/obj/item/oldContents = contents.Copy()
 	atom_storage.remove_all(user)
 	// Make each item scatter a bit
@@ -390,7 +390,7 @@
 /obj/item/storage/bag/tray/proc/do_scatter(obj/item/tray_item)
 	var/delay = rand(2,4)
 	var/datum/move_loop/loop = GLOB.move_manager.move_rand(tray_item, list(NORTH,SOUTH,EAST,WEST), delay, timeout = rand(1, 2) * delay, flags = MOVEMENT_LOOP_START_FAST)
-	//This does mean scattering is tied to the tray. Not sure how better to handle it
+	// This does mean scattering is tied to the tray.. Not sure how better to handle it
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(change_speed))
 
 /obj/item/storage/bag/tray/proc/change_speed(datum/move_loop/source)

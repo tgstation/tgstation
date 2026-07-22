@@ -23,7 +23,7 @@
 /obj/item/book/granter/sign_language/recoil(mob/living/user)
 	to_chat(user, span_warning("You can't read it, the pages are too faded and smudged!"))
 
-/// Called when the reading is completely finished. This is where the actual granting should happen.
+/// Called when the reading is completely finished.. This is where the actual granting should happen.
 /obj/item/book/granter/sign_language/on_reading_finished(mob/living/user)
 	..()
 	user.AddComponent(/datum/component/sign_language)

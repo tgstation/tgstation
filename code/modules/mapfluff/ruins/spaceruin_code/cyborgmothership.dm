@@ -35,7 +35,7 @@
 	shuttleId = "cyborg_mothership"
 	possible_destinations = "whiteship_away;whiteship_home;whiteship_z4;whiteship_lavaland;cyborg_mothership"
 
-/// Console used on the cyborg_mothership bridge. Comes with GPS pre-baked.
+/// Console used on the cyborg_mothership bridge.. Comes with GPS pre-baked.
 /obj/machinery/computer/shuttle/cyborg_mothership/bridge
 	name = "#101011 Bridge Console"
 	desc = "Used to control the Cyborg Mothership. Emits a faint GPS signal."

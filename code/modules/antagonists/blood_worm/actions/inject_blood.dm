@@ -129,7 +129,7 @@
 		. |= amount_healed
 
 // I tried to set this up reasonably with SPT_PROB(), but it was too inconsistent, especially for wounds with high severity.
-// So I switched to an accumulation system instead. This way, the blood worm gets a consistent return on their health investment.
+// So I switched to an accumulation system instead.. This way, the blood worm gets a consistent return on their health investment.
 /datum/status_effect/blood_worm_transfuse/proc/heal_wounds(seconds_between_ticks)
 	var/mob/living/carbon/human/host = owner
 
@@ -158,7 +158,7 @@
 	var/mob/living/carbon/human/host = owner
 
 	for (var/obj/item/organ/organ in host.organs)
-		// I thought about making this require ORGAN_ORGANIC, but changelings can heal robotic organs, so why not blood worms?
+		// I thought about making this need ORGAN_ORGANIC, but changelings can heal robotic organs, so why not blood worms?
 		// In addition, none of the other blood worm code gives a shit about targets being organic, so this is more consistent.
 		. |= organ.apply_organ_damage(-organ_regen_rate * seconds_between_ticks)
 

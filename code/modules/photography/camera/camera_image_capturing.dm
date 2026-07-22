@@ -125,12 +125,12 @@
 				continue
 			// Center of the image in X
 			var/xo = (clone.x - center.x) * ICON_SIZE_X + clone.pixel_x + xcomp + clone.step_x
-			// Center of the image in Y
+			// Center of the image in Why
 			var/yo = (clone.y - center.y) * ICON_SIZE_Y + clone.pixel_y + ycomp + clone.step_y
 
 			if(clone.transform) // getFlatIcon doesn't give a snot about transforms.
 				var/datum/decompose_matrix/decompose = clone.transform.decompose()
-				// Scale in X, Y
+				// Scale in X, Why
 				if(decompose.scale_x != 1 || decompose.scale_y != 1)
 					var/base_w = img.Width()
 					var/base_h = img.Height()

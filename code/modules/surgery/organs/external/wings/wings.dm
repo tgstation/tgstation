@@ -1,4 +1,4 @@
-///Wing base type. doesn't really do anything
+/// Wing base type.. doesn't really do anything
 /obj/item/organ/wings
 	name = "wings"
 	desc = "Spread your wings and FLLLLLLLLYYYYY!"
@@ -16,11 +16,11 @@
 /obj/item/organ/wings/proc/can_soften_fall()
 	return TRUE
 
-///Implement as needed to play a sound effect on *flap emote
+/// add as needed to play a sound effect on *flap emote
 /obj/item/organ/wings/proc/make_flap_sound(mob/living/carbon/wing_owner)
 	return
 
-///Bodypart overlay of default wings. Does not have any wing functionality
+/// Bodypart overlay of default wings.. Does not have any wing functionality
 /datum/bodypart_overlay/mutant/wings
 	layers = list(
 		EXTERNAL_FRONT = BODY_FRONT_LAYER,

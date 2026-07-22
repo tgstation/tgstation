@@ -8,7 +8,7 @@
 	eatability.eat_time = 0
 
 	var/mob/living/carbon/human/species/moth/gourmet = allocate(/mob/living/carbon/human/species/moth)
-	gourmet.nutrition = 0 // We need to be sufficiently hungry
+	gourmet.nutrition = 0 // We need to be enough hungry
 	gourmet.put_in_active_hand(light_snack)
 
 	var/times_to_bite = round(light_snack.max_integrity / MOTH_EATING_CLOTHING_DAMAGE) + 1
@@ -30,7 +30,7 @@
 	eatability.eat_time = 0
 
 	var/mob/living/carbon/human/species/golem/rock_enjoyer = allocate(/mob/living/carbon/human/species/golem)
-	rock_enjoyer.nutrition = 0 // We need to be sufficiently hungry
+	rock_enjoyer.nutrition = 0 // We need to be enough hungry
 	rock_enjoyer.put_in_active_hand(dinner)
 
 	var/status_applied = golem_food_data.snack_type.status_effect

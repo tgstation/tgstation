@@ -24,7 +24,7 @@
 
 GLOBAL_DATUM_INIT(move_manager, /datum/move_manager, new)
 
-///Adds a movable thing to a movement subsystem. Returns TRUE if it all worked, FALSE if it failed somehow
+/// Adds a movable thing to a movement subsystem.. Returns TRUE if it all worked, FALSE if it failed somehow
 /datum/move_manager/proc/add_to_loop(atom/movable/thing_to_add, datum/controller/subsystem/movement/subsystem = SSmovement, datum/move_loop/loop_type, priority = MOVEMENT_DEFAULT_PRIORITY, flags, datum/extra_info)
 	var/datum/movement_packet/our_data = thing_to_add.move_packet
 	if(!our_data)
@@ -60,7 +60,7 @@ GLOBAL_DATUM_INIT(move_manager, /datum/move_manager, new)
 	 * if the move loop gets deleted mid-move, FYI.
 	 */
 	var/processing_move_loop_flags = NONE
-	///Assoc list of subsystems -> loop datum. Only one datum is allowed per subsystem
+	/// Assoc list of subsystems -> loop datum.. Only one datum is allowed per subsystem
 	var/list/existing_loops = list()
 
 /datum/movement_packet/New(atom/movable/parent)
@@ -79,7 +79,7 @@ GLOBAL_DATUM_INIT(move_manager, /datum/move_manager, new)
 	existing_loops = null //Catch anyone modifying this post del
 	return ..()
 
-///Adds a loop to our parent. Returns the created loop if a success, null otherwise
+/// Adds a loop to our parent.. Returns the created loop if a success, null otherwise
 /datum/movement_packet/proc/add_loop(datum/controller/subsystem/movement/subsystem, datum/move_loop/loop_type, priority, flags, datum/extra_info)
 	var/datum/move_loop/existing_loop = existing_loops[subsystem]
 
@@ -104,7 +104,7 @@ GLOBAL_DATUM_INIT(move_manager, /datum/move_manager, new)
 	contest_running_loop(new_loop)
 	return new_loop
 
-///Attempts to contest the current running move loop. Returns TRUE if the loop is active, FALSE otherwise
+/// Tries to contest the current running move loop.. Returns TRUE if the loop is active, FALSE otherwise
 /datum/movement_packet/proc/contest_running_loop(datum/move_loop/contestant)
 	var/datum/controller/subsystem/movement/contesting_subsystem = contestant.controller
 
@@ -128,7 +128,7 @@ GLOBAL_DATUM_INIT(move_manager, /datum/move_manager, new)
 	contesting_subsystem.add_loop(contestant)
 	return TRUE
 
-///Tries to figure out the current favorite loop to run. More complex then just deciding between two different loops, assumes no running loop currently exists
+/// Tries to figure out the current favorite loop to run.. More complex then just deciding between two different loops, assumes no running loop currently exists
 /datum/movement_packet/proc/decide_on_running_loop()
 	if(running_loop)
 		return

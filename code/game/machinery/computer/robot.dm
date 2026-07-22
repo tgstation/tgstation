@@ -145,7 +145,7 @@
 					log_silicon("[key_name(usr)] emagged [key_name(R)] using robotic console!")
 					message_admins("[ADMIN_LOOKUPFLW(usr)] emagged cyborg [key_name_admin(R)] using robotic console!")
 					R.SetEmagged(TRUE)
-					R.logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") //random eight digit hex value. Two are used because rand(1,4294967295) throws an error
+					R.logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") // random eight digit hex value.. Two are used because rand(1,4294967295) throws an error
 
 		if("killdrone")
 			if(allowed(usr))
@@ -162,7 +162,7 @@
 					drone.gib()
 
 
-// I feel like this should be changed, but I have no idea in what way exactly, so I just extracted it to make the code less of a mess
+// I feel like this should be changed. I have no idea in what way exactly, so I just extracted it to make the code less of a mess
 /obj/machinery/computer/robotics/proc/lock_unlock_borg(mob/living/silicon/robot/R, console_location = null)
 	if(R.lockcharge && locked_down_borg == R)
 		UnregisterSignal(locked_down_borg, COMSIG_QDELETING)

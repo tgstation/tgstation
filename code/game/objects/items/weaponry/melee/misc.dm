@@ -58,7 +58,7 @@
 
 /obj/item/melee/beesword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
+		final_block_chance = 0 // Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword.. Or a road roller, if one happened to hit you.
 	return ..()
 
 /obj/item/melee/beesword/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
@@ -258,7 +258,7 @@
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")
 
-// It only inherits the name of the main material it's made of. The secondary is in the description.
+// It only inherits the name of the main material it's made of.. The secondary is in the description.
 /obj/item/melee/cleric_mace/get_material_prefixes(list/materials)
 	var/datum/material/material = get_material_from_slot(/datum/material_slot/weapon_head)
 	return material?.name
@@ -386,7 +386,7 @@
 
 /obj/item/bambostaff/Initialize(mapload)
 	. = ..()
-	// there are too many puns to choose from. ('Bo' is the 'real' name for this kind of weapon.)
+	// there are too many puns to choose from.. ('Bo' is the 'real' name for this kind of weapon.)
 	name = pick("bamboo staff", "bambo staff", "bam-Bo staff", "bam boo staff", "bam-boo staff", "bam Bo", "bambo", "bam-Bo", "bamboo-Bo")
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 10, \
@@ -400,7 +400,7 @@
 
 /obj/item/bambostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
-		final_block_chance = 0 //Don't bring a staff to a gunfight, and also you aren't going to really block someone full body tackling you with a staff. Or a road roller, if one happened to hit you.
+		final_block_chance = 0 // Don't bring a staff to a gunfight, and also you aren't going to really block someone full body tackling you with a staff.. Or a road roller, if one happened to hit you.
 	return ..()
 
 /obj/item/staff
@@ -483,7 +483,7 @@
 	attack_verb_simple = list("swat", "smack")
 	hitsound = 'sound/effects/snap.ogg'
 	w_class = WEIGHT_CLASS_SMALL
-	/// Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
+	/// Things in this list will be instantly splatted.. Flyman weakness is handled in the flyman species weakness proc.
 	var/static/list/splattable
 
 /obj/item/melee/flyswatter/Initialize(mapload)
@@ -509,7 +509,7 @@
 		MODIFY_ATTACK_FORCE(attack_modifiers, 29)
 	else if(ismoth(target))
 		MODIFY_ATTACK_FORCE(attack_modifiers, 9)
-	else // ?? Whatever
+	else // ??. Whatever
 		MODIFY_ATTACK_FORCE(attack_modifiers, 14)
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)

@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	var/atom/old_object
 	if(last_hovored_ref)
 		old_object = last_hovored_ref?.resolve()
-	else // If there's no current ref, we assume it was us. We also treat this as our "first go" location
+	else // If there's no current ref, we assume it was us.. We also treat this as our "first go" location
 		old_object = src
 
 	if(old_object)

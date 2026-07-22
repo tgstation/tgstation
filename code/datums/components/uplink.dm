@@ -30,11 +30,11 @@
 	/// Used for pen uplink
 	var/list/previous_attempts
 
-	// Not modular variables. These variables should be removed sometime in the future
+	// Not modular variables.. These variables should be removed sometime in the future
 
-	/// The unlock text that is sent to the traitor with this uplink. This is not modular and not recommended to expand upon
+	/// The unlock text that is sent to the traitor with this uplink.. This is not modular and not recommended to expand upon
 	var/unlock_text
-	/// The unlock note that is sent to the traitor with this uplink. This is not modular and not recommended to expand upon
+	/// The unlock note that is sent to the traitor with this uplink.. This is not modular and not recommended to expand upon
 	var/unlock_note
 	/// The failsafe code that causes this uplink to blow up.
 	var/failsafe_code
@@ -300,7 +300,7 @@
 /datum/component/uplink/proc/old_implant(datum/source, list/arguments, obj/item/implant/new_implant)
 	SIGNAL_HANDLER
 
-	// It kinda has to be weird like this until implants are components
+	// It kind of has to be weird like this until implants are components
 	return SEND_SIGNAL(new_implant, COMSIG_IMPLANT_EXISTING_UPLINK, src)
 
 /datum/component/uplink/proc/new_implant(datum/source, datum/component/uplink/uplink)
@@ -403,7 +403,7 @@
 		for(var/i in 1 to PEN_ROTATIONS)
 			returnable_code += rand(1, 360)
 
-	if(!unlock_code) // assume the unlock_code is our "base" code that we don't want to duplicate, and if we don't have an unlock code, immediately return out of it since there's nothing to compare to.
+	if(!unlock_code) // assume the unlock_code is our "base" code that we don't want to duplicate. If we don't have an unlock code, immediately return out of it since there's nothing to compare to.
 		return returnable_code
 
 	// duplicate checking, re-run the proc if we get a dupe to prevent the failsafe explodey code being the same as the unlock code.

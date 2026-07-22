@@ -16,7 +16,7 @@
 
 	heat_protection = 0.5 // minor heat insulation
 
-	///Whether or not the alien is leaping. Only used by hunters.
+	/// Whether or not the alien is leaping.. Only used by hunters.
 	var/leaping = FALSE
 	///The speed this alien should move at.
 	var/alien_speed = 0
@@ -159,7 +159,7 @@ Des: Removes all infected images from the alien.
 				old_organ.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)
 				old_organ.Insert(new_xeno, special = TRUE, movement_flags = NO_ID_TRANSFER)
 		else
-			// If we don't have an organ in a slot that should have one in both the old and new xeno, remove the organ from that slot in the new xeno
+			// If we don't have an organ in a slot that should have one in both the old. New xeno, remove the organ from that slot in the new xeno
 			if(default_organ_types_by_slot[slot] && new_xeno.default_organ_types_by_slot[slot] && new_organ)
 				new_organ.Remove(new_xeno, special = TRUE)
 				qdel(new_organ)

@@ -3,7 +3,7 @@
 	desc = "If left untreated the subject will ultimately perish."
 	form = "Condition"
 	max_stages = 3
-	cure_text = /datum/reagent/toxin/anacea::name // I ain't about to make a second sandwich to counteract the first one, so closest thing I'm going for is this.
+	cure_text = /datum/reagent/toxin/anacea::name // I is not about to make a second sandwich to counteract the first one, so closest thing I'm going for is this.
 	cures = list(/datum/reagent/toxin/anacea)
 	cure_chance = 4
 	agent = "Eating the Death Sandwich wrong"

@@ -7,7 +7,7 @@
 
 	VAR_PRIVATE/atom_integrity //defaults to max_integrity
 	var/max_integrity = 500
-	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the atom breaks. 0.5 being 50%
+	var/integrity_failure = 0 // 0 if we have no special broken behavior, otherwise is a percentage of at what point the atom breaks.. 0.5 being 50%
 	///Damage under this value will be completely ignored
 	var/damage_deflection = 0
 
@@ -47,7 +47,7 @@
 	if(atom_integrity <= 0 && previous_atom_integrity > 0)
 		atom_destruction(damage_flag)
 
-/// Proc for recovering atom_integrity. Returns the amount repaired by
+/// Proc for recovering atom_integrity.. Returns the amount repaired by
 /atom/proc/repair_damage(amount)
 	if(amount <= 0) // We only recover here
 		return
@@ -59,7 +59,7 @@
 	if(integrity_failure && atom_integrity > integrity_failure * max_integrity)
 		atom_fix()
 
-/// Handles the integrity of an atom changing. This must be called instead of changing integrity directly.
+/// Handles the integrity of an atom changing.. This must be called instead of changing integrity directly.
 /atom/proc/update_integrity(new_value)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!uses_integrity)
@@ -78,7 +78,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_INTEGRITY_CHANGED, old_value, new_value)
 
-/// This mostly exists to keep atom_integrity private. Might be useful in the future.
+/// This mostly exists to keep atom_integrity private.. Might be useful in the future.
 /atom/proc/get_integrity()
 	SHOULD_BE_PURE(TRUE)
 	return atom_integrity

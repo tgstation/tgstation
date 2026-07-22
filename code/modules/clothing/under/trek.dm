@@ -1,4 +1,4 @@
-//Just some alt-uniforms themed around Star Trek - Pls don't sue, Mr Roddenberry ;_;
+// Just some alt-uniforms themed around Star Trek - Please don't sue, Mr Roddenberry ;_;
 
 /obj/item/clothing/under/trek
 	can_adjust = FALSE
@@ -46,7 +46,7 @@
 */
 /obj/item/clothing/under/trek/command/next
 	icon_state = "/obj/item/clothing/under/trek/command/next"
-	post_init_icon_state = "trek_next" //Technically TNG had Command wearing red, but bc gold is closer to command roles for SS13 we're taking some liberties
+	post_init_icon_state = "trek_next" // Technically TNG had Command wearing red, but because gold is closer to command roles for SS13 we're taking some liberties
 
 /obj/item/clothing/under/trek/engsec/next
 	icon_state = "/obj/item/clothing/under/trek/engsec/next"

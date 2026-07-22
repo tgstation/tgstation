@@ -29,7 +29,7 @@
 /obj/item/clothing/glasses/godeye/dropped(mob/living/user)
 	. = ..()
 	// Behead someone, their "glasses" drop on the floor
-	// and thus, the god eye should no longer be sticky
+	// and so the god eye should no longer be sticky
 	REMOVE_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
 	// And remove the scan ability, note that if we're being called from Destroy
 	// that this may already be nulled and removed

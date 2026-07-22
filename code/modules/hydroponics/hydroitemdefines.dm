@@ -235,7 +235,7 @@
 	restyle(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
-///Send a signal to whatever we clicked and ask them if they wanna be PLANT RESTYLED YEAAAAAAAH
+/// Send a signal to whatever we clicked and ask them if they want to be PLANT RESTYLED YEAAAAAAAH
 /obj/item/secateurs/proc/restyle(atom/target, mob/living/user)
 	SEND_SIGNAL(target, COMSIG_ATOM_RESTYLE, user, target, user.zone_selected, EXTERNAL_RESTYLE_PLANT, 6 SECONDS)
 

@@ -14,7 +14,7 @@
 
 	///icon state after being used up
 	var/used_icon_state = "anomaly_releaser_used"
-	///are we used? if used we can't be used again
+	/// are we used?. if used we can't be used again
 	var/used = FALSE
 	///Can we be used infinitely?
 	var/infinite = FALSE

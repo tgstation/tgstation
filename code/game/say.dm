@@ -157,7 +157,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	do_tts_message(tts_message_to_use, message_language, message_mods, tts_filter, listened)
 
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), visible_name = FALSE)
-	//This proc uses [] because it is faster than continually appending strings. Thanks BYOND.
+	// This proc uses [] because it is faster than continually appending strings.. Thanks BYOND.
 	//Basic span
 	var/freq_color = get_radio_color(radio_freq, radio_freq_color)
 	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]' [freq_color ? "style='color:[freq_color];'" : ""]>"
@@ -255,7 +255,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 	return "[processed_say_mod], \"[processed_input]\""
 
-/// Transforms the message emphasis mods from [/atom/proc/apply_message_emphasis] into the appropriate HTML tags. Includes escaping.
+/// Transforms the message emphasis mods from [/atom/proc/apply_message_emphasis] into the appropriate HTML tags.. Includes escaping.
 #define ENCODE_HTML_EMPHASIS(input, char, html, varname) \
 	var/static/regex/##varname = regex("(?<!\\\\)[char](.+?)(?<!\\\\)[char]", "g");\
 	input = varname.Replace_char(input, "<[html]>$1</[html]>&#8203;") //zero-width space to force maptext to respect closing tags.
@@ -272,14 +272,14 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 #undef ENCODE_HTML_EMPHASIS
 
-/// Modifies the message by comparing the languages of the speaker with the languages of the hearer. Called on the hearer.
+/// Modifies the message by comparing the languages of the speaker with the languages of the hearer.. Called on the hearer.
 /atom/movable/proc/translate_language(atom/movable/speaker, datum/language/language, raw_message, list/spans, list/message_mods)
 	if(!language)
 		return "makes a strange sound."
 
 	if(!has_language(language))
 		var/list/mutual_languages
-		// Get what we can kinda understand, factor in any bonuses passed in from say mods
+		// Get what we can kind of understand, factor in any bonuses passed in from say mods
 		var/list/partially_understood_languages = get_partially_understood_languages()
 		if(LAZYLEN(partially_understood_languages))
 			mutual_languages = partially_understood_languages.Copy()
@@ -384,7 +384,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 
 	// The mob's job identity
 	if(ishuman(M))
-		// Humans use their job as seen on the crew manifest. This is so the AI
+		// Humans use their job as seen on the crew manifest.. This is so the AI
 		// can know their job even if they don't carry an ID.
 		var/datum/record/crew/found_record = find_record(name)
 		if(found_record)

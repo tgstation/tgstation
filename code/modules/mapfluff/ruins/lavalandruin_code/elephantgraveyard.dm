@@ -113,7 +113,7 @@
 
 /obj/structure/sink/oil_well/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	flick("puddle-oil-splash",src)
-	if(tool.tool_behaviour == TOOL_SHOVEL) //attempt to deconstruct the puddle with a shovel
+	if(tool.tool_behaviour == TOOL_SHOVEL) // try to deconstruct the puddle with a shovel
 		to_chat(user, "You fill in the oil well with soil.")
 		tool.play_tool_sound(src)
 		deconstruct(TRUE)
@@ -240,7 +240,7 @@
 		return ..()
 
 
-	//player is attempting to destroy the open grave with a shovel
+	// player is trying to destroy the open grave with a shovel
 	if(user.combat_mode)
 		if(!opened)
 			return ITEM_INTERACT_BLOCKING
@@ -257,7 +257,7 @@
 		deconstruct(TRUE)
 		return ITEM_INTERACT_SUCCESS
 
-	//player is attempting to open/close the grave with a shovel
+	// player is trying to open/close the grave with a shovel
 	user.visible_message(
 			span_notice("[user] Is attempting to [opened ? "close" : "dig open"] [src]."),
 			span_notice("You start [opened ? "closing" : "digging open"] [src]."),

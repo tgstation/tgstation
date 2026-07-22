@@ -4,14 +4,14 @@
 // ABOUT THE DEVICE
 //
 // This is a device supposedly to be used by Janitors and Janitor Cyborgs which will
-// allow them to easily replace lights. This was mostly designed for Janitor Cyborgs since
+// allow them to easily replace lights.. This was mostly designed for Janitor Cyborgs since
 // they don't have hands or a way to replace lightbulbs.
 //
 // HOW IT WORKS
 //
 // You attack a light fixture with it, if the light fixture is broken it will replace the
 // light fixture with a working light; the broken light is then placed on the floor for the
-// user to then pickup with a trash bag. If it's empty then it will just place a light in the fixture.
+// user to then pickup with a trash bag.. If it's empty then it will just place a light in the fixture.
 //
 // HOW TO REFILL THE DEVICE
 //
@@ -20,7 +20,7 @@
 //
 // EMAGGED FEATURES
 //
-// I'm not sure everyone will react the emag's features so please say what your opinions are of it. (I'm pretty sure the players like it)
+// I'm not sure everyone will react the emag's features so please say what your opinions are of it.. (I'm pretty sure the players like it)
 //
 // When emagged it will rig every light it replaces with plasma, which will slowly heat up and ignite while the light is on.
 // This is VERY noticable, even the device's name changes when you emag it so if anyone
@@ -53,7 +53,7 @@
 	/// The light replacer's charge increment (used for adding to cyborg light replacers)
 	var/charge = 1
 
-	/// Eating used bulbs gives us bulb shards. Requires BULB_SHARDS_MAXIMUM to produce a new light.
+	/// Eating used bulbs gives us bulb shards.. Needs BULB_SHARDS_MAXIMUM to produce a new light.
 	var/bulb_shards = 0
 
 	/// whether it is "bluespace powered" (can be used at a range)
@@ -107,7 +107,7 @@
 			user.balloon_alert(user, "stuck in your hand!")
 			return ITEM_INTERACT_BLOCKING
 
-		//insert light. display message only if adding a shard did not create a new bulb else the messages will conflict
+		// insert light.. display message only if adding a shard did not create a new bulb else the messages will conflict
 		var/display_msg = TRUE
 		if(light_to_insert.status == LIGHT_OK)
 			add_uses(1)
@@ -232,7 +232,7 @@
 			qdel(frame)
 		return TRUE
 
-	//attempt to replace all light sources on the turf
+	// try to replace all light sources on the turf
 	if(isturf(target))
 		var/light_replaced = FALSE
 		for(var/atom/target_atom in target)

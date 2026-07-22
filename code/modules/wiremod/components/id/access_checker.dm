@@ -6,10 +6,10 @@
 	/// A list of the accesses to check
 	var/datum/port/input/subject_accesses
 
-	/// A list of the accesses required to return true
+	/// A list of the accesses needed to return true
 	var/datum/port/input/required_accesses
 
-	/// Whether to check for all or any of the required accesses
+	/// Whether to check for all or any of the needed accesses
 	var/datum/port/input/check_any
 
 	ui_buttons = list(

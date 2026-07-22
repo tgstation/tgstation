@@ -1,4 +1,4 @@
-/// Allows carbons with heads to attempt to bite mobs if attacking with cuffed hands / missing arms
+/// Allows carbons with heads to try to bite mobs if attacking with cuffed hands / missing arms
 /datum/element/human_biter
 
 /datum/element/human_biter/Attach(datum/target)

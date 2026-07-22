@@ -494,7 +494,7 @@
 	if(updating_health)
 		updatehealth()
 
-/// heal MANY bodyparts, in random order. note: stamina arg nonfunctional for carbon mobs
+/// heal MANY bodyparts, in random order.. note: stamina arg nonfunctional for carbon mobs
 /mob/living/proc/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_bodytype, updating_health = TRUE, forced = FALSE)
 	. = (adjust_brute_loss(-abs(brute), updating_health = FALSE, forced = forced) + \
 			adjust_fire_loss(-abs(burn), updating_health = FALSE, forced = forced) + \
@@ -504,7 +504,7 @@
 	if(updating_health)
 		updatehealth()
 
-/// damage MANY bodyparts, in random order. note: stamina arg nonfunctional for carbon mobs
+/// damage MANY bodyparts, in random order.. note: stamina arg nonfunctional for carbon mobs
 /mob/living/proc/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, forced = FALSE, required_bodytype)
 	. = (adjust_brute_loss(abs(brute), updating_health = FALSE, forced = forced) + \
 			adjust_fire_loss(abs(burn), updating_health = FALSE, forced = forced) + \

@@ -167,7 +167,7 @@ GLOBAL_VAR(antag_prototypes)
 			antag_header_parts += "<a href='byond://?src=[REF(src)];open_antag_vv=[REF(current_antag)]'>Open VV</a>"
 
 
-		//We aren't antag of this category, grab first prototype to check the prefs (This is pretty vague but really not sure how else to do this)
+		// We aren't antag of this category, grab first prototype to check the prefs (This is pretty vague. Really not sure how else to do this)
 		var/datum/antagonist/pref_source = current_antag
 		if(!pref_source)
 			for(var/datum/antagonist/prototype in GLOB.antag_prototypes[antag_category])

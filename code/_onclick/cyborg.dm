@@ -114,7 +114,7 @@
 /atom/proc/BorgShiftClick(mob/living/silicon/robot/user) //forward to human click if not overridden
 	ShiftClick(user)
 
-/obj/machinery/door/airlock/BorgShiftClick(mob/living/silicon/robot/user)  // Opens and closes doors! Forwards to AI code.
+/obj/machinery/door/airlock/BorgShiftClick(mob/living/silicon/robot/user)  // Opens and closes doors!. Forwards to AI code.
 	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
 		AIShiftClick(user)
 	else
@@ -123,13 +123,13 @@
 /atom/proc/BorgCtrlClick(mob/living/silicon/robot/user) //forward to human click if not overridden
 	user.base_click_ctrl(src)
 
-/obj/machinery/door/airlock/BorgCtrlClick(mob/living/silicon/robot/user) // Bolts doors. Forwards to AI code.
+/obj/machinery/door/airlock/BorgCtrlClick(mob/living/silicon/robot/user) // Bolts doors.. Forwards to AI code.
 	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
 		AICtrlClick(user)
 	else
 		..()
 
-/obj/machinery/power/apc/BorgCtrlClick(mob/living/silicon/robot/user) // turns off/on APCs. Forwards to AI code.
+/obj/machinery/power/apc/BorgCtrlClick(mob/living/silicon/robot/user) // turns off/on APCs.. Forwards to AI code.
 	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
 		AICtrlClick(user)
 	else
@@ -160,7 +160,7 @@
 	else
 		..()
 
-/obj/machinery/turretid/BorgCtrlClick(mob/living/silicon/robot/user) //turret control on/off. Forwards to AI code.
+/obj/machinery/turretid/BorgCtrlClick(mob/living/silicon/robot/user) // turret control on/off.. Forwards to AI code.
 	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
 		AICtrlClick(user)
 	else
@@ -170,13 +170,13 @@
 	user.base_click_alt(src)
 	return
 
-/obj/machinery/door/airlock/borg_click_alt(mob/living/silicon/robot/user) // Eletrifies doors. Forwards to AI code.
+/obj/machinery/door/airlock/borg_click_alt(mob/living/silicon/robot/user) // Eletrifies doors.. Forwards to AI code.
 	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
 		ai_click_alt(user)
 	else
 		..()
 
-/obj/machinery/turretid/borg_click_alt(mob/living/silicon/robot/user) //turret lethal on/off. Forwards to AI code.
+/obj/machinery/turretid/borg_click_alt(mob/living/silicon/robot/user) // turret lethal on/off.. Forwards to AI code.
 	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
 		ai_click_alt(user)
 	else

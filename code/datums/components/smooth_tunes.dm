@@ -1,4 +1,4 @@
-///Smooth tunes component! Applied to musicians to give the songs they play special effects, according to a rite!
+/// Smooth tunes component!. Applied to musicians to give the songs they play special effects, according to a rite!
 ///Comes with BARTICLES!!!
 /datum/component/smooth_tunes
 	///if applied due to a rite, we link it here
@@ -9,7 +9,7 @@
 	var/allow_repeats = TRUE
 	///particles to apply, if applicable
 	var/particles_path
-	///the particle holder of the particle path (created when song starts) ((no i cant think of a better var name because i made the typepath and im perfect))
+	/// the particle holder of the particle path (created when song starts) ((no i cant think of a better var name because i made the typepath. Im perfect))
 	var/obj/effect/abstract/particle_holder/particle_holder
 	///a funny little glow applied to the instrument while playing
 	var/glow_color
@@ -42,7 +42,7 @@
 	if(!starting_song)
 		return
 	if(istype(starting_song.parent, /obj/structure/musician))
-		return //TODO: make stationary instruments work with no hiccups
+		return // To do make stationary instruments work with no hiccups
 
 	if(starting_song.lines.len * starting_song.tempo > FESTIVAL_SONG_LONG_ENOUGH)
 		viable_for_final_effect = TRUE

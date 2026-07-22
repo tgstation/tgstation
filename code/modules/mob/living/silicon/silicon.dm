@@ -14,7 +14,7 @@
 	examine_cursor_icon = null
 	fire_stack_decay_rate = -0.55
 	tts_silicon_voice_effect = TRUE
-	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
+	var/datum/ai_laws/laws = null// Now.... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()
 	var/list/alarms_to_clear = list()
@@ -36,7 +36,7 @@
 	///List keeping track of ion laws to announce
 	var/list/ioncheck = list()
 
-	///Are our siliconHUDs on? TRUE for yes, FALSE for no.
+	/// Are our siliconHUDs on?. TRUE for yes, FALSE for no.
 	var/sensors_on = TRUE
 	var/list/silicon_huds = list(TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD, TRAIT_DIAGNOSTIC_HUD)
 
@@ -94,7 +94,7 @@
 	GLOB.silicon_mobs -= src
 	return ..()
 
-///Sets cyborg gender from preferences. Expects a client.
+/// Sets cyborg gender from preferences.. Expects a client.
 /mob/living/silicon/proc/set_gender(client/player_client)
 	var/silicon_pronouns = player_client.prefs.read_preference(/datum/preference/choiced/silicon_gender)
 	if(silicon_pronouns == /datum/preference/choiced/silicon_gender::use_character_gender)
@@ -247,7 +247,7 @@
 	if (href_list["laws"])
 		statelaws()
 
-	if (href_list["printlawtext"]) // this is kinda backwards
+	if (href_list["printlawtext"]) // this is kind of backwards
 		if (href_list["dead"] && (!isdead(usr) && !usr.client.holder)) // do not print deadchat law notice if the user is now alive
 			to_chat(usr, span_warning("You cannot view law changes that were made while you were dead."))
 			return

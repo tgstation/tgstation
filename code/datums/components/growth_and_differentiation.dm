@@ -6,7 +6,7 @@
 /datum/component/growth_and_differentiation
 	/// What this mob turns into when fully grown.
 	var/growth_path
-	/// Failover for how much time we have until we fully grow. If passed as null, we eschew setting up the timer.
+	/// Failover for how much time we have until we fully grow.. If passed as null, we eschew setting up the timer.
 	/// Remember: We can grow earlier than this if the randomness rolls turn out to be in our favor though!
 	var/growth_time
 	/// Integer - Probability we grow per SPT_PROB
@@ -21,15 +21,15 @@
 	var/list/signals_to_kill_on
 	/// Optional callback for checks to see if we're okay to grow.
 	var/datum/callback/optional_checks
-	/// Optional callback in case we wish to override the default grow() behavior. Assume we supersede the change_mob_type() call if we have this set.
+	/// Optional callback in case we wish to override the default grow() behavior.. Assume we supersede the change_mob_type() call if we have this set.
 	var/datum/callback/optional_grow_behavior
 
 	/// ID for the failover timer.
 	var/timer_id
 	/// Percentage we have grown.
 	var/percent_grown = 0
-	/// Are we ready to grow? This is just in case we fail our checks and need to wait until the next tick.
-	/// We only really need this because we have two competing systems, the timer and the probability-based growth. When one succeeds, this component is considered successful in growth,
+	/// Are we ready to grow?. This is just in case we fail our checks and need to wait until the next tick.
+	/// We only really need this because we have two competing systems, the timer and the probability-based growth.. When one succeeds, this component is considered successful in growth,
 	/// and will actively try to grow the mob (only barred by optional checks).
 	var/ready_to_grow = FALSE
 
@@ -63,7 +63,7 @@
 		parent.AddComponent(/datum/component/happiness)
 		RegisterSignal(parent, COMSIG_MOB_HAPPINESS_CHANGE, PROC_REF(on_happiness_change))
 
-	// If we haven't started the round, we can't do timer stuff. Let's wait in case we're mapped in or something.
+	// If we haven't started the round, we can't do timer stuff.. Let's wait in case we're mapped in or something.
 	if(!SSticker.HasRoundStarted() && !isnull(growth_time))
 		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(comp_on_round_start))
 		return
@@ -77,7 +77,7 @@
 	optional_grow_behavior = null
 	return ..()
 
-/// Wrapper for qdel() so we can pass it in RegisterSignals(). I hate it here too.
+/// Wrapper for qdel() so we can pass it in RegisterSignals().. I hate it here too.
 /datum/component/growth_and_differentiation/proc/stop_component_processing_entirely()
 	SIGNAL_HANDLER
 	qdel(src)
@@ -88,7 +88,7 @@
 	setup_growth_tracking()
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
 
-/// Sets up the two different systems for growth: the timer and the probability based one. Both can coexist. Return COMPONENT_INCOMPATIBLE if we fail to set up either.
+/// Sets up the two different systems for growth: the timer and the probability good one.. Both can coexist.. Return COMPONENT_INCOMPATIBLE if we fail to set up either.
 /datum/component/growth_and_differentiation/proc/setup_growth_tracking()
 	var/did_we_add_at_least_one_thing = FALSE
 
@@ -131,7 +131,7 @@
 
 /// Grows the mob into its new form.
 /datum/component/growth_and_differentiation/proc/grow(silent)
-	if(!isnull(optional_checks) && !optional_checks.Invoke()) // we failed our checks somehow, but we're still ready to grow. Let's wait until next tick to see if our circumstances have changed.
+	if(!isnull(optional_checks) && !optional_checks.Invoke()) // we failed our checks somehow, but we're still ready to grow.. Let's wait until next tick to see if our circumstances have changed.
 		ready_to_grow = TRUE
 		return
 

@@ -37,7 +37,7 @@
 	///Weapon path, for visuals
 	var/held_weapon_visual = /obj/item/gun/ballistic/shotgun
 
-	///Type path for the trader datum to use for retrieving the traders wares, speech, etc
+	/// Type path for the trader datum to use for retrieving the traders wares, speech, and so on
 	var/trader_data_path = /datum/trader_data
 
 

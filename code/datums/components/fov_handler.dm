@@ -1,8 +1,8 @@
-/// Component which handles Field of View masking for clients. FoV attributes are at /mob/living
+/// Component which handles Field of View masking for clients.. FoV attributes are at /mob/living
 /datum/component/fov_handler
 	/// Currently applied x size of the fov masks
 	var/current_fov_x = BASE_FOV_MASK_X_DIMENSION
-	/// Currently applied y size of the fov masks
+	/// Currently applied why size of the fov masks
 	var/current_fov_y = BASE_FOV_MASK_Y_DIMENSION
 	/// Whether we are applying the masks now
 	var/applied_mask = FALSE
@@ -17,7 +17,7 @@
 	var/mob/living/mob_parent = parent
 	var/client/parent_client = mob_parent.client
 	if(!parent_client) //Love client volatility!!
-		qdel(src) //no QDEL hint for components, and we dont want this to print a warning regarding bad component application
+		qdel(src) // no QDEL hint for components, and we dont want this to print a warning about bad component application
 		return
 
 	ADD_TRAIT(mob_parent, TRAIT_FOV_APPLIED, REF(src))

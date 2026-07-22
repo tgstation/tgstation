@@ -34,13 +34,13 @@
 	 * This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
 	 */
 	var/color_src = MUTANT_COLOR
-	/// Is this part locked from roundstart selection? Used for parts that apply effects.
+	/// Is this part locked from roundstart selection?. Used for parts that apply effects.
 	var/locked = FALSE
 	/// Should we center the sprite?
 	var/center = FALSE
-	/// The width of the sprite in pixels. Used to center it if necessary.
+	/// The width of the sprite in pixels.. Used to center it if necessary.
 	var/dimension_x = 32
-	/// The height of the sprite in pixels. Used to center it if necessary.
+	/// The height of the sprite in pixels.. Used to center it if necessary.
 	var/dimension_y = 32
 	/// Should this sprite block emissives?
 	var/em_block = FALSE

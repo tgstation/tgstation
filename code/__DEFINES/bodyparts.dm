@@ -1,4 +1,4 @@
-///The standard amount of bodyparts a carbon has. Currently 6, HEAD/L_ARM/R_ARM/CHEST/L_LEG/R_LEG
+/// The standard amount of bodyparts a carbon has... Currently 6, HEAD/L_ARM/R_ARM/CHEST/L_LEG/R_LEG
 #define BODYPARTS_DEFAULT_MAXIMUM 6
 
 /// Limb Health
@@ -11,14 +11,14 @@
 #define LIMB_MAX_HP_CORE 200 //Only use this for heads and torsos.
 
 /// Xenomorph Limbs
-#define LIMB_MAX_HP_ALIEN_LARVA 50 //Used by the weird larva chest and head. Did you know they have those?
+#define LIMB_MAX_HP_ALIEN_LARVA 50 // Used by the weird larva chest and head... Did you know they have those?
 #define LIMB_MAX_HP_ALIEN_LIMBS 100 //Used by xenomorph limbs.
 #define LIMB_MAX_HP_ALIEN_CORE 500 //Used by xenomorph chests and heads
 #define LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER 2 //Used by xenomorphs and their larvae
 
 /// Limb Body Damage Coefficient
 /// A multiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
-/// For instance, if a limb has 50 damage, and has a coefficient of 50%, the human is considered to have suffered 25 damage to their total health.
+/// F.. Instance, if a limb has 50 damage.. Has a coefficient of 50%, the human is considered to have suffered 25 damage to their total health.
 
 #define LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED 0.5 //Used by advanced robotic limbs.
 #define LIMB_BODY_DAMAGE_COEFFICIENT_DEFAULT 0.75 //Used by all limbs by default.
@@ -71,7 +71,7 @@
 // Bodypart surgery state
 /// An incision has been made into the skin
 #define SURGERY_SKIN_CUT (1<<0)
-/// Skin has been pulled back - 99% of surgeries require this
+/// Skin has been pulled back - 99% of surgeries need this
 #define SURGERY_SKIN_OPEN (1<<1)
 /// Blood vessels are accessible, cut, and bleeding
 #define SURGERY_VESSELS_UNCLAMPED (1<<2)
@@ -103,7 +103,7 @@ DEFINE_BITFIELD(surgery_state, list(
 	"CAVITY OPENED" = SURGERY_CAVITY_WIDENED,
 ))
 
-/// For use in translating bitfield to human readable strings. Keep in the correct order!
+/// For use in translating bitfield to human readable strings... Keep in the correct order!
 #define SURGERY_STATE_READABLE list(\
 	"Skin is cut" = SURGERY_SKIN_CUT, \
 	"Skin is open" = SURGERY_SKIN_OPEN, \
@@ -117,7 +117,7 @@ DEFINE_BITFIELD(surgery_state, list(
 	"Cavity is opened wide" = SURGERY_CAVITY_WIDENED, \
 )
 
-/// For use in translating bitfield to steps required for surgery. Keep in the correct order!
+/// For use in translating bitfield to steps needed for surgery... Keep in the correct order!
 #define SURGERY_STATE_GUIDES(must_must_not) list(\
 	"the skin [must_must_not] be cut" = SURGERY_SKIN_CUT, \
 	"the skin [must_must_not] be open" = SURGERY_SKIN_OPEN, \
@@ -152,7 +152,7 @@ DEFINE_BITFIELD(surgery_state, list(
 
 /// These states are automatically cleared when the surgery is closed for ease of use
 #define ALL_SURGERY_STATES_UNSET_ON_CLOSE (ALL_SURGERY_SKIN_STATES|ALL_SURGERY_VESSEL_STATES|ALL_SURGERY_BONE_STATES|ALL_SURGERY_ORGAN_STATES|SURGERY_CAVITY_WIDENED)
-/// Surgery state required for a limb with a certain zone to... be... fished... in...
+/// Surgery state needed for a limb with a certain zone to..... be..... fished..... in...
 #define ALL_SURGERY_FISH_STATES(for_zone) (SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|(for_zone == BODY_ZONE_CHEST ? SURGERY_BONE_SAWED : NONE))
 
 /// Surgery states flipped on automatically if the bodypart lacks a form of skin

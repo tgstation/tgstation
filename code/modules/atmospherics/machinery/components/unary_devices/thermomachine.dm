@@ -176,12 +176,12 @@
 	// The gas we want to cool/heat
 	var/datum/gas_mixture/port = airs[1]
 
-	if(!port.total_moles()) // Nothing to cool? go home lad
+	if(!port.total_moles()) // Nothing to cool?. go home lad
 		return
 
 	var/port_capacity = port.heat_capacity()
 
-	// The difference between target and what we need to heat/cool. Positive if heating, negative if cooling.
+	// The difference between target and what we need to heat/cool.. Positive if heating, negative if cooling.
 	var/temperature_target_delta = target_temperature - port.temperature
 
 	// We perfectly can do W1+W2 / C1+C2 here but this lets us count the power easily.
@@ -191,7 +191,7 @@
 
 	heat_amount = min(abs(heat_amount), 1e8) * THERMOMACHINE_POWER_CONVERSION
 
-	// This produces a nice curve that scales decently well for really hot stuff, and is nice to not fusion. It'll do
+	// This produces a nice curve that scales decently well for really hot stuff, and is nice to not fusion.. It'll do
 	var/power_usage = idle_power_usage + (heat_amount * 0.05) ** (1.05 - (5e7 * 0.16 / max(heat_amount, 5e7)))
 
 	use_energy(power_usage)

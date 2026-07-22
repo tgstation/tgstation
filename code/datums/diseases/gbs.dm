@@ -6,7 +6,7 @@
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
 	cure_text = /datum/reagent/medicine/synaptizine::name + " & " + /datum/reagent/sulfur::name
 	cures = list(/datum/reagent/medicine/synaptizine,/datum/reagent/sulfur)
-	cure_chance = 7.5 //higher chance to cure, since two reagents are required
+	cure_chance = 7.5 // higher chance to cure, since two reagents are needed
 	agent = "Gravitokinetic Bipotential SADS+"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE

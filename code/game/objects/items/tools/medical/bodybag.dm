@@ -96,8 +96,8 @@
 	to_chat(loc, span_warning("Someone starts trying to break free of [src]!"))
 	if(!do_after(user, 12 SECONDS, src, timed_action_flags = (IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM)))
 		return
-	// you are still in the bag? time to go unless you KO'd, honey!
-	// if they escape during this time and you rebag them the timer is still clocking down and does NOT reset so they can very easily get out.
+	// you are still in the bag?. time to go unless you KO'd, honey!
+	// if they escape during this time. You rebag them the timer is still clocking down. Does NOT reset so they can very easily get out.
 	if(user.incapacitated)
 		to_chat(loc, span_warning("The pressure subsides. It seems that they've stopped resisting..."))
 		return

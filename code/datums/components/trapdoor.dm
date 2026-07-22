@@ -14,11 +14,11 @@
 	can_transfer = TRUE
 	///assembly tied to this trapdoor
 	var/obj/item/assembly/trapdoor/assembly
-	///path of the turf this should change into when the assembly is pulsed. needed for openspace trapdoors knowing what to turn back into
+	/// path of the turf this should change into when the assembly is pulsed.. needed for openspace trapdoors knowing what to turn back into
 	var/trapdoor_turf_path
 	///stack of baseturfs on top of the openspace under this trapdoor
 	var/list/trapdoor_baseturfs = list()
-	/// is this trapdoor "conspicuous" (ie. it gets examine text and overlay added)
+	/// is this trapdoor "conspicuous" that is it gets examine text and overlay added)
 	var/conspicuous
 	/// overlay that makes trapdoors more obvious
 	var/static/trapdoor_overlay
@@ -192,7 +192,7 @@
 
 /datum/component/trapdoor/proc/decal_detached(datum/source, description, cleanable, directional, pic)
 	SIGNAL_HANDLER
-	///so it adds the list to the list, not appending it to the end. thank you byond, very cool.
+	/// so it adds the list to the list, not appending it to the end.. thank you byond, very cool.
 	stored_decals += list(list(description, cleanable, directional, pic))
 
 /**
@@ -463,7 +463,7 @@
 
 #undef TRAPDOOR_LINKING_SEARCH_RANGE
 
-///subtype with internals already included. If you're giving a department a roundstart trapdoor, this is what you want
+/// subtype with internals already included.. If you're giving a department a roundstart trapdoor, this is what you want
 /obj/item/trapdoor_remote/preloaded
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.1)
 

@@ -95,10 +95,10 @@
 			continue
 		if(temp_vent.welded)
 			continue
-		return TRUE //there's at least one. we'll let the codergods handle the rest with prob() i guess.
+		return TRUE // there's at least one.. we'll let the codergods handle the rest with prob() i guess.
 	return FALSE
 
-/// proc that will run the prob check of the event and return a safe or dangerous reagent based off of that.
+/// proc that will run the prob check of the event and return a safe or dangerous reagent good off of that.
 /datum/round_event/scrubber_overflow/proc/get_overflowing_reagent(dangerous)
 	return dangerous ? get_random_reagent_id() : pick(safer_chems)
 

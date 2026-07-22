@@ -22,7 +22,7 @@
 	var/input_text = "Unset Text"
 	/// If set, picking this will be the same as running the event without admin setup.
 	var/normal_run_option
-	/// if you want a special button, this will add it. Remember to actually handle that case for chosen in `apply_to_event`
+	/// if you want a special button, this will add it.. Remember to actually handle that case for chosen in `apply_to_event`
 	/// Example is in scrubber_overflow.dm
 	var/special_run_option
 	/// Picked list option to be applied.
@@ -44,7 +44,7 @@
 	if(normal_run_option && chosen == normal_run_option)
 		chosen = null //no admin pick = runs as normal
 
-/// For admin setups that want a custom string. Suggests what the event would have picked normally.
+/// For admin setups that want a custom string.. Suggests what the event would have picked normally.
 /datum/event_admin_setup/text_input
 	/// Text to ask the user, for example "What horrifying truth will you reveal?"
 	var/input_text = "Unset Text"
@@ -67,7 +67,7 @@
 /datum/event_admin_setup/warn_admin
 	/// Warning text shown to admin on the alert.
 	var/warning_text = "Unset warning text"
-	/// Message sent to other admins. Example: "has forced a shuttle catastrophe while a shuttle was already docked."
+	/// Message sent to other admins.. Example: "has forced a shuttle catastrophe while a shuttle was already docked."
 	var/snitch_text = "Unset snitching text (be mad at coders AND the admin responsible)"
 
 /datum/event_admin_setup/warn_admin/prompt_admins()
@@ -135,7 +135,7 @@
 		return ADMIN_CANCEL_EVENT
 	tgui_alert(usr, "[candidate_count] candidates found!", event_control.name)
 
-/// Checks for candidates. Should return the total number of candidates
+/// Checks for candidates.. Should return the total number of candidates
 /datum/event_admin_setup/minimum_candidate_requirement/proc/count_candidates()
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("Unimplemented count_candidates() on [event_control]'s admin setup.")
@@ -143,7 +143,7 @@
 /datum/event_admin_setup/minimum_candidate_requirement/apply_to_event(datum/round_event/event)
 	return
 
-///For events that require a true/false question
+/// For events that need a true/false question
 /datum/event_admin_setup/question
 	///Question shown to the admin.
 	var/input_text = "Are you sure you would like to do this?"

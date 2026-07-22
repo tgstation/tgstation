@@ -1,5 +1,5 @@
 
-//These are just stupid or funny lawsets that are more interesting than helpful. They may have slight biases toward or against
+// These are just stupid or funny lawsets that are more interesting than helpful.. They may have slight biases toward or against
 //the station but in general are "neutral" enough to be here.
 
 /datum/ai_laws/united_nations

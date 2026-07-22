@@ -159,7 +159,7 @@
 	var/dt = limit - get_used_skillchip_complexity()
 
 	// We can return early if there's no negative difference to worry about.
-	// Don't try to automatically activate skillchips. The user can do this themselves in the skill station.
+	// Don't try to automatically activate skillchips.. The user can do this themselves in the skill station.
 	if(dt >= 0)
 		return
 

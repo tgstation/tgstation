@@ -3,17 +3,17 @@
 	/// Stops the rest of the help
 	#define COMPONENT_BLOCK_HELP_ACT (1<<0)
 
-///Called from /mob/living/carbon/help_shake_act, before any hugs have occurred. (mob/living/helper)
+/// Called from /mob/living/carbon/help_shake_act, before any hugs have occurred... (mob/living/helper)
 #define COMSIG_CARBON_PRE_MISC_HELP "carbon_pre_misc_help"
-	/// Stops the rest of help act (hugging, etc) from occurring
+	/// Stops the rest of help act (hugging, and so on from occurring
 	#define COMPONENT_BLOCK_MISC_HELP (1<<0)
 
-///Called from /mob/living/carbon/help_shake_act on the person being helped, after any hugs have occurred. (mob/living/helper)
+/// Called from /mob/living/carbon/help_shake_act on the person being helped, after any hugs have occurred... (mob/living/helper)
 #define COMSIG_CARBON_HELP_ACT "carbon_help"
-///Called from /mob/living/carbon/help_shake_act on the helper, after any hugs have occurred. (mob/living/helped)
+/// Called from /mob/living/carbon/help_shake_act on the helper, after any hugs have occurred... (mob/living/helped)
 #define COMSIG_CARBON_HELPED "carbon_helped_someone"
 
-///When a carbon slips. Called on /turf/open/handle_slip()
+/// When a carbon slips... Called on /turf/open/handle_slip()
 #define COMSIG_ON_CARBON_SLIP "carbon_slip"
 // /mob/living/carbon physiology signals
 #define COMSIG_CARBON_GAIN_WOUND "carbon_gain_wound" //from /datum/wound/proc/apply_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
@@ -37,7 +37,7 @@
 /// from /obj/item/stack/medical/wrap/gauze/Destroy(): (/obj/item/stack/medical/wrap/gauze/removed_gauze)
 #define COMSIG_BODYPART_UNGAUZED "bodypart_ungauzed"
 
-/// Called from bodypart changing owner, which could be on attach or detachment. Either argument can be null. (mob/living/carbon/new_owner, mob/living/carbon/old_owner)
+/// Called from bodypart changing owner, which could be on attach or detachment... Either argument can be null... (mob/living/carbon/new_owner, mob/living/carbon/old_owner)
 #define COMSIG_BODYPART_CHANGED_OWNER "bodypart_changed_owner"
 /// Called from /obj/item/bodypart/proc/update_part_wound_overlay()
 #define COMSIG_BODYPART_UPDATE_WOUND_OVERLAY "bodypart_update_wound_overlay"
@@ -78,7 +78,7 @@
 #define COMSIG_CARBON_GAIN_ORGAN "carbon_gain_organ"
 ///from /item/organ/proc/Remove() (/obj/item/organ/)
 #define COMSIG_CARBON_LOSE_ORGAN "carbon_lose_organ"
-///Called when someone attempts to cuff a carbon
+/// Called when someone tries to cuff a carbon
 #define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
 	#define COMSIG_CARBON_CUFF_PREVENT (1<<0)
 ///Called when a carbon mutates (source = dna, mutation = mutation added)
@@ -95,13 +95,13 @@
 	#define COMSIG_CARBON_BLOCK_TRAUMA (1 << 0)
 ///Called when a carbon loses a brain trauma (source = carbon, trauma = what trauma was removed)
 #define COMSIG_CARBON_LOSE_TRAUMA "carbon_lose_trauma"
-///Called when a carbon's health hud is updated. (source = carbon, shown_health_amount)
+/// Called when a carbon's health hud is updated... (source = carbon, shown_health_amount)
 #define COMSIG_CARBON_UPDATING_HEALTH_HUD "carbon_health_hud_update"
 	/// Return if you override the carbon's health hud with something else
 	#define COMPONENT_OVERRIDE_HEALTH_HUD (1<<0)
 ///Called when a carbon updates their sanity (source = carbon)
 #define COMSIG_CARBON_SANITY_UPDATE "carbon_sanity_update"
-///Called when a carbon attempts to breath, before the breath has actually occurred
+/// Called when a carbon tries to breath, before the breath has actually occurred
 #define COMSIG_CARBON_ATTEMPT_BREATHE "carbon_attempt_breathe"
 	// Prevents the breath
 	#define COMSIG_CARBON_BLOCK_BREATH (1 << 0)
@@ -109,7 +109,7 @@
 #define COMSIG_CARBON_PRE_BREATHE "carbon_pre_breathe"
 ///Called when a carbon updates their mood
 #define COMSIG_CARBON_MOOD_UPDATE "carbon_mood_update"
-///Called when a carbon attempts to eat (eating)
+/// Called when a carbon tries to eat (eating)
 #define COMSIG_CARBON_ATTEMPT_EAT "carbon_attempt_eat"
 	// Prevents eating the food
 	#define BLOCK_EAT_ATTEMPT (1 << 0)
@@ -132,7 +132,7 @@
 #define COMSIG_JOB_RECEIVED "job_received"
 ///from /mob/living/carbon/human/proc/set_coretemperature(): (oldvalue, newvalue)
 #define COMSIG_HUMAN_CORETEMP_CHANGE "human_coretemp_change"
-///from /datum/species/handle_fire. Called when the human is set on fire and burning clothes and stuff
+/// from /datum/species/handle_fire... Called when the human is set on fire and burning clothes and stuff
 #define COMSIG_HUMAN_BURNING "human_burning"
 ///from /mob/living/carbon/human/proc/force_say(): ()
 #define COMSIG_HUMAN_FORCESAY "human_forcesay"

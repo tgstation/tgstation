@@ -32,7 +32,7 @@
 	var/powerlevel = 0
 	///If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it won't award levels to shrooms that eat it
 	var/bruised = FALSE
-	///If we hit three, another mushroom's gonna eat us
+	/// If we hit three, another mushroom's going to eat us
 	var/faint_ticker = 0
 	///Where we store our cap icons so we dont generate them constantly to update our icon
 	var/static/mutable_appearance/cap_living

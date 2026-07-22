@@ -13,7 +13,7 @@
 		which subside on being administered Mindbreaker Toxin."
 	gain_text = span_warning("You feel your grip on reality slipping...")
 	lose_text = span_notice("You feel more grounded.")
-	/// Whether the hallucinations we give are uncapped, ie all the wacky ones
+	/// Whether the hallucinations we give are uncapped, that is all the wacky ones
 	var/uncapped = FALSE
 
 /datum/brain_trauma/mild/hallucinations/on_life(seconds_per_tick)

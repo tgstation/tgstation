@@ -1,6 +1,6 @@
 
 
-//TODO: Make these basic mobs
+// To do Make these basic mobs
 
 #define MIN_IMPREGNATION_TIME 100 //time it takes to impregnate someone
 #define MAX_IMPREGNATION_TIME 150
@@ -28,7 +28,7 @@
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
 	var/sterile = FALSE
-	var/real = TRUE //0 for the toy, 1 for real. Sure I could istype, but fuck that.
+	var/real = TRUE // 0 for the toy, 1 for real.. Sure I could istype, but fuck that.
 	var/strength = 5
 
 	var/attached = 0
@@ -133,10 +133,10 @@
 	if(!ishuman(hit_mob))
 		return FALSE
 	var/mob/living/carbon/human/target = hit_mob
-	// gotta have a head to be implanted (no changelings or sentient plants)
+	// got to have a head to be implanted (no changelings or sentient plants)
 	if(!target.get_bodypart(BODY_ZONE_HEAD))
 		return FALSE
-	// gotta be able to have the xeno implanted
+	// got to be able to have the xeno implanted
 	if(HAS_TRAIT(hit_mob, TRAIT_XENO_IMMUNE))
 		return FALSE
 	// carbon, has head, not an alien nor has an hivenode or embryo: valid
@@ -176,7 +176,7 @@
 	if(!valid_to_attach(victim))
 		return
 
-	if(victim.stat < UNCONSCIOUS) //sorry bro you gotta be awake
+	if(victim.stat < UNCONSCIOUS) // sorry bro you got to be awake
 		victim.say("AAAA!!") //triggers muffled speech and also visual feedback i guess
 	// early returns and validity checks done: attach.
 	attached++

@@ -369,13 +369,13 @@
 	var/shots_before_degradation = 10
 	/// The max number of allowed shots this gun can have before degradation.
 	var/max_shots_before_degradation = 10
-	/// Determines the degradation stage. The higher the value, the more poorly the weapon performs.
+	/// Determines the degradation stage.. The higher the value, the more poorly the weapon performs.
 	var/degradation_stage = 0
 	/// Maximum degradation stage.
 	var/degradation_stage_max = 5
 	/// The probability of degradation increasing per shot.
 	var/degradation_probability = 10
-	/// The maximum speed malus for projectile flight speed. Projectiles probably shouldn't move too slowly or else they will start to cause problems.
+	/// The maximum speed malus for projectile flight speed.. Projectiles probably shouldn't move too slowly or else they will start to cause problems.
 	var/maximum_speed_malus = 0.7
 	/// What is our damage multiplier if the gun is emagged?
 	var/emagged_projectile_damage_multiplier = 1.6
@@ -383,7 +383,7 @@
 	/// Whether or not our gun is suffering an EMP related malfunction.
 	var/emp_malfunction = FALSE
 
-	/// Our timer for when our gun is suffering an extreme malfunction. AKA it is going to explode
+	/// Our timer for when our gun is suffering an extreme malfunction.. Also known as it is going to explode
 	var/explosion_timer
 
 	SET_BASE_PIXEL(-8, 0)
@@ -489,7 +489,7 @@
 	else
 		attempt_degradation(FALSE)
 
-/// Proc to handle weapon degradation. Called when attempting to fire or immediately after an EMP takes place.
+/// Proc to handle weapon degradation.. Called when trying to fire or immediately after an EMP takes place.
 /obj/item/gun/ballistic/automatic/battle_rifle/proc/attempt_degradation(force_increment = FALSE)
 	if(!prob(degradation_probability) && !force_increment || degradation_stage == degradation_stage_max)
 		return //Only update if we actually increment our degradation stage
@@ -500,7 +500,7 @@
 	do_sparks(1, TRUE, src)
 	update_appearance()
 
-/// Called by /obj/machinery/recharger while inserted: attempts to recalibrate our gun but reducing degradation.
+/// Called by /obj/machinery/recharger while inserted: tries to recalibrate our gun but reducing degradation.
 /obj/item/gun/ballistic/automatic/battle_rifle/proc/attempt_recalibration(restoring_shots_before_degradation = FALSE, recharge_rate = 1)
 	emp_malfunction = FALSE
 

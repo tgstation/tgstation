@@ -94,7 +94,7 @@
 
 		atoms_in_range += close_atom
 
-	// A copy of our requirements list.
+	// A copy of our needs list.
 	// We decrement the values of to determine if enough of each key is present.
 	var/list/requirements_list = ritual.required_atoms.Copy()
 	var/list/banned_atom_types = ritual.banned_atom_types.Copy()
@@ -110,7 +110,7 @@
 
 	// Now go through all our nearby atoms and see which are good for our ritual.
 	for(var/atom/nearby_atom as anything in atoms_in_range)
-		// Go through all of our required atoms
+		// Go through all of our needed atoms
 		for(var/req_type in requirements_list)
 			// We already have enough of this type, skip
 			if(requirements_list[req_type] <= 0)
@@ -125,9 +125,9 @@
 			if(length(banned_atom_types))
 				if(nearby_atom.type in banned_atom_types)
 					continue
-			// If it's a stack, we gotta see if it has more than one inside,
-			// as our requirements may want more than one item of a stack
-			// It's also important that we split the required amount from the stack and add that
+			// If it's a stack, we got to see if it has more than one inside,
+			// as our needs may want more than one item of a stack
+			// It's also important that we split the needed amount from the stack and add that
 			// to the selected_atoms AFTERWARD so we don't change anything if the reqs aren't met.
 			if(isstack(nearby_atom))
 				var/obj/item/stack/picked_stack = nearby_atom
@@ -138,7 +138,7 @@
 			// Otherwise, just add the mark down the item as fulfilled x1
 			else
 				requirements_list[req_type]--
-				// This item is a valid type. Add it to our selected atoms list.
+				// This item is a valid type.. Add it to our selected atoms list.
 				selected_atoms |= nearby_atom
 
 	// All of the atoms have been checked, let's see if the ritual was successful
@@ -199,10 +199,10 @@
 	for(var/atom/to_disappear as anything in selected_atoms)
 		to_disappear.SetInvisibility(INVISIBILITY_ABSTRACT, id=type)
 
-	// All the components have been invisibled, time to actually do the ritual. Call on_finished_recipe
+	// All the components have been invisibled, time to actually do the ritual.. Call on_finished_recipe
 	// (Note: on_finished_recipe may sleep in the case of some rituals like summons, which expect ghost candidates.)
-	// - If the ritual was success (Returned TRUE), proceede to clean up the atoms involved in the ritual. The result has already been spawned by this point.
-	// - If the ritual failed for some reason (Returned FALSE), likely due to no ghosts taking a role or an error, we shouldn't clean up anything, and reset.
+	// - If the ritual was success (Returned TRUE), proceede to clean up the atoms involved in the ritual.. The result has already been spawned by this point.
+	// - If the ritual failed f. Some reason (Returned FALSE), likely due to no ghosts taking a role. An error, we shouldn't clean up anything. Reset.
 	var/ritual_result = ritual.on_finished_recipe(user, selected_atoms, loc)
 
 	if(ritual_result)
@@ -227,7 +227,7 @@
 	return ritual_result
 
 
-/// A 3x3 heretic rune. The kind heretics actually draw in game.
+/// A 3x3 heretic rune.. The kind heretics actually draw in game.
 /obj/effect/heretic_rune/big
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "transmutation_rune"

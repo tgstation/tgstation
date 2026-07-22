@@ -1,4 +1,4 @@
-// Realignment. It's like Fleshmend but solely for stamina damage and stuns. Sec meta
+// Realignment.. It's like Fleshmend but solely for stamina damage and stuns.. Sec meta
 /datum/action/cooldown/spell/realignment
 	name = "Realignment"
 	desc = "Realign yourself, rapidly regenerating stamina and reducing any stuns or knockdowns. \

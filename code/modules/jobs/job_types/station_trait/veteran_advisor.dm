@@ -8,7 +8,7 @@
 	spawn_positions = 0
 	supervisors = SUPERVISOR_HOS
 	minimal_player_age = 7
-	exp_requirements = 6000 //100 HOURS! We want really hard boiled people
+	exp_requirements = 6000 // 100 HOURS!. We want really hard boiled people
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_SECURITY
 	exp_granted_type = EXP_TYPE_CREW

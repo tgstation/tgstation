@@ -5,7 +5,7 @@
 	you_are_text = "You are NOT supposed to be here. How did you let this happen?"
 	important_text = "Bitrunning is a crime, and your primary threat."
 	temp_body = TRUE
-	///Does this bit-entity get an antag datum with the goal of hunting bitrunners? TRUE by default
+	/// Does this bit-entity get an antag datum with the goal of hunting bitrunners?. TRUE by default
 	var/antag = TRUE
 
 
@@ -20,7 +20,7 @@
 		spawned_mob.mind.add_antag_datum(/datum/antagonist/domain_ghost_actor)
 		spawned_mob.mind.set_assigned_role(SSjob.get_job_type(/datum/job/bitrunning_glitch))
 
-/// Simulates a ghost role spawn without calling special(), ie a bitrunner spawn instead of a ghost.
+/// Simulates a ghost role spawn without calling special(), that is a bitrunner spawn instead of a ghost.
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/proc/artificial_spawn(mob/living/runner)
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_SPAWNED, runner)
 

@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(cooking_recipes_atoms)
 GLOBAL_LIST_EMPTY(rcd_list)
 /// list of wallmounted intercom radios.
 GLOBAL_LIST_EMPTY(intercoms_list)
-/// list of all pinpointers. Used to change stuff they are pointing to all at once.
+/// list of all pinpointers.. Used to change stuff they are pointing to all at once.
 GLOBAL_LIST_EMPTY(pinpointer_list)
 /// A list of all zombie_infection organs, for any mass "animation"
 GLOBAL_LIST_EMPTY(zombie_infection_list)

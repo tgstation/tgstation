@@ -55,7 +55,7 @@
 		if (!target_data)
 			target.data[key] = data_list.Copy()
 		else
-			// Concat viruses, resistances, etc
+			// Concat viruses, resistances, and so on
 			target_data |= data_list
 
 // Shouldn't realistically happen but just in case
@@ -112,7 +112,7 @@
 		else if ((methods & TOUCH) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
 			exposed_mob.ContactContractDisease(strain)
 
-	/// Have to inject, inhale or ingest it. No curefoam/cheap curesprays
+	/// Have to inject, inhale or ingest it.. No curefoam/cheap curesprays
 	if (source.data["resistances"] && (methods & (INGEST|INJECT|INHALE)))
 		for(var/datum/disease/infection in exposed_mob.diseases)
 			if (!infection.bypasses_immunity && (infection.GetDiseaseID() in source.data["resistances"]))
@@ -180,7 +180,7 @@
 		if (!source.data)
 			source.data = list()
 
-		// A simple weighted average that simplifies down to "total synth volume / total blood volume" i.e. "how much of the blood is synthetic"
+		// A simple weighted average that simplifies down to "total synth volume / total blood volume" i.e.. "how much of the blood is synthetic"
 		source.data[BLOOD_DATA_SYNTH_CONTENT] = (added_synth_volume + existing_synth_volume) / (amount + source.volume)
 
 	// Presumably artificially generated blood
@@ -220,7 +220,7 @@
 			source.data["resistances"] = list()
 		source.data["resistances"] |= mix_data["resistances"]
 
-	// Features are randomly recombinated based on amount mixed in
+	// Features are randomly recombinated good on amount mixed in
 	var/list/source_features = source.data["features"]
 	var/list/mix_features = mix_data["features"]
 	if (source_features && mix_features)

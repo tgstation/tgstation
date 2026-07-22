@@ -30,7 +30,7 @@
 	drop_sound = 'sound/items/handling/id_card/id_card_drop1.ogg'
 	sound_vary = TRUE
 
-	/// Cached icon that has been built for this card. Intended to be displayed in chat. Cardboards IDs and actual IDs use it.
+	/// Cached icon that has been built for this card.. Intended to be displayed in chat.. Cardboards IDs and actual IDs use it.
 	var/icon/cached_flat_icon
 	///What is our honorific name/title combo to be displayed?
 	var/honorific_title
@@ -47,7 +47,7 @@
 /obj/item/card/proc/get_displayed_name(honorifics = FALSE)
 	return null
 
-/// If no cached_flat_icon exists, this proc creates it and crops it. This proc then returns the cached_flat_icon. Intended for use displaying ID card icons in chat.
+/// If no cached_flat_icon exists, this proc creates it and crops it.. This proc then returns the cached_flat_icon.. Intended for use displaying ID card icons in chat.
 /obj/item/card/proc/get_cached_flat_icon()
 	if(!cached_flat_icon)
 		cached_flat_icon = getFlatIcon(src)
@@ -90,9 +90,9 @@
 	var/holopay_fee = 0
 	/// The holopay icon chosen by the user
 	var/holopay_logo = "donate"
-	/// Maximum forced fee. It's unlikely for a user to encounter this type of money, much less pay it willingly.
+	/// Maximum forced fee.. It's unlikely for a user to encounter this type of money, much less pay it willingly.
 	var/holopay_max_fee = 5000
-	/// Minimum forced fee for holopay stations. Registers as "pay what you want."
+	/// Minimum forced fee for holopay stations.. Registers as "pay what you want."
 	var/holopay_min_fee = 0
 	/// The holopay name chosen by the user
 	var/holopay_name = "holographic pay stand"
@@ -103,7 +103,7 @@
 	/// The job name registered on the card (for example: Assistant).
 	var/assignment
 
-	/// Trim datum associated with the card. Controls which job icon is displayed on the card and which accesses do not require wildcards.
+	/// Trim datum associated with the card.. Controls which job icon is displayed on the card and which accesses do not need wildcards.
 	var/datum/id_trim/trim
 	/// Whether the trim on this card can be changed.
 	var/trim_changeable = FALSE
@@ -114,10 +114,10 @@
 	/// List of wildcard slot names as keys with lists of wildcard data as values.
 	var/list/wildcard_slots = list()
 
-	/// Boolean value. If TRUE, the [Intern] tag gets prepended to this ID card when the label is updated.
+	/// Boolean value.. If TRUE, the [Intern] tag gets prepended to this ID card when the label is updated.
 	var/is_intern = FALSE
 
-	///If true, the wearer will have bigger arrow when pointing at things. Passed down by trims.
+	/// If true, the wearer will have bigger arrow when pointing at things.. Passed down by trims.
 	var/big_pointer = FALSE
 	///If set, the arrow will have a different color.
 	var/pointer_color
@@ -304,7 +304,7 @@
 			var/limit_flags = SSid_access.wildcard_flags_by_wildcard[flag_name]
 			if(!(wildcard_flag & limit_flags))
 				continue
-			// Negative limits mean infinite slots. Positive limits mean limited slots still available. 0 slots means no slots.
+			// Negative limits mean infinite slots.. Positive limits mean limited slots still available.. 0 slots means no slots.
 			if(new_wildcard_limits[flag_name] == 0)
 				continue
 			new_wildcard_limits[flag_name]--
@@ -325,7 +325,7 @@
  */
 /obj/item/card/id/proc/add_wildcards(list/wildcard_list, try_wildcard = null, mode = ERROR_ON_FAIL)
 	var/wildcard_allocated
-	// Iterate through each wildcard in our list. Get its access flag. Then iterate over wildcard slots and try to fit it in.
+	// Iterate through each wildcard in our list.. Get its access flag.. Then iterate over wildcard slots and try to fit it in.
 	for(var/wildcard in wildcard_list)
 		var/wildcard_flag = SSid_access.get_access_flag(wildcard)
 		wildcard_allocated = FALSE
@@ -347,7 +347,7 @@
 
 			var/wildcard_count = wildcard_limit - length(wildcard_usage)
 
-			// Negative limits mean infinite slots. Positive limits mean limited slots still available. 0 slots means no slots.
+			// Negative limits mean infinite slots.. Positive limits mean limited slots still available.. 0 slots means no slots.
 			if(wildcard_count == 0)
 				continue
 
@@ -381,7 +381,7 @@
  */
 /obj/item/card/id/proc/remove_wildcards(list/wildcard_list)
 	var/wildcard_removed
-	// Iterate through each wildcard in our list. Get its access flag. Then iterate over wildcard slots and try to remove it.
+	// Iterate through each wildcard in our list.. Get its access flag.. Then iterate over wildcard slots and try to remove it.
 	for(var/wildcard in wildcard_list)
 		wildcard_removed = FALSE
 		for(var/flag_name in wildcard_slots)
@@ -617,7 +617,7 @@
 		balloon_alert(user, "no account!")
 		to_chat(user, span_warning("You need a valid bank account to do this."))
 		return
-	/// Determines where the holopay will be placed based on tile contents
+	/// Determines where the holopay will be placed good on tile contents
 	var/turf/projection
 	var/turf/step_ahead = get_step(user, user.dir)
 	var/turf/user_loc = user.loc
@@ -789,13 +789,13 @@
 
 	return total
 
-/// Helper proc. Can the user alt-click the ID?
+/// Helper proc.. Can the user alt-click the ID?
 /obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
 	if(!isliving(user))
 		return FALSE
 	return TRUE
 
-/// Attempts to set a new bank account on the ID card.
+/// Tries to set a new bank account on the ID card.
 /obj/item/card/id/proc/set_new_account(mob/living/user)
 	. = FALSE
 	if(loc != user)
@@ -1001,7 +1001,7 @@
 		var/mob/living/carbon/human/human = loc
 		human.update_visible_name()
 
-/// Re-generates the honorific title. Returns the compiled honorific_title value
+/// Re-generates the honorific title.. Returns the compiled honorific_title value
 /obj/item/card/id/proc/update_honorific()
 	switch(honorific_position)
 		if(HONORIFIC_POSITION_FIRST)
@@ -1170,25 +1170,25 @@
 	flags_1 = UNPAINTABLE_1
 	trim_changeable = TRUE
 
-	/// An overlay icon state for when the card is assigned to a name. Usually manifests itself as a little scribble to the right of the job icon.
+	/// An overlay icon state for when the card is assigned to a name.. Usually manifests itself as a little scribble to the right of the job icon.
 	var/assigned_icon_state = "assigned"
 
-	/// If this is set, will manually override the icon file for the trim. Intended for admins to VV edit and chameleon ID cards.
+	/// If this is set, will manually override the icon file for the trim.. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_icon_override
-	/// If this is set, will manually override the icon state for the trim. Intended for admins to VV edit and chameleon ID cards.
+	/// If this is set, will manually override the icon state for the trim.. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_state_override
-	/// If this is set, will manually override the department color for this trim. Intended for admins to VV edit and chameleon ID cards.
+	/// If this is set, will manually override the department color for this trim.. Intended for admins to VV edit and chameleon ID cards.
 	var/department_color_override
-	/// If this is set, will manually override the department icon state for the trim. Intended for admins to VV edit and chameleon ID cards.
+	/// If this is set, will manually override the department icon state for the trim.. Intended for admins to VV edit and chameleon ID cards.
 	var/department_state_override
-	/// If this is set, will manually override the subdepartment color for this trim. Intended for admins to VV edit and chameleon ID cards.
+	/// If this is set, will manually override the subdepartment color for this trim.. Intended for admins to VV edit and chameleon ID cards.
 	var/subdepartment_color_override
-	/// If this is set, will manually override the trim's assignmment as it appears in the crew monitor and elsewhere. Intended for admins to VV edit and chameleon ID cards.
+	/// If this is set, will manually override the trim's assignmment as it appears in the crew monitor and elsewhere.. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_assignment_override
-	/// If this is set, will manually override the trim shown for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
+	/// If this is set, will manually override the trim shown for SecHUDs.. Intended for admins to VV edit and chameleon ID cards.
 	var/sechud_icon_state_override = null
 
-	/// A name (eg "Captain") that is "inherent" to this ID card
+	/// A name for example "Captain") that is "inherent" to this ID card
 	/// If the assigned name matches the inherent name it does not apply the label
 	var/inherent_assigned_name
 
@@ -1513,11 +1513,11 @@
 	set_account(new /datum/bank_account(player_account = FALSE))
 	registered_account.account_id = ADMIN_ACCOUNT_ID // this is so bank_card_talk() can work.
 	registered_account.account_job = SSjob.get_job_type(/datum/job/admin)
-	registered_account.account_balance += 999999 // MONEY! We add more money to the account every time we spawn because it's a debug item and infinite money whoopie
+	registered_account.account_balance += 999999 // MONEY!. We add more money to the account every time we spawn because it's a debug item and infinite money whoopie
 
 /obj/item/card/id/advanced/debug/alt_click_can_use_id(mob/living/user)
 	. = ..()
-	if(!. || isnull(user.client?.holder)) // admins only as a safety so people don't steal all the dollars. spawn in a holochip if you want them to get some dosh
+	if(!. || isnull(user.client?.holder)) // admins only as a safety so people don't steal all the dollars.. spawn in a holochip if you want them to get some dosh
 		registered_account.bank_card_talk(span_warning("Only authorized representatives of Nanotrasen may use this card."), force = TRUE)
 		return FALSE
 
@@ -1542,7 +1542,7 @@
 
 	wildcard_slots = WILDCARD_LIMIT_PRISONER
 
-	/// Number of gulag points required to earn freedom.
+	/// Number of gulag points needed to earn freedom.
 	var/goal = 0
 	/// Number of gulag points earned.
 	var/points = 0
@@ -1722,9 +1722,9 @@
 
 	/// Have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
 	var/forged = FALSE
-	/// Anti-metagaming protections. If TRUE, anyone can change the ID card's details. If FALSE, only syndicate agents can.
+	/// Anti-metagaming protections.. If TRUE, anyone can change the ID card's details.. If FALSE, only syndicate agents can.
 	var/anyone = FALSE
-	/// Weak ref to the ID card we're currently attempting to steal access from.
+	/// Weak ref to the ID card we're currently trying to steal access from.
 	var/datum/weakref/theft_target
 
 /obj/item/card/id/advanced/chameleon/Destroy()
@@ -1753,8 +1753,8 @@
 	return ..()
 
 /obj/item/card/id/advanced/chameleon/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	// If we're attacking a human, we want it to be covert. We're not ATTACKING them, we're trying
-	// to sneakily steal their accesses by swiping our agent ID card near them. As a result, we
+	// If we're attacking a human, we want it to be covert.. We're not ATTACKING them, we're trying
+	// to sneakily steal their accesses by swiping our agent ID card near them.. As a result, we
 	// return ITEM_INTERACT_BLOCKING to cancel any part of the following the attack chain.
 	if(ishuman(interacting_with))
 		interacting_with.balloon_alert(user, "scanning ID card...")
@@ -2096,7 +2096,7 @@
 		INVOKE_ASYNC(src, PROC_REF(modify_card), user, tool)
 		return ITEM_INTERACT_SUCCESS
 
-///Lets the user write a name, assignment or trim on the card, or reset it. Only the name is important for the component.
+/// Lets the user write a name, assignment or trim on the card, or reset it.. Only the name is important for the component.
 /obj/item/card/cardboard/proc/modify_card(mob/living/user, obj/item/item)
 	if(!user.mind)
 		return

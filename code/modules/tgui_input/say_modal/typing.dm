@@ -1,20 +1,20 @@
-/** Creates a thinking indicator over the mob. */
+/** * Creates a thinking indicator over the mob. */
 /mob/proc/create_thinking_indicator()
 	return
 
-/** Removes the thinking indicator over the mob. */
+/** * Removes the thinking indicator over the mob. */
 /mob/proc/remove_thinking_indicator()
 	return
 
-/** Creates a typing indicator over the mob. */
+/** * Creates a typing indicator over the mob. */
 /mob/proc/create_typing_indicator()
 	return
 
-/** Removes the typing indicator over the mob. */
+/** * Removes the typing indicator over the mob. */
 /mob/proc/remove_typing_indicator()
 	return
 
-/** Removes any indicators and marks the mob as not speaking IC. */
+/** * Removes any indicators and marks the mob as not speaking IC. */
 /mob/proc/remove_all_indicators()
 	return
 
@@ -27,7 +27,7 @@
 	remove_all_indicators()
 	return ..()
 
-/// Whether or not to show a typing indicator when speaking. Defaults to on.
+/// Whether or not to show a typing indicator when speaking.. Defaults to on.
 /datum/preference/toggle/typing_indicator
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "typingIndicator"
@@ -36,13 +36,13 @@
 /datum/preference/toggle/typing_indicator/apply_to_client(client/client, value)
 	client?.typing_indicators = value
 
-/** Sets the mob as "thinking" - with indicator and the TRAIT_THINKING_IN_CHARACTER trait */
+/** * Sets the mob as "thinking" - with indicator and the TRAIT_THINKING_IN_CHARACTER trait */
 /datum/tgui_say/proc/start_thinking()
 	if(!window_open)
 		return FALSE
 	return client.start_thinking()
 
-/** Removes typing/thinking indicators and flags the mob as not thinking */
+/** * Removes typing/thinking indicators and flags the mob as not thinking */
 /datum/tgui_say/proc/stop_thinking()
 	return client.stop_thinking()
 

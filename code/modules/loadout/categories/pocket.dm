@@ -31,7 +31,7 @@
 	abstract_type = /datum/loadout_item/pocket_items
 
 /datum/loadout_item/pocket_items/on_equip_item(obj/item/equipped_item, list/item_details, mob/living/carbon/human/equipper, datum/outfit/job/outfit, visuals_only = FALSE)
-	// Backpack items aren't created if it's a visual equipping, so don't do any on equip stuff. It doesn't exist.
+	// Backpack items aren't created if it's a visual equipping, so don't do any on equip stuff.. It doesn't exist.
 	if(visuals_only)
 		return NONE
 

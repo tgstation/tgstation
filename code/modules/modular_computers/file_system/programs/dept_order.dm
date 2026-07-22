@@ -1,4 +1,4 @@
-/// Stores an override value for the order cooldown to be used by the Dpt. Order Cooldown button in the secrets menu. When null, the override is not active.
+/// Stores an override value for the order cooldown to be used by the Dpt.. Order Cooldown button in the secrets menu.. When null, the override is not active.
 GLOBAL_VAR(department_cd_override)
 
 /datum/computer_file/program/department_order
@@ -13,11 +13,11 @@ GLOBAL_VAR(department_cd_override)
 	program_icon = FA_ICON_CART_FLATBED
 	alert_able = TRUE
 
-	// Filled via set_linked_department. Also serves as "who can cancel the order".
+	// Filled via set_linked_department.. Also serves as "who can cancel the order".
 	download_access = list(ACCESS_COMMAND)
 	// Anyone can open, not everyone can use.
 	run_access = list()
-	/// Filled via set_linked_department. Serves as "who can place orders".
+	/// Filled via set_linked_department.. Serves as "who can place orders".
 	VAR_PRIVATE/list/use_access = list()
 
 	/// The department we are linked to, typepath.
@@ -30,7 +30,7 @@ GLOBAL_VAR(department_cd_override)
 		/datum/job_department/security = 0,
 		/datum/job_department/service = 0,
 	)
-	/// Reference to the order we've made UNTIL it gets sent on the supply shuttle. this is so heads can cancel it
+	/// Reference to the order we've made UNTIL it gets sent on the supply shuttle.. this is so heads can cancel it
 	VAR_PRIVATE/datum/supply_order/department_order
 	/// The radio channel we will speak into by default.
 	VAR_PRIVATE/radio_channel
@@ -91,7 +91,7 @@ GLOBAL_VAR(department_cd_override)
 			"name" = pack.name,
 			"cost" = pack.get_cost(),
 			"id" = pack.id,
-			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
+			"desc" = pack.desc || pack.name, // If there is a description, use it.. Otherwise use the pack's name.
 		))
 
 	var/list/supply_data_flattened = list()
@@ -119,7 +119,7 @@ GLOBAL_VAR(department_cd_override)
 /datum/computer_file/program/department_order/proc/find_department_to_link(obj/item/card/id/id_card)
 	PROTECTED_PROC(TRUE)
 	if(id_card.type != /obj/item/card/id/advanced/silver)
-		// I don't want to introduce weird "access order" behavior with Captain's ID / Chameleon ids / etc, so only silver IDs work
+		// I don't want to introduce weird "access order" behavior with Captain's ID / Chameleon ids / and so on so only silver IDs work
 		return null
 	var/list/access_to_depts = list()
 	for(var/datum/job_department/department as anything in department_cooldowns)
@@ -236,14 +236,14 @@ GLOBAL_VAR(department_cd_override)
 	computer.physical.say("Order processed. Cargo will deliver the crate when it comes in on their shuttle. NOTICE: Heads of staff may override the order.")
 	calculate_cooldown(pack.cost)
 
-/// Signal when the supply shuttle begins to spawn orders. We forget the current order preventing it from being overridden (since it's already past the point of no return on undoing the order)
+/// Signal when the supply shuttle begins to spawn orders.. We forget the current order preventing it from being overridden (since it's already past the point of no return on undoing the order)
 /datum/computer_file/program/department_order/proc/finalize_department_order(datum/subsystem)
 	SIGNAL_HANDLER
 	if(!isnull(department_order) && (department_order in SSshuttle.shopping_list))
 		department_order = null
 	UnregisterSignal(subsystem, COMSIG_SUPPLY_SHUTTLE_BUY)
 
-/// Calculates the cooldown it will take for this department's free order, based on its credit cost
+/// Calculates the cooldown it will take for this department's free order, good on its credit cost
 /datum/computer_file/program/department_order/proc/calculate_cooldown(credits)
 	if(isnull(GLOB.department_cd_override))
 		var/time_y = DEPARTMENTAL_ORDER_COOLDOWN_COEFFICIENT * (log(10, credits) ** DEPARTMENTAL_ORDER_COOLDOWN_EXPONENT) * (1 SECONDS)

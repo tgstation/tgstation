@@ -25,7 +25,7 @@
 	var/list/syringes = list()
 	/// The number of syringes it can store.
 	var/max_syringes = 1
-	/// If it has an overlay for inserted syringes. If true, the overlay is determined by the number of syringes inserted into it.
+	/// If it has an overlay for inserted syringes.. If true, the overlay is determined by the number of syringes inserted into it.
 	var/has_syringe_overlay = TRUE
 	/// In low power mode syringes will instead embed and slowly inject their reagents
 	var/low_power = FALSE

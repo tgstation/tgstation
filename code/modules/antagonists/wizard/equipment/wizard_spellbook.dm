@@ -16,7 +16,7 @@
 	var/full_random_bonus = 5
 	/// Determines if this spellbook can refund anything.
 	var/refunds_allowed = TRUE
-	/// The mind that first used the book. Automatically assigned when a wizard spawns.
+	/// The mind that first used the book.. Automatically assigned when a wizard spawns.
 	var/datum/mind/owner
 	/// A list to all spellbook entries within
 	var/list/entries = list()
@@ -117,7 +117,7 @@
 			qdel(possible_entry)
 			continue
 
-		possible_entry.set_spell_info() //loads up things for the entry that require checking spell instance.
+		possible_entry.set_spell_info() // loads up things for the entry that need checking spell instance.
 		entries |= possible_entry
 
 /obj/item/spellbook/ui_interact(mob/user, datum/tgui/ui)
@@ -203,7 +203,7 @@
 			wizard_loadout(wizard, params["id"])
 			return TRUE
 
-/// Attempts to purchased the passed entry [to_buy] for [user].
+/// Tries to purchased the passed entry [to_buy] for [user].
 /obj/item/spellbook/proc/purchase_entry(datum/spellbook_entry/to_buy, mob/living/carbon/human/user)
 	if(!istype(to_buy))
 		CRASH("Spellbook attempted to buy an invalid entry. Got: [to_buy ? "[to_buy] ([to_buy.type])" : "null"]")
@@ -298,7 +298,7 @@
 			break
 
 	refunds_allowed = FALSE
-	//we have given two specific category spells to the wizard. the rest are completely random!
+	// we have given two specific category spells to the wizard.. the rest are completely random!
 	randomize(wizard, bonus_to_give = bonus_to_give)
 
 /// Purchases a fully random wizard loadout for [wizard], with a point bonus [bonus_to_give].

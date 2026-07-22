@@ -13,7 +13,7 @@
 	if(do_fake_alert() == CANCEL_FAKE_ALERT)
 		return FALSE
 
-	qdel(src) // To be implemented by subtypes, call parent for easy cleanup
+	qdel(src) // To be added by subtypes, call parent for easy cleanup
 	return TRUE
 
 /datum/hallucination/station_message/proc/do_fake_alert()

@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	raptor.move_resist = MOVE_RESIST_DEFAULT
 	raptor.held_w_class = WEIGHT_CLASS_BULKY
 	. = ..()
-	// Non-shorties cannot ride these, so we gotta keep em tameable through food
+	// Non-shorties cannot ride these, so we got to keep em tameable through food
 	raptor.AddComponent(/datum/component/tameable, food_types = raptor.food_types, tame_chance = 25, bonus_tame_chance = 15, unique = TRUE)
 	if (raptor.atom_storage)
 		return

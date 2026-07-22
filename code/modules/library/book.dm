@@ -6,7 +6,7 @@
 	worn_icon_state = "book"
 	throw_speed = 1
 	throw_range = 5
-	w_class = WEIGHT_CLASS_NORMAL  //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
+	w_class = WEIGHT_CLASS_NORMAL  // upped to three because books are, y'know, pretty big.. (and you could hide them inside eachother recursively forever)
 	attack_verb_continuous = list("bashes", "whacks", "educates")
 	attack_verb_simple = list("bash", "whack", "educate")
 	resistance_flags = FLAMMABLE
@@ -67,7 +67,7 @@
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
-/// Gets the context to add for clicking the book inhand. Returns null if none.
+/// Gets the context to add for clicking the book inhand.. Returns null if none.
 /obj/item/book/proc/get_attack_self_context(mob/living/user)
 	return "Read"
 
@@ -88,7 +88,7 @@
 /obj/item/book/proc/display_content(mob/living/user)
 	ui_interact(user)
 
-/// Proc that checks if the user is capable of reading the book, for UI interactions and otherwise. Returns TRUE if they can, FALSE if they can't.
+/// Proc that checks if the user is capable of reading the book, for UI interactions and otherwise.. Returns TRUE if they can, FALSE if they can't.
 /obj/item/book/proc/can_read_book(mob/living/user)
 	if(user.is_blind())
 		to_chat(user, span_warning("You are blind and can't read anything!"))
@@ -171,7 +171,7 @@
 		return writing_utensil_act(user, tool)
 	return NONE
 
-/// Called when user clicks on the book with a writing utensil. Attempts to vandalize the book.
+/// Called when user clicks on the book with a writing utensil.. Tries to vandalize the book.
 /obj/item/book/proc/writing_utensil_act(mob/living/user, obj/item/tool)
 	if(!can_vandalize(user, tool))
 		return ITEM_INTERACT_BLOCKING
@@ -232,7 +232,7 @@
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	return ITEM_INTERACT_SUCCESS
 
-/// Called when user clicks on the book with a carving utensil. Attempts to carve the book.
+/// Called when user clicks on the book with a carving utensil.. Tries to carve the book.
 /obj/item/book/proc/carving_act(mob/living/user, obj/item/tool)
 	if(carved)
 		balloon_alert(user, "already carved!")
@@ -268,7 +268,7 @@
 	worn_icon_state = "book"
 	throw_speed = 1
 	throw_range = 5
-	w_class = WEIGHT_CLASS_NORMAL  //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
+	w_class = WEIGHT_CLASS_NORMAL  // upped to three because books are, y'know, pretty big.. (and you could hide them inside eachother recursively forever)
 	attack_verb_continuous = list("bashes", "whacks", "educates")
 	attack_verb_simple = list("bash", "whack", "educate")
 	resistance_flags = FLAMMABLE
@@ -303,7 +303,7 @@
 	if(!data_list[data_field]) { stack_trace("[type] - [data_list["id"]] lacks [data_field] information!"); }
 
 /obj/item/tgui_book/manual/dsm
-	name = "\improper SDSM-35" // 35 was picked based on the current edition plus the average years between edition divided by 500
+	name = "\improper SDSM-35" // 35 was picked good on the current edition plus the average years between edition divided by 500
 	desc = "The Space Diagnostic and Statistical Manual of Mental Disorders, \
 		a comprehensive book on all known mental disorders. \
 		On its 35th edition - though it's due for an update..."
@@ -381,7 +381,7 @@
 	return data
 
 /obj/item/tgui_book/manual/idc
-	name = "\improper IDC-27" // 27 was picked based on the current edition plus the average years between edition divided by 500
+	name = "\improper IDC-27" // 27 was picked good on the current edition plus the average years between edition divided by 500
 	desc = "The Interplanetary Classification of Diseases, \
 		a comprehensive book on all known diseases and ailments. \
 		On its 27th edition - though it's due for an update..."

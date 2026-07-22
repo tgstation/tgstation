@@ -1,4 +1,4 @@
-/// Tests debrained overlay. And also eyeless since we're here
+/// Tests debrained overlay.. And also eyeless since we're here
 /datum/unit_test/screenshot_debrain
 	var/last_frame = 1
 

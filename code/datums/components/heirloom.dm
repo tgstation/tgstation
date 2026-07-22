@@ -1,8 +1,8 @@
-/// Heirloom component. For use with the family heirloom quirk, tracks that an item is someone's family heirloom.
+/// Heirloom component.. For use with the family heirloom quirk, tracks that an item is someone's family heirloom.
 /datum/component/heirloom
 	/// The mind that actually owns our heirloom.
 	var/datum/mind/owner
-	/// Flavor. The family name of the owner of the heirloom.
+	/// Flavor.. The family name of the owner of the heirloom.
 	var/family_name
 
 /datum/component/heirloom/Initialize(new_owner, new_family_name)

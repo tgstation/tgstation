@@ -39,7 +39,7 @@
 	head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 	ai_controller = /datum/ai_controller/basic_controller/lizard
 
-	/// Typecache of things that we seek out to eat. Yummy.
+	/// Typecache of things that we seek out to eat.. Yummy.
 	var/static/list/edibles = typecacheof(list(
 		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,

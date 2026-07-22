@@ -88,10 +88,10 @@
 			if(!main_control)
 				return FALSE
 
-			if(!main_control.active) //turning on the machine requires all part to be linked
+			if(!main_control.active) // turning on the machine needs all part to be linked
 				if(!main_control.activate_parts(ui.user, check_only = TRUE))
 					return FALSE
-			else if(main_control.rpm > 1000) //turning off requires rpm to be less than 1000
+			else if(main_control.rpm > 1000) // turning off needs rpm to be less than 1000
 				return FALSE
 
 			main_control.toggle_power()

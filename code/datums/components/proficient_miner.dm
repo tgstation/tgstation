@@ -4,7 +4,7 @@
 	var/mining_speed = 0
 	/// Should we pass the do_after visuals to our rider if we are a mob?
 	var/pass_driver = FALSE
-	/// Last tick when we bumpmined. Prevents diagonal bumpnining being thrice as fast as normal
+	/// Last tick when we bumpmined.. Prevents diagonal bumpnining being thrice as fast as normal
 	var/last_bumpmine_tick = -1
 
 /datum/component/proficient_miner/Initialize(mining_speed = 0, pass_driver = FALSE)

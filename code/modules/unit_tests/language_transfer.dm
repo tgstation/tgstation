@@ -32,7 +32,7 @@
 	TEST_ASSERT(length(initial_understood & holder.understood_languages) == 1, \
 		"Dummy did not understand Common after returning to human! Instead, it knew the following: [print_language_list(holder.understood_languages)]")
 
-/// Tests species changes which are more complex are functional (e.g. from a species which speaks common to one which does not)
+/// Tests species changes which are more complex are functional (e.g.. from a species which speaks common to one which does not)
 /datum/unit_test/language_species_swap_complex
 
 /datum/unit_test/language_species_swap_complex/Run()

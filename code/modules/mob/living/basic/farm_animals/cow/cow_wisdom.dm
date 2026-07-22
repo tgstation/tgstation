@@ -24,7 +24,7 @@
 		name = "unwise cow"
 
 /mob/living/basic/cow/wisdom/setup_eating()
-	return //cannot tame me! and I don't care about eatin' nothing, neither!
+	return // cannot tame me!. and I don't care about eatin' nothing, neither!
 
 /mob/living/basic/cow/wisdom/setup_udder()
 	if (isnull(milked_reagent))

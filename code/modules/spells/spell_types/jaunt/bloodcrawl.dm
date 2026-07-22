@@ -166,7 +166,7 @@
 	var/consume_sound = 'sound/effects/magic/demon_consume.ogg'
 	/// Apply damage every 20 seconds if we bloodcrawling
 	var/jaunt_damage_timer
-	/// When demon first appears, it does not take damage while in Jaunt. He also doesn't take damage while he's eating someone.
+	/// When demon first appears, it does not take damage while in Jaunt.. He also doesn't take damage while he's eating someone.
 	var/resist_jaunt_damage = TRUE
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/try_enter_jaunt(obj/effect/decal/cleanable/blood, mob/living/jaunter)

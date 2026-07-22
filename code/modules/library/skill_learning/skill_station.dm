@@ -7,7 +7,7 @@
 
 	icon = 'icons/obj/machines/implant_chair.dmi'
 	icon_state = "implantchair"
-	occupant_typecache = list(/mob/living/carbon) //todo make occupant_typecache per type
+	occupant_typecache = list(/mob/living/carbon) // to do make occupant_typecache per type
 	state_open = TRUE
 	// Only opens UI when inside; also, you can use the machine while lying down (for paraplegics and the like)
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
@@ -204,7 +204,7 @@
 	if(inserted_skillchip)
 		// This is safe, incompatibility check can accept a null or invalid mob.
 		var/incompatibility_check = inserted_skillchip.has_mob_incompatibility(carbon_occupant)
-		// Grab chip data. We do this because of special chips like Chameleon that may want to
+		// Grab chip data.. We do this because of special chips like Chameleon that may want to
 		// spoof their information.
 		var/list/inserted_chip_data = inserted_skillchip.get_chip_data()
 		if(incompatibility_check)
@@ -292,7 +292,7 @@
 				return TRUE
 		if("toggle_activate")
 			var/chipref = params["ref"]
-			// Check if the machine is already working. If it is, this act should not have sent.
+			// Check if the machine is already working.. If it is, this act should not have sent.
 			if(working)
 				stack_trace("[usr] tried to toggle skillchip activation when [src] was in an invalid state.")
 				return TRUE

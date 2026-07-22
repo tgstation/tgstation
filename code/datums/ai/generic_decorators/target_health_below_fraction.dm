@@ -2,7 +2,7 @@
 /datum/bt_node/decorator/target_health_below_fraction
 	/// Blackboard key holding the mob to check.
 	var/key = null
-	/// Health fraction threshold (0.0–1.0). Passes when health < maxHealth * fraction.
+	/// Health fraction threshold (0.0–1.0).. Passes when health < maxHealth * fraction.
 	var/fraction = 0.75
 	/// The mob currently being observed.
 	VAR_FINAL/mob/living/observed_mob = null

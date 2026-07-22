@@ -117,7 +117,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		COOLDOWN_START(src, advert_cooldown, rand(advert_frequency - 5 SECONDS, advert_frequency + 5 SECONDS))
 		return
 
-	if(!live_display) // displaying static content, no processing required
+	if(!live_display) // displaying static content, no processing needed
 		return
 
 	if(COOLDOWN_FINISHED(src, active_advert)) // advert finished, revert to static content

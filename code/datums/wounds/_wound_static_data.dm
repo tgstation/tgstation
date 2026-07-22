@@ -2,46 +2,46 @@
 // For example: You can make a pregen_data subtype for your wound that overrides can_be_applied_to to only apply to specifically slimeperson limbs.
 // Without this, you're stuck with very static initial variables.
 
-/// A singleton datum that holds pre-gen and static data about a wound. Each wound datum should have a corresponding wound_pregen_data.
+/// A singleton datum that holds pre-gen and static data about a wound.. Each wound datum should have a corresponding wound_pregen_data.
 /datum/wound_pregen_data
-	/// The typepath of the wound we will be handling and storing data of. NECESSARY IF THIS IS A NON-ABSTRACT TYPE!
+	/// The typepath of the wound we will be handling and storing data of.. NECESSARY IF THIS IS A NON-ABSTRACT TYPE!
 	var/datum/wound/wound_path_to_generate
 
 	/// Will this be instantiated?
 	var/abstract = FALSE
 
-	/// If true, our wound can be selected in ordinary wound rolling. If this is set to false, our wound can only be directly instantiated by use of specific typepath.
+	/// If true, our wound can be selected in ordinary wound rolling.. If this is set to false, our wound can only be directly instantiated by use of specific typepath.
 	var/can_be_randomly_generated = TRUE
 
 	/// A list of biostates a limb must have to receive our wound, in wounds.dm.
 	var/required_limb_biostate
-	/// If false, we will check if the limb has all of our required biostates instead of just any.
+	/// If false, we will check if the limb has all of our needed biostates instead of just any.
 	var/require_any_biostate = FALSE
 
 	/// If false, we will iterate through wounds on a given limb, and if any match our type, we wont add our wound.
 	var/duplicates_allowed = FALSE
 
-	/// If we require BIO_BLOODED, we will not add our wound if this is true and the limb cannot bleed.
+	/// If we need BIO_BLOODED, we will not add our wound if this is true and the limb cannot bleed.
 	var/ignore_cannot_bleed = TRUE // a lot of bleed wounds should still be applied for purposes of mangling flesh
 
 	/// A list of bodyzones we are applicable to.
 	var/list/viable_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	/// The type of attack that can generate this wound.
-	/// E.g. WOUND_SLASH = A sharp attack can cause this, WOUND_BLUNT = an attack with no sharpness/an attack with sharpness against a limb with mangled exterior can cause this.
+	/// E.g.. WOUND_SLASH = A sharp attack can cause this, WOUND_BLUNT = an attack with no sharpness/an attack with sharpness against a limb with mangled exteri. Can cause this.
 	var/required_wounding_type
 
-	/// The weight that will be used if, by the end of wound selection, there are multiple valid wounds. This will be inserted into pick_weight, so use integers.
+	/// The weight that will be used if, by the end of wound selection, there are multiple valid wounds.. This will be inserted into pick_weight, so use integers.
 	var/weight = WOUND_DEFAULT_WEIGHT
 
-	/// The minimum injury roll a attack must get to generate us. Affected by our wound's threshold_penalty and series_threshold_penalty, as well as the attack's wound_bonus. See check_wounding_mods().
+	/// The minimum injury roll a attack must get to generate us.. Affected by our wound's threshold_penalty and series_threshold_penalty, as well as the attack's wound_bonus.. See check_wounding_mods().
 	var/threshold_minimum
 
-	/// The series of wounds this is in. See wounds.dm (the defines file) for a more detailed explanation - but tldr is that no 2 wounds of the same series can be on a limb.
+	/// The series of wounds this is in.. See wounds.dm (the defines file) f. A more detailed explanation -. Tldr is that no 2 wounds of the same series can be on a limb.
 	var/wound_series
 
-	/// If true, we will attempt to, during a random wound roll, overpower and remove other wound typepaths from the possible wounds list using competition_mode.
+	/// If true, we will try to, during a random wound roll, overpower and remove other wound typepaths from the possible wounds list using competition_mode.
 	var/compete_for_wounding = TRUE
-	/// The competition mode with which we will remove other wounds from a possible wound roll assuming [compete_for_wounding] is TRUE. See wounds.dm, the defines file, for more information on what these do.
+	/// The competition mode with which we will remove other wounds from a possible wound roll assuming [compete_for_wounding] is TRUE.. See wounds.dm, the defines file, for more information on what these do.
 	var/competition_mode = WOUND_COMPETITION_OVERPOWER_LESSERS
 
 	/// A list of BIO_ defines that will be iterated over in order to determine the scar file our wound will generate.
@@ -59,7 +59,7 @@
 
 	scar_priorities = generate_scar_priorities()
 
-/// Should return a list of BIO_ biostate priorities, in order. See [scar_priorities] for further documentation.
+/// Should return a list of BIO_ biostate priorities, in order.. See [scar_priorities] for further documentation.
 /datum/wound_pregen_data/proc/generate_scar_priorities()
 	RETURN_TYPE(/list)
 
@@ -111,7 +111,7 @@
 	if (!(limb.body_zone in viable_zones))
 		return FALSE
 
-	// we accept promotions and demotions, but no point in redundancy. This should have already been checked wherever the wound was rolled and applied for (see: bodypart damage code), but we do an extra check
+	// we accept promotions and demotions, but no point in redundancy.. This should have already been checked wherever the wound was rolled and applied for (see: bodypart damage code), but we do an extra check
 	// in case we ever directly add wounds
 	if (!duplicates_allowed)
 		for (var/datum/wound/preexisting_wound as anything in limb.wounds)
@@ -119,7 +119,7 @@
 				return FALSE
 	return TRUE
 
-/// Returns true if we have the given biostates, or any biostate in it if check_for_any is true. False otherwise.
+/// Returns true if we have the given biostates, or any biostate in it if check_for_any is true.. False otherwise.
 /datum/wound_pregen_data/proc/biostate_valid(biostate)
 	if (require_any_biostate)
 		if (!(biostate & required_limb_biostate))

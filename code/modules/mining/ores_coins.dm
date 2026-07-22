@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	AddComponent(/datum/component/storm_hating)
 
 /obj/item/stack/ore/glass/on_orm_collection() //we need to smelt the glass beforehand because the silo and orm don't accept sand mats
-	//If we spawn the sheet of glass on the turf the ORM is "listening" to, it'll get redeemed before we can use it as return value and weird stuff my happen.
+	// If we spawn the sheet of glass on the turf the ORM is "listening" to, it'll get redeemed before we can use it as return value. Weird stuff my happen.
 	var/obj/item/stack/sheet/glass = new refined_type(null, amount)
 	qdel(src)
 	return glass
@@ -313,7 +313,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/det_time = 10 SECONDS
 	/// the timer
 	var/det_timer
-	/// How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
+	/// How pure this gibtonite is, determines the explosion produced by it. Is derived from the det_time of the rock wall it was taken from, higher value = better
 	var/quality = GIBTONITE_QUALITY_LOW
 	/// who attached the rig to us
 	var/attacher
@@ -491,7 +491,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/cooldown = 0
 	var/value = 0
 	var/coinflip
-	///If you do not want this coin to be valued based on its materials and instead set a custom value set this to TRUE and set value to the desired value.
+	/// If you do not want this coin to be valued good on its materials. Instead set a custom value set this to TRUE. Set value to the desired value.
 	var/override_material_worth = FALSE
 	/// The name of the heads side of the coin
 	var/heads_name = "heads"
@@ -534,7 +534,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		user.set_suicide(TRUE)
 		user.suicide_log()
 	else
-		user.visible_message(span_suicide("\the [src] lands on [coinflip]! [user] keeps on living!")) //Don't put it in your pocket. It's your lucky quarter.
+		user.visible_message(span_suicide("\the [src] lands on [coinflip]! [user] keeps on living!")) // Don't put it in your pocket.. It's your lucky quarter.
 
 /obj/item/coin/examine(mob/user)
 	. = ..()
@@ -589,7 +589,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 				heads_action(user)
 			else
 				tails_action(user)
-	return TRUE//did the coin flip? useful for suicide_act
+	return TRUE// did the coin flip?. useful for suicide_act
 
 /obj/item/coin/proc/heads_action(mob/user)
 	return
@@ -684,7 +684,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 				span_hear("You hear the clattering of loose change."))
 		SSeconomy.fire()
 		to_chat(user,"<span class='bounty'>[SSeconomy.inflation_value()] is the inflation value.</span>")
-	return TRUE//did the coin flip? useful for suicide_act
+	return TRUE// did the coin flip?. useful for suicide_act
 
 
 ///Coins used in the dutchmen money bag.

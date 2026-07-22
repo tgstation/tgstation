@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(restaurant)
 	var/list/all_venues = list()
 	///All customer data datums that exist, assoc list of type - reference
 	var/list/all_customers = list()
-	///Caches appearances of food, assoc list where key is the type of food, and value is the appearance. Used so we don't have to keep creating new food. Gets filled whenever a new food that hasn't been ordered gets ordered for the first time.
+	/// Caches appearances of food, assoc list where key is the type of food, and value is the appearance.. Used so we don't have to keep creating new food.. Gets filled whenever a new food that hasn't been ordered gets ordered for the first time.
 	var/list/food_appearance_cache = list()
 
 /datum/controller/subsystem/restaurant/Initialize()

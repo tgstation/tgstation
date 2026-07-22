@@ -242,7 +242,7 @@ GLOBAL_LIST_EMPTY(weather_towers)
 /obj/machinery/power/weather_tower/proc/is_on_station()
 	return is_station_level(src.z) && !SSmapping.is_planetary()
 
-/// Calculate the charge cost to summon weather based on whether the tower is on station or not
+/// Calculate the charge cost to summon weather good on whether the tower is on station or not
 /obj/machinery/power/weather_tower/proc/weather_charge_cost()
 	return is_on_station() ? /obj/item/assembly/signaler/anomaly/weather::charges * 0.5 : 1
 

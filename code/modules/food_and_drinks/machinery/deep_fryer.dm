@@ -155,7 +155,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 
 	cook_time += fry_speed * seconds_per_tick SECONDS
 	if(cook_time >= FRYING_TIME_PERFECT && !frying_fried)
-		frying_fried = TRUE //frying... frying... fried
+		frying_fried = TRUE // frying.... frying.... fried
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
 		audible_message(span_notice("[src] dings!"))
 	else if (cook_time >= FRYING_TIME_WARNING && !frying_burnt)

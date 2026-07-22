@@ -14,7 +14,7 @@
 	var/mutable_appearance/meter_appearance
 	/// If this is multitooled, which is passed onto the component on-creation, if one doesn't currently exist
 	var/multitooled = FALSE
-	/// Stored permanent multiplier from doing mining-related tasks (e.g. vents, megafauna)
+	/// Stored permanent multiplier from doing mining-related tasks (e.g.. vents, megafauna)
 	var/stored_permanent_multiplier = 0
 
 /obj/item/style_meter/Initialize(mapload)
@@ -143,7 +143,7 @@
 	SIGNAL_HANDLER
 	if(!style_meter)
 		return
-	// If we have an active style meter, we're on someone's face. Use them to check if the dead megafauna could be credited to them...
+	// If we have an active style meter, we're on someone's face.. Use them to check if the dead megafauna could be credited to them...
 	var/mob/mob_parent = style_meter.parent
 	if(mob_parent.faction_check_atom(died) || !died.has_faction(FACTION_MINING) || (died.z != mob_parent.z) || !(died in view(mob_parent.client?.view, get_turf(mob_parent))))
 		return
@@ -151,7 +151,7 @@
 	if(ismegafauna(died))
 		adjust_permanent_multiplier(ACTION_MULTIPLIER_MAJOR_KILL)
 
-/// Adjust the stored permanent multiplier. If we have an active style meter, update that style meter too.
+/// Adjust the stored permanent multiplier.. If we have an active style meter, update that style meter too.
 /obj/item/style_meter/proc/adjust_permanent_multiplier(modifier)
 	stored_permanent_multiplier += modifier
 	if(style_meter)

@@ -16,8 +16,8 @@
 ///default queuing tick_usage threshold for most verbs which can allow a small amount of latency to be processed in the next tick
 #define VERB_DEFAULT_QUEUE_THRESHOLD 85
 
-///attempt to queue this verb process if the server is overloaded. evaluates to FALSE if queuing isnt necessary or if it failed.
-///_verification_args... are only necessary if the verb_manager subsystem youre using checks them in can_queue_verb()
+/// try to queue this verb process if the server is overloaded... evaluates to FALSE if queuing isnt necessary or if it failed.
+/// _verification_args..... are only necessary if the verb_manager subsystem youre using checks them in can_queue_verb()
 ///if you put anything in _verification_args that ISNT explicitely put in the can_queue_verb() override of the subsystem youre using,
 ///it will runtime.
 #define TRY_QUEUE_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args...) (_queue_verb(_verb_callback, _tick_check, _subsystem_to_use, _verification_args))

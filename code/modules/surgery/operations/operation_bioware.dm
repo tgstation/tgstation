@@ -144,7 +144,7 @@
 
 /datum/surgery_operation/limb/bioware/nerve_grounding
 	name = "ground nerves"
-	rnd_name = "Xanthoneuroplasty (Grounded Nerves)" // "yellow nerve reshaping". see: yellow gloves
+	rnd_name = "Xanthoneuroplasty (Grounded Nerves)" // "yellow nerve reshaping".. see: yellow gloves
 	desc = "Reroute a patient's nerves to act as grounding rods, protecting them from electrical shocks."
 	time = 15.5 SECONDS
 	status_effect_gained = /datum/status_effect/bioware/nerves/grounded

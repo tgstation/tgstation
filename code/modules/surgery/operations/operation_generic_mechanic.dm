@@ -25,7 +25,7 @@
 	return image('icons/hud/surgery_radial.dmi', "unscrew_shell")
 
 /datum/surgery_operation/limb/mechanical_incision/tool_check(obj/item/tool)
-	// Require any sharpness OR a tool behavior match
+	// Need any sharpness OR a tool behavior match
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/mechanical_incision/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
@@ -104,7 +104,7 @@
 	return image('icons/hud/surgery_radial.dmi', "screw_shell")
 
 /datum/surgery_operation/limb/mechanical_close/tool_check(obj/item/tool)
-	// Require any sharpness OR a tool behavior match
+	// Need any sharpness OR a tool behavior match
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/mechanical_close/state_check(obj/item/bodypart/limb)

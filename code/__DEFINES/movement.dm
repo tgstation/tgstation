@@ -10,7 +10,7 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 ///Broken down, here's what this does:
 /// divides the world icon_size by delay divided by ticklag to get the number of pixels something should be moving each tick.
 /// The division result is given a min value of 1 to prevent obscenely slow glide sizes from being set
-/// Then that's multiplied by the global glide size multiplier. 1.25 by default feels pretty close to spot on. This is just to try to get byond to behave.
+/// Then that's multiplied by the global glide size multiplier... 1.25 by default feels pretty close to spot on... This is just to try to get byond to behave.
 /// The whole result is then clamped to within the range above.
 /// Not very readable but it works
 #define DELAY_TO_GLIDE_SIZE(delay) (clamp(((ICON_SIZE_ALL / max((delay) / world.tick_lag, 1)) * GLOB.glide_size_multiplier), MIN_GLIDE_SIZE, MAX_GLIDE_SIZE))
@@ -18,7 +18,7 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 ///Similar to DELAY_TO_GLIDE_SIZE, except without the clamping, and it supports piping in an unrelated scalar
 #define MOVEMENT_ADJUSTED_GLIDE_SIZE(delay, movement_disparity) (ICON_SIZE_ALL / ((delay) / world.tick_lag) * movement_disparity * GLOB.glide_size_multiplier)
 
-//Movement loop priority. Only one loop can run at a time, this dictates that
+// Movement loop priority... Only one loop can run at a time, this dictates that
 // Higher numbers beat lower numbers
 ///Standard, go lower then this if you want to override, higher otherwise
 #define MOVEMENT_DEFAULT_PRIORITY 10
@@ -39,13 +39,13 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define MOVEMENT_LOOP_IGNORE_GLIDE (1<<3)
 ///Should we not update our movables dir on move?
 #define MOVEMENT_LOOP_NO_DIR_UPDATE (1<<4)
-///Is the loop moving the movable outside its control, like it's an external force? e.g. footsteps won't play if enabled.
+/// Is the loop moving the movable outside its control, like it's an external force?.. e.g... footsteps won't play if enabled.
 #define MOVEMENT_LOOP_OUTSIDE_CONTROL (1<<5)
 
 // Movement loop status flags
 /// Has the loop been paused, soon to be resumed?
 #define MOVELOOP_STATUS_PAUSED (1<<0)
-/// Is the loop running? (Is true even when paused)
+/// Is the loop running?.. (Is true even when paused)
 #define MOVELOOP_STATUS_RUNNING (1<<1)
 /// Is the loop queued in a subsystem?
 #define MOVELOOP_STATUS_QUEUED (1<<2)
@@ -73,20 +73,20 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define CURRENTLY_Z_ASCENDING 4
 
 /// possible bitflag return values of [atom/proc/intercept_zImpact] calls
-/// Stops the movable from falling further and crashing on the ground. Example: stairs.
+/// Stops the movable from falling further and crashing on the ground... Example: stairs.
 #define FALL_INTERCEPTED (1<<0)
 /// Suppresses the "[movable] falls through [old_turf]" message because it'd make little sense in certain contexts like climbing stairs.
 #define FALL_NO_MESSAGE (1<<1)
-/// Used when the whole intercept_zImpact forvar loop should be stopped. For example: when someone falls into the supermatter and becomes dust.
+/// Used when the whole intercept_zImpact forvar loop should be stopped... For example: when someone falls into the supermatter and becomes dust.
 #define FALL_STOP_INTERCEPTING (1<<2)
 /// Used when the grip on a pulled object shouldn't be broken.
 #define FALL_RETAIN_PULL (1<<3)
 
-/// Runs check_pulling() by the end of [/atom/movable/proc/zMove] for every movable that's pulling something. Should be kept enabled unless you know what you are doing.
+/// Runs check_pulling() by the end of [/atom/movable/proc/zMove] for every movable that's pulling something... Should be kept enabled unless you know what you are doing.
 #define ZMOVE_CHECK_PULLING (1<<0)
-/// Checks if pulledby is nearby. if not, stop being pulled.
+/// Checks if pulledby is nearby... if not, stop being pulled.
 #define ZMOVE_CHECK_PULLEDBY (1<<1)
-/// flags for different checks done in [/atom/movable/proc/can_z_move]. Should be self-explainatory.
+/// flags for different checks done in [/atom/movable/proc/can_z_move]... Should be self-explainatory.
 #define ZMOVE_FALL_CHECKS (1<<2)
 #define ZMOVE_CAN_FLY_CHECKS (1<<3)
 #define ZMOVE_INCAPACITATED_CHECKS (1<<4)
@@ -118,9 +118,9 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 /// The second step of the diagnonal movement
 #define SECOND_DIAG_STEP 2
 
-/// Classic bluespace teleportation, requires a sender but no receiver
+/// Classic bluespace teleportation, needs a sender but no receiver
 #define TELEPORT_CHANNEL_BLUESPACE "bluespace"
-/// Quantum-based teleportation, requires both sender and receiver, but is free from normal disruption
+/// Quantum-based teleportation, needs both sender and receiver, but is free from normal disruption
 #define TELEPORT_CHANNEL_QUANTUM "quantum"
 /// Wormhole teleportation, is not disrupted by bluespace fluctuations but tends to be very random or unsafe
 #define TELEPORT_CHANNEL_WORMHOLE "wormhole"
@@ -155,7 +155,7 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define NEWTONS *1
 
 #define DEFAULT_INERTIA_SPEED 5
-/// Maximum inertia that an object can hold. Used to prevent objects from getting to stupid speeds.
+/// Maximum inertia that an object can hold... Used to prevent objects from getting to stupid speeds.
 #define INERTIA_FORCE_CAP 25 NEWTONS
 // Results in maximum speed of 1 tile per tick, capped at about 2/3rds of maximum force
 #define INERTIA_SPEED_COEF 0.375

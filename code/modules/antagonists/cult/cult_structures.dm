@@ -27,7 +27,7 @@
 	var/datum/antagonist/cult/cultist = builder.mind?.has_antag_datum(/datum/antagonist/cult, TRUE)
 	cult_team = cultist?.get_team()
 
-/// Tries to find a cultist. If it succeeds, it also takes advantage of the moment to define the structure's cult team if it's not set yet.
+/// Tries to find a cultist.. If it succeeds, it also takes advantage of the moment to define the structure's cult team if it's not set yet.
 /obj/structure/destructible/cult/proc/is_cultist_check(mob/fool)
 
 	if(!IS_CULTIST(fool))
@@ -89,7 +89,7 @@
 
 // Cult buildings that dispense items to cultists.
 /obj/structure/destructible/cult/item_dispenser
-	/// An associated list of options this structure can make. See setup_options() for format.
+	/// An associated list of options this structure can make.. See setup_options() for format.
 	var/list/options
 	/// The dispenser will create this item and then delete itself if it is rust converted.
 	var/obj/mansus_conversion_path = /obj/item/skub
@@ -207,7 +207,7 @@
 /obj/structure/destructible/cult/item_dispenser/proc/check_menu(mob/user)
 	return isliving(user) && is_cultist_check(user) && !user.incapacitated
 
-// Spooky looking door used in gateways. Or something.
+// Spooky looking door used in gateways.. Or something.
 /obj/effect/gateway
 	name = "gateway"
 	desc = "You're pretty sure that abyss is staring back."

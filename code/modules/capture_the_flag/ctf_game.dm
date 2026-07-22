@@ -5,7 +5,7 @@
 #define YELLOW_TEAM "Yellow"
 #define FLAG_RETURN_TIME 20 SECONDS
 
-///Base CTF machines, if spawned in creates a CTF game with the provided game_id unless one already exists. If one exists associates itself with it.
+/// Base CTF machines, if spawned in creates a CTF game with the provided game_id unless one already exists.. If one exists associates itself with it.
 /obj/machinery/ctf
 	name = "CTF Controller"
 	desc = "Used for running friendly games of capture the flag."
@@ -28,7 +28,7 @@
 	var/team = WHITE_TEAM
 	///The span applied to messages associated with this team.
 	var/team_span = ""
-	///assoc list for classes. If there's only one, it'll just equip. Otherwise, it lets you pick which outfit!
+	/// assoc list for classes.. If there's only one, it'll just equip.. Otherwise, it lets you pick which outfit!
 	var/list/ctf_gear = list("Rifleman" = /datum/outfit/ctf, "Assaulter" = /datum/outfit/ctf/assault, "Marksman" = /datum/outfit/ctf/marksman)
 	var/list/instagib_gear = list("Instagib" = /datum/outfit/ctf/instagib)
 	///Var that holds a copy of ctf_gear so that if instagib mode is enabled (overwritting ctf_gear) it can be reverted with this var.
@@ -139,7 +139,7 @@
 		sort_list(display_classes)
 		var/choice = show_radial_menu(new_team_member.mob, src, display_classes, radius = 38)
 		if(!choice || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || !isobserver(new_team_member.mob) || ctf_game.ctf_enabled == FALSE || !(new_team_member.ckey in ctf_game.get_players(team)))
-			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?,
+			return // picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn.... while in game?,
 				   //there isn't a game going on any more, you are no longer a member of this team (perhaps a new match already started?)
 
 		chosen_class = ctf_gear[choice]
@@ -240,7 +240,7 @@
 	if(!capture && !isnull(ctf_game))
 		ctf_game.message_all_teams("[src] has been returned to the base!")
 
-//working with attack hand feels like taking my brain and putting it through an industrial pill press so i'm gonna be a bit liberal with the comments //Mood
+// working with attack h. Feels like taking my brain. Putting it through an industrial pill press so i'm going to be a bit liberal with the comments //Mood
 /obj/item/ctf_flag/attack_hand(mob/living/user, list/modifiers)
 	//pre normal check item stuff, this is for our special flag checks
 	if(!is_ctf_target(user) && !anyonecanpickup)
@@ -333,7 +333,7 @@
 		flag = null
 	return ..()
 
-///Control point used for CTF for king of the hill or control point game modes. Teams need to maintain control of the point for a set time to win.
+/// Control point used for CTF for king of the hill or control point game modes.. Teams need to maintain control of the point for a set time to win.
 /obj/machinery/ctf/control_point
 	name = "control point"
 	desc = "You should capture this"
@@ -373,7 +373,7 @@
 		return
 	capture(user)
 
-///Proc called when a player interacts with the control point to handle capturing it. Performs a do after and then verifies what team ther capturer belongs to.
+/// Proc called when a player interacts with the control point to handle capturing it.. Performs a do after and then verifies what team ther capturer belongs to.
 /obj/machinery/ctf/control_point/proc/capture(mob/user)
 	if(do_after(user, 3 SECONDS, target = src))
 		var/datum/component/ctf_player/ctf_player = user.mind.GetComponent(/datum/component/ctf_player)
@@ -531,7 +531,7 @@
 #undef CTF_LOADING_LOADING
 #undef CTF_LOADING_LOADED
 
-///Proc that identifies if something is a valid target for CTF related checks, checks if an object is a ctf barrier or has ctf component if they are a player.
+/// Proc that identifies if something is a valid target f. CTF related checks, checks if an object is a ctf barrier. Has ctf component if they are a player.
 /proc/is_ctf_target(atom/target)
 	if(istype(target, /obj/structure/barricade/security/ctf))
 		return TRUE

@@ -51,7 +51,7 @@
 	occupant.vis_flags |= VIS_INHERIT_PLANE
 	vis_contents += occupant
 	pixel_y = 22
-	// Keep them standing! They'll go sideways in the tube when they fall asleep otherwise.
+	// Keep them standing!. They'll go sideways in the tube when they fall asleep otherwise.
 	occupant.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING), CRYO_TRAIT)
 
 /// COMSIG_CRYO_SET_ON callback
@@ -86,15 +86,15 @@
 	var/autoeject = TRUE
 	///Increased via upgraded parts, higher values will provide better healing and use smaller cryoxodane
 	var/efficiency = 1
-	///Our approximation of a mob's heat capacity. Higher tier parts will provide better cooling for mobs
+	/// Our approximation of a mob's heat capacity.. Higher tier parts will provide better cooling for mobs
 	var/heat_capacity = 20000
-	///Works with heat capacity and is increased with higher tier parts. How quickly the mobs temperature changes in the chamber
+	/// Works with heat capacity and is increased with higher tier parts.. How quickly the mobs temperature changes in the chamber
 	var/conduction_coefficient = 0.3
 	///The beaker usually contains cryoxadone that is pumped into the mob
 	var/obj/item/reagent_containers/cup/beaker = null
 	/// Visual content - Occupant
 	var/atom/movable/visual/cryo_occupant/occupant_vis
-	///Cryo will continue to treat people with 0 damage but existing wounds, but will sound off when damage healing is done in case doctors want to directly treat the wounds instead
+	/// Cryo will continue to treat people with 0 damage. Existing wounds. Will sound off when damage healing is done in case doctors want to directly treat the wounds instead
 	var/treating_wounds = FALSE
 	/// Reference to the datum connector we're using to interface with the pipe network
 	var/datum/gas_machine_connector/internal_connector
@@ -386,7 +386,7 @@
 
 /obj/machinery/cryo_cell/process(seconds_per_tick)
 	if(!on || QDELETED(occupant))
-		//somehow an deleting mob is inside us. dump everything out
+		// somehow an deleting mob is inside us.. dump everything out
 		if(!isnull(occupant) && QDELING(occupant))
 			open_machine()
 			on = FALSE //in case panel was open we need to set to FALSE explicitly
@@ -632,7 +632,7 @@
 	return CLICK_ACTION_BLOCKING
 
 /obj/machinery/cryo_cell/click_alt(mob/user)
-	//Required so players don't close the cryo on themselves without a doctor's help
+	// Needed so players don't close the cryo on themselves without a doctor's help
 	if(get_turf(user) == get_turf(src))
 		return CLICK_ACTION_BLOCKING
 

@@ -93,7 +93,7 @@
 		supply_pack = new pack_type
 	else  // treat this as a supply pack id and resolving it with SSshuttle
 		if(admin_override_contents)
-			supply_pack = admin_override_contents //Syndicate crates create a new datum while being customized which will result in this being triggered. Outside of this situation this should never trigger
+			supply_pack = admin_override_contents // Syndicate crates create a new datum while being customized which will result in this being triggered.. Outside of this situation this should never trigger
 		else
 			supply_pack = SSshuttle.supply_packs[pack_type]
 
@@ -102,7 +102,7 @@
 		storage_override = /obj/item/storage/briefcase/empty
 	var/obj/container = supply_pack.generate(null, crate_override = storage_override)
 
-	if(container && istype(container, /obj/structure/closet/crate)) //empty supply packs are a thing! get memed on.
+	if(container && istype(container, /obj/structure/closet/crate)) // empty supply packs are a thing!. get memed on.
 		var/obj/structure/closet/crate/crate = container
 		crate.locked = FALSE //Unlock secure crates
 		crate.update_appearance()
@@ -161,7 +161,7 @@
 		else
 			return ADMIN_CANCEL_EVENT
 
-///This proc prompts admins to set a TC value and uplink type for the crate, those values are then passed to a new syndicate pack's setup_contents() to generate the contents before spawning it.
+/// This proc prompts admins to set a TC value. Uplink type f. The crate, those values are then passed to a new syndicate pack's setup_contents() to generate the contents before spawning it.
 /datum/event_admin_setup/syndicate_cargo_pod/proc/override_contents()
 	var/datum/supply_pack/misc/syndicate/custom_value/syndicate_pack = new
 	var/pack_telecrystals = tgui_input_number(usr, "Please input crate's value in telecrystals.", "Set Telecrystals.", 30)

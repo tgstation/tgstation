@@ -111,7 +111,7 @@
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
 		// INFECTIOUS UNIQUE
-		TRAIT_STABLEHEART, // Replacement for noblood. Infectious zombies can bleed but don't need their heart.
+		TRAIT_STABLEHEART, // Replacement for noblood.. Infectious zombies can bleed but don't need their heart.
 		TRAIT_STABLELIVER, // Not necessary but for consistency with above
 		TRAIT_APATHETIC, // They don't have the brains for mood.
 	)
@@ -172,7 +172,7 @@
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
 	return min(2 SECONDS, amount)
 
-// Weaker subtype - less healing, weaker attacks, etc
+// Weaker subtype - less healing, weaker attacks, and so on
 /datum/species/zombie/infectious/mindless
 	name = "Mindless Infectious Zombie"
 	id = SPECIES_ZOMBIE_INFECTIOUS_MINDLESS

@@ -268,7 +268,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player
 		return
 	smite.do_effect(user, target)
 
-/// "Turns" people into objects. Really, we just add them to the contents of the item.
+/// "Turns" people into objects.. Really, we just add them to the contents of the item.
 /proc/objectify(atom/movable/target, path_or_instance)
 	var/atom/tomb
 	if(ispath(path_or_instance))

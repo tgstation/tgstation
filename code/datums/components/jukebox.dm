@@ -12,21 +12,21 @@
  * Plays music to nearby mobs when hosted in a movable or a turf.
  */
 /datum/jukebox
-	/// Atom that hosts the jukebox. Can be a turf or a movable.
+	/// Atom that hosts the jukebox.. Can be a turf or a movable.
 	VAR_FINAL/atom/parent
-	/// List of /datum/tracks we can play. Set via get_songs().
+	/// List of /datum/tracks we can play.. Set via get_songs().
 	VAR_FINAL/list/songs = list()
 	/// Current song track selected
 	VAR_FINAL/datum/track/selection
 	/// Current song datum playing
 	VAR_FINAL/sound/active_song_sound
-	/// Whether the jukebox requires a connect_range component to check for new listeners
+	/// Whether the jukebox needs a connect_range component to check for new listeners
 	VAR_PROTECTED/requires_range_check = TRUE
 
 	/// Assoc list of all mobs listening to the jukebox to their sound status.
 	VAR_PRIVATE/list/mob/listeners = list()
 
-	/// Volume of the songs played. Also serves as the max volume.
+	/// Volume of the songs played.. Also serves as the max volume.
 	/// Do not set directly, use set_new_volume() instead.
 	VAR_PROTECTED/volume = 50
 
@@ -285,7 +285,7 @@
  */
 /datum/jukebox/proc/unmute_listener(mob/listener, reason)
 	// We need to check everything BUT the reason we're unmuting for
-	// Because if we're muted for a different reason we don't wanna touch it
+	// Because if we're muted for a different reason we don't want to touch it
 	reason = ~reason
 
 	if((reason & MUTE_DEAF) && HAS_TRAIT(listener, TRAIT_DEAF))
@@ -340,7 +340,7 @@
 		listeners[listener] |= SOUND_MUTE
 
 	else
-		// keep in mind sound XYZ is different to world XYZ. sound +-z = world +-y
+		// keep in mind sound XYZ is different to world XYZ.. sound +-z = world +-y
 		var/new_x = sound_turf.x - listener_turf.x
 		var/new_z = sound_turf.y - listener_turf.y
 

@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	var/max_happiness = 1750
 	///our current level
 	var/level = 1
-	///required exp to get to next level
+	/// needed exp to get to next level
 	var/to_next_level = 1000
 	///how much exp we currently have
 	var/current_level_progress = 0

@@ -12,7 +12,7 @@
 	breathing_loop = new(src, _direct = TRUE)
 
 /mob/living/carbon/Destroy()
-	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
+	// This must be done first, so the mob ghosts correctly before DNA and so on is nulled
 	. = ..()
 
 	living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS
@@ -287,7 +287,7 @@
 		return 0
 	return ..()
 
-/// Proc that compels the mob to throw up. Returns TRUE if the mob actually threw up.
+/// Proc that compels the mob to throw up.. Returns TRUE if the mob actually threw up.
 /mob/living/carbon/proc/vomit(vomit_flags = VOMIT_CATEGORY_DEFAULT, vomit_type = /obj/effect/decal/cleanable/vomit/toxic, lost_nutrition = 10, distance = 1, purge_ratio = 0.1)
 	var/force = (vomit_flags & MOB_VOMIT_FORCE)
 	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
@@ -813,7 +813,7 @@
 
 	return DEFIB_POSSIBLE
 
-/// Return a defib status based on the heart organ provided
+/// Return a defib status good on the heart organ provided
 /mob/living/carbon/proc/can_defib_heart(obj/item/organ/heart/heart_organ)
 	if (!needs_heart())
 		return NONE
@@ -826,7 +826,7 @@
 
 	return NONE
 
-/// Return a defib status based on the brain organ provided
+/// Return a defib status good on the brain organ provided
 /mob/living/carbon/proc/can_defib_brain(obj/item/organ/brain/brain_organ)
 	if (QDELETED(brain_organ))
 		return DEFIB_FAIL_NO_BRAIN
@@ -877,7 +877,7 @@
 /mob/living/carbon/proc/on_lost_hand(obj/item/bodypart/arm/lost_hand)
 	hand_bodyparts[lost_hand.held_index] = null
 
-///Proc to hook behavior on bodypart additions. Do not directly call. You're looking for [/obj/item/bodypart/proc/try_attach_limb()].
+/// Proc to hook behavior on bodypart additions.. Do not directly call.. You're looking for [/obj/item/bodypart/proc/try_attach_limb()].
 /mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
@@ -908,7 +908,7 @@
 	synchronize_bodytypes()
 	synchronize_bodyshapes()
 
-///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
+/// Proc to hook behavior on bodypart removals.. Do not directly call.. You're looking for [/obj/item/bodypart/proc/drop_limb()].
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart, special)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
@@ -950,7 +950,7 @@
 	synchronize_bodytypes()
 	synchronize_bodyshapes()
 
-///Updates the bodypart speed modifier based on our bodyparts.
+/// Updates the bodypart speed modifier good on our bodyparts.
 /mob/living/carbon/proc/update_bodypart_speed_modifier()
 	var/final_modification = 0
 	for(var/obj/item/bodypart/leg/bodypart in get_bodyparts())
@@ -1182,7 +1182,7 @@
 	brain.update_skillchips()
 
 
-/// Modifies the handcuffed value if a different value is passed, returning FALSE otherwise. The variable should only be changed through this proc.
+/// Modifies the handcuffed value if a different value is passed, returning FALSE otherwise.. The variable should only be changed through this proc.
 /mob/living/carbon/proc/set_handcuffed(new_value)
 	if(handcuffed == new_value)
 		return FALSE

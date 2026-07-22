@@ -91,7 +91,7 @@
 /obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if(.)
-		// We'll always trigger a search attempt if the parent does something, this ensures the ui is v fast to update
+		// We'll always trigger a search try if the parent does something, this ensures the ui is v fast to update
 		INVOKE_ASYNC(src, PROC_REF(update_db_info))
 		return
 	switch(action)

@@ -26,27 +26,27 @@ SUBSYSTEM_DEF(verb_manager)
 	priority = FIRE_PRIORITY_DELAYED_VERBS
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
-	///list of callbacks to procs called from verbs or verblike procs that were executed when the server was overloaded and had to delay to the next tick.
+	/// list of callbacks to procs called from verbs. Verblike procs that were executed when the server was overloaded. Had to delay to the next tick.
 	///this list is ran through every tick, and the subsystem does not yield until this queue is finished.
 	var/list/datum/callback/verb_callback/verb_queue = list()
 
-	///running average of how many verb callbacks are executed every second. used for the stat entry
+	/// running average of how many verb callbacks are executed every second.. used for the stat entry
 	var/verbs_executed_per_second = 0
 
-	///if TRUE we treat usr's with holders just like usr's without holders. otherwise they always execute immediately
+	/// if TRUE we treat usr's with holders just like usr's without holders.. otherwise they always execute immediately
 	var/can_queue_admin_verbs = FALSE
 
-	///if this is true all verbs immediately execute and don't queue. in case the mc is fucked or something
+	/// if this is true all verbs immediately execute and don't queue.. in case the mc is fucked or something
 	var/FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs = FALSE
 
 	///used for subtypes to determine if they use their own stats for the stat entry
 	var/use_default_stats = TRUE
 
-	///if TRUE this will... message admins every time a verb is queued to this subsystem for the next tick with stats.
+	/// if TRUE this will.... message admins every time a verb is queued to this subsystem for the next tick with stats.
 	///for obvious reasons don't make this be TRUE on the code level this is for admins to turn on
 	var/message_admins_on_queue = FALSE
 
-	///always queue if possible. overrides can_queue_admin_verbs but not FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs
+	/// always queue if possible.. overrides can_queue_admin_verbs but not FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs
 	var/always_queue = FALSE
 
 /**
@@ -76,7 +76,7 @@ SUBSYSTEM_DEF(verb_manager)
 		stack_trace("_queue_verb() returned false because it was given a callback acting on a qdeleted object! [destroyed_string]")
 		return FALSE
 
-	//we want unit tests to be able to directly call verbs that attempt to queue, and since unit tests should test internal behavior, we want the queue
+	// we want unit tests to be able to directly call verbs that try to queue. Since unit tests should test internal behavior, we want the queue
 	//to happen as if it was actually from player input if its called on a mob.
 #ifdef UNIT_TESTS
 	if(QDELETED(usr) && ismob(incoming_callback.object))
@@ -159,7 +159,7 @@ SUBSYSTEM_DEF(verb_manager)
 
 	verb_queue.Cut()
 	verbs_executed_per_second = MC_AVG_SECONDS(verbs_executed_per_second, executed_verbs, wait SECONDS)
-	//note that wait SECONDS is incorrect if this is called outside of fire() but because byond is garbage i need to add a timer to rustg to find a valid solution
+	// note that wait SECONDS is incorrect if this is called outside of fire(). Because byond is garbage i need to add a timer to rustg to find a valid solution
 
 /datum/controller/subsystem/verb_manager/stat_entry(msg)
 	. = ..()

@@ -13,7 +13,7 @@
 	var/series = "coderbus"
 	///Is the card flipped?
 	var/flipped = FALSE
-	///Has this card been "tapped"? AKA, is it horizontal?
+	/// Has this card been "tapped"?. Also known as is it horizontal?
 	var/tapped = FALSE
 	///Cached icon used for inspecting the card
 	var/icon/cached_flat_icon
@@ -21,7 +21,7 @@
 /obj/item/tcgcard/Initialize(mapload, datum_series, datum_id)
 	. = ..()
 	AddElement(/datum/element/item_scaling, 0.3, 1)
-	//If they are passed as null let's replace them with the vars on the card. this also means we can allow for map loaded ccards
+	// If they are passed as null let's replace them with the vars on the card.. this also means we can allow for map loaded ccards
 	if(!datum_series)
 		datum_series = series
 	if(!datum_id)
@@ -358,7 +358,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		"misprint" = 1)
 	///The amount of cards to draw from the guaranteed rarity table
 	var/guaranteed_count = 1
-	///The guaranteed rarity table, acts about the same as the rarity table. it can have as many or as few raritys as you'd like
+	/// The guaranteed rarity table, acts about the same as the rarity table.. it can have as many or as few raritys as you'd like
 	var/list/guar_rarity = list(
 		"legendary" = 1,
 		"epic" = 9,
@@ -401,7 +401,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		cards = buildCardListWithRarity(card_count, guaranteed_count)
 
 	for(var/template in cards)
-		//Makes a new card based of the series of the pack.
+		// Makes a new card good of the series of the pack.
 		new /obj/item/tcgcard(get_turf(user), series, template)
 	to_chat(user, span_notice("Wow! Check out these cards!"))
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
@@ -465,17 +465,17 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		if(cards.len)
 			toReturn += pick(cards)
 		else
-			//If we still don't find anything yell into the void. Lazy coders.
+			// If we still don't find anything yell into the void.. Lazy coders.
 			log_runtime("The index [rarity] of rarity_table does not exist in the global cache")
 	return toReturn
 
 //All of these values should be overridden by either a template or a card itself
 /datum/card
-	///Unique ID, for use in lookups and (eventually) for persistence. MAKE SURE THIS IS UNIQUE FOR EACH CARD IN AS SERIES, OR THE ENTIRE SYSTEM WILL BREAK, AND I WILL BE VERY DISAPPOINTED.
+	/// Unique ID, for use in lookups and (eventually) for persistence.. MAKE SURE THIS IS UNIQUE FOR EACH CARD IN AS SERIES, OR THE ENTIRE SYSTEM WILL BREAK, AND I WILL BE VERY DISAPPOINTED.
 	var/id = "coder"
 	var/name = "Coder"
 	var/desc = "Wow, a mint condition coder card! Better tell the GitHub all about this!"
-	///This handles any extra rules for the card, i.e. extra attributes, special effects, etc. If you've played any other card game, you know how this works.
+	/// This handles any extra rules for the card, i.e.. extra attributes, special effects, and so on If you've played any other card game, you know how this works.
 	var/rules = "There are no rules here. There is no escape. No Recall or Intervention can work in this place."
 	var/icon = DEFAULT_TCG_DMI
 	var/icon_state = "template"
@@ -489,11 +489,11 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	var/faction = "socks"
 	///Used to define the behaviour the card uses during the game.
 	var/cardtype ="C43a7u43?"
-	///An extra descriptor for the card. Combined with the cardtype for a larger card descriptor, i.e. Creature- Xenomorph, Spell- Instant, that sort of thing. For creatures, this has no effect, for spells, this is important.
+	/// An extra descriptor for the card.. Combined with the cardtype for a larger card descriptor, i.e.. Creature- Xenomorph, Spell- Instant, that sort of thing.. For creatures, this has no effect, for spells, this is important.
 	var/cardsubtype = "Weeb"
 	///Defines the series that the card originates from, this is *very* important for spawning the cards via packs.
 	var/series = "hunter2"
-	///The rarity of this card, determines how much (or little) it shows up in packs. Rarities are common, uncommon, rare, epic, legendary and misprint.
+	/// The rarity of this card, determines how much (or little) it shows up in packs.. Rarities are common, uncommon, rare, epic, legendary and misprint.
 	var/rarity = "uber rare to the extreme"
 
 	///Icon file that summons are pulled from

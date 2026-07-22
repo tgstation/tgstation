@@ -151,7 +151,7 @@
 	projectile.damage += (10 * fire_charges)
 	if(upgraded)
 		projectile.explosion_power = 1
-		projectile.damage /= 2 // The damage is pretty solid normally, but with the explosion and all the RNG that comes with, it's nearly a 1-shot. This evens a playing field a bit.
+		projectile.damage /= 2 // The damage is pretty solid normally, but with the explosion and all the RNG that comes with, it's nearly a 1-shot.. This evens a playing field a bit.
 	projectile.fire(null, interacting_with)
 
 	user.visible_message(span_danger("[user] makes a[upgraded ? " devastating" : "" ] blazing slash at [interacting_with]!"),\
@@ -169,15 +169,15 @@
 	desc = "Someone is about to cash out."
 	icon_state = "flaming_slash"
 	damage_type = BURN
-	armor_flag = MELEE //We're operating off of anime remote slash logic here. As such, we can treat this as a hybrid burn/brute this way.
-	damage = 10 // Damage amps based on the number of flame_charges it was created off of.
+	armor_flag = MELEE // We're operating off of anime remote slash logic here.. As such, we can treat this as a hybrid burn/brute this way.
+	damage = 10 // Damage amps good on the number of flame_charges it was created off of.
 	speed = 2
 	light_range = 1
 	light_power = 1
 	light_color = LIGHT_COLOR_FIRE
 	sharpness = SHARP_EDGED
 
-	///Applied in on_hit as the light_devastation_range. Defaults to zero unless giving the slash an extra juiced charge.
+	/// Applied in on_hit as the light_devastation_range.. Defaults to zero unless giving the slash an extra juiced charge.
 	var/explosion_power = 0
 
 /obj/projectile/flaming_slash/on_hit(atom/target, blocked, pierce_hit)

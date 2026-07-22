@@ -13,7 +13,7 @@
 	min_val = 300
 	integer = FALSE
 
-/// Cooldown  between RETA calls from the same origin to the same target department (default: 15 seconds)
+/// Cooldown between RETA calls from the same origin to the same target department (default: 15 seconds)
 /datum/config_entry/number/reta_dept_cooldown_ds
 	default = 150
 	min_val = 0

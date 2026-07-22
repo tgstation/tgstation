@@ -50,7 +50,7 @@ SUBSYSTEM_DEF(garbage)
 	#ifdef REFERENCE_TRACKING
 	var/list/reference_find_on_fail = list()
 	#ifdef REFERENCE_TRACKING_DEBUG
-	//Should we save found refs. Used for unit testing
+	// Should we save found refs.. Used for unit testing
 	var/should_save_refs = FALSE
 	#endif
 	#endif
@@ -204,7 +204,7 @@ SUBSYSTEM_DEF(garbage)
 			if (GC_QUEUE_CHECK)
 				#ifdef REFERENCE_TRACKING
 				// Decides how many refs to look for (potentially)
-				// Based off the remaining and the ones we can account for
+				// Good off the remaining and the ones we can account for
 				var/remaining_refs = refcount(D) - REFS_WE_EXPECT
 				if(reference_find_on_fail[text_ref(D)])
 					INVOKE_ASYNC(D, TYPE_PROC_REF(/datum,find_references), remaining_refs)
@@ -321,10 +321,10 @@ SUBSYSTEM_DEF(garbage)
 		for (var/i in 1 to SSgarbage.queues.len)
 			queues[i] |= SSgarbage.queues[i]
 
-/// Qdel Item: Holds statistics on each type that passes thru qdel
+/// Qdel Item: Holds statistics on each type that passes through qdel
 /datum/qdel_item
 	var/name = "" //!Holds the type as a string for this type
-	var/qdels = 0 //!Total number of times it's passed thru qdel.
+	var/qdels = 0 // !Total number of times it's passed through qdel.
 	var/destroy_time = 0 //!Total amount of milliseconds spent processing this type's Destroy()
 	var/failures = 0 //!Times it was queued for soft deletion but failed to soft delete.
 	var/hard_deletes = 0 //!Different from failures because it also includes QDEL_HINT_HARDDEL deletions
@@ -334,7 +334,7 @@ SUBSYSTEM_DEF(garbage)
 	var/no_respect_force = 0 //!Number of times it's not respected force=TRUE
 	var/no_hint = 0 //!Number of times it's not even bother to give a qdel hint
 	var/slept_destroy = 0 //!Number of times it's slept in its destroy
-	var/qdel_flags = 0 //!Flags related to this type's trip thru qdel.
+	var/qdel_flags = 0 // !Flags related to this type's trip through qdel.
 	var/list/extra_details //!Lazylist of string metadata about the deleted objects
 
 /datum/qdel_item/New(mytype)

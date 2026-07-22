@@ -42,7 +42,7 @@
 /datum/supply_pack/costumes_toys/formalwear
 	name = "Formalwear Crate"
 	desc = "You're gonna like the way you look, I guaranteed it. Contains an asston of fancy clothing."
-	cost = CARGO_CRATE_VALUE * 4 //Lots of very expensive items. You gotta pay up to look good!
+	cost = CARGO_CRATE_VALUE * 4 // Lots of very expensive items.. You got to pay up to look good!
 	contains = list(/obj/item/clothing/under/dress/tango,
 					/obj/item/clothing/under/misc/assistantformal = 2,
 					/obj/item/clothing/under/rank/civilian/lawyer/bluesuit,
@@ -76,7 +76,7 @@
 	cost = CARGO_CRATE_VALUE * 10
 	order_flags = ORDER_CONTRABAND
 	contains = list(/obj/item/firing_pin/clown)
-	crate_name = "toy crate" // It's /technically/ a toy. For the clown, at least.
+	crate_name = "toy crate" // It's /technically/ a toy.. For the clown, at least.
 	crate_type = /obj/structure/closet/crate/wooden
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 

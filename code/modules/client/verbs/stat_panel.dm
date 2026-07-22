@@ -11,7 +11,7 @@ GAME_VERB_HIDDEN(/client, toggle_stat_panel, "Toggle Stat Panel")
 	else
 		winset(src, SKIN_INFOWINDOW_CHILD, "left=null")
 
-///Returns TRUE if the player has something that necessitates the stat panel.
+/// Returns TRUE if the player has something that needs the stat panel.
 /client/proc/needs_stat_panel()
 	if(holder || interviewee)
 		return TRUE

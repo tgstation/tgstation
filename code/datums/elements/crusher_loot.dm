@@ -53,7 +53,7 @@
 	if (guaranteed_drop)
 		if (damage.total_damage / target.maxHealth < guaranteed_drop)
 			return
-	else if (!prob((damage.total_damage / target.maxHealth) * drop_mod)) // On average, you'll need to kill 4 creatures before getting the item. by default.
+	else if (!prob((damage.total_damage / target.maxHealth) * drop_mod)) // On average, you'll need to kill 4 creatures before getting the item.. by default.
 		return
 
 	if (replace_all && isanimal(target))

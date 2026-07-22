@@ -13,7 +13,7 @@
 	new /obj/item/organ/tongue/fly(src)
 	new /obj/item/organ/tongue/zombie(src)
 	new /obj/item/organ/tongue/bone(src)
-	new /obj/item/organ/tongue/robot(src) //DANGER! CRYSTAL HYPERSTRUCTURE-
+	new /obj/item/organ/tongue/robot(src) // DANGER!. CRYSTAL HYPERSTRUCTURE-
 	new /obj/item/organ/tongue/ethereal(src)
 	new /obj/item/autosurgeon/syndicate/commsagent(src)
 	new /obj/item/book/granter/sign_language(src)

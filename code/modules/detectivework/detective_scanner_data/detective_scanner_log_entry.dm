@@ -5,7 +5,7 @@
 	var/scan_time
 	/// `data_entries` is an assoc list, which can't use `BINARY_INSERT`
 	/// And to not perform sorting pipeline every time new data is added,
-	/// this var will be utilized to only sort list when it's required
+	/// this var will be used to only sort list when it's needed
 	var/sorted = TRUE
 	/// Scan data for current log
 	var/list/data_entries = list()

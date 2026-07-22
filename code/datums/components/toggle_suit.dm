@@ -7,7 +7,7 @@
 	var/toggled = FALSE
 	/// The inferred base icon state we do operations on, in case the atom doesn't have one set or if it becomes null or something.
 	var/inferred_base_icon_state
-	/// The noun of what was "toggled" displayed to the user. EX: "Toggled the item's [buttons]"
+	/// The noun of what was "toggled" displayed to the user.. EX: "Toggled the item's [buttons]"
 	var/toggle_noun
 
 /datum/component/toggle_icon/Initialize(toggle_noun = "buttons")

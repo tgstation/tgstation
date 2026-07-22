@@ -65,11 +65,11 @@ GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 	var/list/next_time_allowed = list()
 	///mobs that have triggered the cooldown and are queued to see the hud, but do not yet
 	var/list/queued_to_see = list()
-	/// huduser = list(atoms with their hud hidden) - aka everyone hates targeted invisibility
+	/// huduser = list(atoms with their hud hidden) - also known as everyone hates targeted invisibility
 	var/list/hud_exceptions = list()
 	///whether or not this atom_hud type updates the global huds_by_category list.
 	///some subtypes can't work like this since they're supposed to "belong" to
-	///one target atom each. it will still go in the other global hud lists.
+	/// one target atom each.. it will still go in the other global hud lists.
 	var/uses_global_hud_category = TRUE
 
 /datum/atom_hud/New()
@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 	hud_atoms += list(list())
 	hud_users += list(list())
 
-///returns a list of all hud atoms in the given z level and linked lower z levels (because hud users in higher z levels can see below)
+/// returns a list of all hud atoms in the given z level. Linked lower z levels (because hud users in higher z levels can see below)
 /datum/atom_hud/proc/get_hud_atoms_for_z_level(z_level)
 	if(z_level <= 0)
 		return FALSE
@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 		else
 			break
 
-///returns a list of all hud users in the given z level and linked upper z levels (because hud users in higher z levels can see below)
+/// returns a list of all hud users in the given z level. Linked upper z levels (because hud users in higher z levels can see below)
 /datum/atom_hud/proc/get_hud_users_for_z_level(z_level)
 	if(z_level > length(hud_users) || z_level <= 0)
 		stack_trace("get_hud_atoms_for_z_level() was given a z level index [z_level] out of bounds 1->[length(hud_users)] of hud_atoms!")
@@ -298,8 +298,8 @@ GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 
 	return TRUE
 
-///when a hud atom or hud user changes z levels this makes sure it gets the images it needs and removes the images it doesn't need.
-///because of how signals work we need the same proc to handle both use cases because being a hud atom and being a hud user aren't mutually exclusive
+/// when a hud atom. Hud user changes z levels this makes sure it gets the images it needs. Removes the images it doesn't need.
+/// because of how signals work we need the same proc to handle both use cases because being a hud atom. Being a hud user aren't mutually exclusive
 /datum/atom_hud/proc/on_atom_or_user_z_level_changed(atom/movable/moved_atom, turf/old_turf, turf/new_turf)
 	SIGNAL_HANDLER
 	if(old_turf)

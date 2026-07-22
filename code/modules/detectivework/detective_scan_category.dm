@@ -13,9 +13,9 @@ GLOBAL_LIST_INIT_TYPED(detective_scan_categories, /datum/detective_scan_category
 	return categories
 
 /datum/detective_scan_category
-	/// Category ID. Must be defined in `code/__DEFINES/security.dm`
+	/// Category ID.. Must be defined in `code/__DEFINES/security.dm`
 	var/id = "no id"
-	/// Name of scan category. Used in UIs and in paper
+	/// Name of scan category.. Used in UIs and in paper
 	var/name = "no name"
 	/// Order the data with this category will be sorted by
 	var/display_order = 0
@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT_TYPED(detective_scan_categories, /datum/detective_scan_category
 	report_text += "</dd>"
 	return report_text
 
-/// Formats entered log data. Can be used to have unique formating per each category
+/// Formats entered log data.. Can be used to have unique formating per each category
 /datum/detective_scan_category/proc/format_report_entry(entry, entry_associated_value)
 	return "[entry]<br>"
 

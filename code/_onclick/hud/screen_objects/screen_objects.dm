@@ -17,7 +17,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	speech_span = SPAN_ROBOT
 	appearance_flags = APPEARANCE_UI
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
-	/// A reference to the object in the slot. Grabs or items, generally, but any datum will do.
+	/// A reference to the object in the slot.. Grabs or items, generally, but any datum will do.
 	var/datum/weakref/master_ref = null
 	/// A reference to the owner HUD, if any.
 	VAR_PRIVATE/datum/hud/hud = null
@@ -42,7 +42,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	/// If FALSE, this will not be cleared when calling /client/clear_screen()
 	var/clear_with_screen = TRUE
 	/// If TRUE, clicking the screen element will fall through and perform a default "Click" call
-	/// Obviously this requires your Click override, if any, to call parent on their own.
+	/// Obviously this needs your Click override, if any, to call parent on their own.
 	/// This is set to FALSE to default to dissade you from doing this.
 	/// Generally we don't want default Click stuff, which results in bugs like using Telekinesis on a screen element
 	/// or trying to point your gun at your screen.
@@ -188,11 +188,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	daydreamer.open_memory_panel()
 
 /atom/movable/screen/inventory
-	/// The identifier for the slot. It has nothing to do with ID cards.
+	/// The identifier for the slot.. It has nothing to do with ID cards.
 	var/slot_id
-	/// Icon when empty. For now used only by humans.
+	/// Icon when empty.. For now used only by humans.
 	var/icon_empty
-	/// Icon when contains an item. For now used only by humans.
+	/// Icon when contains an item.. For now used only by humans.
 	var/icon_full
 	/// The overlay when hovering over with an item in your hand
 	var/image/object_overlay
@@ -344,7 +344,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	icon_state = "combat_off"
 	screen_loc = ui_acti
 	mouse_over_pointer = MOUSE_HAND_POINTER
-	///When recovering from minimizing our HUD, this is where we'll be set to. We set this in Initialize.
+	/// When recovering from minimizing our HUD, this is where we'll be set to.. We set this in Initialize.
 	var/default_screen_location
 
 /atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner, default_screen_location)
@@ -444,7 +444,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	var/static/mutable_appearance/off_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "off")
 	///Boolean on whether a mouse is being hovered over us right now.
 	var/hovering = FALSE
-	///Boolean on whether or not the space suit's thermal mode is on. Start at TRUE so we auto-update when we are first equipped.
+	/// Boolean on whether or not the space suit's thermal mode is on.. Start at TRUE so we auto-update when we are first equipped.
 	var/cached_thermal_on = TRUE
 
 /atom/movable/screen/spacesuit/Click(location, control, params)
@@ -660,7 +660,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	if (target.loc != storage.real_location)
 		return
 
-	/// Due to items in storage ignoring transparency for click hitboxes, this only can happen if we drag onto a free cell - aka after all current contents
+	/// Due to items in storage ignoring transparency f. Click hitboxes, this only can happen if we drag onto a free cell - also known as after all current contents
 	storage.real_location.contents -= target
 	storage.real_location.contents += target
 	storage.refresh_views()
@@ -895,7 +895,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /atom/movable/screen/healthdoll/living
 	icon_state = "fullhealth0"
 	screen_loc = ui_living_healthdoll
-	///The image we create on New to use for showing mob's HP on hover. It uses a separate image as to not be cut off by `alpha_mask_filter`.
+	/// The image we create on New to use for showing mob's HP on hover.. It uses a separate image as to not be cut off by `alpha_mask_filter`.
 	var/image/health_overlay
 	///Boolean on whether a mouse is being hovered over us right now.
 	var/hovering = FALSE
@@ -938,7 +938,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 
 /atom/movable/screen/healthdoll/human/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	if(isnull(hud_owner)) //we require a hud owner to work properly, so return out.
+	if(isnull(hud_owner)) // we need a hud owner to work properly, so return out.
 		return
 	update_body_zones()
 	update_appearance()
@@ -953,7 +953,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 		// layer chest above other limbs, it's the center after all
 		limb.layer = body_zone == BODY_ZONE_CHEST ? layer + 0.05 : layer
 		limbs[body_zone] = limb
-		// why viscontents? why not overlays? - because i want to animate filters
+		// why viscontents?. why not overlays?. - because i want to animate filters
 		vis_contents += limb
 
 /atom/movable/screen/healthdoll/human/Destroy()
@@ -990,7 +990,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 			icon_key = overridable_key[1] // thanks i hate it
 		else if(!owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy))
 			var/damage = body_part.get_damage() / body_part.max_damage
-			// calculate what icon state (1-5, or 0 if undamaged) to use based on damage
+			// calculate what icon state (1-5, or 0 if undamaged) to use good on damage
 			icon_key = clamp(ceil(damage * 5), 0, 5)
 
 		if(length(body_part?.wounds))
@@ -1401,7 +1401,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	addtimer(CALLBACK(src, PROC_REF(swap_pot_icon), potion), POTION_DROP_SPEED, TIMER_CLIENT_TIME)
 	animate(src, POTION_DROP_SPEED, easing = BACK_EASING, pixel_x = -50)
 
-/// Swaps the potion icon & name. Made for use w/ addtimer() so as to not disrupt the animation chain
+/// Swaps the potion icon & name.. Made for use with addtimer() so as to not disrupt the animation chain
 /atom/movable/screen/xenobio_potion/proc/swap_pot_icon(obj/item/pot)
 	name = pot.name
 	icon_state = pot.icon_state

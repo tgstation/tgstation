@@ -15,7 +15,7 @@
 	if(is_type_in_list(atom_target, vendor_uncrushable_objects))
 		return FALSE
 
-	//check if it has integrity + allow ninjas, etc to be crushed in cloak
+	// check if it has integrity + allow ninjas, and so on to be crushed in cloak
 	if (atom_target.uses_integrity && !(atom_target.invisibility > SEE_INVISIBLE_LIVING))
 		return TRUE //SMUSH IT
 

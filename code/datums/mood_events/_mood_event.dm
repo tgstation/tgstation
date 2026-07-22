@@ -22,7 +22,7 @@
 	var/special_screen_replace = TRUE
 	/// Owner of this mood event
 	var/mob/living/owner
-	/// List of required jobs for this mood event
+	/// List of needed jobs for this mood event
 	var/list/required_job
 
 /datum/mood_event/New(category)
@@ -152,7 +152,7 @@
 /// Subtype of mood event that iterates over all subtypes of itself to find a suitable one to apply
 /datum/mood_event/conditional
 	abstract_type = /datum/mood_event/conditional
-	/// Priority of this condition over other conditions. Higher = more priority.
+	/// Priority of this condition over other conditions.. Higher = more priority.
 	/// If two priorities are the same, the first one found is used, which would be the one defined first in code.
 	var/priority = 0
 

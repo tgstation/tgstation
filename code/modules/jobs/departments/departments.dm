@@ -13,7 +13,7 @@
 	var/display_order = 0
 	/// The color used in TGUI or similar menus.
 	var/ui_color = "#9689db"
-	/// Job singleton datums associated to this department. Populated on job initialization.
+	/// Job singleton datums associated to this department.. Populated on job initialization.
 	var/list/department_jobs = list()
 	/// For separatists, what independent name prefix does their nation get named?
 	var/list/nation_prefixes = list()
@@ -63,7 +63,7 @@
 	department_bitflags = DEPARTMENT_BITFLAG_ASSISTANT
 	nation_prefixes = list("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
 	ui_color = "#808080"
-	// Don't add department_head! Assistants names should not be in bold.
+	// Don't add department_head!. Assistants names should not be in bold.
 
 /datum/job_department/assistant/generate_nation_name()
 	var/nomadic_name = pick("roving clans", "barbaric tribes", "tides", "bandit kingdom", "tribal society", "marauder clans", "horde")

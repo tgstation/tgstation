@@ -7,15 +7,15 @@
 	// It's not stricly necessary a mob must have a mind, but some traumas do extra stuff if you have mind.
 	dummy.mind_initialize()
 
-	// Following includes some traumas that would require special handling to test.
+	// Following includes some traumas that would need special handling to test.
 	var/list/trauma_blacklist = list()
-	// Requires a phase be set in New
+	// Needs a phase be set in New
 	trauma_blacklist += typesof(/datum/brain_trauma/hypnosis)
-	// Requires another player, sleeps in gain()
+	// Needs another player, sleeps in gain()
 	trauma_blacklist += typesof(/datum/brain_trauma/severe/split_personality)
-	// Requires another player, sleeps in gain()
+	// Needs another player, sleeps in gain()
 	trauma_blacklist += typesof(/datum/brain_trauma/special/imaginary_friend)
-	// Requires a obsession target
+	// Needs a obsession target
 	trauma_blacklist += typesof(/datum/brain_trauma/special/obsessed)
 
 	for(var/datum/brain_trauma/trauma as anything in valid_subtypesof(/datum/brain_trauma) - trauma_blacklist)

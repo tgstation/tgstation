@@ -11,7 +11,7 @@
 	argument_hash_start_idx = 2
 	/// Chance of success per interaction.
 	var/befriend_chance
-	/// Message to print if we gain a friend. String %SOURCE% and %TARGET% are replaced by names if present.
+	/// Message to print if we gain a friend.. String %SOURCE% and %TARGET% are replaced by names if present.
 	var/tamed_reaction
 
 /datum/element/befriend_petting/Attach(datum/target, befriend_chance = AI_DOG_PET_FRIEND_PROB, tamed_reaction)

@@ -38,7 +38,7 @@
 		RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, PROC_REF(on_possible_mindswap))
 	else
 		message_admins("Cult Sacrifice: Could not find unconvertible or convertible target. WELP!")
-		sacced = TRUE // Prevents another hypothetical softlock. This basically means every PC is a cultist.
+		sacced = TRUE // Prevents another hypothetical softlock.. This basically means every PC is a cultist.
 	if(!sacced)
 		cult.make_image(src)
 	for(var/datum/mind/mind in cult.members)

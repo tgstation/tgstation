@@ -20,7 +20,7 @@
 	merge_type = /obj/item/stack/wall_filling
 	/// the main thing it exists for, list of fillings to reskin into.
 	var/list/wall_reskin_types
-	/// what it should be broken down back into when using a welder. Provided as a path.
+	/// what it should be broken down back into when using a welder.. Provided as a path.
 	var/made_from
 
 /obj/item/stack/wall_filling/examine(mob/user)

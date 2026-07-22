@@ -39,9 +39,9 @@
 #define MULTIPLICATIVE_FISHING_MOD "multiplicative"
 
 // These defines are intended for use to interact with fishing hooks when going
-// through the fishing rod, and not the hook itself. They could probably be
-// handled differently, but for now that's how they work. It's grounds for
-// a future refactor, however.
+// through the fishing rod, and not the hook itself... They could probably be
+// handled differently, but for now that's how they work... It's grounds for
+// a future refactor, but
 /// Fishing hook trait that lessens the bounce from hitting the edges of the minigame bar.
 #define FISHING_HOOK_WEIGHTED (1 << 0)
 ///See FISHING_MINIGAME_RULE_BIDIRECTIONAL
@@ -57,7 +57,7 @@
 #define FISHING_LINE_CLOAKED (1 << 0)
 /// Much like FISHING_HOOK_ENSNARE but for the fishing line.
 #define FISHING_LINE_BOUNCY (1 << 1)
-/// The sorta opposite of FISHING_LINE_BOUNCY. It makes it slower to gain completion and faster to lose it.
+/// The sort of opposite of FISHING_LINE_BOUNCY... It makes it slower to gain completion and faster to lose it.
 #define FISHING_LINE_STIFF (1 << 2)
 ///Skip the biting phase and go straight to the fishing phase.
 #define FISHING_LINE_AUTOREEL (1 << 3)
@@ -137,7 +137,7 @@
 #define FISH_SIZE_SMALL_MAX 50
 #define FISH_SIZE_NORMAL_MAX 80
 #define FISH_SIZE_BULKY_MAX 120
-///size threshold for requiring two-handed carry
+/// size threshold for needing two-handed carry
 #define FISH_SIZE_TWO_HANDS_REQUIRED 135
 #define FISH_SIZE_HUGE_MAX 165
 
@@ -170,10 +170,10 @@
 #define FISH_WEIGHT_FORCE_DIVISOR 250
 ///The multiplier used in the FISH_WEIGHT_BITE_DIVISOR define
 #define FISH_WEIGHT_GRIND_TO_BITE_MULT 0.4
-///Used to calculate how many bites a fish can take and therefore the amount of reagents it has.
+/// Used to calculate how many bites a fish can take and so the amount of reagents it has.
 #define FISH_WEIGHT_BITE_DIVISOR (FISH_GRIND_RESULTS_WEIGHT_DIVISOR * FISH_WEIGHT_GRIND_TO_BITE_MULT)
 
-///Set of operations that calculate the slowdown of fish based on weight
+/// Set of operations that calculate the slowdown of fish good on weight
 #define GET_FISH_SLOWDOWN(weighty) round(((weighty/FISH_WEIGHT_SLOWDOWN_DIVISOR)**FISH_WEIGHT_SLOWDOWN_EXPONENT)-1.3, 0.1)
 
 /**
@@ -221,7 +221,7 @@
 #define FISH_RARITY_GOOD_LUCK_FINDING_THIS 50
 #define FISH_RARITY_NOPE 0
 
-///Aquarium fluid variables. The fish' required fluid has to match this, or it'll slowly die.
+/// Aquarium fluid variables... The fish' needed fluid has to match this, or it'll slowly die.
 #define AQUARIUM_FLUID_FRESHWATER "Freshwater"
 #define AQUARIUM_FLUID_SALTWATER "Saltwater"
 #define AQUARIUM_FLUID_SULPHWATEVER "Sulfuric Water"
@@ -229,12 +229,12 @@
 #define AQUARIUM_FLUID_ANADROMOUS "Anadromous"
 #define AQUARIUM_FLUID_ANY_WATER "Any Fluid"
 
-///Fluff. The name of the aquarium company shown in the fish catalog
+/// Fluff... The name of the aquarium company shown in the fish catalog
 #define AQUARIUM_COMPANY "Aquatech Ltd."
 
 ///aquarium mode where you've to manage food, fluid type and temperature to keep fish alive
 #define AQUARIUM_MODE_MANUAL "Manual"
-///Aquarium mode where the code tries to determine what fluid type and temperature to use. Default.
+/// Aquarium mode where the code tries to determine what fluid type and temperature to use... Default.
 #define AQUARIUM_MODE_AUTO "Assisted"
 ///Prevents fish from dying because of temp/fluid settings and starvation but stops growth.
 #define AQUARIUM_MODE_SAFE "Stasis"
@@ -257,7 +257,7 @@
 #define AQUARIUM_MAX_BREEDING_POPULATION 20
 
 //Minigame defines
-/// The height of the minigame slider. Not in pixels, but minigame units.
+/// The height of the minigame slider... Not in pixels, but minigame units.
 #define FISHING_MINIGAME_AREA 1000
 
 ///The fish needs to be cooked for at least this long so that it can be safely eaten

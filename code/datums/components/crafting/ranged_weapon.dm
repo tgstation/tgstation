@@ -159,7 +159,7 @@
 	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
 
-/datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
+/datum/crafting_recipe/improvised_pneumatic_cannon // Pretty easy to get but
 	name = "Pneumatic Cannon"
 	result = /obj/item/pneumatic_cannon/ghetto
 	tool_behaviors = list(TOOL_WELDER, TOOL_WRENCH)
@@ -264,7 +264,7 @@
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
-/datum/crafting_recipe/deagle_prime //When you factor in the makarov (7 tc), the toolbox (1 tc), and the emag (3 tc), this comes to a total of 18 TC or thereabouts. Igorning the 20k pricetag, obviously.
+/datum/crafting_recipe/deagle_prime // When you fact. In the makarov (7 tc), the toolbox (1 tc). The emag (3 tc), this comes to a total of 18 TC. Thereabouts.. Igorning the 20k pricetag, obviously.
 	name = "Regal Condor"
 	result = /obj/item/gun/ballistic/automatic/pistol/deagle/regal
 	reqs = list(

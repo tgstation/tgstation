@@ -10,13 +10,13 @@
 	var/hash
 	/// the file this asset represents
 	var/resource
-	/// our file extension e.g. .png, .gif, etc
+	/// our file extension e.g.. .png, .gif, and so on
 	var/ext = ""
 	/// Should this file also be sent via the legacy browse_rsc system
 	/// when cdn transports are enabled?
 	var/legacy = FALSE
 	/// Used by the cdn system to keep legacy css assets with their parent
-	/// css file. (css files resolve urls relative to the css file, so the
+	/// css file.. (css files resolve urls relative to the css file, so the
 	/// legacy system can't be used if the css file itself could go out over
 	/// the cdn)
 	var/namespace = null
@@ -26,14 +26,14 @@
 	var/keep_local_name = FALSE
 
 ///pass in a valid file_hash if you have one to save it from needing to do it again.
-///pass in a valid dmi file path string e.g. "icons/path/to/dmi_file.dmi" to make generating the hash less expensive
+/// pass in a valid dmi file path string e.g.. "icons/path/to/dmi_file.dmi" to make generating the hash less expensive
 /datum/asset_cache_item/New(name, file, file_hash, dmi_file_path)
 	if (!isfile(file))
 		file = fcopy_rsc(file)
 
 	hash = file_hash
 
-	//the given file is directly from a dmi file and is thus in the rsc already, we know that its file_hash will be correct
+	// the given file is directly from a dmi file and is so in the rsc already, we know that its file_hash will be correct
 	if(!hash)
 		if(dmi_file_path)
 			hash = md5(file)

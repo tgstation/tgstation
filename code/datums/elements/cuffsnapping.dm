@@ -24,12 +24,12 @@
 
 /datum/element/cuffsnapping
 	element_flags = ELEMENT_BESPOKE
-	argument_hash_start_idx = 2 // let bos cutters paeper cutters and etc do it too
+	argument_hash_start_idx = 2 // let bos cutters paeper cutters and and so on do it too
 	/// If not null, can snap cable restraints and similar.
 	var/snap_time_weak = 0 SECONDS
 	/// If not null, can snap handcuffs.
 	var/snap_time_strong = null
-	/// Note: As of time of writing (5/9/23) it takes 4 seconds to manually remove handcuffs. Anything above that value is a waste of time.
+	/// Note: As of time of writing (5/9/23) it takes 4 seconds to manually remove handcuffs.. Anything above that value is a waste of time.
 
 /datum/element/cuffsnapping/Attach(datum/target, snap_time_weak = 0 SECONDS, snap_time_strong = null)
 	. = ..()
@@ -143,7 +143,7 @@
 	if(!isnull(snap_time) && snap_time > 0)
 		if(!do_after(cutter_user, snap_time, target, interaction_key = cutter)) //No doafter if time = 0
 			return
-		if(target_was_restrained) //Removing restraints takes priority over cuffed items. This only applies for carbon mobs, but we need to make sure the restraints are still the same.
+		if(target_was_restrained) // Removing restraints takes priority over cuffed items.. This only applies for carbon mobs, but we need to make sure the restraints are still the same.
 			var/mob/living/carbon/carbon_target = target
 			if(carbon_target.handcuffed != cuffs)
 				return

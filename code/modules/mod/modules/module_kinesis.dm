@@ -21,7 +21,7 @@
 	var/grab_range = 8
 	/// Time between us hitting objects with kinesis.
 	var/hit_cooldown_time = 1 SECONDS
-	/// Stat required for us to grab a mob.
+	/// Stat needed for us to grab a mob.
 	var/stat_required = DEAD
 	/// Atom we grabbed with kinesis.
 	var/atom/movable/grabbed_atom
@@ -272,7 +272,7 @@
 	prebuilt = TRUE
 	stat_required = CONSCIOUS
 
-/// Admin suit version of kinesis. Can grab anything at any range, may enable phasing through walls.
+/// Admin suit version of kinesis.. Can grab anything at any range, may enable phasing through walls.
 /obj/item/mod/module/anomaly_locked/kinesis/admin
 	name = "MOD kinesis++ module"
 	desc = "A modular plug-in to the forearm, this module was recently reredeveloped in super secret. \

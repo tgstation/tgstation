@@ -329,7 +329,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 	var/list/select_refs
 	var/list/select_text
 		//Runtime tracked
-			//These three are weird. For best performance, they are only a number when they're not being changed by the SDQL searching/execution code. They only become numbers when they finish changing.
+			// These three are weird.. For best performance, they are only a number when they're not being changed by the SDQL searching/execution code.. They only become numbers when they finish changing.
 	var/list/obj_count_all
 	var/list/obj_count_eligible
 	var/obj_count_finished
@@ -1083,7 +1083,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 					v = SSmatch
 				else
 					return null
-	else if(object == GLOB) // Shitty ass hack kill me.
+	else if(object == GLOB) // Shitty ass temporary solution kill me.
 		v = expression[start]
 	if(long)
 		if(expression[start + 1] == ".")

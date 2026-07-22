@@ -1,4 +1,4 @@
-// Weapon exports. Stun batons, disablers, etc.
+// Weapon exports.. Stun batons, disablers, and so on
 
 /datum/export/weapon
 	abstract_type = /datum/export/weapon

@@ -22,9 +22,9 @@
 	var/turf_type = null
 	/// What dir will the turf have?
 	var/turf_dir = SOUTH
-	/// Cached associative lazy list to hold the radial options for tile reskinning. See tile_reskinning.dm for more information. Pattern: list[type] -> image
+	/// Cached associative lazy list to hold the radial options for tile reskinning.. See tile_reskinning.dm for more information.. Pattern: list[type] -> image
 	var/list/tile_reskin_types
-	/// Cached associative lazy list to hold the radial options for tile dirs. See tile_reskinning.dm for more information.
+	/// Cached associative lazy list to hold the radial options for tile dirs.. See tile_reskinning.dm for more information.
 	var/list/tile_rotate_dirs
 	/// tile_rotate_dirs but before it gets converted to text
 	var/list/tile_rotate_dirs_number

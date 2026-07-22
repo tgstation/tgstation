@@ -123,11 +123,11 @@
 	if(mapload) //shouldnt queue when we arent even part of a ruin, probably admin shitspawned
 		SSqueuelinks.add_to_queue(src, SELFDESTRUCT_QUEUE)
 
-//smes that produces power, until the boss dies then it self destructs and you gotta make your own power
+// smes that produces power, until the boss dies then it self destructs and you got to make your own power
 /obj/machinery/power/smes/magical/cybersun
 	name = "cybersun-brand power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. It looks like any other SMES unit, except this one says 'Cybersun' on it."
-	//is this being used as part of the haunted trading post ruin? if true, will self destruct when boss dies
+	// is this being used as part of the haunted trading post ruin?. if true, will self destruct when boss dies
 	var/donk_ai_slave = FALSE
 
 /obj/machinery/power/smes/magical/cybersun/Initialize(mapload)
@@ -143,11 +143,11 @@
 	max_integrity = 50
 	invisibility = INVISIBILITY_ABSTRACT
 	anchored = TRUE
-	//is this being used as part of the haunted trading post ruin? if true, will self destruct when boss dies
+	// is this being used as part of the haunted trading post ruin?. if true, will self destruct when boss dies
 	var/donk_ai_slave = FALSE
 	//can the trap trigger more than once?
 	var/multiuse = FALSE
-	//(if multiuse) how many times the trap can trigger. 0 or lower is infinite
+	// (if multiuse) how many times the trap can trigger.. 0 or lower is infinite
 	var/uses_remaining = 0
 	//if true, the trap will unbolt all doors it bolted and cycle shutters a second time after a delay
 	var/resets_self = FALSE
@@ -217,7 +217,7 @@
 	qdel(src)
 
 //trap that gloms onto the first machine it finds on its tile, and lives inside it
-//then it zaps everyone who gets close. disarm by dissassembling the machine, or running out its charges
+// then it zaps everyone who gets close.. disarm by dissassembling the machine, or running out its charges
 /obj/effect/overloader_trap
 	name = "overloader trap"
 	desc = "A trap that overloads machines to electrify people who walk nearby."
@@ -226,7 +226,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "empdisable"
-	//trap won't damage mobs in its faction. set this to null to make it attack everyone
+	// trap won't damage mobs in its faction.. set this to null to make it attack everyone
 	faction = list(ROLE_SYNDICATE)
 	invisibility = INVISIBILITY_ABSTRACT
 	plane = ABOVE_GAME_PLANE
@@ -244,7 +244,7 @@
 	var/jitter_time = 5 SECONDS
 	// length of time targets stutter
 	var/stutter_time = 2 SECONDS
-	//is this being used as part of the haunted trading post ruin? if true, will self destruct when boss dies
+	// is this being used as part of the haunted trading post ruin?. if true, will self destruct when boss dies
 	var/donk_ai_slave = FALSE
 	// machine that the trap inhabits
 	var/obj/machinery/host_machine
@@ -279,12 +279,12 @@
 		return
 	if(!COOLDOWN_FINISHED(src, trigger_cooldown)) //do nothing if we're on cooldown
 		return
-	if(uses_remaining == 0) //deletes trap if it triggers when it has no uses left. should only happen if var edited but lets just be safe
+	if(uses_remaining == 0) // deletes trap if it triggers when it has no uses left.. should only happen if var edited but lets just be safe
 		qdel(src)
 		return
 	if (target.stat) //ensure the guy triggering us is alive
 		return
-	if (!faction_check_atom(target)) //and make sure it ain't someone on our team
+	if (!faction_check_atom(target)) // and make sure it is not someone on our team
 		COOLDOWN_START(src, trigger_cooldown, 4 SECONDS)
 		trap_alerted()
 
@@ -316,7 +316,7 @@
 
 //donk turret - 9mm
 /obj/machinery/porta_turret/syndicate/donk
-	//Medium speed, medium damage, fragile. Does brute damage.
+	// Medium speed, medium damage, fragile.. Does brute damage.
 	name = "\improper Donk Co. Defense Turret"
 	icon_state = "donk_lethal"
 	max_integrity = 120
@@ -344,7 +344,7 @@
 
 //cybersun turret - plasma beam
 /obj/machinery/porta_turret/syndicate/energy/cybersun
-	//Slow speed, high damage. Does burn damage.
+	// Slow speed, high damage.. Does burn damage.
 	name = "\improper Cybersun Plasma Auto-turret"
 	icon_state = "red_lethal"
 	base_icon_state = "red"

@@ -14,7 +14,7 @@
 	/// Optimal point towards which severity will try to gravitate by influencing random values
 	var/optimal_severity = 70
 	/// How often can we change our severity?
-	/// Don't set this too low or it'll look jank
+	/// Don't set this too low or it'll look low quality code
 	var/severity_cooldown = 5 SECONDS
 	/// Alpha of the area overlay when the particle weather pref is enabled
 	var/particle_weather_alpha = 255
@@ -70,7 +70,7 @@
 		return
 	animate_severity(0)
 
-/// Adjust our severity by a random number based on our stage
+/// Adjust our severity by a random number good on our stage
 /datum/weather/particle/proc/process_particles()
 	if (last_severity_tick + severity_cooldown > world.time)
 		return
@@ -123,7 +123,7 @@
 
 /particles/weather
 	spawning = 0
-	// Wider than our view due to weird BYOND jank
+	// Wider than our view due to weird BYOND low quality code
 	width = 800
 	height = 800
 	count = 8000
@@ -148,7 +148,7 @@
 
 	var/wind = wind_strength * severity * wind_sign
 	spawning = LERP(min_spawn, max_spawn, severity)
-	// Might already be set on init, in which case we preserve y and z components
+	// Might already be set on init, in which case we preserve why and z components
 	if (islist(gravity) && length(gravity))
 		gravity[1] = wind
 	else

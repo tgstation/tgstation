@@ -170,7 +170,7 @@
 	var/obj/item/organ/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 	// Indicates if lungs can breathe without gas.
 	if(!lungs)
-		// Lungs are missing! Can't breathe.
+		// Lungs are missing!. Can't breathe.
 		// Simulates breathing zero moles of gas.
 		has_moles = FALSE
 		// Extra damage, let God sort ’em out!
@@ -221,20 +221,20 @@
 
 	// Breath has 0 moles of gas.
 	else if(can_breathe_vacuum)
-		// The mob can breathe anyways. What are you? Some bottom-feeding, scum-sucking algae eater?
+		// The mob can breathe anyways.. What are you?. Some bottom-feeding, scum-sucking algae eater?
 		failed_last_breath = FALSE
 		// Vacuum-adapted lungs regenerate oxyloss even when breathing nothing.
 		if(health >= crit_threshold)
 			adjust_oxy_loss(-5)
 	else
-		// Can't breathe! Lungs are missing, and/or breath is empty.
+		// Can't breathe!. Lungs are missing, and/or breath is empty.
 		. = FALSE
 		failed_last_breath = TRUE
 
 	//-- PLUOXIUM --//
 	// Behaves like Oxygen with 8X efficacy, but metabolizes into a reagent.
 	if(pluoxium_pp)
-		// Inhale Pluoxium. Exhale nothing.
+		// Inhale Pluoxium.. Exhale nothing.
 		breath_moles[/datum/gas/pluoxium] = 0
 		// Metabolize to reagent.
 		if(pluoxium_pp > gas_stimulation_min)
@@ -244,7 +244,7 @@
 	//-- OXYGEN --//
 	// Carbons need only Oxygen to breathe properly.
 	var/oxygen_used = 0
-	// Minimum Oxygen effects. "Too little oxygen!"
+	// Minimum Oxygen effects.. "Too little oxygen!"
 	if(!can_breathe_vacuum && (o2_pp < safe_oxygen_min))
 		// Breathe insufficient amount of O2.
 		oxygen_used = handle_suffocation(o2_pp, safe_oxygen_min, breath_moles[/datum/gas/oxygen])
@@ -266,7 +266,7 @@
 		breath_moles[/datum/gas/carbon_dioxide] += oxygen_used
 
 	//-- CARBON DIOXIDE --//
-	// Maximum CO2 effects. "Too much CO2!"
+	// Maximum CO2 effects.. "Too much CO2!"
 	if(co2_pp > safe_co2_max)
 		// CO2 side-effects.
 		// Give the mob a chance to notice.
@@ -290,7 +290,7 @@
 		clear_alert(ALERT_TOO_MUCH_CO2)
 
 	//-- PLASMA --//
-	// Maximum Plasma effects. "Too much Plasma!"
+	// Maximum Plasma effects.. "Too much Plasma!"
 	if(plasma_pp > safe_plas_max)
 		// Plasma side-effects.
 		var/ratio = (breath_moles[/datum/gas/plasma] / safe_plas_max) * 10
@@ -336,13 +336,13 @@
 					to_chat(src, span_warning("You smell something horribly decayed inside this room."))
 					add_mood_event("smell", /datum/mood_event/disgust/bad_smell)
 			if(15 to 30)
-				//Small chance to vomit. By now, people have internals on anyway
+				// Small chance to vomit.. By now, people have internals on anyway
 				if(prob(5))
 					to_chat(src, span_warning("The stench of rotting carcasses is unbearable!"))
 					add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
 					vomit(VOMIT_CATEGORY_DEFAULT)
 			if(30 to INFINITY)
-				//Higher chance to vomit. Let the horror start
+				// Higher chance to vomit.. Let the horror start
 				if(prob(25))
 					to_chat(src, span_warning("The stench of rotting carcasses is unbearable!"))
 					add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
@@ -352,7 +352,7 @@
 
 	//-- NITROUS OXIDE --//
 	if(n2o_pp > n2o_para_min)
-		// More N2O, more severe side-effects. Causes stun/sleep.
+		// More N2O, more severe side-effects.. Causes stun/sleep.
 		n2o_euphoria = EUPHORIA_ACTIVE
 		if(!HAS_TRAIT(src, TRAIT_ANOSMIA))
 			throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
@@ -396,7 +396,7 @@
 
 	breath.garbage_collect()
 
-/// Applies suffocation side-effects to a given Human, scaling based on ratio of required pressure VS "true" pressure.
+/// Applies suffocation side-effects to a given Human, scaling good on ratio of needed pressure VS "true" pressure.
 /// If pressure is greater than 0, the return value will represent the amount of gas successfully breathed.
 /mob/living/carbon/proc/handle_suffocation(breath_pp = 0, safe_breath_min = 0, true_pp = 0)
 	. = 0
@@ -432,7 +432,7 @@
 	// The air you breathe out should match your body temperature
 	breath.temperature = bodytemperature
 
-/// Attempts to take a breath from the external or internal air tank.
+/// Tries to take a breath from the external or internal air tank.
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	if(invalid_internals())
 		// Unexpectely lost breathing apparatus and ability to breathe from the internal air tank.
@@ -461,7 +461,7 @@
 		return
 
 	if(chem.type == blood_type?.restoration_chem && get_blood_volume() < BLOOD_VOLUME_NORMAL)
-		// Don't clamp this to BLOOD_VOLUME_NORMAL. Reagents have quantization, making an clamped threshold janky.
+		// Don't clamp this to BLOOD_VOLUME_NORMAL.. Reagents have quantization, making an clamped threshold low quality
 		adjust_blood_volume(BLOOD_REGEN_FACTOR * seconds_per_tick)
 		reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
 		return COMSIG_MOB_STOP_REAGENT_TICK
@@ -489,7 +489,7 @@
 		var/existing_synth_volume = cached_blood_volume * get_blood_synth_content()
 
 		if (added_synth_volume != 0 || existing_synth_volume != 0)
-			// A simple weighted average that simplifies down to "total synth volume / total blood volume" i.e. "how much of our blood is synthetic"
+			// A simple weighted average that simplifies down to "total synth volume / total blood volume" i.e.. "how much of our blood is synthetic"
 			AddComponent(/datum/component/synth_blood, (added_synth_volume + existing_synth_volume) / (blood_added + cached_blood_volume))
 
 	if(chem.data?["blood_type"])
@@ -698,7 +698,7 @@
 		return .
 
 	for(var/datum/reagent/bits as anything in belly.reagents.reagent_list)
-		// hack to get around stomachs having 5u stomach lining reagent ugugugu
+		// temporary solution to get around stomachs having 5u stomach lining reagent ugugugu
 		var/effective_volume = bits.volume
 		if(belly.food_reagents[bits.type])
 			effective_volume -= belly.food_reagents[bits.type]

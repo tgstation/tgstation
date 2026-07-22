@@ -61,8 +61,8 @@
 	var/y_diff = clamp(amplitude * cos(amount * time), -view_range, view_range)
 	pixel_x_diff += x_diff
 	pixel_y_diff += y_diff
-	// Brief explanation. We're basically snapping between different pixel_x/ys instantly, with delays between
-	// Doing this with relative changes. This way we don't override any existing pixel_x/y values
+	// Brief explanation.. We're basically snapping between different pixel_x/ys instantly, with delays between
+	// Doing this with relative changes.. This way we don't override any existing pixel_x/y values
 	// We use EASE_OUT here for similar reasons, we want to act at the end of the delay, not at its start
 	// Relative animations are weird, so we do actually need this
 	animate(owner.client, pixel_x = x_diff, pixel_y = y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)

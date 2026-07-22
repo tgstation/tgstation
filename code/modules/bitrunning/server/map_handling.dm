@@ -55,7 +55,7 @@
 		return FALSE
 
 
-	//We will want to record how the domain was selected. Either entirely randomly, with the name redacted, or with full information.
+	// We will want to record how the domain was selected.. Either entirely randomly, with the name redacted, or with full information.
 	//Without this, it is difficult to determine what domains are selected more often intentionallly, vs unintentionally.
 	var/selection_type
 
@@ -133,7 +133,7 @@
 
 	return TRUE
 
-/// Loads in necessary map items like hololadder spawns, caches, etc
+/// Loads in necessary map items like hololadder spawns, caches, and so on
 /obj/machinery/quantum_server/proc/load_map_items()
 	var/turf/goal_turfs = list()
 	var/turf/cache_turfs = list()

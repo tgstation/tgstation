@@ -1,5 +1,5 @@
 /atom
-	///Holds merger groups currently active on the atom. Do not access directly, use GetMergeGroup() instead.
+	/// Holds merger groups currently active on the atom.. Do not access directly, use GetMergeGroup() instead.
 	var/list/datum/merger/mergers
 
 /// Gets a merger datum representing the connected blob of objects in the allowed_types argument

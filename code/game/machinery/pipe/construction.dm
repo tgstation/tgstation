@@ -277,7 +277,7 @@ GAME_VERB_SRC(/obj/item/pipe, flip, view(1), "Invert Pipe", null)
 	var/list/potentially_conflicting_machines = list()
 	// Work out which machines we would potentially conflict with
 	for(var/obj/machinery/atmospherics/machine in loc)
-		// Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
+		// Only one dense/requires density object per tile, for example connectors/cryo/heater/coolers.
 		if(machine.pipe_flags & flags & PIPING_ONE_PER_TURF)
 			to_chat(user, span_warning("Something is hogging the tile!"))
 			return TRUE
@@ -342,10 +342,10 @@ GAME_VERB_SRC(/obj/item/pipe, flip, view(1), "Invert Pipe", null)
 	if(ispath(pipe_type, /obj/machinery/atmospherics/pipe/smart/))
 		// If we're conflicting with another smart pipe, see if we can negotiate.
 		if(istype(other_smart_pipe))
-			// Two smart pipes. This is going to get complicated.
+			// Two smart pipes.. This is going to get complicated.
 			// Check to see whether the already placed pipe is bent or not.
 			if (ISDIAGONALDIR(other_smart_pipe.dir))
-				// The other pipe is bent, with at least two current connections. See if we can bounce off it as a bent pipe in the other direction.
+				// The other pipe is bent, with at least two current connections.. See if we can bounce off it as a bent pipe in the other direction.
 				var/opposing_dir = our_init_dirs & ~other_smart_pipe.connections
 				if (ISNOTSTUB(opposing_dir))
 					// We only get here if both smart pipes have two directions.
@@ -357,7 +357,7 @@ GAME_VERB_SRC(/obj/item/pipe, flip, view(1), "Invert Pipe", null)
 				// There's nothing further we can do.
 				return FALSE
 			else
-				// The other pipe is straight. See if we can go over it in a perpindicular direction.
+				// The other pipe is straight.. See if we can go over it in a perpindicular direction.
 				// Note that the other pipe cannot be unconnected, since we have a conflict.
 				if(EWCOMPONENT(other_smart_pipe.dir))
 					if ((NORTH|SOUTH) & ~p_init_dir)
@@ -382,16 +382,16 @@ GAME_VERB_SRC(/obj/item/pipe, flip, view(1), "Invert Pipe", null)
 					other_smart_pipe.update_pipe_icon()
 					return TRUE
 			return FALSE
-		// We're not dealing with another smart pipe. See if we can become the complement of the conflicting machine.
+		// We're not dealing with another smart pipe.. See if we can become the complement of the conflicting machine.
 		var/opposing_dir = our_init_dirs & ~machine.get_init_directions()
 		if (ISNOTSTUB(opposing_dir))
-			// We have at least two permitted directions in the complement. Use them.
+			// We have at least two permitted directions in the complement.. Use them.
 			p_init_dir = opposing_dir
 			return TRUE
 		return FALSE
 
 	else if(istype(other_smart_pipe))
-		// We're not a smart pipe ourselves, but we are conflicting with a smart pipe. We might be able to solve this by constraining the smart pipe.
+		// We're not a smart pipe ourselves, but we are conflicting with a smart pipe.. We might be able to solve this by constraining the smart pipe.
 		if (our_init_dirs & other_smart_pipe.connections)
 			// We needed to go where a smart pipe already had connections, nothing further we can do
 			return FALSE
@@ -410,7 +410,7 @@ GAME_VERB_SRC(/obj/item/pipe, flip, view(1), "Invert Pipe", null)
 		A.name = pipename
 	if(A.on)
 		// Certain pre-mapped subtypes are on by default, we want to preserve
-		// every other aspect of these subtypes (name, pre-set filters, etc.)
+		// every other aspect of these subtypes (name, pre-set filters, and so on
 		// but they shouldn't turn on automatically when wrenched.
 		A.on = FALSE
 

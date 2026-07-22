@@ -143,7 +143,7 @@
 	ADD_TRAIT(src, TRAIT_UNCATCHABLE, INNATE_TRAIT)
 
 /obj/item/throwing_star/stamina/ninja/on_thrown(mob/living/carbon/user, atom/target)
-	item_flags &= ~DROPDEL // Throwing = dropping = dropdel, not ideal. Remove it before that happens
+	item_flags &= ~DROPDEL // Throwing = dropping = dropdel, not ideal.. Remove it before that happens
 	return ..()
 
 /obj/item/throwing_star/stamina/ninja/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -185,7 +185,7 @@
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/hacker)
 	required_slots = list(ITEM_SLOT_GLOVES)
-	/// Whether or not the communication console hack was used to summon another antagonist.
+	/// Whether or not the communication console temporary solution was used to summon another antagonist.
 	var/communication_console_hack_success = FALSE
 	/// How many times the module has been used to force open doors.
 	var/door_hack_counter = 0
@@ -408,7 +408,7 @@
 	if(objective)
 		objective.completed = TRUE
 
-//AIRLOCK, Ninja objective. Hacking it forces the airlock open and emaggs it
+// AIRLOCK, Ninja objective.. Hacking it forces the airlock open and emaggs it
 /obj/machinery/door/airlock/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
@@ -523,7 +523,7 @@
 /mob/living/carbon/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
-	//20 uses for a standard cell. 200 for high capacity cells.
+	// 20 uses for a standard cell.. 200 for high capacity cells.
 	if(hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN*10))
 		//Got that electric touch
 		do_sparks(5, FALSE, loc)
@@ -665,7 +665,7 @@
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, emag_act))
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-//BUTTONS, emaggs the button removing access requirements
+// BUTTONS, emaggs the button removing access needs
 /obj/machinery/button/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(is_operational && !(obj_flags & EMAGGED))
 		emag_act(ninja)

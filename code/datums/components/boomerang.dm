@@ -1,4 +1,4 @@
-///The cooldown period between last_boomerang_throw and its methods of implementing a rebound proc.
+/// The cooldown period between last_boomerang_throw and its methods of adding a rebound proc.
 #define BOOMERANG_REBOUND_INTERVAL (1 SECONDS)
 /**
  * If an ojvect is given the boomerang component, it should be thrown back to the thrower after either hitting its target, or landing on the thrown tile.
@@ -9,7 +9,7 @@
 	var/boomerang_throw_range = 3
 	///If this boomerang is thrown, does it re-enable the throwers throw mode?
 	var/thrower_easy_catch_enabled = FALSE
-	///This cooldown prevents our 2 throwing signals from firing too often based on how we implement those signals within thrown impacts.
+	/// This cooldown prevents our 2 throwing signals from firing too often good on how we add those signals within thrown impacts.
 	COOLDOWN_DECLARE(last_boomerang_throw)
 	///Adds an extra big of flavor text on examine.
 	var/examine_message

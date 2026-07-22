@@ -322,7 +322,7 @@
 	throw_speed = 3
 	breakable_by_damage = FALSE
 	block_sound = 'sound/items/weapons/block_blade.ogg'
-	is_bashable = FALSE // Gotta wait till it activates y'know
+	is_bashable = FALSE // Got to wait till it activates y'know
 	shield_bash_sound = 'sound/effects/energyshieldbash.ogg'
 	/// Force of the shield when active.
 	var/active_force = 10

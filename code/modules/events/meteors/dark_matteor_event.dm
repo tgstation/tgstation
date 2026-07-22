@@ -9,7 +9,7 @@
 	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event/dark_matteor
-	fakeable = FALSE //Already faked by meteors that miss. Please, god, please miss
+	fakeable = FALSE // Already faked by meteors that miss.. Please, god, please miss
 
 /datum/round_event/dark_matteor/start()
 	var/mob/living/target
@@ -21,7 +21,7 @@
 			continue
 		target = potential_target
 		break
-	//if target was never chosen the target is null aka the matteor will act as spacedust (and can technically miss)
+	// if target was never chosen the target is null also known as the matteor will act as spacedust (and can technically miss)
 	spawn_meteor(list(/obj/effect/meteor/dark_matteor = 1), null, target, distance_from_edge = 10)
 
 /datum/round_event/dark_matteor/announce(fake)
@@ -29,7 +29,7 @@
 
 /datum/event_admin_setup/warn_admin/dark_matteor
 	warning_text = "Dark Matt-eors spawn singularities. The round is ending once a dark matt-eor hits the station. Proceed anyways?"
-	snitch_text = null //since this is not a conditional alert, there is nothing to snitch on. announcing a triggered event is enough.
+	snitch_text = null // since this is not a conditional alert, there is nothing to snitch on.. announcing a triggered event is enough.
 
 /datum/event_admin_setup/warn_admin/dark_matteor/should_warn()
 	return TRUE

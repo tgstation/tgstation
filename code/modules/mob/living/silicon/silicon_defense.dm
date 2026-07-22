@@ -122,7 +122,7 @@
 
 /mob/living/silicon/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	if(hitting_projectile.damage_type == BURN)
-		hitting_projectile.damage_type = BRUTE //Burn is for wire damage. Brute is the outer chassis.
+		hitting_projectile.damage_type = BRUTE // Burn is for wire damage.. Brute is the outer chassis.
 	. = ..()
 	if(. != BULLET_ACT_HIT)
 		return .

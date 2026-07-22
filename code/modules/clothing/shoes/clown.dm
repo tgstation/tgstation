@@ -71,7 +71,7 @@
 
 
 //COMBAT CLOWN SHOES
-//Clown shoes with combat stats and noslip. Of course they still squeak.
+// Clown shoes with combat stats and noslip.. Of course they still squeak.
 /obj/item/clothing/shoes/clown_shoes/combat
 	name = "combat clown shoes"
 	desc = "Advanced Clown Shoes that protect the wearer and render them nearly immune to slipping on their own peels. They also squeak at 100% capacity."

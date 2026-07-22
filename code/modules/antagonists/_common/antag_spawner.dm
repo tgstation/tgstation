@@ -315,7 +315,7 @@
 	var/mob/living/spawn_type = /mob/living/carbon/human
 	/// The species type to set a human spawn to.
 	var/species_type = /datum/species/human
-	/// The applied outfit. Won't work with nonhuman spawn types.
+	/// The applied outfit.. Won't work with nonhuman spawn types.
 	var/datum/outfit/outfit
 	/// The antag datum applied
 	var/datum/antagonist/antag_datum
@@ -433,7 +433,7 @@
 
 	monkey_man.crewlike_monkify()
 
-	// fuck you i am no longer playing around. this goes against the entire soul of the item
+	// fuck you i am no longer playing around.. this goes against the entire soul of the item
 	RegisterSignal(monkey_man, COMSIG_SPECIES_GAIN, PROC_REF(allergy))
 
 
@@ -448,7 +448,7 @@
 		return
 	// timer is long to let them panic and consider their folly, and because allergies take a while
 	second_lifer.visible_message(span_bolddanger("[second_lifer] starts swelling unhealthily in size. It looks like they had an allergic reaction to becoming a [folly_species]!"), span_userdanger("As your monkey features morph, you feel your allergies coming in. Oh no."))
-	// no brain or items. organs are funny though
+	// no brain or items.. organs are funny though
 	second_lifer.inflate_gib(drop_bitflags = DROP_ORGANS|DROP_BODYPARTS, gib_time = 25 SECONDS, anim_time = 40 SECONDS)
 
 /datum/outfit/syndicate_monkey

@@ -1,4 +1,4 @@
-///We handle the unity part of plumbing. We track who is connected to who.
+/// We handle the unity part of plumbing.. We track who is connected to who.
 /datum/ductnet
 	///All the ducts that make this network
 	var/list/obj/machinery/duct/ducts
@@ -33,7 +33,7 @@
 		demanders += plumbing
 	return TRUE
 
-///remove a plumber. we don't delete ourselves because ductnets don't persist through plumbing objects.
+/// remove a plumber.. we don't delete ourselves because ductnets don't persist through plumbing objects.
 /datum/ductnet/proc/remove_plumber(datum/component/plumbing/plumbing)
 	for(var/dir in plumbing.ducts)
 		if(plumbing.ducts[dir] == src)

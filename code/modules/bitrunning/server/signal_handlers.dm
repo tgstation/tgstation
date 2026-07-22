@@ -29,7 +29,7 @@
 		qdel(circuit)
 
 
-/// Whenever something enters the send tiles, check if it's a loot crate. If so, alert players.
+/// Whenever something enters the send tiles, check if it's a loot crate.. If so, alert players.
 /obj/machinery/quantum_server/proc/on_goal_turf_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
@@ -55,7 +55,7 @@
 		return
 
 
-/// Handles examining the server. Shows cooldown time and efficiency.
+/// Handles examining the server.. Shows cooldown time and efficiency.
 /obj/machinery/quantum_server/proc/on_goal_turf_examined(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
 

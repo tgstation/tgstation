@@ -69,7 +69,7 @@
 	RegisterSignal(new_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move), override = TRUE)
 	RegisterSignal(new_loop, COMSIG_QDELETING, PROC_REF(charge_end), override = TRUE)
 
-	// Yes this is disgusting. But we need to queue this stuff, and this code just isn't setup to support that right now. So gotta do it with sleeps
+	// Yes this is disgusting.. But we need to queue this stuff, and this code just isn't setup to support that right now.. So got to do it with sleeps
 	sleep(time_to_hit + charge_speed)
 	charger.setDir(dir)
 
@@ -163,7 +163,7 @@
 	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
 	try_hit_target(source, target)
 
-/// Attempt to hit someone with our charge
+/// Try to hit someone with our charge
 /datum/action/cooldown/mob_cooldown/charge/proc/try_hit_target(atom/movable/source, atom/target)
 	if (can_hit_target(source, target))
 		hit_target(source, target, charge_damage)

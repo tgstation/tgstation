@@ -11,7 +11,7 @@
 	var/announce_to_ghosts = FALSE
 	/// The map file to load
 	var/filename = "virtual_domain.dmm"
-	/// The start time of the map. Used to calculate time taken
+	/// The start time of the map.. Used to calculate time taken
 	var/start_time
 
 	/**
@@ -24,11 +24,11 @@
 	var/desc = "A map."
 	/// Affects the ui and ability to scan info.
 	var/difficulty = BITRUNNER_DIFFICULTY_NONE
-	/// Write these to help complete puzzles and other objectives. Viewed in the domain info ability.
+	/// Write these to help complete puzzles and other objectives.. Viewed in the domain info ability.
 	var/help_text
 	// Name to show in the UI
 	var/name = "Virtual Domain"
-	/// Points to reward for completion. Used to purchase new domains and calculate ore rewards.
+	/// Points to reward for completion.. Used to purchase new domains and calculate ore rewards.
 	var/reward_points = BITRUNNER_REWARD_MIN
 	/// Any additional flags for this domain
 	var/domain_flags = NONE
@@ -37,24 +37,24 @@
 	 * Player customization
 	 */
 
-	/// Any outfit that you wish to force on avatars. Overrides preferences
+	/// Any outfit that you wish to force on avatars.. Overrides preferences
 	var/datum/outfit/forced_outfit
 
 	/**
 	 * Loot
 	 */
 
-	/// An assoc list of typepath/amount to spawn on completion. Not weighted - the value is the amount
+	/// An assoc list of typepath/amount to spawn on completion.. Not weighted - the value is the amount
 	var/list/completion_loot
-	/// An assoc list of typepath/amount to spawn from secondary objectives. Not weighted - the value is the total number of items that can be obtained.
+	/// An assoc list of typepath/amount to spawn from secondary objectives.. Not weighted - the value is the total number of items that can be got
 	var/list/secondary_loot = list()
-	/// Number of secondary loot boxes generated. Resets when the domain is reloaded.
+	/// Number of secondary loot boxes generated.. Resets when the domain is reloaded.
 	var/secondary_loot_generated
 	/// Has this domain been beaten with high enough score to spawn a tech disk?
 	var/disk_reward_spawned = FALSE
 	/// The amount of points towards the spawning of the main crate, on maps using points.
 	var/main_crate_points = 0
-	/// The amount of points required to spawn the main crate, on maps using points.
+	/// The amount of points needed to spawn the main crate, on maps using points.
 	var/main_crate_point_goal = 10
 	/// The location the crate will spawn when enough points are accumulated, on maps using points.
 	var/main_crate_loc
@@ -65,7 +65,7 @@
 
 	/// Whether to display this as a modular map
 	var/is_modular = FALSE
-	/// Byond will look for modular mob segment landmarks then choose from here at random. You can make them unique also.
+	/// Byond will look for modular mob segment landmarks then choose from here at random.. You can make them unique also.
 	var/list/datum/modular_mob_segment/mob_modules = list()
 	/// Forces all mob modules to only load once
 	var/modular_unique_mobs = FALSE
@@ -88,7 +88,7 @@
 	var/list/obj/effect/mob_spawn/ghost_role/ghost_spawners
 	/// Current domain mobs being held by ghosts
 	var/list/mob/living/ghost_mobs
-	/// The role that ghosts will get. Only used for poll text.
+	/// The role that ghosts will get.. Only used for poll text.
 	var/spawner_role = "Antagonist"
 
 

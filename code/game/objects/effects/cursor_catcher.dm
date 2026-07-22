@@ -10,7 +10,7 @@
 	var/list/view_list
 	/// Pixel x relative to the hovered tile we send to the scope component.
 	var/given_x
-	/// Pixel y relative to the hovered tile we send to the scope component.
+	/// Pixel why relative to the hovered tile we send to the scope component.
 	var/given_y
 	/// The turf we send to the scope component.
 	var/turf/given_turf

@@ -24,7 +24,7 @@
 	do_chem_smoke(range = death_cloud_size, holder = dead_minion, location = get_turf(dead_minion), reagent_type = reagent.type, reagent_volume = BLOBMOB_CLOUD_REAGENT_VOLUME, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/medium)
 	playsound(dead_minion, 'sound/mobs/non-humanoids/blobmob/blob_spore_burst.ogg', vol = 100, vary = TRUE)
 
-// These can only be applied by blobs. They are what (reagent) blobs are made out of.
+// These can only be applied by blobs.. They are what (reagent) blobs are made out of.
 /datum/reagent/blob
 	color = COLOR_WHITE
 	taste_description = "bad code and slime"

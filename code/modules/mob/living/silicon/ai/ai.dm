@@ -265,7 +265,7 @@ GAME_VERB_DESC(/mob/living/silicon/ai, pick_status_display, "Set AI Status Displ
 			robot_status = "OFFLINE"
 		else if(!connected_robot.cell || connected_robot.cell.charge <= 0)
 			robot_status = "DEPOWERED"
-		//Name, Health, Battery, Model, Area, and Status! Everything an AI wants to know about its borgies!
+		// Name, Health, Battery, Model, Area, and Status!. Everything an AI wants to know about its borgies!
 		. += list(list("[connected_robot.name]: ",
 			"S.Integrity: [connected_robot.health]% | \
 			Cell: [connected_robot.cell ? "[display_energy(connected_robot.cell.charge)]/[display_energy(connected_robot.cell.maxcharge)]" : "Empty"] | \
@@ -299,7 +299,7 @@ GAME_VERB_DESC(/mob/living/silicon/ai, pick_status_display, "Set AI Status Displ
 	if(trim(reason))
 		SSshuttle.requestEvac(src, reason)
 
-	// hack to display shuttle timer
+	// temporary solution to display shuttle timer
 	if(!EMERGENCY_IDLE_OR_RECALLED)
 		for(var/obj/machinery/computer/communications/C in GLOB.shuttle_caller_list)
 			C.post_status("shuttle")
@@ -328,11 +328,11 @@ GAME_VERB_DESC(/mob/living/silicon/ai, pick_status_display, "Set AI Status Displ
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
 
-GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
+GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") // Don't display it on the verb lists.. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
 
 	ai_tracking_tool.track_input(src)
 
-///Called when an AI starts tracking a new target, before the eye moves. Saves the return point for the "last camera" hotkey.
+/// Called when an AI starts tracking a new target, before the eye moves.. Saves the return point for the "last camera" hotkey.
 /mob/living/silicon/ai/proc/on_track_started(datum/trackable/source, mob/living/target)
 	SIGNAL_HANDLER
 	if(eyeobj)
@@ -378,10 +378,10 @@ GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "AI Comma
 		status_flags &= ~CANPUSH //we dont want the core to be push-able when anchored
 		ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 
-/// Creates an MMI of the AI based on its configuration.
+/// Creates an MMI of the AI good on its configuration.
 /mob/living/silicon/ai/proc/make_mmi(atom/destination) as /obj/item/mmi
 	RETURN_TYPE(/obj/item/mmi)
-	//FIXME: this code is really bad, we shouldn't be doing most of this ourselves. MMI code needs a good refactoring....
+	// Fix me this code is really bad, we shouldn't be doing most of this ourselves.. MMI code needs a good refactoring....
 	var/obj/item/mmi/copied_mmi
 	if(posibrain_inside)
 		copied_mmi = new /obj/item/mmi/posibrain(destination, FALSE)
@@ -401,7 +401,7 @@ GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "AI Comma
 
 	var/suicided = HAS_TRAIT(src, TRAIT_SUICIDED)
 	copied_mmi.brainmob.set_suicide(suicided)
-	copied_mmi.brain?.suicided = suicided // we can't guarantee that the MMI has a brain... sigh
+	copied_mmi.brain?.suicided = suicided // we can't guarantee that the MMI has a brain.... sigh
 
 	if(copied_mmi.brainmob.stat == DEAD && !suicided)
 		copied_mmi.brainmob.set_stat(CONSCIOUS)
@@ -606,7 +606,7 @@ GAME_VERB_PROC(/mob/living/silicon/ai, ai_network_change, "Jump To Network", "AI
 	to_chat(src, span_notice("Switched to the \"[uppertext(network)]\" camera network."))
 //End of code by Mord_Sith
 
-//I am the icon meister. Bow fefore me. //>fefore
+// I am the icon meister.. Bow fefore me.. //>fefore
 GAME_VERB_PROC_DESC(/mob/living/silicon/ai, ai_hologram_change, "Change Hologram", "Change the default hologram available to AI to something else.", "AI Commands")
 
 	if(incapacitated)
@@ -773,7 +773,7 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto
 /mob/living/silicon/ai/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(!..())
 		return
-	if(interaction != AI_TRANS_TO_CARD)//The only possible interaction. Upload AI mob to a card.
+	if(interaction != AI_TRANS_TO_CARD)// The only possible interaction.. Upload AI mob to a card.
 		return
 	if(!can_be_carded)
 		balloon_alert(user, "transfer failed!")
@@ -874,7 +874,7 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto
 		return
 	to_chat(src, "In the top left corner of the screen you will find the Malfunction Modules button, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices.")
 	to_chat(src, "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds.")
-	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
+	view_core() // A BYOND bug needs you to be viewing your core before your verbs update
 	malf_picker = new /datum/module_picker
 	modules_action = new(malf_picker)
 	modules_action.Grant(src)
@@ -1044,7 +1044,7 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 
 /mob/living/silicon/ai/spawned/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	if(!target_ai)
-		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
+		target_ai = src // cheat!. just give.... ourselves as the spawned AI, because that's technically correct
 	. = ..()
 
 /mob/living/silicon/ai/proc/camera_visibility(mob/eye/camera/ai/moved_eye)
@@ -1132,7 +1132,7 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 	RegisterSignal(linked_core, COMSIG_ATOM_EXITED, PROC_REF(on_core_exited))
 
 /// Elegantly closes the AI's link to a core structure,
-/// moving them to its location and cleaning it up. This is generally what you want to call.
+/// moving them to its location and cleaning it up.. This is generally what you want to call.
 /// Prefer calling [proc/break_core_link] directly if the connection is meant to be suddenly severed.
 /mob/living/silicon/ai/proc/resolve_core_link()
 	if(!linked_core) //oh no bro
@@ -1144,7 +1144,7 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 	qdel(unlinked_core)
 	cancel_camera()
 
-/// Handles unregistering the AI from its core. The core itself will not be cleaned up.
+/// Handles unregistering the AI from its core.. The core itself will not be cleaned up.
 /// Prefer calling [proc/resolve_core_link] if the connection is being closed elegantly.
 /mob/living/silicon/ai/proc/break_core_link()
 	if(!linked_core)

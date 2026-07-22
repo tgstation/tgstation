@@ -5,7 +5,7 @@
 	motion_monitored = TRUE
 
 	ambientsounds = list('sound/ambience/engineering/ambitech.ogg', 'sound/ambience/engineering/ambitech2.ogg', 'sound/ambience/engineering/ambiatmos.ogg', 'sound/ambience/engineering/ambiatmos2.ogg')
-	/// Disables ambientsounds if TRUE. Used for mundane AI locations like the exterior or storage room.
+	/// Disables ambientsounds if TRUE.. Used for mundane AI locations like the exterior or storage room.
 	var/secure = TRUE
 	/// Some sounds (like the space jam) are terrible when on loop.
 	/// We use this variable to add it to other AI areas, but override it to keep it from the AI's core.

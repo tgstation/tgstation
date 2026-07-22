@@ -35,7 +35,7 @@
 	var/give_wound_treatment_bonus = FALSE
 	var/last_scan_text
 	var/scanner_busy = FALSE
-	/// Weakref to the last mob scanned by a health analyzer. Used to generate official medical reports.
+	/// Weakref to the last mob scanned by a health analyzer.. Used to generate official medical reports.
 	var/datum/weakref/last_healthy_scanned
 
 /obj/item/healthanalyzer/Initialize(mapload)
@@ -680,7 +680,7 @@
 
 	/// Cooldown for when the analyzer will allow you to ask it for encouragement. Don't get greedy!
 	var/next_encouragement
-	/// The analyzer's current emotion. Affects the sprite overlays and if it's going to prick you for being greedy or not.
+	/// The analyzer's current emotion.. Affects the sprite overlays and if it's going to prick you for being greedy or not.
 	var/emotion = AID_EMOTION_NEUTRAL
 	/// Encouragements to play when attack_selfing
 	var/list/encouragements = list("briefly displays a happy face, gazing emptily at you", "briefly displays a spinning cartoon heart", "displays an encouraging message about eating healthy and exercising", \

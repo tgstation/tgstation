@@ -29,8 +29,8 @@
 			// Excludes machines that don't use power, as these are usually non-machine machinery
 			if(sick_device.use_power == NO_POWER_USE)
 				continue
-			// Look for dense machinery. Basically stops stuff like wall mounts and pipes, silly ones.
-			// But keep in vents and scrubbers. I think it's funny if they start spitting out radiation
+			// Look for dense machinery.. Basically stops stuff like wall mounts and pipes, silly ones.
+			// But keep in vents and scrubbers.. I think it's funny if they start spitting out radiation
 			if(!sick_device.density && !istype(sick_device, /obj/machinery/atmospherics/components/unary))
 				continue
 			// Skip invisible stuff
@@ -151,10 +151,10 @@
 	INVOKE_ASYNC(src, PROC_REF(try_remove_radiation), source, user, tool)
 	return ITEM_INTERACT_BLOCKING
 
-/// Attempts a do_after, and if successful, stops the event
+/// Tries a do_after, and if successful, stops the event
 /datum/round_event/radiation_leak/proc/try_remove_radiation(obj/machinery/source, mob/living/user, obj/item/tool)
 	source.balloon_alert(user, "fixing leak...")
-	// Fairly long do after. It shouldn't be SUPER easy to just run in and stop it.
+	// Fairly long do after.. It shouldn't be SUPER easy to just run in and stop it.
 	// A tider can fix it if they want to soak a bunch of rads and inhale noxious fumes,
 	// but only an equipped engineer should be able to handle it painlessly.
 	if(!tool.use_tool(source, user, 30 SECONDS, amount = (tool.tool_behaviour == TOOL_WELDER ? 2 : 0), volume = 50))

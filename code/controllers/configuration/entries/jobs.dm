@@ -1,4 +1,4 @@
-// This file pretty much just handles all of the interactions between jobconfig.toml and the codebase. This is started by work originating in SSconfig, so I'm okay with it being here.
+// This file pretty much just handles all of the interactions between jobconfig.toml and the codebase.. This is started by work originating in SSconfig, so I'm okay with it being here.
 
 /// Returns an associated list of all of the job config types that we have in the codebase.
 /datum/controller/subsystem/job/proc/generate_config_singletons()
@@ -47,7 +47,7 @@
 		occupation.total_positions = text2num(parser.group[1])
 		occupation.spawn_positions = text2num(parser.group[2])
 
-/// Will generate a new jobconfig.toml file if one does not exist, or if one does exist, will migrate the old jobs.txt file into the new TOML format for download
+/// Will generate a new jobconfig.toml file if one does not exist. If one does exist, will migrate the old jobs.txt file into the new TOML format f. Download
 /// Returns TRUE if a file is successfully generated, FALSE otherwise.
 /datum/controller/subsystem/job/proc/generate_config(mob/user)
 	var/toml_path = "[global.config.directory]/jobconfig.toml"
@@ -91,8 +91,8 @@
 		var/default_positions = text2num(parser.group[1])
 		var/starting_positions = text2num(parser.group[2])
 
-		// Playtime Requirements and Required Account Age are new and we want to see it migrated, so we will just pull codebase defaults for them.
-		// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operator knows that they are overriding the codebase defaults when they remove the comment.
+		// Playtime Needs and Needed Account Age are new and we want to see it migrated, so we will just pull codebase defaults for them.
+		// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operat. Knows that they are overriding the codebase defaults when they remove the comment.
 		var/list/working_list = list(
 			"# [JOB_CONFIG_TOTAL_POSITIONS]" = default_positions,
 			"# [JOB_CONFIG_SPAWN_POSITIONS]" = starting_positions,
@@ -106,13 +106,13 @@
 
 	return TRUE
 
-/// If we add a new job or more fields to config a job with, quickly spin up a brand new config that inherits all of your old settings, but adds the new job with codebase defaults.
+/// If we add a new job. More fields to config a job with, quickly spin up a br. New config that inherits all of your old settings. Adds the new job with codebase defaults.
 /// Returns TRUE if a file is successfully generated, FALSE otherwise.
 /datum/controller/subsystem/job/proc/regenerate_job_config(mob/user)
 	var/toml_path = "[global.config.directory]/jobconfig.toml"
 	var/list/file_data = list()
 
-	if(!fexists(file(toml_path))) // You need an existing (valid) TOML for this to work. Sanity check if someone calls this directly instead of through 'Generate Job Configuration' verb.
+	if(!fexists(file(toml_path))) // You need an existing (valid) TOML for this to work.. Sanity check if someone calls this directly instead of through 'Generate Job Configuration' verb.
 		to_chat(user, span_notice("No jobconfig.toml found in the config folder! If this is not expected, please notify a server operator or coders. You may need to generate a new config file by running 'Generate Job Configuration' from the Server tab."))
 		return FALSE
 
@@ -124,7 +124,7 @@
 			stack_trace("We were about to over-write a job key that already exists in file_data while generating a new jobconfig.toml! This should not happen! Verify you do not have any duplicate job keys in your codebase!")
 			continue
 
-		// When we regenerate, we want to make sure commented stuff stays commented, but we also want to migrate information that remains uncommented. So, let's make sure we keep that pattern.
+		// When we regenerate, we want to make sure commented stuff stays commented, but we also want to migrate information that remains uncommented.. let's make sure we keep that pattern.
 		if(!job_config[job_key])
 			to_chat(user, span_notice("New job [occupation.title] (using key [job_key]) detected! Adding to jobconfig.toml using default codebase values..."))
 			file_data[job_key] = generate_blank_job_config(occupation)
@@ -155,7 +155,7 @@
 
 	return TRUE
 
-/// This will just return a list for a completely new job that doesn't need to be migrated from an old config (completely new). Just done here to reduce copypasta
+/// This will just return a list for a completely new job that doesn't need to be migrated from an old config (completely new).. Just done here to reduce copypasta
 /datum/controller/subsystem/job/proc/generate_blank_job_config(datum/job/new_occupation)
 	var/returnable_list = list()
 	for(var/config_datum_key in job_config_datum_singletons)
@@ -167,7 +167,7 @@
 
 		// Remember, every time we write the TOML from scratch, we want to have it commented out by default.
 		// This is to ensure that the server operator knows that they are overriding codebase defaults when they remove the comment.
-		// Having comments mean that we allow server operators to defer to codebase standards when they deem acceptable. They must uncomment to override the codebase default.
+		// Having comments mean that we allow server operators to defer to codebase standards when they deem acceptable.. They must uncomment to override the codebase default.
 		returnable_list += list(
 			"# [config_datum_key]" = config_datum.get_current_value(new_occupation),
 		)
@@ -192,7 +192,7 @@
 
 	return returnable_list
 
-/// Proc that we call to generate a new jobconfig.toml file and send it to the requesting client. Returns TRUE if a file is successfully generated.
+/// Proc that we call to generate a new jobconfig.toml file and send it to the requesting client.. Returns TRUE if a file is successfully generated.
 /datum/controller/subsystem/job/proc/export_toml(mob/user, data)
 	var/file_location = "data/jobconfig.toml" // store it in the data folder server-side so we can FTP it to the client.
 	var/payload = "[config_documentation]\n[rustg_toml_encode(data)]"

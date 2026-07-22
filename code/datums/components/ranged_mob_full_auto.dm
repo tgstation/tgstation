@@ -3,7 +3,7 @@
 
 /// Allows a mob to autofire by holding down the cursor
 /datum/component/ranged_mob_full_auto
-	/// Delay before attempting to fire again, note that this is just when we make attempts and is separate from mob's actual firing cooldown
+	/// Delay before trying to fire again, note that this is just when we make tries and is separate from mob's actual firing cooldown
 	var/autofire_shot_delay
 	/// Our client for click tracking
 	var/client/clicker
@@ -114,7 +114,7 @@
 		return
 
 	if (isnull(location) || istype(target, /atom/movable/screen)) // Clicking on a screen object.
-		if (target.plane != CLICKCATCHER_PLANE) // The clickcatcher is a special case. We want the click to trigger then, under it.
+		if (target.plane != CLICKCATCHER_PLANE) // The clickcatcher is a special case.. We want the click to trigger then, under it.
 			return // If we click and drag on our worn backpack, for example, we want it to open instead.
 		set_target(parse_caught_click_modifiers(modifiers, get_turf(source.eye), source))
 		params = list2params(modifiers)

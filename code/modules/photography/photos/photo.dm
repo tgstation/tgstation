@@ -50,7 +50,7 @@
 
 	if(!P.see_ghosts) ///Dont bother with this last bit if we can't see ghosts
 		return
-	for(var/datum/weakref/seen_ref in P.mobs_seen) //Any ghosts in the pic? its a haunted photo ooooo~
+	for(var/datum/weakref/seen_ref in P.mobs_seen) // Any ghosts in the pic?. its a haunted photo ooooo~
 		var/mob/seen = seen_ref.resolve()
 		if(!seen)
 			P.mobs_seen -= seen_ref
@@ -69,7 +69,7 @@
 	return ..()
 
 /obj/item/photo/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!"))//when you wanna look at photo of waifu one last time before you die...
+	user.visible_message(span_suicide("[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!"))// when you want to look at photo of waifu one last time before you die...
 	user.emote("laugh", intentional = FALSE, forced = TRUE) // EVERY TIME I DO IT MAKES ME LAUGH
 	return OXYLOSS
 

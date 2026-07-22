@@ -1,4 +1,4 @@
-/// "Tugs" an atom towards another atom. That is to say, it will visually
+/// "Tugs" an atom towards another atom.. That is to say, it will visually
 /// pixel offset to look like it is close to the point it's tugging to,
 /// but not actually move position.
 /datum/component/tug_towards

@@ -43,7 +43,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-//It has stable IN THE NAME. IT WAS MADE FOR THIS MOMENT.
+// It has stable IN THE NAME.. IT WAS MADE FOR THIS MOMENT.
 /datum/reagent/stabilizing_agent/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.myseed?.adjust_instability(-round(volume))
 
@@ -369,7 +369,7 @@
 	affected_mob.remove_surgery_speed_mod(type)
 	affected_mob.color = COLOR_WHITE
 
-//Pauses decay! Does do something, I promise.
+// Pauses decay!. Does do something, I promise.
 /datum/reagent/cryostylane/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM //slower consumption when dead
@@ -421,7 +421,7 @@
 		return
 	burning_temperature = null
 
-/datum/reagent/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
+/datum/reagent/teslium // Teslium.. Causes periodic shocks, and makes shocks against the target much more effective.
 	name = "Teslium"
 	description = "An unstable, electrically-charged metallic slurry. Periodically electrocutes its victim, and makes electrocutions against them more deadly. Excessively heating teslium results in dangerous destabilization. Do not allow it to come into contact with water."
 	color = "#20324D" //RGB: 32, 50, 77

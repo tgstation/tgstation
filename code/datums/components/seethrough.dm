@@ -2,21 +2,21 @@
 /datum/component/seethrough
 	///A list of turfs on which we make ourself transparent
 	var/list/watched_turfs
-	///Associate list, with client = trickery_image. Track which client is being tricked with which image
+	/// Associate list, with client = trickery_image.. Track which client is being tricked with which image
 	var/list/tricked_mobs
 
 	///Which alpha do we animate towards?
 	var/target_alpha
 	///How long our fase in/out takes
 	var/animation_time
-	///After we somehow moved (because ss13 is godless and does not respect anything), how long do we need to stand still to feel safe to setup our "behind" area again
+	/// After we somehow moved (because ss13 is godless. Does not respect anything), how long do we need to st. Still to feel safe to setup our "behind" area again
 	var/perimeter_reset_timer
 	///Does this object let clicks from players its transparent to pass through it
 	var/clickthrough
 	/// Define for the area which is considered behind
 	var/see_through_map
 
-///see_through_map is a define pointing to a specific map. It's basically defining the area which is considered behind. See see_through_maps.dm for a list of maps
+/// see_through_map is a define pointing to a specific map.. It's basically defining the area which is considered behind.. See see_through_maps.dm for a list of maps
 /datum/component/seethrough/Initialize(see_through_map = SEE_THROUGH_MAP_DEFAULT, target_alpha = 100, animation_time = 0.5 SECONDS, perimeter_reset_timer = 2 SECONDS, clickthrough = TRUE)
 	. = ..()
 

@@ -11,7 +11,7 @@
 	return abstracts
 
 // The time complexity of these two procs is really bad, sitting at O(n * m).
-// And yet, the overhead is ridiculously small for some reason. We never figured out why.
+// And yet, the overhead is ridiculously small for some reason.. We never figured out why.
 // So doing list subtraction instead of filtering is faster in all cases, at least for now.
 // If we ever breach like 3000-5000 abstract types, that will likely change.
 // As of right now we're at 272 or so, with subtraction being ~10x faster.

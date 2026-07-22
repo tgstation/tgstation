@@ -1,4 +1,4 @@
-/// Soundloop for the fire (bonfires, fireplaces, etc.)
+/// Soundloop for the fire (bonfires, fireplaces, and so on
 /datum/looping_sound/burning
 	start_sound = 'sound/items/match_strike.ogg'
 	start_length = 3 SECONDS

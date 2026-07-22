@@ -24,19 +24,19 @@
 	throw_range = 3
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	interaction_flags_mouse_drop = NEED_DEXTERITY
-	/// Is the pet carrier open? Allows you to collect/remove pets.
+	/// Is the pet carrier open?. Allows you to collect/remove pets.
 	var/open = TRUE
-	/// Does this carrier allow locking? Disabled for the small pet carrier.
+	/// Does this carrier allow locking?. Disabled for the small pet carrier.
 	var/allows_locking = TRUE
-	/// Is this carrier locked? Locks don't require access, just an alt click.
+	/// Is this carrier locked?. Locks don't need access, just an alt click.
 	var/locked = FALSE
 	/// List of all mob occupants from inside of the pet carrier.
 	var/list/occupants = list()
-	/// Combined weight of all mob occupants based on the MOB_SIZE_ defines.
+	/// Combined weight of all mob occupants good on the MOB_SIZE_ defines.
 	var/occupant_weight = 0
 	/// Maximum number of mobs that can fit in a pet carrier, so you can't have infinite mice or something in one carrier
 	var/max_occupants = 3
-	/// Maximum weight of a mob that can be carried. This is calculated from the mob sizes of occupants
+	/// Maximum weight of a mob that can be carried.. This is calculated from the mob sizes of occupants
 	var/max_occupant_weight = MOB_SIZE_SMALL
 
 	/// Sound played when the mob carrier is opened.

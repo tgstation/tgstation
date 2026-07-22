@@ -1,4 +1,4 @@
-/// PDA themes that you can find in maintenance. Once installed by a player, it'll become available to them on future rounds as well.
+/// PDA themes that you can find in maintenance.. Once installed by a player, it'll become available to them on future rounds as well.
 /datum/computer_file/program/maintenance/theme
 	filename = "theme"
 	filedesc = "Theme holder"
@@ -8,7 +8,7 @@
 
 	///The type of theme we have
 	var/theme_name
-	///The Database ID of the theme. It's important that non-abstract types have it set.
+	/// The Database ID of the theme.. It's important that non-abstract types have it set.
 	var/theme_id
 	///The icon file for this theme
 	var/icon_file = PDA_THEMES_PROGRESS_SET

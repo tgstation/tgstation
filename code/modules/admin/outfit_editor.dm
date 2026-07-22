@@ -54,7 +54,7 @@
 			"path" = item,
 			"name" = initial(item.name),
 			"desc" = initial(item.desc),
-			// at this point initializing the item is probably faster tbh
+			// at this point initializing the item is probably faster to be honest
 			"sprite" = icon2base64(icon(initial(item.icon), initial(item.icon_state), frame = 1)),
 		)
 

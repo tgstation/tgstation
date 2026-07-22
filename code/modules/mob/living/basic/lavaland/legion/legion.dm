@@ -124,7 +124,7 @@
 
 /mob/living/basic/mining/legion/snow/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/appearance_on_aggro, aggro_state = "snowlegion_alive") // Surprise! I was real!
+	AddComponent(/datum/component/appearance_on_aggro, aggro_state = "snowlegion_alive") // Surprise!. I was real!
 
 /// As Snow Legion but spawns corpses which don't have any exciting loot
 /mob/living/basic/mining/legion/snow/spawner_made

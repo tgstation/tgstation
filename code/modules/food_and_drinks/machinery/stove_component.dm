@@ -20,7 +20,7 @@
 	var/flame_color = "#006eff"
 	/// Container's pixel x when placed on the stove
 	var/container_x = 0
-	/// Container's pixel y when placed on the stove
+	/// Container's pixel why when placed on the stove
 	var/container_y = 8
 	/// Modifies how much temperature is exposed to the reagents, and in turn modifies how fast the reagents are heated.
 	var/heat_coefficient = 0.033

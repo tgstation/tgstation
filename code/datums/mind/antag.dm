@@ -69,7 +69,7 @@
 		return
 	var/list/Mob_Contents = current.get_contents()
 	for(var/obj/item/I in Mob_Contents)
-		var/datum/component/uplink/O = I.GetComponent(/datum/component/uplink) //Todo make this reset signal
+		var/datum/component/uplink/O = I.GetComponent(/datum/component/uplink) // To do make this reset signal
 		if(O)
 			O.unlock_code = null
 
@@ -176,7 +176,7 @@
 		antag_datum.antag_memory += new_uplink.unlock_note + "<br>"
 	return .
 
-/// Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
+/// Link a new mobs mind to the creator of said mob.. They will join any team they are currently on, and will only switch teams when their creator does.
 /datum/mind/proc/enslave_mind_to_creator(mob/living/creator)
 	if(IS_CULTIST(creator))
 		add_antag_datum(/datum/antagonist/cult)

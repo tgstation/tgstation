@@ -7,7 +7,7 @@
 	var/list/sound_change_signals
 	//The weather type we're working with
 	var/weather_trait
-	//The playlist of sounds to draw from. Pass by ref
+	// The playlist of sounds to draw from.. Pass by ref
 	var/list/playlist
 
 

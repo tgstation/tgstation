@@ -5,7 +5,7 @@
 #define SODA_FIZZINESS_THROWN 15
 /// How much fizziness is added to the can of soda by shaking it, in percentage points
 #define SODA_FIZZINESS_SHAKE 5
-/// At what atmospheric pressure do we burst a soda can? Empirical evidance (one googled experiment video) states that ~67.458 kPa is where a can bursts.
+/// At what atmospheric pressure do we burst a soda can?. Empirical evidance (one googled experiment video) states that ~67.458 kPa is where a can bursts.
 #define SODA_EXPLOSION_PRESSURE 67.458
 
 /obj/item/reagent_containers/cup/soda_cans
@@ -19,10 +19,10 @@
 	obj_flags = CAN_BE_HIT
 	possible_transfer_amounts = list(5, 10, 15, 25, 30)
 	volume = 30
-	throwforce = 12 // set to 0 upon being opened. Have you ever been domed by a soda can? Those things fucking hurt
-	/// If the can hasn't been opened yet, this is the measure of how fizzed up it is from being shaken or thrown around. When opened, this is rolled as a percentage chance to burst
+	throwforce = 12 // set to 0 upon being opened.. Have you ever been domed by a soda can?. Those things fucking hurt
+	/// If the can hasn't been opened yet, this is the measure of how fizzed up it is from being shaken or thrown around.. When opened, this is rolled as a percentage chance to burst
 	var/fizziness = 0
-	/// Have we been sealed with tape? And if so, what color is it?
+	/// Have we been sealed with tape?. And if so, what color is it?
 	var/tape_color = null
 	/// Color of our fuse, if any
 	var/fuse_color = null

@@ -5,7 +5,7 @@
 	r_pocket = /obj/item/knife/shiv
 
 /datum/outfit/prisoner/post_equip(mob/living/carbon/human/prisoner, visuals_only=FALSE)
-	// This outfit is used by the assets SS, which is ran before the atoms SS
+	// This outfit the uses assets SS, which is ran before the atoms SS
 	if(SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		prisoner.w_uniform?.update_greyscale()
 		prisoner.update_worn_undersuit()

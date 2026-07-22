@@ -8,7 +8,7 @@
 		terminal.connect_to_network()
 
 /obj/machinery/power/apc/proc/make_terminal(terminal_cable_layer = cable_layer)
-	//attempt to locate a terminal if mappers/map export placed it here
+	// try to locate a terminal if mappers/map export placed it here
 	terminal = locate(/obj/machinery/power/terminal) in loc
 	// create a terminal object at the same position as original turf loc
 	if(QDELETED(terminal))

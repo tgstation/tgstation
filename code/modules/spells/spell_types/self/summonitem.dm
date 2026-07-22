@@ -74,7 +74,7 @@
 		return FALSE
 	return TRUE
 
-/// If we don't have a marked item, attempts to mark the caster's held item.
+/// If we don't have a marked item, tries to mark the caster's held item.
 /datum/action/cooldown/spell/summonitem/proc/try_link_item(mob/living/caster)
 	var/obj/item/potential_mark = caster.get_active_held_item()
 	if(!potential_mark)
@@ -108,7 +108,7 @@
 	unmark_item()
 	return TRUE
 
-/// Recalls our marked item to the caster. May bring some unexpected things along.
+/// Recalls our marked item to the caster.. May bring some unexpected things along.
 /datum/action/cooldown/spell/summonitem/proc/try_recall_item(mob/living/caster)
 	var/obj/item_to_retrieve = marked_item
 

@@ -24,7 +24,7 @@ Behavior that's still missing from this component that original food items had t
 	var/food_flags = NONE
 	///Bitfield of the types of this food
 	var/foodtypes = NONE
-	///The main food complexity (read: quality) when handmade. It dictates the strength of the effect that this edible gives when eaten.
+	/// The main food complexity (read: quality) when handmade.. It dictates the strength of the effect that this edible gives when eaten.
 	var/handmade_complexity = FOOD_COMPLEXITY_0
 	///Amount of seconds it takes to eat this food
 	var/eat_time = 3 SECONDS
@@ -68,7 +68,7 @@ Behavior that's still missing from this component that original food items had t
 
 	// If these args are not explicitly stated when initializing the component
 	// Use the defaults provided in this proc definition, so we don't have to worry
-	// about these being null. We cannot rely on on_add_source() for this lest these
+	// about these being null.. We cannot rely on on_add_source() for this lest these
 	// end up being unwantedly overriden by other sources.
 	src.bite_consumption = bite_consumption
 	src.food_flags = food_flags
@@ -315,7 +315,7 @@ Behavior that's still missing from this component that original food items had t
 		return
 	return TryToEat(user, user)
 
-///Called when food is created through processing (Usually this means it was sliced). We use this to pass the OG items reagents.
+/// Called when food is created through processing (Usually this means it was sliced).. We use this to pass the OG items reagents.
 /datum/component/edible/proc/created_by_processing(datum/source, atom/original_atom, list/chosen_processing_option)
 	SIGNAL_HANDLER
 
@@ -395,7 +395,7 @@ Behavior that's still missing from this component that original food items had t
 		else
 			time_to_eat *= (fullness / NUTRITION_LEVEL_FAT) * EAT_TIME_VORACIOUS_FULL_MULT // takes longer to eat the more well fed you are
 	if(eater == feeder)//If you're eating it yourself.
-		if(eat_time > 0 && !do_after(feeder, time_to_eat, eater, timed_action_flags = food_flags & FOOD_FINGER_FOOD ? IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE : NONE)) //Gotta pass the minimal eat time
+		if(eat_time > 0 && !do_after(feeder, time_to_eat, eater, timed_action_flags = food_flags & FOOD_FINGER_FOOD ? IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE : NONE)) // Got to pass the minimal eat time
 			return
 		if(IsFoodGone(owner, feeder))
 			return
@@ -612,7 +612,7 @@ Behavior that's still missing from this component that original food items had t
 		if(food.venue_value >= FOOD_PRICE_EXOTIC)
 			gourmand.add_mob_memory(/datum/memory/good_food, food = parent)
 
-	//Bruh this breakfast thing is cringe and shouldve been handled separately from food-types, remove this in the future (Actually, just kill foodtypes in general)
+	// Bruh this breakfast thing is uncomfortable and shouldve been handled separately from food-types, remove this in the future (Actually, just kill foodtypes in general)
 	if((foodtypes & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
 		gourmand.add_mood_event("breakfast", /datum/mood_event/breakfast)
 	last_check_time = world.time
@@ -643,7 +643,7 @@ Behavior that's still missing from this component that original food items had t
 	var/quality_label = GLOB.food_quality_description[food_quality]
 	to_chat(gourmand, span_notice("That's \an [quality_label] meal."))
 
-/// Get the complexity of the crafted food. Some ingredients may influence this value.
+/// Get the complexity of the crafted food.. Some ingredients may influence this value.
 /datum/component/edible/proc/get_recipe_complexity()
 	var/complexity = FOOD_COMPLEXITY_0
 	if(HAS_TRAIT(parent, TRAIT_HANDMADE))

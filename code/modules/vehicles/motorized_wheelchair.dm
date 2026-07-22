@@ -238,7 +238,7 @@
 	obj_flags |= EMAGGED
 	return TRUE
 
-///Version with slightly better components. Used by deathmatches.
+/// Version with slightly better components.. Used by deathmatches.
 /obj/vehicle/ridden/wheelchair/motorized/improved
 
 /obj/vehicle/ridden/wheelchair/motorized/improved/add_component_parts()

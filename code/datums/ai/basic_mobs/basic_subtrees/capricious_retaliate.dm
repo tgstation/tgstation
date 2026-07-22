@@ -9,7 +9,7 @@
 
 	if(controller.blackboard_key_exists(BB_BASIC_MOB_RETALIATE_LIST))
 		var/deaggro_chance = controller.blackboard[BB_RANDOM_DEAGGRO_CHANCE] || 10
-		if(prob(deaggro_chance)) //Chance to chill the fuck out. This prob() should be matched with the frequency of calling.
+		if(prob(deaggro_chance)) // Chance to chill the fuck out.. This prob() should be matched with the frequency of calling.
 			pawn.visible_message(span_notice("[pawn] calms down."))
 			controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
 			controller.clear_blackboard_key(BB_CURRENT_TARGET)
@@ -43,7 +43,7 @@
 		failed_targeting(pawn)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	// Add to shitlist  set_blackboard_key_assoc_lazylist calls post_blackboard_key_set, waking the combat branch
+	// Add to shitlist set_blackboard_key_assoc_lazylist calls post_blackboard_key_set, waking the combat branch
 	controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, final_target, world.time)
 	pawn.visible_message(span_warning("[pawn] glares grumpily at [final_target]!"))
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

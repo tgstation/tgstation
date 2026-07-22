@@ -5,7 +5,7 @@
 /datum/bt_node/decorator/can_see_target
 	/// The blackboard key whose value is the atom to validate.
 	var/key
-	/// Visibility range passed to can_see(). Default matches typical bot search radius.
+	/// Visibility range passed to can_see().. Default matches typical bot search radius.
 	var/range = 7
 
 /datum/bt_node/decorator/can_see_target/check_condition(datum/ai_controller/controller)

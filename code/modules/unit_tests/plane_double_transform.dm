@@ -5,15 +5,15 @@
 	// We're going to operate off the actual plane master setup of an actual mob
 	// It's not perfect, but it'll help things a lot
 	var/mob/living/carbon/human/judger = allocate(/mob/living/carbon/human/consistent)
-	// Hack to account for not having an actual hud
+	// Temporary solution to account for not having an actual hud
 	var/datum/plane_master_group/hudless/our_group = allocate(/datum/plane_master_group/hudless)
 	our_group.our_mob = judger
 	our_group.show_hud()
-	// End hack
+	// End temporary solution
 
 	// Generates a list of render target -> PM for future use
 	var/list/render_target_to_plane = list()
-	// List of all the plane masters that are being scaled by multiz. These cannot feed into each other
+	// List of all the plane masters that are being scaled by multiz.. These cannot feed into each other
 	var/list/atom/movable/screen/plane_master/input_planes = list()
 	for(var/plane_key in our_group.plane_masters)
 		var/atom/movable/screen/plane_master/plane = our_group.plane_masters[plane_key]

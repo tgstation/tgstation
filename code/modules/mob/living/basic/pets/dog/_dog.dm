@@ -102,7 +102,7 @@
 	speech_data[BB_SPEAK_CHANCE] = 1
 	controller.override_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, speech_data)
 
-///Proc to run on a successful taming attempt
+/// Proc to run on a successful taming try
 /mob/living/basic/pet/dog/tamed(mob/living/tamer, atom/food)
 	. = ..()
 	visible_message(span_notice("[src] licks at [tamer] in a friendly manner!"))

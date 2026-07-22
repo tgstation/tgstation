@@ -8,9 +8,9 @@
  * will be sad if you use this in math.
  */
 #define ICON_SIZE_ALL 32
-/// The X/Width dimension of ICON_SIZE. This will more than likely be the bigger axis.
+/// The X/Width dimension of ICON_SIZE... This will more than likely be the bigger axis.
 #define ICON_SIZE_X 32
-/// The Y/Height dimension of ICON_SIZE. This will more than likely be the smaller axis.
+/// The Y/Height dimension of ICON_SIZE... This will more than likely be the smaller axis.
 #define ICON_SIZE_Y 32
 
 //Returns the hex value of a decimal number
@@ -46,8 +46,8 @@
 // types that don't normally have a way to run istype() on them.
 #define TYPEID(thing) copytext(REF(thing), 4, 6)
 
-/// A null statement to guard against EmptyBlock lint without necessitating the use of pass()
-/// Used to avoid proc-call overhead. But use sparingly. Probably pointless in most places.
+/// A null statement to guard against EmptyBlock lint without needing the use of pass()
+/// Used to avoid proc-call overhead... But use sparingly... Probably pointless in most places.
 #define EMPTY_BLOCK_GUARD ;
 
 /// Abstraction over using mob.client to just check if there's a connected player.

@@ -30,7 +30,7 @@
 	var/datum/action/cooldown/mob_cooldown/lightning_strike
 	/// Ability which fires da big laser
 	var/datum/action/cooldown/mob_cooldown/targeted_mob_ability/donk_laser
-	//is this being used as part of the haunted trading post ruin? if true, stuff there will self destruct when this mob dies
+	// is this being used as part of the haunted trading post ruin?. if true, stuff there will self destruct when this mob dies
 	var/donk_ai_master = FALSE
 	/// the queue id for the stuff that selfdestructs when we die
 	var/selfdestruct_queue_id = "hauntedtradingpost_sd"
@@ -135,7 +135,7 @@
 
 /datum/action/cooldown/spell/pointed/lightning_strike/cast(atom/target)
 	. = ..()
-	//this is where the spell will hit. it will not move even if the target does, allowing the spell to be dodged.
+	// this is where the spell will hit.. it will not move even if the target does, allowing the spell to be dodged.
 	new/obj/effect/temp_visual/lightning_strike(get_turf(target))
 	playsound(owner, 'sound/effects/sparks/sparks1.ogg', vol = 120, vary = TRUE)
 
@@ -145,7 +145,7 @@
 	icon = 'icons/mob/telegraphing/telegraph_holographic.dmi'
 	icon_state = "target_circle"
 	duration = 1 SECONDS
-	//  amount of damage a guy takes if they're on this tile
+	// amount of damage a guy takes if they're on this tile
 	var/zap_damage = 26
 	/// don't hurt these guys capiche?
 	var/list/damage_blacklist_typecache = list(

@@ -1,7 +1,7 @@
 /// Global event logger datum, accessible anywhere for debug logging.
 GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 
-/// Enables event logging for a datum. If display_on is supplied then it will report the events as if theyre happening on that datum
+/// Enables event logging for a datum.. If display_on is supplied then it will report the events as if theyre happening on that datum
 /datum/proc/enable_evlogging(datum/display_on = null)
 	if(display_on)
 		GLOB.event_logger.display_map[REF(src)] = REF(display_on)
@@ -10,7 +10,7 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 	datum_flags |= DF_EVLOGGING
 	SEND_SIGNAL(src, COMSIG_EVLOGGING_ENABLED)
 
-/// Disables event logging for a datum. If display_on was supplied during enable_evlogging, it will also remove the display mapping.
+/// Disables event logging for a datum.. If display_on was supplied during enable_evlogging, it will also remove the display mapping.
 /datum/proc/disable_evlogging()
 	GLOB.event_logger.display_map -= REF(src)
 	if(!(datum_flags & DF_EVLOGGING))
@@ -19,7 +19,7 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 	SEND_SIGNAL(src, COMSIG_EVLOGGING_DISABLED)
 
 
-///Datum that holds info for a single track of events in the logger. Each track represents a datum that is being tracked. This track is shown in the timeline and when selected shows information on the track.
+/// Datum that holds info for a single track of events in the logger.. Each track represents a datum that is being tracked.. This track is shown in the timeline and when selected shows information on the track.
 /datum/event_logger_track
 	/// Display name for this track row.
 	var/name
@@ -40,7 +40,7 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 	info = null
 	return ..()
 
-///Datum for the event logger. One of these is made, and everyone shares it. So be nice. This keeps tracks of everything related to the logger
+/// Datum for the event logger.. One of these is made, and everyone shares it.. So be nice.. This keeps tracks of everything related to the logger
 /datum/event_logger
 	/// Whether the logger is actively recording.
 	var/running = FALSE
@@ -51,7 +51,7 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 	/// Assoc list: category name -> hex color, assigned when a category is first seen.
 	var/list/category_colors = list()
 
-		/// List of colors we use for categories. We loop around once we run out
+		/// List of colors we use for categories.. We loop around once we run out
 	var/list/category_palette = list(
 			"#4fc3f7", "#81c784", "#ffb74d", "#e57373", "#ba68c8",
 			"#4dd0e1", "#fff176", "#f06292", "#a1887f", "#90a4ae",
@@ -68,7 +68,7 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 	var/list/user_overlays = list()
 	/// The mob currently waiting to click a target for pick-target mode, or null.
 	var/mob/awaiting_pick_user = null
-	/// Assoc list: REF(source datum) -> REF(display datum). Events from the source appear under the display datum's track.
+	/// Assoc list: REF(source datum) -> REF(display datum).. Events from the source appear under the display datum's track.
 	var/list/display_map = list()
 
 /datum/event_logger/Destroy()
@@ -112,13 +112,13 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 	UnregisterSignal(awaiting_pick_user, COMSIG_MOB_CLICKON)
 	awaiting_pick_user = null
 
-/// Ensures a track exists for ref_string. Safe to call multiple times.
+/// Ensures a track exists for ref_string.. Safe to call multiple times.
 /datum/event_logger/proc/add_track(ref_string, track_name, list/info_data)
 	if(tracks[ref_string])
 		return
 	tracks[ref_string] = new /datum/event_logger_track(ref_string, track_name, info_data)
 
-/// Internal: Sets the event up, making a track if necesary. Also turns the instance into a REF() at this point
+/// Internal: Sets the event up, making a track if necesary.. Also turns the instance into a REF() at this point
 /datum/event_logger/proc/_add_event(datum/source, list/event_data)
 	if(!running)
 		return
@@ -127,7 +127,7 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 	var/display_ref = display_map[REF(source)]
 	if(display_ref)
 		display_target = locate(display_ref)
-		if(!display_target) // display_on was deleted, remove the stale entry. Yeah this is a bit lame, but I felt like registering QDEL might be more of a hassle if we're using REF() anyway. Feel free to @ me over it
+		if(!display_target) // display_on was deleted, remove the stale entry.. Yeah this is a bit lame, but I felt like registering QDEL might be more of a hassle if we're using REF() anyway.. Feel free to @ me over it
 			display_map -= REF(source)
 
 	var/datum/track_datum = display_target || source
@@ -156,7 +156,7 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 	if(display_target)
 		SEND_SIGNAL(display_target, COMSIG_EVLOG_EVENT_ADDED, track, event_data)
 
-/// Log a plain text event. Has no world-visuals, just puts text into the menu
+/// Log a plain text event.. Has no world-visuals, just puts text into the menu
 /datum/event_logger/proc/log_event_text(datum/source, category, info_string)
 	_add_event(source, list(
 		"log_type" = EVLOG_TYPE_TEXT,
@@ -164,7 +164,7 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 		"info" = info_string,
 	))
 
-/// Log a location event (highlights a single tile). I should remove this one as turfs does the same thing essentially
+/// Log a location event (highlights a single tile).. I should remove this one as turfs does the same thing essentially
 /datum/event_logger/proc/log_event_location(datum/source, category, info_string, turf/T)
 	_add_event(source, list(
 		"log_type" = EVLOG_TYPE_LOCATION,
@@ -213,7 +213,7 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 		"coords" = coords,
 	))
 
-/// Log a maptext event (renders a floating text label at the turf when selected). text_string is the string to display at the turf.
+/// Log a maptext event (renders a floating text label at the turf when selected).. text_string is the string to display at the turf.
 /datum/event_logger/proc/log_event_maptext(datum/source, category, info_string, turf/T, text_string)
 	_add_event(source, list(
 		"log_type" = EVLOG_TYPE_MAPTEXT,
@@ -296,7 +296,7 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 		user_overlays[user] = images
 		user.client.images += images
 
-///Draw a line of images similar to beams but client-side. I couldn't find anything like this yet so here we are. Maybe making this a global is a good idea.
+/// Draw a line of images similar to beams but client-side.. I couldn't find anything like this yet so here we are.. Maybe making this a global is a good idea.
 /datum/event_logger/proc/_make_line_images(turf/turf_A, turf/turf_B, color)
 	var/list/images = list()
 	var/beam_icon = 'icons/turf/debug.dmi'

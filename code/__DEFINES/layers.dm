@@ -4,7 +4,7 @@
 //NEVER HAVE ANYTHING BELOW THIS PLANE ADJUST IF YOU NEED MORE SPACE
 #define LOWEST_EVER_PLANE -50
 
-// Doesn't really layer, just throwing this in here cause it's the best place imo
+// Doesn't really layer, just throwing this in here cause it's the best place in my opinion
 #define FIELD_OF_VISION_BLOCKER_PLANE -45
 #define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*FIELD_OF_VISION_BLOCKER_RENDER_TARGET"
 
@@ -28,7 +28,7 @@
 #define WALL_PLANE -5
 #define GAME_PLANE -4
 #define ABOVE_GAME_PLANE -3
-///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
+/// Slightly above the game plane but does not catch mouse clicks... Useful for certain visuals that should be clicked through, like seethrough trees
 #define SEETHROUGH_PLANE -2
 
 #define RENDER_PLANE_GAME_WORLD -1
@@ -53,7 +53,7 @@
 #define RENDER_PLANE_TURF_LIGHTING 12
 
 #define EMISSIVE_PLANE 13
-/// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
+/// This plane masks out lighting to create an "emissive" effect, that is for glowing lights in otherwise dark areas.
 #define RENDER_PLANE_EMISSIVE 14
 #define EMISSIVE_RENDER_TARGET "*RENDER_PLANE_EMISSIVE"
 // Ensures all the render targets that point at the emissive plate layer correctly
@@ -144,8 +144,8 @@
 #define RENDER_PLANE_MASTER 57
 
 // Lummox I swear to god I will find you
-// NOTE! You can only ever have planes greater then -10000, if you add too many with large offsets you will brick multiz
-// Same can be said for large multiz maps. Tread carefully mappers
+// NOTE!.. You can only ever have planes greater then -10000, if you add too many with large offsets you will brick multiz
+// Same can be said for large multiz maps... Tread carefully mappers
 #define HIGHEST_EVER_PLANE RENDER_PLANE_MASTER
 /// The range unique planes can be in
 /// Try and keep this to a nice whole number, so it's easy to look at a plane var and know what's going on
@@ -154,7 +154,7 @@
 // PLANE_SPACE layer(s)
 #define SPACE_LAYER 1.8
 
-// placed here for documentation. Byond's default turf layer
+// placed here for documentation... Byond's default turf layer
 // We do not use it, as different turfs render on different planes
 // #define TURF_LAYER 2
 #define TURF_LAYER 2 #error TURF_LAYER is no longer supported, please be more specific
@@ -280,19 +280,19 @@
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
 
-// SEETHROUGH_PLANE layers here, tho it has no layer values
+// SEETHROUGH_PLANE layers here, though it has no layer values
 
 //---------- LIGHTING -------------
 
 // LIGHTING_PLANE layers
 // The layer of turf underlays starts at 0.01 and goes up by 0.01
-// Based off the z level. No I do not remember why, should check that
+// Good off the z level... No I do not remember why, should check that
 /// Typically overlays, that "hide" portions of the turf underlay layer
-/// I'm allotting 100 z levels before this breaks. That'll never happen
+/// I'm allotting 100 z levels before this breaks... That'll never happen
 /// --Lemon
 #define LIGHTING_MASK_LAYER 10
 /// Misc things that draw on the turf lighting plane
-/// Space, solar beams, etc
+/// Space, solar beams, and so on
 #define LIGHTING_PRIMARY_LAYER 15
 /// Stuff that needs to draw above everything else on this plane
 #define LIGHTING_ABOVE_ALL 20
@@ -366,7 +366,7 @@
 
 //Plane master critical flags
 //Describes how different plane masters behave when they are being culled for performance reasons
-/// This plane master will not go away if its layer is culled. useful for preserving effects
+/// This plane master will not go away if its layer is culled... useful for preserving effects
 #define PLANE_CRITICAL_DISPLAY (1<<0)
 /// This plane master will temporarially remove relays to all other planes
 /// Allows us to retain the effects of a plane while cutting off the changes it makes
@@ -377,17 +377,17 @@
 #define PLANE_CRITICAL_FUCKO_PARALLAX (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_RELAY|PLANE_CRITICAL_CUT_RENDER)
 
 //---------- Plane Master offsetting_flags -------------
-// Describes how different plane masters behave regarding being offset
+// Describes how different plane masters behave about being offset
 /// This plane master will not be offset itself, existing only once with an offset of 0
 /// Mostly used for planes that really don't need to be duplicated, like the hud planes
 #define BLOCKS_PLANE_OFFSETTING (1<<0)
 /// This plane master will have its relays offset to match the highest rendering plane that matches the target
-/// Required for making things like the blind fullscreen not render over runechat
+/// Needed for making things like the blind fullscreen not render over runechat
 #define OFFSET_RELAYS_MATCH_HIGHEST (1<<1)
 
 /// A value of /datum/preference/numeric/multiz_performance that disables the option
 #define MULTIZ_PERFORMANCE_DISABLE -1
 /// We expect at most 3 layers of multiz
-/// Increment this define if you make a huge map. We unit test for it too just to make it easy for you
+/// Increment this define if you make a huge map... We unit test for it too just to make it easy for you
 /// If you modify this, you'll need to modify the tsx file too
 #define MAX_EXPECTED_Z_DEPTH 3

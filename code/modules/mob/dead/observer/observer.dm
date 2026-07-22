@@ -36,7 +36,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	var/image/ghostimage_default = null //this mobs ghost image without accessories and dirs
 	var/image/ghostimage_simple = null //this mob with the simple white ghost sprite
-	var/mob/observetarget = null //The target mob that the ghost is observing. Used as a reference in logout()
+	var/mob/observetarget = null // The target mob that the ghost is observing.. Used as a reference in logout()
 
 	///Flags of huds the ghost currently has enabled, data huds & ghost vision by default.
 	///Selection: GHOST_DATA_HUDS | GHOST_VISION | GHOST_HEALTH | GHOST_CHEM | GHOST_GAS
@@ -53,7 +53,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/mutable_appearance/facial_hair_overlay
 
 	var/updatedir = 1 //Do we have to update our dir as the ghost moves around?
-	var/lastsetting = null //Stores the last setting that ghost_others was set to, for a little more efficiency when we update ghost images. Null means no update is necessary
+	var/lastsetting = null // Stores the last setting that ghost_others was set to, for a little more efficiency when we update ghost images.. Null means no update is necessary
 
 	//We store copies of the ghost display preferences locally so they can be referred to even if no client is connected.
 	//If there's a bug with changing your ghost settings, it's probably related to this.
@@ -208,7 +208,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	if(new_form)
 		icon_state = new_form
 		if(icon_state in GLOB.ghost_forms_with_directions_list)
-			ghostimage_default.icon_state = new_form + "_nodir" //if this icon has dirs, the default ghostimage must use its nodir version or clients with the preference set to default sprites only will see the dirs
+			ghostimage_default.icon_state = new_form + "_nodir" // if this icon has dirs, the default ghostimage must use its nodir version. Clients with the preference set to default sprites only will see the dirs
 		else
 			ghostimage_default.icon_state = new_form
 
@@ -272,7 +272,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	if(HAS_TRAIT(src, TRAIT_CORPSELOCKED) && !forced)
 		if(can_reenter_corpse) //If you can re-enter the corpse you can't leave when corpselocked
 			return
-		if(ishuman(usr)) //following code only applies to those capable of having an ethereal heart, ie humans
+		if(ishuman(usr)) // following code only applies to those capable of having an ethereal heart, that is humans
 			var/mob/living/carbon/human/crystal_fella = usr
 			var/our_heart = crystal_fella.get_organ_slot(ORGAN_SLOT_HEART)
 			if(istype(our_heart, /obj/item/organ/heart/ethereal)) //so you got the heart?
@@ -317,7 +317,7 @@ GAME_VERB_DESC(/mob/living, ghost, "Ghost", "Relinquish your life and enter the 
 	var/response = tgui_alert(usr, "Are you sure you want to ghost? You won't be able to re-enter your body!", "Confirm Ghost Observe", list("Ghost", "Stay in Body"))
 	if(response != "Ghost")
 		return FALSE//didn't want to ghost after-all
-	ghostize(FALSE) // FALSE parameter is so we can never re-enter our body. U ded.
+	ghostize(FALSE) // FALSE parameter is so we can never re-enter our body.. You ded.
 	return TRUE
 
 GAME_VERB_DESC(/mob/eye, ghost, "Ghost", "Relinquish your life and enter the land of the dead.", "OOC")
@@ -708,7 +708,7 @@ GAME_VERB_HIDDEN(/mob/dead/observer, add_view_range, "Add View Range", input as 
 		return
 
 	if(lastsetting)
-		switch(lastsetting) //checks the setting we last came from, for a little efficiency so we don't try to delete images from the client that it doesn't have anyway
+		switch(lastsetting) // checks the setting we last came from, f. A little efficiency so we don't try to delete images from the client that it doesn't have anyway
 			if(GHOST_OTHERS_DEFAULT_SPRITE)
 				client?.images -= GLOB.ghost_images_default
 			if(GHOST_OTHERS_SIMPLE)

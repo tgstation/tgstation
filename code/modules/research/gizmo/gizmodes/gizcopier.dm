@@ -1,4 +1,4 @@
-/// Scan and copies the nearest object. The copy copies no functionality, only visually
+/// Scan and copies the nearest object.. The copy copies no functionality, only visually
 /datum/gizmodes/copier
 	guaranteed_active_gizmodes = list(
 		/datum/gizpulse/scan,

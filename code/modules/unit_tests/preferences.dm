@@ -1,4 +1,4 @@
-/// Requires all preferences to implement required methods.
+/// Needs all preferences to add needed methods.
 /datum/unit_test/preferences_implement_everything
 
 /datum/unit_test/preferences_implement_everything/Run()
@@ -20,7 +20,7 @@
 		preference.is_valid(100)
 		preference.is_valid(list(1, 2, 3))
 
-/// Requires all preferences to have a valid, unique savefile_identifier.
+/// Needs all preferences to have a valid, unique savefile_identifier.
 /datum/unit_test/preferences_valid_savefile_key
 
 /datum/unit_test/preferences_valid_savefile_key/Run()
@@ -36,7 +36,7 @@
 
 		known_savefile_keys += preference.savefile_key
 
-/// Requires all main features have a main_feature_name
+/// Needs all main features have a main_feature_name
 /datum/unit_test/preferences_valid_main_feature_name
 
 /datum/unit_test/preferences_valid_main_feature_name/Run()
@@ -50,7 +50,7 @@
 
 		TEST_ASSERT(!isnull(preference.main_feature_name), "Preference [preference_type] does not have a main_feature_name set!")
 
-/// Validates that every choiced preference with should_generate_icons implements icon_for,
+/// Validates that every choiced preference with should_generate_icons adds icon_for,
 /// and that every one that doesn't, doesn't.
 /datum/unit_test/preferences_should_generate_icons_sanity
 

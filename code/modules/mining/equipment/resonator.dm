@@ -21,7 +21,7 @@
 
 	/// the mode of the resonator; has three modes: auto (1), manual (2), and matrix (3)
 	var/mode = RESONATOR_MODE_AUTO
-	/// How efficient it is in manual mode. Yes, we lower the damage cuz it's gonna be used for mobhunt
+	/// How efficient it is in manual mode.. Yes, we lower the damage because it's going to be used for mobhunt
 	var/quick_burst_mod = 0.8
 	/// the number of fields the resonator is allowed to have at once
 	var/fieldlimit = 4
@@ -74,7 +74,7 @@
 	var/rupturing = FALSE
 	/// the probability that the field will not be able to spread
 	var/failure_prob = 0
-	/// the number that is added to the failure_prob. Will default to 50
+	/// the number that is added to the failure_prob.. Will default to 50
 	var/adding_failure
 
 /obj/effect/temp_visual/resonance/Initialize(mapload, set_creator, set_resonator, mode, set_failure = 50)

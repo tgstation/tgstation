@@ -493,7 +493,7 @@
 	user.log_talk(message, LOG_SAY, tag = "message to the other server")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has sent a message to the other server\[s].")
 	deadchat_broadcast(" has sent an outgoing message to the other station(s).</span>", "<span class='bold'>[user.real_name]", user, message_type = DEADCHAT_ANNOUNCEMENT)
-	GLOB.communications_controller.soft_filtering = FALSE // set it to false at the end of the proc to ensure that everything prior reads as intended
+	GLOB.communications_controller.soft_filtering = FALSE // set it to false at the end of the proc to ensure that everything before reads as intended
 
 /obj/machinery/computer/communications/ui_data(mob/user)
 	var/list/data = list(
@@ -735,7 +735,7 @@
 	if(!input || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if(user.try_speak(input))
-		//Adds slurs and so on. Someone should make this use languages too.
+		// Adds slurs and so on.. Someone should make this use languages too.
 		var/list/input_data = user.treat_message(input)
 		input = input_data["message"]
 	else
@@ -789,7 +789,7 @@
 /obj/machinery/computer/communications/proc/add_message(datum/comm_message/new_message)
 	LAZYADD(messages, new_message)
 
-/// Defines for the various hack results.
+/// Defines for the various temporary solution results.
 #define HACK_PIRATE "Pirates"
 #define HACK_FUGITIVES "Fugitives"
 #define HACK_SLEEPER "Sleeper Agents"
@@ -813,7 +813,7 @@
 	hack_console(hacker)
 	return TRUE
 
-/// Checks if this console is hackable. Used as a callback during try_hack_console's doafter as well.
+/// Checks if this console is hackable.. Used as a callback during try_hack_console's doafter as well.
 /obj/machinery/computer/communications/proc/can_hack(mob/living/hacker, feedback = FALSE)
 	if(machine_stat & (NOPOWER|BROKEN))
 		if(feedback && hacker)
@@ -835,19 +835,19 @@
  * hacker - the mob that caused the hack
  */
 /obj/machinery/computer/communications/proc/hack_console(mob/living/hacker)
-	// All hack results we'll choose from.
+	// All temporary solution results we'll choose from.
 	var/list/hack_options = list(HACK_SLEEPER)
 
-	// If we have a certain amount of ghosts, we'll add some more !!fun!! options to the list
+	// If we have a certain amount of ghosts, we'll add some more !!fun!!. options to the list
 	var/num_ghosts = length(GLOB.current_observers_list) + length(GLOB.dead_player_list)
 
 	// Pirates / Fugitives have enough lead in time that there's no point summoning them if the shuttle is called
 	// Both of these events also summon space ships and so cannot run on planetary maps
 	if (EMERGENCY_IDLE_OR_RECALLED && !SSmapping.is_planetary())
-		// Pirates require ghosts for the pirates obviously
+		// Pirates need ghosts for the pirates obviously
 		if(num_ghosts >= MIN_GHOSTS_FOR_PIRATES)
 			hack_options += HACK_PIRATE
-		// Fugitives require ghosts for both fugitives and hunters (Please no waldo)
+		// Fugitives need ghosts for both fugitives and hunters (Please no waldo)
 		if(num_ghosts >= MIN_GHOSTS_FOR_FUGITIVES)
 			hack_options += HACK_FUGITIVES
 

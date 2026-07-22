@@ -1,4 +1,4 @@
-///the subsystem creates this many [/mob/oranges_ear] mob instances during init. allocations that require more than this create more.
+/// the subsystem creates this many [/mob/oranges_ear] mob instances during init.. allocations that need more than this create more.
 #define NUMBER_OF_PREGENERATED_ORANGES_EARS 2500
 
 /**
@@ -9,9 +9,9 @@
  * these datums shouldnt have significant behavior, they should just hold data. the lists are filled and emptied by the subsystem.
  */
 /datum/spatial_grid_cell
-	///our x index in the list of cells. this is our index inside of our row list
+	/// our x index in the list of cells.. this is our index inside of our row list
 	var/cell_x
-	///our y index in the list of cells. this is the index of our row list inside of our z level grid
+	/// our why index in the list of cells.. this is the index of our row list inside of our z level grid
 	var/cell_y
 	///which z level we belong to, corresponding to the index of our gridmap in SSspatial_grid.grids_by_z_level
 	var/cell_z
@@ -20,7 +20,7 @@
 	//when empty, the contents lists of these grid cell datums are just references to a dummy list from SSspatial_grid
 	//this is meant to allow a great compromise between memory usage and speed.
 	//now orthogonal_range_search() doesnt need to check if the list is null and each empty list is taking 12 bytes instead of 24
-	//the only downside is that it needs to be switched over to a new list when it goes from 0 contents to > 0 contents and switched back on the opposite case
+	// the only downside is that it needs to be switched over to a new list when it goes from 0 contents to > 0 contents. Switched back on the opposite case
 
 	///every hearing sensitive movable inside this cell
 	var/list/hearing_contents
@@ -84,12 +84,12 @@ SUBSYSTEM_DEF(spatial_grid)
 	)
 	name = "Spatial Grid"
 
-	///list of the spatial_grid_cell datums per z level, arranged in the order of y index then x index
+	/// list of the spatial_grid_cell datums per z level, arranged in the order of why index then x index
 	var/list/grids_by_z_level = list()
 	///everything that spawns before us is added to this list until we initialize
 	var/list/waiting_to_add_by_type = list(SPATIAL_GRID_CONTENTS_TYPE_HEARING = list(), SPATIAL_GRID_CONTENTS_TYPE_CLIENTS = list(), SPATIAL_GRID_CONTENTS_TYPE_ATMOS = list())
 	///associative list of the form: movable.spatial_grid_key (string) -> inner list of spatial grid types for that key.
-	///inner lists contain contents channel types such as SPATIAL_GRID_CONTENTS_TYPE_HEARING etc.
+	/// inner lists contain contents channel types such as SPATIAL_GRID_CONTENTS_TYPE_HEARING and so on
 	///we use this to make adding to a cell static cost, and to save on memory
 	var/list/spatial_grid_categories = list()
 
@@ -101,7 +101,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	///list of all of /mob/oranges_ear instances we have pregenerated for view() iteration speedup
 	var/list/mob/oranges_ear/pregenerated_oranges_ears = list()
-	///how many pregenerated /mob/oranges_ear instances currently exist. this should hopefully never exceed its starting value
+	/// how many pregenerated /mob/oranges_ear instances currently exist.. this should hopefully never exceed its starting value
 	var/number_of_oranges_ears = NUMBER_OF_PREGENERATED_ORANGES_EARS
 
 	///for debugging, stores a list of grids with colors to paint atoms with
@@ -178,7 +178,7 @@ SUBSYSTEM_DEF(spatial_grid)
 			var/datum/spatial_grid_cell/cell = new(x, y, z_level.z_value)
 			new_cell_grid[y] += cell
 
-///adds cells to the grid for every z level when world.maxx or world.maxy is expanded after this subsystem is initialized. hopefully this is never needed.
+/// adds cells to the grid for every z level when world.maxx or world.maxy is expanded after this subsystem is initialized.. hopefully this is never needed.
 ///because i never tested this.
 /datum/controller/subsystem/spatial_grid/proc/after_world_bounds_expanded(datum/controller/subsystem/processing/dcs/fucking_dcs, has_expanded_world_maxx, has_expanded_world_maxy)
 	SIGNAL_HANDLER
@@ -196,7 +196,7 @@ SUBSYSTEM_DEF(spatial_grid)
 			if(cell_row_for_expanded_y_axis > old_y_axis)//we are past the old length of the number of rows, so add to the list
 				z_level_gridmap += list(list())
 
-			//now we know theres a row at this position, so add cells to it that need to be added and update the ones that already exist
+			// now we know theres a row at this position, so add cells to it that need to be added. Update the ones that already exist
 			var/list/cell_row = z_level_gridmap[cell_row_for_expanded_y_axis]
 
 			for(var/grid_cell_for_expanded_x_axis in 1 to cells_on_x_axis)
@@ -206,14 +206,14 @@ SUBSYSTEM_DEF(spatial_grid)
 					cell_row += new_cell_inserted
 					continue
 
-				//now we know the cell index we're at contains an already existing cell that needs its x and y values updated
+				// now we know the cell index we're at contains an already existing cell that needs its x and why values updated
 				var/datum/spatial_grid_cell/old_cell_that_needs_updating = cell_row[grid_cell_for_expanded_x_axis]
 				old_cell_that_needs_updating.cell_x = grid_cell_for_expanded_x_axis
 				old_cell_that_needs_updating.cell_y = cell_row_for_expanded_y_axis
 
-///the left or bottom side index of a box composed of spatial grid cells with the given actual center x or y coordinate
+/// the left or bottom side index of a box composed of spatial grid cells with the given actual center x or why coordinate
 #define BOUNDING_BOX_MIN(center_coord) max(GET_SPATIAL_INDEX(center_coord - range), 1)
-///the right or upper side index of a box composed of spatial grid cells with the given center x or y coordinate.
+/// the right or upper side index of a box composed of spatial grid cells with the given center x or why coordinate.
 ///outputted value cant exceed the number of cells on that axis
 #define BOUNDING_BOX_MAX(center_coord, axis_size) min(GET_SPATIAL_INDEX(center_coord + range), axis_size)
 
@@ -238,7 +238,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	. = list()
 
-	//technically THIS list only contains lists, but inside those lists are grid cell datums and we can go without a SINGLE var init if we do this
+	// technically THIS list only contains lists. Inside those lists are grid cell datums. We can go without a SINGLE var init if we do this
 	var/list/list/datum/spatial_grid_cell/grid_level = grids_by_z_level[center_turf.z]
 
 	switch(type)
@@ -282,11 +282,11 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	var/list/intersecting_grid_cells = list()
 
-	//the minimum x and y cell indexes to test
+	// the minimum x and why cell indexes to test
 	var/min_x = max(GET_SPATIAL_INDEX(center_x - range_x), 1)
 	var/min_y = max(GET_SPATIAL_INDEX(center_y - range_y), 1)//calculating these indices only takes around 2 microseconds
 
-	//the maximum x and y cell indexes to test
+	// the maximum x and why cell indexes to test
 	var/max_x = min(GET_SPATIAL_INDEX(center_x + range_x), cells_on_x_axis)
 	var/max_y = min(GET_SPATIAL_INDEX(center_y + range_y), cells_on_y_axis)
 
@@ -309,7 +309,7 @@ SUBSYSTEM_DEF(spatial_grid)
 		current_list = current_list.Copy()
 	else
 		current_list = list()
-	// Now we do a binary insert, to ensure it's sorted (don't wanna overcache)
+	// Now we do a binary insert, to ensure it's sorted (don't want to overcache)
 	BINARY_INSERT_DEFINE(type, current_list, SORT_VAR_NO_TYPE, type, SORT_COMPARE_DIRECTLY, COMPARE_KEY)
 	update_grid_awareness(add_to, current_list)
 
@@ -487,8 +487,8 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	return TRUE
 
-/// if for whatever reason this movable is "untracked" e.g. it breaks the assumption that a movable is only inside the contents of any grid cell associated with its loc,
-/// this will error. this checks every grid cell in the world so dont call this on live unless you have to.
+/// if for whatever reason this movable is "untracked" e.g.. it breaks the assumption that a movable is only inside the contents of any grid cell associated with its loc,
+/// this will error.. this checks every grid cell in the world so dont call this on live unless you have to.
 /// returns TRUE if this movable is untracked, FALSE otherwise
 /datum/controller/subsystem/spatial_grid/proc/untracked_movable_error(atom/movable/movable_to_check)
 	if(!movable_to_check?.spatial_grid_key)
@@ -613,7 +613,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	return containing_cells
 
-///debug proc for checking if a movable is in multiple cells when it shouldnt be (ie always unless multitile entering is implemented)
+/// debug proc for checking if a movable is in multiple cells when it shouldnt be that is always unless multitile entering is added
 /atom/proc/find_all_cells_containing(remove_from_cells = FALSE)
 	var/datum/spatial_grid_cell/real_cell = SSspatial_grid.get_cell_of(src)
 	var/list/containing_cells = SSspatial_grid.find_hanging_cell_refs_for_movable(src, remove_from_cells)
@@ -636,13 +636,13 @@ SUBSYSTEM_DEF(spatial_grid)
 	number_of_oranges_ears = length(pregenerated_oranges_ears)
 
 ///allocate one [/mob/oranges_ear] mob per turf containing atoms_that_need_ears and give them a reference to every listed atom in their turf.
-///if an oranges_ear is allocated to a turf that already has an oranges_ear then the second one fails to allocate (and gives the existing one the atom it was assigned to)
+/// if an oranges_ear is allocated to a turf that already has an oranges_ear then the second one fails to allocate (. Gives the existing one the atom it was assigned to)
 /datum/controller/subsystem/spatial_grid/proc/assign_oranges_ears(list/atoms_that_need_ears)
 	var/input_length = length(atoms_that_need_ears)
 
 	if(input_length > number_of_oranges_ears)
 		stack_trace("somehow, for some reason, more than the preset generated number of oranges ears was requested. thats fucking [number_of_oranges_ears]. this is not good that should literally never happen")
-		pregenerate_more_oranges_ears(input_length - number_of_oranges_ears)//im still gonna DO IT but ill complain about it
+		pregenerate_more_oranges_ears(input_length - number_of_oranges_ears)// im still going to DO IT but ill complain about it
 
 	. = list()
 
@@ -650,7 +650,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/mob/oranges_ear/current_ear
 	///the next atom in atoms_that_need_ears an ear assigned to it
 	var/atom/assigned_atom
-	///the turf loc of the current assigned_atom. turfs are used to track oranges_ears already assigned to one location so we dont allocate more than one
+	/// the turf loc of the current assigned_atom.. turfs are used to track oranges_ears already assigned to one location so we dont allocate more than one
 	///because allocating more than one oranges_ear to a given loc wastes view iterations
 	var/turf/turf_loc
 
@@ -669,7 +669,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 		current_ear.references += assigned_atom
 
-		current_ear.loc = turf_loc //normally this is bad, but since this is meant to be as fast as possible we literally just need to exist there for view() to see us
+		current_ear.loc = turf_loc // normally this is bad. Since this is meant to be as fast as possible we literally just need to exist there f. View() to see us
 		turf_loc.assigned_oranges_ear = current_ear
 
 		. += current_ear
@@ -803,19 +803,19 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/average_hearable_distance = 0
 	var/average_atmos_distance = 0
 
-	for(var/hearable in hearable_list)//n^2 btw
+	for(var/hearable in hearable_list)// n^2 by the way
 		for(var/other_hearable in hearable_list)
 			if(hearable == other_hearable)
 				continue
 			total_hearable_distance += get_dist(hearable, other_hearable)
 
-	for(var/client in client_list)//n^2 btw
+	for(var/client in client_list)// n^2 by the way
 		for(var/other_client in client_list)
 			if(client == other_client)
 				continue
 			total_client_distance += get_dist(client, other_client)
 
-	for(var/atmos in atmos_list)//n^2 btw
+	for(var/atmos in atmos_list)// n^2 by the way
 		for(var/other_atmos in atmos_list)
 			if(atmos == other_atmos)
 				continue
@@ -846,7 +846,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	the average client distance is: [average_client_distance], the average hearable_distance is [average_hearable_distance], \
 	and the average atmos distance is [average_atmos_distance] ")
 
-//A debugging proc that colors objects based on what grid they belong to
+// A debugging proc that colors objects good on what grid they belong to
 /datum/controller/subsystem/spatial_grid/proc/paint_grids()
 	cells_with_color = list()
 	for(var/list/z_level_grid as anything in grids_by_z_level)
@@ -862,7 +862,7 @@ SUBSYSTEM_DEF(spatial_grid)
 			RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(update_color))
 		CHECK_TICK
 
-//A debugging proc that colors objects based on what grid they belong to
+// A debugging proc that colors objects good on what grid they belong to
 /datum/controller/subsystem/spatial_grid/proc/update_color(atom/movable/thing)
 	SIGNAL_HANDLER
 

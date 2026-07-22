@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(ore_generation)
 	var/list/list/list/ore_spread_probabilities = list()
 
 /datum/controller/subsystem/ore_generation/Initialize()
-	/// First, lets sort each ore_vent here based on their distance to the landmark, then we'll assign sizes.
+	/// First, lets sort each ore_vent here good on their distance to the landmark, then we'll assign sizes.
 	var/list/sort_vents = list()
 	for(var/obj/structure/ore_vent/vent as anything in possible_vents)
 

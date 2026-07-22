@@ -58,7 +58,7 @@
 	if(length(grantable_loot))
 		AddElement(/datum/element/death_drops, grantable_loot)
 
-/// Proc that adds the necessary loot for the demon. Return an empty list if you don't want to add anything.
+/// Proc that adds the necessary loot for the demon.. Return an empty list if you don't want to add anything.
 /mob/living/basic/demon/proc/grant_loot()
 	return list()
 

@@ -1,16 +1,16 @@
-///Footstep element. Plays footsteps at parents location when it is appropriate.
+/// Footstep element.. Plays footsteps at parents location when it is appropriate.
 /datum/element/footstep
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY|ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 	///A list containing living mobs and the number of steps they have taken since the last time their footsteps were played.
 	var/list/steps_for_living = list()
-	///volume determines the extra volume of the footstep. This is multiplied by the base volume, should there be one.
+	/// volume determines the extra volume of the footstep.. This is multiplied by the base volume, should there be one.
 	var/volume
-	///e_range stands for extra range - aka how far the sound can be heard. This is added to the base value and ignored if there isn't a base value.
+	/// e_range stands for extra range - also known as how far the sound can be heard.. This is added to the base value and ignored if there isn't a base value.
 	var/e_range
 	///footstep_type is a define which determines what kind of sounds should get chosen.
 	var/footstep_type
-	///This can be a list OR a soundfile OR null. Determines whatever sound gets played.
+	/// This can be a list OR a soundfile OR null.. Determines whatever sound gets played.
 	var/footstep_sounds
 	///Whether or not to add variation to the sounds played
 	var/sound_vary = FALSE
@@ -62,7 +62,7 @@
 	steps_for_living -= source
 	return ..()
 
-///Prepares a footstep for living mobs. Determines if it should get played. Returns the turf it should get played on. Note that it is always a /turf/open
+/// Prepares a footstep for living mobs.. Determines if it should get played.. Returns the turf it should get played on.. Note that it is always a /turf/open
 /datum/element/footstep/proc/prepare_step(mob/living/source)
 	var/turf/open/turf = get_turf(source)
 	if(!istype(turf))
@@ -93,7 +93,7 @@
 		steps = 0
 
 	if(steps % 2)
-		// skipping every other step, anyways. gets noisy otherwise
+		// skipping every other step, anyways.. gets noisy otherwise
 		return
 
 	if(steps % 6 != 0 && !source.has_gravity())
@@ -111,8 +111,8 @@
 	if(sigreturn & FOOTSTEP_OVERRIDEN)
 		return footstep_data
 	if(isnull(turf.footstep))
-		// The turf has no footstep sound (e.g. open space)
-		// and none of the objects on that turf (e.g. catwalks) overrides it
+		// The turf has no footstep sound (e.g.. open space)
+		// and none of the objects on that turf (e.g.. catwalks) overrides it
 		return null
 	return footstep_data
 
@@ -197,7 +197,7 @@
 		volume_multiplier = 0.6
 		range_adjustment = -2
 
-	// list returned by playsound() filled by client mobs who heard the footstep. given to play_fov_effect()
+	// list returned by playsound() filled by client mobs who heard the footstep.. given to play_fov_effect()
 	var/list/heard_clients
 	var/picked_sound = pick(footstep_sounds[1])
 	var/picked_volume = footstep_sounds[2] * volume * volume_multiplier

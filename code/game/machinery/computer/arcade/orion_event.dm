@@ -3,9 +3,9 @@
 /datum/orion_event
 	var/name = "this displays the events name"
 	var/text = "this displays a blurb about the event"
-	///pickweight to show up. will still be in the events pool if added to the events list but not RANDOM, only triggered.
+	/// pickweight to show up.. will still be in the events pool if added to the events list but not RANDOM, only triggered.
 	var/weight = 0
-	///buttons to pick in response to the event. Don't worry, orion js will handle the rest
+	/// buttons to pick in response to the event.. Don't worry, orion js will handle the rest
 	var/list/event_responses = list()
 	///default emag effect of events is to play an audible message and sound
 	var/emag_message
@@ -281,7 +281,7 @@
 	var/maxSeverity = 3
 	if(gamer_skill_level >= SKILL_LEVEL_EXPERT)
 		maxSeverity = 2 //part of gitting gud is rng mitigation
-	var/severity = rand(1,maxSeverity) //pray to RNGesus. PRAY, PIGS
+	var/severity = rand(1,maxSeverity) // pray to RNGesus.. PRAY, PIGS
 	if(severity == 1)
 		to_chat(gamer, span_userdanger("You suddenly feel slightly nauseated.") )
 		gamer.adjust_disgust(50)
@@ -333,7 +333,7 @@
 	text = "Strange reports warn of changelings infiltrating crews on trips to Orion..."
 	if(game.settlers.len <= 2)
 		text += " But your crew's chance of reaching Orion is so slim the changelings likely avoided your ship..."
-		if(prob(10)) // "likely", I didn't say it was guaranteed! //worst outcome too because changeling controls don't even enable
+		if(prob(10)) // "likely", I didn't say it was guaranteed!. //worst outcome too because changeling controls don't even enable
 			game.lings_aboard = min(++game.lings_aboard,2)
 	else
 		if(game.lings_aboard) //less likely to stack lings
@@ -374,7 +374,7 @@
 			game.lings_aboard = max(0,game.lings_aboard - 2)
 		return
 
-	var/chancetokill = 30*game.lings_aboard-(5*game.alive) //eg: 30*2-(10) = 50%, 2 lings, 2 crew is 50% chance
+	var/chancetokill = 30*game.lings_aboard-(5*game.alive) // for example 30*2-(10) = 50%, 2 lings, 2 crew is 50% chance
 	if(prob(chancetokill))
 		var/deadguy = game.remove_crewmember()
 		var/murder_text = pick(
@@ -396,7 +396,7 @@
 #define BUTTON_SPEED_PAST "Speed Past"
 #define BUTTON_GO_AROUND "Go Around"
 
-///Black Hole - final  (emag can spawn singulo, see death event)
+/// Black Hole - final (emag can spawn singulo, see death event)
 /datum/orion_event/black_hole
 	name = "Looming Black Hole"
 	text = "Sensors indicate that a black hole's gravitational field is \

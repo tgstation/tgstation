@@ -41,7 +41,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	w_class = WEIGHT_CLASS_GIGANTIC
-	force = 10 //a lot worse than most nullrods initially. Why did you invest so much into making it vorpal, you dork.
+	force = 10 // a lot worse than most nullrods initially.. Why did you invest so much into making it vorpal, you dork.
 	armour_penetration = 50 //Very good armor penetration to make up for our abysmal force
 	reach = 2 //why yes, this does have reach
 	slot_flags = null
@@ -59,7 +59,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 	If it is SCYTHE_EMPOWERED, we've performed the death knell on a human with a mind. Lets you sheath for 2 minutes and grants additional force.*/
 	var/empowerment = SCYTHE_WEAK
-	///Our bonus to force after we have death knelled. Lasts approximately 2 minutes.
+	/// Our bonus to force after we have death knelled.. Lasts approximately 2 minutes.
 	var/bonus_force_multiplier = 2
 
 /obj/item/vorpalscythe/examine(mob/user)
@@ -84,7 +84,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	AddComponent(/datum/component/walking_aid)
 
 /obj/item/vorpalscythe/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(ismonkey(target) && !target.mind) //Don't empower from hitting monkeys. Hit a corgi or something, I don't know.
+	if(ismonkey(target) && !target.mind) // Don't empower from hitting monkeys.. Hit a corgi or something, I don't know.
 		return ..()
 
 	if(target.stat < DEAD && target != user)
@@ -135,10 +135,10 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	var/death_knell_speed_mod = 1
 
 	potential_reaping.visible_message(span_danger("[user] begins to raise [src] above [potential_reaping]'s [head_name]."), span_userdanger("[user] begins to raise [src], aiming to slice off your [head_name]!"))
-	if(potential_reaping.stat >= UNCONSCIOUS || HAS_TRAIT(potential_reaping, TRAIT_INCAPACITATED)) //if the victim is incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly behead
+	if(potential_reaping.stat >= UNCONSCIOUS || HAS_TRAIT(potential_reaping, TRAIT_INCAPACITATED)) // if the victim is incapacitated (due to paralysis, a stun, being in staminacrit. So on critted, unconscious. Dead, it's much easier to properly behead
 		death_knell_speed_mod *= 0.5
 	if(potential_reaping.stat != DEAD && potential_reaping.has_status_effect(/datum/status_effect/jitter)) //jittering will make it harder to perform the death knell, even if they're still
-		death_knell_speed_mod *= 1.5 //Staminacritting someone who's jittering (from, say, a stun baton) won't give you enough time to slice their head off, but staminacritting someone who isn't jittering will
+		death_knell_speed_mod *= 1.5 // Staminacritting someone who's jittering (from, say, a stun baton) won't give you enough time to slice their head off. Staminacritting someone who isn't jittering will
 	if(empowerment == SCYTHE_EMPOWERED) //That said, if heads are already rolling, why stop here?
 		death_knell_speed_mod *= 0.5
 	if(ispodperson(potential_reaping) || ismonkey(potential_reaping)) //And if they're a podperson or monkey, they can just die.

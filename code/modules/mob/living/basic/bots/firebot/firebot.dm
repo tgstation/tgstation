@@ -23,7 +23,7 @@
 
 	///Flags firebots use to decide how they function.
 	var/firebot_mode_flags = FIREBOT_EXTINGUISH_PEOPLE | FIREBOT_EXTINGUISH_FLAMES
-	//Selections:  FIREBOT_STATIONARY_MODE | FIREBOT_EXTINGUISH_PEOPLE | FIREBOT_EXTINGUISH_FLAMES
+	// Selections: FIREBOT_STATIONARY_MODE | FIREBOT_EXTINGUISH_PEOPLE | FIREBOT_EXTINGUISH_FLAMES
 	///cooldown before we release foam all over
 	COOLDOWN_DECLARE(foam_cooldown)
 
@@ -90,7 +90,7 @@
 	if(!(bot_access_flags & BOT_COVER_EMAGGED))
 		return
 
-	to_chat(user, span_warning("You enable the very ironically named \"fighting with fire\" mode, and disable the targeting safeties.")) // heheehe. funny
+	to_chat(user, span_warning("You enable the very ironically named \"fighting with fire\" mode, and disable the targeting safeties.")) // heheehe.. funny
 
 	audible_message(span_danger("[src] buzzes oddly!"))
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)

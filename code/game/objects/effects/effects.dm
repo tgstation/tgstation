@@ -1,6 +1,6 @@
 
 //objects in /obj/effect should never be things that are attackable, use obj/structure instead.
-//Effects are mostly temporary visual effects like sparks, smoke, as well as decals, etc...
+// Effects are mostly temporary visual effects like sparks, smoke, as well as decals, and so on
 /obj/effect
 	icon = 'icons/effects/effects.dmi'
 	abstract_type = /obj/effect

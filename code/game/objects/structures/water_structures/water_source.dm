@@ -62,7 +62,7 @@
 		to_chat(user, span_warning("Someone's already washing here!"))
 		return ITEM_INTERACT_BLOCKING
 
-	if(tool.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
+	if(tool.item_flags & ABSTRACT) // Abstract items like grabs won't wash.. No-drop items will though because it's still technically an item in your hand.
 		return ITEM_INTERACT_BLOCKING
 
 	if(is_reagent_container(tool))

@@ -76,7 +76,7 @@
 
 	var/list/requirements_list = list()
 
-	// Process all requirements
+	// Process all needs
 	var/recipe_result
 	if(recipe.blacklist_result)
 		recipe_result = recipe.result
@@ -129,7 +129,7 @@
 		if(!found)
 			return FALSE
 
-	//Skip extra requirements when unit testing, like, underwater basket weaving? Get the hell out of here
+	// Skip extra needs when unit testing, like, underwater basket weaving?. Get the hell out of here
 	return PERFORM_ALL_TESTS(crafting) || recipe.check_requirements(a, requirements_list)
 
 /datum/component/personal_crafting/proc/get_environment(atom/a, list/blacklist = null, radius_range = 1)
@@ -195,7 +195,7 @@
 		.[CONTENTS_POSSIBLE_TOOLS] += instances[item_type]
 	.[CONTENTS_POSSIBLE_TOOLS] += within_source
 
-/// Returns a boolean on whether the tool requirements of the input recipe are satisfied by the input source and surroundings.
+/// Returns a boolean on whether the tool needs of the input recipe are satisfied by the input source and surroundings.
 /datum/component/personal_crafting/proc/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings, final_check = FALSE)
 	if(!length(recipe.tool_behaviors) && !length(recipe.tool_paths))
 		return TRUE
@@ -216,7 +216,7 @@
 		return ", unknown error!" // This should never happen, but in the event that it does...
 
 	if(!recipe)
-		return ", invalid recipe!" // This can happen, I can't really explain why, but it can. Better safe than sorry.
+		return ", invalid recipe!" // This can happen, I can't really explain why, but it can.. Better safe than sorry.
 
 	var/list/contents = get_surroundings(crafter, recipe.blacklist)
 	var/fail_message = perform_all_checks(crafter, recipe, contents, check_tools_last = ignored_flags & CRAFT_IGNORE_DO_AFTER)
@@ -256,7 +256,7 @@
 		if(fail_message)
 			return fail_message
 
-	//used to gather the material composition of the utilized requirements to transfer to the result
+	// used to gather the material composition of the used needs to transfer to the result
 	var/list/total_materials = list()
 	var/list/stuff_to_use = get_used_reqs(recipe, crafter, total_materials)
 
@@ -279,7 +279,7 @@
 		//we don't merge the stack right away but try to put it in the hand of the crafter
 		if(set_materials)
 			result = new recipe.result(craft_turf, res_amount, /*merge =*/ FALSE, /*mat_override =*/ total_materials, /*mat_amt =*/ 1 / res_amount)
-			set_materials = FALSE //We've already set the materials on init. Don't do it again
+			set_materials = FALSE // We've already set the materials on init.. Don't do it again
 		else
 			result = new recipe.result(craft_turf, res_amount, FALSE)
 	else
@@ -314,7 +314,7 @@
 	var/turf/dest_turf = get_turf(crafter)
 
 	// Mobs call perform_all_checks() twice since they don't have the CRAFT_IGNORE_DO_AFTER flag,
-	// one before the do_after() and another after that. While other entities may have that flag and therefore only call the proc once.
+	// one before the do_after() and another after that.. While other entities may have that flag and so only call the proc once.
 	// Check_tools() meanwhile has a final_check arg which, if true, may perform some statements that can
 	// modify some of the tools, like expending charges from a crayon or spraycan, which may make it unable
 	// to meet some criterias afterward, so it's important to call that, last by the end of the final perform_all_checks().
@@ -403,7 +403,7 @@
 	var/list/surroundings = get_environment(atom, recipe.blacklist)
 	for(var/path_key in requirements)
 		var/amount = recipe.reqs?[path_key] || recipe.machinery?[path_key] || recipe.structures?[path_key]
-		if(!amount)//since machinery & structures can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
+		if(!amount)// since machinery & structures can have 0 also known as CRAFTING_MACHINERY_USE - i.e.. use it, don't consume it!
 			continue
 		if(ispath(path_key, /datum/reagent))
 			if(!holder)
@@ -477,7 +477,7 @@
 /datum/component/personal_crafting/ui_state(mob/user)
 	return GLOB.not_incapacitated_turf_state
 
-//For the UI related things we're going to assume the user is a mob rather than typesetting it to an atom as the UI isn't generated if the parent is an atom
+// F. The UI related things we're going to assume the user is a mob rather than typesetting it to an atom as the UI isn't generated if the parent is an atom
 /datum/component/personal_crafting/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -534,7 +534,7 @@
 
 	// Prepare atom data
 
-	//load sprite sheets and select the correct one based on the mode
+	// load sprite sheets and select the correct one good on the mode
 	var/static/list/sprite_sheets
 	if(isnull(sprite_sheets))
 		sprite_sheets = ui_assets()

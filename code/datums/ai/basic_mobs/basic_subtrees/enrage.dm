@@ -24,7 +24,7 @@
 		return AI_BEHAVIOR_SUCCEEDED
 
 	if(!low_health && is_enraged)
-		// Technically something else could have modified the cooldown before/after but that requires further consideration so don't use this behavior in these scenarios
+		// Technically something else could have modified the cooldown before/after but that needs further consideration so don't use this behavior in these scenarios
 		basic_pawn.melee_attack_cooldown = controller.blackboard[BB_BASIC_MOB_PREVIOUS_MELEE_COOLDOWN]
 		controller.clear_blackboard_key(BB_BASIC_MOB_PREVIOUS_MELEE_COOLDOWN)
 		controller.clear_blackboard_key(BB_BASIC_MOB_ENRAGE)

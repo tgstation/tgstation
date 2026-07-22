@@ -15,7 +15,7 @@
 	var/damage_decrease_on_hit = 10
 	/// This is the cutoff point of our cannonball, so that it stops piercing past this value.
 	var/stop_piercing_threshold = 40
-	/// This is the damage value we do to objects on hit. Usually, more than the actual projectile damage
+	/// This is the damage value we do to objects on hit.. Usually, more than the actual projectile damage
 	var/object_damage = 80
 	/// Whether or not our cannonball loses object damage upon hitting an object.
 	var/object_damage_decreases = FALSE
@@ -44,7 +44,7 @@
 	name = "explosive shell"
 	color = COLOR_RED
 	projectile_piercing = NONE
-	damage = 40 //set to 30 before first mob impact, but they're gonna be gibbed by the explosion
+	damage = 40 // set to 30 before first mob impact, but they're going to be gibbed by the explosion
 
 /obj/projectile/bullet/cannonball/explosive/on_hit(atom/target, blocked = 0, pierce_hit)
 	explosion(target, devastation_range = 2, heavy_impact_range = 3, light_impact_range = 4, explosion_cause = src)
@@ -73,7 +73,7 @@
 /obj/projectile/bullet/cannonball/trashball
 	name = "trashball"
 	icon_state = "trashball"
-	damage = 90 //better than the biggest one but no explosion, so kinda just a worse normal cannonball
+	damage = 90 // better than the biggest one but no explosion, so kind of just a worse normal cannonball
 
 /obj/projectile/bullet/cannonball/meteorslug
 	name = "meteorslug"
@@ -104,7 +104,7 @@
 	exposed_wound_bonus = 30
 	damage_type = BRUTE
 
-/// Set statistics based on provided spear
+/// Set statistics good on provided spear
 /obj/projectile/bullet/ballista_spear/proc/attach_spear(obj/item/spear)
 	damage = spear.throwforce * 2.5
 	armour_penetration = spear.armour_penetration * 2
@@ -144,7 +144,7 @@
 /obj/projectile/bullet/ballista_spear/prod/attach_spear(obj/item/spear)
 	AddComponent(/datum/component/projectile_instance_drop, spear)
 	if (!istype(spear, /obj/item/melee/baton/security/cattleprod))
-		return // IDK how you did this but you're going to have a boring projectile
+		return // I do not know how you did this but you're going to have a boring projectile
 	name = "ballistic [initial(spear.name)]"
 	held_prod = spear
 	RegisterSignals(held_prod, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(on_prod_left))

@@ -1,4 +1,4 @@
-/// The Greatest (animal) Of All Time. Cud chewing, shin-kicking, kitchen-dwelling nuisance.
+/// The Greatest (animal) Of All Time.. Cud chewing, shin-kicking, kitchen-dwelling nuisance.
 /mob/living/basic/goat
 	name = "goat"
 	desc = "Not known for their pleasant disposition."
@@ -59,7 +59,7 @@
 
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(edibles))
 
-/// Called when we attack something in order to piece together the intent of the AI/user and provide desired behavior. The element might be okay here but I'd rather the fluff.
+/// Called when we attack something in order to piece together the intent of the AI/user and provide desired behavior.. The element might be okay here but I'd rather the fluff.
 /// Goats are really good at beating up plants by taking bites out of them, but we use the default attack for everything else
 /mob/living/basic/goat/proc/on_pre_attack(datum/source, atom/target)
 	if(is_type_in_list(target, edibles))
@@ -89,7 +89,7 @@
 
 	return COMPONENT_HOSTILE_NO_ATTACK
 
-/// If we are being attacked by someone, give a nice fluff message. But only once in a while.
+/// If we are being attacked by someone, give a nice fluff message.. But only once in a while.
 /mob/living/basic/goat/proc/on_attacked(datum/source, atom/attacker, attack_flags)
 	if (!COOLDOWN_FINISHED(src, gleam_cooldown))
 		return
@@ -111,13 +111,13 @@
 
 	INVOKE_ASYNC(src, PROC_REF(eat_plant), edible_plants)
 
-/// When invoked, adds an udder when applicable. Male goats do not have udders.
+/// When invoked, adds an udder when applicable.. Male goats do not have udders.
 /mob/living/basic/goat/proc/add_udder()
 	if(gender == MALE)
 		return
 	AddComponent(/datum/component/udder)
 
-/// Proc that handles dealing with the various types of plants we might eat. Assumes that a valid list of type(s) will be passed in.
+/// Proc that handles dealing with the various types of plants we might eat.. Assumes that a valid list of type(s) will be passed in.
 /mob/living/basic/goat/proc/eat_plant(list/plants)
 	var/eaten = FALSE
 

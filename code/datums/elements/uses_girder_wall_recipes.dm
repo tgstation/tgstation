@@ -1,4 +1,4 @@
-/// An element for girders, wall barricades, etc. that makes them use wall construction recipes.
+/// An element for girders, wall barricades, and so on that makes them use wall construction recipes.
 /// Only really meant for recipes where you click on the girder with a stack of materials to make a wall.
 /datum/element/uses_girder_wall_recipes
 
@@ -60,12 +60,12 @@
 			continue
 		return recipe
 
-/// Has the user attempt the wall recipe asynchronously.
+/// Has the user try the wall recipe asynchronously.
 /// Assumes that the structure and stack are of valid types for the recipe.
 /datum/element/uses_girder_wall_recipes/proc/attempt_recipe_async(obj/structure/structure, mob/living/user, obj/item/stack/stack, datum/girder_wall_recipe/recipe, is_material_recipe)
 	INVOKE_ASYNC(src, PROC_REF(attempt_recipe), structure, user, stack, recipe, is_material_recipe)
 
-/// Has the user attempt the wall recipe.
+/// Has the user try the wall recipe.
 /// Assumes that the structure and stack are of valid types for the recipe.
 /datum/element/uses_girder_wall_recipes/proc/attempt_recipe(obj/structure/structure, mob/living/user, obj/item/stack/stack, datum/girder_wall_recipe/recipe, is_material_recipe)
 	if (!check_recipe(structure, user, recipe))
@@ -123,7 +123,7 @@
 		return FALSE
 	return TRUE
 
-/// Checks if the girder state of the structure matches the required girder state of the wall recipe.
+/// Checks if the girder state of the structure matches the needed girder state of the wall recipe.
 /datum/element/uses_girder_wall_recipes/proc/check_girder_state(obj/structure/structure, datum/girder_wall_recipe/recipe)
 	if (istype(structure, /obj/structure/girder))
 		var/obj/structure/girder/girder = structure

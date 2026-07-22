@@ -131,7 +131,7 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player 
 	var/source = TRAIT_ADMIN_GRANTED
 	switch(add_or_remove)
 		if("Add") //Not doing source choosing here intentionally to make this bit faster to use, you can always vv it.
-			if(GLOB.movement_type_trait_to_flag[chosen_trait]) //include the required element.
+			if(GLOB.movement_type_trait_to_flag[chosen_trait]) // include the needed element.
 				D.AddElement(/datum/element/movetype_handler)
 			ADD_TRAIT(D,chosen_trait,source)
 		if("Remove")

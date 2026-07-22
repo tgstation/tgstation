@@ -9,13 +9,13 @@
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefact's power."
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
-	/// The base name of the soulstone, set to the initial name by default. Used in name updating
+	/// The base name of the soulstone, set to the initial name by default.. Used in name updating
 	var/base_name
 	/// if TRUE, we can only be used once.
 	var/one_use = FALSE
-	/// Only used if one_use is TRUE. Whether it's used.
+	/// Only used if one_use is TRUE.. Whether it's used.
 	var/spent = FALSE
-	/// if TRUE, our soulstone will work on mobs which are in crit. if FALSE, the mob must be dead.
+	/// if TRUE, our soulstone will work on mobs which are in crit.. if FALSE, the mob must be dead.
 	var/grab_sleeping = TRUE
 	/// This controls the color of the soulstone as well as restrictions for who can use it.
 	/// THEME_CULT is red and is the default of cultist
@@ -132,7 +132,7 @@
 	RegisterSignal(src, COMSIG_BIBLE_SMACKED)
 	return TRUE
 
-/// Checks if the passed mob has the required antag datum set on the soulstone.
+/// Checks if the passed mob has the needed antag datum set on the soulstone.
 /obj/item/soulstone/proc/role_check(mob/who)
 	return required_role ? (who.mind && who.mind.has_antag_datum(required_role, TRUE)) : TRUE
 
@@ -310,7 +310,7 @@
 /// Transfer the mind of a carbon mob (which is then dusted) into a shade mob inside src.
 /// If forced, sacrificial and stat checks are skipped.
 /obj/item/soulstone/proc/capture_soul(mob/living/carbon/victim, mob/user, forced = FALSE)
-	if(!iscarbon(victim)) //TODO: Add sacrifice stoning for non-organics, just because you have no body doesn't mean you don't have a soul
+	if(!iscarbon(victim)) // To do Add sacrifice stoning for non-organics, just because you have no body doesn't mean you don't have a soul
 		return FALSE
 	if(contents.len)
 		return FALSE

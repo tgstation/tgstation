@@ -42,7 +42,7 @@
 	var/operated = FALSE
 	/// List of all atoms within the stomach
 	var/list/atom/movable/stomach_contents
-	/// Have we been cut open with a scalpel? If so, how much damage from it we still have from it and can be recovered with a cauterizing tool.
+	/// Have we been cut open with a scalpel?. If so, how much damage from it we still have from it and can be recovered with a cauterizing tool.
 	/// All healing goes towards recovering this.
 	var/cut_open_damage = 0
 
@@ -88,7 +88,7 @@
 		if(amount_food)
 			amount_max = max(amount_max - amount_food, 0)
 
-		// Transfer the amount of reagents based on volume with a min amount of 1u
+		// Transfer the amount of reagents good on volume with a min amount of 1u
 		var/amount = min((round(metabolism_efficiency * amount_max, 0.05) + rate_min) * seconds_per_tick, amount_max)
 
 		if(amount <= 0)
@@ -138,7 +138,7 @@
 	if(HAS_TRAIT(human, TRAIT_NOHUNGER))
 		return //hunger is for BABIES
 
-	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
+	// The fucking TRAIT_FAT mutation is the dumbest shit ever.. It makes the code so difficult to work with
 	if(HAS_TRAIT_FROM(human, TRAIT_FAT, OBESITY))//I share your pain, past coder.
 		if(human.overeatduration < (OVEREAT_TIME_LIMIT))
 			to_chat(human, span_notice("You feel fit again!"))
@@ -227,7 +227,7 @@
 
 /obj/item/organ/stomach/proc/content_moved(atom/movable/source)
 	SIGNAL_HANDLER
-	if(source.loc == src || source.loc == owner) // not in us? out da list then
+	if(source.loc == src || source.loc == owner) // not in us?. out da list then
 		return
 	LAZYREMOVE(stomach_contents, source)
 	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
@@ -514,7 +514,7 @@
 		owner.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM))
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_EMP // Starts organ faliure - going to need replacing soon.
 
 /obj/item/organ/stomach/cybernetic/tier2
 	name = "cybernetic stomach"
@@ -562,7 +562,7 @@
 //surplus organs are so awful that they explode when removed, unless failing
 /obj/item/organ/stomach/cybernetic/surplus/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
+	AddElement(/datum/element/dangerous_organ_removal, /* surgical = */ TRUE)
 
 /obj/item/organ/stomach/pod
 	name = "pod chloroplast"

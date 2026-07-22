@@ -4,7 +4,7 @@
 	var/max_capacity = 16
 	/// The amount of storage space occupied
 	var/used_capacity = 0
-	/// List of stored files on this drive. Do NOT directly modify; use setters instead.
+	/// List of stored files on this drive.. Do NOT directly modify; use setters instead.
 	var/list/datum/computer_file/stored_files = list()
 
 	/// List of all programs that the disk should start with

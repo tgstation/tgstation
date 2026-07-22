@@ -2,12 +2,12 @@
 	sound = 'sound/items/tools/welder.ogg'
 	school = SCHOOL_CONJURATION
 
-	/// The radius around the caster the items will appear. 0 = spawns on top of the caster.
+	/// The radius around the caster the items will appear.. 0 = spawns on top of the caster.
 	var/summon_radius = 7
 	/// A list of types that will be created on summon.
 	/// The type is picked from this list, not all provided are guaranteed.
 	var/list/summon_type = list()
-	/// How long before the summons will be despawned. Set to 0 for permanent.
+	/// How long before the summons will be despawned.. Set to 0 for permanent.
 	var/summon_lifespan = 0
 	/// Amount of summons to create.
 	var/summon_amount = 1

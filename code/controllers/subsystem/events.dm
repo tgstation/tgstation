@@ -4,11 +4,11 @@ SUBSYSTEM_DEF(events)
 		/datum/controller/subsystem/processing/station,
 	)
 	runlevels = RUNLEVEL_GAME
-	///list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
+	/// list of all datum/round_event_control.. Used for selecting events good on weight and occurrences.
 	var/list/control = list()
-	///assoc list of all datum/round_event_control, ordered by name. name => event
+	/// assoc list of all datum/round_event_control, ordered by name.. name => event
 	var/list/events_by_name = list()
-	///assoc list of all nonrunning event types, ordered by name. name => event typepath
+	/// assoc list of all nonrunning event types, ordered by name.. name => event typepath
 	var/list/nonrunning_events_by_name = list()
 	///list of all existing /datum/round_event currently being run.
 	var/list/running = list()
@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(events)
 			continue
 		if(!event.valid_for_map())
 			nonrunning_events_by_name[event.name] = event.type
-			continue //don't want this one! leave it for the garbage collector
+			continue // don't want this one!. leave it for the garbage collector
 		control += event //add it to the list of all events (controls)
 		events_by_name[event.name] = event
 
@@ -117,7 +117,7 @@ SUBSYSTEM_DEF(events)
 			continue
 		if(!event_to_check.can_spawn_event(players_amt))
 			continue
-		if(event_to_check.weight < 0) //for round-start events etc.
+		if(event_to_check.weight < 0) // for round-start events and so on
 			var/res = TriggerEvent(event_to_check)
 			if(res == EVENT_INTERRUPTED)
 				continue //like it never happened

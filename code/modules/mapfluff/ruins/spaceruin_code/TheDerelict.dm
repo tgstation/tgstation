@@ -108,7 +108,7 @@
 	A.open()
 	A.bolt()
 
-///Attempts to lock the vault doors
+/// Tries to lock the vault doors
 /obj/machinery/computer/vaultcontroller/proc/lock_vault()
 	if(door1 && !door1.density)
 		cycle_close(door1)
@@ -117,7 +117,7 @@
 	if(door1.density && door1.locked && door2.density && door2.locked)
 		locked = TRUE
 
-///Attempts to unlock the vault doors
+/// Tries to unlock the vault doors
 /obj/machinery/computer/vaultcontroller/proc/unlock_vault()
 	if(door1?.density)
 		cycle_open(door1)
@@ -126,7 +126,7 @@
 	if(!door1.density && door1.locked && !door2.density && door2.locked)
 		locked = FALSE
 
-///Attempts to lock/unlock vault doors, if machine is charged.
+/// Tries to lock/unlock vault doors, if machine is charged.
 /obj/machinery/computer/vaultcontroller/proc/activate_lock()
 	if(siphoned_power < siphon_max)
 		return
@@ -168,7 +168,7 @@
 	id_tag = DERELICT_VAULT_ID
 	has_access_panel = FALSE
 
-///Overrides screwdriver act to prevent all deconstruction and hacking. Override for extra tuff fluff
+/// Overrides screwdriver act to prevent all deconstruction and hacking.. Override for extra tuff fluff
 /obj/machinery/door/airlock/vault/derelict/screwdriver_act(mob/living/user, obj/item/tool)
 	to_chat(user, span_danger("The robust make of [src] makes it impossible to access the panel in any way!"))
 	return ITEM_INTERACT_SUCCESS

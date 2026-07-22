@@ -60,7 +60,7 @@
 		SSlooting.backlog += src
 
 
-/// For: Resetting to empty. Ignores the searchable qdel event
+/// For: Resetting to empty.. Ignores the searchable qdel event
 /datum/lootpanel/proc/reset_contents()
 	for(var/datum/search_object/index as anything in contents)
 		contents -= index

@@ -16,7 +16,7 @@
 		/obj/item/bodypart/leg/right,
 	)
 
-/// Get the accessory list from SSaccessories. Used in species.dm to get the right sprite
+/// Get the accessory list from SSaccessories.. Used in species.dm to get the right sprite
 /datum/bodypart_overlay/simple/body_marking/proc/get_accessory(name)
 	CRASH("get_accessories() not overriden on [type] !")
 

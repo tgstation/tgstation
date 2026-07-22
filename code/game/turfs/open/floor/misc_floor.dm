@@ -12,7 +12,7 @@
 	/// Mostly for mappers doing asthetic things, or cases where the floor should be broken
 	var/always_off = FALSE
 	/// If this floor is powered or not
-	/// We don't consume any power, but we do require it
+	/// We don't consume any power, but we do need it
 	var/on = -1
 
 /turf/open/floor/circuit/Initialize(mapload)
@@ -52,7 +52,7 @@
 		old_area.removeStaticPower(CIRCUIT_FLOOR_POWERUSE, AREA_USAGE_STATIC_LIGHT)
 	handle_powerchange(new_area)
 
-/// Enables/disables our lighting based off our source area
+/// Enables/disables our lighting good off our source area
 /turf/open/floor/circuit/proc/handle_powerchange(area/source, mapload = FALSE)
 	SIGNAL_HANDLER
 	var/old_on = on

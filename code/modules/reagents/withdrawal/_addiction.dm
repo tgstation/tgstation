@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT_TYPED(addictions, /datum/addiction, init_subtypes_w_path_keys(/datum/addiction))
 
-///base class for addiction, handles when you become addicted and what the effects of that are. By default you become addicted when you hit a certain threshold, and stop being addicted once you go below another one.
+/// base class for addiction, handles when you become addicted and what the effects of that are.. By default you become addicted when you hit a certain threshold, and stop being addicted once you go below another one.
 /datum/addiction
 	///Name of this addiction
 	var/name = "cringe code"
@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT_TYPED(addictions, /datum/addiction, init_subtypes_w_path_keys(/
 	///moodlet for severe withdrawal
 	var/severe_withdrawal_moodlet = /datum/mood_event/withdrawal_severe
 
-///Called when you gain addiction points somehow. Takes a mind as argument and sees if you gained the addiction
+/// Called when you gain addiction points somehow.. Takes a mind as argument and sees if you gained the addiction
 /datum/addiction/proc/on_gain_addiction_points(datum/mind/victim_mind, new_amount = 0, last_amount = 0)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(new_amount < addiction_gain_threshold) // Not enough to become addicted
@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT_TYPED(addictions, /datum/addiction, init_subtypes_w_path_keys(/
 	SEND_SIGNAL(victim_mind.current, COMSIG_CARBON_GAIN_ADDICTION, victim_mind)
 	victim_mind.current.log_message("has become addicted to [name].", LOG_GAME)
 
-///Called when you lose addiction poitns somehow. Takes a mind as argument and sees if you lost the addiction
+/// Called when you lose addiction poitns somehow.. Takes a mind as argument and sees if you lost the addiction
 /datum/addiction/proc/on_lose_addiction_points(datum/mind/victim_mind, new_amount = 0, last_amount = 0)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(last_amount < addiction_loss_threshold) // Was not addicted last check

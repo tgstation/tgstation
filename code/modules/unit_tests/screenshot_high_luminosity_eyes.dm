@@ -7,7 +7,7 @@
 	var/obj/item/organ/eyes/robotic/glow/test_eyes
 
 /datum/unit_test/screenshot_high_luminosity_eyes/Run()
-	// Create a mob with red and blue eyes. This is to test that high luminosity eyes properly default to the old eye color.
+	// Create a mob with red and blue eyes.. This is to test that high luminosity eyes properly default to the old eye color.
 	test_subject = allocate(/mob/living/carbon/human/consistent)
 	test_subject.equipOutfit(/datum/outfit/job/assistant/consistent)
 	test_subject.eye_color_left = COLOR_RED
@@ -44,7 +44,7 @@
 	test_screenshot("light_emissive", flat_icon)
 
 	// Make sure the light comes back on when we go from range 0 to 1
-	// Change left/right eye color back to red/blue. It should match the original screenshot
+	// Change left/right eye color back to red/blue.. It should match the original screenshot
 	test_eyes.set_beam_range(default_light_range)
 	test_eyes.set_beam_color(COLOR_RED, to_update = UPDATE_EYES_LEFT)
 	test_eyes.set_beam_color(COLOR_BLUE, to_update = UPDATE_EYES_RIGHT)
@@ -56,7 +56,7 @@
 	var/icon/final_icon = get_flat_icon_for_all_directions(test_subject, no_anim = FALSE)
 	for(var/mutable_appearance/light_underlay as anything in test_subject.underlays)
 		if(light_underlay.icon == 'icons/effects/light_overlays/light_cone.dmi')
-			// The light cone icon is 96x96, so we have to shift it over to have it match our sprites. x = 1, y = 1 is the lower left corner so we shift 32 pixels opposite to that.
+			// The light cone icon is 96x96, so we have to shift it over to have it match our sprites.. x = 1, why = 1 is the lower left corner so we shift 32 pixels opposite to that.
 			final_icon.Blend(get_flat_icon_for_all_directions(light_underlay, no_anim = FALSE), ICON_UNDERLAY, -ICON_SIZE_X + 1, -ICON_SIZE_Y + 1)
 	return final_icon
 

@@ -74,7 +74,7 @@
 	var/addiction_type_to_check
 
 	for(var/key in meth.addiction_types)
-		addiction_type_to_check = key //idk how to do this otherwise
+		addiction_type_to_check = key // I do not know how to do this otherwise
 
 	// Let's start with stomach metabolism
 	pill.reagents.add_reagent(meth.type, 5)

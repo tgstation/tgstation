@@ -1,4 +1,4 @@
-// This file contains the louadouts for the assistant gimmicks station trait! When active, gives assistants random stupid gear
+// This file contains the louadouts for the assistant gimmicks station trait!. When active, gives assistants random stupid gear
 
 /// Parent type of gimmick loadouts for assistants for the functional assistant station traits
 /datum/outfit/job/assistant/gimmick

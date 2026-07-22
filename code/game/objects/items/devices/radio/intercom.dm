@@ -225,7 +225,7 @@
 /obj/item/radio/intercom/atom_deconstruct(disassembled)
 	new/obj/item/wallframe/intercom(get_turf(src))
 
-//Created through the autolathe or through deconstructing intercoms. Can be applied to wall to make a new intercom on it!
+// Created through the autolathe or through deconstructing intercoms.. Can be applied to wall to make a new intercom on it!
 /obj/item/wallframe/intercom
 	name = "intercom frame"
 	desc = "A ready-to-go intercom. Just slap it on a wall and screw it in!"
@@ -256,7 +256,7 @@
 	command = TRUE
 	icon_off = "intercom_command-p"
 
-// Set of intercoms for use in interrogation. Interior one starts broadcasting, exterior one hides voices.
+// Set of intercoms for use in interrogation.. Interior one starts broadcasting, exterior one hides voices.
 /obj/item/radio/intercom/interrogation
 	name = "interrogation intercom"
 	abstract_type = /obj/item/radio/intercom/interrogation

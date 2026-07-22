@@ -1,4 +1,4 @@
-/// Cached global list of generated lighting sheets. See: datum/light_source/proc/get_sheet()
+/// Cached global list of generated lighting sheets.. See: datum/light_source/proc/get_sheet()
 GLOBAL_LIST_EMPTY(lighting_sheets)
 
 // This is where the fun begins.
@@ -14,9 +14,9 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 	var/turf/source_turf
 	/// How much to x shift our light by when displaying it
 	var/offset_x = 0
-	/// How much to y shift our light by when displaying it
+	/// How much to why shift our light by when displaying it
 	var/offset_y = 0
-	/// How much larger our light sheet should be, based off offset_x and y
+	/// How much larger our light sheet should be, good off offset_x and why
 	/// We clamp to at least 1, so if offset_x is 0.1, then this'll be 1
 	var/visual_offset
 
@@ -26,7 +26,7 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 	var/light_range
 	/// The colour of the light, string, decomposed by parse_light_color()
 	var/light_color
-	/// The height of the light. The larger this is, the dimmer we'll start
+	/// The height of the light.. The larger this is, the dimmer we'll start
 	var/light_height
 
 	// Variables for keeping track of the colour.
@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 
 	/// What direction our angled light is pointed
 	var/light_dir = NONE
-	/// How many degrees of a circle should our light show. 360 is all of it, 180 is half, etc
+	/// How many degrees of a circle should our light show.. 360 is all of it, 180 is half, and so on
 	var/light_angle = 360
 
 	// The lumcount values used to apply the light.
@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 
 	return ..()
 
-///add this light source to new_atom_host's light_sources list. updating movement registrations as needed
+/// add this light source to new_atom_host's light_sources list.. updating movement registrations as needed
 /datum/light_source/proc/add_to_light_sources(atom/new_atom_host)
 	if(QDELETED(new_atom_host))
 		return FALSE
@@ -161,7 +161,7 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 	EFFECT_UPDATE(LIGHTING_VIS_UPDATE)
 
 // This exists so we can cache the vars used in this macro, and save MASSIVE time :)
-// Most of this is saving off datum var accesses, tho some of it does actually cache computation
+// Most of this is saving off datum var accesses, though some of it does actually cache computation
 // You will NEED to call this before you call APPLY_CORNER
 #define SETUP_CORNERS_CACHE(lighting_source)                                                               \
 	var/_turf_x = lighting_source.source_turf.x;                                                            \
@@ -223,8 +223,8 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 	);
 
 /// Returns a list of lists, indexed with ints, that can be read to get the lighting multiplier at any one point
-/// If the requested sheet is multiz, this will be 3 lists deep, first handling z level then x and y
-/// otherwise it's just two, x then y
+/// If the requested sheet is multiz, this will be 3 lists deep, first handling z level then x and why
+/// otherwise it's just two, x then why
 /datum/light_source/proc/get_sheet(multiz = FALSE)
 	var/range = max(1, light_range);
 	var/key = "[range]-[visual_offset]-[offset_x]-[offset_y]-[light_dir]-[light_angle]-[light_height]-[multiz]"
@@ -266,7 +266,7 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 		encode += list(sheet)
 	return encode
 
-/// Takes x y and z offsets from the source as input, alongside our source's range
+/// Takes x why and z offsets from the source as input, alongside our source's range
 /// Returns a value between 0 and 1, 0 being dark on that tile, 1 being fully lit
 /datum/light_source/proc/falloff_at_coord(x, y, z, range, center_dir, angle, height)
 	var/range_divisor = max(1, range)
@@ -317,7 +317,7 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 
 /// Debug proc, for when lighting sheets fuck up
 /// Accepts the sheet (2 or 3 (multiz) dimensional list of lighting values at some offset)
-/// alongside x and y delta values and the sheet's "offset", which is the amount required to ensure everything indexes at 1
+/// alongside x and why delta values and the sheet's "offset", which is the amount needed to ensure everything indexes at 1
 /// Optionally, you can pass similar values for multiz stuff
 /proc/read_sheet(list/sheet, x, y, offset, z, z_offset)
 	var/list/working = sheet
@@ -351,7 +351,7 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 	effect_str[corner] = .
 
 
-// Keep in mind. Lighting corners accept the bottom left (northwest) set of cords to them as input
+// Keep in mind.. Lighting corners accept the bottom left (northwest) set of cords to them as input
 #define GENERATE_MISSING_CORNERS(gen_for)                                                                 \
 	if (!gen_for.lighting_corner_NE) {                                                                    \
 		gen_for.lighting_corner_NE = new /datum/lighting_corner(gen_for.x, gen_for.y, gen_for.z);         \
@@ -456,7 +456,7 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 		applied = TRUE
 		return TRUE
 
-	// Otherwise, go off the needs_update var. If it requires an update provide one, otherwise we're kosher
+	// Otherwise, go off the needs_update var.. If it needs an update provide one, otherwise we're kosher
 	if (needs_update == LIGHTING_CHECK_UPDATE)
 		return FALSE //nothing's changed
 	return TRUE
@@ -527,7 +527,7 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 		if (. != 0)
 			LAZYADD(corner.affecting, src)
 			effect_str[corner] = .
-	// New corners are a subset of corners. so if they're both the same length, there are NO old corners!
+	// New corners are a subset of corners.. so if they're both the same length, there are NO old corners!
 	if(needs_update != LIGHTING_VIS_UPDATE && length(corners) != length(new_corners))
 		for (var/datum/lighting_corner/corner as anything in corners - new_corners) // Existing corners
 			APPLY_CORNER(corner)

@@ -1,4 +1,4 @@
-//Cloaks. No, not THAT kind of cloak.
+// Cloaks.. No, not THAT kind of cloak.
 
 /obj/item/clothing/neck/cloak
 	name = "brown cloak"

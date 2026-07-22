@@ -21,7 +21,7 @@
 	var/datum/map_template/shelter/template
 	///If true, this capsule is active and will deploy the area if conditions are met.
 	var/used = FALSE
-	///Will this capsule yeet mobs back once the area is deployed?
+	/// Will this capsule throw mobs back once the area is deployed?
 	var/yeet_back = TRUE
 
 /obj/item/survivalcapsule/proc/get_template()
@@ -33,7 +33,7 @@
 		qdel(src)
 
 /obj/item/survivalcapsule/Destroy()
-	template = null // without this, capsules would be one use. per round.
+	template = null // without this, capsules would be one use.. per round.
 	. = ..()
 
 /obj/item/survivalcapsule/examine(mob/user)
@@ -102,7 +102,7 @@
 	for(var/mob/living/did_not_stand_back in range(loc, "[width]x[height]"))
 		var/dir_to_center = get_dir(deploy_location, did_not_stand_back) || pick(GLOB.alldirs)
 		// Aiming to throw the target just enough to get them out of the range of the shelter
-		// IE: Stronger if they're closer, weaker if they're further away
+		// that is Stronger if they're closer, weaker if they're further away
 		var/throw_dist = 0
 		var/x_component = abs(did_not_stand_back.x - deploy_location.x)
 		var/y_component = abs(did_not_stand_back.y - deploy_location.y)

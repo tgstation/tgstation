@@ -2,7 +2,7 @@
 /datum/element/basic_allergenic_attack
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	/// What allergen is being used. Corresponds to a FOODTYPE
+	/// What allergen is being used.. Corresponds to a FOODTYPE
 	var/allergen = NONE
 	/// Chance of the reaction happening
 	var/allergen_chance = 100

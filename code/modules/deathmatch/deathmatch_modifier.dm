@@ -42,7 +42,7 @@
 /datum/deathmatch_modifier/proc/unselect(datum/deathmatch_lobby/lobby)
 	return
 
-///Called when the host chooses to change map. Returns FALSE if the new map is incompatible, TRUE otherwise.
+/// Called when the host chooses to change map.. Returns FALSE if the new map is incompatible, TRUE otherwise.
 /datum/deathmatch_modifier/proc/on_map_changed(datum/deathmatch_lobby/lobby)
 	if (map_incompatible(lobby.map))
 		lobby.unselect_modifier(src)
@@ -267,7 +267,7 @@
 
 /datum/deathmatch_modifier/paraplegic/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
-	///Mounts are being used. Do not spawn wheelchairs.
+	/// Mounts are being used.. Do not spawn wheelchairs.
 	if(/datum/deathmatch_modifier/mounts in lobby.modifiers)
 		return
 	var/obj/vehicle/ridden/wheelchair/motorized/improved/wheels = new (player.loc)
@@ -321,7 +321,7 @@
 	var/list/signed_lobbies
 	///The type of drop pod that'll periodically fall from the sky
 	var/drop_pod_type = /obj/structure/closet/supplypod/podspawn/deathmatch
-	///A (weighted) list of possible contents of the drop pod. Only one is picked at a time
+	/// A (weighted) list of possible contents of the drop pod.. Only one is picked at a time
 	var/list/contents
 	///An interval representing the min and max cooldown between each time it's fired.
 	var/interval = list(7 SECONDS, 12 SECONDS)
@@ -502,7 +502,7 @@
 	random_exempted = TRUE
 
 /datum/deathmatch_modifier/random/on_select(datum/deathmatch_lobby/lobby)
-	///remove any other global modifier if chosen. It'll pick random ones when the time comes.
+	/// remove any other global modifier if chosen.. It'll pick random ones when the time comes.
 	for(var/modpath in lobby.modifiers)
 		var/datum/deathmatch_modifier/modifier = GLOB.deathmatch_game.modifiers[modpath]
 		if(modifier.random_exempted)
@@ -511,7 +511,7 @@
 		lobby.modifiers -= modpath
 
 /datum/deathmatch_modifier/random/on_start_game(datum/deathmatch_lobby/lobby)
-	lobby.modifiers -= type //remove it before attempting to select other modifiers, or they'll fail.
+	lobby.modifiers -= type // remove it before trying to select other modifiers, or they'll fail.
 
 	var/static/list/static_pool
 	if(isnull(static_pool))
@@ -589,8 +589,8 @@
 		/datum/martial_art/boxing/evil = 20,
 		// LEGENDARY
 		/datum/martial_art/plasma_fist = 5,
-		/datum/martial_art/wrestling = 5, // wrestling is kinda strong ngl
-		/datum/martial_art/psychotic_brawling = 5, // a complete meme. sometimes you just get hardstunned. sometimes you punch someone across the room
+		/datum/martial_art/wrestling = 5, // wrestling is kind of strong ngl
+		/datum/martial_art/psychotic_brawling = 5, // a complete meme.. sometimes you just get hardstunned.. sometimes you punch someone across the room
 	)
 
 /datum/deathmatch_modifier/martial_artistry/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)

@@ -9,14 +9,14 @@
 	min_modes = 2
 	max_modes = 3
 
-/// Teleport... stuff...
+/// Teleport.... stuff...
 /datum/gizpulse/teleport
 	/// Min distance to teleport
 	var/offset_min = 5
 	/// Max distance to teleport
 	var/offset_max = 15
 
-/// Teleport... stuff...
+/// Teleport.... stuff...
 /datum/gizpulse/teleport/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
 	var/list/targets = get_teleport_targets(holder)
 	var/range = rand(offset_min, offset_max)

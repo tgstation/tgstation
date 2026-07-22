@@ -6,7 +6,7 @@
 	/// Whether this say mode works with custom say emotes.
 	var/allows_custom_say_emotes = FALSE
 
-/// Checks whether this saymode can be used by the given user. May send feedback.
+/// Checks whether this saymode can be used by the given user.. May send feedback.
 /datum/saymode/proc/can_be_used_by(mob/living/user)
 	return TRUE
 

@@ -83,7 +83,7 @@ FLOOR SAFES
 	. += span_notice("The locking mechanism gears are <b>wrenched</b> in place.")
 
 /obj/structure/safe/update_icon_state()
-	//uses the same icon as the captain's spare safe (therefore lockable storage) so keep it in line with that
+	// uses the same icon as the captain's spare safe so lockable storage) so keep it in line with that
 	icon_state = "[initial(icon_state)][open ? null : "_locked"]"
 	return ..()
 
@@ -321,7 +321,7 @@ FLOOR SAFES
 	open = TRUE
 	locked = FALSE
 
-///Special safe for the station's vault. Not explicitly required, but the piggy bank inside it is.
+/// Special safe for the station's vault.. Not explicitly needed but the piggy bank inside it is.
 /obj/structure/safe/vault
 
 /obj/structure/safe/vault/Initialize(mapload)

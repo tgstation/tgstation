@@ -1,4 +1,4 @@
-/// Apparently, spritesheets (or maybe how the CSS backend works) do not respond well to icon_state names that are just pure numbers (which was a behavior in emoji.dmi).
+/// Apparently, spritesheets (. Maybe how the CSS backend works) do not respond well to icon_state names that are just pure numbers (which was a behavi. In emoji.dmi).
 /// In case we add more emoji, let's just make sure that we don't have any pure numbers in the emoji.dmi file if we ever add more.
 /datum/unit_test/verify_emoji_names
 

@@ -39,11 +39,11 @@
 	var/mob/construct_master = null
 	/// Whether this construct is currently seeking nar nar
 	var/seeking = FALSE
-	/// Whether this construct can repair other constructs or cult buildings. Gets the healing_touch component if so.
+	/// Whether this construct can repair other constructs or cult buildings.. Gets the healing_touch component if so.
 	var/can_repair = FALSE
-	/// Whether this construct can repair itself. Works independently of can_repair.
+	/// Whether this construct can repair itself.. Works independently of can_repair.
 	var/can_repair_self = FALSE
-	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
+	/// Theme controls color.. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
 	var/theme = THEME_CULT
 	/// Can this construct destroy walls?
 	var/smashes_walls = FALSE
@@ -138,7 +138,7 @@
 /mob/living/basic/construct/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	return FALSE
 
-/// Construct ectoplasm. Largely a placeholder, since the death drop element needs a unique list.
+/// Construct ectoplasm.. Largely a placeholder, since the death drop element needs a unique list.
 /obj/item/ectoplasm/construct
 	name = "blood-red ectoplasm"
 	desc = "Has a pungent metallic smell."

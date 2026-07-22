@@ -1,4 +1,4 @@
-//Originally coded by ISaidNo, later modified by Kelenius. Ported from Baystation12.
+// Originally coded by ISaidNo, later modified by Kelenius.. Ported from Baystation12.
 
 /obj/structure/closet/crate/secure/loot
 	name = "abandoned crate"
@@ -7,7 +7,7 @@
 	base_icon_state = "securecrate"
 	integrity_failure = 0 //no breaking open the crate
 	var/code = null
-	/// Associated list of previous attempts w/ bulls & cows
+	/// Associated list of previous tries with bulls & cows
 	var/list/previous_attempts = list()
 	var/attempts = 10
 	var/code_length = 4
@@ -143,7 +143,7 @@
 	if(attempts <= 0)
 		boom(user)
 
-/// Checks if user input is a valid code attempt
+/// Checks if user input is a valid code try
 /obj/structure/closet/crate/secure/loot/proc/validate_input(input)
 	if(!input || code_length != length(input))
 		return FALSE
@@ -166,7 +166,7 @@
 /obj/structure/closet/crate/secure/loot/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 
-	// Attempt to update tgui ui, open and update if needed.
+	// Try to update tgui ui, open and update if needed.
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "AbandonedCrate", name)
@@ -194,7 +194,7 @@
 	attack_hand(user)
 	return ITEM_INTERACT_SUCCESS
 
-/// Implements bulls and cows algorithm to compare guess against actual code
+/// adds bulls and cows algorithm to compare guess against actual code
 /obj/structure/closet/crate/secure/loot/proc/bulls_and_cows(guess)
 	var/bulls = 0
 	var/cows = 0
@@ -222,7 +222,7 @@
 	if(!locked)
 		. = ..() //Run the normal code.
 		if(locked) //Double check if the crate actually locked itself when the normal code ran.
-			//reset the anti-tampering, number of attempts and last attempt when the lock is re-enabled.
+			// reset the anti-tampering, number of tries and last try when the lock is re-enabled.
 			tamperproof = initial(tamperproof)
 			attempts = initial(attempts)
 			previous_attempts = list()

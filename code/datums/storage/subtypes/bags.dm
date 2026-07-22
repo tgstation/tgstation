@@ -109,7 +109,7 @@
 
 ///Tray bag
 /datum/storage/bag/tray
-	max_specific_storage = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
+	max_specific_storage = WEIGHT_CLASS_BULKY // Plates are needed bulky to keep them out of backpacks
 	insert_preposition = "on"
 	max_slots = 8
 	max_total_storage = 16

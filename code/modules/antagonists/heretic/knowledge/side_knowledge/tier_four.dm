@@ -97,7 +97,7 @@
 	research_tree_icon_path = 'icons/obj/weapons/guns/ammo.dmi'
 	research_tree_icon_state = "310_strip"
 
-	/// A list of calibers that the ritual will deny. Only ballistic calibers are allowed.
+	/// A list of calibers that the ritual will deny.. Only ballistic calibers are allowed.
 	var/static/list/caliber_blacklist = list(
 		CALIBER_LASER,
 		CALIBER_ENERGY,

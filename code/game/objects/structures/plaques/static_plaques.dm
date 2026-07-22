@@ -32,8 +32,8 @@
 /obj/structure/plaque/static_plaque/golden/captain
 	name = "The Most Robust Captain Award for Robustness"
 
-// Commission plaques, to give a little backstory to the stations. Commission dates are date of merge (or best approximation, in the case of Meta) + 540 years to convert to SS13 dates.
-// Where PRs are available, I've linked them. Where they are unavailable, a git hash is provided instead for the direct commit that added/removed the map.
+// Commission plaques, to give a little backstory to the stations.. Commission dates are date of merge (or best approximation, in the case of Meta) + 540 years to convert to SS13 dates.
+// Where PRs are available, I've linked them.. Where they are unavailable, a git hash is provided instead for the direct commit that added/removed the map.
 // Please enjoy this trip through SS13's history.
 
 // Runtimestation: added Nov 11, 2016 (946ec1fec869eb59d6a84e32c90613af734fcd0e)
@@ -138,12 +138,12 @@
 // Other Stations
 
 // Space Station 13, Developer Class Outpost, Station Commissioned 30.12.2322, For the Glory of the Workers of the Third Soviet Union
-// The date for this station is exactly 4 centuries after the initial foundation of the (1st) Soviet Union. I have very little interest in tracking down the actual date of addition of Originalstation.
+// The date for this station is exactly 4 centuries after the initial foundation of the (1st) Soviet Union.. I have very little interest in tracking down the actual date of addition of Originalstation.
 /obj/structure/plaque/static_plaque/golden/commission/ks13
 	desc = "космическая-станция-13\nфорпост класса разработчика\nстанция сдана 30.12.2322\nво славу тружеников третьего советского союза"
 	icon_state = "commission_commie"
 
-//These are plaques that aren't made of metal, so we'll just consider them signs. Those are made of plastic (default) or wood, not gold.
+// These are plaques that aren't made of metal, so we'll just consider them signs.. Those are made of plastic (default) or wood, not gold.
 //See: code>game>objects>structures>signs>_signs.dm
 
 /obj/structure/sign/plaques/kiddie

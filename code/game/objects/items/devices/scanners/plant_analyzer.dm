@@ -67,7 +67,7 @@
 	if(last_scan_data)
 		return ..()
 
-/// When we attack something, try to scan something we hit with left click. Left-clicking uses scans for stats
+/// When we attack something, try to scan something we hit with left click.. Left-clicking uses scans for stats
 /obj/item/plant_analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(isliving(interacting_with))
 		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
@@ -80,7 +80,7 @@
 	shown_tab = PLANT_ANALYZER_STAT_TAB
 	return analyze(user, interacting_with)
 
-/// Same as above, but with right click. Right-clicking scans for chemicals.
+/// Same as above, but with right click.. Right-clicking scans for chemicals.
 /obj/item/plant_analyzer/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	return do_plant_chem_scan(interacting_with, user)
 

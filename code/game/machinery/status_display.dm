@@ -34,7 +34,7 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 
 	/// Normal text color
 	var/text_color = COLOR_DISPLAY_BLUE
-	/// Color for headers, eg. "- ETA -"
+	/// Color for headers, for example "- ETA -"
 	var/header_text_color = COLOR_DISPLAY_PURPLE
 
 	/// Used in greenscreen mode: the display currently being displayed (via vis_contents)
@@ -324,7 +324,7 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 		// Marquee text
 		var/marquee_message = "[message]    [message]    [message]"
 
-		// Width of full content. Must of these is never revealed unless the user inputted a single character.
+		// Width of full content.. Must of these is never revealed unless the user inputted a single character.
 		var/full_marquee_width = GLOB.status_font.get_metrics("[marquee_message]    ")
 		// We loop after only this much has passed.
 		var/looping_marquee_width = (GLOB.status_font.get_metrics("[message]    ]") - SCROLL_PADDING)
@@ -450,7 +450,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 		else
 			return PROCESS_KILL
 
-/// Figures out what we should be showing based on what's happening on the station
+/// Figures out what we should be showing good on what's happening on the station
 /// Returns a list with the mode, priority, and other details
 /obj/machinery/status_display/evac/proc/get_highest_priority_display()
 	// Shuttle stuff gets top priority - but only when it's actually doing something
@@ -679,7 +679,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	var/line2
 	if(!SSshuttle.supply)
 		// Might be missing in our first update on initialize before shuttles
-		// have loaded. Cross our fingers that it will soon return.
+		// have loaded.. Cross our fingers that it will soon return.
 		line1 = "shutl"
 		line2 = "not in service"
 	else if(SSshuttle.supply.mode == SHUTTLE_IDLE)
@@ -1200,7 +1200,7 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 		. += emissive_appearance(icon, "camera_emissive", src, alpha = src.alpha)
 
 /// Send an emergency alert signal to all status displays
-/// alert_type: The picture state to display ("biohazard", "lockdown", "radiation", etc.)
+/// alert_type: The picture state to display ("biohazard", "lockdown", "radiation", and so on
 /proc/send_status_display_alert(alert_type)
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 	if(frequency)
@@ -1213,7 +1213,7 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 		frequency.post_signal(virtual_speaker, alert_signal)
 
 /// Clear a specific emergency type from status displays
-/// emergency_type: The specific type to clear ("biohazard", "lockdown", "radiation", etc.)
+/// emergency_type: The specific type to clear ("biohazard", "lockdown", "radiation", and so on
 /// If emergency_type is null, clears ALL emergencies
 /proc/clear_status_display_emergency(emergency_type = null)
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)

@@ -24,8 +24,8 @@ GAME_VERB_DESC(/client, notify_restart, "Notify Restart", "Notifies you on Disco
 		if(member == stored_mention)
 			SSdiscord.notify_members -= stored_mention 
 			to_chat(src, span_notice("You will no longer be notified when the server restarts"))
-			return // This is necassary so it doesnt get added again, as it relies on the for loop being unsuccessful to tell us if they are in the list or not
+			return // This is necassary so it doesnt get added again, as it relies on the f. Loop being unsuccessful to tell us if they are in the list. Not
 
-	// If we got here, they arent in the list. Chuck 'em in!
+	// If we got here, they arent in the list.. Chuck 'em in!
 	to_chat(src, span_notice("You will now be notified when the server restarts"))
 	SSdiscord.notify_members += "[stored_mention]" 

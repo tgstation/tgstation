@@ -16,11 +16,11 @@
 	var/stage_speed = 0
 	///How the symptom affects the disease's transmissibility
 	var/transmittable = 0
-	///The type level of the symptom. Higher is harder to generate.
+	/// The type level of the symptom.. Higher is harder to generate.
 	var/level = 0
-	///The severity level of the symptom. Higher is more dangerous.
+	/// The severity level of the symptom.. Higher is more dangerous.
 	var/severity = 0
-	///The hash tag for our diseases, we will add it up with our other symptoms to get a unique id! ID MUST BE UNIQUE!!!
+	/// The hash tag for our diseases, we will add it up with our other symptoms to get a unique id!. ID MUST BE UNIQUE!!!
 	var/id = ""
 	///Base chance of sending warning messages, so it can be modified
 	var/base_message_chance = 10
@@ -37,7 +37,7 @@
 	var/list/thresholds
 	///If this symptom can appear from /datum/disease/advance/GenerateSymptoms()
 	var/naturally_occuring = TRUE
-	///If the symptom requires an organ for the effects to function, robotic organs are immune to disease unless inorganic biology symptom is present
+	/// If the symptom needs an organ for the effects to function, robotic organs are immune to disease unless inorganic biology symptom is present
 	var/required_organ
 	///The remedy for this symptom
 	var/datum/reagent/symptom_cure = /datum/reagent/medicine/spaceacillin

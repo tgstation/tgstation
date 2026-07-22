@@ -1,4 +1,4 @@
-///The cooldown between messages when attempting to break out of a morgue tray.
+/// The cooldown between messages when trying to break out of a morgue tray.
 #define BREAKOUT_COOLDOWN (5 SECONDS)
 ///The amount of time it takes to break out of a morgue tray.
 #define BREAKDOWN_TIME (60 SECONDS)

@@ -44,7 +44,7 @@
 	if(attacked_living.body_position == LYING_DOWN)
 		INVOKE_ASYNC(src, PROC_REF(fire_shot), attacked_living)
 
-/// Actually fire a shot. If no target is provided, just fire off in a random direction
+/// Actually fire a shot.. If no target is provided, just fire off in a random direction
 /obj/item/clothing/shoes/gunboots/proc/fire_shot(atom/target)
 	if(!isliving(loc))
 		return

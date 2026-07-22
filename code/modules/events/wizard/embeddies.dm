@@ -8,7 +8,7 @@
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 7
 
-///behold... the only reason sticky is a subtype...
+/// behold.... the only reason sticky is a subtype...
 /datum/round_event_control/wizard/embedpocalypse/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 	if(!.)
@@ -32,7 +32,7 @@
 /datum/round_event/wizard/embedpocalypse/sticky/start()
 	GLOB.global_funny_embedding = new /datum/global_funny_embedding/sticky
 
-///set this to a new instance of a SUBTYPE of global_funny_embedding. The main type is a prototype and will runtime really hard
+/// set this to a new instance of a SUBTYPE of global_funny_embedding.. The main type is a prototype and will runtime really hard
 GLOBAL_DATUM(global_funny_embedding, /datum/global_funny_embedding)
 
 /**
@@ -85,11 +85,11 @@ GLOBAL_DATUM(global_funny_embedding, /datum/global_funny_embedding)
 		embed_item.set_embed(embed_type)
 		embed_item.name = "[prefix] [embed_item.name]"
 
-///everything will be... POINTY!!!!
+/// everything will be.... POINTY!!!!
 /datum/global_funny_embedding/pointy
 	prefix = "pointy"
 
-///everything will be... sticky? sure, why not
+/// everything will be.... sticky?. sure, why not
 /datum/global_funny_embedding/sticky
 	embed_type = /datum/embedding/global_funny/sticky
 	prefix = "sticky"

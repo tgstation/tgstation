@@ -1,4 +1,4 @@
-/// Datum for controlling the base character, such as species, scarring, styles, augments etc
+/// Datum for controlling the base character, such as species, scarring, styles, augments and so on
 /datum/corpse_character
 	/// Species type to spawn with
 	var/datum/species/species_type = /datum/species/human
@@ -23,7 +23,7 @@
 /datum/corpse_character/human
 	species_type = /datum/species/human
 
-/// used by the morgue trays to spawn bodies (obeying three different configs???????????????????? yes please daddy give me more config for benign features)
+/// used by the morgue trays to spawn bodies (obeying three different configs????????????????????. yes please daddy give me more config for benign features)
 /datum/corpse_character/morgue
 
 /datum/corpse_character/morgue/apply_character(mob/living/carbon/human/fashionable_corpse, list/saved_objects, list/recovered_items, list/datum/callback/on_revive_and_player_occupancy)

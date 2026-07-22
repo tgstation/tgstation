@@ -22,9 +22,9 @@
 	var/pod_type = /obj/structure/closet/supplypod
 	/// If this console is locked and needs to be unlocked with an ID
 	var/locked = TRUE
-	/// Is the console in beacon mode? Exists to let beacon know when a pod may come in
+	/// Is the console in beacon mode?. Exists to let beacon know when a pod may come in
 	var/using_beacon = FALSE
-	/// Number of beacons printed. Used to determine beacon names.
+	/// Number of beacons printed.. Used to determine beacon names.
 	var/static/printed_beacons = 0
 	/// Cooldown to prevent beacon spam
 	COOLDOWN_DECLARE(beacon_print_cooldown)
@@ -92,7 +92,7 @@
 		data["points"] = account.account_balance
 	data["locked"] = locked//swipe an ID to unlock
 	data["siliconUser"] = HAS_SILICON_ACCESS(user)
-	data["beaconzone"] = beacon ? get_area(beacon) : ""//where is the beacon located? outputs in the tgui
+	data["beaconzone"] = beacon ? get_area(beacon) : ""// where is the beacon located?. outputs in the tgui
 	data["using_beacon"] = using_beacon //is the mode set to deliver to the beacon or the cargobay?
 	data["canBeacon"] = !using_beacon || canBeacon //is the mode set to beacon delivery, and is the beacon in a valid location?
 	data["canBuyBeacon"] = COOLDOWN_FINISHED(src, beacon_print_cooldown) && account.account_balance >= BEACON_COST

@@ -28,7 +28,7 @@
 		return
 	new chosen_effect(open_turf)
 
-/// If we are a cosmic heretic, this will return the appropriate effect trail based on our passive level. returns the default trail otherwise
+/// If we are a cosmic heretic, this will return the appropriate effect trail good on our passive level.. returns the default trail otherwise
 /proc/cosmic_trail_based_on_passive(mob/living/source)
 	if(isstargazer(source))
 		return /datum/element/effect_trail/cosmic_field/antiprojectile

@@ -21,7 +21,7 @@
  */
 
 
-///returns nothing with an alert instead of the message if it contains something in the ic filter, and sanitizes normally if the name is fine. It returns nothing so it backs out of the input the same way as if you had entered nothing.
+/// returns nothing with an alert instead of the message if it contains something in the ic filter, and sanitizes normally if the name is fine.. It returns nothing so it backs out of the input the same way as if you had entered nothing.
 /proc/sanitize_name(target, allow_numbers = FALSE, cap_after_symbols = TRUE)
 	if(is_ic_filtered(target) || is_soft_ic_filtered(target))
 		tgui_alert(usr, "You cannot set a name that contains a word prohibited in IC chat!")
@@ -178,19 +178,19 @@
 		char = t_in[i]
 		switch(text2ascii(char))
 
-			// A  .. Z
+			// A ... Z
 			if(65 to 90) //Uppercase Letters
 				number_of_alphanumeric++
 				last_char_group = LETTERS_DETECTED
 
-			// a  .. z
+			// a ... z
 			if(97 to 122) //Lowercase Letters
 				if(((last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED) && cap_at_start) || (cap_after_symbols && last_char_group == SYMBOLS_DETECTED)) //start of a word
 					char = uppertext(char)
 				number_of_alphanumeric++
 				last_char_group = LETTERS_DETECTED
 
-			// 0  .. 9
+			// 0 ... 9
 			if(48 to 57) //Numbers
 				if(!allow_numbers) //allow name to start with number if AI/Borg
 					if(strict)
@@ -198,7 +198,7 @@
 					continue
 				number_of_alphanumeric++
 				last_char_group = NUMBERS_DETECTED
-			// '  -  .
+			// ' - .
 			if(39,45,46) //Common name punctuation
 				if(last_char_group == NO_CHARS_DETECTED)
 					if(strict)
@@ -206,7 +206,7 @@
 					continue
 				last_char_group = SYMBOLS_DETECTED
 
-			// ~   |   @  :  #  $  %  &  *  +
+			// ~ | @ : # $ % & * +
 			if(126,124,64,58,35,36,37,38,42,43) //Other symbols that we'll allow (mainly for AI)
 				if(last_char_group == NO_CHARS_DETECTED || !allow_numbers) //suppress at start of string
 					if(strict)
@@ -459,10 +459,10 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/ready_random_color()
 	return "#" + random_string(6, GLOB.hex_characters)
 
-//merges non-null characters (3rd argument) from "from" into "into". Returns result
-//e.g. into = "Hello World"
-//     from = "Seeya______"
-//     returns"Seeya World"
+// merges non-null characters (3rd argument) from "from" into "into".. Returns result
+// e.g.. into = "Hello World"
+// from = "Seeya______"
+// returns"Seeya World"
 //The returned text is always the same length as into
 //This was coded to handle DNA gene-splicing.
 /proc/merge_text(into, from, null_char="_")
@@ -502,7 +502,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			. += copytext(into, into_it)
 
 //finds the first occurrence of one of the characters from needles argument inside haystack
-//it may appear this can be optimised, but it really can't. findtext() is so much faster than anything you can do in byondcode.
+// it may appear this can be optimised, but it really can't.. findtext() is so much faster than anything you can do in byondcode.
 //stupid byond :(
 /proc/findchar(haystack, needles, start=1, end=0)
 	var/char = ""
@@ -534,7 +534,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	t = replacetext(t, "\\|", "$9")
 	t = replacetext(t, "\\%", "$0")
 
-	// Escape  single characters that will be used
+	// Escape single characters that will be used
 
 	t = replacetext(t, "!", "$a")
 
@@ -695,7 +695,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 //Takes a list of values, sanitizes it down for readability and character count,
 //then exports it as a json file at data/npc_saves/[filename].json.
-//As far as SS13 is concerned this is write only data. You can't change something
+// As far as SS13 is concerned this is write only data.. You can't change something
 //in the json file and have it be reflected in the in game item/mob it came from.
 //(That's what things like savefiles are for) Note that this list is not shuffled.
 /proc/twitterize(list/proposed, filename, cullshort = 1, storemax = 1000)
@@ -722,7 +722,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			early_culling = FALSE
 			buffer = copytext(string, pos)
 			break
-		if(early_culling) //Never found any letters! Bail!
+		if(early_culling) // Never found any letters!. Bail!
 			continue
 
 		var/punctbuffer = ""
@@ -734,7 +734,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 				break
 			punctbuffer += let
 			cutoff += length(let)
-		if(punctbuffer) //We clip down excessive punctuation to get the letter count lower and reduce repeats. It's not perfect but it helps.
+		if(punctbuffer) // We clip down excessive punctuation to get the letter count lower and reduce repeats.. It's not perfect but it helps.
 			var/exclaim = FALSE
 			var/question = FALSE
 			var/periods = 0
@@ -749,7 +749,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 					question = TRUE
 					if(exclaim)
 						break
-				if(!exclaim && !question && findtext(let, ".")) //? and ! take priority over periods
+				if(!exclaim && !question && findtext(let, ".")) // ?. and !. take priority over periods
 					periods += 1
 			if(exclaim)
 				if(question)
@@ -968,7 +968,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	if(length(thousands))
 		output += thousands
 
-	if(length(output) && number % 1000 && (number % 1000) < 100) //e.g. One Thousand And Ninety-Nine, instead of One Thousand Ninety-Nine
+	if(length(output) && number % 1000 && (number % 1000) < 100) // e.g.. One Thousand And Ninety-Nine, instead of One Thousand Ninety-Nine
 		output += "and"
 
 	//handles digits at ones, tens and hundreds places (if any)
@@ -1090,7 +1090,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	var/pressure_adj = value_in_kpa * 1000 //to adjust for using kPa instead of Pa
 	return siunit(pressure_adj, "Pa", maxdecimals)
 
-/// Slightly expensive proc to scramble a message using equal probabilities of character replacement from a list. DOES NOT SUPPORT HTML!
+/// Slightly expensive proc to scramble a message using equal probabilities of character replacement from a list.. DOES NOT SUPPORT HTML!
 /proc/scramble_message_replace_chars(original, replaceprob = 25, list/replacementchars = list("$", "@", "!", "#", "%", "^", "&", "*"), replace_letters_only = FALSE, replace_whitespace = FALSE)
 	var/list/out = list()
 	var/static/list/whitespace = list(" ", "\n", "\t")
@@ -1105,7 +1105,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		out += prob(replaceprob)? pick(replacementchars) : char
 	return out.Join("")
 
-///runs `piglatin_word()` proc on each word in a sentence. preserves caps and punctuation
+/// runs `piglatin_word()` proc on each word in a sentence.. preserves caps and punctuation
 /proc/piglatin_sentence(text)
 	var/text_length = length(text)
 
@@ -1143,8 +1143,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	var/second_word_is_vowel = (copytext(word, 2, 3) in VOWELS)
 	//If a word starts with a vowel add the word "way" at the end of the word.
 	if(first_word_is_vowel)
-		return word + pick("yay", "way", "hay") //in cultures around the world it's different, so heck lets have fun and make it random. should still be readable
-	//If a word starts with a consonant and a vowel, put the first letter of the word at the end of the word and add "ay."
+		return word + pick("yay", "way", "hay") // in cultures around the world it's different, so heck lets have fun and make it random.. should still be readable
+	// If a word starts with a consonant. A vowel, put the first letter of the word at the end of the word. Add "ay."
 	if(!first_word_is_vowel && second_word_is_vowel)
 		word = copytext(word, 2)
 		word += first_letter
@@ -1185,7 +1185,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/format_text(text)
 	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
 
-///Returns a string based on the weight class define used as argument
+/// Returns a string good on the weight class define used as argument
 /proc/weight_class_to_text(w_class)
 	switch(w_class)
 		if(WEIGHT_CLASS_TINY)

@@ -110,7 +110,7 @@
 	for (var/req_atom in required_atoms)
 		if (!istype(target, req_atom))
 			continue
-		// Try to select a required atom that this scanned atom would contribute towards
+		// Try to select a needed atom that this scanned atom would contribute towards
 		var/selected
 		var/list/seen = scanned[req_atom]
 		if (destructive && (req_atom in scanned) && scanned[req_atom] < required_atoms[req_atom])

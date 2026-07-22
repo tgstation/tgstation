@@ -57,7 +57,7 @@
 	if(visuals_only)
 		return
 
-	// We don't require the nukiebase be loaded to function, but lets go ahead and kick off loading just in case
+	// We don't need the nukiebase be loaded to function, but lets go ahead and kick off loading just in case
 	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, lazy_load_template), LAZY_TEMPLATE_KEY_NUKIEBASE)
 	var/obj/item/radio/radio = nukie.ears
 	radio.set_frequency(FREQ_SYNDICATE)

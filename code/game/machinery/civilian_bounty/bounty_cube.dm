@@ -12,7 +12,7 @@
 	var/bounty_value = 0
 	///Multiplier for the bounty payout received by the Supply budget if the cube is sent without having to nag.
 	var/speed_bonus = 0.2
-	///Percentage of the bounty payout received by the people who completed the bounty. Split between multiple people in the event multiple people finished a global bounty.
+	/// Percentage of the bounty payout received by the people who completed the bounty.. Split between multiple people in the event multiple people finished a global bounty.
 	var/holder_cut = BOUNTY_CUT_STANDARD
 	///Multiplier for the bounty payout received by the person who claims the handling tip.
 	var/handler_tip = 0.1

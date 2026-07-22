@@ -15,7 +15,7 @@ SUBSYSTEM_DEF(server_maint)
 	var/cleanup_ticker = 0
 
 /datum/controller/subsystem/server_maint/PreInit()
-	world.hub_password = "" //quickly! before the hubbies see us.
+	world.hub_password = "" // quickly!. before the hubbies see us.
 
 /datum/controller/subsystem/server_maint/Initialize()
 	if (fexists("tmp/"))
@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(server_maint)
 		"alive_mob_list" = GLOB.alive_mob_list,
 		"suicided_mob_list" = GLOB.suicided_mob_list,
 		"dead_mob_list" = GLOB.dead_mob_list,
-		"keyloop_list" = GLOB.keyloop_list, //A null here will cause new clients to be unable to move. totally unacceptable
+		"keyloop_list" = GLOB.keyloop_list, // A null here will cause new clients to be unable to move.. totally unacceptable
 	)
 
 	var/datum/tgs_version/tgsversion = world.TgsVersion()
@@ -76,7 +76,7 @@ SUBSYSTEM_DEF(server_maint)
 				QDEL_IN(C, 1) //to ensure they get our message before getting disconnected
 				continue
 
-		if (MC_TICK_CHECK) //one day, when ss13 has 1000 people per server, you guys are gonna be glad I added this tick check
+		if (MC_TICK_CHECK) // one day, when ss13 has 1000 people per server, you guys are going to be glad I added this tick check
 			return
 
 /datum/controller/subsystem/server_maint/Shutdown()
@@ -89,7 +89,7 @@ SUBSYSTEM_DEF(server_maint)
 			continue
 		var/client/C = thing
 		C?.tgui_panel?.send_roundrestart()
-		if(server) //if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
+		if(server) // if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address.. -- NeoFite
 			C << link("byond://[server]")
 
 

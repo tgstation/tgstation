@@ -1,7 +1,7 @@
 
 // Optional properties, not guaranteed to be present on all materials
 
-/// Minimum flammability value required to make an object made out of this material flammable
+/// Minimum flammability value needed to make an object made out of this material flammable
 #define MINIMUM_FLAMMABILITY 4
 
 /// If a material has this property, it is flammable and has reduced fire protection.

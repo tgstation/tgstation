@@ -3,9 +3,9 @@
 #define META_GAS_SPECIFIC_HEAT 1
 ///Name of the gas
 #define META_GAS_NAME 2
-///Amount of moles required of the gas to be visible
+/// Amount of moles needed of the gas to be visible
 #define META_GAS_MOLES_VISIBLE 3
-///Overlay path of the gas, also setup the alpha based on the amount
+/// Overlay path of the gas, also setup the alpha good on the amount
 #define META_GAS_OVERLAY 4
 ///Let the air alarm know if the gas is dangerous
 #define META_GAS_DANGER 5
@@ -29,7 +29,7 @@
 #define T0C 273.15
 /// 20degC
 #define T20C 293.15
-/// -14C - Temperature used for kitchen cold room, medical freezer, etc.
+/// -14C - Temperature used for kitchen cold room, medical freezer, and so on
 #define COLD_ROOM_TEMP 259.15
 
 /**
@@ -48,7 +48,7 @@
 #define MINIMUM_MOLE_COUNT 0.01
 /// Molar accuracy to round to
 #define MOLAR_ACCURACY  1E-4
-/// Types of gases (based on gaslist_cache)
+/// Types of gases good on gaslist_cache)
 #define GAS_TYPE_COUNT 20
 /// Maximum error caused by QUANTIZE when removing gas (roughly, in reality around 2 * MOLAR_ACCURACY less)
 #define MAXIMUM_ERROR_GAS_REMOVAL (MOLAR_ACCURACY * GAS_TYPE_COUNT)
@@ -58,20 +58,20 @@
 
 /// moles_visible * FACTOR_GAS_VISIBLE_MAX = Moles after which gas is at maximum visibility
 #define FACTOR_GAS_VISIBLE_MAX 20
-/// Mole step for alpha updates. This means alpha can update at 0.25, 0.5, 0.75 and so on
+/// Mole step for alpha updates... This means alpha can update at 0.25, 0.5, 0.75 and so on
 #define MOLES_GAS_VISIBLE_STEP 0.25
 /// The total visible states
 #define TOTAL_VISIBLE_STATES (FACTOR_GAS_VISIBLE_MAX * (1 / MOLES_GAS_VISIBLE_STEP))
 
-//  REACTIONS
-//  Return values for reactions (bitflags).
-/// The gas mixture is not reacting. Not actually a bitflag.
+// REACTIONS
+// Return values for reactions (bitflags).
+/// The gas mixture is not reacting... Not actually a bitflag.
 #define NO_REACTION NONE
 /// The gas mixture is reacting.
 #define REACTING (1 << 0)
 /// The gas mixture is able to stop all reactions.
 #define STOP_REACTIONS (1 << 1)
-/// The gas mixture has the requirements to start a volatile reaction.
+/// The gas mixture has the needs to start a volatile reaction.
 #define VOLATILE_REACTION (1 << 2)
 
 //Fusion
@@ -100,7 +100,7 @@
 #define MINIMUM_AIR_RATIO_TO_MOVE 0.001
 /// Minimum amount of air that has to move before a group processing can be suspended (Round about 10)
 #define MINIMUM_AIR_TO_SUSPEND (MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND)
-/// Either this must be active (round about 0.1) //Might need to raise this a tad to better support space leaks. we'll see
+/// Either this must be active (round about 0.1) //Might need to raise this a tad to better support space leaks... we'll see
 #define MINIMUM_MOLES_DELTA_TO_MOVE (MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_MOVE)
 /// or this (or both, obviously)
 #define MINIMUM_TEMPERATURE_TO_MOVE (T20C+100)
@@ -114,19 +114,19 @@
 #define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION (T20C+400)
 
 //HEAT TRANSFER COEFFICIENTS
-//Must be between 0 and 1. Values closer to 1 equalize temperature faster
+// Must be between 0 and 1... Values closer to 1 equalize temperature faster
 //Should not exceed 0.4 else strange heat flow occur
 #define WALL_HEAT_TRANSFER_COEFFICIENT 0.0
 #define OPEN_HEAT_TRANSFER_COEFFICIENT 0.4
-/// a hack for now
+/// a temporary solution for now
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT 0.1
-/// a hack to help make vacuums "cold", sacrificing realism for gameplay
+/// a temporary solution to help make vacuums "cold", sacrificing realism for gameplay
 #define HEAT_CAPACITY_VACUUM 7000
 
 //FIRE
-///Minimum temperature for fire to move to the next turf (150 °C or 433 K)
+/// Minimum temperature for fire to move to the next turf (150 °C or 433 Okay
 #define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD (150+T0C)
-///Minimum temperature for fire to exist on a turf (100 °C or 373 K)
+/// Minimum temperature for fire to exist on a turf (100 °C or 373 Okay
 #define FIRE_MINIMUM_TEMPERATURE_TO_EXIST (100+T0C)
 ///Multiplier for the temperature shared to other turfs
 #define FIRE_SPREAD_RADIOSITY_SCALE 0.85
@@ -175,7 +175,7 @@
 
 /// How many maximum iterations do we allow the Newton-Raphson approximation for gas pressure to do.
 #define ATMOS_PRESSURE_APPROXIMATION_ITERATIONS 20
-/// We deal with big numbers and a lot of math, things are bound to get imprecise. Take this traveller.
+/// We deal with big numbers and a lot of math, things are bound to get imprecise... Take this traveller.
 #define ATMOS_PRESSURE_ERROR_TOLERANCE 0.01
 /// Helper function for retrieving gas meta info for use in performace critical places
 #define GAS_META /datum/gas_mixture::gas_meta

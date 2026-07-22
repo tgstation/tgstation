@@ -1,4 +1,4 @@
-///objects can only have one particle on them at a time, so we use these abstract effects to hold and display the effects. You know, so multiple particle effects can exist at once.
+/// objects can only have one particle on them at a time, so we use these abstract effects to hold and display the effects.. You know, so multiple particle effects can exist at once.
 ///also because some objects do not display particles due to how their visuals are built
 /obj/effect/abstract/particle_holder
 	name = "particle holder"
@@ -21,9 +21,9 @@
 		return INITIALIZE_HINT_QDEL
 
 	if(PLANE_TO_TRUE(loc.plane) == FLOOR_PLANE)
-		vis_flags &= ~VIS_INHERIT_PLANE // don't yoink the floor plane. we'll just sit on game plane, it's fine
+		vis_flags &= ~VIS_INHERIT_PLANE // don't yoink the floor plane.. we'll just sit on game plane, it's fine
 
-	// We nullspace ourselves because some objects use their contents (e.g. storage) and some items may drop everything in their contents on deconstruct.
+	// We nullspace ourselves because some objects use their contents (e.g.. storage) and some items may drop everything in their contents on deconstruct.
 	parent = loc
 	loc = null
 
@@ -45,7 +45,7 @@
 	parent = null
 	return ..()
 
-/// Non movables don't delete contents on destroy, so we gotta do this
+/// Non movables don't delete contents on destroy, so we got to do this
 /obj/effect/abstract/particle_holder/proc/parent_deleted(datum/source)
 	SIGNAL_HANDLER
 	qdel(src)

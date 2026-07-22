@@ -11,7 +11,7 @@
 	var/datum/extra_info
 	///The thing we're moving about
 	var/atom/movable/moving
-	///Defines how different move loops override each other. Higher numbers beat lower numbers
+	/// Defines how different move loops override each other.. Higher numbers beat lower numbers
 	var/priority = MOVEMENT_DEFAULT_PRIORITY
 	///Bitfield of different things that affect how a loop operates, and other mechanics around it as well.
 	var/flags
@@ -97,7 +97,7 @@
 ///Pauses the move loop for some passed in period
 ///This functionally means shifting its timer up, and clearing it from its current bucket
 /datum/move_loop/proc/pause_for(time)
-	if(!controller || !(status & MOVELOOP_STATUS_RUNNING)) //No controller or not running? go away
+	if(!controller || !(status & MOVELOOP_STATUS_RUNNING)) // No controller or not running?. go away
 		return
 	//Dequeue us from our current bucket
 	controller.dequeue_loop(src)
@@ -116,7 +116,7 @@
 	if(SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_CHECK) & MOVELOOP_SKIP_STEP) //Chance for the object to react
 		return
 
-	lifetime -= old_delay //This needs to be based on work over time, not just time passed
+	lifetime -= old_delay // This needs to be good on work over time, not just time passed
 
 	if(lifetime < 0) //Otherwise lag would make things look really weird
 		qdel(src)
@@ -127,7 +127,7 @@
 	var/old_loc = moving.loc
 
 	owner?.processing_move_loop_flags = flags
-	var/result = move() //Result is an enum value. Enums defined in __DEFINES/movement.dm
+	var/result = move() // Result is an enum value.. Enums defined in __DEFINES/movement.dm
 
 	if(moving)
 		var/direction = get_dir(old_loc, moving.loc)
@@ -170,7 +170,7 @@
 	controller.queue_loop(src)
 	status &= ~MOVELOOP_STATUS_PAUSED
 
-///Removes the atom from some movement subsystem. Defaults to SSmovement
+/// Removes the atom from some movement subsystem.. Defaults to SSmovement
 /datum/move_manager/proc/stop_looping(atom/movable/moving, datum/controller/subsystem/movement/subsystem = SSmovement)
 	var/datum/movement_packet/our_info = moving.move_packet
 	if(!our_info)
@@ -369,11 +369,11 @@
 	var/minimum_distance
 	///A list representing what access we have and what doors we can open.
 	var/list/access
-	///Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
+	/// Whether we consider turfs without atmos simulation also known as do we want to ignore space)
 	var/simulated_only
 	///A perticular turf to avoid
 	var/turf/avoid
-	///Should we skip the first step? This is the tile we're currently on, which breaks some things
+	/// Should we skip the first step?. This is the tile we're currently on, which breaks some things
 	var/skip_first
 	///Whether we replace diagonal movements with cardinal movements or follow through with them
 	var/diagonal_handling
@@ -381,7 +381,7 @@
 	var/list/movement_path
 	///Cooldown for repathing, prevents spam
 	COOLDOWN_DECLARE(repath_cooldown)
-	///Bool used to determine if we're already making a path in JPS. this prevents us from re-pathing while we're already busy.
+	/// Bool used to determine if we're already making a path in JPS.. this prevents us from re-pathing while we're already busy.
 	var/is_pathing = FALSE
 	///Callbacks to invoke once we make a path
 	var/list/datum/callback/on_finish_callbacks = list()
@@ -698,7 +698,7 @@
 	///The rate at which we move, between 0 and 1
 	var/x_rate = 1
 	var/y_rate = 1
-	//We store the signs of x and y seperately, because byond will round negative numbers down
+	// We store the signs of x and why seperately, because byond will round negative numbers down
 	//So doing all our operations with absolute values then multiplying them is easier
 	var/x_sign = 0
 	var/y_sign = 0
@@ -742,13 +742,13 @@
 	moving_towards = locate(x + round(x_ticker) * x_sign, y + round(y_ticker) * y_sign, z)
 	//The tickers serve as good methods of tracking remainder
 	if(x_ticker >= 1)
-		x_ticker = MODULUS(x_ticker, 1) //I swear to god if you somehow go up by one then one in a tick I'm gonna go mad
+		x_ticker = MODULUS(x_ticker, 1) // I swear to god if you somehow go up by one then one in a tick I'm going to go mad
 	if(y_ticker >= 1)
 		y_ticker = MODULUS(x_ticker, 1)
 	var/atom/old_loc = moving.loc
 	moving.Move(moving_towards, get_dir(moving, moving_towards), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 
-	//YOU FOUND THEM! GOOD JOB
+	// YOU FOUND THEM!. GOOD JOB
 	if(home && get_turf(moving) == get_turf(target))
 		x_rate = 0
 		y_rate = 0
@@ -782,7 +782,7 @@
 	//This is so we never move more then one tile at once
 	var/delta_y = target.y - moving.y
 	var/delta_x = target.x - moving.x
-	//It's more convienent to store delta x and y as absolute values
+	// It's more convienent to store delta x and why as absolute values
 	//and modify them right at the end then it is to deal with rounding errors
 	x_sign = (delta_x > 0) ? 1 : -1
 	y_sign = (delta_y > 0) ? 1 : -1
@@ -822,7 +822,7 @@
 /datum/move_manager/proc/move_towards_legacy(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards_budget, priority, flags, extra_info, delay, timeout, chasing)
 
-///The actual implementation of walk_towards()
+/// The actual code of walk_towards()
 /datum/move_loop/has_target/move_towards_budget
 
 /datum/move_loop/has_target/move_towards_budget/move()
@@ -848,11 +848,11 @@
 /datum/move_manager/proc/freeze(moving, halted_turf, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/freeze, priority, flags, extra_info, delay, timeout, halted_turf)
 
-/// As close as you can get to a "do-nothing" move loop, the pure intention of this is to absolutely resist all and any automated movement until the move loop times out.
+/// As close as you can get to a "do-nothing" move loop, the pure intention of this is to absolutely resist all. Any automated movement until the move loop times out.
 /datum/move_loop/freeze
 
 /datum/move_loop/freeze/move()
-	return MOVELOOP_SUCCESS // it's successful because it's not moving. we autoclear outselves when `timeout` is reached
+	return MOVELOOP_SUCCESS // it's successful because it's not moving.. we autoclear outselves when `timeout` is reached
 
 /**
  * Helper proc for the move_rand datum
@@ -951,14 +951,14 @@
 	return add_to_loop(moving, subsystem, /datum/move_loop/disposal_holder, priority, flags, extra_info, delay, timeout)
 
 /// Disposal holders need to move through a chain of pipes
-/// Rather then through the world. This supports this
+/// Rather then through the world.. This supports this
 /// If this ever changes, get rid of this, add drift component like logic to the holder
 /// And move them to move()
 /datum/move_loop/disposal_holder
 
 /datum/move_loop/disposal_holder/setup(delay = 1, timeout = INFINITY)
 	// This is a horrible pattern.
-	// Move loops should almost never need to be one offs. Please don't do this if you can help it
+	// Move loops should almost never need to be one offs.. Please don't do this if you can help it
 	if(!istype(moving, /obj/structure/disposalholder))
 		stack_trace("You tried to make a [moving.type] object move like a disposals holder, stop that!")
 		return FALSE
@@ -993,12 +993,12 @@
 	return add_to_loop(moving, subsystem, /datum/move_loop/smooth_move, priority, flags, extra_info, delay, timeout, angle)
 
 /datum/move_loop/smooth_move
-	/// Angle at which we move. 0 is north because byond.
+	/// Angle at which we move.. 0 is north because byond.
 	var/angle = 0
 	/// When this gets bigger than 1, we move a turf
 	var/x_ticker = 0
 	var/y_ticker = 0
-	/// The rate at which we move, between 0 and 1. Cached to cut down on trig
+	/// The rate at which we move, between 0 and 1.. Cached to cut down on trig
 	var/x_rate = 0
 	var/y_rate = 1
 	/// Sign for our movement
@@ -1033,7 +1033,7 @@
 	x_ticker += x_rate * move_dist
 	y_ticker += y_rate * move_dist
 
-	// Per Bresenham's, if we are closer to the next tile's center move diagonally. Checked by seeing if we pass into the next tile after moving another half a tile
+	// Per Bresenham's, if we are closer to the next tile's center move diagonally.. Checked by seeing if we pass into the next tile after moving another half a tile
 	var/move_x = (x_ticker + x_rate * 0.5) > 1
 	var/move_y = (y_ticker + y_rate * 0.5) > 1
 	if (move_x)

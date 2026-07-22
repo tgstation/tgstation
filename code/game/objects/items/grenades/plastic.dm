@@ -104,7 +104,7 @@
 	to_chat(user, "Timer set for [det_time] seconds.")
 
 /obj/item/grenade/c4/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	// Here lies C4 ghosts. We hardly knew ye
+	// Here lies C4 ghosts.. We hardly knew ye
 	if(isdead(interacting_with))
 		return NONE
 	aim_dir = get_dir(user, interacting_with)
@@ -179,8 +179,8 @@
 	user.gib(DROP_BODYPARTS)
 	qdel(src)
 
-// X4 is an upgraded directional variant of c4 which is relatively safe to be standing next to. And much less safe to be standing on the other side of.
-// C4 is intended to be used for infiltration, and destroying tech. X4 is intended to be used for heavy breaching and tight spaces.
+// X4 is an upgraded directional variant of c4 which is relatively safe to be standing next to.. And much less safe to be standing on the other side of.
+// C4 is intended to be used for infiltration, and destroying tech.. X4 is intended to be used for heavy breaching and tight spaces.
 // Intended to replace C4 for nukeops, and to be a randomdrop in surplus/random traitor purchases.
 
 /obj/item/grenade/c4/x4

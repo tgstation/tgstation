@@ -53,7 +53,7 @@
 	var/limb_damage = actual_limb.get_damage()
 	var/limb_armor = max(0, target.getarmor(actual_limb, BIO) - 25)
 
-	// This is a pretty jank way to do this, but in short:
+	// This is a pretty low quality code way to do this, but in short:
 	// if they have thick material on that bodypart it will always need at least 25 previous limb damage to trigger an infection.
 	// and if their bio armor isn't thick it's a bit weaker.
 	for(var/obj/item/clothing/iter_clothing in target.get_clothing_on_part(actual_limb))

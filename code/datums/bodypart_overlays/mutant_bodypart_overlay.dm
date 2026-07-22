@@ -1,12 +1,12 @@
-///Variant of bodypart_overlay meant to work synchronously with external organs. Gets imprinted upon Insert in on_species_gain
+/// Variant of bodypart_overlay meant to work synchronously with external organs.. Gets imprinted upon Insert in on_species_gain
 /datum/bodypart_overlay/mutant
 	///Sprite datum we use to draw on the bodypart
 	var/datum/sprite_accessory/sprite_datum
 
-	///Defines what kind of 'organ' we're looking at. Sprites have names like 'm_mothwings_firemoth_ADJ'. 'mothwings' would then be feature_key
+	/// Defines what kind of 'organ' we're looking at.. Sprites have names like 'm_mothwings_firemoth_ADJ'.. 'mothwings' would then be feature_key
 	var/feature_key = ""
 
-	///The color this organ draws with. Updated by bodypart/inherit_color()
+	/// The color this organ draws with.. Updated by bodypart/inherit_color()
 	var/draw_color
 	///Override of the color of the organ, from dye sprays
 	var/dye_color
@@ -15,7 +15,7 @@
 
 	///Where does this organ inherit its color from?
 	var/color_source = ORGAN_COLOR_INHERIT
-	///Take on the dna/preference from whoever we're gonna be inserted in
+	/// Take on the dna/preference from whoever we're going to be inserted in
 	var/imprint_on_next_insertion = TRUE
 
 /datum/bodypart_overlay/mutant/New(obj/item/organ/attached_organ)
@@ -27,7 +27,7 @@
 	SIGNAL_HANDLER
 
 	if (isalien(receiver))
-		return // Xenomorphs have no dna or other features required to support this, maybe one day
+		return // Xenomorphs have no dna or other features needed to support this, maybe one day
 
 	if(!should_visual_organ_apply_to(parent.type, receiver))
 		stack_trace("adding a [parent.type] to a [receiver.type] when it shouldn't be!")
@@ -79,7 +79,7 @@
 	var/base_state = get_base_icon_state()
 	return "[gender_key]_[feature_key]_[base_state]_[layer_index]"
 
-///Get the image we need to draw on the person. Called from get_overlay() which is called from _bodyparts.dm. Limb can be null
+/// Get the image we need to draw on the person.. Called from get_overlay() which is called from _bodyparts.dm.. Limb can be null
 /datum/bodypart_overlay/mutant/get_image(obj/item/bodypart/limb, layer_index, layer_real)
 	if(!sprite_datum)
 		CRASH("Trying to call get_image() on [type] while it didn't have a sprite_datum. This shouldn't happen, report it as soon as possible.")
@@ -96,15 +96,15 @@
 /datum/bodypart_overlay/mutant/added_to_limb(obj/item/bodypart/limb)
 	inherit_color(limb)
 
-///Change our accessory sprite, using the accesssory type. If you need to change the sprite for something, use simple_change_sprite()
+/// Change our accessory sprite, using the accesssory type.. If you need to change the sprite for something, use simple_change_sprite()
 /datum/bodypart_overlay/mutant/set_appearance(accessory_type)
 	sprite_datum = fetch_sprite_datum(accessory_type)
 
-///In a lot of cases, appearances are stored in DNA as the Name, instead of the path. Use set_appearance instead of possible
+/// In a lot of cases, appearances are stored in DNA as the Name, instead of the path.. Use set_appearance instead of possible
 /datum/bodypart_overlay/mutant/proc/set_appearance_from_name(accessory_name)
 	sprite_datum = fetch_sprite_datum_from_name(accessory_name)
 
-///Generate a unique key based on our sprites. So that if we've aleady drawn these sprites, they can be found in the cache and wont have to be drawn again (blessing and curse, but mostly curse)
+/// Generate a unique key good on our sprites.. So that if we've aleady drawn these sprites, they can be found in the cache. Wont have to be drawn again (blessing. Curse. Mostly curse)
 /datum/bodypart_overlay/mutant/icon_render_key(obj/item/bodypart/limb)
 	. = list()
 	. += "[get_base_icon_state()]"
@@ -123,7 +123,7 @@
 /datum/bodypart_overlay/mutant/proc/override_color(obj/item/bodypart/bodypart_owner)
 	CRASH("External organ color set to override with no override proc.")
 
-///Give the organ its color. Force will override the existing one.
+/// Give the organ its color.. Force will override the existing one.
 /datum/bodypart_overlay/mutant/proc/inherit_color(obj/item/bodypart/bodypart_owner, force)
 	if(isnull(bodypart_owner))
 		draw_color = null
@@ -174,7 +174,7 @@
 	else
 		CRASH("External organ [type] had fetch_sprite_datum called with a null accessory name!")
 
-///From dye sprays. Set the dye_color (draw_color override) of this organ to a new value.
+/// From dye sprays.. Set the dye_color (draw_color override) of this organ to a new value.
 /datum/bodypart_overlay/mutant/proc/set_dye_color(new_color, obj/item/organ/organ)
 	dye_color = new_color
 	if(organ.owner)

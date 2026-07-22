@@ -37,7 +37,7 @@
 		/datum/material/bluespace = 50,
 		/datum/material/bananium = 60,
 	)
-	/// Variable that holds a timer which is used for callbacks to `send_console_message()`. Used for preventing multiple calls to this proc while the ORM is eating a stack of ores.
+	/// Variable that holds a timer which is used for callbacks to `send_console_message()`.. Used for preventing multiple calls to this proc while the ORM is eating a stack of ores.
 	var/console_notify_timer
 	/// References the alloys the smelter can create
 	var/datum/techweb/stored_research
@@ -54,7 +54,7 @@
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter]
 
-	//mat_container_signals is for reedeming points from local storage if silo is not required
+	// mat_container_signals is for reedeming points from local storage if silo is not needed
 	var/list/local_signals = null
 	if(!requires_silo)
 		local_signals = list(
@@ -91,7 +91,7 @@
 	if(istype(gathered_ore) && gathered_ore.refined_type)
 		points += gathered_ore.points * point_upgrade * gathered_ore.amount
 
-/// Returns the amount of a specific alloy design, based on the accessible materials
+/// Returns the amount of a specific alloy design, good on the accessible materials
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/design)
 	var/datum/material_container/mat_container = materials.mat_container
 	if(!mat_container || design.make_reagent)
@@ -205,7 +205,7 @@
 			unload_mineral(smelted_ore) //if rejected unload
 
 	if(!console_notify_timer)
-		// gives 5 seconds for a load of ores to be sucked up by the ORM before it sends out request console notifications. This should be enough time for most deposits that people make
+		// gives 5 seconds for a load of ores to be sucked up by the ORM before it sends out request console notifications.. This should be enough time for most deposits that people make
 		console_notify_timer = addtimer(CALLBACK(src, PROC_REF(send_console_message)), 5 SECONDS)
 
 /obj/machinery/mineral/ore_redemption/default_unfasten_wrench(mob/user, obj/item/I)
@@ -311,7 +311,7 @@
 	var/datum/material_container/mat_container = materials.mat_container
 	switch(action)
 		if("Claim")
-			//requires silo but silo not in range
+			// needs silo but silo not in range
 			if(requires_silo && !materials.check_z_level())
 				return FALSE
 

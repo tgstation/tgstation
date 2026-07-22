@@ -31,7 +31,7 @@
 	var/list/list_to_check = get_knowledge_unlockables(start_knowledges, all_knowledges)
 
 	// We now have a list that SHOULD contain all knowledges with a path set (list_to_check).
-	// Let's compare it to our original list (all_possible_knowledge). If they're not identical,
+	// Let's compare it to our original list (all_possible_knowledge).. If they're not identical,
 	// then somewhere we missed a knowledge somewhere, and should throw a fail.
 	var/list/unreachables = list()
 	for(var/knowledge_path in all_possible_knowledge)
@@ -43,21 +43,21 @@
 				break
 		if(!found)
 			unreachables += knowledge_path
-	// Unreachables is a list of typepaths - all paths that cannot be obtained.
+	// Unreachables is a list of typepaths - all paths that cannot be got
 	for(var/datum/heretic_knowledge/lost_knowledge as anything in unreachables)
 		TEST_FAIL("Heretic Knowledge: [lost_knowledge] is unreachable by players! Add it to another knowledge's 'next_knowledge' list. If it is purposeful, set its route to 'null'.")
 
-/// Expects a flat list of knowledge nodes. Returns a list of all HKT_ID entries
+/// Expects a flat list of knowledge nodes.. Returns a list of all HKT_ID entries
 /datum/unit_test/heretic_knowledge/proc/get_knowledge_ids(list/knowledges)
 	var/list/ids = list()
 	for(var/list/knowledge_node as anything in knowledges)
 		ids += knowledge_node[HKT_ID]
 	return ids
 
-/// Gets all unique HKT_NEXT entries from a list of knowledges. both lists must be flat lists of knowledge nodes
+/// Gets all unique HKT_NEXT entries from a list of knowledges.. both lists must be flat lists of knowledge nodes
 /datum/unit_test/heretic_knowledge/proc/get_knowledge_unlockables(list/starting_point, list/all_knowledges)
 	// Now, let's build a list of all researchable knowledge
-	// from the ground up. We start with all starting knowledge,
+	// from the ground up.. We start with all starting knowledge,
 	// then add the next possible knowledges back into the list
 	// repeatedly, until we run out of knowledges to add.
 	var/list/list_to_check = starting_point.Copy()

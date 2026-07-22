@@ -14,7 +14,7 @@
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	/// Whether the biogenerator is currently processing biomass or not.
 	var/processing = FALSE
-	/// The reagent container that is currently inside of the biomass generator. Can be null.
+	/// The reagent container that is currently inside of the biomass generator.. Can be null.
 	var/obj/item/reagent_containers/cup/beaker = null
 	/// The amount of biomass that's currently stored in the biogenerator.
 	var/biomass = 0

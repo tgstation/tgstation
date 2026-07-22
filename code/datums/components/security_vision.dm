@@ -1,6 +1,6 @@
 /// This component allows you to judge someone's level of criminal activity by examining them
 /datum/component/security_vision
-	/// Bitfield containing what things we want to judge based upon
+	/// Bitfield containing what things we want to judge good upon
 	var/judgement_criteria
 	/// Optional callback which will modify the value of `judgement_criteria` before we make the check
 	var/datum/callback/update_judgement_criteria

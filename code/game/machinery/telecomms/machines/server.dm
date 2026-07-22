@@ -16,12 +16,12 @@
 	circuit = /obj/item/circuitboard/machine/telecomms/server
 	/// List of frequency info: the name and color of each frequency that the server processes
 	var/list/frequency_infos = list()
-	/// A list of previous entries on the network. It will not exceed
+	/// A list of previous entries on the network.. It will not exceed
 	/// `MAX_LOG_ENTRIES` entries in length, flushing the oldest entries
 	/// automatically.
 	var/list/log_entries = list()
 	/// Total trafic, which is increased every time a signal is increased and
-	/// the current traffic is higher than 0. See `traffic` for more info.
+	/// the current traffic is higher than 0.. See `traffic` for more info.
 	var/total_traffic = 0
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/subspace/vocal/signal, obj/machinery/telecomms/machine_from)

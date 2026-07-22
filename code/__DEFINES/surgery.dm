@@ -9,17 +9,17 @@
 #define ORGAN_CAN_BE_BIOSCRAMBLED(organ) (!(organ.organ_flags & ORGAN_BIOSCRAMBLE_INCOMPATIBLE) && !(organ.flags_1 & HOLOGRAM_1))
 
 // Flags for the organ_flags var on /obj/item/organ
-/// Organic organs, the default. Don't get affected by EMPs.
+/// Organic organs, the default... Don't get affected by EMPs.
 #define ORGAN_ORGANIC (1<<0)
-/// Synthetic organs, or cybernetic organs. Reacts to EMPs and don't deteriorate or heal
+/// Synthetic organs, or cybernetic organs... Reacts to EMPs and don't deteriorate or heal
 #define ORGAN_ROBOTIC (1<<1)
-/// Mineral organs. Snowflakey.
+/// Mineral organs... Snowflakey.
 #define ORGAN_MINERAL (1<<2)
 /// Frozen organs, don't deteriorate
 #define ORGAN_FROZEN (1<<3)
 /// Failing organs perform damaging effects until replaced or fixed, and typically they don't function properly either
 #define ORGAN_FAILING (1<<4)
-/// Synthetic organ affected by an EMP. Deteriorates over time.
+/// Synthetic organ affected by an EMP... Deteriorates over time.
 #define ORGAN_EMP (1<<5)
 /// Currently only the brain - Removing this organ KILLS the owner
 #define ORGAN_VITAL (1<<6)
@@ -35,7 +35,7 @@
 #define ORGAN_PROMINENT (1<<11)
 /// An organ that is ostensibly dangerous when inside a body
 #define ORGAN_HAZARDOUS (1<<12)
-/// This is an external organ, not an inner one. Used in several checks.
+/// This is an external organ, not an inner one... Used in several checks.
 #define ORGAN_EXTERNAL (1<<13)
 /// This is a ghost organ, which can be used for wall phasing.
 #define ORGAN_GHOST (1<<14)
@@ -121,7 +121,7 @@
 #define OPERATION_ALWAYS_FAILABLE (1<<7)
 /// If set, the operation will ignore clothing when checking for access to the target body part.
 #define OPERATION_IGNORE_CLOTHES (1<<8)
-/// This operation should be prioritized as the next step in a surgery sequence. (In the operating computer it will flash red)
+/// This operation should be prioritized as the next step in a surgery sequence... (In the operating computer it will flash red)
 #define OPERATION_PRIORITY_NEXT_STEP (1<<9)
 /// Operation is a mechanic / robotic surgery
 #define OPERATION_MECHANIC (1<<10)
@@ -161,9 +161,9 @@ DEFINE_BITFIELD(operation_flags, list(
 #define SURGERY_MODIFIER_FAILURE_THRESHOLD 2.5
 /// There is an x percent chance of failure per second beyond 2.5x the base surgery time
 #define FAILURE_CHANCE_PER_SECOND 10
-/// Calculates failure chance of an operation based on the base time and the effective speed modifier
-/// This may look something like: Base time 1 second and 4x effective multiplier -> 4 seconds - 2.5 seconds = 1.5 seconds * 10 = 15% failure chance
-/// Or: Base time 2 seconds and 1x effective multiplier -> 2 seconds - 5 seconds = -3 seconds * 10 = -30% failure chance (clamped to 0%)
+/// Calculates failure chance of an operation good on the base time and the effective speed modifier
+/// This may look something like: Base time 1 second.. 4x effective multiplier -> 4 seconds - 2.5 seconds = 1.5 seconds * 10 = 15% failure chance
+/// Or: Base time 2 seconds.. 1x effective multiplier -> 2 seconds - 5 seconds = -3 seconds * 10 = -30% failure chance (clamped to 0%)
 #define GET_FAILURE_CHANCE(base_time, speed_mod) (FAILURE_CHANCE_PER_SECOND * (((speed_mod * (base_time)) - (SURGERY_MODIFIER_FAILURE_THRESHOLD * (base_time))) / (1 SECONDS)))
 
 // Operation argument indexes

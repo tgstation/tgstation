@@ -1,4 +1,4 @@
-/// Default scenario, with normal species, assignments and damages etc
+/// Default scenario, with normal species, assignments and damages and so on
 /datum/corpse_damage_class/station
 	area_lore = "I was working in a space station"
 	weight = 15

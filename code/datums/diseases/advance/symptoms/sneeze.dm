@@ -28,7 +28,7 @@
 	COOLDOWN_DECLARE(sneeze_cooldown)
 	var/spread_range = 4
 	var/cartoon_sneezing = FALSE //ah, ah, AH, AH-CHOO!!
-	///if FALSE, there is a percentage chance that the mob will emote sneezing while sneeze_cooldown is on cooldown. If TRUE, won't emote again until after the off cooldown sneeze occurs.
+	/// if FALSE, there is a percentage chance that the mob will emote sneezing while sneeze_cooldown is on cooldown.. If TRUE, won't emote again until after the off cooldown sneeze occurs.
 	var/off_cooldown_sneezed = FALSE
 
 /datum/symptom/sneeze/Start(datum/disease/advance/active_disease)
@@ -39,7 +39,7 @@
 		spread_range = 6
 	if(active_disease.totalStealth() >= 4)
 		suppress_warning = TRUE
-	if(active_disease.totalStageSpeed() >= 17) //Yep, stage speed 17, not stage speed 7. This is a big boy threshold (effect), like the language-scrambling transmission one for the voice change symptom.
+	if(active_disease.totalStageSpeed() >= 17) // Yep, stage speed 17, not stage speed 7.. This is a big boy threshold (effect), like the language-scrambling transmission one for the voice change symptom.
 		cartoon_sneezing = TRUE //for a really fun time, distribute a disease with this threshold met while the gravity generator is down
 
 /datum/symptom/sneeze/Activate(datum/disease/advance/active_disease)
@@ -54,7 +54,7 @@
 		else
 			affected_mob.emote("sneeze")
 			active_disease.airborne_spread(spread_range = src.spread_range, force_spread = TRUE, require_facing = TRUE)
-			if(cartoon_sneezing) //Yeah, this can fling you around even if you have a space suit helmet on. It's, uh, bluespace snot, yeah.
+			if(cartoon_sneezing) // Yeah, this can fling you around even if you have a space suit helmet on.. It's, uh, bluespace snot, yeah.
 				to_chat(affected_mob, span_userdanger("You are launched violently backwards by an all-mighty sneeze!"))
 				var/sneeze_distance = rand(2,4) //twice as far as a normal baseball bat strike will fling you
 				var/turf/target = get_ranged_target_turf(affected_mob, REVERSE_DIR(affected_mob.dir), sneeze_distance)

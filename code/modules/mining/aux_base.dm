@@ -42,7 +42,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	. = ..()
 	AddComponent(/datum/component/gps, "NT_AUX")
 
-/obj/machinery/computer/auxiliary_base/Destroy() // Shouldn't be destroyable... but just in case
+/obj/machinery/computer/auxiliary_base/Destroy() // Shouldn't be destroyable.... but just in case
 	LAZYCLEARLIST(turrets)
 	return ..()
 
@@ -67,7 +67,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	data["turrets"] = list()
 	for(var/datum/weakref/turret_ref as anything in turrets)
 		var/obj/machinery/porta_turret/aux_base/base_turret = turret_ref.resolve()
-		if(!istype(base_turret)) // null or invalid in turrets list? axe it
+		if(!istype(base_turret)) // null or invalid in turrets list?. axe it
 			LAZYREMOVE(turrets, turret_ref)
 			continue
 
@@ -166,7 +166,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 				all_mining_turfs += Z_TURFS(z_level)
 			var/turf/LZ = pick(all_mining_turfs) //Pick a random mining Z-level turf
 			if(!ismineralturf(LZ) && !isasteroidturf(LZ))
-			//Find a suitable mining turf. Reduces chance of landing in a bad area
+			// Find a suitable mining turf.. Reduces chance of landing in a bad area
 				to_chat(usr, span_warning("Landing zone scan failed. Please try again."))
 				return
 			if(set_landing_zone(LZ, usr) != ZONE_SET)
@@ -205,7 +205,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 
 /obj/machinery/computer/auxiliary_base/proc/set_landing_zone(turf/T, mob/user, no_restrictions)
 	var/obj/docking_port/mobile/auxiliary_base/base_dock = locate(/obj/docking_port/mobile/auxiliary_base) in SSshuttle.mobile_docking_ports
-	if(!base_dock) //Not all maps have an Aux base. This object is useless in that case.
+	if(!base_dock) // Not all maps have an Aux base.. This object is useless in that case.
 		to_chat(user, span_warning("This station is not equipped with an auxiliary base. Please contact your Nanotrasen contractor."))
 		return
 	if(!no_restrictions)

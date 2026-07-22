@@ -157,7 +157,7 @@
 
 /datum/component/ghostrole_on_revive/proc/add_orbit_twitching(mob/living/parent_mob)
 	parent_mob.AddElement(/datum/element/orbit_twitcher, twitch_chance)
-	// Add it to the ghostrole spawner menu. Note that we can't directly spawn from it, but we can make it twitch to alert bystanders to defib it
+	// Add it to the ghostrole spawner menu.. Note that we can't directly spawn from it, but we can make it twitch to alert bystanders to defib it
 	LAZYADDASSOCLIST(GLOB.joinable_mobs, spawn_text, parent_mob)
 	RegisterSignal(parent_mob, COMSIG_LIVING_GHOSTROLE_INFO, PROC_REF(set_spawner_info))
 

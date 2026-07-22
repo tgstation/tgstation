@@ -6,7 +6,7 @@
 	opacity = FALSE
 	density = TRUE
 	can_atmos_pass = ATMOS_PASS_DENSITY
-	/// If set, how long the force field lasts after it's created. Set to 0 to have infinite duration forcefields.
+	/// If set, how long the force field lasts after it's created.. Set to 0 to have infinite duration forcefields.
 	var/initial_duration = 30 SECONDS
 
 /obj/effect/forcefield/Initialize(mapload)

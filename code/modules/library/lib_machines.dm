@@ -124,7 +124,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			search_page = sanitize_page_input(params["page"], search_page, page_count)
 			INVOKE_ASYNC(src, PROC_REF(update_db_info))
 			return TRUE
-		if("clear_data") //The cap just walked in on your browsing, quick! delete it!
+		if("clear_data") // The cap just walked in on your browsing, quick!. delete it!
 			if(!prevent_db_spam())
 				say("Database cables refreshing. Please wait a moment.")
 				return
@@ -135,7 +135,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			INVOKE_ASYNC(src, PROC_REF(update_db_info))
 			return TRUE
 
-///Checks if the machine is alloweed to make another db request yet. TRUE if so, FALSE otherwise
+/// Checks if the machine is alloweed to make another db request yet.. TRUE if so, FALSE otherwise
 /obj/machinery/computer/libraryconsole/proc/prevent_db_spam()
 	var/allowed = can_db_request()
 	if(!allowed)
@@ -181,7 +181,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 
 	update_page_count()
 	update_page_contents()
-	SStgui.update_uis(src) //We need to do this because we sleep here, so we've gotta update manually
+	SStgui.update_uis(src) // We need to do this because we sleep here, so we've got to update manually
 
 //Returns true if there's been an update worth refreshing our pages for, false otherwise
 /obj/machinery/computer/libraryconsole/proc/has_anything_changed()
@@ -271,9 +271,9 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
  * Library Computer
  * After 860 days, it's finally a buildable computer.
  */
-// TODO: Make this an actual /obj/machinery/computer that can be crafted from circuit boards and such
-// It is August 22nd, 2012... This TODO has already been here for months.. I wonder how long it'll last before someone does something about it.
-// It's December 25th, 2014, and this is STILL here, and it's STILL relevant. Kill me
+// To do Make this an actual /obj/machinery/computer that can be crafted from circuit boards and such
+// It is August 22nd, 2012.... This To do has already been here for months... I wonder how long it'll last before someone does something about it.
+// It's December 25th, 2014, and this is STILL here, and it's STILL relevant.. Kill me
 /obj/machinery/computer/libraryconsole/bookmanagement
 	name = "book inventory management console"
 	desc = "Librarian's command station."
@@ -291,7 +291,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	var/can_spawn_lore = TRUE
 	///The screen we're currently on, sent to the ui
 	var/screen_state = LIBRARY_INVENTORY
-	///Should we show the buttons required for changing screens?
+	/// Should we show the buttons needed for changing screens?
 	var/show_dropdown = TRUE
 	///List of checked out books, /datum/borrowbook
 	var/list/checkouts = list()
@@ -625,7 +625,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	say("Upload Complete. Uploaded title will be available for printing in a moment")
 	update_db_info()
 
-/// Call this proc to attempt a print. It will return false if the print failed, true otherwise, longside some ux
+/// Call this proc to try a print.. It will return false if the print failed, true otherwise, longside some ux
 /// Accepts a callback to call when the print "finishes"
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/attempt_print(datum/callback/call_after)
 	if(!COOLDOWN_FINISHED(src, printer_cooldown))

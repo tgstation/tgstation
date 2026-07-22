@@ -2,13 +2,13 @@
 #define LIGHT_SPEED 299792458
 ///Calculation between the plank constant and the lambda of the lightwave
 #define PLANCK_LIGHT_CONSTANT 2e-16
-///Radius of the h2 calculated based on the amount of number of atom in a mole (and some addition for balancing issues)
+/// Radius of the h2 calculated good on the amount of number of atom in a mole (and some addition for balancing issues)
 #define CALCULATED_H2RADIUS 120e-4
-///Radius of the trit calculated based on the amount of number of atom in a mole (and some addition for balancing issues)
+/// Radius of the trit calculated good on the amount of number of atom in a mole (and some addition for balancing issues)
 #define CALCULATED_TRITRADIUS 230e-3
 ///Power conduction in the void, used to calculate the efficiency of the reaction
 #define VOID_CONDUCTION 1e-2
-///Mole count required (tritium/hydrogen) to start a fusion reaction
+/// Mole count needed (tritium/hydrogen) to start a fusion reaction
 #define FUSION_MOLE_THRESHOLD 25
 ///Used to reduce the gas_power to a more useful amount
 #define INSTABILITY_GAS_POWER_FACTOR 0.003
@@ -30,9 +30,9 @@
 #define IRON_CHANCE_PER_FUSION_LEVEL 17
 ///Amount of iron accumulated per second whenever we fail our saving throw, using the chance above
 #define IRON_ACCUMULATED_PER_SECOND 0.005
-///Maximum amount of iron that can be healed per second. Calculated to mostly keep up with fusion level 5.
+/// Maximum amount of iron that can be healed per second.. Calculated to mostly keep up with fusion level 5.
 #define IRON_OXYGEN_HEAL_PER_SECOND (IRON_ACCUMULATED_PER_SECOND * (100 - IRON_CHANCE_PER_FUSION_LEVEL) / 100)
-///Amount of oxygen in moles required to fully remove 100% iron content. Currently about 2409mol. Calculated to consume at most 10mol/s.
+/// Amount of oxygen in moles needed to fully remove 100% iron content.. Currently about 2409mol.. Calculated to consume at most 10mol/s.
 #define OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL (10 / IRON_OXYGEN_HEAL_PER_SECOND)
 
 //If integrity percent remaining is less than these values, the monitor sets off the relevant alarm.
@@ -66,7 +66,7 @@
 // Given these settings, derive the rest of the equation.
 // Damage is the dependent variable, fusion_moles and damage_source_temperature are the independent variables
 // So the equation takes the form:
-//   damage = molar_slope * fusion_moles + temperature_slope * damage_source_temperature + constant
+// damage = molar_slope * fusion_moles + temperature_slope * damage_source_temperature + constant
 // Derive these constants here for readability
 // Derive the temperature slope from the molar slope
 #define HYPERTORUS_OVERFULL_TEMPERATURE_SLOPE (HYPERTORUS_OVERFULL_MOLAR_SLOPE * (HYPERTORUS_OVERFULL_MAX_SAFE_COLD_FUSION_MOLES - HYPERTORUS_OVERFULL_MAX_SAFE_HOT_FUSION_MOLES) / (FUSION_MAXIMUM_TEMPERATURE - 1))

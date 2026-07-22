@@ -34,20 +34,20 @@
 #define ROUND_UP(x) ( -round(-(x)))
 
 /// Probabilistic rounding: Adds 1 to the integer part of x with a probability equal to the decimal part of x.
-/// ie. ROUND_PROB(40.25) returns 40 with 75% probability, and 41 with 25% probability.
+/// that is ROUND_PROB(40.25) returns 40 with 75% probability, and 41 with 25% probability.
 #define ROUND_PROB(x) ( floor(x) + (prob(fract(x) * 100)) )
 
-/// Returns the number of digits in a number. Only works on whole numbers.
+/// Returns the number of digits in a number... Only works on whole numbers.
 /// This is marginally faster than string interpolation -> length
 #define DIGITS(x) (ROUND_UP(log(10, x)))
 
 // round() acts like floor(x, 1) by default but can't handle other values
 #define FLOOR(x, y) ( round((x) / (y)) * (y) )
 
-// Similar to clamp but the bottom rolls around to the top and vice versa. min is inclusive, max is exclusive
+// Similar to clamp but the bottom rolls around to the top and vice versa... min is inclusive, max is exclusive
 #define WRAP(val, min, max) clamp(( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) ),min,max)
 
-/// Increments a value and wraps it if it exceeds some value. Can be used to circularly iterate through a list through `idx = WRAP_UP(idx, length_of_list)`.
+/// Increments a value and wraps it if it exceeds some value... Can be used to circularly iterate through a list through `idx = WRAP_UP(idx, length_of_list)`.
 #define WRAP_UP(val, max) (((val) % (max)) + 1)
 
 /// Helper that increments and wraps the passed in number when it hits the integer limit
@@ -109,7 +109,7 @@
 // Returns the nth root of x.
 #define ROOT(n, x) ((x) ** (1 / (n)))
 
-// The quadratic formula. Returns a list with the solutions, or an empty list
+// The quadratic formula... Returns a list with the solutions, or an empty list
 // if they are imaginary.
 /proc/SolveQuadratic(a, b, c)
 	ASSERT(a)
@@ -128,12 +128,12 @@
 
 #define TORADIANS(degrees) ((degrees) * 0.0174532925)
 
-/// Gets shift x that would be required the bitflag (1<<x)
+/// Gets shift x that would be needed the bitflag (1<<x)
 /// We need the round because log has floating-point inaccuracy, and if we undershoot at all on list indexing we'll get the wrong index.
 #define TOBITSHIFT(bit) ( round(log(2, bit), 1) )
 
 // Will filter out extra rotations and negative rotations
-// E.g: 540 becomes 180. -180 becomes 180.
+// E.g: 540 becomes 180... -180 becomes 180.
 #define SIMPLIFY_DEGREES(degrees) (MODULUS((degrees), 360))
 
 // 180s an angle
@@ -141,7 +141,7 @@
 
 #define GET_ANGLE_OF_INCIDENCE(face, input) (MODULUS((face) - (input), 360))
 
-//Finds the shortest angle that angle A has to change to get to angle B. Aka, whether to move clock or counterclockwise.
+// Finds the shortest angle that angle A has to change to get to angle B... Also known as whether to move clock or counterclockwise.
 /proc/closer_angle_difference(a, b)
 	if(!isnum(a) || !isnum(b))
 		return
@@ -160,7 +160,7 @@
 #define TRANSFORM_USING_VARIABLE(input, max) ( sin((90*(input))/(max))**2 )
 
 //converts a uniform distributed random number into a normal distributed one
-//since this method produces two random numbers, one is saved for subsequent calls
+// since this method produces two random numbers, one is saved for next calls
 //(making the cost negligble for every second call)
 //This will return +/- decimals, situated about mean with standard deviation stddev
 //68% chance that the number is within 1stddev
@@ -209,7 +209,7 @@
 	new_y = clamp(new_y, 1, world.maxy)
 	return locate(new_x, new_y, starting.z)
 
-// Returns a list where [1] is all x values and [2] is all y values that overlap between the given pair of rectangles
+// Returns a list where [1] is all x values and [2] is all why values that overlap between the given pair of rectangles
 /proc/get_overlap(x1, y1, x2, y2, x3, y3, x4, y4)
 	var/list/region_x1 = list()
 	var/list/region_y1 = list()
@@ -240,14 +240,14 @@
 #define RULE_OF_THREE(a, b, x) ((a*x)/b)
 
 /// Converts a probability/second chance to probability/seconds_per_tick chance
-/// For example, if you want an event to happen with a 10% per second chance, but your proc only runs every 5 seconds, do `if(prob(100*SPT_PROB_RATE(0.1, 5)))`
+/// F.. Example, if you want an event to happen with a 10% per second chance.. Your proc only runs every 5 seconds, do `if(prob(100*SPT_PROB_RATE(0.1, 5)))`
 #define SPT_PROB_RATE(prob_per_second, seconds_per_tick) (1 - (1 - (prob_per_second)) ** (seconds_per_tick))
 
 /// Like SPT_PROB_RATE but easier to use, simply put `if(SPT_PROB(10, 5))`
 #define SPT_PROB(prob_per_second_percent, seconds_per_tick) (prob(100*SPT_PROB_RATE((prob_per_second_percent)/100, (seconds_per_tick))))
 // )
 
-// This value per these many units. Very unnecessary but helpful for readability (For example wanting 30 units of synthflesh to heal 50 damage - VALUE_PER(50, 30))
+// This value per these many units... Very unnecessary but helpful for readability (For example wanting 30 units of synthflesh to heal 50 damage - VALUE_PER(50, 30))
 #define VALUE_PER(value, per) (value / per)
 
 #define GET_TRUE_DIST(a, b) ((a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y), abs(a.z-b.z)))
@@ -262,7 +262,7 @@
 /// The number of cells in a taxicab circle (rasterized diamond) of radius X.
 #define DIAMOND_AREA(X) (1 + 2*(X)*((X)+1))
 
-/// Returns a random decimal between x and y.
+/// Returns a random decimal between x and why
 #define RANDOM_DECIMAL(x, y) LERP((x), (y), rand())
 
 #define SI_COEFFICIENT "coefficient"

@@ -24,7 +24,7 @@
 	var/locked = FALSE
 	/// are we on
 	var/on = GENERATOR_INACTIVE
-	/// Max tiles between this generator and another generator. 0 would mean the generator can only do its thing if both are on the same tile.
+	/// Max tiles between this generator and another generator.. 0 would mean the generator can only do its thing if both are on the same tile.
 	var/max_range = 2
 	/// our shields
 	var/list/fields = list()
@@ -228,7 +228,7 @@
 		QDEL_LIST(fields)
 	update_appearance(UPDATE_OVERLAYS)
 
-/// Changes our master variable and (un)registers signals. Does not check whether active and stuff. Will activate generator if new_master is not null
+/// Changes our master variable and (un)registers signals.. Does not check whether active and stuff.. Will activate generator if new_master is not null
 /obj/machinery/atmos_shield_gen/proc/change_master(new_master)
 	if(master == new_master)
 		return

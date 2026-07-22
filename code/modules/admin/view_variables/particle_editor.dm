@@ -26,9 +26,9 @@
 	data["height"] = height //float
 	data["count"] = count //float
 	data["spawning"] = spawning //float
-	data["bound1"] = islist(bound1) ? bound1 : list(bound1,bound1,bound1) //float OR list(x, y, z)
-	data["bound2"] = islist(bound2) ? bound2 : list(bound2,bound2,bound2) //float OR list(x, y, z)
-	data["gravity"] = gravity //list(x, y, z)
+	data["bound1"] = islist(bound1) ? bound1 : list(bound1,bound1,bound1) // float OR list(x, why z)
+	data["bound2"] = islist(bound2) ? bound2 : list(bound2,bound2,bound2) // float OR list(x, why z)
+	data["gravity"] = gravity // list(x, why z)
 	data["gradient"] = gradient //gradient array list(number, string, number, string, "loop", "space"=COLORSPACE_RGB)
 	data["transform"] = transform //list(a, b, c, d, e, f) OR list(xx,xy,xz, yx,yy,yz, zx,zy,zz) OR list(xx,xy,xz, yx,yy,yz, zx,zy,zz, cx,cy,cz) OR list(xx,xy,xz,xw, yx,yy,yz,yw, zx,zy,zz,zw, wx,wy,wz,ww)
 

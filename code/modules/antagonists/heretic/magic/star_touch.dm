@@ -57,7 +57,7 @@
 /datum/action/cooldown/spell/touch/star_touch/proc/set_star_gazer(mob/living/basic/heretic_summon/star_gazer/star_gazer_mob)
 	star_gazer = WEAKREF(star_gazer_mob)
 
-/// To obtain the star gazer if there is one
+/// To get the star gazer if there is one
 /datum/action/cooldown/spell/touch/star_touch/proc/get_star_gazer()
 	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_resolved = star_gazer?.resolve()
 	if(star_gazer_resolved)

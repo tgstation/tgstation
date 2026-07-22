@@ -107,7 +107,7 @@
 	default = TRUE
 	/// Has the panic message been shown yet?
 	var/active = FALSE
-	/// Are we in a state of a panic attack currently? Only really used for tracking our breath loop
+	/// Are we in a state of a panic attack currently?. Only really used for tracking our breath loop
 	var/active_attack = FALSE
 	/// Breath loop used during a panic attack
 	var/datum/looping_sound/breathing/breath_loop

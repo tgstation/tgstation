@@ -30,7 +30,7 @@
 	. = ..()
 	AddElement(/datum/element/damage_threshold, 10)
 
-/// Hostile NPC version. Pretty dumb, just attacks whoever is near.
+/// Hostile NPC version.. Pretty dumb, just attacks whoever is near.
 /mob/living/basic/construct/juggernaut/hostile
 	ai_controller = /datum/ai_controller/basic_controller/juggernaut
 	smashes_walls = FALSE

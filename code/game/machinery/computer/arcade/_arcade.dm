@@ -75,7 +75,7 @@
 		new empprize(loc)
 	explosion(src, devastation_range = -1, light_impact_range = 1 + num_of_prizes, flame_range = 1 + num_of_prizes)
 
-///Dispenses the proper prizes and gives them a positive mood event. If valid, has a small chance to give a pulse rifle.
+/// Dispenses the proper prizes and gives them a positive mood event.. If valid, has a small chance to give a pulse rifle.
 /obj/machinery/computer/arcade/proc/prizevend(mob/living/user, prizes = 1)
 	if(user.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, TRAIT_GAMERGOD))
 		visible_message(span_notice("[user] inputs an intense cheat code!"),\

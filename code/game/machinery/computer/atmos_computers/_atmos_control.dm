@@ -57,7 +57,7 @@
 		var/obj/machinery/target = closest_sensors[chamber_id]
 		connected_sensors[chamber_id] = target.id_tag
 
-/// Reconnect only works for station based chambers.
+/// Reconnect only works for station good chambers.
 /obj/machinery/computer/atmos_control/proc/reconnect(mob/user)
 	if(!reconnecting)
 		return FALSE
@@ -73,7 +73,7 @@
 			connected_sensors -= chamber_identifier
 			continue
 
-		//non master computers don't have access to these station moniters. Only done to give master computer's special access to these chambers and make them feel special or something
+		// non master computers don't have access to these station moniters.. Only done to give master computer's special access to these chambers and make them feel special or something
 		if(chamber_identifier == ATMOS_GAS_MONITOR_DISTRO)
 			continue
 		if(chamber_identifier == ATMOS_GAS_MONITOR_WASTE)

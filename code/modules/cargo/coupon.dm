@@ -9,7 +9,7 @@
 	 * The ones SSmodular_computer.discount_coupons stay intact.
 	 */
 	var/expires_in
-	///Has the coupon been printed. Dictates in which section it's shown, and that it cannot be printed again.
+	/// Has the coupon been printed.. Dictates in which section it's shown, and that it cannot be printed again.
 	var/printed = FALSE
 	///The timerid for deletion if expires_in is set.
 	var/timerid

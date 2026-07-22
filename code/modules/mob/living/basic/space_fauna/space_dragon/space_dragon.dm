@@ -59,9 +59,9 @@
 
 	/// The colour of the space dragon
 	var/chosen_colour
-	/// Minimum devastation damage dealt coefficient based on max health
+	/// Minimum devastation damage dealt coefficient good on max health
 	var/devastation_damage_min_percentage = 0.4
-	/// Maximum devastation damage dealt coefficient based on max health
+	/// Maximum devastation damage dealt coefficient good on max health
 	var/devastation_damage_max_percentage = 0.75
 	/// Our fire breath action
 	var/datum/action/cooldown/mob_cooldown/fire_breath/carp/fire_breath
@@ -224,7 +224,7 @@
 		return FALSE
 	playsound(src, 'sound/effects/magic/demon_attack1.ogg', 60, TRUE)
 	visible_message(span_boldwarning("[src] swallows [food] whole!"))
-	food.extinguish_mob() // It's wet in there, and our food is likely to be on fire. Let's be decent and not husk them.
+	food.extinguish_mob() // It's wet in there, and our food is likely to be on fire.. Let's be decent and not husk them.
 	food.forceMove(src)
 	return TRUE
 

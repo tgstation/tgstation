@@ -1,8 +1,8 @@
-/// The minimum foam range required to start diluting the reagents past the minimum dilution rate.
+/// The minimum foam range needed to start diluting the reagents past the minimum dilution rate.
 #define MINIMUM_FOAM_DILUTION_RANGE 3
-/// The minumum foam-area based divisor used to decrease foam exposure volume.
+/// The minumum foam-area good divisor used to decrease foam exposure volume.
 #define MINIMUM_FOAM_DILUTION DIAMOND_AREA(MINIMUM_FOAM_DILUTION_RANGE)
-///	The effective scaling of the reagents in the foam. (Total delivered at or below [MINIMUM_FOAM_DILUTION])
+/// The effective scaling of the reagents in the foam.. (Total delivered at or below [MINIMUM_FOAM_DILUTION])
 #define FOAM_REAGENT_SCALE 3.2
 
 /**
@@ -241,7 +241,7 @@
 	var/foamcolor = mix_color_from_reagents(chemholder.reagent_list)
 	if(reagent_scale > 1) // Make room in case we were created by a particularly stuffed payload.
 		foam.reagents.maximum_volume *= reagent_scale
-	chemholder.trans_to(foam, chemholder.total_volume, reagent_scale, copy_only = TRUE) // Foam has an amplifying effect on the reagents it is supplied with. This is balanced by the reagents being diluted as the area the foam covers increases.
+	chemholder.trans_to(foam, chemholder.total_volume, reagent_scale, copy_only = TRUE) // Foam has an amplifying effect on the reagents it is supplied with.. This is balanced by the reagents being diluted as the area the foam covers increases.
 	foam.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
 	if(!isnull(result_type))
 		foam.result_type = result_type
@@ -276,7 +276,7 @@
 	result_type = /obj/effect/decal/cleanable/plasma
 	allow_duplicate_results = FALSE
 	slippery_foam = FALSE
-	/// The amount of plasma gas this foam has absorbed. To be deposited when the foam dissipates.
+	/// The amount of plasma gas this foam has absorbed.. To be deposited when the foam dissipates.
 	var/absorbed_plasma = 0
 
 /obj/effect/particle_effect/fluid/foam/firefighting/Initialize(mapload)
@@ -334,7 +334,7 @@
 /datum/effect_system/fluid_spread/foam/metal
 	effect_type = /obj/effect/particle_effect/fluid/foam/metal
 
-/// FOAM STRUCTURE. Formed by metal foams. Dense and opaque, but easy to break
+/// FOAM STRUCTURE.. Formed by metal foams.. Dense and opaque, but easy to break
 /obj/structure/foamedmetal
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "metalfoam"
@@ -472,7 +472,7 @@
 /datum/effect_system/fluid_spread/foam/metal/resin/halon
 	effect_type = /obj/effect/particle_effect/fluid/foam/metal/resin/halon
 
-/// A variant of resin foam that is created from halon combustion. It does not dissolve in heat to allow the gas to spread before foaming.
+/// A variant of resin foam that is created from halon combustion.. It does not dissolve in heat to allow the gas to spread before foaming.
 /obj/effect/particle_effect/fluid/foam/metal/resin/halon
 
 /obj/effect/particle_effect/fluid/foam/metal/resin/halon/Initialize(mapload)

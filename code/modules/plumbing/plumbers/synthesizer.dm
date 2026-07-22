@@ -1,4 +1,4 @@
-///A single machine that produces a single chem. Can be placed in unison with others through plumbing to create chemical factories
+/// A single machine that produces a single chem.. Can be placed in unison with others through plumbing to create chemical factories
 /obj/machinery/plumbing/synthesizer
 	name = "chemical synthesizer"
 	desc = "Produces a single chemical at a given volume. Must be plumbed. Most effective when working in unison with other chemical synthesizers, heaters and filters."
@@ -9,9 +9,9 @@
 	var/amount = 5
 	///I track them here because I have no idea how I'd make tgui loop like that
 	var/static/list/possible_amounts = list(0, 1, 2, 3, 4, 5)
-	///The reagent we are producing. We are a typepath, but are also typecast because there's several occations where we need to use initial.
+	/// The reagent we are producing.. We are a typepath, but are also typecast because there's several occations where we need to use initial.
 	var/datum/reagent/reagent_id = null
-	///straight up copied from chem dispenser. Being a subtype would be extremely tedious and making it global would restrict potential subtypes using different dispensable_reagents
+	/// straight up copied from chem dispenser.. Being a subtype would be extremely tedious and making it global would restrict potential subtypes using different dispensable_reagents
 	var/static/list/default_reagents = list(
 		/datum/reagent/aluminium,
 		/datum/reagent/bromine,

@@ -13,7 +13,7 @@
 	invocation = "OOGA OOGA OOGA!!!!"
 	invocation_type = INVOCATION_SHOUT
 
-	///Our gorilla transformation spell, additionally granted to the user at max level.
+	/// Our gorilla transformation spell, also granted to the user at max level.
 	var/datum/action/cooldown/spell/shapeshift/gorilla/gorilla_transformation
 
 	summon_radius = 2

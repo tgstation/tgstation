@@ -6,27 +6,27 @@
  */
 /datum/bt_node/decorator
 	node_type = BT_NODE_DECORATOR
-	/// Typepath of the single child node. Resolved to an instance at tree construction.
+	/// Typepath of the single child node.. Resolved to an instance at tree construction.
 	var/child_typepath = null
-	/// Resolved child instance. Populated at tree construction. Do not set directly.
+	/// Resolved child instance.. Populated at tree construction.. Do not set directly.
 	var/datum/bt_node/child = null
-	/// Observer abort mode. Controls reactive re-planning when watched keys change. BT_ABORT_NONE (default) means no reactivity. BT_ABORT_SELF triggers re-plan if we're inside one of our children and the condition changes, while BT_ABORT_LOWER_PRIORITY triggers re-plan if we are in a lower priority (e.g. further to the right) node and the condition changes. BT_ABORT_BOTH does both.
+	/// Observer abort mode.. Controls reactive re-planning when watched keys change.. BT_ABORT_NONE (default) means no reactivity.. BT_ABORT_SELF triggers re-plan if we're inside one of our children. The condition changes, while BT_ABORT_LOWER_PRIORITY triggers re-plan if we are in a lower priority (e.g.. further to the right) node and the condition changes.. BT_ABORT_BOTH does both.
 	var/observer_abort = BT_ABORT_NONE
 	/// If TRUE, the result of check_condition() is inverted before gating the child.
 	var/invert = FALSE
-	/// Whether the child is currently BT_RUNNING. This makes tick() skip check_condition() and delegate directly to child.tick().
+	/// Whether the child is currently BT_RUNNING.. This makes tick() skip check_condition() and delegate directly to child.tick().
 	var/child_active = FALSE
 	/// Set to TRUE once register_observe_signals() has been called for this instance.
 	var/observers_registered = FALSE
-	/// Set to TRUE when register_observe_signals() registered at least one signal. If this is not true but we are observing; then we need to check the condition every tick; not efficient, but allows for reactivity.
+	/// Set to TRUE when register_observe_signals() registered at least one signal.. If this is not true but we are observing; then we need to check the condition every tick; not efficient, but allows for reactivity.
 	var/has_observer_signals = FALSE
-	/// Last result seen by poll_condition(). null = not yet polled. Used to detect condition changes when no signal is available.
+	/// Last result seen by poll_condition().. null = not yet polled.. Used to detect condition changes when no signal is available.
 	var/last_poll_result = null
 	/// TRUE when this decorator is registered in the controller's polling_observers list.
 	var/is_polled = FALSE
-	/// When polling (no observer signals), minimum deciseconds between condition re-evaluations. 0 = every controller tick. Please don't run viewers() every tick bro.
+	/// When polling (no observer signals), minimum deciseconds between condition re-evaluations.. 0 = every controller tick.. Please don't run viewers() every tick bro.
 	var/polling_rate = 0
-	/// world.time of the last poll_condition() evaluation. Only meaningful when polling_rate > 0.
+	/// world.time of the last poll_condition() evaluation.. Only meaningful when polling_rate > 0.
 	VAR_PRIVATE/last_poll_time = 0
 
 
@@ -194,7 +194,7 @@
 	last_execution_index = counter - 1
 	return counter
 
-/// Override to register all signal observers for this decorator. Return TRUE if any were registered. If a decorator does not handle this and we have an observer_abort mode that isn't BT_ABORT_NONE, the system will fall back to ticking the condition every tick, which is less efficient but allows for reactivity without signals.
+/// Override to register all signal observers for this decorator.. Return TRUE if any were registered.. If a decorat. Does not handle this. We have an observer_abort mode that isn't BT_ABORT_NONE, the system will fall back to ticking the condition every tick, which is less efficient. Allows f. Reactivity without signals.
 /datum/bt_node/decorator/proc/register_observe_signals(atom/pawn)
 	return FALSE
 
@@ -202,7 +202,7 @@
 /datum/bt_node/decorator/proc/unregister_observe_signals(atom/pawn)
 	return
 
-/// Shared signal handler. Calls on_observed_change() with owning_controller.
+/// Shared signal handler.. Calls on_observed_change() with owning_controller.
 /datum/bt_node/decorator/proc/on_signal_changed(atom/source, ...)
 	SIGNAL_HANDLER
 	if(owning_controller)

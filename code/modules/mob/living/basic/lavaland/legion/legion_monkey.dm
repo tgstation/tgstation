@@ -38,7 +38,7 @@
 
 /mob/living/basic/mining/legion/monkey/snow/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/appearance_on_aggro, aggro_state = "snow_monkey_alive") // Surprise! I was real!
+	AddComponent(/datum/component/appearance_on_aggro, aggro_state = "snow_monkey_alive") // Surprise!. I was real!
 
 /// Opportunistically hops in and out of vents, if it can find one and is not biting someone.
 /datum/ai_controller/basic_controller/legion_monkey

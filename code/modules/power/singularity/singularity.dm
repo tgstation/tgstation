@@ -12,7 +12,7 @@
 	light_range = 6
 	appearance_flags = LONG_GLIDE
 
-	/// the prepended string to the icon state (singularity_s1, dark_matter_s1, etc)
+	/// the prepended string to the icon state (singularity_s1, dark_matter_s1, and so on
 	var/singularity_icon_variant = "singularity"
 
 	/// The singularity component itself.
@@ -350,7 +350,7 @@
 	. = length(GLOB.cardinals) //Should be 4.
 	for(var/i in GLOB.cardinals)
 		. -= check_turfs_in(i, steps) //-1 for each working direction
-	if(. && retry_with_move) //If there's still a positive value it means it didn't pass. Retry with move if applicable
+	if(. && retry_with_move) // If there's still a positive value it means it didn't pass.. Retry with move if applicable
 		for(var/i in GLOB.cardinals)
 			if(step(src, i)) //Move in each direction.
 				if(check_cardinals_range(steps, FALSE)) //New location passes, return true.
@@ -512,7 +512,7 @@
 
 /// Special singularity that spawns for shuttle events only
 /obj/singularity/shuttle_event
-	anchored = FALSE // this is required to work with shuttle event otherwise singularity gets stuck and doesn't move
+	anchored = FALSE // this is needed to work with shuttle event otherwise singularity gets stuck and doesn't move
 
 /obj/singularity/shuttle_event/no_escape
 	energy = STAGE_SIX_ENERGY

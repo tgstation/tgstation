@@ -89,7 +89,7 @@
 /obj/effect/spawner/random/medical/surgery_tool_advanced
 	name = "Advanced surgery tool spawner"
 	icon_state = "scalpel"
-	loot = list( // Mail loot spawner. Drop pool of advanced medical tools typically from research. Not endgame content.
+	loot = list( // Mail loot spawner.. Drop pool of advanced medical tools typically from research.. Not endgame content.
 		/obj/item/scalpel/advanced,
 		/obj/item/retractor/advanced,
 		/obj/item/cautery/advanced,
@@ -98,7 +98,7 @@
 /obj/effect/spawner/random/medical/surgery_tool_alien
 	name = "Rare surgery tool spawner"
 	icon_state = "scalpel"
-	loot = list( // Mail loot spawner. Some sort of random and rare surgical tool. Alien tech found here.
+	loot = list( // Mail loot spawner.. Some sort of random and rare surgical tool.. Alien tech found here.
 		/obj/item/scalpel/alien,
 		/obj/item/hemostat/alien,
 		/obj/item/retractor/alien,

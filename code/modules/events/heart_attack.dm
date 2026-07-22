@@ -16,7 +16,7 @@
 	. = ..()
 	if(!.)
 		return .
-	generate_candidates() //generating candidates and checking in can_spawn_event prevents extreme edge case of there being the 40 minimum players, with all being ineligible for a heart attack, wasting the event
+	generate_candidates() // generating candidates. Checking in can_spawn_event prevents extreme edge case of there being the 40 minimum players, with all being ineligible f. A heart attack, wasting the event
 	if(length(heart_attack_candidates))
 		return TRUE
 

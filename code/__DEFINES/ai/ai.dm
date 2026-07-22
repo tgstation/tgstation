@@ -15,7 +15,7 @@
 			: (strategy).invert_faction_check))
 
 // Revalidation modes for /datum/bt_node/ai_behavior/acquire_target
-/// If a target is already set, validate it via is_valid_target before searching. Replace if invalid.
+/// If a target is already set, validate it via is_valid_target before searching... Replace if invalid.
 #define TARGET_REVALIDATE 1
 /// If a target is already set, return SUCCESS immediately without re-checking.
 #define TARGET_KEEP_IF_SET 2
@@ -29,7 +29,7 @@
 #define AI_STATUS_ON "ai_on"
 ///The AI is currently active, but is planned by the low priority (background) subsystem.
 #define AI_STATUS_ON_LOW "ai_on_low"
-///The AI is not running. Cancels any active plans if set.
+/// The AI is not running... Cancels any active plans if set.
 #define AI_STATUS_OFF "ai_off"
 
 //Flags returned by get_able_to_run()
@@ -38,7 +38,7 @@
 ///bypass canceling our actions on set_ai_status()
 #define AI_PREVENT_CANCEL_ACTIONS (1<<2)
 
-///For JPS pathing, the maximum length of a path we'll try to generate. Should be modularized depending on what we're doing later on
+/// For JPS pathing, the maximum length of a path we'll try to generate... Should be modularized depending on what we're doing later on
 #define AI_MAX_PATH_LENGTH 30 // 30 is possibly overkill since by default we lose interest after 14 tiles of distance, but this gives wiggle room for weaving around obstacles
 #define AI_BOT_PATH_LENGTH 60
 #define AI_MULEBOT_PATH_LENGTH 150 //we making a pilgramage sometimes...
@@ -77,7 +77,7 @@
 #define CAN_ACT_WHILE_GRABBED (1<<4)
 /// Keeps planning on low prio when unwatched
 #define RUN_WHILE_UNWATCHED (1<<5)
-/// Always plans at high priority. Only works with RUN_WHILE_UNWATCHED
+/// Always plans at high priority... Only works with RUN_WHILE_UNWATCHED
 #define ALWAYS_HIGH_PRIORITY (1<<6)
 
 /// Flags we expect for most AI controllers
@@ -106,5 +106,5 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 ))
 
 
-///Use this if you dont want a controller to show up in the sidebar (e.g. when its a class that just sets BB keys)
+/// Use this if you dont want a controller to show up in the sidebar (e.g... when its a class that just sets BB keys)
 #define ABSTRACT_AI_CLASS "Abstract"

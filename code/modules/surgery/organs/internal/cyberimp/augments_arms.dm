@@ -9,7 +9,7 @@
 		BODY_ZONE_R_ARM = ORGAN_SLOT_RIGHT_ARM_AUG,
 		BODY_ZONE_L_ARM = ORGAN_SLOT_LEFT_ARM_AUG,
 	)
-	///A ref for the arm we're taking up. Mostly for the unregister signal upon removal
+	/// A ref for the arm we're taking up.. Mostly for the unregister signal upon removal
 	var/obj/hand
 
 /obj/item/organ/cyberimp/arm/get_overlay_state(image_layer, obj/item/bodypart/limb)
@@ -282,7 +282,7 @@
 	)
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75)
 
-//The order of the item list for this implant is not alphabetized due to it actually affecting how it shows up playerside when opening the implant
+// The order of the item list f. This implant is not alphabetized due to it actually affecting how it shows up playerside when opening the implant
 /obj/item/organ/cyberimp/arm/toolkit/paperwork
 	name = "integrated paperwork implant"
 	desc = "A highly sought out implant among heads of personnel, and other high up command staff in Nanotrasen. This implant allows the user to always have the tools necessary for paperwork handy"
@@ -453,7 +453,7 @@
 	var/lower_punch_damage = 0
 	/// The amount of damage the implant adds to the upper punching force of our arm.
 	var/upper_punch_damage = 2
-	/// The amount of punch effectiveness (AKA accuracy and crit potential) the implant adds to our arm
+	/// The amount of punch effectiveness also known as accuracy and crit potential) the implant adds to our arm
 	var/punch_effectiveness_added = 10
 	/// How much extra damage does our implant allow the implanted while grabbing someone and they are unable to break the grapple?
 	var/bonus_grab_damage = 20
@@ -544,7 +544,7 @@
 			source.Paralyze(1 SECONDS)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	var/ground_bounce = FALSE // funny flavor. if you hit someone who's floored you slam them into the ground, breaking tiles
+	var/ground_bounce = FALSE // funny flavor.. if you hit someone who's floored you slam them into the ground, breaking tiles
 	var/turf/target_turf = get_turf(living_target)
 
 	/* Damage calculations operate on the same math used in /datum/species/proc/harm():
@@ -588,7 +588,7 @@
 	source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 	playsound(living_target.loc, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 
-	// Some mobs gib when killed, so we're logging early. At this point, we're definitely hitting, so...
+	// Some mobs gib when killed, so we're logging early.. At this point, we're definitely hitting, so...
 	living_target.visible_message(
 		span_danger("[source] [picked_hit_type]ed [living_target][ground_bounce ? " into [target_turf]" : ""]!"),
 		span_userdanger("You're [picked_hit_type]ed by [source][ground_bounce ? " into [target_turf]" : ""]!"),

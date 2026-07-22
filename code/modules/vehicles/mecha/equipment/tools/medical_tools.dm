@@ -189,7 +189,7 @@
 		for(var/datum/reagent/medication as anything in shooter.reagents.reagent_list)
 			if(action == ("inject_reagent_" + medication.name))
 				inject_reagent(medication, shooter)
-				break // or maybe return TRUE? i'm not certain
+				break // or maybe return TRUE?. i'm not certain
 
 /obj/item/mecha_parts/mecha_equipment/sleeper/medical/proc/inject_reagent(datum/reagent/reagent_to_inject, obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG)
 	if(!reagent_to_inject || !patient || !SG || !(SG in chassis.flat_equipment))
@@ -377,7 +377,7 @@
 	energy_drain = 10
 	range = MECHA_MELEE|MECHA_RANGED
 	equip_cooldown = 0
-	///The medical gun doing the actual healing. yes its wierd but its better than copypasting the entire thing
+	/// The medical gun doing the actual healing.. yes its wierd but its better than copypasting the entire thing
 	var/obj/item/gun/medbeam/mech/medigun
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*4, /datum/material/plasma = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT*4, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
 

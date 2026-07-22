@@ -88,7 +88,7 @@
 	hallucinator.client?.images -= flood_images
 
 	flood_turfs.Cut() // We don't own these
-	flood_images.Cut() // We also don't own these, kinda
+	flood_images.Cut() // We also don't own these, kind of
 	QDEL_LIST(flood_image_holders) // But we DO own these
 
 	return ..()

@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_infuser_entries())
 	var/infuse_mob_name = "some kind of mutant"
 	/// general desc
 	var/desc = "The ignorants call you a mutant. I prefer to think of mutants as the future of mankind! They could use a guy like you on their team."
-	/// desc of what passing the threshold gets you. if this is empty, there is no threshold, so this is also really a tally of whether this is a "meme" mutant or not
+	/// desc of what passing the threshold gets you.. if this is empty, there is no threshold, so this is also really a tally of whether this is a "meme" mutant or not
 	var/threshold_desc = "the DNA mess takes over, and you turn into a mutant freak!"
 	/// List of personal attributes added by the mutation.
 	var/list/qualities = list(
@@ -26,7 +26,7 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_infuser_entries())
 		"inspiration for birth control",
 		"just a weird guy",
 	)
-	/// status effect type of the corresponding bonus, if it has one. tier zero won't ever set this.
+	/// status effect type of the corresponding bonus, if it has one.. tier zero won't ever set this.
 	var/status_effect_type
 	/**
 	 * This var clarifies that while the infuser entry has organs that contribute towards an organ set bonus
@@ -42,13 +42,13 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_infuser_entries())
 
 	//-- Vars for DNA Infuser Machine --//
 	/// List of objects, mobs, and/or items, the machine will infuse to make output organs.
-	/// Rejected creatures, of course, are anything not covered by other recipes. This is a special case
+	/// Rejected creatures, of course, are anything not covered by other recipes.. This is a special case
 	var/list/input_obj_or_mob
 	/// List of organs that the machine could spit out in relation
 	var/list/output_organs
 	///message the target gets while being infused
 	var/infusion_desc = "mutant-like"
 
-///Returns a list of organs that can be infused into the target human. Useful for custom behavior for certain entries
+/// Returns a list of organs that can be infused into the target human.. Useful for custom behavior for certain entries
 /datum/infuser_entry/proc/get_output_organs(mob/living/carbon/human/target, atom/movable/infused_from)
 	return output_organs.Copy()

@@ -1,11 +1,11 @@
-// Prioritizes the type of atom that the manipulator interact with. Interaction lists get built on the points themselves.
+// Prioritizes the type of atom that the manipulator interact with.. Interaction lists get built on the points themselves.
 
 /datum/manipulator_priority
 	/// The name of the priority for the UI display.
 	var/name
 	/// Which typepath does this priority handle.
 	var/atom_typepath
-	/// Is this priority active? If not, it will be ignored.
+	/// Is this priority active?. If not, it will be ignored.
 	var/active = TRUE
 
 /datum/manipulator_priority/drop/on_floor

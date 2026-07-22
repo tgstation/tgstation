@@ -76,7 +76,7 @@
 /mob/living/basic/chick/proc/ready_to_grow()
 	return (stat == CONSCIOUS)	&& !istype(loc, /obj/item/mob_holder)
 
-/// Variant of chick that just spawns in the holodeck so you can pet it. Doesn't grow up.
+/// Variant of chick that just spawns in the holodeck so you can pet it.. Doesn't grow up.
 /mob/living/basic/chick/permanent
 	grow_as = null
 

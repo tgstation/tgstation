@@ -1,6 +1,6 @@
 //A set of constants used to determine which type of mute an admin wishes to apply:
-//Please read and understand the muting/automuting stuff before changing these. MUTE_IC_AUTO etc = (MUTE_IC << 1)
-//Therefore there needs to be a gap between the flags for the automute flags
+// Please read and understand the muting/automuting stuff before changing these... MUTE_IC_AUTO and so on = (MUTE_IC << 1)
+// So there needs to be a gap between the flags for the automute flags
 #define MUTE_IC (1<<0)
 #define MUTE_OOC (1<<1)
 #define MUTE_PRAY (1<<2)
@@ -71,7 +71,7 @@
 #define ADMIN_TAG(datum) "(<A href='byond://?src=[REF(src)];[HrefToken(forceGlobal = TRUE)];tag_datum=[REF(datum)]'>TAG</a>)"
 #define ADMIN_LUAVIEW(state) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];lua_state=[REF(state)]'>VIEW STATE</a>)"
 #define ADMIN_LUAVIEW_CHUNK(state, log_index) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];lua_state=[REF(state)];log_index=[log_index]'>VIEW CODE</a>)"
-/// Displays "(SHOW)" in the chat, when clicked it tries to show atom(paper). First you need to set the request_state variable to TRUE for the paper.
+/// Displays "(SHOW)" in the chat, when clicked it tries to show atom(paper)... First you need to set the request_state variable to TRUE for the paper.
 #define ADMIN_SHOW_PAPER(atom) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];show_paper=[REF(atom)]'>SHOW</a>)"
 /// Displays "(PRINT)" in the chat, when clicked it will try to print the atom(paper) on the CentCom/Syndicate fax machine.
 #define ADMIN_PRINT_FAX(atom, sender, destination) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];print_fax=[REF(atom)];sender_name=[url_encode(sender)];destination=[url_encode(destination)]'>PRINT</a>)"
@@ -89,7 +89,7 @@
 	if(!drop_atom)
 		return //not a valid atom.
 	var/turf/drop_turf = get_step(drop_atom, 0) //resolve where the thing is.
-	if(!drop_turf) //incase it's inside a valid drop container, inside another container. ie if a mech picked up a closet and has it inside its internal storage.
+	if(!drop_turf) // incase it's inside a valid drop container, inside another container... that is if a mech picked up a closet and has it inside its internal storage.
 		var/atom/last_try = drop_atom.loc?.drop_location() //one last try, otherwise fuck it.
 		if(last_try)
 			drop_turf = get_step(last_try, 0)
@@ -124,9 +124,9 @@
 #define RANK_SOURCE_BACKUP "rank_backup"
 #define RANK_SOURCE_TEMPORARY "rank_temp"
 
-/// Number of identical messages required before the spam-prevention will warn you to stfu
+/// Number of identical messages needed before the spam-prevention will warn you to stfu
 #define SPAM_TRIGGER_WARNING 5
-/// Number of identical messages required before the spam-prevention will automute you
+/// Number of identical messages needed before the spam-prevention will automute you
 #define SPAM_TRIGGER_AUTOMUTE 10
 
 ///Max length of a keypress command before it's considered to be a forged packet/bogus command
@@ -157,15 +157,15 @@
 GLOBAL_VAR_INIT(ghost_role_flags, ALL)
 
 //Flags that control what ways ghosts can get back into the round
-//ie fugitives, space dragon, etc. also includes dynamic midrounds as it's the same deal
+// that is fugitives, space dragon, and so on also includes dynamic midrounds as it's the same deal
 #define GHOSTROLE_MIDROUND_EVENT (1<<0)
-//ie ashwalkers, free golems, beach bums
+// that is ashwalkers, free golems, beach bums
 #define GHOSTROLE_SPAWNER (1<<1)
-//ie mind monkeys, sentience potion
+// that is mind monkeys, sentience potion
 #define GHOSTROLE_STATION_SENTIENCE (1<<2)
-//ie pais, posibrains
+// that is pais, posibrains
 #define GHOSTROLE_SILICONS (1<<3)
-//ie mafia, ctf
+// that is mafia, ctf
 #define GHOSTROLE_MINIGAME (1<<4)
 
 //smite defines
@@ -173,7 +173,7 @@ GLOBAL_VAR_INIT(ghost_role_flags, ALL)
 #define LIGHTNING_BOLT_DAMAGE 75
 #define LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH 40
 
-/// for [/proc/check_asay_links], if there are any actionable refs in the asay message, this index in the return list contains the new message text to be printed
+/// f.. [/proc/check_asay_links], if there are any actionable refs in the asay message, this index in the return list contains the new message text to be printed
 #define ASAY_LINK_NEW_MESSAGE_INDEX "!asay_new_message"
 /// for [/proc/check_asay_links], if there are any admin pings in the asay message, this index in the return list contains a list of admins to ping
 #define ASAY_LINK_PINGED_ADMINS_INDEX "!pinged_admins"

@@ -18,7 +18,7 @@
 	var/owner_name
 	/// The message associated with the request
 	var/message
-	/// Just any information, which you can to send with request. For example paper datum.
+	/// Just any information, which you can to send with request.. For example paper datum.
 	var/additional_information
 	/// When the request was created
 	var/timestamp

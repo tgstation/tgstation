@@ -41,9 +41,9 @@ Key procs
 	/// Lazyassoclist of languages that can be spoken.
 	/// Tongue organ may also set limits beyond this list.
 	var/list/spoken_languages
-	/// Lazyassoclist of languages we are blocked from understanding, used for certain mobs, mutations, quirks, etc.
+	/// Lazyassoclist of languages we are blocked from understanding, used for certain mobs, mutations, quirks, and so on
 	var/list/blocked_understanding
-	/// Lazyassoclist of languages we are blocked from speaking, used for certain mobs, mutations, quirks, etc.
+	/// Lazyassoclist of languages we are blocked from speaking, used for certain mobs, mutations, quirks, and so on
 	var/list/blocked_speaking
 	/// If true, overrides tongue aforementioned limitations.
 	var/omnitongue = FALSE
@@ -158,7 +158,7 @@ Key procs
 
 	return .
 
-/// Removes every language and optionally sets omnitongue false. If a non default source is supplied, only removes that source.
+/// Removes every language and optionally sets omnitongue false.. If a non default source is supplied, only removes that source.
 /datum/language_holder/proc/remove_all_languages(source = LANGUAGE_ALL, remove_omnitongue = FALSE)
 	for(var/language in GLOB.all_languages)
 		remove_language(language, ALL, source)
@@ -236,7 +236,7 @@ Key procs
 /datum/language_holder/proc/has_partial_language(language)
 	return LAZYACCESS(best_mutual_languages, language)
 
-/// Checks if you can speak the language. Tongue limitations should be supplied as an argument.
+/// Checks if you can speak the language.. Tongue limitations should be supplied as an argument.
 /datum/language_holder/proc/can_speak_language(language)
 	var/can_speak_language_path = omnitongue || owner.could_speak_language(language)
 	return (can_speak_language_path && has_language(language, SPOKEN_LANGUAGE))
@@ -286,7 +286,7 @@ Key procs
 		language_menu = new (src)
 	language_menu.ui_interact(user)
 
-/// Copies all languages from the supplied atom/language holder. Source should be overridden when you
+/// Copies all languages from the supplied atom/language holder.. Source should be overridden when you
 /// do not want the language overwritten by later atom updates or want to avoid blocked languages.
 /datum/language_holder/proc/copy_languages(datum/language_holder/from_holder, source_override)
 	if(source_override) //No blocked languages here, for now only used by ling absorb.

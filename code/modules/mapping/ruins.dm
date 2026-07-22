@@ -19,7 +19,7 @@
 			var/area/new_area = get_area(check)
 			affected_areas[new_area] = TRUE
 
-		// This is faster yes. Only BARELY but it is faster
+		// This is faster yes.. Only BARELY but it is faster
 		for(var/area/affct_area as anything in affected_areas)
 			if(!allowed_areas_typecache[affct_area.type])
 				valid = FALSE
@@ -169,7 +169,7 @@
 
 		//That's done remove from priority even if it failed
 		if(forced)
-			//TODO : handle forced ruins with multiple variants
+			// To do : handle forced ruins with multiple variants
 			forced_ruins -= current_pick
 			forced = FALSE
 
@@ -217,7 +217,7 @@
 			var/top_right_y = bottom_left_y + current_pick.height - 1
 			log_mapping("Successfully placed [current_pick.name] ruin ([bottom_left_x],[bottom_left_y],[placed_turf.z] to [top_right_x],[top_right_y],[placed_turf.z]).")
 
-			///Keep track of the active ruins so we can take it in account for map generation. Using bottom lef turf as key
+			/// Keep track of the active ruins so we can take it in account for map generation.. Using bottom lef turf as key
 			SSmapping.active_ruins[locate(bottom_left_x, bottom_left_y, placed_turf.z)] = current_pick
 
 		//Update the available list

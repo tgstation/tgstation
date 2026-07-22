@@ -145,7 +145,7 @@
 	var/obj/effect/anomaly/A = attached_to
 	if(!istype(A))
 		return
-	else if(A.immortal) //we can't die, why are we still here? just to suffer?
+	else if(A.immortal) // we can't die, why are we still here?. just to suffer?
 		stop()
 	else
 		var/time_left = max(0, (A.death_time - world.time) / 10)

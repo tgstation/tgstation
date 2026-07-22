@@ -12,7 +12,7 @@
 	show_to_ghosts = TRUE
 	suicide_cry = "ALT F4!"
 	ui_name = "AntagInfoGlitch"
-	/// Minimum Qserver threat required to spawn this mob. This is subtracted (x/2) from the server thereafter.
+	/// Minimum Qserver threat needed to spawn this mob.. This is subtracted (x/2) from the server thereafter.
 	var/threat = 0
 
 /datum/antagonist/bitrunning_glitch/greet()
@@ -74,7 +74,7 @@
 	fix_agent_id()
 
 
-/// Resets the agent's ID and name. Needed so this doesn't show as "unknown"
+/// Resets the agent's ID and name.. Needed so this doesn't show as "unknown"
 /datum/antagonist/bitrunning_glitch/proc/fix_agent_id()
 	if(!ishuman(owner.current))
 		return

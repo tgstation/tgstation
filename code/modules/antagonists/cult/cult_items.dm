@@ -173,9 +173,9 @@ Striking a noncultist, however, will tear their flesh."}
 	/// holder for the actual action when created.
 	var/list/datum/action/cooldown/spell/path_wielder_actions
 	var/mob/living/trapped_entity
-	/// The heretic path that the variable below uses to index abilities. Assigned when the heretic is ensouled.
+	/// The heretic path that the variable below uses to index abilities.. Assigned when the heretic is ensouled.
 	var/heretic_path
-	/// If the blade is bound, it cannot utilize its abilities, but neither can its wielder. They must unbind it to use it to its full potential.
+	/// If the blade is bound, it cannot use its abilities, but neither can its wielder.. They must unbind it to use it to its full potential.
 	var/bound = TRUE
 	/// Nested static list used to index abilities and names.
 	var/static/list/heretic_paths_to_haunted_sword_abilities = list(
@@ -302,7 +302,7 @@ Striking a noncultist, however, will tear their flesh."}
 	return TRUE
 
 /obj/item/melee/cultblade/haunted/proc/on_heresy_handle(mob/living/user, actiontype)
-	// todo make the former a subtype of latter
+	// to do make the former a subtype of latter
 	var/binding_implements = list(/obj/item/clothing/neck/eldritch_amulet, /obj/item/clothing/neck/heretic_focus)
 	if(!user.is_holding_item_of_types(binding_implements))
 		to_chat(user, span_notice("You need to hold a focus to bind [src]!"))
@@ -322,7 +322,7 @@ Striking a noncultist, however, will tear their flesh."}
 	return TRUE
 
 /obj/item/melee/cultblade/haunted/proc/on_normie_handle(mob/living/user, actiontype)
-	// todo make the former a subtype of latter
+	// to do make the former a subtype of latter
 	var/binding_implements = list(/obj/item/book/bible)
 	if(!user.is_holding_item_of_types(binding_implements))
 		to_chat(user, span_notice("You need to wield a bible to bind [src]!"))
@@ -729,12 +729,12 @@ Striking a noncultist, however, will tear their flesh."}
 		ADD_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src)) // keep em in place
 		user.add_atom_colour(COLOR_CULT_RED, TEMPORARY_COLOUR_PRIORITY)
 		user.visible_message(span_cult_bold("Dark tendrils appear from the ground and root [user] in place!"))
-	sleep(5 SECONDS) // can we still use these or. i mean its async
+	sleep(5 SECONDS) // can we still use these or.. i mean its async
 	new /obj/structure/spawner/sentient/proteon_spawner(src)
 	visible_message(span_cult_bold("A mysterious hole appears out of nowhere!"))
 	if(!fucked || QDELETED(user))
 		return
-	if(get_turf(user) != src) // they get away. for now
+	if(get_turf(user) != src) // they get away.. for now
 		REMOVE_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
 		return
 	user.visible_message(span_cult_bold("[user] is pulled into the portal through an infinitesmally minuscule hole, shredding [user.p_their()] body!"))

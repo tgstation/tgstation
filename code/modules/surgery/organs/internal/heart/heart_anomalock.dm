@@ -128,7 +128,7 @@
 	var/obj/item/stock_parts/power_store/cell = pick(batteries)
 	cell.give(cell.max_charge() * 0.1)
 
-///Does a few things to try to help you live whatever you may be going through. Returns TRUE if it activated successfully.
+/// Does a few things to try to help you live whatever you may be going through.. Returns TRUE if it activated successfully.
 /obj/item/organ/heart/cybernetic/anomalock/proc/activate_survival(mob/living/carbon/organ_owner)
 	if(!COOLDOWN_FINISHED(src, survival_cooldown))
 		return FALSE
@@ -228,7 +228,7 @@
 	owner.balloon_alert(owner, "your heart weakens")
 	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), REF(src))
 
-/// Called when an organ is lost in the owner. In the event the owner just lost their voltaic (presumably, the one giving this effect), ends the buff and clears the overlay.
+/// Called when an organ is lost in the owner.. In the event the owner just lost their voltaic (presumably, the one giving this effect), ends the buff and clears the overlay.
 /datum/status_effect/voltaic_overdrive/proc/on_organ_lost(mob/living/carbon/source, obj/item/organ/organ, special)
 	SIGNAL_HANDLER
 	if(istype(organ, /obj/item/organ/heart/cybernetic/anomalock))
@@ -245,7 +245,7 @@
 		to_chat(hearer, span_danger("Yeah. Press a metal disk to the chest of a living arc flash hazard. See what that gets you.")) //the guy is LITERALLY sparking like a tesla coil.
 	else
 		to_chat(hearer, span_danger("An electrical arc strikes your stethoscope, conducting into you!"))
-	if(hearer.electrocute_act(15, "stethoscope", flags = SHOCK_NOGLOVES)) //the stethoscope is in your ears. (returns true if it does damage so we only scream in that case)
+	if(hearer.electrocute_act(15, "stethoscope", flags = SHOCK_NOGLOVES)) // the stethoscope is in your ears.. (returns true if it does damage so we only scream in that case)
 		hearer.emote("scream")
 	return span_danger("[owner.p_Their()] heart produces [beat_noise].")
 

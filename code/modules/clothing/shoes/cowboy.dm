@@ -35,7 +35,7 @@
 				break
 			occupant.forceMove(user.drop_location())
 			user.visible_message(span_warning("[user] recoils as something slithers out of [src]."), span_userdanger("You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!"))
-			user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
+			user.Knockdown(20) // Is one second paralyze better here?. I feel you would fall on your ass in some fashion.
 			occupant.UnarmedAttack(user, proximity_flag = TRUE)
 
 /obj/item/clothing/shoes/cowboy/dropped(mob/living/user)

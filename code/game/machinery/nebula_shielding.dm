@@ -1,4 +1,4 @@
-///Machinery that block nebulas. This type is for convenience, you can set nebula shielding on other objects as well using add_to_nebula_shielding()
+/// Machinery that block nebulas.. This type is for convenience, you can set nebula shielding on other objects as well using add_to_nebula_shielding()
 /obj/machinery/nebula_shielding
 	density = TRUE
 
@@ -20,7 +20,7 @@
 
 	add_to_nebula_shielding(src, nebula_type, PROC_REF(get_nebula_shielding))
 
-///Nebula is asking us how strong we are. Return our shield strength is all is well
+/// Nebula is asking us how strong we are.. Return our shield strength is all is well
 /obj/machinery/nebula_shielding/proc/get_nebula_shielding()
 	if(panel_open || (machine_stat & BROKEN))
 		return

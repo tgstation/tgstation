@@ -6,13 +6,13 @@
 	var/obj/machinery/door/airlock/instant/door = allocate(/obj/machinery/door/airlock/instant, run_loc_floor_bottom_left, EAST) //special subtype that just flips the density var on open() and close(), akin to a real airlock.
 	door.interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
 
-	// First, test that someone without any access can open a door that doesn't have any access requirements. Let's test it via using the bumpopen() proc, called when someone bumps into the door.
+	// First, test that someone without any access can open a do. That doesn't have any access needs Let's test it via using the bumpopen() proc, called when someone bumps into the door.
 	subject.Bump(door)
 	TEST_ASSERT_EQUAL(door.density, FALSE, "Subject failed to open access-free airlock!")
 	door.close() // close it here as well
 	subject.last_bumped = 0
 
-	// Alright, now let's test that someone with access can open a door that requires access when only req_access is set.
+	// Alright, now let's test that someone with access can open a door that needs access when only req_access is set.
 	subject.equipOutfit(/datum/outfit/job/assistant/consistent) // set up the outfit here to ensure the last check is pure.
 	var/obj/item/card/id/advanced/keycard = subject.wear_id
 
@@ -24,14 +24,14 @@
 	door.close()
 	subject.last_bumped = 0
 
-	// Okay, now let's edit the req_access on the door to make sure the subject can't open it with the requirements of req_access (must have all accesses required on keycard to open door).
+	// Okay, now let's edit the req_access on the do. To make sure the subject can't open it with the needs of req_access (must have all accesses needed on keycard to open door).
 	door.req_access = list(ACCESS_ENGINEERING, ACCESS_MAINT_TUNNELS, ACCESS_CARGO)
 	subject.Bump(door)
 	TEST_ASSERT_EQUAL(door.density, TRUE, "Subject with invalid access succeeded in opening airlock access-locked behind req_access!")
 	door.close() // included for completeness, will early return if the door is already closed.
 	subject.last_bumped = 0
 
-	// Alright, now to test req_one_access. The two systems should be mutually exclusive, so we'll reset the access on the keycard and the door before we continue..
+	// Alright, now to test req_one_access.. The two systems should be mutually exclusive, so we'll reset the access on the keycard and the door before we continue..
 	door.req_access = null
 	door.req_one_access = list(ACCESS_ENGINEERING, ACCESS_MAINT_TUNNELS)
 	keycard.access = list(ACCESS_MAINT_TUNNELS)
@@ -40,21 +40,21 @@
 	door.close()
 	subject.last_bumped = 0
 
-	// Now, let's test req_one_access with an invalid access. The keycard is still on ACCESS_MAINT_TUNNELS from last step.
+	// Now, let's test req_one_access with an invalid access.. The keycard is still on ACCESS_MAINT_TUNNELS from last step.
 	door.req_one_access = list(ACCESS_ENGINEERING, ACCESS_CARGO)
 	subject.Bump(door)
 	TEST_ASSERT_EQUAL(door.density, TRUE, "Subject with invalid access succeeded in opening airlock access-locked behind req_one_access!")
 	door.close()
 	subject.last_bumped = 0
 
-	// Now, let's test emergency access. Same access and keycard as the last step.
+	// Now, let's test emergency access.. Same access and keycard as the last step.
 	door.emergency = TRUE
 	subject.Bump(door)
 	TEST_ASSERT_EQUAL(door.density, FALSE, "Subject failed to open airlock set to emergency access!")
 	door.close()
 	subject.last_bumped = 0
 
-	// Red alert access. Same access and keycard as the last step.
+	// Red alert access.. Same access and keycard as the last step.
 	door.emergency = FALSE
 	door.red_alert_access = TRUE
 	SSsecurity_level.set_level(SEC_LEVEL_RED)
@@ -66,7 +66,7 @@
 /datum/unit_test/door_access_ai
 
 /datum/unit_test/door_access_ai/Run()
-	var/mob/dead/observer/fake_ghost = allocate(__IMPLIED_TYPE__) // ai must be passed a mob in /new, cringe
+	var/mob/dead/observer/fake_ghost = allocate(__IMPLIED_TYPE__) // ai must be passed a mob in /new, uncomfortable
 	var/mob/living/silicon/ai/subject = allocate(__IMPLIED_TYPE__, run_loc_floor_top_right, null, fake_ghost)
 	var/obj/machinery/door/airlock/instant/door = allocate(__IMPLIED_TYPE__)
 	door.interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
@@ -78,7 +78,7 @@
 /datum/unit_test/windoor_access_ai
 
 /datum/unit_test/windoor_access_ai/Run()
-	var/mob/dead/observer/fake_ghost = allocate(__IMPLIED_TYPE__) // ai must be passed a mob in /new, cringe
+	var/mob/dead/observer/fake_ghost = allocate(__IMPLIED_TYPE__) // ai must be passed a mob in /new, uncomfortable
 	var/mob/living/silicon/ai/subject = allocate(__IMPLIED_TYPE__, run_loc_floor_top_right, null, fake_ghost)
 	var/obj/machinery/door/window/instant/door = allocate(__IMPLIED_TYPE__)
 	door.interaction_flags_machine |= INTERACT_MACHINE_OFFLINE

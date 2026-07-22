@@ -23,17 +23,17 @@
 #define TOOL_RUSTSCRAPER "rustscraper"
 
 // Used by the tool_blocker element, to block the primary or secondary tool action (or both)
-/// e.g. crowbar_act()
+/// e.g... crowbar_act()
 #define TOOL_ACT_PRIMARY (1<<0)
-/// e.g. crowbar_act_secondary()
+/// e.g... crowbar_act_secondary()
 #define TOOL_ACT_SECONDARY (1<<1)
-/// e.g. both crowbar_act() and crowbar_act_secondary()
+/// e.g... both crowbar_act() and crowbar_act_secondary()
 #define TOOL_ACT_ALL TOOL_ACT_PRIMARY | TOOL_ACT_SECONDARY
 
 // If delay between the start and the end of tool operation is less than MIN_TOOL_SOUND_DELAY,
-// tool sound is only played when op is started. If not, it's played twice.
+// tool sound is only played when op is started... If not, it's played twice.
 #define MIN_TOOL_SOUND_DELAY 20
-#define MIN_TOOL_OPERATING_DELAY 40 //minimum delay for operating sound. Prevent overlaps and overhand sound.
+#define MIN_TOOL_OPERATING_DELAY 40 // minimum delay for operating sound... Prevent overlaps and overhand sound.
 /// Return when an item interaction is successful.
 /// This cancels the rest of the chain entirely and indicates success.
 #define ITEM_INTERACT_SUCCESS (1<<0) // Same as TRUE, as most tool (legacy) tool acts return TRUE on success

@@ -1,7 +1,7 @@
 //Stores several modifiers in a way that isn't cleared by changing species
 /datum/physiology
 	/// Multiplier to brute damage received.
-	/// IE: A brute mod of 0.9 = 10% less brute damage.
+	/// that is A brute mod of 0.9 = 10% less brute damage.
 	/// Only applies to damage dealt via [apply_damage][/mob/living/proc/apply_damage] unless factored in manually.
 	var/brute_mod = 1
 	/// Multiplier to burn damage received
@@ -24,7 +24,7 @@
 
 	/// Flat damage reduction from taking damage
 	/// Unlike the other modifiers, this is not a multiplier.
-	/// IE: DR of 10 = 10% less damage.
+	/// that is DR of 10 = 10% less damage.
 	var/damage_resistance = 0
 
 	var/siemens_coeff = 1 // resistance to shocks

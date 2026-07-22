@@ -13,8 +13,8 @@
 
 
 //Delays the mob's next click/action by num deciseconds
-// eg: 10-3 = 7 deciseconds of delay
-// eg: 10*0.5 = 5 deciseconds of delay
+// for example 10-3 = 7 deciseconds of delay
+// for example 10*0.5 = 5 deciseconds of delay
 // DOES NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
 
 /mob/proc/changeNext_move(num)
@@ -456,7 +456,7 @@
 	screen_loc = "CENTER"
 
 #define MAX_SAFE_BYOND_ICON_SCALE_TILES (MAX_SAFE_BYOND_ICON_SCALE_PX / ICON_SIZE_ALL)
-#define MAX_SAFE_BYOND_ICON_SCALE_PX (33 * 32) //Not using world.icon_size on purpose. //Ok well I trust you
+#define MAX_SAFE_BYOND_ICON_SCALE_PX (33 * 32) // Not using world.icon_size on purpose.. //Ok well I trust you
 
 /atom/movable/screen/click_catcher/proc/UpdateGreed(view_size_x = 15, view_size_y = 15)
 	var/icon/newicon = icon('icons/hud/screen_gen.dmi', "catcher")

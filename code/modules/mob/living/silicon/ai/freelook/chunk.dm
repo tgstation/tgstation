@@ -4,7 +4,7 @@
  */
 
 /datum/camerachunk
-	///turfs our cameras cant see but are inside our grid. associative list of the form: list(obscured turf = static image on that turf)
+	/// turfs our cameras cant see but are inside our grid.. associative list of the form: list(obscured turf = static image on that turf)
 	var/list/obscuredTurfs = list()
 	///turfs our cameras can see inside our grid
 	var/list/visibleTurfs = list()
@@ -29,9 +29,9 @@
 	var/list/update_sources = list()
 	/// Are we currently being updated by the cameras subsystem?
 	var/currently_updating = FALSE
-	/// List of cameras that need to be processed. For use in yielding when being lazyupdated by the cameras subsystem
+	/// List of cameras that need to be processed.. For use in yielding when being lazyupdated by the cameras subsystem
 	var/list/list/processing_cameras = list()
-	/// List of newly visible turfs that are currently being generated. For use in lazyupdating.
+	/// List of newly visible turfs that are currently being generated.. For use in lazyupdating.
 	var/list/processing_visible_turfs = list()
 
 /// Add a camera eye to the chunk, updating the chunk if necessary.
@@ -50,7 +50,7 @@
 	seenby -= eye
 
 	var/client/client = eye.GetViewerClient()
-	// Bandaid fix for AI multicamera. Static disappears on other cameras when focused camera is far away.
+	// Bandaid fix for AI multicamera.. Static disappears on other cameras when focused camera is far away.
 	// seenby.len check fixes that, but prevents static removal for those, who exit camera console, when a chunk was observed by 2 or more eye mobs.
 	if(client && eye.use_visibility && (seenby.len == 0 || (isliving(client.mob) && !isAI(client.mob)))) // Bypass for non-AIs, to unsure static removal.
 		client.images -= active_static_images

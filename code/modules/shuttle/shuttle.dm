@@ -6,22 +6,22 @@
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
-	///Common standard is for this to point -away- from the dockingport door, ie towards the ship
+	/// Common standard is for this to point -away- from the dockingport door, that is towards the ship
 	dir = NORTH
 	/// The identifier of the port or ship.
 	/// This will be used in numerous other places like the console,
 	/// stationary ports and whatnot to tell them your ship's mobile
-	/// port can be used in these places, or the docking port is compatible, etc.
+	/// port can be used in these places, or the docking port is compatible, and so on
 	var/shuttle_id
 	/// Possible destinations
 	var/port_destinations
-	///size of covered area, perpendicular to dir. You shouldn't modify this for mobile dockingports, set automatically.
+	/// size of covered area, perpendicular to dir.. You shouldn't modify this for mobile dockingports, set automatically.
 	var/width = 0
-	///size of covered area, parallel to dir. You shouldn't modify this for mobile dockingports, set automatically.
+	/// size of covered area, parallel to dir.. You shouldn't modify this for mobile dockingports, set automatically.
 	var/height = 0
-	///position relative to covered area, perpendicular to dir. You shouldn't modify this for mobile dockingports, set automatically.
+	/// position relative to covered area, perpendicular to dir.. You shouldn't modify this for mobile dockingports, set automatically.
 	var/dwidth = 0
-	///position relative to covered area, parallel to dir. You shouldn't modify this for mobile dockingports, set automatically.
+	/// position relative to covered area, parallel to dir.. You shouldn't modify this for mobile dockingports, set automatically.
 	var/dheight = 0
 
 	var/area_type
@@ -54,7 +54,7 @@
 
 //these objects are indestructible
 /obj/docking_port/Destroy(force)
-	// unless you assert that you know what you're doing. Horrible things
+	// unless you assert that you know what you're doing.. Horrible things
 	// may result.
 	if(force)
 		..()
@@ -86,7 +86,7 @@
 	if(_y == null)
 		_y = y
 
-	//byond's sin and cos functions are inaccurate. This is faster and perfectly accurate
+	// byond's sin and cos functions are inaccurate.. This is faster and perfectly accurate
 	var/cos = 1
 	var/sin = 0
 	switch(_dir)

@@ -1,4 +1,4 @@
-/// Gathers visible turfs in range matching a typecache. Shuffled for variety.
+/// Gathers visible turfs in range matching a typecache.. Shuffled for variety.
 /datum/target_source/range_turfs/typecache_visible
 	var/list/typecache
 

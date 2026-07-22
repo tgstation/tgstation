@@ -5,7 +5,7 @@
  * Calls cast_on_thing_in_aoe on all atoms returned by get_things_to_cast_on by default.
  */
 /datum/action/cooldown/spell/aoe
-	/// The max amount of targets we can affect via our AOE. 0 = unlimited
+	/// The max amount of targets we can affect via our AOE.. 0 = unlimited
 	var/max_targets = 0
 	/// Should we shuffle the targets lift after getting them via get_things_to_cast_on?
 	var/shuffle_targets_list = FALSE
@@ -15,8 +15,8 @@
 /datum/action/cooldown/spell/aoe/is_valid_target(atom/cast_on)
 	return isturf(cast_on.loc)
 
-// At this point, cast_on == owner. Either works.
-// Don't extend this for your spell! Look at cast_on_thing_in_aoe.
+// At this point, cast_on == owner.. Either works.
+// Don't extend this for your spell!. Look at cast_on_thing_in_aoe.
 /datum/action/cooldown/spell/aoe/cast(atom/cast_on)
 	. = ..()
 	// Get every atom around us to our aoe cast on

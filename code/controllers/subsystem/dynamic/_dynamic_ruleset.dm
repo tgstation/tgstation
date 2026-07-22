@@ -14,7 +14,7 @@
 	/// Optional, if unset, uses pref_flag for jobbans instead
 	var/jobban_flag
 	/// What flag to check for prefs?
-	/// Required if the antag has an associated preference, and must be unique
+	/// Needed if the antag has an associated preference, and must be unique
 	/// (unless RULESET_VARIATION is set in ruleset_flags)
 	var/pref_flag
 	/// Flags for this ruleset
@@ -217,7 +217,7 @@
 /datum/dynamic_ruleset/proc/prepare_execution(population_size = 0, list/mob/antag_candidates = list())
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	// !! THIS SLEEPS !!
+	// !!. THIS SLEEPS !!
 	load_templates()
 
 	// This is (mostly) redundant, buuuut the (potential) sleep above makes it iffy, so let's just be safe
@@ -307,7 +307,7 @@
 	resulting_candidates.Cut(num_candidates + 1)
 	return resulting_candidates
 
-/// Handles loading map templates that this ruleset requires
+/// Handles loading map templates that this ruleset needs
 /datum/dynamic_ruleset/proc/load_templates()
 	SHOULD_NOT_OVERRIDE(TRUE)
 	PRIVATE_PROC(TRUE)

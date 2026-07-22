@@ -71,7 +71,7 @@
 	if(transfer_ratio <= 0)
 		return
 
-	// Attempt to transfer the gas.
+	// Try to transfer the gas.
 
 	// If the main output is full, we try to send filtered output to the side port (air2).
 	// If the side output is full, we try to send the non-filtered gases to the main output port (air3).
@@ -80,7 +80,7 @@
 	var/side_output_full = air2.return_pressure() >= MAX_OUTPUT_PRESSURE
 	var/main_output_full = air3.return_pressure() >= MAX_OUTPUT_PRESSURE
 
-	// If both output ports are full, there's nothing we can do. Don't bother removing anything from the input.
+	// If both output ports are full, there's nothing we can do.. Don't bother removing anything from the input.
 	if (side_output_full && main_output_full)
 		return
 
@@ -351,7 +351,7 @@
 	name = "antinoblium filter"
 	filter_type = list(/datum/gas/antinoblium)
 
-// These two filter types have critical_machine flagged to on and thus causes the area they are in to be exempt from the Grid Check event.
+// These two filter types have critical_machine flagged to on and so causes the area they are in to be exempt from the Grid Check event.
 
 /obj/machinery/atmospherics/components/trinary/filter/critical
 	critical_machine = TRUE

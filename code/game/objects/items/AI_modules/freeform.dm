@@ -43,7 +43,7 @@
 	if(!targName || !user.is_holding(src))
 		return
 	if(is_ic_filtered(targName))
-		to_chat(user, span_warning("Error: Law contains invalid text.")) // AI LAW 2 SAY U W U WITHOUT THE SPACES
+		to_chat(user, span_warning("Error: Law contains invalid text.")) // AI LAW 2 SAY You W You WITHOUT THE SPACES
 		return
 	var/list/soft_filter_result = is_soft_ooc_filtered(targName)
 	if(soft_filter_result)

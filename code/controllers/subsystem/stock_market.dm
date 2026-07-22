@@ -6,11 +6,11 @@ SUBSYSTEM_DEF(stock_market)
 
 	/// Associated list of materials and their prices at the given time.
 	var/list/materials_prices = list()
-	/// Associated list of materials alongside their market trends. 1 is up, 0 is stable, -1 is down.
+	/// Associated list of materials alongside their market trends.. 1 is up, 0 is stable, -1 is down.
 	var/list/materials_trends = list()
-	/// Associated list of materials alongside the life of its current trend. After its life is up, it will change to a new trend.
+	/// Associated list of materials alongside the life of its current trend.. After its life is up, it will change to a new trend.
 	var/list/materials_trend_life = list()
-	/// Associated list of materials alongside their available quantity. This is used to determine how much of a material is available to buy, and how much buying and selling affects the price.
+	/// Associated list of materials alongside their available quantity.. This is used to determine how much of a material is available to buy, and how much buying and selling affects the price.
 	var/list/materials_quantity = list()
 	/// A list of all currently active stock market events.
 	var/list/active_events = list()
@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(stock_market)
 	for(var/datum/material/possible_market as anything in subtypesof(/datum/material)) // I need to make this work like this, but lets hardcode it for now
 		if(possible_market.tradable)
 			materials_prices[possible_market] = possible_market.value_per_unit * SHEET_MATERIAL_AMOUNT
-			materials_trends[possible_market] = rand(MARKET_TREND_DOWNWARD,MARKET_TREND_UPWARD) //aka -1 to 1
+			materials_trends[possible_market] = rand(MARKET_TREND_DOWNWARD,MARKET_TREND_UPWARD) // also known as -1 to 1
 			materials_trend_life[possible_market] = rand(1,3)
 			materials_quantity[possible_market] = possible_market.tradable_base_quantity + (rand(-(possible_market.tradable_base_quantity) * 0.5, possible_market.tradable_base_quantity * 0.5))
 	return SS_INIT_SUCCESS

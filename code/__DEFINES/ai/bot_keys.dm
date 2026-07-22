@@ -90,7 +90,7 @@
 #define BB_CLOWN_FRIEND "clown_friend"
 ///key that holds the list of slippery items
 #define BB_SLIPPERY_ITEMS "slippery_items"
-///key that holds list of types we will attempt to slip
+/// key that holds list of types we will try to slip
 #define BB_SLIP_LIST "slip_list"
 ///key that holds the slippery item we will drag people too
 #define BB_SLIPPERY_TARGET "slippery_target"

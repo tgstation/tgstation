@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(blackbox)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/feedback_list = list() //list of datum/feedback_variable
-	var/list/first_death = list() //the first death of this round, assoc. vars keep track of different things
+	var/list/first_death = list() // the first death of this round, assoc.. vars keep track of different things
 	var/triggertime = 0
 	var/sealed = FALSE //time to stop tracking stats?
 	var/list/versions = list("antagonists" = 3,
@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(blackbox)
 	CheckPlayerCount()
 
 	if(CONFIG_GET(flag/use_exp_tracking))
-		if((triggertime < 0) || (world.time > (triggertime +3000))) //subsystem fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire. The <0 is midnight rollover check
+		if((triggertime < 0) || (world.time > (triggertime +3000))) // subsystem fires once at roundstart then once every 10 minutes.. a 5 min check skips the first fire.. The <0 is midnight rollover check
 			update_exp(10)
 
 /datum/controller/subsystem/blackbox/proc/CheckPlayerCount()
@@ -347,7 +347,7 @@ Versioning
 		"lakey" = L.lastattackerckey,
 		"brute" = L.get_brute_loss(),
 		"fire" = L.get_fire_loss(),
-		"brain" = L.get_organ_loss(ORGAN_SLOT_BRAIN) || BRAIN_DAMAGE_DEATH, //get_organ_loss returns null without a brain but a value is required for this column
+		"brain" = L.get_organ_loss(ORGAN_SLOT_BRAIN) || BRAIN_DAMAGE_DEATH, // get_organ_loss returns null without a brain but a value is needed for this column
 		"oxy" = L.get_oxy_loss(),
 		"tox" = L.get_tox_loss(),
 		"stamina" = L.get_stamina_loss(),

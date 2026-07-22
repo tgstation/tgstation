@@ -1,11 +1,11 @@
 /datum/computer_file
 	///The name of the internal file shown in file management.
 	var/filename = "NewFile"
-	///The type of file format the file is in, placed after filename. PNG, TXT, ect. This would be NewFile.XXX
+	/// The type of file format the file is in, placed after filename.. PNG, TXT, ect.. This would be NewFile.XXX
 	var/filetype = "XXX"
-	///How much GQ storage space the file will take to store. Integers only!
+	/// How much GQ storage space the file will take to store.. Integers only!
 	var/size = 1
-	///Whether the file may be deleted. Setting to TRUE prevents deletion/renaming/etc.
+	/// Whether the file may be deleted.. Setting to TRUE prevents deletion/renaming/etc.
 	var/undeletable = FALSE
 	///The computer file's personal ID
 	var/uid
@@ -49,7 +49,7 @@
 	temp.filetype = filetype
 	return temp
 
-///Called post-installation of an application in a computer, after 'computer' var is set. Remember, the user is optional
+/// Called post-installation of an application in a computer, after 'computer' var is set.. Remember, the user is optional
 /datum/computer_file/proc/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
@@ -66,7 +66,7 @@
 /datum/computer_file/proc/on_examine(obj/item/modular_computer/source, mob/user)
 	return null
 
-/// Called on modular computer item_interaction, checking if any application uses the given item. Uses the item interaction chain flags.
+/// Called on modular computer item_interaction, checking if any application uses the given item.. Uses the item interaction chain flags.
 /datum/computer_file/proc/application_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	return NONE
 

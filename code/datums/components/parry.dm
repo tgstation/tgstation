@@ -16,9 +16,9 @@
 	var/boost_speed_mult
 	/// How much this projectile's damage is increased when boosted (parried by owner)
 	var/boost_damage_mult
-	/// Trait required to be able to parry this projectile
+	/// Trait needed to be able to parry this projectile
 	var/parry_trait
-	/// For how long do valid tiles persist? Acts as clientside lag compensation
+	/// For how long do valid tiles persist?. Acts as clientside lag compensation
 	var/grace_period
 	/// Callback for special effects upon parrying
 	var/datum/callback/parry_callback

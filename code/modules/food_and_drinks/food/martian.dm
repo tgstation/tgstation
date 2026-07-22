@@ -445,7 +445,7 @@
 	tastes = list("masterful curry" = 1, "rice" = 1)
 	foodtypes = MEAT|VEGETABLES|GRAIN|FRUIT|SUGAR
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = FOOD_COMPLEXITY_5 //Extensive and secretly guarded. Was previously 2 and I thought it was pathetic.
+	crafting_complexity = FOOD_COMPLEXITY_5 // Extensive and secretly guarded.. Was previously 2 and I thought it was pathetic.
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 // Burgers and Sandwiches
@@ -782,7 +782,7 @@
 	tastes = list("fries" = 1, "duck" = 1, "ketchup" = 1, "mayo" = 1, "spicy seasoning" = 1)
 	foodtypes = MEAT | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = FOOD_COMPLEXITY_4 //Requires a complex 3 as an ingredient.
+	crafting_complexity = FOOD_COMPLEXITY_4 // Needs a complex 3 as an ingredient.
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/little_hawaii_hotdog
@@ -1021,7 +1021,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/salad/eigamudo_curry //curry is meant to be really spicy or kinda mild, this just stinks!
+/obj/item/food/salad/eigamudo_curry // curry is meant to be really spicy or kind of mild, this just stinks!
 	name = "\improper Eigamudo curry"
 	desc = "An inexplicable curry dish made from a cacophony of ingredients. Presumably tastes good to someone, somewhere- though good luck finding them."
 	icon = 'icons/obj/food/martian.dmi'

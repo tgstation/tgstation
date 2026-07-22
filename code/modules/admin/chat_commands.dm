@@ -1,4 +1,4 @@
-/// Reload admins tgs chat command. Intentionally not validated.
+/// Reload admins tgs chat command.. Intentionally not validated.
 /datum/tgs_chat_command/reload_admins
 	name = "reload_admins"
 	help_text = "Forces the server to reload admins."
@@ -14,11 +14,11 @@
 	set waitfor = FALSE
 	load_admins()
 
-/// subtype tgs chat command with validated admin ranks. Only supports discord.
+/// subtype tgs chat command with validated admin ranks.. Only supports discord.
 /datum/tgs_chat_command/validated
 	ignore_type = /datum/tgs_chat_command/validated
 	admin_only = TRUE
-	var/required_rights = 0 //! validate discord userid is linked to a game admin with these flags.
+	var/required_rights = 0 // !. validate discord userid is linked to a game admin with these flags.
 
 
 /// called by tgs

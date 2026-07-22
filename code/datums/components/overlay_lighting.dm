@@ -1,6 +1,6 @@
 ///For switchable lights, is it on and currently emitting light?
 #define LIGHTING_ON (1<<0)
-///Is the parent attached to something else, its loc? Then we need to keep an eye of this.
+/// Is the parent attached to something else, its loc?. Then we need to keep an eye of this.
 #define LIGHTING_ATTACHED (1<<1)
 
 #define GET_PARENT (parent_attached_to || parent)
@@ -54,9 +54,9 @@
 	var/image/visible_mask
 	///Lazy list to track the turfs being affected by our light, to determine their visibility.
 	var/list/turf/affected_turfs
-	///Movable atom currently holding the light. Parent might be a flashlight, for example, but that might be held by a mob or something else.
+	/// Movable atom currently holding the light.. Parent might be a flashlight, for example, but that might be held by a mob or something else.
 	var/atom/movable/current_holder
-	///Movable atom the parent is attached to. For example, a flashlight into a helmet or gun. We'll need to track the thing the parent is attached to as if it were the parent itself.
+	/// Movable atom the parent is attached to.. For example, a flashlight into a helmet or gun.. We'll need to track the thing the parent is attached to as if it were the parent itself.
 	var/atom/movable/parent_attached_to
 	///Whether we're a directional light
 	var/directional = FALSE
@@ -70,7 +70,7 @@
 	var/current_direction
 	///Tracks current directional x offset so we don't update unnecessarily
 	var/directional_offset_x
-	///Tracks current directional y offset so we don't update unnecessarily
+	/// Tracks current directional why offset so we don't update unnecessarily
 	var/directional_offset_y
 	///Cast range for the directional cast (how far away the atom is moved)
 	var/cast_range = 2
@@ -386,7 +386,7 @@
 	make_luminosity_update()
 
 
-///Changes the range which the light reaches. 0 means no light, 6 is the maximum value.
+/// Changes the range which the light reaches.. 0 means no light, 6 is the maximum value.
 /datum/component/overlay_lighting/proc/set_range(atom/source, old_range)
 	SIGNAL_HANDLER
 	var/new_range = source.light_range

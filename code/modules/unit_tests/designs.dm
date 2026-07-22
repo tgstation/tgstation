@@ -10,10 +10,10 @@
 			return
 		if (isnull(current_design.name) || current_design.name == default_design.name) //Designs with ID must have non default/null Name
 			TEST_FAIL("Design [current_design.type] has default or null name var but has an ID")
-		if ((!isnull(current_design.materials) && LAZYLEN(current_design.materials)) || (!isnull(current_design.reagents_list) && LAZYLEN(current_design.reagents_list))) //Design requires materials
+		if ((!isnull(current_design.materials) && LAZYLEN(current_design.materials)) || (!isnull(current_design.reagents_list) && LAZYLEN(current_design.reagents_list))) // Design needs materials
 			if ((isnull(current_design.build_path) || current_design.build_path == default_design.build_path) && (isnull(current_design.make_reagent) || current_design.make_reagent == default_design.make_reagent)) //Check if design gives any output
 				TEST_FAIL("Design [current_design.type] requires materials but does not have either build_path or make_reagent set")
-		else if (!isnull(current_design.build_path) || !isnull(current_design.build_path)) // //Design requires no materials but creates stuff
+		else if (!isnull(current_design.build_path) || !isnull(current_design.build_path)) // //Design needs no materials but creates stuff
 			TEST_FAIL("Design [current_design.type] requires NO materials but has build_path or make_reagent set")
 		if (length(current_design.reagents_list) && !(current_design.build_type & LIMBGROWER))
 			TEST_FAIL("Design [current_design.type] requires reagents but isn't a limb grower design. Reagent costs are only supported by limb grower designs")
@@ -29,7 +29,7 @@
 		if (isnull(path::desc) && isnull(path::surgery::rnd_desc) && isnull(path::surgery::desc))
 			TEST_FAIL("Surgery Design [path] has no desc set or inferable from surgery type")
 
-///Check that all designs have a corresponding id and viceversa, and that they're actually implemented (techweb or disks)
+/// Check that all designs have a corresponding id and viceversa, and that they're actually added (techweb or disks)
 /datum/unit_test/design_source
 
 /datum/unit_test/design_source/Run()
@@ -92,7 +92,7 @@
 			TEST_FAIL("'transfer_materials' doesn't work for [design.type] and other designs that have [/datum/material_slot] or [/datum/material_requirement] in their 'materials' var yet")
 			continue
 
-		//Do not perform further checks if it doesn't have a built path, mat requirements or if it's one of those designs with choosable requirements (harder to implement checks for those)
+		// Do not perform further checks if it doesn't have a built path, mat needs. If it's one of those designs with choosable needs (harder to add checks f. Those)
 		if(mat_requirement_design || !design.build_path || !length(design.materials))
 			continue
 
@@ -106,7 +106,7 @@
 						continue
 					mats_total[mat] += transfered_to_obj[mat]
 			for(var/mat in mats_total)
-				if(round(mats_total[mat]) > design.materials[mat]) // some sneaky weird bug may require rounding the value down
+				if(round(mats_total[mat]) > design.materials[mat]) // some sneaky weird bug may need rounding the value down
 					TEST_FAIL("Amount of [mat] in the 'transfered_materials' var of [design.type] exceeds what present in its 'materials' var \
 					([transcribe_mat_value_as_sheet(mats_total[mat])] vs [transcribe_mat_value_as_sheet(design.materials[mat])])")
 
@@ -154,7 +154,7 @@
 				var/design_val = transcribe_mat_value_as_sheet(design.materials[mat])
 				TEST_FAIL("The [mat.name] ([mat.type] = [sheet_val]) of [printed_instance.type] plus its contents exceeds what presents in [design.type] ([design_val]). Review the code of the object and fix that.")
 
-///Proc made to reduce copypasted code when allocating an object from a design, because stacks have a tendency to merge with each other, and we don't want that.
+/// Proc made to reduce copypasted code when allocating an object from a design, because stacks have a tendency to merge with each other. We don't want that.
 /datum/unit_test/design_mats/proc/allocate_build_path_for_design(build_path)
 	var/is_stack = ispath(build_path)
 	if(is_stack) //If this is a stack, we don't want it to merge with any other stack on the same location

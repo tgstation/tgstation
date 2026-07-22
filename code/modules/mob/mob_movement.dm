@@ -55,7 +55,7 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 	if(!mob?.loc)
 		return FALSE
 	if(HAS_TRAIT(mob, TRAIT_NO_TRANSFORM))
-		return FALSE //This is sorta the goto stop mobs from moving trait
+		return FALSE // This is sort of the goto stop mobs from moving trait
 	if(!isliving(mob))
 		if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, new_loc, direct) & COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE)
 			return FALSE
@@ -135,7 +135,7 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-		// At this point we've moved the client's attached mob. This is one of the only ways to guess that a move was done
+		// At this point we've moved the client's attached mob.. This is one of the only ways to guess that a move was done
 		// as a result of player input and not because they were pulled or any other magic.
 		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVED, direct, old_dir)
 
@@ -334,7 +334,7 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 		var/pass_allowed = rebound.CanPass(src, get_dir(rebound, src))
 		if(!rebound.density && pass_allowed && !istype(rebound, /obj/structure/lattice))
 			continue
-		//Sometime this tick, this pushed off something. Doesn't count as a valid pushoff target
+		// Sometime this tick, this pushed off something.. Doesn't count as a valid pushoff target
 		if(rebound.last_pushoff == world.time)
 			continue
 		if(continuous_move && !pass_allowed)
@@ -387,7 +387,7 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 
 //bodypart selection verbs - Cyberboss
 //8: repeated presses toggles through head - eyes - mouth
-//7: mouth 8: head  9: eyes
+// 7: mouth 8: head 9: eyes
 //4: r-arm 5: chest 6: l-arm
 //1: r-leg 2: groin 3: l-leg
 
@@ -401,7 +401,7 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
  * Uses numpad keys 1-9
  */
 
-///Hidden verb to cycle through head zone with repeated presses, head - eyes - mouth. Bound to 8
+/// Hidden verb to cycle through head zone with repeated presses, head - eyes - mouth.. Bound to 8
 GAME_VERB_HIDDEN(/client, body_toggle_head, "body-toggle-head")
 
 	if(!check_has_body_select())

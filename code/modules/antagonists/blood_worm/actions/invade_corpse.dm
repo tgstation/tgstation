@@ -46,7 +46,7 @@
 		victim.balloon_alert(worm, "can't reach!")
 		return FALSE
 
-	unset_click_ability(worm, refund_cooldown = FALSE) // If you fail after this point, it's because your attempt got interrupted or because the victim is invalid.
+	unset_click_ability(worm, refund_cooldown = FALSE) // If you fail after this point, it's because your try got interrupted or because the victim is invalid.
 
 	if (!invade_check(worm, victim, feedback = TRUE))
 		return TRUE // Don't bite the victim.

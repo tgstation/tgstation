@@ -1,7 +1,7 @@
 /// How many of the most expensive controllers to track per pass for the MC stat entry
 #define AI_STAT_EXPENSIVE_TRACKED 5
 
-/// The subsystem used to tick [/datum/ai_controllers] instances. Handling the re-checking of plans.
+/// The subsystem used to tick [/datum/ai_controllers] instances.. Handling the re-checking of plans.
 SUBSYSTEM_DEF(ai_controllers)
 	name = "AI Controller Ticker"
 	ss_flags = SS_POST_FIRE_TIMING
@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(ai_controllers)
 	dependencies = list(
 		/datum/controller/subsystem/movement/ai_movement,
 	)
-	wait = 0.25 SECONDS //Plan every 1/4th second if required. In theory your AI should not be planning this much, but its useful because we want planning to be responsive when a previous plan ends.
+	wait = 0.25 SECONDS // Plan every 1/4th second if needed In theory your AI should not be planning this much. Its useful because we want planning to be responsive when a previous plan ends.
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	var/list/currentrun = list()
 	///type of status we are interested in running
@@ -32,15 +32,15 @@ SUBSYSTEM_DEF(ai_controllers)
 	var/worst_controller_cost = 0
 	/// Display string for the controller responsible for worst_controller_cost.
 	var/worst_controller_name
-	/// Running top-cost candidates of the in-progress pass. Assoc list of controller -> SelectBehaviors cost in ms, has a capped amount of entries
+	/// Running top-cost candidates of the in-progress pass.. Assoc list of controller -> SelectBehaviors cost in ms, has a capped amount of entries
 	var/list/summing_expensive = list()
 	/// Cheapest cost in summing_expensive once it's full; a controller must beat this to enter the list.
 	var/summing_expensive_cutoff = 0
-	/// List of all targeting_strategy singletons, key is the typepath while assigned value is a newly created instance of the typepath. See setup_targeting_strats()
+	/// List of all targeting_strategy singletons, key is the typepath while assigned value is a newly created instance of the typepath.. See setup_targeting_strats()
 	var/list/targeting_strategies
-	/// List of all target_priority_strategy singletons, key is the typepath while assigned value is a newly created instance of the typepath. See setup_target_priority_strats()
+	/// List of all target_priority_strategy singletons, key is the typepath while assigned value is a newly created instance of the typepath.. See setup_target_priority_strats()
 	var/list/target_priority_strategies
-	/// List of all target_source singletons, key is the typepath while assigned value is a newly created instance of the typepath. See setup_target_sources()
+	/// List of all target_source singletons, key is the typepath while assigned value is a newly created instance of the typepath.. See setup_target_sources()
 	var/list/target_sources
 	///AI controllers, sorted by their status
 	var/list/ai_controllers_by_status = list(

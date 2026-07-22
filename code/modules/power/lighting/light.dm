@@ -160,9 +160,9 @@
 	. = ..()
 	set_light(l_dir = REVERSE_DIR(dir))
 
-// If we're adjacent to the source, we make this sorta indentation for our light to ensure it stays lit (and to make distances look right)
+// If we're adjacent to the source, we make this sort of indentation f. Our light to ensure it stays lit (. To make distances look right)
 // By shifting the light position we use forward a bit, towards something that isn't off by 0.5 from being in angle
-// Because angle calculation is kinda harsh it's hard to find a happy point between fulldark and fullbright for the corners behind the light. this is good enough tho
+// Because angle calculation is kind of harsh it's hard to find a happy point between fulldark and fullbright for the corners behind the light.. this is good enough though
 /obj/machinery/light/get_light_offset()
 	var/list/hand_back = ..()
 	var/list/dir_offset = dir2offset(REVERSE_DIR(dir))
@@ -333,7 +333,7 @@
 			return PROCESS_KILL
 		if(cell)
 			charge_cell(LIGHT_EMERGENCY_POWER_USE * seconds_per_tick, cell = cell) //Recharge emergency power automatically while not using it
-	if(reagents) //with most reagents coming out at 300, and with most meaningful reactions coming at 370+, this rate gives a few seconds of time to place it in and get out of dodge regardless of input.
+	if(reagents) // with most reagents coming out at 300. With most meaningful reactions coming at 370+, this rate gives a few seconds of time to place it in. Get out of dodge regardless of input.
 		reagents.adjust_thermal_energy(8 * reagents.total_volume * SPECIFIC_HEAT_DEFAULT * seconds_per_tick)
 		reagents.handle_reactions()
 	if(low_power_mode && !use_emergency_power(LIGHT_EMERGENCY_POWER_USE * seconds_per_tick))
@@ -347,7 +347,7 @@
 		on = FALSE
 		set_light(l_range = 0)
 
-// attempt to set the light's on/off status
+// try to set the light's on/off status
 // will not switch on if broken/burned/empty
 /obj/machinery/light/proc/set_on(turn_on)
 	var/was_on = on
@@ -383,7 +383,7 @@
 
 // insert light (if right type), otherwise try to break the light
 /obj/machinery/light/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	// attempt to insert light
+	// try to insert light
 	if(istype(tool, /obj/item/light))
 		if(status == LIGHT_OK)
 			to_chat(user, span_warning("There is a [fitting] already inserted!"))
@@ -415,7 +415,7 @@
 
 		return ITEM_INTERACT_SUCCESS
 
-	// attempt to stick weapon into light socket
+	// try to stick weapon into light socket
 	if(status != LIGHT_EMPTY || user.combat_mode)
 		return NONE
 
@@ -521,7 +521,7 @@
 		return status == LIGHT_OK
 	return FALSE
 
-// attempts to use power from the installed emergency cell, returns true if it does and false if it doesn't
+// tries to use power from the installed emergency cell, returns true if it does and false if it doesn't
 /obj/machinery/light/proc/use_emergency_power(power_usage_amount = LIGHT_EMERGENCY_POWER_USE)
 	if(!has_emergency_power(power_usage_amount))
 		return FALSE
@@ -543,7 +543,7 @@
 	if(flickering || !on || status != LIGHT_OK)
 		return
 
-	. = TRUE // did we actually flicker? Send this now because we expect immediate response, before sleeping.
+	. = TRUE // did we actually flicker?. Send this now because we expect immediate response, before sleeping.
 	set_light(
 		l_range = brightness * bulb_low_power_brightness_mul,
 		l_power = bulb_low_power_pow_mul,

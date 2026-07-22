@@ -38,7 +38,7 @@
 /obj/machinery/power/smes/connector/RefreshParts()
 	. = ..()
 
-	//happens if the terminal gets rped without a bank attached. No division by zero error
+	// happens if the terminal gets rped without a bank attached.. No division by zero error
 	if(!total_capacity)
 		total_capacity = 1
 
@@ -105,7 +105,7 @@
 /obj/machinery/power/smes/connector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	return connected_smes ? ..() : FALSE
 
-/// The actual portable part of the portable SMES system. Pretty useless without an actual connector.
+/// The actual portable part of the portable SMES system.. Pretty useless without an actual connector.
 /obj/machinery/smesbank
 	name = "portable power storage unit"
 	desc = "A portable, high-capacity superconducting magnetic energy storage (SMES) unit. Requires a separate power connector port to actually interface with power networks."
@@ -125,7 +125,7 @@
 /obj/machinery/smesbank/Initialize(mapload)
 	. = ..()
 
-	///Initial connection for mapload, We attempt to locate the connector but only connect to it after it has initialized
+	/// Initial connection for mapload, We try to locate the connector but only connect to it after it has initialized
 	if(mapload)
 		connected_port = locate() in loc
 
@@ -142,7 +142,7 @@
 /obj/machinery/smesbank/post_machine_initialize()
 	. = ..()
 
-	//we somehow located an deleted port or no port at all. clear out
+	// we somehow located an deleted port or no port at all.. clear out
 	if(QDELETED(connected_port))
 		connected_port = null
 		return
@@ -275,7 +275,7 @@
 	update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
-/// Disconnects the portable SMES from its assigned connector, if it has any. Also adapted from portable atmos connection code.
+/// Disconnects the portable SMES from its assigned connector, if it has any.. Also adapted from portable atmos connection code.
 /obj/machinery/smesbank/proc/disconnect_port()
 	SHOULD_NOT_OVERRIDE(TRUE)
 

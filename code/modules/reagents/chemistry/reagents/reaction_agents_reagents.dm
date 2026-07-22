@@ -116,7 +116,7 @@
 		volume -= amount
 		holder.update_total()
 
-///How much the reaction speed is sped up by - for 5u added to 100u, an additional step of 1 will be done up to a max of 2x
+/// How much the reaction speed is sped up by - f. 5u added to 100u, an additional step of 1 will be done up to a max of 2x
 #define SPEED_REAGENT_STRENGTH 20
 
 /datum/reagent/reaction_agent/speed_agent
@@ -181,7 +181,7 @@
 	else
 		target.my_atom.audible_message(span_warning("The buffer fizzles with no effect."))
 
-	//remove inversening reagent based on total buffer removed
+	// remove inversening reagent good on total buffer removed
 	var/volume_to_transfer = amount - (amount * (1 - (conversion_buffer / (amount * 10))))
 	if(volume_to_transfer)
 		target.add_reagent(type, volume_to_transfer, reagtemp = holder.chem_temp, added_purity = purity, added_ph = ph)

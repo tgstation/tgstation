@@ -42,9 +42,9 @@
 	var/offset_location = UPPER_BODY
 	/// To restrict mutation to only certain species
 	var/list/species_allowed
-	/// Minimum health required to acquire the mutation
+	/// Minimum health needed to acquire the mutation
 	var/health_req
-	/// Required limbs to acquire this mutation
+	/// Needed limbs to acquire this mutation
 	var/limb_req
 	/// The owner of this mutation's DNA
 	var/datum/dna/dna
@@ -54,11 +54,11 @@
 	var/instability = 0
 	/// Amount of those big blocks with gene sequences
 	var/blocks = 4
-	/// Amount of missing sequences. Sometimes it removes an entire pair for 2 points
+	/// Amount of missing sequences.. Sometimes it removes an entire pair for 2 points
 	var/difficulty = 8
 	/// 'Mutation #49', decided every round to get some form of distinction between undiscovered mutations
 	var/alias
-	/// Whether we can read it if it's active. To avoid cheesing with mutagen
+	/// Whether we can read it if it's active.. To avoid cheesing with mutagen
 	var/scrambled = FALSE
 	/// The sources of the mutation (found in defines/dna.dm)
 	var/list/sources = list()
@@ -80,7 +80,7 @@
 	/// Name of the chromosome
 	var/chromosome_name
 
-	//Chromosome stuff - set to -1 to prevent people from changing it. Example: It'd be a waste to decrease cooldown on mutism
+	// Chromosome stuff - set to -1 to prevent people from changing it.. Example: It'd be a waste to decrease cooldown on mutism
 	/// genetic stability coeff
 	var/stabilizer_coeff = 1
 	/// Makes the mutation hurt the user less
@@ -215,7 +215,7 @@
 	return new_power
 
 // Runs through all the coefficients and uses this to determine which chromosomes the
-// mutation can take. Stores these as text strings in a list.
+// mutation can take.. Stores these as text strings in a list.
 /datum/mutation/proc/update_valid_chromosome_list()
 	valid_chrom_list.Cut()
 

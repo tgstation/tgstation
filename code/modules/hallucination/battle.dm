@@ -11,7 +11,7 @@
 	// for subtypes
 	return TRUE
 
-/// Subtype of battle hallucination for gun based battles, where it sounds like someone is being shot.
+/// Subtype of battle hallucination for gun good battles, where it sounds like someone is being shot.
 /datum/hallucination/battle/gun
 	abstract_hallucination_parent = /datum/hallucination/battle/gun
 	/// The lower end to how many shots we'll fire.
@@ -24,7 +24,7 @@
 	var/hit_person_sound = 'sound/items/weapons/pierce.ogg'
 	/// The sound we make when our shot misses someone and "hits" a "wall".
 	var/hit_wall_sound = SFX_RICOCHET
-	/// The number of successful hits required to "down" the "someone" we're firing at.
+	/// The number of successful hits needed to "down" the "someone" we're firing at.
 	var/number_of_hits_to_end = 2
 	/// The probability chance we have to make our "hit" person fall down after we pass the number_of_hits_to_end.
 	var/chance_to_fall = 80
@@ -36,7 +36,7 @@
 
 	fire_loop(random_far_turf(), rand(shots_to_fire_lower_range, shots_to_fire_upper_range))
 
-/// The main loop for gun based hallucinations.
+/// The main loop for gun good hallucinations.
 /datum/hallucination/battle/gun/proc/fire_loop(turf/source, shots_left = 3, hits = 0)
 	if(QDELETED(src) || QDELETED(hallucinator) || !source)
 		return
@@ -109,7 +109,7 @@
 	hallucinator.playsound_local(source, 'sound/items/weapons/cablecuff.ogg', 15, TRUE)
 	qdel(src)
 
-/// A hallucination of someone being stun batonned, and subsequently harmbatonned.
+/// A hallucination of someone being stun batonned, and then harmbatonned.
 /datum/hallucination/battle/harm_baton
 
 /datum/hallucination/battle/harm_baton/start()

@@ -1,6 +1,6 @@
 /obj/item/organ/stomach/ethereal
 	name = "biological battery"
-	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
+	icon_state = "stomach-p" // Welp.. At least it's more unique in functionaliy.
 	desc = "A crystal-like organ that stores the electric charge of ethereals."
 	organ_traits = list(TRAIT_NOHUNGER) // We have our own hunger mechanic.
 	/// Where the energy of the stomach is stored.
@@ -127,7 +127,7 @@
 
 		playsound(carbon, 'sound/effects/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 		carbon.cut_overlay(overcharge)
-		// Only a small amount of the energy gets discharged as the zap. The rest dissipates as heat. Keeps the damage and energy from the zap the same regardless of what STANDARD_CELL_CHARGE is.
+		// Only a small amount of the energy gets discharged as the zap.. The rest dissipates as heat.. Keeps the damage and energy from the zap the same regardless of what STANDARD_CELL_CHARGE is.
 		var/discharged_energy = -adjust_charge(ETHEREAL_CHARGE_FULL - cell.charge()) * min(7500 / STANDARD_CELL_CHARGE, 1)
 		tesla_zap(source = carbon, zap_range = 2, power = discharged_energy, cutoff = 1 KILO JOULES, zap_flags = ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN | ZAP_ALLOW_DUPLICATES)
 		carbon.visible_message(span_danger("[carbon] violently discharges energy!"), span_warning("You violently discharge energy!"))

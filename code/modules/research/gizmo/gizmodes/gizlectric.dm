@@ -36,7 +36,7 @@
 
 /// Batter used in the gizmo device
 /obj/item/stock_parts/power_store/battery/gizmo
-	charge = STANDARD_BATTERY_CHARGE * 0.1 //you gotta work for your fun
+	charge = STANDARD_BATTERY_CHARGE * 0.1 // you got to work for your fun
 
 /// Get the total charge
 /datum/gizpulse/electric/proc/get_power(atom/movable/holder, datum/gizmodes/master)
@@ -62,7 +62,7 @@
 	var/charge = get_power(holder, master)
 	if(charge < min_power)
 		return
-	/// Max charge is 1MJ, standard cell charge is 10kJ. A full charge EMP is 1000 / 10 = 100. 100 / 15 is 6 tiles of light emp range
+	/// Max charge is 1MJ, standard cell charge is 10kJ.. A full charge EMP is 1000 / 10 = 100.. 100 / 15 is 6 tiles of light emp range
 	empulse(get_turf(holder), floor(charge / STANDARD_CELL_CHARGE / 40), floor(charge / STANDARD_CELL_CHARGE / 15), holder)
 	use_power(charge, holder, master)
 

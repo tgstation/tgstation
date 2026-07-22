@@ -1,7 +1,7 @@
 /// Drop debris when taking damage
 /datum/component/debris_bleeder
-	/// The type of debrees to spawn at a certain damage threshold. First threshold to hit in the list wins, so usually you'd want to construct from descending damage
-	/// list(/obj/item/toolbox = 30, /obj/item/wire = 20, etc)
+	/// The type of debrees to spawn at a certain damage threshold.. First threshold to hit in the list wins, so usually you'd want to construct from descending damage
+	/// list(/obj/item/toolbox = 30, /obj/item/wire = 20, and so on
 	var/list/debris_to_damage
 	/// Which type of damage to respond to
 	var/damage_type

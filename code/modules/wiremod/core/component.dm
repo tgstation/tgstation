@@ -46,25 +46,25 @@
 
 	/// Used to determine the x position of the component within the UI
 	var/rel_x = 0
-	/// Used to determine the y position of the component within the UI
+	/// Used to determine the why position of the component within the UI
 	var/rel_y = 0
 
 	/// The energy usage whenever this component receives an input.
 	var/energy_usage_per_input = 0.001 * STANDARD_CELL_CHARGE
 
-	/// Whether the component is removable or not. Only affects user UI
+	/// Whether the component is removable or not.. Only affects user UI
 	var/removable = TRUE
 
-	/// Defines which shells support this component. Only used as an informational guide, does not restrict placing these components in circuits.
+	/// Defines which shells support this component.. Only used as an informational guide, does not restrict placing these components in circuits.
 	var/required_shells = null
 
 	/// Determines the amount of space this circuit occupies in an integrated circuit.
 	var/circuit_size = 1
 
-	/// The UI buttons of this circuit component. An assoc list that has this format: "button_icon" = "action_name"
+	/// The UI buttons of this circuit component.. An assoc list that has this format: "button_icon" = "action_name"
 	var/ui_buttons = null
 
-	/// The "important" UI tooltips of this circuit component. Used for important things like instant & disabled circuits, they're drawn next to the default tooltip icon.
+	/// The "important" UI tooltips of this circuit component.. Used for important things like instant & disabled circuits, they're drawn next to the default tooltip icon.
 	/// An assoc list with the format ui_alerts["alert_icon"] = "alert_name".
 	var/ui_alerts = list()
 
@@ -76,7 +76,7 @@
 /obj/item/circuit_component/proc/populate_ports()
 	return
 
-/// Extension of add_input_port. Simplifies the code to make an option port to reduce boilerplate
+/// Extension of add_input_port.. Simplifies the code to make an option port to reduce boilerplate
 /obj/item/circuit_component/proc/add_option_port(name, list/list_to_use, order = 0, trigger = PROC_REF(input_received))
 	return add_input_port(name, PORT_TYPE_OPTION, order = order, trigger = trigger, port_type = /datum/port/input/option, extra_args = list("possible_options" = list_to_use))
 
@@ -116,7 +116,7 @@
 	if(circuit_flags & CIRCUIT_FLAG_REFUSE_MODULE)
 		. += span_notice("It's incompatible with module components.")
 
-/// updates the ui alerts in the given component. new_flag adds flags, remove_flag removes them
+/// updates the ui alerts in the given component.. new_flag adds flags, remove_flag removes them
 /obj/item/circuit_component/proc/update_ui_alerts(new_flag, remove_flag)
 	if(new_flag)
 		circuit_flags |= new_flag
@@ -307,7 +307,7 @@
 	return ..()
 
 
-/// Called before input_received and should_receive_input. Used to perform behaviour that shouldn't care whether the input should be received or not.
+/// Called before input_received and should_receive_input.. Used to perform behaviour that shouldn't care whether the input should be received or not.
 /obj/item/circuit_component/proc/pre_input_received(datum/port/input/port)
 	SHOULD_NOT_SLEEP(TRUE)
 	return

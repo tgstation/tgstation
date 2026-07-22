@@ -82,7 +82,7 @@
 		SStgui.update_uis(src)
 
 /obj/machinery/computer/pandemic/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	//Advanced science! Precision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
+	// Advanced science!. Precision instruments for example droppers and syringes) are precise enough to modify the loaded sample!
 	if(istype(tool, /obj/item/reagent_containers/dropper) || istype(tool, /obj/item/reagent_containers/syringe))
 		if(!beaker)
 			balloon_alert(user, "no beaker!")

@@ -112,7 +112,7 @@
 	var/icon/base_icon = icon(hair_sprite_accessory.getCachedIcon(owner?.hair_masks))
 	// Overlay
 	all_hair_overlays += image(base_icon, layer = -HAIR_LAYER, dir = image_dir)
-	// If we have any hair appendages (ponytails, etc.) sticking out on a particular side,
+	// If we have any hair appendages (ponytails, and so on sticking out on a particular side,
 	// we need to add an additional hair layer to go above hats/helmets for the sides they stick out on
 	if(LAZYLEN(hair_sprite_accessory.hair_appendages_outer))
 		var/strictly_masked_zones = NONE
@@ -282,7 +282,7 @@
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 
 	if(override)
-		// aight, no head? tough luck
+		// aight, no head?. tough luck
 		my_head?.override_hair_color = hex_string
 	else
 		hair_color = hex_string
@@ -425,7 +425,7 @@
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 
 	if(override)
-		// so no head? tough luck
+		// so no head?. tough luck
 		my_head?.override_hair_color = hex_string
 	else
 		facial_hair_color = hex_string

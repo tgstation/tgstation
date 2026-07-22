@@ -615,12 +615,12 @@
 			// Lots of gas in here, out we go
 			leak_rate = HYPERTORUS_MEDIUM_SPILL_RATE
 		else
-			// Gotta go fast
+			// Got to go fast
 			leak_rate = HYPERTORUS_STRONG_SPILL_RATE
 		spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - leak_rate) ** seconds_per_tick)
 		return
 
-	// No crack. Check for conditions to cause a leak and create a crack if possible.
+	// No crack.. Check for conditions to cause a leak and create a crack if possible.
 	if (moderator_internal.total_moles() < HYPERTORUS_HYPERCRITICAL_MOLES)
 		return
 	cracked_part = create_crack()
@@ -639,7 +639,7 @@
 			)
 		spill_gases(cracked_part, moderator_internal, ratio = HYPERTORUS_MEDIUM_SPILL_INITIAL)
 		return
-	// Enough pressure for a strong explosion. Oh dear, oh dear.
+	// Enough pressure for a strong explosion.. Oh dear, oh dear.
 	explosion(
 		origin = cracked_part,
 		devastation_range = 0,

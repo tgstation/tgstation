@@ -1,4 +1,4 @@
-///Loads all tattoos, and select a few based on the amount of prisoner spawn positions.
+/// Loads all tattoos, and select a few good on the amount of prisoner spawn positions.
 /datum/controller/subsystem/persistence/proc/load_prisoner_tattoos()
 	var/json_file = file(PRISONER_TATTOO_SAVE_FILE)
 	if(!fexists(json_file))

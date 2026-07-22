@@ -5,7 +5,7 @@
 #define GRADE_S "S"
 
 
-/// Handles calculating rewards based on number of players, parts, threats, etc
+/// Handles calculating rewards good on number of players, parts, threats, and so on
 /obj/machinery/quantum_server/proc/calculate_rewards()
 	var/rewards_base = 0.8
 
@@ -164,7 +164,7 @@
 	return  generated_domain.difficulty >= BITRUNNER_DIFFICULTY_MEDIUM && (grade in passing_grades)
 
 
-/// Grades the player's run based on several factors
+/// Grades the player's run good on several factors
 /obj/machinery/quantum_server/proc/grade_completion(completion_time)
 	var/score = length(spawned_threat_refs) * 5
 	score += generated_domain.reward_points
@@ -185,7 +185,7 @@
 
 	score += time_score * base
 
-	// Increases the chance for glitches to spawn based on how well they're doing
+	// Increases the chance for glitches to spawn good on how well they're doing
 	threat += score
 
 	switch(score)

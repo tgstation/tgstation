@@ -1,8 +1,8 @@
 /// List of plane offset + 1 -> object to display to use
 /// Fills with offsets as they are generated
-/// Holds a list of objects that represent starlight. The idea is to render_source them
-/// So modifying starlight requires touching only one place (NOTE: this doesn't work for the area overlays)
-/// In order to modify them you need to use set_starlight. Areas don't work with render sources it looks like
+/// Holds a list of objects that represent starlight.. The idea is to render_source them
+/// So modifying starlight needs touching only one place (NOTE: this doesn't work for the area overlays)
+/// In order to modify them you need to use set_starlight.. Areas don't work with render sources it looks like
 GLOBAL_LIST_INIT_TYPED(starlight_objects, /obj, list(starlight_object(0)))
 /obj/starlight_appearance
 	icon = 'icons/effects/alphacolors.dmi'
@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT_TYPED(starlight_overlays, /obj, list(starlight_overlay(0)))
 	return glow
 
 /area
-	///Whether this area allows static lighting and thus loads the lighting objects
+	/// Whether this area allows static lighting and so loads the lighting objects
 	var/static_lighting = TRUE
 
 //Non static lighting areas.

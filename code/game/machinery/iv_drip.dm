@@ -308,7 +308,7 @@
 
 	SEND_SIGNAL(src, COMSIG_IV_ATTACH, target)
 
-///Called when an iv is detached. doesnt include chat stuff because there's multiple options and its better handled by the caller
+/// Called when an iv is detached.. doesnt include chat stuff because there's multiple options and its better handled by the caller
 /obj/machinery/iv_drip/proc/detach_iv()
 	if(attachment)
 		visible_message(span_notice("[attachment.attached_to] is detached from [src]."))

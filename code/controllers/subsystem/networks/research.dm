@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_nodes_starting = list()
 	///category name = list(node.id = TRUE)
 	var/list/techweb_categories = list()
-	///List of all items that can unlock a node. (node.id = list(items))
+	/// List of all items that can unlock a node.. (node.id = list(items))
 	var/list/techweb_unlock_items = list()
 	///Node ids that should be hidden by default.
 	var/list/techweb_nodes_hidden = list()
@@ -47,7 +47,7 @@ SUBSYSTEM_DEF(research)
 	var/list/single_server_income = list(
 		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_SINGLE_SERVER_INCOME,
 	)
-	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
+	// ^^^^^^^^ ALL OF THESE ARE PER SECOND!. ^^^^^^^^
 
 	//Aiming for 1.5 hours to max R&D
 	//[88nodes * 5000points/node] / [1.5hr * 90min/hr * 60s/min]
@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(research)
 
 	/// The global list of raw anomaly types that have been refined, for hard limits.
 	var/list/created_anomaly_types = list()
-	/// The hard limits of cores created for each anomaly type. For faster code lookup without switch statements.
+	/// The hard limits of cores created for each anomaly type.. For faster code lookup without switch statements.
 	var/list/anomaly_hard_limit_by_type = list(
 		/obj/item/assembly/signaler/anomaly/bluespace = MAX_CORES_BLUESPACE,
 		/obj/item/assembly/signaler/anomaly/pyro = MAX_CORES_PYRO,
@@ -106,7 +106,7 @@ SUBSYSTEM_DEF(research)
 		techweb_list.last_income = world.time
 
 		if(length(techweb_list.research_queue_nodes))
-			techweb_list.research_node_id(techweb_list.research_queue_nodes[1]) // Attempt to research the first node in queue if possible
+			techweb_list.research_node_id(techweb_list.research_queue_nodes[1]) // Try to research the first node in queue if possible
 
 			for(var/node_id in techweb_list.research_queue_nodes)
 				var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)

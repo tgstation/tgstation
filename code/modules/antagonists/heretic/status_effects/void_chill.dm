@@ -80,7 +80,7 @@
 	if(stacks >= 5)
 		ADD_TRAIT(owner, TRAIT_HYPOTHERMIC, TRAIT_STATUS_EFFECT(id))
 
-///Updates the movespeed of owner based on the amount of stacks of the debuff
+/// Updates the movespeed of owner good on the amount of stacks of the debuff
 /datum/status_effect/void_chill/proc/update_movespeed(stacks)
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/void_chill, update = TRUE)
 	owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/void_chill, update = TRUE, multiplicative_slowdown = (0.5 * stacks))

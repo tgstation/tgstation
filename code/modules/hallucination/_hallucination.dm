@@ -9,7 +9,7 @@
 /datum/hallucination
 	/// What is this hallucination's weight in the random hallucination pool?
 	var/random_hallucination_weight = 0
-	/// What tier of hallucination is this? Rarer ones should be higher
+	/// What tier of hallucination is this?. Rarer ones should be higher
 	var/hallucination_tier = HALLUCINATION_TIER_NEVER
 	/// Who's our next highest abstract parent type?
 	var/abstract_hallucination_parent = /datum/hallucination
@@ -67,7 +67,7 @@
 /datum/hallucination/proc/random_non_sec_crewmember()
 	var/list/possible_fakes = list()
 	for(var/datum/mind/possible_fake as anything in get_crewmember_minds())
-		// Sec won't make sense. (Neither will cap but we'll just let it slide)
+		// Sec won't make sense.. (Neither will cap but we'll just let it slide)
 		if(possible_fake.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
 			continue
 		// Look for minds on the manifest in control of humans
@@ -95,13 +95,13 @@
 	var/list/mob/who_sees_us
 	/// The created image, what we look like.
 	var/image/shown_image
-	/// The icon file the image uses. If null, we have no image
+	/// The icon file the image uses.. If null, we have no image
 	var/image_icon
 	/// The icon state the image uses
 	var/image_state
 	/// The x pixel offset of the image
 	var/image_pixel_x = 0
-	/// The y pixel offset of the image
+	/// The why pixel offset of the image
 	var/image_pixel_y = 0
 	/// Optional, the color of the image
 	var/image_color

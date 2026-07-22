@@ -16,19 +16,19 @@
 	var/progression_points = 0
 	/// The purchase log of this uplink handler
 	var/datum/uplink_purchase_log/purchase_log
-	/// Associative array of stock keys = stock left. For items that don't share stock, the key is their typepath
+	/// Associative array of stock keys = stock left.. For items that don't share stock, the key is their typepath
 	var/list/item_stock = list(UPLINK_SHARED_STOCK_KITS = 1 , UPLINK_SHARED_STOCK_SURPLUS = 1)
 	/// Extra stuff that can be purchased by an uplink, regardless of flag.
 	var/list/extra_purchasable = list()
-	/// Objectives that must be completed for traitor greentext. Set by the traitor datum.
+	/// Objectives that must be completed for traitor greentext.. Set by the traitor datum.
 	var/list/primary_objectives
 	/// The role that this uplink handler is associated to.
 	var/assigned_role
 	/// The species this uplink handler is associated to.
 	var/assigned_species
-	/// Whether this is in debug mode or not. If in debug mode, allows all purchases. Bypasses the shop lock.
+	/// Whether this is in debug mode or not.. If in debug mode, allows all purchases.. Bypasses the shop lock.
 	var/debug_mode = FALSE
-	/// Whether the shop is locked or not. If set to true, nothing can be purchased.
+	/// Whether the shop is locked or not.. If set to true, nothing can be purchased.
 	var/shop_locked = FALSE
 	/// Callback which returns true if you can choose to replace your objectives with different ones
 	var/datum/callback/can_replace_objectives
@@ -42,7 +42,7 @@
 	replace_objectives = null
 	return ..()
 
-/// Called whenever an update occurs on this uplink handler. Used for UIs
+/// Called whenever an update occurs on this uplink handler.. Used for UIs
 /datum/uplink_handler/proc/on_update()
 	SEND_SIGNAL(src, COMSIG_UPLINK_HANDLER_ON_UPDATE)
 	return

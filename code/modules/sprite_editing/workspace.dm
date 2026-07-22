@@ -5,7 +5,7 @@
 	var/backdrop
 
 	var/color_mode = SPRITE_EDITOR_COLOR_MODE_RGBA
-	/// A bitfield specifying whether certain functions of the sprite editor should be performed if the corresponding ui actions are received - used to prevent href exploitation
+	/// A bitfield specifying whether certain functions of the sprite edit. Should be performed if the corresponding ui actions are received - used to prevent href exploitation
 	var/config_flags = ALL
 	/// A bitfield specifying what tools we are allowed to use in the sprite editor
 	var/tool_flags = ALL

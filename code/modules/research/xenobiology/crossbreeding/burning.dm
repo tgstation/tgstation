@@ -35,7 +35,7 @@ Burning extracts:
 	var/mob/living/basic/slime/new_slime = new(get_turf(user),/datum/slime_type/grey)
 	new_slime.visible_message(span_danger("A baby slime emerges from [src], and it nuzzles [user] before burbling hungrily!"))
 	new_slime.befriend(user) //Gas, gas, gas
-	new_slime.bodytemperature = T0C + 400 //We gonna step on the gas.
+	new_slime.bodytemperature = T0C + 400 // We going to step on the gas.
 	new_slime.set_nutrition(SLIME_HUNGER_NUTRITION) //Tonight, we fight!
 	..()
 

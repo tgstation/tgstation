@@ -7,7 +7,7 @@
 	var/list/observers = list()
 	/// The current chosen map
 	var/datum/lazy_template/deathmatch/map
-	/// Our turf reservation AKA where the arena is
+	/// Our turf reservation Also known as where the arena is
 	var/datum/turf_reservation/location
 	/// Whether the lobby is currently playing
 	var/playing = DEATHMATCH_NOT_PLAYING
@@ -212,7 +212,7 @@
 		return
 
 	var/ckey = player.ckey ? player.ckey : player.mind?.key
-	if(!islist(players[ckey])) // potentially the player info could hold a reference to this mob so we can figure the ckey out without worrying about ghosting and suicides n such
+	if(!islist(players[ckey])) // potentially the player info could hold a reference to this mob so we can figure the ckey out without worrying about ghosting. Suicides n such
 		for(var/potential_ckey in players)
 			var/list/player_info = players[potential_ckey]
 			if(player_info["mob"] && player_info["mob"] == player)

@@ -125,7 +125,7 @@
 		return overlay
 	// Apply the atom's color filter to the overlay using named filters so that
 	// later calls to add_filter/update_filters (e.g., height displacement filters)
-	// do not wipe out our coloration. Mirror prior behavior by propagating to
+	// do not wipe out our coloration.. Mirror before behavior by propagating to
 	// child overlays unless KEEP_TOGETHER is present.
 	overlay.add_filter(ATOM_PRIORITY_COLOR_FILTER, ATOM_PRIORITY_COLOR_FILTER_PRIORITY, cached_color_filter)
 

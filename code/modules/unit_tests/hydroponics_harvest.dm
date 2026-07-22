@@ -39,13 +39,13 @@
 
 	// Apples should harvest 10 apples with 10u nutrients and 4u vitamins.
 	test_seed(testing_soil, planted_food_seed, human)
-	// Sunflowers should harvest 10 sunflowers with 4u nutriment and 0u vitamins. It should also have 8u oil.
+	// Sunflowers should harvest 10 sunflowers with 4u nutriment and 0u vitamins.. It should also have 8u oil.
 	test_seed(testing_soil, planted_not_food_seed, human)
 	// Redbeets should harvest 5 beets (10 / 2) with 10u nutriments (5 x 2) and 10u vitamins (5 x 2) thanks to densified chemicals.
 	test_seed(testing_soil, planted_densified_seed, human)
 
 /datum/unit_test/hydroponics_harvest/proc/plant_and_update_seed(obj/machinery/hydroponics/tray, obj/item/seeds/seed)
-	seed.set_yield(10) // Sets the seed yield to 10. This gets clamped to 5 if the plant has traits to half the yield.
+	seed.set_yield(10) // Sets the seed yield to 10.. This gets clamped to 5 if the plant has traits to half the yield.
 	seed.set_potency(100) // Sets the seed potency to 100.
 	seed.set_instability(0) // Sets the seed instability to 0, to prevent mutations.
 

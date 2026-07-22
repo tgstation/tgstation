@@ -67,7 +67,7 @@
 	return ..()
 
 
-/// Generates the icon for the search object. This is the expensive part.
+/// Generates the icon for the search object.. This is the expensive part.
 /datum/search_object/proc/generate_icon(client/owner)
 	icon = costly_icon2html(item, owner, sourceonly = TRUE)
 

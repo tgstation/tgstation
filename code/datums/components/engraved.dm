@@ -36,11 +36,11 @@
 		if(STORY_VALUE_MEH)
 			beauty_value = rand(100, 200) //Its an okay tale
 		if(STORY_VALUE_OKAY)
-			beauty_value = rand(150, 300) //Average story! most things are like this
+			beauty_value = rand(150, 300) // Average story!. most things are like this
 		if(STORY_VALUE_AMAZING)
 			beauty_value = rand(300, 600)//Really impactful stories, seeing a lost limb, losing a loved pet.
 		if(STORY_VALUE_LEGENDARY)
-			beauty_value = rand(500, 800) //Almost always a good story! this is for memories you can barely ever get, killing megafauna, doing ultimate feats!
+			beauty_value = rand(500, 800) // Almost always a good story!. this is for memories you can barely ever get, killing megafauna, doing ultimate feats!
 
 	engraved_wall.AddElement(/datum/element/art, beauty_value / ENGRAVING_BEAUTY_TO_ART_FACTOR)
 	if(persistent_save)

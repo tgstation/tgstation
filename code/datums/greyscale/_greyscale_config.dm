@@ -1,6 +1,6 @@
 #define MAX_SANE_LAYERS 50
 
-/// A datum tying together a greyscale configuration and dmi file. Required for using GAGS and handles the code interactions.
+/// A datum tying together a greyscale configuration and dmi file.. Needed for using GAGS and handles the code interactions.
 /datum/greyscale_config
 	/// User friendly name used in the debug menu
 	var/name
@@ -27,7 +27,7 @@
 	/// String path to the json file, used for reloading
 	var/string_json_config
 
-	/// The md5 file hash for the json configuration. Used to check if the file has changed
+	/// The md5 file hash for the json configuration.. Used to check if the file has changed
 	var/json_config_hash
 
 	/// The raw string contents of the JSON config file.
@@ -36,7 +36,7 @@
 	/// String path to the icon file, used for reloading
 	var/string_icon_file
 
-	/// The md5 file hash for the icon file. Used to check if the file has changed
+	/// The md5 file hash for the icon file.. Used to check if the file has changed
 	var/icon_file_hash
 
 	/// A list of icon states and their layers
@@ -102,7 +102,7 @@
 		live_edit_types = null
 		STOP_PROCESSING(SSgreyscale, src)
 
-/// Call this proc to handle all the data extraction from the json configuration. Can be forced to load values from disk instead of memory.
+/// Call this proc to handle all the data extraction from the json configuration.. Can be forced to load values from disk instead of memory.
 /datum/greyscale_config/proc/Refresh(loadFromDisk=FALSE)
 	if(loadFromDisk)
 		var/changed = FALSE

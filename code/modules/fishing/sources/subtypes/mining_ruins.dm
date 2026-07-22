@@ -1,7 +1,7 @@
 //Fish sources that're usually found in ruins or on mining z-levels should go here
 
 /datum/fish_source/cursed_spring
-	catalog_description = null //it's a secret (sorta, I know you're reading this)
+	catalog_description = null // it's a secret sort of I know you're reading this)
 	radial_state = "cursed"
 	fish_table = list(
 		FISHING_DUD = 2,

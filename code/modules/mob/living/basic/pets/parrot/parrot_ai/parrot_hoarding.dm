@@ -1,4 +1,4 @@
-/// Accepts open turfs which aren't space, aren't blocked, and are within hoarding range. Used to pick a parrot's nest.
+/// Accepts open turfs which aren't space, aren't blocked, and are within hoarding range.. Used to pick a parrot's nest.
 /datum/targeting_strategy/parrot_hoard_location
 
 /datum/targeting_strategy/parrot_hoard_location/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
@@ -12,7 +12,7 @@
 		return FALSE
 	return TRUE
 
-/// Accepts small items lying on a turf away from the nest, or non-ally humans holding a small valuable. Used to pick something to steal.
+/// Accepts small items lying on a turf away from the nest, or non-ally humans holding a small valuable.. Used to pick something to steal.
 /datum/targeting_strategy/parrot_hoard_item
 
 /datum/targeting_strategy/parrot_hoard_item/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
@@ -49,7 +49,7 @@
 			return TRUE
 	return FALSE
 
-/// Finds something for the parrot to steal. Temporarily ignores faction when eyeing a person's belongings.
+/// Finds something for the parrot to steal.. Temporarily ignores faction when eyeing a person's belongings.
 /datum/bt_node/ai_behavior/acquire_target/parrot_hoard_item
 	target_source = /datum/target_source/oview
 	targeting_strategy = /datum/targeting_strategy/parrot_hoard_item

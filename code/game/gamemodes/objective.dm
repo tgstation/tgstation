@@ -1,8 +1,8 @@
 GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective
-	var/datum/mind/owner //The primary owner of the objective. !!SOMEWHAT DEPRECATED!! Prefer using 'team' for new code.
-	var/datum/team/team //An alternative to 'owner': a team. Use this when writing new code.
+	var/datum/mind/owner // The primary owner of the objective.. !!SOMEWHAT DEPRECATED!!. Prefer using 'team' for new code.
+	var/datum/team/team // An alternative to 'owner': a team.. Use this when writing new code.
 	var/name = "generic objective" //Name for admin prompts
 	var/explanation_text = "Nothing" //What that person is supposed to do.
 	///if this objective doesn't print failure or success in the roundend report
@@ -11,9 +11,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/objective_name = "Objective"
 	var/team_explanation_text //For when there are multiple owners.
 	var/datum/mind/target = null //If they are focused on a particular person.
-	var/target_amount = 0 //If they are focused on a particular number. Steal objectives have their own counter.
+	var/target_amount = 0 // If they are focused on a particular number.. Steal objectives have their own counter.
 	var/completed = FALSE //currently only used for custom objectives.
-	var/martyr_compatible = FALSE //If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
+	var/martyr_compatible = FALSE // If the objective is compatible with martyr objective, i.e.. if you can still do it while dead.
 	///can this be granted by admins?
 	var/admin_grantable = FALSE
 
@@ -21,7 +21,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	if(text)
 		explanation_text = text
 
-//Apparently objectives can be qdel'd. Learn a new thing every day
+// Apparently objectives can be qdel'd.. Learn a new thing every day
 /datum/objective/Destroy()
 	return ..()
 
@@ -77,7 +77,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	// "Into the sunset" force escaping for forced escape success
 	if(escapee.force_escaped)
 		return TRUE
-	// Station destroying events (blob, cult, nukies)? Just let them win, even if there was no hope of escape
+	// Station destroying events (blob, cult, nukies)?. Just let them win, even if there was no hope of escape
 	if(SSticker.force_ending || GLOB.station_was_nuked)
 		return TRUE
 	// Escape hasn't happened yet
@@ -413,7 +413,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	admin_grantable = TRUE
 	var/hijack_speed_override = 1
 
-/datum/objective/hijack/check_completion() // Requires all owners to escape.
+/datum/objective/hijack/check_completion() // Needs all owners to escape.
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return FALSE
 	var/list/datum/mind/owners = get_owners()
@@ -503,7 +503,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	admin_grantable = TRUE
 
 /datum/objective/escape/check_completion()
-	// Require all owners escape safely.
+	// Need all owners escape safely.
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/M in owners)
 		if(!considered_escaped(M))
@@ -685,20 +685,20 @@ GLOBAL_LIST_EMPTY(possible_items)
 		if(!isliving(M.current))
 			continue
 
-		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
+		var/list/all_items = M.current.get_all_contents() // this should get things in cheesewheels, books, and so on
 
 		for(var/obj/I in all_items) //Check for items
 			if(HAS_TRAIT(I, TRAIT_ITEM_OBJECTIVE_BLOCKED))
 				continue
 
 			if(istype(I, steal_target))
-				if(!targetinfo) //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
+				if(!targetinfo) // If there's no targetinfo, then that means it was a custom objective.. At this point, we know you have the item, so return 1.
 					return TRUE
-				else if(targetinfo.check_special_completion(I))//Returns true by default. Items with special checks will return true if the conditions are fulfilled.
+				else if(targetinfo.check_special_completion(I))// Returns true by default.. Items with special checks will return true if the conditions are fulfilled.
 					return TRUE
 
-			if(targetinfo && (I.type in targetinfo.altitems)) //Ok, so you don't have the item. Do you have an alternative, at least?
-				if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
+			if(targetinfo && (I.type in targetinfo.altitems)) // Ok, so you don't have the item.. Do you have an alternative, at least?
+				if(targetinfo.check_special_completion(I))// Yeah, we do!. Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
 					return TRUE
 	return FALSE
 
@@ -913,7 +913,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 	for(var/datum/mind/M in owners)
 		if(!isliving(M.current))
 			continue
-		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
+		var/list/all_items = M.current.get_all_contents() // this should get things in cheesewheels, books, and so on
 		for(var/obj/current_item in all_items) //Check for wanted items
 			if(is_type_in_typecache(current_item, wanted_items))
 				if(check_if_valid_item(current_item))
@@ -949,12 +949,12 @@ GLOBAL_LIST_EMPTY(possible_items)
 	for(var/datum/mind/M in owners)
 		if(!isliving(M.current))
 			continue
-		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
+		var/list/all_items = M.current.get_all_contents() // this should get things in cheesewheels, books, and so on
 		for(var/obj/thing in all_items) //Check for wanted items
 			if(istype(thing, /obj/item/book/granter/action/spell))
 				var/obj/item/book/granter/action/spell/spellbook = thing
 				if(spellbook.uses > 0) //if the book still has powers...
-					stolen_count++ //it counts. nice.
+					stolen_count++ // it counts.. nice.
 			else if(is_type_in_typecache(thing, wanted_items))
 				stolen_count++
 	return stolen_count >= amount
@@ -971,7 +971,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 	for(var/datum/mind/mind in owners)
 		if(!isliving(mind.current))
 			continue
-		var/list/all_items = mind.current.get_all_contents() //this should get things in cheesewheels, books, etc.
+		var/list/all_items = mind.current.get_all_contents() // this should get things in cheesewheels, books, and so on
 		for(var/obj/item/stolen in all_items) //Check for wanted items
 			var/found = FALSE
 			for(var/wanted_type in wanted_items)

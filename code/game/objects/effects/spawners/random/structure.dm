@@ -2,7 +2,7 @@
 	name = "structure spawner"
 	desc = "Now you see me, now you don't..."
 
-///12% chance to spawn a ouija board, or a potted plant. Btw, Wawastation has a guaranteed board.
+/// 12% chance to spawn a ouija board, or a potted plant.. By the way Wawastation has a guaranteed board.
 /obj/effect/spawner/random/structure/twelve_percent_spirit_board
 	name = "12% spirit board"
 	icon_state = "spirit_board"
@@ -235,7 +235,7 @@
 		/obj/structure/billboard/nanotrasen/defaced = 15,
 	)
 
-/obj/effect/spawner/random/structure/billboard/lizardsgas //for the space ruin, The Lizard's Gas. I don't see much use for the sprites below anywhere else since they're unifunctional.
+/obj/effect/spawner/random/structure/billboard/lizardsgas // for the space ruin, The Lizard's Gas.. I don't see much use for the sprites below anywhere else since they're unifunctional.
 	name = "\improper The Lizards Gas billboard spawner"
 	loot = list(
 		/obj/structure/billboard/lizards_gas = 75,
@@ -343,7 +343,7 @@
 		/obj/structure/shipping_container/tiger_coop = 1,
 	)
 
-/obj/effect/spawner/random/structure/shipping_container/station_appropriate //places extra emphasis on NT containers, excludes syndicate companies (except Donk. Co.) entirely
+/obj/effect/spawner/random/structure/shipping_container/station_appropriate // places extra emphasis on NT containers, excludes syndicate companies (except Donk.. Co.) entirely
 	name = "station-appropriate shipping container spawner"
 	loot = list(
 		/obj/structure/shipping_container/nanotrasen = 5,

@@ -25,12 +25,12 @@
 
 /mob/living/basic/slime/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 
-	//Lets you feed slimes plasma. Checks before the passthrough force check
+	// Lets you feed slimes plasma.. Checks before the passthrough force check
 	if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma) && stat == CONSCIOUS)
 		use_sheet(attacking_item, user)
 		return
 
-	//Checks if the item passes through the slime first. Safe items can be used simply
+	// Checks if the item passes through the slime first.. Safe items can be used simply
 	if(check_item_passthrough(attacking_item, user))
 		return
 
@@ -55,7 +55,7 @@
 	to_chat(user, span_danger("[attacking_item] passes right through [src]!"))
 	return TRUE
 
-///Attempts to use the item to discipline the unruly slime
+/// Tries to use the item to discipline the unruly slime
 /mob/living/basic/slime/proc/try_discipline_slime(obj/item/attacking_item)
 	if(attacking_item.force < 3)
 		return

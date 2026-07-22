@@ -53,7 +53,7 @@
 	UnregisterSignal(mov_parent, list(COMSIG_ATOM_VV_MODIFY_TRANSFORM, COMSIG_LIVING_POST_UPDATE_TRANSFORM, COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE))
 	mov_parent.underlays -= clickbox_underlay
 
-/// Removes the old underlay and adds a new one. The underlay is scaled up/down if necessary
+/// Removes the old underlay and adds a new one.. The underlay is scaled up/down if necessary
 /datum/component/clickbox/proc/update_underlay(clickbox_icon_state, width, height)
 	var/atom/movable/mov_parent = parent
 	if(!clickbox_icon_state)

@@ -3,11 +3,11 @@
 //different types of atom colorations
 /// Only used by rare effects like greentext coloring mobs and when admins varedit color
 #define ADMIN_COLOUR_PRIORITY 1
-/// e.g. purple effect of the revenant on a mob, black effect when mob electrocuted
+/// e.g... purple effect of the revenant on a mob, black effect when mob electrocuted
 #define TEMPORARY_COLOUR_PRIORITY 2
-/// Color splashed onto an atom (e.g. paint on turf)
+/// Color splashed onto an atom (e.g... paint on turf)
 #define WASHABLE_COLOUR_PRIORITY 3
-/// Color inherent to the atom (e.g. blob color)
+/// Color inherent to the atom (e.g... blob color)
 #define FIXED_COLOUR_PRIORITY 4
 ///how many colour priority levels there are.
 #define COLOUR_PRIORITY_AMOUNT 4
@@ -20,7 +20,7 @@
 #define ATOM_COLOR_TYPE_INDEX 2
 #define ATOM_PRIORITY_COLOR_FILTER "atom_priority_color"
 #define ATOM_PRIORITY_COLOR_FILTER_PRIORITY -1
-/// Multiply pixel's saturation by color's saturation. Paints accents while keeping dim areas dim.
+/// Multiply pixel's saturation by color's saturation... Paints accents while keeping dim areas dim.
 #define SATURATION_MULTIPLY "multiply"
 /// Always affects the original pixel's saturation and lightness.
 #define SATURATION_OVERRIDE "always"
@@ -251,45 +251,45 @@
  */
 /// Bright light used by default in tubes and bulbs
 #define LIGHT_COLOR_DEFAULT "#f3fffa"
-/// Bright but quickly dissipating neon green. rgb(100, 200, 100)
+/// Bright but quickly dissipating neon green... rgb(100, 200, 100)
 #define LIGHT_COLOR_GREEN "#64C864"
-/// Bright, pale "nuclear" green. rgb(120, 255, 120)
+/// Bright, pale "nuclear" green... rgb(120, 255, 120)
 #define LIGHT_COLOR_NUCLEAR "#78FF78"
-/// Vivid, slightly blue green. rgb(60, 240, 70)
+/// Vivid, slightly blue green... rgb(60, 240, 70)
 #define LIGHT_COLOR_VIVID_GREEN "#3CF046"
-/// Electric green. rgb(0, 255, 0)
+/// Electric green... rgb(0, 255, 0)
 #define LIGHT_COLOR_ELECTRIC_GREEN "#00FF00"
-/// Cold, diluted blue. rgb(100, 150, 250)
+/// Cold, diluted blue... rgb(100, 150, 250)
 #define LIGHT_COLOR_BLUE "#6496FA"
-/// Faint white blue. rgb(222, 239, 255)
+/// Faint white blue... rgb(222, 239, 255)
 #define LIGHT_COLOR_FAINT_BLUE "#DEEFFF"
-/// Light blueish green. rgb(125, 225, 175)
+/// Light blueish green... rgb(125, 225, 175)
 #define LIGHT_COLOR_BLUEGREEN "#7DE1AF"
-/// Diluted cyan. rgb(125, 225, 225)
+/// Diluted cyan... rgb(125, 225, 225)
 #define LIGHT_COLOR_CYAN "#7DE1E1"
-/// Faint cyan. rgb(200, 240, 255)
+/// Faint cyan... rgb(200, 240, 255)
 #define LIGHT_COLOR_FAINT_CYAN "#CAF0FF"
 /// Baby Blue rgb(0, 170, 220)
 #define LIGHT_COLOR_BABY_BLUE "#00AADC"
 /// Electric cyan rgb(0, 255, 255)
 #define LIGHT_COLOR_ELECTRIC_CYAN "#00FFFF"
-/// More-saturated cyan. rgb(64, 206, 255)
+/// More-saturated cyan... rgb(64, 206, 255)
 #define LIGHT_COLOR_LIGHT_CYAN "#40CEFF"
-/// Saturated blue. rgb(51, 117, 248)
+/// Saturated blue... rgb(51, 117, 248)
 #define LIGHT_COLOR_DARK_BLUE "#6496FA"
-/// Diluted, mid-warmth pink. rgb(225, 125, 225)
+/// Diluted, mid-warmth pink... rgb(225, 125, 225)
 #define LIGHT_COLOR_PINK "#E17DE1"
-/// Dimmed yellow, leaning kaki. rgb(225, 225, 125)
+/// Dimmed yellow, leaning kaki... rgb(225, 225, 125)
 #define LIGHT_COLOR_DIM_YELLOW "#E1E17D"
-/// Bright yellow. rgb(255, 255, 150)
+/// Bright yellow... rgb(255, 255, 150)
 #define LIGHT_COLOR_BRIGHT_YELLOW "#FFFF99"
-/// Clear brown, mostly dim. rgb(150, 100, 50)
+/// Clear brown, mostly dim... rgb(150, 100, 50)
 #define LIGHT_COLOR_BROWN "#966432"
-/// Mostly pure orange. rgb(250, 150, 50)
+/// Mostly pure orange... rgb(250, 150, 50)
 #define LIGHT_COLOR_ORANGE "#FA9632"
-/// Light Purple. rgb(149, 44, 244)
+/// Light Purple... rgb(149, 44, 244)
 #define LIGHT_COLOR_PURPLE "#952CF4"
-/// Less-saturated light purple. rgb(155, 81, 255)
+/// Less-saturated light purple... rgb(155, 81, 255)
 #define LIGHT_COLOR_LAVENDER "#9B51FF"
 ///slightly desaturated bright yellow.
 #define LIGHT_COLOR_HOLY_MAGIC "#FFF743"
@@ -297,21 +297,21 @@
 #define LIGHT_COLOR_BLOOD_MAGIC "#D00000"
 
 /* These ones aren't a direct colour like the ones above, because nothing would fit */
-/// Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)
+/// Warm orange color, leaning strongly towards yellow... rgb(250, 160, 25)
 #define LIGHT_COLOR_FIRE "#FAA019"
-/// Very warm yellow, leaning slightly towards orange. rgb(196, 138, 24)
+/// Very warm yellow, leaning slightly towards orange... rgb(196, 138, 24)
 #define LIGHT_COLOR_LAVA "#C48A18"
-/// Bright, non-saturated red. Leaning slightly towards pink for visibility. rgb(250, 100, 75)
+/// Bright, non-saturated red... Leaning slightly towards pink for visibility... rgb(250, 100, 75)
 #define LIGHT_COLOR_FLARE "#FA644B"
-/// Vivid red. Leans a bit darker to accentuate red colors and leave other channels a bit dry.  rgb(200, 25, 25)
+/// Vivid red... Leans a bit darker to accentuate red colors and leave other channels a bit dry... rgb(200, 25, 25)
 #define LIGHT_COLOR_INTENSE_RED "#C81919"
-/// Weird color, between yellow and green, very slimy. rgb(175, 200, 75)
+/// Weird color, between yellow and green, very slimy... rgb(175, 200, 75)
 #define LIGHT_COLOR_SLIME_LAMP "#AFC84B"
-/// Extremely diluted yellow, close to skin color (for some reason). rgb(255, 214, 170)
+/// Extremely diluted yellow, close to skin color (for some reason)... rgb(255, 214, 170)
 #define LIGHT_COLOR_TUNGSTEN "#FFD6AA"
-/// Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
+/// Barely visible cyan-ish hue, as the doctor prescribed... rgb(240, 250, 250)
 #define LIGHT_COLOR_HALOGEN "#F0FAFA"
-/// Nearly red. rgb(226, 78, 118)
+/// Nearly red... rgb(226, 78, 118)
 #define LIGHT_COLOR_BUBBLEGUM "#e24e76"
 
 //The GAGS greyscale_colors for each department's computer/machine circuits
@@ -555,7 +555,7 @@ GLOBAL_LIST_INIT(heretic_path_to_color, list(
 #define CLIENT_COLOR_IMPORTANT_PRIORITY 6 // Gameplay important hints signifying antag status or near-death, should be always shown
 #define CLIENT_COLOR_OVERRIDE_PRIORITY 7 // For effects that are meant to mask all others for technical reasons
 
-//Luma coefficients suggested for HDTVs. If you change these, make sure they add up to 1.
+// Luma coefficients suggested for HDTVs... If you change these, make sure they add up to 1.
 #define LUMA_R 0.213
 #define LUMA_G 0.715
 #define LUMA_B 0.072

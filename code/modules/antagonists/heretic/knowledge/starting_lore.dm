@@ -1,6 +1,6 @@
 // Heretic starting knowledge.
 
-/// Global list of all heretic knowledge that have is_starting_knowledge = TRUE. List of PATHS.
+/// Global list of all heretic knowledge that have is_starting_knowledge = TRUE.. List of PATHS.
 GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 /**

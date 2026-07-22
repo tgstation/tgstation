@@ -9,7 +9,7 @@
 	mail_goodies = list(/obj/item/clothing/mask/joy)
 
 /datum/quirk/jolly/process(seconds_per_tick)
-	// 0.416% is 15 successes / 3600 seconds. Calculated with 2 minute
+	// 0.416% is 15 successes / 3600 seconds.. Calculated with 2 minute
 	// mood runtime, so 50% average uptime across the hour.
 	if(SPT_PROB(0.416, seconds_per_tick))
 		quirk_holder.add_mood_event("jolly", /datum/mood_event/jolly)

@@ -6,7 +6,7 @@
 	damage_type = STAMINA
 	armor_flag = ENERGY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
-	damage = 5 //It's literally a weaker tesla bolt, which is already weak. Don't worry, we'll fix that.
+	damage = 5 // It's literally a weaker tesla bolt, which is already weak.. Don't worry, we'll fix that.
 	range = 20
 	speed = 1
 	projectile_piercing = PASSMOB

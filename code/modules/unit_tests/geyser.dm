@@ -1,6 +1,6 @@
 ///Geysers listen to reagent signals to know when to start processing, which is very cool, smart, optimized and fragile
 ///Tests:
-///	Check for reagent datum
+/// Check for reagent datum
 /// Check if our geyser starts with the right reagent
 /// Check if our geyser refills (by clearing the reagents, setting refresh rate to max and manually firing the subsystem)
 /// Check if our geyser refilled with the right reagent

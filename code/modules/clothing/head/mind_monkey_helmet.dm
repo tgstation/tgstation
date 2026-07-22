@@ -10,7 +10,7 @@
 	var/mob/living/carbon/human/magnification = null ///if the helmet is on a valid target (just works like a normal helmet if not (cargo please stop))
 	var/polling = FALSE///if the helmet is currently polling for targets (special code for removal)
 	var/light_colors = 1 ///which icon state color this is (red, blue, yellow)
-	/// This chance is increased by 7 every time the helmet fails to get a host, to dissuade spam. starts negative to add 1 safe reuse
+	/// This chance is increased by 7 every time the helmet fails to get a host, to dissuade spam.. starts negative to add 1 safe reuse
 	var/rage_chance = -7
 	/// Currently used particle type
 	var/particle_path

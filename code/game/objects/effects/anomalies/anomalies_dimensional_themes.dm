@@ -16,7 +16,7 @@
 	var/list/replace_floors = list(/turf/open/floor/material = 1)
 	/// Typepath of turf to replace walls with.
 	var/turf/replace_walls = /turf/closed/wall/material
-	/// List of weighted lists for object replacement. Key is an original typepath, value is a weighted list of typepaths to replace it with.
+	/// List of weighted lists for object replacement.. Key is an original typepath, value is a weighted list of typepaths to replace it with.
 	var/list/replace_objs = list(
 		/obj/structure/chair = list(/obj/structure/chair/greyscale = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 1),
@@ -153,7 +153,7 @@
 	var/obj/new_object = new replace_path(object.loc)
 	new_object.setDir(object.dir)
 	if(istype(object, /obj/machinery/door/airlock))
-		if(istype(new_object, /obj/machinery/door/airlock)) //carry over access-related and adjacent variables. The rest is not as important
+		if(istype(new_object, /obj/machinery/door/airlock)) // carry over access-related and adjacent variables.. The rest is not as important
 			var/obj/machinery/door/airlock/airlock = object
 			var/obj/machinery/door/airlock/new_airlock = new_object
 			new_airlock.closeOtherId = airlock.closeOtherId
@@ -396,7 +396,7 @@
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1),
 		/obj/structure/platform = list(/obj/structure/platform/paper = 1),
 	)
-	/// Cooldown for changing carpets, It's kinda dull to always use the same one, but we also can't make it too random.
+	/// Cooldown for changing carpets, It's kind of dull to always use the same one, but we also can't make it too random.
 	COOLDOWN_DECLARE(carpet_switch_cd)
 	/// List of carpets we can pick from, set up in New
 	var/list/valid_carpets

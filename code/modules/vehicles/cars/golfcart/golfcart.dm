@@ -21,7 +21,7 @@
 	key_type = /obj/item/key/golfcart
 	///Perform an extra step after movement finishes?
 	var/perform_extra_step = FALSE
-	///Base movespeed before any modifiers. Humans run at 1.5 movedelay.
+	/// Base movespeed before any modifiers.. Humans run at 1.5 movedelay.
 	var/static/base_movedelay = 1.25
 	///Base movespeed for the hotrod before any modifiers
 	var/static/hotrod_base_movedelay = 0.65
@@ -29,7 +29,7 @@
 	var/obj/effect/abstract/particle_holder/smoke = null
 	///Seperate image for the cargo buckled to the rear
 	var/image/cargo_image = null
-	///The power source for the cart. Can be replaced with an engine.
+	/// The power source for the cart.. Can be replaced with an engine.
 	var/obj/item/stock_parts/power_store/cell/cell = null
 	///A more powerful power source for the cart.
 	var/obj/item/v8_engine/engine = null
@@ -45,7 +45,7 @@
 		/obj/machinery,
 		/obj/item/kirbyplants,
 	))
-	///Each movement requires this much energy to be drawn from the internal cell
+	/// Each movement needs this much energy to be drawn from the internal cell
 	var/charge_per_move = STANDARD_CELL_CHARGE / 300
 	///Has the final say on whether something can be buckled.
 	var/static/list/banned_cargo = typecacheof(list(
@@ -359,7 +359,7 @@
 		else
 			. += span_info("There is no power cell installed.")
 
-///Called when something tries to pass us. Returns TRUE if it is trying to crawl past us.
+/// Called when something tries to pass us.. Returns TRUE if it is trying to crawl past us.
 /obj/vehicle/ridden/golfcart/proc/allow_crawler_through(atom/crawler)
 	if (!isliving(crawler))
 		return FALSE
@@ -375,7 +375,7 @@
 	if (allow_crawler_through(mover))
 		return TRUE
 
-///Called for COMSIG_MOVABLE_PRE_MOVE on the golfcart front. If the rear of the cart doesn't fit where we want to go, block movement.
+/// Called for COMSIG_MOVABLE_PRE_MOVE on the golfcart front.. If the rear of the cart doesn't fit where we want to go, block movement.
 /obj/vehicle/ridden/golfcart/proc/pre_move(atom/source, atom/new_loc)
 	SIGNAL_HANDLER
 
@@ -404,7 +404,7 @@
 		return
 	perform_extra_step = perform_extra_step || can_do_extra_step
 
-///Creates a fake glide effect on the golfcart and anything buckled to it. Called when moving up stairs as moving up stairs creates a two-tile move.
+/// Creates a fake glide effect on the golfcart and anything buckled to it.. Called when moving up stairs as moving up stairs creates a two-tile move.
 /obj/vehicle/ridden/golfcart/proc/fake_glide(direct)
 	var/px = 0
 	var/py = 0
@@ -460,7 +460,7 @@
 			return
 		fake_glide(dir)
 
-///Called for COMSIG_ATOM_TRIED_PASS on the golfcart front. Allows mobs buckled to the rear of the cart to not get blocked by the front of the cart.
+/// Called for COMSIG_ATOM_TRIED_PASS on the golfcart front.. Allows mobs buckled to the rear of the cart to not get blocked by the front of the cart.
 /obj/vehicle/ridden/golfcart/proc/allow_movement_between_passengers(atom/source, atom/mover)
 	SIGNAL_HANDLER
 
@@ -584,8 +584,8 @@
 	rear_overlay.pixel_x = rear_offsets.x
 	rear_overlay.pixel_y = rear_offsets.y
 	if (dir & SOUTH)
-		// however, specifically when facing south, we require another overlay.
-		// it is effectively an extension of the lower overlay, but it has to be on a different tile so it has to be a different overlay
+		// but specifically when facing south, we need another overlay.
+		// it is effectively an extension of the lower overlay. It has to be on a different tile so it has to be a different overlay
 		var/mutable_appearance/floor_overlay = mutable_appearance(icon, "floor", CART_LOWER_LAYER)
 		floor_overlay.pixel_y += 25
 		. += floor_overlay

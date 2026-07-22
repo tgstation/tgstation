@@ -25,7 +25,7 @@
 	TEST_ASSERT(soles.total_bloodiness, "Shoes didn't become stained after stepping in a pool of blood")
 
 	//The bloody soles component handles the order of stepping on blood/stepping on a bloody tile in a constranating way
-	//Which means it needs to check and see if any time has passed between steps, so it can be sure the player is stepping onto a new tile (that should become bloody)
+	// Which means it needs to check. See if any time has passed between steps, so it can be sure the player is stepping onto a new tile (that should become bloody)
 	//I on the other hand need to do all my movements in one tick, so we need to sidestep this check
 	//Please kill me slowly
 	soles.last_pickup -= 1

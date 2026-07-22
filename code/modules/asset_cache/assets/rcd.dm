@@ -20,7 +20,7 @@
 				sprite_name = initial(path.name)
 				var/datum/universal_icon/sprite_icon
 
-				//icon for windows are blended with grills if required and loaded from radial menu
+				// icon for windows are blended with grills if needed and loaded from radial menu
 				if(ispath(path, /obj/structure/window))
 					if(path == /obj/structure/window)
 						sprite_icon = uni_icon('icons/hud/radial.dmi', "windowsize")

@@ -8,7 +8,7 @@
 	var/server_type = /obj/machinery/telecomms/server
 	/// The signal that was the origin of this one, in case it was a copy.
 	var/datum/signal/subspace/original
-	/// The levels on which this signal can be received. Generally set by
+	/// The levels on which this signal can be received.. Generally set by
 	/// a broadcaster, a relay or a message server.
 	/// If this list contains `0`, then it will be receivable on every single
 	/// z-level.
@@ -55,11 +55,11 @@
 	for(var/obj/machinery/telecomms/allinone/all_in_one_receiver in GLOB.telecomm_machines)
 		all_in_one_receiver.receive_signal(src)
 
-/// Handles broadcasting this signal out, to be implemented by subtypes.
+/// Handles broadcasting this signal out, to be added by subtypes.
 /datum/signal/subspace/proc/broadcast()
 	set waitfor = FALSE
 
-// Vocal transmissions (i.e. using saycode).
+// Vocal transmissions (i.e.. using saycode).
 // Despite "subspace" in the name, these transmissions can also be RADIO
 // (intercoms and SBRs) or SUPERSPACE (CentCom).
 /datum/signal/subspace/vocal
@@ -78,7 +78,7 @@
 	datum/language/language,  // the language of the message
 	message,  // the text content of the message
 	spans,  // the list of spans applied to the message
-	list/message_mods, // the list of modification applied to the message. Whispering, singing, ect
+	list/message_mods, // the list of modification applied to the message.. Whispering, singing, ect
 )
 	src.source = source
 	src.frequency = frequency

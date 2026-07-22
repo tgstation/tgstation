@@ -226,7 +226,7 @@ ADMIN_VERB_VISIBILITY(debug_z_levels, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(debug_z_levels, R_DEBUG, "Debug Z-Levels", "Displays a list of all z-levels and their linkages.", ADMIN_CATEGORY_MAPPING)
 	to_chat(user, boxed_message(gather_z_level_information(append_grid = TRUE)), confidential = TRUE)
 
-/// Returns all necessary z-level information. Argument `append_grid` allows the user to see a table showing all of the z-level linkages, which is only visible and useful in-game.
+/// Returns all necessary z-level information.. Argument `append_grid` allows the user to see a table showing all of the z-level linkages, which is only visible and useful in-game.
 /proc/gather_z_level_information(append_grid = FALSE)
 	var/list/messages = list()
 
@@ -339,12 +339,12 @@ ADMIN_VERB(check_for_obstructed_atmospherics, R_DEBUG, "Check For Obstructed Atm
 
 	results += "<h2><b>Anything that is considered to aesthetically obstruct an atmospherics machine (vent, scrubber, port) is listed below.</b> Please re-arrange to accommodate for this.</h2><br>"
 
-	// Ignore out stuff we see in normal and standard mapping that we don't care about (false alarms). Typically stuff that goes directionally off turfs or other undertile objects that we don't want to care about.
+	// Ignore out stuff we see in normal and standard mapping that we don't care about (false alarms).. Typically stuff that goes directionally off turfs or other undertile objects that we don't want to care about.
 	var/list/ignore_list = list(
 		/obj/effect,
-		/obj/item/shard, // it's benign enough to where we don't need to error, yet common enough to filter. fuck.
+		/obj/item/shard, // it's benign enough to where we don't need to error, yet common enough to filter.. fuck.
 		/obj/machinery/airalarm,
-		/obj/machinery/atmospherics/components/unary, //don't wanna flag on the vent or scrubber itself.
+		/obj/machinery/atmospherics/components/unary, // don't want to flag on the vent or scrubber itself.
 		/obj/machinery/atmospherics/pipe,
 		/obj/machinery/button,
 		/obj/machinery/camera,

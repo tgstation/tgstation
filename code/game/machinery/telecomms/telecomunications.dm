@@ -24,7 +24,7 @@ GLOBAL_LIST_EMPTY(telecomm_machines)
 	var/list/autolinkers = list()
 	/// identification string
 	var/id = "NULL"
-	/// the relevant type path of this telecomms machine eg /obj/machinery/telecomms/server but not server/preset. used for links_by_telecomms_type
+	/// the relevant type path of this telecomms machine for example /obj/machinery/telecomms/server but not server/preset.. used for links_by_telecomms_type
 	var/telecomms_type = null
 	/// the network of the machinery
 	var/network = "NULL"
@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(telecomm_machines)
 	var/on = TRUE
 	/// Is it toggled on, so is it /meant/ to be active?
 	var/toggled = TRUE
-	/// Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
+	/// Can you link it across Z levels or on the otherside of the map?. (Relay & Hub)
 	var/long_range_link = FALSE
 	/// Is it a hidden machine?
 	var/hide = FALSE
@@ -44,7 +44,7 @@ GLOBAL_LIST_EMPTY(telecomm_machines)
 	/// Looping sounds for any servers
 	var/datum/looping_sound/server/soundloop
 
-/// relay signal to all linked machinery that are of type [filter]. If signal has been sent [amount] times, stop sending
+/// relay signal to all linked machinery that are of type [filter].. If signal has been sent [amount] times, stop sending
 /obj/machinery/telecomms/proc/relay_information(datum/signal/subspace/signal, filter, copysig, amount = 20)
 	if(!on)
 		return
@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(telecomm_machines)
 
 	var/send_count = 0
 
-	// Apply some lag based on traffic rates
+	// Apply some lag good on traffic rates
 	var/netlag = round(traffic / 50)
 	if(netlag > signal.data["slow"])
 		signal.data["slow"] = netlag
@@ -143,7 +143,7 @@ GLOBAL_LIST_EMPTY(telecomm_machines)
 /obj/machinery/telecomms/proc/update_power()
 	var/old_on = on
 	if(toggled)
-		if(machine_stat & (BROKEN|NOPOWER|EMPED)) // if powered, on. if not powered, off. if too damaged, off
+		if(machine_stat & (BROKEN|NOPOWER|EMPED)) // if powered, on.. if not powered, off.. if too damaged, off
 			on = FALSE
 		else
 			on = TRUE

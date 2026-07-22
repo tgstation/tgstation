@@ -1,4 +1,4 @@
-///Component specifically for explosion sensetive things, currently only applies to heat based explosions but can later perhaps be used for things that are dangerous to handle carelessly like nitroglycerin.
+/// Component specifically f. Explosion sensetive things, currently only applies to heat good explosions. Can later perhaps be used f. Things that are dangerous to handle carelessly like nitroglycerin.
 /datum/component/explodable
 	/// The devastation range of the resulting explosion.
 	var/devastation_range = 0
@@ -12,7 +12,7 @@
 	var/flash_range = 3
 	/// Whether this explosion ignores the bombcap.
 	var/uncapped
-	/// Whether we always delete. Useful for nukes turned plasma and such, so they don't default delete and can survive
+	/// Whether we always delete.. Useful for nukes turned plasma and such, so they don't default delete and can survive
 	var/delete_after
 	/// For items, lets us determine where things should be hit.
 	var/equipped_slot
@@ -77,7 +77,7 @@
 
 	check_if_detonate(target)
 
-/// Welder check. Here because tool_act is higher priority than attackby.
+/// Welder check.. Here because tool_act is higher priority than attackby.
 /datum/component/explodable/proc/welder_react(datum/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
 
@@ -91,7 +91,7 @@
 	if(shot.damage_type == BURN && shot.damage > 0)
 		detonate()
 
-///Called when you attack a specific body part of the thing this is equipped on. Useful for exploding pants.
+/// Called when you attack a specific body part of the thing this is equipped on.. Useful for exploding pants.
 /datum/component/explodable/proc/explodable_attack_zone(datum/source, damage, damagetype, def_zone, ...)
 	SIGNAL_HANDLER
 
@@ -102,7 +102,7 @@
 	if(isbodypart(def_zone))
 		var/obj/item/bodypart/hitting = def_zone
 		def_zone = hitting.body_zone
-	if(!is_hitting_zone(def_zone)) //You didn't hit us! ha!
+	if(!is_hitting_zone(def_zone)) // You didn't hit us!. ha!
 		return
 	detonate()
 

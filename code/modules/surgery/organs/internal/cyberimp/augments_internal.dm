@@ -336,7 +336,7 @@
 	if(!chippy_brain)
 		return
 	chippy_brain.apply_organ_damage(20 * severity)
-	chippy_brain.maxHealth -= 15 * severity // a bit of your brain fell off. again.
+	chippy_brain.maxHealth -= 15 * severity // a bit of your brain fell off.. again.
 	if(chippy_brain.damage >= chippy_brain.maxHealth)
 		chippy_brain.forceMove(owner.drop_location())
 		owner.visible_message(span_userdanger("[owner]'s brain falls off the back of [owner.p_their()] head!!!"), span_boldwarning("You feel like you're missing something."))

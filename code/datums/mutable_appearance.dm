@@ -1,6 +1,6 @@
-// Mutable appearances are an inbuilt byond datastructure. Read the documentation on them by hitting F1 in DM.
+// Mutable appearances are an inbuilt byond datastructure.. Read the documentation on them by hitting F1 in DM.
 // Basically use them instead of images for overlays/underlays and when changing an object's appearance if you're doing so with any regularity.
-// Unless you need the overlay/underlay to have a different direction than the base object. Then you have to use an image due to a bug.
+// Unless you need the overlay/underlay to have a different direction than the base object.. Then you have to use an image due to a bug.
 
 // Mutable appearances are children of images, just so you know.
 
@@ -36,7 +36,7 @@
 			// Note, we are ok with null turfs, that's not an error condition we'll just default to 0, the error would be
 			// Not passing ANYTHING in, key difference
 			SET_PLANE_EXPLICIT(appearance, plane, offset_spokesman)
-		// That or I'll let you pass in a static offset. Don't be stupid now
+		// That or I'll let you pass in a static offset.. Don't be stupid now
 		else if(!isnull(offset_const))
 			SET_PLANE_W_SCALAR(appearance, plane, offset_const)
 		// otherwise if you're setting plane you better have the guts to back it up

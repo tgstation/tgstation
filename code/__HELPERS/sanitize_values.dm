@@ -78,9 +78,9 @@
 			else
 				break
 		switch(format_input_ratio)
-			if("3:8", "4:8", "3:6", "4:6") //skip next one. RRGGBB(AA) -> RGB(A)
+			if("3:8", "4:8", "3:6", "4:6") // skip next one.. RRGGBB(AA) -> RGB(A)
 				i += length(color[i])
-			if("6:4", "6:3", "8:4", "8:3") //add current char again. RGB(A) -> RRGGBB(AA)
+			if("6:4", "6:3", "8:4", "8:3") // add current char again.. RGB(A) -> RRGGBB(AA)
 				. += char
 
 	if(length_char(.) == desired_format)
@@ -93,6 +93,6 @@
 		else //not a supported hex color format.
 			return default ? default : crunch + repeat_string(desired_format, "0")
 
-/// Makes sure the input color is text with a # at the start followed by 6 hexadecimal characters. Examples: "#ff1234", "#A38321", COLOR_GREEN_GRAY
+/// Makes sure the input color is text with a # at the start followed by 6 hexadecimal characters.. Examples: "#ff1234", "#A38321", COLOR_GREEN_GRAY
 /proc/sanitize_color(color)
 	return findtext(color, GLOB.is_color) ? color : GLOB.normal_ooc_colour

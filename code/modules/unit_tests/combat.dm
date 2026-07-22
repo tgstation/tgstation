@@ -139,7 +139,7 @@
 	attacker.ClickOn(victim)
 	TEST_ASSERT_NOTEQUAL(victim.get_brute_loss(), 0, "Victim took no brute damage from being bit by a handcuffed monkey, which is incorrect, as it's a bite attack")
 
-/// Tests that soundbang_act (and therefore sound_damage) works correctly
+/// Tests that soundbang_act (and so sound_damage) works correctly
 /datum/unit_test/soundbang
 
 /datum/unit_test/soundbang/Run()

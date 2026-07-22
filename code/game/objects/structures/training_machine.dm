@@ -21,7 +21,7 @@
 	buckle_lying = 0
 	max_integrity = 200
 	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING
-	///Is the machine moving? Setting this to FALSE will automatically call stop_moving()
+	/// Is the machine moving?. Setting this to FALSE will automatically call stop_moving()
 	var/moving = FALSE
 	///The distance the machine is allowed to roam from its starting point
 	var/range = 1
@@ -29,13 +29,13 @@
 	var/turf/target_position
 	///The turf the machine was on when it was activated
 	var/turf/starting_turf
-	///Delay between process() calls. Cannot be higher than MAX_SPEED. Smaller value represents faster movement.
+	/// Delay between process() calls.. Cannot be higher than MAX_SPEED.. Smaller value represents faster movement.
 	var/move_speed = 1
 	///Reference to a potentially attached object, either a target, trainer toolbox, or syndicate toolbox
 	var/obj/attached_item
 	///Helper for timing attacks when emagged
 	COOLDOWN_DECLARE(attack_cooldown)
-	///Cooldown macro to control how fast this will move. Used in process()
+	/// Cooldown macro to control how fast this will move.. Used in process()
 	COOLDOWN_DECLARE(move_cooldown)
 
 /**

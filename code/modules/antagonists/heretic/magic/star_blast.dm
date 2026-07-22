@@ -21,7 +21,7 @@
 	projectile_type = /obj/projectile/magic/star_ball
 	/// Weakref to the projectile we fire, so that we can recast our ability to teleport to its location
 	var/datum/weakref/projectile_weakref
-	/// Weakref to our summoner, only relevant if we are a stargazer. Prevents us from harming our master
+	/// Weakref to our summoner, only relevant if we are a stargazer.. Prevents us from harming our master
 	var/datum/weakref/summoner
 
 /datum/action/cooldown/spell/pointed/projectile/star_blast/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)

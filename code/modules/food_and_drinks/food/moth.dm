@@ -1,6 +1,6 @@
 //Moth Foods, the three C's: cheese, coleslaw, and cotton
 //A large emphasis has been put on sharing and multiple portion dishes
-//Additionally, where a mothic name is given, a short breakdown of what exactly it means is provided, for the curious on the internal workings of mothic: it's very onomatopoeic, and makes heavy use of combined words and accents
+// Also where a mothic name is given, a short breakdown of what exactly it means is provided, f. The curious on the internal workings of mothic: it's very onomatopoeic. Makes heavy use of combined words. Accents
 
 //Base ingredients and miscellany, generally not served on their own
 /obj/item/food/herby_cheese

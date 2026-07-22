@@ -9,7 +9,7 @@
 	var/datum/religion_sect/easy_access_sect
 	/// Prevents double selecting sects
 	var/selecting_sect = FALSE
-	/// What extent do we want this religious tool to act? In case you don't want full access to the list. Generated on New
+	/// What extent do we want this religious tool to act?. In case you don't want full access to the list.. Generated on New
 	var/operation_flags
 	/// The rite currently being invoked
 	var/datum/religion_rites/performing_rite
@@ -19,7 +19,7 @@
 	var/force_catalyst_afterattack = FALSE
 	///Callback provided to the tool for after a sect is chosen
 	var/datum/callback/after_sect_select_cb
-	///Optional argument. If a positive value, each invocation will lower charges, and the component will delete without any more charges
+	/// Optional argument.. If a positive value, each invocation will lower charges, and the component will delete without any more charges
 	var/charges
 	///If a typecache is provided, only types of rites in the cache can be invoked.
 	var/list/rite_types_allowlist
@@ -33,7 +33,7 @@
 	rite_types_allowlist = null,
 )
 	. = ..()
-	SetGlobalToLocal() //attempt to connect on start in case one already exists!
+	SetGlobalToLocal() // try to connect on start in case one already exists!
 	src.operation_flags = operation_flags
 	src.force_catalyst_afterattack = force_catalyst_afterattack
 	src.after_sect_select_cb = after_sect_select_cb

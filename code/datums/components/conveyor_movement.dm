@@ -1,6 +1,6 @@
 //Make a component to do things like gravity/flying checks
 ///Manages the loop caused by being on a conveyor belt
-///Prevents movement while you're floating, etc
+/// Prevents movement while you're floating, and so on
 ///Takes the direction to move, delay between steps, and time before starting to move as arguments
 /datum/component/convey
 	var/living_parent = FALSE

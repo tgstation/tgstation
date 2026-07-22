@@ -19,7 +19,7 @@
 	var/obj/item/card/id/stored_id
 	///The alt slot, only used by certain UIs like the access app.
 	var/obj/item/card/id/alt_stored_id
-	///The disk in this PDA. If set, this will be inserted on Initialize.
+	/// The disk in this PDA.. If set, this will be inserted on Initialize.
 	var/obj/item/disk/computer/inserted_disk
 	///The power cell the computer uses to run on.
 	var/obj/item/stock_parts/power_store/internal_cell = /obj/item/stock_parts/power_store/cell
@@ -32,7 +32,7 @@
 	var/max_capacity = 128
 	///The amount of storage space we've got filled
 	var/used_capacity = 0
-	///List of stored files on this drive. Use `store_file` and `remove_file` instead of modifying directly!
+	/// List of stored files on this drive.. Use `store_file` and `remove_file` instead of modifying directly!
 	var/list/datum/computer_file/stored_files = list()
 
 	///Non-static list of programs the computer should receive on Initialize.
@@ -46,14 +46,14 @@
 
 	///The program currently active on the tablet.
 	var/datum/computer_file/program/active_program
-	///Idle programs on background. They still receive process calls but can't be interacted with.
+	/// Idle programs on background.. They still receive process calls but can't be interacted with.
 	var/list/datum/computer_file/program/idle_threads = list()
 	/// Amount of programs that can be ran at once
 	var/max_idle_programs = 2
 
 	///Flag of the type of device the modular computer is, deciding what types of apps it can run.
 	var/hardware_flag = PROGRAM_ALL
-//	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_PDA
+// Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_PDA
 
 	///The theme, used for the main menu and file browser apps.
 	var/device_theme = PDA_THEME_NTOS
@@ -82,8 +82,8 @@
 	///Power usage when the computer is idle and screen is off.
 	var/base_idle_power_usage = 1 WATTS
 
-	// Modular computers can run on various devices. Each DEVICE (Laptop, Console & Tablet)
-	// must have its own DMI file. Icon states must be called exactly the same in all files, but may look differently
+	// Modular computers can run on various devices.. Each DEVICE (Laptop, Console & Tablet)
+	// must have its own DMI file.. Icon states must be called exactly the same in all files, but may look differently
 	// If you create a program which is limited to Laptops and Consoles you don't have to add its icon_state overlay for Tablets too, for example.
 
 	///If set, what the icon_state will be if the computer is unpowered.
@@ -93,12 +93,12 @@
 	///Icon state overlay when the computer is turned on, but no program is loaded (programs override this).
 	var/icon_state_menu = "menu"
 
-	///The full name of the stored ID card's identity. These vars should probably be on the PDA.
+	/// The full name of the stored ID card's identity.. These vars should probably be on the PDA.
 	var/saved_identification
 	///The job title of the stored ID card
 	var/saved_job
 
-	///The 'computer' itself, as an obj. Primarily used for Adjacent() and UI visibility checks, especially for computers.
+	/// The 'computer' itself, as an obj.. Primarily used for Adjacent() and UI visibility checks, especially for computers.
 	var/obj/physical
 	///Amount of steel sheets refunded when disassembling an empty frame of this computer.
 	var/steel_sheet_cost = 5
@@ -258,7 +258,7 @@
 
 	return NONE
 
-// Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
+// Gets IDs/access levels from card slot.. Would be useful when/if PDAs would become modular PCs.. //guess what
 /obj/item/modular_computer/GetAccess()
 	if(stored_id)
 		return stored_id.GetAccess()
@@ -606,7 +606,7 @@
 		return
 
 	if(active_program && (active_program.program_flags & PROGRAM_REQUIRES_NTNET) && !get_ntnet_status())
-		active_program.event_networkfailure(FALSE) // Active program requires NTNet to run but we've just lost connection. Crash.
+		active_program.event_networkfailure(FALSE) // Active program needs NTNet to run but we've just lost connection.. Crash.
 
 	for(var/datum/computer_file/program/idle_programs as anything in idle_threads)
 		idle_programs.process_tick(seconds_per_tick)
@@ -633,7 +633,7 @@
  * The message that the program wishes to display.
  */
 /obj/item/modular_computer/proc/alert_call(datum/computer_file/program/call_source, alerttext, sound = 'sound/machines/beep/twobeep_high.ogg')
-	if(!call_source || !call_source.alert_able || call_source.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
+	if(!call_source || !call_source.alert_able || call_source.alert_silenced || !alerttext) // Yeah, we're checking alert_able.. No, you don't get to make alerts that the user can't silence.
 		return FALSE
 	playsound(src, sound, 50, TRUE)
 	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [call_source.filedesc] notification: [alerttext]"))
@@ -656,7 +656,7 @@
 /obj/item/modular_computer/proc/send_sound()
 	playsound(src, 'sound/machines/terminal/terminal_success.ogg', 15, TRUE)
 
-// Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
+// Function used by NanoUI's to get data for header.. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
 	var/list/data = list()
 
@@ -719,7 +719,7 @@
 	if(active_program == program)
 		return FALSE
 
-	// The program is already running. Resume it.
+	// The program is already running.. Resume it.
 	if(program in idle_threads)
 		active_program?.background_program()
 		active_program = program
@@ -739,7 +739,7 @@
 			to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
 		return FALSE
 
-	if(program.program_flags & PROGRAM_REQUIRES_NTNET && !get_ntnet_status()) // The program requires NTNet connection, but we are not connected to NTNet.
+	if(program.program_flags & PROGRAM_REQUIRES_NTNET && !get_ntnet_status()) // The program needs NTNet connection, but we are not connected to NTNet.
 		if(user)
 			to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
 		return FALSE
@@ -757,13 +757,13 @@
 	update_appearance(UPDATE_ICON)
 	return TRUE
 
-// Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
+// Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal.. 3 is for wired connection (always-on)
 /obj/item/modular_computer/proc/get_ntnet_status()
 	// computers are connected through ethernet
 	if(hardware_flag & PROGRAM_CONSOLE)
 		return NTNET_ETHERNET_SIGNAL
 
-	// NTNet is down and we are not connected via wired connection. No signal.
+	// NTNet is down and we are not connected via wired connection.. No signal.
 	if(!find_functional_ntnet_relay())
 		return NTNET_NO_SIGNAL
 
@@ -803,7 +803,7 @@
 	SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_SHUT_DOWN, loud)
 
 ///Imprints name and job into the modular computer, and calls back to necessary functions.
-///Acts as a replacement to directly setting the imprints fields. All fields are optional, the proc will try to fill in missing gaps.
+/// Acts as a replacement to directly setting the imprints fields.. All fields are optional, the proc will try to fill in missing gaps.
 /obj/item/modular_computer/proc/imprint_id(name = null, job_name = null)
 	saved_identification = name || stored_id?.registered_name || saved_identification
 	saved_job = job_name || stored_id?.assignment || saved_job
@@ -1045,7 +1045,7 @@
 	new /obj/item/stack/sheet/iron(droploc, steel_sheet_cost * (disassembled ? 1 : 0.5))
 	relay_qdel()
 
-// Ejects the inserted intellicard, if one exists. Used when the computer is deconstructed.
+// Ejects the inserted intellicard, if one exists.. Used when the computer is deconstructed.
 /obj/item/modular_computer/proc/eject_aicard()
 	var/datum/computer_file/program/ai_restorer/program = locate() in stored_files
 	if (program)
@@ -1096,7 +1096,7 @@
 			return ALERT_RELEVANCY_PERTINENT
 		if(SEC_LEVEL_RED) // all-hands-on-deck situations, everyone is responsible for combatting a threat
 			return ALERT_RELEVANCY_PERTINENT
-		if(SEC_LEVEL_BLUE) // suspected threat. security needs to be alert and possibly preparing for it, no further concerns
+		if(SEC_LEVEL_BLUE) // suspected threat.. security needs to be alert and possibly preparing for it, no further concerns
 			if(ACCESS_SECURITY in stored_id?.access)
 				return ALERT_RELEVANCY_PERTINENT
 			else

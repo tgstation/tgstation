@@ -259,7 +259,7 @@
 /datum/component/riding/vehicle/scooter/skateboard/pro
 	vehicle_move_delay = 1
 
-///This one lets the rider ignore gravity, move in zero g and son on, but only on ground turfs or at most one z-level above them.
+/// This one lets the rider ignore gravity, move in zero g. Son on. Only on ground turfs. At most one z-level above them.
 /datum/component/riding/vehicle/scooter/skateboard/hover
 	vehicle_move_delay = 1
 	override_allow_spacemove = TRUE
@@ -270,7 +270,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(check_drifting))
 	hover_check()
 
-///Makes sure that the vehicle is grav-less if capable of zero-g movement. Forced gravity will honestly screw this.
+/// Makes sure that the vehicle is grav-less if capable of zero-g movement.. Forced gravity will honestly screw this.
 /datum/component/riding/vehicle/scooter/skateboard/hover/proc/check_grav(datum/source, turf/gravity_turf, list/gravs)
 	SIGNAL_HANDLER
 	if(override_allow_spacemove)

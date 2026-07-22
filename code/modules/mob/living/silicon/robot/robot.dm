@@ -54,7 +54,7 @@
 		add_to_upgrades(board)
 		ADD_TRAIT(src, TRAIT_CAN_GET_AI_TRACKING_MESSAGE, INNATE_TRAIT)
 	else
-		//MMI stuff. Held togheter by magic. ~Miauw
+		// MMI stuff.. Held togheter by magic.. ~Miauw
 		if(!mmi?.brainmob)
 			mmi = new (src)
 			mmi.brain = new /obj/item/organ/brain(mmi)
@@ -116,7 +116,7 @@
 		modularInterface.icon_state_unpowered = "tablet-silicon"
 	modularInterface.update_icon()
 
-//If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
+// If there's an MMI in the robot, have it ejected when the mob goes away.. --NEO
 /mob/living/silicon/robot/Destroy()
 	if(connected_ai)
 		set_connected_ai(null)
@@ -389,7 +389,7 @@
 	if(!QDELETED(builtInCamera))
 		QDEL_NULL(builtInCamera)
 		// I'm trying to get the Cyborg to not be listed in the camera list
-		// Instead of being listed as "deactivated". The downside is that I'm going
+		// Instead of being listed as "deactivated".. The downside is that I'm going
 		// to have to check if every camera is null or not before doing anything, to prevent runtime errors.
 		// I could change the network to null but I don't know what would happen, and it seems too hacky for me.
 
@@ -456,7 +456,7 @@
 		smash_headlamp()
 	return COMPONENT_BLOCK_LIGHT_EATER
 
-/// special handling for getting shot with a light disruptor/saboteur e.g. the fisher
+/// special handling for getting shot with a light disruptor/saboteur e.g.. the fisher
 /mob/living/silicon/robot/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
 	if(lamp_enabled)
@@ -494,7 +494,7 @@
  * * arg2 - update_color, if enabled, will adjust the behavior of the proc to change the color of the light if it is already on.
  */
 /mob/living/silicon/robot/proc/toggle_headlamp(turn_off = FALSE, update_color = FALSE)
-	//if both lamp is enabled AND the update_color flag is on, keep the lamp on. Otherwise, if anything listed is true, disable the lamp.
+	// if both lamp is enabled AND the update_color flag is on, keep the lamp on.. Otherwise, if anything listed is true, disable the lamp.
 	if(!COOLDOWN_FINISHED(src, disabled_time))
 		balloon_alert(src, "disrupted!")
 		return FALSE
@@ -782,7 +782,7 @@
 	if(gone == mmi)
 		mmi = null
 
-///Called when a mob uses an upgrade on an open borg. Checks to make sure the upgrade can be applied
+/// Called when a mob uses an upgrade on an open borg.. Checks to make sure the upgrade can be applied
 /mob/living/silicon/robot/proc/apply_upgrade(obj/item/borg/upgrade/new_upgrade, mob/user)
 	if(isnull(user))
 		return FALSE
@@ -810,7 +810,7 @@
 	RegisterSignal(new_upgrade, COMSIG_QDELETING, PROC_REF(on_upgrade_deleted))
 	logevent("Hardware [new_upgrade] installed successfully.")
 
-///Called when an upgrade is moved outside the robot. So don't call this directly, use forceMove etc.
+/// Called when an upgrade is moved outside the robot.. So don't call this directly, use forceMove and so on
 /mob/living/silicon/robot/proc/remove_from_upgrades(obj/item/borg/upgrade/old_upgrade)
 	SIGNAL_HANDLER
 	if(loc == src)
@@ -1044,7 +1044,7 @@
 
 /mob/living/silicon/robot/on_knockedout_trait_loss(datum/source)
 	. = ..()
-	set_stat(CONSCIOUS) //This is a horrible hack, but silicon code forced my hand
+	set_stat(CONSCIOUS) // This is a horrible temporary solution but silicon code forced my hand
 	update_stat()
 
 /mob/living/silicon/robot/proc/on_dampen()

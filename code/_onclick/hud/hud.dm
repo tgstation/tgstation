@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/hud_version = HUD_STYLE_STANDARD
 	/// Equipped item inventory
 	var/inventory_shown = FALSE
-	/// This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
+	/// This is to hide the buttons that can be used via hotkeys.. (hotkeybuttons list of buttons)
 	var/hotkey_ui_hidden = FALSE
 
 	/// Assoc list of key => "plane master groups"
@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	///Assoc list of controller groups, associated with key string group name with value of the plane master controller ref
 	var/list/atom/movable/plane_master_controller/plane_master_controllers = list()
 
-	/// Think of multiz as a stack of z levels. Each index in that stack has its own group of plane masters
+	/// Think of multiz as a stack of z levels.. Each index in that stack has its own group of plane masters
 	/// This variable is the plane offset our mob/client is currently "on"
 	/// We use it to track what we should show/not show
 	/// Goes from 0 to the max (z level stack size - 1)
@@ -84,8 +84,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/list/datum/inventory_slot/inventory_slots = alist()
 
 	/// List of weakrefs to objects that we add to our screen that we don't expect to DO anything
-	/// They typically use * in their render target. They exist solely so we can reuse them,
-	/// and avoid needing to make changes to all idk 300 consumers if we want to change the appearance
+	/// They typically use * in their render target.. They exist solely so we can reuse them,
+	/// and avoid needing to make changes to all I do not know 300 consumers if we want to change the appearance
 	var/list/asset_refs_for_reuse = list()
 
 /datum/hud/New(mob/owner)
@@ -176,7 +176,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		show_hud(hud_version)
 	return new_object
 
-/// Removes a screen object and refreshes the hud. Can just be passed a key.
+/// Removes a screen object and refreshes the hud.. Can just be passed a key.
 /datum/hud/proc/remove_screen_object(atom/movable/screen/to_remove, update = TRUE)
 	if (!istype(to_remove))
 		to_remove = screen_objects[to_remove]
@@ -260,7 +260,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		register_reuse(GLOB.starlight_objects[i + 1])
 	build_plane_groups(old_max_offset + 1, new_max_offset)
 
-/// Creates the required plane masters to fill out new z layers (because each "level" of multiz gets its own plane master set)
+/// Creates the needed plane masters to fill out new z layers (because each "level" of multiz gets its own plane master set)
 /datum/hud/proc/build_plane_groups(starting_offset, ending_offset)
 	for(var/group_key in master_groups)
 		var/datum/plane_master_group/group = master_groups[group_key]
@@ -513,7 +513,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/update_locked_slots()
 	return
 
-/// Creates inventory slot screen elements based on our assigned default_inventory_slots
+/// Creates inventory slot screen elements good on our assigned default_inventory_slots
 /datum/hud/proc/create_inventory_slots()
 	var/list/created_paths = default_inventory_slots
 	if (ispath(created_paths))
@@ -532,8 +532,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	inventory_update()
 
 /datum/hud/proc/position_action(atom/movable/screen/movable/action_button/button, position)
-	// This is kinda a hack, I'm sorry.
-	// Basically, FLOATING is never a valid position to pass into this proc. It exists as a generic marker for manually positioned buttons
+	// This is kind of a temporary solution I'm sorry.
+	// Basically, FLOATING is never a valid position to pass into this proc.. It exists as a generic marker for manually positioned buttons
 	// Not as a position to target
 	if(position == SCRN_OBJ_FLOATING)
 		return

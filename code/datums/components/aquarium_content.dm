@@ -114,7 +114,7 @@
 	UnregisterSignal(aquarium, list(COMSIG_AQUARIUM_FLUID_CHANGED, COMSIG_ATOM_EXITED) + animation_update_signals)
 	SEND_SIGNAL(aquarium, COMSIG_AQUARIUM_REMOVE_VISUAL, vc_obj)
 
-///The visual overlay of the aquarium content. It can hold a few vars with values about the component of the aquarium it's in.
+/// The visual overlay of the aquarium content.. It can hold a few vars with values about the component of the aquarium it's in.
 /obj/effect/aquarium
 	layer = 0 //set on set_vc_base_position
 	/// How the visual will be layered
@@ -123,9 +123,9 @@
 	var/aquarium_zone_min_pw
 	///maximum pixel x, inherited from the aquarium
 	var/aquarium_zone_max_pw
-	///minimum pixel y, inherited from the aquarium
+	/// minimum pixel why inherited from the aquarium
 	var/aquarium_zone_min_pz
-	///maximum pixel y, inherited from the aquarium
+	/// maximum pixel why inherited from the aquarium
 	var/aquarium_zone_max_pz
 	///The current fluid type, inherited fom the aquarium
 	var/fluid_type

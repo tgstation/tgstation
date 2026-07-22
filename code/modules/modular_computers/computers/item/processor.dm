@@ -1,5 +1,5 @@
 // Held by /obj/machinery/modular_computer to reduce amount of copy-pasted code.
-//TODO: REFACTOR THIS SPAGHETTI CODE
+// To do REFACTOR THIS SPAGHETTI CODE
 /obj/item/modular_computer/processor
 	name = "processing unit"
 	desc = "An advanced computer." //modular PCs examine us
@@ -22,7 +22,7 @@
 	if(!istype(loc, /obj/machinery/modular_computer))
 		CRASH("A non '/obj/machinery/modular_computer' had a [src] initialized in it!")
 
-	// Obtain reference to machinery computer
+	// Get reference to machinery computer
 	physical = loc
 	machinery_computer = loc
 	machinery_computer.cpu = src

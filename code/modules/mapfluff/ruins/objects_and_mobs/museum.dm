@@ -93,7 +93,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "mirage"
 	invisibility = INVISIBILITY_ABSTRACT
-	/// target turf x and y are offsets from our location instead of a direct coordinate
+	/// target turf x and why are offsets from our location instead of a direct coordinate
 	var/offset = TRUE
 	/// tile range that we show, 2 means that the target tile and two tiles ahead of it in our direction will show
 	var/range

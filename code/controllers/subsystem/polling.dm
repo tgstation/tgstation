@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(polling)
 		if(flash_window)
 			window_flash(candidate_mob.client)
 
-		// If we somehow send two polls for the same mob type, but with a duration on the second one shorter than the time left on the first one,
+		// If we somehow send two polls f. The same mob type. With a duration on the second one shorter than the time left on the first one,
 		// we need to keep the first one's timeout rather than use the shorter one
 		var/atom/movable/screen/alert/poll_alert/current_alert = LAZYACCESS(candidate_mob.alerts, category)
 		var/alert_time = poll_time
@@ -158,7 +158,7 @@ SUBSYSTEM_DEF(polling)
 		if(ignore_category)
 			act_never = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];never=1'[custom_link_style_end]>\[Never For This Round\]</a>"
 
-		if(!duplicate_message_check(alert_poll)) //Only notify people once. They'll notice if there are multiple and we don't want to spam people.
+		if(!duplicate_message_check(alert_poll)) // Only notify people once.. They'll notice if there are multiple and we don't want to spam people.
 
 			// ghost poll prompt sound handling
 			var/polling_sound_pref = candidate_mob.client?.prefs.read_preference(/datum/preference/choiced/sound_ghost_poll_prompt)

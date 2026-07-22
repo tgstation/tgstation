@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	desc = "An enchanted deck of tarot cards, rumored to be a source of unimaginable power."
 	icon = 'icons/obj/toys/playing_cards.dmi'
 	icon_state = "deck_tarot_full"
-	/// Are we used or in the process of being used? If yes, then we can't be used.
+	/// Are we used or in the process of being used?. If yes, then we can't be used.
 	var/used = FALSE
 	/// The visuals we give to the guardian we spawn.
 	var/theme = GUARDIAN_THEME_MAGIC
@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		/mob/living/basic/guardian/standard,
 		/mob/living/basic/guardian/support,
 	)
-	/// Have we been refunded? Used to prevent guardians from being created after we've been refunded
+	/// Have we been refunded?. Used to prevent guardians from being created after we've been refunded
 	/// while avoiding scamming people if they use and then destroy us
 	var/was_refunded = FALSE
 
@@ -157,7 +157,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		return FALSE
 	return TRUE
 
-/// Guardian creator available in the wizard spellbook. All but support are available.
+/// Guardian creator available in the wizard spellbook.. All but support are available.
 /obj/item/guardian_creator/wizard
 	allow_multiple = TRUE
 	possible_guardians = list(
@@ -186,7 +186,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	guardian.mind.add_antag_datum(/datum/antagonist/wizard_minion, antag_datum.wiz_team)
 	return guardian
 
-/// Guardian creator available in the traitor uplink. All but dextrous are available, you can pick which you want, and changelings cannot use it.
+/// Guardian creator available in the traitor uplink.. All but dextrous are available, you can pick which you want, and changelings cannot use it.
 /obj/item/guardian_creator/tech
 	name = "holoparasite injector"
 	desc = "It contains an alien nanoswarm of unknown origin. Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, it requires an organic host as a home base and source of fuel."
@@ -202,7 +202,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	ling_failure = span_boldholoparasite("The holoparasites recoil in horror. They want nothing to do with a creature like you.")
 	success_message = span_holoparasite("<b>%GUARDIAN</b> is now online!")
 
-/// Guardian creator only spawned by admins, which creates a holographic fish. You can have several of them.
+/// Guardian creator only spawned by admins, which creates a holographic fish.. You can have several of them.
 /obj/item/guardian_creator/carp
 	name = "holocarp fishsticks"
 	desc = "Using the power of Carp'sie, you can catch a carp from byond the veil of Carpthulu, and bind it to your fleshy flesh form."

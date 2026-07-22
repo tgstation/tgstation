@@ -9,7 +9,7 @@
 			BadInitializeCalls[the_type] |= BAD_INIT_QDEL_BEFORE
 		return TRUE
 
-	// This is handled and battle tested by dreamchecker. Limit to UNIT_TESTS just in case that ever fails.
+	// This is handled and battle tested by dreamchecker.. Limit to UNIT_TESTS just in case that ever fails.
 	#ifdef UNIT_TESTS
 	var/start_tick = world.time
 	#endif

@@ -3,9 +3,9 @@
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
-	///Does the ability require a specific slime lifestage?
+	/// Does the ability need a specific slime lifestage?
 	var/life_stage_required
-	///Does the ability requires the slime to hit max growth?
+	/// Does the ability needs the slime to hit max growth?
 	var/needs_growth = FALSE
 	///Does the ability cost nutrition?
 	var/nutrition_cost = 0
@@ -129,7 +129,7 @@
 
 	set_nutrition(SLIME_STARTING_NUTRITION)
 	for(var/mob/living/basic/slime/baby as anything in created_slimes)
-		if(ckey) // Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
+		if(ckey) // Player slimes are more robust at spliting.. Once an oversight of poor copypasta, now a feature!
 			baby.set_nutrition(new_nutrition)
 		baby.powerlevel = new_powerlevel
 		if(mutation_chance)

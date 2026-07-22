@@ -10,7 +10,7 @@
 	var/list/datum/weakref/item_refs
 	/// If TRUE, deletes the item if no mob picks it up on cast
 	var/delete_on_failure = TRUE
-	/// If TRUE, requires the caster be able to pick it up afterwards
+	/// If TRUE, needs the caster be able to pick it up afterwards
 	var/requires_hands = FALSE
 
 /datum/action/cooldown/spell/conjure_item/Destroy()

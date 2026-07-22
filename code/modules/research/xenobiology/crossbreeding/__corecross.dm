@@ -1,9 +1,9 @@
 //////////////////////////////////////////////
-//////////     SLIME CROSSBREEDS    //////////
+/// /////// SLIME CROSSBREEDS //////////
 //////////////////////////////////////////////
-// A system of combining two extract types. //
-// Performed by feeding a slime 10 of an    //
-// extract color.                           //
+// A system of combining two extract types.. //
+// Performed by feeding a slime 10 of an //
+// extract color.. //
 //////////////////////////////////////////////
 /*==========================================*\
 To add a crossbreed:
@@ -24,7 +24,7 @@ To add a crossbreed:
 	get around to the crossbreeds eventually!
 \*==========================================*/
 
-/obj/item/slimecross //The base type for crossbred extracts. Mostly here for posterity, and to set base case things.
+/obj/item/slimecross // The base type for crossbred extracts.. Mostly here for posterity, and to set base case things.
 	name = "crossbred slime extract"
 	desc = "An extremely potent slime extract, formed through crossbreeding."
 	icon = 'icons/obj/science/slimecrossing.dmi'
@@ -116,7 +116,7 @@ To add a crossbreed:
 		visible_message(span_notice("[src] has been drained completely, and melts away."))
 		qdel(src)
 
-/obj/item/slimecrossbeaker/bloodpack //Pack of 50u blood. Deletes on empty.
+/obj/item/slimecrossbeaker/bloodpack // Pack of 50u blood.. Deletes on empty.
 	name = "blood extract"
 	desc = "A sphere of liquid blood, somehow managing to stay together."
 	color = COLOR_RED

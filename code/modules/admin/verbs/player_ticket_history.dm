@@ -23,7 +23,7 @@ ADMIN_VERB(player_ticket_history, R_ADMIN, "Player Ticket History", "Allows you 
 	GLOB.player_ticket_history.ui_interact(user.mob)
 
 /datum/ticket_history_holder
-	/// Assosciative list of ticket histories. ckey -> list/datum/ticket_history
+	/// Assosciative list of ticket histories.. ckey -> list/datum/ticket_history
 	var/list/ticket_histories = list()
 	/// Assosciative list of user_ckey -> target_ckey
 	var/list/user_selections = list()

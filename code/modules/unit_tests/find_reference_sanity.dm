@@ -17,7 +17,7 @@
 	return ..()
 
 /atom/movable/ref_test
-	// Gotta make sure we do a full check
+	// Got to make sure we do a full check
 	references_to_clear = INFINITY
 	var/atom/movable/ref_test/self_ref
 
@@ -171,7 +171,7 @@
 	//Lets check static vars now, since those can be a real headache
 	testbed.static_test = victim
 
-	//Yes we do actually need to do this. The searcher refuses to read weird lists
+	// Yes we do actually need to do this.. The searcher refuses to read weird lists
 	//And global.vars is a really weird list
 	var/global_vars = list()
 	for(var/key in global.vars)

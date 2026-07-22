@@ -13,7 +13,7 @@
 	unit_name = "messy paperwork pile"
 	export_types = list(/obj/item/paperwork/photocopy)
 	allow_negative_cost = TRUE
-	///Tracks the chance of losing money for trying to double-dip with photocopies. Resets every time it ruins an order.
+	/// Tracks the chance of losing money for trying to double-dip with photocopies.. Resets every time it ruins an order.
 	var/backfire_chance = 0
 	///Used to track if a batch of photocopy exports has backfired
 	var/backfired = FALSE

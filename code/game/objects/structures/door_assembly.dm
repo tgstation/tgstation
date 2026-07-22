@@ -13,13 +13,13 @@
 	var/created_name = null
 	var/mineral = null
 	var/obj/item/electronics/airlock/electronics = null
-	/// Do we perform the extra checks required for multi-tile (large) airlocks
+	/// Do we perform the extra checks needed for multi-tile (large) airlocks
 	var/multi_tile = FALSE
 	/// The type path of the airlock once completed (solid version)
 	var/airlock_type = /obj/machinery/door/airlock
 	/// The type path of the airlock once completed (glass version)
 	var/glass_type = /obj/machinery/door/airlock/glass
-	/// FALSE = glass can be installed. TRUE = glass is already installed.
+	/// FALSE = glass can be installed.. TRUE = glass is already installed.
 	var/glass = FALSE
 	/// Whether to heat-proof the finished airlock
 	var/heat_proof_finished = FALSE
@@ -175,7 +175,7 @@
 			sheet.use(2)
 			var/obj/structure/door_assembly/replacement_assembly = new mineralassembly(loc)
 
-			if(replacement_assembly.noglass && glass) //in case the new door doesn't support glass. prevents the new one from reverting to a normal airlock after being constructed.
+			if(replacement_assembly.noglass && glass) // in case the new door doesn't support glass.. prevents the new one from reverting to a normal airlock after being constructed.
 				var/obj/item/stack/sheet/dropped_glass
 				if(heat_proof_finished)
 					dropped_glass = new /obj/item/stack/sheet/rglass(drop_location())

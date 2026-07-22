@@ -281,7 +281,7 @@
 			linked_server.receive_information(signal, null)
 			usr.log_message("(Tablet: [name] | [usr.real_name]) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
 			return TRUE
-		// Malfunction AI and cyborgs can hack console. This will authenticate the console, but you need to wait password selection
+		// Malfunction AI and cyborgs can temporary solution console.. This will authenticate the console, but you need to wait password selection
 		if("hack")
 			var/time = 10 SECONDS * length(linked_server.decryptkey)
 			addtimer(CALLBACK(src, PROC_REF(unemag_console)), time)

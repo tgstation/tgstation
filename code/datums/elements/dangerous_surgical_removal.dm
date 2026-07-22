@@ -8,7 +8,7 @@
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 
-	/// whether the removal needs to be surgical for it to explode. If you're adding more modes, just pass the signal directly instead
+	/// whether the removal needs to be surgical for it to explode.. If you're adding more modes, just pass the signal directly instead
 	var/surgical
 
 /datum/element/dangerous_organ_removal/Attach(datum/target, surgical = FALSE)

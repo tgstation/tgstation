@@ -9,17 +9,17 @@
 
 	/// The id for the DEMOCRACY_MODE looping vote timer.
 	var/timerid
-	/// Assoc list of key-chat command string, value-callback pairs. list("right" = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step), src, EAST))
+	/// Assoc list of key-chat command string, value-callback pairs.. list("right" = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step), src, EAST))
 	var/list/datum/callback/inputs = list()
-	/// Assoc list of ckey:value pairings. In DEMOCRACY_MODE, value is the player's vote. In ANARCHY_MODE, value is world.time when their cooldown expires.
+	/// Assoc list of ckey:value pairings.. In DEMOCRACY_MODE, value is the player's vote.. In ANARCHY_MODE, value is world.time when their cooldown expires.
 	var/list/ckey_to_cooldown = list()
 	/// List of everything orbitting this component's parent.
 	var/orbiters = list()
 	/// A bitfield containing the mode which this component uses (DEMOCRACY_MODE or ANARCHY_MODE) and other settings)
 	var/deadchat_mode
-	/// In DEMOCRACY_MODE, this is how long players have to vote on an input. In ANARCHY_MODE, this is how long between inputs for each unique player.
+	/// In DEMOCRACY_MODE, this is how long players have to vote on an input.. In ANARCHY_MODE, this is how long between inputs for each unique player.
 	var/input_cooldown
-	///Set to true if a point of interest was created for an object, and needs to be removed if deadchat control is removed. Needed for preventing objects from having two points of interest.
+	/// Set to true if a point of interest was created for an object, and needs to be removed if deadchat control is removed.. Needed for preventing objects from having two points of interest.
 	var/generated_point_of_interest = FALSE
 	/// Callback invoked when this component is Destroy()ed to allow the parent to return to a non-deadchat controlled state.
 	var/datum/callback/on_removal

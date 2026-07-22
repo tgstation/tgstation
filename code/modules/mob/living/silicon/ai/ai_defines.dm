@@ -18,13 +18,13 @@
 
 
 	/* INITIALIZATION */
-	/// If FALSE, attempts to [obj/item/aicard][card] the AI will be rejected
+	/// If FALSE, tries to [obj/item/aicard][card] the AI will be rejected
 	var/can_be_carded = TRUE
 	/// If TRUE, the AI will explode when killed
 	var/explodes_on_death = FALSE
 	/// Whether its MMI is a posibrain or regular MMI, used when being [obj/structure/ai_core][deconstructed]
 	var/posibrain_inside = TRUE
-	/// Whether other AIs get a "new host" announcement text. Syndicate AIs get to be sneaky and won't send the message.
+	/// Whether other AIs get a "new host" announcement text.. Syndicate AIs get to be sneaky and won't send the message.
 	var/announce_init_to_others = TRUE
 
 
@@ -33,12 +33,12 @@
 	var/radio_enabled = TRUE
 	/// Whether its cover is opened, so you can wirecut it for deconstruction
 	var/opened = FALSE
-	/// If the AI is currently anchored to the ground, used for checks. Distinct from [atom/movable/anchored]
+	/// If the AI is currently anchored to the ground, used for checks.. Distinct from [atom/movable/anchored]
 	var/is_anchored = TRUE
 
 	/// Raw HTML containing the last page that was loaded from a held-up PDA
 	VAR_FINAL/last_tablet_note_seen = null
-	/// The last attempted VOX announcement. Exists so that failed VOXes can be retried easily
+	/// The last tried VOX announcement.. Exists so that failed VOXes can be retried easily
 	VAR_FINAL/last_announcement = ""
 	/// AI core icon_state selected by the AI through [verb/pick_icon]
 	var/display_icon_override
@@ -52,7 +52,7 @@
 	/* POWER */
 	/// Reserve emergency power, consumed when the AI has no [var/power_requirement][power source]
 	var/battery = 200
-	/// The conditions the AI will check to see if it's powered, can be set to NONE (0) to disable requirements
+	/// The conditions the AI will check to see if it's powered, can be set to NONE (0) to disable needs
 	var/power_requirement = POWER_REQ_ALL
 	/// Current stage of the AI's power restoration routine
 	VAR_FINAL/aiRestorePowerRoutine = POWER_RESTORATION_OFF
@@ -80,7 +80,7 @@
 	VAR_FINAL/list/mob/eye/camera/ai/all_eyes = list()
 	/// The internal tool used to track players visible through cameras
 	VAR_FINAL/datum/trackable/ai_tracking_tool
-	/// The current movement speed of the camera, it's definition being the base speed. Moves 1 more tile for every 10 sprint.
+	/// The current movement speed of the camera, it's definition being the base speed.. Moves 1 more tile for every 10 sprint.
 	var/sprint = 10
 	/// Time since the AI [proc/AIMove][last moved their camera eye], uses world.timeofday
 	VAR_FINAL/last_moved = 0
@@ -122,7 +122,7 @@
 	/* REMOTE CONTROL */
 	/// Equipment that the AI is controlling remotely, to determine whether to relaymove or use the AI eye
 	VAR_FINAL/obj/controlled_equipment
-	/// AI core that this AI is linked to. See [proc/create_core_link] [proc/resolve_core_link] [proc/break_core_link]
+	/// AI core that this AI is linked to.. See [proc/create_core_link] [proc/resolve_core_link] [proc/break_core_link]
 	VAR_FINAL/obj/structure/ai_core/linked_core
 	/// Robot that this AI is currently using
 	VAR_FINAL/mob/living/silicon/robot/deployed_shell

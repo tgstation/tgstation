@@ -176,7 +176,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	force = 4
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
-	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
+	volume = 3 // Tiny.. Real life equivalents only have 21 breaths of oxygen in them.. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/tank/internals/emergency_oxygen/populate_gas()

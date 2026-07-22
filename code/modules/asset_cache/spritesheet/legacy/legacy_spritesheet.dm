@@ -1,5 +1,5 @@
 
-// spritesheet implementation - coalesces various icons into a single .png file
+// spritesheet code - coalesces various icons into a single .png file
 // and uses CSS to select icons out of that file - saves on transferring some
 // 1400-odd individual PNG files
 #define SPR_SIZE 1
@@ -175,7 +175,7 @@
 			stack_trace("Failed to strip [png_name]: [error]")
 		size[SPRSZ_STRIPPED] = icon(file_directory)
 
-		// this is useful here for determining if weird sprite issues (like having a white background) are a cause of what we're doing DM-side or not since we can see the full flattened thing at-a-glance.
+		// this is useful here f. Determining if weird sprite issues (like having a white background) are a cause of what we're doing DM-side. Not since we can see the full flattened thing at-a-glance.
 		if(CONFIG_GET(flag/save_spritesheets))
 			save_to_logs(file_name = png_name, file_location = file_directory)
 
@@ -293,7 +293,7 @@
 	return mappings
 
 /// Override this in order to start the creation of the spritehseet.
-/// This is where all your Insert, InsertAll, etc calls should be inside.
+/// This is where all your Insert, InsertAll, and so on calls should be inside.
 /datum/asset/spritesheet/proc/create_spritesheets()
 	CRASH("create_spritesheets() not implemented for [type]!")
 
@@ -305,7 +305,7 @@
 
 /datum/asset/spritesheet/proc/queuedInsert(sprite_name, icon/inserted_icon, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
 #ifdef UNIT_TESTS
-	if (inserted_icon && icon_state && !icon_exists(inserted_icon, icon_state)) // check the base icon prior to extracting the state we want
+	if (inserted_icon && icon_state && !icon_exists(inserted_icon, icon_state)) // check the base icon before to extracting the state we want
 		stack_trace("Tried to insert nonexistent icon_state '[icon_state]' from [inserted_icon] into spritesheet [name] ([type])")
 		return
 #endif
@@ -315,7 +315,7 @@
 
 	var/start_usage = world.tick_usage
 
-	//any sprite modifications we want to do (aka, coloring a greyscaled asset)
+	// any sprite modifications we want to do also known as coloring a greyscaled asset)
 	inserted_icon = ModifyInserted(inserted_icon)
 	var/list/dimensions = get_icon_dimensions(inserted_icon)
 	var/size_id = "[dimensions["width"]]x[dimensions["height"]]"
@@ -327,11 +327,11 @@
 	if (size)
 		var/position = size[SPRSZ_COUNT]++
 		// Icons are essentially representations of files + modifications
-		// Because of this, byond keeps them in a cache. It does this in a really dumb way tho
-		// It's essentially a FIFO queue. So after we do icon() some amount of times, our old icons go out of cache
+		// Because of this, byond keeps them in a cache.. It does this in a really dumb way though
+		// It's essentially a FIFO queue.. So after we do icon() some amount of times, our old icons go out of cache
 		// When this happens it becomes impossible to modify them, trying to do so will instead throw a
 		// "bad icon" error.
-		// What we're doing here is ensuring our icon is in the cache by refreshing it, so we can modify it w/o runtimes.
+		// What we're doing here is ensuring our icon is in the cache by refreshing it, so we can modify it without runtimes.
 		var/icon/sheet = size[SPRSZ_ICON]
 		var/icon/sheet_copy = icon(sheet)
 		size[SPRSZ_STRIPPED] = null
@@ -405,7 +405,7 @@
 #undef SPRSZ_ICON
 #undef SPRSZ_STRIPPED
 
-/// Spritesheet that only uses simple PNGs and CSS keys. See `assets` variable.
+/// Spritesheet that only uses simple PNGs and CSS keys.. See `assets` variable.
 /// Deprecated: Use /datum/asset/spritesheet_batched where possible
 /datum/asset/spritesheet/simple
 	abstract_type = /datum/asset/spritesheet/simple

@@ -7,9 +7,9 @@
 #define FRIENDLY_SPAWN 2
 
 //slime core activation type
-/// Jelly species slime ability that causes simple effects that require energized jelly
+/// Jelly species slime ability that causes simple effects that need energized jelly
 #define SLIME_ACTIVATE_MINOR 1
-/// Jelly species slime ability that causes complex effects that require plasma jelly
+/// Jelly species slime ability that causes complex effects that need plasma jelly
 #define SLIME_ACTIVATE_MAJOR 2
 
 /// Determines how much light the jelly species emit

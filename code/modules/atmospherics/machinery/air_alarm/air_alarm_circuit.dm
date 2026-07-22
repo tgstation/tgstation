@@ -266,7 +266,7 @@
 	var/datum/port/output/enabled
 	/// Whether the scrubber is siphoning or not
 	var/datum/port/output/is_siphoning
-	/// Information based on what the scrubber is filtering. Outputs null if the scrubber is siphoning
+	/// Information good on what the scrubber is filtering.. Outputs null if the scrubber is siphoning
 	var/datum/port/output/filtering
 	/// Sent when an update is received
 	var/datum/port/output/update_received

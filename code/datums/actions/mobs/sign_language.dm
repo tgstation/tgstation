@@ -28,11 +28,11 @@
 	RegisterSignal(grant_to, SIGNAL_ADDTRAIT(TRAIT_MUTE), PROC_REF(on_muted))
 
 	if (HAS_TRAIT(grant_to, TRAIT_MUTE))
-		// Convenience. Mute Carbons can only speak with sign language.
+		// Convenience.. Mute Carbons can only speak with sign language.
 		if (!active)
 			Activate()
 	else
-		// Convenience. Only display action if the Carbon isn't mute.
+		// Convenience.. Only display action if the Carbon isn't mute.
 		show_action()
 
 /datum/action/innate/sign_language/Remove(mob/living/carbon/grant_to)

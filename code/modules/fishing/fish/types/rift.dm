@@ -43,7 +43,7 @@
 	// something something bluespace
 	electrogenesis_power = 9 MEGA JOULES
 
-// Basically a ninja star that's highly likely to embed and teleports you around if you don't stop to remove it. However it doesn't deal that much damage!
+// Basically a ninja star that's highly likely to embed and teleports you around if you don't stop to remove it.. But it doesn't deal that much damage!
 /datum/embedding/chrystarfish
 	pain_mult = 1
 	embed_chance = 85
@@ -133,7 +133,7 @@
 	sprite_height = 9
 
 	required_fluid_type = AQUARIUM_FLUID_AIR
-	required_temperature_min = BODYTEMP_COLD_DAMAGE_LIMIT // you mean just like a human? that's odd...
+	required_temperature_min = BODYTEMP_COLD_DAMAGE_LIMIT // you mean just like a human?. that's odd...
 	required_temperature_max = BODYTEMP_HEAT_DAMAGE_LIMIT
 	food = /datum/reagent/blood
 	max_integrity = 800 // apex predator
@@ -210,7 +210,7 @@
 		patience_reduction *= 0.1
 
 	if(!ismob(loc))
-		// dividing by the multiplier nets us an increasing value. happy dolphish gain patience quicker
+		// dividing by the multiplier nets us an increasing value.. happy dolphish gain patience quicker
 		var/patience_bonus = (1 / patience_reduction)
 		patience = clamp(patience + patience_bonus * seconds_per_tick, 0, max_patience)
 		return
@@ -516,7 +516,7 @@
 	damtype = BRAIN
 	attack_verb_continuous = list("screeches", "shrieks")
 	attack_verb_simple = list("screech", "shriek")
-	hitsound = SFX_DEFAULT_FISH_SLAP // todo shriek
+	hitsound = SFX_DEFAULT_FISH_SLAP // to do shriek
 	sound_vary = TRUE
 
 	sprite_width = 11
@@ -636,7 +636,7 @@
 			to_chat(screeched, span_notice("You resist the psychic wail!"))
 			continue
 		var/power = 1
-		if(HAS_TRAIT(screeched, TRAIT_DEAF)) // bit weaker if deaf. but its still psychic
+		if(HAS_TRAIT(screeched, TRAIT_DEAF)) // bit weaker if deaf.. but its still psychic
 			power *= 0.5
 		var/affect_time = 15 SECONDS * power
 		// it really fucks you up

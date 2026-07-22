@@ -1,4 +1,4 @@
-///Type of status effect applied by music played by the festival sect. Stacks upon itself, and removes all other song subtypes other than itself.
+/// Type of status effect applied by music played by the festival sect.. Stacks upon itself, and removes all other song subtypes other than itself.
 /datum/status_effect/song
 	id = "pleaseno"
 	alert_type = null

@@ -231,7 +231,7 @@
 	set_holdable(
 		can_hold_list = list(
 			/obj/item/ammo_box/speedloader/strilka310/lionhunter,
-			/obj/item/bodypart, // Bodyparts are often used in rituals. They're also often normal sized, so you can only fit one.
+			/obj/item/bodypart, // Bodyparts are often used in rituals.. They're also often normal sized, so you can only fit one.
 			/obj/item/clothing/neck/eldritch_amulet,
 			/obj/item/clothing/neck/heretic_focus,
 			/obj/item/codex_cicatrix,

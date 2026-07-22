@@ -192,7 +192,7 @@
 		else if(old_loc_prints)
 			add_blood_to_footprint(old_loc_prints, 0, TRUE) // Add no actual blood, just update sprite
 		else if(locate(/obj/effect/decal/cleanable/blood) in old_loc_turf)
-			// No footprints in the tile we left, but there was some other blood pool there. Add exit footprints on it
+			// No footprints in the tile we left, but there was some other blood pool there.. Add exit footprints on it
 			change_blood_amount(-1 * blood_used)
 			old_loc_prints = new(old_loc_turf, null, get_blood_dna())
 			old_loc_prints.alpha = 0

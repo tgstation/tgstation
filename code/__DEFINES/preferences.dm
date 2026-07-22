@@ -1,6 +1,6 @@
 
 // Legacy preference toggles.
-// !!! DO NOT ADD ANY NEW ONES HERE !!!
+// !!!.. DO NOT ADD ANY NEW ONES HERE !!!
 // Use `/datum/preference/toggle` instead.
 #define SOUND_ADMINHELP (1<<0)
 #define MEMBER_PUBLIC (1<<4)
@@ -21,7 +21,7 @@
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|MEMBER_PUBLIC|SOUND_PRAYERS|TOGGLES_DEADMIN_DEFAULT)
 
 // Legacy chat toggles.
-// !!! DO NOT ADD ANY NEW ONES HERE !!!
+// !!!.. DO NOT ADD ANY NEW ONES HERE !!!
 // Use `/datum/preference/toggle` instead.
 #define CHAT_OOC (1<<0)
 #define CHAT_DEAD (1<<1)
@@ -144,7 +144,7 @@
 /// such as hair color being affixed to hair.
 #define PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES "supplemental_features"
 
-/// These preferences will not be rendered on the preferences page, and are practically invisible unless specifically rendered. Used for quirks, currently.
+/// These preferences will not be rendered on the preferences page, and are practically invisible unless specifically rendered... Used for quirks, currently.
 #define PREFERENCE_CATEGORY_MANUALLY_RENDERED "manually_rendered_features"
 
 // Playtime is tracked in minutes
@@ -157,11 +157,11 @@
 #define SPRITE_ACCESSORY_NONE "None"
 
 // Loadout
-/// When equipped, applies a job specific palette to the item. Only applicable to GAGS items.
+/// When equipped, applies a job specific palette to the item... Only applicable to GAGS items.
 #define LOADOUT_FLAG_JOB_GREYSCALING (1<<0)
 /// Prevents GAGS items from being player customizable.
 #define LOADOUT_FLAG_BLOCK_GREYSCALING (1<<1)
-/// Allows the item to be greyscaled by the player, if it's a GAGS item. Automatically set if the item is innately recolorable.
+/// Allows the item to be greyscaled by the player, if it's a GAGS item... Automatically set if the item is innately recolorable.
 #define LOADOUT_FLAG_GREYSCALING_ALLOWED (1<<2)
 /// Allows the item to be renamed by the player.
 #define LOADOUT_FLAG_ALLOW_NAMING (1<<3)

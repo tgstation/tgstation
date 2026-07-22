@@ -78,7 +78,7 @@
 /datum/unit_test/quirk_validity
 
 /datum/unit_test/quirk_validity/Run()
-	// Required for language quirks to function properly
+	// Needed for language quirks to function properly
 	// Assigning this manually as config is empty
 	GLOB.uncommon_roundstart_languages = list(/datum/language/uncommon)
 

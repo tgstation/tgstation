@@ -14,7 +14,7 @@
 		target_zones = list(BODY_ZONE_PRECISE_EYES), \
 		slots_knockoffable = glasses.slot_flags)
 
-	// Save this for later, since we wanna reset our dummy positions even after they're shoved about.
+	// Save this for later, since we want to reset our dummy positions even after they're shoved about.
 	var/turf/right_of_shover = locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z)
 
 	// Position shover (bottom left) and the shovee (1 tile right of bottom left, no wall behind them)

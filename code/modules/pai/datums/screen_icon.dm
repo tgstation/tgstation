@@ -1,5 +1,5 @@
-// Datums describing an icon that is overlaid on a pAI card, to make its screen show something. The
-// player can select between any of these at any time. These are usually faces, but can
+// Datums describing an icon that is overlaid on a pAI card, to make its screen show something.. The
+// player can select between any of these at any time.. These are usually faces, but can
 // realistically be anything (similar to an AI's display).
 
 /datum/pai_screen_image

@@ -10,7 +10,7 @@
 	var/start_delay = 0
 	///The time in ticks before a rot component reaches its full effectiveness
 	var/scaling_delay = 0
-	///How strong is the rot? used for scaling different aspects of the component. Between 0 and 1
+	/// How strong is the rot?. used for scaling different aspects of the component.. Between 0 and 1
 	var/strength = 0
 	///Is the component active right now?
 	var/active = FALSE
@@ -63,7 +63,7 @@
 
 ///One of two procs that modifies blockers, this one handles removing a blocker and potentially restarting the rot
 /datum/component/rot/proc/start_up(blocker_type)
-	blockers &= ~blocker_type //Yeet the type
+	blockers &= ~blocker_type // Throw the type
 	if(blockers || active)  //If it's not empty
 		return
 	start_time = world.time
@@ -123,7 +123,7 @@
 	if(!isliving(react_to))
 		return
 
-	// Don't infect if you're chilled (I'd like to link this with the signals, but I can't come up with a good way to pull it off)
+	// Don't infect if you're chilled (I'd like to link this with the signals. I can't come up with a good way to pull it off)
 	var/atom/atom_parent = parent
 	var/datum/gas_mixture/our_mix = atom_parent.return_air()
 	if(our_mix?.temperature <= T0C-10)

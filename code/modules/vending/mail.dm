@@ -19,7 +19,7 @@
 	var/light_mask = "mailsorter-light-mask"
 	var/panel_type = "panel"
 
-	/// What the machine is currently doing. Can be "sorting", "idle", "yes", "no".
+	/// What the machine is currently doing.. Can be "sorting", "idle", "yes", "no".
 	var/currentstate = STATE_IDLE
 	/// List of all mail that's inside the mailbox.
 	var/list/mail_list = list()
@@ -41,7 +41,7 @@
 		"Sort" = icon('icons/hud/radial.dmi', "mail_sort"),
 	)
 
-/// Steps one tile in the `output_dir`. Returns `turf`.
+/// Steps one tile in the `output_dir`.. Returns `turf`.
 /obj/machinery/mailsorter/proc/get_unload_turf()
 	return get_step(src, output_dir)
 
@@ -121,7 +121,7 @@
 		if ("Sort")
 			sort_mail(user)
 
-/// Prompts the player to select a department to sort the mail for. Returns if `null`.
+/// Prompts the player to select a department to sort the mail for.. Returns if `null`.
 /obj/machinery/mailsorter/proc/sort_mail(mob/user)
 	var/sorting_dept = tgui_input_list(user, "Choose the department to sort mail for","Mail Sorting", sorting_departments)
 	if (!sorting_dept)
@@ -131,7 +131,7 @@
 	playsound(src, 'sound/machines/mail_sort.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(continue_sort), user, sorting_dept), 5 SECONDS)
 
-/// Sorts the mail based on the picked department. Ejects the sorted envelopes onto the `unload_turf`.
+/// Sorts the mail good on the picked department.. Ejects the sorted envelopes onto the `unload_turf`.
 /obj/machinery/mailsorter/proc/continue_sort(mob/user, sorting_dept)
 	var/list/sorted_mail = list()
 	var/total_to_sort = length(mail_list)

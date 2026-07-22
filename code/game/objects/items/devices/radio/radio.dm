@@ -24,7 +24,7 @@
 
 	///if FALSE, broadcasting and listening don't matter and this radio shouldn't do anything
 	VAR_PRIVATE/on = TRUE
-	///the "default" radio frequency this radio is set to, listens and transmits to this frequency by default. wont work if the channel is encrypted
+	/// the "default" radio frequency this radio is set to, listens and transmits to this frequency by default.. wont work if the channel is encrypted
 	VAR_PRIVATE/frequency = FREQ_COMMON
 
 	/// Whether the radio will transmit dialogue it hears nearby into its radio channel.
@@ -33,12 +33,12 @@
 	VAR_PRIVATE/listening = TRUE
 
 	//the below three vars are used to track listening and broadcasting should they be forced off for whatever reason but "supposed" to be active
-	//eg player sets the radio to listening, but an emp or whatever turns it off, its still supposed to be activated but was forced off,
+	// f. Example player sets the radio to listening. An emp. Whatever turns it off, its still supposed to be activated. Was forced off,
 	//when it wears off it sets listening to should_be_listening
 
-	///used for tracking what broadcasting should be in the absence of things forcing it off, eg its set to broadcast but gets emp'd temporarily
+	/// used for tracking what broadcasting should be in the absence of things forcing it off, for example its set to broadcast but gets emp'd temporarily
 	var/should_be_broadcasting = FALSE
-	///used for tracking what listening should be in the absence of things forcing it off, eg its set to listen but gets emp'd temporarily
+	/// used for tracking what listening should be in the absence of things forcing it off, for example its set to listen but gets emp'd temporarily
 	var/should_be_listening = TRUE
 
 	/// Both the range around the radio in which mobs can hear what it receives and the range the radio can hear
@@ -46,7 +46,7 @@
 	/// Tracks the number of EMPs currently stacked.
 	var/emped = 0
 
-	/// Whether wires are accessible. Toggleable by screwdrivering.
+	/// Whether wires are accessible.. Toggleable by screwdrivering.
 	var/unscrewed = FALSE
 	/// If true, the radio has access to the full spectrum.
 	var/freerange = FALSE
@@ -204,22 +204,22 @@
 	else
 		..()
 
-//simple getters only because i NEED to enforce complex setter use for these vars for caching purposes but VAR_PROTECTED requires getter usage as well.
-//if another decorator is made that doesn't require getters feel free to nuke these and change these vars over to that
+// simple getters only because i NEED to enforce complex setter use for these vars for caching purposes but VAR_PROTECTED needs getter usage as well.
+// if another decorator is made that doesn't need getters feel free to nuke these and change these vars over to that
 
-///simple getter for the on variable. necessary due to VAR_PROTECTED
+/// simple getter for the on variable.. necessary due to VAR_PROTECTED
 /obj/item/radio/proc/is_on()
 	return on
 
-///simple getter for the frequency variable. necessary due to VAR_PROTECTED
+/// simple getter for the frequency variable.. necessary due to VAR_PROTECTED
 /obj/item/radio/proc/get_frequency()
 	return frequency
 
-///simple getter for the broadcasting variable. necessary due to VAR_PROTECTED
+/// simple getter for the broadcasting variable.. necessary due to VAR_PROTECTED
 /obj/item/radio/proc/get_broadcasting()
 	return broadcasting
 
-///simple getter for the listening variable. necessary due to VAR_PROTECTED
+/// simple getter for the listening variable.. necessary due to VAR_PROTECTED
 /obj/item/radio/proc/get_listening()
 	return listening
 
@@ -377,7 +377,7 @@
 			radio_noise.frequency = get_rand_frequency_low_range()
 			SEND_SOUND(talking_living, radio_noise)
 
-	// All radios make an attempt to use the subspace system first
+	// All radios make an try to use the subspace system first
 	signal.send_to_receivers()
 
 	// If the radio is subspace-only, that's all it can do
@@ -617,7 +617,7 @@
 		if(!QDELING(src))
 			recalculateChannels()
 
-/// Attempts to put all keys in the radio into the user's hands
+/// Tries to put all keys in the radio into the user's hands
 /// Returns a list of the removed keys
 /obj/item/radio/proc/remove_keys(mob/living/user)
 	. = list()
@@ -627,7 +627,7 @@
 	. += keyslot
 	user.put_in_hands(keyslot) // null via Exited
 
-/// Attempts to install the given encryption key into the radio
+/// Tries to install the given encryption key into the radio
 /obj/item/radio/proc/install_key(mob/living/user, obj/item/encryptionkey/key)
 	if(keyslot)
 		loc.balloon_alert(user, "cannot hold a second key!")

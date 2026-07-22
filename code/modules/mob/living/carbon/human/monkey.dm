@@ -25,7 +25,7 @@
 /mob/living/carbon/human/species/monkey/angry/proc/give_ape_escape_helmet()
 	var/obj/item/clothing/head/helmet/toggleable/justice/escape/helmet = new(src)
 	equip_to_slot_or_del(helmet, ITEM_SLOT_HEAD)
-	helmet.attack_self(src) // todo encapsulate toggle
+	helmet.attack_self(src) // to do encapsulate toggle
 
 GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/punpun)
 
@@ -45,7 +45,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 /mob/living/carbon/human/species/monkey/punpun/Initialize(mapload)
 	. = ..()
 
-	REGISTER_REQUIRED_MAP_ITEM(1, 1) // pun pun is required on maps.
+	REGISTER_REQUIRED_MAP_ITEM(1, 1) // pun pun is needed on maps.
 	if(mapload && (locate(/datum/station_trait/job/pun_pun) in SSstation.station_traits))
 		new /obj/effect/landmark/start/pun_pun(loc) //Pun Pun is a crewmember, and may late-join.
 		return INITIALIZE_HINT_QDEL
@@ -121,7 +121,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 	WRITE_FILE(json_file, json_encode(file_data))
 
 
-/// Gives pun pun a special name based on various factors such as their past
+/// Gives pun pun a special name good on various factors such as their past
 /mob/living/carbon/human/species/monkey/punpun/proc/give_special_name()
 	var/name_to_use = initial(name)
 
@@ -140,7 +140,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 
 	fully_replace_character_name(real_name, name_to_use)
 
-/// Gives pun pun scars based on how many times he's died in the past
+/// Gives pun pun scars good on how many times he's died in the past
 /mob/living/carbon/human/species/monkey/punpun/proc/give_scars()
 	if(ancestor_chain > 1)
 		generate_fake_scars(rand(ancestor_chain, ancestor_chain * 4))

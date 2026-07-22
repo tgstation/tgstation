@@ -13,7 +13,7 @@
 #define NUKESTATE_CORE_REMOVED 0
 
 // Nuclear bomb UI modes
-///Device is locked and is awaiting the disk for further operations (additionally shows time left if armed)
+/// Device is locked and is awaiting the disk for further operations also shows time left if armed)
 #define NUKEUI_AWAIT_DISK 0
 ///Device is awaiting activation codes input
 #define NUKEUI_AWAIT_CODE 1
@@ -23,7 +23,7 @@
 #define NUKEUI_AWAIT_ARM 3
 ///Device is counting down to setting off the charge
 #define NUKEUI_TIMING 4
-///Device is setting off the charge, aka `proc/actually_explode()`
+/// Device is setting off the charge, also known as `proc/actually_explode()`
 #define NUKEUI_EXPLODED 5
 
 // Nuclear bomb states
@@ -33,7 +33,7 @@
 #define NUKE_OFF_UNLOCKED 1
 ///Device is counting down to setting off the charge, red lights are on
 #define NUKE_ON_TIMING 2
-///Device is setting off the charge, aka `proc/actually_explode()`, red lights are blinking fast
+/// Device is setting off the charge, also known as `proc/actually_explode()`, red lights are blinking fast
 #define NUKE_ON_EXPLODING 3
 
 // Nuclear bomb detonation statuses

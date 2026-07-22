@@ -128,8 +128,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
 // Items usable on a pipe_cleaner :
-//   - Wirecutters : cut it duh !
-//   - pipe cleaner coil : merge pipe cleaners
+// - Wirecutters : cut it duh !
+// - pipe cleaner coil : merge pipe cleaners
 //
 /obj/structure/pipe_cleaner/proc/handlecable(obj/item/tool, mob/user, params)
 	add_fingerprint(user)
@@ -325,7 +325,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		return
 
 	var/dirn
-	if(!dirnew) //If we weren't given a direction, come up with one! (Called as null from catwalk.dm and floor.dm)
+	if(!dirnew) // If we weren't given a direction, come up with one!. (Called as null from catwalk.dm and floor.dm)
 		if(user.loc == T)
 			dirn = user.dir //If laying on the tile we're on, lay in the direction we're facing
 		else

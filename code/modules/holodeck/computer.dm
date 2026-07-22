@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	icon_screen = "holocontrol"
 
 	//new vars
-	///what area type this holodeck loads into. linked turns into the nearest instance of this area
+	/// what area type this holodeck loads into.. linked turns into the nearest instance of this area
 	var/area/mapped_start_area = /area/station/holodeck/rec_center
 
 	///the currently used map template
@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	//creates the timer that determines if another program can be manually loaded
 	COOLDOWN_DECLARE(holodeck_cooldown)
 
-/obj/machinery/computer/holodeck/post_machine_initialize() //from here linked is populated and the program list is generated. its also set to load the offline program
+/obj/machinery/computer/holodeck/post_machine_initialize() // from here linked is populated and the program list is generated.. its also set to load the offline program
 	. = ..()
 	linked = GLOB.areas_by_type[mapped_start_area]
 	if(!linked)
@@ -236,7 +236,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	nerf(!(obj_flags & EMAGGED))
 	finish_spawn()
 
-///To be used on destroy, mainly to prevent sleeping inside well, destroy. Missing a lot of the things contained in load_program
+/// To be used on destroy, mainly to prevent sleeping inside well, destroy.. Missing a lot of the things contained in load_program
 /obj/machinery/computer/holodeck/proc/reset_to_default()
 	if (program == offline_program)
 		return
@@ -258,7 +258,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		effects -= holo_effect
 		holo_effect.deactivate(src)
 
-	//makes sure that any time a holoturf is inside a baseturf list (e.g. if someone put a wall over it) its set to the OFFLINE turf
+	// makes sure that any time a holoturf is inside a baseturf list (e.g.. if someone put a wall over it) its set to the OFFLINE turf
 	//so that you cant bring turfs from previous programs into other ones (like putting the plasma burn turf into lounge for example)
 	for(var/turf/closed/holo_turf in linked)
 		holo_turf.replace_baseturf(/turf/open/floor/holofloor, /turf/open/floor/holofloor/plating)
@@ -346,7 +346,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 	if(istype(holo_atom, /obj/item/organ))
 		var/obj/item/organ/holo_organ = holo_atom
-		if(holo_organ.owner) // a mob has the holo organ inside them... oh dear
+		if(holo_organ.owner) // a mob has the holo organ inside them.... oh dear
 			to_chat(holo_organ.owner, span_warning("\The [holo_organ] inside of you fades away!"))
 	if(!silent)
 		visible_message(span_notice("[holo_atom] fades away!"))
@@ -441,7 +441,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	playsound(src, SFX_SPARKS, 75, TRUE)
 	obj_flags |= EMAGGED
 	if (user)
-		balloon_alert(user, "safety protocols destroyed") // im gonna keep this once since this perfectly describes it
+		balloon_alert(user, "safety protocols destroyed") // im going to keep this once since this perfectly describes it
 		to_chat(user, span_warning("You override the safety and security protocols."))
 		user.log_message("emagged the Holodeck Control Console.", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(user)] emagged the Holodeck Control Console.")

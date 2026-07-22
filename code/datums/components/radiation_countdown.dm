@@ -9,7 +9,7 @@
 	var/time_added
 
 	/// The shortest minimum time before being irradiated.
-	/// If the source has an attempted irradiation again outside this timeframe, it will go through.
+	/// If the source has an tried irradiation again outside this timeframe, it will go through.
 	var/minimum_exposure_time
 
 /datum/component/radiation_countdown/Initialize(minimum_exposure_time)

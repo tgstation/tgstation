@@ -35,7 +35,7 @@
 
 	// saving hearing_args directly via handle_speech_result = speech_args won't work since the arg list
 	// is a temporary variable that gets garbage collected after it's done being used by procs
-	// therefore we need to create a new list and transfer the args
+	// so we need to create a new list and transfer the args
 	handle_speech_result = list()
 	handle_speech_result += speech_args
 
@@ -96,7 +96,7 @@
 	host_mob.grant_language(/datum/language/beachbum, ALL) // can now understand
 	TEST_ASSERT_EQUAL(surfer_quote, host_mob.translate_language(host_mob, /datum/language/beachbum, surfer_quote), "Language test failed. Mob was supposed NOT to understand: [surfer_quote]")
 
-/// This runs some simple speech tests on a speaker and listener and determines if a person can hear whispering or speaking as they are moved a distance away
+/// This runs some simple speech tests on a speaker. Listener. Determines if a person can hear whispering. Speaking as they are moved a distance away
 /datum/unit_test/speech
 	var/mob/living/carbon/human/speaker
 	var/mob/living/carbon/human/listener
@@ -118,7 +118,7 @@
 
 	// saving speech_args directly via handle_speech_result = speech_args won't work since the arg list
 	// is a temporary variable that gets garbage collected after it's done being used by procs
-	// therefore we need to create a new list and transfer the args
+	// so we need to create a new list and transfer the args
 	handle_speech_result = list()
 	handle_speech_result += speech_args
 
@@ -128,14 +128,14 @@
 	TEST_ASSERT(hearing_args[HEARING_SPEAKER], "Handle hearing signal does not have a speaker arg")
 	TEST_ASSERT(hearing_args[HEARING_LANGUAGE], "Handle hearing signal does not have a language arg")
 	TEST_ASSERT(hearing_args[HEARING_RAW_MESSAGE], "Handle hearing signal does not have a raw message arg")
-	// TODO radio unit tests
+	// To do radio unit tests
 	//TEST_ASSERT(hearing_args[HEARING_RADIO_FREQ], "Handle hearing signal does not have a radio freq arg")
 	TEST_ASSERT(hearing_args[HEARING_SPANS], "Handle hearing signal does not have a spans arg")
 	TEST_ASSERT(hearing_args[HEARING_MESSAGE_MODE], "Handle hearing signal does not have a message mode arg")
 
 	// saving hearing_args directly via handle_hearing_result = hearing_args won't work since the arg list
 	// is a temporary variable that gets garbage collected after it's done being used by procs
-	// therefore we need to create a new list and transfer the args
+	// so we need to create a new list and transfer the args
 	handle_hearing_result = list()
 	handle_hearing_result += hearing_args
 
@@ -159,7 +159,7 @@
 	speaker_radio.name = "SPEAKER RADIO"
 	listener_radio = allocate(/obj/item/radio)
 	listener_radio.name = "LISTENER RADIO"
-	// Hear() requires a client otherwise it will early return
+	// Hear() needs a client otherwise it will early return
 	var/datum/client_interface/mock_client = new()
 	listener.mock_client = mock_client
 
@@ -232,7 +232,7 @@
 	speaker_radio.set_broadcasting(TRUE)
 	listener_radio.forceMove(locate((run_loc_floor_bottom_left.x + 10), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	// Normally speaking, if there isn't a functional telecomms array on the same z-level, then handheld radios
-	// have a short delay before sending the message. We use the centcom frequency to get around this.
+	// have a short delay before sending the message.. We use the centcom frequency to get around this.
 	speaker_radio.set_frequency(FREQ_CENTCOM)
 	speaker_radio.special_channels = RADIO_SPECIAL_CENTCOM
 	listener_radio.set_frequency(FREQ_CENTCOM)

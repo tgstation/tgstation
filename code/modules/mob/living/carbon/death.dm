@@ -89,13 +89,13 @@
 		// any organs that weren't throw out already about need to follow the bodypart out
 		for(var/obj/item/organ/leftover as anything in leftover_organs)
 			// depending on whether gibbed flag was set changes how the organs are removed,
-			// so just let's be... very careful here and double check everything
+			// so just let's be.... very careful here and double check everything
 			if(leftover.owner == src)
 				leftover.Remove(src, gibbed)
 			if(leftover.loc != part)
 				leftover.bodypart_insert(part)
 
-/mob/living/carbon/set_suicide(suicide_state) //you thought that box trick was pretty clever, didn't you? well now hardmode is on, boyo.
+/mob/living/carbon/set_suicide(suicide_state) // you thought that box trick was pretty clever, didn't you?. well now hardmode is on, boyo.
 	. = ..()
 	var/obj/item/organ/brain/userbrain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(userbrain)
@@ -104,7 +104,7 @@
 /mob/living/carbon/can_suicide()
 	if(!..())
 		return FALSE
-	if(!(mobility_flags & MOBILITY_USE)) //just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
+	if(!(mobility_flags & MOBILITY_USE)) // just while I finish up the new 'fun' suiciding verb.. This is to prevent metagaming via suicide
 		to_chat(src, span_warning("You can't commit suicide whilst immobile! (You can type Ghost instead however)."))
 		return FALSE
 	return TRUE

@@ -21,7 +21,7 @@
 	var/mob/boy_girl = arguments[ARG_PRAYING_MOB]
 	var/regex/santa_regex = regex("(santa|claus|christmas|xmas)", "i")
 	if(!santa_regex.Find(message) && (!prob(60) || !findtext(message, "satan")))
-		return FALSE //The message doesn't mention us (or satan, cuz the names are so similar, accidents may happen)
+		return FALSE // The message doesn't mention us (or satan, because the names are so similar, accidents may happen)
 	var/is_good_boy_girl = !boy_girl.is_antag() && !HAS_TRAIT(boy_girl, TRAIT_EVIL)
 	arguments[ARG_PRAYER_TYPE] = is_good_boy_girl ? SANTA_PRAYER : SANTA_NAUGHTY_PRAYER
 	arguments[ARG_PRAYER_SYMBOL] = icon('icons/obj/storage/wrapping.dmi', "giftdeliverypackage4")

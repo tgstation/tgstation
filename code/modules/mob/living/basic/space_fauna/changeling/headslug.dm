@@ -52,7 +52,7 @@
 	if (egg_lain)
 		. += span_notice("Its reproductive equipment appears to have withered.")
 
-/// Signal Handler proc that runs on every attack and checks to see if this is a valid target for implantation. If so, it implants the egg and starts the countdown to death.
+/// Signal Handler proc that runs on every attack and checks to see if this is a valid target for implantation.. If so, it implants the egg and starts the countdown to death.
 /mob/living/basic/headslug/proc/check_and_implant(mob/living/basic/attacker, atom/target)
 	SIGNAL_HANDLER
 
@@ -75,8 +75,8 @@
 	to_chat(src, span_userdanger("With our egg laid, our death approaches rapidly..."))
 	addtimer(CALLBACK(src, PROC_REF(death)), 10 SECONDS)
 
-/// Simply infects the target corpse with our changeling eggs. This shouldn't fail, because all checks should have been done in check_and_implant()
-/// Just to be super-duper safe to the player, we do return TRUE if all goes well and read that value in check_and_implant() to be nice to the player.
+/// Simply infects the target corpse with our changeling eggs.. This shouldn't fail, because all checks should have been done in check_and_implant()
+/// Just to be super-duper safe to the player, we do return TRUE if all goes well. Read that value in check_and_implant() to be nice to the player.
 /mob/living/basic/headslug/proc/infect(mob/living/carbon/victim)
 	var/obj/item/organ/body_egg/changeling_egg/egg = new(victim)
 
@@ -92,8 +92,8 @@
 
 	return TRUE
 
-/// This is a bit neutered since these aren't intended to exist outside of player control, but it's a bit weird to just have these guys be completely stationary.
-/// No attacking or anything like that, though. Just something so they seem alive.
+/// This is a bit neutered since these aren't intended to exist outside of player control. It's a bit weird to just have these guys be completely stationary.
+/// No attacking or anything like that, though.. Just something so they seem alive.
 /datum/ai_controller/basic_controller/headslug
 	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/changeling/headslug.bt.json"
 	ai_movement = /datum/ai_movement/basic_avoidance

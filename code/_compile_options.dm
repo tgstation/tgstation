@@ -17,11 +17,11 @@
 #define DATUMVAR_DEBUGGING_MODE
 
 /// Enables update_appearance "relevence" tracking
-/// This allows us to check which update_appearance procs are actually doing anything. Good thing to look in on once a year or so
+/// This allows us to check which update_appearance procs are actually doing anything.. Good thing to look in on once a year or so
 /// You'll need to run a two regexes/search and replaces to make it work
 /// First, one to convert type refs (PROC_REF.*)(update_appearance\)) -> $1_$2
 /// Second, one to convert definitions /update_appearance\( -> /_update_appearance(
-/// We'll use another define to convert uses of the proc over. That'll be all
+/// We'll use another define to convert uses of the proc over.. That'll be all
 // #define APPEARANCE_SUCCESS_TRACKING
 
 ///Used to find the sources of harddels, quite laggy, don't be surprised if it freezes your client for a good while
@@ -29,11 +29,11 @@
 #ifdef REFERENCE_TRACKING
 
 ///Used for doing dry runs of the reference finder, to test for feature completeness
-///Slightly slower, higher in memory. Just not optimal
+/// Slightly slower, higher in memory.. Just not optimal
 //#define REFERENCE_TRACKING_DEBUG
 
 ///Skips over a bunch of types that are "unlikely" to have any hanging refs,
-///MASSIVELY speeding up finding references. Relatively speaking. The reftracker is still not very fast.
+/// MASSIVELY speeding up finding references.. Relatively speaking.. The reftracker is still not very fast.
 //#define FAST_REFERENCE_TRACKING
 
 ///Run a lookup on things hard deleting by default.
@@ -94,9 +94,9 @@
 // If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
 //#define UNIT_TESTS
 
-// If this is uncommented, will attempt to load and initialize prof.dll/libprof.so by default.
+// If this is uncommented, will try to load and initialize prof.dll/libprof.so by default.
 // Even if it's not defined, you can pass "tracy" via -params in order to try to load it.
-// We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy,
+// We do not ship byond-tracy.. Build it yourself here: https://github.com/mafemergency/byond-tracy,
 // or the fork which writes profiling data to a file: https://github.com/ParadiseSS13/byond-tracy
 // #define USE_BYOND_TRACY
 
@@ -216,6 +216,6 @@
 #endif
 
 /// Disable to use builtin DM-based generation.
-/// IconForge is 250x times faster but requires storing the icons in tmp/ and may result in higher asset transport.
+/// IconForge is 250x times faster but needs storing the icons in tmp/ and may result in higher asset transport.
 /// Note that the builtin GAGS editor still uses the 'legacy' generation to allow for debugging.
 #define USE_RUSTG_ICONFORGE_GAGS

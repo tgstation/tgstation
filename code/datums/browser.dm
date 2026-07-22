@@ -253,7 +253,7 @@
 		var/focused_window = winget(user, null, "focus")
 		. = ..()
 
-		//waits for the window to show up client side before attempting to un-focus it
+		// waits for the window to show up client side before trying to un-focus it
 		//winexists sleeps until it gets a reply from the client, so we don't need to bother sleeping
 		for (var/i in 1 to 10)
 			if (user && winexists(user, window_id))
@@ -339,7 +339,7 @@
 	var/list/picker_list = list()
 	for (var/bit_name in bitflags)
 		var/bit_value = bitflags[bit_name]
-		// Gotta make it TRUE/FALSE sorry brother
+		// Got to make it TRUE/FALSE sorry brother
 		var/can_edit = !!(allowed_edit_field & bit_value)
 		var/enabled = !!(current_value & bit_value)
 		picker_list += list(list("checked" = enabled, "value" = bit_value, "name" = bit_name, "allowed_edit" = can_edit))
@@ -461,10 +461,10 @@
 /// this will be called when the close-button of a window is pressed.
 ///
 /// This is usually only needed for devices that regularly update the browse window,
-/// e.g. canisters, timers, etc.
+/// e.g.. canisters, timers, and so on
 ///
 /// windowid should be the specified window name
-/// e.g. code is : user << browse(text, "window=fred")
+/// e.g.. code is : user << browse(text, "window=fred")
 /// then use : onclose(user, "fred")
 ///
 /// Optionally, specify the "source" parameter as the controlled atom (usually src)

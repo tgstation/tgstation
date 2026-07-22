@@ -5,7 +5,7 @@
 	var/climb_time
 	///Stun duration for when you get onto the object
 	var/climb_stun
-	///Assoc list of object being climbed on - climbers.  This allows us to check who needs to be shoved off a climbable object when its clicked on.
+	/// Assoc list of object being climbed on - climbers.. This allows us to check who needs to be shoved off a climbable object when its clicked on.
 	var/list/current_climbers
 
 /datum/element/climbable/Attach(
@@ -70,7 +70,7 @@
 	var/adjusted_climb_stun = climb_stun
 	// Our climbers fitness level, which removes some climb time and speeds up our climbing do_after, assuming they worked out
 	var/fitness_level = user.mind?.get_skill_level(/datum/skill/athletics) - 1
-	adjusted_climb_time = clamp(adjusted_climb_time - fitness_level, 1, climb_time) //Here we adjust the number of deciseconds we shave off per level of fitness, with a minimum of 1 decisecond and a maximum of climb_time (just in case)
+	adjusted_climb_time = clamp(adjusted_climb_time - fitness_level, 1, climb_time) // Here we adjust the number of deciseconds we shave off per level of fitness, with a minimum of 1 decisecond. A maximum of climb_time (just in case)
 
 	var/obj/item/organ/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
@@ -84,7 +84,7 @@
 	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
 		adjusted_climb_time *= 0.8
 		adjusted_climb_stun *= 0.8
-	if(HAS_TRAIT(user, TRAIT_STUBBY_BODY)) //hold on, gimme a moment, my tiny legs can't get over the goshdamn table
+	if(HAS_TRAIT(user, TRAIT_STUBBY_BODY)) // hold on, give me a moment, my tiny legs can't get over the goshdamn table
 		adjusted_climb_time *= 1.5
 		adjusted_climb_stun *= 1.5
 	LAZYADDASSOCLIST(current_climbers, climbed_thing, user)
@@ -101,7 +101,7 @@
 			if(istype(buckle_target))
 				if(buckle_target.is_buckle_possible(user))
 					buckle_target.buckle_mob(user)
-			user.mind?.adjust_experience(/datum/skill/athletics, round(ATHLETICS_SKILL_MISC_EXP/(fitness_level || 1), 1)) //Get a bit fitter with every climb. But it has diminishing returns at a certain point.
+			user.mind?.adjust_experience(/datum/skill/athletics, round(ATHLETICS_SKILL_MISC_EXP/(fitness_level || 1), 1)) // Get a bit fitter with every climb.. But it has diminishing returns at a certain point.
 		else
 			to_chat(user, span_warning("You fail to climb onto [climbed_thing]."))
 	LAZYREMOVEASSOC(current_climbers, climbed_thing, user)
@@ -114,11 +114,11 @@
 	var/dir_step = get_dir(user, climbed_thing.loc)
 	var/same_loc = climbed_thing.loc == user.loc
 	// on-border objects can be vaulted over and into the next turf.
-	// The reverse dir check is for when normal behavior should apply instead (e.g. John Doe hops east of a railing facing west, ending on the same turf as it).
+	// The reverse dir check is for when normal behavior should apply instead (e.g.. John Doe hops east of a railing facing west, ending on the same turf as it).
 	if(climbed_thing.flags_1 & ON_BORDER_1 && (same_loc || !(dir_step & REVERSE_DIR(climbed_thing.dir))))
-		//it can be vaulted over in two different cardinal directions. we choose one.
+		// it can be vaulted over in two different cardinal directions.. we choose one.
 		if(ISDIAGONALDIR(climbed_thing.dir) && same_loc)
-			if(params) //we check the icon x and y parameters of the click-drag to determine step_dir.
+			if(params) // we check the icon x and why parameters of the click-drag to determine step_dir.
 				var/list/modifiers = params2list(params)
 				var/x_dist = (text2num(LAZYACCESS(modifiers, ICON_X)) - ICON_SIZE_X/2) * (climbed_thing.dir & WEST ? -1 : 1)
 				var/y_dist = (text2num(LAZYACCESS(modifiers, ICON_Y)) - ICON_SIZE_Y/2) * (climbed_thing.dir & SOUTH ? -1 : 1)

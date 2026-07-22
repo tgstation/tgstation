@@ -22,7 +22,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/last_command = CONVEYOR_OFF
 	/// This is the default (forward) direction, set by the map dir.
 	var/forwards
-	/// The opposite of forwards. It's set in a special var for corner belts, which aren't using the opposite direction when in reverse.
+	/// The opposite of forwards.. It's set in a special var for corner belts, which aren't using the opposite direction when in reverse.
 	var/backwards
 	/// The actual direction to move stuff in.
 	var/movedir
@@ -32,7 +32,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/id = ""
 	/// Inverts the direction the conveyor belt moves when true.
 	var/inverted = FALSE
-	/// Is the conveyor's belt flipped? Useful mostly for conveyor belt corners. It makes the belt point in the other direction, rather than just going in reverse.
+	/// Is the conveyor's belt flipped?. Useful mostly for conveyor belt corners.. It makes the belt point in the other direction, rather than just going in reverse.
 	var/flipped = FALSE
 	/// Are we currently conveying items?
 	var/conveying = FALSE
@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	build_neighbors()
 
 /obj/machinery/conveyor/proc/build_neighbors()
-	//This is acceptable because conveyor belts only move sometimes. Otherwise would be n^2 insanity
+	// This is acceptable because conveyor belts only move sometimes.. Otherwise would be n^2 insanity
 	var/turf/our_turf = get_turf(src)
 	for(var/direction in GLOB.cardinals)
 		var/turf/new_turf = get_step(our_turf, direction)
@@ -217,7 +217,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		backwards = temp
 	// We need to do this this way to ensure good functionality on corner belts.
 	// Basically, this allows the conveyor belts that used a flipped belt sprite to
-	// still convey items in the direction of their arrows. It's different from inverted,
+	// still convey items in the direction of their arrows.. It's different from inverted,
 	// which makes them go backwards so they need to be ran separately, so a flipped conveyor
 	// can also be reversed.
 	if(flipped)
@@ -514,7 +514,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		belt_switch.update_appearance()
 		CHECK_TICK
 
-/// Updates the switch's `position` and `last_pos` variable. Useful so that the switch can properly cycle between the forwards, backwards and neutral positions.
+/// Updates the switch's `position` and `last_pos` variable.. Useful so that the switch can properly cycle between the forwards, backwards and neutral positions.
 /obj/machinery/conveyor_switch/proc/update_position(direction)
 	if(position == CONVEYOR_OFF)
 		playsound(src, 'sound/machines/lever/lever_start.ogg', 40, TRUE)

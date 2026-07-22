@@ -13,7 +13,7 @@
 			var/datum/blobstrain/bts = bt
 			bts.overmind = overmind
 			src.blobstrains += bt
-	typeshare = (0.8 * length(src.blobstrains)) - (length(src.blobstrains)-1) // 1 is 80%, 2 are 60% etc
+	typeshare = (0.8 * length(src.blobstrains)) - (length(src.blobstrains)-1) // 1 is 80%, 2 are 60% and so on
 
 /datum/blobstrain/multiplex/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag, coefficient = 1) //when the blob takes damage, do this
 	for (var/datum/blobstrain/bt in blobstrains)

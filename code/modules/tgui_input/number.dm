@@ -48,7 +48,7 @@
 /datum/tgui_input_number
 	/// Boolean field describing if the tgui_input_number was closed by the user.
 	var/closed
-	/// The default (or current) value, shown as a default. Users can press reset with this.
+	/// The default (or current) value, shown as a default.. Users can press reset with this.
 	var/default
 	/// The entry that the user has return_typed in.
 	var/entry
@@ -66,7 +66,7 @@
 	var/timeout
 	/// The title of the TGUI window
 	var/title
-	/// The TGUI UI state that will be returned in ui_state(). Default: always_state
+	/// The TGUI UI state that will be returned in ui_state().. Default: always_state
 	var/datum/ui_state/state
 
 /datum/tgui_input_number/New(mob/user, message, title, default, max_value, min_value, timeout, round_value, ui_state)
@@ -81,7 +81,7 @@
 		src.timeout = timeout
 		start_time = world.time
 		QDEL_IN(src, timeout)
-	/// Checks for empty numbers - bank accounts, etc.
+	/// Checks for empty numbers - bank accounts, and so on
 	if(max_value == 0)
 		src.min_value = 0
 		if(default)

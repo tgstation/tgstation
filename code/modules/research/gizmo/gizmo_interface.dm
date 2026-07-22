@@ -41,7 +41,7 @@
 	puzzle = new puzzle ()
 	puzzle.generate_code_sequences(trigger_callbacks)
 
-/// Moves around. Guaranteed to have a mode that controles the movement
+/// Moves around.. Guaranteed to have a mode that controles the movement
 /datum/gizmo_interface/beyblade
 	guaranteed_active_gizmodes = list(/datum/gizmodes/mover)
 	min_modes = 0
@@ -51,13 +51,13 @@
 /datum/gizmo_interface/toggle
 	guaranteed_active_gizmodes = list(/datum/gizmodes/lights)
 
-/// Guaranteed to have a mode that will give a voice components secret keywords. Assumes there's a voice interface added by the gizmo_controller
+/// Guaranteed to have a mode that will give a voice components secret keywords.. Assumes there's a voice interface added by the gizmo_controller
 /datum/gizmo_interface/voice_unlock
 	guaranteed_active_gizmodes = list(/datum/gizmodes/voice)
 	min_modes = 0
 	max_modes = 0
 
-/// For the actual voice operated puzzle. Is a bit more forgiving
+/// For the actual voice operated puzzle.. Is a bit more forgiving
 /datum/gizmo_interface/voice
 	puzzle = /datum/gizmo_puzzle/voice
 

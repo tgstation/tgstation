@@ -1,6 +1,6 @@
 #define REGALRAT_INTERACTION "regalrat"
 
-/// The cheesiest, most crowned rat of them all. Regent superior of all rats in maintenance... at least until someone else tries to encroach on their claim.
+/// The cheesiest, most crowned rat of them all.. Regent superior of all rats in maintenance.... at least until someone else tries to encroach on their claim.
 /mob/living/basic/regal_rat
 	name = "feral regal rat"
 	desc = "An evolved rat, created through some strange science. They lead nearby rats with deadly efficiency to protect their kingdom."
@@ -43,7 +43,7 @@
 
 	///Should we request a mind immediately upon spawning?
 	var/poll_ghosts = FALSE
-	/// String tied to our special moniker for examination. Contains a nice message tied to the potential funny regal name we have.
+	/// String tied to our special moniker for examination.. Contains a nice message tied to the potential funny regal name we have.
 	var/special_moniker = ""
 
 /mob/living/basic/regal_rat/Initialize(mapload)
@@ -114,7 +114,7 @@
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 	)
 
-/// Supplementary work we do when we login. Done this way so we synchronize with the ai controller shutting off and all that jazz as well as allowing more shit to be passed in if need be in future.
+/// Supplementary work we do when we login.. Done this way so we synchronize with the ai controller shutting off. All that jazz as well as allowing more shit to be passed in if need be in future.
 /mob/living/basic/regal_rat/proc/on_login()
 	SIGNAL_HANDLER
 	if(!special_moniker)
@@ -188,13 +188,13 @@
 
 	return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 
-/// Checks if we are allowed to attack this mob. Will return TRUE if we are potentially allowed to attack, but if we end up in a case where we should NOT attack, return FALSE.
+/// Checks if we are allowed to attack this mob.. Will return TRUE if we are potentially allowed to attack, but if we end up in a case where we should NOT attack, return FALSE.
 /mob/living/basic/regal_rat/proc/allowed_to_attack(atom/the_target)
 	if(QDELETED(the_target))
 		return FALSE //wat
 
 	if(!isliving(the_target))
-		return TRUE // it might be possible to attack this? we'll find out soon enough
+		return TRUE // it might be possible to attack this?. we'll find out soon enough
 
 	var/mob/living/living_target = the_target
 	if(HAS_TRAIT_NOT_FROM(living_target, TRAIT_FAKEDEATH, SPECIES_TRAIT) || living_target.stat == DEAD)
@@ -216,7 +216,7 @@
  * * atom/lean_target - the target we try to add the spit to
  */
 /mob/living/basic/regal_rat/proc/poison_target(atom/target)
-	if(isnull(target.reagents) || !target.is_injectable(src, /*allowmobs = */TRUE))
+	if(isnull(target.reagents) || !target.is_injectable(src, /* allowmobs = */TRUE))
 		return FALSE
 
 	visible_message(

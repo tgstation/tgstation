@@ -16,7 +16,7 @@
 	icon_state = "lbelly"
 	gender_specific = TRUE
 
-/datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
+/datum/sprite_accessory/moth_markings // the markings that moths can have.. finally something other than the boring tan
 	icon = 'icons/mob/human/species/moth/moth_markings.dmi'
 	color_src = null
 

@@ -10,25 +10,25 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * It is first created when the first ghost signs up to play.
  */
 /datum/mafia_controller
-	///all roles in the game, dead or alive. check their game status if you only want living or dead.
+	/// all roles in the game, dead or alive.. check their game status if you only want living or dead.
 	var/list/datum/mafia_role/all_roles = list()
 	///all living roles in the game, removed on death.
 	var/list/datum/mafia_role/living_roles = list()
 	///exists to speed up role retrieval, it's a dict.
 	/// `player_role_lookup[player ckey/PDA]` will give you the role they play
 	var/list/player_role_lookup = list()
-	///what part of the game you're playing in. day phases, night phases, judgement phases, etc.
+	/// what part of the game you're playing in.. day phases, night phases, judgement phases, and so on
 	var/phase = MAFIA_PHASE_SETUP
-	///how long the game has gone on for, changes with every sunrise. day one, night one, day two, etc.
+	/// how long the game has gone on for, changes with every sunrise.. day one, night one, day two, and so on
 	var/turn = 0
 
 	///How much faster the game should be, which triggers when half the players are dead.
 	var/time_speedup = 1
 
-	///for debugging and testing a full game, or adminbuse. If this is not empty, it will use this as a setup. clears when game is over
+	/// for debugging and testing a full game, or adminbuse.. If this is not empty, it will use this as a setup.. clears when game is over
 	var/list/custom_setup
 
-	///template picked when the game starts. used for the name and desc reading
+	/// template picked when the game starts.. used for the name and desc reading
 	var/datum/map_template/mafia/current_map
 	///map generation tool that deletes the current map after the game finishes
 	var/datum/map_generator/massdelete/map_deleter
@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	///Readable list of roles in current game, sent to the tgui panel for roles list > list("Psychologist x1", "Clown x2")
 	var/list/current_setup_text
 
-	///starting outfit for all mafia players. it's just a grey jumpsuit.
+	/// starting outfit for all mafia players.. it's just a grey jumpsuit.
 	var/player_outfit = /datum/outfit/mafia
 
 	///spawn points for players, each one has a house
@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 	///group voting on one person, like putting people to trial or choosing who to kill as mafia
 	var/list/votes = list()
-	///and these (judgement_innocent_votes, judgement_abstain_votes and judgement_guilty_votes) are the judgement phase votes, aka people sorting themselves into guilty and innocent, and "eh, i don't really care" lists. whichever has more inno or guilty wins!
+	/// . These (judgement_innocent_votes, judgement_abstain_votes. Judgement_guilty_votes) are the judgement phase votes, also known as people sorting themselves into guilty. Innocent. "eh, i don't really care" lists.. whichever has more inno or guilty wins!
 	var/list/judgement_abstain_votes = list()
 	var/list/judgement_innocent_votes = list()
 	var/list/judgement_guilty_votes = list()
@@ -762,7 +762,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  */
 
 /datum/mafia_controller/proc/check_start_votes()
-	check_signups() //Same as before. What a useful proc.
+	check_signups() // Same as before.. What a useful proc.
 
 	if(length(GLOB.mafia_signup + GLOB.pda_mafia_signup) < MAFIA_MIN_PLAYER_COUNT)
 		return FALSE //Make sure we have the minimum playercount to host a game first.
@@ -904,7 +904,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	owner.body.client?.screen += src
 	addtimer(CALLBACK(src, PROC_REF(null_text), owner.body.client), 10 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 
-///Clears all text to re-use in the future. We use to_clear here in case someone takes over their old body.
+/// Clears all text to re-use in the future.. We use to_clear here in case someone takes over their old body.
 /atom/movable/screen/mafia_popup/proc/null_text(client/to_clear)
 	maptext = null
 	to_clear?.screen -= src

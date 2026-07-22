@@ -6,9 +6,9 @@
 /datum/json_savefile
 	var/path = ""
 	VAR_PRIVATE/list/tree
-	/// If this is set to true, calling set_entry or remove_entry will automatically call save(), this does not catch modifying a sub-tree, nor do I know how to do that
+	/// If this is set to true, calling set_entry. Remove_entry will automatically call save(), this does not catch modifying a sub-tree, n. Do I know how to do that
 	var/auto_save = FALSE
-	/// Cooldown that tracks the time between attempts to download the savefile.
+	/// Cooldown that tracks the time between tries to download the savefile.
 	COOLDOWN_DECLARE(download_cooldown)
 
 GENERAL_PROTECT_DATUM(/datum/json_savefile)
@@ -76,7 +76,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 		for(var/entry in savefile.dir)
 			var/entry_value
 			savefile.cd = "[dir]/[entry]"
-			//eof refers to the path you are cd'ed into, not the savefile as a whole. being false right after cding into an entry means this entry has no buffer, which only happens with nested save file directories
+			// eof refers to the path you are cd'ed into, not the savefile as a whole.. being false right after cding into an entry means this entry has no buffer, which only happens with nested save file directories
 			if (savefile.eof)
 				region[entry] = list()
 				dirs_to_go["[dir]/[entry]"] = region[entry]
@@ -86,7 +86,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 
 /// Proc that handles generating a JSON file (prettified if 515 and over!) of a user's preferences and showing it to them.
 /// Requester is passed in to the ftp() and tgui_alert() procs, and account_name is just used to generate the filename.
-/// We don't _need_ to pass in account_name since this is reliant on the json_savefile datum already knowing what we correspond to, but it's here to help people keep track of their stuff.
+/// We don't _need_ to pass in account_name since this is reliant on the json_savefile datum already knowing what we correspond to. It's here to help people keep track of their stuff.
 /datum/json_savefile/proc/export_json_to_client(mob/requester, account_name)
 	if(!istype(requester) || !path)
 		return

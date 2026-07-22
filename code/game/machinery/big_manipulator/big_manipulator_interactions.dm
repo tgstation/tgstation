@@ -1,4 +1,4 @@
-/// We have no tasks to execute for some reason. Waits for a turf signal to retry.
+/// We have no tasks to execute for some reason.. Waits for a turf signal to retry.
 /obj/machinery/big_manipulator/proc/nothing_ever_happens()
 	if(stopping)
 		complete_stopping_task()
@@ -15,7 +15,7 @@
 	next_cycle_scheduled = FALSE
 	step_tasks()
 
-/// Runs the next task. Or doesn't.
+/// Runs the next task.. Or doesn't.
 /obj/machinery/big_manipulator/proc/step_tasks()
 	if(!on || stopping)
 		return
@@ -34,7 +34,7 @@
 	SStgui.update_uis(src)
 	next_task.run_task(src)
 
-/// Attempts to launch the work cycle. Should only be ran on pressing the "Run" button.
+/// Tries to launch the work cycle.. Should only be ran on pressing the "Run" button.
 /obj/machinery/big_manipulator/proc/try_kickstart(mob/user)
 	if(!on || !anchored || stopping || current_task != null)
 		return FALSE

@@ -5,7 +5,7 @@
 	add_screen_object(/atom/movable/screen/healths/guardian, HUD_MOB_HEALTH, HUD_GROUP_INFO)
 	add_screen_object(/atom/movable/screen/combattoggle/flashy, HUD_MOB_INTENTS, HUD_GROUP_STATIC, ui_style, ui_loc = ui_zonesel)
 
-///Dextrous subtype for only dextrous holoparasites. Can hold things hence the inventory slot.
+/// Dextrous subtype for only dextrous holoparasites.. Can hold things so the inventory slot.
 /datum/hud/dextrous/guardian
 	default_inventory_slots = list(/datum/inventory_slot/guardian_storage)
 	give_health_doll = FALSE

@@ -10,7 +10,7 @@
 	abstract_type = /obj/item/instrument
 	/// Our song datum.
 	var/datum/song/handheld/song
-	/// Our allowed list of instrument ids. This is nulled on initialize.
+	/// Our allowed list of instrument ids.. This is nulled on initialize.
 	var/list/allowed_instrument_ids
 	/// How far away our song datum can be heard.
 	var/instrument_range = 15

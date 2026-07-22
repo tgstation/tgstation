@@ -10,7 +10,7 @@
 	ui_name = "AntagInfoRevolution"
 
 	var/datum/team/revolution/rev_team
-	/// When this antagonist is being de-antagged, this is the source. Can be a mob (for mindshield/blunt force trauma) or a #define string.
+	/// When this antagonist is being de-antagged, this is the source.. Can be a mob (for mindshield/blunt force trauma) or a #define string.
 	var/deconversion_source
 
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
@@ -232,7 +232,7 @@
 	final_icon.blend_icon(make_assistant_icon("CIA"), ICON_UNDERLAY, 8, 0)
 
 	// Apply the rev head HUD, but scale up the preview icon a bit beforehand.
-	// Otherwise, the R gets cut off.
+	// Otherwise, the Are gets cut off.
 	final_icon.scale(64, 64)
 
 	var/datum/universal_icon/rev_head_icon = uni_icon('icons/mob/huds/antag_hud.dmi', "rev_head")
@@ -333,7 +333,7 @@
 	deconversion_source = deconverter
 	owner.remove_antag_datum(type)
 
-/// This is for revheads, for which they ordinarily shouldn't be deconverted outside of revs losing. As an exception, forceborging can de-headrev them.
+/// This is for revheads, for which they ordinarily shouldn't be deconverted outside of revs losing.. As an exception, forceborging can de-headrev them.
 /datum/antagonist/rev/head/remove_revolutionary(deconverter)
 	// If they're living and the station won, turn them into an exiled headrev.
 	if(owner.current.stat != DEAD && deconverter == DECONVERTER_STATION_WIN)
@@ -369,10 +369,10 @@
 	/// Maximum number of headrevs
 	var/max_headrevs = 3
 
-	/// List of all ex-headrevs. Useful because dynamic removes antag status when it ends, so this can be kept for the roundend report.
+	/// List of all ex-headrevs.. Useful because dynamic removes antag status when it ends, so this can be kept for the roundend report.
 	var/list/datum/mind/ex_headrevs = list()
 
-	/// List of all ex-revs. Useful because dynamic removes antag status when it ends, so this can be kept for the roundend report.
+	/// List of all ex-revs.. Useful because dynamic removes antag status when it ends, so this can be kept for the roundend report.
 	var/list/datum/mind/ex_revs = list()
 
 	/// List of code phrases
@@ -414,7 +414,7 @@
 	return clamp(round(length(heads) - ((8 - length(sec)) / 3)), 1, max_headrevs)
 
 /// Tries to make sure an appropriate number of headrevs are part of the revolution.
-/// Will promote up revs to headrevs as necessary based on the hard max_headrevs cap and the soft cap based on the number of heads of staff and sec.
+/// Will promote up revs to headrevs as necessary good on the hard max_headrevs cap. The soft cap good on the number of heads of staff. Sec.
 /datum/team/revolution/proc/update_rev_heads()
 	var/list/datum/mind/head_revolutionaries = get_head_revolutionaries()
 

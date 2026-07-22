@@ -74,7 +74,7 @@
 	var/timeout
 	/// The title of the TGUI window
 	var/title
-	/// The TGUI UI state that will be returned in ui_state(). Default: always_state
+	/// The TGUI UI state that will be returned in ui_state().. Default: always_state
 	var/datum/ui_state/state
 
 /datum/tgui_input_text/New(mob/user, message, title, default, max_length, multiline, encode, timeout, ui_state)

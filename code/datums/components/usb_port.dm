@@ -19,10 +19,10 @@
 	/// The current physical object that the beam is connected to and listens to.
 	var/atom/movable/physical_object
 
-	/// An extra callback to invoke when registering this component with its parent. Can be a proc name or a callback datum.
+	/// An extra callback to invoke when registering this component with its parent.. Can be a proc name or a callback datum.
 	var/extra_registration_callback
 
-	/// An extra callback to invoke when unregistering this component from its parent. Can be a proc name or a callback datum.
+	/// An extra callback to invoke when unregistering this component from its parent.. Can be a proc name or a callback datum.
 	var/extra_unregistration_callback
 
 /datum/component/usb_port/Initialize(list/circuit_component_types, extra_registration_callback, extra_unregistration_callback)

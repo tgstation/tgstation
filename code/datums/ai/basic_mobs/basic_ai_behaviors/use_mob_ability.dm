@@ -1,4 +1,4 @@
-/// Triggers a mob ability stored in a blackboard key. Returns INSTANT SUCCESS if triggered, INSTANT FAILURE if unavailable or trigger fails.
+/// Triggers a mob ability stored in a blackboard key.. Returns INSTANT SUCCESS if triggered, INSTANT FAILURE if unavailable or trigger fails.
 /datum/bt_node/ai_behavior/use_mob_ability
 	var/ability_key = BB_GENERIC_ACTION
 
@@ -12,7 +12,7 @@
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	return start_async()
 
-/// Returns the action to trigger, or null if it isn't available. Override to prep the action before it fires.
+/// Returns the action to trigger, or null if it isn't available.. Override to prep the action before it fires.
 /datum/bt_node/ai_behavior/use_mob_ability/proc/get_valid_ability(datum/ai_controller/controller)
 	var/datum/action/using_action = controller.blackboard[ability_key]
 	if(QDELETED(using_action) || !using_action.IsAvailable())

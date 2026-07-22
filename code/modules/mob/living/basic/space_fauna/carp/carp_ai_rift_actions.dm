@@ -54,7 +54,7 @@
 		return FALSE
 	return TRUE
 
-/// Return the turf to teleport to, implement this or the behaviour won't do anything
+/// Return the turf to teleport to, add this or the behaviour won't do anything
 /datum/bt_node/ai_behavior/make_carp_rift/proc/find_target_turf(datum/ai_controller/controller, atom/target, datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability)
 	CRASH("Called unimplemented target finding proc on carp rift behaviour")
 

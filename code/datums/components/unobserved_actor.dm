@@ -6,7 +6,7 @@
 /datum/component/unobserved_actor
 	/// Dictates what behaviour you're blocked from while observed
 	var/unobserved_flags = NONE
-	/// List of action types which cannot be used while observed. Applies to all actions if not set, and does nothing if NO_OBSERVED_ACTIONS flag isnt present
+	/// List of action types which cannot be used while observed.. Applies to all actions if not set, and does nothing if NO_OBSERVED_ACTIONS flag isnt present
 	var/list/affected_actions = null
 	/// Cooldown to prevent message spam when holding a move button
 	COOLDOWN_DECLARE(message_cooldown)
@@ -98,7 +98,7 @@
 		return FALSE
 
 	// We aren't in darkness, loop for viewers.
-	for(var/mob/living/mob_target in oview(my_turf, 7)) // They probably cannot see us if we cannot see them... can they?
+	for(var/mob/living/mob_target in oview(my_turf, 7)) // They probably cannot see us if we cannot see them.... can they?
 		if(mob_target.client && !mob_target.is_blind() && !HAS_TRAIT(mob_target, TRAIT_UNOBSERVANT))
 			return TRUE
 	for(var/obj/vehicle/sealed/mecha/mecha_mob_target in oview(my_turf, 7))

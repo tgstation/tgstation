@@ -9,7 +9,7 @@
 	/// Minimum players for this map
 	var/min_players = 2
 	/// Maximum players for this map
-	var/max_players = 2 // TODO: make this automatic.
+	var/max_players = 2 // To do make this automatic.
 	/// The map will end in this time
 	var/automatic_gameend_time = 8 MINUTES
 	/// List of allowed loadouts for this map, otherwise defaults to all loadouts

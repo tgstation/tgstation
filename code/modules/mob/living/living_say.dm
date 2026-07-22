@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	RADIO_KEY_ENTERTAINMENT = RADIO_CHANNEL_ENTERTAINMENT, // Entertainment monitors
 
 
-	//kinda localization -- rastaf0
+	// kind of localization -- rastaf0
 	//same keys as above, but on russian keyboard layout.
 	// Location
 	"к" = MODE_R_HAND,
@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	last_say_args_ref = REF(args)
 #endif
 
-	// Make sure the arglist is passed exactly - don't pass a copy of it. Say signal handlers will modify some of the parameters.
+	// Make sure the arglist is passed exactly - don't pass a copy of it.. Say signal handlers will modify some of the parameters.
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
 	if(sigreturn & COMPONENT_UPPERCASE_SPEECH)
 		message = uppertext(message)
@@ -242,7 +242,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		identifier = "[sha1(get_tts_voice(filter, special_filter) + filter.Join(",") + num2text(pitch) + special_filter.Join("|") + shell_scrubbed_input + blip_base + num2text(blip_number))].[world.time]"
 		message_mods[MODE_TTS_IDENTIFIER] = identifier
 
-	//This is before anything that sends say a radio message, and after all important message type modifications, so you can scumb in alien chat or something
+	// This is before anything that sends say a radio message. After all important message type modifications, so you can scumb in alien chat. Something
 	if(saymode && (saymode.handle_message(src, message, spans, language, message_mods) & SAYMODE_MESSAGE_HANDLED))
 		return
 
@@ -308,8 +308,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	var/message = ""
 	// if someone is whispering we make an extra type of message that is obfuscated for people out of range
-	// Less than or equal to 0 means normal hearing. More than 0 and less than or equal to eavesdrop_range means
-	// partial hearing. More than eavesdrop_range means no hearing. Exception for GOOD_HEARING trait
+	// Less than or equal to 0 means normal hearing.. More than 0 and less than or equal to eavesdrop_range means
+	// partial hearing.. More than eavesdrop_range means no hearing.. Exception for GOOD_HEARING trait
 	var/dist = get_dist(speaker, src) - message_range
 	if(dist > 0 && dist <= eavesdrop_range && !HAS_TRAIT(src, TRAIT_GOOD_HEARING))
 		raw_message = stars(raw_message)
@@ -341,7 +341,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 
 	// we need to send this signal before compose_message() is used since other signals need to modify
-	// the raw_message first. After the raw_message is passed through the various signals, it's ready to be formatted
+	// the raw_message first.. After the raw_message is passed through the various signals, it's ready to be formatted
 	// by compose_message() to be displayed in chat boxes for to_chat or runechat
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
@@ -354,7 +354,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		else
 			deaf_type = MSG_AUDIBLE
 
-		// Create map text prior to modifying message for goonchat, sign lang edition
+		// Create map text before to modifying message for goonchat, sign lang edition
 		if (use_runechat && !is_blind())
 			if (is_custom_emote)
 				create_chat_message(speaker, null, message_mods[MODE_CUSTOM_SAY_EMOTE], spans, EMOTE_MESSAGE)
@@ -381,7 +381,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		deaf_message = span_notice("You can't hear yourself!")
 		deaf_type = MSG_AUDIBLE // Since you should be able to hear yourself without looking
 
-	// Create map text prior to modifying message for goonchat
+	// Create map text before to modifying message for goonchat
 	if (use_runechat && !HAS_TRAIT(src, TRAIT_DEAF))
 		if (is_custom_emote)
 			create_chat_message(speaker, null, message_mods[MODE_CUSTOM_SAY_EMOTE], spans, EMOTE_MESSAGE)
@@ -402,7 +402,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/whisper_range = 0
 	var/is_speaker_whispering = FALSE
 	if(message_mods[WHISPER_MODE]) //If we're whispering
-		// Needed for good hearing trait. The actual filtering for whispers happens at the /mob/living/Hear proc
+		// Needed for good hearing trait.. The actual filtering for whispers happens at the /mob/living/Hear proc
 		whisper_range = MESSAGE_RANGE - WHISPER_RANGE
 		is_speaker_whispering = TRUE
 
@@ -421,8 +421,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)
-			if(QDELETED(player_mob)) //Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
-				continue //Remove if underlying cause (likely byond issue) is fixed. See TG PR #49004.
+			if(QDELETED(player_mob)) // Some times nulls and deleteds stay in this list.. This is a workaround to prevent ic chat breaking for everyone when they do.
+				continue // Remove if underlying cause (likely byond issue) is fixed.. See TG PR #49004.
 			if(player_mob.stat != DEAD) //not dead, not important
 				continue
 			if(player_mob.z != z || get_dist(player_mob, src) > 7) //they're out of range of normal hearing

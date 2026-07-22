@@ -10,9 +10,9 @@
 	var/max_charges
 	/// How many charges we currently have
 	var/current_charges
-	/// How long we have to avoid being hit to replenish charges. If set to 0, we never recharge lost charges
+	/// How long we have to avoid being hit to replenish charges.. If set to 0, we never recharge lost charges
 	var/recharge_start_delay = 20 SECONDS
-	/// Once we go unhit long enough to recharge, we replenish charges this often. The floor is effectively 1 second, AKA how often SSdcs processes
+	/// Once we go unhit long enough to recharge, we replenish charges this often.. The floor is effectively 1 second, Also known as how often SSdcs processes
 	var/charge_increment_delay = 1 SECONDS
 	/// How many charges we recover on each charge increment
 	var/charge_recovery = 1
@@ -20,7 +20,7 @@
 	var/shield_icon_file = 'icons/effects/effects.dmi'
 	/// What icon is used when someone has a functional shield up
 	var/shield_icon = "shield-old"
-	/// Do we still shield if we're being held in-hand? If FALSE, it needs to be equipped to a slot to work
+	/// Do we still shield if we're being held in-hand?. If FALSE, it needs to be equipped to a slot to work
 	var/shield_inhand = FALSE
 	/// Should the shield lose charges equal to the damage dealt by a hit?
 	var/lose_multiple_charges = FALSE
@@ -119,7 +119,7 @@
 		return
 	set_wearer(user)
 
-/// Either we've been dropped or our wearer has been QDEL'd. Either way, they're no longer our problem
+/// Either we've been dropped or our wearer has been QDEL'd.. Either way, they're no longer our problem
 /datum/component/shielded/proc/lost_wearer(datum/source, mob/user)
 	SIGNAL_HANDLER
 
@@ -158,7 +158,7 @@
 
 	COOLDOWN_START(src, recently_hit_cd, recharge_start_delay)
 
-	//No wearer? No block.
+	// No wearer?. No block.
 	if(isnull(wearer))
 		return
 

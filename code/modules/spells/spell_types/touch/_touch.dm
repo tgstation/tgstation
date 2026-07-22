@@ -124,7 +124,7 @@
 	RegisterSignal(attached_hand, COMSIG_ITEM_DROPPED, PROC_REF(on_hand_dropped))
 	RegisterSignal(attached_hand, COMSIG_QDELETING, PROC_REF(on_hand_deleted))
 
-	// We can high five with our touch hand. It casts the spell on people. Radical
+	// We can high five with our touch hand.. It casts the spell on people.. Radical
 	attached_hand.AddElement(/datum/element/high_fiver)
 	RegisterSignal(attached_hand, COMSIG_ITEM_OFFER_TAKEN, PROC_REF(on_hand_taken))
 

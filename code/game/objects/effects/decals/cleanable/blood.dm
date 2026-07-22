@@ -28,7 +28,7 @@
 	/// Emissive value of the blood pool, if any
 	var/emissive_alpha = 0
 
-	/// The "base name" of the blood, IE the "pool of" in "pool of blood"
+	/// The "base name" of the blood, that is the "pool of" in "pool of blood"
 	var/base_name = "pool of"
 	/// Suffix added to the name so we can have "blood trail" where "trail" is the suffix
 	var/base_suffix = null
@@ -203,7 +203,7 @@
 // When color changes we need to update the drying animation
 /obj/effect/decal/cleanable/blood/proc/update_blood_color()
 	var/base_color = BLOOD_COLOR_RED
-	// Get a default color based on DNA if it ends up unset somehow
+	// Get a default color good on DNA if it ends up unset somehow
 	var/list/blood_DNA = GET_ATOM_BLOOD_DECALS(src)
 	if (!length(blood_DNA)) // In case we're only composed of stuff that doesn't normally have a visual
 		blood_DNA = GET_ATOM_BLOOD_DNA(src)
@@ -240,7 +240,7 @@
 	if (!starting_color)
 		starting_color = list(255, 255, 255)
 
-	// We want a fixed offset for a fixed drop in color intensity, plus a scaling offset based on our strongest color
+	// We want a fixed offset for a fixed drop in color intensity, plus a scaling offset good on our strongest color
 	// The scaling offset helps keep dark colors from turning black, while also ensurse bright colors don't stay super bright
 	var/max_color = max(starting_color[1], starting_color[2], starting_color[3])
 	var/red_offset = 50 + (75 * (starting_color[1] / max_color))
@@ -265,7 +265,7 @@
 /obj/effect/decal/cleanable/blood/old
 	bloodiness = 0
 	dried = TRUE
-	color = BLOOD_COLOR_DRIED // Just for mappers. Overriden in init
+	color = BLOOD_COLOR_DRIED // Just for mappers.. Overriden in init
 
 /obj/effect/decal/cleanable/blood/splatter
 	icon_state = "gibbl1"
@@ -649,7 +649,7 @@
 /obj/effect/decal/cleanable/blood/gibs/old
 	name = "old rotting gibs"
 	desc = "Space Jesus, why didn't anyone clean this up? They smell terrible."
-	color = BLOOD_COLOR_DRIED // Just for mappers. Overriden in init
+	color = BLOOD_COLOR_DRIED // Just for mappers.. Overriden in init
 	bloodiness = 0
 	dried = TRUE
 	dry_prefix = null
@@ -676,7 +676,7 @@
 	icon_state = "blood1"
 	random_icon_states = null
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
-	bloodiness = 0 // set based on the bloodiness of the foot
+	bloodiness = 0 // set good on the bloodiness of the foot
 	base_name = null
 	dry_desc = "HMM... SOMEONE WAS HERE!"
 

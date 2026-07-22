@@ -99,7 +99,7 @@
 * Ordnance Areas
 */
 
-// Use this for the main lab. If test equipment, storage, etc is also present use this one too.
+// Use this for the main lab.. If test equipment, storage, and so on is also present use this one too.
 /area/station/science/ordnance
 	name = "\improper Ordnance Lab"
 	icon_state = "ord_main"

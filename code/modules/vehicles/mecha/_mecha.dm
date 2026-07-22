@@ -37,7 +37,7 @@
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 	/// Significantly heavier than humans
 	inertia_force_weight = 5
-	/// How much energy the mech will consume each time it moves. this is the current active energy consumed
+	/// How much energy the mech will consume each time it moves.. this is the current active energy consumed
 	var/step_energy_drain = 0.008 * STANDARD_CELL_CHARGE
 	/// How much energy we drain each time we mechpunch someone
 	var/melee_energy_drain = 0.015 * STANDARD_CELL_CHARGE
@@ -66,7 +66,7 @@
 	var/completely_disabled = FALSE
 	/// Whether this mech is allowed to move diagonally
 	var/allow_diagonal_movement = TRUE
-	/// Whether this mech moves into a direct as soon as it goes to move. Basically, turn and step in the same key press.
+	/// Whether this mech moves into a direct as soon as it goes to move.. Basically, turn and step in the same key press.
 	var/pivot_step = FALSE
 	/// Whether or not the mech destroys walls by running into it.
 	var/bumpsmash = FALSE
@@ -99,7 +99,7 @@
 	var/dna_lock
 	/// A list of all granted accesses
 	var/list/accesses = list()
-	/// If the mech should require ALL or only ONE of the listed accesses
+	/// If the mech should need ALL or only ONE of the listed accesses
 	var/one_access = TRUE
 
 	/// Typepath for the wreckage it spawns when destroyed
@@ -156,7 +156,7 @@
 	var/silicon_icon_state = null
 	/// Currently ejecting, and unable to do things
 	var/is_currently_ejecting = FALSE
-	/// Safety for weapons. Won't fire if enabled, and toggled by middle click.
+	/// Safety for weapons.. Won't fire if enabled, and toggled by middle click.
 	var/weapons_safety = FALSE
 	/// Don't play standard sound when set safety if TRUE.
 	var/safety_sound_custom = FALSE
@@ -171,7 +171,7 @@
 	var/can_use_overclock = FALSE
 	/// Speed and energy usage modifier for leg overload
 	var/overclock_coeff = 1.5
-	/// Current leg actuator temperature. Increases when overloaded, decreases when not.
+	/// Current leg actuator temperature.. Increases when overloaded, decreases when not.
 	var/overclock_temp = 0
 	/// Temperature threshold at which actuators may start causing internal damage
 	var/overclock_temp_danger = 15
@@ -255,7 +255,7 @@
 /obj/vehicle/sealed/mecha/Destroy()
 	// If the former occupants get polymorphed, mutated, chestburstered,
 	// or otherwise replaced by another mob, that mob is no longer in .occupants
-	// and gets deleted with the mech. However, they do remain in .contents
+	// and gets deleted with the mech.. But they do remain in .contents
 	var/list/potential_occupants = contents | occupants
 	for(var/mob/buggy_ejectee in potential_occupants)
 		mob_exit(buggy_ejectee, silent = TRUE, forced = TRUE)
@@ -282,10 +282,10 @@
 
 	GLOB.mechas_list -= src //global mech list
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.remove_atom_from_hud(src) //YEET
+	diag_hud.remove_atom_from_hud(src) // Throw
 	return ..()
 
-/// Add parts on mech spawning. Skipped in manual construction.
+/// Add parts on mech spawning.. Skipped in manual construction.
 /obj/vehicle/sealed/mecha/proc/populate_parts()
 	cell = new /obj/item/stock_parts/power_store/cell/high(src)
 	scanmod = new /obj/item/stock_parts/scanning_module(src)
@@ -309,7 +309,7 @@
 	for(var/mob/living/occupant as anything in occupants)
 		if(!isAI(occupant))
 			mob_exit(occupant, forced = TRUE)
-			if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..
+			if(!isbrain(occupant)) // who would win... 1 brain vs 1 sleep proc..
 				occupant.SetSleeping(destruction_sleep_duration)
 			continue
 
@@ -434,8 +434,8 @@
  */
 /obj/vehicle/sealed/mecha/proc/grant_equipment_action(mob/occupant, obj/item/mecha_parts/mecha_equipment/equipment)
 	var/datum/action/vehicle/sealed/mecha/equipment/action = new equipment.action_type // We cannot use grant_action_type_to_mob() because:
-	action.set_chassis(src) 									  					  // 1. grant_action_type_to_mob() works with a single predefined action type
-	action.set_equipment(equipment) 							 					 // 2. We create unique action instances for each equipment with specific equipment references
+	action.set_chassis(src) 									  					  // 1.. grant_action_type_to_mob() works with a single predefined action type
+	action.set_equipment(equipment) 							 					 // 2.. We create unique action instances for each equipment with specific equipment references
 
 	action.Grant(occupant)
 	LAZYINITLIST(occupant_actions[occupant])
@@ -667,7 +667,7 @@
 
 /obj/vehicle/sealed/mecha/proc/process_occupants(seconds_per_tick)
 	for(var/mob/living/occupant as anything in occupants)
-		if(!(mecha_flags & IS_ENCLOSED) && occupant?.incapacitated) //no sides mean it's easy to just sorta fall out if you're incapacitated.
+		if(!(mecha_flags & IS_ENCLOSED) && occupant?.incapacitated) // no sides mean it's easy to just sort of fall out if you're incapacitated.
 			mob_exit(occupant, randomstep = TRUE) //bye bye
 			continue
 		if(cell && cell.maxcharge)
@@ -696,7 +696,7 @@
 			else
 				occupant.clear_alert(ALERT_MECH_DAMAGE)
 		var/atom/checking = occupant.loc
-		// recursive check to handle all cases regarding very nested occupants,
+		// recursive check to handle all cases about very nested occupants,
 		// such as brainmob inside brainitem inside MMI inside mecha
 		while(!isnull(checking))
 			if(isturf(checking))
@@ -716,7 +716,7 @@
 		playsound(src,'sound/machines/clockcult/brass_skewer.ogg', 40, TRUE)
 		log_message("Toggled lights off due to the lack of power.", LOG_MECHA)
 
-/// Called when a driver clicks somewhere. Handles everything like equipment, punches, etc.
+/// Called when a driver clicks somewhere.. Handles everything like equipment, punches, and so on
 /obj/vehicle/sealed/mecha/proc/on_mouseclick(mob/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
@@ -724,7 +724,7 @@
 		return COMSIG_MOB_CANCEL_CLICKON
 	if(weapons_safety)
 		return
-	if(isAI(user)) //For AIs: If safeties are off, use mech functions. If safeties are on, use AI functions.
+	if(isAI(user)) // For AIs: If safeties are off, use mech functions.. If safeties are on, use AI functions.
 		. = COMSIG_MOB_CANCEL_CLICKON
 	if(modifiers[SHIFT_CLICK]) //Allows things to be examined.
 		return

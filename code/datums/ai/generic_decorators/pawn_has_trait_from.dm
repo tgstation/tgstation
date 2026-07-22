@@ -1,4 +1,4 @@
-/// Gates child on the pawn having a given trait from a specific source. Use "invert": true to gate on the trait being absent.
+/// Gates child on the pawn having a given trait from a specific source.. Use "invert": true to gate on the trait being absent.
 /datum/bt_node/decorator/pawn_has_trait_from
 	/// The trait to check for.
 	var/trait = null

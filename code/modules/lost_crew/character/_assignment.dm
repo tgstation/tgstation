@@ -1,6 +1,6 @@
 /// Possible assignments corpses can have, both for flavor and to push them towards contributing to the round
 /datum/corpse_assignment
-	/// Message we send to the player upon revival concerning their job
+	/// Message we send to the player upon revival about their job
 	var/job_lore
 	/// Gear to give to the crewie in a special locked box
 	var/list/protected_job_stuffs

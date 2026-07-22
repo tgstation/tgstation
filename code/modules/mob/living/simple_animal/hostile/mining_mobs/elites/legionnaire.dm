@@ -233,7 +233,7 @@
 		visible_message(span_boldwarning("[src] spews smoke from its maw!"))
 	do_smoke(2, src, smoke_location)
 
-//The legionnaire's head.  Basically the same as any legion head, but we have to tell our creator when we die so they can generate another head.
+// The legionnaire's head.. Basically the same as any legion head, but we have to tell our creator when we die so they can generate another head.
 /mob/living/simple_animal/hostile/asteroid/elite/legionnairehead
 	name = "legionnaire head"
 	desc = "The legionnaire's head floating by itself.  One shouldn't get too close, though once it sees you, you really don't have a choice."
@@ -264,7 +264,7 @@
 	if(body)
 		body.onHeadDeath()
 
-//The legionnaire's bonfire, which can be swapped positions with.  Also sets flammable living beings on fire when they walk over it.
+// The legionnaire's bonfire, which can be swapped positions with.. Also sets flammable living beings on fire when they walk over it.
 /obj/structure/legionnaire_bonfire
 	name = "bone pile"
 	desc = "A pile of bones which seems to occasionally move a little.  It's probably a good idea to smash them."

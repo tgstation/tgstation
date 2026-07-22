@@ -131,7 +131,7 @@
 
 /obj/item/organ/appendix/pod/Initialize(mapload)
 	. = ..()
-	// this could be anything... anything. still useless though
+	// this could be anything.... anything.. still useless though
 	name = pick("pod endoplasmic reticulum", "pod golgi apparatus", "pod plastid", "pod vesicle")
 
 /obj/item/organ/appendix/pod/become_inflamed()

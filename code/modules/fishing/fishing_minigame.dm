@@ -5,7 +5,7 @@
 // UI minigame phase
 #define MINIGAME_PHASE 3
 
-/// The minimum velocity required for the bait to bounce
+/// The minimum velocity needed for the bait to bounce
 #define BAIT_MIN_VELOCITY_BOUNCE 150
 
 /// Reduce initial completion rate depending on difficulty
@@ -39,9 +39,9 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	var/start_time
 	/// Is it finished (either by win/lose or window closing)
 	var/completed = FALSE
-	/// Rule modifiers (eg weighted bait)
+	/// Rule modifiers for example weighted bait)
 	var/special_effects = NONE
-	/// A list of possible active minigame effects. If not empty, one will be picked from time to time.
+	/// A list of possible active minigame effects.. If not empty, one will be picked from time to time.
 	var/list/active_effects
 	/// The cooldown between switching active effects
 	COOLDOWN_DECLARE(active_effect_cd)
@@ -92,7 +92,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	/// The current speed the bait is moving at
 	var/bait_velocity = 0
 
-	/// The completion score. If it reaches 100, it's a win. If it reaches 0, it's a loss.
+	/// The completion score.. If it reaches 100, it's a win.. If it reaches 0, it's a loss.
 	var/completion = 30
 	/// How much completion is lost per second when the bait area is not intersecting with the fish's
 	var/completion_loss = 6
@@ -107,7 +107,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	var/gravity_velocity = -800
 	/// The acceleration of the bait while reeling
 	var/reeling_velocity = 1200
-	/// By how much the bait recoils back when hitting the bounds of the slider while idle. Should be never above 1
+	/// By how much the bait recoils back when hitting the bounds of the slider while idle.. Should be never above 1
 	var/bait_bounce_mult = 0.6
 	/// The multiplier of deceleration of velocity that happens when the bait switches direction
 	var/deceleration_mult = 1.8
@@ -161,7 +161,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		if(rod.hook.fishing_hook_traits & FISHING_HOOK_KILL)
 			special_effects |= FISHING_MINIGAME_RULE_KILL
 
-	//Finish the minigame faster at higher skill. The value modifiers for fishing are negative values btw.
+	// Finish the minigame faster at higher skill.. The value modifiers for fishing are negative values by the way
 	completion_loss += user.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)/5
 	completion_gain -= user.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)/7.5
 
@@ -288,7 +288,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 
 /datum/fishing_challenge/proc/on_hands_blocked(datum/source)
 	SIGNAL_HANDLER
-	if(completed) //the rod was dropped and therefore challenge already completed.
+	if(completed) // the rod was dropped and so challenge already completed.
 		return
 	user.balloon_alert(user, "hands blocked!")
 	interrupt()
@@ -589,7 +589,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	bait_position = clamp(round(fish_position + rand(-diff_dist, diff_dist) - bait_height * 0.5), 0, FISHING_MINIGAME_AREA - bait_height)
 
 	if(!prepare_minigame_hud())
-		get_stack_trace("couldn't prepare minigame hud for a fishing challenge.") //just to be sure. This shouldn't happen.
+		get_stack_trace("couldn't prepare minigame hud for a fishing challenge.") // just to be sure.. This shouldn't happen.
 		qdel(src)
 		return
 
@@ -900,17 +900,17 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	. = ..()
 	if(!spot)
 		return
-	if(ismovable(spot)) // we want the float and therefore the fishing line to stay connected with the fishing spot.
+	if(ismovable(spot)) // we want the float and so the fishing line to stay connected with the fishing spot.
 		RegisterSignal(spot, COMSIG_MOVABLE_MOVED, PROC_REF(follow_movable))
 	SET_BASE_PIXEL(spot.pixel_x, spot.pixel_y)
 	SET_BASE_VISUAL_PIXEL(spot.pixel_w, spot.pixel_z)
-	// early return for spots with a plane lower than this. the floor plane is topdown and we don't want to inherit their layers.
+	// early return for spots with a plane lower than this.. the floor plane is topdown and we don't want to inherit their layers.
 	if(spot.plane < plane)
 		return
 	if(spot.plane > plane) //We want this to render above the fishing spot.
 		var/turf/turf = get_turf(spot)
 		SET_PLANE_EXPLICIT(src, PLANE_TO_TRUE(spot.plane), turf)
-	if(spot.layer > layer) //Ditto. New stuff renders above old stuff if the layer is the same iirc (with some caveats).
+	if(spot.layer > layer) // Ditto.. New stuff renders above old stuff if the layer is the same iirc (with some caveats).
 		layer = spot.layer
 
 /obj/effect/fishing_float/proc/follow_movable(atom/movable/source)

@@ -18,11 +18,11 @@
 	/// Sound played when successfully removing an organ
 	var/remove_success_sound = 'sound/items/handling/surgery/organ2.ogg'
 
-	/// Implements used to insert organs
+	/// adds used to insert organs
 	var/list/insert_implements = list(
 		/obj/item/organ = 1,
 	)
-	/// Implements used to remove organs
+	/// adds used to remove organs
 	var/list/remove_implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_CROWBAR = 1.8,
@@ -227,7 +227,7 @@
 /datum/surgery_operation/limb/organ_manipulation/internal/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
 	if(organ.organ_flags & ORGAN_EXTERNAL)
 		return FALSE
-	// chest organs and the brain require bone sawed
+	// chest organs and the brain need bone sawed
 	if(organ.zone == BODY_ZONE_CHEST || organ.slot == ORGAN_SLOT_BRAIN)
 		return !LIMB_HAS_BONES(limb) || LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_SAWED)
 	return TRUE
@@ -259,7 +259,7 @@
 /datum/surgery_operation/limb/organ_manipulation/internal/abductor/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
 	return (organ.slot == ORGAN_SLOT_HEART) || ..() // Hearts can always be removed, it doesn't check for bone state
 
-// All external organ manipulation requires bones sawed
+// All external organ manipulation needs bones sawed
 /datum/surgery_operation/limb/organ_manipulation/external
 	name = "feature manipulation"
 	desc = "Manipulate features of the patient, such as a moth's wings or a lizard's tail."

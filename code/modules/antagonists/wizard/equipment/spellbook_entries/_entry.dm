@@ -18,17 +18,17 @@
 	var/category
 	/// How many book charges does the spell take
 	var/cost = 2
-	/// How many times has the spell been purchased. Compared against limit.
+	/// How many times has the spell been purchased.. Compared against limit.
 	var/times = 0
-	/// The limit on number of purchases from this entry in a given spellbook. If null, infinite are allowed.
+	/// The limit on number of purchases from this entry in a given spellbook.. If null, infinite are allowed.
 	var/limit
 	/// Is this refundable?
 	var/refundable = TRUE
-	/// Flavor. Verb used in saying how the spell is acquired. Ex "[Learn] Fireball" or "[Summon] Ghosts"
+	/// Flavor.. Verb used in saying how the spell is acquired.. Ex "[Learn] Fireball" or "[Summon] Ghosts"
 	var/buy_word = "Learn"
 	/// The cooldown of the spell
 	var/cooldown
-	/// Whether the spell requires wizard garb or not
+	/// Whether the spell needs wizard garb or not
 	var/requires_wizard_garb = FALSE
 	/// Used so you can't have specific spells together
 	var/list/no_coexistence_typecache
@@ -223,7 +223,7 @@
 	try_equip_item(user, spawned_path)
 	return spawned_path
 
-/// Attempts to give the item to the buyer on purchase.
+/// Tries to give the item to the buyer on purchase.
 /datum/spellbook_entry/item/proc/try_equip_item(mob/living/carbon/human/user, obj/item/to_equip)
 	var/was_put_in_hands = user.put_in_hands(to_equip)
 	to_chat(user, span_notice("\A [to_equip.name] has been summoned [was_put_in_hands ? "in your hands" : "at your feet"]."))
@@ -238,7 +238,7 @@
 		return FALSE
 	return TRUE
 
-/// Ritual, these cause station wide effects and are (pretty much) a blank slate to implement stuff in
+/// Ritual, these cause station wide effects and are (pretty much) a blank slate to add stuff in
 /datum/spellbook_entry/summon
 	category = "Rituals"
 	limit = 1

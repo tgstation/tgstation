@@ -20,9 +20,9 @@
 	var/shown_mood
 	/// Multiplier to the sum total of mood the mob is experiencing
 	var/mood_modifier = 1
-	/// Multiplier to positive moodlet values. Stacks with mood_modifier
+	/// Multiplier to positive moodlet values.. Stacks with mood_modifier
 	var/positive_mood_modifier = 1
-	/// Multiplier to negative moodlet values. Stacks with mood_modifier
+	/// Multiplier to negative moodlet values.. Stacks with mood_modifier
 	var/negative_mood_modifier = 1
 	/// Multiplier to the length of positive moodlets.
 	/// Please don't set this to 0
@@ -34,7 +34,7 @@
 	var/mood_level = MOOD_LEVEL_NEUTRAL
 	/// To track what stage of sanity they're on (1-6)
 	var/sanity_level = SANITY_LEVEL_NEUTRAL
-	/// Is the owner being punished for low mood? if so, how much?
+	/// Is the owner being punished for low mood?. if so, how much?
 	var/insanity_effect = 0
 
 	/// List of mood events currently active on this datum
@@ -264,7 +264,7 @@
 /// Updates the mobs mood.
 /// Called after mood events have been added/removed.
 /datum/mood/proc/update_mood()
-	if(QDELETED(mob_parent)) //don't bother updating their mood if they're about to be salty anyway. (in other words, we're about to be destroyed too anyway.)
+	if(QDELETED(mob_parent)) // don't bother updating their mood if they're about to be salty anyway.. (in other words, we're about to be destroyed too anyway.)
 		return
 	mood = 0
 	shown_mood = 0
@@ -515,7 +515,7 @@
 	else
 		clear_mood_event("area")
 
-/// Updates the mob's given beauty moodie, based on the area
+/// Updates the mob's given beauty moodie, good on the area
 /datum/mood/proc/update_beauty(area/area_to_beautify)
 	SIGNAL_HANDLER
 	if (area_to_beautify.outdoors) // if we're outside, we don't care
@@ -616,7 +616,7 @@
 			mob_parent.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			mob_parent.remove_actionspeed_modifier(ACTIONSPEED_ID_SANITY)
 			sanity_level = SANITY_LEVEL_DISTURBED
-		if(SANITY_NEUTRAL+1 to SANITY_GREAT+1) //shitty hack but +1 to prevent it from responding to super small differences
+		if(SANITY_NEUTRAL+1 to SANITY_GREAT+1) // shitty temporary solution but +1 to prevent it from responding to super small differences
 			set_insanity_effect(0)
 			mob_parent.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			mob_parent.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)

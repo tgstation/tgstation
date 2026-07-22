@@ -1,5 +1,5 @@
 /// Finds the turf directly in front of the keyed target (the tile it is facing) and stores it,
-/// so we can line up an action on its front. Fails if the turf is missing or blocked.
+/// so we can line up an action on its front.. Fails if the turf is missing or blocked.
 /datum/bt_node/ai_behavior/find_target_facing_turf
 	/// Blackboard key holding the target we want to line up against.
 	var/target_key

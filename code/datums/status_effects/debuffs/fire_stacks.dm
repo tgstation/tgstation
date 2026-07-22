@@ -10,11 +10,11 @@
 	var/stacks
 	/// Maximum of stacks that we could possibly get
 	var/stack_limit = MAX_FIRE_STACKS
-	/// What status effect types do we remove uppon being applied. These are just deleted without any deduction from our or their stacks when forced.
+	/// What status effect types do we remove uppon being applied.. These are just deleted without any deduction from our or their stacks when forced.
 	var/list/enemy_types
-	/// What status effect types do we merge into if they exist. Ignored when forced.
+	/// What status effect types do we merge into if they exist.. Ignored when forced.
 	var/list/merge_types
-	/// What status effect types do we override if they exist. These are simply deleted when forced.
+	/// What status effect types do we override if they exist.. These are simply deleted when forced.
 	var/list/override_types
 	/// For how much firestacks does one our stack count
 	var/stack_modifier = 1
@@ -95,7 +95,7 @@
 	stacks = max(0, min(stack_limit, stacks + new_stacks))
 	cache_stacks()
 
-/// Checks if the applicable basic mob is immune to the status effect we're trying to apply. Returns TRUE if it is, FALSE if it isn't.
+/// Checks if the applicable basic mob is immune to the status effect we're trying to apply.. Returns TRUE if it is, FALSE if it isn't.
 /datum/status_effect/fire_handler/proc/check_basic_mob_immunity(mob/living/basic/basic_owner)
 	return (basic_owner.basic_mob_flags & FLAMMABLE_MOB)
 

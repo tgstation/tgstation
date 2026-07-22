@@ -44,7 +44,7 @@
 // If we're zipped, click to unzip
 /obj/item/storage/backpack/duffelbag/attack_hand(mob/user, list/modifiers)
 	if(loc != user)
-		// Hacky, but please don't be cringe yeah?
+		// Hacky, but please don't be uncomfortable yeah?
 		atom_storage.silent = TRUE
 		. = ..()
 		atom_storage.silent = initial(atom_storage.silent)
@@ -100,7 +100,7 @@
 		var/mob/living/wearer = loc
 		wearer.update_equipment_speed_mods()
 
-/// Signal handler for [COMSIG_SPEED_POTION_APPLIED]. Speed potion removes the unzipped slowdown
+/// Signal handler for [COMSIG_SPEED_POTION_APPLIED].. Speed potion removes the unzipped slowdown
 /obj/item/storage/backpack/duffelbag/proc/on_speed_potioned(datum/source)
 	SIGNAL_HANDLER
 	// Don't need to touch the actual slowdown here, since the speed potion does it for us
@@ -245,9 +245,9 @@
 	inhand_icon_state = "duffel-syndieammo"
 	storage_type = /datum/storage/duffel/syndicate
 	resistance_flags = FIRE_PROOF
-	// Less slowdown while unzipped. Still bulky, but it won't halve your movement speed in an active combat situation.
+	// Less slowdown while unzipped.. Still bulky, but it won't halve your movement speed in an active combat situation.
 	zip_slowdown = 0.3
-	// Faster unzipping. Utilizes the same noise as zipping up to fit the unzip duration.
+	// Faster unzipping.. Uses the same noise as zipping up to fit the unzip duration.
 	unzip_duration = 0.5 SECONDS
 	unzip_sfx = 'sound/items/zip/zip_up.ogg'
 

@@ -16,7 +16,7 @@
 	var/atom/origin = null
 	///where the beam goes to
 	var/atom/target = null
-	///list of beam objects. These have their visuals set by the visuals var which is created on starting
+	/// list of beam objects.. These have their visuals set by the visuals var which is created on starting
 	var/list/elements = list()
 	///icon used by the beam.
 	var/icon
@@ -26,7 +26,7 @@
 	var/max_distance = 0
 	///the objects placed in the elements list
 	var/beam_type = /obj/effect/ebeam
-	///This is used as the visual_contents of beams, so you can apply one effect to this and the whole beam will look like that. never gets deleted on redrawing.
+	/// This is used as the visual_contents of beams, so you can apply one effect to this and the whole beam will look like that.. never gets deleted on redrawing.
 	var/obj/effect/ebeam/visuals
 	///The color of the beam we're drawing.
 	var/beam_color
@@ -56,7 +56,7 @@
 	var/last_target_y = 0
 	var/last_target_px = 0
 	var/last_target_py = 0
-	///Animate time queued for the pending redraw. We take the largest (slowest glide) of any movers that triggered the redraw.
+	/// Animate time queued for the pending redraw.. We take the largest (slowest glide) of any movers that triggered the redraw.
 	var/pending_animate_time = 0
 	///Last animation's "from" (where segments were seeded at draw time) — origin endpoint.
 	var/anim_from_origin_x = 0
@@ -68,7 +68,7 @@
 	var/anim_from_target_y = 0
 	var/anim_from_target_px = 0
 	var/anim_from_target_py = 0
-	///world.time at which the last animation began. Combined with anim_duration to estimate segments' current visual position mid-animation.
+	/// world.time at which the last animation began.. Combined with anim_duration to estimate segments' current visual position mid-animation.
 	var/anim_start_time = 0
 	///Duration of the last animation, in deciseconds (matches the time= passed to animate()).
 	var/anim_duration = 0
@@ -138,10 +138,10 @@
 	if(queued_time > pending_animate_time)
 		pending_animate_time = queued_time
 	// Synchronous: deferring via INVOKE_ASYNC would start animate() one render frame after the mob's
-	// BYOND-managed glide, making the beam trail. Draw() doesn't sleep, so calling it here is safe.
+	// BYOND-managed glide, making the beam trail.. Draw() doesn't sleep, so calling it here is safe.
 	Draw()
 
-/** Returns the last drawn endpoints for reuse by inherit_glide(), or null if undrawn. */
+/** * Returns the last drawn endpoints for reuse by inherit_glide(), or null if undrawn. */
 /datum/beam/proc/get_last_geometry()
 	if(!last_draw_valid)
 		return null
@@ -156,7 +156,7 @@
 		"target_py" = last_target_py,
 	)
 
-/** Seeds the next Draw() from saved geometry so rebuilt beams glide instead of snapping. */
+/** * Seeds the next Draw() from saved geometry so rebuilt beams glide instead of snapping. */
 /datum/beam/proc/inherit_glide(list/geometry, animate_time)
 	if(!geometry || animate_time <= 0)
 		return
@@ -208,7 +208,7 @@
 	var/target_py = (isnull(override_target_pixel_y) ? target.pixel_y : override_target_pixel_y) + target.pixel_z
 
 	// Seed from where segments visually are *now*, not where the last Draw asked them to end up.
-	// If the previous animation is still in flight (e.g. consecutive-tick or mid-diagonal moves),
+	// If the previous animation is still in flight (e.g.. consecutive-tick or mid-diagonal moves),
 	// using the cached destination teleports segments forward then animates back — the diagonal jump.
 	// Lerp last from→to by elapsed time to get the real current frame.
 	var/progress = 1

@@ -84,7 +84,7 @@
 	if (flags_1 & ON_BORDER_1)
 		return
 
-	//Adds the component only once. We do it here & not in Initialize() because there are tons of windows & we don't want to add to their init times
+	// Adds the component only once.. We do it here & not in Initialize() because there are tons of windows & we don't want to add to their init times
 	LoadComponent(/datum/component/leanable, dropping)
 
 /obj/structure/window/examine(mob/user)
@@ -345,7 +345,7 @@
 			transfer_fingerprints_to(debris) // transfer fingerprints to shards only
 	update_nearby_icons()
 
-///Spawns shard and debris decal based on the glass_material_datum, spawns rods if window is reinforned and number of shards/rods is determined by the window being fulltile or not.
+/// Spawns shard. Debris decal good on the glass_material_datum, spawns rods if window is reinforned. Number of shards/rods is determined by the window being fulltile. Not.
 /obj/structure/window/proc/spawn_debris(location)
 	var/datum/material/glass_material_ref = SSmaterials.get_material(glass_material_datum)
 	var/obj/item/shard_type = glass_material_ref.shard_type
@@ -505,7 +505,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 //Adding a timestamp, I found this in 2020, I hope it's from this year -Lemon
 //2021 AND STILLLL GOING STRONG
 //2022 BABYYYYY ~lewc
-//2023 ONE YEAR TO GO! -LT3
+// 2023 ONE YEAR TO GO!. -LT3
 //2026 just a week away - kemble
 /datum/armor/window_reinforced
 	melee = 80

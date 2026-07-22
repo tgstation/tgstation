@@ -21,7 +21,7 @@
 	var/charge_overlay_icon
 	/// What icon state should we use for our overlay
 	var/charge_overlay_state
-	/// The actual appearance / our overlay. Don't mess with this
+	/// The actual appearance / our overlay.. Don't mess with this
 	var/mutable_appearance/charge_overlay_instance
 
 	// Sound optional, played when we start chanelling
@@ -116,7 +116,7 @@
 	var/target_radius = 5
 	/// The maximum number of bounces the beam will go before stopping.
 	var/max_beam_bounces = 1
-	/// Who's our initial beam target? Set in before cast, used in cast.
+	/// Who's our initial beam target?. Set in before cast, used in cast.
 	var/atom/initial_target
 
 /datum/action/cooldown/spell/charged/beam/Destroy()

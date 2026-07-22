@@ -1,6 +1,6 @@
-/// How many life ticks are required for the nightmare's heart to revive the nightmare.
+/// How many life ticks are needed for the nightmare's heart to revive the nightmare.
 #define HEART_RESPAWN_THRESHHOLD (80 SECONDS)
-/// A special flag value used to make a nightmare heart not grant a light eater. Appears to be unused.
+/// A special flag value used to make a nightmare heart not grant a light eater.. Appears to be unused.
 #define HEART_SPECIAL_SHADOWIFY 2
 
 /obj/item/organ/brain/shadow/nightmare
@@ -88,7 +88,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5)
 	// In case you want to drink light as well as eat it
 	organ_traits = list(TRAIT_LIGHT_DRINKER)
-	/// How many life ticks in the dark the owner has been dead for. Used for nightmare respawns.
+	/// How many life ticks in the dark the owner has been dead for.. Used for nightmare respawns.
 	var/respawn_progress = 0
 	/// The armblade granted to the host of this heart.
 	var/obj/item/light_eater/blade

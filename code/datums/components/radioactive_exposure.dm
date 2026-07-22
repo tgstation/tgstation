@@ -8,7 +8,7 @@
 	var/irradiation_chance
 	/// The amount the base chance is increased after every failed irradiation check
 	var/irradiation_chance_increment
-	/// Time till we attempt the next irradiation check
+	/// Time till we try the next irradiation check
 	var/irradiation_interval
 	/// The source of irradiation, for logging
 	var/source
@@ -42,7 +42,7 @@
 	var/mob/living/living_parent = parent
 	living_parent.throw_alert(ALERT_RADIOACTIVE_AREA, /atom/movable/screen/alert/radioactive_area)
 
-/// Try and irradiate them. If we chance fail, we come back harder
+/// Try and irradiate them.. If we chance fail, we come back harder
 /datum/component/radioactive_exposure/proc/attempt_irradiate()
 	if(!SSradiation.wearing_rad_protected_clothing(parent) && SSradiation.can_irradiate_basic(parent))
 		if(prob(irradiation_chance))

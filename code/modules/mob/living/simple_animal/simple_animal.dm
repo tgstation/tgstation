@@ -10,23 +10,23 @@
 	status_flags = CANPUSH
 
 	var/icon_living = ""
-	///Icon when the animal is dead. Don't use animated icons for this.
+	/// Icon when the animal is dead.. Don't use animated icons for this.
 	var/icon_dead = ""
 	///We only try to show a gibbing animation if this exists.
 	var/icon_gib = null
-	///Flip the sprite upside down on death. Mostly here for things lacking custom dead sprites.
+	/// Flip the sprite upside down on death.. Mostly here for things lacking custom dead sprites.
 	var/flip_on_death = FALSE
 
 	var/list/speak
-	///Emotes while speaking IE: `Ian [emote], [text]` -- `Ian barks, "WOOF!".` Spoken text is generated from the speak variable.
+	/// Emotes while speaking that is `Ian [emote], [text]` -- `Ian barks, "WOOF!".` Spoken text is generated from the speak variable.
 	var/list/speak_emote
 	var/speak_chance = 0
 	///Hearable emotes
 	var/list/emote_hear
-	///Unlike speak_emote, the list of things in this variable only show by themselves with no spoken text. IE: Ian barks, Ian yaps
+	/// Unlike speak_emote, the list of things in this variable only show by themselves with no spoken text.. that is Ian barks, Ian yaps
 	var/list/emote_see
 
-	///ticks up every time `handle_automated_movement()` is called, which is every 2 seconds at the time of documenting. 1  turns per move is 1 movement every 2 seconds.
+	/// ticks up every time `handle_automated_movement()` is called, which is every 2 seconds at the time of documenting.. 1 turns per move is 1 movement every 2 seconds.
 	var/turns_per_move = 1
 	var/turns_since_move = 0
 	///Use this to temporarely stop random movement or to if you write special movement code for animals.
@@ -69,16 +69,16 @@
 	/// List of weather immunity traits that are then added on Initialize(), see traits.dm.
 	var/list/weather_immunities
 
-	///Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
+	/// Atmos effect - Yes, you can make creatures that need plasma or co2 to survive.. N2O is a trace gas and handled separately, so why it isn't here.. It'd be hard to add it.. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
 	///Leaving something at 0 means it's off - has no maximum.
 	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
-	///This damage is taken when atmos doesn't fit all the requirements above.
+	/// This damage is taken when atmos doesn't fit all the needs above.
 	var/unsuitable_atmos_damage = 1
 
-	///How fast the mob's temperature normalizes. The greater the value, the slower their temperature normalizes. Should always be greater than 0.
+	/// How fast the mob's temperature normalizes.. The greater the value, the slower their temperature normalizes.. Should always be greater than 0.
 	var/temperature_normalization_speed = 5
 
-	//Defaults to zero so Ian can still be cuddly. Moved up the tree to living! This allows us to bypass some hardcoded stuff.
+	// Defaults to zero so Ian can still be cuddly.. Moved up the tree to living!. This allows us to bypass some hardcoded stuff.
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	///how much damage this simple animal does to objects, if any.
@@ -104,7 +104,7 @@
 	///Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls.
 	var/environment_smash = ENVIRONMENT_SMASH_NONE
 
-	///LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster.
+	/// LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING.. Higher speed is slower, negative speed is faster.
 	var/speed = 1
 
 	///Hot simple_animal baby making vars.
@@ -113,7 +113,7 @@
 	///Sorry, no spider+corgi buttbabies.
 	var/animal_species
 
-	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
+	/// If the mob can be spawned with a gold slime core.. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
 	var/gold_core_spawnable = NO_SPAWN
 
 	///Sentience type, for slime potions.
@@ -129,7 +129,7 @@
 	///Played when someone punches the creature.
 	var/attacked_sound = SFX_PUNCH
 
-	///The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever).
+	/// The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process. Will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever).
 	var/AIStatus = AI_ON
 	///once we have become sentient, we can never go back.
 	var/can_have_ai = TRUE
@@ -139,7 +139,7 @@
 
 	///I don't want to confuse this with client registered_z.
 	var/my_z
-	///What kind of footstep this mob should have. Null if it shouldn't have any.
+	/// What kind of footstep this mob should have.. Null if it shouldn't have any.
 	var/footstep_type
 
 	///How much wounding power it has
@@ -190,7 +190,7 @@
 	if(isnull(unsuitable_heat_damage))
 		unsuitable_heat_damage = unsuitable_atmos_damage
 
-	///We need to wait for SSair to be initialized before we can check atmos/temp requirements.
+	/// We need to wait for SSair to be initialized before we can check atmos/temp needs
 	if(PERFORM_ALL_TESTS(focus_only/atmos_and_temp_requirements) && mapload && !SSair.initialized)
 		RegisterSignal(SSair, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(on_ssair_init))
 		return
@@ -258,7 +258,7 @@
 		return
 	if(!isturf(loc) && !allow_movement_on_non_turfs)
 		return
-	if(!(mobility_flags & MOBILITY_MOVE)) //This is so it only moves if it's not inside a closet, gentics machine, etc.
+	if(!(mobility_flags & MOBILITY_MOVE)) // This is so it only moves if it's not inside a closet, gentics machine, and so on
 		return TRUE
 
 	turns_since_move++
@@ -426,7 +426,7 @@
 			else if(!is_child && M.gender == MALE && !(M.flags_1 & HOLOGRAM_1)) //Better safe than sorry ;_;
 				partner = M
 
-		else if(isliving(M) && !faction_check_atom(M)) //shyness check. we're not shy in front of things that share a faction with us.
+		else if(isliving(M) && !faction_check_atom(M)) // shyness check.. we're not shy in front of things that share a faction with us.
 			return //we never mate when not alone, so just abort early
 
 	if(alone && partner && children < 3)
@@ -499,7 +499,7 @@
 		else
 			stack_trace("Something attempted to set simple animals AI to an invalid state: [togglestatus]")
 
-///This proc is used for adding the swabbale element to mobs so that they are able to be biopsied and making sure holographic and butter-based creatures don't yield viable cells samples.
+/// This proc is used f. Adding the swabbale element to mobs so that they are able to be biopsied. Making sure holographic. Butter-based creatures don't yield viable cells samples.
 /mob/living/simple_animal/proc/add_cell_sample()
 	return
 
@@ -525,9 +525,9 @@
 	GLOB.move_manager.move_to(src, target, minimum_distance, delay)
 	return TRUE
 
-//Makes this mob hunt the prey, be it living or an object. Will kill living creatures, and delete objects.
+// Makes this mob hunt the prey, be it living or an object.. Will kill living creatures, and delete objects.
 /mob/living/simple_animal/proc/hunt(hunted)
-	if(src == hunted) //Make sure it doesn't eat itself. While not likely to ever happen, might as well check just in case.
+	if(src == hunted) // Make sure it doesn't eat itself.. While not likely to ever happen, might as well check just in case.
 		return
 	stop_automated_movement = FALSE
 	if(!isturf(src.loc)) // Are we on a proper turf?
@@ -554,7 +554,7 @@
 			prey = null
 			COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 			return
-	else // We're hunting an object, and should delete it instead of killing it. Mostly useful for decal bugs like ants or spider webs.
+	else // We're hunting an object, and should delete it instead of killing it.. Mostly useful for decal bugs like ants or spider webs.
 		manual_emote("chomps [hunted]!")
 		qdel(hunted)
 		hunted = null

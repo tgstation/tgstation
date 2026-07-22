@@ -54,7 +54,7 @@
 			modularInterface?.interact(usr)
 			return TRUE
 		if("Door Jack")
-			// Look to door_jack.dm for implementation
+			// Look to door_jack.dm for code
 			door_jack(params["mode"])
 			return TRUE
 		if("Encryption Slot")
@@ -78,7 +78,7 @@
 			newscaster.ui_interact(src)
 			return TRUE
 		if("Photography Module")
-			// Look to pai_camera.dm for implementation
+			// Look to pai_camera.dm for code
 			use_camera(usr, params["mode"])
 			return TRUE
 		if("Remote Signaler")

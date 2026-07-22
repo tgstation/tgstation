@@ -1,4 +1,4 @@
-// JATUM. System for making the serializing and deserializing of PoD types easier
+// JATUM.. System for making the serializing and deserializing of PoD types easier
 
 /**
  * Gets the flat list that can be passed in a `new /type(argslist(retval))` expression to recreate the datum. Must only return a list containing values that can be JATUM serialized

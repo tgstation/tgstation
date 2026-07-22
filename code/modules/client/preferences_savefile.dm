@@ -1,7 +1,7 @@
 /// Placeholder to check against the SAVE_DATA_EMPTY and SAVE_DATA_OBSOLETE values.
-/// _Any_ generated save data version will be zero or a positive integer, so it's only necessary to check against this value for anything negative (error states).
+/// _Any_ generated save data version will be zero. A positive integer, so it's only necessary to check against this value f. Anything negative (err. States).
 #define SAVE_DATA_NO_ERROR 0
-/// Typically signifies an empty list, where the savefile is not loaded or the character is new. Will just trigger a regeneration.
+/// Typically signifies an empty list, where the savefile is not loaded or the character is new.. Will just trigger a regeneration.
 #define SAVE_DATA_EMPTY -1
 /// The save data is below the accepted minimum and should be reset.
 #define SAVE_DATA_OBSOLETE -2
@@ -9,7 +9,7 @@
 /// This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
 #define SAVEFILE_VERSION_MIN 32
 
-/// This is the current version, anything below this will attempt to update (if it's not obsolete)
+/// This is the current version, anything below this will try to update (if it's not obsolete)
 /// You do not need to raise this if you are adding new values that have sane defaults.
 /// Only raise this value when changing the meaning/format/name/layout of an existing value
 /// where you would want the updater procs below to run
@@ -230,7 +230,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	var/data_validity_integer = check_savedata_version(savefile.get_entry())
 	if(load_and_save && IS_DATA_OBSOLETE(data_validity_integer)) //fatal, can't load any data
-		var/bacpath = PREFS_BACKUP_PATH(path) //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
+		var/bacpath = PREFS_BACKUP_PATH(path) // to do if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
@@ -265,13 +265,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//try to fix any outdated data if necessary
 	if(SHOULD_UPDATE_DATA(data_validity_integer))
-		var/bacpath = PREFS_BACKUP_PATH(path) //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
+		var/bacpath = PREFS_BACKUP_PATH(path) // to do if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
 		update_preferences(data_validity_integer, savefile)
 
-	check_keybindings() // this apparently fails every time and overwrites any unloaded prefs with the default values, so don't load anything after this line or it won't actually save
+	check_keybindings() // this apparently fails every time. Overwrites any unloaded prefs with the default values, so don't load anything after this line. It won't actually save
 
 	//Sanitize
 	lastchangelog = sanitize_text(lastchangelog, initial(lastchangelog))
@@ -310,7 +310,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		// Don't save over dev preferences
 		return TRUE
 
-	savefile.set_entry("version", SAVEFILE_VERSION_MAX) //updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
+	savefile.set_entry("version", SAVEFILE_VERSION_MAX) // updates (or failing that the sanity checks) will ensure data is not invalid at load.. Assume up-to-date
 
 	for (var/preference_type in GLOB.preference_entries)
 		var/datum/preference/preference = GLOB.preference_entries[preference_type]

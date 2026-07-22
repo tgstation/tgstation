@@ -1,4 +1,4 @@
-/// Max number of unanchored items that will be moved from a tile when attempting to add a window to a grille.
+/// Max number of unanchored items that will be moved from a tile when trying to add a window to a grille.
 #define CLEAR_TILE_MOVE_LIMIT 20
 
 /obj/structure/grille
@@ -376,8 +376,8 @@
 				var/obj/structure/cable/C = T.get_cable_node()
 				if(C)
 					playsound(src, 'sound/effects/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-					tesla_zap(source = src, zap_range = 3, power = C.newavail() * 0.01, cutoff = 1e3, zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN | ZAP_ALLOW_DUPLICATES) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
-					C.add_delayedload(C.newavail() * 0.0375) // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock. // What do you mean by this?
+					tesla_zap(source = src, zap_range = 3, power = C.newavail() * 0.01, cutoff = 1e3, zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN | ZAP_ALLOW_DUPLICATES) // Zap for 1/100 of the amount of power.. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
+					C.add_delayedload(C.newavail() * 0.0375) // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X f. 3.5x the 3 bounces shock.. // What do you mean by this?
 	return ..()
 
 /obj/structure/grille/get_dumping_location()
@@ -396,7 +396,7 @@
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, forceMove), loc), time_to_go + time_to_return) //we back boys
 	addtimer(VARSET_CALLBACK(src, dramatically_disappearing, FALSE), time_to_go + time_to_return) //also set the var back
 
-/// Do some very specific checks to see if we *would* get shocked. Returns TRUE if it's shocked
+/// Do some very specific checks to see if we *would* get shocked.. Returns TRUE if it's shocked
 /obj/structure/grille/proc/is_shocked()
 	var/turf/turf = get_turf(src)
 	var/obj/structure/cable/cable = turf.get_cable_node()

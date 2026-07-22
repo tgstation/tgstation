@@ -23,7 +23,7 @@
 	var/obj/item/inventory_head = null
 	///Currently worn item on the back slot
 	var/obj/item/inventory_back = null
-	///Is this corgi physically slow due to age, etc?
+	/// Is this corgi physically slow due to age, and so on
 	var/is_slow = FALSE
 	///Item slots that are available for this corgi to equip stuff into
 	var/list/strippable_inventory_slots = list()
@@ -209,8 +209,8 @@
 		. += back_icon
 
 //Corgis are supposed to be simpler, so only a select few objects can actually be put
-//to be compatible with them. The objects are below.
-//Many  hats added, Some will probably be removed, just want to see which ones are popular.
+// to be compatible with them.. The objects are below.
+// Many hats added, Some will probably be removed, just want to see which ones are popular.
 // > some will probably be removed
 
 /**
@@ -235,7 +235,7 @@
 		to_chat(user, span_warning("\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!"))
 		return FALSE
 
-	//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a hat is removed.
+	// Various hats and items (worn on his head) change Ian's behaviour.. His attributes are reset when a hat is removed.
 	if(!ispath(item_to_add.dog_fashion, /datum/dog_fashion/head))
 		to_chat(user, span_warning("You set [item_to_add] on [src]'s head, but it falls off!"))
 		item_to_add.forceMove(drop_location())
@@ -342,7 +342,7 @@
 	var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 
-//IAN! SQUEEEEEEEEE~
+// IAN!. SQUEEEEEEEEE~
 /mob/living/basic/pet/dog/corgi/ian
 	name = "Ian"
 	real_name = "Ian" //Intended to hold the name without altering it.
@@ -472,7 +472,7 @@
 	if(!stat && !memory_saved)
 		Write_Memory(FALSE)
 
-//NARS-IAN! SQ-Q-QooEglor-r'EEn-nl-luEEEf-f-fth-h
+// NARS-IAN!. SQ-Q-QooEglor-r'EEn-nl-luEEEf-f-fth-h
 /mob/living/basic/pet/dog/corgi/narsie
 	name = "Nars-Ian"
 	real_name = "Nars-Ian"
@@ -494,7 +494,7 @@
 	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_prey_approached))
 	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = 1, works_in_containers = FALSE)
 
-/// Attempt to eat a pet we get near
+/// Try to eat a pet we get near
 /mob/living/basic/pet/dog/corgi/narsie/proc/on_prey_approached(atom/movable/dog, atom/movable/prey)
 	SIGNAL_HANDLER
 	if (!is_type_in_list(prey, edible_types) || istype(prey, type))
@@ -527,7 +527,7 @@
 		revive(ADMIN_HEAL_ALL) //also means that a dead Nars-Ian can consume a pet and revive
 	adjust_brute_loss(-maxHealth)
 
-//LISA! SQUEEEEEEEEE~
+// LISA!. SQUEEEEEEEEE~
 /mob/living/basic/pet/dog/corgi/lisa
 	name = "Lisa"
 	real_name = "Lisa"
@@ -547,7 +547,7 @@
 	held_state = "lisa"
 	strippable_inventory_slots = list(/datum/strippable_item/corgi_back, /datum/strippable_item/pet_collar, /datum/strippable_item/corgi_id) //Lisa already has a cute bow!
 
-//PUPPIES! SQUEEEEEEEEE~
+// PUPPIES!. SQUEEEEEEEEE~
 /mob/living/basic/pet/dog/corgi/puppy
 	name = "\improper corgi puppy"
 	real_name = "corgi"
@@ -563,7 +563,7 @@
 	can_breed = FALSE
 	collar_icon_state = "puppy"
 
-//PUPPY IAN! SQUEEEEEEEEE~
+// PUPPY IAN!. SQUEEEEEEEEE~
 /mob/living/basic/pet/dog/corgi/puppy/ian
 	name = "Ian"
 	real_name = "Ian"

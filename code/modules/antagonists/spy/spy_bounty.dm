@@ -9,12 +9,12 @@
 /datum/spy_bounty
 	/// The name of the bounty.
 	/// Should be a short description without punctuation.
-	/// IE: "Steal the captain's ID"
+	/// that is "Steal the captain's ID"
 	var/name
 	/// Help text for the bounty.
 	/// Should include additional information about the bounty to assist the spy in figuring out what to do.
 	/// Should be punctuated.
-	/// IE: "Steal the captain's ID. It was last seen in the captain's office."
+	/// that is "Steal the captain's ID.. It was last seen in the captain's office."
 	var/help
 	/// Difficult of the bounty, one of [SPY_DIFFICULTY_EASY], [SPY_DIFFICULTY_MEDIUM], [SPY_DIFFICULTY_HARD].
 	/// Must be set to one of the possible bounties to be picked.
@@ -27,7 +27,7 @@
 	/// Weight that the bounty will be selected.
 	var/weight = 1
 
-	/// Whether the bounty's been fully initialized. If this is not set, the bounty will be rerolled.
+	/// Whether the bounty's been fully initialized.. If this is not set, the bounty will be rerolled.
 	VAR_FINAL/initalized = FALSE
 	/// Whether the bounty has been completed.
 	VAR_FINAL/claimed = FALSE
@@ -90,7 +90,7 @@
 
 	if(!length(loot_pool))
 		reward_item = SStraitor.uplink_items_by_type[/datum/uplink_item/bundles_tc/telecrystal]
-		return // future todo : add some junk items for when we run out of items
+		return // future to do : add some junk items for when we run out of items
 
 	reward_item = pick(loot_pool)
 	// we remove here, rather than on claim, to reduce the chance of duplicate rewards in a single batch
@@ -275,7 +275,7 @@
 			continue
 		if(!is_valid_objective_item(item))
 			continue
-		// Determine difficulty. Has some overlap between the categories, which is OK
+		// Determine difficulty.. Has some overlap between the categories, which is OK
 		switch(difficulty)
 			if(SPY_DIFFICULTY_EASY)
 				if(item.difficulty >= 3)
@@ -322,7 +322,7 @@
 	/// What machine (typepath) we want to steal.
 	var/obj/machinery/target_type
 	/// What area (typepath) the desired machine is in.
-	/// Can be pre-set for subtypes. If set, requires the machine to be in the location_type.
+	/// Can be pre-set for subtypes.. If set, needs the machine to be in the location_type.
 	/// If not set, picks a random machine from all areas it can currently be found in.
 	var/area/location_type
 	/// List of weakrefs to all machines of the target type when the bounty was initialized.
@@ -463,7 +463,7 @@
 		/obj/machinery/computer/rdconsole,
 		/obj/machinery/computer/records/security,
 		/obj/machinery/computer/dna_console,
-		/obj/machinery/computer/security, // Requires breaking into a sec checkpoint, but not too hard, many are never visited
+		/obj/machinery/computer/security, // Needs breaking into a sec checkpoint, but not too hard, many are never visited
 		/obj/machinery/dna_scannernew,
 		/obj/machinery/mecha_part_fabricator,
 	)
@@ -715,7 +715,7 @@
 	return IS_WEAKREF_OF(stealing, target_bot_ref)
 
 /datum/spy_bounty/some_bot/beepsky
-	difficulty = SPY_DIFFICULTY_MEDIUM // gotta get him to stand still
+	difficulty = SPY_DIFFICULTY_MEDIUM // got to get him to stand still
 	bot_type = /mob/living/basic/bot/secbot/beepsky/officer
 	help = "Abduct Officer Beepsky - commonly found patrolling the station. \
 		Watch out, they may not take kindly to being scanned."

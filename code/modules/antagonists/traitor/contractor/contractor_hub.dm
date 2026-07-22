@@ -14,7 +14,7 @@
 	var/contracts_completed = 0
 	///How much TC has been paid out, for flavor in the UI & round-end logs.
 	var/contract_TC_payed_out = 0
-	///How much TC we can cash out currently. Used when redeeming TC and for round-end logs.
+	/// How much TC we can cash out currently.. Used when redeeming TC and for round-end logs.
 	var/contract_TC_to_redeem = 0
 
 /datum/contractor_hub/proc/create_contracts(datum/mind/owner)

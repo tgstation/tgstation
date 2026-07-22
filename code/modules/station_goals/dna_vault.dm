@@ -1,7 +1,7 @@
 //Crew has to create dna vault
 // Cargo can order DNA samplers + DNA vault boards
-// DNA vault requires x animals, y plants, z human dna
-// DNA vaults require high tier stock parts
+// DNA vault needs x animals, why plants, z human dna
+// DNA vaults need high tier stock parts
 // After completion each crewmember can receive single upgrade chosen out of 2 for the mob.
 #define VAULT_TOXIN "Toxin Adaptation"
 #define VAULT_NOBREATH "Lung Enhancement"
@@ -89,7 +89,7 @@
 	var/list/obj/structure/fillers = list()
 
 /obj/machinery/dna_vault/Initialize(mapload)
-	//TODO: Replace this,bsa and gravgen with some big machinery datum
+	// To do Replace this,bsa and gravgen with some big machinery datum
 	var/list/occupied = list()
 	for(var/direct in list(EAST,WEST,SOUTHEAST,SOUTHWEST))
 		occupied += get_step(src,direct)

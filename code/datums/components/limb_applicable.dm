@@ -10,15 +10,15 @@
 	/// List of body zones we can apply parent to
 	var/list/valid_zones
 	/// Category that the parent is applied to
-	/// Defaults to REF(parent), ie, you can apply any number of this item to a limb
+	/// Defaults to REF(parent), that is you can apply any number of this item to a limb
 	/// Setting it to a category will prevent multiple items of that category being applied unless override_existing is TRUE
 	var/apply_category
 	/// If TRUE, replaces existing items with new ones
 	/// If FALSE, application will fail if an item of the same category is already applied
 	var/override_existing
-	/// Callback to determine if application can be attempted. Cannot sleep. (Return FALSE to block application)
+	/// Callback to determine if application can be tried Cannot sleep.. (Return FALSE to block application)
 	var/datum/callback/can_apply
-	/// Callback to attempt application, I.E. do_after()s. Can sleep.
+	/// Callback to try application, I.E.. do_after()s.. Can sleep.
 	var/datum/callback/do_apply
 	/// Callback invoked after application
 	var/datum/callback/on_apply

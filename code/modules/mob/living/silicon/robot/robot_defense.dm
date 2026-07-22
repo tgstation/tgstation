@@ -190,7 +190,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		balloon_alert(user, "toner filled")
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(tool, /obj/item/flashlight) && !istype(tool, /obj/item/flashlight/emp)) //subtypes my behated. OOP was a dumb idea
+	if(istype(tool, /obj/item/flashlight) && !istype(tool, /obj/item/flashlight/emp)) // subtypes my behated.. OOP was a dumb idea
 		if(user.combat_mode)
 			return NONE
 		if(!opened)
@@ -389,7 +389,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	return ITEM_INTERACT_SUCCESS
 
 /mob/living/silicon/robot/wrench_act(mob/living/user, obj/item/tool)
-	if(!(opened && !cell))	// Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
+	if(!(opened && !cell))	// Deconstruction.. The flashes break from the fall, to prevent this from being a ghetto reset module.
 		return NONE
 	if(!lockcharge)
 		to_chat(user, span_warning("[src]'s bolts spark! Maybe you should lock them down first!"))
@@ -459,14 +459,14 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		log_silicon("EMAG: [key_name(user)] attempted to emag cyborg [key_name(src)], but they were slaved to traitor AI [connected_ai].")
 		return TRUE // emag succeeded, it was just counteracted
 
-	if(shell) //AI shells cannot be emagged, so we try to make it look like a standard reset. Smart players may see through this, however.
+	if(shell) // AI shells cannot be emagged, so we try to make it look like a standard reset.. Smart players may see through this, but
 		to_chat(user, span_danger("[src] is remotely controlled! Your emag attempt has triggered a system reset instead!"))
 		log_silicon("EMAG: [key_name(user)] attempted to emag an AI shell belonging to [key_name(src) ? key_name(src) : connected_ai]. The shell has been reset as a result.")
 		ResetModel()
 		return TRUE
 
 	SetEmagged(TRUE)
-	Paralyze(10 SECONDS) //Make cyborgs actually unconscious. Without this they can scream for help over the radio mid-emag, which doesn't make much sense
+	Paralyze(10 SECONDS) // Make cyborgs actually unconscious.. Without this they can scream for help over the radio mid-emag, which doesn't make much sense
 	SetStun(10 SECONDS) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 	lawupdate = FALSE
 	set_connected_ai(null)
@@ -491,7 +491,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	to_chat(src, span_danger("Initiating diagnostics..."))
 	sleep(2 SECONDS)
 	to_chat(src, span_danger("SynBorg v1.7 loaded."))
-	logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") //random eight digit hex value. Two are used because rand(1,4294967295) throws an error
+	logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") // random eight digit hex value.. Two are used because rand(1,4294967295) throws an error
 	sleep(0.5 SECONDS)
 	to_chat(src, span_danger("LAW SYNCHRONISATION ERROR"))
 	sleep(0.5 SECONDS)

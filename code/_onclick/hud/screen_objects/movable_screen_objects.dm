@@ -1,7 +1,7 @@
 
 //////////////////////////
 //Movable Screen Objects//
-//   By RemieRichards //
+// By RemieRichards //
 //////////////////////////
 
 
@@ -31,7 +31,7 @@
 /atom/movable/screen/movable/proc/mouse_params_to_position(params)
 	var/list/modifiers = params2list(params)
 
-	//No screen-loc information? abort.
+	// No screen-loc information?. abort.
 	if(!LAZYACCESS(modifiers, SCREEN_LOC))
 		return
 	var/client/our_client = usr.client

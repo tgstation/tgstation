@@ -2,7 +2,7 @@
 /datum/shuttle_event/simple_spawner/player_controlled
 	spawning_list = list(/mob/living/basic/carp)
 
-	///If we cant find a ghost, do we spawn them anyway? Otherwise they go in the garbage bin
+	/// If we cant find a ghost, do we spawn them anyway?. Otherwise they go in the garbage bin
 	var/spawn_anyway_if_no_player = FALSE
 
 	var/ghost_alert_string = "Would you like to be shot at the shuttle?"
@@ -15,7 +15,7 @@
 	else
 		..()
 
-/// Attempt to grant control of a mob to ghosts before spawning it in. if spawn_anyway_if_no_player = TRUE, we spawn the mob even if there's no ghosts
+/// Try to grant control of a mob to ghosts before spawning it in.. if spawn_anyway_if_no_player = TRUE, we spawn the mob even if there's no ghosts
 /datum/shuttle_event/simple_spawner/player_controlled/proc/try_grant_ghost_control(spawn_type)
 	var/mob/living/new_mob = new spawn_type (null)
 	ADD_TRAIT(new_mob, TRAIT_STASIS, type)
@@ -45,7 +45,7 @@
 
 	role_type = ROLE_ALIEN
 
-///Spawns three player controlled carp!! Deadchats final chance to wreak havoc, probably really not that dangerous if even one person has a laser gun
+/// Spawns three player controlled carp!!. Deadchats final chance to wreak havoc, probably really not that dangerous if even one person has a laser gun
 /datum/shuttle_event/simple_spawner/player_controlled/carp
 	name = "Three player controlled carp! (Little dangerous!)"
 	spawning_list = list(/mob/living/basic/carp = 10, /mob/living/basic/carp/mega = 2, /mob/living/basic/carp/magic = 2, /mob/living/basic/carp/magic/chaos = 1)

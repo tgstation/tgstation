@@ -219,7 +219,7 @@ ADMIN_VERB(cmd_admin_areatest, R_DEBUG, "Test Areas", "Tests the areas for vario
 	var/static/list/station_areas_whitelist = typecacheof(list(
 		/area/station,
 	))
-	///Additionally, blacklist in order to filter out the types of areas that can show up on station Z-levels that we never need to test for.
+	/// Also blacklist in order to filter out the types of areas that can show up on station Z-levels that we never need to test for.
 	var/static/list/station_areas_blacklist = typecacheof(list(
 		/area/centcom/asteroid,
 		/area/mine,
@@ -826,7 +826,7 @@ ADMIN_VERB(check_missing_sprites, R_DEBUG, "Debug Worn Item Sprites", "We're can
 		var/obj/item/sprite = new test_obj
 		if(!sprite.slot_flags || (sprite.item_flags & ABSTRACT))
 			continue
-		//Is there an explicit worn_icon to pick against the worn_icon_state? Easy street expected behavior.
+		// Is there an explicit worn_icon to pick against the worn_icon_state?. Easy street expected behavior.
 		if(sprite.worn_icon)
 			if(!icon_exists(sprite.worn_icon, sprite.icon_state))
 				to_chat(user, span_warning("ERROR sprites for [sprite.type]. Slot Flags are [sprite.slot_flags]."), confidential = TRUE)

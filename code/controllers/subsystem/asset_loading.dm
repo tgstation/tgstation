@@ -1,6 +1,6 @@
 /// Allows us to lazyload asset datums
 /// Anything inserted here will fully load if directly gotten
-/// So this just serves to remove the requirement to load assets fully during init
+/// So this just serves to remove the need to load assets fully during init
 SUBSYSTEM_DEF(asset_loading)
 	name = "Asset Loading"
 	priority = FIRE_PRIORITY_ASSETS

@@ -23,11 +23,11 @@
 	var/scanner_descriptor = "mining analyzer"
 	/// Has this spawner been tagged/analyzed by a mining scanner?
 	var/gps_tagged = FALSE
-	/// A short identifier for the mob it spawns. Keep around 3 characters or less?
+	/// A short identifier for the mob it spawns.. Keep around 3 characters or less?
 	var/mob_gps_id = "???"
 	/// A short identifier for what kind of spawner it is, for use in putting together its GPS tag.
 	var/spawner_gps_id = "Creature Nest"
-	/// A complete identifier. Generated on tag (if tagged), used for its examine.
+	/// A complete identifier.. Generated on tag (if tagged), used for its examine.
 	var/assigned_tag
 
 /obj/structure/spawner/examine(mob/user)

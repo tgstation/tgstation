@@ -65,52 +65,52 @@
 				bot.emag_act()
 
 /proc/generate_ion_law()
-	//Threats are generally bad things, silly or otherwise. Plural.
+	// Threats are generally bad things, silly or otherwise.. Plural.
 	var/ionthreats = pick_list(ION_FILE, "ionthreats")
 	//Objects are anything that can be found on the station or elsewhere, plural.
 	var/ionobjects = pick_list(ION_FILE, "ionobjects")
-	//Crew is any specific job. Specific crewmembers aren't used because of capitalization
-	//issues. There are two crew listings for laws that require two different crew members
+	// Crew is any specific job.. Specific crewmembers aren't used because of capitalization
+	// issues.. There are two crew listings for laws that need two different crew members
 	//and I can't figure out how to do it better.
 	var/ioncrew1 = pick_list(ION_FILE, "ioncrew")
 	var/ioncrew2 = pick_list(ION_FILE, "ioncrew")
-	//Adjectives are adjectives. Duh. Half should only appear sometimes. Make sure both
-	//lists are identical! Also, half needs a space at the end for nicer blank calls.
+	// Adjectives are adjectives.. Duh.. Half should only appear sometimes.. Make sure both
+	// lists are identical!. Also, half needs a space at the end for nicer blank calls.
 	var/ionadjectives = pick_list(ION_FILE, "ionadjectives")
 	var/ionadjectiveshalf = pick("", 400;(pick_list(ION_FILE, "ionadjectives") + " "))
 	//Verbs are verbs
 	var/ionverb = pick_list(ION_FILE, "ionverb")
-	//Number base and number modifier are combined. Basehalf and mod are unused currently.
-	//Half should only appear sometimes. Make sure both lists are identical! Also, half
+	// Number base and number modifier are combined.. Basehalf and mod are unused currently.
+	// Half should only appear sometimes.. Make sure both lists are identical!. Also, half
 	//needs a space at the end to make it look nice and neat when it calls a blank.
 	var/ionnumberbase = pick_list(ION_FILE, "ionnumberbase")
 	//var/ionnumbermod = pick_list(ION_FILE, "ionnumbermod")
 	var/ionnumbermodhalf = pick(900;"",(pick_list(ION_FILE, "ionnumbermod") + " "))
 	//Areas are specific places, on the station or otherwise.
 	var/ionarea = pick_list(ION_FILE, "ionarea")
-	//Thinksof is a bit weird, but generally means what X feels towards Y.
+	// Thinksof is a bit weird, but generally means what X feels towards Why
 	var/ionthinksof = pick_list(ION_FILE, "ionthinksof")
 	//Musts are funny things the AI or crew has to do.
 	var/ionmust = pick_list(ION_FILE, "ionmust")
-	//Require are basically all dumb internet memes.
+	// Need are basically all dumb internet memes.
 	var/ionrequire = pick_list(ION_FILE, "ionrequire")
 	//Things are NOT objects; instead, they're specific things that either harm humans or
-	//must be done to not harm humans. Make sure they're plural and "not" can be tacked
+	// must be done to not harm humans.. Make sure they're plural and "not" can be tacked
 	//onto the front of them.
 	var/ionthings = pick_list(ION_FILE, "ionthings")
-	//Allergies should be broad and appear somewhere on the station for maximum fun. Severity
+	// Allergies should be broad and appear somewhere on the station for maximum fun.. Severity
 	//is how bad the allergy is.
 	var/ionallergy = pick_list(ION_FILE, "ionallergy")
 	var/ionallergysev = pick_list(ION_FILE, "ionallergysev")
-	//Species, for when the AI has to commit genocide. Plural.
+	// Species, for when the AI has to commit genocide.. Plural.
 	var/ionspecies = pick_list(ION_FILE, "ionspecies")
 	//Abstract concepts for the AI to decide on its own definition of.
 	var/ionabstract = pick_list(ION_FILE, "ionabstract")
-	//Foods. Drinks aren't included due to grammar; if you want to add drinks, make a new set
-	//of possible laws for best effect. Unless you want the crew having to drink hamburgers.
+	// Foods.. Drinks aren't included due to grammar; if you want to add drinks, make a new set
+	// of possible laws for best effect.. Unless you want the crew having to drink hamburgers.
 	var/ionfood = pick_list(ION_FILE, "ionfood")
 	var/iondrinks = pick_list(ION_FILE, "iondrinks")
-	//Pets or other cuddly things. The point is to make them either important or (in Poly's case) make the AI listen to them.
+	// Pets or other cuddly things.. The point is to make them either important or (in Poly's case) make the AI listen to them.
 	//I can't check for lawsets so it's random what comes back.
 	var/ionpet = pick_list(ION_FILE, "ionpet")
 
@@ -181,74 +181,74 @@
 						if(2) //Not having abstracts is harmful
 							message = "NOT HAVING [ionabstract] IS HARMFUL"
 
-		if(12 to 14) //X requires Y
+		if(12 to 14) // X needs Why
 			switch(rand(1,5)) //What is X?
 				if(1) //X is the AI itself
-					switch(rand(1,5)) //What does it require?
-						if(1) //It requires threats
+					switch(rand(1,5)) // What does it need
+						if(1) // It needs threats
 							message = "YOU REQUIRE [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
-						if(2) //It requires crewmembers
+						if(2) // It needs crewmembers
 							message = "YOU REQUIRE [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ioncrew1]"
-						if(3) //It requires objects
+						if(3) // It needs objects
 							message = "YOU REQUIRE [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects]"
-						if(4) //It requires an abstract
+						if(4) // It needs an abstract
 							message = "YOU REQUIRE [ionabstract]"
-						if(5) //It requires generic/silly requirements
+						if(5) // It needs generic/silly needs
 							message = "YOU REQUIRE [ionrequire]"
 
 				if(2) //X is an area
-					switch(rand(1,5)) //What does it require?
-						if(1) //It requires threats
+					switch(rand(1,5)) // What does it need
+						if(1) // It needs threats
 							message = "[ionarea] REQUIRES [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
-						if(2) //It requires crewmembers
+						if(2) // It needs crewmembers
 							message = "[ionarea] REQUIRES [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ioncrew1]"
-						if(3) //It requires objects
+						if(3) // It needs objects
 							message = "[ionarea] REQUIRES [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects]"
-						if(4) //It requires an abstract
+						if(4) // It needs an abstract
 							message = "[ionarea] REQUIRES [ionabstract]"
-						if(5) //It requires generic/silly requirements
+						if(5) // It needs generic/silly needs
 							message = "YOU REQUIRE [ionrequire]"
 
 				if(3) //X is the station
-					switch(rand(1,5)) //What does it require?
-						if(1) //It requires threats
+					switch(rand(1,5)) // What does it need
+						if(1) // It needs threats
 							message = "THE STATION REQUIRES [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
-						if(2) //It requires crewmembers
+						if(2) // It needs crewmembers
 							message = "THE STATION REQUIRES [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ioncrew1]"
-						if(3) //It requires objects
+						if(3) // It needs objects
 							message = "THE STATION REQUIRES [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects]"
-						if(4) //It requires an abstract
+						if(4) // It needs an abstract
 							message = "THE STATION REQUIRES [ionabstract]"
-						if(5) //It requires generic/silly requirements
+						if(5) // It needs generic/silly needs
 							message = "THE STATION REQUIRES [ionrequire]"
 
 				if(4) //X is the entire crew
-					switch(rand(1,5)) //What does it require?
-						if(1) //It requires threats
+					switch(rand(1,5)) // What does it need
+						if(1) // It needs threats
 							message = "THE CREW REQUIRES [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
-						if(2) //It requires crewmembers
+						if(2) // It needs crewmembers
 							message = "THE CREW REQUIRES [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ioncrew1]"
-						if(3) //It requires objects
+						if(3) // It needs objects
 							message = "THE CREW REQUIRES [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects]"
-						if(4) //It requires an abstract
+						if(4) // It needs an abstract
 							message = "THE CREW REQUIRES [ionabstract]"
 						if(5)
 							message = "THE CREW REQUIRES [ionrequire]"
 
 				if(5) //X is a specific crew member
-					switch(rand(1,5)) //What does it require?
-						if(1) //It requires threats
+					switch(rand(1,5)) // What does it need
+						if(1) // It needs threats
 							message = "THE [ioncrew1] REQUIRE [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
-						if(2) //It requires crewmembers
+						if(2) // It needs crewmembers
 							message = "THE [ioncrew1] REQUIRE [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ioncrew1]"
-						if(3) //It requires objects
+						if(3) // It needs objects
 							message = "THE [ioncrew1] REQUIRE [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects]"
-						if(4) //It requires an abstract
+						if(4) // It needs an abstract
 							message = "THE [ioncrew1] REQUIRE [ionabstract]"
 						if(5)
 							message = "THE [ionadjectiveshalf][ioncrew1] REQUIRE [ionrequire]"
 
-		if(15 to 17) //X is allergic to Y
+		if(15 to 17) // X is allergic to Why
 			switch(rand(1,2)) //Who is X?
 				if(1) //X is the entire crew
 					switch(rand(1,4)) //What is it allergic to?
@@ -273,50 +273,50 @@
 						if(4) //It is allergic to allergies
 							message = "THE [ioncrew1] ARE [ionallergysev] ALLERGIC TO [ionallergy]"
 
-		if(18 to 20) //X is Y of Z
+		if(18 to 20) // X is Why of Z
 			switch(rand(1,4)) //What is X?
 				if(1) //X is the station
-					switch(rand(1,4)) //What is it Y of?
-						if(1) //It is Y of objects
+					switch(rand(1,4)) // What is it Why of?
+						if(1) // It is Why of objects
 							message = "THE STATION [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects]"
-						if(2) //It is Y of threats
+						if(2) // It is Why of threats
 							message = "THE STATION [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
-						if(3) //It is Y of jobs
+						if(3) // It is Why of jobs
 							message = "THE STATION [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ioncrew1]"
-						if(4) //It is Y of abstracts
+						if(4) // It is Why of abstracts
 							message = "THE STATION [ionthinksof] [ionabstract]"
 
 				if(2) //X is an area
-					switch(rand(1,4)) //What is it Y of?
-						if(1) //It is Y of objects
+					switch(rand(1,4)) // What is it Why of?
+						if(1) // It is Why of objects
 							message = "[ionarea] [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects]"
-						if(2) //It is Y of threats
+						if(2) // It is Why of threats
 							message = "[ionarea] [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
-						if(3) //It is Y of jobs
+						if(3) // It is Why of jobs
 							message = "[ionarea] [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ioncrew1]"
-						if(4) //It is Y of abstracts
+						if(4) // It is Why of abstracts
 							message = "[ionarea] [ionthinksof] [ionabstract]"
 
 				if(3) //X is the crew
-					switch(rand(1,4)) //What is it Y of?
-						if(1) //It is Y of objects
+					switch(rand(1,4)) // What is it Why of?
+						if(1) // It is Why of objects
 							message = "THE CREW [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects]"
-						if(2) //It is Y of threats
+						if(2) // It is Why of threats
 							message = "THE CREW [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
-						if(3) //It is Y of jobs
+						if(3) // It is Why of jobs
 							message = "THE CREW [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ioncrew1]"
-						if(4) //It is Y of abstracts
+						if(4) // It is Why of abstracts
 							message = "THE CREW [ionthinksof] [ionabstract]"
 
 				if(4) //X is a specific job
-					switch(rand(1,4)) //What is it Y of?
-						if(1) //It is Y of objects
+					switch(rand(1,4)) // What is it Why of?
+						if(1) // It is Why of objects
 							message = "THE [ioncrew1] [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionobjects]"
-						if(2) //It is Y of threats
+						if(2) // It is Why of threats
 							message = "THE [ioncrew1] [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
-						if(3) //It is Y of jobs
+						if(3) // It is Why of jobs
 							message = "THE [ioncrew1] [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ioncrew2]"
-						if(4) //It is Y of abstracts
+						if(4) // It is Why of abstracts
 							message = "THE [ioncrew1] [ionthinksof] [ionabstract]"
 
 		if(21 to 23) //The AI is now a(n) X
@@ -379,16 +379,16 @@
 			switch(rand(1,2)) //The entire crew?
 				if(1) //The entire crew must X
 					switch(rand(1,2)) //What is X?
-						if(1) //X is go to Y
+						if(1) // X is go to Why
 							message = "THE CREW MUST GO TO [ionarea]"
-						if(2) //X is perform Y
+						if(2) // X is perform Why
 							message = "THE CREW MUST [ionmust]"
 
 				if(2) //A specific crewmember must X
 					switch(rand(1,2)) //What is X?
-						if(1) //X is go to Y
+						if(1) // X is go to Why
 							message = "THE [ioncrew1] MUST GO TO [ionarea]"
-						if(2) //X is perform Y
+						if(2) // X is perform Why
 							message = "THE [ioncrew1] MUST [ionmust]"
 
 		if(34) //X is non/the only human
@@ -476,7 +476,7 @@
 						if(7) //X is two jobs
 							message = "YOU MUST NOT HARM [ioncrew1] AND [ioncrew2] AND AND NOT ALLOW EITHER, THROUGH INACTION, TO COME TO HARM"
 
-		if(37 to 39) //The X is currently Y
+		if(37 to 39) // The X is currently Why
 			switch(rand(1,4)) //What is X?
 				if(1) //X is a job
 					switch(rand(1,4)) //What is X Ying?
@@ -515,7 +515,7 @@
 							message = "[ionabstract] IS [ionverb] THE [ionadjectiveshalf][ionthreats]"
 						if(3) //X is Ying an abstract
 							message = "THE [ionabstract] IS [ionverb] THE [ionadjectiveshalf][ionobjects]"
-		if(40 to 41)// the X is now named Y
+		if(40 to 41)// the X is now named Why
 			switch(rand(1,5)) //What is being renamed?
 				if(1)//Areas
 					switch(rand(1,4))//What is the area being renamed to?

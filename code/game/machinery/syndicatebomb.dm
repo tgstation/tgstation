@@ -35,17 +35,17 @@
 	var/delayedbig = FALSE
 	/// Is the activation wire pulsed?
 	var/delayedlittle = FALSE
-	/// Should we just tell the payload to explode now? Usually triggered by an event (like cutting the wrong wire)
+	/// Should we just tell the payload to explode now?. Usually triggered by an event (like cutting the wrong wire)
 	var/explode_now = FALSE
 	/// The timer for the bomb.
 	var/detonation_timer
 	/// When do we beep next?
 	var/next_beep
-	/// If TRUE, more boom wires are added based on the timer set.
+	/// If TRUE, more boom wires are added good on the timer set.
 	var/add_boom_wires = TRUE
 	/// Reference to the bomb core inside the bomb, which is the part that actually explodes.
 	var/obj/item/bombcore/payload = /obj/item/bombcore/syndicate
-	/// The countdown that'll show up to ghosts regarding the bomb's timer.
+	/// The countdown that'll show up to ghosts about the bomb's timer.
 	var/obj/effect/countdown/syndicatebomb/countdown
 	/// Whether the countdown is visible on examine
 	var/examinable_countdown = TRUE
@@ -550,7 +550,7 @@
 
 	if(!chem_splash(get_turf(src), reagents, spread_range, reactants, temp_boost))
 		playsound(loc, 'sound/items/tools/screwdriver2.ogg', 50, TRUE)
-		return // The Explosion didn't do anything. No need to log, or disappear.
+		return // The Explosion didn't do anything.. No need to log, or disappear.
 
 	if(adminlog)
 		message_admins(adminlog)
@@ -589,7 +589,7 @@
 		if(istype(nade, /obj/item/grenade/chem_grenade/large))
 			max_beakers += 1 // Adding two large grenades only allows for a maximum of 7 beakers.
 			spread_range += 2 // Extra range, reduced density.
-			temp_boost += 50 // maximum of +150K blast using only large beakers. Not enough to self ignite.
+			temp_boost += 50 // maximum of +150K blast using only large beakers.. Not enough to self ignite.
 			for(var/obj/item/slime_extract/slime in nade.beakers) // And slime cores.
 				if(beakers.len < max_beakers)
 					beakers += slime
@@ -602,10 +602,10 @@
 			temp_boost -= 100 // minimum of -150K blast.
 
 		if(istype(nade, /obj/item/grenade/chem_grenade/pyro))
-			temp_boost += 150 // maximum of +350K blast, which is enough to self ignite. Which means a self igniting bomb can't take advantage of other grenade casing properties. Sorry?
+			temp_boost += 150 // maximum of +350K blast, which is enough to self ignite.. Which means a self igniting bomb can't take advantage of other grenade casing properties.. Sorry?
 
 		if(istype(nade, /obj/item/grenade/chem_grenade/adv_release))
-			time_release += 5 SECONDS // A typical bomb, using basic beakers, will explode over 2-4 seconds. Using two will make the reaction last for less time, but it will be more dangerous overall.
+			time_release += 5 SECONDS // A typical bomb, using basic beakers, will explode over 2-4 seconds.. Using two will make the reaction last for less time, but it will be more dangerous overall.
 
 		for(var/obj/item/reagent_containers/cup/beaker in nade)
 			if(beakers.len < max_beakers)
@@ -714,7 +714,7 @@
 
 #undef DIMENSION_CHOICE_RANDOM
 
-///Syndicate Detonator (aka the big red button)///
+/// Syndicate Detonator also known as the big red button)///
 
 /obj/item/syndicatedetonator
 	name = "big red button"

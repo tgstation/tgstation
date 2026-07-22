@@ -1,4 +1,4 @@
-/// Allows us to move through glass but not electrified glass. Can also do a little slowdown before passing through
+/// Allows us to move through glass but not electrified glass.. Can also do a little slowdown before passing through
 /datum/component/glass_passer
 	/// How long does it take us to move into glass?
 	var/pass_time = 0 SECONDS

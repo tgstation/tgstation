@@ -313,9 +313,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	return TRUE
 
 /obj/machinery/shower/process(seconds_per_tick)
-	// the TIMED mode cutoff feature. User has to manually reactivate.
+	// the TIMED mode cutoff feature.. User has to manually reactivate.
 	if(intended_on && mode == SHOWER_MODE_TIMED && COOLDOWN_FINISHED(src, timed_cooldown))
-		// the TIMED mode cutoff feature. User has to manually reactivate.
+		// the TIMED mode cutoff feature.. User has to manually reactivate.
 		intended_on = FALSE
 
 	// Out of water.

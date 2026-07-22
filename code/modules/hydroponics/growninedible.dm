@@ -8,10 +8,10 @@
 	worn_icon = 'icons/mob/clothing/head/hydroponics.dmi'
 	abstract_type = /obj/item/grown
 	resistance_flags = FLAMMABLE
-	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
-	/// Should we pixel offset ourselves at init? for mapping
+	var/obj/item/seeds/seed = null // type path, gets converted to item on New().. It's safe to assume it's always a seed item.
+	/// Should we pixel offset ourselves at init?. for mapping
 	var/offset_at_init = TRUE
-	/// The reagent this plant distill to. If NULL, it uses a generic fruit_wine reagent and adjusts its variables.
+	/// The reagent this plant distill to.. If NULL, it uses a generic fruit_wine reagent and adjusts its variables.
 	var/distill_reagent
 
 // This may look like it's doing nothing but it's necessary, we do this to have kwargs work in New (for passing into Initialize)
@@ -26,7 +26,7 @@
 		seed = new_seed.Copy()
 
 	else if(ispath(seed))
-		// This is for adminspawn or map-placed growns. They get the default stats of their seed type.
+		// This is for adminspawn or map-placed growns.. They get the default stats of their seed type.
 		seed = new seed()
 		seed.adjust_potency(50-seed.potency)
 

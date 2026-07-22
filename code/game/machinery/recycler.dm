@@ -179,7 +179,7 @@
 
 		if(iscloset(thing))
 			var/obj/structure/closet/closet_thing = thing
-			if(closet_thing.secure && closet_thing.locked) // Prevent blindly deconstructing locked secure closets (head closets, important departmental orders, etc.)
+			if(closet_thing.secure && closet_thing.locked) // Prevent blindly deconstructing locked secure closets (head closets, important departmental orders, and so on
 				not_eaten++                                // unless they have already been unlocked to prevent exploiting the recycler to bypass closet access.
 				continue
 
@@ -214,7 +214,7 @@
 			full_power_usage = recycle_item(nom_obj)
 		else
 			// When a non-item is eaten, we deconstruct it with dismantled = FALSE so that
-			// it and its contents aren't just deleted. These always consume full power.
+			// it and its contents aren't just deleted.. These always consume full power.
 			nom_obj.deconstruct(FALSE)
 
 		use_energy(active_power_usage / (full_power_usage ? 1 : 2))
@@ -255,7 +255,7 @@
 		return TRUE
 
 	var/retrieved = materials.insert_item(target, multiplier = (amount_produced / 100))
-	if(retrieved > 0) //item was salvaged i.e. deleted
+	if(retrieved > 0) // item was salvaged i.e.. deleted
 		materials.retrieve_all()
 		qdel(target)
 		return TRUE

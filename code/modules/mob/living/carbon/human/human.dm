@@ -2,7 +2,7 @@
 	ASSIGN_GAME_VERB(src, /mob/living, mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
-	icon_state = "" //Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
+	icon_state = "" // Remove the inherent human icon that is visible on the map editor.. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions. Generally looks nasty.
 
 	setup_mood()
 	// This needs to be called very very early in human init (before organs / species are created at the minimum)
@@ -16,7 +16,7 @@
 
 	create_carbon_reagents()
 	set_species(dna.species.type, icon_update = FALSE) //carbon/Initialize will call update_body()
-	//set species enables and disables the flag. Just to be sure, we re-enable it now until it's removed by the parent call.
+	// set species enables and disables the flag.. Just to be sure, we re-enable it now until it's removed by the parent call.
 	living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS
 
 	prepare_huds() //Prevents a nasty runtime on human init
@@ -224,7 +224,7 @@
 					to_chat(human_user, span_danger("Patient has signs of suffocation, emergency treatment may be required!"))
 				if(get_tox_loss() > 20)
 					to_chat(human_user, span_danger("Gathered data is inconsistent with the analysis, possible cause: poisoning."))
-			if(!human_user.wear_id) //You require access from here on out.
+			if(!human_user.wear_id) // You need access from here on out.
 				to_chat(human_user, span_warning("ERROR: Invalid access"))
 				return
 			var/list/access = human_user.wear_id.GetAccess()
@@ -366,7 +366,7 @@
 
 					return
 
-	..() //end of this massive fucking chain. TODO: make the hud chain not spooky. - Yeah, great job doing that.
+	..() // end of this massive fucking chain.. To do make the hud chain not spooky.. - Yeah, great job doing that.
 
 //called when something steps onto a human
 /mob/living/carbon/human/proc/on_entered(datum/source, atom/movable/AM)
@@ -385,7 +385,7 @@
 	else if(HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
 		. = FALSE
 	if(user && !target_zone)
-		target_zone = get_bodypart(check_zone(user.zone_selected)) //try to find a bodypart. if there isn't one, target_zone will be null, and check_zone in the next line will default to the chest.
+		target_zone = get_bodypart(check_zone(user.zone_selected)) // try to find a bodypart.. if there isn't one, target_zone will be null, and check_zone in the next line will default to the chest.
 	var/obj/item/bodypart/the_part = isbodypart(target_zone) ? target_zone : get_bodypart(check_zone(target_zone)) //keep these synced
 	// Loop through the clothing covering this bodypart and see if there's any thiccmaterials
 	if(!(injection_flags & INJECT_CHECK_PENETRATE_THICK))
@@ -417,7 +417,7 @@
 
 	//Lasertag bullshit
 	if(lasercolor)
-		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
+		if(lasercolor == "b")// Lasertag turrets target the opposing team, how great is that?. -Sieve
 			if(istype(wear_suit, /obj/item/clothing/suit/redtag))
 				threatcount += 4
 			if(is_holding_item_of_type(/obj/item/gun/energy/laser/redtag))
@@ -723,7 +723,7 @@
 
 /mob/living/carbon/human/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, mob_height))
-		// you wanna edit this one not that one
+		// you want to edit this one not that one
 		var_name = NAMEOF(src, base_mob_height)
 	. = ..()
 	if(!.)
@@ -935,7 +935,7 @@
 		visible_message(span_warning("[src] fails to fireman carry [target]!"))
 		return
 
-	mind?.adjust_experience(/datum/skill/athletics, round(experience_reward/(fitness_level || 1), 1)) //Get a bit fitter every time we fireman carry successfully. Deadlift your friends for gains!
+	mind?.adjust_experience(/datum/skill/athletics, round(experience_reward/(fitness_level || 1), 1)) // Get a bit fitter every time we fireman carry successfully.. Deadlift your friends for gains!
 
 	return buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)
 
@@ -959,7 +959,7 @@
 	if(!HAS_TRAIT(target, TRAIT_CAN_MOUNT_HUMANS))
 		target.visible_message(span_warning("[target] really can't seem to mount [src]..."))
 		return FALSE
-	// if you don't invoke it with forced, IE via piggyback / fireman, always fail
+	// if you don't invoke it with forced, that is via piggyback / fireman, always fail
 	if(!force)
 		return FALSE
 	return ..()
@@ -1051,7 +1051,7 @@
 /mob/living/carbon/human/proc/crewlike_monkify()
 	if(!ismonkey(src))
 		set_species(/datum/species/monkey)
-	// Can't make them human or nonclever. At least not with the easy and boring way out.
+	// Can't make them human or nonclever.. At least not with the easy and boring way out.
 	dna.add_mutation(/datum/mutation/clever, MUTATION_SOURCE_CREW_MONKEY)
 	dna.add_mutation(/datum/mutation/race, MUTATION_SOURCE_CREW_MONKEY)
 

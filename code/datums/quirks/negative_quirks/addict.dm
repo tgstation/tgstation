@@ -7,14 +7,14 @@
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	no_process_traits = list(TRAIT_LIVERLESS_METABOLISM)
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
-	var/datum/reagent/reagent_instance //! actual instanced version of the reagent
-	var/where_drug //! Where the drug spawned
-	var/obj/item/drug_container_type //! If this is defined before pill generation, pill generation will be skipped. This is the type of the pill bottle.
-	var/where_accessory //! where the accessory spawned
-	var/obj/item/accessory_type //! If this is null, an accessory won't be spawned.
+	var/datum/reagent/reagent_instance // !. actual instanced version of the reagent
+	var/where_drug // !. Where the drug spawned
+	var/obj/item/drug_container_type // !. If this is defined before pill generation, pill generation will be skipped.. This is the type of the pill bottle.
+	var/where_accessory // !. where the accessory spawned
+	var/obj/item/accessory_type // !. If this is null, an accessory won't be spawned.
 	var/drug_flavour_text = "Better hope you don't run out... of what, exactly? You don't know."
-	var/process_interval = 30 SECONDS //! how frequently the quirk processes
-	COOLDOWN_DECLARE(next_process) //! ticker for processing
+	var/process_interval = 30 SECONDS // !. how frequently the quirk processes
+	COOLDOWN_DECLARE(next_process) // !. ticker for processing
 
 /datum/quirk/item_quirk/addict/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder

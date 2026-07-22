@@ -1,4 +1,4 @@
-// Atom movable signals. Format:
+// Atom movable signals... Format:
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
@@ -75,7 +75,7 @@
 	#define HEARING_MESSAGE_MODE 8
 	#define HEARING_RANGE 9
 
-///called when space wind can't move a movable. (pressure_difference, pressure_direction)
+/// called when space wind can't move a movable... (pressure_difference, pressure_direction)
 #define COMSIG_MOVABLE_RESISTED_SPACEWIND "movable_resisted_wind"
 
 ///called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
@@ -99,7 +99,7 @@
 #define COMSIG_MOVABLE_TELEPORTING "movable_teleporting"
 ///Called after a movable is teleported from `do_teleport()`: ()
 #define COMSIG_MOVABLE_POST_TELEPORT "movable_post_teleport"
-/// from /mob/living/can_z_move, sent to whatever the mob is buckled to. Only ridable movables should be ridden up or down btw.
+/// from /mob/living/can_z_move, sent to whatever the mob is buckled to... Only ridable movables should be ridden up or down by the way
 #define COMSIG_BUCKLED_CAN_Z_MOVE "ridden_pre_can_z_move"
 	#define COMPONENT_RIDDEN_STOP_Z_MOVE 1
 	#define COMPONENT_RIDDEN_ALLOW_Z_MOVE 2

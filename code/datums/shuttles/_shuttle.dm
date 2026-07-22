@@ -18,9 +18,9 @@
 	var/prerequisites
 	/// Shuttle warnings and hazards to the admin who spawns the shuttle
 	var/admin_notes
-	/// How much does this shuttle cost the cargo budget to purchase? Put in terms of CARGO_CRATE_VALUE to properly scale the cost with the current balance of cargo's income.
+	/// How much does this shuttle cost the cargo budget to purchase?. Put in terms of CARGO_CRATE_VALUE to properly scale the cost with the current balance of cargo's income.
 	var/credit_cost = INFINITY
-	/// What job accesses can buy this shuttle? If null, this shuttle cannot be bought.
+	/// What job accesses can buy this shuttle?. If null, this shuttle cannot be bought.
 	var/list/who_can_purchase = list(ACCESS_CAPTAIN)
 	/// Whether or not this shuttle is locked to emags only.
 	var/emag_only = FALSE

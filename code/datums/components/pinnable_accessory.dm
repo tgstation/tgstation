@@ -38,7 +38,7 @@
 		return
 
 	if(!badge.can_attach_accessory(distinguished_uniform, user))
-		// Check handles feedback messages and etc
+		// Check handles feedback messages and and so on
 		return
 
 	if (!silent)

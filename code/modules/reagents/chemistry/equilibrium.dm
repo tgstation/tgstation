@@ -17,13 +17,13 @@
 	var/datum/reagents/holder
 	///How much product we can make multiplied by the input recipe's products/required_reagents numerical values
 	var/multiplier = INFINITY
-	///The sum total of each of the product's numerical's values. This is so the addition/deletion is kept at the right values for multiple product reactions
+	/// The sum total of each of the product's numerical's values.. This is so the addition/deletion is kept at the right values for multiple product reactions
 	var/product_ratio = 0
 	///The total possible that this reaction can make presently - used for gui outputs
 	var/target_vol = 0
-	///The target volume the reaction is headed towards. This is updated every tick, so isn't the total value for the reaction, it's just a way to ensure we can't make more than is possible.
+	/// The target volume the reaction is headed towards.. This is updated every tick, so isn't the total value f. The reaction, it's just a way to ensure we can't make more than is possible.
 	var/step_target_vol = INFINITY
-	///How much of the reaction has been made so far. Mostly used for subprocs, but it keeps track across the whole reaction and is added to every step.
+	/// How much of the reaction has been made so far.. Mostly used for subprocs, but it keeps track across the whole reaction and is added to every step.
 	var/reacted_vol = 0
 	///What our last delta_ph was
 	var/reaction_quality = 1
@@ -46,7 +46,7 @@
 	var/thermic_mod = 1
 	///Allow us to deal with lag by "charging" up our reactions to react faster over a period - this means that the reaction doesn't suddenly mass react - which can cause explosions
 	var/time_deficit
-	///Used to store specific data needed for a reaction, usually used to keep track of things between explosion calls. CANNOT be used as a part of chemical_recipe - those vars are static lookup tables.
+	/// Used to store specific data needed for a reaction, usually used to keep track of things between explosion calls.. CANNOT be used as a part of chemical_recipe - those vars are static lookup tables.
 	var/data = list()
 
 /*
@@ -102,7 +102,7 @@
 	if(holder.ph < (reaction.optimal_ph_min - reaction.determin_ph_range) || holder.ph > (reaction.optimal_ph_max + reaction.determin_ph_range))
 		return FALSE
 
-	//All checks pass. cache the product ratio
+	// All checks pass.. cache the product ratio
 	if(length(reaction.results))
 		product_ratio = 0
 		for(var/datum/reagent/product as anything in reaction.results)
@@ -140,7 +140,7 @@
 			if(reagent.volume >= catalyst_agent.min_volume)
 				catalyst_agent.consider_catalyst(src)
 
-	//Our present catalysts should match with our required catalyts
+	// Our present catalysts should match with our needed catalyts
 	return total_matching_catalysts == reaction.required_catalysts.len
 
 /*
@@ -188,7 +188,7 @@
 
 	//Are we overheated?
 	if(reaction.is_cold_recipe)
-		if(holder.chem_temp < reaction.overheat_temp && reaction.overheat_temp != NO_OVERHEAT) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
+		if(holder.chem_temp < reaction.overheat_temp && reaction.overheat_temp != NO_OVERHEAT) // This is before the process - this is here so that overly_impure and overheated() share the same code location (and so vars) for calls.
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
 			reaction.overheated(holder, src, step_volume_added)
 	else
@@ -394,7 +394,7 @@
 		return
 
 	//If the volume of reagents created(total_step_added) >= volume of reagents still to be created(step_target_vol) then end
-	//i.e. we have created all the reagents needed for this reaction
+	// i.e.. we have created all the reagents needed for this reaction
 	//This is only accurate when a single reaction is present and we don't have multiple reactions where
 	//reaction B consumes the products formed from reaction A(which can happen in add_reagent() as it also triggers handle_reactions() which can consume the reagent just added)
 	//because total_step_added will be higher than the actual volume that was created leading to the reaction ending early

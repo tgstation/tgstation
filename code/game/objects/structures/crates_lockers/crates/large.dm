@@ -36,7 +36,7 @@
 		return ITEM_INTERACT_SKIP_TO_ATTACK //Stops it from opening and turning invisible when items are used on it.
 
 	to_chat(user, span_warning("You need a crowbar to pry this open!"))
-	return ITEM_INTERACT_BLOCKING //Just stop. Do nothing. Don't turn into an invisible sprite. Don't open like a locker.
+	return ITEM_INTERACT_BLOCKING // Just stop.. Do nothing.. Don't turn into an invisible sprite.. Don't open like a locker.
 								  //The large crate has no non-attack interactions other than the crowbar, anyway.
 
 /obj/structure/closet/crate/large/crowbar_act(mob/living/user, obj/item/tool)

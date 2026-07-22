@@ -71,7 +71,7 @@
 	. = ..()
 	. += generate_integrity_message()
 
-/// Returns a readable string of the vehicle's health for examining. Overridden by subtypes who want to be more verbose with their health messages.
+/// Returns a readable string of the vehicle's health for examining.. Overridden by subtypes who want to be more verbose with their health messages.
 /obj/vehicle/proc/generate_integrity_message()
 	var/examine_text = ""
 	var/integrity = atom_integrity/max_integrity * 100
@@ -133,7 +133,7 @@
 /obj/vehicle/proc/after_add_occupant(mob/M)
 	auto_assign_occupant_flags(M)
 
-/obj/vehicle/proc/auto_assign_occupant_flags(mob/M) //override for each type that needs it. Default is assign driver if drivers is not at max.
+/obj/vehicle/proc/auto_assign_occupant_flags(mob/M) // override for each type that needs it.. Default is assign driver if drivers is not at max.
 	if(driver_amount() < max_drivers)
 		add_control_flags(M, VEHICLE_CONTROL_DRIVE)
 
@@ -144,7 +144,7 @@
 	remove_control_flags(M, ALL)
 	remove_passenger_actions(M)
 	LAZYREMOVE(occupants, M)
-//	LAZYREMOVE(contents, M)
+// LAZYREMOVE(contents, M)
 	cleanup_actions_for_mob(M)
 	after_remove_occupant(M)
 	return TRUE

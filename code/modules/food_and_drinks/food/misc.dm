@@ -149,7 +149,7 @@
 	icon_state = "popcorn"
 	trash_type = /obj/item/trash/popcorn
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
-	bite_consumption = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
+	bite_consumption = 0.1 // this snack is supposed to be eating during looooong time.. And this it not dinner food!. --rastaf0
 	tastes = list("popcorn" = 3, "butter" = 1)
 	foodtypes = JUNKFOOD
 	eatverbs = list("bite", "nibble", "gnaw", "gobble", "chomp")

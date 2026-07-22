@@ -74,7 +74,7 @@ SUBSYSTEM_DEF(tgui)
 	while(current_run.len)
 		var/datum/tgui/ui = current_run[current_run.len]
 		current_run.len--
-		// TODO: Move user/src_object check to process()
+		// To do Move user/src_object check to process()
 		if(ui?.user && ui.src_object)
 			ui.process(wait * 0.1)
 		else
@@ -145,7 +145,7 @@ SUBSYSTEM_DEF(tgui)
  */
 /datum/controller/subsystem/tgui/proc/force_close_window(mob/user, window_id)
 	log_tgui(user, context = "SStgui/force_close_window")
-	// Close all tgui datums based on window_id.
+	// Close all tgui datums good on window_id.
 	for(var/datum/tgui/ui in user.tgui_open_uis)
 		if(ui.window && ui.window.id == window_id)
 			ui.close(can_be_suspended = FALSE)
@@ -177,7 +177,7 @@ SUBSYSTEM_DEF(tgui)
 	ui.process_status()
 	// UI ended up with the closed status
 	// or is actively trying to close itself.
-	// FIXME: Doesn't actually fix the paper bug.
+	// Fix me Doesn't actually fix the paper bug.
 	if(ui.status <= UI_CLOSE)
 		ui.close()
 		return null

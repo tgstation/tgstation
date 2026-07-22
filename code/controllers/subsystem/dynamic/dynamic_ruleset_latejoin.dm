@@ -60,7 +60,7 @@
 	weight = 1
 	min_pop = 30
 	repeatable = FALSE
-	/// How many heads of staff are required to be on the station for this to be selected
+	/// How many heads of staff are needed to be on the station for this to be selected
 	var/heads_necessary = 3
 
 /datum/dynamic_ruleset/latejoin/revolution/can_be_selected()

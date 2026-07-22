@@ -22,7 +22,7 @@
 	var/boxtag = ""
 	/// how many slices left
 	var/slices_left = 6
-	/// have we been sliced? like sliced and you can take it apart by hand
+	/// have we been sliced?. like sliced and you can take it apart by hand
 	var/sliced = FALSE
 	/// cutting tools
 	var/list/cutting_tools = list(TOOL_KNIFE, TOOL_SAW, TOOL_SCALPEL)
@@ -79,7 +79,7 @@
 /obj/item/food/pizza/proc/get_slices_filter() //to not repeat code
 	return alpha_mask_filter(icon = icon('icons/obj/food/pizza.dmi', "[slices_left]slices"))
 
-/// slices this pizza. all arguments optional.
+/// slices this pizza.. all arguments optional.
 /obj/item/food/pizza/proc/slice(mob/user, obj/item/tool)
 	if(sliced)
 		return
@@ -92,7 +92,7 @@
 	for(var/_ in 1 to slices_left)
 		produce_slice(no_update = TRUE)
 
-/// make a slice and give it to user. no_update means no filter work is done. user is optional
+/// make a slice and give it to user.. no_update means no filter work is done.. user is optional
 /obj/item/food/pizza/proc/produce_slice(mob/user, no_update = FALSE)
 	var/turf/our_turf = get_turf(src)
 	var/obj/item/food/pizzaslice/slice = new slice_type(our_turf)
@@ -491,7 +491,7 @@
 		return
 	var/obj/item/bodypart/arm/left = user.get_bodypart(BODY_ZONE_L_ARM)
 	var/obj/item/bodypart/arm/right = user.get_bodypart(BODY_ZONE_R_ARM)
-	var/did_the_thing = (left?.dismember() || right?.dismember()) //not all limbs can be removed, so important to check that we did. the. thing.
+	var/did_the_thing = (left?.dismember() || right?.dismember()) // not all limbs can be removed, so important to check that we did.. the.. thing.
 	if(!did_the_thing)
 		return
 	to_chat(user, span_userdanger("Maybe I'll give you a pizza, maybe I'll break off your arm.")) //makes the reference more obvious
@@ -500,7 +500,7 @@
 
 /obj/item/food/proc/i_kill_you(obj/item/item, mob/living/user)
 	if(istype(item, /obj/item/food/pineappleslice))
-		to_chat(user, "<font color='red' size='7'>If you want something crazy like pineapple, I'll kill you.</font>") //this is in bigger text because it's hard to spam something that gibs you, and so that you're perfectly aware of the reason why you died
+		to_chat(user, "<font color='red' size='7'>If you want something crazy like pineapple, I'll kill you.</font>") // this is in bigger text because it's hard to spam something that gibs you. So that you're perfectly aware of the reason why you died
 		user.investigate_log("has been gibbed by putting pineapple on an arnold pizza.", INVESTIGATE_DEATHS)
 		user.gib(DROP_ALL_REMAINS) //if you want something crazy like pineapple, i'll kill you
 	else if(istype(item, /obj/item/food/grown/mushroom) && iscarbon(user))

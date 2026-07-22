@@ -4,7 +4,7 @@
 /datum/gizmo_controller
 	/// Can hold different interacting modes (wires, voice) and connected interfaces
 	var/list/interfaces = list(GIZMO_INTERFACE_WIRES = /datum/gizmo_interface)
-	/// Instanted interfaces. really just here so I can check this shit in vv
+	/// Instanted interfaces.. really just here so I can check this shit in vv
 	var/list/instances = list()
 
 /// Generate interfaces for interacting with the gizmo
@@ -30,7 +30,7 @@
 /datum/gizmo_controller/toggle
 	interfaces = list(GIZMO_INTERFACE_WIRES = /datum/gizmo_interface/toggle)
 
-/// Voice controller with a voice puzzle and interface. Comes with a wire interface that gives you the hint to use the voice interface
+/// Voice controller with a voice puzzle and interface.. Comes with a wire interface that gives you the hint to use the voice interface
 /datum/gizmo_controller/voice
 	interfaces = list(GIZMO_INTERFACE_WIRES = /datum/gizmo_interface/voice_unlock, GIZMO_INTERFACE_VOICE = /datum/gizmo_interface/voice)
 

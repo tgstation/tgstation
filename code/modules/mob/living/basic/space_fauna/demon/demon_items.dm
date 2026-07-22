@@ -31,7 +31,7 @@
 	)
 
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
-	src.Insert(user) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
+	src.Insert(user) // Consuming the heart literally replaces your heart with a demon heart.. H A Are D C O Are E
 
 /obj/item/organ/heart/demon/on_mob_insert(mob/living/carbon/heart_owner)
 	. = ..()

@@ -18,7 +18,7 @@
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	rad_insulation = RAD_MEDIUM_INSULATION
 	material_flags = MATERIAL_EFFECTS
-	/// The icon this falsewall is faking being. we'll switch out our icon with this when we're in fake mode
+	/// The icon this falsewall is faking being.. we'll switch out our icon with this when we're in fake mode
 	var/fake_icon = 'icons/turf/walls/wall.dmi'
 	var/mineral = /obj/item/stack/sheet/iron
 	var/mineral_amount = 2
@@ -36,7 +36,7 @@
 	// minerals are only applied to fake mineral walls
 	// ...yes, real iron walls are not actually made of iron
 	if(ispath(walltype, /turf/closed/wall/mineral))
-		var/obj/item/stack/initialized_mineral = new mineral // Okay this kinda sucks.
+		var/obj/item/stack/initialized_mineral = new mineral // Okay this kind of sucks.
 		set_custom_materials(initialized_mineral.mats_per_unit, mineral_amount)
 		qdel(initialized_mineral)
 

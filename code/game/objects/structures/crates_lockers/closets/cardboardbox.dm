@@ -90,7 +90,7 @@
 	alerted.Cut()
 	playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
 
-/// Does the MGS ! animation
+/// Does the MGS !. animation
 /atom/proc/do_alert_animation(duration = 1 SECONDS)
 	var/mutable_appearance/alert = mutable_appearance('icons/obj/storage/closet.dmi', "cardboard_special")
 	SET_PLANE_EXPLICIT(alert, ABOVE_LIGHTING_PLANE, src)

@@ -194,7 +194,7 @@
 			return FALSE
 
 	if(install_board(user, target_board, by_hand = FALSE))
-		// After installing, attempts to follow up by inserting parts
+		// After installing, tries to follow up by inserting parts
 		install_parts_from_part_replacer(user, replacer, no_sound = TRUE)
 		if(!no_sound)
 			replacer.play_rped_effect()

@@ -5,7 +5,7 @@
 #define RADIO_EXTENSION "department specific"
 #define RADIO_KEY "department specific key"
 #define LANGUAGE_EXTENSION "language specific"
-///This is a mob that is forcing us to say something, so we can use the mob typing the text for bans rather than the one speaking.
+/// This is a mob that is forcing us to say something, so we can use the mob typing the text f.. Bans rather than the one speaking.
 #define MANNEQUIN_CONTROLLED "mannequin controlled"
 /// Message mod which contains a list of bonus "mutual understanding" to allow arbitrary understanding of any speech
 #define LANGUAGE_MUTUAL_BONUS "language mutual bonus"
@@ -14,8 +14,8 @@
 #define HEAR_HEARD (1<<0)
 #define HEAR_UNDERSTOOD (1<<1)
 
-//Message modes. Each one defines a radio channel, more or less.
-//if you use ! as a mode key for some ungodly reason, change the first character for ion_num() so get_message_mode() doesn't freak out with state law prompts - shiz.
+// Message modes... Each one defines a radio channel, more or less.
+// if you use !.. as a mode key for some ungodly reason, change the first character for ion_num() so get_message_mode() doesn't freak out with state law prompts - shiz.
 #define MODE_HEADSET "headset"
 #define MODE_ROBOT "robot"
 
@@ -81,7 +81,7 @@
 /// Override the mob's name
 #define MODE_SPEAKER_NAME_OVERRIDE "speaker_name_override"
 
-//Spans. Robot speech, italics, etc. Applied in compose_message().
+// Spans... Robot speech, italics, and so on Applied in compose_message().
 #define SPAN_ROBOT "robot"
 #define SPAN_YELL "yell"
 #define SPAN_ITALICS "italics"
@@ -129,7 +129,7 @@
 #define MAX_DESC_LEN 280
 #define MAX_AAS_LENGTH 168
 
-// Audio/Visual Flags. Used to determine what sense are required to notice a message.
+// Audio/Visual Flags... Used to determine what sense are needed to notice a message.
 #define MSG_VISUAL (1<<0)
 #define MSG_AUDIBLE (1<<1)
 

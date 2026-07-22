@@ -260,7 +260,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 		last_attacker = WEAKREF(attacking_object.loc)
 		return
 
-	// Edge case. If our attacking_item is a gun which the owner has dropped we need to find out who shot us
+	// Edge case.. If our attacking_item is a gun which the owner has dropped we need to find out who shot us
 	// Track being hit by a mob shooting a stick
 	if(isprojectile(attacking_object))
 		var/obj/projectile/attacking_projectile = attacking_object

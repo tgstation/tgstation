@@ -14,7 +14,7 @@
 	var/time_per_resurrection = 0
 	/// How much stun (paralyze) is caused on respawn per revival.
 	var/stun_per_resurrection = 20 SECONDS
-	/// The color of the phylactery itself. Applied on creation.
+	/// The color of the phylactery itself.. Applied on creation.
 	var/phylactery_color = COLOR_VERY_DARK_LIME_GREEN
 
 	// Internal vars.

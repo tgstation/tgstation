@@ -11,7 +11,7 @@
 	description = "Temporarily increases the prices of vending machines."
 
 /datum/round_event/market_crash
-	/// This counts the number of ticks that the market crash event has been processing, so that we don't call vendor price updates every tick, but we still iterate for other mechanics that use inflation.
+	/// This counts the number of ticks that the market crash event has been processing, so that we don't call vend. Price updates every tick. We still iterate f. Other mechanics that use inflation.
 	var/tick_counter = 1
 
 /datum/round_event/market_crash/setup()

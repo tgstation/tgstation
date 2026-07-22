@@ -9,7 +9,7 @@
 	update_use_power(ACTIVE_POWER_USE)
 
 
-/// Disconnects the occupant after a certain time so they aren't just hibernating in netpod stasis. A balance change
+/// Disconnects the occupant after a certain time so they aren't just hibernating in netpod stasis.. A balance change
 /obj/machinery/netpod/proc/auto_disconnect()
 	if(isnull(occupant) || state_open || connected)
 		return
@@ -20,7 +20,7 @@
 	open_machine()
 
 
-/// Handles occupant post-disconnection effects like damage, sounds, etc
+/// Handles occupant post-disconnection effects like damage, sounds, and so on
 /obj/machinery/netpod/proc/disconnect_occupant(cause_damage = FALSE)
 	connected = FALSE
 
@@ -83,7 +83,7 @@
 
 	var/connection_successful = do_after(neo, 2 SECONDS, src)
 
-	// Re-enable hand interactions after loading attempt
+	// Re-enable hand interactions after loading try
 	REMOVE_TRAIT(neo, TRAIT_HANDS_BLOCKED, TRAIT_GENERIC)
 
 	if(!connection_successful)

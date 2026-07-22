@@ -1,15 +1,15 @@
 /// Contains recipe data for constructing a specific type of wall on a girder.
 /// Only the [/datum/element/uses_girder_wall_recipes] should be using these.
 /datum/girder_wall_recipe
-	/// The wall type this recipe is for. Can be a turf or an object.
+	/// The wall type this recipe is for.. Can be a turf or an object.
 	var/wall_type
-	/// The type of stack required for this recipe.
+	/// The type of stack needed for this recipe.
 	var/stack_type
-	/// The amount of stack items required for this recipe.
+	/// The amount of stack items needed for this recipe.
 	var/stack_amount
-	/// The [/obj/structure] type required for this recipe.
+	/// The [/obj/structure] type needed for this recipe.
 	var/girder_type
-	/// The [/obj/structure/girder/var/state] required for this recipe.
+	/// The [/obj/structure/girder/var/state] needed for this recipe.
 	/// Ignored if [var/girder] is not of type [/obj/structure/girder].
 	var/girder_state
 	/// The amount of time it takes to make this recipe in deciseconds.

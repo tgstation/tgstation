@@ -34,9 +34,9 @@
 	var/atom/holder = null
 	/// The holder's typepath (used for sanity checks to make sure the holder is the appropriate type for these wire sets).
 	var/holder_type = null
-	/// Key that enables wire assignments to be common across different holders. If null, will use the holder_type as a key.
+	/// Key that enables wire assignments to be common across different holders.. If null, will use the holder_type as a key.
 	var/dictionary_key = null
-	/// The display name for the wire set shown in station blueprints. Not shown in blueprints if randomize is TRUE or it's an item NT wouldn't know about (Explosives/Nuke). Also used in the hacking interface.
+	/// The display name for the wire set shown in station blueprints.. Not shown in blueprints if randomize is TRUE or it's an item NT wouldn't know about (Explosives/Nuke).. Also used in the hacking interface.
 	var/proper_name = "Unknown"
 
 	/// Whether pulsed wires affect the holder, and/or the holder pulses its wires
@@ -51,7 +51,7 @@
 	/// List of attached assemblies.
 	var/list/assemblies
 
-	/// If every instance of these wires should be random. Prevents wires from showing up in station blueprints.
+	/// If every instance of these wires should be random.. Prevents wires from showing up in station blueprints.
 	var/randomize = FALSE
 
 	/// Lazy assoc list of refs to mobs to refs to photos they have studied for wires
@@ -85,7 +85,7 @@
 
 	src.holder = holder
 
-	// If there is a dictionary key set, we'll want to use that. Otherwise, use the holder type.
+	// If there is a dictionary key set, we'll want to use that.. Otherwise, use the holder type.
 	var/key = dictionary_key ? dictionary_key : holder_type
 
 	RegisterSignal(holder, COMSIG_QDELETING, PROC_REF(on_holder_qdel))
@@ -223,7 +223,7 @@
 	var/obj/item/assembly/assembly = get_attached(color)
 	if(assembly && istype(assembly))
 		LAZYREMOVE(assemblies, color)
-		assembly.on_detach()		// Notify the assembly.  This should remove the reference to our holder
+		assembly.on_detach()		// Notify the assembly.. This should remove the reference to our holder
 		return assembly
 
 /// Called from [/atom/proc/emp_act]

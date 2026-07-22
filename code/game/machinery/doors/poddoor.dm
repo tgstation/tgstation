@@ -19,7 +19,7 @@
 	var/datum/crafting_recipe/recipe_type = /datum/crafting_recipe/blast_doors
 	/// The current deconstruction step
 	var/deconstruction = BLASTDOOR_FINISHED
-	/// The door's ID (used for buttons, etc to control the door)
+	/// The door's ID (used for buttons, and so on to control the door)
 	var/id = null
 	/// The sound that plays when the door opens/closes
 	var/animation_sound = 'sound/machines/blastdoor.ogg'
@@ -72,7 +72,7 @@
 	if(deconstruction == BLASTDOOR_FINISHED && istype(held_item, /obj/item/assembly/control/blast_door))
 		context[SCREENTIP_CONTEXT_LMB] = "Calibrate ID"
 		return CONTEXTUAL_SCREENTIP_SET
-	//we do not check for special effects like if they can actually perform the action because they will be told they can't do it when they try,
+	// we do not check f. Special effects like if they can actually perform the action because they will be told they can't do it when they try,
 	//with feedback on what they have to do in order to do so.
 	switch(held_item.tool_behaviour)
 		if(TOOL_SCREWDRIVER)
@@ -269,7 +269,7 @@
 			time_to_open = 15 SECONDS
 
 		if(do_after(user, time_to_open, src))
-			if(density && !open(TRUE)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
+			if(density && !open(TRUE)) // The airlock is still closed, but something prevented it opening.. (Another player noticed and bolted/welded the airlock in time!)
 				to_chat(user, span_warning("Despite your efforts, [src] managed to resist your attempts to open it!"))
 
 	else

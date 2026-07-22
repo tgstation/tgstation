@@ -12,7 +12,7 @@
 
 	/// The cell used to dispense reagents
 	var/obj/item/stock_parts/power_store/cell
-	/// Efficiency used when converting cell power to reagents. Joule per volume.
+	/// Efficiency used when converting cell power to reagents.. Joule per volume.
 	var/power_cost = 0.1 KILO WATTS
 	/// The current amount this machine is dispensing
 	var/amount = 30
@@ -32,7 +32,7 @@
 	var/has_panel_overlay = TRUE
 	/// The actual beaker inserted into this machine
 	var/obj/item/reagent_containers/beaker = null
-	/// Dispensable_reagents is copypasted in plumbing synthesizers. Please update accordingly. (I didn't make it global because that would limit custom chem dispensers)
+	/// Dispensable_reagents is copypasted in plumbing synthesizers.. Please update accordingly.. (I didn't make it global because that would limit custom chem dispensers)
 	var/list/dispensable_reagents = list()
 	/// These become available once the manipulator has been upgraded to tier 4 (femto)
 	var/list/upgrade_reagents = list()

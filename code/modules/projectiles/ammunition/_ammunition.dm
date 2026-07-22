@@ -16,7 +16,7 @@
 	var/caliber = null
 	///The bullet type to create when New() is called
 	var/projectile_type = null
-	///Muzzle flash color based on ammo casing.
+	/// Muzzle flash color good on ammo casing.
 	var/muzzle_flash_color = LIGHT_COLOR_ORANGE
 	///the loaded projectile in this ammo casing
 	var/obj/projectile/loaded_projectile = null
@@ -28,7 +28,7 @@
 	var/randomspread = 0
 	///Delay for energy weapons
 	var/delay = 0
-	///Override this to make your gun have a faster fire rate, in tenths of a second. 4 is the default gun cooldown.
+	/// Override this to make your gun have a faster fire rate, in tenths of a second.. 4 is the default gun cooldown.
 	var/click_cooldown_override = 0
 	///the visual effect appearing when the ammo is fired.
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
@@ -44,7 +44,7 @@
 	///If set, this casing will damage any gun it's fired from by the specified amount
 	var/integrity_damage = 0
 
-	/// Set when this casing is fired. Only used for checking if it should burn a user's hand when caught from an ejection port.
+	/// Set when this casing is fired.. Only used for checking if it should burn a user's hand when caught from an ejection port.
 	var/shot_timestamp = 0
 
 /obj/item/ammo_casing/spent
@@ -94,7 +94,7 @@
 			var/obj/item/gun/our_gun = our_box.loc
 			// grab the damage multiplier
 			proj_damage_mult = our_gun.projectile_damage_multiplier
-	// if not, are we just in a gun e.g. chambered
+	// if not, are we just in a gun e.g.. chambered
 	else if(isgun(loc))
 		var/obj/item/gun/our_gun = loc
 		// grab the damage multiplier.

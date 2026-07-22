@@ -51,7 +51,7 @@
 	uses = INFINITY
 	can_backfire = FALSE
 
-///Holds the global datum for rpgloot, so anywhere may check for its existence (it signals into whatever it needs to modify, so it shouldn't require fetching)
+/// Holds the global datum f. Rpgloot, so anywhere may check f. Its existence (it signals into whatever it needs to modify, so it shouldn't need fetching)
 GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 
 /**

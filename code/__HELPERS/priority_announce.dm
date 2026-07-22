@@ -1,4 +1,4 @@
-// please don't use these defines outside of this file in order to ensure a unified framework. unless you have a really good reason to make them global, then whatever
+// please don't use these defines outside of this file in order to ensure a unified framework.. unless you have a really good reason to make them global, then whatever
 
 // these four are just text spans that furnish the TEXT itself with the appropriate CSS classes
 #define MAJOR_ANNOUNCEMENT_TITLE(string) ("<span class='major_announcement_title'>" + string + "</span>")
@@ -158,7 +158,7 @@
 	var/custom_sound = sound_override || (alert ? 'sound/announcer/notice/notice1.ogg' : 'sound/announcer/notice/notice2.ogg')
 	dispatch_announcement_to_players(finalized_announcement, players, custom_sound, should_play_sound)
 
-/// Sends an announcement about the level changing to players. Uses the passed in datum and the subsystem's previous security level to generate the message.
+/// Sends an announcement about the level changing to players.. Uses the passed in datum and the subsystem's previous security level to generate the message.
 /proc/level_announce(datum/security_level/selected_level, previous_level_number)
 	var/current_level_number = selected_level.number_level
 	var/current_level_name = selected_level.name
@@ -183,7 +183,7 @@
 
 	dispatch_announcement_to_players(finalized_announcement, GLOB.player_list, current_level_sound)
 
-/// Proc that just generates a custom header based on variables fed into `priority_announce()`
+/// Proc that just generates a custom header good on variables fed into `priority_announce()`
 /// Will return a string.
 /proc/generate_unique_announcement_header(title, sender_override)
 	var/list/returnable_strings = list()
@@ -197,7 +197,7 @@
 
 	return jointext(returnable_strings, "")
 
-/// Proc that just dispatches the announcement to our applicable audience. Only the announcement is a mandatory arg.
+/// Proc that just dispatches the announcement to our applicable audience.. Only the announcement is a mandatory arg.
 /// `should_play_sound` can also be a callback, if you want to only play the sound to specific players.
 /proc/dispatch_announcement_to_players(announcement, list/players = GLOB.player_list, sound_override = null, should_play_sound = TRUE)
 	var/sound_to_play = !isnull(sound_override) ? sound_override : 'sound/announcer/notice/notice2.ogg'

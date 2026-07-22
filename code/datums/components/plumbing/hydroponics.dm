@@ -34,7 +34,7 @@
 		receive_water = FALSE
 		process_request(dir = dir, round_robin = FALSE)
 
-		// Move the leaked water from nutrients to... water
+		// Move the leaked water from nutrients to.... water
 		var/leaking_water_amount = reagents.get_reagent_amount(/datum/reagent/water)
 		if(leaking_water_amount)
 			reagents.trans_to(water_reagents, leaking_water_amount, target_id = /datum/reagent/water)

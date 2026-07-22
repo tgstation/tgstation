@@ -95,7 +95,7 @@
 	// We can keep bouncing, try to continue the chain
 	if(bounces >= 1)
 		playsound(to_beam, sound, 50, vary = TRUE, extrarange = -1)
-		// Chain continues shortly after. If they extinguish themselves in this time, the chain will stop anyways.
+		// Chain continues shortly after.. If they extinguish themselves in this time, the chain will stop anyways.
 		addtimer(CALLBACK(src, PROC_REF(continue_beam), to_beam, bounces), beam_duration * 0.5)
 
 	else
@@ -120,7 +120,7 @@
 	if(isnull(to_beam_next)) // No target = no chain
 		return
 
-	// Chain again! Recursively
+	// Chain again!. Recursively
 	send_beam(beamed, to_beam_next, bounces - 1)
 
 /// Pick a carbon mob in a radius around us that we can reach.
@@ -160,7 +160,7 @@
 	tick_interval = 0.6 SECONDS
 	/// How much fire / stam to do per tick (stamina damage is doubled this)
 	var/tick_damage = 1
-	/// How long does the animation of the appearance last? If 0 or negative, we make no overlay
+	/// How long does the animation of the appearance last?. If 0 or negative, we make no overlay
 	var/animate_duration = 0.75 SECONDS
 
 /datum/status_effect/fire_blasted/on_creation(mob/living/new_owner, animate_duration = -1, tick_damage = 1)

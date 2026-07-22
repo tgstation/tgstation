@@ -21,20 +21,20 @@
 	var/datum/gas_mixture/empty_test_mix = allocate(/datum/gas_mixture)
 	lab_rat = allocate(/mob/living/carbon/human/consistent)
 	test_lungs = allocate(/obj/item/organ/lungs)
-	// Test one breath of nothing. Suffocate due to the breath being empty.
+	// Test one breath of nothing.. Suffocate due to the breath being empty.
 	lungs_test_check_breath("empty gas mixture", lab_rat, test_lungs, empty_test_mix, expect_failure = TRUE)
 
-	// Suffocation with null. This does indeed happen normally.
+	// Suffocation with null.. This does indeed happen normally.
 	lab_rat = allocate(/mob/living/carbon/human/consistent)
 	test_lungs = allocate(/obj/item/organ/lungs)
-	// Test one breath of nothing. Suffocate due to the breath being null.
+	// Test one breath of nothing.. Suffocate due to the breath being null.
 	lungs_test_check_breath("null", lab_rat, test_lungs, null, expect_failure = TRUE)
 
 	// Suffocation with Nitrogen.
 	var/datum/gas_mixture/nitro_test_mix = create_nitrogen_mix()
 	lab_rat = allocate(/mob/living/carbon/human/consistent)
 	test_lungs = allocate(/obj/item/organ/lungs)
-	// Test one breath of Nitrogen. Suffocate due to the breath being 100% N2.
+	// Test one breath of Nitrogen.. Suffocate due to the breath being 100% N2.
 	lungs_test_check_breath("pure Nitrogen", lab_rat, test_lungs, nitro_test_mix, expect_failure = TRUE)
 
 /// Tests the Plasmaman lungs organ to ensure Plasma breathing and suffocation behave as expected.
@@ -69,7 +69,7 @@
 
 /// Comprehensive unit test for [/obj/item/organ/lungs/proc/check_breath()]
 /// If "expect_failure" is set to TRUE, the test ensures the given Human suffocated.
-/// A "test_name" string is required to contextualize test logs. Describe the gas you're testing.
+/// A "test_name" string is needed to contextualize test logs.. Describe the gas you're testing.
 /datum/unit_test/lungs/proc/lungs_test_check_breath(test_name, mob/living/carbon/human/lab_rat, obj/item/organ/lungs/test_lungs, datum/gas_mixture/test_mix, expect_failure = FALSE)
 	// Setup a small volume of gas which represents one "breath" from test_mix.
 	var/datum/gas_mixture/test_breath

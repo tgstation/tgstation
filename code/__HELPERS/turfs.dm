@@ -1,4 +1,4 @@
-///Returns location. Returns null if no location was found.
+/// Returns location.. Returns null if no location was found.
 /proc/get_teleport_loc(turf/location, mob/target, distance = 1, density_check = FALSE, closed_turf_check = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 /*
 Location where the teleport begins, target that will teleport, distance to go, density checking 0/1(yes/no), closed turf checking.
@@ -14,15 +14,15 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/xoffset = 0//Generic counter for offset location.
 	var/yoffset = 0
 
-	var/b1xerror = 0//Generic placing for point A in box. The lower left.
+	var/b1xerror = 0// Generic placing for point A in box.. The lower left.
 	var/b1yerror = 0
-	var/b2xerror = 0//Generic placing for point B in box. The upper right.
+	var/b2xerror = 0// Generic placing for point B in box.. The upper right.
 	var/b2yerror = 0
 
 	errorx = abs(errorx)//Error should never be negative.
 	errory = abs(errory)
 
-	switch(target.dir)//This can be done through equations but switch is the simpler method. And works fast to boot.
+	switch(target.dir)// This can be done through equations but switch is the simpler method.. And works fast to boot.
 	//Directs on what values need modifying.
 		if(1)//North
 			diry += distance
@@ -62,7 +62,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	if(!destination)//If there isn't a destination.
 		return
 
-	if(!errorx && !errory)//If errorx or y were not specified.
+	if(!errorx && !errory)// If errorx or why were not specified.
 		if(density_check && destination.density)
 			return
 		if(closed_turf_check && isclosedturf(destination))
@@ -132,7 +132,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/turf/target = locate(target_atom.x, target_atom.y, target_atom.z)
 	if(!target_atom || !target)
 		return 0
-		//since NORTHEAST == NORTH|EAST, etc, doing it this way allows for diagonal mass drivers in the future
+		// since NORTHEAST == NORTH|EAST, and so on doing it this way allows for diagonal mass drivers in the future
 		//and isn't really any more complicated
 
 	var/x = target_atom.x
@@ -164,7 +164,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		y = max(1, y - range)
 	if(direction & EAST)
 		x = min(world.maxx, x + range)
-	else if(direction & WEST) //if you have both EAST and WEST in the provided direction, then you're gonna have issues
+	else if(direction & WEST) // if you have both EAST and WEST in the provided direction, then you're going to have issues
 		x = max(1, x - range)
 
 	return locate(x,y,target_atom.z)
@@ -260,7 +260,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return locate(final_x, final_y, offset_from.z)
 	return offset_from
 
-///Returns a turf based on text inputs, original turf and viewing client
+/// Returns a turf good on text inputs, original turf and viewing client
 /proc/parse_caught_click_modifiers(list/modifiers, turf/origin, client/viewing_client)
 	if(!modifiers)
 		return null
@@ -305,7 +305,7 @@ Turf and target are separate in case you want to teleport some distance from a t
  *   but using ratios (as implemented in the proc) is the recommended approach
  */
 /proc/get_loc_from_mousepos(mousepos_x, mousepos_y, sizex, sizey, client/viewing_client)
-	if(sizex == 0 || sizey == 0) //contexts where this information is not availible should return 0 in size, aka tgui passthrough
+	if(sizex == 0 || sizey == 0) // contexts where this information is not availible should return 0 in size, also known as tgui passthrough
 		return list(null, 0, 0)
 	var/turf/baseloc = get_turf(viewing_client.eye)
 	var/list/actual_view = getviewsize(viewing_client ? viewing_client.view : world.view)
@@ -316,7 +316,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	//handle letterboxing to get the right sizes and mouseposes
 	var/size_ratio = sizex/sizey
 	var/screen_ratio = screen_width/screen_height
-	if(size_ratio < screen_ratio) //sizex too high, y has black banners
+	if(size_ratio < screen_ratio) // sizex too high, why has black banners
 		var/effective_height = sizex / screen_ratio
 		var/banner_height = (sizey - effective_height) / 2
 		mousepos_y -= banner_height

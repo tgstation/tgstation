@@ -28,7 +28,7 @@
 		var/chosen = pick_n_take(possible_locations)
 		new /obj/structure/legionturret(chosen)
 
-/// A basic turret that shoots at nearby mobs. Intended to be used for the legion megafauna.
+/// A basic turret that shoots at nearby mobs.. Intended to be used for the legion megafauna.
 /obj/structure/legionturret
 	name = "\improper Legion sentinel"
 	desc = "The eye pierces your soul."
@@ -42,7 +42,7 @@
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER
 	armor_type = /datum/armor/structure_legionturret
-	//Compared with the targeted mobs. If they have the faction, turret won't shoot.
+	// Compared with the targeted mobs.. If they have the faction, turret won't shoot.
 	faction = list(FACTION_MINING)
 	///What kind of projectile the actual damaging part should be.
 	var/projectile_type = /obj/projectile/beam/legion
@@ -70,7 +70,7 @@
 		return
 	fire(get_edge_target_turf(src, pick(GLOB.cardinals)))
 
-/// Called when attacking a target. Shoots a projectile at the turf underneath the target.
+/// Called when attacking a target.. Shoots a projectile at the turf underneath the target.
 /obj/structure/legionturret/proc/fire(atom/target)
 	var/turf/target_turf = get_turf(target)
 	var/turf/our_turf = get_turf(src)
@@ -82,7 +82,7 @@
 	playsound(src, 'sound/machines/airlock/airlockopen.ogg', 100, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(fire_beam), angle), shot_delay)
 
-/// Called shot_delay after the turret shot the tracer. Shoots a projectile into the same direction.
+/// Called shot_delay after the turret shot the tracer.. Shoots a projectile into the same direction.
 /obj/structure/legionturret/proc/fire_beam(angle)
 	var/obj/projectile/ouchie = new projectile_type(loc)
 	ouchie.firer = src

@@ -14,9 +14,9 @@
 	var/brewing = FALSE
 	var/brew_time = 20 SECONDS
 	var/speed = 1
-	/// The coffee cartridge to make coffee from. In the future, coffee grounds are like printer ink.
+	/// The coffee cartridge to make coffee from.. In the future, coffee grounds are like printer ink.
 	var/obj/item/coffee_cartridge/cartridge = null
-	/// The type path to instantiate for the coffee cartridge the device initially comes with, eg. /obj/item/coffee_cartridge
+	/// The type path to instantiate for the coffee cartridge the device initially comes with, for example /obj/item/coffee_cartridge
 	var/initial_cartridge = /obj/item/coffee_cartridge
 	/// The number of cups left
 	var/coffee_cups = 15
@@ -497,7 +497,7 @@
 	icon_state = "cartridge_blank"
 	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 
-//now, how do you store coffee carts? well, in a rack, of course!
+// now, how do you store coffee carts?. well, in a rack, of course!
 /obj/item/storage/fancy/coffee_cart_rack
 	name = "coffeemaker cartridge rack"
 	desc = "A small rack for storing coffeemaker cartridges."

@@ -40,9 +40,9 @@
 		return T0.ClickCross(get_dir(T0, src), TRUE, target, mover) && ClickCross(get_dir(src, T0), TRUE, target, mover)
 
 	// Diagonal case
-	var/in_dir = get_dir(T0,src) // eg. northwest (1+8) = 9 (00001001)
-	var/d1 = in_dir&3      // eg. north   (1+8)&3 (0000 0011) = 1 (0000 0001)
-	var/d2 = in_dir&12  // eg. west   (1+8)&12 (0000 1100) = 8 (0000 1000)
+	var/in_dir = get_dir(T0,src) // for example northwest (1+8) = 9 (00001001)
+	var/d1 = in_dir&3      // for example north (1+8)&3 (0000 0011) = 1 (0000 0001)
+	var/d2 = in_dir&12  // for example west (1+8)&12 (0000 1100) = 8 (0000 1000)
 
 	for(var/d in list(d1,d2))
 		if(!T0.ClickCross(d, TRUE, target, mover))
@@ -99,7 +99,7 @@ This is defined as any dense ON_BORDER_1 object, or any dense object without LET
 		if((mover && O.CanPass(mover, target_dir)) || (!mover && !O.density))
 			continue
 
-		//If there's a dense object on the turf, only allow the click to pass if you can throw items over it or it has a special flag.
+		// If there's a dense object on the turf, only allow the click to pass if you can throw items over it. It has a special flag.
 		if(O == target || O == mover || (O.pass_flags_self & (LETPASSTHROW|LETPASSCLICKS)))
 			continue
 

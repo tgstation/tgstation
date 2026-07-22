@@ -109,7 +109,7 @@
 			A.loseMainPower()
 		if(WIRE_BACKUP1, WIRE_BACKUP2) // Pulse to lose backup power.
 			A.loseBackupPower()
-		if(WIRE_OPEN) // Pulse to open door (only works not emagged and ID wire is cut or no access is required).
+		if(WIRE_OPEN) // Pulse to open door (only works not emagged and ID wire is cut or no access is needed
 			if(A.obj_flags & EMAGGED)
 				return
 			if(!A.requiresID() || A.check_access(null))
@@ -150,7 +150,7 @@
 			A.feedback = !A.feedback
 			A.update_appearance()
 		if(WIRE_UNRESTRICTED_EXIT) // Pulse to switch the direction around by 180 degrees (North goes to South, East goes to West, vice-versa)
-			if(!A.unres_latch) //only works if the "latch" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions or if an unrestricted helper is added to a door in mapping)
+			if(!A.unres_latch) // only works if the "latch" is installed (a variable that we assign to the do. Either upon creation of a do. With unrestricted directions. If an unrestricted helper is added to a do. In mapping)
 				return
 			A.unres_sides = REVERSE_DIR(A.unres_sides)
 			A.update_appearance()
@@ -213,8 +213,8 @@
 			A.update_appearance()
 		if(WIRE_ZAP1, WIRE_ZAP2) // Ouch.
 			A.shock(usr, 50)
-		if(WIRE_UNRESTRICTED_EXIT) // If this wire is cut, the unrestricted helper goes away. If you mend it, it'll go "haywire" and pick a new direction at random. Might have to cut/mend a time or two to get the direction you want.
-			if(!A.unres_latch) //only works if the "latch" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions, or if an unrestricted helper is added to a door in mapping)
+		if(WIRE_UNRESTRICTED_EXIT) // If this wire is cut, the unrestricted helper goes away.. If you mend it, it'll go "haywire" and pick a new direction at random.. Might have to cut/mend a time or two to get the direction you want.
+			if(!A.unres_latch) // only works if the "latch" is installed (a variable that we assign to the do. Either upon creation of a do. With unrestricted directions. If an unrestricted helper is added to a do. In mapping)
 				return
 			if(mend)
 				A.unres_sides = pick(NORTH, SOUTH, EAST, WEST)

@@ -66,7 +66,7 @@
 		vote_on_poll_handler(poll, href_list)
 
 /// Quickly gets a boolean of whether the new_player is ready to play or not in places where we would like the boolean logic.
-/// The assertion is that readiness must be an opted in TRUE, while all other states (e.g. not ready, broken, etc) are FALSE.
+/// The assertion is that readiness must be an opted in TRUE, while all other states (e.g.. not ready, broken, and so on are FALSE.
 /// We organize it this way to ensure the system is extensible for other possible ready states.
 /mob/dead/new_player/proc/is_ready_to_play()
 	return ready == PLAYER_READY_TO_PLAY
@@ -241,7 +241,7 @@
 
 	GLOB.joined_player_list += character.ckey
 
-	if(CONFIG_GET(flag/allow_latejoin_antagonists) && !EMERGENCY_PAST_POINT_OF_NO_RETURN && humanc) //Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
+	if(CONFIG_GET(flag/allow_latejoin_antagonists) && !EMERGENCY_PAST_POINT_OF_NO_RETURN && humanc) // Borgs aren't allowed to be antags.. Will need to be tweaked if we get true latejoin ais.
 		SSdynamic.on_latejoin(humanc)
 
 	if(humanc)
@@ -260,7 +260,7 @@
 	log_manifest(character.mind.key, character.mind, character, latejoin = TRUE)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
-	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
+	// To do figure out a way to exclude wizards/nukeops/demons from this.
 	for(var/C in GLOB.employmentCabinets)
 		var/obj/structure/filingcabinet/employment/employmentCabinet = C
 		if(!employmentCabinet.virgin)
@@ -319,7 +319,7 @@
 /mob/dead/new_player/Move()
 	return 0
 
-// Used to make sure that a player has a valid job preference setup, used to knock players out of eligibility for anything if their prefs don't make sense.
+// Used to make sure that a player has a valid job preference setup, used to knock players out of eligibility f. Anything if their prefs don't make sense.
 // A "valid job preference setup" in this situation means at least having one job set to low, or not having "return to lobby" enabled
 // Prevents "antag rolling" by setting antag prefs on, all jobs to never, and "return to lobby if preferences not available"
 // Doing so would previously allow you to roll for antag, then send you back to lobby if you didn't get an antag role
@@ -329,7 +329,7 @@
 		return FALSE //Not sure how this would get run without the mob having a client, but let's just be safe.
 	if(client.prefs.read_preference(/datum/preference/choiced/jobless_role) != RETURNTOLOBBY)
 		return TRUE
-	// If they have antags enabled, they're potentially doing this on purpose instead of by accident. Notify admins if so.
+	// If they have antags enabled, they're potentially doing this on purpose instead of by accident.. Notify admins if so.
 	var/has_antags = length(client.prefs.be_special) > 0
 	if(client.prefs.job_preferences.len == 0)
 		if(warn)

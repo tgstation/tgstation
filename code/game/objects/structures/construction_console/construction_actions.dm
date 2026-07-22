@@ -23,7 +23,7 @@
 	if(!base_console.internal_rcd)
 		CRASH("Base console is somehow missing an internal RCD!")
 
-///Check a loction to see if it is inside the aux base at the station. Camera visbility checks omitted so as to not hinder construction.
+/// Check a loction to see if it is inside the aux base at the station.. Camera visbility checks omitted so as to not hinder construction.
 /datum/action/innate/construction/proc/check_spot()
 	var/turf/build_target = get_turf(remote_eye)
 	var/area/build_area = get_area(build_target)

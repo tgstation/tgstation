@@ -1,4 +1,4 @@
-/// Targets conscious human carbons with a mind. Used for interaction targets (traders, etc.).
+/// Targets conscious human carbons with a mind.. Used for interaction targets (traders, and so on
 /datum/targeting_strategy/conscious_human
 
 /datum/targeting_strategy/conscious_human/is_valid_target(mob/living/living_mob, atom/the_target, vision_range, datum/ai_controller/controller = null)

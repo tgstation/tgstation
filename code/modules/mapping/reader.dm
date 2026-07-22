@@ -2,7 +2,7 @@
 //SS13 Optimized Map loader
 //////////////////////////////////////////////////////////////
 // We support two different map formats
-// It is kinda possible to process them together, but if we split them up
+// It is kind of possible to process them together, but if we split them up
 // I can make optimization decisions more easily
 /**
  * DMM SPEC:
@@ -72,9 +72,9 @@
 /datum/parsed_map
 	var/original_path
 	var/map_format
-	/// The length of a key in this file. This is promised by the standard to be static
+	/// The length of a key in this file.. This is promised by the standard to be static
 	var/key_len = 0
-	/// The length of a line in this file. Not promised by dmm but standard dmm uses it, so we can trust it
+	/// The length of a line in this file.. Not promised by dmm but standard dmm uses it, so we can trust it
 	var/line_len = 0
 	/// If we've expanded world.maxx
 	var/expanded_y = FALSE
@@ -88,18 +88,18 @@
 
 	var/list/modelCache
 
-	/// Unoffset bounds. Null on parse failure.
+	/// Unoffset bounds.. Null on parse failure.
 	var/list/parsed_bounds
-	/// Offset bounds. Same as parsed_bounds until load().
+	/// Offset bounds.. Same as parsed_bounds until load().
 	var/list/bounds
 
-	///any turf in this list is skipped inside of build_coordinate. Lazy assoc list
+	/// any turf in this list is skipped inside of build_coordinate.. Lazy assoc list
 	var/list/turf_blacklist
 
 	// raw strings used to represent regexes more accurately
 	// '' used to avoid confusing syntax highlighting
 	var/static/regex/dmm_regex = new(@'"([a-zA-Z]+)" = (?:\(\n|\()((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}', "g")
-	/// Matches key formats in TMG (IE: newline after the \()
+	/// Matches key formats in TMG that is newline after the \()
 	var/static/regex/matches_tgm = new(@'^"[A-z]*"[\s]*=[\s]*\([\s]*\n', "m")
 	/// Pulls out key value pairs for TGM
 	var/static/regex/var_edits_tgm = new(@'^\t([A-z0-9]*) = (.*?);?$')
@@ -176,8 +176,8 @@
 
 /// Parse a map, possibly cropping it.
 /datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper=INFINITY, z_lower = -INFINITY, z_upper=INFINITY, measureOnly=FALSE)
-	// This proc sleeps for like 6 seconds. why?
-	// Is it file accesses? if so, can those be done ahead of time, async to save on time here? I wonder.
+	// This proc sleeps for like 6 seconds.. why?
+	// Is it file accesses?. if so, can those be done ahead of time, async to save on time here?. I wonder.
 	// Love ya :)
 	if(isfile(tfile))
 		original_path = "[tfile]"
@@ -293,7 +293,7 @@
 	src.key_len = key_len
 	src.line_len = line_len
 
-/// Iterates over all grid sets and returns ones with z values within the given bounds. Inclusive
+/// Iterates over all grid sets and returns ones with z values within the given bounds.. Inclusive
 /datum/parsed_map/proc/filter_grid_sets_based_on_z_bounds(lower_z, upper_z)
 	var/list/filtered_sets = list()
 	for(var/datum/grid_set/grid_set as anything in gridSets)
@@ -304,7 +304,7 @@
 		filtered_sets += grid_set
 	return filtered_sets
 
-/// Load the parsed map into the world. You probably want [/proc/load_map]. Keep the signature the same.
+/// Load the parsed map into the world.. You probably want [/proc/load_map].. Keep the signature the same.
 /datum/parsed_map/proc/load(x_offset = 0, y_offset = 0, z_offset = 0, crop_map = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, z_lower = -INFINITY, z_upper = INFINITY, place_on_top = FALSE, new_z = FALSE)
 	//How I wish for RAII
 	Master.StartLoadingMap()
@@ -331,7 +331,7 @@
 	SSatoms.map_loader_begin(REF(src))
 
 	// Loading used to be done in this proc
-	// We make the assumption that if the inner procs runtime, we WANT to do cleanup on them, but we should stil tell our parents we failed
+	// We make the assumption that if the inner procs runtime, we WANT to do cleanup on them. We should stil tell our parents we failed
 	// Since well, we did
 	var/sucessful = FALSE
 	switch(map_format)
@@ -354,7 +354,7 @@
 			bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]
 		)
 		for(var/turf/T as anything in turfs)
-			//we do this after we load everything in. if we don't, we'll have weird atmos bugs regarding atmos adjacent turfs
+			// we do this after we load everything in.. if we don't, we'll have weird atmos bugs about atmos adjacent turfs
 			T.AfterChange(CHANGETURF_IGNORE_AIR)
 
 	if(expanded_x || expanded_y)
@@ -367,7 +367,7 @@
 
 	return sucessful
 
-// Wanna clear something up about maps, talking in 255x255 here
+// Want to clear something up about maps, talking in 255x255 here
 // In the tgm format, each gridset contains 255 lines, each line representing one tile, with 255 total gridsets
 // In the dmm format, each gridset contains 255 lines, each line representing one row of tiles, containing 255 * line length characters, with one gridset per z
 // You can think of dmm as storing maps in rows, whereas tgm stores them in columns
@@ -378,16 +378,16 @@
 	var/list/bounds
 	src.bounds = bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 
-	// Building y coordinate ranges
+	// Building why coordinate ranges
 	var/y_relative_to_absolute = y_offset - 1
 	var/x_relative_to_absolute = x_offset - 1
 
-	// Ok so like. something important
+	// Ok so like.. something important
 	// We talk in "relative" coords here, so the coordinate system of the map datum
 	// This is so we can do offsets, but it is NOT the same as positions in game
 	// That's why there's some uses of - y_relative_to_absolute here, to turn absolute positions into relative ones
-	// TGM maps process in columns, so the starting y will always be the max size
-	// We know y starts at 1
+	// TGM maps process in columns, so the starting why will always be the max size
+	// We know why starts at 1
 	var/datum/grid_set/first_column = gridSets[1]
 	var/relative_y = first_column.ycrd
 	var/highest_y = relative_y + y_relative_to_absolute
@@ -400,14 +400,14 @@
 			world.increase_max_y(highest_y)
 		expanded_y = TRUE
 
-	// Skip Y coords that are above the smallest of the three params
+	// Skip Why coords that are above the smallest of the three params
 	// So maxy and y_upper get to act as thresholds, and relative_y can play
 	var/y_skip_above = min(world.maxy - y_relative_to_absolute, y_upper, relative_y)
-	// How many lines to skip because they'd be above the y cuttoff line
+	// How many lines to skip because they'd be above the why cuttoff line
 	var/y_starting_skip = relative_y - y_skip_above
 	highest_y -= y_starting_skip
 
-	// Y is the LOWEST it will ever be here, so we can easily set a threshold for how low to go
+	// Why is the LOWEST it will ever be here, so we can easily set a threshold for how low to go
 	var/line_count = length(first_column.gridLines)
 	var/lowest_y = relative_y - (line_count - 1) // -1 because we decrement at the end of the loop, not the start
 	var/y_ending_skip = max(max(y_lower, 1 - y_relative_to_absolute) - lowest_y, 0)
@@ -418,14 +418,14 @@
 		// Take our smaller crop threshold yes?
 		x_delta_with = min(x_delta_with, world.maxx)
 
-	// We're gonna skip all the entries above the upper x, or maxx if cropMap is set
+	// We're going to skip all the entries above the upper x, or maxx if cropMap is set
 	// The last column is guarenteed to have the highest x value we;ll encounter
 	// Even if z scales, this still works
 	var/datum/grid_set/last_column = gridSets[length(gridSets)]
 	var/final_x = last_column.xcrd + x_relative_to_absolute
 
 	if(final_x > x_delta_with)
-		// If our relative x is greater then X upper, well then we've gotta limit our expansion
+		// If our relative x is greater then X upper, well then we've got to limit our expansion
 		var/delta = max(final_x - x_delta_with, 0)
 		final_x -= delta
 	if(final_x > world.maxx && !crop_map)
@@ -476,9 +476,9 @@
 		// If we're using changeturf, we disable it if we load into a z level we JUST created
 		var/no_afterchange = no_changeturf || zcrd > z_threshold
 
-		// We're gonna track the first and last pairs of coords we find
-		// Since x is always incremented in steps of 1, we only need to deal in y
-		// The first x is guarenteed to be the lowest, the first y the highest, and vis versa
+		// We're going to track the first and last pairs of coords we find
+		// Since x is always incremented in steps of 1, we only need to deal in why
+		// The first x is guarenteed to be the lowest, the first why the highest, and vis versa
 		// This is faster then doing mins and maxes inside the hot loop below
 		var/first_found = FALSE
 		var/first_y = 0
@@ -581,31 +581,31 @@
 			if(!no_changeturf)
 				WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
 				no_afterchange = TRUE
-		// Ok so like. something important
+		// Ok so like.. something important
 		// We talk in "relative" coords here, so the coordinate system of the map datum
 		// This is so we can do offsets, but it is NOT the same as positions in game
 		// That's why there's some uses of - y_relative_to_absolute here, to turn absolute positions into relative ones
 
-		// Skip Y coords that are above the smallest of the three params
+		// Skip Why coords that are above the smallest of the three params
 		// So maxy and y_upper get to act as thresholds, and relative_y can play
 		var/y_skip_above = min(world.maxy - y_relative_to_absolute, y_upper, relative_y)
-		// How many lines to skip because they'd be above the y cuttoff line
+		// How many lines to skip because they'd be above the why cuttoff line
 		var/y_starting_skip = relative_y - y_skip_above
 		ycrd += y_starting_skip
 
-		// Y is the LOWEST it will ever be here, so we can easily set a threshold for how low to go
+		// Why is the LOWEST it will ever be here, so we can easily set a threshold for how low to go
 		var/line_count = length(gset.gridLines)
 		var/lowest_y = relative_y - (line_count - 1) // -1 because we decrement at the end of the loop, not the start
 		var/y_ending_skip = max(max(y_lower, 1 - y_relative_to_absolute) - lowest_y, 0)
 
-		// Now we're gonna precompute the x thresholds
+		// Now we're going to precompute the x thresholds
 		// We skip all the entries below the lower x, or 1
 		var/starting_x_delta = max(max(x_lower, 1 - x_relative_to_absolute) - relative_x, 0)
-		// The x loop counts by key length, so we gotta multiply here
+		// The x loop counts by key length, so we got to multiply here
 		var/x_starting_skip = starting_x_delta * key_len
 		true_xcrd += starting_x_delta
 
-		// We're gonna skip all the entries above the upper x, or maxx if cropMap is set
+		// We're going to skip all the entries above the upper x, or maxx if cropMap is set
 		var/x_target = line_len - key_len + 1
 		var/x_step_count = ROUND_UP(x_target / key_len)
 		var/final_x = relative_x + (x_step_count - 1)
@@ -614,7 +614,7 @@
 			// Take our smaller crop threshold yes?
 			x_delta_with = min(x_delta_with, world.maxx)
 		if(final_x > x_delta_with)
-			// If our relative x is greater then X upper, well then we've gotta limit our expansion
+			// If our relative x is greater then X upper, well then we've got to limit our expansion
 			var/delta = max(final_x - x_delta_with, 0)
 			x_step_count -= delta
 			final_x -= delta
@@ -627,8 +627,8 @@
 				world.increase_max_x(final_x)
 			expanded_x = TRUE
 
-		// We're gonna track the first and last pairs of coords we find
-		// The first x is guarenteed to be the lowest, the first y the highest, and vis versa
+		// We're going to track the first and last pairs of coords we find
+		// The first x is guarenteed to be the lowest, the first why the highest, and vis versa
 		// This is faster then doing mins and maxes inside the hot loop below
 		var/first_found = FALSE
 		var/first_x = 0
@@ -636,8 +636,8 @@
 		var/last_x = 0
 		var/last_y = 0
 
-		// Everything following this line is VERY hot. How hot depends on the map format
-		// (Yes this does mean dmm is technically faster to parse. shut up)
+		// Everything following this line is VERY hot.. How hot depends on the map format
+		// (Yes this does mean dmm is technically faster to parse.. shut up)
 		for(var/i in 1 + y_starting_skip to line_count - y_ending_skip)
 			var/line = gset.gridLines[i]
 
@@ -728,7 +728,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			switch(line[length(line)])
 				if(";") // Var edit, we'll apply it
 					// Var edits look like \tname = value;
-					// I'm gonna try capturing them with regex, since it ought to be the fastest here
+					// I'm going to try capturing them with regex, since it ought to be the fastest here
 					// Should hand back key = value
 					var_edits.Find(line)
 					var/value = parse_constant(var_edits.group[2])
@@ -745,18 +745,18 @@ GLOBAL_LIST_EMPTY(map_model_default)
 					if(editing) // it was the end of a path
 						editing = FALSE
 						continue
-					members_attributes += wrapped_default_list // We know this is a path, and we also know it has no vv's. so we'll just set this to the default list
+					members_attributes += wrapped_default_list // We know this is a path, and we also know it has no vv's.. so we'll just set this to the default list
 					// Drop the last char mind
 					path_to_init = copytext(line, 1, -1)
-				if("}") // Gotta be the end of an area edit, let's check to be sure
+				if("}") // Got to be the end of an area edit, let's check to be sure
 					if(editing) // it was the end of an area edit (shouldn't do those anyhow)
 						editing = FALSE
 						continue
 					stack_trace("ended a line on JUST a }, with no ongoing edit. What? Area shit?")
-				else // If we're editing, this is a var edit entry. the last one in a stack, cause god hates me. Otherwise, it's an area
+				else // If we're editing, this is a var edit entry.. the last one in a stack, cause god hates me.. Otherwise, it's an area
 					if(editing) // I want inline I want inline I want inline
 						// Var edits look like \tname = value;
-						// I'm gonna try capturing them with regex, since it ought to be the fastest here
+						// I'm going to try capturing them with regex, since it ought to be the fastest here
 						// Should hand back key = value
 						var_edits.Find(line)
 						var/value = parse_constant(var_edits.group[2])
@@ -765,30 +765,30 @@ GLOBAL_LIST_EMPTY(map_model_default)
 						current_attributes[var_edits.group[1]] = value
 						continue // Keep on keeping on brother
 
-					members_attributes += wrapped_default_list // We know this is a path, and we also know it has no vv's. so we'll just set this to the default list
+					members_attributes += wrapped_default_list // We know this is a path, and we also know it has no vv's.. so we'll just set this to the default list
 					path_to_init = line
 
 
 			// Alright, if we've gotten to this point, our string is a path
-			// Oh and we don't trim it, because we require no padding for these
+			// Oh and we don't trim it, because we need no padding for these
 			// Saves like 1.5 deciseconds
 			var/atom_def = text2path(path_to_init) //path definition, e.g /obj/foo/bar
 
-			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.  Fix your crap, mappers!
+			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.. Fix your crap, mappers!
 				if(bad_paths)
 					// Rare case, avoid the var to save time most of the time
 					LAZYOR(bad_paths[copytext(line, 1, -1)], model_key)
 				continue
-			// Index is already incremented either way, just gotta set the path and all
+			// Index is already incremented either way, just got to set the path and all
 			members += atom_def
 
 		//check and see if we can just skip this turf
 		//So you don't have to understand this horrid statement, we can do this if
-		// 1. the space_key isn't set yet
-		// 2. no_changeturf is set
-		// 3. there are exactly 2 members
-		// 4. with no attributes
-		// 5. and the members are world.turf and world.area
+		// 1.. the space_key isn't set yet
+		// 2.. no_changeturf is set
+		// 3.. there are exactly 2 members
+		// 4.. with no attributes
+		// 5.. and the members are world.turf and world.area
 		// Basically, if we find an entry like this: "XXX" = (/turf/default, /area/default)
 		// We can skip calling this proc every time we see XXX
 		if(!set_space \
@@ -808,7 +808,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	return .
 
 /// Builds key caches for general formats
-/// Slower then the proc above, tho it could still be optimized slightly. it's just not a priority
+/// Slower then the proc above, though it could still be optimized slightly.. it's just not a priority
 /// Since we don't run DMM maps, ever.
 /datum/parsed_map/proc/dmm_build_cache(no_changeturf, bad_paths=null)
 	if(modelCache && !bad_paths)
@@ -835,15 +835,15 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			var/variables_start = 0
 			var/member_string = model_path.group[1]
 			model_index = model_path.next
-			//findtext is a bit expensive, lets only do this if the last char of our string is a } (IE: we know we have vars)
-			//this saves about 25 miliseconds on my machine. Not a major optimization
+			// findtext is a bit expensive, lets only do this if the last char of our string is a } that is we know we have vars)
+			// this saves about 25 miliseconds on my machine.. Not a major optimization
 			if(member_string[length(member_string)] == "}")
 				variables_start = findtext(member_string, "{")
 
 			var/path_text = trim(copytext(member_string, 1, variables_start))
 			var/atom_def = text2path(path_text) //path definition, e.g /obj/foo/bar
 
-			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.  Fix your crap, mappers!
+			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.. Fix your crap, mappers!
 				if(bad_paths)
 					LAZYOR(bad_paths[path_text], model_key)
 				continue
@@ -867,11 +867,11 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 		//check and see if we can just skip this turf
 		//So you don't have to understand this horrid statement, we can do this if
-		// 1. the space_key isn't set yet
-		// 2. no_changeturf is set
-		// 3. there are exactly 2 members
-		// 4. with no attributes
-		// 5. and the members are world.turf and world.area
+		// 1.. the space_key isn't set yet
+		// 2.. no_changeturf is set
+		// 3.. there are exactly 2 members
+		// 4.. with no attributes
+		// 5.. and the members are world.turf and world.area
 		// Basically, if we find an entry like this: "XXX" = (/turf/default, /area/default)
 		// We can skip calling this proc every time we see XXX
 		if(!set_space \
@@ -891,7 +891,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 /datum/parsed_map/proc/build_coordinate(list/model, turf/crds, no_changeturf as num, placeOnTop as num, new_z)
 	// If we don't have a turf, nothing we will do next will actually acomplish anything, so just go back
-	// Note, this would actually drop area vvs in the tile, but like, why tho
+	// Note, this would actually drop area vvs in the tile, but like, why though
 	if(!crds)
 		return
 	var/index
@@ -913,7 +913,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	var/area/old_area
 	if(members[index] != /area/template_noop)
 		if(members_attributes[index] != default_list)
-			world.preloader_setup(members_attributes[index], members[index])//preloader for assigning  set variables on atom creation
+			world.preloader_setup(members_attributes[index], members[index])// preloader for assigning set variables on atom creation
 		var/area/area_instance = loaded_areas[members[index]]
 		if(!area_instance)
 			var/area_type = members[index]
@@ -949,7 +949,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 		if(members_attributes[index] != default_list)
 			world.preloader_setup(members_attributes[index], members[index])
 
-		// Note: we make the assertion that the last path WILL be a turf. if it isn't, this will fail.
+		// Note: we make the assertion that the last path WILL be a turf.. if it isn't, this will fail.
 		if(placeOnTop)
 			instance = crds.load_on_top(members[index], CHANGETURF_DEFER_CHANGE | (no_changeturf ? CHANGETURF_SKIP : NONE))
 		else if(no_changeturf)
@@ -959,7 +959,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 		if(GLOB.use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
 			world.preloader_load(instance)
-	// If this isn't template work, we didn't change our turf and we changed area, then we've gotta handle area lighting transfer
+	// If this isn't template work, we didn't change our turf and we changed area, then we've got to handle area lighting transfer
 	else if(!no_changeturf && old_area)
 		// Don't do contain/uncontain stuff, this happens a few lines up when the area actally changes
 		crds.on_change_area(old_area, crds.loc)
@@ -970,7 +970,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 		if(members_attributes[atom_index] != default_list)
 			world.preloader_setup(members_attributes[atom_index], members[atom_index])
 
-		// We make the assertion that only /atom s will be in this portion of the code. if that isn't true, this will fail
+		// We make the assertion that only /atom s will be in this portion of the code.. if that isn't true, this will fail
 		instance = create_atom(members[atom_index], crds)//first preloader pass
 
 		if(GLOB.use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
@@ -1009,13 +1009,13 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	var/position
 	var/old_position = 1
 	while(position != 0)
-		// find next delimiter that is not within  "..."
+		// find next delimiter that is not within "..."
 		position = find_next_delimiter_position(text, old_position, delimiter)
 
 		// check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
 		var/equal_position = find_next_delimiter_position(text, old_position, "=")
 		var/trim_left = trim(copytext(text, old_position, (equal_position ? equal_position : position)))
-		if(!trim_left) // damn newlines man. Exists to provide behavior consistency with the above loop. not a major cost becuase this path is cold
+		if(!trim_left) // damn newlines man.. Exists to provide behavior consistency with the above loop.. not a major cost becuase this path is cold
 			if(position)
 				old_position = position + length(text[position])
 			continue

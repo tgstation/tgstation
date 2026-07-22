@@ -1,4 +1,4 @@
-// List is required to compile the resources into the game when it loads.
+// List is needed to compile the resources into the game when it loads.
 // Dynamically loading it has bad results with sounds overtaking each other, even with the wait variable.
 #ifdef AI_VOX
 

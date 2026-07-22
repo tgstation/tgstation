@@ -14,8 +14,8 @@
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	slot_flags = ITEM_SLOT_ID
 	worn_icon_state = "emag"
-	var/prox_check = TRUE //If the emag requires you to be in range
-	var/type_blacklist //List of types that require a specialized emag
+	var/prox_check = TRUE // If the emag needs you to be in range
+	var/type_blacklist // List of types that need a specialized emag
 
 /obj/item/card/emag/get_displayed_name(honorifics = FALSE)
 	return name // That's Grey Tider (as "cryptographic sequencer")
@@ -143,7 +143,7 @@
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
-	type_blacklist = list(typesof(/obj/machinery/door/airlock) + typesof(/obj/machinery/door/window/) +  typesof(/obj/machinery/door/firedoor) - typesof(/obj/machinery/door/airlock/tram)) //list of all typepaths that require a specialized emag to hack.
+	type_blacklist = list(typesof(/obj/machinery/door/airlock) + typesof(/obj/machinery/door/window/) +  typesof(/obj/machinery/door/firedoor) - typesof(/obj/machinery/door/airlock/tram)) // list of all typepaths that need a specialized emag to temporary solution
 
 /obj/item/card/emag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))

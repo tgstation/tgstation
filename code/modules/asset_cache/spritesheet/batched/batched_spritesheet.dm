@@ -3,7 +3,7 @@
 #define CACHE_WAIT "wait"
 #define CACHE_INVALID TRUE
 #define CACHE_VALID FALSE
-/// This is used to invalidate the cache if something changes on the DM side. For example, if the CSS generator was changed.
+/// This is used to invalidate the cache if something changes on the DM side.. For example, if the CSS generator was changed.
 #define SPRITESHEET_SYSTEM_VERSION 1
 
 /datum/asset/spritesheet_batched
@@ -26,10 +26,10 @@
 	/// If this asset should be fully loaded on new
 	/// Defaults to false so we can process this stuff nicely
 	var/load_immediately = FALSE
-	/// If we should avoid propogating 'invalid dir' errors from rust-g. Because sometimes, you just don't know what dirs are valid.
+	/// If we should avoid propogating 'invalid dir' errors from rust-g.. Because sometimes, you just don't know what dirs are valid.
 	var/ignore_dir_errors = FALSE
 
-	/// Forces use of the smart cache. This is for unit tests, please respect the config <3
+	/// Forces use of the smart cache.. This is for unit tests, please respect the config <3
 	var/force_cache = FALSE
 
 	/// If there is currently an async job, its ID
@@ -173,7 +173,7 @@
 
 	if(isnull(cache_result))
 		cache_result = should_refresh(yield)
-		if(cache_result == CACHE_WAIT) // sleep interrupted by MC. We'll get queried again later.
+		if(cache_result == CACHE_WAIT) // sleep interrupted by MC.. We'll get queried again later.
 			cache_result = null
 			return
 

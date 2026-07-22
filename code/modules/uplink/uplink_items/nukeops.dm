@@ -42,8 +42,8 @@
 
 // ~~ Weapon Categories ~~
 
-// Core Gear Box: This contains all the 'fundamental' equipment that most nuclear operatives probably should be buying. It isn't cheaper, but it is a quick and convenient method of acquiring all the gear necessary immediately.
-// Only allows one purchase, and doesn't prevent the purchase of the contained items. Focused on newer players to help them understand what items they need to succeed, and to help older players quickly purchase the baseline gear they need.
+// Core Gear Box: This contains all the 'fundamental' equipment that most nuclear operatives probably should be buying.. It isn't cheaper, but it is a quick and convenient method of acquiring all the gear necessary immediately.
+// Only allows one purchase, and doesn't prevent the purchase of the contained items.. Focused on newer players to help them underst. What items they need to succeed. To help older players quickly purchase the baseline gear they need.
 
 /datum/uplink_item/weapon_kits/core
 	name = "Core Equipment Box (Essential)"
@@ -58,7 +58,7 @@
 	cant_discount = TRUE
 	purchasable_from = UPLINK_SERIOUS_OPS
 
-//Low-cost firearms: Around 8 TC each. Meant for easy squad weapon purchases
+// Low-cost firearms: Around 8 TC each.. Meant for easy squad weapon purchases
 
 /datum/uplink_item/weapon_kits/low_cost
 	cost = 8
@@ -167,7 +167,7 @@
 	item = /obj/item/ammo_box/magazine/m10mm/fire
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
-//Medium-cost: 14 TC each. Meant for more expensive purchases with a goal in mind.
+// Medium-cost: 14 TC each.. Meant for more expensive purchases with a goal in mind.
 
 /datum/uplink_item/weapon_kits/medium_cost
 	cost = 14
@@ -291,7 +291,7 @@
 			Strike fear into the hearts of your enemies."
 	item = /obj/item/ammo_casing/rocket/heap
 
-//High-cost: 18 TC each. Really should only be coming out during war for how powerful it is, or be the majority of your TC outside of war.
+// High-cost: 18 TC each.. Really should only be coming out during war for how powerful it is, or be the majority of your TC outside of war.
 
 /datum/uplink_item/weapon_kits/high_cost
 	cost = 18

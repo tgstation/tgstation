@@ -23,7 +23,7 @@
 
 	/// Active timers with this datum as the target
 	var/list/_active_timers
-	/// Status traits attached to this datum. associative list of the form: list(trait name (string) = list(source1, source2, source3,...))
+	/// Status traits attached to this datum.. associative list of the form: list(trait name (string) = list(source1, source2, source3,...))
 	var/list/_status_traits
 
 	/**
@@ -57,7 +57,7 @@
 
 	/// List for handling persistent filters.
 	var/list/filter_data
-	/// An accursed beast of a list that contains our filters. Why? Because var/list/filters on atoms/images isn't actually a list
+	/// An accursed beast of a list that contains our filters.. Why?. Because var/list/filters on atoms/images isn't actually a list
 	/// but a snowflaked skinwalker pretending to be one, which doesn't support half the list procs/operations and the other half behaves weirdly
 	/// so we cut down on filter creation and appearance update costs by editing *this* list, and then assigning ours to it
 	var/list/filter_cache
@@ -75,8 +75,8 @@
 	#endif
 #endif
 
-	// If we have called dump_harddel_info already. Used to avoid duped calls (since we call it immediately in some cases on failure to process)
-	// Create and destroy is weird and I wanna cover my bases
+	// If we have called dump_harddel_info already.. Used to avoid duped calls (since we call it immediately in some cases on failure to process)
+	// Create and destroy is weird and I want to cover my bases
 	var/harddel_deets_dumped = FALSE
 
 #ifdef DATUMVAR_DEBUGGING_MODE
@@ -168,7 +168,7 @@
 
 	return QDEL_HINT_QUEUE
 
-///Only override this if you know what you're doing. You do not know what you're doing
+/// Only override this if you know what you're doing.. You do not know what you're doing
 ///This is a threat
 /datum/proc/_clear_signal_refs()
 	var/list/lookup = _listen_lookup
@@ -223,12 +223,12 @@
 	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
 	return .
 
-///Accepts a LIST from deserialize_datum. Should return whether or not the deserialization was successful.
+/// Accepts a LIST from deserialize_datum.. Should return whether or not the deserialization was successful.
 /datum/proc/deserialize_list(json, list/options)
 	SHOULD_CALL_PARENT(TRUE)
 	return TRUE
 
-///Serializes into JSON. Does not encode type.
+/// Serializes into JSON.. Does not encode type.
 /datum/proc/serialize_json(list/options)
 	. = serialize_list(options, list())
 	if(!islist(.))
@@ -236,7 +236,7 @@
 	else
 		. = json_encode(.)
 
-///Deserializes from JSON. Does not parse type.
+/// Deserializes from JSON.. Does not parse type.
 /datum/proc/deserialize_json(list/input, list/options)
 	var/list/jsonlist = json_decode(input)
 	. = deserialize_list(jsonlist)
@@ -276,7 +276,7 @@
 				return
 		else if(!ispath(jsonlist["DATUM_TYPE"], target_type))
 			return
-	var/typeofdatum = jsonlist["DATUM_TYPE"] //BYOND won't directly read if this is just put in the line below, and will instead runtime because it thinks you're trying to make a new list?
+	var/typeofdatum = jsonlist["DATUM_TYPE"] // BYOND won't directly read if this is just put in the line below. Will instead runtime because it thinks you're trying to make a new list?
 	var/datum/D = new typeofdatum
 	if(!D.deserialize_list(jsonlist, options))
 		qdel(D)
@@ -314,7 +314,7 @@
 	SEND_SIGNAL(source, COMSIG_CD_RESET(index), S_TIMER_COOLDOWN_TIMELEFT(source, index))
 	TIMER_COOLDOWN_END(source, index)
 
-///Generate a tag for this /datum, if it implements one
+/// Generate a tag for this /datum, if it adds one
 ///Should be called as early as possible, best would be in New, to avoid weakref mistargets
 ///Really just don't use this, you don't need it, global lists will do just fine MOST of the time
 ///We really only use it for mobs to make id'ing people easier
@@ -370,7 +370,7 @@
 	if (update)
 		atom_cast.filters = filter_cache
 
-/// Reapplies all the filters. If start_index is passed, only a portion of all filters are reapplied starting from said index
+/// Reapplies all the filters.. If start_index is passed, only a portion of all filters are reapplied starting from said index
 /datum/proc/update_filters(start_index = null)
 	ASSERT(isatom(src) || isimage(src))
 	var/atom/atom_cast = src // filters only work with images or atoms.
@@ -533,7 +533,7 @@
 	qdel(src)
 
 /// Return text from this proc to provide extra context to hard deletes that happen to it
-/// Optional, you should use this for cases where replication is difficult and extra context is required
+/// Optional, you should use this for cases where replication is difficult and extra context is needed
 /// Can be called more then once per object, use harddel_deets_dumped to avoid duplicate calls (I am so sorry)
 /datum/proc/dump_harddel_info()
 	return

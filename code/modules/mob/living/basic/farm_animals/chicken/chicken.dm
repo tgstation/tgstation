@@ -1,4 +1,4 @@
-/// Counter for number of chicken mobs in the universe. Chickens will not lay fertile eggs if it exceeds the MAX_CHICKENS define.
+/// Counter for number of chicken mobs in the universe.. Chickens will not lay fertile eggs if it exceeds the MAX_CHICKENS define.
 GLOBAL_VAR_INIT(chicken_count, 0)
 
 /* ## Chickens

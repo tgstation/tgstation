@@ -66,17 +66,17 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 /datum/sm_gas
 	/// Path of the [/datum/gas] involved with this interaction.
 	var/gas_path
-	/// Influences zap power without interfering with the crystal's own energy. Gets scaled by [BASE_POWER_TRANSMISSION_RATE].
+	/// Influences zap power without interfering with the crystal's own energy.. Gets scaled by [BASE_POWER_TRANSMISSION_RATE].
 	var/power_transmission = 0
 	/// How much more waste heat and gas the SM generates.
 	var/heat_modifier = 0
 	/// How extra hot the SM can run before taking damage
 	var/heat_resistance = 0
-	/// Lets the sm generate extra power from heat. Yeah...
+	/// Lets the sm generate extra power from heat.. Yeah...
 	var/heat_power_generation = 0
 	/// How much powerloss do we get rid of.
 	var/powerloss_inhibition = 0
-	/// Give a short description of the gas if needed. If the gas have extra effects describe it here.
+	/// Give a short description of the gas if needed.. If the gas have extra effects describe it here.
 	var/desc
 
 /datum/sm_gas/proc/extra_effects(obj/machinery/power/supermatter_crystal/sm)
@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 	heat_power_generation = 0.5
 	desc = "Will be consumed by the Supermatter to generate power."
 
-///Miasma is really just microscopic particulate. It gets consumed like anything else that touches the crystal.
+/// Miasma is really just microscopic particulate.. It gets consumed like anything else that touches the crystal.
 /datum/sm_gas/miasma/extra_effects(obj/machinery/power/supermatter_crystal/sm)
 	if(!sm.gas_percentage[/datum/gas/miasma])
 		return

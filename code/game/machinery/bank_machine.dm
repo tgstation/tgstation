@@ -8,7 +8,7 @@
 	req_access = list(ACCESS_VAULT)
 	///Whether the machine is currently being siphoned
 	var/siphoning = FALSE
-	///While siphoning, how much money do we have? Will drop this once siphon is complete.
+	/// While siphoning, how much money do we have?. Will drop this once siphon is complete.
 	var/syphoning_credits = 0
 	///Whether siphoning is authorized or not (has access)
 	var/unauthorized = FALSE

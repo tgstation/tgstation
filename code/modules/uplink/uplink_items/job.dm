@@ -361,7 +361,7 @@
 	item = /obj/item/bee_smoker
 	cost = 4
 	restricted_roles = list(JOB_BOTANIST)
-	surplus = 0 //requires too much setup to be worth including in surplus crates
+	surplus = 0 // needs too much setup to be worth including in surplus crates
 
 /datum/uplink_item/role_restricted/monkey_agent
 	name = "Simian Agent Reinforcements"

@@ -1,5 +1,5 @@
 // An unholy water flask, but for heretics.
-// Heals heretics, harms non-heretics. Pretty much identical.
+// Heals heretics, harms non-heretics.. Pretty much identical.
 /obj/item/reagent_containers/cup/beaker/eldritch
 	name = "flask of eldritch essence"
 	desc = "Toxic to the closed minded, yet refreshing to those with knowledge of the beyond."
@@ -64,7 +64,7 @@
 		if(5.1 to 10)
 			icon_state = base_icon_state + "_2"
 
-// Funny potion that is basically an aheal. The downside is that it puts you to sleep for a minute.
+// Funny potion that is basically an aheal.. The downside is that it puts you to sleep for a minute.
 /obj/item/ether
 	name = "ether of the newborn"
 	desc = "A flask of nausea-inducing, thick green liquid. Restores your body completely, then places you into an enhanced sleep for a full minute."

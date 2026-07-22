@@ -400,7 +400,7 @@
 ///medical stacks
 
 /datum/chemical_reaction/medicine/medsuture
-	required_reagents = list(/datum/reagent/cellulose = 2, /datum/reagent/toxin/formaldehyde = 4, /datum/reagent/medicine/polypyr = 3) //This might be a bit much, reagent cost should be reviewed after implementation.
+	required_reagents = list(/datum/reagent/cellulose = 2, /datum/reagent/toxin/formaldehyde = 4, /datum/reagent/medicine/polypyr = 3) // This might be a bit much, reagent cost should be reviewed after code
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE | REACTION_TAG_ACTIVE
 

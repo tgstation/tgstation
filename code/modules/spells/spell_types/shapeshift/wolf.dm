@@ -48,7 +48,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	hood = null
 
-///The hoodie, made by the cloak, which gives the action button (making it required to wear the hoodie to use it)
+/// The hoodie, made by the cloak, which gives the action button (making it needed to wear the hoodie to use it)
 /obj/item/clothing/head/hooded/wolf_coat_hoodie
 	name = "wolf pelt hood"
 	desc = "A hood made of wolf fur."

@@ -12,7 +12,7 @@
 	desc = "Fuel your spells using your own soul!"
 	button_icon_state = "soultap"
 
-	// I could see why this wouldn't be necromancy, but messing with souls or whatever. Ectomancy?
+	// I could see why this wouldn't be necromancy, but messing with souls or whatever.. Ectomancy?
 	school = SCHOOL_NECROMANCY
 	cooldown_time = 1 SECONDS
 	invocation = "AT ANY COST!"

@@ -11,7 +11,7 @@
 /datum/round_event/wizard/rpgtitles/start()
 	GLOB.rpgtitle_controller = new /datum/rpgtitle_controller
 
-///Holds the global datum for rpgtitle, so anywhere may check for its existence (it signals into whatever it needs to modify, so it shouldn't require fetching)
+/// Holds the global datum f. Rpgtitle, so anywhere may check f. Its existence (it signals into whatever it needs to modify, so it shouldn't need fetching)
 GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 
 /datum/rpgtitle_controller
@@ -47,7 +47,7 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 	new_crewmember.maptext_y = -32
 
 	//list of lists involving strings related to a biotype flag, their position in the list equal to the position they were defined as bitflags.
-	//the first list entry is an adjective, the second is a noun. if null, we don't want to describe this biotype, and so even if the mob
+	// the first list entry is an adjective, the second is a noun.. if null, we don't want to describe this biotype, and so even if the mob
 	//has that biotype, the null is skipped
 	var/list/biotype_titles = list(
 		null, //organic is too common to be a descriptor
@@ -68,7 +68,7 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 	if(!isanimal_or_basicmob(new_crewmember))
 		maptext_title = job.rpg_title || job.title
 	else
-		//this following code can only be described as bitflag black magic. ye be warned. i tried to comment excessively to explain what the fuck is happening
+		// this following code can only be described as bitflag black magic.. ye be warned.. i tried to comment excessively to explain what the fuck is happening
 		var/list/applicable_biotypes = list()
 		for(var/biotype_flag_position in 0 to 10)
 			var/biotype_flag = (1 << biotype_flag_position)
@@ -96,7 +96,7 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 		return
 
 	var/obj/item/card/id/card = new_crewmember.get_idcard()
-	if(!card)//since this is called on current crew, some may not have IDs. shame on them for missing out!
+	if(!card)// since this is called on current crew, some may not have IDs.. shame on them for missing out!
 		return
 	card.name = "adventuring license"
 	card.desc = "A written license from the adventuring guild. You're good to go!"

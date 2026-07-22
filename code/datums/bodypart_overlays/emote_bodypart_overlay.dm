@@ -1,4 +1,4 @@
-///Variant of bodypart_overlay for displaying emote overlays. See [/datum/emote/living/blush/run_emote] for an example on how to use one of these.
+/// Variant of bodypart_overlay for displaying emote overlays.. See [/datum/emote/living/blush/run_emote] for an example on how to use one of these.
 /datum/bodypart_overlay/simple/emote
 	icon = 'icons/mob/human/emote_visuals.dmi'
 	offset_location = UPPER_BODY
@@ -61,7 +61,7 @@
 		return ..()
 
 	var/list/blood_hsl = rgb2num(base_color, COLORSPACE_HSL)
-	//  take blood color then just make it a lot brighter and desaturate it a bit
+	// take blood color then just make it a lot brighter and desaturate it a bit
 	blood_hsl[2] = max(0, blood_hsl[2] - 20)
 	blood_hsl[3] = min(100, blood_hsl[3] + 30)
 

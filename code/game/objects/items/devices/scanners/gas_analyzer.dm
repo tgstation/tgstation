@@ -204,7 +204,7 @@
 
 		var/total_moles = air.total_moles()
 		var/pressure = air.return_pressure()
-		var/volume = air.return_volume() //could just do mixture.volume... but safety, I guess?
+		var/volume = air.return_volume() // could just do mixture.volume.... but safety, I guess?
 		var/temperature = air.return_temperature()
 		var/heat_capacity = air.heat_capacity()
 		var/thermal_energy = air.thermal_energy()

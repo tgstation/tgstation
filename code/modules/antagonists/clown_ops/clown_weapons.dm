@@ -148,7 +148,7 @@
 	concatable += "As a result of this, a bombanana peel will be spawned at [AREACOORD(src)]."
 
 	var/final_string = jointext(concatable, " ")
-	log_bomber(details = final_string) // sorta wacks out the traditional "log_bomber" format but it gets the point across better
+	log_bomber(details = final_string) // sort of wacks out the traditional "log_bomber" format but it gets the point across better
 	return NONE
 
 /obj/item/grown/bananapeel/bombanana

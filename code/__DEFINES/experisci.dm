@@ -3,7 +3,7 @@
 #define EXPERIMENT_CONFIG_CLICK "experiment_config_click"
 #define EXPERIMENT_CONFIG_UI "experiment_config_ui"
 
-/// Boolean stage, complete/incomplete. No specific progress to report.
+/// Boolean stage, complete/incomplete... No specific progress to report.
 #define EXPERIMENT_BOOL_STAGE "bool"
 /// Integer stages, should be whole numbers with total being included
 /// to support rendering ``value of total``, or something akin to it.
@@ -29,8 +29,8 @@
 /// Used by scanning experiments: instead of storing refs or be a number, the list for scanned atoms is used as typecache
 #define EXPERIMENT_TRAIT_TYPECACHE (1 << 1)
 
-/// Will always attempt to action every experiment eligible with a single input,
-/// no experiment selection required
+/// Will always try to action every experiment eligible with a single input,
+/// no experiment selection needed
 #define EXPERIMENT_CONFIG_ALWAYS_ACTIVE (1 << 0)
 /// Experiment handlers with this flag will not automatically connect to the first techweb they find
 /// on initialization

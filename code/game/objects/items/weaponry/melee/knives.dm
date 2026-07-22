@@ -432,7 +432,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 	/// Used on Initialize, how much time to cut cable restraints and zipties.
 	var/snap_time_weak_handcuffs = 0 SECONDS
-	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
+	/// Used on Initialize, how much time to cut real handcuffs.. Null means it can't.
 	var/snap_time_strong_handcuffs = null
 	/// Starts open if true
 	var/start_extended = FALSE

@@ -212,7 +212,7 @@
 	desc = "A large delivery parcel."
 	icon_state = "deliverycloset"
 	density = TRUE
-	interaction_flags_item = 0 // Disable the ability to pick it up. Wow!
+	interaction_flags_item = 0 // Disable the ability to pick it up.. Wow!
 	layer = BELOW_OBJ_LAYER
 	pass_flags_self = PASSSTRUCTURE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
@@ -287,7 +287,7 @@
 	playsound(src, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
 	return BRUTELOSS
 
-/** Standard TGUI actions */
+/** * Standard TGUI actions */
 /obj/item/dest_tagger/ui_interact(mob/user, datum/tgui/ui)
 	add_fingerprint(user)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -296,24 +296,24 @@
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/** If the user dropped the tagger */
+/** * If the user dropped the tagger */
 /obj/item/dest_tagger/ui_state(mob/user)
 	return GLOB.inventory_state
 
-/** User activates in hand */
+/** * User activates in hand */
 /obj/item/dest_tagger/attack_self(mob/user)
 	if(!locked_destination)
 		ui_interact(user)
 		return
 
-/** Data sent to TGUI window */
+/** * Data sent to TGUI window */
 /obj/item/dest_tagger/ui_data(mob/user)
 	var/list/data = list()
 	data["locations"] = GLOB.TAGGERLOCATIONS
 	data["currentTag"] = currTag
 	return data
 
-/** User clicks a button on the tagger */
+/** * User clicks a button on the tagger */
 /obj/item/dest_tagger/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)

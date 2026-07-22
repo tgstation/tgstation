@@ -54,7 +54,7 @@
 /datum/wound/pierce/bleed/receive_damage(wounding_type, wounding_dmg, wound_bonus, attack_direction, damage_source)
 	if(victim.stat == DEAD || wounding_dmg < 5 || !limb.can_bleed() || !victim.get_blood_volume() || !prob(internal_bleeding_chance + wounding_dmg))
 		return
-	// 20 force attack ~=  5-16 blood loss ~= 1%-3% of blood volume
+	// 20 force attack ~= 5-16 blood loss ~= 1%-3% of blood volume
 	// 30 force attack ~= 6-20 blood loss ~= 1%-4% of blood volume
 	var/blood_bled = sqrt(wounding_dmg) * internal_bleeding_coefficient * limb.get_splint_factor() * pick(0.75, 1, 1.25, 1.5)
 	switch(blood_bled)

@@ -1,4 +1,4 @@
-//Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
+// Please use mob or src (not usr) in these procs.. This way they can be called in the same fashion as procs.
 GAME_VERB_HIDDEN(/client, wiki, "wiki")
 
 	var/wikiurl = CONFIG_GET(string/wikiurl)
@@ -76,7 +76,7 @@ GAME_VERB_DESC(/client, reportissue, "report-issue", "Report an issue", null)
 	var/client_version = "[byond_version].[byond_build]"
 	concatable += ("&reporting-version=" + client_version)
 
-	// the way it works is that we use the ID's that are baked into the template YML and replace them with values that we can collect in game.
+	// the way it works is that we use the ID's that are baked into the template YML. Replace them with values that we can collect in game.
 	if(GLOB.round_id)
 		concatable += ("&round-id=" + GLOB.round_id)
 

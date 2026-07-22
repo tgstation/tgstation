@@ -21,45 +21,45 @@ multiple modular subtrees with behaviors
 	var/ai_traits = DEFAULT_AI_FLAGS
 	///Current status of AI (OFF/ON)
 	var/ai_status
-	///Set by force_ai_off() when an outside system deliberately disables this AI. While TRUE, get_expected_ai_status() always returns AI_STATUS_OFF, so status recalculations (stat changes, z changes, client login/logout) cannot re-enable us. Cleared via clear_forced_off().
+	/// Set by force_ai_off() when an outside system deliberately disables this AI.. While TRUE, get_expected_ai_status() always returns AI_STATUS_OFF, so status recalculations (stat changes, z changes, client login/logout) cannot re-enable us.. Cleared via clear_forced_off().
 	var/forced_off = FALSE
-	///Tracks recent pathing attempts, if we fail too many in a row we fail our current plans.
+	/// Tracks recent pathing tries if we fail too many in a row we fail our current plans.
 	var/consecutive_pathing_attempts
 	///Can the AI remain in control if there is a client?
 	var/continue_processing_when_client = FALSE
 	///distance to give up on target
 	var/max_target_distance = 14
-	/// Repo-relative path to the .bt.json source file for this controller (e.g. "code/datums/ai/basic_mobs/cleanbot.bt.json").
+	/// Repo-relative path to the .bt.json source file for this controller (e.g.. "code/datums/ai/basic_mobs/cleanbot.bt.json").
 	/// initialize_behavior_tree() derives the compiled path from this and loads the BT tree at runtime.
 	var/behavior_tree_json = null
 	///The root of our tree, which will contain
 	var/list/behavior_nodes
-	/// Execution index of the leaf node currently returning BT_RUNNING. 0 = nothing active.
+	/// Execution index of the leaf node currently returning BT_RUNNING.. 0 = nothing active.
 	var/active_execution_index = 0
-	/// Set to TRUE by cancel_current_plan() when it fires mid-tick. Checked by composites to abort the current tick loop early, preventing running_child_index from being re-established after a reset. Cleared at the start of SelectBehaviors().
+	/// Set to TRUE by cancel_current_plan() when it fires mid-tick.. Checked by composites to abort the current tick loop early, preventing running_child_index from being re-established after a reset.. Cleared at the start of SelectBehaviors().
 	var/cancelled_during_tick = FALSE
-	/// Draining log of all leaf execution indices that fired since the last bt_viewer poll. Null when no viewer is attached.
+	/// Draining log of all leaf execution indices that fired since the last bt_viewer poll.. Null when no viewer is attached.
 	var/list/bt_execution_log = null
 	/// assoc list of override_id -> /datum/bt_node/subtree for runtime subtree replacement.
-	/// Populated by finalize_tree() when subtrees with override_id are found. Null until then.
+	/// Populated by finalize_tree() when subtrees with override_id are found.. Null until then.
 	var/list/override_slots = null
-	/// Decorators in polling mode (observer_abort set, no signal registered). Iterated after each SelectBehaviors tick so their condition is re-evaluated even when skipped by composite resume logic.
+	/// Decorators in polling mode (observer_abort set, no signal registered).. Iterated after each SelectBehaviors tick so their condition is re-evaluated even when skipped by composite resume logic.
 	var/list/polling_observers = null
-	/// world.time of our last SelectBehaviors() tick from SSai_controllers. Used to derive the real seconds_per_tick under load; 0 means no tick since the last status change, so the first tick falls back to the subsystem wait.
+	/// world.time of our last SelectBehaviors() tick from SSai_controllers.. Used to derive the real seconds_per_tick under load. 0 means no tick since the last status change, so the first tick falls back to the subsystem wait.
 	var/last_bt_tick = 0
 	///our current cell grid
 	var/datum/cell_tracker/our_cells
 
 	// Movement related things here
-	///Reference to the movement datum we use. Is a type on initialize but becomes a ref afterwards.
+	/// Reference to the movement datum we use.. Is a type on initialize but becomes a ref afterwards.
 	var/datum/ai_movement/ai_movement = /datum/ai_movement/dumb
-	///Delay between movements. This is on the controller so we can keep the movement datum singleton
+	/// Delay between movements.. This is on the controller so we can keep the movement datum singleton
 	var/movement_delay = 0.1 SECONDS
 
 	// The variables below are fucking stupid and should be put into the blackboard at some point.
 	///AI paused time
 	var/paused_until = 0
-	///What distance should we be checking for interesting things when considering idling/deidling? Defaults to AI_DEFAULT_INTERESTING_DIST
+	/// What distance should we be checking for interesting things when considering idling/deidling?. Defaults to AI_DEFAULT_INTERESTING_DIST
 	var/interesting_dist = AI_DEFAULT_INTERESTING_DIST
 	/// TRUE if we're able to run, FALSE if we aren't
 	/// Should not be set manually, override get_able_to_run() instead
@@ -92,7 +92,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/change_ai_movement_type(datum/ai_movement/new_movement)
 	ai_movement = SSai_movement.movement_types[new_movement]
 
-///Completely replaces the behavior_nodes with a new set based on argument provided.
+/// Completely replaces the behavior_nodes with a new set good on argument provided.
 /datum/ai_controller/proc/replace_behavior_nodes(list/typepaths_of_new_subtrees)
 	var/list/old_nodes = behavior_nodes
 	behavior_nodes = typepaths_of_new_subtrees
@@ -227,7 +227,7 @@ multiple modular subtrees with behaviors
  */
 /datum/ai_controller/proc/build_node_from_descriptor(list/desc)
 	var/raw_type = desc[BT_DESC_TYPE]
-	if(!raw_type) // This can happen if we have an overriden type with no binding. (e.g. subtrees not being overriden and default to null)
+	if(!raw_type) // This can happen if we have an overriden type with no binding.. (e.g.. subtrees not being overriden and default to null)
 		return null
 	var/node_type = ispath(raw_type) ? raw_type : text2path(raw_type)
 	if(isnull(node_type))
@@ -287,7 +287,7 @@ multiple modular subtrees with behaviors
 	finalize_tree()
 
 /// Walks the resolved tree to set owning_controller and parent_node on all nodes, populates
-/// override_slots, and assigns pre-order execution indices. Called after initialize_behavior_tree() and
+/// override_slots, and assigns pre-order execution indices.. Called after initialize_behavior_tree() and
 /// after set_behavior_tree_override() installs or removes an override node.
 /datum/ai_controller/proc/finalize_tree()
 	if(!LAZYLEN(behavior_nodes))
@@ -411,7 +411,7 @@ multiple modular subtrees with behaviors
 
 	recalculate_idle(exited)
 
-/// Sets the AI on or off based on current conditions, call to reset after you've manually disabled it somewhere
+/// Sets the AI on or off good on current conditions, call to reset after you've manually disabled it somewhere
 /datum/ai_controller/proc/reset_ai_status()
 	set_ai_status(get_expected_ai_status())
 
@@ -491,7 +491,7 @@ multiple modular subtrees with behaviors
 			return AI_STATUS_ON_LOW
 	return AI_STATUS_OFF
 
-///Called when the AI controller pawn changes z levels, we check if there's any clients on the new one and wake up the AI if there is.
+/// Called when the AI controller pawn changes z levels, we check if there's any clients on the new one. Wake up the AI if there is.
 /datum/ai_controller/proc/on_changed_z_level(atom/source, turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	SIGNAL_HANDLER
 	if (ismob(pawn))
@@ -658,7 +658,7 @@ multiple modular subtrees with behaviors
 	cancelled_during_tick = TRUE
 	reset_bt_tick_states()
 
-/// Turn the controller on or off based on if you're alive, we only register to this if the flag is present so don't need to check again
+/// Turn the controller on. Off good on if you're alive, we only register to this if the flag is present so don't need to check again
 /datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)
 	SIGNAL_HANDLER
 	reset_ai_status()
@@ -685,14 +685,14 @@ multiple modular subtrees with behaviors
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
 
-/// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding. Return the access list you want to use
+/// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding.. Return the access list you want to use
 /datum/ai_controller/proc/get_access()
 	if(!isliving(pawn))
 		return
 	var/mob/living/living_pawn = pawn
 	return living_pawn.get_access()
 
-/// Returns TRUE if the pawn can path to the target. minimum_distance is how close the path must get (0 = onto/adjacent to the target's turf); searches pass it from their own acquire_target leaf.
+/// Returns TRUE if the pawn can path to the target.. minimum_distance is how close the path must get (0 = onto/adjacent to the target's turf); searches pass it from their own acquire_target leaf.
 /datum/ai_controller/proc/can_reach_target(atom/target, distance = 10, minimum_distance = 0)
 	if(!isdatum(target)) //we dont need to check if its not a datum!
 		return TRUE
@@ -702,7 +702,7 @@ multiple modular subtrees with behaviors
 	return (!!length(path))
 
 
-/// Called when a target was found but couldn't be reached. Base no-op; override to record the target (e.g. add it to an ignore list).
+/// Called when a target was found but couldn't be reached.. Base no-op; override to record the target (e.g.. add it to an ignore list).
 /datum/ai_controller/proc/note_unreachable_target(atom/target)
 	return
 
@@ -1011,23 +1011,23 @@ multiple modular subtrees with behaviors
 			if(islist(inner_value) && length(inner_value))
 				UNTYPED_LIST_ADD(remove_queue, inner_value)
 
-			// We found the value that's been deleted. Clear it out from this list
+			// We found the value that's been deleted.. Clear it out from this list
 			else if(inner_value == source)
 				next_to_clear -= inner_value
 
-			//if this is the case stop here. This means the list isn't associative (because an assoc list couldnt have a key for a number!)
+			// if this is the case stop here.. This means the list isn't associative (because an assoc list couldnt have a key for a number!)
 			if(isnum(inner_value))
 				continue
 
 			var/associated_value = next_to_clear[inner_value]
-			if(!associated_value) //This wasn't an associated list! we lied! its all been a trick. Try again next time.
+			if(!associated_value) // This wasn't an associated list!. we lied!. its all been a trick.. Try again next time.
 				continue
 			// We are an assoc lists of lists, the list at the next value so we can handle references in there
 			// (But again, we only need to bother checking the list if it's not empty.)
 			if(islist(associated_value) && length(associated_value))
 				UNTYPED_LIST_ADD(remove_queue, associated_value)
 
-			// We found the value that's been deleted, it was an assoc value. Clear it out entirely
+			// We found the value that's been deleted, it was an assoc value.. Clear it out entirely
 			else if(associated_value == source)
 				next_to_clear -= inner_value
 				SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(inner_value))
@@ -1055,7 +1055,7 @@ multiple modular subtrees with behaviors
 	UnregisterSignal(src, COMSIG_EVLOG_EVENT_ADDED)
 
 
-/// Called whenever an event is logged for this controller. Attaches a snapshot of current behaviors and blackboard state to the event via track_info.
+/// Called whenever an event is logged for this controller.. Attaches a snapshot of current behaviors and blackboard state to the event via track_info.
 /datum/ai_controller/proc/on_evlog_event_added(datum/source, datum/event_logger_track/track, list/event_data)
 	SIGNAL_HANDLER
 	var/list/track_info = list()

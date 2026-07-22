@@ -204,7 +204,7 @@
 
 		catalyst_volume = catalysts[reagent.type]
 		if(catalyst_volume) //we have a working catalyst
-			if(reagent.volume <= catalyst_volume) //dont transfer since we have the required volume
+			if(reagent.volume <= catalyst_volume) // dont transfer since we have the needed volume
 				continue
 			else
 				working_volume -= catalyst_volume //dump out the excess

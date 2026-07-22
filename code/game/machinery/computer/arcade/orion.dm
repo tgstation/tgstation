@@ -131,7 +131,7 @@
 		gamers[gamer] = ORION_GAMER_PAMPHLET //next report send a pamph
 
 		gamer.client.give_award(/datum/award/achievement/misc/gamer, gamer) // PSYCH REPORT NOTE: patient kept rambling about how they did it for an "achievement", recommend continued holding for observation
-		gamer.mind?.adjust_experience(/datum/skill/gaming, 50) // cheevos make u better
+		gamer.mind?.adjust_experience(/datum/skill/gaming, 50) // cheevos make you better
 
 /obj/machinery/computer/arcade/orion_trail/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

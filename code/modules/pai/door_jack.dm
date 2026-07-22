@@ -48,24 +48,24 @@
 	track_thing(hacking_cable)
 	return TRUE
 
-/** Tracks the associated pai */
+/** * Tracks the associated pai */
 /mob/living/silicon/pai/proc/track_pai()
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 	RegisterSignal(card, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
-/** Untracks the associated pai */
+/** * Untracks the associated pai */
 /mob/living/silicon/pai/proc/untrack_pai()
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(card, COMSIG_MOVABLE_MOVED)
 
-/** Tracks the associated hacking_cable */
+/** * Tracks the associated hacking_cable */
 /mob/living/silicon/pai/proc/track_thing(atom/movable/thing)
 	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
 	for(var/atom/movable/location in locations)
 		RegisterSignal(location, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
-/** Untracks the associated hacking */
+/** * Untracks the associated hacking */
 /mob/living/silicon/pai/proc/untrack_thing(atom/movable/thing)
 	UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
 	var/list/locations = get_nested_locs(thing, include_turf = FALSE)

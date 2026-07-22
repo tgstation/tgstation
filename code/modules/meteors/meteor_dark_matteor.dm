@@ -1,4 +1,4 @@
-/// The dark matt-eor. Only attracted by emagging 10 satellites and maximizing meteor chances, and it drops a singulo. Otherwise, it's not that bad.
+/// The dark matt-eor.. Only attracted by emagging 10 satellites and maximizing meteor chances, and it drops a singulo.. Otherwise, it's not that bad.
 /obj/effect/meteor/dark_matteor
 	name = "dark matt-eor"
 	icon_state = "dark_matter"

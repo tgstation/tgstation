@@ -58,7 +58,7 @@
 	iris_overlay = null
 	eye_color_left = "#ce2525"
 	eye_color_right = "#ce2525"
-	// We're gonna downshift green and blue a bit so darkness looks yellow
+	// We're going to downshift green and blue a bit so darkness looks yellow
 	color_cutoffs = list(25, 8, 5)
 	sight_flags = SEE_MOBS
 	flash_protect = FLASH_PROTECTION_SENSITIVE
@@ -141,9 +141,9 @@
 	var/eye_color_mode = USE_CUSTOM_COLOR
 	/// The selected color for the light beam itself
 	var/light_color_string = "#ffffff"
-	/// The custom selected eye color for the left eye. Defaults to the mob's natural eye color
+	/// The custom selected eye color for the left eye.. Defaults to the mob's natural eye color
 	var/left_eye_color_string
-	/// The custom selected eye color for the right eye. Defaults to the mob's natural eye color
+	/// The custom selected eye color for the right eye.. Defaults to the mob's natural eye color
 	var/right_eye_color_string
 	penlight_message = "shine back with cybernetic LEDs"
 
@@ -300,7 +300,7 @@
  */
 /obj/item/organ/eyes/robotic/glow/proc/set_beam_range(new_range)
 	var/old_light_range = eye.light_range
-	if(old_light_range == 0 && new_range > 0 && eye.light_on) // turn bring back the light overlay if we were previously at 0 (aka emissive eyes only)
+	if(old_light_range == 0 && new_range > 0 && eye.light_on) // turn bring back the light overlay if we were previously at 0 also known as emissive eyes only)
 		eye.light_on = FALSE // this is stupid, but this has to be FALSE for set_light_on() to work.
 		eye.set_light_on(TRUE)
 	eye.set_light_range(clamp(new_range, 0, max_light_beam_distance))

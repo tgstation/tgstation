@@ -16,9 +16,9 @@
 		if(initial(item_path.greyscale_colors) && initial(item_path.greyscale_config_worn)) //GAGS has its own unit test.
 			continue
 
-		var/worn_icon = initial(item_path.worn_icon) //override icon file. where our sprite is contained if set. (ie modularity stuff)
+		var/worn_icon = initial(item_path.worn_icon) // override icon file.. where our sprite is contained if set.. that is modularity stuff)
 		var/worn_icon_state = initial(item_path.worn_icon_state) //overrides icon_state.
-		var/icon_state = worn_icon_state || initial(item_path.icon_state) //icon_state. what sprite name we are looking for.
+		var/icon_state = worn_icon_state || initial(item_path.icon_state) // icon_state.. what sprite name we are looking for.
 
 
 		if(isnull(icon_state))
@@ -31,7 +31,7 @@
 			for(var/file_place in possible_icon_states[icon_state])
 				match_message += (match_message ? " & '[file_place]'" : " - Matching sprite found in: '[file_place]'")
 
-		if(worn_icon) //easiest to check since we override everything. this automatically includes downstream support.
+		if(worn_icon) // easiest to check since we override everything.. this automatically includes downstream support.
 			if(isnull(worn_icon_state)) // no worn sprite for this item.
 				continue
 			if(!(icon_state in icon_states(worn_icon, 1)))

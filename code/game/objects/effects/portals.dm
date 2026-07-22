@@ -29,7 +29,7 @@
 	var/mech_sized = FALSE
 	/// A reference to another "linked" destination portal
 	var/obj/effect/portal/linked
-	/// Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
+	/// Needs a linked portal at all times.. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
 	var/hardlinked = TRUE
 	/// What teleport channel does this portal use?
 	var/teleport_channel = TELEPORT_CHANNEL_BLUESPACE
@@ -39,9 +39,9 @@
 	var/allow_anchored = FALSE
 	/// What precision value do we pass to do_teleport (how far from the target destination we will pop out at).
 	var/innate_accuracy_penalty = 0
-	/// Used to track how often sparks should be output. Might want to turn this into a cooldown.
+	/// Used to track how often sparks should be output.. Might want to turn this into a cooldown.
 	var/last_effect = 0
-	/// Does this portal bypass teleport restrictions? like TRAIT_NO_TELEPORT and NOTELEPORT flags.
+	/// Does this portal bypass teleport restrictions?. like TRAIT_NO_TELEPORT and NOTELEPORT flags.
 	var/force_teleport = FALSE
 	/// Does this portal create spark effect when teleporting?
 	var/sparkless = TRUE

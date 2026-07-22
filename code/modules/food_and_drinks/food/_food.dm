@@ -26,7 +26,7 @@
 	var/food_flags
 	///Bitflag of the types of food this food is made of by default (for food recipes, it depends on the ingredients)
 	var/foodtypes
-	///Bitflag of the types of food that have to be removed when the food is baked/microwaved/grilled/dried etc.
+	/// Bitflag of the types of food that have to be removed when the food is baked/microwaved/grilled/dried and so on
 	var/foodtypes_removed_when_cooked = RAW
 	///Bitflag of the types of food that have to be added when cooked
 	var/foodtypes_added_when_cooked = NONE
@@ -42,7 +42,7 @@
 	var/bite_consumption
 	///Type of atom thats spawned after eating this item
 	var/trash_type
-	///How much junkiness this food has? God I should remove junkiness soon
+	/// How much junkiness this food has?. God I should remove junkiness soon
 	var/junkiness
 	///Price of this food if sold in a venue
 	var/venue_value
@@ -54,15 +54,15 @@
 	var/decomp_type = /obj/item/food/badrecipe/moldy
 	///Food that needs to be picked up in order to decompose.
 	var/decomp_req_handle = FALSE
-	///Used to set custom decomposition times for food. Set to 0 to have it automatically set via the food's flags.
+	/// Used to set custom decomposition times for food.. Set to 0 to have it automatically set via the food's flags.
 	var/decomposition_time = 0
 	///Used to set decomposition stink particles for food, will have no particles if null
 	var/decomposition_particles = /particles/stink
-	///Used to set custom starting reagent purity for synthetic and natural food. Ignored when set to null.
+	/// Used to set custom starting reagent purity for synthetic and natural food.. Ignored when set to null.
 	var/starting_reagent_purity = null
-	///How exquisite the meal is. Applicable to crafted food, increasing its quality. Spans from 0 to 5.
+	/// How exquisite the meal is.. Applicable to crafted food, increasing its quality.. Spans from 0 to 5.
 	var/crafting_complexity = 0
-	///Buff given when a hand-crafted version of this item is consumed. Randomized according to crafting_complexity if not assigned.
+	/// Buff given when a hand-crafted version of this item is consumed.. Randomized according to crafting_complexity if not assigned.
 	var/datum/status_effect/food/crafted_food_buff = null
 
 /obj/item/food/Initialize(mapload)
@@ -188,26 +188,26 @@
 	var/og_food_types = edible.foodtypes_by_source[SOURCE_EDIBLE_INNATE]
 	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, foodtypes = og_food_types)
 
-///This proc handles processable elements, overwrite this if you want to add behavior such as slicing, forking, spooning, whatever, to turn the item into something else
+/// This proc handles processable elements, overwrite this if you want to add behavi. Such as slicing, forking, spooning, whatever, to turn the item into something else
 /obj/item/food/proc/make_processable()
 	return
 
-///This proc handles grillable components, overwrite if you want different grill results etc.
+/// This proc handles grillable components, overwrite if you want different grill results and so on
 /obj/item/food/proc/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/badrecipe, rand(20 SECONDS, 30 SECONDS), FALSE)
 	return
 
-///This proc handles bakeable components, overwrite if you want different bake results etc.
+/// This proc handles bakeable components, overwrite if you want different bake results and so on
 /obj/item/food/proc/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/badrecipe, rand(25 SECONDS, 40 SECONDS), FALSE)
 	return
 
-/// This proc handles the microwavable element. Overwrite if you want special microwave results.
-/// By default, all food is microwavable. However, they will be microwaved into a bad recipe (burnt mess).
+/// This proc handles the microwavable element.. Overwrite if you want special microwave results.
+/// By default, all food is microwavable.. But they will be microwaved into a bad recipe (burnt mess).
 /obj/item/food/proc/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/badrecipe, bad_recipe = TRUE)
 
-/// This proc handles the dryable element. Overwrite if you want special drying rack results.
+/// This proc handles the dryable element.. Overwrite if you want special drying rack results.
 /obj/item/food/proc/make_dryable()
 	return
 
@@ -220,7 +220,7 @@
 ///This proc makes things infective and decomposing when they stay on the floor for too long.
 ///Set preserved_food to TRUE to make it never decompose.
 ///Set decomp_req_handle to TRUE to only make it decompose when someone picks it up.
-///Requires /datum/component/germ_sensitive to detect exposure
+/// Needs /datum/component/germ_sensitive to detect exposure
 /obj/item/food/proc/make_germ_sensitive(mapload)
 	if(!isnull(trash_type))
 		return // You don't eat the package and it protects from decomposing

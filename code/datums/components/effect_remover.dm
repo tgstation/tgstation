@@ -8,7 +8,7 @@
 	var/success_feedback
 	/// Line forcesaid by the user on successful removal.
 	var/success_forcesay
-	/// The text used in the screentip when our parent is hovering over an item we can clear. Ex "Destroy rune"
+	/// The text used in the screentip when our parent is hovering over an item we can clear.. Ex "Destroy rune"
 	var/tip_text
 	/// Callback invoked with removal is done.
 	var/datum/callback/on_clear_callback

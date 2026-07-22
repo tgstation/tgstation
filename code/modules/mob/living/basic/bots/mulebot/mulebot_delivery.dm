@@ -75,7 +75,7 @@
 	load = atom_to_load
 	update_appearance()
 
-///resolves the name to display for the loaded mob. primarily needed for the paranormal subtype since we don't want to show the name of ghosts riding it.
+/// resolves the name to display for the loaded mob.. primarily needed for the paranormal subtype since we don't want to show the name of ghosts riding it.
 /mob/living/basic/bot/mulebot/proc/get_load_name()
 	return load ? load.name : null
 
@@ -93,7 +93,7 @@
 // if zero or null, unload at bot's location
 /mob/living/basic/bot/mulebot/proc/unload(dirn)
 	if(QDELETED(load))
-		if(load) //if our thing was qdel'd, there's likely a leftover reference. just clear it and remove the overlay. we'll let the bot keep moving around to prevent it abruptly stopping somewhere.
+		if(load) // if our thing was qdel'd, there's likely a leftover reference.. just clear it and remove the overlay.. we'll let the bot keep moving around to prevent it abruptly stopping somewhere.
 			load = null
 			update_appearance()
 		return

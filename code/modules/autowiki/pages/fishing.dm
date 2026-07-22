@@ -312,7 +312,7 @@
 
 	return output
 
-///Sort the autowiki fish entries by their weight. However, duds always come first.
+/// Sort the autowiki fish entries by their weight.. But duds always come first.
 /proc/cmp_autowiki_fish_sources_content(list/A, list/B)
 	if(A[FISH_SOURCE_AUTOWIKI_NAME] == FISH_SOURCE_AUTOWIKI_DUD)
 		return -1

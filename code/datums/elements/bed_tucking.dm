@@ -4,7 +4,7 @@
 	argument_hash_start_idx = 3
 	/// our pixel_x offset - how much the item moves x when in bed (+x is closer to the pillow)
 	var/x_offset = 0
-	/// our pixel_y offset - how much the item move y when in bed (-y is closer to the middle)
+	/// our pixel_y offset - how much the item move why when in bed (-y is closer to the middle)
 	var/y_offset = 0
 	/// our rotation degree - how many degrees we need to turn the item to get to the left/right side
 	var/rotation_degree = 0

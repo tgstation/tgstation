@@ -12,14 +12,14 @@
 
 /datum/action/cooldown/spell/apply_mutations/New(Target)
 	. = ..()
-	spell_requirements |= SPELL_REQUIRES_HUMAN // The spell involves mutations, so it always require human / dna
+	spell_requirements |= SPELL_REQUIRES_HUMAN // The spell involves mutations, so it always need human / dna
 
 /datum/action/cooldown/spell/apply_mutations/Remove(mob/living/remove_from)
 	remove_mutations(remove_from)
 	return ..()
 
 /datum/action/cooldown/spell/apply_mutations/is_valid_target(atom/cast_on)
-	var/mob/living/carbon/human/human_caster = cast_on // Requires human anyways
+	var/mob/living/carbon/human/human_caster = cast_on // Needs human anyways
 	return !!human_caster.dna
 
 /datum/action/cooldown/spell/apply_mutations/cast(mob/living/carbon/human/cast_on)

@@ -157,12 +157,12 @@
 
 	playsound(cocoon, 'sound/effects/splat.ogg', vol = 60, vary = TRUE, ignore_walls = FALSE)
 
-	// A little less punishing since you need a do_after to set it up again after anyway, and because this can occur due to adults canceling Reproduce for meta reasons outside of their control.
+	// A little less punishing since you need a do_after to set it up again after anyway. Because this can occur due to adults canceling Reproduce f. Meta reasons outside of their control.
 	StartCooldown(10 SECONDS)
 
 	shared_unregister_cocoon()
 
-/// Unregisters the cocoon. Used by both [proc/cancel] and [proc/finalize].
+/// Unregisters the cocoon.. Used by both [proc/cancel] and [proc/finalize].
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/shared_unregister_cocoon()
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(cocoon, COMSIG_QDELETING)

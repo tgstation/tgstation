@@ -7,7 +7,7 @@
 	var/output
 	/// The amount of time this recipe takes.
 	var/time = 40
-	/// The machine required to do this recipe
+	/// The machine needed to do this recipe
 	var/required_machine = /obj/machinery/processor
 	/// Multiplied additional food made when processed
 	var/food_multiplier = 1
@@ -37,7 +37,7 @@
 		/obj/item/food/meat/cutlet/chicken)
 	output = /obj/item/food/raw_meatball
 	removed_foodtypes = GORE
-	added_foodtypes = RAW //you know what? *uncooks your cutlet*
+	added_foodtypes = RAW // you know what?. *uncooks your cutlet*
 
 /datum/food_processor_process/meat/human
 	input = /obj/item/food/meat/slab/human

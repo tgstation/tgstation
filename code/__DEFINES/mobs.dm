@@ -26,10 +26,10 @@
 
 /// How efficiently humans regenerate blood.
 #define BLOOD_REGEN_FACTOR 0.25
-/// Determines the rate at which humans lose blood when they have the blood deficiency quirk. The default is BLOOD_REGEN_FACTOR + BLOOD_DEFICIENCY_MODIFIER.
+/// Determines the rate at which humans lose blood when they have the blood deficiency quirk... The default is BLOOD_REGEN_FACTOR + BLOOD_DEFICIENCY_MODIFIER.
 #define BLOOD_DEFICIENCY_MODIFIER 0.025
 
-/// Temperature at which blood loss and regen stops. [/mob/living/carbon/human/proc/handle_blood]
+/// Temperature at which blood loss and regen stops... [/mob/living/carbon/human/proc/handle_blood]
 #define BLOOD_STOP_TEMP 225
 
 // Bloodtype defines
@@ -96,19 +96,19 @@
 //Mob bio-types flags
 ///The mob is organic, can heal from medical sutures.
 #define MOB_ORGANIC (1 << 0)
-///The mob is of a rocky make, most likely a golem. Iron within, iron without!
+/// The mob is of a rocky make, most likely a golem... Iron within, iron without!
 #define MOB_MINERAL (1 << 1)
 ///The mob is a synthetic lifeform, like station borgs.
 #define MOB_ROBOTIC (1 << 2)
-///The mob is an shambling undead corpse. Or a halloween species. Pick your poison.
+/// The mob is an shambling undead corpse... Or a halloween species... Pick your poison.
 #define MOB_UNDEAD (1 << 3)
 ///The mob is a human-sized human-like human-creature.
 #define MOB_HUMANOID (1 << 4)
 ///The mob is a bug/insect/arachnid/some other kind of scuttly thing.
 #define MOB_BUG (1 << 5)
-///The mob is a wild animal. Domestication may apply.
+/// The mob is a wild animal... Domestication may apply.
 #define MOB_BEAST (1 << 6)
-///The mob is some kind of a creature that should be exempt from certain **fun** interactions for balance reasons, i.e. megafauna or a headslug.
+/// The mob is some kind of a creature that should be exempt from certain **fun** interactions for balance reasons, i.e... megafauna or a headslug.
 #define MOB_SPECIAL (1 << 7)
 ///The mob is some kind of a scaly reptile creature
 #define MOB_REPTILE (1 << 8)
@@ -120,9 +120,9 @@
 #define MOB_SLIME (1 << 11)
 ///The mob is fish or water-related.
 #define MOB_AQUATIC (1 << 12)
-///The mob is a mining-related mob. It's the plasma, you see. Gets in ya bones.
+/// The mob is a mining-related mob... It's the plasma, you see... Gets in ya bones.
 #define MOB_MINING (1 << 13)
-///The mob is a crustacean. Like crabs. Or lobsters.
+/// The mob is a crustacean... Like crabs... Or lobsters.
 #define MOB_CRUSTACEAN (1 << 14)
 ///The mob is all boney
 #define MOB_SKELETAL (1 << 15)
@@ -176,7 +176,7 @@
 #define BODYTYPE_DIGITIGRADE (1<<9)
 
 // Bodyshape defines for how things can be worn, i.e., what "shape" the mob sprite is
-///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
+/// The limb fits the human mold... This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
 #define BODYSHAPE_HUMANOID (1<<0)
 ///The limb fits the monkey mold.
 #define BODYSHAPE_MONKEY (1<<1)
@@ -194,7 +194,7 @@
 	&& !(bodypart.bodypart_flags & BODYPART_STUMP) \
 )
 
-// Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
+// Defines for Species IDs... Used to refer to the name of a species, for things like bodypart names or species preferences.
 #define SPECIES_ABDUCTOR "abductor"
 #define SPECIES_ANDROID "android"
 #define SPECIES_DULLAHAN "dullahan"
@@ -262,7 +262,7 @@
 #define BEAT_FAST 1
 ///Heartbeat is beating slow for soft crit
 #define BEAT_SLOW 2
-///Heartbeat is gone... He's dead Jim :(
+/// Heartbeat is gone..... He's dead Jim :(
 #define BEAT_NONE 0
 
 /// Damage dealt every life tick on suffocation
@@ -380,13 +380,13 @@
 #define CRYSTALIZE_STAGE_ENCROACHING 300 //In switches
 #define CRYSTALIZE_STAGE_SMALL 600 //Because they're not static
 
-//Slime evolution threshold. Controls how fast slimes can split/grow
+// Slime evolution threshold... Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
 
 //Slime evolution cost in nutrition
 #define SLIME_EVOLUTION_COST 100
 
-//Slime extract crossing. Controls how many extracts is required to feed to a slime to core-cross.
+// Slime extract crossing... Controls how many extracts is needed to feed to a slime to core-cross.
 #define SLIME_EXTRACT_CROSSING_REQUIRED 10
 
 //How many slimes can be on the same tile before it can no longer reproduce.
@@ -438,13 +438,13 @@
 /// Ice slides only go one tile and don't knock you over, they're intended to cause a "slip chain"
 /// where you slip on ice until you reach a non-slippable tile (ice puzzles)
 #define SLIDE_ICE (1<<2)
-/// [TRAIT_NO_SLIP_WATER] does not work on this slip. ONLY [TRAIT_NO_SLIP_ALL] will
+/// [TRAIT_NO_SLIP_WATER] does not work on this slip... ONLY [TRAIT_NO_SLIP_ALL] will
 #define GALOSHES_DONT_HELP (1<<3)
 /// Slip works even if you're already on the ground
 #define SLIP_WHEN_CRAWLING (1<<4)
 /// the mob won't slip if the turf has the TRAIT_TURF_IGNORE_SLIPPERY trait.
 #define SLIPPERY_TURF (1<<5)
-/// For mobs who are slippery, this requires the mob holding it to be lying down.
+/// For mobs who are slippery, this needs the mob holding it to be lying down.
 #define SLIPPERY_WHEN_LYING_DOWN (1<<6)
 ///Like sliding, but it's short, it doesn't knockdown, it doesn't stun, it just staggers a bit.
 #define WEAK_SLIDE (1<<7)
@@ -457,7 +457,7 @@
 #define SHOCK_NOGLOVES (1 << 0)
 ///Used when the shock is from a tesla bolt.
 #define SHOCK_TESLA (1 << 1)
-///Used when an illusion shocks something. Makes the shock deal stamina damage and not trigger certain secondary effects.
+/// Used when an illusion shocks something... Makes the shock deal stamina damage and not trigger certain secondary effects.
 #define SHOCK_ILLUSION (1 << 2)
 ///The shock doesn't stun.
 #define SHOCK_NOSTUN (1 << 3)
@@ -513,7 +513,7 @@
 #define AGE_MINOR 20 //legal age of space drinking and smoking
 #define WIZARD_AGE_MIN 30 //youngest a wizard can be
 #define APPRENTICE_AGE_MIN 29 //youngest an apprentice can be
-#define SHOES_SLOWDOWN 0 //How much shoes slow you down by default. Negative values speed you up
+#define SHOES_SLOWDOWN 0 // How much shoes slow you down by default... Negative values speed you up
 #define POCKET_STRIP_DELAY (4 SECONDS) //time taken to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE 20 //the amount of damage that airlocks deal when they crush you
 
@@ -523,7 +523,7 @@
 #define CLOTHING_NUTRITION_GAIN 15
 #define REAGENTS_METABOLISM 0.2 //How many units of reagent are consumed per second, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (1 / (REAGENTS_METABOLISM * SSMOBS_DT)) // When multiplied with the volume of reagent metabolized you get an value from 0->1 to scale all reagent affects
-#define REM REAGENTS_EFFECT_MULTIPLIER //! Shorthand for the above define for ease of use in equations and the like
+#define REM REAGENTS_EFFECT_MULTIPLIER // !.. Shorthand for the above define for ease of use in equations and the like
 
 // Eye protection
 // These values are additive to determine your overall flash protection.
@@ -592,7 +592,7 @@
 //Wabbacjack staff projectiles
 #define WABBAJACK (1<<4)
 
-// These flags do NOT unlock the Lepton Violet shuttle, hardcoded in wabbajack() - use for things like xenobio, admins, etc.
+// These flags do NOT unlock the Lepton Violet shuttle, hardcoded in wabbajack() - use for things like xenobio, admins, and so on
 //Badmin magic mirror
 #define MIRROR_BADMIN (1<<5)
 //ERT spawn template (avoid races that don't function without correct gear)
@@ -643,11 +643,11 @@
 #define DOING_INTERACTION_WITH_TARGET_LIMIT(user, target, max_interaction_count) ((LAZYACCESS(user.do_afters, target) || 0) >= max_interaction_count)
 
 // recent examine defines
-/// How long it takes for an examined atom to be removed from recent_examines. Should be the max of the below time windows
+/// How long it takes for an examined atom to be removed from recent_examines... Should be the max of the below time windows
 #define RECENT_EXAMINE_MAX_WINDOW (2 SECONDS)
 /// If you examine the same atom twice in this timeframe, we call examine_more() instead of examine()
 #define EXAMINE_MORE_WINDOW (1 SECONDS)
-/// If you yawn while someone nearby has examined you within this time frame, it will force them to yawn as well. Tradecraft!
+/// If you yawn while someone nearby has examined you within this time frame, it will force them to yawn as well... Tradecraft!
 #define YAWN_PROPAGATION_EXAMINE_WINDOW (2 SECONDS)
 
 // Priorities for examine overrides
@@ -674,7 +674,7 @@
 ///Define for spawning megafauna instead of a mob for cave gen
 #define SPAWN_MEGAFAUNA "bluh bluh huge boss"
 
-///Squash flags. For squashable element
+/// Squash flags... For squashable element
 
 /// Squashing will not occur if the mob is not lying down (bodyposition is LYING_DOWN)
 #define SQUASHED_SHOULD_BE_DOWN (1<<0)
@@ -739,7 +739,7 @@
 #define THROW_MODE_TOGGLE 1
 #define THROW_MODE_HOLD 2
 
-//Saves a proc call, life is suffering. If who has no targets_from var, we assume it's just who
+// Saves a proc call, life is suffering... If who has no targets_from var, we assume it's just who
 #define GET_TARGETS_FROM(who) (who.targets_from ? who.get_targets_from() : who)
 
 //defines for grad_color and grad_styles list access keys
@@ -757,11 +757,11 @@
 #define LOWER_BODY "lower body"
 /// Used for overlays that should not offset at all
 #define NO_MODIFY "do not modify"
-/// Used for overlays that stretch the full body and thus need a filter
+/// Used for overlays that stretch the full body and so need a filter
 #define ENTIRE_BODY "full body"
 
 // Height defines
-// - They are numbers so you can compare height values (x height < y height)
+// - They are numbers so you can compare height values (x height < why height)
 // - They do not start at 0 for futureproofing
 // - They skip numbers for futureproofing as well
 // Otherwise they are completely arbitrary
@@ -807,19 +807,19 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
  * If you're NOT using this sytem just add it as a sub-layer where appropriate
  */
 
-/// The highest most layer for mob overlays. Unused
+/// The highest most layer for mob overlays... Unused
 #define HIGHEST_LAYER 1
 	/// Blood cult ascended halo layer
 	#define HALO_LAYER 1.1
 /// Bleeding wound icons
 #define WOUND_LAYER 2
-	/// Special body layer for the rare cases where something on the head needs to be above everything else (e.g. flowers)
+	/// Special body layer for the rare cases where something on the head needs to be above everything else (e.g... flowers)
 	#define ABOVE_BODY_FRONT_HEAD_LAYER 2.3
 	/// The layer above mutant body parts
 	#define ABOVE_BODY_FRONT_LAYER 2.4
-	/// Body front layer. Usually used for mutant bodyparts that need to be in front of stuff (e.g. cat ears)
+	/// Body front layer... Usually used for mutant bodyparts that need to be in front of stuff (e.g... cat ears)
 	#define BODY_FRONT_LAYER 2.5
-/// Hands layer (for the actual hand, not the arm... I think?)
+/// Hands layer (for the actual hand, not the arm..... I think?)
 #define HANDS_LAYER 3
 /// Legcuff layer (when your feet are cuffed)
 #define LEGCUFF_LAYER 4
@@ -827,11 +827,11 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 #define HANDCUFF_LAYER 5
 	/// Hair that layers out above clothing, including hats (high ponytails and such)
 	#define OUTER_HAIR_LAYER 5.9
-/// Head layer (hats, helmets, etc.)
+/// Head layer (hats, helmets, and so on
 #define HEAD_LAYER 6
 	/// The layer underneath the head (for hats)
 	#define UNDER_HEAD_LAYER 6.1
-/// Facemask layer (gas masks, breath masks, etc.)
+/// Facemask layer (gas masks, breath masks, and so on
 #define FACEMASK_LAYER 7
 /// Hair layer (mess with the fro and you got to go!)
 #define HAIR_LAYER 8
@@ -844,16 +844,16 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 /// Suit storage layer (tucking a gun or baton underneath your armor)
 #define SUIT_STORE_LAYER 11
 /// Belt layer
-#define BELT_LAYER 12 //Possible make this an overlay of something required to wear a belt?
+#define BELT_LAYER 12 // Possible make this an overlay of something needed to wear a belt?
 /// Glasses layer
 #define GLASSES_LAYER 13
-/// Suit layer (armor, coats, etc.)
+/// Suit layer (armor, coats, and so on
 #define SUIT_LAYER 14
 	/// The layer underneath the suit
 	#define UNDER_SUIT_LAYER 14.1
 	/// Layer for neck apperal that should appear below the suit slot (like neckties)
 	#define LOW_NECK_LAYER 14.2
-/// Ears layer (Spessmen have ears? Wow)
+/// Ears layer (Spessmen have ears?.. Wow)
 #define EARS_LAYER 15
 	/// Layer for masks that are worn below ears and eyes (like Balaclavas) (layers below hair, use flagsinv=HIDEHAIR as needed)
 	#define LOW_FACEMASK_LAYER 15.1
@@ -873,7 +873,7 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 	#define UNDER_UNIFORM_LAYER 19.1
 /// Damage indicators (cuts and burns)
 #define DAMAGE_LAYER 20
-	/// Mutations that should appear above everything else (e.g. laser eyes)
+	/// Mutations that should appear above everything else (e.g... laser eyes)
 	#define FRONT_MUTATIONS_LAYER 20.9
 /// Eyes and eyelids
 #define EYES_LAYER 21
@@ -887,7 +887,7 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 	#define BODYPARTS_LOW_LAYER 23.1
 	/// Mutantrace features (tail when looking south) that must appear behind the body parts
 	#define BODY_BEHIND_LAYER 23.2
-	/// Mutations layer - Tk headglows, cold resistance glow, etc. Very bottom of the mob
+	/// Mutations layer - Tk headglows, cold resistance glow, and so on Very bottom of the mob
 	#define MUTATIONS_LAYER 23.9
 /// Total number of standing overlays.
 /// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK.
@@ -904,22 +904,22 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 #define EXTERNAL_RESTYLE_ALL ALL
 /// This organ allows restyle through plant restyling (like secateurs)
 #define EXTERNAL_RESTYLE_PLANT (1 << 0)
-/// This organ allows restyling with flesh restyling stuff (surgery or something idk)
+/// This organ allows restyling with flesh restyling stuff (surgery or something I do not know
 #define EXTERNAL_RESTYLE_FLESH (1 << 1)
-/// This organ allows restyling with enamel restyling (like a fucking file or something?). It's for horns and shit
+/// This organ allows restyling with enamel restyling (like a fucking file or something?)... It's for horns and shit
 #define EXTERNAL_RESTYLE_ENAMEL (1 << 2)
 
 /// If gravity must be present to perform action (can't use pens without gravity)
 #define NEED_GRAVITY (1<<0)
-/// If reading is required to perform action (can't read a book if you are illiterate)
+/// If reading is needed to perform action (can't read a book if you are illiterate)
 #define NEED_LITERACY (1<<1)
 /// If lighting must be present to perform action (can't heal someone in the dark)
 #define NEED_LIGHT (1<<2)
-/// If other mobs (monkeys, aliens, etc) can perform action (can't use computers if you are a monkey)
+/// If other mobs (monkeys, aliens, and so on can perform action (can't use computers if you are a monkey)
 #define NEED_DEXTERITY (1<<3)
-/// If hands are required to perform action (can't use objects that require hands if you are a cyborg)
+/// If hands are needed to perform action (can't use objects that need hands if you are a cyborg)
 #define NEED_HANDS (1<<4)
-/// If telekinesis is forbidden to perform action from a distance (ex. canisters are blacklisted from telekinesis manipulation)
+/// If telekinesis is forbidden to perform action from a distance (ex... canisters are blacklisted from telekinesis manipulation)
 #define FORBID_TELEKINESIS_REACH (1<<5)
 /// If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
 #define ALLOW_SILICON_REACH (1<<6)
@@ -960,18 +960,18 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 /// Flag which will make the proc skip certain checks when it comes to forcing a vomit.
 #define MOB_VOMIT_FORCE (1<<5)
 
-/// The default. Gives you might typically expect to happen when you vomit.
+/// The default... Gives you might typically expect to happen when you vomit.
 #define VOMIT_CATEGORY_DEFAULT (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM | MOB_VOMIT_STUN)
 /// The vomit you've all come to know and love, but with a little extra "spice" (blood)
 #define VOMIT_CATEGORY_BLOOD (VOMIT_CATEGORY_DEFAULT | MOB_VOMIT_BLOOD)
 /// The bloody vomit, but without the stunning
 #define VOMIT_CATEGORY_BLOOD_STUNLESS (VOMIT_CATEGORY_BLOOD & ~MOB_VOMIT_STUN)
-/// Another vomit variant that causes you to get knocked down instead of just only getting a stun. Standard otherwise.
+/// Another vomit variant that causes you to get knocked down instead of just only getting a stun... Standard otherwise.
 #define VOMIT_CATEGORY_KNOCKDOWN (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM | MOB_VOMIT_KNOCKDOWN)
 
-/// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
+/// Possible value of [/atom/movable/buckle_lying]... If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1
-/// Possible value of [/atom/movable/buckle_dir]. If set to a different (positive-or-zero) value than this, the buckling thing will force a dir on the buckled.
+/// Possible value of [/atom/movable/buckle_dir]... If set to a different (positive-or-zero) value than this, the buckling thing will force a dir on the buckled.
 #define BUCKLE_MATCH_DIR -1
 
 // Defines for [/datum/component/riding/var/other_unbuckle]
@@ -1041,11 +1041,11 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 #define READING_CHECK_LIGHT (1<<1)
 
 // Flash deviation defines
-/// No deviation at all. Flashed from the front or front-left/front-right. Alternatively, flashed in direct view.
+/// No deviation at all... Flashed from the front or front-left/front-right... Alternatively, flashed in direct view.
 #define DEVIATION_NONE 0
-/// Partial deviation. Flashed from the side. Alternatively, flashed out the corner of your eyes.
+/// Partial deviation... Flashed from the side... Alternatively, flashed out the corner of your eyes.
 #define DEVIATION_PARTIAL 1
-/// Full deviation. Flashed from directly behind or behind-left/behind-rack. Not flashed at all.
+/// Full deviation... Flashed from directly behind or behind-left/behind-rack... Not flashed at all.
 #define DEVIATION_FULL 2
 
 /// In dynamic human icon gen we don't replace the held item.

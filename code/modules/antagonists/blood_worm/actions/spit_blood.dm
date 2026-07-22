@@ -58,7 +58,7 @@
 
 	var/modifiers = params2list(params)
 
-	// Don't block examines, grabs, etc.
+	// Don't block examines, grabs, and so on
 	if (modifiers[SHIFT_CLICK] || modifiers[ALT_CLICK] || modifiers[CTRL_CLICK])
 		return FALSE
 
@@ -246,7 +246,7 @@
 	icon_state = "blood_spit"
 
 	damage_type = BURN
-	armor_flag = BULLET // I'm sorry. Acid armor is too nonsensical for combat, as its granted based on how easily acid should destroy objects.
+	armor_flag = BULLET // I'm sorry.. Acid armor is too nonsensical for combat, as its granted good on how easily acid should destroy objects.
 
 	hitsound = 'sound/items/weapons/sear.ogg'
 	hitsound_wall = 'sound/items/weapons/sear.ogg'
@@ -257,17 +257,17 @@
 	color = "#ff1313"
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/juvenile
-	health_cost = 5.5 // This is enough for 20 shots in a row at full health. (keep in mind that health is VERY important)
+	health_cost = 5.5 // This is enough for 20 shots in a row at full health.. (keep in mind that health is VERY important)
 	projectile_type = /obj/projectile/blood_worm_spit/juvenile
 
 /obj/projectile/blood_worm_spit/juvenile
 	damage = 20 // 300 damage total, assuming no armor.
 	armour_penetration = 30 // So that sec cant just nullify half the kit of the blood worms with bulletproof armor.
-	wound_bonus = 0 // Juveniles can afford to fix wounds on their hosts. This doesn't cause critical wounds. (at least not in testing)
+	wound_bonus = 0 // Juveniles can afford to fix wounds on their hosts.. This doesn't cause critical wounds.. (at least not in testing)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/adult
 	desc = "Spit corrosive blood at your target in exchange for your own health. Right-click to melt restraints while in a host, or fire a burst while out of a host."
-	health_cost = 6.5 // This is enough for 26 shots in a row at full health. (keep in mind that health is VERY important)
+	health_cost = 6.5 // This is enough for 26 shots in a row at full health.. (keep in mind that health is VERY important)
 	projectile_type = /obj/projectile/blood_worm_spit/adult
 	burst_projectile_type = /obj/projectile/blood_worm_spit/adult_burst
 

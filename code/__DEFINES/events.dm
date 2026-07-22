@@ -12,7 +12,7 @@
 #define EVENT_CATEGORY_AI "AI issues"
 ///Events that spawn anomalies, which might be the source of anomaly cores
 #define EVENT_CATEGORY_ANOMALIES "Anomalies"
-///Events pertaining cargo, messages incoming to the station and job slots
+/// Events about cargo, messages incoming to the station and job slots
 #define EVENT_CATEGORY_BUREAUCRATIC "Bureaucratic"
 ///Events that cause breakages and malfunctions that could be fixed by engineers
 #define EVENT_CATEGORY_ENGINEERING "Engineering"

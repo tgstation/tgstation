@@ -22,7 +22,7 @@
 	var/thankscount = 0
 	///Current status of the cannon, alternates between CLOWN_CANNON_INACTIVE, CLOWN_CANNON_BUSY and CLOWN_CANNON_READY
 	var/cannonmode = CLOWN_CANNON_INACTIVE
-	///Does the driver require the clown role to drive it
+	/// Does the driver need the clown role to drive it
 	var/enforce_clown_role = TRUE
 	forced_enter_sound = SFX_CLOWN_CAR_LOAD
 	enter_sound = 'sound/vehicles/clown_car/door_close.ogg'
@@ -54,7 +54,7 @@
 /obj/vehicle/sealed/car/clowncar/auto_assign_occupant_flags(mob/M)
 	if(ishuman(M) && driver_amount() < max_drivers)
 		var/mob/living/carbon/human/H = M
-		if(is_clown_job(H.mind?.assigned_role) || !enforce_clown_role) //Ensures only clowns can drive the car. (Including more at once)
+		if(is_clown_job(H.mind?.assigned_role) || !enforce_clown_role) // Ensures only clowns can drive the car.. (Including more at once)
 			add_control_flags(H, VEHICLE_CONTROL_DRIVE)
 			RegisterSignal(H, COMSIG_MOB_CLICKON, PROC_REF(fire_cannon_at))
 			playsound(src, 'sound/vehicles/clown_car/door_close.ogg', 70, TRUE)

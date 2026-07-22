@@ -186,12 +186,12 @@
 	arguments = args.len > 1 ? arguments + args.Copy(2) : arguments
 
 	// Check if this handler is configured to be always active, in which case we
-	// attempt to action every experiment that is available to this handler.
+	// try to action every experiment that is available to this handler.
 	if (config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
 		var/any_success
 		for (var/datum/experiment/experiment in linked_web.available_experiments)
 			// Because this checks any experiment, we have to ensure it is allowable to be selected with can_select_experiment(...)
-			// this handles the handler's blacklist, whitelist, etc (potentially refactor this in the future if possible because this could be expensive)
+			// this handles the handler's blacklist, whitelist, and so on (potentially refactor this in the future if possible because this could be expensive)
 			if (can_select_experiment(experiment) && experiment.actionable(arglist(arguments)) && experiment.perform_experiment(arglist(arguments)))
 				any_success = TRUE
 		return any_success

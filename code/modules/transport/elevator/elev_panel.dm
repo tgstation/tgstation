@@ -24,7 +24,7 @@
 	// Indestructible until someone wants to make these constructible, with all the chaos that implies
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	/// Were we instantiated at mapload? Used to determine when we should link / throw errors
+	/// Were we instantiated at mapload?. Used to determine when we should link / throw errors
 	var/maploaded = FALSE
 
 	/// A weakref to the transport_controller datum we control
@@ -34,15 +34,15 @@
 
 	/// A list of all possible destinations this elevator can travel.
 	/// Assoc list of "Floor name" to "z level of destination".
-	/// By default the floor names will auto-generate ("Floor 1", "Floor 2", etc).
+	/// By default the floor names will auto-generate ("Floor 1", "Floor 2", and so on
 	var/list/linked_elevator_destination
 	/// If you want to override what each floor is named as, you can do so with this list.
 	/// Make this an assoc list of "z level you want to rename" to "desired name".
-	/// So, if you want the z-level 2 destination to be named "Cargo", you would do list("2" = "Cargo").
+	/// if you want the z-level 2 destination to be named "Cargo", you would do list("2" = "Cargo").
 	/// (Reminder: Z1 gets loaded as Central Command, so your map's bottom Z will be Z2!)
 	var/list/preset_destination_names
 
-	/// What z-level did we move to last? Used for showing the user in the UI which direction we're moving.
+	/// What z-level did we move to last?. Used for showing the user in the UI which direction we're moving.
 	var/last_move_target
 	/// TimerID to our door reset timer, made by emergency opening doors
 	var/door_reset_timerid
@@ -210,7 +210,7 @@
  * until it fails to find a valid stopping point in the passed direction.
  */
 /obj/machinery/elevator_control_panel/proc/add_destinations_in_a_direction_recursively(list/turfs_to_check, direction, list/destinations)
-	// Only vertical elevators are supported -  use trams for horizontal ones.
+	// Only vertical elevators are supported - use trams for horizontal ones.
 	if(direction != UP && direction != DOWN)
 		CRASH("[type] was given an invalid direction in add_destinations_in_a_direction_recursively!")
 
@@ -264,7 +264,7 @@
 	if(!check_panel())
 		return UI_DISABLED
 
-	// Otherwise, just check default state (is the user conscious and close, etc).
+	// Otherwise, just check default state (is the user conscious and close, and so on
 	return ..()
 
 /obj/machinery/elevator_control_panel/ui_data(mob/user)
@@ -315,7 +315,7 @@
 				return
 
 			var/desired_z = params["z"]
-			// num2text here is required as the z is stored as strings in the list, but passed here as a number.
+			// num2text here is needed as the z is stored as strings in the list, but passed here as a number.
 			if(!(num2text(desired_z) in linked_elevator_destination))
 				return TRUE // Something is inaccurate, update UI
 
@@ -325,7 +325,7 @@
 
 			INVOKE_ASYNC(lift, TYPE_PROC_REF(/datum/transport_controller/linear, move_to_zlevel), desired_z, CALLBACK(src, PROC_REF(check_panel)), usr)
 			last_move_target = desired_z
-			return TRUE // Succcessfully initiated a move. Regardless of whether it actually works, update the UI
+			return TRUE // Succcessfully initiated a move.. Regardless of whether it actually works, update the UI
 
 		if("emergency_door")
 			var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
@@ -377,7 +377,7 @@
 		zs_we_are_absent |= z_level
 
 	// Open all the doors on the zs we should be open on,
-	// and close all doors we aren't on. Simple enough.
+	// and close all doors we aren't on.. Simple enough.
 	lift.update_lift_doors(zs_we_are_present_on, action = CYCLE_OPEN)
 	lift.update_lift_doors(zs_we_are_absent, action = CYCLE_CLOSED)
 

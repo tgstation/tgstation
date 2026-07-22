@@ -97,7 +97,7 @@
 	if(!move_packet || !length(move_packet.existing_loops))
 		qdel(src)
 
-///Deals with what happens when we stop moving, IE we die
+/// Deals with what happens when we stop moving, that is we die
 /obj/effect/meteor/proc/moved_off_z()
 	qdel(src)
 
@@ -207,7 +207,7 @@
 			return
 
 	var/area/area_to_check = get_area(turf_to_ram)
-	if(area_to_check.area_flags & EVENT_PROTECTED) //This event absolutely destroys arrivals, and putting latejoiners into firelock hell is cringe
+	if(area_to_check.area_flags & EVENT_PROTECTED) // This event absolutely destroys arrivals, and putting latejoiners into firelock hell is uncomfortable
 		return
 
 	return ..()
@@ -352,7 +352,7 @@
 	desc = "Maybe it's a chunk blasted off of the legendary Clown Planet... How annoying."
 	icon_state = "bananium"
 	dropamt = 4
-	hits = 175 //Honks everything, including space tiles. Depending on the angle/how much stuff it hits, there's a fair chance that it will spare the station from the actual explosion
+	hits = 175 // Honks everything, including space tiles.. Depending on the angle/how much stuff it hits, there's a fair chance that it will spare the station from the actual explosion
 	meteordrop = list(/obj/item/stack/ore/bananium)
 	meteorsound = 'sound/items/bikehorn.ogg'
 	threat = 15

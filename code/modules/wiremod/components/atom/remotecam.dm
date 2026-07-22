@@ -285,7 +285,7 @@
 	camera_prefix = "BCI"
 	required_shells = list(/obj/item/organ/cyberimp/bci)
 
-	/// BCIs are organs, and thus the signal must be assigned ONLY when the shell has been installed in a mob - otherwise the camera will never update position
+	/// BCIs are organs. So the signal must be assigned ONLY when the shell has been installed in a mob - otherwise the camera will never update position
 	camera_signal_move_override = TRUE
 
 	/// Store the BCI owner as a variable, so we can remove the move signal if the user was gibbed/destroyed while the BCI is still installed
@@ -324,7 +324,7 @@
 	RegisterSignal(shell_parent, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
 	var/obj/item/organ/cyberimp/bci/bci = shell_parent
 	if(bci.owner) //If somehow the camera was added while shell is already installed inside a mob, assign signals
-		if(bciuser) //This should never happen... But if it does, unassign move signal from old mob
+		if(bciuser) // This should never happen.... But if it does, unassign move signal from old mob
 			UnregisterSignal(bciuser, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
 		bciuser = bci.owner
 		RegisterSignal(bciuser, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))

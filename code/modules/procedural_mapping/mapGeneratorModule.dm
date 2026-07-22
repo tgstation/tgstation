@@ -42,7 +42,7 @@
 		//Clustering!
 		if(clusterMax && clusterMin)
 
-			//You're the same as me? I hate you I'm going home
+			// You're the same as me?. I hate you I'm going home
 			if(clusterCheckFlags & CLUSTER_CHECK_SAME_TURFS)
 				clustering = rand(clusterMin,clusterMax)
 				for(var/turf/F in RANGE_TURFS(clustering,T))
@@ -53,7 +53,7 @@
 					skipLoopIteration = FALSE
 					continue
 
-			//You're DIFFERENT to me? I hate you I'm going home
+			// You're DIFFERENT to me?. I hate you I'm going home
 			if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_TURFS)
 				clustering = rand(clusterMin,clusterMax)
 				for(var/turf/F in RANGE_TURFS(clustering,T))
@@ -77,7 +77,7 @@
 			//Clustering!
 			if(clusterMax && clusterMin)
 
-				//You're the same as me? I hate you I'm going home
+				// You're the same as me?. I hate you I'm going home
 				if(clusterCheckFlags & CLUSTER_CHECK_SAME_ATOMS)
 					clustering = rand(clusterMin, clusterMax)
 					for(var/atom/movable/M in range(clustering,T))
@@ -88,7 +88,7 @@
 						skipLoopIteration = FALSE
 						continue
 
-				//You're DIFFERENT from me? I hate you I'm going home
+				// You're DIFFERENT from me?. I hate you I'm going home
 				if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_ATOMS)
 					clustering = rand(clusterMin, clusterMax)
 					for(var/atom/movable/M in range(clustering,T))
@@ -121,14 +121,14 @@
 
 
 ///////////////////////////////////////////////////////////
-//                 PREMADE BASE TEMPLATES                //
-//           Appropriate settings for usable types       //
+// PREMADE BASE TEMPLATES //
+// Appropriate settings for usable types //
 // Not usable types themselves, use them as parent types //
 // Seriously, don't use these on their own, just parents //
 ///////////////////////////////////////////////////////////
 //The /atom and /turf examples are just so these compile, replace those with your typepaths in your subtypes.
 
-//Settings appropriate for a turf that covers the entire map region, eg a fill colour on a bottom layer in a graphics program.
+// Settings appropriate for a turf that covers the entire map region, for example a fill colour on a bottom layer in a graphics program.
 //Should only have one of these in your mapGenerator unless you want to waste CPU
 /datum/map_generator_module/bottom_layer
 	clusterCheckFlags = CLUSTER_CHECK_NONE
@@ -141,7 +141,7 @@
 	spawnableAtoms = list(/atom = 30)
 	spawnableTurfs = list(/turf = 30)
 
-//Settings appropriate for turfs/atoms that cover a lot of the map region, eg a dense forest.
+// Settings appropriate for turfs/atoms that cover a lot of the map region, for example a dense forest.
 /datum/map_generator_module/dense_layer
 	clusterCheckFlags = CLUSTER_CHECK_NONE
 	spawnableAtoms = list(/atom = 75)

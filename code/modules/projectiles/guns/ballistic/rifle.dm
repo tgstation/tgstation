@@ -16,7 +16,7 @@
 	drop_sound = 'sound/items/handling/gun/ballistics/rifle/rifle_drop1.ogg'
 	pickup_sound = 'sound/items/handling/gun/ballistics/rifle/rifle_pickup1.ogg'
 	tac_reloads = FALSE
-	/// Does the bolt need to be open to interact with the gun (e.g. magazine interactions)?
+	/// Does the bolt need to be open to interact with the gun (e.g.. magazine interactions)?
 	var/need_bolt_lock_to_interact = FALSE
 
 /obj/item/gun/ballistic/rifle/rack(mob/user = null)
@@ -271,7 +271,7 @@
 /obj/item/gun/ballistic/rifle/rebarxbow/forced
 	name = "stressed rebar crossbow"
 	desc = "Some idiot decided that they would risk shooting themselves in the face if it meant they could rack and reload the crossbow faster. Hopefully, it was worth it."
-	// Feel free to add a recipe to allow you to change it back if you would like, I just wasn't sure if you could have two recipes for the same thing.
+	// Feel free to add a recipe to allow you to change it back if you would like, I just wasn't sure if you could have two recipes f. The same thing.
 	can_misfire = TRUE
 	draw_time = 0.5 SECONDS
 	reload_time = 0.5 SECONDS
@@ -349,7 +349,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol
 	projectile_damage_multiplier = 0.625
 	projectile_speed_multiplier = 1
-	spread = 15 //kinda inaccurate
+	spread = 15 // kind of inaccurate
 	burst_size = 3 //but it empties the entire magazine when it fires
 	burst_delay = 0.3 // and by empties, I mean it does it all at once
 	slot_flags = ITEM_SLOT_BELT

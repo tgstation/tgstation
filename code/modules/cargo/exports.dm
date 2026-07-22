@@ -49,7 +49,7 @@ Then the player gets the profit from selling his own wasted time.
 
 	var/list/contents = exported_atom.get_all_contents_ignoring(ignore_typecache)
 
-	// We go backwards, so it'll be innermost objects sold first. We also make sure nothing is accidentally delete before everything is sold.
+	// We go backwards, so it'll be innermost objects sold first.. We also make sure nothing is accidentally delete before everything is sold.
 	var/list/to_delete = list()
 	for(var/atom/movable/thing as anything in reverse_range(contents))
 		var/sold = _export_loop(thing, apply_elastic, dry_run, external_report, export_markets)
@@ -64,7 +64,7 @@ Then the player gets the profit from selling his own wasted time.
 
 	return external_report
 
-/// It works like export_item_and_contents(), however it ignores the contents. Meaning only `exported_atom` will be valued.
+/// It works like export_item_and_contents(), but it ignores the contents.. Meaning only `exported_atom` will be valued.
 /proc/export_single_item(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report, export_markets = list(EXPORT_MARKET_STATION))
 	if(!external_report)
 		external_report = new
@@ -77,7 +77,7 @@ Then the player gets the profit from selling his own wasted time.
 
 	return external_report
 
-/// The main bit responsible for selling the item. Shared by export_single_item() and export_item_and_contents()
+/// The main bit responsible for selling the item.. Shared by export_single_item() and export_item_and_contents()
 /proc/_export_loop(atom/movable/exported_atom, apply_elastic = TRUE, dry_run = FALSE, datum/export_report/external_report, export_markets)
 	var/sold = EXPORT_NOT_SOLD
 	for(var/datum/export/export as anything in GLOB.exports_list)
@@ -95,7 +95,7 @@ Then the player gets the profit from selling his own wasted time.
 /datum/export
 	abstract_type = /datum/export
 
-	/// Unit name. Only used in "Received [total_amount] [name]s [message]."
+	/// Unit name.. Only used in "Received [total_amount] [name]s [message]."
 	var/unit_name = ""
 	/// Message appended to the sale report
 	var/message = ""
@@ -111,9 +111,9 @@ Then the player gets the profit from selling his own wasted time.
 	///Time taken for this exports elasticity to reach back to 100%
 	var/k_recovery_time = 10 MINUTES
 
-	/// The multiplier of the amount sold shown on the report. Useful for exports, such as material, which costs are not strictly per single units sold.
+	/// The multiplier of the amount sold shown on the report.. Useful for exports, such as material, which costs are not strictly per single units sold.
 	var/amount_report_multiplier = 1
-	/// Type of the exported object. If none, the export datum is considered base type.
+	/// Type of the exported object.. If none, the export datum is considered base type.
 	var/list/export_types = list()
 	/// Set to FALSE to make the datum apply only to a strict type.
 	var/include_subtypes = TRUE
@@ -121,7 +121,7 @@ Then the player gets the profit from selling his own wasted time.
 	var/list/exclude_types = list()
 	/// Set to false if the cost shouldn't be determinable by an export scanner
 	var/scannable = TRUE
-	/// Export market that this export applies to. Defaults to EXPORT_MARKET_STATION for items sold to the standard supply shuttle, replacements exist for pirates, etc.
+	/// Export market that this export applies to.. Defaults to EXPORT_MARKET_STATION for items sold to the standard supply shuttle, replacements exist for pirates, and so on
 	var/sales_market = EXPORT_MARKET_STATION
 
 /datum/export/New()

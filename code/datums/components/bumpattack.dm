@@ -7,7 +7,7 @@
 
 /datum/component/bumpattack
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	///inventory slot that the item could be stored while still being able to attack with it. DO SLOT_HANDS|SLOT_BACK instead of a list for multiple slots
+	/// inventory slot that the item could be stored while still being able to attack with it.. DO SLOT_HANDS|SLOT_BACK instead of a list for multiple slots
 	var/valid_inventory_slot
 	///whether or not the behaviour would be active on the item
 	var/active = FALSE

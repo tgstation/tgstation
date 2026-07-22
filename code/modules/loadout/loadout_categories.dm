@@ -49,7 +49,7 @@
 
 	return all_items
 
-/// Returns a list of all /datum/loadout_items in this category, formatted for UI use. Only ran once.
+/// Returns a list of all /datum/loadout_items in this category, formatted for UI use.. Only ran once.
 /datum/loadout_category/proc/items_to_ui_data() as /list
 	if(!length(associated_items))
 		return list()

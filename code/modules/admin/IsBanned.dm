@@ -1,9 +1,9 @@
-//Blocks an attempt to connect before even creating our client datum thing.
+// Blocks an try to connect before even creating our client datum thing.
 
 //How many new ckey matches before we revert the stickyban to its roundstart state
 //These are exclusive, so once it goes over one of these numbers, it reverts the ban
 #define STICKYBAN_MAX_MATCHES 15
-#define STICKYBAN_MAX_EXISTING_USER_MATCHES 3 //ie, users who were connected before the ban triggered
+#define STICKYBAN_MAX_EXISTING_USER_MATCHES 3 // that is users who were connected before the ban triggered
 #define STICKYBAN_MAX_ADMIN_MATCHES 1
 
 /world/IsBanned(key, address, computer_id, type, real_bans_only=FALSE)
@@ -231,8 +231,8 @@
 
 
 		//byond will not trigger isbanned() for "global" host bans,
-		//ie, ones where the "apply to this game only" checkbox is not checked (defaults to not checked)
-		//So it's safe to let admins walk thru host/sticky bans here
+		// that is ones where the "apply to this game only" checkbox is not checked (defaults to not checked)
+		// So it's safe to let admins walk through host/sticky bans here
 		if (admin)
 			log_admin("The admin [ckey] has been allowed to bypass a matching host/sticky ban on [bannedckey]")
 			if (message)

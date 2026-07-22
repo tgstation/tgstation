@@ -330,11 +330,11 @@
 		/datum/computer_file/program/messenger,
 	)
 
-	///Ref to the RoboTact app. Important enough to borgs to deserve a ref.
+	/// Ref to the RoboTact app.. Important enough to borgs to deserve a ref.
 	var/datum/computer_file/program/robotact/robotact
 	///IC log that borgs can view in their personal management app
 	var/list/borglog = list()
-	///Ref to the silicon we're installed in. Set by the silicon itself during its creation.
+	/// Ref to the silicon we're installed in.. Set by the silicon itself during its creation.
 	var/mob/living/silicon/silicon_owner
 
 /obj/item/modular_computer/pda/silicon/pai

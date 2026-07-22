@@ -1,23 +1,23 @@
-// The list of all current global, shared crew bounties, does not contain any personal bounties however.
+// The list of all current global, shared crew bounties, does not contain any personal bounties but
 GLOBAL_LIST_EMPTY(shared_crew_bounties)
 
 /datum/bounty
-	/// A name for the bounty. Displayed on the bounty console/Paper sheets.
+	/// A name for the bounty.. Displayed on the bounty console/Paper sheets.
 	var/name
 	/// A description for the bounty.
 	var/description
-	/// Whether or not the bounty has been claimed by cargo. Only applies to cargo list bounties.
+	/// Whether or not the bounty has been claimed by cargo.. Only applies to cargo list bounties.
 	var/claimed = FALSE
-	/// Whether or not the bounty is high priority. High priority bounties appear at the top of the list.
+	/// Whether or not the bounty is high priority.. High priority bounties appear at the top of the list.
 	var/high_priority = FALSE
 	/// The reward for completing the bounty in credits, before being split by cargo/the player.
 	VAR_PROTECTED/reward = CARGO_CRATE_VALUE * 5 // In credits.
 	var/allow_duplicate = FALSE
 	/// Can this bounty be selected got a new global bounty?
 	var/global_exempt = FALSE
-	///A list consisting of the accounts who sent several of the items required for a bounty payout. Used for distributing payout with the payment component.
+	/// A list consisting of the accounts who sent several of the items needed for a bounty payout.. Used for distributing payout with the payment component.
 	var/list/contribution = list()
-	/// Is this bounty considered unique? This is for weird, singleton bounties that we don't want to roll into randomly, and we provide one of these
+	/// Is this bounty considered unique?. This is for weird, singleton bounties that we don't want to roll into randomly, and we provide one of these
 	var/unique = FALSE
 
 /// Can this bounty be claimed right now?
@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(shared_crew_bounties)
 /datum/bounty/proc/ship(obj/shipped)
 	return
 
-/// Formats the text for what is required to complete the bounty, for display purposes.
+/// Formats the text for what is needed to complete the bounty, for display purposes.
 /datum/bounty/proc/print_required()
 	return ""
 

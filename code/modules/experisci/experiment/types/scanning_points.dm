@@ -3,7 +3,7 @@
 	description = "Base experiment for scanning experiments tracked by points"
 	/// The current points gained on this experiment
 	var/points = 0
-	/// The total required points for this experiment
+	/// The total needed points for this experiment
 	var/required_points
 
 /datum/experiment/scanning/points/is_complete()
@@ -30,7 +30,7 @@
 		if (!istype(target, req_atom))
 			continue
 
-		// Try to select a required atom that this scanned atom would contribute towards
+		// Try to select a needed atom that this scanned atom would contribute towards
 		var/selected
 		if (destructive && (req_atom in scanned))
 			selected = req_atom

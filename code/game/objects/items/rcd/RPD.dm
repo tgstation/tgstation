@@ -178,7 +178,7 @@
 			selected_major_category = GLOB.disposal_pipe_recipes
 		if(TRANSIT_CATEGORY)
 			selected_major_category = GLOB.transit_tube_recipes
-	//selected subcategory (e.g. pipes/binary/devices/heat exchange for atmos)
+	// selected subcategory (e.g.. pipes/binary/devices/heat exchange for atmos)
 	for(var/subcategory in selected_major_category)
 		var/list/subcategory_recipes = selected_major_category[subcategory]
 		var/list/available_recipe = list()
@@ -359,16 +359,16 @@
 			playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
 
 			// Something else could have changed the target's state while we were waiting in do_after
-			// Most of the edge cases don't matter, but atmos components being able to have live connections not described by initializable directions sounds like a headache at best and an exploit at worst
+			// Most of the edge cases don't matter. Atmos components being able to have live connections not described by initializable directions sounds like a headache at best. An exploit at worst
 
-			// Double check to make sure that nothing has changed. If anything we were about to change was connected during do_after, abort
+			// Double check to make sure that nothing has changed.. If anything we were about to change was connected during do_after, abort
 			if(target_differences & target_smart_pipe.connections)
 				balloon_alert(user, "can't configure for its direction!")
 				return ITEM_INTERACT_FAILURE
 			// Grab the current initializable directions, which may differ from old_init_dir if someone else was working on the same pipe at the same time
 			var/current_init_dir = target_smart_pipe.get_init_directions()
-			// Access p_init_dir directly. The RPD can change target layer and initializable directions (though not pipe type or dir) while working to dispense and connect a component,
-			// and have it reflected in the final result. Reprogramming should be similarly consistent.
+			// Access p_init_dir directly.. The RPD can change target layer and initializable directions (though not pipe type or dir) while working to dispense and connect a component,
+			// and have it reflected in the final result.. Reprogramming should be similarly consistent.
 			var/new_init_dir = (current_init_dir & ~target_differences) | (p_init_dir & target_differences)
 			// Don't make a smart pipe with only one connection
 			if(ISSTUB(new_init_dir))
@@ -379,11 +379,11 @@
 			// We can never disconnect from existing connections, but we can connect to previously unconnected directions, and should immediately do so
 			var/newly_permitted_connections = new_init_dir & ~current_init_dir
 			if(newly_permitted_connections)
-				// We're allowed to connect in new directions. Recompute our nodes
+				// We're allowed to connect in new directions.. Recompute our nodes
 				// Disconnect from everything that is currently connected
 				for(var/i in 1 to target_smart_pipe.device_type)
-					// This is basically pipe.nullifyNode, but using it here would create a pitfall for others attempting to
-					// copy and paste disconnection code for other components. Welcome to the atmospherics subsystem
+					// This is basically pipe.nullifyNode, but using it here would create a pitfall for others trying to
+					// copy and paste disconnection code for other components.. Welcome to the atmospherics subsystem
 					var/obj/machinery/atmospherics/node = target_smart_pipe.nodes[i]
 					if(!node)
 						continue

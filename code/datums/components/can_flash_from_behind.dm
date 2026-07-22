@@ -1,6 +1,6 @@
 /// This mob can flash others from behind and still get at least a partial
 // Component and not element because elements can't stack.
-// I don't want to have a bunch of helpers for that. We need to do this generally
+// I don't want to have a bunch of helpers for that.. We need to do this generally
 // because this keeps coming up.
 /datum/component/can_flash_from_behind
 	dupe_mode = COMPONENT_DUPE_SOURCES

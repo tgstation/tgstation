@@ -131,7 +131,7 @@
 		original_firer.client.images -= crosshair_indicator
 	QDEL_NULL(crosshair_indicator)
 
-/// We've been shot by a marksman revolver shot, or the ricochet off another coin, check if we can actually ricochet. The forced var being TRUE means it's a ricochet from another coin
+/// We've been shot by a marksman revolver shot, or the ricochet off another coin, check if we can actually ricochet.. The forced var being TRUE means it's a ricochet from another coin
 /obj/projectile/bullet/coin/proc/check_splitshot(mob/living/shooter, obj/projectile/bullet/marksman/incoming_shot, forced = FALSE)
 	if(!forced && get_dist(src, target_turf) > 1)
 		return FALSE
@@ -142,7 +142,7 @@
 	iterate_splitshots(shooter, incoming_shot)
 	QDEL_IN(src, 0.25 SECONDS) // may not be needed
 
-/// Now we actually create all the splitshots, loop through however many splits we'll create and fire them
+/// Now we actually create all the splitshots, loop through but many splits we'll create and fire them
 /obj/projectile/bullet/coin/proc/iterate_splitshots(mob/living/shooter, obj/projectile/incoming_shot)
 	for(var/i in 1 to num_of_splitshots)
 		fire_splitshot(incoming_shot)
@@ -174,7 +174,7 @@
 		var/obj/projectile/bullet/coin/our_coin = next_target
 		our_coin.check_splitshot(incoming_shot.firer, new_splitshot, forced = TRUE)
 
-/// Find what the splitshots will want to target next, with the order roughly based off the UK coin
+/// Find what the splitshots will want to target next, with the order roughly good off the UK coin
 /obj/projectile/bullet/coin/proc/find_next_target()
 	var/list/valid_targets = shuffle(oview(4, loc))
 	valid_targets -= firer

@@ -76,7 +76,7 @@
 	exit_chance = 5
 
 
-/// Pollinates the hydro tray at BB_TARGET_HYDRO. Must be adjacent.
+/// Pollinates the hydro tray at BB_TARGET_HYDRO.. Must be adjacent.
 /datum/bt_node/ai_behavior/pollinate_hydro
 	time_between_perform = 5 SECONDS
 

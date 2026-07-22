@@ -3,10 +3,10 @@
 	behavior_tree_json = "code/datums/ai/basic_mobs/basic_ai_behaviors/consider_venting.bt.json"
 
 
-/// Enters a vent stored in entry_vent_key. Sets BB_EXIT_VENT_TARGET and BB_VENT_ENTRY_TIME on success.
+/// Enters a vent stored in entry_vent_key.. Sets BB_EXIT_VENT_TARGET and BB_VENT_ENTRY_TIME on success.
 /datum/bt_node/ai_behavior/enter_vent
 	var/entry_vent_key = BB_ENTRY_VENT_TARGET
-	/// TRUE while the async crawl-in is running. perform() holds at DELAY until it resolves.
+	/// TRUE while the async crawl-in is running.. perform() holds at DELAY until it resolves.
 	var/is_starting_crawl = FALSE
 	/// Set by the async action when the crawl finished but we did not end up in the vent.
 	var/failed_ventcrawl = FALSE
@@ -14,7 +14,7 @@
 /datum/bt_node/ai_behavior/enter_vent/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/cached_pawn = controller.pawn
 
-	// We kicked off the crawl on a previous tick; report its result once it resolves. Flags reset in finish_action.
+	// We kicked off the crawl on a previous tick; report its result once it resolves.. Flags reset in finish_action.
 	if(failed_ventcrawl)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	if(is_starting_crawl)
@@ -47,11 +47,11 @@
 	INVOKE_ASYNC(src, PROC_REF(perform_ventcrawl_action), controller, entry_vent)
 	return AI_BEHAVIOR_DELAY
 
-/// Runs the sleeping ventcrawl off the tick. Flags failure if we didn't end up in the vent, so perform() never has to sleep.
+/// Runs the sleeping ventcrawl off the tick.. Flags failure if we didn't end up in the vent, so perform() never has to sleep.
 /datum/bt_node/ai_behavior/enter_vent/proc/perform_ventcrawl_action(datum/ai_controller/controller, obj/machinery/atmospherics/components/unary/vent_pump/entry_vent)
 	var/mob/living/cached_pawn = controller.pawn
 	cached_pawn.handle_ventcrawl(entry_vent)
-	if(!HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING)) //something failed and we ARE NOT IN THE VENT even though the earlier check said we were good to go! odd.
+	if(!HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING)) // something failed and we ARE NOT IN THE VENT even though the earlier check said we were good to go!. odd.
 		failed_ventcrawl = TRUE
 
 /datum/bt_node/ai_behavior/enter_vent/finish_action(datum/ai_controller/controller, succeeded)
@@ -65,7 +65,7 @@
 /datum/bt_node/ai_behavior/enter_vent/proc/is_vent_valid(obj/machinery/atmospherics/components/unary/vent_pump/vent)
 	return !QDELETED(vent) && !vent.welded
 
-/// Picks a random valid vent on the same pipeline as the entry vent. Falls back to the entry vent itself; returns null if nothing is usable.
+/// Picks a random valid vent on the same pipeline as the entry vent.. Falls back to the entry vent itself; returns null if nothing is usable.
 /datum/bt_node/ai_behavior/enter_vent/proc/calculate_exit_vent(datum/ai_controller/controller)
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent = controller.blackboard[entry_vent_key]
 	if(QDELETED(entry_vent))
@@ -86,11 +86,11 @@
 	return entry_vent
 
 
-/// Waits inside a vent for a randomised duration, then exits. Handles the give-up timeout.
+/// Waits inside a vent for a randomised duration, then exits.. Handles the give-up timeout.
 /datum/bt_node/ai_behavior/exit_vent
 	time_between_perform = 1 SECONDS
 	var/target_exit_time = 0
-	/// TRUE while the async crawl-out is running. perform() holds at DELAY until it resolves.
+	/// TRUE while the async crawl-out is running.. perform() holds at DELAY until it resolves.
 	var/is_exiting_crawl = FALSE
 	/// Set by the async action when the crawl finished but we are somehow still in the vent.
 	var/failed_ventcrawl = FALSE
@@ -106,7 +106,7 @@
 /datum/bt_node/ai_behavior/exit_vent/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/cached_pawn = controller.pawn
 
-	// We kicked off the crawl-out on a previous tick; report its result once it resolves. Flags reset in finish_action.
+	// We kicked off the crawl-out on a previous tick; report its result once it resolves.. Flags reset in finish_action.
 	if(failed_ventcrawl)
 		return suicide_pill(cached_pawn)
 	if(is_exiting_crawl)
@@ -142,7 +142,7 @@
 	INVOKE_ASYNC(src, PROC_REF(perform_ventcrawl_action), controller, exit_vent)
 	return AI_BEHAVIOR_DELAY
 
-/// Runs the sleeping ventcrawl off the tick. Flags failure if we're somehow still in the vent, so perform() never has to sleep.
+/// Runs the sleeping ventcrawl off the tick.. Flags failure if we're somehow still in the vent, so perform() never has to sleep.
 /datum/bt_node/ai_behavior/exit_vent/proc/perform_ventcrawl_action(datum/ai_controller/controller, obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
 	var/mob/living/cached_pawn = controller.pawn
 	cached_pawn.handle_ventcrawl(exit_vent)
@@ -168,7 +168,7 @@
 /datum/bt_node/ai_behavior/exit_vent/proc/is_vent_valid(obj/machinery/atmospherics/components/unary/vent_pump/vent)
 	return !QDELETED(vent) && !vent.welded
 
-/// Picks a random valid vent on the same pipeline as BB_ENTRY_VENT_TARGET. Returns null if nothing is usable.
+/// Picks a random valid vent on the same pipeline as BB_ENTRY_VENT_TARGET.. Returns null if nothing is usable.
 /datum/bt_node/ai_behavior/exit_vent/proc/calculate_exit_vent(datum/ai_controller/controller)
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent = controller.blackboard[BB_ENTRY_VENT_TARGET]
 	if(QDELETED(entry_vent))

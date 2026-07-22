@@ -13,7 +13,7 @@
 
 	/// Are we busy printing?
 	var/busy = FALSE
-	/// Coefficient applied to consumed materials. Lower values result in lower material consumption.
+	/// Coefficient applied to consumed materials.. Lower values result in lower material consumption.
 	var/creation_efficiency = 2
 	///The container to hold materials
 	var/datum/material_container/materials

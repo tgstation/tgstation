@@ -10,10 +10,10 @@
 	custom_premium_price = PAYCHECK_CREW * 4
 	/// set integrity to 1 when mapping for !!FUN!!
 	max_integrity = 100
-	/// list of emotes whose cd is overridden by this skillchip. can be edited in mapping or ingame
+	/// list of emotes whose cd is overridden by this skillchip.. can be edited in mapping or ingame
 	var/list/affected_emotes = list("spin", "flip", "backflip")
 	var/datum/effect_system/basic/spark_spread/sparks
-	/// you can use this without lowering integrity! let's be honest. nobody's doing that
+	/// you can use this without lowering integrity!. let's be honest.. nobody's doing that
 	var/allowed_usage = 5
 	/// How many seconds does it take for it to recover one allowed usage
 	var/reload_charge = 10 SECONDS
@@ -83,7 +83,7 @@
 					thing_to_drop.forceMove(bozo.drop_location())
 			*/ //WHY DOESNTY IT OWRK
 
-			// does not necessarily kill you directly. instead it causes cranial fissure + something to drop from your head. could be eyes, tongue, ears, brain, even implants
+			// does not necessarily kill you directly.. instead it causes cranial fissure + something to drop from your head.. could be eyes, tongue, ears, brain, even implants
 			new /obj/effect/gibspawner/generic(get_turf(bozo), bozo)
 			sparks.amount = 15
 			sparks.start()
@@ -104,7 +104,7 @@
 			sparks.amount = 5
 			sparks.start()
 
-		// brain Smoking. you should probably stop now
+		// brain Smoking.. you should probably stop now
 		if(13 to 15)
 			// if already hot, light 'em up
 			var/particle_path = /particles/smoke/steam/mild

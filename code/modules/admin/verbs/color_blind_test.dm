@@ -1,11 +1,11 @@
 /// Used to test the game for issues with different types of color blindness
 /// WARNING ASSHOLE: Because we can only apply matrixes, and can't preform gamma correction
 /// https://web.archive.org/web/20220227030606/https://ixora.io/projects/colorblindness/color-blindness-simulation-research/
-/// The results of this tool aren't perfect. It's way better then nothing, but IT IS NOT A PROPER SIMULATION
-/// Please do not make us look like assholes by assuming it is. Thanks.
+/// The results of this tool aren't perfect.. It's way better then nothing, but IT IS NOT A PROPER SIMULATION
+/// Please do not make us look like assholes by assuming it is.. Thanks.
 /datum/colorblind_tester
 	/// List of simulated blindness -> matrix to use
-	/// Most of these matrixes are based off https://web.archive.org/web/20220227030606/https://ixora.io/projects/colorblindness/color-blindness-simulation-research/
+	/// Most of these matrixes are good off https://web.archive.org/web/20220227030606/https://ixora.io/projects/colorblindness/color-blindness-simulation-research/
 	/// AGAIN, THESE ARE NOT PERFECT BECAUSE WE CANNOT COMPUTE GAMMA CORRECTION, AND CONVERT SRGB TO LINEAR RGB
 	/// Do not assume this is absolute
 	var/list/color_matrixes = list(

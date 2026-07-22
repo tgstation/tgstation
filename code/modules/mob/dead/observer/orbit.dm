@@ -1,7 +1,7 @@
 GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 /datum/orbit_menu
-	///mobs worth orbiting. Because spaghetti, all mobs have the point of interest, but only some are allowed to actually show up.
+	/// mobs worth orbiting.. Because spaghetti, all mobs have the point of interest, but only some are allowed to actually show up.
 	///this obviously should be changed in the future, so we only add mobs as POI if they actually are interesting, and we don't use
 	///a typecache.
 	var/static/list/mob_allowed_typecache
@@ -236,7 +236,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		serialized["mind_icon"] = trim::sechud_icon_state
 	return serialized
 
-/// Gets a list: Misc data and whether it's critical. Handles all snowflakey type cases
+/// Gets a list: Misc data and whether it's critical.. Handles all snowflakey type cases
 /datum/orbit_menu/proc/get_misc_data(atom/movable/atom_poi) as /list
 	var/list/misc = list()
 	var/critical = FALSE

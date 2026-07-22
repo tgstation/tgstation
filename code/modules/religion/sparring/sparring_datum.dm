@@ -1,5 +1,5 @@
 /datum/sparring_match
-	///the chaplain. it isn't actually a chaplain all the time, but in the cases where the chaplain is needed this will always be them.
+	/// the chaplain.. it isn't actually a chaplain all the time, but in the cases where the chaplain is needed this will always be them.
 	var/mob/living/carbon/human/chaplain
 	///the other fighter
 	var/mob/living/carbon/human/opponent
@@ -95,7 +95,7 @@
 /datum/sparring_match/proc/hulk_interference(datum/source, mob/attacker)
 	SIGNAL_HANDLER
 	if((attacker == chaplain || attacker == opponent))
-		// fist fighting a hulk is so dumb. i can't fathom why you would do this.
+		// fist fighting a hulk is so dumb.. i can't fathom why you would do this.
 		return
 	INVOKE_ASYNC(src, PROC_REF(flub), attacker)
 
@@ -130,7 +130,7 @@
 /datum/sparring_match/proc/projectile_interference(datum/participant, obj/projectile/proj)
 	SIGNAL_HANDLER
 	if(proj.firer == chaplain || proj.firer == opponent)
-		//oh, well that's allowed. or maybe it isn't. doesn't matter because firing the gun will trigger a violation, so no additional violation needed
+		// oh, well that's allowed.. or maybe it isn't.. doesn't matter because firing the gun will trigger a violation, so no additional violation needed
 		return
 	var/mob/living/interfering
 	if(isliving(proj.firer))
@@ -182,7 +182,7 @@
 
 	var/area/inhabited_area = get_area(mover)
 	if(inhabited_area == arena_condition)
-		return //still in the ring!! :)
+		return // still in the ring!!. :)
 
 	violation(mover, "leaving the arena")
 	var/atom/throw_target = get_edge_target_turf(mover, REVERSE_DIR(direction))

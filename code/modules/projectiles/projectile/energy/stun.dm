@@ -51,13 +51,13 @@
 	do_sparks(1, TRUE, src)
 	do_sparks(1, TRUE, fired_from)
 	target.apply_status_effect(
-		/*type = *//datum/status_effect/tased,
-		/*taser = */fired_from,
-		/*firer = */initial_firer_weakref?.resolve() || firer,
-		/*tase_stamina = */tase_stamina,
-		/*energy_drain = */STANDARD_CELL_CHARGE * 0.05,
-		/*electrode_name = */"\the [src]\s",
-		/*tase_range = */maximum_range + 1,
+		/* type = *//datum/status_effect/tased,
+		/* taser = */fired_from,
+		/* firer = */initial_firer_weakref?.resolve() || firer,
+		/* tase_stamina = */tase_stamina,
+		/* energy_drain = */STANDARD_CELL_CHARGE * 0.05,
+		/* electrode_name = */"\the [src]\s",
+		/* tase_range = */maximum_range + 1,
 	)
 
 /obj/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
@@ -76,7 +76,7 @@
 	on_remove_on_mob_delete = TRUE
 	/// What atom is tasing us?
 	VAR_PRIVATE/datum/taser
-	/// What atom is using the atom tasing us? Sometimes the same as the taser, such as with turrets.
+	/// What atom is using the atom tasing us?. Sometimes the same as the taser, such as with turrets.
 	VAR_PRIVATE/atom/movable/firer
 	/// The beam datum representing the taser electrodes
 	VAR_PRIVATE/datum/beam/tase_line
@@ -245,7 +245,7 @@
 	taser = new_taser
 	RegisterSignals(taser, list(COMSIG_QDELETING, COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), PROC_REF(end_tase))
 	RegisterSignal(taser, COMSIG_GUN_TRY_FIRE, PROC_REF(block_firing))
-	// snowflake cases! yay!
+	// snowflake cases!. yay!
 	if(istype(taser, /obj/machinery/porta_turret))
 		var/obj/machinery/porta_turret/taser_turret = taser
 		taser_turret.manual_control = TRUE
@@ -327,7 +327,7 @@
 		span_warning("[owner] tries to remove [electrode_name][remover == owner ? "" : " from [owner]"]!"),
 		span_notice("You try to remove [electrode_name][remover == owner ? "" : " from [owner]"]!"),
 	)
-	// If embedding was less... difficult to work with, I would make tasers rely on an embedded object to handle this
+	// If embedding was less.... difficult to work with, I would make tasers rely on an embedded object to handle this
 	if(!do_after(remover, 5 SECONDS, owner, extra_checks = CALLBACK(src, PROC_REF(try_remove_taser_checks)), interaction_key = id))
 		return
 	remover.visible_message(

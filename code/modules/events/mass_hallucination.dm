@@ -89,7 +89,7 @@
 			continue
 		// Hallucinations can have side effects on mobs, like being stunned,
 		// so we'll play the hallucination to clientless mobs as well.
-		// Unless the mob is off the station z-level. It's unlikely anyone will notice.
+		// Unless the mob is off the station z-level.. It's unlikely anyone will notice.
 		if(hallucinating.z != 0 && !is_station_level(hallucinating.z) && !hallucinating.client)
 			continue
 

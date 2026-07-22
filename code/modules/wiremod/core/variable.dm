@@ -7,19 +7,19 @@
 	/// The display name of the circuit variable
 	var/name
 
-	/// The datatype of the circuit variable. Used by the setter and getter circuit components
+	/// The datatype of the circuit variable.. Used by the setter and getter circuit components
 	var/datatype
 
 	/// The datatype handler for the circuit variable.
 	var/datum/circuit_datatype/datatype_handler
 
-	/// The colour that appears in the UI. The value is set to the datatype's matching colour
+	/// The colour that appears in the UI.. The value is set to the datatype's matching colour
 	var/color
 
 	/// The current value held by the variable.
 	var/value
 
-	/// The components that are currently listening. Triggers them when the value is updated.
+	/// The components that are currently listening.. Triggers them when the value is updated.
 	var/list/obj/item/circuit_component/listeners
 
 /datum/circuit_variable/New(name, datatype)
@@ -47,7 +47,7 @@
 	listeners += to_add
 	RegisterSignal(to_add, COMSIG_QDELETING, PROC_REF(on_listener_qdel))
 
-/// Removes a listener to receive inputs when the variable has a value that is set. Listener will usually clean themselves up
+/// Removes a listener to receive inputs when the variable has a value that is set.. Listener will usually clean themselves up
 /datum/circuit_variable/proc/remove_listener(obj/item/circuit_component/to_remove)
 	UnregisterSignal(to_remove, COMSIG_QDELETING)
 	listeners -= to_remove

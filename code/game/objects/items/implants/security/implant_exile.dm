@@ -19,7 +19,7 @@
 		Alongside this, the exile implant interfaces with Nanotrasen mining shuttle control systems, automatically locking \
 		themselves down if implantees attempt to use them."
 
-///Used to help the staff of the space hotel resist the urge to use the space hotel's incredibly alluring roundstart teleporter to ignore their flavor/greeting text and come to the station.
+/// Used to help the staff of the space hotel resist the urge to use the space hotel's incredibly alluring roundstart teleporter to ignore their flavor/greeting text. Come to the station.
 /obj/item/implant/exile/noteleport
 	name = "anti-teleportation implant"
 	desc = "Uses impressive bluespace grounding techniques to deny the person implanted by this implant the ability to teleport or be teleported. \

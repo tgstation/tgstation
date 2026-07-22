@@ -48,7 +48,7 @@
 
 /mob/living/basic/alien/maid/barmaid/Initialize(mapload)
 	. = ..()
-	// Simple bot ID card that can hold all accesses. Someone turn access into a component at some point, please.
+	// Simple bot ID card that can hold all accesses.. Someone turn access into a component at some point, please.
 	access_card = new /obj/item/card/id/advanced/simple_bot(src)
 
 	var/datum/id_trim/job/cap_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/captain]

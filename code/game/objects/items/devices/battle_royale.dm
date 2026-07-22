@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(battle_royale_regions, list(
 	icon = 'icons/obj/medical/syringe.dmi'
 	icon_state = "nanite_hypo"
 	w_class = WEIGHT_CLASS_SMALL
-	/// Do we have a linked remote? Just to prevent headdesk moments
+	/// Do we have a linked remote?. Just to prevent headdesk moments
 	var/linked = FALSE
 
 /obj/item/royale_implanter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -250,7 +250,7 @@ GLOBAL_DATUM_INIT(battle_royale_master, /datum/battle_royale_master, new)
 	addtimer(CALLBACK(src, PROC_REF(finish)), battle_time, TIMER_DELETE_ME)
 	return TRUE
 
-/// An implant was destroyed, hopefully because it exploded. Count how many competitors remain.
+/// An implant was destroyed, hopefully because it exploded.. Count how many competitors remain.
 /datum/battle_royale_controller/proc/implant_destroyed(obj/item/implant/implant)
 	SIGNAL_HANDLER
 	contestant_implants -= implant

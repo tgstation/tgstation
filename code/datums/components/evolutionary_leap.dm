@@ -18,7 +18,7 @@
 	src.evolve_mark = evolve_mark
 	src.evolve_path = evolve_path
 
-	//don't setup timer yet, timer calc requires the round to have started
+	// don't setup timer yet, timer calc needs the round to have started
 	if(!SSticker.HasRoundStarted())
 		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(comp_on_round_start))
 		return

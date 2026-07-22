@@ -542,7 +542,7 @@
 	supplementary_reagents = list(
 		/datum/reagent/growthserum = 1,
 		/datum/reagent/toxin/slimejelly = 2,
-		/datum/reagent/yuck = 2, //Almost every fun recipe requires this. Making this value too high makes cockroaches extremely anti-fun.
+		/datum/reagent/yuck = 2, // Almost every fun recipe needs this.. Making this value too high makes cockroaches extremely anti-fun.
 		/datum/reagent/consumable/nutriment/vitamin = 1)
 
 	suppressive_reagents = list(
@@ -586,7 +586,7 @@
 
 	supplementary_reagents = list(
 		/datum/reagent/gunpowder = 6,
-		/datum/reagent/medicine/pen_acid = 4, //Prussian Blue is an antidote for radioactive thallium poisoning, among other things. The pickelhaube was worn by Prussian/German officers. You can tell I'm running out of ideas here.
+		/datum/reagent/medicine/pen_acid = 4, // Prussian Blue is an antidote for radioactive thallium poisoning, among other things.. The pickelhaube was worn by Prussian/German officers.. You can tell I'm running out of ideas here.
 		/datum/reagent/yuck = 2,
 		/datum/reagent/blood = 2)
 
@@ -652,7 +652,7 @@
 //randomizes from the netherworld pool!
 /datum/micro_organism/cell_line/netherworld
 	desc = "Aberrant residue"
-	required_reagents = list(//theme here: very odd requirements
+	required_reagents = list(// theme here: very odd needs
 		/datum/reagent/water/hollowwater,//geyser reagent, so plentiful when found
 		/datum/reagent/consumable/ethanol/wizz_fizz, //EZ bartender drink, like brainless
 		/datum/reagent/yuck) //since the other two are easy to make tons of, this is kind of a limiter
@@ -673,7 +673,7 @@
 	virus_suspectibility = 0
 
 /datum/micro_organism/cell_line/netherworld/succeed_growing(obj/machinery/vatgrower/vat)
-	resulting_atom = pick(/mob/living/basic/creature, /mob/living/basic/migo, /mob/living/basic/blankbody) //i looked myself, pretty much all of them are reasonably strong and somewhat on the same level. except migo is the jackpot and the blank body is whiff.
+	resulting_atom = pick(/mob/living/basic/creature, /mob/living/basic/migo, /mob/living/basic/blankbody) // i looked myself, pretty much all of them are reasonably strong and somewhat on the same level.. except migo is the jackpot and the blank body is whiff.
 	return ..()
 
 /datum/micro_organism/cell_line/clown

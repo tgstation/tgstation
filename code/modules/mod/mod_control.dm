@@ -191,7 +191,7 @@
 			module.deactivate(display_message = TRUE)
 		module.on_process(seconds_per_tick)
 
-/obj/item/mod/control/visual_equipped(mob/user, slot, initial = FALSE) //needs to be visual because we wanna show it in select equipment
+/obj/item/mod/control/visual_equipped(mob/user, slot, initial = FALSE) // needs to be visual because we want to show it in select equipment
 	if(slot & slot_flags)
 		set_wearer(user)
 	else if(wearer)

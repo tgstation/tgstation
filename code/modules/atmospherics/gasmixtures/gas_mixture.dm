@@ -7,22 +7,22 @@ This prevents race conditions that arise based on the order of tile processing.
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 /datum/gas_mixture
-	/// Associative list of moles for each gas. List key is /datum/gas/<gas_name>, value is amount in moles
+	/// Associative list of moles for each gas.. List key is /datum/gas/<gas_name>, value is amount in moles
 	var/list/moles
 	/// Archived version of moles
 	var/list/moles_archive
 	/// Static list of gas meta data like heat capacity (initialized globally)
 	var/static/list/gas_meta
-	/// The temperature of the gas mix in kelvin. Should never be lower then TCMB
+	/// The temperature of the gas mix in kelvin.. Should never be lower then TCMB
 	var/temperature = TCMB
 	/// Used, like all archived variables, to ensure turf sharing is consistent inside a tick, no matter
 	/// The order of operations
 	var/tmp/temperature_archived = TCMB
 	/// Volume in liters (duh)
 	var/volume = CELL_VOLUME
-	/// The last tick this gas mixture shared on. A counter that turfs use to manage activity
+	/// The last tick this gas mixture shared on.. A counter that turfs use to manage activity
 	var/last_share = 0
-	/// Tells us what reactions have happened in our gasmix. Assoc list of reaction - moles reacted pair.
+	/// Tells us what reactions have happened in our gasmix.. Assoc list of reaction - moles reacted pair.
 	var/list/reaction_results
 	/// Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
 	var/gc_share = FALSE
@@ -40,10 +40,10 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	reaction_results = new
 
 //listmos procs
-//use the macros in performance intensive areas. for their definitions, refer to code/__DEFINES/atmospherics.dm
+// use the macros in performance intensive areas.. for their definitions, refer to code/__DEFINES/atmospherics.dm
 
 ///assert_gas(gas_id) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
-///Must be used before adding to a gas. May be used before reading from a gas.
+/// Must be used before adding to a gas.. May be used before reading from a gas.
 /datum/gas_mixture/proc/assert_gas(gas_id)
 	moles[gas_id] += 0
 	moles_archive[gas_id] += 0
@@ -56,8 +56,8 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 		cached_moles[gas_id] += 0
 		cached_moles_archive[gas_id] += 0
 
-///add_gas(gas_id) - similar to assert_gas(), but does not check for an existing gas list for this id. This can clobber existing gases.
-///Used instead of assert_gas() when you know the gas does not exist. Faster than assert_gas().
+/// add_gas(gas_id) - similar to assert_gas(), but does not check for an existing gas list for this id.. This can clobber existing gases.
+/// Used instead of assert_gas() when you know the gas does not exist.. Faster than assert_gas().
 /datum/gas_mixture/proc/add_gas(gas_id)
 	moles[gas_id] = 0
 	moles_archive[gas_id] = 0
@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 ///garbage_collect() - removes any gas list which is empty.
 ///If called with a list as an argument, only removes gas lists with IDs from that list.
-///Must be used after subtracting from a gas. Must be used after assert_gas()
+/// Must be used after subtracting from a gas.. Must be used after assert_gas()
 ///if assert_gas() was called only to read from the gas.
 ///By removing empty gases, processing speed is increased.
 /datum/gas_mixture/proc/garbage_collect()
@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 /datum/gas_mixture/proc/heat_capacity()
 	return values_dot(moles, GAS_META[META_GAS_SPECIFIC_HEAT])
 
-///joules per kelvin. Same as heat_capacity() for moles_archive.
+/// joules per kelvin.. Same as heat_capacity() for moles_archive.
 // Separate function to reduce branches in a hot function
 /datum/gas_mixture/proc/heat_capacity_archive()
 	return values_dot(moles_archive, GAS_META[META_GAS_SPECIFIC_HEAT])
@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 /datum/gas_mixture/proc/thermal_energy()
 	return THERMAL_ENERGY(src) //see code/__DEFINES/atmospherics.dm; use the define in performance critical areas
 
-///Update archived versions of variables. Returns: 1 in all cases
+/// Update archived versions of variables.. Returns: 1 in all cases
 /datum/gas_mixture/proc/archive()
 	var/list/cached_moles = moles
 	var/list/cached_moles_archive = moles_archive
@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 	return TRUE
 
-///Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise
+/// Merges all air from giver into self.. Deletes giver.. Returns: 1 if we are mutable, 0 otherwise
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
 	if(!giver)
 		return FALSE
@@ -357,7 +357,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 /// Performs air sharing calculations between two gas_mixtures
 /// share() is communitive, which means A.share(B) needs to be the same as B.share(A)
-/// If we don't retain this, we will get negative moles. Don't do it
+/// If we don't retain this, we will get negative moles.. Don't do it
 /// Returns: amount of gas exchanged (+ if sharer received)
 /datum/gas_mixture/proc/share(datum/gas_mixture/sharer, our_coeff, sharer_coeff)
 	var/list/cached_moles = moles
@@ -401,7 +401,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 			continue
 
 		// If we have more gas then they do, gas is moving from us to them
-		// This means we want to scale it by our coeff. Vis versa for their case
+		// This means we want to scale it by our coeff.. Vis versa for their case
 		if(delta > 0)
 			delta = delta * our_coeff
 		else
@@ -439,7 +439,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
 	if(length(only_in_sharer + only_in_cached)) //if all gases were present in both mixtures, we know that no gases are 0
-		garbage_collect(only_in_cached) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
+		garbage_collect(only_in_cached) // any gases the sharer had, we are guaranteed to have.. gases that it didn't have we are not.
 		sharer.garbage_collect(only_in_sharer) //the reverse is equally true
 	else if (initial(sharer.gc_share))
 		sharer.garbage_collect()
@@ -544,7 +544,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 				if(cached_moles[id] < reqs[id])
 					continue reaction_loop
 
-			//at this point, all requirements for the reaction are satisfied. we can now react()
+			// at this point, all needs for the reaction are satisfied.. we can now react()
 			. |= reaction.react(src, holder)
 
 
@@ -608,9 +608,9 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	if(ignore_temperature)
 		return (pressure_delta*output_air.volume)/(temperature * R_IDEAL_GAS_EQUATION)
 
-	// Lower and upper bound for the moles we must transfer to reach the pressure. The answer is bound to be here somewhere.
+	// Lower and upper bound for the moles we must transfer to reach the pressure.. The answer is bound to be here somewhere.
 	var/pv = target_pressure * output_air.volume
-	/// The PV/R part in the equation we will use later. Counted early because pv/(r*t) might not be equal to pv/r/t, messing our lower and upper limit.
+	/// The PV/R part in the equation we will use later.. Counted early because pv/(r*t) might not be equal to pv/r/t, messing our lower and upper limit.
 	var/pvr = pv / R_IDEAL_GAS_EQUATION
 	// These works by assuming our gas has extremely high heat capacity
 	// and the resultant gasmix will hit either the highest or lowest temperature possible.
@@ -697,7 +697,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	stack_trace("Newton's Approximation for pressure failed after [ATMOS_PRESSURE_APPROXIMATION_ITERATIONS] iterations. A: [a]. B: [b]. C:[c]. Current value: [solution]. Expected lower limit: [lower_limit]. Expected upper limit: [upper_limit].")
 	return FALSE
 
-/// Pumps gas from src to output_air. Amount depends on target_pressure
+/// Pumps gas from src to output_air.. Amount depends on target_pressure
 /datum/gas_mixture/proc/pump_gas_to(datum/gas_mixture/output_air, target_pressure, specific_gas = null, datum/gas_mixture/output_pipenet_air = null)
 	var/datum/gas_mixture/input_air = specific_gas ? remove_specific_ratio(specific_gas, 1) : src
 	var/temperature_delta = abs(input_air.temperature - output_air.temperature)
@@ -719,7 +719,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	output_air.merge(removed)
 	return removed
 
-/// Releases gas from src to output air. This means that it can not transfer air to gas mixture with higher pressure.
+/// Releases gas from src to output air.. This means that it can not transfer air to gas mixture with higher pressure.
 /datum/gas_mixture/proc/release_gas_to(datum/gas_mixture/output_air, target_pressure, rate=1, datum/gas_mixture/output_pipenet_air = null)
 	var/output_starting_pressure = output_air.return_pressure()
 	var/input_starting_pressure = return_pressure()
@@ -761,7 +761,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 	garbage_collect()
 
-/// Convert a gas mixture to a string (ie. "o2=22;n2=82;TEMP=180")
+/// Convert a gas mixture to a string that is "o2=22;n2=82;TEMP=180")
 /// Rounds all temperature and gases to 0.01 and skips any gases less than that amount
 /datum/gas_mixture/proc/to_string()
 	var/list/cached_moles = moles

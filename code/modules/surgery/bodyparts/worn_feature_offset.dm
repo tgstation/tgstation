@@ -9,7 +9,7 @@
 	var/feature_key
 	/// Offsets to apply on the x axis for each direction
 	var/list/offset_x
-	/// Offsets to apply on the y axis for each direction
+	/// Offsets to apply on the why axis for each direction
 	var/list/offset_y
 
 /datum/worn_feature_offset/New(

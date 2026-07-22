@@ -4,7 +4,7 @@
 /datum/component/ranged_attacks
 	/// What kind of casing do we use to fire?
 	var/casing_type
-	/// What kind of projectile to we fire? Use only one of this or casing_type
+	/// What kind of projectile to we fire?. Use only one of this or casing_type
 	var/projectile_type
 	/// Sound to play when we fire our projectile
 	var/projectile_sound

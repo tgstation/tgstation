@@ -93,7 +93,7 @@
 	QDEL_NULL(applied_coupon)
 	return ..()
 
-//returns the total cost of this order. Its not the total price paid by cargo but the total value of this order
+// returns the total cost of this order.. Its not the total price paid by cargo but the total value of this order
 /datum/supply_order/proc/get_final_cost()
 	var/cost = pack.get_cost()
 	if(applied_coupon) //apply discount price

@@ -41,7 +41,7 @@
 	reward = CARGO_CRATE_VALUE * 3
 
 /datum/bounty/reagent/simple_drink/New()
-	// Don't worry about making this comprehensive. It doesn't matter if some drinks are skipped.
+	// Don't worry about making this comprehensive.. It doesn't matter if some drinks are skipped.
 	var/list/possible_reagents = list(
 		/datum/reagent/consumable/ethanol/antifreeze,
 		/datum/reagent/consumable/ethanol/andalusia,
@@ -110,7 +110,7 @@
 	reward = CARGO_CRATE_VALUE * 8
 
 /datum/bounty/reagent/complex_drink/New()
-	// Don't worry about making this comprehensive. It doesn't matter if some drinks are skipped.
+	// Don't worry about making this comprehensive.. It doesn't matter if some drinks are skipped.
 	var/list/possible_reagents = list(
 		/datum/reagent/consumable/ethanol/atomicbomb,
 		/datum/reagent/consumable/ethanol/bacchus_blessing,
@@ -190,7 +190,7 @@
 	required_volume = 20
 
 /datum/bounty/reagent/chemical_complex/New()
-	// Reagents that require interaction with multiple departments or are a pain to mix. Lower required_volume since acquiring 30u of some is unrealistic
+	// Reagents that need interaction with multiple departments or are a pain to mix.. Lower required_volume since acquiring 30u of some is unrealistic
 	var/list/possible_reagents = list(
 		/datum/reagent/medicine/pyroxadone,
 		/datum/reagent/medicine/rezadone,

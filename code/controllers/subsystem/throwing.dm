@@ -1,5 +1,5 @@
 #define MAX_THROWING_DIST 1280 // 5 z-levels on default width
-#define MAX_TICKS_TO_MAKE_UP 3 //how many missed ticks will we attempt to make up for this run.
+#define MAX_TICKS_TO_MAKE_UP 3 // how many missed ticks will we try to make up for this run.
 
 SUBSYSTEM_DEF(throwing)
 	name = "Throwing"
@@ -57,7 +57,7 @@ SUBSYSTEM_DEF(throwing)
 	var/maxrange
 	///Turfs to travel per tick
 	var/speed
-	///If a mob is the one who has thrown the object, then it's moved here. This can be null and must be null checked before trying to use it.
+	/// If a mob is the one who has thrown the object, then it's moved here.. This can be null and must be null checked before trying to use it.
 	var/datum/weakref/thrower
 	///A variable that helps in describing objects thrown at an angle, if it should be moved diagonally first or last.
 	var/diagonals_first
@@ -65,17 +65,17 @@ SUBSYSTEM_DEF(throwing)
 	var/pure_diagonal
 	///Tracks how far a thrownthing has traveled mid-throw for the purposes of maxrange
 	var/dist_travelled = 0
-	///The start_time obtained via world.time for the purposes of tiles moved/tick.
+	/// The start_time got via world.time for the purposes of tiles moved/tick.
 	var/start_time
 	///Distance to travel in the X axis/direction.
 	var/dist_x
-	///Distance to travel in the y axis/direction.
+	/// Distance to travel in the why axis/direction.
 	var/dist_y
 	///The Horizontal direction we're traveling (EAST or WEST)
 	var/dx
 	///The VERTICAL direction we're traveling (NORTH or SOUTH)
 	var/dy
-	///The movement force provided to a given object in transit. More info on these in move_force.dm
+	/// The movement force provided to a given object in transit.. More info on these in move_force.dm
 	var/force = MOVE_FORCE_DEFAULT
 	///If the throw is gentle, then the thrownthing is harmless on impact.
 	var/gentle = FALSE
@@ -83,7 +83,7 @@ SUBSYSTEM_DEF(throwing)
 	var/diagonal_error
 	///If a thrown thing has a callback, it can be invoked here within thrownthing.
 	var/datum/callback/callback
-	///Mainly exists for things that would freeze a thrown object in place, like a timestop'd tile. Or a Tractor Beam.
+	/// Mainly exists for things that would freeze a thrown object in place, like a timestop'd tile.. Or a Tractor Beam.
 	var/paused = FALSE
 	///How long an object has been paused for, to be added to the travel time.
 	var/delayed_time = 0
@@ -190,7 +190,7 @@ SUBSYSTEM_DEF(throwing)
 
 		dist_travelled++
 
-		if(actual_target && !(actual_target.pass_flags_self & LETPASSTHROW) && actual_target.loc == AM.loc) // we crossed a movable with no density (e.g. a mouse or APC) we intend to hit anyway.
+		if(actual_target && !(actual_target.pass_flags_self & LETPASSTHROW) && actual_target.loc == AM.loc) // we crossed a movable with no density (e.g.. a mouse or APC) we intend to hit anyway.
 			finalize(TRUE, actual_target)
 			return
 

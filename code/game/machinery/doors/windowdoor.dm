@@ -21,7 +21,7 @@
 	opens_with_door_remote = TRUE
 	/// Reference to the airlock electronics inside for determining window access.
 	var/obj/item/electronics/airlock/electronics = null
-	/// If the door is considered reinforced. If TRUE, the door will resist twice as much heat (1600 deg C vs 800 deg C).
+	/// If the door is considered reinforced.. If TRUE, the door will resist twice as much heat (1600 deg C vs 800 deg C).
 	var/reinf = 0
 	/// On deconstruction, how many shards to drop.
 	var/shards = 2
@@ -375,7 +375,7 @@
 		return TRUE
 	return FALSE
 
-/// Timer proc, called ~0.6 seconds after [emag_act]. Finishes the emag sequence by breaking the windoor.
+/// Timer proc, called ~0.6 seconds after [emag_act].. Finishes the emag sequence by breaking the windoor.
 /obj/machinery/door/window/proc/finish_emag_act()
 	operating = FALSE
 	open(BYPASS_DOOR_CHECKS)

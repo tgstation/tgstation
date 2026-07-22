@@ -1,5 +1,5 @@
-/// For clean results on map, use only sizing pt, multiples of 6: 6pt 12pt 18pt 24pt etc. - Not for use with px sizing
-/// Can be used in TGUI etc, px sizing is pt / 0.75. 6pt = 8px, 12pt = 16px etc.
+/// F. Clean results on map, use only sizing pt, multiples of 6: 6pt 12pt 18pt 24pt. So on - Not f. Use with px sizing
+/// Can be used in TGUI and so on px sizing is pt / 0.75.. 6pt = 8px, 12pt = 16px and so on
 
 /// Base font
 /datum/font/grand9k

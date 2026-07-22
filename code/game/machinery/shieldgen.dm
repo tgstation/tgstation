@@ -102,7 +102,7 @@
 /obj/structure/emergency_shield/cult/barrier
 	density = FALSE //toggled on right away by the parent rune
 	can_atmos_pass = ATMOS_PASS_DENSITY
-	///The rune that created the shield itself. Used to delete the rune when the shield is destroyed.
+	/// The rune that created the shield itself.. Used to delete the rune when the shield is destroyed.
 	var/obj/effect/rune/parent_rune
 
 /obj/structure/emergency_shield/cult/barrier/attack_hand(mob/living/user, list/modifiers)
@@ -321,7 +321,7 @@
 /obj/machinery/power/shieldwallgen/anchored
 	anchored = TRUE
 
-/obj/machinery/power/shieldwallgen/unlocked //for use in ruins, etc
+/obj/machinery/power/shieldwallgen/unlocked // for use in ruins, and so on
 	locked = FALSE
 	req_access = null
 

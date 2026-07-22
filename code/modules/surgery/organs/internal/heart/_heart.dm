@@ -29,10 +29,10 @@
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 
 	/// Whether the heart is currently beating.
-	/// Do not set this directly. Use Restart() and Stop() instead.
+	/// Do not set this directly.. Use Restart() and Stop() instead.
 	VAR_PRIVATE/beating = TRUE
 
-	/// is this mob having a heatbeat sound played? if so, which?
+	/// is this mob having a heatbeat sound played?. if so, which?
 	var/beat = BEAT_NONE
 	/// whether the heart's been operated on to fix some of its damages
 	var/operated = FALSE
@@ -94,7 +94,7 @@
 	. = ..()
 	Stop()
 
-/// Returns how effectively this heart regenerates the owner's blood based on organ health
+/// Returns how effectively this heart regenerates the owner's blood good on organ health
 /obj/item/organ/heart/proc/get_blood_regeneration_multiplier()
 	if(!is_beating() || (organ_flags & (ORGAN_FAILING|ORGAN_EMP)))
 		return 0
@@ -236,7 +236,7 @@
 		COOLDOWN_START(src, severe_cooldown, 20 SECONDS)
 
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_EMP // Starts organ faliure - going to need replacing soon.
 		Stop()
 		addtimer(CALLBACK(src, PROC_REF(Restart)), 10 SECONDS)
 		if(owner_needs_us)
@@ -314,7 +314,7 @@
 //surplus organs are so awful that they explode when removed, unless failing
 /obj/item/organ/heart/cybernetic/surplus/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
+	AddElement(/datum/element/dangerous_organ_removal, /* surgical = */ TRUE)
 
 /obj/item/organ/heart/cybernetic/surplus/hear_beat_noise(mob/living/hearer)
 	return span_danger("[owner.p_Their()] heart produces [beat_noise].")

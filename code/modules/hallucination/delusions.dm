@@ -10,7 +10,7 @@
 	var/affects_us = TRUE
 	/// If TRUE, this hallucination affects all humans in existence
 	var/affects_others = FALSE
-	/// If TRUE, people in view of our hallcuinator won't be affected (requires affects_others)
+	/// If TRUE, people in view of our hallcuinator won't be affected needs affects_others)
 	var/skip_nearby = FALSE
 	/// If TRUE, we will play the wabbajack sound effect to the hallucinator
 	var/play_wabbajack = FALSE
@@ -20,7 +20,7 @@
 	/// The icon state of the delusion image
 	var/delusion_icon_state
 
-	/// Do we use an appearance/generated icon? If yes no icon file or state needed.
+	/// Do we use an appearance/generated icon?. If yes no icon file or state needed.
 	var/dynamic_delusion = FALSE
 	/// Appearance to use as a source for our image
 	/// If this exists we'll ignore the icon/state from above

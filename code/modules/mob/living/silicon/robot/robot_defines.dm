@@ -20,7 +20,7 @@
 	default_hand_amount = 3
 	examine_thats = "This is"
 
-	///Represents the cyborg's model (engineering, medical, etc.)
+	/// Represents the cyborg's model (engineering, medical, and so on
 	var/obj/item/robot_model/model = null
 
 	radio = /obj/item/radio/borg
@@ -56,7 +56,7 @@
 	var/lamp_color = COLOR_WHITE
 	///Set to true if a doomsday event is locking our lamp to on and RED
 	var/lamp_doom = FALSE
-	///Lamp brightness. Starts at 3, but can be 1 - 5.
+	/// Lamp brightness.. Starts at 3, but can be 1 - 5.
 	var/lamp_intensity = 3
 	////Power consumption of the light per lamp_intensity.
 	var/lamp_power_consumption = BORG_LAMP_POWER_CONSUMPTION
@@ -86,7 +86,7 @@
 
 	///Cyborgs will sync their laws with their AI by default
 	var/lawupdate = TRUE
-	///Used to determine if a borg shows up on the robotics console.  Setting to TRUE hides them.
+	/// Used to determine if a borg shows up on the robotics console.. Setting to TRUE hides them.
 	var/scrambledcodes = FALSE
 	///Boolean of whether the borg is locked down or not
 	var/lockcharge = FALSE
@@ -133,7 +133,7 @@
 	var/datum/station_alert/alert_control
 
 // Defining specific kinds of robots
-///This is the subtype that gets created by robot suits. It's needed so that those kind of borgs don't have a useless cell in them
+/// This is the subtype that gets created by robot suits.. It's needed so that those kind of borgs don't have a useless cell in them
 /mob/living/silicon/robot/nocell
 	cell = null
 

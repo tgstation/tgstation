@@ -17,7 +17,7 @@
 #define CANNOT_INTERACT (1<<9)
 /// posibrains can drive this mecha
 #define MMI_COMPATIBLE (1<<10)
-/// AI's can be placed inside this mech. This only prevents direct uploads. It does not prevent mech domination on the mech.
+/// AI's can be placed inside this mech... This only prevents direct uploads... It does not prevent mech domination on the mech.
 #define AI_COMPATIBLE (1<<11)
 /// Can click from any direction and perform stuff
 #define OMNIDIRECTIONAL_ATTACKS (1<<12)
@@ -35,7 +35,7 @@
 #define MECHA_SIDE_ARMOUR "mechaside"
 #define MECHA_BACK_ARMOUR "mechaback"
 
-#define MECHA_WEAPON "mecha_weapon" //l and r arm weapon type
+#define MECHA_WEAPON "mecha_weapon" // l and are arm weapon type
 #define MECHA_L_ARM "mecha_l_arm"
 #define MECHA_R_ARM "mecha_r_arm"
 #define MECHA_UTILITY "mecha_utility"

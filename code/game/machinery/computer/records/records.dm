@@ -133,7 +133,7 @@
 /obj/machinery/computer/records/proc/expunge_record_info(datum/record/crew/target)
 	return
 
-/// Inserts a new record into GLOB.manifest.general. Requires a photo to be taken.
+/// Inserts a new record into GLOB.manifest.general.. Needs a photo to be taken.
 /obj/machinery/computer/records/proc/insert_new_record(mob/user, obj/item/photo/mugshot)
 	if(!mugshot || !is_operational || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return FALSE

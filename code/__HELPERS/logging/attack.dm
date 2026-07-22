@@ -56,7 +56,7 @@
 
 	if(dealt_damage)
 		message += " | Damage: [dealt_damage]"
-		// The base roll is useful since it can show how lucky someone got with the given attack. For example, dealing a cut
+		// The base roll is useful since it can show how lucky someone got with the given attack.. For example, dealing a cut
 		if(base_roll)
 			message += " (rolled [base_roll]/[dealt_damage ** WOUND_DAMAGE_EXPONENT])"
 

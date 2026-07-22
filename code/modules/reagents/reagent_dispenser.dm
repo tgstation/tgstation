@@ -33,7 +33,7 @@
 	var/mutable_appearance/assembliesoverlay
 	/// The person who attached an assembly to this dispenser, for bomb logging purposes
 	var/last_rigger = ""
-	/// is it climbable? some of our wall-mounted dispensers should not have this
+	/// is it climbable?. some of our wall-mounted dispensers should not have this
 	var/climbable = FALSE
 	/// Flags passed to the reagents datum upon creation
 	var/reagent_flags = DRAINABLE | AMOUNT_VISIBLE
@@ -240,7 +240,7 @@
 /obj/structure/reagent_dispensers/watertank/high
 	name = "high-capacity water tank"
 	desc = "A highly pressurized water tank made to hold gargantuan amounts of water."
-	icon_state = "water_high" //I was gonna clean my room...
+	icon_state = "water_high" // I was going to clean my room...
 	tank_volume = 100000
 
 /obj/structure/reagent_dispensers/foamtank
@@ -289,7 +289,7 @@
 		return hitting_projectile.on_hit(src, 0)
 
 	// we override parent like this because otherwise we won't actually properly log the fact that a projectile caused this welding tank to explode.
-	// if this sucks, feel free to change it, but make sure the damn thing will log. thanks.
+	// if this sucks, feel free to change it, but make sure the damn thing will log.. thanks.
 	return ..()
 
 /obj/structure/reagent_dispensers/fueltank/welder_act(mob/living/user, obj/item/tool)
@@ -330,7 +330,7 @@
 	icon_state = "fuel_high"
 	tank_volume = 5000
 
-/// Wall mounted dispeners, like pepper spray or virus food. Not a normal tank, and shouldn't be able to be turned into a plumbed stationary one.
+/// Wall mounted dispeners, like pepper spray or virus food.. Not a normal tank, and shouldn't be able to be turned into a plumbed stationary one.
 /obj/structure/reagent_dispensers/wall
 	anchored = TRUE
 	density = FALSE
@@ -530,11 +530,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	playsound(src, 'sound/effects/glass/glassbash.ogg', 100)
 	tip_over()
 
-///Creates an empty jug inside of the cooler. Doesn't need to be filled bc it absorbs the cooler's reagent on eject.
+/// Creates an empty jug inside of the cooler.. Doesn't need to be filled because it absorbs the cooler's reagent on eject.
 /obj/structure/reagent_dispensers/water_cooler/proc/create_jug()
 	our_jug = new /obj/item/reagent_containers/cooler_jug(src)
 
-///Eject the jug in a variety of ways. If there is a user, the jug goes into their hands. throw_away is passed on tip, to empty and throw the jug away. We delete the reagents since we create a splash before this is called.
+/// Eject the jug in a variety of ways.. If there is a user, the jug goes into their hands.. throw_away is passed on tip, to empty and throw the jug away.. We delete the reagents since we create a splash before this is called.
 /obj/structure/reagent_dispensers/water_cooler/proc/eject_jug(mob/living/user, throw_away = FALSE)
 	if(!our_jug)
 		return
@@ -579,7 +579,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 /obj/structure/reagent_dispensers/water_cooler/jugless/create_jug()
 	return
 
-///Punch cooler. Starts full of healing juice. In case anyone wants to map one somewhere as a healing station.
+/// Punch cooler.. Starts full of healing juice.. In case anyone wants to map one somewhere as a healing station.
 /obj/structure/reagent_dispensers/water_cooler/punch_cooler
 	name = "punch cooler"
 	desc = "A machine that dispenses fruit punch to drink. This juice is unbearably sweet, and can only be safely consumed in the presence of a liquid cooler. Engage with caution."

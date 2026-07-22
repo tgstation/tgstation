@@ -26,11 +26,11 @@
 	thermic_constant = 0.1 //exothermic nature is equal to impurty
 	H_ion_release = -0.025
 	rate_up_lim = 12.5
-	purity_min = 0.5 //100u will natrually just dip under this w/ no buffer
+	purity_min = 0.5 // 100u will natrually just dip under this with no buffer
 	reaction_flags = REACTION_HEAT_ARBITARY //Heating up is arbitary because of submechanics of this reaction.
 	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DRUG | REACTION_TAG_DANGEROUS | REACTION_TAG_ORGAN
 
-//The less pure it is, the faster it heats up. tg please don't hate me for making your meth even more dangerous
+// The less pure it is, the faster it heats up.. tg please don't hate me for making your meth even more dangerous
 /datum/chemical_reaction/methamphetamine/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
 	var/datum/reagent/meth = holder.has_reagent(/datum/reagent/drug/methamphetamine)
 	if(!meth)//First step
@@ -78,11 +78,11 @@
 	expl.start(holder.my_atom)
 	holder.clear_reagents()
 
-///Amount of meth required to make a crystal
+/// Amount of meth needed to make a crystal
 #define METH_REQUIRED (10)
 
 /datum/chemical_reaction/meth_crystal //Since the meth is a cooled pharmaceutical solvent, this precipitates it into a solid.
-	results = list(/datum/reagent/consumable/ethanol = 1) //we don't care what this reagent is. We only need to record its purity
+	results = list(/datum/reagent/consumable/ethanol = 1) // we don't care what this reagent is.. We only need to record its purity
 	required_reagents = list(/datum/reagent/drug/methamphetamine = METH_REQUIRED, /datum/reagent/toxin/acid = 2)
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
@@ -165,7 +165,7 @@
 	thermic_constant = 50
 
 //These drug item reactions should probably be converted to fermichem in the future.
-/datum/chemical_reaction/moon_rock //botany is real easy so it requires a lot of kronkus_extract, make it cheaper if it doesnt get made.
+/datum/chemical_reaction/moon_rock // botany is real easy so it needs a lot of kronkus_extract, make it cheaper if it doesnt get made.
 	required_reagents = list(/datum/reagent/kronkus_extract = 15, /datum/reagent/fuel = 5, /datum/reagent/ammonia = 3)
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT

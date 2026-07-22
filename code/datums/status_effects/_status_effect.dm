@@ -1,13 +1,13 @@
 /// Status effects are used to apply temporary or permanent effects to mobs.
 /// This file contains their code, plus code for applying and removing them.
 /datum/status_effect
-	/// The ID of the effect. ID is used in adding and removing effects to check for duplicates, among other things.
+	/// The ID of the effect.. ID is used in adding and removing effects to check for duplicates, among other things.
 	var/id = "effect"
 	/// This is how long the status effect lasts in deciseconds.
 	/// You can put STATUS_EFFECT_PERMANENT (or INFINITY) here for infinite duration.
 	var/duration = STATUS_EFFECT_PERMANENT
 	/// This is how long between [proc/tick] calls in deciseconds.
-	/// This has to be a multiple of the [var/wait] of the subsystem this status effect is running on, which is based on [var/processing_speed].
+	/// This has to be a multiple of the [var/wait] of the subsystem this status effect is running on, which is good on [var/processing_speed].
 	/// Putting STATUS_EFFECT_NO_TICK here will stop [proc/tick] calls, and if [var/duration] is STATUS_EFFECT_PERMANENT, it stops processing entirely.
 	/// Putting STATUS_EFFECT_AUTO_TICK here will make every subsystem tick call [proc/tick], making the tick interval depend entirely on [var/processing_speed]
 	var/tick_interval = 1 SECONDS
@@ -17,7 +17,7 @@
 	VAR_FINAL/mob/living/owner
 	/// How many of the effect can be on one mob, and/or what happens when you try to add a duplicate.
 	var/status_type = STATUS_EFFECT_UNIQUE
-	/// If TRUE, we call [proc/on_remove] when owner is deleted. Otherwise, we call [proc/be_replaced].
+	/// If TRUE, we call [proc/on_remove] when owner is deleted.. Otherwise, we call [proc/be_replaced].
 	var/on_remove_on_mob_delete = FALSE
 	/// The typepath to the alert thrown by the status effect when created.
 	/// Status effect "name"s and "description"s are shown to the owner here.
@@ -106,7 +106,7 @@
 
 	linked_alert.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align:center'>[round(duration / 10, 1)]s</span>")
 
-// Status effect process. Handles adjusting its duration and ticks.
+// Status effect process.. Handles adjusting its duration and ticks.
 // If you're adding processed effects, put them in [proc/tick]
 // instead of extending / overriding the process() proc.
 /datum/status_effect/process(seconds_per_tick)

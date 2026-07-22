@@ -23,7 +23,7 @@
 	return pick(allowed_drinks)
 
 ///Picks a string of symbols to display as the law number for hacked or ion laws
-/proc/ion_num() //! is at the start to prevent us from changing say modes via get_message_mode()
+/proc/ion_num() // !. is at the start to prevent us from changing say modes via get_message_mode()
 	return "![pick("!","@","#","$","%","^","&")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
 
 ///Returns a string for a random nuke code

@@ -111,7 +111,7 @@
 	SIGNAL_HANDLER
 
 	if(user_client)
-		if(user_client == user.client) //If this was not client handling I'd condemn this sanity check. But clients are fickle things.
+		if(user_client == user.client) // If this was not client handling I'd condemn this sanity check.. But clients are fickle things.
 			return
 		clean_user_client()
 	if(!user.client) //Clients can vanish at any time, the bastards.
@@ -137,7 +137,7 @@
 	bar.icon_state = "prog_bar_[round(((progress / goal) * 100), 5)]"
 
 
-///Called on progress end, be it successful or a failure. Wraps up things to delete the datum and bar.
+/// Called on progress end, be it successful or a failure.. Wraps up things to delete the datum and bar.
 /datum/progressbar/proc/end_progress()
 	if(last_progress != goal)
 		bar.icon_state = "[bar.icon_state]_fail"

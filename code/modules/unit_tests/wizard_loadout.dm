@@ -2,7 +2,7 @@
 // In doing so, he introduced an infinite loop that crashed many servers and made many wizards sad.
 // May this never happen again.
 
-/// Test loadouts for crashes, runtimes, stack traces and infinite loops. No ASSERTs necessary.
+/// Test loadouts for crashes, runtimes, stack traces and infinite loops.. No ASSERTs necessary.
 /datum/unit_test/wizard_loadout
 
 /datum/unit_test/wizard_loadout/Run()

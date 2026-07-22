@@ -1,6 +1,6 @@
 /// In the before times, toggles were all stored in one bitfield.
 /// In order to preserve this existing data (and code) without massive
-/// migrations, this middleware attempts to handle this in a way
+/// migrations, this middleware tries to handle this in a way
 /// transparent to the preferences UI itself.
 /// In the future, the existing toggles data should just be migrated to
 /// individual `/datum/preference/toggle`s.

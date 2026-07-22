@@ -11,7 +11,7 @@
 	undeletable = TRUE
 	tgui_id = "SyndicateContractor"
 
-	///The traitor datum stored on the program. Starts off as null and is set by the player.
+	/// The traitor datum stored on the program.. Starts off as null and is set by the player.
 	var/datum/antagonist/traitor/traitor_data
 	///The error screen sent to the UI so they can show the player.
 	var/error = ""
@@ -140,7 +140,7 @@
 				break
 		var/direction
 		if(curr.z == dropoff_turf.z) //Direction calculations for same z-level only
-			direction = uppertext(dir2text(get_dir(curr, dropoff_turf))) //Direction text (East, etc). Not as precise, but still helpful.
+			direction = uppertext(dir2text(get_dir(curr, dropoff_turf))) // Direction text (East, and so on Not as precise, but still helpful.
 			if(get_area(user) == traitor_data.uplink_handler.contractor_hub.current_contract.contract.dropoff)
 				direction = "LOCATION CONFIRMED"
 		else

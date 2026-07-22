@@ -115,7 +115,7 @@
 		on = FALSE
 	if(machine_stat & NOPOWER)
 		on = FALSE
-	if(!use_energy(active_power_usage, force = FALSE)) // Use energy to keep the turf hot. Doesn't necessarily use the correct amount of energy though (this should be changed).
+	if(!use_energy(active_power_usage, force = FALSE)) // Use energy to keep the turf hot.. Doesn't necessarily use the correct amount of energy though (this should be changed).
 		on = FALSE
 	if(!on)
 		update_appearance()

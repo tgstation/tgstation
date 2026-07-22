@@ -57,7 +57,7 @@
 	var/obj/item/ammo_box/magazine/accepted_magazine_type = /obj/item/ammo_box/magazine/m10mm
 	/// Whether the gun will spawn loaded with a magazine
 	var/spawnwithmagazine = TRUE
-	/// Change this if the gun should spawn with a different magazine type to what accepted_magazine_type defines. Will create errors if not a type or subtype of accepted magazine.
+	/// Change this if the gun should spawn with a different magazine type to what accepted_magazine_type defines.. Will create errors if not a type or subtype of accepted magazine.
 	var/obj/item/ammo_box/magazine/spawn_magazine_type
 	///Whether the sprite has a visible magazine or not
 	var/mag_display = TRUE
@@ -78,7 +78,7 @@
 	* see combat.dm defines for bolt types: BOLT_TYPE_STANDARD; BOLT_TYPE_LOCKING; BOLT_TYPE_OPEN; BOLT_TYPE_NO_BOLT
 	**/
 	var/bolt_type = BOLT_TYPE_STANDARD
-	///Used for locking bolt and open bolt guns. Set a bit differently for the two but prevents firing when true for both.
+	/// Used for locking bolt and open bolt guns.. Set a bit differently for the two but prevents firing when true for both.
 	var/bolt_locked = FALSE
 	var/show_bolt_icon = TRUE ///Hides the bolt icon.
 	///Whether the gun has to be racked each shot or not.
@@ -87,13 +87,13 @@
 	var/obj/item/ammo_box/magazine/magazine
 	///whether the gun ejects the chambered casing
 	var/casing_ejector = TRUE
-	///Whether the gun has an internal magazine or a detatchable one. Overridden by BOLT_TYPE_NO_BOLT.
+	/// Whether the gun has an internal magazine or a detatchable one.. Overridden by BOLT_TYPE_NO_BOLT.
 	var/internal_magazine = FALSE
-	///Phrasing of the bolt in examine and notification messages; ex: bolt, slide, etc.
+	/// Phrasing of the bolt in examine and notification messages; ex: bolt, slide, and so on
 	var/bolt_wording = "bolt"
 	///Phrasing of the magazine in examine and notification messages; ex: magazine, box, etx
 	var/magazine_wording = "magazine"
-	///Phrasing of the cartridge in examine and notification messages; ex: bullet, shell, dart, etc.
+	/// Phrasing of the cartridge in examine and notification messages; ex: bullet, shell, dart, and so on
 	var/cartridge_wording = "bullet"
 	///length between individual racks
 	var/rack_delay = 5
@@ -101,12 +101,12 @@
 	var/recent_rack = 0
 	///Whether the gun can be tacloaded by slapping a fresh magazine directly on it
 	var/tac_reloads = TRUE //Snowflake mechanic no more.
-	///Whether we need to hold the gun in our off-hand to load it. FALSE means we can load it literally anywhere. Important for weapons like bows.
+	/// Whether we need to hold the gun in our off-hand to load it.. FALSE means we can load it literally anywhere.. Important for weapons like bows.
 	var/must_hold_to_load = FALSE
 	///Whether the gun can be sawn off by sawing tools
 	var/can_be_sawn_off = FALSE
 	var/suppressor_x_offset ///pixel offset for the suppressor overlay on the x axis.
-	var/suppressor_y_offset ///pixel offset for the suppressor overlay on the y axis.
+	var/suppressor_y_offset /// pixel offset for the suppressor overlay on the why axis.
 	/// Check if you are able to see if a weapon has a bullet loaded in or not.
 	var/hidden_chambered = FALSE
 
@@ -114,11 +114,11 @@
 
 	///Can we modify our ammo type in this gun's internal magazine?
 	var/can_modify_ammo = FALSE
-	///our initial ammo type. Should match initial caliber, but a bit of redundency doesn't hurt.
+	/// our initial ammo type.. Should match initial caliber, but a bit of redundency doesn't hurt.
 	var/initial_caliber
 	///our alternative ammo type.
 	var/alternative_caliber
-	///our initial fire sound. same reasons for initial caliber
+	/// our initial fire sound.. same reasons for initial caliber
 	var/initial_fire_sound
 	///our alternative fire sound, in case we want our gun to be louder or quieter or whatever
 	var/alternative_fire_sound
@@ -127,17 +127,17 @@
 
 	/// Misfire Variables ///
 
-	/// Whether our ammo misfires now or when it's set by the wrench_act. TRUE means it misfires.
+	/// Whether our ammo misfires now or when it's set by the wrench_act.. TRUE means it misfires.
 	var/can_misfire = FALSE
 	///How likely is our gun to misfire?
 	var/misfire_probability = 0
 	///How much does shooting the gun increment the misfire probability?
 	var/misfire_percentage_increment = 0
-	///What is the cap on our misfire probability? Do not set this to 100.
+	/// What is the cap on our misfire probability?. Do not set this to 100.
 	var/misfire_probability_cap = 25
 
 	/// Fire Selector Variables ///
-	/// Tracks the firemode of burst weapons. TRUE means it is in burst mode.
+	/// Tracks the firemode of burst weapons.. TRUE means it is in burst mode.
 	var/burst_fire_selection = FALSE
 	/// If it has an icon for a selector switch indicating current firemode.
 	var/selector_switch_icon = FALSE
@@ -300,7 +300,7 @@
 	update_appearance()
 	update_item_action_buttons()
 
-// Didn't attempt to catch the casing.
+// Didn't try to catch the casing.
 #define CASING_CATCH_NO_ATTEMPT	0
 // Tried to catch, failed because casing was hot and hands were unprotected.
 #define CASING_CATCH_FAILED_SPICY	1
@@ -308,9 +308,9 @@
 #define CASING_CATCH_FAILED_CLUMSY	2
 // Tried to catch, failed because hands full.
 #define CASING_CATCH_FAILED_PLACEMENT	3
-// Tried to catch, succeeded. Hands protected or casing was cold (not recently fired).
+// Tried to catch, succeeded.. Hands protected or casing was cold (not recently fired).
 #define CASING_CATCH_SUCCESSFUL	4
-// Tried to catch, succeeded. Casing was hot, hands were unprotected, hands burned.
+// Tried to catch, succeeded.. Casing was hot, hands were unprotected, hands burned.
 #define CASING_CATCH_SUCCESSFUL_OUCH	5
 // Offset added to an ejected casing's fire timestamp;
 // if world.time is past the casing's fired timestamp plus this offset, casing is considered cold, and won't burn hands.
@@ -392,7 +392,7 @@
 		var/obj/item/clothing/gloves/electrician_gloves = wielder.gloves
 		if(electrician_gloves.max_heat_protection_temperature && electrician_gloves.max_heat_protection_temperature > 360)
 			protected_hands = TRUE
-	// from left to right: are our hands protected from hot things via gloves? are we or our hands heat resistant? was this casing shot more than 5 seconds ago?
+	// from left to right: are our hands protected from hot things via gloves?. are we or our hands heat resistant?. was this casing shot more than 5 seconds ago?
 	if(protected_hands || HAS_TRAIT(wielder, TRAIT_RESISTHEAT) || HAS_TRAIT(wielder, TRAIT_RESISTHEATHANDS) || world.time >= casing.shot_timestamp + CASING_HOT_DELAY)
 		if(wielder.put_in_hands(casing)) // try placement in hand,
 			return CASING_CATCH_SUCCESSFUL // success

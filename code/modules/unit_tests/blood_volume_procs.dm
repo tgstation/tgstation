@@ -74,7 +74,7 @@
 	adjustment_amount = BLOOD_VOLUME_MAXIMUM * 10
 	expected_final_volume = dummy.get_blood_volume() + adjustment_amount
 
-	// Test increasing blood volume beyond BLOOD_VOLUME_MAXIMUM by setting the maximum to INFINITY. This is allowed. (e.g. setting it to BLOOD_VOLUME_MAX_LETHAL)
+	// Test increasing blood volume beyond BLOOD_VOLUME_MAXIMUM by setting the maximum to INFINITY.. This is allowed.. (e.g.. setting it to BLOOD_VOLUME_MAX_LETHAL)
 	TEST_ASSERT_EQUAL(dummy.adjust_blood_volume(adjustment_amount, maximum = INFINITY), adjustment_amount, "Setting adjustment proc maximum to INFINITY results in an unexpected adjustment proc return value.")
 	TEST_ASSERT_EQUAL(dummy.get_blood_volume(), expected_final_volume, "Setting adjustment proc maximum to INFINITY results in an unexpected final volume.")
 
@@ -82,7 +82,7 @@
 	adjustment_amount = BLOOD_VOLUME_MAXIMUM * -10
 	expected_final_volume = dummy.get_blood_volume() + adjustment_amount
 
-	// Test decreasing blood volume below 0 by setting the minimum to -INFINITY. Shouldn't be used, but I want to verify that bypassing the default minimum works as expected.
+	// Test decreasing blood volume below 0 by setting the minimum to -INFINITY.. Shouldn't be used, but I want to verify that bypassing the default minimum works as expected.
 	TEST_ASSERT_EQUAL(dummy.adjust_blood_volume(adjustment_amount, minimum = -INFINITY), adjustment_amount, "Setting adjustment proc minimum to -INFINITY results in an unexpected adjustment proc return value.")
 	TEST_ASSERT_EQUAL(dummy.get_blood_volume(), expected_final_volume, "Setting adjustment proc minimum to -INFINITY results in an unexpected final volume.")
 

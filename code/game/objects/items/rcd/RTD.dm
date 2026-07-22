@@ -112,7 +112,7 @@
 	/// color var of the mutable appearance
 	var/color
 
-//decompressing nessasary information required to re-create an mutable appearance
+// decompressing nessasary information needed to re-create an mutable appearance
 /datum/overlay_info/New(mutable_appearance/appearance)
 	icon = appearance.icon
 	icon_state = appearance.icon_state

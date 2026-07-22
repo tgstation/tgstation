@@ -1,31 +1,31 @@
-/// List of all holiday-related mail. Do not edit this directly, instead add to var/list/holiday_mail
+/// List of all holiday-related mail.. Do not edit this directly, instead add to var/list/holiday_mail
 GLOBAL_LIST_INIT(holiday_mail, list())
 
 /datum/holiday
-	///Name of the holiday itself. Visible to players.
+	/// Name of the holiday itself.. Visible to players.
 	var/name = "If you see this the holiday calendar code is broken"
 
 	///What day of begin_month does the holiday begin on?
 	var/begin_day = 1
 	///What month does the holiday begin on?
 	var/begin_month = 0
-	/// What day of end_month does the holiday end? Default of 0 means the holiday lasts a single.
+	/// What day of end_month does the holiday end?. Default of 0 means the holiday lasts a single.
 	var/end_day = 0
 	/// What month does the holiday end on?
 	var/end_month = 0
-	/// for christmas neverending, or testing. Forces a holiday to be celebrated.
+	/// for christmas neverending, or testing.. Forces a holiday to be celebrated.
 	var/always_celebrate = FALSE
 	/// Held variable to better calculate when certain holidays may fall on, like easter.
 	var/current_year = 0
-	/// How many years are you offsetting your calculations for begin_day and end_day on. Used for holidays like easter.
+	/// How many years are you offsetting your calculations for begin_day and end_day on.. Used for holidays like easter.
 	var/year_offset = 0
 	///Timezones this holiday is celebrated in (defaults to three timezones spanning a 50 hour window covering all timezones)
 	var/list/timezones = list(TIMEZONE_LINT, TIMEZONE_UTC, TIMEZONE_ANYWHERE_ON_EARTH)
 	///If this is defined, drones/assistants without a default hat will spawn with this item in their head clothing slot.
 	var/obj/item/holiday_hat
-	///When this holiday is active, does this prevent mail from arriving to cargo? Overrides var/list/holiday_mail. Try not to use this for longer holidays.
+	/// When this holiday is active, does this prevent mail from arriving to cargo?. Overrides var/list/holiday_mail.. Try not to use this for longer holidays.
 	var/no_mail_holiday = FALSE
-	/// The list of items we add to the mail pool. Can either be a weighted list or a normal list. Leave empty for nothing.
+	/// The list of items we add to the mail pool.. Can either be a weighted list or a normal list.. Leave empty for nothing.
 	var/list/holiday_mail = list()
 	var/poster_name = "generic celebration poster"
 	var/poster_desc = "A poster for celebrating some holiday. Unfortunately, its unfinished, so you can't see what the holiday is."
@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	/// The default pattern of the holiday, if the requested pattern is null.
 	var/holiday_pattern = PATTERN_DEFAULT
 
-// This proc gets run before the game starts when the holiday is activated. Do festive shit here.
+// This proc gets run before the game starts when the holiday is activated.. Do festive shit here.
 /datum/holiday/proc/celebrate()
 	if(no_mail_holiday)
 		SSeconomy.mail_blocked = TRUE
@@ -47,12 +47,12 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 /datum/holiday/proc/greet()
 	return "Have a happy [name]!"
 
-/// Returns special prefix station name on certain days. (See new_station_name())
+/// Returns special prefix station name on certain days.. (See new_station_name())
 /// Turns "Experimental Research City" into "Christmas Research City"
 /datum/holiday/proc/get_station_prefix()
 	return ""
 
-/// Returns special names for the station name on certain days. (See new_station_name())
+/// Returns special names for the station name on certain days.. (See new_station_name())
 /// Turns "Experimental Research City" into "Experimental Christmas City"
 /datum/holiday/proc/get_station_name()
 	// By default get the first word of the Holiday and use that
@@ -440,7 +440,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	return pick("Moon", "Night Sky", "Celebration")
 
 /// Garbage DAYYYYY
-/// Huh?.... NOOOO
+/// Huh?..... NOOOO
 /// *GUNSHOT*
 /// AHHHGHHHHHHH
 /datum/holiday/garbageday

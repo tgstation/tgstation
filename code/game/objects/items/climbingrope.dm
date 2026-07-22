@@ -73,7 +73,7 @@
 // didnt want to mess up is_blocked_turf_ignore_climbable
 /// checks if our target is blocked, also checks for border objects facing the above turf and climbable stuff
 /obj/item/climbing_hook/proc/target_blocked(turf/target, turf/trans_vertical)
-	if(target.density || (isopenspaceturf(target) && target.zPassOut(DOWN)) || !trans_vertical.zPassOut(DOWN) || trans_vertical.density) // we check if we would fall down from it additionally
+	if(target.density || (isopenspaceturf(target) && target.zPassOut(DOWN)) || !trans_vertical.zPassOut(DOWN) || trans_vertical.density) // we check if we would fall down from it also
 		return TRUE
 
 	for(var/atom/movable/atom_content as anything in target.contents)

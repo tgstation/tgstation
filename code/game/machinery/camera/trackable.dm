@@ -119,7 +119,7 @@
 	to_chat(tracking_holder, span_warning("Unable to reacquire, cancelling track..."))
 	reset_tracking()
 
-/// Tries to track onto our target mob. Returns true if it succeeds, false otherwise
+/// Tries to track onto our target mob.. Returns true if it succeeds, false otherwise
 /datum/trackable/proc/attempt_track()
 	if(!tracked_mob)
 		reset_tracking()

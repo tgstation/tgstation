@@ -47,7 +47,7 @@
 	var/list/infuriating_objects = list(/obj/item/chainsaw, /obj/item/hatchet, /obj/item/stack/sheet/mineral/wood)
 	///chance of target getting paralyzed
 	var/paralyze_prob = 15
-	///for how the target is  paralyzed
+	/// for how the target is paralyzed
 	var/paralyze_value = 5 SECONDS
 	///Additional paralyze chance
 	var/anger_boost = 50

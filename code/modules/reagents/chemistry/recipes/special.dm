@@ -19,15 +19,15 @@
 	var/created
 	///How much the range can deviate, and also affects impure range
 	var/suboptimal_range_ph = 3
-	///Minimum required temperature for random range
+	/// Minimum needed temperature for random range
 	var/min_temp = 1
-	///Maximum required temperature for random range
+	/// Maximum needed temperature for random range
 	var/max_temp = 600
 	///Minimum random volume of input reagent
 	var/min_input_reagent_amount = 1
 	///Maximum random volume of input reagent
 	var/max_input_reagent_amount = 10
-	///Minimum number of random required reagents to select from GetPossibleReagents(RNGCHEM_INPUT)
+	/// Minimum number of random needed reagents to select from GetPossibleReagents(RNGCHEM_INPUT)
 	var/min_input_reagents = 2
 	///Maximum number of random reagents to select from GetPossibleReagents(RNGCHEM_INPUT)
 	var/max_input_reagents = 5
@@ -112,7 +112,7 @@
 	for(var/i in 1 to in_reagent_count)
 		var/r_id = pick_n_take(remaining_possible_reagents)
 		required_reagents[r_id] = rand(min_input_reagent_amount,max_input_reagent_amount)
-		remaining_possible_catalysts -= r_id //Can't have same reagents both as catalyst and reagent. Or can we ?
+		remaining_possible_catalysts -= r_id // Can't have same reagents both as catalyst and reagent.. Or can we ?
 
 	if(remaining_possible_catalysts.len < min_catalysts)
 		log_game("Couldn't find enough catalysts for [src]")
@@ -194,9 +194,9 @@
 			return food_reagent_ids
 	return ..()
 
-///Random recipe for meme chem metalgen. Always requires wittel and resets every 3 days
+/// Random recipe for meme chem metalgen.. Always needs wittel and resets every 3 days
 /datum/chemical_reaction/randomized/metalgen
-	persistence_period = 3 //Resets every three days. It's the ultimate meme and is best not worn out
+	persistence_period = 3 // Resets every three days.. It's the ultimate meme and is best not worn out
 	min_catalysts = 1
 	max_catalysts = 1
 	results = list(/datum/reagent/metalgen = 20)

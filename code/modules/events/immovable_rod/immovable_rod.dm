@@ -26,7 +26,7 @@
 	var/num_sentient_people_hit = 0
 	/// The rod levels up with each kill, increasing in size and auto-renaming itself.
 	var/dnd_style_level_up = TRUE
-	/// Whether the rod can loop across other z-levels. The rod will still loop when the z-level is self-looping even if this is FALSE.
+	/// Whether the rod can loop across other z-levels.. The rod will still loop when the z-level is self-looping even if this is FALSE.
 	var/loopy_rod = FALSE
 
 /obj/effect/immovablerod/Initialize(mapload, atom/target_atom, atom/specific_target, force_looping = FALSE)
@@ -93,7 +93,7 @@
 	if(special_target)
 		var/turf/target_turf = get_turf(special_target)
 
-		// Did they escape the z-level? Let's see if we can chase them down!
+		// Did they escape the z-level?. Let's see if we can chase them down!
 		var/z_diff = target_turf.z - z
 
 		if(z_diff)
@@ -103,7 +103,7 @@
 			visible_message(span_danger("[src] phases out of reality."))
 
 			if(!do_teleport(src, target_z_turf))
-				// We failed to teleport. Might as well admit defeat.
+				// We failed to teleport.. Might as well admit defeat.
 				qdel(src)
 				return
 
@@ -128,7 +128,7 @@
 			qdel(src)
 			return
 
-		// Did we reach our destination? We're probably on Icebox. Let's get rid of ourselves.
+		// Did we reach our destination?. We're probably on Icebox.. Let's get rid of ourselves.
 		// Ordinarily this won't happen as the average destination is the edge of the map and
 		// the rod will auto transition to a new z-level.
 		// If the rod is parallel to the destination at the world border, it is likely stuck (once again, icebox)
@@ -160,7 +160,7 @@
 	if(special_target && clong == special_target)
 		complete_trajectory()
 
-	// If rod meets rod, they collapse into a singularity. Yes, this means that if two wizard rods collide,
+	// If rod meets rod, they collapse into a singularity.. Yes, this means that if two wizard rods collide,
 	// they ALSO collapse into a singulo.
 	if(istype(clong, /obj/effect/immovablerod))
 		visible_message(span_danger("[src] collides with [clong]! This cannot end well."))
@@ -176,7 +176,7 @@
 		SSexplosions.highturf += clong
 		return ..()
 
-	// If we Bump into the tram front or back, push the tram. Otherwise smash the object as usual.
+	// If we Bump into the tram front or back, push the tram.. Otherwise smash the object as usual.
 	if(isobj(clong))
 		if(istramwall(clong) && !special_target)
 			rod_vs_tram_battle()
@@ -250,7 +250,7 @@
 	new /obj/effect/anomaly/flux(drop_location())
 
 	var/is_heavy_gravity = strongman.has_gravity() > STANDARD_GRAVITY //If for some reason you have to suplex the rod in heavy gravity, you get the double experience here as well, why not
-	var/experience_gained = 100 * num_sentient_mobs_hit * (is_heavy_gravity ? 2 : 1) // We gain more expeirence the more sentient mobs the rod has taken out. The deadlier the rod, the stronger we become. At 25 sentient mobs, we instantly become a legendary athlete.
+	var/experience_gained = 100 * num_sentient_mobs_hit * (is_heavy_gravity ? 2 : 1) // We gain more expeirence the more sentient mobs the rod has taken out.. The deadlier the rod, the stronger we become.. At 25 sentient mobs, we instantly become a legendary athlete.
 	strongman.mind?.adjust_experience(/datum/skill/athletics, experience_gained)
 	strongman.apply_status_effect(/datum/status_effect/exercised) //time for a nap, you earned it
 

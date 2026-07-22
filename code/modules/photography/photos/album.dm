@@ -38,7 +38,7 @@
 			continue
 		. |= P.picture.id
 
-//Manual loading, DO NOT USE FOR HARDCODED/MAPPED IN ALBUMS. This is for if an album needs to be loaded mid-round from an ID.
+// Manual loading, DO NOT USE FOR HARDCODED/MAPPED IN ALBUMS.. This is for if an album needs to be loaded mid-round from an ID.
 /obj/item/storage/photo_album/proc/persistence_load()
 	var/list/data = SSpersistence.photo_albums_database.get_key(persistence_id)
 	if (!isnull(data))

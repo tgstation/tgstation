@@ -7,7 +7,7 @@
 // The dirs are connected turfs in the same space
 // break_if_found is a typecache of turf/area types to return false if found
 // extra_check is an optional callback to invoke on each turf checked, and can specify whether to skip processing the turf or return false
-// Please keep this proc type agnostic. If you need to restrict it do it elsewhere or add an arg.
+// Please keep this proc type agnostic.. If you need to restrict it do it elsewhere or add an arg.
 /proc/detect_room(turf/origin, list/break_if_found = list(), max_size=INFINITY, datum/callback/extra_check)
 	if(origin.blocks_air)
 		return list(origin)
@@ -76,7 +76,7 @@
 			if(TURFS_CAN_SHARE(reference_turf, valid_turf))
 				loops = 0
 				connected_turfs |= valid_turf//add that to the original list
-		if(loops >= 7)//if the loop has gone 7 consecutive times with no new turfs added, return the result. Number is arbitrary, subject to change
+		if(loops >= 7)// if the loop has gone 7 consecutive times with no new turfs added, return the result.. Number is arbitrary, subject to change
 			return
 		counter += 1 //increment by one so the next loop will start at the next position in the list
 
@@ -98,7 +98,7 @@
 		//unregister the stuff from its old area
 		SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
 
-		//register the stuff to its new area. special exception for apc as its not registered to this signal
+		// register the stuff to its new area.. special exception for apc as its not registered to this signal
 		if(istype(stuff, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/area_apc = stuff
 			area_apc.assign_to_area()
@@ -111,7 +111,7 @@
 		/turf/open/space,
 		/area/shuttle,
 		))
-	// Ignore these areas and dont let people expand them. They can expand into them though
+	// Ignore these areas and dont let people expand them.. They can expand into them though
 	var/static/list/blacklisted_areas = typecacheof(list(
 		/area/space,
 		/area/station/asteroid,
@@ -136,7 +136,7 @@
 		if(blacklisted_areas[place.type])
 			continue
 		if(!place.requires_power || (place.area_flags & NOTELEPORT) || (place.area_flags & HIDDEN_AREA))
-			continue // No expanding powerless rooms etc
+			continue // No expanding powerless rooms and so on
 		if(!TURF_SHARES(the_turf)) // No expanding areas of walls/something blocking this turf because that defeats the whole point of them used to separate areas
 			continue
 		if(!isnull(place.apc))
@@ -163,11 +163,11 @@
 		newA.setup(str)
 		newA.default_gravity = oldA.default_gravity
 		GLOB.custom_areas[newA] = TRUE
-		require_area_resort() //new area registered. resort the names
+		require_area_resort() // new area registered.. resort the names
 	else
 		newA = area_choice
 
-	//we haven't done anything. let's get outta here
+	// we haven't done anything.. let's get outta here
 	if(newA == oldA)
 		to_chat(creator, span_warning("Selected choice is same as the area your standing in. No area changes were requested."))
 		return
@@ -192,7 +192,7 @@
 	to_chat(creator, span_notice("You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered."))
 	creator.log_message("created a new area: [AREACOORD(creator)] (previously \"[oldA.name]\")", LOG_GAME)
 
-	//purge old areas that had all their turfs merged into the new one i.e. old empty areas. also recompute fire doors
+	// purge old areas that had all their turfs merged into the new one i.e.. old empty areas.. also recompute fire doors
 	for(var/i in 1 to length(area_list))
 		var/area/merged_area = area_list[i]
 
@@ -200,7 +200,7 @@
 		for(var/obj/machinery/door/firedoor/FD as anything in merged_area.firedoors)
 			FD.CalculateAffectingAreas()
 
-		//no more turfs in this area. Time to clean up
+		// no more turfs in this area.. Time to clean up
 		if(!merged_area.has_contained_turfs())
 			qdel(merged_area)
 

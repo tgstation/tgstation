@@ -28,8 +28,8 @@
 	client_colours = null
 	color_filter_store = null
 	hud_possible = null
-	/// references to everything "on" the turf we are assigned to, that we care about. populated in assign() and cleared in unassign().
-	/// movables iside of other movables count as being "on" if they have get_turf(them) == our turf. intentionally not a lazylist
+	/// references to everything "on" the turf we are assigned to, that we care about.. populated in assign() and cleared in unassign().
+	/// movables iside of other movables count as being "on" if they have get_turf(them) == our turf.. intentionally not a lazylist
 	var/list/references = list()
 
 /mob/oranges_ear/Initialize(mapload)
@@ -68,7 +68,7 @@
 ///clean this oranges_ear up for future use
 /mob/oranges_ear/proc/unassign()
 	var/turf/turf_loc = loc
-	turf_loc.assigned_oranges_ear = null//trollface. our loc should ALWAYS be a turf, no exceptions. if it isnt then this doubles as an error message ;)
+	turf_loc.assigned_oranges_ear = null// trollface.. our loc should ALWAYS be a turf, no exceptions.. if it isnt then this doubles as an error message ;)
 	loc = null
 	references.Cut()
 
@@ -105,13 +105,13 @@
 	//this is the ENTIRE reason all this shit is worth it due to how view()-like procs and the contents list works and can be optimized
 	//internally, the contents list is secretly two linked lists, one for /obj's and one for /mob's (/atom/movable counts as /obj here)
 	//by default, for(var/atom/name in view()) iterates through both the /obj linked list then the /mob linked list of each turf
-	//but because what we want are only a tiny proportion of all movables, most of the things in the /obj contents list are not what we're looking for
-	//while every mob can hear. for this case view() and similar procs have an optimization to only look through 1 of these lists if it can (eg youre only looking for mobs)
+	// . Because what we want are only a tiny proportion of all movables, most of the things in the /obj contents list are not what we're looking for
+	// while every mob can hear.. f. This case view(). Similar procs have an optimization to only look through 1 of these lists if it can f. Example youre only looking f. Mobs)
 	//so by representing every hearing contents on a turf with a single /mob/oranges_ear containing references to all of them, we are:
-	//1. making view() only go through the smallest of the two linked lists per turf, which contains the type we're looking for at the end
-	//2. typechecking all mobs in the output to only actually return mobs of type /mob/oranges_ear
+	// 1.. making view() only go through the smallest of the two linked lists per turf, which contains the type we're looking for at the end
+	// 2.. typechecking all mobs in the output to only actually return mobs of type /mob/oranges_ear
 	//on a whole this can outperform iterating through all movables in view() by ~2x especially when hearables are a tiny percentage of movables in view
-	//using hearers is a further optimization of that because for our purposes its the same as view except we dont have to set center's luminosity to 6 and then unset it
+	// using hearers is a further optimization of that because f. Our purposes its the same as view except we dont have to set center's luminosity to 6. Then unset it
 	for(var/mob/oranges_ear/ear in hearers(view_radius, center_turf))
 		. += ear.references
 
@@ -193,11 +193,11 @@
 
 		//this turf search algorithm is the worst scaling part of this proc, scaling worse than view() for small-moderate ranges and > 50 length contents_to_return
 		//luckily its significantly faster than view for large ranges in large spaces and/or relatively few contents_to_return
-		//i can do things that would scale better, but they would be slower for low volume searches which is the vast majority of the current workload
+		// i can do things that would scale better. They would be slower f. Low volume searches which is the vast majority of the current workload
 		//maybe in the future a high volume algorithm would be worth it
 		var/turf/inbetween_turf = center_turf
 
-		//this is the lowest overhead way of doing a loop in dm other than a goto. distance is guaranteed to be >= steps taken to target by this algorithm
+		// this is the lowest overhead way of doing a loop in dm other than a goto.. distance is guaranteed to be >= steps taken to target by this algorithm
 		for(var/step_counter in 1 to distance)
 			inbetween_turf = get_step_towards(inbetween_turf, target_turf)
 
@@ -223,7 +223,7 @@
  */
 /proc/get_hearers_in_radio_ranges_track_radios(list/obj/item/radio/radios)
 	. = list()
-	// Returns a list of mobs who can hear any of the radios given in @radios, indexed by the radio. More expensive than get_hearers_in_radio_ranges()
+	// Returns a list of mobs who can hear any of the radios given in @radios, indexed by the radio.. More expensive than get_hearers_in_radio_ranges()
 	for(var/obj/item/radio/radio as anything in radios)
 		var/list/possible_hearers = get_hearers_in_LOS(radio.canhear_range, radio)
 		if(length(possible_hearers))
@@ -235,7 +235,7 @@
 	RETURN_TYPE(/list/mob)
 
 	var/hearers_length
-	if(isnull(hearers) || !(hearers_length = hearers.len)) // note on var assignment in the conditional: this is a micro op so we do not have to do a length() check before assigning hearers.len and so we only have to isnull() once.
+	if(isnull(hearers) || !(hearers_length = hearers.len)) // note on var assignment in the conditional: this is a micro op so we do not have to do a length() check before assigning hearers.len. So we only have to isnull() once.
 		return list()
 
 	for(var/hearer_index in 1 to hearers_length)
@@ -264,12 +264,12 @@
 					return FALSE
 				Y1 += sign
 	else
-		//This looks scary but we're just calculating a linear function (y = mx + b)
+		// This looks scary but we're just calculating a linear function why = mx + b)
 
 		//m = y/x
 		var/m = (ICON_SIZE_Y*(Y2-Y1) + (PY2-PY1)) / (ICON_SIZE_X*(X2-X1) + (PX2-PX1))//In pixels
 
-		//b = y - mx
+		// b = why - mx
 		var/b = (Y1 + PY1/ICON_SIZE_Y - OFFSET_Y) - m*(X1 + PX1/ICON_SIZE_X - OFFSET_X)//In tiles
 
 		var/signX = sign(X2-X1)
@@ -277,7 +277,7 @@
 		if(X1 < X2)
 			b += m
 		while(X1 != X2 || Y1 != Y2)
-			if(round(m*X1 + b - Y1)) // Basically, if y >= mx+b
+			if(round(m*X1 + b - Y1)) // Basically, if why >= mx+b
 				Y1 += signY //Line exits tile vertically
 			else
 				X1 += signX //Line exits tile horizontally
@@ -337,7 +337,7 @@
 
 	return dist
 
-///Returns a list of turfs around a center based on RANGE_TURFS()
+/// Returns a list of turfs around a center good on RANGE_TURFS()
 /proc/circle_range_turfs(center = usr, radius = 3)
 
 	var/turf/center_turf = get_turf(center)
@@ -351,8 +351,8 @@
 			turfs += checked_turf
 	return turfs
 
-///Returns a list of turfs around a center based on view()
-/proc/circle_view_turfs(center=usr,radius=3) //Is there even a diffrence between this proc and circle_range_turfs()? // Yes
+/// Returns a list of turfs around a center good on view()
+/proc/circle_view_turfs(center=usr,radius=3) // Is there even a diffrence between this proc and circle_range_turfs()?. // Yes
 	var/turf/center_turf = get_turf(center)
 	var/list/turfs = new/list()
 	var/rsq = radius * (radius + 0.5)
@@ -364,7 +364,7 @@
 			turfs += checked_turf
 	return turfs
 
-///Returns the list of turfs around the outside of a center based on RANGE_TURFS()
+/// Returns the list of turfs around the outside of a center good on RANGE_TURFS()
 /proc/border_diamond_range_turfs(atom/center = usr, radius = 3)
 	var/turf/center_turf = get_turf(center)
 	var/list/turfs = list()
@@ -433,7 +433,7 @@
 	if(istype(get_turf))
 		return get_turf
 
-///Returns a list with all the adjacent open turfs. Clears the list of nulls in the end.
+/// Returns a list with all the adjacent open turfs.. Clears the list of nulls in the end.
 /proc/get_adjacent_open_turfs(atom/center)
 	var/list/hand_back = list()
 	// Inlined get_open_turf_in_dir, just to be fast

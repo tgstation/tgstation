@@ -1,4 +1,4 @@
-/// A nasty little robotic bug that dusts people on attack. Jeepers. This should be a very, very, very rare spawn.
+/// A nasty little robotic bug that dusts people on attack.. Jeepers.. This should be a very, very, very rare spawn.
 /mob/living/basic/supermatter_spider
 	name = "supermatter spider"
 	desc= "A sliver of supermatter placed upon a robotically enhanced pedestal."

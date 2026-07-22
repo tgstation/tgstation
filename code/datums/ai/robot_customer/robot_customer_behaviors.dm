@@ -1,5 +1,5 @@
 /// Searches nearby for an unclaimed seat belonging to the customer's venue.
-/// Sets BB_CUSTOMER_MY_SEAT and claims it on success. Returns FAILURE if none found.
+/// Sets BB_CUSTOMER_MY_SEAT and claims it on success.. Returns FAILURE if none found.
 /datum/bt_node/ai_behavior/robot_customer/find_seat
 
 /datum/bt_node/ai_behavior/robot_customer/find_seat/perform(seconds_per_tick, datum/ai_controller/controller)
@@ -64,7 +64,7 @@
 	finish_async(AI_BEHAVIOR_SUCCEEDED)
 
 
-/// Waits at the seat for food to arrive. Ticks down patience and checks for food placed in front.
+/// Waits at the seat for food to arrive.. Ticks down patience and checks for food placed in front.
 /// Succeeds when BB_CUSTOMER_EATING is set; fails when patience runs out or BB_CUSTOMER_LEAVING is set.
 /// On finish, sets BB_CUSTOMER_LEAVING and says the appropriate departure line.
 /datum/bt_node/ai_behavior/robot_customer/wait_for_food

@@ -154,7 +154,7 @@
 	inhand_icon_state = "trayson-t-ray"
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	range = 2
-	modes = list(MODE_NONE, MODE_TRAY, MODE_PIPE_CONNECTABLE, MODE_ATMOS_THERMAL) // atmos techs now finally have 3 modes on their  goggles!
+	modes = list(MODE_NONE, MODE_TRAY, MODE_PIPE_CONNECTABLE, MODE_ATMOS_THERMAL) // atmos techs now finally have 3 modes on their goggles!
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/glasses/meson/engine/tray/dropped(mob/user)

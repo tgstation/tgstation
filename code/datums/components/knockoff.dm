@@ -65,7 +65,7 @@
 	if(!istype(source))
 		return
 
-	// Healing knockdown or setting knockdown to zero or something? Don't knock off.
+	// Healing knockdown or setting knockdown to zero or something?. Don't knock off.
 	if(amount <= 0)
 		return
 	if(!prob(knockoff_chance))

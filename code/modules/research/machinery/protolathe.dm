@@ -18,7 +18,7 @@
 
 	return ..()
 
-/// Special subtype protolathe for offstation use. Has a more limited available design selection.
+/// Special subtype protolathe for offstation use.. Has a more limited available design selection.
 /obj/machinery/rnd/production/protolathe/offstation
 	name = "ancient protolathe"
 	desc = "Converts raw materials into useful objects. Its ancient construction may limit its ability to print all known technology."

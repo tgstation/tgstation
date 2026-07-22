@@ -179,7 +179,7 @@
 			child.forceMove(T)
 			playsound(src, 'sound/effects/bamf.ogg', 100, 1)
 
-//The goliath's children.  Pretty weak, simple mobs which are able to put a single tentacle under their target when at range.
+// The goliath's children.. Pretty weak, simple mobs which are able to put a single tentacle under their target when at range.
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child
 	name = "baby goliath"
 	desc = "A young goliath recently born from its mother.  While they hatch from eggs, said eggs are incubated in the mother until they are ready to be born."

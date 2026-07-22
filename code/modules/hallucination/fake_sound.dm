@@ -178,7 +178,7 @@
 	random_hallucination_weight = 1
 	hallucination_tier = HALLUCINATION_TIER_VERYSPECIAL
 
-	/// if FALSE, we will pass "null" in as the turf source, meaning the sound will just play without direction / etc.
+	/// if FALSE, we will pass "null" in as the turf source, meaning the sound will just play without direction / and so on
 	var/no_source = FALSE
 
 /datum/hallucination/fake_sound/weird/play_fake_sound(turf/source, sound_to_play)
@@ -188,7 +188,7 @@
 	return ..()
 
 /datum/hallucination/fake_sound/weird/antag
-	random_hallucination_weight = 0 // This one's a bit gamey, so I'll leave it disabled by default. Have fun badmins
+	random_hallucination_weight = 0 // This one's a bit gamey, so I'll leave it disabled by default.. Have fun badmins
 	volume = 90
 	sound_vary = FALSE
 	no_source = TRUE

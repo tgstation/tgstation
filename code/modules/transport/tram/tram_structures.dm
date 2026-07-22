@@ -12,8 +12,8 @@
 /obj/structure/grille/tram/Initialize(mapload)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
-	//atmos_sensitive applies connect_loc which 1. reacts to movement in order to 2. unregister and register signals to
-	//the old and new locs. we dont want that, pretend these grilles and windows are plastic or something idk
+	// atmos_sensitive applies connect_loc which 1.. reacts to movement in order to 2.. unregister and register signals to
+	// the old and new locs.. we dont want that, pretend these grilles and windows are plastic or something I do not know
 
 /obj/structure/tram/Initialize(mapload, direct)
 	. = ..()

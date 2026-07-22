@@ -47,7 +47,7 @@
 	UnregisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
 	return ..()
 
-/// When we attempt to attack, check if it is allowed
+/// When we try to attack, check if it is allowed
 /datum/component/basic_mob_attack_telegraph/proc/on_attack(mob/living/basic/source, atom/target)
 	SIGNAL_HANDLER
 	if (!(isliving(target) || ismecha(target))) // Curse you CLARKE

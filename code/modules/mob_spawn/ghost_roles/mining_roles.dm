@@ -1,7 +1,7 @@
 
 //lava hermit
 
-//Malfunctioning cryostasis sleepers: Spawns in makeshift shelters in lavaland. Ghosts become hermits with knowledge of how they got to where they are now.
+// Malfunctioning cryostasis sleepers: Spawns in makeshift shelters in lavaland.. Ghosts become hermits with knowledge of how they got to where they are now.
 /obj/effect/mob_spawn/ghost_role/human/hermit
 	name = "malfunctioning cryostasis sleeper"
 	desc = "A humming sleeper with a silhouetted occupant inside. Its stasis function is broken and it's likely being used as a bed."
@@ -142,7 +142,7 @@
 		id_card.registered_age = AGE_MINOR
 		to_chat(bartender, span_notice("You're not technically old enough to access or serve alcohol, but your ID has been discreetly modified to display your age as [AGE_MINOR]. Try to keep that a secret!"))
 
-//Preserved terrarium/seed vault: Spawns in seed vault structures in lavaland. Ghosts become plantpeople and are advised to begin growing plants in the room near them.
+// Preserved terrarium/seed vault: Spawns in seed vault structures in lavaland.. Ghosts become plantpeople and are advised to begin growing plants in the room near them.
 /obj/effect/mob_spawn/ghost_role/human/seed_vault
 	name = "preserved terrarium"
 	desc = "An ancient machine that seems to be used for storing plant matter. The glass is obstructed by a mat of vines."
@@ -168,7 +168,7 @@
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
 	return ..()
 
-//Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
+// Ash walker eggs: Spawns in ash walker dens in lavaland.. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 
 /obj/structure/ash_walker_eggshell
 	name = "ash walker egg"

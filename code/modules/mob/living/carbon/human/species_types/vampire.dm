@@ -153,7 +153,7 @@
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
 	organ_traits = list(
 		TRAIT_DRINKS_BLOOD,
-		// future todo : tie nobreath and nohunger to a vampire organ set bonus
+		// future to do : tie nobreath and nohunger to a vampire organ set bonus
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
 	)

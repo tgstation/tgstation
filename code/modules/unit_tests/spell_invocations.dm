@@ -23,4 +23,4 @@
 					TEST_FAIL("Spell: [spell_name] ([spell_type]) set a speaking invocation type but did not set an invocation message.")
 
 			// INVOCATION_NONE:
-			// It doesn't matter what they have set for invocation text. So not it's skipped.
+			// It doesn't matter what they have set for invocation text.. So not it's skipped.

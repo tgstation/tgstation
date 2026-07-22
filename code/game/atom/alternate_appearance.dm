@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/proc/check_hud(mob/source)
 	SIGNAL_HANDLER
-	// Attempt to re-apply the hud entirely
+	// Try to re-apply the hud entirely
 	if(!apply_to_new_mob(source))
 		// If that failed, probably shouldn't be seeing it at all, so nuke it
 		hide_from(source, absolute = TRUE)

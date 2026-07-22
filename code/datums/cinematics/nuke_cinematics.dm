@@ -1,4 +1,4 @@
-/// Simple, base cinematic for all animations based around a nuke detonating.
+/// Simple, base cinematic for all animations good around a nuke detonating.
 /datum/cinematic/nuke
 	/// If set, this is the summary screen that pops up after the nuke is done.
 	var/after_nuke_summary_state

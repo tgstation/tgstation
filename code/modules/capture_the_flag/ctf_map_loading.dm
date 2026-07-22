@@ -61,7 +61,7 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 /datum/map_template/ctf
 	should_place_on_top = FALSE
 	var/description = ""
-	///Score required to win CTF on this map.
+	/// Score needed to win CTF on this map.
 	var/points_to_win = 3
 
 /datum/map_template/ctf/classic

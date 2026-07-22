@@ -1,4 +1,4 @@
-// TODO: Work into reworked uplinks.
+// To do Work into reworked uplinks.
 /// Selects a set number of unique items from the uplink, and deducts a percentage discount from them
 /proc/create_uplink_sales(num, datum/uplink_category/category, limited_stock, list/sale_items)
 	var/list/sales = list()
@@ -77,7 +77,7 @@
 	var/surplus = 100
 	/// Whether this can be discounted or not
 	var/cant_discount = FALSE
-	/// If discounted, is true. Used to send a signal to update reimbursement.
+	/// If discounted, is true.. Used to send a signal to update reimbursement.
 	VAR_FINAL/discounted = FALSE
 	/// If this value is changed on two items they will share stock, defaults to not sharing stock with any other item
 	var/stock_key = UPLINK_SHARED_STOCK_UNIQUE
@@ -88,7 +88,7 @@
 	/// A bitfield to represent what uplinks can purchase this item.
 	/// See [`code/__DEFINES/uplink.dm`].
 	var/purchasable_from = ALL
-	/// If this uplink item is only available to certain roles. Roles are dependent on the frequency chip or stored ID.
+	/// If this uplink item is only available to certain roles.. Roles are dependent on the frequency chip or stored ID.
 	var/list/restricted_roles = list()
 	/// The species able to purchase this uplink item.
 	var/list/restricted_species = list()
@@ -104,10 +104,10 @@
 	var/uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
 	/// String to be shown instead of the price, e.g for the Random item.
 	var/cost_override_string = ""
-	/// Whether this item locks all other items from being purchased. Used by syndicate balloon and a few other purchases.
+	/// Whether this item locks all other items from being purchased.. Used by syndicate balloon and a few other purchases.
 	/// Can't be purchased if you've already bought other things
 	/// Uses the purchase log, so items purchased that are not visible in the purchase log will not count towards this.
-	/// However, they won't be purchasable afterwards.
+	/// But they won't be purchasable afterwards.
 	var/lock_other_purchases = FALSE
 	/// A lazylist of typepaths to uplink items relevant to this this item
 	/// EX: a pistol would list its magazines or modifications here
@@ -122,7 +122,7 @@
 /datum/uplink_category
 	/// Name of the category
 	var/name
-	/// Weight of the category. Used to determine the positioning in the uplink. High weight = appears first
+	/// Weight of the category.. Used to determine the positioning in the uplink.. High weight = appears first
 	var/weight = 0
 
 /// Returns by how much percentage do we reduce the price of the selected item

@@ -45,7 +45,7 @@
 
 /datum/chemical_reaction/sodiumchloride
 	results = list(/datum/reagent/consumable/salt = 2)
-	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/chlorine = 1) // That's what I said! Sodium Chloride!
+	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/chlorine = 1) // That's what I said!. Sodium Chloride!
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_FOOD | REACTION_TAG_COMPONENT
 	thermic_constant = 50
 
@@ -94,7 +94,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/soapification
-	required_reagents = list(/datum/reagent/consumable/liquidgibs = 10, /datum/reagent/lye = 10) // requires two scooped gib tiles
+	required_reagents = list(/datum/reagent/consumable/liquidgibs = 10, /datum/reagent/lye = 10) // needs two scooped gib tiles
 	required_temp = 374
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
@@ -169,7 +169,7 @@
 	clear_products(holder, equilibrium.step_target_vol)
 
 /datum/chemical_reaction/nitrous_oxide/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
-	return //This is empty because the explosion reaction will occur instead (see pyrotechnics.dm). This is just here to update the lookup ui.
+	return // This is empty because the explosion reaction will occur instead (see pyrotechnics.dm).. This is just here to update the lookup ui.
 
 
 //Technically a mutation toxin
@@ -252,10 +252,10 @@
 	// All blood duplicated via this reaction is synthetic.
 	var/added_synth_volume = created_volume
 
-	// Blood reagents handle their merger code BEFORE this code runs. So the existing synth volume is already averaged into the total volume.
+	// Blood reagents handle their merger code BEFORE this code runs.. So the existing synth volume is already averaged into the total volume.
 	var/existing_synth_volume = B.volume * B.data[BLOOD_DATA_SYNTH_CONTENT]
 
-	// A simple weighted average that simplifies down to "total synth volume / total blood volume" i.e. "how much of the blood is synthetic"
+	// A simple weighted average that simplifies down to "total synth volume / total blood volume" i.e.. "how much of the blood is synthetic"
 	B.data[BLOOD_DATA_SYNTH_CONTENT] = (added_synth_volume + existing_synth_volume) / B.volume
 
 /datum/chemical_reaction/mix_virus/mix_virus_2
@@ -792,7 +792,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_PLANT
 
 /datum/chemical_reaction/laughter
-	results = list(/datum/reagent/consumable/laughter = 10) // Fuck it. I'm not touching this one.
+	results = list(/datum/reagent/consumable/laughter = 10) // Fuck it.. I'm not touching this one.
 	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/banana = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 

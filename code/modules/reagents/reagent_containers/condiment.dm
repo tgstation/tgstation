@@ -1,8 +1,8 @@
 
 ///////////////////////////////////////////////Condiments
-//Notes by Darem: The condiments food-subtype is for stuff you don't actually eat but you use to modify existing food. They all
-// leave empty containers when used up and can be filled/re-filled with other items. Formatting for first section is identical
-// to mixed-drinks code. If you want an object that starts pre-loaded, you need to make it in addition to the other code.
+// Notes by Darem: The condiments food-subtype is for stuff you don't actually eat but you use to modify existing food.. They all
+// leave empty containers when used up and can be filled/re-filled with other items.. Formatting for first section is identical
+// to mixed-drinks code.. If you want an object that starts pre-loaded, you need to make it in addition to the other code.
 
 //Food items that aren't eaten normally and leave an empty container behind.
 /obj/item/reagent_containers/condiment
@@ -72,10 +72,10 @@
 	if(!is_open_container())
 		return NONE
 
-	//Something like a glass or a food item. Player probably wants to transfer TO it.
+	// Something like a glass or a food item.. Player probably wants to transfer TO it.
 	if(target.is_refillable() || IS_EDIBLE(target))
 		return try_refill(target, user)
-	//A dispenser. Transfer FROM it TO us.
+	// A dispenser.. Transfer FROM it TO us.
 	if(target.is_drainable())
 		return try_drain(target, user)
 	//Eating directly from the ketchup packet
@@ -91,7 +91,7 @@
 		return .
 	if(!is_open_container())
 		return NONE
-	//A dispenser. Transfer FROM it TO us.
+	// A dispenser.. Transfer FROM it TO us.
 	if(target.is_drainable())
 		return try_drain(target, user)
 
@@ -427,7 +427,7 @@
 	icon_state = "coldsauce"
 	list_reagents = list(/datum/reagent/consumable/frostoil = 50)
 
-//Food packs. To easily apply deadly toxi... delicious sauces to your food!
+// Food packs.. To easily apply deadly toxi.... delicious sauces to your food!
 
 /obj/item/reagent_containers/condiment/pack
 	name = "condiment pack"
@@ -456,7 +456,7 @@
 		/datum/reagent/consumable/cherryjelly = list("condi_cherryjelly", "Cherry Jelly", "A jar of super-sweet cherry jelly."),
 		/datum/reagent/consumable/mayonnaise = list("condi_mayo", "Mayonnaise", "Not an instrument."),
 	)
-	/// Can't use initial(name) for this. This stores the name set by condimasters.
+	/// Can't use initial(name) for this.. This stores the name set by condimasters.
 	var/originalname = "condiment"
 
 /obj/item/reagent_containers/condiment/pack/create_reagents(max_vol, flags)

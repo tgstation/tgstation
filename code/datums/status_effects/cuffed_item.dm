@@ -140,7 +140,7 @@
 	if(!update_link())
 		qdel(src)
 
-/// Updates our link and beam effect based on our state
+/// Updates our link and beam effect good on our state
 /// Returns TRUE if we are in a valid link state, FALSE otherwise
 /datum/status_effect/cuffed_item/proc/update_link()
 	// when held, we need no tether
@@ -183,7 +183,7 @@
 		link_effect = null
 	return TRUE
 
-// Delayed unequip after an invalid pickup. This sucks but I can't think of a better way around due to move order shenanigans
+// Delayed unequip after an invalid pickup.. This sucks but I can't think of a better way around due to move order shenanigans
 /datum/status_effect/cuffed_item/proc/eject_item(mob/leash_to_mob)
 	if(QDELETED(src) || cuffed.loc != leash_to_mob)
 		return
@@ -210,14 +210,14 @@
 	SIGNAL_HANDLER
 	qdel(src)
 
-///Tell the player that the item is stuck to their hands someway. Also another way to trigger the try_remove_cuffs proc.
+/// Tell the player that the item is stuck to their hands someway.. Also another way to trigger the try_remove_cuffs proc.
 /datum/status_effect/cuffed_item/proc/cuffed_reminder(obj/item/item, mob/user, list/examine_texts)
 	SIGNAL_HANDLER
 
 	if(user == owner)
 		examine_texts += span_notice("[item.p_Theyre()] cuffed to you by \a [cuffs]. You can <a href='byond://?src=[REF(item)];remove_cuffs_item=1'>remove them</a>.")
 
-/// This mainly exists as a fallback in the rare case the alert icon is not reachable (too many alerts?). You should be somewhat able to examine items while blind so all good.
+/// This mainly exists as a fallback in the rare case the alert icon is not reachable (too many alerts?).. You should be somewhat able to examine items while blind so all good.
 /datum/status_effect/cuffed_item/proc/topic_handler(atom/source, user, href_list)
 	SIGNAL_HANDLER
 
@@ -238,7 +238,7 @@
 	INVOKE_ASYNC(src, PROC_REF(try_remove_cuffs), user)
 	return COMPONENT_ALT_ACTION_DONE
 
-///The main proc responsible for attempting to remove the hancfuss.
+/// The main proc responsible for trying to remove the hancfuss.
 /datum/status_effect/cuffed_item/proc/try_remove_cuffs(mob/living/user)
 
 	var/interaction_key = REF(src)
@@ -300,7 +300,7 @@
 		var/datum/status_effect/cuffed_item/effect = attached_effect
 		effect?.try_remove_cuffs(owner)
 
-// Chains two movable to be adjacent to each other. YMMV using this
+// Chains two movable to be adjacent to each other.. YMMV using this
 /datum/component/chained_together
 	dupe_mode = COMPONENT_DUPE_SOURCES
 	/// Weakref to the thing we're chained to

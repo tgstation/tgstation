@@ -48,7 +48,7 @@ Difficulty: Hard
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
 	icon = 'icons/mob/simple/lavaland/hierophant_new.dmi'
-	faction = list(FACTION_BOSS) //asteroid mobs? get that shit out of my beautiful square house
+	faction = list(FACTION_BOSS) // asteroid mobs?. get that shit out of my beautiful square house
 	speak_emote = list("preaches")
 	armour_penetration = 50
 	melee_damage_lower = 15
@@ -88,13 +88,13 @@ Difficulty: Hard
 	/// base delay for making arenas
 	var/arena_cooldown_time = 20 SECONDS
 	COOLDOWN_DECLARE(arena_cooldown)
-	/// if we're doing something that requires us to stand still and not attack
+	/// if we're doing something that needs us to stand still and not attack
 	var/blinking = FALSE
 	/// weakref to our "home base" beacon
 	var/datum/weakref/spawned_beacon_ref
 	/// If we are sitting at home base and not doing anything
 	var/sitting_at_center = TRUE
-	/// timer id for any active attempts to "go home"
+	/// timer id for any active tries to "go home"
 	var/respawn_timer_id = null
 	var/list/kill_phrases = list("Wsyvgi sj irivkc xettih. Vitemvmrk...", "Irivkc wsyvgi jsyrh. Vitemvmrk...", "Jyip jsyrh. Egxmzexmrk vitemv gcgpiw...", "Kix fiex. Liepmrk...")
 	var/list/target_phrases = list("Xevkix psgexih.", "Iriqc jsyrh.", "Eguymvih xevkix.")
@@ -577,7 +577,7 @@ Difficulty: Hard
 	if(mover != caster)
 		return FALSE
 
-/obj/effect/temp_visual/hierophant/chaser //a hierophant's chaser. follows target around, moving and producing a blast every speed deciseconds.
+/obj/effect/temp_visual/hierophant/chaser // a hierophant's chaser.. follows target around, moving and producing a blast every speed deciseconds.
 	duration = 98
 	var/mob/living/target //what it's following
 	var/turf/targetturf //what turf the target is actually on
@@ -672,7 +672,7 @@ Difficulty: Hard
 
 /obj/effect/temp_visual/hierophant/blast/damaging
 	var/damage = 10 //how much damage do we do?
-	var/monster_damage_boost = TRUE //do we deal extra damage to monsters? Used by the boss
+	var/monster_damage_boost = TRUE // do we deal extra damage to monsters?. Used by the boss
 	var/list/hit_things = list() //we hit these already, ignore them
 	var/friendly_fire_check = FALSE
 	var/bursting = FALSE //if we're bursting and need to hit anyone crossing us

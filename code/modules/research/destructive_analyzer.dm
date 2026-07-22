@@ -16,7 +16,7 @@
 
 /obj/machinery/rnd/destructive_analyzer/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER, TOOL_ACT_PRIMARY) //This allows people to put syndicate screwdrivers in the machine. Secondary act still passes.
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER, TOOL_ACT_PRIMARY) // This allows people to put syndicate screwdrivers in the machine.. Secondary act still passes.
 
 /obj/machinery/rnd/destructive_analyzer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
@@ -126,7 +126,7 @@
 			return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
-	// Cringe way to let emags insert on RMB because we still use attackby to insert
+	// Uncomfortable way to let emags insert on RMB because we still use attackby to insert
 	if(istype(tool, /obj/item/card/emag))
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 	return NONE

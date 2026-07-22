@@ -1,4 +1,4 @@
-// Finally, peas. Base plant.
+// Finally, peas.. Base plant.
 /obj/item/seeds/peas
 	name = "pea pod pack"
 	desc = "These seeds grows into vitamin rich peas!"
@@ -54,7 +54,7 @@
 	desc = "Ridens Cicer, guaranteed to improve your mood dramatically upon consumption!"
 	icon_state = "laughpeas"
 	foodtypes = VEGETABLES
-	tastes = list ("a prancing rabbit" = 1) //Vib Ribbon sends her regards.. wherever she is.
+	tastes = list ("a prancing rabbit" = 1) // Vib Ribbon sends her regards... wherever she is.
 	wine_power = 90
 	wine_flavor = "a vector-graphic rabbit dancing on your tongue"
 
@@ -73,7 +73,7 @@
 	potency = 75
 	yield = 1
 	production = 10
-	instability = 45 //The world is a very unstable place. Constantly changing.
+	instability = 45 // The world is a very unstable place.. Constantly changing.
 	growthstages = 3
 	icon_grow = "worldpeas-grow"
 	icon_dead = "worldpeas-dead"
@@ -86,7 +86,7 @@
 /obj/item/food/grown/peace
 	seed = /obj/item/seeds/peas/laugh/peace
 	name = "cluster of world peas"
-	desc = "A plant discovered through extensive genetic engineering, and iterative graft work. It's rumored to bring peace to any who consume it. In the wider AgSci community, it's attained the nickname of 'Pax Mundi'." //at last... world peas. I'm not sorry.
+	desc = "A plant discovered through extensive genetic engineering, and iterative graft work. It's rumored to bring peace to any who consume it. In the wider AgSci community, it's attained the nickname of 'Pax Mundi'." // at last.... world peas.. I'm not sorry.
 	icon_state = "worldpeas"
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES

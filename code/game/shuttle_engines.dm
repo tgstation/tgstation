@@ -169,7 +169,7 @@
 	desc = "Directs energy into compressed particles in order to power engines."
 	icon_state = "heater"
 	circuit = /obj/item/circuitboard/machine/engine/heater
-	engine_power = 0 // todo make these into 2x1 parts
+	engine_power = 0 // to do make these into 2x1 parts
 
 /obj/machinery/power/shuttle_engine/propulsion
 	name = "propulsion engine"

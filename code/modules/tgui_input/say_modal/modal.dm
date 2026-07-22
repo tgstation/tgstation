@@ -1,4 +1,4 @@
-/** Assigned say modal of the client */
+/** * Assigned say modal of the client */
 /client/var/datum/tgui_say/tgui_say
 
 /**
@@ -35,10 +35,10 @@
 	var/saved_text = ""
 	/// What channel was in use in the say box the last time save_text was called
 	var/saved_channel
-	/// Speech suffuxes used for force_say after "-". Defaults to hurt_phrases
+	/// Speech suffuxes used for force_say after "-".. Defaults to hurt_phrases
 	var/list/alter_phrases
 
-/** Creates the new input window to exist in the background. */
+/** * Creates the new input window to exist in the background. */
 /datum/tgui_say/New(client/client, id)
 	src.client = client
 	window = new(client, id)

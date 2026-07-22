@@ -38,7 +38,7 @@
 
 /obj/item/storage/box/wall_flash/PopulateContents()
 	var/id = rand(1000, 9999)
-	// FIXME what if this conflicts with an existing one?
+	// Fix me what if this conflicts with an existing one?
 
 	new /obj/item/wallframe/button(src)
 	new /obj/item/electronics/airlock(src)

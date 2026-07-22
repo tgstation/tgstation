@@ -59,7 +59,7 @@
 	old_area.update_beauty()
 	REMOVE_TRAIT(source, TRAIT_BEAUTY_APPLIED, INNATE_TRAIT)
 
-///Items only contribute to beauty while not inside other objects or mobs (e.g on the floor, on a table etc.).
+/// Items only contribute to beauty while not inside other objects or mobs (e.g on the floor, on a table and so on
 /datum/element/beauty/proc/on_item_moved(obj/item/source, atom/old_loc, direction, forced)
 	SIGNAL_HANDLER
 

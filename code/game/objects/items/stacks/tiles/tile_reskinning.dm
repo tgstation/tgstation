@@ -5,8 +5,8 @@
 // A: A simple function to allow you to change what tiles you place with a stack of tiles.
 // Q: Why do it this way?
 // A: This allows players more freedom to do beautiful-looking builds.
-// Q: Great! Can I use this for all floors?
-// A: Yep! Just change the tile stack's `tile_reskin_lists` list variable and set which variants you want to be able to convert into.
+// Q: Great!. Can I use this for all floors?
+// A: Yep!. Just change the tile stack's `tile_reskin_lists` list variable and set which variants you want to be able to convert into.
 
 GLOBAL_LIST_EMPTY(tile_reskin_lists)
 
@@ -59,7 +59,7 @@ GLOBAL_LIST_EMPTY(tile_dir_lists)
 		return
 	choice = new choice(user.drop_location(), amount)
 	moveToNullspace()
-	if(!QDELETED(choice)) // Tile could have merged with stuff on the ground. The user will have to pick it up if so.
+	if(!QDELETED(choice)) // Tile could have merged with stuff on the ground.. The user will have to pick it up if so.
 		user.put_in_active_hand(choice)
 	qdel(src)
 

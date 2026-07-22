@@ -224,7 +224,7 @@
 
 /area/icemoon/surface/outdoors/less_spawns/New()
 	. = ..()
-	// this area SOMETIMES does map generation. Often it doesn't at all
+	// this area SOMETIMES does map generation.. Often it doesn't at all
 	// so it SHOULD NOT be used with the genturf turf type, as it is not always replaced
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED))
 		map_generator = /datum/map_generator/cave_generator/icemoon/surface/forested
@@ -296,7 +296,7 @@
 /area/icemoon/underground/unexplored/rivers/deep
 	map_generator = /datum/map_generator/cave_generator/icemoon/deep
 
-/area/icemoon/underground/unexplored/rivers/deep/shoreline //use this for when you don't want mobs to spawn in certain areas in the "deep" portions. Think adjacent to rivers or station structures.
+/area/icemoon/underground/unexplored/rivers/deep/shoreline // use this for when you don't want mobs to spawn in certain areas in the "deep" portions.. Think adjacent to rivers or station structures.
 	icon_state = "shore"
 	area_flags_mapping = /area/icemoon/::area_flags_mapping | CAVES_ALLOWED
 

@@ -1,4 +1,4 @@
-/// The light switch. Can have multiple per area.
+/// The light switch.. Can have multiple per area.
 /obj/machinery/light_switch
 	name = "light switch"
 	icon = 'icons/obj/machines/wallmounts.dmi'

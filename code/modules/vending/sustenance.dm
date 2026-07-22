@@ -42,7 +42,7 @@
 	machine_name = "Sustenance Vendor"
 	icon_state = "refill_snack"
 
-//Labor camp subtype that uses labor points obtained from mining and processing ore
+// Labor camp subtype that uses labor points got from mining and processing ore
 /obj/machinery/vending/sustenance/labor_camp
 	name = "\improper Labor Camp Sustenance Vendor"
 	desc = "A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement. \

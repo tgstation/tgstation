@@ -23,7 +23,7 @@
 		observed_item = null
 	UnregisterSignal(pawn, list(COMSIG_AI_BLACKBOARD_KEY_SET(key), COMSIG_AI_BLACKBOARD_KEY_CLEARED(key)))
 
-/// Fires when the blackboard key changes. Rebinds the move observer to the new item and re-evaluates.
+/// Fires when the blackboard key changes.. Rebinds the move observer to the new item and re-evaluates.
 /datum/bt_node/decorator/item_inside_pawn/proc/on_item_key_changed(atom/source, ...)
 	SIGNAL_HANDLER
 	var/obj/item/target = owning_controller?.blackboard[key]

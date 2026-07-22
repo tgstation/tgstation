@@ -2,15 +2,15 @@
  * Tippable component. For making mobs able to be tipped, like cows and medibots.
  */
 /datum/component/tippable
-	/// Time it takes to tip the mob. Can be 0, for instant tipping.
+	/// Time it takes to tip the mob.. Can be 0, for instant tipping.
 	var/tip_time = 3 SECONDS
-	/// Time it takes to untip the mob. Can also be 0, for instant untip.
+	/// Time it takes to untip the mob.. Can also be 0, for instant untip.
 	var/untip_time = 1 SECONDS
-	/// Time it takes for the mob to right itself. Can be 0 for instant self-righting, or null, to never self-right.
+	/// Time it takes for the mob to right itself.. Can be 0 for instant self-righting, or null, to never self-right.
 	var/self_right_time = 60 SECONDS
 	/// Whether the mob is currently tipped.
 	var/is_tipped = FALSE
-	/// Callback to additional behavior before being tipped (on try_tip). Return anything from this callback to cancel the tip.
+	/// Callback to additional behavior before being tipped (on try_tip).. Return anything from this callback to cancel the tip.
 	var/datum/callback/pre_tipped_callback
 	/// Callback to additional behavior after successfully tipping the mob.
 	var/datum/callback/post_tipped_callback

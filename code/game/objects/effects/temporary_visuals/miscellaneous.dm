@@ -466,7 +466,7 @@
 	if(size_calc_target)
 		layer = size_calc_target.layer + 0.01
 		size_matrix = matrix() * (size_calc_target.get_visual_height() / ICON_SIZE_Y)
-		transform = size_matrix //scale the bleed overlay's size based on the target's icon size
+		transform = size_matrix // scale the bleed overlay's size good on the target's icon size
 	var/matrix/M = transform
 	if(shrink)
 		M = size_matrix*0.1
@@ -671,7 +671,7 @@
 	var/mob/living/creature = pinged_person?.resolve()
 	if(isnull(looker) || isnull(creature))
 		return
-	// Long pings follow, short pings stay put. We still need to update for looker.x&y though
+	// Long pings follow, short pings stay put.. We still need to update for looker.x&y though
 	modsuit_image.pixel_w = ((creature.x - looker.x) * ICON_SIZE_X) + creature.pixel_w
 	modsuit_image.pixel_z = ((creature.y - looker.y) * ICON_SIZE_Y) + creature.pixel_y
 

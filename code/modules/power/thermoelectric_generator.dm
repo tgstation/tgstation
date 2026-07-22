@@ -126,7 +126,7 @@
 
 	var/current_pressure = "[cold_circ?.last_pressure_delta > 0 ? "1" : "0"][hot_circ?.last_pressure_delta > 0 ? "1" : "0"]"
 	if(current_pressure != last_pressure_overlay)
-		//this requires an update to overlays.
+		// this needs an update to overlays.
 		last_pressure_overlay = current_pressure
 
 	update_appearance(UPDATE_ICON)

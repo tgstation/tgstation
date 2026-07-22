@@ -21,7 +21,7 @@
 	var/chosen_fingerprint
 	/// max storage for fibers/fingerprints seperate for each
 	var/max_storage = 5
-	/// do we scan for new material? if false will tamper
+	/// do we scan for new material?. if false will tamper
 	var/scan_mode = TRUE
 	/// do we make forensics scanner messages and sounds
 	var/silent_mode = FALSE
@@ -107,7 +107,7 @@
 /obj/item/forensics_spoofer/proc/tamper(atom/target, mob/living/user, do_fibers = FALSE)
 	do_fake_scan(target, user)
 	if((!do_fibers && isnull(chosen_fingerprint)) || (do_fibers && isnull(chosen_fiber)))
-		balloon_alert(user, "no [do_fibers ? "fiber" : "fingerprint"] selected!") // we CAN automatically select it but if they dont have it selected then they likely didnt know of it in the first place so they learn it now
+		balloon_alert(user, "no [do_fibers ? "fiber" : "fingerprint"] selected!") // we CAN automatically select it. If they dont have it selected then they likely didnt know of it in the first place so they learn it now
 		return ITEM_INTERACT_FAILURE
 	if(!COOLDOWN_FINISHED(src, tamper_cooldown))
 		balloon_alert(user, "please wait!")

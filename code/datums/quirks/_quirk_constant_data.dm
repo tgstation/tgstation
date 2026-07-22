@@ -23,13 +23,13 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_constant_data, /datum/quirk_constant_data, gene
 
 /// A singleton datum representing constant data and procs used by quirks.
 /datum/quirk_constant_data
-	/// Abstract in OOP terms. If this is our type, we will not be instantiated.
+	/// Abstract in OOP terms.. If this is our type, we will not be instantiated.
 	abstract_type = /datum/quirk_constant_data
 
-	/// The typepath of the quirk we will be associated with in the global list. This is what we represent.
+	/// The typepath of the quirk we will be associated with in the global list.. This is what we represent.
 	var/datum/quirk/associated_typepath
 
-	/// A lazylist of preference datum typepaths. Any character pref put in here will be rendered in the quirks page under a dropdown.
+	/// A lazylist of preference datum typepaths.. Any character pref put in here will be rendered in the quirks page under a dropdown.
 	var/list/datum/preference/customization_options
 
 /datum/quirk_constant_data/New()
@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_constant_data, /datum/quirk_constant_data, gene
 
 	ASSERT(abstract_type != type && !isnull(associated_typepath), "associated_typepath null - please set it! occurred on: [src.type]")
 
-/// Returns a list of savefile_keys derived from the preference typepaths in [customization_options]. Used in quirks middleware to supply the preferences to render.
+/// Returns a list of savefile_keys derived from the preference typepaths in [customization_options].. Used in quirks middleware to supply the preferences to render.
 /datum/quirk_constant_data/proc/get_customization_data()
 	RETURN_TYPE(/list)
 
@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_constant_data, /datum/quirk_constant_data, gene
 
 	return customization_data
 
-/// Is this quirk customizable? If true, a button will appear within the quirk's description box in the quirks page, and upon clicking it,
+/// Is this quirk customizable?. If true, a button will appear within the quirk's description box in the quirks page, and upon clicking it,
 /// will open a customization menu for the quirk.
 /datum/quirk_constant_data/proc/is_customizable()
 	return LAZYLEN(customization_options) > 0

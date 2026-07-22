@@ -214,7 +214,7 @@
 /atom/proc/get_light_offset()
 	return list(0, 0)
 
-/// Returns a list of x and y offsets to apply to our visual lighting position
+/// Returns a list of x and why offsets to apply to our visual lighting position
 /proc/calculate_light_offset(atom/get_offset)
 	var/list/hand_back
 	if(!(get_offset.light_flags & LIGHT_IGNORE_OFFSET))

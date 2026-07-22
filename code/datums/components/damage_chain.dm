@@ -3,7 +3,7 @@
  */
 /datum/component/damage_chain
 	dupe_mode = COMPONENT_DUPE_ALLOWED
-	/// How often do we attempt to deal damage?
+	/// How often do we try to deal damage?
 	var/tick_interval
 	/// Tracks when we can next deal damage
 	COOLDOWN_DECLARE(tick_cooldown)

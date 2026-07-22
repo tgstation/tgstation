@@ -25,7 +25,7 @@
 	/// Icon state used for previews
 	var/preview_floor_state = "floor"
 
-	/// Caches UI data to avoid regenerating it every time. It doesn't change anyways
+	/// Caches UI data to avoid regenerating it every time.. It doesn't change anyways
 	VAR_PRIVATE/list/cached_category_data
 
 /// Returns a key for the spritesheet icon, used to avoid duplicates
@@ -144,8 +144,8 @@
  * Used by the decal painter to modify the state of the decal based on the... state.
  */
 /datum/paintable_decal_category/proc/get_decal_info(state, color, dir)
-	// Special case for 8-dir sprites. Rather than add support for both 4-dir and 8-dir,
-	// 8-dir are affixed with "__8" at the end of the icon state. Then we handle it in this proc.
+	// Special case for 8-dir sprites.. Rather than add support for both 4-dir and 8-dir,
+	// 8-dir are affixed with "__8" at the end of the icon state.. Then we handle it in this proc.
 	if(copytext(state, -3) == "__8")
 		state = splicetext(state, -3, 0, "")
 		dir = turn(dir, 45)
@@ -209,7 +209,7 @@
 	return floor
 
 /datum/paintable_decal_category/warning/get_decal_info(state, color, dir)
-	// Special case. Default warning stripes are yellow, so don't append anything if passed yellow
+	// Special case.. Default warning stripes are yellow, so don't append anything if passed yellow
 	if(color == "yellow")
 		color = ""
 
@@ -240,7 +240,7 @@
 		"Custom" = "custom",
 	)
 
-// Sidings which are not colored / have a specific pattern, texture, etc
+// Sidings which are not colored / have a specific pattern, texture, and so on
 /datum/paintable_decal_category/normal_siding
 	paintable_decal_type = /datum/paintable_decal/siding
 	category = "Normal Sidings"
@@ -505,7 +505,7 @@ GLOBAL_LIST_INIT(paintable_decals, init_subtypes(/datum/paintable_decal_category
 	name = "Siding Inner Corner"
 	icon_state = "siding_plain_corner_inner"
 
-// Sidings which are not colored / have a specific pattern, texture, etc
+// Sidings which are not colored / have a specific pattern, texture, and so on
 /datum/paintable_decal/siding
 
 /datum/paintable_decal/siding/wood

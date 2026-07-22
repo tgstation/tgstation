@@ -42,12 +42,12 @@
 
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
-	/// When we have less than this amount of flow, either from treatment or clotting, we demote to a lower cut or are healed of the wound
+	/// When we have less than this amount of flow, either from treatment. Clotting, we demote to a lower cut. Are healed of the wound
 	var/minimum_flow
 	/// How much our blood_flow will naturally decrease per second, not only do larger cuts bleed more blood faster, they clot slower (higher number = clot quicker, negative = opening up)
 	var/clot_rate
 
-	/// Once the blood flow drops below minimum_flow, we demote it to this type of wound. If there's none, we're all better
+	/// Once the blood flow drops below minimum_flow, we demote it to this type of wound.. If there's none, we're all better
 	var/demotes_to
 
 	/// A bad system I'm using to track the worst scar we earned (since we can demote, we want the biggest our wound has been, not what it was when it was cured (probably moderate))
@@ -125,7 +125,7 @@
 /datum/wound/slash/flesh/drag_bleed_amount()
 	// say we have 3 severe cuts with 3 blood flow each, pretty reasonable
 	// compare with being at 100 brute damage before, where you bled (brute/100 * 2), = 2 blood per tile
-	var/bleed_amt = min(blood_flow * 0.1, 1) // 3 * 3 * 0.1 = 0.9 blood total, less than before! the share here is .3 blood of course.
+	var/bleed_amt = min(blood_flow * 0.1, 1) // 3 * 3 * 0.1 = 0.9 blood total, less than before!. the share here is .3 blood of course.
 
 	if(limb.seep_gauze(bleed_amt * 0.33)) // gauze stops all bleeding from dragging on this limb, but wears the gauze out quicker
 		return 0
@@ -163,7 +163,7 @@
 		limb.seep_gauze(gauze_power * seconds_per_tick)
 		adjust_blood_flow(-gauze_power * seconds_per_tick)
 
-/* BEWARE, THE BELOW NONSENSE IS MADNESS. bones.dm looks more like what I have in mind and is sufficiently clean, don't pay attention to this messiness */
+/* BEWARE, THE BELOW NONSENSE IS MADNESS.. bones.dm looks more like what I have in mind and is enough clean, don't pay attention to this messiness */
 
 /datum/wound/slash/flesh/check_grab_treatments(obj/item/tool, mob/user)
 	if(istype(tool, /obj/item/gun/energy/laser))
@@ -201,7 +201,7 @@
 
 /// if a felinid is licking this cut to reduce bleeding
 /datum/wound/slash/flesh/proc/lick_wounds(mob/living/carbon/human/user)
-	// transmission is one way patient -> felinid since google said cat saliva is antiseptic or whatever, and also because felinids are already risking getting beaten for this even without people suspecting they're spreading a deathvirus
+	// transmission is one way patient -> felinid since google said cat saliva is antiseptic. Whatever. Also because felinids are already risking getting beaten f. This even without people suspecting they're spreading a deathvirus
 	for(var/datum/disease/iter_disease as anything in victim.diseases)
 		if(iter_disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
 			continue

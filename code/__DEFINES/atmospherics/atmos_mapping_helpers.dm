@@ -1,4 +1,4 @@
-///Used to define the temperature of a tile, arg is the temperature it should be at. Should always be put at the end of the atmos list.
+/// Used to define the temperature of a tile, arg is the temperature it should be at... Should always be put at the end of the atmos list.
 ///This is solely to be used after compile-time.
 #define TURF_TEMPERATURE(temperature) "TEMP=[temperature]"
 
@@ -9,7 +9,7 @@
 #define OPENTURF_LOW_PRESSURE GAS_O2 + "=14;" + GAS_N2 + "=30;TEMP=293.15"
 /// breathable air that causes disease
 #define OPENTURF_DIRTY_ATMOS GAS_MIASMA + "=15;" + GAS_O2 + "=88;TEMP=293.15"
-/// -193,15°C telecommunications. also used for xenobiology slime killrooms
+/// -193,15°C telecommunications... also used for xenobiology slime killrooms
 #define TCOMMS_ATMOS GAS_N2 + "=100;TEMP=80"
 /// space
 #define AIRLESS_ATMOS "TEMP=2.7"

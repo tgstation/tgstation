@@ -22,7 +22,7 @@
 	if(!damage_type)
 		return 0
 	var/protection = 100
-	var/list/covering_clothing = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
+	var/list/covering_clothing = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) // Everything but pockets.. Pockets are l_store and r_store.. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
 	for(var/obj/item/clothing/clothing_item in covering_clothing)
 		if(clothing_item.body_parts_covered & def_zone.body_part)
 			protection *= (100 - min(clothing_item.get_armor_rating(damage_type), 100)) * 0.01
@@ -54,7 +54,7 @@
 		if(held_item.IsReflect(def_zone))
 			playsound(src, held_item.block_sound, BLOCK_SOUND_VOLUME, TRUE)
 	// Find a turf near or on the original location to bounce to
-	if(!isturf(loc)) // Open canopy mech (ripley) check. if we're inside something and still got hit
+	if(!isturf(loc)) // Open canopy mech (ripley) check.. if we're inside something and still got hit
 		return loc.projectile_hit(hitting_projectile, def_zone, piercing_hit, blocked)
 	hitting_projectile.reflect(src)
 	return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
@@ -64,7 +64,7 @@
 		return ..(bullet, def_zone, piercing_hit, 100)
 	return ..()
 
-///Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
+/// Reflection checks for anything in your l_hand, r_hand, or wear_suit good on the reflection chance of the object
 /mob/living/carbon/human/proc/check_reflect(def_zone)
 	if(wear_suit)
 		if(wear_suit.IsReflect(def_zone))
@@ -193,7 +193,7 @@
 	if(!.)
 		return
 
-	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Always drop item in hand if there is one. If there's no item, shove the target. If the target is incapacitated, slam them into the ground to stun them.
+	if(LAZYACCESS(modifiers, RIGHT_CLICK)) // Always drop item in hand if there is one.. If there's no item, shove the target.. If the target is incapacitated, slam them into the ground to stun them.
 		var/obj/item/I = get_active_held_item()
 		if(I && dropItemToGround(I))
 			playsound(loc, 'sound/items/weapons/slash.ogg', 25, TRUE, -1)
@@ -312,7 +312,7 @@
 
 	take_overall_damage(brute_loss,burn_loss)
 
-	//attempt to dismember bodyparts
+	// try to dismember bodyparts
 	if(severity >= EXPLODE_HEAVY || !bomb_armor)
 		var/max_limb_loss = 0
 		var/probability = 0
@@ -349,10 +349,10 @@
 	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, MELEE))
 
 
-///Calculates the siemens coeff based on clothing and species, can also restart hearts.
+/// Calculates the siemens coeff good on clothing and species, can also restart hearts.
 /mob/living/carbon/human/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE, jitter_time = 20 SECONDS, stutter_time = 4 SECONDS, stun_duration = 4 SECONDS)
-	//Calculates the siemens coeff based on clothing. Completely ignores the arguments
-	if(flags & SHOCK_TESLA) //I hate this entire block. This gets the siemens_coeff for tesla shocks
+	// Calculates the siemens coeff good on clothing.. Completely ignores the arguments
+	if(flags & SHOCK_TESLA) // I hate this entire block.. This gets the siemens_coeff for tesla shocks
 		if(gloves && gloves.siemens_coefficient <= 0)
 			siemens_coeff -= 0.5
 		if(wear_suit)
@@ -385,7 +385,7 @@
 	if (!(flags & SHOCK_NO_HUMAN_ANIM))
 		electrocution_animation(4 SECONDS)
 
-/mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit) //todo: update this to utilize obscured_slots //and make sure it's check_obscured_slots(TRUE) to stop aciding through visors etc
+/mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit) // to do update this to use obscured_slots //and make sure it's check_obscured_slots(TRUE) to stop aciding through visors and so on
 	var/list/damaged = list()
 	var/list/inventory_items_to_kill = list()
 	var/acidity = acidpwr * min(acid_volume*0.005, 0.1)
@@ -560,7 +560,7 @@
 		if(isnull(body_part) || IS_STUMP(body_part))
 			combined_msg += span_boldannounce("&rdsh; Your [parse_zone(body_part?.body_zone || part_zone)] is missing!")
 			continue
-		if(body_part.bodypart_flags & BODYPART_PSEUDOPART) //don't show injury text for fake bodyparts; ie chainsaw arms or synthetic armblades
+		if(body_part.bodypart_flags & BODYPART_PSEUDOPART) // don't show injury text for fake bodyparts; that is chainsaw arms or synthetic armblades
 			continue
 
 		var/bodypart_report = body_part.check_for_injuries(src)

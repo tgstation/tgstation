@@ -1,6 +1,6 @@
-//These objects are used in the cardinal sin-themed ruins (i.e. Gluttony, Pride...)
+// These objects are used in the cardinal sin-themed ruins (i.e.. Gluttony, Pride...)
 
-/obj/effect/gluttony //Gluttony's wall: Used in the Gluttony ruin. Only lets the overweight through.
+/obj/effect/gluttony // Gluttony's wall: Used in the Gluttony ruin.. Only lets the overweight through.
 	name = "gluttony's wall"
 	desc = "Only those who truly indulge may pass."
 	anchored = TRUE
@@ -23,7 +23,7 @@
 
 //can't be bothered to do sloth right now, will make later
 
-/obj/item/knife/envy //Envy's knife: Found in the Envy ruin. Attackers take on the appearance of whoever they strike.
+/obj/item/knife/envy // Envy's knife: Found in the Envy ruin.. Attackers take on the appearance of whoever they strike.
 	name = "envy's knife"
 	desc = "Their success will be yours."
 	icon = 'icons/obj/weapons/stabby.dmi'

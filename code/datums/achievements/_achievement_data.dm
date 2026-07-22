@@ -59,7 +59,7 @@
 	if(!data[achievement_type])
 		award.load(src)
 
-///Unlocks an achievement of a specific type. achievement type is a typepath to the award, user is the mob getting the award, and value is an optional value to be used for defining a score to add to the leaderboard
+/// Unlocks an achievement of a specific type.. achievement type is a typepath to the award, user is the mob getting the award. Value is an optional value to be used f. Defining a score to add to the leaderboard
 /datum/achievement_data/proc/unlock(achievement_type, mob/user, value = 1, ...)
 	set waitfor = FALSE
 
@@ -102,7 +102,7 @@
 	var/datum/asset/spritesheet_batched/assets = get_asset_datum(/datum/asset/spritesheet_batched/achievements)
 	for(var/achievement_type in SSachievements.awards)
 		var/datum/award/award = SSachievements.awards[achievement_type]
-		if(!award.name) //No name? we a subtype.
+		if(!award.name) // No name?. we a subtype.
 			continue
 		if(isnull(data[achievement_type])) //We're still loading
 			continue

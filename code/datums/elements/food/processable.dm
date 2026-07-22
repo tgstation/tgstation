@@ -1,4 +1,4 @@
-// If an item has the processable item, it can be processed into another item with a specific tool. This adds generic behaviour for those actions to make it easier to set-up generically.
+// If an item has the processable item, it can be processed into another item with a specific tool.. This adds generic behaviour for those actions to make it easier to set-up generically.
 /datum/element/processable
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2

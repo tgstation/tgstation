@@ -39,7 +39,7 @@
 	if(affecting && affecting.can_dismember() && !(affecting.bodypart_flags & BODYPART_UNREMOVABLE) && affecting.get_damage() >= (affecting.max_damage - proj.dismemberment))
 		if(!affecting.dismember(proj.damtype) || !proj.catastropic_dismemberment)
 			return
-		apply_damage(proj.damage, proj.damtype, BODY_ZONE_CHEST, wound_bonus = proj.wound_bonus) //stops a projectile blowing off a limb effectively doing no damage. Mostly relevant for sniper rifles.
+		apply_damage(proj.damage, proj.damtype, BODY_ZONE_CHEST, wound_bonus = proj.wound_bonus) // stops a projectile blowing off a limb effectively doing no damage.. Mostly relevant for sniper rifles.
 
 /mob/living/carbon/try_catch_item(obj/item/item, skip_throw_mode_check = FALSE, try_offhand = FALSE)
 	. = ..()
@@ -75,7 +75,7 @@
 	var/message_verb_continuous = "attacks"
 	var/message_verb_simple = "attack"
 	var/message_hit_area = get_hit_area_message(hit_area)
-	// Sanity in case one is... longer than the other?
+	// Sanity in case one is.... longer than the other?
 	if (picked_index && length(weapon.attack_verb_continuous) >= picked_index)
 		message_verb_continuous = weapon.attack_verb_continuous[picked_index]
 	if (picked_index && length(weapon.attack_verb_simple) >= picked_index)
@@ -413,7 +413,7 @@
 		animate(pixel_w = SHAKE_ANIMATION_OFFSET * -2 * direction, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 		animate(pixel_w = SHAKE_ANIMATION_OFFSET * direction, time = 0.1 SECONDS, easing = QUAD_EASING | EASE_IN, flags = ANIMATION_RELATIVE)
 
-/// Check ourselves to see if we've got any shrapnel, return true if we do. This is a much simpler version of what humans do, we only indicate we're checking ourselves if there's actually shrapnel
+/// Check ourselves to see if we've got any shrapnel, return true if we do.. This is a much simpler version of what humans do, we only indicate we're checking ourselves if there's actually shrapnel
 /mob/living/carbon/proc/check_self_for_injuries()
 	if(stat >= UNCONSCIOUS)
 		return
@@ -436,7 +436,7 @@
 	return embeds
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
-	if(SEND_SIGNAL(src, COMSIG_MOB_FLASH_OVERRIDE_CHECK, src) & FLASH_OVERRIDDEN) //Check for behavior overrides before doing the act itself. If we have a behavior override, we handle everything there and skip the rest
+	if(SEND_SIGNAL(src, COMSIG_MOB_FLASH_OVERRIDE_CHECK, src) & FLASH_OVERRIDDEN) // Check for behavior overrides before doing the act itself.. If we have a behavior override, we handle everything there and skip the rest
 		return FLASH_COMPLETED
 
 	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)

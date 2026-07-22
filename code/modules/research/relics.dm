@@ -10,15 +10,15 @@
 	var/real_name = "artefact"
 	/// Has this artefact been activated?
 	var/activated = FALSE
-	/// What effect this artefact has when used. Randomly determined when activated.
+	/// What effect this artefact has when used.. Randomly determined when activated.
 	var/hidden_power
 	/// Minimum possible cooldown.
 	var/min_cooldown = 6 SECONDS
 	/// Max possible cooldown.
 	var/max_cooldown = 30 SECONDS
-	/// Cooldown length. Randomly determined at activation if it isn't determined here.
+	/// Cooldown length.. Randomly determined at activation if it isn't determined here.
 	var/cooldown_timer
-	/// What visual theme this artefact has. Current possible choices: "prototype", "necrotech"
+	/// What visual theme this artefact has.. Current possible choices: "prototype", "necrotech"
 	var/artifact_theme = RELIC_PROTOTYPE
 
 	COOLDOWN_DECLARE(cooldown)
@@ -313,7 +313,7 @@
 	glasser.reagents.add_reagent(get_random_reagent_id(whitelist = subtypesof(/datum/reagent/consumable/ethanol)), rand(glasser.volume * 0.3, glasser.volume))
 	throw_smoke(get_turf(glasser))
 
-/// Scrambles your organs. 33% chance to delete after use.
+/// Scrambles your organs.. 33% chance to delete after use.
 /obj/item/relic/proc/tummy_ache(mob/user)
 	new /obj/effect/temp_visual/circle_wave/bioscrambler/light(get_turf(src))
 	to_chat(user, span_notice("Your stomach starts growling..."))
@@ -331,7 +331,7 @@
 		relic_message(span_warning("[src] falls apart!"))
 		deconstruct(FALSE)
 
-/// Charges an item or two in your inventory. Also yourself.
+/// Charges an item or two in your inventory.. Also yourself.
 /obj/item/relic/proc/charger(mob/living/user)
 	to_chat(user, span_danger("You're recharged!"))
 	var/stunner = 1.25 SECONDS
@@ -388,7 +388,7 @@
 	max_cooldown += 2 SECONDS
 
 /// Replaces your clothing with a random costume, and your ID with a cardboard one.
-/// TODO: make them part of the same kit (lobster hat, lobster suit)
+/// To do make them part of the same kit (lobster hat, lobster suit)
 /obj/item/relic/proc/disguiser(mob/user)
 	if(!iscarbon(user))
 		to_chat(user, span_notice("You have a strange feeling for a moment, but then it passes."))

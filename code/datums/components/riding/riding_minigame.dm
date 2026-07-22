@@ -15,7 +15,7 @@
 	var/maximum_attempts = 25
 	///maximum number of failures before we fail
 	var/current_attempts = 0
-	///required number of successes
+	/// needed number of successes
 	var/required_successes = 11
 	///what failures are we on
 	var/current_failures = 0

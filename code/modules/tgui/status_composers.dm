@@ -61,7 +61,7 @@
 	return ISADVANCEDTOOLUSER(user) ? UI_INTERACTIVE : UI_UPDATE
 
 /// Returns a UI status such that silicons will be able to interact with whatever
-/// they would have access to if this was a machine. For example, AIs can
+/// they would have access to if this was a machine.. For example, AIs can
 /// interact if there's cameras with wireless control is enabled.
 /proc/ui_status_silicon_has_access(mob/user, atom/source)
 	if (!issilicon(user))
@@ -70,7 +70,7 @@
 	return silicon_user.get_ui_access(source)
 
 /// Returns a UI status representing this silicon's capability to access
-/// the given source. Called by `ui_status_silicon_has_access`.
+/// the given source.. Called by `ui_status_silicon_has_access`.
 /mob/living/silicon/proc/get_ui_access(atom/source)
 	return UI_CLOSE
 

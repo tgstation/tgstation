@@ -10,7 +10,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
 	w_class = WEIGHT_CLASS_SMALL
-	///Currently stored blulespace crystal, if any. Required to use the pointer through walls
+	/// Currently stored blulespace crystal, if any.. Needed to use the pointer through walls
 	var/obj/item/stack/ore/bluespace_crystal/crystal_lens
 	///Currently stored micro-laser diode
 	var/obj/item/stock_parts/micro_laser/diode
@@ -18,13 +18,13 @@
 	var/effectchance = 30
 	///Currently available battery charge of the laser pointer
 	var/energy = 10
-	///Maximum possible battery charge of the laser. Draining the battery puts the pointer in a recharge state, preventing use, which ends upon full recharge
+	/// Maximum possible battery charge of the laser.. Draining the battery puts the pointer in a recharge state, preventing use, which ends upon full recharge
 	var/max_energy = 10
 	///Maximum use range
 	var/max_range = 7
 	///Icon for the laser, affects both the laser dot and the laser pointer itself, as it shines a laser on the item itself
 	var/pointer_icon_state = null
-	///Whether the pointer is currently in a full recharge state. Triggered upon fully draining the battery
+	/// Whether the pointer is currently in a full recharge state.. Triggered upon fully draining the battery
 	var/recharge_locked = FALSE
 	///Whether the pointer is currently recharging or not
 	var/recharging = FALSE
@@ -212,7 +212,7 @@
 			if(isnull(crystal_lens))
 				to_chat(user, span_warning("You can't point with [src] through walls!"))
 				return
-			if(!((user.sight & SEE_OBJS) || (user.sight & SEE_MOBS))) //only let it work if we have xray or thermals. mesons don't count because they are easier to get.
+			if(!((user.sight & SEE_OBJS) || (user.sight & SEE_MOBS))) // only let it work if we have xray or thermals.. mesons don't count because they are easier to get.
 				to_chat(user, span_notice("You can't quite make out your target and you fail to shine at it."))
 				return
 

@@ -1,4 +1,4 @@
-// Note: BYOND is object oriented. There is no reason for this to be copy/pasted blood code.
+// Note: BYOND is object oriented.. There is no reason for this to be copy/pasted blood code.
 
 /obj/effect/decal/cleanable/blood/xeno
 	name = "pool of acid"

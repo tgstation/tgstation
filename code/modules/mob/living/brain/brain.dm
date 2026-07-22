@@ -1,7 +1,7 @@
 /mob/living/brain
 	var/obj/item/mmi/container = null
 	var/emp_damage = 0//Handles a type of MMI damage
-	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
+	var/datum/dna/stored/stored_dna // dna var for brain.. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
 	stat = DEAD //we start dead by default
 	see_invisible = SEE_INVISIBLE_LIVING
 	speech_span = SPAN_ROBOT
@@ -31,7 +31,7 @@
 		stored_dna.species = new rando_race()
 
 /mob/living/brain/Destroy()
-	if(key) //If there is a mob connected to this thing. Have to check key twice to avoid false death reporting.
+	if(key) // If there is a mob connected to this thing.. Have to check key twice to avoid false death reporting.
 		if(stat != DEAD)
 			death(TRUE)
 		if(mind) //You aren't allowed to return to brains that don't exist
@@ -41,7 +41,7 @@
 	QDEL_NULL(stored_dna)
 	return ..()
 
-/// Override parent here because... the blind message doesn't really work given what's happen when a brain suicides. Can't hear a brain going grey. So, we omit the "blind" message.
+/// Override parent here because.... the blind message doesn't really work given what's happen when a brain suicides.. Can't hear a brain going grey.. we omit the "blind" message.
 /mob/living/brain/send_applicable_messages()
 	visible_message(span_danger(get_visible_suicide_message()), span_userdanger(get_visible_suicide_message()))
 

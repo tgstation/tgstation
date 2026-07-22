@@ -5,7 +5,7 @@
 	var/list/mutable_appearance/lighting_effects = null
 	///Whether this area has a currently active base lighting, bool
 	var/area_has_base_lighting = FALSE
-	///alpha 0-255 of lighting_effect and thus baselighting intensity
+	/// alpha 0-255 of lighting_effect and so baselighting intensity
 	var/base_lighting_alpha = 0
 	///The colour of the light acting on this area
 	var/base_lighting_color = COLOR_WHITE
@@ -76,9 +76,9 @@
 		lighting_effects += light
 
 	if(base_lighting_color == COLOR_STARLIGHT)
-		// Ok this is gonna be dumb
+		// Ok this is going to be dumb
 		// We rely on render_source working, and it DOES NOT APPEAR TO in area rendering
-		// So we're gonna have to update the area's overlay manually. everything else can be automatic tho
+		// So we're going to have to update the area's overlay manually.. everything else can be automatic though
 		// Fortunately the first overlay is only ever used by the area, soooo
 		var/mutable_appearance/light = mutable_appearance('icons/effects/alphacolors.dmi', "white")
 		light.layer = LIGHTING_PRIMARY_LAYER

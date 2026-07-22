@@ -10,7 +10,7 @@
 	} \
 }
 
-/// See #66313 and #60901. outfit_sanity used to runtime whenever you had two mergable sheets in either hand. Previously, this only had a 3% chance of occuring. Now 100%.
+/// See #66313 and #60901.. outfit_sanity used to runtime whenever you had two mergable sheets in either hand.. Previously, this only had a 3% chance of occuring.. Now 100%.
 /datum/outfit/stacks_in_hands
 	name = "Mr. Runtime"
 

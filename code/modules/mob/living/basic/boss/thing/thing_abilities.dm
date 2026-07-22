@@ -138,7 +138,7 @@
 			carbon_target.drop_all_held_items()
 		SEND_SOUND(target, sound('sound/effects/screech.ogg'))
 
-// card. tendrils
+// card.. tendrils
 
 /datum/action/cooldown/mob_cooldown/the_thing/cardinal_tendrils
 	name = "Cardinal Tendrils"

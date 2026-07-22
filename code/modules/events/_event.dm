@@ -1,6 +1,6 @@
 #define RANDOM_EVENT_ADMIN_INTERVENTION_TIME (20 SECONDS)
 
-//this singleton datum is used by the events controller to dictate how it selects events
+// this singleton datum the uses events controller to dictate how it selects events
 /datum/round_event_control
 	var/name //The human-readable name of the event
 	var/category //The category of the event
@@ -9,11 +9,11 @@
 
 	var/weight = 10 //The weight this event has in the random-selection process.
 									//Higher weights are more likely to be picked.
-									//10 is the default weight. 20 is twice more likely; 5 is half as likely as this default.
+									// 10 is the default weight.. 20 is twice more likely; 5 is half as likely as this default.
 									//0 here does NOT disable the event, it just makes it extremely unlikely
 
 	var/earliest_start = 20 MINUTES //The earliest world.time that an event can start (round-duration in deciseconds) default: 20 mins
-	var/min_players = 0 //The minimum amount of alive, non-AFK human players on server required to start the event.
+	var/min_players = 0 // The minimum amount of alive, non-AFK human players on server needed to start the event.
 
 	var/occurrences = 0 //How many times this event has occurred
 	var/max_occurrences = 20 //The maximum number of times this event can occur (naturally), it can still be forced.
@@ -62,7 +62,7 @@
 			return FALSE
 	return TRUE
 
-// Checks if the event can be spawned. Used by event controller and "false alarm" event.
+// Checks if the event can be spawned.. Used by event controller and "false alarm" event.
 // Admin-created events override this.
 /datum/round_event_control/proc/can_spawn_event(players_amt, allow_magic = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -92,7 +92,7 @@
 
 	triggering = TRUE
 
-	// We sleep HERE, in pre-event setup (because there's no sense doing it in run_event() since the event is already running!) for the given amount of time to make an admin has enough time to cancel an event un-fitting of the present round or at least reroll it.
+	// We sleep HERE, in pre-event setup (because there's no sense doing it in run_event() since the event is already running!) f. The given amount of time to make an admin has enough time to cancel an event un-fitting of the present round. At least reroll it.
 	message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name]. (<a href='byond://?src=[REF(src)];cancel=1'>CANCEL</a>) (<a href='byond://?src=[REF(src)];different_event=1'>SOMETHING ELSE</a>)")
 	sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
 	var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
@@ -182,16 +182,16 @@ Runs the event
 	/// When in the lifetime to call start().
 	/// This is in seconds - so 1 = ~2 seconds in.
 	var/start_when = 0
-	/// When in the lifetime to call announce(). If you don't want it to announce use announce_chance, below.
+	/// When in the lifetime to call announce().. If you don't want it to announce use announce_chance, below.
 	/// This is in seconds - so 1 = ~2 seconds in.
 	var/announce_when = 0
-	/// Probability of announcing, used in prob(), 0 to 100, default 100. Called in process, and for a second time in the ion storm event.
+	/// Probability of announcing, used in prob(), 0 to 100, default 100.. Called in process, and for a second time in the ion storm event.
 	var/announce_chance = 100
 	/// When in the lifetime the event should end.
 	/// This is in seconds - so 1 = ~2 seconds in.
 	var/end_when = 0
 
-	/// How long the event has existed. You don't need to change this.
+	/// How long the event has existed.. You don't need to change this.
 	var/activeFor = 0
 	/// Amount of of alive, non-AFK human players on server at the time of event start
 	var/current_players = 0

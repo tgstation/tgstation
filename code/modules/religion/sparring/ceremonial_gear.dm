@@ -1,4 +1,4 @@
-///ritual weapons. they're really bad, but they become normal weapons when sparring.
+/// ritual weapons.. they're really bad, but they become normal weapons when sparring.
 /obj/item/ceremonial_blade
 	name = "ceremonial blade"
 	desc = "A blade created to spar with. It seems weak, but if you spar with it...?"

@@ -7,22 +7,22 @@
 	/// The component this port is attached to
 	var/obj/item/circuit_component/connected_component
 
-	/// Name of the port. Used when displaying the port.
+	/// Name of the port.. Used when displaying the port.
 	var/name
 
-	/// The port type. Ports can only connect to each other if the type matches
+	/// The port type.. Ports can only connect to each other if the type matches
 	var/datatype
 
-	/// The value that's currently in the port. It's of the above type.
+	/// The value that's currently in the port.. It's of the above type.
 	var/value
 
-	/// The default port type. Stores the original datatype of the port set on Initialize.
+	/// The default port type.. Stores the original datatype of the port set on Initialize.
 	var/datum/circuit_datatype/datatype_handler
 
-	/// The port color. If unset, appears as blue.
+	/// The port color.. If unset, appears as blue.
 	var/color
 
-	/// The weight of the port. Determines the
+	/// The weight of the port.. Determines the
 	var/order = 1
 
 /datum/port/New(obj/item/circuit_component/to_connect, name, datatype, order = 1)
@@ -92,7 +92,7 @@
 	if(!handler || !handler.is_compatible(src))
 		type_to_set = PORT_TYPE_ANY
 		handler = GLOB.circuit_datatypes[type_to_set]
-		// We can't leave this port without a type or else it'll just keep spewing out unnecessary and unneeded runtimes as well as leaving the circuit in a broken state.
+		// We can't leave this port without a type. Else it'll just keep spewing out unnecessary. Unneeded runtimes as well as leaving the circuit in a broken state.
 		stack_trace("[src] port attempted to be set to an incompatible datatype! (target datatype to set: [type_to_set])")
 
 	datatype = type_to_set
@@ -224,7 +224,7 @@
 	SIGNAL_HANDLER
 	SScircuit_component.add_callback(src, CALLBACK(src, PROC_REF(set_input), value))
 
-/// Signal handler proc to null the input if an atom is deleted. An update is not sent because this was not set by anything.
+/// Signal handler proc to null the input if an atom is deleted.. An update is not sent because this was not set by anything.
 /datum/port/proc/null_value(datum/source)
 	SIGNAL_HANDLER
 	if(value == source)

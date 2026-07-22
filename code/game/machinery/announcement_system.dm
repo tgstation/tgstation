@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 	///The headset that we use for broadcasting
 	var/obj/item/radio/headset/radio
-	///AIs headset support all stations channels, but it may require an override for away site or syndie AASs.
+	/// AIs headset support all stations channels, but it may need an override for away site or syndie AASs.
 	var/radio_type = /obj/item/radio/headset/silicon/ai
 
 	var/greenlight = "Light_Green"
@@ -177,7 +177,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 			return TRUE
 	return FALSE
 
-/// Can AAS receive request for broadcast from you? Null source means yes.
+/// Can AAS receive request for broadcast from you?. Null source means yes.
 /obj/machinery/announcement_system/proc/can_be_reached_from(atom/source)
 	if(!source || !istype(source))
 		return TRUE
@@ -185,10 +185,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	if (!source_turf)
 		return TRUE
 	// Keep updated with broadcasting.dm (/datum/signal/subspace/vocal/New)
-	// FFF (For Future Feature): think about adding radio relay support. Maybe implementing /datum/signal/subspace/aas_event or something similar.
+	// FFF (For Future Feature): think about adding radio relay support.. Maybe adding /datum/signal/subspace/aas_event or something similar.
 	return z in SSmapping.get_connected_levels(source_turf)
 
-/// Compiles the announcement message with the provided variables. Announcement line is optional.
+/// Compiles the announcement message with the provided variables.. Announcement line is optional.
 /obj/machinery/announcement_system/proc/compile_config_message(aas_config_entry_type, list/variables_map, announcement_line, fail_if_disabled=FALSE)
 	var/datum/aas_config_entry/config = locate(aas_config_entry_type) in config_entries
 	if (!config || (fail_if_disabled && !config.enabled))
@@ -209,13 +209,13 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	for(var/channel in channels)
 		radio.talk_into(src, message, channel, command_span ? list(speech_span, SPAN_COMMAND) : null)
 
-/// Announces configs entry message with the provided variables. Channels, announcement_line and command_span are optional.
+/// Announces configs entry message with the provided variables.. Channels, announcement_line and command_span are optional.
 /obj/machinery/announcement_system/proc/announce(aas_config_entry_type, list/variables_map, list/channels, announcement_line, command_span)
 	var/msg = compile_config_message(aas_config_entry_type, variables_map, announcement_line, TRUE)
 	if (msg)
 		broadcast(msg, channels, command_span)
 
-/// Returns a random announcement system that is operational, has the specified config entry, signal can reach source and radio supports any channel in list. All args are optional.
+/// Returns a random announcement system that is operational, has the specified config entry, signal can reach source and radio supports any channel in list.. All args are optional.
 /proc/get_announcement_system(aas_config_entry_type, source, list/channels)
 	if (!GLOB.announcement_systems.len)
 		return null
@@ -229,7 +229,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 			intact_aass += announce
 	return intact_aass.len ? pick(intact_aass) : null
 
-/// Announces the provided message with the provided variables and config entry type. Only aas_config_entry_type and variables_map are mandatory. Other args are optional.
+/// Announces the provided message with the provided variables and config entry type.. Only aas_config_entry_type and variables_map are mandatory.. Other args are optional.
 /proc/aas_config_announce(aas_config_entry_type, list/variables_map, source, list/channels, announcement_line, command_span)
 	var/obj/machinery/announcement_system/announcer = get_announcement_system(aas_config_entry_type, source, channels)
 	if (!announcer)
@@ -240,7 +240,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	var/name = "AAS configurable entry"
 	// Should we broadcast this announcement?
 	var/enabled = TRUE
-	// The announcement message. Key will be displayed in the UI.
+	// The announcement message.. Key will be displayed in the UI.
 	var/list/announcement_lines_map = list("Message" = "This is a default announcement line.")
 	// Goes before tooltips for vars, mainly used if announcement has no replacable vars
 	var/general_tooltip
@@ -249,7 +249,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	// Can be changed or disabled by players
 	var/modifiable = TRUE
 
-/// Compiles the announcement message with the provided variables. Announcement line is optional, may be both index or line key.
+/// Compiles the announcement message with the provided variables.. Announcement line is optional, may be both index or line key.
 /datum/aas_config_entry/proc/compile_announce(list/variables_map, announcement_line)
 	var/announcement_message = LAZYACCESS(announcement_lines_map, announcement_line)
 	// If index was provided LAZYACCESS will return us a key, not value

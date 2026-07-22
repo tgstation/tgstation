@@ -35,7 +35,7 @@
 	family_heirlooms = list(/obj/item/clothing/head/utility/hardhat/white, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
 
 	mail_goodies = list(
-		/obj/item/food/cracker = 25, //you know. for poly
+		/obj/item/food/cracker = 25, // you know.. for poly
 		/obj/item/stack/sheet/mineral/diamond = 15,
 		/obj/item/stack/sheet/mineral/uranium/five = 15,
 		/obj/item/stack/sheet/mineral/plasma/five = 15,

@@ -125,7 +125,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(C.current_ticket)
 		var/datum/admin_help/T = C.current_ticket
 		T.AddInteraction("Client disconnected.")
-		//Gotta async this cause clients only logout on destroy, and sleeping in destroy is disgusting
+		// Got to async this cause clients only logout on destroy, and sleeping in destroy is disgusting
 		INVOKE_ASYNC(SSblackbox, TYPE_PROC_REF(/datum/controller/subsystem/blackbox, LogAhelp), T.id, "Disconnected", "Client disconnected", C.ckey)
 		T.initiator = null
 
@@ -185,7 +185,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/initiator_key_name
 	/// If any admins were online when the ticket was initialized
 	var/heard_by_no_admins = FALSE
-	/// The collection of interactions with this ticket. Use AddInteraction() or, preferably, admin_ticket_log()
+	/// The collection of interactions with this ticket.. Use AddInteraction() or, preferably, admin_ticket_log()
 	var/list/ticket_interactions
 	/// Statclick holder for the ticket
 	var/obj/effect/statclick/ahelp/statclick
@@ -960,7 +960,7 @@ GAME_VERB(/client, view_latest_ticket, "View Latest Ticket", "Admin")
 
 /proc/keywords_lookup(msg,external)
 
-	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
+	// This is a list of words which are ignored by the parser when comparing message contents for names.. MUST BE IN LOWER CASE!
 	var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
 
 	//explode the input msg into a list
@@ -1028,7 +1028,7 @@ GAME_VERB(/client, view_latest_ticket, "View Latest Ticket", "Admin")
 	return msg
 
 /proc/get_mob_by_name(msg)
-	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
+	// This is a list of words which are ignored by the parser when comparing message contents for names.. MUST BE IN LOWER CASE!
 	var/list/ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
 
 	//explode the input msg into a list

@@ -18,9 +18,9 @@
 	can_run_on_flags = PROGRAM_LAPTOP | PROGRAM_PDA
 	size = 5
 	tgui_id = "NtosRadar"
-	///List of trackable entities. Updated by the scan() proc.
+	/// List of trackable entities.. Updated by the scan() proc.
 	var/list/list/objects
-	///Ref of the last trackable object selected by the user in the tgui window. Updated in the ui_act() proc.
+	/// Ref of the last trackable object selected by the user in the tgui window.. Updated in the ui_act() proc.
 	var/selected
 	///Used to store when the next scan is available.
 	COOLDOWN_DECLARE(next_scan)

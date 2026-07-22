@@ -63,13 +63,13 @@
 /datum/escape_menu/proc/leave_ghost()
 	PRIVATE_PROC(TRUE)
 
-	// Not guaranteed to be living. Everything defines verb/ghost separately. Fuck you.
+	// Not guaranteed to be living.. Everything defines verb/ghost separately.. Fuck you.
 	var/mob/living/living_user = client?.mob
 	living_user?.ghost()
 
 /datum/escape_menu/proc/leave_suicide()
 	PRIVATE_PROC(TRUE)
 
-	// Not guaranteed to be human. Everything defines verb/suicide separately. Fuck you, still.
+	// Not guaranteed to be human.. Everything defines verb/suicide separately.. Fuck you, still.
 	var/mob/living/carbon/human/human_user = client?.mob
 	human_user?.suicide()

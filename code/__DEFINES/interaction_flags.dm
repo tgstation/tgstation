@@ -1,4 +1,4 @@
-/// whether can_interact() checks for anchored. only works on movables.
+/// whether can_interact() checks for anchored... only works on movables.
 #define INTERACT_ATOM_REQUIRES_ANCHORED (1<<0)
 /// calls try_interact() on attack_hand() and returns that.
 #define INTERACT_ATOM_ATTACK_HAND (1<<1)
@@ -29,7 +29,7 @@
 /// calls try_interact() on attack_paw() and returns that.
 #define INTERACT_ATOM_ATTACK_PAW (1<<13)
 
-/// attempt pickup on attack_hand for items
+/// try pickup on attack_hand for items
 #define INTERACT_ITEM_ATTACK_HAND_PICKUP (1<<0)
 
 /// can_interact() while open

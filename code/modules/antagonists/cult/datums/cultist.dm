@@ -120,7 +120,7 @@
 
 /datum/antagonist/cult/create_team(datum/team/cult/new_team)
 	if(!new_team)
-		//todo remove this and allow admin buttons to create more than one cult
+		// to do remove this and allow admin buttons to create more than one cult
 		for(var/datum/antagonist/cult/H in GLOB.antagonists)
 			if(!H.owner)
 				continue
@@ -144,7 +144,7 @@
 		. += cult_give_item(/obj/item/stack/sheet/runed_metal/ten, H)
 	to_chat(owner, "These will help you start the cult on this station. Use them well, and remember - you are not the only one.</span>")
 
-///Attempts to make a new item and put it in a potential inventory slot in the provided mob.
+/// Tries to make a new item and put it in a potential inventory slot in the provided mob.
 /datum/antagonist/cult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
 	var/obj/item = new item_path(mob)
 	ADD_TRAIT(item, TRAIT_CONTRABAND, INNATE_TRAIT)

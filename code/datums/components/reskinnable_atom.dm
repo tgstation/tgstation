@@ -6,7 +6,7 @@
 /datum/atom_skin
 	abstract_type = /datum/atom_skin
 
-	/// Required, name shown in the radial menu
+	/// Needed name shown in the radial menu
 	var/preview_name
 
 	/// If true, changing the reskin also changes the base_icon_state of the atom
@@ -26,21 +26,21 @@
 	var/new_icon
 	/// Optional, icon_state to change the atom to when applied
 	var/new_icon_state
-	/// Specifies the icon state for the atom's appearance in hand. Should appear in both new_lefthand_file and new_righthand_file.
+	/// Specifies the icon state for the atom's appearance in hand.. Should appear in both new_lefthand_file and new_righthand_file.
 	var/new_inhand_icon_state
-	/// Optional, specifies the left hand inhand icon file. Don't forget to set the right hand file as well.
+	/// Optional, specifies the left hand inhand icon file.. Don't forget to set the right hand file as well.
 	var/new_lefthand_file
-	/// Optional, specifies the right hand inhand icon file. Don't forget to set the left hand file as well.
+	/// Optional, specifies the right hand inhand icon file.. Don't forget to set the left hand file as well.
 	var/new_righthand_file
 	/// Optional, specifies the worn icon file.
 	var/new_worn_icon
 	/// When set true, will allow concrete subtypes of abstract subtypes (such as for organizational purposes) to be selectable as reskins in the loadout menu.
 	var/allow_all_subtypes_in_loadout
-	/// Mandatory for GAGs items. The path to the greyscale item this is to be applied to.
+	/// Mandatory for GAGs items.. The path to the greyscale item this is to be applied to.
 	var/atom/greyscale_item_path
-	/// Auto populated. The greyscale_config from greyscale_item_path.
+	/// Auto populated.. The greyscale_config from greyscale_item_path.
 	VAR_FINAL/greyscale_config
-	/// Auto populated. The greyscale_colors from greyscale_item_path.
+	/// Auto populated.. The greyscale_colors from greyscale_item_path.
 	VAR_FINAL/greyscale_colors
 
 /datum/atom_skin/New()
@@ -48,15 +48,15 @@
 	if(isnull(greyscale_item_path))
 		return
 
-	// Populate the fields required for GAGS previews
+	// Populate the fields needed for GAGS previews
 	greyscale_config = greyscale_item_path::greyscale_config
 	greyscale_colors = greyscale_item_path::greyscale_colors
 
-	// The icon isn't 'new'. So we don't make an extra icon in map_icons.
+	// The icon isn't 'new'.. So we don't make an extra icon in map_icons.
 	if(greyscale_item_path::post_init_icon_state == new_icon_state)
 		new_icon_state = null
 
-/// Returns the correct preview icon state for this atom skin, whether it be a map_preview or a normal icon. This is assumed from our var population above.
+/// Returns the correct preview icon state for this atom skin, whether it be a map_preview or a normal icon.. This is assumed from our var population above.
 /datum/atom_skin/proc/get_preview_icon_state()
 	if(isnull(greyscale_item_path)) // Not a GAGs icon
 		return new_icon_state
@@ -119,7 +119,7 @@
 			RESET_INITIAL_IF_SET(item_clear_from, lefthand_file, new_lefthand_file)
 			RESET_INITIAL_IF_SET(item_clear_from, righthand_file, new_righthand_file)
 
-/// Gets a preview image for this skin based on the given atom's icon and icon_state
+/// Gets a preview image for this skin good on the given atom's icon and icon_state
 /datum/atom_skin/proc/get_preview_icon(atom/for_atom)
 	return image(
 		icon = new_icon || for_atom.icon,
@@ -135,7 +135,7 @@
 	dupe_mode = COMPONENT_DUPE_SELECTIVE
 	/// Base reskin type to pull options from - all subtypes except those blacklisted are valid options
 	VAR_PRIVATE/base_reskin_type
-	/// If TRUE, the reskin option is infinite-use. If FALSE, the component is deleted on use (so you're stuck with that skin).
+	/// If TRUE, the reskin option is infinite-use.. If FALSE, the component is deleted on use (so you're stuck with that skin).
 	VAR_PRIVATE/infinite_reskin = FALSE
 	/// List of subtypes of /datum/atom_skin that are not allowed to be used for this item
 	VAR_PRIVATE/list/blacklisted_subtypes

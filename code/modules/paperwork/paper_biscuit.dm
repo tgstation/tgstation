@@ -121,16 +121,16 @@
 	name = "spare emergency ID safe code biscuit card"
 	contained_slip = /obj/item/paper/paperslip/corporate/fluff/emergency_spare_id_safe_code
 
-//Biscuits which start open. Used for crafting, printing, and such
+// Biscuits which start open.. Used for crafting, printing, and such
 /obj/item/folder/biscuit/unsealed
 	name = "biscuit card"
 	desc = "A biscuit card. On the back, <b>DO NOT DIGEST</b> is printed in large lettering."
 	icon_state = "paperbiscuit_cracked"
 	contents_hidden = FALSE
 	cracked = TRUE
-	///Was the biscuit already sealed by players? Prevents re-sealing after use
+	/// Was the biscuit already sealed by players?. Prevents re-sealing after use
 	var/has_been_sealed = FALSE
-	///What is the sprite for when it's sealed? It starts unsealed, so needs a sprite for when it's sealed.
+	/// What is the sprite for when it's sealed?. It starts unsealed, so needs a sprite for when it's sealed.
 	var/sealed_icon = "paperbiscuit"
 
 /obj/item/folder/biscuit/unsealed/examine()

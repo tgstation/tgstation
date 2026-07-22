@@ -21,7 +21,7 @@
 	var/heal_stamina
 	/// Interaction will use this key, and be blocked while this key is in use
 	var/interaction_key
-	/// Any extra conditions which need to be true to permit healing. Returning TRUE permits the healing, FALSE or null cancels it.
+	/// Any extra conditions which need to be true to permit healing.. Returning TRUE permits the healing, FALSE or null cancels it.
 	var/datum/callback/extra_checks
 	/// Time it takes to perform the healing action
 	var/heal_time
@@ -29,7 +29,7 @@
 	var/list/valid_targets_typecache
 	/// Bitfield for biotypes of mobs we can heal
 	var/valid_biotypes
-	/// Which kinds of carbon limbs can we heal, has no effect on non-carbon mobs. Set to null if you don't care about excluding prosthetics.
+	/// Which kinds of carbon limbs can we heal, has no effect on non-carbon mobs.. Set to null if you don't care about excluding prosthetics.
 	var/required_bodytype
 	/// How targeting yourself works, expects one of HEALING_TOUCH_ANYONE, HEALING_TOUCH_NOT_SELF, or HEALING_TOUCH_SELF_ONLY
 	var/self_targeting
@@ -41,7 +41,7 @@
 	var/show_health
 	/// Color for the healing effect
 	var/heal_color
-	/// Optional click modifier required
+	/// Optional click modifier needed
 	var/required_modifier
 	/// Callback to run after healing a mob
 	var/datum/callback/after_healed

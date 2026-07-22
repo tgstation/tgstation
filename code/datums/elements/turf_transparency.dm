@@ -6,7 +6,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 // Takes a position, transforms it into a z pillar key
 #define Z_PILLAR_TRANSFORM(pos) (ROUND_UP(pos / Z_PILLAR_RADIUS))
 // Takes a z pillar key, hands back the actual posiiton it represents
-// A key of 1 becomes 1, a key of 2 becomes Z_PILLAR_RADIUS + 1, etc.
+// A key of 1 becomes 1, a key of 2 becomes Z_PILLAR_RADIUS + 1, and so on
 #define Z_KEY_TO_POSITION(key) (((key - 1) * Z_PILLAR_RADIUS) + 1)
 
 /// Returns a z pillar to insert turfs into
@@ -19,7 +19,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 		our_z = list()
 		pillars_by_z[z] = our_z
 
-	//Now that we've got the z layer sorted, we're gonna check the X line
+	// Now that we've got the z layer sorted, we're going to check the X line
 	var/x_key = Z_PILLAR_TRANSFORM(x)
 	if(length(our_z) < x_key)
 		our_z.len = x_key
@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 		our_x = list()
 		our_z[x_key] = our_x
 
-	//And now the y layer
+	// And now the why layer
 	var/y_key = Z_PILLAR_TRANSFORM(y)
 	if(length(our_x) < y_key)
 		our_x.len = y_key
@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	return our_lad
 
 /// Exists to be placed on the turf of walls and such to hold the vis_contents of the tile below
-/// Otherwise the lower turf might get shifted around, which is dumb. do this instead.
+/// Otherwise the lower turf might get shifted around, which is dumb.. do this instead.
 /obj/effect/abstract/z_holder
 	var/datum/z_pillar/pillar
 	var/turf/show_for
@@ -115,7 +115,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 		visual_target.vis_contents += to_display
 		return
 
-	// Otherwise, we need to create a new set of sources. let's do that yeah?
+	// Otherwise, we need to create a new set of sources.. let's do that yeah?
 	sources = list()
 	turf_sources[to_display] = sources
 	sources |= source
@@ -148,7 +148,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	if(!length(turf_sources) && !QDELETED(src))
 		qdel(src)
 
-/// Called when a transparent turf is cleared. We wait a tick, then check to see what
+/// Called when a transparent turf is cleared.. We wait a tick, then check to see what
 /// Kind of turf replaced our former holder, and resetup our visuals as desired
 /// We do not need to do this for non transparent holders, because they will have their abstract object cleared
 /// When a transparent holder comes back.
@@ -175,7 +175,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 /datum/element/turf_z_transparency
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 
-///This proc sets up the signals to handle updating viscontents when turfs above/below update. Handle plane and layer here too so that they don't cover other obs/turfs in Dream Maker
+/// This proc sets up the signals to handle updating viscontents when turfs above/below update.. Handle plane and layer here too so that they don't cover other obs/turfs in Dream Maker
 /datum/element/turf_z_transparency/Attach(datum/target, mapload)
 	. = ..()
 	if(!isturf(target))
@@ -214,7 +214,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	// these are different concerns, and should not be HANDLED TOGETHER
 	// similarly, if you rip this out, rework diagonal closed turfs to work with this system
 	// it will make them look significantly nicer, and should let you tie into their logic more easily
-	// Just please don't break behavior yeah? thanks, I love you <3
+	// Just please don't break behavior yeah?. thanks, I love you <3
 	if(isclosedturf(our_turf)) //Show girders below closed turfs
 		var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', "girder", layer = BELOW_CLOSED_TURF_LAYER)
 		girder_underlay.appearance_flags = RESET_ALPHA | RESET_COLOR

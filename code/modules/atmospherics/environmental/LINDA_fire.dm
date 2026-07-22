@@ -85,7 +85,7 @@
 	var/volume = 125
 	/// Temperature handles the initial ignition and the colouring.
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
-	/// Whether the hotspot is new or not. Used for bypass logic.
+	/// Whether the hotspot is new or not.. Used for bypass logic.
 	var/just_spawned = TRUE
 	/// Whether the hotspot becomes passive and follows the gasmix temp instead of changing it.
 	var/bypassing = FALSE
@@ -116,7 +116,7 @@
 			continue
 		if(!our_hot_group)
 			enemy_spot.our_hot_group.add_to_group(src)
-		else if(our_hot_group != enemy_spot.our_hot_group) //if we belongs to a hot group from prior loop and we encounter another hot spot with a group then we merge
+		else if(our_hot_group != enemy_spot.our_hot_group) // if we belongs to a hot group from before loop and we encounter another hot spot with a group then we merge
 			our_hot_group.merge_hot_groups(enemy_spot.our_hot_group)
 
 	if(QDELETED(our_hot_group))//if after loop through all the adjacents turfs and we havent belong to a group yet, make our own
@@ -175,7 +175,7 @@
 		return FALSE
 
 	if(location.active_hotspot && location.active_hotspot != src)
-		// If we're attempting to spawn on a turf which *just* had a hotspot spawned on it, abort and kill ourselves
+		// If we're trying to spawn on a turf which *just* had a hotspot spawned on it, abort and kill ourselves
 		if(location.active_hotspot.just_spawned)
 			return FALSE
 		// When we are spawned from a deletion signal from our previous hotspot, this can happen
@@ -254,7 +254,7 @@
 		var/mutable_appearance/lightning_overlay = mutable_appearance('icons/effects/fire.dmi', "overcharged")
 		lightning_overlay.blend_mode = BLEND_ADD
 		add_overlay(lightning_overlay)
-	if(temperature > 4500000) //This is where noblium happens. Some fusion-y effects.
+	if(temperature > 4500000) // This is where noblium happens.. Some fusion-y effects.
 		var/fusion_amt = temperature < LERP(4500000,12000000,0.5) ? gauss_lerp(temperature, 4500000, 12000000) : 1
 		var/mutable_appearance/fusion_overlay = mutable_appearance('icons/effects/atmospherics.dmi', "fusion_gas")
 		fusion_overlay.blend_mode = BLEND_ADD
@@ -390,7 +390,7 @@
 	var/average_x
 	var/average_y
 	var/average_Z
-	///the range for the sound to drop off based on the size of the group
+	/// the range for the sound to drop off good on the size of the group
 	var/drop_off_dist
 	COOLDOWN_DECLARE(update_sound_center)
 

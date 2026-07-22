@@ -1,5 +1,5 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
-/// Load byond-tracy. If USE_BYOND_TRACY is defined, then this is ignored and byond-tracy is always loaded.
+/// Load byond-tracy.. If USE_BYOND_TRACY is defined, then this is ignored and byond-tracy is always loaded.
 #define USE_TRACY_PARAMETER "tracy"
 /// Force the log directory to be something specific in the data/logs folder
 #define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
@@ -96,7 +96,7 @@ GLOBAL_VAR(restart_counter)
 	// Create the logger
 	logger = new
 
-	// THAT'S IT, WE'RE DONE, THE. FUCKING. END.
+	// THAT'S IT, WE'RE DONE, THE.. FUCKING.. END.
 	Master = new
 
 /**
@@ -151,7 +151,7 @@ GLOBAL_VAR(restart_counter)
 /world/proc/ConfigLoaded()
 	// Everything in here is prioritized in a very specific way.
 	// If you need to add to it, ask yourself hard if what your adding is in the right spot
-	// (i.e. basically nothing should be added before load_admins() in here)
+	// (i.e.. basically nothing should be added before load_admins() in here)
 
 	// Try to set round ID
 	SSdbcore.InitializeRound()
@@ -169,7 +169,7 @@ GLOBAL_VAR(restart_counter)
 		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
 		fdel(RESTART_COUNTER_PATH)
 
-/// Runs after the call to Master.Initialize, but before the delay kicks in. Used to turn the world execution into some single function then exit
+/// Runs after the call to Master.Initialize, but before the delay kicks in.. Used to turn the world execution into some single function then exit
 /world/proc/RunUnattendedFunctions()
 	#ifdef UNIT_TESTS
 	HandleTestRun()
@@ -335,7 +335,7 @@ GLOBAL_VAR_INIT(last_maptick_time, 0)
 /world/proc/check_hard_reboot()
 	if(!TgsAvailable())
 		return FALSE
-	// byond-tracy can't clean up itself, and thus we should always hard reboot if its enabled, to avoid an infinitely growing trace.
+	// byond-tracy can't clean up itself, and so we should always hard reboot if its enabled, to avoid an infinitely growing trace.
 	if(Tracy?.enabled)
 		return TRUE
 	var/ruhr = CONFIG_GET(number/rounds_until_hard_restart)
@@ -497,7 +497,7 @@ GLOBAL_VAR_INIT(last_maptick_time, 0)
 	if(new_value <= 0)
 		CRASH("change_fps() called with [new_value] new_value.")
 	if(fps == new_value)
-		return //No change required.
+		return // No change needed
 
 	fps = new_value
 	on_tickrate_change()
@@ -507,7 +507,7 @@ GLOBAL_VAR_INIT(last_maptick_time, 0)
 	if(new_value <= 0)
 		CRASH("change_tick_lag() called with [new_value] new_value.")
 	if(tick_lag == new_value)
-		return //No change required.
+		return // No change needed
 
 	tick_lag = new_value
 	on_tickrate_change()

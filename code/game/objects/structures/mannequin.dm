@@ -2,7 +2,7 @@
 #define MANNEQUIN_PLASTIC "plastic"
 #define MANNEQUIN_SKELETON "skeleton"
 
-/// A mannequin! A structure that can display clothing on itself.
+/// A mannequin!. A structure that can display clothing on itself.
 /obj/structure/mannequin
 	name = "mannequin"
 	desc = "Oh, so this is a dress-up game now."

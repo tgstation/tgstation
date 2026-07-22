@@ -325,14 +325,14 @@
 	name = "improvised chem heater"
 	desc = "A space heater fashioned to reroute heating to a water bath on top."
 	panel_open = TRUE //This is always open - since we've injected wires in the panel
-	//We inherit the cell from the heater prior
+	// We inherit the cell from the heater before
 	cell = null
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	settable_temperature_range = 50
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 3, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 	///The beaker within the heater
 	var/obj/item/reagent_containers/beaker = null
-	/// How quickly it delivers heat to the reagents. In watts per joule of the thermal energy difference of the reagent from the temperature difference of the current and target temperatures.
+	/// How quickly it delivers heat to the reagents.. In watts per joule of the thermal energy difference of the reagent from the temperature difference of the current and target temperatures.
 	var/beaker_conduction_power = 0.1
 	/// The subsystem we're being processed by.
 	var/datum/controller/subsystem/processing/our_subsystem

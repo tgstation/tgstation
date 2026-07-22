@@ -21,7 +21,7 @@
 	desc = "A bust of the famous Greek physician Hippocrates of Kos, often referred to as the father of western medicine."
 	icon_state = "hippocratic"
 	impressiveness = 50
-	// If it hits the prob(reference_chance) chance, this is set to TRUE. Adds medical HUD when wielded, but has a 10% slower attack speed and is too bloody to make an oath with.
+	// If it hits the prob(reference_chance) chance, this is set to TRUE.. Adds medical HUD when wielded, but has a 10% slower attack speed and is too bloody to make an oath with.
 	var/reference = FALSE
 	// Chance for above.
 	var/reference_chance = 1

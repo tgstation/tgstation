@@ -4,7 +4,7 @@
 #define EMAGGED_METEOR_SHIELD_THRESHOLD_TWO 6
 /// number of emagged meteor shields to get the third warning + an announcement to the crew
 #define EMAGGED_METEOR_SHIELD_THRESHOLD_THREE 7
-/// number of emagged meteor shields to get the fourth... ah shit the dark matt-eor is coming.
+/// number of emagged meteor shields to get the fourth.... ah shit the dark matt-eor is coming.
 #define EMAGGED_METEOR_SHIELD_THRESHOLD_FOUR 10
 /// how long between emagging meteor shields you have to wait
 #define METEOR_SHIELD_EMAG_COOLDOWN 1 MINUTES

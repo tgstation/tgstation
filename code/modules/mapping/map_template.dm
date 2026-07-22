@@ -21,7 +21,7 @@
 	var/list/created_atoms = list()
 	//make sure this list is accounted for/cleared if you request it from ssatoms!
 
-	///If true, any openspace turfs above the template will be replaced with ceiling_turf when loading. Should probably be FALSE for lower levels of multi-z ruins.
+	/// If true, any openspace turfs above the template will be replaced with ceiling_turf when loading.. Should probably be FALSE for lower levels of multi-z ruins.
 	var/has_ceiling = FALSE
 	///What turf to replace openspace with when has_ceiling is true
 	var/turf/ceiling_turf = /turf/open/floor/plating
@@ -83,8 +83,8 @@
 				ports += movable_in_turf
 
 	// Not sure if there is some importance here to make sure the area is in z
-	// first or not.  Its defined In Initialize yet its run first in templates
-	// BEFORE so... hummm
+	// first or not.. Its defined In Initialize yet its run first in templates
+	// BEFORE so.... hummm
 	SSmapping.reg_in_areas_in_z(areas)
 	if(!SSatoms.initialized)
 		return
@@ -209,7 +209,7 @@
 			placement = corner
 	return block(placement.x, placement.y, placement.z, placement.x+width-1, placement.y+height-1, placement.z)
 
-/// Takes in a type path, locates an instance of that type in the cached map, and calculates its offset from the origin of the map, returns this offset in the form list(x, y).
+/// Takes in a type path, locates an instance of that type in the cached map. Calculates its offset from the origin of the map, returns this offset in the form list(x, why
 /datum/map_template/proc/discover_offset(obj/marker)
 	var/key
 	var/list/models = cached_map.grid_models

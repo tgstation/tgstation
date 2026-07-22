@@ -9,7 +9,7 @@
 #define SMOOTH_BORDER (1<<3)
 /// Atom is currently queued to smooth.
 #define SMOOTH_QUEUED (1<<4)
-/// Smooths with objects, and will thus need to scan turfs for contents.
+/// Smooths with objects, and will so need to scan turfs for contents.
 #define SMOOTH_OBJ (1<<5)
 /// Uses directional object smoothing, so we care not only about something being on the right turf, but also its direction
 /// Changes the meaning of smoothing_junction, instead of representing the directions we are smoothing in

@@ -100,7 +100,7 @@
 		changeling.antag_memory += " Objectives:"
 		var/obj_count = 1
 		for(var/datum/objective/objective as anything in all_objectives)
-			if(!objective) //nulls? in my objective list? it's more likely than you think.
+			if(!objective) // nulls?. in my objective list?. it's more likely than you think.
 				continue
 			changeling.antag_memory += " Objective #[obj_count++]: [objective.explanation_text]."
 			var/list/datum/mind/other_owners = objective.get_owners() - suckedbrain
@@ -110,7 +110,7 @@
 				changeling.antag_memory += " Objective Conspirator: [conspirator.name]."
 	changeling.antag_memory += " That's all [target] had. "
 
-	//Some of target's recent speech, so the changeling can attempt to imitate them better.
+	// Some of target's recent speech, so the changeling can try to imitate them better.
 	//Recent as opposed to all because rounds tend to have a LOT of text.
 
 	var/list/recent_speech = target.copy_recent_speech()
@@ -139,10 +139,10 @@
 		changeling.adjust_chemicals(chems_to_add)
 		changeling.total_chem_storage += chems_to_add
 
-		// And of course however many they've absorbed, we've absorbed
+		// And of course but many they've absorbed, we've absorbed
 		changeling.absorbed_count += target_ling.absorbed_count
 
-		// Lastly, make them not a ling anymore. (But leave their objectives for round-end purposes).
+		// Lastly, make them not a ling anymore.. (But leave their objectives for round-end purposes).
 		var/list/copied_objectives = target_ling.objectives.Copy()
 		target.mind.remove_antag_datum(/datum/antagonist/changeling)
 		var/datum/antagonist/fallen_changeling/fallen = target.mind.add_antag_datum(/datum/antagonist/fallen_changeling)

@@ -23,10 +23,10 @@
 	throw_speed = 1
 	throw_range = 2
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT* 7.5)
-	var/max_heat = 100 * STANDARD_BATTERY_CHARGE // Maximum contained heat before exploding. Not actual temperature.
+	var/max_heat = 100 * STANDARD_BATTERY_CHARGE // Maximum contained heat before exploding.. Not actual temperature.
 	var/internal_heat = 0 // Contained heat, goes down every tick.
 	var/mode = DISCONNECTED // DISCONNECTED, CLAMPED_OFF, OPERATING
-	var/warning_given = FALSE //! Stop warning spam, only warn the admins/deadchat once that we are about to boom.
+	var/warning_given = FALSE // !. Stop warning spam, only warn the admins/deadchat once that we are about to boom.
 
 	var/obj/structure/cable/attached
 

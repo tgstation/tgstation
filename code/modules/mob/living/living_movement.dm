@@ -32,13 +32,13 @@
 	if(!old_turf || !new_turf || SSmapping.gravity_by_z_level[old_turf.z] != SSmapping.gravity_by_z_level[new_turf.z])
 		refresh_gravity()
 
-/// Living Mob use event based gravity
+/// Living Mob use event good gravity
 /// We check here to ensure we haven't dropped any gravity changes
 /mob/living/proc/gravity_setup()
 	on_negate_gravity(src)
 	refresh_gravity()
 
-/// Handles gravity effects. Call if something about our gravity has potentially changed!
+/// Handles gravity effects.. Call if something about our gravity has potentially changed!
 /mob/living/proc/refresh_gravity()
 	var/old_grav_state = gravity_state
 	gravity_state = has_gravity()
@@ -143,7 +143,7 @@
 	switch(SEND_SIGNAL(buckled, COMSIG_BUCKLED_CAN_Z_MOVE, direction, start, destination, z_move_flags, src))
 		if(COMPONENT_RIDDEN_ALLOW_Z_MOVE) // Can be ridden.
 			return buckled.can_z_move(direction, start, destination, z_move_flags, src)
-		if(COMPONENT_RIDDEN_STOP_Z_MOVE) // Is a ridable but can't be ridden right now. Feedback messages already done.
+		if(COMPONENT_RIDDEN_STOP_Z_MOVE) // Is a ridable but can't be ridden right now.. Feedback messages already done.
 			return FALSE
 		else
 			if(!(z_move_flags & ZMOVE_CAN_FLY_CHECKS) && !buckled.anchored)

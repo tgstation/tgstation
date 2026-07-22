@@ -147,7 +147,7 @@
 						living_players_connected++
 				else if (checked_mob.ckey)
 					// This finds all dead mobs that still have a ckey inside them
-					// Ie, they have died, but have not ghosted
+					// that is they have died, but have not ghosted
 					observers++
 					if (checked_mob.client)
 						observers_connected++

@@ -1,5 +1,5 @@
 ///This type is responsible for any map generation behavior that is done in areas, override this to allow for
-///area-specific map generation. This generation is ran by areas in initialize.
+/// area-specific map generation.. This generation is ran by areas in initialize.
 /datum/map_generator
 
 	///Map information, such as the start and end turfs of the map generation.
@@ -13,7 +13,7 @@
 /datum/map_generator/New()
 	..()
 	if(buildmode_name == "Undocumented")
-		buildmode_name = copytext_char("[type]", 20) // / d a t u m / m a p g e n e r a t o r / = 20 characters.
+		buildmode_name = copytext_char("[type]", 20) // / d a t you m / m a p g e n e are a t o are / = 20 characters.
 	initialiseModules()
 
 /datum/map_generator/Destroy(force)
@@ -52,7 +52,7 @@
 	var/lilZ = min(Start.z,End.z)
 	var/bigZ = max(Start.z,End.z)
 
-	var/sphereMagic = max(abs(bigZ-(lilZ/2)),1) //Spherical maps! woo!
+	var/sphereMagic = max(abs(bigZ-(lilZ/2)),1) // Spherical maps!. woo!
 
 	var/radius = abs(max(centerX,centerY)) //take the biggest displacement as the radius
 

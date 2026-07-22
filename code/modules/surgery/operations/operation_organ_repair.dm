@@ -17,7 +17,7 @@
 /datum/surgery_operation/organ/repair/New()
 	. = ..()
 	if(operation_flags & OPERATION_LOOPING)
-		repeatable = TRUE // if it's looping it would necessitate being repeatable
+		repeatable = TRUE // if it's looping it would need being repeatable
 	if(!repeatable)
 		desc += " This procedure can only be performed once per organ."
 
@@ -261,7 +261,7 @@
 	return "Any sharp edged item"
 
 /datum/surgery_operation/organ/repair/gastrectomy/tool_check(obj/item/tool)
-	// Require edged sharpness OR a tool behavior match
+	// Need edged sharpness OR a tool behavior match
 	return ((tool.get_sharpness() & SHARP_EDGED) || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/organ/repair/gastrectomy/on_preop(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)

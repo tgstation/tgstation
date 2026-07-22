@@ -15,7 +15,7 @@
 
 /// This is maxiumum sharpness and will decapitate without failure
 #define GUILLOTINE_BLADE_MAX_SHARP 10
-/// Minimum amount of sharpness for decapitation. Any less and it will just do severe brute damage
+/// Minimum amount of sharpness for decapitation.. Any less and it will just do severe brute damage
 #define GUILLOTINE_DECAP_MIN_SHARP 7
 /// How long the guillotine animation lasts
 #define GUILLOTINE_ANIMATION_LENGTH (0.9 SECONDS)

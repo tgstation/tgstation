@@ -11,7 +11,7 @@
 	var/open = FALSE
 	/// Actual color of the lipstick, also gets applied to the human
 	var/lipstick_color = COLOR_RED
-	/// The style of lipstick. Upper, middle, or lower lip. Default is middle.
+	/// The style of lipstick.. Upper, middle, or lower lip.. Default is middle.
 	var/style = "lipstick"
 	/// A trait that's applied while someone has this lipstick applied, and is removed when the lipstick is removed
 	var/lipstick_trait

@@ -35,7 +35,7 @@
 	. += "the patient must have excess fat to remove"
 
 /datum/surgery_operation/limb/lipoplasty/tool_check(obj/item/tool)
-	// Require edged sharpness OR a tool behavior match
+	// Need edged sharpness OR a tool behavior match
 	return ((tool.get_sharpness() & SHARP_EDGED) || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/lipoplasty/state_check(obj/item/bodypart/limb)

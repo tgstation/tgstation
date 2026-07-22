@@ -1,5 +1,5 @@
 /mob/eye/camera/remote/holo/setLoc(turf/destination, force_update = FALSE)
-	// If we're moving outside the space of our projector, then just... don't
+	// If we're moving outside the space of our projector, then just.... don't
 	var/obj/machinery/holopad/H = origin_ref?.resolve()
 	if(!H?.move_hologram(user_ref?.resolve(), destination))
 		sprint = initial(sprint) // Reset sprint so it doesn't balloon in our calling proc
@@ -86,7 +86,7 @@
 
 	dialed_holopads.Cut()
 
-	if(calling_holopad)//if the call is answered, then calling_holopad wont be in dialed_holopads and thus wont have set_holocall(src, FALSE) called
+	if(calling_holopad)// if the call is answered, then calling_holopad wont be in dialed_holopads and so wont have set_holocall(src, FALSE) called
 		calling_holopad.callee_hung_up()
 		calling_holopad = null
 	if(connected_holopad)
@@ -97,7 +97,7 @@
 
 	return ..()
 
-//Gracefully disconnects a holopad `H` from a call. Pads not in the call are ignored. Notifies participants of the disconnection
+// Gracefully disconnects a holopad `H` from a call.. Pads not in the call are ignored.. Notifies participants of the disconnection
 /datum/holocall/proc/Disconnect(obj/machinery/holopad/H)
 	testing("Holocall disconnect")
 	if(H == connected_holopad)
@@ -108,7 +108,7 @@
 
 	ConnectionFailure(H, TRUE)
 
-//Forcefully disconnects disconnected_holopad from a call. Pads not in the call are ignored.
+// Forcefully disconnects disconnected_holopad from a call.. Pads not in the call are ignored.
 /datum/holocall/proc/ConnectionFailure(obj/machinery/holopad/disconnected_holopad, graceful = FALSE)
 	testing("Holocall connection failure: graceful [graceful]")
 	if(disconnected_holopad == connected_holopad || disconnected_holopad == calling_holopad)
@@ -126,7 +126,7 @@
 		testing("No recipients, terminating")
 		qdel(src)
 
-///Answers a call made to answering_holopad which cannot be the calling holopad. Pads not in the call are ignored
+/// Answers a call made to answering_holopad which cannot be the calling holopad.. Pads not in the call are ignored
 /datum/holocall/proc/Answer(obj/machinery/holopad/answering_holopad)
 	testing("Holocall answer")
 	if(answering_holopad == calling_holopad)
@@ -164,7 +164,7 @@
 	playsound(answering_holopad, 'sound/machines/ping.ogg', 100)
 	answering_holopad.say("Connection established.")
 
-//Checks the validity of a holocall and qdels itself if it's not. Returns TRUE if valid, FALSE otherwise
+// Checks the validity of a holocall and qdels itself if it's not.. Returns TRUE if valid, FALSE otherwise
 /datum/holocall/proc/Check()
 	for(var/obj/machinery/holopad/dialed_holopad as anything in dialed_holopads)
 		if(!dialed_holopad.is_operational)

@@ -113,7 +113,7 @@
 	return TRUE
 
 /obj/vehicle/sealed/mecha/mob_exit(mob/M, silent = FALSE, randomstep = FALSE, forced = FALSE)
-	// FIXME: this code is really bad (shocker). Needs a refactor
+	// Fix me this code is really bad (shocker).. Needs a refactor
 	var/atom/movable/mob_container
 	var/turf/newloc = get_turf(src)
 	if(ishuman(M))
@@ -155,7 +155,7 @@
 			to_chat(AI, span_danger("ZZUZULU.ERR--ERRR-NEUROLOG-- PERCEP--- DIST-B**@"))
 			for(var/count in 1 to 5)
 				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(do_sparks), rand(10, 20), FALSE, AI), count SECONDS)
-			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(empulse), get_turf(AI), /*heavy_range = */10, /*light_range = */20, AI), 10 SECONDS)
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(empulse), get_turf(AI), /* heavy_range = */10, /* light_range = */20, AI), 10 SECONDS)
 		return ..()
 	else if(isliving(M))
 		mob_container = M

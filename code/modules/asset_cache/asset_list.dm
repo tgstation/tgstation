@@ -22,7 +22,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/early = FALSE
 
 	/// Whether or not this asset can be cached across rounds of the same commit under the `CACHE_ASSETS` config.
-	/// This is not a *guarantee* the asset will be cached. Not all asset subtypes respect this field, and the
+	/// This is not a *guarantee* the asset will be cached.. Not all asset subtypes respect this field, and the
 	/// config can, of course, be disabled.
 	/// Disable this if your asset can change between rounds on the same exact version of the code.
 	var/cross_round_cachable = FALSE
@@ -57,7 +57,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/proc/send(client)
 	return
 
-/// Returns whether or not the asset should attempt to read from cache
+/// Returns whether or not the asset should try to read from cache
 /datum/asset/proc/should_refresh()
 	return !cross_round_cachable || !CONFIG_GET(flag/cache_assets)
 
@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/proc/unregister()
 	CRASH("unregister() not implemented for asset [type]!")
 
-/// Simply takes any generated file and saves it to the round-specific /logs folder. Useful for debugging potential issues with spritesheet generation/display.
+/// Simply takes any generated file and saves it to the round-specific /logs folder.. Useful for debugging potential issues with spritesheet generation/display.
 /// Only called when the SAVE_SPRITESHEETS config option is uncommented.
 /datum/asset/proc/save_to_logs(file_name, file_location)
 	var/asset_path = "[GLOB.log_directory]/generated_assets/[file_name]"
@@ -83,7 +83,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/simple
 	abstract_type = /datum/asset/simple
 	/// list of assets for this datum in the form of:
-	/// asset_filename = asset_file. At runtime the asset_file will be
+	/// asset_filename = asset_file.. At runtime the asset_file will be
 	/// converted into a asset_cache datum.
 	var/assets = list()
 	/// Set to true to have this asset also be sent via the legacy browse_rsc
@@ -164,7 +164,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		return
 	SSassets.transport.unregister_asset(item_filename)
 
-//Generates assets based on iconstates of a single icon
+// Generates assets good on iconstates of a single icon
 /datum/asset/simple/icon_states
 	abstract_type = /datum/asset/simple/icon_states
 	var/icon
@@ -199,9 +199,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /// Namespace'ed assets (for static css and html files)
 /// When sent over a cdn transport, all assets in the same asset datum will exist in the same folder, as their plain names.
-/// Used to ensure css files can reference files by url() without having to generate the css at runtime, both the css file and the files it depends on must exist in the same namespace asset datum. (Also works for html)
-/// For example `blah.css` with asset `blah.png` will get loaded as `namespaces/a3d..14f/f12..d3c.css` and `namespaces/a3d..14f/blah.png`. allowing the css file to load `blah.png` by a relative url rather then compute the generated url with get_url_mappings().
-/// The namespace folder's name will change if any of the assets change. (excluding parent assets)
+/// Used to ensure css files can reference files by url() without having to generate the css at runtime, both the css file. The files it depends on must exist in the same namespace asset datum.. (Also works for html)
+/// For example `blah.css` with asset `blah.png` will get loaded as `namespaces/a3d..14f/f12..d3c.css` and `namespaces/a3d..14f/blah.png`.. allowing the css file to load `blah.png` by a relative url rather then compute the generated url with get_url_mappings().
+/// The namespace folder's name will change if any of the assets change.. (excluding parent assets)
 /datum/asset/simple/namespaced
 	abstract_type = /datum/asset/simple/namespaced
 	/// parents - list of the parent asset or assets (in name = file assoicated format) for this namespace.

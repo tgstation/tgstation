@@ -41,7 +41,7 @@
 	uncuff()
 	return src
 
-//////////////////////////           Humanize               //////////////////////////////
+/// /////////////////////// Humanize //////////////////////////////
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
 /mob/living/carbon/proc/humanize(species = /datum/species/human, instant = FALSE)
@@ -151,7 +151,7 @@
 	if(client?.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)
 		new_borg.apply_pref_name(/datum/preference/name/cyborg, client)
 
-	if(mind) //TODO //TODO WHAT
+	if(mind) // To do //TODO WHAT
 		if(!transfer_after)
 			mind.active = FALSE
 		mind.transfer_to(new_borg, TRUE)
@@ -399,7 +399,7 @@
  */
 /mob/proc/safe_animal(MP)
 
-//Bad mobs! - Remember to add a comment explaining what's wrong with the mob
+// Bad mobs!. - Remember to add a comment explaining what's wrong with the mob
 	if(!MP)
 		return FALSE //Sanity, this should never happen.
 
@@ -426,9 +426,9 @@
 	if(ispath(MP, /mob/living/basic/bear))
 		return TRUE
 	if(ispath(MP, /mob/living/basic/parrot))
-		return TRUE //Parrots are no longer unfinished! -Nodrak
+		return TRUE // Parrots are no longer unfinished!. -Nodrak
 
-	//Not in here? Must be untested!
+	// Not in here?. Must be untested!
 	return FALSE
 
 #undef PERMANENT_TRANSFORMATION_TRAIT

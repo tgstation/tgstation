@@ -1,7 +1,7 @@
 // Cocoa Pod
 /obj/item/seeds/cocoapod
 	name = "cocoa pod seed pack"
-	desc = "These seeds grow into cacao trees. They look fattening." //SIC: cocoa is the seeds. The trees are spelled cacao.
+	desc = "These seeds grow into cacao trees. They look fattening." // SIC: cocoa is the seeds.. The trees are spelled cacao.
 	icon_state = "seed-cocoapod"
 	species = "cocoapod"
 	plantname = "Cocao Tree"

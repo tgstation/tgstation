@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(overlays)
 
 /// Converts an overlay list into text for debug printing
 /// Of note: overlays aren't actually mutable appearances, they're just appearances
-/// Don't have access to that type tho, so this is the best you're gonna get
+/// Don't have access to that type though so this is the best you're going to get
 /proc/overlays2text(list/overlays)
 	var/list/unique_overlays = list()
 	// As anything because we're basically doing type coercion, rather then actually filtering for mutable appearances
@@ -109,7 +109,7 @@ SUBSYSTEM_DEF(overlays)
 		STAT_STOP_STOPWATCH
 		STAT_LOG_ENTRY(SSoverlays.stats, type)
 
-//TODO: Better solution for these?
+// To do Better solution for these?
 /image/proc/add_overlay(x)
 	overlays |= x
 
@@ -210,7 +210,7 @@ SUBSYSTEM_DEF(overlays)
 			continue
 		if(name == "vars") // Go away
 			continue
-		if(name == "_listen_lookup") // This is just gonna happen with marked datums, don't care
+		if(name == "_listen_lookup") // This is just going to happen with marked datums, don't care
 			continue
 		if(name == "overlays")
 			first.realize_overlays()

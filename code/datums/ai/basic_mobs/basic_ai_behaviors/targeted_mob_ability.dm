@@ -2,9 +2,9 @@
 /datum/bt_node/ai_behavior/targeted_mob_ability
 	var/ability_key = BB_GENERIC_ACTION
 	var/target_key
-	/// Maximum distance at which the ability can fire (inclusive cuz this is tg :) )
+	/// Maximum distance at which the ability can fire (inclusive because this is tg :) )
 	var/maximum_distance = 0
-	///Does this require adjacency?
+	/// Does this need adjacency?
 	var/require_adjacency = FALSE
 
 /datum/bt_node/ai_behavior/targeted_mob_ability/perform(seconds_per_tick, datum/ai_controller/controller)
@@ -35,7 +35,7 @@
 		return
 	finish_async(result ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
 
-/// Variant for abilities that require adjacency (distance ≤ 1).
+/// Variant for abilities that need adjacency (distance ≤ 1).
 /datum/bt_node/ai_behavior/targeted_mob_ability/melee
 	require_adjacency = TRUE
 

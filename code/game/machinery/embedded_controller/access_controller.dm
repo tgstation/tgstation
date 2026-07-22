@@ -155,7 +155,7 @@
 		go_idle()
 		return FALSE
 	update_appearance()
-	target_door.safe = FALSE //Door crushies, manual door after all. Set every time in case someone changed it, safe doors can end up waiting forever.
+	target_door.safe = FALSE // Door crushies, manual door after all.. Set every time in case someone changed it, safe doors can end up waiting forever.
 	target_door.unbolt()
 	if(!target_door.close() || (machine_stat & NOPOWER))
 		go_idle()

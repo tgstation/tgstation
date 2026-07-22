@@ -1,5 +1,5 @@
 /datum/element/decal/blood
-	/// Whenever the parent atom has a color filter applied to it, and thus needs additional overlay handling
+	/// Whenever the parent atom has a color filter applied to it, and so needs additional overlay handling
 	var/uses_filter = FALSE
 	/// Emissive alpha of our parent
 	var/emissive_alpha = null

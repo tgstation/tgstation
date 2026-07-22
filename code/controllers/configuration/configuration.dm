@@ -112,7 +112,7 @@
 	LoadChatFilter()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		validate_job_config()
-		if(SSjob.initialized) // in case we're reloading from disk after initialization, wanna make sure the changes update in the ongoing shift
+		if(SSjob.initialized) // in case we're reloading from disk after initialization, want to make sure the changes update in the ongoing shift
 			SSjob.load_jobs_from_config()
 
 	if(CONFIG_GET(flag/usewhitelist))
@@ -183,7 +183,7 @@
 	// do we have an actual directory or is this just one file
 	if(length(separate_levels) > 1)
 		var/actual_filename = separate_levels[length(separate_levels)]
-		// We need to sanitize out .. to ensure filename_to_test doesn't accidentially an infinte loop here
+		// We need to sanitize out ... to ensure filename_to_test doesn't accidentially an infinte loop here
 		// Need filename in absolute form
 		var/list/parsed_folder_bits = list()
 		// look at just the relative directory referenced
@@ -239,7 +239,7 @@
 				++.
 			continue
 
-		// Reset directive, used for setting a config value back to defaults. Useful for string list config types
+		// Reset directive, used for setting a config value back to defaults.. Useful for string list config types
 		if (entry == "$reset")
 			var/datum/config_entry/resetee = _entries[LOWER_TEXT(value)]
 			if (!value || !resetee)
@@ -486,7 +486,7 @@ Example config:
 
 	update_chat_filter_regexes()
 
-/// Will update the internal regexes of the chat filter based on the filter reasons
+/// Will update the internal regexes of the chat filter good on the filter reasons
 /datum/controller/configuration/proc/update_chat_filter_regexes()
 	ic_filter_regex = compile_filter_regex(ic_filter_reasons + ic_outside_pda_filter_reasons + shared_filter_reasons)
 	ic_outside_pda_filter_regex = compile_filter_regex(ic_filter_reasons + shared_filter_reasons)
@@ -519,7 +519,7 @@ Example config:
 	var/static/regex/should_join_on_word_bounds = regex(@"^\w+$")
 
 	// Stuff like emoticons needs another split, since there's no way to get ":)" on a word bound.
-	// Furthermore, normal words need to be on word bounds, so "(adminhelp)" gets filtered.
+	// Also normal words need to be on word bounds, so "(adminhelp)" gets filtered.
 	var/list/to_join_on_whitespace_splits = list()
 	var/list/to_join_on_word_bounds = list()
 
@@ -529,7 +529,7 @@ Example config:
 		else
 			to_join_on_whitespace_splits += REGEX_QUOTE(banned_word)
 
-	// We don't want a whitespace_split part if there's no stuff that requires it
+	// We don't want a whitespace_split part if there's no stuff that needs it
 	var/whitespace_split = to_join_on_whitespace_splits.len > 0 ? @"(?:(?:^|\s+)(" + jointext(to_join_on_whitespace_splits, "|") + @")(?:$|\s+))" : ""
 	var/word_bounds = @"(\b(" + jointext(to_join_on_word_bounds, "|") + @")\b)"
 	var/regex_filter = whitespace_split != "" ? "([whitespace_split]|[word_bounds])" : word_bounds

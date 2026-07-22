@@ -86,7 +86,7 @@
 
 /// Different from get_answer().
 /obj/item/toy/eightball/proc/pick_from_answer_list()
-	//! This is for grabbing an answer from the answer matrix.
+	// !. This is for grabbing an answer from the answer matrix.
 	var/key = pick(possible_answers)
 	return pick(possible_answers[key])
 

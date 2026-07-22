@@ -147,10 +147,10 @@
 	death_sound = 'sound/mobs/non-humanoids/venus_trap/venus_trap_death.ogg'
 	attack_sound = 'sound/mobs/non-humanoids/venus_trap/venus_trap_hit.ogg'
 	unsuitable_heat_damage = 5 // heat damage is different from cold damage since coldmos is significantly more common than plasmafires
-	unsuitable_cold_damage = 2 // they now do take cold damage, but this should be sufficiently small that it does not cause major issues
+	unsuitable_cold_damage = 2 // they now do take cold damage, but this should be enough small that it does not cause major issues
 	habitable_atmos = null
 	unsuitable_atmos_damage = 0
-	/// copied over from the code from eyeballs (the mob) to make it easier for venus human traps to see in kudzu that doesn't have the transparency mutation
+	/// copied over from the code from eyeballs (the mob) to make it easier f. Venus human traps to see in kudzu that doesn't have the transparency mutation
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 	// Real green, cause of course
 	lighting_cutoff_red = 10
@@ -197,7 +197,7 @@
 	else if(vines_in_range)
 		alert_shown = FALSE
 
-	adjust_brute_loss(vines_in_range ? -weed_heal : no_weed_damage) //every life tick take 20 damage if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
+	adjust_brute_loss(vines_in_range ? -weed_heal : no_weed_damage) // every life tick take 20 damage if not near vines or heal 10 if near vines, 5 times out of weeds = you ded
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle
 	name = "Tangle"

@@ -1,6 +1,6 @@
 /// Datum that represents one "group" of plane masters
 /// So all the main window planes would be in one, all the spyglass planes in another
-/// Etc
+/// And so on
 /datum/plane_master_group
 	/// Our key in the group list on /datum/hud
 	/// Should be unique for any group of plane masters in the world
@@ -13,7 +13,7 @@
 	var/active_offset = 0
 	/// What, if any, submap we render onto
 	var/map = ""
-	/// Controls the screen_loc that owned plane masters will use when generating relays. Due to a Byond bug, relays using the CENTER positional loc
+	/// Controls the screen_loc that owned plane masters will use when generating relays.. Due to a Byond bug, relays using the CENTER positional loc
 	/// Will be improperly offset
 	var/relay_loc = "1,1"
 
@@ -53,7 +53,7 @@
 	show_hud()
 	build_planes_offset(our_hud, active_offset)
 
-/// Well, refresh our group, mostly useful for plane specific updates
+/// refresh our group, mostly useful for plane specific updates
 /datum/plane_master_group/proc/refresh_hud()
 	hide_hud()
 	show_hud()
@@ -66,7 +66,7 @@
 	our_hud.update_parallax_pref()
 	build_planes_offset(our_hud, active_offset)
 
-/// Regenerate our plane masters, this is useful if we don't have a mob but still want to rebuild. Such in the case of changing the screen_loc of relays
+/// Regenerate our plane masters, this is useful if we don't have a mob but still want to rebuild.. Such in the case of changing the screen_loc of relays
 /datum/plane_master_group/proc/rebuild_plane_masters()
 	QDEL_LIST_ASSOC_VAL(plane_masters)
 	build_plane_masters(0, SSmapping.max_plane_offset)
@@ -108,15 +108,15 @@
 	return
 
 // It would be nice to setup parallaxing for stairs and things when doing this
-// So they look nicer. if you can't it's all good, if you think you can sanely look at monster's work
-// It's hard, and potentially expensive. be careful
+// So they look nicer.. if you can't it's all good, if you think you can sanely look at monster's work
+// It's hard, and potentially expensive.. be careful
 /datum/plane_master_group/proc/build_planes_offset(datum/hud/source, new_offset, use_scale = TRUE)
 	// Check if this feature is disabled for the client, in which case don't use scale.
 	var/mob/our_mob = our_hud?.mymob
 	if(!our_mob?.client?.prefs?.read_preference(/datum/preference/toggle/multiz_parallax))
 		use_scale = FALSE
 
-	// No offset? piss off
+	// No offset?. piss off
 	if(!SSmapping.max_plane_offset)
 		return
 
@@ -130,7 +130,7 @@
 		// First of all, if a mob can see objects but not turfs, they will not be shown the holder objects we use for
 		// What I'd like to do is revert to images if this case throws, but image vis_contents is broken
 		// https://www.byond.com/forum/post/2821969
-		// If that's ever fixed, please just use that. thanks :)
+		// If that's ever fixed, please just use that.. thanks :)
 		scale_by = 1
 
 	var/list/offsets = list()
@@ -161,7 +161,7 @@
 		if(plane.offsetting_flags & BLOCKS_PLANE_OFFSETTING)
 			if(plane.offsetting_flags & OFFSET_RELAYS_MATCH_HIGHEST)
 				// Don't offset the plane, do offset where the relays point
-				// Required for making things like the blind fullscreen not render over runechat
+				// Needed for making things like the blind fullscreen not render over runechat
 				plane.offset_relays_in_place(new_offset)
 			continue
 
@@ -186,7 +186,7 @@
 /// Holds plane masters for popups, like camera windows
 /// Note: We do not scale this plane, even though we could
 /// This is because it's annoying to get turfs to position inside it correctly
-/// If you wanna try someday feel free, but I can't manage it
+/// If you want to try someday feel free, but I can't manage it
 /datum/plane_master_group/popup
 
 /datum/plane_master_group/popup/build_planes_offset(datum/hud/source, new_offset, use_scale = TRUE)
@@ -200,7 +200,7 @@
 		return ..(source, new_offset, source.should_use_scale())
 	return ..()
 
-/// Hudless group. Exists for testing
+/// Hudless group.. Exists for testing
 /datum/plane_master_group/hudless
 	var/mob/our_mob
 

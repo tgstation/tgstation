@@ -1,4 +1,4 @@
-/// An element to add a FOV trait to the wearer, removing it when an item is unequipped, but only as long as the visor is up.
+/// An element to add a FOV trait to the wearer, removing it when an item is unequipped. Only as long as the vis. Is up.
 /datum/component/clothing_fov_visor
 	/// What's the FOV angle of the trait we're applying to the wearer
 	var/fov_angle

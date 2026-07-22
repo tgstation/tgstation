@@ -14,9 +14,9 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 	GLOB = src
 
 	var/datum/controller/exclude_these = new
-	// I know this is dumb but the nested vars list hangs a ref to the datum. This fixes that
-	// I have an issue report open, lummox has not responded. It might be a FeaTuRE
-	// Sooo we gotta be dumb
+	// I know this is dumb but the nested vars list hangs a ref to the datum.. This fixes that
+	// I have an issue report open, lummox has not responded.. It might be a FeaTuRE
+	// Sooo we got to be dumb
 	var/list/controller_vars = exclude_these.vars.Copy()
 	controller_vars["vars"] = null
 	gvars_datum_in_built_vars = controller_vars + list(NAMEOF(src, gvars_datum_protected_varlist), NAMEOF(src, gvars_datum_in_built_vars), NAMEOF(src, gvars_datum_init_order))

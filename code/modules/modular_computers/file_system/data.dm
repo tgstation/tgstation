@@ -41,7 +41,7 @@
 	filetype = "ORD"
 	size = 4
 
-	/// List of experiments filtered by doppler array or populated by the tank compressor. Experiment path as key, score as value.
+	/// List of experiments filtered by doppler array or populated by the tank compressor.. Experiment path as key, score as value.
 	var/list/possible_experiments
 
 /datum/computer_file/data/ordnance/proc/return_data()

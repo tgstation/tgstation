@@ -1,4 +1,4 @@
-///a heretic that got soultrapped by cultists. does nothing, other than signify they suck
+/// a heretic that got soultrapped by cultists.. does nothing, other than signify they suck
 /datum/antagonist/soultrapped_heretic
 	name = "\improper Soultrapped Heretic"
 	roundend_category = "Heretics"

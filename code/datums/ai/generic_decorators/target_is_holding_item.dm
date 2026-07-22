@@ -20,7 +20,7 @@
 		observed_target = null
 	UnregisterSignal(pawn, list(COMSIG_AI_BLACKBOARD_KEY_SET(key), COMSIG_AI_BLACKBOARD_KEY_CLEARED(key)))
 
-/// Fires when the blackboard key changes. Rebinds equip signals to the new target and re-evaluates.
+/// Fires when the blackboard key changes.. Rebinds equip signals to the new target and re-evaluates.
 /datum/bt_node/decorator/target_is_holding_item/proc/on_target_key_changed(atom/source, ...)
 	SIGNAL_HANDLER
 	var/mob/target = owning_controller?.blackboard[key]

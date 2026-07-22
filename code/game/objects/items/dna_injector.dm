@@ -19,7 +19,7 @@
 	var/list/remove_mutations
 	/// Tracks if it's been used
 	VAR_FINAL/used = FALSE
-	/// Duration of the mutations added/activated or DNA changes. Does not affect removed mutations.
+	/// Duration of the mutations added/activated or DNA changes.. Does not affect removed mutations.
 	var/duration = INFINITY
 	/// A DNA datum that has its fields copied to the target on injection.
 	var/datum/dna/stored_dna

@@ -57,7 +57,7 @@
 		return
 	var/obj/effect/abstract/main_light = middleman.primary_intercept
 	// We're going to fade our light out so it's less jarring when we fully disappear
-	// Note, a refresh of the overlay light would break this, we're basically just sorta assuming that won't happen
+	// Note, a refresh of the overlay light would break this, we're basically just sort of assuming that won't happen
 	// Would need to track time and sort of "replay" where we should be otherwise
 	if(decay_time >= 0.7 SECONDS) // duration of all animated spark's actual icon state animation
 		animate(main_light, alpha = 220, time = 0.4 SECONDS)
@@ -112,7 +112,7 @@
 	if(isobj(singed))
 		var/datum/reagents/reagents = singed.reagents // heat up things that contain reagents before we check to see if they burn
 		if(reagents && !(reagents.flags & SEALED_CONTAINER))
-			reagents.expose_temperature(1000) // we set this at 1000 because that's the max reagent temp for a chem heater, higher temps require more than sparks
+			reagents.expose_temperature(1000) // we set this at 1000 because that's the max reagent temp for a chem heater, higher temps need more than sparks
 		return
 
 	if(ishuman(singed))

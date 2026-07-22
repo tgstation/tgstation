@@ -240,7 +240,7 @@
 	else if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/opening = target
 
-		if((!opening.requiresID() || opening.allowed(user)) && opening.hasPower()) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message, power requirement is so this doesn't stop unpowered doors from being pried open if you have access
+		if((!opening.requiresID() || opening.allowed(user)) && opening.hasPower()) // This is to prevent stupid shit like hitting a do. With an arm blade, the do. Opening because you have acces. Still getting a "the airlocks motors resist our efforts to force it" message, power need is so this doesn't stop unpowered doors from being pried open if you have access
 			return
 		if(opening.locked)
 			opening.balloon_alert(user, "bolted!")
@@ -696,12 +696,12 @@
 		summoned_minion.set_faction(null)
 		minion_additional_changes(summoned_minion)
 
-///Our tell that we're using this ability. Usually a sound and a visible message.area
+/// Our tell that we're using this ability.. Usually a sound and a visible message.area
 /datum/action/cooldown/hivehead_spawn_minions/proc/do_tell()
 	owner.visible_message(span_warning("[owner]'s head begins to buzz as bees begin to pour out!"), span_warning("We release the bees."), span_hear("You hear a loud buzzing sound!"))
 	playsound(owner, 'sound/mobs/non-humanoids/bee/bee_swarm.ogg', 60, TRUE)
 
-///Stuff we want to do to our minions. This is in its own proc so subtypes can override this behaviour.
+/// Stuff we want to do to our minions.. This is in its own proc so subtypes can override this behaviour.
 /datum/action/cooldown/hivehead_spawn_minions/proc/minion_additional_changes(mob/living/basic/minion)
 	var/mob/living/basic/bee/summoned_bee = minion
 	var/obj/item/clothing/head/helmet/changeling_hivehead/hivehead = owner.get_item_by_slot(ITEM_SLOT_HEAD)

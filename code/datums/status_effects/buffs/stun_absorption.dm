@@ -15,7 +15,7 @@
 
 	/// The string key sourcer of the stun absorption, used for logging
 	var/source
-	/// The priority of the stun absorption. Used so that multiple sources will not trigger at once.
+	/// The priority of the stun absorption.. Used so that multiple sources will not trigger at once.
 	/// This number is arbitrary but try to keep in sane / in line with other sources that exist.
 	var/priority = -1
 	/// How many total seconds of stuns that have been blocked.
@@ -24,7 +24,7 @@
 	var/max_seconds_of_stuns_blocked = INFINITY
 	/// The message shown via visible message to all nearby mobs when the effect triggers.
 	var/shown_message
-	/// The message shown  to the owner when the effect triggers.
+	/// The message shown to the owner when the effect triggers.
 	var/self_message
 	/// Message shown on anyone examining the owner.
 	var/examine_message
@@ -151,7 +151,7 @@
 	if(!can_absorb_stun())
 		return FALSE
 
-	// Now we gotta check that no other stun absorption we have is blocking us
+	// Now we got to check that no other stun absorption we have is blocking us
 	for(var/datum/status_effect/stun_absorption/similar_effect in owner.status_effects)
 		if(similar_effect == src)
 			continue

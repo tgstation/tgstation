@@ -39,7 +39,7 @@
 		parent.temperature_interact(local_turf, volume, thermal_conductivity)
 
 
-	//heatup/cooldown any mobs buckled to ourselves based on our temperature
+	// heatup/cooldown any mobs buckled to ourselves good on our temperature
 	if(has_buckled_mobs())
 		var/hc = pipe_air.heat_capacity()
 		var/mob/living/heat_source = buckled_mobs[1]
@@ -72,7 +72,7 @@
 
 			animate(src, color = rgb(h_r, h_g, h_b), time = 20, easing = SINE_EASING)
 
-	//burn any mobs buckled based on temperature
+	// burn any mobs buckled good on temperature
 	if(!has_buckled_mobs())
 		return
 	var/heat_limit = 1000

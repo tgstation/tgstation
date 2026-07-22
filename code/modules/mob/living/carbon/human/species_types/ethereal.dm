@@ -153,7 +153,7 @@
 		to_chat(user, span_notice("You tap [source] on the back with your card."))
 	source.visible_message(span_danger("[source] starts flickering in an array of colors!"))
 	handle_emag(source)
-	addtimer(CALLBACK(src, PROC_REF(stop_emag), source), 2 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
+	addtimer(CALLBACK(src, PROC_REF(stop_emag), source), 2 MINUTES) // Disco mode for 2 minutes!. This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
 	return TRUE
 
 /// Special handling for getting hit with a light eater

@@ -208,7 +208,7 @@
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/cult/phase/out
 
 
-/// The dummy that holds people jaunting. Maybe one day we can replace it.
+/// The dummy that holds people jaunting.. Maybe one day we can replace it.
 /obj/effect/dummy/phased_mob/spell_jaunt
 	movespeed = 2 //quite slow.
 	/// Whether we're currently reappearing - we can't move if so

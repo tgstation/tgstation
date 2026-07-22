@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(modular_computers)
 	var/intrusion_detection_alarm = FALSE
 	var/next_picture_id = 0
 
-	///Lazylist of coupons used by the Coupon Master PDA app. e.g. "COUPONCODE25" = coupon_code
+	/// Lazylist of coupons used by the Coupon Master PDA app.. e.g.. "COUPONCODE25" = coupon_code
 	var/list/discount_coupons
 	///When will the next coupon drop?
 	var/next_discount = 0
@@ -125,14 +125,14 @@ SUBSYSTEM_DEF(modular_computers)
 		if(prog.program_flags & PROGRAM_ON_SYNDINET_STORE)
 			available_antag_software.Add(prog)
 
-///Attempts to find a new file through searching the available stores with its name.
+/// Tries to find a new file through searching the available stores with its name.
 /datum/controller/subsystem/modular_computers/proc/find_ntnet_file_by_name(filename)
 	for(var/datum/computer_file/program/programs as anything in available_station_software + available_antag_software)
 		if(filename == programs.filename)
 			return programs
 	return null
 
-///Attempts to find a chatorom using the ID of the channel.
+/// Tries to find a chatorom using the ID of the channel.
 /datum/controller/subsystem/modular_computers/proc/get_chat_channel_by_id(id)
 	for(var/datum/ntnet_conversation/chan as anything in chat_channels)
 		if(chan.id == id)

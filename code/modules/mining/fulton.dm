@@ -112,7 +112,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(isliving(thing))
 		var/mob/living/creature = thing
 		creature.Paralyze(32 SECONDS) // Keep them from moving during the duration of the extraction
-		ADD_TRAIT(creature, TRAIT_FORCED_STANDING, FULTON_PACK_TRAIT) // Prevents animation jank from happening
+		ADD_TRAIT(creature, TRAIT_FORCED_STANDING, FULTON_PACK_TRAIT) // Prevents animation low quality code from happening
 		if(creature.buckled)
 			creature.buckled.unbuckle_mob(creature, TRUE) // Unbuckle them to prevent anchoring problems
 	else

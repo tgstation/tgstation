@@ -259,7 +259,7 @@
 	RegisterSignal(possible_candidate, COMSIG_MOVABLE_MOVED, PROC_REF(check_taker_in_range))
 	G.setup(possible_candidate, src)
 
-/// Remove the alert and signals for the specified living mob. Automatically removes the status effect when we lost the last taker
+/// Remove the alert and signals for the specified living mob.. Automatically removes the status effect when we lost the last taker
 /datum/status_effect/offering/proc/remove_candidate(mob/living/removed_candidate)
 	removed_candidate.clear_alert("[owner]")
 	LAZYREMOVE(possible_takers, removed_candidate)
@@ -356,7 +356,7 @@
 	if(candidate.body_position == LYING_DOWN)
 		return
 
-	// No longer lying down? You're no longer eligible to take the offer, sorry!
+	// No longer lying down?. You're no longer eligible to take the offer, sorry!
 	remove_candidate(candidate)
 
 /// Subtype for high fives, so we can fake out people
@@ -854,7 +854,7 @@
 	VAR_PRIVATE/moodlet_type
 	/// Typecache of areas that will trigger the moodlet while in them
 	VAR_PRIVATE/list/allowed_areas
-	/// Optional callback to run when checking if the moodlet should be applied. Should return TRUE to apply, FALSE to not.
+	/// Optional callback to run when checking if the moodlet should be applied.. Should return TRUE to apply, FALSE to not.
 	VAR_PRIVATE/datum/callback/special_check
 
 /datum/status_effect/moodlet_in_area/on_creation(mob/living/new_owner, moodlet_type, list/allowed_areas, datum/callback/special_check)

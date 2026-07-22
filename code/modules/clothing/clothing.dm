@@ -30,14 +30,14 @@
 
 	var/can_be_bloody = TRUE
 
-	///Prevents the article of clothing from gaining the mood boost from washing. Used for the tacticool turtleneck.
+	/// Prevents the article of clothing from gaining the mood boost from washing.. Used for the tacticool turtleneck.
 	var/stubborn_stains = FALSE
 
 	/// What items can be consumed to repair this clothing (must by an /obj/item/stack)
 	var/repairable_by = /obj/item/stack/sheet/cloth
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live
-	var/list/user_vars_to_edit //VARNAME = VARVALUE eg: "name" = "butts"
+	var/list/user_vars_to_edit // VARNAME = VARVALUE for example "name" = "butts"
 	var/list/user_vars_remembered //Auto built by the above + dropped() + equipped()
 
 	/// Trait modification, lazylist of traits to add/take away, on equipment/drop in the correct slot
@@ -45,17 +45,17 @@
 
 	/// How much clothing damage has been dealt to each of the limbs of the clothing, assuming it covers more than one limb
 	var/list/damage_by_parts
-	/// How much integrity is in a specific limb before that limb is disabled (for use in [/obj/item/clothing/proc/take_damage_zone], and only if we cover multiple zones.) Set to 0 to disable shredding.
+	/// How much integrity is in a specific limb before that limb is disabled (f. Use in [/obj/item/clothing/proc/take_damage_zone]. Only if we cover multiple zones.) Set to 0 to disable shredding.
 	var/limb_integrity = 0
 	/// How many zones (body parts, not precise) we have disabled so far, for naming purposes
 	var/zones_disabled
 
 	/// A lazily initiated "food" version of the clothing for moths.
 	// This intentionally does not use the edible component, for a few reasons.
-	// 1. Effectively everything that wants something edible, from now and into the future,
+	// 1.. Effectively everything that wants something edible, from now and into the future,
 	// does not want to receive clothing, simply because moths *can* eat it.
-	// 2. Creating this component for all clothing has a non-negligible impact on init times and memory.
-	// 3. Creating the component contextually to solve #2 will make #1 much more confusing,
+	// 2.. Creating this component for all clothing has a non-negligible impact on init times and memory.
+	// 3.. Creating the component contextually to solve #2 will make #1 much more confusing,
 	// and frankly not be a better solution than what we are doing now.
 	// The first issue could be solved if "edible" checks were more granular,
 	// such that you never actually cared about checking if something is *edible*.
@@ -82,7 +82,7 @@
 	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object. <--- stinky idiot wrote this"
 	spawn_blacklisted = TRUE
 	bite_consumption = 1
-	// sigh, ok, so it's not ACTUALLY infinite nutrition. this is so you can eat clothes more than...once.
+	// sigh, ok, so it's not ACTUALLY infinite nutrition.. this is so you can eat clothes more than...once.
 	// bite_consumption limits how much you actually get, and the take_damage in after eat makes sure you can't abuse this.
 	// ...maybe this was a mistake after all.
 	food_reagents = list(/datum/reagent/consumable/nutriment/cloth_fibers = INFINITY)
@@ -230,7 +230,7 @@
 	update_appearance()
 
 /obj/item/clothing/Destroy()
-	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
+	user_vars_remembered = null // Oh god somebody put REFERENCES in here?. not to worry, we'll clean it up
 	QDEL_NULL(moth_snack)
 	return ..()
 
@@ -247,7 +247,7 @@
 	if(LAZYLEN(user_vars_remembered))
 		for(var/variable in user_vars_remembered)
 			if(variable in user.vars)
-				if(user.vars[variable] == user_vars_to_edit[variable]) //Is it still what we set it to? (if not we best not change it)
+				if(user.vars[variable] == user_vars_to_edit[variable]) // Is it still what we set it to?. (if not we best not change it)
 					user.vars[variable] = user_vars_remembered[variable]
 		user_vars_remembered = initial(user_vars_remembered) // Effectively this sets it to null.
 
@@ -543,7 +543,7 @@ BLIND     // can't see anything
 	female_clothing_icon = fcopy_rsc(female_clothing_icon)
 	GLOB.female_clothing_icons[index] = female_clothing_icon
 
-/// Proc that adjusts the clothing item, used by things like breathing masks, welding helmets, welding goggles etc.
+/// Proc that adjusts the clothing item, used by things like breathing masks, welding helmets, welding goggles and so on
 /obj/item/clothing/proc/adjust_visor(mob/living/user)
 	if(!can_use(user))
 		return FALSE

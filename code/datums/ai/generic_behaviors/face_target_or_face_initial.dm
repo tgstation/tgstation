@@ -1,4 +1,4 @@
-/// Faces the target each tick while it's within range. When the target is absent or out of range, resets to BB_STARTING_DIRECTION.
+/// Faces the target each tick while it's within range.. When the target is absent or out of range, resets to BB_STARTING_DIRECTION.
 /// Captures BB_STARTING_DIRECTION once on setup from the pawn's current facing direction.
 /datum/bt_node/ai_behavior/face_target_or_face_initial
 	var/target_key = BB_CURRENT_TARGET

@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(cameras)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	wait = 2 MINUTES
 	dependencies = list(
-		// Required to get plane offset for static images
+		// Needed to get plane offset for static images
 		/datum/controller/subsystem/mapping,
 	)
 
@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(cameras)
 	SIGNAL_HANDLER
 	update_offsets(new_offset)
 
-/// Checks if a chunk has been generated in x, y, z.
+/// Checks if a chunk has been generated in x, why z.
 /datum/controller/subsystem/cameras/proc/get_camera_chunk(x, y, z)
 	x = GET_CHUNK_COORD(x)
 	y = GET_CHUNK_COORD(y)
@@ -70,7 +70,7 @@ SUBSYSTEM_DEF(cameras)
 
 	return chunks["[x],[y],[z]"]
 
-// Returns the chunk in the x, y, z.
+// Returns the chunk in the x, why z.
 // If there is no chunk, it creates a new chunk and returns that.
 /datum/controller/subsystem/cameras/proc/generate_chunk(x, y, z)
 	x = GET_CHUNK_COORD(x)
@@ -115,7 +115,7 @@ SUBSYSTEM_DEF(cameras)
 /// Used in [/proc/major_chunk_change] - indicates the chunk should be updated without adding/removing a camera.
 #define IGNORE_CAMERA 2
 
-/// Updates the chunks that the turf is located in. Use this when obstacles are destroyed or when doors open.
+/// Updates the chunks that the turf is located in.. Use this when obstacles are destroyed or when doors open.
 /datum/controller/subsystem/cameras/proc/update_visibility(atom/relevant_atom)
 	if(!SSticker)
 		return
@@ -304,7 +304,7 @@ SUBSYSTEM_DEF(cameras)
 
 	return sortTim(filtered_cameras, GLOBAL_PROC_REF(cmp_camera_ctag_asc))
 
-/// Checks if the `camera_to_check` meets the requirements of availability.
+/// Checks if the `camera_to_check` meets the needs of availability.
 /datum/controller/subsystem/cameras/proc/is_camera_available(obj/machinery/camera/camera_to_check, list/networks_available, list/z_levels_available)
 	PRIVATE_PROC(TRUE)
 

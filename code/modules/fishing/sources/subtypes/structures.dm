@@ -193,7 +193,7 @@
 	background = "background_lavaland"
 	catalog_description = "Deep Fryers"
 	radial_state = "fryer"
-	overlay_state = "portal_fry" // literally resprited lava. better than nothing
+	overlay_state = "portal_fry" // literally resprited lava.. better than nothing
 	fish_table = list(
 		/obj/item/food/badrecipe = 15,
 		/obj/item/food/nugget = 5,
@@ -303,7 +303,7 @@
 		var/low = min(highest_record_price, bait_value)
 
 		//the smaller the difference between product price and bait value, the more likely you're to get it.
-		table[product_record] = low/high * 1000 //multiply the value by 1000 for accuracy. pick_weight() doesn't work with zero decimals yet.
+		table[product_record] = low/high * 1000 // multiply the value by 1000 for accuracy.. pick_weight() doesn't work with zero decimals yet.
 
 	add_risks(table, bait_value, highest_record_price, length(products) * 0.5)
 	return table
@@ -410,7 +410,7 @@
 		var/low = min(highest_record_price, bait_value)
 
 		//the smaller the difference between product price and bait value, the more likely you're to get it.
-		table[stocked] = (low / high) * 1000 //multiply the value by 1000 for accuracy. pick_weight() doesn't work with zero decimals yet.
+		table[stocked] = (low / high) * 1000 // multiply the value by 1000 for accuracy.. pick_weight() doesn't work with zero decimals yet.
 
 	add_risks(table, bait_value, highest_record_price, length(products) * 0.5)
 	return table

@@ -1,4 +1,4 @@
-//The "pod_landingzone" temp visual is created by anything that "launches" a supplypod. This is what animates the pod and makes the pod forcemove to the station.
+// The "pod_landingzone" temp visual is created by anything that "launches" a supplypod.. This is what animates the pod and makes the pod forcemove to the station.
 //------------------------------------SUPPLY POD-------------------------------------//
 /obj/structure/closet/supplypod
 	name = "supply pod" //Names and descriptions are normally created with the set_style() proc during initialization, but we have these default values here as a failsafe
@@ -21,23 +21,23 @@
 	///List of bitflags for supply pods, see: code\__DEFINES\obj_flags.dm
 	var/pod_flags = NONE
 
-	//*****NOTE*****: Many of these comments are similarly described in centcom_podlauncher.dm. If you change them here, please consider doing so in the centcom podlauncher code as well!
-	var/adminNamed = FALSE //Determines whether or not the pod has been named by an admin. If true, the pod's name will not get overridden when the style of the pod changes (changing the style of the pod normally also changes the name+desc)
+	// *****NOTE*****: Many of these comments are similarly described in centcom_podlauncher.dm.. If you change them here, please consider doing so in the centcom podlauncher code as well!
+	var/adminNamed = FALSE // Determines whether or not the pod has been named by an admin.. If true, the pod's name will not get overridden when the style of the pod changes (changing the style of the pod normally also changes the name+desc)
 	var/bluespace = FALSE //If true, the pod deletes (in a shower of sparks) after landing
 	var/delays = list(POD_TRANSIT = 30, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 	var/reverse_delays = list(POD_TRANSIT = 30, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 	var/custom_rev_delay = FALSE
 	var/damage = 0 //Damage that occurs to any mob under the pod when it lands.
-	var/effectStun = FALSE //If true, stuns anyone under the pod when it launches until it lands, forcing them to get hit by the pod. Devilish!
+	var/effectStun = FALSE // If true, stuns anyone under the pod when it launches until it lands, forcing them to get hit by the pod.. Devilish!
 	var/effectLimb = FALSE //If true, pops off a limb (if applicable) from anyone caught under the pod when it lands
 	var/effectOrgans = FALSE //If true, yeets out every limb and organ from anyone caught under the pod when it lands
 	var/effectGib = FALSE //If true, anyone under the pod will be gibbed when it lands
 	var/effectStealth = FALSE //If true, a target icon isn't displayed on the turf where the pod will land
-	var/effectQuiet = FALSE //The female sniper. If true, the pod makes no noise (including related explosions, opening sounds, etc)
-	var/effectMissile = FALSE //If true, the pod deletes the second it lands. If you give it an explosion, it will act like a missile exploding as it hits the ground
-	var/effectCircle = FALSE //If true, allows the pod to come in at any angle. Bit of a weird feature but whatever its here
-	var/datum/pod_style/style = /datum/pod_style //Style is a variable that keeps track of what the pod is supposed to look like. Only stores a path, type is set for ease of var access
-	var/reversing = FALSE //If true, the pod will not send any items. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
+	var/effectQuiet = FALSE // The female sniper.. If true, the pod makes no noise (including related explosions, opening sounds, and so on
+	var/effectMissile = FALSE // If true, the pod deletes the second it lands.. If you give it an explosion, it will act like a missile exploding as it hits the ground
+	var/effectCircle = FALSE // If true, allows the pod to come in at any angle.. Bit of a weird feature but whatever its here
+	var/datum/pod_style/style = /datum/pod_style // Style is a variable that keeps track of what the pod is supposed to look like.. Only stores a path, type is set for ease of var access
+	var/reversing = FALSE // If true, the pod will not send any items.. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
 	var/list/reverse_dropoff_coords //Turf that the reverse pod will drop off its newly-acquired cargo to
 	var/create_sparks = TRUE // If true, the pod will create sparks before being deleted.
 	var/fallingSoundLength = 11
@@ -45,7 +45,7 @@
 	var/landingSound //Admin sound to play when the pod lands
 	var/openingSound //Admin sound to play when the pod opens
 	var/leavingSound //Admin sound to play when the pod leaves
-	var/soundVolume = 80 //Volume to play sounds at. Ignores the cap
+	var/soundVolume = 80 // Volume to play sounds at.. Ignores the cap
 	var/list/explosionSize = list(0,0,2,3)
 	var/stay_after_drop = FALSE
 	var/specialised = FALSE // It's not a general use pod for cargo/admin use
@@ -66,7 +66,7 @@
 	bluespace = TRUE
 	explosionSize = list(0,0,1,2)
 
-//type used for one drop spawning items. doesn't have a style as style is set by the helper that creates this
+// type used for one drop spawning items.. doesn't have a style as style is set by the helper that creates this
 /obj/structure/closet/supplypod/podspawn
 	bluespace = TRUE
 	explosionSize = list(0,0,0,0)
@@ -165,7 +165,7 @@
 		forceMove(shippingLane)
 	if (customStyle)
 		style = customStyle
-	set_style(style) //Upon initialization, give the supplypod an iconstate, name, and description based on the "style" variable. This system is important for the centcom_podlauncher to function correctly
+	set_style(style) // Upon initialization, give the supplypod an iconstate, name, and description good on the "style" variable.. This system is important for the centcom_podlauncher to function correctly
 
 /obj/structure/closet/supplypod/proc/set_style(datum/pod_style/chosen_style) //Used to give the sprite an icon state, name, and description.
 	style = chosen_style
@@ -236,11 +236,11 @@
 		return
 
 	//If we're closed
-	if(!door) //We have no door, lets see if we have a decal. If not, theres nothing we need to do
+	if(!door) // We have no door, lets see if we have a decal.. If not, theres nothing we need to do
 		if(decal)
 			. += decal
 		return
-	else if (style::shape != POD_SHAPE_NORMAL) //If we're not a normal pod shape (aka, if we don't have fins), just add the door without masking
+	else if (style::shape != POD_SHAPE_NORMAL) // If we're not a normal pod shape also known as if we don't have fins), just add the door without masking
 		. += door
 	else
 		var/icon/masked_door = new(icon, door) //The door we want to apply
@@ -258,7 +258,7 @@
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 
-/obj/structure/closet/supplypod/ex_act() //Explosions dont do SHIT TO US! This is because supplypods create explosions when they land.
+/obj/structure/closet/supplypod/ex_act() // Explosions dont do SHIT TO US!. This is because supplypods create explosions when they land.
 	return FALSE
 
 /obj/structure/closet/supplypod/contents_explosion() //Supplypods also protect their contents from the harmful effects of fucking exploding.
@@ -275,7 +275,7 @@
 	mob/living/victim,
 	turf/destination = find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
 )
-	if(isnull(destination)) //Uuuuh, something went wrong. This is gonna hurt.
+	if(isnull(destination)) // Uuuuh, something went wrong.. This is going to hurt.
 		to_chat(victim, span_hypnophrase("A million voices echo in your head... \"Seems where you got sent won't \
 			be able to handle our pod... as if we wanted the occupant to survive. Brace yourself, corporate dog.\""))
 		flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
@@ -305,7 +305,7 @@
 		qdel(holder)
 	var/shippingLane = GLOB.areas_by_type[/area/centcom/central_command_areas/supplypod/supplypod_temp_holding]
 	forceMove(shippingLane) //Move to the centcom-z-level until the pod_landingzone says we can drop back down again
-	if (!reverse_dropoff_coords) //If we're centcom-launched, the reverse dropoff turf will be a centcom loading bay. If we're an extraction pod, it should be the ninja jail. Thus, this shouldn't ever really happen.
+	if (!reverse_dropoff_coords) // If we're centcom-launched, the reverse dropoff turf will be a centcom loading bay.. If we're an extraction pod, it should be the ninja jail.. So this shouldn't ever really happen.
 		var/obj/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
 		var/turf/error_landmark_turf = get_turf(error_landmark)
 		reverse_dropoff_coords = list(error_landmark_turf.x, error_landmark_turf.y, error_landmark_turf.z)
@@ -316,7 +316,7 @@
 	var/turf/return_turf = locate(reverse_dropoff_coords[1], reverse_dropoff_coords[2], reverse_dropoff_coords[3])
 	new /obj/effect/pod_landingzone(return_turf, src)
 
-/obj/structure/closet/supplypod/proc/pre_open() //Called before the open_pod() proc. Handles anything that occurs right as the pod lands.
+/obj/structure/closet/supplypod/proc/pre_open() // Called before the open_pod() proc.. Handles anything that occurs right as the pod lands.
 	var/turf/turf_underneath = get_turf(src)
 	var/list/boom = explosionSize
 	resistance_flags = initial(resistance_flags)
@@ -367,7 +367,7 @@
 		opened = TRUE //We set opened to TRUE to avoid spending time trying to open (due to being deleted) during the Destroy() proc
 		qdel(src)
 		return
-	if (ispath(style, /datum/pod_style/gondola)) //Checks if we are supposed to be a gondola pod. If so, create a gondolapod mob, and move this pod to nullspace. I'd like to give a shout out, to my man oranges
+	if (ispath(style, /datum/pod_style/gondola)) // Checks if we are supposed to be a gondola pod.. If so, create a gondolapod mob, and move this pod to nullspace.. I'd like to give a shout out, to my man oranges
 		var/mob/living/basic/pet/gondola/gondolapod/benis = new(turf_underneath, src)
 		benis.contents |= contents //Move the contents of this supplypod into the gondolapod mob.
 		for (var/mob/living/mob_in_pod in benis.contents)
@@ -387,9 +387,9 @@
 		return
 	holder.set_opened()
 	var/turf/turf_underneath = get_turf(holder) //Get the turf of whoever's contents we're talking about
-	if (istype(holder, /mob)) //Allows mobs to assume the role of the holder, meaning we look at the mob's contents rather than the supplypod's contents. Typically by this point the supplypod's contents have already been moved over to the mob's contents
+	if (istype(holder, /mob)) // Allows mobs to assume the role of the holder, meaning we look at the mob's contents rather than the supplypod's contents.. Typically by this point the supplypod's contents have already been moved over to the mob's contents
 		var/mob/holder_as_mob = holder
-		if (holder_as_mob.key && !forced && !broken) //If we are player controlled, then we shouldn't open unless the opening is manual, or if it is due to being destroyed (represented by the "broken" parameter)
+		if (holder_as_mob.key && !forced && !broken) // If we are player controlled, then we shouldn't open unless the opening is manual. If it is due to being destroyed (represented by the "broken" parameter)
 			return
 	if (openingSound)
 		playsound(get_turf(holder), openingSound, soundVolume, FALSE, FALSE) //Special admin sound to play
@@ -413,7 +413,7 @@
 /obj/structure/closet/supplypod/proc/start_exit_sequence(atom/movable/holder)
 	if (leavingSound)
 		playsound(get_turf(holder), leavingSound, soundVolume, FALSE, FALSE)
-	if (reversing) //If we're reversing, we call the close proc. This sends the pod back up to centcom
+	if (reversing) // If we're reversing, we call the close proc.. This sends the pod back up to centcom
 		close(holder)
 	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a separate holder exists)
 		delete_rubble()
@@ -423,7 +423,7 @@
 		if (holder != src)
 			qdel(holder)
 
-/obj/structure/closet/supplypod/close(atom/movable/holder) //Closes the supplypod and sends it back to centcom. Should only ever be called if the "reversing" variable is true
+/obj/structure/closet/supplypod/close(atom/movable/holder) // Closes the supplypod and sends it back to centcom.. Should only ever be called if the "reversing" variable is true
 	if (!holder)
 		return
 	take_contents(holder)
@@ -518,7 +518,7 @@
 	reverse_dropoff_coords = list(picked_turf.x, picked_turf.y, picked_turf.z)
 	return ..()
 
-/obj/structure/closet/supplypod/set_opened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open_pod() proc for more details
+/obj/structure/closet/supplypod/set_opened() // Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod.. Check the open_pod() proc for more details
 	opened = TRUE
 	set_density(FALSE)
 	update_appearance()
@@ -717,11 +717,11 @@
 		else if (istype(single_order, /atom/movable))
 			var/atom/movable/O = single_order
 			O.forceMove(pod)
-	for (var/mob/living/mob_in_pod in pod) //If there are any mobs in the supplypod, we want to set their view to the pod_landingzone. This is so that they can see where they are about to land
+	for (var/mob/living/mob_in_pod in pod) // If there are any mobs in the supplypod, we want to set their view to the pod_landingzone.. This is so that they can see where they are about to land
 		mob_in_pod.reset_perspective(src)
 	if(pod.effectStun) //If effectStun is true, stun any mobs caught on this pod_landingzone until the pod gets a chance to hit them
 		for (var/mob/living/target_living in get_turf(src))
-			target_living.Stun(pod.delays[POD_TRANSIT]+10, ignore_canstun = TRUE)//you ain't goin nowhere, kid.
+			target_living.Stun(pod.delays[POD_TRANSIT]+10, ignore_canstun = TRUE)// you is not goin nowhere, kid.
 	if (arrival_time < pod.fallingSoundLength)
 		pod.fallingSoundLength = 3 //The default falling sound is a little long, so if the landing time is shorter than the default falling sound, use a special, shorter default falling sound
 		pod.fallingSound = 'sound/items/weapons/mortar_whistle.ogg'
@@ -734,11 +734,11 @@
 /obj/effect/pod_landingzone/proc/play_falling_sound()
 	playsound(src, pod.fallingSound, pod.soundVolume, TRUE, 6)
 
-/obj/effect/pod_landingzone/proc/begin_launch(effectCircle) //Begin the animation for the pod falling. The effectCircle param determines whether the pod gets to come in from any descent angle
+/obj/effect/pod_landingzone/proc/begin_launch(effectCircle) // Begin the animation for the pod falling.. The effectCircle param determines whether the pod gets to come in from any descent angle
 	pod.add_glow()
 	pod.update_appearance()
 	pod.forceMove(drop_location())
-	for (var/mob/living/M in pod) //Remember earlier (initialization) when we moved mobs into the pod_landingzone so they wouldnt get lost in nullspace? Time to get them out
+	for (var/mob/living/M in pod) // Remember earlier (initialization) when we moved mobs into the pod_landingzone so they wouldnt get lost in nullspace?. Time to get them out
 		M.reset_perspective(null)
 	var/angle = effectCircle ? rand(0,360) : rand(70,110) //The angle that we can come in from
 	pod.pixel_x = cos(angle)*32*length(smoke_effects) //Use some ADVANCED MATHEMATICS to set the animated pod's position to somewhere on the edge of a circle with the center being the pod_landingzone
@@ -749,7 +749,7 @@
 	pod.layer = FLY_LAYER
 	SET_PLANE_EXPLICIT(pod, ABOVE_GAME_PLANE, src)
 	if (!ispath(pod.style, /datum/pod_style/invisible))
-		animate(pod, pixel_z = -1 * abs(sin(rotation))*4, pixel_x = SUPPLYPOD_X_OFFSET + (sin(rotation) * 20), time = pod.delays[POD_FALLING], easing = LINEAR_EASING) //Make the pod fall! At an angle!
+		animate(pod, pixel_z = -1 * abs(sin(rotation))*4, pixel_x = SUPPLYPOD_X_OFFSET + (sin(rotation) * 20), time = pod.delays[POD_FALLING], easing = LINEAR_EASING) // Make the pod fall!. At an angle!
 	addtimer(CALLBACK(src, PROC_REF(end_launch)), pod.delays[POD_FALLING], TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 /obj/effect/pod_landingzone/proc/setup_smoke(rotation)
@@ -785,9 +785,9 @@
 	SET_PLANE(pod, initial(pod.plane), our_turf)
 	pod.end_glow()
 	QDEL_NULL(helper)
-	pod.pre_open() //Begin supplypod open procedures. Here effects like explosions, damage, and other dangerous (and potentially admin-caused, if the centcom_podlauncher datum was used) memes will take place
+	pod.pre_open() // Begin supplypod open procedures.. Here effects like explosions, damage, and other dangerous (and potentially admin-caused, if the centcom_podlauncher datum was used) memes will take place
 	draw_smoke()
-	qdel(src) //The pod_landingzone's purpose is complete. It can rest easy now
+	qdel(src) // The pod_landingzone's purpose is complete.. It can rest easy now
 
 //------------------------------------UPGRADES-------------------------------------//
 /obj/item/disk/cargo/bluespace_pod //Disk that can be inserted into the Express Console to allow for Advanced Bluespace Pods

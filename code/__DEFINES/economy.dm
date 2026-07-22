@@ -1,11 +1,11 @@
-/// Number of paychecks jobs start with at the creation of a new bank account for a player (So at shift-start or game join, but not a blank new account.)
+/// Number of paychecks jobs start with at the creation of a new bank account f.. A player (So at shift-start.. Game join.. Not a blank new account.)
 #define STARTING_PAYCHECKS 5
 /// How much mail the Economy SS will create per minute, regardless of firing time.
 #define MAX_MAIL_PER_MINUTE 3
 /// Probability of using letters of envelope sprites on all letters.
 #define FULL_CRATE_LETTER_ODDS 70
 
-//Current Paycheck values. Altering these changes both the cost of items meant for each paygrade, as well as the passive/starting income of each job.
+// Current Paycheck values... Altering these changes both the cost of items meant for each paygrade, as well as the passive/starting income of each job.
 ///Default paygrade for the Unassigned Job/Unpaid job assignments.
 #define PAYCHECK_ZERO 0
 ///Paygrade for Prisoners and Assistants.
@@ -72,7 +72,7 @@
 
 #define MAXIMUM_BOUNTY_JOBS 14 //Should be equal to the highest numbered non-random job above.
 
-//These defines are to be used to with the payment component, determines which lines will be used during a transaction. If in doubt, go with clinical.
+// These defines are to be used to with the payment component, determines which lines will be used during a transaction... If in doubt, go with clinical.
 #define PAYMENT_CLINICAL "clinical"
 #define PAYMENT_FRIENDLY "friendly"
 #define PAYMENT_ANGRY "angry"
@@ -82,7 +82,7 @@
 #define MARKET_TREND_DOWNWARD -1
 #define MARKET_TREND_STABLE 0
 
-#define MARKET_EVENT_PROBABILITY 8 //Probability of a market event firing, in percent. Fires once per material, every stock market tick.
+#define MARKET_EVENT_PROBABILITY 8 // Probability of a market event firing, in percent... Fires once per material, every stock market tick.
 /// How much of the total value of a bounty cube does the player receive when the cube is exported?
 #define BOUNTY_CUT_STANDARD 0.3
 

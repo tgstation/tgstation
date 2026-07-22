@@ -9,7 +9,7 @@
 	// Make sure the cable has a powernet.
 	wire.powernet = new()
 	// Make sure the powernet has a good amount of power!
-	// mice bites check if there is ANY power in the powernet  and passes fine, but better safe than sorry
+	// mice bites check if there is ANY power in the powernet and passes fine, but better safe than sorry
 	wire.powernet.avail = 100000
 
 	var/turf/open/floor/stage = get_turf(wire)
@@ -24,10 +24,10 @@
 	biter.ai_controller.ai_traits |= RUN_WHILE_UNWATCHED
 	biter.ai_controller.set_ai_status(AI_STATUS_ON)
 
-	// Mouse eating is chance-based, so we set the hunting target directly, yes, this messed with the test from what it was before, but I'm not sure how to do it better :(
+	// Mouse eating is chance-based, so we set the hunting target directly, yes, this messed with the test from what it was before. I'm not sure how to do it better :(
 	biter.ai_controller.set_blackboard_key(BB_LOW_PRIORITY_HUNTING_TARGET, wire)
 
-	// Tick the tree until the hunt branch moves onto and bites the cable. Can we do this better in unit tests?? idk..
+	// Tick the tree until the hunt branch moves onto and bites the cable.. Can we do this better in unit tests??. I do not know
 	for(var/i in 1 to 5)
 		if(QDELETED(biter))
 			break

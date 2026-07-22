@@ -3,7 +3,7 @@
 	priority = TEST_LONGER
 
 /datum/unit_test/plane_layer_sanity/Run()
-	// This fucker's gonna be slow, I'm sorry
+	// This fucker's going to be slow, I'm sorry
 	for(var/mutable_appearance/appearance)
 		check_topdown_validity(appearance)
 	for(var/atom/thing)

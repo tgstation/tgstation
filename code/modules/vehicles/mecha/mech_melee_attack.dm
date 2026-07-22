@@ -82,7 +82,7 @@
 		else
 			return
 	mecha_attacker.visible_message(span_danger("[mecha_attacker] smashes [src]!"), span_danger("You smash [src]!"), null, COMBAT_MESSAGE_RANGE)
-	// Additionally destroy any grilles
+	// Also destroy any grilles
 	for(var/obj/structure/grille/grille in src.loc)
 		if(istype(grille))
 			grille.take_damage(mecha_attacker.force * 10, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker))

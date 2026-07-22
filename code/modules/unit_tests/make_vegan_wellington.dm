@@ -6,7 +6,7 @@
 	var/turf/griddle_loc = get_step(run_loc_floor_bottom_left, EAST)
 	var/turf/human_loc = get_step(run_loc_floor_bottom_left, NORTHEAST)
 
-	///allocate a table. We don't need it for anything other than cutting a meat slab into cutlets.
+	/// allocate a table.. We don't need it for anything other than cutting a meat slab into cutlets.
 	allocate(/obj/structure/table, table_loc)
 
 	var/obj/machinery/griddle/griddle = allocate(__IMPLIED_TYPE__, griddle_loc)

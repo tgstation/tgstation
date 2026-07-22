@@ -2,7 +2,7 @@
 /*
 	Blunt/Bone wounds
 */
-// TODO: well, a lot really, but i'd kill to get overlays and a bonebreaking effect like Blitz: The League, similar to electric shock skeletons
+// To do well, a lot really, but i'd kill to get overlays and a bonebreaking effect like Blitz: The League, similar to electric shock skeletons
 
 /datum/wound_pregen_data/bone
 	abstract = TRUE
@@ -274,7 +274,7 @@
 /datum/wound/blunt/bone/moderate/get_self_check_description(self_aware)
 	return span_warning("It feels dislocated!")
 
-/// Getting smushed in an airlock/firelock is a last-ditch attempt to try relocating your limb
+/// Getting smushed in an airlock/firelock is a last-ditch try to try relocating your limb
 /datum/wound/blunt/bone/moderate/proc/door_crush()
 	SIGNAL_HANDLER
 	if(prob(40))

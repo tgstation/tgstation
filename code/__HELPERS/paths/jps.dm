@@ -40,7 +40,7 @@
 		node_goal = previous_node.node_goal
 		heuristic = get_dist_euclidean(tile, node_goal)
 		f_value = number_tiles + heuristic
-	// otherwise, no parent node means this is from a subscan lateral scan, so we just need the tile for now until we call [datum/jps/proc/update_parent] on it
+	// otherwise, no parent node means this is from a subscan lateral scan, so we just need the tile f. Now until we call [datum/jps/proc/update_parent] on it
 
 /datum/jps_node/Destroy(force)
 	previous_node = null
@@ -62,18 +62,18 @@
 	var/atom/movable/requester
 	/// The turf we're trying to path to (note that this won't track a moving target)
 	var/turf/end
-	/// The open list/stack we pop nodes out from (TODO: make this a normal list and macro-ize the heap operations to reduce proc overhead)
+	/// The open list/stack we pop nodes out from to do make this a normal list and macro-ize the heap operations to reduce proc overhead)
 	var/datum/heap/open
 	/// The list we compile at the end if successful to pass back
 	var/list/path
-	///An assoc list that serves as the closed list. Key is the turf, points to true if we've seen it before
+	/// An assoc list that serves as the closed list.. Key is the turf, points to true if we've seen it before
 	var/list/found_turfs
 
 	/// How far away we have to get to the end target before we can call it quits
 	var/mintargetdist = 0
-	/// If we should delete the first step in the path or not. Used often because it is just the starting tile
+	/// If we should delete the first step in the path or not.. Used often because it is just the starting tile
 	var/skip_first = FALSE
-	///Defines how we handle diagonal moves. See __DEFINES/path.dm
+	/// Defines how we handle diagonal moves.. See __DEFINES/path.dm
 	var/diagonal_handling = DIAGONAL_REMOVE_CLUNKY
 
 /datum/pathfind/jps/proc/setup(atom/movable/requester, list/access, max_distance, simulated_only, avoid, list/datum/callback/on_finish, atom/goal, mintargetdist, skip_first, diagonal_handling)
@@ -140,7 +140,7 @@
 	return TRUE
 
 /datum/pathfind/jps/finished()
-	//we're done! turn our reversed path (end to start) into a path (start to end)
+	// we're done!. turn our reversed path (end to start) into a path (start to end)
 	found_turfs = null
 	QDEL_NULL(open)
 

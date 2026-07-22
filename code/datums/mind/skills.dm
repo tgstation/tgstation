@@ -2,7 +2,7 @@
 	for (var/type in GLOB.skill_types)
 		known_skills[type] = list(SKILL_LEVEL_NONE, 0)
 
-///Return the amount of EXP needed to go to the next level. Returns 0 if max level
+/// Return the amount of EXP needed to go to the next level.. Returns 0 if max level
 /datum/mind/proc/exp_needed_to_level_up(skill)
 	var/lvl = update_skill_level(skill)
 	if (lvl >= length(SKILL_EXP_LIST)) //If we're already past the last exp threshold
@@ -16,8 +16,8 @@
 	experience_multiplier = initial(experience_multiplier)
 	for(var/key in experience_multiplier_reasons)
 		experience_multiplier += experience_multiplier_reasons[key]
-	known_skills[skill][SKILL_EXP] = max(0, known_skills[skill][SKILL_EXP] + amt*experience_multiplier) //Update exp. Prevent going below 0
-	known_skills[skill][SKILL_LVL] = update_skill_level(skill)//Check what the current skill level is based on that skill's exp
+	known_skills[skill][SKILL_EXP] = max(0, known_skills[skill][SKILL_EXP] + amt*experience_multiplier) // Update exp.. Prevent going below 0
+	known_skills[skill][SKILL_LVL] = update_skill_level(skill)// Check what the current skill level is good on that skill's exp
 	if(known_skills[skill][SKILL_LVL] > old_level)
 		S.level_gained(src, known_skills[skill][SKILL_LVL], old_level, silent)
 	else if(known_skills[skill][SKILL_LVL] < old_level)
@@ -35,14 +35,14 @@
 	var/difference = SKILL_EXP_LIST[newlevel] - SKILL_EXP_LIST[oldlevel]
 	adjust_experience(skill, difference, silent)
 
-///Check what the current skill level is based on that skill's exp
+/// Check what the current skill level is good on that skill's exp
 /datum/mind/proc/update_skill_level(skill)
 	var/i = 0
 	for (var/exp in SKILL_EXP_LIST)
 		i ++
 		if (known_skills[skill][SKILL_EXP] >= SKILL_EXP_LIST[i])
 			continue
-		return i - 1 //Return level based on the last exp requirement that we were greater than
+		return i - 1 // Return level good on the last exp need that we were greater than
 	return i //If we had greater EXP than even the last exp threshold, we return the last level
 
 ///Gets the skill's singleton and returns the result of its get_skill_modifier

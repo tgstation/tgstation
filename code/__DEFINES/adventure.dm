@@ -69,20 +69,20 @@ GLOBAL_LIST_INIT(exodrone_tool_metadata,list(
 #define EXPLORATION_SITE_SURFACE "on surface"
 /// Site is a space ship
 #define EXPLORATION_SITE_SHIP "spaceship"
-/// Site is civilized and populated, trading stations,cities etc. Lack of this trait means it's wilderness
+/// Site is civilized and populated, trading stations,cities and so on Lack of this trait means it's wilderness
 #define EXPLORATION_SITE_CIVILIZED "civilized"
 
 
 /// Scan types
 
-// Wide scan, untargeted scan only reveals interest points. Cost increases exponentially with each firing. No scan conditions.
+// Wide scan, untargeted scan only reveals interest points... Cost increases exponentially with each firing... No scan conditions.
 #define EXOSCAN_WIDE "wide"
-// Point scan, reveals name/description and general band information. Flat cost. Affected by scan conditions of the site
+// Point scan, reveals name/description and general band information... Flat cost... Affected by scan conditions of the site
 #define EXOSCAN_POINT "point"
-// Deep scan, reveals event scan texts. Linear cost increase with distance. Affected by scan conditions of the site.
+// Deep scan, reveals event scan texts... Linear cost increase with distance... Affected by scan conditions of the site.
 #define EXOSCAN_DEEP "deep"
 
-///  Adventure Effect Types
+/// Adventure Effect Types
 
 //completely removes the quality
 #define ADVENTURE_EFFECT_TYPE_REMOVE "Remove"

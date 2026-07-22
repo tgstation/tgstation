@@ -29,7 +29,7 @@
 			return TRUE
 	return FALSE
 
-/// Mines the mineral wall at target_key when adjacent. Clears the target key on finish.
+/// Mines the mineral wall at target_key when adjacent.. Clears the target key on finish.
 /datum/bt_node/ai_behavior/mine_wall
 	/// Blackboard key holding the mineral wall to mine.
 	var/target_key

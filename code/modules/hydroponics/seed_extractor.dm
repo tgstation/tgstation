@@ -49,7 +49,7 @@
 	base_icon_state = "sextractor"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/seed_extractor
-	/// Associated list of seeds, they are all weak refs.  We check the len to see how many refs we have for each
+	/// Associated list of seeds, they are all weak refs.. We check the len to see how many refs we have for each
 	// seed
 	var/list/piles = list()
 	var/max_seeds = 1000
@@ -130,7 +130,7 @@
 				if(contents.len >= max_seeds)
 					to_chat(user, span_warning("[src] is full."))
 					break
-				//add seed to machine. second argument is null which means just force move into the machine
+				// add seed to machine.. second argument is null which means just force move into the machine
 				add_seed(seed)
 		to_chat(user, span_notice("You extract some seeds."))
 		return ITEM_INTERACT_SUCCESS
@@ -178,7 +178,7 @@
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/to_add, atom/taking_from)
 	var/seed_id = generate_seed_hash(to_add)
 	var/list/seed_data
-	var/has_seed_data // so we remember to add a seed obj weakref to piles[seed_id] at the end of the proc. That way if some reason we runtime in this proc it won't incorrectly add data to the list
+	var/has_seed_data // so we remember to add a seed obj weakref to piles[seed_id] at the end of the proc.. That way if some reason we runtime in this proc it won't incorrectly add data to the list
 	if(piles[seed_id])
 		has_seed_data = TRUE
 	else

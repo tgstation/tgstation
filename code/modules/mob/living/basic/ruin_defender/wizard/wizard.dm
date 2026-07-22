@@ -22,7 +22,7 @@
 	basic_mob_flags = DEL_ON_DEATH
 	ai_controller = /datum/ai_controller/basic_controller/wizard
 
-	/// A list of possible wizard corpses, and therefore wizard outfits, to select from
+	/// A list of possible wizard corpses, and so wizard outfits, to select from
 	var/static/list/wizard_outfits = list(
 		/obj/effect/mob_spawn/corpse/human/wizard = 5,
 		/obj/effect/mob_spawn/corpse/human/wizard/red = 3,
@@ -31,10 +31,10 @@
 		/obj/effect/mob_spawn/corpse/human/wizard/marisa = 1,
 		//The tape wizard should go here, but its hat doesn't render correctly for some reason.
 	)
-	/// A specified wizard corpse spawner to use. If null, picks from the list above instead.
+	/// A specified wizard corpse spawner to use.. If null, picks from the list above instead.
 	var/selected_outfit
 
-	/// Typepath for the wizard's targeted spell. If null, selects randomly.
+	/// Typepath for the wizard's targeted spell.. If null, selects randomly.
 	var/targeted_spell_path
 	/// List of possible targeted spells to pick from
 	var/static/list/targeted_spell_list = list(
@@ -42,7 +42,7 @@
 		/datum/action/cooldown/spell/pointed/projectile/lightningbolt,
 	)
 
-	/// Typepath for the wizard's secondary spell. If null, selects randomly.
+	/// Typepath for the wizard's secondary spell.. If null, selects randomly.
 	var/secondary_spell_path
 	/// List of possible secondary spells to pick from
 	var/static/list/secondary_spell_list = list(

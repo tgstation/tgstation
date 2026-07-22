@@ -174,7 +174,7 @@
 	QDEL_NULL(gravity_aura)
 	return ..()
 
-// Carp rifts always take heavy explosion damage. Discourages the use of maxcaps
+// Carp rifts always take heavy explosion damage.. Discourages the use of maxcaps
 // and favours more weaker explosives to destroy the portal
 // as they have the same effect on the portal.
 /obj/structure/carp_rift/ex_act(severity, target)

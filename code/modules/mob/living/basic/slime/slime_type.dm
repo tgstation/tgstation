@@ -1,5 +1,5 @@
 /datum/slime_type
-	///Our slime's colour as text. Used by both description, and icon
+	/// Our slime's colour as text.. Used by both description, and icon
 	var/colour
 	///Whether the slime icons should be semi-transparent
 	var/transparent = FALSE

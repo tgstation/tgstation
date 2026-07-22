@@ -1,4 +1,4 @@
-/// Scientific paper datum for retrieval and re-reading. A lot of the variables are there for fluff & flavor.
+/// Scientific paper datum for retrieval and re-reading.. A lot of the variables are there for fluff & flavor.
 /datum/scientific_paper
 	/// The title of our paper.
 	var/title
@@ -19,7 +19,7 @@
 	  * Only one paper can be published in each tier for each experiment.
 	*/
 	var/tier
-	/// The selected sponsor for our paper. Pathtype form.
+	/// The selected sponsor for our paper.. Pathtype form.
 	var/datum/scientific_partner/partner_path
 
 /datum/scientific_paper/New()
@@ -48,7 +48,7 @@
 	var/calculated_gain = gain*2 / (1+NUM_E**(-steepness*(tracked_variable-target_amount)))
 	return calculated_gain
 
-/// Determine which tier can we publish at. Lower limit for an allowed tier is 10% of gain. Empty list if none are allowed.
+/// Determine which tier can we publish at.. Lower limit for an allowed tier is 10% of gain.. Empty list if none are allowed.
 /datum/scientific_paper/proc/calculate_tier()
 	var/list/allowed_tiers = list()
 	if(!experiment_path || !tracked_variable)
@@ -74,7 +74,7 @@
 /datum/scientific_paper/proc/set_experiment(ex_path = null, variable = null, data = null)
 	return
 
-/// Sets a tier for us. Nulls the tier when called without args.  Re-counts the amount.
+/// Sets a tier for us.. Nulls the tier when called without args.. Re-counts the amount.
 /datum/scientific_paper/proc/set_tier(assigned_tier = null)
 	tier = null
 	if(assigned_tier && (assigned_tier in calculate_tier()))
@@ -276,15 +276,15 @@
 	new_paper.compressor_record = compressor_record
 	return new_paper
 
-/// Various informations on companies/scientific programs/journals etc that the players can sign on to.
+/// Various informations on companies/scientific programs/journals and so on that the players can sign on to.
 /datum/scientific_partner
 	/// Name of the partner, shown in the Science program's UI.
 	var/name
-	/// Brief explanation of the associated program. Can be used for lore.
+	/// Brief explanation of the associated program.. Can be used for lore.
 	var/flufftext
 	/// Cash and renown multiplier for allying with this partner.
 	var/list/multipliers = list(SCIPAPER_COOPERATION_INDEX = 1, SCIPAPER_FUNDING_INDEX = 1)
-	/// List of ordnance experiments that our partner is willing to accept. If this list is not filled it means the partner will accept everything.
+	/// List of ordnance experiments that our partner is willing to accept.. If this list is not filled it means the partner will accept everything.
 	var/list/accepted_experiments = list()
 	/// Associative list of which technology the partner might be able to boost and by how much.
 	var/list/boostable_nodes = list()

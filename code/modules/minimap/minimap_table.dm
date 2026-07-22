@@ -27,7 +27,7 @@
 	var/startup = FALSE
 	/// Pixel X offset for projected hologram overlays.
 	var/animation_x = -15
-	/// Pixel Y offset for projected hologram overlays.
+	/// Pixel Why offset for projected hologram overlays.
 	var/animation_y = 18
 	/// Startup/closing animation duration.
 	var/animation_duration = 5.1 SECONDS

@@ -68,7 +68,7 @@
 	var/turf/current_turf = get_location()
 	var/turf/destination = locate(target_X, target_Y, current_turf?.z)
 
-	// We're already here! No need to do anything.
+	// We're already here!. No need to do anything.
 	if(current_turf == destination)
 		finished.set_output(COMPONENT_SIGNAL)
 		old_dest = null
@@ -79,18 +79,18 @@
 	// If we're going to the same place and the cooldown hasn't subsided, we're probably on the same path as before
 	if (destination == old_dest && TIMER_COOLDOWN_RUNNING(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME))
 
-		// Check if the current turf is the same as the current turf we're supposed to be in. If so, then we set the next step as the next turf on the list
+		// Check if the current turf is the same as the current turf we're supposed to be in.. If so, then we set the next step as the next turf on the list
 		if(current_turf == next_turf)
 			popleft(path)
 			next_turf = get_turf(path[1])
 			output.set_output(next_turf)
 
-			// Restart the cooldown since we don't need a new path ( TIMER_COOLDOWN_START might restart the timer by itself and i dont need to call TIMER_COOLDOWN_END, but better safe than sorry )
+			// Restart the cooldown since we don't need a new path ( TIMER_COOLDOWN_START might restart the timer by itself. I dont need to call TIMER_COOLDOWN_END. Better safe than sorry )
 			TIMER_COOLDOWN_END(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME)
 			TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME, same_path_cooldown)
 
 
-	else // Either we're not going to the same place or the cooldown is over. Either way, we need a new path
+	else // Either we're not going to the same place or the cooldown is over.. Either way, we need a new path
 
 		if(destination != old_dest && TIMER_COOLDOWN_RUNNING(parent, COOLDOWN_CIRCUIT_PATHFIND_DIF))
 			failed.set_output(COMPONENT_SIGNAL)

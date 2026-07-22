@@ -46,6 +46,6 @@
 			SSdiscord.notify_members -= sender.mention
 			return new /datum/tgs_message_content("You will no longer be notified when the server restarts")
 
-	// If we got here, they arent in the list. Chuck 'em in!
+	// If we got here, they arent in the list.. Chuck 'em in!
 	SSdiscord.notify_members += sender.mention
 	return new /datum/tgs_message_content("You will now be notified when the server restarts")

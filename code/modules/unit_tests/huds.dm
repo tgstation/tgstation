@@ -17,7 +17,7 @@
 	REMOVE_TRAIT(dummy, TRAIT_SECURITY_HUD, TRAIT_SOURCE_UNIT_TESTS)
 	TEST_ASSERT(!testhud.hud_users_all_z_levels[dummy], "HUD not removed when trait of HUD was removed")
 
-///We're gonna give every HUD type to a mob to see if they are missing action intent/health doll.
+/// We're going to give every HUD type to a mob to see if they are missing action intent/health doll.
 ///This destroys the HUD of the mob we're using (but it doesn't matter cause it's a test)
 /datum/unit_test/verify_basic_huds
 

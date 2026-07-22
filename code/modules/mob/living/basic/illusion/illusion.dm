@@ -39,7 +39,7 @@
 		return parent_mob.examine(user)
 	return ..()
 
-/// Signal handler for when we attack something. Hook for replicating on standard behavior, with additional behavior on subtypes.
+/// Signal handler for when we attack something.. Hook for replicating on standard behavior, with additional behavior on subtypes.
 /mob/living/basic/illusion/proc/on_preattack(mob/living/source, atom/attacked_target)
 	SIGNAL_HANDLER
 	try_replicate()

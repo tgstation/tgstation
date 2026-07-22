@@ -1,10 +1,10 @@
 #define FLY_INFUSED_ORGAN_DESC "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
 #define FLY_INFUSED_ORGAN_ICON pick("brain-x-d", "liver-x", "kidneys-x", "spinner-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
-///bonus of the fly: you... are a flyperson now. sorry.
+/// bonus of the fly: you.... are a flyperson now.. sorry.
 /datum/status_effect/organ_set_bonus/fly
 	id = "organ_set_bonus_fly"
-	organs_needed = 4 //there are actually 7 fly organs that count, but you only need 4 to go full-flyperson. Be careful!
+	organs_needed = 4 // there are actually 7 fly organs that count, but you only need 4 to go full-flyperson.. Be careful!
 	bonus_activate_text = null
 	bonus_deactivate_text = null
 
@@ -135,7 +135,7 @@
 /obj/item/organ/appendix/fly/update_appearance(updates=ALL)
 	return ..(updates & ~(UPDATE_NAME|UPDATE_ICON)) //don't set name or icon thank you
 
-//useless organs we throw in just to fuck with surgeons a bit more. they aren't part of a bonus, just the (absolute) state of flies
+// useless organs we throw in just to fuck with surgeons a bit more.. they aren't part of a bonus, just the (absolute) state of flies
 /obj/item/organ/fly
 	desc = FLY_INFUSED_ORGAN_DESC
 
@@ -144,7 +144,7 @@
 	name = odd_organ_name()
 	icon_state = FLY_INFUSED_ORGAN_ICON
 
-/obj/item/organ/fly/groin //appendix is the only groin organ so we gotta have one of these too lol
+/obj/item/organ/fly/groin // appendix is the only groin organ so we got to have one of these too lol
 	zone = BODY_ZONE_PRECISE_GROIN
 
 #undef FLY_INFUSED_ORGAN_DESC

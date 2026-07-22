@@ -40,8 +40,8 @@
 #define RULESET_INVADER (1<<0)
 /// Multiple high impact rulesets cannot be selected unless we're at the highest tier
 #define RULESET_HIGH_IMPACT (1<<1)
-/// Ruleset can be configured by admins (implements /proc/configure_ruleset)
-/// Only implemented for midrounds currently
+/// Ruleset can be configured by admins adds /proc/configure_ruleset)
+/// Only added for midrounds currently
 #define RULESET_ADMIN_CONFIGURABLE (1<<2)
 /// Applied to rulesets which intentionally share a pref_flag with another rulesets
 /// Denotes multiple rulesets which abide by the same preference, but are each a variation of some base ruleset

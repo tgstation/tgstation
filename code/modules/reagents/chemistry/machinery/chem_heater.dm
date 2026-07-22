@@ -168,7 +168,7 @@
 	if(!on || !is_operational || QDELETED(beaker) || !beaker.reagents.total_volume)
 		return FALSE
 
-	//heat the beaker and use some power. we want to use only a small amount of power since this proc gets called frequently
+	// heat the beaker and use some power.. we want to use only a small amount of power since this proc gets called frequently
 	var/energy = (target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * beaker.reagents.heat_capacity()
 	beaker.reagents.adjust_thermal_energy(energy)
 	use_energy(active_power_usage + abs(ROUND_UP(energy) / 120))
@@ -180,7 +180,7 @@
 	//adjust temp
 	heat_reagents(seconds_per_tick)
 
-	//send updates to ui. faster than SStgui.update_uis
+	// send updates to ui.. faster than SStgui.update_uis
 	for(var/datum/tgui/ui in src.open_uis)
 		ui.send_update()
 
@@ -193,7 +193,7 @@
 		//create new reactions after temperature adjust
 		beaker.reagents.handle_reactions()
 
-	//send updates to ui. faster than SStgui.update_uis
+	// send updates to ui.. faster than SStgui.update_uis
 	for(var/datum/tgui/ui in src.open_uis)
 		ui.send_update()
 
@@ -387,7 +387,7 @@
 	reagents.maximum_volume = 2000
 	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 1000)
 	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 1000)
-	heater_coefficient = 0.4 //hack way to upgrade
+	heater_coefficient = 0.4 // temporary solution way to upgrade
 
 //map load types
 /obj/machinery/chem_heater/withbuffer

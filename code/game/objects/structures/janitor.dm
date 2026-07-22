@@ -6,7 +6,7 @@
 	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "mopbucket"
 	density = TRUE
-	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
+	var/amount_per_transfer_from_this = 5 // shit I do not know adding this so syringes stop runtime erroring.. --NeoFite
 	/// The icon used for the water overlay
 	var/water_icon = "mopbucket_water"
 

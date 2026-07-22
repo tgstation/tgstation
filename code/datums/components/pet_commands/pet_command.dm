@@ -173,7 +173,7 @@
 	commander.update_mouse_pointer()
 
 
-/// Called when this command is replaced by another command or otherwise deactivated. Extend to add cleanup logic.
+/// Called when this command is replaced by another command or otherwise deactivated.. Extend to add cleanup logic.
 /datum/pet_command/proc/command_ended(datum/ai_controller/controller)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, null)
 	return

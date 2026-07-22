@@ -1,5 +1,5 @@
 /datum/award
-	///Name of the achievement, If null it won't show up in the achievement browser. (Handy for inheritance trees)
+	/// Name of the achievement, If null it won't show up in the achievement browser.. (Handy for inheritance trees)
 	var/name
 	var/desc = "You did it."
 	///The dmi icon file that holds the award's icon state.
@@ -254,7 +254,7 @@
 	return
 
 /datum/award/score/progress/vv_edit_var(var_name, var_value)
-	//These variable is associated for sql queries. We can't allow it to be edited.
+	// These variable is associated for sql queries.. We can't allow it to be edited.
 	if(var_name == NAMEOF(src, changed_entries))
 		return FALSE
 	return ..()
@@ -284,7 +284,7 @@
 	if(sound_to_send)
 		SEND_SOUND(user, sound_to_send)
 
-///Compose the string to send to the user's chat when the progress is made. This one here is generic, but you should override it really.
+/// Compose the string to send to the user's chat when the progress is made.. This one here is generic, but you should override it really.
 /datum/award/score/progress/proc/get_progress_string(progress_string)
 	return span_greenannounce("New progress made for [name]: <B>[progress_string]!</B>")
 
@@ -323,7 +323,7 @@
 	. = ..()
 	award_data["value"] = length(holder.data[type])
 
-///We don't care much about the default value, which is only used for high scores. Instead, we get the entries string from the db.
+/// We don't care much about the default value, which is only used for high scores.. Instead, we get the entries string from the db.
 /datum/award/score/progress/get_raw_value(key)
 	var/list/entries = list()
 	var/datum/db_query/get_entries_load = SSdbcore.NewQuery(

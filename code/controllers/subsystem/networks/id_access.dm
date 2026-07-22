@@ -5,38 +5,38 @@ SUBSYSTEM_DEF(id_access)
 	name = "IDs and Access"
 	ss_flags = SS_NO_FIRE
 
-	/// Dictionary of access flags. Keys are accesses. Values are their associated bitflags.
+	/// Dictionary of access flags.. Keys are accesses.. Values are their associated bitflags.
 	var/list/flags_by_access = list()
-	/// Dictionary of access lists. Keys are access flag names. Values are lists of all accesses as part of that access.
+	/// Dictionary of access lists.. Keys are access flag names.. Values are lists of all accesses as part of that access.
 	var/list/accesses_by_flag = list()
-	/// Dictionary of access flag string representations. Keys are bitflags. Values are their associated names.
+	/// Dictionary of access flag string representations.. Keys are bitflags.. Values are their associated names.
 	var/list/access_flag_string_by_flag = list()
-	/// Dictionary of trim singletons. Keys are paths. Values are their associated singletons.
+	/// Dictionary of trim singletons.. Keys are paths.. Values are their associated singletons.
 	var/list/trim_singletons_by_path = list()
-	/// Dictionary of wildcard compatibility flags. Keys are strings for the wildcards. Values are their associated flags.
+	/// Dictionary of wildcard compatibility flags.. Keys are strings for the wildcards.. Values are their associated flags.
 	var/list/wildcard_flags_by_wildcard = list()
-	/// Dictionary of accesses based on station region. Keys are region strings. Values are lists of accesses.
+	/// Dictionary of accesses good on station region.. Keys are region strings.. Values are lists of accesses.
 	var/list/accesses_by_region = list()
 	/// Specially formatted list for sending access levels to tgui interfaces.
 	var/list/all_region_access_tgui = list()
-	/// Dictionary of access names. Keys are access levels. Values are their associated names.
+	/// Dictionary of access names.. Keys are access levels.. Values are their associated names.
 	var/list/desc_by_access = list()
 	/// List of accesses for the Heads of each sub-department alongside the regions they control and their job name.
 	var/list/sub_department_managers_tgui = list()
-	/// Helper list containing all trim paths that can be used as job templates. Intended to be used alongside logic for ACCESS_CHANGE_IDS. Grab templates from sub_department_managers_tgui for Head of Staff restrictions.
+	/// Helper list containing all trim paths that can be used as job templates.. Intended to be used alongside logic for ACCESS_CHANGE_IDS.. Grab templates from sub_department_managers_tgui for Head of Staff restrictions.
 	var/list/station_job_templates = list()
 	/// Helper list containing all trim paths that can be used as Centcom templates.
 	var/list/centcom_job_templates = list()
-	/// Helper list containing all PDA paths that can be painted by station machines. Intended to be used alongside logic for ACCESS_CHANGE_IDS. Grab templates from sub_department_managers_tgui for Head of Staff restrictions.
+	/// Helper list containing all PDA paths that can be painted by station machines.. Intended to be used alongside logic for ACCESS_CHANGE_IDS.. Grab templates from sub_department_managers_tgui for Head of Staff restrictions.
 	var/list/station_pda_templates = list()
 	/// Helper list containing all station regions.
 	var/list/station_regions = list()
 
-	/// The roundstart generated code for the spare ID safe. This is given to the Captain on shift start. If there's no Captain, it's given to the HoP. If there's no HoP
+	/// The roundstart generated code for the spare ID safe.. This is given to the Captain on shift start.. If there's no Captain, it's given to the HoP.. If there's no HoP
 	var/spare_id_safe_code = ""
 
 /datum/controller/subsystem/id_access/Initialize()
-	// We use this because creating the trim singletons requires the config to be loaded.
+	// We use this because creating the trim singletons needs the config to be loaded.
 	setup_access_flags()
 	setup_region_lists()
 	setup_trim_singletons()
@@ -586,7 +586,7 @@ SUBSYSTEM_DEF(id_access)
 		.["accesses"] = id_card.access
 		var/datum/bank_account/id_account = id_card.registered_account
 		if(istype(id_card, /obj/item/card/id/advanced/chameleon) && !bypass_chameleon)
-			// Generate a bogey record based only on the ID card
+			// Generate a bogey record good only on the ID card
 			// Generates a random bank account number every time as a 'spot the thread' for anyone who
 			// went through records for this entry for whatever reason.
 			.["account_id"] = rand(111111, 999999)

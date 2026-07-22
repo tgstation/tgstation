@@ -1,6 +1,6 @@
 /// How much terror is applied upon first cast of Terrify
 #define TERROR_INITIAL_AMOUNT 100
-/// Amount of terror caused by subsequent casting of the Terrify spell.
+/// Amount of terror caused by next casting of the Terrify spell.
 #define STACK_TERROR_AMOUNT 135
 
 /datum/status_effect/terrified
@@ -19,7 +19,7 @@
 	owner.RemoveComponentSource("terrified", /datum/component/fearful)
 
 /datum/status_effect/terrified/refresh(effect, ...)
-	// Jank way of adding terror to the existing component
+	// Low quality code way of adding terror to the existing component
 	owner.AddComponentFrom("terrified", /datum/component/fearful, null, STACK_TERROR_AMOUNT)
 
 /// The status effect popup for the terror status effect

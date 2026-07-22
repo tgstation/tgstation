@@ -253,7 +253,7 @@
 		duel.confirmations[src] = TRUE
 		to_chat(user,span_notice("You confirm your readiness."))
 		return
-	else if(!is_duelist(target)) //I kinda want to leave this out just to see someone shoot a bystander or missing.
+	else if(!is_duelist(target)) // I kind of want to leave this out just to see someone shoot a bystander or missing.
 		to_chat(user,span_warning("[src] safety system prevents shooting anyone but your designated opponent."))
 		return
 	else

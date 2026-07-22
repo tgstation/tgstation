@@ -1,5 +1,5 @@
 /// Accepts visible food that has no kitten (other than the pawn) nearby.
-/// Pair with a food typecache source (e.g. oview_typed/from_bb_key/basic_foods).
+/// Pair with a food typecache source (e.g.. oview_typed/from_bb_key/basic_foods).
 /datum/targeting_strategy/cat_food
 
 /datum/targeting_strategy/cat_food/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)

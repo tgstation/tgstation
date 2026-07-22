@@ -2,11 +2,11 @@
 /datum/id_trim/away
 	access = list(ACCESS_AWAY_GENERAL)
 
-/// Trim for the hotel ruin. Not Hilbert's Hotel.
+/// Trim for the hotel ruin.. Not Hilbert's Hotel.
 /datum/id_trim/away/hotel
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINTENANCE)
 
-/// Trim for the hotel ruin. Not Hilbert's Hotel.
+/// Trim for the hotel ruin.. Not Hilbert's Hotel.
 /datum/id_trim/away/hotel/security
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINTENANCE, ACCESS_AWAY_SEC)
 

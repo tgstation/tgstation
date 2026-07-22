@@ -31,7 +31,7 @@
 
 // Blackness renders weird when you view down openspace, because of transforms and borders and such
 // This is a consequence of not using lummy's grouped transparency, but I couldn't get that to work without totally fucking up
-// Sight flags, and shooting vis_contents usage to the moon. So we're doin it different.
+// Sight flags, and shooting vis_contents usage to the moon.. So we're doin it different.
 // If image vis contents worked (it should in 515), and we were ok with a maptick cost (wait for threaded maptick) this could be fixed
 /atom/movable/screen/plane_master/rendering_plate/transparent
 	name = "Transparent plate"
@@ -112,7 +112,7 @@
 	var/turf/eye_location = get_turf(eye)
 	z_changed(new_hud, eye_location?.z)
 
-/// Updates ourselves based on our mob's preferences state
+/// Updates ourselves good on our mob's preferences state
 /atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/update_state(mob/mymob)
 	SSweather.particle_planemasters -= src
 	vis_contents.Cut()
@@ -302,7 +302,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	critical = PLANE_CRITICAL_DISPLAY
 	render_relay_planes = list(RENDER_PLANE_GAME)
-	/// A list of light cutoffs we're actively using, (mass, r, g, b) to avoid filter churn
+	/// A list of light cutoffs we're actively using, (mass, are g, b) to avoid filter churn
 	var/list/light_cutoffs
 
 /*!
@@ -331,12 +331,12 @@
 	if(!.)
 		return
 	// This applies a backdrop to our lighting plane
-	// Why do plane masters need a backdrop sometimes? Read https://secure.byond.com/forum/?post=2141928
+	// Why do plane masters need a backdrop sometimes?. Read https://secure.byond.com/forum/?post=2141928
 	// Basically, we need something to brighten
 	// unlit is perhaps less needed rn, it exists to provide a fullbright for things that can't see the lighting plane
 	// but we don't actually use invisibility to hide the lighting plane anymore, so it's pointless
 	var/atom/movable/screen/backdrop = mymob.overlay_fullscreen("lighting_backdrop_lit_[home.key]#[offset]", /atom/movable/screen/fullscreen/lighting_backdrop/lit)
-	// Need to make sure they're on our plane, ALL the time. We always need a backdrop
+	// Need to make sure they're on our plane, ALL the time.. We always need a backdrop
 	SET_PLANE_EXPLICIT(backdrop, PLANE_TO_TRUE(backdrop.plane), src)
 	backdrop = mymob.overlay_fullscreen("lighting_backdrop_unlit_[home.key]#[offset]", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
 	SET_PLANE_EXPLICIT(backdrop, PLANE_TO_TRUE(backdrop.plane), src)
@@ -361,7 +361,7 @@
 	offset_change(new_offset)
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/proc/offset_change(mob_offset)
-	// Offsets stack down remember. This implies that we're above the mob's view plane, and shouldn't render
+	// Offsets stack down remember.. This implies that we're above the mob's view plane, and shouldn't render
 	if(offset < mob_offset)
 		disable_alpha()
 	else
@@ -398,7 +398,7 @@
 	color = list(255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255, 0,0,0,0)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = LIGHT_MASK_RENDER_TARGET
-	// We blend against the game plane, so she's gotta multiply!
+	// We blend against the game plane, so she's got to multiply!
 	blend_mode = BLEND_MULTIPLY
 	render_relay_planes = list(RENDER_PLANE_GAME)
 
@@ -427,7 +427,7 @@
 	// If we CAN'T see through the black, then draw er down brother!
 	else
 		emissive.remove_filter("lighting_mask")
-		// We max alpha here, so our darkness is actually.. dark
+		// We max alpha here, so our darkness is actually... dark
 		// Can't do it before cause it fucks with the filter
 		add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME, offset), relay_color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,1))
 
@@ -548,7 +548,7 @@
 	SIGNAL_HANDLER
 	hide_plane(source)
 
-///render plate for OOC stuff like ghosts, hud-screen effects, etc
+/// render plate for OOC stuff like ghosts, hud-screen effects, and so on
 /atom/movable/screen/plane_master/rendering_plate/non_game
 	name = "Non-Game rendering plate"
 	documentation = "Renders anything that's out of character. Mostly useful as a converse to the game rendering plate."
@@ -654,7 +654,7 @@
 	// 2: lower planes (including offset ones) need to be layered below higher ones (because otherwise they'll render fucky)
 	// By multiplying LOWEST_EVER_PLANE by 30, we give 30 offsets worth of room to planes before they start going negative
 	// Bet
-	// We allow for manuel override if requested. careful with this
+	// We allow for manuel override if requested.. careful with this
 	relay.layer = relay_layer || (plane + abs(LOWEST_EVER_PLANE * 30)) //layer must be positive but can be a decimal
 	relay.blend_mode = blend_to_use
 	relay.mouse_opacity = mouse_opacity

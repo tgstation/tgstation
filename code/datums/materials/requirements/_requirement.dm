@@ -10,7 +10,7 @@
 	/// Maximum property values that materials need to have to pass
 	var/list/property_maximums = null
 
-/// Returns a string description of materials that'd fit this requirement
+/// Returns a string description of materials that'd fit this need
 /datum/material_requirement/proc/get_description()
 	var/list/flag_strings = list()
 	for (var/flag in bitfield_to_list(required_flags))
@@ -49,7 +49,7 @@
 
 	return TRUE
 
-// Actual requirement datums
+// Actual need datums
 /datum/material_requirement/armor_material
 	required_flags = ITEM_MATERIAL_CLASSES
 

@@ -167,13 +167,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		xray_module = null
 		update_appearance()
 		if(malf_xray_firmware_present)
-			malf_xray_firmware_active = malf_xray_firmware_present //re-enable firmware based upgrades after the part is removed.
+			malf_xray_firmware_active = malf_xray_firmware_present // re-enable firmware good upgrades after the part is removed.
 		removeXRay(malf_xray_firmware_present) //make sure we don't remove MALF upgrades.
 
 	else if(gone == emp_module)
 		emp_module = null
 		if(malf_emp_firmware_present)
-			malf_emp_firmware_active = malf_emp_firmware_present //re-enable firmware based upgrades after the part is removed.
+			malf_emp_firmware_active = malf_emp_firmware_present // re-enable firmware good upgrades after the part is removed.
 		removeEmpProof(malf_emp_firmware_present) //make sure we don't remove MALF upgrades
 
 	else if(gone == proximity_monitor)
@@ -248,7 +248,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 /obj/machinery/camera/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
-	//lasts twice as much so we don't have to constantly shoot cameras just to be S T E A L T H Y
+	// lasts twice as much so we don't have to constantly shoot cameras just to be S T E A L T H Why
 	emp_act(EMP_LIGHT, reset_time = disrupt_duration * 2)
 	return TRUE
 
@@ -282,7 +282,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	SScameras.update_visibility(src)
 
 /obj/machinery/camera/singularity_pull(atom/singularity, current_size)
-	if (camera_enabled && current_size >= STAGE_FIVE) // If the singulo is strong enough to pull anchored objects and the camera is still active, turn off the camera as it gets ripped off the wall.
+	if (camera_enabled && current_size >= STAGE_FIVE) // If the singulo is strong enough to pull anchored objects. The camera is still active, turn off the camera as it gets ripped off the wall.
 		toggle_cam(null, 0)
 	return ..()
 
@@ -292,13 +292,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(upgrade_dropped == xray_module)
 		xray_module = null
 		if(malf_xray_firmware_present)
-			malf_xray_firmware_active = malf_xray_firmware_present //re-enable firmware based upgrades after the part is removed.
+			malf_xray_firmware_active = malf_xray_firmware_present // re-enable firmware good upgrades after the part is removed.
 		update_appearance()
 
 	else if(upgrade_dropped == emp_module)
 		emp_module = null
 		if(malf_emp_firmware_present)
-			malf_emp_firmware_active = malf_emp_firmware_present //re-enable firmware based upgrades after the part is removed.
+			malf_emp_firmware_active = malf_emp_firmware_present // re-enable firmware good upgrades after the part is removed.
 
 	else if(upgrade_dropped == proximity_monitor)
 		proximity_monitor = null
@@ -370,7 +370,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		SScameras.remove_camera_from_chunk(src)
 		if (isarea(myarea))
 			LAZYREMOVE(myarea.cameras, src)
-	// We are not guarenteed that the camera will be on a turf. account for that
+	// We are not guarenteed that the camera will be on a turf.. account for that
 	var/change_msg = "deactivates"
 	if(camera_enabled)
 		change_msg = "reactivates"
@@ -411,9 +411,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		return FALSE
 	return TRUE
 
-/// Returns an alist of turfs in this camera's view. This includes turfs that are "obscured by darkness" from the camera's POV.
-/// Format is "alist[turf] = null", if you need to check individual objects use "length(can_see & list(turf))". Only "&" and "in" work for checking contents, but "in" is much slower.
-/// Always have the return value of can_see as the left-hand operand, otherwise it uses list checks instead of alist checks and your CPU time gets thrown in a blender.
+/// Returns an alist of turfs in this camera's view.. This includes turfs that are "obscured by darkness" from the camera's POV.
+/// Format is "alist[turf] = null", if you need to check individual objects use "length(can_see & list(turf))".. Only "&" and "in" work for checking contents, but "in" is much slower.
+/// Always have the return value of can_see as the left-h. Operand, otherwise it uses list checks instead of alist checks. Your CPU time gets thrown in a blender.
 /obj/machinery/camera/proc/can_see()
 	var/alist/see = alist()
 	var/turf/pos = get_turf(src)

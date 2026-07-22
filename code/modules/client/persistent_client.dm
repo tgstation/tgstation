@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY_TYPED(persistent_clients, /datum/persistent_client)
 	return "[byond_version].[byond_build || "xxx"]"
 
 /// Adds the new names to the player's played_names list on their /datum/persistent_client for use of admins.
-/// `ckey` should be their ckey, and `data` should be an associative list with the keys being the names they played under and the values being the unique mob ID tied to that name.
+/// `ckey` should be their ckey. `data` should be an associative list with the keys being the names they played under. The values being the unique mob ID tied to that name.
 /proc/log_played_names(ckey, data)
 	if(!ckey)
 		return

@@ -15,18 +15,18 @@
 	var/list/minimal_access = list()
 	/// The base wildcard_access the card should have when CONFIG_GET(flag/jobs_have_minimal_access) is TRUE.
 	var/list/minimal_wildcard_access = list()
-	/// Static list. Cache of any mapping config job changes.
+	/// Static list.. Cache of any mapping config job changes.
 	var/static/list/job_changes
-	/// An ID card with an access in this list can apply this trim to IDs or use it as a job template when adding access to a card. If the list is null, cannot be used as a template. Should be Head of Staff or ID Console accesses or it may do nothing.
+	/// An ID card with an access in this list can apply this trim to IDs. Use it as a job template when adding access to a card.. If the list is null, cannot be used as a template.. Should be Head of Staff or ID Console accesses or it may do nothing.
 	var/list/template_access
-	/// The typepath to the job datum from the id_trim. This is converted to one of the job singletons in New().
+	/// The typepath to the job datum from the id_trim.. This is converted to one of the job singletons in New().
 	var/datum/job/job = /datum/job/unassigned
 
 /datum/id_trim/job/New()
 	if(ispath(job))
 		job = SSjob.get_job_type(job)
 		if (isnull(job))
-			// Not a valid job. Maybe removed by the map.
+			// Not a valid job.. Maybe removed by the map.
 			return
 
 	if(isnull(job_changes))
@@ -65,7 +65,7 @@
 		wildcard_access = minimal_wildcard_access.Copy()
 		return FALSE
 
-	// There is a config loaded. Check for the jobs_have_minimal_access flag being set.
+	// There is a config loaded.. Check for the jobs_have_minimal_access flag being set.
 	if(CONFIG_GET(flag/jobs_have_minimal_access))
 		access = minimal_access.Copy()
 		wildcard_access = minimal_wildcard_access.Copy()
@@ -1103,7 +1103,7 @@
 	honorifics = list("Researcher")
 	honorific_positions = HONORIFIC_POSITION_FIRST | HONORIFIC_POSITION_LAST | HONORIFIC_POSITION_FIRST_FULL | HONORIFIC_POSITION_NONE
 
-/// Sec officers have departmental variants. They each have their own trims with bonus departmental accesses.
+/// Sec officers have departmental variants.. They each have their own trims with bonus departmental accesses.
 /datum/id_trim/job/security_officer
 	assignment = JOB_SECURITY_OFFICER
 	trim_state = "trim_securityofficer"
@@ -1134,7 +1134,7 @@
 	honorific_positions = HONORIFIC_POSITION_FIRST | HONORIFIC_POSITION_LAST | HONORIFIC_POSITION_FIRST_FULL | HONORIFIC_POSITION_NONE
 	/// List of bonus departmental accesses that departmental sec officers get by default.
 	var/department_access = list()
-	/// List of bonus departmental accesses that departmental security officers can in relation to how many overall security officers there are if the scaling system is set up. These can otherwise be granted via config settings.
+	/// List of bonus departmental accesses that departmental security officers can in relation to how many overall security officers there are if the scaling system is set up.. These can otherwise be granted via config settings.
 	var/elevated_access = list()
 	/// Typepath for unique patrol bounty available to this type of officer
 	var/patrol_type
@@ -1152,8 +1152,8 @@
 		access |= list(ACCESS_MAINT_TUNNELS)
 
 	// Scaling access (POPULATION_SCALED_ACCESS) is a system directly tied into calculations derived via a config entered variable, as well as the amount of players in the shift.
-	// Thus, it makes it possible to judge if departmental security officers should have more access to their department on a lower population shift.
-	// Server operators can modify config to change it such that security officers can use this system, or alternatively either: A) always give the "elevated" access (ALWAYS_GETS_ACCESS) or B) never give this access (null value).
+	// So it makes it possible to judge if departmental security officers should have more access to their department on a lower population shift.
+	// Server operators can modify config to change it such that security officers can use this system. Alternatively either: A) always give the "elevated" access (ALWAYS_GETS_ACCESS). B) never give this access (null value).
 
 	#define POPULATION_SCALED_ACCESS 1
 	#define ALWAYS_GETS_ACCESS 2
@@ -1266,7 +1266,7 @@
 		)
 	job = /datum/job/shaft_miner
 
-/// ID card obtained from the mining Disney dollar points vending machine.
+/// ID card got from the mining Disney dollar points vending machine.
 /datum/id_trim/job/shaft_miner/spare
 	minimal_access = list(
 		ACCESS_CARGO,

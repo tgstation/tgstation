@@ -14,7 +14,7 @@
 	var/cast_time = 3 SECONDS
 	/// True while currently casting the spell
 	var/casting = FALSE
-	/// List of prank implements you can find in your pockets
+	/// List of prank adds you can find in your pockets
 	var/static/list/clown_items = list(
 		/obj/item/bikehorn = 5,
 		/obj/item/food/pie/cream = 5,

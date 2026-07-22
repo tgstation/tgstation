@@ -63,7 +63,7 @@
 /mob/living/carbon/get_random_valid_zone(base_zone, base_probability = 80, list/blacklisted_parts, even_weights, bypass_warning)
 	var/list/limbs = list()
 	for(var/obj/item/bodypart/part as anything in get_bodyparts())
-		var/limb_zone = part.body_zone //cache the zone since we're gonna check it a ton.
+		var/limb_zone = part.body_zone // cache the zone since we're going to check it a ton.
 		if(limb_zone in blacklisted_parts)
 			continue
 		if(even_weights)
@@ -160,7 +160,7 @@
 #define TILES_PER_SECOND 0.7
 ///Shake the camera of the person viewing the mob SO REAL!
 ///Takes the mob to shake, the time span to shake for, and the amount of tiles we're allowed to shake by in tiles
-///Duration isn't taken as a strict limit, since we don't trust our coders to not make things feel shitty. So it's more like a soft cap.
+/// Duration isn't taken as a strict limit, since we don't trust our coders to not make things feel shitty.. So it's more like a soft cap.
 /proc/shake_camera(mob/M, duration, strength=1)
 	if(!M || !M.client || duration < 1)
 		return
@@ -201,7 +201,7 @@
 
 		last_x = x_pos
 		last_y = y_pos
-		//We go based on time spent, so there is a chance we'll overshoot our duration. Don't care
+		// We go good on time spent, so there is a chance we'll overshoot our duration.. Don't care
 		time_spent += time
 
 	animate(pixel_x=oldx, pixel_y=oldy, time=3)
@@ -243,7 +243,7 @@
 			return M
 	return 0
 
-///Returns a mob's real name between brackets. Useful when you want to display a mob's name alongside their real name
+/// Returns a mob's real name between brackets.. Useful when you want to display a mob's name alongside their real name
 /mob/proc/get_realname_string()
 	if(real_name && real_name != name)
 		return " \[[real_name]\]"
@@ -341,7 +341,7 @@
 
 ///Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to
 /proc/isAdminObserver(mob/user)
-	if(!user) //Are they a mob? Auto interface updates call this with a null src
+	if(!user) // Are they a mob?. Auto interface updates call this with a null src
 		return
 	if(!user.client) // Do they have a client?
 		return
@@ -352,7 +352,7 @@
 	return TRUE
 
 ///Returns TRUE/FALSE on whether the mob is an Admin Ghost AI.
-///This requires this snowflake check because AI interact gives the access to the mob's client, rather
+/// This needs this snowflake check because AI interact gives the access to the mob's client, rather
 ///than the mob like everyone else, and we keep it that way so they can't accidentally give someone Admin AI access.
 /proc/isAdminGhostAI(mob/user)
 	if(!isAdminObserver(user))
@@ -439,7 +439,7 @@
 		return LIGHTING_CUTOFF_FULLBRIGHT
 	return initial(lighting_cutoff)
 
-/// Returns a generic path of the object based on the slot
+/// Returns a generic path of the object good on the slot
 /proc/get_path_by_slot(slot_id)
 	switch(slot_id)
 		if(ITEM_SLOT_BACK)
@@ -571,9 +571,9 @@
 
 	return raw_lines
 
-/// Takes in an associated list (key `/datum/action` typepaths, value is the AI blackboard key) and handles granting the action and adding it to the mob's AI controller blackboard.
+/// Takes in an associated list (key `/datum/action` typepaths, value is the AI blackboard key). Handles granting the action. Adding it to the mob's AI controller blackboard.
 /// This is only useful in instances where you don't want to store the reference to the action on a variable on the mob.
-/// You can set the value to null if you don't want to add it to the blackboard (like in player controlled instances). Is also safe with null AI controllers.
+/// You can set the value to null if you don't want to add it to the blackboard (like in player controlled instances).. Is also safe with null AI controllers.
 /// Assumes that the action will be initialized and held in the mob itself, which is typically standard.
 /mob/proc/grant_actions_by_list(list/input)
 	if(length(input) <= 0)

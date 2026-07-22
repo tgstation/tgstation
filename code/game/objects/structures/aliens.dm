@@ -301,12 +301,12 @@
 	if(!COOLDOWN_FINISHED(src, growtime))
 		return
 	COOLDOWN_START(src, growtime, rand(minimum_growtime, maximum_growtime))
-	//attempt to grow all weeds in range
+	// try to grow all weeds in range
 	for(var/obj/structure/alien/weeds/growing_weed in range(node_range, src))
 		growing_weed.try_expand()
 
 /obj/structure/alien/weeds/node/set_base_icon()
-	return //No icon randomization at init. The node's icon is already well defined.
+	return // No icon randomization at init.. The node's icon is already well defined.
 
 /obj/structure/alien/weeds/creature
 	name = "gelatinous floor"

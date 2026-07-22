@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	/// An association list of turfs that have this element attached and their affected contents.
 	var/list/attached_turf_contents = list()
 
-	/// A list of generated immersion masks based on object width, height and whever they're fully immersed underwater
+	/// A list of generated immersion masks good on object width, height and whever they're fully immersed underwater
 	var/list/immersion_masks = list()
 	/// An assoc list of instances of /atom/movable/immerse_mask used as abstract effect relays, because god is dead
 	var/list/generated_visual_overlays = list()
@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	return ..()
 
 
-/// Makes the element start affecting the turf and its contents. Called on Attach() or when TRAIT_IMMERSE_STOPPED is removed.
+/// Makes the element start affecting the turf and its contents.. Called on Attach() or when TRAIT_IMMERSE_STOPPED is removed.
 /datum/element/immerse/proc/start_immersion(turf/source)
 	SIGNAL_HANDLER
 	RegisterSignals(source, list(COMSIG_ATOM_ABSTRACT_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON), PROC_REF(on_init_or_entered))
@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 			continue
 		on_init_or_entered(source, movable)
 
-/// Stops the element from affecting on the turf and its contents. Called on Detach() or when TRAIT_IMMERSE_STOPPED is added.
+/// Stops the element from affecting on the turf and its contents.. Called on Detach() or when TRAIT_IMMERSE_STOPPED is added.
 /datum/element/immerse/proc/stop_immersion(turf/source)
 	SIGNAL_HANDLER
 	UnregisterSignal(source, list(COMSIG_ATOM_ABSTRACT_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, COMSIG_ATOM_ABSTRACT_EXITED))
@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
 		add_immerse_overlay(buckled_mob)
 
-/// Called when a movable exits the turf. If its new location is not in the list of turfs with this element,
+/// Called when a movable exits the turf.. If its new location is not in the list of turfs with this element,
 /// remove the movable from the element.
 /datum/element/immerse/proc/on_atom_exited(turf/source, atom/movable/exited, direction)
 	SIGNAL_HANDLER
@@ -196,7 +196,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	UnregisterSignal(movable, list(COMSIG_LIVING_SET_BUCKLED, COMSIG_QDELETING, COMSIG_LIVING_UPDATE_OFFSETS, COMSIG_ATOM_SPIN_ANIMATION, COMSIG_LIVING_POST_UPDATE_TRANSFORM))
 	REMOVE_TRAIT(movable, TRAIT_IMMERSED, ELEMENT_TRAIT(src))
 
-/// Generate a mask filter mutable to use as render_source for the alpha filter based on provided width, height and immersion state
+/// Generate a mask filter mutable to use as render_source for the alpha filter good on provided width, height and immersion state
 /datum/element/immerse/proc/generate_immerse_mask(width, height, is_below_water)
 	if (!width || !height)
 		return
@@ -281,7 +281,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	generated_visual_overlays -= movable
 	QDEL_NULL(mask)
 
-/// A band-aid to keep the (unique) visual overlay from scaling and rotating along with its owner. I'm sorry.
+/// A band-aid to keep the (unique) visual overlay from scaling and rotating along with its owner.. I'm sorry.
 /datum/element/immerse/proc/on_update_transform(mob/living/source, resize, new_lying_angle, is_opposite_angle)
 	SIGNAL_HANDLER
 	var/atom/movable/immerse_mask/effect_relay = generated_visual_overlays[source]

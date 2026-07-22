@@ -6,7 +6,7 @@
 	if (validate_config(log = FALSE))
 		load_existing_assets()
 
-/// Processes thru any assets that were registered before we were loaded as a transport.
+/// Processes through any assets that were registered before we were loaded as a transport.
 /datum/asset_transport/webroot/proc/load_existing_assets()
 	for (var/asset_name in SSassets.cache)
 		var/datum/asset_cache_item/ACI = SSassets.cache[asset_name]
@@ -29,7 +29,7 @@
 	var/newpath = "[webroot][get_asset_suffex(ACI)]"
 	if (fexists(newpath))
 		return
-	if (fexists("[newpath].gz")) //its a common pattern in webhosting to save gzip'ed versions of text files and let the webserver serve them up as gzip compressed normal files, sometimes without keeping the original version.
+	if (fexists("[newpath].gz")) // its a common pattern in webhosting to save gzip'ed versions of text files. Let the webserver serve them up as gzip compressed normal files, sometimes without keeping the original version.
 		return
 	return fcopy(ACI.resource, newpath)
 

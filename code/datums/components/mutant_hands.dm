@@ -118,7 +118,7 @@
 		return
 
 	// We equipped something to hands that wasn't a mutant hand, and wasn't abstract!
-	// This means they're meant to have a mutant hand. So help them out.
+	// This means they're meant to have a mutant hand.. So help them out.
 	INVOKE_ASYNC(src, PROC_REF(apply_mutant_hands))
 
 /**

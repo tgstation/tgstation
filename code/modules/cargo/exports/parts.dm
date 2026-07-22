@@ -1,4 +1,4 @@
-// Circuit boards, spare parts, etc.
+// Circuit boards, spare parts, and so on
 
 /datum/export/solar_assembly
 	cost = CARGO_CRATE_VALUE * 0.25

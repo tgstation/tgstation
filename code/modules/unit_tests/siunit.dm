@@ -2,7 +2,7 @@
 	TEST_ASSERT_EQUAL(siunit(0.5345, "A", 0), "535 mA", "")
 	TEST_ASSERT_EQUAL(siunit(0.5344, "A", 0), "534 mA", "")
 	TEST_ASSERT_EQUAL(siunit(-0.5344, "A", 0), "-534 mA", "")
-	TEST_ASSERT_EQUAL(siunit_pressure(1.234, 1), "1.2 kPa", "") // test for pascal require *10e-3, as the game thinks in kPa, the proc siunit in Pa
+	TEST_ASSERT_EQUAL(siunit_pressure(1.234, 1), "1.2 kPa", "") // test for pascal need *10e-3, as the game thinks in kPa, the proc siunit in Pa
 	TEST_ASSERT_EQUAL(siunit_pressure(1.234, 2), "1.23 kPa", "")
 	TEST_ASSERT_EQUAL(siunit_pressure(1.234, 3), "1.234 kPa", "")
 	TEST_ASSERT_EQUAL(siunit_pressure(1, 4), "1 kPa", "")

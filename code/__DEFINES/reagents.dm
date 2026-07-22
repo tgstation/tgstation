@@ -7,7 +7,7 @@
 #define REFILLABLE (1<<2)
 /// Makes it possible to remove reagents through any reagent container.
 #define DRAINABLE (1<<3)
-/// Allows items to be dunked into this container for transfering reagents. Used in conjunction with the dunkable component.
+/// Allows items to be dunked into this container for transfering reagents... Used in conjunction with the dunkable component.
 #define DUNKABLE (1<<4)
 
 //Methods to examine reagents in the container
@@ -19,9 +19,9 @@
 //Reaction flags
 /// Applied to a reagent holder, the contents will not react with each other.
 #define NO_REACT (1<<7)
-/// Applied to a reagent holder, all of the reactions in the reagents datum will be instant. Meant to be used for things like smoke effects where reactions aren't meant to occur
+/// Applied to a reagent holder, all of the reactions in the reagents datum will be instant... Meant to be used for things like smoke effects where reactions aren't meant to occur
 #define REAGENT_HOLDER_INSTANT_REACT (1<<8)
-///If the holder is "alive" (i.e. mobs and organs) - If this flag is applied to a holder it will cause reagents to split upon addition to the object
+/// If the holder is "alive" (i.e... mobs and organs) - If this flag is applied to a holder it will cause reagents to split upon addition to the object
 #define REAGENT_HOLDER_ALIVE (1<<9)
 
 //Special properties
@@ -35,7 +35,7 @@
 // Reagent exposure methods.
 /// Used for splashing.
 #define TOUCH (1<<0)
-/// Used for ingesting the reagents. Food and drinks.
+/// Used for ingesting the reagents... Food and drinks.
 #define INGEST (1<<1)
 /// Used by foams, sprays, and blob attacks.
 #define VAPOR (1<<2)
@@ -43,9 +43,9 @@
 #define PATCH (1<<3)
 /// Used for direct injection of reagents.
 #define INJECT (1<<4)
-/// Exclusive to just plumbing. if set we use the round robin technique else we use proportional
+/// Exclusive to just plumbing... if set we use the round robin technique else we use proportional
 #define LINEAR (1<<5)
-/// Used by smoke or inhaling from a source. Smoke, cigarettes, and inhalers.
+/// Used by smoke or inhaling from a source... Smoke, cigarettes, and inhalers.
 #define INHALE (1<<6)
 
 ///Smoke machines are both touch and inhaling
@@ -58,7 +58,7 @@
 #define MIMEDRINK_SILENCE_DURATION (1 MINUTES)
 ///Health threshold for synthflesh and rezadone to unhusk someone
 #define UNHUSK_DAMAGE_THRESHOLD 50
-///Amount of synthflesh required to unhusk someone
+/// Amount of synthflesh needed to unhusk someone
 #define SYNTHFLESH_UNHUSK_AMOUNT 60
 #define SYNTHFLESH_UNHUSK_MAX 100
 
@@ -86,14 +86,14 @@
 #define CHEMICAL_MIN_PH 0
 ///Maximum pH attainable by a solution
 #define CHEMICAL_MAX_PH 14
-///Ionizing strength of strong acidic/basic buffer (volume/holder.total_volume)*strength. So for 1u added to 50u the ph will change by 0.4
+/// Ionizing strength of strong acidic/basic buffer (volume/holder.total_volume)*strength... So for 1u added to 50u the ph will change by 0.4
 #define BUFFER_IONIZING_STRENGTH 30
 ///The maximum temperature a reagent holder can attain
 #define CHEMICAL_MAXIMUM_TEMPERATURE 99999
 ///The default purity of all non reacted reagents
 #define REAGENT_STANDARD_PURITY 0.75
 /// Starting purity of consumable reagents
-#define CONSUMABLE_STANDARD_PURITY 0.5 // 50% pure by default. Below - synthetic food. Above - natural food.
+#define CONSUMABLE_STANDARD_PURITY 0.5 // 50% pure by default... Below - synthetic food... Above - natural food.
 /// Starting purity of reagents made in biogenerator
 #define BIOGEN_REAGENT_PURITY 0.3
 /// the default temperature at which chemicals are added to reagent holders at
@@ -112,11 +112,11 @@
 #define REAGENT_CAN_BE_SYNTHESIZED (1<<4)
 ///Allows a reagent to work on a mob regardless of stasis
 #define REAGENT_IGNORE_STASIS (1<<5)
-///This reagent won't be used in most randomized recipes. Meant for reagents that could be synthetized but are normally inaccessible or TOO hard to get.
+/// This reagent won't be used in most randomized recipes... Meant for reagents that could be synthetized but are normally inaccessible or TOO hard to get.
 #define REAGENT_NO_RANDOM_RECIPE (1<<6)
 ///Does this reagent clean things?
 #define REAGENT_CLEANS (1<<7)
-///Does this reagent affect wounds? Used to check if some procs should be ran.
+/// Does this reagent affect wounds?.. Used to check if some procs should be ran.
 #define REAGENT_AFFECTS_WOUNDS (1<<8)
 /// If present, when metabolizing out of a mob, we divide by the mob's metabolism rather than multiply.
 /// Without this flag: Higher metabolism means the reagent exits the system faster.
@@ -141,9 +141,9 @@
 #define REACTION_CLEAR_INVERSE (1<<0)
 ///Used to create instant reactions
 #define REACTION_INSTANT (1<<1)
-///Used to force reactions to create a specific amount of heat per 1u created. So if thermic_constant = 5, for 1u of reagent produced, the heat will be forced up arbitarily by 5 irresepective of other reagents. If you use this, keep in mind standard thermic_constant values are 100x what it should be with this enabled.
+/// Used to force reactions to create a specific amount of heat per 1u created... So if thermic_constant = 5, for 1u of reagent produced, the heat will be forced up arbitarily by 5 irresepective of other reagents... If you use this, keep in mind standard thermic_constant values are 100x what it should be with this enabled.
 #define REACTION_HEAT_ARBITARY (1<<2)
-///Used to bypass the chem_master transfer block (This is needed for competitive reactions unless you have an end state programmed). More stuff might be added later. When defining this, please add in the comments the associated reactions that it competes with
+/// Used to bypass the chem_master transfer block (This is needed for competitive reactions unless you have an end state programmed)... More stuff might be added later... When defining this, please add in the comments the associated reactions that it competes with
 #define REACTION_COMPETITIVE (1<<3)
 ///Used to force pH changes to be constant regardless of volume
 #define REACTION_PH_VOL_CONSTANT (1<<4)
@@ -152,12 +152,12 @@
 
 ///Used for overheat_temp - This sets the overheat so high it effectively has no overheat temperature.
 #define NO_OVERHEAT 99999
-////Used to force an equlibrium to end a reaction in reaction_step() (i.e. in a reaction_step() proc return END_REACTION to end it)
+/// /Used to force an equlibrium to end a reaction in reaction_step() (i.e... in a reaction_step() proc return END_REACTION to end it)
 #define END_REACTION "end_reaction"
 
-///Minimum requirement for addiction buzz to be met. Addiction code only checks this once every two seconds, so this should generally be low
+/// Minimum need for addiction buzz to be met... Addiction code only checks this once every two seconds, so this should generally be low
 #define MIN_ADDICTION_REAGENT_AMOUNT 1
-///Nicotine requires much less in your system to be happy
+/// Nicotine needs much less in your system to be happy
 #define MIN_NICOTINE_ADDICTION_REAGENT_AMOUNT 0.01
 #define MAX_ADDICTION_POINTS 1000
 
@@ -168,7 +168,7 @@
 #define WITHDRAWAL_STAGE2_END_CYCLE 180
 #define WITHDRAWAL_STAGE3_START_CYCLE 181
 
-///reagent tags - used to look up reagents for specific effects. Feel free to add to but comment it
+/// reagent tags - used to look up reagents for specific effects... Feel free to add to but comment it
 /// This reagent does brute effects (BOTH damaging and healing)
 #define REACTION_TAG_BRUTE (1<<0)
 /// This reagent does burn effects (BOTH damaging and healing)
@@ -181,11 +181,11 @@
 #define REACTION_TAG_HEALING (1<<4)
 /// This reagent primarily damages
 #define REACTION_TAG_DAMAGING (1<<5)
-/// This reagent explodes as a part of its intended effect (i.e. not overheated/impure)
+/// This reagent explodes as a part of its intended effect (i.e... not overheated/impure)
 #define REACTION_TAG_EXPLOSIVE (1<<6)
 /// This reagent does things that are unique and special
 #define REACTION_TAG_OTHER (1<<7)
-/// This reagent's reaction is dangerous to create (i.e. explodes if you fail it)
+/// This reagent's reaction is dangerous to create (i.e... explodes if you fail it)
 #define REACTION_TAG_DANGEROUS (1<<8)
 /// This reagent's reaction is easy
 #define REACTION_TAG_EASY (1<<9)
@@ -213,7 +213,7 @@
 #define REACTION_TAG_COMPETITIVE (1<<20)
 /// Reaction produces a reagent that is a common component for other reactions
 #define REACTION_TAG_COMPONENT (1<<21)
-/// Denotes reactions that will immediately do something on reaction, like an explosion, smoke, etc.
+/// Denotes reactions that will immediately do something on reaction, like an explosion, smoke, and so on
 #define REACTION_TAG_ACTIVE (1<<22)
 
 /// Readable list of reagent reaction tags (in the same order as they are defined!)
@@ -257,7 +257,7 @@
 //flags used by holder.dm to locate an reagent
 ///Direct type
 #define REAGENT_STRICT_TYPE (1<<0)
-///Parent type but not sub types for e.g. if param is obj/item it will look for obj/item/stack but not obj/item/stack/sheet
+/// Parent type but not sub types for e.g... if param is obj/item it will look for obj/item/stack but not obj/item/stack/sheet
 #define REAGENT_PARENT_TYPE (1<<1)
 ///same as istype() check
 #define REAGENT_SUB_TYPE (1<<2)
@@ -289,7 +289,7 @@
 /// Grenade is ready to be finished
 #define GRENADE_READY 3
 
-/// Maximum amount of layers a pill can hold, aka maximum number of seconds a pill takes to dissolve
+/// Maximum amount of layers a pill can hold, also known as maximum number of seconds a pill takes to dissolve
 #define PILL_MAX_LAYERS 60
 /// Maximum amount of layers above which you cannot taste the pill's contents
 #define PILL_MAX_TASTE_LAYERS 20

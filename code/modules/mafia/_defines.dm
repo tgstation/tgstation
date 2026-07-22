@@ -1,6 +1,6 @@
-///The amount of players required to start a Mafia game
+/// The amount of players needed to start a Mafia game
 #define MAFIA_MIN_PLAYER_COUNT 6
-///how many people can play mafia without issues (running out of spawns, procs not expecting more than this amount of people, etc)
+/// how many people can play mafia without issues (running out of spawns, procs not expecting more than this amount of people, and so on
 #define MAFIA_MAX_PLAYER_COUNT 12
 
 ///The time spent during the first day, which is shorter due to not having a voting period.
@@ -50,7 +50,7 @@
 #define MAFIA_SPECIAL "mafia special"
 /// role that wins solo that nobody likes
 #define NEUTRAL_KILL "neutral killing"
-/// role that upsets the game aka obsessed, usually worse for town than mafia but they can vote against mafia
+/// role that upsets the game also known as obsessed, usually worse for town than mafia but they can vote against mafia
 #define NEUTRAL_DISRUPT "neutral chaos"
 
 //role flags (special status of roles like detection immune)
@@ -62,7 +62,7 @@
 #define ROLE_UNIQUE (1<<2)
 ///role is public to all other players in the game.
 #define ROLE_REVEALED (1<<3)
-///can not be defended, protected, or any other form of protection. all kills succeed no matter what.
+/// can not be defended, protected, or any other form of protection.. all kills succeed no matter what.
 #define ROLE_VULNERABLE (1<<4)
 ///cannot perform any actions that night, preselected actions fail
 #define ROLE_ROLEBLOCKED (1<<5)
@@ -94,13 +94,13 @@
 
 ///Sends all signals that must go immediately as night starts.
 #define COMSIG_MAFIA_SUNDOWN "sundown"
-///Sends all signals that must go first, aka roleblocks.
+/// Sends all signals that must go first, also known as roleblocks.
 #define COMSIG_MAFIA_NIGHT_PRE_ACTION_PHASE "night_start"
 ///Sends the signal that all regular actions must go, such as
 #define COMSIG_MAFIA_NIGHT_ACTION_PHASE "night_actions"
-/// now killing happens from the roles that do that. the reason this is post action phase is to ensure doctors can protect and lawyers can block
+/// now killing happens from the roles that do that.. the reason this is post action phase is to ensure doctors can protect and lawyers can block
 #define COMSIG_MAFIA_NIGHT_KILL_PHASE "night_kill"
-/// now clearing refs to prepare for the next day. Do not do any actions here, it's just for ref clearing.
+/// now clearing refs to prepare for the next day.. Do not do any actions here, it's just for ref clearing.
 #define COMSIG_MAFIA_NIGHT_END "night_end"
 
 /// signal sent to roles when the game is confirmed starting
@@ -110,7 +110,7 @@
 
 /// list of ghosts who want to play mafia, every time someone enters the list it checks to see if enough are in
 GLOBAL_LIST_EMPTY(mafia_signup)
-/// list of ghosts who want to play mafia that have since disconnected. They are kept in the lobby, but not counted for starting a game.
+/// list of ghosts who want to play mafia that have since disconnected.. They are kept in the lobby, but not counted for starting a game.
 GLOBAL_LIST_EMPTY(mafia_bad_signup)
 /// list of PDAs who want to play mafia, every time someone enters the list it checks to see if enough are in
 GLOBAL_LIST_EMPTY(pda_mafia_signup)

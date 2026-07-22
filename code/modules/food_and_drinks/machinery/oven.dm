@@ -291,7 +291,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(!istype(item, /obj/item/storage/bag/tray))
-		// Non-tray dumping requires a do_after
+		// Non-tray dumping needs a do_after
 		to_chat(user, span_notice("You start dumping out the contents of [item] into [src]..."))
 		if(!do_after(user, 2 SECONDS, target = item))
 			return ITEM_INTERACT_BLOCKING

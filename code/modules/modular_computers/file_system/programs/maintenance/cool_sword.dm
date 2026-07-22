@@ -41,7 +41,7 @@
 		RegisterSignal(user, COMSIG_MOB_LOGIN, PROC_REF(update_mouse), override = TRUE)
 		RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(stop_mouse), override = TRUE)
 	else
-		// Shouldn't be necessary w/ dropped but just to be safe
+		// Shouldn't be necessary with dropped but just to be safe
 		user.client?.mouse_override_icon = null
 		UnregisterSignal(user, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT))
 	user.update_mouse_pointer()

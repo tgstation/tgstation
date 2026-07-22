@@ -112,7 +112,7 @@
 /obj/item/storage/briefcase/secure/digital_storage/PopulateContents()
 	return
 
-///Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
+/// Syndie variant of Secure Briefcase.. Contains space cash, slightly more robust.
 /obj/item/storage/briefcase/secure/syndie
 	force = 15
 

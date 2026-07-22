@@ -4,7 +4,7 @@
 /datum/bt_node/ai_behavior
 	///Flags for extra behavior (see AI_BEHAVIOR_* defines)
 	var/behavior_flags = NONE
-	///Cooldown between perform() calls; do not read directly  use get_cooldown()
+	/// Cooldown between perform() calls; do not read directly use get_cooldown()
 	var/time_between_perform = 0
 	/// TRUE after setup() has been called and before finish_action() completes.
 	var/running = FALSE
@@ -43,7 +43,7 @@
 		controller.active_execution_index = execution_index
 		return BT_RUNNING
 
-	if(controller.bt_execution_log != null) // dont track if we're not  viewing
+	if(controller.bt_execution_log != null) // dont track if we're not viewing
 		if(length(controller.bt_execution_log) < BT_EXECUTION_LOG_MAX)
 			controller.bt_execution_log += execution_index
 
@@ -71,20 +71,20 @@
 	controller.active_execution_index = execution_index
 	return BT_RUNNING
 
-/// Returns the cooldown to apply after a AI_BEHAVIOR_DELAY perform(). Override for conditional delays.
+/// Returns the cooldown to apply after a AI_BEHAVIOR_DELAY perform().. Override for conditional delays.
 /datum/bt_node/ai_behavior/proc/get_cooldown(datum/ai_controller/cooldown_for)
 	return time_between_perform
 
-/// Called when this behavior first activates on a controller. Return FALSE to abort (returns BT_FAILURE).
+/// Called when this behavior first activates on a controller.. Return FALSE to abort (returns BT_FAILURE).
 /datum/bt_node/ai_behavior/proc/setup(datum/ai_controller/controller)
 	return TRUE
 
-/// Called each tick while the behavior is running. Returns AI_BEHAVIOR_* flags.
+/// Called each tick while the behavior is running.. Returns AI_BEHAVIOR_* flags.
 /datum/bt_node/ai_behavior/proc/perform(seconds_per_tick, datum/ai_controller/controller)
 	SHOULD_NOT_SLEEP(TRUE)
 	return
 
-/// Called when the behavior finishes (succeeded or failed). Subtypes should call ..().
+/// Called when the behavior finishes (succeeded or failed).. Subtypes should call ..().
 /datum/bt_node/ai_behavior/proc/finish_action(datum/ai_controller/controller, succeeded)
 	SHOULD_CALL_PARENT(TRUE)
 	running = FALSE
@@ -106,15 +106,15 @@
 	INVOKE_ASYNC(src, PROC_REF(perform_async), owning_controller)
 	return AI_BEHAVIOR_DELAY
 
-///Override this if you have sleeping behavior, be sure to implement the other async procs in perform()
+/// Override this if you have sleeping behavior, be sure to add the other async procs in perform()
 /datum/bt_node/ai_behavior/proc/perform_async(datum/ai_controller/controller)
 	return
 
-/// Call from an async behavior after its sleeping call, before committing side effects. FALSE means the behavior was aborted/reset mid-flight  bail out without side effects.
+/// Call from an async behavior after its sleeping call, before committing side effects.. FALSE means the behavior was aborted/reset mid-flight bail out without side effects.
 /datum/bt_node/ai_behavior/proc/async_still_valid()
 	return async_running && !QDELETED(owning_controller?.pawn)
 
-/// Call from an async behavior to commit its result. No-op if the behavior was aborted mid-flight.
+/// Call from an async behavior to commit its result.. No-op if the behavior was aborted mid-flight.
 /datum/bt_node/ai_behavior/proc/finish_async(result_flags)
 	if(!async_still_valid())
 		return

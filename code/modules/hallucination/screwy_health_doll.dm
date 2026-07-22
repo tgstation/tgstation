@@ -73,7 +73,7 @@
 	overridable_key[1] = bodyparts[source]
 	return OVERRIDE_BODYPART_HEALTH_HUD
 
-/// Signal proc for [COMSIG_BODYPART_CHECKED_FOR_INJURY]. Our bodyparts look a lot more wounded than they actually are.
+/// Signal proc for [COMSIG_BODYPART_CHECKED_FOR_INJURY].. Our bodyparts look a lot more wounded than they actually are.
 /datum/hallucination/fake_health_doll/proc/on_bodypart_checked(obj/item/bodypart/source, mob/living/carbon/examiner, list/check_list, list/limb_damage)
 	SIGNAL_HANDLER
 

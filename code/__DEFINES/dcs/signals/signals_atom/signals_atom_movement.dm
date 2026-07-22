@@ -1,4 +1,4 @@
-// Atom movement signals. Format:
+// Atom movement signals... Format:
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
@@ -23,9 +23,9 @@
 #define COMSIG_ATOM_AFTER_SHUTTLE_MOVE "movable_after_shuttle_move"
 ///called on a movable (NOT living) when it starts pulling (atom/movable/pulled, state, force)
 #define COMSIG_ATOM_START_PULL "movable_start_pull"
-/// called on /atom when something attempts to pass through it (atom/movable/source, atom/movable/passing, dir)
+/// called on /atom when something tries to pass through it (atom/movable/source, atom/movable/passing, dir)
 #define COMSIG_ATOM_TRIED_PASS "atom_tried_pass"
-/// called on /movable when something attempts to pass through it (atom/movable/source, atom/movable/passing, dir) AND WHEN general_movement = FALSE for some fucking reason
+/// called on /movable when something tries to pass through it (atom/movable/source, atom/movable/passing, dir) AND WHEN general_movement = FALSE for some fucking reason
 #define COMSIG_MOVABLE_CAN_PASS_THROUGH "movable_can_pass_through"
 /// If given, we permit passage through
 #define COMSIG_COMPONENT_PERMIT_PASSAGE (1 << 0)
@@ -35,7 +35,7 @@
 #define COMSIG_LIVING_START_PULL "living_start_pull"
 ///called on /living when someone is pulled (mob/living/puller)
 #define COMSIG_LIVING_GET_PULLED "living_start_pulled"
-///called on /living, when pull is attempted, but before it completes, from base of [/mob/living/start_pulling]: (atom/movable/thing, force)
+/// called on /living, when pull is tried but before it completes, from base of [/mob/living/start_pulling]: (atom/movable/thing, force)
 #define COMSIG_LIVING_TRY_PULL "living_try_pull"
 	#define COMSIG_LIVING_CANCEL_PULL (1 << 0)
 #define COMSIG_LIVING_TRYING_TO_PULL "living_tried_pulling"
@@ -48,17 +48,17 @@
 #define COMSIG_ATOM_UI_INTERACT "atom_ui_interact"
 ///from base of atom/relaymove(): (mob/living/user, direction)
 #define COMSIG_ATOM_RELAYMOVE "atom_relaymove"
-	///prevents the "you cannot move while buckled! message"
+	/// prevents the "you cannot move while buckled!.. message"
 	#define COMSIG_BLOCK_RELAYMOVE (1<<0)
 
-/// From base of atom/setDir(): (old_dir, new_dir). Called before the direction changes
+/// From base of atom/setDir(): (old_dir, new_dir)... Called before the direction changes
 #define COMSIG_ATOM_PRE_DIR_CHANGE "atom_pre_face_atom"
 	#define COMPONENT_ATOM_BLOCK_DIR_CHANGE (1<<0)
-///from base of atom/setDir(): (old_dir, new_dir). Called before the direction changes.
+/// from base of atom/setDir(): (old_dir, new_dir)... Called before the direction changes.
 #define COMSIG_ATOM_DIR_CHANGE "atom_dir_change"
-///from base of atom/setDir(): (old_dir, new_dir). Called after the direction changes.
+/// from base of atom/setDir(): (old_dir, new_dir)... Called after the direction changes.
 #define COMSIG_ATOM_POST_DIR_CHANGE "atom_post_dir_change"
-///from base of atom/movable/keybind_face_direction(): (dir). Called before turning with the movement lock key.
+/// from base of atom/movable/keybind_face_direction(): (dir)... Called before turning with the movement lock key.
 #define COMSIG_MOVABLE_KEYBIND_FACE_DIR "keybind_face_dir"
 	///ignores the movement lock key, used for turning while strafing in a mech
 	#define COMSIG_IGNORE_MOVEMENT_LOCK (1<<0)
@@ -72,5 +72,5 @@
 #define COMSIG_ATOM_PRE_PRESSURE_PUSH "atom_pre_pressure_push"
 	///prevents pressure movement
 	#define COMSIG_ATOM_BLOCKS_PRESSURE (1<<0)
-///From base of /datum/move_loop/process() after attempting to move a movable: (datum/move_loop/loop, old_dir)
+/// From base of /datum/move_loop/process() after trying to move a movable: (datum/move_loop/loop, old_dir)
 #define COMSIG_MOVABLE_MOVED_FROM_LOOP "movable_moved_from_loop"

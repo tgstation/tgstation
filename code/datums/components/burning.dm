@@ -8,7 +8,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /datum/component/burning
 	/// Fire overlay appearance we apply
 	var/fire_overlay
-	/// Particle holder for fire particles, if any. Still utilized over shared holders because they're movable-only
+	/// Particle holder for fire particles, if any.. Still used over shared holders because they're movable-only
 	var/obj/effect/abstract/particle_holder/particle_effect
 	/// Particle type we're using for cleaning up our shared holder
 	var/particle_type

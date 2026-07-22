@@ -154,13 +154,13 @@
 	user.adjust_fire_stacks(4)
 	user.ignite_mob()
 
-// Can we weld? Plasma cutter does not use charge continuously.
+// Can we weld?. Plasma cutter does not use charge continuously.
 // Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
 /obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount, heat_required)
 	if(QDELETED(cell))
 		balloon_alert(user, "no cell inserted!")
 		return FALSE
-	// Amount cannot be used if drain is made continuous, e.g. amount = 5, charge_weld = 25
+	// Amount cannot be used if drain is made continuous, e.g.. amount = 5, charge_weld = 25
 	// Then it'll drain 125 at first and 25 periodically, but fail if charge dips below 125 even though it still can finish action
 	// Alternately it'll need to drain amount*charge_weld every period, which is either obscene or makes it free for other uses
 	if(amount ? cell.charge < PLASMA_CUTTER_CHARGE_WELD * amount : cell.charge < PLASMA_CUTTER_CHARGE_WELD)
@@ -259,10 +259,10 @@
 
 /obj/item/gun/energy/wormhole_projector/try_fire_gun(atom/target, mob/living/user, params)
 	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
-		if(select == AMMO_SELECT_BLUE) //Last fired in left click mode. Switch to orange wormhole (right click).
+		if(select == AMMO_SELECT_BLUE) // Last fired in left click mode.. Switch to orange wormhole (right click).
 			select_fire()
 	else
-		if(select == AMMO_SELECT_ORANGE) //Last fired in right click mode. Switch to blue wormhole (left click).
+		if(select == AMMO_SELECT_ORANGE) // Last fired in right click mode.. Switch to blue wormhole (left click).
 			select_fire()
 	return ..()
 
@@ -468,7 +468,7 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 	ammo_type = list(/obj/item/ammo_casing/energy/marksman)
 	fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
 	automatic_charge_overlays = FALSE
-	/// How many coins we can have at a time. Set to 0 for infinite
+	/// How many coins we can have at a time.. Set to 0 for infinite
 	var/max_coins = 4
 	/// How many coins we currently have available
 	var/coin_count = 0

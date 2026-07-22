@@ -133,8 +133,8 @@
 
 	var/mob/living/carbon/human/human_user = user
 
-	// You see, these tendrils are psychic. That's why you can't see them. Definitely not laziness. Just psychic. The character can feel but not see them.
-	// Because they're psychic. Yeah.
+	// You see, these tendrils are psychic.. That's why you can't see them.. Definitely not laziness.. Just psychic.. The character can feel but not see them.
+	// Because they're psychic.. Yeah.
 	if(human_user.can_block_magic(MAGIC_RESISTANCE_MIND))
 		visible_message(span_danger("Psychic endrils lash out from [src], batting ineffectively at [user]'s head."))
 		return

@@ -1,4 +1,4 @@
-/obj/machinery/power/manufacturing/crusher //todo make it work for other stuff
+/obj/machinery/power/manufacturing/crusher // to do make it work for other stuff
 	name = "manufacturing crusher"
 	desc = "Crushes any item put into it, boulders and such. Materials below a sheet are stored in the machine."
 	icon_state = "crusher"
@@ -56,7 +56,7 @@
 	if(surplus() < crush_cost)
 		return
 	var/obj/victim = poor_saps[length(poor_saps)]
-	if(istype(victim)) //todo handling for other things
+	if(istype(victim)) // to do handling for other things
 		if(!length(victim.custom_materials))
 			add_load(crush_cost)
 			victim.atom_destruction()

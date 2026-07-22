@@ -92,7 +92,7 @@
 		delta_cable(consumed, decrement = TRUE)
 		amount_to_consume -= consumed
 
-	//spawn the cable. if it merged with the stak below then you pick that up else put it in the user's hand
+	// spawn the cable.. if it merged with the stak below then you pick that up else put it in the user's hand
 	var/obj/item/stack/cable_coil/new_cable = new(user.drop_location(), amount)
 	if(QDELETED(new_cable))
 		balloon_alert(user, "merged with stack below!")
@@ -201,7 +201,7 @@
 		cable = new/obj/item/stack/cable_coil(src, create_amount)
 	return modify_cable(cable)
 
-/// check if the turf has the same cable layer as this design. If it does don't put cable here
+/// check if the turf has the same cable layer as this design.. If it does don't put cable here
 /obj/item/rwd/proc/cable_allowed_here(turf/the_turf)
 	// infer our intended cable design from the layer
 	var/obj/structure/cable/design_type

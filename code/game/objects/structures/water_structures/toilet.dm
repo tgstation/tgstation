@@ -20,7 +20,7 @@
 	var/mob/living/swirlie
 	/// Lazylist of items in the cistern.
 	var/list/cistern_items
-	/// Lazylist of fish in the toilet, not to be mixed with the items in the cistern. Max of 3
+	/// Lazylist of fish in the toilet, not to be mixed with the items in the cistern.. Max of 3
 	var/list/fishes
 	/// Does the toilet have a water recycler to recollect its water supply?
 	var/has_water_reclaimer = TRUE
@@ -436,7 +436,7 @@
 		toilet_brain.forceMove(src)
 		add_cistern_item(toilet_brain)
 
-//this also prevents the toilet from dropping meat sheets. if you want to cheese the meat exepriments, sacrifice more people
+// this also prevents the toilet from dropping meat sheets.. if you want to cheese the meat exepriments, sacrifice more people
 /obj/structure/toilet/greyscale/flesh/atom_deconstruct(dissambled = TRUE)
 	for(var/obj/toilet_item in cistern_items)
 		toilet_item.forceMove(drop_location())

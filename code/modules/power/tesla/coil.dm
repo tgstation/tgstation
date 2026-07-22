@@ -22,10 +22,10 @@
 	///Reference to the last zap done
 	var/last_zap = 0
 
-	//Variables to calculate sound based on stored_energy to give engineers an audioclue of the magnitude of energy production.
-	///Calculated range of zap sounds based on power
+	// Variables to calculate sound good on stored_energy to give engineers an audioclue of the magnitude of energy production.
+	/// Calculated range of zap sounds good on power
 	var/zap_sound_range = 0
-	///Calculated volume of zap sounds based on power
+	/// Calculated volume of zap sounds good on power
 	var/zap_sound_volume = 0
 
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored

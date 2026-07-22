@@ -1,5 +1,5 @@
 
-//full of weird and wacky mob spawns. this is probably the darkest corner of mob spawns even after cleanup so be ready for shitcode
+// full of weird and wacky mob spawns.. this is probably the darkest corner of mob spawns even after cleanup so be ready for shitcode
 
 ///dead ai, blue screen and everything.
 /obj/effect/mob_spawn/corpse/ai
@@ -28,7 +28,7 @@
 	. = ..()
 	spawned_slime.set_slime_type(slime_species)
 
-///dead facehuggers, great for xeno ruins so you can have a cool ruin without spiraling the entire round into xenomorph hell. also, this is a terrible terrible artifact of time
+/// dead facehuggers, great for xeno ruins so you can have a cool ruin without spiraling the entire round into xenomorph hell.. also, this is a terrible terrible artifact of time
 /obj/effect/mob_spawn/corpse/facehugger
 	//mostly for unit tests to not get alarmed (which by all means it should because this is a mess)
 	mob_type = /obj/item/clothing/mask/facehugger

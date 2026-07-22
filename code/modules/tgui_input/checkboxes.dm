@@ -54,7 +54,7 @@
 	var/min_checked
 	/// Maximum number of checkboxes that can be checked
 	var/max_checked
-	/// The TGUI UI state that will be returned in ui_state(). Default: always_state
+	/// The TGUI UI state that will be returned in ui_state().. Default: always_state
 	var/datum/ui_state/state
 
 /datum/tgui_checkbox_input/New(mob/user, message, title, list/items, min_checked, max_checked, timeout, ui_state)

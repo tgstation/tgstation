@@ -17,13 +17,13 @@
 	var/authenticated_card
 	/// The name of the registered user, related to `authenticated_card`.
 	var/authenticated_user
-	/// The regions this program has access to based on the authenticated ID.
+	/// The regions this program has access to good on the authenticated ID.
 	var/list/region_access = list()
-	/// The list of accesses this program is verified to change based on the authenticated ID. Used for state checking against player input.
+	/// The list of accesses this program is verified to change good on the authenticated ID.. Used for state checking against player input.
 	var/list/valid_access = list()
 	/// List of job templates that can be applied to ID cards from this program.
 	var/list/job_templates = list()
-	/// Which departments this program has access to. See region defines.
+	/// Which departments this program has access to.. See region defines.
 	var/target_dept
 
 /datum/computer_file/program/card_mod/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
@@ -140,7 +140,7 @@
 				playsound(computer, 'sound/machines/terminal/terminal_on.ogg', 50, FALSE)
 				computer.visible_message(span_notice("\The [computer] prints out a paper."))
 			return TRUE
-		// Used to fire someone. Wipes all access from their card and modifies their assignment.
+		// Used to fire someone.. Wipes all access from their card and modifies their assignment.
 		if("PRG_terminate")
 			if(!computer || !authenticated_card)
 				return TRUE
@@ -162,7 +162,7 @@
 
 			var/old_name = modified_id.registered_name
 
-			// Sanitize the name first. We're not using the full sanitize_name proc as ID cards can have a wider variety of things on them that
+			// Sanitize the name first.. We're not using the full sanitize_name proc as ID cards can have a wider variety of things on them that
 			// would not pass as a formal character name, but would still be valid on an ID card created by a player.
 			var/new_name = sanitize(params["name"])
 
@@ -175,7 +175,7 @@
 					modified_id.update_icon()
 				return TRUE
 
-			// However, we are going to reject bad names overall including names with invalid characters in them, while allowing numbers.
+			// But we are going to reject bad names overall including names with invalid characters in them, while allowing numbers.
 			new_name = reject_bad_name(new_name, allow_numbers = TRUE)
 
 			if(!new_name)

@@ -9,13 +9,13 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 
 	var/list/macro_set
 
-	///running average of how many clicks inputted by a player the server processes every second. used for the subsystem stat entry
+	/// running average of how many clicks inputted by a player the server processes every second.. used for the subsystem stat entry
 	var/clicks_per_second = 0
-	///count of how many clicks onto atoms have elapsed before being cleared by fire(). used to average with clicks_per_second.
+	/// count of how many clicks onto atoms have elapsed before being cleared by fire().. used to average with clicks_per_second.
 	var/current_clicks = 0
 	///acts like clicks_per_second but only counts the clicks actually processed by SSinput itself while clicks_per_second counts all clicks
 	var/delayed_clicks_per_second = 0
-	///running average of how many movement iterations from player input the server processes every second. used for the subsystem stat entry
+	/// running average of how many movement iterations from player input the server processes every second.. used for the subsystem stat entry
 	var/movements_per_second = 0
 	///running average of the amount of real time clicks take to truly execute after the command is originally sent to the server.
 	///if a click isn't delayed at all then it counts as 0 deciseconds.
@@ -40,7 +40,7 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 		"Escape" = "Open-Escape-Menu",
 	)
 
-// Badmins just wanna have fun ♪
+// Badmins just want to have fun ♪
 /datum/controller/subsystem/verb_manager/input/proc/refresh_client_macro_sets()
 	var/list/clients = GLOB.clients
 	for(var/i in 1 to clients.len)

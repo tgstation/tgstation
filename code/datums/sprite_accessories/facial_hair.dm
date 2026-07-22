@@ -1,6 +1,6 @@
 /datum/sprite_accessory/facial_hair
 	icon = 'icons/mob/human/human_face.dmi'
-	gender = MALE // barf (unless you're a dorf, dorfs dig chix w/ beards :P)
+	gender = MALE // barf (unless you're a dorf, dorfs dig chix with beards :P)
 	em_block = TRUE
 
 // please make sure they're sorted alphabetically and categorized

@@ -1,4 +1,4 @@
-/// An element to make an /obj explode based on gas pressure when broken
+/// An element to make an /obj explode good on gas pressure when broken
 /datum/element/volatile_gas_storage
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2

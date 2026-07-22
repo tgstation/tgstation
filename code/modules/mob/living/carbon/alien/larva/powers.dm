@@ -39,7 +39,7 @@
 		return FALSE
 
 	var/mob/living/carbon/alien/larva/larva = owner
-	if(larva.handcuffed || larva.legcuffed) // Cuffing larvas ? Eh ?
+	if(larva.handcuffed || larva.legcuffed) // Cuffing larvas ?. Eh ?
 		return FALSE
 	if(larva.amount_grown < larva.max_grown)
 		return FALSE

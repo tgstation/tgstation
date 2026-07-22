@@ -1,4 +1,4 @@
-/// Object doesn't use any of the light systems. Should be changed to add a light source to the object.
+/// Object doesn't use any of the light systems... Should be changed to add a light source to the object.
 #define NO_LIGHT_SUPPORT 0
 /// Light made with the lighting datums, applying a matrix.
 #define COMPLEX_LIGHT 1
@@ -18,27 +18,27 @@
 
 /// Is our overlay light source attached to another movable (its loc), meaning that the lighting component should go one level deeper.
 #define LIGHT_ATTACHED (1<<0)
-/// Freezes a light in its current state, blocking any attempts at modification
+/// Freezes a light in its current state, blocking any tries at modification
 #define LIGHT_FROZEN (1<<1)
-/// Does this light ignore inherent offsets? (Pixels, transforms, etc)
+/// Does this light ignore inherent offsets?.. (Pixels, transforms, and so on
 #define LIGHT_IGNORE_OFFSET (1<<2)
 
 #define MINIMUM_USEFUL_LIGHT_RANGE 1.4
 
-/// light UNDER the floor. primarily used for starlight, shouldn't fuck with this
+/// light UNDER the floor... primarily used for starlight, shouldn't fuck with this
 #define LIGHTING_HEIGHT_SPACE -0.5
 /// light ON the floor
 #define LIGHTING_HEIGHT_FLOOR 0
 /// height off the ground of light sources on the pseudo-z-axis, you should probably leave this alone
 #define LIGHTING_HEIGHT 1
-/// Value used to round lumcounts, values smaller than 1/129 don't matter (if they do, thanks sinking points), greater values will make lighting less precise, but in turn increase performance, VERY SLIGHTLY.
+/// Value used to round lumcounts, values smaller than 1/129 don't matter (if they do, thanks sinking points), greater values will make lighting less precise.. In turn increase performance, VERY SLIGHTLY.
 #define LIGHTING_ROUND_VALUE (1 / 64)
 
 /// icon used for lighting shading effects
 #define LIGHTING_ICON 'icons/effects/lighting_object.dmi'
 
 /// If the max of the lighting lumcounts of each spectrum drops below this, disable luminosity on the lighting objects.
-/// Set to zero to disable soft lighting. Luminosity changes then work if it's lit at all.
+/// Set to zero to disable soft lighting... Luminosity changes then work if it's lit at all.
 #define LIGHTING_SOFT_THRESHOLD 0
 
 ///How many tiles standard fires glow.
@@ -78,17 +78,17 @@
 #define FLASH_LIGHT_RANGE 3.8
 
 // Emissive blocking.
-/// Uses vis_overlays to leverage caching so that very few new items need to be made for the overlay. For anything that doesn't change outline or opaque area much or at all.
+/// Uses vis_overlays to use caching so that very few new items need to be made for the overlay... For anything that doesn't change outline or opaque area much or at all.
 #define EMISSIVE_BLOCK_GENERIC 0
-/// Uses a dedicated render_target object to copy the entire appearance in real time to the blocking layer. For things that can change in appearance a lot from the base state, like humans.
+/// Uses a dedicated render_target object to copy the entire appearance in real time to the blocking layer... For things that can change in appearance a lot from the base state, like humans.
 #define EMISSIVE_BLOCK_UNIQUE 1
-/// Don't block any emissives. Useful for things like, pieces of paper?
+/// Don't block any emissives... Useful for things like, pieces of paper?
 #define EMISSIVE_BLOCK_NONE 2
 
 #define _EMISSIVE_COLOR(val) list(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, val,0,0,0)
 #define _EMISSIVE_COLOR_NO_BLOOM(val) list(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,val,0,0)
 #define _SPECULAR_COLOR(val) list(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,val,0)
-/// The color matrix applied to all emissive overlays. Should be solely dependent on alpha and not have RGB overlap with [EM_BLOCK_COLOR].
+/// The color matrix applied to all emissive overlays... Should be solely dependent on alpha and not have RGB overlap with [EM_BLOCK_COLOR].
 #define EMISSIVE_COLOR _EMISSIVE_COLOR(1)
 #define EMISSIVE_COLOR_NO_BLOOM _EMISSIVE_COLOR_NO_BLOOM(1)
 #define SPECULAR_COLOR _SPECULAR_COLOR(1)
@@ -112,15 +112,15 @@ GLOBAL_LIST_INIT(specular_color, SPECULAR_COLOR)
 #define SPECULAR_EMISSIVE_OVERLAY_CONTRAST 1.4
 
 #define _EM_BLOCK_COLOR(val) list(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,val, 0,0,0,0)
-/// The color matrix applied to all emissive blockers. Should be solely dependent on alpha and not have RGB overlap with [EMISSIVE_COLOR].
+/// The color matrix applied to all emissive blockers... Should be solely dependent on alpha and not have RGB overlap with [EMISSIVE_COLOR].
 #define EM_BLOCK_COLOR _EM_BLOCK_COLOR(1)
 /// A globally cached version of [EM_BLOCK_COLOR] for quick access.
 GLOBAL_LIST_INIT(em_block_color, EM_BLOCK_COLOR)
 
 /// A set of appearance flags applied to all emissive and emissive blocker overlays.
-/// KEEP_APART to prevent parent hooking, KEEP_TOGETHER for children, and we reset the color of our parent so emissives get proper coloring based on [EMISSIVE_COLOR]
+/// KEEP_APART to prevent parent hooking, KEEP_TOGETHER for children, and we reset the color of our parent so emissives get proper coloring good on [EMISSIVE_COLOR]
 #define EMISSIVE_APPEARANCE_FLAGS (KEEP_APART|KEEP_TOGETHER|RESET_COLOR)
-/// The color matrix used to mask out emissive blockers on the emissive plane. Alpha should default to zero, be solely dependent on the RGB value of [EMISSIVE_COLOR], and be independent of the RGB value of [EM_BLOCK_COLOR].
+/// The color matrix used to mask out emissive blockers on the emissive plane... Alpha should default to zero, be solely dependent on the RGB value of [EMISSIVE_COLOR], and be independent of the RGB value of [EM_BLOCK_COLOR].
 #define EM_MASK_MATRIX list(0,0,0,1/3, 0,0,0,1/3, 0,0,0,1/3, 0,0,0,0, 1,1,1,0)
 /// A globally cached version of [EM_MASK_MATRIX] for quick access.
 GLOBAL_LIST_INIT(em_mask_matrix, EM_MASK_MATRIX)

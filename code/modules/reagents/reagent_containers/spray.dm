@@ -37,8 +37,8 @@
 	return try_spray(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 /obj/item/reagent_containers/spray/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	// This is a hack to make spray bottles fillable from / transferable to these sources
-	// However it can be completely removed when these objects are updated to use the new interaction system
+	// This is a temporary solution to make spray bottles fillable from / transferable to these sources
+	// But it can be completely removed when these objects are updated to use the new interaction system
 	// (because the desired effect will just work out of the box)
 	if(istype(interacting_with, /obj/structure/sink) || istype(interacting_with, /obj/structure/mop_bucket/janitorialcart) || istype(interacting_with, /obj/machinery/hydroponics))
 		return NONE
@@ -99,10 +99,10 @@
 	log_combat(user, start_turf, "fired a puff of reagents from", src, addition="with a range of \[[range]\], containing [puff_reagent_string].")
 	user.log_message("fired a puff of reagents from \a [src] with a range of \[[range]\] and containing [puff_reagent_string].", LOG_ATTACK)
 
-	// do_spray includes a series of step_towards and sleeps. As a result, it will handle deletion of the chempuff.
+	// do_spray includes a series of step_towards and sleeps.. As a result, it will handle deletion of the chempuff.
 	do_spray(target, wait_step, reagent_puff, range, puff_reagent_left, user)
 
-/// Handles exposing atoms to the reagents contained in a spray's chempuff. Deletes the chempuff when it's completed.
+/// Handles exposing atoms to the reagents contained in a spray's chempuff.. Deletes the chempuff when it's completed.
 /obj/item/reagent_containers/spray/proc/do_spray(atom/target, wait_step, obj/effect/decal/chempuff/reagent_puff, range, puff_reagent_left, mob/user)
 	reagent_puff.user = user
 	reagent_puff.sprayer = src

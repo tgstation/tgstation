@@ -1,6 +1,6 @@
 
 //Generic BB keys
-///Use this if you need a generic variable for a target; Use this if you don't have multiple different things to target in your ai (PROTIP: YOU BASICALLY NEVER DO!)
+/// Use this if you need a generic variable f.. A target; Use this if you don't have multiple different things to target in your ai (PROTIP: YOU BASICALLY NEVER DO!)
 #define BB_CURRENT_TARGET "Current Target"
 ///Use this if you need a generic variable for a hiding location;
 #define BB_CURRENT_TARGET_HIDING_LOCATION "Current Target Hiding Location"
@@ -15,7 +15,7 @@
 ///The pawn controlled by this controller
 #define BB_MY_PAWN "Literally me"
 
-///Cooldown on venting (sus)
+/// Cooldown on venting suspicious
 #define BB_VENTING_COOLDOWN "Venting Cooldown"
 
 #define BB_CURRENT_MIN_MOVE_DISTANCE "min_move_distance"
@@ -25,11 +25,11 @@
 #define BB_IGNORE_DRINKS "bb_ignore_drinks"
 ///what we're going to eat next
 #define BB_FOOD_TARGET "bb_food_target"
-///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
+/// How close a mob must be f.. Us to select it as a target, if that is less than how far we can maintain it as a target
 #define BB_AGGRO_RANGE "BB_aggro_range"
 ///If defined, mobs will use this distance instead of default aggro range to locate new targets
 #define BB_AGGRO_GRAB_RANGE "BB_aggro_grab_range"
-///are we hungry? determined by the udder component
+/// are we hungry?.. determined by the udder component
 #define BB_CHECK_HUNGRY "BB_check_hungry"
 ///are we ready to breed?
 #define BB_BREED_READY "BB_breed_ready"
@@ -91,7 +91,7 @@
 /// Are we a panicking goose?
 #define BB_GOOSE_VOMIT_CHANCE "BB_goose_vomit_chance"
 
-/// Set TRUE to suppress a mob's idle wandering (e.g. while under external/deadchat control).
+/// Set TRUE to suppress a mob's idle wandering (e.g... while under external/deadchat control).
 #define BB_DISABLE_IDLE "BB_disable_idle"
 
 /// Set TRUE on a mob's controller by /datum/component/tameable once it has been tamed.
@@ -176,13 +176,13 @@
 ///the motherfucker who tipped us
 #define BB_BASIC_MOB_TIPPER "BB_basic_tip_tipper"
 
-/// Is there something that scared us into being stationary? If so, hold the reference here
+/// Is there something that scared us into being stationary?.. If so, hold the reference here
 #define BB_STATIONARY_CAUSE "BB_thing_that_made_us_stationary"
 ///How long should we remain stationary for?
 #define BB_STATIONARY_SECONDS "BB_stationary_time_in_seconds"
 ///Should we move towards the target that triggered us to be stationary?
 #define BB_STATIONARY_MOVE_TO_TARGET "BB_stationary_move_to_target"
-/// What targets will trigger us to be stationary? Must be a list.
+/// What targets will trigger us to be stationary?.. Must be a list.
 #define BB_STATIONARY_TARGETS "BB_stationary_targets"
 /// How often can we get spooked by a target?
 #define BB_STATIONARY_COOLDOWN "BB_stationary_cooldown"
@@ -229,7 +229,7 @@
 
 ///should we skip the faction check for the targeting strategy?
 #define BB_ALWAYS_IGNORE_FACTION "BB_always_ignore_factions"
-///are we in some kind of temporary state of ignoring factions when targeting? can result in volatile results if multiple behaviours touch this
+/// are we in some kind of temporary state of ignoring factions when targeting?.. can result in volatile results if multiple behaviours touch this
 #define BB_TEMPORARILY_IGNORE_FACTION "BB_temporarily_ignore_factions"
 
 ///A list of what can the mob speak randomly
@@ -261,7 +261,7 @@
 ///key holding the list of things we are able to fish from
 #define BB_FISHABLE_LIST "BB_fishable_list"
 
-///key holding our cooldown between fishing attempts
+/// key holding our cooldown between fishing tries
 #define BB_FISHING_COOLDOWN "BB_fishing_cooldown"
 
 ///key that holds the next time we will start fishing

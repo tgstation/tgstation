@@ -12,7 +12,7 @@
 	var/mob/living/current_holder
 	///The current direction of the jousting.
 	var/current_direction = NONE
-	///How many tiles we've charged up thus far
+	/// How many tiles we've charged up so far
 	var/current_tile_charge = 0
 
 	///How much of an increase in damage is achieved every tile moved during jousting.

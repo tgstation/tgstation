@@ -27,7 +27,7 @@
 
 /datum/fish_source/dimensional_rift
 	background = "background_mansus"
-	catalog_description = null // it's a secret (sorta, I know you're reading this)
+	catalog_description = null // it's a secret sort of I know you're reading this)
 	radial_state = "cursed" // placeholder
 	overlay_state = "portal_mansus"
 	fish_table = list(
@@ -126,7 +126,7 @@
 /datum/fish_source/dimensional_rift/proc/check_item_location(atom/location, obj/item/used_rod)
 	for(var/obj/item/thingy in get_turf(location))
 		// If it's not in the list and it's not what we know as the used rod, skip.
-		// This lets fishing gloves be dragged in as well. I mean honestly if you try fishing in here with those you should just Fucking Die but that's for later.
+		// This lets fishing gloves be dragged in as well.. I mean honestly if you try fishing in here with those you should just Fucking Die but that's for later.
 		if(!is_type_in_list(thingy, list(/obj/item/bodypart, /obj/item/fishing_rod)) && (thingy != used_rod))
 			continue
 		thingy.forceMove(location)

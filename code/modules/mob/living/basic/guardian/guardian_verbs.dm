@@ -29,7 +29,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_GUARDIAN_RECALLED)
 
-/// Swap to a different mode... if we have one
+/// Swap to a different mode.... if we have one
 /mob/living/basic/guardian/proc/toggle_modes()
 	to_chat(src, span_bolddanger("You don't have another mode!"))
 

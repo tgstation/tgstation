@@ -84,7 +84,7 @@
 		recall(activator)
 
 
-/// Assuming we have a wearer, attempt to implant them.
+/// Assuming we have a wearer, try to implant them.
 /obj/item/mod/module/pathfinder/proc/try_implant(mob/activator)
 	if(!ishuman(mod.wearer)) // Wearer isn't human
 		return

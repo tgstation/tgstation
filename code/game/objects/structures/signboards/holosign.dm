@@ -233,7 +233,7 @@
 	investigate_log("Circuit USB ([parent.get_creator()]) set the color to [signboard_color || "(none)"]", INVESTIGATE_SIGNBOARD)
 
 /// Given a color in the format of "#RRGGBB", will return if the color
-/// is dark. Value is mixed with Saturation and Brightness from HSV.
+/// is dark.. Value is mixed with Saturation and Brightness from HSV.
 /proc/is_color_dark_with_saturation(color, threshold = 25)
 	var/hsl = rgb2num(color, COLORSPACE_HSL)
 	return hsl[3] < threshold

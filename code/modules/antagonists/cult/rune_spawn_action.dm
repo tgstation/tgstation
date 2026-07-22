@@ -1,4 +1,4 @@
-//after a delay, creates a rune below you. for constructs creating runes.
+// after a delay, creates a rune below you.. for constructs creating runes.
 /datum/action/innate/cult/create_rune
 	name = "Summon Rune"
 	desc = "Summons a rune"

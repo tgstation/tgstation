@@ -43,7 +43,7 @@
 	RegisterSignal(src, COMSIG_UNDERTILE_UPDATED, PROC_REF(on_hide))
 
 /obj/machinery/atmospherics/pipe/on_deconstruction(disassembled)
-	//we delete the parent here so it initializes air_temporary for us. See /datum/pipeline/Destroy() which calls temporarily_store_air()
+	// we delete the parent here so it initializes air_temporary for us.. See /datum/pipeline/Destroy() which calls temporarily_store_air()
 	QDEL_NULL(parent)
 
 	if(air_temporary)

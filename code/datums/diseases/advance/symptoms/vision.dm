@@ -26,7 +26,7 @@
 		"Resistance 12" = "Weakens extraocular muscles, eventually leading to complete detachment of the eyes.",
 		"Stealth 4" = "The symptom remains hidden until active.",
 	)
-	/// At max stage: If FALSE, cause blindness. If TRUE, cause their eyes to fall out.
+	/// At max stage: If FALSE, cause blindness.. If TRUE, cause their eyes to fall out.
 	var/remove_eyes = FALSE
 
 /datum/symptom/visionloss/Start(datum/disease/advance/A)

@@ -305,7 +305,7 @@
 	can_be_toggled = TRUE
 	active = FALSE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
-	///Type of fuel the generator is using. Is set in generator_init() to add the starting amount of fuel
+	/// Type of fuel the generator is using.. Is set in generator_init() to add the starting amount of fuel
 	var/obj/item/stack/sheet/fuel = null
 	///Fuel used per second while idle, not generating, in units
 	var/fuelrate_idle = 0.00625 * SHEET_MATERIAL_AMOUNT

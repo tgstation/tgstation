@@ -14,19 +14,19 @@
 /datum/component/tackler
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
-	///If we're currently tackling or are on cooldown. Actually, shit, if I use this to handle cooldowns, then getting thrown by something while on cooldown will count as a tackle..... whatever, i'll fix that next commit
+	/// If we're currently tackling or are on cooldown.. Actually, shit, if I use this to handle cooldowns, then getting thrown by something while on cooldown will count as a tackle...... whatever, i'll fix that next commit
 	var/tackling = TRUE
 	///How much stamina it takes to launch a tackle
 	var/stamina_cost
-	///Launching a tackle calls Knockdown on you for this long, so this is your cooldown. Once you stand back up, you can tackle again.
+	/// Launching a tackle calls Knockdown on you for this long, so this is your cooldown.. Once you stand back up, you can tackle again.
 	var/base_knockdown
 	///Your max range for how far you can tackle.
 	var/range
-	///How fast you sail through the air. Standard tackles are 1 speed, but gloves that throw you faster come at a cost: higher speeds make it more likely you'll be badly injured if you fly into a non-mob obstacle.
+	/// How fast you sail through the air.. Standard tackles are 1 speed. Gloves that throw you faster come at a cost: higher speeds make it more likely you'll be badly injured if you fly into a non-mob obstacle.
 	var/speed
-	///A flat modifier to your roll against your target, as described in [rollTackle()][/datum/component/tackler/proc/rollTackle]. Slightly misleading, skills aren't relevant here, this is a matter of what type of gloves (or whatever) is granting you the ability to tackle.
+	/// A flat modifier to your roll against your target, as described in [rollTackle()][/datum/component/tackler/proc/rollTackle].. Slightly misleading, skills aren't relevant here, this is a matter of what type of gloves (or whatever) is granting you the ability to tackle.
 	var/skill_mod
-	///Some gloves, generally ones that increase mobility, may have a minimum distance to fly. Rocket gloves are especially dangerous with this, be sure you'll hit your target or have a clear background if you miss, or else!
+	/// Some gloves, generally ones that increase mobility, may have a minimum distance to fly.. Rocket gloves are especially dangerous with this, be sure you'll hit your target or have a clear background if you miss, or else!
 	var/min_distance
 	///A wearkef to the throwdatum we're currently dealing with, if we need it
 	var/datum/weakref/tackle_ref
@@ -68,7 +68,7 @@
 	tackle_ref = WEAKREF(tackle)
 	tackle.thrower = WEAKREF(user)
 
-///See if we can tackle or not. If we can, leap!
+/// See if we can tackle or not.. If we can, leap!
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/clicked_atom, list/modifiers)
 	SIGNAL_HANDLER
 
@@ -225,7 +225,7 @@
 			target.Knockdown(2 SECONDS)
 			target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
 
-		if(21 to 49) // really good hit, the target is definitely worse off here. Without positive modifiers, this is as good a tackle as you can land
+		if(21 to 49) // really good hit, the target is definitely worse off here.. Without positive modifiers, this is as good a tackle as you can land
 			user.visible_message(span_warning("[user] lands an expert [tackle_word] on [target], knocking [target.p_them()] down hard while landing on [user.p_their()] feet with a passive grip!"), span_userdanger("You land an expert [tackle_word] on [target], knocking [target.p_them()] down hard while landing on your feet with a passive grip!"), ignored_mobs = target)
 			to_chat(target, span_userdanger("[user] lands an expert [tackle_word] on you, knocking you down hard and maintaining a passive grab!"))
 
@@ -241,7 +241,7 @@
 
 		if(50 to INFINITY) // absolutely BODIED
 			var/stamcritted_user = HAS_TRAIT_FROM(user, TRAIT_INCAPACITATED, STAMINA)
-			if(stamcritted_user) // in case the user went into stamcrit from the tackle itself and cannot actually aggro grab (since they will be crit) we make the tackle effectivelly mutually assured...stamina crit
+			if(stamcritted_user) // in case the user went into stamcrit from the tackle itself. Cannot actually aggro grab (since they will be crit) we make the tackle effectivelly mutually assured...stamina crit
 				user.visible_message(span_warning("[user] lands a monsterly reckless [tackle_word] on [target], knocking both of them senseless!"), span_userdanger("You land a monsterly reckless [tackle_word] on [target], knocking both of you senseless!"), ignored_mobs = target)
 				to_chat(target, span_userdanger("[user] lands a monsterly reckless [tackle_word] on you, knocking the both of you senseless!"))
 				user.forceMove(get_turf(target))
@@ -312,7 +312,7 @@
 		if(-INFINITY to 0) //I don't want to know how this has happened, okay?
 			neutral_outcome(user, target, roll, tackle_word) //Default to neutral
 
-		if(1 to 20) // It's not completely terrible! But you are somewhat vulernable for doing it.
+		if(1 to 20) // It's not completely terrible!. But you are somewhat vulernable for doing it.
 			user.visible_message(span_warning("[user] lands a weak [tackle_word] on [target], briefly staggering [target.p_them()]!"), span_userdanger("You land a weak [tackle_word] on [target], briefly staggering [target.p_them()]!"), ignored_mobs = target)
 			to_chat(target, span_userdanger("[user] lands a weak [tackle_word] on you, staggering you!"))
 
@@ -362,7 +362,7 @@
 	else if(target_drunkenness > 30)
 		defense_mod -= 1
 
-	//Arms contribute a great deal to potential tackling prowess and defense. Better arms = better bonus
+	// Arms contribute a great deal to potential tackling prowess and defense.. Better arms = better bonus
 	var/obj/item/bodypart/arm/defender_arm = target.get_active_hand()
 
 	if(defender_arm) //the target may not actually have arms
@@ -423,7 +423,7 @@
 	var/mob/living/carbon/sacker = parent
 	var/sacker_drunkenness = sacker.get_drunk_amount()
 
-	//Arms contribute a great deal to potential tackling prowess and defense. Better arms = better bonus
+	// Arms contribute a great deal to potential tackling prowess and defense.. Better arms = better bonus
 	var/obj/item/bodypart/arm/sacker_arm = sacker.get_active_hand()
 
 	if(sacker_arm) //I have no idea how you would be tackling without hands, but just in case
@@ -533,13 +533,13 @@
 		oopsie_mod += 6 // flies don't take smacking into a window/wall easily
 
 	var/oopsie = rand(danger_zone, 100)
-	if(oopsie >= 94 && oopsie_mod < 0) // good job avoiding getting paralyzed! gold star!
+	if(oopsie >= 94 && oopsie_mod < 0) // good job avoiding getting paralyzed!. gold star!
 		to_chat(user, span_notice("You're really glad you're wearing protection!"))
 	oopsie += oopsie_mod
 
 	switch(oopsie)
 		if(99 to INFINITY)
-			// can you imagine standing around minding your own business when all of the sudden some guy fucking launches himself into a wall at full speed and irreparably paralyzes himself?
+			// can you imagine standing around minding your own business when all of the sudden some guy fucking launches himself into a wall at full speed. Irreparably paralyzes himself?
 			user.visible_message(span_danger("[user] slams face-first into [hit] at an awkward angle, severing [user.p_their()] spinal column with a sickening crack! Fucking shit!"), span_userdanger("You slam face-first into [hit] at an awkward angle, severing your spinal column with a sickening crack! Fucking shit!"))
 			user.apply_damage(40, BRUTE, BODY_ZONE_HEAD, wound_bonus = 40)
 			user.apply_damage(30, STAMINA)
@@ -654,7 +654,7 @@
 
 	var/list/messes = list()
 
-	// we split the mess-making into two parts (check what we're gonna send flying, intermission for dealing with the tackler, then actually send stuff flying) for the benefit of making sure the face-slam text
+	// we split the mess-making into two parts (check what we're going to send flying, intermission f. Dealing with the tackler, then actually send stuff flying) f. The benefit of making sure the face-slam text
 	// comes before the list of stuff that goes flying, but can still adjust text + damage to how much of a mess it made
 	for(var/obj/item/item_in_turf in our_turf.contents)
 		if(!item_in_turf.anchored)
@@ -674,7 +674,7 @@
 		else if(messes.len < MAX_TABLE_MESSES)
 			HOW_big_of_a_miss_did_we_just_make = ", making a gnarly mess"
 		else
-			HOW_big_of_a_miss_did_we_just_make = ", making a ginormous mess!" // an extra exclamation point!! for emphasis!!!
+			HOW_big_of_a_miss_did_we_just_make = ", making a ginormous mess!" // an extra exclamation point!!. for emphasis!!!
 
 	owner.visible_message(span_danger("[owner] trips over [kevved] and slams into it face-first[HOW_big_of_a_miss_did_we_just_make]!"), span_userdanger("You trip over [kevved] and slam into it face-first[HOW_big_of_a_miss_did_we_just_make]!"))
 	owner.adjust_stamina_loss(15 + messes.len * 2, updating_stamina = FALSE)

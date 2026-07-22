@@ -19,7 +19,7 @@
 	 * and [CHANGELING_POWER_UNOBTAINABLE], which are not available for purchase in the changeling emporium
 	 */
 	var/dna_cost = CHANGELING_POWER_UNOBTAINABLE
-	/// Amount of dna needed to use this ability. Note, changelings always have atleast 1
+	/// Amount of dna needed to use this ability.. Note, changelings always have atleast 1
 	var/req_dna = 0
 	/// If you need to be humanoid to use this ability (disincludes monkeys)
 	var/req_human = FALSE

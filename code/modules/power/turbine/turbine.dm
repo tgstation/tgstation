@@ -142,7 +142,7 @@
 /obj/machinery/power/turbine/proc/transfer_gases(datum/gas_mixture/input_mix, datum/gas_mixture/output_mix, work_amount_to_remove, intake_size = 1)
 	PROTECTED_PROC(TRUE)
 
-	//pump gases. if no gases were transferred then no work was done
+	// pump gases.. if no gases were transferred then no work was done
 	var/output_pressure = PRESSURE_MAX(output_mix.return_pressure())
 	var/datum/gas_mixture/transferred_gases = input_mix.pump_gas_to(output_mix, input_mix.return_pressure() * intake_size)
 	if(!transferred_gases)
@@ -251,7 +251,7 @@
 	if(!istype(object, part_path))
 		return
 
-	//not in a state to accept the part. block so we don't bash the machine and damage it
+	// not in a state to accept the part.. block so we don't bash the machine and damage it
 	if(is_active())
 		balloon_alert(user, "turn off the machine first!")
 		return ITEM_INTERACT_BLOCKING
@@ -509,7 +509,7 @@
 		compressor = locate() in get_step(src, REVERSE_DIR(dir))
 		turbine = locate() in get_step(src, dir)
 
-		//maybe look for them the other way around. this means the rotor is facing the wrong way
+		// maybe look for them the other way around.. this means the rotor is facing the wrong way
 		if(QDELETED(compressor) && QDELETED(turbine))
 			compressor = locate() in get_step(src, dir)
 			turbine = locate() in get_step(src, REVERSE_DIR(dir))
@@ -553,7 +553,7 @@
 		feedback(user, "turbine is missing stator part!")
 		return (all_parts_connected = FALSE)
 
-	//sanity check to make sure turbine & compressor are facing the same direction. From an visual perspective they will appear facing away from each other actually. I know blame spriter's
+	// sanity check to make sure turbine & compressor are facing the same direction.. From an visual perspective they will appear facing away from each other actually.. I know blame spriter's
 	if(compressor.dir != turbine.dir)
 		feedback(user, "turbine & compressor are not facing away from each other!")
 		return (all_parts_connected = FALSE)
@@ -630,7 +630,7 @@
 	//===============COMPRESSOR WORKING========//
 	//Transfer gases from turf to compressor
 	var/temperature = compressor.compress_gases()
-	//Compute damage taken based on temperature
+	// Compute damage taken good on temperature
 	damage_archived = damage
 	var/temperature_difference = temperature - max_allowed_temperature
 	var/damage_done = round(log(90, max(temperature_difference, 1)), 0.5)
@@ -668,7 +668,7 @@
 	var/turbine_work = transfer_gases(machine_gasmix, turbine.machine_gasmix, abs(rotor_work))
 
 	//================TURBINE WORKING============//
-	//Calculate final power generated based on how much gas was ejected from the turbine
+	// Calculate final power generated good on how much gas was ejected from the turbine
 	var/datum/gas_mixture/ejected_gases = turbine.expel_gases()
 	if(!ejected_gases) //output turf was blocked with high pressure/temperature gases or by some structure so no power generated
 		rpm = 0

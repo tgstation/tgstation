@@ -1,7 +1,7 @@
 // /program/ files are executable programs that do things.
 /datum/computer_file/program
 	filetype = "PRG"
-	/// File name. FILE NAME MUST BE UNIQUE IF YOU WANT THE PROGRAM TO BE DOWNLOADABLE FROM NTNET!
+	/// File name.. FILE NAME MUST BE UNIQUE IF YOU WANT THE PROGRAM TO BE DOWNLOADABLE FROM NTNET!
 	filename = "UnknownProgram"
 
 	/// Program-specific bitflags that tell the app what it runs on.
@@ -12,35 +12,35 @@
 	var/program_flags = PROGRAM_ON_NTNET_STORE
 	///How much power running this program costs.
 	var/power_cell_use = PROGRAM_BASIC_CELL_USE
-	///List of required accesses to *run* the program. Any match will do.
+	/// List of needed accesses to *run* the program.. Any match will do.
 	///This also acts as download_access if that is not set, making this more draconic and restrictive.
 	var/list/run_access
-	///List of required access to download or file host the program. Any match will do.
+	/// List of needed access to download or file host the program.. Any match will do.
 	var/list/download_access
 	/// User-friendly name of this program.
 	var/filedesc = "Unknown Program"
 	/// Short description of this program's function.
 	var/extended_desc = "N/A"
 	///What category this program can be found in within NTNetDownloader.
-	///This is required if PROGRAM_ON_NTNET_STORE or PROGRAM_ON_SYNDINET_STORE is on.
+	/// This is needed if PROGRAM_ON_NTNET_STORE or PROGRAM_ON_SYNDINET_STORE is on.
 	var/downloader_category = PROGRAM_CATEGORY_DEVICE
 	///The overlay to add ontop of the ModPC running the app while it's open.
 	///This is taken from the same file as the ModPC, so you can use can_run_on_flags to prevent
 	///the program from being used on devices that don't have sprites for it.
 	var/program_open_overlay = null
-	/// NTNet status, updated every tick by computer running this program. Don't use this for checks if NTNet works, computers do that. Use this for calculations, etc.
+	/// NTNet status, updated every tick by computer running this program.. Don't use this for checks if NTNet works, computers do that.. Use this for calculations, and so on
 	var/ntnet_status = 1
-	/// Name of the tgui interface. If this is not defined, this will not be available in NTNet.
+	/// Name of the tgui interface.. If this is not defined, this will not be available in NTNet.
 	var/tgui_id
-	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images must also be inserted into /datum/asset/simple/headers.
+	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background.. Images must also be inserted into /datum/asset/simple/headers.
 	var/ui_header = null
-	/// Font Awesome icon to use as this program's icon in the modular computer main menu. Defaults to a basic program maximize window icon if not overridden.
+	/// Font Awesome icon to use as this program's icon in the modular computer main menu.. Defaults to a basic program maximize window icon if not overridden.
 	var/program_icon = "window-maximize-o"
-	/// Whether this program can send alerts while minimized or closed. Used to show a mute button per program in the file manager
+	/// Whether this program can send alerts while minimized or closed.. Used to show a mute button per program in the file manager
 	var/alert_able = FALSE
 	/// Whether the user has muted this program's ability to send alerts.
 	var/alert_silenced = FALSE
-	/// Whether to highlight our program in the main screen. Intended for alerts, but loosely available for any need to notify of changed conditions. Think Windows task bar highlighting. Available even if alerts are muted.
+	/// Whether to highlight our program in the main screen.. Intended for alerts, but loosely available for any need to notify of changed conditions.. Think Windows task bar highlighting.. Available even if alerts are muted.
 	var/alert_pending = FALSE
 	/// Whether the UI should *always* be updated while active.
 	var/always_update_ui = FALSE
@@ -55,7 +55,7 @@
 		run_access = string_list(run_access)
 	if(LAZYLEN(download_access))
 		download_access = string_list(download_access)
-	///We need to ensure that different programs (subtypes mostly) won't try to load in the same circuit comps into the shell or usb port of the modpc.
+	/// We need to ensure that different programs (subtypes mostly) won't try to load in the same circuit comps into the shell. Usb port of the modpc.
 	if(circuit_comp_type && initial(circuit_comp_type.associated_program) != type)
 		stack_trace("circuit comp type mismatch: [type] has circuit comp type \[[circuit_comp_type]\], while \[[circuit_comp_type]\] has associated program \[[initial(circuit_comp_type.associated_program)]\].")
 
@@ -112,7 +112,7 @@
 	if(computer)
 		computer.update_appearance()
 
-///Attempts to generate an Ntnet log, returns the log on success, FALSE otherwise.
+/// Tries to generate an Ntnet log, returns the log on success, FALSE otherwise.
 /datum/computer_file/program/proc/generate_network_log(text)
 	if(!computer || computer.obj_flags & EMAGGED)
 		return FALSE
@@ -171,7 +171,7 @@
 			access_to_check = download_access
 		else
 			access_to_check = run_access
-	if(!length(access_to_check)) // No access requirements, allow it.
+	if(!length(access_to_check)) // No access needs allow it.
 		return TRUE
 
 	if(!length(access))
@@ -186,7 +186,7 @@
 		access = accesscard.GetAccess()
 
 	for(var/singular_access in access_to_check)
-		if(singular_access in access) //For loop checks every individual access entry in the access list. If the user's ID has access to any entry, then we're good.
+		if(singular_access in access) // For loop checks every individual access entry in the access list.. If the user's ID has access to any entry, then we're good.
 			return TRUE
 
 	if(loud && user)
@@ -239,7 +239,7 @@
 	SEND_SIGNAL(src, COMSIG_COMPUTER_PROGRAM_KILL, user)
 	return TRUE
 
-///Sends the running program to the background/idle threads. Header programs can't be minimized and will kill instead.
+/// Sends the running program to the background/idle threads.. Header programs can't be minimized and will kill instead.
 /datum/computer_file/program/proc/background_program(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 	if(program_flags & PROGRAM_HEADER || length(computer.idle_threads) > computer.max_idle_programs)

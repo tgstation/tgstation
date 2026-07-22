@@ -8,7 +8,7 @@
 #define TURRET_FLAG_AUTH_WEAPONS (1<<1) // Checks if it can shoot people that have a weapon they aren't authorized to have
 #define TURRET_FLAG_SHOOT_CRIMINALS (1<<2) // Checks if it can shoot people that are wanted
 #define TURRET_FLAG_SHOOT_ALL (1<<3)  // The turret gets pissed off and shoots at people nearby (unless they have sec access!)
-#define TURRET_FLAG_SHOOT_ANOMALOUS (1<<4)  // Checks if it can shoot at unidentified lifeforms (ie xenos)
+#define TURRET_FLAG_SHOOT_ANOMALOUS (1<<4)  // Checks if it can shoot at unidentified lifeforms that is xenos)
 #define TURRET_FLAG_SHOOT_UNSHIELDED (1<<5) // Checks if it can shoot people that aren't mindshielded and who arent heads
 #define TURRET_FLAG_SHOOT_BORGS (1<<6) // checks if it can shoot cyborgs
 #define TURRET_FLAG_SHOOT_HEADS (1<<7) // checks if it can shoot at heads of staff
@@ -93,7 +93,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/on = TRUE
 	/// Determines if our projectiles hit our faction
 	var/ignore_faction = FALSE
-	/// The spark system, used for generating... sparks?
+	/// The spark system, used for generating.... sparks?
 	var/datum/effect_system/basic/spark_spread/spark_system
 	/// The turret will try to shoot from a turf in that direction when in a wall
 	var/wall_turret_direction
@@ -221,7 +221,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	RegisterSignal(stored_gun, COMSIG_QDELETING, PROC_REF(null_gun))
 	var/list/gun_properties = stored_gun.get_turret_properties()
 
-	//required properties
+	// needed properties
 	stun_projectile = gun_properties["stun_projectile"]
 	stun_projectile_sound = gun_properties["stun_projectile_sound"]
 	lethal_projectile = gun_properties["lethal_projectile"]
@@ -361,14 +361,14 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(on || raised)
 		return NONE
 
-	//This code handles moving the turret around. After all, it's a portable turret!
+	// This code handles moving the turret around.. After all, it's a portable turret!
 	if(!anchored && !isinspace())
 		set_anchored(TRUE)
 		RemoveInvisibility(id=type)
 		update_appearance()
 		to_chat(user, span_notice("You secure the exterior bolts on the turret."))
 		if(has_cover)
-			cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
+			cover = new /obj/machinery/porta_turret_cover(loc) // create a new turret.. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
 			cover.parent_turret = src //make the cover's parent src
 	else if(anchored)
 		set_anchored(FALSE)
@@ -399,7 +399,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	controllock = TRUE
 	set_disabled(6 SECONDS)
 	update_appearance()
-	//turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
+	// turns it back on.. The cover popUp() popDown() are automatically called in process(), no need to define it here
 	return TRUE
 
 /obj/machinery/porta_turret/emp_act(severity)
@@ -516,7 +516,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 				if(assess_perp(C) >= 4)
 					targets += C
-			else if(turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS) //non humans who are not simple animals (xenos etc)
+			else if(turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS) // non humans who are not simple animals (xenos and so on
 				if(!in_faction(C))
 					targets += C
 
@@ -896,10 +896,10 @@ DEFINE_BITFIELD(turret_flags, list(
 	lethal_projectile = /obj/projectile/plasma/turret
 	lethal_projectile_sound = 'sound/items/weapons/plasma_cutter.ogg'
 	mode = TURRET_LETHAL //It would be useless in stun mode anyway
-	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET) //Minebots, medibots, etc that should not be shot.
+	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET) // Minebots, medibots, and so on that should not be shot.
 
 /obj/machinery/porta_turret/aux_base/assess_perp(mob/living/carbon/human/perp)
-	return 0 //Never shoot humanoids. You are on your own if Ashwalkers or the like attack!
+	return 0 // Never shoot humanoids.. You are on your own if Ashwalkers or the like attack!
 
 /obj/machinery/porta_turret/aux_base/setup()
 	return
@@ -1016,7 +1016,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/lasertag/assess_perp(mob/living/carbon/human/perp)
 	. = 0
-	if(team_color == "blue") //Lasertag turrets target the opposing team, how great is that? -Sieve
+	if(team_color == "blue") // Lasertag turrets target the opposing team, how great is that?. -Sieve
 		. = 0 //But does not target anyone else
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/redtag))
 			. += 4

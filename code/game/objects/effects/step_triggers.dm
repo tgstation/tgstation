@@ -34,7 +34,7 @@
 /obj/effect/step_trigger/singularity_pull(atom/singularity, current_size)
 	return
 
-/* Sends a message to mob when triggered*/
+/* Sends a message to mob when triggered */
 
 /obj/effect/step_trigger/message
 	var/message //the message to give to the mob
@@ -123,7 +123,7 @@
 		var/turf/T = locate(teleport_x, teleport_y, teleport_z)
 		A.forceMove(T)
 
-/* Random teleporter, teleports atoms to locations ranging from teleport_x - teleport_x_offset, etc */
+/* Random teleporter, teleports atoms to locations ranging from teleport_x - teleport_x_offset, and so on */
 
 /obj/effect/step_trigger/teleporter/random
 	var/teleport_x_offset = 0
@@ -192,10 +192,10 @@
 /* Simple sound player, Mapper friendly! */
 
 /obj/effect/step_trigger/sound_effect
-	var/sound //eg. path to the sound, inside '' eg: 'growl.ogg'
+	var/sound // for example path to the sound, inside '' for example 'growl.ogg'
 	var/volume = 100
 	var/freq_vary = 1 //Should the frequency of the sound vary?
-	var/extra_range = 0 // eg World.view = 7, extra_range = 1, 7+1 = 8, 8 turfs radius
+	var/extra_range = 0 // for example World.view = 7, extra_range = 1, 7+1 = 8, 8 turfs radius
 	var/happens_once = FALSE
 	var/triggerer_only = 0 //Whether the triggerer is the only person who hears this
 

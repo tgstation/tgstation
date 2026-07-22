@@ -16,7 +16,7 @@
 	var/datum/ai_laws/laws = new()
 	var/force_replace_ai_name = FALSE
 	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
-	/// Whether the brainmob can move. Doesnt usually matter but SPHERICAL POSIBRAINSSS
+	/// Whether the brainmob can move.. Doesnt usually matter but SPHERICAL POSIBRAINSSS
 	var/immobilize = TRUE
 
 /obj/item/radio/mmi
@@ -189,7 +189,7 @@
 		brainmob.forceMove(brain) //Throw mob into brain.
 		brainmob.set_stat(DEAD)
 		brainmob.emp_damage = 0
-		brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
+		brainmob.reset_perspective() // so the brainmob follows the brain organ instead of the mmi.. And to update our vision
 		brain.brainmob = brainmob //Set the brain to use the brainmob
 		user.log_message("has ejected the brain of [key_name(brainmob)] from an MMI", LOG_GAME)
 		brainmob = null //Set mmi brainmob var to null
@@ -199,7 +199,7 @@
 	brain.organ_flags &= ~ORGAN_FROZEN
 	brain = null //No more brain in here
 
-/obj/item/mmi/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
+/obj/item/mmi/proc/transfer_identity(mob/living/L) // Same deal as the regular brain proc.. Used for human-->robot people.
 	if(!brainmob)
 		set_brainmob(new /mob/living/brain(src))
 	brainmob.name = L.real_name

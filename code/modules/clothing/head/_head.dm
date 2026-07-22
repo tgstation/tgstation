@@ -17,7 +17,7 @@
 	///ignore any hats with the tinfoil counter-measure enabled
 	if(clothing_flags & ANTI_TINFOIL_MANEUVER)
 		return
-	///if the hat happens to be capable of holding contents and has something in it. mostly to prevent super cheesy stuff like stuffing a mini-bomb in a hat and throwing it
+	/// if the hat happens to be capable of holding contents and has something in it.. mostly to prevent super cheesy stuff like stuffing a mini-bomb in a hat and throwing it
 	if(LAZYLEN(contents))
 		return
 	if(iscarbon(hit_atom))

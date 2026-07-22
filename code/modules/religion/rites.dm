@@ -32,7 +32,7 @@
 		return FALSE
 	return TRUE
 
-///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
+/// Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed.. Maybe you want it to check for something else?
 /datum/religion_rites/proc/perform_rite(mob/living/user, atom/religious_tool)
 	if(!can_afford(user))
 		return FALSE
@@ -47,7 +47,7 @@
 			user.say(i)
 			first_invoke = FALSE
 			continue
-		if(!length(ritual_invocations)) //we divide so we gotta protect
+		if(!length(ritual_invocations)) // we divide so we got to protect
 			return FALSE
 		if(!do_after(user, ritual_length/length(ritual_invocations)))
 			return FALSE
@@ -59,7 +59,7 @@
 	return TRUE
 
 
-///Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
+/// Does the thing if the rite was successfully performed.. return value denotes that the effect successfully that is a harm rite does harm)
 /datum/religion_rites/proc/invoke_effect(mob/living/user, atom/religious_tool)
 	SHOULD_CALL_PARENT(TRUE)
 	GLOB.religious_sect.on_riteuse(user, religious_tool)
@@ -364,7 +364,7 @@
 
 /datum/religion_rites/sparring_contract/perform_rite(mob/living/user, atom/religious_tool)
 	for(var/obj/item/paper/could_contract in get_turf(religious_tool))
-		if(could_contract.get_total_length()) //blank paper pls
+		if(could_contract.get_total_length()) // blank paper please
 			continue
 		contract_target = could_contract
 		return ..()
@@ -422,7 +422,7 @@
 	ritual_length = 10 SECONDS
 	invoke_msg = "Weapons in your name! Battles with your blood!"
 	favor_cost = 0
-	///the material that will be attempted to be forged into a weapon
+	/// the material that will be tried to be forged into a weapon
 	var/obj/item/stack/sheet/converted
 
 /datum/religion_rites/ceremonial_weapon/perform_rite(mob/living/user, atom/religious_tool)

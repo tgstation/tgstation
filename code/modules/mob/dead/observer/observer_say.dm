@@ -71,7 +71,7 @@
 			to_follow = V.source
 	var/link = FOLLOW_LINK(src, to_follow)
 	var/is_custom_emote = message_mods[MODE_CUSTOM_SAY_ERASE_INPUT]
-	// Create map text prior to modifying message for goonchat
+	// Create map text before to modifying message for goonchat
 	if (safe_read_pref(client, /datum/preference/toggle/enable_runechat) && (safe_read_pref(client, /datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 		if(is_custom_emote)
 			create_chat_message(speaker, null, message_mods[MODE_CUSTOM_SAY_EMOTE], spans, EMOTE_MESSAGE)

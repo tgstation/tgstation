@@ -95,7 +95,7 @@
 
 	return FALSE
 
-/// Attempts to find a quantum server.
+/// Tries to find a quantum server.
 /obj/machinery/computer/quantum_console/proc/find_server()
 	var/obj/machinery/quantum_server/server = server_ref?.resolve()
 	if(server)

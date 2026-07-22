@@ -126,11 +126,11 @@
 	if(!length(members))
 		qdel(src)
 
-// Checks to see if the passed in location contains something interesting to us. If it does, return TRUE, otherwise return false
+// Checks to see if the passed in location contains something interesting to us.. If it does, return TRUE, otherwise return false
 // If it is interesting, we add it to our processing list
 /datum/merger/proc/check_turf(turf/location, list/found_turfs, asking_from)
 	var/found_something = FALSE
-	// if asking_from is invalid (like if it's 0), we get a random output. that's bad, let's check for falsyness
+	// if asking_from is invalid (like if it's 0), we get a random output.. that's bad, let's check for falsyness
 	var/us_to_them = asking_from && REVERSE_DIR(asking_from)
 
 	if(found_turfs[location])

@@ -1,4 +1,4 @@
-/// This is the main proc. Despite what the name suggests,
+/// This is the main proc.. Despite what the name suggests,
 /// it instantly moves our mobile port to stationary port `new_dock`.
 /obj/docking_port/mobile/proc/initiate_docking(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
 	// Crashing this ship with NO SURVIVORS
@@ -59,7 +59,7 @@
 		return
 
 	/*******************************************Hiding turfs if necessary*******************************************/
-	// TODO: Move this somewhere sane
+	// To do Move this somewhere sane
 	var/list/new_hidden_turfs
 	if(hidden)
 		new_hidden_turfs = list()

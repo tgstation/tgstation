@@ -22,7 +22,7 @@
 	var/story_value = STORY_VALUE_NONE
 	/// Flags of any special behavior for the memory
 	var/memory_flags = NONE
-	/// If this memory changes based on mood, this is the verb it uses.
+	/// If this memory changes good on mood, this is the verb it uses.
 	var/mood_verb
 
 	// Below are common infobits passed to memories, placed into strings.
@@ -97,7 +97,7 @@
 /datum/memory/proc/generate_memory_name()
 	var/list/potential_names = get_names()
 	if(!length(potential_names))
-		// Someone forgot to implement get_names - it will stack trace, so we just need to return
+		// Someone forgot to add get_names - it will stack trace, so we just need to return
 		name = "Erroneous memory - This is a bug"
 		story_value = STORY_VALUE_SHIT
 		memory_flags |= (MEMORY_FLAG_NOPERSISTENCE|MEMORY_NO_STORY)
@@ -316,17 +316,17 @@
 	//storybuilding
 	var/list/story_pieces = list()
 
-	//The forewords for this specific type of story (E.g. This engraving depicts)
+	// The forewords for this specific type of story (E.g.. This engraving depicts)
 	story_pieces += pick(forewords)
-	//The story start for this specific action. (E.g. The Chef carving into The Clown)
+	// The story start for this specific action.. (E.g.. The Chef carving into The Clown)
 	story_pieces += pick(story_starts)
-	//The location it happend, which isn't always included, but commonly is. (E.g. in Space, while in the Bar)
+	// The location it happend, which isn't always included, but commonly is.. (E.g.. in Space, while in the Bar)
 	if(length(wheres))
 		story_pieces += pick(wheres)
-	//Shows how the protagonist felt about it all (E.g. The Chef is looking sad as they tear into The Clown.)
+	// Shows how the protagonist felt about it all (E.g.. The Chef is looking sad as they tear into The Clown.)
 	if(length(story_mood_sentences))
 		story_pieces += pick(story_mood_sentences)
-	//A nonsensical addition, using the memorizer, protagonist or even random crew / things (E.g. in the meantime, the Clown is being arrested, clutching a skub.")
+	// A nonsensical addition, using the memorizer, protagonist or even random crew / things (E.g.. in the meantime, the Clown is being arrested, clutching a skub.")
 	if(prob(75))
 		var/chosen_addition = pick(somethings)
 		chosen_addition = replacetext(chosen_addition, "%MEMORIZER", "[memorizer]")
@@ -336,7 +336,7 @@
 		chosen_addition = replacetext(chosen_addition, "%STORY_TYPE", story_type)
 
 		story_pieces += chosen_addition
-	//Explains any unique styling the art has. e.g. (The engraving has a cubist style.)
+	// Explains any unique styling the art has.. e.g.. (The engraving has a cubist style.)
 	if(length(styles) && prob(75))
 		story_pieces += pick(styles)
 

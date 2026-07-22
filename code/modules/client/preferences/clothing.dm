@@ -50,7 +50,7 @@
 			return /obj/item/storage/backpack/messenger
 
 		// In a perfect world, these would be your department's backpack.
-		// However, this doesn't factor in assistants, or no high slot, and would
+		// But this doesn't factor in assistants, or no high slot, and would
 		// also increase the spritesheet size a lot.
 		// I play medical doctor, and so medical doctor you get.
 		if (DBACKPACK)

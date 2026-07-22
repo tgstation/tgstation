@@ -8,7 +8,7 @@
 	anchored = FALSE
 	pass_flags = PASSTABLE
 	circuit = /obj/item/circuitboard/machine/ecto_sniffer
-	///determines if the device if the power switch is turned on or off. Useful if the ghosts are too annoying.
+	/// determines if the device if the power switch is turned on or off.. Useful if the ghosts are too annoying.
 	var/on = TRUE
 	///If this var set to false the ghosts will not be able interact with the machine, say if the machine is silently disabled by cutting the internal wire.
 	var/sensor_enabled = TRUE

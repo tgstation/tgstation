@@ -22,7 +22,7 @@
 
 	///Direction of pumping the gas (ATMOS_DIRECTION_RELEASING or ATMOS_DIRECTION_SIPHONING)
 	var/pump_direction = ATMOS_DIRECTION_RELEASING
-	///Should we check internal pressure, external pressure, both or none? (ATMOS_EXTERNAL_BOUND, ATMOS_INTERNAL_BOUND, NO_BOUND)
+	/// Should we check internal pressure, external pressure, both or none?. (ATMOS_EXTERNAL_BOUND, ATMOS_INTERNAL_BOUND, NO_BOUND)
 	var/pressure_checks = ATMOS_EXTERNAL_BOUND
 	///The external pressure threshold (default 101 kPa)
 	var/external_pressure_bound = ONE_ATMOSPHERE
@@ -38,7 +38,7 @@
 	/// Is this vent currently overclocked, removing pressure limits but damaging the fan?
 	var/fan_overclocked = FALSE
 
-	/// Rate of damage per atmos process to the fan when overclocked. Set to 0 to disable damage.
+	/// Rate of damage per atmos process to the fan when overclocked.. Set to 0 to disable damage.
 	var/fan_damage_rate = 0.5
 
 	/// The cached string we show for examine that lets you know how fucked up the fan is.
@@ -155,7 +155,7 @@
 	. = ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/assign_to_area(area/target_area = get_area(src))
-	//this vent is already assigned to an area. Unassign it from here first before reassigning it to an new area
+	// this vent is already assigned to an area.. Unassign it from here first before reassigning it to an new area
 	if(isnull(target_area) || !isnull(assigned_area))
 		return
 	assigned_area = target_area

@@ -8,7 +8,7 @@
 	var/welded = FALSE
 	///Current underfloor_accessibility state, determines if the component should show the pipe underneath it and what plane it renders on.
 	var/underfloor_state = UNDERFLOOR_INTERACTABLE
-	///When the component is on a non default layer should we shift everything? Or just the underlay pipe
+	/// When the component is on a non default layer should we shift everything?. Or just the underlay pipe
 	var/shift_underlay_only = TRUE
 	///Stores the parent pipeline, used in components
 	var/list/datum/pipeline/parents
@@ -321,7 +321,7 @@
 	for(var/i in 1 to device_type)
 		var/obj/machinery/atmospherics/node = nodes[i]
 		if(node)
-			if(src in node.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
+			if(src in node.nodes) // Only if it's actually connected.. On-pipe version would is one-sided.
 				node.disconnect(src)
 			nodes[i] = null
 		if(parents[i])

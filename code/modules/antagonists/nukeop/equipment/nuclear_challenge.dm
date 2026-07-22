@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 
 	war_was_declared(user, memo = war_declaration)
 
-///Admin only proc to bypass checks and force a war declaration. Button on antag panel.
+/// Admin only proc to bypass checks and force a war declaration.. Button on antag panel.
 /obj/item/nuclear_challenge/proc/force_war()
 	var/are_you_sure = tgui_alert(usr, "Are you sure you wish to force a war declaration?[GLOB.player_list.len < CHALLENGE_MIN_PLAYERS ? " Note, the player count is under the required limit." : ""]", "Declare war?", list("Yes", "No"))
 
@@ -169,7 +169,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	uplink_type = /obj/item/uplink/clownop
 	announcement_sound = 'sound/announcer/alarm/clownops.ogg'
 
-/// Subtype that does nothing but plays the war op message. Intended for debugging
+/// Subtype that does nothing but plays the war op message.. Intended for debugging
 /obj/item/nuclear_challenge/literally_just_does_the_message
 	name = "\"Declaration of War\""
 	desc = "It's a Syndicate Declaration of War thing-a-majig, but it only plays the loud sound and message. Nothing else."

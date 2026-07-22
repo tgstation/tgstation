@@ -31,7 +31,7 @@
 	if(.)
 		return
 	to_chat(user, span_notice("Screenshot saved in 'BYOND/screenshots' folder."))
-	//This is dealt by BYOND. Keeping this here in case that ever changes, though this command doesn't actually work when manually called.
+	// This is dealt by BYOND.. Keeping this here in case that ever changes, though this command doesn't actually work when manually called.
 	//winset(user, null, "command=.screenshot auto")
 	return TRUE
 
@@ -47,7 +47,7 @@
 	. = ..()
 	if(.)
 		return
-	//This is dealt by BYOND. Keeping this here in case that ever changes.
+	// This is dealt by BYOND.. Keeping this here in case that ever changes.
 	//winset(user, null, "command=.screenshot")
 	return TRUE
 

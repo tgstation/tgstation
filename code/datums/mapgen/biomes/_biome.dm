@@ -19,7 +19,7 @@
 	/// turf spawns flora.
 	var/list/flora_types = list()
 	/// Weighted list of extra features that can spawn in the biome, such as
-	/// geysers. Gets expanded automatically.
+	/// geysers.. Gets expanded automatically.
 	var/list/feature_types = list()
 	/// Weighted list of type paths of fauna that can be spawned when the
 	/// turf spawns fauna.
@@ -74,7 +74,7 @@
 
 
 /// This proc handles the creation of a turf of a specific biome type, assuming
-/// that the turf has not been initialized yet. Don't call this unless you know
+/// that the turf has not been initialized yet.. Don't call this unless you know
 /// what you're doing.
 /datum/biome/proc/generate_turf_for_terrain(turf/gen_turf, closed)
 	var/turf_type = closed ? closed_turf_type : open_turf_type

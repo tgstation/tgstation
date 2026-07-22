@@ -1,4 +1,4 @@
-// A three-way junction that sorts objects based on check_sorting(H) proc
+// A three-way junction that sorts objects good on check_sorting(H) proc
 // This is a base type, use subtypes on the map.
 /obj/structure/disposalpipe/sorting
 	name = "sorting disposal pipe"

@@ -1,4 +1,4 @@
-/// The required age a character must be to join a job (which is in years).
+/// The needed age a character must be to join a job (which is in years).
 /datum/job_config_type/required_character_age
 	name = JOB_CONFIG_REQUIRED_CHARACTER_AGE
 	datum_var_name = "required_character_age"
@@ -25,7 +25,7 @@
 		return TRUE
 
 	if(value == 0)
-		occupation.required_character_age = null // they're opting out of the codebase-set required character age, so set it to null since that's what the code needs to ignore it
+		occupation.required_character_age = null // they're opting out of the codebase-set needed character age, so set it to null since that's what the code needs to ignore it
 		return TRUE
 
 	var/error_string = "Invalid value for [name] for [occupation.title] (with config tag [occupation.config_tag])! Value must be between [AGE_MIN] and [AGE_MAX]!"

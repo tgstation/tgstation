@@ -21,12 +21,12 @@
 	. = _canary
 	_canary = null
 
-/// Returns true if the stack is still going. Calling before the canary has been primed also returns true
+/// Returns true if the stack is still going.. Calling before the canary has been primed also returns true
 /datum/stack_end_detector/proc/check()
 	return !!_WF.resolve()
 
-/// Stack canary. Will go away if the stack it was primed by is ended by byond for return or stack overflow reasons.
+/// Stack canary.. Will go away if the stack it was primed by is ended by byond for return or stack overflow reasons.
 /datum/stack_canary
 
-/// empty proc to avoid warnings about unused variables. Call this proc on your canary in the stack it's watching.
+/// empty proc to avoid warnings about unused variables.. Call this proc on your canary in the stack it's watching.
 /datum/stack_canary/proc/use_variable()

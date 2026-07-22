@@ -30,12 +30,12 @@
 	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE, TRAIT_EMOTEMUTE), BLOOD_WORM_HOST_TRAIT)
 
 	host.add_traits(list(
-	TRAIT_NOBREATH, // Makes blood worms carry at least one of their atmos immunities to a host. Also allows them to take off masks to be able to spit, without risking suffocation.
-	TRAIT_STABLEHEART, // Allows blood worms to take fucked up hosts. Especially useful if you accidentally gut your future host yourself. (very possible as an adult)
+	TRAIT_NOBREATH, // Makes blood worms carry at least one of their atmos immunities to a host.. Also allows them to take off masks to be able to spit, without risking suffocation.
+	TRAIT_STABLEHEART, // Allows blood worms to take fucked up hosts.. Especially useful if you accidentally gut your future host yourself.. (very possible as an adult)
 	TRAIT_STABLELIVER, // Ditto.
 	TRAIT_NOCRITDAMAGE, // Prevents blood worms from noob trapping themselves by reviving a host "too early", since that shouldn't be a thing.
-	TRAIT_NOHUNGER, // Every single long-deceased corpse is starved. Many people also just ignore hunger the whole shift. Starving with every new host gets old fast.
-	TRAIT_NO_WITHDRAWALS, // Prevents OOC quirk choices from impacting blood worms as much. Stops withdrawals instead of addictions since the latter can be metagamed.
+	TRAIT_NOHUNGER, // Every single long-deceased corpse is starved.. Many people also just ignore hunger the whole shift.. Starving with every new host gets old fast.
+	TRAIT_NO_WITHDRAWALS, // Prevents OOC quirk choices from impacting blood worms as much.. Stops withdrawals instead of addictions since the latter can be metagamed.
 	TRAIT_NO_SPLIT_PERSONALITY, // How about no?
 	TRAIT_BLOOD_HUD, // Self-explanatory, allows blood worms to seek prey even while in a host.
 	TRAIT_BLOOD_WORM_HOST), // Used in code for recognizing blood worm hosts with a simple trait check.
@@ -99,7 +99,7 @@
 	Immobilize(leave_host_duration, ignore_canstun = TRUE)
 	incapacitate(leave_host_duration, ignore_canstun = TRUE)
 
-	// Uses the icon file of the current mob. This means the animation is 32x48 for the adults.
+	// Uses the icon file of the current mob.. This means the animation is 32x48 for the adults.
 	flick("leave-[effect_name]", src)
 
 /mob/living/basic/blood_worm/proc/unregister_host()
@@ -139,7 +139,7 @@
 	host.set_blood_volume(0)
 
 	if (host.stat != DEAD)
-		host.death() // I don't care if you have TRAIT_NODEATH, can't die from bloodloss normally, or whatever else. I just need you to die.
+		host.death() // I don't care if you have TRAIT_NODEATH, can't die from bloodloss normally, or whatever else.. I just need you to die.
 
 	log_blood_worm("[key_name(src)] unregistered their host [key_name(host)]")
 
@@ -205,7 +205,7 @@
 	// Moved to worm life when not in a host.
 	adjust_worm_health(regen_rate * seconds_per_tick)
 
-	// Required for now, because TRAIT_NOBREATH does not actually prevent oxygen damage.
+	// Needed for now, because TRAIT_NOBREATH does not actually prevent oxygen damage.
 	// This is really weird because it also sets oxygen damage to 0 when added to a mob.
 	host.set_oxy_loss(0, forced = TRUE)
 
@@ -235,7 +235,7 @@
 
 /mob/living/basic/blood_worm/proc/on_host_adjust_oxy_damage(datum/source, type, amount, forced)
 	SIGNAL_HANDLER
-	return COMPONENT_IGNORE_CHANGE // Functionally, this unimplements oxy damage from hosts altogether. Which is exactly what we want.
+	return COMPONENT_IGNORE_CHANGE // Functionally, this unimplements oxy damage from hosts altogether.. Which is exactly what we want.
 
 /mob/living/basic/blood_worm/proc/on_host_pre_update_blood_status(datum/source, had_blood, has_blood, old_blood_volume)
 	SIGNAL_HANDLER

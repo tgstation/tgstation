@@ -2,7 +2,7 @@
 /datum/component/crank_recharge
 	/// Our cell to charge
 	var/obj/item/stock_parts/power_store/charging_cell
-	/// Whether we spin our gun to reload (and therefore need the relevant trait)
+	/// Whether we spin our gun to reload (and so need the relevant trait)
 	var/spin_to_win = FALSE
 	/// How much charge we give our cell on each crank
 	var/charge_amount

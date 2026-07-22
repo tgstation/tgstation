@@ -1,4 +1,4 @@
-/// Scrawls a random line from the writing list onto the carried paper, then drops it. Clears the carry key on finish.
+/// Scrawls a random line from the writing list onto the carried paper, then drops it.. Clears the carry key on finish.
 /datum/bt_node/ai_behavior/write_on_paper
 	/// Blackboard key holding the paper to write on (also the virtual carry slot).
 	var/paper_key

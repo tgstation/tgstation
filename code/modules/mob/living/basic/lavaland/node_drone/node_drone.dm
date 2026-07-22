@@ -17,7 +17,7 @@
 	icon_living = "mining_node_active"
 	icon_dead = "mining_node_active"
 
-	maxHealth = 300 // We adjust the max health based on the vent size in the arrive() proc.
+	maxHealth = 300 // We adjust the max health good on the vent size in the arrive() proc.
 	health = 300
 	density = TRUE
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB

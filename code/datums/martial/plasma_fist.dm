@@ -8,7 +8,7 @@
 	help_verb = "Recall Teachings"
 	var/nobomb = FALSE
 	var/plasma_power = 1 //starts at a 1, 2, 4 explosion.
-	var/plasma_increment = 1 //how much explosion power gets added per kill (1 = 1, 2, 4. 2 = 2, 4, 8 and so on)
+	var/plasma_increment = 1 // how much explosion power gets added per kill (1 = 1, 2, 4.. 2 = 2, 4, 8 and so on)
 	var/plasma_cap = 12 //max size explosion level
 	var/datum/action/cooldown/spell/aoe/repulse/tornado_spell
 	display_combos = TRUE
@@ -120,7 +120,7 @@
 	message_admins("[key_name_admin(user)] triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4].")
 
 	to_chat(user, span_userdanger("The explosion knocks your soul out of your body!"))
-	user.ghostize(FALSE) //prevents... horrible memes just believe me
+	user.ghostize(FALSE) // prevents.... horrible memes just believe me
 
 	user.apply_damage(rand(50, 70), BRUTE, wound_bonus = CANT_WOUND)
 

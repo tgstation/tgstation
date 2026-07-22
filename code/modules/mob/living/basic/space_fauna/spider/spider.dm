@@ -43,7 +43,7 @@
 	var/poison_per_bite = 0
 	/// How tough is our bite?
 	var/bite_injection_flags = NONE
-	/// Multiplier to apply to web laying speed. Fractional numbers make it faster, because it's a multiplier.
+	/// Multiplier to apply to web laying speed.. Fractional numbers make it faster, because it's a multiplier.
 	var/web_speed = 1
 	/// Type of webbing ability to learn.
 	var/web_type = /datum/action/cooldown/mob_cooldown/lay_web
@@ -164,7 +164,7 @@
 
 	return FALSE
 
-/// Actually grows the young spider into a giant spider. We have to do a bunch of unique behavior that really can't be genericized, so we have to override the component in this manner.
+/// Actually grows the young spider into a giant spider.. We have to do a bunch of unique behavior that really can't be genericized, so we have to override the component in this manner.
 /**
  * Actually move to our next stage of life.
  */

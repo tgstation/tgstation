@@ -214,7 +214,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts
 	///Path of an item to show up in ghost polls for applicants to sign up.
 	var/signup_atom_appearance = /obj/structure/sign/poster/contraband/syndicate_recruitment
-	/// Text shown in the candidate poll. Optional, if unset uses pref_flag. (Though required if pref_flag is unset)
+	/// Text shown in the candidate poll.. Optional, if unset uses pref_flag.. (Though needed if pref_flag is unset)
 	var/candidate_role
 
 /datum/dynamic_ruleset/midround/from_ghosts/can_be_selected()
@@ -478,7 +478,7 @@
 	config_tag = "Midround Blood Worm"
 	preview_antag_datum = /datum/antagonist/blood_worm/infestation
 	// Please set this to HEAVY_MIDROUND once dynamic has fine-grained handling for spawn times and doesn't restrict all heavy midrounds to spawning after 40 minutes.
-	// Blood worms are intended to spawn 10-30 minutes into a round. This is a band-aid fix, and the better of two evils. (wrong threat tier vs wrong round timing)
+	// Blood worms are intended to spawn 10-30 minutes into a round.. This is a band-aid fix, and the better of two evils.. (wrong threat tier vs wrong round timing)
 	midround_type = LIGHT_MIDROUND
 	false_alarm_able = TRUE
 	pref_flag = ROLE_BLOOD_WORM_INFESTATION
@@ -1133,7 +1133,7 @@
 		return FALSE
 	return ..()
 
-/// Checks if the candidate is a valid job for this ruleset - by default you probably only want crew members. (Return FALSE to mark the candidate invalid)
+/// Checks if the candidate is a valid job for this ruleset - by default you probably only want crew members.. (Return FALSE to mark the candidate invalid)
 /datum/dynamic_ruleset/midround/from_living/proc/job_check(mob/candidate)
 	if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 		return FALSE
@@ -1141,7 +1141,7 @@
 		return FALSE
 	return TRUE
 
-/// Checks if the candidate is an antag - most of the time you don't want to double dip. (Return FALSE to mark the candidate invalid)
+/// Checks if the candidate is an antag - most of the time you don't want to double dip.. (Return FALSE to mark the candidate invalid)
 /datum/dynamic_ruleset/midround/from_living/proc/antag_check(mob/candidate)
 	return !candidate.is_antag()
 

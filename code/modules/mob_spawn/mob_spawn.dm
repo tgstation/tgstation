@@ -13,13 +13,13 @@
 	///the type of the mob, you best inherit this
 	var/mob_type = /mob/living/basic/cockroach
 
-	////Human specific stuff. Don't set these if you aren't using a human, the unit tests will put a stop to your sinful hand.
+	/// /Human specific stuff.. Don't set these if you aren't using a human, the unit tests will put a stop to your sinful hand.
 
 	///sets the human as a species, use a typepath (example: /datum/species/skeleton)
 	var/datum/species/mob_species
 	///equips the human with an outfit.
 	var/datum/outfit/outfit
-	///for mappers to override parts of the outfit. really only in here for secret away missions, please try to refrain from using this out of laziness
+	/// for mappers to override parts of the outfit.. really only in here for secret away missions, please try to refrain from using this out of laziness
 	var/list/outfit_override
 	///sets a human's hairstyle
 	var/hairstyle
@@ -124,9 +124,9 @@
 
 ///these mob spawn subtypes do not trigger until attacked by a ghost.
 /obj/effect/mob_spawn/ghost_role
-	///a short, lowercase name for the mob used in possession prompt that pops up on ghost attacks. must be set.
+	/// a short, lowercase name for the mob used in possession prompt that pops up on ghost attacks.. must be set.
 	var/prompt_name = ""
-	///if false, you won't prompt for this role. best used for replacing the prompt system with something else like a radial, or something.
+	/// if false, you won't prompt for this role.. best used for replacing the prompt system with something else like a radial, or something.
 	var/prompt_ghost = TRUE
 	///how many times this spawner can be used (it won't delete unless it's out of uses and the var to delete itself is set)
 	var/uses = 1
@@ -137,24 +137,24 @@
 
 	////descriptions
 
-	///This should be the declaration of what the ghost role is, and maybe a short blurb after if you want. Shown in the spawner menu and after spawning first.
+	/// This should be the declaration of what the ghost role is, and maybe a short blurb after if you want.. Shown in the spawner menu and after spawning first.
 	var/you_are_text = ""
-	///This should be the actual instructions/description/context to the ghost role. This should be the really long explainy bit, basically.
+	/// This should be the actual instructions/description/context to the ghost role.. This should be the really long explainy bit, basically.
 	var/flavour_text = ""
-	///This is critical non-policy information about the ghost role. Shown in the spawner menu and after spawning last.
+	/// This is critical non-policy information about the ghost role.. Shown in the spawner menu and after spawning last.
 	var/important_text = ""
 
-	///Show these on spawn? Usually used for hardcoded special flavor
+	/// Show these on spawn?. Usually used for hardcoded special flavor
 	var/show_flavor = TRUE
 
 	////bans and policy
 
 	///which role to check for a job ban (ROLE_LAVALAND is the default ghost role ban)
 	var/role_ban = ROLE_LAVALAND
-	/// Typepath indicating the kind of job datum this ghost role will have. PLEASE inherit this with a new job datum, it's not hard. jobs come with policy configs.
+	/// Typepath indicating the kind of job datum this ghost role will have.. PLEASE inherit this with a new job datum, it's not hard.. jobs come with policy configs.
 	var/spawner_job_path = /datum/job/ghost_role
 
-	/// Whether this offers a temporary body or not. Essentially, you'll be able to reenter your body after using this spawner.
+	/// Whether this offers a temporary body or not.. Essentially, you'll be able to reenter your body after using this spawner.
 	var/temp_body = FALSE
 
 
@@ -265,7 +265,7 @@
 	return created
 
 /obj/effect/mob_spawn/ghost_role/create(mob/mob_possessor, newname, apply_prefs)
-	if(!mob_possessor.key) // This is in the scenario that the server is somehow lagging, or someone fucked up their code, and we try to spawn the same person in twice. We'll simply not spawn anything and CRASH(), so that we report what happened.
+	if(!mob_possessor.key) // This is in the scenario that the server is somehow lagging. Someone fucked up their code. We try to spawn the same person in twice.. We'll simply not spawn anything and CRASH(), so that we report what happened.
 		CRASH("Attempted to create an instance of [type] with a mob that had no ckey attached to it, which isn't supported by ghost role spawners!")
 
 	return ..()
@@ -297,7 +297,7 @@
 			output_message += "\n[span_userdanger("[important_text]")]"
 		to_chat(spawned_mob, output_message)
 
-/// Checks if the spawner has zero uses left, if so, delete yourself... NOW!
+/// Checks if the spawner has zero uses left, if so, delete yourself.... NOW!
 /obj/effect/mob_spawn/ghost_role/proc/check_uses()
 	if(!uses && deletes_on_zero_uses_left)
 		qdel(src)
@@ -306,7 +306,7 @@
 /obj/effect/mob_spawn/ghost_role/proc/allow_spawn(mob/user, silent = FALSE)
 	return TRUE
 
-///these mob spawn subtypes trigger immediately (New or Initialize) and are not player controlled... since they're dead, you know?
+/// these mob spawn subtypes trigger immediately (New or Initialize) and are not player controlled.... since they're dead, you know?
 /obj/effect/mob_spawn/corpse
 	density = FALSE //these are pretty much abstract objects that leave a corpse in their place.
 	///when this mob spawn should auto trigger.
@@ -350,10 +350,10 @@
 	. = ..()
 	qdel(src)
 
-//almost all mob spawns in this game, dead or living, are human. so voila
+// almost all mob spawns in this game, dead or living, are human.. so voila
 
 /obj/effect/mob_spawn/ghost_role/human
-	//gives it a base sprite instead of a mapping helper. makes sense, right?
+	// gives it a base sprite instead of a mapping helper.. makes sense, right?
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	mob_type = /mob/living/carbon/human
@@ -361,7 +361,7 @@
 /obj/effect/mob_spawn/corpse/human
 	icon_state = "corpsehuman"
 	mob_type = /mob/living/carbon/human
-	///disables PDA and sensors. only makes sense on corpses because ghost roles could simply turn those on again.
+	/// disables PDA and sensors.. only makes sense on corpses because ghost roles could simply turn those on again.
 	var/conceal_presence = TRUE
 	///husks the corpse if true.
 	var/husk = FALSE
@@ -370,7 +370,7 @@
 	. = ..()
 	if(husk)
 		spawned_human.Drain()
-	else //Because for some reason I can't track down, things are getting turned into husks even if husk = false. It's in some damage proc somewhere.
+	else // Because for some reason I can't track down, things are getting turned into husks even if husk = false.. It's in some damage proc somewhere.
 		spawned_human.cure_husk()
 	spawned_human.job = name
 
@@ -388,7 +388,7 @@
 		if(istype(sensor_clothes))
 			sensor_clothes.set_sensor_mode(SENSOR_OFF)
 
-//don't use this in subtypes, just add 1000 brute yourself. that being said, this is a type that has 1000 brute. it doesn't really have a home anywhere else, it just needs to exist
+// don't use this in subtypes, just add 1000 brute yourself.. that being said, this is a type that has 1000 brute.. it doesn't really have a home anywhere else, it just needs to exist
 /obj/effect/mob_spawn/corpse/human/damaged
 	brute_damage = 1000
 

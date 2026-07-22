@@ -19,7 +19,7 @@
 	// pointless if it only takes 2 seconds to cross but updates every 2 seconds
 	subsystem_type = /datum/controller/subsystem/processing/transport
 	light_color = LIGHT_COLOR_BABY_BLUE
-	/// green, amber, or red for tram, blue if it's emag, tram missing, etc.
+	/// green, amber, or red for tram, blue if it's emag, tram missing, and so on
 	var/signal_state = XING_STATE_MALF
 	/// the sensor we use
 	var/datum/weakref/sensor_ref
@@ -299,7 +299,7 @@
 	if(tram.controller_status & COMM_ERROR)
 		idle_aspect = XING_STATE_MALF
 
-	// Check for stopped states. Will kill the process since tram starting up will restart process.
+	// Check for stopped states.. Will kill the process since tram starting up will restart process.
 	if(!tram || !tram.controller_operational || !tram.controller_active || !is_operational || !inbound || !outbound)
 		// Tram missing, we lost power, or something isn't right
 		// Set idle and stop processing, since the tram won't be moving
@@ -313,7 +313,7 @@
 		set_signal_state(idle_aspect, force = !is_operational)
 		return PROCESS_KILL
 
-	// Everything will be based on position and travel direction
+	// Everything will be good on position and travel direction
 	var/signal_pos
 	var/tram_pos
 	var/tram_velocity_sign // 1 for positive axis movement, -1 for negative
@@ -327,12 +327,12 @@
 		tram_pos = tram_part.x
 		tram_velocity_sign = tram.travel_direction & EAST ? 1 : -1
 
-	// How far away are we? negative if already passed.
+	// How far away are we?. negative if already passed.
 	var/approach_distance = tram_velocity_sign * (signal_pos - (tram_pos + DEFAULT_TRAM_MIDPOINT))
 
 	// Check if tram is driving away from us.
 	if(approach_distance < -abs(DEFAULT_TRAM_MIDPOINT))
-		// driving away. Green. In fact, in order to reverse, it'll have to stop, so let's go ahead and kill.
+		// driving away.. Green.. In fact, in order to reverse, it'll have to stop, so let's go ahead and kill.
 		set_signal_state(idle_aspect)
 		return PROCESS_KILL
 

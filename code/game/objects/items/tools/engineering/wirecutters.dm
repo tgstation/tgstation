@@ -44,7 +44,7 @@
 	)
 	/// Used on Initialize, how much time to cut cable restraints and zipties.
 	var/snap_time_weak_handcuffs = 0 SECONDS
-	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
+	/// Used on Initialize, how much time to cut real handcuffs.. Null means it can't.
 	var/snap_time_strong_handcuffs = null
 
 /datum/armor/item_wirecutters

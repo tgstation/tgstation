@@ -1,4 +1,4 @@
-///Atom that manages and controls multiple planes. It's an atom so we can hook into add_filter etc. Multiple controllers can control one plane.
+/// Atom that manages and controls multiple planes.. It's an atom so we can hook into add_filter and so on Multiple controllers can control one plane.
 ///Of note: plane master controllers are currently not very extensively used, because render plates fill a semi similar niche
 ///This could well change someday, and I'd like to keep this stuff around, so we use it for a few cases just out of convenience
 /atom/movable/plane_master_controller

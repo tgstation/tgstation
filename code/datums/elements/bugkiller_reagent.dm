@@ -40,7 +40,7 @@
 		return
 
 	if(exposed_mob.apply_damage(damage, TOX) && damage >= 6)
-		// yes i know it's not burn damage. the burning is on the inside.
+		// yes i know it's not burn damage.. the burning is on the inside.
 		to_chat(exposed_mob, span_danger("You feel a burning sensation."))
 
 /// If bugkiller delivers a lethal dosage, applies this effect which does a funny animation THEN kills 'em

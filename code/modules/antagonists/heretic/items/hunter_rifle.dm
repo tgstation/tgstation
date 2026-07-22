@@ -32,7 +32,7 @@
 	var/currently_aiming = FALSE
 	/// How many seconds it takes to aim per tile of distance between the target
 	var/seconds_per_distance = 0.2 SECONDS
-	/// The minimum distance required to gain a damage bonus from aiming
+	/// The minimum distance needed to gain a damage bonus from aiming
 	var/min_distance = 4
 
 /obj/item/ammo_casing/strilka310/lionhunter/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
@@ -112,7 +112,7 @@
 	// If we're close range, or the target's not a living, OR for some reason a non-carbon is firing the gun
 	// The projectile is dry-fired, and gains no buffs
 	// BUT, if we're at a decent range and the target's a living mob,
-	// the projectile's been channel fired. It has full effects and homes in.
+	// the projectile's been channel fired.. It has full effects and homes in.
 	if(distance > min_distance && isliving(target) && iscarbon(user))
 		loaded_projectile.stamina *= 2
 		loaded_projectile.knockdown = 0.5 SECONDS

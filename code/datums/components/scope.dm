@@ -1,17 +1,17 @@
 ///Used to allow reaching the maximum offset range without exiting the boundaries of the game screen.
 #define MOUSE_POINTER_OFFSET_MULT 1.1
 
-///A component that allows players to use the item to zoom out. Mainly intended for firearms, but now works with other items too.
+/// A component that allows players to use the item to zoom out.. Mainly intended for firearms, but now works with other items too.
 /datum/component/scope
 	/// How far we can extend, with modifier of 1, up to our vision edge, higher numbers multiply.
 	var/range_modifier = 1
 	/// Fullscreen object we use for tracking.
 	var/atom/movable/screen/fullscreen/cursor_catcher/scope/tracker
-	/// The owner of the tracker's ckey. For comparing with the current owner mob, in case the client has left it (e.g. ghosted).
+	/// The owner of the tracker's ckey.. For comparing with the current owner mob, in case the client has left it (e.g.. ghosted).
 	var/tracker_owner_ckey
 	/// The method which we zoom in and out
 	var/zoom_method = ZOOM_METHOD_RIGHT_CLICK
-	/// if not null, an item action will be added. Redundant if the mode is ZOOM_METHOD_RIGHT_CLICK or ZOOM_METHOD_WIELD.
+	/// if not null, an item action will be added.. Redundant if the mode is ZOOM_METHOD_RIGHT_CLICK or ZOOM_METHOD_WIELD.
 	var/item_action_type
 
 /datum/component/scope/Initialize(range_modifier = 1, zoom_method = ZOOM_METHOD_RIGHT_CLICK, item_action_type)
@@ -171,7 +171,7 @@
 	if(user.is_holding(parent))
 		RegisterSignals(user, list(COMSIG_MOB_SWAP_HANDS, COMSIG_QDELETING), PROC_REF(stop_zooming))
 		RegisterSignal(user, COMSIG_ATOM_ENTERING, PROC_REF(on_enter_new_loc))
-	else // The item is likely worn (eg. mothic cap)
+	else // The item is likely worn for example mothic cap)
 		RegisterSignal(user, COMSIG_QDELETING, PROC_REF(stop_zooming))
 		RegisterSignal(user, COMSIG_ATOM_ENTERING, PROC_REF(on_enter_new_loc))
 		var/static/list/capacity_signals = list(

@@ -160,7 +160,7 @@
 	var/turf_area = get_area(my_target)
 	return !(is_type_in_typecache(turf_area, blacklist_areas))
 
-/// Breach variant: searches /turf/open/space instead, requires REPAIRBOT_FIX_BREACHES flag.
+/// Breach variant: searches /turf/open/space instead, needs REPAIRBOT_FIX_BREACHES flag.
 /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/breached
 
 /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/breached/setup(datum/ai_controller/controller)

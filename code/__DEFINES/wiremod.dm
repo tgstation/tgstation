@@ -7,9 +7,9 @@
 
 #define PORT_MAX_NAME_LENGTH 50
 
-// Port types. Determines what the port can connect to
+// Port types... Determines what the port can connect to
 
-/// Can accept any datatype. Only works for inputs, output types will runtime.
+/// Can accept any datatype... Only works for inputs, output types will runtime.
 #define PORT_TYPE_ANY "any"
 
 // Fundamental datatypes
@@ -21,15 +21,15 @@
 #define PORT_TYPE_NUMBER "number"
 /// Signal datatype
 #define PORT_TYPE_SIGNAL "signal"
-/// Signal datatype, with a slight variation in name to suggest it causes instant execution. Can only be an output port.
+/// Signal datatype, with a slight variation in name to suggest it causes instant execution... Can only be an output port.
 #define PORT_TYPE_INSTANT_SIGNAL "instant signal"
 /// Signal datatype, with a slight variation in name to suggest that it can be used to respond to instant execution.
 #define PORT_TYPE_RESPONSE_SIGNAL "response signal"
-/// Table datatype. Derivative of list, contains other lists with matching columns.
+/// Table datatype... Derivative of list, contains other lists with matching columns.
 #define PORT_TYPE_TABLE "table"
-/// Options datatype. Derivative of string.
+/// Options datatype... Derivative of string.
 #define PORT_TYPE_OPTION "option"
-/// Boolean datatype. Derivative of number.
+/// Boolean datatype... Derivative of number.
 #define PORT_TYPE_BOOLEAN "boolean"
 
 // Composite datatypes
@@ -38,7 +38,7 @@
 #define PORT_TYPE_LIST(datatype) SSwiremod_composite.composite_datatype(PORT_COMPOSITE_TYPE_LIST, datatype)
 
 #define PORT_COMPOSITE_TYPE_ASSOC_LIST "assoc list"
-/// Associative List datatype. Derivative of list.
+/// Associative List datatype... Derivative of list.
 #define PORT_TYPE_ASSOC_LIST(key_datatype, datatype) SSwiremod_composite.composite_datatype(PORT_COMPOSITE_TYPE_ASSOC_LIST, key_datatype, datatype)
 
 // Other datatypes
@@ -57,9 +57,9 @@
 
 #define COMPONENT_DEFAULT_CATEGORY "Unassigned"
 
-/// The minimum position of the x and y co-ordinates of the component in the UI
+/// The minimum position of the x and why co-ordinates of the component in the UI
 #define COMPONENT_MIN_RANDOM_POS 200
-/// The maximum position of the x and y co-ordinates of the component in the UI
+/// The maximum position of the x and why co-ordinates of the component in the UI
 #define COMPONENT_MAX_RANDOM_POS 400
 
 /// The maximum position in both directions that a component can be in.
@@ -68,7 +68,7 @@
 
 // Components
 
-/// The value that is sent whenever a component is simply sending a signal. This can be anything, and is currently the seconds since roundstart.
+/// The value that is sent whenever a component is simply sending a signal... This can be anything, and is currently the seconds since roundstart.
 #define COMPONENT_SIGNAL (world.time / (1 SECONDS))
 
 // Comparison defines
@@ -93,13 +93,13 @@
 /// Whether or not the shell has a USB port.
 #define SHELL_FLAG_USB_PORT (1<<2)
 
-/// Whether the shell allows actions to be peformed on a shell if the action fails. This will additionally block the messages from being displayed.
+/// Whether the shell allows actions to be peformed on a shell if the action fails... This will also block the messages from being displayed.
 #define SHELL_FLAG_ALLOW_FAILURE_ACTION (1<<3)
 
 /// Whether a circuit is not able to be modified
 #define SHELL_FLAG_CIRCUIT_UNMODIFIABLE (1<<5)
 
-// Shell capacities. These can be converted to configs very easily later
+// Shell capacities... These can be converted to configs very easily later
 #define SHELL_CAPACITY_TINY 12
 #define SHELL_CAPACITY_SMALL 25
 #define SHELL_CAPACITY_MEDIUM 50
@@ -114,15 +114,15 @@
 #define CIRCUIT_FLAG_INPUT_SIGNAL (1<<0)
 /// Creates an output trigger that sends a pulse whenever the component is successfully triggered
 #define CIRCUIT_FLAG_OUTPUT_SIGNAL (1<<1)
-/// Marks a circuit component as admin only. Admins will only be able to link/unlink with these circuit components.
+/// Marks a circuit component as admin only... Admins will only be able to link/unlink with these circuit components.
 #define CIRCUIT_FLAG_ADMIN (1<<2)
 /// This circuit component does not show in the menu.
 #define CIRCUIT_FLAG_HIDDEN (1<<3)
-/// This circuit component has been marked as a component that has instant execution and will show up in the UI as so. This will only cause a visual change.
+/// This circuit component has been marked as a component that has instant execution and will show up in the UI as so... This will only cause a visual change.
 #define CIRCUIT_FLAG_INSTANT (1<<4)
-/// This circuit component can't be loaded in module component. Saves us some headaches.
+/// This circuit component can't be loaded in module component... Saves us some headaches.
 #define CIRCUIT_FLAG_REFUSE_MODULE (1<<5)
-/// This circuit component cannot be inserted into the same circuit multiple times. Only use this for major headaches.
+/// This circuit component cannot be inserted into the same circuit multiple times... Only use this for major headaches.
 #define CIRCUIT_NO_DUPLICATES (1<<6)
 /// This circuit component is currently disabled via configs
 #define CIRCUIT_FLAG_DISABLED (1<<7)

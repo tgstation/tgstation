@@ -4,7 +4,7 @@
 
 /datum/unit_test/closets/Run()
 	var/list/all_closets = subtypesof(/obj/structure/closet)
-	//Supply pods. They are sent, crashed, opened and never closed again. They also cause exceptions in nullspace.
+	// Supply pods.. They are sent, crashed, opened and never closed again.. They also cause exceptions in nullspace.
 	all_closets -= typesof(/obj/structure/closet/supplypod)
 	/// these bitches spawn specially crafted humans with gear and moving organs being shuffled around through the whole process
 	all_closets -= typesof(/obj/structure/closet/body_bag/lost_crew/with_body)

@@ -65,12 +65,12 @@
 	/// If set to false, this just applies a chemical and cannot paint symbols
 	var/actually_paints = TRUE
 
-	/// If false a do_after is required to draw something, otherwise it applies immediately
+	/// If false a do_after is needed to draw something, otherwise it applies immediately
 	var/instant = FALSE
 	/// If true, this deletes itself when empty
 	var/self_contained = TRUE
 
-	/// Whether or not you can eat this. Doesn't mean it is a good idea to eat it.
+	/// Whether or not you can eat this.. Doesn't mean it is a good idea to eat it.
 	var/edible = TRUE
 
 	/// Reagents which are applied to things you use this on, or yourself if you eat it
@@ -321,7 +321,7 @@
 	if (!actually_paints)
 		return
 	// tgui is a plague upon this codebase
-	// no u
+	// no you
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Crayon", name)
@@ -440,7 +440,7 @@
 		return FALSE
 	return TRUE
 
-/// Attempts to color the target.
+/// Tries to color the target.
 /obj/item/toy/crayon/proc/use_on(atom/target, mob/user, list/modifiers)
 	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
 
@@ -916,7 +916,7 @@
 		if(carbon_target.client)
 			carbon_target.set_eye_blur_if_lower(6 SECONDS)
 			carbon_target.adjust_temp_blindness(2 SECONDS)
-		if(carbon_target.get_eye_protection() <= 0 || carbon_target.is_eyes_covered()) // no eye protection? ARGH IT BURNS. Warning: don't add a stun here. It's a roundstart item with some quirks. added redundancy because gas masks don't give you eye protection
+		if(carbon_target.get_eye_protection() <= 0 || carbon_target.is_eyes_covered()) // no eye protection?. ARGH IT BURNS.. Warning: don't add a stun here.. It's a roundstart item with some quirks.. added redundancy because gas masks don't give you eye protection
 			carbon_target.adjust_jitter(1 SECONDS)
 			carbon_target.adjust_eye_blur(0.5 SECONDS)
 			flash_color(carbon_target, flash_color=paint_color, flash_time=40)

@@ -27,7 +27,7 @@
 	click_wrapper(attacker, to_smack)
 	TEST_ASSERT_NOTEQUAL(to_smack.get_integrity(), to_smack.max_integrity, "The barricade should have taken damage a from a non-combat-mode click.")
 
-/// Tests that common tool interactions are possible still, by attempting to open the panel of an techfab.
+/// Tests that common tool interactions are possible still, by trying to open the panel of an techfab.
 /datum/unit_test/machinery_tool_interaction
 
 /datum/unit_test/machinery_tool_interaction/Run()

@@ -70,14 +70,14 @@
 	SIGNAL_HANDLER
 
 	if(autofire_stat == AUTOFIRE_STAT_ALERT)
-		return //We've updated the firemode. No need for more.
+		return // We've updated the firemode.. No need for more.
 	if(autofire_stat == AUTOFIRE_STAT_FIRING)
 		stop_autofiring() //Let's stop shooting to avoid issues.
 		return
 	if(user.is_holding(parent))
 		autofire_on(user.client)
 
-// There is a gun and there is a user wielding it. The component now waits for the mouse click.
+// There is a gun and there is a user wielding it.. The component now waits for the mouse click.
 /datum/component/automatic_fire/proc/autofire_on(client/usercli)
 	SIGNAL_HANDLER
 
@@ -146,7 +146,7 @@
 		return
 
 	if(isnull(location) || istype(_target, /atom/movable/screen)) //Clicking on a screen object.
-		if(_target.plane != CLICKCATCHER_PLANE) //The clickcatcher is a special case. We want the click to trigger then, under it.
+		if(_target.plane != CLICKCATCHER_PLANE) // The clickcatcher is a special case.. We want the click to trigger then, under it.
 			return //If we click and drag on our worn backpack, for example, we want it to open instead.
 		_target = parse_caught_click_modifiers(modifiers, get_turf(source.eye), source)
 		params = list2params(modifiers)
@@ -161,7 +161,7 @@
 	if(autofire_stat == (AUTOFIRE_STAT_IDLE))
 		CRASH("on_mouse_down() called with [autofire_stat] autofire_stat")
 	if(autofire_stat == AUTOFIRE_STAT_FIRING)
-		stop_autofiring() //This can happen if we click and hold and then alt+tab, printscreen or other such action. MouseUp won't be called then and it will keep autofiring.
+		stop_autofiring() // This can happen if we click and hold and then alt+tab, printscreen or other such action.. MouseUp won't be called then and it will keep autofiring.
 
 	target = _target
 	target_loc = get_turf(target)

@@ -13,7 +13,7 @@
 	screen_loc = ui_stamina
 	///used to find the overlay for charger icon
 	var/current_charge_level = 4
-	///dynamic, based on what cell our nulebot's using
+	/// dynamic, good on what cell our nulebot's using
 	var/image/battery_overlay
 	///maptext that displays charge in numbers
 	var/image/charge_overlay

@@ -59,7 +59,7 @@
 	var/last_shopper
 	///Whether the vendor is tilted or not
 	var/tilted = FALSE
-	/// If tilted, this variable should always be the rotation that was applied when we were tilted. Stored for the purposes of unapplying it.
+	/// If tilted, this variable should always be the rotation that was applied when we were tilted.. Stored for the purposes of unapplying it.
 	var/tilted_rotation = 0
 	///Whether this vendor can be tilted over or not
 	var/tiltable = TRUE
@@ -136,7 +136,7 @@
 	var/icon_deny
 	///World ticks the machine is electified for
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
-	///When this is TRUE, we fire items at customers! We're broken!
+	/// When this is TRUE, we fire items at customers!. We're broken!
 	var/shoot_inventory = FALSE
 	///How likely this is to happen (prob 100) per second
 	var/shoot_inventory_chance = 1
@@ -156,7 +156,7 @@
 	var/displayed_currency_name = MONEY_SYMBOL
 	///Whether our age check is currently functional
 	var/age_restrictions = TRUE
-	/// How many credits does this vending machine have? 20% of all sales go to this pool, and are given freely when the machine is restocked, or successfully tilted. Lost on deconstruction.
+	/// How many credits does this vending machine have?. 20% of all sales go to this pool, and are given freely when the machine is restocked, or successfully tilted.. Lost on deconstruction.
 	var/credits_contained = 0
 	/**
 	  * Is this item on station or not
@@ -236,7 +236,7 @@
 				circuit.desc = "This board's card reader component has been cut out, along with its brand selection dial."
 
 	else if(circuit)
-		all_products_free = circuit.all_products_free //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
+		all_products_free = circuit.all_products_free // if it was constructed outside mapload, sync the vend. Up with the circuit's var so you can't bypass price needs by moving / reconstructing it off station.
 	if(!all_products_free)
 		AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_VENDING)
 	register_context()
@@ -436,7 +436,7 @@
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
 
-	//Pitch to the people!  Really sell it!
+	// Pitch to the people!. Really sell it!
 	if(last_slogan + slogan_delay <= world.time && slogan_list.len && !shut_up && SPT_PROB(2.5, seconds_per_tick))
 		say(pick(slogan_list))
 		last_slogan = world.time

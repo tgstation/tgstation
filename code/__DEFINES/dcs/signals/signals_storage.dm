@@ -1,4 +1,4 @@
-/// Sent to the parent before even attempting to dump items, from base of /datum/storage/dump_content_at(): (datum/storage/storage, atom/over, mob/user)
+/// Sent to the parent before even trying to dump items, from base of /datum/storage/dump_content_at(): (datum/storage/storage, atom/over, mob/user)
 #define COMSIG_STORAGE_DUMP_PRE_TRANSFER "storage_dump_pre_transfer"
 	/// Return to stop the dump before it even has a chance of starting
 	#define CANCEL_STORAGE_DUMP (1<<0)
@@ -16,14 +16,14 @@
 	/// Return to block the item from being stored.
 	#define BLOCK_STORAGE_INSERT (1<<0)
 
-/// Fired off the storage's PARENT when an ITEM is STORED INSIDE. (obj/item, mob, force)
+/// Fired off the storage's PARENT when an ITEM is STORED INSIDE... (obj/item, mob, force)
 #define COMSIG_ATOM_STORED_ITEM "atom_storing_item"
 
-/// Fired off the storage's PARENT when an ITEM is REMOVED. (obj/item, atom, silent)
+/// Fired off the storage's PARENT when an ITEM is REMOVED... (obj/item, atom, silent)
 #define COMSIG_ATOM_REMOVED_ITEM "atom_removing_item"
 
-/// Sent to the STORAGE when an ITEM is STORED INSIDE. (obj/item, mob, force)
+/// Sent to the STORAGE when an ITEM is STORED INSIDE... (obj/item, mob, force)
 #define COMSIG_STORAGE_STORED_ITEM "storage_storing_item"
 
-/// Sent to the STORAGE when an ITEM is REMOVED. (obj/item, atom, silent)
+/// Sent to the STORAGE when an ITEM is REMOVED... (obj/item, atom, silent)
 #define COMSIG_STORAGE_REMOVED_ITEM "storage_removing_item"

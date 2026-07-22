@@ -1,6 +1,6 @@
 /// Applied to living mobs.
 /// Adds a force threshold for which attacks will be blocked entirely.
-/// IE, if they are hit with an attack that deals less than X damage, the attack does nothing.
+/// that is if they are hit with an attack that deals less than X damage, the attack does nothing.
 /datum/element/damage_threshold
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2

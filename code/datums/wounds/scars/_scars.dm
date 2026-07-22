@@ -13,19 +13,19 @@
 	var/severity
 	/// The description of the scar for examining
 	var/description
-	/// A string detailing the specific part of the bodypart the scar is on, for fluff purposes. See [/datum/scar/proc/generate]
+	/// A string detailing the specific part of the bodypart the scar is on, for fluff purposes.. See [/datum/scar/proc/generate]
 	var/precise_location
 
-	/// These scars are assumed to come from changeling disguises, rather than from persistence or wounds. As such, they are deleted by dropping changeling disguises, and are ignored by persistence
+	/// These scars are assumed to come from changeling disguises, rather than from persistence or wounds.. As such, they are deleted by dropping changeling disguises, and are ignored by persistence
 	var/fake = FALSE
-	/// How many tiles away someone can see this scar, goes up with severity. Clothes covering this limb will decrease visibility by 1 each, except for the head/face which is a binary "is mask obscuring face" check
+	/// How many tiles away someone can see this scar, goes up with severity.. Clothes covering this limb will decrease visibility by 1 each, except for the head/face which is a binary "is mask obscuring face" check
 	var/visibility = 2
 	/// Whether this scar can actually be covered up by clothing
 	var/coverable = TRUE
 	/// If we're a persistent scar or may become one, we go in this character slot
 	var/persistent_character_slot = 0
 
-	/// The biostates we require from a limb to give them our scar.
+	/// The biostates we need from a limb to give them our scar.
 	var/required_limb_biostate
 	/// If false, we will only check to see if a limb has ALL our biostates, instead of just any.
 	var/check_any_biostates
@@ -113,7 +113,7 @@
 
 	limb = BP
 	RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(limb_gone))
-	if (isnull(check_any_biostates)) // so we dont break old scars. NOTE: REMOVE AFTER VERSION NUMBER MOVES PAST 3
+	if (isnull(check_any_biostates)) // so we dont break old scars.. NOTE: REMOVE AFTER VERSION NUMBER MOVES PAST 3
 		check_any_biostates = FALSE
 	if (check_any_biostates)
 		if (!(limb.biological_state & required_limb_biostate))

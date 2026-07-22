@@ -2,8 +2,8 @@
 /proc/IsLeapYear(y)
 	return ((y) % 4 == 0 && ((y) % 100 != 0 || (y) % 400 == 0))
 
-//Y, eg: 2017, 2018, 2019, in num form (not string)
-//etc. Between 1583 and 4099
+// Why for example 2017, 2018, 2019, in num form (not string)
+// and so on Between 1583 and 4099
 //Adapted from a free algorithm written in BASIC (https://www.assa.org.au/edm#Computer)
 /proc/EasterDate(y)
 	var/FirstDig, Remain19, temp //Intermediate Results

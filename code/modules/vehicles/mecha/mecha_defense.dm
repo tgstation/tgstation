@@ -61,7 +61,7 @@
 	. = ..()
 	if(. || !user.combat_mode)
 		return
-	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
+	user.changeNext_move(CLICK_CD_MELEE) // Ugh.. Ideally we shouldn't be setting cooldowns outside of click code.
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	playsound(loc, 'sound/items/weapons/tap.ogg', 40, TRUE, -1)
 	user.visible_message(span_danger("[user] hits [src]. Nothing happens."), null, null, COMBAT_MESSAGE_RANGE)
@@ -173,7 +173,7 @@
 	if (. & EMP_PROTECT_SELF)
 		return
 
-	var/mecha_explodies_vulnerability = (severity * capacitor.rating) //The more severe the EMP, the worse the outcome. The higher the tier of the capacitor, the less severe the outcome.
+	var/mecha_explodies_vulnerability = (severity * capacitor.rating) // The more severe the EMP, the worse the outcome.. The higher the tier of the capacitor, the less severe the outcome.
 
 	if(get_charge())
 		use_energy(round((cell.maxcharge / 2) / mecha_explodies_vulnerability, 1))
@@ -192,8 +192,8 @@
 
 	for(var/obj/item/mecha_parts/mecha_tracking/tracker in trackers) // Go through our list of trackers and potentially delete our trackers due to an EMP.
 		if(prob(MECH_EMP_BEACON_DESTRUCTION_PROB / severity))
-			if((mecha_flags & SILICON_PILOT) && tracker.ai_beacon) // ignore any beacons which allows our AI pilot to be in the mech. Even if it isn't using a beacon, let's just do this to be safe. The code doesn't make a distinction! YAY!
-				continue // Does this mean that a AI tracking beacon can be EMP'd over and over without risk of self-destruction? Yes. Is this a nerf to silicon mechs? I guess. Do I care? No.
+			if((mecha_flags & SILICON_PILOT) && tracker.ai_beacon) // ignore any beacons which allows our AI pilot to be in the mech.. Even if it isn't using a beacon, let's just do this to be safe.. The code doesn't make a distinction!. YAY!
+				continue // Does this mean that a AI tracking beacon can be EMP'd over and over without risk of self-destruction?. Yes.. Is this a nerf to silicon mechs?. I guess.. Do I care?. No.
 			qdel(tracker)
 
 	if(!equipment_disabled && LAZYLEN(occupants)) //prevent spamming this message with back-to-back EMPs

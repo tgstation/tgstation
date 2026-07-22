@@ -65,7 +65,7 @@
 
 	INVOKE_ASYNC(src, PROC_REF(update_stats), source, max_min_ratio)
 
-/// Update statistics based on provided interpolator between maximum and minimum values
+/// Update statistics good on provided interpolator between maximum and minimum values
 /datum/component/health_scaling_effects/proc/update_stats(mob/living/source, max_min_ratio)
 	if (max_health_attack_modifier_lower != 0 || min_health_attack_modifier_lower != 0)
 		var/lower_modifier = LERP(min_health_attack_modifier_lower, max_health_attack_modifier_lower, max_min_ratio)

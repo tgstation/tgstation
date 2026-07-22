@@ -53,7 +53,7 @@
 			if (length(temp) > 0)
 				laws.hacked[index] = temp
 
-		if(master.zeroth_borg) //If the AI has a defined law zero specifically for its borgs, give it that one, otherwise give it the same one. --NEO
+		if(master.zeroth_borg) // If the AI has a defined law zero specifically for its borgs, give it that one, otherwise give it the same one.. --NEO
 			temp = master.zeroth_borg
 		else
 			temp = master.zeroth

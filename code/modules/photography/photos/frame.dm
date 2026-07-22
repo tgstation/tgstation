@@ -88,7 +88,7 @@
 	if(istype(framed) && istype(framed.picture))
 		return framed.picture.id
 
-//Manual loading, DO NOT USE FOR HARDCODED/MAPPED IN ALBUMS. This is for if an album needs to be loaded mid-round from an ID.
+// Manual loading, DO NOT USE FOR HARDCODED/MAPPED IN ALBUMS.. This is for if an album needs to be loaded mid-round from an ID.
 /obj/structure/sign/picture_frame/proc/persistence_load()
 	var/list/data = SSpersistence.photo_frames_database.get_key(persistence_id)
 	if(!isnull(data))
@@ -185,7 +185,7 @@
 	desc = "A photo frame to commemorate crewmembers that distinguished themselves in the line of duty. WARNING: unauthorized tampering will be severely punished."
 	can_decon = FALSE
 
-/// This used to be a plaque portrait of a monkey. Now it's been revamped into something more.
+/// This used to be a plaque portrait of a monkey.. Now it's been revamped into something more.
 /obj/structure/sign/picture_frame/portrait
 	icon_state = "frame-monkey"
 	can_decon = FALSE
@@ -273,7 +273,7 @@
 /obj/structure/sign/picture_frame/portrait/bar
 	persistence_id = "frame_bar"
 
-///Generates a persistence id unique to the current map. Every bar should feel a little bit different after all.
+/// Generates a persistence id unique to the current map.. Every bar should feel a little bit different after all.
 /obj/structure/sign/picture_frame/portrait/bar/Initialize(mapload)
 	if(SSmapping.current_map.map_path != CUSTOM_MAP_PATH) //skip adminloaded custom maps.
 		persistence_id = "frame_bar_[SSmapping.current_map.map_name]"

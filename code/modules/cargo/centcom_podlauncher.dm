@@ -6,21 +6,21 @@
 #define LAUNCH_RANDOM 2 //Used to check if we're launching everything from the bay area randomly
 
 //The Great and Mighty CentCom Pod Launcher - MrDoomBringer
-//This was originally created as a way to get adminspawned items to the station in an IC manner. It's evolved to contain a few more
+// This was originally created as a way to get adminspawned items to the station in an IC manner.. It's evolved to contain a few more
 //features such as item removal, smiting, controllable delivery mobs, and more.
 
 //This works by creating a supplypod (refered to as temp_pod) in a special room in the centcom map.
-//IMPORTANT: Even though we call it a supplypod for our purposes, it can take on the appearance and function of many other things: Eg. cruise missiles, boxes, or walking, living gondolas.
+// IMPORTANT: Even though we call it a supplypod f. Our purposes, it can take on the appearance. Function of many other things: F. Example cruise missiles, boxes. Walking, living gondolas.
 //When the user launched the pod, items from special "bays" on the centcom map are taken and put into the supplypod
 
-//The user can change properties of the supplypod using the UI, and change the way that items are taken from the bay (One at a time, ordered, random, etc)
+// The user can change properties of the supplypod using the UI. Change the way that items are taken from the bay (One at a time, ordered, random. So on
 //Many of the effects of the supplypod set here are put into action in supplypod.dm
 
 ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure and launch a CentCom supplypod full of whatever your heart desires!", ADMIN_CATEGORY_EVENTS)
 	new /datum/centcom_podlauncher(user.mob)
 
-//Variables declared to change how items in the launch bay are picked and launched. (Almost) all of these are changed in the ui_act proc
-//Some effect groups are choices, while other are booleans. This is because some effects can stack, while others dont (ex: you can stack explosion and quiet, but you cant stack ordered launch and random launch)
+// Variables declared to change how items in the launch bay are picked and launched.. (Almost) all of these are changed in the ui_act proc
+// Some effect groups are choices, while other are booleans.. This is because some effects can stack, while others dont (ex: you can stack explosion. Quiet. You cant stack ordered launch. Random launch)
 /datum/centcom_podlauncher
 	/// Static typecache of atoms we won't lift up, or pod or whatever.
 	var/static/list/ignored_atoms = typecacheof(list(
@@ -37,30 +37,30 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	var/turf/oldTurf //Keeps track of where the user was at if they use the "teleport to centcom" button, so they can go back
 	var/client/holder //client of whoever is using this datum
 	var/area/centcom/central_command_areas/supplypod/loading/bay //What bay we're using to launch shit from.
-	var/bayNumber //Quick reference to what bay we're in. Usually set to the loading_id variable for the related area type
+	var/bayNumber // Quick reference to what bay we're in.. Usually set to the loading_id variable for the related area type
 	var/customDropoff = FALSE
 	var/picking_dropoff_turf = FALSE
-	var/launchClone = FALSE //If true, then we don't actually launch the thing in the bay. Instead we call duplicate_object() and send the result
+	var/launchClone = FALSE // If true, then we don't actually launch the thing in the bay.. Instead we call duplicate_object() and send the result
 	var/launchRandomItem = FALSE //If true, lauches a single random item instead of everything on a turf.
 	var/launchChoice = LAUNCH_RANDOM //Determines if we launch all at once (0) , in order (1), or at random(2)
 	var/explosionChoice = 0 //Determines if there is no explosion (0), custom explosion (1), or just do a maxcap (2)
 	var/damageChoice = 0 //Determines if we do no damage (0), custom amnt of damage (1), or gib + 5000dmg (2)
-	var/launcherActivated = FALSE //check if we've entered "launch mode" (when we click a pod is launched). Used for updating mouse cursor
+	var/launcherActivated = FALSE // check if we've entered "launch mode" (when we click a pod is launched).. Used for updating mouse cursor
 	var/effectBurst = FALSE //Effect that launches 5 at once in a 3x3 area centered on the target
 	var/effectAnnounce = TRUE
 	var/numTurfs = 0 //Counts the number of turfs with things we can launch in the chosen bay (in the centcom map)
 	var/launchCounter = 1 //Used with the "Ordered" launch mode (launchChoice = 1) to see what item is launched
-	var/atom/specificTarget //Do we want to target a specific mob instead of where we click? Also used for smiting
-	var/list/orderedArea = list() //Contains an ordered list of turfs in an area (filled in the createOrderedArea() proc), read top-left to bottom-right. Used for the "ordered" launch mode (launchChoice = 1)
-	var/list/turf/acceptableTurfs = list() //Contians a list of turfs (in the "bay" area on centcom) that have items that can be launched. Taken from orderedArea
-	var/list/launchList = list() //Contains whatever is going to be put in the supplypod and fired. Taken from acceptableTurfs
+	var/atom/specificTarget // Do we want to target a specific mob instead of where we click?. Also used for smiting
+	var/list/orderedArea = list() // Contains an ordered list of turfs in an area (filled in the createOrderedArea() proc), read top-left to bottom-right.. Used for the "ordered" launch mode (launchChoice = 1)
+	var/list/turf/acceptableTurfs = list() // Contians a list of turfs (in the "bay" area on centcom) that have items that can be launched.. Taken from orderedArea
+	var/list/launchList = list() // Contains whatever is going to be put in the supplypod and fired.. Taken from acceptableTurfs
 
 	/// An effect used for showing where a reverse pod will land
 	var/obj/effect/client_image_holder/dropoff_location/indicator
 	/// An effect used for keeping track of what item is going to be launched next when in "ordered" mode (launchChoice = 1)
 	var/obj/effect/client_image_holder/supplypod_selector/selector
 
-	var/obj/structure/closet/supplypod/centcompod/temp_pod //The temporary pod that is modified by this datum, then cloned. The buildObject() clone of this pod is what is launched
+	var/obj/structure/closet/supplypod/centcompod/temp_pod // The temporary pod that is modified by this datum, then cloned.. The buildObject() clone of this pod is what is launched
 	// Stuff needed to render the map
 	var/map_name
 	var/atom/movable/screen/map_view/camera/cam_screen
@@ -90,7 +90,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	bayNumber = bay.loading_id //Used as quick reference to what bay we're taking items from
 	var/area/pod_storage_area = locate(/area/centcom/central_command_areas/supplypod/pod_storage) in GLOB.areas
 	temp_pod = new(pick(get_area_turfs(pod_storage_area))) //Create a new temp_pod in the podStorage area on centcom (so users are free to look at it and change other variables if needed)
-	orderedArea = createOrderedArea(bay) //Order all the turfs in the selected bay (top left to bottom right) to a single list. Used for the "ordered" mode (launchChoice = 1)
+	orderedArea = createOrderedArea(bay) // Order all the turfs in the selected bay (top left to bottom right) to a single list.. Used for the "ordered" mode (launchChoice = 1)
 	selector = new(null, holder.mob)
 	indicator = new(null, holder.mob)
 	setDropoff(bay)
@@ -143,17 +143,17 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	return data
 
 /datum/centcom_podlauncher/ui_data(mob/user) //Sends info about the pod to the UI.
-	var/list/data = list() //*****NOTE*****: Many of these comments are similarly described in supplypod.dm. If you change them here, please consider doing so in the supplypod code as well!
+	var/list/data = list() // *****NOTE*****: Many of these comments are similarly described in supplypod.dm.. If you change them here, please consider doing so in the supplypod code as well!
 	bayNumber = bay?.loading_id //Used as quick reference to what bay we're taking items from
-	data["bayNumber"] = bayNumber //Holds the bay as a number. Useful for comparisons in centcom_podlauncher.ract
+	data["bayNumber"] = bayNumber // Holds the bay as a number.. Useful for comparisons in centcom_podlauncher.ract
 	data["oldArea"] = (oldTurf ? get_area(oldTurf) : null) //Holds the name of the area that the user was in before using the teleportCentcom action
-	data["picking_dropoff_turf"] = picking_dropoff_turf //If we're picking or have picked a dropoff turf. Only works when pod is in reverse mode
+	data["picking_dropoff_turf"] = picking_dropoff_turf // If we're picking or have picked a dropoff turf.. Only works when pod is in reverse mode
 	data["customDropoff"] = customDropoff
 	data["launchClone"] = launchClone //Do we launch the actual items in the bay or just launch clones of them?
 	data["launchRandomItem"] = launchRandomItem //Do we launch a single random item instead of everything on the turf?
 	data["launchChoice"] = launchChoice //Launch turfs all at once (0), ordered (1), or randomly(1)
-	data["explosionChoice"] = explosionChoice //An explosion that occurs when landing. Can be no explosion (0), custom explosion (1), or maxcap (2)
-	data["damageChoice"] = damageChoice //Damage that occurs to any mob under the pod when it lands. Can be no damage (0), custom damage (1), or gib+5000dmg (2)
+	data["explosionChoice"] = explosionChoice // An explosion that occurs when landing.. Can be no explosion (0), custom explosion (1), or maxcap (2)
+	data["damageChoice"] = damageChoice // Damage that occurs to any mob under the pod when it lands.. Can be no damage (0), custom damage (1), or gib+5000dmg (2)
 	data["explosionSize"] = temp_pod.explosionSize // List of 4 or 5 explosion range vars: devast, heavy, light, fire, flash
 	data["delays"] = temp_pod.delays
 	data["rev_delays"] = temp_pod.reverse_delays
@@ -162,24 +162,24 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	data["effectShrapnel"] = temp_pod.effectShrapnel //If true, creates a cloud of shrapnel of a decided type and magnitude on landing
 	data["shrapnelType"] = "[temp_pod.shrapnel_type]" //Path2String
 	data["shrapnelMagnitude"] = temp_pod.shrapnel_magnitude
-	data["effectStun"] = temp_pod.effectStun //If true, stuns anyone under the pod when it launches until it lands, forcing them to get hit by the pod. Devilish!
+	data["effectStun"] = temp_pod.effectStun // If true, stuns anyone under the pod when it launches until it lands, forcing them to get hit by the pod.. Devilish!
 	data["effectLimb"] = temp_pod.effectLimb //If true, pops off a limb (if applicable) from anyone caught under the pod when it lands
 	data["effectOrgans"] = temp_pod.effectOrgans //If true, yeets the organs out of any bodies caught under the pod when it lands
 	data["effectBluespace"] = temp_pod.bluespace //If true, the pod deletes (in a shower of sparks) after landing
 	data["effectStealth"] = temp_pod.effectStealth //If true, a target icon isn't displayed on the turf where the pod will land
-	data["effectQuiet"] = temp_pod.effectQuiet //The female sniper. If true, the pod makes no noise (including related explosions, opening sounds, etc)
-	data["effectMissile"] = temp_pod.effectMissile //If true, the pod deletes the second it lands. If you give it an explosion, it will act like a missile exploding as it hits the ground
-	data["effectCircle"] = temp_pod.effectCircle //If true, allows the pod to come in at any angle. Bit of a weird feature but whatever its here
+	data["effectQuiet"] = temp_pod.effectQuiet // The female sniper.. If true, the pod makes no noise (including related explosions, opening sounds, and so on
+	data["effectMissile"] = temp_pod.effectMissile // If true, the pod deletes the second it lands.. If you give it an explosion, it will act like a missile exploding as it hits the ground
+	data["effectCircle"] = temp_pod.effectCircle // If true, allows the pod to come in at any angle.. Bit of a weird feature but whatever its here
 	data["effectBurst"] = effectBurst //IOf true, launches five pods at once (with a very small delay between for added coolness), in a 3x3 area centered around the area
-	data["effectReverse"] = temp_pod.reversing //If true, the pod will not send any items. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
-	data["create_sparks"] = temp_pod.create_sparks //If true, the pod will create sparks before being deleted. This might cause fires if there is plasma in the air.
+	data["effectReverse"] = temp_pod.reversing // If true, the pod will not send any items.. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
+	data["create_sparks"] = temp_pod.create_sparks // If true, the pod will create sparks before being deleted.. This might cause fires if there is plasma in the air.
 	data["reverse_option_list"] = temp_pod.reverse_option_list
-	data["effectTarget"] = specificTarget //Launches the pod at the turf of a specific mob target, rather than wherever the user clicked. Useful for smites
-	data["effectName"] = temp_pod.adminNamed //Determines whether or not the pod has been named by an admin. If true, the pod's name will not get overridden when the style of the pod changes (changing the style of the pod normally also changes the name+desc)
+	data["effectTarget"] = specificTarget // Launches the pod at the turf of a specific mob target, rather than wherever the user clicked.. Useful for smites
+	data["effectName"] = temp_pod.adminNamed // Determines whether or not the pod has been named by an admin.. If true, the pod's name will not get overridden when the style of the pod changes (changing the style of the pod normally also changes the name+desc)
 	data["podName"] = temp_pod.name
 	data["podDesc"] = temp_pod.desc
 	data["effectAnnounce"] = effectAnnounce
-	data["giveLauncher"] = launcherActivated //If true, the user is in launch mode, and whenever they click a pod will be launched (either at their mouse position or at a specific target)
+	data["giveLauncher"] = launcherActivated // If true, the user is in launch mode. Whenever they click a pod will be launched (either at their mouse position. At a specific target)
 	data["numObjects"] = numTurfs //Counts the number of turfs that contain a launchable object in the centcom supplypod bay
 	data["fallingSound"] = temp_pod.fallingSound != initial(temp_pod.fallingSound)//Admin sound to play as the pod falls
 	data["landingSound"] = temp_pod.landingSound //Admin sound to play when the pod lands
@@ -263,7 +263,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 			. = TRUE
 
 		////////////////////////////LAUNCH STYLE CHANGES//////////////////
-		if("launchClone") //Toggles the launchClone var. See variable declarations above for what this specifically means
+		if("launchClone") // Toggles the launchClone var.. See variable declarations above for what this specifically means
 			launchClone = !launchClone
 			. = TRUE
 		if("launchRandomItem") //Pick random turfs from the supplypod bay at centcom to launch
@@ -325,7 +325,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 			damageChoice = 1
 			temp_pod.damage = damageInput
 			. = TRUE
-		if("damageGib") //Gibs whoever is under the pod when it lands. Also deals 5000 damage, just to be sure.
+		if("damageGib") // Gibs whoever is under the pod when it lands.. Also deals 5000 damage, just to be sure.
 			if (damageChoice == 2) //If already gibbing, set back to default (no damage)
 				damageChoice = 0
 				temp_pod.damage = 0
@@ -335,10 +335,10 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 			temp_pod.damage = 5000
 			temp_pod.effectGib = TRUE //Gibs whoever is under the pod when it lands
 			. = TRUE
-		if("effectName") //Give the supplypod a custom name. Supplypods automatically get their name based on their style (see supplypod/set_style() proc), so doing this overrides that.
+		if("effectName") // Give the supplypod a custom name.. Supplypods automatically get their name good on their style (see supplypod/set_style() proc), so doing this overrides that.
 			if (temp_pod.adminNamed) //If we're already adminNamed, set the name of the pod back to default
 				temp_pod.adminNamed = FALSE
-				temp_pod.set_style(temp_pod.style) //This resets the name of the pod based on its current style (see supplypod/set_style() proc)
+				temp_pod.set_style(temp_pod.style) // This resets the name of the pod good on its current style (see supplypod/set_style() proc)
 				return
 			var/nameInput= tgui_input_text(usr, "Enter a custom name", "Custom name", temp_pod.style::name, max_length = MAX_NAME_LEN)
 			if (isnull(nameInput))
@@ -382,13 +382,13 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 		if("effectStealth") //Toggle: There is no red target indicator showing where the pod will land
 			temp_pod.effectStealth = !temp_pod.effectStealth
 			. = TRUE
-		if("effectQuiet") //Toggle: The pod makes no noise (explosions, opening sounds, etc)
+		if("effectQuiet") // Toggle: The pod makes no noise (explosions, opening sounds, and so on
 			temp_pod.effectQuiet = !temp_pod.effectQuiet
 			. = TRUE
-		if("effectMissile") //Toggle: The pod deletes the instant it lands. Looks nicer than just setting the open delay and leave delay to zero. Useful for combo-ing with explosions
+		if("effectMissile") // Toggle: The pod deletes the instant it lands.. Looks nicer than just setting the open delay and leave delay to zero.. Useful for combo-ing with explosions
 			temp_pod.effectMissile = !temp_pod.effectMissile
 			. = TRUE
-		if("effectCircle") //Toggle: The pod can come in from any descent angle. Goof requested this im not sure why but it looks p funny actually
+		if("effectCircle") // Toggle: The pod can come in from any descent angle.. Goof requested this im not sure why but it looks p funny actually
 			temp_pod.effectCircle = !temp_pod.effectCircle
 			. = TRUE
 		if("effectBurst") //Toggle: Launch 5 pods (with a very slight delay between) in a 3x3 area centered around the target
@@ -397,7 +397,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 		if("effectAnnounce") //Toggle: Launch 5 pods (with a very slight delay between) in a 3x3 area centered around the target
 			effectAnnounce = !effectAnnounce
 			. = TRUE
-		if("effectReverse") //Toggle: Don't send any items. Instead, after landing, close (taking any objects inside) and go back to the centcom bay it came from
+		if("effectReverse") // Toggle: Don't send any items.. Instead, after landing, close (taking any objects inside) and go back to the centcom bay it came from
 			temp_pod.reversing = !temp_pod.reversing
 			if (temp_pod.reversing)
 				indicator.alpha = 150
@@ -411,7 +411,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 		if("create_sparks") //Toggle: The creates sparks before the pod is deleted
 			temp_pod.create_sparks = !temp_pod.create_sparks
 			. = TRUE
-		if("effectTarget") //Toggle: Launch at a specific mob (instead of at whatever turf you click on). Used for the supplypod smite
+		if("effectTarget") // Toggle: Launch at a specific mob (instead of at whatever turf you click on).. Used for the supplypod smite
 			if (specificTarget)
 				specificTarget = null
 				return
@@ -526,10 +526,10 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 			var/chosenStyle = params["style"]
 			temp_pod.set_style(pod_style_lookup[chosenStyle])
 			. = TRUE
-		if("refresh") //Refresh the Pod bay. User should press this if they spawn something new in the centcom bay. Automatically called whenever the user launches a pod
+		if("refresh") // Refresh the Pod bay.. User should press this if they spawn something new in the centcom bay.. Automatically called whenever the user launches a pod
 			refreshBay()
 			. = TRUE
-		if("giveLauncher") //Enters the "Launch Mode". When the launcher is activated, temp_pod is cloned, and the result it filled and launched anywhere the user clicks (unless specificTarget is true)
+		if("giveLauncher") // Enters the "Launch Mode".. When the launcher is activated, temp_pod is cloned, and the result it filled and launched anywhere the user clicks (unless specificTarget is true)
 			launcherActivated = !launcherActivated
 			if (picking_dropoff_turf)
 				picking_dropoff_turf = FALSE //We don't want to have launch mode enabled while we're picking a turf
@@ -542,7 +542,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 				refreshBay()
 			. = TRUE
 
-/datum/centcom_podlauncher/ui_close(mob/user) //Uses the destroy() proc. When the user closes the UI, we clean up the temp_pod and supplypod_selector variables.
+/datum/centcom_podlauncher/ui_close(mob/user) // Uses the destroy() proc.. When the user closes the UI, we clean up the temp_pod and supplypod_selector variables.
 	QDEL_NULL(temp_pod)
 	qdel(src)
 
@@ -586,7 +586,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 		holder.mouse_down_icon = null
 		holder.mouse_override_icon = null
 		holder.click_intercept = null
-		holder_mob?.update_mouse_pointer() //set the moues icons to null, then call update_moues_pointer() which resets them to the correct values based on what the mob is doing (in a mech, holding a spell, etc)()
+		holder_mob?.update_mouse_pointer() // set the moues icons to null, then call update_moues_pointer() which resets them to the correct values good on what the mob is doing (in a mech, holding a spell. So on
 
 /datum/centcom_podlauncher/proc/InterceptClickOn(user,params,atom/target) //Click Intercept so we know where to send pods where the user clicks
 	var/list/modifiers = params2list(params)
@@ -601,7 +601,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 		. = TRUE
 
 		if(left_click) //When we left click:
-			preLaunch() //Fill the acceptableTurfs list from the orderedArea list. Then, fill up the launchList list with items from the acceptableTurfs list based on the manner of launch (ordered, random, etc)
+			preLaunch() // Fill the acceptableTurfs list from the orderedArea list.. Then, fill up the launchList list with items from the acceptableTurfs list good on the manner of launch (ordered, random, and so on
 			if (!isnull(specificTarget))
 				target = get_turf(specificTarget) //if we have a specific target, then always launch the pod at the turf of the target
 			else if (target)
@@ -627,7 +627,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 						launch(landingzone) //launch the pod at the adjacent turf
 					else
 						launch(target) //If we couldn't locate an adjacent turf, just launch at the normal target
-					sleep(rand()*2) //looks cooler than them all appearing at once. Gives the impression of burst fire.
+					sleep(rand()*2) // looks cooler than them all appearing at once.. Gives the impression of burst fire.
 	else if (picking_dropoff_turf)
 		//Clicking on UI elements shouldn't pick a dropoff turf
 		if(istype(target,/atom/movable/screen))
@@ -661,22 +661,22 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 		CRASH("No /area/centcom/central_command_areas/supplypod/loading/one (or /two or /three or /four) has been mapped into the centcom z-level!")
 	orderedArea = list()
 	if (length(area_to_order.contents)) //Go through the area passed into the proc, and figure out the top left and bottom right corners by calculating max and min values
-		var/startX = area_to_order.contents[1].x //Create the four values (we do it off a.contents[1] so they have some sort of arbitrary initial value. They should be overwritten in a few moments)
+		var/startX = area_to_order.contents[1].x // Create the four values (we do it off a.contents[1] so they have some sort of arbitrary initial value.. They should be overwritten in a few moments)
 		var/endX = area_to_order.contents[1].x
 		var/startY = area_to_order.contents[1].y
 		var/endY = area_to_order.contents[1].y
 		for (var/turf/turf_in_area in area_to_order) //For each turf in the area, go through and find:
-			if (turf_in_area.x < startX) //The turf with the smallest x value. This is our startX
+			if (turf_in_area.x < startX) // The turf with the smallest x value.. This is our startX
 				startX = turf_in_area.x
-			else if (turf_in_area.x > endX) //The turf with the largest x value. This is our endX
+			else if (turf_in_area.x > endX) // The turf with the largest x value.. This is our endX
 				endX = turf_in_area.x
-			else if (turf_in_area.y > startY) //The turf with the largest Y value. This is our startY
+			else if (turf_in_area.y > startY) // The turf with the largest Why value.. This is our startY
 				startY = turf_in_area.y
-			else if (turf_in_area.y < endY) //The turf with the smallest Y value. This is our endY
+			else if (turf_in_area.y < endY) // The turf with the smallest Why value.. This is our endY
 				endY = turf_in_area.y
 		for (var/vertical in endY to startY)
 			for (var/horizontal in startX to endX)
-				orderedArea.Add(locate(horizontal, startY - (vertical - endY), 1)) //After gathering the start/end x and y, go through locating each turf from top left to bottom right, like one would read a book
+				orderedArea.Add(locate(horizontal, startY - (vertical - endY), 1)) // After gathering the start/end x and why go through locating each turf from top left to bottom right, like one would read a book
 	return orderedArea //Return the filled list
 
 /datum/centcom_podlauncher/proc/preLaunch() //Creates a list of acceptable items,
@@ -689,7 +689,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 			numTurfs ++
 
 	launchList = list() //Anything in launchList will go into the supplypod when it is launched
-	if (length(acceptableTurfs) && !temp_pod.reversing && !temp_pod.effectMissile) //We dont fill the supplypod if acceptableTurfs is empty, if the pod is going in reverse (effectReverse=true), or if the pod is acitng like a missile (effectMissile=true)
+	if (length(acceptableTurfs) && !temp_pod.reversing && !temp_pod.effectMissile) // We dont fill the supplypod if acceptableTurfs is empty, if the pod is going in reverse (effectReverse=true). If the pod is acitng like a missile (effectMissile=true)
 		switch(launchChoice)
 			if(LAUNCH_ALL) //If we are launching all the turfs at once
 				for (var/t in acceptableTurfs)
@@ -698,7 +698,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 					if (iswallturf(accepted_turf))
 						launchList += accepted_turf
 			if(LAUNCH_ORDERED) //If we are launching one at a time
-				if (launchCounter > length(acceptableTurfs)) //Check if the launchCounter, which acts as an index, is too high. If it is, reset it to 1
+				if (launchCounter > length(acceptableTurfs)) // Check if the launchCounter, which acts as an index, is too high.. If it is, reset it to 1
 					launchCounter = 1 //Note that the launchCounter index is incremented in the launch() proc
 				var/turf/next_turf_in_line = acceptableTurfs[launchCounter]
 				launchList |= typecache_filter_list_reverse(next_turf_in_line.contents, ignored_atoms) //Filter the specicic turf chosen from acceptableTurfs, and add it to the launchList
@@ -766,7 +766,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 
 /datum/centcom_podlauncher/proc/updateSelector() //Ensures that the selector effect will showcase the next item if needed
 	if (launchChoice == LAUNCH_ORDERED && length(acceptableTurfs) > 1 && !temp_pod.reversing && !temp_pod.effectMissile) //We only show the selector if we are taking items from the bay
-		var/index = (launchCounter == 1 ? launchCounter : launchCounter + 1) //launchCounter acts as an index to the ordered acceptableTurfs list, so adding one will show the next item in the list. We don't want to do this for the very first item tho
+		var/index = (launchCounter == 1 ? launchCounter : launchCounter + 1) // launchCounter acts as an index to the ordered acceptableTurfs list, so adding one will show the next item in the list.. We don't want to do this for the very first item though
 		if (index > length(acceptableTurfs)) //out of bounds check
 			index = 1
 		selector.forceMove(acceptableTurfs[index]) //forceMove the selector to the next turf in the ordered acceptableTurfs list
@@ -784,8 +784,8 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	for (var/turf/turf_to_clear in bay)
 		turf_to_clear.ChangeTurf(/turf/open/floor/iron)
 
-/datum/centcom_podlauncher/Destroy() //The Destroy() proc. This is called by ui_close proc, or whenever the user leaves the game
-	updateCursor(TRUE) //Make sure our moues cursor resets to default. False means we are not in launch mode
+/datum/centcom_podlauncher/Destroy() // The Destroy() proc.. This ui_close calls proc, or whenever the user leaves the game
+	updateCursor(TRUE) // Make sure our moues cursor resets to default.. False means we are not in launch mode
 	QDEL_NULL(selector) //Delete the selector effect
 	QDEL_NULL(indicator)
 	QDEL_NULL(cam_screen)
@@ -810,8 +810,8 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	launchClone = dataToLoad["launchClone"] //Do we launch the actual items in the bay or just launch clones of them?
 	launchRandomItem = dataToLoad["launchRandomItem"] //Do we launch a single random item instead of everything on the turf?
 	launchChoice = dataToLoad["launchChoice"] //Launch turfs all at once (0), ordered (1), or randomly(1)
-	explosionChoice = dataToLoad["explosionChoice"] //An explosion that occurs when landing. Can be no explosion (0), custom explosion (1), or maxcap (2)
-	damageChoice = dataToLoad["damageChoice"] //Damage that occurs to any mob under the pod when it lands. Can be no damage (0), custom damage (1), or gib+5000dmg (2)
+	explosionChoice = dataToLoad["explosionChoice"] // An explosion that occurs when landing.. Can be no explosion (0), custom explosion (1), or maxcap (2)
+	damageChoice = dataToLoad["damageChoice"] // Damage that occurs to any mob under the pod when it lands.. Can be no damage (0), custom damage (1), or gib+5000dmg (2)
 	temp_pod.explosionSize = dataToLoad["explosionSize"] // List of 4 or 5 explosion range vars: devast, heavy, light, fire, flash
 	temp_pod.delays = dataToLoad["delays"]
 	temp_pod.reverse_delays = dataToLoad["rev_delays"]
@@ -820,20 +820,20 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	temp_pod.effectShrapnel = dataToLoad["effectShrapnel"] //If true, creates a cloud of shrapnel of a decided type and magnitude on landing
 	temp_pod.shrapnel_type = text2path(dataToLoad["shrapnelType"])
 	temp_pod.shrapnel_magnitude = dataToLoad["shrapnelMagnitude"]
-	temp_pod.effectStun = dataToLoad["effectStun"]//If true, stuns anyone under the pod when it launches until it lands, forcing them to get hit by the pod. Devilish!
+	temp_pod.effectStun = dataToLoad["effectStun"]// If true, stuns anyone under the pod when it launches until it lands, forcing them to get hit by the pod.. Devilish!
 	temp_pod.effectLimb = dataToLoad["effectLimb"]//If true, pops off a limb (if applicable) from anyone caught under the pod when it lands
 	temp_pod.effectOrgans = dataToLoad["effectOrgans"]//If true, yeets the organs out of any bodies caught under the pod when it lands
 	temp_pod.bluespace = dataToLoad["effectBluespace"] //If true, the pod deletes (in a shower of sparks) after landing
 	temp_pod.effectStealth = dataToLoad["effectStealth"]//If true, a target icon isn't displayed on the turf where the pod will land
-	temp_pod.effectQuiet = dataToLoad["effectQuiet"] //The female sniper. If true, the pod makes no noise (including related explosions, opening sounds, etc)
-	temp_pod.effectMissile = dataToLoad["effectMissile"] //If true, the pod deletes the second it lands. If you give it an explosion, it will act like a missile exploding as it hits the ground
-	temp_pod.effectCircle = dataToLoad["effectCircle"] //If true, allows the pod to come in at any angle. Bit of a weird feature but whatever its here
+	temp_pod.effectQuiet = dataToLoad["effectQuiet"] // The female sniper.. If true, the pod makes no noise (including related explosions, opening sounds, and so on
+	temp_pod.effectMissile = dataToLoad["effectMissile"] // If true, the pod deletes the second it lands.. If you give it an explosion, it will act like a missile exploding as it hits the ground
+	temp_pod.effectCircle = dataToLoad["effectCircle"] // If true, allows the pod to come in at any angle.. Bit of a weird feature but whatever its here
 	effectBurst = dataToLoad["effectBurst"] //IOf true, launches five pods at once (with a very small delay between for added coolness), in a 3x3 area centered around the area
-	temp_pod.reversing = dataToLoad["effectReverse"] //If true, the pod will not send any items. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
+	temp_pod.reversing = dataToLoad["effectReverse"] // If true, the pod will not send any items.. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
 	temp_pod.reverse_option_list = dataToLoad["reverse_option_list"]
 	temp_pod.create_sparks = dataToLoad["create_sparks"] // If true, creates sparks when the pod vanishes.
-	specificTarget = dataToLoad["effectTarget"] //Launches the pod at the turf of a specific mob target, rather than wherever the user clicked. Useful for smites
-	temp_pod.adminNamed = dataToLoad["effectName"] //Determines whether or not the pod has been named by an admin. If true, the pod's name will not get overridden when the style of the pod changes (changing the style of the pod normally also changes the name+desc)
+	specificTarget = dataToLoad["effectTarget"] // Launches the pod at the turf of a specific mob target, rather than wherever the user clicked.. Useful for smites
+	temp_pod.adminNamed = dataToLoad["effectName"] // Determines whether or not the pod has been named by an admin.. If true, the pod's name will not get overridden when the style of the pod changes (changing the style of the pod normally also changes the name+desc)
 	temp_pod.name = dataToLoad["podName"]
 	temp_pod.desc = dataToLoad["podDesc"]
 	effectAnnounce = dataToLoad["effectAnnounce"]

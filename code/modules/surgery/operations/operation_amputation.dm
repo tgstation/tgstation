@@ -79,7 +79,7 @@
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 
 /datum/surgery_operation/limb/amputate/mechanic/state_check(obj/item/bodypart/limb)
-	// added requirement for bone sawed to prevent accidental head removals.
+	// added need for bone sawed to prevent accidental head removals.
 	return ..() && (limb.body_zone != BODY_ZONE_HEAD || LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_SAWED))
 
 /datum/surgery_operation/limb/amputate/mechanic/any_required_strings()

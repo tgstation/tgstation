@@ -3,7 +3,7 @@
 	dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	/// Text that will appear in the alert prompt.
 	var/question = "Travel back?"
-	/// List of z-levels that the user can teleport to. By default, this is station z-levels.
+	/// List of z-levels that the user can teleport to.. By default, this is station z-levels.
 	var/list/zlevels
 
 /datum/component/houlihan_teleport/Initialize(question, zlevels)

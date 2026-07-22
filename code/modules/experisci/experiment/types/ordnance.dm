@@ -8,10 +8,10 @@
 	description = "An experiment conducted in the ordnance subdepartment."
 	exp_tag = "ordnance"
 	performance_hint = "Perform research experiments in the ordnance lab using the specified equipment, print them unto a data disk, and publish them with the NT Frontier app."
-	/// Lookup experiments are initialized using subtypes, 
+	/// Lookup experiments are initialized using subtypes,
 	/// this lets us ignore the ones made for subtyping.
 	var/experiment_proper = FALSE
-	/// Projected gain from an experiment. In list form, indexed = tier.
+	/// Projected gain from an experiment.. In list form, indexed = tier.
 	var/list/gain
 	/// The variable that influences the point equation; Determines when you get the most bang for your buck
 	/// More rigorously, this is the middle of the derivative bell curve.
@@ -29,7 +29,7 @@
 	return !is_complete()
 
 /datum/experiment/ordnance/explosive
-	/// Typepath to gas reactions that we want. Empty if we do not require any at all or don't want any.
+	/// Typepath to gas reactions that we want.. Empty if we do not need any at all or don't want any.
 	var/list/required_reactions
 	/// Whether we only accept explosions with reactions that we set in src.required_reactions or do we allow other reactions in.
 	var/sanitized_reactions = FALSE
@@ -44,5 +44,5 @@
 	var/allow_any_source = FALSE
 
 /datum/experiment/ordnance/gaseous
-	/// Typepath to the gas we require for the experiment. 
+	/// Typepath to the gas we need for the experiment.
 	var/required_gas

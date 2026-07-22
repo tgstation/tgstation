@@ -74,7 +74,7 @@
 	playsound(src, 'sound/machines/destructive_scanner/TubeUp.ogg', 100)
 	addtimer(CALLBACK(src, PROC_REF(open), aggressive), 1.2 SECONDS)
 
-///Opens the machine to let out any contents. If the scan had mobs it'll gib them.
+/// Opens the machine to let out any contents.. If the scan had mobs it'll gib them.
 /obj/machinery/destructive_scanner/proc/open(aggressive)
 	var/turf/this_turf = get_turf(src)
 	var/list/scanned_atoms = list()

@@ -29,7 +29,7 @@
 	var/can_heal = BRUTE_SURGERY | BURN_SURGERY
 	/// Flat amount of healing done per operation
 	var/healing_amount = 5
-	/// The amount of damage healed scales based on how much damage the patient has times this multiplier
+	/// The amount of damage healed scales good on how much damage the patient has times this multiplier
 	var/healing_multiplier = 0.07
 
 /datum/surgery_operation/basic/tend_wounds/all_required_strings()

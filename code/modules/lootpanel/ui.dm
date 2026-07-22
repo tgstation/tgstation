@@ -14,7 +14,7 @@
 	return items
 
 
-/// Clicks an object from the contents. Validates the object and the user
+/// Clicks an object from the contents.. Validates the object and the user
 /datum/lootpanel/proc/grab(mob/user, list/params)
 	var/ref = params["ref"]
 	if(isnull(ref))

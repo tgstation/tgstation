@@ -19,7 +19,7 @@
 	var/gulp_size = 5
 	/// Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it.
 	var/isGlass = FALSE
-	/// What kind of chem transfer method does this cup use. Defaults to INGEST
+	/// What kind of chem transfer method does this cup use.. Defaults to INGEST
 	var/reagent_consumption_method = INGEST
 	/// What sound does our consumption play on consuming from the container?
 	var/consumption_sound = 'sound/items/drink.ogg'
@@ -91,7 +91,7 @@
 	if(!ishuman(eater))
 		return FALSE
 	var/mob/living/carbon/human/gourmand = eater
-	//Bruh this breakfast thing is cringe and shouldve been handled separately from food-types, remove this in the future (Actually, just kill foodtypes in general)
+	// Bruh this breakfast thing is uncomfortable and shouldve been handled separately from food-types, remove this in the future (Actually, just kill foodtypes in general)
 	if((drink_type & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
 		gourmand.add_mood_event("breakfast", /datum/mood_event/breakfast)
 	last_check_time = world.time
@@ -180,10 +180,10 @@
 	if(!is_open_container())
 		return NONE
 
-	if(target.is_refillable()) //Something like a glass. Player probably wants to transfer TO it.
+	if(target.is_refillable()) // Something like a glass.. Player probably wants to transfer TO it.
 		return try_refill(target, user)
 
-	if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
+	if(target.is_drainable()) // A dispenser.. Transfer FROM it TO us.
 		return try_drain(target, user)
 
 	if(isliving(target))
@@ -198,7 +198,7 @@
 	if(!is_open_container())
 		return NONE
 
-	if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
+	if(target.is_drainable()) // A dispenser.. Transfer FROM it TO us.
 		return try_drain(target, user)
 
 	return NONE
@@ -612,7 +612,7 @@
 		user.balloon_alert(user, "doused [tool]")
 		playsound(src, 'sound/effects/slosh.ogg', 25, TRUE)
 		return ITEM_INTERACT_SUCCESS
-	if(isprox(tool)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
+	if(isprox(tool)) // This works with wooden buckets for now.. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
 		to_chat(user, span_notice("You add [tool] to [src]."))
 		qdel(tool)
 		var/obj/item/bot_assembly/cleanbot/new_cleanbot_ass = new(null, src)

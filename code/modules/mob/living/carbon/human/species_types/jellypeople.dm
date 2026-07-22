@@ -1,12 +1,12 @@
 ///The rate at which slimes regenerate their jelly normally
 #define JELLY_REGEN_RATE 1.5
-///The rate at which slimes regenerate their jelly when they completely run out of it and start taking damage, usually after having cannibalized all their limbs already
+/// The rate at which slimes regenerate their jelly when they completely run out of it. Start taking damage, usually after having cannibalized all their limbs already
 #define JELLY_REGEN_RATE_EMPTY 2.5
 ///The blood volume at which slimes begin to start losing nutrition -- so that IV drips can work for blood deficient slimes
 #define BLOOD_VOLUME_LOSE_NUTRITION 550
 
 /datum/species/jelly
-	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
+	// Entirely alien beings that seem to be made entirely out of gel.. They have three eyes and a skeleton visible within them.
 	name = "\improper Jellyperson"
 	plural_form = "Jellypeople"
 	id = SPECIES_JELLYPERSON
@@ -516,7 +516,7 @@
 	return "Luminescent are able to integrate slime extracts into themselves for wondrous effects. \
 		Most things that are toxic heal them, but most things that prevent toxicity damage them!"
 
-//Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW and have to i guess
+// Species datums don't normally add destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW and have to i guess
 /datum/species/jelly/luminescent/Destroy(force)
 	current_extract = null
 	QDEL_NULL(glow)
@@ -702,7 +702,7 @@
 		linker_action_path = /datum/action/innate/link_minds, \
 	)
 
-//Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW
+// Species datums don't normally add destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW
 /datum/species/jelly/stargazer/Destroy()
 	QDEL_NULL(project_action)
 	return ..()
@@ -760,7 +760,7 @@
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
-	/// The species required to use this ability. Typepath.
+	/// The species needed to use this ability.. Typepath.
 	var/req_species = /datum/species/jelly/stargazer
 	/// Whether we're currently linking to someone.
 	var/currently_linking = FALSE

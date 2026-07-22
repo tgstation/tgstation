@@ -32,7 +32,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/next_ask
 	///Delay after polling ghosts
 	var/ask_delay = 60 SECONDS
-	///One of these names is randomly picked as the posibrain's name on possession. If left blank, it will use the global posibrain names
+	/// One of these names is randomly picked as the posibrain's name on possession.. If left blank, it will use the global posibrain names
 	var/list/possible_names
 	///Picked posibrain name
 	var/picked_name
@@ -109,7 +109,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 			return TRUE
 	return FALSE
 
-///Two ways to activate a positronic brain. A clickable link in the ghost notif, or simply clicking the object itself.
+/// Two ways to activate a positronic brain.. A clickable link in the ghost notif, or simply clicking the object itself.
 /obj/item/mmi/posibrain/proc/activate(mob/user)
 	if(QDELETED(brainmob))
 		return
@@ -223,7 +223,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/mmi/posibrain/display/is_occupied()
 	return TRUE
 
-/// Posibrains but spherical. They can roll around and you can kick them
+/// Posibrains but spherical.. They can roll around and you can kick them
 /obj/item/mmi/posibrain/sphere
 	name = "positronic sphere"
 	desc = "Recent developments on cost-cutting measures have allowed us to cut positronic brain cubes into twice-as-cheap spheres. \

@@ -19,7 +19,7 @@
 	var/list/obj/machinery/vending/vending_machines = list()
 	/// All vending machines that have been infected.
 	var/list/obj/machinery/vending/infected_machines = list()
-	/// The original machine infected. Killing it ends the event.
+	/// The original machine infected.. Killing it ends the event.
 	var/obj/machinery/vending/origin_machine
 	/// Murderous sayings from the machines.
 	var/list/rampant_speeches = list(

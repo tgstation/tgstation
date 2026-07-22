@@ -62,7 +62,7 @@
 
 		var/filename = "soup_[SANITIZE_FILENAME(escape_value(result_name))]"
 
-		// -- Compiles a list of required reagents and food items --
+		// -- Compiles a list of needed reagents and food items --
 		var/list/all_needs_text = list()
 		for(var/datum/reagent/reagent_type as anything in soup_recipe.required_reagents)
 			all_needs_text += "[soup_recipe.required_reagents[reagent_type]] units [initial(reagent_type.name)]"

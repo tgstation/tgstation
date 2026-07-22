@@ -67,9 +67,9 @@
 #define NEXT_PARENT_COMMAND "next_parent"
 /// Takes a list of mutable appearances
 /// Returns a list in the form:
-/// 1 - a list of all mutable appearances that would need to be updated to change planes in the event of a z layer change, alnongside the commands required
-/// 	to properly track parents to update
-/// 2 - a list of all parents that will require updating
+/// 1 - a list of all mutable appearances that would need to be updated to change planes in the event of a z layer change, alnongside the commands needed
+/// to properly track parents to update
+/// 2 - a list of all parents that will need updating
 /proc/build_planeed_apperance_queue(list/mutable_appearance/appearances)
 	var/list/queue
 	if(islist(appearances))
@@ -80,7 +80,7 @@
 	var/list/parent_queue = list()
 
 	// We are essentially going to unroll apperance overlays into a flattened list here, so we can filter out floating planes laster
-	// It will look like "overlay overlay overlay (change overlay parent), overlay overlay etc"
+	// It will look like "overlay overlay overlay (change overlay parent), overlay overlay and so on
 	// We can use this list to dynamically update these non floating planes, later
 	while(queue_index < length(queue))
 		queue_index++
@@ -110,17 +110,17 @@
 	// SO
 	// DID YOU KNOW THAT OVERLAY RENDERING BEHAVIOR DEPENDS PARTIALLY ON THE ORDER IN WHICH OVERLAYS ARE ADDED?
 	// WHAT WE'RE DOING HERE ENDS UP REVERSING THE OVERLAYS ADDITION ORDER (when it's walked back to front)
-	// SO GUESS WHAT I'VE GOTTA DO, I'VE GOTTA SWAP ALLLL THE MEMBERS OF THE SUBLISTS
+	// SO GUESS WHAT I'VE Got to DO, I'VE Got to SWAP ALLLL THE MEMBERS OF THE SUBLISTS
 	// I HATE IT HERE
 	var/lower_parent = 0
 	var/upper_parent = 0
 	var/queue_size = length(queue)
 	while(lower_parent <= queue_size)
 		// Let's reorder our "lists" (spaces between parent changes)
-		// We've got a delta index, and we're gonna essentially use it to get "swap" positions from the top and bottom
+		// We've got a delta index, and we're going to essentially use it to get "swap" positions from the top and bottom
 		// We only need to loop over half the deltas to swap all the entries, any more and it'd be redundant
 		// We floor so as to avoid over flipping, and ending up flipping "back" a delta
-		// etc etc
+		// and so on and so on
 		var/target = FLOOR((upper_parent - lower_parent) / 2, 1)
 		for(var/delta_index in 1 to target)
 			var/old_lower = queue[lower_parent + delta_index]
@@ -141,7 +141,7 @@
 	// It's much more convinient for the parent queue to be a list of indexes pointing at queue locations
 	// Rather then a list of copied appearances
 	// Let's turn what we have now into that yeah?
-	// This'll require a loop over both queues
+	// This'll need a loop over both queues
 	// We're using an assoc list here rather then several find()s because I feel like that's more sane
 	var/list/apperance_to_position = list()
 	for(var/i in 1 to length(queue))
@@ -151,20 +151,20 @@
 	for(var/mutable_appearance/parent as anything in parent_queue)
 		parent_indexes += apperance_to_position[parent]
 
-	// Alright. We should now have two queues, a command/appearances one, and a parents queue, which contain no fluff
+	// Alright.. We should now have two queues, a command/appearances one, and a parents queue, which contain no fluff
 	// And when walked backwards allow for proper plane updating
 	var/list/return_pack = list(queue, parent_indexes)
 	return return_pack
 
-// Rebuilding is a hack. We should really store a list of indexes into our existing overlay list or SOMETHING
-// IDK. will work for now though, which is a lot better then not working at all
+// Rebuilding is a temporary solution We should really store a list of indexes into our existing overlay list or SOMETHING
+// I do not know will work for now though, which is a lot better then not working at all
 /mob/living/carbon/proc/update_z_overlays(new_offset, rebuild = FALSE)
 	// Null entries will be filtered here
 	for(var/i in 1 to length(overlays_standing))
 		var/list/cache_grouping = overlays_standing[i]
 		if(cache_grouping && !islist(cache_grouping))
 			cache_grouping = list(cache_grouping)
-		// Need this so we can have an index, could build index into the list if we need to tho, check
+		// Need this so we can have an index, could build index into the list if we need to though check
 		if(!length(cache_grouping))
 			continue
 		overlays_standing[i] = update_appearance_planes(cache_grouping, new_offset)
@@ -355,8 +355,8 @@
 //mob HUD updates for items in our inventory
 
 /// Overlays for the worn overlay so you can overlay while you overlay
-/// eg: ammo counters, primed grenade flashing, etc.
-/// "icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
+/// for example ammo counters, primed grenade flashing, and so on
+/// "icon_file" is used automatically for inhands and so on to make sure it gets the right inhand file
 /obj/item/proc/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/list)
@@ -366,14 +366,14 @@
 		. += emissive_blocker(standing.icon, standing.icon_state, src)
 	SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAYS, ., standing, isinhands, icon_file, bodyshape)
 
-/// worn_overlays to use when you'd want to use KEEP_APART. Don't use KEEP_APART neither there nor here, as it would break floating overlays
+/// worn_overlays to use when you'd want to use KEEP_APART.. Don't use KEEP_APART neither there nor here, as it would break floating overlays
 /obj/item/proc/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file, bodyshape = NONE)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/list)
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ITEM_GET_SEPARATE_WORN_OVERLAYS, ., standing, draw_target, isinhands, icon_file, bodyshape)
 
-///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
+/// Checks to see if any bodyparts need to be redrawn, then does so.. update_limb_data = TRUE redraws the limbs to conform to the owner.
 ///Returns an integer representing the number of limbs that were updated.
 /mob/living/carbon/proc/update_body_parts(update_limb_data)
 	update_damage_overlays()
@@ -536,7 +536,7 @@ GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
 	new_leg_icon = GLOB.masked_leg_icons_cache[icon_cache_key][1]
 	new_leg_icon_lower = GLOB.masked_leg_icons_cache[icon_cache_key][2]
 
-	//this could break layering in oddjob cases, but i'm sure it will work fine most of the time... right?
+	// this could break layering in oddjob cases, but i'm sure it will work fine most of the time.... right?
 	var/image/new_leg_appearance = new(limb_overlay)
 	new_leg_appearance.icon = new_leg_icon
 	new_leg_appearance.layer = -BODYPARTS_LAYER

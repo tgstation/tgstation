@@ -40,7 +40,7 @@
 
 	dashing_item.attack_self(owner) //Used to toggle dash behavior in the dashing item
 
-/// Teleports user to target using do_teleport. Returns TRUE if teleport successful, FALSE otherwise.
+/// Teleports user to target using do_teleport.. Returns TRUE if teleport successful, FALSE otherwise.
 /datum/action/innate/dash/proc/teleport(mob/user, atom/target)
 	if(!IsAvailable(feedback = TRUE))
 		return FALSE
@@ -72,7 +72,7 @@
 
 	return TRUE
 
-/// Callback for [/proc/teleport] to increment our charges after  use.
+/// Callback for [/proc/teleport] to increment our charges after use.
 /datum/action/innate/dash/proc/charge()
 	current_charges = clamp(current_charges + 1, 0, max_charges)
 	SEND_SIGNAL(src, COMSIG_DASH_ACTION_CHARGED)

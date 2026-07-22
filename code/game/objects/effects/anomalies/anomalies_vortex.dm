@@ -7,7 +7,7 @@
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()
-	if(!isturf(loc)) //blackhole cannot be contained inside anything. Weird stuff might happen
+	if(!isturf(loc)) // blackhole cannot be contained inside anything.. Weird stuff might happen
 		qdel(src)
 		return
 

@@ -1,7 +1,7 @@
-/// Spritesheet for body zones. Necessary if your tgui uses BodyZoneSelector
+/// Spritesheet for body zones.. Necessary if your tgui uses BodyZoneSelector
 // This is a simple sheet instead of a spritesheet because spritesheets don't support
 // -ms-interpolation-mode when resized, since you need `transform: scale`.
-// Also spritesheets have some weird fudge on the edges of them because of an IE bug I can't track down.
+// Also spritesheets have some weird fudge on the edges of them because of an that is bug I can't track down.
 /datum/asset/simple/body_zones
 
 /datum/asset/simple/body_zones/register()

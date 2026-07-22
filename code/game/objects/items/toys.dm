@@ -471,7 +471,7 @@
 /obj/item/toy/spinningtoy/proc/manual_suicide(mob/living/carbon/human/user)
 	if(!user)
 		return
-	if(!user.is_holding(src)) // Half digestion? Start choking to death
+	if(!user.is_holding(src)) // Half digestion?. Start choking to death
 		user.visible_message(span_suicide("[user] panics and starts choking [user.p_them()]self to death!"))
 		user.adjust_oxy_loss(200)
 		user.death(FALSE) // unfortunately you have to handle the suiciding yourself with a manual suicide
@@ -487,7 +487,7 @@
 		return
 	user.transferItemToLoc(src, user, TRUE)
 	CH.cavity_item = src // The mother came inside and found Andy, dead with a HUGE belly full of toys
-	user.adjust_oxy_loss(200) // You know how most small toys in the EU have that 3+ onion head icon and a warning that says "Unsuitable for children under 3 years of age due to small parts - choking hazard"? This is why.
+	user.adjust_oxy_loss(200) // You know how most small toys in the EU have that 3+ onion head icon. A warning that says "Unsuitable f. Children under 3 years of age due to small parts - choking hazard"?. This is why.
 	user.death(FALSE)
 	user.ghostize(FALSE)
 
@@ -902,7 +902,7 @@
 	var/chattering = FALSE
 	var/phomeme
 
-// Talking toys are language universal, and thus all species can use them
+// Talking toys are language universal, and so all species can use them
 /obj/item/toy/talking/attack_alien(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 

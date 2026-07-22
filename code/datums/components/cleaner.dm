@@ -92,7 +92,7 @@
  * * grant_xp set this to false if the user should not be granted cleaning experience
  */
 /datum/component/cleaner/proc/clean(datum/source, atom/target, mob/living/user, call_wash = TRUE, grant_xp = TRUE)
-	//make sure we don't attempt to clean something while it's already being cleaned
+	// make sure we don't try to clean something while it's already being cleaned
 	if(HAS_TRAIT(target, TRAIT_CURRENTLY_CLEANING) || (SEND_SIGNAL(target, COMSIG_ATOM_PRE_CLEAN, user) & COMSIG_ATOM_CANCEL_CLEAN))
 		return
 	//add the trait and overlay

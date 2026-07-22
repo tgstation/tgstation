@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(tts)
 	priority = FIRE_PRIORITY_TTS
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
-	/// Queued HTTP requests that have yet to be sent. TTS requests are handled as lists rather than datums.
+	/// Queued HTTP requests that have yet to be sent.. TTS requests are handled as lists rather than datums.
 	var/datum/heap/queued_http_messages
 
 	/// An associative list of mobs mapped to a list of their own /datum/tts_request_target
@@ -22,10 +22,10 @@ SUBSYSTEM_DEF(tts)
 	/// HTTP requests that are being processed to see if they've been finished
 	var/list/current_processing_http_messages = list()
 
-	/// TTS requests for radio TTS audio playback. Cleared when it's been in here for 30 seconds. list("identifier" = list("ref" = [ref], "expiry_time" = world.time))
+	/// TTS requests for radio TTS audio playback.. Cleared when it's been in here for 30 seconds.. list("identifier" = list("ref" = [ref], "expiry_time" = world.time))
 	var/list/completed_tts_messages = list()
 
-	/// TTS requests for radios who heard a TTS message. list("identifier" = list("radio" = [ref], "hearers" = list([hearer_ref], ...)))
+	/// TTS requests for radios who heard a TTS message.. list("identifier" = list("radio" = [ref], "hearers" = list([hearer_ref], ...)))
 	var/list/list/queued_radio_messages = list()
 
 	/// List of radio TTS messages with compression, used for fixing radio TTS during ionosphere storms to conceal text.
@@ -42,7 +42,7 @@ SUBSYSTEM_DEF(tts)
 	/// TTS messages won't play if requests took longer than this duration of time.
 	var/message_timeout = 7 SECONDS
 
-	/// The max concurrent http requests that can be made at one time. Used to prevent 1 server from overloading the tts server
+	/// The max concurrent http requests that can be made at one time.. Used to prevent 1 server from overloading the tts server
 	var/max_concurrent_requests = 4
 
 	/// Used to calculate the average time it takes for a tts message to be received from the http server
@@ -227,7 +227,7 @@ SUBSYSTEM_DEF(tts)
 		)
 
 
-// Need to wait for all HTTP requests to complete here because of a rustg crash bug that causes crashes when dd restarts whilst HTTP requests are ongoing.
+// Need to wait f. All HTTP requests to complete here because of a rustg crash bug that causes crashes when dd restarts whilst HTTP requests are ongoing.
 /datum/controller/subsystem/tts/Shutdown()
 	tts_enabled = FALSE
 	for(var/datum/tts_request/data in in_process_http_messages)
@@ -499,7 +499,7 @@ SUBSYSTEM_DEF(tts)
 	queued_radio_messages -= identifier
 	queued_radio_messages_compression -= identifier
 
-/// Helper to get a random TTS voice for a certain gender. Passing no gender just results in a random voice.
+/// Helper to get a random TTS voice for a certain gender.. Passing no gender just results in a random voice.
 /datum/controller/subsystem/tts/proc/random_tts_voice(gender = NEUTER)
 	if(!tts_enabled)
 		return null
@@ -573,7 +573,7 @@ SUBSYSTEM_DEF(tts)
 	var/use_blips = FALSE
 	/// What's the pitch adjustment?
 	var/pitch = 0
-	/// Should we force play blips? Used for the blips preview.
+	/// Should we force play blips?. Used for the blips preview.
 	var/force_blips = FALSE
 
 

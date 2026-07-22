@@ -6,7 +6,7 @@
 	throwforce = 3
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/mob/human/bodyparts.dmi'
-	icon_state = "" //Leave this blank! Bodyparts are built using overlays
+	icon_state = "" // Leave this blank!. Bodyparts are built using overlays
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 //actually mindblowing
 	/// The icon for Organic limbs using greyscale
 	VAR_PROTECTED/icon_greyscale = DEFAULT_BODYPART_ICON_ORGANIC
@@ -18,11 +18,11 @@
 	VAR_PROTECTED/icon_invisible = 'icons/mob/human/bodyparts.dmi'
 	///The type of husk for building an iconstate
 	var/husk_type = "humanoid"
-	///The color to multiply the greyscaled husk sprites by. Can be null. Old husk sprite chest color is #A6A6A6
+	/// The color to multiply the greyscaled husk sprites by.. Can be null.. Old husk sprite chest color is #A6A6A6
 	var/husk_color = "#A6A6A6"
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	/// The mob that "owns" this limb
-	/// DO NOT MODIFY DIRECTLY. Use update_owner()
+	/// DO NOT MODIFY DIRECTLY.. Use update_owner()
 	var/mob/living/carbon/owner
 
 	/// If this limb can be scarred.
@@ -38,7 +38,7 @@
 	var/bodytype = BODYTYPE_ORGANIC
 	///A bitfield of bodyshapes for clothing and other sprite information
 	var/bodyshape = BODYSHAPE_HUMANOID
-	///Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
+	/// Defines when a bodypart should not be changed.. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
 	var/change_exempt_flags = NONE
 	///Random flags that describe this bodypart
 	var/bodypart_flags = BODYPART_VIRGIN
@@ -47,38 +47,38 @@
 	var/is_husked = FALSE
 	///Whether the bodypart (and the owner) is invisible through invisibleman trait.
 	var/is_invisible = FALSE
-	///The ID of a species used to generate the icon. Needs to match the icon_state portion in the limbs file!
+	/// The ID of a species used to generate the icon.. Needs to match the icon_state portion in the limbs file!
 	var/limb_id = SPECIES_HUMAN
-	///ID of a species to use as an override for species-based biological logic, such as what species to pull the meat from, if our limb_id doesn't match
+	/// ID of a species to use as an override f. Species-based biological logic, such as what species to pull the meat from, if our limb_id doesn't match
 	var/species_id = null
 	//Defines what sprite the limb should use if it is also sexually dimorphic.
 	var/limb_gender = "m"
 	///Is there a sprite difference between male and female?
 	var/is_dimorphic = FALSE
 	///The actual color a limb is drawn as, set by /proc/update_limb()
-	var/draw_color //NEVER. EVER. EDIT THIS VALUE OUTSIDE OF UPDATE_LIMB. I WILL FIND YOU. It ruins the limb icon pipeline.
+	var/draw_color // NEVER.. EVER.. EDIT THIS VALUE OUTSIDE OF UPDATE_LIMB.. I WILL FIND YOU.. It ruins the limb icon pipeline.
 	///If this limb should have emissive overlays
 	var/is_emissive = FALSE
 
-	/// BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
+	/// BODY_ZONE_CHEST, BODY_ZONE_L_ARM, and so on , used for def_zone
 	var/body_zone
-	/// The body zone of this part in english ("chest", "left arm", etc) without the species attached to it
+	/// The body zone of this part in english ("chest", "left arm", and so on without the species attached to it
 	var/plaintext_zone
 	var/aux_zone // used for hands
 	var/aux_layer
 	/// bitflag used to check which clothes cover this bodypart
 	var/body_part
-	/// List of obj/item's embedded inside us. Managed by embedded components, do not modify directly
+	/// List of obj/item's embedded inside us.. Managed by embedded components, do not modify directly
 	var/list/embedded_objects
-	/// are we a hand? if so, which one!
+	/// are we a hand?. if so, which one!
 	var/held_index = 0
 
 	// Limb disabling variables
-	///Whether it is possible for the limb to be disabled whatsoever. TRUE means that it is possible.
+	/// Whether it is possible for the limb to be disabled whatsoever.. TRUE means that it is possible.
 	var/can_be_disabled = FALSE //Defaults to FALSE, as only human limbs can be disabled, and only the appendages.
-	///Controls if the limb is disabled. TRUE means it is disabled (similar to being removed, but still present for the sake of targeted interactions).
+	/// Controls if the limb is disabled.. TRUE means it is disabled (similar to being removed, but still present for the sake of targeted interactions).
 	var/bodypart_disabled = FALSE
-	///Handles limb disabling by damage. If LIMB_NO_DISABLE (-1), a limb can't be disabled via damage. If 1 (100%), it is disabled at max limb damage. Anything between is the percentage of damage against maximum limb damage needed to disable the limb.
+	/// Handles limb disabling by damage.. If LIMB_NO_DISABLE (-1), a limb can't be disabled via damage.. If 1 (100%), it is disabled at max limb damage.. Anything between is the percentage of damage against maximum limb damage needed to disable the limb.
 	var/disabling_threshold_percentage = LIMB_NO_DISABLE
 
 	// Damage variables
@@ -88,10 +88,10 @@
 	var/brute_dam = 0
 	///The current amount of burn damage the limb has
 	var/burn_dam = 0
-	///The maximum brute OR burn damage a bodypart can take. Once we hit this cap, no more damage of either type!
+	/// The maximum brute OR burn damage a bodypart can take.. Once we hit this cap, no more damage of either type!
 	var/max_damage = 0
 
-	//Used in determining overlays for limb damage states. As the mob receives more burn/brute damage, their limbs update to reflect.
+	// Used in determining overlays for limb damage states.. As the mob receives more burn/brute damage, their limbs update to reflect.
 	var/brutestate = 0
 	var/burnstate = 0
 
@@ -126,7 +126,7 @@
 	var/medium_burn_msg = "blistered"
 	var/heavy_burn_msg = "like its peeling away"
 
-	//Damage messages used by examine(). the desc that is most common accross all bodyparts gets shown
+	// Damage messages used by examine().. the desc that is most common accross all bodyparts gets shown
 	var/list/damage_examines = list(
 		BRUTE = DEFAULT_BRUTE_EXAMINE_TEXT,
 		BURN = DEFAULT_BURN_EXAMINE_TEXT,
@@ -141,16 +141,16 @@
 	/// Our current stored wound damage multiplier
 	var/wound_damage_multiplier = 1
 
-	/// This number is added to the effective wound armor on this body part (as long as it isn't managled externally or internally), higher numbers mean more defense, negative means easier to wound
+	/// This number is added to the effective wound arm. On this body part (as long as it isn't managled externally. Internally), higher numbers mean more defense, negative means easier to wound
 	var/wound_resistance = 0
-	/// When this bodypart hits max damage, this number is added to all wound rolls. Obviously only relevant for bodyparts that have damage caps.
+	/// When this bodypart hits max damage, this number is added to all wound rolls.. Obviously only relevant for bodyparts that have damage caps.
 	var/disabled_wound_penalty = 15
 
-	/// A hat won't cover your face, but a shirt covering your chest will cover your... you know, chest
+	/// A hat won't cover your face, but a shirt covering your chest will cover your.... you know, chest
 	var/scars_covered_by_clothes = TRUE
 	/// So we know if we need to scream if this limb hits max damage
 	var/last_maxed
-	/// Our current bleed rate. Cached, update with refresh_bleed_rate()
+	/// Our current bleed rate.. Cached, update with refresh_bleed_rate()
 	var/cached_bleed_rate = 0
 	/// How much generic bleedstacks we have on this bodypart
 	var/generic_bleedstacks
@@ -164,7 +164,7 @@
 	///A list of all bodypart textures to apply
 	var/list/bodypart_textures
 
-	/// Type of an attack from this limb does. Arms will do punches, Legs for kicks, and head for bites. (TO ADD: tactical chestbumps)
+	/// Type of an attack from this limb does.. Arms will do punches, Legs for kicks, and head for bites.. (TO ADD: tactical chestbumps)
 	var/attack_type = BRUTE
 	/// the verbs used for an unarmed attack when using this limb, such as arm.unarmed_attack_verbs = list("punch")
 	var/list/unarmed_attack_verbs = list("bump")
@@ -179,7 +179,7 @@
 	/// Sounds when this bodypart is used in an umarmed attack
 	var/sound/unarmed_attack_sound = 'sound/items/weapons/punch1.ogg'
 	var/sound/unarmed_miss_sound = 'sound/items/weapons/punchmiss.ogg'
-	/// Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
+	/// Lowest possible punch damage this bodypart can give.. If this is set to 0, unarmed attacks will always miss.
 	var/unarmed_damage_low = 1
 	/// Highest possible punch damage this bodypart can ive.
 	var/unarmed_damage_high = 1
@@ -187,38 +187,38 @@
 	var/unarmed_effectiveness = 10
 	/// Multiplier applied to effectiveness and damage when attacking a grabbed target.
 	var/unarmed_pummeling_bonus = 1
-	/// If this limb is used to grab (which is only arms right now), how much more effective is the limb? Every integer above or below 0 is one effective grab level. Higher is a bonus, lower is a malus.
-	/// This is more powerful than adjusting grab escape chance. If the arm has both an increased grab level and a chance reduction, it is very hard to escape a grab.
+	/// If this limb is used to grab (which is only arms right now), how much more effective is the limb?. Every integer above or below 0 is one effective grab level.. Higher is a bonus, lower is a malus.
+	/// This is more powerful than adjusting grab escape chance.. If the arm has both an increased grab level and a chance reduction, it is very hard to escape a grab.
 	var/unarmed_grab_state_bonus = 0
 	/// If this limb is used to grab (which is only arms right now), how much additional damage does it deal to the grabbed individual when they fail to escape the grab?
 	var/unarmed_grab_damage_bonus = 0
-	/// If this limb is used to grab (which is only arms right now), how much more difficult is it to escape the grab, before accounting for grab state? Values above 0 is a malus, values below 0 is a bonus.
-	/// This is less powerful than adjusting grab state. If the arm has both an increased grab level and a chance reduction, it is very hard to escape a grab.
+	/// If this limb is used to grab (which is only arms right now), how much more difficult is it to escape the grab, before accounting f. Grab state?. Values above 0 is a malus, values below 0 is a bonus.
+	/// This is less powerful than adjusting grab state.. If the arm has both an increased grab level and a chance reduction, it is very hard to escape a grab.
 	var/unarmed_grab_escape_chance_bonus = 0
-	/// The 'sharpness' of the limb. Could indicate claws, teeth or spines. Should default to NONE, or blunt.
+	/// The 'sharpness' of the limb.. Could indicate claws, teeth or spines.. Should default to NONE, or blunt.
 	var/unarmed_sharpness = NONE
 
-	/// Traits that are given to the holder of the part. This does not update automatically on life(), only when the organs are initially generated or inserted!
+	/// Traits that are given to the holder of the part.. This does not update automatically on life(), only when the organs are initially generated or inserted!
 	var/list/bodypart_traits
-	/// The name of the trait source that the organ gives. Should not be altered during the events of gameplay, and will cause problems if it is.
+	/// The name of the trait source that the organ gives.. Should not be altered during the events of gameplay, and will cause problems if it is.
 	var/bodypart_trait_source = BODYPART_TRAIT
 	/// List of the above datums which have actually been instantiated, managed automatically
 	var/list/feature_offsets = list()
 
 	/// In the case we dont have dismemberable features, or literally cant get wounds, we will use this percent to determine when we can be dismembered.
-	/// Compared to our ABSOLUTE maximum. Stored in decimal; 0.8 = 80%.
+	/// Compared to our ABSOLUTE maximum.. Stored in decimal; 0.8 = 80%.
 	var/hp_percent_to_dismemberable = 0.8
-	/// If true, we will use [hp_percent_to_dismemberable] even if we are dismemberable via wounds. Useful for things with extreme wound resistance.
+	/// If true, we will use [hp_percent_to_dismemberable] even if we are dismemberable via wounds.. Useful for things with extreme wound resistance.
 	var/use_alternate_dismemberment_calc_even_if_mangleable = FALSE
-	/// If false, no wound that can be applied to us can mangle our exterior. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
+	/// If false, no wound that can be applied to us can mangle our exterior.. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
 	var/any_existing_wound_can_mangle_our_exterior
-	/// If false, no wound that can be applied to us can mangle our interior. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
+	/// If false, no wound that can be applied to us can mangle our interior.. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
 	var/any_existing_wound_can_mangle_our_interior
 	/// get_damage() / total_damage must surpass this to allow our limb to be disabled, even temporarily, by an EMP.
 	var/robotic_emp_paralyze_damage_percent_threshold = 0.3
 	/// A potential texturing overlay to put on the limb
 	var/datum/bodypart_texture/texture_bodypart_overlay
-	/// Lazylist of /datum/status_effect/grouped/bodypart_effect types. Instances of this are applied to the carbon when added the limb is attached, and merged with similair limbs
+	/// Lazylist of /datum/status_effect/grouped/bodypart_effect types.. Instances of this are applied to the carbon when added the limb is attached, and merged with similair limbs
 	var/list/bodypart_effects
 	/// The cached info about the blood this organ belongs to, set during on_removal()
 	var/list/blood_dna_info
@@ -720,7 +720,7 @@
 	// START WOUND HANDLING
 	*/
 
-	// what kind of wounds we're gonna roll for, take the greater between brute and burn, then if it's brute, we subdivide based on sharpness
+	// what kind of wounds we're going to roll for, take the greater between brute and burn, then if it's brute, we subdivide good on sharpness
 	var/wounding_type = (brute > burn ? WOUND_BLUNT : WOUND_BURN)
 	var/wounding_dmg = max(brute, burn)
 
@@ -750,7 +750,7 @@
 				wounding_type = WOUND_BLUNT
 				wounding_dmg *= (easy_dismember ? 1 : 0.75)
 		else
-			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
+			// if we've already mangled the skin (critical slash. Piercing wound), then the bone is exposed. We can damage it with sharp weapons at a reduced rate
 			// So a big sharp weapon is still all you need to destroy a limb
 			if(has_interior && exterior_ready_to_dismember && !(mangled_state & BODYPART_MANGLED_INTERIOR) && sharpness)
 				if(wounding_type == WOUND_SLASH && !easy_dismember)
@@ -774,7 +774,7 @@
 	//back to our regularly scheduled program, we now actually apply damage if there's room below limb damage cap
 	var/can_inflict = max_damage - get_damage()
 	var/total_damage = brute + burn
-	if(total_damage > can_inflict && total_damage > 0) // TODO: the second part of this check should be removed once disabling is all done
+	if(total_damage > can_inflict && total_damage > 0) // To do the second part of this check should be removed once disabling is all done
 		brute = round(brute * (can_inflict / total_damage),DAMAGE_PRECISION)
 		burn = round(burn * (can_inflict / total_damage),DAMAGE_PRECISION)
 
@@ -792,7 +792,7 @@
 			owner.updatehealth()
 	return update_bodypart_damage_state()
 
-/// Returns a bitflag using ANATOMY_EXTERIOR or ANATOMY_INTERIOR. Used to determine if we as a whole have a interior or exterior biostate, or both.
+/// Returns a bitflag using ANATOMY_EXTERIOR or ANATOMY_INTERIOR.. Used to determine if we as a whole have a interior or exterior biostate, or both.
 /obj/item/bodypart/proc/get_bio_state_status()
 	SHOULD_BE_PURE(TRUE)
 
@@ -814,7 +814,7 @@
 
 	return bio_status
 
-/// Returns if our current mangling status allows us to be dismembered. Requires both no exterior/mangled exterior and no interior/mangled interior.
+/// Returns if our current mangling status allows us to be dismembered.. Needs both no exterior/mangled exterior and no interior/mangled interior.
 /obj/item/bodypart/proc/dismemberable_by_wound()
 	SHOULD_BE_PURE(TRUE)
 
@@ -830,7 +830,7 @@
 
 	return (exterior_ready_to_dismember && interior_ready_to_dismember)
 
-/// Returns TRUE if our total percent damage is more or equal to our dismemberable percentage, but FALSE if a wound can cause us to be dismembered.
+/// Returns TRUE if our total percent damage is more. Equal to our dismemberable percentage. FALSE if a wound can cause us to be dismembered.
 /obj/item/bodypart/proc/dismemberable_by_total_damage()
 
 	update_wound_theory()
@@ -883,13 +883,13 @@
 		return FALSE
 	return TRUE
 
-//Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
+// Heals brute and burn damage for the organ.. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
-//Cannot remove negative damage (i.e. apply damage)
+// Cannot remove negative damage (i.e.. apply damage)
 /obj/item/bodypart/proc/heal_damage(brute, burn, updating_health = TRUE, forced = FALSE, required_bodytype)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(!forced && required_bodytype && !(bodytype & required_bodytype)) //So we can only heal certain kinds of limbs, ie robotic vs organic.
+	if(!forced && required_bodytype && !(bodytype & required_bodytype)) // So we can only heal certain kinds of limbs, that is robotic vs organic.
 		return
 
 	if(brute)
@@ -948,7 +948,7 @@
 
 	var/total_damage = brute_dam + burn_dam
 
-	// this block of checks is for limbs that can be disabled, but not through pure damage (AKA limbs that suffer wounds, human/monkey parts and such)
+	// this block of checks is f. Limbs that can be disabled. Not through pure damage also known as limbs that suffer wounds, human/monkey parts. Such)
 	if(disabling_threshold_percentage == LIMB_NO_DISABLE)
 		if(total_damage < max_damage)
 			last_maxed = FALSE
@@ -959,7 +959,7 @@
 		set_disabled(FALSE, update_limbs) // we only care about the paralysis trait
 		return
 
-	// we're now dealing solely with limbs that can be disabled through pure damage, AKA robot parts
+	// we're now dealing solely with limbs that can be disabled through pure damage, Also known as robot parts
 	if(total_damage >= max_damage * disabling_threshold_percentage)
 		if(!last_maxed)
 			if(owner.stat < UNCONSCIOUS)
@@ -1136,7 +1136,7 @@
 	set_can_be_disabled(initial(can_be_disabled))
 
 //Updates an organ's brute/burn states for use by update_damage_overlays()
-//Returns 1 if we need to update overlays. 0 otherwise.
+// Returns 1 if we need to update overlays.. 0 otherwise.
 /obj/item/bodypart/proc/update_bodypart_damage_state()
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -1156,7 +1156,7 @@
 	SEND_SIGNAL(src, COMSIG_BODYPART_UPDATED, dropping_limb, is_creating)
 
 	if(IS_ORGANIC_LIMB(src))
-		// Try to add a cached blood type data, we must do it in here because for some reason DNA gets initialized AFTER the mob's limbs are created.
+		// Try to add a cached blood type data, we must do it in here because f. Some reason DNA gets initialized AFTER the mob's limbs are created.
 		// Should be fine as this gets called before all the important stuff happens
 		if(is_creating && !(bodypart_flags & ORGAN_VIRGIN))
 			blood_dna_info = owner.get_blood_dna_list()
@@ -1181,7 +1181,7 @@
 		return FALSE
 
 	// There should technically to be an ishuman(owner) check here, but it is absent because no basetype carbons use bodyparts
-	// No, xenos don't actually use bodyparts. Don't ask.
+	// No, xenos don't actually use bodyparts.. Don't ask.
 	var/mob/living/carbon/human/human_owner = owner
 
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
@@ -1238,7 +1238,7 @@
 
 /obj/item/bodypart/wash(clean_types)
 	. = ..()
-	if(!.) // Already clean. Nothing to do here.
+	if(!.) // Already clean.. Nothing to do here.
 		return
 	// always add the original dna to the organ after it's washed
 	if(IS_ORGANIC_LIMB(src) && (clean_types & CLEAN_TYPE_BLOOD))
@@ -1376,7 +1376,7 @@
 		for(var/image/limb_image in .)
 			// Remove the old, unmasked image
 			. -= limb_image
-			// Add two masked images based on the old one
+			// Add two masked images good on the old one
 			. += leg_source.generate_masked_leg(limb_image)
 
 	// Apply height to the overlays we generated so far
@@ -1388,7 +1388,7 @@
 			owner.apply_height(generated_overlay, ENTIRE_BODY)
 
 	// Draw external organs like horns and frills
-	// Height is applied again in here so we can specify where the overlay is set (ie offset_location)
+	// Height is applied again in here so we can specify where the overlay is set that is offset_location)
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(src, owner))
 			continue
@@ -1546,7 +1546,7 @@
 
 /obj/item/bodypart/proc/embedded_object_changed(obj/item/embedded_source)
 	SIGNAL_HANDLER
-	/// Embedded objects effect bleed rate, gotta refresh lads
+	/// Embedded objects effect bleed rate, got to refresh lads
 	refresh_bleed_rate()
 
 /// Sets our generic bleedstacks
@@ -1554,7 +1554,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	adjustBleedStacks(set_to - generic_bleedstacks)
 
-/// Modifies our generic bleedstacks. You must use this to change the variable
+/// Modifies our generic bleedstacks.. You must use this to change the variable
 /// Takes the amount to adjust by, and the lowest amount we're allowed to have post adjust
 /obj/item/bodypart/proc/adjustBleedStacks(adjust_by, minimum = -INFINITY)
 	if(!adjust_by)
@@ -1638,7 +1638,7 @@
 	if(LAZYACCESS(applied_items, LIMB_ITEM_TOURNIQUET))
 		cached_bleed_rate *= 0.1
 
-	// Our bleed overlay is based directly off bleed_rate, so go aheead and update that would you?
+	// Our bleed overlay is good directly off bleed_rate, so go aheead and update that would you?
 	if(cached_bleed_rate != old_bleed_rate)
 		update_part_wound_overlay()
 
@@ -1804,7 +1804,7 @@
 	emp_effect(severity, protection)
 	return protection
 
-/// The actual effect of EMPs on the limb. Allows children to override it however they want
+/// The actual effect of EMPs on the limb.. Allows children to override it but they want
 /obj/item/bodypart/proc/emp_effect(severity, protection)
 	if(!IS_ROBOTIC_LIMB(src))
 		return FALSE
@@ -1812,7 +1812,7 @@
 	// 2 + 1.5 = 3,5, with 6 limbs thats 21, on a heavy 42
 	// 42 * 0.8 = 33.6
 	// 3 hits to crit with an ion rifle on someone fully augged at a total of 100.8 damage, although im p sure mood can boost max hp above 100
-	// dont forget emps pierce armor, debilitate augs, and usually comes with splash damage e.g. ion rifles or grenades
+	// dont forget emps pierce armor, debilitate augs, and usually comes with splash damage e.g.. ion rifles or grenades
 	var/time_needed = AUGGED_LIMB_EMP_PARALYZE_TIME
 	var/brute_damage = AUGGED_LIMB_EMP_BRUTE_DAMAGE
 	var/burn_damage = AUGGED_LIMB_EMP_BURN_DAMAGE
@@ -1831,7 +1831,7 @@
 
 	return TRUE
 
-/// Returns the generic description of our BIO_EXTERNAL feature(s), prioritizing certain ones over others. Returns error on failure.
+/// Returns the generic description of our BIO_EXTERNAL feature(s), prioritizing certain ones over others.. Returns error on failure.
 /obj/item/bodypart/proc/get_external_description()
 	if (biological_state & BIO_FLESH)
 		return "flesh"
@@ -1842,7 +1842,7 @@
 
 	return "error"
 
-/// Returns the generic description of our BIO_INTERNAL feature(s), prioritizing certain ones over others. Returns error on failure.
+/// Returns the generic description of our BIO_INTERNAL feature(s), prioritizing certain ones over others.. Returns error on failure.
 /obj/item/bodypart/proc/get_internal_description()
 	if (biological_state & BIO_BONE)
 		return "bone"

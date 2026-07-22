@@ -104,7 +104,7 @@
 /datum/smite/custom_imaginary_friend/effect(client/user, mob/living/target)
 	. = ..()
 
-	// Run this check before and after polling, we don't wanna poll for something which already stopped existing
+	// Run this check before and after polling, we don't want to poll for something which already stopped existing
 	if(QDELETED(target))
 		to_chat(user, span_warning("The target mob no longer exists, aborting."))
 		return

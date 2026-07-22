@@ -6,7 +6,7 @@
 	icon_living = "clown"
 	icon_dead = "clown_dead"
 	icon_gib = "clown_gib"
-	health_doll_icon = "clown" //if >32x32, it will use this generic. for all the huge clown mobs that subtype from this
+	health_doll_icon = "clown" // if >32x32, it will use this generic.. for all the huge clown mobs that subtype from this
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
@@ -447,7 +447,7 @@
 			return FALSE
 		return TRUE
 
-///This proc eats the atom, certain funny items are stored directly in the prank pouch while bananas grant a heal based on their potency and the peels are retained in the pouch.
+/// This proc eats the atom, certain funny items are stored directly in the prank pouch while bananas grant a heal good on their potency. The peels are retained in the pouch.
 /mob/living/basic/clown/mutant/glutton/proc/eat_atom(atom/movable/eaten_atom)
 
 	var/static/funny_items = list(
@@ -524,7 +524,7 @@
 	if(!.)
 		return FALSE
 
-	// Hardcoded to only work with gluttons. Come back next year
+	// Hardcoded to only work with gluttons.. Come back next year
 	return istype(owner, /mob/living/basic/clown/mutant/glutton)
 
 /datum/action/cooldown/regurgitate/Activate(atom/spit_at)

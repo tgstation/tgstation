@@ -92,7 +92,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			sec_job.spawn_positions = -1
 			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")
 
-		//Buttons for helpful stuff. This is where people land in the tgui
+		// Buttons for helpful stuff.. This is where people land in the tgui
 		if("clear_virus")
 			var/choice = tgui_alert(usr, "Are you sure you want to cure all disease? This will also grant immunity for that disease",, list("Yes", "Cancel"))
 			if(choice == "Yes")
@@ -183,7 +183,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			if(!SSshuttle.toggleShuttle("laborcamp","laborcamp_home","laborcamp_away"))
 				message_admins("[key_name_admin(holder)] moved labor shuttle")
 				log_admin("[key_name(holder)] moved the labor shuttle")
-		//!fun! buttons.
+		// !fun!. buttons.
 		if("virus")
 			if(!is_funmin)
 				return
@@ -458,7 +458,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				outfit = text2path(outfit)
 
 			for (var/i in 1 to prefs["portalnum"]["value"])
-				if (length(candidates)) // if we're spawning players, gotta be a little tricky and also not spawn players on top of NPCs
+				if (length(candidates)) // if we're spawning players, got to be a little tricky and also not spawn players on top of NPCs
 					var/ghostcandidates = list()
 					for (var/j in 1 to min(prefs["amount"]["value"], length(candidates)))
 						ghostcandidates += pick_n_take(candidates)

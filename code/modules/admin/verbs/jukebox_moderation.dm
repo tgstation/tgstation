@@ -3,7 +3,7 @@ ADMIN_VERB(upload_jukebox_music, R_SERVER, "Jukebox Upload Music", "Upload a val
 	if(!file)
 		return
 
-	// we could theorticly support other sound types but OGG is the better format from what I am aware and I am 100% sure its length is properly fetched.
+	// we could theorticly support other sound types. OGG is the better format from what I am aware. I am 100% sure its length is properly fetched.
 	if(!IS_OGG_FILE(file))
 		tgui_alert(user, "Invalid file type. Please select an OGG file.", "Loading error", list("Ok"))
 		return

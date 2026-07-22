@@ -24,7 +24,7 @@
 /datum/material/meat/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
 	make_edible(source, mat_amount, multiplier)
-	ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //The rod itself is the bait... sorta.
+	ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) // The rod itself is the bait.... sort of
 	if(isbodypart(source))
 		var/obj/item/bodypart/bodypart = source
 		if(!(bodypart::bodytype & BODYTYPE_ORGANIC))

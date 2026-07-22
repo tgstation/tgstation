@@ -9,7 +9,7 @@
 	var/sample
 	/// The frequency to play the sample to get our desired note.
 	var/frequency
-	/// Deviation up/down from the pivot point that uses its sample. Used to calculate frequency.
+	/// Deviation up/down from the pivot point that uses its sample.. Used to calculate frequency.
 	var/deviation
 
 /datum/instrument_key/New(sample = src.sample, key = src.key, deviation = src.deviation, frequency = src.frequency)

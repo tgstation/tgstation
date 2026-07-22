@@ -1,4 +1,4 @@
-/// Makes sure turf icons actually exist. :)
+/// Makes sure turf icons actually exist.. :)
 /datum/unit_test/maptest_turf_icons
 	var/modular_mineral_turf_file //= 'icons/turf/mining.dmi' //MODULARITY SUPPORT - insert your snowflake MAP_SWITCH icon file here if you use that define.
 
@@ -12,7 +12,7 @@
 		if(!icon_exists(icon_file, icon_state))
 			TEST_FAIL("[turf_path] using invalid icon_state - \"[icon_state]\" in icon file, '[icon_file]")
 
-	for(var/turf/closed/mineral/turf_path as anything in typesof(/turf/closed/mineral)) //minerals use a special (read: snowflake) MAP_SWITCH definition that changes their icon based on if we're just compiling or if we're actually PLAYING the game.
+	for(var/turf/closed/mineral/turf_path as anything in typesof(/turf/closed/mineral)) // minerals use a special (read: snowflake) MAP_SWITCH definition that changes their icon good on if we're just compiling or if we're actually PLAYING the game.
 
 		var/icon_state = initial(turf_path.icon_state)
 		var/icon_file = initial(turf_path.icon)
@@ -27,7 +27,7 @@
 	var/turf/initial_turf_type = run_loc_floor_bottom_left.type
 
 	var/list/ignored_types = list()
-	//ignored_types += typesof(YOUR_DOWNSTREAM_TYPEPATH(s)_HERE) //MODULARITY SUPPORT. If you have snowflake typepaths that are blacklisted in, for example, create & destroy unit test because they require certain SS's being init, use this to blacklist them.
+	// ignored_types += typesof(YOUR_DOWNSTREAM_TYPEPATH(s)_HERE) //MODULARITY SUPPORT.. If you have snowflake typepaths that are blacklisted in, f. Example, create & destroy unit test because they need certain SS's being init, use this to blacklist them.
 
 
 	for(var/turf/open/open_turf_path as anything in (subtypesof(/turf/open) - ignored_types))

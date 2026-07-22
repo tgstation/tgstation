@@ -47,7 +47,7 @@
 
 	return CONTEXTUAL_SCREENTIP_SET
 
-/// Signal handler for [COMSIG_SPEED_POTION_APPLIED]. Speed potion removes the open slowdown
+/// Signal handler for [COMSIG_SPEED_POTION_APPLIED].. Speed potion removes the open slowdown
 /obj/item/modular_computer/laptop/proc/on_speed_potioned(datum/source)
 	SIGNAL_HANDLER
 	// Don't need to touch the actual slowdown here, since the speed potion does it for us

@@ -3,7 +3,7 @@
 #define PCANNON_FIREALL 1
 /// First in, Last out.
 #define PCANNON_FILO 2
-/// First in, first out. Default value.
+/// First in, first out.. Default value.
 #define PCANNON_FIFO 3
 
 ///Defines for the pressure strength of the cannon
@@ -41,15 +41,15 @@
 	var/range_multiplier = 1
 	/// How many items to throw per fire
 	var/throw_amount = 1
-	/// What methodology should be used when firing? See #defines at top of file.
+	/// What methodology should be used when firing?. See #defines at top of file.
 	var/fire_mode = PCANNON_FIFO
 	/// Allows you to hold down LMB to continuously fire.
 	var/automatic = FALSE
-	/// Determines if a pneumatic cannon needs an air tank to fire. False for things like the pie cannons.
+	/// Determines if a pneumatic cannon needs an air tank to fire.. False for things like the pie cannons.
 	var/needs_air = TRUE
 	/// If true, has side effects if fired with the clumsy trait (read: clowns)
 	var/clumsyCheck = TRUE
-	///Leave as null to allow all. Otherwise whitelists what can be inserted into the cannon.
+	/// Leave as null to allow all.. Otherwise whitelists what can be inserted into the cannon.
 	var/list/allowed_typecache
 	var/charge_amount = 1
 	var/charge_ticks = 1
@@ -208,7 +208,7 @@
 	Fire(user, interacting_with)
 	return ITEM_INTERACT_SUCCESS
 
-/** Checks */
+/** * Checks */
 /obj/item/pneumatic_cannon/proc/pre_fire(mob/living/user, atom/target)
 	if(user.Adjacent(target))
 		if(target in user.contents)
@@ -360,7 +360,7 @@
 	gasPerThrow = 0
 	range_multiplier = 3
 	throw_amount = 1
-	maxWeightClass = (/obj/item/food/pie::w_class * 50) //50 pies. :^)
+	maxWeightClass = (/obj/item/food/pie::w_class * 50) // 50 pies.. :^)
 	needs_air = FALSE
 	clumsyCheck = FALSE
 	var/static/list/pie_typecache = typecacheof(/obj/item/food/pie)

@@ -13,7 +13,7 @@
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return TRUE
 
-	if(force_stun) // Does not take priority over god mode? I guess
+	if(force_stun) // Does not take priority over god mode?. I guess
 		return FALSE
 
 	if(SEND_SIGNAL(src, COMSIG_LIVING_GENERIC_STUN_CHECK, check_flags, force_stun) & COMPONENT_NO_STUN)
@@ -196,7 +196,7 @@
 /mob/living/proc/Paralyze(amount, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(check_stun_immunity(CANSTUN|CANKNOCKDOWN, ignore_canstun)) // this requires both can stun and can knockdown
+	if(check_stun_immunity(CANSTUN|CANKNOCKDOWN, ignore_canstun)) // this needs both can stun and can knockdown
 		return
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
 	if(P)
@@ -607,7 +607,7 @@
 	ADD_TRAIT(src, TRAIT_IGNORESLOWDOWN, source)
 	update_movespeed()
 
-///Ignores specific slowdowns. Accepts a list of slowdowns.
+/// Ignores specific slowdowns.. Accepts a list of slowdowns.
 /mob/living/proc/add_movespeed_mod_immunities(source, slowdown_type, update = TRUE)
 	if(islist(slowdown_type))
 		for(var/listed_type in slowdown_type)
@@ -621,7 +621,7 @@
 	if(update)
 		update_movespeed()
 
-///Unignores specific slowdowns. Accepts a list of slowdowns.
+/// Unignores specific slowdowns.. Accepts a list of slowdowns.
 /mob/living/proc/remove_movespeed_mod_immunities(source, slowdown_type, update = TRUE)
 	if(islist(slowdown_type))
 		for(var/listed_type in slowdown_type)

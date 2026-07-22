@@ -1,5 +1,5 @@
 // These mood events are related to /obj/structure/sign/painting/eldritch
-// Names are based on the subtype of painting they belong to
+// Names are good on the subtype of painting they belong to
 
 // Mood applied for ripping the painting
 /datum/mood_event/eldritch_painting

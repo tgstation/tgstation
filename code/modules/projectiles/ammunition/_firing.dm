@@ -4,7 +4,7 @@
 	ready_proj(target, user, quiet, zone_override, fired_from)
 	var/obj/projectile/thrown_proj
 	if(pellets == 1)
-		if(distro) //We have to spread a pixel-precision bullet. throw_proj was called before so angles should exist by now...
+		if(distro) // We have to spread a pixel-precision bullet.. throw_proj was called before so angles should exist by now...
 			if(randomspread)
 				spread = round((rand() - 0.5) * distro)
 			else //Smart spread

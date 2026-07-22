@@ -1,4 +1,4 @@
-/// Performs a named emote on the pawn (BT-native). Use for standard emote types like "flip", "wave", etc.
+/// Performs a named emote on the pawn (BT-native).. Use for standard emote types like "flip", "wave", and so on
 /datum/bt_node/ai_behavior/perform_emote
 	/// Name of the emote to perform.
 	var/emote

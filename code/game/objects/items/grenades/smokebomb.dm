@@ -10,7 +10,7 @@
 	icon_state = "smokewhite"
 	inhand_icon_state = "smoke"
 	slot_flags = ITEM_SLOT_BELT
-	///List of words we take randomly every time we're examined. It's extremely important to keep this list up to date,
+	/// List of words we take randomly every time we're examined.. It's extremely important to keep this list up to date,
 	///It helps to generate the insightful description of the smokebomb
 	var/static/list/bruh_moment = list(
 		"Dank",
@@ -35,7 +35,7 @@
 	. = ..()
 	desc = "The word '[pick(bruh_moment)]' is scribbled on it in crayon."
 
-///Here we generate some smoke and also damage blobs??? for some reason. Honestly not sure why we do that.
+/// Here we generate some smoke and also damage blobs???. for some reason.. Honestly not sure why we do that.
 /obj/item/grenade/smokebomb/detonate(mob/living/lanced_by)
 	. = ..()
 	if(!.)

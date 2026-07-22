@@ -1,7 +1,7 @@
 #define REVENANT_DEFILE_MIN_DAMAGE 30
 #define REVENANT_DEFILE_MAX_DAMAGE 50
 
-//Transmit: the revenant's only direct way to communicate. Sends a single message silently to a single mob
+// Transmit: the revenant's only direct way to communicate.. Sends a single message silently to a single mob
 /datum/action/cooldown/spell/list_target/telepathy/revenant
 	name = "Revenant Transmit"
 	background_icon_state = "bg_revenant"
@@ -51,7 +51,7 @@
 
 /datum/action/cooldown/spell/aoe/revenant/vv_edit_var(var_name, var_value)
 	. = ..()
-	// gross getcomp, but this is solely to make life easier for badmins/debug. sue me
+	// gross getcomp, but this is solely to make life easier for badmins/debug.. sue me
 	var/datum/component/revenant_ability/rev_comp = GetComponent(/datum/component/revenant_ability)
 	switch(var_name)
 		if(NAMEOF(src, unlock_amount))

@@ -9,5 +9,5 @@
 /// Ghost role will take on the player's apperance (though exlcuding name)
 #define GHOSTROLE_TAKE_PREFS_APPEARANCE (1<<1)
 
-/// Return from create to stop the spawn process. Falsy value so one can just check !create()
+/// Return from create to stop the spawn process... Falsy value so one can just check !create()
 #define CANCEL_SPAWN FALSE

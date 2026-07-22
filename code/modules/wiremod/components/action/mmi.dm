@@ -50,7 +50,7 @@
 	/// The current MMI/posibrain
 	var/obj/item/mmi/brain
 
-	/// The current B.O.R.I.S. module
+	/// The current B.O.R.I.S.. module
 	var/obj/item/borg/upgrade/ai/boris
 
 	/// The brainmob or AI currently controlling to the circuit

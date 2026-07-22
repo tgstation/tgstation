@@ -14,7 +14,7 @@
 	)
 	/// Tracks the current label text
 	var/label
-	/// How many labels are left in the current roll? Also serves as our "max".
+	/// How many labels are left in the current roll?. Also serves as our "max".
 	var/labels_left = 30
 	/// Whether we are in label mode
 	VAR_FINAL/mode = FALSE
@@ -138,7 +138,7 @@
 	var/diff = starting_labels - labels_left
 	if(diff)
 		labels_left = starting_labels
-		// 50 per label. Magical cyborg paper doesn't come cheap.
+		// 50 per label.. Magical cyborg paper doesn't come cheap.
 		var/cost = diff * 50
 
 		// If the cyborg manages to use a module without a cell, they get the paper

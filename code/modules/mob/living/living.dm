@@ -94,7 +94,7 @@
 			return . | ZIMPACT_NO_MESSAGE
 
 	var/incoming_damage = (levels * 5) ** 1.5
-	// Smaller mobs with catlike grace can ignore damage (EG: cats)
+	// Smaller mobs with catlike grace can ignore damage for example cats)
 	var/small_surface_area = mob_size <= MOB_SIZE_SMALL
 	var/skip_knockdown = FALSE
 	if(HAS_TRAIT(src, TRAIT_CATLIKE_GRACE) && (small_surface_area || usable_legs >= 2) && body_position == STANDING_UP && can_help_themselves)
@@ -133,7 +133,7 @@
 	movetypes = GROUND|UPSIDE_DOWN
 	multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN / 2
 
-//Generic Bump(). Override MobBump() and ObjBump() instead of this.
+// Generic Bump().. Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A)
 	if(..()) //we are thrown onto something
 		return
@@ -233,7 +233,7 @@
 			if(!move_failed)
 				return TRUE
 
-	//okay, so we didn't switch. but should we push?
+	// okay, so we didn't switch.. but should we push?
 	//not if he's not CANPUSH of course
 	if(!(M.status_flags & CANPUSH))
 		return TRUE
@@ -329,10 +329,10 @@
 	var/dir_to_target = get_dir(src, AM)
 
 	// If there's no dir_to_target then the player is on the same turf as the atom they're trying to push.
-	// This can happen when a player is stood on the same turf as a directional window. All attempts to push
+	// This can happen when a player is stood on the same turf as a directional window.. All tries to push
 	// the window will fail as get_dir will return 0 and the player will be unable to move the window when
 	// it should be pushable.
-	// In this scenario, we will use the facing direction of the /mob/living attempting to push the atom as
+	// In this scenario, we will use the facing direction of the /mob/living trying to push the atom as
 	// a fallback.
 	if(!dir_to_target)
 		dir_to_target = dir
@@ -390,7 +390,7 @@
 
 	// If we're pulling something then drop what we're currently pulling and pull this instead.
 	if(pulling)
-		// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
+		// Are we trying to pull something we are already pulling?. Then just stop here, no need to continue.
 		if(AM == pulling)
 			return FALSE
 		stop_pulling()
@@ -579,7 +579,7 @@ GAME_VERB_HIDDEN(/mob/living, succumb, "succumb", whispered as num|null)
 
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
-//affects them once clothing is factored in. ~Errorage
+// affects them once clothing is factored in.. ~Errorage
 /mob/living/proc/calculate_affecting_pressure(pressure)
 	return pressure
 
@@ -761,7 +761,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 		sleep_icon.SetInvisibility(INVISIBILITY_ABSTRACT, INVISIBILITY_SOURCE_SLEEP_HUD_BUTTON)
 	return TRUE
 
-//Recursive function to find everything a mob is holding. Really shitty proc tbh.
+// Recursive function to find everything a mob is holding.. Really shitty proc to be honest
 /mob/living/get_contents()
 	var/list/ret = list()
 	ret |= contents //add our contents
@@ -802,7 +802,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 	return (allowmobs && reagents && can_inject(user))
 
 
-///Sets the current mob's health value. Do not call directly if you don't know what you are doing, use the damage procs, instead.
+/// Sets the current mob's health value.. Do not call directly if you don't know what you are doing, use the damage procs, instead.
 /mob/living/proc/set_health(new_value)
 	. = health
 	health = new_value
@@ -879,7 +879,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 	if(full_heal_flags)
 		fully_heal(full_heal_flags)
 
-	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
+	if(stat == DEAD && can_be_revived()) // in some cases you can't revive (e.g.. no brain)
 		set_suicide(FALSE)
 		set_stat(UNCONSCIOUS) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
@@ -1072,7 +1072,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 /mob/living/carbon/alien/adult/lying_angle_on_movement(direct)
 	return
 
-/// Print a message about an annoying sensation you are feeling. Returns TRUE if successful.
+/// Print a message about an annoying sensation you are feeling.. Returns TRUE if successful.
 /mob/living/proc/itch(obj/item/bodypart/target_part = null, damage = 0.5, can_scratch = TRUE, silent = FALSE)
 	if ((mob_biotypes & (MOB_ROBOTIC | MOB_SPIRIT)))
 		return FALSE
@@ -1165,9 +1165,9 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 		// Our effective grab state.
 		// GRAB_PASSIVE is equal to 0, so if we have no other altering factors to our grab state, we can break free immediately on resist.
 		pulledby.grab_state,
-		/// The amount of damage inflicted on a failed resist attempt.
+		/// The amount of damage inflicted on a failed resist try
 		rand(7, 13),
-		// Base chance to escape a grab. Divided by effective grab state.
+		// Base chance to escape a grab.. Divided by effective grab state.
 		BASE_GRAB_RESIST_CHANCE,
 	)
 	SEND_SIGNAL(pulledby, COMSIG_MOVABLE_GRABBED_RESISTING, src, grab_stats)
@@ -1188,7 +1188,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 	if(HAS_TRAIT(src, TRAIT_GRABRESISTANCE)) //If we have grab resistance from some source, treat the grab state as one lower.
 		effective_grab_state--
 
-	// If our puller is a human, and they have an active hand they're grabbing with (please don't ask how people grab without hands), then apply their unarmed values to the grab values
+	// If our puller is a human. They have an active h. They're grabbing with (please don't ask how people grab without hands), then apply their unarmed values to the grab values
 	if(ishuman(pulledby))
 		var/mob/living/carbon/human/human_puller = pulledby
 		var/obj/item/bodypart/grabbing_bodypart = human_puller.get_active_hand()
@@ -1197,10 +1197,10 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 			effective_grab_state += grabbing_bodypart.unarmed_grab_state_bonus
 			escape_chance += grabbing_bodypart.unarmed_grab_escape_chance_bonus
 
-	//We only resist our grab state if we are currently in a grab equal to or greater than GRAB_AGGRESSIVE (1). Otherwise, break out immediately!
+	// We only resist our grab state if we are currently in a grab equal to or greater than GRAB_AGGRESSIVE (1).. Otherwise, break out immediately!
 	if(effective_grab_state >= GRAB_AGGRESSIVE)
 		// see defines/combat.dm, this should be baseline 60%
-		// Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
+		// Resist chance divided by the value imparted by your grab state.. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
 		var/resist_chance = clamp(escape_chance / effective_grab_state, 0, 100)
 		if(prob(resist_chance))
 			visible_message(span_danger("[src] breaks free of [pulledby]'s grip!"), \
@@ -1237,7 +1237,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/gravity)
 
-	// Time to add/remove gravity alerts. sorry for the mess it's gotta be fast
+	// Time to add/remove gravity alerts.. sorry for the mess it's got to be fast
 	var/atom/movable/screen/alert/gravity_alert = alerts[ALERT_GRAVITY]
 	switch(gravity)
 		if(-INFINITY to NEGATIVE_GRAVITY)
@@ -1302,7 +1302,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 /// Checks if this mob can be actively tracked by cameras / AI.
 /// Can optionally be passed a user, which is the mob who is tracking src.
 /mob/living/proc/can_track(mob/living/user)
-	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
+	// basic fast checks go first.. When overriding this proc, I recommend calling ..() at the end.
 	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, user) & COMPONENT_CANT_TRACK)
 		return FALSE
 	if(!isnull(user) && src == user)
@@ -1318,12 +1318,12 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 		return FALSE
 	if(onSyndieBase() && !(ROLE_SYNDICATE in user?.faction))
 		return FALSE
-	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
+	// Now, are they viewable by a camera?. (This is last because it's the most intensive check)
 	if(!SScameras.is_visible_by_cameras(src))
 		return FALSE
 	return TRUE
 
-/mob/living/proc/harvest(mob/living/user) //used for extra objects etc. in butchering
+/mob/living/proc/harvest(mob/living/user) // used for extra objects and so on in butchering
 	return
 
 /mob/living/can_hold_items(obj/item/I)
@@ -1350,7 +1350,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 
 	// If the MOBILITY_UI bitflag is not set it indicates the mob's hands are cutoff, blocked, or handcuffed
 	// Note - AI's and borgs have the MOBILITY_UI bitflag set even though they don't have hands
-	// Also if it is not set, the mob could be incapcitated, knocked out, unconscious, asleep, EMP'd, etc.
+	// Also if it is not set, the mob could be incapcitated, knocked out, unconscious, asleep, EMP'd, and so on
 	if(!(mobility_flags & MOBILITY_UI) && !(action_bitflags & ALLOW_RESTING))
 		to_chat(src, span_warning("You don't have the mobility for this!"))
 		return FALSE
@@ -1735,7 +1735,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 	if(mind)
 		mind.transfer_to(new_mob)
 
-	// Well, no mmind, guess we should try to move a key over
+	// no mmind, guess we should try to move a key over
 	else if(key)
 		new_mob.PossessByPlayer(key)
 
@@ -2048,7 +2048,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if (NAMEOF(src, maxHealth))
 			if (!isnum(var_value) || var_value <= 0)
 				return FALSE
-		if(NAMEOF(src, health)) //this doesn't work. gotta use procs instead.
+		if(NAMEOF(src, health)) // this doesn't work.. got to use procs instead.
 			return FALSE
 		if(NAMEOF(src, resting))
 			set_resting(var_value)
@@ -2176,7 +2176,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		forceMove(error_landmark.loc)
 	else
 		forceMove(locate(4,4,1)) //Even if the landmark is missing, this should put them in the error room.
-		//If you're here from seeing this error, I'm sorry. I'm so very sorry. The error landmark should be a sacred object that nobody has any business messing with, and someone did!
+		// If you're here from seeing this error, I'm sorry.. I'm so very sorry.. The error landmark should be a sacred object that nobody has any business messing with, and someone did!
 		//Consider seeing a therapist.
 		var/ERROR_ERROR_LANDMARK_ERROR = "ERROR-ERROR: ERROR landmark missing!"
 		log_mapping(ERROR_ERROR_LANDMARK_ERROR)
@@ -2595,7 +2595,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/carbon/human/will_escape_storage()
 	return TRUE
 
-/// Changes the value of the [living/body_position] variable. Call this before set_lying_angle()
+/// Changes the value of the [living/body_position] variable.. Call this before set_lying_angle()
 /mob/living/proc/set_body_position(new_value)
 	if(body_position == new_value)
 		return
@@ -2611,20 +2611,20 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	update_rest_hud_icon()
 
 
-/// Proc to append behavior to the condition of being floored. Called when the condition starts.
+/// Proc to append behavior to the condition of being floored.. Called when the condition starts.
 /mob/living/proc/on_floored_start()
 	on_fall()
 	if(body_position == STANDING_UP) //force them on the ground
 		set_body_position(LYING_DOWN)
 		set_lying_angle(pick(LYING_ANGLE_EAST, LYING_ANGLE_WEST))
 
-/// Proc to append behavior to the condition of being floored. Called when the condition ends.
+/// Proc to append behavior to the condition of being floored.. Called when the condition ends.
 /mob/living/proc/on_floored_end()
 	if(!resting)
 		get_up()
 
 
-/// Proc to append behavior to the condition of being handsblocked. Called when the condition starts.
+/// Proc to append behavior to the condition of being handsblocked.. Called when the condition starts.
 /mob/living/proc/on_handsblocked_start()
 	if(active_storage)
 		active_storage.hide_contents(src)
@@ -2632,7 +2632,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	add_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED), TRAIT_HANDS_BLOCKED)
 
 
-/// Proc to append behavior to the condition of being handsblocked. Called when the condition ends.
+/// Proc to append behavior to the condition of being handsblocked.. Called when the condition ends.
 /mob/living/proc/on_handsblocked_end()
 	remove_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED), TRAIT_HANDS_BLOCKED)
 
@@ -2806,7 +2806,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		lazarus_policy = get_policy(ROLE_LAZARUS_BAD) || "You have been revived by a malfunctioning lazarus injector! You are now enslaved by whoever revived you."
 	to_chat(src, span_boldnotice(lazarus_policy))
 
-/// Proc for giving a mob a new 'friend', generally used for AI control and targeting. Returns false if already friends or null if qdeleted.
+/// Proc for giving a mob a new 'friend', generally used for AI control and targeting.. Returns false if already friends or null if qdeleted.
 /mob/living/proc/befriend(mob/living/new_friend)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(new_friend, COMSIG_LIVING_MADE_NEW_FRIEND, src)
@@ -2821,7 +2821,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	SEND_SIGNAL(src, COMSIG_LIVING_BEFRIENDED, new_friend)
 	return TRUE
 
-/// Proc for removing a friend you added with the proc 'befriend'. Returns true if you removed a friend.
+/// Proc for removing a friend you added with the proc 'befriend'.. Returns true if you removed a friend.
 /mob/living/proc/unfriend(mob/living/old_friend)
 	SHOULD_CALL_PARENT(TRUE)
 	var/friend_ref = REF(old_friend)
@@ -2842,7 +2842,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 
 		if(cargo_account) //Just in case
-			cargo_account.adjust_money(-min(ransom_price, cargo_account.account_balance)) //Not so much, especially for competent cargo. Plus this can't be mass-triggered like it has been done with contractors
+			cargo_account.adjust_money(-min(ransom_price, cargo_account.account_balance)) // Not so much, especially for competent cargo.. Plus this can't be mass-triggered like it has been done with contractors
 		priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. As is policy we've taken a portion of the station's funds to offset the overall cost.", "Nanotrasen Asset Protection", has_important_message = TRUE)
 
 	///The price should be high enough that the contractor can't just buy 'em back with their cut alone.

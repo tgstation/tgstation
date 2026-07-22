@@ -29,11 +29,11 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 
 /atom/movable/shuttleRotate(rotation, params)
 	. = ..()
-	//rotate the physical bounds and offsets for multitile atoms too. Owerride base "rotate the pixel offsets" for multitile atoms.
+	// rotate the physical bounds and offsets for multitile atoms too.. Owerride base "rotate the pixel offsets" for multitile atoms.
 	//Owerride non zero bound_x, bound_y, pixel_x, pixel_y to zero.
 	//Dont take in account starting bound_x, bound_y, pixel_x, pixel_y.
 	//So it can unintentionally shift physical bounds of things that starts with non zero bound_x, bound_y.
-	if(((bound_height != ICON_SIZE_Y) || (bound_width != ICON_SIZE_X)) && (bound_x == 0) && (bound_y == 0)) //Dont shift things that have non zero bound_x and bound_y, or it move somewhere. Now it BSA and Gateway.
+	if(((bound_height != ICON_SIZE_Y) || (bound_width != ICON_SIZE_X)) && (bound_x == 0) && (bound_y == 0)) // Dont shift things that have non zero bound_x and bound_y, or it move somewhere.. Now it BSA and Gateway.
 		pixel_x = dir & (NORTH|EAST) ? -bound_width+ICON_SIZE_X : 0
 		pixel_y = dir & (NORTH|WEST) ? -bound_width+ICON_SIZE_X : 0 //?
 		bound_x = pixel_x
@@ -101,7 +101,7 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 		var/new_pos = supposed_node_connect.Find(node_dir)
 		nodes[new_pos] = nodes_copy[i]
 
-//prevents shuttles attempting to rotate this since it messes up sprites
+// prevents shuttles trying to rotate this since it messes up sprites
 /obj/machinery/gateway/shuttleRotate(rotation, params)
 	params = NONE
 	return ..()
@@ -111,7 +111,7 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 	if(cyclelinkeddir && (params & ROTATE_DIR))
 		cyclelinkeddir = angle2dir(rotation+dir2angle(cyclelinkeddir))
 		// If we update the linked airlock here, the partner airlock might
-		// not be present yet, so don't do that. Just assume we're still
+		// not be present yet, so don't do that.. Just assume we're still
 		// partnered with the same airlock as before.
 
 /obj/machinery/porta_turret/shuttleRotate(rotation, params)

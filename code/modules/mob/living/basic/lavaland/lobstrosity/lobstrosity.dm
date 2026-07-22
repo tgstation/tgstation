@@ -34,7 +34,7 @@
 	var/charge_command = /datum/pet_command/use_ability/lob_charge
 	/// At which speed do we amputate limbs
 	var/snip_speed = 5 SECONDS
-	///Lobstrosities are natural anglers. This rapresent their proficiency at fishing when not mindless
+	/// Lobstrosities are natural anglers.. This rapresent their proficiency at fishing when not mindless
 	var/base_fishing_level = SKILL_LEVEL_APPRENTICE
 	/// Things we will eat if we see them (arms, chiefly)
 	var/static/list/target_foods = list(/obj/item/bodypart/arm, /obj/item/fish/lavaloop)
@@ -75,7 +75,7 @@
 /mob/living/basic/mining/lobstrosity/tamed(mob/living/tamer, obj/item/food)
 	. = ..()
 	new /obj/effect/temp_visual/heart(loc)
-	/// Pet commands for this mob, however you'll have to tame juvenile lobstrosities to a trained adult one.
+	/// Pet commands for this mob, but you'll have to tame juvenile lobstrosities to a trained adult one.
 	var/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
@@ -138,7 +138,7 @@
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/proc/apply_post_charge(mob/living/charger)
 	charger.apply_status_effect(/datum/status_effect/tired_post_charge)
 
-///A weaker, yet somewhat faster lobstrosity. Sources include aquarium chasm chrabs, chasms, plasma rivers and perhaps xenobio.
+/// A weaker, yet somewhat faster lobstrosity.. Sources include aquarium chasm chrabs, chasms, plasma rivers and perhaps xenobio.
 /mob/living/basic/mining/lobstrosity/juvenile
 	name = "juvenile arctic lobstrosity"
 	desc = "A youngling of the behemothic arctic lobstrosity. They usually stay put in the underground lakes they reside in until they're fully grown."

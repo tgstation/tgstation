@@ -126,7 +126,7 @@
 /datum/orderable_item/veggies/vanillapod
 	name = "Vanilla"
 	purchase_path = /obj/item/food/grown/vanillapod
-	cost_per_order = 25 //food items that are treated as mutations in game should be more expensive. groceries shouldnt include ACTUAL mutations but i think real foods are ok
+	cost_per_order = 25 // food items that are treated as mutations in game should be more expensive.. groceries shouldnt include ACTUAL mutations but i think real foods are ok
 
 /datum/orderable_item/veggies/sweetkorta
 	name = "Sweet Korta Nut"

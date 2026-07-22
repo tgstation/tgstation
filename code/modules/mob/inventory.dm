@@ -6,13 +6,13 @@
 	return get_item_for_held_index(active_hand_index)
 
 
-//Finds the opposite limb for the active one (eg: upper left arm will find the item in upper right arm)
+// Finds the opposite limb for the active one for example upper left arm will find the item in upper right arm)
 //So we're treating each "pair" of limbs as a team, so "both" refers to them
 /mob/proc/get_inactive_held_item()
 	return get_item_for_held_index(get_inactive_hand_index())
 
 
-//Finds the opposite index for the active one (eg: upper left arm will find the item in upper right arm)
+// Finds the opposite index for the active one for example upper left arm will find the item in upper right arm)
 //So we're treating each "pair" of limbs as a team, so "both" refers to them
 /mob/proc/get_inactive_hand_index()
 	var/other_hand = 0
@@ -31,7 +31,7 @@
 	return null
 
 
-//Odd = left. Even = right
+// Odd = left.. Even = right
 /mob/proc/held_index_to_dir(i)
 	if(IS_RIGHT_INDEX(i))
 		return "r"
@@ -47,7 +47,7 @@
 	return has_hand_for_held_index(active_hand_index)
 
 
-//Finds the first available (null) index OR all available (null) indexes in held_items based on a side.
+// Finds the first available (null) index OR all available (null) indexes in held_items good on a side.
 //Lefts: 1, 3, 5, 7...
 //Rights:2, 4, 6, 8...
 /mob/proc/get_empty_held_index_for_side(side = LEFT_HANDS, all = FALSE)
@@ -139,7 +139,7 @@
 
 
 //To appropriately fluff things like "they are holding [I] in their [get_held_index_name(get_held_index_of_item(I))]"
-//Can be overridden to pass off the fluff to something else (eg: science allowing people to add extra robotic limbs, and having this proc react to that
+// Can be overridden to pass off the fluff to something else f. Example science allowing people to add extra robotic limbs. Having this proc react to that
 // with say "they are holding [I] in their Nanotrasen Brand Utility Arm - Right Edition" or w/e
 /mob/proc/get_held_index_name(i)
 	var/list/hand = list()
@@ -191,17 +191,17 @@
 	update_held_items()
 	I.pixel_x = I.base_pixel_x
 	I.pixel_y = I.base_pixel_y
-	if(QDELETED(I)) // this is here because some ABSTRACT items like slappers and circle hands could be moved from hand to hand then delete, which meant you'd have a null in your hand until you cleared it (say, by dropping it)
+	if(QDELETED(I)) // this is here because some ABSTRACT items like slappers. Circle hands could be moved from h. To h. Then delete, which meant you'd have a null in your h. Until you cleared it (say, by dropping it)
 		held_items[hand_index] = null
 		return FALSE
 	SEND_SIGNAL(I, COMSIG_ITEM_ENTERED_HANDS, src, hand_index)
 	return hand_index
 
-//Puts the item into the first available left hand if possible and calls all necessary triggers/updates. returns 1 on success.
+// Puts the item into the first available left hand if possible and calls all necessary triggers/updates.. returns 1 on success.
 /mob/proc/put_in_l_hand(obj/item/I, visuals_only = FALSE)
 	return put_in_hand(I, get_empty_held_index_for_side(LEFT_HANDS), visuals_only = visuals_only)
 
-//Puts the item into the first available right hand if possible and calls all necessary triggers/updates. returns 1 on success.
+// Puts the item into the first available right hand if possible and calls all necessary triggers/updates.. returns 1 on success.
 /mob/proc/put_in_r_hand(obj/item/I, visuals_only = FALSE)
 	return put_in_hand(I, get_empty_held_index_for_side(RIGHT_HANDS), visuals_only = visuals_only)
 
@@ -214,7 +214,7 @@
 		return TRUE
 	return FALSE
 
-//Puts the item into our active hand if possible. returns TRUE on success.
+// Puts the item into our active hand if possible.. returns TRUE on success.
 /mob/proc/put_in_active_hand(obj/item/I, forced = FALSE, ignore_animation = TRUE, visuals_only = FALSE)
 	return put_in_hand(I, active_hand_index, forced, ignore_animation, visuals_only)
 
@@ -224,7 +224,7 @@
 	return put_in_hand(I, get_inactive_hand_index(), forced, visuals_only = visuals_only)
 
 
-//Puts the item our active hand if possible. Failing that it tries other hands. Returns TRUE on success.
+// Puts the item our active hand if possible.. Failing that it tries other hands.. Returns TRUE on success.
 //If both fail it drops it on the floor (or nearby tables if germ sensitive) and returns FALSE.
 //This is probably the main one you need to know :)
 /mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, forced = FALSE, ignore_animation = TRUE, visuals_only = FALSE)
@@ -394,7 +394,7 @@
 	if(animated)
 		I.do_pickup_animation(newloc, src)
 
-//visibly unequips I but it is NOT MOVED AND REMAINS IN SRC, newloc is for signal handling checks only which hints where you want to move the object after removal
+// visibly unequips I. It is NOT MOVED AND REMAINS IN SRC, newloc is f. Signal handling checks only which hints where you want to move the object after removal
 //item MUST BE FORCEMOVE'D OR QDEL'D
 
 /mob/proc/temporarilyRemoveItemFromInventory(obj/item/item_dropping, force = FALSE, idrop = TRUE, atom/newloc = src)
@@ -416,7 +416,7 @@
  */
 /mob/proc/doUnEquip(obj/item/item_dropping, force, atom/newloc, no_move, invdrop = TRUE, silent = FALSE)
 	PROTECTED_PROC(TRUE)
-	if(!item_dropping) //If there's nothing to drop, the drop is automatically successful. If(unEquip) should generally be used to check for TRAIT_NODROP.
+	if(!item_dropping) // If there's nothing to drop, the drop is automatically successful.. If(unEquip) should generally be used to check for TRAIT_NODROP.
 		return TRUE
 
 	if(HAS_TRAIT(item_dropping, TRAIT_NODROP) && !force)
@@ -633,7 +633,7 @@
 	to_chat(user, span_warning("You are unable to equip that!"))
 	return FALSE
 
-/// Attempts to put an item into storage located in a given slot
+/// Tries to put an item into storage located in a given slot
 /// indirect_action - ignore "soft-locked" storages that can be easily opened
 /// del_on_fail - delete the item upon failure
 /mob/proc/equip_to_storage(obj/item/item, slot, indirect_action = FALSE, del_on_fail = FALSE, initial = FALSE)

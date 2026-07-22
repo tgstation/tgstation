@@ -13,7 +13,7 @@ Assistant
 	exp_granted_type = EXP_TYPE_CREW
 	outfit = /datum/outfit/job/assistant
 	plasmaman_outfit = /datum/outfit/plasmaman
-	paycheck = PAYCHECK_LOWER // Get a job. Job reassignment changes your paycheck now. Get over it.
+	paycheck = PAYCHECK_LOWER // Get a job.. Job reassignment changes your paycheck now.. Get over it.
 
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
@@ -97,7 +97,7 @@ Assistant
 /datum/outfit/job/assistant/consistent/post_equip(mob/living/carbon/human/H, visuals_only)
 	..()
 
-	// This outfit is used by the assets SS, which is ran before the atoms SS
+	// This outfit the uses assets SS, which is ran before the atoms SS
 	if (SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		H.w_uniform?.update_greyscale()
 		H.update_worn_undersuit()

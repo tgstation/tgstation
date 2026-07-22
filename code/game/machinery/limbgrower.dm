@@ -1,4 +1,4 @@
-/// The limbgrower. Makes organd and limbs with synthflesh and chems.
+/// The limbgrower.. Makes organd and limbs with synthflesh and chems.
 /// See [limbgrower_designs.dm] for everything we can make.
 /obj/machinery/limbgrower
 	name = "limb grower"
@@ -14,9 +14,9 @@
 	var/selected_category = SPECIES_HUMAN
 	/// If we're currently printing something.
 	var/busy = FALSE
-	/// How efficient our machine is. Better parts = less chemicals used and less power used. Range of 1 to 0.25.
+	/// How efficient our machine is.. Better parts = less chemicals used and less power used.. Range of 1 to 0.25.
 	var/production_coefficient = 1
-	/// How long it takes for us to print a limb. Affected by production_coefficient.
+	/// How long it takes for us to print a limb.. Affected by production_coefficient.
 	var/production_speed = 3 SECONDS
 	/// The design we're printing currently.
 	var/datum/design/being_built
@@ -217,7 +217,7 @@
 			being_built = SSresearch.techweb_design_by_id(design_id)
 			// All the reagents we're using to make our organ.
 			var/list/consumed_reagents_list = being_built.reagents_list.Copy()
-			/// The amount of power we're going to use, based on how much reagent we use.
+			/// The amount of power we're going to use, good on how much reagent we use.
 			var/power = 0
 
 			for(var/reagent_id in consumed_reagents_list)
@@ -284,7 +284,7 @@
 	limb.species_color = "#62A262"
 	limb.update_icon_dropped()
 
-///Returns a valid limb typepath based on the selected option
+/// Returns a valid limb typepath good on the selected option
 /obj/machinery/limbgrower/proc/create_buildpath()
 	var/part_type = being_built.id //their ids match bodypart typepaths
 	var/species = selected_category
@@ -336,7 +336,7 @@
 			return FALSE
 	return TRUE
 
-/obj/machinery/limbgrower/fullupgrade //Inherently cheaper organ production. This is to NEVER be inherently emagged, no valids.
+/obj/machinery/limbgrower/fullupgrade // Inherently cheaper organ production.. This is to NEVER be inherently emagged, no valids.
 	desc = "It grows new limbs using Synthflesh. This alien model seems more efficient."
 	circuit = /obj/item/circuitboard/machine/limbgrower/fullupgrade
 

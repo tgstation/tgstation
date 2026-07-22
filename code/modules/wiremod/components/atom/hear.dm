@@ -17,7 +17,7 @@
 	var/datum/port/output/language_port
 	/// The speaker name port, usually the name of the person who spoke.
 	var/datum/port/output/speaker_name
-	/// The speaker entity that is currently speaking. Not necessarily the person who is speaking.
+	/// The speaker entity that is currently speaking.. Not necessarily the person who is speaking.
 	var/datum/port/output/speaker_port
 	/// The trigger sent when this event occurs
 	var/datum/port/output/trigger_port

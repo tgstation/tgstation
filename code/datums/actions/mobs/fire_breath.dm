@@ -117,7 +117,7 @@
 		queued_spins++
 		addtimer(CALLBACK(src, PROC_REF(fire_spin), target, queued_spins), delay)
 
-/// Breathe fire in a circle, with a slight angle offset based on which of our several circles it is
+/// Breathe fire in a circle, with a slight angle offset good on which of our several circles it is
 /datum/action/cooldown/mob_cooldown/fire_breath/mass_fire/proc/fire_spin(target, spin_count)
 	if (QDELETED(owner) || owner.stat == DEAD)
 		return // Too dead to spin

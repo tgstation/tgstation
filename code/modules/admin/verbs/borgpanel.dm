@@ -39,7 +39,7 @@ ADMIN_VERB(borg_panel, R_ADMIN, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPTION, AD
 	var/static/list/not_shown_upgrades = list(/obj/item/borg/upgrade/hypospray)
 	for (var/upgradetype in subtypesof(/obj/item/borg/upgrade)-not_shown_upgrades) //hypospray is a dummy parent for hypospray upgrades
 		var/obj/item/borg/upgrade/upgrade = upgradetype
-		if (initial(upgrade.model_type) && !is_type_in_list(borg.model, initial(upgrade.model_type))) // Upgrade requires a different model //HEY ASSHOLE, INITIAL DOESNT WORK WITH LISTS
+		if (initial(upgrade.model_type) && !is_type_in_list(borg.model, initial(upgrade.model_type))) // Upgrade needs a different model //HEY ASSHOLE, INITIAL DOESNT WORK WITH LISTS
 			continue
 		var/installed = FALSE
 		if (locate(upgradetype) in borg)
@@ -150,7 +150,7 @@ ADMIN_VERB(borg_panel, R_ADMIN, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPTION, AD
 		if ("toggle_radio")
 			var/channel = params["channel"]
 			if (channel in borg.radio.channels) // We're removing a channel
-				if (!borg.radio.keyslot) // There's no encryption key. This shouldn't happen but we can cope
+				if (!borg.radio.keyslot) // There's no encryption key.. This shouldn't happen but we can cope
 					borg.radio.channels -= channel
 					if (channel == RADIO_CHANNEL_SYNDICATE)
 						borg.radio.special_channels &= ~RADIO_SPECIAL_SYNDIE

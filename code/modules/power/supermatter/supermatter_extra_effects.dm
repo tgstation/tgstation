@@ -5,7 +5,7 @@
 #define THRESHOLD_EQUATION_SLOPE (-1 / MAX_ACCEPTED_POWER_OUTPUT)
 
 // The higher this number, the faster low integrity will drop threshold
-// I would've named this "power", but y'know. :P
+// I would've named this "power", but y'know.. :P
 #define INTEGRITY_EXPONENTIAL_DEGREE 2
 
 // At INTEGRITY_MIN_NUDGABLE_AMOUNT, the power will be treated as, at most, INTEGRITY_MAX_POWER_NUDGE.
@@ -25,7 +25,7 @@
 	var/integrity = 1 - CLAMP01(damage / explosion_point)
 
 	// When integrity goes down, the threshold (from an observable point of view, rads) go up.
-	// However, the power factor must go up as well, otherwise turning off the emitters
+	// But the power factor must go up as well, otherwise turning off the emitters
 	// on a delaminating SM would stop radiation from escaping.
 	// To fix this, lower integrities raise the power factor to a minimum.
 	var/integrity_power_nudge = LERP(INTEGRITY_MAX_POWER_NUDGE, 0, CLAMP01((integrity - INTEGRITY_MIN_NUDGABLE_AMOUNT) / (1 - INTEGRITY_MIN_NUDGABLE_AMOUNT)))
@@ -74,7 +74,7 @@
 	last_accent_sound = world.time + max(SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
 
 /obj/machinery/power/supermatter_crystal/proc/psychological_examination()
-	// Defaults to a value less than 1. Over time the psy_coeff goes to 0 if
+	// Defaults to a value less than 1.. Over time the psy_coeff goes to 0 if
 	// no supermatter soothers are nearby.
 	var/psy_coeff_diff = -0.05
 	for(var/mob/living/carbon/human/seen_by_sm in view(src, SM_HALLUCINATION_RANGE(internal_energy)))

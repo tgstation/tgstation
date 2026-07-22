@@ -37,7 +37,7 @@
 	var/init_jingle = "sound/machines/terminal/terminal_processing.ogg"
 	// How many times you can activate the code-cracking puzzle
 	var/puzzles_left = 3
-	// How many attempts the user has to crack the code before the gizmo starts punishing them
+	// How many tries the user has to crack the code before the gizmo starts punishing them
 	var/attempts_left = 10
 
 	// Whether the puzzle is currently active
@@ -86,14 +86,14 @@
 	new loot(get_turf(holder))
 	playsound(holder,"sound/machines/machine_vend.ogg", 100)
 
-// Proc that punishes the user when they go over the attempt limit
+// Proc that punishes the user when they go over the try limit
 // Technically, user can try to crack the code as many times as they want, as long as they can endure the punishment
 /datum/gizmodes/code_crack/proc/punishment(atom/movable/holder)
 	// Punishment has to be defined by the subtype
 	return
 
 // Proc that produces feedback when the user inputs an incorrect code
-// By default, all of these gizmos tell the user how many attempts are left
+// By default, all of these gizmos tell the user how many tries are left
 /datum/gizmodes/code_crack/proc/feedback(atom/movable/holder)
 	SHOULD_CALL_PARENT(TRUE)
 	// This is kind of ass, but there's probably no way around it
@@ -122,7 +122,7 @@
 	if(puzzle_holder.puzzles_left <= 0)
 		playsound(holder, "sound/machines/uplink/uplinkerror.ogg", 100)
 		return
-	// If it can be tried again (or is launched for the first time), do what we gotta do
+	// If it can be tried again (or is launched for the first time), do what we got to do
 	if(!puzzle_holder.generate_code()) // Code generation may fail, if the restrictions are too severe
 		playsound(holder, "sound/items/ceramic_break.ogg", 100)
 		return
@@ -135,7 +135,7 @@
 // Gizpulse to cycle the currently selected position
 // Example (if code_input is 0000):
 // 0000 -> 0000
-// ^		^
+// ^ ^
 /datum/gizpulse/cycle_position/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
 	var/datum/gizmodes/code_crack/puzzle_holder = astype(master)
 	if(!puzzle_holder)
@@ -143,7 +143,7 @@
 	if(!puzzle_holder.active) // If the puzzle is inactive, produce a loud buzz and get out
 		playsound(holder,"sound/machines/scanner/scanbuzz.ogg", 100)
 		return
-	// Cycle position: 0 -> 1 -> 2 -> .. -> (code_length - 1) -> reset back to 0
+	// Cycle position: 0 -> 1 -> 2 -> ... -> (code_length - 1) -> reset back to 0
 	puzzle_holder.position = (puzzle_holder.position + 1) % puzzle_holder.code_length
 
 	// If we simply bumped the position by 1, produce a single piston-move sound
@@ -155,8 +155,8 @@
 
 // Gizpulse to cycle the currently selected digit
 // Example (if second digit is selected and code_input is 0000):
-//	0000 -> 0100
-//   ^		 ^
+// 0000 -> 0100
+// ^ ^
 /datum/gizpulse/cycle_digit/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
 	var/datum/gizmodes/code_crack/puzzle_holder = astype(master)
 	if(!puzzle_holder)

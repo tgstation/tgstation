@@ -50,7 +50,7 @@
 	var/holoform = FALSE
 	/// Installed software on the pAI
 	var/list/installed_software = list()
-	/// Toggles whether universal translator has been activated. Cannot be reversed
+	/// Toggles whether universal translator has been activated.. Cannot be reversed
 	var/languages_granted = FALSE
 	/// Reference of the bound master
 	var/datum/weakref/master_ref
@@ -97,7 +97,7 @@
 		"Internal GPS" = 35,
 		"Universal Translator" = 35,
 	)
-	/// List of all possible chasises. TRUE means the pAI can be picked up in this chasis.
+	/// List of all possible chasises.. TRUE means the pAI can be picked up in this chasis.
 	var/static/list/possible_chassis = list(
 		"bat" = FALSE,
 		"butterfly" = FALSE,
@@ -150,7 +150,7 @@
 	card = null
 	return ..()
 
-// Need to override parent here because the message we dispatch is turf-based, not based on the location of the object because that could be fuckin anywhere
+// Need to override parent here because the message we dispatch is turf-based, not good on the location of the object because that could be fuckin anywhere
 /mob/living/silicon/pai/send_applicable_messages()
 	var/turf/location = get_turf(src)
 	location.visible_message(span_danger(get_visible_suicide_message()), null, span_hear(get_blind_suicide_message())) // null in the second arg here because we're sending from the turf
@@ -460,7 +460,7 @@
 	qdel(src)
 	return TRUE
 
-/// Signal proc for [COMSIG_LIVING_CULT_SACRIFICED] to give a funny message when a pai is attempted to be sac'd
+/// Signal proc for [COMSIG_LIVING_CULT_SACRIFICED] to give a funny message when a pai is tried to be sac'd
 /mob/living/silicon/pai/proc/on_cult_sacrificed(datum/source, list/invokers)
 	SIGNAL_HANDLER
 
@@ -489,7 +489,7 @@
 /mob/living/silicon/pai/get_access()
 	return list()
 
-///Called when a pAI tries opening something that requires access.
+/// Called when a pAI tries opening something that needs access.
 /mob/living/silicon/pai/proc/on_tried_access(datum/source, obj/door_attempt, list/player_access)
 	SIGNAL_HANDLER
 	return ACCESS_DISALLOWED

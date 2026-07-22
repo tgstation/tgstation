@@ -114,7 +114,7 @@
 	. = ..()
 	if(visuals_only)
 		return
-	if(is_safe_turf(equipped.loc, dense_atoms = TRUE)) //skip this if it's safe. We allow dense atoms because we spawn out of the inactive core.
+	if(is_safe_turf(equipped.loc, dense_atoms = TRUE)) // skip this if it's safe.. We allow dense atoms because we spawn out of the inactive core.
 		return
 	if(isnull(equipped.dna.species.outfit_important_for_life)) //custom species stuff will handle this for us.
 		internals_slot = ITEM_SLOT_SUITSTORE

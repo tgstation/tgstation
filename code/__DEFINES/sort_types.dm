@@ -1,6 +1,6 @@
 
 #define SORT_TYPE_WASTE 0
-///All unwrapped items and untagged parcels get picked up by a junction with this sortType. Usually leads to the recycler.
+/// All unwrapped items and untagged parcels get picked up by a junction with this sortType... Usually leads to the recycler.
 #define SORT_TYPE_DISPOSALS 1 
 #define SORT_TYPE_CARGO_BAY 2
 #define SORT_TYPE_QM_OFFICE 3

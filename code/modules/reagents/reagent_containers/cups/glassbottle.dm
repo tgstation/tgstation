@@ -1,8 +1,8 @@
 #define BOTTLE_KNOCKDOWN_DEFAULT_DURATION (1.3 SECONDS)
 
-///////////////////////////////////////////////Alchohol bottles! -Agouri //////////////////////////
-//Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
-//Bottles now knockdown and break when smashed on people's heads. - Giacom
+/// ////////////////////////////////////////////Alchohol bottles!. -Agouri //////////////////////////
+// Functionally identical to regular drinks.. The only difference is that the default bottle size is 100.. - Darem
+// Bottles now knockdown and break when smashed on people's heads.. - Giacom
 
 /obj/item/reagent_containers/cup/glass/bottle
 	name = "glass bottle"
@@ -23,7 +23,7 @@
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 	age_restricted = TRUE // wrryy can't set an init value to see if drink_type contains ALCOHOL so here we go
-	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
+	/// Directly relates to the 'knockdown' duration.. Lowered by armor (i.e.. helmets)
 	var/bottle_knockdown_duration = BOTTLE_KNOCKDOWN_DEFAULT_DURATION
 	tool_behaviour = TOOL_ROLLINGPIN // Glass bottles can be used as rolling pins when empty
 	toolspeed = 1.3 //it's a little awkward to use, but it's a cylinder alright.
@@ -151,7 +151,7 @@
 
 	var/head_hitter = user.zone_selected == BODY_ZONE_HEAD && isliving(target)
 	if(!QDELETED(target))
-		// An attack that targets the head of a living mob will attempt to knock them down
+		// An attack that targets the head of a living mob will try to knock them down
 		if(head_hitter)
 			var/mob/living/living_target = target
 			var/knockdown_effectiveness = 0
@@ -486,8 +486,8 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/absinthe/proc/redact()
 	// There was a large fight in the coderbus about a player reference
-	// in absinthe. Ergo, this is why the name generation is now so
-	// complicated. Judge us kindly.
+	// in absinthe.. Ergo, this is why the name generation is now so
+	// complicated.. Judge us kindly.
 	var/shortname = pick_weight(
 		list("T&T" = 1, "A&A" = 1, "Generic" = 1))
 	var/fullname
@@ -655,7 +655,7 @@
 	drink_type = ALCOHOL
 	///Used for sabrage; increases the chance of success per 1 force of the attacking sharp item
 	var/sabrage_success_percentile = 5
-	///Whether this bottle was a victim of a successful sabrage attempt
+	/// Whether this bottle was a victim of a successful sabrage try
 	var/sabraged = FALSE
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/add_message_overlay()
@@ -700,7 +700,7 @@
 
 	//The bonus to success chance that the user gets for having a sabrage skillchip installed/otherwise having the trait through other means
 	var/skillchip_bonus = HAS_TRAIT(user, TRAIT_SABRAGE_PRO) ? 35 : 0
-	//calculate success chance. example: captain's sabre - 15 force = 75% chance
+	// calculate success chance.. example: captain's sabre - 15 force = 75% chance
 	var/sabrage_chance = (tool.force * sabrage_success_percentile) + command_bonus + skillchip_bonus
 
 	if(prob(sabrage_chance))
@@ -757,7 +757,7 @@
 	add_container_flags(OPENCONTAINER)
 	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
 	update_appearance()
-	make_froth(offset_x = 0, offset_y = sabraged ? 13 : 15, intensity = froth_severity) //the y offset for sabraged is lower because the bottle's lip is smashed
+	make_froth(offset_x = 0, offset_y = sabraged ? 13 : 15, intensity = froth_severity) // the why offset for sabraged is lower because the bottle's lip is smashed
 	///Type of cork to fire away
 	var/obj/projectile/bullet/cork_to_fire = sabraged ? /obj/projectile/bullet/champagne_cork/sabrage : /obj/projectile/bullet/champagne_cork
 	///Our resulting cork projectile
@@ -995,8 +995,8 @@
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 	return ..()
 
-// Checks to see if the pruno can ferment, i.e. is it inside a structure (e.g. toilet), or a machine (e.g. washer)?
-// TODO: make it so the washer spills reagents if a reagent container is in there, for now, you can wash pruno
+// Checks to see if the pruno can ferment, i.e.. is it inside a structure (e.g.. toilet), or a machine (e.g.. washer)?
+// To do make it so the washer spills reagents if a reagent container is in there, for now, you can wash pruno
 
 /obj/item/reagent_containers/cup/glass/bottle/pruno/proc/check_fermentation()
 	SIGNAL_HANDLER

@@ -129,7 +129,7 @@
 		return
 	launch_everything()
 
-/// Is target something we should even attempt to start launching?
+/// Is target something we should even try to start launching?
 /obj/machinery/power/manufacturing/sorter/proc/can_be_launched(atom/movable/target)
 	. = TRUE
 	if(!istype(target) || target == src || target.anchored) //target is not movable, us or anchored

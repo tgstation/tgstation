@@ -1,4 +1,4 @@
-/// Appended to the description of magazines that spawn with old-fashioned incendiary ammo, which generally leave fire trails and give firestacks in return for less base damage.
+/// Appended to the description of magazines that spawn with old-fashioned incendiary ammo, which generally leave fire trails.. Give firestacks in return f.. Less base damage.
 #define MAGAZINE_DESC_INC "<br>Carries rounds which ignite targets and leave flaming trails, but inflict less damage."
 /// Appended to the description of magazines that spawn with hollow-point ammo, which generally has higher base damage but is weak against armor.
 #define MAGAZINE_DESC_HOLLOWPOINT "<br>Carries hollow-point rounds which are effective against unarmored targets, but suffer greatly against armor."

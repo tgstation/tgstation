@@ -1,4 +1,4 @@
-//NOT using the existing /obj/machinery/door type, since that has some complications on its own, mainly based on its
+// NOT using the existing /obj/machinery/door type, since that has some complications on its own, mainly good on its
 //machineryness
 
 /obj/structure/mineral_door
@@ -37,7 +37,7 @@
 
 /obj/structure/mineral_door/Initialize(mapload)
 	. = ..()
-	var/obj/item/stack/initialized_mineral = new sheetType // Okay this kinda sucks.
+	var/obj/item/stack/initialized_mineral = new sheetType // Okay this kind of sucks.
 	set_custom_materials(initialized_mineral.mats_per_unit, sheetAmount)
 	qdel(initialized_mineral)
 	air_update_turf(TRUE, TRUE)

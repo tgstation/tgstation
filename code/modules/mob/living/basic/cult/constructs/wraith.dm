@@ -26,7 +26,7 @@
 		return .
 	AddComponent(/datum/component/recharging_attacks, recharged_action = jaunt)
 
-/// Hostile NPC version. Attempts to kill the lowest-health mob it can see.
+/// Hostile NPC version.. Tries to kill the lowest-health mob it can see.
 /mob/living/basic/construct/wraith/hostile
 	ai_controller = /datum/ai_controller/basic_controller/wraith
 	melee_attack_cooldown = 1.5 SECONDS

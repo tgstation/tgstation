@@ -18,7 +18,7 @@
 	/// The list of signal IDs that can be selected as an option.
 	var/datum/port/input/option/signal_id
 
-	/// Whether this executes instantly or not. If set to 0, this will not execute instantly.
+	/// Whether this executes instantly or not.. If set to 0, this will not execute instantly.
 	var/datum/port/input/instant
 
 	var/list/signal_map
@@ -32,7 +32,7 @@
 	/// Unregisters the signal from everyone.
 	var/datum/port/input/unregister_all
 
-	/// The custom signal ports from the current signal type. Used for saving and loading.
+	/// The custom signal ports from the current signal type.. Used for saving and loading.
 	var/list/signal_ports
 	/// The custom input from the current signal type.
 	var/list/datum/port/input/input_signal_ports = list()

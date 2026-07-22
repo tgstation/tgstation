@@ -1,19 +1,19 @@
 // ~wound damage/rolling defines
-/// the cornerstone of the wound threshold system, your base wound roll for any attack is rand(1, damage^this), after armor reduces said damage. See [/obj/item/bodypart/proc/check_wounding]
+/// the cornerstone of the wound threshold system, your base wound roll for any attack is rand(1, damage^this), after armor reduces said damage... See [/obj/item/bodypart/proc/check_wounding]
 #define WOUND_DAMAGE_EXPONENT 1.4
-/// any damage dealt over this is ignored for damage rolls unless the target has the frail quirk (25^1.4=91, for reference). Does not apply if the mob has TRAIT_BLOODY_MESS.
+/// any damage dealt over this is ignored for damage rolls unless the target has the frail quirk (25^1.4=91, for reference)... Does not apply if the mob has TRAIT_BLOODY_MESS.
 /// This is further affected by TRAIT_EASILY_WOUNDED increasing the max considered damage (before applying the exponent) by 50%, and TRAIT_HARDLY_WOUNDED reducing it by 50%.
 #define WOUND_MAX_CONSIDERED_DAMAGE 25
 /// an attack must do this much damage after armor in order to roll for being a wound (so pressure damage/being on fire doesn't proc it)
 #define WOUND_MINIMUM_DAMAGE 5
 /// an attack must do this much damage after armor in order to be eliigible to dismember a suitably mushed bodypart
 #define DISMEMBER_MINIMUM_DAMAGE 10
-/// If an attack rolls this high with their wound (including mods), we try to outright dismember the limb. Note 250 is high enough that with a perfect max roll of 90 (see max cons'd damage), you'd need +60 in mods to do this
+/// If an attack rolls this high with their wound (including mods), we try to outright dismember the limb... Note 250 is high enough that with a perfect max roll of 90 (see max cons'd damage), you'd need +60 in mods to do this
 #define WOUND_DISMEMBER_OUTRIGHT_THRESH 150
 /// set wound_bonus on an item or attack to this to disable checking wounding for the attack
 #define CANT_WOUND -100
 
-/// If there are multiple possible and valid wounds for the same type and severity, weight will be used to pick among them. See _wound_pregen_data.dm for more details
+/// If there are multiple possible and valid wounds for the same type and severity, weight will be used to pick among them... See _wound_pregen_data.dm for more details
 /// This is used in pick_weight, so use integers
 #define WOUND_DEFAULT_WEIGHT 50
 
@@ -40,13 +40,13 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 ))
 
 // ~wound categories: wounding_types
-/// any brute weapon/attack that doesn't have sharpness. rolls for blunt bone wounds
+/// any brute weapon/attack that doesn't have sharpness... rolls for blunt bone wounds
 #define WOUND_BLUNT "wound_blunt"
-/// any brute weapon/attack with sharpness = SHARP_EDGED. rolls for slash wounds
+/// any brute weapon/attack with sharpness = SHARP_EDGED... rolls for slash wounds
 #define WOUND_SLASH "wound_slash"
-/// any brute weapon/attack with sharpness = SHARP_POINTY. rolls for piercing wounds
+/// any brute weapon/attack with sharpness = SHARP_POINTY... rolls for piercing wounds
 #define WOUND_PIERCE "wound_pierce"
-/// any concentrated burn attack (lasers really). rolls for burning wounds
+/// any concentrated burn attack (lasers really)... rolls for burning wounds
 #define WOUND_BURN "wound_burn"
 
 /// Mainly a define used for wound_pregen_data, if a pregen data instance expects this, it will accept any and all wound types, even none at all
@@ -65,9 +65,9 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 /// While someone has determination in their system, their bleed rate is slightly reduced
 #define WOUND_DETERMINATION_BLEED_MOD 0.85
 
-/// Wounds using this competition mode will remove any wounds of a greater severity than itself in a random wound roll. In most cases, you dont want to use this.
+/// Wounds using this competition mode will remove any wounds of a greater severity than itself in a random wound roll... In most cases, you dont want to use this.
 #define WOUND_COMPETITION_OVERPOWER_GREATERS "wound_submit"
-/// Wounds using this competition mode will remove any wounds of a lower severity than itself in a random wound roll. Used for ensuring the worse case scenario of a given injury_roll.
+/// Wounds using this competition mode will remove any wounds of a lower severity than itself in a random wound roll... Used for ensuring the worse case scenario of a given injury_roll.
 #define WOUND_COMPETITION_OVERPOWER_LESSERS "wound_dominate"
 
 // ~biology defines
@@ -94,9 +94,9 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
 /// Has flesh and bone - See BIO_BONE and BIO_FLESH
 #define BIO_FLESH_BONE (BIO_BONE|BIO_FLESH)
-/// Standard humanoid - can bleed and suffer all flesh/bone wounds, such as: T1-3 slash/pierce/burn/blunt, except dislocations. Think human heads/chests
+/// Standard humanoid - can bleed and suffer all flesh/bone wounds, such as: T1-3 slash/pierce/burn/blunt, except dislocations... Think human heads/chests
 #define BIO_STANDARD_UNJOINTED (BIO_FLESH_BONE|BIO_BLOODED)
-/// Standard humanoid limbs - can bleed and suffer all flesh/bone wounds, such as: T1-3 slash/pierce/burn/blunt. Can also bleed, and be dislocated. Think human arms and legs
+/// Standard humanoid limbs - can bleed and suffer all flesh/bone wounds, such as: T1-3 slash/pierce/burn/blunt... Can also bleed, and be dislocated... Think human arms and legs
 #define BIO_STANDARD_JOINTED (BIO_STANDARD_UNJOINTED|BIO_JOINTED)
 /// Xenomorph limbs (xenos are immune to wounds anyhow)
 #define BIO_STANDARD_ALIEN (BIO_CHITIN|BIO_BONE|BIO_BLOODED|BIO_JOINTED)
@@ -128,20 +128,20 @@ GLOBAL_LIST_INIT(bio_state_anatomy, list(
 // A "wound series" is just a family of wounds that logically follow eachother
 // Multiple wounds in a single series cannot be on a limb - the highest severity will always be prioritized, and lower ones will be skipped
 
-/// T1-T3 Bleeding slash wounds. Requires flesh. Can cause bleeding, but doesn't require it. From: slash.dm
+/// T1-T3 Bleeding slash wounds... Needs flesh... Can cause bleeding, but doesn't need it... From: slash.dm
 #define WOUND_SERIES_FLESH_SLASH_BLEED "wound_series_flesh_slash_bled"
-/// T1-T3 Basic blunt wounds. T1 requires jointed, but 2-3 require bone. From: bone.dm
+/// T1-T3 Basic blunt wounds... T1 needs jointed, but 2-3 need bone... From: bone.dm
 #define WOUND_SERIES_BONE_BLUNT_BASIC "wound_series_bone_blunt_basic"
-/// T1-T3 Basic burn wounds. Requires flesh. From: burns.dm
+/// T1-T3 Basic burn wounds... Needs flesh... From: burns.dm
 #define WOUND_SERIES_FLESH_BURN_BASIC "wound_series_flesh_burn_basic"
-/// T1-T3 Bleeding puncture wounds. Requires flesh. Can cause bleeding, but doesn't require it. From: pierce.dm
+/// T1-T3 Bleeding puncture wounds... Needs flesh... Can cause bleeding, but doesn't need it... From: pierce.dm
 #define WOUND_SERIES_FLESH_PUNCTURE_BLEED "wound_series_flesh_puncture_bleed"
-/// Generic loss wounds. See loss.dm
+/// Generic loss wounds... See loss.dm
 #define WOUND_SERIES_LOSS_BASIC "wound_series_loss_basic"
 /// Cranial fissure wound.
 #define WOUND_SERIES_CRANIAL_FISSURE "wound_series_cranial_fissure"
 
-/// A assoc list of (wound typepath -> wound_pregen_data instance). Every wound should have a pregen data.
+/// A assoc list of (wound typepath -> wound_pregen_data instance)... Every wound should have a pregen data.
 GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate_wound_static_data())
 
 /// Constructs [GLOB.all_wound_pregen_data] by iterating through a typecache of pregen data, ignoring abstract types, and instantiating the rest.
@@ -168,7 +168,7 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 // A wound series "collection" is merely a way for us to track what is in what series, and what their types are.
 // Without this, we have no centralized way to determine what type is in what series outside of iterating over every pregen data.
 
-/// A branching assoc list of (series -> list(severity -> list(typepath -> weight))). Allows you to say "I want a generic slash wound",
+/// A branching assoc list of (series -> list(severity -> list(typepath -> weight)))... Allows you to say "I want a generic slash wound",
 /// then "Of severity 2", and get a wound of that description - via get_corresponding_wound_type()
 /// Series: A generic wound_series, such as WOUND_SERIES_BONE_BLUNT_BASIC
 /// Severity: Any wounds held within this will be of this severity.
@@ -176,7 +176,7 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 GLOBAL_LIST_INIT(wound_series_collections, generate_wound_series_collection())
 
 // Series -> severity -> type -> weight
-/// Generates [wound_series_collections] by iterating through all pregen_data. Refer to the mentioned list for documentation
+/// Generates [wound_series_collections] by iterating through all pregen_data... Refer to the mentioned list for documentation
 /proc/generate_wound_series_collection()
 	RETURN_TYPE(/list/datum/wound)
 
@@ -299,11 +299,11 @@ GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
 #define WOUND_INFECTION_MODERATE 4
 /// then below here, you ooze some pus and suffer minor tox damage, but nothing serious
 #define WOUND_INFECTION_SEVERE 8
-/// then below here, your limb occasionally locks up from damage and infection and briefly becomes disabled. Things are getting really bad
+/// then below here, your limb occasionally locks up from damage and infection and briefly becomes disabled... Things are getting really bad
 #define WOUND_INFECTION_CRITICAL 12
-/// below here, your skin is almost entirely falling off and your limb locks up more frequently. You are within a stone's throw of septic paralysis and losing the limb
+/// below here, your skin is almost entirely falling off and your limb locks up more frequently... You are within a stone's throw of septic paralysis and losing the limb
 #define WOUND_INFECTION_SEPTIC 20
-// above WOUND_INFECTION_SEPTIC, your limb is completely putrid and you start rolling to lose the entire limb by way of paralyzation. After 3 failed rolls (~4-5% each probably), the limb is paralyzed
+// above WOUND_INFECTION_SEPTIC, your limb is completely putrid and you start rolling to lose the entire limb by way of paralyzation... After 3 failed rolls (~4-5% each probably), the limb is paralyzed
 
 
 // ~random wound balance defines
@@ -319,9 +319,9 @@ GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
 
 
 // ~mangling defines
-// With the wounds pt. 2 update, general dismemberment now requires 2 things for a limb to be dismemberable (exterior/bone only creatures just need the second):
-// 1. Exterior is mangled: A critical slash or pierce wound on that limb
-// 2. Interior is mangled: At least a severe bone wound on that limb
+// With the wounds pt... 2 update, general dismemberment now needs 2 things for a limb to be dismemberable (exterior/bone only creatures just need the second):
+// 1... Exterior is mangled: A critical slash or pierce wound on that limb
+// 2... Interior is mangled: At least a severe bone wound on that limb
 // Lack of exterior or interior count as mangled exterior/interior respectively
 // see [/obj/item/bodypart/proc/get_mangled_state] for more information, as well as GLOB.bio_state_anatomy
 #define BODYPART_MANGLED_NONE NONE
@@ -360,7 +360,7 @@ GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
 ///how many fields we save for each scar (so the number of above fields)
 #define SCAR_SAVE_LENGTH 8
 
-/// saved scars with a version lower than this will be discarded, increment when you update the persistent scarring format in a way that invalidates previous saved scars (new fields, reordering, etc)
+/// saved scars with a version lower than this will be discarded, increment when you update the persistent scarring format in a way that invalidates previous saved scars (new fields, reordering.. So on
 #define SCAR_CURRENT_VERSION 4
 /// how many scar slots, per character slot, we have to cycle through for persistent scarring, if enabled in character prefs
 #define PERSISTENT_SCAR_SLOTS 3
@@ -373,8 +373,8 @@ GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
 /// Our wound is bleeding and actively getting worse, like if we're a critical slash or if we're afflicted with heparin
 #define BLOOD_FLOW_INCREASING 1
 
-/// How often can we annoy the player about their bleeding? This duration is extended if it's not serious bleeding
+/// How often can we annoy the player about their bleeding?.. This duration is extended if it's not serious bleeding
 #define BLEEDING_MESSAGE_BASE_CD (10 SECONDS)
 
-/// Skeletons and other BIO_ONLY_BONE creatures respond much better to bone gel and can have severe and critical bone wounds healed by bone gel alone. The duration it takes to heal is also multiplied by this, lucky them!
+/// Skeletons and other BIO_ONLY_BONE creatures respond much better to bone gel and can have severe and critical bone wounds healed by bone gel alone... The duration it takes to heal is also multiplied by this, lucky them!
 #define WOUND_BONE_BIO_BONE_GEL_MULT 0.25

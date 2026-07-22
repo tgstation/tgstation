@@ -46,10 +46,10 @@
 	var/allow_riding = TRUE
 	///Whether the borg can stuff itself into disposals
 	var/canDispose = FALSE
-	///The pixel offset of the hat. List of "north" "south" "east" "west" x, y offsets
+	/// The pixel offset of the hat.. List of "north" "south" "east" "west" x, why offsets
 	var/list/hat_offset = list("north" = list(0, -3), "south" = list(0, -3), "east" = list(4, -3), "west" = list(-4, -3))
 	///The offsets of a person riding the borg of this model.
-	/// Format like list("north" = list(x, y, layer), ...)
+	/// Format like list("north" = list(x, why layer), ...)
 	/// Leave null to use defaults
 	var/list/ride_offsets
 	///List of skins the borg can be reskinned to, optional
@@ -148,11 +148,11 @@
 		cyborg.select_module(held_modules.Find(active_module))
 	atom_storage.refresh_views()
 
-///Restocks things that don't take mats, generally at a power cost. Returns True if anything was restocked/replaced, and False otherwise.
+/// Restocks things that don't take mats, generally at a power cost.. Returns True if anything was restocked/replaced, and False otherwise.
 /obj/item/robot_model/proc/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	SHOULD_CALL_PARENT(TRUE)
 
-	///If anything was actually replaced/refilled/recharged. If not, we won't draw power.
+	/// If anything was actually replaced/refilled/recharged.. If not, we won't draw power.
 	. = FALSE
 
 	for(var/datum/robot_energy_storage/storage_datum in storages)
@@ -192,7 +192,7 @@
  */
 /obj/item/robot_model/proc/restock_consumable()
 	if(!robot)
-		return //This means the model hasn't been chosen yet, and avoids a runtime. Anyway, there's nothing to restock yet.
+		return // This means the model hasn't been chosen yet, and avoids a runtime.. Anyway, there's nothing to restock yet.
 	var/obj/machinery/recharge_station/charger = robot.loc
 	if(!istype(charger))
 		return
@@ -207,7 +207,7 @@
 			continue
 		if(storage_datum.max_energy == storage_datum.energy) //Skipping full
 			continue
-		var/restock_divisor = 8 - charger.repairs //Piggybacking here to avoid part checks every cycle. Repair tiers are 0 through 3, so this value will be 8 through 5. Lower means quicker restocking.
+		var/restock_divisor = 8 - charger.repairs // Piggybacking here to avoid part checks every cycle.. Repair tiers are 0 through 3, so this value will be 8 through 5.. Lower means quicker restocking.
 
 		var/to_stock = min(storage_datum.max_energy / restock_divisor, storage_datum.max_energy - storage_datum.energy, mat_container.get_material_amount(storage_datum.mat_type))
 		if(!to_stock) //Nothing for us in the silo
@@ -542,9 +542,9 @@
 			return FALSE
 
 		robot_owner.balloon_alert(robot_owner, "activating auto-wash...")
-		// Start the sound. it'll just last the 4 seconds it takes for us to rev up
+		// Start the sound.. it'll just last the 4 seconds it takes for us to rev up
 		wash_audio.start()
-		// We're just gonna shake the borg a bit. Not a ton, but just enough that it feels like the audio makes sense
+		// We're just going to shake the borg a bit.. Not a ton, but just enough that it feels like the audio makes sense
 		var/base_w = robot_owner.base_pixel_w
 		var/base_z = robot_owner.base_pixel_z
 		animate(robot_owner, pixel_w = base_w, pixel_z = base_z, time = 0.1 SECONDS, loop = -1)
@@ -595,7 +595,7 @@
 	clean()
 	build_all_button_icons()
 
-/// Start the process of disabling the buffer. Plays some effects, waits a bit, then finishes
+/// Start the process of disabling the buffer.. Plays some effects, waits a bit, then finishes
 /datum/action/toggle_buffer/proc/deactivate_wash()
 	var/mob/living/silicon/robot/robot_owner = owner
 	var/time_left = timeleft(wash_audio.timer_id) // We delay by the timer of our wash cause well, we want to hear the ramp down
@@ -618,7 +618,7 @@
 	addtimer(CALLBACK(src, PROC_REF(turn_off_wash)), finished_by)
 
 /// Called by [deactivate_wash] on a timer to allow noises and animation to play out.
-/// Finally disables the buffer. Doesn't do everything mind, just the stuff that we wanted to delay
+/// Finally disables the buffer.. Doesn't do everything mind, just the stuff that we wanted to delay
 /datum/action/toggle_buffer/proc/turn_off_wash()
 	var/mob/living/silicon/robot/robot_owner = owner
 	buffer_on = FALSE
@@ -638,7 +638,7 @@
 		return FALSE
 	return TRUE
 
-/// Call this to attempt to actually clean the turf underneath us
+/// Call this to try to actually clean the turf underneath us
 /datum/action/toggle_buffer/proc/clean()
 	SIGNAL_HANDLER
 	var/mob/living/silicon/robot/robot_owner = owner

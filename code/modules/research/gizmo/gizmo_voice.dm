@@ -1,4 +1,4 @@
-/// The words (or tones really) the gizmo voice interface can listen for. Limit to 2 characters (or it breaks because im cringe)
+/// The words (or tones really) the gizmo voice interface can listen for.. Limit to 2 characters (or it breaks because im uncomfortable
 GLOBAL_LIST_INIT(gizmo_words, world.file2list("strings/gizmo_words.txt"))
 
 /// Listen to the tones and send the sequence to the puzzle datum

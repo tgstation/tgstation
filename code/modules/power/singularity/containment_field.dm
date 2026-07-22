@@ -115,7 +115,7 @@
 // Used for overriding certain procs
 
 /obj/machinery/field
-	///Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
+	/// Used to add a delay between shocks.. In some cases this used to crash servers by spawning hundreds of sparks every second.
 	var/has_shocked = FALSE
 
 /obj/machinery/field/Bumped(atom/movable/mover)

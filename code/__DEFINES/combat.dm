@@ -7,20 +7,20 @@
 #define BRUTE "brute"
 /// Scorching and charring of the material.
 #define BURN "burn"
-/// Poisoning. Mostly caused by reagents.
+/// Poisoning... Mostly caused by reagents.
 #define TOX "toxin"
 /// Suffocation.
 #define OXY "oxygen"
 /// Exhaustion and nonlethal damage.
 #define STAMINA "stamina"
-/// Brain damage. Should probably be decommissioned and replaced with proper organ damage.
+/// Brain damage... Should probably be decommissioned and replaced with proper organ damage.
 #define BRAIN "brain"
 
 //Damage flag defines //
 
 /// Involves corrosive substances.
 #define ACID "acid"
-/// Involved in checking whether a disease can infect or spread. Also involved in xeno neurotoxin.
+/// Involved in checking whether a disease can infect or spread... Also involved in xeno neurotoxin.
 #define BIO "bio"
 /// Involves a shockwave, usually from an explosion.
 #define BOMB "bomb"
@@ -71,8 +71,8 @@
 /// If set, this mob can be knocked down
 #define CANKNOCKDOWN (1<<1)
 /// If set, this mob can be knocked unconscious via status effect.
-/// NOTE, does not mean immune to sleep. Unconscious and sleep are two different things.
-/// NOTE, does not relate to the unconscious stat either. Only the status effect.
+/// NOTE, does not mean immune to sleep... Unconscious and sleep are two different things.
+/// NOTE, does not relate to the unconscious stat either... Only the status effect.
 #define CANUNCONSCIOUS (1<<2)
 /// If set, this mob can be grabbed or pushed when bumped into
 #define CANPUSH (1<<3)
@@ -127,7 +127,7 @@ DEFINE_BITFIELD(status_flags, list(
 //Grab breakout odds
 #define BASE_GRAB_RESIST_CHANCE 60 //base chance for whether or not you can escape from a grab
 
-//slowdown when in softcrit. Note that crawling slowdown will also apply at the same time!
+// slowdown when in softcrit... Note that crawling slowdown will also apply at the same time!
 #define SOFTCRIT_ADD_SLOWDOWN 2
 //slowdown when crawling
 #define CRAWLING_ADD_SLOWDOWN 4
@@ -144,7 +144,7 @@ DEFINE_BITFIELD(status_flags, list(
 #define THROWN_PROJECTILE_ATTACK 4
 /// We're being tackled or leaped at.
 #define LEAP_ATTACK 5
-/// We're being attacked with an oversized object, perhaps a road roller. Not that anyone use such a thing as a waepon. So only relevant for certain mech based attacks.
+/// We're being attacked with an oversized object, perhaps a road roller... Not that anyone use such a thing as a waepon... So only relevant for certain mech good attacks.
 #define OVERWHELMING_ATTACK 6
 
 /// Used in check block to get what mob is attacking the blocker.
@@ -201,7 +201,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EMBED_CHANCE_SPEED_BONUS 10
 
 //Gun weapon weight
-/// Default normal ol' gun. Akimboable, one handed.
+/// Default normal ol' gun... Akimboable, one handed.
 #define WEAPON_LIGHT 1
 /// Can't be used akimbo, but only needs one hand to fire
 #define WEAPON_MEDIUM 2
@@ -212,17 +212,17 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
 //Gun bolt types
-///Gun has a bolt, it stays closed while not cycling. The gun must be racked to have a bullet chambered when a mag is inserted.
-///  Example: c20, shotguns, m90
+/// Gun has a bolt, it stays closed while not cycling... The gun must be racked to have a bullet chambered when a mag is inserted.
+/// Example: c20, shotguns, m90
 #define BOLT_TYPE_STANDARD 1
-///Gun has a bolt, it is open when ready to fire. The gun can never have a chambered bullet with no magazine, but the bolt stays ready when a mag is removed.
-///  Example: Tomson, Uzi, the L6 SAW
+/// Gun has a bolt, it is open when ready to fire... The gun can never have a chambered bullet with no magazine, but the bolt stays ready when a mag is removed.
+/// Example: Tomson, Uzi, the L6 SAW
 #define BOLT_TYPE_OPEN 2
-///Gun has no moving bolt mechanism, it cannot be racked. Also dumps the entire contents when emptied instead of a magazine.
-///  Example: Break action shotguns, revolvers
+/// Gun has no moving bolt mechanism, it cannot be racked... Also dumps the entire contents when emptied instead of a magazine.
+/// Example: Break action shotguns, revolvers
 #define BOLT_TYPE_NO_BOLT 3
-///Gun has a bolt, it locks back when empty. It can be released to chamber a round if a magazine is in.
-///  Example: Pistols with a slide lock, some SMGs
+/// Gun has a bolt, it locks back when empty... It can be released to chamber a round if a magazine is in.
+/// Example: Pistols with a slide lock, some SMGs
 #define BOLT_TYPE_LOCKING 4
 //Sawn off nerfs
 ///accuracy penalty of sawn off guns
@@ -239,18 +239,18 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define AMMO_BOX_FULL_EMPTY 2
 
 // Ammo box multiload defines
-/// Ammo box does not accept multiload in or out, e.g. ammo box CANNOT transfer multiple casings in one action, either IN or OUT.
+/// Ammo box does not accept multiload in or out, e.g... ammo box CANNOT transfer multiple casings in one action, either IN or OUT.
 #define AMMO_BOX_MULTILOAD_NONE	0
-/// Ammo box accepts multiload going in, e.g. a magazine being fed from a stripper clip.
+/// Ammo box accepts multiload going in, e.g... a magazine being fed from a stripper clip.
 #define AMMO_BOX_MULTILOAD_IN	(1 << 0)
-/// Ammo box can multiload going out to other ammo boxes, but not loaded magazines, e.g. an ammo box feeding into an unloaded magazine.
+/// Ammo box can multiload going out to other ammo boxes, but not loaded magazines, e.g... an ammo box feeding into an unloaded magazine.
 #define AMMO_BOX_MULTILOAD_OUT	(1 << 1)
-/// Ammo box can multiload going out into loaded magazines, e.g. a speedloader feeding into a revolver's cylinder or a stripper clip feeding into a loaded magazine.
+/// Ammo box can multiload going out into loaded magazines, e.g... a speedloader feeding into a revolver's cylinder or a stripper clip feeding into a loaded magazine.
 #define AMMO_BOX_MULTILOAD_OUT_LOADED	(1 << 2)
-/// Ammo box accepts multiload in AND out, e.g. ammo box can transfer multiple casings IN at once *and* OUT at once.
+/// Ammo box accepts multiload in AND out, e.g... ammo box can transfer multiple casings IN at once *and* OUT at once.
 /// Ammo boxes are assumed to have some variety of magazine loading assistance.
 #define AMMO_BOX_MULTILOAD_BOTH	(AMMO_BOX_MULTILOAD_IN | AMMO_BOX_MULTILOAD_OUT)
-/// Ammo box can accept multiloads, AND can give multiloads to boxes that are loaded or not loaded. Individual stripper clips would count for this.
+/// Ammo box can accept multiloads, AND can give multiloads to boxes that are loaded or not loaded... Individual stripper clips would count for this.
 #define AMMO_BOX_MULTILOAD_ALL	(AMMO_BOX_MULTILOAD_IN | AMMO_BOX_MULTILOAD_OUT | AMMO_BOX_MULTILOAD_OUT_LOADED)
 
 DEFINE_BITFIELD(ammo_box_multiload, list(
@@ -264,11 +264,11 @@ DEFINE_BITFIELD(ammo_box_multiload, list(
 #define SUPPRESSED_VERY 2 /// no message
 
 //His Grace.
-#define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.
+#define HIS_GRACE_SATIATED 0 // He hungers not... If bloodthirst is set to this, His Grace is asleep.
 #define HIS_GRACE_PECKISH 20 //Slightly hungry.
-#define HIS_GRACE_HUNGRY 60 //Getting closer. Increases damage up to a minimum of 20.
-#define HIS_GRACE_FAMISHED 100 //Dangerous. Increases damage up to a minimum of 25 and cannot be dropped.
-#define HIS_GRACE_STARVING 120 //Incredibly close to breaking loose. Increases damage up to a minimum of 30.
+#define HIS_GRACE_HUNGRY 60 // Getting closer... Increases damage up to a minimum of 20.
+#define HIS_GRACE_FAMISHED 100 // Dangerous... Increases damage up to a minimum of 25 and cannot be dropped.
+#define HIS_GRACE_STARVING 120 // Incredibly close to breaking loose... Increases damage up to a minimum of 30.
 #define HIS_GRACE_CONSUME_OWNER 140 //His Grace consumes His owner at this point and becomes aggressive.
 #define HIS_GRACE_FALL_ASLEEP 160 //If it reaches this point, He falls asleep and resets.
 
@@ -315,11 +315,11 @@ GLOBAL_LIST_INIT(all_precise_body_zones, list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_
 
 #define NICE_SHOT_RICOCHET_BONUS 10 //if the shooter has the NICE_SHOT trait and they fire a ricocheting projectile, add this to the ricochet chance and auto aim angle
 
-/// If a carbon is thrown at a speed faster than normal and impacts something solid, they take extra damage for every extra speed up to this number (see [/mob/living/carbon/proc/throw_impact])
+/// If a carbon is thrown at a speed faster than normal.. Impacts something solid, they take extra damage f.. Every extra speed up to this number (see [/mob/living/carbon/proc/throw_impact])
 #define CARBON_MAX_IMPACT_SPEED_BONUS 5
 
-/// Alternate attack defines. Return these at the end of procs like afterattack_secondary.
-/// Calls the normal attack proc. For example, if returned in afterattack_secondary, will call afterattack.
+/// Alternate attack defines... Return these at the end of procs like afterattack_secondary.
+/// Calls the normal attack proc... For example, if returned in afterattack_secondary, will call afterattack.
 /// Will continue the chain depending on the return value of the non-alternate proc, like with normal attacks.
 #define SECONDARY_ATTACK_CALL_NORMAL 1
 
@@ -330,9 +330,9 @@ GLOBAL_LIST_INIT(all_precise_body_zones, list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_
 #define SECONDARY_ATTACK_CONTINUE_CHAIN 3
 
 //Autofire component
-/// Compatible firemode is in the gun. Wait until it's held in the user hands.
+/// Compatible firemode is in the gun... Wait until it's held in the user hands.
 #define AUTOFIRE_STAT_IDLE (1<<0)
-/// Gun is active and in the user hands. Wait until user does a valid click.
+/// Gun is active and in the user hands... Wait until user does a valid click.
 #define AUTOFIRE_STAT_ALERT	(1<<1)
 /// Gun is shooting.
 #define AUTOFIRE_STAT_FIRING (1<<2)
@@ -360,7 +360,7 @@ GLOBAL_LIST_INIT(all_precise_body_zones, list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_
 #define ARMOR_WEAKENED_MULTIPLIER 2
 /// Armor can't block more than this as a percentage
 #define ARMOR_MAX_BLOCK 90
-/// Calculates the new armour value after armour penetration. Can return negative values, and those must be caught.
+/// Calculates the new armour value after armour penetration... Can return negative values, and those must be caught.
 #define PENETRATE_ARMOUR(armour, penetration) (penetration >= 100 ? 0 : 100 * (armour - penetration) / (100 - penetration))
 
 // Defines for combo attack component
@@ -402,11 +402,11 @@ GLOBAL_LIST_INIT(all_precise_body_zones, list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_
 #define ELECTROCUTE_DAMAGE(energy) (energy >= 1 KILO JOULES ? clamp(20 + round(energy / JOULES_PER_DAMAGE), 20, 195) + rand(-5,5) : 0)
 
 // Attack chain attack_modifier modifiers
-/// Sets the weapon's base force to this. Use carefully (as multiple overrides may collide). Set via [SET_ATTACK_FORCE]
+/// Sets the weapon's base force to this... Use carefully (as multiple overrides may collide)... Set via [SET_ATTACK_FORCE]
 #define FORCE_OVERRIDE "force_override"
-/// Flat addition or subtration to the weapon's force. Set via [MODIFY_ATTACK_FORCE]
+/// Flat addition or subtration to the weapon's force... Set via [MODIFY_ATTACK_FORCE]
 #define FORCE_MODIFIER "force_modifier"
-/// Multiplication of the weapon's force. Applied AFTER [FORCE_MODIFIER]. Set via [MODIFY_ATTACK_FORCE_MULTIPLIER]
+/// Multiplication of the weapon's force... Applied AFTER [FORCE_MODIFIER]... Set via [MODIFY_ATTACK_FORCE_MULTIPLIER]
 #define FORCE_MULTIPLIER "force_multiplier"
 /// If set in modifiers, default messages ("You hit the thing with the thing") are silenced
 #define SILENCE_DEFAULT_MESSAGES "silence_default_messages"
@@ -439,8 +439,8 @@ GLOBAL_LIST_INIT(all_precise_body_zones, list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_
 	if(!islist(atk_mods)) { atk_mods = list() }; \
 	atk_mods[SILENCE_DEFAULT_MESSAGES] = TRUE;
 
-/// Calculates the final force of some item based on atk_mods
-/// Needs to have support for force overrides and multipliers of 0 (hence why we ternaries are used over 'or's)
+/// Calculates the final force of some item good on atk_mods
+/// Needs to have support for force overrides and multipliers of 0 so why we ternaries are used over 'or's)
 #define CALCULATE_FORCE(some_item, atk_mods) \
 	((((FORCE_OVERRIDE in atk_mods) ? atk_mods[FORCE_OVERRIDE] : some_item.force) + (atk_mods?[FORCE_MODIFIER] || 0)) * ((FORCE_MULTIPLIER in atk_mods) ? atk_mods[FORCE_MULTIPLIER] : 1))
 

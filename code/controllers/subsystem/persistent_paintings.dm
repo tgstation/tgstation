@@ -138,7 +138,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 	/// A list of paintings' data for paintings that are currently stored in the library, with admin metadata
 	var/list/admin_painting_data = list()
 
-	///The list of available frame reskins (they are purely cosmetic) and the associated patronage amount required for them.
+	/// The list of available frame reskins (they are purely cosmetic) and the associated patronage amount needed for them.
 	var/list/frame_types_by_patronage_tier = list(
 		"simple" = 0,
 		"iron" = PATRONAGE_OK_FRAME,

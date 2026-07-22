@@ -20,7 +20,7 @@
 	/// Whether or not this log should not be publically visible
 	var/secret = FALSE
 
-	/// The list of header information for this category. Used for log file re-initialization
+	/// The list of header information for this category.. Used for log file re-initialization
 	var/list/category_header
 
 	/// Whether the readable version of the log message is formatted internally instead of by rustg
@@ -35,7 +35,7 @@
 
 GENERAL_PROTECT_DATUM(/datum/log_category)
 
-/// Add an entry to this category. It is very important that any data you provide doesn't hold references to anything!
+/// Add an entry to this category.. It is very important that any data you provide doesn't hold references to anything!
 /datum/log_category/proc/create_entry(message, list/data, list/semver_store)
 	var/datum/log_entry/entry = new(
 		// world state contains raw timestamp
@@ -52,7 +52,7 @@ GENERAL_PROTECT_DATUM(/datum/log_category)
 	if(entry_count <= CONFIG_MAX_CACHED_LOG_ENTRIES)
 		entries += entry
 
-/// Allows for category specific file splitting. Needs to accept a null entry for the default file.
+/// Allows for category specific file splitting.. Needs to accept a null entry for the default file.
 /// If master_category it will always return the output of master_category.get_output_file(entry)
 /datum/log_category/proc/get_output_file(list/entry, extension = "log.json")
 	if(master_category)
@@ -63,7 +63,7 @@ GENERAL_PROTECT_DATUM(/datum/log_category)
 
 /// Writes an entry to the output file(s) for the category
 /datum/log_category/proc/write_entry(datum/log_entry/entry)
-	// config isn't loaded? assume we want human readable logs
+	// config isn't loaded?. assume we want human readable logs
 	if(isnull(config) || CONFIG_GET(flag/log_as_human_readable))
 		entry.write_readable_entry_to_file(get_output_file(entry, "log"), format_internally = internal_formatting)
 

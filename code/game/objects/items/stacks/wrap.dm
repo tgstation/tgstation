@@ -167,7 +167,7 @@
 		if(closet.opened)
 			balloon_alert(user, "can't wrap while open!")
 			return ITEM_INTERACT_BLOCKING
-		if(!closet.delivery_icon) //no delivery icon means unwrappable closet (e.g. body bags)
+		if(!closet.delivery_icon) // no delivery icon means unwrappable closet (e.g.. body bags)
 			balloon_alert(user, "can't wrap!")
 			return ITEM_INTERACT_BLOCKING
 		if(use(3))

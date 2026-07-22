@@ -1,4 +1,4 @@
-/// Exoprobe adventure finished: (result) result is ADVENTURE_RESULT_??? values
+/// Exoprobe adventure finished: (result) result is ADVENTURE_RESULT_???.. values
 #define COMSIG_ADVENTURE_FINISHED "adventure_done"
 
 /// Sent on initial adventure qualities generation from /datum/adventure/proc/initialize_qualities(): (list/quality_list)

@@ -95,7 +95,7 @@
 
 	target.grab_ghost()
 
-	// The grab failed, so they're mindless or playerless. We can't continue
+	// The grab failed, so they're mindless or playerless.. We can't continue
 	if(!target.mind || !target.client)
 		target.balloon_alert(source, "no soul!")
 		return COMPONENT_BLOCK_HAND_USE
@@ -154,7 +154,7 @@
 			to_chat(user, span_hierophant_warning("[body] is not in a valid state to be made into a ghoul."))
 			continue
 
-		// We'll select any valid bodies here. If they're clientless, we'll give them a new one.
+		// We'll select any valid bodies here.. If they're clientless, we'll give them a new one.
 		selected_atoms += body
 		return TRUE
 
@@ -163,7 +163,7 @@
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/mob/living/carbon/human/soon_to_be_ghoul = locate() in selected_atoms
-	if(QDELETED(soon_to_be_ghoul)) // No body? No ritual
+	if(QDELETED(soon_to_be_ghoul)) // No body?. No ritual
 		stack_trace("[type] reached on_finished_recipe without a human in selected_atoms to make a ghoul out of.")
 		loc.balloon_alert(user, "ritual failed, no valid body!")
 		return FALSE

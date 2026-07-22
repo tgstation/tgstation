@@ -32,7 +32,7 @@ GLOBAL_VAR(logout_timer_set)
 			output += varname
 	return output
 
-///A giant associative list of span names, and the associated key to create the text span. Used for narrate verbs.
+/// A giant associative list of span names, and the associated key to create the text span.. Used for narrate verbs.
 GLOBAL_LIST_INIT(spanname_to_formatting, list(
 	"Abductor" = "abductor",
 	"Admin" = "admin",

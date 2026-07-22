@@ -1,5 +1,5 @@
 
-// this costume has so many fugging parts 😭. fuck it, it's a file.
+// this costume has so many fugging parts 😭.. fuck it, it's a file.
 //in fact, we should strive to make the chaplain kits of this quality, moreso than the other way around.
 
 /// undersuit

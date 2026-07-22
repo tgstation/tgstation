@@ -114,7 +114,7 @@
 	associated_program = /datum/computer_file/program/nt_pay
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
-	///Circuit variables. This one is for the token we want to pay
+	/// Circuit variables.. This one is for the token we want to pay
 	var/datum/port/input/token_port
 	///The port for the money to send
 	var/datum/port/input/money_port

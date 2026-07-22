@@ -131,6 +131,6 @@
 				<tr><td>[b]</td><td>[e]</td><td>0</td></tr>
 				<tr><td>[c]</td><td>[f]</td><td>1</td></tr>
 			</tbody>
-			</table></td><td class='rbrak'>&nbsp;</td></tr></tbody></table></span>"} //TODO link to modify_transform wrapper for all matrices
+			</table></td><td class='rbrak'>&nbsp;</td></tr></tbody></table></span>"} // To do link to modify_transform wrapper for all matrices
 
 #undef VV_HTML_ENCODE

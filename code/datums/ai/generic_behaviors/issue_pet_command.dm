@@ -10,7 +10,7 @@
 	var/command_type
 	/// Blackboard key holding the target atom to point at.
 	var/target_key
-	/// If set, setup() requires at least one mob of this type within command_distance.
+	/// If set, setup() needs at least one mob of this type within command_distance.
 	var/commandable_mob_type
 	/// Range to search for commandable mobs.
 	var/command_distance = 5

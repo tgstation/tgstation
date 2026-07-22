@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(discord)
 	reverify_cache = list()
 	// Check for if we are using TGS, otherwise return and disables firing
 	if(world.TgsAvailable())
-		enabled = TRUE // Allows other procs to use this (Account linking, etc)
+		enabled = TRUE // Allows other procs to use this (Account linking, and so on
 	else
 		can_fire = FALSE // We dont want excess firing
 		return SS_INIT_NO_NEED
@@ -61,7 +61,7 @@ SUBSYSTEM_DEF(discord)
 	try
 		people_to_notify = json_decode(file2text(notify_file))
 	catch
-		pass() // The list can just stay as its default (blank). Pass() exists because it needs a catch
+		pass() // The list can just stay as its default (blank).. Pass() exists because it needs a catch
 	var/notifymsg = jointext(people_to_notify, ", ")
 	if(notifymsg)
 		notifymsg += ", a new round is starting!"

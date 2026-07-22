@@ -40,7 +40,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/transit_requesters = list()
 	/// An associative list of the mobile docking ports that have failed a transit request, with the amount of times they've actually failed that transit request, up to MAX_TRANSIT_REQUEST_RETRIES
 	var/list/transit_request_failures = list()
-	/// How many turfs our shuttles are currently utilizing in reservation space
+	/// How many turfs our shuttles are currently using in reservation space
 	var/transit_utilized = 0
 
 	/**
@@ -63,7 +63,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/area/emergency_last_call_loc
 	/// How many times was the escape shuttle called?
 	var/emergencyCallAmount = 0
-	/// Is the departure of the shuttle currently prevented? FALSE for no, any other number for yes (thanks shuttle code).
+	/// Is the departure of the shuttle currently prevented?. FALSE for no, any other number for yes (thanks shuttle code).
 	var/emergency_no_escape = FALSE
 	/// Do we prevent the recall of the shuttle?
 	var/emergency_no_recall = FALSE
@@ -71,7 +71,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/admin_emergency_no_recall = FALSE
 	/// Previous mode of the shuttle before it was forcefully disabled by admins.
 	var/last_mode = SHUTTLE_IDLE
-	/// Previous time left to the call, only useful for disabling and re-enabling the shuttle for admins so it doesn't have to start the whole timer again.
+	/// Previous time left to the call, only useful f. Disabling. Re-enabling the shuttle f. Admins so it doesn't have to start the whole timer again.
 	var/last_call_time = 10 MINUTES
 
 	/// Things blocking escape shuttle from leaving.
@@ -112,7 +112,7 @@ SUBSYSTEM_DEF(shuttle)
 	/// A list of job accesses that are able to purchase any shuttles.
 	var/list/has_purchase_shuttle_access
 
-	/// All turfs hidden from navigation computers associated with a list containing the image hiding them and the type of the turf they are pretending to be
+	/// All turfs hidden from navigation computers associated with a list containing the image hiding them. The type of the turf they are pretending to be
 	var/list/hidden_shuttle_turfs = list()
 	/// Only the images from the [/datum/controller/subsystem/shuttle/hidden_shuttle_turfs] list.
 	var/list/hidden_shuttle_turf_images = list()
@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(shuttle)
 	/// The turf reservation for the current previewed shuttle.
 	var/datum/turf_reservation/preview_reservation
 
-	/// Are we currently in the process of loading a shuttle? Useful to ensure we don't load more than one at once, to avoid weird inconsistencies and possible runtimes.
+	/// Are we currently in the process of loading a shuttle?. Useful to ensure we don't load more than one at once, to avoid weird inconsistencies and possible runtimes.
 	var/shuttle_loading
 	/// Did the supermatter start a cascade event?
 	var/supermatter_cascade = FALSE
@@ -170,11 +170,11 @@ SUBSYSTEM_DEF(shuttle)
 			pack_processing += generated_packs
 			continue
 
-		//we have to create the pack before checking if it has 'contains' because generate_supply_packs manually sets it, therefore we cant check initial.
+		// we have to create the pack before checking if it has 'contains' because generate_supply_packs manually sets it, so we cant check initial.
 		if(!pack.contains)
 			continue
 
-		//Adds access requirements to the end of each description.
+		// Adds access needs to the end of each description.
 		if(pack.access && pack.access_view)
 			if(pack.access == pack.access_view)
 				pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open or purchase."
@@ -217,7 +217,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(!T.owner)
 			qdel(T, force=TRUE)
 		// This next one removes transit docks/zones that aren't
-		// immediately being used. This will mean that the zone creation
+		// immediately being used.. This will mean that the zone creation
 		// code will be running a lot.
 
 		// If we're below the soft reservation threshold, don't clear the old space
@@ -324,7 +324,7 @@ SUBSYSTEM_DEF(shuttle)
 	WARNING("couldn't find dock with id: [id]")
 
 /// Check if we can call the evac shuttle.
-/// Returns TRUE if we can. Otherwise, returns a string detailing the problem.
+/// Returns TRUE if we can.. Otherwise, returns a string detailing the problem.
 /datum/controller/subsystem/shuttle/proc/canEvac()
 	var/shuttle_refuel_delay = CONFIG_GET(number/shuttle_refuel_delay)
 	if(world.time - SSticker.round_start_time < shuttle_refuel_delay)
@@ -453,7 +453,7 @@ SUBSYSTEM_DEF(shuttle)
 	// backup shuttle.
 	src.emergency = src.backup_shuttle
 
-/// Actually work on canceling the emergency shuttle recall. Returns TRUE if successful, FALSE otherwise.
+/// Actually work on canceling the emergency shuttle recall.. Returns TRUE if successful, FALSE otherwise.
 /// If hide_origin is TRUE, the recaller's area will not be revealed in announcements (used by admin tools)
 /datum/controller/subsystem/shuttle/proc/cancel_evac(mob/user, hide_origin = FALSE)
 	if(!can_recall(user))
@@ -467,7 +467,7 @@ SUBSYSTEM_DEF(shuttle)
 		deadchat_broadcast(" has recalled the shuttle from [span_name("[get_area_name(user, TRUE)]")].", span_name("[user.real_name]"), user, message_type = DEADCHAT_ANNOUNCEMENT)
 	return TRUE
 
-/// Can this user recall the emergency shuttle? Returns TRUE if they can, otherwise returns FALSE.
+/// Can this user recall the emergency shuttle?. Returns TRUE if they can, otherwise returns FALSE.
 /datum/controller/subsystem/shuttle/proc/can_recall(mob/user)
 	if(isnull(emergency) || emergency.mode != SHUTTLE_CALL)
 		return FALSE
@@ -481,7 +481,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	return past_restriction_point()
 
-/// Are we past the restriction point (i.e. more than half of the shuttle timer has elapsed) for recalling the shuttle? Returns TRUE if we are, FALSE otherwise.
+/// Are we past the restriction point (i.e.. more than half of the shuttle timer has elapsed) for recalling the shuttle?. Returns TRUE if we are, FALSE otherwise.
 /datum/controller/subsystem/shuttle/proc/past_restriction_point()
 	var/security_num = SSsecurity_level.get_current_level_as_number()
 	switch(security_num)
@@ -497,8 +497,8 @@ SUBSYSTEM_DEF(shuttle)
 
 	return TRUE
 
-/// Handle admin level overrides of recalling the shuttle. We assume that the user passed is an admin.
-/// If a special state exists, we prompt the admin to confirm they want to override the wishes of other admins/game code. Returns TRUE if they elect to do so, FALSE otherwise.
+/// Handle admin level overrides of recalling the shuttle.. We assume that the user passed is an admin.
+/// If a special state exists, we prompt the admin to confirm they want to override the wishes of other admins/game code.. Returns TRUE if they elect to do so, FALSE otherwise.
 /datum/controller/subsystem/shuttle/proc/admin_recall(mob/user)
 	if(admin_emergency_no_recall)
 		var/admin_no_recall_alert = tgui_alert(
@@ -520,7 +520,7 @@ SUBSYSTEM_DEF(shuttle)
 			list("Yes", "No"),
 		)
 		if(general_no_recall_alert == "Yes")
-			// we will not unset emergency_no_recall here, as it's game code enforced and I want it to stay active, admins can transiently override it through this though.
+			// we will not unset emergency_no_recall here, as it's game code enforced. I want it to stay active, admins can transiently override it through this though.
 			// they can always edit the variable on SSshuttle if desperate.
 			return TRUE
 		return FALSE
@@ -616,7 +616,7 @@ SUBSYSTEM_DEF(shuttle)
 			color_override = "green",
 		)
 
-//try to move/request to dock_home if possible, otherwise dock_away. Mainly used for admin buttons
+// try to move/request to dock_home if possible, otherwise dock_away.. Mainly used for admin buttons
 /datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttle_id, dock_home, dock_away, timed)
 	var/obj/docking_port/mobile/shuttle_port = getShuttle(shuttle_id)
 	if(!shuttle_port)
@@ -768,7 +768,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	return new_transit_dock
 
-/// Gotta manage our space brother
+/// Got to manage our space brother
 /datum/controller/subsystem/shuttle/proc/transit_space_clearing(datum/turf_reservation/source)
 	SIGNAL_HANDLER
 	transit_utilized -= (source.width + 2) * (source.height + 2)
@@ -958,20 +958,20 @@ SUBSYSTEM_DEF(shuttle)
 	preview_shuttle.register(replace)
 	var/list/force_memory = preview_shuttle.movement_force
 	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
-	preview_shuttle.mode = SHUTTLE_PREARRIVAL//No idle shuttle moving. Transit dock get removed if shuttle moves too long.
+	preview_shuttle.mode = SHUTTLE_PREARRIVAL// No idle shuttle moving.. Transit dock get removed if shuttle moves too long.
 	preview_shuttle.initiate_docking(dest_dock)
 	preview_shuttle.movement_force = force_memory
 
 	. = preview_shuttle
 
-	// Shuttle state involves a mode and a timer based on world.time, so
+	// Shuttle state involves a mode and a timer good on world.time, so
 	// plugging the existing shuttles old values in works fine.
 	preview_shuttle.timer = timer
 	preview_shuttle.mode = mode
 
 	preview_shuttle.postregister(replace)
 
-	// TODO indicate to the user that success happened, rather than just
+	// To do indicate to the user that success happened, rather than just
 	// blanking the modification tab
 	preview_shuttle = null
 	preview_template = null
@@ -1005,9 +1005,9 @@ SUBSYSTEM_DEF(shuttle)
 	var/found = 0
 	// Search the turfs for docking ports
 	// - We need to find the mobile docking port because that is the heart of
-	//   the shuttle.
+	// the shuttle.
 	// - We need to check that no additional ports have slipped in from the
-	//   template, because that causes unintended behaviour.
+	// template, because that causes unintended behaviour.
 	for(var/affected_turfs in affected)
 		for(var/obj/docking_port/port in affected_turfs)
 			if(istype(port, /obj/docking_port/mobile))
@@ -1186,7 +1186,7 @@ SUBSYSTEM_DEF(shuttle)
 
 		if("replace")
 			if(existing_shuttle == backup_shuttle)
-				// TODO make the load button disabled
+				// To do make the load button disabled
 				WARNING("The shuttle that the selected shuttle will replace \
 					is the backup shuttle. Backup shuttle is required to be \
 					intact for round sanity.")

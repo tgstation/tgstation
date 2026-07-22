@@ -203,7 +203,7 @@
 	var/mob/living/silicon/ai/ai = get_mob() //if you use this for anyone else i will find you
 	if(isnull(ai))
 		return
-	var/turf/locturf = isturf(ai.loc) ? get_turf(ai.eyeobj) : get_turf(ai) //must be a var cuz error
+	var/turf/locturf = isturf(ai.loc) ? get_turf(ai.eyeobj) : get_turf(ai) // must be a var because error
 	var/ai_z = locturf.z
 	var/text = "Level<br/>[ai_z]"
 	if(SSmapping.level_trait(ai_z, ZTRAIT_STATION))

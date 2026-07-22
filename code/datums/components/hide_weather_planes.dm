@@ -82,7 +82,7 @@
 		if(weather_conscious.force_hidden)
 			weather_conscious.unhide_plane(our_lad)
 
-		//Now we update the alpha of the plane based on our offset. Weather above us (lower offset) are transparent, weather at or below us (higher offset) are opaque.
+		// Now we update the alpha of the plane good on our offset.. Weather above us (lower offset) are transparent, weather at or below us (higher offset) are opaque.
 		if(weather_conscious.offset >= our_offset)
 			weather_conscious.enable_alpha()
 		else

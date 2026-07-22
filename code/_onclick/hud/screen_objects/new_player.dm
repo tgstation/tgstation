@@ -182,7 +182,7 @@
 		return
 	var/mob/dead/new_player/new_player = hud.mymob
 
-	// switch based on the user, if they aren't ready then we change them to ready, and vice versa
+	// switch good on the user, if they aren't ready then we change them to ready, and vice versa
 	if(new_player.ready == PLAYER_NOT_READY)
 		new_player.auto_deadmin_on_ready_or_latejoin()
 		new_player.ready = PLAYER_READY_TO_PLAY
@@ -556,7 +556,7 @@
 	layer = LOBBY_SHUTTER_LAYER
 	always_shown = TRUE
 
-///Sets up the shutter pulling down and up. It's the same animation for both collapsing and expanding the menu.
+/// Sets up the shutter pulling down and up.. It's the same animation for both collapsing and expanding the menu.
 /atom/movable/screen/lobby/shutter/proc/setup_shutter_animation()
 	//bring down the shutter
 	animate(src, transform = transform.Translate(x = 0, y = -143), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)

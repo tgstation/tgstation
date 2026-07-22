@@ -3,7 +3,7 @@
 	var/obj/machinery/vending/vendor_pawn = controller.pawn
 	return vendor_pawn.tilted
 
-/// Searches nearby tiles for a valid living target and sets the given BB key. Sets tilt cooldown and fails if none found.
+/// Searches nearby tiles for a valid living target and sets the given BB key.. Sets tilt cooldown and fails if none found.
 /datum/bt_node/ai_behavior/find_vendor_target
 	var/target_key
 	var/vision_range
@@ -20,12 +20,12 @@
 	controller.set_blackboard_key(BB_VENDING_TILT_COOLDOWN, world.time + search_cooldown)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-/// Telegraphs and tilts onto the target. Returns success once the machine is tilted.
+/// Telegraphs and tilts onto the target.. Returns success once the machine is tilted.
 /datum/bt_node/ai_behavior/vendor_crush
 	var/target_key
 	/// Time to telegraph before tilting
 	var/time_to_tilt = 0.8 SECONDS
-	/// Time before machine can untilt after a tilt attempt
+	/// Time before machine can untilt after a tilt try
 	var/untilt_cooldown = 1 SECONDS
 
 /datum/bt_node/ai_behavior/vendor_crush/perform(seconds_per_tick, datum/ai_controller/controller)
@@ -60,7 +60,7 @@
 	. = ..()
 	controller.set_blackboard_key(BB_VENDING_BUSY_TILTING, FALSE)
 
-/// Untilts the machine. Sets a tilt cooldown if the previous hit was successful.
+/// Untilts the machine.. Sets a tilt cooldown if the previous hit was successful.
 /datum/bt_node/ai_behavior/vendor_rise_up
 	/// Time before machine can tilt again after untilting if the last hit landed
 	var/success_tilt_cooldown = 5 SECONDS

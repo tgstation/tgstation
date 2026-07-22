@@ -106,7 +106,7 @@
 	set_light_on(!light_on)
 	update_brightness()
 	update_item_action_buttons()
-	return light_on != old_light_on // If the value of light_on didn't change, return false. Otherwise true.
+	return light_on != old_light_on // If the value of light_on didn't change, return false.. Otherwise true.
 
 /obj/item/flashlight/attack_self(mob/user)
 	return toggle_light(user)
@@ -136,7 +136,7 @@
 		to_chat(user, span_warning("[patient] doesn't have any eyes!"))
 		return
 
-	patient.flash_act(visual = TRUE, length = (user.combat_mode) ? 2.5 SECONDS : 1 SECONDS) // Apply a 1 second flash effect to the target. The duration increases to 2.5 Seconds if you have combat mode on.
+	patient.flash_act(visual = TRUE, length = (user.combat_mode) ? 2.5 SECONDS : 1 SECONDS) // Apply a 1 second flash effect to the target.. The duration increases to 2.5 Seconds if you have combat mode on.
 
 	if(patient == user) //they're using it on themselves
 		user.visible_message(span_warning("[user] shines [src] into [patient.p_their()] eyes."), ignored_mobs = user)
@@ -167,7 +167,7 @@
 		if(patient.has_status_effect(/datum/status_effect/drugginess) || patient.has_status_effect(/datum/status_effect/trance))
 			. += span_danger_ml("[patient.p_Their()] [eyes.pupils_name] are responsive, but entirely unfocused.")
 		if(patient.has_status_effect(/datum/status_effect/stoned))
-			. += span_danger_ml("[patient.p_Their()] eyes are wide, lazy, and bloodshot.") //this shit is GAS, batman. *wheezing chuckle*
+			. += span_danger_ml("[patient.p_Their()] eyes are wide, lazy, and bloodshot.") // this shit is GAS, batman.. *wheezing chuckle*
 	return .
 
 /obj/item/flashlight/proc/mouth_examine(mob/living/carbon/human/patient, mob/living/user)
@@ -303,7 +303,7 @@
 /obj/item/flashlight/equipped(mob/user, slot, initial)
 	. = ..()
 	setDir(initial(dir))
-	SEND_SIGNAL(user, COMSIG_ATOM_DIR_CHANGE, user.dir, user.dir) // This is dumb, but if we don't do this then the lighting overlay may be facing the wrong direction depending on how it is picked up
+	SEND_SIGNAL(user, COMSIG_ATOM_DIR_CHANGE, user.dir, user.dir) // This is dumb. If we don't do this then the lighting overlay may be facing the wrong direction depending on how it is picked up
 
 /// for directional sprites - so when we drop the flashlight, it drops facing the same way the user is facing
 /obj/item/flashlight/dropped(mob/user, silent = FALSE)
@@ -867,7 +867,7 @@
 	emp_cur_charges = 100
 
 // Glowsticks, in the uncomfortable range of similar to flares,
-// Flares need to process (for hotspots) tho so this becomes irrelevant
+// Flares need to process (for hotspots) though so this becomes irrelevant
 /obj/item/flashlight/glowstick
 	name = "glowstick"
 	desc = "A military-grade glowstick."
@@ -888,7 +888,7 @@
 	custom_materials = null
 	/// How much max fuel we have
 	var/max_fuel = 0
-	/// How much oxygen gets added upon cracking the stick. Doesn't actually produce a reaction with the fluid but it does allow for bootleg chemical "grenades"
+	/// How much oxygen gets added upon cracking the stick.. Doesn't actually produce a reaction with the fluid but it does allow for bootleg chemical "grenades"
 	var/oxygen_added = 5
 	/// How much temperature gets added for every unit of fuel burned down
 	var/temp_per_fuel = 3
@@ -1151,7 +1151,7 @@
 
 	///The timer we track until the bubble deletes itself.
 	var/bubble_timer
-	///The amount of time that the bubble will survive for once turned on. This can't be changed normally but is a var for admins.
+	/// The amount of time that the bubble will survive for once turned on.. This can't be changed normally but is a var for admins.
 	var/bubble_duration = (15 MINUTES)
 	///Boolean on whether or not a pyroclastic anomaly core has been inserted, allowing the item to be used.
 	var/installed_pyro_core = FALSE
@@ -1234,7 +1234,7 @@
 	var/mob/living/potential_mob = recursive_loc_check(src, /mob/living) || null
 	addtimer(CALLBACK(src, PROC_REF(toggle_light), potential_mob), 5 SECONDS, TIMER_UNIQUE|TIMER_DELETE_ME)
 
-///Closes the bubble and cleans up after itself. Optional 'user' arg for the mob turning us off.
+/// Closes the bubble and cleans up after itself.. Optional 'user' arg for the mob turning us off.
 /obj/item/flashlight/lamp/space_bubble/proc/close_bubble(mob/user)
 	QDEL_NULL(space_bubble)
 	if(bubble_timer)

@@ -59,7 +59,7 @@
 	else if(dist > range_far)
 		linked_alert.icon_state = "pinonfar"
 
-///Attempting to locate a nearby target to scan and point towards.
+/// Trying to locate a nearby target to scan and point towards.
 /datum/status_effect/agent_pinpointer/proc/scan_for_target()
 	scan_target = null
 	if(!owner && !owner.mind)
@@ -72,7 +72,7 @@
 		if(!tracked_target)
 			continue
 
-		//Catch the first one we find, then stop. We want to point to the most recent one we've got.
+		// Catch the first one we find, then stop.. We want to point to the most recent one we've got.
 		scan_target = tracked_target
 		break
 

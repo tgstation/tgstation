@@ -6,7 +6,7 @@
 	name = "technology spawner"
 	icon_state = "disk"
 	spawn_loot_count = 2
-	loot = list( // Space loot spawner. Couple of random bits of technology-adjacent stuff including anomaly cores and BEPIS techs.
+	loot = list( // Space loot spawner.. Couple of random bits of technology-adjacent stuff including anomaly cores and BEPIS techs.
 		/obj/item/raw_anomaly_core/random,
 		/obj/item/disk/design_disk/bepis,
 		/obj/item/disk/computer/syndicate/camera_app,
@@ -36,7 +36,7 @@
 	name = "syndie cosmetic spawner"
 	icon_state = "syndicate"
 	spawn_loot_count = 2
-	loot = list( // A selection of cosmetic syndicate items. Just a couple. No space suits or weapons.
+	loot = list( // A selection of cosmetic syndicate items.. Just a couple.. No space suits or weapons.
 		/obj/effect/spawner/random/clothing/syndie = 8,
 		/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 1,
 		/obj/effect/spawner/random/entertainment/cigarette_pack = 1,

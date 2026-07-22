@@ -1,4 +1,4 @@
-/// Pretty basic, just click people to death. Also hunt and eat bananas.
+/// Pretty basic, just click people to death.. Also hunt and eat bananas.
 /datum/ai_controller/basic_controller/gorilla
 	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/gorilla/gorilla.bt.json"
 	blackboard = list(

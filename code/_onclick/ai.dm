@@ -204,7 +204,7 @@
 	add_hiddenprint(user)
 
 /////////////
-/*   APC   */
+/* APC */
 /////////////
 
 /// Toggle APC power settings

@@ -248,7 +248,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 		spun = TRUE
 
 /obj/item/gun/ballistic/revolver/russian/can_shoot()
-	return TRUE // we ALWAYS want to shoot. even if we don't have a chambered round, even if our chambered round has no bullet
+	return TRUE // we ALWAYS want to shoot.. even if we don't have a chambered round, even if our chambered round has no bullet
 
 /obj/item/gun/ballistic/revolver/russian/load_gun(obj/item/ammo, mob/living/user)
 	. = ..()
@@ -330,7 +330,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 		chambered.loaded_projectile?.wound_bonus = 10
 
 /obj/item/gun/ballistic/revolver/russian/fire_gun(atom/target, mob/living/user, flag, params)
-	// . = false = no shot fired
+	// .. = false = no shot fired
 	. = ..()
 	spun = FALSE
 	var/is_target_face = check_zone(user.zone_selected) == BODY_ZONE_HEAD
@@ -355,7 +355,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
-		return TRUE // so they don't hit themselves in the forehead. because returning FALSE translates to "do melee attack" for whatever reason
+		return TRUE // so they don't hit themselves in the forehead.. because returning FALSE translates to "do melee attack" for whatever reason
 
 	user.visible_message(
 		span_danger("[user][is_target_face ? "": " cowardly"] aims \the [src] at [user.p_their()] [aimed_at_readable] as it goes off!"),
@@ -404,7 +404,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 	)
 	user.dust(drop_items = TRUE)
 
-/obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
+/obj/item/gun/ballistic/revolver/reverse // Fires directly at its user.... unless the user is a clown, of course.
 	clumsy_check = FALSE
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user, akimbo_usage)

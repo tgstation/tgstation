@@ -2,7 +2,7 @@
 	name = "ventpointer"
 	desc = "A handheld tracking device. It will locate and point to nearby vents. A bit unreliable though."
 	icon_state = "pinpointer_vent"
-	minimum_range = 8 //gotta use them eyes
+	minimum_range = 8 // got to use them eyes
 	close_range = 12
 	medium_range = 20
 

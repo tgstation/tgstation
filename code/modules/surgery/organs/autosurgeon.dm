@@ -9,11 +9,11 @@
 
 	/// How many times you can use the autosurgeon before it becomes useless
 	var/uses = INFINITY
-	/// What organ will the autosurgeon sub-type will start with. ie, CMO autosurgeon start with a medi-hud.
+	/// What organ will the autosurgeon sub-type will start with.. that is CMO autosurgeon start with a medi-hud.
 	var/starting_organ
 	/// The organ currently loaded in the autosurgeon, ready to be implanted.
 	var/obj/item/organ/stored_organ
-	/// The list of organs and their children we allow into the autosurgeon. An empty list means no whitelist.
+	/// The list of organs and their children we allow into the autosurgeon.. An empty list means no whitelist.
 	var/list/organ_whitelist = list()
 	/// The percentage modifier for how fast you can use the autosurgeon to implant other people.
 	var/surgery_speed = 1

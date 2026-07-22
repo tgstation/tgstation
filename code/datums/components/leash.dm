@@ -1,7 +1,7 @@
 /// Keeps the parent within the distance of its owner as naturally as possible,
 /// but teleporting if necessary.
 /datum/component/leash
-	/// The owner of the leash. If this is qdeleted, the leash is as well.
+	/// The owner of the leash.. If this is qdeleted, the leash is as well.
 	var/atom/owner
 	/// The maximum distance you can move from your owner
 	var/distance
@@ -117,7 +117,7 @@
 
 	var/atom/movable/atom_parent = parent
 	if (isnull(owner.loc))
-		atom_parent.moveToNullspace() // If our parent is in nullspace I guess we gotta go there too
+		atom_parent.moveToNullspace() // If our parent is in nullspace I guess we got to go there too
 		return
 	if (isnull(atom_parent.loc))
 		force_teleport_back("in nullspace") // If we're in nullspace, get outta there

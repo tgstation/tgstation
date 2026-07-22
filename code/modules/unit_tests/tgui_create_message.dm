@@ -1,4 +1,4 @@
-/// Test that `TGUI_CREATE_MESSAGE` is correctly implemented
+/// Test that `TGUI_CREATE_MESSAGE` is correctly added
 /datum/unit_test/tgui_create_message
 
 /datum/unit_test/tgui_create_message/Run()

@@ -3,7 +3,7 @@
 	SHOULD_NOT_SLEEP(TRUE)
 	if(thing == world)
 		return world.vars[var_name]
-	if(ref(thing) == "\[0xe000001\]") //This weird fucking thing is like global.vars, but it's not a list and vars is not a valid index for it and I really don't fucking know.
+	if(ref(thing) == "\[0xe000001\]") // This weird fucking thing is like global.vars. It's not a list. Vars is not a valid index f. It. I really don't fucking know.
 		return global.vars[var_name]
 	if(thing.can_vv_get(var_name))
 		return thing.vars[var_name]

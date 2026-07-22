@@ -52,7 +52,7 @@
 	var/atom/movable/pawn = source.moving
 	var/datum/ai_controller/controller = source.extra_info
 
-	if((controller.ai_traits & STOP_MOVING_WHEN_PULLED) && pawn.pulledby) //Need to store more state. Annoying.
+	if((controller.ai_traits & STOP_MOVING_WHEN_PULLED) && pawn.pulledby) // Need to store more state.. Annoying.
 		return FALSE
 
 	if(HAS_TRAIT(pawn, TRAIT_AI_MOVEMENT_HALTED))
@@ -66,7 +66,7 @@
 		if(!(pawn_mob.mobility_flags & MOBILITY_MOVE))
 			return FALSE
 		// Bandaid fix: AI controllers don't call /Process_Grab because it's a client proc,
-		// and thus, we need to check that grabbed mobs cuffed/crit can't move
+		// and so we need to check that grabbed mobs cuffed/crit can't move
 		// That proc should probably be moved onto the mob instead of clients
 		if(INCAPACITATED_IGNORING(pawn_mob, INCAPABLE_STASIS) && pawn.pulledby)
 			return FALSE

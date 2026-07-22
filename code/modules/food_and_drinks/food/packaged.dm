@@ -214,7 +214,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 
-// DONK DINNER: THE INNOVATIVE WAY TO GET YOUR DAILY RECOMMENDED ALLOWANCE OF SALT... AND THEN SOME!
+// DONK DINNER: THE INNOVATIVE WAY TO GET YOUR DAILY RECOMMENDED ALLOWANCE OF SALT.... AND THEN SOME!
 /obj/item/food/ready_donk
 	name = "\improper Ready-Donk: Bachelor Chow"
 	desc = "A quick Donk-dinner: now with flavour!"
@@ -291,7 +291,7 @@
 	tastes = list("enchiladas" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
 
-/obj/item/food/ready_donk/nachos_grandes //which translates to... big nachos
+/obj/item/food/ready_donk/nachos_grandes // which translates to.... big nachos
 	name = "\improper Ready-Donk: Donk Sol Series Boritos Nachos Grandes"
 	desc = "Get ready for game day with Donk's classic Nachos Grandes, sponsors of the Donk Sol Series! Boritos chips loaded with cheese, spicy meat and beans, alongside separate guac, pico and donk sauce. Batter up!"
 	icon_state = "ready_donk_nachos"
@@ -363,16 +363,16 @@
 	bite_consumption = 3
 	junkiness = 15
 	tastes = list("cardboard" = 3, "sadness" = 3)
-	foodtypes = null //Don't ask what went into them. You're better off not knowing.
+	foodtypes = null // Don't ask what went into them.. You're better off not knowing.
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/stabilized = 10,
 		/datum/reagent/consumable/nutriment = 2,
-	) //Won't make you fat. Will make you question your sanity.
+	) // Won't make you fat.. Will make you question your sanity.
 
 ///Override for checkliked callback
 /obj/item/food/rationpack/make_edible()
 	. = ..()
 	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
-/obj/item/food/rationpack/proc/check_liked(mob/mob) //Nobody likes rationpacks. Nobody.
+/obj/item/food/rationpack/proc/check_liked(mob/mob) // Nobody likes rationpacks.. Nobody.
 	return FOOD_DISLIKED

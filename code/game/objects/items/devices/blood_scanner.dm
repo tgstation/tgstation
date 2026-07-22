@@ -1,4 +1,4 @@
-///Pricks people with a big needle and gives the user a bunch of info about bloodtype, tox damage, other such stuff. if you fuck up it stabs the guy a bit.
+/// Pricks people with a big needle and gives the user a bunch of info about bloodtype, tox damage, other such stuff.. if you fuck up it stabs the guy a bit.
 /obj/item/blood_scanner
 	name = "hemoanalytic scanner"
 	icon = 'icons/obj/devices/scanner.dmi'
@@ -69,7 +69,7 @@
 	if(scanned_person.has_status_effect(/datum/status_effect/eigenstasium))
 		render_list += "<span class='danger ml-1'>Warning: Dimensional instability detected. Administer stabilizers.</span>\n"
 	if(scanned_person.has_reagent(/datum/reagent/gold/cursed) || scanned_person.has_status_effect(/datum/status_effect/midas_blight))
-		render_list += "<span class='danger ml-1'>Warning: Hemo-aurificating hexes present.</span>\n" //can it detect normal things? barely. But ancient greed-cursed magicks? Spot on.
+		render_list += "<span class='danger ml-1'>Warning: Hemo-aurificating hexes present.</span>\n" // can it detect normal things?. barely.. But ancient greed-cursed magicks?. Spot on.
 	if(HAS_TRAIT_FROM(scanned_person, TRAIT_NODEATH, /datum/reagent/inverse/penthrite))
 		render_list += "<span class='danger ml-1'>Warning: Frankensteinian revivification in progress.</span>\n" //patient is currently an immortal drug-zombie
 	if(scanned_person.has_status_effect(/datum/status_effect/high_blood_pressure))

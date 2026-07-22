@@ -1,4 +1,4 @@
-/// Damn space vultures man! At least they dont go for the brain
+/// Damn space vultures man!. At least they dont go for the brain
 /datum/corpse_damage/post_mortem/organ_loss
 	damage_type = CORPSE_DAMAGE_ORGAN_LOSS
 
@@ -23,7 +23,7 @@
 		else
 			qdel(organ)
 
-/// Damn space vultures man! At least they dont go for the chest or head, or they do but we don't get to see those bodies :O
+/// Damn space vultures man!. At least they dont go for the chest or head, or they do but we don't get to see those bodies :O
 /datum/corpse_damage/post_mortem/limb_loss
 	damage_type = CORPSE_DAMAGE_LIMB_LOSS
 

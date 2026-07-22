@@ -1,11 +1,11 @@
-// Main atom signals. Format:
+// Main atom signals... Format:
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
 // /atom signals
-//from SSatoms InitAtom - Only if the  atom was not deleted or failed initialization
+// from SSatoms InitAtom - Only if the atom was not deleted or failed initialization
 #define COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE "atom_init_success"
-//from SSatoms InitAtom - Only if the  atom was not deleted or failed initialization and has a loc
+// from SSatoms InitAtom - Only if the atom was not deleted or failed initialization and has a loc
 #define COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON "atom_init_success_on"
 ///from base of atom/examine(): (/mob, list/examine_text)
 #define COMSIG_ATOM_EXAMINE "atom_examine"
@@ -63,7 +63,7 @@
 #define COMSIG_ATOM_ENTERED "atom_entered"
 ///from base of atom/movable/Moved(): (atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 #define COMSIG_ATOM_ABSTRACT_ENTERED "atom_abstract_entered"
-/// Sent from the atom that just Entered src. From base of atom/Entered(): (/atom/destination, atom/old_loc, list/atom/old_locs)
+/// Sent from the atom that just Entered src... From base of atom/Entered(): (/atom/destination, atom/old_loc, list/atom/old_locs)
 #define COMSIG_ATOM_ENTERING "atom_entering"
 ///from base of atom/Exit(): (/atom/movable/leaving, direction)
 #define COMSIG_ATOM_EXIT "atom_exit"
@@ -92,7 +92,7 @@
 #define COMSIG_ATOM_ORBIT_STOP "atom_orbit_stop"
 ///from base of atom/set_opacity(): (new_opacity)
 #define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
-///from base of atom/throw_impact, sent by the target hit by a thrown object. (hit_atom, thrown_atom, datum/thrownthing/throwingdatum)
+/// from base of atom/throw_impact, sent by the target hit by a thrown object... (hit_atom, thrown_atom, datum/thrownthing/throwingdatum)
 #define COMSIG_ATOM_PREHITBY "atom_pre_hitby"
 	#define COMSIG_HIT_PREVENTED (1<<0)
 ///from base of atom/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)

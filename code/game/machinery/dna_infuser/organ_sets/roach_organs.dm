@@ -213,7 +213,7 @@
 	human_owner.physiology.tox_mod *= 0.5
 
 /// Roach appendix:
-/// No appendicitus! weee!
+/// No appendicitus!. weee!
 /obj/item/organ/appendix/roach
 	name = "mutated roach-appendix"
 	desc = "Roach DNA infused into what was once a normal appendix. It could get <i>worse</i>?"

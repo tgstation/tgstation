@@ -8,7 +8,7 @@ GLOBAL_DATUM_INIT(is_punctuation, /regex, regex("\[.!?]+", "i"))
 GLOBAL_DATUM_INIT(is_color, /regex, regex("^#\[0-9a-fA-F]{6}$"))
 GLOBAL_DATUM_INIT(is_alpha_color, /regex, regex("^#\[0-9a-fA-F]{8}$"))
 
-//finds text strings recognized as links on discord. Mainly used to stop embedding.
+// finds text strings recognized as links on discord.. Mainly used to stop embedding.
 GLOBAL_DATUM_INIT(has_discord_embeddable_links, /regex, regex("(https?://\[^\\s|<\]{2,})"))
 
 //All < and > characters

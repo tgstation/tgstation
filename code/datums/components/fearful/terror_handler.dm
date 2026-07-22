@@ -1,4 +1,4 @@
-/// Terror handlers, aka datums which determine current fear behaviors.
+/// Terror handlers, also known as datums which determine current fear behaviors.
 /// Separated into two groups, fear sources and fear effects, latter processing after all former are finished
 /datum/terror_handler
 	/// Owner of this fear handler
@@ -7,11 +7,11 @@
 	var/datum/component/fearful/component
 	/// Type of this handler, determines if it should run in the first or second batch
 	var/handler_type = TERROR_HANDLER_SOURCE
-	/// Is this a "default" handler? If so, it will be added to any fearful component unless its initialized with add_defaults = FALSE
+	/// Is this a "default" handler?. If so, it will be added to any fearful component unless its initialized with add_defaults = FALSE
 	var/default = FALSE
 	/// Other effects which should be disabled while this one is running
 	var/list/overrides
-	/// Is this handler bespoke, and always requires a new instance upon adding even when one is already present?
+	/// Is this handler bespoke, and always needs a new instance upon adding even when one is already present?
 	var/bespoke = FALSE
 
 /datum/terror_handler/New(mob/living/new_owner, datum/component/fearful/new_component)
@@ -28,6 +28,6 @@
 /datum/terror_handler/proc/tick(seconds_per_tick, terror_buildup)
 	return 0
 
-/// Additional effects when we're hugged by a mob, returns fear adjustment per hug. Should only be positive.
+/// Additional effects when we're hugged by a mob, returns fear adjustment per hug.. Should only be positive.
 /datum/terror_handler/proc/on_hug(mob/living/hugger)
 	return 0

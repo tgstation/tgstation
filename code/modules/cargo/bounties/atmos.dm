@@ -5,7 +5,7 @@
 	wanted_types = list(/obj/item/tank = TRUE)
 	/// How many moles are needed to fufill the bounty?
 	var/moles_required = 20
-	/// Typepath of the gas datum required to fufill the bounty
+	/// Typepath of the gas datum needed to fufill the bounty
 	var/gas_type
 
 /datum/bounty/item/atmospherics/applies_to(obj/applied_obj)

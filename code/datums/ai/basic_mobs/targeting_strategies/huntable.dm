@@ -1,4 +1,4 @@
-/// Accepts any visible target that isn't a dead mob. Mirrors the legacy hunt finder's validity check.
+/// Accepts any visible target that isn't a dead mob.. Mirrors the legacy hunt finder's validity check.
 /datum/targeting_strategy/huntable
 
 /datum/targeting_strategy/huntable/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)

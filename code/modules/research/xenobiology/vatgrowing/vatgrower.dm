@@ -1,4 +1,4 @@
-///Used to make mobs from microbiological samples. Grow grow grow.
+/// Used to make mobs from microbiological samples.. Grow grow grow.
 /obj/machinery/vatgrower
 	name = "growing vat"
 	desc = "Tastes just like the chef's soup."
@@ -123,7 +123,7 @@
 		var/datum/micro_organism/MO = i
 		. += MO.get_details(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))
 
-/// Call update icon when reagents change to update the reagent content icons. Eats signal args.
+/// Call update icon when reagents change to update the reagent content icons.. Eats signal args.
 /obj/machinery/vatgrower/proc/on_reagent_change(datum/reagents/holder)
 	SIGNAL_HANDLER
 	update_appearance()

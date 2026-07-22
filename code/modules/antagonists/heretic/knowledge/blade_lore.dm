@@ -213,7 +213,7 @@
 	research_tree_icon_state = "blade_upgrade_blade"
 	/// How much force do we apply to the offhand?
 	var/offand_force_decrement = 0
-	/// How much force was the last weapon we offhanded with? If it's different, we need to re-calculate the decrement
+	/// How much force was the last weapon we offhanded with?. If it's different, we need to re-calculate the decrement
 	var/last_weapon_force = -1
 
 /datum/heretic_knowledge/blade_upgrade/blade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -277,7 +277,7 @@
 	if(last_weapon_force != blade.force)
 		offand_force_decrement = 0
 		// We want to make sure that the offhand blade increases their hits to crit by one, just about
-		// So, let's do some quick math. Yes this'll be inaccurate if their mainhand blade is modified (whetstone), no I don't care
+		// let's do some quick math.. Yes this'll be inaccurate if their mainhand blade is modified (whetstone), no I don't care
 		// Find how much force we need to detract from the second blade
 		var/hits_to_crit_on_average = ROUND_UP(100 / (blade.force * 2))
 		while(hits_to_crit_on_average <= 3) // 3 hits and beyond is a bit too absurd
@@ -374,5 +374,5 @@
 	)
 
 	if(target.stat != DEAD)
-		// And! Get some free healing for a portion of the bonus damage dealt.
+		// And!. Get some free healing for a portion of the bonus damage dealt.
 		source.heal_overall_damage(bonus_damage / 2, bonus_damage / 2)

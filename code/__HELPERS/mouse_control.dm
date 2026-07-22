@@ -14,7 +14,7 @@
 	var/screenviewX = screenview[1] * ICON_SIZE_X
 	var/screenviewY = screenview[2] * ICON_SIZE_Y
 	var/ox = round(screenviewX/2) - client.pixel_x //"origin" x
-	var/oy = round(screenviewY/2) - client.pixel_y //"origin" y
+	var/oy = round(screenviewY/2) - client.pixel_y // "origin" why
 	var/angle = SIMPLIFY_DEGREES(ATAN2(y - oy, x - ox))
 	return angle
 

@@ -8,7 +8,7 @@
 	aas_config_announce(/datum/aas_config_entry/bitrunning_QS_ready_announcement, list(), src, list(RADIO_CHANNEL_SUPPLY))
 
 
-/// If there are hosted minds, attempts to get a list of their current virtual bodies w/ vitals
+/// If there are hosted minds, tries to get a list of their current virtual bodies with vitals
 /obj/machinery/quantum_server/proc/get_avatar_data()
 	var/list/hosted_avatars = list()
 
@@ -34,7 +34,7 @@
 	return hosted_avatars
 
 
-/// I grab the atom here so I can signal it / manipulate spawners etc
+/// I grab the atom here so I can signal it / manipulate spawners and so on
 /obj/machinery/quantum_server/proc/get_avatar_destination() as /atom
 	// Branch A: Custom spawns
 	if(length(generated_domain.custom_spawns))

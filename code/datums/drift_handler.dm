@@ -1,21 +1,21 @@
 ///Component that handles drifting
 ///Manages a movement loop that actually does the legwork of moving someone
-///Alongside dealing with the post movement input blocking required to make things look nice
+/// Alongside dealing with the post movement input blocking needed to make things look nice
 /datum/drift_handler
 	var/atom/movable/parent
 	var/old_dir
 	var/datum/move_loop/smooth_move/drifting_loop
 	///Should we ignore the next glide rate input we get?
-	///This is to some extent a hack around the order of operations
-	///Around COMSIG_MOVELOOP_POSTPROCESS. I'm sorry lad
+	/// This is to some extent a temporary solution around the order of operations
+	/// Around COMSIG_MOVELOOP_POSTPROCESS.. I'm sorry lad
 	var/ignore_next_glide = FALSE
-	///Have we been delayed? IE: active, but not working right this second?
+	/// Have we been delayed?. that is active, but not working right this second?
 	var/delayed = FALSE
 	var/block_inputs_until
 	/// How much force is behind this drift.
 	var/drift_force = 1
 
-/// Accepts three args. The direction to drift in, if the drift is instant or not, and if it's not instant, the delay on the start
+/// Accepts three args.. The direction to drift in, if the drift is instant or not, and if it's not instant, the delay on the start
 /datum/drift_handler/New(atom/movable/parent, inertia_angle, instant = FALSE, start_delay = 0, drift_force = 1)
 	. = ..()
 	src.parent = parent
@@ -43,7 +43,7 @@
 	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(after_move))
 	RegisterSignal(drifting_loop, COMSIG_QDELETING, PROC_REF(loop_death))
 	if(drifting_loop.status & MOVELOOP_STATUS_RUNNING)
-		drifting_start(drifting_loop) // There's a good chance it'll autostart, gotta catch that
+		drifting_start(drifting_loop) // There's a good chance it'll autostart, got to catch that
 
 	var/visual_delay = get_loop_delay(parent)
 

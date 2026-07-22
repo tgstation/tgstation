@@ -1,4 +1,4 @@
-///Simple animals 2.0, This time, let's really try to keep it simple. This basetype should purely be used as a base-level for implementing simplified behaviours for things such as damage and attacks. Everything else should be in components or AI behaviours.
+/// Simple animals 2.0, This time, let's really try to keep it simple.. This basetype should purely be used as a base-level for adding simplified behaviours for things such as damage and attacks.. Everything else should be in components or AI behaviours.
 /mob/living/basic
 	name = "basic mob"
 	icon = 'icons/mob/simple/animal.dmi'
@@ -13,7 +13,7 @@
 
 	var/basic_mob_flags = NONE
 
-	///Defines how fast the basic mob can move. This is not a multiplier
+	/// Defines how fast the basic mob can move.. This is not a multiplier
 	var/speed = 1
 	///How much stamina the mob recovers per second, if set to >0 stamina loses its normal function of resetting after a set amount of time
 	var/stamina_recovery = 0
@@ -44,13 +44,13 @@
 	/// How often can you melee attack?
 	var/melee_attack_cooldown = 2 SECONDS
 
-	/// Variable maintained for compatibility with attack_animal procs until simple animals can be refactored away. Use element instead of setting manually.
+	/// Variable maintained for compatibility with attack_animal procs until simple animals can be refactored away.. Use element instead of setting manually.
 	var/environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 
 	/// 1 for full damage, 0 for none, -1 for 1:1 heal from that source.
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 
-	///Verbs used for speaking e.g. "Says" or "Chitters". This can be elementized
+	/// Verbs used for speaking e.g.. "Says" or "Chitters".. This can be elementized
 	var/list/speak_emote
 
 	///When someone interacts with the simple animal.
@@ -80,28 +80,28 @@
 	////////THIS SECTION COULD BE ITS OWN ELEMENT
 	///Icon to use
 	var/icon_living = ""
-	///Icon when the animal is dead. Don't use animated icons for this.
+	/// Icon when the animal is dead.. Don't use animated icons for this.
 	var/icon_dead = ""
 	///We only try to show a gibbing animation if this exists.
 	var/icon_gib = null
 
-	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
+	/// If the mob can be spawned with a gold slime core.. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
 	var/gold_core_spawnable = NO_SPAWN
-	///Sentience type, for slime potions. SHOULD BE AN ELEMENT BUT I DONT CARE ABOUT IT FOR NOW
+	/// Sentience type, for slime potions.. SHOULD BE AN ELEMENT BUT I DONT CARE ABOUT IT FOR NOW
 	var/sentience_type = SENTIENCE_ORGANIC
 
 	///Leaving something at 0 means it's off - has no maximum.
 	var/list/habitable_atmos = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
-	///This damage is taken when atmos doesn't fit all the requirements above. Set to 0 to avoid adding the atmos_requirements element.
+	/// This damage is taken when atmos doesn't fit all the needs above.. Set to 0 to avoid adding the atmos_requirements element.
 	var/unsuitable_atmos_damage = 1
 
 	///Minimal body temperature without receiving damage
 	var/minimum_survivable_temperature = NPC_DEFAULT_MIN_TEMP
 	///Maximal body temperature without receiving damage
 	var/maximum_survivable_temperature = NPC_DEFAULT_MAX_TEMP
-	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the body_temp_sensitive element.
+	/// This damage is taken when the body temp is too cold.. Set both this and unsuitable_heat_damage to 0 to avoid adding the body_temp_sensitive element.
 	var/unsuitable_cold_damage = 1
-	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the body_temp_sensitive element.
+	/// This damage is taken when the body temp is too hot.. Set both this and unsuitable_cold_damage to 0 to avoid adding the body_temp_sensitive element.
 	var/unsuitable_heat_damage = 1
 
 /mob/living/basic/Initialize(mapload)
@@ -124,7 +124,7 @@
 		speak_emote = string_list(speak_emote)
 	damage_coeff = string_assoc_list(damage_coeff)
 
-	///We need to wait for SSair to be initialized before we can check atmos/temp requirements.
+	/// We need to wait for SSair to be initialized before we can check atmos/temp needs
 	if(PERFORM_ALL_TESTS(focus_only/atmos_and_temp_requirements) && mapload && !SSair.initialized)
 		RegisterSignal(SSair, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(on_ssair_init))
 		return
@@ -239,7 +239,7 @@
 		return FALSE
 	var/result = target.attack_basic_mob(src, modifiers)
 	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
-	if(result && !ignore_cooldown) //Only set cooldown if the attack achieved something, which is the case when the value is true-ey. This could definitely be done better but is probably easier once living/simple is gone and we no longer use attack_animal.
+	if(result && !ignore_cooldown) // Only set cooldown if the attack achieved something, which is the case when the value is true-ey.. This could definitely be done better but is probably easier once living/simple is gone and we no longer use attack_animal.
 		changeNext_move(melee_attack_cooldown)
 	return result
 

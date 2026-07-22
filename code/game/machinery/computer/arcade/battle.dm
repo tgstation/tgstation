@@ -2,14 +2,14 @@
 #define WORLD_ENEMY_BOSS 2
 ///The default amount of EXP you gain from killing an enemy, modifiers stacked on top of this.
 #define DEFAULT_EXP_GAIN 50
-///The default cost to purchase an item. Sleeping at the Inn is half of this.
+/// The default cost to purchase an item.. Sleeping at the Inn is half of this.
 #define DEFAULT_ITEM_PRICE 30
 
 ///The max HP the player can have at any time.
 #define PLAYER_MAX_HP 100
 ///The max MP the player can have at any time.
 #define PLAYER_MAX_MP 50
-///The default cost of a spell, in MP. Defending will instead restore this amount.
+/// The default cost of a spell, in MP.. Defending will instead restore this amount.
 #define SPELL_MP_COST 10
 
 ///The player is currently in the Shop.
@@ -73,11 +73,11 @@
 	///The current panel the player is viewieng in the UI.
 	var/ui_panel = UI_PANEL_WORLD_MAP
 
-	/** PLAYER INFORMATION */
+	/** * PLAYER INFORMATION */
 
 	///Boolean on whether it's the player's time to do their turn.
 	var/player_turn = TRUE
-	///How much money the player has, used in the Inn. Starts with the default price for a single item.
+	/// How much money the player has, used in the Inn.. Starts with the default price for a single item.
 	var/player_gold = DEFAULT_ITEM_PRICE
 	///The current amount of HP the player has.
 	var/player_current_hp = PLAYER_MAX_HP
@@ -89,7 +89,7 @@
 		ARMOR_SLOT = null,
 	)
 
-	/** CURRENT ENEMY INFORMATION */
+	/** * CURRENT ENEMY INFORMATION */
 
 	///A feedback message displayed in the UI during combat sequences.
 	var/feedback_message
@@ -312,7 +312,7 @@
 /obj/machinery/computer/arcade/battle/proc/process_enemy_turn(mob/user, defending_flags = NONE)
 	if(enemy_hp <= 0)
 		return on_battle_win(user)
-	//if emagged, cuban pete will set up a bomb acting up as a timer. when it reaches 0 the player fucking dies
+	// if emagged, cuban pete will set up a bomb acting up as a timer.. when it reaches 0 the player fucking dies
 
 	if(obj_flags & EMAGGED)
 		bomb_cooldown--

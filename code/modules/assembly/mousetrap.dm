@@ -27,12 +27,12 @@
 	newhost = connected?.holder || holder?.master || holder || src
 
 	// ok look
-	// previously this wasn't working and thus no concern, but I made mousetraps work with wires
-	// specifically in step-on-the-mousetrap mode, ie, when you enter its turf
+	// previously this wasn't working and so no concern, but I made mousetraps work with wires
+	// specifically in step-on-the-mousetrap mode, that is when you enter its turf
 	// and as a consequence, you can put a mousetrap in door wires and it will be set off
 	// the first time someone walks through a door (enters the door's loc)
 	// that's an interesting mechanic (bolt open a door for example) but it's not appropriate for a mousetrap
-	// similarly if used on say an apc's wires it would go into effect when someone walked by it.  Not appropriate.
+	// similarly if used on say an apc's wires it would go into effect when someone walked by it.. Not appropriate.
 	// other assemblies could be made to do something similar instead.
 	// mousetrap assemblies will still receive on-found notifications when you open a wiring panel
 	// and (whether reasonable or not) mousetraps that do this do still trigger wires

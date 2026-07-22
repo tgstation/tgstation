@@ -6,11 +6,11 @@
 	var/list/shipping
 
 	// Automatic vars, do not touch these.
-	/// Items available from this market, populated by SSmarket on initialization. Automatically assigned, so don't manually adjust.
+	/// Items available from this market, populated by SSmarket on initialization.. Automatically assigned, so don't manually adjust.
 	var/list/available_items = list()
-	/// Item categories available from this market, only items which are in these categories can be gotten from this market. Automatically assigned, so don't manually adjust.
+	/// Item categories available from this market, only items which are in these categories can be gotten from this market.. Automatically assigned, so don't manually adjust.
 	var/list/categories = list()
-	/// Are the items from this market legal or illegal? If illegal, apply a contrband trait to the bought object.
+	/// Are the items from this market legal or illegal?. If illegal, apply a contrband trait to the bought object.
 	var/legal_status = TRUE
 
 /// Adds item to the available items and add its category if it is not in categories yet.

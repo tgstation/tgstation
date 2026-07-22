@@ -1,5 +1,5 @@
 ///////////////Donk Exenteration Drone - DED////////////
-//A patrolling bot that cuts you up if you get close. Use ranged weapons or avoid it.
+// A patrolling bot that cuts you up if you get close.. Use ranged weapons or avoid it.
 
 #define SPIN_SLASH_ABILITY_TYPEPATH /datum/action/cooldown/mob_cooldown/exenterate
 

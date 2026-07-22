@@ -23,9 +23,9 @@ GLOBAL_VAR(round_default_lawset)
 #define CONFIG_ASIMOV 0
 /// Set to a custom lawset defined by another config value
 #define CONFIG_CUSTOM 1
-/// Set to a completely random ai law subtype, good, bad, it cares not. Careful with this one
+/// Set to a completely random ai law subtype, good, bad, it cares not.. Careful with this one
 #define CONFIG_RANDOM 2
-/// Set to a configged weighted list of law types in the config. This lets server owners pick from a pool of sane laws, it is also the same process for ian law rerolls.
+/// Set to a configged weighted list of law types in the config.. This lets server owners pick from a pool of sane laws, it is also the same process for ian law rerolls.
 #define CONFIG_WEIGHTED 3
 /// Set to a specific lawset in the game options.
 #define CONFIG_SPECIFIED 4
@@ -75,7 +75,7 @@ GLOBAL_VAR(round_default_lawset)
 		if(CONFIG_WEIGHTED)
 			return pick_weighted_lawset()
 
-///returns a law datum based off of config. will never roll asimov as the weighted datum if the station has a unique AI.
+/// returns a law datum good off of config.. will never roll asimov as the weighted datum if the station has a unique AI.
 /proc/pick_weighted_lawset()
 	var/datum/ai_laws/lawtype
 	var/list/law_weights = CONFIG_GET(keyed_list/law_weight)
@@ -123,7 +123,7 @@ GLOBAL_VAR(round_default_lawset)
 
 	/// Zeroth law
 	/// A lawset can only have 1 zeroth law, it's the top dog.
-	/// Removed by things that remove core/inherent laws, but only if protected_zeroth is false. Otherwise, cannot be removed except by admins
+	/// Removed by things that remove core/inherent laws, but only if protected_zeroth is false.. Otherwise, cannot be removed except by admins
 	var/zeroth = null
 	/// Zeroth borg law
 	/// It's just a zeroth law but specially themed for cyborgs
@@ -147,7 +147,7 @@ GLOBAL_VAR(round_default_lawset)
 	var/list/hacked = list()
 
 /datum/ai_laws/Destroy(force = FALSE)
-	if(!QDELETED(owner)) //Stopgap to help with laws randomly being lost. This stack_trace will hopefully help find the real issues.
+	if(!QDELETED(owner)) // Stopgap to help with laws randomly being lost.. This stack_trace will hopefully help find the real issues.
 		if(force) //Unless we're forced...
 			stack_trace("AI law datum for [owner] has been forcefully destroyed incorrectly; the owner variable should be cleared first!")
 			return ..()
@@ -236,7 +236,7 @@ GLOBAL_VAR(round_default_lawset)
  */
 /datum/ai_laws/proc/set_zeroth_law(law, law_borg)
 	zeroth = law
-	if(law_borg) //Making it possible for slaved borgs to see a different law 0 than their AI. --NEO
+	if(law_borg) // Making it possible for slaved borgs to see a different law 0 than their AI.. --NEO
 		zeroth_borg = law_borg
 
 /**

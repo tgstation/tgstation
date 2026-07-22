@@ -53,7 +53,7 @@
 	visible_message(span_warning("The corpse of [target.name] suddenly rises!"))
 	var/mob/living/basic/blob_minion/zombie/blombie = change_mob_type(zombie_type, loc, new_name = initial(zombie_type.name))
 	blombie.pass_flags |= PASSBLOB //No way to pass the blob_borne info through change_mob_type() to Initilize(), so we just circumvent it here.
-	APPLY_FACTION_AND_ALLIES_FROM(blombie, src) //inherit the spore's faction in case it was spawned with a different one (eg gold core)
+	APPLY_FACTION_AND_ALLIES_FROM(blombie, src) // inherit the spore's faction in case it was spawned with a different one for example gold core)
 	blombie.set_name()
 	if (istype(blombie)) // In case of badmin
 		blombie.consume_corpse(target)
@@ -118,10 +118,10 @@
 /mob/living/basic/blob_minion/spore/minion/weak/on_strain_updated()
 	return
 
-/// independent spore spawned by cytology, extremely weak and shitty like all spores but exhibits a high degree of sentience in addition to the predatory nature of inherent to blob creatures.
+/// independent spore spawned by cytology, extremely weak. Shitty like all spores. Exhibits a high degree of sentience in addition to the predatory nature of inherent to blob creatures.
 /mob/living/basic/blob_minion/spore/independent
 	//We are on our own and get to enjoy the classic orange look, which frankly, many people are saying is the best!
-	//If I had removed it they'd all be messaging me, people like you wouldn't believe, tough, real tough people, they'd be messaging me with tears in their eyes; "Sir, sir please bring it back!"
+	// If I had removed it they'd all be messaging me, people like you wouldn't believe, tough, real tough people, they'd be messaging me with tears in their eyes. "Sir, sir please bring it back!"
 	icon_state = "blobpod_independent"
 	//we hate gold cores
 	gold_core_spawnable = NO_SPAWN
@@ -129,7 +129,7 @@
 
 /mob/living/basic/blob_minion/spore/independent/Initialize(mapload)
 	. = ..()
-	//free but incredibly shitty antag. Good job hazard to add some friction to gathering spore toxin.
+	// free but incredibly shitty antag.. Good job hazard to add some friction to gathering spore toxin.
 	AddComponent(\
 		/datum/component/ghost_direct_control,\
 		ban_type = ROLE_FREE_BLOB,\

@@ -34,7 +34,7 @@
 	//used to keep track of what material our panel currently has
 	var/datum/material/material_type = /datum/material/glass
 
-	///better glass increases the how much power the solar gives. the power_tier is a multiplier
+	/// better glass increases the how much power the solar gives.. the power_tier is a multiplier
 	var/power_tier = 1
 
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
@@ -226,7 +226,7 @@
 
 /obj/machinery/power/solar/process()
 	// If the turf is sun blocked directly we have no hope of being able to see the sun so don't bother processing
-	// On the other hand if the station is blocking the sun we might we might be able to see it later, so check for that (in update_turn)
+	// On the other h. If the station is blocking the sun we might we might be able to see it later, so check f. That (in update_turn)
 	if((machine_stat & BROKEN) || isnull(loc) || HAS_TRAIT(loc, TRAIT_TURF_SUN_BLOCKED))
 		return
 
@@ -244,7 +244,7 @@
 	if(control)
 		control.gen += sgen
 
-//Bit of a hack but this whole type is a hack
+// Bit of a temporary solution but this whole type is a temporary solution
 /obj/machinery/power/solar/fake/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 	UnregisterSignal(SSsun, COMSIG_SUN_MOVED)

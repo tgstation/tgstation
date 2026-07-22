@@ -1,4 +1,4 @@
-/// The classic morph, Corpus Accipientis (or "The body of the recipient"). It's a blob that can disguise itself as other things simply put.
+/// The classic morph, Corpus Accipientis (or "The body of the recipient").. It's a blob that can disguise itself as other things simply put.
 /mob/living/basic/morph
 	name = "morph"
 	real_name = "morph"
@@ -23,7 +23,7 @@
 	melee_damage_upper = 20
 	melee_attack_cooldown = CLICK_CD_MELEE
 
-	// Oh you KNOW it's gonna be real green
+	// Oh you KNOW it's going to be real green
 	lighting_cutoff_red = 10
 	lighting_cutoff_green = 35
 	lighting_cutoff_blue = 15
@@ -38,7 +38,7 @@
 
 	/// A weakref pointing to the form we are currently assumed as.
 	var/datum/weakref/form_weakref = null
-	/// A typepath pointing of the form we are currently assumed as. Remember, TYPEPATH!!!
+	/// A typepath pointing of the form we are currently assumed as.. Remember, TYPEPATH!!!
 	var/atom/movable/form_typepath = null
 	/// The ability that allows us to disguise ourselves.
 	var/datum/action/cooldown/mob_cooldown/assume_form/disguise_ability = null
@@ -173,10 +173,10 @@
 	eat(eatable = item_target, delay = 2 SECONDS)
 	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
-/// Eat stuff. Delicious. Return TRUE if we ate something, FALSE otherwise.
-/// Required: `eatable` is the thing (item or mob) that we are going to eat.
+/// Eat stuff.. Delicious.. Return TRUE if we ate something, FALSE otherwise.
+/// Needed `eatable` is the thing (item or mob) that we are going to eat.
 /// Optional: `delay` is the applicable time-based delay to pass into `do_after()` before the logic is ran.
-/// Optional: `update_health` is an integer that will be added (or maybe subtracted if you're cruel) to our health after we eat something. Passed into `adjust_health()` so make sure what you pass in is accurate.
+/// Optional: `update_health` is an integer that will be added (or maybe subtracted if you're cruel) to our health after we eat something.. Passed into `adjust_health()` so make sure what you pass in is accurate.
 /mob/living/basic/morph/proc/eat(atom/movable/eatable, delay = 0 SECONDS, update_health = 0)
 	if(QDELETED(eatable) || eatable.loc == src)
 		return FALSE
@@ -197,7 +197,7 @@
 
 	return TRUE
 
-/// No fleshed out AI implementation, just something that make these fellers seem lively if they're just dropped into a station.
+/// No fleshed out AI code just something that make these fellers seem lively if they're just dropped into a station.
 /// Only real human-powered intelligence is capable of playing prop hunt in SS13 (until further notice).
 /datum/ai_controller/basic_controller/morph
 	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/morph.bt.json"

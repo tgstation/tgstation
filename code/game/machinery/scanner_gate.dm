@@ -19,13 +19,13 @@
 	var/scanline_timer
 	///Bool to check if the scanner's controls are locked by an ID.
 	var/locked = FALSE
-	///Which setting is the scanner checking for? See defines in scanner_gate.dm for the list.
+	/// Which setting is the scanner checking for?. See defines in scanner_gate.dm for the list.
 	var/scangate_mode = SCANGATE_NONE
 	///Is searching for a disease, what severity is enough to trigger the gate?
 	var/disease_threshold = DISEASE_SEVERITY_MINOR
 	///If scanning for a specific species, what species is it looking for?
 	var/detect_species_id = SPECIES_HUMAN
-	///Flips all scan results for inverse scanning. Signals if scan returns false.
+	/// Flips all scan results for inverse scanning.. Signals if scan returns false.
 	var/reverse = FALSE
 	///If scanning for nutrition, what level of nutrition will trigger the scanner?
 	var/detect_nutrition = NUTRITION_LEVEL_FAT
@@ -39,7 +39,7 @@
 	var/minus_false_beep = 0
 	///Base false positive/negative chance
 	var/base_false_beep = 5
-	///List of species that can be scanned by the gate. Supports adding more species' IDs during in-game.
+	/// List of species that can be scanned by the gate.. Supports adding more species' IDs during in-game.
 	var/static/list/available_species = list(
 		SPECIES_HUMAN,
 		SPECIES_LIZARD,

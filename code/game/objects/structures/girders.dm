@@ -13,18 +13,18 @@
 	canSmoothWith = SMOOTH_GROUP_GIRDER + SMOOTH_GROUP_WALLS
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
-	/// The stack type required to construct and dropped upon deconstructing the girder.
+	/// The stack type needed to construct and dropped upon deconstructing the girder.
 	var/stack_type = /obj/item/stack/sheet/iron
-	/// The stack amount required to construct and dropped upon deconstructing the girder.
+	/// The stack amount needed to construct and dropped upon deconstructing the girder.
 	var/stack_amount = 2
 	/// Always drops the stack in full, even when demolished rather than disassembled.
 	var/always_drop_stack = FALSE
 
-	/// The current state of the girder. Used for construction.
+	/// The current state of the girder.. Used for construction.
 	var/state = GIRDER_NORMAL
 	/// Whether the girder can be unanchored by wrenching it.
 	var/can_displace = TRUE
-	/// Whether the girder can be welded apart. (for cult and bronze girders)
+	/// Whether the girder can be welded apart.. (for cult and bronze girders)
 	var/can_weld_apart = FALSE
 
 	/// The percentage chance (0-100) that a projectile passes through the girder.

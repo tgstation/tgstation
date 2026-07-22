@@ -80,7 +80,7 @@
 	holder.pixel_y = size_check.Height() - ICON_SIZE_Y
 	if(mob_parent.stat == DEAD || HAS_TRAIT(mob_parent, TRAIT_FAKEDEATH) || isnull(mainframe))
 		holder.icon_state = "huddead2"
-		holder.pixel_x = -8 // new icon states? nuh uh
+		holder.pixel_x = -8 // new icon states?. nuh uh
 	else
 		holder.icon_state = "hudtrackingai"
 		holder.pixel_x = -16
@@ -134,7 +134,7 @@
 	to_chat(owner, span_boldbig("You are still considered a silicon/cyborg/AI. Follow your laws."))
 
 /obj/item/organ/brain/cybernetic/ai/proc/deploy_init(mob/living/silicon/ai/AI)
-	//todo camera maybe
+	// to do camera maybe
 	mainframe = AI
 	connected_ai = AI
 	RegisterSignal(AI, COMSIG_QDELETING, PROC_REF(ai_deleted))

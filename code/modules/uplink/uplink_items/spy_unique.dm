@@ -1,7 +1,7 @@
 /datum/uplink_category/spy_unique
 	name = "Spy Unique"
 
-// This is solely for uplink items that the spy can randomly obtain via bounties.
+// This is solely for uplink items that the spy can randomly get via bounties.
 /datum/uplink_item/spy_unique
 	category = /datum/uplink_category/spy_unique
 	cant_discount = TRUE

@@ -17,7 +17,7 @@
 	maingoal.team = src
 	objectives += maingoal
 
-	// when a nuke team is created, the infiltrator has not loaded in yet - it takes some time. so no nuke, we have to wait
+	// when a nuke team is created, the infiltrator has not loaded in yet - it takes some time.. so no nuke, we have to wait
 	addtimer(CALLBACK(src, PROC_REF(assign_nuke_delayed)), 5 SECONDS)
 
 /datum/team/nuclear/roundend_report()

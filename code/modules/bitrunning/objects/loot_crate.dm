@@ -8,13 +8,13 @@
 #define ORE_MULTIPLIER_DIAMOND 0.3
 #define ORE_MULTIPLIER_BLUESPACE_CRYSTAL 0.2
 
-/obj/structure/closet/crate/secure/bitrunning // Base class. Do not spawn this.
+/obj/structure/closet/crate/secure/bitrunning // Base class.. Do not spawn this.
 	name = "base class cache"
 	desc = "Talk to a coder."
 	icon_state = "bitrunning"
 	base_icon_state = "bitrunning"
 
-/// The virtual domain - side of the bitrunning crate. Deliver to the send location.
+/// The virtual domain - side of the bitrunning crate.. Deliver to the send location.
 /obj/structure/closet/crate/secure/bitrunning/encrypted
 	name = "encrypted cache"
 	desc = "Needs to be decrypted at the safehouse to be opened."
@@ -25,7 +25,7 @@
 /obj/structure/closet/crate/secure/bitrunning/encrypted/can_unlock(mob/living/user, obj/item/card/id/player_id, obj/item/card/id/registered_id)
 	return FALSE
 
-/// The bitrunner den - side of the bitrunning crate. Appears in the receive location.
+/// The bitrunner den - side of the bitrunning crate.. Appears in the receive location.
 /obj/structure/closet/crate/secure/bitrunning/decrypted
 	name = "decrypted cache"
 	desc = "Compiled from the virtual domain. The reward of a successful bitrunner."
@@ -72,7 +72,7 @@
 	var/random_sum = (rand() + 0.5) * base
 	return max(ROUND_UP(random_sum * ore_multiplier), 1)
 
-/// Handles spawning completion loot. This tries to handle bad flat and assoc lists
+/// Handles spawning completion loot.. This tries to handle bad flat and assoc lists
 /obj/structure/closet/crate/secure/bitrunning/decrypted/proc/spawn_loot(list/completion_loot)
 	for(var/path in completion_loot)
 		if(!ispath(path))

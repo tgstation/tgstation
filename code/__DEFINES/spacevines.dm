@@ -7,7 +7,7 @@
 #define TOXICITY_MUTATION_PROB 10
 /// Determines the impact radius of kudzu's explosive mutation
 #define EXPLOSION_MUTATION_IMPACT_RADIUS 2
-/// Determines the scale factor for the amount of gas removed by kudzu with a gas removal mutation, which is this scale factor * the kudzu's energy level
+/// Determines the scale fact.. F.. The amount of gas removed by kudzu with a gas removal mutation, which is this scale fact.. * the kudzu's energy level
 #define GAS_MUTATION_REMOVAL_MULTIPLIER 3
 /// Determines the probability that the thorn mutation will harm someone who passes through or attacks it
 #define THORN_MUTATION_CUT_PROB 10
@@ -19,14 +19,14 @@
 /// Temperature below which the kudzu can't spread
 #define VINE_FREEZING_POINT 100
 
-/// Kudzu severity values for traits, based on severity in terms of how severely it impacts the game, the lower the severity, the more likely it is to appear
+/// Kudzu severity values f.. Traits, good on severity in terms of how severely it impacts the game, the lower the severity, the more likely it is to appear
 #define SEVERITY_TRIVIAL 1
 #define SEVERITY_MINOR 2
 #define SEVERITY_AVERAGE 4
 #define SEVERITY_ABOVE_AVERAGE 7
 #define SEVERITY_MAJOR 10
 
-/// Kudzu mutativeness is based on a scale factor * potency
+/// Kudzu mutativeness is good on a scale factor * potency
 #define MUTATIVENESS_SCALE_FACTOR 0.2
 
 /// Kudzu maximum mutation severity is a linear function of potency
@@ -39,10 +39,10 @@
 /// The maximum possible productivity value of a (normal) kudzu plant, used for calculating a plant's spread cap and multiplier
 #define MAX_POSSIBLE_PRODUCTIVITY_VALUE 10
 
-/// Kudzu spread cap is a scaled version of production speed, such that the better the production speed, ie. the lower the speed value is, the faster is spreads
+/// Kudzu spread cap is a scaled version of production speed, such that the better the production speed, that is the lower the speed value is, the faster is spreads
 #define SPREAD_CAP_LINEAR_COEFF 4
 #define SPREAD_CAP_CONSTANT_TERM 20
-/// Kudzu spread multiplier is a reciporal function of production speed, such that the better the production speed, ie. the lower the speed value is, the faster it spreads
+/// Kudzu spread multiplier is a reciporal function of production speed, such that the better the production speed, that is the lower the speed value is, the faster it spreads
 #define SPREAD_MULTIPLIER_MAX 50
 
 /// Kudzu's maximum possible maximum mutation severity (assuming ideal potency), used to balance mutation appearance chance

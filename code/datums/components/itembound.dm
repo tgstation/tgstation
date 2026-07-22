@@ -1,4 +1,4 @@
-/// When a movable has this component AND they are in the contents of a container, they will no longer be able to use their hands and be immobilized until they are removed from the container. So far, this is only useful for smites.
+/// When a movable has this component AND they are in the contents of a container, they will no longer be able to use their hands. Be immobilized until they are removed from the container.. So far, this is only useful for smites.
 /datum/component/itembound
 	/// Weak reference to the container that the movable is inside of.
 	var/datum/weakref/containerref
@@ -33,7 +33,7 @@
 	SIGNAL_HANDLER
 	examine_list += span_notice("If you hold it up to your ear, you can hear the screams of the damned.")
 
-/// Ensure that when we move, we still are in the container. If not in the container, remove all the traits.
+/// Ensure that when we move, we still are in the container.. If not in the container, remove all the traits.
 /datum/component/itembound/proc/verify_containment()
 	var/atom/movable/container = containerref.resolve()
 	if(!QDELETED(container) && container.contains(parent))

@@ -9,7 +9,7 @@
 	var/viewing_category
 	/// What market is currently being bought from by the uplink?
 	var/viewing_market
-	/// the identifier of the item that the current uplink is attempting to buy
+	/// the identifier of the item that the current uplink is trying to buy
 	var/selected_item
 	/// Is the uplink in the process of buying the selected item?
 	var/buying

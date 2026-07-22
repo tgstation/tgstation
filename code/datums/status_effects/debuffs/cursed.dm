@@ -35,7 +35,7 @@
 		owner.remove_shared_particles(smoke_path)
 	return ..()
 
-/// Checks the number of curses we have and returns information back to the slot machine. `max_curse_amount` is set by the slot machine itself.
+/// Checks the number of curses we have and returns information back to the slot machine.. `max_curse_amount` is set by the slot machine itself.
 /datum/status_effect/slot_machine_curse/proc/check_curses(mob/user, max_curse_amount)
 	SIGNAL_HANDLER
 	if(curse_count >= max_curse_amount)
@@ -54,7 +54,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(handle_after_effects), 1 SECONDS)) // give it a second to let the failure sink in before we exact our toll
 
-/// Makes a nice lorey message about the curse level we're at. I think it's nice
+/// Makes a nice lorey message about the curse level we're at.. I think it's nice
 /datum/status_effect/slot_machine_curse/proc/handle_after_effects()
 	if(QDELETED(src))
 		return
@@ -62,7 +62,7 @@
 	monologuing = TRUE
 	var/list/messages = list()
 	switch(curse_count)
-		if(1) // basically your first is a "freebie" that will still require urgent medical attention and will leave you smoking forever but could be worse tbh
+		if(1) // basically your first is a "freebie" that will still need urgent medical attention. Will leave you smoking forever. Could be worse to be honest
 			if(ishuman(owner))
 				var/mob/living/carbon/human/human_owner = owner
 				playsound(human_owner, SFX_SEAR, 50, TRUE)
@@ -110,10 +110,10 @@
 
 	for(var/message in messages)
 		to_chat(owner, message)
-		sleep(1.5 SECONDS) // yes yes a bit fast but it can be a lot of text and i want the whole thing to send before the cooldown on the slot machine might expire
+		sleep(1.5 SECONDS) // yes yes a bit fast. It can be a lot of text. I want the whole thing to send before the cooldown on the slot machine might expire
 	monologuing = FALSE
 
-/// Cleans ourselves up and removes our curses. Meant to be done in a "positive" way, when the curse is broken. Directly use qdel otherwise.
+/// Cleans ourselves up and removes our curses.. Meant to be done in a "positive" way, when the curse is broken.. Directly use qdel otherwise.
 /datum/status_effect/slot_machine_curse/proc/clear_curses()
 	SIGNAL_HANDLER
 

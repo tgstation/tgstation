@@ -1,5 +1,5 @@
 // This file contains all of the trait sources, or all of the things that grant traits.
-// Several things such as `type` or `REF(src)` may be used in the ADD_TRAIT() macro as the "source", but this file contains all of the defines for immutable static strings.
+// Several things such as `type`.. `REF(src)` may be used in the ADD_TRAIT() macro as the "source".. This file contains all of the defines f.. Immutable static strings.
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
@@ -79,7 +79,7 @@
 /// trait associated to a stat value or range of
 #define STAT_TRAIT "stat"
 #define STATION_TRAIT "station-trait"
-/// obtained from mapping helper
+/// got from mapping helper
 #define MAPPING_HELPER_TRAIT "mapping-helper"
 /// Trait associated to wearing a suit
 #define SUIT_TRAIT "suit"
@@ -196,7 +196,7 @@
 #define PAI_FOLDED "pai-folded"
 /// Trait applied to brain mobs when they lack external aid for locomotion, such as being inside a mech.
 #define BRAIN_UNAIDED "brain-unaided"
-/// Trait applied to a mob when it gets a required "operational datum" (components/elements). Sends out the source as the type of the element.
+/// Trait applied to a mob when it gets a needed "operational datum" (components/elements)... Sends out the source as the type of the element.
 #define TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM "element-required"
 /// Trait applied by MODsuits.
 #define MOD_TRAIT "mod"

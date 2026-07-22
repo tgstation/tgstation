@@ -15,5 +15,5 @@
 			initialized_volume += container.list_reagents[reagent]
 
 		if(initialized_volume > container.volume)
-			// include the path as well here since there's up to like five "hypospray" or "beaker" or "soda water" types that aren't distinct enough to be differentiated by name alone.
+			// include the path as well here since there's up to like five "hypospray". "beaker". "soda water" types that aren't distinct enough to be differentiated by name alone.
 			TEST_FAIL("[container] ([container.type]) has [initialized_volume] units of reagents, but only [container.volume] units of space.")

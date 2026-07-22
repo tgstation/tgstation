@@ -33,7 +33,7 @@
 	/// How big is the singularity?
 	var/singularity_size
 
-	/// Should we disregard the possibility of failed movements? Used by stage five singularities
+	/// Should we disregard the possibility of failed movements?. Used by stage five singularities
 	var/disregard_failed_movements
 
 	/// Can this singularity be BSA'd?
@@ -175,7 +175,7 @@
 
 	consume(source, user)
 
-// Will there be an impact? Who knows.  Will we see it? No.
+// Will there be an impact?. Who knows.. Will we see it?. No.
 /datum/component/singularity/proc/consume_bullets(datum/source, obj/projectile/projectile)
 	SIGNAL_HANDLER
 
@@ -200,7 +200,7 @@
 	var/static/cached_index = 0
 	if(cached_index)
 		var/old_index = cached_index
-		cached_index = 0 // Prevents infinite Cut() runtimes. Sorry MSO
+		cached_index = 0 // Prevents infinite Cut() runtimes.. Sorry MSO
 		turfs_to_consume.Cut(1, old_index + 1)
 
 	for (cached_index in 1 to length(turfs_to_consume))
@@ -224,7 +224,7 @@
 			else
 				thing.singularity_pull(parent, singularity_size)
 
-		if(TICK_CHECK) //Yes this means the singulo can eat all of its host subsystem's cpu, but like it's the singulo, and it was gonna do that anyway
+		if(TICK_CHECK) // Yes this means the singulo can eat all of its host subsystem's cpu. Like it's the singulo. It was going to do that anyway
 			turfs_to_consume.Cut(1, cached_index + 1)
 			cached_index = 0
 			return

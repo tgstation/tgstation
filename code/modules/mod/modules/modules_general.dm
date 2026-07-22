@@ -101,7 +101,7 @@
 	overlay_state_active = "module_jetpack_on"
 	required_slots = list(ITEM_SLOT_BACK)
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7.5, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 5)
-	/// Do we have stabilizers? If yes the user won't move from inertia.
+	/// Do we have stabilizers?. If yes the user won't move from inertia.
 	var/stabilize = TRUE
 	/// Callback to see if we can thrust the user.
 	var/thrust_callback
@@ -238,9 +238,9 @@
 	var/display_dna = FALSE
 	/// Does this show the round ID and shift time?
 	var/display_time = FALSE
-	/// Death sound. May or may not be funny. Vareditable at your own risk.
+	/// Death sound.. May or may not be funny.. Vareditable at your own risk.
 	var/death_sound = 'sound/effects/flatline3.ogg'
-	/// Death sound volume. Please be responsible with this.
+	/// Death sound volume.. Please be responsible with this.
 	var/death_sound_volume = 50
 	/// Does this boost suit sensor status across Z-levels?
 	var/sensor_boost = TRUE
@@ -547,7 +547,7 @@
 		return NONE
 	new /obj/effect/temp_visual/mook_dust(fell_on)
 
-	/// Boolean that tracks whether we fell more than one z-level. If TRUE, we stagger our wearer.
+	/// Boolean that tracks whether we fell more than one z-level.. If TRUE, we stagger our wearer.
 	var/extreme_fall = FALSE
 
 	if(levels >= 2)
@@ -761,7 +761,7 @@
 /obj/item/mod/module/signlang_radio/on_part_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, REF(src))
 
-///A module that recharges the suit by an itsy tiny bit whenever the user takes a step. Originally called "magneto module" but the videogame reference sounds cooler.
+/// A module that recharges the suit by an itsy tiny bit whenever the user takes a step.. Originally called "magneto module" but the videogame reference sounds cooler.
 /obj/item/mod/module/joint_torsion
 	name = "MOD joint torsion ratchet module"
 	desc = "A compact, weak AC generator that charges the suit's internal cell through the power of deambulation. It doesn't work in zero G. More than one can be installed."

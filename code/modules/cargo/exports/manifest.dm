@@ -5,7 +5,7 @@
 #define MAX_CORRECT_CHARGE MAX_HANDLING_CHARGE * 2
 #define MAX_ERRONEOUS_CHARGE MAX_HANDLING_CHARGE * 4
 
-// Approved manifest. 12% handling payment, up to a maximum of the max handling charge
+// Approved manifest.. 12% handling payment, up to a maximum of the max handling charge
 /datum/export/manifest_correct
 	k_elasticity = 0
 	unit_name = "approved manifest"
@@ -24,7 +24,7 @@
 /datum/export/manifest_correct/get_base_cost(obj/item/paper/fluff/jobs/cargo/manifest/exported_item)
 	return min(exported_item.order_cost * MANIFEST_HANDLING_RATE, MAX_HANDLING_CHARGE)
 
-// Correctly denied manifest. Refunds package cost plus double handling payment, up to a maximum of 2x max handling charge
+// Correctly denied manifest.. Refunds package cost plus double handling payment, up to a maximum of 2x max handling charge
 /datum/export/manifest_error_denied
 	k_elasticity = 0
 	unit_name = "correctly denied manifest"
@@ -43,7 +43,7 @@
 /datum/export/manifest_error_denied/get_base_cost(obj/item/paper/fluff/jobs/cargo/manifest/exported_item)
 	return exported_item.order_cost + min(exported_item.order_cost * MANIFEST_CORRECT_RATE, MAX_CORRECT_CHARGE)
 
-// Erroneously approved manifest. Penalty charged quadruple handling payment, up to a maximum of 4x max handling charge
+// Erroneously approved manifest.. Penalty charged quadruple handling payment, up to a maximum of 4x max handling charge
 /datum/export/manifest_error
 	unit_name = "erroneously approved manifest"
 	k_elasticity = 0
@@ -63,7 +63,7 @@
 /datum/export/manifest_error/get_base_cost(obj/item/paper/fluff/jobs/cargo/manifest/exported_item)
 	return -min(exported_item.order_cost * MANIFEST_ERRONEOUS_RATE, MAX_ERRONEOUS_CHARGE)
 
-// Erroneously denied manifest. Penalty charged quadruple handling payment, up to a maximum of 4x max handling charge
+// Erroneously denied manifest.. Penalty charged quadruple handling payment, up to a maximum of 4x max handling charge
 /datum/export/manifest_correct_denied
 	k_elasticity = 0
 	unit_name = "erroneously denied manifest"

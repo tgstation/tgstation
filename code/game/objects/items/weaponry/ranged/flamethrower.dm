@@ -225,7 +225,7 @@
 	operating = FALSE
 
 /obj/item/flamethrower/proc/default_ignite(turf/target, release_amount = 0.05)
-	//TODO: DEFERRED Consider checking to make sure tank pressure is high enough before doing this...
+	// To do DEFERRED Consider checking to make sure tank pressure is high enough before doing this...
 	//Transfer 5% of current tank air contents to turf
 	var/datum/gas_mixture/tank_mix = ptank.return_air()
 	var/datum/gas_mixture/air_transfer = tank_mix.remove_ratio(release_amount)
@@ -234,7 +234,7 @@
 		var/moles = air_transfer.moles[/datum/gas/plasma] * 5 //Suffering
 		air_transfer.set_gas(/datum/gas/plasma, moles)
 	target.assume_air(air_transfer)
-	//Burn it based on transferred gas
+	// Burn it good on transferred gas
 	target.hotspot_expose((tank_mix.temperature*2) + 380,500)
 	//location.hotspot_expose(1000,500,1)
 

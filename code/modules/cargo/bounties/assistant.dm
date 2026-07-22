@@ -267,10 +267,10 @@
 	if(fishie.status == FISH_DEAD || HAS_TRAIT(fishie, TRAIT_FISH_LOW_PRICE))
 		reward -= shipping_penalty
 
-///A subtype of the fish bounty that requires fish with a specific fluid type
+/// A subtype of the fish bounty that needs fish with a specific fluid type
 /datum/bounty/item/assistant/fish/fluid
 	reward = CARGO_CRATE_VALUE * 12
-	///The required fluid type of the fish for it to be shipped
+	/// The needed fluid type of the fish for it to be shipped
 	var/fluid_type
 
 /datum/bounty/item/assistant/fish/fluid/New()

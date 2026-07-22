@@ -52,7 +52,7 @@
 		voice_filter = "rubberband=pitch=1.5" // Use the filter to pitch up if we can't naturally pitch up.
 
 /mob/living/basic/parrot/poly/Destroy()
-	LAZYREMOVE(SSticker.round_end_events, roundend_callback) // we do the memory writing stuff on death, but this is important to yeet as fast as we can if we need to destroy
+	LAZYREMOVE(SSticker.round_end_events, roundend_callback) // we do the memory writing stuff on death, but this is important to throw as fast as we can if we need to destroy
 	roundend_callback = null
 	return ..()
 
@@ -70,7 +70,7 @@
 			specter.PossessByPlayer(key)
 	return ..()
 
-/mob/living/basic/parrot/poly/get_static_list_of_phrases() // there's only one poly, so there should only be one ongoing list of phrases. i guess
+/mob/living/basic/parrot/poly/get_static_list_of_phrases() // there's only one poly, so there should only be one ongoing list of phrases.. i guess
 	var/static/list/phrases_to_return = list()
 	if(length(phrases_to_return))
 		return phrases_to_return
@@ -114,7 +114,7 @@
 		if(POLY_BEATING_DEATHSTREAK)
 			add_atom_colour("#BB7777", FIXED_COLOUR_PRIORITY)
 
-/// Reads the memory of the parrot, and updates the necessary variables. Returns a list of phrases to add to the parrot's speech buffer.
+/// Reads the memory of the parrot, and updates the necessary variables.. Returns a list of phrases to add to the parrot's speech buffer.
 /mob/living/basic/parrot/poly/proc/read_memory()
 	RETURN_TYPE(/list)
 	var/list/returnable_list = list()
@@ -138,7 +138,7 @@
 
 	return returnable_list
 
-/// Determines the type of Poly we might have here based on the statistics we got from the memory.
+/// Determines the type of Poly we might have here good on the statistics we got from the memory.
 /mob/living/basic/parrot/poly/proc/determine_special_poly()
 	if(rounds_survived == longest_survival)
 		return POLY_LONGEST_SURVIVAL

@@ -102,7 +102,7 @@
 	animate(alpha = 255, pixel_y = 0, time = duration / 2)
 	addtimer(on_completed, duration, TIMER_DELETE_ME)
 
-/// A skull is going to be here! Oh no!
+/// A skull is going to be here!. Oh no!
 /obj/effect/temp_visual/legion_brood_indicator
 	name = "legion brood land"
 	duration = 0.75 SECONDS

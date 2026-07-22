@@ -239,7 +239,7 @@
 
 	var/turf/attacker_turf = get_turf(attacker)
 
-	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down
+	// Are they on the same tile?. We'll return partial deviation.. This may be someone flashing while lying down
 	// or flashing someone they're stood on the same turf as, or a borg flashing someone buckled to them.
 	if(victim.loc == attacker_turf)
 		return DEVIATION_PARTIAL

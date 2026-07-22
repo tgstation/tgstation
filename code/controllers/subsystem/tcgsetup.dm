@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(trading_card_game)
 		var/tooltip_text = keywords[keyword]
 		keywords[keyword] = span_tooltip(tooltip_text, keyword)
 
-///Takes a string as input. Searches it for keywords in the pattern {$keyword}, and replaces them with their expanded form, generated above
+/// Takes a string as input.. Searches it for keywords in the pattern {$keyword}, and replaces them with their expanded form, generated above
 /datum/controller/subsystem/trading_card_game/proc/resolve_keywords(search_through)
 	var/starting_text = search_through
 	while(TRUE)
@@ -103,7 +103,7 @@ SUBSYSTEM_DEF(trading_card_game)
 /datum/controller/subsystem/trading_card_game/proc/get_rarity_table(type, list/sample_table)
 	//Pass by refrance moment
 	//This lets us only have one rarity table per pack, badmins beware
-	//Yes this is horribly overengineered. No I am not sorry
+	// Yes this is horribly overengineered.. No I am not sorry
 	if(!cached_rarity_table[type])
 		cached_rarity_table[type] = sample_table
 	return cached_rarity_table[type]
@@ -172,7 +172,7 @@ SUBSYSTEM_DEF(trading_card_game)
 ///Used to test open a large amount of cardpacks
 /datum/controller/subsystem/trading_card_game/proc/check_card_distribution(cardPack, batchSize, batchCount, guaranteed)
 	var/totalCards = 0
-	//Gotta make this look like an associated list so the implicit "does this exist" checks work proper later
+	// Got to make this look like an associated list so the implicit "does this exist" checks work proper later
 	var/list/cardsByCount = list("" = 0)
 	var/obj/item/cardpack/pack = new cardPack()
 	for(var/index in 1 to batchCount)

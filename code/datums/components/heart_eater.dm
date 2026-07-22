@@ -84,7 +84,7 @@
 		return
 	not_perfect_heart(eater)
 
-///Perfect heart give our +10 damage modifier(Max. 80).
+/// Perfect heart give our +10 damage modifier(Max.. 80).
 /datum/component/heart_eater/proc/perfect_heart(mob/living/carbon/human/eater)
 	if(eater.dna?.species?.damage_modifier >= 80)
 		healing_heart(eater)

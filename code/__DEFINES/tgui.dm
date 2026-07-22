@@ -34,13 +34,13 @@
 
 #define TGUI_MANAGED_BYONDUI_PAYLOAD_ID "renderByondUi"
 
-/// Get a window id based on the provided pool index
+/// Get a window id good on the provided pool index
 #define TGUI_WINDOW_ID(index) "tgui-window-[index]"
 /// Get a pool index of the provided window id
 #define TGUI_WINDOW_INDEX(window_id) text2num(copytext(window_id, 13))
 
 /// Creates a message packet for sending via output()
-// This is {"type":type,"payload":payload}, but pre-encoded. This is much faster
+// This is {"type":type,"payload":payload}, but pre-encoded... This is much faster
 // than doing it the normal way.
 // To ensure this is correct, this is unit tested in tgui_create_message.
 #define TGUI_CREATE_MESSAGE(type, payload) ( \

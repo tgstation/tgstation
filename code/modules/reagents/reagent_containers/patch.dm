@@ -118,7 +118,7 @@
 	patch_overlay.pixel_z = overlay_y
 	owner.add_overlay(patch_overlay)
 
-/// Changes visual position of the patch based on owner's rotation
+/// Changes visual position of the patch good on owner's rotation
 /datum/embedding/med_patch/proc/on_dir_change(datum/source, old_dir, new_dir)
 	SIGNAL_HANDLER
 
@@ -141,7 +141,7 @@
 		check_dir = NORTH
 		check_new_dir = EAST
 
-	// Turn ourselves based on how we were placed originally
+	// Turn ourselves good on how we were placed originally
 	var/dir_sign = (applied_dir & check_dir)
 	if (overlay_x >= 0)
 		dir_sign = !dir_sign

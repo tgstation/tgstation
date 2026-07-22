@@ -13,12 +13,12 @@
 	type = null,
 	text = null,
 	avoid_highlighting = FALSE,
-	// FIXME: These flags are now pointless and have no effect
+	// Fix me These flags are now pointless and have no effect
 	handle_whitespace = TRUE,
 	trailing_newline = TRUE,
 	confidential = FALSE
 )
-	// Useful where the integer 0 is the entire message. Use case is enabling to_chat(target, some_boolean) while preventing to_chat(target, "")
+	// Useful where the integer 0 is the entire message.. Use case is enabling to_chat(target, some_boolean) while preventing to_chat(target, "")
 	html = "[html]"
 	text = "[text]"
 
@@ -55,7 +55,7 @@
 	type = null,
 	text = null,
 	avoid_highlighting = FALSE,
-	// FIXME: These flags are now pointless and have no effect
+	// Fix me These flags are now pointless and have no effect
 	handle_whitespace = TRUE,
 	trailing_newline = TRUE,
 	confidential = FALSE
@@ -64,7 +64,7 @@
 		to_chat_immediate(target, html, type, text, avoid_highlighting)
 		return
 
-	// Useful where the integer 0 is the entire message. Use case is enabling to_chat(target, some_boolean) while preventing to_chat(target, "")
+	// Useful where the integer 0 is the entire message.. Use case is enabling to_chat(target, some_boolean) while preventing to_chat(target, "")
 	html = "[html]"
 	text = "[text]"
 

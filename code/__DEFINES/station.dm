@@ -2,7 +2,7 @@
 #define STATION_TRAIT_NEUTRAL 2
 #define STATION_TRAIT_NEGATIVE 3
 
-///Defines for the cost of different station traits. This one is the default.
+/// Defines for the cost of different station traits... This one is the default.
 #define STATION_TRAIT_COST_FULL 1
 ///Cost for smaller traits that could fly under the radar, and are only minorly negative/positive if not neutral.
 #define STATION_TRAIT_COST_LOW 0.5

@@ -1,6 +1,6 @@
 #define MOD_ACTIVATION_STEP_FLAGS IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED|IGNORE_SLOWDOWNS
 
-/// Creates a radial menu from which the user chooses parts of the suit to deploy/retract. Repeats until all parts are extended or retracted.
+/// Creates a radial menu from which the user chooses parts of the suit to deploy/retract.. Repeats until all parts are extended or retracted.
 /obj/item/mod/control/proc/choose_deploy(mob/user)
 	if(!length(mod_parts))
 		return
@@ -337,7 +337,7 @@
 		updated_slots |= text2num(slot_key)
 	wearer.update_clothing(updated_slots)
 
-/// Quickly deploys all the suit parts and if successful, seals them and turns on the suit. Intended mostly for outfits.
+/// Quickly deploys all the suit parts and if successful, seals them and turns on the suit.. Intended mostly for outfits.
 /obj/item/mod/control/proc/quick_activation()
 	control_activation(is_on = TRUE)
 	for(var/obj/item/part as anything in get_parts())

@@ -1,4 +1,4 @@
-/// Revived crew ready to serve once more! Only here for tracking/admin reasons, otherwise hidden
+/// Revived crew ready to serve once more!. Only here for tracking/admin reasons, otherwise hidden
 /datum/antagonist/recovered_crew
 	name = "\improper Recovered Crew"
 	antagpanel_category = "Recovered Crew"

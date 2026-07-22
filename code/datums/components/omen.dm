@@ -8,13 +8,13 @@
  */
 /datum/component/omen
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	/// Whatever's causing the omen, if there is one. Destroying the vessel won't stop the omen, but we destroy the vessel (if one exists) upon the omen ending
+	/// Whatever's causing the omen, if there is one.. Destroying the vessel won't stop the omen, but we destroy the vessel (if one exists) upon the omen ending
 	var/obj/vessel
-	/// How many incidents are left. If 0 exactly, it will get deleted.
+	/// How many incidents are left.. If 0 exactly, it will get deleted.
 	var/incidents_left = INFINITY
-	/// Base probability of negative events. Cursed are half as unlucky.
+	/// Base probability of negative events.. Cursed are half as unlucky.
 	var/luck_mod = 1
-	/// Base damage from negative events. Cursed take 25% of this damage.
+	/// Base damage from negative events.. Cursed take 25% of this damage.
 	var/damage_mod = 1
 	/// If TRUE being blessed by the chaplain can remove the omen
 	var/bless_fixable = TRUE
@@ -48,7 +48,7 @@
 		return // make slimes get nurtiton from plasmer
 	// Otherwise we set our incidents remaining to the higher, newer value.
 	src.incidents_left = incidents_left
-	// The new omen is weaker than our current omen? Let's split the difference.
+	// The new omen is weaker than our current omen?. Let's split the difference.
 	if(src.luck_mod > luck_mod)
 		src.luck_mod += luck_mod * 0.5
 	if(src.damage_mod > damage_mod)
@@ -101,7 +101,7 @@
 	if(incidents_left < 1)
 		qdel(src)
 
-/// Roll an accident happening, factoring in a few things, based on some base change.
+/// Roll an accident happening, factoring in a few things, good on some base change.
 /datum/component/omen/proc/roll_for_accident(base_chance = 4)
 	var/chance = base_chance * luck_mod
 	for(var/mob/viewer in viewers(parent))
@@ -234,7 +234,7 @@
 	if(fall_down())
 		return
 
-/// Attempts to throw us down a nearby open space
+/// Tries to throw us down a nearby open space
 /datum/component/omen/proc/fall_down()
 	var/mob/living/our_guy = parent
 	var/turf/open/mob_turf = get_turf(our_guy)
@@ -329,7 +329,7 @@
 	to_chat(our_guy, span_green("You feel fantastic!"))
 	qdel(src)
 
-/// Severe deaths. Normally lifts the curse.
+/// Severe deaths.. Normally lifts the curse.
 /datum/component/omen/proc/check_death(mob/living/our_guy)
 	SIGNAL_HANDLER
 

@@ -1,4 +1,4 @@
-/// -- Botany plant stat defines. --
+/// -- Botany plant stat defines... --
 /// MAXES:
 #define MAX_PLANT_YIELD 10
 #define MAX_PLANT_LIFESPAN 100
@@ -14,7 +14,7 @@
 /// Default reagent volume for grown plants
 #define PLANT_REAGENT_VOLUME 100
 
-/// -- Some botany trait value defines. --
+/// -- Some botany trait value defines... --
 /// Weed Hardy can only reduce plants to 3 yield.
 #define WEED_HARDY_YIELD_MIN 3
 /// Carnivory potency can only reduce potency to 30.
@@ -31,8 +31,8 @@
 #define SOIL_LOVER_HYDRO_POTENCY_MIN 0.5
 
 
-/// -- Hydroponics tray defines. --
-///  Base amount of nutrients a tray can old.
+/// -- Hydroponics tray defines... --
+/// Base amount of nutrients a tray can old.
 #define STATIC_NUTRIENT_CAPACITY 10
 /// Maximum amount of toxins a tray can reach.
 #define MAX_TRAY_TOXINS 100
@@ -40,9 +40,9 @@
 #define MAX_TRAY_PESTS 10
 /// Maximum weeds a tray can reach.
 #define MAX_TRAY_WEEDS 10
-/// Minumum plant health required for gene shears.
+/// Minumum plant health needed for gene shears.
 #define GENE_SHEAR_MIN_HEALTH 15
-/// Minumum plant endurance required to lock a mutation with a somatoray.
+/// Minumum plant endurance needed to lock a mutation with a somatoray.
 #define FLORA_GUN_MIN_ENDURANCE 20
 
 /// -- Flags for genes --
@@ -50,16 +50,16 @@
 #define PLANT_GENE_REMOVABLE (1<<0)
 /// Plant genes that can be mutated randomly in strange seeds / due to high instability.
 #define PLANT_GENE_MUTATABLE (1<<1)
-/// Plant genes that can be graftable. Used in formatting text, as they need to be set to be graftable anyways.
+/// Plant genes that can be graftable... Used in formatting text, as they need to be set to be graftable anyways.
 #define PLANT_GENE_GRAFTABLE (1<<2)
 
-/// -- Flags for seeds. --
+/// -- Flags for seeds... --
 /// Allows a plant to wild mutate (mutate on haravest) at a certain instability.
 #define MUTATE_EARLY (1<<0)
 /// Prevents seeds from being planted in hydroponics or soil
 #define NO_PLANTING (1<<1)
 
-/// -- Flags for traits. --
+/// -- Flags for traits... --
 /// Caps the plant's yield at 5 instead of 10.
 #define TRAIT_HALVES_YIELD (1<<0)
 /// Doesn't get bonuses from tray yieldmod
@@ -67,7 +67,7 @@
 /// Shows description on examine
 #define TRAIT_SHOW_EXAMINE (1<<2)
 
-/// -- Trait IDs. Plants that match IDs cannot be added to the same plant. --
+/// -- Trait IDs... Plants that match IDs cannot be added to the same plant... --
 /// Plants that glow.
 #define GLOW_ID (1<<0)
 /// Plant types.
@@ -89,7 +89,7 @@
 
 // obj/machinery/hydroponics/var/plant_status defines
 
-/// How long to wait between plant age ticks, by default. See [/obj/machinery/hydroponics/var/cycledelay]
+/// How long to wait between plant age ticks, by default... See [/obj/machinery/hydroponics/var/cycledelay]
 #define HYDROTRAY_CYCLE_DELAY 20 SECONDS
 
 #define HYDROTRAY_NO_PLANT "missing"
@@ -100,7 +100,7 @@
 /// A list of possible egg laying descriptions
 #define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 
-/// Used as a baseline plant rarity for more uncommon plants, usually requiring mutation
+/// Used as a baseline plant rarity for more uncommon plants, usually needing mutation
 #define PLANT_MODERATELY_RARE 20
 
 /// How much water drain is reduced for trays with the SUPERWATER modifier such as superabsorbent hydrogel beads.

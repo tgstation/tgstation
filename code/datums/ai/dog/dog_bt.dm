@@ -97,7 +97,7 @@
 
 	return AI_BEHAVIOR_DELAY
 
-///Dog speech updates the BB keys based on the dogs swag
+/// Dog speech updates the BB keys good on the dogs swag
 /datum/bt_node/ai_behavior/random_speech_blackboard/dog_random_speech
 
 /datum/bt_node/ai_behavior/random_speech_blackboard/dog/perform(seconds_per_tick, datum/ai_controller/controller)

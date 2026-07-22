@@ -1,4 +1,4 @@
-// mouse signals. Format:
+// mouse signals... Format:
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
@@ -8,7 +8,7 @@
 #define COMSIG_CLICK "atom_click"
 ///from base of atom/ShiftClick(): (/mob)
 #define COMSIG_CLICK_SHIFT "shift_click"
-//	#define COMSIG_MOB_CANCEL_CLICKON (1<<0) //shared with other forms of click, this is so you're aware it exists here too.
+// #define COMSIG_MOB_CANCEL_CLICKON (1<<0) //shared with other forms of click, this is so you're aware it exists here too.
 ///from base of atom/ShiftClick()
 #define COMSIG_SHIFT_CLICKED_ON "shift_clicked_on"
 ///from base of atom/CtrlClickOn(): (/mob)

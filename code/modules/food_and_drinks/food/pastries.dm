@@ -365,7 +365,7 @@
 	tastes = list("pastry" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
 	w_class = WEIGHT_CLASS_TINY
-	venue_value = FOOD_PRICE_CHEAP // Pastry base, 3u of sugar and a single. fucking. unit. of. milk. really?
+	venue_value = FOOD_PRICE_CHEAP // Pastry base, 3u of sugar and a single.. fucking.. unit.. of.. milk.. really?
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/icecream
@@ -380,7 +380,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	crafting_complexity = FOOD_COMPLEXITY_2
 	max_volume = 10 //The max volumes scales up with the number of scoops of ice cream served.
-	/// These two variables are used by the ice cream vat. Latter is the one that shows on the UI.
+	/// These two variables the uses ice cream vat.. Latter is the one that shows on the UI.
 	var/list/ingredients = list(
 		/datum/reagent/consumable/flour,
 		/datum/reagent/consumable/sugar,

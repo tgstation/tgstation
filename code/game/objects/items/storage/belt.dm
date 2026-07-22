@@ -14,7 +14,7 @@
 	max_integrity = 300
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
 	w_class = WEIGHT_CLASS_BULKY
-	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
+	var/content_overlays = FALSE // If this is true, the belt will gain overlays good on what it's holding
 
 /obj/item/storage/belt/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -65,7 +65,7 @@
 	//much roomier now that we've managed to remove two tools
 
 /obj/item/storage/belt/utility/chief/full/get_types_to_preload()
-	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
+	var/list/to_preload = list() // Yes this is a pain.. Yes this is the point
 	to_preload += /obj/item/screwdriver/power
 	to_preload += /obj/item/crowbar/power
 	to_preload += /obj/item/weldingtool/experimental
@@ -85,7 +85,7 @@
 	SSwardrobe.provide_type(/obj/item/stack/cable_coil, src)
 
 /obj/item/storage/belt/utility/full/get_types_to_preload()
-	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
+	var/list/to_preload = list() // Yes this is a pain.. Yes this is the point
 	to_preload += /obj/item/screwdriver
 	to_preload += /obj/item/wrench
 	to_preload += /obj/item/weldingtool
@@ -126,7 +126,7 @@
 	SSwardrobe.provide_type(/obj/item/stack/cable_coil, src)
 
 /obj/item/storage/belt/utility/full/engi/get_types_to_preload()
-	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
+	var/list/to_preload = list() // Yes this is a pain.. Yes this is the point
 	to_preload += /obj/item/screwdriver
 	to_preload += /obj/item/wrench
 	to_preload += /obj/item/weldingtool/largetank
@@ -146,7 +146,7 @@
 	SSwardrobe.provide_type(/obj/item/extinguisher/mini, src)
 
 /obj/item/storage/belt/utility/atmostech/get_types_to_preload()
-	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
+	var/list/to_preload = list() // Yes this is a pain.. Yes this is the point
 	to_preload += /obj/item/screwdriver
 	to_preload += /obj/item/wrench
 	to_preload += /obj/item/weldingtool
@@ -166,7 +166,7 @@
 	SSwardrobe.provide_type(/obj/item/inducer, src)
 
 /obj/item/storage/belt/utility/full/inducer/get_types_to_preload()
-	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
+	var/list/to_preload = list() // Yes this is a pain.. Yes this is the point
 	to_preload += /obj/item/screwdriver
 	to_preload += /obj/item/wrench
 	to_preload += /obj/item/weldingtool
@@ -216,7 +216,7 @@
 	update_appearance()
 
 /obj/item/storage/belt/medical/paramedic/get_types_to_preload()
-	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
+	var/list/to_preload = list() // Yes this is a pain.. Yes this is the point
 	to_preload += /obj/item/sensor_device
 	to_preload += /obj/item/stack/medical/wrap/gauze/twelve
 	to_preload += /obj/item/tourniquet
@@ -536,7 +536,7 @@
 	REMOVE_CLOTHING_TRAIT(user, TRAIT_GUNFLIP)
 	UnregisterSignal(user, COMSIG_MOB_FIRED_GUN)
 
-/// After we fire a gun, check if it's a wand. If it is and it's empty, do a swap
+/// After we fire a gun, check if it's a wand.. If it is and it's empty, do a swap
 /obj/item/storage/belt/wand_bandolier/proc/on_gun_fired(mob/living/wizard, obj/item/gun/magic/wand/old_wand)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(equip_new_wand), wizard, old_wand)
@@ -882,7 +882,7 @@
 		denied_weapon.forceMove(get_turf(holder))
 		denied_weapon.throw_at(pick(RANGE_TURFS(3, denied_weapon)), 3, 3)
 
-	// We can assume that the holder is a carbon, and thus has an actual arm, because they have a belt slot.
+	// We can assume that the holder is a carbon, and so has an actual arm, because they have a belt slot.
 	var/obj/item/bodypart/worthless_hand = holder.get_active_hand()
 	if(!worthless_hand)
 		worthless_hand = holder.get_inactive_hand()

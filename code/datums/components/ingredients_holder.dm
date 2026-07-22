@@ -122,7 +122,7 @@
 	SIGNAL_HANDLER
 
 	if (!valid_ingredient(ingredient))
-		if (ingredient.is_drainable()) // For stuff like adding flour from a flour sack into a bowl, we handle the transfer of the reagent elsewhere, but we shouldn't regard it beyond some user feedback.
+		if (ingredient.is_drainable()) // F. Stuff like adding flour from a flour sack into a bowl, we handle the transfer of the reagent elsewhere. We shouldn't regard it beyond some user feedback.
 			attacker.balloon_alert(attacker, "transferring...")
 			return
 		attacker.balloon_alert(attacker, "doesn't go on that!")
@@ -162,7 +162,7 @@
 			filling.pixel_z = rand(-1,1)
 		if(CUSTOM_INGREDIENT_ICON_STACK)
 			filling.pixel_w = rand(-1,1)
-			// we're gonna abuse position layering to ensure overlays render right
+			// we're going to abuse position layering to ensure overlays render right
 			filling.pixel_y = -LAZYLEN(ingredient_names)
 			filling.pixel_z = 3 * LAZYLEN(ingredient_names) - 1
 		if(CUSTOM_INGREDIENT_ICON_STACKPLUSTOP)
@@ -229,7 +229,7 @@
 	if(ingredient.loc != atom_parent)
 		ingredient.forceMove(atom_parent)
 
-///Rebuilds the custom materials the holder is composed of based on the materials of each ingredient
+/// Rebuilds the custom materials the holder is composed of good on the materials of each ingredient
 /datum/component/ingredients_holder/proc/handle_materials(obj/item/ingredient, remove = FALSE)
 	if(!ingredient.custom_materials)
 		return
@@ -254,7 +254,7 @@
 			return "monstrous"
 
 
-///Gives the type of custom food (based on what the first ingredient was).
+/// Gives the type of custom food good on what the first ingredient was).
 /datum/component/ingredients_holder/proc/set_custom_name(obj/item/ingredient)
 	if (istype(ingredient, /obj/item/food/meat))
 		var/obj/item/food/meat/meat = ingredient

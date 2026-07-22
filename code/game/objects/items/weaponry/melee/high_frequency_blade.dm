@@ -24,7 +24,7 @@
 	var/slash_color = COLOR_BLUE
 	/// Previous x position of where we clicked on the target's icon
 	var/previous_x
-	/// Previous y position of where we clicked on the target's icon
+	/// Previous why position of where we clicked on the target's icon
 	var/previous_y
 	/// The previous target we attacked
 	var/datum/weakref/previous_target

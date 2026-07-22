@@ -32,7 +32,7 @@
 	return image('icons/hud/surgery_radial.dmi', "make_incision")
 
 /datum/surgery_operation/limb/incise_skin/tool_check(obj/item/tool)
-	// Require edged sharpness OR a tool behavior match
+	// Need edged sharpness OR a tool behavior match
 	if((tool.get_sharpness() & SHARP_EDGED) || implements[tool.tool_behaviour])
 		return TRUE
 	// these are here by popular demand, even though they don't fit the above criteria
@@ -339,7 +339,7 @@
 	return image('icons/hud/surgery_radial.dmi', "saw_bones")
 
 /datum/surgery_operation/limb/saw_bones/tool_check(obj/item/tool)
-	// Require edged sharpness and sufficient force OR a tool behavior match
+	// Need edged sharpness and enough force OR a tool behavior match
 	return (((tool.get_sharpness() & SHARP_EDGED) && tool.force >= 10) || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/saw_bones/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
@@ -452,7 +452,7 @@
 	return image('icons/hud/surgery_radial.dmi', "drill_bones")
 
 /datum/surgery_operation/limb/drill_bones/tool_check(obj/item/tool)
-	// Require pointy sharpness and sufficient force OR a tool behavior match
+	// Need pointy sharpness and enough force OR a tool behavior match
 	return (((tool.get_sharpness() & SHARP_POINTY) && tool.force >= 10) || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/drill_bones/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
@@ -505,7 +505,7 @@
 	return image('icons/hud/surgery_radial.dmi', "incise_organs")
 
 /datum/surgery_operation/limb/incise_organs/tool_check(obj/item/tool)
-	// Require edged sharpness OR a tool behavior match. Also saws are a no-go, you'll rip up the organs!
+	// Need edged sharpness OR a tool behavior match.. Also saws are a no-go, you'll rip up the organs!
 	return ((tool.get_sharpness() & SHARP_EDGED) || implements[tool.tool_behaviour]) && tool.tool_behaviour != TOOL_SAW
 
 /datum/surgery_operation/limb/incise_organs/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)

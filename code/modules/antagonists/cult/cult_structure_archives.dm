@@ -4,7 +4,7 @@
 #define VEIL_WALKER "Veil Walker"
 #define CRIMSON_MEDALLION "Crimson Medallion"
 
-// Cult archives. Gives out utility items.
+// Cult archives.. Gives out utility items.
 /obj/structure/destructible/cult/item_dispenser/archives
 	name = "archives"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."

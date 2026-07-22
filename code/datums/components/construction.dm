@@ -90,7 +90,7 @@
 					. = I.use_tool(parent, user, 0, volume=50, amount=current_step["amount"])
 
 
-	// Going backwards? Undo the last action. Drop/respawn the items used in last action, if any.
+	// Going backwards?. Undo the last action.. Drop/respawn the items used in last action, if any.
 	if(. && diff == BACKWARD && target_step && !target_step["no_refund"])
 		var/target_step_key = target_step["key"]
 

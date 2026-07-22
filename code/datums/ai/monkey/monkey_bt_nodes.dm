@@ -1,5 +1,5 @@
 
-/// Monkey's battle screech variant  louder and on a 5 second cooldown
+/// Monkey's battle screech variant louder and on a 5 second cooldown
 /datum/bt_node/ai_behavior/battle_screech/monkey
 	time_between_perform = 5 SECONDS
 	screeches = list("roar", "screech")
@@ -176,7 +176,7 @@
 	controller.set_blackboard_key(BB_MONKEY_PICKUP_IS_PICKPOCKET, ismob(target.loc) ? TRUE : null)
 
 
-/// Selects a target from BB_MONKEY_ENEMIES or picks any visible mob if aggressive.  This should be ported to new targetting but its so fkn bespoke
+/// Selects a target from BB_MONKEY_ENEMIES or picks any visible mob if aggressive.. This should be ported to new targetting but its so fkn bespoke
 /datum/bt_node/ai_behavior/monkey_set_combat_target
 	var/attack_target_key
 	var/enemies_key
@@ -373,7 +373,7 @@
 		candidates += potential_candidate
 	return candidates
 
-/// Idle wander/emote behavior. Reads emote lists from BB_MONKEY_IDLE_COMMON_EMOTES and BB_MONKEY_IDLE_RARE_EMOTES.
+/// Idle wander/emote behavior.. Reads emote lists from BB_MONKEY_IDLE_COMMON_EMOTES and BB_MONKEY_IDLE_RARE_EMOTES.
 /datum/bt_node/ai_behavior/monkey_idle
 
 /datum/bt_node/ai_behavior/monkey_idle/perform(seconds_per_tick, datum/ai_controller/controller)

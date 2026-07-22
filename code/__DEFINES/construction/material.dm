@@ -1,9 +1,9 @@
 //Defines for amount of material retrieved from sheets & other items
-/// The amount of materials you get from a sheet of mineral like iron/diamond/glass etc. 100 Units.
+/// The amount of materials you get from a sheet of mineral like iron/diamond/glass and so on 100 Units.
 #define SHEET_MATERIAL_AMOUNT 100
-/// The amount of materials you get from half a sheet. Used in standard object quantities. 50 units.
+/// The amount of materials you get from half a sheet... Used in standard object quantities... 50 units.
 #define HALF_SHEET_MATERIAL_AMOUNT (SHEET_MATERIAL_AMOUNT / 2)
-/// The amount of materials used in the smallest of objects, like pens and screwdrivers. 10 units.
+/// The amount of materials used in the smallest of objects, like pens and screwdrivers... 10 units.
 #define SMALL_MATERIAL_AMOUNT (HALF_SHEET_MATERIAL_AMOUNT / 5)
 /// The amount of material that goes into a coin, which determines the value of the coin.
 #define COIN_MATERIAL_AMOUNT (HALF_SHEET_MATERIAL_AMOUNT * 0.4)
@@ -36,7 +36,7 @@
 #define MATERIAL_CLASS_FABRIC (1 << 5)
 /// This material is a crystal and can be used to make windows or shards
 #define MATERIAL_CLASS_CRYSTAL (1 << 6)
-/// This is an organic material, meaning its probably alive in some way. Or was alive at one point, rather.
+/// This is an organic material, meaning its probably alive in some way... Or was alive at one point, rather.
 #define MATERIAL_CLASS_ORGANIC (1 << 7)
 /// This is a polymer of some sorts
 #define MATERIAL_CLASS_POLYMER (1 << 8)
@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 
 /// Maximum value for a core material property
 #define MATERIAL_PROPERTY_MAX 10
-/// Allows to easily add "deadzones" for properties, and only adjust stats if they go below/above said deadzones. Basically two starting points for modifiers.
+/// Allows to easily add "deadzones" for properties, and only adjust stats if they go below/above said deadzones... Basically two starting points for modifiers.
 #define MATERIAL_PROPERTY_DIVERGENCE(property, minimum, maximum) (min(0, property - minimum) + max(0, property - maximum))
 
 /// Minimum theoretical item force multiplier from materials
@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 
 /// Multiplier for the amount of reagents added to the item upon accidental consumption
 #define MATERIAL_REAGENT_CONSUMPTION_MULT 0.4
-/// Amount of reagents per sheet of material. Not affected by density for simplicity and easier consistency upkeep
+/// Amount of reagents per sheet of material... Not affected by density for simplicity and easier consistency upkeep
 #define MATERIAL_REAGENTS_PER_SHEET 20
 
 // Material Container Flags.
@@ -121,9 +121,9 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 #define MATCONTAINER_ACCEPT_ALLOYS (1 << 4)
 
 // Atom material behavior flags
-/// Whether a material's mechanical effects should apply to the atom. This is necessary for other flags to work.
+/// Whether a material's mechanical effects should apply to the atom... This is necessary for other flags to work.
 #define MATERIAL_EFFECTS (1 << 0)
-/// Applies the material color to the atom's color. Deprecated, use MATERIAL_GREYSCALE instead
+/// Applies the material color to the atom's color... Deprecated, use MATERIAL_GREYSCALE instead
 #define MATERIAL_COLOR (1 << 1)
 /// Whether a prefix describing the material should be added to the name
 #define MATERIAL_ADD_PREFIX (1 << 2)
@@ -169,15 +169,15 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 #define MATERIAL_QUANTITY_EXOTIC 50
 
 // The number of ore vents that will spawn boulders with this material.
-/// Is this material going to spawn often in ore vents? (80% of vents on lavaland)
+/// Is this material going to spawn often in ore vents?.. (80% of vents on lavaland)
 #define MATERIAL_RARITY_COMMON 12
-/// Is this material going to spawn often in ore vents? (53% of vents on lavaland)
+/// Is this material going to spawn often in ore vents?.. (53% of vents on lavaland)
 #define MATERIAL_RARITY_SEMIPRECIOUS 8
-/// Is this material going to spawn uncommonly in ore vents? (33% of vents on lavaland)
+/// Is this material going to spawn uncommonly in ore vents?.. (33% of vents on lavaland)
 #define MATERIAL_RARITY_PRECIOUS 5
-/// Is this material going to spawn rarely in ore vents? (20% of vents on lavaland)
+/// Is this material going to spawn rarely in ore vents?.. (20% of vents on lavaland)
 #define MATERIAL_RARITY_RARE 3
-/// Is this material only going to spawn once in ore vents? (6% of vents on lavaland)
+/// Is this material only going to spawn once in ore vents?.. (6% of vents on lavaland)
 #define MATERIAL_RARITY_UNDISCOVERED 1
 
 /// The key to access the 'optimal' amount of a material key from its assoc value list.

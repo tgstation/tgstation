@@ -14,7 +14,7 @@
 	var/datum/looping_sound/clock/soundloop
 	///Boolean on whether the clock has been destroyed.
 	var/broken = FALSE
-	///Amount of times the clock has been destroyed. It becomes unrepairable the third time.
+	/// Amount of times the clock has been destroyed.. It becomes unrepairable the third time.
 	var/times_broken
 
 /obj/item/table_clock/Initialize(mapload)

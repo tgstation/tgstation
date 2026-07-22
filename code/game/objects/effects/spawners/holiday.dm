@@ -71,7 +71,7 @@
 			/obj/item/grown/cotton,
 			/obj/item/grown/cotton,
 		),
-		VEGAN_DAY = list( ///plant-based "meat" slabs to allow chefs to cook meat recipes anyway. Plus some veggies.
+		VEGAN_DAY = list( /// plant-based "meat" slabs to allow chefs to cook meat recipes anyway.. Plus some veggies.
 			/obj/item/food/meat/slab/killertomato,
 			/obj/item/food/meat/slab/killertomato,
 			/obj/item/food/meat/slab/human/mutant/plant,

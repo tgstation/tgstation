@@ -286,7 +286,7 @@
 	if(xeno_hud)
 		xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
 
-/// Check whether we can recycle monkeys at all. Optionally, displays a balloon alert over a target atom for feedback.
+/// Check whether we can recycle monkeys at all.. Optionally, displays a balloon alert over a target atom for feedback.
 /obj/machinery/computer/camera_advanced/xenobio/proc/can_recycle_monkeys(mob/living/user, atom/target_atom)
 	PRIVATE_PROC(TRUE)
 	var/obj/machinery/monkey_recycler/connected_recycler = connected_recycler_ref?.resolve()
@@ -297,7 +297,7 @@
 		return FALSE
 	return TRUE
 
-/// Check whether we can recycle the target monkey. Optionally takes in a user to display errors to.
+/// Check whether we can recycle the target monkey.. Optionally takes in a user to display errors to.
 /obj/machinery/computer/camera_advanced/xenobio/proc/can_recycle_target_monkey(mob/living/carbon/human/target_human, mob/living/user)
 	PRIVATE_PROC(TRUE)
 	if(!ismonkey(target_human))
@@ -310,7 +310,7 @@
 		return FALSE
 	return TRUE
 
-/// Attempts to recycle any monkeys on the targeted turf.
+/// Tries to recycle any monkeys on the targeted turf.
 /obj/machinery/computer/camera_advanced/xenobio/proc/try_recycle_monkeys_on_turf(mob/living/user, turf/target_turf)
 	if(!can_recycle_monkeys(user, target_turf))
 		return FALSE
@@ -324,7 +324,7 @@
 
 	return monkey_found
 
-/// Attempts to recycle the targeted human.
+/// Tries to recycle the targeted human.
 /obj/machinery/computer/camera_advanced/xenobio/proc/try_recycle_target_monkey(mob/living/user, mob/living/carbon/human/target_human, silence_errors = FALSE)
 	if(!can_recycle_target_monkey(target_human, user))
 		return FALSE
@@ -485,7 +485,7 @@
 
 	to_chat(owner, boxed_message(jointext(render_list, "\n")))
 
-/// Handles console user alt-clicking, forwards to other procs based on target type.
+/// Handles console user alt-clicking, forwards to other procs good on target type.
 /obj/machinery/computer/camera_advanced/xenobio/proc/user_alt_click(mob/living/user, atom/target)
 	SIGNAL_HANDLER
 
@@ -510,7 +510,7 @@
 	if(xeno_hud)
 		xeno_hud.update_potion(current_potion)
 
-/// Handles console user shift-clicking, forwards to other procs based on target type.
+/// Handles console user shift-clicking, forwards to other procs good on target type.
 /obj/machinery/computer/camera_advanced/xenobio/proc/user_shift_click(mob/living/user, atom/target)
 	SIGNAL_HANDLER
 
@@ -536,7 +536,7 @@
 
 	slime_place(target_turf, user)
 
-/// Handles console user ctrl-clicking, forwards to other procs based on target type.
+/// Handles console user ctrl-clicking, forwards to other procs good on target type.
 /obj/machinery/computer/camera_advanced/xenobio/proc/user_ctrl_click(mob/living/user, atom/target)
 	SIGNAL_HANDLER
 
@@ -551,12 +551,12 @@
 		return COMSIG_MOB_CANCEL_CLICKON
 	return NONE
 
-/// Attempts to recycle all monkeys on the turf, otherwise places a monkey from the internal storage.
+/// Tries to recycle all monkeys on the turf, otherwise places a monkey from the internal storage.
 /obj/machinery/computer/camera_advanced/xenobio/proc/ctrl_click_turf(mob/living/user, turf/open/target_turf)
 	if(!validate_turf(user, target_turf))
 		return
 
-	// Attempt to recycle any monkeys on the turf first.
+	// Try to recycle any monkeys on the turf first.
 	if(try_recycle_monkeys_on_turf(user, target_turf))
 		return
 
@@ -604,7 +604,7 @@
 		addtimer(CALLBACK(shot_mob, TYPE_PROC_REF(/atom,RemoveInvisibility), XENOBIO_CONSOLE_TRAIT), SUCTION_DELAY + SUCTION_TIME)
 	addtimer(CALLBACK(src, PROC_REF(handle_xeno_sounds), target_turf, TRUE), SUCTION_DELAY)
 
-/// Shoots the target atom out of the tube. Used for anything that isn't a mob (I.e. potions)
+/// Shoots the target atom out of the tube.. Used for anything that isn't a mob (I.e.. potions)
 /obj/machinery/computer/camera_advanced/xenobio/proc/spit_atom(atom/movable/target_atom, turf/open/target_turf)
 	if(isnull(target_atom))
 		return
@@ -617,14 +617,14 @@
 	if(ispot)
 		addtimer(CALLBACK(src, PROC_REF(handle_shatter_sound), target_turf), SUCTION_DELAY+SUCTION_TIME)
 
-///Plays the sound in the given location. Easier to call w/ addtimer()
+/// Plays the sound in the given location.. Easier to call with addtimer()
 /obj/machinery/computer/camera_advanced/xenobio/proc/handle_xeno_sounds(turf/open/target_turf, spitting)
 	var/tubesound = 'sound/effects/compressed_air/air_suck.ogg'
 	if(spitting)
 		tubesound = 'sound/effects/compressed_air/air_shoot.ogg'
 	playsound(target_turf, tubesound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
-///The sound that plays when a potion shatters. Easier to call w/ addtimer()
+/// The sound that plays when a potion shatters.. Easier to call with addtimer()
 /obj/machinery/computer/camera_advanced/xenobio/proc/handle_shatter_sound(turf/open/target_turf)
 	playsound(target_turf, SFX_SHATTER, 35, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 

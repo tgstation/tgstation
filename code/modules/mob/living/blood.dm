@@ -26,7 +26,7 @@
 	if (!apply_modifiers)
 		return blood_volume // Default behavior, returns the real blood volume.
 	if (HAS_TRAIT(src, TRAIT_GODMODE))
-		return default_blood_volume // Makes TRAIT_GODMODE grant immunity to the effects of bleeding. (oxyloss, passing out, etc.)
+		return default_blood_volume // Makes TRAIT_GODMODE grant immunity to the effects of bleeding.. (oxyloss, passing out, and so on
 
 	var/amount = blood_volume
 
@@ -35,7 +35,7 @@
 		amount *= blood_volume_modifiers[source]
 
 	// Handled here instead of in the saline reagent datum, because this way the modification order is consistent.
-	// E.g. if you have an effect that modifies blood volume over the dilution cap, then saline should do nothing.
+	// E.g.. if you have an effect that modifies blood volume over the dilution cap, then saline should do nothing.
 	var/datum/reagent/medicine/salglu_solution/saline = reagents?.has_reagent(/datum/reagent/medicine/salglu_solution)
 	if (saline && amount < saline.dilution_cap)
 		var/datum/blood_type/blood_type = get_bloodtype()
@@ -98,7 +98,7 @@
 	var/had_blood = CAN_HAVE_BLOOD(src)
 	var/has_blood = can_have_blood()
 
-	// Must not return early on first init for mobs that can have blood. (otherwise they will miss being added to the blood hud)
+	// Must not return early on first init for mobs that can have blood.. (otherwise they will miss being added to the blood hud)
 	if (had_blood == has_blood)
 		return
 
@@ -237,7 +237,7 @@
 				else if(get_stamina_loss() < 80 * determined_mod)
 					to_chat(src, span_userdanger("You feel extremely [word]! It's getting very hard to stay awake!"))
 					adjust_stamina_loss(10 * determined_mod)
-		// Critically low blood, death is near! Adrenaline won't help you here.
+		// Critically low blood, death is near!. Adrenaline won't help you here.
 		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 			if(SPT_PROB(7.5, seconds_per_tick))
 				Unconscious(rand(1 SECONDS, 2 SECONDS))
@@ -248,7 +248,7 @@
 				investigate_log("has died of bloodloss.", INVESTIGATE_DEATHS)
 				death()
 
-	// Blood ratio! if you have 280 blood, this equals 0.5 as that's half of the current value, 560.
+	// Blood ratio!. if you have 280 blood, this equals 0.5 as that's half of the current value, 560.
 	var/effective_blood_ratio = modified_blood_volume / BLOOD_VOLUME_NORMAL
 	var/target_oxyloss = max((1 - effective_blood_ratio) * 100, 0)
 
@@ -256,7 +256,7 @@
 	// This damage accrues faster the less blood you have.
 	// If the damage surpasses the KO threshold for oxyloss, then we'll always tick up so you die eventually
 	if(target_oxyloss > 0 && (get_oxy_loss() < target_oxyloss || (target_oxyloss >= OXYLOSS_PASSOUT_THRESHOLD && stat >= UNCONSCIOUS)))
-		// At roughly half blood this equals to 3 oxyloss per tick. At 90% blood it's close to 0.5
+		// At roughly half blood this equals to 3 oxyloss per tick.. At 90% blood it's close to 0.5
 		var/rounded_oxyloss = round(0.01 * (BLOOD_VOLUME_NORMAL - modified_blood_volume), 0.25) * seconds_per_tick
 		adjust_oxy_loss(rounded_oxyloss, updating_health = TRUE)
 
@@ -336,7 +336,7 @@
 	if(HAS_TRAIT(src, TRAIT_COAGULATING)) // if we have coagulant, we're getting better quick
 		rate_of_change = ", but it's clotting up quickly!"
 	else
-		// flick through our wounds to see if there are any bleeding ones getting worse or holding flow (maybe move this to handle_blood and cache it so we don't need to cycle through the wounds so much)
+		// flick through our wounds to see if there are any bleeding ones getting worse. Holding flow (maybe move this to handle_blood. Cache it so we don't need to cycle through the wounds so much)
 		for(var/datum/wound/iter_wound as anything in all_wounds)
 			if(!iter_wound.blood_flow)
 				continue
@@ -404,7 +404,7 @@
 			target.ForceContractDisease(blood_disease)
 
 	if(!ignore_incompatibility && !(blood_type.type_key() in target.get_bloodtype().compatible_types))
-		// Yes, we cap it to the amount of toxin. This is ridiculously niche, but we do it anyway.
+		// Yes, we cap it to the amount of toxin.. This is ridiculously niche, but we do it anyway.
 		amount = target.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5) * 2
 		adjust_blood_volume(-amount)
 		return amount
@@ -414,13 +414,13 @@
 	// And, obviously, cap it to how much blood the target can take if they're living.
 	amount = target.adjust_blood_volume(amount, maximum = BLOOD_VOLUME_MAX_LETHAL)
 
-	// Synthetic blood handling, used for capping blood worm growth from monkeys, blood bags and basic mobs. This forces blood worms to kill people to reach adulthood.
+	// Synthetic blood handling, used for capping blood worm growth from monkeys, blood bags and basic mobs.. This forces blood worms to kill people to reach adulthood.
 	if (!IS_BLOOD_ALWAYS_SYNTHETIC(target))
 		var/added_synth_volume = amount * get_blood_synth_content()
 		var/existing_synth_volume = cached_target_blood_volume * target.get_blood_synth_content()
 
 		if (added_synth_volume != 0 || existing_synth_volume != 0)
-			// A simple weighted average that simplifies down to "total synth volume / total blood volume" i.e. "how much of their blood is synthetic"
+			// A simple weighted average that simplifies down to "total synth volume / total blood volume" i.e.. "how much of their blood is synthetic"
 			target.AddComponent(/datum/component/synth_blood, (added_synth_volume + existing_synth_volume) / (amount + cached_target_blood_volume))
 
 	adjust_blood_volume(-amount)
@@ -461,7 +461,7 @@
 	if (synth_content > 0)
 		blood_data[BLOOD_DATA_SYNTH_CONTENT] = synth_content
 
-	// DNA, mind, facitons, etc don't get stored in stuff like oil
+	// DNA, mind, facitons, and so on don't get stored in stuff like oil
 	if (!(blood_type.blood_flags & BLOOD_ADD_DNA))
 		return blood_data
 
@@ -485,7 +485,7 @@
 	if (!(blood_type.blood_flags & BLOOD_ADD_DNA))
 		return blood_data
 
-	// If we haven't suicided but the ghost cannot reenter, i.e. we ghosted, don't set ourselves as cloneable
+	// If we haven't suicided but the ghost cannot reenter, i.e.. we ghosted, don't set ourselves as cloneable
 	var/mob/dead/observer/ghost = get_ghost(TRUE, TRUE)
 	if(!HAS_TRAIT(src, TRAIT_SUICIDED) && (!ghost || ghost.can_reenter_corpse))
 		blood_data["cloneable"] = TRUE
@@ -563,7 +563,7 @@
 	RETURN_TYPE(/datum/blood_type)
 	return GLOB.blood_types[id]
 
-/// Returns the hex color string, or a color matrix, of a given blood_type datum given an assoc list of blood_DNA e.g. ("Unknown Blood Type", "*X")
+/// Returns the hex color string, or a color matrix, of a given blood_type datum given an assoc list of blood_DNA e.g.. ("Unknown Blood Type", "*X")
 /proc/get_color_from_blood_list(list/blood_DNA)
 	var/datum/blood_type/blood_type
 	if(!length(blood_DNA))
@@ -669,7 +669,7 @@
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(targ, splatter_strength)
 
-// FIXME: This duplicates blood like crazy. The amount you bleed is way less than the splatter.
+// Fix me This duplicates blood like crazy.. The amount you bleed is way less than the splatter.
 // To summarize, you can literally dupe blood and bypass bloodloss with a syringe and a beaker.
 // I'm writing this here because it's out of scope for my PR, but was discovered because of it.
 /mob/living/proc/make_blood_trail(turf/target_turf, turf/start, was_facing, movement_direction)
@@ -713,7 +713,7 @@
 
 	var/trail_dir = REVERSE_DIR(movement_direction)
 	// The mob is performing a diagonal movement so we need to make a diagonal trail
-	// This is not the same as a diagonal dir. Sorry.
+	// This is not the same as a diagonal dir.. Sorry.
 	// This is insteas denoted by a negative direction (so we don't conflict with real dirs)
 	if(movement_direction in GLOB.diagonals)
 		trail_dir = -1 * movement_direction
@@ -818,7 +818,7 @@
 
 	return blood_alcohol_content
 
-/// Returns on a 0-1 scale how synthetic this mobs blood is. Used for blood worms to cap growth from easily accessible sources of blood.
+/// Returns on a 0-1 scale how synthetic this mobs blood is.. Used for blood worms to cap growth from easily accessible sources of blood.
 /mob/living/proc/get_blood_synth_content()
 	if (IS_BLOOD_ALWAYS_SYNTHETIC(src))
 		return 1 // Basic mobs, simple mobs, born monkeys and spawned mobs have fully synthetic blood.

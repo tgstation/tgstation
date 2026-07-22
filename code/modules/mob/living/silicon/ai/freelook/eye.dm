@@ -140,18 +140,18 @@
 		if (isturf(loc) || isturf(src))
 			AI.eyeobj.setLoc(src)
 
-// This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
+// This will move the AIEye.. It will also cause lights near the eye to light up, if toggled.
 // This is handled in the proc below this one.
 #define SPRINT_PER_TICK 0.5
 #define MAX_SPRINT 50
 #define SPRINT_PER_STEP 20
 /mob/living/silicon/ai/proc/AIMove(direction)
 	if(last_moved && last_moved + 1 < world.timeofday)
-		// Decay sprint based off how long it took us to input this next move
+		// Decay sprint good off how long it took us to input this next move
 		var/missed_sprint = max((world.timeofday + 1) - last_moved, 0) * SPRINT_PER_TICK
 		sprint = max(sprint - missed_sprint * 7, initial(sprint))
 
-	// We move a full step, at least. Can't glide more with our current movement mode, so this is how I have to live
+	// We move a full step, at least.. Can't glide more with our current movement mode, so this is how I have to live
 	var/step_count = 0
 	for(var/i = 0; i < max(sprint, initial(sprint)); i += SPRINT_PER_STEP)
 		step_count += 1

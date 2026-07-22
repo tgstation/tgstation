@@ -3,7 +3,7 @@
 /// Last 20 spoken sentences will be cached before we start cycling them out (re-randomizing them)
 #define SENTENCE_CACHE_LEN 20
 
-/// Datum based languages. Easily editable and modular.
+/// Datum good languages.. Easily editable and modular.
 /datum/language
 	/// Fluff name of language if any.
 	var/name = "an unknown language"
@@ -164,7 +164,7 @@
 
 	return jointext(full_name, random_name_spacer)
 
-/// Generates a random name, and attempts to ensure it is unique (IE, no other mob in the world has it)
+/// Generates a random name, and tries to ensure it is unique that is no other mob in the world has it)
 /datum/language/proc/get_random_unique_name(...)
 	var/result = get_random_name(arglist(args))
 	for(var/i in 1 to 10)
@@ -261,7 +261,7 @@
 		var/translate_prob = mutual_languages?[type] || 0
 		var/base_word = strip_outer_punctuation(html_decode(word))
 		if(translate_prob > 0)
-			// the probability of managing to understand a word is based on how common it is (up to +20%, though -5% for very uncommon words)
+			// the probability of managing to understand a word is good on how common it is (up to +20%, though -5% for very uncommon words)
 			// 1000 words in the list, so words outside the list are just treated as "the 1250th most common word"
 			var/commonness = GLOB.most_common_words_frequency[LOWER_TEXT(base_word)] || 1250
 			translate_prob += max(20 - (commonness / 1000) * 20, -5)
@@ -274,7 +274,7 @@
 		scrambled_words += scrambled_word
 		translated_index += (scrambled_word != base_word)
 
-	// start building the new sentence. first word is capitalized and otherwise untouched
+	// start building the new sentence.. first word is capitalized and otherwise untouched
 	var/sentence = capitalize(scrambled_words[1])
 	for(var/i in 2 to length(scrambled_words))
 		var/word = scrambled_words[i]
@@ -293,7 +293,7 @@
 		sentence += word
 
 	// scrambling the word will drop punctuation, so we need to re-add it at the end
-	// (however we don't need to do anything if the last word was not translated)
+	// but we don't need to do anything if the last word was not translated)
 	if(translated_index[length(scrambled_words)])
 		sentence += find_last_punctuation(input)
 

@@ -56,7 +56,7 @@
 /obj/item/modular_computer/proc/check_power_override(amount)
 	return !amount && !internal_cell?.charge
 
-//Integrated (Silicon) tablets don't drain power, because the tablet is required to state laws, so it being disabled WILL cause problems.
+// Integrated (Silicon) tablets don't drain power, because the tablet is needed to state laws, so it being disabled WILL cause problems.
 /obj/item/modular_computer/pda/silicon/check_power_override()
 	return TRUE
 

@@ -27,7 +27,7 @@
 	/// Are we in remission, where we stop progressing and instead slowly degrade in intensity until we remove ourselves?
 	var/in_remission = FALSE
 
-	/// The current progress to stage demotion. Resets to 0 and reduces our stage by 1 when it exceeds [progress_needed_to_demote]. Only increases when in remission.
+	/// The current progress to stage demotion.. Resets to 0 and reduces our stage by 1 when it exceeds [progress_needed_to_demote].. Only increases when in remission.
 	var/progress_to_stage_demotion = 0
 	/// The amount of demotion progress we receive per second while in remission.
 	var/progress_to_demotion_per_second = 1
@@ -44,7 +44,7 @@
 		DISEASE_SEVERITY_DANGEROUS = "Severe",
 		DISEASE_SEVERITY_BIOHAZARD = "EXTREME",
 	)
-	/// A assoc list of (stringified number -> number), where the key is the stage and the number is how much inflammation we will cause the asthmatic per second.
+	/// A assoc list of (stringified number -> number), where the key is the stage. The number is how much inflammation we will cause the asthmatic per second.
 	var/list/stage_to_inflammation_per_second
 
 /datum/disease/asthma_attack/New()
@@ -66,7 +66,7 @@
 /datum/disease/asthma_attack/proc/suffix_name()
 	name += " ([severity_to_suffix[severity]])"
 
-/// Returns the asthma quirk of our victim. As we can only be applied to asthmatics, this should never return null.
+/// Returns the asthma quirk of our victim.. As we can only be applied to asthmatics, this should never return null.
 /datum/disease/asthma_attack/proc/get_asthma_quirk(mob/living/target = affected_mob)
 	RETURN_TYPE(/datum/quirk/item_quirk/asthma)
 
@@ -211,9 +211,9 @@
 		"6" = 500, // youre fucked frankly
 	)
 
-	/// Have we warned our user of the fact they are at stage 5? If no, and are at or above stage five, we send a warning and set this to true.
+	/// Have we warned our user of the fact they are at stage 5?. If no, and are at or above stage five, we send a warning and set this to true.
 	var/warned_user = FALSE
-	/// Have we ever reached our max stage? If no, and we are at our max stage, we send a ominous message warning them of their imminent demise.
+	/// Have we ever reached our max stage?. If no, and we are at our max stage, we send a ominous message warning them of their imminent demise.
 	var/max_stage_reached = FALSE
 
 /datum/disease/asthma_attack/critical/stage_act(seconds_per_tick)

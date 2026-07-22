@@ -23,7 +23,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 /atom/movable/screen/map_view/proc/generate_view(map_key)
 	// Map keys have to start and end with an A-Z character,
 	// and definitely NOT with a square bracket or even a number.
-	// I wasted 6 hours on this. :agony:
+	// I wasted 6 hours on this.. :agony:
 	// -- Stylemistake
 	assigned_map = map_key
 	set_position(1, 1)
@@ -53,10 +53,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 /atom/movable/screen/map_view/proc/display_to_client(client/show_to)
 	show_to.register_map_obj(src)
 	// We need to add planesmasters to the popup, otherwise
-	// blending fucks up massively. Any planesmaster on the main screen does
-	// NOT apply to map popups. If there's ever a way to make planesmasters
+	// blending fucks up massively.. Any planesmaster on the main screen does
+	// NOT apply to map popups.. If there's ever a way to make planesmasters
 	// omnipresent, then this wouldn't be needed.
-	// We lazy load this because there's no point creating all these if none's gonna see em
+	// We lazy load this because there's no point creating all these if none's going to see em
 
 	// Store this info in a client -> hud pattern, so ghosts closing the window nukes the right group
 	var/datum/weakref/client_ref = WEAKREF(show_to)

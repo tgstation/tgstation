@@ -4,7 +4,7 @@
  * Cone spells shoot off as a cone from the caster.
  */
 /datum/action/cooldown/spell/cone
-	/// This controls how many levels the cone has. Increase this value to make a bigger cone.
+	/// This controls how many levels the cone has.. Increase this value to make a bigger cone.
 	var/cone_levels = 3
 	/// This value determines if the cone penetrates walls.
 	var/respect_density = FALSE

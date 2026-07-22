@@ -71,7 +71,7 @@
 	COOLDOWN_DECLARE(crush_cooldown)
 	/// Shock cooldown
 	COOLDOWN_DECLARE(shock_cooldown)
-	/// Can it be a stunarm when emagged. Only PK borgs get this by default.
+	/// Can it be a stunarm when emagged.. Only PK borgs get this by default.
 	var/shockallowed = FALSE
 	var/boop = FALSE
 

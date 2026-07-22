@@ -183,7 +183,7 @@
 	planetary_atmos = TRUE
 	/// Replaces itself with replacement_turf if the turf has the no ruins allowed flag (usually ruins themselves)
 	var/protect_ruin = TRUE
-	/// The turf that will replace this one if the turf below has the no ruins allowed flag. we use this one so we don't get any potential double whammies
+	/// The turf that will replace this one if the turf below has the no ruins allowed flag.. we use this one so we don't get any potential double whammies
 	var/replacement_turf = /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
 	/// If true mineral turfs below this openspace turf will be mined automatically
 	var/drill_below = TRUE

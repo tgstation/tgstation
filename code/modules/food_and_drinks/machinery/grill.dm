@@ -135,7 +135,7 @@
 			balloon_alert(user, "anchor it first!")
 			return ITEM_INTERACT_BLOCKING
 
-		//required for amount subtypes
+		// needed for amount subtypes
 		var/target_type
 		if(istype(weapon, /obj/item/stack/sheet/mineral/coal))
 			target_type = /obj/item/stack/sheet/mineral/coal
@@ -181,7 +181,7 @@
 				/datum/reagent/consumable/ethanol = 1
 			)
 
-			//compute extra fuel to be obtained from everything transfered
+			// compute extra fuel to be got from everything transfered
 			var/boost
 			var/additional_fuel = 0
 			for(var/datum/reagent/stored as anything in reagents.reagent_list)

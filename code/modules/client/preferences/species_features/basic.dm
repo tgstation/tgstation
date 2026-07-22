@@ -153,7 +153,7 @@
 	return random_hair_color()
 
 /datum/preference/choiced/hairstyle
-	priority = PREFERENCE_PRIORITY_BODY_TYPE // Happens after gender so we can picka hairstyle based on that
+	priority = PREFERENCE_PRIORITY_BODY_TYPE // Happens after gender so we can picka hairstyle good on that
 	savefile_key = "hairstyle_name"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES

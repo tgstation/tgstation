@@ -345,7 +345,7 @@
 	name = "Delta Station Biolab"
 	icon_state = "os_delta_biolab"
 
-//KC13, aka TheDerelict.dmm
+// KC13, also known as TheDerelict.dmm
 
 /area/ruin/space/ks13
 	name = "\improper Derelict Station 13"
@@ -630,7 +630,7 @@
 /area/ruin/space/has_grav/derelictconstruction
 	name = "\improper Derelict Construction Site"
 
-/// The Atmos Asteroid Ruin, has a subtype for rapid identification since this has some unique atmospherics properties and we can easily detect it if something goes wonky.
+/// The Atmos Asteroid Ruin, has a subtype f. Rapid identification since this has some unique atmospherics properties. We can easily detect it if something goes unstable
 /area/ruin/space/has_grav/atmosasteroid
 
 // Ruin of Waystation

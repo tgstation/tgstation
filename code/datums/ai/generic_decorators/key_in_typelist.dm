@@ -1,4 +1,4 @@
-/// Gates child on the atom in `key` being an instance of a type in the typelist held at `typelist_key`. Use "invert": true for the opposite.
+/// Gates child on the atom in `key` being an instance of a type in the typelist held at `typelist_key`.. Use "invert": true for the opposite.
 /datum/bt_node/decorator/key_in_typelist
 	/// Blackboard key holding the atom to type-check.
 	var/key = BB_CURRENT_TARGET

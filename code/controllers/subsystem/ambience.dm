@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(ambience)
 		if(!client_mob || isnewplayer(client_mob))
 			continue
 
-		if(HAS_TRAIT(client_mob, TRAIT_DEAF)) //WHAT? I CAN'T HEAR YOU
+		if(HAS_TRAIT(client_mob, TRAIT_DEAF)) // WHAT?. I CAN'T HEAR YOU
 			continue
 
 		//Check to see if the client-mob is in a valid area
@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(ambience)
 		if(MC_TICK_CHECK)
 			return
 
-///Attempts to play an ambient sound to a mob, returning the cooldown in deciseconds
+/// Tries to play an ambient sound to a mob, returning the cooldown in deciseconds
 /area/proc/play_ambience(mob/M, sound/override_sound, volume = 27)
 	var/sound/new_sound = override_sound || pick(ambientsounds)
 	if(!new_sound) // Dont try to play a sound if we dont have any.
@@ -78,7 +78,7 @@ SUBSYSTEM_DEF(ambience)
 
 /area/station/maintenance
 
-	///A list of rare sound effects to fuck with players. No, it does not contain actual minecraft sounds anymore.
+	/// A list of rare sound effects to fuck with players.. No, it does not contain actual minecraft sounds anymore.
 	var/static/list/minecraft_cave_noises = list(
 		'sound/machines/airlock/airlock.ogg',
 		'sound/effects/snap.ogg',
@@ -118,7 +118,7 @@ SUBSYSTEM_DEF(ambience)
 /mob/proc/refresh_looping_ambience()
 	SIGNAL_HANDLER
 
-	if(!client || isobserver(client.mob)) // If a tree falls in the woods. sadboysuss: Don't refresh for ghosts, it sounds bad
+	if(!client || isobserver(client.mob)) // If a tree falls in the woods.. sadboysuss: Don't refresh for ghosts, it sounds bad
 		return
 
 	var/area/my_area = get_area(src)

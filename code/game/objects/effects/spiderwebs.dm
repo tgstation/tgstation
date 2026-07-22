@@ -43,7 +43,7 @@
 	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB + SMOOTH_GROUP_WALLS
 	///Whether or not the web is a sealed web
 	var/sealed = FALSE
-	///Do we need to offset this based on a sprite frill?
+	/// Do we need to offset this good on a sprite frill?
 	var/has_frill = TRUE
 	/// Chance that someone will get stuck when trying to cross this tile
 	var/stuck_chance = 50
@@ -97,7 +97,7 @@
 	if(prob(stuck_chance))
 		stuck_react(victim)
 
-/// Drains stamina and shows feedback when you get stuck moving thru a web
+/// Drains stamina and shows feedback when you get stuck moving through a web
 /obj/structure/spider/stickyweb/proc/stuck_react(mob/living/victim)
 	if(victim.get_stamina_loss() > 90)
 		if(victim.body_position != LYING_DOWN)

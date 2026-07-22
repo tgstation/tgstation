@@ -28,7 +28,7 @@
 
 	TEST_ASSERT_NOTEQUAL(equipped_collar, human_collar, "Human still has a Monkey collar after changing species.")
 
-///Gives a Human items in both hands, then swaps them to be another species. Held items should remain.
+/// Gives a Human items in both hands, then swaps them to be another species.. Held items should remain.
 /datum/unit_test/species_change_held_items
 
 /datum/unit_test/species_change_held_items/Run()

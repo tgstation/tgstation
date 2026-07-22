@@ -213,7 +213,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 ///Pays out the loser's money equally to all the winners, or refunds it all if no winning option was given.
 /datum/active_bet/proc/payout(winning_option)
 	if(isnull(winning_option) || !(winning_option in options))
-		//no winner was selected (likely the host's PDA was destroyed or attempted href exploit), so let's refund everyone.
+		// no winner was selected (likely the host's PDA was destroyed or tried href exploit), so let's refund everyone.
 		for(var/list/option in options)
 			for(var/list/existing_bets in options[option])
 				var/datum/bank_account/refunded_account = existing_bets[1]

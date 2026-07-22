@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 	var/ui_bgr = BGR_SIDE
 
 	//-- Knowledge in order of unlocking
-	///Starting knowledge - first thing you pick. Gives you access to blades, grasp, mark and passive
+	/// Starting knowledge - first thing you pick.. Gives you access to blades, grasp, mark and passive
 	var/datum/heretic_knowledge/limited_amount/starting/start
 	///Tier1 knowledge
 	var/knowledge_tier1
@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 	for(var/route in GLOB.heretic_path_datums)
 		var/datum/heretic_knowledge_tree_column/column_path = GLOB.heretic_path_datums[route]
 		var/start_knowledge = column_path::start
-		// why aren't the tiered knowledges in a list?!?!? (initial() probably)
+		// why aren't the tiered knowledges in a list?!?!?. (initial() probably)
 		var/t1_knowledge = column_path::knowledge_tier1
 		var/t2_knowledge = column_path::knowledge_tier2
 		var/t3_knowledge = column_path::knowledge_tier3
@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 		var/list/target_knowledge = starting_knowledges[knowledge_path]
 		target_knowledge[HKT_BAN] += start_knowledge_ids - target_knowledge[HKT_ID]
 
-//TODO: use this to generate the globallist
+// To do use this to generate the globallist
 /datum/antagonist/heretic/proc/generate_heretic_research_tree()
 	if(!heretic_path)
 		stack_trace("somehow called generate_heretic_research_tree with a falsey heretic_path")
@@ -331,7 +331,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 				if(shop_tier && !(guaranteed_draft in shop_tier))
 					shop_tier += guaranteed_draft
 			else
-				// rng kinda not correct but like, whatever
+				// rng kind of not correct but like, whatever
 				var/chosen_tier = min(text2num(pick_weight(probabilities)), length(elligible_knowledge))
 				var/list/picked_tier = elligible_knowledge[chosen_tier]
 				selected_knowledge = pick_n_take(picked_tier)

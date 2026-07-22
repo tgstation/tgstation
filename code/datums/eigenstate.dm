@@ -1,6 +1,6 @@
 GLOBAL_DATUM_INIT(closet_teleport_controller, /datum/closet_teleport_controller, new)
 
-///A singleton used to teleport people to a linked web of itterative entries. If one entry is deleted, the 2 around it will forge a link instead.
+/// A singleton used to teleport people to a linked web of itterative entries.. If one entry is deleted, the 2 around it will forge a link instead.
 /datum/closet_teleport_controller
 	///The list of objects that something is linked to indexed by UID
 	var/list/eigen_targets = list()

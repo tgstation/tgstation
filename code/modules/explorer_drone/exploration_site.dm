@@ -1,7 +1,7 @@
 /// All exploration site instances
 GLOBAL_LIST_EMPTY(exploration_sites)
 
-// Band is general distance group. Cost of scanning bands increasly exponentialy.
+// Band is general distance group.. Cost of scanning bands increasly exponentialy.
 /proc/generate_exploration_sites()
 	var/band = GLOB.exoscanner_controller.wide_scan_band
 	var/site_count = 1+rand(band-1,band+1)
@@ -22,13 +22,13 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 	var/distance = 1
 	/// Coordinates in Station coordinate system - don't ask if station rotates
 	var/coordinates
-	/// Was the point scan done or a drone arrived on the site. Affects displayed name/description
+	/// Was the point scan done or a drone arrived on the site.. Affects displayed name/description
 	var/revealed = FALSE
 	/// Was point scan of this site completed.
 	var/point_scan_complete = FALSE
 	/// Was deep scan of this site completed.
 	var/deep_scan_complete = FALSE
-	/// Contains baseline site bands at define time. Events bands will be added to this list as part of event generation.
+	/// Contains baseline site bands at define time.. Events bands will be added to this list as part of event generation.
 	var/list/band_info = list()
 	/// List of event instances represting thing to be found around this exploration site.
 	var/list/events = list()
@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 	return adventure_event
 
 /datum/exploration_site/proc/generate_event(site_traits,event_root_type)
-	/// List of exploration event requirements indexed by type, .[/datum/exploration_site/a] = list("required"=list(trait),"blacklisted"=list(other_trait))
+	/// List of exploration event needs indexed by type, .[/datum/exploration_site/a] = list("required"=list(trait),"blacklisted"=list(other_trait))
 	var/static/exploration_event_requirements_cache = list()
 	if(!length(exploration_event_requirements_cache))
 		exploration_event_requirements_cache = build_exploration_event_requirements_cache()

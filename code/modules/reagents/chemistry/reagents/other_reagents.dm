@@ -180,7 +180,7 @@
 
 /// How many wet stacks you get per units of water when it's applied by touch.
 #define WATER_TO_WET_STACKS_FACTOR_TOUCH 0.5
-/// How many wet stacks you get per unit of water when it's applied by vapor. Much less effective than by touch, of course.
+/// How many wet stacks you get per unit of water when it's applied by vapor.. Much less effective than by touch, of course.
 #define WATER_TO_WET_STACKS_FACTOR_VAPOR 0.1
 
 
@@ -191,7 +191,7 @@
 	. = ..()
 	if(methods & TOUCH)
 		exposed_mob.extinguish_mob() // extinguish removes all fire stacks
-		exposed_mob.adjust_wet_stacks(reac_volume * WATER_TO_WET_STACKS_FACTOR_TOUCH) // Water makes you wet, at a 50% water-to-wet-stacks ratio. Which, in turn, gives you some mild protection from being set on fire!
+		exposed_mob.adjust_wet_stacks(reac_volume * WATER_TO_WET_STACKS_FACTOR_TOUCH) // Water makes you wet, at a 50% water-to-wet-stacks ratio.. Which, in turn, gives you some mild protection from being set on fire!
 
 	if(methods & VAPOR)
 		exposed_mob.adjust_wet_stacks(reac_volume * WATER_TO_WET_STACKS_FACTOR_VAPOR) // Spraying someone with water with the hope to put them out is just simply too funny to me not to add it.
@@ -285,7 +285,7 @@
 	for(var/datum/wound/iter_wound as anything in carbies.all_wounds)
 		iter_wound.on_saltwater(reac_volume, carbies)
 
-// Mixed salt with water! All the help of salt with none of the irritation. Plus increased volume.
+// Mixed salt with water!. All the help of salt with none of the irritation.. Plus increased volume.
 /datum/wound/proc/on_saltwater(reac_volume, mob/living/carbon/carbies)
 	return
 
@@ -331,7 +331,7 @@
 
 	return ..()
 
-// Holy water. Unlike water, which is nuked, stays in and heals the plant a little with the power of the spirits. Also ALSO increases instability.
+// Holy water.. Unlike water, which is nuked, stays in and heals the plant a little with the power of the spirits.. Also ALSO increases instability.
 /datum/reagent/water/holywater/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_waterlevel(round(volume))
 	mytray.adjust_plant_health(round(volume * 0.1))
@@ -378,7 +378,7 @@
 		if(IS_CULTIST(affected_mob))
 			affected_mob.mind.remove_antag_datum(/datum/antagonist/cult)
 			affected_mob.Unconscious(10 SECONDS)
-		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL)) //At this much holy water, you're probably going to fucking melt. good luck
+		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL)) // At this much holy water, you're probably going to fucking melt.. good luck
 			if(!IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role != HOLY_ROLE_PRIEST)
 				need_mob_update += affected_mob.adjust_fire_loss(5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
 		affected_mob.remove_status_effect(/datum/status_effect/jitter)
@@ -493,7 +493,7 @@
 
 /datum/reagent/fuel/unholywater/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_COAGULATING, type) //We don't cult check here because potentially our imbiber may no longer be a cultist for whatever reason! It doesn't purge holy water, after all!
+	REMOVE_TRAIT(affected_mob, TRAIT_COAGULATING, type) // We don't cult check here because potentially our imbiber may no longer be a cultist for whatever reason!. It doesn't purge holy water, after all!
 
 /datum/reagent/hellwater //if someone has this in their system they've really pissed off an eldrich god
 	name = "Hell Water"
@@ -509,7 +509,7 @@
 	affected_mob.ignite_mob() //Only problem with igniting people is currently the commonly available fire suits make you immune to being on fire
 	var/need_mob_update
 	need_mob_update = affected_mob.adjust_tox_loss(0.5*seconds_per_tick, updating_health = FALSE)
-	need_mob_update += affected_mob.adjust_fire_loss(0.5*seconds_per_tick, updating_health = FALSE) //Hence the other damages... ain't I a bastard?
+	need_mob_update += affected_mob.adjust_fire_loss(0.5*seconds_per_tick, updating_health = FALSE) // So the other damages.... is not I a bastard?
 	affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 2.5*seconds_per_tick, 150)
 	if(holder)
 		holder.remove_reagent(type, 0.5 * seconds_per_tick)
@@ -551,11 +551,11 @@
 		)
 
 /datum/reagent/lube/used_on_fish(obj/item/fish/fish)
-	ADD_TRAIT(fish, TRAIT_FISH_FED_LUBE, type) //required for the lubefish mutation
+	ADD_TRAIT(fish, TRAIT_FISH_FED_LUBE, type) // needed for the lubefish mutation
 	addtimer(TRAIT_CALLBACK_REMOVE(fish, TRAIT_FISH_FED_LUBE, type), fish.feeding_frequency, TIMER_UNIQUE|TIMER_OVERRIDE)
 	return TRUE
 
-///Stronger kind of lube. Applies TURF_WET_SUPERLUBE.
+/// Stronger kind of lube.. Applies TURF_WET_SUPERLUBE.
 /datum/reagent/lube/superlube
 	name = "Super Duper Lube"
 	description = "This \[REDACTED\] has been outlawed after the incident on \[DATA EXPUNGED\]."
@@ -566,8 +566,8 @@
 /datum/reagent/spraytan
 	name = "Spray Tan"
 	description = "A substance applied to the skin to darken the skin."
-	color = "#FFC080" // rgb: 255, 196, 128  Bright orange
-	metabolization_rate = 10 * REAGENTS_METABOLISM // very fast, so it can be applied rapidly.  But this changes on an overdose
+	color = "#FFC080" // rgb: 255, 196, 128 Bright orange
+	metabolization_rate = 10 * REAGENTS_METABOLISM // very fast, so it can be applied rapidly.. But this changes on an overdose
 	overdose_threshold = 11 //Slightly more than one un-nozzled spraybottle.
 	taste_description = "sour oranges"
 	ph = 5
@@ -640,7 +640,7 @@
 		var/mob/living/carbon/human/affected_human = affected_mob
 		var/obj/item/bodypart/head/head = affected_human.get_bodypart(BODY_ZONE_HEAD)
 		if(head)
-			head.head_flags |= HEAD_HAIR //No hair? No problem!
+			head.head_flags |= HEAD_HAIR // No hair?. No problem!
 		if(!HAS_TRAIT(affected_human, TRAIT_SHAVED))
 			affected_human.set_facial_hairstyle("Shaved", update = FALSE)
 		affected_human.set_facial_haircolor(COLOR_BLACK, update = FALSE)
@@ -845,7 +845,7 @@
 	name = "Zombie Mutation Toxin"
 	description = "An undead toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/zombie //Not the infectious kind. The days of xenobio zombie outbreaks are long past.
+	race = /datum/species/zombie // Not the infectious kind.. The days of xenobio zombie outbreaks are long past.
 	taste_description = "brai...nothing in particular"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
@@ -962,7 +962,7 @@
 	description = "A colorless, odorless gas. Grows on trees but is still pretty valuable."
 	color = COLOR_GRAY
 	taste_mult = 0 // oderless and tasteless
-	ph = 9.2//It's acutally a huge range and very dependant on the chemistry but ph is basically a made up var in its implementation anyways
+	ph = 9.2// It's acutally a huge range and very dependant on the chemistry but ph is basically a made up var in its code anyways
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
@@ -1010,7 +1010,7 @@
 	description = "A colorless, odorless, nonmetallic, tasteless, highly combustible diatomic gas."
 	color = COLOR_GRAY
 	taste_mult = 0
-	ph = 0.1//Now I'm stuck in a trap of my own design. Maybe I should make -ve phes? (not 0 so I don't get div/0 errors)
+	ph = 0.1// Now I'm stuck in a trap of my own design.. Maybe I should make -ve phes?. (not 0 so I don't get div/0 errors)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
@@ -1067,7 +1067,7 @@
 /datum/reagent/chlorine
 	name = "Chlorine"
 	description = "A pale yellow gas that's well known as an oxidizer. While it forms many harmless molecules in its elemental form it is far from harmless."
-	color = "#FFFB89" //pale yellow? let's make it light gray
+	color = "#FFFB89" // pale yellow?. let's make it light gray
 	taste_description = "chlorine"
 	ph = 7.4
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1080,7 +1080,7 @@
 	mytray.adjust_toxic(round(volume * 1.5))
 	mytray.adjust_waterlevel(-round(volume * 0.5))
 	mytray.adjust_weedlevel(-rand(1, 3))
-	// White Phosphorous + water -> phosphoric acid. That's not a good thing really.
+	// White Phosphorous + water -> phosphoric acid.. That's not a good thing really.
 
 
 /datum/reagent/chlorine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -1127,7 +1127,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-// Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
+// Phosphoric salts are beneficial though.. And even if the plant suffers, in the long run the tray gets some nutrients.. The benefit isn't worth that much.
 /datum/reagent/phosphorus/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_plant_health(-round(volume * 0.75))
 	mytray.adjust_waterlevel(-round(volume * 0.5))
@@ -1184,7 +1184,7 @@
 	material = /datum/material/iron
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
-	color = "#606060" //pure iron? let's make it violet of course
+	color = "#606060" // pure iron?. let's make it violet of course
 	ph = 6
 
 /datum/reagent/gold
@@ -1224,7 +1224,7 @@
 	. = ..()
 	if(!HAS_TRAIT(affected_mob, TRAIT_IRRADIATED) && SSradiation.can_irradiate_basic(affected_mob))
 		var/chance = min(volume / (20 - rad_power * 5), rad_power)
-		if(SPT_PROB(chance, seconds_per_tick)) // ignore rad protection calculations bc it's inside of us
+		if(SPT_PROB(chance, seconds_per_tick)) // ignore rad protection calculations because it's inside of us
 			affected_mob.AddComponent(/datum/component/irradiated)
 
 	if(affected_mob.adjust_tox_loss(tox_damage * seconds_per_tick * metabolization_rate, updating_health = FALSE))
@@ -1586,7 +1586,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-/datum/reagent/foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
+/datum/reagent/foaming_agent// Metal foaming agent.. This is lithium hydride.. Add other recipes (e.g.. LiH + H2O -> LiOH + H2) eventually.
 	name = "Foaming Agent"
 	description = "An agent that yields metallic foam when mixed with light metal and a strong acid."
 	color = "#664B63" // rgb: 102, 75, 99
@@ -1595,7 +1595,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-/datum/reagent/smart_foaming_agent //Smart foaming agent. Functions similarly to metal foam, but conforms to walls.
+/datum/reagent/smart_foaming_agent // Smart foaming agent.. Functions similarly to metal foam, but conforms to walls.
 	name = "Smart Foaming Agent"
 	description = "An agent that yields metallic foam which conforms to area boundaries when mixed with light metal and a strong acid."
 	color = "#664B63" // rgb: 102, 75, 99
@@ -1631,7 +1631,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-// This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant. The new trade off is it culls stability.
+// This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant.. The new trade off is it culls stability.
 /datum/reagent/diethylamine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_plant_health(round(volume))
 	mytray.adjust_pestlevel(-rand(1,2))
@@ -2551,7 +2551,7 @@
 	. = ..()
 	if(!istype(exposed_turf))
 		return
-	// We want one spray of this stuff (5u) to take out a wet floor. Feels better that way
+	// We want one spray of this stuff (5u) to take out a wet floor.. Feels better that way
 	exposed_turf.MakeDry(ALL, TRUE, reac_volume * 10 SECONDS)
 
 /datum/reagent/drying_agent/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
@@ -2685,7 +2685,7 @@
 /datum/reagent/growthserum
 	name = "Growth Serum"
 	description = "A commercial chemical designed to help older men in the bedroom."//not really it just makes you a giant
-	color = "#ff0000"//strong red. rgb 255, 0, 0
+	color = "#ff0000"// strong red.. rgb 255, 0, 0
 	var/current_size = RESIZE_DEFAULT_SIZE
 	taste_description = "bitterness" // apparently what viagra tastes like
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -2878,7 +2878,7 @@
 	. = ..()
 	var/healthcomp = (100 - affected_mob.health) //DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
 	. = FALSE
-	if(affected_mob.get_stamina_loss() < (45 - healthcomp)) //At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
+	if(affected_mob.get_stamina_loss() < (45 - healthcomp)) // At 50 health you would have 200 - 150 health meaning 50 compensation.. 60 - 50 = 10, so would only do 10-19 stamina.)
 		if(affected_mob.adjust_stamina_loss(3.34 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
 			. = UPDATE_MOB_HEALTH
 	if(SPT_PROB(16, seconds_per_tick))
@@ -2903,7 +2903,7 @@
 	color = "#ED2939"
 	taste_description = "upside down"
 
-/// Improvised reagent that induces vomiting. Created by dipping a dead mouse in welder fluid.
+/// Improvised reagent that induces vomiting.. Created by dipping a dead mouse in welder fluid.
 /datum/reagent/yuck
 	name = "Organic Slurry"
 	description = "A mixture of various colors of fluid. Induces vomiting."
@@ -2913,7 +2913,7 @@
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
-	var/yuck_cycle = 0 //! The `current_cycle` when puking starts.
+	var/yuck_cycle = 0 // !. The `current_cycle` when puking starts.
 
 /datum/glass_style/drinking_glass/yuck
 	required_drink_type = /datum/reagent/yuck
@@ -3036,7 +3036,7 @@
 		metal_amount += materials_to_transmute[metal_key]
 
 	if(!metal_amount)
-		metal_amount = default_material_amount //some stuff doesn't have materials at all. To still give them properties, we give them a material. Basically doesn't exist
+		metal_amount = default_material_amount // some stuff doesn't have materials at all.. To still give them properties, we give them a material.. Basically doesn't exist
 
 	// Delete existing materials first before changing the material flags
 	if(length(target.custom_materials))
@@ -3057,7 +3057,7 @@
 	color = "#050096" // rgb: 5, 0, 150
 	taste_mult = 0 // oderless and tasteless
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM //20 times as long, so it's actually viable to use
-	var/time_multiplier = 1 MINUTES //1 minute per unit of gravitum on objects. Seems overpowered, but the whole thing is very niche
+	var/time_multiplier = 1 MINUTES // 1 minute per unit of gravitum on objects.. Seems overpowered, but the whole thing is very niche
 	inverse_chem_val = 0.3
 	inverse_chem = /datum/reagent/inverse/gravitum
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -3085,7 +3085,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-// "Second wind" reagent generated when someone suffers a wound. Epinephrine, adrenaline, and stimulants are all already taken so here we are
+// "Second wind" reagent generated when someone suffers a wound.. Epinephrine, adrenaline, and stimulants are all already taken so here we are
 /datum/reagent/determination
 	name = "Determination"
 	description = "For when you need to push on a little more. Do NOT allow near plants."
@@ -3095,7 +3095,7 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	self_consuming = TRUE
 	metabolized_traits = list(TRAIT_ANALGESIA)
-	/// Whether we've had at least WOUND_DETERMINATION_SEVERE (2.5u) of determination at any given time. No damage slowdown immunity or indication we're having a second wind if it's just a single moderate wound
+	/// Whether we've had at least WOUND_DETERMINATION_SEVERE (2.5u) of determination at any given time.. No damage slowdown immunity or indication we're having a second wind if it's just a single moderate wound
 	var/significant = FALSE
 
 /datum/reagent/determination/on_mob_end_metabolize(mob/living/carbon/affected_mob)
@@ -3223,7 +3223,7 @@
 
 /datum/reagent/ants/on_mob_life(mob/living/carbon/victim, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	victim.adjust_brute_loss(0.2 * max(0.1, round((ant_ticks * ant_damage),0.1)) * metabolization_ratio * seconds_per_tick) //Scales with time. Roughly 32 brute with 100u.
+	victim.adjust_brute_loss(0.2 * max(0.1, round((ant_ticks * ant_damage),0.1)) * metabolization_ratio * seconds_per_tick) // Scales with time.. Roughly 32 brute with 100u.
 	ant_ticks++
 	if(ant_ticks < 5) // Makes ant food a little more appetizing, since you won't be screaming as much.
 		return
@@ -3298,7 +3298,7 @@
 	name = "glass of fire ants"
 	desc = "This is a terrible idea."
 
-//This is intended to a be a scarce reagent to gate certain drugs and toxins with. Do not put in a synthesizer. Renewable sources of this reagent should be inefficient.
+// This is intended to a be a scarce reagent to gate certain drugs and toxins with.. Do not put in a synthesizer.. Renewable sources of this reagent should be inefficient.
 /datum/reagent/lead
 	name = "Lead"
 	description = "A dull metallic element with a low melting point."
@@ -3350,7 +3350,7 @@
 	mytray.myseed?.adjust_potency(round(volume * 0.5))
 
 // I made this food....with love.
-// Reagent added to food by chef's with a chef's kiss. Makes people happy.
+// Reagent added to food by chef's with a chef's kiss.. Makes people happy.
 /datum/reagent/love
 	name = "Love"
 	description = "This food's been made... with love."
@@ -3371,7 +3371,7 @@
 
 /datum/reagent/love/on_mob_delete(mob/living/affected_mob)
 	. = ..()
-	// When we exit the system we'll leave the moodlet based on the amount we had
+	// When we exit the system we'll leave the moodlet good on the amount we had
 	var/duration_of_moodlet = current_cycle * 20 SECONDS
 	affected_mob.clear_mood_event(name)
 	affected_mob.add_mood_event(name, /datum/mood_event/love_reagent, duration_of_moodlet)

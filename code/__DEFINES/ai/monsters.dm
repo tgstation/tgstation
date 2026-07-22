@@ -87,7 +87,7 @@
 #define BB_LOBSTROSITY_EXPLOIT_TRAITS "BB_lobstrosity_exploit_traits"
 /// Key where we store some tasty fingers
 #define BB_LOBSTROSITY_TARGET_LIMB "BB_lobstrosity_target_limb"
-/// We increment this counter every time we try to move while dragging an arm and if we go too long we'll give up trying to get out of line of sight and just eat the fingers
+/// We increment this counter every time we try to move while dragging an arm.. If we go too long we'll give up trying to get out of line of sight.. Just eat the fingers
 #define BB_LOBSTROSITY_FINGER_LUST "BB_lobstrosity_finger_lust"
 /// Does this carp still target lying mobs even if they aren't stunned, and flee from sary fishermen?
 #define BB_LOBSTROSITY_NAIVE_HUNTER "BB_lobstrosity_naive_hunter"
@@ -116,7 +116,7 @@
 #define BB_WHELP_STRAIGHTLINE_FIRE "BB_whelp_straightline_fire"
 ///whelp's secondary enraged ability
 #define BB_WHELP_WIDESPREAD_FIRE "BB_whelp_widespread_fire"
-///the target rock we will attempt to create a sculpture out of
+/// the target rock we will try to create a sculpture out of
 #define BB_TARGET_ROCK "BB_target_rock"
 ///the cannibal target we shall consume
 #define BB_TARGET_CANNIBAL "BB_target_cannibal"
@@ -361,7 +361,7 @@
 #define BB_THETHING_SHRIEK "BB_THETHING_SHRIEK"
 #define BB_THETHING_CARDTENDRILS "BB_THETHING_CARDTENDRILS"
 #define BB_THETHING_ACIDSPIT "BB_THETHING_ACIDSPIT"
-/// Blackboard key for The Thing boss that determines attack mode. TRUE means it will focus on closing the distance and murdering the person in question. Otherwise AOE.
+/// Blackboard key for The Thing boss that determines attack mode... TRUE means it will focus on closing the distance and murdering the person in question... Otherwise AOE.
 #define BB_THETHING_MELEEMODE "BB_THETHING_MELEEMODE"
 /// The Thing will be in attack mode forever if true
 #define BB_THETHING_NOAOE "BB_THETHING_NOAOE"

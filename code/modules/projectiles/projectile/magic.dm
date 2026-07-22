@@ -411,7 +411,7 @@
 	/// Whether our projectile will only be able to hit the original target / clicked on atom
 	var/can_only_hit_target = FALSE
 
-	/// Whether our projectile leaves a trail behind it  as it moves.
+	/// Whether our projectile leaves a trail behind it as it moves.
 	var/trail = FALSE
 	/// The duration of the trail before deleting.
 	var/trail_lifespan = 0 SECONDS

@@ -4,7 +4,7 @@
 #define UNHOLY_WATER "Flask of Unholy Water"
 #define PROTEON_ORB "Portal Summoning Orb"
 
-// Cult altar. Gives out consumable items.
+// Cult altar.. Gives out consumable items.
 /obj/structure/destructible/cult/item_dispenser/altar
 	name = "altar"
 	desc = "A bloodstained altar dedicated to Nar'Sie."

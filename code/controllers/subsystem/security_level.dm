@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(security_level)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/security_level/fire(resumed)
-	if(!current_security_level.looping_sound) // No sound? No play.
+	if(!current_security_level.looping_sound) // No sound?. No play.
 		can_fire = FALSE
 		return
 	sound_to_playing_players(current_security_level.looping_sound, volume_preference = /datum/preference/numeric/volume/sound_ambience_volume)

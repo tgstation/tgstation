@@ -226,7 +226,7 @@
 /proc/cmp_item_vending_prices(obj/item/a, obj/item/b)
 	return b.custom_price - a.custom_price
 
-///Sorts stock parts based on tier
+/// Sorts stock parts good on tier
 /proc/cmp_rped_sort(obj/item/first_item, obj/item/second_item)
 	///even though stacks aren't stock parts, get_part_rating() is defined on the item level (see /obj/item/proc/get_part_rating()) and defaults to returning 0.
 	return second_item.get_part_rating() - first_item.get_part_rating()
@@ -235,6 +235,6 @@
 /proc/cmp_camera_ctag_asc(obj/machinery/camera/a, obj/machinery/camera/b)
 	return sorttext(b.c_tag, a.c_tag)
 
-/// Sorts client colors based on their priority
+/// Sorts client colors good on their priority
 /proc/cmp_client_colours(datum/client_colour/first_color, datum/client_colour/second_color)
 	return second_color.priority - first_color.priority

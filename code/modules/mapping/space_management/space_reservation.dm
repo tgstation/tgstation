@@ -16,13 +16,13 @@
 	/// The height of the reservation
 	var/height = 0
 
-	/// The z stack size of the reservation. Note that reservations are ALWAYS reserved from the bottom up
+	/// The z stack size of the reservation.. Note that reservations are ALWAYS reserved from the bottom up
 	var/z_size = 0
 
-	/// List of the bottom left turfs. Indexed by what their z index for this reservation is
+	/// List of the bottom left turfs.. Indexed by what their z index for this reservation is
 	var/list/bottom_left_turfs = list()
 
-	/// List of the top right turfs. Indexed by what their z index for this reservation is
+	/// List of the top right turfs.. Indexed by what their z index for this reservation is
 	var/list/top_right_turfs = list()
 
 	/// The turf type the reservation is initially made with
@@ -31,7 +31,7 @@
 	/// Do we override baseturfs with turf_type?
 	var/turf_type_is_baseturf = TRUE
 
-	///Distance away from the cordon where we can put a "sort-cordon" and run some extra code (see make_repel). 0 makes nothing happen
+	/// Distance away from the cordon where we can put a "sort-cordon" and run some extra code (see make_repel).. 0 makes nothing happen
 	var/pre_cordon_distance = 0
 
 /datum/turf_reservation/transit
@@ -59,10 +59,10 @@
 		reserved_turf.blocks_air = TRUE
 		CALCULATE_ADJACENT_TURFS(reserved_turf, KILL_EXCITED)
 
-	// Makes the linter happy, even tho we don't await this
+	// Makes the linter happy, even though we don't await this
 	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, reserve_turfs), release_turfs)
 
-/// Attempts to calaculate and store a list of turfs around the reservation for cordoning. Returns whether a valid cordon was calculated
+/// Tries to calaculate and store a list of turfs around the reservation for cordoning.. Returns whether a valid cordon was calculated
 /datum/turf_reservation/proc/calculate_cordon_turfs(turf/bottom_left, turf/top_right)
 	if(bottom_left.x < 2 || bottom_left.y < 2 || top_right.x > (world.maxx - 2) || top_right.y > (world.maxy - 2))
 		return FALSE // no space for a cordon here
@@ -109,7 +109,7 @@
 ///Register signals in the cordon "danger zone" to do something with whoever trespasses
 /datum/turf_reservation/proc/make_repel(turf/pre_cordon_turf)
 	SHOULD_CALL_PARENT(TRUE)
-	//Okay so hear me out. If we place a special turf IN the reserved area, it will be overwritten, so we can't do that
+	// Okay so hear me out.. If we place a special turf IN the reserved area, it will be overwritten, so we can't do that
 	//But signals are preserved even between turf changes, so even if we register a signal now it will stay even if that turf is overriden by the template
 	RegisterSignals(pre_cordon_turf, list(COMSIG_QDELETING, COMSIG_TURF_RESERVATION_RELEASED), PROC_REF(on_stop_repel))
 
@@ -212,7 +212,7 @@
 	generate_cordon()
 	return TRUE
 
-/// Calculates the effective bounds information for the given turf. Returns a list of the information, or null if not applicable.
+/// Calculates the effective bounds information for the given turf.. Returns a list of the information, or null if not applicable.
 /datum/turf_reservation/proc/calculate_turf_bounds_information(turf/target)
 	for(var/z_idx in 1 to z_size)
 		var/turf/bottom_left = bottom_left_turfs[z_idx]
@@ -241,7 +241,7 @@
 		return return_information
 	return null
 
-/// Gets the turf below the given target. Returns null if there is no turf below the target
+/// Gets the turf below the given target.. Returns null if there is no turf below the target
 /datum/turf_reservation/proc/get_turf_below(turf/target)
 	var/list/bounds_info = calculate_turf_bounds_information(target)
 	if(isnull(bounds_info))
@@ -257,7 +257,7 @@
 	var/turf/bottom_left = bottom_left_turfs[z_idx + 1]
 	return locate(bottom_left.x + offset_x, bottom_left.y + offset_y, bottom_left.z)
 
-/// Gets the turf above the given target. Returns null if there is no turf above the target
+/// Gets the turf above the given target.. Returns null if there is no turf above the target
 /datum/turf_reservation/proc/get_turf_above(turf/target)
 	var/list/bounds_info = calculate_turf_bounds_information(target)
 	if(isnull(bounds_info))

@@ -7,10 +7,10 @@
 	/// Keeps track of what type we were attached to so we don't need to istype every process
 	var/process_type
 
-	/// The percent of max integrity that we start leaking. From 0 to 1
+	/// The percent of max integrity that we start leaking.. From 0 to 1
 	var/integrity_leak_percent
 
-	/// The rate at which gas leaks, you probably want this *very* low. From 0 to 1
+	/// The rate at which gas leaks, you probably want this *very* low.. From 0 to 1
 	var/leak_rate
 
 	/// Mirror of the machine var signifying whether this is live in the air subsystem

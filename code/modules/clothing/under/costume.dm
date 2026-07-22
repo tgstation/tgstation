@@ -132,7 +132,7 @@
 	bodyshapes_with_variations = NONE
 	alternate_worn_layer = UNDER_SUIT_LAYER
 	can_adjust = FALSE
-	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR //weebs are gonna love this
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR // weebs are going to love this
 
 /obj/item/clothing/under/costume/geisha
 	name = "geisha suit"
@@ -314,7 +314,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	female_sprite_flags = NO_FEMALE_UNIFORM
-	alternate_worn_layer = GLOVES_LAYER //covers hands but gloves can go over it. This is how these things work in my head.
+	alternate_worn_layer = GLOVES_LAYER // covers hands but gloves can go over it.. This is how these things work in my head.
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/mech_suit/setup_reskins()
@@ -453,7 +453,7 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
-// For the nuke-ops cowboy fit. Sadly no Lone Ranger fit & I don't wanna bloat costume files further.
+// For the nuke-ops cowboy fit.. Sadly no Lone Ranger fit & I don't want to bloat costume files further.
 /obj/item/clothing/under/costume/dutch/syndicate
 	desc = "You can feel a <b>god damn plan</b> coming on, and the armor lining in this suit'll do wonders in makin' it work."
 	armor_type = /datum/armor/clothing_under/syndicate

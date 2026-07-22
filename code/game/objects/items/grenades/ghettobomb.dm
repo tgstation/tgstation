@@ -21,7 +21,7 @@
 	var/power = 5
 	/// Our assembly that when activated causes us to explode
 	var/obj/item/assembly/activator
-	/// List of effects, the key is a path to compare to and the value is incremented by one everytime theres one that is the same type in our contents
+	/// List of effects, the key is a path to compare to. The value is incremented by one everytime theres one that is the same type in our contents
 	var/list/effects = list(
 		/obj/item/food/meat/slab = 0,
 		/obj/item/paper = 0,
@@ -127,7 +127,7 @@
 		balloon_alert(user, isnull(activator) ? "you shouldnt be seeing this" : "on cooldown!")
 		return
 	if(istype(activator, /obj/item/assembly/signaler))
-		return //no signallers, signallers send a signal and i can imagine this having bad sideeffects if some has multiple of the same frequency in their backpack and uses them inhand by accident
+		return // no signallers, signallers send a signal. I can imagine this having bad sideeffects if some has multiple of the same frequency in their backpack. Uses them inh. By accident
 	log_grenade(user)
 	add_fingerprint(user)
 	activator.activate()
@@ -175,7 +175,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "slicedapart"
-	/// Are wires inserted? If so, we are on the final step
+	/// Are wires inserted?. If so, we are on the final step
 	var/wires_are_in = FALSE
 	/// Typecache of items we are allowed to stuff into the pipebomb for effects, only add items with effects
 	var/static/list/allowed = typecacheof(list(
@@ -184,7 +184,7 @@
 		/obj/item/shard,
 		/obj/item/stack/ore/bluespace_crystal/refined,
 	))
-	//this probably shouldve been a blacklist instead but god do i not wanna update this anytime a new assembly is added
+	// this probably shouldve been a blacklist instead but god do i not want to update this anytime a new assembly is added
 	/// A static list of types of assemblies that are allowed to be used to finish the bomb
 	var/static/list/allowed_activators = list(
 		/obj/item/assembly/signaler,

@@ -15,33 +15,33 @@
 	mouse_drop_zone = TRUE
 	// STOP_OVERLAY_UPDATE_BODY_PARTS is removed after we call update_body_parts() during init.
 	living_flags = ALWAYS_DEATHGASP|STOP_OVERLAY_UPDATE_BODY_PARTS
-	///List of [/obj/item/organ]s in the mob. They don't go in the contents for some reason I don't want to know.
+	/// List of [/obj/item/organ]s in the mob.. They don't go in the contents for some reason I don't want to know.
 	var/list/obj/item/organ/organs = list()
 	///Same as [above][/mob/living/carbon/var/organs], but stores "slot ID" - "organ" pairs for easy access.
 	var/list/organs_slot = list()
 
 	///Whether or not the mob is handcuffed
 	var/obj/item/handcuffed = null
-	///Same as handcuffs but for legs. Bear traps use this.
+	/// Same as handcuffs but for legs.. Bear traps use this.
 	var/obj/item/legcuffed = null
 
-	/// Measure of how disgusted we are. See DISGUST_LEVEL_GROSS and friends
+	/// Measure of how disgusted we are.. See DISGUST_LEVEL_GROSS and friends
 	var/disgust = 0
-	/// How disgusted we were LAST time we processed disgust. Helps prevent unneeded work
+	/// How disgusted we were LAST time we processed disgust.. Helps prevent unneeded work
 	var/old_disgust = 0
 
 	//inventory slots
-	/// Equipped air tank. Never set this manually.
+	/// Equipped air tank.. Never set this manually.
 	var/obj/item/tank/internal = null
-	/// "External" air tank. Never set this manually. Not required to stay directly equipped on the mob (i.e. could be a machine or MOD suit module).
+	/// "External" air tank.. Never set this manually.. Not needed to stay directly equipped on the mob (i.e.. could be a machine or MOD suit module).
 	var/obj/item/tank/external = null
 
-	/// DNA is carbon-only, and ideally you should be accessing it through has_dna(), but you can access it directly if you know you're working with a carbon mob
+	/// DNA is carbon-only. Ideally you should be accessing it through has_dna(). You can access it directly if you know you're working with a carbon mob
 	var/datum/dna/dna = null
 	///last mind to control this mob, for blood-based cloning
 	var/datum/mind/last_mind = null
 
-	///This is used to determine if the mob failed a breath. If they did fail a breath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
+	/// This is used to determine if the mob failed a breath.. If they did fail a breath, they will try to breathe each tick, otherwise just once per 4 ticks.
 	var/failed_last_breath = FALSE
 	///Sound loop for breathing when using internals
 	var/datum/looping_sound/breathing/breathing_loop
@@ -73,9 +73,9 @@
 	var/static/list/limb_icon_cache = list()
 
 	/// Used to temporarily increase severity of / apply a new damage overlay (the red ring around the ui / screen).
-	/// This number will translate to equivalent brute or burn damage taken. Handled in [mob/living/proc/update_damage_hud].
+	/// This number will translate to equivalent brute or burn damage taken.. Handled in [mob/living/proc/update_damage_hud].
 	/// (For example, setting damageoverlaytemp = 20 will add 20 "damage" to the overlay the next time it updates.)
-	/// This number is also reset to 0 every tick of carbon Life(). Pain.
+	/// This number is also reset to 0 every tick of carbon Life().. Pain.
 	var/damageoverlaytemp = 0
 
 	/// Protection (insulation) from the heat, Value 0-1 corresponding to the percentage of protection
@@ -91,10 +91,10 @@
 	/// All of the scars a carbon has afflicted throughout their limbs
 	var/list/all_scars
 
-	/// Assoc list of BODY_ZONE -> wounding_type. Set when a limb is dismembered, unset when one is attached. Used for determining what scar to add when it comes time to generate them.
+	/// Assoc list of BODY_ZONE -> wounding_type.. Set when a limb is dismembered, unset when one is attached.. Used for determining what scar to add when it comes time to generate them.
 	var/list/body_zone_dismembered_by
 
-	/// Simple modifier for whether this mob can handle greater or lesser skillchip complexity. See /datum/mutation/biotechcompat/ for example.
+	/// Simple modifier for whether this mob can handle greater or lesser skillchip complexity.. See /datum/mutation/biotechcompat/ for example.
 	var/skillchip_complexity_modifier = 0
 
 	/// Can other carbons be shoved into this one to make it fall?

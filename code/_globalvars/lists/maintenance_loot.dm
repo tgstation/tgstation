@@ -235,7 +235,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 			/obj/item/watertank/janitor = 1,
 			) = 4,
 		list(//other chems
-			/obj/item/reagent_containers/cup/jerrycan/oil = 2, //Not the most exciting reagent, but a staple. And you get a cool can for your pyrotechnics.
+			/obj/item/reagent_containers/cup/jerrycan/oil = 2, // Not the most exciting reagent, but a staple.. And you get a cool can for your pyrotechnics.
 			/obj/item/reagent_containers/cup/jerrycan/space_cleaner = 2, //If you can't find the janitor, the medbay might also appreciate some readymade cleaner.
 			/obj/item/reagent_containers/cup/jerrycan/sus = 1, //what assitant wouldn't like a vibrant jug o' phlog?
 			/obj/item/reagent_containers/cup/jerrycan/diethylamine = 1, //Im sure the botanist would appreciate it, but it is also really cool for maintenance science projects.
@@ -262,7 +262,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/food/monkeycube = 1,
 		) = 8,
 
-	list(//Donk Co. 'Donk Spike' flechette shells, these things show up everywhere in donkpocket boxes
+	list(// Donk Co.. 'Donk Spike' flechette shells, these things show up everywhere in donkpocket boxes
 		/obj/item/storage/box/donkpockets/donkpocketshell = 1,
 		) = 8,
 

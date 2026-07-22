@@ -35,7 +35,7 @@
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes are blood red and stone-like.", BODY_ZONE_PRECISE_EYES)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
-///goliath lungs! You can breathe lavaland air mix but can't breath pure O2 from a tank anymore.
+/// goliath lungs!. You can breathe lavaland air mix but can't breath pure O2 from a tank anymore.
 /obj/item/organ/lungs/lavaland/goliath
 	name = "mutated goliath-lungs"
 	desc = "goliath DNA infused into what was once some normal lungs."
@@ -51,7 +51,7 @@
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their back is covered in small tendrils.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
-///goliath brain. you can't use gloves but one of your arms becomes a tendril hammer that can be used to mine!
+/// goliath brain.. you can't use gloves but one of your arms becomes a tendril hammer that can be used to mine!
 /obj/item/organ/brain/goliath
 	name = "mutated goliath-brain"
 	desc = "goliath DNA infused into what was once a normal brain."
@@ -138,7 +138,7 @@
 	if(!COOLDOWN_FINISHED(src, tendril_hammer_cd))
 		return
 
-	//do a normal attack if our target isn't living, since we're gonna define them after this.
+	// do a normal attack if our target isn't living, since we're going to define them after this.
 	if(!isliving(target))
 		return
 
@@ -159,7 +159,7 @@
 /obj/item/goliath_infuser_hammer/proc/nemesis_effects(mob/living/user, mob/living/target)
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite))
 		return
-	///we obtain the relative direction from the bat itself to the target
+	/// we get the relative direction from the bat itself to the target
 	if(!QDELETED(target))
 		target.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), rand(1, 2), prob(60) ? 1 : 4, user)
 

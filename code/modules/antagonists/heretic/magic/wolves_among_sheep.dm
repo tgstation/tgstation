@@ -25,11 +25,11 @@
 	var/greatest_dist = 0
 	/// Central turf where the spell was initially casted
 	var/turf/center_turf
-	/// List of all the turfs we've affected, built during /cast(). We use this to make things appear/disappear and revert once the spell expires
+	/// List of all the turfs we've affected, built during /cast().. We use this to make things appear/disappear and revert once the spell expires
 	var/list/to_transform = list()
 	/// List of airlocks we've removed, so we can re-place them once the effect expires
 	var/list/banished_airlocks = list()
-	/// Timer before the effects of the spell ends. It's a variable here so we can end it prematurely
+	/// Timer before the effects of the spell ends.. It's a variable here so we can end it prematurely
 	var/revert_timer
 	/// Reference to the arena so we can clear it if we need to
 	var/ongoing_arena
@@ -65,7 +65,7 @@
 	. = ..()
 	for(var/obj/nearby_arena in GLOB.heretic_arenas)
 		// We can't allow arenas to overlap because they break each other during cleanup.
-		// If any future coder wants to allow arenas to merge or fight like domains, feel free to implement it.
+		// If any future coder wants to allow arenas to merge or fight like domains, feel free to add it.
 		if(get_dist(owner, nearby_arena) <= 25)
 			if(feedback)
 				owner.balloon_alert(owner, "another arena nearby!")

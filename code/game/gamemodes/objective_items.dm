@@ -85,10 +85,10 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	/// A hint explaining how one may find the target item.
 	var/steal_hint = "The clown might have one."
 
-	///If the item takes special steps to destroy for an objective (e.g. blackbox)
+	/// If the item takes special steps to destroy for an objective (e.g.. blackbox)
 	var/destruction_method = null
 
-/// For objectives with special checks (does that intellicard have an ai in it? etcetc)
+/// For objectives with special checks (does that intellicard have an ai in it?. etcetc)
 /datum/objective_item/proc/check_special_completion(obj/item/thing)
 	return TRUE
 
@@ -501,7 +501,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		A photocopy may also suffice."
 
 /obj/item/documents/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/documents) //Any set of secret documents. Doesn't have to be NT's
+	return add_item_to_steal(src, /obj/item/documents) // Any set of secret documents.. Doesn't have to be NT's
 
 /datum/objective_item/steal/nuke_core
 	name = "the heavily radioactive plutonium core from the onboard self-destruct"
@@ -565,7 +565,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 	if(istype(potential_storage, /obj/item/aicard))
 		var/obj/item/aicard/card = potential_storage
-		being = card.AI // why is this one capitalized and the other one not? i wish i knew.
+		being = card.AI // why is this one capitalized and the other one not?. i wish i knew.
 	else if(istype(potential_storage, /obj/item/mod/control))
 		var/obj/item/mod/control/suit = potential_storage
 		if(isAI(suit.ai_assistant))

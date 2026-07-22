@@ -17,7 +17,7 @@
 
 	final_checkout()
 
-/// Any "special" suicide messages are handled by the related item that the mob uses to kill itself. This is just messages for when it's done with the bare hands.
+/// Any "special" suicide messages are handled by the related item that the mob uses to kill itself.. This is just messages for when it's done with the bare hands.
 /mob/living/carbon/human/send_applicable_messages(message_type)
 	var/suicide_message = ""
 	switch(message_type)

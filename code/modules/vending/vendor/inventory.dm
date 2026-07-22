@@ -192,12 +192,12 @@
 		var/vend_response = vend_reply || "Thank you for shopping with [src]!"
 		speak(vend_response)
 		purchase_message_cooldown = world.time + 5 SECONDS
-		//This is not the best practice, but it's safe enough here since the chances of two people using a machine with the same ref in 5 seconds is fuck low
+		// This is not the best practice. It's safe enough here since the chances of two people using a machine with the same ref in 5 seconds is fuck low
 		last_shopper = REF(user)
 	if(icon_vend) //Show the vending animation if needed
 		flick(icon_vend, src)
 
-	// Always give out free returned stuff first, e.g. to avoid walling a traitor objective in a bag behind paid items
+	// Always give out free returned stuff first, e.g.. to avoid walling a traitor objective in a bag behind paid items
 	var/obj/item/vended_item = dispense(item_record, get_turf(src), dispense_returned = LAZYLEN(item_record.returned_products))
 	if(!vended_item)
 		return
@@ -274,7 +274,7 @@
 	if(LAZYLEN(product_to_vend.returned_products))
 		return TRUE
 
-	//account to use. optional cause we handle cash on hand transfers as well
+	// account to use.. optional cause we handle cash on hand transfers as well
 	var/datum/bank_account/account = paying_id_card.registered_account
 
 	//deduct money from person

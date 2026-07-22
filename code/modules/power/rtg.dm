@@ -11,7 +11,7 @@
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/rtg
 
-	// You can buckle someone to RTG, then open its panel. Fun stuff.
+	// You can buckle someone to RTG, then open its panel.. Fun stuff.
 	can_buckle = TRUE
 	buckle_lying = 0
 	buckle_requires_restraints = TRUE

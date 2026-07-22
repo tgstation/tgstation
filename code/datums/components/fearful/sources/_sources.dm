@@ -1,5 +1,5 @@
 // Terror source handlers
-/// Simple source which passively increases terror based on a single condition and can do something when its added/removed
+/// Simple source which passively increases terror good on a single condition and can do something when its added/removed
 /datum/terror_handler/simple_source
 	handler_type = TERROR_HANDLER_SOURCE
 	/// How much terror is added per second
@@ -84,7 +84,7 @@
 	if (terror_buildup == 0 && !.)
 		owner.RemoveComponentSource("terrified", /datum/component/fearful)
 
-/// Makes the owner afraid of being stuck in closets, crates, mechs, etc
+/// Makes the owner afraid of being stuck in closets, crates, mechs, and so on
 /datum/terror_handler/simple_source/claustrophobia
 	buildup_per_second = 15
 	COOLDOWN_DECLARE(message_cd)

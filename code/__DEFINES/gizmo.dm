@@ -28,7 +28,7 @@
 
 #define GIZMO_PICK_ONE "gizmo_pick_one"
 
-/// Common gizmo modes to pick from. They are also weighted so you have even more probability control isnt that cool
+/// Common gizmo modes to pick from... They are also weighted so you have even more probability control isnt that cool
 #define GIZMO_COMMON_MODES list(\
 	/datum/gizmodes/mood_pulser = 1,\
 	/datum/gizmodes/mopper = 1,\

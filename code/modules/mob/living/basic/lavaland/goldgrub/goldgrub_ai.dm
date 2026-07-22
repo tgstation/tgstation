@@ -57,7 +57,7 @@
 	var/datum/action/cooldown/dig_ability = controller.blackboard[BB_BURROW_ABILITY]
 
 	if(currently_underground && storm_approaching)
-		return AI_BEHAVIOR_DELAY // Stay underground while storm approaches  RUNNING blocks everything
+		return AI_BEHAVIOR_DELAY // Stay underground while storm approaches RUNNING blocks everything
 
 	if(!dig_ability?.IsAvailable())
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -65,7 +65,7 @@
 	var/has_target = controller.blackboard_key_exists(BB_CURRENT_TARGET)
 
 	if(currently_underground && !has_target)
-		// No target/danger while underground  emerge
+		// No target/danger while underground emerge
 		INVOKE_ASYNC(dig_ability, TYPE_PROC_REF(/datum/action, Trigger))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
@@ -112,7 +112,7 @@
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 
-/// Finds an ore pile. Sets BB_ORE_TARGET. Skips forbidden types and fetch targets.
+/// Finds an ore pile.. Sets BB_ORE_TARGET.. Skips forbidden types and fetch targets.
 /datum/bt_node/ai_behavior/find_ore
 	time_between_perform = 5 SECONDS
 	var/range = 9
@@ -132,7 +132,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-/// Finds a boulder the goldgrub can break. Sets BB_BOULDER_TARGET.
+/// Finds a boulder the goldgrub can break.. Sets BB_BOULDER_TARGET.
 /datum/bt_node/ai_behavior/find_boulder
 	time_between_perform = 5 SECONDS
 
@@ -148,7 +148,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-/// Finds an ore vent to harvest. Sets BB_VENT_TARGET.
+/// Finds an ore vent to harvest.. Sets BB_VENT_TARGET.
 /datum/bt_node/ai_behavior/find_ore_vent
 	time_between_perform = 10 SECONDS
 
@@ -173,7 +173,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-/// Finds a grub egg to protect/pull. Sets BB_LOW_PRIORITY_HUNTING_TARGET.
+/// Finds a grub egg to protect/pull.. Sets BB_LOW_PRIORITY_HUNTING_TARGET.
 /datum/bt_node/ai_behavior/find_grub_egg
 	time_between_perform = 10 SECONDS
 
@@ -190,7 +190,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-/// Eats/interacts with a target at the given blackboard key. Must be adjacent.
+/// Eats/interacts with a target at the given blackboard key.. Must be adjacent.
 /datum/bt_node/ai_behavior/grub_eat
 	var/target_key
 	time_between_perform = 3 SECONDS

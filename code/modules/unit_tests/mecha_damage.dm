@@ -17,7 +17,7 @@
 
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 	dummy.forceMove(locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	// The dummy needs to be targeting an arm. Left is chosen here arbitrarily.
+	// The dummy needs to be targeting an arm.. Left is chosen here arbitrarily.
 	dummy.zone_selected = BODY_ZONE_L_ARM
 	// Not strictly necessary, but you never know
 	dummy.face_atom(demo_mech)

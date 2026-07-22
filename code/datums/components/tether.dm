@@ -1,4 +1,4 @@
-/// Creates a tether between two objects that limits movement range. Tether requires LOS and can be adjusted by left/right clicking its
+/// Creates a tether between two objects that limits movement range.. Tether needs LOS and can be adjusted by left/right clicking its
 /datum/component/tether
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	/// Other side of the tether
@@ -19,7 +19,7 @@
 	var/tether_trait_source
 	/// If TRUE, only add TRAIT_TETHER_ATTACHED to our parent
 	var/no_target_trait
-	/// Are we currently attempting to forcefully shorten the tether?
+	/// Are we currently trying to forcefully shorten the tether?
 	var/force_moving_target = FALSE
 
 /datum/component/tether/Initialize(atom/tether_target, max_dist = 7, tether_name, atom/embed_target = null, start_distance = null, \
@@ -99,7 +99,7 @@
 	var/atom/movable/movable_source = source
 	var/atom/movable/anchor = (source == tether_target ? parent : tether_target)
 
-	// Ignore distance limitations if we're attempting to move the other part of the tether
+	// Ignore distance limitations if we're trying to move the other part of the tether
 	if (get_dist(anchor, new_loc) > cur_dist && !force_moving_target)
 		if (!istype(anchor) || anchor.anchored || anchor.move_resist > movable_source.move_force)
 			to_chat(source, span_warning("[tether_name] runs out of slack and prevents you from moving!"))
@@ -125,7 +125,7 @@
 			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 /// Try adjust the anchor's position to move closer to the target or regain LOS
-/// true_source is an optional argument in case we're looking for a LOS/closer turf to a new location rather than the actual owner, and need to ignore them
+/// true_source is an optional argument in case we're looking f. A LOS/closer turf to a new location rather than the actual owner. Need to ignore them
 /datum/component/tether/proc/try_adjust_position(atom/movable/anchor, atom/target, atom/true_source)
 	if (!istype(anchor) || anchor.anchored)
 		return FALSE

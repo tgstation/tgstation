@@ -12,12 +12,12 @@
 	light_power = 1
 	light_on = FALSE
 	exposed_wound_bonus = 20
-	demolition_mod = 1.5 //1.5x damage to objects, robots, etc.
+	demolition_mod = 1.5 // 1.5x damage to objects, robots, and so on
 	stealthy_audio = TRUE
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NO_BLOOD_ON_ITEM
 
-	/// The color of this energy based sword, for use in editing the icon_state.
+	/// The color of this energy good sword, for use in editing the icon_state.
 	var/sword_color_icon
 	/// Force while active.
 	var/active_force = 30
@@ -123,7 +123,7 @@
 	else
 		heat = initial(heat)
 		STOP_PROCESSING(SSobj, src)
-	tool_behaviour = (active ? TOOL_SAW : NONE) //Lets energy weapons cut trees. Also lets them do bonecutting surgery, which is kinda metal!
+	tool_behaviour = (active ? TOOL_SAW : NONE) // Lets energy weapons cut trees.. Also lets them do bonecutting surgery, which is kind of metal!
 	if(user)
 		balloon_alert(user, "[name] [active ? "enabled":"disabled"]")
 	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 35, TRUE)
@@ -221,7 +221,7 @@
 
 // The colored energy swords we all know and love.
 /obj/item/melee/energy/sword/saber
-	/// Assoc list of all possible saber colors to color define. If you add a new color, make sure to update /obj/item/toy/sword too!
+	/// Assoc list of all possible saber colors to color define.. If you add a new color, make sure to update /obj/item/toy/sword too!
 	var/list/possible_sword_colors = list(
 		"red" = COLOR_SOFT_RED,
 		"blue" = LIGHT_COLOR_LIGHT_CYAN,
@@ -362,7 +362,7 @@
 	var/list/alt_continuous = list("stabs", "pierces", "impales")
 	var/list/alt_simple = list("stab", "pierce", "impale")
 
-//Most of the other special functions are handled in their own files. aka special snowflake code so kewl
+// Most of the other special functions are handled in their own files.. also known as special snowflake code so kewl
 /obj/item/melee/energy/blade/Initialize(mapload)
 	. = ..()
 	alt_continuous = string_list(alt_continuous)
@@ -583,7 +583,7 @@
 		return FALSE
 
 	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
+		final_block_chance = 0 // Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword.. Or a road roller, if one happened to hit you.
 
 	return ..()
 

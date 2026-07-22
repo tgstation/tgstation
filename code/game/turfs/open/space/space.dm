@@ -68,7 +68,7 @@ GLOBAL_LIST_EMPTY(starlight)
 	light_on = FALSE
 	space_lit = TRUE
 	bullet_bounce_sound = null
-	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
+	vis_flags = VIS_INHERIT_ID // when this be added to vis_contents of something it be associated with something on clicking, important f. Visualisation of turf in openspace. Interraction with openspace that show you turf.
 
 	force_no_gravity = TRUE
 	skip_minimap_rendering = TRUE
@@ -101,13 +101,13 @@ GLOBAL_LIST_EMPTY(starlight)
 /turf/open/space/remove_air(amount)
 	return null
 
-/// Updates starlight. Called when we're unsure of a turf's starlight state
+/// Updates starlight.. Called when we're unsure of a turf's starlight state
 /// Returns TRUE if we succeed, FALSE otherwise
 /turf/open/space/proc/update_starlight()
 	for(var/t in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		// I've got a lot of cordons near spaceturfs, be good kids
 		if(isspaceturf(t) || istype(t, /turf/cordon))
-			//let's NOT update this that much pls
+			// let's NOT update this that much please
 			continue
 		enable_starlight()
 		return TRUE

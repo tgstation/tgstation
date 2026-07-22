@@ -75,7 +75,7 @@
 	. = ..()
 	//the compiled icon state is how it appears when it's on.
 	//That's how we want it to show on orbies (little virtual PDA pets).
-	//However we should reset their appearance on runtime.
+	// But we should reset their appearance on runtime.
 	update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/clothing/head/utility/hardhat/cakehat/energycake/turn_on(mob/living/user)

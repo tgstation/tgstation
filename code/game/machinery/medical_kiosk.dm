@@ -1,5 +1,5 @@
-//The Medical Kiosk is designed to act as a low access alernative to  a medical analyzer, and doesn't require breaking into medical. Self Diagnose at your heart's content!
-//For a fee that is. Comes in 4 flavors of medical scan.
+// The Medical Kiosk is designed to act as a low access alernative to a medical analyzer, and doesn't need breaking into medical.. Self Diagnose at your heart's content!
+// For a fee that is.. Comes in 4 flavors of medical scan.
 
 /// Shows if the machine is being used for a general scan.
 #define KIOSK_SCANNING_GENERAL (1<<0)
@@ -23,7 +23,7 @@
 	/// How much it costs to use the kiosk by default.
 	var/default_price = 15
 	/// Makes the TGUI display gibberish and/or incorrect/erratic information.
-	var/pandemonium = FALSE //AKA: Emag mode.
+	var/pandemonium = FALSE // Also known as Emag mode.
 
 	/// Shows whether the kiosk is being used to scan someone and what it's being used for.
 	var/scan_active = NONE
@@ -32,7 +32,7 @@
 	var/paying_customer = FALSE //Ticked yes if passing inuse()
 
 	/// Who's paying?
-	var/datum/weakref/paying_ref //The person using the console in each instance. Used for paying for the kiosk.
+	var/datum/weakref/paying_ref // The person using the console in each instance.. Used for paying for the kiosk.
 	/// Who's getting scanned?
 	var/datum/weakref/patient_ref //If scanning someone else, this will be the target.
 

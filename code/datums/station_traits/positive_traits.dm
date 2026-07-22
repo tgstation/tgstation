@@ -309,7 +309,7 @@
 	if(!cybernetic_type)
 		if(isAI(spawned))
 			var/mob/living/silicon/ai/ai = spawned
-			ai.eyeobj.relay_speech = TRUE //surveillance upgrade. the ai gets cybernetics too.
+			ai.eyeobj.relay_speech = TRUE // surveillance upgrade.. the ai gets cybernetics too.
 		return
 	var/obj/item/organ/cybernetic = new cybernetic_type()
 	cybernetic.Insert(spawned, special = TRUE, movement_flags = DELETE_IF_REPLACED)
@@ -352,7 +352,7 @@
 	max_occurrences_modifier = 10 //lotta cows
 
 /datum/station_trait/random_event_weight_modifier/wise_cows/get_pulsar_message()
-	var/advisory_string = "Advisory Level: <b>Cow Planet</b></center><BR>" //We're gonna go fast and we're gonna go far.
+	var/advisory_string = "Advisory Level: <b>Cow Planet</b></center><BR>" // We're going to go fast and we're going to go far.
 	advisory_string += "Your sector's advisory level is Cow Planet. We don't really know what this one means -- the model we use to create these threat reports hasn't produced this result before. Watch out for cows, I guess? Good luck!"
 	return advisory_string
 
@@ -413,7 +413,7 @@
 	trim_state = "trim_stationengineer"
 	department_color = COLOR_ASSISTANT_GRAY
 
-/// Spawns assistants with some gear, either gimmicky or functional. Maybe, one day, it will inspire an assistant to do something productive or fun
+/// Spawns assistants with some gear, either gimmicky or functional.. Maybe, one day, it will inspire an assistant to do something productive or fun
 /datum/station_trait/assistant_gimmicks
 	name = "Geared Assistants Pilot"
 	report_message = "The Nanotrassen Assistant Affairs division is performing a pilot to see if different assistant equipment helps improve productivity!"

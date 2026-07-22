@@ -15,7 +15,7 @@
 	low_threshold_cleared = span_info("The ringing in your ears has died down.")
 	visual = FALSE
 
-	/// temporary deafness, measured in seconds. While > 0, the person is unable to hear anything.
+	/// temporary deafness, measured in seconds.. While > 0, the person is unable to hear anything.
 	var/temporary_deafness = 0
 
 	// `damage` in this case measures long term damage to the ears, if too high,
@@ -78,7 +78,7 @@
 
 ///Adjust the temporary deafness of the person, up or down
 /obj/item/organ/ears/proc/adjust_temporary_deafness(amount)
-	// organ failure makes us permanently deafened. Also, doesn't do anything if not in someone or during godmode
+	// organ failure makes us permanently deafened.. Also, doesn't do anything if not in someone or during godmode
 	if(amount > 0 && owner && HAS_TRAIT(owner, TRAIT_GODMODE))
 		return
 
@@ -97,7 +97,7 @@
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(adjust_speech))
 	ADD_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
 
-///Called when temporary deafness reaches zero. Has to have an 'organ_owner' arg, because by the time it's called on 'on_mob_remove', owner is already null
+/// Called when temporary deafness reaches zero.. Has to have an 'organ_owner' arg, because by the time it's called on 'on_mob_remove', owner is already null
 /obj/item/organ/ears/proc/on_undeafened(mob/living/organ_owner = owner)
 	REMOVE_TRAIT(organ_owner, TRAIT_DEAF, EAR_DAMAGE)
 	UnregisterSignal(organ_owner, COMSIG_MOB_SAY)
@@ -116,8 +116,8 @@
 		return
 
 	var/message = speech_args[SPEECH_MESSAGE]
-	// Replace only end-of-sentence punctuation with exclamation marks (hence the empty space)
-	// We don't wanna mess with things like ellipses
+	// Replace only end-of-sentence punctuation with exclamation marks so the empty space)
+	// We don't want to mess with things like ellipses
 	message = replacetext(message, ". ", "! ")
 	message = replacetext(message, "? ", "?! ")
 	// Special case for the last character
@@ -311,7 +311,7 @@
 	desc = "Allows the user to more easily hear whispers. The user becomes extra vulnerable to loud noises, however."
 	// Same sensitivity as felinid ears
 	damage_multiplier = 2
-	// The original idea was to use signals to do this not traits. Unfortunately, the star effect used for whispers applies before any relevant signals
+	// The original idea was to use signals to do this not traits.. Unfortunately, the star effect used for whispers applies before any relevant signals
 	// This seems like the least invasive solution
 	organ_traits = list(TRAIT_GOOD_HEARING)
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)

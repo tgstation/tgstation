@@ -18,7 +18,7 @@
 	var/qdel_timer = null
 	///Which type of crossbred
 	var/crossbreed_modification
-	///Reagents required for activation
+	/// Reagents needed for activation
 	var/recurring = FALSE
 
 /obj/item/slime_extract/grind_results()
@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /proc/init_slime_auto_activate_reaction_list()
 	var/list/recipe_list = list()
 
-	// Only reactions with these reagent requirements are allowed to auto_activate
+	// Only reactions with these reagent needs are allowed to auto_activate
 	var/list/auto_activate_reagent_whistlist = list(
 		/datum/reagent/toxin/plasma,
 		/datum/reagent/water,
@@ -310,7 +310,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 
 		if(SLIME_ACTIVATE_MAJOR)
 			user.reagents.add_reagent(/datum/reagent/phosphorus,5)//
-			user.reagents.add_reagent(/datum/reagent/potassium,5) // = smoke, along with any reagents inside mr. slime
+			user.reagents.add_reagent(/datum/reagent/potassium,5) // = smoke, along with any reagents inside mr.. slime
 			user.reagents.add_reagent(/datum/reagent/consumable/sugar,5)     //
 			to_chat(user, span_warning("You activate [src], and a cloud of smoke bursts out of your skin!"))
 			return 450
@@ -736,10 +736,10 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	name = "intelligence potion"
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings."
 	icon_state = "potpink"
-	/// Are we being offered to a mob, and therefore is a ghost poll currently in progress for the sentient mob?
+	/// Are we being offered to a mob, and so is a ghost poll currently in progress for the sentient mob?
 	var/being_used = FALSE
 	var/sentience_type = SENTIENCE_ORGANIC
-	/// Reason for offering potion. This will be displayed in the poll alert to ghosts.
+	/// Reason for offering potion.. This will be displayed in the poll alert to ghosts.
 	var/potion_reason
 
 /obj/item/slimepotion/sentience/examine(mob/user)

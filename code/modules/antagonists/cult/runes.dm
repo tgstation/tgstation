@@ -1,10 +1,10 @@
 
 /// List of all teleport runes
 GLOBAL_LIST(teleport_runes)
-/// Assoc list of every rune that can be drawn by ritual daggers. [rune_name] = [typepath]
+/// Assoc list of every rune that can be drawn by ritual daggers.. [rune_name] = [typepath]
 GLOBAL_LIST_INIT(rune_types, generate_cult_rune_types())
 
-/// Returns an associated list of rune types. [rune.cultist_name] = [typepath]
+/// Returns an associated list of rune types.. [rune.cultist_name] = [typepath]
 /proc/generate_cult_rune_types()
 	RETURN_TYPE(/list)
 
@@ -44,9 +44,9 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	var/cultist_desc = "a basic rune with no function."
 	/// This is said by cultists when the rune is invoked.
 	var/invocation = "Aiy ele-mayo!"
-	/// The amount of cultists required around the rune to invoke it.
+	/// The amount of cultists needed around the rune to invoke it.
 	var/req_cultists = 1
-	/// If we have a description override for required cultists to invoke
+	/// If we have a description override for needed cultists to invoke
 	var/req_cultists_text
 	/// Used for some runes, this is for when you want a rune to not be usable when in use.
 	var/rune_in_use = FALSE
@@ -66,7 +66,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	var/invoke_damage = 0
 	/// If constructs can invoke it
 	var/construct_invoke = TRUE
-	/// If the rune requires a keyword when scribed
+	/// If the rune needs a keyword when scribed
 	var/req_keyword = FALSE
 	/// The actual keyword for the rune
 	var/keyword
@@ -143,7 +143,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 */
 
 /obj/effect/rune/proc/can_invoke(mob/living/user=null)
-	//This proc determines if the rune can be invoked at the time. If there are multiple required cultists, it will find all nearby cultists.
+	// This proc determines if the rune can be invoked at the time.. If there are multiple needed cultists, it will find all nearby cultists.
 	var/list/invokers = list() //people eligible to invoke the rune
 	if(user)
 		invokers += user
@@ -165,7 +165,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	return invokers
 
 /obj/effect/rune/proc/invoke(list/invokers)
-	//This proc contains the effects of the rune as well as things that happen afterwards. If you want it to spawn an object and then delete itself, have both here.
+	// This proc contains the effects of the rune as well as things that happen afterwards.. If you want it to spawn an object and then delete itself, have both here.
 	for(var/atom/invoker in invokers)
 		if(istype(invoker, /obj/item/toy/plush/narplush))
 			invoker.visible_message(span_cult_italic("[src] squeaks_loudly!"))
@@ -188,14 +188,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 	animate(src, transform = matrix(), alpha = 255, time = 0, flags = ANIMATION_END_NOW)
 
 /obj/effect/rune/proc/fail_invoke()
-	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
+	// This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists.. By default, it's just a basic fizzle.
 	visible_message(span_warning("The markings pulse with a small flash of red light, then fall dark."))
 	var/oldcolor = color
 	color = rgb(255, 0, 0)
 	animate(src, color = oldcolor, time = 5)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 0.5 SECONDS)
 
-//Malformed Rune: This forms if a rune is not drawn correctly. Invoking it does nothing but hurt the user.
+// Malformed Rune: This forms if a rune is not drawn correctly.. Invoking it does nothing but hurt the user.
 /obj/effect/rune/malformed
 	cultist_name = "malformed rune"
 	cultist_desc = "a senseless rune written in gibberish. No good can come from invoking this."
@@ -595,7 +595,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	log_when_erased = TRUE
 	no_scribe_boost = TRUE
 	erase_time = 5 SECONDS
-	// We're gonna do some effects with starlight and parallax to make things... spooky
+	// We're going to do some effects with starlight and parallax to make things.... spooky
 	started_creating = /proc/started_narsie_summon
 	failed_to_create = /proc/failed_narsie_summon
 	///Has the rune been used already?
@@ -696,7 +696,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	var/obj/narsie/harbinger = new /obj/narsie(rune_turf) //Causes Nar'Sie to spawn even if the rune has been removed
 	harbinger.start_ending_the_round()
 
-//Rite of Resurrection: Requires a dead or inactive cultist. When reviving the dead, you can only perform one revival for every three sacrifices your cult has carried out.
+// Rite of Resurrection: Needs a dead or inactive cultist.. When reviving the dead, you can only perform one revival for every three sacrifices your cult has carried out.
 /obj/effect/rune/raise_dead
 	cultist_name = "Revive"
 	cultist_desc = "requires a dead, mindless, or inactive cultist placed upon the rune. For each three bodies sacrificed to the dark patron, one body will be mended and their mind awoken"
@@ -747,7 +747,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			fail_invoke()
 			return
 		GLOB.sacrifices_used += SOULS_TO_REVIVE
-		mob_to_revive.revive(ADMIN_HEAL_ALL) //This does remove traits and such, but the rune might actually see some use because of it! //Why did you think this was a good idea
+		mob_to_revive.revive(ADMIN_HEAL_ALL) // This does remove traits and such, but the rune might actually see some use because of it!. //Why did you think this was a good idea
 
 	if(!mob_to_revive.client || mob_to_revive.client.is_afk())
 		set waitfor = FALSE
@@ -787,15 +787,15 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		if(IS_CULTIST(cultist) && cultist.stat == DEAD)
 			cultist.visible_message(span_warning("[cultist] twitches."))
 
-//Rite of the Corporeal Shield: When invoked, becomes solid and cannot be passed. Invoke again to undo.
+// Rite of the Corporeal Shield: When invoked, becomes solid and cannot be passed.. Invoke again to undo.
 /obj/effect/rune/wall
 	cultist_name = "Barrier"
 	cultist_desc = "when invoked, makes a temporary invisible wall to block passage. Can be invoked again to reverse this."
 	invocation = "Khari'd! Eske'te tannin!"
 	icon_state = "4"
 	color = RUNE_COLOR_DARKRED
-	///The barrier summoned by the rune when invoked. Tracked as a variable to prevent refreshing the barrier's integrity.
-	var/obj/structure/emergency_shield/cult/barrier/barrier //barrier is the path and variable name.... i am not a clever man
+	/// The barrier summoned by the rune when invoked.. Tracked as a variable to prevent refreshing the barrier's integrity.
+	var/obj/structure/emergency_shield/cult/barrier/barrier // barrier is the path and variable name..... i am not a clever man
 
 /obj/effect/rune/wall/Destroy()
 	if(barrier)
@@ -876,7 +876,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	var/turf/old_turf = get_turf(cultist_to_summon)
 	if(!do_teleport(cultist_to_summon, get_turf(src)))
 		to_chat(user, span_warning("The summoning has completely failed for [cultist_to_summon]!"))
-		fail_logmsg += "target failed criteria to teleport." //catch-all term, just means they failed do_teleport somehow. The most common reasons why someone should fail to be summoned already have verbose messages.
+		fail_logmsg += "target failed criteria to teleport." // catch-all term, just means they failed do_teleport somehow.. The most common reasons why someone should fail to be summoned already have verbose messages.
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
@@ -941,7 +941,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 				continue
 			target.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)
 
-//Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items. User must stand on the rune at all times, and takes damage for each summoned ghost.
+// Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items.. User must stand on the rune at all times, and takes damage for each summoned ghost.
 /obj/effect/rune/manifest
 	cultist_name = "Spirit Realm"
 	cultist_desc = "manifests a spirit servant of the Geometer and allows you to ascend as a spirit yourself. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
@@ -1161,7 +1161,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			to_chat(M, span_cult_large("An Apocalypse Rune was invoked in \the [place], it is no longer available as a summoning site!"))
 			SEND_SOUND(M, 'sound/effects/pope_entry.ogg')
 	image_handler(images, duration)
-	if(intensity >= 285) // Based on the prior formula, this means the cult makes up <15% of current players
+	if(intensity >= 285) // Good on the before formula, this means the cult makes up <15% of current players
 		var/outcome = rand(1,100)
 		switch(outcome)
 			if(1 to 10)

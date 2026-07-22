@@ -6,7 +6,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 )))
 
 
-/// Parrots! Klepto bastards that imitate your speech and hoard your shit.
+/// Parrots!. Klepto bastards that imitate your speech and hoard your shit.
 /mob/living/basic/parrot
 	name = "parrot"
 	desc = "The parrot squawks, \"They're a Parrot! BAWWK!\""
@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /mob/living/basic/parrot/say_dead(message)
 	return // this is so flarped
 
-/mob/living/basic/parrot/radio(message, list/message_mods = list(), list/spans, language) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
+/mob/living/basic/parrot/radio(message, list/message_mods = list(), list/spans, language) // literally copied from human/radio(), but there's no other way to do this.. at least it's better than it used to be.
 	. = ..()
 	if(. != NONE)
 		return
@@ -180,7 +180,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(!start_perching(over))
 		balloon_alert(user, "not a perching spot!")
 
-/// Proc that handles sending the signal and returning a valid phrase to say. Will not do anything if we don't have a stat or if we're cliented.
+/// Proc that handles sending the signal and returning a valid phrase to say.. Will not do anything if we don't have a stat or if we're cliented.
 /// Will return either a string or null.
 /mob/living/basic/parrot/proc/get_phrase()
 	if(!isnull(client) || stat != CONSCIOUS)
@@ -230,7 +230,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 	toggle_perched(perched = FALSE)
 
-/// Proc that will perch us on a human. Returns TRUE if we perched, FALSE otherwise.
+/// Proc that will perch us on a human.. Returns TRUE if we perched, FALSE otherwise.
 /mob/living/basic/parrot/proc/perch_on_human(mob/living/carbon/human/target)
 	if(LAZYLEN(target.buckled_mobs) >= target.max_buckled_mobs)
 		balloon_alert(src, "can't perch on them!")
@@ -276,7 +276,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(iscarbon(target) && steal_from_mob(target))
 		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
-/// Picks up an item from the ground and puts it in our claws. Returns TRUE if we picked it up, FALSE otherwise.
+/// Picks up an item from the ground and puts it in our claws.. Returns TRUE if we picked it up, FALSE otherwise.
 /mob/living/basic/parrot/put_in_hand_check(obj/item/item_to_pick_up)
 	if(item_to_pick_up.w_class > WEIGHT_CLASS_SMALL)
 		balloon_alert(src, "too big to pick up!")
@@ -298,7 +298,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		)
 	return TRUE
 
-/// Looks for an item that we can snatch and puts it in our claws. Returns TRUE if we picked it up, FALSE otherwise.
+/// Looks for an item that we can snatch and puts it in our claws.. Returns TRUE if we picked it up, FALSE otherwise.
 /mob/living/basic/parrot/proc/steal_from_mob(mob/living/carbon/victim)
 	if(!isnull(get_active_held_item()))
 		balloon_alert(src, "already holding something!")
@@ -330,7 +330,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	consume_cracker(thing) // potential clash with the tameable element so we'll leave it to that to handle qdeling the cracker.
 	return COMPONENT_NO_AFTERATTACK
 
-/// Eats a cracker (or anything i guess). This would be nice to eventually fold into the basic_eating element but we do too much snowflake inventory code stuff for this to be reliable presently.
+/// Eats a cracker (or anything i guess).. This would be nice to eventually fold into the basic_eating element. We do too much snowflake inventory code stuff f. This to be reliable presently.
 /// We don't qdel the item here, we assume the invoking proc will have handled that somehow.
 /// Returns TRUE if we ate the thing.
 /mob/living/basic/parrot/proc/consume_cracker(obj/item/thing)
@@ -359,13 +359,13 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), message = return_value, forced = "parrot oneliner on attack")
 
-/// Handles dropping items we're holding. Gently is a special modifier we can use for special interactions.
+/// Handles dropping items we're holding.. Gently is a special modifier we can use for special interactions.
 /mob/living/basic/parrot/proc/drop_held_item(gently = TRUE)
 	if(get_num_held_items() == 0)
 		balloon_alert(src, "nothing to drop!")
 		return
 
-	if(stat != CONSCIOUS) // don't gotta do shit
+	if(stat != CONSCIOUS) // don't got to do shit
 		return
 
 	if(!gently && isgrenade(get_active_held_item()))
@@ -391,7 +391,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	ai_controller.set_blackboard_key(BB_PARROT_REPEAT_PROBABILITY, speech_probability_rate)
 	ai_controller.set_blackboard_key(BB_PARROT_PHRASE_CHANGE_PROBABILITY, speech_shuffle_rate)
 
-/// Will simply set up the headset for the parrot to use. Stub, implemented on subtypes.
+/// Will simply set up the headset for the parrot to use.. Stub, added on subtypes.
 /mob/living/basic/parrot/proc/setup_headset()
 	return
 
@@ -406,7 +406,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	return default_phrases
 
-/// Gets the available channels that this parrot has access to. Returns a list of the channels we can use.
+/// Gets the available channels that this parrot has access to.. Returns a list of the channels we can use.
 /mob/living/basic/parrot/proc/get_available_channels()
 	var/list/returnable_list = list()
 	if(isnull(ears))

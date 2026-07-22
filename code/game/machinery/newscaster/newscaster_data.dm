@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/author = ""
 	///Body of the aforementioned comment.
 	var/body = ""
-	///At what time was the feed comment sent? Time is in station time.
+	/// At what time was the feed comment sent?. Time is in station time.
 	var/time_stamp = ""
 
 /datum/feed_message
@@ -25,7 +25,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/is_admin_message = FALSE
 	///Is there an image tied to the feed message?
 	var/icon/img = null
-	///At what time was the full-size article sent? Time is in station time.
+	/// At what time was the full-size article sent?. Time is in station time.
 	var/time_stamp = ""
 	///List consisting of the articles feed comments for this full-size article.
 	var/list/datum/feed_comment/comments = list()
@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/photo_file
 	///What is the channel ID of the parent channel?
 	var/parent_id
-	///What number message is this? IE: The first message sent in a round including automated messages is message 1.
+	/// What number message is this?. that is The first message sent in a round including automated messages is message 1.
 	var/message_id
 
 /datum/feed_message/proc/return_author(censor)
@@ -85,11 +85,11 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/channel_desc = ""
 	/// Datum list of all feed_messages.
 	var/list/datum/feed_message/messages = list()
-	/// Is the channel locked? Locked channels cannot be commented on.
+	/// Is the channel locked?. Locked channels cannot be commented on.
 	var/locked = FALSE
-	/// Who is the author of this channel? Taken from the user's ID card.
+	/// Who is the author of this channel?. Taken from the user's ID card.
 	var/author = ""
-	/// Has this channel been censored? Where Locked channels cannot be commented on, Censored channels cannot be viewed at all.
+	/// Has this channel been censored?. Where Locked channels cannot be commented on, Censored channels cannot be viewed at all.
 	var/censored = FALSE
 	/// At what times has the author been censored?
 	var/list/author_censor_time = list()
@@ -97,13 +97,13 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/list/D_class_censor_time = list()
 	/// Has the author of the channel been censored, as opposed to the message itself?
 	var/author_censor
-	/// Is this an admin channel? Allows for actions to be taken by the admin only.
+	/// Is this an admin channel?. Allows for actions to be taken by the admin only.
 	var/is_admin_channel = FALSE
-	/// Channel ID is a unique number sequence similar to account ID number that allows for us to link messages to the proper channels through the UI backend.
+	/// Channel ID is a unique number sequence similar to account ID number that allows f. Us to link messages to the proper channels through the UI backend.
 	var/channel_id
 	/// Should this channel send cross-server messages?
 	var/cross_sector = FALSE
-	/// Is this a cross-sector channel? If so, this channel can only receive messages via topics
+	/// Is this a cross-sector channel?. If so, this channel can only receive messages via topics
 	var/receiving_cross_sector = FALSE
 
 /datum/feed_channel/proc/return_author(censor)
@@ -133,13 +133,13 @@ GLOBAL_LIST_EMPTY(request_list)
 /datum/wanted_message
 	/// Is this criminal alert still active?
 	var/active
-	/// What is the criminal in question's name? Not a mob reference as this is a text field.
+	/// What is the criminal in question's name?. Not a mob reference as this is a text field.
 	var/criminal
 	/// Message body used to describe what crime has been committed.
 	var/body
 	/// Who was it that created this wanted message?
 	var/scanned_user
-	/// Is this an admin message? Prevents editing unless performed by an admin rank.
+	/// Is this an admin message?. Prevents editing unless performed by an admin rank.
 	var/is_admin_msg
 	/// Icon image to be attached to the newscaster message.
 	var/icon/img
@@ -161,7 +161,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/redacted_text = "\[REDACTED\]"
 	/// Channel ID to use when next making a new channel, to maintain unique IDs.
 	var/next_channel_id = 1
-	/// How many messages currently exist on this feed_network? Increments as new messages are written.
+	/// How many messages currently exist on this feed_network?. Increments as new messages are written.
 	var/message_count = 0
 
 /datum/feed_network/New()
@@ -282,7 +282,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	return photo_file
 
 //**************************
-//	 Bounty Board Datums
+// Bounty Board Datums
 //**************************
 
 
@@ -297,7 +297,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/value
 	///Text description of the request to be shown within the UI.
 	var/description
-	///Internal number of the request for organizing. Id card number.
+	/// Internal number of the request for organizing.. Id card number.
 	var/req_number
 	///The account of the request owner.
 	var/datum/bank_account/owner_account

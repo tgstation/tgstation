@@ -44,7 +44,7 @@
 	honorifics = list("Intern")
 	honorific_positions = HONORIFIC_POSITION_LAST | HONORIFIC_POSITION_NONE
 
-/// Trim for Centcom Head Interns. Different assignment, common station access added on.
+/// Trim for Centcom Head Interns.. Different assignment, common station access added on.
 /datum/id_trim/centcom/intern/head
 	assignment = "CentCom Head Intern"
 	big_pointer = TRUE
@@ -80,7 +80,7 @@
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_TELEPORTER, ACCESS_CENT_STORAGE)
 	assignment = JOB_CENTCOM_RESEARCH_OFFICER
 
-/// Trim for Centcom Specops Officers. All Centcom and Station Access.
+/// Trim for Centcom Specops Officers.. All Centcom and Station Access.
 /datum/id_trim/centcom/specops_officer
 	assignment = JOB_CENTCOM_SPECIAL_OFFICER
 	big_pointer = FALSE
@@ -90,7 +90,7 @@
 
 	access = SSid_access.get_region_access_list(list(REGION_CENTCOM, REGION_ALL_STATION))
 
-/// Trim for Centcom (Soviet) Admirals. All Centcom and Station Access.
+/// Trim for Centcom (Soviet) Admirals.. All Centcom and Station Access.
 /datum/id_trim/centcom/admiral
 	assignment = JOB_CENTCOM_ADMIRAL
 
@@ -99,7 +99,7 @@
 
 	access = SSid_access.get_region_access_list(list(REGION_CENTCOM, REGION_ALL_STATION))
 
-/// Trim for Centcom Commanders. All Centcom and Station Access.
+/// Trim for Centcom Commanders.. All Centcom and Station Access.
 /datum/id_trim/centcom/commander
 	assignment = JOB_CENTCOM_COMMANDER
 	honorifics = list("Commander", "CMDR.")
@@ -110,7 +110,7 @@
 
 	access = SSid_access.get_region_access_list(list(REGION_CENTCOM, REGION_ALL_STATION))
 
-/// Trim for Deathsquad officers. All Centcom and Station Access. No centcom officer's access
+/// Trim for Deathsquad officers.. All Centcom and Station Access.. No centcom officer's access
 /datum/id_trim/centcom/deathsquad
 	assignment = JOB_ERT_DEATHSQUAD
 	trim_state = "trim_deathcommando"
@@ -124,7 +124,7 @@
 
 	access = (SSid_access.get_region_access_list(list(REGION_CENTCOM)) - ACCESS_CENT_OFFICER) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)))
 
-/// Trim for generic ERT interns. No universal ID card changing access.
+/// Trim for generic ERT interns.. No universal ID card changing access.
 /datum/id_trim/centcom/ert
 	assignment = "Emergency Response Team Intern"
 	honorifics = list("Intern")
@@ -135,7 +135,7 @@
 
 	access = list(ACCESS_CENT_GENERAL) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)
 
-/// Trim for ERT Commanders. All station and centcom access. No centcom officer's access
+/// Trim for ERT Commanders.. All station and centcom access.. No centcom officer's access
 /datum/id_trim/centcom/ert/commander
 	assignment = JOB_ERT_COMMANDER
 	trim_state = "trim_ert_commander"
@@ -146,7 +146,7 @@
 
 	access = (SSid_access.get_region_access_list(list(REGION_CENTCOM)) - ACCESS_CENT_OFFICER) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)))
 
-/// Trim for generic ERT seccies. No universal ID card changing access.
+/// Trim for generic ERT seccies.. No universal ID card changing access.
 /datum/id_trim/centcom/ert/security
 	assignment = JOB_ERT_OFFICER
 	trim_state = "trim_securityofficer"
@@ -161,7 +161,7 @@
 
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)
 
-/// Trim for generic ERT engineers. No universal ID card changing access.
+/// Trim for generic ERT engineers.. No universal ID card changing access.
 /datum/id_trim/centcom/ert/engineer
 	assignment = JOB_ERT_ENGINEER
 	trim_state = "trim_stationengineer"
@@ -174,7 +174,7 @@
 
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)
 
-/// Trim for generic ERT medics. No universal ID card changing access.
+/// Trim for generic ERT medics.. No universal ID card changing access.
 /datum/id_trim/centcom/ert/medical
 	assignment = JOB_ERT_MEDICAL_DOCTOR
 	trim_state = "trim_medicaldoctor"
@@ -190,7 +190,7 @@
 
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_LIVING) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)
 
-/// Trim for generic ERT chaplains. No universal ID card changing access.
+/// Trim for generic ERT chaplains.. No universal ID card changing access.
 /datum/id_trim/centcom/ert/chaplain
 	assignment = JOB_ERT_CHAPLAIN
 	trim_state = "trim_chaplain"
@@ -206,7 +206,7 @@
 
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)
 
-/// Trim for generic ERT janitors. No universal ID card changing access.
+/// Trim for generic ERT janitors.. No universal ID card changing access.
 /datum/id_trim/centcom/ert/janitor
 	assignment = JOB_ERT_JANITOR
 	trim_state = "trim_ert_janitor"
@@ -222,7 +222,7 @@
 
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)
 
-/// Trim for generic ERT clowns. No universal ID card changing access.
+/// Trim for generic ERT clowns.. No universal ID card changing access.
 /datum/id_trim/centcom/ert/clown
 	assignment = JOB_ERT_CLOWN
 	trim_state = "trim_clown"

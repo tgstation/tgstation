@@ -12,7 +12,7 @@
 /// Note: This will frequently cause erorrs and have seemingly infinitely repeating procs on the current good byond version
 /// It'll be fixed when we can update to latest for dev but you likely can't do that right now (since debugging hasn't been fixed yet)
 /// BIGGER, MORE IMPORTANT NOTE: Should not be used on master maybe ever, introspection like this is mostly useful for debugging
-/// if you have another use I suspect you are just creating god's strongest footgun and should rethink things
+/// if you have another use I suspicious you are just creating god's strongest footgun and should rethink things
 /proc/dump_stack(max_depth = STACK_DEPTH_SEARCH_LIMIT)
 	var/list/proc_paths = list()
 	var/crashed = FALSE
@@ -24,7 +24,7 @@
 			stack_entry = stack_entry.caller
 			depth += 1
 	catch
-		//union job. avoids crashing the stack again
+		// union job.. avoids crashing the stack again
 		//I just do not trust this construct to work reliably
 		crashed = TRUE
 

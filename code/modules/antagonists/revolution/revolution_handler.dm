@@ -4,7 +4,7 @@ GLOBAL_DATUM(revolution_handler, /datum/revolution_handler)
 	/// The revolution team
 	var/datum/team/revolution/revs
 
-	/// The objective of the heads of staff, aka to kill the headrevs.
+	/// The objective of the heads of staff, also known as to kill the headrevs.
 	var/list/datum/objective/mutiny/heads_objective = list()
 
 	/// Cooldown between head revs being promoted
@@ -138,7 +138,7 @@ GLOBAL_DATUM(revolution_handler, /datum/revolution_handler)
 		included_headrevs += objective.target
 
 	// Here, we check current headrevs and add them as objectives if they didn't exist as a head of staff objective before.
-	// Additionally, we make sure the objective is not completed by running the check_completion check on them.
+	// Also we make sure the objective is not completed by running the check_completion check on them.
 	for(var/datum/mind/rev_mind as anything in current_headrevs)
 		if(!(rev_mind in included_headrevs))
 			var/datum/objective/mutiny/objective = new()

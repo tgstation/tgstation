@@ -1,4 +1,4 @@
-//I will need to recode parts of this but I am way too tired atm //I don't know who left this comment but they never did come back
+// I will need to recode parts of this. I am way too tired atm //I don't know who left this comment. They never did come back
 /obj/structure/blob
 	name = "blob"
 	icon = 'icons/mob/nonhuman-player/blob.dmi'
@@ -11,7 +11,7 @@
 	pass_flags_self = PASSBLOB
 	can_atmos_pass = ATMOS_PASS_PROC
 	obj_flags = CAN_BE_HIT|BLOCK_Z_OUT_DOWN // stops blob mobs from falling on multiz.
-	/// How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
+	/// How many points the blob gets back when it removes a blob of that type.. If less than 0, blob cannot be removed.
 	var/point_return = 0
 	max_integrity = BLOB_REGULAR_MAX_HP
 	armor_type = /datum/armor/structure_blob
@@ -25,7 +25,7 @@
 	var/brute_resist = BLOB_BRUTE_RESIST
 	/// Multiplies burn damage by this
 	var/fire_resist = BLOB_FIRE_RESIST
-	/// Only used by the synchronous mesh strain. If set to true, these blobs won't share or receive damage taken with others.
+	/// Only used by the synchronous mesh strain.. If set to true, these blobs won't share or receive damage taken with others.
 	var/ignore_syncmesh_share = 0
 	/// If the blob blocks atmos and heat spread
 	var/atmosblock = FALSE
@@ -107,7 +107,7 @@
 /obj/structure/blob/can_atmos_pass(turf/T, vertical = FALSE)
 	return !atmosblock
 
-/obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
+/obj/structure/blob/update_icon() // Updates color good on overmind color if we have an overmind.
 	. = ..()
 	if(overmind)
 		add_atom_colour(overmind.blobstrain.color, FIXED_COLOUR_PRIORITY)
@@ -157,12 +157,12 @@
 		O.do_attack_animation(A) //visually attack the whatever
 	return O //just in case you want to do something to the animation.
 
-/// Can this blob structure make further blobs? For special cases (e.g. blobs not going past crit mass count if not ending the round)
+/// Can this blob structure make further blobs?. For special cases (e.g.. blobs not going past crit mass count if not ending the round)
 /obj/structure/blob/proc/can_make_blob(mob/eye/blob/controller = null)
-	// If it's not being done with a controller, it's being done automatically. Because it's not player-controlled, it's not worth worrying about.
+	// If it's not being done with a controller, it's being done automatically.. Because it's not player-controlled, it's not worth worrying about.
 	if(!controller)
 		return TRUE
-	// If it's not supposed to end the round and it's at the win count, don't make more. (400 tiles is still a lot to fight through...)
+	// If it's not supposed to end the round and it's at the win count, don't make more.. (400 tiles is still a lot to fight through...)
 	if(!controller.end_round_on_victory && (controller.blobs_legit.len >= controller.blobwincount))
 		balloon_alert(controller, "max tiles reached!")
 		return FALSE
@@ -209,7 +209,7 @@
 	if(make_blob) //well, can we?
 		var/obj/structure/blob/B = new /obj/structure/blob/normal(src.loc, (controller || overmind))
 		B.set_density(TRUE)
-		if(T.Enter(B)) //NOW we can attempt to move into the tile
+		if(T.Enter(B)) // NOW we can try to move into the tile
 			B.set_density(initial(B.density))
 			B.forceMove(T)
 			var/area/Ablob = get_area(B)
@@ -224,7 +224,7 @@
 		else
 			blob_attack_animation(T, controller)
 			T.blob_act(src) //if we can't move in hit the turf again
-			qdel(B) //we should never get to this point, since we checked before moving in. destroy the blob so we don't have two blobs on one tile
+			qdel(B) // we should never get to this point, since we checked before moving in.. destroy the blob so we don't have two blobs on one tile
 			return
 	else
 		blob_attack_animation(T, controller) //if we can't, animate that we attacked
@@ -397,7 +397,7 @@
 /obj/structure/blob/normal/update_icon_state()
 	icon_state = "blob[(atom_integrity <= 15) ? "_damaged" : null]"
 
-	/// - [] TODO: Move this elsewhere
+	/// - [] To do Move this elsewhere
 	if(atom_integrity <= 15)
 		brute_resist = BLOB_BRUTE_RESIST
 	else if (overmind)
@@ -408,9 +408,9 @@
 
 /obj/structure/blob/special // Generic type for nodes/factories/cores/resource
 	// Core and node vars: claiming, pulsing and expanding
-	/// The radius inside which (previously dead) blob tiles are 'claimed' again by the pulsing overmind. Very rarely used.
+	/// The radius inside which (previously dead) blob tiles are 'claimed' again by the pulsing overmind.. Very rarely used.
 	var/claim_range = 0
-	/// The radius inside which blobs are pulsed by this overmind. Does stuff like expanding, making blob spores from factories, make resources from nodes etc.
+	/// The radius inside which blobs are pulsed by this overmind.. Does stuff like expanding, making blob spores from factories, make resources from nodes and so on
 	var/pulse_range = 0
 	/// The radius up to which this special structure naturally grows normal blobs.
 	var/expand_range = 0

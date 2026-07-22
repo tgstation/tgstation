@@ -30,7 +30,7 @@
 	RETURN_TYPE(/datum/tutorial_manager)
 	return SStutorials.tutorial_managers[type]
 
-/// The actual steps of the tutorial. Is given any excess arguments of suggest_tutorial.
+/// The actual steps of the tutorial.. Is given any excess arguments of suggest_tutorial.
 /// Must be overridden.
 /datum/tutorial/proc/perform()
 	SHOULD_CALL_PARENT(FALSE)

@@ -68,11 +68,11 @@
 	/// What type of invocation the spell is.
 	/// Can be "none", "whisper", "shout", "emote"
 	var/invocation_type = INVOCATION_NONE
-	/// Flag for certain states that the spell requires the user be in to cast.
+	/// Flag for certain states that the spell needs the user be in to cast.
 	var/spell_requirements = SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NO_ANTIMAGIC
 	/// This determines what type of antimagic is needed to block the spell.
 	/// (MAGIC_RESISTANCE, MAGIC_RESISTANCE_MIND, MAGIC_RESISTANCE_HOLY)
-	/// If SPELL_REQUIRES_NO_ANTIMAGIC is set in Spell requirements,
+	/// If SPELL_REQUIRES_NO_ANTIMAGIC is set in Spell needs
 	/// The spell cannot be cast if the caster has any of the antimagic flags set.
 	var/antimagic_flags = MAGIC_RESISTANCE
 	/// The current spell level, if taken multiple times by a wizard
@@ -83,11 +83,11 @@
 	var/sparks_amt = 0
 	/// The typepath of the smoke to create on cast.
 	var/smoke_type
-	/// The amount of smoke to create on cast. This is a range, so a value of 5 will create enough smoke to cover everything within 5 steps.
+	/// The amount of smoke to create on cast.. This is a range, so a value of 5 will create enough smoke to cover everything within 5 steps.
 	var/smoke_amt = 0
 
 /datum/action/cooldown/spell/Grant(mob/grant_to)
-	// If our spell is mind-bound, we only wanna grant it to our mind
+	// If our spell is mind-bound, we only want to grant it to our mind
 	if(istype(target, /datum/mind))
 		var/datum/mind/mind_target = target
 		if(mind_target.current != grant_to)
@@ -158,7 +158,7 @@
 
 	// Certain spells are not allowed on the centcom zlevel
 	var/turf/caster_turf = get_turf(owner)
-	// Spells which require being on the station
+	// Spells which need being on the station
 	if((spell_requirements & SPELL_REQUIRES_STATION) && !is_station_level(caster_turf.z))
 		if(feedback)
 			to_chat(owner, span_warning("You can't cast [src] here!"))
@@ -174,7 +174,7 @@
 			to_chat(owner, span_warning("You must dedicate yourself to silence first!"))
 		return FALSE
 
-	// If the spell requires the user has no antimagic equipped, and they're holding antimagic
+	// If the spell needs the user has no antimagic equipped, and they're holding antimagic
 	// that corresponds with the spell's antimagic, then they can't actually cast the spell
 	if((spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC) && !owner.can_cast_magic(antimagic_flags))
 		if(feedback)
@@ -203,7 +203,7 @@
 				to_chat(owner, span_warning("[src] can only be cast by humans!"))
 			return FALSE
 
-		// Otherwise, we can check for contents if they have wizardly apparel. This isn't *quite* perfect, but it'll do, especially since many of the edge cases (gorilla holding a wizard hat) still more or less make sense.
+		// Otherwise, we can check for contents if they have wizardly apparel.. This isn't *quite* perfect, but it'll do, especially since many of the edge cases (gorilla holding a wizard hat) still more or less make sense.
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
 			var/any_casting = FALSE
 			for(var/obj/item/clothing/item in owner)
@@ -274,7 +274,7 @@
 		// That way stuff like teleports or shape-shifts can be invoked before ocurring
 		spell_feedback(owner)
 
-	// Actually cast the spell. Main effects go here
+	// Actually cast the spell.. Main effects go here
 	cast(cast_on)
 
 	if(!(precast_result & SPELL_NO_IMMEDIATE_COOLDOWN))
@@ -493,7 +493,7 @@
 	build_all_button_icons(UPDATE_BUTTON_NAME)
 	return TRUE
 
-/// Gets the title of the spell based on its level.
+/// Gets the title of the spell good on its level.
 /datum/action/cooldown/spell/proc/get_spell_title()
 	switch(spell_level)
 		if(2)

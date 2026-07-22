@@ -44,7 +44,7 @@
 /datum/action/cooldown/spell/touch/shock/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
-		if(carbon_victim.electrocute_act(5, caster, 1, SHOCK_NOGLOVES | SHOCK_NOSTUN))//doesn't stun. never let this stun
+		if(carbon_victim.electrocute_act(5, caster, 1, SHOCK_NOGLOVES | SHOCK_NOSTUN))// doesn't stun.. never let this stun
 
 			var/obj/item/bodypart/affecting = carbon_victim.get_bodypart(carbon_victim.get_random_valid_zone(caster.zone_selected))
 			var/armor_block = carbon_victim.run_armor_check(affecting, ENERGY)
@@ -103,9 +103,9 @@
 	if(!istype(to_modify)) // null or invalid
 		return
 
-	// Transfers more damage if strengthened. (1.5 with power chromosome)
+	// Transfers more damage if strengthened.. (1.5 with power chromosome)
 	to_modify.power_coefficient = GET_MUTATION_POWER(src)
-	// Halves transferred damage if synchronized. (0.5 with synchronizer chromosome)
+	// Halves transferred damage if synchronized.. (0.5 with synchronizer chromosome)
 	to_modify.synchronizer_coefficient = GET_MUTATION_SYNCHRONIZER(src)
 
 /datum/action/cooldown/spell/touch/lay_on_hands
@@ -126,7 +126,7 @@
 	drop_message = span_notice("You lower your hand.")
 	/// Multiplies the amount healed (or damage dealt, in the case of a smite).
 	var/heal_multiplier = 1
-	/// Multiplies the incoming pain from healing. (Halved with synchronizer chromosome)
+	/// Multiplies the incoming pain from healing.. (Halved with synchronizer chromosome)
 	var/pain_multiplier = 1
 	/// Icon used for beaming effect
 	var/beam_icon = "blood"
@@ -229,7 +229,7 @@
 	for(var/obj/item/bodypart/possible_limb in mendicant.get_bodyparts())
 		if(IS_ORGANIC_LIMB(possible_limb))
 			mendicant_organic_limbs += possible_limb
-	// None? Gtfo
+	// None?. Gtfo
 	if(!length(mendicant_organic_limbs))
 		mendicant.balloon_alert(mendicant, "no organic limbs!")
 		return .
@@ -365,17 +365,17 @@
 	if(hurtguy.mob_biotypes & MOB_UNDEAD && mendicant.mob_biotypes & MOB_UNDEAD)
 		return FALSE //always return false if we're both undead //undead solidarity
 
-	if(hurtguy.mob_biotypes & MOB_UNDEAD && !HAS_TRAIT(mendicant, TRAIT_EVIL)) //Is the mob undead and we're not evil? If so, hurt.
+	if(hurtguy.mob_biotypes & MOB_UNDEAD && !HAS_TRAIT(mendicant, TRAIT_EVIL)) // Is the mob undead and we're not evil?. If so, hurt.
 		return TRUE
 
-	if(HAS_TRAIT(hurtguy, TRAIT_EVIL) && !HAS_TRAIT(mendicant, TRAIT_EVIL)) //Is the guy evil and we're not evil? If so, hurt.
+	if(HAS_TRAIT(hurtguy, TRAIT_EVIL) && !HAS_TRAIT(mendicant, TRAIT_EVIL)) // Is the guy evil and we're not evil?. If so, hurt.
 		return TRUE
 
-	if(hurtguy_smiteable) //Is some other property of the target (like the empath component) causing them to be smited? If so, hurt.
+	if(hurtguy_smiteable) // Is some other property of the target (like the empath component) causing them to be smited?. If so, hurt.
 		return TRUE
 	return (FALSE)
 
-///If our target was undead or evil, we blast them with a firey beam rather than healing them. For, you know, 'holy' reasons. When did genes become so morally uptight?
+/// If our target was undead or evil, we blast them with a firey beam rather than healing them.. For, you know, 'holy' reasons.. When did genes become so morally uptight?
 
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/by_gods_light_i_smite_you(mob/living/carbon/smiter, mob/living/motherfucker_to_hurt, smite_multiplier)
 	var/our_smite_multiplier = smite_multiplier
@@ -385,7 +385,7 @@
 
 	if(divine_champion || HAS_TRAIT(smiter, TRAIT_SPIRITUAL))
 
-		// Defaults for possible deity. You know, just in case.
+		// Defaults for possible deity.. You know, just in case.
 		var/possible_deity = evil_smite ? "Satan" : "God"
 
 		var/mob/living/carbon/human/human_smiter = smiter
@@ -427,7 +427,7 @@
 
 /obj/item/melee/touch_attack/lay_on_hands
 	name = "mending touch"
-	desc = "Unlike in your favorite tabletop games, you sadly can't cast this on yourself, so you can't use that as a Scapegoat." // mayus is reference. if you get it you're cool
+	desc = "Unlike in your favorite tabletop games, you sadly can't cast this on yourself, so you can't use that as a Scapegoat." // mayus is reference.. if you get it you're cool
 	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "greyscale"
 	color = COLOR_VERY_PALE_LIME_GREEN

@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	var/list/mob/living/listeners = list()
 	//used to check if the speaker specified a name or a job to focus on
 	var/list/specific_listeners = list()
-	// string to remove at the end of the following of the following loop, so saying "Burn Mr. Hopkins" doesn't also burn the HoP later when we check jobs.
+	// string to remove at the end of the following of the following loop, so saying "Burn Mr.. Hopkins" doesn't also burn the HoP later when we check jobs.
 	var/to_remove_string
 	var/list/candidates = get_hearers_in_view(8, user) - (include_speaker ? null : user)
 	for(var/mob/living/candidate in candidates)
@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 			listeners += candidate
 
-			//Let's ensure the listener's name is not matched within another word or command (and vice-versa). e.g. "Saul" in "somersault"
+			// Let's ensure the listener's name is not matched within another word or command (and vice-versa).. e.g.. "Saul" in "somersault"
 			var/their_first_name = first_name(candidate.name)
 			if(!GLOB.all_voice_of_god_triggers.Find(their_first_name) && findtext(message, regex("(\\L|^)[their_first_name](\\L|$)", "i")))
 				specific_listeners += candidate //focus on those with the specified name
@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	for(var/mob/living/candidate in candidates)
 		var/their_role = candidate.mind?.assigned_role.title
 		if(their_role && findtext(job_message, their_role))
-			specific_listeners |= candidate //focus on those with the specified job. "|=" instead "+=" so "Mrs. Capri the Captain" doesn't get affected twice.
+			specific_listeners |= candidate // focus on those with the specified job.. "|=" instead "+=" so "Mrs.. Capri the Captain" doesn't get affected twice.
 
 	if(specific_listeners.len)
 		listeners = specific_listeners
@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command
 	///a text string or regex that triggers the command.
 	var/trigger
-	/// Is the trigger supposed to be a regex? If so, convert it to such on New()
+	/// Is the trigger supposed to be a regex?. If so, convert it to such on New()
 	var/is_regex = TRUE
 	/// cooldown variable which is normally returned to [proc/voice_of_god] and used as its return value.
 	var/cooldown = COOLDOWN_MEME
@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	for(var/mob/living/target as anything in listeners)
 		target.Immobilize(4 SECONDS * power_multiplier)
 
-/// This command makes carbon listeners throw up like Mr. Creosote.
+/// This command makes carbon listeners throw up like Mr.. Creosote.
 /datum/voice_of_god_command/vomit
 	trigger = "vomit|throw\\s*up|sick"
 	cooldown = COOLDOWN_STUN
@@ -146,7 +146,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	for(var/mob/living/carbon/target in listeners)
 		target.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM), lost_nutrition = (power_multiplier * 10), distance = power_multiplier)
 
-/// This command silences the listeners. Thrice as effective is the user is a mime or curator.
+/// This command silences the listeners.. Thrice as effective is the user is a mime or curator.
 /datum/voice_of_god_command/silence
 	trigger = "shut\\s*up|silence|be\\s*silent|ssh|quiet|hush"
 	cooldown = COOLDOWN_STUN
@@ -189,7 +189,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	for(var/mob/living/target as anything in listeners)
 		target.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier)
 
-/// This command applies 15 points of brute damage to the listeners. There's subtle theological irony in this being more powerful than healing.
+/// This command applies 15 points of brute damage to the listeners.. There's subtle theological irony in this being more powerful than healing.
 /datum/voice_of_god_command/brute
 	trigger = "die|suffer|hurt|pain|death"
 	cooldown = COOLDOWN_DAMAGE
@@ -257,7 +257,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 		target.throw_at(get_step_towards(user, target), 3 * power_multiplier, 1 * power_multiplier)
 
 /// This command forces the listeners to say their true name (so masks and hoods won't help).
-/// Basic and simple mobs who are forced to state their name and don't have one already will... reveal their actual one!
+/// Basic and simple mobs who are forced to state their name and don't have one already will.... reveal their actual one!
 /datum/voice_of_god_command/who_are_you
 	trigger = "who\\s*are\\s*you|say\\s*your\\s*name|state\\s*your\\s*name|identify"
 
@@ -447,7 +447,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	for(var/mob/living/target as anything in listeners)
 		target.SpinAnimation(speed = 10, loops = 5)
 
-/// Supertype of all those commands that make people emote and nothing else. Fuck copypasta.
+/// Supertype of all those commands that make people emote and nothing else.. Fuck copypasta.
 /datum/voice_of_god_command/emote
 	/// The emote to run.
 	var/emote_name = "dance"

@@ -2,7 +2,7 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// Amount of thermite on parent
 	var/amount
-	/// Amount of thermite required to burn through parent
+	/// Amount of thermite needed to burn through parent
 	var/burn_require
 	/// The thermite overlay
 	var/thermite_overlay
@@ -165,7 +165,7 @@
 /datum/component/thermite/proc/on_fire_act(datum/source, exposed_temperature, exposed_volume)
 	SIGNAL_HANDLER
 
-	// This is roughly the real life requirement to ignite thermite
+	// This is roughly the real life need to ignite thermite
 	// (honestly not really sure what the point of this is, considering a god damn lighter can ignite this)
 	if(exposed_temperature >= 1922)
 		thermite_melt()

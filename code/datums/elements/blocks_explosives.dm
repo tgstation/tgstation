@@ -28,7 +28,7 @@
 		unblock_loc(source.loc, source.explosion_block)
 	REMOVE_TRAIT(source, TRAIT_BLOCKING_EXPLOSIVES, TRAIT_GENERIC)
 
-/// Call this when our blocking well, changes. we'll update our turf(s) with the details
+/// Call this when our blocking well, changes.. we'll update our turf(s) with the details
 /datum/element/blocks_explosives/proc/blocking_changed(atom/movable/target, old_block, new_block)
 	if(length(target.locs) > 1)
 		for(var/atom/location as anything in target.locs)
@@ -38,11 +38,11 @@
 		unblock_loc(target.loc, old_block)
 		block_loc(target.loc, new_block)
 
-/// Applies a block amount to a turf. proc for convenince
+/// Applies a block amount to a turf.. proc for convenince
 /datum/element/blocks_explosives/proc/block_loc(atom/location, block_amount)
 	location.explosive_resistance += block_amount
 
-/// Removes a block amount from a turf. proc for convenince
+/// Removes a block amount from a turf.. proc for convenince
 /datum/element/blocks_explosives/proc/unblock_loc(atom/location, block_amount)
 	location.explosive_resistance -= block_amount
 

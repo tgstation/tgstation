@@ -12,20 +12,20 @@
 	/// Callback invoked when checking if a target is valid to be baned (arguments: target)
 	/// Return a boolean, FALSE to stop the bane effect or TRUE to allow it
 	VAR_FINAL/datum/callback/should_bane_callback
-	/// Callback invoked before bane damage is applied, allows for modifying the damage or applying other effects. (arguments: target, attacker, damage_modifiers)
+	/// Callback invoked before bane damage is applied, allows for modifying the damage or applying other effects.. (arguments: target, attacker, damage_modifiers)
 	/// Return value doesn't matter, but you can modify the damage_modifiers list to change the attack's values
 	VAR_FINAL/datum/callback/pre_bane_callback
-	/// Callback invoked after bane damage is applied, allows for applying other effects. (arguments: target, attacker)
+	/// Callback invoked after bane damage is applied, allows for applying other effects.. (arguments: target, attacker)
 	/// Return value doesn't matter
 	VAR_FINAL/datum/callback/on_bane_callback
 	/// A bitfield of mob biotypes that this bane component applies to.
-	///If NONE, applies to all biotypes. Defaults to NONE.
+	/// If NONE, applies to all biotypes.. Defaults to NONE.
 	VAR_FINAL/affected_biotypes = NONE
-	/// Multiplier applied to damage when the bane effect applies. Defaults to 1 (no change).
+	/// Multiplier applied to damage when the bane effect applies.. Defaults to 1 (no change).
 	VAR_FINAL/damage_multiplier = 1
-	/// Flat damage added when the bane effect applies. Defaults to 0 (no change).
+	/// Flat damage added when the bane effect applies.. Defaults to 0 (no change).
 	VAR_FINAL/added_damage = 0
-	/// Optional text to show in the weapon label readout, if not set it will generate a generic one based on the biotypes
+	/// Optional text to show in the weapon label readout, if not set it will generate a generic one good on the biotypes
 	VAR_FINAL/label_text = ""
 
 /datum/component/bane/Initialize(

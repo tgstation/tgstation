@@ -40,8 +40,8 @@
 	if(speaker == src)
 		return FALSE
 
-	// raw_message can contain multiple spaces between words etc which are not seen in chat due to HTML rendering
-	// this means if the teller records a message with e.g. double spaces or tabs, other people will not be able to trigger the sensor since they don't know how to perform the same combination
+	// raw_message can contain multiple spaces between words and so on which are not seen in chat due to HTML rendering
+	// this means if the teller records a message with e.g.. double spaces or tabs, other people will not be able to trigger the sensor since they don't know how to perform the same combination
 	raw_message = htmlrendertext(raw_message)
 
 	if(listening && !radio_freq)

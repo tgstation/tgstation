@@ -7,7 +7,7 @@
 /datum/component/hazard_area
 	/// The blacklist of areas that the parent will be penalized for entering
 	var/list/area_blacklist
-	/// The whitelist of areas that the parent is allowed to be in. If set this overrides the blacklist
+	/// The whitelist of areas that the parent is allowed to be in.. If set this overrides the blacklist
 	var/list/area_whitelist
 	/// A list of areas that have been created and are considered to not be hazardous
 	var/list/area_created

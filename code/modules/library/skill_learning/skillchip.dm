@@ -8,16 +8,16 @@
 	w_class = WEIGHT_CLASS_SMALL
 	/// Used to determine if this is an abstract type or not.
 	/// If this is meant to be an abstract type, set it to the type's path.
-	/// Will be overridden by subsequent abstract parents.
+	/// Will be overridden by next abstract parents.
 	abstract_type = /obj/item/skillchip
 
-	/// Traits automatically granted by this chip, optional. Lazylist.
+	/// Traits automatically granted by this chip, optional.. Lazylist.
 	var/list/auto_traits
 	/// Skill name shown on UI
 	var/skill_name
 	/// Skill description shown on UI
 	var/skill_description
-	/// Category string. Used alongside SKILLCHIP_RESTRICTED_CATEGORIES flag to make a chip incompatible with chips from another category.
+	/// Category string.. Used alongside SKILLCHIP_RESTRICTED_CATEGORIES flag to make a chip incompatible with chips from another category.
 	var/chip_category = SKILLCHIP_CATEGORY_GENERAL
 	/// List of any incompatible categories.
 	var/list/incompatibility_list
@@ -29,17 +29,17 @@
 	var/deactivate_message
 	//If set to FALSE, trying to extract the chip will destroy it instead
 	var/removable
-	/// How complex the skillchip is. Brains can only handle so much complexity at once and skillchips will start to deactivate when the brain's complexity limit is exceeded.
+	/// How complex the skillchip is.. Brains can only handle so much complexity at once and skillchips will start to deactivate when the brain's complexity limit is exceeded.
 	var/complexity = 1
-	/// How many slots taken up in the brain by this chip. Max brain slots are hard set and should not be changed at all.
+	/// How many slots taken up in the brain by this chip.. Max brain slots are hard set and should not be changed at all.
 	var/slot_use = 1
-	/// Variable for flags. DANGEROUS - Child types overwrite flags instead of adding to them. If you change this, make sure all child types have the appropriate flags set too.
+	/// Variable for flags.. DANGEROUS - Child types overwrite flags instead of adding to them.. If you change this, make sure all child types have the appropriate flags set too.
 	var/skillchip_flags = NONE
 	/// Cooldown before the skillchip can be extracted after it has been implanted.
 	var/cooldown = 5 MINUTES
 	/// Cooldown for chip actions.
 	COOLDOWN_DECLARE(chip_cooldown)
-	/// Set to TRUE when the skill chip's effects are applied. Set to FALSE when they're not.
+	/// Set to TRUE when the skill chip's effects are applied.. Set to FALSE when they're not.
 	var/active = FALSE
 	/// Brain that holds this skillchip.
 	var/obj/item/organ/brain/holding_brain
@@ -61,17 +61,17 @@
  * * force - Boolean. Whether or not to just force de-activation if it would be prevented for any reason.
  */
 /obj/item/skillchip/proc/try_activate_skillchip(silent = FALSE, force = FALSE)
-	// Should not happen. Holding brain is destroyed and the chip hasn't had its state set appropriately.
+	// Should not happen.. Holding brain is destroyed and the chip hasn't had its state set appropriately.
 	if(QDELETED(holding_brain))
 		stack_trace("Skillchip's owner is null or qdeleted brain.")
 		return "Skillchip cannot detect viable brain."
 
-	// Also should not happen. We're somehow activating skillchips in a bodyless brain.
+	// Also should not happen.. We're somehow activating skillchips in a bodyless brain.
 	if(QDELETED(holding_brain.owner))
 		stack_trace("Skillchip's brain has no owner, owner is null or owner qdeleted.")
 		return "Skillchip cannot detect viable body."
 
-	// We have a holding brain, the holding brain has an owner. If we're forcing this, do it hard and fast.
+	// We have a holding brain, the holding brain has an owner.. If we're forcing this, do it hard and fast.
 	if(force)
 		on_activate(holding_brain.owner, silent)
 		return
@@ -80,14 +80,14 @@
 	if(!COOLDOWN_FINISHED(src, chip_cooldown))
 		return "Skillchip is still recharging for [COOLDOWN_TIMELEFT(src, chip_cooldown) * 0.1]s"
 
-	// So, we have a brain and that brain has a body. Let's start checking for incompatibility.
+	// we have a brain and that brain has a body.. Let's start checking for incompatibility.
 	var/activate_msg = has_activate_incompatibility(holding_brain)
 
-	// If there's an activate_msg it means we can't activate for some reason. Return the feedback message.
+	// If there's an activate_msg it means we can't activate for some reason.. Return the feedback message.
 	if(activate_msg)
 		return activate_msg
 
-	// Either there's no incompatibility or we're forcing the activation. We're good to go!
+	// Either there's no incompatibility or we're forcing the activation.. We're good to go!
 	on_activate(holding_brain.owner, silent)
 
 /**
@@ -103,20 +103,20 @@
 	if(!active)
 		return "Skillchip is not active."
 
-	// Should not happen. Holding brain is destroyed and the chip hasn't had its state set appropriately.
+	// Should not happen.. Holding brain is destroyed and the chip hasn't had its state set appropriately.
 	if(!holding_brain)
 		stack_trace("Skillchip doesn't have a holding brain.")
 		return "Skillchip cannot detect viable brain."
 
 	if(!brain_owner)
 		brain_owner = holding_brain.owner
-	// Also should not happen. We're somehow deactivating skillchips in a bodyless brain.
+	// Also should not happen.. We're somehow deactivating skillchips in a bodyless brain.
 	if(QDELETED(brain_owner))
 		active = FALSE
 		stack_trace("Skillchip's brain has no owner, owner is null or owner qdeleted.")
 		return "Skillchip cannot detect viable body."
 
-	// We have a holding brain, the holding brain has an owner. If we're forcing this, do it hard and fast.
+	// We have a holding brain, the holding brain has an owner.. If we're forcing this, do it hard and fast.
 	if(force)
 		on_deactivate(brain_owner, silent)
 		return
@@ -125,7 +125,7 @@
 	if(!COOLDOWN_FINISHED(src, chip_cooldown))
 		return "Skillchip is still recharging for [COOLDOWN_TIMELEFT(src, chip_cooldown) * 0.1]s"
 
-	// We're good to go. Deactive this chip.
+	// We're good to go.. Deactive this chip.
 	on_deactivate(brain_owner, silent)
 
 /**
@@ -264,7 +264,7 @@
 	if(QDELETED(brain))
 		return "No brain detected."
 
-	// Check brain incompatibility. This also performs skillchip-to-skillchip incompatibility checks.
+	// Check brain incompatibility.. This also performs skillchip-to-skillchip incompatibility checks.
 	var/brain_message = has_brain_incompatibility(brain)
 	if(brain_message)
 		return brain_message

@@ -596,7 +596,7 @@
 		/obj/item/storage/medkit/advanced = 1,
 		/obj/item/melee/baton/telescopic = 1,
 		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
-		/obj/item/stack/medical/poultice = 1, //These stacks contain 15 by default. Great for getting corpses to defib range without surgery.
+		/obj/item/stack/medical/poultice = 1, // These stacks contain 15 by default.. Great for getting corpses to defib range without surgery.
 	)
 	belt = /obj/item/storage/belt/medical/ert
 	ears = /obj/item/radio/headset/headset_cent/alt

@@ -2,7 +2,7 @@
 #define REFSEARCH_RECURSE_LIMIT 64
 
 #ifdef FAST_REFERENCE_TRACKING
-// typecache of types that almost certainly have no refs, and thus can be safely skipped when finding references
+// typecache of types that almost certainly have no refs, and so can be safely skipped when finding references
 GLOBAL_ALIST_INIT(reftracker_skip_typecache, init_reftracker_skip_typecache())
 // empty alist we swap with GLOB.reftracker_skip_typecache whenever someone calls toggle_fast_reftracking
 GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
@@ -53,7 +53,7 @@ GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
 		/obj/structure/flora, // icebox and such has a LOT of these
 		/datum/chatmessage,
 		/datum/lighting_corner,
-		/datum/log_entry, // hopefully nobody's silly enough to accidentally pass a reference to these... right???
+		/datum/log_entry, // hopefully nobody's silly enough to accidentally pass a reference to these.... right???
 		/datum/reagent/consumable/nutriment,
 	))
 		for(var/type in typesof(base_type))
@@ -84,7 +84,7 @@ GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
 	if(src.references_to_clear == 0)
 		return
 
-	//Yes we do actually need to do this. The searcher refuses to read weird lists
+	// Yes we do actually need to do this.. The searcher refuses to read weird lists
 	//And global.vars is a really weird list
 	var/global_vars = list()
 	for(var/key in global.vars)
@@ -123,7 +123,7 @@ GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
 	if(src.references_to_clear == 0)
 		return
 
-	//Warning, attempting to search clients like this will cause crashes if done on live. Watch yourself
+	// Warning, trying to search clients like this will cause crashes if done on live.. Watch yourself
 #ifndef REFERENCE_DOING_IT_LIVE
 	for(var/client/thing) //clients
 		DoSearchVar(thing, "Clients -> [thing.type]", starting_time)
@@ -144,7 +144,7 @@ GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
 	if(references_to_clear == 0)
 		return
 
-	//Check each time you go down a layer. This makes it a bit slow, but it won't effect the rest of the game at all
+	// Check each time you go down a layer.. This makes it a bit slow, but it won't effect the rest of the game at all
 	#ifndef FIND_REF_NO_CHECK_TICK
 	CHECK_TICK
 	#endif
@@ -176,7 +176,7 @@ GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
 					"[container_name] [datum_container.ref_search_details()] -> [varname] (list)",\
 					search_time,\
 					recursion_count + 1,\
-					/*is_special_list = */ is_atom && (varname == "contents" || varname == "vis_contents" || varname == "locs"))
+					/* is_special_list = */ is_atom && (varname == "contents" || varname == "vis_contents" || varname == "locs"))
 			else if(variable == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
 				if(SSgarbage.should_save_refs)
@@ -268,7 +268,7 @@ GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
 #undef REFSEARCH_RECURSE_LIMIT
 #endif
 
-// Kept outside the ifdef so overrides are easy to implement
+// Kept outside the ifdef so overrides are easy to add
 
 /// Return info about us for reference searching purposes
 /// Will be logged as a representation of this datum if it's a part of a search chain

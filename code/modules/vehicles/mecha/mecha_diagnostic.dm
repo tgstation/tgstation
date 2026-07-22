@@ -9,7 +9,7 @@
 	light_range = 1
 	light_power = 2
 	light_color = "#79aeeb"
-	/// What mech was this diagnostic sheet generated from? Used for applicability in bounties.
+	/// What mech was this diagnostic sheet generated from?. Used for applicability in bounties.
 	var/obj/vehicle/sealed/mecha/mech_data
 
 /obj/item/mecha_diagnostic/Initialize(mapload)

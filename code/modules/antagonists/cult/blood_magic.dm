@@ -2,7 +2,7 @@
 #define USES_TO_BLOOD 2
 /// blood rites charges gained from sapping blood from a victim
 #define BLOOD_DRAIN_GAIN 50
-/// penalty for self healing, 1 point of damage * this # = charges required
+/// penalty for self healing, 1 point of damage * this # = charges needed
 #define SELF_HEAL_PENALTY 1.65
 
 /datum/action/innate/cult/blood_magic //Blood magic handles the creation of blood spells (formerly talismans)
@@ -214,7 +214,7 @@
 	desc = "Allows you to summon a ritual dagger, in case you've lost the dagger that was given to you."
 	invocation = "Wur d'dai leev'mai k'sagan!" //where did I leave my keys, again?
 	button_icon_state = "equip" //this is the same icon that summon equipment uses, but eh, I'm not a spriter
-	/// The item given to the cultist when the spell is invoked. Typepath.
+	/// The item given to the cultist when the spell is invoked.. Typepath.
 	var/obj/item/summoned_type = /obj/item/melee/cultblade/dagger
 
 /datum/action/innate/cult/blood_spell/dagger/Activate()
@@ -456,8 +456,8 @@
 	)
 	user.mob_light(range = 1.1, power = 2, color = LIGHT_COLOR_BLOOD_MAGIC, duration = 0.2 SECONDS)
 	uses--
-	// Heretics are momentarily disoriented by the stunning aura. Enough for both parties to go 'oh shit' but only a mild combat ability.
-	// Heretics have an identical effect on their grasp. The cultist's worse spell preparation is offset by their extra gear and teammates.
+	// Heretics are momentarily disoriented by the stunning aura.. Enough for both parties to go 'oh shit' but only a mild combat ability.
+	// Heretics have an identical effect on their grasp.. The cultist's worse spell preparation is offset by their extra gear and teammates.
 	if(IS_HERETIC(target))
 		target.AdjustKnockdown(0.5 SECONDS)
 		target.adjust_confusion_up_to(1.5 SECONDS, 3 SECONDS)
@@ -586,7 +586,7 @@
 	else
 		to_chat(user, span_warning("[C] is already bound."))
 
-//Construction: Converts 50 iron to a construct shell, plasteel to runed metal, airlock to brittle runed airlock, a borg to a construct, or borg shell to a construct shell
+// Construction: Converts 50 iron to a construct shell, plasteel to runed metal, airlock to brittle runed airlock, a borg to a construct. Borg shell to a construct shell
 /obj/item/melee/blood_magic/construction
 	name = "Twisting Aura"
 	desc = "Corrupts certain metallic objects on contact."
@@ -810,7 +810,7 @@
 	var/cached_blood_volume = human_bloodbag.get_blood_volume()
 	if(cached_blood_volume < BLOOD_VOLUME_SAFE)
 		var/blood_needed = BLOOD_VOLUME_SAFE - cached_blood_volume
-		/// how much blood we are capable of restoring, based on spell charges
+		/// how much blood we are capable of restoring, good on spell charges
 		var/blood_bank = USES_TO_BLOOD * uses
 		if(blood_bank < blood_needed)
 			human_bloodbag.adjust_blood_volume(blood_bank)

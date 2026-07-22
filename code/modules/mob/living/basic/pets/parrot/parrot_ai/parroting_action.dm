@@ -1,6 +1,6 @@
 #define MAXIMUM_PARROT_PITCH 24
 
-/// When a parrot... parrots... it occasionally asks for a fresh phrase to repeat, then squawks it (sometimes over the radio).
+/// When a parrot.... parrots.... it occasionally asks for a fresh phrase to repeat, then squawks it (sometimes over the radio).
 /datum/bt_node/ai_behavior/parrot_repeat_speech
 
 /datum/bt_node/ai_behavior/parrot_repeat_speech/perform(seconds_per_tick, datum/ai_controller/controller)

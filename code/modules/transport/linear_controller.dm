@@ -1,11 +1,11 @@
 /// If anyone changes the hydraulic sound effect I sure hope they update this...
 #define HYDRAULIC_SFX_DURATION (2 SECONDS)
 
-///coordinate and control movement across linked transport_controllers. allows moving large single multitile platforms and many 1 tile platforms.
+/// coordinate and control movement across linked transport_controllers.. allows moving large single multitile platforms and many 1 tile platforms.
 ///also is capable of linking platforms across linked z levels
 /datum/transport_controller/linear
-	///the lift platforms we consider as part of this transport. ordered in order of lowest z level to highest z level after init.
-	///(the sorting algorithm sucks btw)
+	/// the lift platforms we consider as part of this transport.. ordered in order of lowest z level to highest z level after init.
+	/// (the sorting algorithm sucks by the way
 	var/list/obj/structure/transport/linear/transport_modules
 
 	/// Typepath list of what to ignore smashing through, controls all lifts
@@ -19,7 +19,7 @@
 	///whether the lift handled by this transport_controller datum is multitile as opposed to nxm platforms per z level
 	var/modular_set = FALSE
 
-	///taken from our lift platforms. if true we go through each z level of platforms and attempt to make the lowest left corner platform
+	/// taken from our lift platforms.. if true we go through each z level of platforms and try to make the lowest left corner platform
 	///into one giant multitile object the size of all other platforms on that z level.
 	var/create_modular_set = FALSE
 
@@ -29,7 +29,7 @@
 	///transport_id taken from our base lift platform, used to put us into SStransport.transports_by_type
 	var/transport_id = TRANSPORT_TYPE_ELEVATOR
 
-	///overridable ID string to link control units to this specific transport_controller datum. created by placing a transport id landmark object
+	/// overridable ID string to link control units to this specific transport_controller datum.. created by placing a transport id landmark object
 	///somewhere on the tram, if its anywhere on the tram we'll find it in init and set this to whatever it specifies
 	var/specific_transport_id
 
@@ -91,7 +91,7 @@
 	if(!length(transport_modules))
 		qdel(src)
 
-///Collect all bordered platforms via a simple floodfill algorithm. allows multiz trams because its funny
+/// Collect all bordered platforms via a simple floodfill algorithm.. allows multiz trams because its funny
 /datum/transport_controller/linear/proc/link_transport_modules(obj/structure/transport/linear/base_transport_module)
 	add_transport_modules(base_transport_module)
 	var/list/possible_expansions = list(base_transport_module)
@@ -133,7 +133,7 @@
 
 ///orders the lift platforms in order of lowest z level to highest z level.
 /datum/transport_controller/linear/proc/order_platforms_by_z_level()
-	//contains nested lists for every z level in the world. why? because its really easy to sort
+	// contains nested lists for every z level in the world.. why?. because its really easy to sort
 	var/list/platforms_by_z = list()
 	platforms_by_z.len = world.maxz
 
@@ -203,11 +203,11 @@
 		CRASH("there was no transport in the lower left corner of the given transport")
 
 	platforms_in_z.Cut()
-	platforms_in_z += lower_left_corner_transport//we want to change the list given to us not create a new one. so we do this
+	platforms_in_z += lower_left_corner_transport// we want to change the list given to us not create a new one.. so we do this
 
 	lower_left_corner_transport.create_modular_set(min_x, min_y, max_x, max_y, z)
 
-///returns the closest transport to the specified atom, prioritizing transports on the same z level. used for comparing distance
+/// returns the closest transport to the specified atom, prioritizing transports on the same z level.. used for comparing distance
 /datum/transport_controller/linear/proc/return_closest_platform_to(atom/comparison, allow_multiple_answers = FALSE)
 	if(!istype(comparison) || !comparison.z)
 		return FALSE
@@ -369,7 +369,7 @@
 	for(var/turf/moving in lift_locs)
 		// Find what's below the turf that's moving
 		var/turf/below_us = get_step_multiz(moving, DOWN)
-		// Hold up the turf below us is also in our locs list. Multi-z? Don't show a warning
+		// Hold up the turf below us is also in our locs list.. Multi-z?. Don't show a warning
 		if(below_us in lift_locs)
 			continue
 		// Display the warning for until we land
@@ -550,8 +550,8 @@
 		min_x = min(min_x, transport_module.x)
 		max_x = max(max_x, transport_module.x)
 		//this assumes that all z levels have identical horizontal bounding boxes
-		//but if youre still using a non multitile  platform at this point
-		//then its your own problem. it wont runtime it will just be slower than it needs to be if this assumption isnt
+		// but if youre still using a non multitile platform at this point
+		// then its your own problem.. it wont runtime it will just be slower than it needs to be if this assumption isnt
 		//the case
 
 		min_y = min(min_y, transport_module.y)
@@ -563,13 +563,13 @@
 			//Go along the X axis from min to max, from left to right
 			for(var/x in min_x to max_x)
 				if(going & NORTH)
-					//Go along the Y axis from max to min, from up to down
+					// Go along the Why axis from max to min, from up to down
 					for(var/y in max_y to min_y step -1)
 						var/obj/structure/transport/linear/transport_module = locate(/obj/structure/transport/linear, locate(x, y, z))
 						transport_module?.travel(going)
 
 				else if(going & SOUTH)
-					//Go along the Y axis from min to max, from down to up
+					// Go along the Why axis from min to max, from down to up
 					for(var/y in min_y to max_y)
 						var/obj/structure/transport/linear/transport_module = locate(/obj/structure/transport/linear, locate(x, y, z))
 						transport_module?.travel(going)
@@ -582,7 +582,7 @@
 			//Go along the X axis from max to min, from right to left
 			for(var/x in max_x to min_x step -1)
 				if(going & NORTH)
-					//Go along the Y axis from max to min, from up to down
+					// Go along the Why axis from max to min, from up to down
 					for(var/y in max_y to min_y step -1)
 						var/obj/structure/transport/linear/transport_module = locate(/obj/structure/transport/linear, locate(x, y, z))
 						transport_module?.travel(going)
@@ -593,7 +593,7 @@
 						transport_module?.travel(going)
 
 				else
-					//Go along the Y axis from min to max, from down to up
+					// Go along the Why axis from min to max, from down to up
 					for(var/y in min_y to max_y)
 						var/obj/structure/transport/linear/transport_module = locate(/obj/structure/transport/linear, locate(x, y, z))
 						transport_module?.travel(going)

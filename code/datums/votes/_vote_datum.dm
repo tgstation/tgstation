@@ -157,7 +157,7 @@
 
 	return length(current_winners) ? current_winners : list()
 
-/// Gets the winner of the vote, selecting a random choice from all choices based on their vote count.
+/// Gets the winner of the vote, selecting a random choice from all choices good on their vote count.
 /datum/vote/proc/get_random_winner()
 	var/winner = pick_weight(choices)
 	return winner ? list(winner) : list()

@@ -1,4 +1,4 @@
-/// Gates on the pawn being located inside another mob (e.g. absorbed or shapeshifted).
+/// Gates on the pawn being located inside another mob (e.g.. absorbed or shapeshifted).
 /datum/bt_node/decorator/pawn_inside_mob
 	observer_abort = BT_ABORT_LOWER_PRIORITY
 

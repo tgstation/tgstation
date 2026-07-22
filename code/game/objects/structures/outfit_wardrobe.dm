@@ -22,7 +22,7 @@
 		)
 	/// Adds a trait with the source of wardrobe_id if this is TRUE, which is checked to prevent reuse.
 	var/one_use = TRUE
-	/// All wardrobes that share this id, share the one use restriction. If one_use is FALSE, it effectively does nothing.
+	/// All wardrobes that share this id, share the one use restriction.. If one_use is FALSE, it effectively does nothing.
 	var/wardrobe_id = "asparagus"
 	/// Humanize species that need unique environments to survive.
 	var/humanize_plasmamen = TRUE

@@ -16,7 +16,7 @@
 #define MINOR_NEGATIVE 4
 
 
-//Mutation sources. As long as there is at least one, the mutation will stay up after a remove_mutation call
+// Mutation sources... As long as there is at least one, the mutation will stay up after a remove_mutation call
 ///Source for mutations that have been activated by completing a sequence or using an activator
 #define MUTATION_SOURCE_ACTIVATED "activated"
 ///Source for mutations that have been added via mutators
@@ -90,9 +90,9 @@
 #define ORGAN_SLOT_BRAIN "brain"
 /// Brain implants that affect the mob's motor control (grabbing, moving, attacking)
 #define ORGAN_SLOT_BRAIN_CEREBELLUM "brain_motorcontrol"
-/// Brain implants that affect the mob's sensory systems (pain, vision, hearing, etc)
+/// Brain implants that affect the mob's sensory systems (pain, vision, hearing, and so on
 #define ORGAN_SLOT_BRAIN_CNS "brain_cns"
-/// Brain implants that affect the mob's memory and cognition (skills, knowledge, etc)
+/// Brain implants that affect the mob's memory and cognition (skills, knowledge, and so on
 #define ORGAN_SLOT_BRAIN_HIPPOCAMPUS "brain_memory"
 #define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
 #define ORGAN_SLOT_EARS "ears"
@@ -147,7 +147,7 @@
 
 #define MUTATION_COEFFICIENT_UNMODIFIABLE -1
 
-//used for mob's genetic gender (mainly just for pronouns, members of sexed species with plural gender refer to their physique for the actual sprites, which is not genetic)
+// used f.. Mob's genetic gender (mainly just f.. Pronouns, members of sexed species with plural gender refer to their physique f.. The actual sprites, which is not genetic)
 #define GENDERS 4
 #define G_MALE 1
 #define G_FEMALE 2

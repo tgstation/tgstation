@@ -1,4 +1,4 @@
-/// Attachable to items. Plays a bikehorn sound whenever attack_self is called (with a cooldown).
+/// Attachable to items.. Plays a bikehorn sound whenever attack_self is called (with a cooldown).
 /datum/element/honkspam
 
 /datum/element/honkspam/Attach(datum/target)

@@ -13,17 +13,17 @@
 #define STAGE_SIX 11 //From supermatter shard
 
 // Minimum energy needed to reach a stage
-/// Singularity stage 1 energy requirement
+/// Singularity stage 1 energy need
 #define STAGE_ONE_ENERGY_REQUIREMENT 1
-/// Singularity stage 2 energy requirement
+/// Singularity stage 2 energy need
 #define STAGE_TWO_ENERGY_REQUIREMENT 200
-/// Singularity stage 3 energy requirement
+/// Singularity stage 3 energy need
 #define STAGE_THREE_ENERGY_REQUIREMENT 500
-/// Singularity stage 4 energy requirement
+/// Singularity stage 4 energy need
 #define STAGE_FOUR_ENERGY_REQUIREMENT 1000
-/// Singularity stage 5 energy requirement
+/// Singularity stage 5 energy need
 #define STAGE_FIVE_ENERGY_REQUIREMENT 2000
-/// Singularity stage 6 energy requirement (also needs to consume a SM shard)
+/// Singularity stage 6 energy need (also needs to consume a SM shard)
 #define STAGE_SIX_ENERGY_REQUIREMENT 3000
 
 // These values get the median number between two stages to prevent expansion/shrinkage immediately

@@ -154,7 +154,7 @@
 
 /datum/market_item/misc/fishing_capsule
 	name = "Fishing Spot Capsule"
-	//IUU stands for Illegal Unreported and Unregulated fishing. Ironic.
+	// IUU stands for Illegal Unreported and Unregulated fishing.. Ironic.
 	desc = "A repurposed mining capsule connected to a selection of exclusive fishing spots. Approved by the Intergalactic IUU Fishing Association."
 	price_min = CARGO_CRATE_VALUE * 1.125
 	price_max = CARGO_CRATE_VALUE * 2.125

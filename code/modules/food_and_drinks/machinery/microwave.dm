@@ -1,7 +1,7 @@
 // Microwaving doesn't use recipes, instead it calls the microwave_act of the objects.
-// For food, this creates something based on the food's cooked_type
+// For food, this creates something good on the food's cooked_type
 
-/// Values based on microwave success
+/// Values good on microwave success
 #define MICROWAVE_NORMAL 0
 #define MICROWAVE_MUCK 1
 #define MICROWAVE_PRE 2
@@ -42,13 +42,13 @@
 	/// How dirty is it?
 	var/dirty = 0
 	var/dirty_anim_playing = FALSE
-	/// How broken is it? NOT_BROKEN, KINDA_BROKEN, REALLY_BROKEN
+	/// How broken is it?. NOT_BROKEN, KINDA_BROKEN, REALLY_BROKEN
 	var/broken = NOT_BROKEN
 	/// Microwave door position
 	var/open = FALSE
 	/// Microwave max capacity
 	var/max_n_of_items = 10
-	/// Microwave efficiency (power) based on the stock components
+	/// Microwave efficiency (power) good on the stock components
 	var/efficiency = 0
 	/// If we use a cell instead of powernet
 	var/cell_powered = FALSE
@@ -448,7 +448,7 @@
 
 	var/loaded = 0
 	if(!istype(tool, /obj/item/storage/bag/tray))
-		// Non-tray dumping requires a do_after
+		// Non-tray dumping needs a do_after
 		to_chat(user, span_notice("You start dumping out the contents of [tool] into [src]..."))
 		if(!do_after(user, 2 SECONDS, target = tool))
 			return
@@ -896,8 +896,8 @@
 	// playsound(src, 'sound/machines/chime.ogg', 50, FALSE)
 	after_finish_loop()
 
-/// Type of microwave that automatically turns it self on erratically. Probably don't use this outside of the holodeck program "Microwave Paradise".
-/// You could also live your life with a microwave that will continously run in the background of everything while also not having any power draw. I think the former makes more sense.
+/// Type of microwave that automatically turns it self on erratically.. Probably don't use this outside of the holodeck program "Microwave Paradise".
+/// You could also live your life with a microwave that will continously run in the background of everything while also not having any power draw.. I think the former makes more sense.
 /obj/machinery/microwave/hell
 	desc = "Cooks and boils stuff. This one appears to be a bit... off."
 	use_power = NO_POWER_USE
@@ -908,7 +908,7 @@
 	. = ..()
 	//We want there to be some chance of them getting a working microwave (eventually).
 	if(prob(95))
-		//The microwave should turn off asynchronously from any other microwaves that initialize at the same time. Keep in mind this will not turn off, since there is nothing to call the proc that ends this microwave's looping
+		// The microwave should turn off asynchronously from any other microwaves that initialize at the same time.. Keep in mind this will not turn off, since there is nothing to call the proc that ends this microwave's looping
 		addtimer(CALLBACK(src, PROC_REF(wzhzhzh)), rand(0.5 SECONDS, 3 SECONDS))
 
 /obj/machinery/microwave/engineering

@@ -17,7 +17,7 @@
 		return
 	owner.cure_nearsighted(GENETIC_MUTATION)
 
-///Blind makes you blind. Who knew?
+/// Blind makes you blind.. Who knew?
 /datum/mutation/blind
 	name = "Blindness"
 	desc = "Renders the subject completely blind."
@@ -155,7 +155,7 @@
 		return
 	UnregisterSignal(H, COMSIG_MOB_ATTACK_RANGED)
 
-///Triggers on COMSIG_MOB_ATTACK_RANGED. Does the projectile shooting.
+/// Triggers on COMSIG_MOB_ATTACK_RANGED.. Does the projectile shooting.
 /datum/mutation/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, modifiers)
 	SIGNAL_HANDLER
 

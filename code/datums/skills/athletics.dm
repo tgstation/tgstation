@@ -2,7 +2,7 @@
 	name = "Athletics"
 	title = "Athlete"
 	desc = "Twinkle twinkle little star, hit the gym and lift the bar."
-	// The skill value modifier effects the max duration that is possible for /datum/status_effect/exercised; The rands modifier determines block probability and crit probability while boxing against boxers
+	// The skill value modifier effects the max duration that is possible f. /datum/status_effect/exercised; The rands modifier determines block probability. Crit probability while boxing against boxers
 	modifiers = list(
 		SKILL_VALUE_MODIFIER = list(
 			1 MINUTES,

@@ -10,17 +10,17 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
  * then there's a chance the offspring may be of a new type rather than the same as its source or mate (if any).
  */
 /datum/fish_evolution
-	///The name of the evolution. If not set, it'll be generated on runtime from the name of the new fish type.
+	/// The name of the evolution.. If not set, it'll be generated on runtime from the name of the new fish type.
 	var/name
 	///The probability that this evolution can happen.
 	var/probability = 0
 	///The obj/item/fish path of the new fish
 	var/obj/item/fish/new_fish_type = /obj/item/fish
-	///The minimum required temperature for the evolved fish to spawn
+	/// The minimum needed temperature for the evolved fish to spawn
 	var/required_temperature_min = 0
-	///The maximum required temperature for the evolved fish to spawn
+	/// The maximum needed temperature for the evolved fish to spawn
 	var/required_temperature_max = INFINITY
-	///A list of traits added to the new fish. These take priority over the parents' traits.
+	/// A list of traits added to the new fish.. These take priority over the parents' traits.
 	var/list/new_traits
 	///If set, these traits will be removed from the new fish.
 	var/list/removed_traits
@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 	if(!check_conditions(source))
 		return COMPONENT_DONT_GROW
 
-///Called by the fish analyzer right click function. Returns a text string used as tooltip.
+/// Called by the fish analyzer right click function.. Returns a text string used as tooltip.
 /datum/fish_evolution/proc/get_evolution_tooltip()
 	. = ""
 	if(required_temperature_min > 0 || required_temperature_max < INFINITY)

@@ -39,9 +39,9 @@
 		////////////////
 	/// hides the byond verb panel as we use our own custom version
 	show_verb_panel = FALSE
-	///Contains admin info. Null if client is not an admin.
+	/// Contains admin info.. Null if client is not an admin.
 	var/datum/admins/holder = null
-	///Needs to implement InterceptClickOn(user,params,atom) proc
+	/// Needs to add InterceptClickOn(user,params,atom) proc
 	var/datum/click_intercept = null
 	///Time when the click was intercepted
 	var/click_intercept_time = 0
@@ -58,7 +58,7 @@
 	var/total_message_count = 0
 	///Next tick to reset the total message counter
 	var/total_count_reset = 0
-	///Internal counter for clients sending external (IRC/Discord) relay messages via ahelp to prevent spamming. Set to a number every time an admin reply is sent, decremented for every client send.
+	/// Internal counter for clients sending external (IRC/Discord) relay messages via ahelp to prevent spamming.. Set to a number every time an admin reply is sent, decremented for every client send.
 	var/externalreplyamount = 0
 	///Tracks say() usage for ic/dchat while slowmode is enabled
 	COOLDOWN_DECLARE(say_slowmode)
@@ -72,7 +72,7 @@
 	var/datum/preferences/prefs = null
 	///Move delay of controlled mob, any keypresses inside this period will persist until the next proper move
 	var/move_delay = 0
-	///The visual delay to use for the current client.Move(), mostly used for making a client based move look like it came from some other slower source
+	/// The visual delay to use f. The current client.Move(), mostly used f. Making a client good move look like it came from some other slower source
 	var/visual_delay = 0
 
 		////////////
@@ -82,7 +82,7 @@
 	control_freak = 1
 
 		////////////////////////////////////
-		//things that require the database//
+		// things that need the database//
 		////////////////////////////////////
 	///Used to determine how old the account is - in days.
 	var/player_age = -1
@@ -154,13 +154,13 @@
 	var/list/atom/selected_target[2]
 	///Used in MouseDrag to preserve the original mouse click parameters
 	var/mouseParams = ""
-	///Used in MouseDrag to preserve the last mouse-entered location. Weakref
+	/// Used in MouseDrag to preserve the last mouse-entered location.. Weakref
 	var/datum/weakref/mouse_location_ref = null
-	///Used in MouseDrag to preserve the last mouse-entered object. Weakref
+	/// Used in MouseDrag to preserve the last mouse-entered object.. Weakref
 	var/datum/weakref/mouse_object_ref
 	//Middle-mouse-button click dragtime control for aimbot exploit detection.
 	var/middragtime = 0
-	//Middle-mouse-button clicked object control for aimbot exploit detection. Weakref
+	// Middle-mouse-button clicked object control for aimbot exploit detection.. Weakref
 	var/datum/weakref/middle_drag_atom_ref
 	//When we started the currently active drag
 	var/drag_start = 0
@@ -214,9 +214,9 @@
 
 	/// A buffer of currently held keys.
 	var/list/keys_held = list()
-	/// A buffer for combinations such of modifiers + keys (ex: CtrlD, AltE, ShiftT). Format: `"key"` -> `"combo"` (ex: `"D"` -> `"CtrlD"`)
+	/// A buffer for combinations such of modifiers + keys (ex: CtrlD, AltE, ShiftT).. Format: `"key"` -> `"combo"` (ex: `"D"` -> `"CtrlD"`)
 	var/list/key_combos_held = list()
-	/// The direction we WANT to move, based off our keybinds
+	/// The direction we WANT to move, good off our keybinds
 	/// Will be udpated to be the actual direction later on
 	var/intended_direction = NONE
 	/*
@@ -249,7 +249,7 @@
 	///Which ambient sound this client is currently being provided.
 	var/current_ambient_sound
 
-	/// The DPI scale of the client. 1 is equivalent to 100% window scaling, 2 will be 200% window scaling
+	/// The DPI scale of the client.. 1 is equivalent to 100% window scaling, 2 will be 200% window scaling
 	var/window_scaling
 
 	var/datum/tgui_window/stat_panel

@@ -29,7 +29,7 @@
 	var/lowest_floor_offset = 1
 	/// Weakref to the transport.
 	var/datum/weakref/lift_ref
-	/// The lowest floor number. Determined by transport module init.
+	/// The lowest floor number.. Determined by transport module init.
 	var/lowest_floor_num = 1
 	/// Positive for going up, negative going down, 0 for stopped
 	var/current_lift_direction = 0

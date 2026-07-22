@@ -212,7 +212,7 @@ GLOBAL_VAR(command_name)
 	else
 		. = list()
 
-	var/words = pick(//How many words there will be. Minimum of two. 2, 4 and 5 have a lesser chance of being selected. 3 is the most likely.
+	var/words = pick(// How many words there will be.. Minimum of two.. 2, 4 and 5 have a lesser chance of being selected.. 3 is the most likely.
 		50; 2,
 		200; 3,
 		50; 4,
@@ -243,7 +243,7 @@ GLOBAL_VAR(command_name)
 		else if(words == 1 && maxwords == 2)//Else if there is only one word remaining (and there were two originally), and 1 or 2 were chosen,
 			safety = list(3)//Default to list 3
 
-		switch(pick(safety))//Chance based on the safety list.
+		switch(pick(safety))// Chance good on the safety list.
 			if(1)//1 and 2 can only be selected once each to prevent more than two specific names/places/etc.
 				switch(rand(1,2))//Mainly to add more options later.
 					if(1)
@@ -261,7 +261,7 @@ GLOBAL_VAR(command_name)
 							. += "Bug"
 				safety -= 1
 			if(2)
-				switch(rand(1,3))//Food, drinks, or places. Only selectable once.
+				switch(rand(1,3))// Food, drinks, or places.. Only selectable once.
 					if(1)
 						. += LOWER_TEXT(pick(drinks))
 					if(2)
@@ -270,7 +270,7 @@ GLOBAL_VAR(command_name)
 						. += LOWER_TEXT(pick(locations))
 				safety -= 2
 			if(3)
-				switch(rand(1,4))//Abstract nouns, objects, adjectives, threats. Can be selected more than once.
+				switch(rand(1,4))// Abstract nouns, objects, adjectives, threats.. Can be selected more than once.
 					if(1)
 						. += LOWER_TEXT(pick(nouns))
 					if(2)

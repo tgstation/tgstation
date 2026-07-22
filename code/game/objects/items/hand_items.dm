@@ -409,7 +409,7 @@
 		taker.help_shake_act(offerer)
 
 		if(taker.body_position == LYING_DOWN)
-			return // That didn't help them. Awkwaaaaard.
+			return // That didn't help them.. Awkwaaaaard.
 
 		offerer.visible_message(span_notice("[offerer] helps [taker] up!"), span_nicegreen("You help [taker] up!"), span_hear("You hear someone helping someone else up!"), ignored_mobs = taker)
 		to_chat(taker, span_nicegreen("You take [offerer]'s hand, letting [offerer.p_them()] help your up! How nice of them!"))
@@ -430,11 +430,11 @@
 	// taking taker by their hands.
 	var/offerer_zone_selected = offerer.zone_selected
 	offerer.zone_selected = "r_arm"
-	var/did_we_pull = offerer.start_pulling(taker) // Will return either null or FALSE. We only want to silence FALSE.
+	var/did_we_pull = offerer.start_pulling(taker) // Will return either null or FALSE.. We only want to silence FALSE.
 	offerer.zone_selected = offerer_zone_selected
 
 	if(did_we_pull == FALSE)
-		return // That didn't work for one reason or the other. No need to display anything.
+		return // That didn't work for one reason or the other.. No need to display anything.
 
 	to_chat(offerer, span_notice("[taker] takes your hand, allowing you to pull [taker.p_them()] along."))
 	to_chat(taker, span_notice("You take [offerer]'s hand, which allows [offerer.p_them()] to pull you along. How polite!"))
@@ -523,7 +523,7 @@
 	offerer.face_atom(taker)
 	taker.face_atom(offerer)
 	offerer.do_item_attack_animation(taker, used_item = src, animation_type = ATTACK_ANIMATION_BLUNT)
-	//We're still firing a shot here because I don't want to deal with some weird edgecase where direct impacting them with the projectile causes it to freak out because there's no angle or something
+	// We're still firing a shot here because I don't want to deal with some weird edgecase where direct impacting them with the projectile causes it to freak out because there's no angle. Something
 	blown_kiss.original = taker
 	blown_kiss.fired_from = offerer
 	blown_kiss.firer = offerer // don't hit ourself that would be really annoying
@@ -590,7 +590,7 @@
 /obj/projectile/kiss/impact(atom/A)
 	def_zone = BODY_ZONE_HEAD // let's keep it PG, people
 
-	if(damage > 0 || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
+	if(damage > 0 || !isliving(A)) // if we do damage. We hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
 		return ..()
 
 	harmless_on_hit(A)
@@ -651,7 +651,7 @@
 
 /obj/projectile/kiss/death
 	name = "kiss of death"
-	damage = 35 // okay i kinda lied about love not being able to hurt you
+	damage = 35 // okay i kind of lied about love not being able to hurt you
 	wound_bonus = 0
 	sharpness = SHARP_POINTY
 	color = COLOR_BLACK
@@ -682,7 +682,7 @@
 	if(!QDELETED(ink_spit)) // in case it somehow remains around
 		qdel(ink_spit)
 
-// Based on energy gun characteristics
+// Good on energy gun characteristics
 /obj/projectile/kiss/syndie
 	name = "syndie kiss"
 	color = COLOR_SYNDIE_RED

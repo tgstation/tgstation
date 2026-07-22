@@ -29,10 +29,10 @@
 	quirk.add_to_holder(dummy, quirk_transfer = TRUE)
 	dummy.dna.add_mutation(/datum/mutation/blind, "TEST")
 
-	// Remove the blindfold. We should remain blinded
+	// Remove the blindfold.. We should remain blinded
 	QDEL_NULL(blindfold)
 	check_if_blind(dummy, status_message = "after removing their blindfold BUT still being blinded")
-	// Remove the quirk. We should remain blinded again
+	// Remove the quirk.. We should remain blinded again
 	dummy.remove_quirk(/datum/quirk/item_quirk/blindness)
 	check_if_blind(dummy, status_message = "after removing their quirk BUT still being blinded")
 	// Remove the mutation, this should unblind us
@@ -204,7 +204,7 @@
 	TEST_ASSERT(!length(hopefully_empty_result), "[checking] has all the sources we wanted [status], but there were unexpected extra sources.")
 
 /datum/unit_test/nearsighted_effect/proc/validate_correctable_severity(mob/living/carbon/human/dummy, status, expected_final_severity, list/expected_sources)
-	//! This proc expects the dummy to be nearsighted
+	// !. This proc expects the dummy to be nearsighted
 	var/datum/status_effect/grouped/nearsighted/myopia = dummy.is_nearsighted()
 	TEST_ASSERT_NOTNULL(myopia, "Dummy was not nearsighted when given correctable nearsightedness [status].")
 
@@ -212,7 +212,7 @@
 	TEST_ASSERT_EQUAL(myopia.correctable_severity, expected_final_severity, "The determined correctable severity [status] was wrong.")
 
 /datum/unit_test/nearsighted_effect/proc/validate_absolute_severity(mob/living/carbon/human/dummy, status, expected_final_severity, list/expected_sources)
-	//! This proc expects the dummy to be nearsighted
+	// !. This proc expects the dummy to be nearsighted
 	var/datum/status_effect/grouped/nearsighted/myopia = dummy.is_nearsighted()
 	TEST_ASSERT_NOTNULL(myopia, "Dummy was not nearsighted when given absolute nearsightedness [status].")
 
@@ -221,7 +221,7 @@
 
 /// Makes sure that having vision corrected affects the dummy and preserves vision
 /datum/unit_test/nearsighted_effect/proc/validate_glasses_behaviour(mob/living/carbon/human/dummy, status, expected_severity_with, expected_severity_without)
-	//! This proc expects the dummy to be nearsighted
+	// !. This proc expects the dummy to be nearsighted
 	var/obj/item/clothing/glasses/regular/prescriptions = allocate(/obj/item/clothing/glasses/regular)
 	dummy.equip_to_slot_if_possible(prescriptions, ITEM_SLOT_EYES)
 	var/datum/status_effect/grouped/nearsighted/myopia = dummy.is_nearsighted()

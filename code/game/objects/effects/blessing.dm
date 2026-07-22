@@ -6,7 +6,7 @@
 	anchored = TRUE
 	density = FALSE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	/// Is this blessing visible to those with the ability to see blessed tiles? (chaplains)
+	/// Is this blessing visible to those with the ability to see blessed tiles?. (chaplains)
 	var/invisible
 
 /obj/effect/blessing/Initialize(mapload)

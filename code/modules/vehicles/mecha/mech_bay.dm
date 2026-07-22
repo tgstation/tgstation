@@ -14,7 +14,7 @@
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
 	///Power unit per second to charge by
 	var/recharge_power = 0.025 * STANDARD_CELL_RATE
-	///turf that will be checked when a mech wants to charge. directly one turf in the direction it is facing
+	/// turf that will be checked when a mech wants to charge.. directly one turf in the direction it is facing
 	var/turf/recharging_turf
 
 /obj/machinery/mech_bay_recharge_port/Initialize(mapload)

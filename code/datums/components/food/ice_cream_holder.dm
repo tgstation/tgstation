@@ -1,11 +1,11 @@
 #define SWEETENER_PER_SCOOP 10
 #define EXTRA_MAX_VOLUME_PER_SCOOP 20
 
-/// Ice Cream Holder: Allows the edible parent object to be used as an ice cream cone (or cup... in a next future).
+/// Ice Cream Holder: Allows the edible parent object to be used as an ice cream cone (or cup.... in a next future).
 /datum/component/ice_cream_holder
 	/// List of servings of ice cream it is holding at the moment.
 	var/list/scoops
-	/// Servings of ice cream with custom names as key, and their base ones as assoc. (useful for mob/custom ice cream)
+	/// Servings of ice cream with custom names as key, and their base ones as assoc.. (useful for mob/custom ice cream)
 	var/list/special_scoops
 	/*
 	 * List of scoop overlays to add on update_overlays(). Separated from list/scoops considering how byond is inconsistent
@@ -23,7 +23,7 @@
 	 * If false, an examine signal is registered to let the amount and types of held ice cream be known anyway.
 	 */
 	var/change_desc = FALSE
-	/// pixel offsets for scoop overlays. Useful for objects with off-centered sprites.
+	/// pixel offsets for scoop overlays.. Useful for objects with off-centered sprites.
 	var/x_offset = 0
 	var/y_offset = 0
 	/*
@@ -142,7 +142,7 @@
 		new_overlays += overlay
 		added_offset += ICE_CREAM_SCOOP_OFFSET
 
-/// Attack the ice cream vat to get some ice cream. This will change as new ways of getting ice cream are added.
+/// Attack the ice cream vat to get some ice cream.. This will change as new ways of getting ice cream are added.
 /datum/component/ice_cream_holder/proc/on_item_attack_obj(obj/item/source, obj/target, mob/user)
 	SIGNAL_HANDLER
 	if(!istype(target, /obj/machinery/icecream_vat))
@@ -162,7 +162,7 @@
 	if(parent.type != icecream_order.cone_type) //check that the cone type matches
 		return FALSE
 
-	// We don't want to stop ice creams from being sold because of their order. we aren't that finnicky.
+	// We don't want to stop ice creams from being sold because of their order.. we aren't that finnicky.
 	var/our_scoops = scoops.Copy()
 	sortTim(our_scoops, cmp = GLOBAL_PROC_REF(cmp_text_asc))
 
@@ -173,7 +173,7 @@
 /datum/component/ice_cream_holder/proc/sell_ice_cream(obj/item/source, mob/living/basic/robot_customer/sold_to)
 	SIGNAL_HANDLER
 
-	//the price of ice cream scales with the number of scoops. Yummy.
+	// the price of ice cream scales with the number of scoops.. Yummy.
 	var/venue_price = length(scoops) * FOOD_PRICE_TRASH * 2
 
 	var/datum/venue/venue_to_pay = sold_to.ai_controller?.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
@@ -212,9 +212,9 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	 * or a text string shown on [/atom/proc/examine_more]. In the former case, the desc is joined with this prefix.
 	 */
 	var/desc_prefix = "A delicious $CONE_NAME"
-	/// The ingredients required to produce a unit with the ice cream vat, these are multiplied by 3.
+	/// The ingredients needed to produce a unit with the ice cream vat, these are multiplied by 3.
 	var/list/ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/vanilla)
-	/// The same as above, but in a readable text generated on New() that can also contain fluff ingredients such as "lot of love" or "optional flavorings".
+	/// The same as above. In a readable text generated on New() that can also contain fluff ingredients such as "lot of love". "optional flavorings".
 	var/ingredients_text = ""
 	/// the reagent added in 'add_flavour()'
 	var/reagent_type
@@ -350,13 +350,13 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	ingredients_text = "optional flavorings"
 
 /datum/ice_cream_flavour/custom/add_flavour(datum/component/ice_cream_holder/target, datum/reagents/custom_ingredients)
-	if(!custom_ingredients || custom_ingredients.total_volume < 4) //consumable reagents have stronger taste so higher volume are required to allow non-food flavourings to break through better.
+	if(!custom_ingredients || custom_ingredients.total_volume < 4) // consumable reagents have stronger taste so higher volume are needed to allow non-food flavourings to break through better.
 		return GLOB.ice_cream_flavours[ICE_CREAM_BLAND].add_flavour(target) //Bland, sugary ice and milk.
 	var/image/flavoring = image('icons/obj/service/kitchen.dmi', "icecream_custom")
 	var/datum/reagent/master = custom_ingredients.get_master_reagent()
 	flavoring.color = master.color
 	LAZYADD(target.scoop_overlays, flavoring)
-	. = ..() // Make some space for reagents before attempting to transfer some to the target.
+	. = ..() // Make some space for reagents before trying to transfer some to the target.
 	custom_ingredients.trans_to(target.parent, 4)
 
 /datum/ice_cream_flavour/bland

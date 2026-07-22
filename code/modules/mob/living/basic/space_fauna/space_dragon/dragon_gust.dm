@@ -1,7 +1,7 @@
 /// Default additional time to spend stunned per usage of ability
 #define DEFAULT_ACTIVATED_ENDLAG 3 DECISECONDS
 
-/// Rise into the air and slam down, knocking people away. No real cooldown but has escalating endlag if used in quick succession.
+/// Rise into the air and slam down, knocking people away.. No real cooldown but has escalating endlag if used in quick succession.
 /datum/action/cooldown/mob_cooldown/wing_buffet
 	name = "Wing Buffet"
 	desc = "Rise into the air and release a powerful gust from your wings, blowing attackers away. Becomes more tiring if used in quick succession."
@@ -23,7 +23,7 @@
 	var/additional_endlag = 0 DECISECONDS
 	/// Amount of time to add to endlag after each successful use of the ability
 	var/endlag_per_activation = DEFAULT_ACTIVATED_ENDLAG
-	/// How much accumulated stun time do we subtract every second? Takes a full minute to regen off a single use :(
+	/// How much accumulated stun time do we subtract every second?. Takes a full minute to regen off a single use :(
 	var/endlag_decay_per_second = DEFAULT_ACTIVATED_ENDLAG / 60
 	/// Increase the effect of our accumulated additional stun time by this much if space dragon has lost some rifts
 	var/exhaustion_multiplier = 5

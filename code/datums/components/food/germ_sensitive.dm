@@ -29,13 +29,13 @@ GLOBAL_LIST_INIT(floor_diseases, list(
 
 	RegisterSignals(parent, list(
 		COMSIG_ITEM_DROPPED, //Dropped into the world
-		COMSIG_ATOM_EXITED, //Object exits a storage object (tables, boxes, etc)
+		COMSIG_ATOM_EXITED, // Object exits a storage object (tables, boxes, and so on
 	),
 	PROC_REF(dropped))
 
 	RegisterSignals(parent, list(
 		COMSIG_ITEM_PICKUP, //Picked up by mob
-		COMSIG_ATOM_ENTERED, //Object enters a storage object (tables, boxes, etc.)
+		COMSIG_ATOM_ENTERED, // Object enters a storage object (tables, boxes, and so on
 	),
 	PROC_REF(picked_up))
 

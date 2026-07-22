@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT_TYPED(random_hallucination_weighted_list, /list, generate_hallu
 /// Select a random hallucination from the hallucination pool
 ///
 /// * tier - the tier of hallucination to select from
-/// * strict - if true, only select from the passed tier. If false, select from the passed tier and all tiers below it.
+/// * strict - if true, only select from the passed tier.. If false, select from the passed tier and all tiers below it.
 /proc/get_random_hallucination(tier = HALLUCINATION_TIER_COMMON, strict = FALSE)
 	if(!GLOB.random_hallucination_weighted_list[tier])
 		CRASH("get_random_hallucination - No hallucinations in tier \[[tier]\].")
@@ -199,7 +199,7 @@ ADMIN_VERB(debug_hallucination_weighted_list_per_type, R_DEBUG, "Show Hallucinat
 			else
 				last_type_weight = this_weight
 
-	// Sort by weight descending, where weight is the values (not the keys). We assoc_to_keys later to get JUST the text
+	// Sort by weight descending, where weight is the values (not the keys).. We assoc_to_keys later to get JUST the text
 	sortTim(all_weights, GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
 
 	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"

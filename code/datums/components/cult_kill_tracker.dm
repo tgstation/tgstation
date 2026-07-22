@@ -1,4 +1,4 @@
-/// Component to handle the behavior of a nullrod keeping track of cultists it has crit or killed, and converting the item into a cult weapon when sacrificed
+/// Component to handle the behavi. Of a nullrod keeping track of cultists it has crit. Killed. Converting the item into a cult weapon when sacrificed
 /datum/component/cult_kill_tracker
 	/// Lazylist, tracks weakrefs()s to all cultists which have been crit or killed by this nullrod.
 	var/list/cultists_slain

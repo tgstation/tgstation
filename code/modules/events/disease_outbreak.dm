@@ -14,7 +14,7 @@
 #define ADV_RNG_LOW 40
 /// Percentile for mid severity advanced virus
 #define ADV_RNG_MID 85
-/// Percentile for high vs. low transmissibility
+/// Percentile for high vs.. low transmissibility
 #define ADV_SPREAD_THRESHOLD 85
 /// Admin custom low spread
 #define ADV_SPREAD_FORCED_LOW 0
@@ -54,7 +54,7 @@
  */
 /datum/round_event_control/disease_outbreak/proc/generate_candidates()
 	disease_candidates.Cut() //We clear the list and rebuild it again.
-	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list)) //Player list is much more up to date and requires less checks(?)
+	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list)) // Player list is much more up to date and needs less checks(?)
 		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER) || candidate.stat == DEAD)
 			continue
 		if(HAS_TRAIT(candidate, TRAIT_VIRUSIMMUNE)) //Don't pick someone who's virus immune, only for it to not do anything.
@@ -135,7 +135,7 @@
 	if(!virus_type)
 		var/list/virus_candidates = list()
 
-		//Practically harmless diseases. Mostly just gives medical something to do.
+		// Practically harmless diseases.. Mostly just gives medical something to do.
 		virus_candidates += list(/datum/disease/flu, /datum/disease/cold9)
 
 		//The more dangerous ones
@@ -363,7 +363,7 @@
 			stack_trace("Advanced disease could not pick a symptom!")
 			return
 
-		//Checks if the chosen symptom is severe enough to meet requested severity. If not, pick a new symptom.
+		// Checks if the chosen symptom is severe enough to meet requested severity.. If not, pick a new symptom.
 		//If we've met requested severity already, we don't care and will keep the chosen symptom.
 		var/datum/symptom/new_symptom = new chosen_symptom
 

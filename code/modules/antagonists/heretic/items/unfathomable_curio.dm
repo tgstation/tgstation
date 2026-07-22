@@ -1,4 +1,4 @@
-//Item for knock/moon heretic sidepath, it can block 5 hits of damage, acts as storage and if the heretic is examined the examiner suffers brain damage and blindness
+// Item f. Knock/moon heretic sidepath, it can block 5 hits of damage, acts as storage. If the heretic is examined the examiner suffers brain damage. Blindness
 
 /obj/item/storage/belt/unfathomable_curio
 	name = "Unfathomable Curio"

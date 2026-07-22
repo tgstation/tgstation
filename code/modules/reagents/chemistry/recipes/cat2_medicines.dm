@@ -87,8 +87,8 @@
 /*****BURN*****/
 //These are all endothermic!
 
-//This is a relatively simple demonstration have splitting negatives/having purity based negatives
-//Since it requires silver - I don't want to make it too hard
+// This is a relatively simple demonstration have splitting negatives/having purity good negatives
+// Since it needs silver - I don't want to make it too hard
 /datum/chemical_reaction/medicine/lenturi
 	results = list(/datum/reagent/medicine/c2/lenturi = 5)
 	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/silver = 1, /datum/reagent/sulfur = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1)
@@ -161,7 +161,7 @@
 	explode_shockwave(holder, equilibrium, sound_and_text = FALSE)
 
 /*****OXY*****/
-//These react faster with optional oxygen, and have blastback effects! (the oxygen makes their fail states deadlier)
+// These react faster with optional oxygen, and have blastback effects!. (the oxygen makes their fail states deadlier)
 
 /datum/chemical_reaction/medicine/convermol
 	results = list(/datum/reagent/medicine/c2/convermol = 3)
@@ -229,7 +229,7 @@
 /datum/chemical_reaction/medicine/tirimol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added, impure = FALSE)
 	var/bonus = impure ? 2 : 1
 	if(holder.has_reagent(/datum/reagent/oxygen))
-		explode_attack_chem(holder, equilibrium, /datum/reagent/inverse/healing/tirimol, 7.5*bonus, 2, ignore_eyes = TRUE) //since we're smoke/air based
+		explode_attack_chem(holder, equilibrium, /datum/reagent/inverse/healing/tirimol, 7.5*bonus, 2, ignore_eyes = TRUE) // since we're smoke/air good
 		clear_products(holder, 5)//since we attacked
 		explode_invert_smoke(holder, equilibrium, 3)
 	else
@@ -281,7 +281,7 @@
 	purity_min = 0.1 //Fire is our worry for now
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_PLANT | REACTION_TAG_TOXIN
 
-//You get nothing! I'm serious about staying under the heating requirements!
+// You get nothing!. I'm serious about staying under the heating needs
 /datum/chemical_reaction/medicine/multiver/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	. = ..()
 	var/datum/reagent/monover = holder.has_reagent(/datum/reagent/inverse/healing/monover)
@@ -289,7 +289,7 @@
 		holder.remove_reagent(/datum/reagent/inverse/healing/monover, monover.volume)
 		holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The Monover bursts into flames from the heat!"))
 		explode_fire_square(holder, equilibrium, 1)
-		holder.my_atom.fire_act(holder.chem_temp, monover.volume)//I'm kinda banking on this setting the thing on fire. If you see this, then it didn't!
+		holder.my_atom.fire_act(holder.chem_temp, monover.volume)// I'm kind of banking on this setting the thing on fire.. If you see this, then it didn't!
 
 /datum/chemical_reaction/medicine/multiver/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
@@ -340,7 +340,7 @@
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_TOXIN
 
-//overheat beats like a heart! (or is it overbeat?)
+// overheat beats like a heart!. (or is it overbeat?)
 /datum/chemical_reaction/medicine/penthrite/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	. = ..()
 	if(off_cooldown(holder, equilibrium, 1, "lub"))

@@ -322,7 +322,7 @@
 			if(attacker.special_attack_cooldown > 0)
 				attacker.special_attack_cooldown--
 
-			//combat commences
+			// combat starts
 			switch(rand(1,8))
 				if(1 to 3) //attacker wins
 					if(attacker.special_attack_cooldown == 0 && attacker.combat_health <= round(attacker.max_combat_health/3)) //if health is less than 1/3 and special off CD, use it

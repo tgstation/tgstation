@@ -93,7 +93,7 @@
 		return ..()
 
 	updates &= ~UPDATE_OVERLAYS
-	. = ..() // Don't update overlays. We're doing that here
+	. = ..() // Don't update overlays.. We're doing that here
 
 	if(contents.len < LAZYLEN(overlays))
 		overlays -= overlays[overlays.len]

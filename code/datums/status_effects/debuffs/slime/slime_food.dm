@@ -1,4 +1,4 @@
-///Adds pheromones to a mob. If the target slime drains the mob to death, they might befriend the user
+/// Adds pheromones to a mob.. If the target slime drains the mob to death, they might befriend the user
 /datum/status_effect/slime_food
 	id = "slime_food"
 	alert_type = null

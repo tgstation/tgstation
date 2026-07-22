@@ -15,7 +15,7 @@
 	///Sent when shut down
 	var/datum/port/output/is_off
 
-	///Toggles lights on and off. Also RGB.
+	/// Toggles lights on and off.. Also RGB.
 	var/datum/port/input/lights
 	var/datum/port/input/red
 	var/datum/port/input/green

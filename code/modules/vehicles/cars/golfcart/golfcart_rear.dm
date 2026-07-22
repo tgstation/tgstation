@@ -19,7 +19,7 @@
 	///Was this move triggered by the parent?
 	var/moving_from_parent = FALSE
 	var/obj/vehicle/ridden/golfcart/parent = null
-	///List of offsets for buckled passengers. Indexed by passenger index, then by direction string.
+	/// List of offsets for buckled passengers.. Indexed by passenger index, then by direction string.
 	var/static/list/list/vector/passenger_offsets = list(
 		list(
 			TEXT_NORTH = vector(-4, 0, 24),
@@ -44,7 +44,7 @@
 		)
 	)
 
-///Try to load something onto the cart. This proc may fail if the obj is not in allowed_cargo or is in banned_cargo.
+/// Try to load something onto the cart.. This proc may fail if the obj is not in allowed_cargo or is in banned_cargo.
 /obj/golfcart_rear/proc/load(obj/to_load)
 	if (!to_load)
 		return
@@ -223,10 +223,10 @@
 			buckled_mob.currently_z_moving = currently_z_moving
 			buckled_mob.forceMove(destination)
 		else
-			// this is not a good hack - this should never happen
+			// this is not a good temporary solution - this should never happen
 			// but stairs are a particularly problematic area
 			if (!buckled_mob.Move(destination, dir, glide_size))
-				// this is a terrible hack because mob/living forwards forceMove calls to buckled
+				// this is a terrible temporary solution because mob/living forwards forceMove calls to buckled
 				// unless currently_z_moving is non-null
 				buckled_mob.currently_z_moving = CURRENTLY_Z_MOVING_GENERIC
 				buckled_mob.forceMove(destination)
@@ -274,7 +274,7 @@
 
 	return parent.Move(get_step(parent, get_dir(loc, newloc)), direct)
 
-///Called for COMSIG_ATOM_TRIED_PASS on passengers buckled to the cart. Allows them to not block each other's movement / get blocked by the cart.
+/// Called for COMSIG_ATOM_TRIED_PASS on passengers buckled to the cart.. Allows them to not block each other's movement / get blocked by the cart.
 /obj/golfcart_rear/proc/allow_movement_between_bed_passengers(atom/source, atom/mover)
 	SIGNAL_HANDLER
 
@@ -308,7 +308,7 @@
 			animate = FALSE)
 		passenger.layer = layer + ((i * 0.01) - 0.01) * (-invert_layer)
 
-///Called from COMSIG_ATOM_POST_DIR_CHANGE on the rear of the cart. Only used to change buckled mobs' position / layers.
+/// Called from COMSIG_ATOM_POST_DIR_CHANGE on the rear of the cart.. Only used to change buckled mobs' position / layers.
 /obj/golfcart_rear/proc/on_dir_changed(datum/source, old_dir, new_dir)
 	SIGNAL_HANDLER
 
@@ -335,7 +335,7 @@
 	var/vector/rear_offsets = parent.get_rear_offset()
 	. += parent.generate_cargo_overlay(-rear_offsets.x, -rear_offsets.y, layer=layer)
 
-///Called when a passenger tries lying down/getting up. Automatically drops out people who can't stay on
+/// Called when a passenger tries lying down/getting up.. Automatically drops out people who can't stay on
 /obj/golfcart_rear/proc/passenger_falling_down(atom/source, new_bodypos)
 	SIGNAL_HANDLER
 
@@ -370,7 +370,7 @@
 			return FALSE
 	return ..()
 
-///Called on COMSIG_MOVABLE_PREBUCKLE for anything that's buckled to us. Disallows stacking buckles
+/// Called on COMSIG_MOVABLE_PREBUCKLE for anything that's buckled to us.. Disallows stacking buckles
 /obj/golfcart_rear/proc/on_attempted_bucklestack()
 	SIGNAL_HANDLER
 

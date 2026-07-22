@@ -149,7 +149,7 @@
 
 
 /datum/heretic_knowledge/curse/paralysis/curse(mob/living/carbon/human/chosen_mob)
-	if(chosen_mob.usable_legs <= 0) // What're you gonna do, curse someone who already can't walk?
+	if(chosen_mob.usable_legs <= 0) // What're you going to do, curse someone who already can't walk?
 		to_chat(chosen_mob, span_notice("You feel a slight pain for a moment, but it passes shortly. Odd."))
 		return
 

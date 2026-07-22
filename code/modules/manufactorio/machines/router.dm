@@ -55,6 +55,6 @@
 	return MANUFACTURING_FAIL
 
 /obj/machinery/power/manufacturing/router/proc/handle_stack(obj/item/stack/stack, direction)
-	if(stack.amount <= 1) // last implementation was just not good so lets cheap out
+	if(stack.amount <= 1) // last code was just not good so lets cheap out
 		return stack
 	return stack.split_stack(1)

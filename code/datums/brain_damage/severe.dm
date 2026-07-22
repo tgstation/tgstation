@@ -1,6 +1,6 @@
 //Severe traumas, when your brain gets abused way too much.
 //These range from very annoying to completely debilitating.
-//They cannot be cured with chemicals, and require brain surgery to solve.
+// They cannot be cured with chemicals, and need brain surgery to solve.
 
 /datum/brain_trauma/severe
 	abstract_type = /datum/brain_trauma/severe
@@ -190,7 +190,7 @@
 			owner.emote("yawn")
 		else if(prob(33)) //rarest message is a custom emote
 			owner.visible_message("rubs [owner.p_their()] eyes.", visible_message_flags = EMOTE_MESSAGE)
-	//drowsy, so fall asleep. you've had your chance to remedy it
+	// drowsy, so fall asleep.. you've had your chance to remedy it
 	else
 		to_chat(owner, span_warning("You fall asleep."))
 		owner.Sleeping(rand(sleep_time_minimum, sleep_time_maximum))
@@ -332,7 +332,7 @@
 		leading to compulsive theft behaviors that can interfere with daily life and social interactions."
 	gain_text = span_warning("You feel a sudden urge to take that. Surely no one will notice.")
 	lose_text = span_notice("You no longer feel the urge to take things.")
-	/// Cooldown between allowing steal attempts
+	/// Cooldown between allowing steal tries
 	COOLDOWN_DECLARE(steal_cd)
 
 /datum/brain_trauma/severe/kleptomaniac/on_gain()
@@ -380,7 +380,7 @@
 		// Try to do a raw click on the item with one of our empty hands, to pick it up (duh)
 		owner.log_message("attempted to pick up (kleptomania)", LOG_ATTACK, color = "orange")
 		owner.ClickOn(stealable)
-		// No feedback message. Intentional, you may not even realize you picked up something
+		// No feedback message.. Intentional, you may not even realize you picked up something
 		break
 
 	if(steal_to_offhand)

@@ -236,7 +236,7 @@
 	playsound(result, result.attack_sound, 50, TRUE) // reeeeeeeeeeeeeee...
 
 /obj/item/fish/tadpole/get_export_price(price, elasticity_percent)
-	return 2 //two credits. Tadpoles aren't really that valueable.
+	return 2 // two credits.. Tadpoles aren't really that valueable.
 
 /obj/item/fish/tadpole/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] swallows [src] whole!"))
@@ -289,7 +289,7 @@
 	/obj/item/fishing_lure, //they love lures in general.
 	)
 
-///Memetic fish from a paleontologically inaccurate, goofy replica of a specimen. Sells decently for its size.
+/// Memetic fish from a paleontologically inaccurate, goofy replica of a specimen.. Sells decently for its size.
 /obj/item/fish/sacabambaspis
 	name = "sacabambaspis"
 	fish_id = "sacabambaspis"

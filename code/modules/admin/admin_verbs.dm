@@ -40,7 +40,7 @@ ADMIN_VERB(admin_ghost, R_ADMIN, "AGhost", "Become a ghost without DNR.", ADMIN_
 		var/mob/dead/observer/ghost = body.ghostize(TRUE, TRUE)
 		user.init_verbs()
 		if(body && !body.key)
-			body.key = "@[user.key]" //Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
+			body.key = "@[user.key]" // Haaaaaaaack.. But the people have spoken.. If it breaks; blame adminbus
 		// Carry over invisimin to their aghost
 		var/is_stealth_mode = user.holder.fakekey
 		var/is_invisimin = HAS_TRAIT_FROM(body, TRAIT_INVISIMIN, ADMIN_TRAIT)
@@ -187,7 +187,7 @@ ADMIN_VERB(poll_panel, R_POLL, "Server Poll Management", "View and manage polls.
 		text_guess = "@[num2text(guess)]"
 		// We take a guess at some number, and if it's not in the existing stealthmin list we exit
 		for(var/key in GLOB.stealthminID)
-			// If it is in the list tho, we up one number, and redo the loop
+			// If it is in the list though we up one number, and redo the loop
 			if(GLOB.stealthminID[key] == text_guess)
 				guess += 1
 				valid_found = FALSE
@@ -798,7 +798,7 @@ ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an it
 		return
 
 	var/datum/market_item/admin_item = new /datum/market_item()
-	// Making a note here that we don't need to assign to blackmarket because we still only have one market type, but if we ever start using multiple we'll want to poll admins.
+	// Making a note here that we don't need to assign to blackmarket because we still only have one market type. If we ever start using multiple we'll want to poll admins.
 	admin_item.item = chosen
 	SSblackbox.record_feedback("tally", "admin blackmarket items", 1, chosen)
 

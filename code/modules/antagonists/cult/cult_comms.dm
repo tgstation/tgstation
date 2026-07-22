@@ -18,7 +18,7 @@
 	name = "Communion"
 	desc = "Whispered words that all cultists can hear.<br><b>Warning:</b>Nearby non-cultists can still hear you."
 	button_icon_state = "cult_comms"
-	// Unholy words dont require hands or mobility
+	// Unholy words dont need hands or mobility
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_CONSCIOUS
 
 /datum/action/innate/cult/comm/IsAvailable(feedback = FALSE)

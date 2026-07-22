@@ -245,7 +245,7 @@
 	RegisterSignal(portal2, COMSIG_QDELETING, PROC_REF(on_portal_destroy))
 
 	try_move_adjacent(portal1, user.dir)
-	if(QDELETED(portal1) || QDELETED(portal2)) //in the event that something managed to delete the portal objects, i.e. something teleported them
+	if(QDELETED(portal1) || QDELETED(portal2)) // in the event that something managed to delete the portal objects, i.e.. something teleported them
 		to_chat(user, span_notice("[src] vibrates, but no portal seems to appear. Maybe you should try something else."))
 		return
 	active_portal_pairs[portal1] = portal2
@@ -410,7 +410,7 @@
 		else
 			if(bagholdingcheck && !not_holding_tele)
 				to_chat(user, span_warning("The bluespace interface on your bag of holding interferes with the teleport!"))
-			get_fragged(user, destination, not_holding_tele) //EMP teleported you into a wall? Wearing a BoH? You're dead.
+			get_fragged(user, destination, not_holding_tele) // EMP teleported you into a wall?. Wearing a BoH?. You're dead.
 	else
 		telefrag(destination, user)
 		do_teleport(user, destination, channel = TELEPORT_CHANNEL_FREE)
@@ -463,7 +463,7 @@
 		playsound(emergency_destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 25, TRUE)
-	else //We tried to save. We failed. Death time.
+	else // We tried to save.. We failed.. Death time.
 		get_fragged(user, destination)
 
 ///Force move victim to destination, explode destination, drop all victim's items, gib them
@@ -485,7 +485,7 @@
 	victim.gib(DROP_ALL_REMAINS)
 
 ///Damage and stun all mobs in fragging_location turf, called after a teleport
-/obj/item/syndicate_teleporter/proc/telefrag(turf/fragging_location, mob/user) // Don't let this gib. Never let this gib.
+/obj/item/syndicate_teleporter/proc/telefrag(turf/fragging_location, mob/user) // Don't let this gib.. Never let this gib.
 	for(var/mob/living/victim in fragging_location)//Hit everything in the turf
 		victim.apply_damage(20, BRUTE)
 		victim.Paralyze(6 SECONDS)

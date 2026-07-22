@@ -13,7 +13,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	// The length of time to check on the MC (in deciseconds).
 	// Set to 0 to disable.
 	var/processing_interval = 20
-	// The alert level. For every failed poke, we drop a DEFCON level. Once we hit DEFCON 1, restart the MC.
+	// The alert level.. For every failed poke, we drop a DEFCON level.. Once we hit DEFCON 1, restart the MC.
 	var/defcon = 5
 	//the world.time of the last check, so the mc can restart US if we hang.
 	// (Real friends look out for *each other*)
@@ -27,7 +27,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	// Ensure usr is null, to prevent any potential weirdness resulting from the failsafe having a usr if it's manually restarted.
 	usr = null
 
-	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
+	// Highlander-style: there can only be one!. Kill off the old and replace it with the new.
 	if(Failsafe != src)
 		if(istype(Failsafe))
 			qdel(Failsafe)
@@ -109,7 +109,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 							//if the return number was 0, it just means the mc was restarted too recently, and it just needs some time before we try again
 							//no need to handle that specially when defcon 0 can handle it
 
-						if(0) //DEFCON 0! (mc failed to restart)
+						if(0) // DEFCON 0!. (mc failed to restart)
 							var/rtn = Recreate_MC()
 							if(rtn > 0)
 								defcon = 4
@@ -127,7 +127,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 			sleep(initial(processing_interval))
 
 //Emergency loop used when Master got deleted or the main loop exited while Defcon == 0
-//Loop is driven externally so runtimes only cancel the current recovery attempt
+// Loop is driven externally so runtimes only cancel the current recovery try
 /datum/controller/failsafe/proc/emergency_loop()
 	//The code in this proc should be kept as simple as possible, anything complicated like to_chat might rely on master existing and runtime
 	//The goal should always be to get a new Master up and running before anything else

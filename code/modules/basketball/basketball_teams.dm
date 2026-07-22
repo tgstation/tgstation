@@ -13,7 +13,7 @@
 		ITEM_SLOT_MASK, ITEM_SLOT_EYES, ITEM_SLOT_ID,
 		ITEM_SLOT_HEAD, ITEM_SLOT_BACK, ITEM_SLOT_NECK,
 	)
-	//Chance for the wearer to have their height increased. This is repeated three times for maximum height.
+	// Chance for the wearer to have their height increased.. This is repeated three times for maximum height.
 	var/taller_chance = 50
 
 /datum/outfit/basketball/post_equip(mob/living/carbon/human/human_to_equip, visuals_only=FALSE)

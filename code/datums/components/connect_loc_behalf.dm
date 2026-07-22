@@ -1,5 +1,5 @@
 /// This component behaves similar to connect_loc, hooking into a signal on a tracked object's turf
-/// It has the ability to react to that signal on behalf of a separate listener however
+/// It has the ability to react to that signal on behalf of a separate listener but
 /// This has great use, primarily for components, but it carries with it some overhead
 /// So we do it separately as it needs to hold state which is very likely to lead to bugs if it remains as an element.
 /datum/component/connect_loc_behalf
@@ -46,7 +46,7 @@
 	//It's not a solvable problem though, since both actions, the destroy and the move, are sourced from the same signal send
 	//And sending a signal should be agnostic of the order of listeners
 	//So we need to either pick the order agnositic, or destroy safe
-	//And I picked destroy safe. Let's hope this is the right path!
+	// And I picked destroy safe.. Let's hope this is the right path!
 	if(isnull(tracked.loc))
 		return
 

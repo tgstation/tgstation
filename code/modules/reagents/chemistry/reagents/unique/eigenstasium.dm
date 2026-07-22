@@ -39,16 +39,16 @@
 	. = ..()
 	if(!(methods & INGEST) || !iscarbon(living_mob))
 		return
-	//This looks rediculous, but expose is usually called from the donor reagents datum - we want to edit the post exposure version present in the mob.
+	// This looks rediculous. Expose is usually called from the don. Reagents datum - we want to edit the post exposure version present in the mob.
 	var/mob/living/carbon/carby = living_mob
 	//But because carbon mobs have stomachs we have to search in there because we're ingested
 	var/obj/item/organ/stomach/stomach = carby.get_organ_slot(ORGAN_SLOT_STOMACH)
 	var/datum/reagent/eigenstate/eigen
 	if(stomach)
 		eigen = stomach.reagents.has_reagent(/datum/reagent/eigenstate)
-	if(!eigen)//But what if they have no stomach! I want to get off expose_mob's wild ride
+	if(!eigen)// But what if they have no stomach!. I want to get off expose_mob's wild ride
 		eigen = carby.reagents.has_reagent(/datum/reagent/eigenstate)
-	//Because expose_mob and on_mob_add() across all of the different things call them in different orders, so I want to make sure whatever is the first one to call it sets up the location correctly.
+	// Because expose_mob. On_mob_add() across all of the different things call them in different orders, so I want to make sure whatever is the first one to call it sets up the location correctly.
 	eigen.data["ingested"] = TRUE
 
 //Main functions
@@ -58,7 +58,7 @@
 	spirit.alpha = 170
 	spirit.add_atom_colour(LIGHT_COLOR_LIGHT_CYAN, FIXED_COLOUR_PRIORITY)
 	spirit.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it
-	spirit.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
+	spirit.layer = FLY_LAYER// Above all the other objects/mobs.. Or the vast majority of them.
 	spirit.set_anchored(TRUE) //So space wind cannot drag it.
 	spirit.name = "[living_mob.name]'s Eigenstate"//If someone decides to right click.
 	spirit.set_light(2)	//hologram lighting

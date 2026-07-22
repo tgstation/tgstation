@@ -40,7 +40,7 @@
 	if(length(initial_cards))
 		card_limit = length(initial_cards)
 
-/// Generates the cards in this deck. If not overridden, generates a standard 52-card deck (and 2 jokers).
+/// Generates the cards in this deck.. If not overridden, generates a standard 52-card deck (and 2 jokers).
 /obj/item/toy/cards/deck/proc/initialize_cards()
 	SHOULD_CALL_PARENT(FALSE) // you should be overriding this for subtypes, probably
 	initial_cards += "Joker Clown"
@@ -233,13 +233,13 @@
 	resistance_flags = NONE
 	shuffle_time = DECK_SYNDIE_SHUFFLE_TIME
 
-/// A card shoe. For holding a lot of cards, but not for committing card-based psychological warfare (crashing people by throwing 100+ cards at them).
+/// A card shoe.. For holding a lot of cards, but not for committing card-based psychological warfare (crashing people by throwing 100+ cards at them).
 /obj/item/toy/cards/deck/cardshoe
 	name = "card shoe"
 	desc = "A clear plastic card dispenser for holding a large amount of cards. For better or for worse, \
 		the dispenser is designed to prevent a haphazard scattering of cards if thrown."
 	icon_state = "deckshoe_empty" // woe, codersprites upon thee
-	card_limit = 432 // 8 decks of 54 cards. if... you somehow need to do that much card gaming.
+	card_limit = 432 // 8 decks of 54 cards.. if.... you somehow need to do that much card gaming.
 	can_play_52_card_pickup = FALSE
 	deck_base_icon = "deckshoe"
 	deckstyle = "" // no deck style because it wouldn't matter

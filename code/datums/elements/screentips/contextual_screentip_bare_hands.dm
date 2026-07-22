@@ -11,10 +11,10 @@
 	/// If set, the text to show for RMB
 	var/rmb_text
 
-	/// If set, the text to show for LMB when in combat mode. Otherwise, defaults to lmb_text.
+	/// If set, the text to show for LMB when in combat mode.. Otherwise, defaults to lmb_text.
 	var/lmb_text_combat_mode
 
-	/// If set, the text to show for RMB when in combat mode. Otherwise, defaults to rmb_text.
+	/// If set, the text to show for RMB when in combat mode.. Otherwise, defaults to rmb_text.
 	var/rmb_text_combat_mode
 
 // If you're curious about `use_named_parameters`, it's because you should use named parameters!

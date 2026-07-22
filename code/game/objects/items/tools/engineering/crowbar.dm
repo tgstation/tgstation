@@ -130,21 +130,21 @@
 	force_opens = TRUE
 	/// Used on Initialize, how much time to cut cable restraints and zipties.
 	var/snap_time_weak_handcuffs = 0 SECONDS
-	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
+	/// Used on Initialize, how much time to cut real handcuffs.. Null means it can't.
 	var/snap_time_strong_handcuffs = 0 SECONDS
 	/// The text used for our jaws tool description while active
 	var/active_text = "cutting"
 	/// The text used for our jaws tool description while inactive
 	var/inactive_text = "prying"
-	/// The default tool behavior. This should match tool_behavior
+	/// The default tool behavior.. This should match tool_behavior
 	var/first_tool_behavior = TOOL_CROWBAR
-	/// The active tool behavior. This should not match tool_behavior on init.
+	/// The active tool behavior.. This should not match tool_behavior on init.
 	var/second_tool_behavior = TOOL_WIRECUTTER
 	/// Determines if we want to limit our jaws of life from opening certain doors or not.
 	var/limit_jaws_access = FALSE
-	/// The access on doors that block our jaws of life from opening if limit_jaws_access is TRUE. Does nothing if FALSE.
+	/// The access on doors that block our jaws of life from opening if limit_jaws_access is TRUE.. Does nothing if FALSE.
 	var/list/blacklisted_access = list()
-	/// Whether or not our jaws throw out an alert when we pry open a door. Default alert sends out a message to security comms.
+	/// Whether or not our jaws throw out an alert when we pry open a door.. Default alert sends out a message to security comms.
 	var/radio_alert = FALSE
 	/// If radio_alert is TRUE, access in this list that is found on our pried open door is ignored.
 	var/list/ignored_access = list(
@@ -153,7 +153,7 @@
 		ACCESS_EXTERNAL_AIRLOCKS,
 	)
 	COOLDOWN_DECLARE(alert_cooldown)
-	/// How long between announcements from our jaws of life. Keeps the jaws from getting too radio spammy.
+	/// How long between announcements from our jaws of life.. Keeps the jaws from getting too radio spammy.
 	var/alert_cooldown_time = 1 MINUTES
 
 /obj/item/crowbar/power/get_all_tool_behaviours()

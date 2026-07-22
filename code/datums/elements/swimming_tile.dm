@@ -81,7 +81,7 @@
 		floater.apply_status_effect(/datum/status_effect/swimming, ticking_stamina_cost, ticking_oxy_damage)
 		return
 
-	//First, we determine our effective stamina entry cost baseline. This includes the value from the water, as well as any heavy clothing being worn. The strength trait halves this value.
+	// First, we determine our effective stamina entry cost baseline.. This includes the value from the water, as well as any heavy clothing being worn.. The strength trait halves this value.
 	var/effective_stamina_entry_cost = HAS_TRAIT(floater, TRAIT_STRENGTH) ? (stamina_entry_cost + clothing_weight(floater)) : ((stamina_entry_cost + clothing_weight(floater)) / 2)
 
 	//Being in high gravity doubles our effective stamina cost
@@ -92,7 +92,7 @@
 	if(istype(potential_spine))
 		effective_stamina_entry_cost *= potential_spine.athletics_boost_multiplier
 
-	//Finally, we get our athletics skill as a reduction to the stamina cost. This is a direct reduction.
+	// Finally, we get our athletics skill as a reduction to the stamina cost.. This is a direct reduction.
 	var/athletics_skill =  (floater.mind?.get_skill_level(/datum/skill/athletics) || 1) - 1
 
 	floater.apply_damage(clamp((effective_stamina_entry_cost - athletics_skill) * gravity_modifier, 1, 100), STAMINA)
@@ -109,7 +109,7 @@
 		extra_stamina_weight += (clamp(equipped_item.w_class - 2, 0, 100) + equipped_item.slowdown) //Clothing that speeds us up reduces the stamina drain!
 	return extra_stamina_weight
 
-///Added by the swimming_tile element. Drains stamina over time until the owner stops being immersed. Starts drowning them if they are prone or small.
+/// Added by the swimming_tile element.. Drains stamina over time until the owner stops being immersed.. Starts drowning them if they are prone or small.
 /datum/status_effect/swimming
 	id = "swimming"
 	alert_type = null

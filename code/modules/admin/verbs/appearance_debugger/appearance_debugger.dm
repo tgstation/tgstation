@@ -1,7 +1,7 @@
 /// Allows developers to see a breakdown of an atom or a specific target and edit some of the values
 /datum/appearance_debugger
 	var/datum/admins/owner
-	/// Currently debugged atom or mutable appearance, hence /datum
+	/// Currently debugged atom or mutable appearance, so /datum
 	var/datum/debug_target
 	/// A list of copies of the currently debugged appearance and its children for access from the UI
 	var/list/mutable_appearance/appearance_copies

@@ -122,7 +122,7 @@
 
 	return ..() | COMPONENT_MICROWAVE_SUCCESS
 
-/// A proc to modify the displayed result. (Does not affect what the icon_state is passed.)
+/// A proc to modify the displayed result.. (Does not affect what the icon_state is passed.)
 /obj/item/dice/proc/manipulate_result(original)
 	return original
 
@@ -216,7 +216,7 @@
 	sides = 10
 
 /obj/item/dice/d00/manipulate_result(original)
-	return (original - 1)*10  // 10, 20, 30, etc
+	return (original - 1)*10  // 10, 20, 30, and so on
 
 /obj/item/dice/d12
 	name = "d12"

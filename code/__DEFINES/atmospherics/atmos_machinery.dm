@@ -52,12 +52,12 @@
 // Fault levels for air alarm display
 /// Area faults clear
 #define AREA_FAULT_NONE 0
-/// Fault triggered by manual intervention (ie: fire alarm pull)
+/// Fault triggered by manual intervention that is fire alarm pull)
 #define AREA_FAULT_MANUAL 1
-/// Fault triggered automatically (ie: firedoor detection)
+/// Fault triggered automatically that is firedoor detection)
 #define AREA_FAULT_AUTOMATIC 2
 
-// threshold_type values for [/datum/tlv/proc/set_value]  and [/datum/tlv/proc/reset_value]
+// threshold_type values for [/datum/tlv/proc/set_value] and [/datum/tlv/proc/reset_value]
 /// [/datum/tlv/var/warning_min]
 #define TLV_VAR_WARNING_MIN (1 << 0)
 /// [/datum/tlv/var/hazard_min]

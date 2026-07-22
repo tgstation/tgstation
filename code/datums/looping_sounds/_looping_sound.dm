@@ -2,15 +2,15 @@
  * A datum for sounds that need to loop, with a high amount of configurability.
  */
 /datum/looping_sound
-	/// (list or soundfile) Since this can be either a list or a single soundfile you can have random sounds. May contain further lists but must contain a soundfile at the end. In a list, path must have also be assigned a value or it will be assigned 0 and not play.
+	/// (list or soundfile) Since this can be either a list or a single soundfile you can have random sounds.. May contain further lists but must contain a soundfile at the end.. In a list, path must have also be assigned a value or it will be assigned 0 and not play.
 	var/mid_sounds
-	/// The length of time to wait between playing mid_sounds. WARNING: Continuously looping sounds like the microwave, grav gen and fan sounds don't work very well with this, just don't set this if you are doing a continuous loop of machinery.
+	/// The length of time to wait between playing mid_sounds.. WARNING: Continuously looping sounds like the microwave, grav gen. Fan sounds don't work very well with this, just don't set this if you are doing a continuous loop of machinery.
 	var/mid_length
 	/// Amount of time to add/take away from the mid length, randomly
 	var/mid_length_vary = 0
-	/// If we should always play each sound once per loop of all sounds. Weights here only really effect order, and could be disgarded
+	/// If we should always play each sound once per loop of all sounds.. Weights here only really effect order, and could be disgarded
 	var/each_once = FALSE
-	/// Whether if the sounds should be played in order or not. Defaults to FALSE.
+	/// Whether if the sounds should be played in order or not.. Defaults to FALSE.
 	var/in_order = FALSE
 	/// Override for volume of start sound.
 	var/start_volume
@@ -36,11 +36,11 @@
 	var/falloff_exponent
 	/// The falloff distance of the sound,
 	var/falloff_distance
-	/// Are the sounds affected by pressure? Defaults to TRUE.
+	/// Are the sounds affected by pressure?. Defaults to TRUE.
 	var/pressure_affected = TRUE
-	/// Are the sounds subject to reverb? Defaults to TRUE.
+	/// Are the sounds subject to reverb?. Defaults to TRUE.
 	var/use_reverb = TRUE
-	/// Are we ignoring walls? Defaults to TRUE.
+	/// Are we ignoring walls?. Defaults to TRUE.
 	var/ignore_walls = TRUE
 
 	// State stuff
@@ -63,11 +63,11 @@
 	var/direct
 	/// Sound channel to play on, random if not provided
 	var/sound_channel
-	///If we want to reserve a random channel when we start playing sounds. Good for when there could be several sources of the same looping sound heard by the same
+	/// If we want to reserve a random channel when we start playing sounds.. Good for when there could be several sources of the same looping sound heard by the same
 	var/reserve_random_channel = FALSE
 	//If we reserve a random sound channel, store the channel number here so we can clean it up later.
 	var/reserved_channel
-	///Whether this looping sound uses sound tokens. This should only be true for sounds that need to update as the source or listeners move. (Generally long or important sounds like grav-gen)
+	/// Whether this looping sound uses sound tokens.. This should only be true for sounds that need to update as the source or listeners move.. (Generally long or important sounds like grav-gen)
 	var/use_sound_tokens = FALSE
 	///The sound token instance for this looping sound.
 	var/datum/sound_token/sound_token_instance

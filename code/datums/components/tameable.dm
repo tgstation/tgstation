@@ -4,7 +4,7 @@
 	var/unique
 	///Starting success chance for taming.
 	var/tame_chance
-	///Added success chance after every failed tame attempt.
+	/// Added success chance after every failed tame try
 	var/bonus_tame_chance
 	///Current chance to tame on interaction
 	var/current_tame_chance

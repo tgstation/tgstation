@@ -1,4 +1,4 @@
-/// Whether the station has been nuked itself. TRUE only if the station was actually hit by the nuke, otherwise FALSE
+/// Whether the station has been nuked itself.. TRUE only if the station was actually hit by the nuke, otherwise FALSE
 GLOBAL_VAR_INIT(station_was_nuked, FALSE)
 /// The source of the last nuke that went off
 GLOBAL_VAR(station_nuke_source)
@@ -31,7 +31,7 @@ GLOBAL_VAR(station_nuke_source)
 	var/exploded = FALSE
 	/// world time tracker for when we're going to explode
 	var/detonation_timer = null
-	/// The code we need to detonate this nuke. Starts as "admin", purposefully un-enterable
+	/// The code we need to detonate this nuke.. Starts as "admin", purposefully un-enterable
 	var/r_code = NUKE_CODE_UNSET
 	/// If TRUE, the correct code has been entered and we can start the nuke
 	var/yes_code = FALSE
@@ -492,7 +492,7 @@ GLOBAL_VAR(station_nuke_source)
 			else
 				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
 
-/// Anchors the nuke, duh. Can only be done if the disk is inside.
+/// Anchors the nuke, duh.. Can only be done if the disk is inside.
 /obj/machinery/nuclearbomb/proc/set_anchor(mob/anchorer)
 	if(isinspace() && !anchored)
 		if(anchorer)
@@ -591,7 +591,7 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/zap_act(power, zap_flags)
 	. = ..()
 	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
-		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
+		qdel(src)// like the singulo, tesla deletes it.. stops it from exploding over and over
 
 #define NUKE_RADIUS 127
 
@@ -653,7 +653,7 @@ GLOBAL_VAR(station_nuke_source)
 	else if(bomb_location.onSyndieBase())
 		detonation_status = DETONATION_HIT_SYNDIE_BASE
 
-	// The nuke was somewhere wacky - deep space, mining z, centcom? Whatever
+	// The nuke was somewhere wacky - deep space, mining z, centcom?. Whatever
 	else
 		detonation_status = DETONATION_MISSED_STATION
 

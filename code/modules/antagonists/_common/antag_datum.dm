@@ -4,7 +4,7 @@
 GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist
-	///Public name for this antagonist. Appears for player prompts and round-end reports.
+	/// Public name for this antagonist.. Appears for player prompts and round-end reports.
 	var/name = "\improper Antagonist"
 	///Section of roundend report, datums with same category will be displayed together, also default header for the section
 	var/roundend_category = "other antagonists"
@@ -14,21 +14,21 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/datum/mind/owner
 	///Silent will prevent the gain/lose texts to show
 	var/silent = FALSE
-	/// What flag is checked for jobbans and polling? Optional, if unset, will use pref_flag
+	/// What flag is checked for jobbans and polling?. Optional, if unset, will use pref_flag
 	var/jobban_flag
-	/// What flag to check for prefs? Required for antags with preferences associated
+	/// What flag to check for prefs?. Needed for antags with preferences associated
 	var/pref_flag
 	///Should replace jobbanned player with ghosts if granted.
 	var/replace_banned = TRUE
 	///List of the objective datums that this role currently has, completing all objectives at round-end will cause this antagonist to greentext.
 	var/list/objectives = list()
-	///String dialogue that is added to the player's in-round notes and memories regarding specifics of that antagonist, eg. the nuke code for nuke ops, or your unlock code for traitors.
+	/// String dialogue that is added to the player's in-round notes. Memories about specifics of that antagonist, f. Example the nuke code f. Nuke ops. Your unlock code f. Traitors.
 	var/antag_memory = ""
 	///typepath of moodlet that the mob will gain when granted this antagonist type.
 	var/antag_moodlet
 	///If these antags are alone when a shuttle elimination happens.
 	var/can_elimination_hijack = ELIMINATION_NEUTRAL
-	///If above 0, this is the multiplier for the speed at which we hijack the shuttle. Do not directly read, use hijack_speed().
+	/// If above 0, this is the multiplier for the speed at which we hijack the shuttle.. Do not directly read, use hijack_speed().
 	var/hijack_speed = 0
 	///The antag hud's icon file
 	var/hud_icon = 'icons/mob/huds/antag_hud.dmi'
@@ -37,13 +37,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 	/// The battlecry this antagonist shouts when suiciding with C4/X4.
 	var/suicide_cry = ""
 	//Antag panel properties
-	///This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
+	/// This will hide adding this antag type in antag panel, use only f. Internal subtypes that shouldn't be added directly. Still show if possessed by mind
 	var/show_in_antagpanel = TRUE
-	///Antagpanel will display these together, REQUIRED
+	/// Antagpanel will display these together, Needed
 	var/antagpanel_category = "Uncategorized"
 	///Will append antagonist name in admin listings - use for categories that share more than one antag type
 	var/show_name_in_check_antagonists = FALSE
-	/// Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
+	/// Should this antagonist be shown as antag to ghosts?. Shouldn't be used for stealthy antagonists like traitors
 	var/show_to_ghosts = FALSE
 	/// The typepath for the outfit to show in the preview for the preferences menu.
 	var/preview_outfit
@@ -57,7 +57,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/hardcore_random_bonus = FALSE
 	/// A path to the audio stinger that plays upon gaining this datum.
 	var/stinger_sound
-	/// Multiplicative modifier to the mind's desensitized level when this antagonist is applied. Minimum is 0.1.
+	/// Multiplicative modifier to the mind's desensitized level when this antagonist is applied.. Minimum is 0.1.
 	var/desensitized_modifier = 1.0
 
 	//ANTAG UI
@@ -222,7 +222,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	SIGNAL_HANDLER
 	return
 
-/// Handles adding and removing the clumsy mutation from clown antags. Gets called in apply/remove_innate_effects
+/// Handles adding and removing the clumsy mutation from clown antags.. Gets called in apply/remove_innate_effects
 /datum/antagonist/proc/handle_clown_mutation(mob/living/mob_override, message, removing = TRUE)
 	if(!ishuman(mob_override) || !is_clown_job(owner.assigned_role))
 		return

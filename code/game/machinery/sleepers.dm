@@ -15,7 +15,7 @@
 
 	///How much chems is allowed to be in a patient at once, before we force them to wait for the reagent to process.
 	var/efficiency = 1
-	///The minimum damage required to use any chem other than Epinephrine.
+	/// The minimum damage needed to use any chem other than Epinephrine.
 	var/min_health = -25
 	///Whether the machine can be operated by the person inside of it.
 	var/controls_inside = FALSE
@@ -26,7 +26,7 @@
 
 	///List of currently available chems.
 	var/list/available_chems = list()
-	///Used when emagged to scramble which chem is used, eg: mutadone -> morphine
+	/// Used when emagged to scramble which chem is used, for example mutadone -> morphine
 	var/list/chem_buttons
 	///All chems this sleeper will get, depending on the parts inside.
 	var/list/possible_chems = list(
@@ -316,7 +316,7 @@
 	deconstructable = TRUE
 	enter_message = span_boldnotice("You're surrounded by some funky music inside the chamber. You zone out as you feel waves of krunk vibe within you.")
 
-	//Exclusively uses non-lethal, "fun" chems. At an obvious downside.
+	// Exclusively uses non-lethal, "fun" chems.. At an obvious downside.
 	possible_chems = list(
 		list(
 			/datum/reagent/consumable/ethanol/beer,
@@ -346,7 +346,7 @@
 /obj/machinery/sleeper/party/inject_chem(chem, mob/user)
 	if(obj_flags & EMAGGED)
 		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, 4)
-	else if (prob(20)) //You're injecting chemicals into yourself from a recalled, decrepit medical machine. What did you expect?
+	else if (prob(20)) // You're injecting chemicals into yourself from a recalled, decrepit medical machine.. What did you expect?
 		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, rand(1,3))
 	if(chem in spray_chems)
 		var/datum/reagents/holder = new()

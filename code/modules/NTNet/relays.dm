@@ -1,18 +1,18 @@
 ///Checks whether NTNet is available by ensuring at least one relay exists and is operational.
 /proc/find_functional_ntnet_relay()
-	// Check all relays. If we have at least one working relay, ntos is up.
+	// Check all relays.. If we have at least one working relay, ntos is up.
 	for(var/obj/machinery/ntnet_relay/relays as anything in SSmachines.get_machines_by_type(/obj/machinery/ntnet_relay))
 		if(!relays.is_operational)
 			continue
 		return TRUE
 	return FALSE
 
-// Relays don't handle any actual communication. Global NTNet datum does that, relays only tell the datum if it should or shouldn't work.
+// Relays don't handle any actual communication.. Global NTNet datum does that, relays only tell the datum if it should or shouldn't work.
 /obj/machinery/ntnet_relay
 	name = "NTNet Quantum Relay"
 	desc = "A very complex router and transmitter capable of connecting electronic devices together. Looks fragile."
 	use_power = ACTIVE_POWER_USE
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 10 //10kW, apropriate for machine that keeps massive cross-Zlevel wireless network operational. Used to be 20 but that actually drained the smes one round
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 10 // 10kW, apropriate for machine that keeps massive cross-Zlevel wireless network operational.. Used to be 20 but that actually drained the smes one round
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "bus"
 	density = TRUE
@@ -28,7 +28,7 @@
 
 	// Denial of Service attack variables
 	var/dos_overload = 0 // Amount of DoS "packets" in this relay's buffer
-	var/dos_capacity = 500 // Amount of DoS "packets" in buffer required to crash the relay
+	var/dos_capacity = 500 // Amount of DoS "packets" in buffer needed to crash the relay
 	var/dos_dissipate = 0.5 // Amount of DoS "packets" dissipated over time.
 
 /obj/machinery/ntnet_relay/Initialize(mapload)

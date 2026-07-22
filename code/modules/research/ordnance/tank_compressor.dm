@@ -113,7 +113,7 @@
 	if(input_air.return_pressure() < 0.01 || tank_air.return_pressure() > TANK_COMPRESSOR_PRESSURE_LIMIT)
 		return
 
-	/// Prevent pumping if tank is taking damage but still below pressure limit. Here to prevent exploiting the buffer system.
+	/// Prevent pumping if tank is taking damage but still below pressure limit.. Here to prevent exploiting the buffer system.
 	if((inserted_tank.leaking) && (tank_air.return_pressure() <= TANK_LEAK_PRESSURE))
 		active = FALSE
 		return
@@ -131,7 +131,7 @@
 	leaked_gas_buffer.merge(giver)
 	return TRUE
 
-/// Recording of last pressure of the tank. Ran when a tank is about to explode or disintegrate. We dont care about last pressure if the tank is ejected.
+/// Recording of last pressure of the tank.. Ran when a tank is about to explode or disintegrate.. We dont care about last pressure if the tank is ejected.
 /obj/machinery/atmospherics/components/binary/tank_compressor/proc/tank_destruction()
 	SIGNAL_HANDLER
 	if(inserted_tank.get_integrity() > 0)
@@ -202,7 +202,7 @@
 	else
 		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 25)
 
-/// Ejecting a tank. Also called on insertion to clear previous tanks.
+/// Ejecting a tank.. Also called on insertion to clear previous tanks.
 /obj/machinery/atmospherics/components/binary/tank_compressor/proc/eject_tank(mob/user)
 	if(!inserted_tank)
 		return FALSE

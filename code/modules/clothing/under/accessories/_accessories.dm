@@ -19,7 +19,7 @@
 	slot_flags = NONE
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NOBLUDGEON
-	/// Whether the icon_state is also the worn_icon_state. If false, don't forget to set worn_icon_state.
+	/// Whether the icon_state is also the worn_icon_state.. If false, don't forget to set worn_icon_state.
 	var/icon_state_is_worn = TRUE
 	/// Whether or not the accessory displays through suits and the like.
 	var/above_suit = TRUE
@@ -97,7 +97,7 @@
 
 	return TRUE
 
-/// Called after try_attach returns TRUE and thus the accessory can be finally be moved into its target
+/// Called after try_attach returns TRUE and so the accessory can be finally be moved into its target
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/attached_to)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -175,7 +175,7 @@
 
 /// Called when the uniform this accessory is pinned to is equipped in a valid slot
 /obj/item/clothing/accessory/proc/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
-	equipped(user, user.get_slot_by_item(clothes)) // so we get any actions, item_flags get set, etc
+	equipped(user, user.get_slot_by_item(clothes)) // so we get any actions, item_flags get set, and so on
 	for(var/trait in clothing_traits) // Accessory don't have slot flags by def, but they still apply clothing traits when the suit is equipped in the right slot.
 		ADD_CLOTHING_TRAIT(user, trait)
 

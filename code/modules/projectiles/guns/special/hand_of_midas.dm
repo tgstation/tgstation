@@ -74,7 +74,7 @@
 	qdel(gold_beam)
 	return ITEM_INTERACT_SUCCESS
 
-// If we botch a shot, we have to start over again by inserting gold coins into the gun. Can only be done if it has no charges or gold.
+// If we botch a shot, we have to start over again by inserting gold coins into the gun.. Can only be done if it has no charges or gold.
 /obj/item/gun/magic/midas_hand/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/coin/gold))
 		return NONE
@@ -97,7 +97,7 @@
 /obj/item/gun/magic/midas_hand/proc/gold_time_convert()
 	return min(30 SECONDS, round(gold_timer, 0.2)) / 10
 
-/// Checks our range to the person we're sucking gold out of. Double the initial range, so you need to get in close to start.
+/// Checks our range to the person we're sucking gold out of.. Double the initial range, so you need to get in close to start.
 /obj/item/gun/magic/midas_hand/proc/check_gold_range(mob/living/user, mob/living/victim)
 	return IN_GIVEN_RANGE(user, victim, gold_suck_range*2)
 

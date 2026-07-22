@@ -25,7 +25,7 @@
 	if(B && B.loc == loc)
 		qdel(src)
 
-///Checks if we are allowed to be in `here_turf`, and returns that result. Subtypes should override this when necessary.
+/// Checks if we are allowed to be in `here_turf`, and returns that result.. Subtypes should override this when necessary.
 /obj/effect/decal/proc/NeverShouldHaveComeHere(turf/here_turf)
 	return isclosedturf(here_turf) || (isgroundlessturf(here_turf) && !GET_TURF_BELOW(here_turf))
 
@@ -55,7 +55,7 @@
 	anchored = TRUE
 	/// Does this decal change colors on holidays
 	var/use_holiday_colors = FALSE
-	/// The pattern used when recoloring the decal. If null, it'll use the def of the station or holiday.
+	/// The pattern used when recoloring the decal.. If null, it'll use the def of the station or holiday.
 	var/pattern
 
 // This is with the intent of optimizing mapload
@@ -91,7 +91,7 @@
 		T.RemoveElement(/datum/element/decal, icon, icon_state, dir, null, layer, alpha, color, null, FALSE, null)
 #endif
 	// Intentionally used over moveToNullspace(), which calls doMove(), which fires
-	// off an enormous amount of procs, signals, etc, that this temporary effect object
+	// off an enormous amount of procs, signals, and so on that this temporary effect object
 	// never needs or affects.
 	loc = null
 	return QDEL_HINT_QUEUE

@@ -66,6 +66,6 @@
 
 	carried.set_resting(TRUE, instant = TRUE)
 
-	// Try a fireman carry. It should fail, we have no open hands
+	// Try a fireman carry.. It should fail, we have no open hands
 	incredible_hulk.buckle_mob(carried, force = TRUE, check_loc = TRUE, buckle_mob_flags = CARRIER_NEEDS_ARM)
 	TEST_ASSERT(!length(incredible_hulk.buckled_mobs), "Someone with mutant hands was able to fireman carry, despite having no hands to do so.")

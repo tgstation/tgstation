@@ -375,13 +375,13 @@
 	. = ..()
 	update_window()
 
-///Updates the overlays of this canister based on its air contents
+/// Updates the overlays of this canister good on its air contents
 /obj/machinery/portable_atmospherics/canister/proc/update_window()
 	if(!air_contents)
 		return
 
 	var/static/alpha_filter
-	if(!alpha_filter) // Gotta do this separate since the icon may not be correct at world init
+	if(!alpha_filter) // Got to do this separate since the icon may not be correct at world init
 		alpha_filter = filter(type="alpha", icon = icon('icons/obj/pipes_n_cables/canisters.dmi', "window-base"))
 
 	cut_overlay(window)
@@ -524,7 +524,7 @@
 		investigate_log("shielding turned off due to power loss")
 		update_appearance()
 
-///return the icon_state component for the canister's indicator light based on its current pressure reading
+/// return the icon_state component for the canister's indicator light good on its current pressure reading
 /obj/machinery/portable_atmospherics/canister/proc/get_pressure_state()
 	var/air_pressure = air_contents.return_pressure()
 	switch(air_pressure)
@@ -553,7 +553,7 @@
 			if(!holding)
 				air_update_turf(FALSE, FALSE)
 
-	// A bit different than other atmos devices. Wont stop if currently taking damage.
+	// A bit different than other atmos devices.. Wont stop if currently taking damage.
 	if(take_atmos_damage())
 		update_appearance()
 		excited = TRUE

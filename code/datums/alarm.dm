@@ -29,14 +29,14 @@
 /datum/alarm_handler/Destroy()
 	for(var/alarm_type, sent_alarm in sent_alarms)
 		for(var/area/area_to_clear as anything in sent_alarm)
-			//Yeet all connected alarms
+			// Throw all connected alarms
 			clear_alarm_from_area(alarm_type, area_to_clear)
 	source_atom = null
 	return ..()
 
 ///Sends an alarm to any interested things, does some checks to prevent unneeded work
 ///Important to note is that source_atom is not held as a ref, we're used as a proxy to prevent hard deletes
-///optional_camera should only be used when you have one camera you want to pass along to alarm listeners, most of the time you should have no use for it
+/// optional_camera should only be used when you have one camera you want to pass along to alarm listeners, most of the time you should have no use f. It
 /datum/alarm_handler/proc/send_alarm(alarm_type, atom/use_as_source_atom, optional_camera)
 	if(!use_as_source_atom)
 		use_as_source_atom = source_atom
@@ -98,7 +98,7 @@
 /datum/alarm_listener
 	///List of valid source z levels, ignored if null
 	var/list/allowed_z_levels
-	///List of allowed areas. if this is null it's ignored
+	/// List of allowed areas.. if this is null it's ignored
 	var/list/allowed_areas
 
 	///List of alarm type -> list of area name -> list(area, ref to area's cameras, list(sources))
@@ -106,7 +106,7 @@
 	///Should we allow alarm changes to go through or not
 	var/accepting_alarm_changes = TRUE
 
-///Accepts a list of alarm types to pay attention to, a list of valid z levels, and a list of valid areas. areas and zlevels are ignored if null
+/// Accepts a list of alarm types to pay attention to, a list of valid z levels, and a list of valid areas.. areas and zlevels are ignored if null
 /datum/alarm_listener/New(alarms_to_listen_for, allowed_z_levels, allowed_areas)
 	src.allowed_z_levels = allowed_z_levels
 	src.allowed_areas = allowed_areas
@@ -148,7 +148,7 @@
 		cameras = list(optional_camera) // This will cause harddels, so we need to clear manually
 		RegisterSignal(optional_camera, COMSIG_QDELETING, PROC_REF(clear_camera_ref), override = TRUE) //It's just fine to override, cause we clear all refs in the proc
 
-	//This does mean that only the first alarm of that camera type in the area will send a ping, but jesus what else can ya do
+	// This does mean that only the first alarm of that camera type in the area will send a ping. Jesus what else can ya do
 	alarms_of_our_type[source_area.name] = list(source_area, cameras, list(handler))
 	SEND_SIGNAL(src, COMSIG_ALARM_LISTENER_TRIGGERED, alarm_type, source_area)
 

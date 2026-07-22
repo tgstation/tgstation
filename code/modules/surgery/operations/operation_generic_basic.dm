@@ -34,7 +34,7 @@
 	return !patient.has_limbs // Only for limbless mobs
 
 /datum/surgery_operation/basic/incise_skin/tool_check(obj/item/tool)
-	// Require edged sharpness OR a tool behavior match
+	// Need edged sharpness OR a tool behavior match
 	if((tool.get_sharpness() & SHARP_EDGED) || implements[tool.tool_behaviour])
 		return TRUE
 	// these are here by popular demand, even though they don't fit the above criteria
@@ -97,7 +97,7 @@
 	return !patient.has_limbs // Only for limbless mobs
 
 /datum/surgery_operation/basic/saw_bone/tool_check(obj/item/tool)
-	// Require edged sharpness and sufficient force OR a tool behavior match
+	// Need edged sharpness and enough force OR a tool behavior match
 	return (((tool.get_sharpness() & SHARP_EDGED) && tool.force >= 10) || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/basic/saw_bone/on_preop(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)

@@ -162,9 +162,9 @@
 	integer = FALSE
 	min_val = 30
 
-/datum/config_entry/flag/arrivals_shuttle_require_undocked //Require the arrivals shuttle to be undocked before latejoiners can join
+/datum/config_entry/flag/arrivals_shuttle_require_undocked // Need the arrivals shuttle to be undocked before latejoiners can join
 
-/datum/config_entry/flag/arrivals_shuttle_require_safe_latejoin //Require the arrivals shuttle to be operational in order for latejoiners to join
+/datum/config_entry/flag/arrivals_shuttle_require_safe_latejoin // Need the arrivals shuttle to be operational in order for latejoiners to join
 
 /datum/config_entry/string/alert_green
 	default = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -277,7 +277,7 @@
 
 /datum/config_entry/flag/roundstart_away //Will random away mission be loaded.
 
-/datum/config_entry/number/gateway_delay //How long the gateway takes before it activates. Default is half an hour. Only matters if roundstart_away is enabled.
+/datum/config_entry/number/gateway_delay // How long the gateway takes before it activates.. Default is half an hour.. Only matters if roundstart_away is enabled.
 	default = 30 MINUTES
 	integer = FALSE
 	min_val = 0
@@ -494,7 +494,7 @@
 	if(.)
 		SSquirks.max_positive_quirks = config_entry_value
 
-/// Freebie quirk points. Can't go negative because we have no way of enforcing a person has a quirk before they join.
+/// Freebie quirk points.. Can't go negative because we have no way of enforcing a person has a quirk before they join.
 /datum/config_entry/number/default_quirk_points
 	default = 2
 	min_val = 0

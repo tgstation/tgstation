@@ -1,4 +1,4 @@
-//Note for this file: All the raw pastries should not have microwave results, use baking instead. All cooked products can use baking, but should also support a microwave.
+// Note for this file: All the raw pastries should not have microwave results, use baking instead.. All cooked products can use baking, but should also support a microwave.
 
 /obj/item/food/dough
 	name = "dough"

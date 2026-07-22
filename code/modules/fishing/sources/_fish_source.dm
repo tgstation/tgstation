@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/list/currently_on_regen
 	/// Text shown as baloon alert when you roll a dud in the table
 	var/duds = list("it was nothing", "the hook is empty")
-	/// Baseline difficulty for fishing in this spot. THIS IS ADDED TO THE DEFAULT DIFFICULTY OF THE MINIGAME (15)
+	/// Baseline difficulty for fishing in this spot.. THIS IS ADDED TO THE DEFAULT DIFFICULTY OF THE MINIGAME (15)
 	var/fishing_difficulty = FISHING_DEFAULT_DIFFICULTY
 	/// How the spot type is described in fish catalog section about fish sources, will be skipped if null
 	var/catalog_description
@@ -151,7 +151,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 ///Called whenever a fishing spot with this fish source attached is deleted
 /datum/fish_source/proc/on_fishing_spot_del(datum/component/fishing_spot/spot)
 
-/// Can we fish in this spot at all. Returns DENIAL_REASON or null if we're good to go
+/// Can we fish in this spot at all.. Returns DENIAL_REASON or null if we're good to go
 /datum/fish_source/proc/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	return rod.reason_we_cant_fish(src)
 
@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		return
 	if(isitem(reward)) //Try to put it in hand
 		INVOKE_ASYNC(fisherman, TYPE_PROC_REF(/mob, put_in_hands), reward)
-	else if(istype(reward, /obj/effect/spawner)) // Do not attempt to forceMove() a spawner. It will break things, and the spawned item should already be at the mob's turf by now.
+	else if(istype(reward, /obj/effect/spawner)) // Do not try to forceMove() a spawner.. It will break things, and the spawned item should already be at the mob's turf by now.
 		fisherman.balloon_alert(fisherman, "caught something!")
 		return
 	fisherman.balloon_alert(fisherman, "caught [reward]!")
@@ -340,7 +340,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/regen_time = fish_count_regen[reward_path]
 	addtimer(CALLBACK(src, PROC_REF(regen_count), reward_path), regen_time)
 
-/// Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.
+/// Spawns a reward from a atom path right where the fisherman is.. Part of the dispense_reward() logic.
 /datum/fish_source/proc/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot)
 	if(reward_path == FISHING_DUD)
 		return
@@ -362,7 +362,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 /// Returns the fish table, with with the unavailable items from fish_counts removed.
 /datum/fish_source/proc/get_fish_table(atom/location, from_explosion = FALSE)
 	var/list/table = fish_table.Copy()
-	//message bottles cannot spawn from explosions. They're meant to be one-time messages (rarely) and photos from past rounds
+	// message bottles cannot spawn from explosions.. They're meant to be one-time messages (rarely) and photos from past rounds
 	//and it would suck if the pool of bottle messages were constantly being emptied by explosive fishing.
 	if(from_explosion)
 		table -= /obj/effect/spawner/message_in_a_bottle
@@ -393,7 +393,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		final_table -= FISHING_DUD
 
 	if(!fisherman.client)
-		final_table -= /obj/effect/spawner/message_in_a_bottle // avoids npc's to get messages in a bottle. Fish for them!
+		final_table -= /obj/effect/spawner/message_in_a_bottle // avoids npc's to get messages in a bottle.. Fish for them!
 
 	for(var/result in final_table)
 		final_table[result] *= rod.hook.get_hook_bonus_multiplicative(result)
@@ -529,7 +529,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		info = span_tooltip("In bold are fish you're more likely to catch with the current setup. The opposite is true for the smaller font", info)
 	examine_text += span_info("[info]: [english_list(known_fishes)].")
 
-///How much the explosive_fishing_score impacts explosive fishing. The higher the value, the stronger the malus for repeated calls
+/// How much the explosive_fishing_score impacts explosive fishing.. The higher the value, the stronger the malus for repeated calls
 #define EXPLOSIVE_FISHING_MALUS_EXPONENT 0.55
 ///How much the explosive_fishing_score is reduced each second.
 #define EXPLOSIVE_FISHING_RECOVERY_RATE 0.18

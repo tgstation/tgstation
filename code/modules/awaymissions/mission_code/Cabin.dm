@@ -129,7 +129,7 @@
 	if(!IS_WIZARD(user))
 		..()
 
-/*Cabin's forest. Removed in the new cabin map since it was buggy and I prefer manual placement.*/
+/* Cabin's forest.. Removed in the new cabin map since it was buggy and I prefer manual placement. */
 /datum/map_generator/snowy
 	modules = list(/datum/map_generator_module/bottomlayer/snow, \
 	/datum/map_generator_module/snow/pine_trees, \

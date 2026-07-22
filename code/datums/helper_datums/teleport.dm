@@ -153,7 +153,7 @@
 		var/y = rand(1, world.maxy)
 		var/z = pick(zlevels)
 		var/random_location = locate(x,y,z)
-		var/keep_trying_no_teleport = (cycle < 300) //if the area is mostly NOTELEPORT (centcom) we gotta give up on this fantasy at some point.
+		var/keep_trying_no_teleport = (cycle < 300) // if the area is mostly NOTELEPORT (centcom) we got to give up on this fantasy at some point.
 		if(is_safe_turf(random_location, extended_safety_checks, dense_atoms, keep_trying_no_teleport))
 			return random_location
 
@@ -204,7 +204,7 @@
 
 	if(extended_safety_checks)
 		if(islava(floor_turf)) //chasms aren't /floor, and so are pre-filtered
-			var/turf/open/lava/lava_turf = floor_turf // Cyberboss: okay, this makes no sense and I don't understand the above comment, but I'm too lazy to check history to see what it's supposed to do right now
+			var/turf/open/lava/lava_turf = floor_turf // Cyberboss: okay, this makes no sense. I don't underst. The above comment. I'm too lazy to check history to see what it's supposed to do right now
 			if(!lava_turf.is_safe())
 				return
 
@@ -218,10 +218,10 @@
 		if(density_found)
 			return
 
-	// DING! You have passed the gauntlet, and are "probably" safe.
+	// DING!. You have passed the gauntlet, and are "probably" safe.
 	return TRUE
 
-///Check for turfs within range of the center turf and perform simple checks to see which is a valid teleportation target. If so, add it to a list to pick the final destination from at the end.
+/// Check for turfs within range of the center turf and perform simple checks to see which is a valid teleportation target.. If so, add it to a list to pick the final destination from at the end.
 /proc/get_valid_teleport_turf(turf/origin, turf/center, range = 0, skip_restrictions = FALSE)
 	var/list/turfs = list()
 	var/area/origin_area = origin.loc
@@ -245,7 +245,7 @@
 		return pick(turfs)
 	return null
 
-/// Validates that the teleport being attempted is valid or not
+/// Validates that the teleport being tried is valid or not
 /proc/check_teleport_valid(atom/teleported_atom, atom/destination, channel, atom/original_destination = null)
 	SHOULD_BE_PURE(TRUE)
 

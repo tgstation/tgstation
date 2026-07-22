@@ -42,7 +42,7 @@
 	if(!.)
 		return
 
-	//Transfer from core or card to mech. Proc is called by mech.
+	// Transfer from core or card to mech.. Proc mech calls.
 	switch(interaction)
 		if(AI_TRANS_TO_CARD) //Upload AI from mech to AI card.
 			if(!(mecha_flags & PANEL_OPEN)) //Mech must be in maint mode to allow carding.
@@ -83,7 +83,7 @@
 				to_chat(AI, span_warning("Occupants detected! Forced ejection initiated!"))
 				to_chat(occupants, span_danger("You have been forcibly ejected!"))
 				for(var/ejectee in occupants)
-					mob_exit(ejectee, silent = TRUE, randomstep = TRUE, forced = TRUE) //IT IS MINE, NOW. SUCK IT, RD!
+					mob_exit(ejectee, silent = TRUE, randomstep = TRUE, forced = TRUE) // IT IS MINE, NOW.. SUCK IT, RD!
 
 		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to a mech.
 			AI = card.AI
@@ -107,7 +107,7 @@
 			card.AI = null
 	ai_enter_mech(AI)
 
-///Hack and From Card interactions share some code, so leave that here for both to use.
+/// Temporary solution and From Card interactions share some code, so leave that here for both to use.
 /obj/vehicle/sealed/mecha/proc/ai_enter_mech(mob/living/silicon/ai/AI)
 	AI.ai_restore_power()
 	mecha_flags |= SILICON_PILOT

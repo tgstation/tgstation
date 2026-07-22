@@ -80,7 +80,7 @@
 		/obj/item/fish/moonfish = 1,
 	))
 
-///Subtype bought from the blackmarket at a gratuitously cheap price. The catch? The fish inside it is dead.
+/// Subtype bought from the blackmarket at a gratuitously cheap price.. The catch?. The fish inside it is dead.
 /obj/item/storage/fish_case/blackmarket
 	name = "ominous fish case"
 	desc = "A resizable case keeping the fish inside in stasis. This one holds a faint cadaverine smell."

@@ -1,4 +1,4 @@
-///The plumbing RCD. All the blueprints are located in _globalvars > lists > construction.dm
+/// The plumbing RCD.. All the blueprints are located in _globalvars > lists > construction.dm
 /obj/item/construction/plumbing
 	name = "Plumbing Constructor"
 	desc = "An expertly modified RCD outfitted to construct plumbing machinery."
@@ -21,13 +21,13 @@
 	var/selected_category
 	///type of the plumbing machine
 	var/obj/machinery/blueprint = null
-	///This list that holds all the plumbing design types the plumberer can construct. Its purpose is to make it easy to make new plumberer subtypes with a different selection of machines.
+	/// This list that holds all the plumbing design types the plumberer can construct.. Its purpose is to make it easy to make new plumberer subtypes with a different selection of machines.
 	var/list/plumbing_design_types = null
 	///Current selected layer
 	var/current_layer = "Default Layer"
 	///Current selected color, for ducts
 	var/current_color = "omni"
-	///maps layer name to layer number value. didnt make this global cause only this class needs it
+	/// maps layer name to layer number value.. didnt make this global cause only this class needs it
 	var/static/list/name_to_number = list(
 		"First Layer" = 1,
 		"Second Layer" = 2,

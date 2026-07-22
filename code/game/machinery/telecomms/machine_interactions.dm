@@ -1,4 +1,4 @@
-// This file is separate from telecommunications.dm to isolate the implementation
+// This file is separate from telecommunications.dm to isolate the code
 // of basic interactions with the machines.
 
 /obj/machinery/telecomms
@@ -149,7 +149,7 @@
 	add_act(action, params)
 	. = TRUE
 
-/// Adds new_connection to src's links list AND vice versa. Also updates `links_by_telecomms_type`.
+/// Adds new_connection to src's links list AND vice versa.. Also updates `links_by_telecomms_type`.
 /obj/machinery/telecomms/proc/add_new_link(obj/machinery/telecomms/new_connection, mob/user)
 	if(!istype(new_connection) || new_connection == src)
 		return FALSE
@@ -167,7 +167,7 @@
 		user.log_message("linked [src] for [new_connection].", LOG_GAME)
 	return TRUE
 
-/// Removes old_connection from src's links list AND vice versa. Also updates `links_by_telecomms_type`.
+/// Removes old_connection from src's links list AND vice versa.. Also updates `links_by_telecomms_type`.
 /obj/machinery/telecomms/proc/remove_link(obj/machinery/telecomms/old_connection, mob/user)
 	if(!istype(old_connection) || old_connection == src)
 		return FALSE

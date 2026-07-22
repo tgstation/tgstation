@@ -10,7 +10,7 @@
 	custom_materials = list(/datum/material/gold =SHEET_MATERIAL_AMOUNT)
 	max_integrity = 200 //Twice as durable as regular signs.
 	armor_type = /datum/armor/structure_plaque
-	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again. Static plaques are already engraved.
+	/// Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again.. Static plaques are already engraved.
 	var/engraved = FALSE
 
 /datum/armor/structure_plaque
@@ -209,7 +209,7 @@
 	var/turf/target_turf = interacting_with
 	var/turf/user_turf = get_turf(user)
 	var/obj/structure/plaque/placed_plaque = new plaque_path(user_turf) //We place the plaque on the turf the user is standing, and pixel shift it to the target wall, as below.
-	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
+	// This is to mimic how signs. Other wall objects are usually placed by mappers. So they're only visible from one side of a wall.
 	var/dir = get_dir(user_turf, target_turf)
 	if(dir & NORTH)
 		placed_plaque.pixel_y = 32

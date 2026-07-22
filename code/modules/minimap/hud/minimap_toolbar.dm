@@ -6,13 +6,13 @@
 	mouse_over_pointer = MOUSE_HAND_POINTER
 	/// The minimap display this button controls.
 	var/atom/movable/screen/minimap_display/display
-	/// Vertical slot index (0 = topmost). Used by reposition_toolbar_buttons to calculate screen_loc.
+	/// Vertical slot index (0 = topmost).. Used by reposition_toolbar_buttons to calculate screen_loc.
 	var/button_slot = 0
-	/// Mouse cursor icon set when this button's tool is active. null = default cursor.
+	/// Mouse cursor icon set when this button's tool is active.. null = default cursor.
 	var/icon/mouse_icon = null
-	/// Draw color this button represents. null = erase mode.
+	/// Draw color this button represents.. null = erase mode.
 	var/draw_color = null
-	/// HUD key for this tool button. Used to track selection state.
+	/// HUD key for this tool button.. Used to track selection state.
 	var/tool_key = null
 	/// Coordinates of the last drag position during drawing.
 	var/last_drag_x
@@ -57,16 +57,16 @@
 	last_drag_x = null
 	last_drag_y = null
 
-/// Called during mouse drag on the map. Override to implement tool behavior.
+/// Called during mouse drag on the map.. Override to add tool behavior.
 /atom/movable/screen/minimap_toolbar_button/proc/on_mouse_drag(x, y)
 	return FALSE
 
-/// Called on mouse up. Override to clean up tool state.
+/// Called on mouse up.. Override to clean up tool state.
 /atom/movable/screen/minimap_toolbar_button/proc/on_mouse_up()
 	last_drag_x = null
 	last_drag_y = null
 
-/// Called on click. Override to implement click behavior like label placement.
+/// Called on click.. Override to add click behavior like label placement.
 /atom/movable/screen/minimap_toolbar_button/proc/on_click(icon_x, icon_y, right_click)
 	return FALSE
 

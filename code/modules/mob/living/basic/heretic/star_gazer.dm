@@ -90,7 +90,7 @@
 	deltimer(begging_timer)
 	return ..()
 
-/// Tries to find a ghost to take control of the mob. If no ghost accepts, ask again in a bit
+/// Tries to find a ghost to take control of the mob.. If no ghost accepts, ask again in a bit
 /mob/living/basic/heretic_summon/star_gazer/proc/beg_for_ghost()
 	if(timeleft(begging_timer) && !client)
 		return

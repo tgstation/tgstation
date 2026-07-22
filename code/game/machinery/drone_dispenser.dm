@@ -43,7 +43,7 @@
 	//The item the dispenser will create
 	var/list/dispense_type = list(/obj/effect/mob_spawn/ghost_role/drone)
 
-	/// The maximum number of "idle" drone shells it will make before ceasing production. Set to 0 for infinite.
+	/// The maximum number of "idle" drone shells it will make before ceasing production.. Set to 0 for infinite.
 	var/maximum_idle = 3
 
 	/// Sound that the drone dispnser plays when it's ready to start making more drones.
@@ -94,7 +94,7 @@
 	name = "syndrone shell dispenser"
 	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with iron and glass. Disgusting."
 	dispense_type = list(/obj/effect/mob_spawn/ghost_role/drone/syndrone)
-	//If we're gonna be a jackass, go the full mile - 10 second recharge timer
+	// If we're going to be a jackass, go the full mile - 10 second recharge timer
 	cooldownTime = 10 SECONDS
 	end_create_message = "dispenses a suspicious drone shell."
 	starting_amount = SHEET_MATERIAL_AMOUNT * 12.5
@@ -135,7 +135,7 @@
 	end_create_message = "dispenses a classic drone shell."
 
 // An example of a custom drone dispenser.
-// This one requires no materials and creates basic hivebots
+// This one needs no materials and creates basic hivebots
 /obj/machinery/drone_dispenser/hivebot
 	name = "hivebot fabricator"
 	desc = "A large, bulky machine that whirs with activity, steam hissing from vents in its sides."
@@ -188,7 +188,7 @@
 		return
 
 	if((glass_cost != 0 || iron_cost != 0) && !materials.has_materials(using_materials))
-		return // We require more minerals
+		return // We need more minerals
 
 	// We are currently in the middle of something
 	if(timer > world.time)

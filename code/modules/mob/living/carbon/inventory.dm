@@ -77,7 +77,7 @@
 		qdel(equipping)
 	return null
 
-//This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
+// This is an UNSAFE proc.. Use mob_can_equip() before calling this one!. Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 /mob/living/carbon/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
 	if(!slot)
 		return
@@ -128,7 +128,7 @@
 		return
 
 	hud_used?.update_locked_slots()
-	if(!(slot & item.slot_flags)) // Things below only update if slotted in (ie: not held)
+	if(!(slot & item.slot_flags)) // Things below only update if slotted in that is not held)
 		return
 	if(item.hair_mask)
 		LAZYADD(hair_masks, item.hair_mask)
@@ -212,7 +212,7 @@
 	if((added_slots|removed_slots) & HIDEEYES)
 		update_eyes()
 	// HIDEJUMPSUIT is for digitigrade legs, HIDEEARS is for lizard frills, HIDEHAIR is for felinid ears and lizard horns, the others should be obvious
-	// future todo; we should collect a list of all bodypart overlays and what conceals/reveals them dynamically, rather than hardcoding this
+	// future to do we should collect a list of all bodypart overlays and what conceals/reveals them dynamically, rather than hardcoding this
 	if((added_slots|removed_slots) & (HIDEJUMPSUIT|HIDEEARS|HIDEHAIR|HIDESNOUT|HIDEMUTWINGS|HIDEANTENNAE))
 		update_body()
 
@@ -283,7 +283,7 @@
 	breathing_loop.stop()
 	return TRUE
 
-/// Close the the currently open external (that's EX-ternal) air tank. Returns TRUE if successful.
+/// Close the the currently open external (that's EX-ternal) air tank.. Returns TRUE if successful.
 /mob/living/carbon/proc/close_externals()
 	return close_internals(TRUE)
 
@@ -326,7 +326,7 @@
 	to_chat(src, span_notice("You close [is_external ? external : internal] valve."))
 	return close_internals(is_external)
 
-/// Prepares emergency disconnect from open air tanks and notifies in chat. Usually called after mob suddenly unequips breathing apparatus.
+/// Prepares emergency disconnect from open air tanks and notifies in chat.. Usually called after mob suddenly unequips breathing apparatus.
 /mob/living/carbon/proc/cutoff_internals()
 	if (!external && !internal)
 		return
@@ -400,13 +400,13 @@
 	// our coverage might look something like GROIN|LEGS, which would convert to list(BODY_ZONE_GROIN, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	// so if we were checking "is BODY_ZONE_CHEST accessible", we would pass - this is correct!
 	//
-	// however, if we convert the location to body zone, we would get CHEST|GROIN
+	// but if we convert the location to body zone, we would get CHEST|GROIN
 	// then we would check (CHEST|GROIN) & (GROIN|LEGS) and return FALSE - which is incorrect, the chest is perfectly accessible!
 	// checking for ((CHEST|GROIN) & (GROIN|LEGS)) == (CHEST|GROIN) would also be incorrect,
 	// as it would imply your chest is accessible from lacking groin coverage
 	return !(location in cover_flags2body_zones(covered_flags))
 
-/// Attempts to equip the given item in a conspicious place.
+/// Tries to equip the given item in a conspicious place.
 /// This is used when, for instance, a character spawning with an item
 /// in their hands would be a dead giveaway that they are an antagonist.
 /// Returns the human readable name of where it placed the item, or null otherwise.

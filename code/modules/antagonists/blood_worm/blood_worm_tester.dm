@@ -69,7 +69,7 @@
 
 	// Handling it as a timer instead of a do_after prevents abusing the do_after to do antag checks.
 	// Otherwise, if the target runs away from the testing do_after, then that means they're likely a host.
-	// So, contrary to intuition, having this on a timer is way better for the blood worms than a do_after.
+	// contrary to intuition, having this on a timer is way better for the blood worms than a do_after.
 	addtimer(CALLBACK(src, PROC_REF(report_results), HAS_TRAIT(target_mob, TRAIT_BLOOD_WORM_HOST)), 3 SECONDS)
 
 	spent = TRUE

@@ -250,7 +250,7 @@
 		and he's likely wearing this hat."
 	icon_state = /obj/item/clothing/head/fedora::icon_state
 
-///Detectives Fedora, but like Inspector Gadget. Not a subtype to not inherit candy corn stuff
+/// Detectives Fedora, but like Inspector Gadget.. Not a subtype to not inherit candy corn stuff
 /obj/item/clothing/head/fedora/inspector_hat
 	name = "inspector's fedora"
 	desc = "There's only one man can try to stop an evil villain."

@@ -22,7 +22,7 @@
 		/obj/item/pillow/random,
 	)
 
-	///essentially our "sleep bank". sleeping charges it up and its drained while awake
+	/// essentially our "sleep bank".. sleeping charges it up and its drained while awake
 	var/five_more_minutes = 0
 	///the overlay we put over the eyes
 	var/datum/bodypart_overlay/simple/bags/bodypart_overlay

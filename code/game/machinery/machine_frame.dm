@@ -4,9 +4,9 @@
 	board_type = /obj/item/circuitboard/machine
 	/// List of all compnents inside the frame contributing to its construction
 	var/list/components
-	/// List of all components required to construct the frame
+	/// List of all components needed to construct the frame
 	var/list/req_components
-	/// User-friendly list of names of required components
+	/// User-friendly list of names of needed components
 	var/list/req_component_names
 
 /obj/structure/frame/machine/Initialize(mapload)
@@ -155,14 +155,14 @@
 	update_appearance(UPDATE_ICON_STATE)
 
 	//add circuit board as the first component to the list of components
-	//required for part_replacer to locate it while exchanging parts
+	// needed for part_replacer to locate it while exchanging parts
 	//so it does not early return in /obj/machinery/proc/exchange_parts
 	components = list(circuit)
 	req_components = added.req_components.Copy()
 	if(!req_components)
 		return
 
-	//creates a list of names from all the required parts
+	// creates a list of names from all the needed parts
 	req_component_names = list()
 	for(var/component_path in req_components)
 		if(!ispath(component_path))
@@ -339,7 +339,7 @@
 			stack_trace("Bad stock part in req_components: [stock_part_base]")
 			continue
 
-		//if we require an bluespace crystall and we have an full sheet of them we can allow that
+		// if we need an bluespace crystall and we have an full sheet of them we can allow that
 		if(ispath(stock_part_path, /obj/item/stack/ore/bluespace_crystal) && istype(tool, /obj/item/stack/sheet/bluespace_crystal))
 			pass() //allow it
 		else if(!istype(tool, stock_part_path))
@@ -372,7 +372,7 @@
 			// We regenerate the stock parts on deconstruct.
 			// This technically means we lose unique qualities of the stock part, but
 			// it's worth it for how dramatically this simplifies the code.
-			// The only place I can see it affecting anything is like...RPG qualities. :P
+			// The only place I can see it affecting anything is like...RPG qualities.. :P
 			qdel(tool)
 		else if(user.transferItemToLoc(tool, src))
 			components += tool

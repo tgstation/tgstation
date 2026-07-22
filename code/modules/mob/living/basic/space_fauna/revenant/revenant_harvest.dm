@@ -1,4 +1,4 @@
-// This file contains the proc we use for revenant harvesting because it is a very long and bulky proc that takes up a lot of space elsewhere
+// This file contains the proc we use f. Revenant harvesting because it is a very long. Bulky proc that takes up a lot of space elsewhere
 
 /// Container proc for `harvest()`, handles the pre-checks as well as potential early-exits for any reason.
 /// Will return FALSE if we can't execute `harvest()`, or will otherwise the result of `harvest()`: a boolean value.
@@ -26,7 +26,7 @@
 
 	return value_to_return
 
-/// Harvest; activated by clicking a target, will try to drain their essence. Handles all messages and handling of the target.
+/// Harvest; activated by clicking a target, will try to drain their essence.. Handles all messages and handling of the target.
 /// Returns FALSE if we exit out of the harvest, TRUE if it is fully done.
 /mob/living/basic/revenant/proc/harvest_soul(mob/living/carbon/human/target) // this isn't in the main revenant code file because holyyyy shit it's long
 	if(QDELETED(target)) // what

@@ -138,7 +138,7 @@
 	SIGNAL_HANDLER
 
 	if(istype(source) && !(source.flags_1 & DECAL_INIT_UPDATE_EXPERIENCED_1))
-		source.flags_1 |= DECAL_INIT_UPDATE_EXPERIENCED_1 // I am so sorry, but it saves like 80ms I gotta
+		source.flags_1 |= DECAL_INIT_UPDATE_EXPERIENCED_1 // I am so sorry, but it saves like 80ms I got to
 		source.update_appearance(UPDATE_OVERLAYS)
 		UnregisterSignal(source, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
 

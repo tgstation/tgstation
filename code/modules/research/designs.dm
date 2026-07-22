@@ -17,35 +17,35 @@ other types of metals and chemistry for reagents).
 - Add the AUTOLATHE tag to
 */
 
-//DESIGNS ARE GLOBAL. DO NOT CREATE OR DESTROY THEM AT RUNTIME OUTSIDE OF INIT, JUST REFERENCE THEM TO WHATEVER YOU'RE DOING! //why are you yelling?
-//DO NOT REFERENCE OUTSIDE OF SSRESEARCH. USE THE PROCS IN SSRESEARCH TO OBTAIN A REFERENCE.
+// DESIGNS ARE GLOBAL.. DO NOT CREATE OR DESTROY THEM AT RUNTIME OUTSIDE OF INIT, JUST REFERENCE THEM TO WHATEVER YOU'RE DOING!. //why are you yelling?
+// DO NOT REFERENCE OUTSIDE OF SSRESEARCH.. USE THE PROCS IN SSRESEARCH TO Get A REFERENCE.
 
 /datum/design //Datum for object designs, used in construction
 	/// Name of the created object
 	var/name = "Name"
 	/// Description of the created object
 	var/desc = null
-	/// The ID of the design. Used for quick reference. Alphanumeric, lower-case, no symbols
+	/// The ID of the design.. Used for quick reference.. Alphanumeric, lower-case, no symbols
 	var/id = DESIGN_ID_IGNORE
-	/// Bitflags indicating what machines this design is compatable with. ([IMPRINTER]|[AWAY_IMPRINTER]|[PROTOLATHE]|[AWAY_LATHE]|[AUTOLATHE]|[MECHFAB]|[BIOGENERATOR]|[LIMBGROWER]|[SMELTER])
+	/// Bitflags indicating what machines this design is compatable with.. ([IMPRINTER]|[AWAY_IMPRINTER]|[PROTOLATHE]|[AWAY_LATHE]|[AUTOLATHE]|[MECHFAB]|[BIOGENERATOR]|[LIMBGROWER]|[SMELTER])
 	var/build_type = null
-	/// List of materials required to create one unit of the product. Format is (typepath or requirements datum) -> amount
+	/// List of materials needed to create one unit of the product.. Format is (typepath or needs datum) -> amount
 	var/list/materials = list()
-	/// The amount of time required to create one unit of the product.
+	/// The amount of time needed to create one unit of the product.
 	var/construction_time = 3.2 SECONDS
 	/// The typepath of the object produced by this design
 	var/build_path = null
-	/// Reagent produced by this design. Currently only supported by the biogenerator.
+	/// Reagent produced by this design.. Currently only supported by the biogenerator.
 	var/make_reagent
-	/// What categories this design falls under. Used for sorting in production machines.
+	/// What categories this design falls under.. Used for sorting in production machines.
 	var/list/category = list()
-	/// List of reagents required to create one unit of the product. Currently only supported by the limb grower.
+	/// List of reagents needed to create one unit of the product.. Currently only supported by the limb grower.
 	var/list/reagents_list = list()
 	/// How many times faster than normal is this to build on the protolathe
 	var/lathe_time_factor = 1
 	/// Bitflags indicating what departmental lathes should be allowed to process this design.
 	var/departmental_flags = ALL
-	/// What techwebs nodes unlock this design. Constructed by SSresearch
+	/// What techwebs nodes unlock this design.. Constructed by SSresearch
 	var/list/datum/techweb_node/unlocked_by = list()
 	/// Override for the automatic icon generation used for the research console.
 	var/research_icon
@@ -53,9 +53,9 @@ other types of metals and chemistry for reagents).
 	var/research_icon_state
 	/// Appears to be unused.
 	var/icon_cache
-	/// Optional string that interfaces can use as part of search filters. See- item/borg/upgrade/ai and the Exosuit Fabs.
+	/// Optional string that interfaces can use as part of search filters.. See- item/borg/upgrade/ai and the Exosuit Fabs.
 	var/search_metadata
-	/// For protolathe designs that don't require reagents: If they can be exported to autolathes with a design disk or not.
+	/// For protolathe designs that don't need reagents: If they can be exported to autolathes with a design disk or not.
 	var/autolathe_exportable = TRUE
 
 	/**
@@ -110,7 +110,7 @@ other types of metals and chemistry for reagents).
 			temp_list[mat_type] = amount
 			continue
 
-		// Not a material requirement, so get the ref the normal way
+		// Not a material need so get the ref the normal way
 		var/datum/material/mat = SSmaterials.get_material(mat_type)
 		temp_list[mat] = amount
 
@@ -147,7 +147,7 @@ other types of metals and chemistry for reagents).
 		amount = 1
 	return new build_path(drop_loc, amount)
 
-///A proc that handles transfering the materials to the target object and anything it contains that isn't abstract. You can check the doc for var/list/transfered_materials for how it works.
+/// A proc that handles transfering the materials to the target object and anything it contains that isn't abstract.. You can check the doc for var/list/transfered_materials for how it works.
 /datum/design/proc/transfer_materials(list/custom_materials, multiplier, atom/target_object)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
@@ -169,7 +169,7 @@ other types of metals and chemistry for reagents).
 			continue
 		simple_transfer_materials(transfered_materials[object.type], multiplier, object)
 
-///Called by [proc/transfer_materials] in two places and it's basically the meat and bone of the function. Having it as a separate proc reduces copypaste a little.
+/// Called by [proc/transfer_materials] in two places and it's basically the meat and bone of the function.. Having it as a separate proc reduces copypaste a little.
 /datum/design/proc/simple_transfer_materials(list/custom_materials, multiplier, atom/target_object)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	PRIVATE_PROC(TRUE)

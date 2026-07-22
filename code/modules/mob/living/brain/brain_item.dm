@@ -23,7 +23,7 @@
 
 	var/suicided = FALSE
 	var/mob/living/brain/brainmob = null
-	/// If it's a fake brain with no brainmob assigned. Feedback messages will be faked as if it does have a brainmob. See changelings & dullahans.
+	/// If it's a fake brain with no brainmob assigned.. Feedback messages will be faked as if it does have a brainmob.. See changelings & dullahans.
 	var/decoy_override = FALSE
 
 
@@ -31,9 +31,9 @@
 
 	/// List of skillchip items, their location should be this brain.
 	var/list/obj/item/skillchip/skillchips
-	/// Maximum skillchip complexity we can support before they stop working. Do not reference this var directly and instead call get_max_skillchip_complexity()
+	/// Maximum skillchip complexity we can support before they stop working.. Do not reference this var directly and instead call get_max_skillchip_complexity()
 	var/max_skillchip_complexity = 3
-	/// Maximum skillchip slots available. Do not reference this var directly and instead call get_max_skillchip_slots()
+	/// Maximum skillchip slots available.. Do not reference this var directly and instead call get_max_skillchip_slots()
 	var/max_skillchip_slots = 5
 
 	/// Size modifier for the sprite
@@ -46,7 +46,7 @@
 	var/variant_traits_added
 	/// Variance in brain traits removed by subtypes
 	var/variant_traits_removed
-	/// The color of this brain. Fluff, only used when repairing (shade of...).
+	/// The color of this brain.. Fluff, only used when repairing (shade of...).
 	var/shade_color = "pink"
 
 /obj/item/organ/brain/Initialize(mapload)
@@ -95,7 +95,7 @@
 		if(trauma.owner)
 			if(trauma.owner == brain_owner)
 				// if we're being special replaced, the trauma is already applied, so this is expected
-				// but if we're not... this is likely a bug, and should be reported
+				// but if we're not.... this is likely a bug, and should be reported
 				if(!special)
 					stack_trace("A brain trauma ([trauma]) is being re-applied to its owning mob ([brain_owner])!")
 				continue
@@ -161,7 +161,7 @@
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
-		// Hack, fucked dna needs to follow the brain to prevent memes, so we need to copy over the trait sources and shit
+		// Temporary solution fucked dna needs to follow the brain to prevent memes, so we need to copy over the trait sources and shit
 		for(var/source in GET_TRAIT_SOURCES(L, TRAIT_BADDNA))
 			ADD_TRAIT(brainmob, TRAIT_BADDNA, source)
 
@@ -212,7 +212,7 @@
 		to_chat(user, span_danger("You hit [src] with [item]!"))
 
 /obj/item/organ/brain/proc/check_for_repair(obj/item/item, mob/user)
-	if(damage && item.is_drainable() && item.reagents.has_reagent(/datum/reagent/medicine/mannitol) && (organ_flags & ORGAN_ORGANIC)) //attempt to heal the brain
+	if(damage && item.is_drainable() && item.reagents.has_reagent(/datum/reagent/medicine/mannitol) && (organ_flags & ORGAN_ORGANIC)) // try to heal the brain
 		if(brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
 			to_chat(user, span_warning("[src] is far too damaged, there's nothing else we can do for it!"))
 			return TRUE
@@ -225,7 +225,7 @@
 		user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to reform its original shape[and_bright_shade]."), span_notice("You pour the contents of [item] onto [src], causing it to reform its original shape[and_bright_shade]."))
 		var/amount = item.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
 		var/healto = max(0, damage - amount * 2)
-		item.reagents.remove_all(ROUND_UP(item.reagents.total_volume / amount * (damage - healto) * 0.5)) //only removes however much solution is needed while also taking into account how much of the solution is mannitol
+		item.reagents.remove_all(ROUND_UP(item.reagents.total_volume / amount * (damage - healto) * 0.5)) // only removes but much solution is needed while also taking into account how much of the solution is mannitol
 		set_organ_damage(healto) //heals 2 damage per unit of mannitol, and by using "set_organ_damage", we clear the failing variable if that was up
 		return TRUE
 	return FALSE
@@ -368,9 +368,9 @@
 	if(delta_dam < 0 && damage > BRAIN_DAMAGE_MILD)
 		roll_for_brain_trauma(-delta_dam) // parent call returns negative numbers if take damage and positive if we heal
 
-/// Rolls a random chance to gain a brain trauma based on damage taken and current damage level
+/// Rolls a random chance to gain a brain trauma good on damage taken and current damage level
 /obj/item/organ/brain/proc/roll_for_brain_trauma(delta_dam)
-	if(prob(delta_dam * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
+	if(prob(delta_dam * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) // Base chance is the hit damage; f. Every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
 		gain_trauma_type(BRAIN_TRAUMA_MILD, natural_gain = TRUE)
 
 	var/is_boosted = (owner && HAS_TRAIT(src, TRAIT_SPECIAL_TRAUMA_BOOST))
@@ -384,7 +384,7 @@
 
 #define BRAIN_DAMAGE_FILTER "brain_damage_color_filter"
 
-/// Updates the brain's color based on damage level - the more damaged, the darker and grayer it gets
+/// Updates the brain's color good on damage level - the more damaged, the darker and grayer it gets
 /obj/item/organ/brain/proc/update_brain_color(animate = TRUE)
 	if(damage <= 0)
 		if(get_filter(BRAIN_DAMAGE_FILTER))
@@ -458,7 +458,7 @@
 		// We're technically doing a little hackery here by bypassing the procs, but I'm the one who wrote them
 		// and when you know the rules, you can break the rules.
 
-		// Technically the owning mob is the same. We don't need to activate or deactivate the skillchips.
+		// Technically the owning mob is the same.. We don't need to activate or deactivate the skillchips.
 		// All the skillchips themselves care about is what brain they're in.
 		// Because the new brain will ultimately be owned by the same body, we can safely leave skillchip logic alone.
 
@@ -557,7 +557,7 @@
 /obj/item/organ/brain/felinid //A bit smaller than average
 	brain_size = 0.8
 
-// Sometimes, felinids go a bit haywire and bite people. Based entirely on mania and hunger.
+// Sometimes, felinids go a bit haywire and bite people.. Good entirely on mania and hunger.
 /obj/item/organ/brain/felinid/get_attacking_limb(mob/living/carbon/human/target)
 	var/starving_cat_bonus = owner.nutrition <= NUTRITION_LEVEL_HUNGRY ? 1 : 10
 	var/crazy_feral_cat = clamp((starving_cat_bonus * owner.mob_mood?.sanity_level), 0, 100)
@@ -651,7 +651,7 @@
 	if(var_name == NAMEOF(src, smooth_brain))
 		update_appearance()
 
-//Direct trauma gaining proc. Necessary to assign a trauma to its brain. Avoid using directly.
+// Direct trauma gaining proc.. Necessary to assign a trauma to its brain.. Avoid using directly.
 /obj/item/organ/brain/proc/brain_gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
 	if(!can_gain_trauma(trauma, resilience))
 		return null
@@ -737,7 +737,7 @@
 		return found_bodypart || active_hand
 	return active_hand
 
-/// Brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
+/// Brains REALLY like ghosting people.. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
 /obj/item/organ/brain/replace_into(mob/living/carbon/new_owner)
 	var/obj/item/organ/brain/old_brain = new_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	old_brain.Remove(new_owner, special = TRUE, movement_flags = NO_ID_TRANSFER)

@@ -26,7 +26,7 @@
 	var/teleporting = FALSE
 	/// Action enabling the blink-dash functionality.
 	var/datum/action/innate/dash/hierophant/blink
-	/// Whether the blink ability is activated. IF TRUE, left clicking a location will blink to it. If FALSE, this is disabled.
+	/// Whether the blink ability is activated.. IF TRUE, left clicking a location will blink to it.. If FALSE, this is disabled.
 	var/blink_activated = TRUE
 
 /obj/item/hierophant_club/Initialize(mapload)
@@ -204,7 +204,7 @@
 	if (user != victim && success)
 		log_combat(user, victim, "teleported", null, "from [AREACOORD(user_turf)]")
 
-/// Attempts to place a return beacon at user's feet
+/// Tries to place a return beacon at user's feet
 /obj/item/hierophant_club/proc/deploy_beacon(mob/user)
 	if (!isopenturf(user.loc) && !isopenspaceturf(user.loc))
 		to_chat(user, span_warning("You need to be on solid ground to detach the beacon!"))

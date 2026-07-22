@@ -30,7 +30,7 @@
 	smoothing_groups = SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_TABLES
 	var/static/list/turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY, TRAIT_IMMERSE_STOPPED)
-	///a bit fucky, I know. but this is needed to get sorted on init smoothing groups stored
+	/// a bit fucky, I know.. but this is needed to get sorted on init smoothing groups stored
 	var/list/on_init_smoothed_vars
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
@@ -46,7 +46,7 @@
 	var/is_flipped = FALSE
 	/// Whether or not when flipped, it ignores PASS_GLASS flag
 	var/is_transparent = FALSE
-	/// If you don't have sprites for flipped tables, you can use matrices instead. looks ever-slightly worse.
+	/// If you don't have sprites for flipped tables, you can use matrices instead.. looks ever-slightly worse.
 	var/use_matrices_instead = FALSE
 	/// Matrix to return to on unflipping table
 	var/matrix/before_flipped_matrix
@@ -93,13 +93,13 @@
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	AddElement(/datum/element/table_smash, gentle_push = slam_gently, after_smash_proccall = PROC_REF(after_smash))
 
-/// Applies additional properties based on the frame used to construct this table.
+/// Applies additional properties good on the frame used to construct this table.
 /obj/structure/table/proc/apply_frame_properties(obj/structure/table_frame/frame_used)
 	frame = frame_used.type
 	framestack = frame_used.framestack
 	framestackamount = frame_used.framestackamount
 
-/// Applies additional properties based on the stack used to construct this table.
+/// Applies additional properties good on the stack used to construct this table.
 /obj/structure/table/proc/apply_stack_properties(obj/item/stack/stack_used)
 	return
 
@@ -163,7 +163,7 @@
 		icon_state = initial(icon_state)
 		before_flipped_matrix = transform
 		var/matrix/transform_matrix = matrix(1, 0, 0, 0, 0.350, 9) // "flips" the table
-		//there's probably a nicer way to do this but whatever. rotates the table according to the dir
+		// there's probably a nicer way to do this but whatever.. rotates the table according to the dir
 		if(dir == EAST)
 			transform_matrix.Turn(90)
 		if(dir == SOUTH)
@@ -392,7 +392,7 @@
 	var/y_offset = 0
 	// Items are centered by default, but we move them if click ICON_X and ICON_Y are available
 	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
-		// Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+		// Clamp it so that the icon never moves more than 16 pixels in either direction so leaving the table turf)
 		x_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X*0.5), ICON_SIZE_X*0.5)
 		y_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y*0.5), ICON_SIZE_Y*0.5)
 
@@ -493,7 +493,7 @@
 	LAZYADD(attached_items, thing)
 	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(on_item_moved))
 
-/// Handles cases where any attached item moves, with or without the table. If we get picked up or anything, unregister the signal so we don't move with the table after removal from the surface.
+/// Handles cases where any attached item moves, with or without the table.. If we get picked up or anything, unregister the signal so we don't move with the table after removal from the surface.
 /obj/structure/table/rolling/proc/on_item_moved(datum/source, atom/old_loc, dir, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
@@ -677,7 +677,7 @@
 /obj/structure/table/wood/fancy/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
 	// Needs to be set dynamically because table smooth sprites are 32x34,
-	// which the editor treats as a two-tile-tall object. The sprites are that
+	// which the editor treats as a two-tile-tall object.. The sprites are that
 	// size so that the north/south corners look nice - examine the detail on
 	// the sprites in the editor to see why.
 
@@ -816,7 +816,7 @@
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 
-/// Attempts to shock the user, given the table is hooked up and they're within range.
+/// Tries to shock the user, given the table is hooked up and they're within range.
 /// Returns TRUE on successful electrocution, FALSE otherwise.
 /obj/structure/table/reinforced/proc/attempt_electrocution(mob/user)
 	if(!anchored) // If for whatever reason it's not anchored, it can't be shocked either.
@@ -1046,7 +1046,7 @@
 	buckled.remove_offsets(type)
 	buckled.RemoveComponentSource(type, /datum/component/free_operation)
 
-/// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
+/// Any mob that enters our tile will be marked as a potential patient.. They will be turned into a patient if they lie down.
 /obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/potential_patient)
 	SIGNAL_HANDLER
 	if(!istype(potential_patient))

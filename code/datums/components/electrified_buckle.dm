@@ -1,6 +1,6 @@
 ///divide the power in the cable net under parent by this to determine the shock damage
 #define ELECTRIC_BUCKLE_SHOCK_STRENGTH_DIVISOR 5000
-///it will not shock the mob buckled to parent if its required to use a cable to shock and the cable has less than this power availaible
+/// it will not shock the mob buckled to parent if its needed to use a cable to shock. The cable has less than this power availaible
 #define ELECTRIC_BUCKLE_MINUMUM_POWERNET_STRENGTH 10
 
 
@@ -10,13 +10,13 @@
  * the parent is supposed to define its behavior with arguments in AddComponent
 */
 /datum/component/electrified_buckle
-	///if usage_flags has SHOCK_REQUIREMENT_ITEM, this is the item required to be inside parent in order for it to shock buckled mobs
+	/// if usage_flags has SHOCK_REQUIREMENT_ITEM, this is the item needed to be inside parent in order for it to shock buckled mobs
 	var/obj/item/required_object
 	///this is casted to the overlay we put on parent_chair
 	var/list/requested_overlays
 	///it will only shock once every shock_loop_time
 	COOLDOWN_DECLARE(electric_buckle_cooldown)
-	///these flags tells this instance what is required in order to allow shocking
+	/// these flags tells this instance what is needed in order to allow shocking
 	var/usage_flags
 	///if true, this will shock the buckled mob every shock_loop_time in process()
 	var/shock_on_loop = TRUE
@@ -28,9 +28,9 @@
 	var/shock_loop_time = 5 SECONDS
 	///how much damage is done per shock iff usage_flags doesnt have SHOCK_REQUIREMENT_LIVE_CABLE
 	var/shock_damage = 50
-	///this signal was given as an argument to register for parent to emit, if its emitted to parent then shock_on_demand is called. var is so it can be unregistered
+	/// this signal was given as an argument to register for parent to emit, if its emitted to parent then shock_on_demand is called.. var is so it can be unregistered
 	var/requested_signal_parent_emits = null
-	///what area power channel do we check if area power is required?
+	/// what area power channel do we check if area power is needed
 	var/area_power_channel = AREA_USAGE_EQUIP
 	///details of how we electrocute people
 	var/shock_flags

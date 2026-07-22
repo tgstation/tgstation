@@ -9,7 +9,7 @@
 	key = "taunt"
 	key_third_person = "taunts"
 	message = "taunts!"
-	cooldown = 1.6 SECONDS //note when changing this- this is used by the matrix taunt to block projectiles.
+	cooldown = 1.6 SECONDS // note when changing this- this the uses matrix taunt to block projectiles.
 
 /datum/emote/living/taunt/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
@@ -158,7 +158,7 @@
 	var/mob/living/carbon/human/human_user = user
 	var/obj/item/organ/wings/wings = human_user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 
-	// play a flapping noise if the wing has this implemented
+	// play a flapping noise if the wing has this added
 	if(!istype(wings))
 		return
 	wings.make_flap_sound(human_user)
@@ -667,7 +667,7 @@
 			continue
 
 		var/dist_between = get_dist(user, iter_living)
-		var/recently_examined = FALSE // if you yawn just after someone looks at you, it forces them to yawn as well. Tradecraft!
+		var/recently_examined = FALSE // if you yawn just after someone looks at you, it forces them to yawn as well.. Tradecraft!
 
 		if(iter_living.client)
 			var/examine_time = LAZYACCESS(iter_living.client?.recent_examines, user)
@@ -680,7 +680,7 @@
 		var/yawn_delay = rand(0.2 SECONDS, 0.7 SECONDS) * dist_between
 		addtimer(CALLBACK(src, PROC_REF(propagate_yawn), iter_living), yawn_delay)
 
-/// This yawn has been triggered by someone else yawning specifically, likely after a delay. Check again if they don't have the yawned recently trait
+/// This yawn has been triggered by someone else yawning specifically, likely after a delay.. Check again if they don't have the yawned recently trait
 /datum/emote/living/yawn/proc/propagate_yawn(mob/user)
 	if(!istype(user) || TIMER_COOLDOWN_RUNNING(user, COOLDOWN_YAWN_PROPAGATION))
 		return

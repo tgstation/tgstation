@@ -221,7 +221,7 @@
 	removed_traits = list(/datum/fish_trait/dummy)
 	show_on_wiki = FALSE
 
-///This is used by both fish_evolution and fish_growth unit tests.
+/// This both uses fish_evolution and fish_growth unit tests.
 /datum/fish_evolution/dummy/two
 	new_fish_type = /obj/item/fish/goldfish
 
@@ -248,7 +248,7 @@
 	var/obj/item/multitool/tool = allocate(__IMPLIED_TYPE__)
 	var/datum/fish_source/toilet/fish_source = GLOB.preset_fish_sources[/datum/fish_source/toilet]
 
-	portal.max_fishing_spots = 1 //We've no scrying orb to know if it'll be buffed or nerfed this in the future. We only have space for one here.
+	portal.max_fishing_spots = 1 // We've no scrying orb to know if it'll be buffed or nerfed this in the future.. We only have space for one here.
 	portal.activate(fish_source, user)
 	TEST_ASSERT(!portal.active, "[portal] was activated with a fish source from an unlinked fishing spot")
 	portal.multitool_act(user, tool)
@@ -257,7 +257,7 @@
 	TEST_ASSERT_EQUAL(LAZYACCESS(portal.linked_fishing_spots, fishing_spot), fish_source, "We tried linking [portal] to the fishing spot but didn't succeed.")
 	portal.activate(fish_source, user)
 	TEST_ASSERT(portal.active?.fish_source == fish_source, "[portal] can't acces a fish source from a linked fishing spot")
-	//Let's move the fishing spot away. This is fine as long as the portal moves to another z level, away from the toilet
+	// Let's move the fishing spot away.. This is fine as long as the portal moves to another z level, away from the toilet
 	var/turf/other_z_turf = pick(GLOB.newplayer_start)
 	portal.forceMove(other_z_turf)
 	TEST_ASSERT(!portal.active, "[portal] (not upgraded) is still active though the fishing spot is on another z-level.[portal.z == fishing_spot.z ? " Actually they're still on the same level!" : ""]")

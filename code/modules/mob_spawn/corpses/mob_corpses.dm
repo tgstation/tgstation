@@ -1,5 +1,5 @@
 
-///all the corpses meant as mob drops yes, these definitely could be sorted properly. i invite (you) to do it!!
+/// all the corpses meant as mob drops yes, these definitely could be sorted properly.. i invite (you) to do it!!
 
 /obj/effect/mob_spawn/corpse/human/syndicatesoldier
 	name = "Syndicate Operative"

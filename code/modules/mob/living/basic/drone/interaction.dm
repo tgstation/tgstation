@@ -156,7 +156,7 @@
 		set_shy(FALSE)
 		LAZYADD(mind.special_roles, "Hacked Drone")
 		REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-		speed = 1 //gotta go slow
+		speed = 1 // got to go slow
 		message_admins("[ADMIN_LOOKUPFLW(src)] became a hacked drone hellbent on destroying the station!")
 	else
 		if(!hacked || !can_unhack)

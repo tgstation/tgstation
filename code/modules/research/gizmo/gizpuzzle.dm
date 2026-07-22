@@ -16,12 +16,12 @@
 	var/code_length = 3
 	/// The codes that got generated, formatted as (1 = list(CRYPTIC_WIRE_5, CRYPTIC_WIRE_3, CRYPTIC_WIRE_7, 2 = list(...)))
 	var/list/code_sequences
-	/// The current sequence we're on. Will reset if it doesn't match anything
+	/// The current sequence we're on.. Will reset if it doesn't match anything
 	var/list/current_sequence = list()
 	/// List of callbacks that the solutions will call on succes
 	var/list/solution_callbacks
 
-	/// For if you want something to happen on merely being pulsed. If null, simply ping, bleep and creak or whatever as feedback
+	/// For if you want something to happen on merely being pulsed.. If null, simply ping, bleep and creak or whatever as feedback
 	var/datum/callback/pulsed_callback
 
 	COOLDOWN_DECLARE(feedback_cooldown)
@@ -45,7 +45,7 @@
 		for(var/j in 1 to code_length)
 			code_sequences[i] += pick(cryptic_pulse)
 
-/// Whenever a puzzle attempt is made
+/// Whenever a puzzle try is made
 /datum/gizmo_puzzle/proc/on_pulse(pulse_number, mob/living/user, atom/movable/holder, no_feedback = FALSE)
 	current_sequence += cryptic_pulse[pulse_number]
 	. = GIZMO_PUZZLE_CORRECT
@@ -72,7 +72,7 @@
 
 	pulsed_callback?.Invoke(holder, user, ., no_feedback)
 
-/// Just some feedback so people can start forcing sequences. No feedback if it's done automatically
+/// Just some feedback so people can start forcing sequences.. No feedback if it's done automatically
 /datum/gizmo_puzzle/proc/default_on_pulsed(atom/movable/holder, mob/living/user, solved_type, no_feedback = FALSE)
 	if(!COOLDOWN_FINISHED(src, feedback_cooldown) || !isliving(user) || no_feedback)
 		return

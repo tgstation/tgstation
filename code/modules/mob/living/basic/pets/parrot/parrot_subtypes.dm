@@ -1,6 +1,6 @@
 // this file is for parrots that aren't poly
 
-/// Parrot that will just randomly spawn with a headset. Nothing too special beyond that.
+/// Parrot that will just randomly spawn with a headset.. Nothing too special beyond that.
 /mob/living/basic/parrot/headsetted
 
 /mob/living/basic/parrot/headsetted/setup_headset()

@@ -82,7 +82,7 @@
 			sword_closet.container_resist_act(owner, loc_required = FALSE)
 		flinged_sword.visible_message(span_alert("\the [flinged_sword] yanks itself out of [sword_closet]!"))
 
-	// no general struct/machinery check. imagine if someone put the sword in a vendor
+	// no general struct/machinery check.. imagine if someone put the sword in a vendor
 
 	if(isturf(sword_loc))
 		new /obj/effect/temp_visual/sword_sparks(sword_loc)
@@ -97,7 +97,7 @@
 	icon_state = "purplesparkles"
 
 /obj/effect/temp_visual/sword_sparks
-	icon_state = "mech_toxin" // only used in one place and it looks kinda good
+	icon_state = "mech_toxin" // only used in one place and it looks kind of good
 
 /obj/effect/temp_visual/blessed
 	icon_state = "blessed"

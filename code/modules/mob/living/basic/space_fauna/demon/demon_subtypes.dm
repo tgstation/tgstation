@@ -11,7 +11,7 @@
 	minimum_survivable_temperature = TCMB
 
 	// slaughter demons are specifically intended to have low melee damage, but as they hit and build up their killstreak
-	// their wound bonuses grow and grow higher. this is how they're able to efficiently kill and slaughter their victims.
+	// their wound bonuses grow and grow higher.. this is how they're able to efficiently kill and slaughter their victims.
 	// consider this before you balance them.
 	obj_damage = 50
 	melee_damage_lower = 15
@@ -64,7 +64,7 @@
 	wound_bonus = initial(wound_bonus)
 	exposed_wound_bonus = initial(exposed_wound_bonus)
 
-/// Performs the classic slaughter demon bodyslam on the attack_target. Yeets them a screen away.
+/// Performs the classic slaughter demon bodyslam on the attack_target.. Yeets them a screen away.
 /mob/living/basic/demon/slaughter/proc/bodyslam(atom/attack_target)
 	if(!isliving(attack_target) || attack_target == src)
 		return
@@ -94,7 +94,7 @@
 	COOLDOWN_START(src, slam_cooldown, slam_cooldown_time)
 	log_combat(src, victim, "slaughter slammed")
 
-/// Proc that we execute on attacking someone to keep track of our hitstreaks and wound bonuses. Also handles triggering the bodyslam on attacks.
+/// Proc that we execute on attacking someone to keep track of our hitstreaks and wound bonuses.. Also handles triggering the bodyslam on attacks.
 /mob/living/basic/demon/slaughter/proc/on_attack(mob/living/source, atom/attack_target, proximity_flag, list/modifiers)
 	SIGNAL_HANDLER
 
@@ -116,7 +116,7 @@
 	wound_bonus += wound_bonus_per_hit
 	exposed_wound_bonus += wound_bonus_per_hit
 
-/// The laughter demon! It's everyone's best friend! It just wants to hug them so much, it wants to hug everyone at once!
+/// The laughter demon!. It's everyone's best friend!. It just wants to hug them so much, it wants to hug everyone at once!
 /mob/living/basic/demon/slaughter/laughter
 	name = "laughter demon"
 	real_name = "laughter demon"
@@ -144,7 +144,7 @@
 		icon_state = "honk_demon"
 
 /mob/living/basic/demon/slaughter/laughter/grant_loot()
-	return list() // we do our thing... with the kittens...
+	return list() // we do our thing.... with the kittens...
 
 /// We do our own special thing on death, which is to spawn a kitten.
 /mob/living/basic/demon/slaughter/laughter/proc/on_death()

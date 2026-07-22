@@ -28,7 +28,7 @@
 	screen_loc = "BOTTOM,LEFT+50%"
 	appearance_flags = APPEARANCE_UI | TILE_BOUND
 
-/// Cinematic datum. Used to show an animation to everyone.
+/// Cinematic datum.. Used to show an animation to everyone.
 /datum/cinematic
 	/// A list of all clients watching the cinematic
 	var/list/client/watching = list()
@@ -80,7 +80,7 @@
 		// Close watcher ui's, too, so they can watch it.
 		SStgui.close_user_uis(watching_mob)
 
-	// Actually plays the animation. This will sleep, likely.
+	// Actually plays the animation.. This will sleep, likely.
 	play_cinematic()
 
 	// Cleans up after it's done playing.
@@ -169,7 +169,7 @@
 
 	UnregisterSignal(no_longer_watching, COMSIG_QDELETING)
 	// We'll clear the cinematic if they have a mob which has one,
-	// but we won't remove TRAIT_NO_TRANSFORM. Wait for the cinematic end to do that.
+	// but we won't remove TRAIT_NO_TRANSFORM.. Wait for the cinematic end to do that.
 	no_longer_watching.mob?.clear_fullscreen("cinematic")
 	no_longer_watching.screen -= screen
 

@@ -91,7 +91,7 @@
 	for(var/obj/item/bodypart/body_part as anything in disabled)
 		var/damage_text
 		if(HAS_TRAIT(body_part, TRAIT_DISABLED_BY_WOUND))
-			continue // skip if it's disabled by a wound (cuz we'll be able to see the bone sticking out!)
+			continue // skip if it's disabled by a wound because we'll be able to see the bone sticking out!)
 		if(body_part.get_damage() < body_part.max_damage) //we don't care if it's stamcritted
 			damage_text = "limp and lifeless"
 		else
@@ -333,7 +333,7 @@
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
 
-/// Returns a list of "damtype" => damage description based off of which bodypart description is most common
+/// Returns a list of "damtype" => damage description good off of which bodypart description is most common
 /mob/living/carbon/proc/get_majority_bodypart_damage_desc()
 	var/list/seen_damage = list() // This looks like: ({Damage type} = list({Damage description for that damage type} = {number of times it has appeared}, ...), ...)
 	var/list/most_seen_damage = list() // This looks like: ({Damage type} = {Frequency of the most common description}, ...)
@@ -579,8 +579,8 @@
 		if(part_id == expected_id)
 			continue
 		// same shape bodyparts are concealed by clothing
-		// this means you can see ex. digitigrade legs through clothes
-		// but you can't see ex. cybernetic legs through clothes
+		// this means you can see ex.. digitigrade legs through clothes
+		// but you can't see ex.. cybernetic legs through clothes
 		if(part.bodyshape == initial(expected_part?.bodyshape) && (part.body_zone in covered))
 			continue
 		texts += span_notice("[p_They()] [p_have()] \a [part].")

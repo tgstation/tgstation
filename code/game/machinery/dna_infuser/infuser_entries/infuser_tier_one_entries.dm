@@ -140,7 +140,7 @@
 	if(!istype(infused_from))
 		return ..()
 
-	///Get a list of possible alternatives to the standard fish infusion. We prioritize special infusions over it.
+	/// Get a list of possible alternatives to the standard fish infusion.. We prioritize special infusions over it.
 	var/list/possible_alt_infusions = list()
 	for(var/type in infused_from.fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[type]

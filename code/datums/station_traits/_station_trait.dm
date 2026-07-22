@@ -1,13 +1,13 @@
 /// Station traits displayed in the lobby
 GLOBAL_LIST_EMPTY(lobby_station_traits)
 
-///Base class of station traits. These are used to influence rounds in one way or the other by influencing the levers of the station.
+/// Base class of station traits.. These are used to influence rounds in one way or the other by influencing the levers of the station.
 /datum/station_trait
 	/// Trait should not be instantiated in a round if its type matches this type
 	abstract_type = /datum/station_trait
 	///Name of the trait
 	var/name = "unnamed station trait"
-	///The type of this trait. Used to classify how this trait influences the station
+	/// The type of this trait.. Used to classify how this trait influences the station
 	var/trait_type = STATION_TRAIT_NEUTRAL
 	///Whether or not this trait uses process()
 	var/trait_processes = FALSE
@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	var/show_in_report = FALSE
 	///What message to show in the centcom report?
 	var/report_message
-	///What code-trait does this station trait give? gives none if null
+	/// What code-trait does this station trait give?. gives none if null
 	var/trait_to_give
 	///What traits are incompatible with this one?
 	var/blacklist
@@ -33,7 +33,7 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	var/sign_up_button = FALSE
 	/// Lobby buttons controlled by this trait
 	var/list/lobby_buttons = list()
-	/// The ID that we look for in dynamic.json. Not synced with 'name' because I can already see this go wrong
+	/// The ID that we look for in dynamic.json.. Not synced with 'name' because I can already see this go wrong
 	var/dynamic_threat_id
 
 /datum/station_trait/New()
@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 /datum/station_trait/proc/get_report()
 	return "<i>[name]</i> - [report_message]"
 
-/// Will attempt to revert the station trait, used by admins.
+/// Will try to revert the station trait, used by admins.
 /datum/station_trait/proc/revert()
 	if (!can_revert)
 		CRASH("revert() was called on [type], which can't be reverted!")
@@ -104,7 +104,7 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	SIGNAL_HANDLER
 	lobby_buttons -= lobby_button
 
-/// Proc ran when round starts. Use this for roundstart effects. By default we clean up our buttons here.
+/// Proc ran when round starts.. Use this for roundstart effects.. By default we clean up our buttons here.
 /datum/station_trait/proc/on_round_start()
 	SIGNAL_HANDLER
 	destroy_lobby_buttons()

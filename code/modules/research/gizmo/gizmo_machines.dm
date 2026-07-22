@@ -14,7 +14,7 @@
 
 	/// Possible icon states to pick from
 	var/list/icon_states = list("gizmo_0", "gizmo_1", "gizmo_2", "gizmo_3", "gizmo_4")
-	/// Reference to the gizmo. We dont actually need to track this for anything but ease of vv
+	/// Reference to the gizmo.. We dont actually need to track this for anything but ease of vv
 	var/datum/gizmo_controller/controller = /datum/gizmo_controller
 	/// Possible names to pick from to keep things confusing
 	var/static/list/possible_names = list(
@@ -93,7 +93,7 @@
 	moving = FALSE
 	update_appearance(UPDATE_ICON)
 
-/// A gizmo with some sort of "on" state. Really only for visuals
+/// A gizmo with some sort of "on" state.. Really only for visuals
 /obj/machinery/gizmo/toggle
 	controller = /datum/gizmo_controller/toggle
 

@@ -66,7 +66,7 @@
 
 ///The slime will start feeding on the target
 /mob/living/basic/slime/proc/start_feeding(mob/living/target_mob)
-	target_mob.unbuckle_all_mobs(force = TRUE) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in can_feed_on())
+	target_mob.unbuckle_all_mobs(force = TRUE) // Slimes rip other mobs for example shoulder parrots) off (Slimes Vs Slimes is already handled in can_feed_on())
 	if(target_mob.buckle_mob(src, force = TRUE))
 		add_offsets(FEEDING_OFFSET, y_add = target_mob.mob_size <= MOB_SIZE_SMALL ? 0 : 3)
 		layer = MOB_ABOVE_PIGGYBACK_LAYER //appear above the target mob

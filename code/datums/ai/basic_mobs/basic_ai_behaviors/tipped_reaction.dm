@@ -9,7 +9,7 @@
 	var/mob/living/carbon/tipper = controller.blackboard[tipper_key]
 
 	var/mob/living/carbon/savior
-	// look for someone in a radius around us for help. If our original tipper is in range, prioritize them
+	// look for someone in a radius around us for help.. If our original tipper is in range, prioritize them
 	for(var/mob/living/carbon/potential_aid in oview(3, get_turf(controller.pawn)))
 		if(potential_aid == tipper)
 			savior = tipper

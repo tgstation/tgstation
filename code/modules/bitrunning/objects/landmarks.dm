@@ -79,7 +79,7 @@
 	icon_state = "mob_segment"
 
 
-/// Bitrunning safehouses. Typically 7x6 rooms with a single entrance.
+/// Bitrunning safehouses.. Typically 7x6 rooms with a single entrance.
 /obj/modular_map_root/safehouse
 	config_file = "strings/modular_maps/safehouse.toml"
 	icon = 'icons/effects/bitrunning.dmi'

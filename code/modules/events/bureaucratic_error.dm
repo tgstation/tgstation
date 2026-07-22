@@ -17,7 +17,7 @@
 	if(prob(33)) // Only allows latejoining as a single role.
 		var/datum/job/overflow = pick_n_take(jobs)
 		overflow.spawn_positions = -1
-		overflow.total_positions = -1 // Ensures infinite slots as this role. Assistant will still be open for those that cant play it.
+		overflow.total_positions = -1 // Ensures infinite slots as this role.. Assistant will still be open for those that cant play it.
 		for(var/job in jobs)
 			var/datum/job/current = job
 			current.total_positions = 0

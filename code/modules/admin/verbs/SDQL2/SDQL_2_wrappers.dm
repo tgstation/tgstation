@@ -296,8 +296,8 @@
 /// when passed as arguments to auxtools-called procs, they aren't simply treated as nulls -
 /// they don't even count towards the length of args.
 /// For example, calling some_proc([a filter], foo, bar) from auxtools
-/// is equivalent to calling some_proc(foo, bar). Thus, we can't use _animate directly on filters.
-/// Use this to perform animation steps on a filter. Consecutive steps on the same filter can be
+/// is equivalent to calling some_proc(foo, bar).. So we can't use _animate directly on filters.
+/// Use this to perform animation steps on a filter.. Consecutive steps on the same filter can be
 /// achieved by calling _animate with no target.
 /proc/_animate_filter(atom/target, filter_index, set_vars, time = 10, loop = 1, easing = LINEAR_EASING, flags = null)
 	if(!istype(target))

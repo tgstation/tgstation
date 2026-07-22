@@ -77,7 +77,7 @@
 	if(isobj(source) && !isstack(source) && (source.material_flags & MATERIAL_AFFECT_STATISTICS))
 		source.RemoveElement(/datum/element/can_shatter, shard_type, round(mat_amount / SHEET_MATERIAL_AMOUNT * multiplier), SFX_SHATTER)
 
-/// Has no special properties. Could be good against vampires in the future perhaps.
+/// Has no special properties.. Could be good against vampires in the future perhaps.
 /datum/material/silver
 	name = "silver"
 	desc = "A precious metal known for being hated by oversized bats and dogs."
@@ -239,7 +239,7 @@
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
 
-/// Can cause bluespace effects on use. (Teleportation)
+/// Can cause bluespace effects on use.. (Teleportation)
 /datum/material/bluespace
 	name = "bluespace crystal"
 	desc = "Crystals with bluespace properties."
@@ -442,7 +442,7 @@
 	points_per_unit = 4 / SHEET_MATERIAL_AMOUNT
 	points_per_boulder_unit = 4 / SHEET_MATERIAL_AMOUNT
 
-/// Force decrease and mushy sound effect. (Not yet implemented)
+/// Force decrease and mushy sound effect.. (Not yet added
 /datum/material/biomass
 	name = "biomass"
 	desc = "Organic matter."
@@ -528,7 +528,7 @@
 		MATERIAL_THERMAL = 4,
 		MATERIAL_CHEMICAL = 9,
 		MATERIAL_BEAUTY = 0.5,
-		MATERIAL_INTEGRITY = 2, // This is magic, I ain't gotta explain shit
+		MATERIAL_INTEGRITY = 2, // This is magic, I is not got to explain shit
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/mythril
 	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT
@@ -611,7 +611,7 @@
 		victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
 		return TRUE
 
-//I don't like sand. It's coarse, and rough, and irritating, and it gets everywhere.
+// I don't like sand.. It's coarse, and rough, and irritating, and it gets everywhere.
 /datum/material/sand
 	name = "sand"
 	desc = "You know, it's amazing just how structurally sound sand can be."
@@ -638,7 +638,7 @@
 	victim.adjust_disgust(17)
 	return TRUE
 
-//And now for our lavaland dwelling friends, sand, but in stone form! Truly revolutionary.
+// And now for our lavaland dwelling friends, sand, but in stone form!. Truly revolutionary.
 /datum/material/sandstone
 	name = "sandstone"
 	desc = "Bialtaakid 'ant taerif ma hdha."
@@ -921,7 +921,7 @@
 		MATERIAL_PENETRATING = TRUE,
 	)
 	sheet_type = /obj/item/stack/sheet/telepolycrystal
-	material_reagent = list(/datum/reagent/bluespace = 1, /datum/reagent/medicine/stimulants = 1) // We don't have liquid telecrystals and I don't wanna risk it
+	material_reagent = list(/datum/reagent/bluespace = 1, /datum/reagent/medicine/stimulants = 1) // We don't have liquid telecrystals and I don't want to risk it
 	value_per_unit = 1200 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
 

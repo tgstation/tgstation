@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	var/chaplain_spawnable = TRUE
 	/// Short description of what this item is capable of, for radial menu uses.
 	var/menu_description = "A standard chaplain's weapon. Fits in pockets. Can be worn on the belt."
-	/// Affects GLOB.holy_weapon_type. Disable to allow null rods to change at will and without affecting the station's type.
+	/// Affects GLOB.holy_weapon_type.. Disable to allow null rods to change at will and without affecting the station's type.
 	var/station_holy_item = TRUE
 
 /obj/item/nullrod/Initialize(mapload)
@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 
 /obj/item/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
+		final_block_chance = 0 // Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword.. Or a road roller, if one happened to hit you.
 	return ..()
 
 /obj/item/nullrod/claymore/darkblade
@@ -244,7 +244,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 /// Other Variants
 /// Not a special category on their own, but usually possess more unique mechanics
 
-// High Frequency Blade - Two-handed, has armor penetration, and can block exosuit attacks relatively easily. Can't block anything else.
+// High Frequency Blade - Two-handed, has armor penetration, and can block exosuit attacks relatively easily.. Can't block anything else.
 
 /obj/item/nullrod/vibro
 	name = "high frequency blade"
@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
 	return ..()
 
-// God Hand - Cannot be dropped. Does burn damage.
+// God Hand - Cannot be dropped.. Does burn damage.
 
 /obj/item/nullrod/godhand
 	name = "god hand"
@@ -528,7 +528,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 3, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	material_slots = list(/datum/material_slot/weapon_head = /datum/material/silver, /datum/material_slot/handle = /datum/material/iron)
 
-// Atheist's Fedora - Wear it on your head. No melee damage, massive throw force.
+// Atheist's Fedora - Wear it on your head.. No melee damage, massive throw force.
 
 /obj/item/nullrod/fedora
 	name = "atheist's fedora"
@@ -553,7 +553,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get further from god!"))
 	return (BRUTELOSS|FIRELOSS)
 
-// Dark Blessing - Replaces your arm with an armblade. Cannot be dropped.
+// Dark Blessing - Replaces your arm with an armblade.. Cannot be dropped.
 
 /obj/item/nullrod/armblade
 	name = "dark blessing"
@@ -607,7 +607,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	AddElement(/datum/element/nullrod_core)
 	AddComponent(/datum/component/faction_granter, FACTION_CARP, holy_role_required = HOLY_ROLE_PRIEST, grant_message = span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
 
-// Monk's Staff - Good block, two-handed. Great for showing off.
+// Monk's Staff - Good block, two-handed.. Great for showing off.
 
 /obj/item/nullrod/bostaff
 	name = "monk's staff"
@@ -644,10 +644,10 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 
 /obj/item/nullrod/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
-		final_block_chance = 0 //Don't bring a stick to a gunfight, and also you aren't going to really block someone full body tackling you with a stick. Or a road roller, if one happened to hit you.
+		final_block_chance = 0 // Don't bring a stick to a gunfight, and also you aren't going to really block someone full body tackling you with a stick.. Or a road roller, if one happened to hit you.
 	return ..()
 
-// Arrhythmic Knife - Lets your walk without rhythm by varying your walk speed. Can't be put away.
+// Arrhythmic Knife - Lets your walk without rhythm by varying your walk speed.. Can't be put away.
 
 /obj/item/nullrod/tribal_knife
 	name = "arrhythmic knife"
@@ -757,7 +757,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	hitsound = 'sound/effects/sparks/sparks4.ogg'
 	menu_description = "A tool dealing brain damage which partially penetrates armor. Fits in pockets. Can be worn on the belt."
 
-// Ancient Spear - Slight armor penetration, based on the Brass Spear from the Clockcult game mode.
+// Ancient Spear - Slight armor penetration, good on the Brass Spear from the Clockcult game mode.
 
 /obj/item/nullrod/spear
 	name = "ancient spear"
@@ -844,15 +844,15 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 
 /obj/item/nullrod/nullblade/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	//Check for our user's potential 'strength' value. As a baseline, we'll use a default value of 4 for the sake of nonhuman users.
+	// Check for our user's potential 'strength' value.. As a baseline, we'll use a default value of 4 for the sake of nonhuman users.
 	var/strength_value = 4
-	// We can use our human wielder's arm strength to determine their 'strength'. We add unarmed lower and upper, then divide by four.
+	// We can use our human wielder's arm strength to determine their 'strength'.. We add unarmed lower and upper, then divide by four.
 	// This isn't how strength works in dnd but who fucking cares.
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/obj/item/bodypart/wielding_bodypart = human_user.get_active_hand()
 		strength_value = round((wielding_bodypart.unarmed_damage_low + wielding_bodypart.unarmed_damage_high) * 0.25, 1)
-	// Our force becomes 1d6 + strength + some modifier (based on force - base force) to account for whetstones and other things.
+	// Our force becomes 1d6 + strength + some modifier good on force - base force) to account for whetstones and other things.
 	SET_ATTACK_FORCE(attack_modifiers, roll("1d6") + strength_value + (force - initial(force)))
 	return ..()
 
@@ -878,7 +878,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	// Did our sneak attack fail due to a special effect?
 	var/sneak_attack_fail_message = FALSE
 
-	// The force our sneak attack applies. Starts as 3d6, then changed based on certain factors.
+	// The force our sneak attack applies.. Starts as 3d6, then changed good on certain factors.
 	var/sneak_attack_dice = roll("3d6")
 
 	// Status effects on the target that grant us sneak attacks
@@ -899,17 +899,17 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	else if(HAS_TRAIT(living_target, TRAIT_HANDS_BLOCKED))
 		successful_sneak_attack = TRUE
 
-	// Check for various positional outcomes to determine a sneak attack. We want to sneak attack whenever our target is behind.
+	// Check for various positional outcomes to determine a sneak attack.. We want to sneak attack whenever our target is behind.
 	else if(check_behind(user, living_target))
 		successful_sneak_attack = TRUE
 
-	/// Now we'll check for things that STOP a sneak attack. Why? Because this mechanic isn't complicated enough and I must insert more ivory tower design.
+	/// Now we'll check for things that STOP a sneak attack.. Why?. Because this mechanic isn't complicated enough and I must insert more ivory tower design.
 
 	if(living_target.mob_biotypes & MOB_SLIME) // SLIMES HAVE NO ANATOMY.
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
-	else if(living_target.incorporeal_move >= 1 && !HAS_TRAIT(living_target, TRAIT_REVENANT_REVEALED)) // WE CAN'T SNEAK ATTACK INCORPOREAL JERKS. BUT WE CAN SNEAK ATTACK REVEALED REVENANTS BECAUSE DUH, NULLROD.
+	else if(living_target.incorporeal_move >= 1 && !HAS_TRAIT(living_target, TRAIT_REVENANT_REVEALED)) // WE CAN'T SNEAK ATTACK INCORPOREAL JERKS.. BUT WE CAN SNEAK ATTACK REVEALED REVENANTS BECAUSE DUH, NULLROD.
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
@@ -921,7 +921,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
-	else if(HAS_TRAIT(living_target, TRAIT_MIND_READER) && !user.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0)) // FORESIGHT SAYS 'FUCK YOU' TO SNEAK ATTACKERS. BUT IF YOU HAVE A TIN FOIL HAT, YOU'RE SAFE!
+	else if(HAS_TRAIT(living_target, TRAIT_MIND_READER) && !user.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0)) // FORESIGHT SAYS 'FUCK YOU' TO SNEAK ATTACKERS.. BUT IF YOU HAVE A TIN FOIL HAT, YOU'RE SAFE!
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
@@ -937,17 +937,17 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 
 	/// And now we'll deal with sneak attack damage modifiers.
 
-	// If our target is also unconscious for some reason, we get even more damage. Coup de grace, motherfucker.
+	// If our target is also unconscious for some reason, we get even more damage.. Coup de grace, motherfucker.
 	if(HAS_TRAIT(living_target, TRAIT_KNOCKEDOUT))
 		sneak_attack_dice += roll("1d6")
 		new /obj/effect/temp_visual/crit(get_turf(living_target))
 
-	// If the target is rebuked, we also add some additional damage. It is the closest thing to 'studying' your target, okay?
+	// If the target is rebuked, we also add some additional damage.. It is the closest thing to 'studying' your target, okay?
 	if(living_target.has_status_effect(/datum/status_effect/rebuked))
 		sneak_attack_dice += 2
 
 	// If we're morbid, and the target has been dissected, we get an extra d6.
-	// The chances of this occuring are quite low, as even having this weapon means you're locked out of becoming morbid as a chaplain, but when it does come up...
+	// The chances of this occuring are quite low, as even having this weapon means you're locked out of becoming morbid as a chaplain. When it does come up...
 	// Or the coroner stole this blade to go hunt the recently dead...
 	if(HAS_TRAIT(user, TRAIT_MORBID) && HAS_TRAIT(living_target, TRAIT_DISSECTED))
 		sneak_attack_dice += roll("1d6")
@@ -958,7 +958,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 
 	// Affecting body part check.
 	var/obj/item/bodypart/affecting = living_target.get_bodypart(user.get_random_valid_zone(user.zone_selected))
-	// Target's armor value. Accounts for armor penetration even though we have no armour_penetration defined on the parent.
+	// Target's armor value.. Accounts for armor penetration even though we have no armour_penetration defined on the parent.
 	var/armor_block = living_target.run_armor_check(affecting, MELEE, armour_penetration = armour_penetration)
 
 	// We got a sneak attack!

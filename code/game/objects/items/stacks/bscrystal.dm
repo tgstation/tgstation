@@ -72,7 +72,7 @@
 	drop_sound = null //till I make a better one
 	pickup_sound = null
 
-// Polycrystals, aka stacks
+// Polycrystals, also known as stacks
 /obj/item/stack/sheet/bluespace_crystal
 	name = "bluespace polycrystal"
 	singular_name = "bluespace polycrystal"

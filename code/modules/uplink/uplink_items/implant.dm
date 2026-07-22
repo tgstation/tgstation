@@ -46,7 +46,7 @@
 			Undetectable (except via surgery), and excellent for escaping confinement."
 	item = /obj/item/storage/box/syndie_kit // the actual uplink implant is generated later on in spawn_item
 	cost = UPLINK_IMPLANT_TELECRYSTAL_COST
-	// An empty uplink is kinda useless.
+	// An empty uplink is kind of useless.
 	surplus = 0
 	restricted = TRUE
 	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY

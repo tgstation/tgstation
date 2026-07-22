@@ -7,9 +7,9 @@
 	var/title = "ERROR"
 	/// What atom the recipe makes, typepath
 	var/atom/result_type
-	/// Generated base64 image. Used only if result has color
+	/// Generated base64 image.. Used only if result has color
 	var/result_image
-	/// Amount of stack required to make
+	/// Amount of stack needed to make
 	var/req_amount = 1
 	/// Amount of resulting atoms made
 	var/res_amount = 1
@@ -17,7 +17,7 @@
 	var/max_res_amount = 1
 	/// How long it takes to make
 	var/time = 0
-	/// Bitflag of additional placement checks required to place. (STACK_CHECK_CARDINALS|STACK_CHECK_ADJACENT|STACK_CHECK_TRAM_FORBIDDEN|STACK_CHECK_TRAM_EXCLUSIVE)
+	/// Bitflag of additional placement checks needed to place.. (STACK_CHECK_CARDINALS|STACK_CHECK_ADJACENT|STACK_CHECK_TRAM_FORBIDDEN|STACK_CHECK_TRAM_EXCLUSIVE)
 	var/placement_checks = NONE
 	/// What trait, if any, boosts the construction speed of this item
 	var/trait_booster
@@ -60,7 +60,7 @@
 
 	src.removed_mats = removed_mats
 
-	// We create base64 image only if item have color. Otherwise use icon_ref for TGUI
+	// We create base64 image only if item have color.. Otherwise use icon_ref for TGUI
 	var/obj/item/result = result_type
 	var/paint = result::color
 	if(!isnull(paint) && paint != COLOR_WHITE)

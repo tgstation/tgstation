@@ -1,4 +1,4 @@
-// Helpers for checking whether a z-level conforms to a specific requirement
+// Helpers for checking whether a z-level conforms to a specific need
 
 // Basic levels
 #define is_centcom_level(z) SSmapping.level_trait(z, ZTRAIT_CENTCOM)

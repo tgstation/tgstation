@@ -108,7 +108,7 @@ ADMIN_VERB(spawn_cargo, R_SPAWN, "Spawn Cargo", "Spawn a cargo crate.", ADMIN_CA
 ADMIN_VERB(create_or_modify_area, R_DEBUG, "Create Or Modify Area", "Create of modify an area. wow.", ADMIN_CATEGORY_DEBUG)
 	create_area(user.mob)
 
-//Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked
+// Kicks all the clients currently in the lobby.. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked
 //defaults to kicking everyone (afk + non afk clients in the lobby)
 //returns a list of ckeys of the kicked clients
 /proc/kick_clients_in_lobby(message, kick_only_afk = 0)
@@ -127,7 +127,7 @@ ADMIN_VERB(create_or_modify_area, R_DEBUG, "Create Or Modify Area", "Create of m
 //returns FALSE if we don't plan to trap the event
 /datum/admins/proc/cmd_ghost_drag(mob/dead/observer/frommob, mob/tomob)
 
-	//this is the exact two check rights checks required to edit a ckey with vv.
+	// this is the exact two check rights checks needed to edit a ckey with vv.
 	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
 		return FALSE
 

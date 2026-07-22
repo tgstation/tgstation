@@ -4,7 +4,7 @@
 
 GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
-/// Makes a list of jobs and pushes them to a DM list selector. Just in case someone did a special kind of fucky-wucky with TGUI.
+/// Makes a list of jobs and pushes them to a DM list selector.. Just in case someone did a special kind of fucky-wucky with TGUI.
 /datum/latejoin_menu/proc/fallback_ui(mob/dead/new_player/user)
 	var/list/jobs = list()
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
@@ -26,7 +26,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		// In case they reopen the GUI
-		// FIXME: this can cause a runtime since user can be a living mob
+		// Fix me this can cause a runtime since user can be a living mob
 		if(istype(user))
 			user.jobs_menu_mounted = FALSE
 			addtimer(CALLBACK(src, PROC_REF(scream_at_player), user), 5 SECONDS)
@@ -166,7 +166,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 					tgui_alert(owner, "The server is full!", "Oh No!")
 					return TRUE
 
-			// SAFETY: AttemptLateSpawn has it's own sanity checks. This is perfectly safe.
+			// SAFETY: AttemptLateSpawn has it's own sanity checks.. This is perfectly safe.
 			owner.AttemptLateSpawn(params["job"])
 		if("viewpoll")
 			var/datum/poll_question/poll = locate(params["viewpoll"]) in GLOB.polls
@@ -184,7 +184,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 			owner.vote_on_poll_handler(poll, params)
 			return TRUE
 
-/// Gives the user a random job that they can join as, and prompts them if they'd actually like to keep it, rerolling if not. Cancellable by the user.
+/// Gives the user a random job that they can join as, and prompts them if they'd actually like to keep it, rerolling if not.. Cancellable by the user.
 /// WARNING: BLOCKS THREAD!
 /datum/latejoin_menu/proc/get_random_job(mob/dead/new_player/owner)
 	var/list/dept_data = list()

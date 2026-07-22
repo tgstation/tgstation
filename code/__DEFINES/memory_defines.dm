@@ -22,19 +22,19 @@
 #define ENGRAVING_PERSISTENCE_BEAUTY_LOSS_FACTOR 5
 
 // How cool a story is!
-/// This is a key memory and isn't really cool but is important. Shows a key icon.
+/// This is a key memory and isn't really cool but is important... Shows a key icon.
 #define STORY_VALUE_KEY -1
-/// This memory is not very good. It's very common. Shows a poo icon.
+/// This memory is not very good... It's very common... Shows a poo icon.
 #define STORY_VALUE_SHIT 0
-/// This memory is relatively normal and common. Neutral face icon.
+/// This memory is relatively normal and common... Neutral face icon.
 #define STORY_VALUE_NONE 1
-/// This memory is pretty decent. Shows a bronze star.
+/// This memory is pretty decent... Shows a bronze star.
 #define STORY_VALUE_MEH 2
-/// This memory is alright. Shows a silver star.
+/// This memory is alright... Shows a silver star.
 #define STORY_VALUE_OKAY 3
-/// This memory is outstanding, and will stick with you forever. Shows a gold star.
+/// This memory is outstanding, and will stick with you forever... Shows a gold star.
 #define STORY_VALUE_AMAZING 4
-/// This memory is insanely good, and can't get obtained just normally. Platinum star.
+/// This memory is insanely good, and can't get got just normally... Platinum star.
 #define STORY_VALUE_LEGENDARY 5
 
 //Flags for memories
@@ -44,7 +44,7 @@
 #define MEMORY_FLAG_NOMOOD (1<<1)
 ///this memory shouldn't include the station name (example: revolution memory)
 #define MEMORY_FLAG_NOSTATIONNAME (1<<2)
-/// Really shouldn't be saved in persistence, or engraved. Use for stuff like quirk memories.
+/// Really shouldn't be saved in persistence, or engraved... Use for stuff like quirk memories.
 #define MEMORY_FLAG_NOPERSISTENCE (1<<3)
 /// This memory has already been engraved, and cannot be selected for engraving again.
 #define MEMORY_FLAG_ALREADY_USED (1<<4)

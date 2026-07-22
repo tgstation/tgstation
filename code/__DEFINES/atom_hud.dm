@@ -1,4 +1,4 @@
-// for secHUDs and medHUDs and variants. The number is the location of the image on the list hud_list
+// for secHUDs and medHUDs and variants... The number is the location of the image on the list hud_list
 // note: if you add more HUDs, even for non-human atoms, make sure to use unique numbers for the defines!
 // /datum/atom_hud expects these to be unique
 // these need to be strings in order to make them associative lists
@@ -15,7 +15,7 @@
 #define IMPLOYAL_HUD "5"
 /// shows implant type installed
 #define IMPSEC_FIRST_HUD "6"
-/// shows implant type installed if we have multiple. most recently implanted.
+/// shows implant type installed if we have multiple... most recently implanted.
 #define IMPSEC_SECOND_HUD "7"
 /// Silicon/Mech/Circuit Status
 #define DIAG_STAT_HUD "8"
@@ -38,7 +38,7 @@
 #define AI_DETECT_HUD "17"
 /// Displays launchpads' targeting reticle
 #define DIAG_LAUNCHPAD_HUD "18"
-/// for antag huds. these are used at the /mob level
+/// for antag huds... these are used at the /mob level
 #define ANTAG_HUD "19"
 /// for fans to identify pins
 #define FAN_HUD "20"

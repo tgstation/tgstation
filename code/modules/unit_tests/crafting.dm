@@ -65,10 +65,10 @@
 			LAZYADD(uncreatables_found, req_path)
 			continue
 
-		// A recipe might accept an abstract base type as its reqs - e.g. obj/item/food/grown - signifying it can use any item of that type.
-		// However, we cannot create those abstract base types... but we also cannot pick a random subtype everytime either,
+		// A recipe might accept an abstract base type as its reqs - e.g.. obj/item/food/grown - signifying it can use any item of that type.
+		// But we cannot create those abstract base types.... but we also cannot pick a random subtype everytime either,
 		// as sutypes can have different custom_materials between them, so doing that will lead us to sporiadic errors.
-		// The safest course of action is to make the contributor pick a valid subtype (as generic as possible. please) to use in its place.
+		// The safest course of action is to make the contributor pick a valid subtype (as generic as possible.. please) to use in its place.
 		var/datum/req_path_datum = req_path
 		if(req_path_datum.abstract_type == req_path)
 			LAZYADD(uncreatables_found, req_path)
@@ -90,7 +90,7 @@
 	var/list/bulky_objects = list()
 	bulky_objects += recipe.structures + recipe.machinery //either structures and machinery could be null
 	list_clear_nulls(bulky_objects) //so we clear the list
-	for(var/req_path in bulky_objects) //spawn required machinery or structures
+	for(var/req_path in bulky_objects) // spawn needed machinery or structures
 		if(req_path in uncreatables)
 			LAZYADD(uncreatables_found, req_path)
 			continue
@@ -167,7 +167,7 @@
 			what_it_should_be += " (you can round values above SHEET_MATERIAL_AMOUNT to the nearest decimal)"
 
 
-		///This tells you about other ways to deal with the issue, if you can't just change the materials of the object. For example, if there are two different recipes for it.
+		/// This tells you about other ways to deal with the issue, if you can't just change the materials of the object.. For example, if there are two different recipes for it.
 		var/add_info = ""
 
 		if(istype(recipe, /datum/crafting_recipe/stack))

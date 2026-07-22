@@ -1,4 +1,4 @@
-// The severity of explosions. Why are these inverted? I have no idea, but git blame doesn't go back far enough for me to find out.
+// The severity of explosions... Why are these inverted?.. I have no idea, but git blame doesn't go back far enough for me to find out.
 /// The (current) highest possible explosion severity.
 #define EXPLODE_DEVASTATE 3
 /// The (current) middling explosion severity.
@@ -68,7 +68,7 @@
 #define EXPLODABLE_DELETE_PARENT 2
 
 // Flags for [/obj/item/grenade/var/dud_flags]
-/// The grenade cannot detonate at all. It is innately nonfunctional.
+/// The grenade cannot detonate at all... It is innately nonfunctional.
 #define GRENADE_DUD (1<<0)
 /// The grenade has been used and as such cannot detonate.
 #define GRENADE_USED (1<<1)

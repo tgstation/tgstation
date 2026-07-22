@@ -1,6 +1,6 @@
 ///This datum is a simple holder for the micro_organisms in a sample.
 /datum/biological_sample
-	///List of all micro_organisms in the sample. These are instantiated
+	/// List of all micro_organisms in the sample.. These are instantiated
 	var/list/micro_organisms = list()
 	///Prevents someone from stacking too many layers onto a swabber
 	var/sample_layers = 1
@@ -22,7 +22,7 @@
 		var/datum/micro_organism/chosen_type = pick_weight(GLOB.cell_virus_tables[virus_define])
 		micro_organisms += new chosen_type
 
-///Takes another sample and merges it into use. This can cause one very big sample but we limit it to 3 layers.
+/// Takes another sample and merges it into use.. This can cause one very big sample but we limit it to 3 layers.
 /datum/biological_sample/proc/Merge(datum/biological_sample/other_sample)
 	if(sample_layers >= 3)//No more than 3 layers, at that point you're entering danger zone.
 		return FALSE

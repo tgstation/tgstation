@@ -1,8 +1,8 @@
-/// Does nothing for a given duration (deciseconds, so use the SECONDS define pls), then succeeds. duration = 0 waits forever.
+/// Does nothing for a given duration (deciseconds, so use the SECONDS define please then succeeds.. duration = 0 waits forever.
 /datum/bt_node/ai_behavior/wait
-	/// world.time when the wait ends. 0 when waiting forever
+	/// world.time when the wait ends.. 0 when waiting forever
 	VAR_PRIVATE/end_time = 0
-	/// How long to wait, in deciseconds. 0 waits forever.
+	/// How long to wait, in deciseconds.. 0 waits forever.
 	var/duration = 0
 
 /datum/bt_node/ai_behavior/wait/setup(datum/ai_controller/controller)

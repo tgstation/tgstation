@@ -5,7 +5,7 @@
 	icon_state = "autolathe"
 	base_icon_state = "autolathe"
 	density = TRUE
-	///Energy cost per full stack of sheets worth of materials used. Material insertion is 40% of this.
+	/// Energy cost per full stack of sheets worth of materials used.. Material insertion is 40% of this.
 	active_power_usage = 0.025 * STANDARD_CELL_RATE
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
@@ -20,7 +20,7 @@
 	var/shocked = FALSE
 	///Are we currently printing something
 	var/busy = FALSE
-	///Coefficient applied to consumed materials. Lower values result in lower material consumption.
+	/// Coefficient applied to consumed materials.. Lower values result in lower material consumption.
 	var/creation_efficiency = 1.6
 	///Designs related to the autolathe
 	var/datum/techweb/autounlocking/stored_research
@@ -282,12 +282,12 @@
 		return
 	build_count = clamp(build_count, 1, 50)
 
-	// Check for materials required. For custom material items decode their required materials
+	// Check for materials needed For custom material items decode their needed materials
 	var/list/materials_needed = list()
 	var/list/slots_chosen = null
 	var/mat_choice = FALSE
 	for(var/material, amount_needed in design.materials)
-		if(!ispath(material, /datum/material_requirement) && !ispath(material, /datum/material_slot)) // Material requirement
+		if(!ispath(material, /datum/material_requirement) && !ispath(material, /datum/material_slot)) // Material need
 			if(!istype(material, /datum/material))
 				CRASH("Autolathe ui_act got passed an invalid material id: [material]")
 			materials_needed[material] += amount_needed

@@ -1,4 +1,4 @@
-/// A preference for a name. Used not just for normal names, but also for clown names, etc.
+/// A preference for a name.. Used not just for normal names, but also for clown names, and so on
 /datum/preference/name
 	category = "names"
 	priority = PREFERENCE_PRIORITY_NAMES
@@ -158,7 +158,7 @@
 /datum/preference/name/bible/create_default_value()
 	return DEFAULT_BIBLE
 
-/// The first name given to nuclear operative antagonists. The last name will be chosen by the team leader.
+/// The first name given to nuclear operative antagonists.. The last name will be chosen by the team leader.
 /datum/preference/name/operative_alias
 	savefile_key = "operative_alias"
 	allow_numbers = TRUE //You can get a little wacky with your alias nobody will judge you

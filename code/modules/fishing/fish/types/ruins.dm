@@ -1,4 +1,4 @@
-///From oil puddles from the elephant graveyard. Also an evolution of the "unmarine bonemass"
+/// From oil puddles from the elephant graveyard.. Also an evolution of the "unmarine bonemass"
 /obj/item/fish/mastodon
 	name = "unmarine mastodon"
 	fish_id = "mastodon"
@@ -74,7 +74,7 @@
 	stable_population = 4
 	fish_flags = parent_type::fish_flags & ~FISH_FLAG_SHOW_IN_CATALOG
 	beauty = FISH_BEAUTY_EXCELLENT
-	fish_movement_type = /datum/fish_movement/choppy //Glideless legacy movement? in my fishing minigame?
+	fish_movement_type = /datum/fish_movement/choppy // Glideless legacy movement?. in my fishing minigame?
 	favorite_bait = list(
 		list(
 			FISH_BAIT_TYPE = FISH_BAIT_FOODTYPE,
@@ -177,10 +177,10 @@
 		skin_haver.cause_wound_of_type_and_severity(WOUND_PIERCE, to_wound, WOUND_SEVERITY_CRITICAL, WOUND_SEVERITY_CRITICAL)
 		skin_haver.cause_wound_of_type_and_severity(WOUND_BLUNT, to_wound, WOUND_SEVERITY_CRITICAL, WOUND_SEVERITY_CRITICAL)
 		user.become_husk(REF(src))
-		to_wound.skin_tone = COLOR_RED // skin is gone. (if they somehow get revived, don't worry - death from loss of skin takes longer than dehydration, so it's still realistic)
+		to_wound.skin_tone = COLOR_RED // skin is gone.. (if they somehow get revived, don't worry - death from loss of skin takes longer than dehydration, so it's still realistic)
 
 	// skin crab grows powerful
-	color = skin_tone //skintone2hex(skin_tone) //wait til smartkar's recolorwork
+	color = skin_tone // skintone2hex(skin_tone) //wait until smartkar's recolorwork
 	visible_message(span_danger("[user] starts glowing eerily..."))
 	AddElement(/datum/element/haunted, haunt_color = skin_tone)
 

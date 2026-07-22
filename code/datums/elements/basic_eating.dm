@@ -18,7 +18,7 @@
 	var/add_to_contents
 	/// If true, when add_to_contents would put the item into contents but when used for healing, the item is consumed instead
 	var/consume_healing
-	/// Types the animal can eat. Can be an assoc list with amount to heal/damage the mob by
+	/// Types the animal can eat.. Can be an assoc list with amount to heal/damage the mob by
 	var/list/food_types
 
 /datum/element/basic_eating/Attach(datum/target, heal_amt = 0, damage_amount = 0, damage_type = null, drinking = FALSE, add_to_contents = FALSE, consume_healing = TRUE, food_types = list())

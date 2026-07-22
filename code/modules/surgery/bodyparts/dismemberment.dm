@@ -13,7 +13,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/affecting = limb_owner.get_bodypart(BODY_ZONE_CHEST)
-	affecting.receive_damage(clamp(brute_dam/2 * affecting.body_damage_coeff, 15, 50), clamp(burn_dam/2 * affecting.body_damage_coeff, 0, 50), wound_bonus=CANT_WOUND) //Damage the chest based on limb's existing damage
+	affecting.receive_damage(clamp(brute_dam/2 * affecting.body_damage_coeff, 15, 50), clamp(burn_dam/2 * affecting.body_damage_coeff, 0, 50), wound_bonus=CANT_WOUND) // Damage the chest good on limb's existing damage
 	if(!silent)
 		limb_owner.visible_message(span_danger("<B>[limb_owner]'s [name] is violently dismembered!</B>"))
 	INVOKE_ASYNC(limb_owner, TYPE_PROC_REF(/mob, emote), "scream")
@@ -79,7 +79,7 @@
 		. += cavity_item
 		cavity_item = null
 
-///limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
+/// limb removal.. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
 /obj/item/bodypart/proc/drop_limb(special, dismembered, move_to_floor = TRUE)
 	if(!owner)
 		return
@@ -107,7 +107,7 @@
 
 	if(!special)
 		if(phantom_owner.dna)
-			for(var/datum/mutation/mutation as anything in phantom_owner.dna.mutations) //some mutations require having specific limbs to be kept.
+			for(var/datum/mutation/mutation as anything in phantom_owner.dna.mutations) // some mutations need having specific limbs to be kept.
 				if(mutation.limb_req && (mutation.limb_req == body_zone))
 					to_chat(phantom_owner, span_warning("You feel your [mutation] deactivating from the loss of your [body_zone]!"))
 					phantom_owner.dna.remove_mutation(mutation, mutation.sources)
@@ -233,7 +233,7 @@
 
 	return ..()
 
-///Try to attach this bodypart to a mob, while replacing one if it exists, does nothing if it fails. Returns TRUE on success, FALSE on failure.
+/// Try to attach this bodypart to a mob, while replacing one if it exists, does nothing if it fails.. Returns TRUE on success, FALSE on failure.
 /obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner)
 	if(!istype(limb_owner))
 		return FALSE
@@ -317,8 +317,8 @@
 		update_disabled()
 
 	if(!lazy)
-		// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
-		// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
+		// Bodyparts need to be sorted for leg masking to be done properly.. It also will allow for some predictable
+		// behavior within said bodyparts list.. We sort it here, as it's the only place we make changes to bodyparts.
 		new_limb_owner.bodyparts = sort_list(new_limb_owner.bodyparts, GLOBAL_PROC_REF(cmp_bodypart_by_body_part_asc))
 		new_limb_owner.updatehealth()
 		new_limb_owner.update_body() // updates lips + hair + eyes
@@ -330,7 +330,7 @@
 	return TRUE
 
 /obj/item/bodypart/head/try_attach_limb(mob/living/carbon/new_head_owner, special, lazy)
-	// These are stored before calling super. This is so that if the head is from a different body, it persists its appearance.
+	// These are stored before calling super.. This is so that if the head is from a different body, it persists its appearance.
 	var/old_real_name = real_name
 	. = ..()
 	if(!. || lazy)

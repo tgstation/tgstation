@@ -102,7 +102,7 @@
 
 	for(var/turf/cardinal_canidate as anything in cardinal_turfs) //cardinal turfs are always changed but don't always spread
 		// NOTE: WE ARE SKIPPING CHANGETURF HERE
-		// The calls in this proc only serve to provide a satisfactory (if it's not ALREADY this) check. They do not actually call changeturf
+		// The calls in this proc only serve to provide a satisfactory (if it's not ALREADY this) check.. They do not actually call changeturf
 		// This is safe because this proc can only be run during mapload, and nothing has initialized by now so there's nothing to inherit or delete
 		if(!istype(cardinal_canidate, logged_turf_type) && cardinal_canidate.ChangeTurf(type, baseturfs, CHANGETURF_SKIP) && prob(probability))
 			if(baseturfs)

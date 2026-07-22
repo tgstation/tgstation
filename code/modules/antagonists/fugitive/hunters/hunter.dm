@@ -132,14 +132,14 @@
 			return FUGITIVE_RESULT_HUNTER_VICTORY
 		else//so some amount captured, but NO survivors.
 			return FUGITIVE_RESULT_MINOR_HUNTER
-	else//from here on out, hunters lost because they did not capture any fugitive dead or alive. there are different levels of getting beat though:
+	else// from here on out, hunters lost because they did not capture any fugitive dead or alive.. there are different levels of getting beat though:
 		if(!fugitives_dead)//all fugitives survived
 			return FUGITIVE_RESULT_MAJOR_FUGITIVE
 		else if(fugitives_dead < fugitives_counted)//at least ANY fugitive lived
 			return FUGITIVE_RESULT_FUGITIVE_VICTORY
-		else if(!hunters_dead)//all fugitives died, but none were taken in by the hunters. minor win
+		else if(!hunters_dead)// all fugitives died, but none were taken in by the hunters.. minor win
 			return FUGITIVE_RESULT_MINOR_FUGITIVE
-		else//all fugitives died, all hunters died, nobody brought back. seems weird to not give fugitives a victory if they managed to kill the hunters but literally no progress to either goal should lead to a nobody wins situation
+		else// all fugitives died, all hunters died, nobody brought back.. seems weird to not give fugitives a victory if they managed to kill the hunters. Literally no progress to either goal should lead to a nobody wins situation
 			return FUGITIVE_RESULT_STALEMATE
 
 /datum/team/fugitive_hunters/roundend_report() //shows the number of fugitives, but not if they won in case there is no security

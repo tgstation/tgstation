@@ -10,7 +10,7 @@
 	default_message = "Vote to restart the ongoing round. \
 		Only works if there are no non-AFK admins online."
 
-/// This proc checks to see if any admins are online for the purposes of this vote to see if it can pass. Returns TRUE if there are valid admins online (Has +SERVER and is not AFK), FALSE otherwise.
+/// This proc checks to see if any admins are online for the purposes of this vote to see if it can pass.. Returns TRUE if there are valid admins online (Has +SERVER and is not AFK), FALSE otherwise.
 /datum/vote/restart_vote/proc/admins_present()
 	for(var/client/online_admin as anything in GLOB.admins)
 		if(online_admin.is_afk() || !check_rights_for(online_admin, R_SERVER))

@@ -7,7 +7,7 @@
 	var/name = "Guardian Spirit"
 	/// Mob description to apply
 	var/desc = "A mysterious being that stands by its charge, ever vigilant."
-	/// Are we magical or technological? Mostly just used to pick a surname
+	/// Are we magical or technological?. Mostly just used to pick a surname
 	var/fluff_type = GUARDIAN_MAGIC
 	/// What speech bubble do we use?
 	var/bubble_icon = "guardian"

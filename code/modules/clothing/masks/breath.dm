@@ -60,7 +60,7 @@
 	flags_cover = NONE
 	actions_types = null
 	armor_type = /datum/armor/breath_muzzle
-	equip_delay_other = 2.5 SECONDS // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
+	equip_delay_other = 2.5 SECONDS // my sprite has 4 straps, a-la a head harness.. takes a while to equip, longer than a muzzle
 	adjustable = FALSE
 
 /obj/item/clothing/mask/breath/muzzle/Initialize(mapload)

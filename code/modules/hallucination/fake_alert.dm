@@ -1,4 +1,4 @@
-/// Fake alert hallucination. Causes a fake alert to be thrown to the hallucinator.
+/// Fake alert hallucination.. Causes a fake alert to be thrown to the hallucinator.
 /datum/hallucination/fake_alert
 	abstract_hallucination_parent = /datum/hallucination/fake_alert
 	random_hallucination_weight = 1
@@ -9,7 +9,7 @@
 	var/duration
 	/// The category of the fake alert
 	var/alert_category
-	/// The type of the fake alert. Can be a list, if you want it to draw from multiple types (randomly).
+	/// The type of the fake alert.. Can be a list, if you want it to draw from multiple types (randomly).
 	var/alert_type
 	/// Optional, the severity of the alert.
 	var/optional_severity

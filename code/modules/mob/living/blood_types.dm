@@ -3,7 +3,7 @@
 	var/name = "?"
 	/// A description of the blood type.
 	var/desc
-	/// Unique identifier for the blood type in the global list of singletons. Typically this is just the name, but some blood types might have the same name (e.g. evil blood)
+	/// Unique identifier for the blood type in the global list of singletons.. Typically this is just the name, but some blood types might have the same name (e.g.. evil blood)
 	var/id
 	/// What DNA string does this bloodtype have by default, if not set by a mob?
 	var/dna_string = "Unknown DNA"
@@ -46,7 +46,7 @@
 /datum/blood_type/proc/get_blood_name()
 	return capitalize(LOWER_TEXT(reagent_type::name))
 
-/// Type string of this bloodtype. Used to prevent "Oil type: Oil" scenarios
+/// Type string of this bloodtype.. Used to prevent "Oil type: Oil" scenarios
 /datum/blood_type/proc/get_type()
 	if (reagent_type != /datum/reagent/blood)
 		return null
@@ -54,7 +54,7 @@
 
 /// Returns blood color or color matrix
 /// Useful when you want to have a blood color with values out of normal hex bounds for that acidic look
-/// set dynamic to TRUE to redo the matrix each time (e.g. for clown blood dynamically shifting each time)
+/// set dynamic to TRUE to redo the matrix each time (e.g.. for clown blood dynamically shifting each time)
 /datum/blood_type/proc/get_color(dynamic = FALSE)
 	return color
 
@@ -278,7 +278,7 @@
 	if (!new_splat)
 		return
 
-	// Oil blood will never dry and can be ignited with fire or anything sufficiently hot
+	// Oil blood will never dry and can be ignited with fire or anything enough hot
 	blood.can_dry = FALSE
 	blood.dry_prefix = null
 	blood.dry_desc = null
@@ -329,7 +329,7 @@
 	var/list/random_color_list
 
 /datum/blood_type/clown/get_color(dynamic = TRUE)
-	// Set up the random color list if we haven't done that yet. Only need to do this once.
+	// Set up the random color list if we haven't done that yet.. Only need to do this once.
 	if(isnull(random_color_list))
 		var/datum/reagent/colorful_reagent/clown_blood = new
 		random_color_list = clown_blood.random_color_list.Copy()
@@ -338,7 +338,7 @@
 	color = pick(random_color_list)
 	return ..()
 
-/// Slimeperson blood, aka 'toxin' blood type
+/// Slimeperson blood, also known as 'toxin' blood type
 /datum/blood_type/slime
 	name = BLOOD_TYPE_TOX
 	dna_string = "Slime DNA"

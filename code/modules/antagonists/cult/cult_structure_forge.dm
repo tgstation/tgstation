@@ -3,7 +3,7 @@
 #define ELDRITCH_SWORD "Eldritch Longsword"
 #define CURSED_BLADE "Cursed Ritual Blade"
 
-// Cult forge. Gives out combat weapons.
+// Cult forge.. Gives out combat weapons.
 /obj/structure/destructible/cult/item_dispenser/forge
 	name = "daemon forge"
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar'Sie."

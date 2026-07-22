@@ -1,7 +1,7 @@
 #define CTF_DEFAULT_RESPAWN 15 SECONDS
 #define CTF_INSTAGIB_RESPAWN 5 SECONDS
 
-///The CTF controller acts as a manager for an individual CTF game, each CTF game should have its own, the controller should handle all game-wide functionality.
+/// The CTF controller acts as a manager f. An individual CTF game, each CTF game should have its own, the controller should handle all game-wide functionality.
 /datum/ctf_controller
 	///The ID associated with this CTF game.
 	var/game_id = CTF_GHOST_CTF_GAME_ID
@@ -67,7 +67,7 @@
 	stop_ctf()
 	new /obj/effect/landmark/ctf(get_turf(GLOB.ctf_spawner))
 
-///Some CTF maps may require alternate rulesets, this proc is called by the medisim spawners and CTF maploading.
+/// Some CTF maps may need alternate rulesets, this proc the calls medisim spawners and CTF maploading.
 /datum/ctf_controller/proc/setup_rules(
 	points_to_win = 3,
 	victory_rejoin_text = "Teams have been cleared. Click on the machines to vote to begin another round.",
@@ -80,7 +80,7 @@
 ///Add an additional team to the current CTF game.
 /datum/ctf_controller/proc/add_team(obj/machinery/ctf/spawner/spawner)
 	if(!isnull(teams[spawner.team]))
-		return //CTF currently only supports one spawn point per team, if you want to add a map that uses more you'll need to modify add_team/remove_team and turn the spawner var on the team itself into a list
+		return // CTF currently only supports one spawn point per team, if you want to add a map that uses more you'll need to modify add_team/remove_team. Turn the spawner var on the team itself into a list
 	teams[spawner.team] = new /datum/ctf_team(spawner)
 
 ///Called when a spawner is deleted, removes the team from this datum.
@@ -124,14 +124,14 @@
 			return FALSE
 	return TRUE
 
-///Called when a flag is captured by the provided team. Messages players telling them who scored a point and if points are high enough declares victory.
+/// Called when a flag is captured by the provided team.. Messages players telling them who scored a point and if points are high enough declares victory.
 /datum/ctf_controller/proc/capture_flag(team_color, mob/living/user, team_span, obj/item/ctf_flag/flag)
 	teams[team_color].score_points(flag.flag_value)
 	message_all_teams("<span class='userdanger [team_span]'>[user.real_name] has captured \the [flag], scoring a point for [team_color] team! They now have [get_points(team_color)]/[points_to_win] points!</span>")
 	if(get_points(team_color) >= points_to_win)
 		victory(team_color)
 
-///Called when points are scored at a control point. Messages players telling them when a team is half way to winning and if points are high enough declares victory.
+/// Called when points are scored at a control point.. Messages players telling them when a team is half way to winning and if points are high enough declares victory.
 /datum/ctf_controller/proc/control_point_scoring(team_color, points)
 	teams[team_color].score_points(points)
 	if(get_points(team_color) == points_to_win/2)
@@ -143,7 +143,7 @@
 /datum/ctf_controller/proc/get_points(team_color)
 	return teams[team_color].points
 
-///Ends the current CTF game and informs all players which team won. Restarts CTF if auto_restart is enabled.
+/// Ends the current CTF game and informs all players which team won.. Restarts CTF if auto_restart is enabled.
 /datum/ctf_controller/proc/victory(winning_team)
 	ctf_enabled = FALSE
 	clear_control_points()
@@ -173,7 +173,7 @@
 	for(var/team in teams)
 		teams[team].message_team(message)
 
-///Enables and disables instagib mode in this game. During instagib mode respawns are faster, players are faster and people die faster (instant).
+/// Enables and disables instagib mode in this game.. During instagib mode respawns are faster, players are faster and people die faster (instant).
 /datum/ctf_controller/proc/toggle_instagib_mode()
 	if(!instagib_mode) // Normal > Instagib
 		for(var/team in teams)
@@ -187,7 +187,7 @@
 			respawn_cooldown = CTF_DEFAULT_RESPAWN
 	instagib_mode = !instagib_mode
 
-///A datum that holds details about individual CTF teams, any team specific CTF functionality should be implemented here.
+/// A datum that holds details about individual CTF teams, any team specific CTF functionality should be added here.
 /datum/ctf_team
 	///Reference to the spawn point that this team uses.
 	var/obj/machinery/ctf/spawner/spawner
@@ -217,7 +217,7 @@
 /datum/ctf_team/proc/score_points(points_scored)
 	points += points_scored
 
-///Resets this teams score and clears its member list. All members will be dusted and have their player component removed.
+/// Resets this teams score and clears its member list.. All members will be dusted and have their player component removed.
 /datum/ctf_team/proc/reset_team()
 	points = 0
 	for(var/player in team_members)
@@ -231,7 +231,7 @@
 		var/datum/component/ctf_player/ctf_player = team_members[player]
 		ctf_player.send_message(message)
 
-///Creates a CTF game with the provided team ID then returns a reference to the new controller. If a controller already exists provides a reference to it.
+/// Creates a CTF game with the provided team ID then returns a reference to the new controller.. If a controller already exists provides a reference to it.
 /proc/create_ctf_game(game_id)
 	return GLOB.ctf_games[game_id] || new /datum/ctf_controller(game_id)
 

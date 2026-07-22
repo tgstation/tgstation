@@ -712,7 +712,7 @@
 
 //
 // SUIT + HEAD
-// (Specifically for toggleable suits with hats, i.e. winter coats)
+// (Specifically for toggleable suits with hats, i.e.. winter coats)
 //
 
 /datum/greyscale_config/winter_coats

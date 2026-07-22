@@ -63,7 +63,7 @@
 	var/desc_mid = ""
 	///Optional for rating polls, description shown next to the maximum value
 	var/desc_max = ""
-	///Hint for statbus, not used by the game; If this option should be included by default when calculating the resulting percentages of all options for this poll
+	/// Hint f. Statbus, not used by the game; If this option should be included by default when calculating the resulting percentages of all options f. This poll
 	var/default_percentage_calc
 
 /**

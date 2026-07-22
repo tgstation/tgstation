@@ -53,7 +53,7 @@
 /datum/component/sticker/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_LIVING_IGNITED, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_ATOM_EXAMINE))
 
-/// Subscribes to `COMSIG_TURF_EXPOSE` if parent atom is a turf. If turf is closed - subscribes to signal
+/// Subscribes to `COMSIG_TURF_EXPOSE` if parent atom is a turf.. If turf is closed - subscribes to signal
 /datum/component/sticker/proc/register_turf_signals(dir)
 	if(!isturf(parent))
 		return

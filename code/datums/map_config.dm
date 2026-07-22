@@ -1,7 +1,7 @@
 //This file is used to contain unique properties of every map, and how we wish to alter them on a per-map basis.
 //Use JSON files that match the datum layout and you should be set from there.
 //Right now, we default to MetaStation to ensure something does indeed load by default.
-//  -san7890 (with regards to Cyberboss)
+// -san7890 (with regards to Cyberboss)
 
 /datum/map_config
 	// Metadata
@@ -28,7 +28,7 @@
 	var/space_ruin_levels = DEFAULT_SPACE_RUIN_LEVELS
 	var/space_empty_levels = DEFAULT_SPACE_EMPTY_LEVELS
 
-	/// Boolean that tells us if this is a planetary station. (like IceBoxStation)
+	/// Boolean that tells us if this is a planetary station.. (like IceBoxStation)
 	var/planetary = FALSE
 	/// How many z's to generate around a planetary station
 	var/wilderness_levels = 0
@@ -36,7 +36,7 @@
 	var/wilderness_directory
 	/// Z-Level traits our wilderness maps will get, ice box traits by default
 	var/list/wilderness_z_traits = ZTRAITS_ICY_WILDS
-	/// Index of map names (inside wilderness_directory) with the amount to spawn. ("ice_planes" = 1) for one ice spawn
+	/// Index of map names (inside wilderness_directory) with the amount to spawn.. ("ice_planes" = 1) for one ice spawn
 	var/list/wilderness_maps_to_spawn = list()
 
 	///The type of mining Z-level that should be loaded.
@@ -56,7 +56,7 @@
 	var/job_changes = list()
 	/// List of additional areas that count as a part of the library
 	var/library_areas = list()
-	/// Boolean - if TRUE, the "Up" and "Down" traits are automatically distributed to the map's z-levels. If FALSE; they're set via JSON.
+	/// Boolean - if TRUE, the "Up" and "Down" traits are automatically distributed to the map's z-levels.. If FALSE; they're set via JSON.
 	var/height_autosetup = TRUE
 
 	/// Boolean - if TRUE, players spawn with grappling hooks in their bags
@@ -259,7 +259,7 @@
 		wilderness_directory = wilderness["directory"]
 		wilderness.Remove("directory")
 
-		// Just pick and take based on weight
+		// Just pick and take good on weight
 		for(var/i in 1 to wilderness_levels)
 			wilderness_maps_to_spawn += pick_weight_take(wilderness)
 		shuffle_inplace(wilderness_maps_to_spawn)

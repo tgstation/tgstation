@@ -394,7 +394,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	//now that cables are done, let's connect found machines
 	for(var/obj/machinery/power/PM in to_connect)
 		if(!PM.connect_to_network())
-			PM.disconnect_from_network() //if we somehow can't connect the machine to the new powernet, remove it from the old nonetheless
+			PM.disconnect_from_network() // if we somehow can't connect the machine to the new powernet, remove it from the old but
 
 //////////////////////////////////////////////
 // Powernets handling helpers
@@ -428,9 +428,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 /obj/structure/cable/proc/auto_propagate_cut_cable(obj/O)
 	if(O && !QDELETED(O))
 		var/datum/powernet/newPN = new()// creates a new powernet...
-		propagate_network(O, newPN)//... and propagates it to the other side of the cable
+		propagate_network(O, newPN)// .... and propagates it to the other side of the cable
 
-//Makes a new network for the cable and propgates it. If we already have one, just die
+// Makes a new network for the cable and propgates it.. If we already have one, just die
 /obj/structure/cable/proc/propagate_if_no_network()
 	if(powernet)
 		return
@@ -860,7 +860,7 @@ GLOBAL_LIST(hub_radial_layer_list)
 	addtimer(CALLBACK(src, PROC_REF(Reload)), 10, TIMER_UNIQUE) //spam protect
 	return CLICK_ACTION_SUCCESS
 
-// This is a mapping aid. In order for this to be placed on a map and function, all three layers need to have their nodes active
+// This is a mapping aid.. In order for this to be placed on a map and function, all three layers need to have their nodes active
 /obj/structure/cable/multilayer/connected
 		cable_layer = CABLE_LAYER_1 | CABLE_LAYER_2 | CABLE_LAYER_3
 

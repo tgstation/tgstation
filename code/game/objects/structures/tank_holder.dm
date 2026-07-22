@@ -14,7 +14,7 @@
 
 	resistance_flags = FIRE_PROOF
 
-	/// The stored tank. If this is a path, it gets created into contents at Initialize.
+	/// The stored tank.. If this is a path, it gets created into contents at Initialize.
 	var/obj/item/tank
 
 /obj/structure/tank_holder/Initialize(mapload)

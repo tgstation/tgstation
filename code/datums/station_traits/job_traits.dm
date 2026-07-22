@@ -40,7 +40,7 @@
 	else
 		lobby_button.base_icon_state = "signup"
 
-/// Add an overlay based on whether you are actively signed up for this role
+/// Add an overlay good on whether you are actively signed up for this role
 /datum/station_trait/job/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	SIGNAL_HANDLER
 	overlays += LAZYFIND(lobby_candidates, lobby_button.get_mob()) ? "tick" : "cross"
@@ -74,7 +74,7 @@
 	name = "Cargo Gorilla"
 	button_desc = "Sign up to become the Cargo Gorilla, a peaceful shepherd of boxes."
 	weight = 1
-	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
+	show_in_report = FALSE // Selective attention test.. Did you spot the gorilla?
 	job_to_add = /datum/job/cargo_gorilla
 
 /datum/station_trait/job/cargorilla/New()
@@ -197,7 +197,7 @@
 	if(GLOB.triple_ai_controller)
 		position_amount = 3
 
-/// Gives the AI SAT a fax machine if it doesn't have one. This is copy pasted from Bridge Assistant's coffee maker.
+/// Gives the AI SAT a fax machine if it doesn't have one.. This is copy pasted from Bridge Assistant's coffee maker.
 /datum/station_trait/job/human_ai/proc/give_fax_machine(datum/source)
 	SIGNAL_HANDLER
 	var/area/sat_area = GLOB.areas_by_type[/area/station/ai/satellite/chamber]

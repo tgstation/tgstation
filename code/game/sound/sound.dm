@@ -42,7 +42,7 @@
 		CRASH("playsound(): falloff_distance is equal to or higher than maxdistance! Bump up extrarange or reduce the falloff_distance.")
 
 	if(vary && !frequency)
-		frequency = get_rand_frequency() // skips us having to do it per-sound later. should just make this a macro tbh
+		frequency = get_rand_frequency() // skips us having to do it per-sound later.. should just make this a macro to be honest
 
 	var/list/listeners
 
@@ -68,7 +68,7 @@
 		for(var/mob/listening_ghost as anything in SSmobs.dead_players_by_zlevel[source_z])
 			listeners += listening_ghost
 
-	for(var/mob/listening_mob in listeners)//had nulls sneak in here, hence the typecheck
+	for(var/mob/listening_mob in listeners)// had nulls sneak in here, so the typecheck
 		var/turf/mob_turf = get_turf(listening_mob)
 		if(!mob_turf)
 			continue
@@ -149,14 +149,14 @@
 		sound_to_use.x = dx * distance_multiplier
 		var/dz = turf_source.y - turf_loc.y // Hearing from infront/behind
 		sound_to_use.z = dz * distance_multiplier
-		var/dy = (turf_source.z - turf_loc.z) * 5 * distance_multiplier // Hearing from  above / below, multiplied by 5 because we assume height is further along coords.
+		var/dy = (turf_source.z - turf_loc.z) * 5 * distance_multiplier // Hearing from above / below, multiplied by 5 because we assume height is further along coords.
 		sound_to_use.y = dy
 
 		sound_to_use.falloff = max_distance || 1 //use max_distance, else just use 1 as we are a direct sound so falloff isnt relevant.
 
-		// Sounds can't have their own environment. A sound's environment will be:
-		// 1. the mob's
-		// 2. the area's (defaults to SOUND_ENVRIONMENT_NONE)
+		// Sounds can't have their own environment.. A sound's environment will be:
+		// 1.. the mob's
+		// 2.. the area's (defaults to SOUND_ENVRIONMENT_NONE)
 		if(sound_environment_override != SOUND_ENVIRONMENT_NONE)
 			sound_to_use.environment = sound_environment_override
 		else
@@ -213,7 +213,7 @@
 /proc/get_rand_frequency_low_range()
 	return rand(38000, 45000)
 
-///Used to convert a SFX define into a .ogg so we can add some variance to sounds. If soundin is already a .ogg, we simply return it
+/// Used to convert a SFX define into a .ogg so we can add some variance to sounds.. If soundin is already a .ogg, we simply return it
 /proc/get_sfx(soundin)
 	if(!istext(soundin))
 		return soundin

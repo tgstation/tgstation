@@ -1,8 +1,8 @@
-GLOBAL_LIST_INIT(VVlocked, list("vars", "datum_flags", "client", "mob")) //Requires DEBUG
+GLOBAL_LIST_INIT(VVlocked, list("vars", "datum_flags", "client", "mob")) // Needs DEBUG
 GLOBAL_PROTECT(VVlocked)
-GLOBAL_LIST_INIT(VVicon_edit_lock, list("icon", "icon_state", "overlays", "underlays")) //Requires DEBUG or FUN
+GLOBAL_LIST_INIT(VVicon_edit_lock, list("icon", "icon_state", "overlays", "underlays")) // Needs DEBUG or FUN
 GLOBAL_PROTECT(VVicon_edit_lock)
-GLOBAL_LIST_INIT(VVckey_edit, list("key", "ckey")) //Requires DEBUG or SPAWN
+GLOBAL_LIST_INIT(VVckey_edit, list("key", "ckey")) // Needs DEBUG or SPAWN
 GLOBAL_PROTECT(VVckey_edit)
 GLOBAL_LIST_INIT(VVpixelmovement, list("bound_x", "bound_y", "step_x", "step_y", "step_size", "bound_height", "bound_width", "bounds")) //No editing ever.
 GLOBAL_PROTECT(VVpixelmovement)
@@ -241,7 +241,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if(class == VV_MESSAGE)
 		class = VV_TEXT
 
-	switch(class) //Spits a runtime error if you try to modify an entry in the contents list. Dunno how to fix it, yet.
+	switch(class) // Spits a runtime error if you try to modify an entry in the contents list.. Do not know how to fix it, yet.
 		if(VV_LIST)
 			mod_list(variable, O, original_name, objectvar)
 

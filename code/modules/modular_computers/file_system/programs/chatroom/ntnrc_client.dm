@@ -83,7 +83,7 @@
 				return
 
 			if(netadmin_mode)
-				active_channel = new_target // Bypasses normal leave/join and passwords. Technically makes the user invisible to others.
+				active_channel = new_target // Bypasses normal leave/join and passwords.. Technically makes the user invisible to others.
 				return TRUE
 
 			active_channel = new_target

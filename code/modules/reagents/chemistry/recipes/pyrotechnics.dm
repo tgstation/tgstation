@@ -44,7 +44,7 @@
 			// We have a purging chemical
 			has_purging_chemical = TRUE
 			break
-	// Then we need omnizine! MAGIC!
+	// Then we need omnizine!. MAGIC!
 	var/has_omnizine = holder.has_reagent(/datum/reagent/medicine/omnizine)
 	if(has_purging_chemical && has_omnizine)
 		// With all this medical "science" combined, we can clear mob reagents
@@ -90,7 +90,7 @@
 
 /datum/chemical_reaction/reagent_explosion/rdx_explosion2 //makes rdx unique , on its own it is a good bomb, but when combined with liquid electricity it becomes truly destructive
 	required_reagents = list(/datum/reagent/rdx = 1 , /datum/reagent/consumable/liquidelectricity = 1)
-	strengthdiv = 3.5 //actually a decrease of 1 becaused of how explosions are calculated. This is due to the fact we require 2 reagents
+	strengthdiv = 3.5 // actually a decrease of 1 becaused of how explosions are calculated.. This is due to the fact we need 2 reagents
 	modifier = 4
 
 /datum/chemical_reaction/reagent_explosion/rdx_explosion2/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
@@ -103,7 +103,7 @@
 
 /datum/chemical_reaction/reagent_explosion/rdx_explosion3
 	required_reagents = list(/datum/reagent/rdx = 1 , /datum/reagent/teslium = 1)
-	strengthdiv = 3.5 //actually a decrease of 1 becaused of how explosions are calculated. This is due to the fact we require 2 reagents
+	strengthdiv = 3.5 // actually a decrease of 1 becaused of how explosions are calculated.. This is due to the fact we need 2 reagents
 	modifier = 6
 
 
@@ -226,8 +226,8 @@
 	var/two_thirds = created_volume / 1.5
 	var/location = get_turf(holder.my_atom)
 	var/lastkey = holder.my_atom.fingerprintslast
-	// 100 created volume = 4 heavy range & 7 light range. A few tiles smaller than traitor EMP grandes.
-	// 200 created volume = 8 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades.
+	// 100 created volume = 4 heavy range & 7 light range.. A few tiles smaller than traitor EMP grandes.
+	// 200 created volume = 8 heavy range & 14 light range.. 4 tiles larger than traitor EMP grenades.
 	empulse(location, round(two_thirds / 12), round(two_thirds / 7), 1, emp_source = src)
 	holder.clear_reagents()
 	if(lastkey)
@@ -607,7 +607,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 8e5/2e6/4.8e6. Tesla revolvers have a power of 10000 for comparison.
+	var/T1 = created_volume * 20		// 100 units : Zap 3 times, with powers 8e5/2e6/4.8e6.. Tesla revolvers have a power of 10000 for comparison.
 	var/T2 = created_volume * 50
 	var/T3 = created_volume * 120
 	var/added_delay = 0.5 SECONDS

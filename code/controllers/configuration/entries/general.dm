@@ -54,7 +54,7 @@
 /// if the game appears on the hub or not
 /datum/config_entry/flag/hub
 
-/// Pop requirement for the server to be removed from the hub
+/// Pop need for the server to be removed from the hub
 /datum/config_entry/number/max_hub_pop
 	default = 0 //0 means disabled
 	integer = TRUE
@@ -166,7 +166,7 @@
 /// log roundstart divide occupations debug information to a file
 /datum/config_entry/flag/log_job_debug
 
-/// log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
+/// log shuttle related actions, that is shuttle computers, shuttle manipulator, emergency console
 /datum/config_entry/flag/log_shuttle
 
 /// log image authoring, such as using the modular computer paint app
@@ -204,7 +204,7 @@
 	min_val = 0
 
 /// If disabled, non-voters will automatically have their votes added to certain vote options
-/// (For example: restart votes will default to "no restart", map votes will default to their preferred map / default map, rocking the vote will default to "no")
+/// (F. Example: restart votes will default to "no restart", map votes will default to their preferred map / default map, rocking the vote will default to "no")
 /datum/config_entry/flag/default_no_vote
 
 /// Prevents dead people from voting.
@@ -259,7 +259,7 @@
 /datum/config_entry/flag/protect_legacy_ranks //Stops any ranks loaded by the legacy system from having their flags edited by the permissions panel
 	protection = CONFIG_ENTRY_LOCKED
 
-/datum/config_entry/flag/enable_localhost_rank //Gives the !localhost! rank to any client connecting from 127.0.0.1 or ::1
+/datum/config_entry/flag/enable_localhost_rank // Gives the !localhost!. rank to any client connecting from 127.0.0.1 or ::1
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/flag/load_legacy_ranks_only //Loads admin ranks only from legacy admin_ranks.txt, while enabled ranks are mirrored to the database
@@ -289,9 +289,9 @@
 
 /datum/config_entry/flag/usewhitelist
 
-/datum/config_entry/flag/use_age_restriction_for_jobs //Do jobs use account age restrictions? --requires database
+/datum/config_entry/flag/use_age_restriction_for_jobs // Do jobs use account age restrictions?. --requires database
 
-/datum/config_entry/flag/use_account_age_for_jobs //Uses the time they made the account for the job restriction stuff. New player joining alerts should be unaffected.
+/datum/config_entry/flag/use_account_age_for_jobs // Uses the time they made the account for the job restriction stuff.. New player joining alerts should be unaffected.
 
 /datum/config_entry/flag/use_exp_tracking
 
@@ -447,7 +447,7 @@
 
 /datum/config_entry/number/panic_bunker_living // living time in minutes that a player needs to pass the panic bunker
 
-/// Flag for requiring players who would otherwise be denied access by the panic bunker to complete a written interview
+/// Flag for needing players who would otherwise be denied access by the panic bunker to complete a written interview
 /datum/config_entry/flag/panic_bunker_interview
 
 /datum/config_entry/string/panic_bunker_message
@@ -498,7 +498,7 @@
 
 /datum/config_entry/flag/aggressive_changelog
 
-/datum/config_entry/flag/autoconvert_notes //if all connecting player's notes should attempt to be converted to the database
+/datum/config_entry/flag/autoconvert_notes // if all connecting player's notes should try to be converted to the database
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/flag/allow_webclient
@@ -517,11 +517,11 @@
 
 /datum/config_entry/flag/preference_map_voting
 
-/// Allows players to export their own preferences as a JSON file. Left as a config toggle in case it needs to be turned off due to server-specific needs.
+/// Allows players to export their own preferences as a JSON file.. Left as a config toggle in case it needs to be turned off due to server-specific needs.
 /datum/config_entry/flag/forbid_preferences_export
 	default = FALSE
 
-/// The number of seconds a player must wait between preference export attempts.
+/// The number of seconds a player must wait between preference export tries
 /datum/config_entry/number/seconds_cooldown_for_preferences_export
 	default = 10
 	min_val = 1
@@ -778,7 +778,7 @@
 	min_val = 0
 	max_val = 100
 
-/// Pop requirement to exclude recently played maps from votes.
+/// Pop need to exclude recently played maps from votes.
 /datum/config_entry/number/map_vote_minimum_pop_to_remember_maps
 	default = 0 //0 means disabled
 	integer = TRUE

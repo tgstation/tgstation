@@ -1,4 +1,4 @@
-/// Causes the hallucinator to believe themselves frozen in ice. Man am I glad he's frozen in there etc etc
+/// Causes the hallucinator to believe themselves frozen in ice.. Man am I glad he's frozen in there and so on and so on
 /datum/hallucination/ice
 	random_hallucination_weight = 3
 	hallucination_tier = HALLUCINATION_TIER_COMMON

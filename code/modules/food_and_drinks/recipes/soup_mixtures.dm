@@ -43,7 +43,7 @@
 
 	/// An assoc list of what ingredients are necessary to how much is needed
 	var/list/required_ingredients
-	/// Tracks the total number of ingredient items needed, for calculating multipliers. Only done once in first on_reaction
+	/// Tracks the total number of ingredient items needed, for calculating multipliers.. Only done once in first on_reaction
 	VAR_FINAL/total_ingredient_max
 
 	/// Multiplier applied to all reagents transferred from reagents to pot when the soup is cooked
@@ -73,7 +73,7 @@
 
 			//means we still have left over ingredients
 			if(ingredient_count)
-				//decode ingredient type i.e. stack or not and fulfill request
+				// decode ingredient type i.e.. stack or not and fulfill request
 				if(ispath(ingredient_type, /obj/item/stack))
 					var/obj/item/stack/stack_ingredient = ingredient
 					ingredient_count -= stack_ingredient.amount
@@ -127,7 +127,7 @@
 				qdel(ingredient)
 			var/obj/item/created = new resulting_food_path(get_turf(pot))
 			created.pixel_y += 8
-		// Re-add required reagents that were not used in this step
+		// Re-add needed reagents that were not used in this step
 		if(created_volume > ingredient_max_multiplier)
 			for(var/reagent_path in required_reagents)
 				holder.add_reagent(reagent_path,(required_reagents[reagent_path])*(created_volume-ingredient_max_multiplier))
@@ -148,9 +148,9 @@
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 	var/list/tracked_ingredients = list()
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
-		// Track all ingredients in data. Assoc list of weakref to ingredient to initial total volume.
+		// Track all ingredients in data.. Assoc list of weakref to ingredient to initial total volume.
 		tracked_ingredients[WEAKREF(ingredient)] = ingredient.reagents?.total_volume || 1
-		// Equalize temps. Otherwise when we add ingredient temps in, it'll lower reaction temp
+		// Equalize temps.. Otherwise when we add ingredient temps in, it'll lower reaction temp
 		ingredient.reagents?.chem_temp = holder.chem_temp
 
 	// Store a list of weakrefs to ingredients as
@@ -200,7 +200,7 @@
 		if(!transfer_ingredient_reagents(ingredient, holder, max(cached_ingredients[ingredient_ref] * 0.2, 2)))
 			continue //all reagents were transfered
 
-		// Uh oh we reached the top of the pot, the soup's gonna boil over.
+		// Uh oh we reached the top of the pot, the soup's going to boil over.
 		if(holder.total_volume >= holder.maximum_volume * 0.95)
 			below_pot.visible_message(span_warning("[pot] starts to boil over!"))
 			// Create a spread of dirty foam
@@ -234,7 +234,7 @@
 	// If soup is made, remove ingredients as their reagents were added to the soup
 	if(react_vol)
 		for(var/obj/item/ingredient as anything in pot.added_ingredients)
-			// Let's not mess with  indestructible items.
+			// Let's not mess with indestructible items.
 			// Chef doesn't need more ways to delete things with cooking.
 			if(ingredient.resistance_flags & INDESTRUCTIBLE)
 				continue
@@ -287,8 +287,8 @@
 	ingredient_pool.trans_to(holder, amount, ingredient_reagent_multiplier, no_react = TRUE)
 	return TRUE
 
-/// Adds text to the requirements list of the recipe
-/// Return a list of strings, each string will be a new line in the requirements list
+/// Adds text to the needs list of the recipe
+/// Return a list of strings, each string will be a new line in the needs list
 /datum/chemical_reaction/food/soup/proc/describe_recipe_details()
 	return
 
@@ -343,7 +343,7 @@
 
 /// So this one's kind of a "failed" result, but also a "custom" result
 /// Getting to this temperature and having no other soup reaction made means you're either messing something up
-/// or you simply aren't following a recipe. So it'll just combine
+/// or you simply aren't following a recipe.. So it'll just combine
 /datum/chemical_reaction/food/soup/custom
 	required_temp = SOUP_BURN_TEMP + 40 // Only done if it's been burning for a little bit
 	optimal_temp = SOUP_BURN_TEMP + 50
@@ -913,7 +913,7 @@
 	)
 
 // Beet soup (Borscht)
-// This has a gimmick where it randomizes its name based on common mispellings on Borsch
+// This has a gimmick where it randomizes its name good on common mispellings on Borsch
 /datum/reagent/consumable/nutriment/soup/white_beet
 	name = "Beet Soup"
 	description = "Wait, how do you spell it again..?"
@@ -936,7 +936,7 @@
 
 	// Update tastes with the new name
 	LAZYSET(soup.data, how_do_you_spell_it, 1)
-	// Not perfect. Doesn't clear when the bowl type is unset. But it'll do well enough
+	// Not perfect.. Doesn't clear when the bowl type is unset.. But it'll do well enough
 
 /obj/item/reagent_containers/cup/bowl/soup/white_beet
 	initial_reagent = /datum/reagent/consumable/nutriment/soup/white_beet
@@ -1729,7 +1729,7 @@
 	percentage_of_nutriment_converted = 0.15
 
 // Cornmeal Porridge (Soup-ish)
-// Also, pretty much just a normal chemical reaction. Used in other stuff
+// Also, pretty much just a normal chemical reaction.. Used in other stuff
 /datum/reagent/consumable/nutriment/soup/cornmeal_porridge
 	name = "Cornmeal Porridge"
 	description = "A plate of cornmeal porridge. It's more flavourful than most porridges, and makes a good base for other flavours, too."

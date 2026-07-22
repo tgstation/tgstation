@@ -1,6 +1,6 @@
 // This contains all boxes that will be used on round-start spawning into a job.
 
-// Ordinary survival box. Every crewmember gets one of these.
+// Ordinary survival box.. Every crewmember gets one of these.
 /obj/item/storage/box/survival
 	name = "survival box"
 	desc = "A box with the bare essentials of ensuring the survival of you and others."

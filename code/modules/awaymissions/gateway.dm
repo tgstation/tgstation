@@ -127,7 +127,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 /datum/gateway_destination/point/get_target_turf()
 	return pick(target_turfs)
 
-/* Dense invisible object starting the teleportation. Created by gateways on activation. */
+/* Dense invisible object starting the teleportation.. Created by gateways on activation. */
 /obj/effect/gateway_portal_bumper
 	var/obj/machinery/gateway/gateway
 	density = TRUE
@@ -436,7 +436,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	// ok so what this used to do was render the tiles "on the other side" of the gateway onto the gateway mask
 	// Unfortunately since I've removed the plane inheriting from /atom vis_flags, this no longer works
 	// You could setup gateways to draw onto "lower then everything" z layers, but generating a whole stack of plane masters
-	// Just for this one effect is kinda silly. Maybe next time
+	// Just for this one effect is kind of silly.. Maybe next time
 	// Rather then that, let's just render a little preview port to the console, because for reasons that's trivial
 	vis_contents = null
 

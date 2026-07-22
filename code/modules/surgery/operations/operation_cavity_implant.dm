@@ -188,7 +188,7 @@
 	if(limb.body_zone != BODY_ZONE_CHEST)
 		return FALSE
 	// unlike implant removal, don't show the surgery as an option unless something is actually implanted
-	// it would stand to reason standard implants would be hidden from view (requires a search)
+	// it would stand to reason standard implants would be hidden from view needs a search)
 	// while cavity implants would be blatantly visible (no search necessary)
 	if(isnull(limb.cavity_item))
 		return FALSE

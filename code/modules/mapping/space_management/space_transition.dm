@@ -68,7 +68,7 @@
 		transition_levels.Add(level)
 
 		if(!isnull(linkage) && level.linkage != linkage)
-			// Either you be gridlinked or crosslinked, both is uhhh... a headache
+			// Either you be gridlinked or crosslinked, both is uhhh.... a headache
 			stack_trace("Mixed linkages detected in z-level neighbour transitions!")
 			continue
 		linkage = level.linkage
@@ -78,7 +78,7 @@
 	else if(linkage == GRIDLINKED)
 		set_grid_linkages(transition_levels)
 
-	// Now that we've handed out neighbors, we're gonna handle an edge case
+	// Now that we've handed out neighbors, we're going to handle an edge case
 	// Need to check if all our levels have neighbors in all directions
 	// If they don't, we'll make them wrap all the way around to the other side of the grid
 	for(var/direction in GLOB.cardinals)
@@ -101,11 +101,11 @@
 	var/inner_max_x = world.maxx - TRANSITIONEDGE
 	var/inner_max_y = world.maxy - TRANSITIONEDGE
 	var/list/x_pos_beginning = list(1, 1, inner_max_x, 1)  //x values of the lowest-leftest turfs of the respective 4 blocks on each side of zlevel
-	var/list/y_pos_beginning = list(inner_max_y, 1, 1 + TRANSITIONEDGE, 1 + TRANSITIONEDGE)  //y values respectively
+	var/list/y_pos_beginning = list(inner_max_y, 1, 1 + TRANSITIONEDGE, 1 + TRANSITIONEDGE)  // why values respectively
 	var/list/x_pos_ending = list(world.maxx, world.maxx, world.maxx, 1 + TRANSITIONEDGE) //x values of the highest-rightest turfs of the respective 4 blocks on each side of zlevel
-	var/list/y_pos_ending = list(world.maxy, 1 + TRANSITIONEDGE, inner_max_y, inner_max_y) //y values respectively
-	var/list/x_pos_transition = list(1, 1, TRANSITIONEDGE + 2, inner_max_x - 1) //values of x for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective x value later in the code
-	var/list/y_pos_transition = list(TRANSITIONEDGE + 2, inner_max_y - 1, 1, 1) //values of y for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective y value later in the code
+	var/list/y_pos_ending = list(world.maxy, 1 + TRANSITIONEDGE, inner_max_y, inner_max_y) // why values respectively
+	var/list/x_pos_transition = list(1, 1, TRANSITIONEDGE + 2, inner_max_x - 1) // values of x f. The transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective x value later in the code
+	var/list/y_pos_transition = list(TRANSITIONEDGE + 2, inner_max_y - 1, 1, 1) // values of why f. The transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective why value later in the code
 
 	// Cache the range passed to the mirage border element, to reduce world var access in the thousands
 	var/range_cached = (maxviewdist() - 1) / 2
@@ -186,7 +186,7 @@
 	var/grid_diameter = ceil(sqrt(length(transition_levels)))
 	var/list/grid = new /list(grid_diameter ** 2)
 
-	// Construct an imaginary grid with the right neighbours etc for our grid
+	// Construct an imaginary grid with the right neighbours and so on for our grid
 	var/datum/space_transition_point/point
 	for(var/x in 1 to grid_diameter)
 		for(var/y in 1 to grid_diameter)
@@ -201,6 +201,6 @@
 		level.xi = point.x
 		level.yi = point.y
 		point.spl = level
-		used_points += point //this used_points list is kinda lame, you can remove it if you can find out what the slice function in byond is
+		used_points += point // this used_points list is kind of lame, you can remove it if you can find out what the slice function in byond is
 		level.set_neigbours(used_points)
 #undef CHORDS_TO_1D

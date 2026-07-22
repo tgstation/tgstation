@@ -248,7 +248,7 @@
 	for(var/turf/closed/mineral/mineral_turf in RANGE_TURFS(1, mineral) - mineral)
 		mineral_turf.drill_aoe(user, 0.2)
 
-//yes this is a /mob_cooldown subtype being added to an item. I can't recommend you do what I'm doing
+// yes this is a /mob_cooldown subtype being added to an item.. I can't recommend you do what I'm doing
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet
 	check_flags = NONE
 	owner_has_control = FALSE
@@ -361,7 +361,7 @@
 	if(weapon)
 		addtimer(CALLBACK(weapon, TYPE_PROC_REF(/obj/item, melee_attack_chain), user, target), 0.1 SECONDS)
 
-// Raptor - Your shots now go through your allied mobs. You monster.
+// Raptor - Your shots now go through your allied mobs.. You monster.
 /obj/item/crusher_trophy/raptor_feather
 	name = "raptor feather"
 	desc = "A feather of an innocent raptor. You'd go to hell for this one, if you weren't already mining in it."

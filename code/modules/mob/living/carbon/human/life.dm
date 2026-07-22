@@ -1,6 +1,6 @@
 
 
-//NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
+// NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails.. In which case it happens once per ONE TICK!. So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
 
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
 // Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
@@ -159,7 +159,7 @@
 
 //END FIRE CODE
 
-//This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
+// This proc returns a number made up of the flags for body parts which you are protected on.. (such as HEAD, CHEST, GROIN, and so on See setup.dm for the full list)
 /mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = 0
 	//Handle normal clothing

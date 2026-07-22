@@ -112,12 +112,12 @@
 	return ..()
 
 //INCAPACITATED
-/// This status effect represents anything that leaves a character unable to perform basic tasks (interrupting do-afters, for example), but doesn't incapacitate them further than that (no stuns etc..)
+/// This status effect represents anything that leaves a character unable to perform basic tasks (interrupting do-afters, f. Example). Doesn't incapacitate them further than that (no stuns. So on
 /datum/status_effect/incapacitating/incapacitated
 	id = "incapacitated"
 	force_say_chance = 0
 
-// What happens when you get the incapacitated status. You get TRAIT_INCAPACITATED added to you for the duration of the status effect.
+// What happens when you get the incapacitated status.. You get TRAIT_INCAPACITATED added to you for the duration of the status effect.
 /datum/status_effect/incapacitating/incapacitated/on_apply()
 	. = ..()
 	if(!.)
@@ -389,7 +389,7 @@
 	var/obj/effect/abstract/crusher_mark/marked_underlay
 	/// If the projectile that applies this was boosted, the mark will also be boosted
 	var/boosted = FALSE
-	/// How long before the mark is ready to be detonated. Used for both the visual overlay and to determine when it's ready
+	/// How long before the mark is ready to be detonated.. Used for both the visual overlay and to determine when it's ready
 	var/ready_delay = 0.8 SECONDS
 	/// Damage dealt when the mark is detonated
 	var/detonation_damage = 50
@@ -552,7 +552,7 @@
 	duration = 10 MINUTES //you're cursed for 10 minutes have fun
 	tick_interval = 5 SECONDS
 	alert_type = null
-	/// Which nasty things are we doing? [CURSE_BLINDING / CURSE_WASTING / CURSE_GRASPING]]
+	/// Which nasty things are we doing?. [CURSE_BLINDING / CURSE_WASTING / CURSE_GRASPING]]
 	var/curse_flags = NONE
 	/// When should we next throw hands?
 	var/effect_next_activation = 0
@@ -777,7 +777,7 @@
 	duration = 600
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /atom/movable/screen/alert/status_effect/dna_melt
-	var/kill_either_way = FALSE //no amount of removing mutations is gonna save you now
+	var/kill_either_way = FALSE // no amount of removing mutations is going to save you now
 
 /datum/status_effect/dna_melt/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
@@ -913,7 +913,7 @@
 	id = "ants"
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/ants
-	duration = 2 MINUTES //Keeping the normal timer makes sure people can't somehow dump 300+ ants on someone at once so they stay there for like 30 minutes. Max w/ 1 dump is 57.6 brute.
+	duration = 2 MINUTES // Keeping the normal timer makes sure people can't somehow dump 300+ ants on someone at once so they stay there for like 30 minutes.. Max with 1 dump is 57.6 brute.
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	/// Will act as the main timer as well as changing how much damage the ants do.
 	var/ants_remaining = 0
@@ -967,7 +967,7 @@
 
 /datum/status_effect/ants/tick(seconds_between_ticks)
 	var/mob/living/carbon/human/victim = owner
-	victim.apply_damage(max(0.1, round((ants_remaining * damage_per_ant), 0.1)) * seconds_between_ticks, BRUTE, spread_damage = TRUE) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
+	victim.apply_damage(max(0.1, round((ants_remaining * damage_per_ant), 0.1)) * seconds_between_ticks, BRUTE, spread_damage = TRUE) // Scales with # of ants (lowers with time).. Roughly 10 brute over 50 seconds.
 	if(victim.stat <= SOFT_CRIT) //Makes sure people don't scratch at themselves while they're in a critical condition
 		if(prob(15))
 			switch(rand(1,2))
@@ -975,7 +975,7 @@
 					victim.say(pick(ant_debuff_speech), forced = /datum/status_effect/ants)
 				if(2)
 					victim.emote("scream")
-		if(prob(50)) // Most of the damage is done through random chance. When tested yielded an average 100 brute with 200u ants.
+		if(prob(50)) // Most of the damage is done through random chance.. When tested yielded an average 100 brute with 200u ants.
 			switch(rand(1,50))
 				if (1 to 8) //16% Chance
 					to_chat(victim, span_danger("You scratch at the ants on your scalp!."))
@@ -1173,7 +1173,7 @@
 			midas_state = "midas_4"
 	victim.update_icon()
 	if(victim.stat == DEAD)
-		qdel(src) // Dead people stop being turned to gold. Don't want people sitting on dead bodies.
+		qdel(src) // Dead people stop being turned to gold.. Don't want people sitting on dead bodies.
 
 /datum/status_effect/midas_blight/proc/on_update_overlays(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER

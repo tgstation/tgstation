@@ -39,13 +39,13 @@
 	var/inside_belt_icon_state
 	///Forced mob worn layer instead of the standard preferred size.
 	var/alternate_worn_layer
-	///The config type to use for greyscaled worn sprites. Both this and greyscale_colors must be assigned to work.
+	/// The config type to use for greyscaled worn sprites.. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_worn
-	///The config type to use for greyscaled left inhand sprites. Both this and greyscale_colors must be assigned to work.
+	/// The config type to use for greyscaled left inhand sprites.. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_inhand_left
-	///The config type to use for greyscaled right inhand sprites. Both this and greyscale_colors must be assigned to work.
+	/// The config type to use for greyscaled right inhand sprites.. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_inhand_right
-	///The config type to use for greyscaled belt overlays. Both this and greyscale_colors must be assigned to work.
+	/// The config type to use for greyscaled belt overlays.. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_belt
 
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
@@ -57,15 +57,15 @@
 
 		!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!! */
 
-	///Dimensions of the icon file used when this item is worn, eg: hats.dmi (32x32 sprite, 64x64 sprite, etc.). Allows inhands/worn sprites to be of any size, but still centered on a mob properly
+	/// Dimensions of the icon file used when this item is worn, f. Example hats.dmi (32x32 sprite, 64x64 sprite. So on Allows inhands/worn sprites to be of any size. Still centered on a mob properly
 	var/worn_x_dimension = 32
-	///Dimensions of the icon file used when this item is worn, eg: hats.dmi (32x32 sprite, 64x64 sprite, etc.). Allows inhands/worn sprites to be of any size, but still centered on a mob properly
+	/// Dimensions of the icon file used when this item is worn, f. Example hats.dmi (32x32 sprite, 64x64 sprite. So on Allows inhands/worn sprites to be of any size. Still centered on a mob properly
 	var/worn_y_dimension = 32
 	///Same as for [worn_x_dimension][/obj/item/var/worn_x_dimension] but for inhands, uses the lefthand_ and righthand_ file vars
 	var/inhand_x_dimension = 32
 	///Same as for [worn_y_dimension][/obj/item/var/worn_y_dimension] but for inhands, uses the lefthand_ and righthand_ file vars
 	var/inhand_y_dimension = 32
-	/// Worn overlay will be shifted by this along y axis
+	/// Worn overlay will be shifted by this along why axis
 	var/worn_y_offset = 0
 
 	max_integrity = 200
@@ -104,34 +104,34 @@
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
 	/// This var exists as a weird proxy "owner" ref
-	/// It's used in a few places. Stop using it, and optimially replace all uses please
+	/// It's used in a few places.. Stop using it, and optimially replace all uses please
 	var/obj/item/master = null
 
-	///Price of an item in a vending machine, overriding the base vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
+	/// Price of an item in a vending machine, overriding the base vending machine price.. Define in terms of paycheck defines as opposed to raw numbers.
 	var/custom_price
-	///Price of an item in a vending machine, overriding the premium vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
+	/// Price of an item in a vending machine, overriding the premium vending machine price.. Define in terms of paycheck defines as opposed to raw numbers.
 	var/custom_premium_price
 	///Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item
 	var/age_restricted = FALSE
 
-	///flags which determine which body parts are protected from heat. [See here][HEAD]
+	/// flags which determine which body parts are protected from heat.. [See here][HEAD]
 	var/heat_protection = 0
-	///flags which determine which body parts are protected from cold. [See here][HEAD]
+	/// flags which determine which body parts are protected from cold.. [See here][HEAD]
 	var/cold_protection = 0
-	///Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
+	/// Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage.. Keep at null to disable protection.. Only protects areas set by heat_protection flags
 	var/max_heat_protection_temperature
-	///Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
+	/// Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage.. 0 is NOT an acceptable number due to if(varname) tests!!. Keep at null to disable protection.. Only protects areas set by cold_protection flags
 	var/min_cold_protection_temperature
 
 	///list of /datum/action's that this item has.
 	var/list/datum/action/actions
 	///list of paths of action datums to give to the item on New().
 	var/list/actions_types
-	///Slot flags in which this item grants actions. If null, defaults to the item's slot flags (so actions are granted when worn)
+	/// Slot flags in which this item grants actions.. If null, defaults to the item's slot flags (so actions are granted when worn)
 	var/action_slots = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
-	///This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
+	/// This flag is used to determine when items in someone's inventory cover others.. that is helmets making it so you can't see glasses, and so on
 	var/flags_inv
 	///you can see someone's mask through their transparent visor, but you can't reach it
 	var/transparent_protection = NONE
@@ -146,17 +146,17 @@
 	var/body_parts_covered = 0
 	/// for electrical admittance/conductance (electrocution checks and shit)
 	var/siemens_coefficient = 1
-	/// How much clothing is slowing you down. Negative values speeds you up
+	/// How much clothing is slowing you down.. Negative values speeds you up
 	var/slowdown = 0
 	///percentage of armour effectiveness to remove
 	var/armour_penetration = 0
 	///Whether or not our object doubles the value of affecting armour
 	var/weak_against_armour = FALSE
-	/// The click cooldown given after attacking. Lower numbers means faster attacks
+	/// The click cooldown given after attacking.. Lower numbers means faster attacks
 	var/attack_speed = CLICK_CD_MELEE
-	/// The click cooldown on secondary attacks. Lower numbers mean faster attacks. Will use attack_speed if undefined.
+	/// The click cooldown on secondary attacks.. Lower numbers mean faster attacks.. Will use attack_speed if undefined.
 	var/secondary_attack_speed
-	///In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
+	/// In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets and so on
 	var/equip_delay_self = 0 SECONDS
 	///In deciseconds, how long an item takes to put on another person
 	var/equip_delay_other = 2 SECONDS
@@ -165,12 +165,12 @@
 	///How long it takes to resist out of the item (cuffs and such)
 	var/breakouttime = 0
 
-	///Used in [atom/proc/attackby] to say how something was attacked `"[x] has been [z.attack_verb] by [y] with [z]"`
+	/// Used in [atom/proc/attackby] to say how something was attacked `"[x] has been [z.attack_verb] by why with [z]"`
 	var/list/attack_verb_continuous
 	var/list/attack_verb_simple
-	///list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
+	/// list() of species types, if a species cannot put items in a certain slot. Species type is in list, it will be able to wear that item
 	var/list/species_exception = null
-	///This is a bitfield that defines what variations exist for bodyparts like Digi legs. See: code\_DEFINES\inventory.dm
+	/// This is a bitfield that defines what variations exist for bodyparts like Digi legs.. See: code\_DEFINES\inventory.dm
 	var/supports_variations_flags = NONE
 	/// This is a bitfield that defines which bodyshapes this item is capable of rendering, used by build_worn_icon()
 	var/bodyshapes_with_variations = NONE
@@ -202,18 +202,18 @@
 	var/block_chance = 0
 	///Effect of blocking
 	var/block_effect = /obj/effect/temp_visual/block
-	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
+	var/hit_reaction_chance = 0 // If you want to have something unrelated to blocking/armour piercing and so on Maybe not needed, but trying to think ahead/allow more freedom
 	///In tiles, how far this weapon can reach; 1 for adjacent, which is default
 	var/reach = 1
 
-	///The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot. For default list, see [/mob/proc/equip_to_appropriate_slot]
+	/// The list of slots by priority.. equip_to_appropriate_slot() uses this list.. Doesn't matter if a mob type doesn't have a slot.. For default list, see [/mob/proc/equip_to_appropriate_slot]
 	var/list/slot_equipment_priority = null
 
 	///Reference to the datum that determines whether dogs can wear the item: Needs to be in /obj/item because corgis can wear a lot of non-clothing items
 	var/datum/dog_fashion/dog_fashion = null
 
 	//Tooltip vars
-	///string form of an item's force. Edit this var only to set a custom force string
+	/// string form of an item's force.. Edit this var only to set a custom force string
 	var/force_string
 	var/last_force_string_check = 0
 	var/tip_timer
@@ -221,7 +221,7 @@
 	///Determines who can shoot this
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
-	///Used as the dye color source in the washing machine only (at the moment). Can be a hex color or a key corresponding to a registry entry, see washing_machine.dm
+	/// Used as the dye color source in the washing machine only (at the moment).. Can be a hex color or a key corresponding to a registry entry, see washing_machine.dm
 	var/dye_color
 	///Whether the item is unaffected by standard dying.
 	var/undyeable = FALSE
@@ -230,9 +230,9 @@
 
 	/// Used in obj/item/examine to give additional notes on what the weapon does, separate from the predetermined output variables
 	var/offensive_notes
-	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force requirements
+	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force needs
 	var/override_notes = FALSE
-	/// Used if we want to have a custom verb text for throwing. "John Spaceman flicks the ciggerate" for example.
+	/// Used if we want to have a custom verb text for throwing.. "John Spaceman flicks the ciggerate" for example.
 	var/throw_verb
 
 	/// A lazylist used for applying fantasy values, contains the actual modification applied to a variable.
@@ -275,7 +275,7 @@
 
 /obj/item/Destroy(force)
 	// This var exists as a weird proxy "owner" ref
-	// It's used in a few places. Stop using it, and optimially replace all uses please
+	// It's used in a few places.. Stop using it, and optimially replace all uses please
 	master = null
 	if(ismob(loc))
 		var/mob/m = loc
@@ -295,7 +295,7 @@
 	if(. & CLICK_ACTION_ANY)
 		return (isturf(loc) && !anchored) ? NONE : . //allow the object to get dragged on the floor
 
-/// Subtypes only override this proc for ctrl click purposes. obeys same principles as ctrl_click()
+/// Subtypes only override this proc for ctrl click purposes.. obeys same principles as ctrl_click()
 /obj/item/proc/item_ctrl_click(mob/user)
 	SHOULD_CALL_PARENT(FALSE)
 	return NONE
@@ -348,7 +348,7 @@
 /obj/item/proc/add_stealing_item_objective()
 	return
 
-/// Adds the weapon_description element, which shows the 'warning label' for especially dangerous objects. Override this for item types with special notes.
+/// Adds the weapon_description element, which shows the 'warning label' for especially dangerous objects.. Override this for item types with special notes.
 /obj/item/proc/add_weapon_description()
 	AddElement(/datum/element/weapon_description)
 
@@ -446,7 +446,7 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", null)
 		. += research_scan(user)
 
 /obj/item/proc/research_scan(mob/user)
-	/// Research prospects, including boostable nodes and point values. Deliver to a console to know whether the boosts have already been used.
+	/// Research prospects, including boostable nodes and point values.. Deliver to a console to know whether the boosts have already been used.
 	var/list/research_msg = list("<font color='purple'>Research prospects:</font> ")
 	///Separator between the items on the list
 	var/sep = ""
@@ -468,7 +468,7 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", null)
 	if (!sep) // nothing was shown
 		research_msg += "None"
 
-	// Extractable materials. Only shows the names, not the amounts.
+	// Extractable materials.. Only shows the names, not the amounts.
 	research_msg += ".<br><font color='purple'>Extractable materials:</font> "
 	if (length(custom_materials))
 		sep = ""
@@ -529,7 +529,7 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", null)
 		//naming these vars that i'm putting into the fantasy component to make it more readable
 		var/canFail = FALSE
 		var/announce = FALSE
-		//Apply fantasy with affix. failing this should never happen, but if it does it should not be silent.
+		// Apply fantasy with affix.. failing this should never happen, but if it does it should not be silent.
 		if(AddComponent(/datum/component/fantasy, fantasy_quality, list(affix), canFail, announce) == COMPONENT_INCOMPATIBLE)
 			to_chat(usr, span_warning("Fantasy component not compatible with [src]."))
 			CRASH("fantasy component incompatible with object of type: [type]")
@@ -565,7 +565,7 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", null)
 	var/outside_storage = !loc.atom_storage
 	var/turf/storage_turf
 	if(loc.atom_storage)
-		//We want the pickup animation to play even if we're moving the item between movables. Unless the mob is not located on a turf.
+		// We want the pickup animation to play even if we're moving the item between movables.. Unless the mob is not located on a turf.
 		if(isturf(user.loc))
 			storage_turf = get_turf(loc)
 		if(!loc.atom_storage.remove_single(user, src, user, silent = TRUE))
@@ -589,7 +589,7 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", null)
 		user.dropItemToGround(src)
 		return TRUE
 
-/// Called when a mob is manually attempting to unequip the item
+/// Called when a mob is manually trying to unequip the item
 /// Returning FALSE will prevent the unequip from happening
 /obj/item/proc/can_mob_unequip(mob/user)
 	return TRUE
@@ -720,7 +720,7 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", null)
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
 	SEND_SIGNAL(user, COMSIG_LIVING_PICKED_UP_ITEM, src)
 
-/// called when "found" in pockets and storage items. Returns 1 if the search should end.
+/// called when "found" in pockets and storage items.. Returns 1 if the search should end.
 /obj/item/proc/on_found(mob/finder)
 	return
 
@@ -938,13 +938,13 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 	var/mob/owner = loc
 	owner.update_clothing(slot_flags | owner.get_slot_by_item(src))
 
-///Returns the temperature of src. If you want to know if an item is hot use this proc.
+/// Returns the temperature of src.. If you want to know if an item is hot use this proc.
 /obj/item/proc/get_temperature()
 	if(resistance_flags & ON_FIRE)
 		return max(heat, BURNING_ITEM_MINIMUM_TEMPERATURE)
 	return heat
 
-///Returns the sharpness of src. If you want to get the sharpness of an item use this.
+/// Returns the sharpness of src.. If you want to get the sharpness of an item use this.
 /obj/item/proc/get_sharpness()
 	return sharpness
 
@@ -1009,7 +1009,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 
 	return SEND_SIGNAL(src, COMSIG_ITEM_MICROWAVE_ACT, microwave_source, microwaver, randomize_pixel_offset)
 
-///Used to check for extra requirements for blending(grinding or juicing) an object
+/// Used to check for extra needs for blending(grinding or juicing) an object
 /obj/item/proc/blend_requirements(atom/movable/grinder, mob/living/user)
 	return TRUE
 
@@ -1031,7 +1031,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 			.[reagent_type] = .[reagent_type] + amount * material.material_reagent[reagent_type] / length(material.material_reagent) * MATERIAL_REAGENTS_PER_SHEET / SHEET_MATERIAL_AMOUNT
 	return .
 
-///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
+/// Called BEFORE the object is ground up - use this to change grind results good on conditions.. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_grind()
 	PROTECTED_PROC(TRUE)
 
@@ -1079,7 +1079,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 
 	return null
 
-///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
+/// Called BEFORE the object is ground up - use this to change grind results good on conditions.. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_juice()
 	PROTECTED_PROC(TRUE)
 
@@ -1127,7 +1127,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 	if(!QDELETED(target_holder))
 		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 
-///What should The atom that blended an object do with it afterwards? Default behaviour is to delete it
+/// What should The atom that blended an object do with it afterwards?. Default behaviour is to delete it
 /atom/movable/proc/blended(obj/item/blended_item, grinded)
 	qdel(blended_item)
 
@@ -1165,7 +1165,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 		var/mob/living/L = usr
 		if(usr.client.prefs.read_preference(/datum/preference/toggle/enable_tooltips))
 			var/timedelay = usr.client.prefs.read_preference(/datum/preference/numeric/tooltip_delay) / 100
-			tip_timer = addtimer(CALLBACK(src, PROC_REF(openTip), location, control, params, usr), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
+			tip_timer = addtimer(CALLBACK(src, PROC_REF(openTip), location, control, params, usr), timedelay, TIMER_STOPPABLE)// timer takes delay in deciseconds, but the pref is in milliseconds.. dividing by 100 converts it.
 		if(usr.client.prefs.read_preference(/datum/preference/toggle/item_outlines))
 			if(istype(L) && L.incapacitated)
 				apply_outline(COLOR_RED_GRAY) //if they're dead or handcuffed, let's show the outline as red to indicate that they can't interact with that right now
@@ -1185,11 +1185,11 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 	remove_filter(HOVER_OUTLINE_FILTER)
 
 /obj/item/proc/apply_outline(outline_color = null)
-	if(((get(src, /mob) != usr) && !loc?.atom_storage && !(item_flags & IN_STORAGE)) || QDELETED(src) || isobserver(usr)) //cancel if the item isn't in an inventory, is being deleted, or if the person hovering is a ghost (so that people spectating you don't randomly make your items glow)
+	if(((get(src, /mob) != usr) && !loc?.atom_storage && !(item_flags & IN_STORAGE)) || QDELETED(src) || isobserver(usr)) // cancel if the item isn't in an inventory, is being deleted. If the person hovering is a ghost (so that people spectating you don't randomly make your items glow)
 		return FALSE
 	var/theme = LOWER_TEXT(usr.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 	if(!outline_color) //if we weren't provided with a color, take the theme's color
-		switch(theme) //yeah it kinda has to be this way
+		switch(theme) // yeah it kind of has to be this way
 			if("midnight")
 				outline_color = COLOR_THEME_MIDNIGHT
 			if("plasmafire")
@@ -1211,11 +1211,11 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 			else //this should never happen, hopefully
 				outline_color = COLOR_WHITE
 	if(color)
-		outline_color = COLOR_WHITE //if the item is recolored then the outline will be too, let's make the outline white so it becomes the same color instead of some ugly mix of the theme and the tint
+		outline_color = COLOR_WHITE // if the item is recolored then the outline will be too, let's make the outline white so it becomes the same col. Instead of some ugly mix of the theme. The tint
 
 	add_filter(HOVER_OUTLINE_FILTER, 1, list("type" = "outline", "size" = 1, "color" = outline_color))
 
-/// Called when a mob tries to use the item as a tool. Handles most checks.
+/// Called when a mob tries to use the item as a tool.. Handles most checks.
 /obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
@@ -1262,7 +1262,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 
 	return TRUE
 
-/// Called before [obj/item/proc/use_tool] if there is a delay, or by [obj/item/proc/use_tool] if there isn't. Only ever used by welding tools and stacks, so it's not added on any other [obj/item/proc/use_tool] checks.
+/// Called before [obj/item/proc/use_tool] if there is a delay, or by [obj/item/proc/use_tool] if there isn't.. Only ever used by welding tools and stacks, so it's not added on any other [obj/item/proc/use_tool] checks.
 /obj/item/proc/tool_start_check(mob/living/user, amount=0, heat_required=0)
 	. = tool_use_check(user, amount, heat_required)
 	if(.)
@@ -1272,7 +1272,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 /obj/item/proc/tool_use_check(mob/living/user, amount, heat_required)
 	return !amount
 
-/// Generic use proc. Depending on the item, it uses up fuel, charges, sheets, etc. Returns TRUE on success, FALSE on failure.
+/// Generic use proc.. Depending on the item, it uses up fuel, charges, sheets, and so on Returns TRUE on success, FALSE on failure.
 /obj/item/proc/use(used)
 	return !used
 
@@ -1297,9 +1297,9 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 		if(!TIMER_COOLDOWN_FINISHED(src, COOLDOWN_TOOL_SOUND))
 			return
 		playsound(target, played_sound, volume, TRUE)
-		TIMER_COOLDOWN_START(src, COOLDOWN_TOOL_SOUND, 4 SECONDS) //based on our longest sound clip
+		TIMER_COOLDOWN_START(src, COOLDOWN_TOOL_SOUND, 4 SECONDS) // good on our longest sound clip
 
-/// Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
+/// Used in a callback that is passed by use_tool into do_after call.. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	. = tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
@@ -1328,7 +1328,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 		return ..()
 
 	var/mob/owner = loc
-	// This should remove the IN_INVENTORY flag. Otherwise we'll end up having a loop
+	// This should remove the IN_INVENTORY flag.. Otherwise we'll end up having a loop
 	owner.transferItemToLoc(src, destination, force = TRUE, silent = TRUE, animated = FALSE)
 
 /obj/item/proc/canStrip(mob/stripper, mob/owner)
@@ -1338,7 +1338,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
 
-///Called by the carbon throw_item() proc. Returns null if the item negates the throw, or a reference to the thing to suffer the throw else.
+/// Called by the carbon throw_item() proc.. Returns null if the item negates the throw, or a reference to the thing to suffer the throw else.
 /obj/item/proc/on_thrown(mob/living/carbon/user, atom/target)
 	if((item_flags & ABSTRACT) || HAS_TRAIT(src, TRAIT_NODROP))
 		return
@@ -1369,7 +1369,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
  * * discover_after - if the item will be discovered after being chomped (FALSE will usually mean it was swallowed, TRUE will usually mean it was bitten into and discovered)
  */
 /obj/item/proc/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
-	if(get_sharpness() && force >= 5) //if we've got something sharp with a decent force (ie, not plastic)
+	if(get_sharpness() && force >= 5) // if we've got something sharp with a decent force that is not plastic)
 		INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
 		victim.visible_message(span_warning("[victim] looks like [victim.p_theyve()] just bit something they shouldn't have!"), \
 							span_boldwarning("OH GOD! Was that a crunch? That didn't feel good at all!!"))
@@ -1386,9 +1386,9 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 		return discover_after
 
 	if(custom_materials?.len) //if we've got materials, let's see what's in it
-		// How many mats have we found? You can only be affected by two material datums by default
+		// How many mats have we found?. You can only be affected by two material datums by default
 		var/found_mats = 0
-		// How much of each material is in it? Used to determine if the glass should break
+		// How much of each material is in it?. Used to determine if the glass should break
 		var/total_material_amount = 0
 
 		for(var/mats in custom_materials)
@@ -1465,7 +1465,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 		var/mob/mob_loc = loc
 		mob_loc.update_clothing(slot_flags)
 
-/// Called on [/datum/element/openspace_item_click_handler/proc/on_afterattack]. Check the relative file for information.
+/// Called on [/datum/element/openspace_item_click_handler/proc/on_afterattack].. Check the relative file for information.
 /obj/item/proc/handle_openspace_click(turf/target, mob/user, list/modifiers)
 	stack_trace("Undefined handle_openspace_click() behaviour. Ascertain the openspace_item_click_handler element has been attached to the right item and that its proc override doesn't call parent.")
 
@@ -1831,7 +1831,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 
 		if(ishuman(target))
 			var/mob/living/carbon/human/victim_human = target
-			if(victim_human.key && !victim_human.client) // AKA braindead
+			if(victim_human.key && !victim_human.client) // Also known as braindead
 				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
 					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
 					LAZYADD(victim_human.afk_thefts, new_entry)
@@ -1897,7 +1897,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 	toolspeed = reset_fantasy_variable("toolspeed", toolspeed)
 	SEND_SIGNAL(src, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, bonus)
 
-//automatically finds tool behavior if there is only one. requires an extension of the proc if a tool has multiple behaviors
+// automatically finds tool behavior if there is only one.. needs an extension of the proc if a tool has multiple behaviors
 /obj/item/proc/get_all_tool_behaviours()
 	if (!isnull(tool_behaviour))
 		return list(tool_behaviour)
@@ -2152,7 +2152,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 
 	return src
 
-/// Checks if the bait is liked by the fish type or not. Returns a multiplier that affects the chance of catching it.
+/// Checks if the bait is liked by the fish type or not.. Returns a multiplier that affects the chance of catching it.
 /obj/item/proc/check_bait(obj/item/fish/fish)
 	if(HAS_TRAIT(src, TRAIT_OMNI_BAIT))
 		return 1
@@ -2210,7 +2210,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 		embed_data = new embed_type(src)
 	return embed_data
 
-/// Sets our embedding datum to a different one. Can also take types
+/// Sets our embedding datum to a different one.. Can also take types
 /obj/item/proc/set_embed(datum/embedding/new_embed)
 	if (new_embed == embed_data)
 		return

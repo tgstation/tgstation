@@ -28,11 +28,11 @@ GLOBAL_LIST_INIT(hfr_fuels_list, hfr_fuels_create_list())
 	var/gas_production_multiplier = 1
 	///Max allowed temperature multiplier, scales the max temperature we can hit, see FUSION_MAXIMUM_TEMPERATURE (Maxed at 1, don't go getting any ideas)
 	var/temperature_change_multiplier = 1
-	///These are the main fuels, only 2 gases that are the ones being consumed by the fusion reaction (eg. H2 and trit)
+	/// These are the main fuels, only 2 gases that are the ones being consumed by the fusion reaction for example H2 and trit)
 	var/requirements = list()
 	///Gases that gets produced directly in the internal gasmix
 	var/primary_products = list()
-	///Gases that gets produced in the moderator gasmix or directly ejected (must be 6 gases), the order indicate at what power level the gases are going to be made (from power level 1 to 6)
+	/// Gases that gets produced in the moderat. Gasmix. Directly ejected (must be 6 gases), the order indicate at what power level the gases are going to be made (from power level 1 to 6)
 	var/secondary_products = list()
 	///Flags to decide what behaviour the meltdown will have depending on the fuel mix used
 	var/meltdown_flags = HYPERTORUS_FLAG_BASE_EXPLOSION

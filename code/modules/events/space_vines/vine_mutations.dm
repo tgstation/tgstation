@@ -188,7 +188,7 @@
 	quality = MINOR_NEGATIVE
 	severity = SEVERITY_MINOR
 
-/// Destroys any vine on spread-target's tile. The checks for if this should be done are in the spread() proc.
+/// Destroys any vine on spread-target's tile.. The checks for if this should be done are in the spread() proc.
 /datum/spacevine_mutation/vine_eating/on_spread(obj/structure/spacevine/holder, turf/target)
 	for(var/obj/structure/spacevine/prey in target)
 		qdel(prey)
@@ -210,7 +210,7 @@
 	. = ..()
 	aggrospread_act(holder, buckled)
 
-/// Hurts mobs. To be used when a vine with aggressive spread mutation spreads into the mob's tile or buckles them.
+/// Hurts mobs.. To be used when a vine with aggressive spread mutation spreads into the mob's tile or buckles them.
 /datum/spacevine_mutation/aggressive_spread/aggrospread_act(obj/structure/spacevine/vine, mob/living/living_mob)
 	if(isvineimmune(living_mob) || living_mob.stat == DEAD)
 		return
@@ -220,7 +220,7 @@
 		playsound(living_mob, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
 		living_mob.visible_message(span_danger("[living_mob] is brutally threshed by [vine]!"), \
 		span_userdanger("You are brutally threshed by [vine]!"))
-		log_combat(vine, living_mob, "aggressively spread into") //You aren't being attacked by the vines. You just happen to stand in their way.
+		log_combat(vine, living_mob, "aggressively spread into") // You aren't being attacked by the vines.. You just happen to stand in their way.
 		return
 
 	var/mob/living/carbon/victim = living_mob

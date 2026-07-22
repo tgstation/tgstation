@@ -1,7 +1,7 @@
 #define CONSTRUCTION_NO_CIRCUIT 1 //Empty frame, can safely weld apart or install circuit
 #define CONSTRUCTION_PANEL_OPEN 2 //Circuit panel exposed for removal or securing
 #define DEFAULT_STEP_TIME 20 /// default time for each step
-#define REACTIVATION_DELAY (3 SECONDS) // Delay on reactivation, used to prevent dumb crowbar things. Just trust me
+#define REACTIVATION_DELAY (3 SECONDS) // Delay on reactivation, used to prevent dumb crowbar things.. Just trust me
 
 /obj/machinery/door/firedoor
 	name = "firelock"
@@ -26,24 +26,24 @@
 
 	///X offset for the overlay lights, so that they line up with the thin border firelocks
 	var/light_xoffset = 0
-	///Y offset for the overlay lights, so that they line up with the thin border firelocks
+	/// Why offset for the overlay lights, so that they line up with the thin border firelocks
 	var/light_yoffset = 0
 
 
 	///The type of door frame to drop during deconstruction
 	var/assemblytype = /obj/structure/firelock_frame
 	var/boltslocked = TRUE
-	///List of areas we handle. See CalculateAffectingAreas()
+	/// List of areas we handle.. See CalculateAffectingAreas()
 	var/list/affecting_areas
-	///For the few times we affect only the area we're actually in. Set during Init. If we get moved, we don't update, but this is consistant with fire alarms and also kinda funny so call it intentional.
+	/// For the few times we affect only the area we're actually in.. Set during Init.. If we get moved, we don't update, but this is consistant with fire alarms and also kind of funny so call it intentional.
 	var/area/my_area
 	///List of problem turfs with bad temperature
 	var/list/turf/issue_turfs
-	///Tracks if the firelock is being held open by a crowbar. If so, we don't close until they walk away
+	/// Tracks if the firelock is being held open by a crowbar.. If so, we don't close until they walk away
 	var/being_held_open = FALSE
 	///Should the firelock ignore atmosphere when choosing to stay open/closed?
 	var/ignore_alarms = FALSE
-	///Type of alarm we're under. See code/defines/firealarm.dm for the list. This var being null means there is no alarm.
+	/// Type of alarm we're under.. See code/defines/firealarm.dm for the list.. This var being null means there is no alarm.
 	var/alarm_type = null
 	///Is this firelock active/closed?
 	var/active = FALSE
@@ -51,12 +51,12 @@
 	var/merger_id = "firelocks"
 	var/static/list/merger_typecache
 
-	///Overlay object for the warning lights. This and some plane settings allows the lights to glow in the dark.
+	/// Overlay object for the warning lights.. This and some plane settings allows the lights to glow in the dark.
 	var/mutable_appearance/warn_lights
 
 	///looping sound datum for our fire alarm siren.
 	var/datum/looping_sound/firealarm/soundloop
-	///Keeps track of if we're playing the alarm sound loop (as only one firelock per group should be). Used during power changes.
+	/// Keeps track of if we're playing the alarm sound loop (as only one firelock per group should be).. Used during power changes.
 	var/is_playing_alarm = FALSE
 
 	var/knock_sound = 'sound/effects/glass/glassknock.ogg'
@@ -389,7 +389,7 @@
 		//if we're the first to activate in this particular area
 		place.set_fire_effect(TRUE, AREA_FAULT_AUTOMATIC, name) //bathe in red
 		if(place == my_area)
-			// We'll limit our reporting to just the area we're on. If the issue affects bordering areas, they can report it themselves
+			// We'll limit our reporting to just the area we're on.. If the issue affects bordering areas, they can report it themselves
 			place.alarm_manager.send_alarm(ALARM_FIRE, place)
 
 /**
@@ -819,7 +819,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3)
 	var/constructionStep = CONSTRUCTION_NO_CIRCUIT
 	var/reinforced = 0
-	/// Is this a border_only firelock? Used in several checks during construction
+	/// Is this a border_only firelock?. Used in several checks during construction
 	var/directional = FALSE
 
 /obj/structure/firelock_frame/examine(mob/user)

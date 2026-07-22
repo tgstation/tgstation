@@ -254,16 +254,16 @@
 	. = ..()
 	if(!(flags_1 & INITIALIZED_1))
 		return
-	if(!(arrived.flags_1 & INITIALIZED_1)) // If arrived hasn't finished its own Initialize() yet (e.g. during its own creation during mapload), on_atom_inited() will already call enter_hot_spring() for it once
+	if(!(arrived.flags_1 & INITIALIZED_1)) // If arrived hasn't finished its own Initialize() yet (e.g.. during its own creation during mapload), on_atom_inited() will already call enter_hot_spring() for it once
 		return
 	enter_hot_spring(arrived)
 
 /turf/open/water/hot_spring/on_atom_inited(datum/source, atom/movable/movable)
 	enter_hot_spring(movable)
 
-///Registers the signals from the immerse element and calls dip_in if the movable has the required trait.
+/// Registers the signals from the immerse element and calls dip_in if the movable has the needed trait.
 /turf/open/water/hot_spring/proc/enter_hot_spring(atom/movable/movable)
-	if(is_type_in_typecache(movable, GLOB.immerse_ignored_movable)) // So we don't immerse weird things like turf decals/effects, projectiles, etc
+	if(is_type_in_typecache(movable, GLOB.immerse_ignored_movable)) // So we don't immerse weird things like turf decals/effects, projectiles, and so on
 		return FALSE
 	RegisterSignal(movable, SIGNAL_ADDTRAIT(TRAIT_IMMERSED), PROC_REF(dip_in))
 	if(isliving(movable)) //so far, exiting a hot spring only has effects on living mobs.

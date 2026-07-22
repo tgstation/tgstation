@@ -26,7 +26,7 @@
 	var/glass_fix = TRUE
 	///Represents a signel source of screaming when broken
 	var/datum/alarm_handler/alarm_manager
-	///Used for subtypes that have a UI in them. The examine on click while adjecent will not fire, as we already get a popup
+	/// Used for subtypes that have a UI in them.. The examine on click while adjecent will not fire, as we already get a popup
 	var/autoexamine_while_closed = TRUE
 
 /datum/armor/structure_displaycase
@@ -200,7 +200,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 
-///Handles placing an item into the display case. Returns TRUE if the item failed to be placed inside the container, useful for descendants
+/// Handles placing an item into the display case.. Returns TRUE if the item failed to be placed inside the container, useful for descendants
 /obj/structure/displaycase/proc/insert_showpiece(obj/item/new_showpiece, mob/user)
 	if(showpiece_type && !istype(new_showpiece, showpiece_type))
 		to_chat(user, span_notice("This doesn't belong in this kind of display."))
@@ -512,9 +512,9 @@
 	glass_fix = FALSE //Fixable with tools instead.
 	pass_flags = PASSTABLE ///Can be placed and moved onto a table.
 	autoexamine_while_closed = FALSE
-	///The price of the item being sold. Altered by grab intent ID use.
+	/// The price of the item being sold.. Altered by grab intent ID use.
 	var/sale_price = 20
-	///The Account which will receive payment for purchases. Set by the first ID to swipe the tray.
+	/// The Account which will receive payment for purchases.. Set by the first ID to swipe the tray.
 	var/datum/bank_account/payments_acc = null
 
 /obj/structure/displaycase/forsale/update_icon_state()

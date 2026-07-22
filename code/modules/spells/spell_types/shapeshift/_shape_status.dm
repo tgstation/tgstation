@@ -7,7 +7,7 @@
 	// When the mob's deleted on_remove() will handle our references
 	on_remove_on_mob_delete = TRUE
 
-	/// The caster's mob. Who has transformed into us
+	/// The caster's mob.. Who has transformed into us
 	/// This reference is handled in [/proc/restore_caster], which is always called if we delete
 	var/mob/living/caster_mob
 	/// Whether we're currently undoing the change
@@ -25,7 +25,7 @@
 		qdel(src)
 		return
 
-	// No caster mob, no one to put in the mob. Self-delete
+	// No caster mob, no one to put in the mob.. Self-delete
 	if(!istype(caster))
 		stack_trace("Mob shapechange status effect applied without a proper caster.")
 		qdel(src)

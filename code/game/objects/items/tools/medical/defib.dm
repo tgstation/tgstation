@@ -328,8 +328,8 @@
 	var/cooldown = FALSE
 	var/busy = FALSE
 	var/obj/item/defibrillator/defib
-	var/req_defib = TRUE // Whether or not the paddles require a defibrilator object
-	var/recharge_time = 6 SECONDS // Only applies to defibs that do not require a defibrilator. See: do_success()
+	var/req_defib = TRUE // Whether or not the paddles need a defibrilator object
+	var/recharge_time = 6 SECONDS // Only applies to defibs that do not need a defibrilator.. See: do_success()
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 
 /obj/item/shockpaddles/Initialize(mapload)

@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(air)
 	var/list/expansion_queue = list()
 	/// List of turfs to recalculate adjacent turfs on before processing
 	var/list/adjacent_rebuild = list()
-	/// A list of machines that will be processed when currentpart == SSAIR_ATMOSMACHINERY. Use SSair.begin_processing_machine and SSair.stop_processing_machine to add and remove machines.
+	/// A list of machines that will be processed when currentpart == SSAIR_ATMOSMACHINERY.. Use SSair.begin_processing_machine and SSair.stop_processing_machine to add and remove machines.
 	var/list/obj/machinery/atmos_machinery = list()
 
 	var/list/pipe_init_dirs_cache = list()
@@ -50,7 +50,7 @@ SUBSYSTEM_DEF(air)
 	/// Reactions which will contribute to a hotspot's size.
 	var/list/hotspot_reactions
 
-	/// A cache of objects that perisists between processing runs when resumed == TRUE. Dangerous, qdel'd objects not cleared from this may cause runtimes on processing.
+	/// A cache of objects that perisists between processing runs when resumed == TRUE.. Dangerous, qdel'd objects not cleared from this may cause runtimes on processing.
 	var/list/currentrun = list()
 	var/currentpart = SSAIR_PIPENETS
 
@@ -121,7 +121,7 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 
-	// Every time we fire, we want to make sure pipenets are rebuilt. The game state could have changed between each fire() proc call
+	// Every time we fire, we want to make sure pipenets are rebuilt.. The game state could have changed between each fire() proc call
 	// and anything missing a pipenet can lead to unintended behaviour at worse and various runtimes at best.
 	if(length(rebuild_queue) || length(expansion_queue))
 		timer = TICK_USAGE_REAL
@@ -483,7 +483,7 @@ SUBSYSTEM_DEF(air)
 			//The group also expands by a tile per rebuild on each edge, suffering
 			T.excited_group.garbage_collect() //Kill the excited group, it'll reform on its own later
 
-///Puts an active turf to sleep so it doesn't process. Do this without cleaning up its excited group.
+/// Puts an active turf to sleep so it doesn't process.. Do this without cleaning up its excited group.
 /datum/controller/subsystem/air/proc/sleep_active_turf(turf/open/T)
 	active_turfs -= T
 	if(currentpart == SSAIR_ACTIVETURFS)
@@ -494,7 +494,7 @@ SUBSYSTEM_DEF(air)
 	if(istype(T))
 		T.excited = FALSE
 
-///Adds a turf to active processing, handles duplicates. Call this with blockchanges == TRUE if you want to nuke the assoc excited group
+/// Adds a turf to active processing, handles duplicates.. Call this with blockchanges == TRUE if you want to nuke the assoc excited group
 /datum/controller/subsystem/air/proc/add_to_active(turf/open/activate, blockchanges = FALSE)
 	if(istype(activate) && activate.air)
 		activate.significant_share_ticker = 0
@@ -554,10 +554,10 @@ SUBSYSTEM_DEF(air)
 		if(CHECK_TICK)
 			time--
 
-	// Now we're gonna compare for differences
+	// Now we're going to compare for differences
 	// Taking advantage of current cycle being set to negative before this run to do A->B B->A prevention
 	for(var/turf/open/potential_diff as anything in difference_check)
-		// I can't use 0 here, so we're gonna do this instead. If it ever breaks I'll eat my shoe
+		// I can't use 0 here, so we're going to do this instead.. If it ever breaks I'll eat my shoe
 		potential_diff.current_cycle = -INFINITY
 		for(var/turf/open/enemy_tile as anything in potential_diff.atmos_adjacent_turfs)
 			// If it's already been processed, then it's already talked to us
@@ -615,7 +615,7 @@ SUBSYSTEM_DEF(air)
 /// Logs all active turfs at roundstart to the mapping log so it can be readily accessed.
 /datum/controller/subsystem/air/proc/log_active_turfs()
 // sadly this has to be here because we can't realistically expect that all active turfs will be resolved in every possible situation when running through CI.
-// In an ideal world, we would have absolutely zero active turfs 99.99% of the time, but that's not the case. `log_mapping()` during world initialize triggers a CI fail.
+// In an ideal world, we would have absolutely zero active turfs 99.99% of the time, but that's not the case.. `log_mapping()` during world initialize triggers a CI fail.
 #ifdef UNIT_TESTS
 	return
 #else
@@ -650,7 +650,7 @@ SUBSYSTEM_DEF(air)
 				level_traits += trait
 				tally_by_level_trait[trait]++
 
-		// so we can pass along the area type for the log, making it much easier to locate the active turf for a mapper assuming all area types are unique. This is only really a problem for stuff like ruin areas.
+		// so we can pass along the area type f. The log, making it much easier to locate the active turf f. A mapper assuming all area types are unique.. This is only really a problem for stuff like ruin areas.
 		var/area/turf_area = get_area(active_turf)
 		message_to_log += "Active turf: [AREACOORD(active_turf)] ([turf_area.type]). Turf type: [active_turf.type]. Relevant Z-Trait(s): [english_list(level_traits)]."
 
@@ -694,7 +694,7 @@ SUBSYSTEM_DEF(air)
 		if (ET_EG)
 			if (ET_EG != EG)
 				EG.merge_groups(ET_EG)
-				EG = excited_group //merge_groups() may decide to replace our current EG
+				EG = excited_group // merge_groups() may decide to replace our current For example
 		else
 			EG.add_turf(ET)
 		if (!ET.excited)
@@ -838,7 +838,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 	atmos_machinery -= machine
 
 	// If we're currently processing atmos machines, there's a chance this machine is in
-	// the currentrun list, which is a cache of atmos_machinery. Remove it from that list
+	// the currentrun list, which is a cache of atmos_machinery.. Remove it from that list
 	// as well to prevent processing qdeleted objects in the cache.
 	if(currentpart == SSAIR_ATMOSMACHINERY)
 		currentrun -= machine

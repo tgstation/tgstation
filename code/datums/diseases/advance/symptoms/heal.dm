@@ -452,9 +452,9 @@
 
 	return FALSE
 
-/// Determines the rate at which Plasma Fixation heals based on the amount of plasma in the air
+/// Determines the rate at which Plasma Fixation heals good on the amount of plasma in the air
 #define HEALING_PER_MOL 1.1
-/// Determines the rate at which Plasma Fixation heals based on the amount of plasma being breathed through internals
+/// Determines the rate at which Plasma Fixation heals good on the amount of plasma being breathed through internals
 #define HEALING_PER_BREATH_PRESSURE 0.05
 /// Determines the highest amount you can be healed for when breathing plasma from internals
 #define MAX_HEAL_COEFFICIENT_INTERNALS 0.75
@@ -516,9 +516,9 @@
 	. = 0
 
 	// Check internals
-	///  the amount of mols in a breath is significantly lower than in the environment so we are just going to use the tank's
-	///  distribution pressure as an abstraction rather than calculate it using the ideal gas equation.
-	///  balanced around a tank set to 4kpa = about 0.2 healing power. maxes out at 0.75 healing power, or 15kpa.
+	/// the amount of mols in a breath is significantly lower than in the environment so we are just going to use the tank's
+	/// distribution pressure as an abstraction rather than calculate it using the ideal gas equation.
+	/// balanced around a tank set to 4kpa = about 0.2 healing power.. maxes out at 0.75 healing power, or 15kpa.
 	var/obj/item/tank/internals/internals_tank = carbon_host.internal
 	if(internals_tank)
 		var/datum/gas_mixture/tank_contents = internals_tank.return_air()
@@ -544,7 +544,7 @@
 
 	var/difference = carbon_host.get_body_temp_normal() - carbon_host.bodytemperature
 	if(prob(5))
-		if(difference > -1) // Yes, it's supposed to be -1 and not 0. Probably so you keep getting passive messages even at normal temperature.
+		if(difference > -1) // Yes, it's supposed to be -1 and not 0.. Probably so you keep getting passive messages even at normal temperature.
 			to_chat(carbon_host, span_notice("You feel warmer."))
 		if(difference < 0)
 			to_chat(carbon_host, span_notice("You feel less hot."))

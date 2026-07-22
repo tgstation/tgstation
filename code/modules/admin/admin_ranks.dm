@@ -13,7 +13,7 @@ GLOBAL_PROTECT(protected_ranks)
 	var/rights = R_DEFAULT
 	/// Rights we're allowed to use, pre filtering
 	var/include_rights = NONE
-	/// These are the rights of include_rights we aren't allowed to use. Frankly I have no idea why this exists
+	/// These are the rights of include_rights we aren't allowed to use.. Frankly I have no idea why this exists
 	var/exclude_rights = NONE
 	/// Rights we're allowed to edit on other folks, impact of this is dependent on R_PERMISSIONS and R_DBRANKS
 	var/can_edit_rights = NONE
@@ -135,7 +135,7 @@ GLOBAL_PROTECT(protected_ranks)
 			return "Temporary"
 
 /// Loads admin ranks.
-///	Return a list containing the backup data if they were loaded from the database backup json
+/// Return a list containing the backup data if they were loaded from the database backup json
 /proc/load_admin_ranks(dbfail, no_update)
 	if(IsAdminAdvancedProcCall())
 		to_chat(usr, span_adminprefix("Admin Reload blocked: Advanced ProcCall detected."), confidential = TRUE)
@@ -270,7 +270,7 @@ GLOBAL_PROTECT(protected_ranks)
 	var/list/rank_names = list()
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
 		rank_names[R.name] = R
-	//ckeys listed in admins.txt are always made admins before sql loading is attempted
+	// ckeys listed in admins.txt are always made admins before sql loading is tried
 	var/admins_text = file2text("[global.config.directory]/admins.txt")
 	var/regex/admins_regex = new(@"^(?!#)(.+?)\s+=\s+(.+)", "gm")
 

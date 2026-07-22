@@ -239,7 +239,7 @@
 		new /mob/living/basic/garden_gnome(.)
 
 /datum/supply_pack/critter/fish
-	test_ignored = TRUE // However, we should be wary of how possible it is to get more valuable fish out of this on average, depending on sample size.
+	test_ignored = TRUE // But we should be wary of how possible it is to get more valuable fish out of this on average, depending on sample size.
 
 /datum/supply_pack/critter/fish/aquarium_fish
 	name = "Aquarium Fish Case"

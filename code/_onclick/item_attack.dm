@@ -75,7 +75,7 @@
 		return TRUE
 
 	// At this point it means the attack was "successful", or at least unhandled, in some way
-	// This can mean nothing happened, this can mean the target took damage, etc.
+	// This can mean nothing happened, this can mean the target took damage, and so on
 
 	if(user.client && isitem(target))
 		var/mob/living/living_user = astype(user)
@@ -92,7 +92,7 @@
 		return TRUE
 	interact(user)
 
-/// Called when the item is in the active hand, and right-clicked. Intended for alternate or opposite functions, such as lowering reagent transfer amount. At the moment, there is no verb or hotkey.
+/// Called when the item is in the active hand, and right-clicked.. Intended for alternate or opposite functions, such as lowering reagent transfer amount.. At the moment, there is no verb or hotkey.
 /obj/item/proc/attack_self_secondary(mob/user, modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF_SECONDARY, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
@@ -264,7 +264,7 @@
 	add_fingerprint(user)
 	return FALSE // unhandled
 
-/// The equivalent of [/obj/item/proc/attack] but for alternate attacks, AKA right clicking
+/// The equivalent of [/obj/item/proc/attack] but for alternate attacks, Also known as right clicking
 /obj/item/proc/attack_secondary(mob/living/victim, mob/living/user, list/modifiers, list/attack_modifiers)
 	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SECONDARY, victim, user, modifiers, attack_modifiers)
 
@@ -347,7 +347,7 @@
 		wounding = CANT_WOUND
 
 	if(user != src)
-		// This doesn't factor in armor, or most damage modifiers (physiology). Your mileage may vary
+		// This doesn't factor in armor, or most damage modifiers (physiology).. Your mileage may vary
 		if(check_block(attacking_item, final_force, "\the [attacking_item]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
 			return ATTACK_FAILED
 
@@ -356,7 +356,7 @@
 	if(final_force <= 0)
 		return 0
 
-	if(ishuman(src) || client) // istype(src) is kinda bad, but it's to avoid spamming the blackbox
+	if(ishuman(src) || client) // istype(src) is kind of bad, but it's to avoid spamming the blackbox
 		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
 		SSblackbox.record_feedback("tally", "zone_targeted", 1, user.zone_selected)
 
@@ -499,7 +499,7 @@
 	var/message_verb_continuous = "attacks"
 	var/message_verb_simple = "attack"
 	var/message_hit_area = get_hit_area_message(hit_area)
-	// Sanity in case one is... longer than the other?
+	// Sanity in case one is.... longer than the other?
 	if (picked_index && length(weapon.attack_verb_continuous) >= picked_index)
 		message_verb_continuous = weapon.attack_verb_continuous[picked_index]
 	if (picked_index && length(weapon.attack_verb_simple) >= picked_index)

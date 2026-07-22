@@ -13,7 +13,7 @@
 	// This layer only matters for determining when you click it vs other objects
 	layer = BELOW_OPEN_DOOR_LAYER
 	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 5)
-	/// If TRUE, we can't pass through unless the mob is resting (or fulfills more specific requirements)
+	/// If TRUE, we can't pass through unless the mob is resting (or fulfills more specific needs
 	var/require_resting = TRUE
 	/// Layer the flaps render on
 	var/flaps_layer = ABOVE_MOB_LAYER
@@ -197,7 +197,7 @@
 		return TRUE
 	if(pass_info.pulling_info)
 		return CanAStarPass(to_dir, pass_info.pulling_info)
-	return TRUE //diseases, stings, etc can pass
+	return TRUE // diseases, stings, and so on can pass
 
 
 /obj/structure/plasticflaps/CanAllowThrough(atom/movable/mover, border_dir)

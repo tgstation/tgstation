@@ -1,4 +1,4 @@
-///Burdened grants some mutations upon injuring yourself sufficiently
+/// Burdened grants some mutations upon injuring yourself enough
 /datum/brain_trauma/special/burdened
 	name = "Flagellating Compulsions"
 	desc = "Patient feels compelled to injure themselves in various incapacitating and horrific ways. \
@@ -10,7 +10,7 @@
 	gain_text = span_notice("You feel burdened!")
 	lose_text = span_warning("You no longer feel the need to burden yourself!")
 	random_gain = FALSE
-	/// goes from 0 to 9 (but can be beyond 9, just does nothing) and gives rewards. increased by disabling yourself with debuffs
+	/// goes from 0 to 9 (but can be beyond 9, just does nothing) and gives rewards.. increased by disabling yourself with debuffs
 	var/burden_level = 0
 	/// Static list of organ slots that add burden when lost
 	var/static/list/burden_organ_slots = list(
@@ -180,7 +180,7 @@
 	if(!burdened_species)
 		return
 
-	/// only organs that are slotted in these count. because there's a lot of useless organs to cheese with.
+	/// only organs that are slotted in these count.. because there's a lot of useless organs to cheese with.
 	var/list/critical_slots = burden_organ_slots.Copy()
 	if(!burdened_species.mutantheart)
 		critical_slots -= ORGAN_SLOT_HEART
@@ -220,7 +220,7 @@
 /datum/brain_trauma/special/burdened/proc/limbs_added_burden(datum/source, obj/item/bodypart/new_limb, special)
 	SIGNAL_HANDLER
 
-	if(special) //something we don't wanna consider, like instaswapping limbs
+	if(special) // something we don't want to consider, like instaswapping limbs
 		return
 	update_burden(increase = FALSE)
 
@@ -228,7 +228,7 @@
 /datum/brain_trauma/special/burdened/proc/limbs_removed_burden(datum/source, obj/item/bodypart/old_limb, special, dismembered)
 	SIGNAL_HANDLER
 
-	if(special) //something we don't wanna consider, like instaswapping limbs
+	if(special) // something we don't want to consider, like instaswapping limbs
 		return
 	update_burden(increase = TRUE)
 

@@ -21,7 +21,7 @@
 /datum/status_effect/drowsiness/on_remove()
 	UnregisterSignal(owner, COMSIG_COMPONENT_CLEAN_FACE_ACT)
 
-/// Signal proc for [COMSIG_COMPONENT_CLEAN_FACE_ACT]. When we wash our face, reduce drowsiness by a bit.
+/// Signal proc for [COMSIG_COMPONENT_CLEAN_FACE_ACT].. When we wash our face, reduce drowsiness by a bit.
 /datum/status_effect/drowsiness/proc/on_face_clean(datum/source)
 	SIGNAL_HANDLER
 

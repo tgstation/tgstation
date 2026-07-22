@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY(customized_pets)
 #define RAPTOR_INHERIT_MIN_MODIFIER -0.25
 /// Maximum modifier a raptor can get to their modifiers, such as ability effect and growth speed
 #define RAPTOR_INHERIT_MAX_MODIFIER 0.25
-/// Genetic drift for raptors, aka min/max value from the cap that stats can receive when breeding
+/// Genetic drift for raptors, also known as min/max value from the cap that stats can receive when breeding
 #define RAPTOR_GENETIC_DRIFT 0.2
 
 /// This mob suffers depression
@@ -121,11 +121,11 @@ GLOBAL_LIST_EMPTY(customized_pets)
 #define MAX_RAPTOR_POP 64
 
 
-///Return value for [/mob/living/basic/proc/early_melee_attack]. Using this value will make the attack continue as normal.
+/// Return value for [/mob/living/basic/proc/early_melee_attack]... Using this value will make the attack continue as normal.
 #define BASIC_MOB_CONTINUE_ATTACK_CHAIN 0
-///Return value for [/mob/living/basic/proc/early_melee_attack]. Using this value will make the attack end, but not set a cooldown. This is the default.
+/// Return value for [/mob/living/basic/proc/early_melee_attack]... Using this value will make the attack end, but not set a cooldown... This is the default.
 #define BASIC_MOB_END_ATTACK_CHAIN 1
-///Return value for [/mob/living/basic/proc/early_melee_attack]. Using this value will make the attack end, and sets a cooldown. Useful if you add behavior to early_melee_attack
+/// Return value for [/mob/living/basic/proc/early_melee_attack]... Using this value will make the attack end, and sets a cooldown... Useful if you add behavior to early_melee_attack
 #define BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN 2
 
 ///Delay between trying to update target selection

@@ -89,7 +89,7 @@
 	icon_state = "smoothbore_prime"
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler/smoothbore/prime)
 	charge_sections = 2
-	spread = 0 //could be like 5, but having just very tiny spread kinda feels like bullshit
+	spread = 0 // could be like 5, but having just very tiny spread kind of feels like bullshit
 	custom_materials = list(
 		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8,
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5.15,

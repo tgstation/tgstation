@@ -81,7 +81,7 @@
 		is_sinking = TRUE
 		INVOKE_ASYNC(src, PROC_REF(sinking_progress), living_target)
 
-/// Makes the mob try to sink three times. Unsinks if interrupted.
+/// Makes the mob try to sink three times.. Unsinks if interrupted.
 /datum/component/ground_sinking/proc/sinking_progress(mob/living/basic/living_target)
 	living_target.visible_message(span_notice("[living_target] starts sinking into the ground!"))
 	for(var/i in 1 to 3)

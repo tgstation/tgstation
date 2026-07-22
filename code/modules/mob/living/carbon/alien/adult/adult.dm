@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	drop_all_held_items()
 	..()
 
-//For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
+// For alien evolution/promotion/queen finder procs.. Checks for an active alien of that type
 /proc/get_alien_type(alien_path, mob/ignored)
 	for(var/mob/living/carbon/alien/alien in GLOB.carbon_list)
 		if(alien == ignored)
@@ -113,13 +113,13 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 		return FALSE
 	if(incapacitated || grab_state < GRAB_AGGRESSIVE || stat != CONSCIOUS)
 		return FALSE
-	if(get_dir(src, poor_soul) != dir) // Gotta face em 4head
+	if(get_dir(src, poor_soul) != dir) // Got to face em 4head
 		return FALSE
 	return TRUE
 
-/// Attempts to devour the passed in thing in devour_time seconds
+/// Tries to devour the passed in thing in devour_time seconds
 /// The mob needs to be consumable, as decided by [/mob/living/carbon/alien/adult/proc/can_consume]
-/// Returns FALSE if the attempt never even started, TRUE otherwise
+/// Returns FALSE if the try never even started, TRUE otherwise
 /mob/living/carbon/alien/adult/proc/devour_lad(atom/movable/candidate, devour_time = 13.5 SECONDS)
 	setDir(get_dir(src, candidate))
 	if(!can_consume(candidate))

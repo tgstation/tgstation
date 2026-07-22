@@ -3,9 +3,9 @@
 	random_hallucination_weight = 100
 	hallucination_tier = HALLUCINATION_TIER_COMMON
 
-	/// If TRUE, we force the message to be hallucinated from common radio. Only set in New()
+	/// If TRUE, we force the message to be hallucinated from common radio.. Only set in New()
 	var/force_radio
-	/// If set, a message we force to be picked, rather than an auto-generated message. Only set in New()
+	/// If set, a message we force to be picked, rather than an auto-generated message.. Only set in New()
 	var/specific_message
 
 /datum/hallucination/chat/New(mob/living/hallucinator, force_radio = FALSE, specific_message)
@@ -51,7 +51,7 @@
 			understood_language = pick(shared_languages)
 			break
 
-		// corpses disrespect language because they're... dead
+		// corpses disrespect language because they're.... dead
 		if(isnull(speaker) && length(valid_corpses))
 			speaker = pick(valid_corpses)
 

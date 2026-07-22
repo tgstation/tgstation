@@ -67,7 +67,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		to_chat(target, span_warning("That is not a valid room number!"))
 		return
 
-	// Orb is not adjacent to the target. No teleporties.
+	// Orb is not adjacent to the target.. No teleporties.
 	if(!src.Adjacent(target))
 		to_chat(target, span_warning("You too far away from \the [src] to enter it!"))
 
@@ -75,7 +75,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(target.incapacitated)
 		to_chat(target, span_warning("You aren't able to activate \the [src] anymore!"))
 
-	// Has the user thrown it away or otherwise disposed of it such that it's no longer in their hands or in some storage connected to them?
+	// Has the user thrown it away. Otherwise disposed of it such that it's no longer in their hands. In some storage connected to them?
 	if(get_atom_on_turf(src, /mob) != user)
 		if(user == target)
 			to_chat(user, span_warning("\The [src] is no longer in your possession!"))
@@ -87,10 +87,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	// The user should drop the item before teleporting, but we're not going to force the item to be dropped if it can't be done normally...
 	if(user == target)
 		// The item should be on the user or in the user's inventory somewhere.
-		// However, if they're not holding it, it may be in a pocket? In a backpack? Who knows! Still, they can't just drop it to the floor anymore...
+		// But if they're not holding it, it may be in a pocket?. In a backpack?. Who knows!. Still, they can't just drop it to the floor anymore...
 		if(!user.get_held_index_of_item(src))
 			to_chat(user, span_warning("You try to drop \the [src], but it's too late! It's no longer in your hands! Prepare for unforeseen consequences..."))
-		// Okay, so they HAVE to be holding it here, because it's in their hand from the above check. Try to drop the item and if it fails, oh dear...
+		// Okay, so they HAVE to be holding it here, because it's in their hand from the above check.. Try to drop the item and if it fails, oh dear...
 		else if(!user.dropItemToGround(src))
 			to_chat(user, span_warning("You can't seem to drop \the [src]! It must be stuck to your hand somehow! Prepare for unforeseen consequences..."))
 

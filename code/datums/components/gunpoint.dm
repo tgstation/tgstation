@@ -186,7 +186,7 @@
 	to_chat(target, span_userdanger("[shooter] breaks [shooter.p_their()] aim on you!"))
 	qdel(src)
 
-///If the shooter is hit by an attack, they have a 50% chance to flinch and fire. If it hit the arm holding the trigger, it's an 80% chance to fire instead
+/// If the shooter is hit by an attack, they have a 50% chance to flinch and fire.. If it hit the arm holding the trigger, it's an 80% chance to fire instead
 /datum/component/gunpoint/proc/flinch(mob/living/source, damage_amount, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
 	SIGNAL_HANDLER
 

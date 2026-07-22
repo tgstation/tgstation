@@ -2,7 +2,7 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 	var/datum/fax_panel_interface/ui = new /datum/fax_panel_interface(user.mob)
 	ui.ui_interact(user.mob)
 
-/// Admin Fax Panel. Tool for sending fax messages faster.
+/// Admin Fax Panel.. Tool for sending fax messages faster.
 /datum/fax_panel_interface
 	/// All faxes in from machinery list()
 	var/available_faxes = list()
@@ -12,9 +12,9 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 	/// Paper which admin edit and send.
 	var/obj/item/paper/fax_paper = new /obj/item/paper(null)
 
-	/// Default name of fax. Used when field with fax name not edited.
+	/// Default name of fax.. Used when field with fax name not edited.
 	var/sending_fax_name = "Secret"
-	/// Default name of paper. paper - bluh-bluh. Used when field with paper name not edited.
+	/// Default name of paper.. paper - bluh-bluh.. Used when field with paper name not edited.
 	var/default_paper_name = "Standard Report"
 
 /datum/fax_panel_interface/New()

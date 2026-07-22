@@ -32,7 +32,7 @@
 	src.fine = fine
 	src.paid = 0
 
-/// Pays off a fine and attempts to fix any weird values.
+/// Pays off a fine and tries to fix any weird values.
 /datum/crime/citation/proc/pay_fine(amount)
 	if(amount <= 0)
 		return FALSE

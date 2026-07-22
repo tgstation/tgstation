@@ -48,7 +48,7 @@
 	controller.clear_blackboard_key(target_key)
 	controller.clear_blackboard_key(BB_FETCH_DELIVER_TO)
 
-/// Clears the fetch ignore list at most once per AI_FETCH_IGNORE_DURATION. Always succeeds.
+/// Clears the fetch ignore list at most once per AI_FETCH_IGNORE_DURATION.. Always succeeds.
 /datum/bt_node/ai_behavior/forget_failed_fetches
 	COOLDOWN_DECLARE(clear_cooldown)
 
@@ -75,7 +75,7 @@
 /datum/bt_node/subtree/pet_command/follow
 	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_follow.bt.json"
 
-/// Plays dead (10%/tick to get up). Clears command on revival.
+/// Plays dead (10%/tick to get up).. Clears command on revival.
 /datum/bt_node/subtree/pet_command/play_dead
 	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_play_dead.bt.json"
 
@@ -83,7 +83,7 @@
 /datum/bt_node/subtree/pet_command/attack
 	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_attack.bt.json"
 
-/// Protect owner: loops a validity check then melee attack. Clears command if target invalid.
+/// Protect owner: loops a validity check then melee attack.. Clears command if target invalid.
 /datum/bt_node/subtree/pet_command/protect_owner
 	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_protect_owner.bt.json"
 
@@ -95,7 +95,7 @@
 /datum/bt_node/subtree/pet_command/fish
 	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_fish.bt.json"
 
-/// Moves to BB_CURRENT_PET_TARGET and breeds once. Clears command on completion.
+/// Moves to BB_CURRENT_PET_TARGET and breeds once.. Clears command on completion.
 /datum/bt_node/subtree/pet_command/breed
 	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_breed.bt.json"
 
@@ -107,7 +107,7 @@
 /datum/bt_node/subtree/pet_command/untargeted_ability
 	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_untargeted_ability.bt.json"
 
-/// Fetch: seek > pick up > deliver. Falls back to clear_pet_command if nothing to do.
+/// Fetch: seek > pick up > deliver.. Falls back to clear_pet_command if nothing to do.
 /datum/bt_node/subtree/pet_command/fetch
 	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_fetch.bt.json"
 
@@ -123,6 +123,6 @@
 /datum/bt_node/subtree/pet_command/attack/minebot
 	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_attack_minebot.bt.json"
 
-/// Protect owner: loops validity check then glockroach ranged attack. Clears command if target invalid.
+/// Protect owner: loops validity check then glockroach ranged attack.. Clears command if target invalid.
 /datum/bt_node/subtree/pet_command/protect_owner/ranged/glockroach
 	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_protect_owner_ranged_glockroach.bt.json"

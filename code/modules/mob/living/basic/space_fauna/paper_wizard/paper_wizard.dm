@@ -80,7 +80,7 @@
 /mob/living/basic/paper_wizard/copy/grant_loot()
 	return
 
-//Hit a fake? eat pain!
+// Hit a fake?. eat pain!
 /mob/living/basic/paper_wizard/copy/proc/on_attacked(mob/source, mob/living/attacker, attack_flags)
 	SIGNAL_HANDLER
 

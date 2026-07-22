@@ -1,4 +1,4 @@
-/// Trim for admins and debug cards. Has every single access in the game.
+/// Trim for admins and debug cards.. Has every single access in the game.
 /datum/id_trim/admin
 	assignment = "Jannie"
 	trim_state = "trim_janitor"

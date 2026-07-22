@@ -485,7 +485,7 @@
 	name = "R&D Console"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/rdconsole
-	req_access = list(ACCESS_RESEARCH) // Research access is required to toggle the lock.
+	req_access = list(ACCESS_RESEARCH) // Research access is needed to toggle the lock.
 
 	var/silence_announcements = FALSE
 	var/locked = TRUE

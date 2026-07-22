@@ -13,7 +13,7 @@
 	var/datum/port/output/sender_name
 	///Job title of the sender of the above
 	var/datum/port/output/sender_job
-	///Reference to the device that sent the message. Usually a PDA.
+	/// Reference to the device that sent the message.. Usually a PDA.
 	var/datum/port/output/sender_device
 	///Pinged whenever a message is received.
 	var/datum/port/output/received
@@ -48,7 +48,7 @@
 /obj/item/circuit_component/mod_program/messenger/input_received(datum/port/port)
 	var/list/messenger_targets = list()
 	for(var/datum/weakref/ref as anything in targets.value)
-		var/obj/item/modular_computer/modpc = ref?.resolve() //entity ports are hardrefs, entity list ports are weakref. :thonking:
+		var/obj/item/modular_computer/modpc = ref?.resolve() // entity ports are hardrefs, entity list ports are weakref.. :thonking:
 		if(!istype(modpc))
 			continue
 		var/datum/computer_file/program/messenger/messenger = locate() in modpc.stored_files
@@ -59,7 +59,7 @@
 	var/datum/computer_file/program/messenger/messenger = associated_program
 	var/filterd_message = censor_ic_filter_for_pdas(message.value)
 
-	///We need to async send_message() because some tcomms devices might sleep. Also because of (non-existent) user tgui alerts.
+	/// We need to async send_message() because some tcomms devices might sleep.. Also because of (non-existent) user tgui alerts.
 	INVOKE_ASYNC(messenger, TYPE_PROC_REF(/datum/computer_file/program/messenger, send_message), src, filterd_message, messenger_targets)
 
 /obj/item/circuit_component/mod_program/messenger/register_shell(atom/movable/shell)

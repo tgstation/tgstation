@@ -1,5 +1,5 @@
 GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)))
-//Smart pipes... or are they?
+// Smart pipes.... or are they?
 /obj/machinery/atmospherics/pipe/smart
 	icon = 'icons/obj/pipes_n_cables/simple.dmi'
 	icon_state = "pipe11-3"

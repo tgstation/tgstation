@@ -120,7 +120,7 @@
 	current_overlay.pixel_z = 28
 	SET_PLANE_EXPLICIT(current_overlay, ABOVE_LIGHTING_PLANE, owner)
 	// This will cause turning to reset the animation *but* this is the best option
-	// as modifying alpha requires readding the image to client.images for it to actually update
+	// as modifying alpha needs readding the image to client.images for it to actually update
 	danger_overlay = image(icon = 'icons/effects/eldritch.dmi', loc = owner, icon_state = overlay_state, layer = ABOVE_ALL_MOB_LAYER)
 	danger_overlay.pixel_w = -owner.pixel_x
 	danger_overlay.pixel_z = 28

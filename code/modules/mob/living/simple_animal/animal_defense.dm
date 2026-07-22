@@ -90,7 +90,7 @@
 			L.amount_grown = min(L.amount_grown + damage_done, L.max_grown)
 
 /mob/living/simple_animal/attack_drone(mob/living/basic/drone/user)
-	if(user.combat_mode) //No kicking dogs even as a rogue drone. Use a weapon.
+	if(user.combat_mode) // No kicking dogs even as a rogue drone.. Use a weapon.
 		return
 	return ..()
 

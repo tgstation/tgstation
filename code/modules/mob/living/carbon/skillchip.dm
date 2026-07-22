@@ -11,7 +11,7 @@
 	// Grab the brain.
 	var/obj/item/organ/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 
-	// Check for the brain. No brain = no implant.
+	// Check for the brain.. No brain = no implant.
 	if(QDELETED(brain))
 		return "Brain not found."
 

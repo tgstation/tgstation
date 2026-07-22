@@ -142,7 +142,7 @@
 
 
 // Honk pin, clown's joke item.
-// Can replace other pins. Replace a pin in cap's laser for extra fun!
+// Can replace other pins.. Replace a pin in cap's laser for extra fun!
 /obj/item/firing_pin/clown
 	name = "hilarious firing pin"
 	desc = "Advanced clowntech that can convert any firearm into a far more useful object."
@@ -172,7 +172,7 @@
 			return TRUE
 		if(user.mind.has_antag_datum(/datum/antagonist/nukeop/clownop)) //clown ops aren't clumsy by default and technically don't have an assigned role of "Clown", but come on, they're basically clowns
 			return TRUE
-		if(user.mind.has_antag_datum(/datum/antagonist/nukeop/leader/clownop)) //Wanna hear a funny joke?
+		if(user.mind.has_antag_datum(/datum/antagonist/nukeop/leader/clownop)) // Want to hear a funny joke?
 			return TRUE //The clown op leader antag datum isn't a subtype of the normal clown op antag datum.
 	return FALSE
 
@@ -229,13 +229,13 @@
 	selfdestruct = TRUE
 
 // Paywall pin, brought to you by ARMA 3 DLC.
-// Checks if the user has a valid bank account on an ID and if so attempts to extract a one-time payment to authorize use of the gun. Otherwise fails to shoot.
+// Checks if the user has a valid bank account on an ID. If so tries to extract a one-time payment to authorize use of the gun.. Otherwise fails to shoot.
 /obj/item/firing_pin/paywall
 	name = "paywall firing pin"
 	desc = "A firing pin with a built-in configurable paywall."
 	color = COLOR_GOLD
 	fail_message = ""
-	/// List of account IDs which have accepted the license prompt. If this is the multi-payment pin, then this means they accepted the waiver that each shot will cost them money
+	/// List of account IDs which have accepted the license prompt.. If this is the multi-payment pin, then this means they accepted the waiver that each shot will cost them money
 	var/list/gun_owners = list()
 	/// How much gets paid out to license yourself to the gun
 	var/payment_amount
@@ -303,7 +303,7 @@
 	if(credit_card_details in gun_owners)
 		if(multi_payment && credit_card_details)
 			if(!gun.can_shoot())
-				return TRUE //So you don't get charged for attempting to fire an empty gun.
+				return TRUE // So you don't get charged for trying to fire an empty gun.
 			if(credit_card_details.adjust_money(-payment_amount, "Firing Pin: Gun Rent"))
 				if(pin_owner)
 					pin_owner.adjust_money(payment_amount, "Firing Pin: Payout For Gun Rent")

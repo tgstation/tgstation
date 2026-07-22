@@ -27,7 +27,7 @@
 	var/fish_idle_velocity = 0
 	/// A position on the slider the fish wants to get to
 	var/target_position
-	/// If true, the fish can jump while a target position is set, thus overriding it
+	/// If true, the fish can jump while a target position is set, so overriding it
 	var/can_interrupt_move = TRUE
 	/// The current speed the fish is moving at
 	var/fish_velocity = 0

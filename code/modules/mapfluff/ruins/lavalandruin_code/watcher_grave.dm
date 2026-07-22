@@ -14,7 +14,7 @@
 #define WATCHER_EGG_LIVELY_MOD 0.75
 #define WATCHER_EGG_ACTIVE_MOD 0.5
 
-/// Egg which hatches into a helpful pet. Or you can eat it if you want.
+/// Egg which hatches into a helpful pet.. Or you can eat it if you want.
 /obj/item/food/egg/watcher
 	name = "watcher egg"
 	desc = "A lonely egg still pulsing with life, somehow untouched by the corruption of the Necropolis."

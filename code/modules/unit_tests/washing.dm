@@ -23,7 +23,7 @@
 				TEST_FAIL("[i] was not cleaned when its turf was cleaned (cleaning only mopables)!")
 			if(clean_sig_caught > 1)
 				TEST_FAIL("[i] was cleaned more than once when its turf was cleaned (cleaning only mopables)!")
-		// non-mopables require the all_contents = TRUE flag to be cleaned
+		// non-mopables need the all_contents = TRUE flag to be cleaned
 		else
 			if(clean_sig_caught != 0)
 				TEST_FAIL("[i] was cleaned when its turf was cleaned (cleaning only mopables)!")

@@ -55,7 +55,7 @@
 	/// The number of input fields
 	var/input_field_count = 0
 
-	/// Paper can be shown via cameras. When that is done, a deep copy of the paper is made and stored as a var on the camera.
+	/// Paper can be shown via cameras.. When that is done, a deep copy of the paper is made and stored as a var on the camera.
 	/// The paper is located in nullspace, and holds a weak ref to the camera that once contained it so the paper can do some
 	/// state checking on if it should be shown to a viewer.
 	var/datum/weakref/camera_holder
@@ -63,10 +63,10 @@
 	///If TRUE, staff can read paper everywhere, but usually from requests panel.
 	var/request_state = FALSE
 
-	///If this paper can be selected as a candidate for a future message in a bottle when spawned outside of mapload. Doesn't affect manually doing that.
+	/// If this paper can be selected as a candidate for a future message in a bottle when spawned outside of mapload.. Doesn't affect manually doing that.
 	var/can_become_message_in_bottle = TRUE
 
-	/// Assoc Lazylist of REF()s to mobs that are viewing the paper while holding a writing tool to what that tool's writing implement details are
+	/// Assoc Lazylist of REF()s to mobs that are viewing the paper while holding a writing tool to what that tool's writing add details are
 	VAR_FINAL/list/writers
 
 /obj/item/paper/Initialize(mapload)
@@ -128,7 +128,7 @@
 
 	return copy_text
 
-/// Returns a deep copy list of raw_stamp_data, or null if the list is empty or doesn't exist. Does not copy overlays or stamp_cache, only the tgui rendered stamps.
+/// Returns a deep copy list of raw_stamp_data, or null if the list is empty or doesn't exist.. Does not copy overlays or stamp_cache, only the tgui rendered stamps.
 /obj/item/paper/proc/copy_raw_stamps()
 	if(!LAZYLEN(raw_stamp_data))
 		return null
@@ -365,7 +365,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 	. += span_warning("You cannot read it!")
 
 /obj/item/paper/ui_status(mob/user, datum/ui_state/state)
-	// Are we on fire?  Hard to read if so
+	// Are we on fire?. Hard to read if so
 	if(resistance_flags & ON_FIRE)
 		return UI_CLOSE
 	if(camera_holder && can_show_to_mob_through_camera(user) || request_state)
@@ -374,8 +374,8 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 		return UI_CLOSE
 	if(INCAPACITATED_IGNORING(user, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB) || (isobserver(user) && !isAdminGhostAI(user)))
 		return UI_UPDATE
-	// Even harder to read if your blind...braile? humm
-	// .. or if you cannot read
+	// Even harder to read if your blind...braile?. humm
+	// ... or if you cannot read
 	if(user.is_blind())
 		to_chat(user, span_warning("You are blind and can't read anything!"))
 		return UI_CLOSE
@@ -509,7 +509,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 	)
 
 /obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
-	if(!user.client) //bro stop trying to open UI on AI man ur gonna drive me nuts man comeon man
+	if(!user.client) // bro stop trying to open UI on AI man your going to drive me nuts man comeon man
 		return
 	if(resistance_flags & ON_FIRE)
 		return
@@ -717,7 +717,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 			// Use a clipboard's pen, if applicable
 			if(istype(loc, /obj/item/clipboard))
 				var/obj/item/clipboard/clipboard = loc
-				// This is just so you can still use a stamp if you're holding one. Otherwise, it'll
+				// This is just so you can still use a stamp if you're holding one.. Otherwise, it'll
 				// use the clipboard's pen, if applicable.
 				if(!istype(holding, /obj/item/stamp) && clipboard.pen)
 					holding = clipboard.pen
@@ -734,7 +734,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 				log_paper("[key_name(user)] tried to write to [name] when it would exceed the length limit by [new_length - MAX_PAPER_LENGTH] characters: \"[paper_input]\"")
 				return TRUE
 
-			// Safe to assume there are writing implement details as user.can_write(...) fails with an invalid writing implement.
+			// Safe to assume there are writing add details as user.can_write(...) fails with an invalid writing add
 			var/writing_implement_data = holding.get_writing_implement_details()
 
 			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
@@ -759,7 +759,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 			// Use a clipboard's pen, if applicable
 			if(istype(loc, /obj/item/clipboard))
 				var/obj/item/clipboard/clipboard = loc
-				// This is just so you can still use a stamp if you're holding one. Otherwise, it'll
+				// This is just so you can still use a stamp if you're holding one.. Otherwise, it'll
 				// use the clipboard's pen, if applicable.
 				if(!istype(holding, /obj/item/stamp) && clipboard.pen)
 					holding = clipboard.pen
@@ -768,7 +768,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 			if(!user.can_write(holding))
 				return TRUE
 
-			// Safe to assume there are writing implement details as user.can_write(...) fails with an invalid writing implement.
+			// Safe to assume there are writing add details as user.can_write(...) fails with an invalid writing add
 			var/writing_implement_data = holding.get_writing_implement_details()
 			var/list/field_data = params["field_data"]
 
@@ -826,7 +826,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 	var/colour = ""
 	/// Whether to render the font bold or not.
 	var/bold = FALSE
-	/// Whether the creator of this input field has the R_FUN permission, thus allowing less sanitization
+	/// Whether the creator of this input field has the R_FUN permission, so allowing less sanitization
 	var/advanced_html = FALSE
 
 /datum/paper_input/New(_raw_text, _font, _colour, _bold, _advanced_html)
@@ -863,9 +863,9 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 	var/class = ""
 	/// X position of stamp.
 	var/stamp_x = 0
-	/// Y position of stamp.
+	/// Why position of stamp.
 	var/stamp_y = 0
-	/// Rotation of stamp in degrees. 0 to 359.
+	/// Rotation of stamp in degrees.. 0 to 359.
 	var/rotation = 0
 
 /datum/paper_stamp/New(_class, _stamp_x, _stamp_y, _rotation)
@@ -887,7 +887,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 
 /// A reference to some data that replaces a modifiable input field at some given index in paper raw input parsing.
 /datum/paper_field
-	/// When tgui parses the raw input, if it encounters a field_index matching the nth user input field, it will disable it and replace it with the field_data.
+	/// When tgui parses the raw input, if it encounters a field_index matching the nth user input field, it will disable it. Replace it with the field_data.
 	var/field_index = -1
 	/// The data that tgui should substitute in-place of the input field when parsing.
 	var/datum/paper_input/field_data = null

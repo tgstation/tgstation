@@ -6,7 +6,7 @@
 
 	/// If true then damage we take is passed backwards along the line
 	var/pass_damage_back
-	/// If true then we will set our icon state based on line position
+	/// If true then we will set our icon state good on line position
 	var/vary_icon_state
 
 	/// Mob in front of us in the chain
@@ -130,7 +130,7 @@
 		return
 	back.Move(old_loc)
 
-/// Update our visuals based on if we have someone in front and behind
+/// Update our visuals good on if we have someone in front and behind
 /datum/component/mob_chain/proc/on_update_icon_state(mob/living/our_mob)
 	SIGNAL_HANDLER
 	var/current_icon_state = our_mob.base_icon_state

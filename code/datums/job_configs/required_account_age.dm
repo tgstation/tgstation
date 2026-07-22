@@ -1,4 +1,4 @@
-/// The amount of time required to have an account to join a job (days).
+/// The amount of time needed to have an account to join a job (days).
 /datum/job_config_type/required_account_age
 	name = JOB_CONFIG_REQUIRED_ACCOUNT_AGE
 	datum_var_name = "minimal_player_age"

@@ -18,7 +18,7 @@
 	var/icon_screen = "generic"
 	/// Time it takes to deconstruct with a screwdriver.
 	var/time_to_unscrew = 2 SECONDS
-	/// Are we authenticated to use this? Used by things like comms console, security and medical data, and apc controller.
+	/// Are we authenticated to use this?. Used by things like comms console, security and medical data, and apc controller.
 	var/authenticated = FALSE
 	/// Will projectiles be able to pass over this computer?
 	var/projectiles_pass_chance = 65

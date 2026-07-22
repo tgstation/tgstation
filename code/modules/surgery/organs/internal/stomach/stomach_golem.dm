@@ -37,7 +37,7 @@
 		food.nutriment_factor = 0
 	return ..()
 
-/// Slow down based on how full you are
+/// Slow down good on how full you are
 /obj/item/organ/stomach/golem/handle_hunger(mob/living/carbon/human/human, delta_time)
 	// the effects are all negative, so just don't run them if you have the trait
 	. = ..()

@@ -27,22 +27,22 @@
 	/// World time when the build started.
 	var/build_start = 0
 
-	/// The job ID of the part currently being processed. This is used for ordering list items for the client UI.
+	/// The job ID of the part currently being processed.. This is used for ordering list items for the client UI.
 	var/top_job_id = 0
 
 	/// Part currently stored in the Exofab.
 	var/obj/item/stored_part
 
-	/// Coefficient for the speed of item building. Based on the installed parts.
+	/// Coefficient for the speed of item building.. Good on the installed parts.
 	var/time_coeff = 1
 
-	/// Coefficient for the efficiency of material usage in item building. Based on the installed parts.
+	/// Coefficient for the efficiency of material usage in item building.. Good on the installed parts.
 	var/component_coeff = 1
 
 	/// Reference to the techweb.
 	var/datum/techweb/stored_research
 
-	/// Whether the Exofab links to the ore silo on init. Special derelict or maintanance variants should set this to FALSE.
+	/// Whether the Exofab links to the ore silo on init.. Special derelict or maintanance variants should set this to FALSE.
 	var/link_on_init = TRUE
 
 	/// Reference to a remote material inventory, such as an ore silo.
@@ -269,7 +269,7 @@
 
 	// If there's an item being built, check if it is complete.
 	if(being_built && (build_finish < world.time))
-		// Then attempt to dispense it and if appropriate build the next item.
+		// Then try to dispense it and if appropriate build the next item.
 		dispense_built_part(being_built)
 		if(process_queue)
 			build_next_in_queue(FALSE)
@@ -480,7 +480,7 @@
 			return
 
 		if("stop_queue")
-			// Pause queue building. Also known as stop.
+			// Pause queue building.. Also known as stop.
 			process_queue = FALSE
 
 			return

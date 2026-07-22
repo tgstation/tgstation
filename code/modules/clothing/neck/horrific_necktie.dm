@@ -11,7 +11,7 @@
 
 	/// Are we grabbing a spirit?
 	var/using = FALSE
-	///The only person who can hear us is the one who activated us. Once activated a voice, only they can activate more.
+	/// The only person who can hear us is the one who activated us.. Once activated a voice, only they can activate more.
 	var/datum/mind/hears_us
 	///The mob that inhabits us, once posessed.
 	var/list/mob/living/basic/tie/possessed_souls = list()

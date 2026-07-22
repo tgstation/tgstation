@@ -6,17 +6,17 @@
  * See [Voucher Redeemer](/datum/element/voucher_redeemer) for where these sets are handled.
  */
 /datum/voucher_set
-	/// Required, Name of the set.
+	/// Needed Name of the set.
 	var/name
 	/// Optional, description of the set
 	var/description
-	/// Optional, Icon of the set. Defaults to first item if not set.
+	/// Optional, Icon of the set.. Defaults to first item if not set.
 	var/icon
-	/// Optional, Icon state of the set. Defaults to first item if not set.
+	/// Optional, Icon state of the set.. Defaults to first item if not set.
 	var/icon_state
-	/// Required, List of items contained in the set
+	/// Needed List of items contained in the set
 	var/list/atom/set_items
-	/// Optional, what key to use for blackbox feedback. No data will be recorded if not set.
+	/// Optional, what key to use for blackbox feedback.. No data will be recorded if not set.
 	var/blackbox_key
 
 /datum/voucher_set/New()

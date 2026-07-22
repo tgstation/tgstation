@@ -4,7 +4,7 @@
  * * accessor - mob trying to access this object, !!CAN BE NULL!! because of telekiesis because we're in hell
  */
 /atom/movable/proc/allowed(mob/accessor)
-	//check if it doesn't require any access at all, or the user is an Adminghost
+	// check if it doesn't need any access at all, or the user is an Adminghost
 	if(check_access(null) || isAdminGhostAI(accessor))
 		return TRUE
 	if(isnull(accessor)) //likely a TK user, and we checked for free access above.

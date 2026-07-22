@@ -81,7 +81,7 @@
 	icon_state = "motion2"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5)
-	/// If this beacon allows for AI control. Exists to avoid using istype() on checking
+	/// If this beacon allows for AI control.. Exists to avoid using istype() on checking
 	var/ai_beacon = FALSE
 	/// Cooldown variable for EMP pulsing
 	var/recharging = FALSE

@@ -34,7 +34,7 @@
 
 	qdel(src)
 
-/// Replaces all the requested baseturfs (usually space/baseturfbottom) with the desired baseturf. Skips if its already there
+/// Replaces all the requested baseturfs (usually space/baseturfbottom) with the desired baseturf.. Skips if its already there
 /obj/effect/baseturf_helper/proc/replace_baseturf(turf/thing)
 	thing.remove_baseturfs_from_typecache(baseturf_to_replace)
 
@@ -107,7 +107,7 @@
 		return
 	return ..(ceiling)
 
-///Used for marking mapping errors. These should only be created by cases explicitly caught by unit tests, and should NEVER actually appear in production.
+/// Used for marking mapping errors.. These should only be created by cases explicitly caught by unit tests, and should NEVER actually appear in production.
 /obj/effect/mapping_error
 	name = "I AM ERROR"
 	desc = "IF YOU SEE ME, YELL AT A MAPPER!!!"
@@ -180,7 +180,7 @@
 				return
 			if(9 to 11)
 				airlock.feedback = FALSE
-				// These do not use airlock.bolt() because we want to pretend it was always locked. That means no sound effects.
+				// These do not use airlock.bolt() because we want to pretend it was always locked.. That means no sound effects.
 				airlock.locked = TRUE
 			if(12 to 15)
 				airlock.locked = TRUE
@@ -229,7 +229,7 @@
 	if(airlock.locked)
 		log_mapping("[src] at [AREACOORD(src)] tried to bolt [airlock] but it's already locked!")
 	else
-		// Used instead of bolt so that we can pretend it was always locked, i.e. no sound effects on init.
+		// Used instead of bolt so that we can pretend it was always locked, i.e.. no sound effects on init.
 		airlock.locked = TRUE
 
 /obj/effect/mapping_helpers/airlock/unres
@@ -831,9 +831,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 /obj/effect/mapping_helpers/atom_injector/custom_icon
 	name = "Custom Icon Injector"
 	icon_state = "icon"
-	///This is the var that will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.
+	/// This is the var that will be set with the fetched icon.. In case you want to set some secondary icon sheets like inhands and such.
 	var/target_variable = "icon"
-	///This should return raw dmi in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi?raw=true"
+	/// This should return raw dmi in response to http get request.. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi?raw=true"
 	var/icon_url
 	///The icon file we fetched from the http get request.
 	var/icon_file
@@ -878,7 +878,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	icon_state = "sound"
 	///This is the var that will be set with the fetched sound.
 	var/target_variable = "hitsound"
-	///This should return raw sound in response to http get request. For example: "https://github.com/tgstation/tgstation/blob/master/sound/misc/bang.ogg?raw=true"
+	/// This should return raw sound in response to http get request.. For example: "https://github.com/tgstation/tgstation/blob/master/sound/misc/bang.ogg?raw=true"
 	var/sound_url
 	///The sound file we fetched from the http get request.
 	var/sound_file
@@ -1013,7 +1013,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	if(!length(open_turfs))
 		return
 
-	//some balloons! this picks an open turf and pops a few balloons in and around that turf, yay.
+	// some balloons!. this picks an open turf and pops a few balloons in and around that turf, yay.
 	for(var/i in 1 to balloon_clusters)
 		var/turf/clusterspot = pick_n_take(open_turfs)
 		new /obj/item/toy/balloon(clusterspot)
@@ -1167,7 +1167,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	var/atom/movable/circuit_shell
 	/// Capacity of the shell.
 	var/shell_capacity = SHELL_CAPACITY_VERY_LARGE
-	/// The url for the json. Example: "https://pastebin.com/raw/eH7VnP9d"
+	/// The url for the json.. Example: "https://pastebin.com/raw/eH7VnP9d"
 	var/json_url
 
 /obj/effect/mapping_helpers/circuit_spawner/Initialize(mapload)

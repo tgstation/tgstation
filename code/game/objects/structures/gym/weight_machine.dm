@@ -14,7 +14,7 @@
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7)
 
-	///How much we shift the user's pixel y when using the weight machine.
+	/// How much we shift the user's pixel why when using the weight machine.
 	var/pixel_shift_z = -3
 
 	///The weight action we give to people that buckle themselves to us.
@@ -23,7 +23,7 @@
 	///message when drunk user fails to use the machine
 	var/drunk_message = "You try for a new record and pull through! Through a muscle that is."
 
-	// the total reps you can do before you hit stamcrit based on fitness level
+	// the total reps you can do before you hit stamcrit good on fitness level
 	var/static/list/total_workout_reps = list(3, 4, 4, 5, 6, 6, 7)
 
 	///List of messages picked when using the machine.
@@ -201,11 +201,11 @@
 
 	var/affected_gravity = user.has_gravity()
 	if (!affected_gravity)
-		return TRUE // No weight? I could do this all day
+		return TRUE // No weight?. I could do this all day
 	var/gravity_modifier = affected_gravity > STANDARD_GRAVITY ? 0.75 : 1
 	// the amount of workouts you can do before you hit stamcrit
 	var/workout_reps = total_workout_reps[user.mind.get_skill_level(/datum/skill/athletics)] * gravity_modifier
-	// total stamina drain of 1 workout calculated based on the workout length
+	// total stamina drain of 1 workout calculated good on the workout length
 	var/stamina_exhaustion = FLOOR(user.maxHealth / workout_reps / WORKOUT_LENGTH, 0.1)
 
 	var/obj/item/organ/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)

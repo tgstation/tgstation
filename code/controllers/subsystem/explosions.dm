@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(explosions)
 
 	/// List of turfs to throw the contents of
 	var/list/throwturf = list()
-	/// List of turfs to throw the contents of... AFTER the next explosion processes
+	/// List of turfs to throw the contents of.... AFTER the next explosion processes
 	/// This avoids order of operations errors and shit
 	var/list/held_throwturf = list()
 
@@ -252,7 +252,7 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 	)
 	var/atom/location = isturf(origin) ? origin : origin.loc
 	if(SEND_SIGNAL(origin, COMSIG_ATOM_EXPLODE, arguments) & COMSIG_CANCEL_EXPLOSION)
-		return // Signals are incompatible with `arglist(...)` so we can't actually use that for these. Additionally,
+		return // Signals are incompatible with `arglist(...)` so we can't actually use that for these.. Also
 
 	while(location)
 		var/next_loc = location.loc
@@ -333,8 +333,8 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 	var/who_did_it = "N/A"
 	var/who_did_it_game_log = "N/A"
 
-	// Projectiles have special handling. They rely on a firer var and not fingerprints. Check special cases for firer being
-	// mecha, mob or an object such as the gun itself. Handle each uniquely.
+	// Projectiles have special handling.. They rely on a firer var and not fingerprints.. Check special cases for firer being
+	// mecha, mob or an object such as the gun itself.. Handle each uniquely.
 	if(isprojectile(explosion_cause))
 		var/obj/projectile/fired_projectile = explosion_cause
 		if(ismecha(fired_projectile.firer))
@@ -372,7 +372,7 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 	// Play sounds; we want sounds to be different depending on distance so we will manually do it ourselves.
 	// Stereo users will also hear the direction of the explosion!
 
-	// Calculate far explosion sound range. Only allow the sound effect for heavy/devastating explosions.
+	// Calculate far explosion sound range.. Only allow the sound effect for heavy/devastating explosions.
 	// 3/7/14 will calculate to 80 + 35
 
 	var/far_dist = 0
@@ -399,7 +399,7 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 	var/reactionary = CONFIG_GET(flag/reactionary_explosions)
 	// this list is setup in the form position -> block for that position
 	// we assert that turfs will be processed closed to farthest, so we can build this as we go along
-	// This is gonna be an array, index'd by turfs
+	// This is going to be an array, index'd by turfs
 	var/list/cached_exp_block = list()
 	var/list/held_throwturf = src.held_throwturf
 
@@ -470,7 +470,7 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 
 	var/took = (REALTIMEOFDAY - started_at) / 10
 
-	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes to explosion code using this please so we can compare
+	// You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data.. Just -test- changes to explosion code using this please so we can compare
 	debug_world("Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds.")
 
 	explosion_index += 1
@@ -478,7 +478,7 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_EXPLOSION, epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range, explosion_cause, explosion_index)
 
 // Explosion SFX defines...
-/// The probability that a quaking explosion will make the station creak per unit. Maths!
+/// The probability that a quaking explosion will make the station creak per unit.. Maths!
 #define QUAKE_CREAK_PROB 30
 /// The probability that an echoing explosion will make the station creak per unit.
 #define ECHO_CREAK_PROB 5
@@ -488,7 +488,7 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 #define FAR_LOWER 40
 /// Upper limit for far explosion SFX volume.
 #define FAR_UPPER 60
-/// The probability that a distant explosion SFX will be a far explosion sound rather than an echo. (0-100)
+/// The probability that a distant explosion SFX will be a far explosion sound rather than an echo.. (0-100)
 #define FAR_SOUND_PROB 75
 /// The upper limit on screenshake amplitude for nearby explosions.
 #define NEAR_SHAKE_CAP 5
@@ -545,7 +545,7 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 			if(base_shake_amount > 0)
 				shake_camera(listener, NEAR_SHAKE_DURATION, clamp(base_shake_amount, 0, NEAR_SHAKE_CAP))
 
-		else if(distance < far_distance) // You can hear a far explosion if you are outside the blast radius. Small explosions shouldn't be heard throughout the station.
+		else if(distance < far_distance) // You can hear a far explosion if you are outside the blast radius.. Small explosions shouldn't be heard throughout the station.
 			var/far_volume = clamp(far_distance / 2, FAR_LOWER, FAR_UPPER)
 			if(creaking)
 				listener.playsound_local(epicenter, null, far_volume, TRUE, frequency, sound_to_use = creaking_sound, distance_multiplier = 0)
@@ -558,7 +558,7 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 				base_shake_amount = max(base_shake_amount, quake_factor * 3, 0) // Devastating explosions rock the station and ground
 				shake_camera(listener, FAR_SHAKE_DURATION, min(base_shake_amount, FAR_SHAKE_CAP))
 
-		else if(!isspaceturf(listener_turf) && !(!(epicenter_area.type in GLOB.the_station_areas) && SSmapping.is_planetary()) && echo_factor) // Big enough explosions echo through the hull. Except on planetary maps if the epicenter is not on the station's area.
+		else if(!isspaceturf(listener_turf) && !(!(epicenter_area.type in GLOB.the_station_areas) && SSmapping.is_planetary()) && echo_factor) // Big enough explosions echo through the hull.. Except on planetary maps if the epicenter is not on the station's area.
 			var/echo_volume
 			if(quake_factor)
 				echo_volume = 60

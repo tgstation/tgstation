@@ -270,7 +270,7 @@
 	icon_state = "moon_insanity"
 
 // Status effects that eldritch paintings apply
-//The debug painting status effect. To make sure this isn't applying to heretics.
+// The debug painting status effect.. To make sure this isn't applying to heretics.
 /datum/status_effect/eldritch_painting
 	id = "eldritch_painting"
 	alert_type = /atom/movable/screen/alert/status_effect/eldritch_painting

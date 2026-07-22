@@ -96,7 +96,7 @@
 	to_chat(crab, span_warning("We burst out of the remains of our former body in a shower of gore!"))
 	active = FALSE
 
-/// Ruptures nearby walls using the torn_wall component. Also it destroys objects with density.
+/// Ruptures nearby walls using the torn_wall component.. Also it destroys objects with density.
 /datum/action/changeling/headcrab/proc/escaping_prison(mob/living/user)
 	user.visible_message(span_boldwarning("[user]'s expanding form begins crushing the surrounding obstacles!"))
 	var/list/walls_to_destroy = list()

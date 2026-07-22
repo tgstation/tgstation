@@ -112,7 +112,7 @@
 			continue
 		internal.merge(contents.remove_specific(gas_type, contents.moles[gas_type] * gas_input))
 
-///Checks if the gases required are all inside
+/// Checks if the gases needed are all inside
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/internal_check()
 	var/gas_check = 0
 	for(var/gas_type in selected_recipe.requirements)

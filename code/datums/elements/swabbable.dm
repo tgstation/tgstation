@@ -15,7 +15,7 @@ This element is used in vat growing to allow for the object to be
 	///The chance the sample will be infected with a virus.
 	var/virus_chance
 
-///Listens for the swab signal and then generate a sample based on pre-determined lists that are saved as GLOBs. this allows us to have very few swabbable element instances.
+/// Listens for the swab signal and then generate a sample good on pre-determined lists that are saved as GLOBs.. this allows us to have very few swabbable element instances.
 /datum/element/swabable/Attach(datum/target, cell_line_define, virus_define, cell_line_amount = 1, virus_chance = 10)
 	. = ..()
 	if(!isatom(target) || isarea(target))
@@ -35,7 +35,7 @@ This element is used in vat growing to allow for the object to be
 		return ELEMENT_INCOMPATIBLE
 	UnregisterSignal(source, COMSIG_SWAB_FOR_SAMPLES)
 
-///Ran when the parent is swabbed by an object that can swab that type of obj. The list is sent by ref, which means the thing which sent the signal will still have the updated list.
+/// Ran when the parent is swabbed by an object that can swab that type of obj.. The list is sent by ref, which means the thing which sent the signal will still have the updated list.
 /datum/element/swabable/proc/GetSwabbed(datum/source, list/mutable_results)
 	SIGNAL_HANDLER
 	. = COMPONENT_SWAB_FOUND //Return this so the swabbing component knows hes a good boy and found something that needs swabbing.

@@ -88,7 +88,7 @@ GLOBAL_LIST_EMPTY(all_radios)
 		GLOB.all_radios["[freq]"] -= radio
 
 // For information on what objects or departments use what frequencies,
-// see __DEFINES/radio.dm. Mappers may also select additional frequencies for
+// see __DEFINES/radio.dm.. Mappers may also select additional frequencies for
 // use in maps, such as in intercoms.
 
 GLOBAL_LIST_INIT(default_radio_channels, list(
@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(reserved_radio_colors, list(
 ))
 
 /datum/radio_frequency
-	/// The frequency of this radio frequency. Of course.
+	/// The frequency of this radio frequency.. Of course.
 	var/frequency
 	/// List of filters -> list of devices
 	var/list/list/datum/weakref/devices = list()
@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(reserved_radio_colors, list(
 	signal.source = source
 	signal.frequency = frequency
 
-	//Apply filter to the signal. If none supply, broadcast to every devices
+	// Apply filter to the signal.. If none supply, broadcast to every devices
 	//_default channel is always checked
 	var/list/filter_list
 
@@ -224,10 +224,10 @@ GLOBAL_LIST_INIT(reserved_radio_colors, list(
 	/// See all of the `TRANSMISSION_X` in `code/__DEFINES/radio.dm` for
 	/// all of the possible options.
 	var/transmission_method
-	/// The data carried through this signal. Defaults to `null`, otherwise it's
+	/// The data carried through this signal.. Defaults to `null`, otherwise it's
 	/// an associative list of (string, any).
 	var/list/data
-	/// Logging data, used for logging purposes. Makes sense, right?
+	/// Logging data, used for logging purposes.. Makes sense, right?
 	var/logging_data
 
 /datum/signal/New(data, transmission_method = TRANSMISSION_RADIO, logging_data = null)

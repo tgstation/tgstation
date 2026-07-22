@@ -3,7 +3,7 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS // So you can change bake results with various cookstuffs
 	///Result atom type of baking this object
 	var/atom/bake_result
-	///Amount of time required to bake the food
+	/// Amount of time needed to bake the food
 	var/required_bake_time = 2 MINUTES
 	///Is this a positive bake result?
 	var/positive_result = TRUE
@@ -72,7 +72,7 @@
 /datum/component/bakeable/proc/on_bake(datum/source, atom/used_oven, seconds_per_tick = 1)
 	SIGNAL_HANDLER
 
-	// Let our signal know if we're baking something good or ... burning something
+	// Let our signal know if we're baking something good or .... burning something
 	var/baking_result = positive_result ? COMPONENT_BAKING_GOOD_RESULT : COMPONENT_BAKING_BAD_RESULT
 
 	current_bake_time += seconds_per_tick * 10 //turn it into ds

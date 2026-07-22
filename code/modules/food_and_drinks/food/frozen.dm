@@ -88,7 +88,7 @@
 
 /obj/item/food/honkdae/make_edible()
 	. = ..()
-	AddComponent(/datum/component/ice_cream_holder, y_offset = -2) //The sugar will react with the banana forming laughter. Honk!
+	AddComponent(/datum/component/ice_cream_holder, y_offset = -2) // The sugar will react with the banana forming laughter.. Honk!
 
 /////////////
 //SNOWCONES//
@@ -347,7 +347,7 @@
 	crafted_food_buff = /datum/status_effect/food/chilling
 
 	var/overlay_state = "creamsicle_o" //This is the edible part of the popsicle.
-	var/bite_states = 4 //This value value is used for correctly setting the bite_consumption to ensure every bite changes the sprite. Do not set to zero.
+	var/bite_states = 4 // This value value is used for correctly setting the bite_consumption to ensure every bite changes the sprite.. Do not set to zero.
 	var/bitecount = 0
 
 

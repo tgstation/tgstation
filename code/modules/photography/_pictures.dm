@@ -14,7 +14,7 @@
 	var/psize_y = 96
 	var/has_blueprints = FALSE
 	var/logpath //If the picture has been logged this is the path.
-	var/id //this var is NOT protected because the worst you can do with this that you couldn't do otherwise is overwrite photos, and photos aren't going to be used as attack logs/investigations anytime soon.
+	var/id // this var is NOT protected because the worst you can do with this that you couldn't do otherwise is overwrite photos. Photos aren't going to be used as attack logs/investigations anytime soon.
 	///Was this image capable of seeing ghosts?
 	var/see_ghosts = CAMERA_NO_GHOSTS
 	///The ckey of the player who printed this photo from an edited computer image.

@@ -35,7 +35,7 @@
 	extra_validation = null
 	return ..()
 
-/// Attempt to feed this item to golem
+/// Try to feed this item to golem
 /datum/component/golem_food/proc/on_attack(atom/source, mob/living/target, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
 	if (user.combat_mode || !HAS_TRAIT(target, TRAIT_ROCK_EATER))
@@ -88,7 +88,7 @@
 	/// Golem food buff to apply on consumption
 	var/datum/golem_food_buff/food_buff
 
-/// Set up some properties based on a passed-in item that the golem will pretend to eat
+/// Set up some properties good on a passed-in item that the golem will pretend to eat
 /obj/item/food/golem_food/proc/setup(
 	name,
 	consume_food = TRUE,

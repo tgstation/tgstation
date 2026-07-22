@@ -54,10 +54,10 @@ GLOBAL_LIST_INIT(command_strings, list(
 	var/bot_type = NONE
 	///All initial access this bot started with.
 	var/list/initial_access = list()
-	///Bot-related mode flags on the Bot indicating how they will act. BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
-	/// DO NOT MODIFY MANUALLY, USE set_bot_mode_flags. If you don't shit breaks BAD
+	/// Bot-related mode flags on the Bot indicating how they will act.. BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
+	/// DO NOT MODIFY MANUALLY, USE set_bot_mode_flags.. If you don't shit breaks BAD
 	var/bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
-	///Bot-related cover flags on the Bot to deal with what has been done to their cover, including emagging. BOT_COVER_MAINTS_OPEN | BOT_COVER_LOCKED | BOT_COVER_EMAGGED | BOT_COVER_HACKED
+	/// Bot-related cover flags on the Bot to deal with what has been done to their cover, including emagging.. BOT_COVER_MAINTS_OPEN | BOT_COVER_LOCKED | BOT_COVER_EMAGGED | BOT_COVER_HACKED
 	var/bot_access_flags = BOT_COVER_LOCKED
 	///Small name of what the bot gets messed with when getting hacked/emagged.
 	var/hackables = "system circuits"
@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	///list of all layed path icons
 	var/list/current_pathed_turfs = list()
 
-	///The type of data HUD the bot uses. Diagnostic by default.
+	/// The type of data HUD the bot uses.. Diagnostic by default.
 	var/data_hud_type = TRAIT_DIAGNOSTIC_HUD
 	/// If true we will allow ghosts to control this mob
 	var/can_be_possessed = FALSE
@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		TRAIT_IMMOBILIZED,
 		TRAIT_HANDS_BLOCKED,
 	)
-	///name of the UI we will attempt to open
+	/// name of the UI we will try to open
 	var/bot_ui = "SimpleBot"
 	// The faction of the bot before it inherited the pai's faction
 	var/list/original_faction
@@ -170,7 +170,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	SEND_SIGNAL(src, COMSIG_BOT_MODE_FLAGS_SET, mode_flags)
 
 /mob/living/basic/bot/proc/get_mode()
-	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
+	if(client) // Player bots do not have modes, so the override.. Also an easy way for PDA users/AI to know when a bot is a player.
 		return span_bold("[paicard ? "pAI Controlled" : "Autonomous"]")
 
 	if(!(bot_mode_flags & BOT_MODE_ON))
@@ -322,11 +322,11 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
-	if(bot_access_flags & BOT_COVER_LOCKED) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
+	if(bot_access_flags & BOT_COVER_LOCKED) // First emag application unlocks the bot's interface.. Apply a screwdriver to use the emag again.
 		bot_access_flags &= ~BOT_COVER_LOCKED
 		balloon_alert(user, "cover unlocked")
 		return TRUE
-	if((bot_access_flags & BOT_COVER_LOCKED) || !(bot_access_flags & BOT_COVER_MAINTS_OPEN)) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
+	if((bot_access_flags & BOT_COVER_LOCKED) || !(bot_access_flags & BOT_COVER_MAINTS_OPEN)) // Bot panel is unlocked by ID or emag, and the panel is screwed open.. Ready for emagging.
 		balloon_alert(user, "open maintenance panel first!")
 		return FALSE
 	bot_access_flags |= BOT_COVER_EMAGGED
@@ -568,9 +568,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 	to_chat(ai_caller, span_danger("Call command to a bot has been reset."))
 	calling_ai_ref = null
 
-//PDA control. Some bots, especially MULEs, may have more parameters.
+// PDA control.. Some bots, especially MULEs, may have more parameters.
 /mob/living/basic/bot/proc/bot_control(command, mob/user, list/user_access = list())
-	if(!(bot_mode_flags & BOT_MODE_ON) || bot_access_flags & BOT_COVER_EMAGGED || !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
+	if(!(bot_mode_flags & BOT_MODE_ON) || bot_access_flags & BOT_COVER_EMAGGED || !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) // Emagged bots do not respect anyone's authority!. Bots with their remote controls off cannot get commands.
 		return TRUE //ACCESS DENIED
 	if(client && command != "ejectpai")
 		bot_control_message(command, user)
@@ -677,7 +677,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	icon_state = "[isnull(base_icon_state) ? initial(icon_state) : base_icon_state][bot_mode_flags & BOT_MODE_ON]"
 	return ..()
 
-/// Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
+/// Access check proc for bot topics!. Remember to place in a bot's individual Topic if desired.
 /mob/living/basic/bot/proc/topic_denied(mob/user)
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return TRUE
@@ -842,7 +842,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/get_hit_area_message(input_area)
 	// we just get hit, there's no complexity for hitting an arm (if it exists) or anything.
-	// we also need to return an empty string as otherwise it would falsely say that we get hit in the chest or something strange like that (bots don't have "chests")
+	// we also need to return an empty string as otherwise it would falsely say that we get hit in the chest. Something strange like that (bots don't have "chests")
 	return ""
 
 /mob/living/basic/bot/proc/on_bot_movement(atom/movable/source, atom/oldloc, dir, forced)

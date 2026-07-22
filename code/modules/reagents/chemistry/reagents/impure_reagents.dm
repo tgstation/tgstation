@@ -1,4 +1,4 @@
-//Reagents produced by metabolising/reacting fermichems suboptimally, i.e. inverse_chems or impure_chems
+// Reagents produced by metabolising/reacting fermichems suboptimally, i.e.. inverse_chems or impure_chems
 //Inverse = Splitting
 //Invert = Whole conversion
 
@@ -6,7 +6,7 @@
 /datum/reagent/impurity
 	name = "Chemical Isomers"
 	description = "Impure chemical isomers made from suboptimal reactions. Causes mild liver damage"
-	//by default, it will stay hidden on splitting, but take the name of the source on inverting. Cannot be fractioned down either if the reagent is somehow isolated.
+	// by default, it will stay hidden on splitting, but take the name of the source on inverting.. Cannot be fractioned down either if the reagent is somehow isolated.
 	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_CAN_BE_SYNTHESIZED //impure can be synthed, and is one of the only ways to get almost pure impure
 	ph = 3
 	inverse_chem = null
@@ -33,7 +33,7 @@
 	description = "Inverse reagents are created when a reagent's purity is below it's inverse threshold. The are created either during ingestion - which will then replace their associated reagent, or some can be created during the reaction process."
 	ph = 2
 	chemical_flags = REAGENT_SNEAKYNAME //Inverse generally cannot be synthed - they're difficult to get
-	//Mostly to be safe - but above flags will take care of this. Also prevents it from showing these on reagent lookups in the ui
+	// Mostly to be safe - but above flags will take care of this.. Also prevents it from showing these on reagent lookups in the ui
 	inverse_chem = null
 	///how much this reagent does for tox damage too
 	var/tox_damage = 1
@@ -110,7 +110,7 @@
 
 /datum/reagent/inverse/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	metabolization_rate += 0.05 * REAGENTS_METABOLISM //speed up our metabolism over time. Chop chop.
+	metabolization_rate += 0.05 * REAGENTS_METABOLISM // speed up our metabolism over time.. Chop chop.
 
 /datum/reagent/inverse/cryostylane/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
 	if(current_cycle >= 60)

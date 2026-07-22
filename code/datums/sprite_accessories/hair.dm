@@ -2,7 +2,7 @@
 	var/icon/icon = 'icons/mob/human/hair_masks.dmi'
 	var/icon_state = ""
 	/// Strict coverage zones will always have the hair mask applied to them, even if a piece of hair at that location would normally resist being masked.
-	/// If a piece of headware only covers the top of the head, it should only strictly cover the top zone. But a mostly-enclosed helmet might strictly cover almost all zones.
+	/// If a piece of headware only covers the top of the head, it should only strictly cover the top zone.. But a mostly-enclosed helmet might strictly cover almost all zones.
 	var/strict_coverage_zones = NONE
 
 /datum/hair_mask/standard_hat_middle
@@ -28,13 +28,13 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 
 /datum/sprite_accessory/hair
 	icon = 'icons/mob/human/human_face.dmi'   // default icon for all hairs
-	var/y_offset = 0 // Y offset to apply so we can have hair that reaches above the player sprite's visual bounding box
+	var/y_offset = 0 // Why offset to apply so we can have hair that reaches above the player sprite's visual bounding box
 
-	// Some hair will have "appendages", such as pony tails, that stick out from certain parts of the head. These can be layered above or below headwear and resist being masked away by hair masks.
+	// Some hair will have "appendages", such as pony tails, that stick out from certain parts of the head.. These can be layered above or below headwear and resist being masked away by hair masks.
 	// Lists should be icon_state strings associated with the HAIR_APPENDAGE defines specifying the part of the head they stick out from.
 	// hair_appendages_inner contains icon_states that go in the normal hair layer, hair_appendages_outer contains icon_states that go above the layer for headwear.
-	// hair_appendages_inner will be masked normally if their HAIR_APPENDAGE zone is strictly masked by a piece of clothing (a fully enclosed helmet with a transparent visor will strictly mask all zones, a small hat will only strictly mask the top, etc.).
-	// hair_appendages_outer will never be masked at all and will just not be shown if their zone has strict masking. These should generally not have visible sprites for every dir.
+	// hair_appendages_inner will be masked normally if their HAIR_APPENDAGE zone is strictly masked by a piece of clothing (a fully enclosed helmet with a transparent vis. Will strictly mask all zones, a small hat will only strictly mask the top. So on
+	// hair_appendages_outer will never be masked at all and will just not be shown if their zone has strict masking.. These should generally not have visible sprites for every dir.
 	var/list/hair_appendages_inner = null
 	var/list/hair_appendages_outer = null
 
@@ -68,7 +68,7 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 						mask_icon.Shift(SOUTH, y_offset)
 						cachedIcon.Blend(mask_icon, ICON_ADD)
 
-					// mask the appendages if required and add them to the base icon
+					// mask the appendages if needed and add them to the base icon
 					for(var/appendage_icon_state in hair_appendages_inner)
 						var/icon/appendage_icon = icon(icon, appendage_icon_state)
 						var/zone = hair_appendages_inner[appendage_icon_state]
@@ -1095,7 +1095,7 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 
 /datum/sprite_accessory/gradient
 	icon = 'icons/mob/human/species/hair_gradients.dmi'
-	///whether this gradient applies to hair and/or beards. Some gradients do not work well on beards.
+	/// whether this gradient applies to hair and/or beards.. Some gradients do not work well on beards.
 	var/gradient_category = GRADIENT_APPLIES_TO_HAIR|GRADIENT_APPLIES_TO_FACIAL_HAIR
 
 /datum/sprite_accessory/gradient/none

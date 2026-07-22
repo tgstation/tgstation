@@ -17,7 +17,7 @@
 	light_on = FALSE
 	toolspeed = 1.5
 	tool_behaviour = TOOL_WELDER
-	///The amount of heat a lighter has while it's on. We're using the define to ensure lighters can't do things we don't want them to.
+	/// The amount of heat a lighter has while it's on.. We're using the define to ensure lighters can't do things we don't want them to.
 	var/heat_while_on = HIGH_TEMPERATURE_REQUIRED - 100
 	///The amount of time the lighter has been on for, for fuel consumption.
 	var/burned_fuel_for = 0
@@ -25,7 +25,7 @@
 	var/maximum_fuel = 6
 	/// Whether the lighter is lit.
 	var/lit = FALSE
-	/// Whether the lighter is fancy. Fancy lighters have fancier flavortext and won't burn thumbs.
+	/// Whether the lighter is fancy.. Fancy lighters have fancier flavortext and won't burn thumbs.
 	var/fancy = TRUE
 	/// The engraving overlay used by this lighter.
 	var/overlay_state
@@ -288,7 +288,7 @@
 		"transp",
 		"tall",
 		"matte",
-		"zoppo", //u cant stoppo th zoppo
+		"zoppo", // you cant stoppo th zoppo
 	)
 
 	/// The color of the lighter.

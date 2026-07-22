@@ -75,7 +75,7 @@
 	if(!gave_alert)
 		living_mob.clear_alert(ALERT_TEMPERATURE)
 
-///Ensures that maploaded mobs are in a safe environment. Unit test stuff.
+/// Ensures that maploaded mobs are in a safe environment.. Unit test stuff.
 /datum/element/body_temp_sensitive/proc/check_safe_environment(mob/living/living_mob)
 	if(living_mob.stat == DEAD)
 		return

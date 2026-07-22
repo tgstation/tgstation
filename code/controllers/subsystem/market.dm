@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(market)
 	var/list/obj/machinery/ltsrbt/telepads = list()
 	/// Currently queued purchases.
 	var/list/queued_purchases = list()
-	/// How many admin items have been spawned this round? Used to iterate the identifier of admin-created market items.
+	/// How many admin items have been spawned this round?. Used to iterate the identifier of admin-created market items.
 	var/admin_items_spawned = 0
 
 /datum/controller/subsystem/market/Initialize()
@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(market)
 
 			// Get random area, throw it somewhere there.
 			if(SHIPPING_METHOD_TELEPORT)
-				var/turf/targetturf = get_safe_random_station_turf_equal_weight() //todo: split weights
+				var/turf/targetturf = get_safe_random_station_turf_equal_weight() // to do split weights
 				// This shouldn't happen.
 				if (!targetturf)
 					continue
@@ -132,7 +132,7 @@ SUBSYSTEM_DEF(market)
 
 /// Used to make a teleportation effect as do_teleport does not like moving items from nullspace.
 /datum/controller/subsystem/market/proc/fake_teleport(datum/market_purchase/purchase, turf/target)
-	// Oopsie, whoopsie, the item is gone. So long, and thanks for all the money.
+	// Oopsie, whoopsie, the item is gone.. So long, and thanks for all the money.
 	if(QDELETED(purchase))
 		return
 	var/atom/movable/thing = purchase.entry.spawn_item(target, purchase)
@@ -140,7 +140,7 @@ SUBSYSTEM_DEF(market)
 	do_sparks(5, TRUE, target)
 	qdel(purchase)
 
-/// Used to add /datum/market_purchase to queued_purchases var. Returns TRUE when queued.
+/// Used to add /datum/market_purchase to queued_purchases var.. Returns TRUE when queued.
 /datum/controller/subsystem/market/proc/queue_item(datum/market_purchase/purchase)
 	if((purchase.method == SHIPPING_METHOD_LTSRBT && !telepads.len) || isnull(purchase.uplink))
 		qdel(purchase)

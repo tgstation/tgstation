@@ -20,7 +20,7 @@
 	///How many pages the booklet holds
 	var/number_of_pages = 50
 
-//A little janky with pockets
+// A little low quality with pockets
 /obj/item/ph_booklet/attack_hand(mob/user)
 	if(user.get_held_index_of_item(src))//Does this check pockets too..?
 		if(number_of_pages == 50)
@@ -75,7 +75,7 @@
 	color = "#f5c352"
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
-	///If the paper was used, and therefore cannot change color again
+	/// If the paper was used, and so cannot change color again
 	var/used = FALSE
 
 /obj/item/ph_paper/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -158,7 +158,7 @@
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 	heat = 2000
-	///If the flame is lit - i.e. if we're processing and burning
+	/// If the flame is lit - i.e.. if we're processing and burning
 	var/lit = FALSE
 	///total reagent volume
 	var/max_volume = 50
@@ -188,7 +188,7 @@
 		playsound(user.loc, 'sound/effects/chemistry/heatdam.ogg', 50, TRUE)
 		return ITEM_INTERACT_SUCCESS
 
-	if(tool.is_drainable()) //Transfer FROM it TO us. Special code so it only happens when flame is off.
+	if(tool.is_drainable()) // Transfer FROM it TO us.. Special code so it only happens when flame is off.
 		var/obj/item/reagent_containers/container = tool
 		if(!container.reagents.total_volume)
 			to_chat(user, span_warning("[container] is empty and can't be poured!"))

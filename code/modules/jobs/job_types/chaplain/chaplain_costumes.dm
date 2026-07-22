@@ -223,7 +223,7 @@
 	desc = "Armour that's comprised of metal and cloth."
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_BULKY
-	slowdown = 2.0 //gotta pretend we're balanced.
+	slowdown = 2.0 // got to pretend we're balanced.
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/armor_crusader
 

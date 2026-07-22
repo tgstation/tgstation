@@ -168,7 +168,7 @@
 		give_eye_control(user)
 		eyeobj.setLoc(eyeobj.loc)
 		return
-	/* We're attempting to initialize the eye past this point */
+	/* We're trying to initialize the eye past this point */
 
 	if(!CreateEye())
 		to_chat(user, span_warning("\The [src] flashes a bunch of never-ending errors on the display. Something is really wrong."))
@@ -207,7 +207,7 @@
 	return attack_hand(user)
 
 /obj/machinery/computer/camera_advanced/attack_ai(mob/user)
-	return //AIs would need to disable their own camera procs to use the console safely. Bugs happen otherwise.
+	return // AIs would need to disable their own camera procs to use the console safely.. Bugs happen otherwise.
 
 /datum/action/innate/camera_off
 	name = "End Camera View"

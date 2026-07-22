@@ -114,8 +114,8 @@
 	displaying_client.parallax_animate_timers -= layer
 
 	// If we are moving in a direction, we used the QUAD_EASING function with EASE_IN
-	// This means our position function is x^2. This is always LESS then the linear we're using here
-	// But if we just used the same time delay, our rate of change would mismatch. f'(1) = 2x for quad easing, rather then the 1 we get for linear
+	// This means our position function is x^2.. This is always LESS then the linear we're using here
+	// But if we just used the same time delay, our rate of change would mismatch.. f'(1) = 2x for quad easing, rather then the 1 we get for linear
 	// (This is because of how derivatives work right?)
 	// Because of this, while our actual rate of change from before was PARALLAX_LOOP_TIME, our perceived rate of change was PARALLAX_LOOP_TIME / 2 (lower == faster).
 	// Let's account for that here
@@ -183,7 +183,7 @@
 		parallax_layer.offset_y -= change_y
 		// Now that we have our offsets, let's do our positioning
 		// We're going to use an animate to "glide" that last movement out, so it looks nicer
-		// Don't do any animates if we're not actually moving enough distance yeah? thanks lad
+		// Don't do any animates if we're not actually moving enough distance yeah?. thanks lad
 		if(run_parralax && (largest_change * our_speed > 1))
 			animate(parallax_layer, pixel_w = round(parallax_layer.offset_x, 1), pixel_z = round(parallax_layer.offset_y, 1), time = glide_rate)
 		else
@@ -342,7 +342,7 @@
 
 	// Turn the view size into a grid of correctly scaled overlays
 	var/list/viewscales = getviewsize(overlay_view)
-	// This could be half the size but we need to provide space for parallax movement on mob movement, and movement on scroll from shuttles, so like this instead
+	// This could be half the size. We need to provide space f. Parallax movement on mob movement. Movement on scroll from shuttles, so like this instead
 	var/countx = (CEILING((viewscales[1] / 2) * parallax_scaler, 1) + 1)
 	var/county = (CEILING((viewscales[2] / 2) * parallax_scaler, 1) + 1)
 	for(var/x in -countx to countx)
@@ -374,7 +374,7 @@
 
 /atom/movable/screen/parallax_layer/old
 	icon = null
-	icon_state = null // dog there's gonna be so many overlays...
+	icon_state = null // dog there's going to be so many overlays...
 	speed = 0.6
 	layer = 1 // Draws on its own
 
@@ -382,7 +382,7 @@
 	var/mutable_appearance/copy = mutable_appearance(null, "")
 	// We have to use render targets to draw one of these flat and reuse it for this because FOR SOME REASON
 	// 16 (tile count) * (14 (animated state count) * 4 (frame count) + 1 (1 is not animated)) 480x480 states
-	// is TOO MUCH for the client. Whatever, see if I care.
+	// is TOO MUCH for the client.. Whatever, see if I care.
 	copy.render_source = "*old_space_parallax"
 	return copy
 

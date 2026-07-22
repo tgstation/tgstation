@@ -25,11 +25,11 @@
 	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
 	drop_sound = SFX_GENERIC_DEVICE_DROP
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4.6, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
-	///Power cell used to power the scanner. Paths g
+	/// Power cell used to power the scanner.. Paths g
 	var/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/crap
 	///Cell cover status
 	var/cell_cover_open = FALSE
-	///Does this item scan for contraband correctly? If not, will provide a flipped response.
+	/// Does this item scan for contraband correctly?. If not, will provide a flipped response.
 	var/scans_correctly = TRUE
 
 /obj/item/inspector/Initialize(mapload)

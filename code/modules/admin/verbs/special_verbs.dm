@@ -23,7 +23,7 @@ GAME_VERB_PROC_DESC(/client, readmin, "Readmin", "Regain your admin powers.", "A
 	A.associate(src)
 
 	if (!holder)
-		return //This can happen if an admin attempts to vv themself into somebody elses's deadmin datum by getting ref via brute force
+		return // This can happen if an admin tries to vv themself into somebody elses's deadmin datum by getting ref via brute force
 
 	to_chat(src, span_interface("You are now an admin."), confidential = TRUE)
 	message_admins("[src] re-adminned themselves.")

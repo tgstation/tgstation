@@ -96,7 +96,7 @@
 	if(eyeballies.owner != target)
 		return FALSE
 	var/obj/item/organ/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
-	//got different eyes or doesn't own the head... somehow
+	// got different eyes or doesn't own the head.... somehow
 	if(head.owner != target || eyes != eyeballies)
 		return FALSE
 

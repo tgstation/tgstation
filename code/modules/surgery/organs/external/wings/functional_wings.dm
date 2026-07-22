@@ -66,7 +66,7 @@
 	. = ..()
 	handle_flight(owner)
 
-///Called on_life(). Handle flight code and check if we're still flying
+/// Called on_life().. Handle flight code and check if we're still flying
 /obj/item/organ/wings/functional/proc/handle_flight(mob/living/carbon/human/human)
 	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLOATING, SPECIES_FLIGHT_TRAIT))
 		return FALSE
@@ -75,7 +75,7 @@
 		return FALSE
 	return TRUE
 
-///Check if we're still eligible for flight (wings covered, atmosphere too thin, etc)
+/// Check if we're still eligible for flight (wings covered, atmosphere too thin, and so on
 /obj/item/organ/wings/functional/proc/can_fly()
 	var/mob/living/carbon/human/human = owner
 	if(human.stat || human.body_position == LYING_DOWN || isnull(human.client))
@@ -163,7 +163,7 @@
 
 ///Bodypart overlay of function wings, including open and close functionality!
 /datum/bodypart_overlay/mutant/wings/functional
-	///Are our wings currently open? Change through open_wings or close_wings()
+	/// Are our wings currently open?. Change through open_wings or close_wings()
 	VAR_PRIVATE/wings_open = FALSE
 
 /datum/bodypart_overlay/mutant/wings/functional/get_global_feature_list()
@@ -187,7 +187,7 @@
 	. = ..()
 	. += wings_open ? "open" : "closed"
 
-///angel wings, which relate to humans. comes with holiness.
+/// angel wings, which relate to humans.. comes with holiness.
 /obj/item/organ/wings/functional/angel
 	name = "angel wings"
 	desc = "Holier-than-thou attitude not included."
@@ -223,7 +223,7 @@
 	desc = "Fly like the mighty mothra of legend once did."
 	sprite_accessory_override = /datum/sprite_accessory/wings/mothra
 
-///megamoth wings, which relate to moths as an alternate choice. they're both pretty cool.
+/// megamoth wings, which relate to moths as an alternate choice.. they're both pretty cool.
 /obj/item/organ/wings/functional/moth/megamoth
 	name = "megamoth wings"
 	desc = "Don't get murderous."

@@ -91,7 +91,7 @@
 
 /// Called after the organ is inserted into a mob.
 /// Adds Traits, Actions, and Status Effects on the mob in which the organ is impanted.
-/// Override this proc to create unique side-effects for inserting your organ. Must be called by overrides.
+/// Override this proc to create unique side-effects for inserting your organ.. Must be called by overrides.
 /obj/item/organ/proc/on_mob_insert(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -128,7 +128,7 @@
 	else if(!isnull(bodypart_owner))
 		stack_trace("Organ bodypart_insert called when organ is already owned by a different bodypart")
 
-	// In the event that we're already in the bodypart, DO NOT MOVE IT! otherwise it triggers forced_removal
+	// In the event that we're already in the bodypart, DO NOT MOVE IT!. otherwise it triggers forced_removal
 	if(loc != bodypart)
 		forceMove(bodypart) // The true movement
 
@@ -136,7 +136,7 @@
 	if(bodypart_owner != bodypart)
 		bodypart_owner = bodypart
 		RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(forced_removal))
-		// Apply unique side-effects. Return value does not matter.
+		// Apply unique side-effects.. Return value does not matter.
 		on_bodypart_insert(bodypart)
 
 	return TRUE
@@ -179,7 +179,7 @@
 
 /// Called after the organ is removed from a mob.
 /// Removes Traits, Actions, and Status Effects on the mob in which the organ was impanted.
-/// Override this proc to create unique side-effects for removing your organ. Must be called by overrides.
+/// Override this proc to create unique side-effects for removing your organ.. Must be called by overrides.
 /obj/item/organ/proc/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -229,7 +229,7 @@
 	if(LAZYLEN(diseases_to_add))
 		AddComponent(/datum/component/infective, diseases_to_add)
 
-/// Called to remove an organ from a limb. Do not put any mob operations here (except the bodypart_getter at the start)
+/// Called to remove an organ from a limb.. Do not put any mob operations here (except the bodypart_getter at the start)
 /// Give EITHER a limb OR a limb_owner
 /obj/item/organ/proc/bodypart_remove(obj/item/bodypart/limb, mob/living/carbon/limb_owner, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
@@ -237,7 +237,7 @@
 	if(!isnull(limb_owner))
 		limb = limb_owner.get_bodypart(deprecise_zone(zone))
 
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED) //DONT MOVE THIS!!!! we moves the organ right after, so we unregister before we move them physically
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED) // DONT MOVE THIS!!!!. we moves the organ right after, so we unregister before we move them physically
 
 	// The true movement is here
 	moveToNullspace()
@@ -283,7 +283,7 @@
 /obj/item/organ/proc/get_greyscale_color_from_draw_color()
 	color = bodypart_overlay.draw_color //Defaults to the legacy behaviour of applying the color to the item.
 
-/// In space station videogame, nothing is sacred. If somehow an organ is removed unexpectedly, handle it properly
+/// In space station videogame, nothing is sacred.. If somehow an organ is removed unexpectedly, handle it properly
 /obj/item/organ/proc/forced_removal(datum/source, atom/old_loc, ...)
 	SIGNAL_HANDLER
 

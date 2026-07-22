@@ -104,7 +104,7 @@
 			continue
 		return holiday_real.get_holiday_colors(thing_to_color, pattern)
 
-/// Proc to return colors for recoloring atoms based on a pattern and the position of the atom. Primarily used by holidays
+/// Proc to return colors for recoloring atoms good on a pattern and the position of the atom.. Primarily used by holidays
 /proc/get_decoration_color_from_pattern(atom/thing_to_color, pattern = PATTERN_DEFAULT, list/colors)
 	if(!length(colors))
 		return

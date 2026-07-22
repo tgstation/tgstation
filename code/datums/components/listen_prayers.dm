@@ -3,7 +3,7 @@
  * Unlike admins, they cannot smite the person for it, also the prayers are anonymous unless the person says who he's in the message.
  */
 /datum/component/listen_prayers
-	///A callback called before the prayer is heard. May alter the message or prevent it from being heard if it returns FALSE
+	/// A callback called before the prayer is heard.. May alter the message or prevent it from being heard if it returns FALSE
 	var/datum/callback/pre_prayer_callback
 	///This will be affixed to the "deities" that have heard this message.
 	var/deity_name
@@ -46,7 +46,7 @@
 	if(!mind.current || mind.current.stat >= UNCONSCIOUS || !mind.current.client) //You can't hear prayers if unconscious or disconnected
 		return
 	if(!isliving(praying) || praying.stat == DEAD)
-		return FALSE //I don't see any reason in hell to why dead people should be allowed into this. This isn't a knockoff TRAIT_SIXTHSENSE.
+		return FALSE // I don't see any reason in hell to why dead people should be allowed into this.. This isn't a knockoff TRAIT_SIXTHSENSE.
 	if(praying == mind.current) //Ignore prayers coming from ourselves.
 		return
 	if(mind.current.client in GLOB.admins) //This is redundant if we're adminning
@@ -64,7 +64,7 @@
 	if(deity_name)
 		deities_that_listened += deity_name
 
-///An action to stop hearing prayers on command. Doesn't do a whole lot without the associated component
+/// An action to stop hearing prayers on command.. Doesn't do a whole lot without the associated component
 /datum/action/innate/listen_prayers
 	name = "Listen Prayers"
 	button_icon = 'icons/hud/actions.dmi'

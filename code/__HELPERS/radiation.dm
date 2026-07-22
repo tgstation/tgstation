@@ -5,8 +5,8 @@
 #define CALCULATE_RAD_MAX_CHANCE(rad_power) (20 + (15 * (rad_power - 1)))
 
 /// Sends out a pulse of radiation, eminating from the source.
-/// Radiation is performed by collecting all radiatables within the max range (0 means source only, 1 means adjacent, etc),
-/// then makes their way towards them. A number, starting at 1, is multiplied
+/// Radiation is performed by collecting all radiatables within the max range (0 means source only, 1 means adjacent, and so on
+/// then makes their way towards them.. A number, starting at 1, is multiplied
 /// by the insulation amounts of whatever is in the way (for example, walls lowering it down).
 /// If this number hits equal or below the threshold, then the target can no longer be irradiated.
 /// If the number is above the threshold, then the chance is the chance that the target will be irradiated.
@@ -15,7 +15,7 @@
 /// If max_range is high, but threshold is too high, then it usually won't reach the source at the max range in time.
 /// If max_range is low, but threshold is too low, then it basically guarantees everyone nearby, even if there's walls
 /// and such in the way, can be irradiated.
-/// You can also pass in a minimum exposure time. If this is set, then this radiation pulse
+/// You can also pass in a minimum exposure time.. If this is set, then this radiation pulse
 /// will not irradiate the source unless they have been around *any* radioactive source for that
 /// period of time.
 /// The chance to get irradiated diminishes over range, and from objects that block radiation.
@@ -59,7 +59,7 @@
 /// Returns a RADIATION_DANGER_* define, see [code/__DEFINES/radiation.dm]
 /proc/get_perceived_radiation_danger(datum/radiation_pulse_information/pulse_information, insulation_to_target)
 	if (insulation_to_target > pulse_information.threshold)
-		// We could get irradiated! The only thing stopping us now is chance, so scale based on that.
+		// We could get irradiated!. The only thing stopping us now is chance, so scale good on that.
 		if (pulse_information.chance >= EXTREME_RADIATION_CHANCE)
 			return PERCEIVED_RADIATION_DANGER_EXTREME
 		else

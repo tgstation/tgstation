@@ -10,7 +10,7 @@
 	greyscale_colors = COLOR_WHITE
 	species_exception = list(/datum/species/golem)
 	flags_1 = IS_PLAYER_COLORABLE_1
-	///How many times has this shirt been washed? (In an ideal world this is just the determinant of the transform matrix.)
+	/// How many times has this shirt been washed?. (In an ideal world this is just the determinant of the transform matrix.)
 	var/wash_count = 0
 
 /obj/item/clothing/suit/costume/wellworn_shirt/machine_wash(obj/machinery/washing_machine/washer)

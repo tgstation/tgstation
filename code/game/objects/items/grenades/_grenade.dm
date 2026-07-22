@@ -21,7 +21,7 @@
 	pickup_sound = 'sound/items/handling/grenade/grenade_pick_up.ogg'
 	drop_sound = 'sound/items/handling/grenade/grenade_drop.ogg'
 	sound_vary = TRUE
-	/// Bitfields which prevent the grenade from detonating if set. Includes ([GRENADE_DUD]|[GRENADE_USED])
+	/// Bitfields which prevent the grenade from detonating if set.. Includes ([GRENADE_DUD]|[GRENADE_USED])
 	var/dud_flags = NONE
 	///Is this grenade currently armed?
 	var/active = FALSE
@@ -29,7 +29,7 @@
 	var/grenade_arm_sound = 'sound/items/weapons/armbomb.ogg'
 	/// If the sound of the grenade should be varied
 	var/grenade_sound_vary = TRUE
-	///Is it a cluster grenade? We don't wanna spam admin logs with these.
+	/// Is it a cluster grenade?. We don't want to spam admin logs with these.
 	var/type_cluster = FALSE
 	///How long it takes for a grenade to explode after being armed
 	var/det_time = 5 SECONDS
@@ -56,7 +56,7 @@
 	var/shrapnel_radius
 	///Did we add the component responsible for spawning shrapnel to this?
 	var/shrapnel_initialized
-	///Possible timers that can be assigned for detonation. Values are strings in SECONDS
+	/// Possible timers that can be assigned for detonation.. Values are strings in SECONDS
 	var/list/possible_fuse_time = list("Instant", "3", "4", "5")
 
 /obj/item/grenade/Initialize(mapload)
@@ -203,7 +203,7 @@
 		var/mob/mob = loc
 		mob.dropItemToGround(src)
 
-///Signal sent by someone putting the grenade in as an ingredient. Registers signals onto what it was put into so it can explode.
+/// Signal sent by someone putting the grenade in as an ingredient.. Registers signals onto what it was put into so it can explode.
 /obj/item/grenade/proc/on_used_as_ingredient(datum/source, atom/used_in)
 	SIGNAL_HANDLER
 
@@ -211,12 +211,12 @@
 	RegisterSignal(used_in, COMSIG_TOOL_ATOM_ACTED_PRIMARY(TOOL_KNIFE), PROC_REF(ingredient_detonation))
 	RegisterSignal(used_in, COMSIG_TOOL_ATOM_ACTED_PRIMARY(TOOL_ROLLINGPIN), PROC_REF(ingredient_detonation))
 
-///Signal sent by someone eating food this is an ingredient in "used_in". Makes the grenade go kerblooey, destroying the food.
+/// Signal sent by someone eating food this is an ingredient in "used_in".. Makes the grenade go kerblooey, destroying the food.
 /obj/item/grenade/proc/ingredient_detonation(atom/used_in, mob/living/target, mob/living/user, bitecount, bitesize)
 	SIGNAL_HANDLER
 
 	detonate()
-	//can't remove it as an ingredient so we need to get rid of the food. deleted ingredients not good
+	// can't remove it as an ingredient so we need to get rid of the food.. deleted ingredients not good
 	return DESTROY_FOOD
 
 /obj/item/grenade/screwdriver_act(mob/living/user, obj/item/tool)

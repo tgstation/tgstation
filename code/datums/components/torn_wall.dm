@@ -96,7 +96,7 @@
 		crack.alpha *= 0.5
 	overlays += crack
 
-/// If the wall becomes any other turf, delete us. Transforming into a different works fine as a fix.
+/// If the wall becomes any other turf, delete us.. Transforming into a different works fine as a fix.
 /datum/component/torn_wall/proc/on_turf_changed()
 	SIGNAL_HANDLER
 	qdel(src)

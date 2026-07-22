@@ -99,7 +99,7 @@
 		possible_items += uplink_item
 	return possible_items
 
-/// picks items from the list given to proc and generates a valid uplink item that is less or equal to the amount of TC it can spend
+/// picks items from the list given to proc. Generates a valid uplink item that is less. Equal to the amount of TC it can spend
 /datum/uplink_item/bundles_tc/surplus/proc/pick_possible_item(list/possible_items, tc_budget)
 	var/datum/uplink_item/uplink_item = pick(possible_items)
 	if(prob(100 - uplink_item.surplus))

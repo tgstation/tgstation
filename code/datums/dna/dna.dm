@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(standard_mutation_sources, list(MUTATION_SOURCE_ACTIVATED, MUTA
 		.[block_path] += total_block_len
 		total_block_len += block.block_length
 
-///Ditto but for unique features. Used by the datum/dna/set_uni_feature_block and datum/dna/get_uni_feature_block procs.
+/// Ditto but for unique features.. Used by the datum/dna/set_uni_feature_block and datum/dna/get_uni_feature_block procs.
 GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 /proc/populate_total_uf_len_by_block()
@@ -33,14 +33,14 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/unique_identity
 	///The blood type datum, usually a singleton
 	var/datum/blood_type/blood_type
-	///The type of mutant race the player is if applicable (i.e. potato-man)
+	/// The type of mutant race the player is if applicable (i.e.. potato-man)
 	var/datum/species/species = new /datum/species/human
 	/// Assoc list of feature keys to their value
 	/// Note if you set these manually, and do not update [unique_features] afterwards, it will likely be reset.
 	var/list/features = list(FEATURE_MUTANT_COLOR = COLOR_WHITE)
 	///Stores the hashed values of the person's non-human features
 	var/unique_features
-	///Stores the real name of the person who originally got this dna datum. Used primarily for changelings
+	/// Stores the real name of the person who originally got this dna datum.. Used primarily for changelings
 	var/real_name
 	///All mutations are from now on here
 	var/list/mutations
@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	///List of the default genes from this mutation to allow DNA Scanner highlighting
 	var/default_mutation_genes[DNA_MUTATION_BLOCKS]
 	var/stability = 100
-	///Did we take something like mutagen? In that case we can't get our genes scanned to instantly cheese all the powers.
+	/// Did we take something like mutagen?. In that case we can't get our genes scanned to instantly cheese all the powers.
 	var/scrambled = FALSE
 	/// Weighted list of nonlethal meltdowns
 	var/static/list/nonfatal_meltdowns = list()
@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 				continue
 			new_dna.add_mutation(mutation, valid_sources)
 
-///Adds a mutation to the dna if possible. See defines/dna.dm for all sources.
+/// Adds a mutation to the dna if possible.. See defines/dna.dm for all sources.
 /datum/dna/proc/add_mutation(mutation_to_add, list/sources)
 	if(!islist(sources))
 		if(!sources)
@@ -319,7 +319,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		if(message && stability < old_stability)
 			to_chat(holder, message)
 
-/// Updates the UI, UE, and UF of the DNA according to the features, appearance, name, etc. of the DNA / holder.
+/// Updates the UI, UE, and UF of the DNA according to the features, appearance, name, and so on of the DNA / holder.
 /datum/dna/proc/update_dna_identity()
 	if(!holder.has_dna())
 		return
@@ -477,7 +477,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		dna.species = new rando_race()
 
 //proc used to update the mob's appearance after its dna UI has been changed
-//2025: Im unsure if dna is meant to be living, carbon, or human level.. there's contradicting stuff and bugfixes going back 8 years
+// 2025: Im unsure if dna is meant to be living, carbon, or human level... there's contradicting stuff and bugfixes going back 8 years
 //If youre reading this, and you know for sure, update this, or maybe remove the carbon part entirely
 /mob/living/carbon/proc/updateappearance(icon_update = TRUE, mutcolor_update = FALSE, mutations_overlay_update = FALSE)
 	if(!has_dna())
@@ -584,7 +584,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/mutation = pick(candidates)
 	. = dna.add_mutation(mutation, MUTATION_SOURCE_MUTATOR)
 
-///Returns a random mutation typepath based on the given arguments. By default, all available mutations in the dna sequence but the monkey one.
+/// Returns a random mutation typepath good on the given arguments.. By default, all available mutations in the dna sequence but the monkey one.
 /mob/living/carbon/proc/get_random_mutation_path(quality = POSITIVE|NEGATIVE|MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, list/excluded_mutations = list(/datum/mutation/race))
 	if(!has_dna())
 		return null
@@ -602,7 +602,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	possible -= excluded_mutations
 	return length(possible) ? pick(possible) : null //prevent runtimes from picking null
 
-///Gives the mob a random mutation based on the given arguments.
+/// Gives the mob a random mutation good on the given arguments.
 /mob/living/carbon/proc/easy_random_mutate(quality = POSITIVE|NEGATIVE|MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, list/excluded_mutations = list(/datum/mutation/race))
 	var/mutation_path = get_random_mutation_path(quality, scrambled, sequence, excluded_mutations)
 	if(!mutation_path)
@@ -612,7 +612,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		return
 	var/datum/mutation/mutation = dna.get_mutation(mutation_path)
 	if(mutation)
-		mutation.scrambled = FALSE	//set to FALSE to allow easy_random_mutate obtained genes to be saved in DNA consoles
+		mutation.scrambled = FALSE	// set to FALSE to allow easy_random_mutate got genes to be saved in DNA consoles
 
 /mob/living/carbon/proc/random_mutate_unique_identity()
 	if(!has_dna())
@@ -662,7 +662,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(ui || uf)
 		M.updateappearance(mutcolor_update=uf, mutations_overlay_update=1)
 
-//value in range 1 to values. values must be greater than 0
+// value in range 1 to values.. values must be greater than 0
 //all arguments assumed to be positive integers
 /proc/construct_block(value, values, blocksize=DNA_BLOCK_SIZE)
 	var/width = round((16**blocksize)/values)

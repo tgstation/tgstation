@@ -33,9 +33,9 @@
 	var/obj/item/tank/tank_to_target
 
 	// These vars are used for the explosion simulation and doesn't affect the core detonation.
-	/// Combined result of the first two tanks. Exists only in our machine.
+	/// Combined result of the first two tanks.. Exists only in our machine.
 	var/datum/gas_mixture/combined_gasmix
-	/// Here for the UI, tracks the amounts of reaction that has occured. 1 means valve opened but not reacted.
+	/// Here for the UI, tracks the amounts of reaction that has occured.. 1 means valve opened but not reacted.
 	var/reaction_increment = 0
 
 /obj/machinery/research/anomaly_refinery/Initialize(mapload)
@@ -49,7 +49,7 @@
 
 
 /obj/machinery/research/anomaly_refinery/assume_air(datum/gas_mixture/giver)
-	return null // Required to make the TTV not vent directly into the air.
+	return null // Needed to make the TTV not vent directly into the air.
 
 /**
  * Determines how much explosive power (last value, so light impact theoretical radius) is required to make a certain anomaly type.
@@ -249,7 +249,7 @@
 		test_status = "Transfer valve resulted in negligible explosive power. Items ejected."
 	end_test(test_status)
 
-/// This is not the real valve opening process. This is the simulated one used for displaying reactions.
+/// This is not the real valve opening process.. This is the simulated one used for displaying reactions.
 /obj/machinery/research/anomaly_refinery/proc/simulate_valve()
 	if(!inserted_bomb?.tank_one || !inserted_bomb?.tank_two)
 		eject_bomb()
@@ -268,7 +268,7 @@
 
 	reaction_increment += 1
 
-/// We dont allow incomplete valves to go in but do code in checks for incomplete valves. Just in case.
+/// We dont allow incomplete valves to go in but do code in checks for incomplete valves.. Just in case.
 /obj/machinery/research/anomaly_refinery/proc/eject_bomb(mob/user, force = FALSE)
 	if(!inserted_bomb || (active && !force))
 		return

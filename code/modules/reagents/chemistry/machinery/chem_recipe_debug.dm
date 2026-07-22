@@ -7,21 +7,21 @@
 #define USE_REACTION_TEMPERATURE 0
 ///force a user specified value for temperature on the reaction
 #define USE_USER_TEMPERATURE 1
-///force the minimum required temperature for the reaction to start on the reaction
+/// force the minimum needed temperature for the reaction to start on the reaction
 #define USE_MINIMUM_TEMPERATURE 2
 ///force the optimal temperature for the reaction
 #define USE_OPTIMAL_TEMPERATURE 3
-///force the overheat temperature for the reaction. At this point reagents start to decrease
+/// force the overheat temperature for the reaction.. At this point reagents start to decrease
 #define USE_OVERHEAT_TEMPERATURE 4
 
-///Play the next reaction i.e. increment current_reaction_index
+/// Play the next reaction i.e.. increment current_reaction_index
 #define PLAY_NEXT_REACTION 0
-///Play the previous reaction i.e. decrement current_reaction_index
+/// Play the previous reaction i.e.. decrement current_reaction_index
 #define PLAY_PREVIOUS_REACTION 1
-///Pick a reaction at random i.e. user decides via input list what the value of current_reaction_index should be
+/// Pick a reaction at random i.e.. user decides via input list what the value of current_reaction_index should be
 #define PLAY_USER_REACTION 2
 
-///Maximum volume of reagents this machine & its required container can hold
+/// Maximum volume of reagents this machine & its needed container can hold
 #define MAXIMUM_HOLDER_VOLUME 9000
 
 /obj/machinery/chem_recipe_debug
@@ -34,7 +34,7 @@
 
 	///Temperature to be imposed on the reaction
 	var/forced_temp = DEFAULT_REAGENT_TEMPERATURE
-	///The mode for setting reaction temps. see temp defines
+	/// The mode for setting reaction temps.. see temp defines
 	var/temp_mode = USE_REACTION_TEMPERATURE
 	///The ph to be imposed on the reaction
 	var/forced_ph = CHEMICAL_NORMAL_PH
@@ -44,7 +44,7 @@
 	var/forced_purity = 1.0
 	///If TRUE will use forced_purity else don't alter the purity of the reaction
 	var/use_forced_purity = FALSE
-	///The multiplier to be applied on the selected reaction required reagents to start the reaction
+	/// The multiplier to be applied on the selected reaction needed reagents to start the reaction
 	var/volume_multiplier = 1
 
 	///Cached copy all reactions mapped with their name
@@ -60,11 +60,11 @@
 	///The current var of the reaction we are editing
 	var/edit_var = "Required Temp"
 
-	///The target reagents to we are working with. can vary if an reaction requires a specific container
+	/// The target reagents to we are working with.. can vary if an reaction needs a specific container
 	var/datum/reagents/target_reagents
 	///The beaker inside this machine, if null will create a new one
 	var/obj/item/reagent_containers/container
-	///The default reagent container required for the selected test reaction if any
+	/// The default reagent container needed for the selected test reaction if any
 	var/obj/item/reagent_containers/required_container
 
 /obj/machinery/chem_recipe_debug/Initialize(mapload)
@@ -141,7 +141,7 @@
 	reaction_name = replacetext(reaction_name, "_", " ")
 	return full_capitalize(reaction_name)
 
-///Retrives the target temperature to be imposed on the test reaction based on temp_mode
+/// Retrives the target temperature to be imposed on the test reaction good on temp_mode
 /obj/machinery/chem_recipe_debug/proc/decode_target_temperature()
 	PRIVATE_PROC(TRUE)
 	SHOULD_BE_PURE(TRUE)
@@ -188,7 +188,7 @@
 		adjust_environment(seconds_per_tick)
 		target_reagents.handle_reactions()
 
-	//send updates to ui. faster than SStgui.update_uis
+	// send updates to ui.. faster than SStgui.update_uis
 	for(var/datum/tgui/ui in src.open_uis)
 		ui.send_update()
 
@@ -197,7 +197,7 @@
 
 	adjust_environment(seconds_per_tick)
 
-	//send updates to ui. faster than SStgui.update_uis
+	// send updates to ui.. faster than SStgui.update_uis
 	for(var/datum/tgui/ui in src.open_uis)
 		ui.send_update()
 
@@ -346,7 +346,7 @@
 				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING)))
 
 		if(!QDELETED(required_container))
-			//as of now we only decode soup pots. If more exotic containers are made make sure to add them here
+			// as of now we only decode soup pots.. If more exotic containers are made make sure to add them here
 			if(istype(required_container, /obj/item/reagent_containers/cup/soup_pot))
 				var/obj/item/reagent_containers/cup/soup_pot/pot = required_container
 				for(var/obj/item as anything in pot.added_ingredients)
@@ -489,7 +489,7 @@
 		if("start_reaction")
 			var/datum/chemical_reaction/test_reaction
 
-			//pick the reaction based on the reaction mode
+			// pick the reaction good on the reaction mode
 			var/len = reactions_to_test.len
 			if(len > 1)
 				switch(current_reaction_mode)
@@ -520,7 +520,7 @@
 			target_reagents.force_stop_reacting()
 			target_reagents.clear_reagents()
 
-			//If the reaction requires a specific container initialize & do other stuff accordingly
+			// If the reaction needs a specific container initialize & do other stuff accordingly
 			target_reagents = reagents
 			if(!QDELETED(required_container))
 				UnregisterSignal(required_container.reagents, COMSIG_REAGENTS_REACTION_STEP)
@@ -531,13 +531,13 @@
 				target_reagents = required_container.reagents
 				RegisterSignal(target_reagents, COMSIG_REAGENTS_REACTION_STEP, PROC_REF(on_reaction_step))
 
-			//append everything required
+			// append everything needed
 			var/list/reagent_list = list()
 			if(length(test_reaction.required_catalysts))
 				reagent_list += test_reaction.required_catalysts
 			if(length(test_reaction.required_reagents))
 				reagent_list += test_reaction.required_reagents
-			//now add the required reagents
+			// now add the needed reagents
 			var/target_temperature
 			switch(temp_mode)
 				if(USE_REACTION_TEMPERATURE)
@@ -549,7 +549,7 @@
 				if(length(test_reaction.required_catalysts) && test_reaction.required_catalysts[_reagent.type])
 					vol_mul = 1 //catalysts don't need to be present in large amounts
 
-				//add the required reagents with the precise conditions
+				// add the needed reagents with the precise conditions
 				target_reagents.add_reagent(
 					_reagent,
 					reagent_list[_reagent] * vol_mul,

@@ -1,4 +1,4 @@
-// 'user' can be a modPC, hence why it's pathed to the atom
+// 'user' can be a modPC, so why it's pathed to the atom
 /datum/mafia_controller/ui_static_data(atom/user)
 	var/list/data = list()
 
@@ -22,7 +22,7 @@
 
 	return data
 
-// 'user' can be a modPC, hence why it's pathed to the atom
+// 'user' can be a modPC, so why it's pathed to the atom
 /datum/mafia_controller/ui_data(atom/user)
 	var/list/data = list()
 

@@ -71,7 +71,7 @@
 		return //return if there aren't more than 5 Moles of Water Vapor in the air
 	snap_signal()
 
-///Signal fired when wearer attempts to activate/deactivate suits
+/// Signal fired when wearer tries to activate/deactivate suits
 /obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
 	SIGNAL_HANDLER
 	balloon_alert(user, "springlocks aren't responding...?")
@@ -95,7 +95,7 @@
 
 		for (var/obj/item/bodypart/bodypart as anything in mod.wearer.get_damageable_bodyparts())
 			if (part.body_parts_covered & bodypart.body_part) // can hit chest again
-				bodypart.receive_damage(100, forced = TRUE, sharpness = SHARP_POINTY) //boggers, bogchamp, etc
+				bodypart.receive_damage(100, forced = TRUE, sharpness = SHARP_POINTY) // boggers, bogchamp, and so on
 
 	if(!HAS_TRAIT(mod.wearer, TRAIT_NODEATH))
 		mod.wearer.investigate_log("has been killed by [src].", INVESTIGATE_DEATHS)
@@ -244,7 +244,7 @@
 	incompatible_modules = list(/obj/item/mod/module/paper_dispenser)
 	cooldown_time = 5 SECONDS
 	required_slots = list(ITEM_SLOT_GLOVES|ITEM_SLOT_NECK)
-	/// The total number of sheets created by this MOD. The more sheets, them more likely they set on fire.
+	/// The total number of sheets created by this MOD.. The more sheets, them more likely they set on fire.
 	var/num_sheets_dispensed = 0
 
 /obj/item/mod/module/paper_dispenser/on_use(mob/activator)
@@ -326,7 +326,7 @@
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// How many steps the user has taken since turning the suit on, used for footsteps.
 	var/step_count = 0
-	/// If you use the module on a planetary turf, you fly up. To the sky.
+	/// If you use the module on a planetary turf, you fly up.. To the sky.
 	var/you_fucked_up = FALSE
 
 /obj/item/mod/module/atrocinator/on_activation(mob/activator)
@@ -342,7 +342,7 @@
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(on_someone_buckled))
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
 	ADD_TRAIT(mod.wearer, TRAIT_PASSTABLE, REF(src))
-	check_upstairs() //todo at some point flip your screen around
+	check_upstairs() // to do at some point flip your screen around
 
 /obj/item/mod/module/atrocinator/deactivate(mob/activator, display_message = TRUE, deleting = FALSE)
 	if(you_fucked_up && !deleting)

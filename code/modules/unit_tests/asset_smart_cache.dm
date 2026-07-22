@@ -2,7 +2,7 @@
 	name = "test"
 	load_immediately = TRUE
 	force_cache = TRUE
-	// Don't let the asset subsystem load this. This is how we trick it.
+	// Don't let the asset subsystem load this.. This is how we trick it.
 	abstract_type = /datum/asset/spritesheet_batched/test
 	var/static/list/items = list(/obj/item/binoculars, /obj/item/camera, /obj/item/clothing/under/color/blue, /obj/item/clothing/under/color/black)
 

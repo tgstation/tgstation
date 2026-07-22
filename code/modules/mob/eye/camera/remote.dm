@@ -3,9 +3,9 @@
  * Handles assigning/unassigning it's users, as well as applying sight effects.
  */
 /mob/eye/camera/remote
-	/// Weakref to the current user of this eye. Must be a [living mob][/mob/living].
+	/// Weakref to the current user of this eye.. Must be a [living mob][/mob/living].
 	var/datum/weakref/user_ref
-	/// Weakref to the creator of this eye. Must be a [machine][/obj/machinery].
+	/// Weakref to the creator of this eye.. Must be a [machine][/obj/machinery].
 	var/datum/weakref/origin_ref
 
 	/// TRUE if this camera should show itself to the user.
@@ -17,11 +17,11 @@
 
 	/// If TRUE, the eye will have acceleration when moving.
 	var/acceleration = TRUE
-	/// Used internally for calculating wait time. (world.timeofday + wait_time)
+	/// Used internally for calculating wait time.. (world.timeofday + wait_time)
 	VAR_FINAL/last_moved = 0
 	/// The amount of time that must pass before var/sprint is reset.
 	VAR_PROTECTED/wait_time = 5 DECISECONDS
-	/// The speed of the camera. Scales from initial(sprint) to var/max_sprint
+	/// The speed of the camera.. Scales from initial(sprint) to var/max_sprint
 	VAR_PROTECTED/sprint = 10
 	/// Amount of speed that is added to var/sprint.
 	VAR_PROTECTED/momentum = 0.5

@@ -206,7 +206,7 @@
 	if(!(new_part.bodytype & BODYTYPE_GHOST))
 		swap_mode(force_off = TRUE)
 
-///Swaps the mode, allowing us to phase through stuff but drops everything. Optional 'force_off' arg to prevent being able to turn it on.
+/// Swaps the mode, allowing us to phase through stuff but drops everything.. Optional 'force_off' arg to prevent being able to turn it on.
 /datum/action/innate/toggle_passthrough/proc/swap_mode(force_off)
 	//we can only turn off, early return if we're trying to turn it on instead.
 	if(force_off && HAS_TRAIT_FROM(owner, TRAIT_NO_FLOATING_ANIM, SPECIES_TRAIT))
@@ -248,7 +248,7 @@
 		carbon_species.update_no_equip_flags(carbon_owner, initial(carbon_species.no_equip_flags))
 		UnregisterSignal(carbon_owner, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
 
-///Called when attempting to move to a new tile while the action is active, returns to cancel moving.
+/// Called when trying to move to a new tile while the action is active, returns to cancel moving.
 /datum/action/innate/toggle_passthrough/proc/attempt_move(mob/source, new_loc, direct)
 	SIGNAL_HANDLER
 	if(locate(/obj/effect/blessing) in new_loc)

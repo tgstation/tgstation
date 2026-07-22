@@ -261,7 +261,7 @@
 		proj.firer = src
 		proj.fire(dir2angle(dir))
 
-/obj/machinery/anomalous_crystal/dark_reprise //Revives anyone nearby, but turns them into shadowpeople and renders them uncloneable, so the crystal is your only hope of getting up again if you go down.
+/obj/machinery/anomalous_crystal/dark_reprise // Revives anyone nearby. Turns them into shadowpeople. Renders them uncloneable, so the crystal is your only hope of getting up again if you go down.
 	observer_desc = "When activated, this crystal revives anyone nearby, but turns them into Shadowpeople and makes them unclonable, making the crystal their only hope of getting up again."
 	activation_method = ACTIVATE_TOUCH
 	activation_sound = 'sound/effects/hallucinations/growl1.ogg'
@@ -288,12 +288,12 @@
 		to_revive.set_species(/datum/species/shadow, TRUE)
 		to_revive.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
 		//Free revives, but significantly limits your options for reviving except via the crystal
-		//except JK who cares about BADDNA anymore. this even heals suicides.
+		// except JK who cares about BADDNA anymore.. this even heals suicides.
 		ADD_TRAIT(to_revive, TRAIT_BADDNA, MAGIC_TRAIT)
 
 	return TRUE
 
-/obj/machinery/anomalous_crystal/helpers //Lets ghost spawn as helpful creatures that can only heal people slightly. Incredibly fragile and they can't converse with humans
+/obj/machinery/anomalous_crystal/helpers // Lets ghost spawn as helpful creatures that can only heal people slightly.. Incredibly fragile and they can't converse with humans
 	observer_desc = "This crystal allows ghosts to turn into a fragile creature that can heal people."
 	activation_method = ACTIVATE_TOUCH
 	activation_sound = 'sound/effects/ghost2.ogg'
@@ -322,7 +322,7 @@
 			var/mob/living/basic/lightgeist/deployable = new(get_turf(loc))
 			deployable.PossessByPlayer(user.key)
 
-/obj/machinery/anomalous_crystal/possessor //Allows you to bodyjack small animals, then exit them at your leisure, but you can only do this once per activation. Because they blow up. Also, if the bodyjacked animal dies, SO DO YOU.
+/obj/machinery/anomalous_crystal/possessor // Allows you to bodyjack small animals, then exit them at your leisure, but you can only do this once per activation.. Because they blow up.. Also, if the bodyjacked animal dies, SO DO YOU.
 	observer_desc = "When activated, this crystal allows you to take over small animals, and then exit them at the possessors leisure. Exiting the animal kills it, and if you die while possessing the animal, you die as well."
 	activation_method = ACTIVATE_TOUCH
 	use_time = 1 SECONDS
@@ -343,7 +343,7 @@
 			continue
 		valid_mobs += possible_mob
 
-	if (!length(valid_mobs)) //Just in case there aren't any animals on the station, this will leave you with a terrible option to possess if you feel like it //i found it funny that in the file for a giant angel beast theres a cockroach
+	if (!length(valid_mobs)) // Just in case there aren't any animals on the station, this will leave you with a terrible option to possess if you feel like it //i found it funny that in the file f. A giant angel beast theres a cockroach
 		new /mob/living/basic/cockroach/bloodroach(get_step(src,dir))
 		return
 

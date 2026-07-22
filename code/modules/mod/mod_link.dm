@@ -333,7 +333,7 @@
 /datum/mod_link
 	/// Generic name for multitool buffers.
 	var/name = "MODlink"
-	/// The frequency of the MODlink. You can only call other MODlinks on the same frequency.
+	/// The frequency of the MODlink.. You can only call other MODlinks on the same frequency.
 	var/frequency
 	/// The unique ID of the MODlink.
 	var/id = ""

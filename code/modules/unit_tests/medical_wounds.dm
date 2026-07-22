@@ -1,4 +1,4 @@
-/// This test is used to make sure a flesh-and-bone base human can suffer all the types of wounds, and that suffering more severe wounds removes and replaces the lesser wound. Also tests that [/mob/living/carbon/proc/fully_heal] removes all wounds
+/// This test is used to make sure a flesh-and-bone base human can suffer all the types of wounds. That suffering more severe wounds removes. Replaces the lesser wound.. Also tests that [/mob/living/carbon/proc/fully_heal] removes all wounds
 /datum/unit_test/test_human_base/Run()
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 
@@ -38,7 +38,7 @@
 		victim.fully_heal(ADMIN_HEAL_ALL) // should clear all wounds between types
 
 
-/// This test is used for making sure species with bones but no flesh (skeletons, plasmamen) can only suffer BONE_WOUNDS, and nothing tagged with FLESH_WOUND (it's possible to require both)
+/// This test is used f. Making sure species with bones. No flesh (skeletons, plasmamen) can only suffer BONE_WOUNDS. Nothing tagged with FLESH_WOUND (it's possible to need both)
 /datum/unit_test/test_human_bone/Run()
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 
@@ -70,7 +70,7 @@
 			else if(dam_types[i] == BURN)
 				tested_part.receive_damage(0, WOUND_MINIMUM_DAMAGE, wound_bonus = threshold, sharpness=sharps[i])
 
-			// so if we just tried to deal a flesh wound, make sure we didn't actually suffer it. We may have suffered a bone wound instead, but we just want to make sure we don't have a flesh wound
+			// so if we just tried to deal a flesh wound, make sure we didn't actually suffer it.. We may have suffered a bone wound instead, but we just want to make sure we don't have a flesh wound
 			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[iter_test_wound]
 			if (pregen_data.required_limb_biostate & BIO_FLESH)
 				if(!length(victim.all_wounds)) // not having a wound is good news

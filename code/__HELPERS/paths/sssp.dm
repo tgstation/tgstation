@@ -14,7 +14,7 @@
 	var/datum/can_pass_info/pass_info
 	/// Were we allowed to path over space?
 	var/pass_space = TRUE
-	/// Were we avoiding a turf? If so, which one?
+	/// Were we avoiding a turf?. If so, which one?
 	var/turf/avoid
 	/// Are we currently being expanded?
 	var/expanding = FALSE
@@ -101,7 +101,7 @@
 /// Copies the passed in path_map into this datum
 /// Saves some headache with updating refs if we want to modify a path_map
 /datum/path_map/proc/copy_from(datum/path_map/read_from)
-	// Copy all the relevant vars over. NOT any of the timer stuff, we want them to still count
+	// Copy all the relevant vars over.. NOT any of the timer stuff, we want them to still count
 	src.next_closest = read_from.next_closest
 	src.distances = read_from.distances
 	src.start = read_from.start
@@ -127,7 +127,7 @@
 	return pass_info.compare_against(pass_info)
 
 
-/// Returns a new /datum/pathfind/sssp based off our settings
+/// Returns a new /datum/pathfind/sssp good off our settings
 /// Will have an invalid source mob, no max distance, and no ending callback
 /datum/path_map/proc/settings_to_path()
 	// Default creation to not set any vars incidentally
@@ -137,7 +137,7 @@
 	return based_on_what
 
 /// Expands this pathmap to cover a new range, assuming the arg is greater then the current range
-/// Returns true if this succeeded or was not required, false otherwise
+/// Returns true if this succeeded or was not needed false otherwise
 /datum/path_map/proc/expand(new_range)
 	var/list/working_distances = distances
 	var/working_index = working_distances.len
@@ -158,7 +158,7 @@
 	// We're guaranteed that hand_around will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
 	var/datum/callback/await = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around)
 
-	// We're gonna build a pathfind datum from our settings and set it running
+	// We're going to build a pathfind datum from our settings and set it running
 	var/datum/pathfind/sssp/based_off_us = new()
 
 	based_off_us.setup_from_canpass(pass_info, start, new_range, pass_space, avoid, list(await))
@@ -244,7 +244,7 @@
 				return TRUE
 			continue
 		for(var/turf/adjacent in TURF_NEIGHBORS(next_turf))
-			// Already have a path? then we're gooood baby
+			// Already have a path?. then we're gooood baby
 			if(working_queue[adjacent])
 				continue
 
@@ -263,7 +263,7 @@
 						working_queue[vertical_move] = next_turf
 						working_distances += distance
 					else
-						// Can't do a vertical move? let's do a horizontal move first
+						// Can't do a vertical move?. let's do a horizontal move first
 						if(!working_queue[horizontal_move])
 							working_queue[horizontal_move] = next_turf
 							working_distances += distance

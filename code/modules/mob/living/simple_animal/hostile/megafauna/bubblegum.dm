@@ -273,7 +273,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/change_move_delay(newmove = initial(move_to_delay))
 	move_to_delay = newmove
 	set_varspeed(move_to_delay)
-	handle_automated_action() // need to recheck movement otherwise move_to_delay won't update until the next checking aka will be wrong speed for a bit
+	handle_automated_action() // need to recheck movement otherwise move_to_delay won't update until the next checking also known as will be wrong speed for a bit
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	. = ..()

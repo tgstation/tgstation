@@ -93,7 +93,7 @@
 	announcement_triggered = TRUE
 	return TRUE
 
-/// Signal calls cant sleep, we gotta do this.
+/// Signal calls cant sleep, we got to do this.
 /datum/sm_delam/cascade/proc/end_round_holder()
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(effect_evac_rift_end))

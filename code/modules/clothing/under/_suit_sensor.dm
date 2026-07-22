@@ -13,7 +13,7 @@
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 7
-	///The current sensor mode, inherited from the clothing it's cut from. Can also be changed when using it in hand.
+	/// The current sensor mode, inherited from the clothing it's cut from.. Can also be changed when using it in hand.
 	var/sensor_mode = SENSOR_OFF
 	///Suit sensors are busted when struck by a heavy electromagnetic pulse.
 	var/broken = FALSE

@@ -48,7 +48,7 @@
 /obj/item/clothing/head/helmet/sec/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(issignaler(attacking_item))
 		var/obj/item/assembly/signaler/attached_signaler = attacking_item
-		// There's a flashlight in us. Remove it first, or it'll be lost forever!
+		// There's a flashlight in us.. Remove it first, or it'll be lost forever!
 		var/obj/item/flashlight/seclite/blocking_us = locate() in src
 		if(blocking_us)
 			to_chat(user, span_warning("[blocking_us] is in the way, remove it first!"))

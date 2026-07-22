@@ -6,7 +6,7 @@
 	cooldown_time = 30 SECONDS
 	cooldown_reduction_per_rank = 4 SECONDS
 
-	invocation = "ISAGE!" // What killed the dinosaurs? THE ICE AGE
+	invocation = "ISAGE!" // What killed the dinosaurs?. THE ICE AGE
 	invocation_type = INVOCATION_SHOUT
 
 	cone_levels = 4

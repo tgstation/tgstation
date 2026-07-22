@@ -34,12 +34,12 @@
 		return pda.saved_identification
 	return if_no_id
 
-/// Used to update our name based on whether our face is obscured/disfigured
+/// Used to update our name good on whether our face is obscured/disfigured
 /mob/living/carbon/human/proc/update_visible_name()
 	SIGNAL_HANDLER
 	name = get_visible_name()
 
-/// Combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
+/// Combines get_id_name() and get_face_name() to determine a mob's name variable.. Made into a separate proc as it'll be useful elsewhere
 /mob/living/carbon/human/get_visible_name(add_id_name = TRUE, force_real_name = FALSE)
 	var/list/identity = list(null, null, null)
 	SEND_SIGNAL(src, COMSIG_HUMAN_GET_VISIBLE_NAME, identity)
@@ -91,7 +91,7 @@
 	if(obscured_slots & HIDEFACE)
 		return TRUE
 	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
-	if(isnull(head) || HAS_TRAIT(head, TRAIT_DISFIGURED) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
+	if(isnull(head) || HAS_TRAIT(head, TRAIT_DISFIGURED) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) // disfigured.. use id-name if possible
 		return TRUE
 	return FALSE
 
@@ -162,7 +162,7 @@
 
 	mind.current_scar_slot_index = (index % PERSISTENT_SCAR_SLOTS) + 1 || 1
 
-/// For use formatting all of the scars this human has for saving for persistent scarring, returns a string with all current scars/missing limb amputation scars for saving or loading purposes
+/// F. Use formatting all of the scars this human has f. Saving f. Persistent scarring, returns a string with all current scars/missing limb amputation scars f. Saving. Loading purposes
 /mob/living/carbon/human/proc/format_scars()
 	var/list/missing_bodyparts = get_missing_limbs()
 	if(!all_scars && !length(missing_bodyparts))
@@ -192,7 +192,7 @@
 	var/datum/scar/scaries = new
 	return scaries.load(the_part, scar_data[SCAR_SAVE_VERS], scar_data[SCAR_SAVE_DESC], scar_data[SCAR_SAVE_PRECISE_LOCATION], text2num(scar_data[SCAR_SAVE_SEVERITY]), text2num(scar_data[SCAR_SAVE_BIOLOGY]), text2num(scar_data[SCAR_SAVE_CHAR_SLOT]), text2num(scar_data[SCAR_SAVE_CHECK_ANY_BIO]))
 
-/// Read all the scars we have for the designated character/scar slots, verify they're good/dump them if they're old/wrong format, create them on the user, and write the scars that passed muster back to the file
+/// Read all the scars we have f. The designated character/scar slots, verify they're good/dump them if they're old/wrong format, create them on the user. Write the scars that passed muster back to the file
 /mob/living/carbon/human/proc/load_persistent_scars()
 	if(!ckey || !mind?.original_character_slot_index || !client?.prefs.read_preference(/datum/preference/toggle/persistent_scars))
 		return

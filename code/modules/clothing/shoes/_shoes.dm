@@ -22,7 +22,7 @@
 	/// How do these shoes stay on?
 	var/fastening_type = SHOES_LACED
 
-	///Are we currently tied? Can either be SHOES_UNTIED, SHOES_TIED, or SHOES_KNOTTED
+	/// Are we currently tied?. Can either be SHOES_UNTIED, SHOES_TIED, or SHOES_KNOTTED
 	var/tied = SHOES_TIED
 	///How long it takes to lace/unlace these shoes
 	var/lace_time = 5 SECONDS
@@ -60,7 +60,7 @@
 			right.dismember()
 		playsound(user, SFX_DESECRATION, 50, TRUE, -1)
 		return BRUTELOSS
-	else//didnt realize this suicide act existed (was in miscellaneous.dm) and didnt want to remove it, so made it a 50/50 chance. Why not!
+	else// didnt realize this suicide act existed (was in miscellaneous.dm) and didnt want to remove it, so made it a 50/50 chance.. Why not!
 		user.visible_message(span_suicide("[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?"))
 		for(var/i in 1 to 3)
 			sleep(0.3 SECONDS)
@@ -208,7 +208,7 @@
 
 		var/mod_time = lace_time
 		to_chat(user, span_notice("You quietly set to work [tied ? "un[fastening_verb()]" : "knotting"] [loc]'s [src.name]..."))
-		if(HAS_TRAIT(user, TRAIT_CLUMSY)) // based clowns trained their whole lives for this
+		if(HAS_TRAIT(user, TRAIT_CLUMSY)) // good clowns trained their whole lives for this
 			mod_time *= 0.75
 
 		if(do_after(user, mod_time, target = our_guy, extra_checks = CALLBACK(src, PROC_REF(still_shoed), our_guy), hidden = TRUE))
@@ -229,7 +229,7 @@
 /obj/item/clothing/shoes/proc/still_shoed(mob/living/carbon/our_guy)
 	return (loc == our_guy)
 
-///check_trip runs on each step to see if we fall over as a result of our lace status. Knotted laces are a guaranteed trip, while untied shoes are just a chance to stumble
+/// check_trip runs on each step to see if we fall over as a result of our lace status.. Knotted laces are a guaranteed trip, while untied shoes are just a chance to stumble
 /obj/item/clothing/shoes/proc/check_trip()
 	SIGNAL_HANDLER
 	var/mob/living/carbon/human/our_guy = loc

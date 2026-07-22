@@ -13,10 +13,10 @@
 
 #define SUPPLYPOD_X_OFFSET -16
 
-///DO NOT GO ANY LOWER THAN X1.4 the "CARGO_CRATE_VALUE" value if using regular crates, or infinite profit will be possible! This is also unit tested against.
+/// DO NOT GO ANY LOWER THAN X1.4 the "CARGO_CRATE_VALUE" value if using regular crates, or infinite profit will be possible!.. This is also unit tested against.
 #define CARGO_MINIMUM_COST CARGO_CRATE_VALUE * 1.4
 
-/// The baseline unit for cargo crates. Adjusting this will change the cost of all in-game shuttles, crate export values, bounty rewards, and all supply pack import values, as they use this as their unit of measurement.
+/// The baseline unit for cargo crates... Adjusting this will change the cost of all in-game shuttles, crate export values, bounty rewards.. All supply pack import values, as they use this as their unit of measurement.
 #define CARGO_CRATE_VALUE 200
 
 /// The highest amount of orders you can have of one thing at any one time
@@ -32,7 +32,7 @@
 /// Universal Scanner mode for using the price tagger.
 #define SCAN_PRICE_TAG 3
 
-// Defines for use with `export_item_and_contents()`, aka the export code that sells the items.
+// Defines for use with `export_item_and_contents()`, also known as the export code that sells the items.
 /// Default export define, these are things that are sold to centcom.
 #define EXPORT_MARKET_STATION "supply"
 /// Export market for pirates.
@@ -63,7 +63,7 @@
 /// This is set when something is created by an admin to make sure its contents is also marked as such
 #define ORDER_ADMIN_SPAWNED (1 << 9)
 
-///Discount categories for coupons. This one is for anything that isn't discountable.
+/// Discount categories for coupons... This one is for anything that isn't discountable.
 #define SUPPLY_PACK_NOT_DISCOUNTABLE null
 ///Discount category for the standard stuff, mostly goodies.
 #define SUPPLY_PACK_STD_DISCOUNTABLE "standard_discount"
@@ -80,13 +80,13 @@
 #define EXPORT_SOLD_DONT_DELETE 2
 
 
-//At 320 it's 7.5 minutes, at 1400 it's 12.44 minutes,  at 3000 (around gun crates) it's 15.5 minutes, at 8000 (hat crate) 20 minutes, at 9000 (expensive atmos cans) it's 20.58 minutes, and at the 20k crate it's 24.76 minutes.
+// At 320 it's 7.5 minutes, at 1400 it's 12.44 minutes, at 3000 (around gun crates) it's 15.5 minutes, at 8000 (hat crate) 20 minutes, at 9000 (expensive atmos cans) it's 20.58 minutes.. At the 20k crate it's 24.76 minutes.
 /// Multiplies the logarithmic value calculating the free crate cooldown
 #define DEPARTMENTAL_ORDER_COOLDOWN_COEFFICIENT 60
 /// Used for the power of the logarithmic value for the free crate cooldown
 #define DEPARTMENTAL_ORDER_COOLDOWN_EXPONENT 2.2
 
-//At 320 it's 475 credits, at 1400 it's 669 credits,  at 3000 (around gun crates) its 778, at 8000 (hat crate) it's 925 credits, at 9000 (expensive atmos cans) it's 943 credits, and at the 20k crate it's 1070 credits.
+// At 320 it's 475 credits, at 1400 it's 669 credits, at 3000 (around gun crates) its 778, at 8000 (hat crate) it's 925 credits, at 9000 (expensive atmos cans) it's 943 credits.. At the 20k crate it's 1070 credits.
 
 /// Multiplies the logarithmic value calculating the free crate delivery reward
 #define DEPARTMENTAL_ORDER_REWARD_COEFFICIENT 120

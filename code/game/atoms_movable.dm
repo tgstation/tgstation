@@ -12,7 +12,7 @@
 	var/move_force = MOVE_FORCE_DEFAULT
 	var/pull_force = PULL_FORCE_DEFAULT
 	var/datum/thrownthing/throwing = null
-	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
+	var/throw_speed = 2 // How many tiles to move per ds when being thrown.. Float values are fully supported
 	var/throw_range = 7
 	///Max range this atom can be thrown via telekinesis
 	var/tk_throw_range = 10
@@ -23,7 +23,7 @@
 	VAR_PRIVATE/datum/language_holder/language_holder
 	/// The list of factions this atom belongs to (used for cacheable faction strings - these tend to not change very often)
 	VAR_PROTECTED/list/faction
-	/// The list of allies this atom has (used for anything too dynamic for string_list() - typically mob refs, each mob starts with themselves as an ally)
+	/// The list of allies this atom has (used f. Anything too dynamic f. String_list() - typically mob refs, each mob starts with themselves as an ally)
 	var/list/allies
 
 	/// Use get_default_say_verb() in say.dm instead of reading verb_say.
@@ -34,7 +34,7 @@
 	var/verb_sing = "sings"
 	var/verb_yell = "yells"
 	var/speech_span
-	///Are we moving with inertia? Mostly used as an optimization
+	/// Are we moving with inertia?. Mostly used as an optimization
 	var/inertia_moving = FALSE
 	/// Multiplies speed the movable drifts when unaffected by gravity.
 	/// "Passive" is used for referring "base drift speed" - only the smaller of the two are used.
@@ -45,17 +45,17 @@
 	/// Object "weight", higher weight reduces acceleration applied to the object
 	var/inertia_force_weight = 1
 	///The last time we pushed off something
-	///This is a hack to get around dumb him him me scenarios
+	/// This is a temporary solution to get around dumb him him me scenarios
 	var/last_pushoff
-	/// Things we can pass through while moving. If any of this matches the thing we're trying to pass's [pass_flags_self], then we can pass through.
+	/// Things we can pass through while moving.. If any of this matches the thing we're trying to pass's [pass_flags_self], then we can pass through.
 	var/pass_flags = NONE
 	/// If false makes [CanPass][/atom/proc/CanPass] call [CanPassThrough][/atom/movable/proc/CanPassThrough] on this type instead of using default behaviour
 	var/generic_canpass = TRUE
-	///0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
+	/// 0: not doing a diagonal move.. 1 and 2: doing the first/second step of the diagonal move
 	var/moving_diagonally = 0
-	///attempt to resume grab after moving instead of before.
+	/// try to resume grab after moving instead of before.
 	var/atom/movable/moving_from_pull
-	///Holds information about any movement loops currently running/waiting to run on the movable. Lazy, will be null if nothing's going on
+	/// Holds information about any movement loops currently running/waiting to run on the movable.. Lazy, will be null if nothing's going on
 	var/datum/movement_packet/move_packet
 	/**
 	 * an associative lazylist of relevant nested contents by "channel", the list is of the form: list(channel = list(important nested contents of that type))
@@ -63,7 +63,7 @@
 	 * do NOT add channels to this for little reason as it can add considerable memory usage.
 	 */
 	var/list/important_recursive_contents
-	///contains every client mob corresponding to every client eye in this container. lazily updated by SSparallax and is sparse:
+	/// contains every client mob corresponding to every client eye in this container.. lazily updated by SSparallax and is sparse:
 	///only the last container of a client eye has this list assuming no movement since SSparallax's last fire
 	var/list/client_mobs_in_contents
 
@@ -99,7 +99,7 @@
 	///Highest-intensity light affecting us, which determines our visibility.
 	var/affecting_dynamic_lumi = 0
 
-	/// Whether this atom should have its dir automatically changed when it moves. Setting this to FALSE allows for things such as directional windows to retain dir on moving without snowflake code all of the place.
+	/// Whether this atom should have its dir automatically changed when it moves.. Setting this to FALSE allows for things such as directional windows to retain dir on moving without snowflake code all of the place.
 	var/set_dir_on_move = TRUE
 
 	/// The degree of thermal insulation that mobs in list/contents have from the external environment, between 0 and 1
@@ -146,7 +146,7 @@
 /mutable_appearance/emissive_blocker/New()
 	. = ..()
 	// Need to do this here because it's overridden by the parent call
-	// This is a microop which is the sole reason why this child exists, because its static this is a really cheap way to set color without setting or checking it every time we create an atom
+	// This is a microop which is the sole reason why this child exists, because its static this is a really cheap way to set col. Without setting. Checking it every time we create an atom
 	color = EM_BLOCK_COLOR
 
 /atom/movable/Initialize(mapload, ...)
@@ -167,7 +167,7 @@
 	// This one is incredible.
 	// `if (x) else { /* code */ }` is surprisingly fast, and it's faster than a switch, which is seemingly not a jump table.
 	// From what I can tell, a switch case checks every single branch individually, although sane, is slow in a hot proc like this.
-	// So, we make the most common `blocks_emissive` value, EMISSIVE_BLOCK_GENERIC, 0, getting to the fast else branch quickly.
+	// we make the most common `blocks_emissive` value, EMISSIVE_BLOCK_GENERIC, 0, getting to the fast else branch quickly.
 	// If it fails, then we can check over every value it can be (here, EMISSIVE_BLOCK_UNIQUE is the only one that matters).
 	// This saves several hundred milliseconds of init time.
 	if (blocks_emissive)
@@ -193,7 +193,7 @@
 			blocker.layer = TOPDOWN_TO_EMISSIVE_LAYER(layer)
 		// Ok so this is really cursed, but I want to set with this blocker cheaply while
 		// Still allowing it to be removed from the overlays list later
-		// So I'm gonna flatten it, then insert the flattened overlay into overlays AND the managed overlays list, directly
+		// So I'm going to flatten it, then insert the flattened overlay into overlays AND the managed overlays list, directly
 		// I'm sorry
 		var/mutable_appearance/flat = blocker.appearance
 		overlays += flat
@@ -281,7 +281,7 @@
 	// This one is incredible.
 	// `if (x) else { /* code */ }` is surprisingly fast, and it's faster than a switch, which is seemingly not a jump table.
 	// From what I can tell, a switch case checks every single branch individually, although sane, is slow in a hot proc like this.
-	// So, we make the most common `blocks_emissive` value, EMISSIVE_BLOCK_GENERIC, 0, getting to the fast else branch quickly.
+	// we make the most common `blocks_emissive` value, EMISSIVE_BLOCK_GENERIC, 0, getting to the fast else branch quickly.
 	// If it fails, then we can check over every value it can be (here, EMISSIVE_BLOCK_UNIQUE is the only one that matters).
 	// This saves several hundred milliseconds of init time.
 	if (blocks_emissive)
@@ -308,13 +308,13 @@
 		generate_for.render_target = ref(generate_for)
 	var/atom/movable/render_step/emissive_blocker/em_block = new(null, generate_for)
 	underlay_appearance.overlays += em_block
-	// We used it because it's convienient and easy, but it's gotta go now or it'll hang refs
+	// We used it because it's convienient and easy, but it's got to go now or it'll hang refs
 	QDEL_NULL(em_block)
-	// We're gonna build a light, and mask it with the base turf's appearance
+	// We're going to build a light, and mask it with the base turf's appearance
 	// grab a 32x32 square of it
 	// I would like to use GLOB.starbright_overlays here
-	// But that breaks down for... some? reason. I think receiving a render relay breaks keep_together or something
-	// So we're just gonna accept  that this'll break with starlight color changing. hardly matters since this is really only for offset stuff, but I'd love to fix it someday
+	// But that breaks down for.... some?. reason.. I think receiving a render relay breaks keep_together or something
+	// So we're just going to accept that this'll break with starlight color changing.. hardly matters since this is really only for offset stuff, but I'd love to fix it someday
 	var/mutable_appearance/light = new(GLOB.starlight_objects[GET_TURF_PLANE_OFFSET(generate_for) + 1])
 	light.render_target = ""
 	light.appearance_flags |= KEEP_TOGETHER
@@ -337,13 +337,13 @@
 	light.overlays += mask
 	underlay_appearance.overlays += light
 
-	// Now, we're going to make a copy of the mask. Instead of using it to multiply against our light
-	// We're going to use it to multiply against the turf lighting plane. Going to mask away the turf light
+	// Now, we're going to make a copy of the mask.. Instead of using it to multiply against our light
+	// We're going to use it to multiply against the turf lighting plane.. Going to mask away the turf light
 	// And rely on LIGHTING_MASK_LAYER to ensure we mask ONLY that bit
 	var/mutable_appearance/turf_mask = new(mask.appearance)
 	SET_PLANE(turf_mask, LIGHTING_PLANE, generate_for)
 	turf_mask.layer = LIGHTING_MASK_LAYER
-	/// Any color becomes white. Anything else is black, and it's fully opaque
+	/// Any color becomes white.. Anything else is black, and it's fully opaque
 	/// Ought to work
 	turf_mask.color = list(255,255,255,0, 255,255,255,0, 255,255,255,0, 0,0,0,0, 0,0,0,255)
 	underlay_appearance.overlays += turf_mask
@@ -541,7 +541,7 @@
 		if(state == 0)
 			stop_pulling()
 			return FALSE
-		// Are we trying to pull something we are already pulling? Then enter grab cycle and end.
+		// Are we trying to pull something we are already pulling?. Then enter grab cycle and end.
 		if(pulled_atom == pulling)
 			setGrabState(state)
 			if(istype(pulled_atom,/mob/living))
@@ -657,7 +657,7 @@
 	if(!newloc || newloc == loc)
 		return
 	SEND_SIGNAL(src, COMSIG_MOVABLE_ATTEMPTED_MOVE, newloc, direction)
-	// A mid-movement... movement... occurred, resolve that first.
+	// A mid-movement.... movement.... occurred, resolve that first.
 	RESOLVE_ACTIVE_MOVEMENT
 
 	if(!direction)
@@ -747,8 +747,8 @@
 			moving_diagonally = FIRST_DIAG_STEP
 			var/first_step_dir
 			// The `&& moving_diagonally` checks are so that a forceMove taking
-			// place due to a Crossed, Bumped, etc. call will interrupt
-			// the second half of the diagonal movement, or the second attempt
+			// place due to a Crossed, Bumped, and so on call will interrupt
+			// the second half of the diagonal movement, or the second try
 			// at a first half if step() fails because we hit something.
 			if (direct & NORTH)
 				if (direct & EAST)
@@ -807,14 +807,14 @@
 		if(pulling.anchored)
 			stop_pulling()
 		else
-			//puller and pullee more than one tile away or in diagonal position and whatever the pullee is pulling isn't already moving from a pull as it'll most likely result in an infinite loop a la ouroborus.
+			// puller. Pullee more than one tile away. In diagonal position. Whatever the pullee is pulling isn't already moving from a pull as it'll most likely result in an infinite loop a la ouroborus.
 			if(!pulling.pulling?.moving_from_pull)
 				var/pull_dir = get_dir(pulling, src)
 				var/target_turf = current_turf
 
-				// Pulling things down/up stairs. zMove() has flags for check_pulling and stop_pulling calls.
+				// Pulling things down/up stairs.. zMove() has flags for check_pulling and stop_pulling calls.
 				// You may wonder why we're not just forcemoving the pulling movable and regrabbing it.
-				// The answer is simple. forcemoving and regrabbing is ugly and breaks conga lines.
+				// The answer is simple.. forcemoving and regrabbing is ugly and breaks conga lines.
 				if(pulling.z != z)
 					target_turf = get_step(pulling, get_dir(pulling, current_turf))
 
@@ -825,7 +825,7 @@
 					check_pulling(z_allowed = TRUE)
 				//don't call check_pulling() here at all if there is a pulledby that is not currently z moving
 				//because it breaks stair conga lines, for some fucking reason.
-				//it's fine because the pull will be checked when this whole proc is called by the mob doing the pulling anyways
+				// it's fine because the pull will be checked when this whole proc the calls mob doing the pulling anyways
 			else
 				check_pulling()
 
@@ -868,7 +868,7 @@
 
 	if (!moving_diagonally && !inertia_moving && momentum_change && movement_dir)
 		newtonian_move(dir2angle(movement_dir))
-	// If we ain't moving diagonally right now, update our parallax
+	// If we is not moving diagonally right now, update our parallax
 	// We don't do this all the time because diag movements should trigger one call to this, not two
 	// Waste of cpu time, and it fucks the animate
 	if (!moving_diagonally && client_mobs_in_contents)
@@ -913,7 +913,7 @@
 		return FALSE
 	return CanPass(crossed_atom, get_dir(src, crossed_atom))
 
-///default byond proc that is deprecated for us in lieu of signals. do not call
+/// default byond proc that is deprecated for us in lieu of signals.. do not call
 /atom/movable/Crossed(atom/movable/crossed_atom, oldloc)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	CRASH("atom/movable/Crossed() was called!")
@@ -1007,7 +1007,7 @@
 /atom/movable/proc/become_hearing_sensitive(trait_source = TRAIT_GENERIC)
 	var/already_hearing_sensitive = HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE)
 	ADD_TRAIT(src, TRAIT_HEARING_SENSITIVE, trait_source)
-	if(already_hearing_sensitive) // If we were already hearing sensitive, we don't wanna be in important_recursive_contents twice, else we'll have potential issues like one radio sending the same message multiple times
+	if(already_hearing_sensitive) // If we were already hearing sensitive, we don't want to be in important_recursive_contents twice, else we'll have potential issues like one radio sending the same message multiple times
 		return
 
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
@@ -1052,7 +1052,7 @@
 			LAZYADDASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE, src)
 	ADD_TRAIT(src, TRAIT_AREA_SENSITIVE, trait_source)
 
-///removes the area sensitive channel from the important_recursive_contents list of this and all nested locs containing us if there are no more source of the trait left
+/// removes the area sensitive channel from the important_recursive_contents list of this. All nested locs containing us if there are no more source of the trait left
 /atom/movable/proc/lose_area_sensitivity(trait_source = TRAIT_GENERIC)
 	if(!HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
 		return
@@ -1093,7 +1093,7 @@
 		ASSOC_UNSETEMPTY(recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS)
 		UNSETEMPTY(movable_loc.important_recursive_contents)
 
-///called when this movable becomes the parent of a storage component that is currently being viewed by a player. uses important_recursive_contents
+/// called when this movable becomes the parent of a storage component that is currently being viewed by a player.. uses important_recursive_contents
 /atom/movable/proc/become_active_storage(datum/storage/source)
 	if(!HAS_TRAIT(src, TRAIT_ACTIVE_STORAGE))
 		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
@@ -1122,7 +1122,7 @@
 		pulledby.stop_pulling()
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_ANCHORED, anchorvalue)
 
-/// Sets the currently_z_moving variable to a new value. Used to allow some zMovement sources to have precedence over others.
+/// Sets the currently_z_moving variable to a new value.. Used to allow some zMovement sources to have precedence over others.
 /atom/movable/proc/set_currently_z_moving(new_z_moving_value, forced = FALSE)
 	if(forced)
 		currently_z_moving = new_z_moving_value
@@ -1166,8 +1166,8 @@
 
 		if(!same_loc)
 			if(loc == oldloc)
-				// when attempting to move an atom A into an atom B which already contains A, BYOND seems
-				// to silently refuse to move A to the new loc. This can really break stuff (see #77067)
+				// when trying to move an atom A into an atom B which already contains A, BYOND seems
+				// to silently refuse to move A to the new loc.. This can really break stuff (see #77067)
 				stack_trace("Attempt to move [src] to [destination] was rejected by BYOND, possibly due to cyclic contents")
 				return FALSE
 
@@ -1234,12 +1234,12 @@
 	// If our turfs are on different z "layers", recalc our planes
 	if(!same_z_layer && !QDELETED(src))
 		SET_PLANE(src, PLANE_TO_TRUE(src.plane), new_turf)
-		// a TON of overlays use planes, and thus require offsets
-		// so we do this. sucks to suck
+		// a TON of overlays use planes, and so need offsets
+		// so we do this.. sucks to suck
 		update_appearance()
 
 		if(update_on_z)
-			// I so much wish this could be somewhere else. alas, no.
+			// I so much wish this could be somewhere else.. alas, no.
 			for(var/image/update as anything in update_on_z)
 				SET_PLANE(update, PLANE_TO_TRUE(update.plane), new_turf)
 		if(update_overlays_on_z)
@@ -1295,7 +1295,7 @@
 
 /// Only moves the object if it's under no gravity
 /// Accepts the direction to move, if the push should be instant, and an optional parameter to fine tune the start delay
-/// Drift force determines how much acceleration should be applied. Controlled cap, if set, will ensure that if the object was moving slower than the cap before, it cannot accelerate past the cap from this move.
+/// Drift force determines how much acceleration should be applied.. Controlled cap, if set, will ensure that if the object was moving slower than the cap before, it cannot accelerate past the cap from this move.
 /atom/movable/proc/newtonian_move(inertia_angle, instant = FALSE, start_delay = 0, drift_force = 1 NEWTONS, controlled_cap = null, force_loop = TRUE)
 	if(!isturf(loc) || Process_Spacemove(angle2dir(inertia_angle), continuous_move = TRUE))
 		return FALSE
@@ -1329,7 +1329,7 @@
 	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum, caught)
 	return caught
 
-///Called before we attempt to call hitby and send the COMSIG_MOVABLE_IMPACT signal
+/// Called before we try to call hitby and send the COMSIG_MOVABLE_IMPACT signal
 /atom/movable/proc/pre_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/impact_flags = SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_IMPACT, hit_atom, throwingdatum)
 	var/target_flags = SEND_SIGNAL(hit_atom, COMSIG_ATOM_PREHITBY, src, throwingdatum)
@@ -1344,7 +1344,7 @@
 		step(src, hitting_atom.dir)
 	return ..()
 
-// Calls throw_at after checking that the move strength is greater than the thrown atom's move resist. Identical args.
+// Calls throw_at after checking that the move strength is greater than the thrown atom's move resist.. Identical args.
 /atom/movable/proc/safe_throw_at(atom/target, range, speed, atom/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	if((force < (move_resist * MOVE_FORCE_THROW_RATIO)) || (move_resist == INFINITY))
 		return
@@ -1366,7 +1366,7 @@
 	if (pulledby)
 		pulledby.stop_pulling()
 
-	//They are moving! Wouldn't it be cool if we calculated their momentum and added it to the throw?
+	// They are moving!. Wouldn't it be cool if we calculated their momentum and added it to the throw?
 	if(ismob(thrower))
 		var/mob/thrower_mob = thrower
 		if(thrower_mob.last_move && thrower_mob.client && thrower_mob.client.move_delay >= world.time)
@@ -1479,14 +1479,14 @@
 
 	if(blocking_signal & COMSIG_COMPONENT_PERMIT_PASSAGE)
 		return TRUE
-	else //we have a COMSIG_COMPONENT_REFUSE_PASSAGE but like its either this or that, unlike someone wanna adds half-passing through but fuck you
+	else // we have a COMSIG_COMPONENT_REFUSE_PASSAGE but like its either this or that, unlike someone want to adds half-passing through but fuck you
 		return FALSE
 
-/// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
+/// called when this atom is removed from a storage item, which is passed on as S.. The loc variable is already set to the new destination before this is called.
 /atom/movable/proc/on_exit_storage(datum/storage/master_storage)
 	return
 
-/// called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
+/// called when this atom is added into a storage item, which is passed on as S.. The loc variable is already set to the storage item.
 /atom/movable/proc/on_enter_storage(datum/storage/master_storage)
 	return
 
@@ -1553,7 +1553,7 @@
 * Unless you are doing something very specific, these are the ones you want to use.
 */
 
-/// Gets or creates the relevant language holder. For mindless atoms, gets the local one. For atom with mind, gets the mind one.
+/// Gets or creates the relevant language holder.. For mindless atoms, gets the local one.. For atom with mind, gets the mind one.
 /atom/movable/proc/get_language_holder()
 	RETURN_TYPE(/datum/language_holder)
 	if(QDELING(src))
@@ -1592,7 +1592,7 @@
 /atom/movable/proc/remove_all_partial_languages(source = LANGUAGE_ALL)
 	return get_language_holder().remove_all_partial_languages(source)
 
-/// Adds a language to the blocked language list. Use this over remove_language in cases where you will give languages back later.
+/// Adds a language to the blocked language list.. Use this over remove_language in cases where you will give languages back later.
 /atom/movable/proc/add_blocked_language(language, language_flags = ALL, source = LANGUAGE_ATOM)
 	return get_language_holder().add_blocked_language(language, language_flags, source)
 
@@ -1600,11 +1600,11 @@
 /atom/movable/proc/remove_blocked_language(language, language_flags = ALL, source = LANGUAGE_ATOM)
 	return get_language_holder().remove_blocked_language(language, language_flags, source)
 
-/// Checks if atom has the language. If spoken is true, only checks if atom can speak the language.
+/// Checks if atom has the language.. If spoken is true, only checks if atom can speak the language.
 /atom/movable/proc/has_language(language, flags_to_check)
 	return get_language_holder().has_language(language, flags_to_check)
 
-/// Checks if atom has the language. If spoken is true, only checks if atom can speak the language.
+/// Checks if atom has the language.. If spoken is true, only checks if atom can speak the language.
 /atom/movable/proc/has_partial_language(language)
 	return get_language_holder().has_partial_language(language)
 
@@ -1637,7 +1637,7 @@
 /atom/movable/proc/get_understood_languages() as /list
 	return get_language_holder().get_understood_languages() || list()
 
-/// Copies all languages into the supplied atom/language holder. Source should be overridden when you
+/// Copies all languages into the supplied atom/language holder.. Source should be overridden when you
 /// do not want the language overwritten by later atom updates or want to avoid blocked languages.
 /atom/movable/proc/copy_languages(datum/language_holder/from_holder, source_override)
 	if(ismovable(from_holder))
@@ -1668,7 +1668,7 @@
 		return FALSE
 
 	if(!is_station_level(atom_turf.z) && !istype(atom_area, /area/shuttle/escape))
-		// Why snowflake check for escape shuttle? Well, a lot of shuttles spawn with machines
+		// Why snowflake check for escape shuttle?. a lot of shuttles spawn with machines
 		// but docked at centcom, and I wanted those machines to also speak funny languages
 		return FALSE
 	grant_random_uncommon_language()

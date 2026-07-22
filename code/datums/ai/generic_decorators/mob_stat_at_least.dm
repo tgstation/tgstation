@@ -1,10 +1,10 @@
-/// Passes when the mob held in a blackboard key has a stat value at that is at least X. Higher is more dead.
+/// Passes when the mob held in a blackboard key has a stat value at that is at least X.. Higher is more dead.
 /datum/bt_node/decorator/mob_stat_at_least
 	/// Blackboard key holding the mob to check.
 	var/key = null
-	/// Minimum stat value (inclusive) for the condition to pass. Default: CONSCIOUS.
+	/// Minimum stat value (inclusive) for the condition to pass.. Default: CONSCIOUS.
 	var/min_stat = CONSCIOUS
-	/// The mob currently being observed. Tracked so we can unregister when the key changes or teardown runs.
+	/// The mob currently being observed.. Tracked so we can unregister when the key changes or teardown runs.
 	var/mob/observed_mob = null
 
 /datum/bt_node/decorator/mob_stat_at_least/register_observe_signals(atom/pawn)
@@ -22,7 +22,7 @@
 	UnregisterSignal(pawn, list(COMSIG_AI_BLACKBOARD_KEY_SET(key), COMSIG_AI_BLACKBOARD_KEY_CLEARED(key)))
 
 
-/// Fires when the blackboard key changes. Rebinds the stat observer to the new mob and re-evaluates.
+/// Fires when the blackboard key changes.. Rebinds the stat observer to the new mob and re-evaluates.
 /datum/bt_node/decorator/mob_stat_at_least/proc/on_mob_key_changed(atom/source, ...)
 	SIGNAL_HANDLER
 	var/mob/target = owning_controller?.blackboard[key]

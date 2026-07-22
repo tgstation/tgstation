@@ -23,7 +23,7 @@
 	var/list/pda_types = list()
 	/// A list of the card trims that this machine can currently imprint onto a card.
 	var/list/card_trims = list()
-	/// Set to a region define (REGION_SECURITY for example) to create a departmental variant, limited to departmental options. If null, this is unrestricted.
+	/// Set to a region define (REGION_SECURITY for example) to create a departmental variant, limited to departmental options.. If null, this is unrestricted.
 	var/target_dept
 
 /obj/machinery/pdapainter/update_icon_state()
@@ -69,7 +69,7 @@
 	return ..()
 
 /obj/machinery/pdapainter/on_deconstruction(disassembled)
-	// Don't use ejection procs as we're gonna be destroyed anyway, so no need to update icons or anything.
+	// Don't use ejection procs as we're going to be destroyed anyway, so no need to update icons or anything.
 	if(stored_pda)
 		stored_pda.forceMove(loc)
 		stored_pda = null
@@ -298,7 +298,7 @@
 
 			var/obj/item/held_item = usr.get_active_held_item()
 			if(istype(held_item, /obj/item/modular_computer/pda))
-				// If we successfully inserted, we've ejected the old item. Return early.
+				// If we successfully inserted, we've ejected the old item.. Return early.
 				if(insert_pda(held_item, usr))
 					return TRUE
 			// If we did not successfully insert, try to eject.
@@ -313,7 +313,7 @@
 
 			var/obj/item/held_item = usr.get_active_held_item()
 			if(isidcard(held_item))
-				// If we successfully inserted, we've ejected the old item. Return early.
+				// If we successfully inserted, we've ejected the old item.. Return early.
 				if(insert_id_card(held_item, usr))
 					return TRUE
 			// If we did not successfully insert, try to eject.
@@ -371,27 +371,27 @@
 
 			return TRUE
 
-/// Security departmental variant. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
+/// Security departmental variant.. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
 /obj/machinery/pdapainter/security
 	name = "\improper Security PDA & ID Painter"
 	target_dept = REGION_SECURITY
 
-/// Medical departmental variant. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
+/// Medical departmental variant.. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
 /obj/machinery/pdapainter/medbay
 	name = "\improper Medbay PDA & ID Painter"
 	target_dept = REGION_MEDBAY
 
-/// Science departmental variant. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
+/// Science departmental variant.. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
 /obj/machinery/pdapainter/research
 	name = "\improper Research PDA & ID Painter"
 	target_dept = REGION_RESEARCH
 
-/// Engineering departmental variant. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
+/// Engineering departmental variant.. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
 /obj/machinery/pdapainter/engineering
 	name = "\improper Engineering PDA & ID Painter"
 	target_dept = REGION_ENGINEERING
 
-/// Supply departmental variant. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
+/// Supply departmental variant.. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
 /obj/machinery/pdapainter/supply
 	name = "\improper Supply PDA & ID Painter"
 	target_dept = REGION_SUPPLY

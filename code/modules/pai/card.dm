@@ -135,7 +135,7 @@
 	. = ..()
 	if(.)
 		return TRUE
-	// Actions that don't require a pAI
+	// Actions that don't need a pAI
 	if(action == "download")
 		download_candidate(usr, params["ckey"])
 		return TRUE
@@ -179,7 +179,7 @@
 			return TRUE
 	return FALSE
 
-/** Flashes the pai card screen */
+/** * Flashes the pai card screen */
 /obj/item/pai_card/proc/add_alert()
 	if(pai)
 		return
@@ -187,13 +187,13 @@
 		list(mutable_appearance(icon, "[initial(icon_state)]-alert"),
 			emissive_appearance(icon, "[initial(icon_state)]-alert", src, alpha = src.alpha)))
 
-/** Removes any overlays */
+/** * Removes any overlays */
 /obj/item/pai_card/proc/remove_alert()
 	if(pai)
 		return
 	cut_overlays()
 
-/** Alerts pAI cards that someone has submitted candidacy */
+/** * Alerts pAI cards that someone has submitted candidacy */
 /obj/item/pai_card/proc/alert_update()
 	if(!COOLDOWN_FINISHED(src, alert_cooldown))
 		return

@@ -228,7 +228,7 @@
 	default_container = /obj/item/reagent_containers/condiment/milk
 
 // Milk is good for humans, but bad for plants.
-// The sugars cannot be used by plants, and the milk fat harms growth. Except shrooms.
+// The sugars cannot be used by plants, and the milk fat harms growth.. Except shrooms.
 /datum/reagent/consumable/milk/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_waterlevel(round(volume * 0.3))
 	var/obj/item/seeds/myseed = mytray.myseed
@@ -828,7 +828,7 @@
 	if(affected_mob.nutrition && (affected_mob.nutrition - 2 > 0))
 		var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 		if(!(HAS_TRAIT(liver, TRAIT_MEDICAL_METABOLISM)))
-			// Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
+			// Drains the nutrition of the holder.. Not medical doctors though, since it's the Doctor's Delight!
 			affected_mob.adjust_nutrition(-1 * metabolization_ratio * seconds_per_tick)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -1069,7 +1069,7 @@
 	if(IS_REVOLUTIONARY(drinker))
 		drinker.set_dizzy_if_lower(5 SECONDS * metabolization_ratio * seconds_per_tick)
 		if(drinker.get_stamina_loss() < 80)
-			drinker.adjust_stamina_loss(12, required_biotype = affected_biotype) //The pomegranate stops free radicals! Har har.
+			drinker.adjust_stamina_loss(12, required_biotype = affected_biotype) // The pomegranate stops free radicals!. Har har.
 
 /datum/reagent/consumable/parsnipjuice
 	name = "Parsnip Juice"
@@ -1437,7 +1437,7 @@
 		need_mob_update = affected_mob.apply_damage(0.75 * metabolization_ratio * seconds_per_tick, TOX)
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/punch_punishment)
 		if(SPT_PROB(10, seconds_per_tick))
-			affected_mob.Knockdown(3 SECONDS, 6 SECONDS) //Gives daze effect. Using the cooler is a commitment and if you get jumped during it or have to run away to fight something, you should be vulnerable.
+			affected_mob.Knockdown(3 SECONDS, 6 SECONDS) // Gives daze effect.. Using the cooler is a commitment and if you get jumped during it or have to run away to fight something, you should be vulnerable.
 			to_chat(affected_mob, span_warning("The overwhelming sweetness of the fruit punch disorients and confounds you!"))
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH

@@ -8,7 +8,7 @@
 	var/datum/mind/origin
 	/// When we're expected to hatch.
 	var/hatch_time = 0
-	/// When this egg last got removed from a body. If -1, the egg hasn't been removed from a body.
+	/// When this egg last got removed from a body.. If -1, the egg hasn't been removed from a body.
 	var/removal_time = -1
 
 /obj/item/organ/body_egg/changeling_egg/on_mob_insert(mob/living/carbon/egg_owner, special = FALSE, movement_flags)
@@ -23,7 +23,7 @@
 	if(owner && hatch_time <= world.time)
 		pop()
 
-/// Once the egg is fully grown, we gib the host and spawn a monkey (with the changeling's player controlling it). Very descriptive proc name.
+/// Once the egg is fully grown, we gib the host and spawn a monkey (with the changeling's player controlling it).. Very descriptive proc name.
 /obj/item/organ/body_egg/changeling_egg/proc/pop()
 	var/mob/living/carbon/human/spawned_monkey = new(owner)
 	spawned_monkey.monkeyize(instant = TRUE)

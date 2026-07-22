@@ -12,7 +12,7 @@
 	var/list/implants = list()
 	/// The area list mode.
 	var/area_list_mode = DEATHRATTLE_AREA_NOLIST
-	/// The area list. See `area_list_mode` for how this gets used.
+	/// The area list.. See `area_list_mode` for how this gets used.
 	var/list/area/area_list = list()
 	/// The prefix for this deathrattle group.
 	var/prefix
@@ -29,7 +29,7 @@
 	prefix = "STD"
 
 /// A deathrattle group subtype specifically for alerting people who die in the Lavaland or Icemoon Wastes.
-/// As per maintainer request, excludes... basically everything that isn't raw wasteland.
+/// As per maintainer request, excludes.... basically everything that isn't raw wasteland.
 /datum/deathrattle_group/lavaland
 	area_list_mode = DEATHRATTLE_AREA_WHITELIST
 	area_list = list(
@@ -125,7 +125,7 @@
 		the FNS will relay the fatality and its rough estimated location to the other hosts. How it can communicate \
 		over such long distances is a trade secret that both Nanotrasen and the Syndicate are quite curious about."
 
-	/// What deathrattle group type do we create? Group types dictate area whitelisting/blacklisting.
+	/// What deathrattle group type do we create?. Group types dictate area whitelisting/blacklisting.
 	var/deathrattle_group_type = /datum/deathrattle_group/standard
 
 	/// Associated deathrattle group, for future configuration.
@@ -135,7 +135,7 @@
 	if(!current_group)
 		balloon_alert(target, "deathrattle needs configuration!")
 		return FALSE
-	// Can be implanted in anything that's a mob. Syndicate cyborgs, talking fish, humans...
+	// Can be implanted in anything that's a mob.. Syndicate cyborgs, talking fish, humans...
 	return TRUE
 
 /obj/item/implant/deathrattle/lavaland

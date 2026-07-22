@@ -13,8 +13,8 @@
 	var/circuit_periph
 	var/circuit_weapon
 
-	// Armor plating typepaths. both must be defined
-	// unless relevant step procs are overriden. amounts
+	// Armor plating typepaths.. both must be defined
+	// unless relevant step procs are overriden.. amounts
 	// must be defined if using /obj/item/stack/sheet types
 	var/obj/inner_plating
 	var/inner_plating_amount
@@ -48,7 +48,7 @@
 		get_outer_plating_steps()
 
 	// If you don't set a construction icon state, one will automatically be assigned
-	// based on the index of the step in the step list
+	// good on the index of the step in the step list
 	//
 	// If you do set a custom icon state, it will not be overridden, but the state will still increment.
 	//

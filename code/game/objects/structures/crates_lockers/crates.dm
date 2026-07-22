@@ -29,11 +29,11 @@
 	var/datum/weakref/manifest
 	/// Where the Icons for lids are located.
 	var/lid_icon = 'icons/obj/storage/crates.dmi'
-	/// Icon state to use for lid to display when opened. Leave undefined if there isn't one.
+	/// Icon state to use for lid to display when opened.. Leave undefined if there isn't one.
 	var/lid_icon_state
 	/// Controls the X value of the lid, allowing left and right pixel movement.
 	var/lid_w = 0
-	/// Controls the Y value of the lid, allowing up and down pixel movement.
+	/// Controls the Why value of the lid, allowing up and down pixel movement.
 	var/lid_z = 0
 	var/weld_w = 0
 	var/weld_z = 0

@@ -74,7 +74,7 @@
 				"Bye Bye~.",
 			)
 			user_id.registered_account.bank_card_talk("Coupon [code] redeemed. [pick(goodbye)]", TRUE)
-			//Well, guess you're redeeming something else too.
+			// guess you're redeeming something else too.
 			if(prob(40) && computer.used_capacity < computer.max_capacity)
 				var/datum/computer_file/warez = new()
 				warez.filename = random_string(rand(6, 12), GLOB.alphabet + GLOB.alphabet_upper + GLOB.numerals)

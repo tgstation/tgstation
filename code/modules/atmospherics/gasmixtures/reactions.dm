@@ -49,7 +49,7 @@
 	var/list/requirements
 	var/major_gas //the highest rarity gas used in the reaction.
 	var/exclude = FALSE //do it this way to allow for addition/removal of reactions midmatch in the future
-	///The priority group this reaction is a part of. You can think of these as processing in batches, put your reaction into the one that's most fitting
+	/// The priority group this reaction is a part of.. You can think of these as processing in batches, put your reaction into the one that's most fitting
 	var/priority_group
 	var/name = "reaction"
 	var/id = "r"
@@ -393,7 +393,7 @@
 	else if(temperature < FREON_LOWER_TEMPERATURE)
 		temperature_scale = 0.5
 	else
-		temperature_scale = (FREON_MAXIMUM_BURN_TEMPERATURE - temperature) / (FREON_MAXIMUM_BURN_TEMPERATURE - FREON_TERMINAL_TEMPERATURE) //calculate the scale based on the temperature
+		temperature_scale = (FREON_MAXIMUM_BURN_TEMPERATURE - temperature) / (FREON_MAXIMUM_BURN_TEMPERATURE - FREON_TERMINAL_TEMPERATURE) // calculate the scale good on the temperature
 	if (temperature_scale <= 0)
 		return
 
@@ -443,7 +443,7 @@
  * Endothermic.
  * Requires BZ as a catalyst.
  */
-/datum/gas_reaction/nitrousformation //formation of n2o, exothermic, requires bz as catalyst
+/datum/gas_reaction/nitrousformation // formation of n2o, exothermic, needs bz as catalyst
 	priority_group = PRIORITY_FORMATION
 	name = "Nitrous Oxide Formation"
 	id = "nitrousformation"
@@ -700,7 +700,7 @@
 	var/nitrium_moles = cached_moles[/datum/gas/nitrium]
 	var/temperature = air.temperature
 
-	//This reaction is aggressively slow. like, a tenth of a mole per fire slow. Keep that in mind
+	// This reaction is aggressively slow.. like, a tenth of a mole per fire slow.. Keep that in mind
 	var/heat_efficiency = min(temperature / NITRIUM_DECOMPOSITION_TEMP_DIVISOR, nitrium_moles)
 
 	if (heat_efficiency <= 0 || (nitrium_moles - heat_efficiency < 0)) //Shouldn't produce gas from nothing.
@@ -732,7 +732,7 @@
 	id = "freonformation"
 	desc = "Production of freon using plasma, carbon dioxide, and BZ under high temperature."
 
-/datum/gas_reaction/freonformation/init_reqs() //minimum requirements for freon formation
+/datum/gas_reaction/freonformation/init_reqs() // minimum needs for freon formation
 	requirements = list(
 		/datum/gas/plasma = MINIMUM_MOLE_COUNT * 6,
 		/datum/gas/carbon_dioxide = MINIMUM_MOLE_COUNT * 3,

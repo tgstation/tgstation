@@ -140,7 +140,7 @@
 		return FALSE
 	return ..()
 
-/mob/living/basic/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
+/mob/living/basic/bot/mulebot/update_icon_state() // if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well.. <3
 	. = ..()
 	icon_state = "[base_icon_state][(bot_mode_flags & BOT_MODE_ON) ? wires?.is_cut(WIRE_AVOIDANCE) : "0"]"
 

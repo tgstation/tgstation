@@ -8,7 +8,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 	COOLDOWN_DECLARE(silicon_message_cooldown)
 	COOLDOWN_DECLARE(nonsilicon_message_cooldown)
 
-	/// Are we trying to send a cross-station message that contains soft-filtered words? If so, flip to TRUE to extend the time admins have to cancel the message.
+	/// Are we trying to send a cross-station message that contains soft-filtered words?. If so, flip to TRUE to extend the time admins have to cancel the message.
 	var/soft_filtering = FALSE
 
 	/// The main content of the roundstart report
@@ -16,7 +16,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 	var/command_report_main_content = ""
 	/// A list of footnote datums, to be added to the bottom of the roundstart command report.
 	var/list/command_report_footnotes = list()
-	/// A counter of conditions that are blocking the command report from printing. Counter incremements up for every blocking condition, and de-incrememnts when it is complete.
+	/// A counter of conditions that are blocking the command report from printing.. Counter incremements up for every blocking condition, and de-incrememnts when it is complete.
 	var/block_command_report = 0
 	/// Has a special xenomorph egg been delivered?
 	var/xenomorph_egg_delivered = FALSE

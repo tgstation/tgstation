@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 #define BASE_POINT_SCAN_TIME (2 MINUTES)
 #define BASE_DEEP_SCAN_TIME (3 MINUTES)
 
-/// Represents scan in progress, only one globally for now, todo later split per z or allow partial dish swarm usage
+/// Represents scan in progress, only one globally for now, to do later split per z or allow partial dish swarm usage
 /datum/exoscan
 	/// Scan type wide/point/deep
 	var/scan_type
@@ -214,8 +214,8 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	scan_power = power
 	GLOB.exoscanner_controller.update_scan_power()
 
-	// More generous power draw scaling. Sum the total energy ratings of all parts involved, divide by how many parts we have, use that as the multiplier.
-	// Otherwise it'd be hitting 81x power draw at T4 parts, which seems... unintended.
+	// More generous power draw scaling.. Sum the total energy ratings of all parts involved, divide by how many parts we have, use that as the multiplier.
+	// Otherwise it'd be hitting 81x power draw at T4 parts, which seems.... unintended.
 	var/energy_rating = 0
 	for(var/datum/stock_part/part in component_parts)
 		energy_rating += part.energy_rating()
@@ -289,7 +289,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	var/list/tracked_dishes = list()
 	/// Scan currently in progress if any.
 	var/datum/exoscan/current_scan
-	/// Band for the next wide scan. Increased after successful completion of wide scan.
+	/// Band for the next wide scan.. Increased after successful completion of wide scan.
 	var/wide_scan_band = 1
 	/// Current scan power keyed by site
 	var/list/scan_power_cache = list()
@@ -345,7 +345,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 				break
 		. += effective_power
 
-/// Scan condition, these require some specific setup for the dish to count for the scan power for the given site
+/// Scan condition, these need some specific setup for the dish to count for the scan power for the given site
 /datum/scan_condition
 	var/name
 	var/description

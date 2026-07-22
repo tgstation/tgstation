@@ -56,7 +56,7 @@
 
 	/// Time this organ has failed for
 	var/failure_time = 0
-	/// Do we affect the appearance of our mob. Used to save time in preference code
+	/// Do we affect the appearance of our mob.. Used to save time in preference code
 	var/visual = TRUE
 	/**
 	 * Traits that are given to the holder of the organ.
@@ -215,7 +215,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			return
 		. += span_warning("[src] is starting to look discolored.")
 
-/// Returns a line to be displayed regarding valid insertion zones
+/// Returns a line to be displayed about valid insertion zones
 /obj/item/organ/proc/zones_tip()
 	if (!valid_zones)
 		return span_notice("It should be inserted in the [parse_zone(zone)].")
@@ -235,7 +235,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/organ/process(seconds_per_tick)
-	on_death(seconds_per_tick) //Kinda hate doing it like this, but I really don't want to call process directly.
+	on_death(seconds_per_tick) // Kind of hate doing it like this, but I really don't want to call process directly.
 
 /obj/item/organ/proc/OnEatFrom(eater, feeder)
 	// You can't use it anymore after eating it
@@ -244,7 +244,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
-///Adjusts an organ's damage by the amount "damage_amount", up to a maximum amount, which is by default max damage. Returns the net change in organ damage.
+/// Adjusts an organ's damage by the amount "damage_amount", up to a maximum amount, which is by default max damage.. Returns the net change in organ damage.
 /obj/item/organ/proc/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE) //use for damaging effects
 	if(!damage_amount) //Micro-optimization.
 		return FALSE
@@ -262,7 +262,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(message && owner && owner.stat <= SOFT_CRIT)
 		to_chat(owner, message)
 
-///SETS an organ's damage to the amount "damage_amount", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
+/// SETS an organ's damage to the amount "damage_amount". In doing so clears. Sets the failing flag, good f. When you have an effect that should fix an organ if broken
 /obj/item/organ/proc/set_organ_damage(damage_amount, required_organ_flag = NONE) //use mostly for admin heals
 	return apply_organ_damage(damage_amount - damage, required_organ_flag = required_organ_flag)
 
@@ -364,7 +364,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		return
 
 	// Default organ fixing handling
-	// May result in kinda cursed stuff for mobs which don't need these organs
+	// May result in kind of cursed stuff for mobs which don't need these organs
 	var/obj/item/organ/lungs/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		lungs = new()
@@ -461,7 +461,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(replacement.type == type)
 		replacement.set_organ_damage(damage)
 
-/// Called by medical scanners to get a simple summary of how healthy the organ is. Returns an empty string if things are fine.
+/// Called by medical scanners to get a simple summary of how healthy the organ is.. Returns an empty string if things are fine.
 /obj/item/organ/proc/get_status_text(scanpower, add_tooltips, colored = TRUE)
 	if(scanpower >= SCANPOWER_ADVANCED && (organ_flags & ORGAN_HAZARDOUS))
 		return conditional_tooltip("[colored ? "<font color='#cc3333'>" : ""]Harmful Foreign Body[colored ? "</font>" : ""]", "Remove surgically.", add_tooltips)
@@ -522,7 +522,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/replace_into(mob/living/carbon/new_owner)
 	Insert(new_owner, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
-/// Signal proc for [COMSIG_FOOD_ATTEMPT_EAT], block feeding an organ to a mob if they are marked as ready to operate - to prevent mistakenly feeding your patient
+/// Signal proc f. [COMSIG_FOOD_ATTEMPT_EAT], block feeding an organ to a mob if they are marked as ready to operate - to prevent mistakenly feeding your patient
 /obj/item/organ/proc/block_nom(datum/source, mob/living/carbon/eater, mob/living/carbon/feeder)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(eater, TRAIT_READY_TO_OPERATE))

@@ -104,7 +104,7 @@
 	return
 
 /// Called when a turf in the field of the monitor is unlinked
-/// Do NOT call this manually, requires management of the field_turfs list
+/// Do NOT call this manually, needs management of the field_turfs list
 /datum/proximity_monitor/advanced/proc/cleanup_field_turf(turf/target)
 	return
 
@@ -114,7 +114,7 @@
 		setup_field_turf(target)
 
 /// Called when a turf in the edge of the monitor is unlinked
-/// Do NOT call this manually, requires management of the edge_turfs list
+/// Do NOT call this manually, needs management of the edge_turfs list
 /datum/proximity_monitor/advanced/proc/cleanup_edge_turf(turf/target)
 	if(edge_is_a_field) // If the edge is considered a field, clean it up like one
 		cleanup_field_turf(target)

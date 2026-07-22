@@ -7,7 +7,7 @@
 	layer = OBJ_LAYER
 	/// Stops persistent lootdrop spawns from being shoved into lockers
 	anchored = TRUE
-	/// A list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
+	/// A list of possible items to spawn e.g.. list(/obj/item, /obj/structure, /obj/effect)
 	var/list/loot
 	/// The subtypes AND type to combine with the loot list
 	var/loot_type_path
@@ -17,7 +17,7 @@
 	var/spawn_loot_count = 1
 	/// If the same item can be spawned twice
 	var/spawn_loot_double = TRUE
-	/// Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
+	/// Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3... This overrides pixel_x/y on the spawner itself
 	var/spawn_loot_split = FALSE
 	/// The pixel x/y divider offsets for spawn_loot_split (spaced 1 pixel apart by default)
 	var/spawn_loot_split_pixel_offsets = 2
@@ -29,14 +29,14 @@
 	var/spawn_scatter_radius = 0
 	/// Whether the items should have a random pixel_x/y offset (maxium offset distance is ±16 pixels for x/y)
 	var/spawn_random_offset = FALSE
-	/// Whether items that cannot be spawned will be removed from the loot list. Keep it TRUE unless you've a good reason.
+	/// Whether items that cannot be spawned will be removed from the loot list.. Keep it TRUE unless you've a good reason.
 	var/remove_if_cant_spawn = TRUE
 
 /obj/effect/spawner/random/Initialize(mapload)
 	. = ..()
 	spawn_loot()
 
-///If the spawner has any loot defined, randomly picks some and spawns it. Does not cleanup the spawner.
+/// If the spawner has any loot defined, randomly picks some and spawns it.. Does not cleanup the spawner.
 /obj/effect/spawner/random/proc/spawn_loot(lootcount_override)
 	if(!prob(spawn_loot_chance))
 		return
@@ -116,7 +116,7 @@
 /obj/effect/spawner/random/proc/make_item(spawn_loc, type_path_to_make)
 	return new type_path_to_make(spawn_loc)
 
-///If the spawner has a spawn_scatter_radius set, this creates a list of nearby turfs available that are in view and have an unblocked line to them.
+/// If the spawner has a spawn_scatter_radius set, this creates a list of nearby turfs available that are in view. Have an unblocked line to them.
 /obj/effect/spawner/random/proc/get_spawn_locations(radius)
 	var/list/scatter_locations = list()
 

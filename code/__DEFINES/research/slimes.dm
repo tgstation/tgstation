@@ -21,7 +21,7 @@
 /// Below this, we feel starving
 #define SLIME_STARVE_NUTRITION 10
 
-///The slime is not hungry. It might try to feed anyways.
+/// The slime is not hungry... It might try to feed anyways.
 #define SLIME_HUNGER_NONE 0
 ///The slime is more likely to feed on people
 #define SLIME_HUNGER_HUNGRY 1

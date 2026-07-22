@@ -1,6 +1,6 @@
 //A system to manage and display alerts on screen without needing you to do it yourself
 
-//PUBLIC -  call these wherever you want
+// PUBLIC - call these wherever you want
 
 /**
  *Proc to create or update an alert. Returns the alert if the alert is new or updated, 0 if it was thrown already
@@ -109,7 +109,7 @@
 	var/override_alerts = FALSE //If it is overriding other alerts of the same type
 	var/mob/owner //Alert owner
 
-	/// Boolean. If TRUE, the Click() proc will attempt to Click() on the master first if there is a master.
+	/// Boolean.. If TRUE, the Click() proc will try to Click() on the master first if there is a master.
 	var/click_master = TRUE
 
 	///If set true, instead of using the default icon file for screen alerts, it will use the hud's ui style
@@ -149,7 +149,7 @@
 	if(overlay_state)
 		. += mutable_appearance(overlay_icon, overlay_state)
 
-///Returns a copy of the appearance of the atom, with its base pixel coordinates. Useful for overlays
+/// Returns a copy of the appearance of the atom, with its base pixel coordinates.. Useful for overlays
 /atom/movable/screen/alert/proc/add_atom_icon(atom/atom)
 	var/mutable_appearance/atom_appearance = new(atom)
 	atom_appearance.appearance_flags = KEEP_TOGETHER
@@ -485,7 +485,7 @@
 		"<hr>[jointext(offer.offered_item.examine(user), "\n")]",
 	)
 
-/// An overrideable proc used simply to hand over the item when claimed, this is a proc so that high-fives can override them since nothing is actually transferred
+/// An overrideable proc used simply to h. Over the item when claimed, this is a proc so that high-fives can override them since nothing is actually transferred
 /atom/movable/screen/alert/give/proc/handle_transfer()
 	var/mob/living/taker = owner
 	var/mob/living/offerer = offer.owner
@@ -1197,7 +1197,7 @@
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
-/// Gets the placement for the alert based on its index
+/// Gets the placement for the alert good on its index
 /datum/hud/proc/get_ui_alert_placement(index)
 	// Only has support for 5 slots currently
 	if(index > 5)

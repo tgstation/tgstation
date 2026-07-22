@@ -1,4 +1,4 @@
-///A component added to the mind of anyone who is playing in an ongoing CTF match. Any player specific CTF functionality should be implemented here. (someone should implement score tracking here)
+/// A component added to the mind of anyone who is playing in an ongoing CTF match.. Any player specific CTF functionality should be added here.. (someone should add score tracking here)
 /datum/component/ctf_player
 	///The team that this player is associated with.
 	var/team
@@ -66,7 +66,7 @@
 /datum/component/ctf_player/proc/send_message(message)
 	to_chat(GLOB.directory[ckey_reference], message)
 
-///Called when the associated CTF game ends or their associated team is deleted, dusts the player and deletes this component to ensure no data from it is carried over to future games.
+/// Called when the associated CTF game ends. Their associated team is deleted, dusts the player. Deletes this component to ensure no data from it is carried over to future games.
 /datum/component/ctf_player/proc/end_game()
 	if(player_mob)
 		for(var/obj/item/ctf_flag/flag in player_mob)

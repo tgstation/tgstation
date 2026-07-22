@@ -128,7 +128,7 @@
 			else
 				typecounts[backpack_item.type] = 1
 		outfit.backpack_contents = typecounts
-		//TODO : Copy varedits from backpack stuff too.
+		// To do : Copy varedits from backpack stuff too.
 	//Copy implants
 	outfit.implants = list()
 	for(var/obj/item/implant/implant in implants)

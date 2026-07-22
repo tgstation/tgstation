@@ -1,4 +1,4 @@
-// Category 2 medicines are medicines that have an ill effect regardless of volume/OD to dissuade doping. Mostly used as emergency chemicals OR to convert damage (and heal a bit in the process). The type is used to prompt borgs that the medicine is harmful.
+// Category 2 medicines are medicines that have an ill effect regardless of volume/OD to dissuade doping.. Mostly used as emergency chemicals OR to convert damage (and heal a bit in the process).. The type is used to prompt borgs that the medicine is harmful.
 /datum/reagent/medicine/c2
 	abstract_type = /datum/reagent/medicine/c2
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -12,7 +12,7 @@
 /******BRUTE******/
 /*Suffix: -bital*/
 
-/datum/reagent/medicine/c2/helbital //kinda a C2 only if you're not in hardcrit.
+/datum/reagent/medicine/c2/helbital // kind of a C2 only if you're not in hardcrit.
 	name = "Helbital"
 	description = "Named after the Norse goddess Hel, this medicine heals the patient's bruises the closer they are to death. Patients will find the medicine 'aids' their healing if not near death by causing asphyxiation."
 	color = "#9400D3"
@@ -270,7 +270,7 @@
 	. = ..()
 	var/oxycalc = 2.5 * metabolization_ratio * (current_cycle-1)
 	if(!overdosed)
-		oxycalc = min(oxycalc, affected_mob.get_oxy_loss() + 0.5) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
+		oxycalc = min(oxycalc, affected_mob.get_oxy_loss() + 0.5) // if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle.. that is if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10.. We would take the toxdamage for the extra 10 if we were overdosing.
 	var/need_mob_update
 	need_mob_update = affected_mob.adjust_oxy_loss(-2 * oxycalc * normalise_creation_purity() * metabolization_ratio * seconds_per_tick , FALSE, required_biotype = affected_biotype)
 	need_mob_update += affected_mob.adjust_tox_loss(2 * oxycalc * metabolization_ratio * seconds_per_tick / CONVERMOL_RATIO, updating_health = FALSE, required_biotype = affected_biotype)
@@ -334,7 +334,7 @@
 
 /datum/reagent/medicine/c2/seiver/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	rads_heal_threshold = rand(rads_heal_threshold - 50, rads_heal_threshold + 50) // Basically this means 50K and below will always give the radiation heal, and upto 150K could. Calculated once.
+	rads_heal_threshold = rand(rads_heal_threshold - 50, rads_heal_threshold + 50) // Basically this means 50K and below will always give the radiation heal, and upto 150K could.. Calculated once.
 
 /datum/reagent/medicine/c2/seiver/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -350,7 +350,7 @@
 		healypoints += toxcalc
 
 	//and you're cold
-	var/radcalc = 1 * round((T0C-chemtemp) / 6, 0.1) * metabolization_ratio * seconds_per_tick //max ~45 rad loss unless you've hit below 0K. if so, wow.
+	var/radcalc = 1 * round((T0C-chemtemp) / 6, 0.1) * metabolization_ratio * seconds_per_tick // max ~45 rad loss unless you've hit below 0K.. if so, wow.
 	if(radcalc > 0 && HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
 		radcalc *= normalise_creation_purity()
 		// extra rad healing if you are SUPER cold
@@ -360,7 +360,7 @@
 			need_mob_update += affected_mob.adjust_tox_loss(-radcalc * 0.75, updating_health = FALSE, required_biotype = affected_biotype)
 		healypoints += (radcalc / 5)
 
-	//you're yes and... oh no!
+	// you're yes and.... oh no!
 	healypoints = round(healypoints, 0.1)
 	affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, healypoints / 5, required_organ_flag = affected_organ_flags)
 	if(need_mob_update)
@@ -397,7 +397,7 @@
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
-// Antitoxin binds plants pretty well. So the tox goes significantly down
+// Antitoxin binds plants pretty well.. So the tox goes significantly down
 /datum/reagent/medicine/c2/multiver/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_toxic(-(round(volume * 2)*normalise_creation_purity())) //0-2.66, 2 by default (0.75 purity).
 
@@ -492,7 +492,7 @@
 
 #undef issyrinormusc
 /******COMBOS******/
-/*Suffix: Combo of healing, prob gonna get wack REAL fast*/
+/* Suffix: Combo of healing, prob going to get wack REAL fast */
 /datum/reagent/medicine/c2/synthflesh
 	name = "Synthflesh"
 	description = "Heals brute and burn damage at the cost of toxicity (66% of damage healed). Patch, splash, and spray application only. 60u of pure synthflesh or 100u at lower purities can restore corpses husked by burns."
@@ -544,7 +544,7 @@
 	var/current_volume = synthflesh ? synthflesh.volume : 0
 	var/current_purity = synthflesh ? synthflesh.purity : 0
 
-	if (methods & TOUCH)	//touch does not apply chems to blood, we want to combine the two volumes before attempting to unhusk
+	if (methods & TOUCH)	// touch does not apply chems to blood, we want to combine the two volumes before trying to unhusk
 		current_purity = current_volume > 0 ? (current_volume * current_purity + reac_volume * creation_purity) / (current_volume + reac_volume) : creation_purity
 		current_volume += reac_volume
 
@@ -660,4 +660,4 @@
 	affected_mob.clear_alert("penthrite")
 
 /******NICHE******/
-//todo
+// to do

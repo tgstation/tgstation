@@ -56,12 +56,12 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	var/canvas_color = "#ffffff"
 	/// The sprite editor workspace that carries the data for this canvas
 	var/datum/sprite_editor_workspace/workspace
-	/// Is it clean canvas or was there something painted on it at some point, used to decide when to show wip splotch overlay
+	/// Is it clean canvas or was there something painted on it at some point, used to decide when to show work in progress splotch overlay
 	var/used = FALSE
 	var/finalized = FALSE //Blocks edits
 	var/icon_generated = FALSE
 	var/icon/generated_icon
-	///boolean that blocks persistence from saving it. enabled from printing copies, because we do not want to save copies.
+	/// boolean that blocks persistence from saving it.. enabled from printing copies, because we do not want to save copies.
 	var/no_save = FALSE
 
 	///reference to the last patron's mind datum, used to allow them (and no others) to change the frame before the round ends.
@@ -168,7 +168,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 		"pixelsPerUnit" = pixels_per_unit,
 		"finalized" = finalized,
 		"allowColorPicker" = can_change_implement_color,
-		"editable" = can_edit && !finalized, //Ideally you should be able to draw moustaches on existing paintings in the gallery but that's not implemented yet
+		"editable" = can_edit && !finalized, // Ideally you should be able to draw moustaches on existing paintings in the gallery but that's not added yet
 		"showPlaque" = istype(loc, /obj/structure/sign/painting)
 	)
 
@@ -381,7 +381,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 			data += grid[y][x]
 	return data.Join("")
 
-//Todo make this element ?
+// To do make this element ?
 /obj/item/canvas/proc/get_paint_tool_color(obj/item/painting_implement)
 	if(!painting_implement)
 		return
@@ -504,7 +504,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 /obj/item/canvas/thirtysix_twentyfour
 	name = "canvas (36x24)"
 	desc = "A very large canvas to draw out your soul on. You'll need a larger frame to put it on a wall."
-	icon_state = "24x24" //The vending spritesheet needs the icons to be 32x32. We'll set the actual icon on Initialize.
+	icon_state = "24x24" // The vending spritesheet needs the icons to be 32x32.. We'll set the actual icon on Initialize.
 	width = 36
 	height = 24
 	SET_BASE_PIXEL(-4, 4)
@@ -662,7 +662,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 
 /obj/structure/sign/painting/update_icon_state(updates=ALL)
 	. = ..()
-	// Stops the frame icon_state from poking out behind the paintings. we have proper frame overlays in artstuff.dmi.
+	// Stops the frame icon_state from poking out behind the paintings.. we have proper frame overlays in artstuff.dmi.
 	icon = current_canvas?.generated_icon ? null : initial(icon)
 
 /obj/structure/sign/painting/update_name(updates)

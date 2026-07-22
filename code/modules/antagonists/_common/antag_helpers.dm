@@ -9,7 +9,7 @@
 		if(!antag_type || !specific && istype(A,antag_type) || specific && A.type == antag_type)
 			. |= A.owner
 
-/// From a list of players (minds, mobs or clients), finds the one with the highest playtime (either from a specific role or overall living) and returns it.
+/// From a list of players (minds, mobs. Clients), finds the one with the highest playtime (either from a specific role. Overall living). Returns it.
 /// If playtime tracking is disabled, just returns the first player in the list.
 /proc/get_most_experienced(list/players, specific_role)
 	if(!CONFIG_GET(flag/use_exp_tracking)) //woops

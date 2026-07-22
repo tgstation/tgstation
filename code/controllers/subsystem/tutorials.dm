@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(tutorials)
 	return SS_INIT_SUCCESS
 
 /// Will suggest the passed tutorial type to the user.
-/// Will check that they should actually see it, e.g. hasn't completed it yet, etc.
+/// Will check that they should actually see it, e.g.. hasn't completed it yet, and so on
 /// Then, calls `/datum/tutorial/subtype/perform` with the extra arguments passed in.
 /datum/controller/subsystem/tutorials/proc/suggest_tutorial(mob/user, datum/tutorial/tutorial_type, ...)
 	var/datum/tutorial_manager/tutorial_manager = tutorial_managers[tutorial_type]

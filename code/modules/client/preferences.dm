@@ -4,7 +4,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/client/parent
 	/// The path to the general savefile for this datum
 	var/path
-	/// Whether or not we allow saving/loading. Used for guests, if they're enabled
+	/// Whether or not we allow saving/loading.. Used for guests, if they're enabled
 	var/load_and_save = TRUE
 	/// Ensures that we always load the last used save, QOL
 	var/default_slot = 1
@@ -24,7 +24,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// List of ROLE_X that the client wants to be eligible for
 	var/list/be_special = list() //Special role selection
 
-	/// Custom keybindings. Map of keybind names to keyboard inputs.
+	/// Custom keybindings.. Map of keybind names to keyboard inputs.
 	/// For example, by default would have "swap_hands" -> list("X")
 	var/list/key_bindings = list()
 
@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/action_buttons_screen_locs = list()
 
-	///Someone thought we were nice! We get a little heart in OOC until we join the server past the below time (we can keep it until the end of the round otherwise)
+	/// Someone thought we were nice!. We get a little heart in OOC until we join the server past the below time (we can keep it until the end of the round otherwise)
 	var/hearted
 	///If we have a hearted commendations, we honor it every time the player loads preferences until this time has been passed
 	var/hearted_until
@@ -543,7 +543,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	SEND_SIGNAL(character, COMSIG_HUMAN_PREFS_APPLIED)
 
-/// Returns whether the parent mob should have the random hardcore settings enabled. Assumes it has a mind.
+/// Returns whether the parent mob should have the random hardcore settings enabled.. Assumes it has a mind.
 /datum/preferences/proc/should_be_random_hardcore(datum/job/job, datum/mind/mind)
 	if(!read_preference(/datum/preference/toggle/random_hardcore))
 		return FALSE

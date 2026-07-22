@@ -1,6 +1,6 @@
 /// Component that floods gas when ignited by fire.
 /datum/component/combustible_flooder
-	// Gas type, molar count, and temperature. All self explanatory.
+	// Gas type, molar count, and temperature.. All self explanatory.
 	var/gas_id
 	var/gas_amount
 	var/temp_amount
@@ -31,7 +31,7 @@
 	if(isturf(parent))
 		UnregisterSignal(parent, COMSIG_TURF_EXPOSE)
 
-/// Do the flooding. Trigger temperature is the temperature we will flood at if we dont have a temp set at the start. Trigger referring to whatever triggered it.
+/// Do the flooding.. Trigger temperature is the temperature we will flood at if we dont have a temp set at the start.. Trigger referring to whatever triggered it.
 /datum/component/combustible_flooder/proc/flood(mob/user, trigger_temperature)
 	var/delete_parent = TRUE
 	var/turf/open/flooded_turf = get_turf(parent)
@@ -99,7 +99,7 @@
 	if(shot.damage_type == BURN && shot.damage > 0)
 		flood(shot.firer, 2500)
 
-/// Welder check. Here because tool_act is higher priority than attackby.
+/// Welder check.. Here because tool_act is higher priority than attackby.
 /datum/component/combustible_flooder/proc/welder_react(datum/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
 

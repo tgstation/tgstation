@@ -15,7 +15,7 @@
  * optional ui datum/tgui The UI to be updated, if it exists.
  */
 /datum/proc/ui_interact(mob/user, datum/tgui/ui)
-	return FALSE // Not implemented.
+	return FALSE // Not added
 
 /**
  * public
@@ -28,7 +28,7 @@
  * return list Data to be sent to the UI.
  */
 /datum/proc/ui_data(mob/user)
-	return list() // Not implemented.
+	return list() // Not added
 
 /**
  * public
@@ -187,7 +187,7 @@ GAME_VERB_HIDDEN(/client, uiclose, "uiclose", window_id as text)
 	var/mob/user = src?.mob
 	if(!user)
 		return
-	// Close all tgui datums based on window_id.
+	// Close all tgui datums good on window_id.
 	SStgui.force_close_window(user, window_id)
 
 /**

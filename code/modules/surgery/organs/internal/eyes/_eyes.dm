@@ -9,7 +9,7 @@
 
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
-	maxHealth = 0.5 * STANDARD_ORGAN_THRESHOLD //half the normal health max since we go blind at 30, a permanent blindness at 50 therefore makes sense unless medicine is administered
+	maxHealth = 0.5 * STANDARD_ORGAN_THRESHOLD // half the normal health max since we go blind at 30, a permanent blindness at 50 so makes sense unless medicine is administered
 	high_threshold = 0.3 * STANDARD_ORGAN_THRESHOLD //threshold at 30
 	low_threshold = 0.2 * STANDARD_ORGAN_THRESHOLD //threshold at 20
 
@@ -51,7 +51,7 @@
 	var/obj/effect/abstract/eyelid_effect/eyelid_left
 	var/obj/effect/abstract/eyelid_effect/eyelid_right
 
-	/// Glasses cannot be worn over these eyes. Currently unused
+	/// Glasses cannot be worn over these eyes.. Currently unused
 	var/no_glasses = FALSE
 	/// Native FOV that will be applied if a config is enabled
 	var/native_fov = FOV_90_DEGREES
@@ -59,11 +59,11 @@
 	var/scarring = NONE
 
 	/// The (custom, sometimes) messages we get when we use a flashlight or penlight on these eyes.
-	/// Completely optional but good if you wanna be FANCY
+	/// Completely optional but good if you want to be FANCY
 
 	/// this message should never show up for default eyes, do not change on default eyes.
 	var/penlight_message = "useless default please report"
-	/// what are the pupils called? eg. pupils, apertures, etc.
+	/// what are the pupils called?. for example pupils, apertures, and so on
 	var/pupils_name = "pupils"
 	/// do these eyes have pupils (or equivalent) that react to light when penlighted.
 	var/light_reactive = TRUE
@@ -260,7 +260,7 @@
 	eye_puncture.apply_wound(bodypart_owner, wound_source = "bullet impact", right_side = picked_side)
 	apply_scar(picked_side)
 
-/// When our owner washes their face. The idea that spessmen wash their eyeballs is highly disturbing but this is the easiest way to get rid of cursed crayon eye coloring
+/// When our owner washes their face.. The idea that spessmen wash their eyeballs is highly disturbing but this is the easiest way to get rid of cursed crayon eye coloring
 /obj/item/organ/eyes/proc/on_face_wash()
 	SIGNAL_HANDLER
 	wash(CLEAN_WASH)
@@ -376,7 +376,7 @@
 		var/mutable_appearance/right_iris = mutable_appearance(icon, "[iris_overlay]_r")
 		var/list/color_left = rgb2num(eye_color_left, COLORSPACE_HSL)
 		var/list/color_right = rgb2num(eye_color_right, COLORSPACE_HSL)
-		// Ugly as sin? Indeed it is! But otherwise eyeballs turn out to be super dark, and this way even lighter colors are mostly preserved
+		// Ugly as sin?. Indeed it is!. But otherwise eyeballs turn out to be super dark, and this way even lighter colors are mostly preserved
 		if (color_left[3])
 			color_left[3] /= sqrt(color_left[3] * 0.01)
 		if (color_right[3])
@@ -421,7 +421,7 @@
 #undef OFFSET_X
 #undef OFFSET_Y
 
-//Gotta reset the eye color, because that persists
+// Got to reset the eye color, because that persists
 /obj/item/organ/eyes/enter_wardrobe()
 	. = ..()
 	eye_color_left = initial(eye_color_left)
@@ -578,7 +578,7 @@
 #undef BLINK_DURATION
 #undef BLINK_LOOPS
 
-/// by default, returns the eyes' penlight_message var as a notice span. May do other things when overridden, such as eldritch insanity, or eye damage, or whatnot. Whatever you want, really.
+/// by default, returns the eyes' penlight_message var as a notice span.. May do other things when overridden, such as eldritch insanity, or eye damage, or whatnot.. Whatever you want, really.
 /obj/item/organ/eyes/proc/penlight_examine(mob/living/viewer)
 	return span_notice("[owner.p_Their()] eyes [penlight_message].")
 

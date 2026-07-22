@@ -299,7 +299,7 @@
 
 /datum/mood_event/too_slow
 	description = "NO! HOW COULD I BE... TOO SLOW???"
-	mood_change = -2 // multiplied by how many people saw it happen, up to 8, so potentially massive. the ULTIMATE prank carries a lot of weight
+	mood_change = -2 // multiplied by how many people saw it happen, up to 8, so potentially massive.. the ULTIMATE prank carries a lot of weight
 	timeout = 2 MINUTES
 
 /datum/mood_event/too_slow/add_effects(param)
@@ -397,7 +397,7 @@
 	mood_change = -5
 	timeout = 5 MINUTES
 
-/datum/mood_event/banished //when the chaplain is sus! (and gets forcably de-holy'd)
+/datum/mood_event/banished // when the chaplain is suspicious (and gets forcably de-holy'd)
 	description = "I have been excommunicated!"
 	mood_change = -10
 	timeout = 10 MINUTES

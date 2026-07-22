@@ -179,7 +179,7 @@
 	if(!QDELETED(main_hand) && istype(main_hand, /obj/item/melee/sickly_blade))
 		striking_with = main_hand
 
-	// No valid item in either slot? No riposte
+	// No valid item in either slot?. No riposte
 	if(!striking_with)
 		return
 
@@ -256,7 +256,7 @@
 
 //---- Flesh Passive
 // Makes you never get disgust, virus immune and immune to damage from space ants
-// Level 2, organs and raw meat heals you. You also become a voracious glutton who likes all food. No slowdown from being fat
+// Level 2, organs and raw meat heals you.. You also become a voracious glutton who likes all food.. No slowdown from being fat
 // Level 3, being fat gives damage resistance
 /datum/status_effect/heretic_passive/flesh
 	name = "Ravenous Hunger"

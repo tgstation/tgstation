@@ -49,7 +49,7 @@ Doesn't work on other aliens/AI.*/
 	var/mob/living/carbon/carbon_owner = owner
 	carbon_owner.adjustPlasma(-plasma_cost)
 	// It'd be really annoying if click-to-fire actions stayed active,
-	// even if our plasma amount went under the required amount.
+	// even if our plasma amount went under the needed amount.
 	if(click_to_activate && carbon_owner.getPlasma() < plasma_cost)
 		unset_click_ability(owner, refund_cooldown = FALSE)
 

@@ -97,7 +97,7 @@
 	flavour_text = "Blimey! I feel less of a landlubber now."
 	charges = 5
 
-// So drones can teach borgs and AI dronespeak. For best effect, combine with mother drone lawset.
+// So drones can teach borgs and AI dronespeak.. For best effect, combine with mother drone lawset.
 /obj/item/language_manual/dronespeak_manual
 	name = "dronespeak manual"
 	desc = "The book's cover reads: \"Understanding Dronespeak - An exercise in futility.\" The book is written entirely in binary, non-silicons probably won't understand it."

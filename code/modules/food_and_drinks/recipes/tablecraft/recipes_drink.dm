@@ -97,7 +97,7 @@
 	result = /obj/item/reagent_containers/cup/glass/bottle/holywater
 	category = CAT_DRINK
 
-//flask of unholy water is a beaker for some reason, I will try making it a bottle and add it here once the antag freeze is over. t. kryson
+// flask of unholy water is a beaker f. Some reason, I will try making it a bottle. Add it here once the antag freeze is over.. t.. kryson
 
 /datum/crafting_recipe/nothingbottle
 	name = "Nothing Bottle"

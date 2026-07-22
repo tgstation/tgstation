@@ -160,12 +160,12 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupan
 		if(istype(target_vehicle.occupants, /list) && target_vehicle.occupants.len)
 			for(var/mob/mob_occupant in target_vehicle.occupants)
 				options["[mob_occupant.name] ([mob_occupant.tag])[target_vehicle.is_driver(mob_occupant) ? " (Driver)" : ""]"] = "\ref[mob_occupant]"
-		// Searching for mobs in exosuit equipment (e.g. seccage, sleepers)
+		// Searching for mobs in exosuit equipment (e.g.. seccage, sleepers)
 		for(var/obj/item/mecha_parts/mecha_equipment/obj_contents in target.contents)
 			for(var/mob/mob_in_equipment in obj_contents.contents)
 				options["[mob_in_equipment.name] ([mob_in_equipment.tag])"] = "\ref[mob_in_equipment]"
 
-	// Closets, crates, bodybags, coffins, etc.
+	// Closets, crates, bodybags, coffins, and so on
 	else if(istype(target, /obj/structure/closet))
 		for(var/mob/mob_occupant in target.contents)
 			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
@@ -173,12 +173,12 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupan
 		for(var/obj/structure/closet/obj_contents in target.contents)
 			for(var/mob/mob_in_bodybag in obj_contents.contents)
 				options["[mob_in_bodybag.name] ([mob_in_bodybag.tag])"] = "\ref[mob_in_bodybag]"
-		// That's basically the same for folded bodybags (e.g. bluespace bodybags with mobs inside)
+		// That's basically the same for folded bodybags (e.g.. bluespace bodybags with mobs inside)
 		for(var/obj/item/bodybag/obj_contents_folded in target.contents)
 			for(var/mob/mob_in_bodybag_folded in obj_contents_folded.contents)
 				options["[mob_in_bodybag_folded.name] ([mob_in_bodybag_folded.tag])"] = "\ref[mob_in_bodybag_folded]"
 
-	// Folded bodybags (e.g. bluespace bodybags with mobs inside)
+	// Folded bodybags (e.g.. bluespace bodybags with mobs inside)
 	else if(istype(target, /obj/item/bodybag))
 		for(var/mob/mob_occupant in target.contents)
 			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
@@ -191,7 +191,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupan
 		for(var/obj/structure/closet/obj_contents in target.contents)
 			for(var/mob/mob_in_bodybag in obj_contents.contents)
 				options["[mob_in_bodybag.name] ([mob_in_bodybag.tag])"] = "\ref[mob_in_bodybag]"
-		// That's basically the same for folded bodybags (e.g. bluespace bodybags with mobs inside)
+		// That's basically the same for folded bodybags (e.g.. bluespace bodybags with mobs inside)
 		for(var/obj/item/bodybag/obj_contents_folded in target.contents)
 			for(var/mob/mob_in_bodybag_folded in obj_contents_folded.contents)
 				options["[mob_in_bodybag_folded.name] ([mob_in_bodybag_folded.tag])"] = "\ref[mob_in_bodybag_folded]"
@@ -264,16 +264,16 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 			if(tgui_alert(user,"This character appears to have been a monkey. Would you like to respawn them as such?",,list("Yes","No")) == "Yes")
 				var/mob/living/carbon/human/species/monkey/new_monkey = new
 				SSjob.send_to_late_join(new_monkey)
-				G_found.mind.transfer_to(new_monkey) //be careful when doing stuff like this! I've already checked the mind isn't in use
+				G_found.mind.transfer_to(new_monkey) // be careful when doing stuff like this!. I've already checked the mind isn't in use
 				new_monkey.PossessByPlayer(G_found.key)
 				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.", confidential = TRUE)
 				var/msg = span_adminnotice("[key_name_admin(user)] has respawned [new_monkey.key] as a filthy monkey.")
 				message_admins(msg)
 				admin_ticket_log(new_monkey, msg)
-				return //all done. The ghost is auto-deleted
+				return // all done.. The ghost is auto-deleted
 
 
-	//Ok, it's not a monkey. So, spawn a human.
+	// Ok, it's not a monkey.. spawn a human.
 	var/mob/living/carbon/human/new_character = new//The mob being spawned.
 	SSjob.send_to_late_join(new_character)
 
@@ -294,7 +294,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 	new_character.name = new_character.real_name
 
 	if(G_found.mind && !G_found.mind.active)
-		G_found.mind.transfer_to(new_character) //be careful when doing stuff like this! I've already checked the mind isn't in use
+		G_found.mind.transfer_to(new_character) // be careful when doing stuff like this!. I've already checked the mind isn't in use
 	else
 		new_character.mind_initialize()
 	if(is_unassigned_job(new_character.mind.assigned_role))
@@ -327,7 +327,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 	if(!skip_job_respawn)
 		new_character.mind.assigned_role.on_respawn(new_character)
 
-	//Announces the character on all the systems, based on the record.
+	// Announces the character on all the systems, good on the record.
 	if(!record_found && (new_character.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 		//Power to the user!
 		if(tgui_alert(new_character,"Warning: No data core entry detected. Would you like to announce the arrival of this character by adding them to various databases, such as medical records?",,list("No","Yes")) == "Yes")

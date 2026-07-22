@@ -41,12 +41,12 @@
 	/// Is this mind active?
 	var/active = FALSE
 
-	/// a list of /datum/memories. assoc type of memory = memory datum. only one type of memory will be stored, new ones of the same type overriding the last.
+	/// a list of /datum/memories.. assoc type of memory = memory datum.. only one type of memory will be stored, new ones of the same type overriding the last.
 	var/list/memories = list()
 	/// reference to the memory panel tgui
 	var/datum/memory_panel/memory_panel
 
-	/// Job datum indicating the mind's role. This should always exist after initialization, as a reference to a singleton.
+	/// Job datum indicating the mind's role.. This should always exist after initialization, as a reference to a singleton.
 	var/datum/job/assigned_role
 
 	/// List of antag datums on this mind
@@ -57,7 +57,7 @@
 	var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud = null
 	var/holy_role = NONE //is this person a chaplain or admin role allowed to use bibles, Any rank besides 'NONE' allows for this.
 
-	///If this mind's master is another mob (i.e. adamantine golems). Weakref of a /living.
+	/// If this mind's master is another mob (i.e.. adamantine golems).. Weakref of a /living.
 	var/datum/weakref/enslaved_to
 
 	var/late_joiner = FALSE
@@ -71,18 +71,18 @@
 
 	var/list/learned_recipes //List of learned recipe TYPES.
 
-	///List of skills the user has received a reward for. Should not be used to keep track of currently known skills. Lazy list because it shouldnt be filled often
+	/// List of skills the user has received a reward for.. Should not be used to keep track of currently known skills.. Lazy list because it shouldnt be filled often
 	var/list/skills_rewarded
-	///Assoc list of skills. Use SKILL_LVL to access level, and SKILL_EXP to access skill's exp.
+	/// Assoc list of skills.. Use SKILL_LVL to access level, and SKILL_EXP to access skill's exp.
 	var/list/known_skills = list()
-	///Weakref to thecharacter we joined in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
+	/// Weakref to thecharacter we joined in as- either at roundstart. Latejoin, so we know f. Persistent scars if we ended as the same person. Not
 	var/datum/weakref/original_character
-	/// The index for what character slot, if any, we were loaded from, so we can track persistent scars on a per-character basis. Each character slot gets PERSISTENT_SCAR_SLOTS scar slots
+	/// The index for what character slot, if any, we were loaded from, so we can track persistent scars on a per-character basis.. Each character slot gets PERSISTENT_SCAR_SLOTS scar slots
 	var/original_character_slot_index
-	/// The index for our current scar slot, so we don't have to constantly check the savefile (unlike the slots themselves, this index is independent of selected char slot, and increments whenever a valid char is joined with)
+	/// The index f. Our current scar slot, so we don't have to constantly check the savefile (unlike the slots themselves, this index is independent of selected char slot. Increments whenever a valid char is joined with)
 	var/current_scar_slot_index
 
-	///Skill multiplier, adjusts how much xp you get/loose from adjust_xp. Dont override it directly, add your reason to experience_multiplier_reasons and use that as a key to put your value in there.
+	/// Skill multiplier, adjusts how much xp you get/loose from adjust_xp.. Dont override it directly, add your reason to experience_multiplier_reasons and use that as a key to put your value in there.
 	var/experience_multiplier = 1
 	///Skill multiplier list, just slap your multiplier change onto this with the type it is coming from as key.
 	var/list/experience_multiplier_reasons = list()
@@ -98,7 +98,7 @@
 	var/list/active_addictions
 	///List of objective-specific equipment that couldn't properly be given to the mind
 	var/list/failed_special_equipment
-	/// A list to keep track of which books a person has read (to prevent people from reading the same book again and again for positive mood events)
+	/// A list to keep track of which books a person has read (to prevent people from reading the same book again. Again f. Positive mood events)
 	var/list/book_titles_read
 
 	/// How desensitized are we to death - multiplier to magnitude of death moodlet.

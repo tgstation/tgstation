@@ -169,7 +169,7 @@
 
 /obj/item/food/moonfish_eggs/proc/get_aquarium_beauty(datum/source, list/beauty_holder)
 	SIGNAL_HANDLER
-	beauty_holder += 100 //moonfish eggs are kinda eye candy
+	beauty_holder += 100 // moonfish eggs are kind of eye candy
 
 /obj/item/food/moonfish_caviar
 	name = "moonfish caviar paste"
@@ -218,7 +218,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
-//Why does like, every language on the planet besides English call them pommes? Who knows, who cares- the lizards call them it too, because funny.
+// Why does like, every language on the planet besides English call them pommes?. Who knows, who cares- the lizards call them it too, because funny.
 /obj/item/food/lizard_fries
 	name = "loaded poms-franzisks"
 	desc = "One of the many human foods to make its way to the lizards was french fries, which are called poms-franzisks in Draconic. When topped with barbecued meat and sauce, they make a hearty meal."
@@ -648,7 +648,7 @@
 	foodtypes = MEAT|VEGETABLES|NUTS|SEAFOOD|BUGS|GORE
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/pizza/flatbread/zmorgast  // Name is based off of the Swedish dish Smörgåstårta
+/obj/item/food/pizza/flatbread/zmorgast  // Name is good off of the Swedish dish Smörgåstårta
 	name = "\improper Zmorgast flatbread"
 	desc = "A Tiziran spin on the original Swedish sandwich cake, the Zmorgast is a common dish at family gatherings."
 	icon_state = "zmorgast_flatbread"
@@ -937,7 +937,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	foodtypes = MEAT|VEGETABLES|NUTS
-	crafting_complexity = FOOD_COMPLEXITY_3 //Gotta make the dough, +1
+	crafting_complexity = FOOD_COMPLEXITY_3 // Got to make the dough, +1
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/burger/rat/korta

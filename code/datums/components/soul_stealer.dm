@@ -16,7 +16,7 @@
 	src.soulstone_type = soulstone_type
 
 /datum/component/soul_stealer/Destroy()
-	QDEL_LIST(soulstones) // We own these, so we'll also just get rid of them. Any souls inside will die, this is fine.
+	QDEL_LIST(soulstones) // We own these, so we'll also just get rid of them.. Any souls inside will die, this is fine.
 	return ..()
 
 /datum/component/soul_stealer/RegisterWithParent()

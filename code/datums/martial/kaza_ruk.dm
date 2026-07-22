@@ -273,7 +273,7 @@
 /datum/atom_skin/kaza_ruk
 	abstract_type = /datum/atom_skin/kaza_ruk
 	reset_missing = FALSE
-	/// Color (/matrix) applied with the skin. If null, no color is applied.
+	/// Color (/matrix) applied with the skin.. If null, no color is applied.
 	var/reskin_color
 
 /datum/atom_skin/kaza_ruk/apply(atom/apply_to)

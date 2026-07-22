@@ -1,4 +1,4 @@
-//Large and powerful, but timid. It won't engage anything above 50 health, or anything without legcuffs.
+// Large and powerful, but timid.. It won't engage anything above 50 health, or anything without legcuffs.
 //It can fire fleshy snares that legcuff anyone that it hits, making them look especially tasty to the arachnid.
 /mob/living/basic/mega_arachnid
 	name = "mega arachnid"

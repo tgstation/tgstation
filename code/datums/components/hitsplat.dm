@@ -14,7 +14,7 @@
 	)
 
 	var/obj/effect/overlay/vis/hitsplat/hitsplat_type = /obj/effect/overlay/vis/hitsplat/debugging
-	// Alot less spammy and more useable as a smite or ingame feature. Off for ALL the health adjustments
+	// Alot less spammy and more useable as a smite or ingame feature.. Off for ALL the health adjustments
 	var/only_attacks = FALSE
 
 /datum/component/hitsplat/Initialize(hitsplat_type, only_attacks)

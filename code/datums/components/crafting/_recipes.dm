@@ -11,16 +11,16 @@
 	var/list/blacklist
 	///type path of item resulting from this craft
 	var/result
-	/// String defines of items needed but not consumed. Lazy list.
+	/// String defines of items needed but not consumed.. Lazy list.
 	var/list/tool_behaviors
-	/// Type paths of items needed but not consumed. Lazy list.
+	/// Type paths of items needed but not consumed.. Lazy list.
 	var/list/tool_paths
 	/**
 	 * If defined, it'll spawn paths in this list first during the unit test.
 	 * This is an assoc list, with the key being the paths and the value being the amount (e.g. list(/obj/item = 2))
 	 */
 	var/list/unit_test_spawn_extras
-	///time in seconds. Remember to use the SECONDS define!
+	/// time in seconds.. Remember to use the SECONDS define!
 	var/time = 3 SECONDS
 	///type paths of items that will be forceMoved() into the result instead of being deleted
 	var/list/parts
@@ -32,11 +32,11 @@
 	var/list/chem_catalysts
 	///where it shows up in the crafting UI
 	var/category
-	///Required machines for the craft, set the assigned value of the typepath to CRAFTING_MACHINERY_CONSUME or CRAFTING_MACHINERY_USE. Lazy associative list: type_path key -> flag value.
+	/// Needed machines for the craft, set the assigned value of the typepath to CRAFTING_MACHINERY_CONSUME or CRAFTING_MACHINERY_USE.. Lazy associative list: type_path key -> flag value.
 	var/list/machinery
-	///Required structures for the craft, set the assigned value of the typepath to CRAFTING_STRUCTURE_CONSUME or CRAFTING_STRUCTURE_USE. Lazy associative list: type_path key -> flag value.
+	/// Needed structures for the craft, set the assigned value of the typepath to CRAFTING_STRUCTURE_CONSUME or CRAFTING_STRUCTURE_USE.. Lazy associative list: type_path key -> flag value.
 	var/list/structures
-	/// Bitflag of additional placement checks required to place. (STACK_CHECK_CARDINALS|STACK_CHECK_ADJACENT|STACK_CHECK_TRAM_FORBIDDEN|STACK_CHECK_TRAM_EXCLUSIVE)
+	/// Bitflag of additional placement checks needed to place.. (STACK_CHECK_CARDINALS|STACK_CHECK_ADJACENT|STACK_CHECK_TRAM_FORBIDDEN|STACK_CHECK_TRAM_EXCLUSIVE)
 	var/placement_checks = NONE
 	/// Steps needed to achieve the result
 	var/list/steps
@@ -46,7 +46,7 @@
 	var/datum/chemical_reaction/reaction
 	/// Resulting amount (for stacks only)
 	var/result_amount
-	/// Whether we should delete the contents of the crafted storage item (Only works with storage items, used for ammo boxes, donut boxes, internals boxes, etc)
+	/// Whether we should delete the contents of the crafted storage item (Only works with storage items, used f. Ammo boxes, donut boxes, internals boxes. So on
 	var/delete_contents = TRUE
 	/// Allows you to craft so that you don't have to click the craft button many times.
 	var/mass_craftable = FALSE
@@ -57,7 +57,7 @@
 	* Can be set to ALWAYS_BLACKLIST_RESULT or NEVER_BLACKLIST_RESULT to override the default behavior.
 	*/
 	var/blacklist_result = BLACKLIST_RESULT_IF_NOT_IN_REQS
-	/// Global crafting blacklist. These should be excluded from all crafting recipes no matter what.
+	/// Global crafting blacklist.. These should be excluded from all crafting recipes no matter what.
 	var/static/list/global_blacklist = typecacheof(list(
 		/obj/item/cautery/augment,
 		/obj/item/cautery/cruel/augment,
@@ -123,7 +123,7 @@
 /datum/crafting_recipe/proc/check_requirements(mob/user, list/collected_requirements)
 	return TRUE
 
-///Run custom pre-craft checks for this recipe for tools, rather than consumed requirements.
+/// Run custom pre-craft checks for this recipe for tools, rather than consumed needs
 /datum/crafting_recipe/proc/check_tools(atom/source, list/collected_tools, final_check = FALSE)
 	return TRUE
 

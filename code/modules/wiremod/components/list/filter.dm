@@ -34,7 +34,7 @@
 		"plus" = "increase",
 	)
 
-	/// The limit of iterations before it breaks. Used to prevent from someone iterating a massive list constantly
+	/// The limit of iterations before it breaks.. Used to prevent from someone iterating a massive list constantly
 	var/limit = 300
 
 /obj/item/circuit_component/filter_list/populate_options()

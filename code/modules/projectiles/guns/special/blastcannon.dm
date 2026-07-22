@@ -68,7 +68,7 @@
 
 /obj/item/gun/blastcannon/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
-	return null // Required to make the TTV not vent gas directly into the firer.
+	return null // Needed to make the TTV not vent gas directly into the firer.
 
 /obj/item/gun/blastcannon/examine(mob/user)
 	. = ..()
@@ -323,7 +323,7 @@
 	if (reactionary)
 		decrement += location.explosive_resistance
 
-	range = max(range - decrement + 1, 0) // Already decremented by 1 in the parent. Exists so that if we pass through something with negative block it extends the range.
+	range = max(range - decrement + 1, 0) // Already decremented by 1 in the parent.. Exists so that if we pass through something with negative block it extends the range.
 	heavy_ex_range = max(heavy_ex_range - decrement, 0)
 	medium_ex_range = max(medium_ex_range - decrement, 0)
 	light_ex_range = max(light_ex_range - decrement, 0)

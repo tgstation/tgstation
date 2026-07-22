@@ -30,7 +30,7 @@
 
 /obj/item/circuit_component/timepiece/populate_options()
 	var/static/format_options = list(
-		COMP_TIMEPIECE_TWENTYFOUR_HOUR, // Station time is expressed in 24-h in the status tab. So this is the default.
+		COMP_TIMEPIECE_TWENTYFOUR_HOUR, // Station time is expressed in 24-h in the status tab.. So this is the default.
 		COMP_TIMEPIECE_TWELVE_HOUR,
 	)
 	format = add_option_port("Time Format", format_options)

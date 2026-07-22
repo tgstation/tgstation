@@ -8,17 +8,17 @@
 	var/name = "Generic Action"
 	/// The description of what the action does, shown in button tooltips
 	var/desc
-	/// The target the action is attached to. If the target datum is deleted, the action is as well.
-	/// Set in New() via the proc link_to(). PLEASE set a target if you're making an action
+	/// The target the action is attached to.. If the target datum is deleted, the action is as well.
+	/// Set in New() via the proc link_to().. PLEASE set a target if you're making an action
 	var/datum/target
-	/// Where any buttons we create should be by default. Accepts screen_loc and location defines
+	/// Where any buttons we create should be by default.. Accepts screen_loc and location defines
 	var/default_button_position = SCRN_OBJ_IN_LIST
 	/// This is who currently owns the action, and most often, this is who is using the action if it is triggered
 	/// This can be the same as "target" but is not ALWAYS the same - this is set and unset with Grant() and Remove()
 	var/mob/owner
 	/// If False, the owner of this action does not get a hud and cannot activate it on their own
 	var/owner_has_control = TRUE
-	/// Flags that will determine of the owner / user of the action can... use the action
+	/// Flags that will determine of the owner / user of the action can.... use the action
 	var/check_flags = NONE
 	/// Whether the button becomes transparent when it can't be used, or just reddened
 	var/transparent_when_unavailable = TRUE
@@ -78,7 +78,7 @@
 	QDEL_LIST_ASSOC_VAL(viewers) // Qdel the buttons in the viewers list **NOT THE HUDS**
 	return ..()
 
-/// Signal proc that clears any references based on the owner or target deleting
+/// Signal proc that clears any references good on the owner or target deleting
 /// If the owner's deleted, we will simply remove from them, but if the target's deleted, we will self-delete
 /datum/action/proc/clear_ref(datum/ref)
 	SIGNAL_HANDLER
@@ -102,7 +102,7 @@
 	SEND_SIGNAL(owner, COMSIG_MOB_GRANTED_ACTION, src)
 	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(clear_ref), override = TRUE)
 
-	// Register some signals based on our check_flags
+	// Register some signals good on our check_flags
 	// so that our button icon updates when relevant
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(update_status_on_signal))
@@ -130,7 +130,7 @@
 		if(!hud.mymob)
 			continue
 		HideFrom(hud.mymob)
-	LAZYREMOVE(remove_from?.actions, src) // We aren't always properly inserted into the viewers list, gotta make sure that action's cleared
+	LAZYREMOVE(remove_from?.actions, src) // We aren't always properly inserted into the viewers list, got to make sure that action's cleared
 	viewers = list()
 	UnregisterSignal(remove_from, COMSIG_MOB_KEYDOWN)
 
@@ -347,7 +347,7 @@
 /// Puts our action in their actions list and shows them the button.
 /datum/action/proc/GiveAction(mob/viewer)
 	var/datum/hud/our_hud = viewer.hud_used
-	if(viewers[our_hud]) // Already have a copy of us? go away
+	if(viewers[our_hud]) // Already have a copy of us?. go away
 		return
 
 	LAZYOR(viewer.actions, src) // Move this in
@@ -417,7 +417,7 @@
 		forced = TRUE
 	if(updates & (UPDATE_NAME|UPDATE_DESC))
 		update_flag |= UPDATE_BUTTON_NAME
-	// Status is not relevant, and background is not relevant. Neither will change
+	// Status is not relevant, and background is not relevant.. Neither will change
 
 	// Force the update if an icon state or overlay change was done
 	build_all_button_icons(update_flag, forced)
@@ -435,7 +435,7 @@
 	// Grant() calls Remove() from the existing owner so we're covered on that
 	Grant(source.current)
 
-/// Checks if our action is actively selected. Used for selecting icons primarily.
+/// Checks if our action is actively selected.. Used for selecting icons primarily.
 /datum/action/proc/is_action_active(atom/movable/screen/movable/action_button/current_button)
 	return FALSE
 

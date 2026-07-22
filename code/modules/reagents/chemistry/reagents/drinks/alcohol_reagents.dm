@@ -121,7 +121,7 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	glass_price = DRINK_PRICE_STOCK
 
-// Beer is a chemical composition of alcohol and various other things. It's a garbage nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
+// Beer is a chemical composition of alcohol and various other things.. It's a garbage nutrient but hey, it's still one.. Also alcohol is bad, mmmkay?
 /datum/reagent/consumable/ethanol/beer/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_plant_health(-round(volume * 0.05))
 	mytray.adjust_waterlevel(round(volume * 0.7))
@@ -522,7 +522,7 @@
 
 	if(ishuman(exposed_mob))
 		var/mob/living/carbon/human/human = exposed_mob
-		// tgstation13 does not endorse underage drinking. laws may vary by your jurisdiction.
+		// tgstation13 does not endorse underage drinking.. laws may vary by your jurisdiction.
 		if(human.age >= 13 && human.age <= 19 && human.gender == FEMALE)
 			quality = teenage_girl_quality
 
@@ -587,7 +587,7 @@
 /datum/reagent/consumable/ethanol/cuba_libre/on_mob_life(mob/living/carbon/cubano, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
-	if(cubano.mind && cubano.mind.has_antag_datum(/datum/antagonist/rev)) //Cuba Libre, the traditional drink of revolutions! Heals revolutionaries.
+	if(cubano.mind && cubano.mind.has_antag_datum(/datum/antagonist/rev)) // Cuba Libre, the traditional drink of revolutions!. Heals revolutionaries.
 		need_mob_update = cubano.adjust_brute_loss(-1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += cubano.adjust_fire_loss(-1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += cubano.adjust_tox_loss(-1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
@@ -712,7 +712,7 @@
 
 /datum/reagent/consumable/ethanol/bloody_mary/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	drinker.adjust_blood_volume((0.25 + round(2 * drinker.get_drunk_amount() / 40, 0.1)) * metabolization_ratio * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL) // Bloody Mary restores blood loss based on how drunk you are
+	drinker.adjust_blood_volume((0.25 + round(2 * drinker.get_drunk_amount() / 40, 0.1)) * metabolization_ratio * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL) // Bloody Mary restores blood loss good on how drunk you are
 
 /datum/reagent/consumable/ethanol/brave_bull
 	name = "Brave Bull"
@@ -731,14 +731,14 @@
 	. = ..()
 	tough_text = pick("brawny", "tenacious", "tough", "hardy", "sturdy") //Tuff stuff
 	to_chat(drinker, span_notice("You feel [tough_text]!"))
-	drinker.maxHealth += 10 //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
+	drinker.maxHealth += 10 // Brave Bull makes you sturdier, and so capable of withstanding a tiny bit more punishment.
 	drinker.health += 10
 
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_end_metabolize(mob/living/drinker)
 	. = ..()
 	to_chat(drinker, span_notice("You no longer feel [tough_text]."))
 	drinker.maxHealth -= 10
-	drinker.health = min(drinker.health - 10, drinker.maxHealth) //This can indeed crit you if you're alive solely based on alchol ingestion
+	drinker.health = min(drinker.health - 10, drinker.maxHealth) // This can indeed crit you if you're alive solely good on alchol ingestion
 
 /datum/reagent/consumable/ethanol/tequila_sunrise
 	name = "Tequila Sunrise"
@@ -1410,9 +1410,9 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	glass_price = DRINK_PRICE_STOCK
 
-/datum/reagent/consumable/ethanol/fetching_fizz //A reference to one of my favorite games of all time. Pulls nearby ores to the imbiber!
+/datum/reagent/consumable/ethanol/fetching_fizz // A reference to one of my favorite games of all time.. Pulls nearby ores to the imbiber!
 	name = "Fetching Fizz"
-	description = "Whiskey sour/iron/uranium mixture resulting in a highly magnetic slurry. Mild alcohol content." //Requires no alcohol to make but has alcohol anyway because ~magic~
+	description = "Whiskey sour/iron/uranium mixture resulting in a highly magnetic slurry. Mild alcohol content." // Needs no alcohol to make but has alcohol anyway because ~magic~
 	color = rgb(255, 91, 15)
 	boozepwr = 10
 	quality = DRINK_VERYGOOD
@@ -1427,7 +1427,7 @@
 	for(var/obj/item/stack/ore/ore in orange(3, drinker))
 		step_towards(ore, drinker_turf)
 
-//Another reference. Heals those in critical condition extremely quickly.
+// Another reference.. Heals those in critical condition extremely quickly.
 /datum/reagent/consumable/ethanol/hearty_punch
 	name = "Hearty Punch"
 	description = "Brave bull/syndicate bomb/absinthe mixture resulting in an energizing beverage. Mild alcohol content."
@@ -1450,7 +1450,7 @@
 		if(need_mob_update)
 			return UPDATE_MOB_HEALTH
 
-/datum/reagent/consumable/ethanol/bacchus_blessing //An EXTREMELY powerful drink. Smashed in seconds, dead in minutes.
+/datum/reagent/consumable/ethanol/bacchus_blessing // An EXTREMELY powerful drink.. Smashed in seconds, dead in minutes.
 	name = "Bacchus' Blessing"
 	description = "Unidentifiable mixture. Unmeasurably high alcohol content."
 	color = rgb(51, 19, 3) //Sickly brown
@@ -1815,7 +1815,7 @@
 
 /datum/reagent/consumable/ethanol/sugar_rush/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	drinker.satiety -= 10 * metabolization_ratio * seconds_per_tick //junky as hell! a whole glass will keep you from being able to eat junk food
+	drinker.satiety -= 10 * metabolization_ratio * seconds_per_tick // junky as hell!. a whole glass will keep you from being able to eat junk food
 
 /datum/reagent/consumable/ethanol/crevice_spike
 	name = "Crevice Spike"
@@ -1829,7 +1829,7 @@
 
 /datum/reagent/consumable/ethanol/crevice_spike/on_mob_metabolize(mob/living/drinker) //damage only applies when drink first enters system and won't again until drink metabolizes out
 	. = ..()
-	drinker.adjust_brute_loss(3 * min(5,volume), required_bodytype = affected_bodytype) //minimum 3 brute damage on ingestion to limit non-drink means of injury - a full 5 unit gulp of the drink trucks you for the full 15
+	drinker.adjust_brute_loss(3 * min(5,volume), required_bodytype = affected_bodytype) // minimum 3 brute damage on ingestion to limit non-drink means of injury - a full 5 unit gulp of the drink trucks you f. The full 15
 
 /datum/reagent/consumable/ethanol/sake
 	name = "Sake"
@@ -1879,7 +1879,7 @@
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_life(mob/living/drinker, seconds_per_tick, metabolization_ratio)
 	var/obj/item/shield/the_shield = mighty_shield?.resolve()
-	if(the_shield && !(the_shield in drinker.contents)) //If you had a shield and lose it, you lose the reagent as well. Otherwise this is just a normal drink.
+	if(the_shield && !(the_shield in drinker.contents)) // If you had a shield and lose it, you lose the reagent as well.. Otherwise this is just a normal drink.
 		holder.remove_reagent(type, volume)
 		return
 	return ..()
@@ -1937,7 +1937,7 @@
 		return
 
 	var/need_mob_update
-	if(drinker.get_brute_loss() && drinker.get_fire_loss()) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
+	if(drinker.get_brute_loss() && drinker.get_fire_loss()) // If you are damaged by both types, slightly increased healing but it only heals one.. The more the merrier wink wink.
 		if(prob(50))
 			need_mob_update = drinker.adjust_brute_loss(-0.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE,  required_bodytype = affected_bodytype)
 		else
@@ -2083,8 +2083,8 @@
 	quality = DRINK_GOOD
 	taste_description = "bad coding"
 	ph = 4
-	var/list/names = list("null fruit" = 1) //Names of the fruits used. Associative list where name is key, value is the percentage of that fruit.
-	var/list/tastes = list("bad coding" = 1) //List of tastes. See above.
+	var/list/names = list("null fruit" = 1) // Names of the fruits used.. Associative list where name is key, value is the percentage of that fruit.
+	var/list/tastes = list("bad coding" = 1) // List of tastes.. See above.
 
 /datum/reagent/consumable/ethanol/fruit_wine/on_new(list/data)
 	if(!data)
@@ -2121,7 +2121,7 @@
 	generate_data_info(data)
 
 /datum/reagent/consumable/ethanol/fruit_wine/proc/generate_data_info(list/data)
-	// BYOND's compiler fails to catch non-consts in a ranged switch case, and it causes incorrect behavior. So this needs to explicitly be a constant.
+	// BYOND's compiler fails to catch non-consts in a ranged switch case, and it causes incorrect behavior.. So this needs to explicitly be a constant.
 	var/const/minimum_percent = 0.15 //Percentages measured between 0 and 1.
 	var/list/primary_tastes = list()
 	var/list/secondary_tastes = list()
@@ -2378,7 +2378,7 @@
 
 /datum/reagent/consumable/ethanol/mauna_loa/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	// Heats the user up while the reagent is in the body. Occasionally makes you burst into flames.
+	// Heats the user up while the reagent is in the body.. Occasionally makes you burst into flames.
 	drinker.adjust_bodytemperature(25 * metabolization_ratio * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick)
 	if (SPT_PROB(2.5, seconds_per_tick))
 		drinker.adjust_fire_stacks(1 * metabolization_ratio)
@@ -2406,7 +2406,7 @@
 /datum/reagent/consumable/ethanol/pina_olivada
 	name = "Piña Olivada"
 	description = "An oddly designed concoction of olive oil and pineapple juice."
-	boozepwr = 20 // the oil coats your gastrointestinal tract, meaning you can't absorb as much alcohol. horrifying
+	boozepwr = 20 // the oil coats your gastrointestinal tract, meaning you can't absorb as much alcohol.. horrifying
 	color = "#493c00"
 	quality = DRINK_NICE
 	taste_description = "a horrible emulsion of pineapple and olive oil"
@@ -2640,7 +2640,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-/datum/reagent/consumable/ethanol/bitters //why do they call them bitters, anyway? they're more spicy than anything else
+/datum/reagent/consumable/ethanol/bitters // why do they call them bitters, anyway?. they're more spicy than anything else
 	name = "Andromeda Bitters"
 	description = "A bartender's best friend, often used to lend a delicate spiciness to any drink. Produced in New Trinidad, now and forever."
 	boozepwr = 70
@@ -3007,7 +3007,7 @@
 /datum/reagent/consumable/ethanol/red_city_am
 	name = "Red City AM"
 	description = "A breakfast drink from New Osaka, for when you really need to get drunk at 9:30 in the morning in more socially acceptable manner than drinking bagwine on the bullet train. Not that you should drink this on the bullet train either."
-	boozepwr = 5 //this thing is fucking disgusting and both less tasty and less alcoholic than a bloody mary. it is against god and nature
+	boozepwr = 5 // this thing is fucking disgusting and both less tasty and less alcoholic than a bloody mary.. it is against god and nature
 	color = "#ef0903"
 	quality = DRINK_NICE
 	taste_description = "breakfast in a glass"
@@ -3064,7 +3064,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-/datum/reagent/consumable/ethanol/konococo_rumtini //todo: add espresso | coffee, coffee liqueur, coconut rum, sugar
+/datum/reagent/consumable/ethanol/konococo_rumtini // to do add espresso | coffee, coffee liqueur, coconut rum, sugar
 	name = "Konococo Rumtini"
 	description = "Coconut rum, coffee liqueur, and espresso- an odd combination, to be sure, but a welcomed one."
 	boozepwr = 20
@@ -3337,7 +3337,7 @@
 /datum/reagent/consumable/ethanol/garibaldi/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(IS_REVOLUTIONARY(drinker))
-		//status effect has a duration of 5 seconds which gets refreshed by this, falls off on it's own in case of running out of drink or deconversion
+		// status effect has a duration of 5 seconds which gets refreshed by this, falls off on it's own in case of running out of drink. Deconversion
 		drinker.apply_status_effect(/datum/status_effect/rev_resilience)
 
 /datum/reagent/consumable/ethanol/improved_whiskey
@@ -3374,7 +3374,7 @@
 
 /datum/reagent/consumable/ethanol/last_word/expose_mob(mob/living/drinker, methods, reac_volume, show_message, touch_protection)
 	. = ..()
-	//Mutes people for 5 seconds on their first sip every 5 minutes. Requires ingest, you can't savor something that's injected into your eyes or whatever.
+	// Mutes people for 5 seconds on their first sip every 5 minutes.. Needs ingest, you can't savor something that's injected into your eyes or whatever.
 	if(!(methods & INGEST) || !iscarbon(drinker) || HAS_TRAIT(drinker, TRAIT_HAD_LAST_WORD))
 		return
 

@@ -25,7 +25,7 @@
 	return
 
 /obj/effect/decal/chempuff/proc/end_life(delay = 0.5 SECONDS)
-	QDEL_IN(src, delay) //Gotta let it stop drifting
+	QDEL_IN(src, delay) // Got to let it stop drifting
 	animate(src, alpha = 0, time = delay)
 
 /obj/effect/decal/chempuff/proc/loop_ended(datum/move_loop/source)

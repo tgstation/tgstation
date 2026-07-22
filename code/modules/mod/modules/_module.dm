@@ -55,7 +55,7 @@
 	var/list/pinned_to = list()
 	/// flags that let the module ability be used in odd circumstances
 	var/allow_flags = NONE
-	/// A list of slots required in the suit to work. Formatted like list(x|y, z, ...) where either x or y are required and z is required.
+	/// A list of slots needed in the suit to work.. Formatted like list(x|y, z, ...) where either x or why are needed and z is needed
 	var/list/required_slots = list()
 	/// If TRUE worn overlay will be masked with the suit, preventing any bits from poking out of its controur
 	var/mask_worn_overlay = FALSE
@@ -90,7 +90,7 @@
 	if(HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
 		. += span_notice("Complexity level: [complexity]")
 
-/// Looks through the MODsuit's parts to see if it has the parts required to support this module
+/// Looks through the MODsuit's parts to see if it has the parts needed to support this module
 /obj/item/mod/module/proc/has_required_parts(list/parts, need_active = FALSE)
 	if(!length(required_slots))
 		return TRUE

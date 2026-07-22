@@ -86,11 +86,11 @@ There are several things that need to be remembered:
 			target_overlay = "[target_overlay]_d"
 
 
-		//This is how non-humanoid clothing works. You check if the mob has the right bodyflag, and the clothing has the corresponding clothing flag.
-		//handled_by_bodyshape is used to track whether or not we successfully used an alternate sprite. It's set to TRUE to ease up on copy-paste.
+		// This is how non-humanoid clothing works.. You check if the mob has the right bodyflag, and the clothing has the corresponding clothing flag.
+		// handled_by_bodyshape is used to track whether or not we successfully used an alternate sprite.. It's set to TRUE to ease up on copy-paste.
 		//icon_file MUST be set to null by default, or it causes issues.
 		//handled_by_bodyshape MUST be set to FALSE under the if(!icon_exists()) statement, or everything breaks.
-		//"override_file = handled_by_bodyshape ? icon_file : null" MUST be added to the arguments of build_worn_icon()
+		// "override_file = handled_by_bodyshape ?. icon_file : null" MUST be added to the arguments of build_worn_icon()
 		//Friendly reminder that icon_exists_or_scream(file, state) is your friend when debugging this code.
 		var/handled_by_bodyshape = TRUE
 		var/digi = (bodyshape & BODYSHAPE_DIGITIGRADE)
@@ -193,7 +193,7 @@ There are several things that need to be remembered:
 	apply_height(gloves_overlay, LOWER_BODY)
 
 	// We dont have any >2 hands human species (and likely wont ever), so theres no point in splitting this because:
-	// It will only run if the left hand OR the right hand is missing, and it wont run if both are missing because you cant wear gloves with no arms
+	// It will only run if the left h. OR the right h. Is missing. It wont run if both are missing because you cant wear gloves with no arms
 	// (unless admins mess with this then its their fault)
 	if(num_hands < default_num_hands)
 		var/static/atom/movable/alpha_filter_target
@@ -617,7 +617,7 @@ generate/load female uniform sprites matching all previously decided variables
 		draw_target = mutable_appearance(file2use, t_state, layer = -layer2use)
 
 	//Get the overlays for this item when it's being worn
-	//eg: ammo counters, primed grenade flashes, etc.
+	// for example ammo counters, primed grenade flashes, and so on
 	var/list/worn_overlays = worn_overlays(draw_target, isinhands, file2use, bodyshape)
 	if(length(worn_overlays))
 		draw_target.overlays += worn_overlays
@@ -938,8 +938,8 @@ generate/load female uniform sprites matching all previously decided variables
 				),
 			))
 
-	// Kinda gross but because many humans overlays do not use KEEP_TOGETHER we need to manually propogate the filter
-	// Otherwise overlays, such as worn overlays on icons, won't have the filter "applied", and the effect kinda breaks
+	// Kind of gross but because many humans overlays do not use KEEP_TOGETHER we need to manually propogate the filter
+	// Otherwise overlays, such as worn overlays on icons, won't have the filter "applied", and the effect kind of breaks
 	if(!(appearance.appearance_flags & KEEP_TOGETHER))
 		for(var/mutable_appearance/child_overlay as anything in appearance.underlays + appearance.overlays)
 			apply_height_filter(child_overlay)
@@ -978,7 +978,7 @@ generate/load female uniform sprites matching all previously decided variables
 	var/i = 1
 	while (i <= length(parsed_overlays))
 		var/mutable_appearance/overlay = parsed_overlays[i]
-		if (!isimage(overlay)) // Malformed overlays, etc
+		if (!isimage(overlay)) // Malformed overlays, and so on
 			i += 1
 			continue
 		var/overlay_x = overlay.pixel_x + overlay.pixel_w

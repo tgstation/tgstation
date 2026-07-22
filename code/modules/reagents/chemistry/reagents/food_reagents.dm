@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////////
 
 
-// Part of the food code. Also is where all the food
+// Part of the food code.. Also is where all the food
 // condiments, additives, and such go.
 
 /datum/reagent/consumable
@@ -13,7 +13,7 @@
 	inverse_chem_val = 0.1
 	inverse_chem = null
 	creation_purity = CONSUMABLE_STANDARD_PURITY
-	/// How much nutrition this reagent supplies. Look at get_nutriment_factor() for an understanding.
+	/// How much nutrition this reagent supplies.. Look at get_nutriment_factor() for an understanding.
 	var/nutriment_factor = 1
 	/// affects mood, typically higher for mixed drinks with more complex recipes'
 	var/quality = 0
@@ -93,7 +93,7 @@
 		supplied_data = data
 
 	// if data isn't an associative list, this has some WEIRD side effects
-	// TODO probably check for assoc list?
+	// To do probably check for assoc list?
 
 	data = counterlist_normalise(supplied_data)
 
@@ -216,7 +216,7 @@
 /datum/reagent/consumable/nutriment/fat/oil
 	name = "Vegetable Oil"
 	description = "A variety of cooking oil derived from plant fats. Used in food preparation and frying."
-	color = "#EADD6B" //RGB: 234, 221, 107 (based off of canola oil)
+	color = "#EADD6B" // RGB: 234, 221, 107 good off of canola oil)
 	taste_mult = 0.8
 	taste_description = "oil"
 	carry_food_tastes = FALSE
@@ -402,7 +402,7 @@
 	description = "A special oil that noticeably chills the body. Extracted from chilly peppers and slimes."
 	color = "#8BA6E9" // rgb: 139, 166, 233
 	taste_description = "mint"
-	ph = 13 //HMM! I wonder
+	ph = 13 // HMM!. I wonder
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	///40 joules per unit.
@@ -435,10 +435,10 @@
 		return
 	if(isopenturf(exposed_turf))
 		var/turf/open/exposed_open_turf = exposed_turf
-		exposed_open_turf.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=100, wet_time_to_add=reac_volume SECONDS) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
+		exposed_open_turf.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=100, wet_time_to_add=reac_volume SECONDS) // Is less effective in high pressure/high heat capacity environments.. More effective in low pressure.
 		var/temperature = exposed_open_turf.air.temperature
 		var/heat_capacity = exposed_open_turf.air.heat_capacity()
-		exposed_open_turf.air.temperature = max(exposed_open_turf.air.temperature - ((temperature - TCMB) * (heat_capacity * reac_volume * specific_heat) / (heat_capacity + reac_volume * specific_heat)) / heat_capacity, TCMB) // Exchanges environment temperature with reagent. Reagent is at 2.7K with a heat capacity of 40J per unit.
+		exposed_open_turf.air.temperature = max(exposed_open_turf.air.temperature - ((temperature - TCMB) * (heat_capacity * reac_volume * specific_heat) / (heat_capacity + reac_volume * specific_heat)) / heat_capacity, TCMB) // Exchanges environment temperature with reagent.. Reagent is at 2.7K with a heat capacity of 40J per unit.
 	if(reac_volume < 5)
 		return
 	for(var/mob/living/basic/slime/exposed_slime in exposed_turf)
@@ -538,7 +538,7 @@
 	to_chat(carbies, span_notice("The salt bits seep in and stick to [LOWER_TEXT(src)], painfully irritating the skin but soaking up most of the blood."))
 
 /datum/wound/burn/flesh/on_salt(reac_volume)
-	// Slightly sanitizes and disinfects, but also increases infestation rate (some bacteria are aided by salt), and decreases flesh healing (can damage the skin from moisture absorption)
+	// Slightly sanitizes. Disinfects. Also increases infestation rate (some bacteria are aided by salt). Decreases flesh healing (can damage the skin from moisture absorption)
 	sanitization += VALUE_PER(0.4, 30) * reac_volume
 	infection -= max(VALUE_PER(0.3, 30) * reac_volume, 0)
 	infection_rate += VALUE_PER(0.12, 30) * reac_volume
@@ -548,7 +548,7 @@
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
 	description = "A powder ground from peppercorns. *AAAACHOOO*"
-	// no color (ie, black)
+	// no color that is black)
 	taste_description = "pepper"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
@@ -575,7 +575,7 @@
 
 /datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(isvampire(affected_mob)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
+	if(isvampire(affected_mob)) // incapacitating but not lethal.. Unfortunately, vampires cannot vomit.
 		if(SPT_PROB(min((current_cycle-1)/2, 12.5), seconds_per_tick))
 			if(HAS_TRAIT(affected_mob, TRAIT_ANOSMIA))
 				to_chat(affected_mob, span_danger("You feel that something is wrong, your strength is leaving you! You can barely think..."))
@@ -711,7 +711,7 @@
 	to_chat(carbies, span_notice("The flour seeps into [LOWER_TEXT(src)], painfully drying some of it up and absorbing a little blood."))
 	// When some nerd adds infection for wounds, make this increase the infection
 
-// Don't pour flour onto burn wounds, it increases infection risk! Very unwise. Backed up by REAL info from REAL professionals.
+// Don't pour flour onto burn wounds, it increases infection risk!. Very unwise.. Backed up by REAL info from REAL professionals.
 // https://www.reuters.com/article/uk-factcheck-flour-burn-idUSKCN26F2N3
 /datum/wound/burn/flesh/on_flour(reac_volume)
 	to_chat(victim, span_notice("The flour seeps into [LOWER_TEXT(src)], spiking you with intense pain! That probably wasn't a good idea..."))
@@ -853,7 +853,7 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	default_container = /obj/item/reagent_containers/condiment/honey
 
-// On the other hand, honey has been known to carry pollen with it rarely. Can be used to take in a lot of plant qualities all at once, or harm the plant.
+// On the other hand, honey has been known to carry pollen with it rarely.. Can be used to take in a lot of plant qualities all at once, or harm the plant.
 /datum/reagent/consumable/honey/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	if(!isnull(mytray.myseed) && prob(20))
 		mytray.pollinate(range = 1)

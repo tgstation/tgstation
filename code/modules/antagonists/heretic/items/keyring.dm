@@ -104,7 +104,7 @@
 	var/obj/effect/lock_portal/portal_two
 	///The first door we are linking in the pair, so we can create a portal pair
 	var/datum/weakref/link
-	/// are our created portals inverted? (heretics get sent to a random airlock, crew get sent to the target)
+	/// are our created portals inverted?. (heretics get sent to a random airlock, crew get sent to the target)
 	var/inverted = FALSE
 
 /obj/item/card/id/advanced/heretic/examine(mob/user)

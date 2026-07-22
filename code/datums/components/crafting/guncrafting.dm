@@ -1,4 +1,4 @@
-//Gun crafting parts til they can be moved elsewhere
+// Gun crafting parts until they can be moved elsewhere
 
 // PARTS //
 /obj/item/weaponcrafting

@@ -3,7 +3,7 @@
 
 /datum/round_event_control/wizard/deprevolt //stationwide!
 	name = "Departmental Uprising"
-	weight = 0 //An order that requires order in a round of chaos was maybe not the best idea. Requiescat in pace departmental uprising August 2014 - March 2015 //hello motherfucker i fixed your shit in 2021
+	weight = 0 // An order that needs order in a round of chaos was maybe not the best idea.. Requiescat in pace departmental uprising August 2014 - March 2015 //hello motherfucker i fixed your shit in 2021
 	typepath = /datum/round_event/wizard/deprevolt
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
@@ -23,7 +23,7 @@
 	var/dangerous_nation = TRUE
 
 /datum/round_event/wizard/deprevolt/start()
-	// no setup needed, this proc handles empty values. God i'm good (i wrote all of this)
+	// no setup needed, this proc handles empty values.. God i'm good (i wrote all of this)
 	create_separatist_nation(picked_department, announce, dangerous_nation)
 
 ///which department is revolting?

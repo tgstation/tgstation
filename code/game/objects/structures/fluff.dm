@@ -116,7 +116,7 @@
 	name = "bus"
 	icon_state = "frontwalltop"
 	density = FALSE
-	layer = ABOVE_ALL_MOB_LAYER //except for the stairs tile, which should be set to OBJ_LAYER aka 3.
+	layer = ABOVE_ALL_MOB_LAYER // except for the stairs tile, which should be set to OBJ_LAYER also known as 3.
 	plane = ABOVE_GAME_PLANE
 
 

@@ -60,7 +60,7 @@
 	reagents.flags &= ~NO_REACT
 	reagents.handle_reactions()
 
-	chamber.emptying = TRUE //If we move this up, it'll instantly get turned off since any reaction always sets the reagent_total to zero. Other option is make the reaction update
+	chamber.emptying = TRUE // If we move this up, it'll instantly get turned off since any reaction always sets the reagent_total to zero.. Other option is make the reaction update
 	//everything for every chemical removed, wich isn't a good option either.
 	chamber.on_reagent_change(reagents) //We need to check it now, because some reactions leave nothing left.
 	if(chamber.emptying) //if we are still emptying then keep checking for reagents until we are emptied out
@@ -87,14 +87,14 @@
 /datum/component/plumbing/buffered/send_request(dir)
 	process_request(reagent = request, dir = dir)
 
-///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs separate, like into a special internal acid container
+/// Special connect that we currently use for reaction chambers.. Being used so we can keep certain inputs separate, like into a special internal acid container
 /datum/component/plumbing/buffered/acidic_input
 	demand_connects = WEST
 	demand_color = COLOR_YELLOW
 	ducting_layer = SECOND_DUCT_LAYER
 	request = /datum/reagent/reaction_agent/acidic_buffer
 
-///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs separate, like into a special internal base container
+/// Special connect that we currently use for reaction chambers.. Being used so we can keep certain inputs separate, like into a special internal base container
 /datum/component/plumbing/buffered/alkaline_input
 	demand_connects = EAST
 	demand_color = COLOR_VIBRANT_LIME

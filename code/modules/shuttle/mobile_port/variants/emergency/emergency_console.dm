@@ -127,7 +127,7 @@
 
 		if("abort")
 			if(length(authorized))
-				// Abort. The action for when heads are fighting over whether to launch early.
+				// Abort.. The action for when heads are fighting over whether to launch early.
 				authorized.Cut()
 				. = TRUE
 

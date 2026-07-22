@@ -539,7 +539,7 @@ effective or pretty fucking useless.
 
 /obj/item/camera/flash/Exited(atom/movable/gone, direction)
 	. = ..()
-	// i guess this is a normal camera now. shouldn't happen, though
+	// i guess this is a normal camera now.. shouldn't happen, though
 	if(gone == internal_flash)
 		internal_flash = null
 

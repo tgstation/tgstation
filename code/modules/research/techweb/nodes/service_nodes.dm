@@ -213,7 +213,7 @@
 		"fish_genegun",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
-	// only available if you've done the first fishing experiment (thus unlocking fishing tech), but not a strict requirement to get the tech
+	// only available if you've done the first fishing experiment so unlocking fishing tech), but not a strict need to get the tech
 	discount_experiments = list(/datum/experiment/scanning/fish/second = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/fishing_anomalous

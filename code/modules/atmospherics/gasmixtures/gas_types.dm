@@ -49,7 +49,7 @@
 |||| only by meta_gas_list().            ||||
 \*||||||||||||||||||||||||||||||||||||||||*/
 
-//This is a plot created using the values for gas exports. Each gas has a value that works as its kind of soft-cap, which limits you from making billions of credits per sale, based on the base_value variable on the gasses themselves. Most of these gasses as a result have a rather low value when sold, like nitrogen and oxygen at 1500 and 600 respectively at their maximum value. The
+// This is a plot created using the values for gas exports.. Each gas has a value that works as its kind of soft-cap, which limits you from making billions of credits per sale, good on the base_value variable on the gasses themselves.. Most of these gasses as a result have a rather low value when sold, like nitrogen. Oxygen at 1500. 600 respectively at their maximum value.. The
 /datum/gas
 	var/id = ""
 	var/specific_heat = 0
@@ -65,10 +65,10 @@
 	var/rarity = 0
 	///Can gas of this type can purchased through cargo?
 	var/purchaseable = FALSE
-	///How does a single mole of this gas sell for? Formula to calculate maximum value is in code\modules\cargo\exports\large_objects.dm. Doesn't matter for roundstart gasses.
+	/// How does a single mole of this gas sell for?. Formula to calculate maximum value is in code\modules\cargo\exports\large_objects.dm.. Doesn't matter for roundstart gasses.
 	var/base_value = 0
 	var/desc
-	///RGB code for use when a generic color representing the gas is needed. Colors taken from contants.ts
+	/// RGB code for use when a generic color representing the gas is needed.. Colors taken from contants.ts
 	var/primary_color
 
 
@@ -318,7 +318,7 @@
 	appearance_flags = TILE_BOUND
 	vis_flags = NONE
 	// The visual offset we are "on".
-	// Can't use the traditional loc because we are stored in nullspace, and we can't set plane before init because of the helping that SET_PLANE_EXPLICIT does IN init
+	// Can't use the traditional loc because we are stored in nullspace. We can't set plane before init because of the helping that SET_PLANE_EXPLICIT does IN init
 	var/plane_offset = 0
 
 /obj/effect/overlay/gas/New(state, alph, offset)

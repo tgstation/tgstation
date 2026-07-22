@@ -55,7 +55,7 @@
 
 	// There may be other signals that want to handle mob's death
 	// and the process of activating destroys the body, so let the other
-	// signal handlers at least finish. Also, the "delayed explosion"
+	// signal handlers at least finish.. Also, the "delayed explosion"
 	// uses sleeps, which is bad for signal handlers to do.
 	INVOKE_ASYNC(src, PROC_REF(activate), "death")
 

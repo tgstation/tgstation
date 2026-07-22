@@ -1,18 +1,18 @@
 /datum/job
 	abstract_type = /datum/job
-	/// The name of the job , used for preferences, bans and more. Make sure you know what you're doing before changing this.
+	/// The name of the job , used for preferences, bans and more.. Make sure you know what you're doing before changing this.
 	var/title = "NOPE"
 
 	/// The description of the job, used for preferences menu.
-	/// Keep it short and useful. Avoid in-jokes, these are for new players.
+	/// Keep it short and useful.. Avoid in-jokes, these are for new players.
 	var/description
 
-	/// Innate skill levels unlocked at roundstart. Based on config.jobs_have_minimal_access config setting, for example with a skeleton crew. Format is list(/datum/skill/foo = SKILL_EXP_NOVICE) with exp as an integer or as per code/_DEFINES/skills.dm
+	/// Innate skill levels unlocked at roundstart.. Good on config.jobs_have_minimal_access config setting, for example with a skeleton crew.. Format is list(/datum/skill/foo = SKILL_EXP_NOVICE) with exp as an integer or as per code/_DEFINES/skills.dm
 	var/list/skills
-	/// Innate skill levels unlocked at roundstart. Based on config.jobs_have_minimal_access config setting, for example with a full crew. Format is list(/datum/skill/foo = SKILL_EXP_NOVICE) with exp as an integer or as per code/_DEFINES/skills.dm
+	/// Innate skill levels unlocked at roundstart.. Good on config.jobs_have_minimal_access config setting, for example with a full crew.. Format is list(/datum/skill/foo = SKILL_EXP_NOVICE) with exp as an integer or as per code/_DEFINES/skills.dm
 	var/list/minimal_skills
 
-	/// Tells the given channels that the given mob is the new department head. See communications.dm for valid channels.
+	/// Tells the given channels that the given mob is the new department head.. See communications.dm for valid channels.
 	var/head_announce
 
 	/// Bitflags for the job
@@ -39,7 +39,7 @@
 	/// If this is set to 1, a text is printed to the player when jobs are assigned, telling him that he should let admins know that he has to disconnect.
 	var/req_admin_notify
 
-	/// If you have the use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
+	/// If you have the use_age_restriction_for_jobs config option enabled. The database set up, this option will add a need f. Players to be at least minimal_player_age days old.. (meaning they first signed in at least that many days before.)
 	var/minimal_player_age = 0
 
 	var/datum/outfit/outfit = null
@@ -47,16 +47,16 @@
 	/// The job's outfit that will be assigned for plasmamen.
 	var/datum/outfit/plasmaman/plasmaman_outfit = null
 
-	/// Minutes of experience-time required to play in this job. The type is determined by [exp_required_type] and [exp_required_type_department] depending on configs.
+	/// Minutes of experience-time needed to play in this job.. The type is determined by [exp_required_type] and [exp_required_type_department] depending on configs.
 	var/exp_requirements = 0
-	/// Experience required to play this job, if the config is enabled, and `exp_required_type_department` is not enabled with the proper config.
+	/// Experience needed to play this job, if the config is enabled, and `exp_required_type_department` is not enabled with the proper config.
 	var/exp_required_type = ""
-	/// Department experience required to play this job, if the config is enabled.
+	/// Department experience needed to play this job, if the config is enabled.
 	var/exp_required_type_department = ""
 	/// Experience type granted by playing in this job.
 	var/exp_granted_type = ""
 
-	///How much money does this crew member make in a single paycheck? Note that passive paychecks are capped to PAYCHECK_CREW in regular gameplay after roundstart.
+	/// How much money does this crew member make in a single paycheck?. Note that passive paychecks are capped to PAYCHECK_CREW in regular gameplay after roundstart.
 	var/paycheck = PAYCHECK_CREW
 	///Which department does this paycheck pay from?
 	var/paycheck_department = ACCOUNT_CIV
@@ -69,7 +69,7 @@
 
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
-	///What types of bounty tasks can this job receive past the default? TODO, move to id trims.
+	/// What types of bounty tasks can this job receive past the default?. To do move to id trims.
 	var/bounty_types = CIV_JOB_BASIC
 
 	/// Goodies that can be received via the mail system.
@@ -80,14 +80,14 @@
 	/// If this job's mail goodies compete with generic goodies.
 	var/exclusive_mail_goodies = FALSE
 
-	/// Bitfield of departments this job belongs to. These get setup when adding the job into the department, on job datum creation.
+	/// Bitfield of departments this job belongs to.. These get setup when adding the job into the department, on job datum creation.
 	var/departments_bitflags = NONE
 
 	/// If specified, this department will be used for the preferences menu.
 	var/datum/job_department/department_for_prefs = null
 
 	/// Lazy list with the departments this job belongs to.
-	/// Required to be set for playable jobs.
+	/// Needed to be set for playable jobs.
 	/// The first department will be used in the preferences menu,
 	/// unless department_for_prefs is set.
 	var/list/departments_list = null
@@ -98,7 +98,7 @@
 	///Is this job affected by weird spawns like the ones from station traits
 	var/random_spawns_possible = TRUE
 
-	/// List of family heirlooms this job can get with the family heirloom quirk. List of types.
+	/// List of family heirlooms this job can get with the family heirloom quirk.. List of types.
 	var/list/family_heirlooms
 
 	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN | JOB_CANNOT_OPEN_SLOTS | JOB_HEAD_OF_STAFF)
@@ -109,7 +109,7 @@
 	/// Multiplier for the silence command of the voice of god.
 	var/voice_of_god_silence_power = 1
 
-	/// String. If set to a non-empty one, it will be the key for the policy text value to show this role on spawn.
+	/// String.. If set to a non-empty one, it will be the key for the policy text value to show this role on spawn.
 	var/policy_index = ""
 
 	/// RPG job names, for the memes
@@ -120,7 +120,7 @@
 
 	var/human_authority = JOB_AUTHORITY_NON_HUMANS_ALLOWED
 
-	/// String key to track any variables we want to tie to this job in config, so we can avoid using the job title. We CAPITALIZE it in order to ensure it's unique and resistant to trivial formatting changes.
+	/// String key to track any variables we want to tie to this job in config, so we can avoid using the job title.. We CAPITALIZE it in order to ensure it's unique and resistant to trivial formatting changes.
 	/// You'll probably break someone's config if you change this, so it's best to not to.
 	var/config_tag = ""
 
@@ -145,7 +145,7 @@
 	if(isnum(new_total_positions))
 		total_positions = new_total_positions
 
-/// Executes after the mob has been spawned in the map. Client might not be yet in the mob, and is thus a separate variable.
+/// Executes after the mob has been spawned in the map.. Client might not be yet in the mob, and is so a separate variable.
 /datum/job/proc/after_spawn(mob/living/spawned, client/player_client)
 	SHOULD_CALL_PARENT(TRUE)
 	if(length(mind_traits))
@@ -230,12 +230,12 @@
 	dna.species.pre_equip_species_outfit(equipping, src, visual_only)
 	equip_outfit_and_loadout(equipping.get_outfit(consistent), player_client?.prefs, visual_only)
 
-/datum/job/proc/announce_head(mob/living/carbon/human/human, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
+/datum/job/proc/announce_head(mob/living/carbon/human/human, channels) // tells the given channel that the given mob is the new department head.. See communications.dm for valid channels.
 	if(human)
 		//timer because these should come after the captain announcement
 		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(aas_config_announce), /datum/aas_config_entry/newhead, list("PERSON" = human.real_name, "RANK" = human.job), null, channels, null, TRUE), 1))
 
-//If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
+// If the configuration option is set to need players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/player)
 	if(!player || !available_in_days(player))
 		return TRUE //Available in 0 days = available right now = player is old enough to play.
@@ -258,10 +258,10 @@
 	if(player.prefs?.db_flags & DB_FLAG_EXEMPT)
 		return 0
 
-	// As of the time of writing this comment, verifying database connection isn't "solved". Sometimes rust-g will report a
+	// As of the time of writing this comment, verifying database connection isn't "solved".. Sometimes rust-g will report a
 	// connection mid-shift despite the database dying.
-	// If the client age is -1, it means that no code path has overwritten it. Even first time connections get it set to 0,
-	// so it's a pretty good indication of a database issue. We'll again just assume they're old enough for all jobs.
+	// If the client age is -1, it means that no code path has overwritten it.. Even first time connections get it set to 0,
+	// so it's a pretty good indication of a database issue.. We'll again just assume they're old enough for all jobs.
 	if(player.player_age == -1)
 		return 0
 
@@ -341,7 +341,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	box = /obj/item/storage/box/survival
 
-	preload = TRUE // These are used by the prefs ui, and also just kinda could use the extra help at roundstart
+	preload = TRUE // These the uses prefs ui, and also just kind of could use the extra help at roundstart
 
 	var/backpack = /obj/item/storage/backpack
 	var/satchel = /obj/item/storage/backpack/satchel
@@ -516,7 +516,7 @@
 /datum/job/proc/get_spawn_mob(client/player_client, atom/spawn_point)
 	var/mob/living/spawn_instance
 	if(ispath(spawn_type, /mob/living/silicon/ai))
-		// This is unfortunately necessary because of snowflake AI init code. To be refactored.
+		// This is unfortunately necessary because of snowflake AI init code.. To be refactored.
 		spawn_instance = new spawn_type(get_turf(spawn_point), null, player_client.mob, TRUE)
 	else
 		spawn_instance = spawn_point.JoinPlayerHere(spawn_type, TRUE)
@@ -527,7 +527,7 @@
 	return spawn_instance
 
 
-/// Applies the preference options to the spawning mob, taking the job into account. Assumes the client has the proper mind.
+/// Applies the preference options to the spawning mob, taking the job into account.. Assumes the client has the proper mind.
 /mob/living/proc/apply_prefs_job(client/player_client, datum/job/job)
 
 

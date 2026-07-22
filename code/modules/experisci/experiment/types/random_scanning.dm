@@ -1,11 +1,11 @@
 /datum/experiment/scanning/random
 	name = "Base random scanning experiment"
 	description = "This experiment's contents will be randomized. Good luck!"
-	///list of types which that can be included in the experiment. Randomly picked from on New
+	/// list of types which that can be included in the experiment.. Randomly picked from on New
 	var/list/possible_types = list()
 	/// The total desired number of atoms to have scanned
 	var/total_requirement = 0
-	/// Max amount of a requirement per type
+	/// Max amount of a need per type
 	var/max_requirement_per_type = 100
 
 /datum/experiment/scanning/random/New(datum/techweb/techweb)

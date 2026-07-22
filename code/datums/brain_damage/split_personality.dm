@@ -41,7 +41,7 @@
 	var/datum/action/personality_commune/owner_spell = new(src)
 	owner_spell.Grant(owner_backseat)
 
-/// Attempts to get a ghost to play the personality
+/// Tries to get a ghost to play the personality
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = "Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice(poll_role)]?",

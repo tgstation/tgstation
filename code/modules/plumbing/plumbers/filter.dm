@@ -1,4 +1,4 @@
-///chemical plumbing filter. If it's not filtered by left and right, it goes straight.
+/// chemical plumbing filter.. If it's not filtered by left and right, it goes straight.
 /obj/machinery/plumbing/filter
 	name = "chemical filter"
 	desc = "A chemical filter for filtering chemicals. The left and right outputs appear to be from the perspective of the input port."
@@ -6,9 +6,9 @@
 	density = FALSE
 	reagents = /datum/reagents/plumbing/filter
 
-	///whitelist of chems id's that go to the left side. Empty to disable port
+	/// whitelist of chems id's that go to the left side.. Empty to disable port
 	var/list/left = list()
-	///whitelist of chem id's that go to the right side. Empty to disable port
+	/// whitelist of chem id's that go to the right side.. Empty to disable port
 	var/list/right = list()
 
 /obj/machinery/plumbing/filter/Initialize(mapload, layer)

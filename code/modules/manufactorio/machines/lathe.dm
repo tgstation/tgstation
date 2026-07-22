@@ -110,7 +110,7 @@
 	if(surplus() < power_cost)
 		finalize_build()
 		return
-	//check for materials required. For custom material items decode their required materials
+	// check for materials needed For custom material items decode their needed materials
 	var/list/materials_needed = list()
 	var/list/slots_chosen = null
 	for(var/material, amount_needed in design.materials)
@@ -122,7 +122,7 @@
 			slot = SSmaterials.material_slots[material]
 			requirement = slot.requirement_type
 
-		if(requirement) // Material requirement
+		if(requirement) // Material need
 			for(var/datum/material/valid_candidate as anything in SSmaterials.get_materials_by_req(material))
 				if(materials.get_material_amount(valid_candidate) >= amount_needed)
 					material = valid_candidate

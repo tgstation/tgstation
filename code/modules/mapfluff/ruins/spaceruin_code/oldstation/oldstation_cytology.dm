@@ -16,11 +16,11 @@
 	name = "cultivation broth"
 	amount_per_transfer_from_this = 50
 	list_reagents = list(
-		// Required for CELL_LINE_TABLE_COW
+		// Needed for CELL_LINE_TABLE_COW
 		/datum/reagent/consumable/nutriment/protein = 10,
 		/datum/reagent/consumable/nutriment = 5,
 		/datum/reagent/cellulose = 5,
-		// Required for CELL_LINE_TABLE_GRAPE
+		// Needed for CELL_LINE_TABLE_GRAPE
 		/datum/reagent/toxin/slimejelly = 5,
 		/datum/reagent/yuck = 5,
 		/datum/reagent/consumable/vitfro = 5,

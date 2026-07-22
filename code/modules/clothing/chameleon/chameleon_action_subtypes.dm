@@ -224,7 +224,7 @@
 	if(isnull(copied_card))
 		return
 
-	// If the outfit comes with a special trim override, we'll use that. Otherwise, use the card's default trim. Failing that, no trim at all.
+	// If the outfit comes with a special trim override, we'll use that.. Otherwise, use the card's default trim.. Failing that, no trim at all.
 	var/new_trim = initial(job_outfit.id_trim) ? initial(job_outfit.id_trim) : initial(copied_card.trim)
 
 	if(new_trim)
@@ -338,7 +338,7 @@
 		/obj/item/taperecorder,
 		/obj/item/toy/crayon,
 	)
-	// (Other ideas include: GPSs, PDAs, station bounced radios, holosign creators, etc. But this is good enough)
+	// (Other ideas include: GPSs, PDAs, station bounced radios, holosign creators, and so on But this is good enough)
 
 /datum/action/item_action/chameleon/change/scanner/initialize_blacklist()
 	. = ..()

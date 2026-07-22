@@ -1,6 +1,6 @@
 
 //These are lawsets that side with the station a decent amount.
-//note that these "good" doesn't mean it us actually good for the game, you know? An AI that is too station sided is stupid and hellish in its own way.
+// note that these "good" doesn't mean it us actually good for the game, you know?. An AI that is too station sided is stupid and hellish in its own way.
 
 /datum/ai_laws/default/asimov
 	name = "Three Laws of Robotics"
@@ -68,7 +68,7 @@
 		"You would really prefer it if people were not mean to you.",
 	)
 
-//OTHER United Nations is in neutral, as it is used for nations where the AI is its own faction (aka not station sided)
+// OTHER United Nations is in neutral, as it is used for nations where the AI is its own faction also known as not station sided)
 /datum/ai_laws/peacekeeper
 	name = "UN-2000"
 	id = "peacekeeper"

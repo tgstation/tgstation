@@ -35,7 +35,7 @@
 	location = null
 	return ..()
 
-/// Instruct the effect system to start following an atom. Can be chained into .start()
+/// Instruct the effect system to start following an atom.. Can be chained into .start()
 /datum/effect_system/proc/attach(atom/new_holder)
 	RETURN_TYPE(/datum/effect_system)
 	holder = new_holder
@@ -83,7 +83,7 @@
 			return
 		generate_effect()
 
-/// Returns how many steps to attempt to move a generated effect
+/// Returns how many steps to try to move a generated effect
 /datum/effect_system/basic/proc/get_step_count()
 	return rand(1, 3)
 

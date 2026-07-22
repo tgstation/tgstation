@@ -16,10 +16,10 @@
 	isSecure - 1 if there some form of shielding in front of the airlock wires.
 */
 
-/// Overlay cache.  Why isn't this just in /obj/machinery/door/airlock?  Because its used just a
-/// tiny bit in door_assembly.dm  Refactored so you don't have to make a null copy of airlock
+/// Overlay cache.. Why isn't this just in /obj/machinery/door/airlock?. Because its used just a
+/// tiny bit in door_assembly.dm Refactored so you don't have to make a null copy of airlock
 /// to get to the damn thing
-/// Someone, for the love of god, profile this.  Is there a reason to cache mutable_appearance
+/// Someone, for the love of god, profile this.. Is there a reason to cache mutable_appearance
 /// if so, why are we JUST doing the airlocks when we can put this in mutable_appearance.dm for
 /// everything
 /proc/get_airlock_overlay(icon_state, icon_file, atom/offset_spokesman, em_block)
@@ -88,29 +88,29 @@
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_OPEN
 	interaction_flags_click = ALLOW_SILICON_REACH
-	blocks_emissive = EMISSIVE_BLOCK_NONE // Custom emissive blocker. We don't want the normal behavior.
+	blocks_emissive = EMISSIVE_BLOCK_NONE // Custom emissive blocker.. We don't want the normal behavior.
 
 	///The type of door frame to drop during deconstruction
 	var/assemblytype = /obj/structure/door_assembly
 	/// How much are wires secured
 	var/security_level = 0
-	/// If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
+	/// If 1, AI control is disabled until the AI hacks back in and disables the lock.. If 2, the AI has bypassed the lock.. If -1, the control is enabled. The AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/aiControlDisabled = AI_WIRE_NORMAL
 	/// If true, this door can't be hacked by the AI
 	var/hackProof = FALSE
 	/// Timer id, active when we are actively waiting for the main power to be restored
 	var/main_power_timer = 0
-	/// Paired with main_power_timer. Records its remaining time when something happens to interrupt power regen
+	/// Paired with main_power_timer.. Records its remaining time when something happens to interrupt power regen
 	var/main_power_time
 	/// Timer id, active when we are actively waiting for the backup power to be restored
 	var/backup_power_timer = 0
-	/// Paired with backup_power_timer. Records its remaining time when something happens to interrupt power regen
+	/// Paired with backup_power_timer.. Records its remaining time when something happens to interrupt power regen
 	var/backup_power_time
 	/// Lights and sounds enabled by default
 	var/feedback = TRUE
 	var/aiDisabledIdScanner = FALSE
 	var/aiHacking = FALSE
-	/// Cyclelinking for airlocks that aren't on the same x or y coord as the target.
+	/// Cyclelinking for airlocks that aren't on the same x or why coord as the target.
 	var/closeOtherId
 	var/obj/machinery/door/airlock/closeOther
 	var/list/obj/machinery/door/airlock/close_others = list()
@@ -121,7 +121,7 @@
 	/// The seal on the airlock
 	var/obj/item/seal
 	var/abandoned = FALSE
-	/// Controls if the door closes quickly or not. FALSE = the door autocloses in 1.5 seconds, TRUE = 8 seconds - see autoclose_in()
+	/// Controls if the door closes quickly or not.. FALSE = the door autocloses in 1.5 seconds, TRUE = 8 seconds - see autoclose_in()
 	var/normalspeed = TRUE
 	var/cutAiWire = FALSE
 	var/autoname = FALSE
@@ -152,7 +152,7 @@
 	var/prying_so_hard = FALSE
 	/// Logging for door electrification.
 	var/shockedby
-	/// How many seconds remain until the door is no longer electrified. -1/MACHINE_ELECTRIFIED_PERMANENT = permanently electrified until someone fixes it.
+	/// How many seconds remain until the door is no longer electrified.. -1/MACHINE_ELECTRIFIED_PERMANENT = permanently electrified until someone fixes it.
 	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
 
 	flags_1 = HTML_USE_INITAL_ICON_1
@@ -161,7 +161,7 @@
 /obj/machinery/door/airlock/get_save_vars()
 	. = ..()
 	. -= NAMEOF(src, icon_state) // airlocks ignore icon_state and instead use get_airlock_overlay()
-	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
+	// To do save the wire data but need to include states for cute wires, signalers attached to wires, and so on
 	return .
 
 /obj/machinery/door/airlock/Initialize(mapload)
@@ -435,7 +435,7 @@
 		deltimer(backup_power_timer)
 		backup_power_timer = null
 
-// Alright, we're gonna do a meme here
+// Alright, we're going to do a meme here
 /obj/machinery/door/airlock/set_wires(datum/wires/new_wires)
 	if(wires)
 		UnregisterSignal(wires, list(
@@ -820,7 +820,7 @@
 
 	ui_interact(user)
 
-///Performs basic checks to make sure we are still able to hack an airlock. If control is restored early through outside means, opens the airlock's control interface.
+/// Performs basic checks to make sure we are still able to temporary solution an airlock.. If control is restored early through outside means, opens the airlock's control interface.
 /obj/machinery/door/airlock/proc/check_hacking(mob/user, success_message)
 	if(QDELETED(src))
 		to_chat(user, span_warning("Connection lost! Unable to locate airlock on network."))
@@ -1384,7 +1384,7 @@
 		addtimer(CALLBACK(src, PROC_REF(close)), FORCING_DOOR_CHECKS)
 	return TRUE
 
-/// Additional checks depending on what we want to happen to door (should we try and open it normally, or do we want this open at all costs?)
+/// Additional checks depending on what we want to happen to do. (should we try. Open it normally. Do we want this open at all costs?)
 /obj/machinery/door/airlock/try_to_force_door_open(force_type = DEFAULT_DOOR_CHECKS)
 	switch(force_type)
 		if(DEFAULT_DOOR_CHECKS) // Regular behavior.
@@ -1497,7 +1497,7 @@
 	if(!in_range(src, user) || !painter.can_use(user)) // user should be adjacent to the airlock, and the painter should have a toner cartridge that isn't empty
 		return
 
-	// reads from the airlock painter's `available paintjob` list. lets the player choose a paint option, or cancel painting
+	// reads from the airlock painter's `available paintjob` list.. lets the player choose a paint option, or cancel painting
 	var/current_paintjob = tgui_input_list(user, "Paintjob for this airlock", "Customize", sort_list(painter.available_paint_jobs))
 	if(isnull(current_paintjob) || !in_range(src, user) || !painter.can_use(user)) // if the user clicked cancel on the popup, or moved away, or ran out of ink, return
 		return
@@ -1538,7 +1538,7 @@
 		return TRUE
 	return FALSE
 
-/// Timer proc, called ~0.6 seconds after [emag_act]. Finishes the emag sequence by breaking the airlock, permanently locking it, and disabling power.
+/// Timer proc, called ~0.6 seconds after [emag_act].. Finishes the emag sequence by breaking the airlock, permanently locking it, and disabling power.
 /obj/machinery/door/airlock/proc/finish_emag_act()
 	if(QDELETED(src))
 		return FALSE
@@ -1575,7 +1575,7 @@
 		playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
 
 	if(do_after(user, time_to_open, src))
-		if(density && !open(BYPASS_DOOR_CHECKS)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
+		if(density && !open(BYPASS_DOOR_CHECKS)) // The airlock is still closed, but something prevented it opening.. (Another player noticed and bolted/welded the airlock in time!)
 			to_chat(user, span_warning("Despite your efforts, [src] managed to resist your attempts to open it!"))
 			user.log_message("Tried and failed to pry open [src], located at [loc_name(src)], due to the airlock getting sealed during the do_after.", LOG_GAME)
 			return
@@ -2303,7 +2303,7 @@
 	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
 
-	/// Whether or not the airlock can be opened without access from a certain direction while powered, or with bare hands from any direction while unpowered OR pressurized.
+	/// Whether. Not the airlock can be opened without access from a certain direction while powered. With bare hands from any direction while unpowered OR pressurized.
 	var/space_dir = null
 
 /obj/machinery/door/airlock/external/Initialize(mapload, ...)

@@ -90,7 +90,7 @@
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	inhand_icon_state = "jackhammer"
-	toolspeed = 0.1 //the epitome of powertools. extremely fast mining
+	toolspeed = 0.1 // the epitome of powertools.. extremely fast mining
 	usesound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts."

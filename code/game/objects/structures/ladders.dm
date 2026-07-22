@@ -1,4 +1,4 @@
-// Basic ladder. By default links to the z-level above/below.
+// Basic ladder.. By default links to the z-level above/below.
 /obj/structure/ladder
 	name = "ladder"
 	desc = "A sturdy metal ladder."
@@ -298,7 +298,7 @@
 	if(ladder.up && ladder.down)
 		ladder.show_options(user, is_ghost)
 
-/// The messages shown after the player has finished climbing. Players can see this happen from either src or the destination so we've 2 POVs here
+/// The messages shown after the player has finished climbing.. Players can see this happen from either src or the destination so we've 2 POVs here
 /obj/structure/ladder/proc/show_final_fluff_message(mob/user, obj/structure/ladder/destination, going_up)
 	var/up_down = going_up ? "up" : "down"
 
@@ -350,7 +350,7 @@
 	use(user, going_up = FALSE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-//Not be called when right clicking as a monkey. attack_hand_secondary() handles that.
+// Not be called when right clicking as a monkey.. attack_hand_secondary() handles that.
 /obj/structure/ladder/attack_paw(mob/user, list/modifiers)
 	use(user)
 	return TRUE
@@ -440,7 +440,7 @@
 	else //goes both ways
 		show_options(user, is_ghost = TRUE)
 
-// Indestructible away mission ladders which link based on a mapped ID and height value rather than X/Y/Z.
+// Indestructible away mission ladders which link good on a mapped ID and height value rather than X/Y/Z.
 /obj/structure/ladder/unbreakable
 	name = "sturdy ladder"
 	desc = "An extremely sturdy metal ladder."
@@ -449,7 +449,7 @@
 	var/height = 0  // higher numbers are considered physically higher
 
 /obj/structure/ladder/unbreakable/LateInitialize()
-	// Override the parent to find ladders based on being height-linked
+	// Override the parent to find ladders good on being height-linked
 	if (!id || (up && down))
 		update_appearance()
 		return

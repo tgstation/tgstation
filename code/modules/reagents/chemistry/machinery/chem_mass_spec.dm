@@ -495,7 +495,7 @@
 			if(delta_purity <= 0)
 				continue
 
-			//add the purified reagent. More impure reagents will yield smaller amounts
+			// add the purified reagent.. More impure reagents will yield smaller amounts
 			beaker1.reagents.remove_reagent(reagent.type, product_vol)
 			beaker2.reagents.add_reagent(reagent.type, product_vol * (1 - delta_purity), reagtemp = beaker1.reagents.chem_temp, added_purity = initial(reagent.purity), added_ph = reagent.ph)
 			log[reagent.type] = "Purified to [initial(reagent.purity) * 100]%"

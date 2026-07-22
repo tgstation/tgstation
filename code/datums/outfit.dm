@@ -92,7 +92,7 @@
 	/// Any clothing accessory item
 	var/accessory = null
 
-	/// Internals box. Will be inserted at the start of backpack_contents
+	/// Internals box.. Will be inserted at the start of backpack_contents
 	var/box
 
 	/**
@@ -124,7 +124,7 @@
 	///Should we preload some of this job's items?
 	var/preload = FALSE
 
-	/// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
+	/// Any undershirt.. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
 	var/datum/sprite_accessory/clothing/undershirt = null
 	var/datum/sprite_accessory/clothing/underwear = null
 	var/datum/sprite_accessory/clothing/socks = null
@@ -141,7 +141,7 @@
  * If visuals_only is true, you can omit any work that doesn't visually appear on the character sprite
  */
 /datum/outfit/proc/pre_equip(mob/living/carbon/human/user, visuals_only = FALSE)
-	//to be overridden for customization depending on client prefs,species etc
+	// to be overridden for customization depending on client prefs,species and so on
 	return
 
 /**
@@ -156,7 +156,7 @@
  * If visuals_only is true, you can omit any work that doesn't visually appear on the character sprite
  */
 /datum/outfit/proc/post_equip(mob/living/carbon/human/user, visuals_only = FALSE)
-	//to be overridden for toggling internals, id binding, access etc
+	// to be overridden for toggling internals, id binding, access and so on
 	return
 
 #define EQUIP_OUTFIT_ITEM(item_path, slot_name) if(##item_path) { \
@@ -351,7 +351,7 @@
 		item.add_fingerprint(user, ignoregloves = TRUE)
 	return TRUE
 
-/// Return a list of all the types that are required to disguise as this outfit type
+/// Return a list of all the types that are needed to disguise as this outfit type
 /datum/outfit/proc/get_chameleon_disguise_info()
 	var/list/types = list(uniform, suit, back, belt, gloves, shoes, head, mask, neck, ears, glasses, id, l_pocket, r_pocket, suit_store, r_hand, l_hand)
 	types += chameleon_extras
@@ -360,7 +360,7 @@
 	return types
 
 /// Return a list of types to pregenerate for later equipping
-/// This should not be things that do unique stuff in Initialize() based off their location, since we'll be storing them for a while
+/// This should not be things that do unique stuff in Initialize() good off their location, since we'll be storing them for a while
 /datum/outfit/proc/get_types_to_preload()
 	var/list/preload = list()
 	preload += id
@@ -465,7 +465,7 @@
 /datum/outfit/proc/save_to_file(mob/admin)
 	var/stored_data = get_json_data()
 	var/json = json_encode(stored_data)
-	//Kinda annoying but as far as i can tell you need to make actual file.
+	// Kind of annoying but as far as i can tell you need to make actual file.
 	var/f = file("data/TempOutfitUpload")
 	fdel(f)
 	WRITE_FILE(f,json)

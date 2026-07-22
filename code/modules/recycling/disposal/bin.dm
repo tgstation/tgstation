@@ -30,7 +30,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	var/flushing = FALSE
 	/// Every 30 ticks it will look whether it is ready to flush
 	var/flush_every_ticks = 30
-	/// This var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
+	/// This var adds 1 once per tick.. When it reaches flush_every_ticks it resets and tries to flush.
 	var/flush_count = 0
 	/// The last time a sound was played
 	var/last_sound = 0
@@ -410,7 +410,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	log_combat(shover, target, "shoved", "into [src] (disposal bin)[weapon ? " with [weapon]" : ""]")
 	return COMSIG_LIVING_SHOVE_HANDLED
 
-///Called when a push broom is trying to sweep items onto the turf this object is standing on. Garbage will be moved inside.
+/// Called when a push broom is trying to sweep items onto the turf this object is standing on.. Garbage will be moved inside.
 /obj/machinery/disposal/proc/ready_for_trash(datum/source, obj/item/pushbroom/broom, mob/user, list/items_to_sweep)
 	SIGNAL_HANDLER
 	if(!items_to_sweep)

@@ -1,4 +1,4 @@
-/// How likely are we to do something weird to the clone? Persists between construct/deconstruct
+/// How likely are we to do something weird to the clone?. Persists between construct/deconstruct
 GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 
 /// Machine which experimentally clones people you scanned with the experimental cloner scanner

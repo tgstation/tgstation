@@ -102,15 +102,15 @@
 
 	//Cover, TRUE for locked
 	data["cover"] = "[cyborg.locked? "LOCKED":"UNLOCKED"]"
-	//Ability to move. FAULT if lockdown wire is cut, DISABLED if borg locked, ENABLED otherwise
+	// Ability to move.. FAULT if lockdown wire is cut, DISABLED if borg locked, ENABLED otherwise
 	data["locomotion"] = "[cyborg.wires.is_cut(WIRE_LOCKDOWN)?"FAULT":"[cyborg.lockcharge?"DISABLED":"ENABLED"]"]"
-	//Model wire. FAULT if cut, NOMINAL otherwise
+	// Model wire.. FAULT if cut, NOMINAL otherwise
 	data["wireModule"] = "[cyborg.wires.is_cut(WIRE_RESET_MODEL)?"FAULT":"NOMINAL"]"
-	//DEBUG -- Camera(net) wire. FAULT if cut (or no cameranet camera), DISABLED if pulse-disabled, NOMINAL otherwise
+	// DEBUG -- Camera(net) wire.. FAULT if cut (or no cameranet camera), DISABLED if pulse-disabled, NOMINAL otherwise
 	data["wireCamera"] = "[!cyborg.builtInCamera || cyborg.wires.is_cut(WIRE_CAMERA)?"FAULT":"[cyborg.builtInCamera.can_use()?"NOMINAL":"DISABLED"]"]"
-	//AI wire. FAULT if wire is cut, CONNECTED if connected to AI, READY otherwise
+	// AI wire.. FAULT if wire is cut, CONNECTED if connected to AI, READY otherwise
 	data["wireAI"] = "[cyborg.wires.is_cut(WIRE_AI)?"FAULT":"[cyborg.connected_ai?"CONNECTED":"READY"]"]"
-	//Law sync wire. FAULT if cut, NOMINAL otherwise
+	// Law sync wire.. FAULT if cut, NOMINAL otherwise
 	data["wireLaw"] = "[cyborg.wires.is_cut(WIRE_LAWSYNC)?"FAULT":"NOMINAL"]"
 
 	return data

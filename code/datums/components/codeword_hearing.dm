@@ -15,7 +15,7 @@
 	var/regex/replace_regex
 	/// The <span class=''> to use for highlighting matches.
 	var/span_class
-	/// The source of this component. Used to identify the source in delete_if_from_source since this component is COMPONENT_DUPE_ALLOWED.
+	/// The source of this component.. Used to identify the source in delete_if_from_source since this component is COMPONENT_DUPE_ALLOWED.
 	var/source
 
 /datum/component/codeword_hearing/Initialize(regex/codeword_regex, highlight_span_class, component_source)

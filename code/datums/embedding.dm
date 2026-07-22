@@ -121,7 +121,7 @@
 
 	return TRUE
 
-/// Attempts to embed an object
+/// Tries to embed an object
 /datum/embedding/proc/try_embed(obj/item/weapon, mob/living/carbon/victim, hit_zone, blocked, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
 
@@ -137,7 +137,7 @@
 	embed_into(victim, limb)
 	return MOVABLE_IMPACT_ZONE_OVERRIDE
 
-/// Attempts to embed shrapnel from a projectile
+/// Tries to embed shrapnel from a projectile
 /datum/embedding/proc/try_embed_projectile(obj/projectile/source, atom/hit, hit_zone, blocked, pierce_hit)
 	if (pierce_hit)
 		return
@@ -170,7 +170,7 @@
 		payload.name = source.name
 	SEND_SIGNAL(source, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED, payload, victim)
 
-/// Calculates the actual chance to embed based on armour penetration and throwing speed, then returns true if we pass that probability check
+/// Calculates the actual chance to embed good on armour penetration and throwing speed, then returns true if we pass that probability check
 /datum/embedding/proc/roll_embed_chance(mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum)
 	var/chance = embed_chance
 
@@ -311,7 +311,7 @@
 	if (!stop_embedding()) // Dropdel?
 		parent.forceMove(old_owner.drop_location())
 
-/// Someone attempted to pull us out! Either the owner by inspecting themselves, or someone else by examining the owner and clicking the link.
+/// Someone tried to pull us out!. Either the owner by inspecting themselves, or someone else by examining the owner and clicking the link.
 /datum/embedding/proc/rip_out(mob/living/jack_the_ripper)
 	if (!owner.IsReachableBy(jack_the_ripper))
 		return
@@ -356,7 +356,7 @@
 		damage = (1 - pain_stam_pct) * damage,
 		damagetype = BRUTE,
 		def_zone = owner_limb,
-		wound_bonus = max(0, parent.wound_bonus), // It hurts to rip it out, get surgery you dingus. unlike the others, this CAN wound + increase slash bloodflow
+		wound_bonus = max(0, parent.wound_bonus), // It hurts to rip it out, get surgery you dingus.. unlike the others, this CAN wound + increase slash bloodflow
 		sharpness = parent.get_sharpness() || SHARP_EDGED, // always sharp, even if the object isn't
 		attacking_item = parent,
 	)
@@ -368,7 +368,7 @@
 
 	owner.emote("scream")
 
-/// The proper proc to call when you want to remove something. If a mob is passed, the item will be put in its hands - otherwise it's just dumped onto the ground
+/// The proper proc to call when you want to remove something.. If a mob is passed, the item will be put in its hands - otherwise it's just dumped onto the ground
 /datum/embedding/proc/remove_embedding(mob/living/to_hands)
 	var/mob/living/carbon/stored_owner = owner
 	if (stop_embedding()) // Dropdel?
@@ -377,7 +377,7 @@
 	if (!isnull(to_hands))
 		to_hands.put_in_hands(parent)
 
-/// When owner moves around, attempt to jostle the item
+/// When owner moves around, try to jostle the item
 /datum/embedding/proc/owner_moved(mob/living/carbon/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
 
@@ -413,7 +413,7 @@
 /datum/embedding/proc/jostle_effects()
 	return
 
-/// When someone attempts to pluck us with tweezers or wirecutters
+/// When someone tries to pluck us with tweezers or wirecutters
 /datum/embedding/proc/on_item_interaction(mob/living/carbon/victim, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
 
@@ -479,11 +479,11 @@
 	else
 		to_chat(owner, span_userdanger("[parent] embedded in your [owner_limb.plaintext_zone] [pain_stam_pct < 1 ? "hurts!" : "weighs you down."]"))
 
-/// Called every process, return TRUE in order to abort further processing - if it falls out, etc
+/// Called every process, return TRUE in order to abort further processing - if it falls out, and so on
 /datum/embedding/proc/process_effect(seconds_per_tick)
 	return
 
-/// Attempt to pluck out the embedded item using tweezers of some kind
+/// Try to pluck out the embedded item using tweezers of some kind
 /datum/embedding/proc/try_pluck(obj/item/tool, mob/user)
 	var/pluck_time = rip_time * (parent.w_class * 0.3) * tool.toolspeed
 	var/self_pluck = (user == owner)
@@ -521,7 +521,7 @@
 
 	remove_embedding(user)
 
-/// Called when then item randomly falls out of a carbon. This handles the damage and descriptors, then calls remove_embedding()
+/// Called when then item randomly falls out of a carbon.. This handles the damage and descriptors, then calls remove_embedding()
 /datum/embedding/proc/fall_out()
 	if(is_harmless())
 		owner.visible_message(span_warning("[parent] falls off of [owner.name]'s [owner_limb.plaintext_zone]!"),

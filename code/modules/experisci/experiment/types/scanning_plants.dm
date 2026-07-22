@@ -7,7 +7,7 @@
 	traits = EXPERIMENT_TRAIT_DESTRUCTIVE
 	///List of possible plant genes the experiment may ask for.
 	var/list/possible_plant_genes = list()
-	///List of plant genes actually required, indexed by the atom that is required.
+	/// List of plant genes actually needed indexed by the atom that is needed
 	var/list/required_genes = list()
 
 /datum/experiment/scanning/random/plants/New(datum/techweb/techweb)

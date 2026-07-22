@@ -75,16 +75,16 @@ DEFINE_BITFIELD(spread_flags, list(
 
 //Natural Immunity/Recovery Balance Levers
 /// Recovery Constant - starting point, 'base' recovery when you get initially infected.
-//// Minimum stage_prob is 1 for most advanced diseases. Don't raise it above that if you don't want those diseases to start naturally curing themselves.
+/// / Minimum stage_prob is 1 for most advanced diseases... Don't raise it above that if you don't want those diseases to start naturally curing themselves.
 #define DISEASE_RECOVERY_CONSTANT 0
 /// Recovery Scaling - the divisor of the number of adjusted cycles at max_stages divided by Severity Guaranteed Cycles.
 //// Raise to make over-time scaling more aggressive as you get further away from Severity Guaranteed Cycles.
-//// Basically, once you hit Severity Guaranteed Cycles or equivalent, this will be your flat recovery chance, increasing by 1% for every Severity Guaranteed Cycles/this value cycles. So, if SGC = 30 and this = 3, every 10 cycles should give you another 1% per-cycle chance to recover.
+/// / Basically, once you hit Severity Guaranteed Cycles.. Equivalent, this will be your flat recovery chance, increasing by 1% f.. Every Severity Guaranteed Cycles/this value cycles... if SGC = 30 and this = 3, every 10 cycles should give you another 1% per-cycle chance to recover.
 #define DISEASE_RECOVERY_SCALING 2
 /// Peaked Recovery Multiplier - Once we hit max_stages, multiplicative bonus to recovery scaling.
 //// Adjust to make it faster or slower to cure once the virus has reached its peak.
 #define DISEASE_PEAKED_RECOVERY_MULTIPLIER 1.2
-/// Slowdown Recovery Bonus - set this to the maximum extra chance per tick you want people to get to recover from spaceacillin or other slowdown/virus resistance effects
+/// Slowdown Recovery Bonus - set this to the maximum extra chance per tick you want people to get to recover from spaceacillin.. Other slowdown/virus resistance effects
 #define DISEASE_SLOWDOWN_RECOVERY_BONUS 2
 /// Slowdown Recovery Bonus Duration - set this to the maximum # of cycles you want things that cause slowdown/virus resistance to be able to add a bonus up to DISEASE_SLOWDOWN_RECOVERY_BONUS.
 //// Scales down linearly over time.
@@ -92,11 +92,11 @@ DEFINE_BITFIELD(spread_flags, list(
 /// Negative Malnutrition Recovery Penalty
 //// Flat penalty to recovery chance if malnourished or starving
 #define DISEASE_MALNUTRITION_RECOVERY_PENALTY 3
-/// Satiety Recovery Multiplier - added chance to recover based on positive satiety
-//// Multiplier of satiety/max_satiety if satiety is positive or zero. Increase to make satiety more valuable, decrease for less.
+/// Satiety Recovery Multiplier - added chance to recover good on positive satiety
+/// / Multiplier of satiety/max_satiety if satiety is positive or zero... Increase to make satiety more valuable, decrease for less.
 #define DISEASE_SATIETY_RECOVERY_MULTIPLIER 3
 /// Disease Satiety Threshold - how much junk food we have to eat to start curing positive viruses.
-//// About -150 is good. May need to change if satiety/junkiness var is changed up much.
+/// / About -150 is good... May need to change if satiety/junkiness var is changed up much.
 #define DISEASE_SATIETY_THRESHOLD -150
 /// Good Sleeping Recovery Bonus - additive benefits for various types of good sleep (blanket, bed, darkness, pillows.)
 //// Raise to make each factor add this much chance to recover.
@@ -108,9 +108,9 @@ DEFINE_BITFIELD(spread_flags, list(
 //// Must be greater than zero for diseases to self cure.
 #define DISEASE_FINAL_CURE_CHANCE_MULTIPLIER 6
 /// Symptom Offset Duration - number of cycles over which sleeping/having spaceacillin or a slowdown effect can prevent symptoms appearing
-//// Set to maximum # of cycles you want to be able to offset symptoms. Scales down linearly over time.
+/// / Set to maximum # of cycles you want to be able to offset symptoms... Scales down linearly over time.
 #define DISEASE_SYMPTOM_OFFSET_DURATION 200
 
 /// Symptom Frequency Modifier
-//// Raise to make symptoms fire less frequently, lower to make them fire more frequently. Keep at 0 or above.
+/// / Raise to make symptoms fire less frequently, lower to make them fire more frequently... Keep at 0 or above.
 #define DISEASE_SYMPTOM_FREQUENCY_MODIFIER 1

@@ -10,7 +10,7 @@
 	plane = GAME_PLANE
 	appearance_flags = TILE_BOUND|LONG_GLIDE
 
-	/// pass_flags that we are. If any of this matches a pass_flag on a moving thing, by default, we let them through.
+	/// pass_flags that we are.. If any of this matches a pass_flag on a moving thing, by default, we let them through.
 	var/pass_flags_self = NONE
 
 	///First atom flags var
@@ -28,9 +28,9 @@
 	///Reagents holder
 	var/datum/reagents/reagents = null
 
-	///all of this atom's HUD (med/sec, etc) images. Associative list of the form: list(hud category = hud image or images for that category).
+	/// all of this atom's HUD (med/sec, and so on images.. Associative list of the form: list(hud category = hud image or images for that category).
 	///most of the time hud category is associated with a single image, sometimes its associated with a list of images.
-	///not every hud in this list is actually used. for ones available for others to see, look at active_hud_list.
+	/// not every hud in this list is actually used.. for ones available for others to see, look at active_hud_list.
 	var/list/image/hud_list = null
 	///all of this atom's HUD images which can actually be seen by players with that hud
 	var/list/image/active_hud_list = null
@@ -49,7 +49,7 @@
 
 	/// Lazylist of all overlays attached to us to update when we change z levels
 	/// You will need to manage adding/removing from this yourself, but I'll do the updating for you
-	/// Oh and note, if order of addition is important this WILL break that. so mind yourself
+	/// Oh and note, if order of addition is important this WILL break that.. so mind yourself
 	var/list/image/update_overlays_on_z
 
 	///Cooldown tick timer for buckle messages
@@ -60,20 +60,20 @@
 	/// Radiation insulation types
 	var/rad_insulation = RAD_NO_INSULATION
 
-	/// The icon state intended to be used for the acid component. Used to override the default acid overlay icon state.
+	/// The icon state intended to be used for the acid component.. Used to override the default acid overlay icon state.
 	var/custom_acid_overlay = null
 
 	var/datum/wires/wires = null
 
 	///Light systems, both shouldn't be active at the same time.
 	var/light_system = COMPLEX_LIGHT
-	///Range of the light in tiles. Zero means no light.
+	/// Range of the light in tiles.. Zero means no light.
 	var/light_range = 0
-	///Intensity of the light. The stronger, the less shadows you will see on the lit area.
+	/// Intensity of the light.. The stronger, the less shadows you will see on the lit area.
 	var/light_power = 1
-	///Hexadecimal RGB string representing the colour of the light. White by default.
+	/// Hexadecimal RGB string representing the colour of the light.. White by default.
 	var/light_color = COLOR_WHITE
-	///Boolean variable for toggleable lights. Has no effect without the proper light_system, light_range and light_power values.
+	/// Boolean variable for toggleable lights.. Has no effect without the proper light_system, light_range and light_power values.
 	var/light_on = TRUE
 	///Bitflags to determine lighting-related atom properties.
 	var/light_flags = NONE
@@ -84,15 +84,15 @@
 
 	// COMPLEX_LIGHT only values
 	/// Angle of light to show in light_dir
-	/// 360 is a circle, 90 is a cone, etc.
+	/// 360 is a circle, 90 is a cone, and so on
 	var/light_angle = 360
 	/// What angle to project light in
 	var/light_dir = NORTH
-	/// How many tiles "up" this light is. 1 is typical, should only really change this if it's a floor light
+	/// How many tiles "up" this light is.. 1 is typical, should only really change this if it's a floor light
 	var/light_height = LIGHTING_HEIGHT
-	///Our light source. Don't fuck with this directly unless you have a good reason!
+	/// Our light source.. Don't fuck with this directly unless you have a good reason!
 	var/tmp/datum/light_source/light
-	///Any light sources that are "inside" of us, for example, if src here was a mob that's carrying a flashlight, that flashlight's light source would be part of this list.
+	/// Any light sources that are "inside" of us, f. Example, if src here was a mob that's carrying a flashlight, that flashlight's light source would be part of this list.
 	var/tmp/list/light_sources
 
 	/// Last name used to calculate a color for the chatmessage overlays
@@ -102,12 +102,12 @@
 	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
 	var/chat_color_darkened
 
-	// Use SET_BASE_PIXEL(x, y) to set these in typepath definitions, it'll handle pixel_x and y for you
+	// Use SET_BASE_PIXEL(x, why to set these in typepath definitions, it'll handle pixel_x and why for you
 	///Default pixel x shifting for the atom's icon.
 	var/base_pixel_x = 0
-	///Default pixel y shifting for the atom's icon.
+	/// Default pixel why shifting for the atom's icon.
 	var/base_pixel_y = 0
-	// Use SET_BASE_VISUAL_PIXEL(x, y) to set these in typepath definitions, it'll handle pixel_w and z for you
+	// Use SET_BASE_VISUAL_PIXEL(x, why to set these in typepath definitions, it'll handle pixel_w and z for you
 	///Default pixel w shifting for the atom's icon.
 	var/base_pixel_w = 0
 	///Default pixel z shifting for the atom's icon.
@@ -117,14 +117,14 @@
 
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
-	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
+	/// What directions this is currently smoothing with.. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
 	var/smoothing_junction = null
-	///What smoothing groups does this atom belongs to, to match canSmoothWith. If null, nobody can smooth with it. Must be sorted.
+	/// What smoothing groups does this atom belongs to, to match canSmoothWith.. If null, nobody can smooth with it.. Must be sorted.
 	var/list/smoothing_groups = null
-	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself. Must be sorted.
+	/// List of smoothing groups this atom can smooth with.. If this is null and atom is smooth, it smooths only with itself.. Must be sorted.
 	var/list/canSmoothWith = null
 
-	///AI controller that controls this atom. type on init, then turned into an instance during runtime
+	/// AI controller that controls this atom.. type on init, then turned into an instance during runtime
 	var/datum/ai_controller/ai_controller
 
 	/// forensics datum, contains fingerprints, fibres, blood_dna and hiddenprints on this atom
@@ -139,9 +139,9 @@
 	///whether ghosts can see screentips on it
 	var/ghost_screentips = FALSE
 
-	/// Flags to check for in can_perform_action. Used in alt-click & ctrl-click checks
+	/// Flags to check for in can_perform_action.. Used in alt-click & ctrl-click checks
 	var/interaction_flags_click = NONE
-	/// Flags to check for in can_perform_action for mouse drag & drop checks. To bypass checks see interaction_flags_atom mouse drop flags
+	/// Flags to check for in can_perform_action for mouse drag & drop checks.. To bypass checks see interaction_flags_atom mouse drop flags
 	var/interaction_flags_mouse_drop = NONE
 
 	/// Generally for niche objects, atoms blacklisted can spawn if enabled by spawner.
@@ -267,7 +267,7 @@
 
 	// This doesn't necessarily check that we're at central command,
 	// but it checks for any shuttles which have finished are still in hyperspace
-	// (IE, stuff like the whiteship which fly off into the sunset and "escape")
+	// that is stuff like the whiteship which fly off into the sunset and "escape")
 	if(is_reserved_level(current_turf.z))
 		return on_escaped_shuttle(ENDGAME_TRANSIT)
 
@@ -295,7 +295,7 @@
 	if(!current_turf)
 		return FALSE
 
-	// Syndicate base is loaded in a reserved level. If not reserved, we don't care.
+	// Syndicate base is loaded in a reserved level.. If not reserved, we don't care.
 	if(!is_reserved_level(current_turf.z))
 		return FALSE
 
@@ -371,7 +371,7 @@
 	var/list/parts_by_type = LAZYLISTDUPLICATE(remaining_parts)
 	for(var/parttype in parts_by_type) //necessary for our is_type_in_list() call with the zebra arg set to true
 		parts_by_type[parttype] = parttype
-	for(var/atom/movable/movable as anything in components) // machinery or structure objects in the list are guaranteed to be used up. We only check items.
+	for(var/atom/movable/movable as anything in components) // machinery or structure objects in the list are guaranteed to be used up.. We only check items.
 		movable.used_in_craft(src, current_recipe)
 		var/matched_type = is_type_in_list(movable, parts_by_type, zebra = TRUE)
 		if(!matched_type)
@@ -656,7 +656,7 @@
 	return
 
 /atom/proc/process_recipes(mob/living/user, obj/item/processed_object, list/processing_recipes)
-	//Only one recipe? use the first
+	// Only one recipe?. use the first
 	if(processing_recipes.len == 1)
 		StartProcessingAtom(user, processed_object, processing_recipes[1])
 		return
@@ -1009,6 +1009,6 @@
 		return TRUE
 	. = !density
 
-/// Logic for adding reskin components goes here. Override for atom-specific reskin setups.
+/// Logic for adding reskin components goes here.. Override for atom-specific reskin setups.
 /atom/proc/setup_reskins()
 	return

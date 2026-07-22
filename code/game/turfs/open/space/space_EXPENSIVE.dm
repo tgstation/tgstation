@@ -27,7 +27,7 @@
 	if(!our_area.area_has_base_lighting && space_lit) //Only provide your own lighting if the area doesn't for you
 		// Intentionally not add_overlay for performance reasons.
 		// add_overlay does a bunch of generic stuff, like creating a new list for overlays,
-		// queueing compile, cloning appearance, etc etc etc that is not necessary here.
+		// queueing compile, cloning appearance, and so on and so on and so on that is not necessary here.
 		overlays += GLOB.starlight_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
 
 	if (!mapload)

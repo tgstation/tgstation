@@ -33,7 +33,7 @@
 	var/list/vowbroken_message
 	var/list/parent_message
 	var/normal_desc
-	/// The type of offspring this plush generates. If not set, it'll default to the type itself on init.
+	/// The type of offspring this plush generates.. If not set, it'll default to the type itself on init.
 	var/offspring_type
 
 	//--end of love :'(--
@@ -72,7 +72,7 @@
 /obj/item/toy/plush/Destroy()
 	QDEL_NULL(grenade)
 
-	//inform next of kin and... acquaintances
+	// inform next of kin and.... acquaintances
 	if(partner)
 		partner.bad_news(src)
 		partner = null
@@ -208,7 +208,7 @@
 			Kisser.lover.heartbreak(Kisser) //the old lover can get over the kiss-and-run whilst the kisser has some fun
 			chance -= concern //one heart already broken, what does another mean?
 		if(lover) //if the recipient has a lover
-			chance -= loyalty //mustn't... but those lips
+			chance -= loyalty // mustn't.... but those lips
 		if(partner) //if the recipient has a partner
 			chance -= duty //do we mate for life?
 
@@ -536,7 +536,7 @@
 		// Set our greyscale colors to the lizard color we made + black eyes
 		set_greyscale(colors = list(generated_lizard_color, COLOR_BLACK))
 
-// Preset lizard plushie that uses the original lizard plush green. (Or close to it)
+// Preset lizard plushie that uses the original lizard plush green.. (Or close to it)
 /obj/item/toy/plush/lizard_plushie/green
 	desc = "An adorable stuffed toy that resembles a green lizardperson. This one fills you with nostalgia and soul."
 	icon = 'icons/map_icons/items/_item.dmi'
@@ -703,7 +703,7 @@
 		resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	playsound(src, 'sound/effects/hallucinations/wail.ogg', 50, TRUE, -1)
 	var/list/available_spots = get_adjacent_open_turfs(loc)
-	if(available_spots.len) //If the user is in a confined space the plushie will drop normally as the user dies, but in the open the plush is placed one tile away from the user to prevent squeak spam
+	if(available_spots.len) // If the user is in a confined space the plushie will drop normally as the user dies. In the open the plush is placed one tile away from the user to prevent squeak spam
 		var/turf/open/random_open_spot = pick(available_spots)
 		forceMove(random_open_spot)
 	user.dust(just_ash = FALSE, drop_items = TRUE)

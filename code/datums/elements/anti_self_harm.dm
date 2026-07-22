@@ -1,7 +1,7 @@
 // Prevents a basic mob from hitting themselves by accident.
 // This is useful if you don't want self-harm as a balancing factor.
 // There are a lot of basic mobs that never benefit from hitting themselves.
-// Properly implementing this for carbons would require a more complex setup.
+// Properly adding this for carbons would need a more complex setup.
 
 /datum/element/anti_self_harm
 

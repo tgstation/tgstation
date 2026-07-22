@@ -1,4 +1,4 @@
-/// Caused by dirty food. Makes you vomit stars.
+/// Caused by dirty food.. Makes you vomit stars.
 /datum/disease/nebula_nausea
 	name = "Nebula Nausea"
 	desc = "You can't contain the colorful beauty of the cosmos inside."

@@ -65,7 +65,7 @@
 
 	// Every tick, the drunk value decrases by
 	// 4% the current drunk_value + 0.01
-	// (until it reaches 0 and terminates)
+	// (until it reaches 0 and stops
 	set_drunk_value(drunk_value - (0.01 + drunk_value * 0.04))
 	if(QDELETED(src))
 		return
@@ -174,7 +174,7 @@
 		if(drunk_value > BALLMER_PEAK_WINDOWS_ME) // by this point you're into windows ME territory
 			owner.say(pick_list_replacements(VISTA_FILE, "ballmer_windows_me_msg"), forced = "ballmer")
 
-	// Drunk slurring scales in intensity based on how drunk we are -at 16 you will likely not even notice it,
+	// Drunk slurring scales in intensity good on how drunk we are -at 16 you will likely not even notice it,
 	// but when we start to scale up you definitely will
 	if(drunk_value >= 16)
 		owner.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/drunk, max_duration = 20 SECONDS)
@@ -232,7 +232,7 @@
 	if(drunkard.gain_trauma(/datum/brain_trauma/severe/split_personality/blackout, TRAUMA_LIMIT_ABSOLUTE))
 		drunk_value -= 70 //So that the drunk personality can spice things up without being killed by liver failure
 		return
-	if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(owner.z))// Don't put us in a deep sleep if the shuttle's here. QoL, mainly.
+	if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(owner.z))// Don't put us in a deep sleep if the shuttle's here.. QoL, mainly.
 		to_chat(owner, span_warning("You're so tired... but you can't miss that shuttle..."))
 	else
 		owner.Sleeping(90 SECONDS)

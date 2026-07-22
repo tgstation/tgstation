@@ -3,7 +3,7 @@
 /datum/bt_node/subtree/relay_to_hive_partner
 	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/hivebot/relay_to_hive_partner.bt.json"
 
-/// Says a random binary string to a hive partner. Movement to the partner is handled
+/// Says a random binary string to a hive partner.. Movement to the partner is handled
 /// in the tree via a move_to_target leaf; the target key is cleared by a clear_key leaf.
 /datum/bt_node/ai_behavior/relay_message
 	/// Blackboard key holding the hive partner to talk at.
@@ -23,7 +23,7 @@
 	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/atom/movable, say), message_relayed, forced = "AI Controller")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/// Repairs a damaged machine once in range. Finding the machine is a separate
+/// Repairs a damaged machine once in range.. Finding the machine is a separate
 /// acquire_target leaf; movement is a move_to_target leaf.
 /datum/bt_node/ai_behavior/hunt_target/repair_machines
 	always_reset_target = TRUE

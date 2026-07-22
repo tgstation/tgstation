@@ -20,7 +20,7 @@
 		return span_info("This one is completely devoid of life.")
 
 /obj/item/organ/brain/cybernetic/check_for_repair(obj/item/item, mob/user)
-	if (item.tool_behaviour == TOOL_MULTITOOL) //attempt to repair the brain
+	if (item.tool_behaviour == TOOL_MULTITOOL) // try to repair the brain
 		if (brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
 			to_chat(user, span_warning("[src] is far too damaged, there's nothing else we can do for it!"))
 			return TRUE

@@ -4,7 +4,7 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS // So you can change grill results with various cookstuffs
 	///Result atom type of grilling this object
 	var/atom/cook_result
-	///Amount of time required to cook the food
+	/// Amount of time needed to cook the food
 	var/required_cook_time = 2 MINUTES
 	///Time spent cooking so far
 	var/current_cook_time = 0

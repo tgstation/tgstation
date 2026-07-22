@@ -23,15 +23,15 @@
 		homing beacons, unstable eigenstates, or machinery housing any form of artificial intelligence."
 	///If you're being raided by pirates, what do you tell the crew?
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
-	///The name of the shuttle template being used as the cargo shuttle. 'cargo' is default and contains critical code. Don't change this unless you know what you're doing.
+	/// The name of the shuttle template being used as the cargo shuttle.. 'cargo' is default and contains critical code.. Don't change this unless you know what you're doing.
 	var/cargo_shuttle = "cargo"
 	///The docking port called when returning to the station.
 	var/docking_home = "cargo_home"
 	///The docking port called when leaving the station.
 	var/docking_away = "cargo_away"
-	///If this console can loan the cargo shuttle. Set to false to disable.
+	/// If this console can loan the cargo shuttle.. Set to false to disable.
 	var/stationcargo = TRUE
-	///The account this console processes and displays. Independent from the account the shuttle processes.
+	/// The account this console processes and displays.. Independent from the account the shuttle processes.
 	var/cargo_account = ACCOUNT_CAR
 
 /datum/computer_file/program/budgetorders/proc/is_visible_pack(mob/user, paccess_to_check, list/access, contraband)
@@ -105,7 +105,7 @@
 			"name" = P.name,
 			"cost" = P.get_cost(),
 			"id" = pack,
-			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
+			"desc" = P.desc || P.name, // If there is a description, use it.. Otherwise use the pack's name.
 			"first_item_icon" = first_item?.icon,
 			"first_item_icon_state" = first_item?.icon_state,
 			"goody" = P.order_flags & ORDER_GOODY,
@@ -113,7 +113,7 @@
 			"contains" = P.get_contents_ui_data(),
 		))
 
-	//Data regarding the User's capability to buy things.
+	// Data about the User's capability to buy things.
 	data["away"] = SSshuttle.supply.getDockedId() == docking_away
 	data["self_paid"] = self_paid
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
@@ -235,7 +235,7 @@
 
 			// Our account that we want to end up paying with.
 			var/datum/bank_account/account
-			// Our ID card that we want to pull from for identification. Modifies either name, account, or neither depending on function.
+			// Our ID card that we want to pull from for identification.. Modifies either name, account, or neither depending on function.
 			var/obj/item/card/id/id_card_customer = computer.stored_id?.GetID()
 			if(!id_card_customer)
 				id_card_customer = hwoman?.get_idcard(TRUE) //Grab from hands/mob if there's no id_card slot to prioritize.

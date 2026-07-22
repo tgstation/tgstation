@@ -1,4 +1,4 @@
-/// sound of a lone droplet hitting the water every once in a while like a broken faucet. used by moisture traps
+/// sound of a lone droplet hitting the water every once in a while like a broken faucet.. used by moisture traps
 /datum/looping_sound/drip
 	mid_sounds = 'sound/effects/droplet.ogg'
 	mid_length = 30 SECONDS

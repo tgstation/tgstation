@@ -75,7 +75,7 @@
 	icon_state = "eyes_snail"
 	eye_icon_state = "snail_eyes"
 	blink_animation = FALSE
-	pupils_name = "eyestalks" //many species of snails can retract their eyes into their face! (my lame science excuse for not having better writing here)
+	pupils_name = "eyestalks" // many species of snails can retract their eyes into their face!. (my lame science excuse for not having better writing here)
 	penlight_message = "are sat upon retractable tentacles"
 
 /obj/item/organ/eyes/jelly
@@ -85,7 +85,7 @@
 	eye_icon_state = "jelleyes"
 	blink_animation = FALSE
 	iris_overlay = null
-	pupils_name = "lensing bubbles" //imagine a water lens physics demo but with goo. thats how these work.
+	pupils_name = "lensing bubbles" // imagine a water lens physics demo but with goo.. thats how these work.
 	penlight_message = "are three bubbles of refractive jelly"
 
 /obj/item/organ/eyes/lizard

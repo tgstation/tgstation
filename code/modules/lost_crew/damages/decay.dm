@@ -1,4 +1,4 @@
-/// We simulate decay on bodies. This is always used, but severity can differ (though tending to the more severe)
+/// We simulate decay on bodies.. This is always used, but severity can differ (though tending to the more severe)
 /datum/corpse_damage/post_mortem/organ_decay
 	damage_type = CORPSE_DAMAGE_ORGAN_DECAY
 	/// The max amount of decay we can apply to organs, scaled by severity

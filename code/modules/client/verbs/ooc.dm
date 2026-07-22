@@ -1,4 +1,4 @@
-GLOBAL_VAR_INIT(OOC_COLOR, null)//If this is null, use the CSS for OOC. Otherwise, use a custom colour.
+GLOBAL_VAR_INIT(OOC_COLOR, null)// If this is null, use the CSS for OOC.. Otherwise, use a custom colour.
 GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 ///talking in OOC uses this
@@ -98,7 +98,7 @@ GAME_VERB(/client, ooc, VERB_OOC, null, msg as text)
 
 	//The linkify span classes and linkify=TRUE below make ooc text get clickable chat href links if you pass in something resembling a url
 	for(var/client/receiver as anything in GLOB.clients)
-		if(!receiver.prefs) // Client being created or deleted. Despite all, this can be null.
+		if(!receiver.prefs) // Client being created or deleted.. Despite all, this can be null.
 			continue
 		if(!(get_chat_toggles(receiver) & CHAT_OOC))
 			continue
@@ -320,7 +320,7 @@ GAME_VERB_DESC(/client, fit_viewport, "Fit Viewport", "Fit the width of the map 
 	// Calculate desired pixel width using window size and aspect ratio
 	var/list/sizes = params2list(winget(src, "[SKIN_MAINWINDOW_SPLIT];[SKIN_MAPWINDOW]", "size"))
 
-	// Client closed the window? Some other error? This is unexpected behaviour, let's
+	// Client closed the window?. Some other error?. This is unexpected behaviour, let's
 	// CRASH with some info.
 	if(!sizes["[SKIN_MAPWINDOW].size"])
 		CRASH("sizes does not contain mapwindow.size key. This means a winget failed to return what we wanted. --- sizes var: [sizes] --- sizes length: [length(sizes)]")
@@ -335,7 +335,7 @@ GAME_VERB_DESC(/client, fit_viewport, "Fit Viewport", "Fit the width of the map 
 		return
 
 	// Gets the type of zoom we're currently using from our view datum
-	// If it's 0 we do our pixel calculations based off the size of the mapwindow
+	// If it's 0 we do our pixel calculations good off the size of the mapwindow
 	// If it's not, we already know how big we want our window to be, since zoom is the exact pixel ratio of the map
 	var/zoom_value = src.view_size?.zoom || 0
 
@@ -374,7 +374,7 @@ GAME_VERB_DESC(/client, fit_viewport, "Fit Viewport", "Fit the width of the map 
 			// success
 			return
 		else if (isnull(delta))
-			// calculate a probable delta value based on the difference
+			// calculate a probable delta value good on the difference
 			delta = 100 * (desired_width - got_width) / split_width
 		else if ((delta > 0 && got_width > desired_width) || (delta < 0 && got_width < desired_width))
 			// if we overshot, halve the delta and reverse direction
@@ -383,11 +383,11 @@ GAME_VERB_DESC(/client, fit_viewport, "Fit Viewport", "Fit the width of the map 
 		pct += delta
 		winset(src, SKIN_MAINWINDOW_SPLIT, "splitter=[pct]")
 
-/// Attempt to automatically fit the viewport, assuming the user wants it
+/// Try to automatically fit the viewport, assuming the user wants it
 /client/proc/attempt_auto_fit_viewport()
 	if (!prefs?.read_preference(/datum/preference/toggle/auto_fit_viewport))
 		return
-	// No need to attempt to fit the viewport on non-initialized clients as they'll auto-fit viewport right before finishing init
+	// No need to try to fit the viewport on non-initialized clients as they'll auto-fit viewport right before finishing init
 	if(fully_created)
 		INVOKE_ASYNC(src, VERB_REF(fit_viewport))
 

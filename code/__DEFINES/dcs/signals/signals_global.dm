@@ -1,4 +1,4 @@
-// Global signals. Format:
+// Global signals... Format:
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
@@ -34,7 +34,7 @@
 #define COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN "!job_after_latejoin_spawn"
 /// crewmember joined the game (mob/living, rank)
 #define COMSIG_GLOB_CREWMEMBER_JOINED "!crewmember_joined"
-/// Random event is trying to roll. (/datum/round_event_control/random_event)
+/// Random event is trying to roll... (/datum/round_event_control/random_event)
 /// Called by (/datum/round_event_control/preRunEvent).
 #define COMSIG_GLOB_PRE_RANDOM_EVENT "!pre_random_event"
 	/// Do not allow this random event to continue.
@@ -47,11 +47,11 @@
 #define COMSIG_GLOB_TRAPDOOR_LINK "!trapdoor_link"
 	///successfully linked to a trapdoor!
 	#define LINKED_UP (1<<0)
-/// an obj/item is created! (obj/item/created_item)
+/// an obj/item is created!.. (obj/item/created_item)
 #define COMSIG_GLOB_NEW_ITEM "!new_item"
 /// called post /obj/item initialize (obj/item/created_item)
 #define COMSIG_GLOB_ATOM_AFTER_POST_INIT "!atom_after_post_init"
-/// an obj/machinery is created! (obj/machinery/created_machine)
+/// an obj/machinery is created!.. (obj/machinery/created_machine)
 #define COMSIG_GLOB_NEW_MACHINE "!new_machine"
 /// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
 #define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
@@ -64,7 +64,7 @@
 #define COMSIG_GLOB_ALARM_FIRE(alarm_type) "!alarm_fire [alarm_type]"
 /// An alarm of some form was cleared (datum/alarm_handler/source, alarm_type, area/source_area)
 #define COMSIG_GLOB_ALARM_CLEAR(alarm_type) "!alarm_clear [alarm_type]"
-///global mob logged in signal! (/mob/added_player)
+/// global mob logged in signal!.. (/mob/added_player)
 #define COMSIG_GLOB_MOB_LOGGED_IN "!mob_logged_in"
 
 /// global signal sent when a nuclear device is armed (/obj/machinery/nuclearbomb/nuke/exploding_nuke)
@@ -75,7 +75,7 @@
 /// global signal sent when a nuclear device is detonating (/obj/machinery/nuclearbomb/nuke/exploding_nuke)
 #define COMSIG_GLOB_NUKE_DEVICE_DETONATING "!nuclear_device_detonating"
 
-/// Global signal sent when a puzzle piece is completed (light mechanism, etc.) (try_id)
+/// Global signal sent when a puzzle piece is completed (light mechanism, and so on (try_id)
 #define COMSIG_GLOB_PUZZLE_COMPLETED "!puzzle_completed"
 
 /// Global signal called after the station changes its name.
@@ -116,8 +116,8 @@
 /// Global signal whenever a camera network broadcast is started/stopped/updated: (camera_net, is_show_active, announcement)
 #define COMSIG_GLOB_NETWORK_BROADCAST_UPDATED "!network_broadcast_updated"
 
-///Global signal sent when the player list grows. Called by [mob/add_to_player_list] (mob/player)
+/// Global signal sent when the player list grows... Called by [mob/add_to_player_list] (mob/player)
 #define COMSIG_GLOB_PLAYER_LOGIN "!player_login"
 
-///Global signal sent when the player list shrinks. Called by [mob/remove_from_player_list] (mob/player)
+/// Global signal sent when the player list shrinks... Called by [mob/remove_from_player_list] (mob/player)
 #define COMSIG_GLOB_PLAYER_LOGOUT "!player_logout"

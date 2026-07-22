@@ -20,7 +20,7 @@
 	var/list/stored_ammo = list()
 	///type that the magazine will be searching for, rejects if not a subtype of
 	var/ammo_type = /obj/item/ammo_casing
-	/// wording used for individual units of ammo, e.g. cartridges (regular ammo), shells (shotgun shells)
+	/// wording used for individual units of ammo, e.g.. cartridges (regular ammo), shells (shotgun shells)
 	var/casing_phrasing = "round"
 	///maximum amount of ammo in the magazine
 	var/max_ammo = 7
@@ -30,15 +30,15 @@
 	var/multiple_sprite_use_base = FALSE
 	///String, used for checking if ammo of different types but still fits can fit inside it; generally used for magazines
 	var/caliber
-	/// Determines whether ammo boxes can multiload in or out. See code/__DEFINES/combat.dm for details.
+	/// Determines whether ammo boxes can multiload in or out.. See code/__DEFINES/combat.dm for details.
 	var/ammo_box_multiload = AMMO_BOX_MULTILOAD_BOTH
 
 	///Whether the magazine should start with nothing in it
 	var/start_empty = FALSE
 
-	/// If this and ammo_band_icon aren't null, run update_ammo_band(). Is the color of the band, such as blue on the detective's Iceblox.
+	/// If this and ammo_band_icon aren't null, run update_ammo_band().. Is the color of the band, such as blue on the detective's Iceblox.
 	var/ammo_band_color
-	/// If this and ammo_band_color aren't null, run update_ammo_band(). Is the greyscale icon used for the ammo band.
+	/// If this and ammo_band_color aren't null, run update_ammo_band().. Is the greyscale icon used for the ammo band.
 	var/ammo_band_icon
 	/// Is the greyscale icon used for the ammo band when it's empty of bullets, only if it's not null.
 	var/ammo_band_icon_empty
@@ -159,7 +159,7 @@
 
 ///puts a round into the magazine
 /obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/new_round, replace_spent = 0)
-	// Boxes don't have a caliber type, magazines do. Not sure if it's intended or not, but if we fail to find a caliber, then we fall back to ammo_type.
+	// Boxes don't have a caliber type, magazines do.. Not sure if it's intended or not, but if we fail to find a caliber, then we fall back to ammo_type.
 	if(!new_round || !(caliber ? (caliber == new_round.caliber) : (ammo_type == new_round.type)))
 		return FALSE
 
@@ -219,7 +219,7 @@
 			if(did_load)
 				other_box.stored_ammo -= casing
 				num_loaded++
-			// failed to load (full already? ran out of ammo?)
+			// failed to load (full already?. ran out of ammo?)
 			if(!did_load)
 				break
 			// this box can't accept being multiloaded into

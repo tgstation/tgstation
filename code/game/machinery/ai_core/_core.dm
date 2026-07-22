@@ -204,7 +204,7 @@
 	qdel(src)
 	return ai_mob
 
-/// Quick proc to call to see if the brainmob inside of us has suicided. Returns TRUE if we have, FALSE in any other scenario.
+/// Quick proc to call to see if the brainmob inside of us has suicided.. Returns TRUE if we have, FALSE in any other scenario.
 /obj/structure/ai_core/proc/suicide_check()
 	if(isnull(core_mmi) || isnull(core_mmi.brainmob))
 		return FALSE
@@ -251,8 +251,8 @@ That prevents a few funky behaviors.
 		to_chat(user, span_alert("There is no AI loaded on this terminal."))
 
 /obj/item/circuitboard/aicore
-	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent
-	var/battery = 200 //backup battery for when the AI loses power. Copied to/from AI mobs when carding, and placed here to avoid recharge via deconning the core
+	name = "AI core (AI Core Board)" // duh, but best to be consistent
+	var/battery = 200 // backup battery for when the AI loses power.. Copied to/from AI mobs when carding, and placed here to avoid recharge via deconning the core
 
 /obj/item/circuitboard/aicore/Initialize(mapload)
 	. = ..()

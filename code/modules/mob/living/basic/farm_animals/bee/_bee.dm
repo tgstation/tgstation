@@ -1,9 +1,9 @@
-#define BEE_TRAY_RECENT_VISIT 20 SECONDS //! How long in deciseconds until a tray can be visited by a bee again
-#define BEE_DEFAULT_COLOUR "#e5e500" //! the colour we make the stripes of the bee if our reagent has no colour (or we have no reagent)
-#define BEE_POLLINATE_YIELD_CHANCE 33 //! chance to increase yield of plant
-#define BEE_POLLINATE_PEST_CHANCE 33 //! chance to decrease pest of plant
-#define BEE_POLLINATE_POTENCY_CHANCE 50 //! chance to increase potancy of plant
-#define BEE_FOODGROUPS RAW | MEAT | GORE | BUGS //! the bee food contents
+#define BEE_TRAY_RECENT_VISIT 20 SECONDS // !. How long in deciseconds until a tray can be visited by a bee again
+#define BEE_DEFAULT_COLOUR "#e5e500" // !. the colour we make the stripes of the bee if our reagent has no colour (or we have no reagent)
+#define BEE_POLLINATE_YIELD_CHANCE 33 // !. chance to increase yield of plant
+#define BEE_POLLINATE_PEST_CHANCE 33 // !. chance to decrease pest of plant
+#define BEE_POLLINATE_POTENCY_CHANCE 50 // !. chance to increase potancy of plant
+#define BEE_FOODGROUPS RAW | MEAT | GORE | BUGS // !. the bee food contents
 
 /mob/living/basic/bee
 	name = "bee"

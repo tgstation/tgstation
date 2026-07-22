@@ -11,11 +11,11 @@
  * If you NEED state, consider making a quirk, or moving your behavior into a component the personality applies.
  */
 /datum/personality
-	/// Required: Name of the personality
+	/// Needed Name of the personality
 	var/name
-	/// Required: Description of the personality.
-	/// Phrased to be "In character" - i.e. "I like to help people!"
-	/// Rather than OOC 0 i.e. "When helping people, I get a positive moodlet."
+	/// Needed Description of the personality.
+	/// Phrased to be "In character" - i.e.. "I like to help people!"
+	/// Rather than OOC 0 i.e.. "When helping people, I get a positive moodlet."
 	var/desc
 	/// Optional: Short blurb on what positive effects this personality has on gameplay, for ui
 	var/pos_gameplay_desc
@@ -25,7 +25,7 @@
 	var/neut_gameplay_desc
 	/// Easy way to apply a trait as a part of a personality.
 	var/personality_trait
-	/// Required: The key to use when saving this personality to a savefile.
+	/// Needed The key to use when saving this personality to a savefile.
 	/// Don't change it once it's set unless you want to write migration code
 	var/savefile_key
 	/// What groups does this personality belong to?

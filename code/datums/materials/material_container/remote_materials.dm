@@ -7,15 +7,15 @@ handles linking back and forth.
 
 /datum/remote_materials
 	// Three possible states:
-	// 1. silo exists, materials is parented to silo
-	// 2. silo is null, materials is parented to parent
-	// 3. silo is null, materials is null
+	// 1.. silo exists, materials is parented to silo
+	// 2.. silo is null, materials is parented to parent
+	// 3.. silo is null, materials is null
 
 	///Movable this connection is attached to
 	var/atom/movable/parent
 	///The silo machine this container is connected to
 	var/obj/machinery/ore_silo/silo
-	///Material container. the value is either the silo or local
+	/// Material container.. the value is either the silo or local
 	var/datum/material_container/mat_container
 	///Should we create a local storage if we can't connect to silo
 	var/allow_standalone
@@ -25,7 +25,7 @@ handles linking back and forth.
 	var/mat_container_flags = NONE
 	///List of signals to hook onto the local container
 	var/list/mat_container_signals
-	///Callback for round start silo connections. Have to cancel this if the parent gets destroyed before round start
+	/// Callback for round start silo connections.. Have to cancel this if the parent gets destroyed before round start
 	VAR_PRIVATE/datum/callback/connection
 
 /datum/remote_materials/New(
@@ -151,7 +151,7 @@ handles linking back and forth.
 		if (silo)
 			silo.disconnect_receptacle(src, parent)
 		else if (mat_container)
-			//transfer all mats to silo. whatever cannot be transfered is dumped out as sheets
+			// transfer all mats to silo.. whatever cannot be transfered is dumped out as sheets
 			if(mat_container.total_amount())
 				for(var/datum/material/mat as anything in mat_container.materials)
 					var/mat_amount = mat_container.materials[mat]

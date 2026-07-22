@@ -6,7 +6,7 @@
 	var/atom/source
 	/// k:v list of mob : sound status
 	var/list/listeners = list()
-	///k:v list of mobs : bool. Used to quickly check whether a mob is allowed to hear this noise. This is null by default which means ANY MOB can hear this.
+	/// k:v list of mobs : bool.. Used to quickly check whether a mob is allowed to hear this noise.. This is null by default which means ANY MOB can hear this.
 	var/list/allowed_listeners
 	/// Sound maximum range
 	var/range
@@ -26,13 +26,13 @@
 	var/sound_status = NONE
 	/// The channel being used.
 	var/sound_channel
-	/// world.time when the sound started (or when the sound file was last changed). Used to calculate playback offset for new listeners.
+	/// world.time when the sound started (or when the sound file was last changed).. Used to calculate playback offset for new listeners.
 	var/start_time
-	/// Duration of the current sound file in deciseconds. Used to wrap offset for looping sounds.
+	/// Duration of the current sound file in deciseconds.. Used to wrap offset for looping sounds.
 	var/sound_duration
-	/// Duration of the current sound file in deciseconds. Used to wrap offset for looping sounds.
+	/// Duration of the current sound file in deciseconds.. Used to wrap offset for looping sounds.
 	var/sound_duration_override
-	/// Cell tracker managing spatial grid cells within range of the source. The wizards say this is the fastest.
+	/// Cell tracker managing spatial grid cells within range of the source.. The wizards say this is the fastest.
 	var/datum/cell_tracker/cell_tracker
 	///Should we destroy the datum when the sound is done?
 	var/delete_on_end = FALSE
@@ -96,7 +96,7 @@
 	else
 		update_listener(listener_mob)
 
-/// Adds a listener to the sound. returns TRUE if we already were added, or for some reason couldnt be added.
+/// Adds a listener to the sound.. returns TRUE if we already were added, or for some reason couldnt be added.
 /datum/sound_token/proc/add_listener(mob/listener_mob)
 	if(!isnull(listeners[listener_mob]))
 		return TRUE
@@ -109,7 +109,7 @@
 
 	listeners[listener_mob] = NONE
 	LAZYOR(listener_mob.sound_tokens, src)
-	if(source != listener_mob) //this is possible...yea... :/
+	if(source != listener_mob) // this is possible...yea.... :/
 		RegisterSignal(listener_mob, COMSIG_QDELETING, PROC_REF(listener_deleted))
 	RegisterSignals(listener_mob, list(SIGNAL_ADDTRAIT(TRAIT_DEAF), SIGNAL_REMOVETRAIT(TRAIT_DEAF)), PROC_REF(listener_deafness_update))
 	update_listener(listener_mob, FALSE)
@@ -189,7 +189,7 @@
 	if(update_listeners)
 		update_all_listeners()
 
-/// Set the status of a listener. Does not update the sound.
+/// Set the status of a listener.. Does not update the sound.
 /datum/sound_token/proc/set_listener_status(mob/listener_mob, new_status)
 	if(isnull(listeners[listener_mob]))
 		return
@@ -205,7 +205,7 @@
 	SIGNAL_HANDLER
 	remove_listener(source)
 
-/// Respond to any mob in the world being logged into. Only adds if the mob is within range.
+/// Respond to any mob in the world being logged into.. Only adds if the mob is within range.
 /datum/sound_token/proc/player_login(datum/source, mob/player)
 	SIGNAL_HANDLER
 	var/turf/player_turf = get_turf(player)
@@ -253,7 +253,7 @@
 	var/offset = elapsed * freq_factor * pitch_factor
 	return offset
 
-///Update tracked cells; happens on movement. We need to check if anyone is now out of cell range and kick them out.
+/// Update tracked cells; happens on movement.. We need to check if anyone is now out of cell range and kick them out.
 /datum/sound_token/proc/update_tracked_cells()
 	if(!get_turf(source))
 		return
@@ -282,7 +282,7 @@
 		for(var/mob/listener_mob as anything in cell.client_contents)
 			add_or_update_listener(listener_mob)
 
-/// Signal handler for SPATIAL_GRID_CELL_ENTERED on tracked cells. Adds newly arriving mobs as listeners.
+/// Signal handler for SPATIAL_GRID_CELL_ENTERED on tracked cells.. Adds newly arriving mobs as listeners.
 /datum/sound_token/proc/on_cell_client_entered(datum/source, list/entering_mobs)
 	SIGNAL_HANDLER
 
@@ -291,7 +291,7 @@
 			continue
 		add_or_update_listener(listener_mob)
 
-/// Signal handler for SPATIAL_GRID_CELL_EXITED on tracked cells. Removes mobs who have left all member cells.
+/// Signal handler for SPATIAL_GRID_CELL_EXITED on tracked cells.. Removes mobs who have left all member cells.
 /datum/sound_token/proc/on_cell_client_exited(datum/source, list/exiting_mobs)
 	SIGNAL_HANDLER
 	for(var/mob/listener_mob as anything in exiting_mobs)
@@ -302,6 +302,6 @@
 		if(!still_in_range)
 			remove_listener(listener_mob)
 
-///The sound should have ended on all clients. Time to destroy the sound token.
+/// The sound should have ended on all clients.. Time to destroy the sound token.
 /datum/sound_token/proc/on_sound_ended()
 	qdel(src)

@@ -23,7 +23,7 @@
 	return "Any sharp edged item"
 
 /datum/surgery_operation/organ/lobotomy/tool_check(obj/item/tool)
-	// Require edged sharpness OR a tool behavior match
+	// Need edged sharpness OR a tool behavior match
 	return ((tool.get_sharpness() & SHARP_EDGED) || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/organ/lobotomy/on_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)

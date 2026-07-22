@@ -5,7 +5,7 @@
 	// initialising the list of items we need
 	var/target_items = list()
 	for(var/obj/machinery/vending/vendor as anything in subtypesof(/obj/machinery/vending))
-		vendor = new vendor() // It seems `initial(list var)` has nothing. need to make a type.
+		vendor = new vendor() // It seems `initial(list var)` has nothing.. need to make a type.
 		target_items |= vendor.products
 		target_items |= vendor.premium
 		target_items |= vendor.contraband

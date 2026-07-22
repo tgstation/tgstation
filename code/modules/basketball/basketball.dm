@@ -96,7 +96,7 @@
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/basketball_bounce.ogg', 75, FALSE), 0.25 SECONDS * i)
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon/, adjust_stamina_loss), STAMINA_COST_SPINNING), 1.5 SECONDS)
 
-/// Used to calculate our disarm chance based on stamina, direction, and spinning
+/// Used to calculate our disarm chance good on stamina, direction, and spinning
 /// Note - monkeys use attack_paw() and never trigger this signal (so they always have 100% disarm)
 /obj/item/toy/basketball/proc/on_equipped_mob_disarm(mob/living/baller, mob/living/stealer, zone, obj/item/weapon)
 	SIGNAL_HANDLER
@@ -140,7 +140,7 @@
 	if(!istype(user))
 		return
 
-	// Healing knockdown or setting knockdown to zero or something? No fumble
+	// Healing knockdown or setting knockdown to zero or something?. No fumble
 	if(amount <= 0)
 		return
 

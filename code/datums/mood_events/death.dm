@@ -188,7 +188,7 @@
 	else
 		description = "%DEAD_MOB% just died!!"
 
-	// future todo : make the hop care about ian, cmo runtime, etc.
+	// future to do : make the hop care about ian, cmo runtime, and so on
 	if(HAS_PERSONALITY(owner, /datum/personality/animal_friend))
 		mood_change *= 1.5
 		timeout *= 1.25
@@ -213,7 +213,7 @@
 
 	return is_any_xenomorph(dead_mob)
 
-// Give buffs based on the type of xenomorph dying
+// Give buffs good on the type of xenomorph dying
 /datum/mood_event/conditional/see_death/xeno/update_effect(mob/dead_mob, dusted, gibbed)
 	// following values are in absolute value form, we make it have a positive effect later
 	var/change_modifier = 0

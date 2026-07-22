@@ -226,7 +226,7 @@
 	if(cell)
 		cell.charge = FLOOR(cell.charge * 0.25, 1) //Starts at very low charge
 	if(prob(70)) //Maybe add a drill
-		if(prob(15)) //Possible diamond drill... Feeling lucky?
+		if(prob(15)) // Possible diamond drill.... Feeling lucky?
 			var/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/D = new
 			D.attach(src)
 		else
@@ -399,7 +399,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 			return FALSE
 		to_chat(chassis.occupants, "[icon2html(src,  chassis.occupants)][span_notice("You unload [passenger].")]")
 		passenger.forceMove(drop_location())
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step), passenger, chassis.dir), 1) //That's right, one tick. Just enough to cause the tile move animation.
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step), passenger, chassis.dir), 1) // That's right, one tick.. Just enough to cause the tile move animation.
 		playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		log_message("Unloaded [passenger]. Cargo compartment capacity: [cargo_capacity - contents.len]", LOG_MECHA)
 		return TRUE

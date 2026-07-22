@@ -27,7 +27,7 @@
 /datum/element/block_turf_fingerprints/proc/apply_to_turf(turf/the_turf)
 	// It's possible two things with this element could be on the same turf, so let's avoid double-applying
 	if(the_turf.interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND)
-		// But what if the turf has this flag by default? We still need to override register a signal.
+		// But what if the turf has this flag by default?. We still need to override register a signal.
 		// Otherwise we may run into a very niche bug:
 		// - A turf as this flag by default
 		// - A movable with this element is placed on the turf

@@ -1,14 +1,14 @@
 //If you look at the "geyser_soup" overlay icon_state, you'll see that the first frame has 25 ticks.
 //That's because the first 18~ ticks are completely skipped for some ungodly weird fucking byond reason
 
-///A lavaland geyser that spawns chems and can be mining scanned for points. Made to work with the plumbing pump to extract that sweet rare nectar
+/// A lavaland geyser that spawns chems and can be mining scanned for points.. Made to work with the plumbing pump to extract that sweet rare nectar
 /obj/structure/geyser
 	name = "geyser"
 	icon = 'icons/obj/mining_zones/terrain.dmi'
 	icon_state = "geyser"
 	anchored = TRUE
 
-	///set to null to get it greyscaled from "[icon_state]_soup". Not very usable with the whole random thing, but more types can be added if you change the spawn prob
+	/// set to null to get it greyscaled from "[icon_state]_soup".. Not very usable with the whole random thing, but more types can be added if you change the spawn prob
 	var/erupting_state = null
 	///what chem do we produce?
 	var/datum/reagent/reagent_id = /datum/reagent/fuel/oil
@@ -21,7 +21,7 @@
 	var/discovered = FALSE
 	///How many points we grant to whoever discovers us
 	var/point_value = 100
-	///what's our real name that will show upon discovery? null to do nothing
+	/// what's our real name that will show upon discovery?. null to do nothing
 	var/true_name
 	///the message given when you discover this geyser.
 	var/discovery_message = null
@@ -43,7 +43,7 @@
 		I.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(I)
 
-///start making those CHHHHHEEEEEEMS. Called whenever chems are removed
+/// start making those CHHHHHEEEEEEMS.. Called whenever chems are removed
 /obj/structure/geyser/proc/start_chemming()
 	SIGNAL_HANDLER
 

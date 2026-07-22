@@ -13,7 +13,7 @@
 	abstract_type = /datum/heretic_knowledge
 	/// Name of the knowledge, shown to the heretic.
 	var/name = "Basic knowledge"
-	/// Description of the knowledge, shown to the heretic. Describes what it unlocks / does.
+	/// Description of the knowledge, shown to the heretic.. Describes what it unlocks / does.
 	var/desc = "Basic knowledge of forbidden arts."
 	/// What's shown to the heretic when the knowledge is acquired
 	var/gain_text
@@ -21,14 +21,14 @@
 	/// If set, this knowledge allows the heretic to do a ritual on a transmutation rune with the components set.
 	/// If one of the items in the list is a list, it's treated as 'any of these items will work'
 	var/list/required_atoms
-	/// Paired with above. If set, the resulting spawned atoms upon ritual completion.
+	/// Paired with above.. If set, the resulting spawned atoms upon ritual completion.
 	var/list/result_atoms = list()
 	/// If set, required_atoms checks for these *exact* types and doesn't allow them to be ingredients.
 	var/list/banned_atom_types = list()
 	/// Cost of knowledge in knowledge points
 	var/cost = 0
-	/// The priority of the knowledge. Higher priority knowledge appear higher in the ritual list.
-	/// Number itself is completely arbitrary. Does not need to be set for non-ritual knowledge.
+	/// The priority of the knowledge.. Higher priority knowledge appear higher in the ritual list.
+	/// Number itself is completely arbitrary.. Does not need to be set for non-ritual knowledge.
 	var/priority = 0
 	///If this is considered starting knowledge, TRUE if yes
 	var/is_starting_knowledge = FALSE
@@ -40,9 +40,9 @@
 	var/research_tree_icon_state
 	var/research_tree_icon_frame = 1
 	var/research_tree_icon_dir = SOUTH
-	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
+	/// Determines what kind of monster ghosts will ignore from here on out.. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
 	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
-	/// This is used for the drafting system. By default is 0 (Meaning it won't show up in the draft), also makes it show up in the shop according to this tier
+	/// This is used for the drafting system.. By default is 0 (Meaning it won't show up in the draft), also makes it show up in the shop according to this tier
 	var/drafting_tier = 0
 	/// decides if it's added to the shop, only, and not drafts
 	var/is_shop_only = FALSE
@@ -192,7 +192,7 @@
  */
 /datum/heretic_knowledge/spell
 	abstract_type = /datum/heretic_knowledge/spell
-	/// Spell path we add to the heretic. Type-path.
+	/// Spell path we add to the heretic.. Type-path.
 	var/datum/action/action_to_add
 	/// The spell we actually created.
 	var/datum/weakref/created_action_ref
@@ -484,7 +484,7 @@
 	priority = MAX_KNOWLEDGE_PRIORITY - 10 // A pretty important midgame ritual.
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "book_open"
-	/// Whether we've done the ritual. Only doable once.
+	/// Whether we've done the ritual.. Only doable once.
 	var/was_completed = FALSE
 
 /datum/heretic_knowledge/knowledge_ritual/New()

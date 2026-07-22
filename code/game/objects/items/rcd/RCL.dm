@@ -42,7 +42,7 @@
 	if(!loaded)
 		return FALSE
 	. = TRUE
-	if(ghetto && prob(10)) //Is it a ghetto RCL? If so, give it a 10% chance to fall apart
+	if(ghetto && prob(10)) // Is it a ghetto RCL?. If so, give it a 10% chance to fall apart
 		to_chat(user, span_warning("You attempt to loosen the securing screws on the side, but it falls apart!"))
 		while(loaded.amount > 30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
 			var/diff = loaded.amount % 30
@@ -192,7 +192,7 @@
 		balloon_alert(user, "its empty!")
 		return
 
-	if(prob(2) && ghetto) //Give ghetto RCLs a 2% chance to jam, requiring it to be reactviated manually.
+	if(prob(2) && ghetto) // Give ghetto RCLs a 2% chance to jam, needing it to be reactviated manually.
 		balloon_alert(user, "wires jam!")
 		active = FALSE
 		return
@@ -204,7 +204,7 @@
 					last = null
 					return
 				if(get_dir(last, user) == last.d2)
-					//Did we just walk backwards? Well, that's the one direction we CAN'T complete a stub.
+					// Did we just walk backwards?. that's the one direction we CAN'T complete a stub.
 					last = null
 					return
 				loaded.pipe_cleaner_join(last, user, FALSE)

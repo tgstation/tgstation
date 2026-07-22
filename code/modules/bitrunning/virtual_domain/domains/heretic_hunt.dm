@@ -78,7 +78,7 @@
 	user.AddElement(/datum/element/rust_healing)
 	user.add_faction(FACTION_HERETIC)
 
-// All it does is stand there, only attacks if attacked (Manuel player) (TODO: make them ahelp to really simulate manuel players)
+// All it does is stand there, only attacks if attacked (Manuel player) to do make them ahelp to really simulate manuel players)
 /datum/ai_controller/basic_controller/fake_crewman
 	behavior_tree_json = "code/modules/bitrunning/virtual_domain/domains/crewman.bt.json"
 	blackboard = list(

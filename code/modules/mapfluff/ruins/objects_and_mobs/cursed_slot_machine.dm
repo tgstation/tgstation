@@ -1,4 +1,4 @@
-/// Greed's slot machine: Used in the Greed ruin. Deals damage on each use, with a successful use giving a d20 of fate.
+/// Greed's slot machine: Used in the Greed ruin.. Deals damage on each use, with a successful use giving a d20 of fate.
 /obj/structure/cursed_slot_machine
 	name = "greed's slot machine"
 	desc = "High stakes, high rewards."
@@ -20,7 +20,7 @@
 	var/status_effect_on_roll = TRUE
 	/// Length of the cooldown between the machine being used and being able to spin the machine again.
 	var/cooldown_length = 15 SECONDS
-	/// Are we currently in use? Anti-spam prevention measure.
+	/// Are we currently in use?. Anti-spam prevention measure.
 	var/in_use = FALSE
 	/// Cooldown between pulls of the cursed slot machine.
 	COOLDOWN_DECLARE(spin_cooldown)
@@ -53,7 +53,7 @@
 	. += mutable_appearance(icon, overlay_state)
 	. += emissive_appearance(icon, overlay_state, src)
 
-/// Validates that the user can use the cursed slot machine. User is the person using the slot machine. Returns TRUE if we can, FALSE otherwise.
+/// Validates that the user can use the cursed slot machine.. User is the person using the slot machine.. Returns TRUE if we can, FALSE otherwise.
 /obj/structure/cursed_slot_machine/proc/check_and_set_usage(mob/living/carbon/human/user)
 	if(in_use)
 		balloon_alert_to_viewers("already spinning!")
@@ -65,7 +65,7 @@
 		to_chat(user, span_danger("The machine doesn't engage. You get the compulsion to try again in a few seconds."))
 		return FALSE
 
-	if(signal_value & SLOT_MACHINE_USE_CANCEL) // failsafe in case we don't want to let the machine be used for some reason (like if we're maxed out on curses but not getting gibbed)
+	if(signal_value & SLOT_MACHINE_USE_CANCEL) // failsafe in case we don't want to let the machine be used f. Some reason (like if we're maxed out on curses. Not getting gibbed)
 		say("We're sorry, but we can no longer serve you at this establishment.")
 		return FALSE
 

@@ -75,7 +75,7 @@
 // Passable, but mining mobs avoid pathing through them
 /mob/living/basic/mining/demon_afterimage/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
 	var/mob/living/requester = pass_info.requester_ref?.resolve()
-	// Only block mining mobs so that drones etc can still path through
+	// Only block mining mobs so that drones and so on can still path through
 	if (istype(requester) && (requester.mob_biotypes & MOB_MINING) && requester.loc != loc)
 		return FALSE
 	return ..()

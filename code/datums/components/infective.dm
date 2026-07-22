@@ -172,7 +172,7 @@
 
 	var/old_bio_armor
 	if(isitem(parent))
-		//if you are putting an infective item on, it obviously will not protect you, so set its bio armor low enough that it will never block ContactContractDisease()
+		// if you are putting an infective item on, it obviously will not protect you, so set its bio arm. Low enough that it will never block ContactContractDisease()
 		var/obj/item/equipped_item = parent
 		old_bio_armor = equipped_item.get_armor_rating(BIO)
 		equipped_item.set_armor_rating(BIO, 0)

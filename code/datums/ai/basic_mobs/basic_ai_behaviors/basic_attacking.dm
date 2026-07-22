@@ -55,7 +55,7 @@
 	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), final_target, TRUE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/// Single-hit variant: terminates after one successful attack and always clears the target key.
+/// Single-hit variant: stops after one successful attack and always clears the target key.
 /datum/bt_node/ai_behavior/basic_melee_attack/interact_once
 
 /datum/bt_node/ai_behavior/basic_melee_attack/interact_once/finish_action(datum/ai_controller/controller, succeeded)
@@ -68,7 +68,7 @@
 	var/targeting_strategy = BB_TARGETING_STRATEGY
 	var/hiding_location_key
 	time_between_perform = 0.6 SECONDS
-	/// Max range at which we can fire. Make sure your movement actually gets you this close please
+	/// Max range at which we can fire.. Make sure your movement actually gets you this close please
 	var/max_range = 9
 	/// Avoid shooting through friendlies.
 	var/avoid_friendly_fire = FALSE

@@ -94,7 +94,7 @@
 	update_med_hud_health(parent)
 	update_med_hud_status(parent)
 
-/// Update our parent's health display based on how harmed our host is
+/// Update our parent's health display good on how harmed our host is
 /datum/component/life_link/proc/update_health_hud(mob/living/mob_parent)
 	var/severity = 0
 	var/healthpercent = health_percentage(host)

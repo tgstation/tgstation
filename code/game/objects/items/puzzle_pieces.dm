@@ -49,7 +49,7 @@
 	move_resist = MOVE_FORCE_OVERPOWERING
 	damage_deflection = 70
 	can_open_with_hands = FALSE
-	/// Make sure that the puzzle has the same puzzle_id as the keycard door! (If this is null, queuelinks dont happen!)
+	/// Make sure that the puzzle has the same puzzle_id as the keycard door!. (If this is null, queuelinks dont happen!)
 	var/puzzle_id = null
 	/// do we use queue_links?
 	var/uses_queuelinks = TRUE
@@ -132,7 +132,7 @@
 		return ITEM_INTERACT_BLOCKING
 	return ITEM_INTERACT_SUCCESS
 
-//Test doors. Gives admins a few doors to use quickly should they so choose for events.
+// Test doors.. Gives admins a few doors to use quickly should they so choose for events.
 /obj/machinery/door/puzzle/keycard/yellow_required
 	name = "blue airlock"
 	desc = "It looks like it requires a yellow keycard."
@@ -158,7 +158,7 @@
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 
-//Uses the pressure_plate settings for a pretty basic custom pattern that waits for a specific item to trigger. Easy enough to retool for mapping purposes or subtypes.
+// Uses the pressure_plate settings for a pretty basic custom pattern that waits for a specific item to trigger.. Easy enough to retool for mapping purposes or subtypes.
 /obj/item/pressure_plate/hologrid
 	name = "hologrid"
 	desc = "A high power, electronic input port for a holobox, which can unlock the hologrid's storage compartment. Safe to stand on."
@@ -169,7 +169,7 @@
 	trigger_item = TRUE
 	specific_item = /obj/structure/holobox
 	removable_assembly = FALSE //Being a pressure plate subtype, this can also use signals.
-	roundstart_signaller_freq = FREQ_HOLOGRID_SOLUTION //Frequency is kept on its own default channel however.
+	roundstart_signaller_freq = FREQ_HOLOGRID_SOLUTION // Frequency is kept on its own default channel but
 	active = TRUE
 	trigger_delay = 10
 	protected = TRUE
@@ -323,7 +323,7 @@
 	var/id //null would literally open every puzzle door without an id
 	/// queue size, must match count of objects this activates!
 	var/queue_size = 2
-	/// should the puzzle machinery perform the final step of the queue link on LateInitialize? An alternative to queue size
+	/// should the puzzle machinery perform the final step of the queue link on LateInitialize?. An alternative to queue size
 	var/late_initialize_pop = FALSE
 
 /obj/machinery/puzzle/get_save_vars()
@@ -433,7 +433,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password, 32)
 	tgui_text = "Please enter the PIN code."
 	tgui_title = "What's the PIN code?"
 	input_max_len_is_pass = TRUE
-	///The length of the PIN. Suggestion: something between 4 and 12.
+	/// The length of the PIN.. Suggestion: something between 4 and 12.
 	var/pin_length = 6
 	///associate a color to each digit that may be found in the password.
 	var/list/digit_to_color = list()

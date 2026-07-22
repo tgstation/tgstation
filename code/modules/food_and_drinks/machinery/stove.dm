@@ -24,7 +24,7 @@
 // Soup pot for cooking soup
 // Future addention ideas:
 // - Thermostat you can stick in the pot to see in examine the temperature
-// - Tasting the pot to learn its exact contents w/o sci goggles (chef skillchip?)
+// - Tasting the pot to learn its exact contents without sci goggles (chef skillchip?)
 /obj/item/reagent_containers/cup/soup_pot
 	name = "soup pot"
 	desc = "A tall soup designed to mix and cook all kinds of soup."

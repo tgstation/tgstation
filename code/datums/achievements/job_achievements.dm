@@ -46,7 +46,7 @@
 	database_id = MEDAL_SNAIL
 	icon_state = "snail"
 
-//all of service! hip hip!
+// all of service!. hip hip!
 
 /datum/award/achievement/jobs/service_bad
 	name = "Centcom Grade: Shitty Service"
@@ -66,4 +66,4 @@
 	database_id = MEDAL_GOOD_SERVICE
 	icon_state = "service_good"
 
-//civilian achievies! while not recognized by the code, it is recognized by our hearts
+// civilian achievies!. while not recognized by the code, it is recognized by our hearts

@@ -67,7 +67,7 @@
 	worn_icon = 'icons/mob/clothing/head/beanie.dmi'
 	icon_state = "waldo_hat"
 
-//No dog fashion sprites yet :(  poor Ian can't be dope like the rest of us yet
+// No dog fashion sprites yet :( poor Ian can't be dope like the rest of us yet
 
 /obj/item/clothing/head/beanie/black/dboy
 	name = "test subject beanie"

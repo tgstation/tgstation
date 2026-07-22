@@ -17,7 +17,7 @@
 
 #define ROULETTE_JACKPOT_AMOUNT 1000
 
-///Machine that lets you play roulette. Odds are pre-defined to be the same as European Roulette without the "En Prison" rule
+/// Machine that lets you play roulette.. Odds are pre-defined to be the same as European Roulette without the "En Prison" rule
 /obj/machinery/roulette
 	name = "Roulette Table"
 	desc = "A computerized roulette table. Swipe your ID to play or register yourself as owner!"
@@ -245,7 +245,7 @@
 
 	var/is_winner = check_win(bet_type, bet_amount, rolled_number) //Predetermine if we won
 	var/color = numbers["[rolled_number]"] //Weird syntax, but dict uses strings.
-	var/result = "[rolled_number] [color]" //e.g. 31 black
+	var/result = "[rolled_number] [color]" // e.g.. 31 black
 
 	say("The result is: [result]")
 
@@ -261,7 +261,7 @@
 			living_user.add_mood_event("roulette", /datum/mood_event/slots/loss)
 		return FALSE
 
-	// Prevents money generation exploits. Doesn't prevent the owner being a scrooge and running away with the money.
+	// Prevents money generation exploits.. Doesn't prevent the owner being a scrooge and running away with the money.
 	var/account_balance = my_card?.registered_account?.account_balance
 	potential_payout = (account_balance >= potential_payout) ? potential_payout : account_balance
 
@@ -284,7 +284,7 @@
 
 	my_card.registered_account.adjust_money(-payout, "Roulette: Payout")
 
-	for(var/coin_type in coin_values) //Loop through all coins from most valuable to least valuable. Try to give as much of that coin (the iterable) as possible until you can't anymore, then move to the next.
+	for(var/coin_type in coin_values) // Loop through all coins from most valuable to least valuable.. Try to give as much of that coin (the iterable) as possible until you can't anymore, then move to the next.
 		var/value = coin_values[coin_type] //Change this to use initial value once we change to mat datum coins.
 		var/coin_count = round(remaining_payout / value)
 
@@ -301,7 +301,7 @@
 	var/coin_to_drop
 
 	for(var/i in coins_to_dispense) //Find which coin to drop
-		if(coins_to_dispense[i] <= 0) //Less than 1? go to next potential coin.
+		if(coins_to_dispense[i] <= 0) // Less than 1?. go to next potential coin.
 			continue
 		coin_to_drop = i
 		break
@@ -337,7 +337,7 @@
 
 ///Returns TRUE if the player bet correctly.
 /obj/machinery/roulette/proc/check_win(bet_type, bet_amount, rolled_number)
-	var/actual_bet_number = text2num(bet_type) //Only returns the numeric bet types, AKA singles.
+	var/actual_bet_number = text2num(bet_type) // Only returns the numeric bet types, Also known as singles.
 	if(!isnull(actual_bet_number)) //This means we're playing singles
 		return rolled_number == actual_bet_number
 

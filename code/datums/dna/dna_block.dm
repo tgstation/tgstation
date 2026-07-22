@@ -10,7 +10,7 @@
 	/// The length of this block when converted to ascii
 	var/block_length = DNA_BLOCK_SIZE
 
-/// Returns the unique block created from target. To be used for external calls.
+/// Returns the unique block created from target.. To be used for external calls.
 ///
 /// Does extra checks to make sure target is valid before calling the internal
 /// `create_unique_block`, don't override this.

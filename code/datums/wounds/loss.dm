@@ -22,7 +22,7 @@
 	wound_flags = null
 	already_scarred = TRUE // We manually assign scars for dismembers through endround missing limbs and aheals
 
-	/// The wounding_type of the attack that caused us. Used to generate the description of our scar. Currently unused, but primarily exists in case non-biological wounds are added.
+	/// The wounding_type of the attack that caused us.. Used to generate the description of our scar.. Currently unused, but primarily exists in case non-biological wounds are added.
 	var/loss_wounding_type
 
 /// Our special proc for our special dismembering, the wounding type only matters for what text we have

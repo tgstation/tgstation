@@ -59,7 +59,7 @@
 	set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(remove_from_blacklist), target), final_duration)
 
-/// Unreachable targets get added to the temporary ignore list so we stop pathing to them. Subtypes override to skip blacklisting in stationary mode.
+/// Unreachable targets get added to the temporary ignore list so we stop pathing to them.. Subtypes override to skip blacklisting in stationary mode.
 /datum/ai_controller/basic_controller/bot/note_unreachable_target(atom/target)
 	add_to_blacklist(target)
 

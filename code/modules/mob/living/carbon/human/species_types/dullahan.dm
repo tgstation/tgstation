@@ -31,7 +31,7 @@
 
 	/// The dullahan relay that's associated with the owner, used to handle many things such as talking and hearing.
 	var/obj/item/dullahan_relay/my_head
-	/// Did our owner's first client connection get handled yet? Useful for when some proc needs to be called once we're sure that a client has moved into our owner, like for Dullahans.
+	/// Did our owner's first client connection get handled yet?. Useful for when some proc needs to be called once we're sure that a client has moved into our owner, like for Dullahans.
 	var/owner_first_client_connection_handled = FALSE
 
 /datum/species/dullahan/check_roundstart_eligible()
@@ -55,7 +55,7 @@
 	my_head = new /obj/item/dullahan_relay(head, human)
 	human.put_in_hands(head)
 
-	// We want to give the head some boring old eyes just so it doesn't look too jank on the head sprite.
+	// We want to give the head some boring old eyes just so it doesn't look too low quality code on the head sprite.
 	var/obj/item/organ/eyes/eyes = new /obj/item/organ/eyes(head)
 	eyes.eye_color_left = human.eye_color_left
 	eyes.eye_color_right = human.eye_color_right
@@ -74,7 +74,7 @@
 		return // don't gib nullspace
 	my_head = null
 	dullahan.investigate_log("has been gibbed by having an illegal head put on [dullahan.p_their()] shoulders.", INVESTIGATE_DEATHS)
-	dullahan.gib(DROP_ALL_REMAINS) // Yeah so giving them a head on their body is really not a good idea, so their original head will remain but uh, good luck fixing it after that.
+	dullahan.gib(DROP_ALL_REMAINS) // Yeah so giving them a head on their body is really not a good idea, so their original head will remain. Uh, good luck fixing it after that.
 
 /// If our head is destroyed, so are we
 /datum/species/dullahan/proc/on_head_destroyed()
@@ -86,7 +86,7 @@
 	human.investigate_log("has been gibbed by the loss of [human.p_their()] head.", INVESTIGATE_DEATHS)
 	human.gib(DROP_ALL_REMAINS)
 
-/// Head was butchered? No more dullahan
+/// Head was butchered?. No more dullahan
 /datum/species/dullahan/proc/on_relay_move()
 	SIGNAL_HANDLER
 	if(QDELETED(my_head?.owner) || !isdullahan(my_head?.owner))

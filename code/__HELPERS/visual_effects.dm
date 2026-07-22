@@ -31,7 +31,7 @@
 /// The duration of the animate call in mob/living/update_transform
 #define UPDATE_TRANSFORM_ANIMATION_TIME (0.2 SECONDS)
 
-///Animates source spinning around itself. For docmentation on the args, check atom/proc/SpinAnimation()
+/// Animates source spinning around itself.. For docmentation on the args, check atom/proc/SpinAnimation()
 /atom/proc/do_spin_animation(speed = 1 SECONDS, loops = -1, segments = 3, angle = 120, parallel = TRUE, tag = null)
 	var/list/matrices = list()
 	for(var/i in 1 to segments-1)
@@ -92,11 +92,11 @@
 /// Makes this atom look like a "hologram"
 /// So transparent, blue, with a scanline and an emissive glow
 /// This is acomplished using a combination of filters and render steps/overlays
-/// The degree of the opacity is optional, based off the opacity arg (0 -> 1)
-/// An optional color_override replaces the default blue tint — either a hex string (opacity applied on top) or a color matrix/list (passed through as-is; caller owns its own alpha)
+/// The degree of the opacity is optional, good off the opacity arg (0 -> 1)
+/// An optional color_override replaces the default blue tint — either a hex string (opacity applied on top). A col. Matrix/list (passed through as-is; caller owns its own alpha)
 /// Returns the glow mutable_appearance so callers can cut the overlay later
 /atom/proc/makeHologram(opacity = 0.5, color_override)
-	// First, we'll make things blue (roughly) and sorta transparent
+	// First, we'll make things blue (roughly) and sort of transparent
 	var/color_value
 	if(islist(color_override))
 		color_value = color_override
@@ -111,9 +111,9 @@
 			b = rgb_list[3]
 		color_value = rgb(r, g, b, opacity * 255)
 	add_filter("HOLO: Color and Transparent", 1, color_matrix_filter(color_value))
-	// Now we're gonna do a scanline effect
-	// Gonna take this atom and give it a render target, then use it as a source for a filter
-	// (We use an atom because it seems as if setting render_target on an MA is just invalid. I hate this engine)
+	// Now we're going to do a scanline effect
+	// Going to take this atom and give it a render target, then use it as a source for a filter
+	// (We use an atom because it seems as if setting render_target on an MA is just invalid.. I hate this engine)
 	var/atom/movable/scanline = new(null)
 	scanline.icon = 'icons/effects/effects.dmi'
 	scanline.icon_state = "scanline"
@@ -131,7 +131,7 @@
 		var/static/uid = 0
 		render_target = "HOLOGRAM [uid]"
 		uid++
-	// I'm using static here to reduce the overhead, it does mean we need to do plane stuff manually tho
+	// I'm using static here to reduce the overhead, it does mean we need to do plane stuff manually though
 	var/static/atom/movable/render_step/emissive/glow
 	if(!glow)
 		glow = new(null)

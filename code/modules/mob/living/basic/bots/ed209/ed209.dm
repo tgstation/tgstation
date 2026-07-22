@@ -170,4 +170,4 @@
 	projectile_type = /obj/projectile/bullet/a7mm
 	emagged_projectile_sound = 'sound/items/weapons/minebot_rocket.ogg'
 	emagged_projectile_type = /obj/projectile/bullet/rocket/weak //lord have mercy
-	ride_component = /datum/component/riding/creature/ed_bot/nukie //ride at ur own risk. especially if its emagged. warranty void
+	ride_component = /datum/component/riding/creature/ed_bot/nukie // ride at your own risk.. especially if its emagged.. warranty void

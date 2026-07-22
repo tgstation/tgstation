@@ -178,7 +178,7 @@
 	/// Determines what icon is being shown
 	VAR_PRIVATE/is_sending = FALSE
 
-	///This is the cargo hold ID used by the piratepad_control. Match these two to link them together.
+	/// This is the cargo hold ID used by the piratepad_control.. Match these two to link them together.
 	var/cargo_hold_id
 
 /obj/machinery/piratepad/multitool_act(mob/living/user, obj/item/multitool/I)
@@ -228,7 +228,7 @@
 	var/datum/weakref/pad_ref
 	///How long does it take to warmup the pad to teleport?
 	var/warmup_time = 100
-	///Is the teleport pad/computer sending something right now? TRUE/FALSE
+	/// Is the teleport pad/computer sending something right now?. TRUE/FALSE
 	var/sending = FALSE
 	///For the purposes of space pirates, how many points does the control pad have collected.
 	var/points = 0
@@ -236,7 +236,7 @@
 	var/datum/export_report/total_report
 	///Callback holding the sending timer for sending the goods after a delay.
 	var/sending_timer
-	///This is the cargo hold ID used by the piratepad machine. Match these two to link them together.
+	/// This is the cargo hold ID used by the piratepad machine.. Match these two to link them together.
 	var/cargo_hold_id
 	///Interface name for the ui_interact call for different subtypes.
 	var/interface_type = "CargoHoldTerminal"
@@ -381,7 +381,7 @@
 		for(var/mob/living/hidden as anything in hidden_mobs)
 			///Sell mobs, but leave their contents intact.
 			export_single_item(hidden, apply_elastic = FALSE, dry_run = dry_run, external_report = report, export_markets = list(EXPORT_MARKET_STATION, EXPORT_MARKET_PIRACY))
-		///there are still licing mobs inside that item. Stop, don't sell it ffs.
+		/// there are still licing mobs inside that item.. Stop, don't sell it ffs.
 		if(locate(/mob/living) in item_on_pad.get_all_contents())
 			continue
 		export_item_and_contents(item_on_pad, apply_elastic = FALSE, dry_run = dry_run, delete_unsold = FALSE, external_report = report, ignore_typecache = nosell_typecache, export_markets = list(EXPORT_MARKET_STATION, EXPORT_MARKET_PIRACY))
@@ -425,7 +425,7 @@
 	abstract_type = /datum/export/pirate
 	sales_market = EXPORT_MARKET_PIRACY
 
-/// Attempts to find the thing on station
+/// Tries to find the thing on station
 /datum/export/pirate/proc/find_loot()
 	return
 

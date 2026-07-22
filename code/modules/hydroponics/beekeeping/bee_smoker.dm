@@ -18,7 +18,7 @@
 	var/activated = FALSE
 	/// sound to play when releasing smoke
 	var/datum/looping_sound/beesmoke/beesmoke_loop
-	///how much  fuel it costs to use this item
+	/// how much fuel it costs to use this item
 	var/single_use_cost = 5
 
 /obj/item/bee_smoker/Initialize(mapload)

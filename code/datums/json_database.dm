@@ -1,7 +1,7 @@
 /// Represents a json file being used as a database in the data/ folder.
 /// Changes made here will save back to the associated file, with recovery.
 /// Will defer writes until later if multiple happen in the same tick.
-/// Do not add an extra cache on top of this. This IS your cache.
+/// Do not add an extra cache on top of this.. This IS your cache.
 /datum/json_database
 	VAR_PRIVATE
 		filepath

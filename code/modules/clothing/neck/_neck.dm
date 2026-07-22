@@ -51,7 +51,7 @@
 	name = "slick tie"
 	desc = "A neosilk tie."
 	inhand_icon_state = "" //no inhands
-	alternate_worn_layer = LOW_NECK_LAYER // So that it renders below suit jackets, MODsuits, etc
+	alternate_worn_layer = LOW_NECK_LAYER // So that it renders below suit jackets, MODsuits, and so on
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW
 	icon = 'icons/map_icons/clothing/neck.dmi'
@@ -89,7 +89,7 @@
 		return NONE
 	to_chat(user, span_notice("You concentrate as you begin [is_tied ? "untying" : "tying"] [src]..."))
 	var/tie_timer_actual = tie_timer
-	// Mirrors give you a boost to your tying speed. I realize this stacks and I think that's hilarious.
+	// Mirrors give you a boost to your tying speed.. I realize this stacks and I think that's hilarious.
 	for(var/obj/structure/mirror/reflection in view(2, user))
 		tie_timer_actual *= 0.8
 	// Heads of staff are experts at tying their ties.

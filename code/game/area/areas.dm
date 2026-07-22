@@ -32,15 +32,15 @@
 
 	///Do we have an active fire alarm?
 	var/fire = FALSE
-	///A var for whether the area allows for detecting fires/etc. Disabled or enabled at a fire alarm, checked by fire locks.
+	/// A var for whether the area allows for detecting fires/etc.. Disabled or enabled at a fire alarm, checked by fire locks.
 	var/fire_detect = TRUE
-	///A list of all fire locks in this area. Used by fire alarm panels when resetting fire locks or activating all in an area
+	/// A list of all fire locks in this area.. Used by fire alarm panels when resetting fire locks or activating all in an area
 	var/list/firedoors
-	///A list of firelocks currently active. Used by fire alarms when setting their icons.
+	/// A list of firelocks currently active.. Used by fire alarms when setting their icons.
 	var/list/active_firelocks
-	///A list of all fire alarms in this area. Used by firelocks and burglar alarms to change icon state.
+	/// A list of all fire alarms in this area.. Used by firelocks and burglar alarms to change icon state.
 	var/list/firealarms = list()
-	///Alarm type to count of sources. Not usable for ^ because we handle fires differently
+	/// Alarm type to count of sources.. Not usable for ^ because we handle fires differently
 	var/list/active_alarms = list()
 	/// The current alarm fault status
 	var/fault_status = AREA_FAULT_NONE
@@ -48,7 +48,7 @@
 	var/fault_location
 	///List of all lights in our area
 	var/list/lights = list()
-	///We use this just for fire alarms, because they're area based right now so one alarm going poof shouldn't prevent you from clearing your alarms listing. Fire alarms and fire locks will set and clear alarms.
+	/// We use this just f. Fire alarms, because they're area good right now so one alarm going poof shouldn't prevent you from clearing your alarms listing.. Fire alarms and fire locks will set and clear alarms.
 	var/datum/alarm_handler/alarm_manager
 
 	var/lightswitch = TRUE
@@ -60,7 +60,7 @@
 	/// If a room is too big it doesn't have beauty.
 	var/beauty_threshold = 150
 
-	/// For space, the asteroid, lavaland, etc. Used with blueprints or with weather to determine if we are adding a new area (vs editing a station room)
+	/// F. Space, the asteroid, lavaland. So on Used with blueprints. With weather to determine if we are adding a new area (vs editing a station room)
 	var/outdoors = FALSE
 	/// Whether or not this area unifies all of its motion sensors.
 	var/motion_monitored = FALSE
@@ -72,7 +72,7 @@
 	var/mood_bonus = 0
 	/// Mood message for being here, only shows up if mood_bonus != 0
 	var/mood_message = "This area is pretty nice!"
-	/// Does the mood bonus require a trait?
+	/// Does the mood bonus need a trait?
 	var/mood_trait
 
 	///Will objects this area be needing power?
@@ -109,7 +109,7 @@
 
 	var/list/cameras
 
-	/// Typepath to limit the areas (subtypes included) that atoms in this area can smooth with. Used for shuttles.
+	/// Typepath to limit the areas (subtypes included) that atoms in this area can smooth with.. Used for shuttles.
 	var/area/area_limited_icon_smoothing
 
 	/// The energy usage of the area in the last machines SS tick.
@@ -292,7 +292,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return 0
 
 /// Returns a nested list of lists with all turfs split by zlevel.
-/// only zlevels with turfs are returned. The order of the list is not guaranteed.
+/// only zlevels with turfs are returned.. The order of the list is not guaranteed.
 /area/proc/get_zlevel_turf_lists()
 	if(length(turfs_to_uncontain_by_zlevel))
 		cannonize_contained_turfs()
@@ -316,7 +316,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return turfs_by_zlevel[zlevel]
 
 
-/// Merges a list containing all of the turfs zlevel lists from get_zlevel_turf_lists inside one list. Use get_zlevel_turf_lists() or get_turfs_by_zlevel() unless you need all the turfs in one list to avoid generating large lists
+/// Merges a list containing all of the turfs zlevel lists from get_zlevel_turf_lists inside one list.. Use get_zlevel_turf_lists() or get_turfs_by_zlevel() unless you need all the turfs in one list to avoid generating large lists
 /area/proc/get_turfs_from_all_zlevels()
 	. = list()
 	for (var/list/zlevel_turfs as anything in get_zlevel_turf_lists())
@@ -325,7 +325,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /// Ensures that the contained_turfs list properly represents the turfs actually inside us
 /area/proc/cannonize_contained_turfs_by_zlevel(zlevel_to_clean, _autoclean = TRUE)
 	// This is massively suboptimal for LARGE removal lists
-	// Try and keep the mass removal as low as you can. We'll do this by ensuring
+	// Try and keep the mass removal as low as you can.. We'll do this by ensuring
 	// We only actually add to contained turfs after large changes (Also the management subsystem)
 	// Do your damndest to keep turfs out of /area/space as a stepping stone
 	// That sucker gets HUGE and will make this take actual seconds
@@ -337,7 +337,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		return
 
 	var/new_length = length(turfs_to_uncontain_by_zlevel)
-	// Walk backwards thru the list
+	// Walk backwards through the list
 	for (var/i in length(turfs_to_uncontain_by_zlevel) to 0 step -1)
 		if (i && length(turfs_to_uncontain_by_zlevel[i]))
 			break // Stop the moment we find a useful list

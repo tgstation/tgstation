@@ -63,7 +63,7 @@
 		if(living_mobs.len < maximum_spawns)
 			produce_mob()
 
-/datum/round_event/vent_clog/end() //No end announcement. If you want to take the easy way out and just leave the vent welded, you must open it at your own peril.
+/datum/round_event/vent_clog/end() // No end announcement.. If you want to take the easy way out and just leave the vent welded, you must open it at your own peril.
 	vent = null
 	living_mobs.Cut()
 

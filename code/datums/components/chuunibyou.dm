@@ -59,7 +59,7 @@
 	))
 	REMOVE_TRAIT(parent, TRAIT_CHUUNIBYOU, REF(src))
 
-/// signal sent when the parent tries to speak. we let speech pass if we are casting a spell so mimes still chuuni their spellcasts
+/// signal sent when the parent tries to speak.. we let speech pass if we are casting a spell so mimes still chuuni their spellcasts
 /// (this may end in the mime dying)
 /datum/component/chuunibyou/proc/on_try_speech(datum/source, message, ignore_spam, forced)
 	SIGNAL_HANDLER
@@ -81,7 +81,7 @@
 	SIGNAL_HANDLER
 
 	// this makes it bypass speech checks (being a mime) until the spell is done casting
-	// this lets mimes cast with it, but, um... might get them lynched
+	// this lets mimes cast with it, but, um.... might get them lynched
 	casting_spell = TRUE
 	invocation_list[INVOCATION_TYPE] = INVOCATION_SHOUT
 	invocation_list[INVOCATION_GARBLE_PROB] = 0

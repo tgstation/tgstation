@@ -17,7 +17,7 @@
  * W - walls
  * P - pump
  */
-/// A vent, scrubber and a sensor in a single device meant specifically for cycling airlocks. Ideal for airlocks of up to 3x3 tiles in size to avoid wind and timing out.
+/// A vent, scrubber and a sensor in a single device meant specifically for cycling airlocks.. Ideal for airlocks of up to 3x3 tiles in size to avoid wind and timing out.
 /obj/machinery/atmospherics/components/unary/airlock_pump
 	name = "external airlock pump"
 	desc = "A pump for cycling an external airlock controlled by the connected doors."
@@ -59,11 +59,11 @@
 	var/cycle_timeout = 10 SECONDS
 	///List of the turfs adjacent to the pump for faster cycling and avoiding wind
 	var/list/turf/adjacent_turfs = list()
-	///Max distance between the airlock and the pump. Used to set up cycling.
+	/// Max distance between the airlock and the pump.. Used to set up cycling.
 	var/airlock_pump_distance_limit = 2
 	///Max distance between the central airlock and the side airlocks in a group
 	var/airlock_group_distance_limit = 2
-	///Type of airlocks required for automatic cycling setup. To avoid hacking bridge doors. Ignored for mapspawn pump.
+	/// Type of airlocks needed for automatic cycling setup.. To avoid hacking bridge doors.. Ignored for mapspawn pump.
 	var/valid_airlock_typepath = /obj/machinery/door/airlock/external
 	///Station-facing airlocks used in cycling
 	var/list/obj/machinery/door/airlock/internal_airlocks
@@ -264,7 +264,7 @@
 		return
 	if(airlock in external_airlocks)
 		// If it's not null - we shuttledocked
-		// (it may be 0. Maybe badmin set internal pressure to 0 as well, who knows)
+		// (it may be 0.. Maybe badmin set internal pressure to 0 as well, who knows)
 		if(docked_side_pressure != null)
 			// Space-faced airlock detection
 			var/turf/external_tile = get_step(airlock, REVERSE_DIR(dir))
@@ -347,7 +347,7 @@
 	deltimer(emergency_stop_timer)
 
 	// In case we can open both sides safe_dock will do it for us
-	// it also handles its own messages. If we can't - procceed
+	// it also handles its own messages.. If we can't - procceed
 	if (docked_side_pressure != null && safe_dock(unbolt_only))
 		return TRUE
 

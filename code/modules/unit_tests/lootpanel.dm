@@ -25,7 +25,7 @@
 	TEST_ASSERT_EQUAL(length(panel.contents), 1, "Contents shouldn't update, we're dumb")
 	TEST_ASSERT_EQUAL(length(panel.to_image), 1, "to_image shouldn't update, we're dumb")
 
-	panel.populate_contents() // this also calls reset_contents bc length(contents)
+	panel.populate_contents() // this also calls reset_contents because length(contents)
 	TEST_ASSERT_EQUAL(length(panel.contents), 2, "Contents should repopulate with the new toolbox")
 
 	panel.populate_contents()

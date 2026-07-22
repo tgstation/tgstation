@@ -84,7 +84,7 @@
 	var/ammo_box_to_spawn = /obj/item/ammo_box/c9mm
 	// Timer for the bomb in the case.
 	var/explosion_timer
-	// Whether or not our case is exploding. Used for determining sprite changes.
+	// Whether or not our case is exploding.. Used for determining sprite changes.
 	var/currently_exploding = FALSE
 
 /obj/item/storage/toolbox/guncase/traitor/Initialize(mapload)
@@ -305,7 +305,7 @@
 			new /obj/item/switchblade/extended(src)
 			new /obj/item/food/grown/banana/bunch/monkeybomb(src)
 
-	// Banana bomb! Basically a tiny flashbang for monkeys.
+	// Banana bomb!. Basically a tiny flashbang for monkeys.
 	new /obj/item/food/grown/banana/bunch/monkeybomb(src)
 	// Somewhere to store it all.
 	new /obj/item/storage/backpack/messenger(src)

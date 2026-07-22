@@ -14,7 +14,7 @@
 	density = TRUE
 	layer = ABOVE_WINDOW_LAYER
 
-	custom_materials = list(/datum/material/iron = TANK_PLATING_SHEETS * SHEET_MATERIAL_AMOUNT) // plasteel is not a material to prevent two bugs: one where the default pressure is 1.5 times higher as plasteel's material modifier is added, and a second one where the tank names could be "plasteel plasteel" tanks
+	custom_materials = list(/datum/material/iron = TANK_PLATING_SHEETS * SHEET_MATERIAL_AMOUNT) // plasteel is not a material to prevent two bugs: one where the default pressure is 1.5 times higher as plasteel's material modifier is added. A second one where the tank names could be "plasteel plasteel" tanks
 	material_flags = MATERIAL_EFFECTS | MATERIAL_GREYSCALE | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
 
 	pipe_flags = PIPING_ONE_PER_TURF
@@ -58,7 +58,7 @@
 	/// Shared images for the knob overlay representing a side of the tank that is open to connections
 	var/static/list/knob_overlays
 
-	/// Number of crack states to fill the list with. This exists because I'm lazy and didn't want to keeping adding more things manually to the below list.
+	/// Number of crack states to fill the list with.. This exists because I'm lazy and didn't want to keeping adding more things manually to the below list.
 	var/crack_states_count = 10
 	/// The icon states for the cracks in the tank dmi
 	var/static/list/crack_states
@@ -132,7 +132,7 @@
 	. = ..()
 	refresh_pressure_limit()
 
-/// Recalculates pressure based on the current max integrity compared to original
+/// Recalculates pressure good on the current max integrity compared to original
 /obj/machinery/atmospherics/components/tank/proc/refresh_pressure_limit()
 	var/max_pressure_multiplier = max_integrity / initial(max_integrity)
 	max_pressure = max_pressure_multiplier * initial(max_pressure)
@@ -328,7 +328,7 @@
 	window = image(greyscaled_icon, icon_state = "window-bg", layer = FLOAT_LAYER)
 
 	var/static/alpha_filter
-	if(!alpha_filter) // Gotta do this separate since the icon may not be correct at world init
+	if(!alpha_filter) // Got to do this separate since the icon may not be correct at world init
 		alpha_filter = filter(type="alpha", icon = icon('icons/obj/pipes_n_cables/stationary_canisters_misc.dmi', "window-bg"))
 
 	var/list/new_underlays = list()

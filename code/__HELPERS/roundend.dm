@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 				else
 					category = "others"
 					mob_data["typepath"] = M.type
-		//Ghosts don't care about minds, but we want to retain ckey data etc
+		// Ghosts don't care about minds, but we want to retain ckey data and so on
 		if(isobserver(M))
 			count_only = FALSE
 			escape_status = "ghosts"
@@ -408,7 +408,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		content = file2text(filename)
 	else if (report_type == SERVER_LAST_ROUND) //Look at the last round that this server has seen
 		content = file2text("data/server_last_roundend_report.html")
-	else //report_type is null, so make a new report based on the current round and show that to the player
+	else // report_type is null, so make a new report good on the current round and show that to the player
 		var/list/report_parts = list(personal_report(C), GLOB.common_report)
 		content = report_parts.Join()
 		fdel(filename)
@@ -533,7 +533,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	parts += "In total, they earned [tourist_income] [MONEY_NAME][tourist_income ? "!" : "..."]<br>"
 	log_econ("Roundend service income: [tourist_income] [MONEY_NAME].")
 
-	// Award service achievements based on tourist income
+	// Award service achievements good on tourist income
 	switch(tourist_income)
 		if(1 to 2000)
 			award_service(/datum/award/achievement/jobs/service_bad)

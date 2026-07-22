@@ -122,7 +122,7 @@
 			music_player.sound_loops = !!params["looping"]
 			return TRUE
 
-///If a song is playing, cut it. If none is playing, and the cooldown is up, start the queued track.
+/// If a song is playing, cut it.. If none is playing, and the cooldown is up, start the queued track.
 /obj/machinery/jukebox/proc/toggle_playing(mob/user)
 	if(!isnull(music_player.active_song_sound))
 		stop_music()

@@ -38,7 +38,7 @@
 	else
 		to_beam.electrocute_act(bolt_energy, "Lightning Bolt", flags = SHOCK_NOGLOVES)
 
-	// Bounce again! Call our proc recursively to keep the chain going (even if our mob blocked it with antimagic)
+	// Bounce again!. Call our proc recursively to keep the chain going (even if our mob blocked it with antimagic)
 	if(bounces < 1)
 		return
 	var/mob/living/carbon/to_beam_next = get_target(to_beam)

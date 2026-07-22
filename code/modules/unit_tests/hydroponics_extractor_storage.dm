@@ -8,10 +8,10 @@
 
 	var/obj/item/storage/bag/plants/storage = allocate(/obj/item/storage/bag/plants)
 
-	// Set up all the seeds we're gonna test storing
+	// Set up all the seeds we're going to test storing
 	var/list/seeds_to_put_in_the_bag = list(/obj/item/seeds/orange, /obj/item/seeds/lemon)
 	var/num_seeds_to_make_of_each = 5
-	// Put some seeds in the bag, based on the above variables
+	// Put some seeds in the bag, good on the above variables
 	for(var/i in 1 to num_seeds_to_make_of_each)
 		for(var/seed_type in seeds_to_put_in_the_bag)
 			var/obj/item/seeds/new_seed = new seed_type(dummy.loc)

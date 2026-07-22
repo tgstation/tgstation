@@ -151,7 +151,7 @@
 		to_chat(victim, span_userdanger("The vines [pick("wind", "tangle", "tighten")] around you!"))
 		buckle_mob(victim, force = TRUE)
 
-/// Finds a target tile to spread to. If checks pass it will spread to it and also proc on_spread on target.
+/// Finds a target tile to spread to.. If checks pass it will spread to it and also proc on_spread on target.
 /obj/structure/spacevine/proc/spread()
 	if(isnull(master)) //If we've lost our controller, something has gone terribly wrong.
 		return

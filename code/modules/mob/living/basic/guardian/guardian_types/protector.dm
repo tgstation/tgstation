@@ -1,4 +1,4 @@
-/// Very durable, and reverses the usual leash dynamic. Can slow down to become extremely durable.
+/// Very durable, and reverses the usual leash dynamic.. Can slow down to become extremely durable.
 /mob/living/basic/guardian/protector
 	guardian_type = GUARDIAN_PROTECTOR
 	melee_damage_lower = 15

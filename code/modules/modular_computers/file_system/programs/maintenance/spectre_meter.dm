@@ -55,7 +55,7 @@
 		if("toggle_mode")
 			auto_mode = !auto_mode
 			if(auto_mode)
-				///We want SSprocess. It fires twice as fast than the standard SSobjs used by [computer_file/program/process_tick]
+				/// We want SSprocess.. It fires twice as fast than the standard SSobjs used by [computer_file/program/process_tick]
 				START_PROCESSING(SSprocessing, src)
 				soundloop.start(computer)
 			else

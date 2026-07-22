@@ -2,7 +2,7 @@
 //
 // Pipes combine to form pipelines
 // Pipelines and other atmospheric objects combine to form pipe_networks
-//   Note: A single pipe_network represents a completely open space
+// Note: A single pipe_network represents a completely open space
 //
 // Pipes -> Pipelines
 // Pipelines + Other Objects -> Pipe network
@@ -12,7 +12,7 @@
 
 /obj/machinery/atmospherics
 	anchored = TRUE
-	move_resist = INFINITY //Moving a connected machine without actually doing the normal (dis)connection things will probably cause a LOT of issues. (this imply moving machines with something that can push turfs like a megafauna)
+	move_resist = INFINITY // Moving a connected machine without actually doing the normal (dis)connection things will probably cause a LOT of issues.. (this imply moving machines with something that can push turfs like a megafauna)
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = AREA_USAGE_ENVIRON
@@ -59,10 +59,10 @@
 	///Cap overlay that is being added to turf's `vis_contents`, `null` if pipe was never hidden or has no valid connections
 	var/obj/effect/overlay/cap_visual/cap_overlay
 
-	///Is the thing being rebuilt by SSair or not. Prevents list bloat
+	/// Is the thing being rebuilt by SSair or not.. Prevents list bloat
 	var/rebuilding = FALSE
 
-	///The bitflag that's being checked on ventcrawling. Default is to allow ventcrawling and seeing pipes.
+	/// The bitflag that's being checked on ventcrawling.. Default is to allow ventcrawling and seeing pipes.
 	var/vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE
 
 	///keeps the name of the object from being overridden if it's vareditted.
@@ -347,7 +347,7 @@
 	else if(target.piping_layer != given_layer && !(target.pipe_flags & PIPING_ALL_LAYER))
 		return FALSE
 
-	//if the target does not have the same color and it does not have all color connection flag[which allows it to be connected regardless of color] & one of the pipes is not gray[allowing for connection regardless] then we are out
+	// if the target does not have the same col. . It does not have all col. Connection flag[which allows it to be connected regardless of color] & one of the pipes is not gray[allowing f. Connection regardless] then we are out
 	if(target.pipe_color != pipe_color && !((target.pipe_flags | pipe_flags) & PIPING_ALL_COLORS) && target.pipe_color != ATMOS_COLOR_OMNI && pipe_color != ATMOS_COLOR_OMNI)
 		return FALSE
 
@@ -458,7 +458,7 @@
 			span_hear("You hear ratchet."))
 		investigate_log("was [span_warning("REMOVED")] by [key_name(usr)]", INVESTIGATE_ATMOS)
 
-		//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
+		// You unwrenched a pipe full of pressure?. Let's splat you into the wall, silly.
 		if(unsafe_wrenching)
 			unsafe_pressure_release(user, internal_pressure)
 		deconstruct(TRUE)
@@ -611,7 +611,7 @@
 		user.last_played_vent = world.time
 		playsound(src, 'sound/machines/ventcrawl.ogg', 50, TRUE, -3)
 
-	//Would be great if this could be implemented when someone alt-clicks the image.
+	// Would be great if this could be added when someone alt-clicks the image.
 	if (target_move.vent_movement & VENTCRAWL_ENTRANCE_ALLOWED)
 		user.handle_ventcrawl(target_move)
 		return
@@ -621,7 +621,7 @@
 		return
 	our_client.set_eye(target_move)
 	// Let's smooth out that movement with an animate yeah?
-	// If the new x is greater (move is left to right) we get a negative offset. vis versa
+	// If the new x is greater (move is left to right) we get a negative offset.. vis versa
 	our_client.pixel_x = (x - target_move.x) * ICON_SIZE_X
 	our_client.pixel_y = (y - target_move.y) * ICON_SIZE_Y
 	animate(our_client, pixel_x = 0, pixel_y = 0, time = 0.05 SECONDS)

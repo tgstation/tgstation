@@ -67,7 +67,7 @@
 
 	/// Lazylist of drained mobs to ensure that we don't steal a soul from someone twice
 	var/list/drained_mobs = null
-	/// List of action ability datums to grant on Initialize. Keep in mind that anything with the `/aoe/revenant` subtype starts locked by default.
+	/// List of action ability datums to grant on Initialize.. Keep in mind that anything with the `/aoe/revenant` subtype starts locked by default.
 	var/static/list/datum/action/abilities = list(
 		/datum/action/cooldown/spell/aoe/revenant/blight,
 		/datum/action/cooldown/spell/aoe/revenant/defile,
@@ -91,7 +91,7 @@
 	var/essence_excess = 0
 	/// How long the revenant is revealed for, is about 2 seconds times this var.
 	var/unreveal_time = 0
-	/// How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
+	/// How many perfect, regen-cap increasing souls the revenant has.. //TODO, add objective for getting a perfect soul(s?)
 	var/perfectsouls = 0
 
 /mob/living/basic/revenant/Initialize(mapload)
@@ -155,7 +155,7 @@
 	if(essence_regenerating && !HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED) && essence < max_essence) //While inhibited, essence will not regenerate
 		var/change_in_time = DELTA_WORLD_TIME(SSmobs)
 		essence = min(essence + (essence_regen_amount * change_in_time), max_essence)
-		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
+		update_mob_action_buttons() // because we update something needed by our spells in life, we need to update our buttons
 
 	update_health_hud()
 
@@ -216,7 +216,7 @@
 	var/rendered = span_deadsay("<b>UNDEAD: [src]</b> says, \"[message]\"")
 	relay_to_list_and_observers(rendered, GLOB.revenant_relay_mobs, src)
 
-/mob/living/basic/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly, so we gotta do some wacky override stuff
+/mob/living/basic/revenant/ClickOn(atom/A, params) // revenants can't interact with the world directly, so we got to do some wacky override stuff
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		ShiftClickOn(A)
@@ -232,7 +232,7 @@
 		attempt_harvest(A)
 		return
 
-	// This is probably the most cringe place I could put this but whatever -
+	// This is probably the most uncomfortable place I could put this but whatever -
 	// Revenants can click on spirit boards for seances like ghosts
 	if(istype(A, /obj/structure/spirit_board) \
 		&& !HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) \
@@ -340,7 +340,7 @@
 
 /// Forces the mob, once dormant, to move inside ectoplasm until it can regenerate.
 /mob/living/basic/revenant/proc/move_to_ectoplasm()
-	if(QDELETED(src) || !dormant) // something fucky happened, abort. we MUST be dormant to go inside the ectoplasm.
+	if(QDELETED(src) || !dormant) // something fucky happened, abort.. we MUST be dormant to go inside the ectoplasm.
 		return
 
 	visible_message(span_danger("[src]'s body breaks apart into a fine pile of blue dust."))
@@ -356,7 +356,7 @@
 	if(isnull(orbiting) || incorporeal_move_check(entering_loc))
 		return
 
-	// we're about to go somewhere we aren't meant to, end the orbit and block the move. feedback will be given in `incorporeal_move_check()`
+	// we're about to go somewhere we aren't meant to, end the orbit and block the move.. feedback will be given in `incorporeal_move_check()`
 	orbiting.end_orbit(src)
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
@@ -393,7 +393,7 @@
 /mob/living/basic/revenant/proc/incorporeal_move_check(atom/destination)
 	var/turf/open/floor/step_turf = get_turf(destination)
 	if(isnull(step_turf))
-		return TRUE // what? whatever let it happen
+		return TRUE // what?. whatever let it happen
 
 	if(step_turf.turf_flags & NOJAUNT)
 		to_chat(src, span_warning("Some strange aura is blocking the way."))
@@ -492,7 +492,7 @@
 	return TRUE
 
 /mob/living/basic/revenant/mob_negates_gravity()
-	return TRUE // i don't gotta explain shit
+	return TRUE // i don't got to explain shit
 
 /mob/living/basic/revenant/vv_edit_var(vname, vval)
 	. = ..()

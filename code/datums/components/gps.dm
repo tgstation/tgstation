@@ -1,6 +1,6 @@
-///Global GPS_list. All  GPS components get saved in here for easy reference.
+/// Global GPS_list.. All GPS components get saved in here for easy reference.
 GLOBAL_LIST_EMPTY(GPS_list)
-///GPS component. Atoms that have this show up on gps. Pretty simple stuff.
+/// GPS component.. Atoms that have this show up on gps.. Pretty simple stuff.
 /datum/component/gps
 	var/gpstag = "COM0"
 	var/tracking = TRUE
@@ -38,9 +38,9 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		qdel(src)
 		return
 
-///GPS component subtype. Only gps/item's can be used to open the UI.
+/// GPS component subtype.. Only gps/item's can be used to open the UI.
 /datum/component/gps/item
-	var/updating = TRUE //Automatic updating of GPS list. Can be set to manual by user.
+	var/updating = TRUE // Automatic updating of GPS list.. Can be set to manual by user.
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
 	/// UI state of GPS, altering when it can be used.
 	var/datum/ui_state/state = null

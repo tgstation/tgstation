@@ -97,7 +97,7 @@
 	new_abductor.real_name = "[team.name] [sub_role]"
 	new_abductor.equipOutfit(outfit)
 
-	// If we have a team skincolor, apply it here. Applied by admins or 2% chance of natural occurance
+	// If we have a team skincolor, apply it here.. Applied by admins or 2% chance of natural occurance
 	if(!isnull(team.team_skincolor))
 		for(var/obj/item/bodypart/part as anything in new_abductor.get_bodyparts())
 			part.should_draw_greyscale = TRUE
@@ -105,7 +105,7 @@
 
 		new_abductor.update_body_parts(update_limb_data = TRUE)
 
-	// We require that the template be loaded here, so call it in a blocking manner, if its already done loading, this won't block
+	// We need that the template be loaded here, so call it in a blocking manner, if its already done loading, this won't block
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
 	//Teleport to ship
 	for(var/obj/effect/landmark/abductor/LM in GLOB.landmarks_list)
@@ -163,7 +163,7 @@
 	if (choice == "new team")
 		team = new
 		if(tgui_alert(admin, "Use a Custom Skin Color?", "Alien Spraypainter", list("Yes", "No")) == "Yes")
-			// Keep in mind the darker colors don't look all that great, but it's easier to just reference an existing color list than make a new one
+			// Keep in mind the darker colors don't look all that great. It's easier to just reference an existing col. List than make a new one
 			var/colorchoice = tgui_input_list(admin, "Select Which Color?", "Alien Spraypainter", GLOB.color_list_ethereal + "Custom Color")
 			if(colorchoice == "Custom Color")
 				colorchoice = tgui_color_picker(admin, "Pick new color", "Alien Spraypainter", COLOR_WHITE)
@@ -200,13 +200,13 @@
 	var/static/team_count = 1
 	///List of all brainwashed victims' minds
 	var/list/datum/mind/abductees = list()
-	/// If we will recolor these aliens, this value gets changed. Has a really small chance to occur naturally, but admins can change this to anything they want.
+	/// If we will recolor these aliens, this value gets changed.. Has a really small chance to occur naturally, but admins can change this to anything they want.
 	var/team_skincolor = null
 
 /datum/team/abductor_team/New()
 	..()
 	team_number = team_count++
-	name = "Mothership [pick(GLOB.greek_letters)]" //TODO Ensure unique and actual alieny names
+	name = "Mothership [pick(GLOB.greek_letters)]" // To do Ensure unique and actual alieny names
 	add_objective(new /datum/objective/experiment)
 	// Some aliens can be green as a treat
 	if(prob(check_holidays(APRIL_FOOLS) ? 50 : 2) && isnull(team_skincolor))

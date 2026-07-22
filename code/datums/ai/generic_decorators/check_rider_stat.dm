@@ -1,4 +1,4 @@
-///Checks the health status of our rider, if any. returns false if we dont have a rider to begin with
+/// Checks the health status of our rider, if any.. returns false if we dont have a rider to begin with
 /datum/bt_node/decorator/check_rider_stat
 	///stat we're interested in
 	var/target_stat = UNCONSCIOUS

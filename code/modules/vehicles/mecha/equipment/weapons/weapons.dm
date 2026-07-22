@@ -11,11 +11,11 @@
 	var/fire_sound
 	/// How many shots are fired per action.
 	var/projectiles_per_shot = 1
-	/// The degrees by which each individual bullet fans out from a central point. A predictable spray of bullets.
+	/// The degrees by which each individual bullet fans out from a central point.. A predictable spray of bullets.
 	var/variance = 0
-	/// Whether our bullets go off trajectory while firing randomly. Used to replicate recoil and not a structured, predictable spray.
+	/// Whether our bullets go off trajectory while firing randomly.. Used to replicate recoil and not a structured, predictable spray.
 	var/randomspread = FALSE
-	/// The amount in deciseconds that the weapon sleeps between shots to simulate a 'burst fire'. The delay stops another bullet from being fired while sleeping.
+	/// The amount in deciseconds that the weapon sleeps between shots to simulate a 'burst fire'.. The delay stops another bullet from being fired while sleeping.
 	var/projectile_delay = 0
 	//the visual effect appearing when the weapon is fired.
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
@@ -53,7 +53,7 @@
 	if(!action_checks(target))
 		return FALSE
 
-	/// Find our mecha, find the opposite direction. Used for kickback while the mecha is drifting in zero-g to launch us in this direction.
+	/// Find our mecha, find the opposite direction.. Used for kickback while the mecha is drifting in zero-g to launch us in this direction.
 	var/newtonian_target = dir2angle(REVERSE_DIR(chassis.dir))
 	. = ..()//start the cooldown early because of sleeps
 	for(var/projectiles_to_shoot in 1 to projectiles_per_shot)
@@ -492,7 +492,7 @@
 	user.log_message("fired a [F] in [AREACOORD(T)].", LOG_ATTACK)
 	addtimer(CALLBACK(F, TYPE_PROC_REF(/obj/item/grenade/flashbang, detonate)), det_time)
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang //Because I am a heartless bastard -Sieve //Heartless? for making the poor man's honkblast? - Kaze
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang // Because I am a heartless bastard -Sieve //Heartless?. for making the poor man's honkblast?. - Kaze
 	name = "\improper SOB-3 grenade launcher"
 	desc = "A weapon for combat exosuits. Launches primed clusterbangs. You monster."
 	projectiles = 3
@@ -553,7 +553,7 @@
 	projectiles_cache_max = 999
 	harmful = TRUE
 	diags_first = TRUE
-	/// Damage done by the glove on contact. Also used to determine throw distance (damage / 5)
+	/// Damage done by the glove on contact.. Also used to determine throw distance (damage / 5)
 	var/punch_damage = 35
 	mech_flags = EXOSUIT_MODULE_HONK
 	ammo_type = MECHA_AMMO_PUNCHING_GLOVE
@@ -645,7 +645,7 @@
 	var/obj/vehicle/sealed/mecha/ripley/secmech
 	///Audio for using the hydraulic clamp
 	var/clampsound = 'sound/vehicles/mecha/hydraulic.ogg'
-	///Var for the cuff type. Basically stole how cuffing works from secbots
+	/// Var for the cuff type.. Basically stole how cuffing works from secbots
 	var/cuff_type = /obj/item/restraints/handcuffs/cable/zipties/used
 	///Var for autocuff, can be toggled in the mech interface.
 	var/autocuff = TRUE

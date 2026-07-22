@@ -17,7 +17,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp.bt.json"
 
-///Megacarps. The only difference is that they don't flee from scary fishermen and prioritize them.
+/// Megacarps.. The only difference is that they don't flee from scary fishermen and prioritize them.
 /datum/ai_controller/basic_controller/carp/mega
 	blackboard = list(
 		BB_BASIC_MOB_STOP_FLEEING = TRUE,

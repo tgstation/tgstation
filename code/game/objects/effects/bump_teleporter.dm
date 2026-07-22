@@ -40,7 +40,7 @@
 
 	stack_trace("Bump_teleporter [src] could not find a teleporter with id [id_target]!")
 
-/// Check to see if our teleporter was set up correctly mapside. Return TRUE if everything is fine, FALSE if not.
+/// Check to see if our teleporter was set up correctly mapside.. Return TRUE if everything is fine, FALSE if not.
 /obj/effect/bump_teleporter/proc/validate_setup(atom/movable/checkable)
 	var/message = ""
 
@@ -55,16 +55,16 @@
 
 	return TRUE
 
-/// Actually move our target atom from one position to another. Return TRUE if everything is fine. Override this proc on subtypes for specific teleportation methods.
+/// Actually move our target atom from one position to another.. Return TRUE if everything is fine.. Override this proc on subtypes for specific teleportation methods.
 /obj/effect/bump_teleporter/proc/teleport_action(atom/movable/target, turf/destination)
 	target.forceMove(destination)
 
-/// Subtype that uses do_teleport instead, to leverage any NO_TELEPORT traits that you might need to add in a given map
+/// Subtype that uses do_teleport instead, to use any NO_TELEPORT traits that you might need to add in a given map
 /obj/effect/bump_teleporter/filtering
 	name = "bump teleporter (do_teleport)"
 	desc = "Use me for when you want to avoid moving mobs with certain traits, like NO_TELEPORT."
 	icon_state = "x4"
 
-/// As promised in the name of this subtype, use do_teleport to leverage all of the filtering checks that it does.
+/// As promised in the name of this subtype, use do_teleport to use all of the filtering checks that it does.
 /obj/effect/bump_teleporter/filtering/teleport_action(atom/movable/target, turf/destination)
 	do_teleport(target, destination, channel = TELEPORT_CHANNEL_QUANTUM)

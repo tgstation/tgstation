@@ -68,7 +68,7 @@
 	if(succeeded)
 		controller.clear_blackboard_key(BB_CHECK_HUNGRY)
 
-///Find nearby ashwalkers. we love lizards.
+/// Find nearby ashwalkers.. we love lizards.
 /datum/bt_node/ai_behavior/befriend_ashwalkers
 	time_between_perform = 5 SECONDS
 

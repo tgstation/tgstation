@@ -31,7 +31,7 @@
 	. = ..()
 	soundloop = new (src)
 
-/// Scan the occupant, eventually producing a [/datum/experimental_cloning_record]. Returns FALSE if unsuccessful.
+/// Scan the occupant, eventually producing a [/datum/experimental_cloning_record].. Returns FALSE if unsuccessful.
 /obj/machinery/experimental_cloner_scanner/proc/start_scan()
 	if (machine_stat & BROKEN || machine_stat & NOPOWER || isnull(occupant))
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', vol = 100)

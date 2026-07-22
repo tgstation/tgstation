@@ -41,7 +41,7 @@
 	..()
 	QDEL_NULL(friend)
 
-//If the friend goes afk, make a brand new friend. Plenty of fish in the sea of imagination.
+// If the friend goes afk, make a brand new friend.. Plenty of fish in the sea of imagination.
 /datum/brain_trauma/special/imaginary_friend/proc/reroll_friend()
 	if(friend.client) //reconnected
 		return
@@ -381,7 +381,7 @@
 /datum/emote/imaginary_friend/custom/replace_pronoun(mob/user, message)
 	return message
 
-// Another snowflake proc, when will they end... should have refactored it differently
+// Another snowflake proc, when will they end.... should have refactored it differently
 /mob/eye/imaginary_friend/point_at(atom/pointed_atom)
 	if(!isturf(loc))
 		return

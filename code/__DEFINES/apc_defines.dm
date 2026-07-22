@@ -59,7 +59,7 @@
 #define APC_RESET_EMP "emp"
 
 // update_state
-// Bitshifts: (If you change the status values to be something other than an int or able to exceed 3 you will need to change these too)
+// Bitshifts: (If you change the status values to be something other than an int.. Able to exceed 3 you will need to change these too)
 /// The bit shift for the APCs cover status.
 #define UPSTATE_COVER_SHIFT (0)
 	/// The bitflag representing the APCs cover being open for icon purposes.
@@ -84,7 +84,7 @@
 /// Bitflag indicating that the APCs locked status overlay should be shown.
 #define UPOVERLAY_LOCKED (1<<1)
 
-// Bitshifts: (If you change the status values to be something other than an int or able to exceed 3 you will need to change these too)
+// Bitshifts: (If you change the status values to be something other than an int.. Able to exceed 3 you will need to change these too)
 /// Bit shift for the charging status of the APC.
 #define UPOVERLAY_CHARGING_SHIFT (2)
 /// Bit shift for the equipment status of the APC.

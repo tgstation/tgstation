@@ -92,7 +92,7 @@
 		power_throw++
 	if(isitem(thrown_thing))
 		var/obj/item/thrown_item = thrown_thing
-		frequency_number = 1-(thrown_item.w_class-3)/8 //At normal weight, the frequency is at 1. For tiny, it is 1.25. For huge, it is 0.75.
+		frequency_number = 1-(thrown_item.w_class-3)/8 // At normal weight, the frequency is at 1.. For tiny, it is 1.25.. For huge, it is 0.75.
 		if(thrown_item.throw_verb)
 			verb_text = thrown_item.throw_verb
 	do_attack_animation(target, no_effect = 1)
@@ -105,7 +105,7 @@
 		throwsound = 'sound/items/weapons/throwsoft.ogg'
 		power_throw_text = " flimsily."
 	frequency_number = frequency_number + (rand(-5,5)/100); //Adds a bit of randomness in the frequency to not sound exactly the same.
-	//The volume of the sound takes the minimum between the distance thrown or the max range an item, but no more than 50. Short throws are quieter. A fast throwing speed also makes the noise sharper.
+	// The volume of the sound takes the minimum between the distance thrown or the max range an item, but no more than 50.. Short throws are quieter.. A fast throwing speed also makes the noise sharper.
 	playsound(src, throwsound, clamp(8*min(get_dist(loc,target),thrown_thing.throw_range), 10, 50), vary = TRUE, extrarange = -1, frequency = frequency_number)
 	visible_message(span_danger("[src] [verb_text][plural_s(verb_text)] [thrown_thing][power_throw_text]"), \
 					span_danger("You [verb_text] [thrown_thing][power_throw_text]"))

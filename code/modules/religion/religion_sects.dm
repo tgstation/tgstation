@@ -18,7 +18,7 @@
 	var/tgui_icon = "bug"
 	/// holder for alignments.
 	var/alignment = ALIGNMENT_GOOD
-	/// Does this require something before being available as an option?
+	/// Does this need something before being available as an option?
 	var/starter = TRUE
 	/// The Sect's 'Mana'
 	var/favor = 0 //MANA!
@@ -30,7 +30,7 @@
 	var/list/desired_items
 	/// Autopopulated by `desired_items`
 	var/list/desired_items_typecache
-	/// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
+	/// Lists of rites by type.. Converts itself into a list of rites with "name - desc (favor_cost)" = type
 	var/list/rites_list = list()
 	/// Changes the Altar of Gods icon
 	var/altar_icon
@@ -73,7 +73,7 @@
 		to_chat(chap, span_notice("Return to an altar to reform your sect."))
 	chap.remove_faction(FACTION_HOLY)
 
-/// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
+/// Returns TRUE if the item can be sacrificed.. Can be modified to fit item being tested as well as person offering.. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
 /datum/religion_sect/proc/can_sacrifice(obj/item/sacrifice, mob/living/chap)
 	. = TRUE
 	if(chap.mind.holy_role == HOLY_ROLE_DEACON)
@@ -82,7 +82,7 @@
 	if(!is_type_in_typecache(sacrifice, desired_items_typecache))
 		return FALSE
 
-/// Activates when the sect sacrifices an item. This proc has NO bearing on the attackby sequence of other objects when used in conjunction with the religious_tool component.
+/// Activates when the sect sacrifices an item.. This proc has NO bearing on the attackby sequence of other objects when used in conjunction with the religious_tool component.
 /datum/religion_sect/proc/on_sacrifice(obj/item/sacrifice, mob/living/chap)
 	return adjust_favor(default_item_favor, chap)
 
@@ -90,7 +90,7 @@
 /datum/religion_sect/proc/tool_examine(mob/living/holy_creature)
 	return "You are currently at [round(favor)] favor with [GLOB.deity]."
 
-/// Adjust Favor by a certain amount. Can provide optional features based on a user. Returns actual amount added/removed
+/// Adjust Favor by a certain amount.. Can provide optional features good on a user.. Returns actual amount added/removed
 /datum/religion_sect/proc/adjust_favor(amount = 0, mob/living/chap)
 	. = amount
 	if(favor + amount < 0)
@@ -99,15 +99,15 @@
 		. = (max_favor-favor) //if favor = 5 and we want to add 10 with a max of 10, we'll only be able to add 5
 	favor = clamp(0, max_favor, favor+amount)
 
-/// Sets favor to a specific amount. Can provide optional features based on a user.
+/// Sets favor to a specific amount.. Can provide optional features good on a user.
 /datum/religion_sect/proc/set_favor(amount = 0, mob/living/chap)
 	favor = clamp(0,max_favor,amount)
 	return favor
 
-/// Activates when an individual uses a rite. Can provide different/additional benefits depending on the user.
+/// Activates when an individual uses a rite.. Can provide different/additional benefits depending on the user.
 /datum/religion_sect/proc/on_riteuse(mob/living/user, atom/religious_tool)
 
-/// Replaces the bible's bless mechanic. Return TRUE if you want to not do the brain hit.
+/// Replaces the bible's bless mechanic.. Return TRUE if you want to not do the brain hit.
 /datum/religion_sect/proc/sect_bless(mob/living/target, mob/living/chap)
 	if(!ishuman(target))
 		return BLESSING_FAILED
@@ -142,7 +142,7 @@
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return BLESSING_SUCCESS
 
-/// What happens if we bless a corpse? By default just do the default smack behavior
+/// What happens if we bless a corpse?. By default just do the default smack behavior
 /datum/religion_sect/proc/sect_dead_bless(mob/living/target, mob/living/chap)
 	return FALSE
 
@@ -446,7 +446,7 @@
 	desc = "Sacrifice the organic slurry created from rats dipped in welding fuel to gain favor. Exchange favor to adapt to the maintenance shafts."
 	tgui_icon = "eye"
 	altar_icon_state = "convertaltar-maint"
-	alignment = ALIGNMENT_EVIL //while maint is more neutral in my eyes, the flavor of it kinda pertains to rotting and becoming corrupted by the maints
+	alignment = ALIGNMENT_EVIL // while maint is more neutral in my eyes, the flavor of it kind of pertains to rotting and becoming corrupted by the maints
 	rites_list = list(/datum/religion_rites/maint_adaptation, /datum/religion_rites/adapted_eyes, /datum/religion_rites/adapted_food, /datum/religion_rites/ritual_totem)
 	desired_items = list(/obj/item/reagent_containers = "holding organic slurry")
 
@@ -496,16 +496,16 @@
 		/datum/religion_rites/tenacious,
 		/datum/religion_rites/unbreakable,
 	)
-	///the one allowed contract. making a new contract dusts the old one
+	/// the one allowed contract.. making a new contract dusts the old one
 	var/obj/item/sparring_contract/existing_contract
-	///places you can spar in. rites can be used to expand this list with new arenas!
+	/// places you can spar in.. rites can be used to expand this list with new arenas!
 	var/list/arenas = list(
 		"Recreation Area" = /area/station/commons/fitness/recreation,
 		"Chapel" = /area/station/service/chapel,
 	)
-	///how many matches you've lost with holy stakes. 3 = excommunication
+	/// how many matches you've lost with holy stakes.. 3 = excommunication
 	var/matches_lost = 0
-	///past opponents who you've beaten in holy battles. You can't fight them again to prevent favor farming
+	/// past opponents who you've beaten in holy battles.. You can't fight them again to prevent favor farming
 	var/list/past_opponents = list()
 
 /datum/religion_sect/spar/tool_examine(mob/living/holy_creature)
@@ -554,7 +554,7 @@
 	smack_chance = 20
 	/// Whether the dream protection rite has been used
 	VAR_FINAL/dream_protection = FALSE
-	/// Number of deacons added thus far
+	/// Number of deacons added so far
 	VAR_FINAL/deacon_count = 0
 	/// Max number of deacons
 	var/max_deacons = 3
@@ -610,7 +610,7 @@
 
 // dream blessing only works on dreaming targets.
 // blessing someone asleep causes them to dream, and blessing a dreamer rewards favor.
-// it also heals regardless of if the target is mechanical or organic. do robots dream of electric sheep?
+// it also heals regardless of if the target is mechanical or organic.. do robots dream of electric sheep?
 /datum/religion_sect/dreams/sect_bless(mob/living/target, mob/living/chap)
 	if(HAS_TRAIT(target, TRAIT_DREAMING))
 		var/result = standard_bless_healing(target, chap)

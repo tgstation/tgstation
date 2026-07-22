@@ -116,7 +116,7 @@
 
 /datum/status_effect/overwatch/Destroy()
 	QDEL_NULL(link)
-	if (!isnull(watcher))  // Side effects in Destroy? Well it turns out `on_remove` is also just called on Destroy. But only if the owner isn't deleting.
+	if (!isnull(watcher))  // Side effects in Destroy?. Well it turns out `on_remove` is also just called on Destroy.. But only if the owner isn't deleting.
 		INVOKE_ASYNC(src, PROC_REF(unregister_watcher), watcher)
 		watcher = null
 

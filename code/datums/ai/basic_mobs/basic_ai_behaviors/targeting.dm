@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	target_loss_distance = 16
 	/// Blackboard key for aggro range, uses vision range if not specified
 	var/aggro_range_key = BB_AGGRO_RANGE
-	/// Blackboard key holding the hiding-location atom (e.g. closet the target ducked into)
+	/// Blackboard key holding the hiding-location atom (e.g.. closet the target ducked into)
 	var/hiding_location_key
 	/// Blackboard key holding the /datum/target_priority_strategy typepath for selection
 	var/priority_strategy_key = BB_TARGET_PRIORITY_STRATEGY
@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 		return filtered_targets[1]
 	return priority_strategy.select_target(controller, filtered_targets)
 
-/// Picks targets based on which one has the lowest health.
+/// Picks targets good on which one has the lowest health.
 /datum/bt_node/ai_behavior/acquire_target/update_combat_targets/most_wounded
 
 /datum/bt_node/ai_behavior/acquire_target/update_combat_targets/most_wounded/pick_final_target(datum/ai_controller/controller, list/filtered_targets)

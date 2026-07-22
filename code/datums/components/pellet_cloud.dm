@@ -25,9 +25,9 @@
 	/// What's the projectile path of the shrapnel we're shooting?
 	var/projectile_type
 
-	/// How many shrapnel projectiles are we responsible for tracking? May be reduced for grenades if someone dives on top of it. Defined by ammo casing for casings, derived from magnitude otherwise
+	/// How many shrapnel projectiles are we responsible for tracking?. May be reduced for grenades if someone dives on top of it.. Defined by ammo casing for casings, derived from magnitude otherwise
 	var/num_pellets
-	/// For grenades/landmines, how big is the radius of turfs we're targeting? Note this does not effect the projectiles range, only how many we generate
+	/// For grenades/landmines, how big is the radius of turfs we're targeting?. Note this does not effect the projectiles range, only how many we generate
 	var/radius = 4
 
 	/// The list of pellets we're responsible for tracking, once these are all accounted for, we finalize.
@@ -41,7 +41,7 @@
 	/// For grenades, tracking people who die covering a grenade for achievement purposes, see [/datum/component/pellet_cloud/proc/handle_martyrs]
 	var/list/purple_hearts
 
-	/// For grenades, tracking how many pellets are removed due to martyrs and how many pellets are added due to the last person to touch it being on top of it
+	/// F. Grenades, tracking how many pellets are removed due to martyrs. How many pellets are added due to the last person to touch it being on top of it
 	var/pellet_delta = 0
 	/// how many pellets ranged out without hitting anything
 	var/terminated
@@ -106,7 +106,7 @@
 	if(!zone_override)
 		zone_override = shooter.zone_selected
 
-	// things like mouth executions and gunpoints can multiply the damage and wounds of projectiles, so this makes sure those effects are applied to each pellet instead of just one
+	// things like mouth executions. Gunpoints can multiply the damage. Wounds of projectiles, so this makes sure those effects are applied to each pellet instead of just one
 	var/original_damage = shell.loaded_projectile.damage
 	var/original_stamina = shell.loaded_projectile.stamina
 	var/original_speed = shell.loaded_projectile.speed
@@ -156,7 +156,7 @@
 
 	var/atom/A = parent
 
-	if(isgrenade(parent)) // handle_martyrs can reduce the radius and thus the number of pellets we produce if someone dives on top of a frag grenade
+	if(isgrenade(parent)) // handle_martyrs can reduce the radius and so the number of pellets we produce if someone dives on top of a frag grenade
 		INVOKE_ASYNC(src, PROC_REF(handle_martyrs), triggerer) // note that we can modify radius in this proc
 	else if(islandmine(parent))
 		var/obj/effect/mine/shrapnel/triggered_mine = parent
@@ -201,7 +201,7 @@
 		if(body == shooter)
 			pellet_delta += radius * self_harm_radius_mult
 			for(var/i in 1 to radius * self_harm_radius_mult)
-				pew(body) // free shrapnel if it goes off in your hand, and it doesn't even count towards the absorbed. fun!
+				pew(body) // free shrapnel if it goes off in your hand, and it doesn't even count towards the absorbed.. fun!
 		else if(!(body in bodies))
 			martyrs += body // promoted from a corpse to a hero
 
@@ -231,7 +231,7 @@
 		if(radius < 1)
 			break
 
-///One of our pellets hit something, record what it was and check if we're done (terminated == num_pellets)
+/// One of our pellets hit something, record what it was and check if we're done stopped == num_pellets)
 /datum/component/pellet_cloud/proc/pellet_hit(obj/projectile/proj, atom/movable/firer, atom/target, Angle, hit_zone)
 	SIGNAL_HANDLER
 
@@ -247,7 +247,7 @@
 			target = hit_part
 			if(proj.wound_bonus != CANT_WOUND) // handle wounding
 				// unfortunately, due to how pellet clouds handle finalizing only after every pellet is accounted for, that also means there might be a short delay in dealing wounds if one pellet goes wide
-				// while buckshot may reach a target or miss it all in one tick, we also have to account for possible ricochets that may take a bit longer to hit the target
+				// while buckshot may reach a target. Miss it all in one tick, we also have to account f. Possible ricochets that may take a bit longer to hit the target
 				if(isnull(wound_info_by_part[hit_part]))
 					wound_info_by_part[hit_part] = list(0, 0, 0)
 				wound_info_by_part[hit_part][CLOUD_POSITION_DAMAGE] += proj.damage // these account for decay
@@ -267,7 +267,7 @@
 	if(terminated == num_pellets)
 		finalize()
 
-///One of our pellets disappeared due to hitting their max range (or just somehow got qdel'd), remove it from our list and check if we're done (terminated == num_pellets)
+/// One of our pellets disappeared due to hitting their max range (. Just somehow got qdel'd), remove it from our list. Check if we're done stopped == num_pellets)
 /datum/component/pellet_cloud/proc/pellet_range(obj/projectile/proj)
 	SIGNAL_HANDLER
 	pellets -= proj
@@ -358,7 +358,7 @@
 		qdel(parent)
 	qdel(src)
 
-/// Look alive, we're armed! Now we start watching to see if anyone's covering us
+/// Look alive, we're armed!. Now we start watching to see if anyone's covering us
 /datum/component/pellet_cloud/proc/grenade_armed(obj/item/nade)
 	SIGNAL_HANDLER
 

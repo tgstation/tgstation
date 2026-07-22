@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 // CRATE MIMIC
 // ****************************
 
-// Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
+// Aggro when you try to open them.. Will also pickup loot when spawns and drop it when dies.
 /mob/living/basic/mimic/crate
 	name = "crate"
 	desc = "A very hostile rectangular steel crate."
@@ -69,9 +69,9 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	var/locked = FALSE
 	/// action to lock us
 	var/datum/action/innate/mimic_lock/lock
-	///A cap for items in the mimic. Prevents the mimic from eating enough stuff to cause lag when opened.
+	/// A cap for items in the mimic.. Prevents the mimic from eating enough stuff to cause lag when opened.
 	var/storage_capacity = 50
-	///A cap for mobs. Mobs count towards the item cap. Same purpose as above.
+	/// A cap for mobs.. Mobs count towards the item cap.. Same purpose as above.
 	var/mob_storage_capacity = 10
 	///Nullspaced crate that we are pretending to be
 	var/atom/movable/crate = /obj/structure/closet/crate
@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	REMOVE_TRAIT(src, TRAIT_AI_PAUSED, INNATE_TRAIT)
 	ai_controller.clear_forced_off()
 	if(length(contents))
-		locked = TRUE //if this was a crate with loot then we dont want people to just leftclick it to open it then bait it somewhere and steal its loot
+		locked = TRUE // if this was a crate with loot then we dont want people to just leftclick it to open it then bait it somewhere. Steal its loot
 	return TRUE
 
 /mob/living/basic/mimic/crate/adjust_health(amount, updating_health = TRUE, forced = FALSE)
@@ -325,7 +325,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		befriend(owner)
 	creator_ref = WEAKREF(owner)
 
-/// Check whether this object can be copied. If destroy_original is true, this proc is ignored.
+/// Check whether this object can be copied.. If destroy_original is true, this proc is ignored.
 /mob/living/basic/mimic/copy/proc/check_object(obj/target)
 	return ((isitem(target) || isstructure(target)) && !is_type_in_typecache(target, GLOB.animatable_blacklist))
 
@@ -392,7 +392,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 			if(!ballistic.chambered?.loaded_projectile && magazine_useless(gun)) // ran out of ammo
 				ai_controller?.set_blackboard_key(BB_GUNMIMIC_GUN_EMPTY, TRUE) //BANZAIIIIIIII
 				ai_controller?.cancel_current_plan()
-		else //if we cant fire we probably like ran out of energy or magic charges or whatever the hell idk
+		else // if we cant fire we probably like ran out of energy or magic charges or whatever the hell I do not know
 			ai_controller?.set_blackboard_key(BB_GUNMIMIC_GUN_EMPTY, TRUE)
 			ai_controller?.cancel_current_plan() // Stop our firing behavior so we can plan melee
 	else

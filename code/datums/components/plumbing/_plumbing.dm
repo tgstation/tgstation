@@ -1,8 +1,8 @@
 /datum/component/plumbing
 	dupe_mode = COMPONENT_DUPE_ALLOWED
-	///Index with "1" = /datum/ductnet/theductpointingnorth etc. "1" being the num2text from NORTH define
+	/// Index with "1" = /datum/ductnet/theductpointingnorth and so on "1" being the num2text from NORTH define
 	var/list/datum/ductnet/ducts
-	///shortcut to our parents' reagent holder. The holder that sends reagents into the pipeline
+	/// shortcut to our parents' reagent holder.. The holder that sends reagents into the pipeline
 	var/datum/reagents/reagents
 	///Whether our tile is covered and we should hide our ducts
 	var/tile_covered = FALSE
@@ -10,7 +10,7 @@
 	var/supply_connects = NONE
 	///direction in wich we act as a demander
 	var/demand_connects = NONE
-	///The layer on which we connect. Don't add multiple. If you want multiple layer connects for some reason you can just add multiple components with different layers
+	/// The layer on which we connect.. Don't add multiple.. If you want multiple layer connects for some reason you can just add multiple components with different layers
 	var/ducting_layer = DUCT_LAYER_DEFAULT
 	///What color is our demand connect?
 	var/demand_color = COLOR_RED
@@ -81,7 +81,7 @@
 	var/atom/movable/parent_movable = parent
 	return parent_movable.anchored
 
-///Returns the reagent holder meant to receive the reagents. Can be different from the one that sends reagents to the network
+/// Returns the reagent holder meant to receive the reagents.. Can be different from the one that sends reagents to the network
 /datum/component/plumbing/proc/recipient_reagents_holder()
 	return reagents
 
@@ -254,7 +254,7 @@
 	if(distinct_reagent_cap != INFINITY)
 		examine_list += span_notice("This plumbing component will only accept up to [distinct_reagent_cap] distinct reagents at once.")
 
-///called from in process(). only calls process_request(), but can be overwritten for children with special behaviour
+/// called from in process().. only calls process_request(), but can be overwritten for children with special behaviour
 /datum/component/plumbing/proc/send_request(dir)
 	var/amount_to_give = MACHINE_REAGENT_TRANSFER
 	// infinite cap means we need to special handling, process_request will just grab as much as it wants.
@@ -313,7 +313,7 @@
 		suppliersLeft--
 	return TRUE
 
-///returns TRUE when they can give the specified amount and reagent. called by process request
+/// returns TRUE when they can give the specified amount and reagent.. called by process request
 /datum/component/plumbing/proc/can_give(amount, reagent, datum/ductnet/net)
 	SHOULD_BE_PURE(TRUE)
 
@@ -327,6 +327,6 @@
 
 	return FALSE
 
-///this is where the reagent is actually transferred and is thus the finish point of our process()
+/// this is where the reagent is actually transferred and is so the finish point of our process()
 /datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, round_robin = TRUE)
 	reagents.trans_to(target.recipient_reagents_holder(), amount, target_id = reagent, methods = round_robin ? LINEAR : NONE)

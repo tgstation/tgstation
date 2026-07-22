@@ -6,7 +6,7 @@
 	var/drop_chance
 	///A list of "candy" items that can be dropped when taking damage
 	var/candy
-	///Number of "candy" items dropped when the structure is destroyed/mob is killed, set to 0 if none. drop_chance and minimum damage are not applied.
+	/// Number of "candy" items dropped when the structure is destroyed/mob is killed, set to 0 if none.. drop_chance and minimum damage are not applied.
 	var/death_drop
 
 /datum/component/pinata/Initialize(

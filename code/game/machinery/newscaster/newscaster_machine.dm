@@ -19,9 +19,9 @@
 	var/newscaster_username
 	///How much paper is contained within the newscaster?
 	var/paper_remaining = 0
-	///The access required to access D-notices.
+	/// The access needed to access D-notices.
 	var/admin_access = ACCESS_LIBRARY
-	///The access required to submit & remove wanted issues.
+	/// The access needed to submit & remove wanted issues.
 	var/security_access = ACCESS_SECURITY
 
 	///What newscaster channel is currently being viewed by the player?
@@ -193,7 +193,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			"image" = (has_wanted_issue ? "wanted_photo.png" : null)
 		))
 
-	//Code breaking down the channels that have been made on-station thus far. ha
+	// Code breaking down the channels that have been made on-station so far.. ha
 	//Then, breaks down the messages that have been made on those channels.
 	if(current_channel)
 		for(var/datum/feed_message/feed_message as anything in current_channel.messages)

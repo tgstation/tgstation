@@ -18,7 +18,7 @@
 	var/hacked_download = FALSE
 	///How much of the data has been downloaded.
 	var/download_completion
-	///The error message being displayed to the user, if necessary. Null if there isn't one.
+	/// The error message being displayed to the user, if necessary.. Null if there isn't one.
 	var/downloaderror
 
 	///The list of categories to display in the UI, in order of which they appear.
@@ -47,7 +47,7 @@
 	if(!PRG || !istype(PRG))
 		return FALSE
 
-	// Attempting to download antag only program, but without having emagged/syndicate computer. No.
+	// Trying to download antag only program, but without having emagged/syndicate computer.. No.
 	if((PRG.program_flags & PROGRAM_ON_SYNDINET_STORE) && !(computer.obj_flags & EMAGGED))
 		return FALSE
 
@@ -100,7 +100,7 @@
 	if(download_completion >= downloaded_file.size)
 		complete_file_download()
 		return
-	// Download speed according to connectivity state. NTNet server is assumed to be on unlimited speed so we're limited by our local connectivity
+	// Download speed according to connectivity state.. NTNet server is assumed to be on unlimited speed so we're limited by our local connectivity
 	var/download_netspeed = 0
 	// Speed defines are found in misc.dm
 	switch(ntnet_status)
@@ -140,7 +140,7 @@
 	data["downloading"] = !!downloaded_file
 	data["error"] = downloaderror || FALSE
 
-	// Download running. Wait please..
+	// Download running.. Wait please..
 	if(downloaded_file)
 		data["downloadname"] = downloaded_file.filename
 		data["downloaddesc"] = downloaded_file.filedesc

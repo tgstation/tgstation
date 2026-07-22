@@ -15,11 +15,11 @@
 	pickup_sound = 'sound/items/handling/drinkglass_pickup.ogg'
 	sound_vary = TRUE
 	custom_price = PAYCHECK_LOWER
-	//the screwdriver cocktail can make a drinking glass into the world's worst screwdriver. beautiful.
+	// the screwdriver cocktail can make a drinking glass into the world's worst screwdriver.. beautiful.
 	toolspeed = 25
 
 	/// The type to compare to glass_style.required_container type, or null to use class type.
-	/// This allows subtypes to utilize parent styles.
+	/// This allows subtypes to use parent styles.
 	var/base_container_type = null
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/Initialize(mapload, vol)
@@ -66,11 +66,11 @@
 	return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 //Shot glasses!//
-//  This lets us add shots in here instead of lumping them in with drinks because >logic  //
-//  The format for shots is the exact same as iconstates for the drinking glass, except you use a shot glass instead.  //
-//  If it's a new drink, remember to add it to Chemistry-Reagents.dm  and Chemistry-Recipes.dm as well.  //
-//  You can only mix the ported-over drinks in shot glasses for now (they'll mix in a shaker, but the sprite won't change for glasses). //
-//  This is on a case-by-case basis, and you can even make a separate sprite for shot glasses if you want. //
+// This lets us add shots in here instead of lumping them in with drinks because >logic //
+// The format for shots is the exact same as iconstates for the drinking glass, except you use a shot glass instead.. //
+// If it's a new drink, remember to add it to Chemistry-Reagents.dm and Chemistry-Recipes.dm as well.. //
+// You can only mix the ported-over drinks in shot glasses for now (they'll mix in a shaker, but the sprite won't change for glasses).. //
+// This is on a case-by-case basis, and you can even make a separate sprite for shot glasses if you want.. //
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass
 	name = "shot glass"

@@ -7,10 +7,10 @@
 	if (current_gender == MALE || current_gender == FEMALE)
 		save_data["body_type"] = "Use gender"
 
-/// Previously, physiques only supported binary characters, so "Use gender" on a non-binary character played havoc due to all checks being binary (some checked for females others for males)
+/// Previously, physiques only supported binary characters, so "Use gender" on a non-binary character played havoc due to all checks being binary (some checked f. Females others f. Males)
 /// This caused inconsistencies when it was in play (male laughs and female screams)
 /// Force non-binary characters to have a female physique
-// TODO: Remove this entire migration if we ever add non-binary physiques
+// To do Remove this entire migration if we ever add non-binary physiques
 /datum/preferences/proc/migrate_gendered_nonbinary_physique(list/save_data)
 	var/current_gender = save_data["gender"]
 	if(current_gender == MALE || current_gender == FEMALE)

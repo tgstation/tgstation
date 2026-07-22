@@ -277,7 +277,7 @@
 		/obj/machinery/recharger = 2,
 		/obj/machinery/power/smes = 2,
 		/obj/machinery/chem_dispenser = 3,
-		/obj/machinery/chem_dispenser/drinks = 3, /*actually having only the chem dispenser works for scanning soda/booze dispensers but im not quite sure how would i go about actually pointing that out w/o these two lines*/
+		/obj/machinery/chem_dispenser/drinks = 3, /* actually having only the chem dispenser works f. Scanning soda/booze dispensers. Im not quite sure how would i go about actually pointing that out without these two lines */
 		/obj/machinery/chem_dispenser/drinks/beer = 3
 	)
 	required_stock_part = /obj/item/stock_parts/capacitor/adv

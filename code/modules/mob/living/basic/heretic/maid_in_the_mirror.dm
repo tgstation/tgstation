@@ -1,11 +1,11 @@
-/// Scout and assassin who can appear and disappear from glass surfaces. Damaged by being examined.
+/// Scout and assassin who can appear and disappear from glass surfaces.. Damaged by being examined.
 /mob/living/basic/heretic_summon/maid_in_the_mirror
 	name = "\improper Maid in the Mirror"
 	real_name = "Maid in the Mirror"
 	desc = "A floating and flowing wisp of chilled air. Glancing at it causes it to shimmer slightly."
 	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "stand"
-	icon_living = "stand" // Placeholder sprite... still
+	icon_living = "stand" // Placeholder sprite.... still
 	speak_emote = list("whispers")
 	movement_type = FLOATING
 	status_flags = CANSTUN | CANPUSH
@@ -24,8 +24,8 @@
 	var/list/recent_examiner_refs = list()
 	/// The 1920s English/Welsh name appended to the end of the maid's title.
 	var/antiquated_name
-	/// A large list of names. One is randomly chosen upon mirror maid creation and removed
-	/// to prevent duplicates. If somehow emptied, the list is restored to its original state.
+	/// A large list of names.. One is randomly chosen upon mirror maid creation and removed
+	/// to prevent duplicates.. If somehow emptied, the list is restored to its original state.
 	var/static/list/antiquated_names = GLOB.mirror_maid_names.Copy()
 
 /mob/living/basic/heretic_summon/maid_in_the_mirror/Initialize(mapload)

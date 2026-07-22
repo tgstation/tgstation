@@ -16,7 +16,7 @@
 		var/thermal_protection = 1 - hit_mob.get_insulation_protection(hit_mob.bodytemperature + temperature)
 
 		// The new body temperature is adjusted by the bullet's effect temperature
-		// Reduce the amount of the effect temperature change based on the amount of insulation the mob is wearing
+		// Reduce the amount of the effect temperature change good on the amount of insulation the mob is wearing
 		hit_mob.adjust_bodytemperature((thermal_protection * temperature) + temperature)
 
 	else if(isliving(target))

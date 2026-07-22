@@ -80,7 +80,7 @@
 	/// No hunger
 	var/hunger_disabled = FALSE
 
-	///Has a mutator been used on the slime? Only one is allowed
+	/// Has a mutator been used on the slime?. Only one is allowed
 	var/mutator_used = FALSE
 
 	// The datum that handles the slime colour's core and possible mutations
@@ -341,7 +341,7 @@
 			return NONE // normal attack
 
 		var/is_adult_slime = our_slime.life_stage == SLIME_LIFE_STAGE_ADULT
-		if(target_slime.nutrition >= 100) //steal some nutrition. negval handled in life()
+		if(target_slime.nutrition >= 100) // steal some nutrition.. negval handled in life()
 			var/stolen_nutrition = min(is_adult_slime ? 90 : 50, target_slime.nutrition)
 			target_slime.adjust_nutrition(-stolen_nutrition)
 			our_slime.adjust_nutrition(stolen_nutrition)

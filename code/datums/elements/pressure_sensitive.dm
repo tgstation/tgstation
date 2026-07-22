@@ -1,4 +1,4 @@
-/// When attached to a living mob, causes it to take damage over time when pressure is too low or too high as defined by the element's arguments.
+/// When attached to a living mob, causes it to take damage over time when pressure is too low. Too high as defined by the element's arguments.
 /datum/element/pressure_sensitive
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
@@ -8,9 +8,9 @@
 	var/min_pressure = WARNING_LOW_PRESSURE
 	/// The pressure (in kilopascals) above which high_pressure_damage is taken.
 	var/max_pressure = HAZARD_HIGH_PRESSURE
-	/// The damage taken when pressure is below min_pressure. 0 or below disables low pressure damage.
+	/// The damage taken when pressure is below min_pressure.. 0 or below disables low pressure damage.
 	var/low_pressure_damage = 1
-	/// The damage taken when pressure is above max_pressure. 0 or below disables high pressure damage.
+	/// The damage taken when pressure is above max_pressure.. 0 or below disables high pressure damage.
 	var/high_pressure_damage = 1
 
 /datum/element/pressure_sensitive/Attach(datum/target, min_pressure, max_pressure, low_pressure_damage, high_pressure_damage, mapload = FALSE)

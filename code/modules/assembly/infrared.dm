@@ -55,7 +55,7 @@
 	// In general non-dense items should not block beams, but make special cases for things being thrown
 	if(!beam_atom.density && !beam_atom.throwing)
 		return FALSE
-	// The actually important check. Ensures stuff like mobs trip it but stuff like laser projectiles don't
+	// The actually important check.. Ensures stuff like mobs trip it but stuff like laser projectiles don't
 	if(beam_atom.pass_flags_self & beam_pass_flags)
 		return FALSE
 	if(isitem(beam_atom))

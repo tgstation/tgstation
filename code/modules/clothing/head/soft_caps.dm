@@ -4,7 +4,7 @@
 	icon = 'icons/obj/clothing/head/hats.dmi'
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 	icon_state = "cargosoft"
-	inhand_icon_state = "greyscale_softcap" //todo wip
+	inhand_icon_state = "greyscale_softcap" // to do work in progress
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	/// For setting icon archetype
 	var/soft_type = "cargo"
@@ -12,7 +12,7 @@
 	var/soft_suffix = "soft"
 
 	dog_fashion = /datum/dog_fashion/head/cargo_tech
-	/// Whether this is on backwards... Woah, cool
+	/// Whether this is on backwards.... Woah, cool
 	var/flipped = FALSE
 
 /obj/item/clothing/head/soft/dropped()

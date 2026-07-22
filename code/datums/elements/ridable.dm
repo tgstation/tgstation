@@ -114,14 +114,14 @@
 		unequip_buckle_inhands(user, target_movable)
 		return FALSE
 
-/// Checks to see if we've been hit with a red xenobio potion to make us faster. This is only registered if we're a vehicle
+/// Checks to see if we've been hit with a red xenobio potion to make us faster.. This is only registered if we're a vehicle
 /datum/element/ridable/proc/check_potion(atom/movable/ridable_atom, obj/item/slimepotion/speed/speed_potion, mob/living/user)
 	SIGNAL_HANDLER
 
 	if(HAS_TRAIT(ridable_atom, TRAIT_SPEED_POTIONED))
 		to_chat(user, span_warning("[ridable_atom] has already been coated with red, that's as fast as it'll go!"))
 		return SPEED_POTION_STOP
-	if(ridable_atom.has_buckled_mobs()) // effect won't take place til the next time someone mounts it, so just prevent that situation
+	if(ridable_atom.has_buckled_mobs()) // effect won't take place until the next time someone mounts it, so just prevent that situation
 		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [ridable_atom] while it's being ridden!"))
 		return SPEED_POTION_STOP
 	var/speed_limit = round(CONFIG_GET(number/movedelay/run_delay) * 0.85, 0.01)
@@ -198,7 +198,7 @@
 	if(rider == user) // Piggyback user
 		return ITEM_INTERACT_BLOCKING
 
-	// Handles de-fireman carrying a mob and buckling them onto something (tables, etc)
+	// Handles de-fireman carrying a mob and buckling them onto something (tables, and so on
 	var/mob/living/former_rider = rider
 	user.unbuckle_mob(former_rider)
 	former_rider.forceMove(get_turf(interacting_with))

@@ -25,7 +25,7 @@
 	var/power_efficiency = 1
 	/// Current x target
 	var/x_offset = 0
-	/// Current y target
+	/// Current why target
 	var/y_offset = 0
 	/// The icon to use for the indicator
 	var/indicator_icon = "launchpad_target"
@@ -273,7 +273,7 @@
 	log_msg += " [sending ? "to" : "from"] [target_x], [target_y], [z] ([A ? A.name : "null area"])"
 	log_game(log_msg.Join())
 
-//Starts in the briefcase. Don't spawn this directly, or it will runtime when closing.
+// Starts in the briefcase.. Don't spawn this directly, or it will runtime when closing.
 /obj/machinery/launchpad/briefcase
 	name = "briefcase launchpad"
 	desc = "A portable bluespace pad able to thrust matter through bluespace, teleporting it to or from nearby locations. Controlled via remote."
@@ -324,7 +324,7 @@
 	if(!istype(tool, /obj/item/launchpad_remote))
 		return NONE
 	var/obj/item/launchpad_remote/remote = tool
-	if(IS_WEAKREF_OF(src, remote.pad)) //do not attempt to link when already linked
+	if(IS_WEAKREF_OF(src, remote.pad)) // do not try to link when already linked
 		return ITEM_INTERACT_BLOCKING
 	remote.pad = WEAKREF(src)
 	to_chat(user, span_notice("You link [src] to [remote]."))

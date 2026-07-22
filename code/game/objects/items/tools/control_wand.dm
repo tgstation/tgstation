@@ -26,11 +26,11 @@
 	// areas that this remote is the exclusive owner of
 	var/list/area/our_domain = null
 	// areas specifically considered as restricted from a remote
-	// accessing them unless specifically allowed (vault, security, etc)
+	// accessing them unless specifically allowed (vault, security, and so on
 	var/static/list/area/restricted_areas = list(
 		/area/station/command/bridge, 									/*so Captain's remote isn't totally useless*/
 		/area/station/security, 										/*so antag RD/HoP/QM/CMO can't easily screw up the brig doors*/
-		/area/station/command/vault, 									/*aka Vault since it's QM's special thing*/
+		/area/station/command/vault, 									/* also known as Vault since it's QM's special thing */
 		/area/station/ai/satellite/chamber,	// these are areas exclusive to RD
 		/area/station/ai/upload,			// but sometimes mappers might misconfig their doors with our several dozen access helpers
 	)

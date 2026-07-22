@@ -5,7 +5,7 @@
 	var/dir_target = NORTH
 	/// value of our filter, checked by us
 	var/value = ""
-	/// is our output inverted? checked by sorter
+	/// is our output inverted?. checked by sorter
 	var/inverted = FALSE
 	/// the sorter we belong to
 	var/obj/machinery/power/manufacturing/sorter/sorter

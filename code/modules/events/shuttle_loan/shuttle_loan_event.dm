@@ -1,4 +1,4 @@
-/// Gives the choice to "loan" the shuttle to central command, giving a big delay on its return to the station in exchange for money and loot/threats in the cargo hold. Only one can be available at a time.
+/// Gives the choice to "loan" the shuttle to central command, giving a big delay on its return to the station in exchange f. Money. Loot/threats in the cargo hold.. Only one can be available at a time.
 /datum/round_event_control/shuttle_loan
 	name = "Shuttle Loan"
 	typepath = /datum/round_event/shuttle_loan
@@ -51,7 +51,7 @@
 	if(fake)
 		qdel(situation)
 
-///Triggered when accepting the shuttle loan. Gives payment and delays shuttle. Ensures the event won't be deleted from event controller until after the cargo arrives at the station.
+/// Triggered when accepting the shuttle loan.. Gives payment and delays shuttle.. Ensures the event won't be deleted from event controller until after the cargo arrives at the station.
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(situation.thanks_msg, "Cargo shuttle commandeered by [command_name()].")
 
@@ -77,7 +77,7 @@
 /datum/round_event/shuttle_loan/end()
 	if(!SSshuttle.shuttle_loan)
 		return
-	if(!SSshuttle.shuttle_loan.dispatched) //Haven't dispatched in time? Too bad. Clean it up and move on without spawning anything.
+	if(!SSshuttle.shuttle_loan.dispatched) // Haven't dispatched in time?. Too bad.. Clean it up and move on without spawning anything.
 		SSshuttle.shuttle_loan = null
 		return
 

@@ -1,5 +1,5 @@
-/// For clean results on map, use only sizing pt, multiples of 6: 6t 12pt 18pt etc. - Not for use with px sizing
-/// Can be used in TGUI etc, px sizing is pt / 0.75. 12pt = 16px, 24pt = 32px etc.
+/// For clean results on map, use only sizing pt, multiples of 6: 6t 12pt 18pt and so on - Not for use with px sizing
+/// Can be used in TGUI and so on px sizing is pt / 0.75.. 12pt = 16px, 24pt = 32px and so on
 
 /// Base font
 /datum/font/spessfont

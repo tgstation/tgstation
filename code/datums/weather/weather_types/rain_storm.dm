@@ -198,7 +198,7 @@
 		/datum/reagent/consumable/frostoil,
 		// include a random food or drink
 		pick(subtypesof(/datum/reagent/consumable)),
-		// include a random regular drink (vodka, wine, beer, etc.)
+		// include a random regular drink (vodka, wine, beer, and so on
 		pick(/obj/machinery/chem_dispenser/drinks/beer::beer_dispensable_reagents),
 	)
 	GLOB.wizard_rain_reagents |= allowed_food_drinks

@@ -1,4 +1,4 @@
-// This whole file is just a container for the young spider subtypes that actually differentiate into different giant spiders. None of them are particularly special as of now.
+// This whole file is just a container for the young spider subtypes that actually differentiate into different giant spiders.. None of them are particularly special as of now.
 
 /// Will differentiate into the base giant spider (known colloquially as the "guard" spider).
 /mob/living/basic/spider/growing/young/guard

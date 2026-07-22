@@ -1,4 +1,4 @@
-/// Applies full-body brute damage to a target while pulling them. Used with a move_to_target sequence.
+/// Applies full-body brute damage to a target while pulling them.. Used with a move_to_target sequence.
 /datum/bt_node/ai_behavior/break_spine
 	var/target_key
 	var/give_up_distance = 10

@@ -11,9 +11,9 @@
 	name = "stanchion"
 	desc = "A sturdy post made to support one end of a large cable."
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5)
-	/// The post that the other end of this post's tripwire, if any. Also serves as a check for if we have a tripwire.
+	/// The post that the other end of this post's tripwire, if any.. Also serves as a check for if we have a tripwire.
 	var/obj/structure/tripwire/post/opposing_post
-	/// The wire or wires between us and the opposing post. Only one post in the pair will have this list filled.
+	/// The wire or wires between us and the opposing post.. Only one post in the pair will have this list filled.
 	var/list/obj/structure/tripwire/cable/tripwires = list()
 
 /obj/structure/tripwire/post/Initialize(mapload)
@@ -240,7 +240,7 @@
 
 	if(iscarbon(mover))
 		var/mob/living/carbon/moving_carbon = mover
-		if(moving_carbon.body_position == LYING_DOWN) // Crawl under it. Bonus of allowing dragging dying people.
+		if(moving_carbon.body_position == LYING_DOWN) // Crawl under it.. Bonus of allowing dragging dying people.
 			return TRUE
 
 		if(moving_carbon.move_intent == MOVE_INTENT_WALK)
@@ -260,7 +260,7 @@
 		return
 
 	var/obj/vehicle/sealed/mecha/falling_down = entered
-	if(falling_down.toppled) // did you trip directly into a tripwire? We don't want this to chain, however amusing the image might be.
+	if(falling_down.toppled) // did you trip directly into a tripwire?. We don't want this to chain, but amusing the image might be.
 		return
 
 	if(astype(falling_down, /obj/vehicle/sealed/mecha/phazon)?.phasing)
@@ -279,10 +279,10 @@
 	else
 		falling_angle = pick(90, 270)
 
-	// For disambiguation, damage_value is the mech's health / 5. damage_value is the base for all the rest of the numbers.
-	// damage_value is applied directly as damage to whoever it falls on. That person is also paralyzed for damage_value / 10 seconds.
+	// For disambiguation, damage_value is the mech's health / 5.. damage_value is the base for all the rest of the numbers.
+	// damage_value is applied directly as damage to whoever it falls on.. That person is also paralyzed for damage_value / 10 seconds.
 	// The pilot of the falling mech receives damage_value / 5 as a head trauma.
-	// The mech itself receives damage_value * 0.15 seconds of immobility(can still attack, but can't rotate). (damage_value / 10 * 1.5)
+	// The mech itself receives damage_value * 0.15 seconds of immobility(can still attack, but can't rotate).. (damage_value / 10 * 1.5)
 	falling_down.toppled = TRUE
 	falling_down.forceMove(get_turf(src))
 	var/tripped = falling_down.fall_and_crush(get_step(falling_down, falling_down.dir), damage_value, 15, paralyze_time = damage_value, rotation = falling_angle)
@@ -297,7 +297,7 @@
 		blind_message = span_danger("You hear a deafening CRASH!"), \
 		ignored_mobs = drivers)
 
-	for(var/mob/living/driver as anything in drivers) // can any mechs have two drivers? No. Could they? yes.
+	for(var/mob/living/driver as anything in drivers) // can any mechs have two drivers?. No.. Could they?. yes.
 		var/damage = driver.apply_damage(damage_value / 3, BRUTE, BODY_ZONE_HEAD, driver.run_armor_check(BODY_ZONE_HEAD, MELEE), wound_bonus = 30, wound_clothing = FALSE)
 		var/falling_string
 		switch(damage)

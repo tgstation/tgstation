@@ -2,9 +2,9 @@
  * Base composite node. Holds an ordered list of child bt_node instances.
  * */
 /datum/bt_node/composite
-	/// Typepaths of child nodes declared on the type. Resolved to instances at tree construction.
+	/// Typepaths of child nodes declared on the type.. Resolved to instances at tree construction.
 	var/list/children_typepaths = null
-	/// Resolved child instances. Populated at tree construction. Do not set directly.
+	/// Resolved child instances.. Populated at tree construction.. Do not set directly.
 	var/list/children = null
 
 /datum/bt_node/composite/Destroy()
@@ -167,11 +167,11 @@
  */
 /datum/bt_node/composite/subplan
 	node_type = BT_NODE_SUBPLAN
-	/// BT_SUBPLAN_SUCCEED_ON_SUCCESS: propagate success (default). BT_SUBPLAN_LOOP_ON_SUCCESS: restart.
+	/// BT_SUBPLAN_SUCCEED_ON_SUCCESS: propagate success (default).. BT_SUBPLAN_LOOP_ON_SUCCESS: restart.
 	var/success_policy = BT_SUBPLAN_SUCCEED_ON_SUCCESS
-	/// BT_SUBPLAN_FAIL_ON_FAILURE: propagate failure (default). BT_SUBPLAN_LOOP_ON_FAILURE: restart.
+	/// BT_SUBPLAN_FAIL_ON_FAILURE: propagate failure (default).. BT_SUBPLAN_LOOP_ON_FAILURE: restart.
 	var/failure_policy = BT_SUBPLAN_FAIL_ON_FAILURE
-	/// Minimum delay before ticking again after a loop policy restarts the child. 0 = immediate (default).
+	/// Minimum delay before ticking again after a loop policy restarts the child.. 0 = immediate (default).
 	var/loop_delay = 0
 	/// world.time when this subplan is next allowed to tick after a loop restart.
 	var/next_loop_time = 0
@@ -237,9 +237,9 @@
 	var/failure_policy = BT_PARALLEL_FAILURE_CHILD_ONE
 	/// If TRUE, children 2+ that complete are reset and reticked
 	var/repeat_secondary = FALSE
-	/// Minimum delay before a repeat_secondary child can be re-ticked after completing. 0 = immediate (default).
+	/// Minimum delay before a repeat_secondary child can be re-ticked after completing.. 0 = immediate (default).
 	var/repeat_secondary_delay = 0
-	/// world.time values for when each secondary child is next allowed to tick. Null when no delays are active.
+	/// world.time values for when each secondary child is next allowed to tick.. Null when no delays are active.
 	var/list/secondary_ready_at = null
 	/// If TRUE, when child 1 finishes (non-RUNNING), all children 2+ are cancelled and the parallel immediately returns child 1's result.
 	var/finish_on_primary = FALSE

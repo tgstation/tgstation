@@ -1,4 +1,4 @@
-///from mind/transfer_to. Sent after the mind has been transferred: (mob/previous_body)
+/// from mind/transfer_to... Sent after the mind has been transferred: (mob/previous_body)
 #define COMSIG_MIND_TRANSFERRED "mind_transferred"
 
 /// Called on the mind when an antagonist is being gained, after the antagonist list has updated (datum/antagonist/antagonist)

@@ -1,6 +1,6 @@
 // A very special plant, deserving its own file.
 
-// Yes, i'm talking about cabbage, baby! No, just kidding, but cabbages are the precursor to replica pods, so they are here as well.
+// Yes, i'm talking about cabbage, baby!. No, just kidding, but cabbages are the precursor to replica pods, so they are here as well.
 /obj/item/seeds/cabbage
 	name = "cabbage seed pack"
 	desc = "These seeds grow into cabbages."
@@ -154,7 +154,7 @@
 
 	// No podman player, give one or two seeds.
 	if(!make_podman)
-		// Prevent accidental harvesting. Make sure the user REALLY wants to do this if there's a chance of this coming from a living creature.
+		// Prevent accidental harvesting.. Make sure the user REALLY wants to do this if there's a chance of this coming from a living creature.
 		if(user.client && (mind || ckey))
 			var/choice = tgui_alert(user, "The pod is currently devoid of soul. There is a possibility that a soul could claim this creature, or you could harvest it for seeds.", "Harvest Seeds?", list("Harvest Seeds", "Cancel"))
 			if(choice != "Harvest Seeds")
@@ -182,7 +182,7 @@
 		parent.update_tray(user, seed_count)
 		return result
 
-	// Congratulations! %Do you want to build a pod man?%
+	// Congratulations!. %Do you want to build a pod man?%
 	var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)
 
 	if(realName)

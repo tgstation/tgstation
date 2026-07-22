@@ -14,7 +14,7 @@
 	icon_state = "keysec"
 
 /obj/item/key/security/suicide_act(mob/living/user)
-	if(!user.emote("spin")) //In the off chance that someone attempts this suicide while under the effects of mime's bane they deserve the silliness.
+	if(!user.emote("spin")) // In the off chance that someone tries this suicide while under the effects of mime's bane they deserve the silliness.
 		user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] ear and starts [user.p_their()] motor! It looks like [user.p_theyre()] trying to commit suicide... But [user.p_they()] sputters and stalls out! "))
 		playsound(src, 'sound/misc/sadtrombone.ogg', 50, TRUE, -1)
 		return SHAME
@@ -61,7 +61,7 @@
 			user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] mouth and has epically become one with the janicart, and they're even in overdrive mode! It looks like [user.p_theyre()] trying to commit suicide!"))
 			user.AddElement(/datum/element/cleaning)
 			playsound(src, 'sound/effects/magic/lightning_chargeup.ogg', 50, TRUE, -1)
-			user.reagents.add_reagent(/datum/reagent/drug/methamphetamine, 10) //Gotta go fast!
+			user.reagents.add_reagent(/datum/reagent/drug/methamphetamine, 10) // Got to go fast!
 			for(var/i in 1 to 150)
 				addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, add_atom_colour), (i % 2)? "#a245bb" : "#7a7d82", ADMIN_COLOUR_PRIORITY), i)
 			addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 151)

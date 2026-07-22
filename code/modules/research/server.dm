@@ -1,8 +1,8 @@
-/// Default master server machine state. Use a special screwdriver to get to the next state.
+/// Default master server machine state.. Use a special screwdriver to get to the next state.
 #define HDD_PANEL_CLOSED 0
-/// Front master server HDD panel has been removed. Use a special crowbar to get to the next state.
+/// Front master server HDD panel has been removed.. Use a special crowbar to get to the next state.
 #define HDD_PANEL_OPEN 1
-/// Master server HDD has been pried loose and is held in by only cables. Use a special set of wirecutters to finish stealing the objective.
+/// Master server HDD has been pried loose and is held in by only cables.. Use a special set of wirecutters to finish stealing the objective.
 #define HDD_PRIED 2
 /// Master server HDD has been cut loose.
 #define HDD_CUT_LOOSE 3
@@ -36,7 +36,7 @@
 			var/datum/techweb/science_web = locate(/datum/techweb/science) in SSresearch.techwebs
 			connect_techweb(science_web)
 	stored_research.techweb_servers |= src
-	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
+	name += " [num2hex(rand(1,65535), -1)]" // gives us a random four-digit hex number as part of the name.. Y'know, for fluff.
 
 /obj/machinery/rnd/server/Destroy()
 	if(stored_research)
@@ -92,7 +92,7 @@
 	user.log_message("[research_disabled ? "shut off" : "turned on"] [src]", LOG_GAME)
 	refresh_working()
 
-/// Gets status text based on this server's status for the computer.
+/// Gets status text good on this server's status for the computer.
 /obj/machinery/rnd/server/proc/get_status_text()
 	if(machine_stat & EMPED)
 		return "O&F@I*$ - R3*&O$T R@U!R%D"
@@ -114,7 +114,7 @@
 	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 
-/// Master R&D server. As long as this still exists and still holds the HDD for the theft objective, research points generate at normal speed. Destroy it or an antag steals the HDD? Half research speed.
+/// Master R&D server.. As long as this still exists and still holds the HDD for the theft objective, research points generate at normal speed.. Destroy it or an antag steals the HDD?. Half research speed.
 /obj/machinery/rnd/server/master
 	max_integrity = 1800 //takes roughly ~15s longer to break then full deconstruction.
 	circuit = null
@@ -228,11 +228,11 @@
 	return TRUE
 
 /obj/machinery/rnd/server/master/on_deconstruction(disassembled)
-	// If the machine contains a source code HDD, destroying it will negatively impact research speed. Safest to log this.
+	// If the machine contains a source code HDD, destroying it will negatively impact research speed.. Safest to log this.
 	if(source_code_hdd)
 		// Destroyed with a hard drive inside = harm income
 		stored_research.income_modifier *= 0.5
-		// If there's a usr, this was likely a direct deconstruction of some sort. Extra logging info!
+		// If there's a usr, this was likely a direct deconstruction of some sort.. Extra logging info!
 		if(usr)
 			var/mob/user = usr
 

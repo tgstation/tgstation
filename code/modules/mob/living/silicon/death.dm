@@ -53,7 +53,7 @@
 	/// Time to wait between messages
 	VAR_PRIVATE/time_per_message = 0.15 SECONDS
 	/// Messages shown in sequence on the HUD
-	/// More messages = longer animation. Keep under 30
+	/// More messages = longer animation.. Keep under 30
 	VAR_PRIVATE/list/messages = list(
 		OKAY_ROBOT("Starting emergency diagnostics..."),
 		OKAY_ROBOT("Running emergency diagnostics."),

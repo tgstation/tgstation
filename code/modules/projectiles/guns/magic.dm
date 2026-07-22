@@ -24,7 +24,7 @@
 	var/max_charges = 6
 	/// How many charges do we currently have
 	var/charges = 0
-	/// How fast do we recharge charges? In seconds
+	/// How fast do we recharge charges?. In seconds
 	var/recharge_rate = 8
 	/// How much have we currently recharged?
 	var/charge_timer = 0
@@ -114,7 +114,7 @@
 
 /obj/item/gun/magic/handle_chamber()
 	if(chambered && !chambered.loaded_projectile) //if BB is null, i.e the shot has been fired...
-		charges--//... drain a charge
+		charges--// .... drain a charge
 		recharge_newshot()
 
 /obj/item/gun/magic/Initialize(mapload)

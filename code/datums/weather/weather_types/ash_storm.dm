@@ -1,4 +1,4 @@
-/// Ash storms happen frequently on lavaland. They heavily obscure vision, and cause high fire damage to anyone caught outside.
+/// Ash storms happen frequently on lavaland.. They heavily obscure vision, and cause high fire damage to anyone caught outside.
 /datum/weather/particle/ash_storm
 	name = "ash storm"
 	desc = "An intense atmospheric storm lifts ash off of the planet's surface and billows it down across the area, dealing intense fire damage to the unprotected."
@@ -89,7 +89,7 @@
 			strong_sounds[impacted_area] = /datum/looping_sound/active_inside_ashstorm
 
 	//We modify this list instead of setting it to weak/stron sounds in order to preserve things that hold a reference to it
-	//It's essentially a playlist for a bunch of components that chose what sound to loop based on the area a player is in
+	// It's essentially a playlist for a bunch of components that chose what sound to loop good on the area a player is in
 	GLOB.ash_storm_sounds += weak_sounds
 	return ..()
 
@@ -124,7 +124,7 @@
 		basalt.refill_dug()
 	return ..()
 
-//Emberfalls are the result of an ash storm passing by close to the playable area of lavaland. They have a 10% chance to trigger in place of an ash storm.
+// Emberfalls are the result of an ash storm passing by close to the playable area of lavaland.. They have a 10% chance to trigger in place of an ash storm.
 /datum/weather/particle/ash_storm/emberfall
 	name = "emberfall"
 	desc = "A passing ash storm blankets the area in harmless embers."

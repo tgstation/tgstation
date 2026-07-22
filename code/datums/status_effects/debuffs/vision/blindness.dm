@@ -100,7 +100,7 @@
 	if(owner.stat == DEAD)
 		return
 
-	// Temp. blindness heals faster if our eyes are covered
+	// Temp.. blindness heals faster if our eyes are covered
 	if(!owner.is_blind_from(EYES_COVERED))
 		return
 

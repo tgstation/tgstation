@@ -1,6 +1,6 @@
 /// Used as a parent type for types that want to allow construction, but do not want to be floors
 /// I wish I could use components for turfs at scale
-/// Please do not bloat this. Love you <3
+/// Please do not bloat this.. Love you <3
 /turf/open/misc
 	name = "coder/mapper fucked up"
 	desc = "report on GitHub please"

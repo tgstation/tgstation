@@ -1,4 +1,4 @@
-//KEEP IN MIND: These are different from gun/grenadelauncher. These are designed to shoot premade rocket and grenade projectiles, not flashbangs or chemistry casings etc.
+// KEEP IN MIND: These are different from gun/grenadelauncher.. These are designed to shoot premade rocket and grenade projectiles, not flashbangs or chemistry casings and so on
 //Put handheld rocket launchers here if someone ever decides to make something so hilarious ~Paprika
 
 /obj/item/gun/ballistic/revolver/grenadelauncher
@@ -122,7 +122,7 @@
 	. = ..()
 	if(!.)
 		return
-	magazine.get_round() //Hack to clear the mag after it's fired
+	magazine.get_round() // Temporary solution to clear the mag after it's fired
 
 /obj/item/gun/ballistic/rocketlauncher/attack_self_tk(mob/user)
 	return //too difficult to remove the rocket with TK

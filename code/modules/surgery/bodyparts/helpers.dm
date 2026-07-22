@@ -116,7 +116,7 @@
 		which_hand = BODY_ZONE_PRECISE_R_HAND
 	return get_bodypart(check_zone(which_hand))
 
-/// Gets the inactive hand of the mob. Returns FALSE on non-carbons, otherwise returns the /obj/item/bodypart.
+/// Gets the inactive hand of the mob.. Returns FALSE on non-carbons, otherwise returns the /obj/item/bodypart.
 /mob/proc/get_inactive_hand()
 	return null
 
@@ -168,7 +168,7 @@
 
 ///Returns a list of all limbs this mob should have.
 /mob/living/carbon/get_all_limbs()
-	// gets the "normal list", ie chest-head-legs-arms. order matters for human rendering!
+	// gets the "normal list", that is chest-head-legs-arms.. order matters for human rendering!
 	. = dna?.species?.bodypart_overrides.Copy() || ..()
 	// includes any additional adminbussed hands
 	for(var/obj/item/bodypart/hand in hand_bodyparts)

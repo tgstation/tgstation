@@ -12,19 +12,19 @@
 	obj_flags = UNIQUE_RENAME
 	/// Name of plant when planted.
 	var/plantname = "Plants"
-	/// A type path. The thing that is created when the plant is harvested.
+	/// A type path.. The thing that is created when the plant is harvested.
 	var/obj/item/product
 	///Describes the product on the product path.
 	var/productdesc
-	/// Used to update icons. Should match the name in the sprites unless all icon_* are overridden.
+	/// Used to update icons.. Should match the name in the sprites unless all icon_* are overridden.
 	var/species = ""
 	///the file that stores the sprites of the growing plant from this seed.
 	var/growing_icon = 'icons/obj/service/hydroponics/growing.dmi'
-	/// Used to override grow icon (default is `"[species]-grow"`). You can use one grow icon for multiple closely related plants with it.
+	/// Used to override grow icon (default is `"[species]-grow"`).. You can use one grow icon for multiple closely related plants with it.
 	var/icon_grow
-	/// Used to override dead icon (default is `"[species]-dead"`). You can use one dead icon for multiple closely related plants with it.
+	/// Used to override dead icon (default is `"[species]-dead"`).. You can use one dead icon for multiple closely related plants with it.
 	var/icon_dead
-	/// Used to override harvest icon (default is `"[species]-harvest"`). If null, plant will use `[icon_grow][growthstages]`.
+	/// Used to override harvest icon (default is `"[species]-harvest"`).. If null, plant will use `[icon_grow][growthstages]`.
 	var/icon_harvest
 	/// Used to offset the plant sprite so that it appears at proper height in the tray
 	var/plant_icon_offset = 8
@@ -36,19 +36,19 @@
 	var/maturation = 6
 	/// Changes the amount of time needed for a plant to become harvestable.
 	var/production = 6
-	/// Amount of growns created per harvest. If is -1, the plant/shroom/weed is never meant to be harvested.
+	/// Amount of growns created per harvest.. If is -1, the plant/shroom/weed is never meant to be harvested.
 	var/yield = 3
-	/// The 'power' of a plant. Generally effects the amount of reagent in a plant, also used in other ways.
+	/// The 'power' of a plant.. Generally effects the amount of reagent in a plant, also used in other ways.
 	var/potency = 10
 	/// Amount of growth sprites the plant has.
 	var/growthstages = 6
 	// Chance that a plant will mutate in each stage of its life.
 	var/instability = 5
-	/// How rare the plant is. Used for giving points to cargo when shipping off to CentCom.
+	/// How rare the plant is.. Used for giving points to cargo when shipping off to CentCom.
 	var/rarity = 0
 	/// The type of plants that this plant can mutate into.
 	var/list/mutatelist
-	/// Starts as a list of paths, is converted to a list of types on init. Plant gene datums are stored here, see plant_genes.dm for more info.
+	/// Starts as a list of paths, is converted to a list of types on init.. Plant gene datums are stored here, see plant_genes.dm for more info.
 	var/list/genes = list()
 	/// A list of reagents to add to product.
 	var/list/reagents_add
@@ -180,7 +180,7 @@
 		rating = H.rating
 	if(yield == 0)//Oh god don't divide by zero you'll doom us all.
 		adjust_yield(1 * rating)
-	else if(prob(1/(yield * yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
+	else if(prob(1/(yield * yield) * 100))// This formula gives you diminishing returns good on yield.. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
 		adjust_yield(1 * rating)
 	return BULLET_ACT_HIT
 
@@ -216,7 +216,7 @@
 	var/output_loc = parent.Adjacent(user) ? user.drop_location() : parent.drop_location() //needed for TK
 	///Name of the grown products.
 	var/product_name
-	///The Number of products produced by the plant, typically the yield. Modified by certain traits.
+	/// The Number of products produced by the plant, typically the yield.. Modified by certain traits.
 	var/product_count = getYield()
 
 	while(t_amount < product_count)
@@ -287,13 +287,13 @@
 			var/edible_vol = grown_edible.reagents ? grown_edible.reagents.maximum_volume : 0
 			var/amount = max(1, round((edible_vol)*(potency/100) * reagent_overflow_mod, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
 			var/list/data
-			if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
+			if(rid == /datum/reagent/blood) // Temporary solution to make blood in plants always O-
 				data = list("blood_type" = get_blood_type(BLOOD_TYPE_O_MINUS))
 			if(istype(grown_edible) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
 				data = grown_edible.tastes // apple tastes of apple.
 			T.reagents.add_reagent(rid, amount, data, added_purity = reagent_purity)
 
-		//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
+		// Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist.. Mutually exclusive with distilling.
 		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_typepath())
 			grown_edible.juice(juicer = FALSE) //we pass FALSE & not null because Byond default args will subtitute it with the default value
 		else if(get_gene(/datum/plant_gene/trait/brewing))
@@ -302,14 +302,14 @@
 		/// The number of nutriments we have inside of our plant, for use in our heating / cooling genes
 		var/num_nutriment = T.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
 
-		// Heats up the plant's contents by 25 kelvin per 1 unit of nutriment. Mutually exclusive with cooling.
+		// Heats up the plant's contents by 25 kelvin per 1 unit of nutriment.. Mutually exclusive with cooling.
 		if(get_gene(/datum/plant_gene/trait/chem_heating))
 			T.visible_message(span_notice("[T] releases freezing air, consuming its nutriments to heat its contents."))
 			T.reagents.remove_reagent(/datum/reagent/consumable/nutriment, num_nutriment)
 			T.reagents.chem_temp = min(1000, (T.reagents.chem_temp + num_nutriment * 25))
 			T.reagents.handle_reactions()
 			playsound(T.loc, 'sound/effects/wounds/sizzle2.ogg', 5)
-		// Cools down the plant's contents by 5 kelvin per 1 unit of nutriment. Mutually exclusive with heating.
+		// Cools down the plant's contents by 5 kelvin per 1 unit of nutriment.. Mutually exclusive with heating.
 		else if(get_gene(/datum/plant_gene/trait/chem_cooling))
 			T.visible_message(span_notice("[T] releases a blast of hot air, consuming its nutriments to cool its contents."))
 			T.reagents.remove_reagent(/datum/reagent/consumable/nutriment, num_nutriment)
@@ -317,7 +317,7 @@
 			T.reagents.handle_reactions()
 			playsound(T.loc, 'sound/effects/space_wind.ogg', 50)
 
-/// Returns reagent purity based on seed stats
+/// Returns reagent purity good on seed stats
 /obj/item/seeds/proc/get_reagent_purity()
 	var/purity_from_lifespan = lifespan / 400 //up to +25% for lifespan
 	var/purity_from_endurance = endurance / 400 //up to +25% for endurance
@@ -572,7 +572,7 @@
 	else
 		new_trait = null
 
-	// Adjust stats based on graft stats
+	// Adjust stats good on graft stats
 	set_lifespan(round(max(lifespan, (lifespan + (2/3)*(snip.plant_dna.lifespan - lifespan)))))
 	set_endurance(round(max(endurance, (endurance + (2/3)*(snip.plant_dna.endurance - endurance)))))
 	set_production(round(max(production, (production + (2/3)*(snip.plant_dna.production - production)))))

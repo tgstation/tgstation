@@ -5,7 +5,7 @@
 	var/list/area_to_looping_type = list()
 	///Current sound loop
 	var/datum/looping_sound/our_loop
-	///A list of "acceptable" z levels to be on. If you leave this, we're gonna delete ourselves
+	/// A list of "acceptable" z levels to be on.. If you leave this, we're going to delete ourselves
 	var/list/accepted_zs
 	/// World.time when we are allowed to start another sound loop
 	VAR_PRIVATE/next_loop_time

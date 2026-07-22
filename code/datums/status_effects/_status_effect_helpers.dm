@@ -22,7 +22,7 @@
 				continue
 
 			switch(existing_effect.status_type)
-				// Multiple are allowed, continue as normal. (Not normally reachable)
+				// Multiple are allowed, continue as normal.. (Not normally reachable)
 				if(STATUS_EFFECT_MULTIPLE)
 					break
 				// Only one is allowed of this type - early return
@@ -71,7 +71,7 @@
  * Returns an instance of a status effect, or NULL if none were found.
  */
 /mob/proc/has_status_effect(datum/status_effect/checked_effect)
-	// Yes I'm being cringe and putting this on the mob level even though status effects only apply to the living level
+	// Yes I'm being uncomfortable and putting this on the mob level even though status effects only apply to the living level
 	// There's quite a few places (namely examine and, bleh, cult code) where it's easier to not need to cast to living before checking
 	// for an effect such as blindness
 	return null

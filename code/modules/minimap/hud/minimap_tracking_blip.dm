@@ -1,6 +1,6 @@
 /atom/movable/screen/minimap_element/blip
 	icon = 'icons/ui_icons/minimap/map_blips.dmi'
-	/// Is this a large blip? causes different pixel offsets to be applied
+	/// Is this a large blip?. causes different pixel offsets to be applied
 	var/large = FALSE
 	/// Minimap datum for the current z-level this blip is on
 	var/datum/minimap/minimap

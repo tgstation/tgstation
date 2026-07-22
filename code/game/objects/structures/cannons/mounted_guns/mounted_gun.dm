@@ -1,5 +1,5 @@
 //Mounted guns are basically a smaller equivalent to cannons, designed to use pre-existing ammo rather than cannonballs.
-//Due to using pre-existing ammo, they dont require to be loaded with gunpowder or an equivalent.
+// Due to using pre-existing ammo, they dont need to be loaded with gunpowder or an equivalent.
 
 /obj/structure/mounted_gun
 	name = "Mounted Gun"
@@ -12,15 +12,15 @@
 	max_integrity = 300
 	/// Suffix added to base icon state when firing
 	var/fire_suffix = "_fire"
-	/// whether the cannon can be unwrenched from the ground. Anchorable_cannon equivalent.
+	/// whether the cannon can be unwrenched from the ground.. Anchorable_cannon equivalent.
 	var/anchorable_gun = TRUE
 	/// Max shots per firing of the gun.
 	var/max_shots_per_fire = 1
-	/// Delay it takes to load the gun. Set to 0 if none.
+	/// Delay it takes to load the gun.. Set to 0 if none.
 	var/load_delay = 0 SECONDS
 	/// Message displayed when loading gun
 	var/loading_message = "gun loaded"
-	/// Shots currently loaded. Should never be more than max_shots_per_fire.
+	/// Shots currently loaded.. Should never be more than max_shots_per_fire.
 	var/shots_in_gun = 1
 	/// Shots added to gun, per piece of ammo loaded.
 	var/shots_per_load = 1

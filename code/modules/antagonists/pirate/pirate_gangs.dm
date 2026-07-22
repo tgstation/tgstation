@@ -1,4 +1,4 @@
-///global lists of all pirate gangs that can show up today. they will be taken out of the global lists as spawned so dupes cannot spawn.
+/// global lists of all pirate gangs that can show up today.. they will be taken out of the global lists as spawned so dupes cannot spawn.
 GLOBAL_LIST_INIT(light_pirate_gangs, init_pirate_gangs(is_heavy = FALSE))
 GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	var/response_rejected = "Foo! No Bungopoints!"
 	///station pays the pirates, but after the ship spawned
 	var/response_too_late = "Your Bungopoints arrived too late, rebooting world..."
-	///station pays the pirates... but doesn't have enough cash.
+	/// station pays the pirates.... but doesn't have enough cash.
 	var/response_not_enough = "Not enough Bungopoints have been added into my bank account, rebooting world..."
 
 	/// Have the pirates been paid off?
@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	. = ..()
 	ship_name = pick(strings(PIRATE_NAMES_FILE, ship_name_pool))
 
-///whether this pirate gang can roll today. this is called when the global list initializes, so
+/// whether this pirate gang can roll today.. this is called when the global list initializes, so
 ///returning FALSE means it cannot show up at all for the entire round.
 /datum/pirate_gang/proc/can_roll()
 	return TRUE
@@ -162,7 +162,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_not_enough = "You trying to cheat us? That's fine, we'll take your station as collateral."
 	announcement_color = "yellow"
 
-///Agents from the space I.R.S. heavily armed to stea- I mean, collect the station's tax dues
+/// Agents from the space I.R.S.. heavily armed to stea- I mean, collect the station's tax dues
 /datum/pirate_gang/irs
 	name = "Space IRS Agents"
 

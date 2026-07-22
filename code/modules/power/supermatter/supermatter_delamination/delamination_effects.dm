@@ -36,7 +36,7 @@
 		if(!is_valid_z_level(victim_turf, sm_turf))
 			continue
 		victim.playsound_local(victim_turf, 'sound/effects/magic/charge.ogg')
-		if(victim.z == 0) //victim is inside an object, this is to maintain an old bug turned feature with lockers n shit i guess. tg issue #69687
+		if(victim.z == 0) // victim is inside an object, this is to maintain an old bug turned feature with lockers n shit i guess.. tg issue #69687
 			var/message = ""
 			var/location = victim.loc
 			if(istype(location, /obj/structure/disposalholder)) // sometimes your loc can be a disposalsholder when you're inside a disposals type, so let's just pass a message that makes sense.
@@ -51,13 +51,13 @@
 			living_victim.add_mood_event("delam", /datum/mood_event/delam)
 	return TRUE
 
-/// Spawns anomalies all over the station. Half instantly, the other half over time.
+/// Spawns anomalies all over the station.. Half instantly, the other half over time.
 /datum/sm_delam/proc/effect_anomaly(obj/machinery/power/supermatter_crystal/sm)
 	var/anomalies = 10
 	var/list/anomaly_types = list(GRAVITATIONAL_ANOMALY = 55, HALLUCINATION_ANOMALY = 45, DIMENSIONAL_ANOMALY = 35, BIOSCRAMBLER_ANOMALY = 35, FLUX_ANOMALY = 25, PYRO_ANOMALY = 5, VORTEX_ANOMALY = 1)
 	var/list/anomaly_places = GLOB.generic_event_spawns
 
-	// Spawns this many anomalies instantly. Spawns the rest with callbacks.
+	// Spawns this many anomalies instantly.. Spawns the rest with callbacks.
 	var/cutoff_point = round(anomalies * 0.5, 1)
 
 	for(var/i in 1 to anomalies)

@@ -80,7 +80,7 @@
 	addtimer(CALLBACK(src, PROC_REF(finish_suicide), user), 15) //you've eaten it, you can run now
 	return MANUAL_SUICIDE
 
-/obj/item/food/monkeycube/proc/finish_suicide(mob/living/user) ///internal proc called by a monkeycube's suicide_act using a timer and callback. takes as argument the mob/living who activated the suicide
+/obj/item/food/monkeycube/proc/finish_suicide(mob/living/user) /// internal proc called by a monkeycube's suicide_act using a timer and callback.. takes as argument the mob/living who activated the suicide
 	if(QDELETED(user) || QDELETED(src))
 		return
 	if(src.loc != user) //how the hell did you manage this

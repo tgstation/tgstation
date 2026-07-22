@@ -17,13 +17,13 @@
 	density = TRUE
 	can_buckle = TRUE
 
-	/// Has this vent been tapped to produce boulders? Cannot be untapped.
+	/// Has this vent been tapped to produce boulders?. Cannot be untapped.
 	var/tapped = FALSE
-	/// Has this vent been scanned by a mining scanner? Cannot be scanned again. Adds ores to the vent's description.
+	/// Has this vent been scanned by a mining scanner?. Cannot be scanned again.. Adds ores to the vent's description.
 	var/discovered = FALSE
-	/// Is this type of vent exempt from the map's vent budget/limit? Think the free iron/glass vent or boss vents. This also causes it to not roll for random mineral breakdown.
+	/// Is this type of vent exempt from the map's vent budget/limit?. Think the free iron/glass vent or boss vents.. This also causes it to not roll for random mineral breakdown.
 	var/unique_vent = FALSE
-	/// Does this vent spawn a node drone when tapped? Currently unique to boss vents so try not to VV it.
+	/// Does this vent spawn a node drone when tapped?. Currently unique to boss vents so try not to VV it.
 	var/spawn_drone_on_tap = TRUE
 	/// What icon_state do we use when the ore vent has been tapped?
 	var/icon_state_tapped = "ore_vent_active"
@@ -60,7 +60,7 @@
 		/obj/item/mining_scanner,
 	)
 
-	/// Turf above us that we're currently tracking, stored in case of movement jank
+	/// Turf above us that we're currently tracking, stored in case of movement low quality code
 	var/turf/tracked_turf = null
 	/// Visual overlay for our vent tap
 	var/obj/effect/abstract/vent_visual = null
@@ -658,7 +658,7 @@
 	generate_description()
 
 /obj/structure/ore_vent/random
-	// Todo: determine if we need a boulder_size default thats unique from the override performed in vent_size_setup.
+	// To do determine if we need a boulder_size default thats unique from the override performed in vent_size_setup.
 
 /obj/structure/ore_vent/random/Initialize(mapload)
 	. = ..()
@@ -756,7 +756,7 @@
 	RegisterSignal(boss, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion))
 	SSblackbox.record_feedback("tally", "ore_vent_mobs_spawned", 1, summoned_boss)
 	COOLDOWN_START(src, wave_cooldown, INFINITY) //Basically forever
-	boss.say(boss.summon_line, language = /datum/language/common, forced = "summon line") //Pull their specific summon line to say. Default is meme text so make sure that they have theirs set already.
+	boss.say(boss.summon_line, language = /datum/language/common, forced = "summon line") // Pull their specific summon line to say.. Default is meme text so make sure that they have theirs set already.
 
 /obj/structure/ore_vent/boss/handle_wave_conclusion()
 	node = new /mob/living/basic/node_drone(loc) //We're spawning the vent after the boss dies, so the player can just focus on the boss.

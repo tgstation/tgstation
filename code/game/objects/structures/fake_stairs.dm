@@ -1,4 +1,4 @@
-/// Stairs but they are FAKE and dont have any of the Z-changing behavior. DO NOT MAP THESE NEXT TO REAL STAIRS
+/// Stairs but they are FAKE and dont have any of the Z-changing behavior.. DO NOT MAP THESE NEXT TO REAL STAIRS
 /obj/structure/fake_stairs
 	gender = PLURAL
 	name = "stairs"

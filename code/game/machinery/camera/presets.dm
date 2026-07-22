@@ -113,11 +113,11 @@
 	desc = "This camera belongs in a mecha. If you see this, tell a coder!"
 	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_RD)
 	short_range = 1 //used when the camera gets EMPd
-	///Number of the camera and thus the name of the mech
+	/// Number of the camera and so the name of the mech
 	var/number = 0
 	///Currently used name of the mech
 	var/current_name = null
-	///Whether the camera was recently affected by an EMP and is thus unfocused, shortening view_range
+	/// Whether the camera was recently affected by an EMP and is so unfocused, shortening view_range
 	var/is_emp_scrambled = FALSE
 
 ///Restore the camera's view default view range after an EMP
@@ -130,7 +130,7 @@
 /obj/machinery/camera/exosuit/proc/update_c_tag(obj/vehicle/sealed/mecha/mech)
 	//List of all used mech names
 	var/static/list/existing_mech_names = list()
-	//Name of the mech passed with this proc. We use format_text to wipe away stuff like `\initial` to prevent c_tag from erroring out
+	// Name of the mech passed with this proc.. We use format_text to wipe away stuff like `\initial` to prevent c_tag from erroring out
 	var/mech_name = format_text(mech.name)
 
 	if(current_name && current_name != mech_name) //decrease by 1 to preserve correct naming numeration
@@ -150,7 +150,7 @@
 	if(isEmpProof(ignore_malf_upgrades)) //pass a malf upgrade to ignore_malf_upgrades so we can replace the malf module with the normal one
 		return //that way if someone tries to upgrade an already malf-upgraded camera, it'll just upgrade it to a normal version.
 	if(malf_upgrade)
-		malf_emp_firmware_active = TRUE //don't add parts to drop, update icon, ect. reconstructing it will also retain the upgrade.
+		malf_emp_firmware_active = TRUE // don't add parts to drop, update icon, ect.. reconstructing it will also retain the upgrade.
 		malf_emp_firmware_present = TRUE //so the upgrade is retained after incompatible parts are removed.
 		AddElement(/datum/element/empprotection, EMP_PROTECT_ALL|EMP_NO_EXAMINE)
 
@@ -177,7 +177,7 @@
 	if(isXRay(ignore_malf_upgrades)) //pass a malf upgrade to ignore_malf_upgrades so we can replace the malf upgrade with the normal one
 		return //that way if someone tries to upgrade an already malf-upgraded camera, it'll just upgrade it to a normal version.
 	if(malf_upgrade)
-		malf_xray_firmware_active = TRUE //don't add parts to drop, update icon, ect. reconstructing it will also retain the upgrade.
+		malf_xray_firmware_active = TRUE // don't add parts to drop, update icon, ect.. reconstructing it will also retain the upgrade.
 		malf_xray_firmware_present = TRUE //so the upgrade is retained after incompatible parts are removed.
 
 	else if(!xray_module) //only happens via upgrading in camera/attackby()

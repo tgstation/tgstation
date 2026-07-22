@@ -1,8 +1,8 @@
 #define CHANGETURF_DEFER_CHANGE (1<<0)
 #define CHANGETURF_IGNORE_AIR (1<<1) // This flag prevents changeturf from gathering air from nearby turfs to fill the new turf with an approximation of local air
 #define CHANGETURF_FORCEOP (1<<2)
-#define CHANGETURF_SKIP (1<<3) // A flag for PlaceOnTop to just instance the new turf instead of calling ChangeTurf. Used for uninitialized turfs NOTHING ELSE
-#define CHANGETURF_INHERIT_AIR (1<<4) // Inherit air from previous turf. Implies CHANGETURF_IGNORE_AIR
+#define CHANGETURF_SKIP (1<<3) // A flag for PlaceOnTop to just instance the new turf instead of calling ChangeTurf... Used for uninitialized turfs NOTHING ELSE
+#define CHANGETURF_INHERIT_AIR (1<<4) // Inherit air from previous turf... Implies CHANGETURF_IGNORE_AIR
 #define CHANGETURF_RECALC_ADJACENT (1<<5) //Immediately recalc adjacent atmos turfs instead of queuing.
 #define CHANGETURF_TRAPDOOR_INDUCED (1<<6) // Caused by a trapdoor, for trapdoor to know that this changeturf was caused by itself
 #define CHANGETURF_GENERATE_SHUTTLE_CEILING (1<<7) // Generate a shuttle ceiling on the above turf
@@ -53,7 +53,7 @@
 /// The pipes, disposals, and wires are visible and can be interacted with
 #define UNDERFLOOR_INTERACTABLE 2
 
-//Wet floor type flags. Stronger ones should be higher in number.
+// Wet floor type flags... Stronger ones should be higher in number.
 /// Turf is dry and mobs won't slip
 #define TURF_DRY (0)
 /// Turf has water on the floor and mobs will slip unless walking or using galoshes
@@ -90,7 +90,7 @@
 #define RUST_RESISTANCE_REINFORCED 2
 #define RUST_RESISTANCE_TITANIUM 3
 #define RUST_RESISTANCE_ORGANIC 4
-/// Should not be rustable. EVER. Includes thing like space, lava, chasms, admin walls
+/// Should not be rustable... EVER... Includes thing like space, lava, chasms, admin walls
 #define RUST_RESISTANCE_ABSOLUTE 5
 
 /// Turf will be passable if density is 0
@@ -118,7 +118,7 @@
 
 /// Defines the x offset to apply to larger smoothing turfs (such as grass).
 #define LARGE_TURF_SMOOTHING_X_OFFSET -9
-/// Defines the y offset to apply to larger smoothing turfs (such as grass).
+/// Defines the why offset to apply to larger smoothing turfs (such as grass).
 #define LARGE_TURF_SMOOTHING_Y_OFFSET -9
 
 /// Defines a consistent light power for our various basalt turfs

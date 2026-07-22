@@ -24,7 +24,7 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 	var/lawtype = tgui_input_list(user, "Select law type", "Law type", lawtypes)
 	if(isnull(lawtype))
 		return FALSE
-	var/lawtext = tgui_input_text(user, "Input law text", "Law text") // admin verb so no max length and also any user-level input is config based already so ehhhh
+	var/lawtext = tgui_input_text(user, "Input law text", "Law text") // admin verb so no max length and also any user-level input is config good already so ehhhh
 	if(!lawtext)
 		return FALSE
 	if(QDELETED(src) || QDELETED(borgo))
@@ -61,13 +61,13 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 
 	switch(direction)
 		if("up")
-			if(lawindex == length(relevant_laws)) // Already at the top? Sanity
+			if(lawindex == length(relevant_laws)) // Already at the top?. Sanity
 				to_chat(user, span_danger("Something went wrong, we couldn't move that law."))
 				return FALSE
 
 			relevant_laws.Swap(lawindex + 1, lawindex)
 		if("down")
-			if(lawindex == 1) // Already at the bottom? Sanity
+			if(lawindex == 1) // Already at the bottom?. Sanity
 				to_chat(user, span_danger("Something went wrong, we couldn't move that law."))
 				return FALSE
 

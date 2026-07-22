@@ -1,14 +1,14 @@
 	//These are macros used to reduce on proc calls
 #define fetchElement(L, i) (associative) ? L[L[i]] : L[i]
 
-	//Minimum sized sequence that will be merged. Anything smaller than this will use binary-insertion sort.
+	// Minimum sized sequence that will be merged.. Anything smaller than this will use binary-insertion sort.
 	//Should be a power of 2
 #define MIN_MERGE 32
 
 	//When we get into galloping mode, we stay there until both runs win less often than MIN_GALLOP consecutive times.
 #define MIN_GALLOP 7
 
-//This is a global instance to allow much of this code to be reused. The interfaces are kept separately
+// This is a global instance to allow much of this code to be reused.. The interfaces are kept separately
 GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 /datum/sort_instance
 	//The array being sorted.
@@ -20,11 +20,11 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 	//whether we are sorting list keys (0: L[i]) or associated values (1: L[L[i]])
 	var/associative = 0
 
-	//This controls when we get *into* galloping mode.  It is initialized to MIN_GALLOP.
+	// This controls when we get *into* galloping mode.. It is initialized to MIN_GALLOP.
 	//The mergeLo and mergeHi methods nudge it higher for random data, and lower for highly structured data.
 	var/minGallop = MIN_GALLOP
 
-	//Stores information regarding runs yet to be merged.
+	// Stores information about runs yet to be merged.
 	//Run i starts at runBase[i] and extends for runLen[i] elements.
 	//runBase[i] + runLen[i] == runBase[i+1]
 	var/list/runBases = list()
@@ -217,14 +217,14 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 	//ASSERT(len1 > 0 && len2 > 0)
 	//ASSERT(base1 + len1 == base2)
 
-	//Record the legth of the combined runs. If i is the 3rd last run now, also slide over the last run
-	//(which isn't involved in this merge). The current run (i+1) goes away in any case.
+	// Record the legth of the combined runs.. If i is the 3rd last run now, also slide over the last run
+	// (which isn't involved in this merge).. The current run (i+1) goes away in any case.
 	runLens[i] += runLens[i+1]
 	runLens.Cut(i+1, i+2)
 	runBases.Cut(i+1, i+2)
 
 	//Find where the first element of run2 goes in run1.
-	//Prior elements in run1 can be ignored (because they're already in place)
+	// Before elements in run1 can be ignored (because they're already in place)
 	var/k = gallopRight(fetchElement(L,base2), base1, len1, 0)
 	//ASSERT(k >= 0)
 	base1 += k
@@ -233,7 +233,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 		return
 
 	//Find where the last element of run1 goes in run2.
-	//Subsequent elements in run2 can be ignored (because they're already in place)
+	// Next elements in run2 can be ignored (because they're already in place)
 	len2 = gallopLeft(fetchElement(L,base1 + len1 - 1), base2, len2, len2-1)
 	//ASSERT(len2 >= 0)
 	if(len2 == 0)
@@ -291,7 +291,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 		//ASSERT(-1 <= lastOffset && lastOffset < offset && offset <= len)
 
 	//Now L[base+lastOffset] < key <= L[base+offset], so key belongs somewhere to the right of lastOffset but no farther than
-	//offset. Do a binary search with invariant L[base+lastOffset-1] < key <= L[base+offset]
+	// offset.. Do a binary search with invariant L[base+lastOffset-1] < key <= L[base+offset]
 	++lastOffset
 	while(lastOffset < offset)
 		var/m = lastOffset + ((offset - lastOffset) >> 1)
@@ -324,7 +324,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 	var/offset = 1
 	var/lastOffset = 0
 	if(call(cmp)(key, fetchElement(L,base+hint)) < 0) //key <= L[base+hint]
-		var/maxOffset = hint + 1 //therefore we want to insert somewhere in the range [base,base+hint] = [base+,base+(hint+1))
+		var/maxOffset = hint + 1 // so we want to insert somewhere in the range [base,base+hint] = [base+,base+(hint+1))
 		while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint-offset)) < 0) //we are iterating backwards
 			lastOffset = offset
 			offset = (offset << 1) + 1 //1 3 7 15
@@ -337,7 +337,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 		offset = hint - temp
 
 	else //key > L[base+hint]
-		var/maxOffset = len - hint //therefore we want to insert somewhere in the range (base+hint,base+len) = [base+hint+1, base+hint+(len-hint))
+		var/maxOffset = len - hint // so we want to insert somewhere in the range (base+hint,base+len) = [base+hint+1, base+hint+(len-hint))
 		while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint+offset)) >= 0)
 			lastOffset = offset
 			offset = (offset << 1) + 1
@@ -390,7 +390,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 	outer:
 		while(1)
 			var/count1 = 0 //# of times in a row that first run won
-			var/count2 = 0 // " " " " " "  second run won
+			var/count2 = 0 // " " " " " " second run won
 
 			//do the straightforward thin until one run starts winning consistently
 
@@ -491,7 +491,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 	outer:
 		while(1)
 			var/count1 = 0 //# of times in a row that first run won
-			var/count2 = 0 // " " " " " "  second run won
+			var/count2 = 0 // " " " " " " second run won
 
 			//do the straightforward thing until one run starts winning consistently
 			do
@@ -641,8 +641,8 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 			val2 = fetchElement(L,cursor2)
 
 
-	//Record the legth of the combined runs. If i is the 3rd last run now, also slide over the last run
-	//(which isn't involved in this merge). The current run (i+1) goes away in any case.
+	// Record the legth of the combined runs.. If i is the 3rd last run now, also slide over the last run
+	// (which isn't involved in this merge).. The current run (i+1) goes away in any case.
 	runLens[i] += runLens[i+1]
 	runLens.Cut(i+1, i+2)
 	runBases.Cut(i+1, i+2)

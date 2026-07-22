@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(area_contents)
 		for (var/area_zlevel in 1 to length(to_clear.turfs_to_uncontain_by_zlevel))
 			if (length(to_clear.turfs_to_uncontain_by_zlevel[area_zlevel]))
 				total_to_clear += length(to_clear.turfs_to_uncontain_by_zlevel[area_zlevel])
-				if (length(to_clear.turfs_by_zlevel) >= area_zlevel) //this should always be true, but stat_entry is no place for runtimes. fire() can handle that
+				if (length(to_clear.turfs_by_zlevel) >= area_zlevel) // this should always be true, but stat_entry is no place for runtimes.. fire() can handle that
 					total_clearing_from += length(to_clear.turfs_by_zlevel[area_zlevel])
 	msg = "\n  A:[length(currentrun)] MR:[length(marked_for_clearing)] TC:[total_to_clear] CF:[total_clearing_from]"
 	return ..()
@@ -54,8 +54,8 @@ SUBSYSTEM_DEF(area_contents)
 
 			// The operation of cutting large lists can be expensive
 			// It scales almost directly with the size of the list we're cutting with
-			// Because of this, we're gonna stick to cutting 1 entry at a time
-			// There's no reason to batch it I promise, this is faster. No overtime too
+			// Because of this, we're going to stick to cutting 1 entry at a time
+			// There's no reason to batch it I promise, this is faster.. No overtime too
 			var/amount_cut = 0
 			var/list/cut_from = clear.turfs_to_uncontain_by_zlevel[area_zlevel]
 			for(amount_cut in 1 to length(cut_from))
@@ -63,7 +63,7 @@ SUBSYSTEM_DEF(area_contents)
 				if(MC_TICK_CHECK)
 					cut_from.Cut(1, amount_cut + 1)
 					return
-			// avoid double removals if we return early on a subsequent z-level
+			// avoid double removals if we return early on a next z-level
 			clear.turfs_to_uncontain_by_zlevel[area_zlevel] = list()
 
 		clear.turfs_to_uncontain_by_zlevel = list()

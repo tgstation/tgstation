@@ -7,7 +7,7 @@
 	interaction_flags_click = ALLOW_RESTING
 	interaction_flags_mouse_drop = ALLOW_RESTING
 
-	///Tracks the scale of the mob transformation matrix in relation to its identity. Use update_transform(resize) to change it.
+	/// Tracks the scale of the mob transformation matrix in relation to its identity.. Use update_transform(resize) to change it.
 	var/current_size = RESIZE_DEFAULT_SIZE
 	///How the mob transformation matrix is scaled on init.
 	var/initial_size = RESIZE_DEFAULT_SIZE
@@ -21,13 +21,13 @@
 	/// The mob's current health.
 	var/health = MAX_LIVING_HEALTH
 
-	/// The max amount of stamina damage we can have at once (Does NOT effect stamcrit thresholds. See crit_threshold)
+	/// The max amount of stamina damage we can have at once (Does NOT effect stamcrit thresholds.. See crit_threshold)
 	var/max_stamina = 120
-	///Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
+	/// Stamina damage, or exhaustion.. You recover it slowly naturally, and are knocked down if it gets too high.. Holodeck and hallucinations deal this.
 	var/staminaloss = 0
 
 	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
-	///Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
+	/// Brutal damage caused by brute force (punching, being clubbed by a toolbox ect.... this also accounts for pressure damage)
 	var/bruteloss = 0
 	///Oxygen depravation damage (no air in lungs)
 	var/oxyloss = 0
@@ -47,25 +47,25 @@
 	///When the mob enters hard critical state and is fully incapacitated.
 	var/hardcrit_threshold = HEALTH_THRESHOLD_FULLCRIT
 
-	//Damage dealing vars! These are meaningless outside of specific instances where it's checked and defined.
-	/// Lower bound of damage done by unarmed melee attacks. Mob code is a mess, only works where this is checked for.
+	// Damage dealing vars!. These are meaningless outside of specific instances where it's checked and defined.
+	/// Lower bound of damage done by unarmed melee attacks.. Mob code is a mess, only works where this is checked for.
 	var/melee_damage_lower = 0
-	/// Upper bound of damage done by unarmed melee attacks. Please ensure you check the xyz_defenses.dm for the mobs in question to see if it uses this or hardcoded values.
+	/// Upper bound of damage done by unarmed melee attacks.. Please ensure you check the xyz_defenses.dm for the mobs in question to see if it uses this or hardcoded values.
 	var/melee_damage_upper = 0
 
-	/// Generic bitflags for boolean conditions at the [/mob/living] level. Keep this for inherent traits of living types, instead of runtime-changeable ones.
+	/// Generic bitflags for boolean conditions at the [/mob/living] level.. Keep this for inherent traits of living types, instead of runtime-changeable ones.
 	var/living_flags = NONE
 
-	/// Flags that determine the potential of a mob to perform certain actions. Do not change this directly.
+	/// Flags that determine the potential of a mob to perform certain actions.. Do not change this directly.
 	var/mobility_flags = MOBILITY_FLAGS_DEFAULT
 
 	var/resting = FALSE
 
 	/// Variable to track the body position of a mob, regardgless of the actual angle of rotation (usually matching it, but not necessarily).
 	var/body_position = STANDING_UP
-	/// Number of degrees of rotation of a mob. 0 means no rotation, up-side facing NORTH. 90 means up-side rotated to face EAST, and so on.
+	/// Number of degrees of rotation of a mob.. 0 means no rotation, up-side facing NORTH.. 90 means up-side rotated to face EAST, and so on.
 	VAR_PROTECTED/lying_angle = 0
-	/// Value of lying lying_angle before last change. TODO: Remove the need for this.
+	/// Value of lying lying_angle before last change.. To do Remove the need for this.
 	var/lying_prev = 0
 	/// Does the mob rotate when lying
 	var/rotate_on_lying = FALSE
@@ -89,7 +89,7 @@
 	  */
 	var/incorporeal_move = FALSE
 
-	/// Lazylist of all quirks the mob has. These are not singletons
+	/// Lazylist of all quirks the mob has.. These are not singletons
 	var/list/quirks
 	/// Lazylist of all typepaths of personalities the mob has.
 	var/list/personalities
@@ -109,30 +109,30 @@
 	var/limb_destroyer = 0
 
 	var/mob_size = MOB_SIZE_HUMAN
-	/// List of biotypes the mob belongs to. Used by diseases and reagents mainly.
+	/// List of biotypes the mob belongs to.. Used by diseases and reagents mainly.
 	var/mob_biotypes = MOB_ORGANIC
 	///more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 	var/metabolism_efficiency = 1
 	///does the mob have distinct limbs?(arms,legs, chest,head)
 	var/has_limbs = FALSE
 
-	///How many legs does this mob have by default. This shouldn't change at runtime.
+	/// How many legs does this mob have by default.. This shouldn't change at runtime.
 	var/default_num_legs = 2
-	///How many legs does this mob currently have. Should only be changed through set_num_legs()
+	/// How many legs does this mob currently have.. Should only be changed through set_num_legs()
 	var/num_legs = 2
-	///How many usable legs this mob currently has. Should only be changed through set_usable_legs()
+	/// How many usable legs this mob currently has.. Should only be changed through set_usable_legs()
 	var/usable_legs = 2
 
-	///How many hands does this mob have by default. This shouldn't change at runtime.
+	/// How many hands does this mob have by default.. This shouldn't change at runtime.
 	var/default_num_hands = 2
-	///How many hands hands does this mob currently have. Should only be changed through set_num_hands()
+	/// How many hands hands does this mob currently have.. Should only be changed through set_num_hands()
 	var/num_hands = 2
-	///How many usable hands does this mob currently have. Should only be changed through set_usable_hands()
+	/// How many usable hands does this mob currently have.. Should only be changed through set_usable_hands()
 	var/usable_hands = 2
 
 	var/list/pipes_shown = list()
 	var/last_played_vent = 0
-	/// The last direction we moved in a vent. Used to make holding two directions feel nice
+	/// The last direction we moved in a vent.. Used to make holding two directions feel nice
 	var/last_vent_dir = 0
 	/// Cell tracker datum we use to manage the pipes around us, for faster ventcrawling
 	/// Should only exist if you're in a pipe
@@ -144,11 +144,11 @@
 
 	///what icon the mob uses for speechbubbles
 	var/bubble_icon = "default"
-	///if this exists AND the normal sprite is bigger than 32x32, this is the replacement icon state (because health doll size limitations). the icon will always be screen_gen.dmi
+	/// if this exists AND the normal sprite is bigger than 32x32, this is the replacement icon state (because health doll size limitations).. the icon will always be screen_gen.dmi
 	var/health_doll_icon
 
 	var/last_bumped = 0
-	///if a mob's name should be appended with an id when created e.g. Mob (666)
+	/// if a mob's name should be appended with an id when created e.g.. Mob (666)
 	var/unique_name = FALSE
 	///the id a mob gets when it's created
 	var/identifier = 0
@@ -157,17 +157,17 @@
 	var/list/butcher_results = null
 	///these will always be yielded from butchering
 	var/list/guaranteed_butcher_results = null
-	///effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier
+	/// effectiveness prob.. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier
 	var/butcher_difficulty = 0
 
 	/// How much blood the mob currently has.
 	/// Don't read directly, use get_blood_volume() and get_blood_volume(apply_modifiers = TRUE).
 	/// Don't write directly either, use set_blood_volume() and adjust_blood_volume().
-	/// Also don't initialize this. Initialize default_blood_volume instead.
+	/// Also don't initialize this.. Initialize default_blood_volume instead.
 	var/blood_volume = 0
-	/// The default blood volume of the mob. Used primarily for healing bloodloss.
+	/// The default blood volume of the mob.. Used primarily for healing bloodloss.
 	var/default_blood_volume = 0
-	/// Lazylist of blood volume modifiers. These multiply blood volume when get_blood_volume(apply_modifiers = TRUE) is used.
+	/// Lazylist of blood volume modifiers.. These multiply blood volume when get_blood_volume(apply_modifiers = TRUE) is used.
 	/// Use set_blood_volume_modifier(multiplier, source) and remove_blood_volume_modifier(source) to modify this.
 	var/list/blood_volume_modifiers = null
 
@@ -180,7 +180,7 @@
 
 	/// The w_class of the holder when held.
 	var/held_w_class = WEIGHT_CLASS_NORMAL
-	///if it can be held, can it be equipped to any slots? (think pAI's on head)
+	/// if it can be held, can it be equipped to any slots?. (think pAI's on head)
 	var/worn_slot_flags = NONE
 
 	var/ventcrawl_layer = PIPING_LAYER_DEFAULT
@@ -227,7 +227,7 @@
 
 	/// Direction that this mob is looking at, used for the look_up and look_down procs
 	var/looking_vertically = NONE
-	///looking holder we use for look_up and look_down. we use this over resetting to the turf because we want to glide
+	/// looking holder we use for look_up and look_down.. we use this over resetting to the turf because we want to glide
 	var/atom/movable/looking_holder/looking_holder
 
 	/// Living mob's mood datum
@@ -237,7 +237,7 @@
 	/// Contains the owner and all imaginary friend mobs if they exist, otherwise null
 	var/list/imaginary_group = null
 
-	/// What our current gravity state is. Used to avoid duplicate animates and such
+	/// What our current gravity state is.. Used to avoid duplicate animates and such
 	var/gravity_state = null
 
 	/// How long it takes to return to 0 stam
@@ -253,12 +253,12 @@
 	/// Reference handling is done by the martial arts themselves
 	var/list/datum/martial_art/martial_arts
 
-	/// how many tiles can this mob reach with their hands? 1 tile is adjacent.
+	/// how many tiles can this mob reach with their hands?. 1 tile is adjacent.
 	var/reach_length = 1
 
 	/// Lazy assoc list of currently applied fishing difficulty modifiers keyed to their source
 	var/list/fishing_difficulty_mods_by_source
 
-	/// When less than or equal to  this distance (but not adjacent), this mob can hear parts of distant whispers, but not the entire message.
+	/// When less than or equal to this distance (but not adjacent), this mob can hear parts of distant whispers, but not the entire message.
 	/// When greater than this distance, this mob cannot hear anything of a whisper.
 	var/eavesdrop_range = EAVESDROP_EXTRA_RANGE

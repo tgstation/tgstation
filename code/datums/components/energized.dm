@@ -80,7 +80,7 @@
 			source.audible_message(span_danger("[parent] makes an electric crackle..."))
 		return FALSE
 
-	// Everything will be based on position and travel direction
+	// Everything will be good on position and travel direction
 	var/plate_pos
 	var/tram_pos
 	var/tram_velocity_sign // 1 for positive axis movement, -1 for negative
@@ -94,7 +94,7 @@
 		tram_pos = tram_part.x
 		tram_velocity_sign = tram.travel_direction & EAST ? 1 : -1
 
-	// How far away are we? negative if already passed.
+	// How far away are we?. negative if already passed.
 	var/approach_distance = tram_velocity_sign * (plate_pos - (tram_pos + DEFAULT_TRAM_MIDPOINT))
 
 	// Check if our victim is in the active path of the tram.

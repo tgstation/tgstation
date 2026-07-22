@@ -63,7 +63,7 @@
 	return TRUE
 
 //Butterbeans, the beans wid da butta!
-// Butterbeans! - Squeeze for a single butter slice!
+// Butterbeans!. - Squeeze for a single butter slice!
 /obj/item/seeds/soya/butter
 	name = "butterbean seed pack"
 	desc = "These seeds grow into butterbean plants."
@@ -138,7 +138,7 @@
 	potency = 20
 	genes = list(/datum/plant_gene/trait/stable_stats, /datum/plant_gene/trait/repeated_harvest)
 	mutatelist = null
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/ants = 0.1) //IRL jumping beans contain insect larve, hence the ants
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/ants = 0.1) // IRL jumping beans contain insect larve, so the ants
 	graft_gene = /datum/plant_gene/trait/stable_stats
 	rarity = PLANT_MODERATELY_RARE
 

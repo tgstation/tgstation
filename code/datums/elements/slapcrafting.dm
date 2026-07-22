@@ -48,11 +48,11 @@
 
 	var/list/valid_recipes
 	for(var/datum/crafting_recipe/recipe as anything in slapcraft_recipes)
-		// Gotta instance it to copy the list over.
+		// Got to instance it to copy the list over.
 		recipe = new recipe()
 		var/list/type_ingredient_list = recipe.reqs
 		qdel(recipe)
-		if(length(type_ingredient_list) == 1) // No ingredients besides itself? We use one of the tools then
+		if(length(type_ingredient_list) == 1) // No ingredients besides itself?. We use one of the tools then
 			type_ingredient_list = recipe.tool_paths
 			// Check the tool behaviours differently as they aren't types
 			for(var/behaviour in initial(recipe.tool_behaviors))
@@ -117,10 +117,10 @@
 	SIGNAL_HANDLER
 
 	var/list/string_results = list()
-	// This list saves the recipe result names we've already used to cross-check other recipes so we don't have ', a spear, or a spear!' in the desc.
+	// This list saves the recipe result names we've already used to cross-check other recipes so we don't have ', a spear. A spear!' in the desc.
 	var/list/already_used_names
 	for(var/datum/crafting_recipe/recipe as anything in slapcraft_recipes)
-		// Identical name to a previous recipe's result? Skip in description.
+		// Identical name to a previous recipe's result?. Skip in description.
 		var/atom/result = initial(recipe.result)
 		if(locate(initial(result.name)) in already_used_names)
 			continue
@@ -152,7 +152,7 @@
 
 	to_chat(user, span_notice("You could craft \a [initial(result.name)] by applying one of these items to it!"))
 
-	// Gotta instance it to copy the lists over.
+	// Got to instance it to copy the lists over.
 	cur_recipe = new cur_recipe()
 	var/list/type_ingredient_list = cur_recipe.reqs
 
@@ -170,7 +170,7 @@
 		var/atom/ingredient = valid_type
 		var/amount = initial(cur_recipe.reqs[ingredient])
 
-		// If we're about to describe the ingredient that the component is based on, lower the described amount by 1 or remove it outright.
+		// If we're about to describe the ingredient that the component is good on, lower the described amount by 1 or remove it outright.
 		if(source.type == valid_type)
 			if(amount > 1)
 				amount--
@@ -185,7 +185,7 @@
 
 	var/list/tool_list = ""
 
-	// Paste the required tools.
+	// Paste the needed tools.
 	for(var/valid_type in cur_recipe.tool_paths)
 		var/atom/tool = valid_type
 		tool_list += "\a [initial(tool.name)]\n"

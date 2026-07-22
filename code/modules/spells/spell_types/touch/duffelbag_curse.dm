@@ -46,7 +46,7 @@
 		to_chat(victim, span_warning("The weight of this bag becomes overburdening!"))
 		return TRUE
 
-	// However if they're uncursed, they're fresh for getting a cursed bag
+	// But if they're uncursed, they're fresh for getting a cursed bag
 	var/obj/item/storage/backpack/duffelbag/cursed/conjured_duffel = new get_turf(victim)
 	victim.visible_message(
 		span_danger("A growling duffel bag appears on [victim]!"),
@@ -75,7 +75,7 @@
 	if(victim.put_in_hands(conjured_duffel))
 		return TRUE
 
-	// Well, we failed to give them the duffel bag,
+	// we failed to give them the duffel bag,
 	// but technically we still stunned them so that's something
 	return TRUE
 

@@ -1,4 +1,4 @@
-/// Make the holder move by adding a movement element. Signal is for aestethic interactions mostly
+/// Make the holder move by adding a movement element.. Signal is for aestethic interactions mostly
 /datum/gizmodes/mover
 	guaranteed_active_gizmodes = list(/datum/gizpulse/start_moving = 1, /datum/gizpulse/stop_moving = 1)
 
@@ -32,7 +32,7 @@
 	SEND_SIGNAL(holder, COMSIG_GIZMO_OFF_STATE)
 	holder.set_light_on(FALSE)
 
-/// Gives a voice hint or changes the voices language for use with a voice interface (i mean you give this to a wire interface or other but it then gives you
+/// Gives a voice hint. Changes the voices language f. Use with a voice interface (i mean you give this to a wire interface. Other. It then gives you
 /// the info to use a voice interface)
 /datum/gizmodes/voice
 	guaranteed_active_gizmodes = list(/datum/gizpulse/voice_hint, /datum/gizpulse/language_change)

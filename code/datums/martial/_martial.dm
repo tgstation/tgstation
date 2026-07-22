@@ -13,7 +13,7 @@
 	/// Where this martial art is from, sometimes the same as the holder if it's tied to them
 	/// If the origin is deleted, this martial art will be too.
 	VAR_PRIVATE/datum/origin
-	/// The current mob associated with this martial art datum. Do not set directly.
+	/// The current mob associated with this martial art datum.. Do not set directly.
 	VAR_PRIVATE/mob/living/holder
 	/// Weakref to the last mob we attacked, for determining when to reset streaks
 	VAR_PRIVATE/datum/weakref/current_target
@@ -28,19 +28,19 @@
 	var/combo_timer = 6 SECONDS
 	/// Timer ID for the combo reset timer.
 	var/timerid
-	/// If TRUE, this style allows you to punch people despite being a pacifist (IE: Boxing, which does no damage)
+	/// If TRUE, this style allows you to punch people despite being a pacifist that is Boxing, which does no damage)
 	var/pacifist_style = FALSE
 	/// If TRUE, the user is locked to using this martial art, and can't swap to other ones they know.
 	/// If the mob has two locked martial arts, it's first come first serve.
 	var/locked_to_use = FALSE
 	/// A modifier to the effective grab state for resist grabs of users of this martial art.
-	/// IE: grab_state_modifier = 1 means passive grabs are aggro grab difficulty, and aggro grabs are neckgrab difficulty.
+	/// that is grab_state_modifier = 1 means passive grabs are aggro grab difficulty, and aggro grabs are neckgrab difficulty.
 	var/grab_state_modifier = 0
 	/// A modifier to the damage dealt on a failed grab resist.
-	/// IE: grab_damage_modifier = 10 means 10 more stamina damage dealt
+	/// that is grab_damage_modifier = 10 means 10 more stamina damage dealt
 	var/grab_damage_modifier = 0
 	/// A modifier to the chance of escaping a grab.
-	/// IE: grab_escape_chance_modifier = -10 means 10% less chance to escape a grab
+	/// that is grab_escape_chance_modifier = -10 means 10% less chance to escape a grab
 	var/grab_escape_chance_modifier = 0
 
 /datum/martial_art/serialize_list(list/options, list/semvers)

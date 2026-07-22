@@ -2,7 +2,7 @@
 GLOBAL_DATUM_INIT(AdminProcCallHandler, /mob/proccall_handler, new())
 GLOBAL_PROTECT(AdminProcCallHandler)
 
-/// Used to handle proccalls called indirectly by an admin (e.g. tgs, circuits).
+/// Used to handle proccalls called indirectly by an admin (e.g.. tgs, circuits).
 /// Has to be a mob because IsAdminAdvancedProcCall() checks usr, which is a mob variable.
 /// So usr is set to this for any proccalls that don't have any usr mob/client to refer to.
 /mob/proccall_handler
@@ -153,7 +153,7 @@ ADMIN_VERB(advanced_proc_call, R_DEBUG, "Advanced ProcCall", "Call a proc on any
 		admin_ticket_log(target, msg)
 		returnval = WrapAdminProcCall(target, procname, lst) // Pass the lst as an argument list to the proc
 	else
-		//this currently has no hascall protection. wasn't able to get it working.
+		// this currently has no hascall protection.. wasn't able to get it working.
 		log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		message_admins("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].") //Proccall announce removed.
 		returnval = WrapAdminProcCall(GLOBAL_PROC, procname, lst) // Pass the lst as an argument list to the proc

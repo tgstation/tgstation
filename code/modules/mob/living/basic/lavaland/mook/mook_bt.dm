@@ -71,7 +71,7 @@
 	return result
 
 
-///gotta get south of the material stand
+/// got to get south of the material stand
 /datum/bt_node/ai_behavior/find_deposit_position
 	/// Blackboard key holding the /obj/structure/ore_container/material_stand target.
 	var/stand_key = BB_MATERIAL_STAND_TARGET

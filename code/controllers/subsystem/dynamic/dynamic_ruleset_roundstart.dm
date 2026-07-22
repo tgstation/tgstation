@@ -99,8 +99,8 @@
 	candidate.add_antag_datum(/datum/antagonist/changeling)
 
 // Quick thing about this event, it turns out roundstart blood worms, despite being granted a host, are worse at antaggery in practice.
-// They have their static, so unlike blood worms who spawn in the middle of the round, they just kinda tend to do nothing. So having at least 2 is ideal.
-// This way, if one ends up being a fluke, the other can hopefully pick up the slack. It's a semi-rare event, so having a massive chance to just fizzle out isn't ideal.
+// They have their static, so unlike blood worms who spawn in the middle of the round, they just kind of tend to do nothing.. So having at least 2 is ideal.
+// This way, if one ends up being a fluke, the other can hopefully pick up the slack.. It's a semi-rare event, so having a massive chance to just fizzle out isn't ideal.
 /datum/dynamic_ruleset/roundstart/blood_worm
 	name = "Blood Worms"
 	config_tag = "Roundstart Blood Worm"
@@ -207,7 +207,7 @@
 
 /datum/dynamic_ruleset/roundstart/blood_cult/execute()
 	. = ..()
-	// future todo, find a cleaner way to get this from execute args
+	// future to do find a cleaner way to get this from execute args
 	var/datum/team/cult/main_cult = locate() in GLOB.antagonist_teams
 	main_cult.setup_objectives()
 
@@ -254,8 +254,8 @@
 	repeatable = FALSE
 
 /datum/dynamic_ruleset/roundstart/nukies/prepare_for_role(datum/mind/candidate)
-	// they all get the normal operative job, even the leader. (leader's job is updated when they get the antag datum)
-	// all this ultimately matters for is 1. ensuring they *don't* get a normal job and 2. spawning them in the elevator
+	// they all get the normal operative job, even the leader.. (leader's job is updated when they get the antag datum)
+	// all this ultimately matters for is 1.. ensuring they *don't* get a normal job and 2.. spawning them in the elevator
 	LAZYSET(SSjob.forced_occupations, candidate, /datum/job/nuclear_operative)
 
 /datum/dynamic_ruleset/roundstart/nukies/execute()

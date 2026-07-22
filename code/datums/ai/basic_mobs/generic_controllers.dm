@@ -107,7 +107,7 @@
 	ai_traits = PASSIVE_AI_FLAGS
 
 /// Does what it is told and protects da boss
-/// TODO: port pet command system to BT so pet_planning functions correctly
+/// To do port pet command system to BT so pet_planning functions correctly
 /datum/ai_controller/basic_controller/simple/simple_goon
 	behavior_tree_json = "code/datums/ai/basic_mobs/simple_goon.bt.json"
 	blackboard = list(

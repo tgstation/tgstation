@@ -40,7 +40,7 @@
 	if (isnull(template))
 		return null
 	if (!ispath(template))
-		template = text2path(prefs["template"]["value"]) // new text2path ... doesn't compile in 511
+		template = text2path(prefs["template"]["value"]) // new text2path .... doesn't compile in 511
 
 	template = new template
 	var/datum/antagonist/ert/ert = template.leader_role
@@ -106,7 +106,7 @@
 
 	var/templtype = prefs["template"]["value"]
 	if (!ispath(prefs["template"]["value"]))
-		templtype = text2path(prefs["template"]["value"]) // new text2path ... doesn't compile in 511
+		templtype = text2path(prefs["template"]["value"]) // new text2path .... doesn't compile in 511
 
 	if (ertemplate.type != templtype)
 		ertemplate = new templtype

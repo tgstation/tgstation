@@ -113,7 +113,7 @@
 	// but here we outright close it so people can't gleam extra info
 	if(!is_operational)
 		return UI_CLOSE
-	// if you're knocked out, ie anesthetic... definitely a no-go
+	// if you're knocked out, that is anesthetic.... definitely a no-go
 	if(user.stat >= UNCONSCIOUS || HAS_TRAIT(user, TRAIT_KNOCKEDOUT))
 		return UI_CLOSE
 	// the patient itself should be blocked from viewing the computer

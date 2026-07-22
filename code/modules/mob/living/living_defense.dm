@@ -257,7 +257,7 @@
 			blocked = TRUE
 
 	var/zone = get_random_valid_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
-	var/nosell_hit = (SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, blocked, throwingdatum) & MOVABLE_IMPACT_ZONE_OVERRIDE) // TODO: find a better way to handle hitpush and skipcatch for humans
+	var/nosell_hit = (SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, blocked, throwingdatum) & MOVABLE_IMPACT_ZONE_OVERRIDE) // To do find a better way to handle hitpush and skipcatch for humans
 	if(nosell_hit)
 		skipcatch = TRUE
 		hitpush = FALSE
@@ -422,7 +422,7 @@
 /mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
 	if(.)
-		return FALSE // looks wrong, but if the attack chain was cancelled we don't propogate it up to children calls. Yeah it's cringe.
+		return FALSE // looks wrong, but if the attack chain was cancelled we don't propogate it up to children calls.. Yeah it's uncomfortable
 
 	if(user.melee_damage_upper == 0)
 		if(user != src)
@@ -788,7 +788,7 @@
 	var/turf/target_shove_turf = get_step(target.loc, shove_dir)
 	var/turf/target_old_turf = target.loc
 
-	//Are we hitting anything? or
+	// Are we hitting anything?. or
 	if(shove_flags & SHOVE_CAN_MOVE)
 		if(SEND_SIGNAL(target_shove_turf, COMSIG_LIVING_DISARM_PRESHOVE, src, target, weapon) & COMSIG_LIVING_ACT_SOLID)
 			shove_flags |= SHOVE_BLOCKED

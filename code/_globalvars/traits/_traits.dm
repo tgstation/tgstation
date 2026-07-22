@@ -1,9 +1,9 @@
 // This file should contain every single global trait in the game in a type-based list, as well as any additional trait-related information that's useful to have on a global basis.
 // This file is used in linting, so make sure to add everything alphabetically and what-not.
-// Do consider adding your trait entry to the similar list in `admin_tooling.dm` if you want it to be accessible to admins (which is probably the case for 75% of traits).
+// Do consider adding your trait entry to the similar list in `admin_tooling.dm` if you want it to be accessible to admins (which is probably the case f. 75% of traits).
 
 // Please do note that there is absolutely no bearing on what traits are added to what subtype of `/datum`, this is just an easily referenceable list sorted by type.
-// The only thing that truly matters about traits is the code that is built to handle the traits, and where that code is located. Nothing else.
+// The only thing that truly matters about traits is the code that is built to handle the traits, and where that code is located.. Nothing else.
 
 GLOBAL_LIST_INIT(traits_by_type, list(
 	/atom = list(
@@ -109,7 +109,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 	/datum/controller/subsystem/economy = list(
 		"TRAIT_MARKET_CRASHING" = TRAIT_MARKET_CRASHING,
 	),
-	// AKA SSstation
+	// Also known as SSstation
 	/datum/controller/subsystem/processing/station = list(
 		"STATION_TRAIT_ASSISTANT_GIMMICKS" = STATION_TRAIT_ASSISTANT_GIMMICKS,
 		"STATION_TRAIT_BANANIUM_SHIPMENTS" = STATION_TRAIT_BANANIUM_SHIPMENTS,
@@ -503,7 +503,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_PRESENT_VISION" = TRAIT_PRESENT_VISION,
 		"TRAIT_PRESERVE_UI_WITHOUT_CLIENT" = TRAIT_PRESERVE_UI_WITHOUT_CLIENT,
 		"TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION" = TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION,
-		"TRAIT_PRIMITIVE" = TRAIT_PRIMITIVE, //unable to use mechs. Given to Ash Walkers
+		"TRAIT_PRIMITIVE" = TRAIT_PRIMITIVE, // unable to use mechs.. Given to Ash Walkers
 		"TRAIT_PROFOUND_FISHER" = TRAIT_PROFOUND_FISHER,
 		"TRAIT_PULL_BLOCKED" = TRAIT_PULL_BLOCKED,
 		"TRAIT_PUSHIMMUNE" = TRAIT_PUSHIMMUNE,

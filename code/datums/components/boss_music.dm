@@ -7,7 +7,7 @@
 	///How long the track is, used to clear players out when the music is supposed to end.
 	var/track_duration
 
-	///List of all mobs listening to the boss music currently. Cleared on Destroy or after `track_duration`.
+	/// List of all mobs listening to the boss music currently.. Cleared on Destroy or after `track_duration`.
 	var/list/datum/weakref/players_listening_refs = list()
 	///List of callback timers, used to clear out mobs listening to boss music after `track_duration`.
 	var/list/music_callbacks = list()
@@ -45,7 +45,7 @@
 	UnregisterSignal(parent, signal)
 	return ..()
 
-/// Handler wrapper for basic mobs getting a target. The signal we pass to basic mobs passes along the blackboard key which we can access off parent.
+/// Handler wrapper for basic mobs getting a target.. The signal we pass to basic mobs passes along the blackboard key which we can access off parent.
 /datum/component/boss_music/proc/basic_target_found(mob/source, key)
 	SIGNAL_HANDLER
 	var/mob/new_target = source.ai_controller.blackboard[key]

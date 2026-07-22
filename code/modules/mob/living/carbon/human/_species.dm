@@ -18,9 +18,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species
 	///If the game needs to manually check your race to do something not included in a proc here, it will use this.
 	var/id
-	///This is used for children, it will determine their default limb ID for use of examine. See [/mob/living/carbon/human/proc/examine].
+	/// This is used for children, it will determine their default limb ID for use of examine.. See [/mob/living/carbon/human/proc/examine].
 	var/examine_limb_id
-	///This is the fluff name. They are displayed on health analyzers and in the character setup menu. Leave them generic for other servers to customize.
+	/// This is the fluff name.. They are displayed on health analyzers and in the character setup menu.. Leave them generic for other servers to customize.
 	var/name
 	/**
 	 * The formatting of the name of the species in plural context. Defaults to "[name]\s" if unset.
@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	 */
 	var/plural_form
 
-	/// Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
+	/// Whether or not the race has sexual characteristics (biological genders).. At the moment this is only FALSE for skeletons and shadows
 	var/sexes = TRUE
 
 	///The maximum number of bodyparts this species can have.
@@ -38,29 +38,29 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// If USE_MUTANT_COLOR, it uses the mob's mutant_color.
 	/// If USE_FIXED_MUTANT_COLOR, it uses fixedmutcolor
 	var/hair_color_mode
-	///The alpha used by the hair. 255 is completely solid, 0 is invisible.
+	/// The alpha used by the hair.. 255 is completely solid, 0 is invisible.
 	var/hair_alpha = 255
-	///The alpha used by the facial hair. 255 is completely solid, 0 is invisible.
+	/// The alpha used by the facial hair.. 255 is completely solid, 0 is invisible.
 	var/facial_hair_alpha = 255
 
 	///Never, Optional, or Forced digi legs?
 	var/digitigrade_customization = DIGITIGRADE_NEVER
-	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
+	/// If your race uses a non standard bloodtype (A+, O-, AB-, and so on For example, lizards have L type blood.
 	///Reagent that your species bleeds, and what chemical can be used to recover lost blood depend on this
 	var/exotic_bloodtype
-	///The rate at which blood is passively drained by having the blood deficiency quirk. Some races such as slimepeople can regen their blood at different rates so this is to account for that
+	/// The rate at which blood is passively drained by having the blood deficiency quirk.. Some races such as slimepeople can regen their blood at different rates so this is to account for that
 	var/blood_deficiency_drain_rate = BLOOD_REGEN_FACTOR + BLOOD_DEFICIENCY_MODIFIER // slightly above the regen rate so it slowly drains instead of regenerates.
 	///What the species drops when gibbed by a gibber machine.
 	var/meat = /obj/item/food/meat/slab/human
 	///What skin the species drops when gibbed by a gibber machine.
 	var/skinned_type
-	///flags for inventory slots the race can't equip stuff to. Golems cannot wear jumpsuits, for example.
+	/// flags for inventory slots the race can't equip stuff to.. Golems cannot wear jumpsuits, for example.
 	var/no_equip_flags
 	/// What languages this species can understand and say.
 	/// Use a [language holder datum][/datum/language_holder] typepath in this var.
 	/// Should never be null.
 	var/datum/language_holder/species_language_holder = /datum/language_holder/human_basic
-	///The bodyparts this species uses. assoc of bodypart string - bodypart type. Make sure all the fucking entries are in or I'll skin you alive.
+	/// The bodyparts this species uses.. assoc of bodypart string - bodypart type.. Make sure all the fucking entries are in or I'll skin you alive.
 	var/list/bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right,
@@ -69,7 +69,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
-	///Internal organs that are unique to this race, like a tail or other cosmetic organs. list(typepath of organ 1, typepath of organ 2 = "Round").
+	/// Internal organs that are unique to this race, like a tail or other cosmetic organs.. list(typepath of organ 1, typepath of organ 2 = "Round").
 	var/list/mutant_organs = list()
 	///Replaces default brain with a different organ
 	var/obj/item/organ/brain/mutantbrain = /obj/item/organ/brain
@@ -92,11 +92,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Replaces default appendix with a different organ.
 	var/obj/item/organ/appendix/mutantappendix = /obj/item/organ/appendix
 
-	/// Store body marking defines. See mobs.dm for bitflags
+	/// Store body marking defines.. See mobs.dm for bitflags
 	var/list/body_markings = list()
 
-	/// Flat modifier on all damage taken via [apply_damage][/mob/living/proc/apply_damage] (so being punched, shot, etc.)
-	/// IE: 10 = 10% less damage taken.
+	/// Flat modifier on all damage taken via [apply_damage][/mob/living/proc/apply_damage] (so being punched, shot, and so on
+	/// that is 10 = 10% less damage taken.
 	var/damage_modifier = 0
 	///multiplier for damage from cold temperature
 	var/coldmod = 1
@@ -106,17 +106,17 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/stunmod = 1
 	///multiplier for money paid at payday
 	var/payday_modifier = 1.0
-	///Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.
+	/// Base electrocution coefficient.. Basically a multiplier for damage from electrocutions.
 	var/siemens_coeff = 1
 	///To use MUTCOLOR with a fixed color that's independent of the mcolor feature in DNA.
 	var/fixed_mut_color = ""
-	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
+	/// Special mutation that can be found in the genepool exclusively in this species.. Dont leave empty or changing species will be a headache
 	var/inert_mutation = /datum/mutation/dwarfism
 	///Used to set the mob's death_sound upon species change
 	var/death_sound
 	///Special sound for grabbing
 	var/grab_sound
-	/// A path to an outfit that is important for species life e.g. plasmaman outfit
+	/// A path to an outfit that is important for species life e.g.. plasmaman outfit
 	var/datum/outfit/outfit_important_for_life
 
 	/// The natural temperature for a body
@@ -128,12 +128,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// The body temperature limit the body can take before it starts taking damage from cold.
 	var/bodytemp_cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
 
-	/// The icon_state of the fire overlay added when sufficently ablaze and standing. see onfire.dmi
+	/// The icon_state of the fire overlay added when sufficently ablaze and standing.. see onfire.dmi
 	var/fire_overlay = "human"
 
 	/// Generic traits tied to having the species.
 	var/list/inherent_traits = list()
-	/// List of biotypes the mob belongs to. Used by diseases.
+	/// List of biotypes the mob belongs to.. Used by diseases.
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	///List of factions the mob gain upon gaining this species.
 	var/list/inherent_factions
@@ -141,28 +141,28 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///What anim to use for gibbing
 	var/gib_anim = "gibbed-h"
 
-	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
+	/// Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors.. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
 
 	///Unique cookie given by admins through prayers
 	var/species_cookie = /obj/item/food/cookie
 
-	/// List of family heirlooms this species can get with the family heirloom quirk. List of types.
+	/// List of family heirlooms this species can get with the family heirloom quirk.. List of types.
 	var/list/family_heirlooms
 
-	///List of results you get from knife-butchering. null means you cant butcher it. Associated by resulting type - value of amount
+	/// List of results you get from knife-butchering.. null means you cant butcher it.. Associated by resulting type - value of amount
 	var/list/knife_butcher_results
 
 	/// Should we preload this species's organs?
 	var/preload = TRUE
 
-	/// Do we try to prevent reset_perspective() from working? Useful for Dullahans to stop perspective changes when they're looking through their head.
+	/// Do we try to prevent reset_perspective() from working?. Useful for Dullahans to stop perspective changes when they're looking through their head.
 	var/prevent_perspective_change = FALSE
 
 	///Was the species changed from its original type at the start of the round?
 	var/roundstart_changed = FALSE
 
-	/// This supresses the "dosen't appear to be himself" examine text for if the mob is run by an AI controller. Should be used on any NPC human subtypes. Monkeys are the prime example.
+	/// This supresses the "dosen't appear to be himself" examine text for if the mob is run by an AI controller.. Should be used on any NPC human subtypes.. Monkeys are the prime example.
 	var/ai_controlled_species = FALSE
 
 	/**
@@ -171,7 +171,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	 **/
 	var/properly_gained = FALSE
 
-	///A list containing outfits that will be overridden in the species_equip_outfit proc. [Key = Typepath passed in] [Value = Typepath of outfit you want to equip for this specific species instead].
+	/// A list containing outfits that will be overridden in the species_equip_outfit proc.. [Key = Typepath passed in] [Value = Typepath of outfit you want to equip for this specific species instead].
 	var/list/outfit_override_registry = list()
 
 ///////////
@@ -475,18 +475,18 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	human.living_flags &= ~STOP_OVERLAY_UPDATE_BODY_PARTS
 
-///Proc that will randomise the hair, or primary appearance element (i.e. for moths wings) of a species' associated mob
+/// Proc that will randomise the hair, or primary appearance element (i.e.. for moths wings) of a species' associated mob
 /datum/species/proc/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
 	human_mob.set_hairstyle(random_hairstyle(human_mob.gender), update = FALSE)
 
-///Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob,
+/// Proc that will randomise the underwear (i.e.. top, pants and socks) of a species' associated mob,
 /// but will not update the body right away.
 /datum/species/proc/randomize_active_underwear_only(mob/living/carbon/human/human_mob)
 	human_mob.undershirt = random_undershirt(human_mob.gender)
 	human_mob.underwear = random_underwear(human_mob.gender)
 	human_mob.socks = random_socks(human_mob.gender)
 
-///Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob
+/// Proc that will randomise the underwear (i.e.. top, pants and socks) of a species' associated mob
 /datum/species/proc/randomize_active_underwear(mob/living/carbon/human/human_mob)
 	randomize_active_underwear_only(human_mob)
 	human_mob.update_body()
@@ -529,7 +529,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			return FALSE
 
 	// this check prevents us from equipping something to a slot it doesn't support, WITH the exceptions of storage slots (pockets, suit storage, and backpacks)
-	// we don't require having those slots defined in the item's slot_flags, so we'll rely on their own checks further down
+	// we don't need having those slots defined in the item's slot_flags, so we'll rely on their own checks further down
 	if(!(I.slot_flags & slot))
 		var/excused = FALSE
 		// Anything that's small or smaller can fit into a pocket by default
@@ -736,7 +736,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	user.do_cpr(target)
 
-///This proc handles punching damage. IMPORTANT: Our owner is the TARGET and not the USER in this proc. For whatever reason...
+/// This proc handles punching damage.. IMPORTANT: Our owner is the TARGET and not the USER in this proc.. For whatever reason...
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && !attacker_style?.pacifist_style)
 		to_chat(user, span_warning("You don't want to harm [target]!"))
@@ -745,7 +745,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/obj/item/organ/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	var/obj/item/bodypart/attacking_bodypart = attacker_style?.get_attacking_limb(user, target) || brain?.get_attacking_limb(target) || user.get_active_hand()
 
-	// Whether or not we get some protein for a successful attack. Nom.
+	// Whether or not we get some protein for a successful attack.. Nom.
 	var/biting = FALSE
 
 	var/atk_verb_index = rand(1, length(attacking_bodypart.unarmed_attack_verbs))
@@ -767,34 +767,34 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if (length(attacking_bodypart.unarmed_attack_verbs_continuous) >= atk_verb_index) // Just in case
 				atk_verb_continuous = attacking_bodypart.unarmed_attack_verbs_continuous[atk_verb_index]
 			atk_effect = attacking_bodypart.unarmed_attack_effect
-		else  //Nothing? Okay. Fail.
+		else  // Nothing?. Okay.. Fail.
 			user.balloon_alert(user, "can't attack!")
 			return FALSE
 
 	user.do_attack_animation(target, atk_effect)
 
-	//has our target been shoved recently? If so, they're staggered and we get an easy hit.
+	// has our target been shoved recently?. If so, they're staggered and we get an easy hit.
 	var/staggered = target.has_status_effect(/datum/status_effect/staggered)
 
 	//Someone in a grapple is much more vulnerable to being harmed by punches.
 	var/grappled = (target.pulledby && target.pulledby.grab_state >= GRAB_AGGRESSIVE)
 
-	// Our lower and upper unarmed damage values. Damage is rolled between these two values.
+	// Our lower and upper unarmed damage values.. Damage is rolled between these two values.
 	var/lower_unarmed_damage = attacking_bodypart.unarmed_damage_low
 	var/upper_unarmed_damage = attacking_bodypart.unarmed_damage_high
 
-	// The presence of TRAIT_STRENGTH increases our upper unarmed damage. This is a damage cap increase.
+	// The presence of TRAIT_STRENGTH increases our upper unarmed damage.. This is a damage cap increase.
 	upper_unarmed_damage += HAS_TRAIT(user, TRAIT_STRENGTH) ? 2 : 0
 
-	// Out athletics skill is used to set our potential base damage roll. It won't increase our potential damage roll, but will make our unarmed attack more consistent.
+	// Out athletics skill is used to set our potential base damage roll.. It won't increase our potential damage roll, but will make our unarmed attack more consistent.
 	// For a normal human arm, this would cap at 10, and for a normal human leg, this would go up to 14.
 	lower_unarmed_damage =  min(lower_unarmed_damage + (user.mind?.get_skill_level(/datum/skill/athletics) || 0), upper_unarmed_damage)
 
-	// The actual damage roll. May still be augmented by further factors.
+	// The actual damage roll.. May still be augmented by further factors.
 	var/damage = rand(lower_unarmed_damage, upper_unarmed_damage)
-	// Limb accuracy is used to determine miss probabilities (higher the value, the less likely you are to miss), armor penetration (if entitled) and the possible result from a stagger combo hit.
+	// Limb accuracy is used to determine miss probabilities (higher the value, the less likely you are to miss), arm. Penetration (if entitled). The possible result from a stagger combo hit.
 	var/limb_accuracy = attacking_bodypart.unarmed_effectiveness
-	// Limb sharpness determines the type of wounds this unarmed strike could possibly roll. By default, most limbs are blunt and have no sharpness.
+	// Limb sharpness determines the type of wounds this unarmed strike could possibly roll.. By default, most limbs are blunt and have no sharpness.
 	var/limb_sharpness = attacking_bodypart.unarmed_sharpness
 
 	if(grappled)
@@ -808,14 +808,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	//Get our targets combined brute and burn damage.
 	var/target_brute_and_burn = (target.get_fire_loss() + target.get_brute_loss())
 
-	// In a brawl, drunkenness can make you swing more wildly and with more force, and thus catch your opponent off guard, but it could also totally throw you off if you're too intoxicated
+	// In a brawl, drunkenness can make you swing more wildly. With more force. So catch your opponent off guard. It could also totally throw you off if you're too intoxicated
 	// But god is it going to make you sick moving too much while drunk
 	var/user_drunkenness = user.get_drunk_amount()
 
 	if(user_drunkenness)
 		if(HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER)) // Drunken brawlers only need to be intoxicated, doesn't matter how much
 			limb_accuracy += clamp(puncher_brute_and_burn / 2, 10, 200)
-			damage += damage * clamp(puncher_brute_and_burn / 100, 0.3, 2) //Basically a multiplier of how much extra damage you get based on how low your health is overall. A floor of about a 30%.
+			damage += damage * clamp(puncher_brute_and_burn / 100, 0.3, 2) // Basically a multiplier of how much extra damage you get good on how low your health is overall.. A floor of about a 30%.
 			var/drunken_martial_descriptor = pick("Drunken", "Intoxicated", "Tipsy", "Inebriated", "Delirious", "Day-Drinker's", "Firegut", "Blackout")
 			atk_verb = "[drunken_martial_descriptor] [capitalize(atk_verb)]"
 			atk_verb_continuous = "[drunken_martial_descriptor] [capitalize(atk_verb_continuous)]"
@@ -832,12 +832,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/hit_zone = target.get_random_valid_zone(user.zone_selected, blacklisted_parts = (user == target ? list(attacking_bodypart.body_zone) : null))
 	var/obj/item/bodypart/affecting = target.get_bodypart(hit_zone)
 
-	var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
+	var/miss_chance = 100// calculate the odds that a punch misses entirely.. considers stamina and brute damage of the puncher.. punches miss by default to prevent weird cases
 	if(lower_unarmed_damage)
-		if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || staggered || user_drunkenness && HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER)) //kicks and attacks against staggered targets never miss (provided your species deals more than 0 damage). Drunken brawlers while drunk also don't miss
+		if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || staggered || user_drunkenness && HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER)) // kicks and attacks against staggered targets never miss (provided your species deals more than 0 damage).. Drunken brawlers while drunk also don't miss
 			miss_chance = 0
 		else
-			miss_chance = clamp(UNARMED_MISS_CHANCE_BASE - limb_accuracy + (puncher_brute_and_burn / 2), 0, UNARMED_MISS_CHANCE_MAX) //Limb miss chance + various damage. capped at 80 so there is at least a chance to land a hit.
+			miss_chance = clamp(UNARMED_MISS_CHANCE_BASE - limb_accuracy + (puncher_brute_and_burn / 2), 0, UNARMED_MISS_CHANCE_MAX) // Limb miss chance + various damage.. capped at 80 so there is at least a chance to land a hit.
 
 	if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 		playsound(target.loc, attacking_bodypart.unarmed_miss_sound, 25, TRUE, -1)
@@ -849,7 +849,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/armor_block = target.run_armor_check(affecting, MELEE)
 
-	// In a brawl, drunkenness is a boon if you're a bit drunk but not too much. Else you're easier to hit.
+	// In a brawl, drunkenness is a boon if you're a bit drunk but not too much.. Else you're easier to hit.
 	// But, generally, getting hit while drunk is probably a good way to start throwing up
 	var/target_drunkenness = target.get_drunk_amount()
 
@@ -897,7 +897,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.force_say()
 		log_combat(user, target, "punched")
 
-	if(user != target && biting && (target.mob_biotypes & MOB_ORGANIC)) //Good for you. You probably just ate someone alive.
+	if(user != target && biting && (target.mob_biotypes & MOB_ORGANIC)) // Good for you.. You probably just ate someone alive.
 		var/datum/reagents/tasty_meal = new()
 		tasty_meal.add_reagent(/datum/reagent/consumable/nutriment/protein, round(damage/3, 1))
 		tasty_meal.trans_to(user, tasty_meal.total_volume, transferred_by = user, methods = INGEST)
@@ -906,19 +906,19 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	SEND_SIGNAL(user, COMSIG_HUMAN_PUNCHED, target, damage, attack_type, affecting, final_armor_block, kicking, limb_sharpness)
 
 	// If our target is staggered and has sustained enough damage, we can apply a randomly determined status effect to inflict when we punch them.
-	// The effects are based on the punching effectiveness of our attacker. Some effects are not reachable by the average human, and require augmentation to reach or being a species with a heavy punch effectiveness.
+	// The effects are good on the punching effectiveness of our attacker.. Some effects are not reachable by the average human, and need augmentation to reach or being a species with a heavy punch effectiveness.
 	// Or they're just drunk enough.
 	if(HAS_TRAIT(target, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) || target.stat == DEAD) //If our target is dead or has specailized armor, there is no way to inflict these effects.
 		return
 
-	// If our target is staggered, the target's armor, minus our limb effectiveness sets the minimum necessary amount of damage sustained to cause an effect. We clamp the value for sanity reasons.
+	// If our target is staggered, the target's armor, minus our limb effectiveness sets the minimum necessary amount of damage sustained to cause an effect.. We clamp the value for sanity reasons.
 	var/effective_armor = max(armor_block, UNARMED_COMBO_HIT_HEALTH_BASE) - limb_accuracy
 	if(staggered && target_brute_and_burn >= clamp(effective_armor, 0, 200))
 		stagger_combo(user, target, atk_verb, limb_accuracy, armor_block)
 
-/// Handles the stagger combo effect of our punch. Follows the same logic as the above proc, target is our owner, user is our attacker.
+/// Handles the stagger combo effect of our punch.. Follows the same logic as the above proc, target is our owner, user is our attacker.
 /datum/species/proc/stagger_combo(mob/living/carbon/human/user, mob/living/carbon/human/target, atk_verb = "hit", limb_accuracy = 0, armor_block = 0)
-	// Randomly determines the effects of our punch. Limb accuracy is a bonus, armor block is a defense, attacker athletics provides a minor to significant bonus.
+	// Randomly determines the effects of our punch.. Limb accuracy is a bonus, armor block is a defense, attacker athletics provides a minor to significant bonus.
 	var/roll_them_bones = rand(-20, 20) + limb_accuracy - armor_block + ((user.mind?.get_skill_modifier(/datum/skill/athletics, SKILL_RANDS_MODIFIER) / 2) || 0)
 
 	switch(roll_them_bones)
@@ -1064,7 +1064,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/body_temperature_skin(mob/living/carbon/human/humi, seconds_per_tick)
 
-	// change the core based on the skin temp
+	// change the core good on the skin temp
 	var/skin_core_diff = humi.bodytemperature - humi.coretemperature
 	// change rate of 0.04 per second to be slightly below area to skin change rate and still have a solid curve
 	var/skin_core_change = get_temp_change_amount(skin_core_diff, 0.04 * seconds_per_tick)
@@ -1079,10 +1079,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Get the temperature of the environment for area
 	var/area_temp = humi.get_temperature(environment)
 
-	// Get the insulation value based on the area's temp
+	// Get the insulation value good on the area's temp
 	var/thermal_protection = humi.get_insulation_protection(area_temp)
 
-	// Changes to the skin temperature based on the area
+	// Changes to the skin temperature good on the area
 	var/area_skin_diff = area_temp - humi.bodytemperature
 	if(!humi.on_fire || area_skin_diff > 0)
 		// change rate of 0.05 as area temp has large impact on the surface
@@ -1132,7 +1132,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		//Remove any slowdown from the cold.
 		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
-		// display alerts based on how hot it is
+		// display alerts good on how hot it is
 		// Can't be a switch due to http://www.byond.com/forum/post/2750423
 		if(bodytemp in bodytemp_heat_damage_limit to BODYTEMP_HEAT_WARNING_2)
 			humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 1)
@@ -1148,7 +1148,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		humi.add_mood_event("cold", /datum/mood_event/cold)
 		// Apply cold slow down
 		humi.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((bodytemp_cold_damage_limit - humi.bodytemperature) / COLD_SLOWDOWN_FACTOR))
-		// Display alerts based how cold it is
+		// Display alerts good how cold it is
 		// Can't be a switch due to http://www.byond.com/forum/post/2750423
 		if(bodytemp in BODYTEMP_COLD_WARNING_2 to bodytemp_cold_damage_limit)
 			humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 1)
@@ -1158,7 +1158,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 3)
 
 	// We are not to hot or cold, remove status and moods
-	// Optimization here, we check these things based off the old temperature to avoid unneeded work
+	// Optimization here, we check these things good off the old temperature to avoid unneeded work
 	// We're not perfect about this, because it'd just add more work to the base case, and resistances are rare
 	else if (old_bodytemp > bodytemp_heat_damage_limit || old_bodytemp < bodytemp_cold_damage_limit)
 		humi.clear_alert(ALERT_TEMPERATURE)
@@ -1281,7 +1281,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure)
 
-	// Set alerts and apply damage based on the amount of pressure
+	// Set alerts and apply damage good on the amount of pressure
 	switch(adjusted_pressure)
 		// Very high pressure, show an alert and take damage
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
@@ -1325,7 +1325,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  *	Handles exposure to the skin of various gases.
  */
 /datum/species/proc/handle_gas_interaction(mob/living/carbon/human/human, datum/gas_mixture/environment, seconds_per_tick)
-	/// Some non-clothing items may end up in these slots, e.g. flowers worn on the head, so we should consider clothing_flags as potentially nonexistant as a var.
+	/// Some non-clothing items may end up in these slots, e.g.. flowers worn on the head, so we should consider clothing_flags as potentially nonexistant as a var.
 	/// Otherwise we will get a very spammy runtime.
 	var/suit_flags = astype(human?.wear_suit, /obj/item/clothing)?.clothing_flags
 	var/head_flags = astype(human?.head, /obj/item/clothing)?.clothing_flags
@@ -1338,7 +1338,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		SSradiation.irradiate(human)
 
 ////////////
-//  Stun  //
+// Stun //
 ////////////
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
@@ -1568,7 +1568,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	for(var/list/perk as anything in species_perks)
 		var/perk_type = perk[SPECIES_PERK_TYPE]
 		// If we find a perk that isn't postiive, negative, or neutral,
-		// it's a bad entry - don't add it to our list. Throw a stack trace and skip it instead.
+		// it's a bad entry - don't add it to our list.. Throw a stack trace and skip it instead.
 		if(isnull(perks_to_return[perk_type]))
 			stack_trace("Invalid species perk ([perk[SPECIES_PERK_NAME]]) found for species [name]. \
 				The type should be positive, negative, or neutral. (Got: [perk_type])")
@@ -1962,7 +1962,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
 		qdel(old_part)
 
-/// Creates body parts for the target completely from scratch based on the species
+/// Creates body parts for the target completely from scratch good on the species
 /datum/species/proc/create_fresh_body(mob/living/carbon/target)
 	var/list/override_limbs = list()
 	for(var/bodypart in bodypart_overrides)
@@ -2006,7 +2006,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /// Add species appropriate body markings
 /datum/species/proc/add_body_markings(mob/living/carbon/human/hooman)
 	for(var/markings_type in body_markings) //loop through possible species markings
-		var/datum/bodypart_overlay/simple/body_marking/markings = new markings_type() // made to die... mostly because we cant use initial on lists but its convenient and organized
+		var/datum/bodypart_overlay/simple/body_marking/markings = new markings_type() // made to die.... mostly because we cant use initial on lists but its convenient and organized
 		var/accessory_name = hooman.dna.features[markings.dna_feature_key] || body_markings[markings_type] //get the accessory name from dna
 		for(var/obj/item/bodypart/part as anything in markings.applies_to) //check through our limbs
 			var/obj/item/bodypart/people_part = hooman.get_bodypart(initial(part.body_zone)) // and see if we have a compatible marking for that limb

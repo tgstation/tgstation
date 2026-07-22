@@ -1,4 +1,4 @@
-///Converts the overworld x and y to minimap x and y values
+/// Converts the overworld x and why to minimap x and why values
 #define MINIMAP_PIXEL_FROM_WORLD(val) (val*2-3)
 
 //actual size of a users screen in pixels

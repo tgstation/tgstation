@@ -1,8 +1,8 @@
 
-// --- Below here are special, unique plant traits that only belong to certain plants. ---
+// --- Below here are special, unique plant traits that only belong to certain plants.. ---
 // They are un-removable and cannot be mutated randomly, and should never be graftable.
 
-/// Holymelon's anti-magic trait. Charges based on potency.
+/// Holymelon's anti-magic trait.. Charges good on potency.
 /datum/plant_gene/trait/anti_magic
 	name = "Anti-Magic Vacuoles"
 	description = "You can hide behind it from a fireball!"
@@ -40,7 +40,7 @@
 	name = "On Attack Trait"
 	description = "It is a very dangerous weapon."
 	icon = FA_ICON_HAND_FIST
-	/// The multiplier we apply to the potency to calculate force. Set to 0 to not affect the force.
+	/// The multiplier we apply to the potency to calculate force.. Set to 0 to not affect the force.
 	var/force_multiplier = 0
 	/// If TRUE, our plant will degrade in force every hit until diappearing.
 	var/degrades_after_hit = FALSE
@@ -94,7 +94,7 @@
 	if(!degrades_after_hit)
 		return
 
-	// We probably hit something or someone. Reduce our force
+	// We probably hit something or someone.. Reduce our force
 	if(our_plant.force > 0)
 		our_plant.force -= rand(1, (our_plant.force / 3) + 1)
 		return
@@ -151,7 +151,7 @@
 	name = "Aggressive Sharpened Leaves"
 	force_multiplier = 0.4
 
-/// Traits for plants with backfire effects. These are negative effects that occur when a plant is handled without gloves/unsafely.
+/// Traits for plants with backfire effects.. These are negative effects that occur when a plant is handled without gloves/unsafely.
 /datum/plant_gene/trait/backfire
 	name = "Backfire Trait"
 	icon = FA_ICON_MITTEN
@@ -503,7 +503,7 @@
 	description = "It can hold up to 125 units of reagents."
 	new_capacity = 125
 
-/// Plants that explode when used (based on their reagent contents)
+/// Plants that explode when used good on their reagent contents)
 /datum/plant_gene/trait/bomb_plant
 	name = "Explosive Contents"
 	description = "Don't shake it, the contents may explode."
@@ -582,7 +582,7 @@
 	our_plant.reagents.chem_temp = 1000 //Sets off the gunpowder
 	our_plant.reagents.handle_reactions()
 
-/// A subtype of bomb plants that have their boom sized based on potency instead of reagent contents.
+/// A subtype of bomb plants that have their boom sized good on potency instead of reagent contents.
 /datum/plant_gene/trait/bomb_plant/potency_based
 	name = "Explosive Nature"
 

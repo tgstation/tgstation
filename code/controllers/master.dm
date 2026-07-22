@@ -35,7 +35,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	/// Tickdrift as of last tick, w no averaging going on
 	var/olddrift = 0
 
-	/// How long is the MC sleeping between runs, read only (set by Loop() based off of anti-tick-contention heuristics)
+	/// How long is the MC sleeping between runs, read only (set by Loop() good off of anti-tick-contention heuristics)
 	var/sleep_delta = 1
 
 	/// Only run ticker subsystems for the next n ticks.
@@ -51,7 +51,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 	var/datum/controller/subsystem/queue_head //!Start of queue linked list
 	var/datum/controller/subsystem/queue_tail //!End of queue linked list (used for appending to the list)
-	var/queue_priority_count = 0 //Running total so that we don't have to loop thru the queue each run to split up the tick
+	var/queue_priority_count = 0 // Running total so that we don't have to loop through the queue each run to split up the tick
 	var/queue_priority_count_bg = 0 //Same, but for background subsystems
 	var/map_loading = FALSE //!Are we loading in a new map?
 
@@ -89,7 +89,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 	if(!config)
 		config = new
-	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
+	// Highlander-style: there can only be one!. Kill off the old and replace it with the new.
 
 	if(!random_seed)
 		#ifdef UNIT_TESTS
@@ -514,7 +514,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	if(result && !(result in valid_results))
 		warning("[subsystem.name] subsystem initialized, returning invalid result [result]. This is a bug.")
 
-	// just returned ..() or didn't implement Initialize() at all
+	// just returned ..() or didn't add Initialize() at all
 	if(result == SS_INIT_NONE)
 		warning("[subsystem.name] subsystem does not implement Initialize() or it returns ..(). If the former is true, the SS_NO_INIT flag should be set for this subsystem.")
 
@@ -593,7 +593,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	//Prep the loop (most of this is because we want MC restarts to reset as much state as we can, and because
 	// local vars rock
 
-	//all this shit is here so that flag edits can be refreshed by restarting the MC. (and for speed)
+	// all this shit is here so that flag edits can be refreshed by restarting the MC.. (and for speed)
 	var/list/tickersubsystems = list()
 	var/list/runlevel_sorted_subsystems = list(list()) //ensure we always have at least one runlevel
 	var/timer = world.time
@@ -620,7 +620,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 			var/delay = SS.wait
 			if(SS.ss_flags & SS_TICKER)
 				delay = TICKS2DS(delay)
-			// Gotta convert to ticks cause rand needs integers
+			// Got to convert to ticks cause rand needs integers
 			SS.next_fire = world.time + TICKS2DS(rand(0, DS2TICKS(min(delay, 2 SECONDS))))
 
 		var/ss_runlevels = SS.runlevels
@@ -636,8 +636,8 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 
 	queue_head = null
 	queue_tail = null
-	//these sort by lower priorities first to reduce the number of loops needed to add subsequent SS's to the queue
-	//(higher subsystems will be sooner in the queue, adding them later in the loop means we don't have to loop thru them next queue add)
+	// these sort by lower priorities first to reduce the number of loops needed to add next SS's to the queue
+	// (higher subsystems will be sooner in the queue, adding them later in the loop means we don't have to loop through them next queue add)
 	sortTim(tickersubsystems, GLOBAL_PROC_REF(cmp_subsystem_priority))
 	for(var/I in runlevel_sorted_subsystems)
 		sortTim(I, GLOBAL_PROC_REF(cmp_subsystem_priority))
@@ -685,7 +685,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 				sleep(world.tick_lag * (processing * sleep_delta))
 				continue
 
-			//Byond resumed us late. assume it might have to do the same next tick
+			// Byond resumed us late.. assume it might have to do the same next tick
 			if (last_run + CEILING(world.tick_lag * (processing * sleep_delta), world.tick_lag) < world.time)
 				sleep_delta += 1
 
@@ -829,7 +829,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	. = 1
 
 
-/// RunQueue - Run thru the queue of subsystems to run, running them while balancing out their allocated tick precentage
+/// RunQueue - Run through the queue of subsystems to run, running them while balancing out their allocated tick precentage
 /// Returns 0 if runtimed, a negitive number for logic errors, and a positive number if the operation completed without errors
 /datum/controller/master/proc/RunQueue()
 	. = 0
@@ -878,14 +878,14 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 			tick_remaining = TICK_LIMIT_RUNNING - TICK_USAGE
 
 			if (queue_node_priority >= 0 && current_tick_budget > 0 && current_tick_budget >= queue_node_priority)
-				//Give the subsystem a precentage of the remaining tick based on the remaining priority
+				// Give the subsystem a precentage of the remaining tick good on the remaining priority
 				tick_precentage = tick_remaining * (queue_node_priority / current_tick_budget)
 			else
 				//error state
 				if (. == 0)
 					log_world("MC: tick_budget sync error. [json_encode(list(current_tick_budget, queue_priority_count, queue_priority_count_bg, bg_calc, queue_node, queue_node_priority))]")
 				. = -1
-				tick_precentage = tick_remaining //just because we lost track of priority calculations doesn't mean we can't try to finish off the run, if the error state persists, we don't want to stop ticks from happening
+				tick_precentage = tick_remaining // just because we lost track of priority calculations doesn't mean we can't try to finish off the run, if the err. State persists, we don't want to stop ticks from happening
 
 			tick_precentage = max(tick_precentage*0.5, tick_precentage-queue_node.tick_overrun)
 
@@ -1043,7 +1043,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 		var/datum/controller/subsystem/SS = thing
 		SS.OnConfigLoad()
 
-/// Attempts to dump our current profile info into a file, triggered if the MC thinks shit is going down
+/// Tries to dump our current profile info into a file, triggered if the MC thinks shit is going down
 /// Accepts a delay in deciseconds of how long ago our last dump can be, this saves causing performance problems ourselves
 /datum/controller/master/proc/AttemptProfileDump(delay)
 	if(REALTIMEOFDAY - last_profiled <= delay)

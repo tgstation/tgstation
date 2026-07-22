@@ -105,7 +105,7 @@
 	//I really should have spread this out across more states but thin little windoors are hard to sprite.
 	add_fingerprint(user)
 	if(!cables_added)
-		//Adding plasteel makes the assembly a secure windoor assembly. Step 2 (optional) complete.
+		// Adding plasteel makes the assembly a secure windoor assembly.. Step 2 (optional) complete.
 		if(istype(tool, /obj/item/stack/sheet/plasteel) && !secure)
 			var/obj/item/stack/sheet/plasteel/reinforcement = tool
 			if(reinforcement.get_amount() < 2)
@@ -130,7 +130,7 @@
 			update_appearance()
 			return ITEM_INTERACT_SUCCESS
 
-		//Adding cable to the assembly. Step 5 complete.
+		// Adding cable to the assembly.. Step 5 complete.
 		if(istype(tool, /obj/item/stack/cable_coil) && anchored)
 			user.visible_message(span_notice("[user] wires the windoor assembly."), span_notice("You start to wire the windoor assembly..."))
 
@@ -158,7 +158,7 @@
 
 	//cables_added TRUE beyond this point
 
-	//Adding airlock electronics for access. Step 6 complete.
+	// Adding airlock electronics for access.. Step 6 complete.
 	if(istype(tool, /obj/item/electronics/airlock))
 
 		tool.play_tool_sound(src, 100)
@@ -242,7 +242,7 @@
 			name = "anchored windoor assembly"
 		return ITEM_INTERACT_SUCCESS
 
-	//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
+	// Unwrenching an unsecure assembly un-anchors it.. Step 4 undone
 	user.visible_message(span_notice("[user] unsecures the windoor assembly to the floor."),
 						span_notice("You start to unsecure the windoor assembly to the floor..."))
 

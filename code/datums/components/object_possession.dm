@@ -1,4 +1,4 @@
-/// Component that allows a user to control any object as if it were a mob. Does give the user incorporeal movement.
+/// Component that allows a user to control any object as if it were a mob.. Does give the user incorporeal movement.
 /datum/component/object_possession
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// Stores a reference to the obj that we are currently possessing.

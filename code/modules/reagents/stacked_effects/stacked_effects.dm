@@ -1,7 +1,7 @@
 ///Side effects from metabolizing an reagent or a combination of them
 /datum/stacked_metabolization_effect
 	abstract_type = /datum/stacked_metabolization_effect
-	///List of reagents that need to be metabolized for this side effect to kick in. For subtypes values greater than requirement list will also trigger this effect
+	/// List of reagents that need to be metabolized for this side effect to kick in.. For subtypes values greater than need list will also trigger this effect
 	var/list/datum/reagent/requirements
 
 /**

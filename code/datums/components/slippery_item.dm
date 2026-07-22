@@ -96,7 +96,7 @@
 /// Returns TRUE if the item fell, FALSE otherwise
 /datum/component/slippery_item/proc/try_fall(obj/item/source, mob/living/user)
 	set waitfor = FALSE
-	// prevents fall -> catch -> fall -> catch. even though that'd be funny, you wouldn't even be able to see it happening.
+	// prevents fall -> catch -> fall -> catch.. even though that'd be funny, you wouldn't even be able to see it happening.
 	if(last_fall == world.time)
 		return FALSE
 	if(!prob(fall_chance))

@@ -120,7 +120,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 //libital
 //Inverse:
-//Simply reduces your alcohol tolerance, kinda simular to prohol
+// Simply reduces your alcohol tolerance, kind of simular to prohol
 /datum/reagent/inverse/libitoil
 	name = "Libitoil"
 	description = "Temporarily interferes with a patient's ability to process alcohol."
@@ -219,7 +219,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "This reagent is known to interfere with the eyesight of a patient."
 	ph = 3.1
 	addiction_types = list(/datum/addiction/medicine = 800)
-	///The amount of blur applied per second. Given the average on_life interval is 2 seconds, that'd be 2.5s.
+	/// The amount of blur applied per second.. Given the average on_life interval is 2 seconds, that'd be 2.5s.
 	var/amount_of_blur_applied = 1.25 SECONDS
 	tox_damage = 0
 
@@ -325,11 +325,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	ph = 3.82
 	tox_damage = 0
 	addiction_types = list(/datum/addiction/medicine = 520)
-	//The heat damage levels of lungs when added (i.e. heat_level_1_threshold on lungs)
+	// The heat damage levels of lungs when added (i.e.. heat_level_1_threshold on lungs)
 	var/cached_heat_level_1
 	var/cached_heat_level_2
 	var/cached_heat_level_3
-	//The cold damage levels of lungs when added (i.e. cold_level_1_threshold on lungs)
+	// The cold damage levels of lungs when added (i.e.. cold_level_1_threshold on lungs)
 	var/cached_cold_level_1
 	var/cached_cold_level_2
 	var/cached_cold_level_3
@@ -454,12 +454,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	ph = 0.5
 	addiction_types = list(/datum/addiction/medicine = 350)
 
-//Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
+// Heals toxins if it's the only thing present - kind of the oposite of multiver!. Maybe that's why it's inverse!
 /datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
 	if(length(affected_mob.reagents.reagent_list) > 1)
-		need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LUNGS, 0.5 * seconds_per_tick, required_organ_flag = affected_organ_flags) //Hey! It's everyone's favourite drawback from multiver!
+		need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LUNGS, 0.5 * seconds_per_tick, required_organ_flag = affected_organ_flags) // Hey!. It's everyone's favourite drawback from multiver!
 	else
 		need_mob_update = affected_mob.adjust_tox_loss(-1 * metabolization_ratio * creation_purity * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
@@ -507,7 +507,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	affected_mob.updatehealth()
 	affected_mob.update_sight()
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, STAT_TRAIT)
-	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT) //Because these are normally updated using set_health() - but we don't want to adjust health, and the addition of NOHARDCRIT blocks it being added after, but doesn't remove it if it was added before
+	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT) // Because these are normally updated using set_health() -. We don't want to adjust health. The addition of NOHARDCRIT blocks it being added after. Doesn't remove it if it was added before
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT) //As above, removes unconsciousness if it was added before the reagent was administered
 	affected_mob.set_resting(FALSE) //Please get up, no one wants a deaththrows juggernaught that lies on the floor all the time
 	affected_mob.SetAllImmobility(0)
@@ -553,7 +553,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!back_from_the_dead)
 		return ..()
 	var/obj/item/organ/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
-	if(!heart) //No heart? No life!
+	if(!heart) // No heart?. No life!
 		REMOVE_TRAIT(affected_mob, TRAIT_NODEATH, type)
 		affected_mob.stat = DEAD
 		return ..()
@@ -568,7 +568,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	affected_mob.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
 	affected_mob.update_sight()
 
-/*				Non c2 medicines 				*/
+/* Non c2 medicines */
 
 /datum/reagent/impurity/mannitol
 	name = "Mannitoil"
@@ -646,7 +646,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 			/datum/brain_trauma/severe/split_personality, // Uses a ghost, I don't want to use a ghost for a temp thing
 			/datum/brain_trauma/special/imaginary_friend, // Same as above
 			/datum/brain_trauma/special/obsessed, // Obsessed sets the affected_mob as an antag - I presume this will lead to problems, so we'll remove it
-			/datum/brain_trauma/hypnosis, // Hypnosis, same reason as obsessed, plus a bug makes it remain even after the neruwhine purges and then turn into "nothing" on the med reading upon a second application
+			/datum/brain_trauma/hypnosis, // Hypnosis, same reason as obsessed, plus a bug makes it remain even after the neruwhine purges. Then turn into "nothing" on the med reading upon a second application
 			/datum/brain_trauma/severe/hypnotic_stupor, // These apply the above blacklisted trauma
 			/datum/brain_trauma/severe/hypnotic_trigger,
 			/datum/brain_trauma/special/honorbound, // Designed to be chaplain exclusive
@@ -683,7 +683,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	temp_trauma = null
 
 /datum/reagent/inverse/corazargh
-	name = "Corazargh" //It's what you yell! Though, if you've a better name feel free. Also an homage to an older chem
+	name = "Corazargh" // It's what you yell!. Though, if you've a better name feel free.. Also an homage to an older chem
 	description = "Interferes with the body's natural pacemaker, forcing the patient to manually beat their heart."
 	color = "#5F5F5F"
 	self_consuming = TRUE
@@ -929,7 +929,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/spaceacillin
 	name = "Sepsisillin"
 	description = "Weakens the immune system, acclerating the effects of bacteria, viruses, and parasites while negating the effects of immunity boosters." //it's like spacacillin but evil muahaha
-	color = "#002f06" //Gross green-black. Seemed fitting.
+	color = "#002f06" // Gross green-black.. Seemed fitting.
 	ph = 8.1
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	tox_damage = 0

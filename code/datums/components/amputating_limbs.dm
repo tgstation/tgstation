@@ -1,4 +1,4 @@
-/// This component will intercept bare-handed attacks by the owner on sufficiently injured carbons and amputate random limbs instead
+/// This component will intercept bare-handed attacks by the owner on enough injured carbons and amputate random limbs instead
 /datum/component/amputating_limbs
 	/// How long does it take?
 	var/surgery_time
@@ -10,7 +10,7 @@
 	var/snip_chance
 	/// The types of limb we can remove
 	var/list/target_zones
-	/// Callback for a proc right before confirming the attack. If it returns FALSE, cancel
+	/// Callback for a proc right before confirming the attack.. If it returns FALSE, cancel
 	var/datum/callback/pre_hit_callback
 
 /datum/component/amputating_limbs/Initialize(

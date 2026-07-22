@@ -76,7 +76,7 @@
 	QDEL_NULL(grav_field)
 	. = ..()
 
-///Bigger, meaner, immortal gravity anomaly. although this is just the super grav anomaly but bigger and shattering move force
+/// Bigger, meaner, immortal gravity anomaly.. although this is just the super grav anomaly but bigger and shattering move force
 /obj/effect/anomaly/grav/high/big
 	immortal = TRUE
 	anomaly_core = null

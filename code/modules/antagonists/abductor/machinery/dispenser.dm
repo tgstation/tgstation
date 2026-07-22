@@ -9,7 +9,7 @@
 	var/list/amounts
 
 /obj/machinery/abductor/gland_dispenser/proc/random_color()
-	//TODO : replace with presets or spectrum
+	// To do : replace with presets or spectrum
 	return rgb(rand(0,255),rand(0,255),rand(0,255))
 
 /obj/machinery/abductor/gland_dispenser/Initialize(mapload)

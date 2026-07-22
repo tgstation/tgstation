@@ -1,4 +1,4 @@
-//Cardboard cutouts! They're man-shaped and can be colored with a crayon to look like a human in a certain outfit, although it's limited, discolored, and obvious to more than a cursory glance.
+// Cardboard cutouts!. They're man-shaped. Can be colored with a crayon to look like a human in a certain outfit, although it's limited, discolored. Obvious to more than a cursory glance.
 /obj/item/cardboard_cutout
 	name = "cardboard cutout"
 	desc = "A vaguely humanoid cardboard cutout. It's completely blank."
@@ -13,7 +13,7 @@
 	var/pushed_over = FALSE
 	/// If the cutout actually appears as what it portray and not a discolored version
 	var/deceptive = FALSE
-	/// What cutout datum we spawn at the start? Uses the name, not the path.
+	/// What cutout datum we spawn at the start?. Uses the name, not the path.
 	var/starting_cutout
 	/// Reference to the tactical component that should be deleted when the cutout is toppled.
 	var/datum/component/tactical/tacticool
@@ -179,7 +179,7 @@
 	var/mutable_appearance/preview_appearance
 	/// A flat appearance, with only one direction, that we apply to the cardboard cutout.
 	var/image/applied_appearance
-	/// The base name we actually give to to the cardboard cutout. Can be overridden in get_name().
+	/// The base name we actually give to to the cardboard cutout.. Can be overridden in get_name().
 	var/applied_name = "boardjak"
 	/// The desc we give to the cardboard cutout.
 	var/applied_desc = "A cardboard cutout of a boardjak."

@@ -29,7 +29,7 @@
 	var/clumsy_knockdown_time = 18 SECONDS
 	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
 	var/stamina_damage = 55
-	/// How much armor does our baton ignore? This operates as armour penetration, but only applies to the stun attack.
+	/// How much armor does our baton ignore?. This operates as armour penetration, but only applies to the stun attack.
 	var/stun_armour_penetration = 15 // pens very light / cosmetic armor
 	/// What armor does our stun attack check before delivering the attack?
 	var/armour_type_against_stun = MELEE
@@ -41,7 +41,7 @@
 	var/on_stun_sound = 'sound/effects/woodhit.ogg'
 	/// The volume of the above.
 	var/on_stun_volume = 75
-	/// Whether the stun attack is logged. Only relevant for abductor batons, which have different modes.
+	/// Whether the stun attack is logged.. Only relevant for abductor batons, which have different modes.
 	var/log_stun_attack = TRUE
 	/// Boolean on whether people with chunky fingers can use this baton.
 	var/chunky_finger_usable = FALSE
@@ -155,9 +155,9 @@
 		if(harmbatonning)
 			return FALSE // if harmbatonning, ALwAYS attack
 		if(active)
-			return TRUE  // if active, but can't stun? no attack
+			return TRUE  // if active, but can't stun?. no attack
 		if(!user.combat_mode)
-			return TRUE  // if not in combat mode? no attack
+			return TRUE  // if not in combat mode?. no attack
 
 		return FALSE // otherwise, attack normally
 
@@ -285,12 +285,12 @@
 		.["visible"] = span_danger("[user] tries to knock down [target] with [src], and predictably fails!") //look at this duuuuuude
 		.["local"] = span_userdanger("[user] tries to... knock you down with [src]?") //look at the top of his head!
 
-/// Contains any special effects that we apply to living, non-cyborg mobs we stun. Does not include applying a knockdown, dealing stamina damage, etc.
+/// Contains any special effects that we apply to living, non-cyborg mobs we stun.. Does not include applying a knockdown, dealing stamina damage, and so on
 /obj/item/melee/baton/proc/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	PROTECTED_PROC(TRUE)
 	return
 
-/// Contains any special effects that we apply to cyborgs we stun. Does not include flashing the cyborg's screen, hardstunning them, etc.
+/// Contains any special effects that we apply to cyborgs we stun.. Does not include flashing the cyborg's screen, hardstunning them, and so on
 /obj/item/melee/baton/proc/additional_effects_cyborg(mob/living/target, mob/living/user)
 	PROTECTED_PROC(TRUE)
 	return
@@ -805,7 +805,7 @@
 /obj/item/melee/baton/security/stunsword/loaded
 	preload_cell_type = /obj/item/stock_parts/power_store/cell/bluespace // 40% stun_armour_penetration
 
-//Makeshift stun baton. Replacement for stun gloves.
+// Makeshift stun baton.. Replacement for stun gloves.
 /obj/item/melee/baton/security/cattleprod
 	name = "stunprod"
 	desc = "An improvised stun baton."
@@ -829,7 +829,7 @@
 	active_changes_inhand = FALSE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.15, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	var/obj/item/assembly/igniter/sparkler
-	///Determines whether or not we can improve the cattleprod into a new type. Prevents turning the cattleprod subtypes into different subtypes, or wasting materials on making it....another version of itself.
+	/// Determines whether or not we can improve the cattleprod into a new type.. Prevents turning the cattleprod subtypes into different subtypes, or wasting materials on making it....another version of itself.
 	var/can_upgrade = TRUE
 
 /obj/item/melee/baton/security/cattleprod/Initialize(mapload)

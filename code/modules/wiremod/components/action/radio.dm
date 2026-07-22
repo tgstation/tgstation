@@ -11,7 +11,7 @@
 	desc = "A component that can listen and send frequencies. If set to private, the component will only receive signals from other components attached to circuitboards with the same owner id."
 	category = "Action"
 
-	/// The publicity options. Controls whether it's public or private.
+	/// The publicity options.. Controls whether it's public or private.
 	var/datum/port/input/option/public_options
 
 	/// Frequency input

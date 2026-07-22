@@ -1,5 +1,5 @@
 //Bureaucracy machine!
-//Simply set this up in the hopline and you can serve people based on ticket numbers
+// Simply set this up in the hopline and you can serve people good on ticket numbers
 
 /obj/machinery/ticket_machine
 	name = "ticket machine"
@@ -249,7 +249,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	max_integrity = 50
 	var/number
 	var/saved_maptext = null
-	var/owner_ref // A ref to our owner. Doesn't need to be weak because mobs have unique refs
+	var/owner_ref // A ref to our owner.. Doesn't need to be weak because mobs have unique refs
 	var/obj/machinery/ticket_machine/source
 
 /obj/item/ticket_machine_ticket/Initialize(mapload, num)

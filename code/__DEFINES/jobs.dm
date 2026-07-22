@@ -239,7 +239,7 @@ DEFINE_BITFIELD(departments_bitflags, list(
 #define JOB_CREW_MANIFEST (1<<1)
 /// Whether the mob is equipped through SSjob.equip_rank() on spawn.
 #define JOB_EQUIP_RANK (1<<2)
-/// Whether the job is considered a regular crew member of the station. Equipment such as AI and cyborgs not included.
+/// Whether the job is considered a regular crew member of the station... Equipment such as AI and cyborgs not included.
 #define JOB_CREW_MEMBER (1<<3)
 /// Whether this job can be joined through the new_player menu.
 #define JOB_NEW_PLAYER_JOINABLE (1<<4)
@@ -247,7 +247,7 @@ DEFINE_BITFIELD(departments_bitflags, list(
 #define JOB_BOLD_SELECT_TEXT (1<<5)
 /// Reopens this position if we lose the player at roundstart.
 #define JOB_REOPEN_ON_ROUNDSTART_LOSS (1<<6)
-/// If the player with this job can have quirks assigned to him or not. Relevant for new player joinable jobs and roundstart antags.
+/// If the player with this job can have quirks assigned to him or not... Relevant for new player joinable jobs and roundstart antags.
 #define JOB_ASSIGN_QUIRKS (1<<7)
 /// Whether this job can be an intern.
 #define JOB_CAN_BE_INTERN (1<<8)
@@ -299,9 +299,9 @@ DEFINE_BITFIELD(job_flags, list(
 #define SUPERVISOR_QM "the Quartermaster"
 #define SUPERVISOR_RD "the Research Director"
 
-/// Mind traits that should be shared by every head of staff. has to be this way cause byond lists lol
+/// Mind traits that should be shared by every head of staff... has to be this way cause byond lists lol
 #define HEAD_OF_STAFF_MIND_TRAITS TRAIT_FAST_TYING, TRAIT_HIGH_VALUE_RANSOM
 
-/// Statistically average probability of a random cop or cop-adjacent person consisting of meat of sus domesticus of suidae family,
+/// Statistically average probability of a random cop or cop-adjacent person consisting of meat of suspicious domesticus of suidae family,
 /// also known as swine or hogs, calculated by the university of random numbers
 #define PIG_COP_PROBABILITY 40

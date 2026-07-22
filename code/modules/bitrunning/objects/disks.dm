@@ -87,7 +87,7 @@
 	playsound(user, 'sound/items/click.ogg', 50, TRUE)
 	choice_made = choice
 
-/// Tier 1 programs. Simple, funny, or helpful.
+/// Tier 1 programs.. Simple, funny, or helpful.
 /obj/item/disk/bitrunning/ability/tier1
 	name = "bitrunning program: basic"
 	selectable_actions = list(
@@ -95,7 +95,7 @@
 		/datum/action/cooldown/spell/basic_heal,
 	)
 
-/// Tier 2 programs. More complex, powerful, or useful.
+/// Tier 2 programs.. More complex, powerful, or useful.
 /obj/item/disk/bitrunning/ability/tier2
 	name = "bitrunning program: complex"
 	selectable_actions = list(
@@ -104,7 +104,7 @@
 		/datum/action/cooldown/spell/forcewall,
 	)
 
-/// Tier 3 abilities. Very powerful, game breaking.
+/// Tier 3 abilities.. Very powerful, game breaking.
 /obj/item/disk/bitrunning/ability/tier3
 	name = "bitrunning program: elite"
 	selectable_actions = list(
@@ -152,7 +152,7 @@
 	playsound(user, 'sound/items/click.ogg', 50, TRUE)
 	choice_made = choice
 
-/// Tier 1 items. Simple, funny, or helpful.
+/// Tier 1 items.. Simple, funny, or helpful.
 /obj/item/disk/bitrunning/item/tier1
 	name = "bitrunning gear: simple"
 	selectable_items = list(
@@ -161,7 +161,7 @@
 		/obj/item/grenade/c4,
 	)
 
-/// Tier 2 items. More complex, powerful, or useful.
+/// Tier 2 items.. More complex, powerful, or useful.
 /obj/item/disk/bitrunning/item/tier2
 	name = "bitrunning gear: complex"
 	selectable_items = list(
@@ -170,7 +170,7 @@
 		/obj/item/clothing/suit/armor/vest,
 	)
 
-/// Tier 3 items. Very powerful, game breaking.
+/// Tier 3 items.. Very powerful, game breaking.
 /obj/item/disk/bitrunning/item/tier3
 	name = "bitrunning gear: advanced"
 	selectable_items = list(

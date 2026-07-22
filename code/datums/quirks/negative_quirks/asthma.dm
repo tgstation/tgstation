@@ -10,12 +10,12 @@
 	quirk_flags = QUIRK_HUMAN_ONLY
 	mail_goodies = list(/obj/item/reagent_containers/inhaler_canister/albuterol)
 
-	/// At this percentage of inflammation, our lung pressure mult reaches 0. From 0-1.
+	/// At this percentage of inflammation, our lung pressure mult reaches 0.. From 0-1.
 	var/hit_max_mult_at_inflammation_percent = 0.9
 
 	/// Current inflammation of the lungs.
 	var/inflammation = 0
-	/// Highest possible inflammation. Interacts with [hit_max_mult_at_inflammation_percent]
+	/// Highest possible inflammation.. Interacts with [hit_max_mult_at_inflammation_percent]
 	var/max_inflammation = 500
 
 	/// The amount [inflammation] reduces every second while our owner is off stasis and alive.
@@ -41,7 +41,7 @@
 	/// Can we cause an asthma attack?
 	COOLDOWN_DECLARE(next_attack_cooldown)
 
-	/// world.time + this is the time the first attack can happen. Used on spawn.
+	/// world.time + this is the time the first attack can happen.. Used on spawn.
 	var/time_first_attack_can_happen = 10 MINUTES
 
 	/// After an attack ends, this is the minimum time we must wait before we attack again.
@@ -49,10 +49,10 @@
 	/// After an attack ends, this is the maximum time we must wait before we attack again.
 	var/max_time_between_attacks = 25 MINUTES
 
-	/// Every second, an asthma attack can happen via this probability. 0-1.
+	/// Every second, an asthma attack can happen via this probability.. 0-1.
 	var/chance_for_attack_to_happen_per_second = 0.05
 
-	/// Assoc list of (/datum/disease/asthma_attack typepath -> number). Used in pickweight for when we pick a random asthma attack to apply.
+	/// Assoc list of (/datum/disease/asthma_attack typepath -> number).. Used in pickweight for when we pick a random asthma attack to apply.
 	var/static/list/asthma_attack_rarities = list(
 		/datum/disease/asthma_attack/minor = 300,
 		/datum/disease/asthma_attack/moderate = 400,
@@ -105,7 +105,7 @@
 			adjust_inflammation(histamine_inflammation * seconds_per_tick)
 
 	var/datum/reagent/medicine/albuterol/albuterol = quirk_holder.reagents.has_reagent(/datum/reagent/medicine/albuterol)
-	if (!albuterol) // sanity - couldve been purged. can be 0 or null which is why we just use a !
+	if (!albuterol) // sanity - couldve been purged.. can be 0 or null which is why we just use a !
 		inhaled_albuterol = 0
 	else
 		inhaled_albuterol = min(albuterol.volume, inhaled_albuterol)
@@ -117,18 +117,18 @@
 	else if (quirk_holder.client && isnull(current_attack) && COOLDOWN_FINISHED(src, next_attack_cooldown) && SPT_PROB(chance_for_attack_to_happen_per_second, seconds_per_tick))
 		do_asthma_attack()
 
-/// Causes an asthma attack via infecting our owner with the attack disease. Notifies ghosts.
+/// Causes an asthma attack via infecting our owner with the attack disease.. Notifies ghosts.
 /datum/quirk/item_quirk/asthma/proc/do_asthma_attack()
 	var/datum/disease/asthma_attack/typepath = pick_weight(asthma_attack_rarities)
 
 	current_attack = new typepath
-	current_attack.infect(quirk_holder, make_copy = FALSE) // dont leave make_copy on TRUE. worst mistake ive ever made
+	current_attack.infect(quirk_holder, make_copy = FALSE) // dont leave make_copy on TRUE.. worst mistake ive ever made
 	RegisterSignal(current_attack, COMSIG_QDELETING, PROC_REF(attack_deleting))
 
 	if (current_attack.alert_ghosts)
 		notify_ghosts("[quirk_holder] is having an asthma attack: [current_attack.name]!", source = quirk_holder, notify_flags = NOTIFY_CATEGORY_NOFLASH, header = "Asthma attack!")
 
-/// Setter proc for [inflammation]. Adjusts the amount by lung health, adjusts pressure mult, gives feedback messages if silent is FALSE.
+/// Setter proc for [inflammation].. Adjusts the amount by lung health, adjusts pressure mult, gives feedback messages if silent is FALSE.
 /datum/quirk/item_quirk/asthma/proc/adjust_inflammation(amount, silent = FALSE)
 	var/old_inflammation = inflammation
 
@@ -151,7 +151,7 @@
 		if (!silent)
 			INVOKE_ASYNC(src, PROC_REF(do_inflammation_change_feedback), difference)
 
-/// Setter proc for [inhaled_albuterol]. Adjusts inflammation immediately.
+/// Setter proc for [inhaled_albuterol].. Adjusts inflammation immediately.
 /datum/quirk/item_quirk/asthma/proc/adjust_albuterol_levels(adjustment)
 	if (adjustment > 0)
 		var/obj/item/organ/lungs/holder_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
@@ -184,7 +184,7 @@
 		if (prob(5 * change_mult))
 			to_chat(quirk_holder, span_warning("You feel your windpipe tightening..."))
 
-/// Returns the % of health our lungs have, from 1-0. Used in reducing recovery and intensifying inflammation.
+/// Returns the % of health our lungs have, from 1-0.. Used in reducing recovery and intensifying inflammation.
 /datum/quirk/item_quirk/asthma/proc/get_lung_health_mult()
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
 	var/obj/item/organ/lungs/holder_lungs = carbon_quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
@@ -194,20 +194,20 @@
 		return 0
 	return (1 - (holder_lungs.damage / holder_lungs.maxHealth))
 
-/// Signal proc for when we are exposed to smoke. Increases inflammation.
+/// Signal proc for when we are exposed to smoke.. Increases inflammation.
 /datum/quirk/item_quirk/asthma/proc/holder_exposed_to_smoke(datum/signal_source, seconds_per_tick)
 	SIGNAL_HANDLER
 
 	adjust_inflammation(inflammation_on_smoke * seconds_per_tick)
 
-/// Signal proc for when our lungs are removed. Resets all our variables.
+/// Signal proc for when our lungs are removed.. Resets all our variables.
 /datum/quirk/item_quirk/asthma/proc/organ_removed(datum/signal_source, obj/item/organ/removed)
 	SIGNAL_HANDLER
 
 	if (istype(removed, /obj/item/organ/lungs))
 		reset_asthma()
 
-/// Signal proc for when our owner receives reagents. If we receive albuterol via inhalation, we adjust inhaled albuterol by that amount. If we are smoking, we increase inflammation.
+/// Signal proc for when our owner receives reagents.. If we receive albuterol via inhalation, we adjust inhaled albuterol by that amount.. If we are smoking, we increase inflammation.
 /datum/quirk/item_quirk/asthma/proc/exposed_to_reagents(atom/source, list/reagents, datum/reagents/source_reagents, methods, show_message)
 	SIGNAL_HANDLER
 
@@ -224,7 +224,7 @@
 	if (istype(source_reagents.my_atom, /obj/item/cigarette)) // smoking is bad, kids
 		adjust_inflammation(inflammation_on_smoke * final_total * 5)
 
-/// Signal proc for when our asthma attack qdels. Unsets our refs to it and resets [next_attack_cooldown].
+/// Signal proc for when our asthma attack qdels.. Unsets our refs to it and resets [next_attack_cooldown].
 /datum/quirk/item_quirk/asthma/proc/attack_deleting(datum/signal_source)
 	SIGNAL_HANDLER
 
@@ -233,14 +233,14 @@
 
 	COOLDOWN_START(src, next_attack_cooldown, rand(min_time_between_attacks, max_time_between_attacks))
 
-/// Signal handler for COMSIG_LIVING_POST_FULLY_HEAL. Heals our asthma.
+/// Signal handler for COMSIG_LIVING_POST_FULLY_HEAL.. Heals our asthma.
 /datum/quirk/item_quirk/asthma/proc/on_full_heal(datum/signal_source, heal_flags)
 	SIGNAL_HANDLER
 
 	if (heal_flags & HEAL_ORGANS)
 		reset_asthma()
 
-/// Resets our asthma to normal. No inflammation, no pressure mult.
+/// Resets our asthma to normal.. No inflammation, no pressure mult.
 /datum/quirk/item_quirk/asthma/proc/reset_asthma()
 	inflammation = 0
 	var/obj/item/organ/lungs/holder_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)

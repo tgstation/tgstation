@@ -362,7 +362,7 @@
 		/datum/action/cooldown/mob_cooldown/lay_web/solid_web,
 		/datum/action/cooldown/mob_cooldown/lay_web/web_passage,
 	)
-	/// Charging ability, kept seperate from innate_actions due to implementation details
+	/// Charging ability, kept seperate from innate_actions due to code details
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/charge
 
 /mob/living/basic/spider/giant/tarantula/Initialize(mapload)

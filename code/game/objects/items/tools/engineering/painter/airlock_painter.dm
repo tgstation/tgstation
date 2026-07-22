@@ -17,9 +17,9 @@
 
 	/// The ink cartridge to pull charges from.
 	var/obj/item/toner/ink = null
-	/// The type path to instantiate for the ink cartridge the device initially comes with, eg. /obj/item/toner
+	/// The type path to instantiate for the ink cartridge the device initially comes with, for example /obj/item/toner
 	var/initial_ink_type = /obj/item/toner
-	/// Associate list of all paint jobs the airlock painter can apply. The key is the name of the airlock the user will see. The value is the type path of the airlock
+	/// Associate list of all paint jobs the airlock painter can apply.. The key is the name of the airlock the user will see.. The value is the type path of the airlock
 	var/list/available_paint_jobs = list(
 		"Public" = /obj/machinery/door/airlock/public,
 		"Engineering" = /obj/machinery/door/airlock/engineering,
@@ -87,7 +87,7 @@
 			T = get_turf(src)
 
 		// they managed to lose their lungs between then and
-		// now. Good job.
+		// now.. Good job.
 		if(!L)
 			return OXYLOSS
 
@@ -98,7 +98,7 @@
 		L.reagents.add_reagent(/datum/reagent/colorful_reagent, 10)
 		L.reagents.expose(L, TOUCH, 1)
 
-		// TODO maybe add some colorful vomit?
+		// To do maybe add some colorful vomit?
 
 		user.visible_message(span_suicide("[user] vomits out [user.p_their()] [L]!"))
 		playsound(user.loc, 'sound/effects/splat.ogg', 50, TRUE)

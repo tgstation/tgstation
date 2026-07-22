@@ -45,7 +45,7 @@
 	var/active = FALSE
 	///This will be true for 30 seconds after an EMP, it makes the reaction effect dangerous to the user.
 	var/bad_effect = FALSE
-	///Message sent when the armor is emp'd. It is not the message for when the emp effect goes off.
+	/// Message sent when the armor is emp'd.. It is not the message for when the emp effect goes off.
 	var/emp_message = span_warning("The reactive armor has been emp'd! Damn, now it's REALLY gonna not do much!")
 	///Message sent when the armor is still on cooldown, but activates.
 	var/cooldown_message = span_danger("The reactive armor fails to do much, as it is recharging! From what? Only the reactive armor knows.")
@@ -117,7 +117,7 @@
 	bad_effect = TRUE
 	addtimer(VARSET_CALLBACK(src, bad_effect, FALSE), 30 SECONDS)
 
-//When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
+// When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows.. That's the fun of it!)
 /obj/item/clothing/suit/armor/reactive/teleport
 	name = "reactive teleport armor"
 	desc = "Someone separated our Research Director from his own head!"
@@ -176,7 +176,7 @@
 	desc = "An experimental suit of armor that renders the wearer invisible on detection of imminent harm, and creates a decoy that runs away from the owner. You can't fight what you can't see."
 	cooldown_message = span_danger("The reactive stealth system activates, but is not charged enough to fully cloak!")
 	emp_message = span_warning("The reactive stealth armor's threat assessment system crashes...")
-	///when triggering while on cooldown will only flicker the alpha slightly. this is how much it removes.
+	/// when triggering while on cooldown will only flicker the alpha slightly.. this is how much it removes.
 	var/cooldown_alpha_removal = 50
 	///cooldown alpha flicker- how long it takes to return to the original alpha
 	var/cooldown_animation_time = 3 SECONDS
@@ -252,7 +252,7 @@
 
 /obj/item/clothing/suit/armor/reactive/tesla/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of energy into [owner] from the surrounding environment!"))
-	REMOVE_CLOTHING_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE) //oops! can't shock without this!
+	REMOVE_CLOTHING_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE) // oops!. can't shock without this!
 	electrocute_mob(owner, get_area(src), src, 1)
 	ADD_CLOTHING_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration

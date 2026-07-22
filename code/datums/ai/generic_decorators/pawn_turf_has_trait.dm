@@ -1,4 +1,4 @@
-/// Gates child on the pawn's current turf having a given trait. Use invert = TRUE to gate on the trait being absent.
+/// Gates child on the pawn's current turf having a given trait.. Use invert = TRUE to gate on the trait being absent.
 /datum/bt_node/decorator/pawn_turf_has_trait
 	var/trait = null
 

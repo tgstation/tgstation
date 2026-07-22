@@ -1,8 +1,8 @@
 //Some information about how html sanitization is handled
-//All book info datums should store sanitized data. This cannot be worked around
+// All book info datums should store sanitized data.. This cannot be worked around
 //All inputs and outputs from the round (DB calls) need to use sanitized data
 //All tgui menus should get unsanitized data, since jsx handles that on its own
-//Everything else should use sanitized data. Yes including names, it's an xss vuln because of how chat works
+// Everything else should use sanitized data.. Yes including names, it's an xss vuln because of how chat works
 ///A datum which contains all the metadata of a book
 /datum/book_info
 	///The title of the book
@@ -23,7 +23,7 @@
 		return
 	title = reject_bad_text(trim(html_encode(_title), 30))
 
-/datum/book_info/proc/get_title(default="N/A") //Loads in an html decoded version of the title. Only use this for tgui menus, absolutely nothing else.
+/datum/book_info/proc/get_title(default="N/A") // Loads in an html decoded version of the title.. Only use this for tgui menus, absolutely nothing else.
 	return html_decode(title) || "N/A"
 
 /datum/book_info/proc/set_author(_author, trusted = FALSE)

@@ -26,7 +26,7 @@
 	species_cookie = /obj/item/food/nugget
 
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons = TRUE, replace_missing = TRUE)
-	if(!pref_load) //Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
+	if(!pref_load) // Hah!. They got forcefully purrbation'd.. Force default felinid parts on them if they have no mutant parts in those areas!
 		if(human_who_gained_species.dna.features[FEATURE_TAIL_CAT] == SPRITE_ACCESSORY_NONE)
 			human_who_gained_species.dna.features[FEATURE_TAIL_CAT] = get_consistent_feature_entry(SSaccessories.feature_list[FEATURE_TAIL_CAT])
 		if(human_who_gained_species.dna.features[FEATURE_EARS] == SPRITE_ACCESSORY_NONE)
@@ -74,7 +74,7 @@
 			current_spines.Remove(soon_to_be_felinid, special = TRUE)
 			qdel(current_spines)
 
-		// Without this line the tails would be invisible. This is because cat tail and ears default to None.
+		// Without this line the tails would be invisible.. This is because cat tail and ears default to None.
 		// Humans get converted directly to felinids, and the key is handled in on_species_gain.
 		// Now when we get mob.dna.features[feature_key], it returns None, which is why the tail is invisible.
 		// stored_feature_id is only set once (the first time an organ is inserted), so this should be safe.
@@ -97,7 +97,7 @@
 	else if(ishuman(purrbated_human) && !ishumanbasic(purrbated_human))
 		var/datum/species/target_species = purrbated_human.dna.species
 
-		// From the previous check we know they're not a felinid, therefore removing cat ears and tail is safe
+		// From the previous check we know they're not a felinid, so removing cat ears and tail is safe
 		var/obj/item/organ/tail/old_tail = purrbated_human.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 		if(istype(old_tail, /obj/item/organ/tail/cat))
 			old_tail.Remove(purrbated_human, special = TRUE)

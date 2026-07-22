@@ -35,10 +35,10 @@
 		found = GLOB.infuser_entries[/datum/infuser_entry/fly]
 	return found
 
-/// Attempt to replace/add-to the occupant's organs with "mutated" equivalents.
+/// Try to replace/add-to the occupant's organs with "mutated" equivalents.
 /// Returns TRUE on success, FALSE on failure.
-/// Requires the target mob to have an existing organic organ to "mutate".
-// TODO: In the future, this should have more logic:
+/// Needs the target mob to have an existing organic organ to "mutate".
+// To do In the future, this should have more logic:
 // - Replace non-mutant organs before mutant ones.
 /mob/living/carbon/human/proc/infuse_organ(datum/infuser_entry/entry, atom/movable/infused_from)
 	var/obj/item/organ/new_organ = pick_infusion_organ(entry, infused_from)
@@ -52,10 +52,10 @@
 
 /// Picks a random mutated organ from the given infuser entry which is also compatible with this human.
 /// Tries to return a typepath of a valid mutant organ if all of the following criteria are true:
-/// 1. Target must have a pre-existing organ in the same organ slot as the new organ;
-///   - or the new organ must be external.
-/// 2. Target's pre-existing organ must be organic / not robotic.
-/// 3. Target must not have the same/identical organ.
+/// 1.. Target must have a pre-existing organ in the same organ slot as the new organ;
+/// - or the new organ must be external.
+/// 2.. Target's pre-existing organ must be organic / not robotic.
+/// 3.. Target must not have the same/identical organ.
 /mob/living/carbon/human/proc/pick_infusion_organ(datum/infuser_entry/entry, atom/movable/infused_from)
 	if(!entry)
 		return FALSE

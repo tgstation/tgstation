@@ -5,7 +5,7 @@
 /datum/component/temporary_description
 	/// What do we display on examine?
 	var/description_text = ""
-	/// What do we display if examined by a clown? Usually only applied if this is put on a corpse, but go nuts.
+	/// What do we display if examined by a clown?. Usually only applied if this is put on a corpse, but go nuts.
 	var/naive_description = ""
 	/// When are we removed?
 	var/list/removal_signals

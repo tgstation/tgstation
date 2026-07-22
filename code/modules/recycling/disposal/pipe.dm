@@ -164,7 +164,7 @@
 		to_chat(user, span_notice("You slice [src]."))
 	return TRUE
 
-//checks if something is blocking the deconstruction (e.g. trunk with a bin still linked to it)
+// checks if something is blocking the deconstruction (e.g.. trunk with a bin still linked to it)
 /obj/structure/disposalpipe/proc/can_be_deconstructed()
 	return TRUE
 
@@ -173,7 +173,7 @@
 	if(disassembled)
 		if(spawn_pipe)
 			var/obj/structure/disposalconstruct/construct = stored
-			if(!construct) // Don't have something? Make one now
+			if(!construct) // Don't have something?. Make one now
 				construct = new /obj/structure/disposalconstruct(src, null, SOUTH, FALSE, src)
 			stored = null
 			construct.forceMove(loc)
@@ -315,7 +315,7 @@
 	icon_state = "pipe-b"
 	initialize_dirs = DISP_DIR_NONE
 	// broken pipes always have dpdir=0 so they're not found as 'real' pipes
-	// i.e. will be treated as an empty turf
+	// i.e.. will be treated as an empty turf
 	spawn_pipe = FALSE
 	anchored = FALSE
 

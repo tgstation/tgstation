@@ -1,4 +1,4 @@
-//Anomalies, used for anomaly events. Anomalies cause adverse effects on their surroundings and can be mitigated by signalling their respective frequency.
+// Anomalies, used for anomaly events.. Anomalies cause adverse effects on their surroundings and can be mitigated by signalling their respective frequency.
 /obj/effect/anomaly
 	name = "anomaly"
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
@@ -11,7 +11,7 @@
 	var/obj/item/assembly/signaler/anomaly/anomaly_core = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
 
-	/// How long till we seppuku? Blocked by immortal
+	/// How long till we seppuku?. Blocked by immortal
 	var/lifespan = ANOMALY_COUNTDOWN_TIMER
 	var/death_time
 
@@ -130,7 +130,7 @@
 	to_chat(user, span_notice("Analyzing... [src]'s unstable field is not fluctuating along a stable frequency."))
 	return ITEM_INTERACT_BLOCKING
 
-///Stabilize an anomaly, letting it stay around forever or untill destabilizes by a player. An anomaly without a core can't be signalled, but can be destabilized
+/// Stabilize an anomaly, letting it stay around forever or untill destabilizes by a player.. An anomaly without a core can't be signalled, but can be destabilized
 /obj/effect/anomaly/proc/stabilize(anchor = FALSE, has_core = TRUE)
 	immortal = TRUE
 	name = (has_core ? "stable " : "hollow ") + name

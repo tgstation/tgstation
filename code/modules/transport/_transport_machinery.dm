@@ -116,7 +116,7 @@
 	INVOKE_ASYNC(src, PROC_REF(try_fix_machine), source, user, tool)
 	return ITEM_INTERACT_BLOCKING
 
-/// Attempts a do_after, and if successful, stops the event
+/// Tries a do_after, and if successful, stops the event
 /obj/machinery/transport/proc/try_fix_machine(obj/machinery/transport/machine, mob/living/user, obj/item/tool)
 	SHOULD_CALL_PARENT(TRUE)
 

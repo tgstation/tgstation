@@ -1,4 +1,4 @@
-/// Caused by dirty food. Makes you burp out Tritium, sometimes burning hot!
+/// Caused by dirty food.. Makes you burp out Tritium, sometimes burning hot!
 /datum/disease/gastritium
 	name = "Gastritium"
 	desc = "If left untreated, may manifest in severe Tritium heartburn."

@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(statpanels)
 	var/status_wait = 2
 	///how many subsystem fires between updates of the MC tab
 	var/mc_wait = 5
-	///how many full runs this subsystem has completed. used for variable rate refreshes.
+	/// how many full runs this subsystem has completed.. used for variable rate refreshes.
 	var/num_fires = 0
 
 /datum/controller/subsystem/statpanels/fire(resumed = FALSE)

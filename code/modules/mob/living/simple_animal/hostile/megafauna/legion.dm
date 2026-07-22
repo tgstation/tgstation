@@ -132,8 +132,8 @@
 	. = ..()
 	if(istype(hit_atom))
 		playsound(src, attack_sound, 100, TRUE)
-		hit_atom.apply_damage(22 * size / 2, wound_bonus = CANT_WOUND) //It gets pretty hard to dodge the skulls when there are a lot of them. Scales down with size
-		hit_atom.safe_throw_at(get_step(src, get_dir(src, hit_atom)), 2) //Some knockback. Prevent the legion from melee directly after the throw.
+		hit_atom.apply_damage(22 * size / 2, wound_bonus = CANT_WOUND) // It gets pretty hard to dodge the skulls when there are a lot of them.. Scales down with size
+		hit_atom.safe_throw_at(get_step(src, get_dir(src, hit_atom)), 2) // Some knockback.. Prevent the legion from melee directly after the throw.
 
 /mob/living/simple_animal/hostile/megafauna/legion/GiveTarget(new_target)
 	. = ..()
@@ -158,7 +158,7 @@
 			var/mob/living/basic/mining/legion_brood/legion = new(loc)
 			legion.infest(living_target)
 
-///Special snowflake death() here. Can only die if size is 1 or lower and HP is 0 or below.
+/// Special snowflake death() here.. Can only die if size is 1 or lower and HP is 0 or below.
 /mob/living/simple_animal/hostile/megafauna/legion/death()
 	//Make sure we didn't get cheesed
 	if(health > 0)

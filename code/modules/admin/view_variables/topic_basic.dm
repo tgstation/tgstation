@@ -104,7 +104,7 @@
 		if(length(components))
 			names += sort_list(components, GLOBAL_PROC_REF(cmp_typepaths_asc))
 		names += "---Elements---"
-		// We have to list every element here because there is no way to know what element is on this object without doing some sort of hack.
+		// We have to list every element here because there is no way to know what element is on this object without doing some sort of temporary solution
 		names += sort_list(subtypesof(/datum/element), GLOBAL_PROC_REF(cmp_typepaths_asc))
 		var/path = tgui_input_list(usr, "Choose a component/element to remove. All elements listed here may not be on the datum.", "Remove element", names)
 		if(isnull(path))

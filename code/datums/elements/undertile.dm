@@ -8,13 +8,13 @@
 
 	///the invisiblity trait applied, like TRAIT_T_RAY_VISIBLE
 	var/invisibility_trait
-	///level of invisibility applied when under a tile. Could be INVISIBILITY_OBSERVER if you still want it to be visible to ghosts
+	/// level of invisibility applied when under a tile.. Could be INVISIBILITY_OBSERVER if you still want it to be visible to ghosts
 	var/invisibility_level
 	///an overlay for the tile if we wish to apply that
 	var/tile_overlay
-	///whether we use alpha or not. TRUE uses ALPHA_UNDERTILE because otherwise we have 200 different instances of this element for different alphas
+	/// whether we use alpha or not.. TRUE uses ALPHA_UNDERTILE because otherwise we have 200 different instances of this element for different alphas
 	var/use_alpha
-	///We will switch between anchored and unanchored. for stuff like satchels that shouldn't be pullable under tiles but are otherwise unanchored
+	/// We will switch between anchored and unanchored.. for stuff like satchels that shouldn't be pullable under tiles but are otherwise unanchored
 	var/use_anchor
 	///Will hiding the object tilt the tile it is beneath?
 	var/tilt_tile

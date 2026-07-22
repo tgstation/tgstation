@@ -6,9 +6,9 @@
 	lifespan = ANOMALY_COUNTDOWN_TIMER + 2 SECONDS //This one takes slightly longer, because it can run away.
 	move_chance = 0 //prevents it from moving around so ghosts can actually move it with decent accuracy
 
-	///Blocks the anomaly from updating ghost count. Used in case an admin wants to rig the anomaly to be a certain size or intensity.
+	/// Blocks the anomaly from updating ghost count.. Used in case an admin wants to rig the anomaly to be a certain size or intensity.
 	var/override_ghosts = FALSE
-	///The numerical power of the anomaly. Calculated in anomalyEffect. Also used in determining the category of detonation effects.
+	/// The numerical power of the anomaly.. Calculated in anomalyEffect.. Also used in determining the category of detonation effects.
 	var/effect_power = 0
 	///The actual number of ghosts orbiting the anomaly.
 	var/ghosts_orbiting = 0
@@ -122,7 +122,7 @@
 
 
 
-// Ghost Portal. Used to bring anomaly orbiters into the playing field as ghosts. Destroys itself and all of its associated ghosts after two minutes.
+// Ghost Portal.. Used to bring anomaly orbiters into the playing field as ghosts.. Destroys itself and all of its associated ghosts after two minutes.
 // Can be destroyed early to the same effect.
 
 /obj/structure/ghost_portal

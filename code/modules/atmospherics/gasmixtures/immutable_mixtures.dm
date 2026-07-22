@@ -64,7 +64,7 @@
 	moles = initial_gas.Copy()
 	moles_archive = initial_gas.Copy()
 
-/datum/gas_mixture/immutable/planetary/proc/parse_string_immutable(gas_string) //I know I know, I need this tho
+/datum/gas_mixture/immutable/planetary/proc/parse_string_immutable(gas_string) // I know I know, I need this though
 	gas_string = SSair.preprocess_gas_string(gas_string)
 
 	var/list/mix = initial_gas

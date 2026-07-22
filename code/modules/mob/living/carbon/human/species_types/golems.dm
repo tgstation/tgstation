@@ -1,4 +1,4 @@
-/// Animated beings of stone. They have increased defenses, and do not need to breathe. They must eat minerals to live, which give additional buffs.
+/// Animated beings of stone.. They have increased defenses, and do not need to breathe.. They must eat minerals to live, which give additional buffs.
 /datum/species/golem
 	name = "Golem"
 	id = SPECIES_GOLEM
@@ -19,7 +19,7 @@
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_RADIMMUNE,
-		TRAIT_SNOWSTORM_IMMUNE, // Shared with plasma river... but I guess if you can survive a plasma river a blizzard isn't a big deal
+		TRAIT_SNOWSTORM_IMMUNE, // Shared with plasma river.... but I guess if you can survive a plasma river a blizzard isn't a big deal
 		TRAIT_UNHUSKABLE,
 	)
 	mutantheart = null
@@ -150,8 +150,8 @@
 		if(!do_after(user, do_after_time, source, extra_checks = CALLBACK(src, PROC_REF(check_rebuild), source, user, mats) ) )
 			return
 
-		// calculated "effective sheet power" based on mats
-		// ex. iron sheets will have a power of 1, reinforced glass a power of 1.5
+		// calculated "effective sheet power" good on mats
+		// ex.. iron sheets will have a power of 1, reinforced glass a power of 1.5
 		var/mat_power = 0
 		for(var/mat, mat_amt in mats.custom_materials)
 			mat_power += mat_amt
@@ -201,7 +201,7 @@
 	SIGNAL_HANDLER
 
 	// golems can't be defibrillated, they have no heart and aren't even alive in the traditional sense
-	// you gotta rebuild them with materials if they fall apart
+	// you got to rebuild them with materials if they fall apart
 	return DEFIB_FAIL_GOLEM
 
 /datum/species/golem/proc/drain_nutrition(mob/living/carbon/human/source, damage_amt, damage_type, ...)

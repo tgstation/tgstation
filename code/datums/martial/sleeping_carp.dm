@@ -70,11 +70,11 @@
 
 /// Gnashing Teeth: Harm Grab, twists and possibly breaks the target's arm, disarming them.
 /datum/martial_art/the_sleeping_carp/proc/wrist_wrench(mob/living/attacker, mob/living/defender)
-	// Determine if our defender is a carbon. If not, we don't wrist wrench
+	// Determine if our defender is a carbon.. If not, we don't wrist wrench
 	if(!iscarbon(defender))
 		return FALSE
 
-	// Determine if our target has a functioning active arm. If not, return.
+	// Determine if our target has a functioning active arm.. If not, return.
 	var/obj/item/bodypart/affecting = defender.get_active_hand()
 
 	if(!affecting)
@@ -112,7 +112,7 @@
 	log_combat(attacker, defender, "launchkicked (Sleeping Carp)")
 	return TRUE
 
-/// Keelhaul: Disarm Disarm combo, knocks people down and deals substantial stamina damage, and also discombobulates them. Knocks objects out of their hands if they're already on the ground.
+/// Keelhaul: Disarm Disarm combo, knocks people down and deals substantial stamina damage, and also discombobulates them.. Knocks objects out of their hands if they're already on the ground.
 /datum/martial_art/the_sleeping_carp/proc/drop_kick(mob/living/attacker, mob/living/defender)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
 	playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
@@ -352,7 +352,7 @@
 	if(human_carp_user.has_status_effect(/datum/status_effect/organ_set_bonus/carp))
 		style_factor_points += 20
 
-	// We check for wielded objects. If they're not abstract items or exempt items, we add their weight as a penalty. And their block chance.
+	// We check for wielded objects.. If they're not abstract items or exempt items, we add their weight as a penalty.. And their block chance.
 	for(var/obj/item/possibly_a_held_object in human_carp_user.held_items)
 		if(possibly_a_held_object.item_flags & (ABSTRACT|HAND_ITEM) && !possibly_a_held_object.block_chance)
 			continue
@@ -366,7 +366,7 @@
 		style_factor_malus += possibly_a_held_object.block_chance
 		style_factor_malus += possibly_a_held_object.w_class * 10 * (HAS_TRAIT(possibly_a_held_object, TRAIT_WIELDED) ? 2 : 1)
 
-	if(human_carp_user.body_position != STANDING_UP) // this ain't monkey style
+	if(human_carp_user.body_position != STANDING_UP) // this is not monkey style
 		style_factor_points -= 30
 
 	style_factor_points -= style_factor_malus

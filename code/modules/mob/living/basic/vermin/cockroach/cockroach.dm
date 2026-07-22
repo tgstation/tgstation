@@ -149,7 +149,7 @@
 ///Proc used to override the squashing behavior of the normal cockroach.
 /mob/living/basic/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)
 	if(!istype(living_target))
-		return FALSE //We failed to run the invoke. Might be because we're a structure. Let the squashable element handle it then!
+		return FALSE // We failed to run the invoke.. Might be because we're a structure.. Let the squashable element handle it then!
 	if(!HAS_TRAIT(living_target, TRAIT_PIERCEIMMUNE))
 		living_target.visible_message(span_danger("[living_target] steps onto [cockroach]'s spike!"), span_userdanger("You step onto [cockroach]'s spike!"))
 		return TRUE

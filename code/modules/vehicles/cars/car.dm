@@ -58,7 +58,7 @@
 		return
 	to_chat(user, span_notice("It seems [src]'s trunk was empty."))
 
-///attempts to force a mob into the car
+/// tries to force a mob into the car
 /obj/vehicle/sealed/car/proc/mob_try_forced_enter(mob/forcer, mob/kidnapped, silent = FALSE)
 	if(occupant_amount() >= max_occupants)
 		return FALSE

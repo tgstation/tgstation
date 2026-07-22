@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		scrubber.set_widenet(TRUE)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SIPHONING)
 
-/// Special case for cycles. Cycles need to refill the air again after it's scrubbed out so this proc is called.
+/// Special case for cycles.. Cycles need to refill the air again after it's scrubbed out so this proc is called.
 /// Same as [/datum/air_alarm_mode/filtering/apply]
 /datum/air_alarm_mode/cycle/replace(area/applied, pressure)
 	if(pressure >= ONE_ATMOSPHERE * 0.05)

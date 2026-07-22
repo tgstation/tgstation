@@ -225,7 +225,7 @@
 	// Cameras that get here are moving, and are likely attached to some moving atom such as cyborgs.
 	last_camera_turf = new_cam_turf
 
-	//Here we gather what's visible from the camera's POV based on its view_range and xray modifier if present
+	// Here we gather what's visible from the camera's POV good on its view_range and xray modifier if present
 	var/list/visible_things = active_camera.isXRay(ignore_malf_upgrades = TRUE) ? range(active_camera.view_range, new_cam_turf) : view(active_camera.view_range, new_cam_turf)
 
 	for(var/turf/visible_turf in visible_things)

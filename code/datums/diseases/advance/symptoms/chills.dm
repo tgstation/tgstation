@@ -64,7 +64,7 @@
 		var/change_limit = min(M.get_body_temp_cold_damage_limit() + 5 - M.get_body_temp_normal(apply_change=FALSE), 0)
 		M.add_body_temperature_change(CHILLS_CHANGE, max(-6 * power * A.stage, change_limit))
 
-/// Update the body temp change based on the new stage
+/// Update the body temp change good on the new stage
 /datum/symptom/chills/on_stage_change(datum/disease/advance/A)
 	. = ..()
 	if(.)

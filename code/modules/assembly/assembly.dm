@@ -18,7 +18,7 @@
 	 * This will prevent things such as visible lasers from facing the incorrect direction when transformed by assembly_holder's update_appearance()
 	 */
 	var/is_position_sensitive = FALSE
-	/// Flags related to this assembly. See [assemblies.dm]
+	/// Flags related to this assembly.. See [assemblies.dm]
 	var/assembly_flags = NONE
 	var/secured = TRUE
 	var/list/attached_overlays = null
@@ -112,7 +112,7 @@
 	return secured
 
 // This is overwritten so that clumsy people can set off mousetraps even when in a holder.
-// We are not going deeper than that however (won't set off if in a tank bomb or anything with wires)
+// We are not going deeper than that but (won't set off if in a tank bomb or anything with wires)
 // That would need to be added to all parent objects, or a signal created, whatever.
 // Anyway this return check prevents you from picking up every assembly inside the holder at once.
 /obj/item/assembly/attack_hand(mob/living/user, list/modifiers)

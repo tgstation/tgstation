@@ -17,7 +17,7 @@
 /// Useful for doing "we're done" effects without duped code
 #define BREATH_LOST 1
 
-//The proportion of oxygen needed for metabolism compared to pluoxium. (Pluoxium is this many times efficient as oxygen)
+// The proportion of oxygen needed for metabolism compared to pluoxium... (Pluoxium is this many times efficient as oxygen)
 #define PLUOXIUM_PROPORTION 8
 
 //Defines for N2O and Healium euphoria moodlets
@@ -32,16 +32,16 @@
 #define MAX_TOXIC_GAS_DAMAGE 10
 
 // Pressure limits.
-/// This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
+/// This determins at what pressure the ultra-high pressure red icon is displayed... (This one is set as a constant)
 #define HAZARD_HIGH_PRESSURE 550
 /// This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
 #define WARNING_HIGH_PRESSURE 325
-/// This is when the gray low pressure icon is displayed. (it is 2.5 * HAZARD_LOW_PRESSURE)
+/// This is when the gray low pressure icon is displayed... (it is 2.5 * HAZARD_LOW_PRESSURE)
 #define WARNING_LOW_PRESSURE 50
-/// This is when the black ultra-low pressure icon is displayed. (This one is set as a constant)
+/// This is when the black ultra-low pressure icon is displayed... (This one is set as a constant)
 #define HAZARD_LOW_PRESSURE 20
 
-/// This is used in handle_temperature_damage() for humans, and in reagents that affect body temperature. Temperature damage is multiplied by this amount.
+/// This is used in handle_temperature_damage() for humans, and in reagents that affect body temperature... Temperature damage is multiplied by this amount.
 #define TEMPERATURE_DAMAGE_COEFFICIENT 1.5
 
 /// The maximum temperature of Lavaland
@@ -51,13 +51,13 @@
 
 /// The natural temperature for a body
 #define BODYTEMP_NORMAL 310.15
-/// This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
+/// This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick... The higher the number, the slower the recovery... This is applied each tick, so long as the mob is alive.
 #define BODYTEMP_AUTORECOVERY_DIVISOR 28
-/// Minimum amount of kelvin moved toward 310K per tick. So long as abs(310.15 - bodytemp) is more than 50.
+/// Minimum amount of kelvin moved toward 310K per tick... So long as abs(310.15 - bodytemp) is more than 50.
 #define BODYTEMP_AUTORECOVERY_MINIMUM 3
-///Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
+/// Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery... This is the divisor which comes into play when the human's loc temperature is lower than their body temperature... Make it lower to lose bodytemp faster.
 #define BODYTEMP_COLD_DIVISOR 15
-/// Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
+/// Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery... This is the divisor which comes into play when the human's loc temperature is higher than their body temperature... Make it lower to gain bodytemp faster.
 #define BODYTEMP_HEAT_DIVISOR 15
 /// The maximum number of degrees that your body can cool in 1 tick, due to the environment, when in a cold area.
 #define BODYTEMP_COOLING_MAX -30
@@ -76,7 +76,7 @@
 /// A temperature limit which is above the minimum icebox temperature
 #define BODYTEMP_COLD_ICEBOX_SAFE (ICEBOX_MIN_TEMPERATURE - 5)
 /// The body temperature limit the human body can take before it will take wound damage.
-#define BODYTEMP_HEAT_WOUND_LIMIT (BODYTEMP_NORMAL + 90) // 400.5 k
+#define BODYTEMP_HEAT_WOUND_LIMIT (BODYTEMP_NORMAL + 90) // 400.5 okay
 /// The modifier on cold damage limit hulks get ontop of their regular limit
 #define BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER 25
 /// The modifier on cold damage hulks get.
@@ -112,11 +112,11 @@
 
 //CLOTHES
 
-/// what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
+/// what min_cold_protection_temperature is set to for space-helmet quality headwear... MUST NOT BE 0.
 #define SPACE_HELM_MIN_TEMP_PROTECT 2.0
 /// Thermal insulation works both ways /Malkevin
 #define SPACE_HELM_MAX_TEMP_PROTECT 1500
-/// what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
+/// what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits... MUST NOT BE 0.
 #define SPACE_SUIT_MIN_TEMP_PROTECT 2.0
 /// The min cold protection of a space suit without the heater active
 #define SPACE_SUIT_MIN_TEMP_PROTECT_OFF 72
@@ -124,14 +124,14 @@
 
 /// Cold protection for firesuits
 #define FIRE_SUIT_MIN_TEMP_PROTECT 60
-/// what max_heat_protection_temperature is set to for firesuit quality suits. MUST NOT BE 0.
+/// what max_heat_protection_temperature is set to for firesuit quality suits... MUST NOT BE 0.
 #define FIRE_SUIT_MAX_TEMP_PROTECT 30000
 /// Cold protection for fire helmets
 #define FIRE_HELM_MIN_TEMP_PROTECT 60
 /// for fire helmet quality items (red and white hardhats)
 #define FIRE_HELM_MAX_TEMP_PROTECT 30000
 
-/// what max_heat_protection_temperature is set to for firesuit quality suits and helmets. MUST NOT BE 0.
+/// what max_heat_protection_temperature is set to for firesuit quality suits and helmets... MUST NOT BE 0.
 #define FIRE_IMMUNITY_MAX_TEMP_PROTECT 35000
 
 /// For normal helmets

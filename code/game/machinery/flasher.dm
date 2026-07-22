@@ -9,10 +9,10 @@
 	max_integrity = 250
 	integrity_failure = 0.4
 	damage_deflection = 10
-	///The contained flash. Mostly just handles the bulb burning out & needing placement.
+	/// The contained flash.. Mostly just handles the bulb burning out & needing placement.
 	var/obj/item/assembly/flash/handheld/bulb
 	var/id = null
-	/// How far this flash reaches. Affects both proximity distance and the actual stun effect.
+	/// How far this flash reaches.. Affects both proximity distance and the actual stun effect.
 	var/flash_range = 2 //this is roughly the size of a brig cell.
 
 	/// How strong Paralyze()'d targets are when flashed.
@@ -164,7 +164,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	else
 		new /obj/item/stack/sheet/iron (loc, 2)
 
-/obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
+/obj/machinery/flasher/portable // Portable version of the flasher.. Only flashes when anchored
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
 	icon = 'icons/obj/machines/sec.dmi'

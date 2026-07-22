@@ -13,7 +13,7 @@ GLOBAL_DATUM_INIT(admin_states, /alist, alist())
 GLOBAL_PROTECT(admin_states)
 
 /datum/ui_state/admin_state
-	/// The specific admin permissions required for the UI using this state.
+	/// The specific admin permissions needed for the UI using this state.
 	VAR_FINAL/required_perms = R_ADMIN
 
 /datum/ui_state/admin_state/New(required_perms = R_ADMIN)

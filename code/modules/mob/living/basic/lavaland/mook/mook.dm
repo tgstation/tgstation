@@ -1,5 +1,5 @@
 //Fragile but highly aggressive wanderers that pose a large threat in numbers.
-//They'll attempt to leap at their target from afar using their hatchets.
+// They'll try to leap at their target from afar using their hatchets.
 /mob/living/basic/mining/mook
 	name = "wanderer"
 	desc = "This unhealthy looking primitive seems to be talented at administering health care."

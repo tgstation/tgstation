@@ -1,7 +1,7 @@
 
 //reserved file just for golems since they're such a big thing, available on lavaland and from the station
 
-//Golem shells: Spawns in Free Golem ships in lavaland. Ghosts become mineral golems and are advised to spread personal freedom.
+// Golem shells: Spawns in Free Golem ships in lavaland.. Ghosts become mineral golems and are advised to spread personal freedom.
 /obj/effect/mob_spawn/ghost_role/human/golem
 	name = "inert free golem shell"
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
@@ -20,7 +20,7 @@
 
 	//Deconstruction var's
 	var/list/obj/item/stack/drop_on_deconstruct
-	//Time it takes to deconstruct a completed shell.	 Note : You can dissssemble multiple at once
+	// Time it takes to deconstruct a completed shell.. Note : You can dissssemble multiple at once
 	var/deconstruct_time = 4 SECONDS
 
 

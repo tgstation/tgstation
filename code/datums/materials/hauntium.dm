@@ -5,7 +5,7 @@
 	greyscale_color = "#FFFFFF"
 	alpha = 100
 	starlight_color = COLOR_ALMOST_BLACK
-	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_FABRIC // Metal for crafting, and fabric because bedsheets and ghosts... you get it.
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_FABRIC // Metal for crafting, and fabric because bedsheets and ghosts.... you get it.
 	mat_properties = list(
 		MATERIAL_DENSITY = 2,
 		MATERIAL_HARDNESS = 6,

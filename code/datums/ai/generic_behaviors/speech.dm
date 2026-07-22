@@ -3,9 +3,9 @@
 	time_between_perform = 1 SECONDS
 	/// Chance that the mob will speak.
 	var/speech_chance = 1
-	/// Hearable emotes (e.g. "barks.")  played with sound if sound list is populated.
+	/// Hearable emotes (e.g.. "barks.") played with sound if sound list is populated.
 	var/list/emote_hear
-	/// Visible-only emotes (e.g. "wags tail.")  no sound.
+	/// Visible-only emotes (e.g.. "wags tail.") no sound.
 	var/list/emote_see
 	/// Spoken lines.
 	var/list/speak
@@ -142,7 +142,7 @@
 		return ..() // No radio, just talk funny
 	mob_radio.talk_into(pawn, pick(radio_speech + remembered_speech), pick(RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_COMMON))
 
-///Speech behavior that reads from a blackboard to pick what to say. Useful for things with dynamic speech behaviors
+/// Speech behavior that reads from a blackboard to pick what to say.. Useful for things with dynamic speech behaviors
 /datum/bt_node/ai_behavior/random_speech_blackboard
 
 /datum/bt_node/ai_behavior/random_speech_blackboard/perform(seconds_per_tick, datum/ai_controller/controller)

@@ -54,7 +54,7 @@
 /datum/proximity_monitor/advanced/bubble/on_z_change(datum/source)
 	recalculate_field(full_recalc = TRUE)
 
-///rendering all the field visuals. first we render the corners, then we connect them
+/// rendering all the field visuals.. first we render the corners, then we connect them
 /datum/proximity_monitor/advanced/bubble/proc/draw_effect()
 	var/max_pixel_offset = current_range * ICON_SIZE_ALL
 	var/top_right_corner = list(effect_direction_images["[NORTHEAST]"], max_pixel_offset, max_pixel_offset)

@@ -117,7 +117,7 @@
 #define COMSIG_ITEM_MARK_RETRIEVAL "item_mark_retrieval"
 	/// Return to stop the cast and prevent the item from being marked
 	#define COMPONENT_BLOCK_MARK_RETRIEVAL (1 << 0)
-///When an object is retrieved by a magic recall spell. This will apply to all containers, mobs, etc. that are pulled by the spell.
+/// When an object is retrieved by a magic recall spell... This will apply to all containers, mobs, and so on that are pulled by the spell.
 #define COMSIG_MAGIC_RECALL "magic_recall"
 
 

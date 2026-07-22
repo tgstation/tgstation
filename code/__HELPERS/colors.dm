@@ -235,7 +235,7 @@
 				// Hue goes from 0 to 360
 				if (1)
 					multiplier = 360
-				// Value, luminance, chroma, etc go from 0 to 100
+				// Value, luminance, chroma, and so on go from 0 to 100
 				if (2 to 3)
 					multiplier = 100
 				// Alpha still goes from 0 to 255

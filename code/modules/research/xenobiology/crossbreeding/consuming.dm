@@ -5,7 +5,7 @@ Consuming extracts:
 */
 /obj/item/slimecross/consuming
 	name = "consuming extract"
-	desc = "It hungers... for <i>more</i>." //My slimecross has finally decided to eat... my buffet!
+	desc = "It hungers... for <i>more</i>." // My slimecross has finally decided to eat.... my buffet!
 	icon_state = "consuming"
 	effect = "consuming"
 	var/nutriment_eaten = 0
@@ -281,7 +281,7 @@ Consuming extracts:
 	colour = SLIME_TYPE_CERULEAN
 	effect_desc = "Creates a slime cookie that has a chance to make another once you eat it."
 	cookietype = /obj/item/slime_cookie/cerulean
-	cookies = 3 //You're gonna get more.
+	cookies = 3 // You're going to get more.
 
 /obj/item/slime_cookie/cerulean
 	name = "duplicookie"

@@ -6,13 +6,13 @@
 	if(QDELING(src))
 		CRASH("[my_atom] is trying to handle reactions while being flagged for deletion. It presently has [length(reagent_list)] number of reactants in it. If that is over 0 then something terrible happened.")
 
-	if(!length(reagent_list))//The liver is calling this method a lot, and is often empty of reagents so it's pointless busywork. It should be an easy fix, but I'm nervous about touching things beyond scope. Also since everything is so handle_reactions() trigger happy it might be a good idea having this check anyways.
+	if(!length(reagent_list))// The liver is calling this method a lot, and is often empty of reagents so it's pointless busywork.. It should be an easy fix, but I'm nervous about touching things beyond scope.. Also since everything is so handle_reactions() trigger happy it might be a good idea having this check anyways.
 		return FALSE
 
 	if(flags & NO_REACT)
 		if(is_reacting)
 			force_stop_reacting() //Force anything that is trying to to stop
-		return FALSE //Yup, no reactions here. No siree.
+		return FALSE // Yup, no reactions here.. No siree.
 
 #ifndef UNIT_TESTS
 	// We assert that reagents will not need to react before the map is fully loaded
@@ -39,7 +39,7 @@
 			if(next_reaction)
 				continue
 
-			//do we have the required reagents?
+			// do we have the needed reagents?
 			var/granularity = 1
 			if(!(reaction.reaction_flags & REACTION_INSTANT))
 				granularity = CHEMICAL_QUANTISATION_LEVEL
@@ -57,7 +57,7 @@
 			if(next_reaction)
 				continue
 
-			//do we have the required container?
+			// do we have the needed container?
 			if(cached_my_atom)
 				if(reaction.required_container)
 					if(reaction.required_container_accepts_subtypes)
@@ -70,13 +70,13 @@
 			else if(reaction.required_container)
 				continue
 
-			//do we have the required temps?
+			// do we have the needed temps?
 			var/required_temp = reaction.required_temp
 			var/is_cold_recipe = reaction.is_cold_recipe
 			if(required_temp != 0 && (is_cold_recipe && chem_temp > required_temp) || (!is_cold_recipe && chem_temp < required_temp))
 				continue
 
-			//do we have the required ph? in range of min - ph_range & max + ph_range
+			// do we have the needed ph?. in range of min - ph_range & max + ph_range
 			if(ph < reaction.optimal_ph_min - reaction.determin_ph_range && ph > reaction.optimal_ph_max + reaction.determin_ph_range)
 				continue
 
@@ -158,12 +158,12 @@
 	PRIVATE_PROC(TRUE)
 
 	equilibrium.reaction.reaction_finish(src, equilibrium, equilibrium.reacted_vol)
-	if(!equilibrium.holder || !equilibrium.reaction) //Somehow I'm getting empty equilibrium. This is here to handle them
+	if(!equilibrium.holder || !equilibrium.reaction) // Somehow I'm getting empty equilibrium.. This is here to handle them
 		LAZYREMOVE(reaction_list, equilibrium)
 		qdel(equilibrium)
-		stack_trace("The equilibrium datum currently processing in this reagents datum had a nulled holder or nulled reaction. src holder:[my_atom] || src type:[my_atom.type] ") //Shouldn't happen. Does happen
+		stack_trace("The equilibrium datum currently processing in this reagents datum had a nulled holder or nulled reaction. src holder:[my_atom] || src type:[my_atom.type] ") // Shouldn't happen.. Does happen
 		return
-	if(equilibrium.holder != src) //When called from Destroy() eqs are nulled in smoke. This is very strange. This is probably causing it to spam smoke because of the runtime interupting the removal.
+	if(equilibrium.holder != src) // When called from Destroy() eqs are nulled in smoke.. This is very strange.. This is probably causing it to spam smoke because of the runtime interupting the removal.
 		stack_trace("The equilibrium datum currently processing in this reagents datum had a desynced holder to the ending reaction. src holder:[my_atom] | equilibrium holder:[equilibrium.holder.my_atom] || src type:[my_atom.type] | equilibrium holder:[equilibrium.holder.my_atom.type]")
 		LAZYREMOVE(reaction_list, equilibrium)
 
@@ -227,7 +227,7 @@
 	//average purity to be used in scaling the yield of products formed
 	var/average_purity = get_average_purity()
 
-	//remove the required reagents
+	// remove the needed reagents
 	for(var/datum/reagent/requirement as anything in cached_required_reagents)//this is not an object
 		remove_reagent(requirement, cached_required_reagents[requirement] * multiplier)
 

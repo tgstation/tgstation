@@ -212,7 +212,7 @@
 	icons = list("bananium","bananium_dam")
 	custom_materials = list(/datum/material/bananium = SMALL_MATERIAL_AMOUNT*5)
 	rust_resistance = RUST_RESISTANCE_BASIC
-	material_flags = NONE //The slippery comp makes it unpractical for good clown decor. The custom mat one should still slip.
+	material_flags = NONE // The slippery comp makes it unpractical for good clown decor.. The custom mat one should still slip.
 	var/sound_cooldown = 0
 
 /turf/open/floor/mineral/bananium/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)

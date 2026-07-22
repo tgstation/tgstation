@@ -1,5 +1,5 @@
 // Ethereals:
-/// How long it takes an ethereal to drain or charge APCs. Also used as a spam limiter.
+/// How long it takes an ethereal to drain or charge APCs.. Also used as a spam limiter.
 #define ETHEREAL_APC_DRAIN_TIME (3 SECONDS)
 /// How much power ethereals gain/drain from APCs.
 #define ETHEREAL_APC_POWER_GAIN (0.1 * STANDARD_ETHEREAL_CHARGE)
@@ -128,7 +128,7 @@
 	atom_break()
 
 /obj/machinery/power/apc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0)
-	// APC being at 0 integrity doesnt delete it outright. Combined with take_damage this might cause runtimes.
+	// APC being at 0 integrity doesnt delete it outright.. Combined with take_damage this might cause runtimes.
 	if(machine_stat & BROKEN && atom_integrity <= 0)
 		if(sound_effect)
 			play_attack_sound(damage_amount, damage_type, damage_flag)

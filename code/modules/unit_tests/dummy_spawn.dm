@@ -1,6 +1,6 @@
 ///This set of tests is focused on ensuring the stability of preference dummies
 ///And by extension the hacks built to make them fast
-///Organ consistency, object pooling via the wardrobe ss, etc
+/// Organ consistency, object pooling via the wardrobe ss, and so on
 
 //Test spawning one of every species
 /datum/unit_test/dummy_spawn_species

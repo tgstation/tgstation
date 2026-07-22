@@ -64,7 +64,7 @@
 		return FALSE
 	. = ..()
 
-//Reskins! More fitting with most of our tiles, and appear as a radial on the base type
+// Reskins!. More fitting with most of our tiles, and appear as a radial on the base type
 /turf/open/floor/catwalk_floor/iron
 	name = "iron plated catwalk floor"
 	icon_state = "iron_above"

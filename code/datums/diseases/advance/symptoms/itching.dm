@@ -25,7 +25,7 @@
 	)
 	///emote cooldowns
 	COOLDOWN_DECLARE(itching_cooldown)
-	///if FALSE, there is a percentage chance that the mob will emote scratching while itching_cooldown is on cooldown. If TRUE, won't emote again until after the off cooldown scratch occurs.
+	/// if FALSE, there is a percentage chance that the mob will emote scratching while itching_cooldown is on cooldown.. If TRUE, won't emote again until after the off cooldown scratch occurs.
 	var/off_cooldown_scratched = FALSE
 
 /datum/symptom/itching/Start(datum/disease/advance/active_disease)

@@ -17,7 +17,7 @@
 	to_modify.curse_probability_modifier = GET_MUTATION_SYNCHRONIZER(src)
 	return .
 
-/// The base "void invocation" action. No side effects.
+/// The base "void invocation" action.. No side effects.
 /datum/action/cooldown/spell/void
 	name = "Invoke Void"
 	desc = "Pulls you into a pocket of the void temporarily, making you invincible."
@@ -56,7 +56,7 @@
 	UnregisterSignal(remove_from, COMSIG_LIVING_LIFE)
 	return ..()
 
-/// Signal proc for [COMSIG_LIVING_LIFE]. Has a chance of casting itself randomly.
+/// Signal proc for [COMSIG_LIVING_LIFE].. Has a chance of casting itself randomly.
 /datum/action/cooldown/spell/void/cursed/proc/on_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
 
@@ -70,7 +70,7 @@
 
 	var/mob/living/carbon/carbon_source = source
 	if(istype(carbon_source) && carbon_source.dna)
-		// If we have DNA, the probability of curse changes based on how stable we are
+		// If we have DNA, the probability of curse changes good on how stable we are
 		prob_of_curse += ((100 - carbon_source.dna.stability) / 40)
 
 	prob_of_curse *= curse_probability_modifier

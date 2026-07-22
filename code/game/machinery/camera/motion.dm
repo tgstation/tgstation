@@ -1,7 +1,7 @@
 /obj/machinery/camera/process()
 	// motion camera event loop
 	if(!isMotion())
-		return PROCESS_KILL // FIXME: This is never undone if the camera gets upgraded to a motion camera
+		return PROCESS_KILL // Fix me This is never undone if the camera gets upgraded to a motion camera
 	if(machine_stat & EMPED)
 		return
 	if (detectTime > 0)

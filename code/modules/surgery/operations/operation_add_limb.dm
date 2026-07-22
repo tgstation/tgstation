@@ -13,7 +13,7 @@
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 	allow_stumps = TRUE
-	/// List of items that are always allowed to be an arm replacement, even if they fail another requirement.
+	/// List of items that are always allowed to be an arm replacement, even if they fail another need
 	var/list/always_accepted_prosthetics = list(
 		/obj/item/chainsaw, // the OG, too large otherwise
 		/obj/item/melee/synthetic_arm_blade, // also too large otherwise

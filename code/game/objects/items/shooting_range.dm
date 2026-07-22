@@ -27,7 +27,7 @@
 		return ..() // Too many bullets, we're done here
 
 	// Projectiles which do not deal damage will not leave dent / scorch mark graphics.
-	// However we snowflake some projectiles to leave them anyway, because they're appropriate.
+	// But we snowflake some projectiles to leave them anyway, because they're appropriate.
 	var/static/list/always_leave_marks
 	if(isnull(always_leave_marks))
 		always_leave_marks = typecacheof(list(

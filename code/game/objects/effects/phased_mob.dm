@@ -59,7 +59,7 @@
 	var/area/destination_area = get_area(eject_spot)
 	if(destination_area.area_flags & NOTELEPORT)
 		// this ONLY happens if someone uses a phasing effect
-		// to try to land in a NOTELEPORT zone after it is created, AKA trying to exploit.
+		// to try to land in a NOTELEPORT zone after it is created, Also known as trying to exploit.
 		if(isliving(jaunter))
 			var/mob/living/living_cheaterson = jaunter
 			to_chat(living_cheaterson, span_userdanger("This area has a heavy universal force occupying it, and you are scattered to the cosmos!"))
@@ -94,7 +94,7 @@
 		setDir(direction)
 	forceMove(newloc)
 
-/// Checks if the conditions are valid to be able to phase. Returns a turf destination if positive.
+/// Checks if the conditions are valid to be able to phase.. Returns a turf destination if positive.
 /obj/effect/dummy/phased_mob/proc/phased_check(mob/living/user, direction)
 	RETURN_TYPE(/turf)
 	if (movedelay > world.time || !direction)

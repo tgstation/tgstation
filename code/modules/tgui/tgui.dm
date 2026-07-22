@@ -135,7 +135,7 @@
 		return
 	closing = TRUE
 	// If we don't have window_id, open proc did not have the opportunity
-	// to finish, therefore it's safe to skip this whole block.
+	// to finish, so it's safe to skip this whole block.
 	if(window)
 		// Windows you want to keep are usually blue screens of death
 		// and we want to keep them around, to allow user to read

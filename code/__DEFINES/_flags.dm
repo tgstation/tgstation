@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DF_USE_TAG (1<<0)
 #define DF_VAR_EDITED (1<<1)
 #define DF_ISPROCESSING (1<<2)
-/// Placed on datums that have a static, constant reference. Primarily only used for turfs.
+/// Placed on datums that have a static, constant reference... Primarily only used for turfs.
 #define DF_STATIC_OBJECT (1<<3)
 /// Set on datums that should be tracked by the event logger.
 #define DF_EVLOGGING (1<<4)
@@ -25,13 +25,13 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ON_BORDER_1 (1<<1)
 ///Whether or not this atom shows screentips when hovered over
 #define NO_SCREENTIPS_1 (1<<2)
-/// Prevent clicking things below it on the same turf eg. doors/ fulltile windows
+/// Prevent clicking things below it on the same turf for example doors/ fulltile windows
 #define PREVENT_CLICK_UNDER_1 (1<<3)
 ///specifies that this atom is a hologram that isn't real
 #define HOLOGRAM_1 (1<<4)
 ///Whether /atom/Initialize() has already run for the object
 #define INITIALIZED_1 (1<<5)
-/// was this spawned by an admin? used for stat tracking stuff.
+/// was this spawned by an admin?.. used for stat tracking stuff.
 #define ADMIN_SPAWNED_1 (1<<6)
 /// should not get harmed if this gets caught by an explosion?
 #define PREVENT_CONTENTS_EXPLOSION_1 (1<<7)
@@ -41,9 +41,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define UNPAINTABLE_1 (1<<9)
 /// Is this atom immune to being dusted by the supermatter?
 #define SUPERMATTER_IGNORES_1 (1<<10)
-/// If a turf can be made dirty at roundstart. This is also used in areas.
+/// If a turf can be made dirty at roundstart... This is also used in areas.
 #define CAN_BE_DIRTY_1 (1<<11)
-/// Should we use the initial icon for display? Mostly used by overlay only objects
+/// Should we use the initial icon for display?.. Mostly used by overlay only objects
 #define HTML_USE_INITAL_ICON_1 (1<<12)
 /// Can players recolor this in-game via vendors (and maybe more if support is added)?
 #define IS_PLAYER_COLORABLE_1 (1<<13)
@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define UPDATE_OVERLAYS (1<<3)
 /// Update the atom's greyscaling
 #define UPDATE_GREYSCALE (1<<4)
-/// Update the atom's smoothing. (More accurately, queue it for an update)
+/// Update the atom's smoothing... (More accurately, queue it for an update)
 #define UPDATE_SMOOTHING (1<<5)
 /// Update the atom's icon
 #define UPDATE_ICON (UPDATE_ICON_STATE|UPDATE_OVERLAYS)
@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_RUINS (1<<4)
 /// Blocks this turf from being rusted
 #define NO_RUST (1<<5)
-/// Is this turf is "solid". Space and lava aren't for instance
+/// Is this turf is "solid"... Space and lava aren't for instance
 #define IS_SOLID (1<<6)
 /// This turf will never be cleared away by other objects on Initialize.
 #define NO_CLEARING (1<<7)
@@ -107,11 +107,11 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define VALID_TERRITORY (1<<0)
 /// If blobs can spawn there and if it counts towards their score.
 #define BLOBS_ALLOWED (1<<1)
-/// Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
+/// Are you forbidden from teleporting to the area?.. (centcom, mobs, wizard, hand teleporter)
 #define NOTELEPORT (1<<2)
 /// Hides area from player Teleport function.
 #define HIDDEN_AREA (1<<3)
-/// If people are allowed to suicide in it. Mostly for OOC stuff like minigames
+/// If people are allowed to suicide in it... Mostly for OOC stuff like minigames
 #define BLOCK_SUICIDE (1<<5)
 /// If set, this area will be innately traversable by Xenobiology camera consoles.
 #define XENOBIOLOGY_COMPATIBLE (1<<6)
@@ -129,7 +129,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_BOH (1<<12)
 /// This area prevents fishing from removing unique/limited loot from sources that're also used outside of it.
 #define UNLIMITED_FISHING (1<<13)
-/// This area is prevented from having gravity (ie. space, nearstation, or outside solars)
+/// This area is prevented from having gravity that is space, nearstation, or outside solars)
 #define NO_GRAVITY (1<<14)
 /// This area can be teleported in, but -only- to locations within that same area.
 #define LOCAL_TELEPORT (1<<15)
@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 //flags for pass_flags
 /// Allows you to pass over tables.
 #define PASSTABLE (1<<0)
-/// Allows you to pass over glass(this generally includes anything see-through that's glass-adjacent, ie. windows, windoors, airlocks with glass, etc.)
+/// Allows you to pass over glass(this generally includes anything see-through that's glass-adjacent, that is windows, windoors, airlocks with glass, and so on
 #define PASSGLASS (1<<1)
 /// Allows you to pass over grilles.
 #define PASSGRILLE (1<<2)
@@ -167,25 +167,25 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSBLOB (1<<3)
 /// Allows you to pass over mobs.
 #define PASSMOB (1<<4)
-/// Allows you to pass over closed turfs, ie. walls.
+/// Allows you to pass over closed turfs, that is walls.
 #define PASSCLOSEDTURF (1<<5)
-/// Let thrown things past us. **ONLY MEANINGFUL ON pass_flags_self!**
+/// Let thrown things past us... **ONLY MEANINGFUL ON pass_flags_self!**
 #define LETPASSTHROW (1<<6)
-/// Allows you to pass over machinery, ie. vending machines, computers, protolathes, etc.
+/// Allows you to pass over machinery, that is vending machines, computers, protolathes, and so on
 #define PASSMACHINE (1<<7)
-/// Allows you to pass over structures, ie. racks, tables(if you don't already have PASSTABLE), etc.
+/// Allows you to pass over structures, that is racks, tables(if you don't already have PASSTABLE), and so on
 #define PASSSTRUCTURE (1<<8)
 /// Allows you to pass over plastic flaps, often found at cargo or MULE dropoffs.
 #define PASSFLAPS (1<<9)
 /// Allows you to pass over airlocks and mineral doors.
 #define PASSDOORS (1<<10)
-/// Allows you to pass over vehicles, ie. mecha, secways, the pimpin' ride, etc.
+/// Allows you to pass over vehicles, that is mecha, secways, the pimpin' ride, and so on
 #define PASSVEHICLE (1<<11)
 /// Allows you to pass over dense items.
 #define PASSITEM (1<<12)
-/// Do not intercept click attempts during Adjacent() checks. See [turf/proc/ClickCross]. **ONLY MEANINGFUL ON pass_flags_self!**
+/// Do not intercept click tries during Adjacent() checks... See [turf/proc/ClickCross]... **ONLY MEANINGFUL ON pass_flags_self!**
 #define LETPASSCLICKS (1<<13)
-/// Allows you to pass over windows and window-adjacent stuff, like windows and windoors. Does not include airlocks with glass in them.
+/// Allows you to pass over windows and window-adjacent stuff, like windows and windoors... Does not include airlocks with glass in them.
 #define PASSWINDOW (1<<14)
 
 //Movement Types
@@ -195,7 +195,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FLOATING (1<<3)
 /// When moving, will Cross() everything, but won't stop or Bump() anything.
 #define PHASING (1<<4)
-/// The mob is walking on the ceiling. Or is generally just, upside down.
+/// The mob is walking on the ceiling... Or is generally just, upside down.
 #define UPSIDE_DOWN (1<<5)
 /// Combination flag for movetypes which, for all intents and purposes, mean the mob is not touching the ground
 #define MOVETYPES_NOT_TOUCHING_GROUND (FLYING|FLOATING|UPSIDE_DOWN)
@@ -300,7 +300,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 // ---- Skillchip incompatibility flags ---- //
 // These flags control which skill chips are compatible with each other.
-// By default, skillchips are incompatible with themselves and multiple of the same istype() cannot be implanted together. Set this flag to disable that check.
+// By default, skillchips are incompatible with themselves and multiple of the same istype() cannot be implanted together... Set this flag to disable that check.
 #define SKILLCHIP_ALLOWS_MULTIPLE (1<<0)
 // This skillchip is incompatible with other skillchips from the incompatible_category list.
 #define SKILLCHIP_RESTRICTED_CATEGORIES (1<<1)
@@ -317,7 +317,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IGNORE_TARGET_LOC_CHANGE (1<<1)
 /// Can do the action even if the item is no longer being held
 #define IGNORE_HELD_ITEM (1<<2)
-/// Can do the action even if the mob is incapacitated (ex. handcuffed)
+/// Can do the action even if the mob is incapacitated (ex... handcuffed)
 #define IGNORE_INCAPACITATED (1<<3)
 /// Used to prevent important slowdowns from being abused by drugs like kronkaine
 #define IGNORE_SLOWDOWNS (1<<4)

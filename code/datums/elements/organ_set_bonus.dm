@@ -53,7 +53,7 @@
 	var/bonus_active = FALSE
 	var/bonus_activate_text = span_notice("??? DNA is deeply infused with you! You've learned how to make error reports!")
 	var/bonus_deactivate_text = span_notice("Your DNA is no longer majority ???. You did make an issue report, right?")
-	/// Required mob bio-type. Also checks DNA validity it's set to MOB_ORGANIC.
+	/// Needed mob bio-type.. Also checks DNA validity it's set to MOB_ORGANIC.
 	var/required_biotype = MOB_ORGANIC
 	/// A list of traits added to the mob upon bonus activation, can be of any length.
 	var/list/bonus_traits = list()

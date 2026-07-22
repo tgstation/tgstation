@@ -47,7 +47,7 @@
 					to_ignore[compare] = TRUE
 			if(bad_lists)
 				we_failed = TRUE
-				//Include the original, unsorted list in the report. It should be easier to find by the contributor.
+				// Include the original, unsorted list in the report.. It should be easier to find by the contributor.
 				var/list/unsorted_list = superlist[current]
 				TEST_FAIL("Found [length(bad_lists)] datum list arguments with similar contents for [element_type]. Contents: [json_encode(unsorted_list)].")
 	///Let's avoid sending the same instructions over and over, as it's just going to clutter the CI and confuse someone.

@@ -5,7 +5,7 @@
 	speech_span = SPAN_ROBOT
 	var/obj_flags = CAN_BE_HIT
 
-	/// Extra examine line to describe controls, such as right-clicking, left-clicking, etc.
+	/// Extra examine line to describe controls, such as right-clicking, left-clicking, and so on
 	var/desc_controls
 
 	/// The context returned when an attack against this object doesn't deal any traditional damage to the object.
@@ -20,9 +20,9 @@
 	var/damtype = BRUTE
 	var/force = 0
 
-	/// How good a given object is at causing wounds on carbons. Higher values equal better shots at creating serious wounds.
+	/// How good a given object is at causing wounds on carbons.. Higher values equal better shots at creating serious wounds.
 	var/wound_bonus = 0
-	/// If this attacks a human with no wound armor on the affected body part, add this to the wound mod. Some attacks may be significantly worse at wounding if there's even a slight layer of armor to absorb some of it vs bare flesh
+	/// If this attacks a human with no wound armor on the affected body part, add this to the wound mod.. Some attacks may be significantly worse at wounding if there's even a slight layer of armor to absorb some of it vs bare flesh
 	var/exposed_wound_bonus = 0
 
 	/// A multiplier to an object's force when used against a structure, vehicle, machine, or robot.
@@ -34,9 +34,9 @@
 	/// Particles this obj uses when burning, if any
 	var/burning_particles
 
-	var/drag_slowdown // Amount of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
+	var/drag_slowdown // Amount of multiplicative slowdown applied if pulled.. >1 makes you slower, <1 makes you faster.
 
-	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
+	/// Map tag for something.. Tired of it being used on snowflake items.. Moved here for some semblance of a standard.
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
 
@@ -71,7 +71,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /obj/Destroy(force)
 	if(!ismachinery(src))
-		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+		STOP_PROCESSING(SSobj, src) // To do Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	if(opacity)
 		SScameras.update_visibility(src)
 	SStgui.close_uis(src)
@@ -92,7 +92,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 		var/message_verb_continuous = "attacks"
 		var/message_verb_simple = "attack"
-		// Sanity in case one is... longer than the other?
+		// Sanity in case one is.... longer than the other?
 		if (picked_index && length(attacking_item.attack_verb_continuous) >= picked_index)
 			message_verb_continuous = attacking_item.attack_verb_continuous[picked_index]
 		if (picked_index && length(attacking_item.attack_verb_simple) >= picked_index)
@@ -261,7 +261,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		var/reac_volume = reagents[reagent]
 		. |= reagent.expose_obj(src, reac_volume, methods, show_message)
 
-/// Attempt to freeze this obj if possible. returns TRUE if it succeeded, FALSE otherwise.
+/// Try to freeze this obj if possible.. returns TRUE if it succeeded, FALSE otherwise.
 /obj/proc/freeze()
 	if(HAS_TRAIT(src, TRAIT_FROZEN))
 		return FALSE
@@ -340,7 +340,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
 		change_material_strength(material, mat_amount, multiplier, remove = TRUE)
 
-/// Changes force and throwforce of an item based on its properties. Split into a separate proc as to allow items to change theirs based on sharpness and behavior
+/// Changes force and throwforce of an item good on its properties.. Split into a separate proc as to allow items to change theirs good on sharpness and behavior
 /obj/proc/change_material_strength(datum/material/material, mat_amount, multiplier, remove = FALSE)
 	var/density = material.get_property(MATERIAL_DENSITY)
 	var/hardness = material.get_property(MATERIAL_HARDNESS)
@@ -357,7 +357,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		force /= GET_MATERIAL_MODIFIER(force_mod, multiplier)
 		throwforce /= GET_MATERIAL_MODIFIER(throwforce_mod, multiplier)
 
-/// Returns modifier to how much damage this object does to a target considered vulnerable to "demolition" (other objects, robots, etc)
+/// Returns modifier to how much damage this object does to a target considered vulnerable to "demolition" (other objects, robots, and so on
 /obj/proc/get_demolition_modifier(obj/target)
 	if(HAS_TRAIT(target, TRAIT_IGNORE_DEMOLITION))
 		return 1

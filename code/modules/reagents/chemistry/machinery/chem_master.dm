@@ -331,7 +331,7 @@
 	beaker_data["contents"] = beakerContents
 	.["buffer"] = beaker_data
 
-	//is transfering or destroying reagents. applied only for buffer
+	// is transfering or destroying reagents.. applied only for buffer
 	.["isTransfering"] = is_transfering
 
 	//container along with the suggested type

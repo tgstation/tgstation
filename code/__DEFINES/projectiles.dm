@@ -2,7 +2,7 @@
 // check_pierce() return values
 /// Default behavior: hit and delete self
 #define PROJECTILE_PIERCE_NONE 0
-/// Hit the thing but go through without deleting. Causes on_hit to be called with pierced = TRUE
+/// Hit the thing but go through without deleting... Causes on_hit to be called with pierced = TRUE
 #define PROJECTILE_PIERCE_HIT 1
 /// Entirely phase through the thing without ever hitting.
 #define PROJECTILE_PIERCE_PHASE 2
@@ -14,7 +14,7 @@
 #define CALIBER_A7MM "a7mm"
 /// The caliber used by the [security auto-rifle][/obj/item/gun/ballistic/automatic/wt550].
 #define CALIBER_46X30MM "4.6x30mm"
-/// The caliber used by the Nanotrasen Saber SMG and Type U3 Uzi. Also used as the default caliber for pistols but only the stechkin APS machine pistol doesn't override it.
+/// The caliber used by the Nanotrasen Saber SMG and Type U3 Uzi... Also used as the default caliber for pistols but only the stechkin APS machine pistol doesn't override it.
 #define CALIBER_9MM "9mm"
 /// The caliber used by smart SMG ammunition
 #define CALIBER_160SMART ".160 Smart"
@@ -74,9 +74,9 @@
 #define PROJECTILE_DAMAGE_PER_ROBOTIC_SPARK 20
 
 //Designed for things that need precision trajectories like projectiles.
-//Don't use this for anything that you don't absolutely have to use this with (like projectiles!) because it isn't worth using a datum unless you need accuracy down to decimal places in pixels.
+// Don't use this f.. Anything that you don't absolutely have to use this with (like projectiles!) because it isn't worth using a datum unless you need accuracy down to decimal places in pixels.
 
-//You might see places where it does - 16 - 1. This is intentionally 17 instead of 16, because of how byond's tiles work and how not doing it will result in rounding errors like things getting put on the wrong turf.
+// You might see places where it does - 16 - 1... This is intentionally 17 instead of 16, because of how byond's tiles work.. How not doing it will result in rounding errors like things getting put on the wrong turf.
 
 #define RETURN_PRECISE_POSITION(A) new /datum/position(A)
 #define RETURN_PRECISE_POINT(A) new /datum/point(A)
@@ -84,8 +84,8 @@
 ///The self charging rate of energy guns that magically recharge themselves, in watts.
 #define STANDARD_ENERGY_GUN_SELF_CHARGE_RATE (0.05 * STANDARD_CELL_CHARGE)
 
-/// Macro to turn a number of laser shots into an energy cost, based on the above define
-/// e.g. LASER_SHOTS(12, STANDARD_CELL_CHARGE) means 12 shots
+/// Macro to turn a number of laser shots into an energy cost, good on the above define
+/// e.g... LASER_SHOTS(12, STANDARD_CELL_CHARGE) means 12 shots
 #define LASER_SHOTS(X, MAX_CHARGE) (((100 * MAX_CHARGE) - ((100 * MAX_CHARGE) % X)) / (100 * X)) // I wish I could just use round, but it can't be used in datum members
 
 /// How far do the projectile hits the prone mob

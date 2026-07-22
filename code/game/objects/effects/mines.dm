@@ -6,9 +6,9 @@
 	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "landmine"
 	base_icon_state = "landmine"
-	/// We manually check to see if we've been triggered in case multiple atoms cross us in the time between the mine being triggered and it actually deleting, to avoid a race condition with multiple detonations
+	/// We manually check to see if we've been triggered in case multiple atoms cross us in the time between the mine being triggered. It actually deleting, to avoid a race condition with multiple detonations
 	var/triggered = FALSE
-	/// Can be set to FALSE if we want a short 'coming online' delay, then set to TRUE. Can still be set off by damage
+	/// Can be set to FALSE if we want a short 'coming online' delay, then set to TRUE.. Can still be set off by damage
 	var/armed = TRUE
 	/// If set, we default armed to FALSE and set it to TRUE after this long from initializing
 	var/arm_delay
@@ -75,7 +75,7 @@
 		living_mob = on_who
 
 	if(living_mob?.incorporeal_move || (on_who.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
-		return foot_on_mine ? IS_WEAKREF_OF(on_who, foot_on_mine) : FALSE //Only go boom if their foot was on the mine PRIOR to flying/phasing. You fucked up, you live with the consequences.
+		return foot_on_mine ? IS_WEAKREF_OF(on_who, foot_on_mine) : FALSE // Only go boom if their foot was on the mine Before to flying/phasing.. You fucked up, you live with the consequences.
 
 	return TRUE
 
@@ -111,7 +111,7 @@
 		return
 
 	if(!foot_on_mine && gone.flags_1 & ON_BORDER_1)
-		if(gone.dir == REVERSE_DIR(direction)) //see if a north facing border atom (ie window) travels south (and other directions as needed)
+		if(gone.dir == REVERSE_DIR(direction)) // see if a north facing border atom that is window) travels south (and other directions as needed)
 			visible_message(span_danger("[icon2html(src, viewers(src))] *click*"))
 			playsound(src, 'sound/machines/click.ogg', 60, TRUE)
 			triggermine() //it "passed" over the mine briefly, triggering it in the process
@@ -231,7 +231,7 @@
 	name = "shrapnel mine"
 	/// The type of projectiles we're shooting out of this
 	var/shrapnel_type = /obj/projectile/bullet/shrapnel
-	/// Broadly, how many pellets we're spawning, the total is n! - (n-1)! pellets, so don't set it too high. For reference, 15 is probably pushing it at MAX
+	/// Broadly, how many pellets we're spawning, the total is n!. - (n-1)!. pellets, so don't set it too high.. For reference, 15 is probably pushing it at MAX
 	var/shrapnel_magnitude = 3
 	/// If TRUE, we spawn extra pellets to eviscerate the person who stepped on it, otherwise it just spawns a ring of pellets around the tile we're on (making setting it off an offensive move)
 	var/shred_triggerer = FALSE

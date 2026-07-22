@@ -15,9 +15,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	integrity_failure = 0.25
 	armor_type = /datum/armor/structure_closet
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
-	/// How close being inside of the thing provides complete pressure safety. Must be between 0 and 1!
+	/// How close being inside of the thing provides complete pressure safety.. Must be between 0 and 1!
 	contents_pressure_protection = 0
-	/// How insulated the thing is, for the purposes of calculating body temperature. Must be between 0 and 1!
+	/// How insulated the thing is, for the purposes of calculating body temperature.. Must be between 0 and 1!
 	contents_thermal_insulation = 0
 	pass_flags_self = PASSSTRUCTURE | LETPASSCLICKS
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
@@ -64,11 +64,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/close_sound_volume = 50
 	var/material_drop = /obj/item/stack/sheet/iron
 	var/material_drop_amount = 2
-	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
+	var/delivery_icon = "deliverycloset" // which icon to use when packagewrapped.. null to be unwrappable.
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
 	var/icon_broken = "sparking"
-	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
+	/// Whether a skittish person can dive inside this closet.. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
 	/// secure locker or not, also used if overriding a non-secure locker with a secure door overlay to add fancy lights
 	var/secure = FALSE
@@ -77,7 +77,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/is_maploaded = FALSE
 
 	var/contents_initialized = FALSE
-	/// is this closet locked by an exclusive id, i.e. your own personal locker
+	/// is this closet locked by an exclusive id, i.e.. your own personal locker
 	var/datum/weakref/id_card = null
 	/// should we prevent further access change
 	var/access_locked = FALSE
@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	/// access types for card reader
 	var/list/access_choices = TRUE
 
-	/// Whether this closet is sealed or not. If sealed, it'll have its own internal air
+	/// Whether this closet is sealed or not.. If sealed, it'll have its own internal air
 	var/sealed = FALSE
 
 	/// Internal gas for this closet.
@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 	/// How many pixels the closet can shift on the x axis when shaking
 	var/x_shake_pixel_shift = 2
-	/// how many pixels the closet can shift on the y axes when shaking
+	/// how many pixels the closet can shift on the why axes when shaking
 	var/y_shake_pixel_shift = 1
 	///Creates see through image for clients to see while inside closet
 	VAR_PRIVATE/datum/closet_see_inside/closet_see_inside
@@ -525,7 +525,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return
 	for(var/atom/movable/AM in location)
 		if(AM != src && insert(AM, mapload) == LOCKER_FULL) // limit reached
-			if(mapload) // Yea, it's a mapping issue. Blame mappers.
+			if(mapload) // Yea, it's a mapping issue.. Blame mappers.
 				log_mapping("Closet storage capacity of [type] exceeded on mapload at [AREACOORD(src)]")
 			break
 	for(var/i in reverse_range(location.get_all_contents()))
@@ -564,7 +564,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(length(contents) >= storage_capacity)
 		if(!mapload)
 			return LOCKER_FULL
-		//For maploading, we only return LOCKER_FULL if the movable was otherwise insertable. This way we can avoid logging false flags.
+		// For maploading, we only return LOCKER_FULL if the movable was otherwise insertable.. This way we can avoid logging false flags.
 		return insertion_allowed(inserted) ? LOCKER_FULL : FALSE
 	if(!insertion_allowed(inserted))
 		return FALSE
@@ -769,7 +769,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 				id_card = WEAKREF(card)
 				name = "[card.registered_name]'s locker"
 				desc += " It has been ID locked to [card.registered_name]."
-			if("Job") //anyone who has the same access permissions as this id has access. Does NOT apply to the whole department.
+			if("Job") // anyone who has the same access permissions as this id has access.. Does NOT apply to the whole department.
 				name = "[card.assignment]'s locker"
 				desc += " It has been access locked to [card.assignment]s."
 				set_access(card.GetAccess())
@@ -1070,7 +1070,7 @@ GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "Toggle Open", nu
 		to_chat(usr, span_warning("This mob type can't use this verb."))
 
 // Objects that try to exit a locker by stepping were doing so successfully,
-// and due to an oversight in turf/Enter() were going through walls.  That
+// and due to an oversight in turf/Enter() were going through walls.. That
 // should be independently resolved, but this is also an interesting twist.
 /obj/structure/closet/Exit(atom/movable/leaving, direction)
 	open()
@@ -1093,7 +1093,7 @@ GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "Toggle Open", nu
 
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		return
-	//okay, so the closet is either welded or locked... resist!!!
+	// okay, so the closet is either welded or locked.... resist!!!
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message(span_warning("[src] begins to shake violently!"), \
@@ -1170,7 +1170,7 @@ GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "Toggle Open", nu
 		var/error_msg = ""
 		if(!isnull(id_card))
 			var/obj/item/card/id/registered_id = id_card.resolve()
-			if(!registered_id) //id was deleted at some point. make this closet public access again
+			if(!registered_id) // id was deleted at some point.. make this closet public access again
 				name = initial(name)
 				desc = initial(desc)
 				id_card = null
@@ -1291,7 +1291,7 @@ GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "Toggle Open", nu
 	log_combat(shover, target, "shoved", "into [src] (locker/crate)[weapon ? " with [weapon]" : ""]")
 	return COMSIG_LIVING_SHOVE_HANDLED
 
-/// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Unlock and open up when we get knock casted.
+/// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED].. Unlock and open up when we get knock casted.
 /obj/structure/closet/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, atom/caster)
 	SIGNAL_HANDLER
 
@@ -1301,7 +1301,7 @@ GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "Toggle Open", nu
 /obj/structure/closet/preopen
 	opened = TRUE
 
-///Adds the closet to a global list. Placed in its own proc so that crates may be excluded.
+/// Adds the closet to a global list.. Placed in its own proc so that crates may be excluded.
 /obj/structure/closet/proc/add_to_roundstart_list()
 	GLOB.roundstart_station_closets += src
 

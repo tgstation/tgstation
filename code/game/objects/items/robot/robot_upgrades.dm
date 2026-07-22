@@ -11,7 +11,7 @@
 	var/installed = FALSE
 	var/require_model = FALSE
 	var/list/model_type = null
-	/// Bitflags listing model compatibility. Used in the exosuit fabricator for creating sub-categories.
+	/// Bitflags listing model compatibility.. Used in the exosuit fabricator for creating sub-categories.
 	var/model_flags = NONE
 
 	/// List of items to add with the module, if any
@@ -259,7 +259,7 @@
 
 	borg.SetEmagged(TRUE)
 	borg.logevent("WARN: hardware installed with missing security certificate!") //A bit of fluff to hint it was an illegal tech item
-	borg.logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") //random eight digit hex value. Two are used because rand(1,4294967295) throws an error
+	borg.logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") // random eight digit hex value.. Two are used because rand(1,4294967295) throws an error
 
 	return TRUE
 
@@ -527,7 +527,7 @@
 	items_to_add = list(/obj/item/shockpaddles/cyborg)
 
 /obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/borg, mob/living/user = usr)
-	var/obj/item/borg/upgrade/defib/backpack/defib_pack = locate() in borg //If a full defib unit was used to upgrade prior, we can just pop it out now and replace
+	var/obj/item/borg/upgrade/defib/backpack/defib_pack = locate() in borg // If a full defib unit was used to upgrade before we can just pop it out now and replace
 	if(defib_pack)
 		defib_pack.deactivate(borg, user)
 		to_chat(user, span_notice("The defibrillator pops out of the chassis as the compact upgrade installs."))
@@ -878,8 +878,8 @@
 	items_to_add = list(/obj/item/shuttle_blueprints/borg)
 
 
-///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
-//A reusable tool that can bring borgs back to life. They gotta be repaired first, though.
+/// This isn't an upgrade or part of the same path, but I'm going to just stick it here because it's a tool used on cyborgs.
+// A reusable tool that can bring borgs back to life.. They got to be repaired first, though.
 /obj/item/borg_restart_board
 	name = "cyborg emergency reboot module"
 	desc = "A reusable firmware reset tool that can force a reboot of a disabled-but-repaired cyborg, bringing it back online."

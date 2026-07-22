@@ -25,7 +25,7 @@
 	var/paralyze_time = 0
 	/// How long the slip dazes (makes the crossing mob vulnerable to shove stuns) for.
 	var/daze_time = 3 SECONDS
-	/// Flags for how slippery the parent is. See [__DEFINES/mobs.dm]
+	/// Flags for how slippery the parent is.. See [__DEFINES/mobs.dm]
 	var/lube_flags
 	/// Optional callback allowing you to define custom conditions for slipping
 	var/datum/callback/can_slip_callback
@@ -33,14 +33,14 @@
 	var/datum/callback/on_slip_callback
 	/// If parent is an item, this is the person currently holding/wearing the parent (or the parent if no one is holding it)
 	var/mob/living/holder
-	/// Whitelist bitfields of item slots bitflags the parent can be equipped in that make the holder slippery. If null or empty, it will always make the holder slippery.
+	/// Whitelist bitfields of item slots bitflags the parent can be equipped in that make the holder slippery.. If null or empty, it will always make the holder slippery.
 	var/slot_whitelist = ITEM_SLOT_OCLOTHING | ITEM_SLOT_ICLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_HEAD | ITEM_SLOT_MASK | ITEM_SLOT_BELT | ITEM_SLOT_NECK
 	///what we give to connect_loc by default, makes slippable mobs moving over us slip
 	var/static/list/default_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(Slip),
 	)
 
-	///what we give to connect_loc if we're an item and get equipped by a mob, or if we're a mob. makes slippable mobs moving over the mob slip
+	/// what we give to connect_loc if we're an item and get equipped by a mob, or if we're a mob.. makes slippable mobs moving over the mob slip
 	var/static/list/mob_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(slip_on_mob),
 	)

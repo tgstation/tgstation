@@ -1,4 +1,4 @@
-/// Test to make sure the pressure pumping proc used by things like portable pumps, pressure pumps, etc actually work.
+/// Test to make sure the pressure pumping proc used by things like portable pumps, pressure pumps, and so on actually work.
 /datum/unit_test/atmospheric_gas_transfer
 
 /datum/unit_test/atmospheric_gas_transfer/Run()
@@ -32,7 +32,7 @@
 	second_mix.temperature = trit_temp
 
 	var/initial_pressure = second_mix.return_pressure()
-	// A fixed number would mean transfer is too small for high temps. So we make it scaled.
+	// A fixed number would mean transfer is too small for high temps.. So we make it scaled.
 
 	if(isnull(additional_pressure))
 		additional_pressure = first_mix.return_pressure() / 10

@@ -259,7 +259,7 @@ no power level overlay is currently in the overlays list.
 		check_power_level()
 		return FALSE
 
-//This could likely be better, it tends to start loopin if you have a complex generator loop setup.  Still works well enough to run the engine fields will likely recode the field gens and fields sometime -Mport
+// This could likely be better, it tends to start loopin if you have a complex generator loop setup.. Still works well enough to run the engine fields will likely recode the field gens and fields sometime -Mport
 /obj/machinery/field/generator/proc/draw_power(draw = 0, failsafe = FALSE, obj/machinery/field/generator/other_generator = null, obj/machinery/field/generator/last = null)
 	if((other_generator && (other_generator == src)) || (failsafe >= 8))//Loopin, set fail
 		return FALSE

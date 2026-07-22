@@ -1,4 +1,4 @@
-/// How much time (in seconds) is assumed to pass while assuming air. Used to scale overpressure/overtemp damage when assuming air.
+/// How much time (in seconds) is assumed to pass while assuming air.. Used to scale overpressure/overtemp damage when assuming air.
 #define ASSUME_AIR_DT_FACTOR 1
 /// Multiplies the pressure of assembly bomb explosions before it's put through THE LOGARITHM
 #define ASSEMBLY_BOMB_COEFFICIENT 0.5
@@ -21,7 +21,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
-	worn_icon = 'icons/mob/clothing/back.dmi' //since these can also get thrown into suit storage slots. if something goes on the belt, set this to null.
+	worn_icon = 'icons/mob/clothing/back.dmi' // since these can also get thrown into suit storage slots.. if something goes on the belt, set this to null.
 	hitsound = 'sound/items/weapons/smash.ogg'
 	pickup_sound = 'sound/items/handling/gas_tank/gas_tank_pick_up.ogg'
 	drop_sound = 'sound/items/handling/gas_tank/gas_tank_drop.ogg'
@@ -39,15 +39,15 @@
 	integrity_failure = 0.5
 	/// If we are in the process of exploding, stops multi explosions
 	var/igniting = FALSE
-	/// The gases this tank contains. Don't modify this directly, use return_air() to get it instead
+	/// The gases this tank contains.. Don't modify this directly, use return_air() to get it instead
 	var/datum/gas_mixture/air_contents = null
-	/// The volume of this tank. Among other things gas tank explosions (including TTVs) scale off of this. Be sure to account for that if you change this or you will break ~~toxins~~ ordinance.
+	/// The volume of this tank.. Among other things gas tank explosions (including TTVs) scale off of this.. Be sure to account for that if you change this or you will break ~~toxins~~ ordinance.
 	var/volume = TANK_STANDARD_VOLUME
 	/// Whether the tank is currently leaking.
 	var/leaking = FALSE
 	/// The pressure of the gases this tank supplies to internals.
 	var/distribute_pressure = ONE_ATMOSPHERE
-	/// Icon state when in a tank holder or a surgical table. Null makes it incompatible with tank holder.
+	/// Icon state when in a tank holder or a surgical table.. Null makes it incompatible with tank holder.
 	var/tank_holder_icon_state = "holder_generic"
 	///Used by process() to track if there's a reason to process each tick
 	var/excited = TRUE
@@ -100,7 +100,7 @@
 	playsound(loc, 'sound/items/internals/internals_off.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	QDEL_NULL(volume_bar)
 
-/// Attempts to toggle the mob's internals on or off using this tank. Returns TRUE if successful.
+/// Tries to toggle the mob's internals on or off using this tank.. Returns TRUE if successful.
 /obj/item/tank/proc/toggle_internals(mob/living/carbon/mob_target)
 	return mob_target.toggle_internals(src)
 
@@ -311,10 +311,10 @@
 	var/actual_distribute_pressure = clamp(tank_pressure, 0, distribute_pressure)
 
 	// Lets do some algebra to understand why this works, yeah?
-	// R_IDEAL_GAS_EQUATION is (kPa * L) / (K * mol) by the by, so the units in this equation look something like this
-	// kpa * L / (R_IDEAL_GAS_EQUATION * K)
-	// Or restated (kpa * L / K) * 1/R_IDEAL_GAS_EQUATION
-	// (kpa * L * K * mol) / (kpa * L * K)
+	// R_IDEAL_GAS_EQUATION is (kPa * L) / okay * mol) by the by, so the units in this equation look something like this
+	// kpa * L / (R_IDEAL_GAS_EQUATION * Okay
+	// Or restated (kpa * L / Okay * 1/R_IDEAL_GAS_EQUATION
+	// (kpa * L * Okay * mol) / (kpa * L * Okay
 	// If we cancel it all out, we get moles, which is the expected unit
 	// This sort of thing comes up often in atmos, keep the tool in mind for other bits of code
 	var/moles_needed = actual_distribute_pressure*volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
@@ -496,7 +496,7 @@
 	update_weight_class(initial(w_class))
 	update_appearance(UPDATE_OVERLAYS)
 
-/// Ignites the contents of the tank. Called when receiving a signal if the tank is welded and has an igniter attached.
+/// Ignites the contents of the tank.. Called when receiving a signal if the tank is welded and has an igniter attached.
 /obj/item/tank/proc/ignite()
 	if(!bomb_status) // if it isn't welded, release the gases instead
 		release()
@@ -565,7 +565,7 @@
 
 	qdel(src)
 
-/// Releases air stored in the tank. Called when signaled without being welded, or when ignited without enough pressure to explode.
+/// Releases air stored in the tank.. Called when signaled without being welded, or when ignited without enough pressure to explode.
 /obj/item/tank/proc/release()
 	var/datum/gas_mixture/our_mix = return_air()
 	var/datum/gas_mixture/removed = remove_air(our_mix.total_moles())

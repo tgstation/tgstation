@@ -33,9 +33,9 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
 
-//the undocumented 4th argument is for ?[0x\ref] style topic links. hsrc is set to the reference and anything after the ] gets put into hsrc_command
+// the undocumented 4th argument is for ?[0x\ref] style topic links.. hsrc is set to the reference and anything after the ] gets put into hsrc_command
 /client/Topic(href, href_list, hsrc, hsrc_command)
-	if(!usr || usr != mob) //stops us calling Topic for somebody else's client. Also helps prevent usr=null
+	if(!usr || usr != mob) // stops us calling Topic for somebody else's client.. Also helps prevent usr=null
 		return
 
 #ifndef TESTING
@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		topiclimiter[MINUTE_COUNT] += 1
 		if (topiclimiter[MINUTE_COUNT] > mtl)
 			var/msg = "Your previous action was ignored because you've done too many in a minute."
-			if (minute != topiclimiter[ADMINSWARNED_AT]) //only one admin message per-minute. (if they spam the admins can just boot/ban them)
+			if (minute != topiclimiter[ADMINSWARNED_AT]) // only one admin message per-minute.. (if they spam the admins can just boot/ban them)
 				topiclimiter[ADMINSWARNED_AT] = minute
 				msg += " Administrators have been informed."
 				log_game("[key_name(src)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
@@ -153,7 +153,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		if(QDELETED(real_src))
 			return
 
-	//fun fact: Topic() acts like a verb and is executed at the end of the tick like other verbs. So we have to queue it if the server is
+	// fun fact: Topic() acts like a verb and is executed at the end of the tick like other verbs.. So we have to queue it if the server is
 	//overloaded
 	if(hsrc && hsrc != holder && DEFAULT_TRY_QUEUE_VERB(VERB_CALLBACK(src, PROC_REF(_Topic), hsrc, href, href_list)))
 		return
@@ -225,7 +225,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 			cmd_admin_mute(src, mute_type, 1)
 			return TRUE
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			//"auto-ban" sends the message that the cold and uncaring gamecode has been designed to quiash you like a bug in short measure should you continue, and it's quite intentional that the user isn't told exactly what that entails.
+			// "auto-ban" sends the message that the cold. Uncaring gamecode has been designed to quiash you like a bug in short measure should you continue. It's quite intentional that the user isn't told exactly what that entails.
 			to_chat(src, span_userdanger("You are nearing the auto-ban limit for identical messages."))
 			mob.balloon_alert(mob, "stop spamming!")
 			return FALSE
@@ -234,7 +234,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		src.last_message_count = 0
 		return FALSE
 
-//This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
+// This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() and so on
 /client/AllowUpload(filename, filelength)
 	var/client_max_file_size = CONFIG_GET(number/upload_limit)
 	if (holder)
@@ -297,8 +297,8 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
-	prefs.last_ip = address //these are gonna be used for banning
-	prefs.last_id = computer_id //these are gonna be used for banning
+	prefs.last_ip = address // these are going to be used for banning
+	prefs.last_id = computer_id // these are going to be used for banning
 
 	if(fexists(roundend_report_file()))
 		ASSIGN_GAME_VERB(src, /client, show_previous_roundend_report)
@@ -368,7 +368,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 
 	. = ..() //calls mob.Login()
 
-	// Admin Verbs need the client's mob to exist. Must be after ..()
+	// Admin Verbs need the client's mob to exist.. Must be after ..()
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorisation
 	var/datum/admins/admin_datum = GLOB.admin_datums[ckey]
@@ -605,7 +605,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		if (!QDELING(src))
 			stack_trace("Client does not purport to be QDELING, this is going to cause bugs in other places!")
 
-		// Yes this is the same as what's found in qdel(). Yes it does need to be here
+		// Yes this is the same as what's found in qdel().. Yes it does need to be here
 		// Get off my back
 		SEND_SIGNAL(src, COMSIG_QDELETING, TRUE)
 		Destroy() //Clean up signals and timers.
@@ -863,9 +863,9 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 /client/Click(atom/object, atom/location, control, params)
 	if(click_intercept_time)
 		if(click_intercept_time >= world.time)
-			click_intercept_time = 0 //Reset and return. Next click should work, but not this one.
+			click_intercept_time = 0 // Reset and return.. Next click should work, but not this one.
 			return
-		click_intercept_time = 0 //Just reset. Let's not keep re-checking forever.
+		click_intercept_time = 0 // Just reset.. Let's not keep re-checking forever.
 
 	var/ab = FALSE
 	var/list/modifiers = params2list(params)
@@ -894,7 +894,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 
 		if (clicklimiter[MINUTE_COUNT] > mcl)
 			var/msg = "Your previous click was ignored because you've done too many in a minute."
-			if (minute != clicklimiter[ADMINSWARNED_AT]) //only one admin message per-minute. (if they spam the admins can just boot/ban them)
+			if (minute != clicklimiter[ADMINSWARNED_AT]) // only one admin message per-minute.. (if they spam the admins can just boot/ban them)
 				clicklimiter[ADMINSWARNED_AT] = minute
 
 				msg += " Administrators have been informed."
@@ -968,7 +968,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		preload_rsc = external_rsc_urls[next_external_rsc]
 #endif
 
-	spawn (10) //removing this spawn causes all clients to not get verbs. (this can't be addtimer because these assets may be needed before the mc inits)
+	spawn (10) // removing this spawn causes all clients to not get verbs.. (this can't be addtimer because these assets may be needed before the mc inits)
 
 		//load info on what assets the client has
 		src << browse('code/modules/asset_cache/validate_assets.html', "window=asset_cache_browser")
@@ -1078,11 +1078,11 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	if(get_chat_toggles(src) & CHAT_PULLR)
 		to_chat(src, announcement)
 
-///Redirect proc that makes it easier to call the unlock achievement proc. Achievement type is the typepath to the award, user is the mob getting the award, and value is an optional variable used for leaderboard value increments
+/// Redirect proc that makes it easier to call the unlock achievement proc.. Achievement type is the typepath to the award, user is the mob getting the award. Value is an optional variable used f. Leaderboard value increments
 /client/proc/give_award(achievement_type, mob/user, value = 1, ...)
 	return persistent_client.achievements.unlock(arglist(args))
 
-///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
+/// Redirect proc that makes it easier to get the status of an achievement.. Achievement type is the typepath to the award.
 /client/proc/get_award_status(achievement_type)
 	return persistent_client.achievements.get_achievement_status(achievement_type)
 
@@ -1148,7 +1148,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	if(value)
 		if(SSambience.ambience_listening_clients[src] > world.time)
 			return // If already properly set we don't want to reset the timer.
-		SSambience.ambience_listening_clients[src] = world.time + 10 SECONDS //Just wait 10 seconds before the next one aight mate? cheers.
+		SSambience.ambience_listening_clients[src] = world.time + 10 SECONDS // Just wait 10 seconds before the next one aight mate?. cheers.
 	else
 		SSambience.remove_ambience_client(src)
 
@@ -1169,7 +1169,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 			stat_tab = payload["tab"]
 			SSstatpanels.immediate_send_stat_data(src)
 
-/// Checks if this client has met the days requirement passed in, or if
+/// Checks if this client has met the days need passed in, or if
 /// they are exempt from it.
 /// Returns the number of days left, or 0.
 /client/proc/get_remaining_days(days_needed)
@@ -1184,7 +1184,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 
 	return max(0, days_needed - player_age)
 
-/// Attempts to make the client orbit the given object, for administrative purposes.
+/// Tries to make the client orbit the given object, for administrative purposes.
 /// If they are not an observer, will try to aghost them.
 /client/proc/admin_follow(atom/movable/target)
 	if(!isobserver(mob))
@@ -1220,7 +1220,7 @@ GAME_VERB(/client, toggle_fullscreen, "Toggle Fullscreen", "OOC")
 
 		screen -= object
 
-/// Handles any "fluff" or supplementary procedures related to an admin logout event. Should not have anything critically related cleaning up an admin's logout.
+/// Handles any "fluff" or supplementary procedures related to an admin logout event.. Should not have anything critically related cleaning up an admin's logout.
 /client/proc/handle_admin_logout()
 	adminGreet(logout = TRUE)
 	if(length(GLOB.admins) > 0 || !SSticker.IsRoundInProgress()) // We only want to report this stuff if we are currently playing.

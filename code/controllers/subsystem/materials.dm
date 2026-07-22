@@ -30,11 +30,11 @@ SUBSYSTEM_DEF(materials)
 
 	)
 
-	/// A list of dimensional themes used by the dimensional anomaly and other things, most of which require materials to function.
+	/// A list of dimensional themes used by the dimensional anomaly and other things, most of which need materials to function.
 	var/list/datum/dimension_theme/dimensional_themes
 	/// An ID -> instance list of material properties
 	var/list/datum/material_property/properties
-	/// A typepath -> instance list of material requirements
+	/// A typepath -> instance list of material needs
 	var/list/datum/material_requirement/requirements
 	/// A typepath -> instance list of material slots
 	var/list/datum/material_slot/material_slots
@@ -179,7 +179,7 @@ SUBSYSTEM_DEF(materials)
 	return list2params(fullid)
 
 
-/// Returns a list to be used as an object's custom_materials. Lists will be cached and re-used based on the parameters.
+/// Returns a list to be used as an object's custom_materials.. Lists will be cached and re-used good on the parameters.
 /datum/controller/subsystem/materials/proc/get_material_set_cache(list/materials_declaration, multiplier = 1)
 	if(!LAZYLEN(materials_declaration))
 		return null // If we get a null we pass it right back, we don't want to generate stack traces just because something is clearing out its materials list.
@@ -199,7 +199,7 @@ SUBSYSTEM_DEF(materials)
 		material_combos[combo_index] = combo
 	return combo
 
-/// Returns all materials that fit a requirement datum
+/// Returns all materials that fit a need datum
 /datum/controller/subsystem/materials/proc/get_materials_by_req(datum/material_requirement/requirement)
 	if (ispath(requirement))
 		if (!requirements[requirement])

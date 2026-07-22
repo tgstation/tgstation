@@ -1,4 +1,4 @@
-/// Returns either the error landmark or the location of the room. Needless to say, if this is used, it means things have gone awry.
+/// Returns either the error landmark or the location of the room.. Needless to say, if this is used, it means things have gone awry.
 #define GET_ERROR_ROOM ((locate(/obj/effect/landmark/error) in GLOB.landmarks_list) || locate(4,4,1))
 
 ///Returns the name of the area the atom is in
@@ -81,7 +81,7 @@
 	object_to_change.screen_loc = screen_loc
 	return object_to_change
 
-/// Adds an image to a client's `.images`. Useful as a callback.
+/// Adds an image to a client's `.images`.. Useful as a callback.
 /proc/add_image_to_client(image/image_to_remove, client/add_to)
 	add_to?.images += image_to_remove
 
@@ -90,7 +90,7 @@
 	for(var/client/add_to in show_to)
 		add_to.images += image_to_remove
 
-/// Removes an image from a client's `.images`. Useful as a callback.
+/// Removes an image from a client's `.images`.. Useful as a callback.
 /proc/remove_image_from_client(image/image_to_remove, client/remove_from)
 	remove_from?.images -= image_to_remove
 
@@ -136,7 +136,7 @@
 	// Because this is vis_contents, we need to set the layer manually (you can just set it as you want on return if this is a problem)
 	if(passed_appearance.layer == FLOAT_LAYER)
 		passed_appearance.layer = layer + 0.1
-	// This is faster then pooling. I promise
+	// This is faster then pooling.. I promise
 	var/atom/movable/flick_visual/visual = new()
 	visual.appearance = passed_appearance
 	visual.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -259,7 +259,7 @@
 	if(pressure <= LAVALAND_EQUIPMENT_EFFECT_PRESSURE)
 		. = TRUE
 
-///Find an obstruction free turf that's within the range of the center. Can also condition on if it is of a certain area type.
+/// Find an obstruction free turf that's within the range of the center.. Can also condition on if it is of a certain area type.
 /proc/find_obstruction_free_location(range, atom/center, area/specific_area)
 	var/list/possible_loc = list()
 
@@ -282,9 +282,9 @@
 /proc/check_behind(atom/source, atom/target)
 	// Let's see if source is behind target
 	// "Behind" is defined as 3 tiles directly to the back of the target
-	// x . .
+	// x .. .
 	// x > .
-	// x . .
+	// x .. .
 
 	// No tactical spinning allowed
 	if(HAS_TRAIT(target, TRAIT_SPINNING))

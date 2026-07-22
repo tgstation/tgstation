@@ -130,7 +130,7 @@
 	new_held_organ.vis_flags |= VIS_INHERIT_PLANE
 	RegisterSignal(new_held_organ, COMSIG_MOVABLE_MOVED, PROC_REF(unregister_held_organ))
 	RegisterSignal(new_held_organ, COMSIG_QDELETING, PROC_REF(unregister_held_organ))
-	// We gotta offset ourselves via pixel_w/z, so we don't end up z fighting with the touch attack
+	// We got to offset ourselves via pixel_w/z, so we don't end up z fighting with the touch attack
 	new_held_organ.pixel_w = new_held_organ.pixel_x
 	new_held_organ.pixel_z = new_held_organ.pixel_y
 	new_held_organ.pixel_x = 0
@@ -183,7 +183,7 @@
 		return FALSE
 
 	// Keep in mind that, for simplemobs(summons), this will just flat heal the combined value of both brute and burn healing,
-	// while for human minions(ghouls), this will heal brute and burn like normal. So be careful adjusting to bigger numbers
+	// while for human minions(ghouls), this will heal brute and burn like normal.. So be careful adjusting to bigger numbers
 	to_heal.balloon_alert(caster, "[what_are_we] healed")
 	to_heal.heal_overall_damage(monster_brute_healing, monster_burn_healing)
 	playsound(to_heal, 'sound/effects/magic/staff_healing.ogg', 30)
@@ -201,7 +201,7 @@
 		victim.balloon_alert(caster, "no organs!")
 		return FALSE
 
-	// Round u pto the nearest generic zone (body, chest, arm)
+	// Round you pto the nearest generic zone (body, chest, arm)
 	var/zone_to_check = check_zone(caster.zone_selected)
 	var/parsed_zone = victim.parse_zone_with_bodypart(zone_to_check)
 
@@ -210,7 +210,7 @@
 		// Only show organs which are in our generic zone
 		if(deprecise_zone(organ.zone) != zone_to_check)
 			continue
-		// Also, some organs to exclude. Don't remove vital (brains), don't remove synthetics, and don't remove unremovable
+		// Also, some organs to exclude.. Don't remove vital (brains), don't remove synthetics, and don't remove unremovable
 		if(organ.organ_flags & (ORGAN_ROBOTIC|ORGAN_VITAL|ORGAN_UNREMOVABLE))
 			continue
 
@@ -278,7 +278,7 @@
 		carbon_victim.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
 		carbon_victim.emote("scream")
 
-	// We need to wait for the spell to actually finish casting to put the organ in their hands, hence, 1 ms timer.
+	// We need to wait for the spell to actually finish casting to put the organ in their hands, so 1 ms timer.
 	addtimer(CALLBACK(caster, TYPE_PROC_REF(/mob, put_in_hands), picked_organ), 0.1 SECONDS)
 	return TRUE
 

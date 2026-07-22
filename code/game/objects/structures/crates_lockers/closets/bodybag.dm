@@ -246,7 +246,7 @@
 	pinned?.forceMove(drop_location())
 	return ..()
 
-/// Environmental bags. They protect against bad weather.
+/// Environmental bags.. They protect against bad weather.
 
 /obj/structure/closet/body_bag/environmental
 	name = "environmental protection bag"
@@ -259,7 +259,7 @@
 	foldedbag_path = /obj/item/bodybag/environmental
 	/// The list of weathers we protect from.
 	var/list/weather_protection = list(TRAIT_ASHSTORM_IMMUNE, TRAIT_RADSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE) // Does not protect against lava or the The Floor Is Lava spell.
-	/// The contents of the gas to be distributed to an occupant. Set in Initialize()
+	/// The contents of the gas to be distributed to an occupant.. Set in Initialize()
 	var/datum/gas_mixture/air_contents = null
 
 /obj/structure/closet/body_bag/environmental/Initialize(mapload)
@@ -308,7 +308,7 @@
 	foldedbag_path = /obj/item/bodybag/environmental/nanotrasen
 	weather_protection = list(TRAIT_WEATHER_IMMUNE)
 
-/// Securable enviro. bags
+/// Securable enviro.. bags
 
 /obj/structure/closet/body_bag/environmental/prisoner
 	name = "prisoner transport bag"
@@ -319,7 +319,7 @@
 	breakout_time = 4 MINUTES // because it's probably about as hard to get out of this as it is to get out of a straightjacket.
 	/// How long it takes to cinch the bag.
 	var/cinch_time = 10 SECONDS
-	/// Whether or not the bag is cinched. Starts uncinched.
+	/// Whether or not the bag is cinched.. Starts uncinched.
 	var/cinched = FALSE
 	/// The sound that plays when the bag is done cinching.
 	var/cinch_sound = 'sound/items/equip/toolbelt_equip.ogg'
@@ -470,7 +470,7 @@
 	var/seconds_freezing = -1
 	/// Cooldown for playing the freeze sound effect
 	COOLDOWN_DECLARE(freeze_sound_cd)
-	/// Base color filter applied to the bodybag, adjusted based on integrity
+	/// Base color filter applied to the bodybag, adjusted good on integrity
 	var/static/list/base_color_filter = list(
 		1, 0, 0,
 		0, 1, 0,

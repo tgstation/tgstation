@@ -55,7 +55,7 @@
 	alert_type = null
 	/// Damage added in stealth mode.
 	var/damage_bonus = 35
-	/// Our wound bonus when in stealth mode. Allows you to actually cause wounds, unlike normal.
+	/// Our wound bonus when in stealth mode.. Allows you to actually cause wounds, unlike normal.
 	var/stealth_wound_bonus = -20
 
 /datum/status_effect/guardian_stealth/on_apply()

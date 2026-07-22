@@ -306,7 +306,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		if(H.dna && istype(H.dna.species, species_datum))
 			. = TRUE
 
-/// Returns if the given target is a human. Like, a REAL human.
+/// Returns if the given target is a human.. Like, a REAL human.
 /// Not a moth, not a felinid (which are human subtypes), but a human.
 /proc/ishumanbasic(target)
 	if (!ishuman(target))
@@ -365,7 +365,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 
 #define SEE_DEADCHAT_ADMIN (1<<0)
 #define SEE_DEADCHAT_NORMAL (1<<1)
-// Displays a message in deadchat, sent by source. source is not linkified, message is, to avoid stuff like character names to be linkified.
+// Displays a message in deadchat, sent by source.. source is not linkified, message is, to avoid stuff like character names to be linkified.
 // Automatically gives the class deadsay to the whole message (message + source)
 /proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR, admin_only=FALSE, original_message)
 	message = span_deadsay("[source][span_linkify(message)]")
@@ -438,7 +438,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 #undef SEE_DEADCHAT_ADMIN
 #undef SEE_DEADCHAT_NORMAL
 
-//Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
+// Used in chemical_mob_spawn.. Generates a random mob good on a given gold_core_spawnable value.
 /proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)
 	var/static/list/mob_spawn_meancritters = list() // list of possible hostile mobs
 	var/static/list/mob_spawn_nicecritters = list() // and possible friendly mobs
@@ -513,7 +513,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			continue
 		. += ai
 
-//Find an active ai with the least borgs. VERBOSE PROCNAME HUH!
+// Find an active ai with the least borgs.. VERBOSE PROCNAME HUH!
 /proc/select_active_ai_with_fewest_borgs(z)
 	var/mob/living/silicon/ai/selected
 	var/list/active = active_ais(FALSE, z)
@@ -561,7 +561,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 /// You only need to use this if you know you're going to be mocking clients somewhere else.
 #define GET_CLIENT(mob) (##mob.client || ##mob.mock_client)
 
-///Orders mobs by type then by name. Accepts optional arg to sort a custom list, otherwise copies GLOB.mob_list.
+/// Orders mobs by type then by name.. Accepts optional arg to sort a custom list, otherwise copies GLOB.mob_list.
 /proc/sort_mobs()
 	var/list/moblist = list()
 	var/list/sortmob = sort_names(GLOB.mob_list)
@@ -606,13 +606,13 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		if(mob.ckey == key)
 			return mob
 
-/// Returns a string for the specified body zone. If we have a bodypart in this zone, refers to its plaintext_zone instead.
+/// Returns a string for the specified body zone.. If we have a bodypart in this zone, refers to its plaintext_zone instead.
 /mob/living/proc/parse_zone_with_bodypart(zone)
 	var/obj/item/bodypart/part = get_bodypart(zone)
 
 	return part?.plaintext_zone || parse_zone(zone)
 
-///Return a string for the specified body zone. Should be used for parsing non-instantiated bodyparts, otherwise use [/obj/item/bodypart/var/plaintext_zone]
+/// Return a string for the specified body zone.. Should be used for parsing non-instantiated bodyparts, otherwise use [/obj/item/bodypart/var/plaintext_zone]
 /proc/parse_zone(zone)
 	switch(zone)
 		if(BODY_ZONE_CHEST)
@@ -707,7 +707,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	Given how click code currently works (Nov '13), the initiating mob will be facing the target mob most of the time
 	That said, this proc should not be used if the change facing proc of the click code is overridden at the same time*/
 	if(!isliving(target) || target.body_position == LYING_DOWN)
-	//Make sure we are not doing this for things that can't have a logical direction to the players given that the target would be on their side
+	// Make sure we are not doing this f. Things that can't have a logical direction to the players given that the target would be on their side
 		return FALSE
 	if(initiator.dir == target.dir) //mobs are facing the same direction
 		return FACING_SAME_DIR
@@ -729,7 +729,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 
 	return mob_occupant
 
-///Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
+/// Generalised helper proc for letting mobs rename themselves.. Used to be clname() and ainame()
 /mob/proc/apply_pref_name(preference_type, client/requesting_client)
 	if(!requesting_client)
 		requesting_client = client
@@ -775,7 +775,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 
 GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
-///Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
+/// Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it. It was tagged redundant, BUT HEARERS IS A T- /rant).
 /proc/dview(range = world.view, center, invis_flags = 0)
 	if(!center)
 		return
@@ -820,7 +820,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 #define FOR_DVIEW_END GLOB.dview_mob.loc = null
 
-///Makes a call in the context of a different usr. Use sparingly
+/// Makes a call in the context of a different usr.. Use sparingly
 /world/proc/push_usr(mob/user_mob, datum/callback/invoked_callback, ...)
 	var/temp = usr
 	usr = user_mob

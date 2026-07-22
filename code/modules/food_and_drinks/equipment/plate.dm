@@ -18,7 +18,7 @@
 	/// If the plate will shatter when thrown
 	var/fragile = TRUE
 	/// The largest weight class we can carry, inclusive.
-	/// IE, if we this is normal, we can carry normal items or smaller.
+	/// that is if we this is normal, we can carry normal items or smaller.
 	var/biggest_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/plate/Initialize(mapload)
@@ -65,7 +65,7 @@
 	item_to_plate.vis_flags |= VIS_INHERIT_PLANE
 	RegisterSignal(item_to_plate, COMSIG_MOVABLE_MOVED, PROC_REF(ItemMoved))
 	RegisterSignal(item_to_plate, COMSIG_QDELETING, PROC_REF(ItemMoved))
-	// We gotta offset ourselves via pixel_w/z, so we don't end up z fighting with the plane
+	// We got to offset ourselves via pixel_w/z, so we don't end up z fighting with the plane
 	item_to_plate.pixel_w = item_to_plate.pixel_x
 	item_to_plate.pixel_z = item_to_plate.pixel_y
 	item_to_plate.pixel_x = 0
@@ -95,7 +95,7 @@
 
 	update_weight_class(new_w_class)
 
-///This proc is called by signals that remove the food from the plate.
+/// This proc signals calls that remove the food from the plate.
 /obj/item/plate/proc/ItemMoved(obj/item/moved_item, atom/OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
 	ItemRemovedFromPlate(moved_item)

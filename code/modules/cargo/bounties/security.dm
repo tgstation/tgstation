@@ -1,4 +1,4 @@
-///Bounties that require you to perform documentation and inspection of your department to send to centcom.
+/// Bounties that need you to perform documentation and inspection of your department to send to centcom.
 /datum/bounty/patrol
 	name = "Patrol Station"
 	description = "Perform a routine patrol of %AREA_NAME%. \
@@ -33,7 +33,7 @@
 	description = replacetext(description, "%AREA_NAME%", initial(demanded_area.name))
 	description = replacetext(description, "%AREA_COVERAGE%", needed_coverage)
 
-	// scale the reward based on how big the area is, so you don't feel like you're wasting time
+	// scale the reward good on how big the area is, so you don't feel like you're wasting time
 	// central primary hallway can have somewhere in the ballpark of 500 turfs
 	// but something like the bar only sits around 100-200
 	reward *= (needed_coverage / 100)

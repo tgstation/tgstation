@@ -13,7 +13,7 @@
 	var/max_i = 10//number of tries to spawn meteor.
 	while(!isspaceturf(picked_start))
 		var/start_side
-		if(direction) //If a direction has been specified, we set start_side to it. Otherwise, pick randomly
+		if(direction) // If a direction has been specified, we set start_side to it.. Otherwise, pick randomly
 			start_side = direction
 		else
 			start_side = pick(GLOB.cardinals)

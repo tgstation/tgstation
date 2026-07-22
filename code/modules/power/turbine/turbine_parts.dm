@@ -1,6 +1,6 @@
 ///String to access turbine part typepath to upgrade
 #define TURBINE_UPGRADE_PART "part"
-///String to access turbine part required amount to upgrade
+/// String to access turbine part needed amount to upgrade
 #define TURBINE_UPGRADE_AMOUNT "amount"
 
 /obj/item/turbine_parts
@@ -53,7 +53,7 @@
 					max_value += 0.2
 	return max_value
 
-///Returns a list containing the typepath & amount of it required to upgrade to the next tier
+/// Returns a list containing the typepath & amount of it needed to upgrade to the next tier
 /obj/item/turbine_parts/proc/get_tier_upgrades()
 	PROTECTED_PROC(TRUE)
 	SHOULD_BE_PURE(TRUE)

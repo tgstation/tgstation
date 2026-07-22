@@ -62,7 +62,7 @@
 		return
 	return ..()
 
-/// Smear it on someone like a regen core, why not. Make sure they're alive though.
+/// Smear it on someone like a regen core, why not.. Make sure they're alive though.
 /obj/item/organ/legion_tumour/proc/try_apply(mob/living/target, mob/user)
 	if(!user.Adjacent(target) || !isliving(target))
 		return FALSE

@@ -1,7 +1,7 @@
 /datum/ert
 	///Antag datum team for this type of ERT.
 	var/team = /datum/team/ert
-	///Do we open the doors to the "high-impact" weapon/explosive cabinets? Used for combat-focused ERTs.
+	/// Do we open the doors to the "high-impact" weapon/explosive cabinets?. Used for combat-focused ERTs.
 	var/opendoors = TRUE
 	///Alternate antag datum given to the leader of the squad.
 	var/leader_role = /datum/antagonist/ert/commander
@@ -11,7 +11,7 @@
 	var/roles = list(/datum/antagonist/ert/security, /datum/antagonist/ert/medic, /datum/antagonist/ert/engineer)
 	///The custom name assigned to this team, for their antag datum/roundend reporting.
 	var/rename_team
-	///Defines the color/alert code of the response team. Unused if a polldesc is defined.
+	/// Defines the color/alert code of the response team.. Unused if a polldesc is defined.
 	var/code
 	///The mission given to this ERT type in their flavor text.
 	var/mission = "Assist the station."
@@ -25,11 +25,11 @@
 	var/spawn_admin = FALSE
 	/// If TRUE, we try and pick one of the most experienced players who volunteered to fill the leader slot
 	var/leader_experience = TRUE
-	/// A custom map template to spawn the ERT at. If this is null or use_custom_shuttle is FALSE, the ERT will spawn at Centcom.
+	/// A custom map template to spawn the ERT at.. If this is null or use_custom_shuttle is FALSE, the ERT will spawn at Centcom.
 	var/datum/map_template/ert_template
 	/// If we should actually _use_ the ert_template custom shuttle
 	var/use_custom_shuttle = TRUE
-	/// Used for spawning bodies for your ERT. Unless customized in the Summon-ERT verb settings, will be overridden and should not be defined at the datum level.
+	/// Used for spawning bodies for your ERT.. Unless customized in the Summon-ERT verb settings, will be overridden and should not be defined at the datum level.
 	var/mob/living/carbon/human/mob_type
 
 /datum/ert/New()

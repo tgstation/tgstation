@@ -40,7 +40,7 @@
 
 /datum/crafting_recipe/radio_containing/New()
 	if(isnull(radio_types_blacklist))
-		// because we got shit like /obj/item/radio/off ... WHY!?!
+		// because we got shit like /obj/item/radio/off .... WHY!?!
 		radio_types_blacklist = typecacheof(list(/obj/item/radio/headset, /obj/item/radio/intercom))
 	blacklist = radio_types_blacklist
 	return ..()
@@ -135,7 +135,7 @@
 
 /datum/crafting_recipe/trapdoor_remote
 	name = "Trapdoor Remote"
-	result = /obj/item/trapdoor_remote/preloaded // since its useless without its assembly just require an assembly to craft it
+	result = /obj/item/trapdoor_remote/preloaded // since its useless without its assembly just need an assembly to craft it
 	reqs = list(
 		/obj/item/compact_remote = 1,
 		/obj/item/stack/cable_coil = 5,

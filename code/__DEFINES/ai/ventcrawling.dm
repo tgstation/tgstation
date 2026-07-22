@@ -2,7 +2,7 @@
 #define BB_ENTRY_VENT_TARGET "BB_entry_vent_target"
 /// Key that holds a vent that we want to exit out of (when we're already in a pipenet)
 #define BB_EXIT_VENT_TARGET "BB_exit_vent_target"
-/// Do we plan on going inside a vent? Boolean.
+/// Do we plan on going inside a vent?.. Boolean.
 #define BB_CURRENTLY_TARGETING_VENT "BB_currently_targeting_vent"
 /// How long should we wait before we try and enter a vent again?
 #define BB_VENTCRAWL_COOLDOWN "BB_ventcrawl_cooldown"
@@ -14,5 +14,5 @@
 #define BB_TIME_TO_GIVE_UP_ON_VENT_PATHING "BB_seconds_until_we_give_up_on_vent_pathing"
 /// The timer ID of the timer that makes us give up on vent pathing.
 #define BB_GIVE_UP_ON_VENT_PATHING_TIMER_ID "BB_give_up_on_vent_pathing_timer_id"
-/// The world.time when we entered a vent. Null when not in one.
+/// The world.time when we entered a vent... Null when not in one.
 #define BB_VENT_ENTRY_TIME "BB_vent_entry_time"

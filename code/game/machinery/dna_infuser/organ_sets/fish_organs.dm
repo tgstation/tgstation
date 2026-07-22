@@ -2,7 +2,7 @@
 #define FISH_SCLERA_COLOR COLOR_WHITE
 #define FISH_PUPIL_COLOR COLOR_BLUE
 #define FISH_COLORS FISH_ORGAN_COLOR + FISH_SCLERA_COLOR + FISH_PUPIL_COLOR
-/// How many fishy organs can you have at once, requirement to get the tail color
+/// How many fishy organs can you have at once, need to get the tail color
 /// Currently liver, stomach, lungs and tail plus tongue
 #define FISH_INFUSION_ALL_ORGANS 4
 
@@ -40,7 +40,7 @@
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
-		//Fish is slightly weaker to being cooked. oh oh.
+		// Fish is slightly weaker to being cooked.. oh oh.
 		human.physiology.burn_mod *= 1.15
 		human.physiology.heat_mod *= 1.15
 		human.physiology.damage_resistance += 8 //base 8% damage resistance, much wow.
@@ -208,7 +208,7 @@
 		owner.remove_movespeed_modifier(/datum/movespeed_modifier/fish_flopping)
 
 
-///Tail for fish DNA-infused spacemen. It provides a speed buff while in water. It's also needed for the crawl speed bonus once the threshold is reached.
+/// Tail for fish DNA-infused spacemen.. It provides a speed buff while in water.. It's also needed for the crawl speed bonus once the threshold is reached.
 /obj/item/organ/tail/fish
 	name = "fish tail"
 	desc = "A severed tail from some sort of marine creature... or a fish-infused spaceman. It's smooth, faintly wet and definitely not flopping."
@@ -287,7 +287,7 @@
 
 /datum/bodypart_overlay/mutant/tail/fish/on_mob_insert(obj/item/organ/parent, mob/living/carbon/receiver)
 	//Initialize the related dna feature block if we don't have any so it doesn't error out.
-	//This isn't tied to any species, but I kinda want it to be mutable instead of having a fixed sprite accessory.
+	// This isn't tied to any species, but I kind of want it to be mutable instead of having a fixed sprite accessory.
 	if(imprint_on_next_insertion && !receiver.dna.features[feature_key])
 		receiver.dna.features[feature_key] = pick(SSaccessories.feature_list[feature_key])
 		receiver.dna.update_uf_block(/datum/dna_block/feature/accessory/tail_fish)
@@ -309,11 +309,11 @@
 	icon_state = "gills"
 	breath_noise = "the dribbling of water"
 	organ_traits = list(TRAIT_NODROWN)
-	// Seafood instead of meat, because it's a fish organ. Additionally gross for being gills
+	// Seafood instead of meat, because it's a fish organ.. Also gross for being gills
 	foodtype_flags = RAW | SEAFOOD | GORE | GROSS
 	food_tastes = list("gross fish" = 1)
 	safe_oxygen_min = 0 //We don't breathe this
-	///The required partial pressure of water_vapor for not suffocating.
+	/// The needed partial pressure of water_vapor for not suffocating.
 	var/safe_water_level = parent_type::safe_oxygen_min
 
 	/// Bodypart overlay applied to the chest where the lungs are in
@@ -349,7 +349,7 @@
 	. = ..()
 	owner.clear_alert(ALERT_NOT_ENOUGH_WATER)
 
-/// Requires the spaceman to have either water vapor or be wet.
+/// Needs the spaceman to have either water vapor or be wet.
 /obj/item/organ/lungs/fish/proc/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp)
 	var/need_to_breathe = !HAS_TRAIT(breather, TRAIT_NO_BREATHLESS_DAMAGE) && !HAS_TRAIT(breather, TRAIT_IS_WET)
 	if(water_pp < safe_water_level && need_to_breathe)
@@ -451,7 +451,7 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
 
 
-///Organ from fish with the ink production trait. Doesn't count toward the organ set bonus but is buffed once it's active.
+/// Organ from fish with the ink production trait.. Doesn't count toward the organ set bonus but is buffed once it's active.
 /obj/item/organ/tongue/inky
 	name = "ink-secreting tongue"
 	desc = "A black tongue linked to two swollen black sacs underneath the palate."
@@ -506,7 +506,7 @@
 	. = ..()
 	. += /datum/language/carptongue
 
-///Organ from fish with the toxic trait. Allows the user to use tetrodotoxin as a healing chem instead of a toxin.
+/// Organ from fish with the toxic trait.. Allows the user to use tetrodotoxin as a healing chem instead of a toxin.
 /obj/item/organ/liver/fish
 	name = "mutated fish-liver"
 	desc = "Fish DNA infused into a stomach that now uses tetrodotoxin as regenerative material. It also processes alcohol quite well."

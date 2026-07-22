@@ -1,4 +1,4 @@
-/// Which crime is the prisoner permabrigged for. For fluff!
+/// Which crime is the prisoner permabrigged for.. For fluff!
 /datum/preference/choiced/prisoner_crime
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -21,7 +21,7 @@
 	return istype(preferences.get_highest_priority_job(), /datum/job/prisoner)
 
 /// Types of Crimes Prisoners will have on their record roundstart.
-/// (They also can choose Random, which picks from these options... randomly!)
+/// (They also can choose Random, which picks from these options.... randomly!)
 GLOBAL_LIST_INIT(prisoner_crimes, init_prisoner_crimes())
 
 /proc/init_prisoner_crimes()
@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(prisoner_crimes, init_prisoner_crimes())
 	var/name = "Bugged the Game"
 	/// what the record will say about the crime
 	var/desc = "Engaged in widespread gamebreaking, didn't report on Github. By the way, report this on Github!"
-	/// how many tattoos come from the crime. People who committed murder have more than tax evaders!
+	/// how many tattoos come from the crime.. People who committed murder have more than tax evaders!
 	var/tattoos = -1
 
 /datum/prisoner_crime/New()
@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(prisoner_crimes, init_prisoner_crimes())
 /datum/prisoner_crime/identity_theft
 	name = "Identity Theft of High-Ranking Figure"
 	desc = "Impersonated a high-ranking figure."
-	tattoos = 0 //well, obviously can't impersonate people with tats. if they want to go back to doing that
+	tattoos = 0 // well, obviously can't impersonate people with tats.. if they want to go back to doing that
 
 /datum/prisoner_crime/jaywalker
 	name = "Jaywalker"

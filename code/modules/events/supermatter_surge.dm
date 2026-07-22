@@ -7,11 +7,11 @@
 #define SURGE_BULLET_ENERGY_ADDITION 5
 /// The amount of powerloss inhibition (energy retention) we add for the duration of the SM surge
 #define SURGE_BASE_POWERLOSS_INHIBITION 0.55
-/// The powerloss inhibition scaling based on surge severity
+/// The powerloss inhibition scaling good on surge severity
 #define SURGE_POWERLOSS_INHIBITION_MODIFIER 0.175
-/// The power generation scaling based on surge severity
+/// The power generation scaling good on surge severity
 #define SURGE_POWER_GENERATION_MODIFIER 0.075
-/// The heat modifier scaling based on surge severity
+/// The heat modifier scaling good on surge severity
 #define SURGE_HEAT_MODIFIER 0.25
 
 /**

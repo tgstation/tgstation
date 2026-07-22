@@ -10,7 +10,7 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.15
 	/// Selected barsign being used
 	var/datum/barsign/chosen_sign
-	/// Do we attempt to rename the area we occupy when the chosen sign is changed?
+	/// Do we try to rename the area we occupy when the chosen sign is changed?
 	var/change_area_name = FALSE
 	/// What kind of sign do we drop upon being disassembled?
 	var/disassemble_result = /obj/item/wallframe/barsign

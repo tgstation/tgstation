@@ -14,7 +14,7 @@
 /obj/item/disk/computer/maintenance/modsuit_control
 	starting_programs = list(/datum/computer_file/program/maintenance/modsuit_control)
 
-///Returns A 'spookiness' value based on the number of ghastly creature and hauntium and their distance from the PC.
+/// Returns A 'spookiness' value good on the number of ghastly creature and hauntium and their distance from the PC.
 /obj/item/disk/computer/maintenance/spectre_meter
 	starting_programs = list(/datum/computer_file/program/maintenance/spectre_meter)
 

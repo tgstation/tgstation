@@ -21,7 +21,7 @@
 	actions += new /datum/action/innate/construction/place_structure/turret(src) //Action for spawning turrets
 
 /obj/machinery/computer/camera_advanced/base_construction/aux/find_spawn_spot()
-	//Aux base controller. Where the eyeobj will spawn.
+	// Aux base controller.. Where the eyeobj will spawn.
 	var/obj/machinery/computer/auxiliary_base/aux_controller
 	for(var/obj/machinery/computer/auxiliary_base/potential_aux_console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/auxiliary_base))
 		if(istype(get_area(potential_aux_console), allowed_area))

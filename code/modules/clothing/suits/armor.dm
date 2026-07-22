@@ -230,7 +230,7 @@
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
-/datum/armor/armor_secjacket //Gotta compensate those extra covered limbs
+/datum/armor/armor_secjacket // Got to compensate those extra covered limbs
 	melee = 25
 	bullet = 25
 	laser = 25

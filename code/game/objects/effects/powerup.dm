@@ -34,7 +34,7 @@
 /obj/effect/powerup/Bumped(atom/movable/movable_atom)
 	trigger(movable_atom)
 
-/// Triggers the effect of the powerup on the target, returns FALSE if the target is not /mob/living, is dead or the cooldown hasn't finished, returns TRUE otherwise
+/// Triggers the effect of the powerup on the target, returns FALSE if the target is not /mob/living, is dead. The cooldown hasn't finished, returns TRUE otherwise
 /obj/effect/powerup/proc/trigger(mob/living/target)
 	if(!istype(target) || target.stat == DEAD)
 		return FALSE

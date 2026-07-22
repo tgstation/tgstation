@@ -19,11 +19,11 @@
 	icon_keyboard = "rd_key"
 	light_color = LIGHT_COLOR_PINK
 	add_usb_port = FALSE
-	///Area that the eyeobj will be constrained to. If null, eyeobj will be able to build and move anywhere.
+	/// Area that the eyeobj will be constrained to.. If null, eyeobj will be able to build and move anywhere.
 	var/area/allowed_area
-	///Assoc. list ("structure_name" : count) that keeps track of the number of special structures that can't be built with an RCD, for example, tiny fans or turrets.
+	/// Assoc.. list ("structure_name" : count) that keeps track of the number of special structures that can't be built with an RCD, f. Example, tiny fans. Turrets.
 	var/list/structures = list()
-	///Internal RCD. Some construction actions rely on having this.
+	/// Internal RCD.. Some construction actions rely on having this.
 	var/obj/item/construction/rcd/internal/internal_rcd
 
 /obj/machinery/computer/camera_advanced/base_construction/Initialize(mapload)
@@ -53,7 +53,7 @@
 /obj/machinery/computer/camera_advanced/base_construction/proc/restock_materials()
 	return
 
-///Find a spawn location for the eyeobj. If no allowed_area is defined, spawn ontop of the console.
+/// Find a spawn location for the eyeobj.. If no allowed_area is defined, spawn ontop of the console.
 /obj/machinery/computer/camera_advanced/base_construction/proc/find_spawn_spot()
 	if (allowed_area)
 		return pick(get_area_turfs(allowed_area))
@@ -98,7 +98,7 @@
  */
 /mob/eye/camera/remote/base_construction
 	name = "construction holo-drone"
-	//Allows any curious crew to watch the base after it leaves. (This is safe as the base cannot be modified once it leaves)
+	// Allows any curious crew to watch the base after it leaves.. (This is safe as the base cannot be modified once it leaves)
 	move_on_shuttle = TRUE
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "construction_drone"
@@ -115,7 +115,7 @@
 
 /mob/eye/camera/remote/base_construction/setLoc(turf/destination, force_update = FALSE)
 	var/area/curr_area = get_area(destination)
-	//Only move if we're in the allowed area. If no allowed area is defined, then we're free to move wherever.
+	// Only move if we're in the allowed area.. If no allowed area is defined, then we're free to move wherever.
 	if(!linked_console.allowed_area || istype(curr_area, linked_console.allowed_area))
 		return ..()
 
@@ -124,7 +124,7 @@
 	dir = direction
 	return ..()
 
-///[Base console's][/obj/machinery/computer/camera_advanced/base_construction] internal RCD. Has a large material capacity and a fast buildspeed.
+/// [Base console's][/obj/machinery/computer/camera_advanced/base_construction] internal RCD.. Has a large material capacity and a fast buildspeed.
 /obj/item/construction/rcd/internal
 	name = "internal RCD"
 	max_matter = 600

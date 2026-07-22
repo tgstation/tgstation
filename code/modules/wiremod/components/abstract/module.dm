@@ -89,7 +89,7 @@
 /obj/item/circuit_component/module_output/pre_input_received(datum/port/input/port)
 	if(!port)
 		return
-	// We don't check the parent here because frankly, we don't care. We only sync our input with the module's output
+	// We don't check the parent here because frankly, we don't care.. We only sync our input with the module's output
 	var/datum/port/output/port_to_update = attached_module.linked_ports[port]
 	if(!port_to_update)
 		CRASH("[port.type] doesn't have a linked port in [type]!")

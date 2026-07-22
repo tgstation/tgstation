@@ -21,7 +21,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5)
 	/// Keeps track of the total points scored
 	var/total_score = 0
-	/// The chance to score a ball into the hoop based on distance
+	/// The chance to score a ball into the hoop good on distance
 	var/static/list/throw_range_success = list(95, 80, 65, 50, 35, 20)
 
 /obj/structure/hoop/Initialize(mapload)

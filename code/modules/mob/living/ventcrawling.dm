@@ -9,7 +9,7 @@
 /mob/living/carbon/human/notify_ventcrawler_on_login()
 	if(!ismonkey(src))
 		return ..()
-	if(!istype(head, /obj/item/clothing/head/helmet/monkey_sentience)) //don't notify them about ventcrawling if they're wearing the sentience helmet, because they can't ventcrawl with it on, and if they take it off they'll no longer be in control of the mob.
+	if(!istype(head, /obj/item/clothing/head/helmet/monkey_sentience)) // don't notify them about ventcrawling if they're wearing the sentience helmet, because they can't ventcrawl with it on. If they take it off they'll no longer be in control of the mob.
 		return ..()
 
 
@@ -70,7 +70,7 @@
 	if(!can_enter_vent(ventcrawl_target))
 		return
 
-	var/has_client = !isnull(client) // clientless mobs can do this too! this is just stored in case the client disconnects while we sleep in do_after.
+	var/has_client = !isnull(client) // clientless mobs can do this too!. this is just stored in case the client disconnects while we sleep in do_after.
 
 	//Handle the exit here
 	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
@@ -146,7 +146,7 @@
 			pipecrawl.hide_plane(src)
 		return
 
-	// We're gonna color the lighting plane to make it darker while ventcrawling, so things look nicer
+	// We're going to color the lighting plane to make it darker while ventcrawling, so things look nicer
 	// This is a bit hacky but it makes the background darker, which has a nice effect
 	for(var/atom/movable/screen/plane_master/lighting as anything in hud_used.get_true_plane_masters(LIGHTING_PLANE))
 		lighting.add_atom_colour("#4d4d4d", TEMPORARY_COLOUR_PRIORITY)
@@ -157,7 +157,7 @@
 	var/obj/machinery/atmospherics/current_location = loc
 	var/list/our_pipenets = current_location.return_pipenets()
 
-	// We on occasion want to do a full rebuild. this lets us do that
+	// We on occasion want to do a full rebuild.. this lets us do that
 	if(full_refresh)
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image

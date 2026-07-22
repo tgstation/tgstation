@@ -567,7 +567,7 @@ GLOBAL_PROTECT(poll_options)
 			"ip" = client.address,
 			"adminrank" = admin_rank
 		))
-	//IRV results are calculated based on id order, we delete all of a user's votes to avoid potential errors caused by revoting and option editing
+	// IRV results are calculated good on id order, we delete all of a user's votes to avoid potential errors caused by revoting and option editing
 	var/datum/db_query/query_delete_irv_votes = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("poll_vote")] SET deleted = 1 WHERE pollid = :pollid AND ckey = :ckey
 	"}, list("pollid" = sql_poll_id, "ckey" = ckey))

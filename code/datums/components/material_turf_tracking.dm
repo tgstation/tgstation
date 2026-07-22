@@ -3,7 +3,7 @@
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	/// Material we're linked to
 	var/datum/material/owner_material = null
-	/// Does our parent require the target to be elevated for us to trigger?
+	/// Does our parent need the target to be elevated for us to trigger?
 	var/requires_elevation = FALSE
 
 	/// Typecache of things we should ignore

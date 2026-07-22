@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	 */
 	var/energy_release = 0
 	var/dangerous = FALSE
-	///Gas required for the recipe to work
+	/// Gas needed for the recipe to work
 	var/list/requirements
 	///Products made from the recipe
 	var/list/products

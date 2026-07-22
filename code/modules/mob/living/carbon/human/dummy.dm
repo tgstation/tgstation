@@ -58,11 +58,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 		var/list/contents = checking.contents
 		if(length(contents))
-			items_to_check |= contents //Please don't make an infinite loop somehow thx
+			items_to_check |= contents // Please don't make an infinite loop somehow thanks
 			to_nuke += checking //Goodbye
 			continue
 
-		//I'm making the bet that if you're empty of other items you're not going to OOM if reapplied. I assume you're here because I was wrong
+		// I'm making the bet that if you're empty of other items you're not going to OOM if reapplied.. I assume you're here because I was wrong
 		if(ismob(checking.loc))
 			var/mob/checkings_owner = checking.loc
 			checkings_owner.temporarilyRemoveItemFromInventory(checking, TRUE) //Clear out of there yeah?
@@ -76,7 +76,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	item.item_flags |= IN_INVENTORY
 	if(!item.visual_equipped(src, slot, initial))
 		return FALSE
-	if(!(slot & item.slot_flags)) // Things below only update if slotted in (ie: not held)
+	if(!(slot & item.slot_flags)) // Things below only update if slotted in that is not held)
 		return TRUE
 	add_item_coverage(item)
 	if(item.hair_mask)
@@ -126,7 +126,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		target.dna.unique_features = consistent_UF
 		target.dna.unique_identity = consistent_UI
 
-/// Provides a dummy that is consistently bald, white, naked, etc.
+/// Provides a dummy that is consistently bald, white, naked, and so on
 /mob/living/carbon/human/dummy/consistent
 
 /mob/living/carbon/human/dummy/consistent/setup_human_dna()
@@ -195,7 +195,7 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 		copycat.updateappearance(icon_update=TRUE, mutcolor_update=TRUE, mutations_overlay_update=TRUE)
 	else
 		//even if target isn't a carbon, if they have a client we can make the
-		//dummy look like what their human would look like based on their prefs
+		// dummy look like what their human would look like good on their prefs
 		target?.client?.prefs?.apply_prefs_to(copycat, TRUE)
 
 	return copycat

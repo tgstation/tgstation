@@ -184,7 +184,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(user.mind)
 		user.mind.name = newname
 
-// Erm ackshually the proper term is species. Get it right??
+// Erm ackshually the proper term is species.. Get it right??
 /obj/structure/mirror/proc/change_race(mob/living/carbon/human/race_changer)
 	var/racechoice = tgui_input_list(race_changer, "What are we again?", "Race change", selectable_races)
 	if(isnull(racechoice) || !can_use_mirror(race_changer))
@@ -417,7 +417,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 	to_chat(race_changer, span_alert("You feel quite intelligent."))
 	// Prevents wizards from being soft locked out of everything
-	// If this stays after the species was changed once more, well, the magic mirror did it. It's magic i aint gotta explain shit
+	// If this stays after the species was changed once more, well, the magic mirror did it.. It's magic i aint got to explain shit
 	race_changer.add_traits(list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER), SPECIES_TRAIT)
 
 /obj/structure/mirror/magic/lesser

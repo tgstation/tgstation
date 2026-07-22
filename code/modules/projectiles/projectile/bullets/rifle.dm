@@ -27,7 +27,7 @@
 
 /obj/projectile/bullet/strilka310/surplus
 	name = ".310 Strilka surplus bullet"
-	weak_against_armour = TRUE //this is specifically more important for fighting carbons than fighting noncarbons. Against a simple mob, this is still a full force bullet
+	weak_against_armour = TRUE // this is specifically more important for fighting carbons than fighting noncarbons.. Against a simple mob, this is still a full force bullet
 	armour_penetration = 0
 
 /obj/projectile/bullet/strilka310/enchanted
@@ -94,7 +94,7 @@
 	icon_state = "rebar"
 	damage = 50
 	dismemberment = 2 //It's a budget sniper rifle.
-	armour_penetration = 35 //A bit better versus armor. Gets past anti laser armor or a sec vest, but doesnt get past proper bulletproof armor.
+	armour_penetration = 35 // A bit better versus armor.. Gets past anti laser armor or a sec vest, but doesnt get past proper bulletproof armor.
 	wound_bonus = 10
 	exposed_wound_bonus = 20
 	embed_falloff_tile = -3

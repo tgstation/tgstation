@@ -12,7 +12,7 @@
 
 	if(stat == DEAD)
 		icon_state = "larva[state]_dead"
-	else if(handcuffed || legcuffed) //This should be an overlay. Who made this an icon_state?
+	else if(handcuffed || legcuffed) // This should be an overlay.. Who made this an icon_state?
 		icon_state = "larva[state]_cuff"
 	else if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		icon_state = "larva[state]_stun"

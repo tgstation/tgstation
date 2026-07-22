@@ -1,6 +1,6 @@
 ///the point where you can notice the item is hungry on examine.
 #define HUNGER_THRESHOLD_WARNING 25
-///the point where the item has a chance to eat something on every tick. possibly you!
+/// the point where the item has a chance to eat something on every tick.. possibly you!
 #define HUNGER_THRESHOLD_TRY_EATING 50
 
 /**
@@ -15,9 +15,9 @@
 	var/awakened = FALSE
 	///counts time passed since it ate food
 	var/hunger = 0
-	///The bag's max "health". IE, how many times you need to poison it.
+	/// The bag's max "health".. that is how many times you need to poison it.
 	var/max_health = 2
-	///The bag's current "health". IE, how many more times you need to poison it to stop it.
+	/// The bag's current "health".. that is how many more times you need to poison it to stop it.
 	var/current_health = 2
 
 /datum/component/curse_of_hunger/Initialize(add_dropdel = FALSE, max_health = 2)

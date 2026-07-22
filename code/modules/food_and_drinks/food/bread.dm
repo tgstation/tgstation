@@ -1,5 +1,5 @@
 
-/// Abstract parent object for bread items. Should not be made obtainable in game.
+/// Abstract parent object for bread items.. Should not be made obtainable in game.
 /obj/item/food/bread
 	name = "bread?"
 	desc = "You shouldn't see this, call the coders."
@@ -25,7 +25,7 @@
 		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 		AddElement(/datum/element/processable, TOOL_SAW, slice_type, yield, 4 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
-// Abstract parent object for sliced bread items. Should not be made obtainable in game.
+// Abstract parent object for sliced bread items.. Should not be made obtainable in game.
 /obj/item/food/breadslice
 	name = "breadslice?"
 	desc = "You shouldn't see this, call the coders."
@@ -327,7 +327,7 @@
 	desc = "It's bread, customized to your wildest dreams."
 	slice_type = /obj/item/food/breadslice/empty
 
-// What you get from cutting a custom bread. Different from custom sliced bread.
+// What you get from cutting a custom bread.. Different from custom sliced bread.
 /obj/item/food/breadslice/empty
 	name = "bread slice"
 	icon_state = "tofubreadslice"

@@ -39,7 +39,7 @@
 	var/paymode = HOLOCHIP // toggles between HOLOCHIP/COIN, defined above
 	var/cointype = /obj/item/coin/iron //default cointype
 
-	/// The optional bank account used as the machine's bank. Player losses are deposited here, while payouts and jackpots are deducted from its balance
+	/// The optional bank account used as the machine's bank.. Player losses are deposited here, while payouts and jackpots are deducted from its balance
 	var/datum/bank_account/house_bank_account
 
 	/// Typepaths representing the symbols shown on this machine's reels
@@ -53,9 +53,9 @@
 		/obj/item/stack/spacecash/c20,
 	)
 
-	/// Used to determine the 1st name of the slot machine. Name = "[adjective] [noun]"
+	/// Used to determine the 1st name of the slot machine.. Name = "[adjective] [noun]"
 	var/list/slot_adjectives = list("Blazing", "Bonus", "Grand", "Greedy", "Jumbo", "Platinum", "Lucky", "Mega", "Robust", "Super", "Turbo", "Wild")
-	/// Used to determine the 2nd name of the slot machine. Name = "[adjective] [noun]"
+	/// Used to determine the 2nd name of the slot machine.. Name = "[adjective] [noun]"
 	var/list/slot_nouns = list("Bankroll", "Cashout", "Fortune", "Jackpot", "Luck", "Money", "Payday", "Reels", "Riches", "Spinner", "Spins", "Strike", "Treasure", "Spess")
 
 	/// The symbol typepath that pays out the jackpot when it lines up five wide
@@ -106,7 +106,7 @@
 	. = ..()
 
 /// Generates a randomised slot name by pulling an adjective and a noun
-/// Produces things like "Lucky Sevens", "Robust Payday", "Honking Bonanza", etc.
+/// Produces things like "Lucky Sevens", "Robust Payday", "Honking Bonanza", and so on
 /obj/machinery/computer/slot_machine/proc/make_machine_name()
 	var/adjective = pick(slot_adjectives)
 	var/noun = pick(slot_nouns)
@@ -407,7 +407,7 @@
 			balance = 0
 		if(/obj/singularity)
 			user.electrocute_act(80, src, flags = SHOCK_ILLUSION | SHOCK_NOGLOVES)
-		else // gibonite, syndicate bombs, flashbangs, etc.
+		else // gibonite, syndicate bombs, flashbangs, and so on
 			var/obj/item/grenade/flashbang/bang = new(get_turf(src))
 			bang.arm_grenade(null, 1 SECONDS)
 
@@ -504,7 +504,7 @@
 
 	return amountthesame
 
-/// Give the specified amount of money. If the amount is greater than the amount of prize money available, add the difference as balance
+/// Give the specified amount of money.. If the amount is greater than the amount of prize money available, add the difference as balance
 /obj/machinery/computer/slot_machine/proc/give_money(amount)
 	var/amount_to_give = min(amount, money)
 	var/surplus = amount - give_payout(amount_to_give)
@@ -531,7 +531,7 @@
 
 	return amount
 
-/// Dispense the given amount. If machine is set to use coins, will use the specified coin type.
+/// Dispense the given amount.. If machine is set to use coins, will use the specified coin type.
 /// If throwit and target are set, will launch the payment at the target
 /obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/coin/silver, throwit = FALSE, mob/living/target)
 	if(paymode == HOLOCHIP)

@@ -6,7 +6,7 @@
 /datum/personality/department/apply_to_mob(mob/living/who)
 	. = ..()
 	RegisterSignals(who, list(COMSIG_MOB_MIND_TRANSFERRED_INTO, COMSIG_MOB_MIND_SET_ROLE), PROC_REF(update_effect))
-	// Unfortunate side effect here in that IC job changes, IE HoP are missed
+	// Unfortunate side effect here in that IC job changes, that is HoP are missed
 	who.apply_status_effect(/datum/status_effect/moodlet_in_area, /datum/mood_event/enjoying_department_area, applicable_areas & who.mind?.get_work_areas())
 
 /datum/personality/department/remove_from_mob(mob/living/who)

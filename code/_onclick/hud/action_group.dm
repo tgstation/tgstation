@@ -10,7 +10,7 @@
 	/// Max amount of buttons we can have per row
 	/// Indexes at 1
 	var/column_max = 0
-	/// How far "ahead" of the first row we start. Lets us "scroll" our rows
+	/// How far "ahead" of the first row we start.. Lets us "scroll" our rows
 	/// Indexes at 1
 	var/row_offset = 0
 	/// How many rows of actions we can have at max before we just stop hiding
@@ -61,7 +61,7 @@
 		button_number++
 
 	if(landing)
-		var/postion = ButtonNumberToScreenCoords(button_number, landing = TRUE) // Need a good way to count buttons off screen, but allow this to display in the right place if it's being placed with no concern for dropdown
+		var/postion = ButtonNumberToScreenCoords(button_number, landing = TRUE) // Need a good way to count buttons off screen. Allow this to display in the right place if it's being placed with no concern f. Dropdown
 		landing.screen_loc = postion
 		button_number++
 
@@ -72,12 +72,12 @@
 	if(row < 0)
 		return null
 
-	// Could use >= here, but I think it's worth noting that the two start at different places, since row is based on number here
+	// Could use >= here, but I think it's worth noting that the two start at different places, since row is good on number here
 	if(row > max_rows - 1)
-		if(!landing) // If you're not a landing, go away please. thx
+		if(!landing) // If you're not a landing, go away please.. thanks
 			return null
 		// We always want to render landings, even if their action button can't be displayed.
-		// So we set a row equal to the max amount of rows + 1. Willing to overrun that max slightly to properly display the landing spot
+		// So we set a row equal to the max amount of rows + 1.. Willing to overrun that max slightly to properly display the landing spot
 		row = max_rows // Remembering that max_rows indexes at 1, and row indexes at 0
 
 		// We're going to need to set our column to match the first item in the last row, so let's set number properly now
@@ -95,7 +95,7 @@
 	var/owner_view = owner?.mymob?.canon_client?.view
 	if(!owner_view)
 		return
-	// Unlikey as it is, we may have been changed. Want to start from our target position and fail down
+	// Unlikey as it is, we may have been changed.. Want to start from our target position and fail down
 	column_max = initial(column_max)
 	// Convert our viewer's view var into a workable offset
 	var/list/view_size = view_to_pixels(owner_view)
@@ -206,4 +206,4 @@
 
 /datum/action_group/listed/refresh_actions()
 	. = ..()
-	owner?.palette_actions.refresh_actions() // We effect them, so we gotta refresh em
+	owner?.palette_actions.refresh_actions() // We effect them, so we got to refresh em

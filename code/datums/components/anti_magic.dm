@@ -154,7 +154,7 @@
 	if(parent in antimagic_sources)
 		return NONE
 
-	// Block success! Add this parent to the list of antimagic sources
+	// Block success!. Add this parent to the list of antimagic sources
 	antimagic_sources += parent
 
 	block_magic?.Invoke(source, parent)

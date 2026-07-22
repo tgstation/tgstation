@@ -126,7 +126,7 @@
 		update_radial_list()
 	else
 		var/obj/item/parent_item = parent
-		parent_item.set_painting_tool_color(colors[index]) // This will send a signal back to us. See below.
+		parent_item.set_painting_tool_color(colors[index]) // This will send a signal back to us.. See below.
 
 /datum/component/palette/proc/on_painting_tool_set_color(datum/source, chosen_color)
 	SIGNAL_HANDLER

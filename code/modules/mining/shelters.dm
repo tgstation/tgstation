@@ -121,7 +121,7 @@
 	. = ..()
 	blacklisted_turfs -= typesof(/turf/closed/mineral)
 	blacklisted_turfs += typecacheof(/turf/open/openspace)
-	// Stop the capsule from being used around pipes and cables (if not emagged) cuz it'd look bad and a bit disruptive.
+	// Stop the capsule from being used around pipes and cables (if not emagged) because it'd look bad and a bit disruptive.
 	banned_objects = typecacheof(list(
 		/obj/structure/disposalpipe,
 		/obj/machinery/atmospherics/pipe,

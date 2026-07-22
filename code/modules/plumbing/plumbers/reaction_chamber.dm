@@ -1,6 +1,6 @@
-///a reaction chamber for plumbing. pretty much everything can react, but this one keeps the reagents separated and only reacts under your given terms
+/// a reaction chamber for plumbing.. pretty much everything can react, but this one keeps the reagents separated and only reacts under your given terms
 
-/// coefficient to convert temperature to joules. same lvl as acclimator
+/// coefficient to convert temperature to joules.. same lvl as acclimator
 #define HEATER_COEFFICIENT 0.05
 
 /obj/machinery/plumbing/reaction_chamber

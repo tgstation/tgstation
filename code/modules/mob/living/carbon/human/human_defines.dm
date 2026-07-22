@@ -32,7 +32,7 @@
 	// Base "natural" eye color
 	var/eye_color_left = COLOR_BLACK
 	var/eye_color_right = COLOR_BLACK
-	/// Var used to keep track of a human mob having a heterochromatic right eye. To ensure prefs don't overwrite shit
+	/// Var used to keep track of a human mob having a heterochromatic right eye.. To ensure prefs don't overwrite shit
 	var/eye_color_heterochromatic = FALSE
 	// Eye color overrides assoc lists - priority key to hex color
 	var/list/eye_color_left_overrides
@@ -88,15 +88,15 @@
 	/// The core temperature of the human compaired to the skin temp of the body
 	var/coretemperature = BODYTEMP_NORMAL
 
-	///Exposure to damaging heat levels increases stacks, stacks clean over time when temperatures are lower. Stack is consumed to add a wound.
+	/// Exposure to damaging heat levels increases stacks, stacks clean over time when temperatures are lower.. Stack is consumed to add a wound.
 	var/heat_exposure_stacks = 0
 
-	/// When an braindead player has their equipment fiddled with, we log that info here for when they come back so they know who took their ID while they were DC'd for 30 seconds
+	/// When an braindead player has their equipment fiddled with, we log that info here f. When they come back so they know who took their ID while they were DC'd f. 30 seconds
 	var/list/afk_thefts
 
 	/// Base height of the mob, modified by stuff like dwarfism or species
 	VAR_PRIVATE/base_mob_height = HUMAN_HEIGHT_MEDIUM
-	/// Actual height of the mob. Don't touch this one, it is set via update_mob_height()
+	/// Actual height of the mob.. Don't touch this one, it is set via update_mob_height()
 	VAR_FINAL/mob_height = HUMAN_HEIGHT_MEDIUM
 
 	/// Tracks how long in seconds we've been in a low pressure environment

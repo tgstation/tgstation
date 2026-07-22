@@ -31,12 +31,12 @@
 	var/obj/item/fish/mounted_fish
 	/// The identifier for mounts that carry the trophy between rounds.
 	var/persistence_id
-	/// Trophies from persistence have a good chance to be dusted if removal is attempted, though rarely it pays off.
+	/// Trophies from persistence have a good chance to be dusted if removal is tried though rarely it pays off.
 	var/persistence_loaded_fish = FALSE
 
 /obj/structure/fish_mount/Initialize(mapload)
 	. = ..()
-	//Mounted fish shouldn't flop. It should also show size and weight to everyone.
+	// Mounted fish shouldn't flop.. It should also show size and weight to everyone.
 	add_traits(list(TRAIT_STOP_FISH_FLOPPING, TRAIT_EXAMINE_FISH), INNATE_TRAIT)
 	if(mapload)
 		find_and_mount_on_atom()

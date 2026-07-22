@@ -139,7 +139,7 @@
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 
-// A stronger horse is required for our strongest cowboys.
+// A stronger horse is needed for our strongest cowboys.
 /mob/living/basic/pony/syndicate
 	health = 300
 	maxHealth = 300

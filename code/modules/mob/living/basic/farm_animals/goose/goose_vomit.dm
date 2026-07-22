@@ -1,4 +1,4 @@
-/// Repeatedly throw up until there's nothing left inside, regrettably sufficiently complex that it requires its own file
+/// Repeatedly throw up until there's nothing left inside, regrettably enough complex that it needs its own file
 /datum/action/cooldown/mob_cooldown/goose_vomit
 	name = "Vomit"
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED

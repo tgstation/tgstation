@@ -11,7 +11,7 @@
 	if(!can_store_file(file_storing))
 		return FALSE
 
-	// This file is already stored. Don't store it again.
+	// This file is already stored.. Don't store it again.
 	if(file_storing in stored_files)
 		return FALSE
 

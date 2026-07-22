@@ -11,9 +11,9 @@
 // delays for the different stages of the box's state, the visuals, and the audio
 /// How long the box takes to decide what the prize is
 #define MBOX_DURATION_CHOOSING (5 SECONDS)
-/// How long the box takes to start expiring the offer, though it's still valid until MBOX_DURATION_EXPIRING finishes. Timed to the sound clips
+/// How long the box takes to start expiring the offer, though it's still valid until MBOX_DURATION_EXPIRING finishes.. Timed to the sound clips
 #define MBOX_DURATION_PRESENTING (3.5 SECONDS)
-/// How long the box takes to start lowering the prize back into itself. When this finishes, the prize is gone
+/// How long the box takes to start lowering the prize back into itself.. When this finishes, the prize is gone
 #define MBOX_DURATION_EXPIRING (4.5 SECONDS)
 /// How long after the box closes until it can go again
 #define MBOX_DURATION_STANDBY (2.7 SECONDS)
@@ -130,19 +130,19 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	var/grant_sound = 'sound/effects/mysterybox/mbox_end.ogg'
 	/// The box's current state, and whether it can be interacted with in different ways
 	var/box_state = MYSTERY_BOX_STANDBY
-	/// The object that represents the rapidly changing item that will be granted upon being claimed. Is not, itself, an item.
+	/// The object that represents the rapidly changing item that will be granted upon being claimed.. Is not, itself, an item.
 	var/obj/effect/abstract/mystery_box_item/presented_item
 	/// A timer for how long it takes for the box to start its expire animation
 	var/box_expire_timer
 	/// A timer for how long it takes for the box to close itself
 	var/box_close_timer
-	/// Every type that's a child of this that has an icon, icon_state, and isn't ABSTRACT is fair game. More granularity to come
+	/// Every type that's a child of this that has an icon, icon_state, and isn't ABSTRACT is fair game.. More granularity to come
 	var/selectable_base_type = /obj/item
-	/// The instantiated list that contains all of the valid items that can be chosen from. Generated in [/obj/structure/mystery_box/proc/generate_valid_types]
+	/// The instantiated list that contains all of the valid items that can be chosen from.. Generated in [/obj/structure/mystery_box/proc/generate_valid_types]
 	var/list/valid_types
 	/// If the prize is a ballistic gun with an external magazine, should we grant the user a spare mag?
 	var/grant_extra_mag = TRUE
-	/// Stores the current sound channel we're using so we can cut off our own sounds as needed. Randomized after each roll
+	/// Stores the current sound channel we're using so we can cut off our own sounds as needed.. Randomized after each roll
 	var/current_sound_channel
 	/// How many time can it still be used?
 	var/uses_left = INFINITY
@@ -209,7 +209,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	presented_item.expire_animation()
 	box_close_timer = addtimer(CALLBACK(src, PROC_REF(close_box)), MBOX_DURATION_EXPIRING, TIMER_STOPPABLE)
 
-/// The box is closed, whether because the prize fully expired, or it was claimed. Start resetting all of the state stuff
+/// The box is closed, whether because the prize fully expired, or it was claimed.. Start resetting all of the state stuff
 /obj/structure/mystery_box/proc/close_box()
 	box_state = MYSTERY_BOX_COOLING_DOWN
 	update_icon_state()
@@ -302,7 +302,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 		return
 	return ..()
 
-/// This represents the item that comes out of the box and is constantly changing before the box finishes deciding. Can probably be just an /atom or /movable.
+/// This represents the item that comes out of the box and is constantly changing before the box finishes deciding.. Can probably be just an /atom or /movable.
 /obj/effect/abstract/mystery_box_item
 	name = "???"
 	desc = "Who knows what it'll be??"
@@ -311,7 +311,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	pixel_z = -4
 	uses_integrity = FALSE
 
-	/// The currently selected item. Constantly changes while choosing, determines what is spawned if the prize is claimed, and its current icon
+	/// The currently selected item.. Constantly changes while choosing, determines what is spawned if the prize is claimed, and its current icon
 	var/selected_path = /obj/item/gun/ballistic/revolver/c38/detective
 	/// The box that spawned this
 	var/obj/structure/mystery_box/parent_box

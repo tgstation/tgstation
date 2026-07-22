@@ -13,7 +13,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_2
 
-/// Counter for number of chicks hatched by throwing eggs, minecraft style. Chicks will not emerge from thrown eggs if this value exceeds the MAX_CHICKENS define.
+/// Counter for number of chicks hatched by throwing eggs, minecraft style.. Chicks will not emerge from thrown eggs if this value exceeds the MAX_CHICKENS define.
 GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 
 /obj/item/food/egg

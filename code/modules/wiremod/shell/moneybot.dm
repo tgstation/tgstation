@@ -101,7 +101,7 @@
 	var/num_on_tile = 0
 	for(var/obj/item/holochip/chip in droploc)
 		num_on_tile++
-	// at this point, clearly no one's jumping for the cash. so let's stop dispensing
+	// at this point, clearly no one's jumping for the cash.. so let's stop dispensing
 	if(num_on_tile > max_chips)
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return

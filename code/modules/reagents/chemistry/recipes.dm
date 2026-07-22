@@ -8,14 +8,14 @@
 /datum/chemical_reaction
 	///Results of the chemical reactions
 	var/list/results = list()
-	///Required chemicals that are USED in the reaction
+	/// Needed chemicals that are USED in the reaction
 	var/list/required_reagents = list()
-	///Required chemicals that must be present in the container but are not USED.
+	/// Needed chemicals that must be present in the container but are not USED.
 	var/list/required_catalysts = list()
 
 	/// If required_container will check for the exact type, or will also accept subtypes
 	var/required_container_accepts_subtypes = FALSE
-	/// If required_container_accepts_subtypes is FALSE, the exact type of what container this reaction can take place in. Otherwise, what type including subtypes are acceptable.
+	/// If required_container_accepts_subtypes is FALSE, the exact type of what container this reaction can take place in.. Otherwise, what type including subtypes are acceptable.
 	var/atom/required_container
 
 	///Determines if a chemical reaction can occur inside a mob
@@ -25,16 +25,16 @@
 	///The sound played upon mixing, if applicable
 	var/mix_sound = 'sound/effects/bubbles/bubbles.ogg'
 
-	/// Set to TRUE if you want the recipe to only react when it's BELOW the required temp.
+	/// Set to TRUE if you want the recipe to only react when it's BELOW the needed temp.
 	var/is_cold_recipe = FALSE
-	///FermiChem! - See fermi_readme.md
-	///Required temperature for the reaction to begin, for fermimechanics it defines the lower area of bell curve for determining heat based rate reactions, aka the minimum
+	/// FermiChem!. - See fermi_readme.md
+	/// Needed temperature f. The reaction to begin, f. Fermimechanics it defines the lower area of bell curve f. Determining heat good rate reactions, also known as the minimum
 	var/required_temp = 100
-	/// Upper end for above (i.e. the end of the curve section defined by temp_exponent_factor)
+	/// Upper end for above (i.e.. the end of the curve section defined by temp_exponent_factor)
 	var/optimal_temp = 500
 	/// Temperature at which reaction explodes - If any reaction is this hot, it explodes!
 	var/overheat_temp = 900
-	/// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	/// Lowest value of pH determining pH a 1 value for pH good rate reactions (Plateu phase)
 	var/optimal_ph_min = 5
 	/// Higest value for above
 	var/optimal_ph_max = 9
@@ -44,13 +44,13 @@
 	var/temp_exponent_factor = 2
 	/// How sharp the pH exponential curve is (to the power of value)
 	var/ph_exponent_factor = 2
-	/// How much the temperature changes per unit of chem used. without REACTION_HEAT_ARBITARY flag the rate of change depends on the holder heat capacity else results are more accurate
+	/// How much the temperature changes per unit of chem used.. without REACTION_HEAT_ARBITARY flag the rate of change depends on the holder heat capacity else results are more accurate
 	var/thermic_constant = 0
 	/// pH change per 1u reaction
 	var/H_ion_release = 0.01
 	/// Optimal/max rate possible if all conditions are perfect
 	var/rate_up_lim = 30
-	/// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
+	/// If purity is below 0.15, it calls OverlyImpure() too.. Set to 0 to disable this.
 	var/purity_min = 0.15
 	/// bitflags for clear conversions; see code/__DEFINES/reagents.dm
 	var/reaction_flags = NONE
@@ -241,7 +241,7 @@
 				X.throw_at(T, moving_power, 1)
 		else
 			if(setting_type)
-				if(step_away(X, T) && moving_power > 1) //Can happen twice at most. So this is fine.
+				if(step_away(X, T) && moving_power > 1) // Can happen twice at most.. So this is fine.
 					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), X, T), 0.2 SECONDS)
 			else
 				if(step_towards(X, T) && moving_power > 1)
@@ -249,7 +249,7 @@
 
 //////////////////Generic explosions/failures////////////////////
 // It is HIGHLY, HIGHLY recomended that you consume all/a good volume of the reagents/products in an explosion - because it will just keep going forever until the reaction stops
-//If you have competitive reactions - it's a good idea to consume ALL reagents in a beaker (or product+reactant), otherwise it'll swing back with the deficit and blow up again
+// If you have competitive reactions - it's a good idea to consume ALL reagents in a beaker (. Product+reactant), otherwise it'll swing back with the deficit. Blow up again
 
 /*
  * The same method that pyrotechnic reagents used before
@@ -371,7 +371,7 @@
 	if(clear_products)
 		clear_products(holder)
 
-//Spews out the corrisponding reactions reagents  (products/required) of the beaker in a smokecloud. Doesn't spew catalysts
+// Spews out the corrisponding reactions reagents (products/required) of the beaker in a smokecloud.. Doesn't spew catalysts
 /datum/chemical_reaction/proc/explode_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0, clear_products = TRUE, clear_reactants = TRUE)
 	var/datum/reagents/reagents = new/datum/reagents(2100, NO_REACT)//Lets be safe first
 	reagents.my_atom = holder.my_atom //fingerprint
@@ -416,7 +416,7 @@
 			var/atom/throw_target = get_edge_target_turf(movey, get_dir(movey, get_step_away(movey, this_turf)))
 			movey.throw_at(throw_target, moving_power, 1)
 
-////////BEGIN FIRE BASED EXPLOSIONS
+/// /////BEGIN FIRE Good EXPLOSIONS
 
 //Calls the default explosion subsystem handiler to explode with fire (random firespots and noise)
 /datum/chemical_reaction/proc/explode_fire(datum/reagents/holder, datum/equilibrium/equilibrium, range = 3)
@@ -472,7 +472,7 @@
 	for(var/turf/turf as anything in RANGE_TURFS(fire_range, location))
 		new /obj/effect/hotspot(turf)
 
-///////////END FIRE BASED EXPLOSIONS
+/// ////////END FIRE Good EXPLOSIONS
 
 /*
 * Freezes in a circle around the holder location

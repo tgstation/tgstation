@@ -35,7 +35,7 @@
 	var/last_shot = 0
 	///Number of shots made (gets reset every few shots)
 	var/shot_number = 0
-	///if it's welded down to the ground or not. the emitter will not fire while unwelded. if set to true, the emitter will start anchored as well.
+	/// if it's welded down to the ground or not.. the emitter will not fire while unwelded.. if set to true, the emitter will start anchored as well.
 	var/welded = FALSE
 	///Is the emitter id locked?
 	var/locked = FALSE
@@ -55,7 +55,7 @@
 	var/mode = FALSE
 
 	// The following 3 vars are mostly for the prototype
-	///manual shooting? (basically you hop onto the emitter and choose the shooting direction, is very janky since you can only shoot at the 8 directions and i don't think is ever used since you can't build those)
+	/// manual shooting?. (basically you hop onto the emitter. Choose the shooting direction, is very low quality since you can only shoot at the 8 directions. I don't think is ever used since you can't build those)
 	var/manual = FALSE
 	///Amount of power inside
 	var/charge = 0
@@ -337,7 +337,7 @@
 /obj/machinery/power/emitter/screwdriver_act(mob/living/user, obj/item/item)
 	return default_deconstruction_screwdriver(user, item)
 
-/// Attempt to toggle the controls lock of the emitter
+/// Try to toggle the controls lock of the emitter
 /obj/machinery/power/emitter/proc/togglelock(mob/user)
 	if(obj_flags & EMAGGED)
 		to_chat(user, span_warning("The lock seems to be broken!"))

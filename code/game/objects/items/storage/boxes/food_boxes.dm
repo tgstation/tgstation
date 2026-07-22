@@ -5,7 +5,7 @@
 	desc = "Instructions: Heat in microwave. Product will stay perpetually warmed with cutting edge Donk Co. technology."
 	icon_state = "donkpocketbox"
 	illustration = null
-	/// What type of donk pocket are we gonna cram into this box?
+	/// What type of donk pocket are we going to cram into this box?
 	var/donktype = /obj/item/food/donkpocket
 	storage_type = /datum/storage/box/donk_pockets
 

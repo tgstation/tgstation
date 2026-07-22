@@ -38,7 +38,7 @@
 	behavior_tree_json = "code/modules/mob/living/basic/alien/lay_alien_egg.bt.json"
 
 
-/// Plants alien weeds on the pawn's current turf. Fails if the pawn can't plant or weeds couldn't be placed.
+/// Plants alien weeds on the pawn's current turf.. Fails if the pawn can't plant or weeds couldn't be placed.
 /datum/bt_node/ai_behavior/plant_alien_weeds
 
 /datum/bt_node/ai_behavior/plant_alien_weeds/perform(seconds_per_tick, datum/ai_controller/controller)
@@ -47,7 +47,7 @@
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-/// Lays an alien egg on the pawn's current turf. Fails if the pawn can't lay eggs or an egg couldn't be placed.
+/// Lays an alien egg on the pawn's current turf.. Fails if the pawn can't lay eggs or an egg couldn't be placed.
 /datum/bt_node/ai_behavior/lay_alien_egg
 
 /datum/bt_node/ai_behavior/lay_alien_egg/perform(seconds_per_tick, datum/ai_controller/controller)

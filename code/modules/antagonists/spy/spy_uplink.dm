@@ -130,7 +130,7 @@
 	qdel(active_scan_cone)
 	return .
 
-/// Attempts to steal the passed atom in accordance with the passed bounty.
+/// Tries to steal the passed atom in accordance with the passed bounty.
 /// If successful, proceeds to complete the bounty.
 /datum/component/spy_uplink/proc/steal_process(atom/movable/stealing, mob/living/spy, datum/spy_bounty/bounty)
 	spy.visible_message(
@@ -154,7 +154,7 @@
 	// clear up the bounty itself
 	bounty.clean_up_stolen_item(stealing, spy, handler)
 	bounty.claimed = TRUE
-	// adds child items to the bounty pool, ie ammo for a newly acquired gun
+	// adds child items to the bounty pool, that is ammo for a newly acquired gun
 	for(var/child_item_type in bounty.reward_item.relevant_child_items)
 		handler.try_add_to_loot_pool(SStraitor.uplink_items_by_type[child_item_type])
 	// and finally, spawn the reward
@@ -174,7 +174,7 @@
 	var/datum/antagonist/spy/spy_datum = spy_ref?.resolve()
 	if(!isnull(spy_datum))
 		// "When" TGUI roundend is finished, a list of all bounties complete and their rewards should be put in a collapsible,
-		// otherwise it's just too much information to display cleanly. (That's why we're only displaying number and rewards)
+		// otherwise it's just too much information to display cleanly.. (That's why we're only displaying number and rewards)
 		spy_datum.bounties_claimed += 1
 		spy_datum.all_loot += bounty.reward_item.name
 

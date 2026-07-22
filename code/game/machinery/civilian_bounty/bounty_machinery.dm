@@ -156,7 +156,7 @@
 			stack_item.claimed = TRUE
 			stack_item.on_claimed(inserted_scan_id)
 			// Unique case: A global bounty is completed, and you have the same bounty as a personal bounty,
-			// it will complete your personal one as well. It will however only increment the tracker by one.
+			// it will complete your personal one as well.. It will but only increment the tracker by one.
 			if(check_global)
 				SSeconomy.civ_bounty_tracker++ //This is the tracker for adding more global bounties, not for logging purposes.
 				for(var/datum/bank_account/helper in stack_item.contribution)
@@ -354,7 +354,7 @@
 	//Then, add new bounties up to the limit.
 	var/list/jobs_picked = running_jobs || list()
 	while(length(GLOB.shared_crew_bounties) < update_up_to)
-		var/job_code = rand(CIV_JOB_BASIC, CIV_JOB_BITRUN) //CIV_JOB_ defines taken from _DEFINES/economy.dm. If new job bounty classes are added, swap out our maximum.
+		var/job_code = rand(CIV_JOB_BASIC, CIV_JOB_BITRUN) // CIV_JOB_ defines taken from _DEFINES/economy.dm.. If new job bounty classes are added, swap out our maximum.
 		if(job_code in jobs_picked)
 			continue
 		jobs_picked += job_code

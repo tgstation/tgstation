@@ -53,7 +53,7 @@
 	. = ..()
 	var/rises_message = "rises out of [cast_on]"
 
-	// If we casted at a wall we'll try to rust it. In the case of an enchanted wall it'll deconstruct it
+	// If we casted at a wall we'll try to rust it.. In the case of an enchanted wall it'll deconstruct it
 	if(isclosedturf(cast_on))
 		cast_on.visible_message(span_warning("\The [cast_on] quakes as the rust causes it to crumble!"))
 		var/mob/living/living_owner = owner

@@ -113,7 +113,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	var/py_shift = 0
 	var/button_animation_flags = BUTTON_SLIDE_IN
 
-	///A replacement icon state for the generic radial slice bg icon. Doesn't affect the next page nor the center buttons
+	/// A replacement icon state for the generic radial slice bg icon.. Doesn't affect the next page nor the center buttons
 	var/radial_slice_icon
 
 //If we swap to vis_contens inventory these will need a redo
@@ -264,7 +264,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		E.icon_state = "radial_slice" // Resets the bg icon state to the default for next page buttons.
 		E.add_overlay("radial_next")
 	else
-		//This isn't granted to exist, so use the ?. operator for conditionals that use it.
+		// This isn't granted to exist, so use the ?.. operator for conditionals that use it.
 		var/datum/radial_menu_choice/choice_datum = choice_datums[choice_id]
 		if(choice_datum?.name)
 			E.name = choice_datum.name
@@ -446,10 +446,10 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 /// Can be provided to choices in radial menus if you want to provide more information
 /datum/radial_menu_choice
-	/// Required -- what to display for this button
+	/// Needed -- what to display for this button
 	var/image/image
 
-	/// If provided, this will be the name the radial slice hud button. This has priority over everything else.
+	/// If provided, this will be the name the radial slice hud button.. This has priority over everything else.
 	var/name
 
 	/// If provided, will display an info button that will put this text in your chat

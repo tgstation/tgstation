@@ -13,7 +13,7 @@
 	var/datum/dimension_theme/theme
 	/// Effect displaying on the anomaly to represent the theme.
 	var/mutable_appearance/theme_icon
-	/// How many times we can still teleport. Delete self if it hits 0 and we try to teleport. If immortal, will simply stay where it is
+	/// How many times we can still teleport.. Delete self if it hits 0 and we try to teleport.. If immortal, will simply stay where it is
 	var/teleports_left
 	/// Minimum teleports it will do before going away permanently
 	var/minimum_teleports = 1

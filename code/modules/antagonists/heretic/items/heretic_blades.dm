@@ -79,7 +79,7 @@
 	escape_attempts = 0
 	deltimer(escape_timer)
 
-/// Attempts to teleport the passed mob to somewhere safe on the station, if they can use the blade.
+/// Tries to teleport the passed mob to somewhere safe on the station, if they can use the blade.
 /obj/item/melee/sickly_blade/proc/seek_safety(mob/user)
 	var/turf/safe_turf = find_safe_turf(z, extended_safety_checks = TRUE)
 	if(check_usability(user))
@@ -151,7 +151,7 @@
 	inhand_icon_state = "void_blade"
 	after_use_message = "The Aristocrat hears your call..."
 
-// Path of the Blade's... blade.
+// Path of the Blade's.... blade.
 // Opting for /dark instead of /blade to avoid "sickly_blade/blade".
 /obj/item/melee/sickly_blade/dark
 	name = "\improper sundered blade"
@@ -235,7 +235,7 @@
 	after_use_message = "The Moon hears your call..."
 
 // Path of Nar'Sie's blade
-// What!? This blade is given to cultists as an altar item when they sacrifice a heretic.
+// What!?. This blade is given to cultists as an altar item when they sacrifice a heretic.
 // It is also given to the heretic themself if they sacrifice a cultist.
 /obj/item/melee/sickly_blade/cursed
 	name = "\improper cursed blade"

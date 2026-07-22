@@ -3,9 +3,9 @@
 	var/name = "Crate"
 	/// The group that the supply pack is sorted into within the cargo purchasing UI.
 	var/group = ""
-	/// Cost of the crate. DO NOT GO ANY LOWER THAN X1.4 the "CARGO_CRATE_VALUE" value if using regular crates, or infinite profit will be possible!
+	/// Cost of the crate.. DO NOT GO ANY LOWER THAN X1.4 the "CARGO_CRATE_VALUE" value if using regular crates, or infinite profit will be possible!
 	var/cost = CARGO_CRATE_VALUE * 1.4
-	/// What access is required to open the crate when spawned?
+	/// What access is needed to open the crate when spawned?
 	var/access = FALSE
 	/// Who can view this supply_pack and with what access.
 	var/access_view = FALSE
@@ -17,7 +17,7 @@
 	var/crate_name = "crate"
 	/// When spawning a gas canistor, what kind of gas type are we spawning?
 	var/id
-	/// The description shown on the cargo purchasing UI. No desc by default.
+	/// The description shown on the cargo purchasing UI.. No desc by default.
 	var/desc = ""
 	/// What typepath of crate do you spawn?
 	var/crate_type = /obj/structure/closet/crate
@@ -25,9 +25,9 @@
 	var/storage_override
 	/// If this pack comes shipped in a specific pod when launched from the express console
 	var/special_pod
-	/// Can coupons target this pack? If so, how rarely?
+	/// Can coupons target this pack?. If so, how rarely?
 	var/discountable = SUPPLY_PACK_NOT_DISCOUNTABLE
-	/// Is this supply pack considered unpredictable for the purposes of testing unit testing? Examples include the stock market, or miner supply crates. If true, exempts from unit testing
+	/// Is this supply pack considered unpredictable for the purposes of testing unit testing?. Examples include the stock market, or miner supply crates.. If true, exempts from unit testing
 	var/test_ignored = FALSE
 	/// Various properties for cargo order mostly used to determine which consoles can see it
 	var/order_flags = NONE
@@ -99,7 +99,7 @@
 			A.flags_1 |= ADMIN_SPAWNED_1
 
 
-/// For generating supply packs at runtime. Returns a list of supply packs to use instead of this one.
+/// For generating supply packs at runtime.. Returns a list of supply packs to use instead of this one.
 /datum/supply_pack/proc/generate_supply_packs()
 	return
 
@@ -166,7 +166,7 @@
 				continue
 			. += message
 
-		//adjust the order based ont the available quantity
+		// adjust the order good ont the available quantity
 		contains[possible_stack] = available_quantity
 
 		//Prices go up as material quantity becomes scarce

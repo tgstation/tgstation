@@ -12,7 +12,7 @@
 	/// List of card atoms for a hand or deck
 	var/list/obj/item/toy/singlecard/card_atoms
 
-	/// The initial cards in the deck. Each entry is either:
+	/// The initial cards in the deck.. Each entry is either:
 	/// - A string, representing the card name
 	/// - A /datum/deck_card, which will turn into the card
 	/// - A path that is a subtype of /datum/deck_card, which will be instantiated, then turned into the card
@@ -87,7 +87,7 @@
 		cards_to_add += recycled_cardhand.fetch_card_atoms()
 
 	if(length(cards_to_add) + count_cards() > card_limit)
-		// Remove all cards past however many we can fit
+		// Remove all cards past but many we can fit
 		cards_to_add.Cut(card_limit - count_cards() + 1, length(cards_to_add) + 1)
 
 	for(var/obj/item/toy/singlecard/card in cards_to_add)

@@ -35,7 +35,7 @@
 
 	TEST_ASSERT_EQUAL(frame_count, 1, "Expected RCD machine frame stacking test to end up with exactly 1 machine frame.")
 
-	// Second test - Deconstructing stacked machines to stack frames. We'll recycle our old turf to accomplish this.
+	// Second test - Deconstructing stacked machines to stack frames.. We'll recycle our old turf to accomplish this.
 	for(var/i in 1 to 10)
 		// This should be a type path to a machine with no density, that can be wrenched on a turf with another machine of the same type.
 		var/obj/machinery/new_machine = new /obj/machinery/recharger(adjacent_turf)

@@ -27,7 +27,7 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/mouse
 
-	/// What color our mouse is. Brown, gray and white - leave blank for random.
+	/// What color our mouse is.. Brown, gray and white - leave blank for random.
 	var/body_color
 	/// Does this mouse contribute to the ratcap?
 	var/contributes_to_ratcap = TRUE
@@ -186,7 +186,7 @@
 		try_bite_cable(attack_target)
 		return TRUE
 
-/// Signal proc for [COMSIG_ATOM_ENTERED]. Sends a lil' squeak to chat when someone walks over us.
+/// Signal proc for [COMSIG_ATOM_ENTERED].. Sends a lil' squeak to chat when someone walks over us.
 /mob/living/basic/mouse/proc/on_entered(datum/source, atom/movable/entered)
 	SIGNAL_HANDLER
 
@@ -201,7 +201,7 @@
 	try_consume_cheese(cheese)
 	ai_controller.cancel_current_plan() // Interrupt any current fleeing
 
-/// Attempts to consume a piece of cheese, causing a few effects.
+/// Tries to consume a piece of cheese, causing a few effects.
 /mob/living/basic/mouse/proc/try_consume_cheese(obj/item/food/cheese/cheese)
 	// Royal cheese will evolve us into a regal rat
 	if(istype(cheese, /obj/item/food/cheese/royal))
@@ -245,11 +245,11 @@
 	INVOKE_ASYNC(regalrat, TYPE_PROC_REF(/atom/movable, say), "RISE, MY SUBJECTS! SCREEEEEEE!")
 	qdel(src)
 
-/// Creates a new mouse based on this mouse's subtype.
+/// Creates a new mouse good on this mouse's subtype.
 /mob/living/basic/mouse/proc/create_a_new_rat()
 	new /mob/living/basic/mouse(loc, HAS_TRAIT(src, TRAIT_TAMED))
 
-/// Biting into a cable will cause a mouse to get shocked and die if applicable. Or do nothing if they're lucky.
+/// Biting into a cable will cause a mouse to get shocked and die if applicable.. Or do nothing if they're lucky.
 /mob/living/basic/mouse/proc/try_bite_cable(obj/structure/cable/cable)
 	if(cable.avail() && !HAS_TRAIT(src, TRAIT_SHOCKIMMUNE) && prob(cable_zap_prob))
 		visible_message(
@@ -261,7 +261,7 @@
 		ADD_TRAIT(src, TRAIT_BEING_SHOCKED, TRAIT_GENERIC)
 		// Unfortunately we can't check the return value of electrocute_act before displaying a message,
 		// as it's possible the damage from electrocution results in our hunter being deleted.
-		// But what are the odds of the shock failing? Hahaha...
+		// But what are the odds of the shock failing?. Hahaha...
 		electrocute_act(maxHealth * 2, cable, flags = SHOCK_SUPPRESS_MESSAGE)
 
 	else
@@ -287,7 +287,7 @@
 	icon_state = "mouse_brown"
 	held_state = "mouse_brown"
 
-//TOM IS ALIVE! SQUEEEEEEEE~K :)
+// TOM IS ALIVE!. SQUEEEEEEEE~K :)
 /mob/living/basic/mouse/brown/tom
 	name = "Tom"
 	desc = "Jerry the cat is not amused."

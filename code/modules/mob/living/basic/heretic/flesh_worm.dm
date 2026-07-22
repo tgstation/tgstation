@@ -1,7 +1,7 @@
 /// Armsy starts to look a bit funky if he's shorter than this
 #define MINIMUM_ARMSY_LENGTH 2
 
-// What if we took a linked list... But made it a mob?
+// What if we took a linked list.... But made it a mob?
 /// The "Terror of the Night" / Armsy, a large worm made of multiple bodyparts that occupies multiple tiles
 /mob/living/basic/heretic_summon/armsy
 	name = "Lord of the Night"
@@ -21,7 +21,7 @@
 	mob_size = MOB_SIZE_HUGE
 	sentience_type = SENTIENCE_BOSS
 	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
-	///Previous segment in the chain, we hold onto this purely to keep track of how long we currently are and to attach new growth to the back
+	/// Previous segment in the chain, we hold onto this purely to keep track of how long we currently are. To attach new growth to the back
 	var/mob/living/basic/heretic_summon/armsy/back
 	///How many arms do we have to eat to expand?
 	var/stacks_to_grow = 5
@@ -57,7 +57,7 @@
 	return TRUE
 
 /mob/living/basic/heretic_summon/armsy/can_be_pulled(user, force)
-	return FALSE // The component does this but not on the head. We don't want the head to be pulled either.
+	return FALSE // The component does this but not on the head.. We don't want the head to be pulled either.
 
 /mob/living/basic/heretic_summon/armsy/proc/build_tail(worm_length)
 	worm_length = max(worm_length, MINIMUM_ARMSY_LENGTH)

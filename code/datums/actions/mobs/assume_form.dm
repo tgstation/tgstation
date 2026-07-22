@@ -1,5 +1,5 @@
 /// Allows a mob to assume the form of another item or mob.
-/// Warning, this will likely shit the bricks if you add this action to anything more sophisticated than a basic mob- this isn't built for anything carbon-wise.
+/// Warning, this will likely shit the bricks if you add this action to anything more sophisticated than a basic mob- this isn't built f. Anything carbon-wise.
 /datum/action/cooldown/mob_cooldown/assume_form
 	name = "Assume Form"
 	desc = "Choose something that you wish to blend into the environment as. Click on yourself to reset your appearance."
@@ -35,14 +35,14 @@
 	enable_cooldown_actions()
 	return TRUE
 
-/// Rapid proc to test if we can assume the form of a given atom. Returns TRUE if we can, FALSE if we can't. Done like this so we can be nice and explicit.
+/// Rapid proc to test if we can assume the form of a given atom.. Returns TRUE if we can, FALSE if we can't.. Done like this so we can be nice and explicit.
 /datum/action/cooldown/mob_cooldown/assume_form/proc/can_assume_form(atom/target_atom)
 	if(is_type_in_typecache(target_atom, blacklist_typecache) || (!isobj(target_atom) && !ismob(target_atom)))
 		return FALSE
 
 	return TRUE
 
-/// Determines what our user meant by their action. If they clicked on themselves, we reset our appearance. Otherwise, we assume the appearance of the clicked-on item.
+/// Determines what our user meant by their action.. If they clicked on themselves, we reset our appearance.. Otherwise, we assume the appearance of the clicked-on item.
 /datum/action/cooldown/mob_cooldown/assume_form/proc/determine_intent(atom/target_atom)
 	if(!can_assume_form(target_atom))
 		return
@@ -53,7 +53,7 @@
 
 	assume_appearances(target_atom)
 
-/// Assumes the appearance of a desired movable and applies it to our mob. Target is the movable in question.
+/// Assumes the appearance of a desired movable and applies it to our mob.. Target is the movable in question.
 /datum/action/cooldown/mob_cooldown/assume_form/proc/assume_appearances(atom/movable/target_atom)
 	owner.appearance = target_atom.appearance
 	owner.copy_overlays(target_atom)

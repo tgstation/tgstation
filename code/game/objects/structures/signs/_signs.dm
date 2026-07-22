@@ -10,7 +10,7 @@
 	resistance_flags = FLAMMABLE
 	///Determines if a sign is unwrenchable.
 	var/buildable_sign = TRUE
-	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
+	/// This determines if you can select this sign type when using a pen on a sign backing.. False by default, set to true per sign type to override.
 	var/is_editable = FALSE
 	///sign_change_name is used to make nice looking, alphabetized and categorized names when you use a pen on any sign item or structure which is_editable.
 	var/sign_change_name
@@ -149,7 +149,7 @@
 	max_integrity = 100
 	///The type of sign structure that will be created when placed on a turf, the default looks just like a sign backing item.
 	var/sign_path = /obj/structure/sign/blank
-	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
+	/// This determines if you can select this sign type when using a pen on a sign backing.. False by default, set to true per sign type to override.
 	var/is_editable = TRUE
 
 /datum/armor/item_sign
@@ -198,7 +198,7 @@
 		balloon_alert(user, "stand in line with wall!")
 		return ITEM_INTERACT_BLOCKING
 	var/obj/structure/sign/placed_sign = new sign_path(user_turf) //We place the sign on the turf the user is standing, and pixel shift it to the target wall, as below.
-	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
+	// This is to mimic how signs. Other wall objects are usually placed by mappers. So they're only visible from one side of a wall.
 	if(dir & NORTH)
 		placed_sign.pixel_y = 32
 	else if(dir & SOUTH)

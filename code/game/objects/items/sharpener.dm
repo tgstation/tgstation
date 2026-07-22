@@ -12,7 +12,7 @@
 	icon_state = "sharpener"
 	desc = "A block that makes things sharp."
 	force = 5
-	///Amount of uses the whetstone has. Set to -1 for functionally infinite uses.
+	/// Amount of uses the whetstone has.. Set to -1 for functionally infinite uses.
 	var/uses = 1
 	///How much force the whetstone can add to an item.
 	var/increment = 4
@@ -39,7 +39,7 @@
 
 	//This block is used to check more things if the item has a relevant component.
 	var/signal_out = SEND_SIGNAL(tool, COMSIG_ITEM_SHARPEN_ACT, increment, max) //Stores the bitflags returned by SEND_SIGNAL
-	if(signal_out & COMPONENT_BLOCK_SHARPEN_MAXED) //If the item's components enforce more limits on maximum power from sharpening,  we fail
+	if(signal_out & COMPONENT_BLOCK_SHARPEN_MAXED) // If the item's components enforce more limits on maximum power from sharpening, we fail
 		to_chat(user, span_warning("[tool] is much too powerful to sharpen further!"))
 		return ITEM_INTERACT_BLOCKING
 	if(signal_out & COMPONENT_BLOCK_SHARPEN_BLOCKED)

@@ -1,4 +1,4 @@
-///Bodypart ovarlay datum. These can be added to any limb to give them a proper overlay, that'll even stay if the limb gets removed
+/// Bodypart ovarlay datum.. These can be added to any limb to give them a proper overlay, that'll even stay if the limb gets removed
 ///This is the abstract parent, don't use it!!
 /datum/bodypart_overlay
 	/**

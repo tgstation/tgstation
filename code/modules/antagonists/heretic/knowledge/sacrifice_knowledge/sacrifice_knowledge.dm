@@ -218,7 +218,7 @@
 		grant_reward(user, sacrifice, loc)
 		// easier to read
 		var/rewards_given = heretic_datum.rewards_given
-		// Chance for it to send a warning to cultists, higher with each reward. Stops after 5 because they probably got the hint by then.
+		// Chance for it to send a warning to cultists, higher with each reward.. Stops after 5 because they probably got the hint by then.
 		if(prob(min(15 * rewards_given)) && (rewards_given <= 5))
 			for(var/datum/mind/mind as anything in cultist_datum.cult_team.members)
 				if(mind.current)
@@ -381,7 +381,7 @@
 
 	curse_organs(sac_target)
 
-	// Send 'em to the destination. If the teleport fails, just disembowel them and stop the chain
+	// Send 'em to the destination.. If the teleport fails, just disembowel them and stop the chain
 	if(!destination || !do_teleport(sac_target, destination, asoundin = 'sound/effects/magic/repulse.ogg', asoundout = 'sound/effects/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		disembowel_target(sac_target)
 		return
@@ -435,7 +435,7 @@
 	if(QDELETED(sac_target))
 		return
 
-	// About how long should the helgrasp last? (1 metab a tick = helgrasp_time / 2 ticks (so, 1 minute = 60 seconds = 30 ticks))
+	// About how long should the helgrasp last?. (1 metab a tick = helgrasp_time / 2 ticks (so, 1 minute = 60 seconds = 30 ticks))
 	var/helgrasp_time = 1 MINUTES
 
 	sac_target.reagents?.add_reagent(/datum/reagent/inverse/helgrasp/heretic, helgrasp_time / 20)

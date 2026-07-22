@@ -1,7 +1,7 @@
 ///Earthquake random event.
-///Draws a curve of turfs between a high and low point. These turfs will shake and eventually "collapse", forming a cut in the station that drops to the z-level below.
-///Much of the actual structural damage is done through the explosions subsystem. Objects, machines, and especially people
-///that aren't moved out of the epicenter area (indicated by the wobbly tiles) will not just be thrown down a z-level, but also be destroyed/maimed in the process.
+/// Draws a curve of turfs between a high and low point.. These turfs will shake and eventually "collapse", forming a cut in the station that drops to the z-level below.
+/// Much of the actual structural damage is done through the explosions subsystem.. Objects, machines, and especially people
+/// that aren't moved out of the epicenter area (indicated by the wobbly tiles) will not just be thrown down a z-level. Also be destroyed/maimed in the process.
 /datum/round_event_control/earthquake
 	name = "Chasmic Earthquake"
 	description = "Causes an earthquake, demolishing anything caught in the fault."
@@ -83,7 +83,7 @@
 		for(var/turf/turf_to_compare in turfs_to_compare)
 			nearest_distance = min(get_dist(turf_to_check, turf_to_compare), nearest_distance)
 
-		// If the turf is too far from any point on our fault line estimate, we remove it. If it's on the edge, we lightly damage it
+		// If the turf is too far from any point on our fault line estimate, we remove it.. If it's on the edge, we lightly damage it
 		if(nearest_distance > 2)
 			if(nearest_distance == 3)
 				edges += turf_to_check
@@ -162,8 +162,8 @@
 		shake_camera(earthquake_witness, 2 SECONDS, 4)
 		earthquake_witness.playsound_local(earthquake_witness, 'sound/effects/explosion/explosionfar.ogg', 75)
 
-	// Step two of the destruction, which detonates the turfs in the earthquake zone. There is no actual explosion, meaning stuff around the earthquake zone is perfectly safe.
-	// All turfs, and everything else that IS in the earthquake zone, however, will behave as if it were bombed.
+	// Step two of the destruction, which detonates the turfs in the earthquake zone.. There is no actual explosion, meaning stuff around the earthquake zone is perfectly safe.
+	// All turfs, and everything else that IS in the earthquake zone, but will behave as if it were bombed.
 	// If you are caught in the earthquake zone, you will not only die but probably be torn apart in the process.
 	for(var/turf/turf_to_shred in turfs_to_shred)
 		if(prob(10))

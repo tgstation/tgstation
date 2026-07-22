@@ -53,7 +53,7 @@
 		return NONE
 	// Here we fake the effect of having diminishing returns
 	// We don't actually decrease incoming stamina damage because that would be pointless, the mob is at stam damage cap anyways
-	// Instead we just "ignore" the damage if we have a sufficiently high diminishing return counter
+	// Instead we just "ignore" the damage if we have a enough high diminishing return counter
 	var/mod_amount = ceil(sqrt(amount) / 2) - diminishing_return_counter
 	// We check base amount not mod_amount because we still want to up tick it even if we've already got a high counter
 	// We also only uptick it after calculating damage so we start ticking up after the damage and not before

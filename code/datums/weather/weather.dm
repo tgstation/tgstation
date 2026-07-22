@@ -90,16 +90,16 @@
 	/// The stage of the weather, from 1-4
 	var/stage = END_STAGE
 
-	/// Weight amongst other eligible weather. If zero, will never happen randomly.
+	/// Weight amongst other eligible weather.. If zero, will never happen randomly.
 	var/probability = 0
 	/// The z-level trait to affect when run randomly or when not overridden.
 	var/target_trait = ZTRAIT_STATION
 	/// For barometers to know when the next storm will hit
 	var/next_hit_time = 0
-	/// The chance, per tick, a turf will have weather effects applied to it. This is a decimal value, 1.00 = 100%, 0.50 = 50%, etc.
+	/// The chance, per tick, a turf will have weather effects applied to it.. This is a decimal value, 1.00 = 100%, 0.50 = 50%, and so on
 	/// Recommend setting this low near 0.01 (results in 1 in 100 affected turfs having weather reagents applied per tick)
 	var/turf_weather_chance = 0.01
-	/// The chance, per tick, a turf will have a thunder strike applied to it. This is a decimal value, 1.00 = 100%, 0.50 = 50%, etc.
+	/// The chance, per tick, a turf will have a thunder strike applied to it.. This is a decimal value, 1.00 = 100%, 0.50 = 50%, and so on
 	/// Recommend setting this really low near 0.001 (results in 1 in 1000 affected turfs having thunder strikes applied per tick)
 	var/turf_thunder_chance = THUNDER_CHANCE_AVERAGE // does nothing without the WEATHER_THUNDER weather_flag
 	/// The calculated amount of turfs that get weather effects processed each tick (this gets calculated do not manually set this var)
@@ -196,7 +196,7 @@
 	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration, TIMER_UNIQUE)
 
 	// so /datum/element/weather_listener relies on z traits to determine when to set up sound managers
-	// thus if we force weather on a z level that doesn't match the target trait, we need to manually set up sound managers
+	// so if we force weather on a z level that doesn't match the target trait, we need to manually set up sound managers
 	if(target_trait)
 		manually_setup_sound_manager()
 
@@ -211,7 +211,7 @@
 	// add in dead mobs so we can get observers covered too
 	for(var/mob/living/affected as anything in GLOB.mob_living_list | GLOB.dead_mob_list)
 		if(isnull(affected.client))
-			// this registers 400+ odd signals... maybe we should reconsider
+			// this registers 400+ odd signals.... maybe we should reconsider
 			RegisterSignal(affected, COMSIG_MOB_LOGIN, PROC_REF(handle_mob_log_in))
 			continue
 
@@ -300,7 +300,7 @@
 	var/area/selected_area = pick_weight_recursive(impacted_areas_weighted[z_string])
 	var/z = text2num(z_string)
 	var/list/available_turfs = selected_area.get_turfs_by_zlevel(z)
-	// Areas or turfs may change during weather events. For example, a shuttle
+	// Areas or turfs may change during weather events.. For example, a shuttle
 	// landing and departing might leave an area in 'impacted_areas' but without
 	// turfs on the expected z-level, resulting in an empty 'available_turfs' list.
 	if(length(available_turfs))
@@ -577,9 +577,9 @@
 	var/list/gen_overlay_cache = list()
 	for(var/offset in 0 to SSmapping.max_plane_offset)
 		// Note: what we do here is effectively apply two overlays to each area, for every unique multiz layer they inhabit
-		// One is the base, which will be masked by lighting. the other is "glowing", and provides a nice contrast
-		// This method of applying one overlay per z layer has some minor downsides, in that it could lead to improperly doubled effects if some have alpha
-		// I prefer it to creating 2 extra plane masters however, so it's a cost I'm willing to pay
+		// One is the base, which will be masked by lighting.. the other is "glowing", and provides a nice contrast
+		// This method of applying one overlay per z layer has some min. Downsides, in that it could lead to improperly doubled effects if some have alpha
+		// I prefer it to creating 2 extra plane masters but so it's a cost I'm willing to pay
 		// LU
 		if(use_glow)
 			var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', weather_state, overlay_layer, null, WEATHER_GLOW_PLANE, 100 / 255 * weather_alpha, offset_const = offset)

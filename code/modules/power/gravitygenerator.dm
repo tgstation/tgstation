@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 /obj/machinery/gravity_generator/zap_act(power, zap_flags)
 	. = ..()
 	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
-		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
+		qdel(src)// like the singulo, tesla deletes it.. stops it from exploding over and over
 
 /obj/machinery/gravity_generator/update_icon_state()
 	icon_state = "[get_status()]_[sprite_number]"
@@ -178,7 +178,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 
 /obj/machinery/gravity_generator/main/proc/setup_parts()
 	var/turf/our_turf = get_turf(src)
-	// 9x9 block obtained from the bottom middle of the block
+	// 9x9 block got from the bottom middle of the block
 	var/list/spawn_turfs = CORNER_BLOCK_OFFSET(our_turf, 3, 3, -1, 0)
 	var/count = 10
 	for(var/turf/T in spawn_turfs)
@@ -320,7 +320,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 		return "fix[min(broken_state, 3)]"
 	return on || charging_state != POWER_IDLE ? "on" : "off"
 
-// Set the charging state based on power/breaker.
+// Set the charging state good on power/breaker.
 /obj/machinery/gravity_generator/main/proc/set_power()
 	var/new_state = FALSE
 	if(machine_stat & (NOPOWER|BROKEN) || !breaker)
@@ -479,11 +479,11 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 	for(var/obj/machinery/gravity_generator/part as anything in generator_parts)
 		SET_PLANE(part, PLANE_TO_TRUE(part.plane), new_turf)
 
-/// Returns the radioactive shielding (if there's a radioactive nebula). Called from a callback set in add_to_nebula_shielding()
+/// Returns the radioactive shielding (if there's a radioactive nebula).. Called from a callback set in add_to_nebula_shielding()
 /obj/machinery/gravity_generator/main/proc/get_radioactive_nebula_shielding()
 	return on ? radioactive_nebula_shielding : 0
 
-//prevents shuttles attempting to rotate this since it messes up sprites
+// prevents shuttles trying to rotate this since it messes up sprites
 /obj/machinery/gravity_generator/main/shuttleRotate(rotation, params)
 	params = NONE
 	return ..()

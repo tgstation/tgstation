@@ -1,13 +1,13 @@
 /datum/syndicate_contract
-	///The 'id' of this particular contract. Used to keep track of statuses from TGUI.
+	/// The 'id' of this particular contract.. Used to keep track of statuses from TGUI.
 	var/id
-	///The current status of the contract. Starts off by default.
+	/// The current status of the contract.. Starts off by default.
 	var/status = CONTRACT_STATUS_INACTIVE
 	///The related Objective datum for the contract, holding the target and such.
 	var/datum/objective/contract/contract
 	///The job position of the target.
 	var/target_rank
-	///How much we will pay out upon completion. This is not the TC completion, it's typically credits.
+	/// How much we will pay out upon completion.. This is not the TC completion, it's typically credits.
 	var/ransom = 0
 	///The level of payout, which affects the TC we get paid on completion.
 	var/payout_type
@@ -169,7 +169,7 @@
 	var/time_until_next
 	switch(level)
 		if(VICTIM_EXPERIENCE_START)
-			// Heal them up - gets them out of crit/soft crit. If omnizine is removed in the future, this needs to be replaced with a
+			// Heal them up - gets them out of crit/soft crit.. If omnizine is removed in the future, this needs to be replaced with a
 			// method of healing them, consequence free, to a reasonable amount of health.
 			victim.reagents.add_reagent(/datum/reagent/medicine/omnizine, amount = 20)
 			victim.flash_act()

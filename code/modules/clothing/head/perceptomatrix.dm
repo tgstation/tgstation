@@ -2,7 +2,7 @@
 #define PERCEPTOMATRIX_INACTIVE_FLAGS SNUG_FIT|STACKABLE_HELMET_EXEMPT|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT
 #define PERCEPTOMATRIX_ACTIVE_FLAGS PERCEPTOMATRIX_INACTIVE_FLAGS|CASTING_CLOTHES // we love casting spells
 
-/// Helmet which can turn you into a BEAST!! once an anomaly core is inserted
+/// Helmet which can turn you into a BEAST!!. once an anomaly core is inserted
 /obj/item/clothing/head/helmet/perceptomatrix
 	name = "perceptomatrix helm"
 	desc = "This piece of headgear harnesses the energies of a hallucinatory anomaly to create a safe audiovisual replica of -all- external stimuli directly into the cerebral cortex, \
@@ -88,7 +88,7 @@
 	user.update_sight()
 	..()
 
-// Prevent casting the spell w/o the core.
+// Prevent casting the spell without the core.
 /obj/item/clothing/head/helmet/perceptomatrix/proc/pre_cast_core_check(mob/caster, datum/action/cooldown/spell/spell)
 	SIGNAL_HANDLER
 	if((!core_installed) && spell.school == SCHOOL_PSYCHIC)
@@ -113,7 +113,7 @@
 	astype(loc, /mob/living/carbon)?.update_tint()
 
 	// When someone makes TRAIT_DEAF an element, or status effect, or whatever, give this item a way to bypass said deafness.
-	// just blocking future instances of deafness isn't what the item is meant to do but there's no proper way to do it otherwise at the moment.
+	// just blocking future instances of deafness isn't what the item is meant to do. There's no proper way to do it otherwise at the moment.
 	active_components += AddComponent(/datum/component/wearertargeting/earprotection, EAR_PROTECTION_HEAVY) // should be same as highest value
 	active_components += AddComponent(
 		/datum/component/anti_magic, \
@@ -198,7 +198,7 @@
 	for(var/mob/chef in get_hearers_in_view(7, pancakes))
 		if(!chef.mind)
 			continue
-		// if cooked by chef, or if EITHER 5% chance OR its april fools. a || (b || c)
+		// if cooked by chef, or if EITHER 5% chance OR its april fools.. a || (b || c)
 		if(HAS_TRAIT_FROM(pancakes, TRAIT_HANDMADE, REF(chef.mind)) || (prob(5) || check_holidays(APRIL_FOOLS)))
 			chef.say("Ma fuckin' pancakes!")
 

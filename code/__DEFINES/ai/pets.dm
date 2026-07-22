@@ -38,7 +38,7 @@
 #define BB_PARROT_REPEAT_PROBABILITY "BB_parrot_repeat_probability"
 /// The odds that this parrot will choose another string to repeat
 #define BB_PARROT_PHRASE_CHANGE_PROBABILITY "BB_parrot_phrase_change_probability"
-/// A copy of the string buffer that we end the shift with. DO NOT ACCESS THIS DIRECTLY - YOU SHOULD USE THE COMPONENT IN MOST CASES
+/// A copy of the string buffer that we end the shift with... DO NOT ACCESS THIS DIRECTLY - YOU SHOULD USE THE COMPONENT IN MOST CASES
 #define BB_EXPORTABLE_STRING_BUFFER_LIST "BB_parrot_repeat_string_buffer"
 /// The types of perches we desire to use
 #define BB_PARROT_PERCH_TYPES "BB_parrot_perch_types"

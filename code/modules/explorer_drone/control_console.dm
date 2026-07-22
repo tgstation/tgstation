@@ -5,7 +5,7 @@
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/piratepad_control")
 	//Currently controlled drone
 	var/obj/item/exodrone/controlled_drone
-	/// Have we lost contact with the drone without disconnecting. Unset on user confirmation.
+	/// Have we lost contact with the drone without disconnecting.. Unset on user confirmation.
 	var/signal_lost = FALSE
 
 /obj/machinery/computer/exodrone_control_console/ui_interact(mob/user, datum/tgui/ui)
@@ -94,7 +94,7 @@
 		.["all_drones"] = exodrones
 
 /obj/machinery/computer/exodrone_control_console/update_overlays()
-	/// Show alert screen if the drone is in a mode that requires decisionmaking
+	/// Show alert screen if the drone is in a mode that needs decisionmaking
 	if(controlled_drone && (controlled_drone.drone_status == EXODRONE_IDLE || controlled_drone.drone_status == EXODRONE_EXPLORATION || controlled_drone.drone_status == EXODRONE_ADVENTURE))
 		icon_screen = "alert:2"
 	else

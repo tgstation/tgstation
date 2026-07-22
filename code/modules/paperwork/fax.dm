@@ -14,7 +14,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	circuit = /obj/item/circuitboard/machine/fax
 	/// The unique ID by which the fax will build a list of existing faxes.
 	var/fax_id
-	/// The name of the fax displayed in the list. Not necessarily unique to some EMAG jokes.
+	/// The name of the fax displayed in the list.. Not necessarily unique to some EMAG jokes.
 	var/fax_name
 	/// A weak reference to an inserted object.
 	var/datum/weakref/loaded_item_ref
@@ -22,7 +22,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
 	/// If true, the fax machine is jammed and needs cleaning
 	var/jammed = FALSE
-	/// Necessary to hide syndicate faxes from the general list. Doesn't mean he's EMAGGED!
+	/// Necessary to hide syndicate faxes from the general list.. Doesn't mean he's EMAGGED!
 	var/syndicate_network = FALSE
 	/// True if the fax machine should be visible to other fax machines in general.
 	var/visible_to_network = TRUE
@@ -310,7 +310,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	data["fax_id"] = fax_id
 	data["fax_name"] = fax_name
 	data["visible"] = visible_to_network
-	// In this case, we don't care if the fax is hacked or in the syndicate's network. The main thing is to check the visibility of other faxes.
+	// In this case, we don't care if the fax is hacked or in the syndicate's network.. The main thing is to check the visibility of other faxes.
 	data["syndicate_network"] = (syndicate_network || (obj_flags & EMAGGED))
 	data["has_paper"] = !!loaded_item_ref?.resolve()
 	data["fax_history"] = fax_history
@@ -627,7 +627,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 
 	return .
 
-/// Sends a fax to a fax machine in an area! fax_area is a type, where all subtypes are also queried. If multiple machines, one is randomly picked
+/// Sends a fax to a fax machine in an area!. fax_area is a type, where all subtypes are also queried.. If multiple machines, one is randomly picked
 /// If force is TRUE, we send a droppod with a fax machine and fax the message to that fax machine
 /proc/send_fax_to_area(obj/item/fax_item, area_type, sender, force = FALSE, force_pod_type)
 	var/list/fax_machines = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax)
@@ -643,7 +643,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 		var/obj/machinery/fax/target_fax = pick(valid_fax_machines)
 		target_fax.receive(fax_item, sender)
 
-	else if(force) //no fax machines but we really gotte send? SEND A FAX MACHINE
+	else if(force) // no fax machines but we really gotte send?. SEND A FAX MACHINE
 		var/obj/machinery/fax/new_fax_machine = new()
 		if(!send_supply_pod_to_area(new_fax_machine, area_type, force_pod_type))
 			stack_trace("Attempted to forcibly send a fax to [area_type], however the area does not exist or has no valid dropoff spot for a fax machine")

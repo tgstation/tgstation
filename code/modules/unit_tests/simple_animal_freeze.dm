@@ -1,6 +1,6 @@
 /// Tests that no new simple_animal subtypes are added.
 /datum/unit_test/simple_animal_freeze
-	// !!! DO NOT ADD NEW ENTRIES TO THIS LIST !!!
+	// !!!. DO NOT ADD NEW ENTRIES TO THIS LIST !!!
 	// NO new simple animals are allowed.
 	// Use the new basic mobs system instead.
 	// If you are refactoring a simple_animal, REMOVE it from this list

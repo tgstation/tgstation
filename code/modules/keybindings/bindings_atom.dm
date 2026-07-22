@@ -1,9 +1,9 @@
-// You might be wondering why this isn't client level. If focus is null, we don't want you to move.
+// You might be wondering why this isn't client level.. If focus is null, we don't want you to move.
 // Only way to do that is to tie the behavior into the focus's keyLoop().
 
 /atom/movable/keyLoop(client/user)
-	// Clients don't go null randomly. They do go null unexpectedly though, when they're poked in particular ways
-	// keyLoop is called by a for loop over mobs. We're guarenteed that all the mobs have clients at the START
+	// Clients don't go null randomly.. They do go null unexpectedly though, when they're poked in particular ways
+	// keyLoop a calls for loop over mobs.. We're guarenteed that all the mobs have clients at the START
 	// But the move of one mob might poke the client of another, so we do this
 	if(!user)
 		return FALSE

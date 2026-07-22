@@ -203,14 +203,14 @@
 		return
 	if(!borghead)
 		borghead = human_user.head
-	if(!istype(borghead, /obj/item/clothing/head/costume/cardborg)) //why is this done this way? because equipped() is called BEFORE THE ITEM IS IN THE SLOT WHYYYY
+	if(!istype(borghead, /obj/item/clothing/head/costume/cardborg)) // why is this done this way?. because equipped() is called BEFORE THE ITEM IS IN THE SLOT WHYYYY
 		return
 	RegisterSignal(borghead, COMSIG_ITEM_DROPPED, PROC_REF(helmet_drop)) // Don't need to worry about qdeleting since dropped will be called from there
 	in_use = TRUE
 	var/image/override_image = image(icon = 'icons/mob/silicon/robots.dmi' , icon_state = "robot", loc = human_user)
 	override_image.override = TRUE
-	override_image.add_overlay(mutable_appearance('icons/mob/silicon/robots.dmi', "robot_e")) //gotta look realistic
-	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "standard_borg_disguise", override_image) //you look like a robot to robots! (including yourself because you're totally a robot)
+	override_image.add_overlay(mutable_appearance('icons/mob/silicon/robots.dmi', "robot_e")) // got to look realistic
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "standard_borg_disguise", override_image) // you look like a robot to robots!. (including yourself because you're totally a robot)
 
 /obj/item/clothing/suit/costume/cardborg/proc/helmet_drop(datum/source, mob/living/user)
 	SIGNAL_HANDLER

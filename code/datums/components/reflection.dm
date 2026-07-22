@@ -96,7 +96,7 @@
 	SIGNAL_HANDLER
 	set_reflection(REVERSE_DIR(new_dir))
 
-///Turns the allowed reflected direction alongside the parent's dir. then calls get_reflection_targets.
+/// Turns the allowed reflected direction alongside the parent's dir.. then calls get_reflection_targets.
 /datum/component/reflection/proc/set_reflection(new_dir = SOUTH)
 	if(reflected_dir == new_dir)
 		return
@@ -196,7 +196,7 @@
 
 	else if(reflected_dir & NORTH)
 		reflection.dir = (target.dir & (NORTH|SOUTH)) ? target.dir : REVERSE_DIR(target.dir)
-		// north needs snowflake handling to make a more... "understandable" reflection
+		// north needs snowflake handling to make a more.... "understandable" reflection
 		reflection.transform = reflection.transform.Turn(180)
 		reflection.pixel_y += 5
 

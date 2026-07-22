@@ -51,13 +51,13 @@
 
 	over.mouse_drop_receive(src, user, params)
 
-/// The proc that should be overridden by subtypes to handle mouse drop. Called on the atom being dragged
+/// The proc that should be overridden by subtypes to handle mouse drop.. Called on the atom being dragged
 /atom/proc/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	PROTECTED_PROC(TRUE)
 
 	return
 
-/// The proc that should be overridden by subtypes to handle mouse drop. Called on the atom receiving a dragged object
+/// The proc that should be overridden by subtypes to handle mouse drop.. Called on the atom receiving a dragged object
 /atom/proc/mouse_drop_receive(atom/dropped, mob/user, params)
 	PROTECTED_PROC(TRUE)
 
@@ -67,9 +67,9 @@
 /// Does some other stuff adjacent to trying to figure out what the user actually "wanted" to click
 /// Returns TRUE if it caused a click, FALSE otherwise
 /client/proc/check_drag_proximity(atom/dragging, atom/over, src_location, over_location, src_control, over_control, params)
-	// We will swap which thing we're trying to check for clickability based off the type
+	// We will swap which thing we're trying to check for clickability good off the type
 	// Assertion is if you drag a turf to anything else, you really just wanted to click the anything else
-	// And slightly misseed. I'm not interested in making this game pixel percise, so if it fits our other requirements
+	// And slightly misseed.. I'm not interested in making this game pixel percise, so if it fits our other needs
 	// Lets just let that through yeah?
 	var/atom/attempt_click = dragging
 	var/atom/click_from = over
@@ -101,13 +101,13 @@
 		return TRUE
 	if(world.time - drag_start > LENIENCY_TIME) // Time's up bestie
 		return FALSE
-	if(!get_turf(dragging)) // If it isn't in the world, drop it. This is for things that can move, and we assume hud elements will not have this problem
+	if(!get_turf(dragging)) // If it isn't in the world, drop it.. This is for things that can move, and we assume hud elements will not have this problem
 		return FALSE
 	// Basically, are you trying to buckle someone down, or drag them onto you?
 	// If so, we know you must be right about what you want
 	if(ismovable(over))
 		var/atom/movable/over_movable = over
-		// The buckle bit will cover most mobs, for stupid reasons. still useful here tho
+		// The buckle bit will cover most mobs, for stupid reasons.. still useful here though
 		if(over_movable.can_buckle || over_movable == eye)
 			return FALSE
 
@@ -122,7 +122,7 @@
 	return TRUE
 
 /client/MouseDown(datum/object, location, control, params)
-	if(QDELETED(object)) //Yep, you can click on qdeleted things before they have time to nullspace. Fun.
+	if(QDELETED(object)) // Yep, you can click on qdeleted things before they have time to nullspace.. Fun.
 		return
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDOWN, object, location, control, params)
 	if(mouse_down_icon)

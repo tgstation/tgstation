@@ -8,7 +8,7 @@
 	rust_resistance = RUST_RESISTANCE_BASIC
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-	heat_capacity = 62500 //a little over 5 cm thick , 62500 for 1 m by 2.5 m by 0.25 m iron wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
+	heat_capacity = 62500 // a little over 5 cm thick , 62500 for 1 m by 2.5 m by 0.25 m iron wall.. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
 
 	baseturfs = /turf/open/floor/plating
 
@@ -21,7 +21,7 @@
 	rcd_memory = RCD_MEMORY_WALL
 	///bool on whether this wall can be chiselled into
 	var/can_engrave = TRUE
-	///lower numbers are harder. Used to determine the probability of a hulk smashing through.
+	/// lower numbers are harder.. Used to determine the probability of a hulk smashing through.
 	var/hardness = 40
 	var/slicing_duration = 100  //default time taken to slice the wall
 	/// A turf that will replace this turf when this turf is destroyed
@@ -30,13 +30,13 @@
 	var/added_leaning = FALSE
 	var/list/dent_decals
 
-	/// The type of sheet this wall requires for construction and drops upon deconstruction.
+	/// The type of sheet this wall needs for construction and drops upon deconstruction.
 	var/sheet_type = /obj/item/stack/sheet/iron
-	/// The amount of sheets this wall requires for construction and drops upon deconstruction.
+	/// The amount of sheets this wall needs for construction and drops upon deconstruction.
 	var/sheet_amount = 2
-	/// The type of girder this wall requires for construction and drops upon deconstruction.
+	/// The type of girder this wall needs for construction and drops upon deconstruction.
 	var/girder_type = /obj/structure/girder
-	/// The girder state this wall requires for construction and drops upon deconstruction.
+	/// The girder state this wall needs for construction and drops upon deconstruction.
 	var/girder_state = GIRDER_NORMAL
 	/// How long this wall takes to make by using its sheet type on a girder.
 	var/make_delay = 4 SECONDS
@@ -66,7 +66,7 @@
 			return CONTEXTUAL_SCREENTIP_SET
 
 /turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
-	//Adds the component only once. We do it here & not in Initialize() because there are tons of walls & we don't want to add to their init times
+	// Adds the component only once.. We do it here & not in Initialize() because there are tons of walls & we don't want to add to their init times
 	LoadComponent(/datum/component/leanable, dropping)
 
 /turf/closed/wall/atom_destruction(damage_flag)
@@ -181,7 +181,7 @@
  */
 /turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 20)
 	var/datum/mutation/hulk/smasher = locate(/datum/mutation/hulk) in hulkman.dna.mutations
-	if(!smasher || !damage || smasher.no_recoil) //sanity check but also snow and wood walls deal no recoil damage, so no arm breaky. Also, if our type of hulk doesn't cause recoil damage, return.
+	if(!smasher || !damage || smasher.no_recoil) // sanity check but also snow and wood walls deal no recoil damage, so no arm breaky.. Also, if our type of hulk doesn't cause recoil damage, return.
 		return
 	hulkman.apply_damage(damage, BRUTE, arm, wound_bonus = 0) //enough damage to regularly result in at least a breakage.
 

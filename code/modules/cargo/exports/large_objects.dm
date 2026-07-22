@@ -33,7 +33,7 @@
 	exclude_types = list()
 
 /datum/export/crate/coffin
-	cost = CARGO_CRATE_VALUE/2 //50 wooden crates cost 800 credits, and you can make 10 coffins in seconds with those planks. Each coffin selling for 100 means you can make a net gain of 200 credits for wasting your time making coffins.
+	cost = CARGO_CRATE_VALUE/2 // 50 wooden crates cost 800 credits, and you can make 10 coffins in seconds with those planks.. Each coffin selling for 100 means you can make a net gain of 200 credits for wasting your time making coffins.
 	unit_name = "coffin"
 	export_types = list(/obj/structure/closet/crate/coffin)
 
@@ -118,7 +118,7 @@
  * We don't want players making that much credits so we limit the total amount earned to MAX_GAS_CREDITS
 */
 /datum/export/gas_canister
-	cost = CARGO_CRATE_VALUE * 0.05 //Base cost of canister. You get more for nice gases inside.
+	cost = CARGO_CRATE_VALUE * 0.05 // Base cost of canister.. You get more for nice gases inside.
 	unit_name = "Gas Canister"
 	export_types = list(/obj/machinery/portable_atmospherics/canister)
 

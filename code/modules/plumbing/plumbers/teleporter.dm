@@ -25,7 +25,7 @@
 	to_chat(user, span_green("You successfully link [src] to the [M.buffer]."))
 	return ITEM_INTERACT_SUCCESS
 
-///Lose our previous target and make our previous target lose us. Seperate proc because I feel like I'll need this again
+/// Lose our previous target and make our previous target lose us.. Seperate proc because I feel like I'll need this again
 /obj/machinery/plumbing/sender/proc/lose_teleport_target()
 	target.senders.Remove(src)
 	target = null
@@ -42,7 +42,7 @@
 	flick(initial(icon_state) + "_flash", src)
 	reagents.trans_to(R, amount)
 
-///A bluespace output pipe for plumbing. Supports multiple recipients. Must be constructed with a circuit board
+/// A bluespace output pipe for plumbing.. Supports multiple recipients.. Must be constructed with a circuit board
 /obj/machinery/plumbing/receiver
 	name = "chemical recipient"
 	desc = "Receives chemicals from one or more chemical beacons. Use a multitool on this machine and then all subsequent chemical beacons. Reset by opening the \

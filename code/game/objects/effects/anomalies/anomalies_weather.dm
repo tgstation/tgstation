@@ -3,9 +3,9 @@
 	anomaly_core = /obj/item/assembly/signaler/anomaly/weather
 	lifespan = ANOMALY_COUNTDOWN_TIMER * 2.5
 
-	/// Chance per turf per second that we will produce thunder. Use the defines
+	/// Chance per turf per second that we will produce thunder.. Use the defines
 	var/thunder_chance = 0
-	/// The type of weather this anomaly will produce. If unset, will be picked from select_weather()
+	/// The type of weather this anomaly will produce.. If unset, will be picked from select_weather()
 	var/datum/weather/weather_type
 	/// List of active weathers spawned by this anomaly
 	VAR_PRIVATE/list/active_weathers

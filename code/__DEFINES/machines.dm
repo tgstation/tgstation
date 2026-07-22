@@ -26,19 +26,19 @@
 
 /// dont use power
 #define NO_POWER_USE 0
-/// use idle_power_usage i.e. the power needed just to keep the machine on
+/// use idle_power_usage i.e... the power needed just to keep the machine on
 #define IDLE_POWER_USE 1
-/// use active_power_usage i.e. the power the machine consumes to perform a specific task
+/// use active_power_usage i.e... the power the machine consumes to perform a specific task
 #define ACTIVE_POWER_USE 2
 
 ///Base global power consumption for idling machines
 #define BASE_MACHINE_IDLE_CONSUMPTION (100 WATTS)
-///Base global power consumption for active machines. The unit is ambiguous (joules or watts) depending on the use case for dynamic users.
+/// Base global power consumption for active machines... The unit is ambiguous (joules or watts) depending on the use case for dynamic users.
 #define BASE_MACHINE_ACTIVE_CONSUMPTION (BASE_MACHINE_IDLE_CONSUMPTION * 10)
 
-/// Bitflags for a machine's preferences on when it should start processing. For use with machinery's `processing_flags` var.
+/// Bitflags for a machine's preferences on when it should start processing... For use with machinery's `processing_flags` var.
 #define START_PROCESSING_ON_INIT (1<<0) /// Indicates the machine will automatically start processing right after its `Initialize()` is ran.
-#define START_PROCESSING_MANUALLY (1<<1) /// Machines with this flag will not start processing when it's spawned. Use this if you want to manually control when a machine starts processing.
+#define START_PROCESSING_MANUALLY (1<<1) /// Machines with this flag will not start processing when it's spawned... Use this if you want to manually control when a machine starts processing.
 
 //bitflags for door switches.
 #define OPEN (1<<0)
@@ -47,12 +47,12 @@
 #define SHOCK (1<<3)
 #define SAFE (1<<4)
 
-//defines to be used with the door's open()/close() procs in order to discriminate what type of open is being done. The door will never open if it's been physically disabled (i.e. welded, sealed, etc.).
+// defines to be used with the door's open()/close() procs in order to discriminate what type of open is being done... The door will never open if it's been physically disabled (i.e... welded, sealed, and so on
 /// We should go through the door's normal opening procedure, no overrides.
 #define DEFAULT_DOOR_CHECKS 0
-/// We're not going through the door's normal opening procedure, we're forcing it open. Can still fail if it's emagged or something. Costs power.
+/// We're not going through the door's normal opening procedure, we're forcing it open... Can still fail if it's emagged or something... Costs power.
 #define FORCING_DOOR_CHECKS 1
-/// We are getting this door open if it has not been physically held shut somehow. Play a special sound to signify this level of opening.
+/// We are getting this door open if it has not been physically held shut somehow... Play a special sound to signify this level of opening.
 #define BYPASS_DOOR_CHECKS 2
 
 /// Damage dealth to an airlock when prie
@@ -60,18 +60,18 @@
 
 //used in design to specify which machine can build it
 //Note: More than one of these can be added to a design but imprinter and lathe designs are incompatible.
-#define IMPRINTER (1<<0) //For circuits. Uses glass/chemicals.
-#define PROTOLATHE (1<<1) //New stuff. Uses various minerals
+#define IMPRINTER (1<<0) // For circuits... Uses glass/chemicals.
+#define PROTOLATHE (1<<1) // New stuff... Uses various minerals
 #define AUTOLATHE (1<<2) //Prints basic designs without research
 #define MECHFAB (1<<3) //Remember, objects utilising this flag should have construction_time and construction_cost vars.
 #define BIOGENERATOR (1<<4) //Uses biomass
 #define LIMBGROWER (1<<5) //Uses synthetic flesh
 #define SMELTER (1<<6) //uses various minerals
-/// Protolathes for offstation roles. More limited tech tree.
+/// Protolathes for offstation roles... More limited tech tree.
 #define AWAY_LATHE (1<<8)
-/// Imprinters for offstation roles. More limited tech tree.
+/// Imprinters for offstation roles... More limited tech tree.
 #define AWAY_IMPRINTER (1<<9)
-/// For wiremod/integrated circuits. Uses various minerals.
+/// For wiremod/integrated circuits... Uses various minerals.
 #define COMPONENT_PRINTER (1<<10)
 
 GLOBAL_LIST_INIT(build_types_to_string, list(
@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(build_types_to_string, list(
 #define SD_EMERGENCY 1
 /// Shows an arbitrary message, user-set
 #define SD_MESSAGE 2
-/// Shows an alert picture (e.g. red alert, radiation, etc.)
+/// Shows an alert picture (e.g... red alert, radiation, and so on
 #define SD_PICTURE 3
 /// Shows whoever or whatever is on the green screen in the captain's office
 #define SD_GREENSCREEN 4

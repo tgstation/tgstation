@@ -17,7 +17,7 @@
 #define DROP_BRAIN (1<<0)
 /// Mobs will drop organs
 #define DROP_ORGANS (1<<1)
-/// Mobs will drop bodyparts (arms, legs, etc.)
+/// Mobs will drop bodyparts (arms, legs, and so on
 #define DROP_BODYPARTS (1<<2)
 /// Mobs will drop items
 #define DROP_ITEMS (1<<3)
@@ -25,9 +25,9 @@
 /// Mobs will drop everything
 #define DROP_ALL_REMAINS (DROP_BRAIN | DROP_ORGANS | DROP_BODYPARTS | DROP_ITEMS)
 
-// Keys for indexing blood data lists. HIGHLY INCOMPLETE.
+// Keys for indexing blood data lists... HIGHLY INCOMPLETE.
 /// Indexing a blood reagent data list with this returns how synthetic the blood is, used for blood worms to nerf common blood sources like monkeys.
 #define BLOOD_DATA_SYNTH_CONTENT "synth_content"
 
-/// Returns whether this mob always has synthetic blood. Used to cap growth for blood worms from easily accessible sources of blood.
+/// Returns whether this mob always has synthetic blood... Used to cap growth for blood worms from easily accessible sources of blood.
 #define IS_BLOOD_ALWAYS_SYNTHETIC(mob) (!ishuman(mob) || HAS_TRAIT(mob, TRAIT_BORN_MONKEY) || HAS_TRAIT(mob, TRAIT_SPAWNED_MOB))

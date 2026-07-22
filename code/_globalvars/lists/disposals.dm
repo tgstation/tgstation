@@ -1,5 +1,5 @@
-// Reference list for disposal sort junctions. Set the sortType variable on disposal sort junctions to
-// the index of the sort department that you want. For example, sortType set to 2 will reroute all packages
+// Reference list for disposal sort junctions.. Set the sortType variable on disposal sort junctions to
+// the index of the sort department that you want.. For example, sortType set to 2 will reroute all packages
 // tagged for the Cargo Bay.
 
 /* List of sortType codes for mapping reference
@@ -36,11 +36,11 @@
 30 Detective's Office
 */
 
-//The whole system for the sorttype var is determined based on the order of this list,
+// The whole system for the sorttype var is determined good on the order of this list,
 //disposals must always be 1, since anything that's untagged will automatically go to disposals, or sorttype = 1 --Superxpdude
 
 //If you don't want to fuck up disposals, add to this list, and don't change the order.
-//If you insist on changing the order, you'll have to change every sort junction to reflect the new order. --Pete
+// If you insist on changing the order, you'll have to change every sort junction to reflect the new order.. --Pete
 
 GLOBAL_LIST_INIT(TAGGERLOCATIONS, list("Disposals",
 	"Cargo Bay", "QM Office", "Engineering", "CE Office",

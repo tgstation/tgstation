@@ -152,12 +152,12 @@
 			return TRUE
 	return FALSE
 
-// Will generate new unique symptoms, use this if there are none. Returns a list of symptoms that were generated.
+// Will generate new unique symptoms, use this if there are none.. Returns a list of symptoms that were generated.
 /datum/disease/advance/proc/GenerateSymptoms(level_min, level_max, amount_get = 0)
 
 	. = list() // Symptoms we generated.
 
-	// Generate symptoms. By default, we only choose non-deadly symptoms.
+	// Generate symptoms.. By default, we only choose non-deadly symptoms.
 	var/list/possible_symptoms = list()
 	for(var/symp in SSdisease.list_symptoms)
 		var/datum/symptom/S = new symp
@@ -194,7 +194,7 @@
 		if(new_name)
 			AssignName()
 
-//Generate disease properties based on the effects. Returns an associated list.
+// Generate disease properties good on the effects.. Returns an associated list.
 /datum/disease/advance/proc/GenerateProperties()
 	properties = list("resistance" = 0, "stealth" = 0, "stage_rate" = 0, "transmittable" = 0, "severity" = 0)
 
@@ -204,7 +204,7 @@
 		properties["stage_rate"] += S.stage_speed
 		properties["transmittable"] += S.transmittable
 		if(!S.neutered)
-			properties["severity"] += S.severity // severity is based on the sum of all non-neutered symptoms' severity
+			properties["severity"] += S.severity // severity is good on the sum of all non-neutered symptoms' severity
 	if(properties["severity"] > 0)
 		properties["severity"] += round((properties["resistance"] / 12), 1)
 		properties["severity"] += round((properties["stage_rate"] / 11), 1)

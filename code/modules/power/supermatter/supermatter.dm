@@ -1,5 +1,5 @@
 //Ported from /vg/station13, which was in turn forked from baystation12;
-//Please do not bother them with bugs from this port, however, as it has been modified quite a bit.
+// Please do not bother them with bugs from this port, but as it has been modified quite a bit.
 //Modifications include removing the world-ending full supermatter variation, and leaving only the shard.
 
 //Zap constants, speeds up targeting
@@ -37,12 +37,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	///The portion of the gasmix we're on that we should remove
 	var/absorption_ratio = 0.15
-	/// The gasmix we just recently absorbed. Tile's air multiplied by absorption_ratio
+	/// The gasmix we just recently absorbed.. Tile's air multiplied by absorption_ratio
 	var/datum/gas_mixture/absorbed_gasmix
 	/// The current gas behaviors for this particular crystal
 	var/list/current_gas_behavior
 
-	///Refered to as EER on the monitor. This value effects gas output, damage, and power generation.
+	/// Refered to as EER on the monitor.. This value effects gas output, damage, and power generation.
 	var/internal_energy = 0
 	var/list/internal_energy_factors
 
@@ -53,7 +53,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/damage_archived = 0
 	var/list/damage_factors
 
-	/// The zap power transmission over internal energy. W/MeV.
+	/// The zap power transmission over internal energy.. W/MeV.
 	var/zap_transmission_rate = BASE_POWER_TRANSMISSION_RATE
 	var/list/zap_factors
 
@@ -92,7 +92,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/gas_heat_modifier = 0
 	/// Affects the minimum point at which the SM takes heat damage
 	var/gas_heat_resistance = 0
-	/// How much power decay is negated. Complete power decay negation at 1.
+	/// How much power decay is negated.. Complete power decay negation at 1.
 	var/gas_powerloss_inhibition = 0
 	/// Affects the amount of power the main SM zap makes.
 	var/gas_power_transmission_rate = 0
@@ -141,8 +141,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	/// Disables all methods of taking damage.
 	var/disable_damage = FALSE
 	/// Disables the calculation of gas effects and production of waste.
-	/// SM still "breathes" though, still takes gas and spits it out. Nothing is done on them though.
-	/// Cleaner code this way. Get rid of if it's too wasteful.
+	/// SM still "breathes" though, still takes gas and spits it out.. Nothing is done on them though.
+	/// Cleaner code this way.. Get rid of if it's too wasteful.
 	var/disable_gas = FALSE
 	/// Disables power changes.
 	var/disable_power_change = FALSE
@@ -153,34 +153,34 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	///Stores the time of when the last zap occurred
 	var/last_power_zap = 0
-	///Stores the tick of the machines subsystem of when the last zap energy accumulation occurred. Gives a passage of time in the perspective of SSmachines.
+	/// Stores the tick of the machines subsystem of when the last zap energy accumulation occurred.. Gives a passage of time in the perspective of SSmachines.
 	var/last_energy_accumulation_perspective_machines = 0
-	///Same as [last_energy_accumulation_perspective_machines], but based around the high energy zaps found in handle_high_power().
+	/// Same as [last_energy_accumulation_perspective_machines], but good around the high energy zaps found in handle_high_power().
 	var/last_high_energy_accumulation_perspective_machines = 0
 	/// Accumulated energy to be transferred from supermatter zaps.
 	var/list/zap_energy_accumulation = list()
 	///Do we show this crystal in the CIMS modular program
 	var/include_in_cims = TRUE
 
-	///Hue shift of the zaps color based on the power of the crystal
+	/// Hue shift of the zaps color good on the power of the crystal
 	var/hue_angle_shift = 0
 	///Reference to the warp effect
 	var/atom/movable/warp_effect/warp
-	///The power threshold required to transform the powerloss function into a linear function from a cubic function.
+	/// The power threshold needed to transform the powerloss function into a linear function from a cubic function.
 	var/powerloss_linear_threshold = 0
 	///The offset of the linear powerloss function set so the transition is differentiable.
 	var/powerloss_linear_offset = 0
 
 	/// How we are delaminating.
 	var/datum/sm_delam/delamination_strategy
-	/// Whether the sm is forced in a specific delamination_strategy or not. All truthy values means it's forced.
+	/// Whether the sm is forced in a specific delamination_strategy or not.. All truthy values means it's forced.
 	/// Only values greater or equal to the current one can change the strat.
 	var/delam_priority = SM_DELAM_PRIO_NONE
 
 	/// Lazy list of the crazy engineers who managed to turn a cascading engine around.
 	var/list/datum/weakref/saviors = null
 
-	/// If a sliver of the supermatter has been removed. Almost certainly by a traitor. Lowers the delamination countdown time.
+	/// If a sliver of the supermatter has been removed.. Almost certainly by a traitor.. Lowers the delamination countdown time.
 	var/supermatter_sliver_removed = FALSE
 
 	/// If the SM is decorated with holiday lights
@@ -369,7 +369,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	absorption_ratio = clamp(absorption_ratio - 0.05, 0.15, 1)
 	return TRUE
 
-// SupermatterMonitor UI for ghosts only. Inherited attack_ghost will call this.
+// SupermatterMonitor UI for ghosts only.. Inherited attack_ghost will call this.
 /obj/machinery/power/supermatter_crystal/ui_interact(mob/user, datum/tgui/ui)
 	if(!isobserver(user))
 		return FALSE
@@ -452,7 +452,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/zap_transmission = zap_transmission_rate * internal_energy
 	var/zap_power_multiplier = 1
 	if(internal_energy > POWER_PENALTY_THRESHOLD) //Supermatter zaps multiply power internally under some conditions for some reason, so we'll snowflake this for now.
-		///Power multiplier bonus applied to all zaps. Zap power generation doubles when it reaches 7GeV and 9GeV.
+		/// Power multiplier bonus applied to all zaps.. Zap power generation doubles when it reaches 7GeV and 9GeV.
 		zap_power_multiplier *= 2 ** clamp(round((internal_energy - POWER_PENALTY_THRESHOLD) / 2000), 0, 2)
 		///The supermatter releases additional zaps after 5GeV, with more at 7GeV and 9GeV.
 		var/additional_zap_bonus = clamp(internal_energy * 3200, 6.4e6, 3.2e7) * clamp(round(INVERSE_LERP(1000, 3000, internal_energy)), 1, 4)
@@ -501,7 +501,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return SUPERMATTER_NORMAL
 	return SUPERMATTER_INACTIVE
 
-/// Returns the integrity percent of the Supermatter. No rounding made yet, round it yourself.
+/// Returns the integrity percent of the Supermatter.. No rounding made yet, round it yourself.
 /obj/machinery/power/supermatter_crystal/proc/get_integrity_percent()
 	var/integrity = damage / explosion_point
 	integrity = 100 - integrity * 100
@@ -701,7 +701,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	// I'm sorry for this, but we need to calculate power lost immediately after power gain.
 	// Helps us prevent cases when someone dumps superhothotgas into the SM and shoots the power to the moon for one tick.
-	/// Power if we dont have decay. Used for powerloss calc.
+	/// Power if we dont have decay.. Used for powerloss calc.
 	var/momentary_power = internal_energy
 	for(var/powergain_type in additive_power)
 		momentary_power += additive_power[powergain_type]
@@ -782,7 +782,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	waste_multiplier = 0
 	if(disable_gas)
 		return
-	/// Tell people the heat output in energy. More informative than telling them the heat multiplier.
+	/// Tell people the heat output in energy.. More informative than telling them the heat multiplier.
 	var/additive_waste_multiplier = list()
 	additive_waste_multiplier[SM_WASTE_BASE] = 1
 	additive_waste_multiplier[SM_WASTE_GAS] = gas_heat_modifier
@@ -835,7 +835,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/total_moles = absorbed_gasmix.total_moles()
 
 	// We dont let external factors deal more damage than the emergency point.
-	// Only cares about the damage before this proc is run. We ignore soon-to-be-applied damage.
+	// Only cares about the damage before this proc is run.. We ignore soon-to-be-applied damage.
 	additive_damage[SM_DAMAGE_EXTERNAL] = external_damage_immediate * clamp((emergency_point - damage) / emergency_point, 0, 1)
 	external_damage_immediate = 0
 
@@ -1037,7 +1037,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/mob/living/creature = target
 		ADD_TRAIT(creature, TRAIT_BEING_SHOCKED, WAS_SHOCKED)
 		addtimer(TRAIT_CALLBACK_REMOVE(creature, TRAIT_BEING_SHOCKED, WAS_SHOCKED), 1 SECONDS)
-		//3 shots a human with no resistance. 2 to crit, one to death. This is at at least 10000 power.
+		// 3 shots a human with no resistance.. 2 to crit, one to death.. This is at at least 10000 power.
 		//There's no increase after that because the input power is effectivly capped at 10k
 		//Does 1.5 damage at the least
 		var/shock_damage = ((zap_flags & ZAP_MOB_DAMAGE) ? (power_level / 200) - 10 : rand(5,10))

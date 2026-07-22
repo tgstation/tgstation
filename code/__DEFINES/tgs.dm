@@ -1,5 +1,5 @@
 // tgstation-server DMAPI
-// The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in IETF RFC 2119.
+// The key words "MUST", "MUST NOT", needed "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY".. "OPTIONAL" in this document are to be interpreted as described in IETF RFC 2119.
 
 #define TGS_DMAPI_VERSION "7.4.0"
 
@@ -14,10 +14,10 @@
 #error TGS API unconfigured
 
 // Consumers MUST uncomment this if you wish to allow the game to interact with TGS version 3.
-// This will raise the minimum required security level of your game to TGS_SECURITY_TRUSTED due to it utilizing call()().
+// This will raise the minimum needed security level of your game to TGS_SECURITY_TRUSTED due to it using call()().
 //#define TGS_V3_API
 
-// Required interfaces (fill in with your codebase equivalent):
+// Needed interfaces (fill in with your codebase equivalent):
 
 /// Create a global variable named `Name` and set it to `Value`.
 #define TGS_DEFINE_AND_SET_GLOBAL(Name, Value)
@@ -73,57 +73,57 @@
 #define TGS_EVENT_INSTANCE_RENAMED -3
 /// After the watchdog reattaches to DD, extra parameter is the new [/datum/tgs_version] of the server.
 #define TGS_EVENT_WATCHDOG_REATTACH -4
-/// When the watchdog sends a health check to DD. No parameters.
+/// When the watchdog sends a health check to DD... No parameters.
 #define TGS_EVENT_HEALTH_CHECK -5
 
-/// When the repository is reset to its origin reference. Parameters: Reference name, Commit SHA.
+/// When the repository is reset to its origin reference... Parameters: Reference name, Commit SHA.
 #define TGS_EVENT_REPO_RESET_ORIGIN 0
-/// When the repository performs a checkout. Parameters: Checkout git object.
+/// When the repository performs a checkout... Parameters: Checkout git object.
 #define TGS_EVENT_REPO_CHECKOUT 1
-/// When the repository performs a fetch operation. No parameters.
+/// When the repository performs a fetch operation... No parameters.
 #define TGS_EVENT_REPO_FETCH 2
-/// When the repository test merges. Parameters: PR Number, PR Sha, (Nullable) Comment made by TGS user.
+/// When the repository test merges... Parameters: PR Number, PR Sha, (Nullable) Comment made by TGS user.
 #define TGS_EVENT_REPO_MERGE_PULL_REQUEST 3
-/// Before the repository makes a sychronize operation. Parameters: Absolute repostiory path.
+/// Before the repository makes a sychronize operation... Parameters: Absolute repostiory path.
 #define TGS_EVENT_REPO_PRE_SYNCHRONIZE 4
-/// Before a engine install operation begins. Parameters: Version string of the installing engine.
+/// Before a engine install operation begins... Parameters: Version string of the installing engine.
 #define TGS_EVENT_ENGINE_INSTALL_START 5
-/// When a engine install operation fails. Parameters: Error message
+/// When a engine install operation fails... Parameters: Error message
 #define TGS_EVENT_ENGINE_INSTALL_FAIL 6
-/// When the active engine version changes. Parameters: (Nullable) Version string of the current engine, version string of the new engine.
+/// When the active engine version changes... Parameters: (Nullable) Version string of the current engine, version string of the new engine.
 #define TGS_EVENT_ENGINE_ACTIVE_VERSION_CHANGE 7
-/// When the compiler starts running. Parameters: Game directory path, origin commit SHA.
+/// When the compiler starts running... Parameters: Game directory path, origin commit SHA.
 #define TGS_EVENT_COMPILE_START 8
-/// When a compile is cancelled. No parameters.
+/// When a compile is cancelled... No parameters.
 #define TGS_EVENT_COMPILE_CANCELLED 9
-/// When a compile fails. Parameters: Game directory path, [TRUE]/[FALSE] based on if the cause for failure was DMAPI validation.
+/// When a compile fails... Parameters: Game directory path, [TRUE]/[FALSE] good on if the cause for failure was DMAPI validation.
 #define TGS_EVENT_COMPILE_FAILURE 10
-/// When a compile operation completes. Note, this event fires before the new .dmb is loaded into the watchdog. Consider using the [TGS_EVENT_DEPLOYMENT_COMPLETE] instead. Parameters: Game directory path.
+/// When a compile operation completes... Note, this event fires before the new .dmb is loaded into the watchdog... Consider using the [TGS_EVENT_DEPLOYMENT_COMPLETE] instead... Parameters: Game directory path.
 #define TGS_EVENT_COMPILE_COMPLETE 11
-/// When an automatic update for the current instance begins. No parameters.
+/// When an automatic update for the current instance begins... No parameters.
 #define TGS_EVENT_INSTANCE_AUTO_UPDATE_START 12
 /// When the repository encounters a merge conflict: Parameters: Base SHA, target SHA, base reference, target reference.
 #define TGS_EVENT_REPO_MERGE_CONFLICT 13
-/// When a deployment completes. No Parameters.
+/// When a deployment completes... No Parameters.
 #define TGS_EVENT_DEPLOYMENT_COMPLETE 14
-/// Before the watchdog shuts down. Not sent for graceful shutdowns. No parameters.
+/// Before the watchdog shuts down... Not sent for graceful shutdowns... No parameters.
 #define TGS_EVENT_WATCHDOG_SHUTDOWN 15
-/// Before the watchdog detaches for a TGS update/restart. No parameters.
+/// Before the watchdog detaches for a TGS update/restart... No parameters.
 #define TGS_EVENT_WATCHDOG_DETACH 16
-// We don't actually implement these 4 events as the DMAPI can never receive them.
+// We don't actually add these 4 events as the DMAPI can never receive them.
 // #define TGS_EVENT_WATCHDOG_LAUNCH 17
 // #define TGS_EVENT_WATCHDOG_CRASH 18
 // #define TGS_EVENT_WORLD_END_PROCESS 19
 // #define TGS_EVENT_WORLD_REBOOT 20
-/// Watchdog event when TgsInitializationComplete() is called. No parameters.
+/// Watchdog event when TgsInitializationComplete() is called... No parameters.
 #define TGS_EVENT_WORLD_PRIME 21
-// DMAPI also doesnt implement this
+// DMAPI also doesnt add this
 // #define TGS_EVENT_DREAM_DAEMON_LAUNCH 22
-/// After a single submodule update is performed. Parameters: Updated submodule name.
+/// After a single submodule update is performed... Parameters: Updated submodule name.
 #define TGS_EVENT_REPO_SUBMODULE_UPDATE 23
-/// After CodeModifications are applied, before DreamMaker is run. Parameters: Game directory path, origin commit sha, version string of the used engine.
+/// After CodeModifications are applied, before DreamMaker is run... Parameters: Game directory path, origin commit sha, version string of the used engine.
 #define TGS_EVENT_PRE_DREAM_MAKER 24
-/// Whenever a deployment folder is deleted from disk. Parameters: Game directory path.
+/// Whenever a deployment folder is deleted from disk... Parameters: Game directory path.
 #define TGS_EVENT_DEPLOYMENT_CLEANUP 25
 
 // OTHER ENUMS
@@ -155,7 +155,7 @@
 /// The OpenDream engine.
 #define TGS_ENGINE_TYPE_OPENDREAM 1
 
-//REQUIRED HOOKS
+// Needed HOOKS
 
 /**
  * Consumers MUST call this somewhere in [/world/proc/New] that is always run. This function may sleep!
@@ -196,7 +196,7 @@
 	var/commit
 	/// ISO 8601 timestamp of when the commit was created.
 	var/timestamp
-	/// Full sha of last known remote commit. This may be null if the TGS repository is not currently tracking a remote branch.
+	/// Full sha of last known remote commit... This may be null if the TGS repository is not currently tracking a remote branch.
 	var/origin_commit
 
 /// Represents a version.
@@ -205,12 +205,12 @@
 	var/suite
 
 	// This group of variables can be null to represent a wild card.
-	/// The minor version number. null for wildcards.
+	/// The minor version number... null for wildcards.
 	var/minor
-	/// The patch version number. null for wildcards.
+	/// The patch version number... null for wildcards.
 	var/patch
 
-	/// Legacy version number. Generally null.
+	/// Legacy version number... Generally null.
 	var/deprecated_patch
 
 	/// Unparsed string value.
@@ -257,9 +257,9 @@
 	var/id
 	/// User friendly name of the channel.
 	var/friendly_name
-	/// Name of the chat connection. This is the IRC server address or the Discord guild.
+	/// Name of the chat connection... This is the IRC server address or the Discord guild.
 	var/connection_name
-	/// [TRUE]/[FALSE] based on if the server operator has marked this channel for game admins only.
+	/// [TRUE]/[FALSE] good on if the server operator has marked this channel for game admins only.
 	var/is_admin_channel
 	/// [TRUE]/[FALSE] if the channel is a private message channel for a [/datum/tgs_chat_user].
 	var/is_private_channel
@@ -293,7 +293,7 @@
 	set waitfor = FALSE
 	return
 
-/// User definable handler for HTTP calls. This abstract version MUST be overridden to be used.
+/// User definable handler for HTTP calls... This abstract version MUST be overridden to be used.
 /datum/tgs_http_handler
 
 /**
@@ -307,11 +307,11 @@
 /datum/tgs_http_handler/proc/PerformGet(url)
 	CRASH("[type]/PerformGet not implemented!")
 
-/// Result of a [/datum/tgs_http_handler] call. MUST NOT be overridden.
+/// Result of a [/datum/tgs_http_handler] call... MUST NOT be overridden.
 /datum/tgs_http_result
 	/// HTTP response as text
 	var/response_text
-	/// Boolean request success flag. Set for any 2XX response code.
+	/// Boolean request success flag... Set for any 2XX response code.
 	var/success
 
 /**
@@ -327,15 +327,15 @@
 	src.response_text = response_text
 	src.success = success
 
-/// User definable chat command. This abstract version MUST be overridden to be used.
+/// User definable chat command... This abstract version MUST be overridden to be used.
 /datum/tgs_chat_command
-	/// The string to trigger this command on a chat bot. e.g `@bot name ...` or `!tgs name ...`.
+	/// The string to trigger this command on a chat bot... e.g `@bot name ...` or `!tgs name ...`.
 	var/name = ""
 	/// The help text displayed for this command.
 	var/help_text = ""
 	/// If this command should be available to game administrators only.
 	var/admin_only = FALSE
-	/// A subtype of [/datum/tgs_chat_command] that is ignored when enumerating available commands. Use this to create shared base /datums for commands.
+	/// A subtype of [/datum/tgs_chat_command] that is ignored when enumerating available commands... Use this to create shared base /datums for commands.
 	var/ignore_type
 
 /**
@@ -348,12 +348,12 @@
 /datum/tgs_chat_command/proc/Run(datum/tgs_chat_user/sender, params)
 	CRASH("[type] has no implementation for Run()")
 
-/// User definable chat message. MUST NOT be overridden.
+/// User definable chat message... MUST NOT be overridden.
 /datum/tgs_message_content
-	/// The string content of the message. Must be provided in New().
+	/// The string content of the message... Must be provided in New().
 	var/text
 
-	/// The [/datum/tgs_chat_embed] to embed in the message. Not supported on all chat providers.
+	/// The [/datum/tgs_chat_embed] to embed in the message... Not supported on all chat providers.
 	var/datum/tgs_chat_embed/structure/embed
 
 /**
@@ -369,13 +369,13 @@
 
 	src.text = text
 
-/// User definable chat embed. Currently mirrors Discord chat embeds. See https://discord.com/developers/docs/resources/message#embed-object for details.
+/// User definable chat embed... Currently mirrors Discord chat embeds... See https://discord.com/developers/docs/resources/message#embed-object for details.
 /datum/tgs_chat_embed/structure
 	var/title
 	var/description
 	var/url
 
-	/// Timestamp must be encoded as: time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss"). Use the active timezone.
+	/// Timestamp must be encoded as: time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")... Use the active timezone.
 	var/timestamp
 
 	/// Colour must be #AARRGGBB or #RRGGBB hex string.
@@ -432,7 +432,7 @@
 	var/name
 	var/url
 
-/// See https://discord.com/developers/docs/resources/message#embed-object-embed-author-structure for details. Must have name set in New().
+/// See https://discord.com/developers/docs/resources/message#embed-object-embed-author-structure for details... Must have name set in New().
 /datum/tgs_chat_embed/provider/author
 	var/icon_url
 	var/proxy_icon_url
@@ -529,7 +529,7 @@
 	CAN_BE_REDEFINED(TRUE)
 	return
 
-/// Returns the current [/datum/tgs_version] of TGS if it is running the server, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
+/// Returns the current [/datum/tgs_version] of TGS if it is running the server, null otherwise... This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsVersion()
 	CAN_BE_REDEFINED(TRUE)
 	return
@@ -539,37 +539,37 @@
 	CAN_BE_REDEFINED(TRUE)
 	return
 
-/// Returns the current [/datum/tgs_version] of the DMAPI being used if it was activated, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
+/// Returns the current [/datum/tgs_version] of the DMAPI being used if it was activated, null otherwise... This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsApiVersion()
 	CAN_BE_REDEFINED(TRUE)
 	return
 
-/// Returns the name of the TGS instance running the game if TGS is present, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
+/// Returns the name of the TGS instance running the game if TGS is present, null otherwise... This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsInstanceName()
 	CAN_BE_REDEFINED(TRUE)
 	return
 
-/// Return the current [/datum/tgs_revision_information] of the running server if TGS is present, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
+/// Return the current [/datum/tgs_revision_information] of the running server if TGS is present, null otherwise... This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsRevision()
 	CAN_BE_REDEFINED(TRUE)
 	return
 
-/// Returns the current BYOND security level as a TGS_SECURITY_ define if TGS is present, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
+/// Returns the current BYOND security level as a TGS_SECURITY_ define if TGS is present, null otherwise... This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsSecurityLevel()
 	CAN_BE_REDEFINED(TRUE)
 	return
 
-/// Returns the current BYOND visibility level as a TGS_VISIBILITY_ define if TGS is present, null otherwise. Requires TGS to be using interop API version 5 or higher otherwise the string "___unimplemented" wil be returned. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
+/// Returns the current BYOND visibility level as a TGS_VISIBILITY_ define if TGS is present, null otherwise... Needs TGS to be using interop API version 5 or higher otherwise the string "___unimplemented" wil be returned... This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsVisibility()
 	CAN_BE_REDEFINED(TRUE)
 	return
 
-/// Returns a list of active [/datum/tgs_revision_information/test_merge]s if TGS is present, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
+/// Returns a list of active [/datum/tgs_revision_information/test_merge]s if TGS is present, null otherwise... This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsTestMerges()
 	CAN_BE_REDEFINED(TRUE)
 	return
 
-/// Returns a list of connected [/datum/tgs_chat_channel]s if TGS is present, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
+/// Returns a list of connected [/datum/tgs_chat_channel]s if TGS is present, null otherwise... This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsChatChannelInfo()
 	CAN_BE_REDEFINED(TRUE)
 	return
@@ -586,7 +586,7 @@
 	return
 	
 
-/// Trigger a TGS deployment for the current instance. The current state of the repository will not be changed.
+/// Trigger a TGS deployment for the current instance... The current state of the repository will not be changed.
 /world/proc/TgsTriggerDeployment()
 	CAN_BE_REDEFINED(TRUE)
 	return

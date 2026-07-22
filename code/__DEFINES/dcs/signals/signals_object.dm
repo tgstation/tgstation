@@ -1,11 +1,11 @@
-// Object signals. Format:
+// Object signals... Format:
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
 // /obj signals
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
-///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
+/// from base of /turf/proc/levelupdate()... (intact) true to hide and false to unhide
 #define COMSIG_OBJ_HIDE "obj_hide"
 /// from /obj/item/toy/crayon/spraycan/use_on: (user, spraycan, color_is_dark)
 #define COMSIG_OBJ_PAINTED "obj_painted"
@@ -28,7 +28,7 @@
 #define COMSIG_MACHINERY_POWER_RESTORED "machinery_power_restored"
 ///from /obj/machinery/set_occupant(atom/movable/O): (new_occupant)
 #define COMSIG_MACHINERY_SET_OCCUPANT "machinery_set_occupant"
-///from /obj/machinery/destructive_scanner/proc/open(aggressive): Runs when the destructive scanner scans a group of objects. (list/scanned_atoms)
+/// from /obj/machinery/destructive_scanner/proc/open(aggressive): Runs when the destructive scanner scans a group of objects... (list/scanned_atoms)
 #define COMSIG_MACHINERY_DESTRUCTIVE_SCAN "machinery_destructive_scan"
 ///from /obj/machinery/computer/arcade/victory_tickets(tickets, sound = TRUE)
 #define COMSIG_ARCADE_VICTORY "arcade_victory"
@@ -41,7 +41,7 @@
 ///from /obj/machinery/default_change_direction_wrench: (mob/user, obj/item/wrench)
 #define COMSIG_MACHINERY_DEFAULT_ROTATE_WRENCH "machinery_default_rotate_wrench"
 
-///from /obj/machinery/can_interact(mob/user): Called on user when attempting to interact with a machine (obj/machinery/machine)
+/// from /obj/machinery/can_interact(mob/user): Called on user when trying to interact with a machine (obj/machinery/machine)
 #define COMSIG_TRY_USE_MACHINE "try_use_machine"
 	/// Can't interact with the machine
 	#define COMPONENT_CANT_USE_MACHINE_INTERACT (1<<0)
@@ -127,7 +127,7 @@
 #define COMSIG_ITEM_POST_EQUIPPED "item_post_equipped"
 	/// This will make the on_equipped proc return FALSE.
 	#define COMPONENT_EQUIPPED_FAILED (1<<0)
-/// A mob has just equipped an item. Called on [/mob] from base of [/obj/item/equipped()]: (/obj/item/equipped_item, slot)
+/// A mob has just equipped an item... Called on [/mob] from base of [/obj/item/equipped()]: (/obj/item/equipped_item, slot)
 #define COMSIG_MOB_EQUIPPED_ITEM "mob_equipped_item"
 /// A mob has just unequipped an item.
 #define COMSIG_MOB_UNEQUIPPED_ITEM "mob_unequipped_item"
@@ -153,7 +153,7 @@
 #define COMSIG_MOB_DROPPED_ITEM "mob_dropped_item"
 ///from base of obj/item/pickup(): (/mob/taker)
 #define COMSIG_ITEM_PICKUP "item_pickup"
-///from base of mob/put_in_hand(), after forceMove  item is now in the mob's hand: (mob/holder, hand_index)
+/// from base of mob/put_in_hand(), after forceMove item is now in the mob's hand: (mob/holder, hand_index)
 #define COMSIG_ITEM_ENTERED_HANDS "item_entered_hands"
 ///from base of obj/item/on_outfit_equip(): (mob/equipper, visuals_only, slot)
 #define COMSIG_ITEM_EQUIPPED_AS_OUTFIT "item_equip_as_outfit"
@@ -250,7 +250,7 @@
 
 ///from /obj/item/book/bible/interact_with_atom(): (mob/user)
 #define COMSIG_BIBLE_SMACKED "bible_smacked"
-	///stops the bible chain from continuing. When all of the effects of the bible smacking have been moved to a signal we can kill this
+	/// stops the bible chain from continuing... When all of the effects of the bible smacking have been moved to a signal we can kill this
 	#define COMSIG_END_BIBLE_CHAIN (1<<0)
 ///Closets
 ///From base of [/obj/structure/closet/proc/insert]: (atom/movable/inserted)
@@ -492,7 +492,7 @@
 ///sent from mecha action buttons to the mecha they're linked to
 #define COMSIG_MECHA_ACTION_TRIGGER "mecha_action_activate"
 
-///sent from clicking while you have no equipment selected. Sent before cooldown and adjacency checks, so you can use this for infinite range things if you want.
+/// sent from clicking while you have no equipment selected... Sent before cooldown and adjacency checks, so you can use this for infinite range things if you want.
 #define COMSIG_MECHA_MELEE_CLICK "mecha_action_melee_click"
 	/// Prevents click from happening.
 	#define COMPONENT_CANCEL_MELEE_CLICK (1<<0)
@@ -556,8 +556,8 @@
 
 /// from /obj/structure/cursed_slot_machine/handle_status_effect() when someone pulls the handle on the slot machine
 #define COMSIG_CURSED_SLOT_MACHINE_USE "cursed_slot_machine_use"
-	#define SLOT_MACHINE_USE_CANCEL (1<<0) //! we've used up the number of times we may use this slot machine. womp womp.
-	#define SLOT_MACHINE_USE_POSTPONE (1<<1) //! we haven't used up all our attempts to gamble away our life but we should chill for a few seconds
+	#define SLOT_MACHINE_USE_CANCEL (1<<0) // !.. we've used up the number of times we may use this slot machine... womp womp.
+	#define SLOT_MACHINE_USE_POSTPONE (1<<1) // !.. we haven't used up all our tries to gamble away our life but we should chill for a few seconds
 
 /// from /obj/structure/cursed_slot_machine/determine_victor() when someone loses.
 #define COMSIG_CURSED_SLOT_MACHINE_LOST "cursed_slot_machine_lost"
@@ -577,9 +577,9 @@
 /// from /datum/element/undertile/hide()
 #define COMSIG_UNDERTILE_UPDATED "undertile_updated"
 
-/// Sent from /obj/item/update_weight_class(). (old_w_class, new_w_class)
+/// Sent from /obj/item/update_weight_class()... (old_w_class, new_w_class)
 #define COMSIG_ITEM_WEIGHT_CLASS_CHANGED "item_weight_class_changed"
-/// Sent from /obj/item/update_weight_class(), to its loc. (obj/item/changed_item, old_w_class, new_w_class)
+/// Sent from /obj/item/update_weight_class(), to its loc... (obj/item/changed_item, old_w_class, new_w_class)
 #define COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED "atom_contents_weight_class_changed"
 
 /// Sent from /obj/item/proc/animate_attack() : (atom/movable/attacker, atom/attacked_atom, animation_type, list/image_override, list/animation_override, list/angle_override)

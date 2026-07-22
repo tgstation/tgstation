@@ -32,7 +32,7 @@
 	/// When we reach this much remaining time we will start animating more urgently as a warning
 	var/imminent_expiry_warning = 5 SECONDS
 
-/// Set up how the alert ACTUALLY looks, based on the effect applied
+/// Set up how the alert ACTUALLY looks, good on the effect applied
 /atom/movable/screen/alert/status_effect/golem_status/proc/update_details(buff_time)
 	var/datum/status_effect/golem/golem_effect = attached_effect
 	if (!istype(golem_effect))
@@ -215,7 +215,7 @@
 	human_owner.physiology.burn_mod /= BURN_MULTIPLIER
 	return ..()
 
-/// When we take fire damage (or... technically also cold damage, we don't differentiate), zap a nearby APC
+/// When we take fire damage (or.... technically also cold damage, we don't differentiate), zap a nearby APC
 /datum/status_effect/golem/plasma/proc/on_burned(datum/source, damage, damagetype, ...)
 	SIGNAL_HANDLER
 	if(damagetype != BURN)

@@ -218,7 +218,7 @@
 		if(!(B?.being_dumped))
 			accounts_to_rob -= B
 			continue
-		var/amount = round(B.account_balance * percentage_lost) // We don't want fractions of a credit stolen. That's just agony for everyone.
+		var/amount = round(B.account_balance * percentage_lost) // We don't want fractions of a credit stolen.. That's just agony for everyone.
 		var/datum/bank_account/account = bogdanoff?.get_bank_account() || internal_account
 		account.transfer_money(B, amount, "?VIVA¿: !LA CRABBE¡")
 		B.money_crabbed += amount
@@ -242,7 +242,7 @@
  */
 /obj/structure/checkoutmachine/proc/expel_cash()
 	var/funds_remaining = internal_account.account_balance
-	var/safety = funds_remaining + 1 // In the absolute worst case scenario the loop will complete in funds_remaining steps, if this is counter reaches 0 something went terribly wrong and we need to leave
+	var/safety = funds_remaining + 1 // In the absolute worst case scenario the loop will complete in funds_remaining steps, if this is counter reaches 0 something went terribly wrong. We need to leave
 	while(floor(funds_remaining))
 		var/amount_to_remove = min(funds_remaining, rand(1, round(internal_account.account_balance)/8))
 		var/obj/item/holochip/holochip = new (get_turf(src), amount_to_remove)
@@ -297,7 +297,7 @@
  * Cleans up after the falling animation.
  */
 /obj/effect/dumpeet_target/proc/end_launch()
-	QDEL_NULL(DF) //Delete the falling machine effect, because at this point its animation is over. We dont use temp_visual because we want to manually delete it as soon as the pod appears
+	QDEL_NULL(DF) // Delete the falling machine effect, because at this point its animation is over.. We dont use temp_visual because we want to manually delete it as soon as the pod appears
 	playsound(src, SFX_EXPLOSION, 80, TRUE)
 	dump.forceMove(get_turf(src))
-	qdel(src) //The target's purpose is complete. It can rest easy now
+	qdel(src) // The target's purpose is complete.. It can rest easy now

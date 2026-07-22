@@ -17,7 +17,7 @@
 
 // The categories below do not have hard rules on what info is displayed, and are for categorizing info thematically.
 
-/// The mode that the items in, what kind of item is dispensed, etc
+/// The mode that the items in, what kind of item is dispensed, and so on
 #define DETSCAN_CATEGORY_SETTINGS "Active Settings"
 /// praise be
 #define DETSCAN_CATEGORY_HOLY "Holy Data"

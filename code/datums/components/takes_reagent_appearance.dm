@@ -12,7 +12,7 @@
  * An example usage is bartender mixed drinks - each reagent gets its own fancy drink sprite
  */
 /datum/component/takes_reagent_appearance
-	/// The type to compare against the glass_style's required_container_type. The parent's type by default.
+	/// The type to compare against the glass_style's required_container_type.. The parent's type by default.
 	var/base_container_type
 	/// Icon file when attached to the item
 	var/icon_pre_change
@@ -65,7 +65,7 @@
 	item_parent.update_appearance()
 
 /// Signal proc for [COMSIG_ATOM_UPDATE_APPEARANCE]
-/// We hook into the update appearance proc to perform our own update based on our glass style
+/// We hook into the update appearance proc to perform our own update good on our glass style
 /// Preventing any further updates down the line on successes
 /datum/component/takes_reagent_appearance/proc/on_update_appearance(datum/source, updates)
 	SIGNAL_HANDLER

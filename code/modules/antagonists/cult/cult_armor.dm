@@ -64,7 +64,7 @@
 	icon_state = "cult_hoodalt"
 	inhand_icon_state = null
 
-///'Ghost' subtype, given to cultists spawned by Spirit Realm. Can't be dropped.
+/// 'Ghost' subtype, given to cultists spawned by Spirit Realm.. Can't be dropped.
 /obj/item/clothing/suit/hooded/cultrobes/alt/ghost
 	item_flags = DROPDEL
 

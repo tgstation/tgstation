@@ -118,7 +118,7 @@
 	. = NONE
 	// This exists so that even if one of the signal receivers unregisters the signal,
 	// all the objects that are receiving the signal get the signal this final time.
-	// AKA: No you can't cancel the signal reception of another object by doing an unregister in the same signal.
+	// Also known as No you can't cancel the signal reception of another object by doing an unregister in the same signal.
 	var/list/queued_calls = list()
 	// This should be faster than doing `var/datum/listening_datum as anything in target` as it does not implicitly copy the list
 	for(var/i in 1 to length(target))

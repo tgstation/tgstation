@@ -1,4 +1,4 @@
-///Unit test that tests all types of moods for slimes, to make sure they all have proper icons, excluding moods that intentionally don't have an icon.
+/// Unit test that tests all types of moods f. Slimes, to make sure they all have proper icons, excluding moods that intentionally don't have an icon.
 /datum/unit_test/slime_mood
 
 /datum/unit_test/slime_mood/Run()

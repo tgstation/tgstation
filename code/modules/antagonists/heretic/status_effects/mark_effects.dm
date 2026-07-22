@@ -139,7 +139,7 @@
 
 	return ..()
 
-/// Checks if the movement from moving_from to going_to leaves our [var/locked_to] area. Returns TRUE if so.
+/// Checks if the movement from moving_from to going_to leaves our [var/locked_to] area.. Returns TRUE if so.
 /datum/status_effect/eldritch/blade/proc/is_escaping_locked_area(atom/moving_from, atom/going_to)
 	if(!locked_to)
 		return FALSE
@@ -279,7 +279,7 @@
 	if(damage_sustained < 15)
 		return
 
-	// Removes the trait in here since we don't wanna destroy the mark before its detonated or allow detonation triggers with other weapons
+	// Removes the trait in here since we don't want to destroy the mark before its detonated or allow detonation triggers with other weapons
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 	owner.balloon_alert(owner, "you feel able to once again strike!")
 

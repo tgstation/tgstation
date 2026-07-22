@@ -180,7 +180,7 @@
 
 /// Actually moves our nukie to where they should be
 /datum/antagonist/nukeop/proc/move_to_spawnpoint()
-	// Ensure that the nukiebase is loaded, and wait for it if required
+	// Ensure that the nukiebase is loaded, and wait for it if needed
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	var/turf/destination = get_spawnpoint()
 	owner.current.forceMove(destination)

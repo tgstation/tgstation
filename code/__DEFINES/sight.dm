@@ -22,7 +22,7 @@
 
 #define INVISIBILITY_MAXIMUM 100 //the maximum allowed for "real" objects
 
-#define INVISIBILITY_ABSTRACT 101 //only used for abstract objects (e.g. spacevine_controller), things that are not really there.
+#define INVISIBILITY_ABSTRACT 101 // only used for abstract objects (e.g... spacevine_controller), things that are not really there.
 
 #define BORGMESON (1<<0)
 #define BORGTHERM (1<<1)
@@ -57,7 +57,7 @@
 //#define SEE_THRU (1<<9)
 /// render dark tiles as blackness (Note, this basically means we draw dark tiles to plane 0)
 /// we can then hijack that plane with a plane master, and start drawing it anywhere we want
-/// NOTE: this does not function with the SIDE_MAP map format. So we can't. :(
+/// NOTE: this does not function with the SIDE_MAP map format... So we can't... :(
 //#define SEE_BLACKNESS (1<<10)
 
 /// Bitfield of sight flags that show THINGS but no lighting

@@ -12,7 +12,7 @@
 	setup_shuttle_events()
 
 /obj/docking_port/mobile/emergency/canDock(obj/docking_port/stationary/S)
-	return SHUTTLE_CAN_DOCK //If the emergency shuttle can't move, the whole game breaks, so it will force itself to land even if it has to crush a few departments in the process
+	return SHUTTLE_CAN_DOCK // If the emergency shuttle can't move, the whole game breaks, so it will force itself to l. Even if it has to crush a few departments in the process
 
 /obj/docking_port/mobile/emergency/register()
 	. = ..()
@@ -104,7 +104,7 @@
 				if(shuttle_areas[get_area(player)])
 					has_people = TRUE
 					var/location = get_area(player.mind.current)
-					//Non-antag present. Can't hijack.
+					// Non-antag present.. Can't hijack.
 					if(!(player.mind.has_antag_datum(/datum/antagonist)) && !istype(location, /area/shuttle/escape/brig))
 						return FALSE
 					//Antag present, doesn't stop but let's see if we actually want to hijack
@@ -200,7 +200,7 @@
 			if(!success)
 				setTimer(ENGINE_START_TIME)
 
-			if(time_left <= 50 && !sound_played) //4 seconds left:REV UP THOSE ENGINES BOYS. - should sync up with the launch
+			if(time_left <= 50 && !sound_played) // 4 seconds left:REV UP THOSE ENGINES BOYS.. - should sync up with the launch
 				sound_played = 1 //Only rev them up once.
 				var/list/areas = list()
 				for(var/area/shuttle/escape/E in GLOB.areas)

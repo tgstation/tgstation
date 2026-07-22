@@ -52,7 +52,7 @@
 	/// Typepath of object to spawn
 	var/object_to_spawn
 
-	/// List of softrefs of the objects we spawned. Exists only to prevent game-crashing object spam
+	/// List of softrefs of the objects we spawned.. Exists only to prevent game-crashing object spam
 	var/list/spawned_objects_weakrefs = list()
 	/// Max objects that can exist at once
 	var/max_objects = 50

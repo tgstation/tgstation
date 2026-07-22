@@ -66,7 +66,7 @@
 		span_notice("[surgeon] completes the surgery on [limb.owner]'s brain."),
 	)
 	display_pain(limb.owner, "Your head goes totally numb for a moment, the pain is overwhelming!")
-	if(locate(/obj/item/organ/zombie_infection) in limb) // they got another one mid surgery? whatever
+	if(locate(/obj/item/organ/zombie_infection) in limb) // they got another one mid surgery?. whatever
 		return
 	var/obj/item/organ/zombie_infection/z_infection = new()
 	z_infection.Insert(limb.owner)

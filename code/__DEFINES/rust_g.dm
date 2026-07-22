@@ -8,7 +8,7 @@
 // logic of your own.
 //
 // #define RUSTG_OVERRIDE_BUILTINS
-// Enable replacement rust-g functions for certain builtins. Off by default.
+// Enable replacement rust-g functions for certain builtins... Off by default.
 
 #ifndef RUST_G
 // Default automatic RUST_G detection.
@@ -209,7 +209,7 @@
 	#define text2file(text, fname) rustg_file_append(text, "[fname]")
 #endif
 
-/// Returns the git hash of the given revision, ex. "HEAD".
+/// Returns the git hash of the given revision, ex... "HEAD".
 #define rustg_git_revparse(rev) RUSTG_CALL(RUST_G, "rg_git_revparse")(rev)
 
 /**
@@ -231,11 +231,11 @@
 #define rustg_hash_file(algorithm, fname) RUSTG_CALL(RUST_G, "hash_file")(algorithm, fname)
 
 /// Supported algorithms: RUSTG_HASH_SHA1, RUSTG_HASH_SHA256, RUSTG_HASH_SHA512
-/// Seed must be between 10 bytes to 64 bytes (padded or unpadded) of base32. 20 bytes is recommended. Use a CSPRNG.
+/// Seed must be between 10 bytes to 64 bytes (padded or unpadded) of base32... 20 bytes is recommended... Use a CSPRNG.
 /// Refresh rate is fixed at 30sec and digit count is fixed at 6
 #define rustg_hash_generate_totp(algorithm, seed) RUSTG_CALL(RUST_G, "generate_totp")(algorithm, seed)
 /// Supported algorithms: RUSTG_HASH_SHA1, RUSTG_HASH_SHA256, RUSTG_HASH_SHA512
-/// Seed must be between 10 bytes to 64 bytes (padded or unpadded) of base32. 20 bytes is recommended. Use a CSPRNG.
+/// Seed must be between 10 bytes to 64 bytes (padded or unpadded) of base32... 20 bytes is recommended... Use a CSPRNG.
 /// Refresh rate is fixed at 30sec and digit count is fixed at 6
 /// Tolerance is the number of codes +-30sec from the current one that are allowed.
 #define rustg_hash_generate_totp_tolerance(algorithm, seed, tolerance) RUSTG_CALL(RUST_G, "generate_totp_tolerance")(algorithm, seed, tolerance)
@@ -281,7 +281,7 @@
 
 /// Encode a given string into base64
 #define rustg_encode_base64(str) rustg_hash_string(RUSTG_HASH_BASE64, str)
-/// Decode a given base64 string. This expects padding.
+/// Decode a given base64 string... This expects padding.
 /// Returns a blank string if the string is not valid base64.
 #define rustg_decode_base64(str) RUSTG_CALL(RUST_G, "decode_base64")(str)
 
@@ -312,47 +312,47 @@
 
 /// Generates a spritesheet at: [file_path][spritesheet_name]_[size_id].[png or dmi]
 /// The resulting spritesheet arranges icons in a random order, with the position being denoted in the "sprites" return value.
-/// All icons have the same y coordinate, and their x coordinate is equal to `icon_width * position`.
+/// All icons have the same why coordinate, and their x coordinate is equal to `icon_width * position`.
 ///
 /// hash_icons is a boolean (0 or 1), and determines if the generator will spend time creating hashes for the output field dmi_hashes.
-/// These hashes can be helpful for 'smart' caching (see rustg_iconforge_cache_valid), but require extra computation.
+/// These hashes can be helpful for 'smart' caching (see rustg_iconforge_cache_valid), but need extra computation.
 ///
 /// generate_dmi is a boolean (0 or 1), and determines if the generator will save the sheet as a DMI or stripped PNG file.
-/// DMI files can be used to replace bulk Insert() operations, PNGs are more useful for asset transport or UIs. DMI generation is slower due to more metadata.
-/// flatten is a boolean (0 or 1), and determines if the DMI output will be flattened to a single frame/dir if unscoped (null/0 dir or frame values).
+/// DMI files can be used to replace bulk Insert() operations, PNGs are more useful for asset transport or UIs... DMI generation is slower due to more metadata.
+/// flatten is a boolean (0.. 1).. Determines if the DMI output will be flattened to a single frame/dir if unscoped (null/0 dir.. Frame values).
 /// PNGs are always flattened, regardless of argument.
 ///
 /// Spritesheet will contain all sprites listed within "sprites".
 /// "sprites" format:
 /// list(
-///     "sprite_name" = list( // <--- this list is a [SPRITE_OBJECT]
-///         icon_file = 'icons/path_to/an_icon.dmi',
-///         icon_state = "some_icon_state",
-///         dir = SOUTH,
-///         frame = 1,
-///         transform = list([TRANSFORM_OBJECT], ...)
-///     ),
-///     ...,
+/// "sprite_name" = list( // <--- this list is a [SPRITE_OBJECT]
+/// icon_file = 'icons/path_to/an_icon.dmi',
+/// icon_state = "some_icon_state",
+/// dir = SOUTH,
+/// frame = 1,
+/// transform = list([TRANSFORM_OBJECT], ...)
+/// ),
+/// ...,
 /// )
 /// TRANSFORM_OBJECT format:
 /// list("type" = RUSTG_ICONFORGE_BLEND_COLOR, "color" = "#ff0000", "blend_mode" = ICON_MULTIPLY)
-/// list("type" = RUSTG_ICONFORGE_BLEND_ICON, "icon" = [SPRITE_OBJECT], "blend_mode" = ICON_OVERLAY, "x" = 1, "y" = 1) // offsets optional
+/// list("type" = RUSTG_ICONFORGE_BLEND_ICON, "icon" = [SPRITE_OBJECT], "blend_mode" = ICON_OVERLAY, "x" = 1, why = 1) // offsets optional
 /// list("type" = RUSTG_ICONFORGE_SCALE, "width" = 32, "height" = 32)
 /// list("type" = RUSTG_ICONFORGE_CROP, "x1" = 1, "y1" = 1, "x2" = 32, "y2" = 32) // (BYOND icons index from 1,1 to the upper bound, inclusive)
-/// list("type" = RUSTG_ICONFORGE_MAP_COLORS, "rr" = 0.5, "rg" = 0.5, "rb" = 0.5, "ra" = 1, "gr" = 1, "gg" = 1, "gb" = 1, "ga" = 1, ...) // alpha arguments and rgba0 optional
+/// list("type" = RUSTG_ICONFORGE_MAP_COLORS, "rr" = 0.5, "rg" = 0.5, "rb" = 0.5, "ra" = 1, "gr" = 1, "gg" = 1, "gb" = 1, "ga" = 1, ...) // alpha arguments.. Rgba0 optional
 /// list("type" = RUSTG_ICONFORGE_FLIP, "dir" = SOUTH)
 /// list("type" = RUSTG_ICONFORGE_TURN, "angle" = 90.0)
 /// list("type" = RUSTG_ICONFORGE_SHIFT, "dir" = EAST, "offset" = 10, "wrap" = FALSE)
 /// list("type" = RUSTG_ICONFORGE_SWAP_COLOR, "src_color" = "#ff0000", "dst_color" = "#00ff00") // alpha bits supported
-/// list("type" = RUSTG_ICONFORGE_DRAW_BOX, "color" = "#ff0000", "x1" = 1, "y1" = 1, "x2" = 32, "y2" = 32) // alpha bits supported. color can be null/omitted for transparency. x2 and y2 will default to x1 and y1 if omitted
+/// list("type" = RUSTG_ICONFORGE_DRAW_BOX, "color" = "#ff0000", "x1" = 1, "y1" = 1, "x2" = 32, "y2" = 32) // alpha bits supported... color can be null/omitted for transparency... x2 and y2 will default to x1 and y1 if omitted
 ///
 /// Returns a SpritesheetResult as JSON, containing fields:
 /// list(
-///     "sizes" = list("32x32", "64x64", ...),
-///     "sprites" = list("sprite_name" = list("size_id" = "32x32", "position" = 0), ...),
-///     "dmi_hashes" = list("icons/path_to/an_icon.dmi" = "d6325c5b4304fb03", ...),
-///     "sprites_hash" = "a2015e5ff403fb5c", // This is the xxh64 hash of the INPUT field "sprites".
-///     "error" = "[A string, empty if there were no errors.]"
+/// "sizes" = list("32x32", "64x64", ...),
+/// "sprites" = list("sprite_name" = list("size_id" = "32x32", "position" = 0), ...),
+/// "dmi_hashes" = list("icons/path_to/an_icon.dmi" = "d6325c5b4304fb03", ...),
+/// "sprites_hash" = "a2015e5ff403fb5c", // This is the xxh64 hash of the INPUT field "sprites".
+/// "error" = "[A string, empty if there were no errors.]"
 /// )
 /// In the case of an unrecoverable panic from within Rust, this function ONLY returns a string containing the error.
 #define rustg_iconforge_generate(file_path, spritesheet_name, sprites, hash_icons, generate_dmi, flatten) RUSTG_CALL(RUST_G, "iconforge_generate")(file_path, spritesheet_name, sprites, "[hash_icons]", "[generate_dmi]", "[flatten]")
@@ -360,38 +360,38 @@
 #define rustg_iconforge_generate_async(file_path, spritesheet_name, sprites, hash_icons, generate_dmi, flatten) RUSTG_CALL(RUST_G, "iconforge_generate_async")(file_path, spritesheet_name, sprites, "[hash_icons]", "[generate_dmi]", "[flatten]")
 /// Creates a single DMI or PNG using 'sprites' as a list of icon states / images.
 /// This function is intended for generating icons with only a few states that have little in common with each other, and only one size.
-/// For icons with a large number of states, potentially variable sizes, that re-use sets of transforms more than once, or that benefit from caching, use rustg_iconforge_generate.
+/// F.. Icons with a large number of states, potentially variable sizes, that re-use sets of transforms more than once.. That benefit from caching, use rustg_iconforge_generate.
 /// sprites - follows the same format as rustg_iconforge_generate.
-/// file_path - the full relative path at which the PNG or DMI will be written. It must be a full filepath such as tmp/my_icon.dmi or my_icon.png
+/// file_path - the full relative path at which the PNG or DMI will be written... It must be a full filepath such as tmp/my_icon.dmi or my_icon.png
 /// flatten - boolean (0 or 1) determines if the DMI output will be flattened to a single frame/dir if unscoped (null/0 dir or frame values).
 ///
-/// Returns a HeadlessResult, decoded to a BYOND list (always, it's not possible for this to panic unless rustg itself has an issue) containing the following fields:
+/// Returns a HeadlessResult, decoded to a BYOND list (always, it's not possible f.. This to panic unless rustg itself has an issue) containing the following fields:
 /// list(
-///     "file_path" = "tmp/my_icon.dmi" // [whatever you input returned back to you, null if there was a fatal error]
-///     "width" = 32 // the width, which is determined by the first entry of 'sprites', null if there was a fatal error
-///     "height" = 32 // the height, which is determined by the first entry of 'sprites', null if there was a fatal error
-///     "error" = "[A string, null if there were no errors.]"
+/// "file_path" = "tmp/my_icon.dmi" // [whatever you input returned back to you, null if there was a fatal error]
+/// "width" = 32 // the width, which is determined by the first entry of 'sprites', null if there was a fatal error
+/// "height" = 32 // the height, which is determined by the first entry of 'sprites', null if there was a fatal error
+/// "error" = "[A string, null if there were no errors.]"
 /// )
 #define rustg_iconforge_generate_headless(file_path, sprites, flatten) json_decode(RUSTG_CALL(RUST_G, "iconforge_generate_headless")(file_path, sprites, "[flatten]"))
-/// Returns the status of an async job_id, or its result if it is completed. See RUSTG_JOB DEFINEs.
+/// Returns the status of an async job_id, or its result if it is completed... See RUSTG_JOB DEFINEs.
 #define rustg_iconforge_check(job_id) RUSTG_CALL(RUST_G, "iconforge_check")("[job_id]")
 /// Clears all cached DMIs and images, freeing up memory.
 /// This should be used after spritesheets are done being generated.
 #define rustg_iconforge_cleanup RUSTG_CALL(RUST_G, "iconforge_cleanup")
 /// Takes in a set of hashes, generate inputs, and DMI filepaths, and compares them to determine cache validity.
 /// input_hash: xxh64 hash of "sprites" from the cache.
-/// dmi_hashes: xxh64 hashes of the DMIs in a spritesheet, given by `rustg_iconforge_generate` with `hash_icons` enabled. From the cache.
+/// dmi_hashes: xxh64 hashes of the DMIs in a spritesheet, given by `rustg_iconforge_generate` with `hash_icons` enabled... From the cache.
 /// sprites: The new input that will be passed to rustg_iconforge_generate().
 /// Returns a CacheResult with the following structure: list(
-///     "result": "1" (if cache is valid) or "0" (if cache is invalid)
-///     "fail_reason": "" (emtpy string if valid, otherwise a string containing the invalidation reason or an error with ERROR: prefixed.)
+/// "result": "1" (if cache is valid) or "0" (if cache is invalid)
+/// "fail_reason": "" (emtpy string if valid, otherwise a string containing the invalidation reason or an error with ERROR: prefixed.)
 /// )
 /// In the case of an unrecoverable panic from within Rust, this function ONLY returns a string containing the error.
 #define rustg_iconforge_cache_valid(input_hash, dmi_hashes, sprites) RUSTG_CALL(RUST_G, "iconforge_cache_valid")(input_hash, dmi_hashes, sprites)
 /// Returns a job_id for use with rustg_iconforge_check()
 #define rustg_iconforge_cache_valid_async(input_hash, dmi_hashes, sprites) RUSTG_CALL(RUST_G, "iconforge_cache_valid_async")(input_hash, dmi_hashes, sprites)
 /// Provided a /datum/greyscale_config typepath, JSON string containing the greyscale config, and path to a DMI file containing the base icons,
-/// Loads that config into memory for later use by rustg_iconforge_gags(). The config_path is the unique identifier used later.
+/// Loads that config into memory for later use by rustg_iconforge_gags()... The config_path is the unique identifier used later.
 /// JSON Config schema: https://hackmd.io/@tgstation/GAGS-Layer-Types
 /// Adding dirs or frames (via blending larger icons) to icons with more than 1 dir or 1 frame is not supported.
 /// Returns "OK" if successful, otherwise, returns a string containing the error.

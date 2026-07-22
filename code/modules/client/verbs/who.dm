@@ -93,7 +93,7 @@ GAME_VERB(/client, adminwho, "Adminwho", "Admin")
 
 	return jointext(message_strings, "\n")
 
-/// Proc that returns a list of cliented admins. Remember that this list can contain nulls!
+/// Proc that returns a list of cliented admins.. Remember that this list can contain nulls!
 /// Also, will return null if we don't have any admins.
 /proc/get_list_of_admins()
 	var/returnable_list = list()
@@ -106,7 +106,7 @@ GAME_VERB(/client, adminwho, "Adminwho", "Admin")
 
 	return returnable_list
 
-/// Proc that will return the applicable display name, linkified or not, based on the input client reference.
+/// Proc that will return the applicable display name, linkified or not, good on the input client reference.
 /proc/get_linked_admin_name(client/admin)
 	var/feedback_link = admin.holder.feedback_link()
 	return isnull(feedback_link) ? admin : "<a href=[feedback_link]>[admin]</a>"
@@ -124,7 +124,7 @@ GAME_VERB(/client, adminwho, "Adminwho", "Admin")
 
 	return returnable_list
 
-/// Proc that gathers adminwho information for admins, which will contain information on if the admin is AFK, readied to join, etc. Only arg is a list of clients to use.
+/// Proc that gathers adminwho information f. Admins, which will contain information on if the admin is AFK, readied to join. So on Only arg is a list of clients to use.
 /// Will return a list of strings.
 /proc/get_sensitive_adminwho_information(list/checkable_admins)
 	var/returnable_list = list()

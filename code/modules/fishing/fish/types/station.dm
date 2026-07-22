@@ -37,7 +37,7 @@
 
 /obj/item/fish/ratfish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
-	//stable pop reflects the config for how many mice migrate. powerful...
+	// stable pop reflects the config for how many mice migrate.. powerful...
 	stable_population = CONFIG_GET(number/mice_roundstart)
 
 /obj/item/fish/sludgefish
@@ -78,7 +78,7 @@
 	icon_state_dead = "slimefish_dead"
 	sprite_width = 7
 	sprite_height = 7
-	fish_flags = parent_type::fish_flags & ~FISH_DO_FLOP_ANIM //it already has a cute bouncy wiggle. :3
+	fish_flags = parent_type::fish_flags & ~FISH_DO_FLOP_ANIM // it already has a cute bouncy wiggle.. :3
 	random_case_rarity = FISH_RARITY_VERY_RARE
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
 	stable_population = 4
@@ -201,7 +201,7 @@
 	is_bait = FALSE
 	next_type = /datum/fish_evolution/nessie
 	growth_time = 8 MINUTES
-	///fritterish can have different forms assigned to them on init. These are purely visual.
+	/// fritterish can have different forms assigned to them on init.. These are purely visual.
 	var/variant = FISH_FRITTERISH
 
 /obj/item/fish/fryish/fritterish/Initialize(mapload, apply_qualities = TRUE)

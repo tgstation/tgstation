@@ -463,7 +463,7 @@
 	temp_gender ||= get_visible_gender()
 	return ..()
 
-//clothing need special handling due to pairs of items, ie gloves vs a singular glove, shoes, ect.
+// clothing need special handling due to pairs of items, that is gloves vs a singular glove, shoes, ect.
 /obj/item/clothing/p_they(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender

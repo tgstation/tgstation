@@ -1,6 +1,6 @@
 
 /////////////////
-//Misc. Frozen.//
+// Misc.. Frozen.//
 /////////////////
 
 /datum/crafting_recipe/food/icecreamsandwich

@@ -1,4 +1,4 @@
-/// Global list of all glass style singletons created. See [/proc/create_glass_styles] for list format.
+/// Global list of all glass style singletons created.. See [/proc/create_glass_styles] for list format.
 GLOBAL_LIST_INIT(glass_style_singletons, create_glass_styles())
 
 /**
@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(glass_style_singletons, create_glass_styles())
 		var/reagent_type = new_style.required_drink_type
 		if(!islist(final_list[container_type]))
 			final_list[container_type] = list()
-		// Check that our slot is free. If it's not free, this is an error
+		// Check that our slot is free.. If it's not free, this is an error
 		if(final_list[container_type][reagent_type])
 			stack_trace("[style] collided with another glass style singleton during instantiation. \
 				This means its reagent ([reagent_type]) has two styles set for the same container type. \
@@ -49,10 +49,10 @@ GLOBAL_LIST_INIT(glass_style_singletons, create_glass_styles())
  * this allows one reagent to style multiple things across a variety of icon files
  */
 /datum/glass_style
-	/// Required - What EXACT type of reagent is needed for this style to be used
+	/// Needed - What EXACT type of reagent is needed for this style to be used
 	/// If not supplied, will be assumed to be an abstract type and will not be instantiated
 	var/datum/reagent/required_drink_type
-	/// Required - What EXACT type of atom is needed for this style to be used
+	/// Needed - What EXACT type of atom is needed for this style to be used
 	/// If not supplied, will be assumed to be an abstract type and will not be instantiated
 	var/required_container_type
 	/// Optional - What the glass is renamed to

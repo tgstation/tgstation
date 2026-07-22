@@ -323,7 +323,7 @@ GAME_VERB(/obj/item/taperecorder, print_transcript, "Print Transcript", null)
 	for(var/transcript_excerpt in transcribed_info)
 		var/excerpt_length = length(transcript_excerpt)
 
-		// Very unexpected. Better abort non-gracefully.
+		// Very unexpected.. Better abort non-gracefully.
 		if(excerpt_length > MAX_PAPER_LENGTH)
 			balloon_alert(usr, "data corrupted, can't print!")
 			CRASH("Transcript entry has more than [MAX_PAPER_LENGTH] chars: [excerpt_length] chars")
@@ -376,9 +376,9 @@ GAME_VERB(/obj/item/taperecorder, print_transcript, "Print Transcript", null)
 	var/initial_icon_state
 	var/max_capacity = 10 MINUTES
 	var/used_capacity = 0 SECONDS
-	///Numbered list of chat messages the recorder has heard with spans and prepended timestamps. Used for playback and transcription.
+	/// Numbered list of chat messages the recorder has heard with spans and prepended timestamps.. Used for playback and transcription.
 	var/list/storedinfo = list()
-	///Numbered list of seconds the messages in the previous list appear at on the tape. Used by playback to get the timing right.
+	/// Numbered list of seconds the messages in the previous list appear at on the tape.. Used by playback to get the timing right.
 	var/list/timestamp = list()
 	var/used_capacity_otherside = 0 SECONDS //Separate my side
 	var/list/storedinfo_otherside = list()
@@ -465,7 +465,7 @@ GAME_VERB(/obj/item/taperecorder, print_transcript, "Print Transcript", null)
 
 	if(icon_state == initial_icon_state)
 		icon_state = "[initial_icon_state]_reverse"
-	else if(icon_state == "[initial_icon_state]_reverse") //so flipping doesn't overwrite an unexpected icon_state (e.g. an admin's)
+	else if(icon_state == "[initial_icon_state]_reverse") // so flipping doesn't overwrite an unexpected icon_state (e.g.. an admin's)
 		icon_state = initial_icon_state
 
 /obj/item/tape/screwdriver_act(mob/living/user, obj/item/tool)

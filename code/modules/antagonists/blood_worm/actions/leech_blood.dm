@@ -15,7 +15,7 @@
 
 	var/leech_grab_delay = 1 SECONDS
 
-	/// Associative list of all reagent types that are compatible for leeching from reagent containers. Format is "list[reagent_type] = TRUE"
+	/// Associative list of all reagent types that are compatible for leeching from reagent containers.. Format is "list[reagent_type] = TRUE"
 	var/static/list/compatible_container_reagent_types = list(
 		/datum/reagent/blood = TRUE, // If it's blood, then it works :D
 		/datum/reagent/consumable/liquidelectricity = TRUE, // Rare enough to allow.
@@ -29,7 +29,7 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/InterceptClickOn(mob/living/clicker, params, atom/target)
 	var/modifiers = params2list(params)
 
-	// Don't block examines, grabs, etc.
+	// Don't block examines, grabs, and so on
 	if (modifiers[SHIFT_CLICK] || modifiers[ALT_CLICK] || modifiers[CTRL_CLICK])
 		return FALSE
 
@@ -47,7 +47,7 @@
 		target.balloon_alert(owner, "can't reach!")
 		return FALSE
 
-	// If you fail after this point, it's because your attempt got interrupted or because the victim is invalid.
+	// If you fail after this point, it's because your try got interrupted or because the victim is invalid.
 	unset_click_ability(owner, refund_cooldown = FALSE)
 
 	if (isliving(target))
@@ -245,7 +245,7 @@
 		return FALSE
 	return TRUE
 
-/// Returns all of the blood in the given container. Format is "list[reagent_type] = volume"
+/// Returns all of the blood in the given container.. Format is "list[reagent_type] = volume"
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/get_blood_in_container(obj/item/reagent_containers/target)
 	. = list()
 

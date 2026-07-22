@@ -23,7 +23,7 @@
 	/// Our offset from our "true" plane, see below
 	var/offset
 	/// When rendering multiz, lower levels get their own set of plane masters
-	/// Real plane here represents the "true" plane value of something, ignoring the offset required to handle lower levels
+	/// Real plane here represents the "true" plane value of something, ignoring the offset needed to handle lower levels
 	var/real_plane
 
 	//--rendering relay vars--
@@ -31,7 +31,7 @@
 	var/list/render_relay_planes = list(RENDER_PLANE_UNLIT_GAME)
 	/// blend mode to apply to the render relay in case you dont want to use the plane_masters blend_mode
 	var/blend_mode_override
-	/// list of current relays this plane is utilizing to render
+	/// list of current relays this plane is using to render
 	var/list/atom/movable/render_plane_relay/relays = list()
 	/// if render relays have already be generated
 	var/relays_generated = FALSE
@@ -40,8 +40,8 @@
 	/// We do this so PMs can opt into being temporary, to reduce load on clients
 	var/start_hidden = FALSE
 	/// If this plane master is being forced to hide.
-	/// Hidden PMs will dump ANYTHING relayed or drawn onto them. Be careful with this
-	/// Remember: a hidden plane master will dump anything drawn directly to it onto the output render. It does NOT hide its contents
+	/// Hidden PMs will dump ANYTHING relayed or drawn onto them.. Be careful with this
+	/// Remember: a hidden plane master will dump anything drawn directly to it onto the output render.. It does NOT hide its contents
 	/// Use alpha for that
 	var/force_hidden = FALSE
 
@@ -51,9 +51,9 @@
 
 	/// Bitfield that describes how this plane master will render if its z layer is being "optimized"
 	/// If a plane master is NOT critical, it will be completely dropped if we start to render outside a client's multiz boundary prefs
-	/// Of note: most of the time we will relay renders to non critical planes in this stage. so the plane master will end up drawing roughly "in order" with its friends
+	/// Of note: most of the time we will relay renders to non critical planes in this stage.. so the plane master will end up drawing roughly "in order" with its friends
 	/// This is NOT done for parallax and other problem children, because the rules of BLEND_MULTIPLY appear to not behave as expected :(
-	/// This will also just make debugging harder, because we do fragile things in order to ensure things operate as epected. I'm sorry
+	/// This will also just make debugging harder, because we do fragile things in order to ensure things operate as epected.. I'm sorry
 	/// Compile time
 	/// See [code\__DEFINES\layers.dm] for our bitflags
 	var/critical = NONE
@@ -61,7 +61,7 @@
 	/// If this plane master is outside of our visual bounds right now
 	var/is_outside_bounds = FALSE
 
-	/// Has this plane master had its offset made concrete? Avoids modifications/uses that are going to immediately break
+	/// Has this plane master had its offset made concrete?. Avoids modifications/uses that are going to immediately break
 	var/offset_already_updated = FALSE
 
 /atom/movable/screen/plane_master/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset = 0)
@@ -81,7 +81,7 @@
 
 /atom/movable/screen/plane_master/Destroy()
 	if(home)
-		// NOTE! We do not clear ourselves from client screens
+		// NOTE!. We do not clear ourselves from client screens
 		// We relay on whoever qdel'd us to reset our hud, and properly purge us
 		home.plane_masters -= "[plane]"
 		home = null
@@ -101,7 +101,7 @@
 
 /// Updates our "offset", basically what layer of multiz we're meant to render
 /// Top is 0, goes up as you go down
-/// It's taken into account by render targets and relays, so we gotta make sure they're on the same page
+/// It's taken into account by render targets and relays, so we got to make sure they're on the same page
 /atom/movable/screen/plane_master/proc/update_offset()
 	name = "[initial(name)] #[offset]"
 	SET_PLANE_W_SCALAR(src, real_plane, offset)
@@ -135,8 +135,8 @@
 
 	var/client/our_client = mymob?.canon_client
 	// Alright, let's get this out of the way
-	// Mobs can move z levels without their client. If this happens, we need to ensure critical display settings are respected
-	// This is done here. Mild to severe pain but it's nessesary
+	// Mobs can move z levels without their client.. If this happens, we need to ensure critical display settings are respected
+	// This is done here.. Mild to severe pain but it's nessesary
 	if(check_outside_bounds())
 		if(!(critical & PLANE_CRITICAL_DISPLAY))
 			return FALSE

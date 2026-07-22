@@ -769,7 +769,7 @@
 	id_trim = /datum/id_trim/job/bridge_assistant // half tider half command
 	id = /obj/item/card/id/advanced/chameleon
 	uniform = /obj/item/clothing/under/trek/command/next
-	l_pocket = /obj/item/gun/energy/e_gun/mini // they are thej best race in the end. not as impactful as you may think
+	l_pocket = /obj/item/gun/energy/e_gun/mini // they are thej best race in the end.. not as impactful as you may think
 	r_pocket = /obj/item/extinguisher/mini
 	gloves = /obj/item/clothing/gloves/fingerless
 	belt = /obj/item/storage/belt/utility/full/inducer
@@ -1041,7 +1041,7 @@
 	)
 
 	// I mean is it really that bad if they don't even know half this stuff is added to them.
-	// It's like, forbidden knowledge. It fits with the mansus theme - great excuse for poor design!
+	// It's like, forbidden knowledge.. It fits with the mansus theme - great excuse for poor design!
 	knowledge_to_grant = list(
 		/datum/heretic_knowledge/limited_amount/starting/base_blade,
 		/datum/heretic_knowledge/blade_upgrade/blade,
@@ -1096,7 +1096,7 @@
 		/datum/action/cooldown/spell/pointed/void_phase,
 	)
 
-// Chaplain! No spells (other than smoke), but strong armor and weapons, and immune to others' spells
+// Chaplain!. No spells (other than smoke), but strong armor and weapons, and immune to others' spells
 
 /datum/outfit/deathmatch_loadout/holy_crusader
 	name = "Deathmatch: Holy Crusader"
@@ -1142,7 +1142,7 @@
 	belt = /obj/item/brass_spear
 	gloves = /obj/item/clothing/gloves/tinkerer
 	shoes = /obj/item/clothing/shoes/bronze
-	l_pocket = /obj/item/reagent_containers/cup/beaker/synthflesh/named // they used to turn their dmg into tox with a spell. close enough
+	l_pocket = /obj/item/reagent_containers/cup/beaker/synthflesh/named // they used to turn their dmg into tox with a spell.. close enough
 	r_pocket = /obj/item/reagent_containers/cup/beaker/synthflesh/named
 
 //syndicate spaceman

@@ -1,10 +1,10 @@
 /datum/component/bloody_spreader
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	// How many bloodening instances are left. Deleted on zero.
+	// How many bloodening instances are left.. Deleted on zero.
 	var/blood_left
 	// We will spread this blood DNA to targets!
 	var/list/blood_dna
-	// Blood splashed around everywhere will carry these diseases. Oh no...
+	// Blood splashed around everywhere will carry these diseases.. Oh no...
 	var/list/diseases
 
 /datum/component/bloody_spreader/Initialize(blood_left = INFINITY, list/blood_dna = list(get_blood_type(BLOOD_TYPE_MEAT).dna_string = get_blood_type(BLOOD_TYPE_MEAT)), list/diseases = null)
@@ -100,7 +100,7 @@
 		blood_slots |= ITEM_SLOT_ICLOTHING
 		blood_lost += 1
 	else if (slot & (ITEM_SLOT_SUITSTORE | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_NECK))
-		blood_slots |= ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING // Will only actually bloody one of these, thus blood_lost is increased by one instead of two
+		blood_slots |= ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING // Will only actually bloody one of these, so blood_lost is increased by one instead of two
 		blood_lost += 1
 
 	if (!(slot & ITEM_SLOT_HANDS))

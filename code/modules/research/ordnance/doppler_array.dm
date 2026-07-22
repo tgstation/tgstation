@@ -40,7 +40,7 @@
 	var/displacement = 0
 	var/factual_radius = list()
 	var/theory_radius = list()
-	/// Indexed to length 3 if filled properly. Should be an empty list otherwise.
+	/// Indexed to length 3 if filled properly.. Should be an empty list otherwise.
 	var/reaction_results = list()
 	var/explosion_identifier
 
@@ -99,7 +99,7 @@
 	if(!explosion_score) // Dont even bother.
 		return passed_experiments
 
-	/// Early return for explosions without proper reaction_results. We will append experiments that are always fair game.
+	/// Early return for explosions without proper reaction_results.. We will append experiments that are always fair game.
 	if(!record_reactions.len)
 		for (var/datum/experiment/ordnance/explosive/experiment in SSresearch.ordnance_experiments)
 			if(experiment.allow_any_source)
@@ -131,7 +131,7 @@
 		// Check for misc properties
 		if(experiment.sanitized_misc && length(record_reactions[TANK_RESULTS_MISC]))
 			continue
-		// Check for missing reactions for those who require all.
+		// Check for missing reactions for those who need all.
 		if(experiment.require_all && missing_reactions.len)
 			continue
 		// For those who only need one, check if there is actually one.
@@ -226,7 +226,7 @@
 	else
 		. += mutable_appearance(icon,"[base_icon_state]_cable")
 
-	if(machine_stat & BROKEN) // Probably meant to be used on an indestructible doppler, but this is not implemented.
+	if(machine_stat & BROKEN) // Probably meant to be used on an indestructible doppler, but this is not added
 		. += mutable_appearance(icon, "[base_icon_state]_screen-broken")
 	else if (machine_stat & NOPOWER)
 		. += mutable_appearance(icon, "[base_icon_state]_screen-off")

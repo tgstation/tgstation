@@ -1,4 +1,4 @@
-//Vehicle control flags. control flags describe access to actions in a vehicle.
+// Vehicle control flags... control flags describe access to actions in a vehicle.
 
 ///controls the vehicles movement
 #define VEHICLE_CONTROL_DRIVE (1<<0)
@@ -16,7 +16,7 @@
 
 //Ridden vehicle flags
 
-/// Does our vehicle require arms to operate? Also used for piggybacking on humans to reserve arms on the rider
+/// Does our vehicle need arms to operate?.. Also used for piggybacking on humans to reserve arms on the rider
 #define RIDER_NEEDS_ARMS   (1<<0)
 // As above but only used for riding cyborgs, and only reserves 1 arm instead of 2
 #define RIDER_NEEDS_ARM (1<<1)

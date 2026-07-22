@@ -22,13 +22,13 @@
 	/// If set and this used as a splint for a broken bone wound,
 	/// This is used as a multiplier for applicable slowdowns (lower = better) (also for speeding up burn recoveries)
 	var/splint_factor
-	/// Like splint_factor but for burns instead of bone wounds. This is a multiplier used to speed up burn recoveries
+	/// Like splint_factor but for burns instead of bone wounds.. This is a multiplier used to speed up burn recoveries
 	var/burn_cleanliness_bonus
 	/// How much blood flow this stack can absorb if used as a bandage on a cut wound.
 	/// note that absorption is how much we lower the flow rate, not the raw amount of blood we suck up
 	var/absorption_capacity
 	/// How quickly we lower the blood flow on a cut wound we're bandaging.
-	/// Expected lifetime of this bandage in seconds is thus absorption_capacity/absorption_rate,
+	/// Expected lifetime of this bandage in seconds is so absorption_capacity/absorption_rate,
 	/// or until the cut heals, whichever comes first
 	var/absorption_rate
 
@@ -38,7 +38,7 @@
 	var/other_delay = 0
 	/// If we've still got more and the patient is still hurt, should we keep going automatically?
 	var/repeating = FALSE
-	/// How much brute we heal per application. This is the only number that matters for simplemobs
+	/// How much brute we heal per application.. This is the only number that matters for simplemobs
 	var/heal_brute
 	/// How much burn we heal per application
 	var/heal_burn
@@ -204,8 +204,8 @@
 	log_combat(user, patient, "healed", src)
 
 	// first, just try looping
-	// 1. we can keep healing the current target
-	// 2. the user's changed their target (and thus we should heal that limb instead)
+	// 1.. we can keep healing the current target
+	// 2.. the user's changed their target (and so we should heal that limb instead)
 	var/preferred_target = check_zone(user.zone_selected)
 	if(try_heal_checks(patient, user, preferred_target, silent = TRUE))
 		if(preferred_target != healed_zone)
@@ -360,7 +360,7 @@
 	)
 	return TRUE
 
-///Override this proc for special post heal effects. Only called for carbon patients.
+/// Override this proc for special post heal effects.. Only called for carbon patients.
 /obj/item/stack/medical/proc/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/living/user)
 	return
 

@@ -41,9 +41,9 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/fast_web)
 
-	// keep in mind we have infinite range (the entire pipenet is our playground, it's just a matter of random choice as to where we end up) so lower and upper both have their gives and takes.
+	// keep in mind we have infinite range (the entire pipenet is our playground, it's just a matter of random choice as to where we end up) so lower. Upper both have their gives. Takes.
 	// but, also remember the more time we aren't in a vent, the more susceptible we are to dying to anything and everything.
-	// also remember we can't evolve if we're in a vent. lots to keep in mind when you set these variables.
+	// also remember we can't evolve if we're in a vent.. lots to keep in mind when you set these variables.
 	ai_controller.set_blackboard_key(BB_LOWER_VENT_TIME_LIMIT, rand(9, 11) SECONDS)
 	ai_controller.set_blackboard_key(BB_UPPER_VENT_TIME_LIMIT, rand(12, 14) SECONDS)
 
@@ -58,7 +58,7 @@
 /mob/living/basic/spider/growing/spiderling/start_pulling(atom/movable/pulled_atom, state, force = move_force, supress_message = FALSE) // we're TOO FUCKING SMALL
 	return
 
-/// Opportunistically hops in and out of vents, if it can find one. We aren't interested in attacking due to how weak we are, we gotta be quick and hidey.
+/// Opportunistically hops in and out of vents, if it can find one.. We aren't interested in attacking due to how weak we are, we got to be quick and hidey.
 /datum/ai_controller/basic_controller/spiderling
 	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/spider/spiderlings/spiderling.bt.json"
 	blackboard = list(

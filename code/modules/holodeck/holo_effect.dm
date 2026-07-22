@@ -37,7 +37,7 @@
 	var/turf/T = get_turf(src)
 	if(T)
 		do_sparks(3, TRUE, T)
-		T.temperature = 5000 //Why? not quite sure to be honest with you
+		T.temperature = 5000 // Why?. not quite sure to be honest with you
 		T.hotspot_expose(50000,50000,1)
 
 /obj/effect/holodeck_effect/random_book

@@ -14,8 +14,8 @@
 	limb_texture = /datum/bodypart_texture/carpskin
 	color_overlay_priority = LIMB_COLOR_CARP_INFUSION
 
-///Carp lungs! You can breathe in space! Oh... you can't breathe on the station, you need low oxygen environments.
-/// Inverts behavior of lungs. Bypasses suffocation due to space / lack of gas, but also allows Oxygen to suffocate.
+/// Carp lungs!. You can breathe in space!. Oh.... you can't breathe on the station, you need low oxygen environments.
+/// Inverts behavior of lungs.. Bypasses suffocation due to space / lack of gas, but also allows Oxygen to suffocate.
 /obj/item/organ/lungs/carp
 	name = "mutated carp-lungs"
 	desc = "Carp DNA infused into what was once some normal lungs."
@@ -108,7 +108,7 @@
 	icon_state = "carptooth"
 	icon_angle = -45
 
-///carp brain. you need to occasionally go to a new zlevel. think of it as... walking your dog!
+/// carp brain.. you need to occasionally go to a new zlevel.. think of it as.... walking your dog!
 /obj/item/organ/brain/carp
 	name = "mutated carp-brain"
 	desc = "Carp DNA infused into what was once a normal brain."
@@ -122,7 +122,7 @@
 	shade_color = "blue"
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_FERAL_BITER)
 
-	///Timer counting down. When finished, the owner gets a bad moodlet.
+	/// Timer counting down.. When finished, the owner gets a bad moodlet.
 	var/cooldown_timer
 	///how much time the timer is given
 	var/cooldown_time = 10 MINUTES
@@ -137,7 +137,7 @@
 	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(unsatisfied_nomad)), cooldown_time, TIMER_STOPPABLE|TIMER_OVERRIDE|TIMER_UNIQUE)
 	RegisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(satisfied_nomad))
 
-//technically you could get around the mood issue by extracting and reimplanting the brain but it will be far easier to just go one z there and back
+// technically you could get around the mood issue by extracting. Reimplanting the brain. It will be far easier to just go one z there. Back
 /obj/item/organ/brain/carp/on_mob_remove(mob/living/carbon/brain_owner)
 	. = ..()
 	UnregisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED)

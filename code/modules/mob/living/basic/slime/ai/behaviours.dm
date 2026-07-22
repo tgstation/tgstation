@@ -5,7 +5,7 @@
 		hunter.UnarmedAttack(hunted, TRUE)
 		return
 
-	if((hunted.body_position != STANDING_UP) || prob(20)) //Not standing, or we rolled well? Feed.
+	if((hunted.body_position != STANDING_UP) || prob(20)) // Not standing, or we rolled well?. Feed.
 		hunter.start_feeding(hunted)
 		return
 

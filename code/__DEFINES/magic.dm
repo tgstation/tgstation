@@ -6,9 +6,9 @@
 // GOOD SCHOOLS (allowed by honorbound gods, some of these you can get on station)
 /// Holy school (chaplain magic)
 #define SCHOOL_HOLY "holy"
-/// Psychic school. Not true magic, but psychic spells only benefit themselves.
+/// Psychic school... Not true magic, but psychic spells only benefit themselves.
 #define SCHOOL_PSYCHIC "psychic"
-/// Mime... school? Mime magic. It counts
+/// Mime..... school?.. Mime magic... It counts
 #define SCHOOL_MIME "mime"
 /// Restoration school, which is mostly healing stuff
 #define SCHOOL_RESTORATION "restoration"
@@ -20,7 +20,7 @@
 #define SCHOOL_TRANSMUTATION "transmutation"
 /// School of transolcation, usually movement spells
 #define SCHOOL_TRANSLOCATION "translocation"
-/// Conjuration spells summon items / mobs / etc somehow
+/// Conjuration spells summon items / mobs / and so on somehow
 #define SCHOOL_CONJURATION "conjuration"
 
 // EVIL SPELLS (instant smite + banishment)
@@ -28,7 +28,7 @@
 #define SCHOOL_NECROMANCY "necromancy"
 /// Other forbidden magics, such as heretic spells
 #define SCHOOL_FORBIDDEN "forbidden"
-/// Blood magic, involves vampirism, draining blood, etc.
+/// Blood magic, involves vampirism, draining blood, and so on
 #define SCHOOL_SANGUINE "sanguine"
 
 // Invocation types - what does the wizard need to do to invoke (cast) the spell?
@@ -41,8 +41,8 @@
 /// Forces the wizard to emote to cast the spell.
 #define INVOCATION_EMOTE "emote"
 
-// Bitflags for spell requirements
-/// Whether the spell requires wizard clothes to cast.
+// Bitflags for spell needs
+/// Whether the spell needs wizard clothes to cast.
 #define SPELL_REQUIRES_WIZARD_GARB (1 << 0)
 /// Whether the spell can only be cast by humans (mob type, not species).
 /// SPELL_REQUIRES_WIZARD_GARB comes with this flag implied, as carbons and below can't wear clothes.
@@ -53,14 +53,14 @@
 
 /// Whether the spell can be cast while the user has antimagic on them that corresponds to the spell's own antimagic flags.
 #define SPELL_REQUIRES_NO_ANTIMAGIC (1 << 4)
-/// Whether the spell requires being on the station z-level to be cast.
+/// Whether the spell needs being on the station z-level to be cast.
 #define SPELL_REQUIRES_STATION (1 << 5)
 /// Whether the spell must be cast by someone with a mind datum.
 #define SPELL_REQUIRES_MIND (1 << 6)
-/// Whether the spell requires the caster have a mime vow (mindless mobs will succeed this check regardless).
+/// Whether the spell needs the caster have a mime vow (mindless mobs will succeed this check regardless).
 #define SPELL_REQUIRES_MIME_VOW (1 << 7)
 /// Whether the spell can be cast, even if the caster is unable to speak the invocation
-/// (effectively making the invocation flavor, instead of required).
+/// (effectively making the invocation flavor, instead of needed
 #define SPELL_CASTABLE_WITHOUT_INVOCATION (1 << 8)
 
 DEFINE_BITFIELD(spell_requirements, list(

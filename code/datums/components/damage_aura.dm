@@ -88,7 +88,7 @@
 	STOP_PROCESSING(SSaura, src)
 	return ..()
 
-/// The requirements for the mob to be effected by the damage aura.
+/// The needs for the mob to be effected by the damage aura.
 /datum/component/damage_aura/proc/check_requirements(mob/living/target_mob)
 	if(target_mob.stat == DEAD || target_mob.has_faction(immune_factions))
 		return TRUE

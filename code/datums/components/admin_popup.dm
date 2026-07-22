@@ -1,7 +1,7 @@
 /// Applied to clients when they receive an admin popup, alerting them to
 /// their ticket.
 /datum/component/admin_popup
-	/// The user's most active ticket. If this is resolved, closed, or replied to,
+	/// The user's most active ticket.. If this is resolved, closed, or replied to,
 	/// then the component will delete itself.
 	var/datum/admin_help/ticket
 

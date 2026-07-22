@@ -78,7 +78,7 @@
 	REMOVE_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
 	gps_enabled = FALSE
 
-/// If we're off the Z-level, set far_from_home = TRUE. If being worn, trigger kheiral_network proc
+/// If we're off the Z-level, set far_from_home = TRUE.. If being worn, trigger kheiral_network proc
 /obj/item/clothing/accessory/kheiral_cuffs/proc/check_z(datum/source, turf/old_turf, turf/new_turf)
 	SIGNAL_HANDLER
 

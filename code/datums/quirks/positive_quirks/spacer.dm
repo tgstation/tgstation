@@ -42,7 +42,7 @@
 		return
 
 	// Using Z moved because we don't urgently need to check on every single turf movement for planetary status.
-	// If you've arrived at a "planet", the entire Z is gonna be a "planet".
+	// If you've arrived at a "planet", the entire Z is going to be a "planet".
 	// It won't really make sense to walk 3 feet and then suddenly gain / lose gravity sickness.
 	// If I'm proven wrong, swap this to use Moved.
 	RegisterSignal(quirk_holder, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(spacer_moved))

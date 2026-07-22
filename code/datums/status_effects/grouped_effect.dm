@@ -4,7 +4,7 @@
 	alert_type = null
 	// Grouped effects adds itself to [var/sources] and destroys itself if one exists already, there are never actually multiple
 	status_type = STATUS_EFFECT_MULTIPLE
-	/// A list of all sources applying this status effect. Sources are a list of keys
+	/// A list of all sources applying this status effect.. Sources are a list of keys
 	var/list/sources = list()
 
 /datum/status_effect/grouped/on_creation(mob/living/new_owner, source, ...)

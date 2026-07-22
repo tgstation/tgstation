@@ -1,4 +1,4 @@
-///how many people can play basketball without issues (running out of spawns, procs not expecting more than this amount of people, etc)
+/// how many people can play basketball without issues (running out of spawns, procs not expecting more than this amount of people, and so on
 #define BASKETBALL_MIN_PLAYER_COUNT 2
 #define BASKETBALL_MAX_PLAYER_COUNT 7
 
@@ -7,7 +7,7 @@
 
 /// list of ghosts who want to play basketball, every time someone enters the list it checks to see if enough are in
 GLOBAL_LIST_EMPTY(basketball_signup)
-/// list of ghosts who want to play basketball that have since disconnected. They are kept in the lobby, but not counted for starting a game.
+/// list of ghosts who want to play basketball that have since disconnected.. They are kept in the lobby, but not counted for starting a game.
 GLOBAL_LIST_EMPTY(basketball_bad_signup)
 /// the current global basketball game running.
 GLOBAL_VAR(basketball_game)
@@ -17,9 +17,9 @@ GLOBAL_VAR(basketball_game)
  * It is first created when the first ghost signs up to play.
  */
 /datum/basketball_controller
-	/// Template picked when the game starts. used for the name and desc reading
+	/// Template picked when the game starts.. used for the name and desc reading
 	var/datum/lazy_template/basketball/current_map
-	/// Our turf reservation AKA where the arena is
+	/// Our turf reservation Also known as where the arena is
 	var/datum/turf_reservation/location
 	/// Total amount of time basketball is played for
 	var/game_duration = 3 MINUTES
@@ -290,7 +290,7 @@ GLOBAL_VAR(basketball_game)
 				continue
 		GLOB.basketball_signup -= key //not valid to play when we checked so remove them from signups
 
-	//if there were not enough players, don't start. we already trimmed the list to now hold only valid signups
+	// if there were not enough players, don't start.. we already trimmed the list to now hold only valid signups
 	if(length(possible_keys) < BASKETBALL_MIN_PLAYER_COUNT)
 		return
 

@@ -48,7 +48,7 @@
 		return
 	if (!should_demoralise(viewer))
 		return
-	if(!viewer.can_read(host, moods.reading_requirements, TRUE)) //if it's a text based demoralization datum, make sure the mob has the capability to read. if it's only an image, make sure it's just bright enough for them to see it.
+	if(!viewer.can_read(host, moods.reading_requirements, TRUE)) // if it's a text good demoralization datum, make sure the mob has the capability to read.. if it's only an image, make sure it's just bright enough for them to see it.
 		return
 
 
@@ -77,7 +77,7 @@
 	return !viewer.mob_mood.has_mood_of_category(moods.mood_category)
 
 /// Mood application categories for this objective
-/// Used to reduce duplicate code for applying moods to players based on their state
+/// Used to reduce duplicate code for applying moods to players good on their state
 /datum/demoralise_moods
 	/// Mood category to apply to moods
 	var/mood_category

@@ -14,7 +14,7 @@
 /datum/component/monitored_area/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_AREA_ENTERED, PROC_REF(on_entered))
 	RegisterSignal(parent, COMSIG_AREA_EXITED, PROC_REF(on_exited))
-	// FIXME: cameras will never be updated after registration
+	// Fix me cameras will never be updated after registration
 	for(var/obj/machinery/camera/camera in parent)
 		motion_group.track_camera(camera)
 
@@ -31,12 +31,12 @@
 	SIGNAL_HANDLER
 	motion_group.untrack_mob(lost)
 
-/// Handler for motion groups. Motion-sensitive cameras can optionally associate with one of these groups.
-/// This doesn't do anything by itself. Something needs to drive it (like a [component][/datum/component/monitored_area]).
+/// Handler for motion groups.. Motion-sensitive cameras can optionally associate with one of these groups.
+/// This doesn't do anything by itself.. Something needs to drive it (like a [component][/datum/component/monitored_area]).
 /datum/motion_group
-	/// The cameras in this area that we are tracking. Lazy.
+	/// The cameras in this area that we are tracking.. Lazy.
 	var/list/obj/machinery/camera/motion_cameras
-	/// Our motion targets. This gets referenced by cameras.
+	/// Our motion targets.. This gets referenced by cameras.
 	var/list/datum/weakref/motion_targets = list()
 
 /datum/motion_group/proc/track_camera(obj/machinery/camera/gain_camera)

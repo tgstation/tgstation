@@ -36,7 +36,7 @@
 	variable = TRUE
 	blacklisted_movetypes = FLOATING
 
-/// Movespeed modifier applied by immutably slow worn equipment. Should never be ignored, because that's the point.
+/// Movespeed modifier applied by immutably slow worn equipment.. Should never be ignored, because that's the point.
 /datum/movespeed_modifier/equipment_speedmod/immutable
 
 /datum/movespeed_modifier/grab_slowdown

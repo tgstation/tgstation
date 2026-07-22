@@ -19,7 +19,7 @@
 	var/shuttleId
 	/// Possible destinations of the attached shuttle
 	var/possible_destinations = ""
-	/// Variable dictating if the attached shuttle requires authorization from the admin staff to move
+	/// Variable dictating if the attached shuttle needs authorization from the admin staff to move
 	var/admin_controlled = FALSE
 	/// Variable dictating if the attached shuttle is forbidden to change destinations mid-flight
 	var/no_destination_swap = FALSE

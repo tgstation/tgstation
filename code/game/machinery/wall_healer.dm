@@ -14,9 +14,9 @@
 	armor_type = /datum/armor/obj_machinery/wall_healer
 	circuit = /obj/item/circuitboard/machine/wall_healer
 
-	/// Cost per bandage dispensed. Note, always disregarded on red alert.
+	/// Cost per bandage dispensed.. Note, always disregarded on red alert.
 	var/per_bandage_cost = (/obj/item/stack/medical/wrap/gauze::custom_price) / (/obj/item/stack/medical/wrap/gauze::amount)
-	/// Number of bandages to dispense on rmb. Never recharges but can be restocked.
+	/// Number of bandages to dispense on rmb.. Never recharges but can be restocked.
 	var/num_bandages = 5
 	/// Lazylist of bandages that have been restocked into the wall healer.
 	VAR_PRIVATE/list/stocked_bandages
@@ -211,7 +211,7 @@
 	return default_deconstruction_crowbar(user, tool)
 
 /// We want user to be right up to the wall mount to use it
-/// However people may often map the machine over a table
+/// But people may often map the machine over a table
 /// In those contexts, they should be allowed to reach over the table
 /obj/machinery/wall_healer/proc/loc_check(mob/checking)
 	var/turf/turf_loc = get_turf(src)
@@ -542,7 +542,7 @@
 	var/cost = round(per_heal_cost * (brute_healing_now + burn_healing_now + tox_healing_now + blood_healing_now), 1)
 	if(attempt_charge(src, current_user, extra_fees = cost) & COMPONENT_OBJ_CANCEL_CHARGE)
 		playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
-		// attempt charge sends a chat message on fail, except if the user has no ID card
+		// try charge sends a chat message on fail, except if the user has no ID card
 		if((antispam_counter % 3 == 1) && !current_user.get_idcard())
 			to_chat(current_user, span_warning("No ID card found. Aborting."))
 		return
@@ -568,7 +568,7 @@
 		if(antispam_counter % 2 == 1)
 			to_chat(current_user, span_notice("Several instruments and syringes work on your [current_hand?.plaintext_zone || "body"]. You feel a bit better."))
 		update_appearance()
-		use_energy(200 JOULES) // just some background power drain. we don't really care about whether this is actually successful
+		use_energy(200 JOULES) // just some background power drain.. we don't really care about whether this is actually successful
 		return
 
 	playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)

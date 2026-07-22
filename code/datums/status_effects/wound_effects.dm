@@ -114,7 +114,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/carbon_mob = owner
-	if(source) // if we don't have a source, that means we are calling it from on_limb_removed. In that case we do not want to reassign these to the about-to-be-removed limbs (which can cause hanging refs)
+	if(source) // if we don't have a source, that means we are calling it from on_limb_removed.. In that case we do not want to reassign these to the about-to-be-removed limbs (which can cause hanging refs)
 		left = carbon_mob.get_bodypart(BODY_ZONE_L_LEG)
 		right = carbon_mob.get_bodypart(BODY_ZONE_R_LEG)
 
@@ -145,7 +145,7 @@
 		carbon_mob.remove_status_effect(src)
 		return
 
-//Quirk variant of limping. Will always be applied as long as you have a leg to stand on.
+// Quirk variant of limping.. Will always be applied as long as you have a leg to stand on.
 /datum/status_effect/limp/quirk
 	id = "limp_quirk"
 	alert_type = null

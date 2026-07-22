@@ -15,7 +15,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/acid_volume
 	/// The maximum volume of acid on the parent [/atom].
 	var/max_volume = INFINITY
-	/// Used exclusively for melting turfs. TODO: Move integrity to the atom level so that this can be dealt with there.
+	/// Used exclusively for melting turfs.. To do Move integrity to the atom level so that this can be dealt with there.
 	var/parent_integrity = 30
 	/// How far the acid melting of turfs has progressed
 	var/stage = 0
@@ -25,18 +25,18 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/turf_acid_ignores_mobs = FALSE
 	/// The ambient sound of acid eating away at the parent [/atom].
 	var/datum/looping_sound/acid/sizzle
-	/// Particle holder for acid particles (sick). Still utilized over shared holders because they're movable-only
+	/// Particle holder for acid particles (sick).. Still used over shared holders because they're movable-only
 	var/obj/effect/abstract/particle_holder/particle_effect
 	/// Particle type we're using for cleaning up our shared holder
 	var/particle_type
-	/// The proc used to handle the parent [/atom] when processing. TODO: Unify damage and resistance flags so that this doesn't need to exist!
+	/// The proc used to handle the parent [/atom] when processing.. To do Unify damage and resistance flags so that this doesn't need to exist!
 	var/datum/callback/process_effect
 
 /datum/component/acid/Initialize(acid_power = ACID_POWER_MELT_TURF, acid_volume = 50, acid_overlay = GLOB.acid_overlay, acid_particles = /particles/acid, turf_acid_ignores_mobs = FALSE)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	// The parent object cannot have acid. Not incompatible, but should not really happen.
+	// The parent object cannot have acid.. Not incompatible, but should not really happen.
 	var/atom/atom_parent = parent
 	if(atom_parent.resistance_flags & UNACIDABLE)
 		qdel(src)
@@ -123,7 +123,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	acid_power = ((src.acid_power * src.acid_volume) + (acid_power * acid_volume)) / (src.acid_volume + acid_volume)
 	set_volume(src.acid_volume + acid_volume)
 
-/// Sets the acid volume to a new value. Limits the acid volume by the amount allowed to exist on the parent atom.
+/// Sets the acid volume to a new value.. Limits the acid volume by the amount allowed to exist on the parent atom.
 /datum/component/acid/proc/set_volume(new_volume)
 	acid_volume = clamp(new_volume, 0, max_volume)
 	if(!acid_volume)
@@ -137,7 +137,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		qdel(src)
 		return
 	process_effect?.InvokeAsync(seconds_per_tick)
-	if(QDELING(src)) //The process effect deals damage, and on turfs diminishes the acid volume, potentially destroying the component. Let's not destroy it twice.
+	if(QDELING(src)) // The process effect deals damage, and on turfs diminishes the acid volume, potentially destroying the component.. Let's not destroy it twice.
 		return
 	set_volume(acid_volume - (ACID_DECAY_BASE + (ACID_DECAY_SCALING*round(sqrt(acid_volume)))) * seconds_per_tick)
 
@@ -249,7 +249,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	playsound(source, SFX_SEAR, 50, TRUE)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/// Handles searing the feet of whoever walks over this without protection. Only active if the parent is a turf.
+/// Handles searing the feet of whoever walks over this without protection.. Only active if the parent is a turf.
 /datum/component/acid/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 

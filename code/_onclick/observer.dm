@@ -43,7 +43,7 @@
 	if(world.time <= next_move)
 		return
 	// You are responsible for checking config.ghost_interaction when you override this function
-	// Not all of them require checking, see below
+	// Not all of them need checking, see below
 	A.attack_ghost(src)
 
 // Oh by the way this didn't work with old click code which is why clicking shit didn't spam you
@@ -71,7 +71,7 @@
 
 // ---------------------------------------
 // And here are some good things for free:
-// Now you can click through portals, wormholes, gateways, and teleporters while observing. -Sayu
+// Now you can click through portals, wormholes, gateways, and teleporters while observing.. -Sayu
 
 /obj/machinery/teleport/hub/attack_ghost(mob/user)
 	if(!power_station?.engaged || !power_station.teleporter_console || !power_station.teleporter_console.target_ref)

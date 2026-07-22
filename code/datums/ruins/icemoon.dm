@@ -1,4 +1,4 @@
-// Hey! Listen! Update \config\iceruinblacklist.txt with your new ruins!
+// Hey!. Listen!. Update \config\iceruinblacklist.txt with your new ruins!
 
 /datum/map_template/ruin/icemoon
 	prefix = "_maps/RandomRuins/IceRuins/"
@@ -220,7 +220,7 @@
 	description = "Suspiciously dead silent. May or may not contain megafauna"
 	suffix = "icemoon_underground_outpost31.dmm"
 
-//TODO: Bottom-Level ONLY Spawns after Refactoring Related Code
+// To do Bottom-Level ONLY Spawns after Refactoring Related Code
 /datum/map_template/ruin/icemoon/underground/plasma_facility
 	name = "Ice-Ruin Abandoned Plasma Facility"
 	id = "plasma_facility"
@@ -238,7 +238,7 @@
 /datum/map_template/ruin/icemoon/underground/vent
 	name = "Ice-Ruin Icemoon Ore Vent"
 	id = "ore_vent_i"
-	description = "A vent that spews out ore. Seems to be a natural phenomenon." //Make this a subtype that only spawns medium and large vents. Some smalls will go to the top level.
+	description = "A vent that spews out ore. Seems to be a natural phenomenon." // Make this a subtype that only spawns medium and large vents.. Some smalls will go to the top level.
 	suffix = "icemoon_underground_ore_vent.dmm"
 	allow_duplicates = TRUE
 	cost = 0

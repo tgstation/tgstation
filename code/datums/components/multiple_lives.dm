@@ -22,7 +22,7 @@
 /datum/component/multiple_lives/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_LIVING_DEATH, COMSIG_ATOM_EXAMINE, COMSIG_LIVING_WRITE_MEMORY))
 
-/// Stops a dying station pet from overriding persistence data before we respawn it and thus causing issues.
+/// Stops a dying station pet from overriding persistence data before we respawn it and so causing issues.
 /datum/component/multiple_lives/proc/on_write_memory(mob/living/source, dead, gibbed)
 	if(dead && !HAS_TRAIT(source, TRAIT_SUICIDED))
 		return COMPONENT_DONT_WRITE_MEMORY

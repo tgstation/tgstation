@@ -10,7 +10,7 @@
 	var/teleports = FALSE
 	/// Optional replacement for the teleport question.
 	var/question = null
-	/// Optional list of z-levels that the Houlihan element can send us to. Modify this on Initialize().
+	/// Optional list of z-levels that the Houlihan element can send us to.. Modify this on Initialize().
 	VAR_FINAL/list/zlevels = null
 
 /obj/structure/signpost/Initialize(mapload)
@@ -19,7 +19,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/signpost/LateInitialize()
-	// This is here cause we wanna be super sure zlevels is properly initialized
+	// This is here cause we want to be super sure zlevels is properly initialized
 	if(teleports)
 		AddComponent(/datum/component/houlihan_teleport, question, zlevels)
 

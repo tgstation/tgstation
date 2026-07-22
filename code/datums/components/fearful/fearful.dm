@@ -10,7 +10,7 @@
 	var/list/terror_handlers = list()
 	/// List of overriden handler types, for ease of access
 	var/list/list/overriden_handlers = list()
-	/// How much buildup we had last tick? Used for non-ticking terror source tracking
+	/// How much buildup we had last tick?. Used for non-ticking terror source tracking
 	var/last_tick_buildup = 0
 
 /*

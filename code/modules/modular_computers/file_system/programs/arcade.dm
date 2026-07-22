@@ -10,7 +10,7 @@
 
 	///Returns TRUE if the game is being played.
 	var/game_active = TRUE
-	///This disables buttom actions from having any impact if TRUE. Resets to FALSE when the player is allowed to make an action again.
+	/// This disables buttom actions from having any impact if TRUE.. Resets to FALSE when the player is allowed to make an action again.
 	var/pause_state = FALSE
 	var/boss_hp = 45
 	var/boss_mp = 15

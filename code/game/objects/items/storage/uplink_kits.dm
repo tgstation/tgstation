@@ -175,7 +175,7 @@
 			new /obj/item/assembly/flash/hypnotic(src) // 7 TC
 			new /obj/item/storage/pill_bottle/lsd(src) // ~1 TC
 			new /obj/item/pen/sleepy(src) // 4 TC
-			new /obj/item/gun/ballistic/revolver/nagant(src) // 13 TC comparable to 357. revolvers
+			new /obj/item/gun/ballistic/revolver/nagant(src) // 13 TC comparable to 357.. revolvers
 			new /obj/item/megaphone(src)
 			new /obj/item/bedsheet/rev(src)
 			new /obj/item/clothing/suit/armor/vest/russian_coat(src)
@@ -212,7 +212,7 @@
 			new /obj/item/toy/cards/deck/syndicate(src) // 1 tc, for poker
 
 		if(KIT_NINJA)
-			new /obj/item/storage/belt/sheath/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
+			new /obj/item/storage/belt/sheath/katana(src) // Unique , hard to tell how much tc this is worth.. 8 tc?
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
 			for(var/i in 1 to 6)
 				new /obj/item/throwing_star(src) // 1 tc
@@ -220,7 +220,7 @@
 			new /obj/item/chameleon(src) // 7 tc
 			new /obj/item/card/id/advanced/chameleon/elite(src) // 2 tc
 			new /obj/item/card/emag/doorjack(src) // 3 tc
-			new /obj/item/book/granter/action/spell/smoke(src) // ninja smoke bomb. 1 tc
+			new /obj/item/book/granter/action/spell/smoke(src) // ninja smoke bomb.. 1 tc
 			new /obj/item/clothing/shoes/bhop(src) // mining item, lets you jump at people, at least 2 tc
 
 		if(KIT_DARK_LORD)
@@ -279,9 +279,9 @@
 			new /obj/item/dnainjector/cryokinesis(src)
 			new /obj/item/gun/energy/temperature/freeze(src) // ~6 tc
 			new /obj/item/gun/energy/laser/thermal/cryo(src) // ~6 tc
-			new /obj/item/melee/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue, 8 tc
+			new /obj/item/melee/energy/sword/saber/blue(src) // see see it fits the theme because its blue and ice is blue, 8 tc
 
-		if(KIT_TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire uplink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
+		if(KIT_TRAITOR_2006) // A kit so old, it's probably older than you.. //This bundle is filled with the entire uplink contents traitors had access to in 2006, from OpenSS13.. Notably the esword was not a choice but existed in code.
 			new /obj/item/storage/toolbox/emergency/old/ancientbundle(src) //Items fit neatly into a classic toolbox just to remind you what the theme is.
 
 		if(KIT_DEAD_MONEY)
@@ -316,10 +316,10 @@
 
 /obj/item/storage/toolbox/emergency/old/ancientbundle/PopulateContents()
 	new /obj/item/card/emag(src) // 4 tc
-	new /obj/item/card/emag/doorjack(src) //emag used to do both. 3 tc
+	new /obj/item/card/emag/doorjack(src) // emag used to do both.. 3 tc
 	new /obj/item/pen/sleepy(src) // 4 tc
 	new /obj/item/reagent_containers/applicator/pill/cyanide(src)
-	new /obj/item/chameleon(src) //its not the original cloaking device, but it will do. 8 tc
+	new /obj/item/chameleon(src) // its not the original cloaking device, but it will do.. 8 tc
 	new /obj/item/gun/ballistic/revolver(src) // 13 tc old one stays in the old box
 	new /obj/item/implanter/freedom(src) // 5 tc
 	new /obj/item/stack/telecrystal(src) //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
@@ -685,7 +685,7 @@
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_box/magazine/m12g/donk(src)
 
-///Subtype for the sabotage bundle. Contains three C4, two X4 and 6 signalers
+/// Subtype for the sabotage bundle.. Contains three C4, two X4 and 6 signalers
 /obj/item/storage/backpack/duffelbag/syndie/sabotage
 
 /obj/item/storage/backpack/duffelbag/syndie/sabotage/PopulateContents()
@@ -750,13 +750,13 @@
 	new /obj/item/pen/edagger(src) // 2 TC
 	// The necessary equipment to help secure that disky.
 	new /obj/item/radio/headset/syndicate/alt(src) // 5 TC / Free for nukies
-	new /obj/item/modular_computer/pda/nukeops(src) // ?? TC / Free for nukies
+	new /obj/item/modular_computer/pda/nukeops(src) // ??. TC / Free for nukies
 	new /obj/item/card/id/advanced/chameleon/elite(src) // 2 TC / Free for nukies
 	var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
 	new spess_suit(src) // Above allows me to get the helmet from a variable on the object
 	var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
 	new spess_helmet(src) // 4 TC for the space gear
-	new /obj/item/tank/jetpack/harness(src) // They kinda need this to fly to the cruiser.
+	new /obj/item/tank/jetpack/harness(src) // They kind of need this to fly to the cruiser.
 	// Tacticool gear
 	new /obj/item/clothing/shoes/combat(src)
 	new /obj/item/clothing/under/syndicate(src)
@@ -798,7 +798,7 @@
 			human_target.reagents.add_reagent(/datum/reagent/toxin, 2)
 			return FALSE
 
-	if(!human_target.is_antag()) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
+	if(!human_target.is_antag()) // GTFO.. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
 		to_chat(human_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
 		human_target.reagents.add_reagent(/datum/reagent/toxin, 15)
 		return FALSE

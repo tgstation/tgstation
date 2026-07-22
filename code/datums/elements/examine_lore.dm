@@ -1,11 +1,11 @@
-/// A simple element for adding additional lore to things. Examine more? More like examine *lore*.
+/// A simple element for adding additional lore to things.. Examine more?. More like examine *lore*.
 /// Yes, the name's a pun, I'm sorry, I thought it was funny at the moment.
 /datum/element/examine_lore
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 	/// The message we add to items to denote that we have cool lore to read.
 	var/lore_hint
-	/// Our lore. In order to match descriptions on items, this should be considered to be pre-italicized.
+	/// Our lore.. In order to match descriptions on items, this should be considered to be pre-italicized.
 	var/lore
 
 /datum/element/examine_lore/Attach(datum/target, lore_hint, lore)

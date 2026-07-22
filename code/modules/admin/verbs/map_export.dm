@@ -214,7 +214,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	if(obj_blacklist && !islist(obj_blacklist))
 		CRASH("Non-list being used as object blacklist for map writing")
 
-	// we want to keep decals from crayon writings, blood splatters, cobwebs, etc.
+	// we want to keep decals from crayon writings, blood splatters, cobwebs, and so on
 	// most landmarks get deleted except for latejoin arrivals shuttle
 	var/static/list/default_blacklist = typecacheof(list(/obj/effect, /obj/projectile)) - typecacheof(list(/obj/effect/decal, /obj/effect/turf_decal, /obj/effect/landmark))
 	if(!obj_blacklist)
@@ -311,7 +311,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 				current_header += ",\n[location])\n"
 				//====Fill the contents file====
 				var/textiftied_header = current_header.Join()
-				// If we already know this header just use its key, otherwise we gotta make a new one
+				// If we already know this header just use its key, otherwise we got to make a new one
 				var/key = header_data[textiftied_header]
 				if(!key)
 					key = calculate_tgm_header_index(key_index, layers)
@@ -345,7 +345,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		return
 	return "{\n\t[data_to_add.Join(";\n\t")]\n\t}"
 
-// Could be inlined, not a massive cost tho so it's fine
+// Could be inlined, not a massive cost though so it's fine
 /// Generates a key matching our index
 /proc/calculate_tgm_header_index(index, key_length)
 	var/list/output = list()

@@ -20,7 +20,7 @@
 	var/error_message = ""
 	/// Can the monitor translate languages?
 	var/universal_translate = FALSE
-	/// Access required to delete messages
+	/// Access needed to delete messages
 	req_access = list(ACCESS_TCOMMS)
 	circuit = /obj/item/circuitboard/computer/comm_server
 
@@ -70,11 +70,11 @@
 				if(ispath(mobtype, /mob/living/carbon/human) || ispath(mobtype, /mob/living/brain))
 					race = "Humanoid"
 
-				// NT knows a lot about slimes, but not aliens. Can identify slimes
+				// NT knows a lot about slimes, but not aliens.. Can identify slimes
 				else if(ispath(mobtype, /mob/living/basic/slime))
 					race = "Slime"
 
-				// sometimes M gets deleted prematurely for AIs... just check the job
+				// sometimes M gets deleted prematurely for AIs.... just check the job
 				else if(ispath(mobtype, /mob/living/silicon) || packet.parameters["job"] == JOB_AI)
 					race = "Artificial Life"
 

@@ -40,15 +40,15 @@ GLOBAL_LIST_INIT(reagent_containers, list(
 	)),
 ))
 
-/// list of all /datum/chemical_reaction datums indexed by their typepath. Use this for general lookup stuff
+/// list of all /datum/chemical_reaction datums indexed by their typepath.. Use this for general lookup stuff
 GLOBAL_LIST(chemical_reactions_list)
-/// list of all /datum/chemical_reaction datums. Used during chemical reactions. Indexed by REACTANT types
+/// list of all /datum/chemical_reaction datums.. Used during chemical reactions.. Indexed by REACTANT types
 GLOBAL_LIST(chemical_reactions_list_reactant_index)
-/// list of all /datum/chemical_reaction datums. Used for the reaction lookup UI. Indexed by PRODUCT type
+/// list of all /datum/chemical_reaction datums.. Used for the reaction lookup UI.. Indexed by PRODUCT type
 GLOBAL_LIST(chemical_reactions_list_product_index)
-/// list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
+/// list of all /datum/reagent datums indexed by reagent id.. Used by chemistry stuff
 GLOBAL_LIST_INIT(chemical_reagents_list, init_chemical_reagent_list())
-/// list of all reactions with their associated product and result ids. Used for reaction lookups
+/// list of all reactions with their associated product and result ids.. Used for reaction lookups
 GLOBAL_LIST(chemical_reactions_results_lookup_list)
 /// Turfs metalgen can't touch
 GLOBAL_LIST_INIT(blacklisted_metalgen_types, typecacheof(list(
@@ -121,10 +121,10 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 			reaction = new reaction
 		if(!QDELETED(reaction)) // in case random recipe generation fail
 			reactions += reaction
-	// Ok so we're gonna do a thingTM here
+	// Ok so we're going to do a thingTM here
 	// I want to distribute all our reactions such that each reagent id links to as few as possible
 	// I get the feeling there's a canonical way of doing this, but I don't know it
-	// So instead, we're gonna wing it
+	// So instead, we're going to wing it
 	var/list/reagent_to_react_count = list()
 	for(var/datum/chemical_reaction/reaction as anything in reactions)
 		if(!istype(reaction, /datum/chemical_reaction/randomized))
@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 				reagent_to_react_count[reagent_id] += 1
 
 	var/list/reaction_lookup = GLOB.chemical_reactions_list_reactant_index
-	// Create filters based on a random reagent id in the required reagents list - this is used to speed up handle_reactions()
+	// Create filters good on a random reagent id in the needed reagents list - this is used to speed up handle_reactions()
 	// Basically, we only really need to care about ONE reagent, at least when initially filtering, since any others are ignorable
 	// Doing this separately because it relies on the loop above, and this is easier to parse
 	for(var/datum/chemical_reaction/reaction as anything in reactions)
@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 			product_name = product_names[1]
 
 		if(!istype(reaction, /datum/chemical_reaction/randomized))
-			//Master list of ALL reactions that is used in the UI lookup table. This is expensive to make, and we don't want to lag the server by creating it on UI request, so it's cached to send to UIs instantly.
+			// Master list of ALL reactions that is used in the UI lookup table.. This is expensive to make. We don't want to lag the server by creating it on UI request, so it's cached to send to UIs instantly.
 			GLOB.chemical_reactions_results_lookup_list += list(list(
 				"name" = product_name,
 				"id" = reaction.type,
@@ -206,7 +206,7 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 				"reactants" = reagents,
 			))
 
-			// Create filters based on each reagent id in the required reagents list - this is specifically for finding reactions from product(reagent) ids/typepaths.
+			// Create filters good on each reagent id in the needed reagents list - this is specifically for finding reactions from product(reagent) ids/typepaths.
 			for(var/id in product_ids)
 				if(!GLOB.chemical_reactions_list_product_index[id])
 					GLOB.chemical_reactions_list_product_index[id] = list()

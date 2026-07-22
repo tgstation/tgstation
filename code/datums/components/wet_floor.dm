@@ -11,7 +11,7 @@
 	var/current_overlay
 	var/permanent = FALSE
 	var/last_process = 0
-	/// Should we display an overlay for this component? Useful mainly for turfs
+	/// Should we display an overlay for this component?. Useful mainly for turfs
 	/// that already look wets or just don't need the visuals for any other reason.
 	var/should_display_overlay = TRUE
 
@@ -20,7 +20,7 @@
 		add_wet(arglist(args.Copy(3)))
 	else //We are being passed in a full blown component
 		var/datum/component/wet_floor/WF = newcomp //Lets make an assumption
-		if(WF.gc()) //See if it's even valid, still. Also does LAZYLEN and stuff for us.
+		if(WF.gc()) // See if it's even valid, still.. Also does LAZYLEN and stuff for us.
 			CRASH("Wet floor component tried to inherit another, but the other was able to garbage collect while being inherited! What a waste of time!")
 		for(var/i in WF.time_left_list)
 			add_wet(text2num(i), WF.time_left_list[i])

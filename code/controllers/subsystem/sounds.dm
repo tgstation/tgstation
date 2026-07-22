@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(sounds)
 	ss_flags = SS_NO_FIRE
 	init_stage = INITSTAGE_EARLY
 	var/static/using_channels_max = CHANNEL_HIGHEST_AVAILABLE //BYOND max channels
-	/// Amount of channels to reserve for random usage rather than reservations being allowed to reserve all channels. Also a nice safeguard for when someone screws up.
+	/// Amount of channels to reserve for random usage rather than reservations being allowed to reserve all channels.. Also a nice safeguard for when someone screws up.
 	var/static/random_channels_min = 50
 
 	// Hey uh these two needs to be initialized fast because the whole "things get deleted before init" thing.
@@ -16,11 +16,11 @@ SUBSYSTEM_DEF(sounds)
 	// Special datastructure for fast channel management
 	/// List of all channels as numbers
 	var/list/channel_list
-	/// Associative list of all reserved channels associated to their position. `"[channel_number]" =` index as number
+	/// Associative list of all reserved channels associated to their position.. `"[channel_number]" =` index as number
 	var/list/reserved_channels
-	/// lower iteration position - Incremented and looped to get "random" sound channels for normal sounds. The channel at this index is returned when asking for a random channel.
+	/// lower iteration position - Incremented and looped to get "random" sound channels for normal sounds.. The channel at this index is returned when asking for a random channel.
 	var/channel_random_low
-	/// higher reserve position - decremented and incremented to reserve sound channels, anything above this is reserved. The channel at this index is the highest unreserved channel.
+	/// higher reserve position - decremented and incremented to reserve sound channels, anything above this is reserved.. The channel at this index is the highest unreserved channel.
 	var/channel_reserve_high
 
 	/// All valid sound files in the sound directory
@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(sounds)
 	VAR_PRIVATE/list/precache_errors = list()
 
 	// Comments from https://github.com/DaedalusDock/daedalusdock We love Francinum.
-	/// A list of sound formats that work in byond. Indexed for direct accesing rather then loop itteration or usage of `in`
+	/// A list of sound formats that work in byond.. Indexed for direct accesing rather then loop itteration or usage of `in`
 	var/static/list/byond_sound_formats = list(
 		"mid" = TRUE, //Midi, 8.3 File Name
 		"midi" = TRUE, //Midi, Long File Name
@@ -46,10 +46,10 @@ SUBSYSTEM_DEF(sounds)
 		"oxm" = TRUE, //FastTracker 2 (Vorbis Compressed Samples)
 		"wav" = TRUE, //Waveform Audio File Format, A (R)IFF-class format, and Microsoft's choice in the 80s sound format pissing match.
 		"ogg" = TRUE, //OGG Audio Container, Usually contains Vorbis-compressed Audio
-		//"raw" = TRUE, //On the tin, byond purports to support raw, uncompressed PCM Audio. I actually have no fucking idea how FMOD actually handles these.
-		//since they completely lack all information. As a confusion based anti-footgun, I'm just going to wire this to FALSE for now. It's here though.
+		// "raw" = TRUE, //On the tin, byond purports to support raw, uncompressed PCM Audio.. I actually have no fucking idea how FMOD actually handles these.
+		// since they completely lack all information.. As a confusion good anti-footgun, I'm just going to wire this to FALSE for now.. It's here though.
 		"wma" = TRUE, //Windows Media Audio container
-		"aiff" = TRUE, //Audio Interchange File Format, Apple's side of the 80s sound format pissing match. It's also (R)IFF in a trenchcoat.
+		"aiff" = TRUE, // Audio Interchange File Format, Apple's side of the 80s sound format pissing match.. It's also (R)IFF in a trenchcoat.
 		"mp3" = TRUE //MPeg Layer 3 Container (And usually, Codec.)
 	)
 
@@ -134,7 +134,7 @@ SUBSYSTEM_DEF(sounds)
 /datum/controller/subsystem/sounds/proc/free_datumless_channels()
 	free_datum_channels(DATUMLESS)
 
-/// Reserve a sound channel. Free it later with free_sound_channel()
+/// Reserve a sound channel.. Free it later with free_sound_channel()
 /datum/controller/subsystem/sounds/proc/reserve_sound_channel()
 	. = reserve_channel()
 	if(!.) //oh no..
@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(sounds)
 	LAZYINITLIST(using_channels_by_datum[DATUMLESS])
 	using_channels_by_datum[DATUMLESS] += .
 
-/// Reserves a channel for a datum. Automatic cleanup only when the datum is deleted. Returns an integer for channel.
+/// Reserves a channel for a datum.. Automatic cleanup only when the datum is deleted.. Returns an integer for channel.
 /datum/controller/subsystem/sounds/proc/reserve_sound_channel_for_datum(datum/D)
 	if(!D) //i don't like typechecks but someone will fuck it up
 		CRASH("Attempted to reserve sound channel without datum using the managed proc.")
@@ -181,7 +181,7 @@ SUBSYSTEM_DEF(sounds)
 	reserved_channels -= text_channel
 	// push reserve index up, which makes it now on a channel that is reserved
 	channel_reserve_high++
-	// swap the reserved channel wtih the unreserved channel so the reserve index is now on an unoccupied channel and the freed channel is next to be used.
+	// swap the reserved channel wtih the unreserved channel so the reserve index is now on an unoccupied channel. The freed channel is next to be used.
 	channel_list.Swap(channel_reserve_high, index)
 	// now, an existing reserved channel will likely (exception: unreserving last reserved channel) be at index
 	// get it, and update position.

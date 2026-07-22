@@ -15,13 +15,13 @@
 /// For the priciest domains, free loot basically
 #define BITRUNNER_REWARD_EXTREME 6
 
-/// Blue in ui. Basically the only threat is rogue ghosts roles
+/// Blue in ui... Basically the only threat is rogue ghosts roles
 #define BITRUNNER_DIFFICULTY_NONE 0
-/// Yellow. Mobs are kinda dumb and largely avoidable
+/// Yellow... Mobs are kind of dumb and largely avoidable
 #define BITRUNNER_DIFFICULTY_LOW 1
-/// Orange. Mobs will shoot at you or are pretty aggressive
+/// Orange... Mobs will shoot at you or are pretty aggressive
 #define BITRUNNER_DIFFICULTY_MEDIUM 2
-/// Red with skull. I am trying to kill bitrunners.
+/// Red with skull... I am trying to kill bitrunners.
 #define BITRUNNER_DIFFICULTY_HIGH 3
 
 /// Camera network bitrunner bodycams are on

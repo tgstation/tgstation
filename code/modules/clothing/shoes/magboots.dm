@@ -17,7 +17,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75)
 	/// Whether the magpulse system is active
 	var/magpulse = FALSE
-	/// Slowdown applied wwhen magpulse is active. This is added onto existing slowdown
+	/// Slowdown applied wwhen magpulse is active.. This is added onto existing slowdown
 	var/slowdown_active = 2
 	/// A list of traits we apply when we get activated
 	var/list/active_traits = list(TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NEGATES_GRAVITY)
@@ -33,7 +33,7 @@
 	if(fishing_modifier)
 		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 
-/// Signal handler for [COMSIG_SPEED_POTION_APPLIED]. Speed potion removes the active slowdown
+/// Signal handler for [COMSIG_SPEED_POTION_APPLIED].. Speed potion removes the active slowdown
 /obj/item/clothing/shoes/magboots/proc/on_speed_potioned(datum/source)
 	SIGNAL_HANDLER
 

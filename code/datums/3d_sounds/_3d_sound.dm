@@ -233,7 +233,7 @@
 			else
 				unmute_listener(listener, MUTE_VOLUME)
 				our_sound.volume = volume * (pref_volume/100)
-		// keep in mind sound XYZ is different to world XYZ. sound +-z = world +-y
+		// keep in mind sound XYZ is different to world XYZ.. sound +-z = world +-y
 		var/new_x = sound_turf.x - listener_turf.x
 		var/new_z = sound_turf.y - listener_turf.y
 

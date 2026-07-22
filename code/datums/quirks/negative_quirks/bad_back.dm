@@ -28,7 +28,7 @@
 		UnregisterSignal(equipped_backpack, COMSIG_ITEM_POST_UNEQUIP)
 		quirk_holder.clear_mood_event("back_pain")
 
-/// Signal handler for when the quirk_holder equips an item. If it's a backpack, adds the back_pain mood event.
+/// Signal handler for when the quirk_holder equips an item.. If it's a backpack, adds the back_pain mood event.
 /datum/quirk/badback/proc/on_equipped_item(mob/living/source, obj/item/equipped_item, slot)
 	SIGNAL_HANDLER
 
@@ -40,7 +40,7 @@
 	UnregisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM)
 	backpack = WEAKREF(equipped_item)
 
-/// Signal handler for when the quirk_holder unequips an equipped backpack. Removes the back_pain mood event.
+/// Signal handler for when the quirk_holder unequips an equipped backpack.. Removes the back_pain mood event.
 /datum/quirk/badback/proc/on_unequipped_backpack(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
 	SIGNAL_HANDLER
 

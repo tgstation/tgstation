@@ -217,7 +217,7 @@
 	name = "wallet contents spawner"
 	icon_state = "wallet"
 	spawn_loot_count = 1
-	loot = list(	// random photos would go here. IF I HAD ONE. :'(
+	loot = list(	// random photos would go here.. IF I HAD ONE.. :'(
 		/obj/item/lipstick/random,
 		/obj/item/reagent_containers/applicator/pill/maintenance,
 		/obj/effect/spawner/random/food_or_drink/seed,

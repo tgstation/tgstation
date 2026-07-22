@@ -9,7 +9,7 @@
 
 	///Shows on examining someone with an infused organ.
 	var/infused_desc
-	/// Which body zone has to be exposed. If none is set, this is always noticable.
+	/// Which body zone has to be exposed.. If none is set, this is always noticable.
 	var/body_zone
 
 /datum/element/noticable_organ/Attach(obj/item/organ/target, infused_desc, body_zone)

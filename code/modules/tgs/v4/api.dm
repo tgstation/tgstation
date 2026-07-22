@@ -183,7 +183,7 @@
 	while(requesting_new_port && !override_requesting_new_port)
 		sleep(world.tick_lag)
 
-	//we need some port open at this point to facilitate return communication
+	// we need some port open at this point to help return communication
 	if(!world.port)
 		requesting_new_port = TRUE
 		if(!world.OpenPort(0)) //open any port

@@ -15,7 +15,7 @@
 		parent.AddComponent(/datum/component/pellet_cloud, projectile_type=projectile_type)
 
 /datum/component/mirv/RegisterWithParent()
-	if(ismachinery(parent) || isstructure(parent) || isgun(parent) || isprojectilespell(parent)) // turrets, etc
+	if(ismachinery(parent) || isstructure(parent) || isgun(parent) || isprojectilespell(parent)) // turrets, and so on
 		RegisterSignal(parent, COMSIG_PROJECTILE_ON_HIT, PROC_REF(projectile_hit))
 
 /datum/component/mirv/UnregisterFromParent()

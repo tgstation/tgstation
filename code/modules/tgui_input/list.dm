@@ -51,7 +51,7 @@
 	var/message
 	/// The list of items (responses) provided on the TGUI window
 	var/list/items
-	/// Buttons (strings specifically) mapped to the actual value (e.g. a mob or a verb)
+	/// Buttons (strings specifically) mapped to the actual value (e.g.. a mob or a verb)
 	var/list/items_map
 	/// The button that the user has pressed, null if no selection has been made
 	var/choice
@@ -63,9 +63,9 @@
 	var/timeout
 	/// Boolean field describing if the tgui_list_input was closed by the user.
 	var/closed
-	/// The TGUI UI state that will be returned in ui_state(). Default: always_state
+	/// The TGUI UI state that will be returned in ui_state().. Default: always_state
 	var/datum/ui_state/state
-	/// Whether the tgui list input is invalid or not (i.e. due to all list entries being null)
+	/// Whether the tgui list input is invalid or not (i.e.. due to all list entries being null)
 	var/invalid = FALSE
 
 /datum/tgui_list_input/New(mob/user, message, title, list/items, default, timeout, ui_state)

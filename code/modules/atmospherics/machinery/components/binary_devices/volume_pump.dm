@@ -3,12 +3,12 @@
 // node1, air1, network1 corresponds to input
 // node2, air2, network2 corresponds to output
 //
-// Thus, the two variables affect pump operation are set in New():
-//   air1.volume
-//     This is the volume of gas available to the pump that may be transferred to the output
-//   air2.volume
-//     Higher quantities of this cause more air to be perfected later
-//     but overall network volume is also increased as this increases...
+// So the two variables affect pump operation are set in New():
+// air1.volume
+// This is the volume of gas available to the pump that may be transferred to the output
+// air2.volume
+// Higher quantities of this cause more air to be perfected later
+// but overall network volume is also increased as this increases...
 
 /obj/machinery/atmospherics/components/binary/volume_pump
 	icon_state = "volpump_map-3"
@@ -76,7 +76,7 @@
 	var/input_starting_pressure = air1.return_pressure()
 	var/output_starting_pressure = air2.return_pressure()
 
-	// Requires being able to leak air in order to overclock.
+	// Needs being able to leak air in order to overclock.
 	if(overclocked)
 		var/turf/turf = loc
 		if(isclosedturf(turf))

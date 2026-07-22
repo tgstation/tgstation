@@ -13,9 +13,9 @@
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	///the mob that's implanted with this
 	var/mob/living/imp_in = null
-	///implant color, used for selecting either the "b" version or the "r" version of the implant case sprite when the implant is in a case.
+	/// implant color, used for selecting either the "b" version or the are version of the implant case sprite when the implant is in a case.
 	var/implant_color = "b"
-	///if false, upon implantation of a duplicate implant, an attempt to combine the new implant's uses with the old one's uses will be made, deleting the new implant if successful or stopping the implantation if not
+	/// if false, upon implantation of a duplicate implant, an try to combine the new implant's uses with the old one's uses will be made, deleting the new implant if successful. Stopping the implantation if not
 	var/allow_multiple = FALSE
 	///how many times this can do something, only relevant for implants with limited uses
 	var/uses = -1
@@ -24,9 +24,9 @@
 	///what icon state will we represent ourselves with on the hud?
 	var/hud_icon_state = null
 
-	/// What's the most important info that we really, really care about, e.g. name, lifespan-after-death, utility?
+	/// What's the most important info that we really, really care about, e.g.. name, lifespan-after-death, utility?
 	var/implant_info = "No information available."
-	/// What's the extended lore for this implant that we might not care that much about, e.g. descriptions, flavortext?
+	/// What's the extended lore for this implant that we might not care that much about, e.g.. descriptions, flavortext?
 	var/implant_lore = "No information available."
 
 /obj/item/implant/proc/activate()

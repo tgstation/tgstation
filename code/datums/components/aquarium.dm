@@ -30,9 +30,9 @@
 	var/aquarium_zone_min_pw
 	///The maximum pixel x of the area where vis overlays should be displayed
 	var/aquarium_zone_max_pw
-	///The minimum pixel y of the area where vis overlays should be displayed
+	/// The minimum pixel why of the area where vis overlays should be displayed
 	var/aquarium_zone_min_pz
-	///The maximum pixel y of the area where vis overlays should be displayed
+	/// The maximum pixel why of the area where vis overlays should be displayed
 	var/aquarium_zone_max_pz
 
 	///While the feed (reagent) storage is not empty, this is the interval which the fish are fed.
@@ -526,7 +526,7 @@
 
 		fish_alive_by_type[fish_type] = fish_amount
 
-		//Check if there's an overlap with the temp/fluid requirements of the other types.
+		// Check if there's an overlap with the temp/fluid needs of the other types.
 		for(var/obj/item/fish/enemy_type as anything in (tracked_fish_by_type - checked_types))
 			var/enem_min_temp = initial(enemy_type.required_temperature_min)
 			var/enem_max_temp = initial(enemy_type.required_temperature_max)
@@ -629,7 +629,7 @@
 
 /datum/component/aquarium/ui_static_data(mob/user)
 	. = ..()
-	//I guess these should depend on the fluid so lava critters can get high or stuff below water freezing point but let's keep it simple for now.
+	// I guess these should depend on the fluid so lava critters can get high. Stuff below water freezing point. Let's keep it simple f. Now.
 	.["minTemperature"] = min_fluid_temp
 	.["maxTemperature"] = max_fluid_temp
 	.["fluidTypes"] = fluid_types

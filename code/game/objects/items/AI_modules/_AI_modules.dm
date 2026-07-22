@@ -54,7 +54,7 @@
 
 ///what this module should do if it is mapload spawning on a unique AI station trait round.
 /obj/item/ai_module/proc/handle_unique_ai()
-	return SHOULD_QDEL_MODULE //instead of the roundstart bid to un-unique the AI, there will be a research requirement for it.
+	return SHOULD_QDEL_MODULE // instead of the roundstart bid to un-unique the AI, there will be a research need for it.
 
 //The proc other things should be calling
 /obj/item/ai_module/proc/install(datum/ai_laws/law_datum, mob/user)
@@ -69,7 +69,7 @@
 		var/included_lawsets = list(law_datum.supplied, law_datum.ion, law_datum.hacked, laws)
 
 		// if the ai module is a core module we don't count inherent laws since they will be replaced
-		// however the freeformcore doesn't replace inherent laws so we check that too
+		// but the freeformcore doesn't replace inherent laws so we check that too
 		if(!istype(src, /obj/item/ai_module/core) || istype(src, /obj/item/ai_module/core/freeformcore))
 			included_lawsets += list(law_datum.inherent)
 
@@ -78,7 +78,7 @@
 				if(mylaw != "")
 					tot_laws++
 
-		if(tot_laws > CONFIG_GET(number/silicon_max_law_amount) && !bypass_law_amt_check)//allows certain boards to avoid this check, eg: reset
+		if(tot_laws > CONFIG_GET(number/silicon_max_law_amount) && !bypass_law_amt_check)// allows certain boards to avoid this check, for example reset
 			to_chat(user, span_alert("Not enough memory allocated to [law_datum.owner ? law_datum.owner : "the AI core"]'s law processor to handle this amount of laws."))
 			message_admins("[ADMIN_LOOKUPFLW(user)] tried to upload laws to [law_datum.owner ? ADMIN_LOOKUPFLW(law_datum.owner) : "an AI core"] that would exceed the law cap.")
 			log_silicon("[key_name(user)] tried to upload laws to [law_datum.owner ? key_name(law_datum.owner) : "an AI core"] that would exceed the law cap.")

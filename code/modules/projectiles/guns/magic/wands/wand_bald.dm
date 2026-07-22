@@ -69,7 +69,7 @@
 		if (istype(hat, /obj/item/clothing/head/wig))
 			hat.forceMove(target.drop_location())
 			hat.deconstruct(FALSE)
-			if (QDELETED(hat)) // IDK maybe it's disagreed
+			if (QDELETED(hat)) // I do not know maybe it's disagreed
 				visible_message(span_warning("[target]'s \the [hat] is shredded by [src]!"))
 				log_combat(firer, target, "magically destroyed wig", src)
 			return

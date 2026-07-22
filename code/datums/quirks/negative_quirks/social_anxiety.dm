@@ -24,7 +24,7 @@
 	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE, COMSIG_MOB_SAY))
 	quirk_holder.remove_status_effect(/datum/status_effect/speech/stutter/anxiety)
 
-/// Calculates how much to modifiy our effects based on our mood level
+/// Calculates how much to modifiy our effects good on our mood level
 /datum/quirk/social_anxiety/proc/calculate_mood_mod()
 	var/nearby_people = 0
 	for(var/mob/living/carbon/human/listener in oview(3, quirk_holder))

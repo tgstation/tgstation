@@ -1,6 +1,6 @@
 /// This is intended to replace /icon, allowing rustg to generate icons much faster than DM can at scale.
 /// Construct these with the uni_icon() proc, in the same manner as BYOND's icon() proc.
-/// Additionally supports a number of transform procs (lowercase, rather than BYOND's uppercase)
+/// Also supports a number of transform procs (lowercase, rather than BYOND's uppercase)
 /// such as Crop, Scale, and Blend (as blend_icon/blend_color).
 /datum/universal_icon
 	var/icon/icon_file
@@ -12,9 +12,9 @@
 /// Don't instantiate these yourself, use uni_icon.
 /datum/universal_icon/New(icon/icon_file, icon_state="", dir=null, frame=null, datum/icon_transformer/transform=null, color=null)
 	#ifdef UNIT_TESTS
-	// This check is kinda slow and shouldn't fail unless a developer makes a mistake. So it'll get caught in unit tests.
+	// This check is kind of slow and shouldn't fail unless a developer makes a mistake.. So it'll get caught in unit tests.
 	if((!isicon(icon_file) && !isfile(icon_file)) || "[icon_file]" == "/icon" || !length("[icon_file]"))
-		// bad! use 'icons/path_to_dmi.dmi' format only
+		// bad!. use 'icons/path_to_dmi.dmi' format only
 		CRASH("FATAL: universal_icon was provided icon_file: [icon_file] - icons provided to batched spritesheets MUST be DMI files, they cannot be /image, /icon, or other runtime generated icons.")
 	#endif
 	src.icon_file = icon_file
@@ -345,7 +345,7 @@
 			if(!istype(icon_object))
 				stack_trace("Invalid icon found in icon transformer during to_list()! [icon_object]")
 				continue
-			// This mutates the inner transform list!!! Make sure it only runs on copies.
+			// This mutates the inner transform list!!!. Make sure it only runs on copies.
 			this_transform["icon"] = icon_object.to_list()
 		transforms_out += list(this_transform)
 	return transforms_out
@@ -382,7 +382,7 @@
 	var/datum/universal_icon/entry = SSgreyscale.GetColoredIconByTypeUniversalIcon(config, colors, path::post_init_icon_state || path::icon_state)
 	return entry
 
-/// Gets the relevant universal icon for an atom, when displayed in TGUI. (see: icon_state_preview)
+/// Gets the relevant universal icon for an atom, when displayed in TGUI.. (see: icon_state_preview)
 /// Supports GAGS items and colored items.
 /proc/get_display_icon_for(atom/atom_path)
 	if (!ispath(atom_path, /atom))
@@ -398,7 +398,7 @@
 	return uni_icon(icon_file, icon_state, color=atom_path::color)
 
 /// getFlatIcon for [/datum/universal_icon]s
-/// Still fairly slow for complex appearances due to filesystem operations. Try to avoid using it
+/// Still fairly slow for complex appearances due to filesystem operations.. Try to avoid using it
 /proc/get_flat_uni_icon(image/appearance, defdir, deficon, defstate, defblend, start = TRUE, parentcolor)
 	// Loop through the underlays, then overlays, sorting them into the layers list
 	#define PROCESS_OVERLAYS_OR_UNDERLAYS(flat, process, base_layer) \
@@ -472,7 +472,7 @@
 	if(should_display)
 		//Determines if there're directionals.
 		if (curdir != SOUTH)
-			// icon states either have 1, 4 or 8 dirs. We only have to check
+			// icon states either have 1, 4 or 8 dirs.. We only have to check
 			// one of NORTH, EAST or WEST to know that this isn't a 1-dir icon_state since they just have SOUTH.
 			var/list/metadata = icon_metadata(curicon)
 			if(islist(metadata))
@@ -499,7 +499,7 @@
 
 
 	if(appearance.overlays.len || appearance.underlays.len)
-		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
+		// Layers will be a sorted list of icons/overlays, good on the order in which they are displayed
 		var/list/layers = list()
 		var/image/copy
 		if(should_display)
@@ -544,7 +544,7 @@
 			if(layer_image.alpha == 0)
 				continue
 
-			if(layer_image == copy && length("[layer_image.icon]")) // 'layer_image' is an /image based on the object being flattened, and isn't a 'runtime' icon.
+			if(layer_image == copy && length("[layer_image.icon]")) // 'layer_image' is an /image good on the object being flattened, and isn't a 'runtime' icon.
 				curblend = BLEND_OVERLAY
 				add = uni_icon(layer_image.icon, layer_image.icon_state, base_icon_dir)
 				if(appearance.color)

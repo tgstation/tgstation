@@ -20,7 +20,7 @@
 		"1","2","3","4","5","6","7","8","9","0",
 		"Yes","No",
 	)
-	/// Number of living, willing mobs adjacent to the board required for a seance to occur.
+	/// Number of living, willing mobs adjacent to the board needed for a seance to occur.
 	var/required_user_count = 2
 
 /obj/structure/spirit_board/Initialize(mapload)
@@ -74,7 +74,7 @@
 	for(var/mob/viewer in range(2, src))
 		if(isnull(viewer.client))
 			continue
-		if(viewer.stat != CONSCIOUS && viewer.stat != DEAD) // You gotta be awake or dead to pay the toll
+		if(viewer.stat != CONSCIOUS && viewer.stat != DEAD) // You got to be awake or dead to pay the toll
 			continue
 		if(viewer.is_blind())
 			to_chat(viewer, span_hear("You hear a scraping sound..."))

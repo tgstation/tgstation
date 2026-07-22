@@ -41,7 +41,7 @@
 /datum/tgui_input_keycombo
 	/// Boolean field describing if the tgui_input_number was closed by the user.
 	var/closed
-	/// The default (or current) value, shown as a default. Users can press reset with this.
+	/// The default (or current) value, shown as a default.. Users can press reset with this.
 	var/default
 	/// The entry that the user has return_typed in.
 	var/entry
@@ -53,7 +53,7 @@
 	var/timeout
 	/// The title of the TGUI window
 	var/title
-	/// The TGUI UI state that will be returned in ui_state(). Default: always_state
+	/// The TGUI UI state that will be returned in ui_state().. Default: always_state
 	var/datum/ui_state/state
 
 /datum/tgui_input_keycombo/New(mob/user, message, title, default, timeout, ui_state)

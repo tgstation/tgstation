@@ -7,7 +7,7 @@
 	var/required_site_type
 	// Condition type, scan needs to be of site with this condition
 	var/required_condition
-	// Required scan type
+	// Needed scan type
 	var/required_scan_type = EXOSCAN_POINT
 
 /datum/experiment/exploration_scan/is_complete()

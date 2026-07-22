@@ -25,7 +25,7 @@
 	if(drop_bitflags & DROP_BODYPARTS)
 		spread_bodyparts(drop_bitflags, gibbed = TRUE)
 
-	// failsafe for if we fuck up and leave our brain behind. (other organs are replaceable so we can ignore them.)
+	// failsafe for if we fuck up and leave our brain behind.. (other organs are replaceable so we can ignore them.)
 	var/obj/item/organ/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if((drop_bitflags & DROP_BRAIN) && !isnull(brain))
 		stack_trace("gib invoked with drop_brain() had their brain after spilling organs and bodyparts, meaning both failed!")
@@ -59,7 +59,7 @@
 	if (gib_type)
 		new gib_type(drop_location(), src, get_static_viruses())
 
-/// Get type of gibs this mob should spawn based on our flags
+/// Get type of gibs this mob should spawn good on our flags
 /mob/living/proc/get_gibs_type(drop_bitflags = NONE)
 	if (mob_biotypes & MOB_ROBOTIC)
 		return /obj/effect/gibspawner/robot
@@ -196,7 +196,7 @@
 		mind?.experienced_death()
 
 /mob/living/silicon/send_death_moodlets(dusted = FALSE, gibbed = FALSE)
-	return // You are a machine (Future todo, roboticists feel sad though)
+	return // You are a machine (Future to do roboticists feel sad though)
 
 /mob/living/basic/send_death_moodlets(dusted = FALSE, gibbed = FALSE)
 	if(!(basic_mob_flags & SENDS_DEATH_MOODLETS))

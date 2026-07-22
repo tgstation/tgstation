@@ -55,13 +55,13 @@
 	var/charge_timer
 	/// Damage that the mark does when hit by the crusher
 	var/detonation_damage = 50
-	/// Damage that the mark additionally does when hit by the crusher via backstab
+	/// Damage that the mark also does when hit by the crusher via backstab
 	var/backstab_bonus = 30
 	/// The file in which our projectile icon resides
 	var/projectile_icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	/// Used by retool kits when changing the crusher's projectile sprite
 	var/projectile_icon_state = "pulse1"
-	/// Wielded damage we deal, aka our "real" damage
+	/// Wielded damage we deal, also known as our "real" damage
 	var/force_wielded = 20
 	/// Set to TRUE if the last projectile fired was point-blank at a living target
 	var/last_projectile_pb = FALSE
@@ -293,7 +293,7 @@
 //destablizing force
 /obj/projectile/destabilizer
 	name = "destabilizing force"
-	damage = 0 //We're just here to mark people. This is still a melee weapon.
+	damage = 0 // We're just here to mark people.. This is still a melee weapon.
 	damage_type = BRUTE
 	armor_flag = BOMB
 	range = 6
@@ -366,6 +366,6 @@
 		// If there is a mind, check for skill modifier to allow them to reload faster.
 		if(carbon_firer.mind && used_crusher)
 			skill_modifier = carbon_firer.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
-			used_crusher.attempt_recharge_projectile(used_crusher.charge_time * skill_modifier) //If you hit a mineral, you might get a quicker reload. epic gamer style.
+			used_crusher.attempt_recharge_projectile(used_crusher.charge_time * skill_modifier) // If you hit a mineral, you might get a quicker reload.. epic gamer style.
 
 	return ..()

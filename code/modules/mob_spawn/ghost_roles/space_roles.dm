@@ -1,5 +1,5 @@
 
-//Ancient cryogenic sleepers. Players become NT crewmen from a hundred year old space station, now on the verge of collapse.
+// Ancient cryogenic sleepers.. Players become NT crewmen from a hundred year old space station, now on the verge of collapse.
 /obj/effect/mob_spawn/ghost_role/human/oldstation
 	name = "old cryogenics pod"
 	desc = "A humming cryo pod. You can barely recognise a uniform underneath the built up ice. The machine is attempting to wake up its occupant."

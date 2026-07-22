@@ -1,5 +1,5 @@
 #define TRAIT_HOOKED "hooked"
-#define IMMOBILIZATION_TIMER (0.25 SECONDS) //! How long we immobilize the firer after firing - we do cancel the immobilization early if nothing is hit.
+#define IMMOBILIZATION_TIMER (0.25 SECONDS) // !. How long we immobilize the firer after firing - we do cancel the immobilization early if nothing is hit.
 
 /// Meat Hook
 /obj/item/gun/magic/hook
@@ -25,7 +25,7 @@
 
 /obj/item/gun/magic/hook/can_trigger_gun(mob/living/user, akimbo_usage) // This isn't really a gun, so it shouldn't be checking for TRAIT_NOGUNS, a firing pin (pinless), or a trigger guard (guardless)
 	if(akimbo_usage)
-		return FALSE //this would be kinda weird while shooting someone down.
+		return FALSE // this would be kind of weird while shooting someone down.
 	if(HAS_TRAIT(user, TRAIT_IMMOBILIZED))
 		return FALSE
 	return TRUE
@@ -113,7 +113,7 @@
 	/// How long we knockdown the victim for.
 	var/knockdown_time = (0.5 SECONDS)
 
-	/// List of traits that prevent the user from moving. More restrictive than attempting to fire the hook by design.
+	/// List of traits that prevent the user from moving.. More restrictive than trying to fire the hook by design.
 	var/static/list/prevent_movement_traits = list(
 		TRAIT_IMMOBILIZED,
 		TRAIT_UI_BLOCKED,
@@ -168,9 +168,9 @@
 	if(!movement_result || (victim.loc == destination.loc)) // either we failed our movement or our mission is complete
 		end_movement()
 
-/// Attempts to move the victim towards the destination. Returns TRUE if we do a successful movement, FALSE otherwise.
+/// Tries to move the victim towards the destination.. Returns TRUE if we do a successful movement, FALSE otherwise.
 /// second_attempt is a boolean to prevent infinite recursion.
-/// If this whole series of events wasn't reliant on SSfastprocess firing as fast as it does, it would have been more useful to make this a move loop datum. But, we need the speed.
+/// If this whole series of events wasn't reliant on SSfastprocess firing as fast as it does, it would have been more useful to make this a move loop datum.. But, we need the speed.
 /datum/hook_and_move/proc/attempt_movement(atom/movable/subject, atom/target, second_attempt = FALSE)
 	var/actually_moved = FALSE
 	if(!second_attempt)
@@ -194,7 +194,7 @@
 	if(actually_moved)
 		return TRUE
 
-	//If the x step failed, go y
+	// If the x step failed, go why
 	if((target_y > subject_y) && step(subject, NORTH))
 		actually_moved = TRUE
 	else if((target_y < subject_y) && step(subject, SOUTH))
@@ -203,7 +203,7 @@
 	if(actually_moved)
 		return TRUE
 
-	// if we fail twice, abort. otherwise queue up the second attempt.
+	// if we fail twice, abort.. otherwise queue up the second try
 	if(second_attempt)
 		return FALSE
 
@@ -221,7 +221,7 @@
 	damage = 0
 	stamina = 40
 
-/// Debug hook for fun (AKA admin abuse). doesn't do any more damage or anything just lets you wildfire it.
+/// Debug hook for fun also known as admin abuse).. doesn't do any more damage or anything just lets you wildfire it.
 /obj/item/gun/magic/hook/debug
 	name = "super meat hook"
 	max_charges = 100

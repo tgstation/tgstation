@@ -52,7 +52,7 @@
 	return TRUE
 
 /// Adds a list of hiddenprints to the atom
-/atom/proc/add_hiddenprint_list(list/hiddenprints_to_add) //NOTE: THIS IS FOR ADMINISTRATION FINGERPRINTS, YOU MUST CUSTOM SET THIS TO INCLUDE CKEY/REAL NAMES! CHECK FORENSICS.DM
+/atom/proc/add_hiddenprint_list(list/hiddenprints_to_add) // NOTE: THIS IS FOR ADMINISTRATION FINGERPRINTS, YOU MUST CUSTOM SET THIS TO INCLUDE CKEY/REAL NAMES!. CHECK FORENSICS.DM
 	if (QDELETED(src))
 		return
 	if (isnull(hiddenprints_to_add))

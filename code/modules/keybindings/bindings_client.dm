@@ -35,7 +35,7 @@ GAME_VERB_HIDDEN_INSTANT(/client, keyDown, "keyDown", _key as text, mousepos_x a
 		qdel(src)
 		return
 
-	//Focus Chat failsafe. Overrides movement checks to prevent WASD.
+	// Focus Chat failsafe.. Overrides movement checks to prevent WASD.
 	if(!hotkeys && length(_key) == 1 && _key != "Alt" && _key != "Ctrl" && _key != "Shift")
 		winset(src, null, "input.focus=true ; input.text=[url_encode(_key)]")
 		return

@@ -5,9 +5,9 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 	/// The ID of the electronics to match to the ID of the machine being used.
 	var/id = -1
-	/// Cooldown of the controller. Updates when pressed (activate())
+	/// Cooldown of the controller.. Updates when pressed (activate())
 	var/cooldown = FALSE
-	/// Should we toggle open/close of doors based on their current state
+	/// Should we toggle open/close of doors good on their current state
 	/// Also used for curtains
 	var/sync_doors = TRUE
 	/// If this controller's ID should be adjustable by players through multitools.

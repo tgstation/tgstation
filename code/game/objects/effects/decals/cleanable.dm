@@ -7,13 +7,13 @@
 	/// When two of these are on a same tile or do we need to merge them into just one?
 	var/mergeable_decal = TRUE
 	var/beauty = 0
-	/// The type of cleaning required to clean the decal. See __DEFINES/cleaning.dm for the options
+	/// The type of cleaning needed to clean the decal.. See __DEFINES/cleaning.dm for the options
 	var/clean_type = CLEAN_TYPE_LIGHT_DECAL
-	///The reagent this decal holds. Leave blank for none.
+	/// The reagent this decal holds.. Leave blank for none.
 	var/datum/reagent/decal_reagent
 	///The amount of reagent this decal holds, if decal_reagent is defined
 	var/reagent_amount = 0
-	/// If TRUE, gains TRAIT_MOPABLE on init - thus this cleanable will cleaned if its turf is cleaned
+	/// If TRUE, gains TRAIT_MOPABLE on init - so this cleanable will cleaned if its turf is cleaned
 	/// Set to FALSE for things that hang high on the walls or things which generally shouldn't be mopped up
 	var/is_mopped = TRUE
 
@@ -132,7 +132,7 @@
 	return ..()
 
 /// Creates a cleanable decal on a turf
-/// Use this if your decal is one of one, and thus we should not spawn it if it's there already
+/// Use this if your decal is one of one, and so we should not spawn it if it's there already
 /// Returns either the existing cleanable, the one we created, or null if we can't spawn on that turf
 /turf/proc/spawn_unique_cleanable(obj/effect/decal/cleanable/cleanable_type)
 	var/turf/checkturf = src

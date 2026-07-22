@@ -774,7 +774,7 @@
 
 /datum/chemical_reaction/drink/pousse_cafe
 	results=list(/datum/reagent/consumable/ethanol/pousse_cafe = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/herbal_liqueur = 1, /datum/reagent/consumable/ethanol/bitters = 1, /datum/reagent/consumable/ethanol/branca_menta = 1, /datum/reagent/consumable/ethanol/irish_cream = 1, /datum/reagent/consumable/ethanol/yuyake = 1, /datum/reagent/consumable/ethanol/aperitivo = 1, /datum/reagent/consumable/ethanol/amaretto = 1, /datum/reagent/consumable/ethanol/curacao = 1, /datum/reagent/consumable/ethanol/maraschino = 1, /datum/reagent/consumable/toechtauese_syrup = 1)	// In case someone wants to implement some sort of actual layering mechanic, these are listed from left to right by their specific gravity more or less
+	required_reagents = list(/datum/reagent/consumable/ethanol/herbal_liqueur = 1, /datum/reagent/consumable/ethanol/bitters = 1, /datum/reagent/consumable/ethanol/branca_menta = 1, /datum/reagent/consumable/ethanol/irish_cream = 1, /datum/reagent/consumable/ethanol/yuyake = 1, /datum/reagent/consumable/ethanol/aperitivo = 1, /datum/reagent/consumable/ethanol/amaretto = 1, /datum/reagent/consumable/ethanol/curacao = 1, /datum/reagent/consumable/ethanol/maraschino = 1, /datum/reagent/consumable/toechtauese_syrup = 1)	// In case someone wants to add some sort of actual layering mechanic, these are listed from left to right by their specific gravity more. Less
 
 /datum/chemical_reaction/drink/spritz
 	results=list(/datum/reagent/consumable/ethanol/spritz = 6)

@@ -73,7 +73,7 @@
 	if(HAS_TRAIT(user, TRAIT_PRIMITIVE) || user.ai_controller)
 		if(locked)
 			return //Your primitive brain cant escape a dna scanner noob
-	else if(!locked) //Not locked and not primitive? escape immediately
+	else if(!locked) // Not locked and not primitive?. escape immediately
 		open_machine()
 
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -112,7 +112,7 @@
 /obj/machinery/dna_scannernew/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(state_open)
 		return FALSE
-	if(locked) //haha bro u cant open it its locked xD
+	if(locked) // haha bro you cant open it its locked xD
 		return FALSE
 
 	..()
@@ -144,7 +144,7 @@
 		return
 	close_machine(target)
 
-//This is only called by the scanner. if you ever want to use this outside of that context you'll need to refactor things a bit
+// This is only called by the scanner.. if you ever want to use this outside of that context you'll need to refactor things a bit
 /obj/machinery/dna_scannernew/proc/set_linked_console(new_console)
 	if(linked_console)
 		UnregisterSignal(linked_console, COMSIG_QDELETING)
@@ -164,7 +164,7 @@
 	var/list/genetic_makeup_buffer = list()
 	var/list/mutations = list()
 	var/max_mutations = 10
-	read_only = FALSE //Well,it's still a floppy disk
+	read_only = FALSE // it's still a floppy disk
 
 /obj/item/disk/data/Initialize(mapload)
 	. = ..()

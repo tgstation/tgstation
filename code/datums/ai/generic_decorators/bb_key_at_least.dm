@@ -1,4 +1,4 @@
-/// Passes if the given blackboard key holds a number >= minimum. Returns FAILURE if the key is unset or below minimum.
+/// Passes if the given blackboard key holds a number >= minimum.. Returns FAILURE if the key is unset or below minimum.
 /datum/bt_node/decorator/bb_key_at_least
 	var/key
 	var/minimum

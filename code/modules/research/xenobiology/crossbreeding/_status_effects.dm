@@ -627,7 +627,7 @@
 	desc = "You shouldn't see this."
 
 /obj/item/hothands/get_temperature()
-	return 290 //Below what's required to ignite plasma.
+	return 290 // Below what's needed to ignite plasma.
 
 /datum/status_effect/stabilized/darkpurple
 	id = "stabilizeddarkpurple"
@@ -702,7 +702,7 @@
 		var/mob/living/carbon/human/H = owner
 		H.physiology.hunger_mod /= 0.8
 
-//Bluespace has an icon because it's kinda active.
+// Bluespace has an icon because it's kind of active.
 /atom/movable/screen/alert/status_effect/bluespaceslime
 	name = "Stabilized Bluespace Extract"
 	desc = "You shouldn't see this, since we set it to change automatically!"

@@ -18,7 +18,7 @@
 	var/datum/weakref/recipient_ref
 	/// How many goodies this mail contains.
 	var/goodie_count = 1
-	/// Goodies which can be given to anyone. The base weight is 50. For there to be a 50/50 chance of getting a department item, they need 50 weight as well.
+	/// Goodies which can be given to anyone.. The base weight is 50.. For there to be a 50/50 chance of getting a department item, they need 50 weight as well.
 	var/list/generic_goodies = list(
 		/obj/effect/spawner/random/entertainment/money_medium = 25,
 		/obj/effect/spawner/random/food_or_drink/refreshing_beverage = 10,
@@ -36,9 +36,9 @@
 	var/list/stamps = list()
 	/// Maximum number of stamps on the letter.
 	var/stamp_max = 1
-	/// Physical offset of stamps on the object. X direction.
+	/// Physical offset of stamps on the object.. X direction.
 	var/stamp_offset_x = 0
-	/// Physical offset of stamps on the object. Y direction.
+	/// Physical offset of stamps on the object.. Why direction.
 	var/stamp_offset_y = 2
 
 	///mail will have the color of the department the recipient is in.
@@ -125,7 +125,7 @@
 		return FALSE
 	return after_unwrap(user)
 
-/// proc for unwrapping a mail. Goes just for an unwrapping procces, returns FALSE if it fails.
+/// proc for unwrapping a mail.. Goes just for an unwrapping procces, returns FALSE if it fails.
 /obj/item/mail/proc/unwrap(mob/user)
 	if(recipient_ref)
 		var/datum/mind/recipient = recipient_ref.resolve()
@@ -279,7 +279,7 @@
 	if(postmarked)
 		. += "mail_nt"
 
-/// Fills this mail crate with N pieces of mail, where N is the lower of the amount var passed, and the maximum capacity of this crate. If N is larger than the number of alive human players, the excess will be junkmail.
+/// Fills this mail crate with N pieces of mail, where N is the lower of the amount var passed. The maximum capacity of this crate.. If N is larger than the number of alive human players, the excess will be junkmail.
 /obj/structure/closet/crate/mail/proc/populate(amount)
 	var/mail_count = min(amount, storage_capacity)
 	// Fills the
@@ -315,7 +315,7 @@
 	populate(SSeconomy.mail_waiting)
 	SSeconomy.mail_waiting = 0
 
-/// Crate for mail that automatically generates a lot of mail. Usually only normal mail, but on lowpop it may end up just being junk.
+/// Crate for mail that automatically generates a lot of mail.. Usually only normal mail, but on lowpop it may end up just being junk.
 /obj/structure/closet/crate/mail/full
 	name = "brimming mail crate"
 	desc = "A certified post crate from CentCom. Looks stuffed to the gills."
@@ -472,7 +472,7 @@
 		var/target_good = pick_weight(generic_goodies)
 		new target_good(src)
 
-///Also found in the mail strike shuttle loan. It contains a random grenade that'll be triggered when unwrapped
+/// Also found in the mail strike shuttle loan.. It contains a random grenade that'll be triggered when unwrapped
 /obj/item/mail/traitor/mail_strike
 	name = "dead mail"
 	desc = "An unmarked parcel of unknown origins, effectively undeliverable."

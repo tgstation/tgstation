@@ -1,4 +1,4 @@
-/// Target priority datum, exists to allow mobs to have custom targeting priorities. Singleton.
+/// Target priority datum, exists to allow mobs to have custom targeting priorities.. Singleton.
 /datum/target_priority_strategy
 
 /// Returns a number representing the priority of a target, higher -> more likely to attack

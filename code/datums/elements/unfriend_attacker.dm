@@ -10,7 +10,7 @@
 /datum/element/unfriend_attacker
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	/// Message to print if we remove a friend. String %SOURCE% and %TARGET% are replaced by names if present.
+	/// Message to print if we remove a friend.. String %SOURCE% and %TARGET% are replaced by names if present.
 	var/untamed_reaction
 
 /datum/element/unfriend_attacker/Attach(datum/target, untamed_reaction)

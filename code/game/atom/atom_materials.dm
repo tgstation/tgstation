@@ -1,6 +1,6 @@
 /atom
-	/// The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
-	/// The list referenced by this var can be shared by multiple objects and should not be directly modified. Instead, use [set_custom_materials][/atom/proc/set_custom_materials].
+	/// The custom materials this atom is made of, used by a lot of things like furniture, walls. Floors (if I finish the functionality, that is.)
+	/// The list referenced by this var can be shared by multiple objects and should not be directly modified.. Instead, use [set_custom_materials][/atom/proc/set_custom_materials].
 	var/list/datum/material/custom_materials
 	/// Bitfield for how the atom handles materials.
 	var/material_flags = NONE
@@ -9,7 +9,7 @@
 	/// List of material slots to be used to control material behaviors instead of default ones
 	var/list/datum/material_slot/material_slots = null
 
-/// Sets the custom materials for an atom. This is what you want to call, since most of the ones below are mainly internal.
+/// Sets the custom materials for an atom.. This is what you want to call, since most of the ones below are mainly internal.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	// Easy way to know no changes are being made.
@@ -196,7 +196,7 @@
 			return 1
 	return 1 / length(materials)
 
-///Called by apply_material_effects(). It ACTUALLY handles applying effects common to all atoms (depending on material flags)
+/// Called by apply_material_effects().. It ACTUALLY handles applying effects common to all atoms (depending on material flags)
 /atom/proc/finalize_material_effects(list/materials)
 	SHOULD_CALL_PARENT(TRUE)
 	var/total_alpha = 0
@@ -279,7 +279,7 @@
  */
 /atom/proc/gather_material_color(datum/material/material, list/colors, amount, multicolor = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	if(!material.color) //the material has no color. Nevermind
+	if(!material.color) // the material has no color.. Nevermind
 		return
 	var/color_to_add = material.color
 	var/istext = istext(color_to_add)
@@ -365,7 +365,7 @@
 
 	main_material.on_main_applied(src, amount, multiplier)
 
-///Called by remove_material_effects(). It ACTUALLY handles removing effects common to all atoms (depending on material flags)
+/// Called by remove_material_effects().. It ACTUALLY handles removing effects common to all atoms (depending on material flags)
 /atom/proc/finalize_remove_material_effects(list/materials)
 	var/list/colors = list()
 	var/datum/material/main_material = get_master_material()
@@ -492,7 +492,7 @@
 /atom/proc/get_material_slots()
 	return material_slots?.Copy()
 
-/// Returns TRUE if this atom utilizes material slots
+/// Returns TRUE if this atom uses material slots
 /atom/proc/has_material_slots()
 	return !!length(material_slots)
 
@@ -581,7 +581,7 @@
 			all_mats[material] += atom.custom_materials[material]
 	return all_mats
 
-/// A simple proc that iterates through each material that the object is made of and spawns some stacks based on their amount and associated sheet/ore type.
+/// A simple proc that iterates through each material that the object is made of. Spawns some stacks good on their amount. Associated sheet/ore type.
 /atom/proc/drop_custom_materials(multiplier = 1)
 	for(var/datum/material/material as anything in custom_materials)
 		var/stack_type = material.sheet_type || material.ore_type
@@ -603,7 +603,7 @@
 
 #define COMPARISION_ACCEPTABLE_MATERIAL_DEVIATION 0.03
 
-/// Compares the materials of two items to see if they're roughly the same. Primarily used in crafting and processing unit tests.
+/// Compares the materials of two items to see if they're roughly the same.. Primarily used in crafting and processing unit tests.
 /atom/proc/compare_materials(atom/target)
 	if(custom_materials == target.custom_materials) // SSmaterials caches the combinations so we don't have to run more complex checks
 		return TRUE
@@ -664,11 +664,11 @@
 	if(!value)
 		return 0
 
-	// If value is small, do NOT try rounding to nearest 0 or 5. percentage error becomes huge.
+	// If value is small, do NOT try rounding to nearest 0 or 5.. percentage error becomes huge.
 	var/final_value
 
 	if(value < sheet_amount)
-		// Use exact amount for small-value materials (0.1, 0.25, 0.55, etc)
+		// Use exact amount for small-value materials (0.1, 0.25, 0.55, and so on
 		final_value = value
 	else
 		// Large values: round to nearest 0 or 5

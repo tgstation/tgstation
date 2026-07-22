@@ -333,7 +333,7 @@
 
 	return TRUE
 
-/// Handles printing records via UI. Takes the params from UI_act.
+/// Handles printing records via UI.. Takes the params from UI_act.
 /obj/machinery/computer/records/security/proc/print_record(mob/user, datum/record/crew/target, list/params)
 	if(printing)
 		balloon_alert(user, "printer busy")
@@ -465,7 +465,7 @@
 	/// Sets the new status of the targets.
 	var/datum/port/input/option/new_status
 
-	/// Returns the new status set once the setting is complete. Good for locating errors.
+	/// Returns the new status set once the setting is complete.. Good for locating errors.
 	var/datum/port/output/new_status_set
 
 	/// Sends a signal on failure

@@ -1,6 +1,6 @@
 #define BLOB_REROLL_RADIUS 60
 
-/** Simple price check */
+/** * Simple price check */
 /mob/eye/blob/proc/can_buy(cost = 15)
 	if(blob_points < cost)
 		to_chat(src, span_warning("You cannot afford this, you need at least [cost] resources!"))
@@ -9,7 +9,7 @@
 	add_points(-cost)
 	return TRUE
 
-/** Places the core itself */
+/** * Places the core itself */
 /mob/eye/blob/proc/place_blob_core(placement_override = BLOB_NORMAL_PLACEMENT, pop_override = FALSE)
 	if(placed && placement_override != BLOB_FORCE_PLACEMENT)
 		return
@@ -32,7 +32,7 @@
 	else
 		if(placement_override == BLOB_RANDOM_PLACEMENT)
 			var/turf/force_tile = pick(GLOB.blobstart)
-			forceMove(force_tile) //got overrided? you're somewhere random, motherfucker
+			forceMove(force_tile) // got overrided?. you're somewhere random, motherfucker
 
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
@@ -47,7 +47,7 @@
 	placed = TRUE
 	announcement_time = world.time + OVERMIND_ANNOUNCEMENT_MAX_TIME
 
-/** Checks proximity for mobs */
+/** * Checks proximity for mobs */
 /mob/eye/blob/proc/check_core_visibility()
 	for(var/mob/living/player in range(7, src))
 		if(player.has_faction(ROLE_BLOB))
@@ -66,7 +66,7 @@
 	return TRUE
 
 
-/** Checks for previous blobs or denose objects on the tile. */
+/** * Checks for previous blobs or denose objects on the tile. */
 /mob/eye/blob/proc/check_objects_tile(turf/placement)
 	for(var/obj/object in placement)
 		if(istype(object, /obj/structure/blob))
@@ -82,12 +82,12 @@
 
 	return TRUE
 
-/** Moves the core elsewhere. */
+/** * Moves the core elsewhere. */
 /mob/eye/blob/proc/transport_core()
 	if(blob_core)
 		forceMove(blob_core.drop_location())
 
-/** Jumps to a node */
+/** * Jumps to a node */
 /mob/eye/blob/proc/jump_to_node()
 	if(!length(GLOB.blob_nodes))
 		return
@@ -105,7 +105,7 @@
 	if(chosen_node)
 		forceMove(chosen_node.loc)
 
-/** Places important blob structures */
+/** * Places important blob structures */
 /mob/eye/blob/proc/create_special(price, blobstrain, min_separation, needs_node, turf/tile)
 	if(!tile)
 		tile = get_turf(src)
@@ -139,7 +139,7 @@
 
 	return blob.change_to(blobstrain, src)
 
-/** Toggles requiring nodes */
+/** * Toggles needing nodes */
 /mob/eye/blob/proc/toggle_node_req()
 	nodes_required = !nodes_required
 	if(nodes_required)
@@ -147,7 +147,7 @@
 	else
 		to_chat(src, span_warning("You no longer require a nearby node or core to place factory and resource blobs."))
 
-/** Creates a shield to reflect projectiles */
+/** * Creates a shield to reflect projectiles */
 /mob/eye/blob/proc/create_shield(turf/tile)
 	var/obj/structure/blob/shield/shield = locate(/obj/structure/blob/shield) in tile
 	if(!shield)
@@ -170,7 +170,7 @@
 	shield = shield.change_to(/obj/structure/blob/shield/reflective, src)
 	shield.balloon_alert(src, "upgraded to [shield.name]!")
 
-/** Preliminary check before polling ghosts. */
+/** * Preliminary check before polling ghosts. */
 /mob/eye/blob/proc/create_blobbernaut()
 	var/turf/current_turf = get_turf(src)
 	var/obj/structure/blob/special/factory/factory = locate(/obj/structure/blob/special/factory) in current_turf
@@ -223,7 +223,7 @@
 	factory.assign_blobbernaut(blobber)
 	blobber.assign_key(ghost.key, blobstrain)
 
-/** Moves the core */
+/** * Moves the core */
 /mob/eye/blob/proc/relocate_core()
 	var/turf/tile = get_turf(src)
 	var/obj/structure/blob/special/node/blob = locate(/obj/structure/blob/special/node) in tile
@@ -251,7 +251,7 @@
 	blob.forceMove(old_turf)
 	blob.setDir(old_dir)
 
-/** Searches the tile for a blob and removes it. */
+/** * Searches the tile for a blob and removes it. */
 /mob/eye/blob/proc/remove_blob(turf/tile)
 	var/obj/structure/blob/blob = locate() in tile
 
@@ -274,7 +274,7 @@
 
 	qdel(blob)
 
-/** Expands to nearby tiles */
+/** * Expands to nearby tiles */
 /mob/eye/blob/proc/expand_blob(turf/tile)
 	if(world.time < last_attack)
 		return
@@ -318,7 +318,7 @@
 		last_attack = world.time + CLICK_CD_RAPID
 
 
-/** Finds cardinal and diagonal attack directions */
+/** * Finds cardinal and diagonal attack directions */
 /mob/eye/blob/proc/directional_attack(turf/tile, list/possible_blobs, attack_success = FALSE)
 	var/list/cardinal_blobs = list()
 	var/list/diagonal_blobs = list()
@@ -344,7 +344,7 @@
 			add_points(BLOB_EXPAND_COST) //if we're attacking diagonally and didn't hit anything, refund
 	return
 
-/** Rally spores to a location */
+/** * Rally spores to a location */
 /mob/eye/blob/proc/rally_spores(turf/tile)
 	to_chat(src, "You rally your spores.")
 	var/list/surrounding_turfs = TURF_NEIGHBORS(tile)
@@ -356,7 +356,7 @@
 		blob_mob.ai_controller.clear_blackboard_key(BB_CURRENT_TARGET)
 		blob_mob.ai_controller.set_blackboard_key(BB_TRAVEL_DESTINATION, pick(surrounding_turfs))
 
-/** Opens the reroll menu to change strains */
+/** * Opens the reroll menu to change strains */
 /mob/eye/blob/proc/strain_reroll()
 	if (!free_strain_rerolls && blob_points < BLOB_POWER_REROLL_COST)
 		to_chat(src, span_warning("You need at least [BLOB_POWER_REROLL_COST] resources to reroll your strain again!"))
@@ -364,7 +364,7 @@
 
 	open_reroll_menu()
 
-/** Controls changing strains */
+/** * Controls changing strains */
 /mob/eye/blob/proc/open_reroll_menu()
 	if (!strain_choices)
 		strain_choices = list()

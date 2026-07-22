@@ -8,7 +8,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	volume = 50
-	/// How many "layers" we have remaining. Each layer equates to 1 second of digestion
+	/// How many "layers" we have remaining.. Each layer equates to 1 second of digestion
 	var/layers_remaining = 3
 
 /obj/item/reagent_containers/applicator/pill/Initialize(mapload)
@@ -121,7 +121,7 @@
 	if (layers_remaining >= seconds_per_tick)
 		return COMPONENT_CANCEL_DIGESTION
 
-	// SSmobs.wait is 2 seconds (as of writing this), so we can end up with a delay of 1 second. In this case, use a timer
+	// SSmobs.wait is 2 seconds (as of writing this), so we can end up with a delay of 1 second.. In this case, use a timer
 	if (layers_remaining > 0)
 		// Using weakrefs because the mob can get deleted in the meanwhile and leave the pill behind
 		addtimer(CALLBACK(src, PROC_REF(finish_digesting), WEAKREF(stomach), WEAKREF(owner)), layers_remaining SECONDS)

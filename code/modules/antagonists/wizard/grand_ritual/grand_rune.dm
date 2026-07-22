@@ -1,6 +1,6 @@
 /// Number of times you need to cast on the rune to complete it
 #define GRAND_RUNE_INVOKES_TO_COMPLETE 3
-/// Base time to take to invoke one stage of the rune. This is done three times to complete the rune.
+/// Base time to take to invoke one stage of the rune.. This is done three times to complete the rune.
 #define BASE_INVOKE_TIME 7 SECONDS
 /// Time to add on to each step every time a previous rune is completed.
 #define ADD_INVOKE_TIME 2 SECONDS
@@ -23,7 +23,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	plane = FLOOR_PLANE
 	layer = RUNE_LAYER
-	/// How many prior grand rituals have been completed?
+	/// How many before grand rituals have been completed?
 	var/potency = 0
 	/// Time to take per invocation of rune.
 	var/invoke_time = BASE_INVOKE_TIME

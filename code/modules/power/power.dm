@@ -42,7 +42,7 @@
 // Machines should use add_load(), surplus(), avail()
 // Non-machines should use add_delayedload(), delayed_surplus(), newavail()
 
-//override this if the machine needs special functionality for making wire nodes appear, ie emitters, generators, etc.
+// override this if the machine needs special functionality for making wire nodes appear, that is emitters, generators, and so on
 /obj/machinery/power/proc/should_have_node()
 	return FALSE
 
@@ -114,7 +114,7 @@
 /obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
 	return
 
-// returns true if the area has power on given channel (or doesn't require power).
+// returns true if the area has power on given channel (or doesn't need power).
 // defaults to power_channel
 /obj/machinery/proc/powered(chan = power_channel, ignore_use_power = FALSE)
 	if(!use_power && !ignore_use_power)
@@ -232,7 +232,7 @@
 		return FALSE
 
 	var/surplus = local_apc.surplus()
-	if(surplus <= 0) //I don't know if powernet surplus can ever end up negative, but I'm just gonna failsafe it
+	if(surplus <= 0) // I don't know if powernet surplus can ever end up negative, but I'm just going to failsafe it
 		return FALSE
 	if(surplus < amount)
 		if(!take_any)
@@ -411,7 +411,7 @@
 	//now that the powernet is set, connect found machines to it
 	for(var/obj/machinery/power/PM in found_machines)
 		if(!PM.connect_to_network()) //couldn't find a node on its turf...
-			PM.disconnect_from_network() //... so disconnect if already on a powernet
+			PM.disconnect_from_network() // .... so disconnect if already on a powernet
 
 
 //Merge two powernets, the bigger (in cable length term) absorbing the other
@@ -422,8 +422,8 @@
 	if(net1 == net2) //don't merge same powernets
 		return
 
-	//We assume net1 is larger. If net2 is in fact larger we are just going to make them switch places to reduce on code.
-	if(net1.cables.len < net2.cables.len) //net2 is larger than net1. Let's switch them around
+	// We assume net1 is larger.. If net2 is in fact larger we are just going to make them switch places to reduce on code.
+	if(net1.cables.len < net2.cables.len) // net2 is larger than net1.. Let's switch them around
 		var/temp = net1
 		net1 = net2
 		net2 = temp
@@ -434,7 +434,7 @@
 
 	for(var/obj/machinery/power/Node in net2.nodes) //merge power machines
 		if(!Node.connect_to_network())
-			Node.disconnect_from_network() //if somehow we can't connect the machine to the new powernet, disconnect it from the old nonetheless
+			Node.disconnect_from_network() // if somehow we can't connect the machine to the new powernet, disconnect it from the old but
 
 	return net1
 
@@ -471,9 +471,9 @@
 //Determines how strong could be shock, deals damage to mob, uses power.
 //M is a mob who touched wire/whatever
 //power_source is a source of electricity, can be power cell, area, apc, cable, powernet or null
-//source is an object caused electrocuting (airlock, grille, etc)
+// source is an object caused electrocuting (airlock, grille, and so on
 //siemens_coeff - layman's terms, conductivity
-//dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)
+// dist_check - set to only shock mobs within 1 of source (vendors, airlocks, and so on
 //No animations will be performed by this proc.
 /proc/electrocute_mob(mob/living/carbon/victim, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
 	if(!istype(victim) || ismecha(victim.loc))
@@ -531,6 +531,6 @@
 		return null
 	for(var/obj/structure/cable/C in src)
 		if(C.cable_layer & cable_layer)
-			C.update_appearance() // I hate this. it's here because update_icon_state SCANS nearby turfs for objects to connect to. Wastes cpu time
+			C.update_appearance() // I hate this.. it's here because update_icon_state SCANS nearby turfs for objects to connect to.. Wastes cpu time
 			return C
 	return null

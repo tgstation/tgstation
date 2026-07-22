@@ -53,7 +53,7 @@
 /// Teleports parent to a safe turf on the station z-level.
 /datum/component/stationloving/proc/relocate()
 
-	var/target_turf = length(GLOB.the_station_areas) ? get_safe_random_station_turf(GLOB.the_station_areas) : find_safe_turf() //Fallback. Mostly for debug maps.
+	var/target_turf = length(GLOB.the_station_areas) ? get_safe_random_station_turf(GLOB.the_station_areas) : find_safe_turf() // Fallback.. Mostly for debug maps.
 
 	if(!target_turf)
 		if(GLOB.blobstart.len > 0)
@@ -124,7 +124,7 @@
 
 	return COMPONENT_BLOCK_MARK_RETRIEVAL
 
-/// Checks whether a given atom's turf is within bounds. Returns TRUE if it is, FALSE if it isn't.
+/// Checks whether a given atom's turf is within bounds.. Returns TRUE if it is, FALSE if it isn't.
 /datum/component/stationloving/proc/atom_in_bounds(atom/atom_to_check)
 	// Typecache of shuttles that we allow the disk to stay on
 	var/static/list/allowed_shuttles = typecacheof(list(
@@ -164,7 +164,7 @@
 
 	return FALSE
 
-/// Signal handler for before the parent is qdel'd. Can prevent the parent from being deleted where allow_item_destruction is FALSE and force is FALSE.
+/// Signal handler for before the parent is qdel'd.. Can prevent the parent from being deleted where allow_item_destruction is FALSE and force is FALSE.
 /datum/component/stationloving/proc/on_parent_pre_qdeleted(datum/source, force)
 	SIGNAL_HANDLER
 

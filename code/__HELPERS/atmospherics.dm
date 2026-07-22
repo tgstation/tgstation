@@ -64,7 +64,7 @@
 GLOBAL_LIST_EMPTY(reaction_handbook)
 GLOBAL_LIST_EMPTY(gas_handbook)
 
-/// Automatically populates gas_handbook and reaction_handbook. They are formatted lists containing information regarding gases and reactions they participate in.
+/// Automatically populates gas_handbook and reaction_handbook.. They are formatted lists containing information about gases and reactions they participate in.
 /// Structure can be found in TS form at AtmosHandbook.tsx
 /proc/atmos_handbooks_init()
 	if(length(GLOB.reaction_handbook))

@@ -1,15 +1,15 @@
 /datum/component/armor_plate
 	/// The current number of upgrades applied to the parent via this component.
 	var/amount = 0
-	/// The maximum number of upgarde items that can be applied. Once var/amount reaches this value, no more upgrades can be applied
+	/// The maximum number of upgarde items that can be applied.. Once var/amount reaches this value, no more upgrades can be applied
 	var/maxamount = 3
-	/// The path for our upgrade item. Each one is expended to improve the parent's armor values.
+	/// The path for our upgrade item.. Each one is expended to improve the parent's armor values.
 	var/upgrade_item = /obj/item/stack/sheet/animalhide/goliath_hide
-	/// The armor datum path for our upgrade values. This value is added per upgrade item applied
+	/// The armor datum path for our upgrade values.. This value is added per upgrade item applied
 	var/datum/armor/armor_mod = /datum/armor/armor_plate
 	/// The name of the upgrade item.
 	var/upgrade_name
-	/// Adds a prefix to the item, demonstrating that it is upgraded in some way.
+	/// Adds a prefix to the item, showing that it is upgraded in some way.
 	var/upgrade_prefix = "reinforced"
 	/// Tracks whether or not we've received an upgrade or not.
 	var/have_upgraded = FALSE

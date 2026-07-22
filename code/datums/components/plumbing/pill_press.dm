@@ -13,7 +13,7 @@
 /datum/component/plumbing/pill_press/send_request(dir)
 	var/obj/machinery/plumbing/pill_press/target = parent
 
-	//required volume of reagents to package the product has been sent
+	// needed volume of reagents to package the product has been sent
 	if(reagents.total_volume >= target.current_volume)
 		return
 

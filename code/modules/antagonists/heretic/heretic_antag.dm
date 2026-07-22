@@ -42,13 +42,13 @@
 	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
 	/// A static list of all paths we can take and related info for the UI
 	var/static/list/path_info = list()
-	/// Assoc list of [typepath] = [knowledge instance]. A list of all knowledge this heretic's reserached.
+	/// Assoc list of [typepath] = [knowledge instance].. A list of all knowledge this heretic's reserached.
 	var/list/researched_knowledge = list()
-	/// Lazy assoc list of [refs to humans] to [image previews of the human]. Humans that we have as sacrifice targets.
+	/// Lazy assoc list of [refs to humans] to [image previews of the human].. Humans that we have as sacrifice targets.
 	var/list/mob/living/carbon/human/sac_targets
 	/// List of all sacrifice target's names, used for end of round report
 	var/list/all_sac_targets = list()
-	/// List that keeps track of which items have been gifted to the heretic after a cultist was sacrificed. Used to alter drop chances to reduce dupes.
+	/// List that keeps track of which items have been gifted to the heretic after a cultist was sacrificed.. Used to alter drop chances to reduce dupes.
 	var/list/unlocked_heretic_items = list(
 		/obj/item/melee/sickly_blade/cursed = 0,
 		/obj/item/clothing/neck/heretic_focus/crimson_medallion = 0,
@@ -60,7 +60,7 @@
 	var/feast_of_owls = FALSE
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
-	/// Whether we've ascended! (Completed one of the final rituals)
+	/// Whether we've ascended!. (Completed one of the final rituals)
 	var/ascended = FALSE
 	/// Whether we're drawing a rune or not
 	var/drawing_rune = FALSE
@@ -68,23 +68,23 @@
 	var/datum/heretic_knowledge_tree_column/heretic_path
 	/// Reference to the overlay heretics get when they get strong enough
 	var/static/mutable_appearance/eldritch_overlay = mutable_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_aura")
-	/// A sum of how many knowledge points this heretic CURRENTLY has. Used to research.
+	/// A sum of how many knowledge points this heretic CURRENTLY has.. Used to research.
 	var/knowledge_points = 1
-	/// The time between gaining influence passively. The heretic gain +1 knowledge points every this duration of time.
+	/// The time between gaining influence passively.. The heretic gain +1 knowledge points every this duration of time.
 	var/passive_gain_timer = 20 MINUTES
-	/// Tracks how many knowledge points the heretic has aqcuired. Once you get enough points you lose the ability to blade break
+	/// Tracks how many knowledge points the heretic has aqcuired.. Once you get enough points you lose the ability to blade break
 	var/knowledge_gained = 0
 	/// The organ slot we place our Living Heart in.
 	var/living_heart_organ_slot = ORGAN_SLOT_HEART
-	/// A list of TOTAL how many sacrifices completed. (Includes high value sacrifices)
+	/// A list of TOTAL how many sacrifices completed.. (Includes high value sacrifices)
 	var/total_sacrifices = 0
-	/// A list of TOTAL how many high value sacrifices completed. (Heads of staff)
+	/// A list of TOTAL how many high value sacrifices completed.. (Heads of staff)
 	var/high_value_sacrifices = 0
 	/// Controls what types of turf we can spread rust to
 	var/rust_strength = 1
 	/// Simpler version of above used to limit amount of loot that can be hoarded
 	var/rewards_given = 0
-	/// Our heretic passive level. Tracked here in case of body moving shenanigans
+	/// Our heretic passive level.. Tracked here in case of body moving shenanigans
 	var/passive_level = 1
 	/// How many points are needed to gain a visible heretic aura
 	var/points_to_aura = 8
@@ -102,7 +102,7 @@
 	//can't imagine why you would want this one, so it can't be overridden by the knowledge
 	var/icon_moving = 0
 
-	//item transmutation knowledge does not generate its own icon due to implementation difficulties, the icons have to be specified in the override vars
+	// item transmutation knowledge does not generate its own icon due to code difficulties, the icons have to be specified in the override vars
 
 	//if the knowledge has a special icon, use that
 	if(!isnull(knowledge.research_tree_icon_path))
@@ -187,8 +187,8 @@
 	var/list/shop_knowledge = list()
 
 	// This should be cached in some way, but the fact that final knowledge
-	// has to update its disabled state based on whether all objectives are complete,
-	// makes this very difficult. I'll figure it out one day maybe
+	// has to update its disabled state good on whether all objectives are complete,
+	// makes this very difficult.. I'll figure it out one day maybe
 	for(var/knowledge_path in researched_knowledge)
 		var/list/knowledge_info = researched_knowledge[knowledge_path]
 		/// draft knowledges are only shown post-research
@@ -205,7 +205,7 @@
 
 		tree_data[depth]["nodes"] += list(knowledge_data)
 
-	// TODO: sanity for purchasing categories as bypasses are likely rn
+	// To do sanity for purchasing categories as bypasses are likely rn
 	var/list/heretic_tree = heretic_shops[HERETIC_KNOWLEDGE_TREE]
 	var/list/researchable_knowledges = get_researchable_knowledge()
 	for(var/datum/heretic_knowledge/knowledge_path as anything in heretic_tree)
@@ -315,7 +315,7 @@
 /datum/antagonist/heretic/get_preview_icon()
 	var/datum/universal_icon/icon = render_preview_outfit(preview_outfit)
 
-	// MOTHBLOCKS TODO: Copied and pasted from cult, make this its own proc
+	// MOTHBLOCKS To do Copied and pasted from cult, make this its own proc
 
 	// The sickly blade is 64x64, but getFlatIcon crunches to 32x32.
 	// So I'm just going to add it in post, screw it.
@@ -501,7 +501,7 @@
 	if(ascended)
 		return
 
-	// We shouldn't be able to cast this! Cancel it.
+	// We shouldn't be able to cast this!. Cancel it.
 	source.balloon_alert(source, "you need a focus!")
 	return SPELL_CANCEL_CAST
 
@@ -608,7 +608,7 @@
 
 	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) // uhh let's find the guy to shove him back in
 		if((ghost.mind?.current == source) && ghost.client) // is it the same guy and do they have the same client
-			ghost.reenter_corpse() // shove them in! it doesnt do it automatically
+			ghost.reenter_corpse() // shove them in!. it doesnt do it automatically
 
 	// Drop all items and splatter them around messily.
 	var/list/dustee_items = source.unequip_everything()
@@ -1106,7 +1106,7 @@
 	name = "pick a path"
 	explanation_text = "Pick a path to pursue."
 
-/// Heretic's minor sacrifice objective. "Minor sacrifices" includes anyone.
+/// Heretic's minor sacrifice objective.. "Minor sacrifices" includes anyone.
 /datum/objective/minor_sacrifice
 	name = "minor sacrifice"
 
@@ -1125,7 +1125,7 @@
 		return FALSE
 	return completed || (heretic_datum.total_sacrifices >= target_amount)
 
-/// Heretic's major sacrifice objective. "Major sacrifices" are heads of staff.
+/// Heretic's major sacrifice objective.. "Major sacrifices" are heads of staff.
 /datum/objective/major_sacrifice
 	name = "major sacrifice"
 	target_amount = 1
@@ -1137,7 +1137,7 @@
 		return FALSE
 	return completed || (heretic_datum.high_value_sacrifices >= target_amount)
 
-/// Heretic's research objective. "Research" is heretic knowledge nodes (You start with some).
+/// Heretic's research objective.. "Research" is heretic knowledge nodes (You start with some).
 /datum/objective/heretic_research
 	name = "research"
 	target_amount = 1 // You spawn with 1 point

@@ -31,7 +31,7 @@
 
 	return appearance
 
-// This is a semi hot proc, so we micro it. saves maybe 150ms
+// This is a semi hot proc, so we micro it.. saves maybe 150ms
 // sorry :)
 /proc/fast_emissive_blocker(atom/make_blocker)
 	var/mutable_appearance/blocker = new()
@@ -93,7 +93,7 @@
 	hand_back += alpha_threshold_down
 	hand_back += alpha_threshold_up
 	hand_back += em_block
-	// Cast to movable so we can use vis_contents. will work for turfs, but not for areas
+	// Cast to movable so we can use vis_contents.. will work for turfs, but not for areas
 	var/atom/movable/vis_cast = make_blocker
 	vis_cast.vis_contents += hand_back
 	return hand_back

@@ -70,7 +70,7 @@
 	INVOKE_ASYNC(src, PROC_REF(action), drivers[1], bumped_into, null, TRUE)
 
 /obj/item/mecha_parts/mecha_equipment/drill/do_after_checks(atom/target)
-	// Gotta be close to the target
+	// Got to be close to the target
 	if(!loc.Adjacent(target))
 		return FALSE
 	// Check if we can still use the equipment & use power for every iteration of do after

@@ -1,7 +1,7 @@
 // Cellular Emporium -
 // The place where Changelings go to purchase biological weaponry.
 /datum/cellular_emporium
-	/// The name of the emporium - why does it need a name? Dunno
+	/// The name of the emporium - why does it need a name?. Do not know
 	var/name = "cellular emporium"
 	/// The changeling who owns this emporium
 	var/datum/antagonist/changeling/changeling

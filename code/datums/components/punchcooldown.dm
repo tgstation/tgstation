@@ -1,4 +1,4 @@
-///Your favourite Jojoke. Used for the gloves of the north star.
+/// Your favourite Jojoke.. Used for the gloves of the north star.
 /datum/component/wearertargeting/punchcooldown
 	signals = list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_HAND_ITEM_ATTACK)
 	mobtype = /mob/living/carbon
@@ -13,7 +13,7 @@
 		return
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(changewarcry))
 
-///Called on COMSIG_LIVING_UNARMED_ATTACK. Yells the warcry and and reduces punch cooldown.
+/// Called on COMSIG_LIVING_UNARMED_ATTACK.. Yells the warcry and and reduces punch cooldown.
 /datum/component/wearertargeting/punchcooldown/proc/reducecooldown(mob/living/carbon/M, atom/target)
 	var/obj/item/used_item = M.get_active_held_item()
 	if((M.combat_mode && isliving(target)) || (used_item & HAND_ITEM))
@@ -21,7 +21,7 @@
 		if(warcry)
 			M.say(warcry, ignore_spam = TRUE, forced = "north star warcry")
 
-///Called on COMSIG_ITEM_ATTACK_SELF. Allows you to change the warcry.
+/// Called on COMSIG_ITEM_ATTACK_SELF.. Allows you to change the warcry.
 /datum/component/wearertargeting/punchcooldown/proc/changewarcry(datum/source, mob/user)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(do_changewarcry), user)

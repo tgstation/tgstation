@@ -29,7 +29,7 @@
 		return
 
 	if(ismovable(bumped))
-		if(istype(bumped, /obj/machinery/door))//door check is kinda lame but it just plays better
+		if(istype(bumped, /obj/machinery/door))// door check is kind of lame but it just plays better
 			return
 
 		var/atom/movable/mover = bumped

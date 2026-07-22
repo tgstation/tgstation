@@ -15,7 +15,7 @@
 	/// The agent that causes the disease, for example "virus", "bacteria", "parasite", "curse"
 	var/agent = "Unknown"
 	/// A string describing how the disease spreads, for example "Airborne", "Blood", "Skin contact", "Magic"
-	/// (Keep this strictly for how it spreads BETWEEN hosts, NOT how it affected the initial host. Use agent var for that)
+	/// (Keep this strictly for how it spreads BETWEEN hosts, NOT how it affected the initial host.. Use agent var for that)
 	var/spread_text = ""
 	/// A string describing how the disease can be cured, for example "Toxin remover", "Antibiotics", "Rest and hydration", "Prayers to the gods"
 	var/cure_text = ""
@@ -47,10 +47,10 @@
 	/// The probability of this infection being cured every second the cure is present
 	var/cure_chance = 4
 	var/carrier = FALSE //If our host is only a carrier
-	var/bypasses_immunity = FALSE //Does it skip species virus immunity check? Some things may diseases and not viruses
+	var/bypasses_immunity = FALSE // Does it skip species virus immunity check?. Some things may diseases and not viruses
 	var/spreading_modifier = 1
 	var/severity = DISEASE_SEVERITY_NONTHREAT
-	/// If the disease requires an organ for the effects to function, robotic organs are immune to disease unless inorganic biology symptom is present
+	/// If the disease needs an organ for the effects to function, robotic organs are immune to disease unless inorganic biology symptom is present
 	var/required_organ
 	var/needs_all_cures = TRUE
 	var/list/strain_data = list() //dna_spread special bullshit
@@ -119,7 +119,7 @@
 
 	stage_act(seconds_per_tick)
 
-///Proc to process the disease and decide on whether to advance, cure or make the symptoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
+/// Proc to process the disease and decide on whether to advance, cure or make the symptoms appear.. Returns a boolean on whether to continue acting on the symptoms or not.
 /datum/disease/proc/stage_act(seconds_per_tick)
 	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
 	var/recovery_prob = 0
@@ -384,13 +384,13 @@
 		if(ispath(mob_type, viable_type))
 			return TRUE
 
-	// Let's only do this check if it fails. Did some genius coder pass in a non-type argument?
+	// Let's only do this check if it fails.. Did some genius coder pass in a non-type argument?
 	if(!ispath(mob_type))
 		stack_trace("Non-path argument passed to mob_type variable: [mob_type]")
 
 	return FALSE
 
-/// Checks if the mob has the required organ and it's not robotic or affected by inorganic biology
+/// Checks if the mob has the needed organ and it's not robotic or affected by inorganic biology
 /datum/disease/proc/has_required_infectious_organ(mob/living/carbon/target, required_organ_slot)
 	if(!iscarbon(target))
 		return FALSE

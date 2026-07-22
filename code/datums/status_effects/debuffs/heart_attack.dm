@@ -34,7 +34,7 @@
 /datum/status_effect/heart_attack/tick(seconds_between_ticks)
 	var/mob/living/carbon/human/human_owner = owner
 	if(!istype(human_owner) || !human_owner.can_heartattack())
-		qdel(src) //No heart? No effects.
+		qdel(src) // No heart?. No effects.
 		return
 
 	if(time_until_stoppage > ATTACK_CURE_THRESHOLD)
@@ -59,7 +59,7 @@
 		if(!visible)
 			ADD_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_HIGH, type)
 			owner.med_hud_set_status()
-			visible = TRUE //We do not reset this status until it's fully cured. Once it's been made apparent, there's no reason to hide it again until it is resolved. It will only confuse players.
+			visible = TRUE // We do not reset this status until it's fully cured.. Once it's been made apparent, there's no reason to hide it again until it is resolved.. It will only confuse players.
 		if(SPT_PROB(15, seconds_between_ticks))
 			to_chat(owner, span_danger("You feel a sharp pain in your chest!"))
 			if(SPT_PROB(15, seconds_between_ticks))
@@ -85,7 +85,7 @@
 			owner.emote("cough")
 			if(SPT_PROB(5, seconds_between_ticks))
 				to_chat(owner, span_userdanger("You cough. Everything goes dark. You're going to die soon."))
-				owner.adjust_temp_blindness(10 SECONDS) //Are you panicking yet? You should be panicking by now.
+				owner.adjust_temp_blindness(10 SECONDS) // Are you panicking yet?. You should be panicking by now.
 			else
 				to_chat(owner, span_userdanger("As you cough, your chest surges in pain and darkness closes in around your sight."))
 				owner.adjust_temp_blindness(2 SECONDS)
@@ -139,11 +139,11 @@
 	if(istype(organ, /obj/item/organ/heart))
 		qdel(src)
 
-///Slightly reduces your timer. Can cure you if you really really want.
+/// Slightly reduces your timer.. Can cure you if you really really want.
 /datum/status_effect/heart_attack/proc/minor_shock(datum/source)
 	SIGNAL_HANDLER
-	time_until_stoppage += 18 //Good for keeping yourself up. Won't be easy to get over the cure threshold by yourself. You're going to need security beating the crap out of you with stunbatons, but it'll work.
-	if(prob(50)) //Also good for crafty solos who want to stunbaton themselves back to health. Timing will be key.
+	time_until_stoppage += 18 // Good for keeping yourself up.. Won't be easy to get over the cure threshold by yourself.. You're going to need security beating the crap out of you with stunbatons, but it'll work.
+	if(prob(50)) // Also good for crafty solos who want to stunbaton themselves back to health.. Timing will be key.
 		to_chat(owner, span_nicegreen("Something about being shocked makes the pain in your chest ease up!"))
 
 ///Makes major progress towards curing the attack.
@@ -152,14 +152,14 @@
 	time_until_stoppage += 50 //Three shocks should save pretty much anyone.
 	owner.visible_message(span_nicegreen("[owner] seems to be relieved of their pain as they're shocked by the [source]!"), span_nicegreen("The [source] shocks your heart awake, and you feel the pain in your chest ease up!"))
 
-///Slightly reduces your timer, just like the minor shock signal. Slightly more relief because these use cases are generally more dangerous.
+/// Slightly reduces your timer, just like the minor shock signal.. Slightly more relief because these use cases are generally more dangerous.
 /datum/status_effect/heart_attack/proc/electrocuted(datum/source, shock_damage)
 	SIGNAL_HANDLER
 	time_until_stoppage += (20 + shock_damage * 1.15)
 	if(prob(50))
 		to_chat(owner, span_nicegreen("Something about being electrocuted makes the pain in your chest ease up!"))
 
-///Alternative to penthrite that keeps you up for a few seconds after having a heart attack. Gives a bit of time to call for help regardless of when/where you've collapsed.
+/// Alternative to penthrite that keeps you up for a few seconds after having a heart attack.. Gives a bit of time to call for help regardless of when/where you've collapsed.
 /datum/status_effect/heart_desperation
 	id = "heart_desperation"
 	duration = (4 SECONDS)

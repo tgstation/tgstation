@@ -8,7 +8,7 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// Whether we qdel ourself when our parent is unwrapped or not.
 	var/delete_on_unwrap = TRUE
-	/// List of bank accounts this pricetag pays out to. Format is payees[bank_account] = profit_ratio.
+	/// List of bank accounts this pricetag pays out to.. Format is payees[bank_account] = profit_ratio.
 	var/list/payees = list()
 
 /datum/component/pricetag/Initialize(list/pay_to_account, profit_ratio = 1, delete_on_unwrap = TRUE)
@@ -96,14 +96,14 @@
 	if(!isnum(item_value))
 		return
 
-	// Gotta see how much money we've lost by the end of things.
+	// Got to see how much money we've lost by the end of things.
 	var/overall_item_price = item_value
 	var/running_tally = 0
 
 	for(var/datum/bank_account/payee as anything in payees)
-		// Every payee with a ratio gets a cut based on the item's total value
+		// Every payee with a ratio gets a cut good on the item's total value
 		var/payee_cut = round(item_value * payees[payee])
-		// And of course, the cut is removed from what cargo gets. (But not below zero, just in case)
+		// And of course, the cut is removed from what cargo gets.. (But not below zero, just in case)
 		overall_item_price = max(0, overall_item_price - payee_cut)
 
 		payee.adjust_money(payee_cut, "Pricetag: [capitalize(format_text(source.name))] Sale")

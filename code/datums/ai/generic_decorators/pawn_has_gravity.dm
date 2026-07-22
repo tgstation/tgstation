@@ -1,4 +1,4 @@
-/// Gates child on the pawn having gravity. Use invert = TRUE to gate on weightlessness instead.
+/// Gates child on the pawn having gravity.. Use invert = TRUE to gate on weightlessness instead.
 /datum/bt_node/decorator/pawn_has_gravity
 
 /datum/bt_node/decorator/pawn_has_gravity/register_observe_signals(atom/pawn)

@@ -59,7 +59,7 @@
 		if(!(istype(dog, /mob/living/basic/pet/dog/corgi/ian) || istype(dog, /mob/living/basic/pet/dog/corgi/puppy/ian)))
 			continue
 
-		// Makes this station trait more interesting. Ian probably won't go anywhere without a little external help.
+		// Makes this station trait more interesting.. Ian probably won't go anywhere without a little external help.
 		// Also gives him a couple extra lives to survive eventual tiders.
 		dog.deadchat_plays(DEMOCRACY_MODE|MUTE_DEMOCRACY_MESSAGES, 3 SECONDS)
 		dog.AddComponent(/datum/component/multiple_lives, 2)
@@ -499,7 +499,7 @@
 #undef SKUB_IDFC
 #undef RANDOM_SKUB
 
-/// Crew don't ever spawn as enemies of the station. Obsesseds, blob infection, space changelings etc can still happen though
+/// Crew don't ever spawn as enemies of the station.. Obsesseds, blob infection, space changelings and so on can still happen though
 /datum/station_trait/background_checks
 	name = "Station-Wide Background Checks"
 	report_message = "We replaced the intern doing your crew's background checks with a trained screener for this shift! \

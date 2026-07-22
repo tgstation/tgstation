@@ -6,7 +6,7 @@
 #define MAX_PAPER_STAMPS 30
 /// Max number of stamp overlays that we'll add to a piece of paper's icon.
 #define MAX_PAPER_STAMPS_OVERLAYS 4
-/// Maximum length of input fields. Input fields greater than this length are clamped tgui-side. Input field text input greater than this length is rejected tgui-side, discarded + logged if it reaches DM-side.
+/// Maximum length of input fields... Input fields greater than this length are clamped tgui-side... Input field text input greater than this length is rejected tgui-side, discarded + logged if it reaches DM-side.
 #define MAX_PAPER_INPUT_FIELD_LENGTH MAX_NAME_LEN
 
 /// Should not be able to write on or stamp paper.

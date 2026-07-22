@@ -121,7 +121,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 		loc.balloon_alert(activator, "no elevator connected!")
 		return FALSE
 
-	// We can't call an elevator that's moving. You may say "you totally can do that", but that's not modelled
+	// We can't call an elevator that's moving.. You may say "you totally can do that", but that's not modelled
 	if(lift.controller_status & CONTROLS_LOCKED)
 		loc.balloon_alert(activator, "elevator is moving!")
 		return FALSE
@@ -139,7 +139,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 	if(activator)
 		loc.balloon_alert(activator, "elevator called")
 
-	// Actually try to move the lift. This will sleep.
+	// Actually try to move the lift.. This will sleep.
 	if(!lift.move_to_zlevel(loc.z, CALLBACK(src, PROC_REF(check_button))))
 		loc.balloon_alert(activator, "elevator out of service!")
 		return FALSE

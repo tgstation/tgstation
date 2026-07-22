@@ -47,7 +47,7 @@
 	if(!pressing && current_plate)
 		work_press(user)
 
-///This proc attempts to create a plate. User cannot move during this process.
+/// This proc tries to create a plate.. User cannot move during this process.
 /obj/machinery/plate_press/proc/work_press(mob/living/user)
 
 	pressing = TRUE

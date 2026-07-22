@@ -21,7 +21,7 @@
 		'sound/effects/brap/brap3.ogg'=1,
 		'sound/effects/brap/brap4.ogg'=1,
 		)
-	/// The amount of steps that it takes for the sound to play. On april fools this gets lowered to 1 (same # as clown shoes)
+	/// The amount of steps that it takes for the sound to play.. On april fools this gets lowered to 1 (same # as clown shoes)
 	var/step_delay = 10
 
 /obj/item/clothing/head/costume/whoopee/Initialize(mapload)

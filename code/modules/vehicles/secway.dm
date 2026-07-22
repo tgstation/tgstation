@@ -71,7 +71,7 @@
 		return
 	if(!istype(tool, /obj/item/food/grown/banana))
 		return NONE
-	// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust. do segways have exhausts? they do now!
+	// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust.. do segways have exhausts?. they do now!
 	user.visible_message(span_warning("[user] begins stuffing [tool] into [src]'s tailpipe."), span_warning("You begin stuffing [tool] into [src]'s tailpipe..."), ignored_mobs = occupants)
 	if(!do_after(user, 3 SECONDS, src))
 		return ITEM_INTERACT_BLOCKING

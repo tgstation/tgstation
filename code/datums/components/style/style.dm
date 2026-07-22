@@ -327,7 +327,7 @@
 	else
 		source.balloon_alert(source, "unable to hotswap!")
 
-/// Increase our permanent multiplier based on the modifier.
+/// Increase our permanent multiplier good on the modifier.
 /datum/component/style/proc/adjust_permanent_multiplier(modifier)
 	permanent_multiplier += modifier
 

@@ -66,7 +66,7 @@
 #define LAZYFIND(L, V) (L?.Find(V))
 ///returns L[I] if L exists and I is a valid index of L, runtimes if L is not a list
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
-///Sets the item K to the value V, if the list is null it will initialize it
+/// Sets the item Okay to the value V, if the list is null it will initialize it
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 ///Sets the length of a lazylist
 #define LAZYSETLEN(L, V) if (!L) { L = list(); } L.len = V;
@@ -74,11 +74,11 @@
 #define LAZYLEN(L) length(L)
 ///Sets a list to null
 #define LAZYNULL(L) L = null
-///Adds to the item K the value V, if the list is null it will initialize it
+/// Adds to the item Okay the value V, if the list is null it will initialize it
 #define LAZYADDASSOC(L, K, V) if(!L) { L = list(); } L[K] += V;
-///This is used to add onto lazy assoc list when the value you're adding is a /list/. This one has extra safety over lazyaddassoc because the value could be null (and thus cant be used to += objects)
+/// This is used to add onto lazy assoc list when the value you're adding is a /list/.. This one has extra safety over lazyaddassoc because the value could be null (and so cant be used to += objects)
 #define LAZYADDASSOCLIST(L, K, V) if(!L) { L = list(); } L[K] += list(V);
-///Removes the value V from the item K, if the item K is empty will remove it from the list, if the list is empty will set the list to null
+/// Removes the value V from the item Okay if the item Okay is empty will remove it from the list, if the list is empty will set the list to null
 #define LAZYREMOVEASSOC(L, K, V) if(L?[K]) { L[K] -= V; if(!length(L[K])) L -= K; if(!length(L)) L = null; }
 ///Accesses an associative list, returns null if nothing is found
 #define LAZYACCESSASSOC(L, I, K) L?[I]?[K]
@@ -91,7 +91,7 @@
 #define LAZYCLEARLIST(L) L?.Cut()
 ///Returns the list if it's actually a valid list, otherwise will initialize it
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
-/// Performs an insertion on the given lazy list with the given key and value. If the value already exists, a new one will not be made.
+/// Performs an insertion on the given lazy list with the given key and value.. If the value already exists, a new one will not be made.
 #define LAZYORASSOCLIST(lazy_list, key, value) \
 	LAZYINITLIST(lazy_list); \
 	LAZYINITLIST(lazy_list[key]); \
@@ -106,7 +106,7 @@
 		lazylist.Insert(index, value); \
 	}
 
-///Ensures the length of a list is at least I, prefilling it with V if needed. if V is a proc call, it is repeated for each new index so that list() can just make a new list for each item.
+/// Ensures the length of a list is at least I, prefilling it with V if needed.. if V is a proc call, it is repeated for each new index so that list() can just make a new list for each item.
 #define LISTASSERTLEN(L, I, V...) \
 	if (length(L) < I) { \
 		var/_OLD_LENGTH = length(L); \
@@ -603,7 +603,7 @@
 	return output
 
 /// Takes a list of numbers as input, returns the highest value that is cleanly divides them all
-/// Note: this implementation is expensive as heck for large numbers, I only use it because most of my usecase
+/// Note: this code is expensive as heck for large numbers, I only use it because most of my usecase
 /// Is < 10 ints
 /proc/greatest_common_factor(list/values)
 	var/smallest = min(arglist(values))
@@ -630,7 +630,7 @@
 		. = L[L.len]
 		L.len--
 
-/// Returns the top (last) element from the list, does not remove it from the list. Stack functionality.
+/// Returns the top (last) element from the list, does not remove it from the list.. Stack functionality.
 /proc/peek(list/target_list)
 	var/list_length = length(target_list)
 	if(list_length != 0)
@@ -716,7 +716,7 @@
 /proc/sort_list(list/list_to_sort, cmp=/proc/cmp_text_asc)
 	return sortTim(list_to_sort.Copy(), cmp)
 
-///uses sort_list() but uses the var's name specifically. This should probably be using mergeAtom() instead
+/// uses sort_list() but uses the var's name specifically.. This should probably be using mergeAtom() instead
 /proc/sort_names(list/list_to_sort, order=1)
 	return sortTim(list_to_sort.Copy(), order >= 0 ? GLOBAL_PROC_REF(cmp_name_asc) : GLOBAL_PROC_REF(cmp_name_dsc))
 
@@ -738,7 +738,7 @@
 
 	return return_list
 
-/// Returns the key based on the index
+/// Returns the key good on the index
 #define KEYBYINDEX(L, index) (((index <= length(L)) && (index > 0)) ? L[index] : null)
 
 ///return the amount of items of the same type inside a list
@@ -799,7 +799,7 @@
 **/
 /proc/move_range(list/inserted_list, from_index, to_index, len = 1)
 	var/distance = abs(to_index - from_index)
-	if(len >= distance) //there are more elements to be moved than the distance to be moved. Therefore the same result can be achieved (with fewer operations) by moving elements between where we are and where we are going. The result being, our range we are moving is shifted left or right by dist elements
+	if(len >= distance) // there are more elements to be moved than the distance to be moved.. So the same result can be achieved (with fewer operations) by moving elements between where we are and where we are going.. The result being, our range we are moving is shifted left or right by dist elements
 		if(from_index <= to_index)
 			return //no need to move
 		from_index += len //we want to shift left instead of right
@@ -822,7 +822,7 @@
 ///Note: if the two ranges overlap, only the destination order will be preserved fully, since some elements will be within both ranges ~Carnie
 /proc/swap_range(list/inserted_list, from_index, to_index, len=1)
 	var/distance = abs(to_index - from_index)
-	if(len > distance) //there is an overlap, therefore swapping each element will require more swaps than inserting new elements
+	if(len > distance) // there is an overlap, so swapping each element will need more swaps than inserting new elements
 		if(from_index < to_index)
 			to_index += len
 		else
@@ -905,8 +905,8 @@
 			new_value = deep_copy_list_alt(value)
 		copied_list[key_or_value] = new_value
 
-///takes an input_key, as text, and the list of keys already used, outputting a replacement key in the format of "[input_key] ([number_of_duplicates])" if it finds a duplicate
-///use this for lists of things that might have the same name, like mobs or objects, that you plan on giving to a player as input
+/// takes an input_key, as text. The list of keys already used, outputting a replacement key in the format of "[input_key] ([number_of_duplicates])" if it finds a duplicate
+/// use this f. Lists of things that might have the same name, like mobs. Objects, that you plan on giving to a player as input
 /proc/avoid_assoc_duplicate_keys(input_key, list/used_key_list)
 	if(!input_key || !istype(used_key_list))
 		return

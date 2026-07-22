@@ -76,7 +76,7 @@
 
 	var/tactical_disguise_power = INFINITY // it's a flawless plan: they'll never look behind this unassuming potted plant
 	if(identity[VISIBLE_NAME_FORCED])
-		if(identity[VISIBLE_NAME_FORCED] >= tactical_disguise_power) // my disguise is too powerful for you, traveler! but seriously this is bad
+		if(identity[VISIBLE_NAME_FORCED] >= tactical_disguise_power) // my disguise is too powerful for you, traveler!. but seriously this is bad
 			stack_trace("A name forcing signal ([identity[VISIBLE_NAME_FACE]]) has a priority collision with [src].")
 		else
 			identity[VISIBLE_NAME_FORCED] = tactical_disguise_power
@@ -112,7 +112,7 @@
 	user.remove_alt_appearance("sneaking_mission[REF(src)]")
 	REMOVE_TRAIT(user, TRAIT_UNKNOWN_APPEARANCE, REF(src))
 
-///Checks if a mob is holding us, and if so we will modify our appearance to properly match w/ the mob.
+/// Checks if a mob is holding us, and if so we will modify our appearance to properly match with the mob.
 /datum/component/tactical/proc/tactical_update(obj/item/source)
 	SIGNAL_HANDLER
 	if(!ismob(source.loc))

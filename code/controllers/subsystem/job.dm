@@ -35,9 +35,9 @@ SUBSYSTEM_DEF(job)
 
 	var/list/level_order = list(JP_HIGH, JP_MEDIUM, JP_LOW)
 
-	/// Lazylist of mob:occupation_string pairs. Forces mobs into certain occupations with highest priority.
+	/// Lazylist of mob:occupation_string pairs.. Forces mobs into certain occupations with highest priority.
 	var/list/forced_occupations
-	/// Lazylist of mob:list(occupation_string) pairs. Prevents mobs from taking certain occupations at all.
+	/// Lazylist of mob:list(occupation_string) pairs.. Prevents mobs from taking certain occupations at all.
 	var/list/prevented_occupations
 
 	/**
@@ -57,7 +57,7 @@ SUBSYSTEM_DEF(job)
 		JOB_QUARTERMASTER = 7,
 	)
 
-	/// If TRUE, some player has been assigned Captaincy or Acting Captaincy at some point during the shift and has been given the spare ID safe code.
+	/// If TRUE, some player has been assigned Captaincy. Acting Captaincy at some point during the shift. Has been given the spare ID safe code.
 	var/assigned_captain = FALSE
 	/// Whether the emergency safe code has been requested via a comms console on shifts with no Captain or Acting Captain.
 	var/safe_code_requested = FALSE
@@ -66,16 +66,16 @@ SUBSYSTEM_DEF(job)
 	/// The loc to which the emergency safe code has been requested for delivery.
 	var/turf/safe_code_request_loc
 
-	/// Dictionary that maps job priorities to low/medium/high. Keys have to be number-strings as assoc lists cannot be indexed by integers. Set in setup_job_lists.
+	/// Dictionary that maps job priorities to low/medium/high.. Keys have to be number-strings as assoc lists cannot be indexed by integers.. Set in setup_job_lists.
 	var/list/job_priorities_to_strings
 
-	/// Are we using the old job config system (txt) or the new job config system (TOML)? IF we are going to use the txt file, then we are in "legacy mode", and this will flip to TRUE.
+	/// Are we using the old job config system (txt) or the new job config system (TOML)?. IF we are going to use the txt file, then we are in "legacy mode", and this will flip to TRUE.
 	var/legacy_mode = FALSE
 
 	/// List of job config datum singletons.
 	var/list/job_config_datum_singletons = list()
 
-	/// This is just the message we prepen and put into all of the config files to ensure documentation. We use this in more than one place, so let's put it in the SS to make life a bit easier.
+	/// This is just the message we prepen and put into all of the config files to ensure documentation.. We use this in more than one place, so let's put it in the SS to make life a bit easier.
 	var/config_documentation = "## This is the configuration file for the job system.\n## This will only be enabled when the config flag LOAD_JOBS_FROM_TXT is enabled.\n\
 	## We use a system of keys here that directly correlate to the job, just to ensure they don't desync if we choose to change the name of a job.\n## You are able to change (as of now) five (six if the job is a command head) different variables in this file.\n\
 	## Total Positions are how many job slots you get in a shift, Spawn Positions are how many you get that load in at spawn. If you set this to -1, it is unrestricted.\n## Playtime Requirements is in minutes, and the job will unlock when a player reaches that amount of time.\n\
@@ -268,7 +268,7 @@ SUBSYSTEM_DEF(job)
 			job_debug("FOC: Player client no longer exists, Player: [player]")
 			continue
 
-		// Initial screening check. Does the player even have the job enabled, if they do - Is it at the correct priority level?
+		// Initial screening check.. Does the player even have the job enabled, if they do - Is it at the correct priority level?
 		var/player_job_level = player.client?.prefs.job_preferences[job.title]
 		if(isnull(player_job_level))
 			job_debug("FOC: Player job not enabled, Player: [player]")
@@ -389,7 +389,7 @@ SUBSYSTEM_DEF(job)
 		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
 			job_debug("JOBS: Command Job is now full, Job: [job], Positions: [job.current_positions], Limit: [job.spawn_positions]")
 
-/// Attempts to fill out all available AI positions.
+/// Tries to fill out all available AI positions.
 /datum/controller/subsystem/job/proc/fill_ai_positions()
 	var/datum/job/ai_job = get_job(JOB_AI)
 	if(!ai_job)
@@ -447,26 +447,26 @@ SUBSYSTEM_DEF(job)
 	job_debug("DO: Priority assignment complete")
 
 	// The overflow role has limitless slots, plus having the Overflow box ticked in prefs should (with one exception) set the priority to JP_HIGH.
-	// So everyone with overflow enabled will get that job. Thus we can assign it immediately to all players that have it enabled.
+	// So everyone with overflow enabled will get that job.. So we can assign it immediately to all players that have it enabled.
 	job_debug("DO: Assigning early overflow roles")
 	assign_all_overflow_positions()
 	job_debug("DO: Early overflow roles assigned.")
 
 	// At this point we can assume the following:
 	// From assign_priority_positions()
-	// 1. If possible, any necessary job roles to allow Dynamic rulesets to execute (such as an AI for malf AI) are satisfied.
-	// 2. All Head of Staff roles with any player pref set to JP_HIGH are filled out.
-	// 3. If any player not selected by the above has any Head of Staff preference enabled at any JP_ level, there is at least one Head of Staff.
+	// 1.. If possible, any necessary job roles to allow Dynamic rulesets to execute (such as an AI for malf AI) are satisfied.
+	// 2.. All Head of Staff roles with any player pref set to JP_HIGH are filled out.
+	// 3.. If any player not selected by the above has any Head of Staff preference enabled at any JP_ level, there is at least one Head of Staff.
 	//
 	// From assign_all_overflow_positions()
-	// 4. Anyone with the overflow role enabled has been given the overflow role.
+	// 4.. Anyone with the overflow role enabled has been given the overflow role.
 
 	// Copy the joinable occupation list and filter out ineligible occupations due to above job assignments.
 	var/list/available_occupations = joinable_occupations.Copy()
 	var/datum/job_department/command_department = get_department_type(/datum/job_department/command)
 
 	for(var/datum/job/job in available_occupations)
-		// Make sure the job isn't filled. If it is, remove it from the list so it doesn't get checked.
+		// Make sure the job isn't filled.. If it is, remove it from the list so it doesn't get checked.
 		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
 			job_debug("DO: Job is now filled, Job: [job], Current: [job.current_positions], Limit: [job.spawn_positions]")
 			available_occupations -= job
@@ -628,7 +628,7 @@ SUBSYSTEM_DEF(job)
 		return C.holder.auto_deadmin()
 	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SECURITY) && ((CONFIG_GET(flag/auto_deadmin_security) && !timegate_expired) || (C.prefs?.toggles & DEADMIN_POSITION_SECURITY)))
 		return C.holder.auto_deadmin()
-	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SILICON) && ((CONFIG_GET(flag/auto_deadmin_silicons) && !timegate_expired) || (C.prefs?.toggles & DEADMIN_POSITION_SILICON))) //in the event there's ever psuedo-silicon roles added, ie synths.
+	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SILICON) && ((CONFIG_GET(flag/auto_deadmin_silicons) && !timegate_expired) || (C.prefs?.toggles & DEADMIN_POSITION_SILICON))) // in the event there's ever psuedo-silicon roles added, that is synths.
 		return C.holder.auto_deadmin()
 
 /datum/controller/subsystem/job/proc/setup_officer_positions()
@@ -743,7 +743,7 @@ SUBSYSTEM_DEF(job)
 
 /obj/structure/chair/JoinPlayerHere(mob/joining_mob, buckle)
 	var/mob/created_joining_mob = ..()
-	// Placing a mob in a chair will attempt to buckle it, or else fall back to default.
+	// Placing a mob in a chair will try to buckle it, or else fall back to default.
 	if(buckle && isliving(created_joining_mob))
 		buckle_mob(created_joining_mob, FALSE, FALSE)
 	return created_joining_mob
@@ -820,7 +820,7 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/job_debug(message)
 	log_job_debug(message)
 
-/// Builds various lists of jobs based on station, centcom and additional jobs with icons associated with them.
+/// Builds various lists of jobs good on station, centcom and additional jobs with icons associated with them.
 /datum/controller/subsystem/job/proc/setup_job_lists()
 	job_priorities_to_strings = list(
 		"[JP_LOW]" = "Low Priority",
@@ -889,10 +889,10 @@ SUBSYSTEM_DEF(job)
 	for(var/datum/mind/mind as anything in forced_occupations)
 		var/mob/dead/new_player = mind.current
 		// Eligibility checks already carried out as part of the dynamic ruleset trim_candidates proc.
-		// However no guarantee of game state between then and now, so don't skip eligibility checks on assign_role.
+		// But no guarantee of game state between then and now, so don't skip eligibility checks on assign_role.
 		assign_role(new_player, get_job_type(LAZYACCESS(forced_occupations, mind)))
 
-	// Get JP_HIGH department Heads of Staff in place. Indirectly useful for the Revolution ruleset to have as many Heads as possible.
+	// Get JP_HIGH department Heads of Staff in place.. Indirectly useful for the Revolution ruleset to have as many Heads as possible.
 	job_debug("APP: Assigning all JP_HIGH head of staff roles.")
 	var/head_count = fill_all_head_positions_at_priority(JP_HIGH)
 
@@ -912,11 +912,11 @@ SUBSYSTEM_DEF(job)
 
 	// When the Overflow role changes for any reason, this allows players to set otherwise invalid job priority pref states.
 	// So if Assistant is the "usual" Overflow but it gets changed to Clown for a shift, players can set the Assistant role's priorities
-	// to JP_MEDIUM and JP_LOW. When the "usual" Overflow role comes back, it returns to an On option in the prefs menu but still
+	// to JP_MEDIUM and JP_LOW.. When the "usual" Overflow role comes back, it returns to an On option in the prefs menu but still
 	// keeps its old JP_MEDIUM or JP_LOW value in the background.
 
 	// Due to this prefs quirk, we actually don't want to find JP_HIGH candidates as it may exclude people with abnormal pref states that
-	// appear normal from the UI. By passing in JP_ANY, it will return all players that have the overflow job pref (which should be a toggle)
+	// appear normal from the UI.. By passing in JP_ANY, it will return all players that have the overflow job pref (which should be a toggle)
 	// set to any level.
 	var/list/overflow_candidates = find_occupation_candidates(overflow_datum, JP_ANY)
 	job_debug("OVRFLW: Attempting to assign the overflow role to [length(overflow_candidates)] players.")

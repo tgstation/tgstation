@@ -10,7 +10,7 @@
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
 	layer = ABOVE_TREE_LAYER
 	plane = ABOVE_GAME_PLANE
-	/// armor is a little bit less than a grille. max_integrity about half that of a grille.
+	/// armor is a little bit less than a grille.. max_integrity about half that of a grille.
 	armor_type = /datum/armor/structure_railing
 	max_integrity = 25
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
@@ -122,7 +122,7 @@
 	var/obj/rod = new item_deconstruct(drop_location(), rods_to_make)
 	transfer_fingerprints_to(rod)
 
-///Implements behaviour that makes it possible to unanchor the railing.
+/// adds behaviour that makes it possible to unanchor the railing.
 /obj/structure/railing/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
 	to_chat(user, span_notice("You begin to [anchored ? "unfasten the railing from":"fasten the railing to"] the floor..."))

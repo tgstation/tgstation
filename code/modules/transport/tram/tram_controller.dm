@@ -8,7 +8,7 @@
 /datum/transport_controller/linear/tram
 	///whether this controller is active (any state we don't accept new orders, not nessecarily moving)
 	var/controller_active = FALSE
-	///whether all required parts of the tram are considered operational
+	/// whether all needed parts of the tram are considered operational
 	var/controller_operational = TRUE
 	///the controller cabinet located on the tram
 	var/obj/machinery/transport/tram_controller/paired_cabinet
@@ -22,8 +22,8 @@
 	var/travel_trip_length = 0
 	///multiplier on how much damage/force the tram imparts on things it hits
 	var/collision_lethality = 1
-	/// reference to the navigation landmark associated with this tram. since we potentially span multiple z levels we dont actually
-	/// know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
+	/// reference to the navigation landmark associated with this tram.. since we potentially span multiple z levels we dont actually
+	/// know where on us this platform is.. as long as we know THAT its on us we can just move the distance and direction between this
 	/// and the destination landmark.
 	var/obj/effect/landmark/transport/nav_beacon/tram/nav/nav_beacon
 	/// reference to the landmark we consider ourself stationary at.
@@ -34,7 +34,7 @@
 	var/current_speed = 0
 	var/current_load = 0
 
-	///decisecond delay between horizontal movement. cannot make the tram move faster than 1 movement per world.tick_lag.
+	/// decisecond delay between horizontal movement.. cannot make the tram move faster than 1 movement per world.tick_lag.
 	var/internal_movement_delay
 
 	///version of internal_movement_delay that gets set in init and is considered our base delay if our tram gets slowed down
@@ -43,7 +43,7 @@
 	///speed of the death machine on rails (in percent)
 	var/tram_max_speed = 100
 
-	///the world.time we should next move at. in case our speed is set to less than 1 movement per tick
+	/// the world.time we should next move at.. in case our speed is set to less than 1 movement per tick
 	var/scheduled_move = INFINITY
 
 	///whether we have been slowed down automatically
@@ -275,7 +275,7 @@
 		paired_cabinet.say("Controller reset.")
 	nav_beacon.tram_loop.start()
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
-		if(transport_module.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
+		if(transport_module.travelling) // wee woo wee woo there was a double action queued.. damn multi tile structs
 			return //we don't care to undo cover_locked controls, though, as that will resolve itself
 		if(malf_active == TRANSPORT_LOCAL_WARNING)
 			if(transport_module.check_for_humans())
@@ -788,7 +788,7 @@
 	log_transport("TC: [specific_transport_id] collided at ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) towards [push_destination] ([push_destination.x], [push_destination.y], [push_destination.z]) Dir [travel_direction] Dist [travel_remaining].")
 	// Don't bother processing crossing signals, where this tram's going there are no signals
 	//for(var/obj/machinery/transport/crossing_signal/xing as anything in SStransport.crossing_signals)
-	//	xing.temp_malfunction()
+	// xing.temp_malfunction()
 	priority_announce("In a turn of rather peculiar events, it appears that [GLOB.station_name] has struck an immovable rod. (Don't ask us where it came from.) This has led to a station brakes failure on one of the tram platforms.\n\n\
 		Our diligent team of engineers have been informed and they're rushing over - although not quite at the speed of our recently flying tram.\n\n\
 		So while we all look in awe at the universe's mysterious sense of humour, please stand clear of the tracks and remember to stand behind the yellow line.", "Braking News")

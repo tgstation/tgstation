@@ -35,7 +35,7 @@
 	. = ..()
 	spawned_mob.mind.add_antag_datum(/datum/antagonist/venus_human_trap)
 
-/// Called when the attached flower bud has borne fruit (ie. is ready)
+/// Called when the attached flower bud has borne fruit that is is ready)
 /obj/effect/mob_spawn/ghost_role/venus_human_trap/proc/bear_fruit()
 	ready = TRUE
 	notify_ghosts(

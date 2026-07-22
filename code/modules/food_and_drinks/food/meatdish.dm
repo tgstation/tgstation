@@ -98,7 +98,7 @@
 	cell_line = null
 	starting_reagent_purity = 0.3
 
-///carp fillet, but without the toxin. Used by baby carps (fish item), which have a trait that handles the toxin already.
+/// carp fillet, but without the toxin.. Used by baby carps (fish item), which have a trait that handles the toxin already.
 /obj/item/food/fishmeat/carp/no_tox
 
 /obj/item/food/fishmeat/carp/no_tox/Initialize(mapload)
@@ -123,7 +123,7 @@
 		/datum/reagent/consumable/nutriment/protein = 4, //The halluginogen comes from the fish trait.
 	)
 
-///Premade gunner jellyfish fillets from supply orders. Contains the halluginogen that'd be normally from the fish trait.
+/// Premade gunner jellyfish fillets from supply orders.. Contains the halluginogen that'd be normally from the fish trait.
 /obj/item/food/fishmeat/gunner_jellyfish/supply
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin/mindbreaker/fish = 2)
 
@@ -135,7 +135,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
 	fillet_name = "cleaned %NAME"
 
-///donkfish fillets. The yuck reagent is now added by the fish trait of the same name.
+/// donkfish fillets.. The yuck reagent is now added by the fish trait of the same name.
 /obj/item/food/fishmeat/donkfish
 	name = "donkfillet"
 	desc = "The dreaded donkfish fillet. No sane spaceman would eat this, and it does not get better when cooked."
@@ -1011,7 +1011,7 @@
 	foodtypes = MEAT | VEGETABLES | DAIRY
 
 	w_class = WEIGHT_CLASS_SMALL
-	//basic ingredients, but a lot of them. just covering costs here
+	// basic ingredients, but a lot of them.. just covering costs here
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_4
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)

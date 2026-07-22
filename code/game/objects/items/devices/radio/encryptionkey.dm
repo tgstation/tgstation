@@ -11,7 +11,7 @@
 	var/list/channels = list()
 	/// Flags for which "special" radio networks should be accessible
 	var/special_channels = NONE
-	/// Assoc list of language to how well understood it is. 0 is invalid, 100 is perfect.
+	/// Assoc list of language to how well understood it is.. 0 is invalid, 100 is perfect.
 	var/list/language_data
 
 /obj/item/encryptionkey/examine(mob/user)

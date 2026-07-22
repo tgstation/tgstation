@@ -188,7 +188,7 @@
 /datum/memory/was_slipped
 	story_value = STORY_VALUE_MEH
 	// Protagonist - The mob that got slipped
-	// Antagonist - The thing that did the slipping (banana peel, etc)
+	// Antagonist - The thing that did the slipping (banana peel, and so on
 
 /datum/memory/was_slipped/get_names()
 	return list("The slipping of [protagonist_name].")
@@ -238,7 +238,7 @@
 		"[protagonist_name] [mood_verb] as they try to pick up the scraps.",
 	)
 
-/// Got kissed! AHHHHH!
+/// Got kissed!. AHHHHH!
 /datum/memory/kissed
 	story_value = STORY_VALUE_MEH
 	// Sorry but blind people can't feel kisses...
@@ -464,7 +464,7 @@
 
 /// Given to heads of staff, and those around them, upon defeating the revolutionaries.
 /datum/memory/revolution_heads_victory
-	story_value = STORY_VALUE_AMAZING // Not as cool as a rev victory. Everyone loves underdog stories
+	story_value = STORY_VALUE_AMAZING // Not as cool as a rev victory.. Everyone loves underdog stories
 	memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_SKIP_UNCONSCIOUS
 	// Protagonist - The head of staff that won the revolution
 
@@ -673,7 +673,7 @@
 	for(var/mob/living/player as anything in other_players)
 		// This will result in some strange structure sometimes -
 		// "The assistant, the assistant, and the assistant playing a game",
-		// but meh. Someone can improve upon it in the future
+		// but meh.. Someone can improve upon it in the future
 		story_players += build_story_character(player)
 
 	src.formatted_players_list = english_list(story_players, nothing_text = "no-one")
@@ -892,7 +892,7 @@
 /// Becoming a mutant via infusion
 /datum/memory/dna_infusion
 	story_value = STORY_VALUE_MEH
-	///describing what they turn into, "skittish", "nomadic", etc
+	/// describing what they turn into, "skittish", "nomadic", and so on
 	var/mutantlike
 
 /datum/memory/dna_infusion/New(

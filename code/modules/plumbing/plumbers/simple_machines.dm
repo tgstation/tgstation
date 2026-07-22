@@ -10,7 +10,7 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, layer)
 
-///We can fill beakers in here and everything. we dont inheret from input because it has nothing that we need
+/// We can fill beakers in here and everything.. we dont inheret from input because it has nothing that we need
 /obj/machinery/plumbing/output
 	name = "output gate"
 	desc = "A manual output for plumbing systems, for taking reagents directly into containers."

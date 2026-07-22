@@ -7,7 +7,7 @@
 	var/mob/living/basic/pet/cat/cat = controller.pawn
 	return istype(cat) && !isnull(cat.held_food)
 
-/// Pounces on a mouse, occasionally killing it. Movement is handled externally.
+/// Pounces on a mouse, occasionally killing it.. Movement is handled externally.
 /datum/bt_node/ai_behavior/play_with_mouse
 	time_between_perform = 10 SECONDS
 	/// Blackboard key holding the mouse we are hunting.
@@ -143,7 +143,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-/// Points at a target and meows for food. Used to beg humans and call kittens to dinner.
+/// Points at a target and meows for food.. Used to beg humans and call kittens to dinner.
 /datum/bt_node/ai_behavior/beacon_for_food
 	time_between_perform = 5 SECONDS
 	/// Blackboard key holding the atom we are pointing at.
@@ -191,7 +191,7 @@
 
 /// Leaves the cat house we are currently residing in, occasionally.
 /datum/bt_node/ai_behavior/leave_cat_home
-	/// Chance per attempt that we decide to leave.
+	/// Chance per try that we decide to leave.
 	var/leave_home_chance = 15
 
 /datum/bt_node/ai_behavior/leave_cat_home/perform(seconds_per_tick, datum/ai_controller/controller)
@@ -232,7 +232,7 @@
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 
-// Subtree types  the trees themselves live in the matching .bt.json files.
+// Subtree types the trees themselves live in the matching .bt.json files.
 
 /// Block other behaviors while residing in a cat house; occasionally leave.
 /datum/bt_node/subtree/cat_reside_in_home

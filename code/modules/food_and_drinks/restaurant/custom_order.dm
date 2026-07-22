@@ -13,7 +13,7 @@
 /datum/custom_order/proc/dispense_order()
 	return src
 
-///Whether or not the order is correct. Only relevant if dispense_order didn't return another object.
+/// Whether or not the order is correct.. Only relevant if dispense_order didn't return another object.
 /datum/custom_order/proc/is_correct_order(obj/item/object_used)
 	if(SEND_SIGNAL(object_used, COMSIG_ITEM_IS_CORRECT_CUSTOM_ORDER, src) & COMPONENT_CORRECT_ORDER)
 		return TRUE

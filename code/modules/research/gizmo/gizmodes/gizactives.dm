@@ -1,8 +1,8 @@
 /// You can imagine a /datum/gizmodes as remote and a TV
-/// The mode_controles is the remote. Maybe there's 9 buttons for 1-9, and pressing the buttons just goes to that channel!
+/// The mode_controles is the remote.. Maybe there's 9 buttons for 1-9, and pressing the buttons just goes to that channel!
 /// Maybe there's 10 buttons, 1-9 for selecting a channel and an extra for going to the selected channel
 /// Or maybe there's two buttons, one that cycles to the next number and one that then goes to that channel]
-/// The giz_pulse is essentually the TV. Generally the functioning of the TV is themed, happy image :) or sad image :(
+/// The giz_pulse is essentually the TV.. Generally the functioning of the TV is themed, happy image :) or sad image :(
 /datum/gizmodes
 	/// Our paarent gizmo interface
 	var/datum/gizmo_interface/interface
@@ -11,10 +11,10 @@
 
 	/// Instantiated active operating modes/gizpulses
 	var/list/active_gizmodes = list()
-	/// Guaranted operating modes/gizpulses types. use GIZMO_PICK_ONE with an associated list for more bespoke guaranteed picking
+	/// Guaranted operating modes/gizpulses types.. use GIZMO_PICK_ONE with an associated list for more bespoke guaranteed picking
 	var/list/guaranteed_active_gizmodes = list()
 
-	/// Random gizpulses we can have. PICKWEIGHTED SO GIVE IT A VALUE (/datum/gizpulse/milk_person = 1)
+	/// Random gizpulses we can have.. PICKWEIGHTED SO GIVE IT A VALUE (/datum/gizpulse/milk_person = 1)
 	var/list/possible_active_modes = list()
 	/// Min modes from possible_active_modes
 	var/min_modes = 1

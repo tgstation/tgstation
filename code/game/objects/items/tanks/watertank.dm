@@ -100,8 +100,8 @@ GAME_VERB(/obj/item/watertank, toggle_mister_verb, "Toggle Mister", null)
 	remove_noz()
 
 // This mister item is intended as an extension of the watertank and always attached to it.
-// Therefore, it's designed to be "locked" to the player's hands or extended back onto
-// the watertank backpack. Allowing it to be placed elsewhere or created without a parent
+// So it's designed to be "locked" to the player's hands or extended back onto
+// the watertank backpack.. Allowing it to be placed elsewhere or created without a parent
 // watertank object will likely lead to weird behaviour or runtimes.
 /obj/item/reagent_containers/spray/mister
 	name = "water mister"
@@ -407,7 +407,7 @@ GAME_VERB(/obj/item/watertank, toggle_mister_verb, "Toggle Mister", null)
 	else
 		turn_on()
 
-//Todo : cache these.
+// To do : cache these.
 /obj/item/reagent_containers/chemtank/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE) //apply chemcolor and level
 	. = ..()
 	//inhands + reagent_filling

@@ -5,7 +5,7 @@
 	var/can_be_driven = TRUE
 	/// If TRUE, this creature's abilities can be triggered by the rider while mounted
 	var/can_use_abilities = FALSE
-	/// Shall we require riders to go through the riding minigame if they arent in our friends list
+	/// Shall we need riders to go through the riding minigame if they arent in our friends list
 	var/require_minigame = FALSE
 	/// Do we use vehicle_move_delay or default to mob's own movespeed?
 	var/uses_native_speed = FALSE
@@ -100,7 +100,7 @@
 	remove_abilities(former_rider)
 	if(!formerly_ridden.buckled_mobs.len)
 		formerly_ridden.remove_traits(list(TRAIT_AI_PAUSED, TRAIT_AI_MOVEMENT_HALTED), REF(src))
-	// We gotta reset those layers at some point, don't we?
+	// We got to reset those layers at some point, don't we?
 	former_rider.layer = MOB_LAYER
 	formerly_ridden.layer = MOB_LAYER
 	return ..()
@@ -162,7 +162,7 @@
 	span_warning("You're thrown clear of [movable_parent]!"))
 	rider.throw_at(target, throw_range, throw_speed, movable_parent, gentle = gentle)
 
-/// If we're a cyborg or animal and we spin, we yeet whoever's on us off us
+/// If we're a cyborg or animal and we spin, we throw whoever's on us off us
 /datum/component/riding/creature/proc/check_emote(mob/living/user, datum/emote/emote)
 	SIGNAL_HANDLER
 	if((!iscyborg(user) && !isanimal_or_basicmob(user)) || !istype(emote, /datum/emote/spin))
@@ -172,7 +172,7 @@
 		force_dismount(yeet_mob, gentle=!user.combat_mode) // gentle on help, byeeee if not
 
 
-/// If the ridden creature has abilities, and some var yet to be made is set to TRUE, the rider will be able to control those abilities
+/// If the ridden creature has abilities. Some var yet to be made is set to TRUE, the rider will be able to control those abilities
 /datum/component/riding/creature/proc/setup_abilities(mob/living/rider)
 	if(!isliving(parent))
 		return
@@ -213,7 +213,7 @@
 	return COMPONENT_RIDDEN_ALLOW_Z_MOVE
 
 
-///////Yes, I said humans. No, this won't end well...//////////
+/// ////Yes, I said humans.. No, this won't end well...//////////
 /datum/component/riding/creature/human
 	can_be_driven = FALSE
 
@@ -524,7 +524,7 @@
 	/// Current speed boost
 	var/speed_boost = 0
 	/// Speed boost per time equivalent tile of movement in the same direction
-	/// Not directly per tile as we move faster and thus would accelerate faster
+	/// Not directly per tile as we move faster and so would accelerate faster
 	var/rush_speed_boost = -0.3
 	/// Maximum speed boost we can have
 	var/maximum_boost = -3
@@ -548,7 +548,7 @@
 
 /datum/component/riding/creature/goliath/get_move_delay(mob/living/living_parent, mob/living/user, direction)
 	var/move_delay = living_parent.cached_multiplicative_slowdown + flat_speed_mod
-	// We give grace of 2 ticks of stopped movement, or 0.1 seconds, in case of SSinput not being able to process all inputs in a single tick
+	// We give grace of 2 ticks of stopped movement. 0.1 seconds, in case of SSinput not being able to process all inputs in a single tick
 	if (last_move_dir != direction || vehicle_move_cooldown + 0.1 SECONDS < world.time)
 		last_move_dir = direction
 		// If we're "drifting" only halve our speed instead

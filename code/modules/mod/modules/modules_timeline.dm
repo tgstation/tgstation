@@ -85,19 +85,19 @@
 		UnregisterSignal(module, COMSIG_MODULE_TRIGGERED)
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 
-///Signal fired when wearer attempts to activate/deactivate suits
+/// Signal fired when wearer tries to activate/deactivate suits
 /obj/item/mod/module/rewinder/proc/on_activate_block(datum/source, user)
 	SIGNAL_HANDLER
 	balloon_alert(user, "not while rewinding!")
 	return MOD_CANCEL_ACTIVATE
 
-///Signal fired when wearer attempts to trigger modules, if attempting while time is stopped
+/// Signal fired when wearer tries to trigger modules, if trying while time is stopped
 /obj/item/mod/module/rewinder/proc/on_module_triggered(datum/source, mob/user)
 	SIGNAL_HANDLER
 	balloon_alert(user, "not while rewinding!")
 	return MOD_ABORT_USE
 
-///Timestopper - Need I really explain? It's the wizard's time stop, but the user channels it by not moving instead of a duration.
+/// Timestopper - Need I really explain?. It's the wizard's time stop, but the user channels it by not moving instead of a duration.
 /obj/item/mod/module/timestopper
 	name = "MOD timestopper module"
 	desc = "A module that can halt time in a small radius around the user... for as long as they \
@@ -135,19 +135,19 @@
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	timestop = null
 
-///Signal fired when wearer attempts to trigger modules, if attempting while time is stopped
+/// Signal fired when wearer tries to trigger modules, if trying while time is stopped
 /obj/item/mod/module/timestopper/proc/on_module_triggered(datum/source)
 	SIGNAL_HANDLER
 	balloon_alert(mod.wearer, "not while stopping time!")
 	return MOD_ABORT_USE
 
-///Signal fired when wearer attempts to activate/deactivate suits, if attempting while time is stopped
+/// Signal fired when wearer tries to activate/deactivate suits, if trying while time is stopped
 /obj/item/mod/module/timestopper/proc/on_activate_block(datum/source, user)
 	SIGNAL_HANDLER
 	balloon_alert(user, "not while stopping time!")
 	return MOD_CANCEL_ACTIVATE
 
-///Timeline Jumper - Infinite phasing. needs some special effects
+/// Timeline Jumper - Infinite phasing.. needs some special effects
 /obj/item/mod/module/timeline_jumper
 	name = "MOD timeline jumper module"
 	desc = "A module used to traverse timelines, phasing the user in and out of the stream of events."
@@ -187,7 +187,7 @@
 	//probably justifies its own sound but whatever
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 
-///Signal fired when wearer attempts to activate/deactivate suits while phased out
+/// Signal fired when wearer tries to activate/deactivate suits while phased out
 /obj/item/mod/module/timeline_jumper/proc/on_activate_block(datum/source, user)
 	SIGNAL_HANDLER
 	//has to be a to_chat because you're phased out.
@@ -297,7 +297,7 @@
 	name = "eradication beam"
 	icon_state = "chronobolt"
 	range = CHRONO_BEAM_RANGE
-	///Reference to the tem... given by the tem! weakref because back in the day we didn't know about harddels- or maybe we didn't care.
+	/// Reference to the tem.... given by the tem!. weakref because back in the day we didn't know about harddels- or maybe we didn't care.
 	var/datum/weakref/tem_weakref
 
 /obj/projectile/energy/chrono_beam/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -321,7 +321,7 @@
 	interaction_flags_atom = NONE
 	/// Mob being eradicated by this field
 	var/mob/living/captured
-	/// Linked module. while this exists, the field will progress towards eradication. while it isn't, the field progresses away until it disappears. see attached for a special case
+	/// Linked module.. while this exists, the field will progress towards eradication.. while it isn't, the field progresses away until it disappears.. see attached for a special case
 	var/obj/item/mod/module/tem/tem
 	/// Time in seconds before someone is eradicated, assuming progress isn't interrupted
 	var/timetokill = 3 SECONDS

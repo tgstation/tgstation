@@ -20,13 +20,13 @@
 	var/min_time_between_visitor = 60 SECONDS
 	///Max time between new visits
 	var/max_time_between_visitor = 90 SECONDS
-	///Required access to mess with the venue
+	/// Needed access to mess with the venue
 	var/req_access = ACCESS_KITCHEN
 	///how many robots got their wanted thing
 	var/customers_served = 0
 	///Total income of those venue
 	var/total_income = 0
-	///Blacklist for idiots that attack bots. Key is the mob that did it, and the value is the amount of warnings they've received.
+	/// Blacklist for idiots that attack bots.. Key is the mob that did it, and the value is the amount of warnings they've received.
 	var/list/mob_blacklist = list()
 	///Seats linked to this venue, assoc list of key holosign of seat position, and value of robot assigned to it, if any.
 	var/list/linked_seats = list()
@@ -170,7 +170,7 @@
 	layer = BELOW_OBJ_LAYER
 	armor_type = /datum/armor/restaurant_portal
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	///What venue is this portal for? Uses a typepath which is turned into an instance on Initialize
+	/// What venue is this portal for?. Uses a typepath which is turned into an instance on Initialize
 	var/datum/venue/linked_venue
 
 	/// A weak reference to the mob who turned on the portal

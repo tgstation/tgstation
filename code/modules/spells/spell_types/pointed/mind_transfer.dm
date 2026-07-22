@@ -101,7 +101,7 @@
 		if(stand.summoner)
 			to_swap = stand.summoner
 
-	// Gives the target a mind if we don't require one and they don't have one
+	// Gives the target a mind if we don't need one and they don't have one
 	if(!to_swap.mind && !target_requires_mind)
 		to_swap.mind_initialize()
 

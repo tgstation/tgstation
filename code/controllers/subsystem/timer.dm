@@ -1,4 +1,4 @@
-/// Controls how many buckets should be kept, each representing a tick. (1 minutes worth)
+/// Controls how many buckets should be kept, each representing a tick.. (1 minutes worth)
 #define BUCKET_LEN (world.fps*1*60)
 /// Helper for getting the correct bucket for a given timer
 #define BUCKET_POS(timer) (((ROUND_UP((timer.timeToRun - timer.timer_subsystem.head_offset) / world.tick_lag)+1) % BUCKET_LEN) || BUCKET_LEN)
@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(timer)
 	var/list/hashes = list()
 	/// world.time of the first entry in the bucket list, effectively the 'start time' of the current buckets
 	var/head_offset = 0
-	/// Index of the wrap around pivot for buckets. buckets before this are later running buckets wrapped around from the end of the bucket list.
+	/// Index of the wrap around pivot for buckets.. buckets before this are later running buckets wrapped around from the end of the bucket list.
 	var/practical_offset = 1
 	/// world.tick_lag the bucket was designed for
 	var/bucket_resolution = 0
@@ -333,7 +333,7 @@ SUBSYSTEM_DEF(timer)
 
 
 /datum/controller/subsystem/timer/Recover()
-	// Find the current timer sub-subsystem in global and recover its buckets etc
+	// Find the current timer sub-subsystem in global and recover its buckets and so on
 	var/datum/controller/subsystem/timer/timerSS = null
 	for(var/global_var in global.vars)
 		if (istype(global.vars[global_var],src.type))
@@ -463,7 +463,7 @@ SUBSYSTEM_DEF(timer)
 	var/list/bucket_list = timer_subsystem.bucket_list
 	var/list/second_queue = timer_subsystem.second_queue
 
-	// Attempt to get the head of the bucket
+	// Try to get the head of the bucket
 	var/datum/timedevent/buckethead
 	if(bucket_pos > 0)
 		buckethead = bucket_list[bucket_pos]
@@ -532,7 +532,7 @@ SUBSYSTEM_DEF(timer)
 		/* 11 = */ "[source]"
 	)
 #else
-	// Generate a debuggable list for the timer, simpler but wayyyy cheaper, string generation (and ref/copy memes) is a bitch and this saves a LOT of time
+	// Generate a debuggable list f. The timer, simpler. Wayyyy cheaper, string generation (. Ref/copy memes) is a bitch. This saves a LOT of time
 	timer_info = list(
 		/* 1 = */ id,
 		/* 2 = */ timeToRun,

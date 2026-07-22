@@ -109,7 +109,7 @@
 /obj/effect/immovablerod/wizard/suplex_rod(mob/living/strongman)
 	var/mob/living/wizard = our_wizard?.resolve()
 	if(QDELETED(wizard))
-		return ..() // There's no wizard in this rod? It's pretty much a normal rod at this point
+		return ..() // There's no wizard in this rod?. It's pretty much a normal rod at this point
 
 	strongman.visible_message(
 		span_boldwarning("[src] transforms into [wizard] as [strongman] suplexes them!"),

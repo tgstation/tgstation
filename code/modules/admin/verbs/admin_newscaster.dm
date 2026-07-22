@@ -78,7 +78,7 @@ ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows yo
 			"image" = (has_wanted_issue ? "wanted_photo.png" : null)
 		))
 
-	//Code breaking down the channels that have been made on-station thus far. ha
+	// Code breaking down the channels that have been made on-station so far.. ha
 	//Then, breaks down the messages that have been made on those channels.
 	for(var/datum/feed_channel/channel as anything in GLOB.news_network.network_channels)
 		channel_list += list(list(

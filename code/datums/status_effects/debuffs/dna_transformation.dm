@@ -9,11 +9,11 @@
 	VAR_PROTECTED/copy_dna_flags = COPY_DNA_SPECIES
 	/// A reference to a COPY of the DNA that the mob will be transformed into.
 	VAR_PRIVATE/datum/dna/new_dna
-	/// A reference to a COPY of the DNA of the mob prior to transformation.
+	/// A reference to a COPY of the DNA of the mob before to transformation.
 	VAR_PRIVATE/datum/dna/old_dna
 
 /datum/status_effect/temporary_transformation/Destroy()
-	. = ..() // parent must be called first, so we clear DNA refs AFTER transforming back... yeah i know
+	. = ..() // parent must be called first, so we clear DNA refs AFTER transforming back.... yeah i know
 	QDEL_NULL(new_dna)
 	QDEL_NULL(old_dna)
 
@@ -70,7 +70,7 @@
 	transforming.domutcheck()
 
 /datum/status_effect/temporary_transformation/trans_sting
-	/// Tracks the time left on the effect when the owner last died. Used to pause the effect.
+	/// Tracks the time left on the effect when the owner last died.. Used to pause the effect.
 	var/time_before_pause = -1
 	/// Signals which we react to to determine if we should pause the effect.
 	var/static/list/update_on_signals = list(

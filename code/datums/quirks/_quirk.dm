@@ -10,7 +10,7 @@
 	var/value = 0
 	/// Flags related to this quirk.
 	var/quirk_flags = QUIRK_HUMAN_ONLY
-	/// Reference to the mob currently tied to this quirk datum. Quirks are not singletons.
+	/// Reference to the mob currently tied to this quirk datum.. Quirks are not singletons.
 	var/mob/living/quirk_holder
 	/// Text displayed when this quirk is assigned to a mob (and not transferred)
 	var/gain_text
@@ -53,7 +53,7 @@
 		remove_from_current_holder()
 	return ..()
 
-/// Called when quirk_holder is qdeleting. Simply qdels this datum and lets Destroy() handle the rest.
+/// Called when quirk_holder is qdeleting.. Simply qdels this datum and lets Destroy() handle the rest.
 /datum/quirk/proc/on_holder_qdeleting(mob/living/source, force)
 	SIGNAL_HANDLER
 	qdel(src)
@@ -208,7 +208,7 @@
 /datum/quirk/item_quirk
 	/// Lazylist of strings describing where all the quirk items have been spawned.
 	var/list/where_items_spawned
-	/// If true, the backpack automatically opens on post_add(). Usually set to TRUE when an item is equipped inside the player's backpack.
+	/// If true, the backpack automatically opens on post_add().. Usually set to TRUE when an item is equipped inside the player's backpack.
 	var/open_backpack = FALSE
 	abstract_type = /datum/quirk/item_quirk
 
@@ -240,7 +240,7 @@
 /datum/quirk/item_quirk/post_add()
 	if(open_backpack)
 		var/mob/living/carbon/human/human_holder = quirk_holder
-		// post_add() can be called via delayed callback. Check they still have a backpack equipped before trying to open it.
+		// post_add() can be called via delayed callback.. Check they still have a backpack equipped before trying to open it.
 		if(human_holder.back)
 			human_holder.back.atom_storage.show_contents(human_holder)
 

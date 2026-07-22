@@ -257,7 +257,7 @@
 		owner.adjust_tox_loss(10)
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_EMP // Starts organ faliure - going to need replacing soon.
 
 /obj/item/organ/liver/cybernetic/tier2
 	name = "cybernetic liver"
@@ -295,7 +295,7 @@
 //surplus organs are so awful that they explode when removed, unless failing
 /obj/item/organ/liver/cybernetic/surplus/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
+	AddElement(/datum/element/dangerous_organ_removal, /* surgical = */ TRUE)
 
 /obj/item/organ/liver/pod
 	name = "pod peroxisome"
@@ -317,7 +317,7 @@
 	desc = "A slimy liver, constantly secreting impressive volumes of lube. Usually cooked with olive oil and cilantro, and traditionally eaten under a white flag."
 	icon_state = "liver-bone" // Its greyscale, so works perfectly for coloring
 	color = "#96DB00"
-	/// Speed modifier for snails who have this organ. Positive numbers make them move slower, negative numbers make them move faster.
+	/// Speed modifier for snails who have this organ.. Positive numbers make them move slower, negative numbers make them move faster.
 	var/snail_speed_mod = 6
 
 /obj/item/organ/liver/snail/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)

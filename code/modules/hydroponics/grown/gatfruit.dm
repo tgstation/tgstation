@@ -35,7 +35,7 @@
 	reagents.flags &= ~INJECTABLE //id rather not have this be filled with initropidril without effort
 
 /obj/item/food/grown/gatfruit/generate_trash(atom/location)
-	//if you set this to anything but the revolver i will find you... and... downvote your pr...
+	// if you set this to anything but the revolver i will find you.... and.... downvote your pr...
 	var/obj/item/gun/ballistic/revolver/peashooter/gun = new trash_type(location || drop_location())
 	var/potency_percentage = CLAMP01(seed.potency / 100)
 	var/amount_to_trans = reagents.total_volume / gun.magazine.max_ammo

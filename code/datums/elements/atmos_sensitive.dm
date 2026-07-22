@@ -1,4 +1,4 @@
-//This element facilitates reaction to atmos changes when a tile is inactive.
+// This element helps reaction to atmos changes when a tile is inactive.
 //It adds the object to a list on SSair to be processed for so long as the object wants to be processed
 //And removes it as soon as the object is no longer interested
 //Don't put it on things that tend to clump into one spot, you will cause lag spikes.
@@ -72,7 +72,7 @@
 		return
 	atmos_expose(air, air.temperature)
 
-///We use this proc to check if we should start processing an item, or continue processing it. Returns true/false as expected
+/// We use this proc to check if we should start processing an item, or continue processing it.. Returns true/false as expected
 /atom/proc/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return FALSE
 
@@ -80,6 +80,6 @@
 /atom/proc/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	return
 
-///What to do when our requirements are no longer met
+/// What to do when our needs are no longer met
 /atom/proc/atmos_end()
 	return

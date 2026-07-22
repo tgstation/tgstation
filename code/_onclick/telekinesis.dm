@@ -19,7 +19,7 @@
 		return
 	new /obj/effect/temp_visual/telekinesis(get_turf(src))
 	add_hiddenprint(user)
-	user.UnarmedAttack(src, FALSE) // attack_hand, attack_paw, etc
+	user.UnarmedAttack(src, FALSE) // attack_hand, attack_paw, and so on
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 

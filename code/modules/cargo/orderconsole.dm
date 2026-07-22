@@ -6,11 +6,11 @@
 	circuit = /obj/item/circuitboard/computer/cargo
 	light_color = COLOR_BRIGHT_ORANGE
 
-	///Can the supply console send the shuttle back and forth? Used in the UI backend.
+	/// Can the supply console send the shuttle back and forth?. Used in the UI backend.
 	var/can_send = TRUE
-	///Can this console only send requests? Typically used at the cargo front desk for pedestrians.
+	/// Can this console only send requests?. Typically used at the cargo front desk for pedestrians.
 	var/requestonly = FALSE
-	///Can you approve requests placed for cargo? Works differently between the app and the computer.
+	/// Can you approve requests placed for cargo?. Works differently between the app and the computer.
 	var/can_approve_requests = TRUE
 	var/contraband = FALSE
 	var/self_paid = FALSE
@@ -23,15 +23,15 @@
 	var/list/loaded_coupons
 	/// var that makes express console use rockets
 	var/is_express = FALSE
-	///The name of the shuttle template being used as the cargo shuttle. 'cargo' is default and contains critical code. Don't change this unless you know what you're doing.
+	/// The name of the shuttle template being used as the cargo shuttle.. 'cargo' is default and contains critical code.. Don't change this unless you know what you're doing.
 	var/cargo_shuttle = "cargo"
 	///The docking port called when returning to the station.
 	var/docking_home = "cargo_home"
 	///The docking port called when leaving the station.
 	var/docking_away = "cargo_away"
-	///If this console can loan the cargo shuttle. Set to false to disable.
+	/// If this console can loan the cargo shuttle.. Set to false to disable.
 	var/stationcargo = TRUE
-	///The account this console processes and displays. Independent from the account the shuttle processes.
+	/// The account this console processes and displays.. Independent from the account the shuttle processes.
 	var/cargo_account = ACCOUNT_CAR
 	///Interface name for the ui_interact call for different subtypes.
 	var/interface_type = "Cargo"
@@ -83,7 +83,7 @@
 
 /obj/machinery/computer/cargo/ui_data()
 	var/list/data = list()
-	data["department"] = "Cargo" // Hardcoded here, for customization in budgetordering.dm AKA NT IRN
+	data["department"] = "Cargo" // Hardcoded here, for customization in budgetordering.dm Also known as NT IRN
 	data["location"] = SSshuttle.supply.getStatusText()
 	var/datum/bank_account/bank = SSeconomy.get_dep_account(cargo_account)
 	if(bank)
@@ -197,7 +197,7 @@
 			"name" = pack.name,
 			"cost" = pack.get_cost() * get_discount(),
 			"id" = pack_id,
-			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
+			"desc" = pack.desc || pack.name, // If there is a description, use it.. Otherwise use the pack's name.
 			"first_item_icon" = first_item?.icon,
 			"first_item_icon_state" = first_item?.icon_state,
 			"goody" = (pack.order_flags & ORDER_GOODY),
@@ -302,7 +302,7 @@
 			if(pack.access_view && !(pack.access_view in access) && personal_department)
 				// We want to block cargo requests when a player is requesting a restricted pack that they don't have access to.
 				// BUT only when it's requested with non-cargo funds, as cargo had direct oversight over their own purchases with their own budget.
-				// HOWEVER, this shouldn't prevent someone from buying something using their own personal funds.
+				// But this shouldn't prevent someone from buying something using their own personal funds.
 				say("ERROR: User lacks the requisite access for this purchase request.")
 				return
 
@@ -453,7 +453,7 @@
 			return add_item(ui.user, supply_pack_id)
 		if("remove")
 			var/order_name = params["order_name"]
-			//try removing at least one item with the specified name. An order may not be removed if it was from the department
+			// try removing at least one item with the specified name.. An order may not be removed if it was from the department
 			for(var/datum/supply_order/order in SSshuttle.shopping_list)
 				if(order.pack.name != order_name)
 					continue

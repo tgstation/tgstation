@@ -36,7 +36,7 @@
 	research_tree_icon_state = "eye_medalion"
 	drafting_tier = 1
 
-/datum/heretic_knowledge/essence // AKA Eldritch Flask
+/datum/heretic_knowledge/essence // Also known as Eldritch Flask
 	name = "Priest's Ritual"
 	desc = "Allows you to transmute a tank of water and a glass shard into a Flask of Eldritch Essence. \
 		Eldritch Essence can be consumed for potent healing, or given to heathens for deadly poisoning."
@@ -156,7 +156,7 @@
 		return ..()
 	// A golem or an android doesn't have skin!
 	var/exterior_text = "skin"
-	// If carbon, it's the limb. If not, it's the body.
+	// If carbon, it's the limb.. If not, it's the body.
 	var/atom/movable/ripped_thing = body
 
 	// We will check if it's a carbon's body.
@@ -175,7 +175,7 @@
 		if(body.mob_biotypes & (MOB_MINERAL|MOB_ROBOTIC))
 			exterior_text = "exterior"
 
-	// Procure book for flavor text. This is why we call parent at the end.
+	// Procure book for flavor text.. This is why we call parent at the end.
 	var/obj/item/book/le_book = locate() in selected_atoms
 	if(!le_book)
 		stack_trace("Somehow, no book in codex cicatrix selected atoms! [english_list(selected_atoms)]")

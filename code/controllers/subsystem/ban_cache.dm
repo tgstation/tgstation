@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(ban_cache)
 	generate_queries()
 	return SS_INIT_SUCCESS
 
-/// Generates ban caches for any logged in clients. This ensures the amount of in-series ban checking we have to do that actually involves sleeps is VERY low
+/// Generates ban caches for any logged in clients.. This ensures the amount of in-series ban checking we have to do that actually involves sleeps is VERY low
 /datum/controller/subsystem/ban_cache/proc/generate_queries()
 	query_started = TRUE
 	if(!SSdbcore.Connect())
@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(ban_cache)
 		query_arg_keys += ":key[num_keys]"
 		num_keys++
 
-	// We're gonna try and make a query for clients
+	// We're going to try and make a query for clients
 	var/datum/db_query/query_batch_ban_cache = SSdbcore.NewQuery(
 		"SELECT ckey, role, applies_to_admins FROM [format_table_name("ban")] WHERE ckey IN ([query_arg_keys.Join(",")]) AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())",
 		query_args

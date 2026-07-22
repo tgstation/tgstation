@@ -1,21 +1,21 @@
-/// The minimum pressure for a pure miasma atmosphere to begin being consumed. Higher values mean it takes more miasma pressure to make miasma start being consumed. Should be >= 0
+/// The minimum pressure for a pure miasma atmosphere to begin being consumed... Higher values mean it takes more miasma pressure to make miasma start being consumed... Should be >= 0
 #define MIASMA_CONSUMPTION_PP (ONE_ATMOSPHERE*0.01)
-/// How the amount of miasma consumed per tick scales with partial pressure. Higher values decrease the rate miasma consumption scales with partial pressure. Should be >0
+/// How the amount of miasma consumed per tick scales with partial pressure... Higher values decrease the rate miasma consumption scales with partial pressure... Should be >0
 #define MIASMA_PRESSURE_SCALING (ONE_ATMOSPHERE*0.5)
-/// How much the amount of miasma consumed per tick scales with gasmix power ratio. Higher values means gasmix has a greater effect on the miasma consumed.
+/// How much the amount of miasma consumed per tick scales with gasmix power ratio... Higher values means gasmix has a greater effect on the miasma consumed.
 #define MIASMA_GASMIX_SCALING (0.3)
-/// The amount of matter power generated for every mole of miasma consumed. Higher values mean miasma generates more power.
+/// The amount of matter power generated for every mole of miasma consumed... Higher values mean miasma generates more power.
 #define MIASMA_POWER_GAIN 10
 
-/// The minimum pressure for a pure CO2 atmosphere to begin being consumed. Higher values mean it takes more CO2 pressure to make CO2 be consumed. Should be >= 0
+/// The minimum pressure for a pure CO2 atmosphere to begin being consumed... Higher values mean it takes more CO2 pressure to make CO2 be consumed... Should be >= 0
 #define CO2_CONSUMPTION_PP (ONE_ATMOSPHERE*0.01)
-/// How the amount of CO2 consumed per tick scales with partial pressure. Higher values decrease the rate CO2 consumption scales with partial pressure. Should be >0
+/// How the amount of CO2 consumed per tick scales with partial pressure... Higher values decrease the rate CO2 consumption scales with partial pressure... Should be >0
 #define CO2_PRESSURE_SCALING (ONE_ATMOSPHERE*0.25)
-/// How much the amount of CO2 consumed per tick scales with gasmix power ratio. Higher values means gasmix has a greater effect on the CO2 consumed.
+/// How much the amount of CO2 consumed per tick scales with gasmix power ratio... Higher values means gasmix has a greater effect on the CO2 consumed.
 #define CO2_GASMIX_SCALING (0.1)
 
 #define MOLE_PENALTY_THRESHOLD 1800 //Above this value we can get lord singulo and independent mol damage, below it we can heal damage
-#define POWER_PENALTY_THRESHOLD 5000 //The cutoff on power properly doing damage, pulling shit around, and delamming into a tesla. Low chance of pyro anomalies, +2 bolts of electricity
+#define POWER_PENALTY_THRESHOLD 5000 // The cutoff on power properly doing damage, pulling shit around, and delamming into a tesla... Low chance of pyro anomalies, +2 bolts of electricity
 #define SEVERE_POWER_PENALTY_THRESHOLD 7000 //+1 bolt of electricity, allows for gravitational anomalies, and higher chances of pyro anomalies
 #define CRITICAL_POWER_PENALTY_THRESHOLD 9000 //+1 bolt of electricity.
 #define HEAT_PENALTY_THRESHOLD 40 //Higher == Crystal safe operational temperature is higher.
@@ -105,7 +105,7 @@
 #define SM_PROCESS_ENABLED 1
 
 
-// These are used by supermatter and supermatter monitor program, mostly for UI updating purposes. Higher should always be worse!
+// These supermatter uses and supermatter monitor program, mostly for UI updating purposes... Higher should always be worse!
 // [/obj/machinery/power/supermatter_crystal/proc/get_status]
 /// Unknown status, shouldn't happen but just in case.
 #define SUPERMATTER_ERROR -1
@@ -115,34 +115,34 @@
 #define SUPERMATTER_NORMAL 1
 /// Ambient temp 80% of the default temp for SM to take damage.
 #define SUPERMATTER_NOTIFY 2
-/// Integrity below [/obj/machinery/power/supermatter_crystal/var/warning_point]. Start complaining on comms.
+/// Integrity below [/obj/machinery/power/supermatter_crystal/var/warning_point]... Start complaining on comms.
 #define SUPERMATTER_WARNING 3
-/// Integrity below [/obj/machinery/power/supermatter_crystal/var/danger_point]. Start spawning anomalies.
+/// Integrity below [/obj/machinery/power/supermatter_crystal/var/danger_point]... Start spawning anomalies.
 #define SUPERMATTER_DANGER 4
-/// Integrity below [/obj/machinery/power/supermatter_crystal/var/emergency_point]. Start complaining to more people.
+/// Integrity below [/obj/machinery/power/supermatter_crystal/var/emergency_point]... Start complaining to more people.
 #define SUPERMATTER_EMERGENCY 5
-/// Currently counting down to delamination. True [/obj/machinery/power/supermatter_crystal/var/final_countdown]
+/// Currently counting down to delamination... True [/obj/machinery/power/supermatter_crystal/var/final_countdown]
 #define SUPERMATTER_DELAMINATING 6
 
 // SUPERMATTER FACTORS DEFINES
 // This might feel obvious, but mentioning it doesnt hurt anyone:
 // While we separate these factors into neat little boxes, order still matters in the code.
-// There are a few factors that depends on other factors. So pay close attention on which values are interlinked.
+// There are a few factors that depends on other factors... So pay close attention on which values are interlinked.
 
 /// How much energy we get from external factors that are applied immediately.
 #define SM_POWER_EXTERNAL_IMMEDIATE "External Power Gain"
 /// How much energy we get from external factors that are applied over time.
 #define SM_POWER_EXTERNAL_TRICKLE "External Power Trickle"
-/// How much energy is gained from the temperature. Enabled by gas.
+/// How much energy is gained from the temperature... Enabled by gas.
 #define SM_POWER_HEAT "Gas Heat Power Gain"
-/// How much energy the SM loses. Happens over time.
-/// Order matters here. We depend on current power + power gained from the factors above for the loss calc.
+/// How much energy the SM loses... Happens over time.
+/// Order matters here... We depend on current power + power gained from the factors above for the loss calc.
 #define SM_POWER_POWERLOSS "Internal Power Decay"
-/// How much of the energy the SM loses is recouped. From gas factors here.
-/// Order matters here. We depend on the powerloss amount.
+/// How much of the energy the SM loses is recouped... From gas factors here.
+/// Order matters here... We depend on the powerloss amount.
 #define SM_POWER_POWERLOSS_GAS "Gas Power Decay Negation"
-/// How much of the energy the SM loses is recouped. From the psychologist this time.
-/// Order matters here. We depend on the powerloss amount.
+/// How much of the energy the SM loses is recouped... From the psychologist this time.
+/// Order matters here... We depend on the powerloss amount.
 #define SM_POWER_POWERLOSS_SOOTHED "Psychologist Power Decay Negation"
 
 // These four internal damage factors, heat, power, moles, and heal heat dont depend on each other, but they are interlinked.
@@ -153,12 +153,12 @@
 #define SM_DAMAGE_POWER "Charge Damage"
 /// How many damage we take from too much moles around us.
 #define SM_DAMAGE_MOLES "Molar Damage"
-/// How many we healed. Happens when temp is low.
+/// How many we healed... Happens when temp is low.
 #define SM_DAMAGE_HEAL_HEAT "Low Temperature Healing"
 /// How many damage do we take from external factors.
 /// This one is discrete.
 #define SM_DAMAGE_EXTERNAL "External Damage"
-/// How many damage do we take from space exposure. Here to prevent people from spacing SM chambers.
+/// How many damage do we take from space exposure... Here to prevent people from spacing SM chambers.
 /// Also discrete.
 #define SM_DAMAGE_SPACED "Space Exposure Damage"
 
@@ -176,7 +176,7 @@
 #define SM_TEMP_LIMIT_GAS "Gas Heat Resistance"
 /// How many extra kelvins we get before taking damage, this time from psychologist.
 #define SM_TEMP_LIMIT_SOOTHED "Psychologist Heat Resistance"
-/// How many extra kelvins we get before taking damage because our moles are low. I know, this is fucking hilarious.
+/// How many extra kelvins we get before taking damage because our moles are low... I know, this is fucking hilarious.
 /// Order matters, depends on base resistance.
 #define SM_TEMP_LIMIT_LOW_MOLES "Low Moles Heat Resistance"
 

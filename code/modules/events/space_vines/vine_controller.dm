@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 	var/list/obj/structure/spacevine/queue_end
 	///Spread multiplier, depends on productivity, affects how often kudzu spreads
 	var/spread_multiplier = 5 // corresponds to artificial kudzu with production speed of 1, approaches 10% of total vines will spread per second
-	///Maximum spreading limit (ie. how many kudzu can there be) for this controller
+	/// Maximum spreading limit that is how many kudzu can there be) for this controller
 	var/spread_cap = 30 // corresponds to artificial kudzu with production speed of 3.5
 	///The chance that we will develop a new mutation
 	var/mutativeness = 1
@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 		vine.add_atom_colour(parentcolor, FIXED_COLOUR_PRIORITY)
 		if(prob(mutativeness))
 			var/datum/spacevine_mutation/random_mutate = pick_weight(GLOB.vine_mutations_list - vine.mutations)
-			if(!isnull(random_mutate)) //If this vine has every single mutation don't attempt to add a null mutation.
+			if(!isnull(random_mutate)) // If this vine has every single mutation don't try to add a null mutation.
 				var/total_severity = random_mutate.severity
 				for(var/datum/spacevine_mutation/mutation as anything in vine.mutations)
 					total_severity += mutation.severity
@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 	// Mathematical notes:
 	// The formula for spread_multiplier is SPREAD_MULTIPLIER_MAX / (MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - production)
 	// So (MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - production) = SPREAD_MULTIPLIER_MAX / spread_multiplier
-	// ie. production = MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - SPREAD_MULTIPLIER_MAX / spread_multiplier
+	// that is production = MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - SPREAD_MULTIPLIER_MAX / spread_multiplier
 	seed.set_production(MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - (SPREAD_MULTIPLIER_MAX / spread_multiplier)) //Reverts spread_multiplier formula so resulting seed gets original production stat or equivalent back.
 	qdel(src)
 
@@ -121,10 +121,10 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 /datum/spacevine_controller/process(seconds_per_tick)
 	var/vine_count = length(vines)
 	if(!vine_count)
-		qdel(src) //space vines exterminated. Remove the controller
+		qdel(src) // space vines exterminated.. Remove the controller
 		return
 
-	/// Bonus spread for kudzu that has just started out (ie. with low vine count)
+	/// Bonus spread for kudzu that has just started out that is with low vine count)
 	var/start_spread_bonus = max(5 - spread_multiplier * (vine_count ** 2) / 400, 0)
 	/// Base spread rate, depends solely on spread multiplier and vine count
 	var/spread_base = 0.5 * vine_count / spread_multiplier

@@ -112,7 +112,7 @@
 /obj/machinery/food_cart/proc/lost_part(atom/movable/source, force)
 	SIGNAL_HANDLER
 
-	//okay, so it's deleting the fridge or griddle which are more important. We're gonna break the machine then
+	// okay, so it's deleting the fridge or griddle which are more important.. We're going to break the machine then
 	UnregisterSignal(cart_griddle, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
 	UnregisterSignal(cart_smartfridge, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
 	UnregisterSignal(cart_table, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))

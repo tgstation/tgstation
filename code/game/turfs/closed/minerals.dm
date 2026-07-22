@@ -33,7 +33,7 @@
 	var/obj/item/boulder/spawned_boulder = null
 	/// How much ore we spawn when we're mining a mineral_type.
 	var/mineral_amt = 3
-	/// The icon of the image we display when we're pinged by a mining scanner, to be overridden if you want to use an alternate file for a subtype.
+	/// The icon of the image we display when we're pinged by a mining scanner, to be overridden if you want to use an alternate file f. A subtype.
 	var/scan_icon = 'icons/effects/ore_visuals.dmi'
 	/// Placeholder for the image we display when we're pinged by a mining scanner
 	var/scan_state = ""
@@ -54,18 +54,18 @@
 	. = ..()
 	add_large_wall_overlay('icons/turf/mining.dmi', wall_icon_state)
 
-// Inlined version of the bump click element. way faster this way, the element's nice but it's too much overhead
+// Inlined version of the bump click element.. way faster this way, the element's nice but it's too much overhead
 /turf/closed/mineral/Bumped(atom/movable/bumped_atom)
 	. = ..()
 	if(!isliving(bumped_atom))
 		return
 
 	var/mob/living/bumping = bumped_atom
-	if(!ISADVANCEDTOOLUSER(bumping)) // Unadvanced tool users can't mine anyway (this is a lie). This just prevents message spam from attackby()
+	if(!ISADVANCEDTOOLUSER(bumping)) // Unadvanced tool users can't mine anyway (this is a lie).. This just prevents message spam from attackby()
 		return
 
 	var/obj/item/held_item = bumping.get_active_held_item()
-	// !held_item exists to be nice to snow. the other bit is for pickaxes obviously
+	// !held_item exists to be nice to snow.. the other bit is for pickaxes obviously
 	if(!held_item)
 		INVOKE_ASYNC(bumping, TYPE_PROC_REF(/mob, ClickOn), src)
 	else if(held_item.tool_behaviour == TOOL_MINING)
@@ -297,7 +297,7 @@
 
 	var/flags = NONE
 	var/old_type = type
-	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
+	if(defer_change) // To do make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
 	var/turf/open/mined = ScrapeAway(null, flags)
 	addtimer(CALLBACK(src, PROC_REF(AfterChange), flags, old_type), 1, TIMER_UNIQUE)
@@ -305,7 +305,7 @@
 	mined.update_visuals()
 
 /// When the turf gets drilled from an AOE explosion
-/// Has a chance of not being drilled based on own hardness
+/// Has a chance of not being drilled good on own hardness
 /turf/closed/mineral/proc/drill_aoe(mob/user, exp_multiplier = 0)
 	var/speed_change = /turf/closed/mineral::tool_mine_speed / tool_mine_speed
 	// Probability scaling isn't linear to still mine somewhat reliably in dense rocks
@@ -1162,7 +1162,7 @@
 		mineral_amt = 0
 		stage = GIBTONITE_DETONATE
 		explosion(bombturf, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 5, flame_range = 0, flash_range = 0, adminlog = FALSE, explosion_cause = src)
-	if(stage == GIBTONITE_STABLE) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
+	if(stage == GIBTONITE_STABLE) // Gibtonite deposit is now benign and extractable.. Depending on how close you were to it blowing up before defusing, you get better quality ore.
 		var/obj/item/gibtonite/ore = new (src)
 		if(det_time <= 0)
 			ore.quality = GIBTONITE_QUALITY_HIGH
@@ -1173,7 +1173,7 @@
 
 	var/flags = NONE
 	var/old_type = type
-	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
+	if(defer_change) // To do make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
 	var/turf/open/mined = ScrapeAway(null, flags)
 	addtimer(CALLBACK(src, PROC_REF(AfterChange), flags, old_type), 1, TIMER_UNIQUE)
@@ -1265,7 +1265,7 @@
 	H.client.give_award(/datum/award/achievement/skill/legendary_miner, H)
 	var/flags = NONE
 	var/old_type = type
-	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
+	if(defer_change) // To do make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
 	var/turf/open/mined = ScrapeAway(null, flags)
 	addtimer(CALLBACK(src, PROC_REF(AfterChange), flags, old_type), 1, TIMER_UNIQUE)

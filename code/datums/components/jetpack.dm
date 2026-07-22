@@ -47,7 +47,7 @@
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	if(!activation_signal) // Can't activate? go away
+	if(!activation_signal) // Can't activate?. go away
 		return COMPONENT_INCOMPATIBLE
 
 	RegisterSignal(parent, activation_signal, PROC_REF(activate))
@@ -133,7 +133,7 @@
 	if (!should_trigger(source))
 		return
 
-	if(source.client.intended_direction && check_on_move.Invoke(TRUE)) //You use jet when press keys. yes.
+	if(source.client.intended_direction && check_on_move.Invoke(TRUE)) // You use jet when press keys.. yes.
 		trail?.generate_effect()
 
 /// Handles all active 0g movement, including both manual (trying to move a direction in 0g) and automatic (drifting idly in 0g)

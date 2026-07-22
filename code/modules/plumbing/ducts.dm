@@ -64,7 +64,7 @@
 
 	LAZYINITLIST(neighbours)
 	for(var/direction in GLOB.cardinals)
-		//we have already connected. happens in circular connections
+		// we have already connected.. happens in circular connections
 		var/connected = FALSE
 		for(var/atom/movable/neighbour as anything in neighbours)
 			if(direction & neighbours[neighbour])
@@ -140,7 +140,7 @@
 
 	update_appearance(UPDATE_ICON)
 
-///we disconnect ourself from our neighbours. we also destroy our ductnet and tell our neighbours to make a new one
+/// we disconnect ourself from our neighbours.. we also destroy our ductnet and tell our neighbours to make a new one
 /obj/machinery/duct/on_deconstruction()
 	var/obj/item/stack/ducts/duct_stack = new (drop_location())
 	duct_stack.duct_color = duct_color
@@ -152,7 +152,7 @@
 	//remove ourself from the duct
 	net.ducts -= src
 	if(!net.ducts.len)
-		qdel(net) //destroy the pipeline. Suppliers aren't important if there aren't any ducts left
+		qdel(net) // destroy the pipeline.. Suppliers aren't important if there aren't any ducts left
 	net = null
 
 /obj/machinery/duct/Destroy()

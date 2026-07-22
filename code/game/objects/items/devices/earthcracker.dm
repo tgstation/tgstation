@@ -122,7 +122,7 @@
 	update_appearance(UPDATE_ICON)
 	return TRUE
 
-/// The fun part. We spawn a huge weakpoint here.
+/// The fun part.. We spawn a huge weakpoint here.
 /obj/item/earthcracker/proc/strike_the_earth()
 	if(QDELETED(src))
 		return

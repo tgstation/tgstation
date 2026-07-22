@@ -8,10 +8,10 @@
 
 	var/reboot_mode = TGS_REBOOT_MODE_NORMAL
 
-	/// List of chat messages list()s that attempted to be sent during a topic call. To be bundled in the result of the call
+	/// List of chat messages list()s that tried to be sent during a topic call.. To be bundled in the result of the call
 	var/list/intercepted_message_queue
 
-	/// List of chat messages list()s that attempted to be sent during a topic call. To be bundled in the result of the call
+	/// List of chat messages list()s that tried to be sent during a topic call.. To be bundled in the result of the call
 	var/list/offline_message_queue
 
 	var/list/custom_commands

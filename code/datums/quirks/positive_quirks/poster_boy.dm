@@ -17,7 +17,7 @@
 	name = "Box of Posters"
 	desc = "You made them yourself!"
 
-/// fills box of posters based on job, one neutral poster and 2 department posters
+/// fills box of posters good on job, one neutral poster and 2 department posters
 /obj/item/storage/box/posterbox/proc/add_quirk_posters(datum/mind/posterboy)
 	new /obj/item/poster/quirk/crew/random(src)
 	var/department = posterboy.assigned_role.paycheck_department

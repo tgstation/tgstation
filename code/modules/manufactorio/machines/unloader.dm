@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "unloader-corner"
 	circuit = /obj/item/circuitboard/machine/manuunloader
-	/// power used per attempt to unload a crate
+	/// power used per try to unload a crate
 	var/power_to_unload_crate = 2 KILO WATTS
 	/// whether the side we output unloaded crates is flipped
 	var/flip_side = FALSE

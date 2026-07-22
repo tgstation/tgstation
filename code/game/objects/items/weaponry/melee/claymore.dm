@@ -48,7 +48,7 @@
 
 /obj/item/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
+		final_block_chance = 0 // Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword.. Or a road roller, if one happened to hit you.
 	return ..()
 
 //statistically similar to e-cutlasses
@@ -104,10 +104,10 @@
 	demolition_mod = 0.75
 	block_chance = 30
 
-/obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
+/obj/item/claymore/highlander // ALL COMMENTS MADE About THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
 	obj_flags = CONDUCTS_ELECTRICITY
-	item_flags = DROPDEL //WOW BRO YOU LOST AN ARM, GUESS WHAT YOU DONT GET YOUR SWORD ANYMORE //I CANT BELIEVE SPOOKYDONUT WOULD BREAK THE REQUIREMENTS
+	item_flags = DROPDEL // WOW BRO YOU LOST AN ARM, GUESS WHAT YOU DONT GET YOUR SWORD ANYMORE //I CANT BELIEVE SPOOKYDONUT WOULD BREAK THE Needs
 	slot_flags = null
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
 	light_range = 3

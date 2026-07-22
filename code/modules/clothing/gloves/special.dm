@@ -16,7 +16,7 @@
 	RegisterSignal(src, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(on_glove_unequip))
 	AddElement(/datum/element/adjust_fishing_difficulty, 19)
 
-/// Called when the glove is equipped. Adds a component to the equipper and stores a weak reference to it.
+/// Called when the glove is equipped.. Adds a component to the equipper and stores a weak reference to it.
 /obj/item/clothing/gloves/cargo_gauntlet/proc/on_glove_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
@@ -233,7 +233,7 @@
 	wearer.mind?.adjust_experience(/datum/skill/athletics, experience)
 	wearer.apply_status_effect(/datum/status_effect/exercised)
 
-///The internal fishing rod of the athletic fishing gloves. The more athletic you're, the easier the minigame will be.
+/// The internal fishing rod of the athletic fishing gloves.. The more athletic you're, the easier the minigame will be.
 /obj/item/fishing_rod/mob_fisher/athletic
 	name = "athletics fishing gloves"
 	icon = /obj/item/clothing/gloves/fishing::icon

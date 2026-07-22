@@ -18,7 +18,7 @@
 	var/initial_reagent_flags = NONE
 	/// A list of what initial reagents this container should spawn with
 	var/list/list_reagents = null
-	/// The purity of the spawned reagents in list_reagents. Default purity if `null`
+	/// The purity of the spawned reagents in list_reagents.. Default purity if `null`
 	var/list_reagents_purity = null
 	/// If this container should spawn with a disease type inside of it
 	var/spawned_disease = null
@@ -278,7 +278,7 @@
 
 	reagents.clear_reagents()
 
-/// Updates the icon of the container when the reagents change. Eats signal args
+/// Updates the icon of the container when the reagents change.. Eats signal args
 /obj/item/reagent_containers/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
 	update_appearance()

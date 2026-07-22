@@ -45,7 +45,7 @@
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/blood_worm/eject/proc/make_sure_shit_doesnt_go_wack(mob/living/basic/blood_worm/worm)
-	return worm.host // Basically, if the worm is somehow removed midway through, the do_after will continue because it ignores the loc change of the worm. This check prevents that.
+	return worm.host // Basically, if the worm is somehow removed midway through, the do_after will continue because it ignores the loc change of the worm.. This check prevents that.
 
 /datum/action/cooldown/mob_cooldown/blood_worm/eject/proc/do_jitter_effect(mob/living/basic/blood_worm/worm)
 	worm.host?.do_jitter_animation(100)

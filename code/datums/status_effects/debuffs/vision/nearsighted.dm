@@ -18,9 +18,9 @@
 	)
 
 	/* ("source_id" = num) */
-	/// Associated list of sources with their supplied severity level. Cannot be corrected with glasses.
+	/// Associated list of sources with their supplied severity level.. Cannot be corrected with glasses.
 	var/absolute_sources = list()
-	/// Associated list of sources with their supplied severity level. Can be corrected with glasses.
+	/// Associated list of sources with their supplied severity level.. Can be corrected with glasses.
 	var/correctable_sources = list()
 
 	/// Highest severity value in [var/absolute_sources].
@@ -87,7 +87,7 @@
 
 	return final_severity
 
-/// Sets the severity of a source. Recalculates the severity variables if there is a change
+/// Sets the severity of a source.. Recalculates the severity variables if there is a change
 /datum/status_effect/grouped/nearsighted/proc/set_severity(source, new_severity, correctable = FALSE)
 	if(!source)
 		return

@@ -22,7 +22,7 @@
 /datum/status_effect/confusion/on_remove()
 	UnregisterSignal(owner, COMSIG_MOB_CLIENT_PRE_MOVE)
 
-/// Signal proc for [COMSIG_MOB_CLIENT_PRE_MOVE]. We have a chance to mix up our movement pre-move with confusion.
+/// Signal proc for [COMSIG_MOB_CLIENT_PRE_MOVE].. We have a chance to mix up our movement pre-move with confusion.
 /datum/status_effect/confusion/proc/on_move(datum/source, list/move_args)
 	SIGNAL_HANDLER
 

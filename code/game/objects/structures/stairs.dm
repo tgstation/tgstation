@@ -8,7 +8,7 @@
 #define STAIR_BLIP_MIN_DISTANCE 2
 
 // dir determines the direction of travel to go upwards
-// stairs require /turf/open/openspace as the tile above them to work, unless your stairs have 'force_open_above' set to TRUE
+// stairs need /turf/open/openspace as the tile above them to work, unless your stairs have 'force_open_above' set to TRUE
 // multiple stair objects can be chained together; the Z level transition will happen on the final stair object in the chain
 
 /obj/structure/stairs
@@ -23,9 +23,9 @@
 
 	/// If TRUE replaces the turf above this stair obj with /turf/open/openspace
 	var/force_open_above = FALSE
-	/// Determines if this stair is the last in a "chain" of stairs, ie next step is upstairs
+	/// Determines if this stair is the last in a "chain" of stairs, that is next step is upstairs
 	VAR_FINAL/terminator_mode = STAIR_TERMINATOR_AUTOMATIC
-	/// Upstairs turf. Is observed for changes if force_open_above is TRUE (to re-open if necessary)
+	/// Upstairs turf.. Is observed for changes if force_open_above is TRUE (to re-open if necessary)
 	VAR_FINAL/turf/directly_above
 	/// If TRUE, we have left/middle/right sprites.
 	var/has_merged_sprites = TRUE

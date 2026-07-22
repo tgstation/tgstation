@@ -1,4 +1,4 @@
-// This file contains all boxes used by the Engineering department and its purpose on the station. Also contains stuff we use when we wanna fix up stuff as well or helping us live when shit goes southwardly.
+// This file contains all boxes used by the Engineering department and its purpose on the station.. Also contains stuff we use when we want to fix up stuff as well or helping us live when shit goes southwardly.
 
 /obj/item/storage/box/metalfoam
 	name = "box of metal foam grenades"

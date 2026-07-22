@@ -34,9 +34,9 @@
 	var/datum/changeling_profile/first_profile = null
 	/// How many DNA strands the changeling can store for transformation.
 	var/dna_max = 6
-	/// The amount of DNA gained. Includes DNA sting.
+	/// The amount of DNA gained.. Includes DNA sting.
 	var/absorbed_count = 0
-	/// The amount of DMA gained using absorb, not DNA sting. Start with one (your original DNA)
+	/// The amount of DMA gained using absorb, not DNA sting.. Start with one (your original DNA)
 	var/true_absorbs = 0
 	/// The number of chemicals the changeling currently has.
 	var/chem_charges = 20
@@ -56,7 +56,7 @@
 	var/total_genetic_points = 10
 	/// List of all powers we start with.
 	var/list/innate_powers = list()
-	/// Associated list of all powers we have evolved / bought from the emporium. [path] = [instance of path]
+	/// Associated list of all powers we have evolved / bought from the emporium.. [path] = [instance of path]
 	var/list/purchased_powers = list()
 
 	/// The voice we're mimicing via the changeling voice ability.
@@ -71,13 +71,13 @@
 	/// A reference to our cellular emporium action (which opens the UI for the datum).
 	var/datum/action/cellular_emporium/emporium_action
 
-	/// The name of our "hive" that our ling came from. Flavor.
+	/// The name of our "hive" that our ling came from.. Flavor.
 	var/hive_name
 
 	/// Static typecache of all changeling powers that are usable.
 	var/static/list/all_powers = typecacheof(/datum/action/changeling, ignore_root_path = TRUE)
 
-	/// Static list of possible ids. Initialized into the greek alphabet the first time it is used
+	/// Static list of possible ids.. Initialized into the greek alphabet the first time it is used
 	var/static/list/possible_changeling_IDs
 
 	/// Satic list of what each slot associated with (in regard to changeling flesh items).
@@ -100,7 +100,7 @@
 	/// A list of all memories we've stolen through absorbs.
 	var/list/stolen_memories = list()
 
-	///	Keeps track of the currently selected profile.
+	/// Keeps track of the currently selected profile.
 	var/datum/changeling_profile/current_profile
 
 /datum/antagonist/changeling/New()
@@ -274,7 +274,7 @@
 	if(owner.current.stat == DEAD)
 		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * delta_time, total_chem_storage * 0.5)
 
-	// If we're not dead and not on fire - we go up to the full chem cap at normal speed. If on fire we only regenerate at 1/4th the normal speed
+	// If we're not dead and not on fire - we go up to the full chem cap at normal speed.. If on fire we only regenerate at 1/4th the normal speed
 	else
 		if(living_owner.fire_stacks && living_owner.on_fire)
 			adjust_chemicals((chem_recharge_rate - 0.75) * delta_time)
@@ -306,9 +306,9 @@
 		return
 	if(!isliving(ling) || clicked == ling || ling.stat != CONSCIOUS)
 		return
-	// sort-of hack done here: we use in_given_range here because it's quicker.
+	// sort-of temporary solution done here: we use in_given_range here because it's quicker.
 	// actual ling stings do pathfinding to determine whether the target's "in range".
-	// however, this is "close enough" preliminary checks to not block click
+	// but this is "close enough" preliminary checks to not block click
 	if(!isliving(clicked) || !IN_GIVEN_RANGE(ling, clicked, sting_range))
 		return
 
@@ -400,7 +400,7 @@
 		to_chat(owner.current, span_warning("We cannot evolve this ability!"))
 		return FALSE
 
-	//To avoid potential exploits by buying new powers while in stasis, which clears your verblist. // Probably not a problem anymore, but whatever.
+	// To avoid potential exploits by buying new powers while in stasis, which clears your verblist.. // Probably not a problem anymore, but whatever.
 	if(HAS_TRAIT(owner.current, TRAIT_DEATHCOMA))
 		to_chat(owner.current, span_warning("We lack the energy to evolve new abilities right now!"))
 		return FALSE
@@ -486,7 +486,7 @@
 	var/mob/living/carbon/user = owner.current
 
 	if(stored_profiles.len)
-		// If our current DNA is the stalest, we gotta ditch it before absorbing more.
+		// If our current DNA is the stalest, we got to ditch it before absorbing more.
 		var/datum/changeling_profile/top_profile = stored_profiles[1]
 		if(top_profile.dna.is_same_as(user.dna) && stored_profiles.len > dna_max)
 			if(verbose)
@@ -513,7 +513,7 @@
 		if(verbose)
 			to_chat(user, span_warning("[target]'s body is ruined beyond usability!"))
 		return FALSE
-	if(!ishuman(target) || ismonkey(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
+	if(!ishuman(target) || ismonkey(target))// Absorbing monkeys is entirely possible, but it can cause issues with transforming.. That's what lesser form is for anyway!
 		if(verbose)
 			to_chat(user, span_warning("We could gain no benefit from absorbing a lesser creature."))
 		return FALSE
@@ -811,7 +811,7 @@
 			qdel(skillchip)
 			continue
 
-		// Try force-implanting and activating. If it doesn't work, there's nothing much we can do. There may be some
+		// Try force-implanting and activating.. If it doesn't work, there's nothing much we can do.. There may be some
 		// incompatibility out of our hands
 		var/implant_msg = user.implant_skillchip(skillchip, TRUE)
 		if(implant_msg)
@@ -820,7 +820,7 @@
 			qdel(skillchip)
 			continue
 
-		// Time to set the metadata. This includes trying to activate the chip.
+		// Time to set the metadata.. This includes trying to activate the chip.
 		var/set_meta_msg = skillchip.set_metadata(chip)
 
 		if(set_meta_msg)
@@ -828,7 +828,7 @@
 			stack_trace("Failure to activate changeling skillchip from [chosen_profile] with skillchip [skillchip] using [chip] metadata. Error msg: [set_meta_msg]")
 			continue
 
-	//vars hackery. not pretty, but better than the alternative.
+	// vars hackery.. not pretty, but better than the alternative.
 	for(var/slot in slot2type)
 		if(istype(user.vars[slot], slot2type[slot]) && !(chosen_profile.exists_list[slot])) // Remove unnecessary flesh items
 			qdel(user.vars[slot])
@@ -877,7 +877,7 @@
 	user.name = user.get_visible_name()
 	current_profile = chosen_profile
 
-// Changeling profile themselves. Store a data to store what every DNA instance looked like.
+// Changeling profile themselves.. Store a data to store what every DNA instance looked like.
 /datum/changeling_profile
 	/// The name of the profile / the name of whoever this profile source.
 	var/name = "a bug"
@@ -1025,7 +1025,7 @@
 	data["absorbed_dna"] = absorbed_count
 	return data
 
-// Changelings spawned from non-changeling headslugs (IE, due to being transformed into a headslug as a non-ling). Weaker than a normal changeling.
+// Changelings spawned from non-changeling headslugs that is due to being transformed into a headslug as a non-ling).. Weaker than a normal changeling.
 /datum/antagonist/changeling/headslug
 	name = "\improper Headslug Changeling"
 	show_in_antagpanel = FALSE

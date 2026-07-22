@@ -33,7 +33,7 @@
 	if(target.on)
 		process_request(target.disposal_rate * SSFLUIDS_DT, dir = dir)
 
-///has one pipe output that only supplies. example is liquid pump and manual input pipe
+/// has one pipe output that only supplies.. example is liquid pump and manual input pipe
 /datum/component/plumbing/simple_supply
 	supply_connects = SOUTH
 

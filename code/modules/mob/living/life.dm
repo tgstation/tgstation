@@ -132,7 +132,7 @@
 	animate(y = 0, time = 10)
 
 /mob/living/proc/handle_high_gravity(gravity, seconds_per_tick)
-	if(gravity < GRAVITY_DAMAGE_THRESHOLD) //Aka gravity values of 3 or more
+	if(gravity < GRAVITY_DAMAGE_THRESHOLD) // Also known as gravity values of 3 or more
 		return
 
 	var/grav_strength = gravity - GRAVITY_DAMAGE_THRESHOLD

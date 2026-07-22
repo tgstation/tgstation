@@ -1,20 +1,20 @@
 /// The coefficient of the proportionate power output.
 /// Doesn't change output total, lower numbers just increases the smoothing - taking longer to ramp up, and longer to drop away.
 /// 4% means an accumulator, when starting up for the first time:
-/// - emits   50% of what is being received after 40 seconds
-/// - emits   90% of what is being received after two minutes
-/// - emits   99% of what is being received after four minutes
+/// - emits 50% of what is being received after 40 seconds
+/// - emits 90% of what is being received after two minutes
+/// - emits 99% of what is being received after four minutes
 /// after having stored energy for at least 4-5 minutes, then dropping input to nothing:
-/// - emits   50% of what was previously being received after 40 seconds
-/// - emits   25% of what was previously being received after 79 seconds
-/// - emits   10% of what was previously being received after two minutes
-/// - emits    1% of what was previously being received after four minutes
+/// - emits 50% of what was previously being received after 40 seconds
+/// - emits 25% of what was previously being received after 79 seconds
+/// - emits 10% of what was previously being received after two minutes
+/// - emits 1% of what was previously being received after four minutes
 #define ACCUMULATOR_PROPORTIONAL_COEFFICIENT 0.04
 /// The coefficient for the constant power output.
 #define ACCUMULATOR_CONSTANT_COEFFICIENT 2000
 
 /// Abstract type for generators that accumulate energy over time and slowly release it
-/// eg. radiation collectors, tesla coils
+/// for example radiation collectors, tesla coils
 /obj/machinery/power/energy_accumulator
 	anchored = FALSE
 	density = TRUE

@@ -121,7 +121,7 @@
 		return
 	assume_direct_control(hopeful_ghost)
 
-/// Grant possession of our mob, component is now no longer required
+/// Grant possession of our mob, component is now no longer needed
 /datum/component/ghost_direct_control/proc/assume_direct_control(mob/harbinger)
 	if (QDELETED(src))
 		to_chat(harbinger, span_warning("Offer to possess creature has expired!"))

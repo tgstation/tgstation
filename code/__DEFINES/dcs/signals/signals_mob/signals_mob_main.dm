@@ -35,12 +35,12 @@
 
 /// From base of /client/Move(): (list/move_args)
 #define COMSIG_MOB_CLIENT_PRE_LIVING_MOVE "mob_client_pre_living_move"
-	/// Should we stop the current living movement attempt
+	/// Should we stop the current living movement try
 	#define COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
-/// From base of /client/Move(), invoked when a non-living mob is attempting to move: (list/move_args)
+/// From base of /client/Move(), invoked when a non-living mob is trying to move: (list/move_args)
 #define COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE "mob_client_move_possessed_object"
-	/// Cancels the move attempt
+	/// Cancels the move try
 	#define COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 /// From base of /client/Move(): (new_loc, direction)
@@ -67,9 +67,9 @@
 /// Sent from /proc/do_after once a do_after action completes, whether via the bar filling or via interruption.
 #define COMSIG_DO_AFTER_ENDED "mob_do_after_ended"
 
-///from mind/transfer_to. Sent to the receiving mob.
+/// from mind/transfer_to... Sent to the receiving mob.
 #define COMSIG_MOB_MIND_TRANSFERRED_INTO "mob_mind_transferred_into"
-///from mind/transfer_from. Sent to the mob the mind is being transferred out of.
+/// from mind/transfer_from... Sent to the mob the mind is being transferred out of.
 #define COMSIG_MOB_MIND_TRANSFERRED_OUT_OF "mob_mind_transferred_out_of"
 /// From /mob/proc/ghostize() Called when a mob successfully ghosts
 #define COMSIG_MOB_GHOSTIZED "mob_ghostized"
@@ -77,9 +77,9 @@
 #define COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL "mob_mind_before_midround_roll"
 	#define CANCEL_ROLL (1<<1)
 
-///signal sent when a mob has their holy role set. Sent to the mob having their role changed.
+/// signal sent when a mob has their holy role set... Sent to the mob having their role changed.
 #define COMSIG_MOB_MIND_SET_HOLY_ROLE "mob_mind_set_holy_role"
-///signal sent when a mob has their job role set. Sent to the mob having their role changed.
+/// signal sent when a mob has their job role set... Sent to the mob having their role changed.
 #define COMSIG_MOB_MIND_SET_ROLE "mob_mind_set_role"
 
 ///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
@@ -188,7 +188,7 @@
 ///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
 #define COMSIG_TRY_STRIP "try_strip"
 	#define COMPONENT_CANT_STRIP (1<<0)
-///Called when a mob's strip menu is attempting to be opened,from base /datum/element/strippable/proc/mouse_drop_onto (datum/source, atom/over, mob/user)
+/// Called when a mob's strip menu is trying to be opened,from base /datum/element/strippable/proc/mouse_drop_onto (datum/source, atom/over, mob/user)
 #define COMSIG_MOB_STRIP_MENU_OPEN "mob_strip_menu_open"
 	#define COMPONENT_BLOCK_STRIP_MENU_OPEN (1<<0)
 ///From /datum/component/face_decal/splat/Initialize()

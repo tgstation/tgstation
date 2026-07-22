@@ -18,7 +18,7 @@
 		/datum/reagent/consumable/salt,
 		/datum/reagent/uranium/radium,
 	)
-	/// Reference to the reagent holder. Preferably access it from the holder instead, but some procs dont like that (process())
+	/// Reference to the reagent holder.. Preferably access it from the holder instead, but some procs dont like that (process())
 	var/datum/reagents/reagent_holder
 	/// Reagent that is being generated right now
 	var/active_reagent = /datum/reagent/water

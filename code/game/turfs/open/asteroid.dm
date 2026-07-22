@@ -183,7 +183,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 		if("basalt5", "basalt9")
 			set_light(BASALT_LIGHT_RANGE_DIM, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA) //barely anything!
 
-///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
+/// ////Surface.. The surface is warm, but survivable without a suit.. Internals are needed The floors break to chasms, which drop you into the underground.
 
 /turf/open/misc/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS

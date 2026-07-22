@@ -1,4 +1,4 @@
-///We pump liquids from activated(plungerated) geysers to a plumbing outlet. We need to be wired.
+/// We pump liquids from activated(plungerated) geysers to a plumbing outlet.. We need to be wired.
 /obj/machinery/plumbing/liquid_pump
 	name = "liquid pump"
 	desc = "Pump up those sweet liquids from under the surface. Uses thermal energy from geysers to power itself." //better than placing 200 cables, because it wasn't fun
@@ -11,7 +11,7 @@
 
 	///units we pump per second
 	var/pump_power = 1
-	///set to true if the loop couldnt find a geyser in process, so it remembers and stops checking every loop until moved. more accurate name would be absolutely_no_geyser_under_me_so_dont_try
+	/// set to true if the loop couldnt find a geyser in process, so it remembers and stops checking every loop until moved.. more accurate name would be absolutely_no_geyser_under_me_so_dont_try
 	var/geyserless = FALSE
 	///The geyser object
 	var/obj/structure/geyser/geyser

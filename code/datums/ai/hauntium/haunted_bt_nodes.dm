@@ -73,7 +73,7 @@
 /datum/bt_node/ai_behavior/idle_ghost_item/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	var/obj/item/item_pawn = controller.pawn
-	if(ismob(item_pawn.loc)) //Being held. dont teleport
+	if(ismob(item_pawn.loc)) // Being held.. dont teleport
 		return AI_BEHAVIOR_INSTANT
 	if(SPT_PROB(teleport_chance, seconds_per_tick))
 		playsound(item_pawn.loc, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)

@@ -98,7 +98,7 @@
 	var/health_analyzer = /obj/item/healthanalyzer
 	/// drop determining variable
 	var/medkit_type = /obj/item/storage/medkit
-	///based off medkit_X skins in aibots.dmi for your selection; X goes here IE medskin_tox means skin var should be "tox"
+	/// good off medkit_X skins in aibots.dmi for your selection; X goes here that is medskin_tox means skin var should be "tox"
 	var/skin = "generic"
 	/// How much healing do we do at a time?
 	var/heal_amount = 2.5
@@ -106,12 +106,12 @@
 	VAR_FINAL/heal_multiplier = 1.0
 	/// Start healing when they have this much damage in a category
 	var/heal_threshold = 10
-	/// What damage type does this bot support. Because the default is brute, if the medkit is brute-oriented there is a slight bonus to healing. set to "all" for it to heal any of the 4 base damage types
+	/// What damage type does this bot support.. Because the default is brute, if the medkit is brute-oriented there is a slight bonus to healing.. set to "all" for it to heal any of the 4 base damage types
 	var/damage_type_healer = BRUTE
 
 	///Flags Medbots use to decide how they should be acting.
 	var/medical_mode_flags = MEDBOT_DECLARE_CRIT | MEDBOT_SPEAK_MODE
-	//Selections:  MEDBOT_DECLARE_CRIT | MEDBOT_STATIONARY_MODE | MEDBOT_SPEAK_MODE | MEDBOT_TIPPED_MODE
+	// Selections: MEDBOT_DECLARE_CRIT | MEDBOT_STATIONARY_MODE | MEDBOT_SPEAK_MODE | MEDBOT_TIPPED_MODE
 
 	/// techweb linked to the medbot
 	var/datum/techweb/linked_techweb

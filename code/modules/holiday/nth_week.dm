@@ -1,4 +1,4 @@
-///A holiday lasting one day only that falls on the nth weekday in a month i.e. 3rd Wednesday of February.
+/// A holiday lasting one day only that falls on the nth weekday in a month i.e.. 3rd Wednesday of February.
 /datum/holiday/nth_week
 	///Nth weekday of type begin_weekday in begin_month to start on (1 to 5).
 	var/begin_week = 1
@@ -75,7 +75,7 @@
 	begin_weekday = SATURDAY
 	end_weekday = SUNDAY
 
-//National Moth Week falls on the last full week of July, including the saturday and sunday before. See http://nationalmothweek.org/ for precise tracking.
+// National Moth Week falls on the last full week of July, including the saturday and sunday before.. See http://nationalmothweek.org/ for precise tracking.
 /datum/holiday/nth_week/moth/shouldCelebrate(dd, mm, yyyy, ddd)
 	if(first_day_of_month(yyyy, mm) >= 5) //Friday or later start of the month means week 5 is a full week.
 		begin_week += 1

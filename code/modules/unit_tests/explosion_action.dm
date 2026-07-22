@@ -8,16 +8,16 @@
 	var/alien_ear_damage = 0
 
 /datum/unit_test/explosion_action/Run()
-	// We split up this `Run()` into multiple parts based on the over-arching parent type. This is because all of them have different core implementations of `EX_ACT()`, and we want to test all.
-	// All procs also have varying levels of bulkiness to them, and it's valuable to have this level of organization because otherwise it would blend all-together and be an entangled mess.
+	// We split up this `Run()` into multiple parts good on the over-arching parent type.. This is because all of them have different core implementations of `EX_ACT()`, and we want to test all.
+	// All procs also have varying levels of bulkiness to them. It's valuable to have this level of organization because otherwise it would blend all-together. Be an entangled mess.
 	execute_mob_tests()
 	execute_turf_tests()
 	execute_obj_tests()
 
 /// Tests the EX_ACT macro on several different types of mobs to ensure that it still works as expected.
-/// Throughout this test, we use the "abstract" type of a `/mob/living` to ensure that the raw framework will still work and remain hardy against any `ex_act()` overrides
-/// that may be done on the subtype-to-subtype basis. Any time we use an explicit subtype is to test that framework, so if you update that for some reason, you should also update this test.
-/// Like, if you balance aliens to take more ear damage and this test fails, just update the test to reflect that. That's it.
+/// Throughout this test, we use the "abstract" type of a `/mob/living` to ensure that the raw framework will still work. Remain hardy against any `ex_act()` overrides
+/// that may be done on the subtype-to-subtype basis.. Any time we use an explicit subtype is to test that framework, so if you update that f. Some reason, you should also update this test.
+/// if you balance aliens to take more ear damage and this test fails, just update the test to reflect that.. That's it.
 /datum/unit_test/explosion_action/proc/execute_mob_tests()
 	// You may delete this entire section of the test when the entire `simple_animal` framework needs to be scrapped.
 	var/mob/living/simple_animal/test_simple_animal = allocate(/mob/living/simple_animal)
@@ -37,7 +37,7 @@
 
 	EX_ACT(test_simple_animal, EXPLODE_DEVASTATE) // this should gib.
 	TEST_ASSERT(QDELETED(test_simple_animal), "EX_ACT() with EXPLODE_DEVASTATE severity should have gibbed a simple animal!")
-	// End of the simple-animal checks. No more simple animals beyond this point.
+	// End of the simple-animal checks.. No more simple animals beyond this point.
 
 	// Now let's be safe and check basic mobs (they're the future, man)
 	var/mob/living/basic/test_basic_animal = allocate(/mob/living/basic)
@@ -58,7 +58,7 @@
 	EX_ACT(test_basic_animal, EXPLODE_DEVASTATE) // this should gib.
 	TEST_ASSERT(QDELETED(test_basic_animal), "EX_ACT() with EXPLODE_DEVASTATE severity should have gibbed a basic animal!")
 
-	// Aliens have their own implementation too.
+	// Aliens have their own code too.
 	var/mob/living/carbon/alien/test_alien = allocate(/mob/living/carbon/alien)
 	test_alien.maxHealth = MAX_LIVING_HEALTH
 	test_alien.health = MAX_LIVING_HEALTH
@@ -82,11 +82,11 @@
 	TEST_ASSERT_EQUAL(alien_burn_loss, 60, "EX_ACT() with EXPLODE_HEAVY severity should have done 60 burn damage to an alien!")
 	TEST_ASSERT_EQUAL(alien_ear_damage, 30, "EX_ACT() with EXPLODE_HEAVY severity should have done 30 ear damage to an alien!")
 
-	// Let's check to make sure the armor system works as expected. Corgi dogs are the only one that have this implemented on the basic level, so let's use that.
+	// Let's check to make sure the armor system works as expected.. Corgi dogs are the only one that have this added on the basic level, so let's use that.
 	var/mob/living/basic/pet/dog/corgi/test_dog = set_up_test_dog()
 
-	// those two items should give us a 100% armor rating, so let's test that to make sure it works (all ex_act checks should now be prob(100)), no room for error.
-	EX_ACT(test_dog, EXPLODE_LIGHT) // should do 20 damage (basic animals do a prob() check based on the armor rating, and divide the expected brute loss by 1.5).
+	// those two items should give us a 100% arm. Rating, so let's test that to make sure it works (all ex_act checks should now be prob(100)), no room f. Error.
+	EX_ACT(test_dog, EXPLODE_LIGHT) // should do 20 damage (basic animals do a prob() check good on the armor rating, and divide the expected brute loss by 1.5).
 	TEST_ASSERT_EQUAL(test_dog.health, MAX_LIVING_HEALTH - 20, "EX_ACT() with EXPLODE_LIGHT severity should have done 20 damage to a corgi with an immune helmet and vest!")
 	test_dog.revive(ADMIN_HEAL_ALL)
 
@@ -94,11 +94,11 @@
 	TEST_ASSERT_EQUAL(test_dog.health, MAX_LIVING_HEALTH - 40, "EX_ACT() with EXPLODE_HEAVY severity should have done 40 damage to a corgi with an immune helmet and vest!")
 	test_dog.revive(ADMIN_HEAL_ALL)
 
-	EX_ACT(test_dog, EXPLODE_DEVASTATE) // this should NOT gib, but should do 500 damage. 500 is a lot but we don't really need to test that exact number here to be honest
+	EX_ACT(test_dog, EXPLODE_DEVASTATE) // this should NOT gib, but should do 500 damage.. 500 is a lot but we don't really need to test that exact number here to be honest
 	TEST_ASSERT(!QDELETED(test_dog), "EX_ACT() with EXPLODE_DEVASTATE severity should NOT have gibbed a corgi with an immune helmet and vest!")
 	TEST_ASSERT_EQUAL(test_dog.stat, DEAD, "EX_ACT() with EXPLODE_DEVASTATE severity should have killed a corgi with an immune helmet and vest!")
 
-	// Humans have a lot of prob() checks and stuff (e.g. delimbing) and it's really complicated, so let's just test the basic stuff here. if you want to test this further should really go into its own unit test.
+	// Humans have a lot of prob() checks and stuff (e.g.. delimbing) and it's really complicated, so let's just test the basic stuff here.. if you want to test this further should really go into its own unit test.
 	var/mob/living/carbon/human/test_human = allocate(/mob/living/carbon/human/consistent)
 
 	ADD_TRAIT(test_human, TRAIT_BOMBIMMUNE, REF(src))
@@ -144,7 +144,7 @@
 	TEST_ASSERT_NOTEQUAL(test_closed_turf.type, CLOSED_FLOOR_TYPE, "EX_ACT() with EXPLODE_LIGHT severity should have dismantled the wall, but instead saw zero changes!")
 	test_closed_turf.ChangeTurf(original_closed_turf_type, original_closed_baseturfs)
 
-	// just to make sure the hardness is what we wanted it to be, there's no real reason why the hardness should inherit between changeturfs but by God we should guard against it.
+	// just to make sure the hardness is what we wanted it to be, there's no real reason why the hardness should inherit between changeturfs. By God we should guard against it.
 	test_closed_turf.ChangeTurf(CLOSED_FLOOR_TYPE)
 	test_closed_turf.hardness = cached_hardness
 	EX_ACT(test_closed_turf, EXPLODE_HEAVY) // wall will be dismantled at the very least
@@ -187,7 +187,7 @@
 	EX_ACT(test_object, EXPLODE_DEVASTATE) // does an INFINITE amount of damage, will trigger a qdel()
 	TEST_ASSERT(QDELETED(test_object), "EX_ACT() with EXPLODE_DEVASTATE severity should have deleted the target, but instead saw no change!")
 
-/// Sets up a fully armored corgi for testing purposes. Split out into its own proc as to not clutter up the main test.
+/// Sets up a fully armored corgi for testing purposes.. Split out into its own proc as to not clutter up the main test.
 /datum/unit_test/explosion_action/proc/set_up_test_dog()
 	var/mob/living/basic/pet/dog/corgi/returnable_dog = allocate(/mob/living/basic/pet/dog/corgi)
 	returnable_dog.maxHealth = MAX_LIVING_HEALTH

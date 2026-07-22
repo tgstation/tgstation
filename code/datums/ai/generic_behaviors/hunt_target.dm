@@ -157,7 +157,7 @@
 /datum/bt_node/ai_behavior/hunt_target/headbutt_leg/target_caught(mob/living/hunter, atom/hunted)
 	hunter.manual_emote("playfully headbutts [hunted]'s legs!")
 
-/// Attempts to buckle (latch onto) the target mob.
+/// Tries to buckle (latch onto) the target mob.
 /datum/bt_node/ai_behavior/hunt_target/latch_onto
 
 /datum/bt_node/ai_behavior/hunt_target/latch_onto/setup(datum/ai_controller/controller)

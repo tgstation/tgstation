@@ -1,4 +1,4 @@
-/// Heals the eye damage of the keyed target. Movement to the target is handled externally.
+/// Heals the eye damage of the keyed target.. Movement to the target is handled externally.
 /datum/bt_node/ai_behavior/heal_eye_damage
 	/// Blackboard key holding the target whose eyes we heal.
 	var/target_key

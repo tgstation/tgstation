@@ -1,6 +1,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////
-/obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
+/obj/machinery/hydroponics/soil // Not actually hydroponics at all!. Honk!
 	name = "soil"
 	desc = "A patch of dirt."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'

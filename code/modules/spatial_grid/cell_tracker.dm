@@ -13,7 +13,7 @@
 	var/list/datum/spatial_grid_cell/member_cells = list()
 	// Inner window
 	// If a cell is inside this space, it will be entered into our membership list
-	/// The height (y radius) of our inner window
+	/// The height why radius) of our inner window
 	var/inner_window_x_radius
 	/// The width (x radius) of our inner window
 	var/inner_window_y_radius
@@ -21,13 +21,13 @@
 	// Outer window
 	// If a cell is outside this space, it will be removed from our memebership list
 	// This effectively applies a grace window, to prevent moving back and forth across a border line causing issues
-	/// The height (y radius) of our outer window
+	/// The height why radius) of our outer window
 	var/outer_window_x_radius
 	/// The width (x radius) of our outer window
 	var/outer_window_y_radius
 
 /// Accepts a width and height to use for this tracker
-/// Also accepts the ratio to use between inner and outer window. Optional, defaults to 2
+/// Also accepts the ratio to use between inner and outer window.. Optional, defaults to 2
 /datum/cell_tracker/New(width, height, inner_outer_ratio)
 	set_bounds(width, height, inner_outer_ratio)
 	return ..()
@@ -82,7 +82,7 @@
 /datum/cell_tracker/proc/recalculate_cells(turf/center)
 	if(!center)
 		CRASH("/datum/cell_tracker had an invalid location on refresh, ya done fucked")
-	// This is a mild waste of cpu time. Consider optimizing by adding a new helper function to get just the space between two bounds
+	// This is a mild waste of cpu time.. Consider optimizing by adding a new helper function to get just the space between two bounds
 	// Assuming it ever becomes a real problem
 	var/list/datum/spatial_grid_cell/inner_window = SSspatial_grid.get_cells_in_bounds(center, inner_window_x_radius, inner_window_y_radius)
 	var/list/datum/spatial_grid_cell/outer_window = SSspatial_grid.get_cells_in_bounds(center, outer_window_x_radius, outer_window_y_radius)
@@ -91,7 +91,7 @@
 	// The outer window may contain cells we don't actually have, so we do it like this
 	var/list/datum/spatial_grid_cell/old_cells = member_cells - outer_window
 
-	// This whole thing is a naive implementation,
+	// This whole thing is a naive code
 	// if it turns out to be expensive because of all the list operations I'll look closer at it
 	member_cells -= old_cells
 	member_cells += new_cells

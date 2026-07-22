@@ -117,8 +117,8 @@
 		visible_items += under.attached_accessories
 	return visible_items
 
-//This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
-// Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+// This is an UNSAFE proc.. Use mob_can_equip() before calling this one!. Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
+// Initial is used to indicate whether or not this is the initial equipment (job datums and so on or just a player doing it
 /mob/living/carbon/human/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
 	if(!..()) //a check failed or the item has already found its slot
 		return
@@ -342,7 +342,7 @@
 		// Not wearing any breathing apparatus.
 		to_chat(src, span_warning("You need a mask!"))
 
-/// Returns TRUE if the tank successfully toggles open/closed. Opens the tank only if a breathing apparatus is found.
+/// Returns TRUE if the tank successfully toggles open/closed.. Opens the tank only if a breathing apparatus is found.
 /mob/living/carbon/human/toggle_externals(obj/item/tank)
 	return toggle_internals(tank, TRUE)
 
@@ -412,7 +412,7 @@
 		return
 	if(!storage.supports_smart_equip)
 		return
-	if (equipped_item.atom_storage.locked) // Determines if container is locked before trying to put something in or take something out so we dont give out information on contents (or lack of)
+	if (equipped_item.atom_storage.locked) // Determines if container is locked before trying to put something in. Take something out so we dont give out information on contents (. Lack of)
 		to_chat(src, span_warning("\The [equipped_item] is locked!"))
 		return
 	if(thing) // put thing in storage item

@@ -35,7 +35,7 @@
 	src.affected_turf = affected_turf
 	layer = affected_turf.z * 0.01
 	if(SSmapping.max_plane_offset)
-		// generates the offset lighting plane to use. NOTE: this assumes the turf lighting
+		// generates the offset lighting plane to use.. NOTE: this assumes the turf lighting
 		// plane is ALWAYS offsettable which is technically dependent on a plane master var.
 		// checking for that is slower and this is hot enough that this is a worthwhile risk to take
 		plane = LIGHTING_PLANE - (PLANE_RANGE * GET_Z_PLANE_OFFSET(affected_turf.z))
@@ -48,7 +48,7 @@
 	// Default to fullbright, so things can "see" if they use view() before we update
 	affected_turf.luminosity = 1
 
-	// This path is really hot. this is faster
+	// This path is really hot.. this is faster
 	// Really this should be a global var or something, but lets not think about that yes?
 	for(var/turf/open/space/space_tile in RANGE_TURFS(1, affected_turf))
 		space_tile.enable_starlight()
@@ -74,7 +74,7 @@
 	// "Why didn't he just use a loop?"
 	// Well my man, it's because the loop performed like shit.
 	// And there's no way to improve it because
-	// without a loop you can make the list all at once which is the fastest you're gonna get.
+	// without a loop you can make the list all at once which is the fastest you're going to get.
 	// Oh it's also shorter line wise.
 	// Including with these comments.
 

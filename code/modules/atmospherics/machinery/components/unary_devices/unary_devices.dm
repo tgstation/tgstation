@@ -44,7 +44,7 @@
 /obj/machinery/atmospherics/components/unary/proc/disconnect_pipes()
 	var/obj/machinery/atmospherics/node1 = nodes[1]
 	if(node1)
-		if(src in node1.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
+		if(src in node1.nodes) // Only if it's actually connected.. On-pipe version would is one-sided.
 			node1.disconnect(src)
 		nodes[1] = null
 	if(parents[1])

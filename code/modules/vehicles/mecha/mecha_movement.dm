@@ -1,4 +1,4 @@
-/// Sets the direction of the mecha and all of its occcupents, required for FOV. Alternatively one could make a recursive contents registration and register topmost direction changes in the fov component
+/// Sets the direction of the mecha and all of its occcupents, needed for FOV.. Alternatively one could make a recursive contents registration and register topmost direction changes in the fov component
 /obj/vehicle/sealed/mecha/setDir(newdir)
 	. = ..()
 	for(var/mob/living/occupant as anything in occupants)
@@ -16,7 +16,7 @@
 	if(isnull(ore_box) || !HAS_TRAIT(src, TRAIT_OREBOX_FUNCTIONAL))
 		return
 	for(var/obj/item/stack/ore/ore in range(1, src))
-		//we can reach it and it's in front of us? grab it!
+		// we can reach it and it's in front of us?. grab it!
 		if(ore.Adjacent(src) && ((get_dir(src, ore) & dir) || ore.loc == loc))
 			ore.forceMove(ore_box)
 	for(var/obj/item/boulder/boulder in range(1, src))
@@ -25,7 +25,7 @@
 			boulder.forceMove(ore_box)
 
 
-///Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.
+/// Plays the mech step sound effect.. Split from movement procs so that other mechs (HONK) can override this one specific part.
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
 	if(mecha_flags & QUIET_STEPS)
 		return
@@ -194,7 +194,7 @@
 	if(!chassis_camera?.can_use())
 		return
 	// Delay's a bit faster then standard cameras to "avoid running out of the camera's fov" whatever that means
-	// An EMPd mecha with a lowered view_range on its camera can still sometimes run out into static before updating, however.
+	// An EMPd mecha with a lowered view_range on its camera can still sometimes run out into static before updating, but
 	SScameras.camera_moved(chassis_camera, get_turf(old_loc), get_turf(chassis_camera), 0.5 SECONDS)
 
 /obj/vehicle/sealed/mecha/proc/right_self(fallen_angle)

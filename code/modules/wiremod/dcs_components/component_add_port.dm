@@ -16,7 +16,7 @@
 	var/prefix = "Port"
 	/// The order of the new ports
 	var/order = 1
-	/// The minimum amount of ports required
+	/// The minimum amount of ports needed
 	var/minimum_amount = 1
 	/// The maximum amount of ports allowed
 	var/maximum_amount = 10

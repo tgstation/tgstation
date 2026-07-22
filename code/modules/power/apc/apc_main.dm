@@ -40,7 +40,7 @@
 	///Initial cell charge %
 	var/start_charge = 90
 	///Type of cell we start with
-	var/cell_type = /obj/item/stock_parts/power_store/battery/upgraded //Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
+	var/cell_type = /obj/item/stock_parts/power_store/battery/upgraded // Base cell has 2500 capacity.. Enter the path of a different cell you want to use.. cell determines charge rates, max capacity, ect.. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
 	///State of the cover (closed, opened, removed)
 	var/opened = APC_COVER_CLOSED
 	///Is the APC shorted and not working?
@@ -81,7 +81,7 @@
 	var/main_status = APC_NO_POWER
 	powernet = FALSE // set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
 	///Is the apc hacked by a malf ai?
-	var/malfhack = FALSE //New var for my changes to AI malf. --NeoFite
+	var/malfhack = FALSE // New var for my changes to AI malf.. --NeoFite
 	///Reference to our ai hacker
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
 	///Counter for displaying the hacked overlay to mobs within view
@@ -122,15 +122,15 @@
 	var/mob/remote_control_user = null
 	///Represents a signel source of power alarms for this apc
 	var/datum/alarm_handler/alarm_manager
-	/// Offsets the object by APC_PIXEL_OFFSET (defined in apc_defines.dm) pixels in the direction we want it placed in. This allows the APC to be embedded in a wall, yet still inside an area (like mapping).
+	/// Offsets the object by APC_PIXEL_OFFSET (defined in apc_defines.dm) pixels in the direction we want it placed in.. This allows the APC to be embedded in a wall, yet still inside an area (like mapping).
 	var/offset_old
 	/// Used for apc helper called cut_AI_wire to make apc's wore responsible for ai connectione mended.
 	var/cut_AI_wire = FALSE
 	/// Used for apc helper called unlocked to make apc unlocked.
 	var/unlocked = FALSE
-	/// Used for apc helper called syndicate_access to make apc's required access syndicate_access.
+	/// Used for apc helper called syndicate_access to make apc's needed access syndicate_access.
 	var/syndicate_access = FALSE
-	/// Used for apc helper called away_general_access to make apc's required access away_general_access.
+	/// Used for apc helper called away_general_access to make apc's needed access away_general_access.
 	var/away_general_access = FALSE
 	/// Used for apc helper called cell_5k to install 5k cell into apc.
 	var/cell_5k = FALSE
@@ -168,9 +168,9 @@
 		start_charge = cell.charge / cell.maxcharge // only used in Initialize() so direct edit is fine
 		. += NAMEOF(src, start_charge)
 
-	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
-	//. += NAMEOF(src, shorted)
-	//. += NAMEOF(src, locked)
+	// To do save the wire data but need to include states for cute wires, signalers attached to wires, and so on
+	// .. += NAMEOF(src, shorted)
+	// .. += NAMEOF(src, locked)
 	return .
 
 /obj/machinery/power/apc/Initialize(mapload)
@@ -181,7 +181,7 @@
 		datum_flags |= DF_ISPROCESSING
 		SSmachines.processing_apcs += src
 
-	//Assign it to its area. If mappers already assigned an area string fast load the area from it else get the current area
+	// Assign it to its area.. If mappers already assigned an area string fast load the area from it else get the current area
 	var/area/our_area = get_area(loc)
 	if(areastring)
 		area = get_area_instance_from_text(areastring)
@@ -195,7 +195,7 @@
 			log_mapping("Duplicate APC created at [AREACOORD(src)] [area.type]. Original at [AREACOORD(area.apc)] [area.type].")
 		area.apc = src
 
-	//Initialize name & access of the apc. Name requires area to be assigned first
+	// Initialize name & access of the apc.. Name needs area to be assigned first
 	if(!req_access)
 		req_access = list(ACCESS_ENGINE_EQUIP)
 	if(auto_name)

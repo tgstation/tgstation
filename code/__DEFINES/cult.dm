@@ -30,7 +30,7 @@
 #define THEME_CULT "cult"
 #define THEME_WIZARD "wizard"
 #define THEME_HOLY "holy"
-/// Only used for heretic Harvesters, obtained from sacrificing cultists
+/// Only used for heretic Harvesters, got from sacrificing cultists
 #define THEME_HERETIC "heretic"
 
 /// Defines for cult item_dispensers.

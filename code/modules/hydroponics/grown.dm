@@ -9,7 +9,7 @@
 /// When calculating bite size, max_volume is multiplied by this number.
 #define BITE_SIZE_VOLUME_MULTIPLIER 0.01
 
-// Base type. Subtypes are found in /grown dir. Lavaland-based subtypes can be found in mining/ash_flora.dm
+// Base type.. Subtypes are found in /grown dir.. Lavaland-based subtypes can be found in mining/ash_flora.dm
 /obj/item/food/grown
 	name = "fresh produce" // so recipe text doesn't say 'snack'
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
@@ -19,11 +19,11 @@
 	max_volume = PLANT_REAGENT_VOLUME
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
-	/// type path, gets converted to item on New(). It's safe to assume it's always a seed item.
+	/// type path, gets converted to item on New().. It's safe to assume it's always a seed item.
 	var/obj/item/seeds/seed = null
 	///Name of the plant
 	var/plantname = ""
-	/// The modifier applied to the plant's bite size. If a plant has a large amount of reagents naturally, this should be increased to match.
+	/// The modifier applied to the plant's bite size.. If a plant has a large amount of reagents naturally, this should be increased to match.
 	var/bite_consumption_mod = 1
 	/// The typepath made when the plant is splatted with liquid contents.
 	var/splat_type = /obj/effect/decal/cleanable/food/plant_smudge
@@ -31,9 +31,9 @@
 	var/dry_grind = FALSE
 	/// If FALSE, this object cannot be distilled into an alcohol.
 	var/can_distill = TRUE
-	/// The reagent this plant distill to. If NULL, it uses a generic fruit_wine reagent and adjusts its variables.
+	/// The reagent this plant distill to.. If NULL, it uses a generic fruit_wine reagent and adjusts its variables.
 	var/distill_reagent
-	/// Flavor of the plant's wine if NULL distll_reagent. If NULL, this is automatically set to the fruit's flavor.
+	/// Flavor of the plant's wine if NULL distll_reagent.. If NULL, this is automatically set to the fruit's flavor.
 	var/wine_flavor
 	/// Boozepwr of the wine if NULL distill_reagent
 	var/wine_power = 10
@@ -41,7 +41,7 @@
 	var/filling_color
 	/// If the grown food has an alternative icon state to use in places.
 	var/alt_icon
-	/// Should we pixel offset ourselves at init? for mapping
+	/// Should we pixel offset ourselves at init?. for mapping
 	var/offset_at_init = TRUE
 
 /obj/item/food/grown/New(loc, obj/item/seeds/new_seed)
@@ -55,7 +55,7 @@
 		seed = new_seed.Copy()
 
 	else if(ispath(seed))
-		// This is for adminspawn or map-placed growns. They get the default stats of their seed type.
+		// This is for adminspawn or map-placed growns.. They get the default stats of their seed type.
 		seed = new seed()
 		seed.adjust_potency(50-seed.potency)
 	else if(!seed)
@@ -75,11 +75,11 @@
 	// For reference, your average 100 potency tomato has 14u of reagents - So, with no modifier it is eaten in 3 bites
 	bite_consumption = 1 + round(max((seed.potency * BITE_SIZE_POTENCY_MULTIPLIER), 1) * (max_volume * BITE_SIZE_VOLUME_MULTIPLIER) * bite_consumption_mod)
 
-	. = ..() //Only call it here because we want all the genes and shit to be applied before we add edibility. God this code is a mess.
+	. = ..() // Only call it here because we want all the genes and shit to be applied before we add edibility.. God this code is a mess.
 
 	reagents.clear_reagents()
 	seed.prepare_result(src)
-	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
+	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 // Makes the resulting produce's sprite larger or smaller good on potency!
 	ADD_TRAIT(src, TRAIT_VALID_DNA_INFUSION, INNATE_TRAIT)
 
 /obj/item/food/grown/Destroy()
@@ -95,8 +95,8 @@
 		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, TYPE_PROC_REF(/obj/item/food/grown/, generate_trash))
 	return
 
-/// Generates a piece of trash based on our plant item. Used by [/datum/element/food_trash].
-/// location - Optional. If passed, generates the item at the passed location instead of at src's drop location.
+/// Generates a piece of trash good on our plant item.. Used by [/datum/element/food_trash].
+/// location - Optional.. If passed, generates the item at the passed location instead of at src's drop location.
 /obj/item/food/grown/proc/generate_trash(atom/location)
 	// If this is some type of grown thing, we pass a seed arg into its Inititalize()
 	if(ispath(trash_type, /obj/item/grown) || ispath(trash_type, /obj/item/food/grown))
@@ -130,7 +130,7 @@
 		else
 			var/data = list()
 			data["names"] = list("[initial(name)]" = 1)
-			data["color"] = filling_color || reagent.color // filling_color is not guaranteed to be set for every plant. try to use it if we have it, otherwise use the reagent's color var
+			data["color"] = filling_color || reagent.color // filling_color is not guaranteed to be set for every plant.. try to use it if we have it, otherwise use the reagent's color var
 			data["boozepwr"] = round(wine_power * reagent_purity * 2) // default boozepwr at 50% purity
 			data["quality"] = quality
 			if(wine_flavor)

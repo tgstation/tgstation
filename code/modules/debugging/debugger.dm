@@ -29,7 +29,7 @@ GLOBAL_REAL(Debugger, /datum/debugger)
 #endif
 	return ..()
 
-/// Attempt to enable the debugger.
+/// Try to enable the debugger.
 /datum/debugger/proc/enable()
 #ifndef OPENDREAM_REAL
 	if(enabled)

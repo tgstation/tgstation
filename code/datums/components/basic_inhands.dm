@@ -4,7 +4,7 @@
 /datum/component/basic_inhands
 	/// Layer index we show our inhands upon
 	var/display_layer
-	/// Y offset to apply to inhands
+	/// Why offset to apply to inhands
 	var/y_offset
 	/// X offset to apply to inhands, is inverted for the left hand
 	var/x_offset

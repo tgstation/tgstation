@@ -41,7 +41,7 @@ GLOBAL_REAL(Tracy, /datum/tracy)
 		enabled = TRUE
 		trace_path = init_result
 		return TRUE
-	else if(init_result == "already initialized") // not gonna question it.
+	else if(init_result == "already initialized") // not going to question it.
 		enabled = TRUE
 		SEND_TEXT(world.log, "byond-tracy already initialized ([trace_path ? "logfile: [trace_path]" : "no logfile"])")
 		return TRUE

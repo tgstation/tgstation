@@ -19,7 +19,7 @@
 		stack_trace("Called is_banned_from without specifying a ckey.")
 		return FALSE
 
-	// Convert to ckey. This allows is_banned_from to take either key or ckey interchangably,
+	// Convert to ckey.. This allows is_banned_from to take either key or ckey interchangably,
 	// and is officially a feature of the proc.
 	var/player_ckey = ckey(player_key)
 
@@ -41,7 +41,7 @@
 
 			return FALSE
 
-		// Otherwise, it's just a single role string. Return if it's in the ban cache.
+		// Otherwise, it's just a single role string.. Return if it's in the ban cache.
 		return (roles in ban_cache)
 
 	// If there's no player client, we'll ask the database.
@@ -87,7 +87,7 @@
 	return FALSE
 
 //checks DB ban table if a ckey, ip and/or cid is banned from a specific role
-//returns an associative nested list of each matching row's ban id, bantime, ban round id, expiration time, ban duration, applies to admins, reason, key, ip, cid and banning admin's key in that order
+// returns an associative nested list of each matching row's ban id, bantime, ban round id, expiration time, ban duration, applies to admins, reason, key, ip, cid. Banning admin's key in that order
 /proc/is_banned_from_with_details(player_ckey, player_ip, player_cid, role)
 	if(!player_ckey && !player_ip && !player_cid)
 		return
@@ -140,11 +140,11 @@
 	// We do NOT cache the start time because it can update, and we want it to be able to
 	while(player_client && player_client?.ban_cache_start + config_delay >= REALTIMEOFDAY && !player_client?.ban_cache)
 		// Wait a decisecond or two would ya?
-		// If this causes lag on client join, increase this delay. it doesn't need to be too fast since this should
+		// If this causes lag on client join, increase this delay.. it doesn't need to be too fast since this should
 		// Realllly only happen near Login, and we're unlikely to make any new requests in that time
 		stoplag(2)
 
-	// If we have a ban cache, use it. if we've timed out, go ahead and start another query would you?
+	// If we have a ban cache, use it.. if we've timed out, go ahead and start another query would you?
 	// This will update any other sleep loops, so we should only run one at a time
 	return player_client?.ban_cache || build_ban_cache(player_client)
 

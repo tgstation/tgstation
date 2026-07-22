@@ -2,7 +2,7 @@
 #define THERMAL_REGULATOR_COST (0.018 * STANDARD_CELL_CHARGE)
 
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
-//      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!
+// Meaning the the suit is defined directly after the corrisponding helmet.. Just like below!
 /obj/item/clothing/head/helmet/space
 	name = "space helmet"
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
@@ -39,7 +39,7 @@
 	alt_toggle_message = "You pull your helmet's visor up."
 	///How much this helmet affects fishing difficulty
 	var/fishing_modifier = 3
-	///Icon state applied when we get spraypainted/peppersprayed. If null, does not add the dirt component
+	/// Icon state applied when we get spraypainted/peppersprayed.. If null, does not add the dirt component
 	var/visor_dirt = "helm_dirt"
 	/// Whether the helmet has a visor you can flip up
 	var/has_visor = FALSE
@@ -114,7 +114,7 @@
 	var/cell_cover_open = FALSE
 	/// Status of the thermal regulator
 	var/thermal_on = FALSE
-	/// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
+	/// If this is FALSE the batery status UI will be disabled.. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
 	var/show_hud = TRUE
 	///How much this suit affects fishing difficulty
 	var/fishing_modifier = 5
@@ -165,7 +165,7 @@
 	if(!thermal_on)
 		return
 
-	// If we got here, thermal regulators are on. If there's no cell, turn them off
+	// If we got here, thermal regulators are on.. If there's no cell, turn them off
 	if(!cell)
 		toggle_spacesuit(user, FALSE)
 		update_hud_icon(user)
@@ -297,7 +297,7 @@
  */
 /obj/item/clothing/suit/space/proc/toggle_spacesuit(mob/toggler, manual_toggle = TRUE)
 	// If we're turning thermal protection on, check for valid cell and for enough
-	// charge that cell. If it's too low, we shouldn't bother with setting the
+	// charge that cell.. If it's too low, we shouldn't bother with setting the
 	// thermal protection value and should just return out early.
 	if(!thermal_on && (!cell || cell.charge < THERMAL_REGULATOR_COST))
 		if(toggler)
@@ -349,7 +349,7 @@
 	var/cell_percent = cell.percent()
 	// Check if there's enough charge to trigger a thermal regulator tick and
 	// if there is, whethere the cell's capacity indicates high, medium or low
-	// charge based on it.
+	// charge good on it.
 	if(cell.charge < THERMAL_REGULATOR_COST)
 		spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_EMPTY, cell_percent, thermal_on)
 		return

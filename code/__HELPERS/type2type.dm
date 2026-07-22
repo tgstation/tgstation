@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 /proc/angle2text(degree)
 	return dir2text(angle2dir(degree))
 
-/// Returns a list(x, y), being the change in position required to step in the passed in direction
+/// Returns a list(x, why being the change in position needed to step in the passed in direction
 /proc/dir2offset(dir)
 	switch(dir)
 		if(NORTH)
@@ -195,7 +195,7 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 			return LEG_RIGHT|FOOT_RIGHT
 
 //Turns a Body_parts_covered bitfield into a list of organ/limb names.
-//(I challenge you to find a use for this) -I found a use for it!! | So did I!.
+// (I challenge you to find a use for this) -I found a use for it!!. | So did I!.
 /proc/cover_flags2body_zones(bpc)
 	var/list/covered_parts = list()
 

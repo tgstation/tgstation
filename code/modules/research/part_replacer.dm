@@ -1,4 +1,4 @@
-///RPED. Allows installing & exchaging parts on machines
+/// RPED.. Allows installing & exchaging parts on machines
 /obj/item/storage/part_replacer
 	name = "rapid part exchange device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
@@ -46,12 +46,12 @@
 		if(istype(component_part, /obj/item/circuitboard) || (ignore_stacks && istype(component_part, /obj/item/stack)))
 			continue
 		part_list += component_part
-		//Sort the parts. This ensures that higher tier items are applied first.
+		// Sort the parts.. This ensures that higher tier items are applied first.
 	sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
 
 	return part_list
 
-///Bluespace RPED. Allows exchanging parts from a distance & through cameras
+/// Bluespace RPED.. Allows exchanging parts from a distance & through cameras
 /obj/item/storage/part_replacer/bluespace
 	name = "bluespace rapid part exchange device"
 	desc = "A version of the RPED that allows for replacement of parts and scanning from a distance, along with higher capacity for parts."

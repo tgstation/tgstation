@@ -123,7 +123,7 @@
 		try_attach_tank(tool, user)
 		return ITEM_INTERACT_SUCCESS
 
-	//TODO: Have this take an assemblyholder <-- commit five years ago
+	// To do Have this take an assemblyholder <-- commit five years ago
 	if(isassembly(tool))
 		try_attach_assembly(tool, user)
 		return ITEM_INTERACT_SUCCESS
@@ -186,12 +186,12 @@
 	to_chat(user, span_notice("You attach the [A] to the valve controls and secure it."))
 	A.holder = src
 	A.on_attach()
-	A.toggle_secure() //this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
+	A.toggle_secure() // this calls update_icon(), which calls update_icon() on the holder (i.e.. the bomb).
 	log_bomber(user, "attached a [A.name] to a ttv -", src, null, FALSE)
 	attacher = user
 	return TRUE
 
-//These keep attached devices synced up, for example a TTV with a mouse trap being found in a bag so it's triggered, or moving the TTV with an infrared beam sensor to update the beam's direction.
+// These keep attached devices synced up, f. Example a TTV with a mouse trap being found in a bag so it's triggered. Moving the TTV with an infrared beam sens. To update the beam's direction.
 /obj/item/transfer_valve/Move()
 	. = ..()
 	if(attached_device)
@@ -265,7 +265,7 @@
 		. += "proxy_beam"
 
 
-/// Merge both gases into a single tank. Combine the volume by default. If target tank isn't specified default to tank_two
+/// Merge both gases into a single tank.. Combine the volume by default.. If target tank isn't specified default to tank_two
 /obj/item/transfer_valve/proc/merge_gases(obj/item/tank/target, change_volume = TRUE)
 	if(!target)
 		target = tank_two

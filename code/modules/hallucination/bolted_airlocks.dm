@@ -62,7 +62,7 @@
 
 /datum/hallucination/bolts/Destroy()
 	// Clean up any locks we happen to have remaining on qdel.
-	// Hypothetically this shouldn't delete anything. But just in case.
+	// Hypothetically this shouldn't delete anything.. But just in case.
 	for(var/datum/weakref/leftover_lock_ref as anything in locks)
 		var/obj/effect/client_image_holder/hallucination/fake_door_lock/leftover_lock = leftover_lock_ref.resolve()
 		if(!QDELETED(leftover_lock))

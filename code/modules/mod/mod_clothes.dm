@@ -10,7 +10,7 @@
 	heat_protection = HEAD
 	cold_protection = HEAD
 
-// Even without a hat stabilizer, hats can be worn - however, they'll fall off very easily
+// Even without a hat stabilizer, hats can be worn - but they'll fall off very easily
 /obj/item/clothing/head/mod/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)

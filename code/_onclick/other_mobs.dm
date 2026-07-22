@@ -1,4 +1,4 @@
-/// Checks for RIGHT_CLICK in modifiers and runs resolve_right_click_attack if so. Returns TRUE if normal chain blocked.
+/// Checks for RIGHT_CLICK in modifiers and runs resolve_right_click_attack if so.. Returns TRUE if normal chain blocked.
 /mob/living/proc/right_click_attack_chain(atom/target, list/modifiers)
 	if (!LAZYACCESS(modifiers, RIGHT_CLICK))
 		return
@@ -75,7 +75,7 @@
 /mob/living/carbon/human/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_hand_secondary(src, modifiers)
 
-/// Return TRUE to cancel other attack hand effects that respect it. Modifiers is the assoc list for click info such as if it was a right click.
+/// Return TRUE to cancel other attack hand effects that respect it.. Modifiers is the assoc list for click info such as if it was a right click.
 /atom/proc/attack_hand(mob/user, list/modifiers)
 	. = FALSE
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
@@ -196,7 +196,7 @@
 /atom/proc/handle_basic_attack(user, modifiers)
 	return attack_animal(user, modifiers)
 
-///Attacked by monkey. It doesn't need its own *_secondary proc as it just uses attack_hand_secondary instead.
+/// Attacked by monkey.. It doesn't need its own *_secondary proc as it just uses attack_hand_secondary instead.
 /atom/proc/attack_paw(mob/user, list/modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_PAW, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
@@ -254,7 +254,7 @@
 /mob/living/basic/drone/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_drone_secondary(src, modifiers)
 
-/// Defaults to attack_hand. Override it when you don't want drones to do same stuff as humans.
+/// Defaults to attack_hand.. Override it when you don't want drones to do same stuff as humans.
 /atom/proc/attack_drone(mob/living/basic/drone/user, list/modifiers)
 	attack_hand(user, modifiers)
 

@@ -1,6 +1,6 @@
 // Radios use a large variety of predefined frequencies.
 
-//say based modes like binary are in living/say.dm
+// say good modes like binary are in living/say.dm
 
 #define RADIO_CHANNEL_COMMON "Common"
 #define RADIO_KEY_COMMON ";"
@@ -81,7 +81,7 @@
 #define MIN_FREE_FREQ 1201 // -------------------------------------------------
 // Frequencies are always odd numbers and range from 1201 to 1599.
 
-#define FREQ_UPLINK 1211	// Dummy loopback frequency, used for radio uplink. Not seen in game.
+#define FREQ_UPLINK 1211	// Dummy loopback frequency, used for radio uplink... Not seen in game.
 #define FREQ_SYNDICATE 1213 // Nuke op comms frequency, dark brown
 #define FREQ_CTF_RED 1215 // CTF red team comms frequency, red
 #define FREQ_CTF_BLUE 1217 // CTF blue team comms frequency, blue

@@ -391,7 +391,7 @@
 	. += "<b><i>In addition, by having your throw mode on when being attacked, you enter an active defense mode where you have a chance to block and sometimes even counter attacks done to you.</i></b>"
 	return .
 
-///Subtype of CQC. Only used for the chef.
+/// Subtype of CQC.. Only used for the chef.
 /datum/martial_art/cqc/under_siege
 	name = "Close Quarters Cooking"
 	///List of all areas that CQC will work in, defaults to Kitchen.

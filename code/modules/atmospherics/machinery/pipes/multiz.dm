@@ -45,7 +45,7 @@
 	center.pixel_w = PIPING_LAYER_P_X * (piping_layer - PIPING_LAYER_DEFAULT)
 	. += center
 
-///Attempts to locate a multiz pipe that's above us, if it finds one it merges us into its pipenet
+/// Tries to locate a multiz pipe that's above us, if it finds one it merges us into its pipenet
 /obj/machinery/atmospherics/pipe/multiz/pipeline_expansion()
 	var/turf/local_turf = get_turf(src)
 	for(var/obj/machinery/atmospherics/pipe/multiz/above in GET_TURF_ABOVE(local_turf))

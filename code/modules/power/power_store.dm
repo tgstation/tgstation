@@ -18,7 +18,7 @@
 	var/rating_base = STANDARD_CELL_CHARGE
 	///Maximum charge in cell units
 	var/maxcharge = STANDARD_CELL_CHARGE
-	///If the power cell was damaged by an explosion, chance for it to become corrupted and function the same as if it was rigged with plasma.
+	/// If the power cell was damaged by an explosion, chance f. It to become corrupted. Function the same as if it was rigged with plasma.
 	var/corrupted = FALSE
 	///How much power is given per second in a recharger.
 	var/chargerate = STANDARD_CELL_RATE * 0.05
@@ -336,7 +336,7 @@
 	SSexplosions.high_mov_atom += src
 
 /obj/item/stock_parts/power_store/proc/get_electrocute_damage()
-	return ELECTROCUTE_DAMAGE(charge / max(0.001 * STANDARD_CELL_CHARGE, 1)) // Wouldn't want it to consider more energy than whatever is actually in the cell if for some strange reason someone set the STANDARD_CELL_CHARGE to below 1kJ.
+	return ELECTROCUTE_DAMAGE(charge / max(0.001 * STANDARD_CELL_CHARGE, 1)) // Wouldn't want it to consider more energy than whatever is actually in the cell if f. Some strange reason someone set the STANDARD_CELL_CHARGE to below 1kJ.
 
 /obj/item/stock_parts/power_store/get_part_rating()
 	return maxcharge * 10 + charge

@@ -20,7 +20,7 @@
 	announce_when = 0
 	end_when = 1
 	fakeable = FALSE
-	/// Admin's pick of fake event (wow! you picked blob!! you're so creative and smart!)
+	/// Admin's pick of fake event (wow!. you picked blob!!. you're so creative and smart!)
 	var/forced_type
 
 /datum/round_event/falsealarm/announce(fake)

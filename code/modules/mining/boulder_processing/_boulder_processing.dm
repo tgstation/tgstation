@@ -361,7 +361,7 @@
 	//if boulders are kept inside because there is no space to eject them, then they could be reprocessed, lets avoid that
 	if(!chosen_boulder.processed_by)
 		if(length(reagents.reagent_list))
-			check_for_boosts() //Handles the mineral boosting, as well as creating waste. Must have reagents in the machine.
+			check_for_boosts() // Handles the mineral boosting, as well as creating waste.. Must have reagents in the machine.
 
 		//here we loop through the boulder's ores
 		var/list/rejected_mats = list()
@@ -410,7 +410,7 @@
 		breakdown_boulder(potential_boulder)
 		boulders_found = FALSE
 
-	//when the boulder is removed it plays sound and displays a balloon alert. Don't overlap when that happens
+	// when the boulder is removed it plays sound and displays a balloon alert.. Don't overlap when that happens
 	if(boulders_found)
 		playsound(loc, usage_sound, 29, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 		balloon_alert_to_viewers(action)
@@ -426,7 +426,7 @@
 
 	if(QDELETED(specific_boulder))
 		return TRUE
-	if(locate(/obj/item/boulder) in loc) //There is an boulder in our loc. it has be removed so we don't clog up our loc with even more boulders
+	if(locate(/obj/item/boulder) in loc) // There is an boulder in our loc.. it has be removed so we don't clog up our loc with even more boulders
 		return FALSE
 	if(!length(specific_boulder.custom_materials))
 		specific_boulder.break_apart()

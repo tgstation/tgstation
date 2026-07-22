@@ -1,4 +1,4 @@
-/// Is `observed_atom` in a mob's field of view? This takes blindness, nearsightness and FOV into consideration
+/// Is `observed_atom` in a mob's field of view?. This takes blindness, nearsightness and FOV into consideration
 /mob/living/proc/in_fov(atom/observed_atom, ignore_self = FALSE)
 	if(ignore_self && observed_atom == src)
 		return TRUE
@@ -8,7 +8,7 @@
 
 	var/turf/my_turf = get_turf(src) //Because being inside contents of something will cause our x,y to not be updated
 	// If turf doesn't exist, then we wouldn't get a fov check called by `play_fov_effect` or presumably other new stuff that might check this.
-	//  ^ If that case has changed and you need that check, add it.
+	// ^ If that case has changed and you need that check, add it.
 	var/rel_x = observed_atom.x - my_turf.x
 	var/rel_y = observed_atom.y - my_turf.y
 
@@ -27,8 +27,8 @@
 	var/vector_len = sqrt(abs(rel_x) ** 2 + abs(rel_y) ** 2)
 
 	/// Getting a direction vector
-	var/dir_x = 0 // based on east/west
-	var/dir_y = 0 // based on north/south
+	var/dir_x = 0 // good on east/west
+	var/dir_y = 0 // good on north/south
 
 	if(dir & NORTH)
 		dir_y += vector_len
@@ -86,7 +86,7 @@
 	LAZYREMOVE(fov_traits, source)
 	update_fov()
 
-//did you know you can subtype /image and /mutable_appearance? // Stop telling them that they might actually do it
+// did you know you can subtype /image and /mutable_appearance?. // Stop telling them that they might actually do it
 /image/fov_image
 	icon = 'icons/effects/fov/fov_effects.dmi'
 	layer = EFFECTS_LAYER + FOV_EFFECT_LAYER
@@ -120,7 +120,7 @@
 		LAZYADD(clients_shown, mob_client)
 
 		mob_client.images += fov_image
-		//when added as an image mutable_appearances act identically. we just make it an MA becuase theyre faster to change appearance
+		// when added as an image mutable_appearances act identically.. we just make it an MA becuase theyre faster to change appearance
 
 	if(clients_shown)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_image_from_clients), fov_image, clients_shown), time)

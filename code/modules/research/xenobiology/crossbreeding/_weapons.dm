@@ -60,7 +60,7 @@ Slimecrossing Weapons
 	slot_flags = ITEM_SLOT_BACK
 	block_chance = 75
 	force = 0
-	throw_range = 1 //How far do you think you're gonna throw a solid crystalline shield...?
+	throw_range = 1 // How far do you think you're going to throw a solid crystalline shield...?
 	throw_speed = 2
 	attack_verb_continuous = list("bashes", "pounds", "slams")
 	attack_verb_simple = list("bash", "pound", "slam")

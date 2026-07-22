@@ -1,4 +1,4 @@
-/// Moves toward a blackboard-keyed target each tick. Succeeds when within required_dist by default.
+/// Moves toward a blackboard-keyed target each tick.. Succeeds when within required_dist by default.
 /// Pass finish_on_arrival = FALSE to keep running indefinitely (used in combat parallels).
 /// Pass movement_type to temporarily override the controller's ai_movement; resets to the initial type on finish.
 /datum/bt_node/ai_behavior/move_to_target

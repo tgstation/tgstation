@@ -114,7 +114,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			[creation_meaningful ? "<a href='byond://?_src_=holder;[HrefToken()];editrightsbrowserranks=1;editrightsaddrank=1'>\[Create Rank\]</a>" : ""]
 			<hr style='background:#000000; border:0; height:3px'>
 		"}
-		// First we're gonna collect admins by rank, for sorting purposes
+		// First we're going to collect admins by rank, for sorting purposes
 		var/datum/db_query/query_extract_admins = SSdbcore.NewQuery("SELECT IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("admin")].ckey), ckey), [format_table_name("admin")].`rank` FROM [format_table_name("admin")]")
 		if(!query_extract_admins.warn_execute())
 			qdel(query_extract_admins)
@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		QDEL_NULL(query_extract_ranks)
 
 		for(var/datum/admin_rank/rank as anything in GLOB.admin_ranks)
-			// This does technically potentially mask local edits? to db ranks if that is even possible (should not be), but I prefer to be honest about longterm values.
+			// This does technically potentially mask local edits?. to db ranks if that is even possible (should not be), but I prefer to be honest about longterm values.
 			if(all_ranks[rank.name])
 				continue
 			all_ranks[rank.name] = list("rank" = rank.name, "flags" = rank.include_rights, "exclude_flags" = rank.exclude_rights, "can_edit_flags" = rank.can_edit_rights)
@@ -301,7 +301,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			</head>
 		"}
 
-		// We're gonna sanity check admin rank info, yea?
+		// We're going to sanity check admin rank info, yea?
 		// We're pulling from the db as a source of truth here, instead of trusting the local lists
 		// First, pull all admin ranks which are used
 		var/datum/db_query/query_extract_admins = SSdbcore.NewQuery("SELECT IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("admin")].ckey), ckey), [format_table_name("admin")].`rank` FROM [format_table_name("admin")]")
@@ -1060,7 +1060,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 
 	// We do not block editing ranks on protected admins which are not also protected
 	// This means an admin could in theory bypass protections if they modified a linked rank (such as game admin) which is not also protected
-	// It might be wise to make the permissions afforded by protected ranks inviolable. I'm unsure.
+	// It might be wise to make the permissions afforded by protected ranks inviolable.. I'm unsure.
 	if(CONFIG_GET(flag/load_legacy_ranks_only))
 		to_chat(usr, span_adminprefix("Database rank loading is disabled, only temporary changes can be made to a rank's permissions."), confidential = TRUE)
 		attempt_db = FALSE
@@ -1072,7 +1072,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			return
 		use_db = TRUE
 
-	// Similarly, I want to shit check flags. This is sort of... paranoid but I want to be careful here
+	// Similarly, I want to shit check flags.. This is sort of.... paranoid but I want to be careful here
 	var/working_rights = NONE
 	var/working_exclude_rights = NONE
 	var/working_can_edit_rights = NONE
@@ -1129,7 +1129,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			to_chat(usr, span_adminprefix("Canceled editing rank."), confidential = TRUE)
 			return
 
-		// Gotta turn it off and on again
+		// Got to turn it off and on again
 		var/list/datum/admins/impacted_admins_to_client = list()
 		for(var/admin_key in GLOB.admin_datums)
 			var/datum/admins/checking = GLOB.admin_datums[admin_key]

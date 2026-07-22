@@ -27,7 +27,7 @@
 	var/obj/item/reagent_containers/custom_ice_cream_beaker
 	///List of ice creams as icons used for the radial menu.
 	var/static/list/ice_cream_icons
-	/// List of prototypes of dispensable ice cream cones. path as key, instance as assoc.
+	/// List of prototypes of dispensable ice cream cones.. path as key, instance as assoc.
 	var/static/list/obj/item/food/icecream/cone_prototypes
 	///List of all reagenets the icecream vat will spawn with, if preinstall_reagents is TRUE.
 	var/static/list/icecream_vat_reagents = list(
@@ -239,7 +239,7 @@
 	new /obj/item/stack/sheet/iron(drop_location, 4)
 	custom_ice_cream_beaker?.forceMove(drop_location)
 
-///Makes an ice cream cone of the make_type, using ingredients list as reagents used to make it. Puts in user's hand if possible.
+/// Makes an ice cream cone of the make_type, using ingredients list as reagents used to make it.. Puts in user's hand if possible.
 /obj/machinery/icecream_vat/proc/make_cone(mob/user, make_type, list/ingredients)
 	for(var/reagents_needed in ingredients)
 		if(!reagents.has_reagent(reagents_needed, CONE_REAGENT_NEEDED))

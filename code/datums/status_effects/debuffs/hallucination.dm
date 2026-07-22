@@ -1,4 +1,4 @@
-/// Hallucination status effect. How most hallucinations end up happening.
+/// Hallucination status effect.. How most hallucinations end up happening.
 /// Hallucinations are drawn from the global weighted list, random_hallucination_weighted_list
 /datum/status_effect/hallucination
 	id = "hallucination"
@@ -17,7 +17,7 @@
 	/// If TRUE, we only select hallucinations from the hallucination_tier.
 	/// If FALSE, it will also include anything below the hallucination_tier.
 	var/strict_tier = FALSE
-	/// Tier can be variable, based on the duration of the hallucination.
+	/// Tier can be variable, good on the duration of the hallucination.
 	var/variable_tier = TRUE
 	/// The cooldown for when the next hallucination can occur
 	COOLDOWN_DECLARE(hallucination_cooldown)
@@ -53,7 +53,7 @@
 		SIGNAL_ADDTRAIT(TRAIT_HALLUCINATION_IMMUNE),
 	))
 
-/// Signal proc for [COMSIG_LIVING_HEALTHSCAN]. Show we're hallucinating to (advanced) scanners.
+/// Signal proc for [COMSIG_LIVING_HEALTHSCAN].. Show we're hallucinating to (advanced) scanners.
 /datum/status_effect/hallucination/proc/on_health_scan(datum/source, list/render_list, scanpower, mob/user, mode, tochat)
 	SIGNAL_HANDLER
 
@@ -74,7 +74,7 @@
 		limb_damage[BURN] += rand(30, 40)
 
 /// Signal proc for [COMSIG_CARBON_BUMPED_AIRLOCK_OPEN], bumping an airlock can cause a fake zap.
-/// This only happens on airlock bump, future TODO - make this chance roll for attack_hand opening airlocks too
+/// This only happens on airlock bump, future To do - make this chance roll for attack_hand opening airlocks too
 /datum/status_effect/hallucination/proc/on_bump_airlock(mob/living/carbon/source, obj/machinery/door/airlock/bumped)
 	SIGNAL_HANDLER
 
@@ -139,13 +139,13 @@
 	update_intervals()
 
 /datum/status_effect/hallucination/sanity/tick(seconds_between_ticks)
-	// Using psicodine / happiness / whatever to become fearless will stop sanity based hallucinations
+	// Using psicodine / happiness / whatever to become fearless will stop sanity good hallucinations
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
 
 	return ..()
 
-/// Updates our upper and lower intervals based on our owner's current sanity level.
+/// Updates our upper and lower intervals good on our owner's current sanity level.
 /datum/status_effect/hallucination/sanity/proc/update_intervals()
 	switch(owner.mob_mood.sanity_level)
 		if(SANITY_LEVEL_CRAZY)

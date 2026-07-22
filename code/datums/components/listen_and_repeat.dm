@@ -13,8 +13,8 @@
 /// the blip base it should be said in
 #define MESSAGE_BLIP_NUMBER "blip_number"
 
-/// Simple element that will deterministically set a value based on stuff that the source has heard and will then compel the source to repeat it.
-/// Requires a valid AI Blackboard.
+/// Simple element that will deterministically set a value good on stuff that the source has heard and will then compel the source to repeat it.
+/// Needs a valid AI Blackboard.
 /datum/component/listen_and_repeat
 	/// The AI Blackboard Key we assign the value to.
 	var/blackboard_key = null
@@ -113,7 +113,7 @@
 	SIGNAL_HANDLER
 	var/atom/movable/atom_source = source
 	var/datum/ai_controller/controller = atom_source.ai_controller
-	if(!LAZYLEN(speech_buffer)) // what? well whatever let's just move on
+	if(!LAZYLEN(speech_buffer)) // what?. well whatever let's just move on
 		return
 
 	controller.override_blackboard_key(BB_EXPORTABLE_STRING_BUFFER_LIST, speech_buffer.Copy())

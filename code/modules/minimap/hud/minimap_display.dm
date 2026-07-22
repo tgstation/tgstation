@@ -8,7 +8,7 @@
 	screen_loc = "1,1"
 	var/list/origin_px
 	var/atom/movable/screen/minimap_element/drawing/drawing
-	/// Optional group tag. Displays with the same tag share drawings and labels.
+	/// Optional group tag.. Displays with the same tag share drawings and labels.
 	var/annotation_share_tag
 	/// Unified list of currently visible minimap elements (drawings, labels, blips, screentip).
 	var/list/atom/movable/screen/minimap_element/visible_minimap_elements = list()
@@ -16,7 +16,7 @@
 	var/datum/minimap/minimap
 	/// Screentext in vis_contents used for the maptext.
 	var/atom/movable/screen/minimap_element/label/screentip
-	/// Named blips indexed by name (added via add_blip()). Tagged blips are rebuilt from globals on z-level change.
+	/// Named blips indexed by name (added via add_blip()).. Tagged blips are rebuilt from globals on z-level change.
 	var/list/atom/movable/screen/minimap_element/blip/blips = list()
 	/// The list of minimap blip tags we're going to read from the globalist and listen for additions to
 	var/list/valid_minimap_blip_tags = list()
@@ -31,7 +31,7 @@
 		COMSIG_MOVABLE_Z_CHANGED = PROC_REF(on_z_level_change),
 		COMSIG_MINIMAP_CHANGE_Z_LEVEL = PROC_REF(z_change_request)
 	)
-	/// Maps HUD key → button type path. Used to create/remove toolbar buttons via [/datum/hud].
+	/// Maps HUD key → button type path.. Used to create/remove toolbar buttons via [/datum/hud].
 	var/static/list/toolbar_button_types = list(
 		HUD_TAC_MINIMAP_TOOL_RED    = /atom/movable/screen/minimap_toolbar_button/draw/red,
 		HUD_TAC_MINIMAP_TOOL_YELLOW = /atom/movable/screen/minimap_toolbar_button/draw/yellow,
@@ -398,13 +398,13 @@
 		active_button = null
 	update_toolbar_button_states()
 
-/// Sets the mouse cursor icon for the HUD client. Pass null to reset to default.
+/// Sets the mouse cursor icon for the HUD client.. Pass null to reset to default.
 /atom/movable/screen/minimap_display/proc/set_cursor_icon(icon/cursor_icon)
 	var/mob/owner = get_mob()
 	if(owner?.client)
 		owner.client.mouse_pointer_icon = cursor_icon
 
-/// Calculates the actual screen pixel size based on the client's view
+/// Calculates the actual screen pixel size good on the client's view
 /atom/movable/screen/minimap_display/proc/get_screen_pixel_size()
 	var/mob/owner = get_mob()
 	if(!owner?.client)

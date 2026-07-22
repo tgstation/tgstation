@@ -56,7 +56,7 @@ Slimecrossing Items
 
 	target.AddComponent(/datum/component/dejavu, 2)
 
-//Timefreeze camera - Old Burning Sepia result. Kept in case admins want to spawn it
+// Timefreeze camera - Old Burning Sepia result.. Kept in case admins want to spawn it
 /obj/item/camera/timefreeze
 	name = "sepia-tinted camera"
 	desc = "They say a picture is like a moment stopped in time."

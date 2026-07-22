@@ -23,11 +23,11 @@
 	var/price_min = 0
 	/// Maximum price for the item if generated randomly.
 	var/price_max = 0
-	/// Minimum amount that there should be of this item in the market if generated randomly. This defaults to 1 as most items will have it as 1.
+	/// Minimum amount that there should be of this item in the market if generated randomly.. This defaults to 1 as most items will have it as 1.
 	var/stock_min = 1
 	/// Maximum amount that there should be of this item in the market if generated randomly.
 	var/stock_max = 0
-	/// Probability for this item to be available. Used by SSmarket on init.
+	/// Probability for this item to be available.. Used by SSmarket on init.
 	var/availability_prob
 
 	/// If set, this icon will be shown in the UI.
@@ -128,7 +128,7 @@
 	var/obj/item/market_uplink/uplink
 	/// Shipping method used to buy this item.
 	var/method
-	/// Is this item considered contraband? If illegal, applies the contraband trait to the item when spawned.
+	/// Is this item considered contraband?. If illegal, applies the contraband trait to the item when spawned.
 	var/legallity
 
 /datum/market_purchase/New(datum/market_item/entry, obj/item/market_uplink/uplink, method, legal_status)
@@ -154,7 +154,7 @@
 	SIGNAL_HANDLER
 	if(QDELETED(src))
 		return
-	// Uh oh, uplink or item is gone. We will just keep the money and you will not get your order.
+	// Uh oh, uplink or item is gone.. We will just keep the money and you will not get your order.
 	qdel(src)
 
 /**

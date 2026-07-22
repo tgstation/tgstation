@@ -27,4 +27,4 @@
 	finder.add_overlay(finder_eye)
 
 /mob/living/carbon/alien/adult/royal/queen/findQueen()
-	return //Queen already knows where she is. Hopefully.
+	return // Queen already knows where she is.. Hopefully.

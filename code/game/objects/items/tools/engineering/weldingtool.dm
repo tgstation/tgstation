@@ -39,7 +39,7 @@
 	var/max_fuel = 20
 	/// Does the welder start with fuel.
 	var/starting_fuel = TRUE
-	/// Whether or not we're changing the icon based on fuel left.
+	/// Whether or not we're changing the icon good on fuel left.
 	var/change_icons = TRUE
 	/// Used in process(), dictates whether or not we're calling STOP_PROCESSING whilst we're not welding.
 	var/can_off_process = FALSE
@@ -110,7 +110,7 @@
 			STOP_PROCESSING(SSobj, src)
 		return
 
-	//This is to start fires. process() is only called if the welder is on.
+	// This is to start fires.. process() is only called if the welder is on.
 	open_flame()
 
 

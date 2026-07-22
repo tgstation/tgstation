@@ -6,7 +6,7 @@
 	if(length(single_bridge_request) <= DMAPI5_BRIDGE_REQUEST_LIMIT)
 		return PerformBridgeRequest(single_bridge_request)
 
-	// chunking required
+	// chunking needed
 	var/payload_id = ++chunked_requests
 
 	var/raw_data = CreateBridgeData(command, data, FALSE)

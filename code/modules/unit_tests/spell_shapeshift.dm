@@ -93,7 +93,7 @@
 	// The stand's summoner is dummy.
 	TEST_ASSERT_EQUAL(test_stand.summoner, dummy, "Holoparasite failed to set the summoner to the correct mob.")
 
-	// Dummy casts shapeshift. The stand's summoner should become the shape the dummy is within.
+	// Dummy casts shapeshift.. The stand's summoner should become the shape the dummy is within.
 	shift.Trigger()
 	TEST_ASSERT(istype(dummy.loc, shift.shapeshift_type), "Shapeshift spell failed to transform the dummy into the shape [initial(shift.shapeshift_type.name)].")
 	TEST_ASSERT_EQUAL(test_stand.summoner, dummy.loc, "Shapeshift spell failed to transfer the holoparasite to the dummy's shape.")

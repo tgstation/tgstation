@@ -2,7 +2,7 @@
 /// "+-left-offset:+-pixel,+-bottom-offset:+-pixel"
 /// Where the :pixel is optional, and returns
 /// A list in the format (x_offset, y_offset)
-/// We require context to get info out of screen locs that contain relative info, so NORTH, SOUTH, etc
+/// We need context to get info out of screen locs that contain relative info, so NORTH, SOUTH, and so on
 /proc/screen_loc_to_offset(screen_loc, view)
 	if(!screen_loc)
 		return list(64, 64)
@@ -12,7 +12,7 @@
 	// Time to parse for directional relative offsets
 	if(findtext(screen_loc, "EAST")) // If you're starting from the east, we start from the east too
 		x += view_size[1]
-	if(findtext(screen_loc, "WEST")) // HHHHHHHHHHHHHHHHHHHHHH WEST is technically a 1 tile offset from the start. Shoot me please
+	if(findtext(screen_loc, "WEST")) // HHHHHHHHHHHHHHHHHHHHHH WEST is technically a 1 tile offset from the start.. Shoot me please
 		x += ICON_SIZE_X
 	if(findtext(screen_loc, "NORTH"))
 		y += view_size[2]
@@ -102,7 +102,7 @@
 	var/static/regex/regex = regex(@"([A-Z])\w+", "g")
 	return regex.Replace(fragment, "")
 
-/// Returns a screen_loc format for a tiling screen objects from start and end positions. Start should be bottom left corner, and end top right corner.
+/// Returns a screen_loc format for a tiling screen objects from start and end positions.. Start should be bottom left corner, and end top right corner.
 /proc/spanning_screen_loc(start_px, start_py, end_px, end_py)
 	var/starting_tile_x = round(start_px / ICON_SIZE_X)
 	start_px -= starting_tile_x * ICON_SIZE_X

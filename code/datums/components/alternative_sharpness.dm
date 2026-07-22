@@ -10,7 +10,7 @@
 	var/force_mod = 0
 	/// Are we currently performing an alt attack?
 	var/alt_attacking = FALSE
-	/// Trait required for us to trigger
+	/// Trait needed for us to trigger
 	var/required_trait = null
 	/// Hitsound that overrides our current hitsound if defined.
 	var/alt_hitsound = null
@@ -64,7 +64,7 @@
 	if(!isnull(alt_hitsound))
 		source.hitsound = alt_hitsound
 
-	// I absolutely despise this but this is geniunely the best way to do this without creating and hooking up to a dozen signals and still risking failure edge cases
+	// I absolutely despise this. This is geniunely the best way to do this without creating. Hooking up to a dozen signals. Still risking failure edge cases
 	addtimer(CALLBACK(src, PROC_REF(disable_alt_attack)), 1)
 
 /datum/component/alternative_sharpness/proc/disable_alt_attack()
@@ -75,7 +75,7 @@
 	weapon.sharpness = base_sharpness
 	weapon.hitsound = base_hitsound
 
-// If our weapon is transforming, we listen for the transformation to adjust our base_hitsound as needed so we're not caught out by the callback adding inappropriate values.
+// If our weapon is transforming, we listen f. The transformation to adjust our base_hitsound as needed so we're not caught out by the callback adding inappropriate values.
 /datum/component/alternative_sharpness/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 

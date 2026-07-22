@@ -71,7 +71,7 @@
 
 	return INITIALIZE_HINT_QDEL
 
-/// A more volatile granter that can potentially have any spell within. Use wisely.
+/// A more volatile granter that can potentially have any spell within.. Use wisely.
 /obj/item/book/granter/action/spell/true_random
 	icon_state = "random_book"
 	desc = "You feel as if anything could be gained from this book."

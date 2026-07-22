@@ -11,7 +11,7 @@
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 10 SECONDS
 
-	/// Our spell's requrements before we shapeshifted. Stored on shapeshift so we can restore them after unshifting.
+	/// Our spell's requrements before we shapeshifted.. Stored on shapeshift so we can restore them after unshifting.
 	var/pre_shift_requirements
 
 	/// Whether we revert to our human form on death.
@@ -26,7 +26,7 @@
 	/// Our chosen type.
 	var/mob/living/shapeshift_type
 	/// All possible types we can become.
-	/// This should be implemented even if there is only one choice.
+	/// This should be added even if there is only one choice.
 	var/list/atom/possible_shapes
 
 	/// The shapechange status effect to apply to our mob, it should be a subtype of this if you change it
@@ -46,8 +46,8 @@
 
 	if(shapeshift_type)
 		// If another shapeshift spell was casted while we're already shifted, they could technically go to do_unshapeshift().
-		// However, we don't really want people casting shapeshift A to un-shapeshift from shapeshift B,
-		// as it could cause bugs or unintended behavior. So we'll just stop them here.
+		// But we don't really want people casting shapeshift A to un-shapeshift from shapeshift B,
+		// as it could cause bugs or unintended behavior.. So we'll just stop them here.
 		if(is_shifted(cast_on) && !is_type_in_list(cast_on, possible_shapes))
 			to_chat(cast_on, span_warning("This spell won't un-shapeshift you from this form!"))
 			return . | SPELL_CANCEL_CAST
@@ -108,12 +108,12 @@
 	if(HAS_TRAIT(resulting_mob, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(resulting_mob, TRAIT_VENTCRAWLER_NUDE))
 		return
 
-	// Uh oh. You've shapeshifted into something that can't fit into a vent, while ventcrawling.
+	// Uh oh.. You've shapeshifted into something that can't fit into a vent, while ventcrawling.
 	eject_from_vents(resulting_mob)
 
 /// Whenever someone shapeshifts within a vent,
 /// and enters a state in which they are no longer a ventcrawler,
-/// they are brutally ejected from the vents. In the form of gibs.
+/// they are brutally ejected from the vents.. In the form of gibs.
 /datum/action/cooldown/spell/shapeshift/proc/eject_from_vents(mob/living/cast_on)
 	var/obj/machinery/atmospherics/pipe_you_die_in = cast_on.loc
 	var/datum/pipeline/our_pipeline
@@ -133,7 +133,7 @@
 
 	priority_announce("We detected a pipe blockage around [get_area(get_turf(cast_on))], please dispatch someone to investigate.", "[command_name()]")
 	// Gib our caster, and make sure to leave nothing behind
-	// (If we leave something behind, it'll drop on the turf of the pipe, which is kinda wrong.)
+	// (If we leave something behind, it'll drop on the turf of the pipe, which is kind of wrong.)
 	cast_on.investigate_log("has been gibbed by shapeshifting while ventcrawling.", INVESTIGATE_DEATHS)
 	cast_on.gib()
 
@@ -172,7 +172,7 @@
 
 	return new_shape
 
-/// Actually does the un-shapeshift, from the caster. (Caster is a shapeshifted mob.)
+/// Actually does the un-shapeshift, from the caster.. (Caster is a shapeshifted mob.)
 /datum/action/cooldown/spell/shapeshift/proc/do_unshapeshift(mob/living/caster)
 	var/datum/status_effect/shapechange_mob/shapechange = caster.has_status_effect(shapechange_type)
 	if(!shapechange)
@@ -181,7 +181,7 @@
 		stack_trace("[type] do_unshapeshift was called when the mob wasn't even shapeshifted (from a spell).")
 		return
 
-	// Restore the requirements.
+	// Restore the needs
 	spell_requirements = pre_shift_requirements
 	pre_shift_requirements = null
 
@@ -190,7 +190,7 @@
 	return unshapeshifted_mob
 
 /// Helper proc that instantiates the mob we shapeshift into.
-/// Returns an instance of a living mob. Can be overridden.
+/// Returns an instance of a living mob.. Can be overridden.
 /datum/action/cooldown/spell/shapeshift/proc/create_shapeshift_mob(atom/loc)
 	return new shapeshift_type(loc)
 

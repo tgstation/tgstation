@@ -43,7 +43,7 @@
  * Contains the main fusion calculations and checks, for more informations check the comments along the code.
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/fusion_process(seconds_per_tick)
-//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again! Again but with machine!
+// fusion: a terrible idea that was fun but broken.. Now reworked to be less broken and more interesting.. Again (and again, and again).. Again!. Again but with machine!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
 //7 reworks
 
@@ -72,7 +72,7 @@
 	var/positive_temperature_multiplier = 1
 	var/negative_temperature_multiplier = 1
 
-	//We scale it down by volume/2 because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
+	// We scale it down by volume/2 because f. Fusion conditions, moles roughly = 2*volume. We want it to be good off something constant between reactions.
 	var/scale_factor = volume * 0.5
 
 	/// Store the fuel gases and the byproduct gas quantities
@@ -133,7 +133,7 @@
 								scaled_moderator_list[/datum/gas/nitrium] * 0.15 + \
 								scaled_moderator_list[/datum/gas/healium] * 0.45 + \
 								scaled_moderator_list[/datum/gas/freon] * 1.15
-	///Between 0.25 and 100, this value is used to modify the behaviour of the internal energy and the core temperature based on the gases present in the mix
+	/// Between 0.25. 100, this value is used to modify the behaviour of the internal energy. The core temperature good on the gases present in the mix
 	var/power_modifier = scaled_moderator_list[/datum/gas/oxygen] * 0.55 + \
 								scaled_moderator_list[/datum/gas/carbon_dioxide] * 0.95 + \
 								scaled_moderator_list[/datum/gas/nitrium] * 1.45 + \
@@ -141,7 +141,7 @@
 								scaled_moderator_list[/datum/gas/plasma] * 0.05 - \
 								scaled_moderator_list[/datum/gas/nitrous_oxide] * 0.05 - \
 								scaled_moderator_list[/datum/gas/freon] * 0.75
-	///Minimum 0.25, this value is used to modify the behaviour of the energy emission based on the gases present in the mix
+	/// Minimum 0.25, this value is used to modify the behaviour of the energy emission good on the gases present in the mix
 	var/heat_modifier = scaled_moderator_list[/datum/gas/plasma] * 1.25 - \
 								scaled_moderator_list[/datum/gas/nitrogen] * 0.75 - \
 								scaled_moderator_list[/datum/gas/nitrous_oxide] * 1.45 - \
@@ -204,7 +204,7 @@
 	power_output = efficiency * (internal_power - conduction - radiation)
 	//Hotter air is easier to heat up and cool down
 	heat_limiter_modifier = 5 * (10 ** power_level) * (heating_conductor / 100)
-	//The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
+	// The amount of heat that is finally emitted, good on the power output.. Min and max are variables that depends of the modifier
 	heat_output_min = - heat_limiter_modifier * 0.01 * negative_temperature_multiplier
 	heat_output_max = heat_limiter_modifier * positive_temperature_multiplier
 	heat_output = clamp(internal_instability * power_output * heat_modifier / 200, heat_output_min, heat_output_max)
@@ -214,7 +214,7 @@
 	if (!check_fuel())
 		return
 
-	// Phew. Lets calculate what this means in practice.
+	// Phew.. Lets calculate what this means in practice.
 	var/fuel_consumption_rate = clamp(fuel_injection_rate * 0.01 * 5 * power_level, 0.05, 30)
 	var/consumption_amount = fuel_consumption_rate * seconds_per_tick
 	var/production_amount
@@ -242,7 +242,7 @@
  * Perform recipe specific actions. Fuel consumption and recipe based gas production happens here.
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/moderator_fuel_process(seconds_per_tick, production_amount, consumption_amount, datum/gas_mixture/internal_output, moderator_list, datum/hfr_fuel/fuel, fuel_list)
-	// Adjust fusion consumption/production based on this recipe's characteristics
+	// Adjust fusion consumption/production good on this recipe's characteristics
 	var/fuel_consumption = consumption_amount * 0.85 * selected_fuel.fuel_consumption_multiplier
 	var/scaled_production = production_amount * selected_fuel.gas_production_multiplier
 
@@ -429,7 +429,7 @@
 		var/subcritical_heal_restore = (internal_fusion.total_moles() - HYPERTORUS_SUBCRITICAL_MOLES) / HYPERTORUS_SUBCRITICAL_SCALE
 		critical_threshold_proximity = max(critical_threshold_proximity + min(subcritical_heal_restore * seconds_per_tick, 0), 0)
 
-	// If coolant is sufficiently cold, heal up
+	// If coolant is enough cold, heal up
 	if(internal_fusion.total_moles() > 0 && (airs[1].total_moles() && coolant_temperature < HYPERTORUS_COLD_COOLANT_THRESHOLD) && power_level <= 4)
 		var/cold_coolant_heal_restore = log(10, max(coolant_temperature, 1) * HYPERTORUS_COLD_COOLANT_SCALE) - (HYPERTORUS_COLD_COOLANT_MAX_RESTORE * 2)
 		critical_threshold_proximity = max(critical_threshold_proximity + min(cold_coolant_heal_restore * seconds_per_tick, 0), 0)
@@ -523,7 +523,7 @@
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_internal_cooling(seconds_per_tick)
 	if(moderator_internal.total_moles() > 0 && internal_fusion.total_moles() > 0)
-		//Modifies the moderator_internal temperature based on energy conduction and also the fusion by the same amount
+		// Modifies the moderator_internal temperature good on energy conduction and also the fusion by the same amount
 		var/fusion_temperature_delta = internal_fusion.temperature - moderator_internal.temperature
 		var/fusion_heat_amount = (1 - (1 - METALLIC_VOID_CONDUCTIVITY) ** seconds_per_tick) * fusion_temperature_delta * (internal_fusion.heat_capacity() * moderator_internal.heat_capacity() / (internal_fusion.heat_capacity() + moderator_internal.heat_capacity()))
 		internal_fusion.temperature = max(internal_fusion.temperature - fusion_heat_amount / internal_fusion.heat_capacity(), TCMB)

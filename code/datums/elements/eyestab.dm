@@ -123,7 +123,7 @@
 	if (eyes.damage < EYESTAB_BLINDING_THRESHOLD)
 		return
 
-	// At over 30 damage, there is a chance (based on eye damage) of going blind
+	// At over 30 damage, there is a chance good on eye damage) of going blind
 	if (prob(eyes.damage - EYESTAB_BLINDING_THRESHOLD + 1))
 		if (!target.is_blind_from(EYE_DAMAGE))
 			eyes.set_organ_damage(eyes.maxHealth)

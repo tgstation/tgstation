@@ -2,11 +2,11 @@
 /datum/bt_node
 	/// Node type identifier.
 	var/node_type = BT_NODE_LEAF
-	/// Pre-order depth-first index of this node in the tree. Assigned by finalize_tree().
+	/// Pre-order depth-first index of this node in the tree.. Assigned by finalize_tree().
 	var/execution_index = 0
-	/// Index of the last descendant node in this subtree. Equal to execution_index for leaves.
+	/// Index of the last descendant node in this subtree.. Equal to execution_index for leaves.
 	var/last_execution_index = 0
-	/// Reference to this node's parent in the resolved tree. Set by ai_controller/finalize_tree().
+	/// Reference to this node's parent in the resolved tree.. Set by ai_controller/finalize_tree().
 	/// Null for root-level nodes.
 	var/datum/bt_node/parent_node = null
 	///Owning controller for this node
@@ -23,12 +23,12 @@
 		t = replacetext(t, "/datum/bt_node/subtree/", "")
 		label = t
 
-///Ticked by the ai_controller. Returns BT_SUCCESS, BT_FAILURE, or BT_RUNNING which can change how the parent responds.
+/// Ticked by the ai_controller.. Returns BT_SUCCESS, BT_FAILURE, or BT_RUNNING which can change how the parent responds.
 /datum/bt_node/proc/tick(datum/ai_controller/controller, seconds_per_tick)
 	SHOULD_NOT_SLEEP(TRUE)
 	return BT_FAILURE
 
-/// Resets per-tick state for this node instance. Override in subtypes that hold tick state.
+/// Resets per-tick state for this node instance.. Override in subtypes that hold tick state.
 /datum/bt_node/proc/reset_tick_state()
 	return
 
@@ -66,7 +66,7 @@
 /datum/bt_node/proc/has_active_descendants()
 	return FALSE
 
-/// Walks descendants to find the node with the given execution_index. Returns null if not found.
+/// Walks descendants to find the node with the given execution_index.. Returns null if not found.
 /datum/bt_node/proc/find_by_index(target_index)
 	if(execution_index == target_index)
 		return src
@@ -79,7 +79,7 @@
 			return found
 	return null
 
-/// Appends this node's active/upcoming state to lines for display. No-op for plain leaf nodes.
+/// Appends this node's active/upcoming state to lines for display.. No-op for plain leaf nodes.
 /datum/bt_node/proc/append_active_nodes(list/lines, indent)
 	return
 
@@ -91,7 +91,7 @@
 /datum/bt_node/proc/set_descriptor_children(list/children_descs, datum/ai_controller/controller)
 	return
 
-/// Returns a single-character status marker for display. Overridden by ai_behavior to check running.
+/// Returns a single-character status marker for display.. Overridden by ai_behavior to check running.
 /datum/bt_node/proc/get_status_marker()
 	return "o"
 
@@ -99,7 +99,7 @@
 /datum/bt_node/proc/append_full_tree_state(list/lines, indent)
 	lines += "[indent][get_status_marker()] [label]"
 
-/// Adds all children that must be visited during reset to to_visit. No-op for leaf nodes.
+/// Adds all children that must be visited during reset to to_visit.. No-op for leaf nodes.
 /datum/bt_node/proc/collect_reset_children(list/to_visit)
 	return
 

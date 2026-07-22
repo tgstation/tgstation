@@ -82,7 +82,7 @@
  */
 /obj/effect/particle_effect/fluid
 	name = "fluid"
-	///	The fluid group that this particle effect belongs to.
+	/// The fluid group that this particle effect belongs to.
 	var/datum/fluid_group/group
 	/// What SSfluid bucket this particle effect is currently in.
 	var/tmp/effect_bucket
@@ -90,7 +90,7 @@
 	var/tmp/spread_bucket
 
 /obj/effect/particle_effect/fluid/Initialize(mapload, datum/fluid_group/group, obj/effect/particle_effect/fluid/source)
-	// We don't pass on explosions. Don't wanna set off a chain reaction in our reagents
+	// We don't pass on explosions.. Don't want to set off a chain reaction in our reagents
 	flags_1 |= PREVENT_CONTENTS_EXPLOSION_1
 	. = ..()
 	if(!group)
@@ -146,7 +146,7 @@
 	var/source_msg
 	var/blame_msg
 	if (holder)
-		holder.transfer_fingerprints_to(flood) // This is important. If this doesn't exist thermobarics are annoying to adjudicate.
+		holder.transfer_fingerprints_to(flood) // This is important.. If this doesn't exist thermobarics are annoying to adjudicate.
 		source_msg = "from inside of [ismob(holder) ? ADMIN_LOOKUPFLW(holder) : ADMIN_VERBOSEJMP(holder)]"
 		var/lastkey = holder.fingerprintslast
 		if (lastkey)

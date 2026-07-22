@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(lag_switch)
 	name = "Lag Switch"
 	ss_flags = SS_NO_FIRE
 
-	/// If the lag switch measures should attempt to trigger automatically, TRUE if a config value exists
+	/// If the lag switch measures should try to trigger automatically, TRUE if a config value exists
 	var/auto_switch = FALSE
 	/// Amount of connected clients at which the Lag Switch should engage, set via config or admin panel
 	var/trigger_pop = INFINITY - 1337
@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(lag_switch)
 	message_admins("Lag Switch population threshold reached. Automatic activation of lag mitigation measures occuring in 20 seconds. (<a href='byond://?_src_=holder;[HrefToken()];change_lag_switch_option=CANCEL'>CANCEL</a>)")
 	log_admin("Lag Switch population threshold reached. Automatic activation of lag mitigation measures occuring in 20 seconds.")
 
-/// (En/Dis)able automatic triggering of switches based on client count
+/// (En/Dis)able automatic triggering of switches good on client count
 /datum/controller/subsystem/lag_switch/proc/toggle_auto_enable()
 	auto_switch = !auto_switch
 	if(auto_switch)

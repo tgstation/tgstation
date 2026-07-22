@@ -1,6 +1,6 @@
 /// How long the chat message's spawn-in animation will occur for
 #define CHAT_MESSAGE_SPAWN_TIME (0.2 SECONDS)
-/// How long the chat message will exist prior to any exponential decay
+/// How long the chat message will exist before to any exponential decay
 #define CHAT_MESSAGE_LIFESPAN (5 SECONDS)
 /// How long the chat message's end of life fading animation will occur for
 #define CHAT_MESSAGE_EOL_FADE (0.7 SECONDS)
@@ -255,7 +255,7 @@
 				animate(m.message, alpha = 0, time = CHAT_MESSAGE_EOL_FADE, flags=continuing)
 				continuing |= ANIMATION_CONTINUE
 			// We run this after the alpha animate, because we don't want to interrup it, but also don't want to block it by running first
-			// Sooo instead we do this. bit messy but it fuckin works
+			// Sooo instead we do this.. bit messy but it fuckin works
 			if(m.message.pixel_z < starting_height)
 				var/max_height = m.message.pixel_z + m.approx_lines * CHAT_MESSAGE_APPROX_LHEIGHT - starting_height
 				if(max_height > 0)
@@ -332,7 +332,7 @@
 	// Ensure the list we are using, if present, is a copy so we don't modify the list provided to us
 	var/list/classes = (runechat_flags & EMOTE_MESSAGE) ? list("emote", "italics") : LAZYCOPY(spans)
 
-	// Check for virtual speakers (aka hearing a message through a radio)
+	// Check for virtual speakers also known as hearing a message through a radio)
 	var/atom/movable/original_speaker = speaker
 	if (!(runechat_flags & EMOTE_MESSAGE) && istype(speaker, /atom/movable/virtualspeaker))
 		var/atom/movable/virtualspeaker/virtual_speaker = speaker

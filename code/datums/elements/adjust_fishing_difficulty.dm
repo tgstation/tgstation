@@ -98,7 +98,7 @@
 	else
 		LAZYSET(user.fishing_difficulty_mods_by_source, source_item.type, modifier)
 
-	// Are we currently in a fishing challenge? If so, update that challenge as well
+	// Are we currently in a fishing challenge?. If so, update that challenge as well
 	var/datum/fishing_challenge/challenge = GLOB.fishing_challenges_by_user[user]
 	if(challenge)
 		challenge.update_difficulty()

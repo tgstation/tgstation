@@ -10,7 +10,7 @@
 	var/specific_heat = SPECIFIC_HEAT_DEFAULT
 	/// used by taste messages
 	var/taste_description = "metaphorical salt"
-	///how this taste compares to others. Higher values means it is more noticable
+	/// how this taste compares to others.. Higher values means it is more noticable
 	var/taste_mult = 1
 	/// reagent holder this belongs to
 	var/datum/reagents/holder = null
@@ -22,13 +22,13 @@
 	var/volume = 0
 	/// pH of the reagent
 	var/ph = 7
-	///Purity of the reagent - for use with internal reaction mechanics only. Use below (creation_purity) if you're writing purity effects into a reagent's use mechanics.
+	/// Purity of the reagent - for use with internal reaction mechanics only.. Use below (creation_purity) if you're writing purity effects into a reagent's use mechanics.
 	var/purity = 1
-	///the purity of the reagent on creation (i.e. when it's added to a mob and its purity split it into 2 chems; the purity of the resultant chems are kept as 1, this tracks what the purity was before that)
+	/// the purity of the reagent on creation (i.e.. when it's added to a mob. Its purity split it into 2 chems; the purity of the resultant chems are kept as 1, this tracks what the purity was before that)
 	var/creation_purity = 1
-	///The molar mass of the reagent - if you're adding a reagent that doesn't have a recipe, just add a random number between 10 - 800. Higher numbers are "harder" but it's mostly arbitary.
+	/// The molar mass of the reagent - if you're adding a reagent that doesn't have a recipe, just add a random number between 10 - 800.. Higher numbers are "harder" but it's mostly arbitary.
 	var/mass
-	/// color it looks in containers etc
+	/// color it looks in containers and so on
 	var/color = COLOR_BLACK // rgb: 0, 0, 0
 	///how fast the reagent is metabolized by the mob
 	var/metabolization_rate = REAGENTS_METABOLISM
@@ -42,7 +42,7 @@
 	var/reagent_weight = 1
 	///is it currently metabolizing
 	var/metabolizing = FALSE
-	/// Are we from a material? We might wanna know that for special stuff. Like metalgen. Is replaced with a ref of the material on New()
+	/// Are we from a material?. We might want to know that for special stuff.. Like metalgen.. Is replaced with a ref of the material on New()
 	var/datum/material/material
 	///The set of exposure methods this penetrates skin with.
 	var/penetrates_skin = VAPOR
@@ -79,7 +79,7 @@
 	var/list/metabolized_traits
 	/// A list of traits to apply while the reagent is in a mob.
 	var/list/added_traits
-	/// Multiplier of the amount purged by reagents such as calomel, multiver, syniver etc.
+	/// Multiplier of the amount purged by reagents such as calomel, multiver, syniver and so on
 	var/purge_multiplier = 1
 
 	///The default reagent container for the reagent, used for icon generation
@@ -151,7 +151,7 @@
 
 	return SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_TURF, exposed_turf, reac_volume)
 
-///Called whenever a reagent is on fire, or is in a holder that is on fire. (WIP)
+/// Called whenever a reagent is on fire, or is in a holder that is on fire.. work in progress
 /datum/reagent/proc/burn(datum/reagents/holder)
 	return
 
@@ -270,11 +270,11 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_REAGENT_ON_MERGE, mix_data, amount)
 
-/// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
+/// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects.. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
 /datum/reagent/proc/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	return
 
-/// Called when an overdose starts. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
+/// Called when an overdose starts.. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
 /datum/reagent/proc/overdose_start(mob/living/affected_mob, metabolization_ratio)
 	to_chat(affected_mob, span_userdanger("You feel like you took too much of [name]!"))
 	affected_mob.add_mood_event("[type]_overdose", /datum/mood_event/overdose, name)
@@ -322,7 +322,7 @@
 		purity = src.purity
 	return min(1-inverse_chem_val + purity + 0.01, 1) //Gives inverse reactions a 1% purity threshold for being 100% pure to appease players with OCD.
 
-///Called when feeding a fish. If TRUE is returned, a portion of reagent will be consumed.
+/// Called when feeding a fish.. If TRUE is returned, a portion of reagent will be consumed.
 /datum/reagent/proc/used_on_fish(obj/item/fish/fish)
 	return FALSE
 
@@ -348,7 +348,7 @@
  * * * Water, Silicon, Soup, and Space Lube
  */
 /proc/pretty_string_from_reagent_list(list/reagent_list, names_only, join_text = " | ", final_and, capitalize_names)
-	//Convert reagent list to a printable string for logging etc
+	// Convert reagent list to a printable string for logging and so on
 	var/list/reagent_strings = list()
 	var/reagents_left = reagent_list.len
 	var/intial_list_length = reagents_left

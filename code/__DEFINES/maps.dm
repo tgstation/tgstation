@@ -49,13 +49,13 @@ Always compile, always use that verb, and always make sure that it works for wha
 // Maploader bounds indices
 /// The maploader index for the maps minimum x
 #define MAP_MINX 1
-/// The maploader index for the maps minimum y
+/// The maploader index for the maps minimum why
 #define MAP_MINY 2
 /// The maploader index for the maps minimum z
 #define MAP_MINZ 3
 /// The maploader index for the maps maximum x
 #define MAP_MAXX 4
-/// The maploader index for the maps maximum y
+/// The maploader index for the maps maximum why
 #define MAP_MAXY 5
 /// The maploader index for the maps maximum z
 #define MAP_MAXZ 6
@@ -106,7 +106,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 // number - default gravity if there's no gravity generators or area overrides present
 #define ZTRAIT_GRAVITY "Gravity"
 
-// Whether this z level is linked up/down. Bool.
+// Whether this z level is linked up/down... Bool.
 #define ZTRAIT_UP "Up"
 #define ZTRAIT_DOWN "Down"
 
@@ -221,7 +221,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define SPACE_KEY "space"
 
 //clusterCheckFlags defines
-//All based on clusterMin and clusterMax as guides
+// All good on clusterMin and clusterMax as guides
 
 //Individual defines
 #define CLUSTER_CHECK_NONE 0 //!No checks are done, cluster as much as possible

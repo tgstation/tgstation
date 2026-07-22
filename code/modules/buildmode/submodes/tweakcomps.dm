@@ -1,6 +1,6 @@
 /datum/buildmode_mode/tweakcomps
 	key = "tweakcomps"
-	/// This variable is responsible for the rating of the components themselves. Literally tiers of components, where 1 is standard, 4 is bluespace.
+	/// This variable is responsible for the rating of the components themselves.. Literally tiers of components, where 1 is standard, 4 is bluespace.
 	var/rating = null
 
 /datum/buildmode_mode/tweakcomps/show_help(client/builder)

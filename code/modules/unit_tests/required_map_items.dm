@@ -7,7 +7,7 @@
  */
 /datum/unit_test/maptest_required_map_items
 	test_flags = UNIT_TEST_MAP_TEST
-	/// A list of all typepaths that we expect to be in the required items list
+	/// A list of all typepaths that we expect to be in the needed items list
 	var/list/expected_types = list()
 
 /// Used to fill the expected types list with all the types we look for on the map.
@@ -46,18 +46,18 @@
 			continue
 
 	// This primarily serves as a reminder to include the typepath in the expected types list above.
-	// However we can easily delete this line in the future if it runs into false positives.
+	// But we can easily delete this line in the future if it runs into false positives.
 	TEST_ASSERT(length(required_map_items) == 0, "The following paths were found in required map items, but weren't checked: [english_list(required_map_items)]")
 
-/// Datum for tracking required map items
+/// Datum for tracking needed map items
 /datum/required_item
 	/// Type (exact) being tracked
 	var/tracked_type
 	/// How many exist in the world
 	var/total_amount = 0
-	/// Min. amount of this type that should exist roundstart (inclusive)
+	/// Min.. amount of this type that should exist roundstart (inclusive)
 	var/minimum_amount = 1
-	/// Max. amount of this type that should exist roundstart (inclusive)
+	/// Max.. amount of this type that should exist roundstart (inclusive)
 	var/maximum_amount = 1
 
 /datum/required_item/New(tracked_type, minimum_amount = 1, maximum_amount = 1)

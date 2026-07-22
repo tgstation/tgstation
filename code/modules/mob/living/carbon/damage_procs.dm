@@ -335,7 +335,7 @@
 
 		parts -= picked
 
-	if(!.) // no change? no need to update anything
+	if(!.) // no change?. no need to update anything
 		return
 
 	if(updating_health)
@@ -362,7 +362,7 @@
 		var/burn_was = picked.burn_dam
 		. += picked.get_damage()
 
-		// disabling wounds from these for now cuz your entire body snapping cause your heart stopped would suck
+		// disabling wounds from these for now because your entire body snapping cause your heart stopped would suck
 		update |= picked.receive_damage(brute_per_part, burn_per_part, blocked = FALSE, updating_health = FALSE, forced = forced, required_bodytype = required_bodytype, wound_bonus = CANT_WOUND)
 
 		. -= picked.get_damage() // return the net amount of damage healed
@@ -372,7 +372,7 @@
 
 		parts -= picked
 
-	if(!.) // no change? no need to update anything
+	if(!.) // no change?. no need to update anything
 		return
 
 	if(updating_health)

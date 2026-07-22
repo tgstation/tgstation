@@ -237,7 +237,7 @@ GLOBAL_LIST_INIT(hijack_employers, list(
 	"Waffle Corporation Terrorist",
 ))
 
-///employers who hire agents to do a task and escape... or martyrdom. whatever
+/// employers who hire agents to do a task and escape..... or martyrdom... whatever
 GLOBAL_LIST_INIT(normal_employers, list(
 	"Champions of Evil",
 	"Corporate Climber",
@@ -250,7 +250,7 @@ GLOBAL_LIST_INIT(normal_employers, list(
 	"Waffle Corporation",
 ))
 
-///employers for malfunctioning ais. they do not have sides, unlike traitors.
+/// employers for malfunctioning ais... they do not have sides, unlike traitors.
 GLOBAL_LIST_INIT(ai_employers, list(
 	"Biohazard",
 	"Despotic Ruler",
@@ -294,7 +294,7 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a heretic and is guaranteed to return the datum if possible - will cause issues with above trait
 #define GET_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
 
-/// Check if the given mob is a  lunatic
+/// Check if the given mob is a lunatic
 #define IS_LUNATIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/lunatic))
 /// Checks if the given mob is either a heretic, heretic monster or a lunatic.
 #define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || HAS_TRAIT(mob, TRAIT_HERETIC_SUMMON) || IS_LUNATIC(mob))
@@ -319,7 +319,7 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a wizard apprentice
 #define IS_WIZARD_APPRENTICE(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/wizard/apprentice))
 
-/// Checks if the given mob is a revolutionary. Will return TRUE for rev heads as well.
+/// Checks if the given mob is a revolutionary... Will return TRUE for rev heads as well.
 #define IS_REVOLUTIONARY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/rev))
 
 /// Checks if the given mob is a head revolutionary.
@@ -345,7 +345,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 /// Returns true if the given mob has an antag datum which is assigned to a human antagonist who doesn't spawn on the space station
 #define IS_HUMAN_INVADER(mob) (mob?.mind?.has_antag_datum_in_list(GLOB.human_invader_antagonists))
 
-/// The dimensions of the antagonist preview icon. Will be scaled to this size.
+/// The dimensions of the antagonist preview icon... Will be scaled to this size.
 #define ANTAGONIST_PREVIEW_ICON_SIZE 96
 
 // Defines for objective items to determine what they can appear in
@@ -366,11 +366,11 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 /// Chance the traitor gets a martyr objective instead of having to escape alive, as long as all the objectives are martyr compatible.
 #define MARTYR_PROB 20
 
-/// Chance the traitor gets a kill objective. If this prob fails, they will get a steal objective instead.
+/// Chance the traitor gets a kill objective... If this prob fails, they will get a steal objective instead.
 #define KILL_PROB 50
 /// If a kill objective is rolled, chance that it is to destroy the AI.
 #define DESTROY_AI_PROB(denominator) (100 / denominator)
-/// If the destroy AI objective doesn't roll, chance that we'll get a maroon instead. If this prob fails, they will get a generic assassinate objective instead.
+/// If the destroy AI objective doesn't roll, chance that we'll get a maroon instead... If this prob fails, they will get a generic assassinate objective instead.
 #define MAROON_PROB 30
 /// Probability that any job related objective is picked
 #define JOB_PROB 40
@@ -487,9 +487,9 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 // Spy bounty difficulties
 /// Can easily be accomplished by any job without any specialized tools, people won't really miss these things
 #define SPY_DIFFICULTY_EASY "Easy"
-/// Requires some specialized tools, knowledge, or access to accomplish, may require getting into conflict with the crew
+/// Needs some specialized tools, knowledge, or access to accomplish, may need getting into conflict with the crew
 #define SPY_DIFFICULTY_MEDIUM "Medium"
-/// Very difficult to accomplish, almost guaranteed to require crew conflict
+/// Very difficult to accomplish, almost guaranteed to need crew conflict
 #define SPY_DIFFICULTY_HARD "Hard"
 
 /// Camera net used by battle royale objective

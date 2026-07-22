@@ -1,7 +1,7 @@
 ///like normal callbacks but they also record their creation time for measurement purposes
-///they also require the same usr/user that made the callback to both still exist and to still have a client in order to execute
+/// they also need the same usr/user that made the callback to both still exist and to still have a client in order to execute
 /datum/callback/verb_callback
-	///the tick this callback datum was created in. used for testing latency
+	/// the tick this callback datum was created in.. used for testing latency
 	var/creation_time = 0
 
 /datum/callback/verb_callback/New(thingtocall, proctocall, ...)

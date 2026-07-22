@@ -27,7 +27,7 @@
 	. = ..()
 	new /obj/item/fishing_line/auto_reel(src)
 
-///From the fishing mystery box. It's basically a lazarus and a few bottles of strange reagents.
+/// From the fishing mystery box.. It's basically a lazarus and a few bottles of strange reagents.
 /obj/item/storage/box/fish_revival_kit
 	name = "fish revival kit"
 	desc = "Become a fish doctor today. A label on the side indicates that fish require two to ten reagent units to be splashed onto them for revival, depending on size."

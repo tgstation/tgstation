@@ -3,7 +3,7 @@
 PROCESSING_SUBSYSTEM_DEF(reagents)
 	name = "Reagents"
 	priority = FIRE_PRIORITY_REAGENTS
-	wait = 0.25 SECONDS //You might think that rate_up_lim has to be set to half, but since everything is normalised around seconds_per_tick, it automatically adjusts it to be per second. Magic!
+	wait = 0.25 SECONDS // You might think that rate_up_lim has to be set to half. Since everything is normalised around seconds_per_tick, it automatically adjusts it to be per second.. Magic!
 	ss_flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	init_stage = INITSTAGE_EARLY
@@ -23,7 +23,7 @@ PROCESSING_SUBSYSTEM_DEF(reagents)
 	//cache for sanic speed (lists are references anyways)
 	var/list/current_run = currentrun
 
-	//Attempt to realtime reactions in a way that doesn't make them overtly dangerous
+	// Try to realtime reactions in a way that doesn't make them overtly dangerous
 	var/delta_realtime = (world.time - previous_world_time)/10 //normalise to s from ds
 	previous_world_time = world.time
 

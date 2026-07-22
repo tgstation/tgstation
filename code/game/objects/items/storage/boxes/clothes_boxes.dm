@@ -27,7 +27,7 @@
 	for(var/i in 1 to 7)
 		new /obj/item/clothing/glasses/regular(src)
 
-//it needs to be linked, hence a kit.
+// it needs to be linked, so a kit.
 /obj/item/storage/box/rxglasses/spyglasskit
 	name = "spyglass kit"
 	desc = "this box contains <i>cool</i> nerd glasses; with built-in displays to view a linked camera."

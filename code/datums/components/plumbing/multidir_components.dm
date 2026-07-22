@@ -1,7 +1,7 @@
 ///When you have a component accepting multiple connections
 /datum/component/plumbing/multidirectional
 	demand_connects = NORTH
-	supply_connects = SOUTH | EAST | WEST //SOUTH is straight, EAST is left and WEST is right. We look from the perspective of the insert
+	supply_connects = SOUTH | EAST | WEST // SOUTH is straight, EAST is left and WEST is right.. We look from the perspective of the insert
 
 /**
  * Returns the direction in which this component is connected to an ductnet without the rotation

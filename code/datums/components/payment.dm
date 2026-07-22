@@ -13,7 +13,7 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE ///NO OVERRIDING TO CHEESE BOUNTIES
 	///Standardized of operation.
 	var/cost = 10
-	///Flavor style for handling cash (Friendly? Hostile? etc.)
+	/// Flavor style for handling cash (Friendly?. Hostile?. and so on
 	var/transaction_style = "Clinical"
 	///Who's getting paid?
 	var/datum/bank_account/target_acc
@@ -51,7 +51,7 @@
 		card = user.pulling
 	if(handle_card(user, card, total_cost))
 		return //Only breaks here if the card can handle the cost of purchasing with someone's ID.
-	if(handle_cardless(user, total_cost)) //Here we attempt to handle the purchase physically, with held money first. Otherwise we default to below.
+	if(handle_cardless(user, total_cost)) // Here we try to handle the purchase physically, with held money first.. Otherwise we default to below.
 		return
 	return COMPONENT_OBJ_CANCEL_CHARGE
 

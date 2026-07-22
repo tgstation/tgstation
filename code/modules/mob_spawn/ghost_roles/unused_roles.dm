@@ -40,7 +40,7 @@
 //spawners for the space hotel, which isn't currently in the code but heyoo secret away missions or something
 
 //Space Hotel Staff
-/obj/effect/mob_spawn/ghost_role/human/hotel_staff //not free antag u little shits
+/obj/effect/mob_spawn/ghost_role/human/hotel_staff // not free antag you little shits
 	name = "staff sleeper"
 	desc = "A sleeper designed for long-term stasis between guest visits."
 	prompt_name = "a hotel staff member"
@@ -140,7 +140,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
-//Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
+// Timeless prisons: Spawns in Wish Granter prisons in lavaland.. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
 /obj/effect/mob_spawn/ghost_role/human/exile
 	name = "timeless prison"
 	desc = "Although this stasis pod looks medicinal, it seems as though it's meant to preserve something for a very long time."

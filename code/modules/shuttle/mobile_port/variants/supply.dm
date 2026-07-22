@@ -150,8 +150,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			empty_turfs += shuttle_turf
 
 	//quickly and greedily handle chef's grocery runs first, there are a few reasons why this isn't attached to the rest of cargo...
-	//but the biggest reason is that the chef requires produce to cook and do their job, and if they are using this system they
-	//already got let down by the botanists. So to open a new chance for cargo to also screw them over any more than is necessary is bad.
+	// but the biggest reason is that the chef needs produce to cook and do their job, and if they are using this system they
+	// already got let down by the botanists.. So to open a new chance for cargo to also screw them over any more than is necessary is bad.
 	if(SSshuttle.chef_groceries.len)
 		var/obj/structure/closet/crate/freezer/grocery_crate = new(pick_n_take(empty_turfs))
 		grocery_crate.name = "kitchen produce freezer"
@@ -176,7 +176,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		if(!empty_turfs.len)
 			break
 
-		//adjust galactic material market based on the ordered quantities
+		// adjust galactic material market good on the ordered quantities
 		var/datum/supply_pack/custom/minerals/sheets = astype(spawning_order.pack)
 		if(!isnull(sheets))
 			var/list/orders_adjusted = sheets.adjust_market()
@@ -197,7 +197,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		if(!spawning_order.department_destination && spawning_order.charge_on_purchase)
 			if(spawning_order.paying_account) //Someone paid out of pocket
 				paying_for_this = spawning_order.paying_account
-				// note this is before we increment, so this is the GOODY_FREE_SHIPPING_MAX + 1th goody to ship. also note we only increment off this step if they successfully pay the fee, so there's no way around it
+				// note this is before we increment, so this is the GOODY_FREE_SHIPPING_MAX + 1th goody to ship.. also note we only increment off this step if they successfully pay the fee, so there's no way around it
 				if(spawning_order.pack.order_flags & ORDER_GOODY)
 					var/list/current_buyer_orders = goodies_by_buyer[spawning_order.paying_account]
 					if(LAZYLEN(current_buyer_orders) == GOODY_FREE_SHIPPING_MAX)
@@ -241,11 +241,11 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			message_admins("\A [spawning_order.pack.name] ordered by [ADMIN_LOOKUPFLW(spawning_order.orderer_ckey)], paid by [from_whom] has shipped.")
 		purchases++
 
-		// done dealing with order. Time to remove & delete it
+		// done dealing with order.. Time to remove & delete it
 		SSshuttle.shopping_list -= spawning_order
 		clean_up_orders += spawning_order
 
-	// we handle packing all the goodies last, since the type of crate we use depends on how many goodies they ordered. If it's more than GOODY_FREE_SHIPPING_MAX
+	// we handle packing all the goodies last, since the type of crate we use depends on how many goodies they ordered.. If it's more than GOODY_FREE_SHIPPING_MAX
 	// then we send it in a crate (including the CRATE_TAX cost), otherwise send it in a free shipping case
 	for(var/buyer_key in goodies_by_buyer)
 		var/list/buying_account_orders = goodies_by_buyer[buyer_key]
@@ -322,7 +322,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	Then, fills the mail crate with mail, by picking applicable crew who can receive mail at the time to sending.
 */
 /obj/docking_port/mobile/supply/proc/create_mail()
-	//Early return if there's no mail waiting to prevent taking up a slot. We also don't send mails on sundays or holidays.
+	// Early return if there's no mail waiting to prevent taking up a slot.. We also don't send mails on sundays or holidays.
 	if(!SSeconomy.mail_waiting || SSeconomy.mail_blocked || SSsecurity_level.current_security_level.disables_mail)
 		return
 

@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(ticker)
 	var/current_state = GAME_STATE_STARTUP
 	/// Boolean to track if round should be forcibly ended next ticker tick.
 	/// Set by admin intervention ([ADMIN_FORCE_END_ROUND])
-	/// or a "round-ending" event, like summoning Nar'Sie, a blob victory, the nuke going off, etc. ([FORCE_END_ROUND])
+	/// or a "round-ending" event, like summoning Nar'Sie, a blob victory, the nuke going off, and so on ([FORCE_END_ROUND])
 	var/force_ending = END_ROUND_AS_NORMAL
 	/// If TRUE, there is no lobby phase, the game starts immediately.
 	#ifdef ABSOLUTE_MINIMUM
@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(ticker)
 	var/round_end_sound //music/jingle played when the world reboots
 	var/round_end_sound_sent = TRUE //If all clients have loaded it
 
-	var/list/datum/mind/minds = list() //The characters in the game. Used for objective tracking.
+	var/list/datum/mind/minds = list() // The characters in the game.. Used for objective tracking.
 
 	var/delay_end = FALSE //if set true, the round will not restart on its own
 	var/admin_delay_notice = "" //a message to display to anyone who tries to restart the world after a delay
@@ -240,7 +240,7 @@ SUBSYSTEM_DEF(ticker)
 
 	// There may be various config settings that have been set or modified by this point.
 	// This is the point of no return before spawning in new players, let's run over the
-	// job trim singletons and update them based on any config settings.
+	// job trim singletons and update them good on any config settings.
 	SSid_access.refresh_job_trim_singletons()
 
 	CHECK_TICK
@@ -332,12 +332,12 @@ SUBSYSTEM_DEF(ticker)
 
 	for(var/i in GLOB.start_landmarks_list)
 		var/obj/effect/landmark/start/S = i
-		if(istype(S)) //we can not runtime here. not in this important of a proc.
+		if(istype(S)) // we can not runtime here.. not in this important of a proc.
 			S.after_round_start()
 		else
 			stack_trace("[S] [S.type] found in start landmarks list, which isn't a start landmark!")
 
-	// handle persistence stuff that requires ckeys, in this case hardcore mode and temporal scarring
+	// handle persistence stuff that needs ckeys, in this case hardcore mode and temporal scarring
 	for(var/i in GLOB.player_list)
 		if(!ishuman(i))
 			continue

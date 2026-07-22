@@ -5,7 +5,7 @@
 
 	/// Whether to make the spell robeless
 	var/make_robeless = TRUE
-	/// The typepath of the spell we give to people. Instantiated in Initialize
+	/// The typepath of the spell we give to people.. Instantiated in Initialize
 	var/datum/action/cooldown/spell/spell_type
 	/// The actual spell we give to the person on implant
 	var/datum/action/cooldown/spell/spell_to_give

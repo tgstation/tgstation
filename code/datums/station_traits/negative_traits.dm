@@ -17,7 +17,7 @@
 /datum/station_trait/distant_supply_lines/on_round_start()
 	SSeconomy.pack_price_modifier *= 1.2
 
-///A negative trait that stops mail from arriving (or the inverse if on holiday). It also enables a specific shuttle loan situation.
+/// A negative trait that stops mail from arriving (or the inverse if on holiday).. It also enables a specific shuttle loan situation.
 /datum/station_trait/mail_blocked
 	name = "Postal workers strike"
 	trait_type = STATION_TRAIT_NEGATIVE
@@ -26,7 +26,7 @@
 	report_message = "Due to an ongoing strike announced by the postal workers union, mail won't be delivered this shift."
 
 /datum/station_trait/mail_blocked/on_round_start()
-	//This is either a holiday or Sunday... well then, let's flip the situation.
+	// This is either a holiday or Sunday.... well then, let's flip the situation.
 	if(SSeconomy.mail_blocked)
 		name = "Postal system overtime"
 		report_message = "Despite being a day off, the postal system is working overtime today. Mail will be delivered this shift."
@@ -204,7 +204,7 @@
 	cost = STATION_TRAIT_COST_LOW
 
 	// Way too much is done on atoms SS to be reverted, and it'd look
-	// kinda clunky on round start. It's not impossible to make this work,
+	// kind of clunky on round start.. It's not impossible to make this work,
 	// but it's a project for...someone else.
 	can_revert = FALSE
 
@@ -261,7 +261,7 @@
 		new /obj/effect/decal/cleanable/blood(pick(area_open_turfs))
 
 	var/list/blood_path = list()
-	for(var/i in 1 to 10) // Only 10 attempts
+	for(var/i in 1 to 10) // Only 10 tries
 		var/turf/destination = pick(area_open_turfs)
 		var/turf/next_step = get_step_to(punpun, destination)
 		for(var/k in 1 to 30) // Max 30 steps
@@ -554,7 +554,7 @@
 
 	nebula.add_shielder(shielder, shielding_proc)
 
-///The station will be inside a radioactive nebula! Space is radioactive and the station needs to start setting up nebula shielding
+/// The station will be inside a radioactive nebula!. Space is radioactive and the station needs to start setting up nebula shielding
 /datum/station_trait/nebula/hostile/radiation
 	name = "Radioactive Nebula"
 	trait_type = STATION_TRAIT_NEGATIVE
@@ -626,11 +626,11 @@
 	var/datum/round_event_control/modified_event = locate(/datum/round_event_control/radiation_storm) in SSevents.control
 	modified_event.weight = 0
 
-///They entered space? START BOMBING WITH RADS HAHAHAHA. old_area can be null for new objects
+/// They entered space?. START BOMBING WITH RADS HAHAHAHA.. old_area can be null for new objects
 /datum/station_trait/nebula/hostile/radiation/proc/on_entered(area/space, atom/movable/enterer, area/old_area)
 	SIGNAL_HANDLER
 
-	// Old area was radioactive, so what's the point. nothing changes. nothing ever does. also make sure the subsystem is alive before we give it food
+	// Old area was radioactive, so what's the point.. nothing changes.. nothing ever does.. also make sure the subsystem is alive before we give it food
 	if (istype(old_area, radioactive_areas) || !SSradioactive_nebula.initialized)
 		return
 
@@ -644,7 +644,7 @@
 
 	// The component handles its own removal
 
-/// When a mob is spawned by dynamic, intercept and give it a little radiation shield. Only works for dynamic mobs!
+/// When a mob is spawned by dynamic, intercept and give it a little radiation shield.. Only works for dynamic mobs!
 /datum/station_trait/nebula/hostile/radiation/proc/on_spawned_mob(datum/source, mob/spawned_mob)
 	SIGNAL_HANDLER
 

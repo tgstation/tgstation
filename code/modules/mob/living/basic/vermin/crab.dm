@@ -37,7 +37,7 @@
 	AddElement(/datum/element/ai_flee_while_injured)
 	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean"))
 
-//COFFEE! SQUEEEEEEEEE!
+// COFFEE!. SQUEEEEEEEEE!
 /mob/living/basic/crab/coffee
 	name = "Coffee"
 	real_name = "Coffee"

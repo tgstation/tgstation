@@ -1,4 +1,4 @@
-/// Passes when the pawn's loc is of the given type (e.g. the pawn is inside a specific structure).
+/// Passes when the pawn's loc is of the given type (e.g.. the pawn is inside a specific structure).
 /datum/bt_node/decorator/pawn_loc_is_type
 	observer_abort = BT_ABORT_LOWER_PRIORITY
 	/// Typepath the pawn's loc must match.

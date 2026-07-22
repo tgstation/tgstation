@@ -39,7 +39,7 @@
 	always_area_sensitive = TRUE
 	///Buildstate for contruction steps
 	var/buildstage = FIRE_ALARM_BUILD_SECURED
-	///Our home area, set in Init. Due to loading step order, this seems to be null very early in the server setup process, which is why some procs use `my_area?` for var or list checks.
+	/// Our home area, set in Init.. Due to loading step order, this seems to be null very early in the server setup process, which is why some procs use `my_area?` f. Var. List checks.
 	var/area/my_area = null
 	///looping sound datum for our fire alarm siren.
 	var/datum/looping_sound/firealarm/soundloop
@@ -105,7 +105,7 @@
 	handle_fire(our_area, our_area.fire)
 
 /obj/machinery/firealarm/on_enter_area(datum/source, area/area_to_register)
-	//were already registered to an area. exit from here first before entering into an new area
+	// were already registered to an area.. exit from here first before entering into an new area
 	if(!isnull(my_area))
 		return
 	. = ..()
@@ -180,7 +180,7 @@
 		set_light(l_color = LIGHT_COLOR_BLUE)
 
 	else if(!(my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
-		if(my_area?.fire_detect) //If this is false, someone disabled it. Leave the light missing, a good hint to anyone paying attention.
+		if(my_area?.fire_detect) // If this is false, someone disabled it.. Leave the light missing, a good hint to anyone paying attention.
 			if(is_station_level(z))
 				var/current_level = SSsecurity_level.get_current_level_as_number()
 				. += mutable_appearance(icon, "fire_[current_level]")

@@ -1,7 +1,7 @@
 // Replaces chemgrenade stuff, allowing reagent explosions to be called from anywhere.
 // It should be called using a location, the range, and a list of reagents involved.
 
-// Threatscale is a multiplier for the 'threat' of the grenade. If you're increasing the affected range drastically, you might want to improve this.
+// Threatscale is a multiplier for the 'threat' of the grenade.. If you're increasing the affected range drastically, you might want to improve this.
 // Extra heat affects the temperature of the mixture, and may cause it to react in different ways.
 
 /**
@@ -100,12 +100,12 @@
 				continue
 			turflist[lad] = TRUE
 
-		reactable += valid_step.get_all_contents() // Yes this means multitile objects double react. I don't care. skill issue
+		reactable += valid_step.get_all_contents() // Yes this means multitile objects double react.. I don't care.. skill issue
 		if(hot_chem)
 			valid_step.hotspot_expose(chem_temp*2, 5)
 
 	// Remove anything we can't see
 	for(var/atom/thing as anything in (dview(spread_range, epicenter) & reactable))
 		var/distance = max(1, get_dist(thing, epicenter))
-		var/fraction = 0.5 / (2 ** distance) //50/25/12/6... for a 200u splash, 25/12/6/3... for a 100u, 12/6/3/1 for a 50u
+		var/fraction = 0.5 / (2 ** distance) // 50/25/12/6.... for a 200u splash, 25/12/6/3.... for a 100u, 12/6/3/1 for a 50u
 		source.expose(thing, TOUCH, fraction)

@@ -35,20 +35,20 @@
 	/// The path of the structure the rcd is currently creating
 	var/atom/movable/rcd_design_path
 
-	/// Owner of this rcd. It can either be a construction console, player, or mech.
+	/// Owner of this rcd.. It can either be a construction console, player, or mech.
 	var/atom/owner
 	/// used by arcd, can this rcd work from a range
 	var/ranged = FALSE
 	/// delay multiplier for all construction types
 	var/delay_mod = 1
-	/// variable for R walls to deconstruct them
+	/// variable for Are walls to deconstruct them
 	var/canRturf = FALSE
 	/// integrated airlock electronics for setting access to a newly built airlocks
 	var/obj/item/electronics/airlock/rcd/airlock_electronics
 
 	COOLDOWN_DECLARE(destructive_scan_cooldown)
 
-	///number of active rcd effects in use e.g. when building multiple walls at once this value increases
+	/// number of active rcd effects in use e.g.. when building multiple walls at once this value increases
 	var/current_active_effects = 0
 
 /obj/effect/rcd_hologram
@@ -177,7 +177,7 @@
 		 * if we are trying to finish a wall girder then let it finish then make sure no one/nothing is stuck in the girder
 		 */
 		else if(rcd_mode == RCD_TURF && rcd_structure == /turf/open/floor/plating/rcd)
-			//if a player builds a wallgirder on top of himself manually with iron sheets he can't finish the wall if he is still on the girder. Exclude the girder itself when checking for other dense objects on the turf
+			// if a player builds a wallgirder on top of himself manually with iron sheets he can't finish the wall if he is still on the girder.. Exclude the girder itself when checking for other dense objects on the turf
 			var/list/ignore_types = list()
 			if(isturf(target))
 				if(isfloorturf(target))
@@ -214,10 +214,10 @@
 				ignored_types = list(/obj/structure/window)
 				//if we are trying to create grills/windoors we can go ahead and further ignore other windoors on the turf
 				if(rcd_mode == RCD_WINDOWGRILLE || (rcd_mode == RCD_AIRLOCK && ispath(rcd_structure, /obj/machinery/door/window)))
-					//only ignore mobs if we are trying to create windoors and not grills. We don't want to drop a grill on top of somebody
+					// only ignore mobs if we are trying to create windoors and not grills.. We don't want to drop a grill on top of somebody
 					ignore_mobs = rcd_mode == RCD_AIRLOCK
 					ignored_types += /obj/machinery/door/window
-				//if we are trying to create full airlock doors then we do the regular checks and make sure we have the full space for them. i.e. don't ignore anything dense on the turf
+				// if we are trying to create full airlock doors then we do the regular checks and make sure we have the full space for them.. i.e.. don't ignore anything dense on the turf
 				else if(rcd_mode == RCD_AIRLOCK)
 					ignored_types = list()
 

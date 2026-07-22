@@ -425,7 +425,7 @@
 	SIGNAL_HANDLER
 
 	for(var/mob/living/creature as anything in keyed_creatures)
-		sort_creature_angle(creature) // Kinda spaghetti but it honestly seems like the shortest path to the same result
+		sort_creature_angle(creature) // Kind of spaghetti but it honestly seems like the shortest path to the same result
 
 /obj/item/mod/module/active_sonar/on_process(seconds_per_tick)
 	. = ..()

@@ -115,7 +115,7 @@
 	if(occupant_actions[take_from][actiontype])
 		var/datum/action/action = occupant_actions[take_from][actiontype]
 		// Actions don't dissipate on removal, they just sit around assuming they'll be reusued
-		// Gotta qdel
+		// Got to qdel
 		qdel(action)
 		occupant_actions[take_from] -= actiontype
 	return TRUE
@@ -417,7 +417,7 @@
 				span_userdanger("You smack against the board, hard."),
 			)
 			rider.emote("scream")
-			rider.adjust_brute_loss(10)  // thats gonna leave a mark
+			rider.adjust_brute_loss(10)  // thats going to leave a mark
 			return
 		rider.visible_message(
 			span_danger("[rider] misses the landing and falls on [rider.p_their()] face!"),

@@ -160,7 +160,7 @@
 	var/obj/item/organ/heart/parent_heart = carbon_parent.get_organ_slot(ORGAN_SLOT_HEART)
 	return !isnull(parent_heart) && CAN_HAVE_BLOOD(carbon_parent) && carbon_parent.stat != DEAD
 
-///Action to pump your heart. Cooldown will always be set to 1 second less than the pump delay.
+/// Action to pump your heart.. Cooldown will always be set to 1 second less than the pump delay.
 /datum/action/cooldown/manual_heart
 	name = "Pump your blood"
 	cooldown_time = 2 SECONDS

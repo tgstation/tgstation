@@ -68,7 +68,7 @@
 		if(!valid_occupant)
 			return FALSE
 
-	else if(istype(the_target, /obj/machinery/porta_turret)) //Cringe turret! kill it!
+	else if(istype(the_target, /obj/machinery/porta_turret)) // Uncomfortable turret!. kill it!
 		var/obj/machinery/porta_turret/P = the_target
 		if(P.in_faction(living_mob)) //Don't attack if the turret is in the same faction
 			return FALSE
@@ -125,7 +125,7 @@
 
 /// Subtype which searches for mobs of a size relative to ours
 /datum/targeting_strategy/basic/of_size
-	/// If true, we will return mobs which are smaller than us. If false, larger.
+	/// If true, we will return mobs which are smaller than us.. If false, larger.
 	var/find_smaller = TRUE
 	/// If true, we will return mobs which are the same size as us.
 	var/inclusive = TRUE
@@ -155,7 +155,7 @@
 /datum/targeting_strategy/basic/of_size/smaller
 	inclusive = FALSE
 
-/// Makes the mob only attack their own faction. Useful mostly if their attacks do something helpful (e.g. healing touch).
+/// Makes the mob only attack their own faction.. Useful mostly if their attacks do something helpful (e.g.. healing touch).
 /datum/targeting_strategy/basic/same_faction
 	invert_faction_check = TRUE
 

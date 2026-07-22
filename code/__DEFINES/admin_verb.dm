@@ -45,11 +45,11 @@ _ADMIN_VERB(verb_path_name, verb_permissions, verb_name, ADMIN_VERB_NO_DESCRIPTI
 #define ADMIN_VERB_AND_CONTEXT_MENU(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, verb_args...) \
 _ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, TRUE, ##verb_args)
 
-/// Used to define a special check to determine if the admin verb should exist at all. Useful for verbs such as play sound which require configuration.
+/// Used to define a special check to determine if the admin verb should exist at all... Useful for verbs such as play sound which need configuration.
 #define ADMIN_VERB_CUSTOM_EXIST_CHECK(verb_path_name) \
 /datum/admin_verb/##verb_path_name/__avd_check_should_exist()
 
-/// Used to define the visibility flag of the verb. If the admin does not have this flag enabled they will not see the verb.
+/// Used to define the visibility flag of the verb... If the admin does not have this flag enabled they will not see the verb.
 #define ADMIN_VERB_VISIBILITY(verb_path_name, verb_visibility) /datum/admin_verb/##verb_path_name/visibility_flag = ##verb_visibility
 
 // These are put here to prevent the "procedure override precedes definition" error.
@@ -70,7 +70,7 @@ _ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_categor
  * Also note that byond is shit and you cannot multi-line the macro call.
  */
 
-/// Use this to mark your verb as not having a description. Should ONLY be used if you are also hiding the verb!
+/// Use this to mark your verb as not having a description... Should ONLY be used if you are also hiding the verb!
 #define ADMIN_VERB_NO_DESCRIPTION ""
 /// Used to verbs you do not want to show up in the master verb panel.
 #define ADMIN_CATEGORY_HIDDEN null

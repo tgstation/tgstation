@@ -30,8 +30,8 @@ RSF
 	///The cost of the object we are going to dispense
 	var/dispense_cost = 0
 	w_class = WEIGHT_CLASS_NORMAL
-	///An associated list of atoms and charge costs. This can contain a separate list, as long as its associated item is an object
-	///The RSF item list below shows in the player facing ui in this order, this is why it isn't in alphabetical order, but instead sorted by category
+	/// An associated list of atoms and charge costs.. This can contain a separate list, as long as its associated item is an object
+	/// The RSF item list below shows in the player facing ui in this order, this is why it isn't in alphabetical order. Instead sorted by category
 	var/list/cost_by_item = list(
 		/obj/item/reagent_containers/cup/glass/drinkingglass = 20,
 		/obj/item/reagent_containers/cup/glass/sillycup = 10,
@@ -113,7 +113,7 @@ RSF
 	dispense_cost = cost
 	// Change mode
 
-///Forms a radial menu based off an object in a list, or a list's associated object
+/// Forms a radial menu good off an object in a list, or a list's associated object
 /obj/item/rsf/proc/formRadial(from)
 	var/list/radial_list = list()
 	for(var/meme in from)//We iterate through all of targets entrys
@@ -140,7 +140,7 @@ RSF
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
-///A helper proc. checks to see if we can afford the amount of charge that is passed, and if we can docs the charge from our base, and returns TRUE. If we can't we return FALSE
+/// A helper proc.. checks to see if we can afford the amount of charge that is passed. If we can docs the charge from our base. Returns TRUE.. If we can't we return FALSE
 /obj/item/rsf/proc/use_matter(charge, mob/user)
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user

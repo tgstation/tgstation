@@ -3,7 +3,7 @@
 
 /// Check organ insertion and removal, for all organ subtypes usable in-game.
 /// Ensures algorithmic correctness of the "Insert()" and "Remove()" procs.
-/// This test is especially useful because developers frequently  override those.
+/// This test is especially useful because developers frequently override those.
 /datum/unit_test/organ_sanity
 	// List of organ typepaths which cause species change.
 	// Species change swaps out all the organs, making test_organ un-usable after insertion.

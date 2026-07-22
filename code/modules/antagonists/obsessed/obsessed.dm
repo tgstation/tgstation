@@ -25,7 +25,7 @@
 	var/datum/brain_trauma/special/obsessed/trauma
 
 /datum/antagonist/obsessed/can_be_owned(datum/mind/new_owner)
-	return ..() && new_owner.current?.get_organ_by_type(/obj/item/organ/brain) // gotta have a brain to be obsessed!
+	return ..() && new_owner.current?.get_organ_by_type(/obj/item/organ/brain) // got to have a brain to be obsessed!
 
 /// Dummy antag datum that will show the cured obsessed to admins
 /datum/antagonist/former_obsessed
@@ -101,7 +101,7 @@
 	if(obsessionmind.current?.has_quirk(/datum/quirk/item_quirk/family_heirloom))
 		objectives_left += OBSESSED_OBJECTIVE_HEIRLOOM
 
-	// If they have no coworkers, jealousy will pick someone else on the station. This will never be a free objective.
+	// If they have no coworkers, jealousy will pick someone else on the station.. This will never be a free objective.
 	if(!is_captain_job(obsessionmind.assigned_role))
 		objectives_left += OBSESSED_OBJECTIVE_JEALOUS
 
@@ -189,7 +189,7 @@
 		explanation_text = "Free Objective"
 		completed = TRUE
 
-/datum/objective/assassinate/jealous //assassinate, but it changes the target to someone else in the previous target's department. cool, right?
+/datum/objective/assassinate/jealous // assassinate, but it changes the target to someone else in the previous target's department.. cool, right?
 	var/datum/mind/obsessed_target
 
 /datum/objective/assassinate/jealous/update_explanation_text()
@@ -238,7 +238,7 @@
 /datum/objective/spendtime/check_completion()
 	return timer <= 0 || completed
 
-/datum/objective/hug//this objective isn't perfect. hugging the correct amount of times, then switching bodies, might fail the objective anyway. maybe i'll come back and fix this sometime.
+/datum/objective/hug// this objective isn't perfect.. hugging the correct amount of times, then switching bodies, might fail the objective anyway.. maybe i'll come back and fix this sometime.
 	name = "hugs"
 	var/hugs_needed = 0
 

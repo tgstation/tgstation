@@ -4,7 +4,7 @@
 	name = "placeholder quirk poster"
 	desc = "Uh oh! You shouldn't have this!"
 	icon_state = "rolled_poster_legit"
-	/// People from the selected department will gain a mood buff. If no department is specified applies to the entire crew.
+	/// People from the selected department will gain a mood buff.. If no department is specified applies to the entire crew.
 	var/quirk_poster_department = NONE
 
 /obj/item/poster/quirk/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)

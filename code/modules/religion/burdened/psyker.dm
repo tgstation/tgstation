@@ -67,7 +67,7 @@
 	new /obj/effect/gibspawner/generic(drop_location(), src, get_blood_dna_list())
 	emote("scream")
 
-/// Proc with no side effects that turns someone into a psyker. returns FALSE if it could not psykerize.
+/// Proc with no side effects that turns someone into a psyker.. returns FALSE if it could not psykerize.
 /mob/living/carbon/human/proc/psykerize()
 	var/obj/item/bodypart/head/old_head = get_bodypart(BODY_ZONE_HEAD)
 	var/obj/item/organ/brain/old_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
@@ -82,7 +82,7 @@
 	if (length(our_drops))
 		psyker_head.butcher_drops = string_list(our_drops)
 	qdel(old_head)
-	var/obj/item/organ/brain/psyker/psyker_brain = new() /// turns out if you make a flashing monochromatic outline against black background that refreshes on inconsistant intervals, it hurts peoples eyes. Who'da thunk.
+	var/obj/item/organ/brain/psyker/psyker_brain = new() /// turns out if you make a flashing monochromatic outline against black background that refreshes on inconsistant intervals, it hurts peoples eyes.. Who'da thunk.
 	old_brain.before_organ_replacement(psyker_brain)
 	old_brain.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)

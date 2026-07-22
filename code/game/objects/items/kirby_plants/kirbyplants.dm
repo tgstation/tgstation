@@ -16,7 +16,7 @@
 
 	/// Can this plant be trimmed by someone with TRAIT_BONSAI
 	var/trimmable = TRUE
-	/// Whether this plant is dead and requires a seed to revive
+	/// Whether this plant is dead and needs a seed to revive
 	var/dead = FALSE
 	///If it's a special named plant, set this to true to prevent dead-name overriding.
 	var/custom_plant_name = FALSE

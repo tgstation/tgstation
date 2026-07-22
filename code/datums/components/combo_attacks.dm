@@ -11,7 +11,7 @@
 	var/leniency_time
 	/// List of inputs done by user.
 	var/list/input_list = list()
-	/// Associative list of all the combo moves. Name of Attack = list(COMBO_STEPS = list(Steps made of LEFT_ATTACK and RIGHT_ATTACK), COMBO_PROC = PROC_REF(Proc Name))
+	/// Associative list of all the combo moves.. Name of Attack = list(COMBO_STEPS = list(Steps made of LEFT_ATTACK and RIGHT_ATTACK), COMBO_PROC = PROC_REF(Proc Name))
 	var/list/combo_list = list()
 	/// A list of strings containing the ways to do combos, for examines.
 	var/list/combo_strings = list()

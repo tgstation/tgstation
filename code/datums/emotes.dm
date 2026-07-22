@@ -15,7 +15,7 @@
 	var/key = ""
 	/// This will also call the emote.
 	var/key_third_person = ""
-	/// Needed for more user-friendly emote names, so emotes with keys like "aflap" will show as "flap angry". Defaulted to key.
+	/// Needed for more user-friendly emote names, so emotes with keys like "aflap" will show as "flap angry".. Defaulted to key.
 	var/name = ""
 	/// Message displayed when emote is used.
 	var/message = ""
@@ -45,9 +45,9 @@
 	var/list/mob_type_blacklist_typecache
 	/// Types that can use this emote regardless of their state.
 	var/list/mob_type_ignore_stat_typecache
-	/// Trait that is required to use this emote.
+	/// Trait that is needed to use this emote.
 	var/trait_required
-	/// In which state can you use this emote? (Check stat.dm for a full list of them)
+	/// In which state can you use this emote?. (Check stat.dm for a full list of them)
 	var/stat_allowed = CONSCIOUS
 	/// Sound to play when emote is called.
 	var/sound
@@ -71,7 +71,7 @@
 	var/forced_specific_emote_audio_cooldown = 2 SECONDS
 	/// Does this emote's sound ignore walls?
 	var/sound_wall_ignore = FALSE
-	///Does this emote use sound tokens? this means it also ignores walls.
+	/// Does this emote use sound tokens?. this means it also ignores walls.
 	var/use_sound_tokens = FALSE
 
 /datum/emote/New()

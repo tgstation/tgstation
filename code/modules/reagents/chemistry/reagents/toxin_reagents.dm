@@ -119,7 +119,7 @@
 
 /datum/reagent/toxin/plasma/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	if(HAS_TRAIT(affected_mob, TRAIT_PLASMA_LOVER_METABOLISM)) // sometimes mobs can temporarily metabolize plasma (e.g. plasma fixation disease symptom)
+	if(HAS_TRAIT(affected_mob, TRAIT_PLASMA_LOVER_METABOLISM)) // sometimes mobs can temporarily metabolize plasma (e.g.. plasma fixation disease symptom)
 		toxpwr = 0
 
 /datum/reagent/toxin/plasma/on_mob_end_metabolize(mob/living/carbon/affected_mob)
@@ -440,7 +440,7 @@
 	if(affected_mob.has_trauma_type(/datum/brain_trauma/mild/hallucinations))
 		affected_mob.remove_status_effect(/datum/status_effect/hallucination)
 
-	// otherwise it creates hallucinations. truly a miracle medicine.
+	// otherwise it creates hallucinations.. truly a miracle medicine.
 	else
 		affected_mob.adjust_hallucinations(5 SECONDS * metabolization_ratio * seconds_per_tick)
 
@@ -736,7 +736,7 @@
 	. = ..()
 	if(!HAS_TRAIT(affected_mob, TRAIT_IRRADIATED) && SSradiation.can_irradiate_basic(affected_mob))
 		var/chance = min(volume / (20 - rad_power * 5), rad_power)
-		if(SPT_PROB(chance, seconds_per_tick)) // ignore rad protection calculations bc it's inside of us
+		if(SPT_PROB(chance, seconds_per_tick)) // ignore rad protection calculations because it's inside of us
 			affected_mob.AddComponent(/datum/component/irradiated)
 	else
 		if(affected_mob.adjust_tox_loss(4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
@@ -1161,7 +1161,7 @@
 	if(affected_mob.adjust_oxy_loss(2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
-/datum/reagent/toxin/heparin //Based on a real-life anticoagulant. I'm not a doctor, so this won't be realistic.
+/datum/reagent/toxin/heparin // Good on a real-life anticoagulant.. I'm not a doctor, so this won't be realistic.
 	name = "Heparin"
 	description = "A powerful anticoagulant. All open cut wounds on the patient will open up and bleed much faster. \
 		Counters coagulants like Sanguirite, purging them."
@@ -1177,11 +1177,11 @@
 	metabolized_traits = list(TRAIT_BLOOD_FOUNTAIN)
 
 /datum/reagent/toxin/heparin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
-	if(holder.has_reagent(/datum/reagent/medicine/coagulant)) //Directly purges coagulants from the system. Get rid of the heparin BEFORE attempting to use coagulants.
+	if(holder.has_reagent(/datum/reagent/medicine/coagulant)) // Directly purges coagulants from the system.. Get rid of the heparin BEFORE trying to use coagulants.
 		holder.remove_reagent(/datum/reagent/medicine/coagulant, 5 * metabolization_ratio * seconds_per_tick)
 	return ..()
 
-/datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
+/datum/reagent/toxin/rotatium // Rotatium.. Fucks up your rotation and is hilarious
 	name = "Rotatium"
 	description = "A constantly swirling, oddly colourful fluid. Causes the patient's sense of direction and hand-eye coordination to become wild."
 	silent_toxin = TRUE
@@ -1248,7 +1248,7 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	var/acidpwr = 10 //the amount of protection removed from the armour
 
-// ...Why? I mean, clearly someone had to have done this and thought, well,
+// ...Why?. I mean, clearly someone had to have done this and thought, well,
 // acid doesn't hurt plants, but what brought us here, to this point?
 /datum/reagent/toxin/acid/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_plant_health(-round(volume))
@@ -1690,7 +1690,7 @@
 		return
 	if(prob(10))
 		disaster_zone.balloon_alert_to_viewers("hissssssss!")
-	spew_waste(5) //You can't just dump the industrial waste down the kitchen sink. High range to disincentivize using the chem disposaler.
+	spew_waste(5) // You can't just dump the industrial waste down the kitchen sink.. High range to disincentivize using the chem disposaler.
 
 /**
  * Pick a random turf in the spew range and split our total amount of waste there.

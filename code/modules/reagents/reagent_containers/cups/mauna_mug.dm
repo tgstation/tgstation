@@ -37,7 +37,7 @@
 	if(!reagents.total_volume)
 		return FALSE
 	var/max_temp = min(500 + (500 * (0.2 * cell.rating)), 1000) // 373 to 1000
-	reagents.adjust_thermal_energy(0.4 * cell.maxcharge * reagents.total_volume * seconds_per_tick, max_temp = max_temp) // 4 kelvin every tick on a basic cell. 160k on bluespace
+	reagents.adjust_thermal_energy(0.4 * cell.maxcharge * reagents.total_volume * seconds_per_tick, max_temp = max_temp) // 4 kelvin every tick on a basic cell.. 160k on bluespace
 	reagents.handle_reactions()
 	update_appearance()
 	if(reagents.chem_temp >= max_temp)
@@ -112,7 +112,7 @@
 	if(!reagents.total_volume || reagents.chem_temp < 400)
 		return
 
-	var/intensity = (reagents.chem_temp - 400) * 1 / 600 //Get the opacity of the incandescent overlay. Ranging from 400 to 1000
+	var/intensity = (reagents.chem_temp - 400) * 1 / 600 // Get the opacity of the incandescent overlay.. Ranging from 400 to 1000
 	var/mutable_appearance/mug_glow = mutable_appearance(icon, "maunamug_incand")
 	mug_glow.alpha = 255 * intensity
 	. += mug_glow

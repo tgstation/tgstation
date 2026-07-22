@@ -1,10 +1,10 @@
-//DO NOT USE THESE FOR ACCESSING ATMOS DATA, THEY MUTATE THINGS WHEN CALLED. I WILL BEAT YOU WITH A STICK. See the actual proc for more details
-///Check if an atom (A) and a turf (O) allow gas passage based on the atom's can_atmos_pass var, do not use.
-///(V) is if the share is vertical or not. True or False
+// DO NOT USE THESE FOR ACCESSING ATMOS DATA, THEY MUTATE THINGS WHEN CALLED... I WILL BEAT YOU WITH A STICK... See the actual proc for more details
+/// Check if an atom (A) and a turf (O) allow gas passage good on the atom's can_atmos_pass var, do not use.
+/// (V) is if the share is vertical or not... True or False
 #define CANATMOSPASS(A, O, V) ( A.can_atmos_pass == ATMOS_PASS_PROC ? A.can_atmos_pass(O, V) : ( A.can_atmos_pass == ATMOS_PASS_DENSITY ? !A.density : A.can_atmos_pass ) )
 
 //Helpers
-///Moves the icon of the device based on the piping layer and on the direction
+/// Moves the icon of the device good on the piping layer and on the direction
 #define PIPING_LAYER_SHIFT(T, PipingLayer) \
 	if(T.layer > -1) { \
 		if(T.dir & (NORTH|SOUTH)) { \
@@ -22,7 +22,7 @@
 		} \
 	}
 
-///Moves the icon of the device based on the piping layer and on the direction, the shift amount is dictated by more_shift
+/// Moves the icon of the device good on the piping layer and on the direction, the shift amount is dictated by more_shift
 #define PIPING_FORWARD_SHIFT(T, PipingLayer, more_shift) \
 	if(T.layer > -1) { \
 		if(T.dir & (NORTH|SOUTH)) { \
@@ -40,7 +40,7 @@
 		} \
 	}
 
-///Moves the icon of the device based on the piping layer on both x and y
+/// Moves the icon of the device good on the piping layer on both x and why
 #define PIPING_LAYER_DOUBLE_SHIFT(T, PipingLayer) \
 	if(T.layer > -1) { \
 		T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
@@ -78,9 +78,9 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define CALCULATE_ADJACENT_TURFS(T, state) SSair.adjacent_rebuild[T] = state
 #endif
 
-//If you're doing spreading things related to atmos, DO NOT USE CANATMOSPASS, IT IS NOT CHEAP. use this instead, the info is cached after all. it's tweaked just a bit to allow for circular checks
+// If you're doing spreading things related to atmos, DO NOT USE CANATMOSPASS, IT IS NOT CHEAP... use this instead, the info is cached after all... it's tweaked just a bit to allow for circular checks
 #define TURFS_CAN_SHARE(T1, T2) (LAZYACCESS(T2.atmos_adjacent_turfs, T1) || LAZYLEN(T1.atmos_adjacent_turfs & T2.atmos_adjacent_turfs))
-//Use this to see if a turf is fully blocked or not, think windows or firelocks. Fails with 1x1 non full tile windows, but it's not worth the cost.
+// Use this to see if a turf is fully blocked or not, think windows or firelocks... Fails with 1x1 non full tile windows, but it's not worth the cost.
 #define TURF_SHARES(T) (LAZYLEN(T.atmos_adjacent_turfs))
 
 #define LINDA_CYCLE_ARCHIVE(turf)\

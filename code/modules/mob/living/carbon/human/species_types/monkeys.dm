@@ -120,11 +120,11 @@
 	desc = "This wad of meat is small, but has enlarged occipital lobes for spotting bananas."
 	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE, TRAIT_GUN_NATURAL, TRAIT_WEAK_SOUL) // No literacy or advanced tool usage.
 	actions_types = list(/datum/action/item_action/organ_action/toggle_trip)
-	/// Will this monkey stumble if they are crossed by a simple mob or a carbon in combat mode? Toggable by monkeys with clients, and is messed automatically set to true by monkey AI.
+	/// Will this monkey stumble if they are crossed by a simple mob or a carbon in combat mode?. Toggable by monkeys with clients, and is messed automatically set to true by monkey AI.
 	var/tripping = TRUE
 
 /obj/item/organ/brain/primate/get_replaceability(obj/item/organ/new_organ_type, obj/item/organ/expected_organ_type, datum/species/old_species, replace_current = TRUE)
-	///Real monkeys retain their ape brains when humanized (further species change can override it). If old_species is null,
+	/// Real monkeys retain their ape brains when humanized (further species change can override it).. If old_species is null,
 	if(HAS_TRAIT(owner, TRAIT_BORN_MONKEY) && (!old_species || istype(old_species, /datum/species/monkey)))
 		return FALSE
 	return ..()

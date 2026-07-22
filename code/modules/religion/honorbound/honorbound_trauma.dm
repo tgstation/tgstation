@@ -90,7 +90,7 @@
 	if(istype(the_gun_in_question, /obj/item/gun/magic))
 		return
 
-	if(!isliving(target)) //No shooting an innocent you weren't aiming at to get around this. Aim true or go home, honor-dork
+	if(!isliving(target)) // No shooting an innocent you weren't aiming at to get around this.. Aim true or go home, honor-dork
 		return COMPONENT_CANCEL_GUN_FIRE
 
 	var/mob/living/shot_mob = target
@@ -103,7 +103,7 @@
 
 /// Checks a mob for any obvious signs of evil, and applies a guilty reason for each.
 /datum/brain_trauma/special/honorbound/proc/check_visible_guilt(mob/living/attacked_mob)
-	//will most likely just hit nuke ops but good catch-all. WON'T hit traitors
+	// will most likely just hit nuke ops but good catch-all.. WON'T hit traitors
 	if(attacked_mob.has_faction(ROLE_SYNDICATE))
 		guilty(attacked_mob, "for their misaligned association with the Syndicate!")
 	//not an antag datum check so it applies to wizard minions as well
@@ -145,7 +145,7 @@
 	to_chat(user, span_danger("[GLOB.deity] no longer considers you innocent!"))
 	guilty += user
 
-///Signal sent by the relay_attackers element. It makes the attacker guilty unless the damage was stamina or it was a shove.
+/// Signal sent by the relay_attackers element.. It makes the attacker guilty unless the damage was stamina or it was a shove.
 /datum/brain_trauma/special/honorbound/proc/on_attacked(mob/source, mob/attacker, attack_flags)
 	SIGNAL_HANDLER
 	if(!(attack_flags & (ATTACKER_STAMINA_ATTACK|ATTACKER_SHOVING)))
@@ -235,11 +235,11 @@
 	active_msg = "You prepare to declare a sinner..."
 	deactive_msg = "You decide against a declaration."
 
-	/// The amount of favor required to declare on someone
+	/// The amount of favor needed to declare on someone
 	var/required_favor = 150
 	/// A ref to our owner's honorbound trauma
 	var/datum/brain_trauma/special/honorbound/honor_trauma
-	/// The declaration that's shouted in invocation. Set in New()
+	/// The declaration that's shouted in invocation.. Set in New()
 	var/declaration = "By the divine light of my deity, you are an evil of this world that must be wrought low!"
 
 /datum/action/cooldown/spell/pointed/declare_evil/New()

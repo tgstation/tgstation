@@ -1,4 +1,4 @@
-///To be used when there is the need of an atmos connection without repathing everything (eg: cryo.dm)
+/// To be used when there is the need of an atmos connection without repathing everything for example cryo.dm)
 /datum/gas_machine_connector
 
 	var/obj/machinery/connected_machine
@@ -106,7 +106,7 @@
 /datum/gas_machine_connector/proc/disconnect_connector()
 	var/obj/machinery/atmospherics/node = gas_connector.nodes[1]
 	if(node)
-		if(gas_connector in node.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
+		if(gas_connector in node.nodes) // Only if it's actually connected.. On-pipe version would is one-sided.
 			node.disconnect(gas_connector)
 		gas_connector.nodes[1] = null
 	if(gas_connector.parents[1])

@@ -214,7 +214,7 @@
 			else
 				to_chat(ai, "[span_name("<a href='byond://?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a>")] holds <a href='byond://?_src_=usr;[href_string];'>\a [title]</a> up to one of your cameras...")
 
-		// If it's not an AI, eye if the client's eye is set to the camera. I wonder if this even works anymore with tgui camera apps and stuff?
+		// If it's not an AI, eye if the client's eye is set to the camera.. I wonder if this even works anymore with tgui camera apps and stuff?
 		else if(potential_viewer.client?.eye == src)
 			potential_viewer.log_talk(title, LOG_VICTIM, "Pressed to camera from [key_name(user)]", FALSE)
 			if(!is_computer)

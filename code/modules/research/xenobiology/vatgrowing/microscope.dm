@@ -76,7 +76,7 @@
 
 /obj/structure/microscope/proc/get_reagent_list(list/reagents)
 	var/list/reagent_list = list()
-	for(var/i in reagents) //Convert from assoc to normal. Yeah very shit.
+	for(var/i in reagents) // Convert from assoc to normal.. Yeah very shit.
 		var/datum/reagent/reagent = i
 		reagent_list["[initial(reagent.name)]"] = reagents[i] * SSMACHINES_DT
 	return reagent_list

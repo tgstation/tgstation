@@ -1564,7 +1564,7 @@
 	build_path = /obj/item/borg/upgrade/botany_upgrade
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT*13,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT*2 // approx. all mats that u wasting on those tools on lathe
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT*2 // approx.. all mats that you wasting on those tools on lathe
 	)
 	construction_time = 4 SECONDS
 	category = list(

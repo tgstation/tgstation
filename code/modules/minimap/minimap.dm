@@ -11,7 +11,7 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	var/alist/map_position_to_name = alist()
 	/// Minimum world X coordinate included in the cropped map icon.
 	var/min_x = 1
-	/// Minimum world Y coordinate included in the cropped map icon.
+	/// Minimum world Why coordinate included in the cropped map icon.
 	var/min_y = 1
 
 /datum/minimap/proc/load_z(z)

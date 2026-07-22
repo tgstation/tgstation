@@ -66,7 +66,7 @@
 	feature_key = FEATURE_MOTH_WINGS
 
 /datum/dna_block/feature/accessory/moth_wing/create_unique_block(mob/living/carbon/human/target)
-	if(target.dna.features[feature_key] == "Burnt Off") // Why is this snowflake check a thing. Please find a way to fix this later
+	if(target.dna.features[feature_key] == "Burnt Off") // Why is this snowflake check a thing.. Please find a way to fix this later
 		return random_string(block_length, GLOB.hex_characters)
 	return ..()
 

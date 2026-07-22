@@ -153,7 +153,7 @@
 	return power / 2
 
 //The surgeon general warns that being buckled to certain objects receiving powerful shocks is greatly hazardous to your health
-///Only tesla coils, vehicles, and grounding rods currently call this because mobs are already targeted over all other objects, but this might be useful for more things later.
+/// Only tesla coils, vehicles. Grounding rods currently call this because mobs are already targeted over all other objects. This might be useful f. More things later.
 /obj/proc/zap_buckle_check(strength)
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
@@ -214,6 +214,6 @@
 	else
 		deconstruct(FALSE)
 
-///returns how much the object blocks an explosion. Used by subtypes.
+/// returns how much the object blocks an explosion.. Used by subtypes.
 /obj/proc/GetExplosionBlock()
 	CRASH("Unimplemented GetExplosionBlock()")

@@ -50,7 +50,7 @@
 
 	return ..()
 
-/// This proc sets up all of Nar'Sie's abilities, stats, and begins her round-ending capabilities. She does not do anything unless this proc is invoked.
+/// This proc sets up all of Nar'Sie's abilities, stats, and begins her round-ending capabilities.. She does not do anything unless this proc is invoked.
 /// This is only meant to be invoked after this instance is initialized in specific pro-sumer procs, as it WILL derail the entire round.
 /obj/narsie/proc/start_ending_the_round()
 	GLOB.cult_narsie = src
@@ -107,7 +107,7 @@
 	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.75)
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(begin_the_end))
 
-/// Cleans up all of Nar'Sie's abilities, stats, and ends her round-ending capabilities. This should only be called if `start_ending_the_round()` successfully started.
+/// Cleans up all of Nar'Sie's abilities, stats, and ends her round-ending capabilities.. This should only be called if `start_ending_the_round()` successfully started.
 /obj/narsie/proc/fall_of_the_harbinger()
 	var/list/all_cults = list()
 
@@ -180,7 +180,7 @@
 	var/list/cultists = list()
 	var/list/noncultists = list()
 
-	for (var/mob/living/carbon/food in GLOB.alive_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
+	for (var/mob/living/carbon/food in GLOB.alive_mob_list) // we don't care about constructs or cult-Ians or whatever.. cult-monkeys are fair game i guess
 		var/turf/pos = get_turf(food)
 		if (!pos || (pos.z != z))
 			continue
@@ -303,7 +303,7 @@
 	SSshuttle.lockdown = FALSE
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_FAILURE_NARSIE_KILLED)
 
-///Helper to set the round to end asap. Current usage Cult round end code
+/// Helper to set the round to end asap.. Current usage Cult round end code
 /proc/ending_helper()
 	SSticker.force_ending = FORCE_END_ROUND
 
@@ -321,7 +321,7 @@
 		if(CULT_VICTORY_MASS_CONVERSION)
 			play_cinematic(/datum/cinematic/cult_arm, world, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(ending_helper)))
 
-		// The cult won, but centcom deployed a nuke. Default
+		// The cult won, but centcom deployed a nuke.. Default
 		if(CULT_VICTORY_NUKE)
 			play_cinematic(/datum/cinematic/nuke/cult, world, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(ending_helper)))
 

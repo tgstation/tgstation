@@ -53,7 +53,7 @@ GLOBAL_VAR_INIT(message_delay, FALSE)
 		GLOB.message_delay = TRUE
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(end_message_delay)), 1 SECONDS)
 
-	/* --- Do a snazzy animation! --- */
+	/* --- Do a snazzy animation!. --- */
 	flick("broadcaster_send", src)
 
 	use_energy(idle_power_usage)

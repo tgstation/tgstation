@@ -12,7 +12,7 @@
 	var/pathing_distance = 10
 	var/bypass_add_blacklist = FALSE
 	var/turf_search = FALSE
-	/// How close the path must get to the target (0 = onto/adjacent). Repairbot raises this so it stops next to the walls/girders it repairs.
+	/// How close the path must get to the target (0 = onto/adjacent).. Repairbot raises this so it stops next to the walls/girders it repairs.
 	var/minimum_distance = 0
 	time_between_perform = 2 SECONDS
 	/// Stashed candidate list between perform() and the async worker (not a blackboard value).
@@ -92,7 +92,7 @@
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 
-///Interact with an object. Could probably be moved to a generic behavior as the only unique thing is the blacklist.
+/// Interact with an object.. Could probably be moved to a generic behavior as the only unique thing is the blacklist.
 /datum/bt_node/ai_behavior/bot_interact
 	var/target_key
 	var/clear_target = TRUE

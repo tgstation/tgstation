@@ -27,7 +27,7 @@
 	mob_size = MOB_SIZE_LARGE
 	initial_language_holder = /datum/language_holder/slime
 	footstep_type = FOOTSTEP_MOB_SLIME
-	///Oozes have their own nutrition. Changes based on them eating
+	/// Oozes have their own nutrition.. Changes good on them eating
 	var/ooze_nutrition = 50
 	var/ooze_nutrition_loss = -0.15
 	var/ooze_metabolism_modifier = 2
@@ -65,7 +65,7 @@
 
 	var/nutrition_change = ooze_nutrition_loss
 
-	//Eat a bit of all the reagents we have. Gaining nutrition for actual nutritional ones.
+	// Eat a bit of all the reagents we have.. Gaining nutrition for actual nutritional ones.
 	for(var/i in reagents?.reagent_list)
 		var/datum/reagent/reagent = i
 		var/consumption_amount = min(reagents.get_reagent_amount(reagent.type), ooze_metabolism_modifier * REAGENTS_METABOLISM * seconds_per_tick)
@@ -78,7 +78,7 @@
 	if(ooze_nutrition <= 0)
 		adjust_brute_loss(0.25 * seconds_per_tick)
 
-/// Returns an applicable list of actions to grant to the mob. Will return a list or null.
+/// Returns an applicable list of actions to grant to the mob.. Will return a list or null.
 /mob/living/simple_animal/hostile/ooze/proc/get_innate_actions()
 	return null
 
@@ -103,7 +103,7 @@
 ///* Gelatinious Ooze code below *\\\\
 
 
-///Its good stats and high mobility makes this a good assasin type creature. It's vulnerabilites against cold, shotguns and
+/// Its good stats and high mobility makes this a good assasin type creature.. It's vulnerabilites against cold, shotguns and
 /mob/living/simple_animal/hostile/ooze/gelatinous
 	name = "Gelatinous Cube"
 	desc = "A cubic ooze native to Sholus VII.\nSince the advent of space travel this species has established itself in the waste treatment facilities of several space colonies.\nIt is often considered to be the third most infamous invasive species due to its highly aggressive and predatory nature."
@@ -195,7 +195,7 @@
 	StartCooldown()
 
 
-///This action lets you consume the mob you're currently pulling. I'M GONNA CONSUUUUUME (this is considered one of the funny memes in the 2019-2020 era)
+/// This action lets you consume the mob you're currently pulling.. I'M Going to CONSUUUUUME (this is considered one of the funny memes in the 2019-2020 era)
 /datum/action/consume
 	name = "Consume"
 	desc = "Consume a mob that you are dragging to gain nutrition from them."
@@ -238,7 +238,7 @@
 		return FALSE
 	start_consuming(eat_target)
 
-///Start allowing this datum to process to handle the damage done to  this mob.
+/// Start allowing this datum to process to handle the damage done to this mob.
 /datum/action/consume/proc/start_consuming(mob/living/target)
 	vored_mob = target
 	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
@@ -360,7 +360,7 @@
 		return FALSE
 
 	// Why is this in InterceptClickOn() and not Activate()?
-	// Well, we need to use the params of the click intercept
+	// we need to use the params of the click intercept
 	// for passing into aim_projectile, so we'll handle it here instead.
 	// We just need to make sure Pre-activate and Activate return TRUE so we make it this far
 	clicker.visible_message(

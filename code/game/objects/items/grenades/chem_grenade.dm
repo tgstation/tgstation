@@ -21,7 +21,7 @@
 	var/affected_area = 3
 	/// The amount of temperature that is added to the reagents on detonation.
 	var/ignition_temp = 10
-	/// How much to scale the reagents by when the grenade detonates. Used by advanced grenades to make them slightly more worthy.
+	/// How much to scale the reagents by when the grenade detonates.. Used by advanced grenades to make them slightly more worthy.
 	var/threatscale = 1
 	/// The description when examining empty casings.
 	var/casedesc = "This basic model accepts both beakers and bottles. It heats contents by 10 K upon ignition."
@@ -47,7 +47,7 @@
 	threatscale = reset_fantasy_variable("threatscale", threatscale)
 
 /obj/item/grenade/chem_grenade/examine(mob/user)
-	display_timer = (stage == GRENADE_READY) //show/hide the timer based on assembly state
+	display_timer = (stage == GRENADE_READY) // show/hide the timer good on assembly state
 	. = ..()
 	if (!user.can_see_reagents())
 		if (stage == GRENADE_READY || !(length(beakers)))
@@ -350,7 +350,7 @@
 
 	return ..()
 
-/obj/item/grenade/chem_grenade/cryo // Intended for rare cryogenic mixes. Cools the area moderately upon detonation.
+/obj/item/grenade/chem_grenade/cryo // Intended for rare cryogenic mixes.. Cools the area moderately upon detonation.
 	name = "cryo grenade"
 	desc = "A custom made cryogenic grenade. Rapidly cools contents upon ignition."
 	casedesc = "Upon ignition, it rapidly cools contents by 100 K. Smaller splash range than regular casings."
@@ -360,7 +360,7 @@
 	ignition_temp = -100
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 
-/obj/item/grenade/chem_grenade/pyro // Intended for pyrotechnical mixes. Produces a small fire upon detonation, igniting potentially flammable mixtures.
+/obj/item/grenade/chem_grenade/pyro // Intended for pyrotechnical mixes.. Produces a small fire upon detonation, igniting potentially flammable mixtures.
 	name = "pyro grenade"
 	desc = "A custom made pyrotechnical grenade. Heats up contents upon ignition."
 	casedesc = "Upon ignition, it rapidly heats contents by 500 K."
@@ -369,14 +369,14 @@
 	ignition_temp = 500 // This is enough to expose a hotspot.
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 
-/obj/item/grenade/chem_grenade/adv_release // Intended for weaker, but longer lasting effects. Could have some interesting uses.
+/obj/item/grenade/chem_grenade/adv_release // Intended for weaker, but longer lasting effects.. Could have some interesting uses.
 	name = "advanced release grenade"
 	desc = "A custom made advanced release grenade. It is able to be detonated more than once. Can be configured using a multitool."
 	casedesc = "This casing is able to detonate more than once. Can be configured using a multitool."
 	icon_state = "timeg"
 	base_icon_state = "timeg"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
-	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
+	var/unit_spread = 10 // Amount of units per repeat.. Can be altered with a multitool.
 
 /obj/item/grenade/chem_grenade/adv_release/multitool_act(mob/living/user, obj/item/tool)
 	if (active)
@@ -526,7 +526,7 @@
 
 	beaker_one.reagents.add_reagent(/datum/reagent/fluorosurfactant, 40)
 	beaker_two.reagents.add_reagent(/datum/reagent/water, 40)
-	beaker_two.reagents.add_reagent(/datum/reagent/space_cleaner/ez_clean, 60) //ensures a  t h i c c  distribution
+	beaker_two.reagents.add_reagent(/datum/reagent/space_cleaner/ez_clean, 60) // ensures a t h i c c distribution
 
 	beakers += beaker_one
 	beakers += beaker_two

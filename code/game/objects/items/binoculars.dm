@@ -19,7 +19,7 @@
 	user.visible_message(span_notice("[user] holds [src] up to [user.p_their()] eyes."), span_notice("You hold [src] up to your eyes."))
 	inhand_icon_state = "binoculars_wielded"
 	user.regenerate_icons()
-	//Have you ever tried running with binocs on? It takes some willpower not to stop as things appear way too close than they're.
+	// Have you ever tried running with binocs on?. It takes some willpower not to stop as things appear way too close than they're.
 	user.add_movespeed_modifier(/datum/movespeed_modifier/binocs_wielded)
 
 /obj/item/binoculars/proc/on_unwield(obj/item/source, mob/user)

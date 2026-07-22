@@ -37,7 +37,7 @@
 	return do_after_mecha(target, user, delay)
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/do_after_checks(atom/target)
-	// Gotta be close to the target
+	// Got to be close to the target
 	if(!loc.Adjacent(target))
 		return FALSE
 	return ..()
@@ -128,7 +128,7 @@
 						span_userdanger("[chassis] rips your arms off!"))
 			log_combat(source, carbon_victim, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
 			return ..()
-	var/armor_check = clamp(victim.run_armor_check(null, MELEE) / 3, 0, 100) //our target only benefits from a third of their armor. Because it's a huge ass clamp
+	var/armor_check = clamp(victim.run_armor_check(null, MELEE) / 3, 0, 100) // our target only benefits from a third of their armor.. Because it's a huge ass clamp
 	victim.visible_message(span_danger("[chassis] squeezes [victim]!"), \
 						span_userdanger("[chassis] squeezes you!"),\
 						span_hear("You hear something crack."))
@@ -177,7 +177,7 @@
 
 	for(var/turf/targetturf in RANGE_TURFS(1, chassis))
 		var/obj/effect/particle_effect/water/extinguisher/water = new /obj/effect/particle_effect/water/extinguisher(targetturf)
-		var/datum/reagents/water_reagents = new /datum/reagents(required_amount/8) //required_amount/8, because the water usage is split between eight sprays. As of this comment, required_amount/8 = 10u each.
+		var/datum/reagents/water_reagents = new /datum/reagents(required_amount/8) // required_amount/8, because the water usage is split between eight sprays.. As of this comment, required_amount/8 = 10u each.
 		water.reagents = water_reagents
 		water_reagents.my_atom = water
 		reagents.trans_to(water, required_amount / 8)
@@ -232,7 +232,7 @@
 	desc = "An exosuit-mounted Rapid Construction Device."
 	icon_state = "mecha_rcd"
 	equip_cooldown = 0 // internal RCD already handles it
-	energy_drain = 0 // internal RCD handles power consumption based on matter use
+	energy_drain = 0 // internal RCD handles power consumption good on matter use
 	range = MECHA_MELEE | MECHA_RANGED
 	item_flags = NO_MAT_REDEMPTION
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 12.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 10, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 10)
@@ -326,7 +326,7 @@
 
 #undef RCD_RANGE
 
-//Dunno where else to put this so shrug
+// Do not know where else to put this so shrug
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade
 	name = "Ripley MK-II Conversion Kit"
 	desc = "A pressurized canopy attachment kit for an Autonomous Power Loader Unit \"Ripley\" MK-I exosuit, to convert it to the slower, but space-worthy MK-II design. This kit cannot be removed, once applied."

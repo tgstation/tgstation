@@ -113,12 +113,12 @@
 	//Split up the reagent if it's in a mob
 	if(flags & REAGENT_HOLDER_ALIVE)
 		amount = process_mob_reagent_purity(glob_reagent, amount, added_purity, reagent_added)
-		if(amount <= 0) //Inverse or nothing was added. return true amount
+		if(amount <= 0) // Inverse or nothing was added.. return true amount
 			return amount * -1
 
 	var/cached_total = total_volume
 	if(cached_total + amount > maximum_volume)
-		amount = maximum_volume - cached_total //Doesnt fit in. Make it disappear. shouldn't happen. Will happen.
+		amount = maximum_volume - cached_total // Doesnt fit in.. Make it disappear.. shouldn't happen.. Will happen.
 	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
 		return FALSE
@@ -140,7 +140,7 @@
 			iter_reagent.purity = ((iter_reagent.creation_purity * iter_reagent.volume) + (added_purity * amount)) /(iter_reagent.volume + amount) //This should add the purity to the product
 			iter_reagent.creation_purity = iter_reagent.purity
 			iter_reagent.ph = ((iter_reagent.ph * (iter_reagent.volume)) + (added_ph * amount)) / (iter_reagent.volume + amount)
-			iter_reagent.on_merge(data, amount) // Update this before updating volume. FIXME: Move all of the surrounding crap into this proc so implementations decide whether they go first or base code goes first.
+			iter_reagent.on_merge(data, amount) // Update this before updating volume.. Fix me Move all of the surrounding crap into this proc so implementations decide whether they go first or base code goes first.
 			iter_reagent.volume += amount
 			update_total()
 
@@ -360,7 +360,7 @@
 		else if(!istype(cached_reagent, source_reagent_typepath))
 			continue
 
-		//check conversion threshold. stop if we have reached our target
+		// check conversion threshold.. stop if we have reached our target
 		reagent_volume = cached_reagent.volume
 		if(cached_reagent.volume > conversion_volume)
 			reagent_volume = conversion_volume
@@ -370,7 +370,7 @@
 			conversion_volume -= cached_reagent.volume
 			cached_reagent.volume = 0
 
-		//compute average of everything. preserve data if nessassary
+		// compute average of everything.. preserve data if nessassary
 		weighted_purity += cached_reagent.purity * reagent_volume
 		weighted_ph += cached_reagent.ph * reagent_volume
 		weighted_volume += reagent_volume
@@ -534,7 +534,7 @@
 
 	return total_transfered_amount
 
-///For internal purposes. Sends a signal when a new reagent has been created in the target reagent holder upon transfer
+/// For internal purposes.. Sends a signal when a new reagent has been created in the target reagent holder upon transfer
 /datum/reagents/proc/_on_transfer_creation(datum/reagent/reagent, datum/reagents/target_holder, datum/reagent/new_reagent)
 	PRIVATE_PROC(TRUE)
 
@@ -767,7 +767,7 @@
  * * coeff - multiplier to be applied on temp diff between param temp and current temp
  */
 /datum/reagents/proc/expose_temperature(temperature, coeff = 0.02)
-	if(flags & NO_REACT) //stasis holders IE cryobeaker
+	if(flags & NO_REACT) // stasis holders that is cryobeaker
 		return
 	var/temp_delta = (temperature - chem_temp) * coeff
 	if(temp_delta > 0)
@@ -807,7 +807,7 @@
 	return result
 
 //===============================Logging==========================================
-/// Outputs a log-friendly list of reagents based on the internal reagent_list.
+/// Outputs a log-friendly list of reagents good on the internal reagent_list.
 /datum/reagents/proc/get_reagent_log_string()
 	if(!length(reagent_list))
 		return "no reagents"

@@ -12,17 +12,17 @@
 	/// Organization name, used for display
 	var/organization = "Third-Party"
 
-	/// Already unlocked and all designs are now available. Assoc list, id = TRUE
+	/// Already unlocked and all designs are now available.. Assoc list, id = TRUE
 	var/list/researched_nodes = list()
-	/// Visible nodes, doesn't mean it can be researched. Assoc list, id = TRUE
+	/// Visible nodes, doesn't mean it can be researched.. Assoc list, id = TRUE
 	var/list/visible_nodes = list()
-	/// Nodes that can immediately be researched, all reqs met. assoc list, id = TRUE
+	/// Nodes that can immediately be researched, all reqs met.. assoc list, id = TRUE
 	var/list/available_nodes = list()
-	/// Designs that are available for use. Assoc list, id = TRUE
+	/// Designs that are available for use.. Assoc list, id = TRUE
 	var/list/researched_designs = list()
 	/// Custom inserted designs like from disks that should survive recalculation.
 	var/list/custom_designs = list()
-	/// Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.
+	/// Hidden nodes.. id = TRUE.. Used for unhiding nodes when needs are met by removing the entry of the node.
 	var/list/hidden_nodes = list()
 	/// List of items already deconstructed for research points, preventing infinite research point generation.
 	var/list/deconstructed_items = list()
@@ -439,7 +439,7 @@
 	update_node_status(node)
 	return TRUE
 
-///Removes a node from the hidden_nodes list, making it viewable and researchable (if no experiments are required).
+/// Removes a node from the hidden_nodes list, making it viewable and researchable (if no experiments are needed
 /datum/techweb/proc/unhide_node(datum/techweb_node/node)
 	if(!istype(node))
 		return FALSE
@@ -496,7 +496,7 @@
 				visible_nodes[node.id] = TRUE
 	update_tiers(node)
 
-//Laggy procs to do specific checks, just in case. Don't use them if you can just use the vars that already store all this!
+// Laggy procs to do specific checks, just in case.. Don't use them if you can just use the vars that already store all this!
 /datum/techweb/proc/designHasReqs(datum/design/D)
 	for(var/i in researched_nodes)
 		var/datum/techweb_node/N = SSresearch.techweb_node_by_id(i)
@@ -539,7 +539,7 @@
 	for (var/datum/scientific_partner/partner as anything in SSresearch.scientific_partners)
 		scientific_cooperation[partner.type] = 0
 
-/// Publish the paper into our techweb. Cancel if we are not allowed to.
+/// Publish the paper into our techweb.. Cancel if we are not allowed to.
 /datum/techweb/proc/add_scientific_paper(datum/scientific_paper/paper_to_add)
 	if(!paper_to_add.allowed_to_publish(src))
 		return FALSE

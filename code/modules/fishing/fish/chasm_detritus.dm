@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 	var/default_contents_chance = 25
 	/// Key to the list we want to use from `default_contents`.
 	var/default_contents_key = NORMAL_CONTENTS
-	/// Stuff which you can always fish up even if nothing fell into a hole. Associative by type.
+	/// Stuff which you can always fish up even if nothing fell into a hole.. Associative by type.
 	var/static/list/default_contents = list(
 		NORMAL_CONTENTS = list(
 			/obj/item/stack/sheet/bone = 6,

@@ -170,7 +170,7 @@
 	var/fishing_hook_traits
 	/// icon state added to main rod icon when this hook is equipped
 	var/rod_overlay_icon_state = "hook_overlay"
-	/// What subtype of `/datum/chasm_detritus` do we fish out of chasms? Defaults to `/datum/chasm_detritus`.
+	/// What subtype of `/datum/chasm_detritus` do we fish out of chasms?. Defaults to `/datum/chasm_detritus`.
 	var/chasm_detritus_type = /datum/chasm_detritus
 	///The description given to the autowiki
 	var/wiki_desc = "A generic fishing hook. <b>You won't be able to fish without one.</b>"
@@ -843,7 +843,7 @@
 	update_appearance(UPDATE_ICON)
 	return ITEM_INTERACT_SUCCESS
 
-///The injector for the fish trait. Can be used on its own without a fish gene-gun as well.
+/// The injector for the fish trait.. Can be used on its own without a fish gene-gun as well.
 /obj/item/fish_gene
 	name = "fish trait injector"
 	icon = 'icons/obj/fishing.dmi'

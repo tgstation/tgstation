@@ -1,4 +1,4 @@
-/// Manages library data, loading bookselves, etc
+/// Manages library data, loading bookselves, and so on
 SUBSYSTEM_DEF(library)
 	name = "Library Loading"
 	dependencies = list(

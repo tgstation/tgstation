@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(economy)
 	runlevels = RUNLEVEL_GAME
 	///How many paychecks should players start out the round with?
 	var/roundstart_paychecks = 5
-	///How many credits does the in-game economy have in circulation at round start? Divided up by 6 of the 7 department budgets evenly, where cargo starts with nothing.
+	/// How many credits does the in-game economy have in circulation at round start?. Divided up by 6 of the 7 department budgets evenly, where cargo starts with nothing.
 	var/budget_pool = 35000
 	var/list/department_accounts = list(ACCOUNT_CIV = ACCOUNT_CIV_NAME,
 										ACCOUNT_ENG = ACCOUNT_ENG_NAME,
@@ -28,13 +28,13 @@ SUBSYSTEM_DEF(economy)
 	var/list/dep_cards = list()
 	/// A var that collects the total amount of credits owned in player accounts on station, reset and recounted on fire()
 	var/station_total = 0
-	/// A var that tracks how much money is expected to be on station at a given time. If less than station_total prices go up in vendors.
+	/// A var that tracks how much money is expected to be on station at a given time.. If less than station_total prices go up in vendors.
 	var/station_target = 1
 	/// A passively increasing buffer to help alliviate inflation later into the shift, but to a lesser degree.
 	var/station_target_buffer = 0
 	/// A var that displays the result of inflation_value for easier debugging and tracking.
 	var/inflation_value = 1
-	/// How many civilain bounties have been completed so far this shift? Affects civilian budget payout values.
+	/// How many civilain bounties have been completed so far this shift?. Affects civilian budget payout values.
 	var/civ_bounty_tracker = 0
 	/// Contains the message to send to newscasters about price inflation and earnings, updated on price_update()
 	var/earning_report
@@ -50,7 +50,7 @@ SUBSYSTEM_DEF(economy)
 
 	/// Number of mail items generated.
 	var/mail_waiting = 0
-	/// Mail Holiday: AKA does mail arrive today? Always blocked on Sundays.
+	/// Mail Holiday: Also known as does mail arrive today?. Always blocked on Sundays.
 	var/mail_blocked = FALSE
 	/// List used to track partially completed processing steps
 	/// Allows for proper yielding
@@ -131,7 +131,7 @@ SUBSYSTEM_DEF(economy)
  * Iterates over every department account for the same payment.
  */
 /datum/controller/subsystem/economy/proc/departmental_payouts()
-	// son sonic speed? cache? hot over in cold food why? (datum var accesses are slow, cache lists for sonic speed)
+	// son sonic speed?. cache?. hot over in cold food why?. (datum var accesses are slow, cache lists for sonic speed)
 	var/list/cached_processing = src.cached_processing
 	for(var/i in 1 to length(cached_processing))
 		var/datum/bank_account/dept_account = get_dep_account(cached_processing[i])
@@ -226,7 +226,7 @@ SUBSYSTEM_DEF(economy)
 /datum/controller/subsystem/economy/proc/update_vending_prices()
 	var/list/obj/machinery/vending/prices_to_update = list()
 	// Assoc list of "z level" -> if it's on the station
-	// Hack, is station z level is too expensive to do for each machine, I hate this place
+	// Temporary solution is station z level is too expensive to do for each machine, I hate this place
 	var/list/station_z_status = list()
 	for(var/obj/machinery/vending/vending_lad as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/vending))
 		if(istype(vending_lad, /obj/machinery/vending/custom))

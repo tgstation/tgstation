@@ -29,9 +29,9 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/list/messages = list()
 	/// Priority of the latest message
 	var/new_message_priority = REQ_NO_NEW_MESSAGE
-	// Is the console silent? Set to TRUE for it not to beep all the time
+	// Is the console silent?. Set to TRUE for it not to beep all the time
 	var/silent = FALSE
-	// Is the console hacked? Enables EXTREME priority if TRUE
+	// Is the console hacked?. Enables EXTREME priority if TRUE
 	var/hack_state = FALSE
 	/// FALSE = This console cannot be used to send department announcements, TRUE = This console can send department announcements
 	var/can_send_announcements = FALSE
@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/message_verified_by = ""
 	/// If a message is stamped, this will contain the stamp name
 	var/message_stamped_by = ""
-	///If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
+	/// If an emergency has been called by this device.. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
 	var/emergency
 	/// If ore redemption machines will send an update when it receives new ores.
 	var/receive_ore_updates = FALSE
@@ -348,8 +348,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 ///Sends the message from the request console
 /obj/machinery/requests_console/proc/send_message(recipient, message, priority, request_type)
 	var/radio_channel
-	// They all naming them wrong, all the time... I'll probably rewrite this later in separate PR.
-	// Automatically from areas or via mapping helpers. (ther is no "Cargobay Request Console" in any map)
+	// They all naming them wrong, all the time.... I'll probably rewrite this later in separate PR.
+	// Automatically from areas or via mapping helpers.. (ther is no "Cargobay Request Console" in any map)
 	switch(ckey(recipient))
 		if("bridge")
 			radio_channel = RADIO_CHANNEL_COMMAND
@@ -565,7 +565,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 	. = ..()
 	// If RETA enabled change config lines to include RETA info
 	if(CONFIG_GET(flag/reta_enabled))
-		// Non sec/engi/med personnel may be called by CC or AI (I hope) for anomaly removal and etc. Mostly admin triggered calls
+		// Non sec/engi/med personnel may be called by CC or AI (I hope) for anomaly removal and and so on Mostly admin triggered calls
 		announcement_lines_map = list(
 			"RETA Granted" = "- RETA door access granted to responders",
 			"RETA Failed" = "- no RETA access provided",
@@ -636,7 +636,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 
 /datum/aas_config_entry/rc_new_message
 	name = "RC Alert: New Message"
-	// Yes, players can't use html tags, however they can use speech mods like | or +, but sh-sh-sh, don't tell them!
+	// Yes, players can't use html tags, but they can use speech mods like | or +, but sh-sh-sh, don't tell them!
 	announcement_lines_map = list(
 		"Unauthenticated" = "Message from %SENDER to %RECEIVER: <i>%MESSAGE</i>",
 		"Verified with ID" = "Message from %SENDER to %RECEIVER, Verified by %AUTHENTICATION (Authenticated): <i>%MESSAGE</i>",

@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(icon_smooth)
 	priority = FIRE_PRIORITY_SMOOTHING
 	ss_flags = SS_TICKER
 
-	///Blueprints assemble an image of what pipes/manifolds/wires look like on initialization, and thus should be taken after everything's been smoothed
+	/// Blueprints assemble an image of what pipes/manifolds/wires look like on initialization, and so should be taken after everything's been smoothed
 	var/list/blueprint_queue = list()
 	var/list/smooth_queue = list()
 	var/list/deferred = list()
@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(icon_smooth)
 
 	return SS_INIT_SUCCESS
 
-/// Releases a pool of delayed smooth attempts from a particular source
+/// Releases a pool of delayed smooth tries from a particular source
 /datum/controller/subsystem/icon_smooth/proc/free_deferred(source_to_free)
 	smooth_queue += deferred_by_source[source_to_free]
 	deferred_by_source -= source_to_free

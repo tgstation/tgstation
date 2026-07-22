@@ -46,7 +46,7 @@
 			release_smoke(nearby_carbon)
 			COOLDOWN_START(src, gas_cooldown, gas_cooldown_length)
 
-///Releases a cloud of smoke based on the randomly generated reagent in Initialize().
+/// Releases a cloud of smoke good on the randomly generated reagent in Initialize().
 /obj/effect/decal/remains/human/smokey/proc/release_smoke(mob/living/smoke_releaser)
 	visible_message(span_warning("[smoke_releaser] disturbs [src], which releases a huge cloud of gas!"))
 	do_chem_smoke(2, src, get_turf(src), that_shit_that_killed_saddam, 15)

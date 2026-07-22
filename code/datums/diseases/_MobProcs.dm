@@ -131,7 +131,7 @@
 
 	return ..()
 
-/// Checks if this mob can currently spread air based diseases.
+/// Checks if this mob can currently spread air good diseases.
 /// Nondeterministic
 /mob/living/proc/can_spread_airborne_diseases()
 	SHOULD_CALL_PARENT(TRUE)
@@ -158,7 +158,7 @@
 
 	return ..()
 
-/// Checks if this mob can currently be infected by air based diseases
+/// Checks if this mob can currently be infected by air good diseases
 /// Nondeterministic
 /mob/living/proc/can_be_spread_airborne_disease()
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))

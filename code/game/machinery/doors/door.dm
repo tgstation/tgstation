@@ -1,6 +1,6 @@
 ///Default wait until doors autoclose
 #define DOOR_CLOSE_WAIT 60
-/// Trait for checking if a mob is currently activating an unrestricted airlock open and thus has pressure pushes blocked
+/// Trait for checking if a mob is currently activating an unrestricted airlock open and so has pressure pushes blocked
 #define TRAIT_UNRESTRICTED_AIRLOCK_OPENING "trait_unrestricted_airlock_opening"
 
 /obj/machinery/door
@@ -78,9 +78,9 @@
 
 	/// Checks to see if this airlock has an unrestricted "latch" within (will set to TRUE if present).
 	var/unres_latch = FALSE
-	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
+	/// Unrestricted sides.. A bitflag for which direction (if any) can open the door with no access
 	var/unres_sides = NONE
-	/// Delayed open for unrestricted users. If there is an unrestricted side, we want to know if the door opening should be delayed for a bit to add tension and what-not
+	/// Delayed open for unrestricted users.. If there is an unrestricted side, we want to know if the door opening should be delayed for a bit to add tension and what-not
 	var/delayed_unres_open = FALSE
 	/// Lower range for random time to open for unrestricted users
 	var/delayed_unres_time_lower = 2 SECONDS
@@ -261,7 +261,7 @@
 			return
 		if(isliving(AM))
 			var/mob/living/M = AM
-			//Can bump-open maybe 3 airlocks per second. This is to prevent weird mass door openings
+			// Can bump-open maybe 3 airlocks per second.. This is to prevent weird mass door openings
 			//While keeping things feeling snappy
 			if(world.time - M.last_bumped <= 0.3 SECONDS)
 				return
@@ -289,7 +289,7 @@
 /obj/machinery/door/Move()
 	var/turf/T = loc
 	. = ..()
-	if(density) //Gotta be closed my friend
+	if(density) // Got to be closed my friend
 		move_update_air(T)
 
 /obj/machinery/door/CanAllowThrough(atom/movable/mover, border_dir)
@@ -339,7 +339,7 @@
 	if(elevator_mode && elevator_status != LIFT_PLATFORM_UNLOCKED)
 		return FALSE
 
-	// note: if the ID wire is cut no ID cards are checked at all! (This is intentional!)
+	// note: if the ID wire is cut no ID cards are checked at all!. (This is intentional!)
 	if(access_bypass || (requiresID() && user_can_activate_door(user)))
 		if(density)
 			open()
@@ -363,14 +363,14 @@
 		return !delayed_unres_open || attempt_delayed_unres_open(user)
 	return FALSE
 
-/// Allows for specific side of airlocks to be unrestricted (IE, can exit maint freely, but need access to enter)
+/// Allows for specific side of airlocks to be unrestricted that is can exit maint freely, but need access to enter)
 /obj/machinery/door/proc/unrestricted_side(mob/opener)
 	return get_dir(src, opener) & unres_sides
 
 /// Initiates a do_after to open the door after a delay for unrestricted openers
 /// Returns TRUE if we successfully finished the do_after, FALSE otherwise
 /obj/machinery/door/proc/attempt_delayed_unres_open(mob/opener)
-	if(opener.do_after_count() > 0) // not allowed to do this if you're doing something else. just wait lad.
+	if(opener.do_after_count() > 0) // not allowed to do this if you're doing something else.. just wait lad.
 		return FALSE
 
 	stoplag(1) // allow the door to process any allow/deny responses first
@@ -410,7 +410,7 @@
 	COOLDOWN_START(src, pressure_push_cooldown, 5 SECONDS)
 	return COMSIG_ATOM_BLOCKS_PRESSURE
 
-/// Exists to ensure that we always deregister the pressure push blocking signal. Can be called multiple times safely as we check the trait.
+/// Exists to ensure that we always deregister the pressure push blocking signal.. Can be called multiple times safely as we check the trait.
 /obj/machinery/door/proc/deregister_pressure_push_signal(mob/opener)
 	if(!HAS_TRAIT_FROM(opener, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, REF(src)))
 		return
@@ -550,7 +550,7 @@
 		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
 
-/// Returns the time required to hit particular points in an animation
+/// Returns the time needed to hit particular points in an animation
 /// Used to manage delays for opening/closing and such
 /obj/machinery/door/proc/animation_segment_delay(animation)
 	switch(animation)
@@ -579,7 +579,7 @@
 	src.animation = animation
 	update_appearance()
 
-/// Public proc that simply handles opening the door. Returns TRUE if the door was opened, FALSE otherwise.
+/// Public proc that simply handles opening the door.. Returns TRUE if the door was opened, FALSE otherwise.
 /// Use argument "forced" in conjunction with try_to_force_door_open if you want/need additional checks depending on how sorely you need the door opened.
 /obj/machinery/door/proc/open(forced = DEFAULT_DOOR_CHECKS)
 	if(!density)
@@ -605,12 +605,12 @@
 		autoclose_in(DOOR_CLOSE_WAIT)
 	return TRUE
 
-/// Private proc that runs a series of checks to see if we should forcibly open the door. Returns TRUE if we should open the door, FALSE otherwise. Implemented in child types.
-/// In case a specific behavior isn't covered, we should default to TRUE just to be safe (simply put, this proc should have an explicit reason to return FALSE).
+/// Private proc that runs a series of checks to see if we should forcibly open the door.. Returns TRUE if we should open the door, FALSE otherwise.. added in child types.
+/// In case a specific behavi. Isn't covered, we should default to TRUE just to be safe (simply put, this proc should have an explicit reason to return FALSE).
 /obj/machinery/door/proc/try_to_force_door_open(force_type = DEFAULT_DOOR_CHECKS)
-	return TRUE // the base "door" can always be forced open since there's no power or anything like emagging it to prevent an open, not even invoked on the base type anyways.
+	return TRUE // the base "door" can always be forced open since there's no power. Anything like emagging it to prevent an open, not even invoked on the base type anyways.
 
-/// Public proc that simply handles closing the door. Returns TRUE if the door was closed, FALSE otherwise.
+/// Public proc that simply handles closing the door.. Returns TRUE if the door was closed, FALSE otherwise.
 /// Use argument "forced" in conjuction with try_to_force_door_shut if you want/need additional checks depending on how sorely you need the door closed.
 /obj/machinery/door/proc/close(forced = DEFAULT_DOOR_CHECKS)
 	if(density)
@@ -649,8 +649,8 @@
 		crush()
 	return TRUE
 
-/// Private proc that runs a series of checks to see if we should forcibly shut the door. Returns TRUE if we should shut the door, FALSE otherwise. Implemented in child types.
-/// In case a specific behavior isn't covered, we should default to TRUE just to be safe (simply put, this proc should have an explicit reason to return FALSE).
+/// Private proc that runs a series of checks to see if we should forcibly shut the door.. Returns TRUE if we should shut the door, FALSE otherwise.. added in child types.
+/// In case a specific behavi. Isn't covered, we should default to TRUE just to be safe (simply put, this proc should have an explicit reason to return FALSE).
 /obj/machinery/door/proc/try_to_force_door_shut(force_type = DEFAULT_DOOR_CHECKS)
 	return TRUE // the base "door" can always be forced shut
 
@@ -765,7 +765,7 @@
 	zap_flags &= ~ZAP_OBJ_DAMAGE
 	. = ..()
 
-/// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Open up when someone casts knock.
+/// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED].. Open up when someone casts knock.
 /obj/machinery/door/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, atom/caster)
 	SIGNAL_HANDLER
 
@@ -778,7 +778,7 @@
 /obj/machinery/door/proc/update_explosive_block()
 	set_explosion_block(real_explosion_block)
 
-// Kinda roundabout, essentially if we're dense, we respect real_explosion_block
+// Kind of roundabout, essentially if we're dense, we respect real_explosion_block
 // Otherwise, we block nothing
 /obj/machinery/door/set_explosion_block(explosion_block)
 	real_explosion_block = explosion_block

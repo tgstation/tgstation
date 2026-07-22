@@ -1,4 +1,4 @@
-// Atom lighting signals. Format:
+// Atom lighting signals... Format:
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
@@ -44,7 +44,7 @@
 ///Called right after the atom changes the value of light_render_source to a different one, from base of [/atom/proc/set_light_render_source]: (old_render_source)
 #define COMSIG_ATOM_UPDATE_LIGHT_RENDER_SOURCE "atom_update_light_render_source"
 
-///Called when an atom has a light template applied to it. Frombase of [/datum/light_template/proc/mirror_onto]: ()
+/// Called when an atom has a light template applied to it... Frombase of [/datum/light_template/proc/mirror_onto]: ()
 #define COMSIG_ATOM_LIGHT_TEMPLATE_MIRRORED "atom_light_template_mirrored"
 
 ///Called when an atom's overlay component applies visuals, from base of [/datum/component/overlay_lighting/proc/show_to_holder]: (image/mask, image/cone, atom/movable/light_holder)

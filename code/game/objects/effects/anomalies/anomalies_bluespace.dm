@@ -64,9 +64,9 @@
 	var/y_distance = beacon_turf.y - impact_turf.y
 	var/x_distance = beacon_turf.x - impact_turf.x
 	var/list/available_turfs = RANGE_TURFS(12, beacon_turf)
-	for (var/atom/movable/movable in urange(12, impact_turf )) // iterate thru list of mobs in the area
+	for (var/atom/movable/movable in urange(12, impact_turf )) // iterate through list of mobs in the area
 		if(istype(movable, /obj/item/beacon) || iseffect(movable) || iseyemob(movable))
-			continue // Don't mess with beacons, effects or camera mobs (blob, AI eye etc...)
+			continue // Don't mess with beacons, effects or camera mobs (blob, AI eye and so on
 		if(movable.anchored)
 			continue // do_teleport doesn't check if the item is anchored or not.
 

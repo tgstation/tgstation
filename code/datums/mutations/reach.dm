@@ -23,7 +23,7 @@
 		return
 	UnregisterSignal(homan, COMSIG_MOB_ATTACK_RANGED)
 
-///Triggers on COMSIG_MOB_ATTACK_RANGED. Usually handles stuff like picking up items at range.
+/// Triggers on COMSIG_MOB_ATTACK_RANGED.. Usually handles stuff like picking up items at range.
 /datum/mutation/telekinesis/proc/on_ranged_attack(mob/source, atom/target)
 	SIGNAL_HANDLER
 	if(is_type_in_typecache(target, blacklisted_atoms))

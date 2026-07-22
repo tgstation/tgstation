@@ -1,9 +1,9 @@
 /// Name of the blanks file
 #define BLANKS_FILE_NAME "config/blanks.json"
 
-/// For use with the `color_mode` var. Photos will be printed in greyscale while the var has this value.
+/// For use with the `color_mode` var.. Photos will be printed in greyscale while the var has this value.
 #define PHOTO_GREYSCALE "Greyscale"
-/// For use with the `color_mode` var. Photos will be printed in full color while the var has this value.
+/// For use with the `color_mode` var.. Photos will be printed in full color while the var has this value.
 #define PHOTO_COLOR "Color"
 
 /// How much toner is used for making a copy of a paper.
@@ -17,11 +17,11 @@
 /// How much toner is used for making a copy of paperwork.
 #define PAPERWORK_TONER_USE (PAPER_TONER_USE * PAPERWORK_PAPER_USE)
 
-/// At which toner charge amount we start losing color. Toner cartridges are scams.
+/// At which toner charge amount we start losing color.. Toner cartridges are scams.
 #define TONER_CHARGE_LOW_AMOUNT 2
 
 // please use integers here
-/// How much paper is used for making a copy of paper. What, are you seriously surprised by this?
+/// How much paper is used for making a copy of paper.. What, are you seriously surprised by this?
 #define PAPER_PAPER_USE 1
 /// How much paper is used for making a copy of a photo.
 #define PHOTO_PAPER_USE 1
@@ -40,7 +40,7 @@
 /// Photocopier copy fee.
 #define PHOTOCOPIER_FEE 5
 
-/// Paper blanks (form templates, basically). Loaded from `config/blanks.json`.
+/// Paper blanks (form templates, basically).. Loaded from `config/blanks.json`.
 /// If invalid or not found, set to null.
 GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
@@ -76,15 +76,15 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/time_to_print
 	/// How efficent our toner is when printing
 	var/toner_efficiency
-	/// A reference to a mob on top of the photocopier trying to copy their ass. Null if there is no mob.
+	/// A reference to a mob on top of the photocopier trying to copy their ass.. Null if there is no mob.
 	var/mob/living/ass
-	/// A reference to the toner cartridge that's inserted into the copier. Null if there is no cartridge.
+	/// A reference to the toner cartridge that's inserted into the copier.. Null if there is no cartridge.
 	var/obj/item/toner/toner_cartridge
-	/// Type path of toner this photocopier should starts with. Null if he should start without it.
+	/// Type path of toner this photocopier should starts with.. Null if he should start without it.
 	var/obj/item/toner/starting_toner
 	/// How many copies will be printed with one click of the "copy" button.
 	var/num_copies = 1
-	/// Used with photos. Determines if the copied photo will be in greyscale or color.
+	/// Used with photos.. Determines if the copied photo will be in greyscale or color.
 	var/color_mode = PHOTO_COLOR
 	/// Indicates whether the printer is currently busy copying or not.
 	var/busy = FALSE
@@ -283,7 +283,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		if("make_copy")
 			if(check_busy(usr))
 				return FALSE
-			// ASS COPY. By Miauw
+			// ASS COPY.. By Miauw
 			if(ass)
 				if(ishuman(ass) && (ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) || ass.get_item_by_slot(ITEM_SLOT_OCLOTHING)))
 					if(ass == usr)
@@ -378,12 +378,12 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			created_paper = paper_path
 			return TRUE
 
-/// Returns the color used for the printing operation. If the color is below TONER_LOW_PERCENTAGE, it returns a gray color.
+/// Returns the color used for the printing operation.. If the color is below TONER_LOW_PERCENTAGE, it returns a gray color.
 /obj/machinery/photocopier/proc/get_toner_color()
 	return toner_cartridge.charges > TONER_CHARGE_LOW_AMOUNT ? COLOR_FULL_TONER_BLACK : COLOR_GRAY
 
 
-/// Will invoke `do_copy_loop` asynchronously. Passes the supplied arguments on to it.
+/// Will invoke `do_copy_loop` asynchronously.. Passes the supplied arguments on to it.
 /obj/machinery/photocopier/proc/do_copies(datum/callback/copy_cb, mob/user, paper_use, toner_use, copies_amount)
 	if(machine_stat & (BROKEN|NOPOWER))
 		return
@@ -435,7 +435,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(error_message)
 		to_chat(user, error_message)
 
-	// if you managed to cancel the copy operation, tough luck. you aren't getting your money back.
+	// if you managed to cancel the copy operation, tough luck.. you aren't getting your money back.
 	var/list/copies_made = list()
 	for(var/i in 1 to copies_amount)
 		if(machine_stat & (BROKEN|NOPOWER))
@@ -603,7 +603,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	use_toner(PAPERWORK_TONER_USE)
 	return copied_paperwork
 
-/// Handles the copying of blanks. No mutating state, so this should not fail.
+/// Handles the copying of blanks.. No mutating state, so this should not fail.
 /obj/machinery/photocopier/proc/make_blank_print(list/blank)
 	var/copy_colour = get_toner_color()
 	var/obj/item/paper/printblank = get_empty_paper(created_paper)
@@ -676,7 +676,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/photocopier/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	// No infinite paper chain. You need the original paperwork to make more copies.
+	// No infinite paper chain.. You need the original paperwork to make more copies.
 	if(istype(tool, /obj/item/paperwork/photocopy))
 		balloon_alert(user, "too blurry!")
 		to_chat(user, span_warning("The [tool] is far too messy to produce a good copy!"))
@@ -867,7 +867,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /// Subtype of photocopier that is free to use.
 /obj/machinery/photocopier/gratis
 	desc = "Does the same important paperwork, but it's free to use! The best type of free."
-	usage_cost = 0 // it's free! no charge! very cool and gratis-pilled.
+	usage_cost = 0 // it's free!. no charge!. very cool and gratis-pilled.
 
 /obj/machinery/photocopier/gratis/prebuilt
 	starting_toner = /obj/item/toner

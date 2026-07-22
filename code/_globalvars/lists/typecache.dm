@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(typecache_machine_or_structure, typecacheof(list(
 	/obj/structure,
 )))
 
-/// A typecache listing structures that are considered to have surfaces that you can place items on that are higher than the floor. This, of course, should be restricted to /atom/movables. This is primarily used for food decomposition code.
+/// A typecache listing structures that are considered to have surfaces that you can place items on that are higher than the floor.. This, of course, should be restricted to /atom/movables.. This is primarily used for food decomposition code.
 GLOBAL_LIST_INIT(typecache_elevated_structures, typecacheof(list(
 	/obj/machinery/conveyor,
 	/obj/structure/closet,

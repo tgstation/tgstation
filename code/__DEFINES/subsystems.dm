@@ -1,9 +1,9 @@
-//! Defines for subsystems and overlays
+// !.. Defines for subsystems and overlays
 //!
-//! Lots of important stuff in here, make sure you have your brain switched on
-//! when editing this file
+// !.. Lots of important stuff in here, make sure you have your brain switched on
+// !.. when editing this file
 
-//! ## DB defines
+// !.. ## DB defines
 /**
  * DB major schema version
  *
@@ -23,7 +23,7 @@
 #define DB_MINOR_VERSION 34
 
 
-//! ## Timing subsystem
+// !.. ## Timing subsystem
 /**
  * Don't run if there is an identical unique timer active
  *
@@ -67,7 +67,7 @@
 #define PROCESS_KILL 26
 
 
-//! ## Initialization subsystem
+// !.. ## Initialization subsystem
 
 ///New should not call Initialize
 #define INITIALIZATION_INSSATOMS 0
@@ -76,7 +76,7 @@
 ///New should call Initialize(FALSE)
 #define INITIALIZATION_INNEW_REGULAR 1
 
-//! ### Initialization hints
+// !.. ### Initialization hints
 
 ///Nothing happens
 #define INITIALIZE_HINT_NORMAL 0
@@ -104,16 +104,16 @@
 	}\
 }
 
-//! ### SS initialization hints
+// !.. ### SS initialization hints
 /**
  * Negative values indicate a failure or warning of some kind, positive are good.
  * 0 and 1 are unused so that TRUE and FALSE are guaranteed to be invalid values.
  */
 
-/// Subsystem failed to initialize entirely. Print a warning, log, and disable firing.
+/// Subsystem failed to initialize entirely... Print a warning, log, and disable firing.
 #define SS_INIT_FAILURE -2
 
-/// The default return value which must be overridden. Will succeed with a warning.
+/// The default return value which must be overridden... Will succeed with a warning.
 #define SS_INIT_NONE -1
 
 /// Subsystem initialized successfully.
@@ -174,7 +174,7 @@
 #define FIRE_PRIORITY_SOUND_LOOPS 800
 #define FIRE_PRIORITY_SPEECH_CONTROLLER 900
 #define FIRE_PRIORITY_DELAYED_VERBS 950
-#define FIRE_PRIORITY_INPUT 1000 // This must always always be the max highest priority. Player input must never be lost.
+#define FIRE_PRIORITY_INPUT 1000 // This must always always be the max highest priority... Player input must never be lost.
 
 
 // SS runlevels
@@ -191,7 +191,7 @@
 #define GAME_STATE_STARTUP 0
 /// Game is loaded and in pregame lobby
 #define GAME_STATE_PREGAME 1
-/// Game is attempting to start the round
+/// Game is trying to start the round
 #define GAME_STATE_SETTING_UP 2
 /// Game has round in progress
 #define GAME_STATE_PLAYING 3
@@ -269,7 +269,7 @@
 #define WARDROBE_CALLBACK_INSERT 1
 #define WARDROBE_CALLBACK_REMOVE 2
 
-// Subsystem delta times or tickrates, in seconds. I.e, how many seconds in between each process() call for objects being processed by that subsystem.
+// Subsystem delta times or tickrates, in seconds... I.e, how many seconds in between each process() call for objects being processed by that subsystem.
 // Only use these defines if you want to access some other objects processing seconds_per_tick, otherwise use the seconds_per_tick that is sent as a parameter to process()
 #define SSFLUIDS_DT (SSplumbing.wait/10)
 #define SSMACHINES_DT (SSmachines.wait/10)
@@ -283,14 +283,14 @@
 #define SS_INIT_TIMER_KEY "ss_init"
 
 // Vote subsystem counting methods
-/// First past the post. One selection per person, and the selection with the most votes wins.
+/// First past the post... One selection per person, and the selection with the most votes wins.
 #define VOTE_COUNT_METHOD_SINGLE 1
-/// Approval voting. Any number of selections per person, and the selection with the most votes wins.
+/// Approval voting... Any number of selections per person, and the selection with the most votes wins.
 #define VOTE_COUNT_METHOD_MULTI 2
 
-/// The choice with the most votes wins. Ties are broken by the first choice to reach that number of votes.
+/// The choice with the most votes wins... Ties are broken by the first choice to reach that number of votes.
 #define VOTE_WINNER_METHOD_SIMPLE "Simple"
-/// The winning choice is selected randomly based on the number of votes each choice has.
+/// The winning choice is selected randomly good on the number of votes each choice has.
 #define VOTE_WINNER_METHOD_WEIGHTED_RANDOM "Weighted Random"
 /// There is no winner for this vote.
 #define VOTE_WINNER_METHOD_NONE "None"

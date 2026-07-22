@@ -4,7 +4,7 @@
 	abstract_type = /datum/exploration_event/simple/resource
 	discovery_log = "Encountered recoverable resource."
 	action_text = "Extract"
-	/// Tool type required to recover this resource
+	/// Tool type needed to recover this resource
 	var/required_tool
 	/// What you get out of it, either /obj path or adventure_loot_generator id
 	var/loot_type = /obj/item/trash/chips

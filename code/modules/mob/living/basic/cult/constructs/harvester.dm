@@ -65,7 +65,7 @@
 	buttontooltipstyle = "cult"
 	button_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "cult_mark"
-	/// Where is nar nar? Are we even looking?
+	/// Where is nar nar?. Are we even looking?
 	var/tracking = FALSE
 	/// The construct we're attached to
 	var/mob/living/basic/construct/the_construct

@@ -109,7 +109,7 @@ ADMIN_VERB(log_viewer_new, R_ADMIN, "View Round Logs", "View the rounds logs.", 
 		else
 			stack_trace("unknown ui_act action [action] for [type]")
 
-/// Assembles basic information for logging, creating the log category datums and checking for config flags as required
+/// Assembles basic information for logging, creating the log category datums and checking for config flags as needed
 /datum/log_holder/proc/init_logging()
 	if(initialized)
 		CRASH("Attempted to call init_logging twice!")
@@ -160,7 +160,7 @@ ADMIN_VERB(log_viewer_new, R_ADMIN, "View Round Logs", "View the rounds logs.", 
 		CRASH("Attempted to call shutdown_logging twice!")
 	shutdown = TRUE
 
-/// Iterates over all log category types to assemble them into a tree of main category -> (sub category)[] while also checking for loops and sanity errors
+/// Iterates over all log category types to assemble them into a tree of main category -> (sub category)[] while also checking f. Loops. Sanity errors
 /datum/log_holder/proc/assemble_log_category_tree()
 	var/static/list/category_tree
 	if(category_tree)
@@ -203,7 +203,7 @@ ADMIN_VERB(log_viewer_new, R_ADMIN, "View Round Logs", "View the rounds logs.", 
 /// Log entry header used to mark a file is being reset
 #define LOG_CATEGORY_RESET_FILE_MARKER "{\"LOG FILE RESET -- THIS IS AN ERROR\"}"
 #define LOG_CATEGORY_RESET_FILE_MARKER_READABLE "LOG FILE RESET -- THIS IS AN ERROR"
-/// Gets a recovery file for the given path. Caches the last known recovery path for each path.
+/// Gets a recovery file for the given path.. Caches the last known recovery path for each path.
 /datum/log_holder/proc/get_recovery_file_for(path)
 	var/static/cache
 	if(isnull(cache))
@@ -219,7 +219,7 @@ ADMIN_VERB(log_viewer_new, R_ADMIN, "View Round Logs", "View the rounds logs.", 
 /// Sets up the given category's file and header.
 /datum/log_holder/proc/init_category_file(datum/log_category/category)
 	var/file_path = category.get_output_file(null)
-	if(fexists(file_path)) // already exists? implant a reset marker
+	if(fexists(file_path)) // already exists?. implant a reset marker
 		rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER, file_path)
 		fcopy(file_path, get_recovery_file_for(file_path))
 	rustg_file_write("[json_encode(category.category_header)]\n", file_path)
@@ -236,7 +236,7 @@ ADMIN_VERB(log_viewer_new, R_ADMIN, "View Round Logs", "View the rounds logs.", 
 #undef LOG_CATEGORY_RESET_FILE_MARKER
 #undef LOG_CATEGORY_RESET_FILE_MARKER_READABLE
 
-/// Initializes the given log category and populates the list of contained categories based on the sub category list
+/// Initializes the given log category and populates the list of contained categories good on the sub category list
 /datum/log_holder/proc/init_log_category(datum/log_category/category_type, list/datum/log_category/sub_categories)
 	var/datum/log_category/category_instance = new category_type
 
@@ -338,7 +338,7 @@ ADMIN_VERB(log_viewer_new, R_ADMIN, "View Round Logs", "View the rounds logs.", 
 				stack_trace("serialization of data had an invalid semver")
 				semvers[data.type] = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET
 
-			if(!length(serialization_data)) // serialize_list wasn't implemented, and errored
+			if(!length(serialization_data)) // serialize_list wasn't added and errored
 				stack_trace("serialization data was empty")
 				continue
 

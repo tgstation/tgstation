@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT_TYPED(light_types, /datum/light_template, generate_light_types(
 		types[template.id] = template
 	return types
 
-/// Light templates. They describe how a light looks, and links that to names/icons that can be used when templating/debugging
+/// Light templates.. They describe how a light looks, and links that to names/icons that can be used when templating/debugging
 /datum/light_template
 	/// User friendly name, to display clientside
 	var/name = ""

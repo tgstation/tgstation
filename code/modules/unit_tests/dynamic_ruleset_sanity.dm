@@ -23,7 +23,7 @@
 
 		// null antag flag is valid for rulesets with no associated preferecne
 		if (isnull(antag_flag))
-			// however if you set preview_antag_datum, it is assumed you do have a preference, and thus should have a flag
+			// but if you set preview_antag_datum, it is assumed you do have a preference, and so should have a flag
 			if (initial(ruleset.preview_antag_datum))
 				TEST_FAIL("[ruleset] sets preview_antag_datum, but has no pref_flag! \
 					If you want to use a preview antag datum, you must set a pref_flag.")

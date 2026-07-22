@@ -23,7 +23,7 @@
 	var/keyword
 	var/log = TRUE
 	var/key_valid
-	/// If the comms.txt config key is required. If you flip this to false, ensure the code is correct and the query you receive is legit.
+	/// If the comms.txt config key is needed If you flip this to false, ensure the code is correct and the query you receive is legit.
 	var/require_comms_key = TRUE
 
 /datum/world_topic/proc/TryRun(list/input)
@@ -101,7 +101,7 @@
 
 /datum/world_topic/comms_console/Run(list/input)
 	// Reject comms messages from other servers that are not on our configured network,
-	// if this has been configured. (See CROSS_COMMS_NETWORK in comms.txt)
+	// if this has been configured.. (See CROSS_COMMS_NETWORK in comms.txt)
 	var/configured_network = CONFIG_GET(string/cross_comms_network)
 	if (configured_network && configured_network != input["network"])
 		return
@@ -109,7 +109,7 @@
 	// We can't add the timer without the timer ID, but we can't get the timer ID without the timer!
 	// To solve this, we just use a list that we mutate later.
 	var/list/data = list("input" = input)
-	// Did we have to pass the soft filter on our origin server? Passed as a boolean value.
+	// Did we have to pass the soft filter on our origin server?. Passed as a boolean value.
 	var/soft_filter_passed = !!input["is_filtered"]
 	var/timer_id = addtimer(CALLBACK(src, PROC_REF(receive_cross_comms_message), data), soft_filter_passed ? EXTENDED_CROSS_SECTOR_CANCEL_TIME : CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
 	data["timer_id"] = timer_id

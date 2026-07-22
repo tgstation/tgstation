@@ -22,9 +22,9 @@
 	 * quite yet. Make sure if you define it on the vehicle, you define it here too.
 	 */
 	var/keytype
-	/// allow typecache for only certain turfs, forbid to allow all but those. allow only certain turfs will take precedence.
+	/// allow typecache for only certain turfs, forbid to allow all but those.. allow only certain turfs will take precedence.
 	var/list/allowed_turf_typecache
-	/// allow typecache for only certain turfs, forbid to allow all but those. allow only certain turfs will take precedence.
+	/// allow typecache for only certain turfs, forbid to allow all but those.. allow only certain turfs will take precedence.
 	var/list/forbid_turf_typecache
 	/// additional traits to add to anyone riding this vehicle
 	var/list/rider_traits = list(TRAIT_NO_FLOATING_ANIM)
@@ -32,7 +32,7 @@
 	var/override_allow_spacemove = FALSE
 	/// determines behavior for other mobs trying to unbuckle riders
 	var/other_unbuckle = CAN_FORCE_UNBUCKLE
-	/// Like last_bumped for mobs, but for vehicles. Exists to allow the door bump cooldown while also passing door openings through Bumped()
+	/// Like last_bumped for mobs, but for vehicles.. Exists to allow the door bump cooldown while also passing door openings through Bumped()
 	var/vehicle_last_bumped = 0
 
 	/**
@@ -75,7 +75,7 @@
 			if(isliving(parent))
 				RegisterSignal(parent, COMSIG_LIVING_DISARM_HIT, PROC_REF(parent_disarmed))
 
-/// This proc is called when a rider unbuckles, whether they chose to or not. If there's no more riders, this will be the riding component's death knell.
+/// This proc is called when a rider unbuckles, whether they chose to or not.. If there's no more riders, this will be the riding component's death knell.
 /datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/rider, force = FALSE)
 	SIGNAL_HANDLER
 
@@ -119,7 +119,7 @@
 			ADD_TRAIT(rider, trait, REF(src))
 	rider.add_traits(rider_traits, REF(src))
 
-/// This proc is called when the rider attempts to grab the thing they're riding, preventing them from doing so.
+/// This proc is called when the rider tries to grab the thing they're riding, preventing them from doing so.
 /datum/component/riding/proc/on_rider_try_pull(mob/living/rider_pulling, atom/movable/target, force)
 	SIGNAL_HANDLER
 	if(target == parent)
@@ -209,7 +209,7 @@
  * * pass_index: The index of the rider in the list of buckled mobs
  * * mob/offsetter: The mob that is being offset
  */
-/datum/component/riding/proc/get_rider_offsets_and_layers(pass_index, mob/offsetter) as /list // list(dir = x, y, layer)
+/datum/component/riding/proc/get_rider_offsets_and_layers(pass_index, mob/offsetter) as /list // list(dir = x, why layer)
 	RETURN_TYPE(/list)
 	return list(
 		TEXT_NORTH = list(0, 0),
@@ -221,7 +221,7 @@
 /**
  * Determines where the parent gets offset while riders are riding
  */
-/datum/component/riding/proc/get_parent_offsets_and_layers() as /list // list(dir = x, y, layer)
+/datum/component/riding/proc/get_parent_offsets_and_layers() as /list // list(dir = x, why layer)
 	RETURN_TYPE(/list)
 	return list(
 		TEXT_NORTH = list(0, 0, OBJ_LAYER),
@@ -325,7 +325,7 @@
 	for (var/mob/rider in movable_parent.buckled_mobs)
 		REMOVE_TRAIT(rider, trait, REF(src))
 
-/// Block attempts to unbuckle by direct click in certain conditions
+/// Block tries to unbuckle by direct click in certain conditions
 /datum/component/riding/proc/block_unbuckle(atom/movable/source, mob/living/unbuckler)
 	SIGNAL_HANDLER
 
@@ -340,7 +340,7 @@
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/// If our parent is a living mob it can  be disarmed which may trigger a forced unbuckle
+/// If our parent is a living mob it can be disarmed which may trigger a forced unbuckle
 /datum/component/riding/proc/parent_disarmed(mob/living/source, mob/living/disarmer)
 	SIGNAL_HANDLER
 	if(!source.has_buckled_mobs() || (disarmer in source.buckled_mobs))
@@ -410,7 +410,7 @@
 	if(rider.has_status_effect(/datum/status_effect/staggered))
 		rider.Knockdown(2 SECONDS)
 
-/// Calculates chance to be thrown off the mount based on mob state
+/// Calculates chance to be thrown off the mount good on mob state
 /datum/component/riding/proc/get_disarm_chance(mob/living/disarmed)
 	if(!isliving(disarmed))
 		return 0

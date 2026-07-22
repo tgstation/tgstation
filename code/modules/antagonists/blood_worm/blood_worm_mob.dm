@@ -5,8 +5,8 @@
 
 	initial_language_holder = /datum/language_holder/blood_worm
 
-	// FIXME: This should use MOB_BUG, but it makes hunter boxing instakill juveniles.
-	// I.e. blood worms should be susceptible to pest killer, but not hunter boxing.
+	// Fix me This should use MOB_BUG, but it makes hunter boxing instakill juveniles.
+	// I.e.. blood worms should be susceptible to pest killer, but not hunter boxing.
 	mob_biotypes = MOB_ORGANIC
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = CANPUSH // No CANSTUN, blood worms are immune to stuns by design.
@@ -35,7 +35,7 @@
 	lighting_cutoff_green = 20
 	lighting_cutoff_blue = 20
 
-	/// Identification number, i.e. "hatchling blood worm (id)"
+	/// Identification number, i.e.. "hatchling blood worm (id)"
 	/// Used for carrying the same number through growth stages.
 	var/id_number = null
 
@@ -46,13 +46,13 @@
 	/// How long the leave host animation lasts for this type, in deciseconds.
 	var/leave_host_duration = 0
 
-	/// How much regular (human, blood pack, etc.) blood the worm has consumed.
+	/// How much regular (human, blood pack, and so on blood the worm has consumed.
 	var/consumed_normal_blood = 0
-	/// How much synthetic (monkey, duplicated, etc.) blood the worm has consumed.
+	/// How much synthetic (monkey, duplicated, and so on blood the worm has consumed.
 	var/consumed_synth_blood = 0
 	/// The maximum amount of synthetic blood counted for growth.
 	var/maximum_synth_blood = 1000
-	/// How efficient ingesting synthetic blood is compared to normal blood. (ingested amount is multiplied by this)
+	/// How efficient ingesting synthetic blood is compared to normal blood.. (ingested amount is multiplied by this)
 	var/synth_blood_efficiency = 0.7
 
 	/// The current host of the blood worm, if any.
@@ -64,18 +64,18 @@
 
 	// Innate and shared actions
 
-	/// Typed, please initialize with a proper action subtype. (empty = no action)
+	/// Typed, please initialize with a proper action subtype.. (empty = no action)
 	var/datum/action/cooldown/mob_cooldown/blood_worm/spit/spit_action
-	/// Typed, please initialize with a proper action subtype. (empty = no action)
+	/// Typed, please initialize with a proper action subtype.. (empty = no action)
 	var/datum/action/cooldown/mob_cooldown/blood_worm/leech/leech_action
 	/// Not typed, please leave empty.
 	var/datum/action/cooldown/mob_cooldown/blood_worm/invade/invade_action
-	/// Typed, please initialize with a proper action subtype. (empty = no action)
+	/// Typed, please initialize with a proper action subtype.. (empty = no action)
 	var/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/cocoon_action
 
 	// Host actions
 
-	/// Typed, please initialize with a proper action subtype. (empty = no action)
+	/// Typed, please initialize with a proper action subtype.. (empty = no action)
 	var/datum/action/cooldown/mob_cooldown/blood_worm/inject/transfuse_action
 	/// Not typed, please leave empty.
 	var/datum/action/cooldown/mob_cooldown/blood_worm/eject/eject_action
@@ -201,7 +201,7 @@
 	real_name = name
 
 /mob/living/basic/blood_worm/adjust_health(amount, updating_health, forced)
-	return host ? 0 : ..() // Prevents damage from adjust_x_loss while in a host, because that damage would be nullified by the next [proc/sync_health] call. Adjust host blood volume instead.
+	return host ? 0 : ..() // Prevents damage from adjust_x_loss while in a host, because that damage would be nullified by the next [proc/sync_health] call.. Adjust host blood volume instead.
 
 /mob/living/basic/blood_worm/set_stat(new_stat)
 	. = ..()
@@ -282,7 +282,7 @@
 
 	guaranteed_butcher_results = list(/obj/item/food/meat/slab/blood_worm = 1)
 
-	maxHealth = 80 // In practice, escaping into a vent from someone who could 3 hit you with a basic bitch welder was really hard. This used to be 50, and was buffed to 80, but speed was slowed a bit.
+	maxHealth = 80 // In practice, escaping into a vent from someone who could 3 hit you with a basic bitch welder was really hard.. This used to be 50, and was buffed to 80, but speed was slowed a bit.
 	health = 80
 
 	// Hatchlings need to be space resistant
@@ -290,7 +290,7 @@
 	unsuitable_cold_damage = 0.5
 	unsuitable_heat_damage = 1
 
-	obj_damage = 15 // 10 -> 15, in testing 10 proved to be way too slow at breaking morgue trays and such. Make sure that this doesn't go above airlock damage deflection.
+	obj_damage = 15 // 10 -> 15, in testing 10 proved to be way too slow at breaking morgue trays and such.. Make sure that this doesn't go above airlock damage deflection.
 	melee_damage_lower = 12
 	melee_damage_upper = 14
 	armour_penetration = 10
@@ -333,12 +333,12 @@
 	unsuitable_cold_damage = 1
 	unsuitable_heat_damage = 1.5
 
-	obj_damage = 35 // Able to break most obstacles, such as airlocks. This is mandatory since they can't ventcrawl anymore.
-	melee_damage_lower = 18 // Juveniles can't run away nearly as easily, so they are expected to do direct combat against normal crew. (but lose hard to well-equipped sec)
+	obj_damage = 35 // Able to break most obstacles, such as airlocks.. This is mandatory since they can't ventcrawl anymore.
+	melee_damage_lower = 18 // Juveniles can't run away nearly as easily, so they are expected to do direct combat against normal crew.. (but lose hard to well-equipped sec)
 	melee_damage_upper = 22
 	armour_penetration = 30
 
-	wound_bonus = 0 // Juveniles can afford to heal wounds on their hosts, unlike hatchlings. Note that this can't cause critical wounds. (at least it didn't in testing)
+	wound_bonus = 0 // Juveniles can afford to heal wounds on their hosts, unlike hatchlings.. Note that this can't cause critical wounds.. (at least it didn't in testing)
 	sharpness = SHARP_POINTY
 
 	speed = 0.3
@@ -376,7 +376,7 @@
 
 	guaranteed_butcher_results = list(/obj/item/food/meat/slab/blood_worm = 3)
 
-	maxHealth = 180 // Used to be 150, turns out their lack of armor and weakness to burn made them too squishy. People kited them using lasguns, leaving them with no way to fight back at all.
+	maxHealth = 180 // Used to be 150, turns out their lack of armor and weakness to burn made them too squishy.. People kited them using lasguns, leaving them with no way to fight back at all.
 	health = 180
 
 	unsuitable_cold_damage = 1
@@ -384,7 +384,7 @@
 
 	obj_damage = 50 // You are not getting away.
 	melee_damage_lower = 25
-	melee_damage_upper = 30 // Turns out adults regularly end up encountering advanced weapons like cap's sabre, lasguns + armor, eswords, etc. They need a strong melee.
+	melee_damage_upper = 30 // Turns out adults regularly end up encountering advanced weapons like cap's sabre, lasguns + armor, eswords, and so on They need a strong melee.
 	armour_penetration = 50 // Adults will 100% encounter sec, they are shit out of luck without proper armor pen.
 
 	wound_bonus = 0 // Able to cause critical wounds.

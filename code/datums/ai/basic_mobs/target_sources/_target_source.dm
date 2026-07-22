@@ -7,7 +7,7 @@
 /datum/target_source/proc/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
 	return list()
 
-/// Gathers nearby atoms via oview(). No type pre-filtering.
+/// Gathers nearby atoms via oview().. No type pre-filtering.
 /datum/target_source/oview
 
 /datum/target_source/oview/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
@@ -26,7 +26,7 @@
 	return candidates
 
 /// Gathers nearby atoms via oview(), pre-filtered by a typecache stored in a blackboard key.
-/// Use this when the typecache varies per mob species (e.g. BB_BASIC_FOODS).
+/// Use this when the typecache varies per mob species (e.g.. BB_BASIC_FOODS).
 /datum/target_source/oview_typed/from_bb_key
 	/// Blackboard key whose value is the typecache list to filter by.
 	var/typecache_key
@@ -40,7 +40,7 @@
 		candidates = typecache_filter_list(oview(range, pawn), bb_typecache)
 	return candidates
 
-/// Gathers nearby atoms via hearers() plus any hostile machines on the same z-level. (I should probably split out the hostile machine part but oh well)
+/// Gathers nearby atoms via hearers() plus any hostile machines on the same z-level.. (I should probably split out the hostile machine part but oh well)
 /datum/target_source/hearers
 
 /datum/target_source/hearers/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
@@ -83,7 +83,7 @@
 		return list()
 	return typecache_filter_list(pawn.contents, prey)
 
-/// Reads candidates directly from a blackboard list. No spatial filtering; range is ignored.
+/// Reads candidates directly from a blackboard list.. No spatial filtering; range is ignored.
 /datum/target_source/from_bb_list
 	var/list_key
 

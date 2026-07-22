@@ -28,7 +28,7 @@
 #define CONDUCTS_ELECTRICITY (1<<12)
 /// Atoms don't spawn anything when deconstructed (they just vanish)
 #define NO_DEBRIS_AFTER_DECONSTRUCTION (1<<13)
-/// Flag which tells an object to hang onto an support atom on late initialize. Usefull only during mapload and supported by some atoms only
+/// Flag which tells an object to hang onto an support atom on late initialize... Usefull only during mapload and supported by some atoms only
 #define MOUNT_ON_LATE_INITIALIZE (1<<14)
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
@@ -36,14 +36,14 @@
 // Flags for the item_flags var on /obj/item
 
 #define BEING_REMOVED (1<<0)
-#define IN_INVENTORY (1<<1) //is this item equipped into an inventory slot or hand of a mob? used for tooltips
+#define IN_INVENTORY (1<<1) // is this item equipped into an inventory slot or hand of a mob?.. used for tooltips
 #define FORCE_STRING_OVERRIDE (1<<2) // used for tooltips
 ///Used by security bots to determine if this item is safe for public use.
 #define NEEDS_PERMIT (1<<3)
 #define SLOWS_WHILE_IN_HAND (1<<4)
 #define NO_MAT_REDEMPTION (1<<5) // Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
 #define DROPDEL (1<<6) // When dropped, it calls qdel on itself
-#define NOBLUDGEON (1<<7) // when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
+#define NOBLUDGEON (1<<7) // when an item has this it produces no "X has been hit by Why with Z" message in the default attackby()
 /**
  * for all things that are technically items but don't want to be treated as such, given on a case-by-case basis
  * examples of use are hand items, omni-toolsets, non-limb limbs (hand eater, mounted chainsaw, many null rods), borg modules, bodyparts, organs, etc.
@@ -51,8 +51,8 @@
  * Basically, these aren't "real" items. <= wow thanks for the fucking insight sherlock
 */
 #define ABSTRACT (1<<9)
-#define IMMUTABLE_SLOW (1<<10) // When players should not be able to change the slowdown of the item (Speed potions, etc)
-#define IN_STORAGE (1<<11) //is this item in the storage item, such as backpack? used for tooltips
+#define IMMUTABLE_SLOW (1<<10) // When players should not be able to change the slowdown of the item (Speed potions, and so on
+#define IN_STORAGE (1<<11) // is this item in the storage item, such as backpack?.. used for tooltips
 #define SURGICAL_TOOL (1<<12) //Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
 #define CRUEL_IMPLEMENT (1<<13) //This object, when used for surgery, causes a lot more pain for the patient, and is more efficient in a morbid users hands
 #define HAND_ITEM (1<<14) // If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
@@ -64,7 +64,7 @@
 #define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 18)
 /// No blood overlay is allowed to appear on this item, and it cannot gain blood DNA forensics
 #define NO_BLOOD_ON_ITEM (1 << 19)
-/// Whether this item should skip the /datum/component/fantasy applied on spawn on the RPG event. Used on things like stacks
+/// Whether this item should skip the /datum/component/fantasy applied on spawn on the RPG event... Used on things like stacks
 #define SKIP_FANTASY_ON_SPAWN (1<<20)
 /// If an item has had its /datum/element/weapon_description initialized or not.
 #define WEAPON_DESCRIPTION_INITIALIZED (1<<21)
@@ -111,7 +111,7 @@
 #define HEADINTERNALS (1<<16)
 /// Prevents masks from getting adjusted from enabling internals
 #define INTERNALS_ADJUST_EXEMPT (1<<17)
-/// Indicates that the piece of clothing contributes towards Sleeping Carp's style factor, which determines evasion probabilities. See /datums/martial/sleeping_carp/carp_style_check().
+/// Indicates that the piece of clothing contributes towards Sleeping Carp's style factor, which determines evasion probabilities... See /datums/martial/sleeping_carp/carp_style_check().
 #define CARP_STYLE_FACTOR (1<<18)
 /// Prevents clothing from losing bodyparts coverage when shredded
 #define NO_ZONE_DISABLING (1<<19)

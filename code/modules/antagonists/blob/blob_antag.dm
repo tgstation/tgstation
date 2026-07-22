@@ -12,7 +12,7 @@
 	var/datum/action/innate/blobpop/pop_action
 	/// Initial points for a human blob
 	var/starting_points_human_blob = OVERMIND_STARTING_POINTS
-	/// Has the blob already popped inside of the round? This is here to prevent blobs from "respawning"
+	/// Has the blob already popped inside of the round?. This is here to prevent blobs from "respawning"
 	var/has_already_popped = FALSE
 
 /datum/antagonist/blob/roundend_report()

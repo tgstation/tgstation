@@ -7,7 +7,7 @@
 	var/bonus_modifier = 0
 	/// Sound played when butchering
 	var/butcher_sound = 'sound/effects/butcher.ogg'
-	/// Whether or not this component can be used to butcher currently. Used to temporarily disable butchering
+	/// Whether or not this component can be used to butcher currently.. Used to temporarily disable butchering
 	var/butchering_enabled = TRUE
 	/// Whether or not this component is compatible with blunt tools.
 	var/can_be_blunt = FALSE
@@ -69,7 +69,7 @@
 		INVOKE_ASYNC(src, PROC_REF(butcher_human), source, victim, user)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	// Neckslicing requires aggro grabs
+	// Neckslicing needs aggro grabs
 	if (user.pulling != victim || user.grab_state < GRAB_AGGRESSIVE || user.zone_selected != BODY_ZONE_HEAD)
 		return
 
@@ -166,7 +166,7 @@
 		return
 
 	if (target.body_zone == BODY_ZONE_CHEST && target.owner)
-		// Cannot butcher the chest until we hack off all the other limbs
+		// Cannot butcher the chest until we temporary solution off all the other limbs
 		for (var/obj/item/bodypart/limb as anything in target.owner.get_bodyparts())
 			if (limb != target && limb.butcher_drops && limb.butcher_replacement)
 				to_chat(user, span_warning("You need to butcher all other limbs first!"))
@@ -223,7 +223,7 @@
 		if (is_stack && amount)
 			var/obj/item/stack/butcher_result = null
 			if (ispath(drop_type, /obj/item/stack/sheet/animalhide/carbon))
-				butcher_result = new drop_type(drop_loc, amount, /*merge = */TRUE, /*mat_override = */null, /*mat_amount = */1, target.skin_tone || target.species_color)
+				butcher_result = new drop_type(drop_loc, amount, /* merge = */TRUE, /* mat_override = */null, /* mat_amount = */1, target.skin_tone || target.species_color)
 			else
 				butcher_result = new drop_type(drop_loc, amount)
 			if (target.blood_dna_info)

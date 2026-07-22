@@ -208,7 +208,7 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/focused
-	description = "I have a goal, and I will reach it, whatever it takes!" //Used for syndies, nukeops etc so they can focus on their goals
+	description = "I have a goal, and I will reach it, whatever it takes!" // Used for syndies, nukeops and so on so they can focus on their goals
 	mood_change = 8
 	hidden = TRUE
 
@@ -256,7 +256,7 @@
 
 /datum/mood_event/blood_worm
 	description = "KILL, CONSUME, MULTIPLY, CONQUER."
-	mood_change = 999 // Makes it bold green and gives the special obj a higher priority. Blood worm hosts are apathetic, so this is otherwise meaningless.
+	mood_change = 999 // Makes it bold green and gives the special obj a higher priority.. Blood worm hosts are apathetic, so this is otherwise meaningless.
 	hidden = TRUE
 
 /datum/mood_event/family_heirloom

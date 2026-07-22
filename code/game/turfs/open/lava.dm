@@ -34,7 +34,7 @@
 	var/immunity_trait = TRAIT_LAVA_IMMUNE
 	/// objects with these flags won't burn.
 	var/immunity_resistance_flags = LAVA_PROOF
-	/// the temperature that this turf will attempt to heat/cool gasses too in a heat exchanger, in kelvin
+	/// the temperature that this turf will try to heat/cool gasses too in a heat exchanger, in kelvin
 	var/lava_temperature = 5000
 	/// The icon that covers the lava bits of our turf
 	var/mask_icon = 'icons/turf/floors.dmi'
@@ -244,14 +244,14 @@
 /turf/open/lava/proc/is_safe()
 	return HAS_TRAIT(src, TRAIT_LAVA_STOPPED)
 
-///Generic return value of the can_burn_stuff() proc. Does nothing.
+/// Generic return value of the can_burn_stuff() proc.. Does nothing.
 #define LAVA_BE_IGNORING 0
-/// Another. Won't burn the target but will make the turf start processing.
+/// Another.. Won't burn the target but will make the turf start processing.
 #define LAVA_BE_PROCESSING 1
 /// Burns the target and makes the turf process (depending on the return value of do_burn()).
 #define LAVA_BE_BURNING 2
 
-///Proc that sets on fire something or everything on the turf that's not immune to lava. Returns TRUE to make the turf start processing.
+/// Proc that sets on fire something or everything on the turf that's not immune to lava.. Returns TRUE to make the turf start processing.
 /turf/open/lava/proc/burn_stuff(atom/movable/to_burn, seconds_per_tick = 1)
 	if(is_safe())
 		return FALSE
@@ -468,7 +468,7 @@
 
 	var/mob/living/burn_living = burn_target
 	var/need_mob_update
-	// This is from plasma, so it should obey plasma biotype requirements
+	// This is from plasma, so it should obey plasma biotype needs
 	need_mob_update += burn_living.adjust_tox_loss(15, updating_health = FALSE, required_biotype = MOB_ORGANIC)
 	need_mob_update += burn_living.adjust_fire_loss(25, updating_health = FALSE)
 	if(need_mob_update)

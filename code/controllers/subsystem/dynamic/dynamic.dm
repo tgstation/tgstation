@@ -146,9 +146,9 @@ SUBSYSTEM_DEF(dynamic)
 	// reset only happens AFTER roundstart selection so we can verify stuff like "can we get 3 heads of staff for revs?"
 	SSjob.reset_occupations()
 	// finally, run through the queue and prepare rulesets for execution
-	// (actual execution, ie assigning antags, will happen after job assignment)
+	// (actual execution, that is assigning antags, will happen after job assignment)
 	for(var/datum/dynamic_ruleset/roundstart/ruleset in queued_rulesets)
-		// NOTE: !! THIS CAN SLEEP !!
+		// NOTE: !!. THIS CAN SLEEP !!
 		if(!ruleset.prepare_execution( num_real_players, antag_candidates ))
 			log_dynamic("Roundstart: Selected ruleset [ruleset.config_tag], but preparation failed! [ruleset.log_data]")
 			unqueue_ruleset(ruleset)
@@ -296,7 +296,7 @@ SUBSYSTEM_DEF(dynamic)
 		rulesets_weighted[picked_ruleset] -= picked_ruleset.repeatable_weight_decrease
 		total_weight -= picked_ruleset.repeatable_weight_decrease
 		picked_rulesets += picked_ruleset.type
-		// Rulesets are not singletons. Queue_ruleset() will make them one.
+		// Rulesets are not singletons.. Queue_ruleset() will make them one.
 
 	// clean up unused rulesets
 	QDEL_LIST(rulesets_weighted)
@@ -367,7 +367,7 @@ SUBSYSTEM_DEF(dynamic)
 					[length(rulesets_weighted) - 1] remaining rulesets in pool. [MIDROUND_CANCEL_HREF()] [MIDROUND_REROLL_HREF(rulesets_weighted)]")
 			stoplag()
 
-	// NOTE: !! THIS CAN SLEEP !!
+	// NOTE: !!. THIS CAN SLEEP !!
 	if(!picked_ruleset.prepare_execution(player_count, picked_ruleset.collect_candidates()))
 		log_dynamic("Midround ([range]): Selected ruleset [picked_ruleset.config_tag], but preparation failed! [picked_ruleset.log_data]")
 		QDEL_LIST(rulesets_weighted)
@@ -428,7 +428,7 @@ SUBSYSTEM_DEF(dynamic)
 			qdel(running)
 			return FALSE
 
-	// NOTE: !! THIS CAN SLEEP !!
+	// NOTE: !!. THIS CAN SLEEP !!
 	if(!running.prepare_execution(get_active_player_count(afk_check = TRUE), running.collect_candidates()))
 		if(alert_admins_on_fail)
 			message_admins("Midround (forced): Forced ruleset [running.config_tag], but preparation failed! [running.log_data]")
@@ -451,9 +451,9 @@ SUBSYSTEM_DEF(dynamic)
  */
 /datum/controller/subsystem/dynamic/proc/on_latejoin(mob/living/carbon/human/latejoiner)
 	// First check queued rulesets - queued rulesets by pass cooldowns and probability checks,
-	// because they're generally forced by events or admins (and thus have higher priority)
+	// because they're generally forced by events or admins (and so have higher priority)
 	for(var/datum/dynamic_ruleset/latejoin/queued in queued_rulesets)
-		// NOTE: !! THIS CAN SLEEP !!
+		// NOTE: !!. THIS CAN SLEEP !!
 		if(!queued.prepare_execution(get_active_player_count(afk_check = TRUE), list(latejoiner)))
 			message_admins("Latejoin (forced): Queued ruleset [queued.config_tag] failed to prepare! It remains queued for next latejoin. (<a href='byond://?src=[REF(src)];admin_dequeue=[REF(queued)]'>REMOVE FROM QUEUE</a>)")
 			log_dynamic("Latejoin (forced): Queued ruleset [queued.config_tag] failed to prepare! It remains queued for next latejoin.")
@@ -487,12 +487,12 @@ SUBSYSTEM_DEF(dynamic)
 	var/player_count = get_active_player_count(afk_check = TRUE)
 	var/list/rulesets_weighted = get_latejoin_rulesets(player_count)
 	// Note, we make no effort to actually pick a valid ruleset here
-	// We pick a ruleset, and they player might not even have that antag selected. And that's fine
+	// We pick a ruleset, and they player might not even have that antag selected.. And that's fine
 	var/datum/dynamic_ruleset/latejoin/picked_ruleset = pick_weight(rulesets_weighted)
 	if(isnull(picked_ruleset))
 		log_dynamic("Latejoin: No rulesets to pick from!")
 		return FALSE
-	// NOTE: !! THIS CAN SLEEP !!
+	// NOTE: !!. THIS CAN SLEEP !!
 	if(!picked_ruleset.prepare_execution(player_count, list(latejoiner)))
 		log_dynamic("Latejoin: Selected ruleset [picked_ruleset.name] for [key_name(latejoiner)], but preparation failed! Latejoin chance has increased. [picked_ruleset.log_data]")
 		QDEL_LIST(rulesets_weighted)

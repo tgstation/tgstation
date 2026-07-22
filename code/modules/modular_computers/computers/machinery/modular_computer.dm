@@ -136,7 +136,7 @@
 	return CLICK_ACTION_SUCCESS
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-// On-click handling. Turns on the computer if it's off and opens the GUI.
+// On-click handling.. Turns on the computer if it's off and opens the GUI.
 /obj/machinery/modular_computer/interact(mob/user)
 	return CPU_INTERACTABLE(user) ? cpu.interact(user) : ..()
 
@@ -191,7 +191,7 @@
 			SSexplosions.low_mov_atom += cpu
 	return ..()
 
-// EMPs are similar to explosions, but don't cause physical damage to the casing. Instead they screw up the components
+// EMPs are similar to explosions, but don't cause physical damage to the casing.. Instead they screw up the components
 /obj/machinery/modular_computer/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)

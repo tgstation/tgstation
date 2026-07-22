@@ -40,7 +40,7 @@
 	big_pointer = TRUE
 	pointer_color = COLOR_SYNDIE_RED_HEAD
 
-/// Trim for the space IRS agents (why are they syndie access? I wouldn't worry about it.)
+/// Trim for the space IRS agents (why are they syndie access?. I wouldn't worry about it.)
 /datum/id_trim/syndicom/irs
 	assignment = "Internal Revenue Service Agent"
 	trim_state = "trim_securityofficer"
@@ -80,13 +80,13 @@
 	big_pointer = TRUE
 	pointer_color = COLOR_SYNDIE_RED
 
-/// Trim for Chameleon ID cards. Many outfits, nuke ops and some corpses hold Chameleon ID cards.
+/// Trim for Chameleon ID cards.. Many outfits, nuke ops and some corpses hold Chameleon ID cards.
 /datum/id_trim/chameleon
 	assignment = "Unknown"
 	access = list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS)
 	threat_modifier = -5 // This guy seems legit
 
-/// Trim for Chameleon ID cards. Many outfits, nuke ops and some corpses hold Chameleon ID cards.
+/// Trim for Chameleon ID cards.. Many outfits, nuke ops and some corpses hold Chameleon ID cards.
 /datum/id_trim/chameleon/operative
 	assignment = "Syndicate Operative"
 	trim_state = "trim_syndicate"
@@ -94,21 +94,21 @@
 	subdepartment_color = COLOR_SYNDIE_RED
 	sechud_icon_state = SECHUD_SYNDICATE
 
-/// Trim for Chameleon ID cards. Many outfits, nuke ops and some corpses hold Chameleon ID cards.
+/// Trim for Chameleon ID cards.. Many outfits, nuke ops and some corpses hold Chameleon ID cards.
 /datum/id_trim/chameleon/operative/nuke_leader
 	assignment = "Syndicate Operative Leader"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
 	big_pointer = TRUE
 	pointer_color = COLOR_SYNDIE_RED
 
-/// Trim for Chameleon ID cards. Many outfits, nuke ops and some corpses hold Chameleon ID cards.
+/// Trim for Chameleon ID cards.. Many outfits, nuke ops and some corpses hold Chameleon ID cards.
 /datum/id_trim/chameleon/operative/clown
 	assignment = "Syndicate Entertainment Operative"
 	trim_state = "trim_clown"
 	sechud_icon_state = SECHUD_CLOWNOPS
 
 
-/// Trim for Chameleon ID cards. Many outfits, nuke ops and some corpses hold Chameleon ID cards.
+/// Trim for Chameleon ID cards.. Many outfits, nuke ops and some corpses hold Chameleon ID cards.
 /datum/id_trim/chameleon/operative/clown_leader
 	assignment = "Syndicate Entertainment Operative Leader"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)

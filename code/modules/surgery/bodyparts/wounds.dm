@@ -1,4 +1,4 @@
-/// Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds
+/// Allows us to roll for and apply a wound without actually dealing damage.. Used for aggregate wounding power with pellet clouds
 /obj/item/bodypart/proc/painless_wound_roll(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus, sharpness=NONE, wound_clothing)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -24,7 +24,7 @@
 			wounding_type = WOUND_BLUNT
 			wounding_dmg *= (easy_dismember ? 1 : 0.75)
 	else
-		// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
+		// if we've already mangled the skin (critical slash. Piercing wound), then the bone is exposed. We can damage it with sharp weapons at a reduced rate
 		// So a big sharp weapon is still all you need to destroy a limb
 		if(has_interior && exterior_ready_to_dismember && !(mangled_state & BODYPART_MANGLED_INTERIOR) && sharpness)
 			if(wounding_type == WOUND_SLASH && !easy_dismember)
@@ -177,7 +177,7 @@
 	if (corresponding_typepath)
 		return limb.force_wound_upwards(corresponding_typepath, wound_source = wound_source)
 
-/// Limb is nullable, but picks a random one. Defers to limb.get_wound_threshold_of_wound_type, see it for documentation.
+/// Limb is nullable, but picks a random one.. Defers to limb.get_wound_threshold_of_wound_type, see it for documentation.
 /mob/living/carbon/proc/get_wound_threshold_of_wound_type(wounding_type, severity, default, obj/item/bodypart/limb, wound_source)
 	if (isnull(limb))
 		limb = pick(bodyparts)
@@ -255,7 +255,7 @@
 
 	return injury_mod
 
-/// Should return an assoc list of (wound_series -> penalty). Will be used in determining series-specific penalties for wounding.
+/// Should return an assoc list of (wound_series -> penalty).. Will be used in determining series-specific penalties for wounding.
 /obj/item/bodypart/proc/check_series_wounding_mods()
 	RETURN_TYPE(/list)
 

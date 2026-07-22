@@ -20,7 +20,7 @@
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 10)
 	/// is the bonfire lit?
 	var/burning = FALSE
-	/// icon for the bonfire while on. for a softer more burning embers icon, use "bonfire_warm"
+	/// icon for the bonfire while on.. for a softer more burning embers icon, use "bonfire_warm"
 	var/burn_icon = "bonfire_on_fire"
 	/// if the bonfire has a grill attached
 	var/grill = FALSE
@@ -79,7 +79,7 @@
 		//Center the icon where the user clicked.
 		if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 			return ITEM_INTERACT_SUCCESS
-		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+		// Clamp it so that the icon never moves more than 16 pixels in either direction so leaving the table turf)
 		tool.pixel_x = tool.base_pixel_x + clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
 		tool.pixel_y = tool.base_pixel_y + clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
 		return ITEM_INTERACT_SUCCESS

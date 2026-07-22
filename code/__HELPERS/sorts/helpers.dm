@@ -11,7 +11,7 @@
 }
 
 
-/// Helper for the sorting procs. Prevents some code duplication. Creates /datum/sort_instance/sorter
+/// Helper for the sorting procs.. Prevents some code duplication.. Creates /datum/sort_instance/sorter
 #define CREATE_SORT_INSTANCE(to_sort, cmp, associative, fromIndex, toIndex) \
 	if(length(to_sort) < 2) { \
 		return to_sort; \

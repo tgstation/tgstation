@@ -5,7 +5,7 @@
  * Add this component after gasmixes has been initialized.
  */
 /datum/component/atmos_reaction_recorder
-	/// The list we write append each reaction tick to. 
+	/// The list we write append each reaction tick to.
 	/// This is often a list initialized by something else (passed as a reference under Initialize).
 	var/list/copied_reaction_results
 	/// Signals we have been listening to.
@@ -37,7 +37,7 @@
 	registered_signals += list(COMSIG_GASMIX_REACTED = parent_air)
 
 	for(var/signal in reset_criteria)
-		// We currently dont implement the same signal registered twice even from different sources. This allows this component to be simpler.
+		// We currently dont add the same signal registered twice even from different sources.. This allows this component to be simpler.
 		if(signal in registered_signals)
 			return COMPONENT_INCOMPATIBLE
 		RegisterSignal(reset_criteria[signal], signal, PROC_REF(reset_data))

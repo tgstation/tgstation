@@ -11,7 +11,7 @@
 	// But it should fail when passed as a directory
 	fcopy("_maps/[VALID_TEST_MAP].json", "data/load_map_security_temp/[VALID_TEST_MAP].json")
 
-	//Attempt to load our configs
+	// Try to load our configs
 
 	// test load from _maps - this should pass
 	var/datum/map_config/maps_config = load_map_config(VALID_TEST_MAP, MAP_DIRECTORY_MAPS)

@@ -1,4 +1,4 @@
-//Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm. Now with dedicated file!
+// Key thing that stops lag.. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.. Now with dedicated file!
 
 ///Increases delay as the server gets more overloaded, as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
 #define DELTA_CALC max(((max(TICK_USAGE, world.cpu) / 100) * max(Master.sleep_delta-1,1)), 1)
@@ -10,7 +10,7 @@
 		return 1
 	if (!initial_delay)
 		initial_delay = world.tick_lag
-// Unit tests are not the normal environemnt. The mc can get absolutely thigh crushed, and sleeping procs running for ages is much more common
+// Unit tests are not the normal environemnt.. The mc can get absolutely thigh crushed, and sleeping procs running for ages is much more common
 // We don't want spurious hard deletes off this, so let's only sleep for the requested period of time here yeah?
 #ifdef UNIT_TESTS
 	sleep(initial_delay)

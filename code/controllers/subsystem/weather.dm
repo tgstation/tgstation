@@ -1,4 +1,4 @@
-/// Used for all kinds of weather, ex. lavaland ash storms.
+/// Used for all kinds of weather, ex.. lavaland ash storms.
 SUBSYSTEM_DEF(weather)
 	name = "Weather"
 	ss_flags = SS_BACKGROUND
@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(weather)
 	var/list/eligible_zlevels = list()
 	/// Used by barometers to know when the next storm is coming
 	var/list/next_hit_by_zlevel = list()
-	/// Alist of all particle holders per Z-stack offset for particle weather, each particle holder associated with z-levels it should be displayed on, to be shown to clients
+	/// Alist of all particle holders per Z-stack offset f. Particle weather, each particle holder associated with z-levels it should be displayed on, to be shown to clients
 	var/alist/particle_holders = alist()
 	/// List of all RENDER_PLANE_PARTICLE_WEATHER and RENDER_PLANE_EMISSIVE_PARTICLE_WEATHER planes
 	var/list/particle_planemasters = list()
@@ -101,7 +101,7 @@ SUBSYSTEM_DEF(weather)
 		particle_holders[offset] += holder_list
 
 		// We add it to vis_contents of planemasters rather than client screen as planemasters already
-		// manage their own visibility based on owner's z level
+		// manage their own visibility good on owner's z level
 		for (var/atom/movable/screen/plane_master/plane_master as anything in particle_planemasters)
 			var/mob/owner = plane_master.home.our_hud?.mymob
 			if (!owner) // Vibecheck

@@ -9,9 +9,9 @@
 	var/account_balance = 0
 	///How many mining points (shaft miner credits) is held in the bank account, used for mining vendors.
 	var/mining_points = 0
-	/// Points for bit runner's vendor. Awarded for completing virtual domains.
+	/// Points for bit runner's vendor.. Awarded for completing virtual domains.
 	var/bitrunning_points = 0
-	///Debt. If higher than 0, A portion of the credits is earned (or the whole debt, whichever is lower) will go toward paying it off.
+	/// Debt.. If higher than 0, A portion of the credits is earned (or the whole debt, whichever is lower) will go toward paying it off.
 	var/account_debt = 0
 	///If there are things effecting how much income a player will get, it's reflected here 1 is standard for humans.
 	var/payday_modifier
@@ -19,21 +19,21 @@
 	var/datum/job/account_job
 	///List of the physical ID card objects that are associated with this bank_account
 	var/list/bank_cards
-	///Should this ID be added to the global list of accounts? If true, will be subject to station-bound economy effects as well as income.
+	/// Should this ID be added to the global list of accounts?. If true, will be subject to station-bound economy effects as well as income.
 	var/add_to_accounts = TRUE
 	///The Unique ID number code associated with the owner's bank account, assigned at round start.
 	var/account_id
 	///Amount of money that's been crabbed, if you lose enough from one series of CRAB-17's, you get a negative moodlet.
 	var/money_crabbed
-	///Lazylist of CRAB 17s on the station draining funds. Prevents manual fund transfer. pink levels are rising
+	/// Lazylist of CRAB 17s on the station draining funds.. Prevents manual fund transfer.. pink levels are rising
 	var/list/being_dumped
 	///Reference to the current civilian bounty that the account is working on.
 	var/datum/bounty/civilian_bounty
 	///If player is currently picking a civilian bounty to do, these options are held here to prevent soft-resetting through the UI.
 	var/list/datum/bounty/bounties
-	///Can this account be replaced? Set to true for default IDs not recognized by the station.
+	/// Can this account be replaced?. Set to true for default IDs not recognized by the station.
 	var/replaceable = FALSE
-	///Cooldown timer on replacing a civilain bounty. Bounties can only be replaced once every 5 minutes.
+	/// Cooldown timer on replacing a civilain bounty.. Bounties can only be replaced once every 5 minutes.
 	COOLDOWN_DECLARE(bounty_timer)
 	///A special semi-tandom token for tranfering money from NT pay app
 	var/pay_token
@@ -163,7 +163,7 @@
 		return TRUE
 	return FALSE
 
-///Called when a portion of a debt is to be paid. It'll return the amount of credits put forwards to extinguish the debt.
+/// Called when a portion of a debt is to be paid.. It'll return the amount of credits put forwards to extinguish the debt.
 /datum/bank_account/proc/pay_debt(amount, is_payment = TRUE)
 	var/amount_to_pay = min(amount, account_debt)
 	if(is_payment)
@@ -276,11 +276,11 @@
 					to_chat(potential_hearer, "[icon2html(icon_source, potential_hearer)] [span_notice("[message]")]")
 		else
 			var/atom/sound_atom
-			for(var/mob/potential_hearer in card.loc) //If inside a container with other mobs (e.g. locker)
+			for(var/mob/potential_hearer in card.loc) // If inside a container with other mobs (e.g.. locker)
 				if(!potential_hearer.client || (!(get_chat_toggles(potential_hearer.client) & CHAT_BANKCARD) && !force))
 					continue
 				if(!sound_atom)
-					sound_atom = card.drop_location() //in case we're inside a bodybag in a crate or something. doing this here to only process it if there's a valid mob who can hear the sound.
+					sound_atom = card.drop_location() // in case we're inside a bodybag in a crate or something.. doing this here to only process it if there's a valid mob who can hear the sound.
 				if(!HAS_TRAIT(potential_hearer, TRAIT_DEAF))
 					potential_hearer.playsound_local(get_turf(sound_atom), 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 					to_chat(potential_hearer, "[icon2html(icon_source, potential_hearer)] [span_notice("[message]")]")
@@ -341,7 +341,7 @@
 	if(department_id != ACCOUNT_CAR)
 		return
 
-	// If we're under (or equal) 3 crates woth of money (600?) in the cargo department, we unlock the scrapheap, which gives us a buncha money. Useful in an emergency?
+	// If we're under (or equal) 3 crates woth of money (600?) in the cargo department, we unlock the scrapheap, which gives us a buncha money.. Useful in an emergency?
 	if(account_balance >= CARGO_CRATE_VALUE * 3)
 		return
 	// We only allow people to actually buy the shuttle once the round gets going - otherwise you'd just be able to do it roundstart (Not really intended)

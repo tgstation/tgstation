@@ -1,8 +1,8 @@
 ///The area is a "Station" area, showing no special text.
 #define AREA_STATION 1
-///The area is in outdoors (lavaland/icemoon/jungle/space), therefore unclaimed territories.
+/// The area is in outdoors (lavaland/icemoon/jungle/space), so unclaimed territories.
 #define AREA_OUTDOORS 2
-///The area is special (shuttles/centcom), therefore can't be claimed.
+/// The area is special (shuttles/centcom), so can't be claimed.
 #define AREA_SPECIAL 3
 
 ///The blueprints are currently reading the list of all wire datums.
@@ -32,7 +32,7 @@
 	var/fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
 	///Boolean on whether the blueprints are currently being used, which prevents double-using them to rename/create areas.
 	var/in_use = FALSE
-	///The type of area we'll create when we make a new area. This is a typepath.
+	/// The type of area we'll create when we make a new area.. This is a typepath.
 	var/area/new_area_type = /area
 	///The legend type the blueprints are currently looking at, which is either modularly
 	///set by wires datums, the main page, or an overview of them all.
@@ -142,7 +142,7 @@
 		if("view_wireset")
 			var/setting_wireset = params["view_wireset"]
 			for(var/device in GLOB.wire_color_directory)
-				if("[device]" == setting_wireset) //I know... don't change it...
+				if("[device]" == setting_wireset) // I know.... don't change it...
 					legend_viewing = setting_wireset
 					return TRUE
 		if("view_blueprints")

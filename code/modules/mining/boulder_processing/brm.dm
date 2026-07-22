@@ -274,7 +274,7 @@
 		batch_processing = FALSE
 		return FALSE
 
-	//There is an boulder in our loc. it has be removed so we don't clog up our loc with even more boulders
+	// There is an boulder in our loc.. it has be removed so we don't clog up our loc with even more boulders
 	if(locate(/obj/item/boulder) in loc)
 		batch_processing = FALSE
 		return TURF_BLOCKED_BY_BOULDER

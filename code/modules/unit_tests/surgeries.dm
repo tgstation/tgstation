@@ -349,7 +349,7 @@
 	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_VESSELS_UNCLAMPED), "Surgical state for unclamped vessels was incorrectly removed upon wound healing")
 	TEST_ASSERT(!LIMB_HAS_SURGERY_STATE(chest, SURGERY_BONE_DRILLED), "Surgical state for bone drilled was not correctly removed upon wound healing")
 
-/// Makes sure surgery returns the correct implement
+/// Makes sure surgery returns the correct add
 /datum/unit_test/surgery_implement
 
 /datum/unit_test/surgery_implement/Run()

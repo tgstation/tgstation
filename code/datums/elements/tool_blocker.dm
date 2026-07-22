@@ -2,7 +2,7 @@
 /datum/element/tool_blocker
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	/// e.g. TOOL_SCREWDRIVER, TOOL_CROWBAR
+	/// e.g.. TOOL_SCREWDRIVER, TOOL_CROWBAR
 	var/tool_type
 	/// Bitflag representing which tool_acts to block
 	var/action_type

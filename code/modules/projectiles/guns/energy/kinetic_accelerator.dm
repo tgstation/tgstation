@@ -268,7 +268,7 @@
 			// If there is a mind, check for skill modifier to allow them to reload faster.
 			if(carbon_firer.mind)
 				skill_modifier = carbon_firer.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
-			kinetic_gun.attempt_reload(kinetic_gun.recharge_time * skill_modifier) //If you hit a mineral, you might get a quicker reload. epic gamer style.
+			kinetic_gun.attempt_reload(kinetic_gun.recharge_time * skill_modifier) // If you hit a mineral, you might get a quicker reload.. epic gamer style.
 	var/obj/effect/temp_visual/kinetic_blast/K = new /obj/effect/temp_visual/kinetic_blast(target_turf)
 	K.color = color
 
@@ -301,11 +301,11 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
-	//Most modkits are supposed to allow duplicates. The ones that don't should be blocked by PKA code anyways.
+	// Most modkits are supposed to allow duplicates.. The ones that don't should be blocked by PKA code anyways.
 	allow_duplicates = TRUE
 	// If defined with a type of mod, prevents paring this mod with another of the same mod in the same PKA
 	var/denied_type = null
-	// If defined, limits the number of a mod to this value in a single PKA. If denied_type is not defined. but this value is above 1, it will default to types of itself.
+	// If defined, limits the number of a mod to this value in a single PKA.. If denied_type is not defined.. but this value is above 1, it will default to types of itself.
 	var/maximum_of_type = 0
 	var/cost = 30
 	var/modifier = 1 //For use in any mod kit that has numerical modifiers
@@ -563,7 +563,7 @@
 	name = "rapid repeater"
 	desc = "Quarters the kinetic accelerator's cooldown on striking a living target, but greatly increases the base cooldown."
 	denied_type = /obj/item/borg/upgrade/modkit/cooldown/repeater
-	modifier = -14 //Makes the cooldown 3 seconds(with no cooldown mods) if you miss. Don't miss.
+	modifier = -14 // Makes the cooldown 3 seconds(with no cooldown mods) if you miss.. Don't miss.
 	cost = 50
 	custom_materials = list(/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT)
 

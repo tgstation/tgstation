@@ -241,7 +241,7 @@
 /datum/effect_system/fluid_spread/smoke/bad/green
 	effect_type = /obj/effect/particle_effect/fluid/smoke/bad/green
 
-/// Black smoke that makes you cough. (Actually dark grey)
+/// Black smoke that makes you cough.. (Actually dark grey)
 /obj/effect/particle_effect/fluid/smoke/bad/black
 	name = "black smoke"
 	color = "#383838"
@@ -427,7 +427,7 @@
 
 /// A factory which produces clouds of chemical bearing smoke.
 /datum/effect_system/fluid_spread/smoke/chem
-	/// Evil evil hack so we have something to "hold" our reagents
+	/// Evil evil temporary solution so we have something to "hold" our reagents
 	var/datum/reagents/chemholder
 	effect_type = /obj/effect/particle_effect/fluid/smoke/chem
 

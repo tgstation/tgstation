@@ -1,4 +1,4 @@
-/// Buffs given by eating hand-crafted food. The duration scales with consumable reagents purity.
+/// Buffs given by eating hand-crafted food.. The duration scales with consumable reagents purity.
 /datum/status_effect/food
 	id = "food_effect"
 	duration = 5 MINUTES // Same as food mood buffs

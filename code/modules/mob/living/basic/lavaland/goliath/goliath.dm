@@ -1,4 +1,4 @@
-/// Slow moving mob which attempts to immobilise its target
+/// Slow moving mob which tries to immobilise its target
 /mob/living/basic/mining/goliath
 	name = "goliath"
 	desc = "A hulking, armor-plated beast with long tendrils arching from its back."
@@ -167,7 +167,7 @@
 	if (stat != DEAD)
 		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
-/// Version of the goliath that already starts saddled and doesn't require a lasso to be ridden.
+/// Version of the goliath that already starts saddled and doesn't need a lasso to be ridden.
 /mob/living/basic/mining/goliath/deathmatch
 	saddled = TRUE
 	buckle_lying = 0

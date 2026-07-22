@@ -63,7 +63,7 @@
 	/// List of all items stolen in the last pool of bounties.
 	/// Same as above - strings that represent stolen items.
 	var/list/claimed_bounties_from_last_pool = list()
-	/// When rolling for bounties, the number of attempts is calculated based on the number of bounties to give out.
+	/// When rolling for bounties, the number of tries is calculated good on the number of bounties to give out.
 	/// This number will override that calculation with a set value - used for testing and debugging.
 	var/num_attempts_override = 0
 
@@ -126,7 +126,7 @@
 			continue
 		// any child items, such as ammo, are removed from the pool until the parent item is rewarded
 		for(var/child_item_type in (item.relevant_child_items || list()) - show_anyways)
-			if(prob(10)) // 10% chance to have it anyways though. teehee
+			if(prob(10)) // 10% chance to have it anyways though.. teehee
 				continue
 			var/child_item = SStraitor.uplink_items_by_type[child_item_type]
 			for(var/difficulty in possible_uplink_items)
@@ -135,7 +135,7 @@
 
 	refresh_bounty_list()
 
-/// Helper to attempt to add the passed uplink item datum to the possible bounty pool(s).
+/// Helper to try to add the passed uplink item datum to the possible bounty pool(s).
 /datum/spy_bounty_handler/proc/try_add_to_loot_pool(datum/uplink_item/item)
 	if(isnull(item.item) || item.item == ABSTRACT_UPLINK_ITEM || !(item.purchasable_from & UPLINK_SPY))
 		return FALSE
@@ -179,7 +179,7 @@
 
 		var/list/pool = bounty_types[difficulty]
 		var/amount_to_give = bounties_to_give[difficulty]
-		var/failed_attempts = num_attempts_override || clamp(amount_to_give * 4, 10, 25) // more potential bounties = more attempts to make one
+		var/failed_attempts = num_attempts_override || clamp(amount_to_give * 4, 10, 25) // more potential bounties = more tries to make one
 		while(amount_to_give > 0 && failed_attempts > 0)
 			var/picked_bounty = pick_weight(pool)
 			var/datum/spy_bounty/bounty = new picked_bounty(src)

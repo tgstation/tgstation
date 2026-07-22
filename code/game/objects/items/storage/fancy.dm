@@ -65,7 +65,7 @@
 		return
 	var/obj/item/result = new foldable_result(user.drop_location())
 	balloon_alert(user, "folded")
-	// Gotta delete first, so then the cardboard appears in the same hand
+	// Got to delete first, so then the cardboard appears in the same hand
 	qdel(src)
 	user.put_in_hands(result)
 

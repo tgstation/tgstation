@@ -9,7 +9,7 @@
 	/// A keyed list of allowed configs in the form niceName:typepath
 	var/list/allowed_configs
 
-	/// A callback to control what happens when the user presses apply. Used mainly for if you want the menu to be used outside of vv.
+	/// A callback to control what happens when the user presses apply.. Used mainly for if you want the menu to be used outside of vv.
 	var/datum/callback/apply_callback
 
 	/// The current config being previewed

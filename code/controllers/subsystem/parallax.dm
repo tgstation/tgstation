@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(parallax)
 	RegisterSignal(random_layer, COMSIG_QDELETING, PROC_REF(clear_references))
 	random_layer.get_random_look()
 
-/// Change the random parallax layer after it's already been set. update_player_huds = TRUE will also replace them in the players client images, if it was set
+/// Change the random parallax layer after it's already been set.. update_player_huds = TRUE will also replace them in the players client images, if it was set
 /datum/controller/subsystem/parallax/proc/swap_out_random_parallax_layer(atom/movable/screen/parallax_layer/new_type, update_player_huds = TRUE)
 	set_random_parallax_layer(new_type)
 
@@ -85,7 +85,7 @@ SUBSYSTEM_DEF(parallax)
 	//Parallax is one of the first things to be set (during client join), so rarely is anything fast enough to swap it out
 	//That's why we need to swap the layers out for fast joining clients :/
 	for(var/client/client as anything in GLOB.clients)
-		// gotta clear things out
+		// got to clear things out
 		client?.parallax_rock?.set_layer_settings(0, FALSE, FALSE)
 		client.mob?.hud_used?.update_parallax_pref()
 
@@ -94,7 +94,7 @@ SUBSYSTEM_DEF(parallax)
 
 	random_layer = null
 
-/// Called at the end of SSstation setup, in-case we want to run some code that would otherwise be too early to run (like GLOB. stuff)
+/// Called at the end of SSstation setup, in-case we want to run some code that would otherwise be too early to run (like GLOB.. stuff)
 /datum/controller/subsystem/parallax/proc/post_station_setup()
 	random_layer?.apply_global_effects()
 

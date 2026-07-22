@@ -116,7 +116,7 @@
 	var/static_power_usage = 0
 	//AREA_USAGE_EQUIP,AREA_USAGE_ENVIRON or AREA_USAGE_LIGHT
 	var/power_channel = AREA_USAGE_EQUIP
-	///A combination of factors such as having power, not being broken and so on. Boolean.
+	/// A combination of factors such as having power, not being broken and so on.. Boolean.
 	var/is_operational = TRUE
 	///list of all the parts used to build it, if made from certain kinds of frames.
 	var/list/component_parts = null
@@ -130,9 +130,9 @@
 	var/list/occupant_typecache
 	///The mob that is sealed inside the machine
 	var/atom/movable/occupant = null
-	///Viable flags to go here are START_PROCESSING_ON_INIT, or START_PROCESSING_MANUALLY. See code\__DEFINES\machines.dm for more information on these flags.
+	/// Viable flags to go here are START_PROCESSING_ON_INIT, or START_PROCESSING_MANUALLY.. See code\__DEFINES\machines.dm for more information on these flags.
 	var/processing_flags = START_PROCESSING_ON_INIT
-	///What subsystem this machine will use, which is generally SSmachines or SSfastprocess. By default all machinery use SSmachines. This fires a machine's process() roughly every 2 seconds.
+	/// What subsystem this machine will use, which is generally SSmachines or SSfastprocess.. By default all machinery use SSmachines.. This fires a machine's process() roughly every 2 seconds.
 	var/subsystem_type = /datum/controller/subsystem/machines
 	///Circuit to be created and inserted when the machinery is created
 	var/obj/item/circuitboard/circuit
@@ -146,7 +146,7 @@
 	var/atmos_processing = FALSE
 	///world.time of last use by [/mob/living]
 	var/last_used_time = 0
-	///Mobtype of last user. Typecast to [/mob/living] for initial() usage
+	/// Mobtype of last user.. Typecast to [/mob/living] for initial() usage
 	var/mob/living/last_user_mobtype
 	///Do we want to hook into on_enter_area and on_exit_area?
 	///Disables some optimizations
@@ -166,7 +166,7 @@
 /obj/machinery/New(location, obj/item/circuitboard/board, ...)
 	if(istype(board))
 		circuit = board
-		//we don't want machines that override Initialize() have the board passed as a param e.g. atmos
+		// we don't want machines that override Initialize() have the board passed as a param e.g.. atmos
 		return ..(location)
 
 	return ..()
@@ -186,7 +186,7 @@
 	if(occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
 
-	if((resistance_flags & INDESTRUCTIBLE) && component_parts) // This is needed to prevent indestructible machinery still blowing up. If an explosion occurs on the same tile as the indestructible machinery without the PREVENT_CONTENTS_EXPLOSION_1 flag, /datum/controller/subsystem/explosions/proc/propagate_blastwave will call ex_act on all movable atoms inside the machine, including the circuit board and component parts. However, if those parts get deleted, the entire machine gets deleted, allowing for INDESTRUCTIBLE machines to be destroyed. (See #62164 for more info)
+	if((resistance_flags & INDESTRUCTIBLE) && component_parts) // This is needed to prevent indestructible machinery still blowing up.. If an explosion occurs on the same tile as the indestructible machinery without the PREVENT_CONTENTS_EXPLOSION_1 flag, /datum/controller/subsystem/explosions/proc/propagate_blastwave will call ex_act on all movable atoms inside the machine, including the circuit board. Component parts.. But if those parts get deleted, the entire machine gets deleted, allowing for INDESTRUCTIBLE machines to be destroyed.. (See #62164 for more info)
 		flags_1 |= PREVENT_CONTENTS_EXPLOSION_1
 
 	if(critical_machine)
@@ -323,7 +323,7 @@
 	set waitfor = FALSE
 	return PROCESS_KILL
 
-///Called when we want to change the value of the machine_stat variable. Holds bitflags.
+/// Called when we want to change the value of the machine_stat variable.. Holds bitflags.
 /obj/machinery/proc/set_machine_stat(new_value)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
@@ -380,7 +380,7 @@
  * Drop every movable atom in the machine's contents list, including any components and circuit.
  */
 /obj/machinery/dump_contents()
-	// Start by calling the dump_inventory_contents proc. Will allow machines with special contents
+	// Start by calling the dump_inventory_contents proc.. Will allow machines with special contents
 	// to handle their dropping.
 	dump_inventory_contents()
 
@@ -499,7 +499,7 @@
 
 	return TRUE
 
-///updates the power channel this machine uses. removes the static power usage from the old channel and readds it to the new channel
+/// updates the power channel this machine uses.. removes the static power usage from the old channel and readds it to the new channel
 /obj/machinery/proc/update_power_channel(new_power_channel)
 	SHOULD_CALL_PARENT(TRUE)
 	if(new_power_channel == power_channel)
@@ -604,7 +604,7 @@
 
 	return TRUE
 
-///Called when we want to change the value of the `is_operational` variable. Boolean.
+/// Called when we want to change the value of the `is_operational` variable.. Boolean.
 /obj/machinery/proc/set_is_operational(new_value)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
@@ -621,7 +621,7 @@
 
 	return
 
-///Called when we want to change the value of the `panel_open` variable. Boolean.
+/// Called when we want to change the value of the `panel_open` variable.. Boolean.
 /obj/machinery/proc/set_panel_open(new_value)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
@@ -641,7 +641,7 @@
 
 	return
 
-/// Toggles the panel_open var. Defined for convienience
+/// Toggles the panel_open var.. Defined for convienience
 /obj/machinery/proc/toggle_panel_open()
 	SHOULD_NOT_OVERRIDE(TRUE)
 
@@ -699,7 +699,7 @@
 		if(!(living_user.mobility_flags & MOBILITY_MOVE))
 			return FALSE
 
-	return TRUE // If we passed all of those checks, woohoo! We can interact with this machine.
+	return TRUE // If we passed all of those checks, woohoo!. We can interact with this machine.
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -887,7 +887,7 @@
 	crowbar.play_tool_sound(src, 50)
 	user.visible_message(span_notice("[user] pries open [src]."), span_notice("You pry open [src]."))
 	open_machine(density_to_set = open_density)
-	if (close_after_pry) //Should it immediately close after prying? (If not, it must be closed elsewhere)
+	if (close_after_pry) // Should it immediately close after prying?. (If not, it must be closed elsewhere)
 		close_machine(density_to_set = closed_density)
 	return ITEM_INTERACT_SUCCESS
 
@@ -955,7 +955,7 @@
 					new stack_path(loc, board.req_components[component])
 	LAZYCLEARLIST(component_parts)
 
-	//drop everything inside us. we do this last to give machines a chance
+	// drop everything inside us.. we do this last to give machines a chance
 	//to handle their contents before we dump them
 	dump_contents()
 
@@ -975,7 +975,7 @@
 	// If the new frame shouldn't be able to fit here due to the turf being blocked, spawn the frame deconstructed.
 	if(isturf(loc))
 		var/turf/machine_turf = loc
-		// We're spawning a frame before this machine is qdeleted, so we want to ignore it. We've also just spawned a new frame, so ignore that too.
+		// We're spawning a frame before this machine is qdeleted, so we want to ignore it.. We've also just spawned a new frame, so ignore that too.
 		if(machine_turf.is_blocked_turf(TRUE, source_atom = new_frame, ignore_atoms = list(src)))
 			new_frame.deconstruct(disassembled)
 			return
@@ -1127,10 +1127,10 @@
 		for(var/obj/item/secondary_part in part_list)
 			if(!istype(secondary_part, required_type))
 				continue
-			// If it's a corrupt or rigged cell, attempting to send it through Bluespace could have unforeseen consequences.
+			// If it's a corrupt or rigged cell, trying to send it through Bluespace could have unforeseen consequences.
 			if(istype(secondary_part, /obj/item/stock_parts/power_store/cell) && works_from_distance)
 				var/obj/item/stock_parts/power_store/cell/checked_cell = secondary_part
-				// If it's rigged or corrupted, max the charge. Then explode it.
+				// If it's rigged or corrupted, max the charge.. Then explode it.
 				if(checked_cell.try_explode(max_charge = TRUE))
 					break
 			if(secondary_part.get_part_rating() > current_rating)
@@ -1182,7 +1182,7 @@
 		else
 			component_ref = component_part
 			for(var/obj/item/counted_part in part_count)
-				//e.g. 2 beakers though they have the same type are still 2 different objects so component_ref wont keep them unique so we look for that type ourselves and increment it
+				// e.g.. 2 beakers though they have the same type are still 2 different objects so component_ref wont keep them unique so we look f. That type ourselves. Increment it
 				if(istype(counted_part, component_ref.type))
 					part_count[counted_part]++
 					component_ref = null
@@ -1196,7 +1196,7 @@
 			continue
 		part_count[component_ref] = 1
 
-		// we infer the required stack stuff inside the machine from the circuitboards requested components
+		// we infer the needed stack stuff inside the machine from the circuitboards requested components
 		if(istype(component_ref, /obj/item/circuitboard/machine))
 			var/obj/item/circuitboard/machine/board = component_ref
 			for(var/component in board.req_components)
@@ -1210,7 +1210,7 @@
 		var/part_name
 		var/icon/html_icon
 		var/icon_state
-		//infer name & icon of part. stacks are just type paths so we have to get their initial values
+		// infer name & icon of part.. stacks are just type paths so we have to get their initial values
 		if(ispath(component_part, /obj/item/stack))
 			var/obj/item/stack/stack_ref = component_part
 			part_name = initial(stack_ref.singular_name)
@@ -1273,7 +1273,7 @@
 	return ..()
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/dropped_atom) // Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
-	var/md5 = md5(dropped_atom.name) // Oh, and it's deterministic too. A specific item will always drop from the same slot.
+	var/md5 = md5(dropped_atom.name) // Oh, and it's deterministic too.. A specific item will always drop from the same slot.
 	for (var/i in 1 to 32)
 		. += hex2num(md5[i])
 	. = . % 9

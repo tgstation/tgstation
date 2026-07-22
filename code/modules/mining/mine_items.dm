@@ -1,6 +1,6 @@
 /**********************Light************************/
 
-//this item is intended to give the effect of entering the mine, so that light gradually fades. we also use the base effect for certain lighting effects while mapping.
+// this item is intended to give the effect of entering the mine, so that light gradually fades.. we also use the base effect for certain lighting effects while mapping.
 /obj/effect/light_emitter
 	name = "light emitter"
 	icon_state = "lighting_marker"
@@ -222,8 +222,8 @@
 	. = ..()
 	unbuckle_all_mobs()
 
-// Hack: If a mob is buckled onto the cart, bumping the cart will instead bump the mob (because higher layer)
-// So if we want to allow people to shove carts people are riding, we gotta check the mob for bumped and redirect it
+// Temporary solution If a mob is buckled onto the cart, bumping the cart will instead bump the mob (because higher layer)
+// So if we want to allow people to shove carts people are riding, we got to check the mob for bumped and redirect it
 /obj/structure/closet/crate/miningcar/post_buckle_mob(mob/living/buckled_mob)
 	RegisterSignal(buckled_mob, COMSIG_ATOM_BUMPED, PROC_REF(buckled_bumped))
 	RegisterSignal(buckled_mob, COMSIG_MOVABLE_BUMP_PUSHED, PROC_REF(block_bump_push))
@@ -292,7 +292,7 @@
 		UnregisterSignal(src, COMSIG_MOVABLE_BUMP_PUSHED)
 
 // We want a low move resistance so people can drag it along the tracks
-// But we also don't want people to nudge it with a push (since it requires a do_after to set off)
+// But we also don't want people to nudge it with a push (since it needs a do_after to set off)
 /obj/structure/closet/crate/miningcar/proc/block_bump_push(datum/source, mob/living/bumper, force)
 	SIGNAL_HANDLER
 	if(on_rails)

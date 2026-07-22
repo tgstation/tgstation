@@ -16,7 +16,7 @@
 #define CARDINAL_TO_FULLPIPES(cardinals) (cardinals)
 #define CARDINAL_TO_SHORTPIPES(cardinals) ((cardinals) << 4)
 #define CARDINAL_TO_PIPECAPS(cardinals) ((cardinals) << 8)
-// A pipe is a stub if it only has zero or one permitted direction. For a regular pipe this is nonsensical, and there are no pipe sprites for this, so it is not allowed.
+// A pipe is a stub if it only has zero or one permitted direction... For a regular pipe this is nonsensical, and there are no pipe sprites for this, so it is not allowed.
 #define ISSTUB(bits) !((bits) & ((bits) - 1))
 #define ISNOTSTUB(bits) ((bits) & ((bits) - 1))
 //Atmos pipe limits
@@ -48,7 +48,7 @@
 #define TANK_MIN_RELEASE_PRESSURE 0
 /// The maximum pressure an gas tanks release valve can be set to.
 #define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
-/// The default initial value gas tanks release valves are set to. (At least the ones containing pure plasma/oxygen.)
+/// The default initial value gas tanks release valves are set to... (At least the ones containing pure plasma/oxygen.)
 #define TANK_DEFAULT_RELEASE_PRESSURE 16
 /// The default initial value gas plasmamen tanks releases valves are set to.
 #define TANK_PLASMAMAN_RELEASE_PRESSURE 4
@@ -62,7 +62,7 @@
 #define TANK_RUPTURE_PRESSURE (35.*ONE_ATMOSPHERE)
 /// The internal pressure in kPa at which an gas tank that breaks will cause an explosion.
 #define TANK_FRAGMENT_PRESSURE (40.*ONE_ATMOSPHERE)
-/// Range scaling constant for tank explosions. Calibrated so that a TTV assembled using two 70L tanks will hit the maxcap at at least 160atm.
+/// Range scaling constant for tank explosions... Calibrated so that a TTV assembled using two 70L tanks will hit the maxcap at at least 160atm.
 #define TANK_FRAGMENT_SCALE (84.*ONE_ATMOSPHERE)
 /// Denotes that our tank is overpressurized simply from gas merging.
 #define TANK_MERGE_OVERPRESSURE "tank_overpressure"
@@ -101,11 +101,11 @@
 #define PIPING_DISTRO_AND_WASTE_LAYERS (1<<6)
 
 // Ventcrawling bitflags, handled in var/vent_movement
-///Allows for ventcrawling to occur. All atmospheric machines have this flag on by default. Cryo is the exception
+/// Allows for ventcrawling to occur... All atmospheric machines have this flag on by default... Cryo is the exception
 #define VENTCRAWL_ALLOWED (1<<0)
-///Allows mobs to enter or leave from atmospheric machines. On for passive, unary, and scrubber vents.
+/// Allows mobs to enter or leave from atmospheric machines... On for passive, unary, and scrubber vents.
 #define VENTCRAWL_ENTRANCE_ALLOWED (1<<1)
-///Used to check if a machinery is visible. Called by update_pipe_vision(). On by default for all except cryo.
+/// Used to check if a machinery is visible... Called by update_pipe_vision()... On by default for all except cryo.
 #define VENTCRAWL_CAN_SEE (1<<2)
 
 DEFINE_BITFIELD(vent_movement, list(

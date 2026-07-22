@@ -318,7 +318,7 @@
 		else
 			user.update_held_items()
 
-		// if the item requires two handed drop the item on unwield
+		// if the item needs two handed drop the item on unwield
 		if(HAS_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS) && can_drop)
 			user.dropItemToGround(parent, force=TRUE)
 

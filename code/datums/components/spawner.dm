@@ -11,9 +11,9 @@
 	var/list/faction
 	/// List of weak references to things we have already created
 	var/list/spawned_things = list()
-	/// Callback to a proc that is called when a mob is spawned. Primarily used for sentient spawners.
+	/// Callback to a proc that is called when a mob is spawned.. Primarily used for sentient spawners.
 	var/datum/callback/spawn_callback
-	/// How many mobs can we spawn maximum each time we try to spawn? (1 - max)
+	/// How many mobs can we spawn maximum each time we try to spawn?. (1 - max)
 	var/max_spawn_per_attempt
 	/// Distance from the spawner to spawn mobs
 	var/spawn_distance

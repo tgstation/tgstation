@@ -253,7 +253,7 @@
 	name = "fabricated lizard tail"
 	desc = "A fabricated severed lizard tail. This one's made of synthflesh. Probably not usable for lizard wine."
 
-///Bodypart overlay for tail spines. Handled by the tail - has no actual organ associated.
+/// Bodypart overlay for tail spines.. Handled by the tail - has no actual organ associated.
 /datum/bodypart_overlay/mutant/tail_spines
 	layers = list(
 		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
@@ -264,7 +264,7 @@
 	offset_location = ENTIRE_BODY
 	///Spines wag when the tail does
 	var/wagging = FALSE
-	/// Key for tail spine states, depends on the shape of the tail. Defined in the tail sprite datum.
+	/// Key for tail spine states, depends on the shape of the tail.. Defined in the tail sprite datum.
 	var/tail_spine_key = NONE
 
 /datum/bodypart_overlay/mutant/tail_spines/get_base_icon_state()

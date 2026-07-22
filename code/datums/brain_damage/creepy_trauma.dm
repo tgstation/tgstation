@@ -189,7 +189,7 @@
 			owner.adjust_eye_blur_up_to(10 SECONDS, 20 SECONDS)
 			to_chat(owner, span_warning("You forget to blink for a moment."))
 
-// if the creep examines first, then the obsession examines them, have a 50% chance to possibly blow their cover. wearing a mask avoids this risk
+// if the creep examines first, then the obsession examines them, have a 50% chance to possibly blow their cover.. wearing a mask avoids this risk
 /datum/brain_trauma/special/obsessed/proc/stare(datum/source, mob/living/examining_mob, triggering_examiner)
 	SIGNAL_HANDLER
 

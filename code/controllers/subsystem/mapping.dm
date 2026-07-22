@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(mapping)
 	var/max_plane_offset = 0
 
 	var/loading_ruins = FALSE
-	var/list/turf/unused_turfs = list() //Not actually unused turfs they're unused but reserved for use for whatever requests them. "[zlevel_of_turf]" = list(turfs)
+	var/list/turf/unused_turfs = list() // Not actually unused turfs they're unused but reserved for use for whatever requests them.. "[zlevel_of_turf]" = list(turfs)
 	var/list/datum/turf_reservations //list of turf reservations
 	var/list/used_turfs = list() //list of turf = datum/turf_reservation
 	/// List of lists of turfs to reserve
@@ -71,7 +71,7 @@ SUBSYSTEM_DEF(mapping)
 	// Z-manager stuff
 	var/station_start  // should only be used for maploading-related tasks
 	var/space_levels_so_far = 0
-	///list of all z level datums in the order of their z (z level 1 is at index 1, etc.)
+	/// list of all z level datums in the order of their z (z level 1 is at index 1, and so on
 	var/list/datum/space_level/z_list
 	///list of all z level indices that form multiz connections and whether theyre linked up or down.
 	///list of lists, inner lists are of the form: list("up or down link direction" = TRUE)
@@ -82,7 +82,7 @@ SUBSYSTEM_DEF(mapping)
 	/// True when in the process of adding a new Z-level, global locking
 	var/adding_new_zlevel = FALSE
 
-	///shows the default gravity value for each z level. recalculated when gravity generators change.
+	/// shows the default gravity value for each z level.. recalculated when gravity generators change.
 	///List in the form: list(z level num = max generator gravity in that z level OR the gravity level trait)
 	var/list/gravity_by_z_level = list()
 
@@ -276,7 +276,7 @@ SUBSYSTEM_DEF(mapping)
 		var/proportional_budget = round(CONFIG_GET(number/space_budget) * (space_ruins.len / DEFAULT_SPACE_RUIN_LEVELS))
 		seedRuins(space_ruins, proportional_budget, list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS], mineral_budget = 0, ruins_type = ZTRAIT_SPACE_RUINS)
 
-/// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
+/// Sets up rivers, and things that behave like rivers.. So lava/plasma rivers, and chasms
 /// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic
 /datum/controller/subsystem/mapping/proc/setup_rivers()
 	// Generate mining ruins
@@ -613,13 +613,13 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 		message_admins("Loading [away_name] failed!")
 		return
 
-/// Adds a new reservation z level. A bit of space that can be handed out on request
+/// Adds a new reservation z level.. A bit of space that can be handed out on request
 /// Of note, reservations default to transit turfs, to make their most common use, shuttles, faster
 /datum/controller/subsystem/mapping/proc/add_reservation_zlevel(for_shuttles)
 	num_of_res_levels++
 	return add_new_zlevel("Transit/Reserved #[num_of_res_levels]", list(ZTRAIT_RESERVED = TRUE))
 
-/// Requests a /datum/turf_reservation based on the given width, height, and z_size. You can specify a z_reservation to use a specific z level, or leave it null to use any z level.
+/// Requests a /datum/turf_reservation good on the given width, height, and z_size.. You can specify a z_reservation to use a specific z level, or leave it null to use any z level.
 /datum/controller/subsystem/mapping/proc/request_turf_block_reservation(
 	width,
 	height,
@@ -669,7 +669,7 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 		T.blocks_air = TRUE
 		CHECK_TICK
 
-	// Gotta create these suckers if we've not done so already
+	// Got to create these suckers if we've not done so already
 	if(SSatoms.initialized)
 		SSatoms.InitializeAtoms(Z_TURFS(z))
 
@@ -697,7 +697,7 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	for(var/l in unused_turfs) //unused_turfs is an assoc list by z = list(turfs)
 		if(islist(unused_turfs[l]))
 			clearing |= unused_turfs[l]
-	clearing |= used_turfs //used turfs is an associative list, BUT, reserve_turfs() can still handle it. If the code above works properly, this won't even be needed as the turfs would be freed already.
+	clearing |= used_turfs // used turfs is an associative list, BUT, reserve_turfs() can still handle it.. If the code above works properly, this won't even be needed as the turfs would be freed already.
 	unused_turfs.Cut()
 	used_turfs.Cut()
 	reserve_turfs(clearing, await = TRUE)
@@ -735,7 +735,7 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	z_level_to_stack.len += 1
 	// Bare minimum we have ourselves
 	z_level_to_stack[z_value] = list(z_value)
-	// 0's the default value, we'll update it later if required
+	// 0's the default value, we'll update it later if needed
 	z_level_to_plane_offset[z_value] = 0
 	z_level_to_lowest_plane_offset[z_value] = 0
 
@@ -928,7 +928,7 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	message_admins("[key_name_admin(usr)] has loaded every single away mission in the [map_directory] directory. [ADMIN_SEE_ZLEVEL_LAYOUT]")
 	log_game("[key_name(usr)] has loaded every single away mission in the [map_directory] directory.")
 
-/// Lightweight proc that just checks to make sure that all of the expected z-levels were loaded. Split out for clarity from load_all_away_missions()
+/// Lightweight proc that just checks to make sure that all of the expected z-levels were loaded.. Split out for clarity from load_all_away_missions()
 /// Argument "checkable_levels" is just a list of the names (typically the filepaths) of the z-levels we were expected to load, which should correspond to the name on the space level datum.
 /datum/controller/subsystem/mapping/proc/validate_z_level_loading(list/checkable_levels)
 	for(var/z in 1 to max(world.maxz, length(z_list)))

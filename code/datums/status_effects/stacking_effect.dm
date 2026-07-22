@@ -90,7 +90,7 @@
 	var/icon_height = owner.get_cached_height()
 	status_overlay.pixel_w = -owner.pixel_x
 	status_overlay.pixel_z = FLOOR(icon_height * 0.25, 1)
-	status_overlay.transform = matrix() * (icon_height / ICON_SIZE_Y) //scale the status's overlay size based on the target's icon size
+	status_overlay.transform = matrix() * (icon_height / ICON_SIZE_Y) // scale the status's overlay size good on the target's icon size
 	owner.add_overlay(status_overlay)
 	return ..()
 

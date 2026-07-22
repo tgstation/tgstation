@@ -4,7 +4,7 @@
 #define SPAWN_RARE 10
 
 
-/// Handles spawning mobs for this landmark. Sends a signal when done.
+/// Handles spawning mobs for this landmark.. Sends a signal when done.
 /obj/effect/landmark/bitrunning/mob_segment/proc/spawn_mobs(turf/origin, datum/modular_mob_segment/segment)
 	var/list/mob/living/spawned_mobs = list()
 
@@ -73,7 +73,7 @@
 	return spawned_mobs
 
 
-// Some generic mob segments. If you want to add generic ones for any map, add them here
+// Some generic mob segments.. If you want to add generic ones for any map, add them here
 
 /datum/modular_mob_segment/gondolas
 	mobs = list(

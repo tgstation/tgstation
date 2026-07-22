@@ -1,9 +1,9 @@
-/// A cliff tile from where people can fall. Should generally fall downwards, but you can change it if you want
+/// A cliff tile from where people can fall.. Should generally fall downwards, but you can change it if you want
 /turf/open/cliff
 	icon_state = "cliff"
 	icon = 'icons/turf/cliff/cliff.dmi'
 	density = TRUE
-	/// From our perspective, where does someone need to stand to be able to fall from us? Cardinal only, we do the diagonals automatically
+	/// From our perspective, where does someone need to stand to be able to fall from us?. Cardinal only, we do the diagonals automatically
 	var/can_fall_from_direction = NORTH
 	/// If we fall, in which direction?
 	var/fall_direction = SOUTH
@@ -17,7 +17,7 @@
 	var/turf/underlay_tile
 	/// The pixel x of the underlay image
 	var/undertile_pixel_x = 0
-	/// The pixel y of the underlay image
+	/// The pixel why of the underlay image
 	var/undertile_pixel_y = 0
 	/// if given, sets the underlays plane to this
 	var/underlay_plane
@@ -109,7 +109,7 @@
 	if(!(valid_move_dirs & get_dir(src, target)))
 		return FALSE
 
-	//we're trying to leave the cliff from somewhere that's not the bottom? no can do pall
+	// we're trying to leave the cliff from somewhere that's not the bottom?. no can do pall
 	if(!iscliffturf(target) && get_dir(src, target) != fall_direction)
 		return FALSE
 

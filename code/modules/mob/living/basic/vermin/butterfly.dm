@@ -77,7 +77,7 @@
 		will_be_destroyed = FALSE
 		deltimer(despawn_timer)
 
-/// Checks whether the butterfly should be despawned after the next check, based on distance from source
+/// Checks whether the butterfly should be despawned after the next check, good on distance from source
 /mob/living/basic/butterfly/lavaland/temporary/proc/should_despawn()
 	if(QDELETED(source))
 		return TRUE

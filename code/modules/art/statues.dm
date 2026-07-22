@@ -319,7 +319,7 @@
 	pickup_sound = 'sound/items/handling/tools/screwdriver_pickup.ogg'
 	sharpness = SHARP_POINTY
 	tool_behaviour = TOOL_RUSTSCRAPER
-	toolspeed = 3 // You're gonna have a bad time
+	toolspeed = 3 // You're going to have a bad time
 
 	/// Block we're currently carving in
 	var/obj/structure/carving_block/prepared_block
@@ -473,7 +473,7 @@ Moving interrupts
 	var/current_target
 	/// Currently chosen preset statue type
 	var/current_preset_type
-	//Table of required materials for each non-abstract statue type
+	// Table of needed materials for each non-abstract statue type
 	var/static/list/statue_costs
 	/// statue completion from 0 to 1.0
 	var/completion = 0

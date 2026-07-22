@@ -1,4 +1,4 @@
-/// Plain, but durable and strong. Can destroy walls.
+/// Plain, but durable and strong.. Can destroy walls.
 /mob/living/basic/guardian/standard
 	guardian_type = GUARDIAN_STANDARD
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, STAMINA = 0, OXY = 0.5)
@@ -46,7 +46,7 @@
 	button_icon_state = "boxing"
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
-	/// How long can it be? Shouldn't be too long because we repeat this a shitload of times
+	/// How long can it be?. Shouldn't be too long because we repeat this a shitload of times
 	var/max_length = 6
 
 /datum/action/select_guardian_battlecry/IsAvailable(feedback)

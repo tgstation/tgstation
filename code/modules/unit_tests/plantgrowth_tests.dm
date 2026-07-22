@@ -1,5 +1,5 @@
 
-// Checks plants for broken tray icons. Use Advanced Proc Call to activate.
+// Checks plants for broken tray icons.. Use Advanced Proc Call to activate.
 // Maybe some day it would be used as unit test.
 // -------- IT IS NOW!
 /datum/unit_test/plantgrowth/Run()

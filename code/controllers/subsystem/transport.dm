@@ -11,7 +11,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 	var/list/sensors = list()
 	var/list/doors = list()
 	var/list/displays = list()
-	///how much time a tram can take per movement before we notify admins and slow down the tram. in milliseconds
+	/// how much time a tram can take per movement before we notify admins and slow down the tram.. in milliseconds
 	var/max_time = 15
 	///how many times the tram can move costing over max_time milliseconds before it gets slowed down
 	var/max_exceeding_moves = 5
@@ -89,14 +89,14 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 		log_transport("Sub: Sending response to [source.id_tag]. Contents: [REQUEST_FAIL] [INTERNAL_ERROR]. Info: [SUB_TS_STATUS].")
 		return
 
-	// Controller is 'active' (not accepting requests right now) someone already pushed button, hit by a rod, etc.
+	// Controller is 'active' (not accepting requests right now) someone already pushed button, hit by a rod, and so on
 	if(transport_controller.controller_active)
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, TRANSPORT_IN_USE)
 		log_transport("Sub: Sending response to [source.id_tag]. Contents: [REQUEST_FAIL] [TRANSPORT_IN_USE]. Info: [TC_TA_INFO].")
 		return
 
 	// We've made it this far, tram is physically fine so let's trip plan
-	// This is based on the destination nav beacon, the logical location
+	// This is good on the destination nav beacon, the logical location
 	// If Something Happens and the location the controller thinks it's at
 	// gets out of sync with its actual physical location, it can be reset
 
@@ -107,7 +107,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 			destination = potential_destination
 			break
 
-	// The platform in the request doesn't exist (ie: Can't send a tram to East Wing when the map is Birdshot)
+	// The platform in the request doesn't exist that is Can't send a tram to East Wing when the map is Birdshot)
 	if(!destination)
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, INVALID_PLATFORM)
 		log_transport("Sub: Sending response to [source.id_tag]. Contents: [REQUEST_FAIL] [INVALID_PLATFORM]. Info: RD0.")
@@ -149,7 +149,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 /datum/controller/subsystem/processing/transport/proc/dispatch_transport(datum/transport_controller/linear/tram/transport_controller, destination, request_flags)
 	log_transport("Sub: Sending dispatch request to [transport_controller.specific_transport_id]. [request_flags ? "Contents: [request_flags]." : "No request flags."]")
 
-	// This will generally be caught in the request validation, however an admin may try to force move the tram, or other actions bypassing the request process.
+	// This will generally be caught in the request validation. An admin may try to force move the tram. Other actions bypassing the request process.
 	if(transport_controller.idle_platform == transport_controller.destination_platform)
 		log_transport("Sub: [transport_controller.specific_transport_id] dispatch failed. Info: DE-1 Transport Controller idle and destination are the same.")
 		return

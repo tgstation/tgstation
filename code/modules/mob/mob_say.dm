@@ -1,6 +1,6 @@
 //Speech verbs.
 
-///what clients use to speak. when you type a message into the chat bar in say mode, this is the first thing that goes off serverside.
+/// what clients use to speak.. when you type a message into the chat bar in say mode, this is the first thing that goes off serverside.
 GAME_VERB(/mob, say_verb, VERB_SAY, null, message as text)
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems

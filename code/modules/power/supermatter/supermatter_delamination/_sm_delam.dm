@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	/// Has a priority announcement been sent since this delam strategy was initialized
 	var/announcement_triggered = FALSE
 
-/// Whether we are eligible for this delamination or not. TRUE if valid, FALSE if not.
+/// Whether we are eligible for this delamination or not.. TRUE if valid, FALSE if not.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
 /datum/sm_delam/proc/can_select(obj/machinery/power/supermatter_crystal/sm)
 	return FALSE
@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 
 /// Whatever we're supposed to do when a delam is currently in progress.
 /// Mostly just to tell people how useless engi is, and play some alarm sounds.
-/// Returns TRUE if we just told people a delam is going on. FALSE if its healing or we didnt say anything.
+/// Returns TRUE if we just told people a delam is going on.. FALSE if its healing or we didnt say anything.
 /// [/obj/machinery/power/supermatter_crystal/proc/process_atmos]
 /datum/sm_delam/proc/delam_progress(obj/machinery/power/supermatter_crystal/sm)
 	if(sm.damage <= sm.warning_point) // Damage is too low, lets not
@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	))
 
 	// Filter animation persists even if the filter itself is changed externally.
-	// Probably prone to breaking. Treat with suspicion.
+	// Probably prone to breaking.. Treat with suspicion.
 	if(new_filter)
 		animate(sm.get_filter("ray"), offset = 10, time = 10 SECONDS, loop = -1)
 		animate(offset = 0, time = 10 SECONDS)

@@ -117,7 +117,7 @@
 
 	return TRUE
 
-// maybe we don't need the item context proc but instead the hand one? since we don't need to check held_item
+// maybe we don't need the item context proc but instead the hand one?. since we don't need to check held_item
 /datum/element/simple_rotation/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
 

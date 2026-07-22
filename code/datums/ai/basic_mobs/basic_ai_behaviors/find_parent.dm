@@ -5,7 +5,7 @@
 	var/look_range = 7
 	/// Blackboard key holding the list of typepaths we accept as parents.
 	var/mom_types_key = BB_FIND_MOM_TYPES
-	/// Blackboard key holding typepaths to skip even if they match (e.g. other babies).
+	/// Blackboard key holding typepaths to skip even if they match (e.g.. other babies).
 	var/ignore_types_key = BB_IGNORE_MOM_TYPES
 	/// Blackboard key to store the found parent in.
 	var/found_mom_key = BB_FOUND_MOM

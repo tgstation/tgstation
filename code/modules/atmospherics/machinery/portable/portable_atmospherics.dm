@@ -11,7 +11,7 @@
 	interaction_flags_click = NEED_DEXTERITY
 	damage_deflection = 11
 
-	///Stores the gas mixture of the portable component. Don't access this directly, use return_air() so you support the temporary processing it provides
+	/// Stores the gas mixture of the portable component.. Don't access this directly, use return_air() so you support the temporary processing it provides
 	var/datum/gas_mixture/air_contents
 	///Stores the gas mixture in string form for map loading and saving
 	var/initial_gas_mix
@@ -26,9 +26,9 @@
 	///Should be false on start of every process_atmos() proc, since true means we'll process again next tick.
 	var/excited = FALSE
 
-	/// Max amount of heat allowed inside the machine before it starts to melt. [PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT] is special value meaning we are immune.
+	/// Max amount of heat allowed inside the machine before it starts to melt.. [PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT] is special value meaning we are immune.
 	var/temp_limit = 10000
-	/// Max amount of pressure allowed inside of the canister before it starts to break. [PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT] is special value meaning we are immune.
+	/// Max amount of pressure allowed inside of the canister before it starts to break.. [PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT] is special value meaning we are immune.
 	var/pressure_limit = 500000
 
 	/// Should reactions inside the object be suppressed
@@ -130,7 +130,7 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Repair"
 		return CONTEXTUAL_SCREENTIP_SET
 
-/// Take damage if a variable is exceeded. Damage is equal to temp/limit * heat/limit.
+/// Take damage if a variable is exceeded.. Damage is equal to temp/limit * heat/limit.
 /// The damage multiplier is treated as 1 if something is being ignored while the other one is exceeded.
 /// On most cases only one will be exceeded, so the other one is scaled down.
 /obj/machinery/portable_atmospherics/proc/take_atmos_damage()

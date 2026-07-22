@@ -101,8 +101,8 @@
 		/area/station/science/ordnance/bomb,
 		/area/station/solars,
 
-		// FIXME, burnchamber is usually mapped with a vent in the buffer airlock
-		// which causes us to leak into freezer. These two should be forbidden
+		// Fix me burnchamber is usually mapped with a vent in the buffer airlock
+		// which causes us to leak into freezer.. These two should be forbidden
 		/area/station/science/ordnance/burnchamber,
 		/area/station/science/ordnance/freezerchamber,
 	)

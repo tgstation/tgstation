@@ -18,7 +18,7 @@
 	var/give_objectives = TRUE
 	///bool for giving codewords
 	var/should_give_codewords = TRUE
-	///malf on_gain sound effect. Set here so Infected AI can override
+	/// malf on_gain sound effect.. Set here so Infected AI can override
 	var/malf_sound = 'sound/music/antag/malf.ogg'
 
 /datum/antagonist/malf_ai/New(give_objectives = TRUE)

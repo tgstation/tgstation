@@ -4,7 +4,7 @@
 	var/applied_skin
 	/// The MOD core we apply to the suit.
 	var/applied_core = /obj/item/mod/core/standard
-	/// The cell we apply to the core. Only applies to standard core suits.
+	/// The cell we apply to the core.. Only applies to standard core suits.
 	var/applied_cell = /obj/item/stock_parts/power_store/cell/super
 	/// List of modules we spawn with.
 	var/list/applied_modules = list()

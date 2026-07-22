@@ -9,7 +9,7 @@
 	var/next_use_time = 0
 	/// The default cooldown applied when StartCooldown() is called
 	var/cooldown_time = 0
-	/// The default melee cooldown applied after the ability ends. If set to null, copies cooldown_time.
+	/// The default melee cooldown applied after the ability ends.. If set to null, copies cooldown_time.
 	var/melee_cooldown_time = 0
 	/// The actual next time the owner of this action can melee
 	var/next_melee_use_time = 0
@@ -31,7 +31,7 @@
 	var/click_cd_override = CLICK_CD_CLICK_ABILITY
 	/// If TRUE, we will unset after using our click intercept.
 	var/unset_after_click = TRUE
-	/// What icon to replace our mouse cursor with when active. Optional
+	/// What icon to replace our mouse cursor with when active.. Optional
 	var/ranged_mousepointer
 	/// The base icon_state of this action's background
 	var/base_background_icon_state
@@ -86,7 +86,7 @@
 	// If we don't change the icon state, or don't apply a special overlay,
 	if(active_background_icon_state || active_icon_state || active_overlay_icon_state)
 		return
-	// ...we need to show it's active somehow. So, make it greeeen
+	// ...we need to show it's active somehow.. make it greeeen
 	button.color = COLOR_GREEN
 
 /datum/action/cooldown/apply_button_background(atom/movable/screen/movable/action_button/current_button, force)
@@ -175,7 +175,7 @@
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	START_PROCESSING(SSfastprocess, src)
 
-/// Starts a cooldown time for other abilities that share a cooldown with this. Has some niche usage with more complicated attack ai!
+/// Starts a cooldown time for other abilities that share a cooldown with this.. Has some niche usage with more complicated attack ai!
 /// Will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldownOthers(override_cooldown_time)
 	if(!length(owner?.actions))
@@ -275,7 +275,7 @@
 	if(!QDELETED(src) && !QDELETED(owner))
 		SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_FINISHED, src)
 
-/// To be implemented by subtypes (if not generic)
+/// To be added by subtypes (if not generic)
 /datum/action/cooldown/proc/Activate(atom/target)
 	var/total_delay = 0
 	for(var/datum/action/cooldown/ability as anything in initialized_actions)

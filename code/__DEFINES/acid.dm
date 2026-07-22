@@ -1,4 +1,4 @@
-/// The acid power required to destroy most closed turfs.
+/// The acid power needed to destroy most closed turfs.
 #define ACID_POWER_MELT_TURF 200
 /// The maximum amount of damage (per second) acid can deal to an [/obj].
 #define MOVABLE_ACID_DAMAGE_MAX 300
@@ -15,5 +15,5 @@
 /// The scaling factor for the acid decay rate.
 #define ACID_DECAY_SCALING 1
 
-/// The combined acid power and acid volume required to burn hands.
+/// The combined acid power and acid volume needed to burn hands.
 #define ACID_LEVEL_HANDBURN 20

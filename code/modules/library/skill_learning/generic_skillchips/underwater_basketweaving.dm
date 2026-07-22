@@ -21,7 +21,7 @@
 	if(!user.mind)
 		return
 	learn_recipes(user)
-	//Prevent the skill from being transferred via mindswap. What an edge case
+	// Prevent the skill from being transferred via mindswap.. What an edge case
 	RegisterSignal(user.mind, COMSIG_MIND_TRANSFERRED, PROC_REF(forget_recipes))
 	RegisterSignal(user, COMSIG_MOB_MIND_TRANSFERRED_INTO, PROC_REF(learn_recipes))
 

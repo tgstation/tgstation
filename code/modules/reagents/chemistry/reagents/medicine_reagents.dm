@@ -47,7 +47,7 @@
 	/// Flags to fullheal every metabolism tick
 	var/full_heal_flags = ~(HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_ORGANS)
 
-// The best stuff there is. For testing/debugging.
+// The best stuff there is.. For testing/debugging.
 /datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_waterlevel(round(volume))
 	mytray.adjust_plant_health(round(volume))
@@ -71,7 +71,7 @@
 	. = ..()
 	affected_mob.heal_bodypart_damage(brute = 2.5 * metabolization_ratio * seconds_per_tick, burn = 2.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjust_tox_loss(-2.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype)
-	// Heal everything! That we want to. But really don't heal reagents. Otherwise we'll lose ... us.
+	// Heal everything!. That we want to.. But really don't heal reagents.. Otherwise we'll lose .... us.
 	affected_mob.fully_heal(full_heal_flags & ~HEAL_ALL_REAGENTS) // there is no need to return UPDATE_MOB_HEALTH because this proc calls updatehealth()
 
 /datum/reagent/medicine/adminordrazine/quantum_heal
@@ -228,7 +228,7 @@
 	inverse_chem_val = 0.25
 	inverse_chem = /datum/reagent/inverse/rezadone
 
-// Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that. // No such luck so far // with clone damage gone, someone will find a better use for rezadone... right?
+// Rezadone is almost never used in favor of cryoxadone.. Hopefully this will change that.. // No such luck so far // with clone damage gone, someone will find a better use for rezadone.... right?
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(affected_mob.heal_bodypart_damage(
@@ -273,7 +273,7 @@
 	inverse_chem = /datum/reagent/inverse/spaceacillin
 	added_traits = list(TRAIT_VIRUS_RESISTANCE)
 
-//Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
+// Goon Chems.. Ported mainly from Goonstation.. Easily mixable (or not so easily) and provide a variety of effects.
 
 /datum/reagent/medicine/oxandrolone
 	name = "Oxandrolone"
@@ -855,7 +855,7 @@
 	affected_mob.adjust_eye_blur(-2 SECONDS * metabolization_ratio * seconds_per_tick * normalized_purity)
 	var/obj/item/organ/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
-		// Healing eye damage will cure nearsightedness and blindness from ... eye damage
+		// Healing eye damage will cure nearsightedness and blindness from .... eye damage
 		if(eyes.apply_organ_damage(-1 * metabolization_ratio * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
 			. = UPDATE_MOB_HEALTH
 		// If our eyes are seriously damaged, we have a probability of causing eye blur while healing depending on purity
@@ -907,7 +907,7 @@
 /datum/reagent/medicine/oculine/flumpuline/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/obj/item/organ/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
-	// if no eyes or inorganic do nothing. we let already changed eyes go because funny
+	// if no eyes or inorganic do nothing.. we let already changed eyes go because funny
 	if(!eyes || !IS_ORGANIC_ORGAN(eyes))
 		return .
 
@@ -1103,7 +1103,7 @@
 
 	return round(-their_health / healing_per_reagent_unit, DAMAGE_PRECISION)
 
-/// Calculates the amount of reagent that will be needed to both revive and full heal the target. Looks at healing_per_reagent_unit and excess_healing_ratio
+/// Calculates the amount of reagent that will be needed to both revive and full heal the target.. Looks at healing_per_reagent_unit and excess_healing_ratio
 /datum/reagent/medicine/strange_reagent/proc/calculate_amount_needed_to_full_heal(mob/living/benefactor)
 	var/their_health = benefactor.get_brute_loss() + benefactor.get_fire_loss()
 	var/max_health = benefactor.getMaxHealth()
@@ -1398,7 +1398,7 @@
 	affected_mob.AdjustSleeping(-2 SECONDS * metabolization_ratio * seconds_per_tick)
 	holder.remove_reagent(/datum/reagent/consumable/sugar, 3 * metabolization_ratio * seconds_per_tick)
 
-//Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.
+// Trek Chems, used primarily by medibots.. Only heals a specific damage type, but is very efficient.
 
 /datum/reagent/medicine/inaprovaline //is this used anywhere?
 	name = "Inaprovaline"
@@ -1483,7 +1483,7 @@
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
-	if(current_cycle < 25) //10u has to be processed before u get into THE FUN ZONE
+	if(current_cycle < 25) // 10u has to be processed before you get into THE FUN ZONE
 		need_mob_update = affected_mob.adjust_brute_loss(-0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += affected_mob.adjust_fire_loss(-0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += affected_mob.adjust_oxy_loss(-0.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
@@ -1789,7 +1789,7 @@
 
 /datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, -0.67 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)) // Add a chance to cure liver trauma once implemented.
+	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, -0.67 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)) // Add a chance to cure liver trauma once added
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/polypyr  //This is intended to be an ingredient in advanced chems.
@@ -1802,7 +1802,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-/datum/reagent/medicine/polypyr/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio) //I wanted a collection of small positive effects, this is as hard to obtain as coniine after all.
+/datum/reagent/medicine/polypyr/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio) // I wanted a collection of small positive effects, this is as hard to get as coniine after all.
 	. = ..()
 	var/need_mob_update
 	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LUNGS, -0.5 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
@@ -1913,7 +1913,7 @@
 
 		return UPDATE_MOB_HEALTH
 
-// i googled "natural coagulant" and a couple of results came up for banana peels, so after precisely 30 more seconds of research, i now dub grinding banana peels good for your blood
+// i googled "natural coagulant". A couple of results came up f. Banana peels, so after precisely 30 more seconds of research, i now dub grinding banana peels good f. Your blood
 /datum/reagent/medicine/coagulant/banana_peel
 	name = "Pulped Banana Peel"
 	description = "Ancient Clown Lore says that pulped banana peels are good for your blood, but are you really going to take medical advice from a clown about bananas?"

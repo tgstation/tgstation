@@ -36,7 +36,7 @@
 	. = ..()
 	access |= list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS)
 
-/// Trim for the Tunnel Clown! outfit. Has all access.
+/// Trim for the Tunnel Clown!. outfit.. Has all access.
 /datum/id_trim/tunnel_clown
 	assignment = "Tunnel Clown!"
 	trim_state = "trim_clown"
@@ -47,7 +47,7 @@
 	. = ..()
 	access |= SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 
-/// Trim for Bounty Hunters NOT hired by centcom. (?)
+/// Trim for Bounty Hunters NOT hired by centcom.. (?)
 /datum/id_trim/bounty_hunter
 	assignment = "Bounty Hunter"
 	trim_state = "trim_deathcommando"

@@ -104,7 +104,7 @@
 	remove_old_machine()
 	return ITEM_INTERACT_SUCCESS
 
-///Sets a controlled machine to a new machine, if possible. Checks if AIs can even control it.
+/// Sets a controlled machine to a new machine, if possible.. Checks if AIs can even control it.
 /obj/item/machine_remote/proc/set_controlled_machine(obj/machinery/new_machine)
 	if(controlling_machine_or_bot == new_machine)
 		return

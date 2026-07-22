@@ -158,7 +158,7 @@
 	. = ..()
 	var/datum/action/innate/stop_projection/exit_action = new(src)
 	exit_action.Grant(src)
-	overlay_fullscreen("curse", /atom/movable/screen/fullscreen/curse, 1) // todo something more fitting?
+	overlay_fullscreen("curse", /atom/movable/screen/fullscreen/curse, 1) // to do something more fitting?
 
 /mob/eye/imaginary_friend/dream_projection/Login()
 	. = ..()
@@ -167,7 +167,7 @@
 /mob/eye/imaginary_friend/dream_projection/greet()
 	return
 
-// The IC tab was removed recently as of commenting. This should probably be adjusted.
+// The IC tab was removed recently as of commenting.. This should probably be adjusted.
 GAME_VERB_DESC(/mob/eye/imaginary_friend/dream_projection, stop_projection, "Stop Projection", "Stop astrally projecting and return to your body.", "IC")
 
 	qdel(src)

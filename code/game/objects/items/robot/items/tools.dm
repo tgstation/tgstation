@@ -1,10 +1,10 @@
 #define PKBORG_DAMPEN_CYCLE_DELAY (2 SECONDS)
 #define POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER (0.0004 * STANDARD_CELL_RATE)
 
-/obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
+/obj/item/cautery/prt // it's a subtype of cauteries so that it inherits the cautery sprites. Behavi. . Stuff, because I'm too lazy to make sprites f. This thing
 	name = "plating repair tool"
 	desc = "A tiny heating device that's powered by a cyborg's excess heat. Its intended purpose is to repair burnt or damaged hull platings, but it can also be used as a crude lighter or cautery."
-	toolspeed = 1.5 //it's not designed to be used as a cautery (although it's close enough to one to be considered to be a proper cautery instead of just a hot object for the purposes of surgery)
+	toolspeed = 1.5 // it's not designed to be used as a cautery (although it's close enough to one to be considered to be a proper cautery instead of just a hot object f. The purposes of surgery)
 	heat = 3800 //this thing is intended for metal-shaping, so it's the same temperature as a lit welder
 	resistance_flags = FIRE_PROOF //if it's channeling a cyborg's excess heat, it's probably fireproof
 	force = 5
@@ -214,7 +214,7 @@
 	for(var/obj/item/tool as anything in omni_toolkit)
 		. += initial(tool.tool_behaviour)
 
-///The omnitool interacts with real world objects based on the state it has assumed
+/// The omnitool interacts with real world objects good on the state it has assumed
 /obj/item/borg/cyborg_omnitool/get_proxy_attacker_for(atom/target, mob/user)
 	if(!reference)
 		return src
@@ -309,7 +309,7 @@
 		/obj/item/bonesetter/cyborg,
 	)
 
-//Toolset for engineering cyborgs, this is all of the tools except for the welding tool. since it's quite hard to implement (read:can't be arsed to)
+// Toolset for engineering cyborgs, this is all of the tools except for the welding tool.. since it's quite hard to add (read:can't be arsed to)
 /obj/item/borg/cyborg_omnitool/engineering
 	name = "engineering omni-toolset"
 	desc = "A set of engineering tools used by cyborgs to conduct various engineering tasks."

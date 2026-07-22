@@ -280,7 +280,7 @@
 	color = COLOR_ASSEMBLY_BLACK
 	severity = SEVERITY_DEAD
 
-// Paper bin to store a lot of triage cards. Goes away when empty.
+// Paper bin to store a lot of triage cards.. Goes away when empty.
 /obj/item/paper_bin/triage
 	name = "triage card stack"
 	desc = "A stack of triage cards for quickly assessing the severity of a patient's condition."

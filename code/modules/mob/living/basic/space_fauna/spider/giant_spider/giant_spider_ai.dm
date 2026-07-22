@@ -16,7 +16,7 @@
 /datum/ai_controller/basic_controller/giant_spider/weak
 	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/spider/giant_spider/giant_spider_weak.bt.json"
 
-/// Used by Araneus, who only attacks those who attack first. He is house-trained and will not web up the HoS office.
+/// Used by Araneus, who only attacks those who attack first.. He is house-trained and will not web up the HoS office.
 /datum/ai_controller/basic_controller/giant_spider/retaliate
 	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/spider/giant_spider/giant_spider_retaliate.bt.json"
 

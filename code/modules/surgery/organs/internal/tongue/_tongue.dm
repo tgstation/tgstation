@@ -25,15 +25,15 @@
 	 * (such as no accent, hissing, or whatever)
 	 */
 	var/list/languages_native
-	///changes the verbage of how you speak. (Permille -> says <-, "I just used a verb!")
-	///i hate to say it, but because of sign language, this may have to be a component. and we may have to do some insane shit like putting a component on a component
+	/// changes the verbage of how you speak.. (Permille -> says <-, "I just used a verb!")
+	/// i hate to say it, but because of sign language, this may have to be a component.. and we may have to do some insane shit like putting a component on a component
 	var/say_mod = "says"
 	///for temporary overrides of the above variable.
 	var/temp_say_mod = ""
 
-	/// Whether the owner of this tongue can speak clearly. Being set to FALSE means they mumble and slur things
+	/// Whether the owner of this tongue can speak clearly.. Being set to FALSE means they mumble and slur things
 	var/speakable_with = TRUE
-	/// Whether the owner of this tongue can taste anything. Being set to FALSE will mean no taste feedback will be provided.
+	/// Whether the owner of this tongue can taste anything.. Being set to FALSE will mean no taste feedback will be provided.
 	var/sense_of_taste = TRUE
 	/// Determines how "sensitive" this tongue is to tasting things, lower is more sensitive.
 	/// See [/mob/living/proc/get_taste_sensitivity].
@@ -318,7 +318,7 @@
 /datum/action/cooldown/turn_to_statue/proc/statue_deleted(datum/source)
 	SIGNAL_HANDLER
 
-	clean_up_statue() // Note that if the lizard is in the statue when they're raw deleted, they too will be raw deleted. This is fine
+	clean_up_statue() // Note that if the lizard is in the statue when they're raw deleted, they too will be raw deleted.. This is fine
 
 /// Initializes the statue we're going to hang around inside
 /datum/action/cooldown/turn_to_statue/proc/init_statue()
@@ -439,7 +439,7 @@
 /obj/item/organ/tongue/zombie/proc/load_zombie_translations()
 	var/list/zombie_translation = strings("zombie_replacement.json", "zombie")
 	for(var/zombie_word in zombie_translation)
-		// since zombie words are a reverse list, we gotta do this backwards
+		// since zombie words are a reverse list, we got to do this backwards
 		var/list/data = islist(zombie_translation[zombie_word]) ? zombie_translation[zombie_word] : list(zombie_translation[zombie_word])
 		for(var/english_word in data)
 			add_word_to_translations(english_word, zombie_word)
@@ -459,7 +459,7 @@
 			word = english_to_zombie[LOWER_TEXT(word)]
 			translated_word_list += word ? word : FALSE
 
-		// all occurrences of characters "eiou" (case-insensitive) are replaced with "r"
+		// all occurrences of characters "eiou" (case-insensitive) are replaced with are
 		message = replacetext(message, regex(@"[eiou]", "ig"), "r")
 		// all characters other than "zhrgbmna .!?-" (case-insensitive) are stripped
 		message = replacetext(message, regex(@"[^zhrgbmna.!?-\s]", "ig"), "")
@@ -469,7 +469,7 @@
 		var/list/old_words = splittext(message, " ")
 		var/list/new_words = list()
 		for(var/word in old_words)
-			// lower-case "r" at the end of words replaced with "rh"
+			// lower-case are at the end of words replaced with "rh"
 			word = replacetext(word, regex(@"\lr\b"), "rh")
 			// an "a" or "A" by itself will be replaced with "hra"
 			word = replacetext(word, regex(@"\b[Aa]\b"), "hra")
@@ -522,7 +522,7 @@
 	attack_verb_continuous = list("bites", "chatters", "chomps", "enamelles", "bones")
 	attack_verb_simple = list("bite", "chatter", "chomp", "enamel", "bone")
 	sense_of_taste = FALSE
-	liked_foodtypes = GROSS | MEAT | RAW | GORE | DAIRY //skeletons eat spooky shit... and dairy, of course
+	liked_foodtypes = GROSS | MEAT | RAW | GORE | DAIRY // skeletons eat spooky shit.... and dairy, of course
 	disliked_foodtypes = NONE
 	modifies_speech = TRUE
 	var/chattering = FALSE
@@ -590,7 +590,7 @@
 /obj/item/organ/tongue/snail
 	name = "radula"
 	desc = "A minutely toothed, chitinous ribbon, which as a side effect, makes all snails talk IINNCCRREEDDIIBBLLYY SSLLOOWWLLYY."
-	color = "#96DB00" // TODO proper sprite, rather than recoloured pink tongue
+	color = "#96DB00" // To do proper sprite, rather than recoloured pink tongue
 	modifies_speech = TRUE
 	voice_filter = "atempo=0.5" // makes them talk really slow
 
@@ -609,7 +609,7 @@
 	desc = "A sophisticated ethereal organ, capable of synthesising speech via electrical discharge."
 	icon_state = "electrotongue"
 	say_mod = "crackles"
-	taste_sensitivity = 10 // ethereal tongues function (very loosely) like a gas spectrometer: vaporising a small amount of the food and allowing it to pass to the nose, resulting in more sensitive taste
+	taste_sensitivity = 10 // ethereal tongues function (very loosely) like a gas spectrometer: vaporising a small amount of the food. Allowing it to pass to the nose, resulting in more sensitive taste
 	liked_foodtypes = NONE //no food is particularly liked by ethereals
 	disliked_foodtypes = GROSS
 	toxic_foodtypes = NONE //no food is particularly toxic to ethereals
@@ -671,7 +671,7 @@
 	languages_native = list(/datum/language/slime)
 
 /obj/item/organ/tongue/jelly/get_food_taste_reaction(obj/item/food, foodtypes = NONE)
-	// a silver slime created this? what a delicacy!
+	// a silver slime created this?. what a delicacy!
 	if(HAS_TRAIT(food, TRAIT_FOOD_SILVER))
 		return FOOD_LIKED
 	return ..()

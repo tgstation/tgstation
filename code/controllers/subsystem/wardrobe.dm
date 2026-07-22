@@ -1,6 +1,6 @@
 /// This subsystem strives to make loading large amounts of select objects as smooth at execution as possible
 /// It preloads a set of types to store, and caches them until requested
-/// Doesn't catch everything mind, this is intentional. There's many types that expect to either
+/// Doesn't catch everything mind, this is intentional.. There's many types that expect to either
 /// A: Not sit in a list for 2 hours, or B: have extra context passed into them, or for their parent to be their location
 /// You should absolutely not spam this system, it will break things in new and wonderful ways
 /// S close enough for government work though.
@@ -15,19 +15,19 @@ SUBSYSTEM_DEF(wardrobe)
 	)
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT // We're going to fill up our cache while players sit in the lobby
 	/// How much to cache outfit items
-	/// Multiplier, 2 would mean cache enough items to stock 1 of each preloaded order twice, etc
+	/// Multiplier, 2 would mean cache enough items to stock 1 of each preloaded order twice, and so on
 	var/cache_intensity = 2
 	/// How many more then the template of a type are we allowed to have before we delete applicants?
 	var/overflow_lienency = 2
 	/// List of type -> list(insertion callback, removal callback) callbacks for insertion/removal to use.
 	/// Set in setup_callbacks, used in canonization.
 	var/list/initial_callbacks = list()
-	/// Canonical list of types required to fill all preloaded stocks once.
+	/// Canonical list of types needed to fill all preloaded stocks once.
 	/// Type -> list(count, last inspection timestamp, call on insert, call on removal)
 	var/list/canon_minimum = list()
-	/// List of types to load. Type -> count //(I'd do a list of lists but this needs to be refillable)
+	/// List of types to load.. Type -> count //(I'd do a list of lists but this needs to be refillable)
 	var/list/order_list = list()
-	/// List of lists. Contains our preloaded atoms. Type -> list(last inspect time, list(instances))
+	/// List of lists.. Contains our preloaded atoms.. Type -> list(last inspect time, list(instances))
 	var/list/preloaded_stock = list()
 	/// The last time we inspected our stock
 	var/last_inspect_time = 0
@@ -132,7 +132,7 @@ SUBSYSTEM_DEF(wardrobe)
 		target_delta = min(target_delta, 0) //I only want negative numbers to matter here
 
 		// If we don't have enough, queue enough to make up the remainder
-		// If we have too much in the queue, cull to 0. We do this so time isn't wasted creating and destroying entries
+		// If we have too much in the queue, cull to 0.. We do this so time isn't wasted creating and destroying entries
 		set_queue_item(loaded_type, abs(target_delta))
 
 		master_info[WARDROBE_CACHE_LAST_INSPECT] = last_inspect_time
@@ -220,7 +220,7 @@ SUBSYSTEM_DEF(wardrobe)
 	stash_object(object)
 
 /// Take an existing object, and insert it into our storage
-/// If we can't or won't take it, it's deleted. You do not own this object after passing it in
+/// If we can't or won't take it, it's deleted.. You do not own this object after passing it in
 /datum/controller/subsystem/wardrobe/proc/stash_object(obj/item/object)
 	var/object_type = object.type
 	var/list/master_info = canon_minimum[object_type]
@@ -314,10 +314,10 @@ SUBSYSTEM_DEF(wardrobe)
 		preloaded_stock -= unload_type
 
 /// Sets up insertion and removal callbacks by typepath
-/// We will always use the deepest path. So /obj/item/blade/knife superceeds the entries of /obj/item and /obj/item/blade
+/// We will always use the deepest path.. So /obj/item/blade/knife superceeds the entries of /obj/item and /obj/item/blade
 /// Mind this
 /datum/controller/subsystem/wardrobe/proc/setup_callbacks()
-	var/list/play_with = new /list(WARDROBE_CALLBACK_REMOVE) // Turns out there's a global list of pdas. Let's work around that yeah?
+	var/list/play_with = new /list(WARDROBE_CALLBACK_REMOVE) // Turns out there's a global list of pdas.. Let's work around that yeah?
 
 	play_with = new /list(WARDROBE_CALLBACK_REMOVE) // Don't want organs rotting on the job
 	play_with[WARDROBE_CALLBACK_INSERT] = CALLBACK(null, TYPE_PROC_REF(/obj/item/organ,enter_wardrobe))

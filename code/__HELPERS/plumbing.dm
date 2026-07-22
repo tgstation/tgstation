@@ -22,7 +22,7 @@
 		if(istype(pipe) && (pipe.duct_layer & ducting_layer))
 			return pipe
 
-		//check for overlapping machines. -ve duct layer means we are checking machines on machines overlap which regardless of layer is not allowed
+		// check for overlapping machines.. -ve duct layer means we are checking machines on machines overlap which regardless of layer is not allowed
 		for(var/datum/component/plumbing/plumber as anything in other.GetComponents(/datum/component/plumbing))
 			if(is_machine || (plumber.ducting_layer & ducting_layer))
 				return plumber

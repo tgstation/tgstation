@@ -1,4 +1,4 @@
-//Alium nests. Essentially beds with an unbuckle delay that only aliums can buckle mobs to.
+// Alium nests.. Essentially beds with an unbuckle delay that only aliums can buckle mobs to.
 
 /obj/structure/bed/nest
 	name = "alien nest"
@@ -111,7 +111,7 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/victim = M
-		if(((victim.wear_mask && istype(victim.wear_mask, /obj/item/clothing/mask/facehugger)) || HAS_TRAIT(victim, TRAIT_XENO_HOST)) && victim.stat != DEAD) //If they're a host or have a facehugger currently infecting them. Must be alive.
+		if(((victim.wear_mask && istype(victim.wear_mask, /obj/item/clothing/mask/facehugger)) || HAS_TRAIT(victim, TRAIT_XENO_HOST)) && victim.stat != DEAD) // If they're a host or have a facehugger currently infecting them.. Must be alive.
 			victim.apply_status_effect(/datum/status_effect/nest_sustenance)
 
 /obj/structure/bed/nest/post_unbuckle_mob(mob/living/M)

@@ -62,7 +62,7 @@
 	var/heavy_emp_damage = 25
 	///Alarm listener datum, handes caring about alarm events and such
 	var/datum/alarm_listener/listener
-	/// Internal storage slot. Fits any item
+	/// Internal storage slot.. Fits any item
 	var/obj/item/internal_storage
 	/// Headwear slot
 	var/obj/item/head
@@ -85,9 +85,9 @@
 	var/visualAppearance = MAINTDRONE
 	/// Hacked state, see [/mob/living/basic/drone/proc/update_drone_hack]
 	var/hacked = FALSE
-	/// Whether this drone can be un-hacked. Used for subtypes that cannot be meaningfully "fixed".
+	/// Whether this drone can be un-hacked.. Used for subtypes that cannot be meaningfully "fixed".
 	var/can_unhack = TRUE
-	/// If we have laws to minimize bothering others. Enables or disables drone laws enforcement components (use [/mob/living/basic/drone/proc/set_shy] to set)
+	/// If we have laws to minimize bothering others.. Enables or disables drone laws enforcement components (use [/mob/living/basic/drone/proc/set_shy] to set)
 	var/shy = TRUE
 	/// Flavor text announced to drones on [/mob/proc/Login]
 	var/flavortext = \

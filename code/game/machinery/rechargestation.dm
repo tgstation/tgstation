@@ -15,7 +15,7 @@
 	var/repairs
 	///Callback for borgs & modsuits to provide their cell to us for charging
 	var/datum/callback/charge_cell
-	///Whether we're sending iron and glass to a cyborg. Requires Silo connection.
+	/// Whether we're sending iron and glass to a cyborg.. Needs Silo connection.
 	var/sendmats = FALSE
 	var/datum/remote_materials/materials
 

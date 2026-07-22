@@ -24,7 +24,7 @@
 	storage_type = /datum/storage/medkit
 
 	var/empty = FALSE
-	/// Defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
+	/// Defines damage type of the medkit.. General ones stay null.. Used for medibot healing bonuses
 	var/damagetype_healed
 
 /obj/item/storage/medkit/Initialize(mapload)

@@ -99,14 +99,14 @@
 
 	return TRUE
 
-/// Start the equipping process. This is the proc you should yield in.
+/// Start the equipping process.. This is the proc you should yield in.
 /// Returns TRUE/FALSE depending on if it is allowed.
 /datum/strippable_item/proc/start_equip(atom/source, obj/item/equipping, mob/user)
 
 	equipping.item_start_equip(source, equipping, user, show_visible_message)
 	return TRUE
 
-/// The proc that places the item on the source. This should not yield.
+/// The proc that places the item on the source.. This should not yield.
 /datum/strippable_item/proc/finish_equip(atom/source, obj/item/equipping, mob/user)
 	SHOULD_NOT_SLEEP(TRUE)
 
@@ -132,7 +132,7 @@
 
 	return TRUE
 
-/// Start the unequipping process. This is the proc you should yield in.
+/// Start the unequipping process.. This is the proc you should yield in.
 /// Returns TRUE/FALSE depending on if it is allowed.
 /datum/strippable_item/proc/start_unequip(atom/source, mob/user)
 	var/obj/item/item = get_item(source)
@@ -156,7 +156,7 @@
 
 	if(ishuman(source))
 		var/mob/living/carbon/human/victim_human = source
-		if(victim_human.key && !victim_human.client) // AKA braindead
+		if(victim_human.key && !victim_human.client) // Also known as braindead
 			if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
 				var/list/new_entry = list(list(user.name, "tried unequipping your [item.name]", world.time))
 				LAZYADD(victim_human.afk_thefts, new_entry)
@@ -166,7 +166,7 @@
 
 	return TRUE
 
-/// The proc that unequips the item from the source. This should not yield.
+/// The proc that unequips the item from the source.. This should not yield.
 /datum/strippable_item/proc/finish_unequip(atom/source, mob/user)
 
 /// Returns a STRIPPABLE_OBSCURING_* define to report on whether or not this is obscured.

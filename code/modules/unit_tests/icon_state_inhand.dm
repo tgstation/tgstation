@@ -1,4 +1,4 @@
-/// Makes sure items with defined inhand_icon_states... actually have icons that exist!
+/// Makes sure items with defined inhand_icon_states.... actually have icons that exist!
 /datum/unit_test/missing_icons/inhand_icon_state
 	default_location = "icons/mob/inhands/"
 	var/fallback_log_message

@@ -69,13 +69,13 @@ xxx xxx xxx
 */
 /// Encodes connectivity between border objects
 /// Returns a list accessable by a border object's dir, the direction between it and a target, and a target
-/// Said list will return the direction the two objects connect, if any exists (if the target isn't a border object and the direction is fine, return the inverse of the direction in use)
+/// Said list will return the direction the two objects connect, if any exists (if the target isn't a border object. The direction is fine, return the inverse of the direction in use)
 /proc/generate_adjacent_directions()
 	// Have to hold all conventional dir pairs, so we size to the largest
-	// We don't HAVE diagonal border objects, so I'm gonna pretend they'll never exist
+	// We don't HAVE diagonal border objects, so I'm going to pretend they'll never exist
 
 	// You might be like, lemon, can't we use GLOB.cardinals/GLOB.alldirs here
-	// No, they aren't loaded yet. life is pain
+	// No, they aren't loaded yet.. life is pain
 	var/list/cardinals = list(NORTH, SOUTH, EAST, WEST)
 	var/list/alldirs = cardinals + list(NORTH|EAST, SOUTH|EAST, NORTH|WEST, SOUTH|WEST)
 	var/largest_cardinal = max(cardinals)
@@ -94,7 +94,7 @@ xxx xxx xxx
 			var/list/smoothable_dirs = new /list(largest_cardinal + 1) // + 1 because we need to provide space for NONE to be a valid index
 			// None is fine, we want to smooth with things on our own turf
 			// We'll do the two dirs to our left and right
-			// They connect.. "below" us and on their side
+			// They connect... "below" us and on their side
 			if(connectable_dir == NONE)
 				smoothable_dirs[left] = dir_to_junction(opposite | left)
 				smoothable_dirs[right] = dir_to_junction(opposite | right)
@@ -117,7 +117,7 @@ xxx xxx xxx
 		direction_map[dir] = acceptable_adjacents
 	return direction_map
 
-/// Helper proc for smoothing border objects. Return this from smoothing_allowed() to get the desired effect
+/// Helper proc for smoothing border objects.. Return this from smoothing_allowed() to get the desired effect
 /// Indexes into some global lists that encode direction bullshit
 /proc/should_border_obj_smooth(atom/border_obj, atom/target, direction)
 	// If the target is also a border obj, take its dirs into account
@@ -281,7 +281,7 @@ xxx xxx xxx
 #define DEFAULT_UNDERLAY_ICON 'icons/turf/floors.dmi'
 #define DEFAULT_UNDERLAY_ICON_STATE "plating"
 
-///Changes the icon state based on the new junction bitmask
+/// Changes the icon state good on the new junction bitmask
 /atom/proc/set_smoothed_icon_state(new_junction)
 	. = smoothing_junction
 	smoothing_junction = new_junction

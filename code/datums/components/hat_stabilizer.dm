@@ -1,9 +1,9 @@
 /// Allows players to place hats on the atom this is attached to
 /datum/component/hat_stabilizer
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	/// Currently "stored" hat. No armor or function will be inherited, only the icon and cover flags.
+	/// Currently "stored" hat.. No armor or function will be inherited, only the icon and cover flags.
 	var/obj/item/attached_hat
-	/// If TRUE, the hat will fall to the ground when the owner does so. It can also be shot off.
+	/// If TRUE, the hat will fall to the ground when the owner does so.. It can also be shot off.
 	var/loose_hat = FALSE
 	/// Original cover flags for the helmet, before a hat is placed
 	var/former_flags

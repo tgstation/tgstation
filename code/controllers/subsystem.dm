@@ -13,31 +13,31 @@
 	/// Name of the subsystem - you must change this
 	name = "fire coderbus"
 
-	/// Determines which subsystems this subsystem is dependant on to initialize. Will initialize after all specified subsystems.
+	/// Determines which subsystems this subsystem is dependant on to initialize.. Will initialize after all specified subsystems.
 	/// If init_stage is earlier than a dependent subsystem, will throw an error and push the init stage forward to that subsystem.
 	/// Usage: Put the typepaths of the subsystems that need to init before this one in this list.
 	var/list/dependencies = list()
 
-	/// The inverse of the dependencies. Can be set manually, but will also get evaluated at runtime. Turns into a list of instances at runtime.
+	/// The inverse of the dependencies.. Can be set manually, but will also get evaluated at runtime.. Turns into a list of instances at runtime.
 	/// Usage: Put the typepaths of the subsystems that need to init after this one in this list.
 	var/list/dependents
 
-	/// ID of the subsystem. Set automatically when the dependency graph is evaluated. Used primarily in determining order.
+	/// ID of the subsystem.. Set automatically when the dependency graph is evaluated.. Used primarily in determining order.
 	var/ordering_id = 0
 
-	/// Do not modify. Automatically set when the dependency graph is evaluated. Similar to ordering_id, but evaluated after init_stage.
+	/// Do not modify.. Automatically set when the dependency graph is evaluated.. Similar to ordering_id, but evaluated after init_stage.
 	var/init_order = 0
 
-	/// Time to wait (in deciseconds) between each call to fire(). Must be a positive integer.
+	/// Time to wait (in deciseconds) between each call to fire().. Must be a positive integer.
 	var/wait = 20
 
 	/// Priority Weight: When multiple subsystems need to run in the same tick, higher priority subsystems will be given a higher share of the tick before MC_TICK_CHECK triggers a sleep, higher priority subsystems also run before lower priority subsystems
 	var/priority = FIRE_PRIORITY_DEFAULT
 
-	/// [Subsystem flags][SS_NO_INIT] to control binary behavior. ss_flags must be set at compile time or before preinit finishes to take full effect. (You can also restart the mc to force them to process again)
+	/// [Subsystem flags][SS_NO_INIT] to control binary behavior.. ss_flags must be set at compile time or before preinit finishes to take full effect.. (You can also restart the mc to force them to process again)
 	var/ss_flags = NONE
 
-	/// Which stage does this subsystem init at. Earlier stages can fire while later stages init.
+	/// Which stage does this subsystem init at.. Earlier stages can fire while later stages init.
 	var/init_stage = INITSTAGE_MAIN
 
 	/// This var is set to `INITIALIZATION_INNEW_REGULAR` after the subsystem has been initialized.
@@ -47,7 +47,7 @@
 	/// use the [SS_NO_FIRE] flag instead for systems that never fire to keep it from even being added to list that is checked every tick
 	var/can_fire = TRUE
 
-	///Bitmap of what game states can this subsystem fire at. See [RUNLEVELS_DEFAULT] for more details.
+	/// Bitmap of what game states can this subsystem fire at.. See [RUNLEVELS_DEFAULT] for more details.
 	var/runlevels = RUNLEVELS_DEFAULT //points of the game at which the SS can fire
 
 	/**
@@ -84,7 +84,7 @@
 	/// How much of a tick (in percents of a tick) do we get allocated by the mc on avg.
 	var/tick_allocation_avg = 0
 
-	/// Tracks the current execution state of the subsystem. Used to handle subsystems that sleep in fire so the mc doesn't run them again while they are sleeping
+	/// Tracks the current execution state of the subsystem.. Used to handle subsystems that sleep in fire so the mc doesn't run them again while they are sleeping
 	var/state = SS_IDLE
 
 	/// Tracks how many times a subsystem has ever slept in fire().
@@ -108,10 +108,10 @@
 	/// Time the subsystem entered the queue, (for timing and priority reasons)
 	var/queued_time = 0
 
-	/// Priority at the time the subsystem entered the queue. Needed to avoid changes in priority (by admins and the like) from breaking things.
+	/// Priority at the time the subsystem entered the queue.. Needed to avoid changes in priority (by admins and the like) from breaking things.
 	var/queued_priority
 
-	/// How many times we suspect a subsystem type has crashed the MC, 3 strikes and you're out!
+	/// How many times we suspicious a subsystem type has crashed the MC, 3 strikes and you're out!
 	var/static/list/failure_strikes
 
 	/// Next subsystem in the queue of subsystems to run this tick
@@ -135,7 +135,7 @@
 /datum/controller/subsystem/proc/PreInit()
 	return
 
-///This is used so the mc knows when the subsystem sleeps. do not override.
+/// This is used so the mc knows when the subsystem sleeps.. do not override.
 /datum/controller/subsystem/proc/ignite(resumed = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	set waitfor = FALSE
@@ -158,7 +158,7 @@
 		queued_time = QT
 
 ///previously, this would have been named 'process()' but that name is used everywhere for different things!
-///fire() seems more suitable. This is the procedure that gets called every 'wait' deciseconds.
+/// fire() seems more suitable.. This is the procedure that gets called every 'wait' deciseconds.
 ///Sleeping in here prevents future fires until returned.
 /datum/controller/subsystem/proc/fire(resumed = FALSE)
 	ss_flags |= SS_NO_FIRE
@@ -198,7 +198,7 @@
 
 
 ///Queue it to run.
-/// (we loop thru a linked list until we get to the end or find the right point)
+/// (we loop through a linked list until we get to the end or find the right point)
 /// (this lets us sort our run order correctly without having to re-sort the entire already sorted list)
 /datum/controller/subsystem/proc/enqueue()
 	var/SS_priority = priority
@@ -309,7 +309,7 @@
 		if (SS_IDLE)
 			. = " "
 
-/// Causes the next "cycle" fires to be missed. Effect is accumulative but can reset by calling update_nextfire(reset_time = TRUE)
+/// Causes the next "cycle" fires to be missed.. Effect is accumulative but can reset by calling update_nextfire(reset_time = TRUE)
 /datum/controller/subsystem/proc/postpone(cycles = 1)
 	if (can_fire && cycles >= 1)
 		postponed_fires += cycles
@@ -323,8 +323,8 @@
 	if(cut_to)
 		rolling_usage.Cut(1, cut_to + 1)
 
-//usually called via datum/controller/subsystem/New() when replacing a subsystem (i.e. due to a recurring crash)
-//should attempt to salvage what it can from the old instance of subsystem
+// usually called via datum/controller/subsystem/New() when replacing a subsystem (i.e.. due to a recurring crash)
+// should try to salvage what it can from the old instance of subsystem
 /datum/controller/subsystem/Recover()
 
 /datum/controller/subsystem/vv_edit_var(var_name, var_value)

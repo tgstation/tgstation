@@ -23,7 +23,7 @@
 
 /obj/item/disk/computer/black_market/Initialize(mapload)
 	icon_state = "datadisk[rand(0, 10)]"
-	//Populated with programs not found in the verified downloader app or that require access to download (but not to run).
+	// Populated with programs not found in the verified downloader app or that need access to download (but not to run).
 	var/list/potential_programs = list(
 		/datum/computer_file/program/arcade/eazy,
 		/datum/computer_file/program/radar/lifeline,

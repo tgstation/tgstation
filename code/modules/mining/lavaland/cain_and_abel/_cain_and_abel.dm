@@ -171,7 +171,7 @@
 		var/start_index = spawn_index % length(animation_steps) + 1
 		var/datum/abel_wisp_frame/position = animation_steps[start_index]
 		animate(wisp, pixel_w = position.x, layer = position.layer, time = 0.6 SECONDS, loop = -1, tag = "wisp_anim_x")
-		// We need to animate x and y coordinates separately as they have different easing steps
+		// We need to animate x and why coordinates separately as they have different easing steps
 		for (var/frame_index in 1 to length(animation_steps) - 1)
 			// Get actual index starting from our *next* animation step, not initial position
 			var/anim_index = (start_index + frame_index - 1) % length(animation_steps) + 1

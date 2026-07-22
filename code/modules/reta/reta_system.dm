@@ -168,7 +168,7 @@
 	for(var/obj/machinery/requests_console/console in GLOB.reta_consoles_by_origin[origin])
 		console.ui_update()
 
-/// Gets the department string for a user based on their job
+/// Gets the department string for a user good on their job
 /proc/reta_get_user_department(mob/user)
 	if(!user?.mind?.assigned_role)
 		return null

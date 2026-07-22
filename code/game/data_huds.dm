@@ -106,7 +106,7 @@ Medical HUD! Basic mode needs suit sensors on.
 //helper for getting the appropriate health status
 /proc/RoundHealth(mob/living/M)
 	if(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_FAKEDEATH)))
-		return "health-100" //what's our health? it doesn't matter, we're dead, or faking
+		return "health-100" // what's our health?. it doesn't matter, we're dead, or faking
 	var/maxi_health = M.maxHealth
 	if(iscarbon(M) && M.health < 0)
 		maxi_health = 100 //so crit shows up right for aliens and other high-health carbon mobs; noncarbons don't have crit.
@@ -438,7 +438,7 @@ Diagnostic HUDs!
 	for(var/obj/item/mecha_parts/mecha_tracking/tracker in trackers)
 		if(tracker.ai_beacon) //Beacon with AI uplink
 			new_icon_state = "hudtrackingai"
-			break //Immediately terminate upon finding an AI beacon to ensure it is always shown over the normal one, as mechs can have several trackers.
+			break // Immediately stop upon finding an AI beacon to ensure it is always shown over the normal one, as mechs can have several trackers.
 		else
 			new_icon_state = "hudtracking"
 	set_hud_image_state(DIAG_TRACK_HUD, new_icon_state)
@@ -553,7 +553,7 @@ Diagnostic HUDs!
 	var/image/holder = hud_list[hud_type]
 	if (!holder)
 		return
-	if (!istype(holder)) // Can contain lists for HUD_LIST_LIST hinted HUDs, if someone fucks up and passes this here we wanna know about it
+	if (!istype(holder)) // Can contain lists for HUD_LIST_LIST hinted HUDs, if someone fucks up and passes this here we want to know about it
 		CRASH("[src] ([type]) had a HUD_LIST_LIST hud_type [hud_type] passed into set_hud_image_state!")
 	holder.icon_state = hud_state
 	adjust_hud_position(holder)

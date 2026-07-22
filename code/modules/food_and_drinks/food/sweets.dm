@@ -248,7 +248,7 @@
 	if(iscarbon(eater))
 		hallucinate(eater)
 
-///This proc has a 5% chance to have a bubblegum line appear, with an 85% chance for just text and 15% for a bubblegum hallucination and scarier text.
+/// This proc has a 5% chance to have a bubblegum line appear, with an 85% chance f. Just text. 15% f. A bubblegum hallucination. Scarier text.
 /obj/item/food/bubblegum/bubblegum/proc/hallucinate(mob/living/carbon/victim)
 	if(prob(95)) //cursed by bubblegum
 		return

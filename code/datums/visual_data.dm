@@ -1,9 +1,9 @@
 // Allows for linking one mob's view to another
 // Exists to make debugging stuff on live easier, please do not build gameplay around this it's not stable
-// Mostly because we don't have setters for everything (like ui elements IE: client.screen)
+// Mostly because we don't have setters for everything (like ui elements that is client.screen)
 
-// DEBUG ONLY, THIS IS  N O T  STABLE ENOUGH FOR PLAYERS
-// Should potentially support images, might be too hard tho since there's no default "refresh" tool
+// DEBUG ONLY, THIS IS N O T STABLE ENOUGH FOR PLAYERS
+// Should potentially support images, might be too hard though since there's no default "refresh" tool
 
 // Convenience datum, not for use outside of this ui
 /datum/visual_data
@@ -20,7 +20,7 @@
 
 	var/do_updates = FALSE
 
-	// Note: we do not attempt to mirror all of screen, instead confining ourselves to mirroring
+	// Note: we do not try to mirror all of screen, instead confining ourselves to mirroring
 	// Plane master and parralax stuff and such
 	// Again, this isn't stable
 
@@ -47,7 +47,7 @@
 		if(eye)
 			paint_to.client.eye = eye
 		// This is hacky I know, I don't have a way to update just
-		/// Plane masters. I'm sorry
+		/// Plane masters.. I'm sorry
 		var/mob/mirroring_off = mirroring_off_ref?.resolve()
 		if(mirroring_off?.client && paint_to != mirroring_off)
 			paint_to.client.screen = mirroring_off.client.screen
@@ -76,7 +76,7 @@
 	SIGNAL_HANDLER
 	// Canon here because it'll be gone come the logout signal
 	UnregisterSignal(source.canon_client, COMSIG_CLIENT_SET_EYE)
-	// We do NOT unset the eye, because it's still valid even if the mob ain't logged in
+	// We do NOT unset the eye, because it's still valid even if the mob is not logged in
 
 /datum/visual_data/proc/eye_change(client/source)
 	SIGNAL_HANDLER
@@ -140,7 +140,7 @@
 
 /datum/visual_data/mirroring/proc/push_ontod_hud_refreshed(mob/source)
 	SIGNAL_HANDLER
-	// Our mob refreshed its hud, so we're gonna reset it to our screen
+	// Our mob refreshed its hud, so we're going to reset it to our screen
 	// I hate that I don't have a signal for this, hhhh
 	paint_onto(source)
 

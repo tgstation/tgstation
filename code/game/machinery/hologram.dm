@@ -42,7 +42,7 @@ Possible to do for anyone motivated enough:
 	/// The plane is set such that it shows up without being covered by pipes/wires in a map editor, we change this on initialize.
 	layer = MAP_SWITCH(ABOVE_OPEN_TURF_LAYER, LOW_OBJ_LAYER)
 	plane = MAP_SWITCH(FLOOR_PLANE, GAME_PLANE)
-	req_access = list(ACCESS_KEYCARD_AUTH) //Used to allow for forced connecting to other (not secure) holopads. Anyone can make a call, though.
+	req_access = list(ACCESS_KEYCARD_AUTH) // Used to allow for forced connecting to other (not secure) holopads.. Anyone can make a call, though.
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_holopad
 	circuit = /obj/item/circuitboard/machine/holopad
@@ -55,11 +55,11 @@ Possible to do for anyone motivated enough:
 	var/list/masters
 	/// Holoray-owner link
 	var/list/holorays
-	/// To prevent request spam. ~Carn
+	/// To prevent request spam.. ~Carn
 	var/last_request = 0
 	/// Change to change how far the AI can move away from the holopad before deactivating
 	var/holo_range = 5
-	/// Array of /datum/holocalls that are calling US. this is only filled for holopads answering calls from another holopad
+	/// Array of /datum/holocalls that are calling US.. this is only filled for holopads answering calls from another holopad
 	var/list/holo_calls
 	/// Currently outgoing holocall, cannot call any other holopads unless this is null.
 	/// creating a new holocall from us to another holopad sets this var to that holocall datum
@@ -91,7 +91,7 @@ Possible to do for anyone motivated enough:
 	var/calling = FALSE
 	/// Whether this pad is currently projecting a pointing arrow
 	var/pointing = FALSE
-	///bitfield. used to turn on and off hearing sensitivity depending on if we can act on Hear() at all - meant for lowering the number of unessesary hearable atoms
+	/// bitfield.. used to turn on. Off hearing sensitivity depending on if we can act on Hear() at all - meant f. Lowering the number of unessesary hearable atoms
 	var/can_hear_flags = NONE
 
 /datum/armor/machinery_holopad
@@ -452,7 +452,7 @@ Possible to do for anyone motivated enough:
 
 		return TRUE
 
-///setter for adding/removing holocalls to this holopad. used to update the holo_calls list and can_hear_flags
+/// setter for adding/removing holocalls to this holopad.. used to update the holo_calls list and can_hear_flags
 ///adds the given holocall if add_holocall is TRUE, removes if FALSE
 /obj/machinery/holopad/proc/set_holocall(datum/holocall/holocall_to_update, add_holocall = TRUE)
 	if(!istype(holocall_to_update))
@@ -563,7 +563,7 @@ Possible to do for anyone motivated enough:
 		else //make it like real life
 			hologram.Impersonation = user
 		hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
-		hologram.layer = FLY_LAYER //Above all the other objects/mobs. Or the vast majority of them.
+		hologram.layer = FLY_LAYER // Above all the other objects/mobs.. Or the vast majority of them.
 		SET_PLANE_EXPLICIT(hologram, ABOVE_GAME_PLANE, src)
 		hologram.set_anchored(TRUE)//So space wind cannot drag it.
 		hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
@@ -580,7 +580,7 @@ Possible to do for anyone motivated enough:
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/holopad/Hear(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
-	if(speaker && LAZYLEN(masters) && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
+	if(speaker && LAZYLEN(masters) && !radio_freq)// Master is mostly a safety in case lag hits or something.. Radio_freq so AIs dont hear holopad stuff through radios.
 		for(var/mob/living/silicon/ai/master in masters)
 			if(masters[master] && speaker != master)
 				master.relay_speech(speaker, message_language, raw_message, radio_freq, spans, message_mods)
@@ -790,7 +790,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/datum/language_holder/holder = hologram.get_language_holder()
 	holder.selected_language = record.language
 	hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
-	hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
+	hologram.layer = FLY_LAYER// Above all the other objects/mobs.. Or the vast majority of them.
 	SET_PLANE_EXPLICIT(hologram, ABOVE_GAME_PLANE, src)
 	hologram.set_anchored(TRUE)//So space wind cannot drag it.
 	hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
@@ -953,7 +953,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		var/static/uid = 0
 		render_target = "holoray#[uid]"
 		uid++
-	// Let's GLOW BROTHER! (Doing it like this is the most robust option compared to duped overlays)
+	// Let's GLOW BROTHER!. (Doing it like this is the most robust option compared to duped overlays)
 	glow = new(null, src)
 	// We need to counteract the pixel offset to ensure we don't double offset (I hate byond)
 	glow.pixel_x = 32

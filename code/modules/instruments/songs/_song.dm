@@ -38,7 +38,7 @@
 	/// Min volume - This is so someone doesn't decide it's funny to set it to 0 and play invisible songs.
 	var/min_volume = 1
 
-	/// What instruments our built in picker can use. The picker won't show unless this is longer than one.
+	/// What instruments our built in picker can use.. The picker won't show unless this is longer than one.
 	var/list/allowed_instrument_ids = list("r3grand")
 
 	//////////// Cached instrument variables /////////////
@@ -70,7 +70,7 @@
 	var/current_chord
 	/// Channel as text = current volume percentage but it's 0 to 100 instead of 0 to 1.
 	var/list/channels_playing = list()
-	/// List of channels that aren't being used, as text. This is to prevent unnecessary freeing and reallocations from SSsounds/SSinstruments.
+	/// List of channels that aren't being used, as text.. This is to prevent unnecessary freeing and reallocations from SSsounds/SSinstruments.
 	var/list/channels_idle = list()
 	/// Who or what's playing us
 	var/atom/music_player
@@ -86,7 +86,7 @@
 	var/max_sound_channels = CHANNELS_PER_INSTRUMENT
 	/// Current channels, so we can save a length() call.
 	var/using_sound_channels = 0
-	/// Last channel to play. text.
+	/// Last channel to play.. text.
 	var/last_channel_played
 	/// Should we not decay our last played note?
 	var/full_sustain_held_note = TRUE
@@ -100,7 +100,7 @@
 	var/static/list/accent_lookup = list("b" = -1, "s" = 1, "#" = 1, "n" = 0)
 	//////////////////////////////////////////////////////////////
 
-	///////////// !!FUN!! - Only works in synthesized mode! /////////////////
+	/// ////////// !!FUN!!. - Only works in synthesized mode!. /////////////////
 	/// Note numbers to shift.
 	var/note_shift = 0
 	var/note_shift_min = -100
@@ -121,7 +121,7 @@
 	/////////////////////////////////////////////////////////////////////////
 
 
-	///Rate at which volume goes down to 0. Not controlled in menu.
+	/// Rate at which volume goes down to 0.. Not controlled in menu.
 	var/exponential_falloff = 4
 
 /datum/song/New(atom/parent, list/instrument_ids, new_range)
@@ -209,7 +209,7 @@
 		to_chat(user, span_warning("Song is empty."))
 		return
 	playing = TRUE
-	//we can not afford to runtime, since we are going to be doing sound channel reservations and if we runtime it means we have a channel allocation leak.
+	// we can not afford to runtime, since we are going to be doing sound channel reservations. If we runtime it means we have a channel allocation leak.
 	//wrap the rest of the stuff to ensure stop_playing() is called.
 	do_hearcheck()
 	SEND_SIGNAL(parent, COMSIG_INSTRUMENT_START, src, user)
@@ -296,7 +296,7 @@
  */
 /datum/song/proc/tempodiv_to_delay(tempodiv)
 	if(!tempodiv)
-		tempodiv = 1 // no division by 0. some song converters tend to use 0 for when it wants to have no div, for whatever reason.
+		tempodiv = 1 // no division by 0.. some song converters tend to use 0 for when it wants to have no div, for whatever reason.
 	return max(1, round((tempo/tempodiv) / world.tick_lag, 1))
 
 /**
@@ -324,7 +324,7 @@
 /// Sets and sanitizes the repeats variable.
 /datum/song/proc/set_repeats(new_repeats_value)
 	if(playing)
-		return //So that people cant keep adding to repeat. If the do it intentionally, it could result in the server crashing.
+		return // So that people cant keep adding to repeat.. If the do it intentionally, it could result in the server crashing.
 	repeat = round(new_repeats_value)
 	if(repeat < 0)
 		repeat = 0
@@ -356,7 +356,7 @@
 /datum/song/process(wait)
 	if(!playing)
 		return PROCESS_KILL
-	// it's expected this ticks at every world.tick_lag. if it lags, do not attempt to catch up.
+	// it's expected this ticks at every world.tick_lag.. if it lags, do not try to catch up.
 	process_song(world.tick_lag)
 	process_decay(world.tick_lag)
 

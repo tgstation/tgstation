@@ -10,10 +10,10 @@
 	/// What type of power cell this uses
 	var/obj/item/stock_parts/power_store/cell
 	var/cell_type = /obj/item/stock_parts/power_store/cell
-	///if the weapon has custom icons for individual ammo types it can switch between. ie disabler beams, taser, laser/lethals, ect.
+	/// if the weapon has custom icons for individual ammo types it can switch between.. that is disabler beams, taser, laser/lethals, ect.
 	var/modifystate = FALSE
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
-	///The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
+	/// The state of the select fire switch.. Determines from the ammo_type list what kind of shot is fired next.
 	var/select = 1
 	///If the user can select the firemode through attack_self.
 	var/can_select = TRUE
@@ -29,7 +29,7 @@
 	var/single_shot_type_overlay = TRUE
 	///Should we give an overlay to empty guns?
 	var/display_empty = TRUE
-	///If we have an additional overlay based on our shot type while active
+	/// If we have an additional overlay good on our shot type while active
 	var/shot_type_fluff_overlay = FALSE
 
 	///whether the gun's cell drains the cyborg user's cell to recharge
@@ -52,7 +52,7 @@
 
 	// EMP related vars
 
-	/// A divide to the amount of charge lost when the weapon is EMP'd. Higher means more resistant.
+	/// A divide to the amount of charge lost when the weapon is EMP'd.. Higher means more resistant.
 	var/emp_resistance = 1
 
 /obj/item/gun/energy/fire_sounds()
@@ -208,12 +208,12 @@
 			if(robot.cell)
 				var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
 				if(robot.cell.use(shot.e_cost)) //Take power from the borg...
-					cell.give(shot.e_cost) //... to recharge the shot
+					cell.give(shot.e_cost) // .... to recharge the shot
 
 	if(!chambered)
 		var/obj/item/ammo_casing/energy/AC = ammo_type[select]
 		if(cell.charge >= AC.e_cost) //if there's enough power in the cell cell...
-			chambered = AC //...prepare a new shot based on the current ammo type selected
+			chambered = AC // ...prepare a new shot good on the current ammo type selected
 			if(!chambered.loaded_projectile)
 				chambered.newshot()
 				return ..()
@@ -221,7 +221,7 @@
 /obj/item/gun/energy/handle_chamber()
 	if(chambered && !chambered.loaded_projectile) //if loaded_projectile is null, i.e the shot has been fired...
 		var/obj/item/ammo_casing/energy/shot = chambered
-		cell.use(shot.e_cost)//... drain the cell cell
+		cell.use(shot.e_cost)// .... drain the cell cell
 	chambered = null //either way, released the prepared shot
 	recharge_newshot() //try to charge a new shot
 

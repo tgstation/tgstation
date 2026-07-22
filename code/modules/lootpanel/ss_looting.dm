@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(looting)
 	priority = FIRE_PRIORITY_PROCESS
 	runlevels = RUNLEVEL_LOBBY|RUNLEVELS_DEFAULT
 	wait = 0.5 SECONDS
-	/// Backlog of items. Gets put into processing
+	/// Backlog of items.. Gets put into processing
 	var/list/datum/lootpanel/backlog = list()
 	/// Actively processing items
 	var/list/datum/lootpanel/processing = list()

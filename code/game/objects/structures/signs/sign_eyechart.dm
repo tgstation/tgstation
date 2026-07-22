@@ -40,7 +40,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/eyechart, 32)
 		eye_goodness = max(eye_goodness, very_bad + 1)
 	if(user.is_nearsighted_currently())
 		eye_goodness = max(eye_goodness, little_bad + 1)
-	eye_goodness += ((get_dist(user, src) - 2) * 5) // add a modifier based on distance, so closer = "better", further = "worse"
+	eye_goodness += ((get_dist(user, src) - 2) * 5) // add a modifier good on distance, so closer = "better", further = "worse"
 
 	. += "<hr>You read through the chart, for old time's sake."
 	if(eye_goodness <= 0)

@@ -21,7 +21,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	// This code is responsible for splitting up create & destroy across multiple integration tests.
 	var/total_amount_to_check = length(type_paths_to_check)
 #ifdef RUNNING_LOCAL_TESTS
-	// not ci? do everything
+	// not ci?. do everything
 	var/start_index = 0
 	var/end_index = total_amount_to_check
 #else
@@ -40,7 +40,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	var/end_index = (what_map_index_are_we == runner_count) ? total_amount_to_check : start_index + split_up_amount
 #endif
 
-	// +1 because byond's list.Copy() implementation is weird
+	// +1 because byond's list.Copy() code is weird
 	type_paths_to_check = type_paths_to_check.Copy(start_index, end_index + 1)
 
 	log_world("Running create and destroy on [length(type_paths_to_check)] atoms out of the [total_amount_to_check] total")
@@ -68,7 +68,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 			//Yes byond is fucking sinful
 			creation = null
 
-		//There's a lot of stuff that either spawns stuff in on create, or removes stuff on destroy. Let's cut it all out so things are easier to deal with
+		// There's a lot of stuff that either spawns stuff in on create, or removes stuff on destroy.. Let's cut it all out so things are easier to deal with
 		var/list/to_del = spawn_at.contents - cached_contents
 		if(length(to_del))
 			for(var/atom/to_kill in to_del)
@@ -111,7 +111,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 			oldest_packet_creation = min(qdeld_at, oldest_packet_creation)
 
 		//If we've found a packet that got del'd later then we finished, then all our shit has been processed
-		//That said, if there are any pending hard deletes you may NOT sleep, we gotta handle that shit
+		// That said, if there are any pending hard deletes you may NOT sleep, we got to handle that shit
 		if(oldest_packet_creation > start_time && !length(SSgarbage.queues[GC_QUEUE_HARDDELETE]))
 			garbage_queue_processed = TRUE
 			break
@@ -122,7 +122,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 		//Immediately fire the gc right after
 		SSgarbage.next_fire = 1
-		//Unless you've seriously fucked up, queue processing shouldn't take "that" long. Let her run for a bit, see if anything's changed
+		// Unless you've seriously fucked up, queue processing shouldn't take "that" long.. Let her run for a bit, see if anything's changed
 		sleep(20 SECONDS)
 
 	//Alright, time to see if anything messed up

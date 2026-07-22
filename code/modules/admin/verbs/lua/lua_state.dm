@@ -156,7 +156,7 @@ GLOBAL_PROTECT(lua_state_stack)
 /datum/lua_state/proc/call_function_return_first(function, ...)
 	SHOULD_NOT_SLEEP(TRUE) // This function is meant to be used for signal handlers.
 	var/list/result = call_function(arglist(args))
-	INVOKE_ASYNC(src, PROC_REF(log_result), deep_copy_list(result), /*verbose = */FALSE)
+	INVOKE_ASYNC(src, PROC_REF(log_result), deep_copy_list(result), /* verbose = */FALSE)
 	if(length(result))
 		if(islist(result["return_values"]) && length(result["return_values"]))
 			var/return_value = result["return_values"][1]

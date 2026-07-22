@@ -166,7 +166,7 @@
 /turf/open/proc/update_visuals()
 	var/list/atmos_overlay_types = src.atmos_overlay_types // Cache for free performance
 
-	if(!air) // 2019-05-14: was not able to get this path to fire in testing. Consider removing/looking at callers -Naksu
+	if(!air) // 2019-05-14: was not able to get this path to fire in testing.. Consider removing/looking at callers -Naksu
 		if (atmos_overlay_types)
 			for(var/overlay in atmos_overlay_types)
 				vis_contents -= overlay
@@ -268,7 +268,7 @@
 	var/list/share_end
 
 	#ifdef TRACK_MAX_SHARE
-	max_share = 0 //Gotta reset our tracker
+	max_share = 0 // Got to reset our tracker
 	#endif
 
 	for(var/turf/open/enemy_tile as anything in adjacent_turfs)
@@ -305,7 +305,7 @@
 				our_excited_group = excited_group //update our cache
 		if(our_excited_group && enemy_excited_group && enemy_tile.excited) //If you're both excited, no need to compare right?
 			should_share_air = TRUE
-		else if(our_air.compare(enemy_air, /*cmp_archive = */ TRUE)) //Lets see if you're up for it
+		else if(our_air.compare(enemy_air, /* cmp_archive = */ TRUE)) //Lets see if you're up for it
 			SSair.add_to_active(enemy_tile) //Add yourself young man
 			var/datum/excited_group/existing_group = our_excited_group || enemy_excited_group || new
 			if(!our_excited_group)
@@ -323,7 +323,7 @@
 					consider_pressure_difference(enemy_tile, difference)
 				else
 					enemy_tile.consider_pressure_difference(src, -difference)
-			//This acts effectivly as a very slow timer, the max deltas of the group will slowly lower until it breaksdown, they then pop up a bit, and fall back down until irrelevant
+			// This acts effectivly as a very slow timer, the max deltas of the group will slowly lower until it breaksdown, they then pop up a bit. Fall back down until irrelevant
 			LAST_SHARE_CHECK
 
 
@@ -333,7 +333,7 @@
 		var/datum/gas_mixture/planetary_mix = SSair.planetary[initial_gas_mix]
 		// archive ourself again so we don't accidentally share more gas than we currently have
 		LINDA_CYCLE_ARCHIVE(src)
-		if(our_air.compare(planetary_mix, /*cmp_archive = */ TRUE))
+		if(our_air.compare(planetary_mix, /* cmp_archive = */ TRUE))
 			if(!our_excited_group)
 				var/datum/excited_group/new_group = new
 				new_group.add_turf(src)
@@ -348,7 +348,7 @@
 	for(var/turf/open/enemy_tile as anything in share_end)
 		var/datum/gas_mixture/enemy_mix = enemy_tile.air
 		archive()
-		// We share 100% of our mix in this step. Let's jive
+		// We share 100% of our mix in this step.. Let's jive
 		var/difference = our_air.share(enemy_mix, 1, 1)
 		LAST_SHARE_CHECK
 		if(!difference)
@@ -493,7 +493,7 @@
 				shared_mix.copy_from(planetary_mix)
 				shared_cached_moles = shared_mix.moles // Cache update
 				break
-		//"borrowing" this code from merge(), I need to play with the temp portion. Lets expand it out
+		// "borrowing" this code from merge(), I need to play with the temp portion.. Lets expand it out
 		//temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
 		var/capacity = mix.heat_capacity()
 		energy += mix.temperature * capacity
@@ -509,12 +509,12 @@
 		shared_mix.garbage_collect()
 
 	for(var/turf/open/group_member as anything in turf_list)
-		if(group_member.planetary_atmos) //We do this as a hack to try and minimize unneeded excited group spread over planetary turfs
+		if(group_member.planetary_atmos) // We do this as a temporary solution to try and minimize unneeded excited group spread over planetary turfs
 			group_member.air.copy_from(SSair.planetary[group_member.initial_gas_mix]) //Comes with a cost of "slower" drains, but it's worth it
 		else
 			group_member.air.copy_from(shared_mix) //Otherwise just set the mix to a copy of our equalized mix
 		group_member.update_visuals()
-		if(poke_turfs) //Because we only activate all these once every breakdown, in event of lag due to this code and slow space + vent things, increase the wait time for breakdowns
+		if(poke_turfs) // Because we only activate all these once every breakdown, in event of lag due to this code. Slow space + vent things, increase the wait time f. Breakdowns
 			SSair.add_to_active(group_member)
 			group_member.significant_share_ticker = EXCITED_GROUP_DISMANTLE_CYCLES //Max out the ticker, if they don't share next tick, nuke em
 
@@ -650,7 +650,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 	if(..((blocks_air ? temperature : air.temperature)) != FALSE && !blocks_air)
 		temperature = air.temperature_share(null, thermal_conductivity, temperature, heat_capacity)
 
-///Should we attempt to superconduct?
+/// Should we try to superconduct?
 /turf/proc/consider_superconductivity(starting)
 	if(!thermal_conductivity)
 		return FALSE

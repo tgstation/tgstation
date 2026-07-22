@@ -120,6 +120,6 @@
 	send_withheld()
 
 /obj/machinery/power/manufacturing/crafter/cooker
-	name = "manufacturing cooking machine" // maybe this shouldnt be available dont wanna make chef useless, though otherwise it would need a sprite
+	name = "manufacturing cooking machine" // maybe this shouldnt be available dont want to make chef useless, though otherwise it would need a sprite
 	desc = "Cooks the set recipe until it runs out of resources. Inputs irrelevant to the recipe are ignored."
 	cooking = TRUE

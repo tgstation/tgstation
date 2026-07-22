@@ -242,7 +242,7 @@
 	box = /obj/item/storage/box/survival/hug
 	chameleon_extras = /obj/item/stamp/clown
 	implants = list(/obj/item/implant/sad_trombone)
-	///drops a pie cannon on post_equip. i'm so done with this stupid outfit trying to put shit that doesn't fit in the backpack!
+	/// drops a pie cannon on post_equip.. i'm so done with this stupid outfit trying to put shit that doesn't fit in the backpack!
 	var/drop_a_pie_cannon = FALSE
 
 /datum/outfit/consumed_clown/pre_equip(mob/living/carbon/human/clown, visuals_only = FALSE)
@@ -278,7 +278,7 @@
 
 /datum/outfit/consumed_golem
 	name = "Legion-Consumed Golem"
-	//Oops! All randomized!
+	// Oops!. All randomized!
 
 /datum/outfit/consumed_golem/pre_equip(mob/living/carbon/human/golem, visuals_only = FALSE)
 	if(!visuals_only)

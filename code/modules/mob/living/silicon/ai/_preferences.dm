@@ -1,4 +1,4 @@
-// A mapping between AI_EMOTION_* string constants, which also double as user readable descriptions, and the name of the iconfile. (used for /obj/machinery/status_display/ai )
+// A mapping between AI_EMOTION_* string constants, which also double as user readable descriptions, and the name of the iconfile.. (used for /obj/machinery/status_display/ai )
 GLOBAL_LIST_INIT(ai_status_display_emotes, list(
 	// Original AI emotion states
 	AI_EMOTION_AWESOME = "ai_awesome",

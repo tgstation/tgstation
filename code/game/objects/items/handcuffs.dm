@@ -18,9 +18,9 @@
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
-// Zipties, cable cuffs, etc. Can be cut with wirecutters instantly.
+// Zipties, cable cuffs, and so on Can be cut with wirecutters instantly.
 #define HANDCUFFS_TYPE_WEAK 0
-// Handcuffs... alien handcuffs. Can be cut through only by jaws of life.
+// Handcuffs.... alien handcuffs.. Can be cut through only by jaws of life.
 #define HANDCUFFS_TYPE_STRONG 1
 
 /**
@@ -59,7 +59,7 @@
 	var/cuffsound = 'sound/items/weapons/handcuffs.ogg'
 	///Sound that plays when restrain is successful
 	var/cuffsuccesssound = 'sound/items/handcuff_finish.ogg'
-	/// How strong the cuffs are. Weak cuffs can be broken with wirecutters or boxcutters.
+	/// How strong the cuffs are.. Weak cuffs can be broken with wirecutters or boxcutters.
 	var/restraint_strength = HANDCUFFS_TYPE_STRONG
 
 	/// Is this pair of cuff being actually used?
@@ -204,7 +204,7 @@
 	icon_state = "cuff"
 	inhand_icon_state = "coil_red"
 	color = CABLE_HEX_COLOR_RED
-	///for generating the correct icons based off the original cable's color.
+	/// for generating the correct icons good off the original cable's color.
 	var/cable_color = CABLE_COLOR_RED
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -605,7 +605,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
 	///Amount of time to knock the target down for once it's hit in deciseconds.
 	var/knockdown = 0
-	///Reference of the mob we will attempt to snare
+	/// Reference of the mob we will try to snare
 	var/datum/weakref/ensnare_mob_ref
 
 /obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE, quickstart = TRUE, throw_type_path = /datum/thrownthing)

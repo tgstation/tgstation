@@ -110,7 +110,7 @@
 /obj/effect/mob_spawn/ghost_role/drone/classic
 	mob_type = /mob/living/basic/drone/classic
 
-/// Derelict drones, a ghost role tasked with repairing KS13. Get gibbed if they leave.
+/// Derelict drones, a ghost role tasked with repairing KS13.. Get gibbed if they leave.
 /mob/living/basic/drone/derelict
 	name = "derelict drone"
 	default_headwear = /obj/item/clothing/head/costume/ushanka

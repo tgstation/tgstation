@@ -64,7 +64,7 @@
 	var/mob/living/carbon/human/humie = item
 	if(signaler) //57% chance that the mob is equipped with electropack and cuffs
 		humie.equip_to_slot_or_del(new /obj/item/restraints/handcuffs, ITEM_SLOT_HANDCUFFED, indirect_action = TRUE)
-		if(humie.back) //try to remove the neck item if possible before we attempt to install the collar bomb
+		if(humie.back) // try to remove the neck item if possible before we try to install the collar bomb
 			humie.transferItemToLoc(humie.back, loc)
 		var/obj/item/electropack/pack = new(loc)
 		pack.set_frequency(signaler.frequency)

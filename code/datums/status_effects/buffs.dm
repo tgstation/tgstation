@@ -222,7 +222,7 @@
 	if(HAS_TRAIT(new_owner, TRAIT_FAT)) // less xp until you get into shape
 		modifier -= 0.5
 
-	if(new_owner.reagents.has_reagent(/datum/reagent/drug/pumpup)) // steriods? yes please!
+	if(new_owner.reagents.has_reagent(/datum/reagent/drug/pumpup)) // steriods?. yes please!
 		modifier += 3
 
 	if(new_owner.reagents.has_reagent(/datum/reagent/inverse/oxandrolone)) // MOREEEEE
@@ -507,7 +507,7 @@
 	alert_type = null
 	///This var stores the mobs max health when the buff was first applied, and determines the size of future buffs.database.database.
 	var/historic_max_health
-	///This var determines how large the health buff will be. health_buff_modifier * historic_max_health * stacks
+	/// This var determines how large the health buff will be.. health_buff_modifier * historic_max_health * stacks
 	var/health_buff_modifier = 0.1 //translate to a 10% buff over historic health per stack
 	///This modifier multiplies the healing by the effect.
 	var/healing_modifier = 2
@@ -644,14 +644,14 @@
 	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "radiation_shield"
 
-/// Throw an alert we're in darkness!! Nightvision can make it hard to tell so this is useful
+/// Throw an alert we're in darkness!!. Nightvision can make it hard to tell so this is useful
 /datum/status_effect/shadow
 	id = "shadow"
 	duration = 2.2 SECONDS // One status effect tick longer than the life tick
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/shadow_regeneration
 
-/// Same as above, but also heal in darkness!! Mostly superseded but some simple mobs use this
+/// Same as above, but also heal in darkness!!. Mostly superseded but some simple mobs use this
 /datum/status_effect/shadow/regeneration
 	id = "shadow_regeneration"
 

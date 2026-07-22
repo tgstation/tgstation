@@ -26,7 +26,7 @@
 	mod.update_charge_alert()
 	mod = null
 
-/// Returns the item responsible for charging the suit, like a power cell, an ethereal's stomach, the core itself, etc.
+/// Returns the item responsible for charging the suit, like a power cell, an ethereal's stomach, the core itself, and so on
 /obj/item/mod/core/proc/charge_source()
 	return
 

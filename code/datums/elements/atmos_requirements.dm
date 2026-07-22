@@ -7,7 +7,7 @@
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 	argument_hash_end_idx = 3
-	/// An assoc list of "what atmos does this mob require to survive in".
+	/// An assoc list of "what atmos does this mob need to survive in".
 	var/list/atmos_requirements
 	/// How much (brute) damage we take from being in unsuitable atmos.
 	var/unsuitable_atmos_damage
@@ -90,7 +90,7 @@
 
 	return return_gases
 
-///Ensures that maploaded mobs are in a safe environment. Unit test stuff.
+/// Ensures that maploaded mobs are in a safe environment.. Unit test stuff.
 /datum/element/atmos_requirements/proc/check_safe_environment(mob/living/living_mob)
 	if(living_mob.stat == DEAD || is_breathable_atmos(living_mob))
 		return

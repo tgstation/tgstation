@@ -1,4 +1,4 @@
-///This element allows the item it's attached to be bound to oneself's arm with a pair of handcuffs (sold separately). Borgs need not to apply
+/// This element allows the item it's attached to be bound to oneself's arm with a pair of handcuffs (sold separately).. Borgs need not to apply
 /datum/element/cuffable_item
 
 /datum/element/cuffable_item/Attach(datum/target)

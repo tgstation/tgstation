@@ -52,7 +52,7 @@
 	/// Coloured overlay we apply
 	var/mutable_appearance/overlay
 
-	/// Which toggle button the guardian has. Won't get one if it's null.
+	/// Which toggle button the guardian has.. Won't get one if it's null.
 	var/toggle_button_type = null
 	/// Name used by the guardian creator.
 	var/creator_name = "Error"
@@ -149,7 +149,7 @@
 	if (isnull(summoner))
 		to_chat(src, span_boldholoparasite("For some reason, somehow, you have no summoner. Please report this bug immediately."))
 		return
-	mind.enslave_mind_to_creator(summoner) // Once our mind is created, we become enslaved to our summoner. cant be done in the first run of set_summoner, because by then we dont have a mind yet.
+	mind.enslave_mind_to_creator(summoner) // Once our mind is created, we become enslaved to our summoner.. cant be done in the first run of set_summoner, because by then we dont have a mind yet.
 
 /// Pick a new colour for our guardian
 /mob/living/basic/guardian/proc/guardian_recolour()
@@ -295,7 +295,7 @@
 /mob/living/basic/guardian/proc/unleash()
 	qdel(GetComponent(/datum/component/leash))
 
-/// Called when our owner dies. We fucked up, so now neither of us get to exist.
+/// Called when our owner dies.. We fucked up, so now neither of us get to exist.
 /mob/living/basic/guardian/proc/on_summoner_death(mob/living/source, mob/living/former_owner)
 	cut_summoner()
 	if (!isnull(former_owner.loc))
@@ -345,7 +345,7 @@
 	visible_message(span_warning("[src] resists the polymorph!")) // Ha, no
 
 /mob/living/basic/guardian/can_suicide()
-	return FALSE // You gotta persuade your boss to end it instead, sorry
+	return FALSE // You got to persuade your boss to end it instead, sorry
 
 /// Returns true if you are out and about
 /mob/living/basic/guardian/proc/is_deployed()

@@ -32,7 +32,7 @@
 		/obj/item/clothing/under/misc/patriotsuit = 3,
 		/obj/item/bedsheet/patriot = 5,
 		/obj/item/food/burger/superbite = 3,
-	) //U S A
+	) // You S A
 	armor_type = /datum/armor/vending_liberationstation
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/liberation

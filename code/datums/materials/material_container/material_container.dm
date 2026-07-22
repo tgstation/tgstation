@@ -25,7 +25,7 @@
 	var/list/allowed_item_typecache
 	/// Whether or not this material container allows specific amounts from sheets to be inserted
 	var/precise_insertion = FALSE
-	/// The material container flags. See __DEFINES/construction/materials.dm.
+	/// The material container flags.. See __DEFINES/construction/materials.dm.
 	var/mat_container_flags
 	/// Signals that are registered with this contained
 	var/list/registered_signals
@@ -275,7 +275,7 @@
 	var/first_checks = TRUE
 	//list of items to delete
 	var/list/obj/item/to_delete = list()
-	//The status of the last insert attempt
+	// The status of the last insert try
 	var/inserted = 0
 	//All messages to be displayed to chat
 	var/list/chat_msgs = list()
@@ -293,10 +293,10 @@
 		var/obj/item/target_item = items[1]
 		items -= target_item
 
-		//e.g. projectiles inside bullets are not objects
+		// e.g.. projectiles inside bullets are not objects
 		if(!istype(target_item))
 			continue
-		//can't allow abstract, hologram items, or if they item is designed to be ignored by the mat container without throwing warnings and stuff (unlike NO_MAT_REDEMPTION flag).
+		// can't allow abstract, hologram items. If they item is designed to be ignored by the mat container without throwing warnings. Stuff (unlike NO_MAT_REDEMPTION flag).
 		if((target_item.item_flags & ABSTRACT) || (target_item.flags_1 & HOLOGRAM_1) || HAS_TRAIT(target_item, TRAIT_IGNORED_BY_MAT_REDEMPTION))
 			continue
 		//user defined conditions for the object the material container datum is attached to
@@ -313,7 +313,7 @@
 				chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] = status_data
 
 			if(target_item.resistance_flags & INDESTRUCTIBLE)
-				if(target_item != active_held) //move it out of any storage medium its in so it doesn't get consumed with its parent, but only if that storage medium is not our hand
+				if(target_item != active_held) // move it out of any storage medium its in so it doesn't get consumed with its parent. Only if that storage medium is not our hand
 					target_item.forceMove(get_turf(context))
 				continue
 
@@ -376,7 +376,7 @@
 			item_count = the_stack.amount
 			is_stack = TRUE
 
-		//we typically don't want to consume bags, boxes but only their contents. so we skip processing
+		// we typically don't want to consume bags, boxes but only their contents.. so we skip processing
 		inserted = !target_item.atom_storage ? insert_item(target_item, 1, context, is_stack, user_data = ID_DATA(user)) : 0
 		if(inserted > 0)
 			. += inserted
@@ -393,17 +393,17 @@
 
 			//delete the item or merge stacks if any left over
 			if(is_stack)
-				//player split it & machine further split that due to lack of space? merge with remaining stack
+				// player split it & machine further split that due to lack of space?. merge with remaining stack
 				if(!QDELETED(target_item) && was_stack_split)
 					var/obj/item/stack/inserting_stack = target_item
 					item_stack.add(inserting_stack.amount)
 					qdel(inserting_stack)
 
-				//was this the original item in the players hand? put what's left back in the player's hand
+				// was this the original item in the players hand?. put what's left back in the player's hand
 				if(!QDELETED(original_item))
 					user.put_in_active_hand(original_item)
 
-				//skip processing children & other stuff. irrelevant for stacks
+				// skip processing children & other stuff.. irrelevant for stacks
 				continue
 
 			//queue the object for deletion
@@ -417,13 +417,13 @@
 			status_data[item_name] = item_data
 			chat_msgs["[inserted]"] = status_data
 
-			//player split the stack by the requested amount but even that split amount could not be salvaged. merge it back with the original
+			// player split the stack by the requested amount but even that split amount could not be salvaged.. merge it back with the original
 			if(was_stack_split)
 				var/obj/item/stack/inserting_stack = target_item
 				item_stack.add(inserting_stack.amount)
 				qdel(inserting_stack)
 
-			//was this the original item in the players hand? put it back because we coudn't salvage it
+			// was this the original item in the players hand?. put it back because we coudn't salvage it
 			if(!QDELETED(original_item))
 				user.put_in_active_hand(original_item)
 
@@ -432,7 +432,7 @@
 				break
 
 			//we failed to process the item so don't bother going into its contents
-			//but if we are dealing with storage items like bags, boxes etc then we make a exception
+			// but if we are dealing with storage items like bags, boxes and so on then we make a exception
 			if(!target_item.atom_storage)
 				continue
 
@@ -541,7 +541,7 @@
 	if(mat in allowed_materials)
 		return TRUE
 	if(istype(mat) && ((mat.id in allowed_materials) || (mat.type in allowed_materials)))
-		allowed_materials += mat // This could get messy with passing lists by ref... but if you're doing that the list expansion is probably being taken care of elsewhere anyway...
+		allowed_materials += mat // This could get messy with passing lists by ref.... but if you're doing that the list expansion is probably being taken care of elsewhere anyway...
 		return TRUE
 	if(SEND_SIGNAL(src, COMSIG_MATCONTAINER_MAT_CHECK, mat) & MATCONTAINER_ALLOW_MAT)
 		allowed_materials += mat
@@ -616,7 +616,7 @@
 	if(!length(mats))
 		return FALSE
 
-	for(var/x in mats) //Loop through all required materials
+	for(var/x in mats) // Loop through all needed materials
 		var/wanted = OPTIMAL_COST(mats[x] * coefficient) * multiplier
 		if(!has_enough_of_material(x, wanted))//Not a category, so just check the normal way
 			return FALSE
@@ -643,7 +643,7 @@
 	if(!istype(mat))
 		mat = SSmaterials.get_material(mat)
 
-	//check if sufficient is available
+	// check if enough is available
 	if(materials[mat] < amt)
 		return 0
 
@@ -704,10 +704,10 @@
 		if(!target)
 			return 0
 
-	//eject sheets based on available amount after each iteration
+	// eject sheets good on available amount after each iteration
 	var/count = 0
 	while(stack_amt > 0)
-		//don't merge yet. we need to do stuff with it first
+		// don't merge yet.. we need to do stuff with it first
 		var/obj/item/stack/new_stack = new type_to_retrieve(target, min(stack_amt, MAX_STACK_SIZE), FALSE)
 		if(istype(new_stack, /obj/item/stack/sheet))
 			var/obj/item/stack/sheet/new_sheets = new_stack
@@ -752,7 +752,7 @@
 	data["SHEET_MATERIAL_AMOUNT"] = SHEET_MATERIAL_AMOUNT
 	return data
 
-/// List format is list(material_name = list(amount = ..., ref = ..., etc.))
+/// List format is list(material_name = list(amount = ..., ref = ..., and so on
 /datum/material_container/ui_data(mob/user)
 	var/list/data = list()
 

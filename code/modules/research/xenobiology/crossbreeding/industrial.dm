@@ -7,9 +7,9 @@ Industrial extracts:
 	desc = "A gel-like, sturdy extract, fond of plasma and industry."
 	effect = "industrial"
 	icon_state = "industrial_still"
-	var/plasmarequired = 2 //Units of plasma required to be consumed to produce item.
+	var/plasmarequired = 2 // Units of plasma needed to be consumed to produce item.
 	var/itempath = /obj/item //The item produced by the extract.
-	var/plasmaabsorbed = 0 //Units of plasma aborbed by the extract already. Absorbs at a rate of 2u/obj tick.
+	var/plasmaabsorbed = 0 // Units of plasma aborbed by the extract already.. Absorbs at a rate of 2u/obj tick.
 	var/itemamount = 1 //How many items to spawn
 
 /obj/item/slimecross/industrial/examine(mob/user)
@@ -179,7 +179,7 @@ Industrial extracts:
 	plasmarequired = 4
 	itempath = /obj/item/grenade/iedcasing/spawned
 
-/obj/item/slimecross/industrial/black //What does this have to do with black slimes? No clue! Fun, though
+/obj/item/slimecross/industrial/black // What does this have to do with black slimes?. No clue!. Fun, though
 	colour = SLIME_TYPE_BLACK
 	effect_desc = "Produces slime brand regenerative cigarettes."
 	plasmarequired = 6

@@ -77,7 +77,7 @@
 	var/rclick_damage_type = BRUTE
 	/// Can we speak?
 	var/can_speak = FALSE
-	/// Turf that our abilities rely on. VVing this automatically sets all the components and removes space dependency stuff if the new tile isnt space
+	/// Turf that our abilities rely on.. VVing this automatically sets all the components and removes space dependency stuff if the new tile isnt space
 	var/home_turf = /turf/open/space
 	/// Decal that we can kidnap on
 	var/kidnapping_decal = /obj/effect/decal/cleanable/vomit/nebula
@@ -253,7 +253,7 @@
 
 	kidnapping = FALSE
 
-/// Woosh! You got takened
+/// Woosh!. You got takened
 /mob/living/basic/voidwalker/proc/take_them(mob/living/victim)
 	if(ishuman(victim))
 		var/mob/living/carbon/human/hewmon = victim
@@ -282,7 +282,7 @@
 /// Modding the voidwalker is funny, so setting the home_turf sets everything right for easy of modding
 /mob/living/basic/voidwalker/vv_edit_var(vname, vval)
 	. = ..()
-	// This is all very snowflakey code but like, it's supposed to be. It's just for helping admins mod it
+	// This is all very snowflakey code but like, it's supposed to be.. It's just for helping admins mod it
 	if(vname == NAMEOF(src, home_turf))
 		var/datum/component/space_camo/camo = GetComponent(/datum/component/space_camo)
 		var/datum/component/space_dive/dive = GetComponent(/datum/component/space_dive)
@@ -302,7 +302,7 @@
 /// Wall Conversion
 ///
 
-/// Attempt to convert a wall into passable voidwalker windows
+/// Try to convert a wall into passable voidwalker windows
 /mob/living/basic/voidwalker/proc/try_convert_wall(turf/closed/wall/our_wall)
 	if(!conversions_remaining)
 		balloon_alert(src, "need more kidnaps!")

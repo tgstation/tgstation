@@ -13,7 +13,7 @@
 	var/active = FALSE
 	var/last_pressure_delta = 0
 	var/flipped = 0
-	///Which circulator mode we are on, the generator requires one of each to work.
+	/// Which circulator mode we are on, the generator needs one of each to work.
 	var/mode = CIRCULATOR_HOT
 	///The generator we are connected to.
 	var/obj/machinery/power/thermoelectric_generator/generator

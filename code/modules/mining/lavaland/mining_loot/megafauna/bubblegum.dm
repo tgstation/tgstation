@@ -22,7 +22,7 @@
 	user.log_message("activated a bottle of mayhem", LOG_ATTACK)
 	qdel(src)
 
-// H.E.C.K. Suit
+// H.E.C.K.. Suit
 
 /obj/item/clothing/suit/hooded/hostile_environment
 	name = "H.E.C.K. suit"

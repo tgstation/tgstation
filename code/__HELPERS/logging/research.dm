@@ -1,4 +1,4 @@
-/// Puts the text into the research html file, not log. See [INVESTIGATE_RESEARCH] for [/atom/proc/investigate_log]
+/// Puts the text into the research html file, not log.. See [INVESTIGATE_RESEARCH] for [/atom/proc/investigate_log]
 /proc/log_research(text)
 	if(!text)
 		return

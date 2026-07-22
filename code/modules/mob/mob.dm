@@ -48,7 +48,7 @@
 	qdel(hud_used)
 	QDEL_LIST(client_colours)
 	ghostize(can_reenter_corpse = FALSE) //False, since we're deleting it currently
-	if(mind?.current == src) //Let's just be safe yeah? This will occasionally be cleared, but not always. Can't do it with ghostize without changing behavior
+	if(mind?.current == src) // Let's just be safe yeah?. This will occasionally be cleared, but not always.. Can't do it with ghostize without changing behavior
 		mind.set_current(null)
 
 	if(mock_client)
@@ -57,7 +57,7 @@
 	return ..()
 
 /mob/New()
-	// This needs to happen IMMEDIATELY. I'm sorry :(
+	// This needs to happen IMMEDIATELY.. I'm sorry :(
 	GenerateTag()
 	return ..()
 
@@ -194,7 +194,7 @@
 			var/image/I = image('icons/mob/huds/hud.dmi', src, "")
 			I.appearance_flags = RESET_COLOR|PIXEL_SCALE|KEEP_APART
 			hud_list[hud] = I
-		set_hud_image_active(hud, update_huds = FALSE) //by default everything is active. but dont add it to huds to keep control.
+		set_hud_image_active(hud, update_huds = FALSE) // by default everything is active.. but dont add it to huds to keep control.
 
 /**
  * Some kind of debug verb that gives atmosphere environment details
@@ -472,7 +472,7 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
 	SEND_SIGNAL(src, COMSIG_MOB_INCAPACITATE_CHANGED, old_incap, incapacitated)
 	return TRUE
 
-/// Returns an updated incapacitated bitflag. If a flag is set it means we're incapacitated in that case
+/// Returns an updated incapacitated bitflag.. If a flag is set it means we're incapacitated in that case
 /mob/proc/build_incapacitated()
 	return NONE
 
@@ -602,7 +602,7 @@ GAME_VERB(/mob, examinate, "Examine", null, atom/examinify as mob|obj|turf in vi
 	to_chat(src, span_infoplain(result_combined))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
 
-/// Handles adding examine messages for the target that are specific to this mob, e.g. a blood worm examining how much blood a living target has.
+/// Handles adding examine messages for the target that are specific to this mob, e.g.. a blood worm examining how much blood a living target has.
 /mob/proc/examining(atom/target, list/result)
 	SHOULD_NOT_SLEEP(TRUE)
 	return
@@ -787,7 +787,7 @@ GAME_VERB(/mob, examinate, "Examine", null, atom/examinify as mob|obj|turf in vi
 /mob/proc/mode()
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_mode)))
 
-///proc version to finish /mob/verb/mode() execution. used in case the proc needs to be queued for the tick after its first called
+/// proc version to finish /mob/verb/mode() execution.. used in case the proc needs to be queued for the tick after its first called
 /mob/proc/execute_mode()
 	if(ismecha(loc))
 		return
@@ -949,7 +949,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 	if(selected_hand != active_hand_index)
 		swap_hand(selected_hand)
 
-	// _queue_verb requires a client, so when we don't have it (AI controlled mob) we don't use it
+	// _queue_verb needs a client, so when we don't have it (AI controlled mob) we don't use it
 	client ? mode() : execute_mode()
 
 /mob/proc/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //For sec bot threat assessment
@@ -1069,7 +1069,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 /mob/proc/can_interact_with(atom/A, treat_mob_as_adjacent)
 	if(isAdminGhostAI(src))
 		return TRUE
-	//Return early. we do not need to check that we are on adjacent turfs (i.e we are inside a closet)
+	// Return early.. we do not need to check that we are on adjacent turfs (i.e we are inside a closet)
 	if (treat_mob_as_adjacent && src == A.loc)
 		return TRUE
 	if (Adjacent(A))
@@ -1163,7 +1163,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 			) //Just in case the mind is unsynced at the moment.
 
 	if(oldname)
-		//update the datacore records! This is goig to be a bit costly.
+		// update the datacore records!. This is goig to be a bit costly.
 		replace_records_name(oldname,newname)
 
 		//update our pda and id if we have them on our person
@@ -1217,7 +1217,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 /mob/proc/update_health_hud()
 	return
 
-/// Changes the stamina HUD based on new information
+/// Changes the stamina HUD good on new information
 /mob/proc/update_stamina_hud()
 	return
 
@@ -1478,7 +1478,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 		hunger_bar.update_hunger_bar()
 	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_NUTRITION)
 
-/// Apply a proper movespeed modifier based on items we have equipped
+/// Apply a proper movespeed modifier good on items we have equipped
 /mob/proc/update_equipment_speed_mods()
 	var/speedies = 0
 	var/immutable_speedies = 0
@@ -1488,7 +1488,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 		else
 			speedies += thing.slowdown
 
-	//if  we have TRAIT_STURDY_FRAME, we reduce our overall speed penalty UNLESS that penalty would be a negative value, and therefore a speed boost.
+	// if we have TRAIT_STURDY_FRAME, we reduce our overall speed penalty UNLESS that penalty would be a negative value, and so a speed boost.
 	if(speedies > 0 && HAS_TRAIT(src, TRAIT_STURDY_FRAME))
 		speedies *= 0.2
 
@@ -1543,7 +1543,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/admin_varedit, multiplicative_slowdown = diff)
 
 /// Cleanup proc that's called when a mob loses a client, either through client destroy or logout
-/// Logout happens post client del, so we can't just copypaste this there. This keeps things clean and consistent
+/// Logout happens post client del, so we can't just copypaste this there.. This keeps things clean and consistent
 /mob/proc/become_uncliented()
 	if(!canon_client)
 		return

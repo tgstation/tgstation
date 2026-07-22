@@ -31,7 +31,7 @@
 	owner.remove_traits(list(TRAIT_COAGULATING, TRAIT_NOCRITDAMAGE, TRAIT_NOSOFTCRIT), TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/unholy_determination/tick(seconds_between_ticks)
-	// The amount we heal of each damage type per tick. If we're missing legs we heal better because we can't dodge.
+	// The amount we heal of each damage type per tick.. If we're missing legs we heal better because we can't dodge.
 	var/healing_amount = (heal_per_second * seconds_between_ticks) + (heal_per_second * (2 - owner.usable_legs))
 
 	// In softcrit you're, strong enough to stay up.
@@ -39,7 +39,7 @@
 		if(prob(5))
 			to_chat(owner, span_hypnophrase("Your body feels like giving up, but you fight on!"))
 		healing_amount *= 2
-	// ...But reach hardcrit and you're done. You now die faster.
+	// ...But reach hardcrit and you're done.. You now die faster.
 	if (owner.health < owner.hardcrit_threshold)
 		if(prob(5))
 			to_chat(owner, span_big(span_hypnophrase("You can't hold on for much longer...")))

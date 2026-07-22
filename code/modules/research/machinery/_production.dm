@@ -1,11 +1,11 @@
 /obj/machinery/rnd/production
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
-	/// Energy cost per full stack of materials spent. Material insertion is 40% of this.
+	/// Energy cost per full stack of materials spent.. Material insertion is 40% of this.
 	active_power_usage = 0.05 * STANDARD_CELL_RATE
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 
-	/// The efficiency coefficient. Material costs and print times are multiplied by this number;
+	/// The efficiency coefficient.. Material costs and print times are multiplied by this number;
 	var/efficiency_coeff = 1
 	/// The material storage used by this fabricator.
 	var/datum/remote_materials/materials
@@ -17,13 +17,13 @@
 	var/allowed_buildtypes = NONE
 	/// All designs in the techweb that can be fabricated by this machine, since the last update.
 	var/list/datum/design/cached_designs
-	/// What color is this machine's stripe? Leave null to not have a stripe.
+	/// What color is this machine's stripe?. Leave null to not have a stripe.
 	var/stripe_color = null
 	///direction we output onto (if 0, on top of us)
 	var/drop_direction = 0
 	///looping sound for printing items
 	var/datum/looping_sound/lathe_print/print_sound
-	///made so we dont call addtimer() 40,000 times in on_techweb_update(). only allows addtimer() to be called on the first update
+	/// made so we dont call addtimer() 40,000 times in on_techweb_update().. only allows addtimer() to be called on the first update
 	var/techweb_updating = FALSE
 
 /obj/machinery/rnd/production/Initialize(mapload)
@@ -194,7 +194,7 @@
 
 	update_static_data_for_all_viewers()
 
-///Computes this machines cost efficiency based on the available parts
+/// Computes this machines cost efficiency good on the available parts
 /obj/machinery/rnd/production/proc/compute_efficiency()
 	PROTECTED_PROC(TRUE)
 

@@ -113,7 +113,7 @@
 	if(is_on_a_planet(owner))
 		qdel(src)
 
-/// Positive version of the previous. Get space immunity and the ability to slowly move through glass (but you still get muted)
+/// Positive version of the previous.. Get space immunity and the ability to slowly move through glass (but you still get muted)
 /datum/brain_trauma/voided/stable
 	scan_desc = "stable cosmic neural pattern"
 	traits_to_apply = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD)

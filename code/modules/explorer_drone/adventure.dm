@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 	var/version
 	/// adventure name
 	var/name
-	/// required site traits to use this adventure
+	/// needed site traits to use this adventure
 	var/list/required_site_traits
 
 /// Check if the adventure usable for given exploration site traits
@@ -91,7 +91,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 		return FALSE
 	return TRUE
 
-/// Extracts fields that are used by adventure browser / generation before instantiating
+/// Extracts fields that adventure uses browser / generation before instantiating
 /datum/adventure_db_entry/proc/extract_metadata()
 	if(!raw_json)
 		CRASH("Trying to extract metadata from empty adventure")
@@ -114,7 +114,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 	if(!islist(json_data))
 		CRASH("Invalid JSON in adventure with path:[filename], name:[name]")
 
-	//Basic validation of required fields, don't even bother loading if they are missing.
+	// Basic validation of needed fields, don't even bother loading if they are missing.
 	var/static/list/required_fields = list(ADVENTURE_NAME_FIELD,ADVENTURE_STARTING_NODE_FIELD,ADVENTURE_NODES_FIELD)
 	for(var/field in required_fields)
 		if(!json_data[field])
@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 	var/name
 	/// Node the adventure will start at
 	var/starting_node
-	/// Required site traits for the adventure to appear
+	/// Needed site traits for the adventure to appear
 	var/list/required_site_traits = list()
 	/// Modifiers to band scan values
 	var/list/band_modifiers = list()
@@ -182,11 +182,11 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 	// State tracking variables
 	/// Current active adventure node
 	var/datum/adventure_node/current_node
-	/// Last other node than this one. Used by GO_BACK_NODE
+	/// Last other node than this one.. Used by GO_BACK_NODE
 	var/previous_node_id
 	/// Assoc list of quality name = value
 	var/list/qualities
-	/// Delayed state properties. If not null, means adventure is in delayed action state and will contain list(delay_time,delay_message)
+	/// Delayed state properties.. If not null, means adventure is in delayed action state and will contain list(delay_time,delay_message)
 	var/list/delayed_action
 
 /// Basic sanity checks to ensure broken adventures are not used.
@@ -288,7 +288,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 	var/description
 	/// Preset image name, exclusive with raw_image
 	var/image_name
-	/// Image in base64 form. Exclusive with image_name
+	/// Image in base64 form.. Exclusive with image_name
 	var/raw_image
 	/// All possible choices from this node, associative list of choice_id -> choice_data
 	var/list/choices
@@ -372,22 +372,22 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 	else
 		return raw_value
 
-/// Checks if current qualities satisfy passed in requirements
+/// Checks if current qualities satisfy passed in needs
 /datum/adventure/proc/check_requirements(raw_requirements)
 	if(!islist(raw_requirements))
 		return TRUE
 	var/list/req_groups = raw_requirements
-	// Top level list - can contain either req groups or single requirements and is AND type group
+	// Top level list - can contain either req groups or single needs and is AND type group
 	for(var/list/group_data in req_groups)
 		if(group_data[REQ_GROUP_REQUIREMENTS_FIELD]) //It's a group
 			if(!check_requirement_group(group_data))
 				return FALSE
-		else //It's a single requirement
+		else // It's a single need
 			if(!check_single_requirement(group_data))
 				return FALSE
 	return TRUE
 
-/// Recursively validates group requirements.
+/// Recursively validates group needs
 /datum/adventure/proc/check_requirement_group(raw_group_data)
 	if(!islist(raw_group_data))
 		CRASH("Invalid group requirement in adventure [name]")
@@ -400,7 +400,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 				if(subgroup_data[REQ_GROUP_REQUIREMENTS_FIELD]) //It's a group
 					if(check_requirement_group(subgroup_data))
 						return TRUE
-				else //It's a single requirement
+				else // It's a single need
 					if(check_single_requirement(subgroup_data))
 						return TRUE
 			return FALSE
@@ -409,14 +409,14 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 				if(subgroup_data[REQ_GROUP_REQUIREMENTS_FIELD]) //It's a group
 					if(!check_requirement_group(subgroup_data))
 						return FALSE
-				else //It's a single requirement
+				else // It's a single need
 					if(!check_single_requirement(subgroup_data))
 						return FALSE
 			return TRUE
 		else
 			CRASH("Invalid requirement group in adventure [name]")
 
-//Checks if unit requirement {"quality": "a","op": "==","value": "something"} is met.
+// Checks if unit need {"quality": "a","op": "==","value": "something"} is met.
 /datum/adventure/proc/check_single_requirement(raw_requirement)
 	var/qkey = raw_requirement[REQ_QUALITY_FIELD]
 	var/qval = raw_requirement[REQ_VALUE_FIELD]

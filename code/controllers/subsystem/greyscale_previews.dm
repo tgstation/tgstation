@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(greyscale_previews)
 		var/root = types_that_get_their_own_file[filename]
 
 		for (var/atom/atom_type as anything in typesof(root))
-			// First match wins (prevents /obj from overwriting clothing buckets, etc.)
+			// First match wins (prevents /obj from overwriting clothing buckets, and so on
 			if (isnull(type_to_filename[atom_type]))
 				type_to_filename[atom_type] = filename
 

@@ -5,7 +5,7 @@
 	threat.AddComponent(/datum/component/virtual_entity, src)
 
 
-/// Choses which antagonist role is spawned based on threat
+/// Choses which antagonist role is spawned good on threat
 /obj/machinery/quantum_server/proc/get_antagonist_role()
 	var/list/available = list()
 
@@ -21,7 +21,7 @@
 	return chosen
 
 
-/// Selects a target to mutate. Gives two attempts, then crashes if it fails.
+/// Selects a target to mutate.. Gives two tries then crashes if it fails.
 /obj/machinery/quantum_server/proc/get_mutation_target()
 	var/datum/weakref/target_ref = pick(mutation_candidate_refs)
 	var/mob/living/resolved = target_ref.resolve()

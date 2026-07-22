@@ -1,4 +1,4 @@
-///called on /living when attempting to pick up an item, from base of /mob/living/put_in_hand_check(): (obj/item/I)
+/// called on /living when trying to pick up an item, from base of /mob/living/put_in_hand_check(): (obj/item/I)
 #define COMSIG_LIVING_TRY_PUT_IN_HAND "living_try_put_in_hand"
 	/// Can't pick up
 	#define COMPONENT_LIVING_CANT_PUT_IN_HAND (1<<0)
@@ -46,7 +46,7 @@
 #define COMSIG_LIVING_ELECTROCUTE_ACT "living_electrocute_act"
 	/// Block the electrocute_act() proc from proceeding
 	#define COMPONENT_LIVING_BLOCK_SHOCK (1<<0)
-///sent when items with siemen coeff. of 0 block a shock: (power_source, source, siemens_coeff, dist_check)
+/// sent when items with siemen coeff... of 0 block a shock: (power_source, source, siemens_coeff, dist_check)
 #define COMSIG_LIVING_SHOCK_PREVENTED "living_shock_prevented"
 ///sent by stuff like stunbatons and tasers: ()
 #define COMSIG_LIVING_MINOR_SHOCK "living_minor_shock"
@@ -62,11 +62,11 @@
 #define COMSIG_LIVING_TRY_SYRINGE_WITHDRAW "living_try_syringe_withdraw"
 ///from base of mob/living/set_usable_legs()
 #define COMSIG_LIVING_LIMBLESS_SLOWDOWN  "living_limbless_slowdown"
-///From living/Life(). (deltatime)
+/// From living/Life()... (deltatime)
 #define COMSIG_LIVING_PRE_LIFE "living_pre_life"
-	/// Block the Life() proc from proceeding... this should really only be done in some really wacky situations.
+	/// Block the Life() proc from proceeding..... this should really only be done in some really wacky situations.
 	#define COMPONENT_LIVING_CANCEL_LIFE_PROCESSING (1<<0)
-///From living/Life(). (deltatime)
+/// From living/Life()... (deltatime)
 #define COMSIG_LIVING_LIFE "living_life"
 ///From living/set_resting(): (new_resting, silent, instant)
 #define COMSIG_LIVING_RESTING "living_resting"
@@ -77,7 +77,7 @@
 // adjust_x_loss messages sent from /mob/living/proc/adjust[x]Loss
 /// Returned from all the following messages if you actually aren't going to apply any change
 #define COMPONENT_IGNORE_CHANGE (1<<0)
-// Each of these messages sends the damagetype even though it is inferred by the signal so you can pass all of them to the same proc if required
+// Each of these messages sends the damagetype even though it is inferred by the signal so you can pass all of them to the same proc if needed
 /// Send when bruteloss is modified (type, amount, forced)
 #define COMSIG_LIVING_ADJUST_BRUTE_DAMAGE "living_adjust_brute_damage"
 /// Send when fireloss is modified (type, amount, forced)
@@ -181,7 +181,7 @@
 
 /// From mob/living/try_speak(): (message, ignore_spam, forced)
 #define COMSIG_MOB_TRY_SPEECH "living_vocal_speech"
-	/// Return to skip can_speak check, IE, forcing success. Overrides below.
+	/// Return to skip can_speak check, that is forcing success... Overrides below.
 	#define COMPONENT_IGNORE_CAN_SPEAK (1<<0)
 	/// Return if the mob cannot speak.
 	#define COMPONENT_CANNOT_SPEAK (1<<1)
@@ -299,7 +299,7 @@
 
 /// From /datum/element/basic_eating/try_eating()
 #define COMSIG_MOB_PRE_EAT "mob_pre_eat"
-	///cancel eating attempt
+	/// cancel eating try
 	#define COMSIG_MOB_CANCEL_EAT (1<<0)
 
 /// From /datum/element/basic_eating/finish_eating()

@@ -1,7 +1,7 @@
 /// For instances where we don't want a design showing up due to it being for debug/sanity purposes
 #define DESIGN_ID_IGNORE "IGNORE_THIS_DESIGN"
 
-///The object printed from this design won't get the mats used to make it. Default setting for stacks unless specified otherwise
+/// The object printed from this design won't get the mats used to make it... Default setting for stacks unless specified otherwise
 #define DESIGN_DONT_INHERIT_MATS 0
 /**
  * Default setting. The object printed from this design gets the mats used to make it.
@@ -11,20 +11,20 @@
 ///The object printed from this design gets the mats used to make it but skips the unit test.
 #define DESIGN_INHERIT_MATS_SPECIAL 2
 
-//! Techweb names for new point types. Can be used to define specific point values for specific types of research (science, security, engineering, etc.)
+// !.. Techweb names for new point types... Can be used to define specific point values for specific types of research (science, security, engineering, and so on
 #define TECHWEB_POINT_TYPE_GENERIC "General Research"
 
-//!  Amount of points required to unlock nodes of corresponding tiers
+// !.. Amount of points needed to unlock nodes of corresponding tiers
 #define TECHWEB_TIER_1_POINTS 40
 #define TECHWEB_TIER_2_POINTS 80
 #define TECHWEB_TIER_3_POINTS 120
 #define TECHWEB_TIER_4_POINTS 160
 #define TECHWEB_TIER_5_POINTS 200
 
-//! Amount of points gained per second by a single R&D server, see: [research][code/controllers/subsystem/research.dm]
+// !.. Amount of points gained per second by a single R&D server, see: [research][code/controllers/subsystem/research.dm]
 #define TECHWEB_SINGLE_SERVER_INCOME 1
 
-//! Swab cell line types
+// !.. Swab cell line types
 #define CELL_LINE_TABLE_SLUDGE "cell_line_sludge_table"
 #define CELL_LINE_TABLE_MOLD "cell_line_mold_table"
 #define CELL_LINE_TABLE_MOIST "cell_line_moist_table"
@@ -32,7 +32,7 @@
 #define CELL_LINE_TABLE_CLOWN "cell_line_clown_table"
 #define CELL_LINE_TABLE_ALGAE "cell_line_algae_table"
 
-//! Biopsy cell line types
+// !.. Biopsy cell line types
 #define CELL_LINE_TABLE_BEAR "cell_line_bear_table"
 #define CELL_LINE_TABLE_BLOBBERNAUT "cell_line_blobbernaut_table"
 #define CELL_LINE_TABLE_BLOBSPORE "cell_line_blobspore_table"
@@ -75,7 +75,7 @@
 #define CELL_LINE_TABLE_SHEEP "cell_line_table_SHEEP"
 #define CELL_LINE_TABLE_PIG "cell_line_table_pig"
 
-//! Biopsy cell line organ types
+// !.. Biopsy cell line organ types
 #define CELL_LINE_ORGAN_HEART "cell_line_organ_heart"
 #define CELL_LINE_ORGAN_LUNGS "cell_line_organ_lungs"
 #define CELL_LINE_ORGAN_LIVER "cell_line_organ_liver"
@@ -83,14 +83,14 @@
 
 #define CELL_LINE_ORGAN_HEART_CURSED "cell_line_organ_heart_cursed"
 
-//! All cell virus types
+// !.. All cell virus types
 #define CELL_VIRUS_TABLE_GENERIC "cell_virus_generic_table"
 #define CELL_VIRUS_TABLE_GENERIC_MOB "cell_virus_generic_mob_table"
 
-//! General defines for vatgrowing
+// !.. General defines for vatgrowing
 /// Past how much growth can the other cell_lines affect a finished cell line negatively
 #define VATGROWING_DANGER_MINIMUM 30
-//Defines how many percent of vat grown atoms come out as hue shifted color mutants. A flat chance for now, maybe in the future dependant on the cell line.
+// Defines how many percent of vat grown atoms come out as hue shifted color mutants... A flat chance for now, maybe in the future dependant on the cell line.
 #define CYTO_SHINY_CHANCE 15
 
 #define SCIPAPER_COOPERATION_INDEX "cooperation"

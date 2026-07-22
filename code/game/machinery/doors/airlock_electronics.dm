@@ -3,7 +3,7 @@
 	req_access = list(ACCESS_MAINT_TUNNELS)
 	/// A list of all granted accesses
 	var/list/accesses = list()
-	/// If the airlock should require ALL or only ONE of the listed accesses
+	/// If the airlock should need ALL or only ONE of the listed accesses
 	var/one_access = 0
 	/// Checks to see if this airlock has an unrestricted helper (will set to TRUE if present).
 	var/unres_latch = FALSE

@@ -50,7 +50,7 @@
 	machine_name = "\improper Hotdoggo-Vend"
 	icon_state = "refill_snack"
 
-/// Cute little thing that sets it apart from the other food vending mahicnes. I mean, you don't find this every day.
+/// Cute little thing that sets it apart from the other food vending mahicnes.. I mean, you don't find this every day.
 /obj/machinery/vending/hotdog/on_dispense(obj/item/vended_item, dispense_returned = FALSE)
 	// Only apply to newly dispensed items
 	if(dispense_returned)

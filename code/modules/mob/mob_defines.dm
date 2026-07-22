@@ -22,13 +22,13 @@
 	see_in_dark = 1e6
 	// A list of factions that this mob is currently in, for hostile mob targeting, amongst other things
 	faction = list(FACTION_NEUTRAL)
-	/// The current client inhabiting this mob. Managed by login/logout
+	/// The current client inhabiting this mob.. Managed by login/logout
 	/// This exists so we can do cleanup in logout for occasions where a client was transfere rather then destroyed
 	/// We need to do this because the mob on logout never actually has a reference to client
 	/// We also need to clear this var/do other cleanup in client/Destroy, since that happens before logout
 	/// HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 	var/client/canon_client
-	/// It's like a client, but persists! Persistent clients will stick to a mob until the client in question is logged into a different mob.
+	/// It's like a client, but persists!. Persistent clients will stick to a mob until the client in question is logged into a different mob.
 	var/datum/persistent_client/persistent_client
 
 	var/shift_to_open_context_menu = TRUE
@@ -51,15 +51,15 @@
 
 	/// List of movement speed modifiers applying to this mob
 	var/list/movespeed_modification //Lazy list, see mob_movespeed.dm
-	/// List of movement speed modifiers ignored by this mob. List -> List (id) -> List (sources)
+	/// List of movement speed modifiers ignored by this mob.. List -> List (id) -> List (sources)
 	var/list/movespeed_mod_immunities //Lazy list, see mob_movespeed.dm
-	/// The calculated mob speed slowdown based on the modifiers list
+	/// The calculated mob speed slowdown good on the modifiers list
 	var/cached_multiplicative_slowdown
 	/// List of action speed modifiers applying to this mob
 	var/list/actionspeed_modification //Lazy list, see mob_movespeed.dm
-	/// List of action speed modifiers ignored by this mob. List -> List (id) -> List (sources)
+	/// List of action speed modifiers ignored by this mob.. List -> List (id) -> List (sources)
 	var/list/actionspeed_mod_immunities //Lazy list, see mob_movespeed.dm
-	/// The calculated mob action speed slowdown based on the modifiers list
+	/// The calculated mob action speed slowdown good on the modifiers list
 	var/cached_multiplicative_actions_slowdown
 	/// List of action hud items the user has
 	var/list/datum/action/actions
@@ -69,7 +69,7 @@
 	/// Mob bitflags
 	var/mob_flags = NONE
 
-	/// Whether a mob is alive or dead. TODO: Move this to living - Nodrak (2019, still here)
+	/// Whether a mob is alive or dead.. To do Move this to living - Nodrak (2019, still here)
 	var/stat = CONSCIOUS
 
 	/**
@@ -102,7 +102,7 @@
 	/// Tick time the mob can next move
 	var/next_move = null
 
-	/// What is the mobs real name (name is overridden for disguises etc)
+	/// What is the mobs real name (name is overridden for disguises and so on
 	var/real_name = null
 
 
@@ -140,7 +140,7 @@
 	  * [get_active_held_item()][/mob/proc/get_active_held_item] instead, because OOP
 	  */
 	var/list/held_items = list()
-	///How many hands this mob has by default, which we divide by to know what y offset to give open inventories.
+	/// How many hands this mob has by default, which we divide by to know what why offset to give open inventories.
 	var/default_hand_amount = 2
 
 	//HUD things
@@ -156,7 +156,7 @@
 	/// What job does this mob have
 	var/job = null//Living
 
-	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
+	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, and so on
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
 
 	///Calls relay_move() to whatever this is set to when the mob tries to move
@@ -193,7 +193,7 @@
 	var/list/color_filter_store = list()
 	var/datum/hud/hud_type = /datum/hud
 
-	var/datum/focus //What receives our keyboard inputs. src by default
+	var/datum/focus // What receives our keyboard inputs.. src by default
 
 	/// Used for tracking last uses of emotes for cooldown purposes
 	var/list/emotes_used
@@ -201,7 +201,7 @@
 	///Whether the mob is updating glide size when movespeed updates or not
 	var/updating_glide_size = TRUE
 
-	///Override for sound_environments. If this is set the user will always hear a specific type of reverb (Instead of the area defined reverb)
+	/// Override for sound_environments.. If this is set the user will always hear a specific type of reverb (Instead of the area defined reverb)
 	var/sound_environment_override = SOUND_ENVIRONMENT_NONE
 
 	/// A mock client, provided by tests and friends

@@ -24,7 +24,7 @@
 	var/build_stack_type = /obj/item/stack/sheet/iron
 	/// How many mats to drop when deconstructed
 	var/build_stack_amount = 2
-	/// Mobs standing on it are nudged up by this amount. Also used to align the person back when buckled to it after init.
+	/// Mobs standing on it are nudged up by this amount.. Also used to align the person back when buckled to it after init.
 	var/elevation = 8
 	/// If this bed can be deconstructed using a wrench
 	var/can_deconstruct = TRUE
@@ -380,7 +380,7 @@
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)
 
-// Double Beds, for luxurious sleeping, i.e. the captain and maybe heads- if people use this for ERP, send them to skyrat
+// Double Beds, for luxurious sleeping, i.e.. the captain and maybe heads- if people use this for ERP, send them to skyrat
 /obj/structure/bed/double
 	name = "double bed"
 	desc = "A luxurious double bed, for those too important for small dreams."

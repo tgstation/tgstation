@@ -1,4 +1,4 @@
-/proc/point_midpoint_points(datum/point/a, datum/point/b) //Obviously will not support multiZ calculations! Same for the two below.
+/proc/point_midpoint_points(datum/point/a, datum/point/b) // Obviously will not support multiZ calculations!. Same for the two below.
 	return new /datum/point(_z = a.z, _pixel_x = (a.return_px() + b.return_px()) * 0.5, _pixel_y = (a.return_py() + b.return_py()) * 0.5)
 
 /proc/pixel_length_between_points(datum/point/a, datum/point/b)
@@ -7,7 +7,7 @@
 /proc/angle_between_points(datum/point/a, datum/point/b)
 	return ATAN2(b.return_py() - a.return_py(), b.return_px() - a.return_px())
 
-/// For positions with map x/y/z and pixel x/y so you don't have to return lists. Could use addition/subtraction in the future I guess.
+/// For positions with map x/y/z and pixel x/y so you don't have to return lists.. Could use addition/subtraction in the future I guess.
 /datum/position
 	var/x = 0
 	var/y = 0
@@ -52,7 +52,7 @@
 /datum/position/proc/return_point()
 	return new /datum/point(src)
 
-/// A precise point on the map in absolute pixel locations based on world.icon_size. Pixels are FROM THE EDGE OF THE MAP!
+/// A precise point on the map in absolute pixel locations good on world.icon_size.. Pixels are FROM THE EDGE OF THE MAP!
 /datum/point
 	var/x = 0
 	var/y = 0

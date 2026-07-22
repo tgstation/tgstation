@@ -1,4 +1,4 @@
-/datum/round_event_control/wizard/greentext //Gotta have it!
+/datum/round_event_control/wizard/greentext // Got to have it!
 	name = "Greentext"
 	weight = 4
 	typepath = /datum/round_event/wizard/greentext

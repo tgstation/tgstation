@@ -34,11 +34,11 @@
 			long_req = r2
 			short_req = r1
 
-	//if short one has a container requirement and it's not the same as the long one's, there's no conflict
+	// if short one has a container need and it's not the same as the long one's, there's no conflict
 	if(short_req.required_container && short_req.required_container != long_req.required_container)
 		return FALSE
 
-	//if short one has a more extreme temperature requirement, there's no conflict
+	// if short one has a more extreme temperature need there's no conflict
 	if(short_req.is_cold_recipe == long_req.is_cold_recipe)
 		if(short_req.is_cold_recipe && short_req.required_temp < long_req.required_temp)
 			return FALSE
@@ -64,18 +64,18 @@
 		return TRUE
 
 	for(var/datum/reagent/ingredient as anything in reagent_overlap)
-		//if longer reaction requires lower reagent quantity, there's no conflict
+		// if longer reaction needs lower reagent quantity, there's no conflict
 		if(reagent_overlap[ingredient] < short_req.required_reagents[ingredient])
 			return FALSE
 	for(var/datum/reagent/catalyst as anything in catalyst_overlap)
-		//if longer reaction requires lower catalys quantity, there's no conflict
+		// if longer reaction needs lower catalys quantity, there's no conflict
 		if(catalyst_overlap[catalyst] < short_req.required_catalysts[catalyst])
 			return FALSE
 
-	//if we got this far, the longer reaction will be impossible to create if the shorter one is earlier in GLOB.chemical_reactions_list_reactant_index, and will require the reagents to be added in a particular order otherwise
+	// if we got this far, the longer reaction will be impossible to create if the shorter one is earlier in GLOB.chemical_reactions_list_reactant_index. Will need the reagents to be added in a particular order otherwise
 	return TRUE
 
-//Creates foam from the reagent. Metaltype is for metal foam, notification is what to show people in textbox
+// Creates foam from the reagent.. Metaltype is for metal foam, notification is what to show people in textbox
 /datum/reagents/proc/create_foam(foamtype, foam_volume, result_type = null, notification = null, log = FALSE, lifetime, slippery)
 	var/location = get_turf(my_atom)
 
@@ -88,7 +88,7 @@
 	for(var/mob/M in viewers(5, location))
 		to_chat(M, notification)
 
-///Converts the pH into a tgui readable color - i.e. white and black text is readable over it. This is NOT the colourwheel for pHes however.
+/// Converts the pH into a tgui readable color - i.e.. white and black text is readable over it.. This is NOT the colourwheel for pHes but
 /proc/convert_ph_to_readable_color(pH)
 	switch(pH)
 		if(-INFINITY to 1)
@@ -114,7 +114,7 @@
 		if(12.5 to INFINITY)
 			return "purple"
 
-///Converts pH to universal indicator colours. This is the colorwheel for pHes
+/// Converts pH to universal indicator colours.. This is the colorwheel for pHes
 #define CONVERT_PH_TO_COLOR(pH, color) \
 	switch(pH) {\
 		if(14 to INFINITY)\

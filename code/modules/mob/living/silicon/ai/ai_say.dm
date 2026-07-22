@@ -44,7 +44,7 @@
 			return NOPASS
 	return FALSE
 
-//For holopads only. Usable by AI.
+// For holopads only.. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, list/spans = list(), language, list/message_mods = list())
 	message = trim(message)
 

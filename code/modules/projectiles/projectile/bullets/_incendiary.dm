@@ -22,7 +22,7 @@
 		new /obj/effect/hotspot(location)
 		location.hotspot_expose(700, 50, 1)
 
-/// Incendiary bullet that more closely resembles a real flamethrower sorta deal, no visible bullet, just flames.
+/// Incendiary bullet that more closely resembles a real flamethrower sort of deal, no visible bullet, just flames.
 /obj/projectile/bullet/incendiary/fire
 	damage = 15
 	range = 6
@@ -53,7 +53,7 @@
 	ricochet_chance = 10000
 	ricochets_max = 4
 	ricochet_incidence_leeway = 0
-	/// Lazy attempt at knockback, any items this plume hits will be knocked back this far. Decrements with each tile passed.
+	/// Lazy try at knockback, any items this plume hits will be knocked back this far.. Decrements with each tile passed.
 	var/knockback_range = 7
 	/// A lazylist of all the items we've already knocked back, so we don't do it again
 	var/list/launched_items

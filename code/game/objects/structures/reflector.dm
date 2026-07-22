@@ -266,7 +266,7 @@
 	else
 		return ..()
 
-//	USB
+// USB
 
 /obj/item/circuit_component/reflector
 	display_name = "Reflector"

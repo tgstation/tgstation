@@ -1,4 +1,4 @@
-/** Atmos related */
+/** * * Atmos related */
 #define ALERT_TOO_MUCH_OXYGEN "too_much_oxy"
 #define ALERT_NOT_ENOUGH_OXYGEN "not_enough_oxy"
 
@@ -18,7 +18,7 @@
 
 #define ALERT_NOT_ENOUGH_WATER "not_enough_water"
 
-/** Mob related */
+/** * * Mob related */
 #define ALERT_SUCCUMB "succumb"
 #define ALERT_BUCKLED "buckled"
 #define ALERT_HANDCUFFED "handcuffed"
@@ -37,25 +37,25 @@
 #define ALERT_ETHEREAL_CHARGE "ethereal_charge"
 #define ALERT_ETHEREAL_OVERCHARGE "ethereal_overcharge"
 
-/** Alien related */
+/** * * Alien related */
 #define ALERT_XENO_FIRE "alien_fire"
 #define ALERT_XENO_PLASMA "alien_plas"
 #define ALERT_XENO_NOQUEEN "alien_noqueen"
 
-/** Silicon related */
+/** * * Silicon related */
 #define ALERT_NEW_LAW "newlaw"
 #define ALERT_CHARGE "charge"
 #define ALERT_LOCKED "locked"
 #define ALERT_HACKED "hacked"
 #define ALERT_HACKING_APC "hackingapc"
 
-/** MODsuit/Mech related */
+/** * * MODsuit/Mech related */
 #define ALERT_MECH_DAMAGE "mech_damage"
 
-/** Food related */
+/** * * Food related */
 #define ALERT_DISGUST "disgust"
 
-/** Environment related */
+/** * * Environment related */
 #define ALERT_PRESSURE "pressure"
 #define ALERT_GRAVITY "gravity"
 #define ALERT_FIRE "fire"
@@ -64,7 +64,7 @@
 #define ALERT_TEMPERATURE_HOT "temphot"
 #define ALERT_TEMPERATURE_COLD "tempcold"
 
-/** Bitrunning */
+/** * * Bitrunning */
 #define ALERT_BITRUNNER_CROWBAR "bitrunning_crowbar"
 #define ALERT_BITRUNNER_COMPLETED "bitrunning_complete"
 #define ALERT_BITRUNNER_INTEGRITY "bitrunning_integrity"

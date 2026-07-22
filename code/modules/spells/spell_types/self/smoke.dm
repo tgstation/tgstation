@@ -26,7 +26,7 @@
 	smoke_type = /datum/effect_system/fluid_spread/smoke
 	smoke_amt = 2
 
-/// Unused smoke that makes people sleep. Used to be for cult?
+/// Unused smoke that makes people sleep.. Used to be for cult?
 /datum/action/cooldown/spell/smoke/disable
 	name = "Paralysing Smoke"
 	desc = "This spell spawns a cloud of paralysing smoke."

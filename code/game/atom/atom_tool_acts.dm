@@ -49,7 +49,7 @@
 		return interact_return
 
 	// We have to manually handle storage in item_interaction because storage is blocking in 99% of interactions, which stifles a lot
-	// Yeah it sucks not being able to signalize this, but the other option is to have a second signal here just for storage which is also not great
+	// Yeah it sucks not being able to signalize this. The other option is to have a second signal here just f. Storage which is also not great
 	if(atom_storage)
 		if(is_left_clicking)
 			if(atom_storage.insert_on_attack)

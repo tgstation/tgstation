@@ -6,7 +6,7 @@
 	name = "artifact boulder"
 	desc = "This boulder is brimming with strange energy. Cracking it open could contain something unusual for science."
 	icon_state = "boulder_artifact"
-	/// This is the type of item that will be inside the boulder. Default is a strange object.
+	/// This is the type of item that will be inside the boulder.. Default is a strange object.
 	var/artifact_type = /obj/item/relic/lavaland
 	/// References to the relic inside the boulder, if any.
 	var/obj/item/artifact_inside
@@ -15,7 +15,7 @@
 
 /obj/item/boulder/artifact/Initialize(mapload)
 	. = ..()
-	artifact_inside = new artifact_type(src) /// This could be poggers for archaeology in the future.
+	artifact_inside = new artifact_type(src) /// This could be excellent for archaeology in the future.
 	if(bonus_mat)
 		add_bonus_mats()
 
@@ -57,7 +57,7 @@
 /obj/item/boulder/gulag_vent
 	name = "iron boulder"
 	desc = "Basically just a raw lump of iron. Smash it into bits with a pickaxe."
-	// This produces 5 ore when smashed open because not using a machine reduces the ore count by one. 14 boulders x 15 ore x 5 points = 1050 points
+	// This produces 5 ore when smashed open because not using a machine reduces the ore count by one.. 14 boulders x 15 ore x 5 points = 1050 points
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 16)
 
 /// Boulders usually spawned in lavaland labour camp area, broken open with pickaxe like a loot box

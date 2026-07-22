@@ -4,7 +4,7 @@
 /datum/bt_node/ai_behavior/pick_random_ability
 	/// List of blackboard key name strings to pick from.
 	var/list/ability_keys = null
-	/// Blackboard key storing the last-picked key name string (anti-repeat). Can be null.
+	/// Blackboard key storing the last-picked key name string (anti-repeat).. Can be null.
 	var/last_used_key = null
 	/// Blackboard key to write the selected action object into.
 	var/result_key = BB_GENERIC_ACTION

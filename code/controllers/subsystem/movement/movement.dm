@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(movement)
 		This is intentional, as we loop our delays much more often then that ss is designed for
 		We also have much shorter term timers, so we need to worry about redundant buckets much less
 	*/
-	///Assoc list of "target time" -> list(things to process). Used for quick lookup
+	/// Assoc list of "target time" -> list(things to process).. Used for quick lookup
 	var/list/buckets = list()
 	///Sorted list of list(target time, bucket to process)
 	var/list/sorted_buckets = list()
@@ -27,10 +27,10 @@ SUBSYSTEM_DEF(movement)
 	return ..()
 
 /datum/controller/subsystem/movement/Recover()
-	//Get ready this is gonna be horrible
+	// Get ready this is going to be horrible
 	//We need to do this to support subtypes by the by
 	var/list/typenames = return_typenames(src.type)
-	var/our_name = typenames[length(typenames)] //Get the last name in the list, IE the subsystem identifier
+	var/our_name = typenames[length(typenames)] // Get the last name in the list, that is the subsystem identifier
 
 	var/datum/controller/subsystem/movement/old_version = global.vars["SS[our_name]"]
 	buckets = old_version.buckets
@@ -68,7 +68,7 @@ SUBSYSTEM_DEF(movement)
 	smash_bucket(1, bucket_time) // We assume we're the first bucket in the queue right now
 	visual_delay = MC_AVERAGE_FAST(visual_delay, max((world.time - canonical_time) / TICKS2DS(wait), 1))
 
-/// Removes a bucket from our system. You only need to pass in the time, but if you pass in the index of the list you save us some work
+/// Removes a bucket from our system.. You only need to pass in the time, but if you pass in the index of the list you save us some work
 /datum/controller/subsystem/movement/proc/smash_bucket(index, bucket_time)
 	var/sorted_length = length(sorted_buckets)
 	if(!index)

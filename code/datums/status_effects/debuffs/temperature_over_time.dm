@@ -9,7 +9,7 @@
 
 /datum/status_effect/temperature_over_time
 	id = "temp_ot"
-	alert_type = null // no alert. you do the sprite
+	alert_type = null // no alert.. you do the sprite
 	remove_on_fullheal = TRUE
 	on_remove_on_mob_delete = TRUE
 	tick_interval = 1 SECONDS

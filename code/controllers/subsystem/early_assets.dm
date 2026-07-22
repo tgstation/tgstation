@@ -1,7 +1,7 @@
 /// Initializes any assets that need to be loaded ASAP.
 /// This houses preference menu assets, since they can be loaded at any time,
 /// most dangerously before the atoms SS initializes.
-/// Thus, we want it to fail consistently in CI as if it would've if a player
+/// So we want it to fail consistently in CI as if it would've if a player
 /// opened it up early.
 SUBSYSTEM_DEF(early_assets)
 	name = "Early Assets"

@@ -1,6 +1,6 @@
 /// For scaling the effectiveness of certain effects to the total bodypart count
 #define GET_BODYPART_COEFFICIENT(X) round(X.len / BODYPARTS_DEFAULT_MAXIMUM , 0.1)
-/// Check if it's full body. These are mostly here so we can change just one place when we ever add more limbs (?)
+/// Check if it's full body.. These are mostly here so we can change just one place when we ever add more limbs (?)
 #define IS_FULL_BODY(X) (X.len == BODYPARTS_DEFAULT_MAXIMUM )
 
 /// Effects added to a carbon focused on the bodyparts itself, such as adding a photosynthesis component that
@@ -11,9 +11,9 @@
 
 	/// List of bodyparts contributing to this effect
 	var/list/bodyparts = list()
-	/// Minimum amount of bodyparts required for on_apply to be called. When tipping below, on_remove is called
+	/// Minimum amount of bodyparts needed for on_apply to be called.. When tipping below, on_remove is called
 	var/minimum_bodyparts = 1
-	/// Are we currently active? We don't NEED to track it, but it's a lot easier and faster if we do
+	/// Are we currently active?. We don't NEED to track it, but it's a lot easier and faster if we do
 	var/is_active = FALSE
 
 /datum/status_effect/grouped/bodypart_effect/source_added(source, obj/item/bodypart/bodypart)
@@ -29,7 +29,7 @@
 	if(!is_active && bodyparts.len >= minimum_bodyparts)
 		activate()
 
-/// Remove a bodypart from the effect. Deleting = TRUE is used during clean-up phase
+/// Remove a bodypart from the effect.. Deleting = TRUE is used during clean-up phase
 /datum/status_effect/grouped/bodypart_effect/proc/remove_bodypart(mob/living/carbon/old_owner, obj/item/bodypart/bodypart, deleting)
 	UnregisterSignal(bodypart, COMSIG_BODYPART_REMOVED)
 
@@ -50,7 +50,7 @@
 
 	remove_bodypart(owner, bodypart)
 
-/// Signal called when a bodypart is destroyed. Destruction of a bodypart doesn't necessarily drop it
+/// Signal called when a bodypart is destroyed.. Destruction of a bodypart doesn't necessarily drop it
 /datum/status_effect/grouped/bodypart_effect/proc/on_bodypart_destroyed(obj/item/bodypart/bodypart)
 	SIGNAL_HANDLER
 
@@ -62,7 +62,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	is_active = TRUE
-	// Maybe add support for different stages? AKA add a stronger effect when there are more limbs
+	// Maybe add support for different stages?. Also known as add a stronger effect when there are more limbs
 
 /// Remove an effect whenever a threshold is no longer reached
 /datum/status_effect/grouped/bodypart_effect/proc/deactivate()
@@ -79,7 +79,7 @@
 
 	return ..()
 
-/// This limb regens in light! Only BODYTYPE_PLANT limbs will heal, but limbs without the flag (and with the effect) still contribute to healing of the other limbs
+/// This limb regens in light!. Only BODYTYPE_PLANT limbs will heal, but limbs without the flag (and with the effect) still contribute to healing of the other limbs
 /datum/status_effect/grouped/bodypart_effect/photosynthesis
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	tick_interval = 1 SECONDS

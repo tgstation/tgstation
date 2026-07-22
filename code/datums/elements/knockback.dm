@@ -5,14 +5,14 @@
 /datum/element/knockback
 	/// distance the atom will be thrown
 	var/throw_distance
-	/// whether this can throw anchored targets (tables, etc)
+	/// whether this can throw anchored targets (tables, and so on
 	var/throw_anchored
 	/// whether this is a gentle throw (default false means people thrown into walls are stunned / take damage)
 	var/throw_gentle
 
 /datum/element/knockback/Attach(datum/target, throw_distance = 1, throw_anchored = FALSE, throw_gentle = FALSE)
 	. = ..()
-	if(ismachinery(target) || isstructure(target) || isgun(target) || isprojectilespell(target)) // turrets, etc
+	if(ismachinery(target) || isstructure(target) || isgun(target) || isprojectilespell(target)) // turrets, and so on
 		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, PROC_REF(projectile_hit))
 	else if(isitem(target))
 		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(item_afterattack))

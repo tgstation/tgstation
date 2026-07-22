@@ -97,7 +97,7 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_caf
 	name = "blood-soaked paper"
-	//This does not have to be in New() because it is a constant. There are no variables in it i.e. [sc_safcode]
+	// This does not have to be in New() because it is a constant.. There are no variables in it i.e.. [sc_safcode]
 	default_raw_text = "<font color=red><i>This paper is soaked in blood, it is impossible to read any text.</i></font>"
 
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible

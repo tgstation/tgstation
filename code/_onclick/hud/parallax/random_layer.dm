@@ -1,4 +1,4 @@
-/// Parallax layers that vary between rounds. Has some code to make sure we all have the same one
+/// Parallax layers that vary between rounds.. Has some code to make sure we all have the same one
 /atom/movable/screen/parallax_layer/random
 	blend_mode = BLEND_OVERLAY
 	speed = 2
@@ -18,7 +18,7 @@
 /atom/movable/screen/parallax_layer/random/proc/copy_parallax(atom/movable/screen/parallax_layer/random/twin)
 	return
 
-/// For applying minor effects related to parallax. If you want big stuff, put it in a station trait or something
+/// For applying minor effects related to parallax.. If you want big stuff, put it in a station trait or something
 /atom/movable/screen/parallax_layer/random/proc/apply_global_effects()
 	return
 

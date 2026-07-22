@@ -3,7 +3,7 @@
 	Burn wounds
 */
 
-// TODO: well, a lot really, but specifically I want to add potential fusing of clothing/equipment on the affected area, and limb infections, though those may go in body part code
+// To do well, a lot really. Specifically I want to add potential fusing of clothing/equipment on the affected area. Limb infections, though those may go in body part code
 /datum/wound/burn
 	name = "Burn Wound"
 	undiagnosed_name = "Burns"
@@ -19,7 +19,7 @@
 	default_scar_file = FLESH_SCAR_FILE
 
 	// Flesh damage vars
-	/// How much damage to our flesh we currently have. Once both this and infection reach 0, the wound is considered healed
+	/// How much damage to our flesh we currently have.. Once both this and infection reach 0, the wound is considered healed
 	var/flesh_damage = 5
 	/// Our current counter for how much flesh regeneration we have stacked from regenerative mesh/synthflesh/whatever, decrements each tick and lowers flesh_damage
 	var/flesh_healing = 0
@@ -29,10 +29,10 @@
 	var/infection_rate = 0
 	/// Our current level of infection
 	var/infection = 0
-	/// Our current level of sanitization/anti-infection, from disinfectants/alcohol/UV lights. While positive, totally pauses and slowly reverses infection effects each tick
+	/// Our current level of sanitization/anti-infection, from disinfectants/alcohol/UV lights.. While positive, totally pauses and slowly reverses infection effects each tick
 	var/sanitization = 0
 
-	/// Once we reach infection beyond WOUND_INFECTION_SEPTIC, we get this many warnings before the limb is completely paralyzed (you'd have to ignore a really bad burn for a really long time for this to happen)
+	/// Once we reach infection beyond WOUND_INFECTION_SEPTIC, we get this many warnings before the limb is completely paralyzed (you'd have to ignore a really bad burn f. A really long time f. This to happen)
 	var/strikes_to_lose_limb = 3
 
 /datum/wound/burn/flesh/handle_process(seconds_per_tick)

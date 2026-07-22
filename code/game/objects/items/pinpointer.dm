@@ -1,4 +1,4 @@
-//Pinpointers are used to track atoms from a distance as long as they're on the same z-level. The captain and nuke ops have ones that track the nuclear authentication disk.
+// Pinpointers are used to track atoms from a distance as long as they're on the same z-level.. The captain and nuke ops have ones that track the nuclear authentication disk.
 /obj/item/pinpointer
 	name = "pinpointer"
 	desc = "A handheld tracking device that locks onto certain signals."
@@ -28,11 +28,11 @@
 	/// Icon_state suffix for special pinpointer icons
 	var/icon_suffix = ""
 
-	/// At what range the pinpointer declares you to be at your destination. Use to hide the exact location of your target.
+	/// At what range the pinpointer declares you to be at your destination.. Use to hide the exact location of your target.
 	var/minimum_range = 0
 	/// From 1 to this value, the sprite will display as though you're close.
 	var/close_range = 8
-	/// From close_range + 1 to this value, the sprite will display as though you're medium distance away. Past this value, we'll display as though you're far.
+	/// From close_range + 1 to this value, the sprite will display as though you're medium distance away.. Past this value, we'll display as though you're far.
 	var/medium_range = 16
 
 /obj/item/pinpointer/Initialize(mapload)
@@ -90,7 +90,7 @@
 		return
 	. += get_direction_icon(here, there)
 
-///Called by update_icon after sanity. There is a target
+/// Called by update_icon after sanity.. There is a target
 /obj/item/pinpointer/proc/get_direction_icon(here, there)
 	if(get_dist_euclidean(here,there) <= minimum_range)
 		return "pinon[alert ? "alert" : ""]direct[icon_suffix]"
@@ -190,7 +190,7 @@
 /obj/item/pinpointer/pair
 	name = "pair pinpointer"
 	desc = "A handheld tracking device that locks onto its other half of the matching pair."
-	/// Reference to the other, specific pinpointer that it's bought with. Assigned on /obj/item/storage/box/pinpointer_pairs.
+	/// Reference to the other, specific pinpointer that it's bought with.. Assigned on /obj/item/storage/box/pinpointer_pairs.
 	var/other_pair
 
 /obj/item/pinpointer/pair/Destroy()

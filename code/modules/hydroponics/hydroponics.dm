@@ -30,7 +30,7 @@
 	var/toxic = 0
 	///Current age
 	var/age = 0
-	///The status of the plant in the tray. Whether it's harvestable, alive, missing or dead.
+	/// The status of the plant in the tray.. Whether it's harvestable, alive, missing or dead.
 	var/plant_status = HYDROTRAY_NO_PLANT
 	///Its health
 	var/plant_health
@@ -42,7 +42,7 @@
 	var/cycledelay = HYDROTRAY_CYCLE_DELAY
 	///The currently planted seed
 	var/obj/item/seeds/myseed
-	///Obtained from the quality of the parts used in the tray, determines nutrient drain rate.
+	/// Got from the quality of the parts used in the tray, determines nutrient drain rate.
 	var/rating = 1
 	///Can it be unwrenched to move?
 	var/unwrenchable = TRUE
@@ -62,7 +62,7 @@
 	var/obj/effect/overlay/vis_effect/snail/our_snail
 	///Flags to indicate special tray type behaviours.
 	var/tray_flags = HYDROPONIC
-	///How many extra px to offset the plant sprite on the y axis, gets passed to the seed and added to the seeds offset
+	/// How many extra px to offset the plant sprite on the why axis, gets passed to the seed and added to the seeds offset
 	var/plant_offset_y = 0
 	///Suffix things
 	var/alt_tray = FALSE
@@ -70,8 +70,8 @@
 	var/obj/machinery/hydroponics/soil/current_soil
 
 /obj/machinery/hydroponics/Initialize(mapload)
-	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
-	//SO HERE LIES THE "nutrilevel" VAR. IT'S DEAD AND I PUT IT OUT OF ITS MISERY. USE "reagents" INSTEAD. ~ArcaneMusic, accept no substitutes.
+	// ALRIGHT YOU DEGENERATES.. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
+	// SO HERE LIES THE "nutrilevel" VAR.. IT'S DEAD AND I PUT IT OUT OF ITS MISERY.. USE "reagents" INSTEAD.. ~ArcaneMusic, accept no substitutes.
 	create_reagents(maxnutri, INJECTABLE)
 	if(mapload)
 		reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, max(maxnutri / 2, 10)) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
@@ -348,7 +348,7 @@
 				if(waterlevel <= 0)
 					adjust_plant_health(-rand(0,2) / rating)
 
-			// Sufficient water level and nutrient level = plant healthy but also spawns weeds
+			// Enough water level and nutrient level = plant healthy but also spawns weeds
 			else if(waterlevel > 10 && reagents.total_volume > 0)
 				adjust_plant_health(rand(1,2) / rating)
 				if(myseed && prob(myseed.weed_chance))
@@ -443,7 +443,7 @@
 				adjust_weedlevel(1 / rating)
 
 		// Weeeeeeeeeeeeeeedddssss
-		if(weedlevel >= 10 && prob(50) && !self_sustaining) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
+		if(weedlevel >= 10 && prob(50) && !self_sustaining) // At this point the plant is kind of fucked.. Weeds can overtake the plant spot.
 			if(myseed && myseed.yield >= 3)
 				myseed.adjust_yield(-rand(1,2)) //Loses even more yield per tick, quickly dropping to 3 minimum.
 				myseed.set_yield(clamp((myseed.yield), WEED_HARDY_YIELD_MIN, MAX_PLANT_YIELD))
@@ -580,7 +580,7 @@
 
 	var/difference = new_waterlevel - waterlevel
 	if(difference > 0)
-		adjust_toxic(-round(difference/4))//Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
+		adjust_toxic(-round(difference/4))// Toxicity dilutation code.. The more water you put in, the lesser the toxin concentration.
 
 /obj/machinery/hydroponics/proc/set_plant_health(new_plant_health, update_icon = TRUE, forced = FALSE)
 	if(plant_health == new_plant_health || ((!myseed || plant_status == HYDROTRAY_PLANT_DEAD) && !forced))
@@ -908,7 +908,7 @@
 			to_chat(user, span_notice("[src] is full."))
 			return
 
-		var/list/trays = list(src)//makes the list just this in cases of syringes and compost etc
+		var/list/trays = list(src)// makes the list just this in cases of syringes and compost and so on
 		var/target = myseed ? myseed.plantname : src
 		var/visi_msg = ""
 		var/transfer_amount
@@ -930,7 +930,7 @@
 			if(istype(reagent_source, /obj/item/reagent_containers/syringe/))
 				var/obj/item/reagent_containers/syringe/syr = reagent_source
 				visi_msg="[user] injects [target] with [syr]"
-			// Beakers, bottles, buckets, etc.
+			// Beakers, bottles, buckets, and so on
 			if(reagent_source.is_drainable())
 				playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 				var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash_hydroponics")
@@ -941,7 +941,7 @@
 			visible_message(span_notice("[visi_msg]."))
 
 		for(var/obj/machinery/hydroponics/H in trays)
-		//cause I don't want to feel like im juggling 15 tamagotchis and I can get to my real work of ripping flooring apart in hopes of validating my life choices of becoming a space-gardener
+		// cause I don't want to feel like im juggling 15 tamagotchis. I can get to my real work of ripping flooring apart in hopes of validating my life choices of becoming a space-gardener
 			//This was originally in apply_chemicals, but due to apply_chemicals only holding nutrients, we handle it here now.
 			if(reagent_source.reagents.has_reagent(/datum/reagent/water))
 				var/water_amt = reagent_source.reagents.get_reagent_amount(/datum/reagent/water) * transfer_amount / reagent_source.reagents.total_volume

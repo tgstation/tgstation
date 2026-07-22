@@ -9,7 +9,7 @@
 	/// The vars copied over to our projectile on fire.
 	var/list/chameleon_projectile_vars
 
-	/// The badmin mode. Makes your projectiles act like the real deal.
+	/// The badmin mode.. Makes your projectiles act like the real deal.
 	var/real_hits = FALSE
 	/// how it looks by default.
 	var/default_look = /obj/item/gun/energy/laser
@@ -70,7 +70,7 @@
 
 	else if(istype(gun_to_set, /obj/item/gun/energy))
 		var/obj/item/gun/energy/energy_gun = gun_to_set
-		// Even if the energy gun has multiple ammo types, we copy the first. Energy guns always (should) have a list in ammo_type.
+		// Even if the energy gun has multiple ammo types, we copy the first.. Energy guns always (should) have a list in ammo_type.
 		if(islist(energy_gun.ammo_type) && energy_gun.ammo_type.len)
 			var/obj/item/first_casing = energy_gun.ammo_type[1]
 			casing_to_dupe = new first_casing.type(src)

@@ -20,7 +20,7 @@
 	var/list/datum/feed_channel/news_content = list()
 	///The time the newspaper was made in terms of newscaster's last action, used to tell the newspaper whether a story should be in it.
 	var/creation_time
-	///The page in the newspaper currently being read. 0 is the title screen while the last is the security screen.
+	/// The page in the newspaper currently being read.. 0 is the title screen while the last is the security screen.
 	var/current_page = 0
 	///The currently scribbled text written in scribble_page
 	var/scribble_text
@@ -99,7 +99,7 @@
 
 		playsound(src, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
 		punctured = TRUE
-		// User has additional arms or something, I dunno
+		// User has additional arms or something, I do not know
 		if (isliving(loc))
 			var/mob/living/owner = loc
 			owner.remove_fov_trait(REF(src), FOV_REVERSE_270_DEGRESS)
@@ -129,7 +129,7 @@
 	scribble_text = new_scribble_text
 	return ITEM_INTERACT_SUCCESS
 
-///Checks the creation time of the newspaper and compares it to list to see if the list is meant to be censored at the time of printing.
+/// Checks the creation time of the newspaper. Compares it to list to see if the list is meant to be censored at the time of printing.
 /obj/item/newspaper/proc/censored_check(list/times_censored)
 	if(!times_censored.len)
 		return FALSE

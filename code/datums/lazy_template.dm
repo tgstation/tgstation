@@ -105,7 +105,7 @@
 			loaded_turfs += turf
 			loaded_areas |= get_area(turf)
 
-			// atoms can actually be in the contents of two or more turfs based on its icon/bound size
+			// atoms can actually be in the contents of two or more turfs good on its icon/bound size
 			// see https://www.byond.com/docs/ref/index.html#/atom/var/contents
 			for(var/thing in (turf.get_all_contents() - turf))
 				if(istype(thing, /obj/structure/cable))

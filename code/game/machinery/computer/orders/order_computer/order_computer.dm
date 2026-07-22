@@ -19,7 +19,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	COOLDOWN_DECLARE(order_cooldown)
 	///Cooldown time between uses, express console will have extra time depending on express_cost_multiplier.
 	var/cooldown_time = 60 SECONDS
-	///The channel we will attempt to speak into through our radio.
+	/// The channel we will try to speak into through our radio.
 	var/radio_channel = RADIO_CHANNEL_SUPPLY
 	///What line we should announce on ordering_groceries
 	var/announcement_line
@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	var/list/order_categories = list()
 	///The current list of things we're trying to order, waiting for checkout.
 	var/list/datum/orderable_item/grocery_list = list()
-	///For blackbox logging, what kind of order is this? set nothing to not tally, like golem orders
+	/// For blackbox logging, what kind of order is this?. set nothing to not tally, like golem orders
 	var/blackbox_key
 
 /obj/machinery/computer/order_console/Initialize(mapload)

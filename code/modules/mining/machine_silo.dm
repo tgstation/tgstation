@@ -18,9 +18,9 @@
 #define UNRESTRICT_FAILURE_NO_ACCESS (1<<8)
 // Announced when a silicon tries to unrestrict the ore silo
 #define UNRESTRICT_FAILURE_SOULLESS_MACHINE (1<<9)
-// Announced when a user removes the worn ID(with valid bank account) requirement from the ore silo
+// Announced when a user removes the worn ID(with valid bank account) need from the ore silo
 #define UNRESTRICT_CONFIRMATION (1<<10)
-// Announced when a user restricts the ore silo to require a valid ID with bank account
+// Announced when a user restricts the ore silo to need a valid ID with bank account
 #define RESTRICT_CONFIRMATION (1<<11)
 
 /obj/machinery/ore_silo
@@ -504,7 +504,7 @@
 	for(var/channel in radio_channels)
 		// Key is the channel name, value is the bitmask of announced actions
 		if(action & radio_channels[channel])
-			var/say_cooldown_adherence_timer = 1 SECONDS * radio_channels.Find(channel) // * 1, * 2, * 3, etc.
+			var/say_cooldown_adherence_timer = 1 SECONDS * radio_channels.Find(channel) // * 1, * 2, * 3, and so on
 			addtimer(CALLBACK(radio, TYPE_PROC_REF(/obj/item, talk_into), src, message, channel), say_cooldown_adherence_timer)
 
 #undef ALWAYS_ANNOUNCE
@@ -556,7 +556,7 @@
 	var/action
 	///An short verb describing the action
 	var/noun
-	///The amount of items affected by this action e.g. print quantity, sheets ejected etc.
+	/// The amount of items affected by this action e.g.. print quantity, sheets ejected and so on
 	var/amount
 	///List of individual materials used in the action
 	var/list/materials

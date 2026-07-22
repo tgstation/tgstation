@@ -45,7 +45,7 @@
 	var/datum/glass_style/expected_glass_type = GLOB.glass_style_singletons[glass.type][tested_reagent_type]
 	TEST_ASSERT_NOTNULL(expected_glass_type, "Glass style datum for the tested reagent ([tested_reagent_type]) and container ([glass.type]) was not found.")
 
-	// Add 5 units of the reagent to the glass. This will change the name, desc, icon, and icon state
+	// Add 5 units of the reagent to the glass.. This will change the name, desc, icon, and icon state
 	glass.reagents.add_reagent(tested_reagent_type, 5)
 	TEST_ASSERT_EQUAL(glass.icon, expected_glass_type.icon, "Glass icon file did not change after gaining a reagent that would change it.")
 	TEST_ASSERT_EQUAL(glass.icon_state, expected_glass_type.icon_state, "Glass icon state did not change after gaining a reagent that would change it")

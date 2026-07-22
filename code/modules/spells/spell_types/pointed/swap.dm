@@ -44,7 +44,7 @@
 	if(!target)
 		return FALSE
 	if(!isliving(target) || isturf(target))
-		// Find any living being in the list. We aren't picky, it's aim assist after all
+		// Find any living being in the list.. We aren't picky, it's aim assist after all
 		target = locate(/mob/living) in target
 		if(!target)
 			to_chat(owner, span_warning("You can only select living beings as secondary target!"))

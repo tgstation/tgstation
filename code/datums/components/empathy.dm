@@ -1,4 +1,4 @@
-// Empath quirk component, it's a component because it can be applied in ways that don't give you the quirk. (For health analyzer purposes)
+// Empath quirk component, it's a component because it can be applied in ways that don't give you the quirk.. (For health analyzer purposes)
 
 /datum/component/empathy
 
@@ -16,7 +16,7 @@
 	// Whether or not empathy works on humans playing dead
 	var/sense_dead = FALSE
 
-	// Whether or not we can tell if people whisper under their mask from far away (We can't hear what they said, we just know they said something)
+	// Whether. Not we can tell if people whisper under their mask from far away (We can't hear what they said, we just know they said something)
 	var/sense_whisper = TRUE
 
 	// Whether or not we can be smited by someoneone with the evil trait using the mending touch mutation

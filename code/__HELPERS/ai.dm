@@ -1,4 +1,4 @@
-//this file has procs that help ais think good. used by behaviors mostly
+// this file has procs that help ais think good.. used by behaviors mostly
 
 
 /// Returns either the best weapon from the given choices or null if held weapons are better

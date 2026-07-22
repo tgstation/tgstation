@@ -7,9 +7,9 @@
 	argument_hash_start_idx = 2
 	/// Whether we stop the current action if backfire is triggered (EX: returning CANCEL_ATTACK_CHAIN)
 	var/cancel_action = FALSE
-	/// Any extra traits we want to check in addition to TRAIT_PLANT_SAFE. Mobs with a trait in this list will be considered safe. List of traits.
+	/// Any extra traits we want to check in addition to TRAIT_PLANT_SAFE.. Mobs with a trait in this list will be considered safe.. List of traits.
 	var/extra_traits
-	/// Any plant genes we want to check that are required for our plant to be dangerous. Plants without a gene in this list will be considered safe. List of typepaths.
+	/// Any plant genes we want to check that are needed for our plant to be dangerous.. Plants without a gene in this list will be considered safe.. List of typepaths.
 	var/extra_genes
 
 /datum/element/plant_backfire/Attach(datum/target, cancel_action = FALSE, extra_traits, extra_genes)

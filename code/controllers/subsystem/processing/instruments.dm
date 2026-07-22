@@ -11,9 +11,9 @@ PROCESSING_SUBSYSTEM_DEF(instruments)
 	var/static/musician_maxlines = 600
 	/// Max characters per line in songs
 	var/static/musician_maxlinechars = 300
-	/// Deciseconds between hearchecks. Too high and instruments seem to lag when people are moving around in terms of who can hear it. Too low and the server lags from this.
+	/// Deciseconds between hearchecks.. Too high and instruments seem to lag when people are moving around in terms of who can hear it.. Too low and the server lags from this.
 	var/static/musician_hearcheck_mindelay = 5
-	/// Maximum instrument channels total instruments are allowed to use. This is so you don't have instruments deadlocking all sound channels.
+	/// Maximum instrument channels total instruments are allowed to use.. This is so you don't have instruments deadlocking all sound channels.
 	var/static/max_instrument_channels = MAX_INSTRUMENT_CHANNELS
 	/// Current number of channels allocated for instruments
 	var/static/current_instrument_channels = 0

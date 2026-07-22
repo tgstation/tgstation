@@ -45,7 +45,7 @@
 	var/activation_step_time = MOD_ACTIVATION_STEP_TIME
 	/// Theme used by the MOD TGUI.
 	var/ui_theme = "ntos"
-	/// List of inbuilt modules. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
+	/// List of inbuilt modules.. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
 	var/list/inbuilt_modules = list()
 	/// Allowed items in the chestplate's suit storage.
 	var/list/allowed_suit_storage = list()

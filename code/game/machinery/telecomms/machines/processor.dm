@@ -14,7 +14,7 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.01
 	circuit = /obj/item/circuitboard/machine/telecomms/processor
 	/// Whether this processor is currently compressing the data,
-	/// or actually decompressing it. Defaults to `FALSE`.
+	/// or actually decompressing it.. Defaults to `FALSE`.
 	var/compressing = FALSE
 
 #define COMPRESSION_AMOUNT_COMPRESSING 100

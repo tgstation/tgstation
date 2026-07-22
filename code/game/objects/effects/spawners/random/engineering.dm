@@ -24,7 +24,7 @@
 /obj/effect/spawner/random/engineering/tool_advanced
 	name = "Advanced tool spawner"
 	icon_state = "wrench"
-	loot = list( // Mail loot spawner. Some sort of random and rare building tool. No alien tech here.
+	loot = list( // Mail loot spawner.. Some sort of random and rare building tool.. No alien tech here.
 		/obj/item/wrench/caravan,
 		/obj/item/wirecutters/caravan,
 		/obj/item/screwdriver/caravan,
@@ -67,7 +67,7 @@
 	name = "Rare material spawner"
 	icon_state = "diamond"
 	spawn_loot_count = 3
-	loot = list( // Space loot spawner. Random selecton of a few rarer materials.
+	loot = list( // Space loot spawner.. Random selecton of a few rarer materials.
 		/obj/item/stack/sheet/runed_metal/ten = 20,
 		/obj/item/stack/sheet/mineral/diamond{amount = 15} = 15,
 		/obj/item/stack/sheet/mineral/uranium{amount = 15} = 15,

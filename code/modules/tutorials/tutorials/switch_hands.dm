@@ -63,7 +63,7 @@
 /datum/tutorial/switch_hands/proc/on_swap_hands(mob/living/source, obj/item/swapped_to, obj/item/swapped_from)
 	SIGNAL_HANDLER
 
-	//FIXME: this checking breaks easily
+	// Fix me this checking breaks easily
 	if (isnull(swapped_to))
 		stage = STAGE_PICK_UP_ITEM
 		show_instructions()

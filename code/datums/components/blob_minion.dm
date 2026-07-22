@@ -156,7 +156,7 @@
 		return
 	minion.adjust_fire_loss(clamp(0.01 * exposed_temperature, 1, 5))
 
-/// Someone is attempting to move through us, allow it if it is a blob tile
+/// Someone is trying to move through us, allow it if it is a blob tile
 /datum/component/blob_minion/proc/on_attempted_pass(mob/living/minion, atom/movable/incoming)
 	SIGNAL_HANDLER
 	if(istype(incoming, /obj/structure/blob))
@@ -202,7 +202,7 @@
 		do_chem_smoke(range = death_cloud_size, holder = minion, location = get_turf(minion), reagent_type = /datum/reagent/toxin/spore, reagent_volume = BLOBMOB_CLOUD_REAGENT_VOLUME, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/medium)
 		playsound(minion, 'sound/mobs/non-humanoids/blobmob/blob_spore_burst.ogg', vol = 100)
 
-///When am independent mob with this component mutates, like from a random cytology mutation, give them a strain and modify their name to let the players know they have something special.
+/// When am independent mob with this component mutates, like from a random cytology mutation, give them a strain. Modify their name to let the players know they have something special.
 /datum/component/blob_minion/proc/on_mutated(mob/living/minion)
 	SIGNAL_HANDLER
 	if(overmind || our_strain)

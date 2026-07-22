@@ -41,14 +41,14 @@
 	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_FREE_HYPERSPACE_MOVEMENT), PROC_REF(initialize_loop))
 	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_FREE_HYPERSPACE_MOVEMENT), PROC_REF(clear_loop))
 
-	//Items have this cool thing where they're first put on the floor if you grab them from storage, and then into your hand, which isn't caught by movement signals that well
+	// Items have this cool thing where they're first put on the flo. If you grab them from storage. Then into your hand, which isn't caught by movement signals that well
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(do_remove))
 
 	if(!HAS_TRAIT(parent, TRAIT_FREE_HYPERSPACE_MOVEMENT))
 		initialize_loop()
 
-	update_state(parent) //otherwise we'll get moved 1 tile before we can correct ourselves, which isnt super bad but just looks jank
+	update_state(parent) // otherwise we'll get moved 1 tile before we can correct ourselves, which isnt super bad but just looks low quality code
 
 /datum/component/shuttle_cling/proc/initialize_loop()
 	hyperloop = GLOB.move_manager.move(moving = parent, direction = direction, delay = not_clinging_move_delay, subsystem = SShyperspace_drift, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_NO_DIR_UPDATE|MOVEMENT_LOOP_OUTSIDE_CONTROL)
@@ -111,7 +111,7 @@
 
 	var/mob/living/living = movee
 
-	//Check if we can interact with stuff (checks for alive, arms, stun, etc)
+	// Check if we can interact with stuff (checks for alive, arms, stun, and so on
 	if(!living.can_perform_action(living, FORBID_TELEKINESIS_REACH|NEED_HANDS))
 		return NOT_HOLDING_ON
 
@@ -127,7 +127,7 @@
 				return CLINGING
 	return NOT_HOLDING_ON
 
-///Are we on a hyperspace tile? There's some special bullshit with lattices so we just wrap this check
+/// Are we on a hyperspace tile?. There's some special bullshit with lattices so we just wrap this check
 /datum/component/shuttle_cling/proc/is_on_hyperspace(atom/movable/clinger)
 	if(istype(clinger.loc, hyperspace_type) && !HAS_TRAIT(clinger.loc, TRAIT_HYPERSPACE_STOPPED))
 		return TRUE
@@ -153,13 +153,13 @@
 			hyperloop.direction = direction + REVERSE_DIR(side_dir) //We're bumping a wall to the side, so switch to the other side_dir (yes this adds pingpong protocol)
 		return
 
-	//Get the directions from the side of our current drift direction (so if we have drift south, get all cardinals and remove north and south, leaving only east and west)
+	// Get the directions from the side of our current drift direction (so if we have drift south, get all cardinals. Remove north. South, leaving only east. West)
 	var/side_dirs = shuffle(GLOB.cardinals - direction - REVERSE_DIR(direction))
 
 	//We check if one side is solid
 	if(!is_tile_solid(get_step(clinger, side_dirs[1])))
 		hyperloop.direction = direction + side_dirs[1]
-	else //if one side isnt solid, send it to the other side (it can also be solid but we dont care cause we're boxed in then and not like itll matter much then)
+	else // if one side isnt solid, send it to the other side (it can also be solid. We dont care cause we're boxed in then. Not like itll matter much then)
 		hyperloop.direction = direction + side_dirs[2]
 
 ///Check if it's a closed turf or contains a dense object

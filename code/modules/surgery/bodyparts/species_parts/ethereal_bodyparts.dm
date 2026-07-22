@@ -107,4 +107,4 @@
 /obj/item/bodypart/head/ethereal/lustrous
 	limb_id = SPECIES_ETHEREAL_LUSTROUS
 	head_flags = NONE
-	teeth_count = 0 // bro you seen these thinsg. they got a crystal for a head aint no teeth here
+	teeth_count = 0 // bro you seen these thinsg.. they got a crystal for a head aint no teeth here

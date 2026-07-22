@@ -47,7 +47,7 @@
 
 	examine_list += span_notice("You could probably process [source] at \a <b>[initial(loom_type.name)]</b>.")
 
-/// Checks if the thing we clicked on can be used as a loom, and if we can actually loom the source at present (an example being does the stack have enough in it (if its a stack))
+/// Checks if the thing we clicked on can be used as a loom. If we can actually loom the source at present (an example being does the stack have enough in it (if its a stack))
 /datum/element/loomable/proc/try_and_loom_me(obj/item/source, atom/target, mob/living/user)
 	SIGNAL_HANDLER
 
@@ -69,9 +69,9 @@
 	INVOKE_ASYNC(src, PROC_REF(loom_me), source, user, target)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/// If a do_after of the specified loom_time passes, will create a new one of resulting_atom and either delete the item, or .use the required amount if its a stack
+/// If a do_after of the specified loom_time passes, will create a new one of resulting_atom. Either delete the item. .use the needed amount if its a stack
 /datum/element/loomable/proc/loom_me(obj/item/source, mob/living/user, atom/target)
-	//this allows us to count the amount of times it has successfully used the stack's required amount
+	// this allows us to count the amount of times it has successfully used the stack's needed amount
 	var/spawning_amount = 0
 	if(isstack(source))
 		var/obj/item/stack/stack_we_use = source

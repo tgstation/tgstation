@@ -19,7 +19,7 @@
 	UnregisterSignal(user, list(COMSIG_MOB_EMOTED("taunt"), COMSIG_MOB_PRE_EMOTED))
 	return ..()
 
-///Prevent players from stamcritting from INTENTIONAL flips. 1.4s of bullet immunity isn't worth several secs of stun.
+/// Prevent players from stamcritting from INTENTIONAL flips.. 1.4s of bullet immunity isn't worth several secs of stun.
 /obj/item/skillchip/matrix_taunt/proc/check_if_we_can_taunt(mob/living/source, key, params, type_override, intentional, datum/emote/emote)
 	SIGNAL_HANDLER
 	if(key != "taunt" || !intentional)

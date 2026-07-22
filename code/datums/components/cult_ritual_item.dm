@@ -278,7 +278,7 @@
 			start_scribe_rune(tool, cultist)
 			return FALSE
 
-	our_turf = get_turf(cultist) //we may have moved. adjust as needed...
+	our_turf = get_turf(cultist) // we may have moved.. adjust as needed...
 
 	if(!can_scribe_rune(tool, cultist))
 		return FALSE
@@ -298,7 +298,7 @@
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 		if(!scribe_narsie_rune(cultist, user_team))
 			return
-		our_turf = get_turf(cultist) //we may have moved. adjust as needed...
+		our_turf = get_turf(cultist) // we may have moved.. adjust as needed...
 
 	var/can_have_blood = CAN_HAVE_BLOOD(cultist)
 
