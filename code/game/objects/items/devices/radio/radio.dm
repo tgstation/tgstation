@@ -448,8 +448,6 @@
 
 /obj/item/radio/proc/on_receive_message(list/data)
 	SEND_SIGNAL(src, COMSIG_RADIO_RECEIVE_MESSAGE, data)
-	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
-
 	if(!isliving(loc))
 		return
 
@@ -457,6 +455,7 @@
 	var/volume_modifier = (holder.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
 	if(!radio_noise || HAS_TRAIT(holder, TRAIT_DEAF) || !holder.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
 		return
+	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
 	var/list/spans = data["spans"]
 	if(COOLDOWN_FINISHED(src, audio_cooldown))
 		COOLDOWN_START(src, audio_cooldown, 0.5 SECONDS)
