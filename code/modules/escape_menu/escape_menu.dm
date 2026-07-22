@@ -135,6 +135,7 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 			"displayName" = admin.holder?.fakekey || admin.ckey,
 			"rank" = admin.holder?.rank_names(),
 			"feedbackLink" = admin.holder?.feedback_link(),
+			"ping" = round(admin.avgping, 1),
 			"ignored" = (admin.ckey in client?.prefs?.ignoring),
 		))
 	return result
@@ -145,6 +146,7 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 		result += list(list(
 			"ckey" = player.ckey,
 			"displayName" = player.ckey,
+			"ping" = round(player.avgping, 1),
 			"ignored" = (player.ckey in client?.prefs?.ignoring),
 		))
 	return result

@@ -99,7 +99,12 @@ function PlayerEntry({
       }
       onClick={onToggleIgnore}
     >
-      <span className="escape-menu__player-name">{player.displayName}</span>
+      <span className="escape-menu__player-name">
+        {player.displayName}
+        {player.ping !== undefined && (
+          <span className="escape-menu__player-ping"> ({player.ping}ms)</span>
+        )}
+      </span>
       {player.rank && (
         <span className="escape-menu__player-rank">{player.rank}</span>
       )}

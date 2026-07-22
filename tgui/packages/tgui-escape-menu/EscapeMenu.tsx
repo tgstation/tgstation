@@ -16,6 +16,7 @@ export type PlayerInfo = {
   displayName: string;
   rank?: string;
   feedbackLink?: string;
+  ping?: number;
   ignored: boolean;
 };
 
