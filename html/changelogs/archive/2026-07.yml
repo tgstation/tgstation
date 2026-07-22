@@ -615,3 +615,33 @@
       to wait for the next
   PapaMichael:
   - spellcheck: More verbs match their pronouns
+  SmArtKar:
+  - bugfix: Fixed the Four Hands wizard perk
+  - bugfix: Fixed quick tile replacement
+2026-07-21:
+  CabinetOnFire:
+  - bugfix: Fixes cats getting permanent zoomies after being chased away by a superior
+      male
+  - bugfix: Fixes mechs not qdel'ing when destroyed if they spawn a wreck
+  FalloutFalcon:
+  - qol: per department sorting for character setup matches latejoin menu
+  SmArtKar:
+  - bugfix: Removed unnecessary click delay from window placement
+  lelandkemble:
+  - code_imp: Edible food unit test doesn't check abstract type food, abstract type
+      food doesn't have seeds.
+  timothymtorres:
+  - rscadd: Add water bottles to booze-o-mat non-alcoholic category
+  vinylspiders:
+  - bugfix: peeking into a hilberts hotel room while it gets deleted will now kick
+      you out properly
+  - bugfix: fixed an issue where the lights would stay dark after reloading the same
+      hilberts hotel room
+2026-07-22:
+  CabinetOnFire:
+  - refactor: Ruin loading should now be more robust and should spawn less orphaned
+      genturfs
+  lelandkemble:
+  - code_imp: converted calls to attackby() to calls to item_interaction()
+  - bugfix: MODsuit drill module manual activation works again
+  - bugfix: you can put c4s on safes
