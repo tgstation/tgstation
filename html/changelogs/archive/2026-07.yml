@@ -637,3 +637,16 @@
       you out properly
   - bugfix: fixed an issue where the lights would stay dark after reloading the same
       hilberts hotel room
+2026-07-22:
+  CabinetOnFire:
+  - refactor: Ruin loading should now be more robust and should spawn less orphaned
+      genturfs
+  Kashargul:
+  - bugfix: tgui UI testing with more than one test file
+  lelandkemble:
+  - code_imp: converted calls to attackby() to calls to item_interaction()
+  - bugfix: MODsuit drill module manual activation works again
+  - bugfix: you can put c4s on safes
+  vinylspiders:
+  - bugfix: fixed tails and ears not updating on your dummy when changing the pref
+      until you change species or switch characters

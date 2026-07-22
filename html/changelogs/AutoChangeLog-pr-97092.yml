@@ -1,0 +1,4 @@
+author: "nPocToDark"
+delete-after: True
+changes:
+  - qol: "Raptor eggs now floor placeable (even in lava). It's now easier to immerse them in lava to accelerate their growth."
