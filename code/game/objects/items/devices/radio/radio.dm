@@ -672,7 +672,6 @@
 	icon_state = "walkieian"
 	desc = "A Little-Crew branded toy radio in the shape of a lovable pet. After Little-Crew HQ was hit with a Donksoft Nuke, these have become collector's items!"
 	overlay_speaker_idle = null
-	overlay_speaker_active = null
 	overlay_mic_idle = null
 	overlay_mic_active = null
 
@@ -748,7 +747,6 @@
 	inhand_icon_state = "radio"
 	worn_icon_state = "radio"
 	overlay_speaker_idle = "radio_s_idle"
-	overlay_speaker_active = "radio_s_active"
 	overlay_mic_idle = "radio_m_idle"
 	overlay_mic_active = "radio_m_active"
 
