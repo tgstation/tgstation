@@ -669,7 +669,8 @@
 			to_chat(maybe_monkey, span_danger("You vomit out blood, making you feel grossly monkeyish."))
 
 	if (LAZYLEN(SSmobs.cubemonkeys) < CONFIG_GET(number/monkeycap))
-		new /mob/living/carbon/human/species/monkey(location, TRUE)
+		for(var/_ in 1 to created_volume)
+			new /mob/living/carbon/human/species/monkey(location, TRUE)
 
 /datum/chemical_reaction/angry_monkey
 	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/inverse/bath_salts = 10)
@@ -688,7 +689,8 @@
 			to_chat(maybe_monkey, span_danger("You vomit out blood, making you feel grossly monkeyish."))
 
 	if (LAZYLEN(SSmobs.cubemonkeys) < CONFIG_GET(number/monkeycap))
-		new /mob/living/carbon/human/species/monkey/angry(location, TRUE)
+		for(var/_ in 1 to created_volume)
+			new /mob/living/carbon/human/species/monkey/angry(location, TRUE)
 
 //water electrolysis
 /datum/chemical_reaction/electrolysis
