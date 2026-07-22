@@ -72,7 +72,6 @@
 /datum/sound_token/Destroy(force, ...)
 	for(var/listener in listeners)
 		remove_listener(listener)
-
 	listeners = null
 	source = null
 	return ..()
