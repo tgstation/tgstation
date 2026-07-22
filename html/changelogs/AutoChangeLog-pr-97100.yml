@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixed tails and ears not updating on your dummy when changing the pref until you change species or switch characters"
