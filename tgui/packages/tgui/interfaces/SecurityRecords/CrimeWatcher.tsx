@@ -103,7 +103,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
   const { current_user, higher_access } = data;
   const { author, crime_ref, details, fine, name, paid, time, valid, voider } =
     item;
-  const showFine = !!fine && fine > 0 ? `: ${fine} кр` : ': ШТРАФ ОПЛАЧЕН';
+  const showFine = fine && fine > 0 ? `: ${fine} кр` : ': ШТРАФ ОПЛАЧЕН';
 
   let collapsibleColor = '';
   if (!valid) {

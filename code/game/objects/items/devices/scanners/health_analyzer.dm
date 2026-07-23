@@ -456,11 +456,11 @@
 		else
 			cure_text = disease.cure_text
 		render_list += "<span class='alert ml-1'>\
-			<b>Внимание: [disease.form]</b><br>\
+			[conditional_tooltip("<b>Внимание: [disease.form] обнаружена</b>", "Примените указанное лекарство или [/datum/reagent/medicine/spaceacillin::name], обеспечьте больного едой и отдыхом.", tochat)]<br>\
 			<div class='ml-2'>\
 			Название: [disease.name].<br>\
 			Распространение: [disease.spread_text].<br>\
-			Стадия: [disease.stage]/[disease.max_stages].<br>\
+			Stage: [disease.stage]/[disease.max_stages].<br>\
 			Возможное лекарство: [cure_text]</div>\
 			</span>"
 

@@ -28,6 +28,10 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, "Select Equipment", mob/ta
 	var/datum/outfit/selected_outfit = /datum/outfit
 	//serializable string for the UI to keep track of which outfit is selected
 	var/selected_identifier = "/datum/outfit"
+	/// Cached flat icon of the dummy wearing selected_outfit, so ui_data() doesn't redraw the sprite on every refresh when it doesn't need to
+	var/icon/cached_dummy_icon
+	/// The selected_identifier cached_dummy_icon was last rendered for.
+	var/cached_for_identifier
 
 /datum/select_equipment/New(_user, mob/target)
 	user = CLIENT_FROM_VAR(_user)
@@ -105,12 +109,16 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, "Select Equipment", mob/ta
 	if(!dummy_key)
 		init_dummy()
 
-	var/icon/dummysprite = get_flat_human_icon(null,
-		dummy_key = dummy_key,
-		outfit_override = selected_outfit,
-		no_anim = TRUE,
-	)
-	data["icon64"] = icon2base64(dummysprite)
+	if(isnull(cached_dummy_icon) || cached_for_identifier != selected_identifier)
+		cached_dummy_icon = get_flat_human_icon(null,
+			dummy_key = dummy_key,
+			showDirs = list(SOUTH),
+			outfit_override = selected_outfit,
+			no_anim = TRUE,
+		)
+		cached_for_identifier = selected_identifier
+
+	data["icon64"] = icon2base64(cached_dummy_icon)
 	data["name"] = target_mob
 
 	var/datum/preferences/prefs = user?.client?.prefs

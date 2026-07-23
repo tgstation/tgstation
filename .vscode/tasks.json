@@ -3,7 +3,10 @@
 	"tasks": [
 		{
 			"type": "shell",
-			"command": "python tools/build_bt.py",
+			"command": "tools/bootstrap/python tools/build_bt.py",
+			"windows": {
+				"command": ".\\tools\\bootstrap\\python.bat tools/build_bt.py"
+			},
 			"group": "build",
 			"presentation": { "reveal": "silent", "panel": "shared" },
 			"label": "Compile BT Trees"
