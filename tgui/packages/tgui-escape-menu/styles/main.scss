@@ -39,11 +39,8 @@ body,
   height: 100%;
   font-family: 'Pixellari', 'Grand9K Pixel', monospace;
   color: white;
-  text-shadow:
-    1px 1px 0 black,
-    -1px -1px 0 black,
-    1px -1px 0 black,
-    -1px 1px 0 black;
+  -webkit-text-stroke: 0.15vw black;
+  paint-order: stroke fill;
 
   &__overlay {
     position: absolute;
@@ -122,6 +119,7 @@ body,
 
     &:hover {
       text-decoration: underline;
+      -webkit-text-stroke: 0;
     }
 
     &--disabled {
@@ -328,6 +326,7 @@ body,
 
     &:hover {
       text-decoration: underline;
+      -webkit-text-stroke: 0;
     }
   }
 
@@ -348,6 +347,7 @@ body,
 
       &:hover {
         text-decoration: underline;
+        -webkit-text-stroke: 0;
       }
     }
   }
