@@ -355,7 +355,7 @@
 		return
 	var/turf/turf = get_turf(cell)
 	forceMove(turf)
-	attackby(cell, user) //puts it into the heater
+	try_insert_cell(user, cell, TRUE) //puts it into the heater
 
 /obj/machinery/space_heater/improvised_chem_heater/heating_examine()
 	. = ..()
@@ -424,17 +424,7 @@
 /obj/machinery/space_heater/improvised_chem_heater/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
 	if(istype(tool, /obj/item/stock_parts/power_store/cell))
-		if(cell)
-			to_chat(user, span_warning("There is already a power cell inside!"))
-			return ITEM_INTERACT_BLOCKING
-		if(!user.transferItemToLoc(tool, src))
-			return ITEM_INTERACT_BLOCKING
-		cell = tool
-		tool.add_fingerprint(usr)
-
-		user.visible_message(span_notice("\The [user] inserts a power cell into \the [src]."), span_notice("You insert the power cell into \the [src]."))
-		SStgui.update_uis(src)
-		return ITEM_INTERACT_SUCCESS
+		return try_insert_cell(user, tool)
 
 	//reagent containers
 	if(is_reagent_container(tool) && !(tool.item_flags & ABSTRACT) && tool.is_open_container())
@@ -450,6 +440,22 @@
 		return NONE
 	//Dropper tools
 	tool.interact_with_atom(beaker, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/space_heater/improvised_chem_heater/proc/try_insert_cell(mob/living/user, obj/item/stock_parts/power_store/cell/battery, silent = FALSE)
+	if(cell)
+		to_chat(user, span_warning("There is already a power cell inside!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(battery, src))
+		return ITEM_INTERACT_BLOCKING
+
+	cell = battery
+	battery.add_fingerprint(user)
+
+	if(!silent)
+		user.visible_message(span_notice("\The [user] inserts a power cell into \the [src]."), span_notice("You insert the power cell into \the [src]."))
+	SStgui.update_uis(src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/space_heater/crowbar_act(mob/living/user, obj/item/tool)

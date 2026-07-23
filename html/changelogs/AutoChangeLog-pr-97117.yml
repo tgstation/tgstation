@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - bugfix: "It no longer looks like you have accessories attached after you've removed them."
