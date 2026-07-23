@@ -27,7 +27,7 @@
 	if(ismob(thrower) && bartender_check(target, thrower) && throwingdatum)
 		return FALSE
 	var/splash_target = QDELETED(target) ? target.drop_location() : target
-	var/splash_thrower = ismob(thrower) ? thrower || throwingdatum?.get_thrower() : null
+	var/splash_thrower = ismob(thrower) ? thrower : null
 	splash_reagents(splash_target, splash_thrower, allow_closed_splash = TRUE)
 	var/obj/item/broken_bottle/broken = new (loc)
 	broken.mimic_broken(src, target, break_top)
