@@ -161,7 +161,7 @@
 	else
 		user.visible_message(
 			span_warning("[user] smashes [src] [head_hitter ? "over [target]'s head" : "against [target]"]!"),
-			span_warning("[user] smashes [src] [head_hitter ? "over your head" : "against you"]!"),
+			span_warning("You smash [src] [head_hitter ? "over [target]'s head" : "against [target]"]!"),
 		)
 
 	// Finally, smash the bottle. This kills (del) the bottle and also does all the logging for us
