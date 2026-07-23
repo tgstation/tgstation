@@ -83,7 +83,7 @@
 
 	var/list/cached_moles = moles
 	var/list/cached_moles_archive = moles_archive
-	for(var/gas_id in mix)
-		cached_moles[gas_id] = cached_moles_archive[gas_id] = mix[gas_id]
+	for(var/gas_id, value in mix)
+		cached_moles[gas_id] = cached_moles_archive[gas_id] = value
 
 

@@ -91,14 +91,14 @@
 	var/removal_ratio =  min(1, volume_rate / environment.volume)
 
 	var/total_moles_to_remove = 0
-	for(var/gas_id in cached_moles & scrubbing)
-		total_moles_to_remove += cached_moles[gas_id]
+	for(var/gas_id, value in cached_moles & scrubbing)
+		total_moles_to_remove += value
 
 	if(!total_moles_to_remove)//no gases to remove
 		return FALSE
 
-	for(var/gas_id in cached_moles & scrubbing)
-		var/transferred_moles = max(QUANTIZE(cached_moles[gas_id] * removal_ratio * (cached_moles[gas_id] / total_moles_to_remove)), min(MOLAR_ACCURACY*1000, cached_moles[gas_id]))
+	for(var/gas_id, value in cached_moles & scrubbing)
+		var/transferred_moles = max(QUANTIZE(value * removal_ratio * (value / total_moles_to_remove)), min(MOLAR_ACCURACY*1000, value))
 
 		filtered_out.moles[gas_id] += transferred_moles
 		cached_moles[gas_id] -= transferred_moles
