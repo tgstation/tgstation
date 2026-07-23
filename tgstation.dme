@@ -4257,6 +4257,7 @@
 #include "code\modules\client\preferences\silicon_gender.dm"
 #include "code\modules\client\preferences\skin_tone.dm"
 #include "code\modules\client\preferences\sounds.dm"
+#include "code\modules\client\preferences\spacer_born.dm"
 #include "code\modules\client\preferences\species.dm"
 #include "code\modules\client\preferences\statpanel.dm"
 #include "code\modules\client\preferences\status_bar.dm"
