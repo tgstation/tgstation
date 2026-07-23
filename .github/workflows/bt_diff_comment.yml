@@ -1,0 +1,33 @@
+# Uploads the rendered images and posts the PR comment. Runs on workflow_run.
+name: Behavior tree diff comment
+
+on:
+  workflow_run:
+    workflows: ["Behavior tree diff"]
+    types: [completed]
+
+permissions:
+  contents: read
+  pull-requests: write
+  actions: read
+
+jobs:
+  comment:
+    name: Post behavior tree diff comment
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Download rendered diffs
+        uses: actions/download-artifact@v4
+        with:
+          name: bt-diff
+          path: bt-diff-out
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload images and comment
+        uses: tgstation/BehaviorTreeG@main
+        with:
+          mode: publish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          file-house-key: ${{ secrets.FILE_HOUSE_KEY }}
