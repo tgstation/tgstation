@@ -131,7 +131,7 @@ export function EscapeMenu() {
     });
   }, []);
 
-  if (!state.serverState || !state.isOpen) {
+  if (!state.serverState) {
     return null;
   }
 
