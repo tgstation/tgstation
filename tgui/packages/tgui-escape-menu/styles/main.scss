@@ -307,7 +307,7 @@ body,
   }
 
   &__player-section-title {
-    font-size: 2vw;
+    font-size: 3vw;
     font-weight: bold;
     margin-bottom: 1.2vh;
     padding-bottom: 0.4vh;
@@ -333,7 +333,7 @@ body,
   }
 
   &__player-name {
-    font-size: 1.4vw;
+    font-size: 2vw;
     overflow-wrap: break-word;
 
     &:hover {
@@ -343,13 +343,13 @@ body,
   }
 
   &__player-ping {
-    font-size: 1vw;
+    font-size: 1.4vw;
     color: #777;
     font-family: 'Grand9K Pixel', monospace;
   }
 
   &__player-rank {
-    font-size: 1vw;
+    font-size: 1.4vw;
     color: #aaa;
     font-family: 'Grand9K Pixel', monospace;
 

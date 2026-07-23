@@ -159,6 +159,7 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 			"feedbackLink" = admin.holder?.feedback_link(),
 			"ping" = round(admin.avgping, 1),
 			"ignored" = (admin.ckey in client?.prefs?.ignoring),
+			"isSelf" = (admin.ckey == client?.ckey),
 		))
 	return result
 
@@ -170,6 +171,7 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 			"displayName" = player.ckey,
 			"ping" = round(player.avgping, 1),
 			"ignored" = (player.ckey in client?.prefs?.ignoring),
+			"isSelf" = (player.ckey == client?.ckey),
 		))
 	return result
 
@@ -250,7 +252,7 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 			client?.admin_notice()
 		if("toggle_ignore")
 			var/ckey = payload["ckey"]
-			if(!ckey)
+			if(!ckey || ckey == client?.ckey)
 				return TRUE
 			if(ckey in client?.prefs?.ignoring)
 				client.prefs.ignoring -= ckey

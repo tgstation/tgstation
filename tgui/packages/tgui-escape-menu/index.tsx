@@ -3,7 +3,11 @@ import './styles/main.scss';
 import { loadMappings, loadStyleSheet } from 'common/assets';
 import { createRoot, type Root } from 'react-dom/client';
 import { assetMap } from './assets';
-import { EscapeMenu } from './EscapeMenu';
+import {
+  clearSkipNextResize,
+  EscapeMenu,
+  getSkipNextResize,
+} from './EscapeMenu';
 
 const ICON_SCALE_BASE_WIDTH = 800;
 
@@ -17,7 +21,15 @@ document.onreadystatechange = () => {
     document.documentElement.style.setProperty('--icon-scale', `${scale}`);
   }
   updateIconScale();
-  window.addEventListener('resize', updateIconScale);
+
+  window.addEventListener('resize', () => {
+    if (getSkipNextResize()) {
+      clearSkipNextResize();
+      return;
+    }
+    document.documentElement.style.width = '';
+    updateIconScale();
+  });
 
   if (!reactRoot) {
     const root = document.getElementById('react-root');

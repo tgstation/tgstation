@@ -102,7 +102,10 @@ function PlayerEntry({
         (player.ignored ? ' escape-menu__player-entry--ignored' : '')
       }
     >
-      <span className="escape-menu__player-name" onClick={onToggleIgnore}>
+      <span
+        className="escape-menu__player-name"
+        onClick={player.isSelf ? undefined : onToggleIgnore}
+      >
         {player.displayName}
         {player.ping !== undefined && (
           <span className="escape-menu__player-ping"> ({player.ping}ms)</span>
