@@ -923,7 +923,7 @@
 
 	old_bodypart.on_removal(src)
 	bodyparts -= old_bodypart
-	real_bodypart_cache -= old_bodypart
+	real_bodypart_cache -= old_bodypart.body_zone
 
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
