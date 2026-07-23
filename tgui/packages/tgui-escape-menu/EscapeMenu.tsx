@@ -96,6 +96,7 @@ export function isResizeFrozen() {
 function openMenu(dispatch: React.Dispatch<Action>) {
   setTimeout(() => {
     document.documentElement.style.width = '';
+    document.documentElement.style.height = '';
     resizeFrozen = false;
   }, 50);
   playOpenSounds();
@@ -106,6 +107,7 @@ function openMenu(dispatch: React.Dispatch<Action>) {
 function closeMenu(dispatch: React.Dispatch<Action>) {
   resizeFrozen = true;
   document.documentElement.style.width = `${window.innerWidth}px`;
+  document.documentElement.style.height = `${window.innerHeight}px`;
   Byond.winset('mapwindow.escape_menu', { 'is-visible': false });
   Byond.winset('map', { focus: true });
   playCloseSounds();
