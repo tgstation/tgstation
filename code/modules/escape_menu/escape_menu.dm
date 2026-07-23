@@ -5,6 +5,7 @@ GLOBAL_VAR(escape_menu_suicide_icon_base64)
 	if(!isnull(GLOB.escape_menu_suicide_icon_base64))
 		return
 	GLOB.escape_menu_suicide_icon_base64 = ""
+	UNTIL(MC_RUNNING(SSatoms.init_stage))
 	var/mob/living/carbon/human/consistent/clown = new
 	clown.equipOutfit(/datum/outfit/job/clown)
 	var/icon/clown_icon = getFlatIcon(clown)
