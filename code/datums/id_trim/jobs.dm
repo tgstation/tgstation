@@ -250,6 +250,7 @@
 		ACCESS_RC_ANNOUNCE,
 		ACCESS_TELEPORTER,
 		ACCESS_WEAPONS,
+		ACCESS_CONSTRUCTION,
 	)
 	extra_access = list()
 	template_access = list(
@@ -257,7 +258,7 @@
 		ACCESS_CHANGE_IDS,
 	)
 	job = /datum/job/bridge_assistant
-	honorifics = list("Underling", "Assistant", "Mate")
+	honorifics = list("Underling", "Honorary Assistant", "Mate", "Coffeemaker")
 	honorific_positions = HONORIFIC_POSITION_FIRST | HONORIFIC_POSITION_LAST | HONORIFIC_POSITION_FIRST_FULL | HONORIFIC_POSITION_NONE
 
 /datum/id_trim/job/captain

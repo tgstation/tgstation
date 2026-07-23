@@ -161,8 +161,11 @@
             hsla(60, 100%, 39.2%, 1);
         }
 
-        .job-name {
+        &.head .job-name {
           font-size: 17px;
+        }
+
+        .job-name {
           &.hovered {
             background: colors.hover(colors.fg(var(--department-color)));
           }

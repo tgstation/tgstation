@@ -347,3 +347,15 @@
 	new /obj/item/clothing/under/rank/security/officer/skirt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/flashlight/seclite(src)
+
+/obj/structure/closet/secure_closet/bridge_officer
+	name = "bridge assistant's locker"
+	icon_state = "ba"
+	req_access = list(ACCESS_COMMAND)
+
+/obj/structure/closet/secure_closet/bridge_officer/PopulateContents()
+	..()
+	new /obj/item/holosign_creator/engineering(src)
+	new /obj/item/storage/bag/construction(src)
+	new /obj/item/stock_parts/power_store/battery/high(src)
+	new /obj/item/storage/bag/garment/bridge_assistant(src)

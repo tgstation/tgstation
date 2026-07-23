@@ -252,6 +252,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "science_sec"
 	department = SEC_DEPT_SCIENCE
 
+/obj/effect/landmark/start/bridge_assistant
+	name = "Bridge Assistant"
+	icon_state = "bridge_assistant"
+
 //Antagonist spawns
 
 /obj/effect/landmark/start/wizard

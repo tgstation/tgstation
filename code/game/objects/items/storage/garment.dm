@@ -43,6 +43,10 @@
 	name = "EMT's garment bag"
 	desc = "A bag for storing extra clothes and shoes. This one belongs to the emergency medical team."
 
+/obj/item/storage/bag/garment/bridge_assistant
+	name = "bridge assistant's garment bag"
+	desc = "A bag for storing extra clothes and shoes. This one belongs to the bridge assistant."
+
 /obj/item/storage/bag/garment/captain/PopulateContents()
 	new /obj/item/clothing/under/rank/captain(src)
 	new /obj/item/clothing/under/rank/captain/skirt(src)
@@ -170,3 +174,15 @@
 	new /obj/item/clothing/gloves/latex/nitrile(src)
 	new /obj/item/clothing/shoes/workboots/black(src)
 	new /obj/item/clothing/glasses/hud/health(src)
+
+/obj/item/storage/bag/garment/bridge_assistant/PopulateContents()
+	new /obj/item/clothing/gloves/color/yellow/heavy(src)
+	new /obj/item/clothing/under/trek/command(src)
+	new /obj/item/clothing/under/trek/command/next(src)
+	new /obj/item/clothing/under/trek/command/voy(src)
+	new /obj/item/clothing/under/trek/command/ent(src)
+	new /obj/item/clothing/head/soft/black/nanotrasen(src)
+	new /obj/item/clothing/glasses/sunglasses(src)
+	new /obj/item/clothing/shoes/laceup(src)
+
+
