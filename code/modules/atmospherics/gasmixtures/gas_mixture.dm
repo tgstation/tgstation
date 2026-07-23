@@ -213,8 +213,8 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	var/list/cached_removed_moles = removed.moles //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
-	for(var/id in cached_moles)
-		cached_removed_moles[id] = QUANTIZE(cached_moles[id] * ratio)
+	for(var/id, value in cached_moles)
+		cached_removed_moles[id] = QUANTIZE(value * ratio)
 		cached_moles[id] -= cached_removed_moles[id]
 
 	garbage_collect()
@@ -235,8 +235,8 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	var/list/cached_removed_moles = removed.moles //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
-	for(var/id in cached_moles)
-		cached_removed_moles[id] = QUANTIZE(cached_moles[id] * ratio)
+	for(var/id, value in cached_moles)
+		cached_removed_moles[id] = QUANTIZE(value * ratio)
 		cached_moles[id] -= cached_removed_moles[id]
 
 	garbage_collect()
@@ -537,10 +537,10 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 			if((reqs["MIN_TEMP"] && temp < reqs["MIN_TEMP"]) || (reqs["MAX_TEMP"] && temp > reqs["MAX_TEMP"]))
 				continue
 
-			for(var/id in reqs)
+			for(var/id, value in reqs)
 				if (id == "MIN_TEMP" || id == "MAX_TEMP")
 					continue
-				if(cached_moles[id] < reqs[id])
+				if(cached_moles[id] < value)
 					continue reaction_loop
 
 			//at this point, all requirements for the reaction are satisfied. we can now react()
@@ -796,8 +796,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 	var/list/gases_to_check = acceptable_gas_bounds.Copy() // thank you spaceman
 	var/list/cached_moles = moles
-	for(var/id in cached_moles)
-		var/gas_moles = cached_moles[id]
+	for(var/id, gas_moles in cached_moles)
 		if(!(id in gases_to_check))
 			if(gas_moles > extraneous_gas_limit)
 				return FALSE
