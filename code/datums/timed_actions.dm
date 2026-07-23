@@ -216,7 +216,7 @@
 	ASSERT(!isnum(target), "a do_after created by [user] had a target set as [target] - probably intended to be the time instead.")
 	ASSERT(!isatom(delay), "a do_after created by [user] had a timer of [delay] - probably intended to be the target instead.")
 
-	if (delay == 0)
+	if (delay <= 0)
 		return TRUE
 
 	if(!interaction_key && ismob(user))
