@@ -42,8 +42,8 @@
 	var/change_exempt_flags = NONE
 	///Random flags that describe this bodypart
 	var/bodypart_flags = BODYPART_VIRGIN
-	///Does this part have an internal or external anatomy biostate? Assigned on init based on biological_state, do not modify
-	var/bio_status = NONE
+	///Does this part have an internal or external anatomy biostate? Assigned on init based on biological_state
+	VAR_FINAL/bio_status = NONE
 	///Mangling state (interior, exterior) of the bodypart
 	var/mangled_state = BODYPART_MANGLED_NONE
 
@@ -763,7 +763,7 @@
 					wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
 				wounding_type = WOUND_BLUNT
 
-		if (((exterior_ready_to_dismember && interior_ready_to_dismember) || dismemberable_by_total_damage(mangled_state)) && try_dismember(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus))
+		if (((exterior_ready_to_dismember && interior_ready_to_dismember) || dismemberable_by_total_damage()) && try_dismember(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus))
 			return
 		// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
 		if(wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)
