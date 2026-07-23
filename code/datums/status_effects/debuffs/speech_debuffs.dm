@@ -77,9 +77,12 @@
 	/// * 2nd capture group is either a digraph (th, qu, ch) or a consonant
 	/// * 3rd capture group is the rest of the word (can be empty)
 	VAR_FINAL/static/regex/stutter_regex
+	/// Cyrillic version of the stutter regex for UTF-8 speech.
+	VAR_FINAL/static/regex/stutter_regex_cyrillic // BANDASTATION EDIT: Enhance social anxiety quirk
 
 /datum/status_effect/speech/stutter/on_creation(mob/living/new_owner, ...)
 	stutter_regex ||= regex(@@^([\s"'()[\]{}.!?,:;_`~-]*\b)([^aeoiuh\d]h|qu|[^\d])(.*)@, "i")
+	stutter_regex_cyrillic ||= regex(@@^([\s"'()[\]{}.!?,:;_`~-]*)([бвгджзйклмнпрстфхцчшщБВГДЖЗЙКЛМНПРСТФХЦЧШЩ])(.*)@) // BANDASTATION EDIT: Enhance social anxiety quirk
 	return ..()
 
 /datum/status_effect/speech/stutter/apply_speech(original_word, index)
@@ -88,7 +91,10 @@
 
 	if(stutter_regex.Find(original_word))
 		return "[stutter_regex.group[1]][stutter_char(stutter_regex.group[2])][stutter_regex.group[3]]"
-
+	// BANDASTATION EDIT START: Enhance social anxiety quirk
+	if(stutter_regex_cyrillic.Find(original_word))
+		return "[stutter_regex_cyrillic.group[1]][stutter_char(stutter_regex_cyrillic.group[2])][stutter_regex_cyrillic.group[3]]"
+	// BANDASTATION EDIT START: Enhance social anxiety quirk
 	return original_word // i give up
 
 /datum/status_effect/speech/stutter/proc/stutter_char(some_char)

@@ -47,23 +47,9 @@
 	if(HAS_TRAIT(source, TRAIT_SIGN_LANG)) // No modifiers for signers, so you're less anxious when you go non-verbal
 		return
 
+	// BANDASTATION EDIT START: Enhance social anxiety quirk
 	var/moodmod = calculate_mood_mod()
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message)
-		var/list/message_split = splittext(message, " ")
-		var/list/new_message = list()
-		for(var/word in message_split)
-			if(prob(max(5, moodmod)) && word != message_split[1]) //Minimum 1/20 chance of filler
-				new_message += pick("ээ,","эмм,","ам,")
-				if(prob(min(5, moodmod))) //Max 1 in 20 chance of cutoff after a successful filler roll, for 50% odds in a 15 word sentence
-					quirk_holder.set_silence_if_lower(6 SECONDS)
-					to_chat(quirk_holder, span_danger("Вы чувствуете себя неловко и перестаете говорить. Вам нужно время, чтобы прийти в себя!"))
-					break
-			new_message += word
-
-		message = jointext(new_message, " ")
-
-	if(prob(min(50, (0.50 * moodmod)))) //Max 50% chance of not talking
+	if(prob(min(20, (0.20 * moodmod)))) //Max 20% chance of not talking
 		if(dumb_thing)
 			to_chat(quirk_holder, span_userdanger("Вы вспоминаете глупость, которую сказали давным-давно, и внутренне кричите."))
 			dumb_thing = FALSE //only once per life
@@ -71,13 +57,12 @@
 				new/obj/item/food/spaghetti/pastatomato(get_turf(quirk_holder)) //now that's what I call spaghetti code
 		else
 			to_chat(quirk_holder, span_warning("Вы думаете, что это не добавит ничего нового к разговору, и решаете не говорить об этом."))
-			if(prob(min(25, (0.25 * moodmod)))) //Max 25% chance of silence stacks after successful not talking roll
-				to_chat(quirk_holder, span_danger("Вы уходите в себя. Вы <i>действительно<i> не настроены на разговор."))
-				quirk_holder.set_silence_if_lower(10 SECONDS)
+			if(prob(min(20, (0.20 * moodmod)))) //Max 20% chance of silence stacks after successful not talking roll
+				to_chat(quirk_holder, span_danger("Вы уходите в себя. Вы <i>действительно</i> не настроены на разговор."))
+				quirk_holder.set_silence_if_lower(6 SECONDS)
 
-		speech_args[SPEECH_MESSAGE] = pick("Ээ.","Эмм.","Ам.")
-	else
-		speech_args[SPEECH_MESSAGE] = message
+		speech_args[SPEECH_MESSAGE] = pick("Э-э-эм.","Эмм.","Ам.", "Ммм.", "Х-э-эм.", "Ну.", "Ой.", "Простите.", "Извините.")
+	// BANDASTATION EDIT END: Enhance social anxiety quirk
 
 // small chance to make eye contact with inanimate objects/mindless mobs because of nerves
 /datum/quirk/social_anxiety/proc/looks_at_floor(datum/source, atom/A)
