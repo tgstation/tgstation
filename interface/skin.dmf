@@ -146,7 +146,7 @@ window "infobuttons"
 		background-color = none
 		saved-params = "is-checked"
 		text = "Menu"
-		command = ".output mapwindow.escape_menu:update %7B%22type%22%3A%22toggle%22%2C%22payload%22%3Anull%7D\n.winset \"mapwindow.escape_menu.is-visible=true?mapwindow.escape_menu.is-visible=false:mapwindow.escape_menu.is-visible=true\""
+		command = ".winset \"mapwindow.escape_menu.is-visible=true?mapwindow.escape_menu.is-visible=false:mapwindow.escape_menu.is-visible=true\"\n.output mapwindow.escape_menu:update %7B%22type%22%3A%22toggle%22%2C%22payload%22%3Anull%7D"
 	elem "hotkeys"
 		type = BUTTON
 		pos = 92,5

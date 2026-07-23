@@ -36,7 +36,7 @@ export function AdminPage({ serverState, onNavigate, onAction }: Props) {
           See Admin Notices
         </MenuButton>
         <MenuButton onClick={() => onAction('pray')}>Pray</MenuButton>
-        {serverState.canSeeNotes && (
+        {!!serverState.canSeeNotes && (
           <MenuButton onClick={() => onAction('see_notes')}>
             See Notes
           </MenuButton>

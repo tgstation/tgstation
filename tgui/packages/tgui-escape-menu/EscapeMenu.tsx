@@ -61,9 +61,9 @@ type Action =
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'open':
-      return { ...state, isOpen: true, page: 'home', showResources: false };
+      return { ...state, isOpen: true };
     case 'close':
-      return { ...state, isOpen: false, showResources: false };
+      return { ...state, isOpen: false, page: 'home', showResources: false };
     case 'navigate':
       return { ...state, page: action.page, showResources: false };
     case 'toggleResources':
@@ -120,13 +120,6 @@ export function EscapeMenu() {
         closeMenu(dispatch);
       } else {
         openMenu(dispatch);
-      }
-    });
-
-    document.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        closeMenu(dispatch);
       }
     });
   }, []);

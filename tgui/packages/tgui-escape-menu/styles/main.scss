@@ -41,6 +41,9 @@ body,
   color: white;
   -webkit-text-stroke: 0.15vw black;
   paint-order: stroke fill;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  text-rendering: optimizeSpeed;
 
   &__overlay {
     position: absolute;
@@ -101,7 +104,7 @@ body,
 
     &--page {
       position: absolute;
-      top: 15vh;
+      top: 20vh;
       left: var(--content-margin);
     }
   }
@@ -138,7 +141,7 @@ body,
 
   &__back-button {
     position: absolute;
-    top: 2vh;
+    top: 5vh;
     left: 2vw;
     background: none;
     border: none;
@@ -153,7 +156,7 @@ body,
     gap: 0.3vh;
 
     .escape-menu__icon-button {
-      transform: scale(calc(var(--icon-scale, 1.5) * 0.66));
+      transform: scale(var(--icon-scale, 1.5));
     }
 
     &:hover {
@@ -291,7 +294,7 @@ body,
 
   &__player-list {
     position: absolute;
-    top: 12vh;
+    top: 20vh;
     left: var(--content-margin);
     right: calc(var(--details-width) + var(--details-gap));
     bottom: var(--content-margin);
