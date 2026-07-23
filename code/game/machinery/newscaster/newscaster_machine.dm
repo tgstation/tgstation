@@ -637,12 +637,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 /obj/machinery/newscaster/proc/news_alert(channel)
 	if(channel)
 		alert = TRUE
+		say("Breaking news from [channel]!")
+		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 75, TRUE)
 		update_appearance()
 		addtimer(CALLBACK(src, PROC_REF(remove_alert)), ALERT_DELAY, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 	else
 		say("Attention! Wanted issue distributed!")
-		playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, TRUE)
+		playsound(src, 'sound/machines/warning-buzzer.ogg', 75, TRUE)
 
 /**
  * Performs a series of sanity checks before giving the user confirmation to create a new feed_channel using channel_name, and channel_desc.
