@@ -345,10 +345,8 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 /datum/gas_mixture/proc/copy_from_ratio(datum/gas_mixture/sample, partial = 1)
 	var/list/cached_moles = moles //accessing datum vars is slower than proc vars
 	var/list/sample_cached_moles = sample.moles
-
-	//remove all gases not in the sample
-	cached_moles &= sample_cached_moles
-
+	// Remove all gases (sample overrides our values anyways)
+	cached_moles.Cut()
 	temperature = sample.temperature
 	for(var/gas_id, amount in sample_cached_moles)
 		cached_moles[gas_id] = amount * partial
