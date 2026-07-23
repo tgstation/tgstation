@@ -647,11 +647,19 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * * update_storage - should we update the parent to show visual effects
  */
 /datum/storage/proc/remove_all(atom/drop_loc = parent.drop_location(), update_storage = TRUE)
+	block_insert_remove_updates = TRUE
 	for(var/obj/item/thing in real_location)
-		if(!attempt_remove(thing, drop_loc, silent = TRUE, visual_updates = update_storage))
+		if(!attempt_remove(thing, drop_loc, silent = TRUE, visual_updates = FALSE))
 			continue
 		thing.pixel_x = thing.base_pixel_x + rand(-8, 8)
 		thing.pixel_y = thing.base_pixel_y + rand(-8, 8)
+
+	block_insert_remove_updates = FALSE
+	if(update_storage)
+		if(animated)
+			animate_parent()
+		refresh_views()
+		parent.update_appearance()
 
 /**
  * Allows a mob to attempt to remove a single item from the storage
