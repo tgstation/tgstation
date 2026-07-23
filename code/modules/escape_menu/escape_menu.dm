@@ -1,8 +1,27 @@
+GLOBAL_VAR(escape_menu_suicide_icon_base64)
+
+/proc/generate_escape_menu_suicide_icon()
+	set waitfor = FALSE
+	if(!isnull(GLOB.escape_menu_suicide_icon_base64))
+		return
+	GLOB.escape_menu_suicide_icon_base64 = ""
+	var/mob/living/carbon/human/consistent/clown = new
+	clown.equipOutfit(/datum/outfit/job/clown)
+	var/icon/clown_icon = getFlatIcon(clown)
+	clown_icon.Turn(90)
+	qdel(clown)
+	GLOB.escape_menu_suicide_icon_base64 = icon2base64(clown_icon)
+	for(var/datum/escape_menu/menu as anything in GLOB.escape_menus)
+		menu.send_update(list("suicideIcon" = GLOB.escape_menu_suicide_icon_base64))
+
+GLOBAL_LIST_EMPTY(escape_menus)
+
 /client/var/datum/escape_menu/escape_menu
 
 /client/proc/initialize_escape_menu()
 	set waitfor = FALSE
 	sleep(3 SECONDS)
+	generate_escape_menu_suicide_icon()
 	escape_menu = new(src)
 
 GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
@@ -35,9 +54,11 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 	RegisterSignal(SSdcs, COMSIG_GLOB_STATION_NAME_CHANGED, PROC_REF(on_station_name_changed))
 	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
 
+	GLOB.escape_menus += src
 	send_init()
 
 /datum/escape_menu/Destroy(force)
+	GLOB.escape_menus -= src
 	STOP_PROCESSING(SSescape_menu, src)
 	window?.unsubscribe(src)
 	window = null
@@ -125,6 +146,7 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 		"players" = build_player_list(),
 		"ignoredOffline" = build_ignored_offline(),
 		"resources" = resources,
+		"suicideIcon" = GLOB.escape_menu_suicide_icon_base64,
 	))
 
 /datum/escape_menu/proc/build_admin_list()

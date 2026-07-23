@@ -61,14 +61,6 @@
 	for(var/state in icon_states(icons_large))
 		Insert("leave-[state]", icons_large, icon_state = state)
 
-	var/mob/living/carbon/human/consistent/clown = new
-	clown.equipOutfit(/datum/outfit/job/clown)
-	var/icon/clown_icon = getFlatIcon(clown)
-	clown_icon.Turn(90)
-	clown_icon.Scale(96, 96)
-	Insert("leave-suicide", clown_icon)
-	qdel(clown)
-
 /datum/asset/simple/chat_dark
 	keep_local_name = FALSE
 	assets = list(

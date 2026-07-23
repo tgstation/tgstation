@@ -35,6 +35,7 @@ export type ServerState = {
   admins: PlayerInfo[];
   players: PlayerInfo[];
   ignoredOffline: string[];
+  suicideIcon: string | null;
 };
 
 export type ResourceLink = {
@@ -189,7 +190,11 @@ export function EscapeMenu() {
           />
         )}
         {state.page === 'leave_body' && (
-          <LeaveBodyPage onNavigate={navigate} onAction={handleAction} />
+          <LeaveBodyPage
+            serverState={state.serverState}
+            onNavigate={navigate}
+            onAction={handleAction}
+          />
         )}
         {state.page === 'quit' && (
           <QuitPage onNavigate={navigate} onAction={handleAction} />
