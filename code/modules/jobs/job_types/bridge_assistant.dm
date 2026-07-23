@@ -22,7 +22,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_BRIDGE_ASSISTANT
 	departments_list = list(/datum/job_department/command)
-	department_for_prefs = /datum/job_department/captain
+	department_for_prefs = /datum/job_department/command
 	family_heirlooms = list(/obj/item/banner/command/mundane)
 
 	mail_goodies = list(

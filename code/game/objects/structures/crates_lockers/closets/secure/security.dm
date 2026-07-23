@@ -359,3 +359,4 @@
 	new /obj/item/storage/bag/construction(src)
 	new /obj/item/stock_parts/power_store/battery/high(src)
 	new /obj/item/storage/bag/garment/bridge_assistant(src)
+	new /obj/item/reagent_containers/cup/soda_cans/grey_bull(src)

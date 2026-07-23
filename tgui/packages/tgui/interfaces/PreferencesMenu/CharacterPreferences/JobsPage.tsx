@@ -348,7 +348,7 @@ function Department(props: DepartmentProps) {
   const data = useServerPrefs();
   if (!data) return;
 
-  const { departments, jobs, jobs_sorted} = data.jobs;
+  const { departments, jobs, jobs_sorted } = data.jobs;
   const department = departments[name];
 
   // This isn't necessarily a bug, it's like this
@@ -582,6 +582,13 @@ export function JobsPage() {
             <Stack.Item>
               <Stack vertical>
                 <PriorityHeaders />
+                <Department
+                  department="Command"
+                  dragging={dragging}
+                  setDragging={setDragging}
+                  hoveringOver={hoveringOver}
+                  setHoveringOver={setHoveringOver}
+                />
                 <Department
                   department="Security"
                   dragging={dragging}

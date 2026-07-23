@@ -176,7 +176,7 @@
 	new /obj/item/clothing/glasses/hud/health(src)
 
 /obj/item/storage/bag/garment/bridge_assistant/PopulateContents()
-	new /obj/item/clothing/gloves/color/yellow/heavy(src)
+	new /obj/item/clothing/gloves/cut(src)
 	new /obj/item/clothing/under/trek/command(src)
 	new /obj/item/clothing/under/trek/command/next(src)
 	new /obj/item/clothing/under/trek/command/voy(src)
