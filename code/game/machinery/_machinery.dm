@@ -1101,6 +1101,8 @@
 	var/list/part_list = replacer_tool.get_sorted_parts(ignore_stacks = TRUE)
 	if(!part_list.len)
 		return FALSE
+
+	var/update_storage = FALSE
 	for(var/primary_part_base in component_parts)
 		//we exchanged all we could time to bail
 		if(!part_list.len)
@@ -1136,7 +1138,8 @@
 			if(secondary_part.get_part_rating() > current_rating)
 				//store name of part incase we qdel it below
 				var/secondary_part_name = secondary_part.name
-				if(replacer_tool.atom_storage.attempt_remove(secondary_part, src))
+				if(replacer_tool.atom_storage.attempt_remove(secondary_part, src, silent = TRUE, visual_updates = FALSE))
+					update_storage = TRUE
 					if (istype(primary_part_base, /datum/stock_part))
 						var/stock_part_datum = GLOB.stock_part_datums_per_object[secondary_part.type]
 						if (isnull(stock_part_datum))
@@ -1159,7 +1162,7 @@
 				else
 					physical_part = primary_part_base
 
-				replacer_tool.atom_storage.attempt_insert(physical_part, user, TRUE, force = STORAGE_SOFT_LOCKED)
+				replacer_tool.atom_storage.attempt_insert(physical_part, user, override = TRUE, force = STORAGE_SOFT_LOCKED, messages = FALSE)
 				to_chat(user, span_notice("[capitalize(physical_part.name)] replaced with [secondary_part_name]."))
 				shouldplaysound = TRUE //Only play the sound when parts are actually replaced!
 				break
@@ -1168,6 +1171,9 @@
 
 	if(shouldplaysound)
 		replacer_tool.play_rped_effect()
+	if(update_storage)
+		replacer_tool.atom_storage.refresh_views()
+
 	return TRUE
 
 /obj/machinery/proc/display_parts(mob/user)
