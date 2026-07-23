@@ -73,8 +73,9 @@
 	var/obj/item/circuitboard/computer/atmos_alert/my_circuit = circuit
 	for (var/obj/machinery/airalarm/air_alarm as anything in GLOB.air_alarms)
 		// If the circuit has station_only, check if alarm areas are in the station list
-		if(my_circuit.station_only && !station_alert_areas[air_alarm.my_area.type])
-			continue
+		if(my_circuit.station_only)
+			if(!station_alert_areas[air_alarm.my_area.type])
+				continue
 		// Otherwise just check if alarms match the console's z-level
 		else if (air_alarm.z != z)
 			continue
