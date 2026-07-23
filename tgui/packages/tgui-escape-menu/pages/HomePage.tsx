@@ -47,35 +47,39 @@ export function HomePage({
 
   return (
     <>
-      <div className="escape-menu__title">
-        <div className="escape-menu__subtitle">Another day on...</div>
-        <div className="escape-menu__station-name">
-          {serverState.stationName}
+      <div className="escape-menu__home-column">
+        <div className="escape-menu__title">
+          <div className="escape-menu__subtitle">Another day on...</div>
+          <div className="escape-menu__station-name">
+            {serverState.stationName}
+          </div>
         </div>
-      </div>
-      <div className="escape-menu__buttons">
-        <MenuButton onClick={() => onAction('resume')}>Resume</MenuButton>
-        <MenuButton onClick={() => onAction('character')}>Character</MenuButton>
-        <MenuButton onClick={() => onAction('settings')}>Settings</MenuButton>
-        <MenuButton onClick={() => onNavigate('players')}>Players</MenuButton>
-        <MenuButton
-          onClick={() => onNavigate('admin')}
-          blinking={serverState.hasTicketNotification}
-          tooltip={
-            serverState.hasTicketNotification
-              ? 'An admin is trying to talk to you!'
-              : undefined
-          }
-        >
-          Admin Help
-        </MenuButton>
-        <MenuButton
-          onClick={() => onNavigate('leave_body')}
-          disabled={!serverState.canLeaveBody}
-        >
-          Leave Body
-        </MenuButton>
-        <MenuButton onClick={() => onNavigate('quit')}>Quit</MenuButton>
+        <div className="escape-menu__buttons">
+          <MenuButton onClick={() => onAction('resume')}>Resume</MenuButton>
+          <MenuButton onClick={() => onAction('character')}>
+            Character
+          </MenuButton>
+          <MenuButton onClick={() => onAction('settings')}>Settings</MenuButton>
+          <MenuButton onClick={() => onNavigate('players')}>Players</MenuButton>
+          <MenuButton
+            onClick={() => onNavigate('admin')}
+            blinking={serverState.hasTicketNotification}
+            tooltip={
+              serverState.hasTicketNotification
+                ? 'An admin is trying to talk to you!'
+                : undefined
+            }
+          >
+            Admin Help
+          </MenuButton>
+          <MenuButton
+            onClick={() => onNavigate('leave_body')}
+            disabled={!serverState.canLeaveBody}
+          >
+            Leave Body
+          </MenuButton>
+          <MenuButton onClick={() => onNavigate('quit')}>Quit</MenuButton>
+        </div>
       </div>
       <div className="escape-menu__resources">
         {mounted && (

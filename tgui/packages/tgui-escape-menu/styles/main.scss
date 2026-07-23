@@ -26,15 +26,24 @@ body,
 
 .Tooltip {
   font-family: 'Pixellari', monospace;
-  transform: translateY(-16px);
+  transform: translateY(-1.5vh);
 }
 
 .escape-menu {
+  --details-width: 25vw;
+  --content-margin: 4vw;
+  --details-gap: 3vw;
+
   position: relative;
   width: 100%;
   height: 100%;
   font-family: 'Pixellari', 'Grand9K Pixel', monospace;
   color: white;
+  text-shadow:
+    1px 1px 0 black,
+    -1px -1px 0 black,
+    1px -1px 0 black,
+    -1px 1px 0 black;
 
   &__overlay {
     position: absolute;
@@ -50,45 +59,53 @@ body,
     height: 100%;
   }
 
-  &__title {
+  &__home-column {
     position: absolute;
-    top: 50px;
-    left: 50px;
+    top: var(--content-margin);
+    left: var(--content-margin);
+    max-width: calc(
+      100% - var(--content-margin) - var(--details-width) - var(--details-gap)
+    );
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    margin-bottom: 2vh;
   }
 
   &__subtitle {
-    font-size: 18px;
+    font-size: 1.8vw;
     color: #ccc;
-    margin-bottom: 4px;
+    margin-bottom: 0.4vh;
   }
 
   &__station-name {
-    font-size: 56px;
+    font-size: 5vw;
     font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   }
 
   &__details {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 2vh;
+    right: 2vw;
+    width: var(--details-width);
     text-align: right;
-    font-size: 18px;
+    font-size: 1.8vw;
     line-height: 1.5;
     color: #ddd;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    z-index: 2;
   }
 
   &__buttons {
-    position: absolute;
-    top: 200px;
-    left: 50px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 0.4vh;
 
     &--page {
-      top: 140px;
+      position: absolute;
+      top: 15vh;
+      left: var(--content-margin);
     }
   }
 
@@ -97,12 +114,11 @@ body,
     border: none;
     color: white;
     font-family: 'Pixellari', monospace;
-    font-size: 48px;
+    font-size: 4.5vw;
     font-weight: bold;
     text-align: left;
-    padding: 2px 8px;
+    padding: 0.2vh 0.5vw;
     cursor: pointer;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 
     &:hover {
       text-decoration: underline;
@@ -124,19 +140,23 @@ body,
 
   &__back-button {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 2vh;
+    left: 2vw;
     background: none;
     border: none;
     color: white;
     font-family: 'Grand9K Pixel', monospace;
-    font-size: 14px;
+    font-size: 1.4vw;
     cursor: pointer;
-    padding: 8px 16px;
+    padding: 0.8vh 1.5vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
+    gap: 0.3vh;
+
+    .escape-menu__icon-button {
+      transform: scale(calc(var(--icon-scale, 1.5) * 0.66));
+    }
 
     &:hover {
       filter: brightness(1.3);
@@ -149,7 +169,7 @@ body,
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
-    gap: 60px;
+    gap: 6vw;
   }
 
   &__large-button {
@@ -163,7 +183,7 @@ body,
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 1vh;
 
     &:hover {
       filter: brightness(1.3);
@@ -171,7 +191,7 @@ body,
   }
 
   &__large-button-label {
-    font-size: 32px;
+    font-size: 3vw;
     font-weight: bold;
   }
 
@@ -184,21 +204,20 @@ body,
   }
 
   &__quit-prompt {
-    font-size: 48px;
-    margin-bottom: 24px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-size: 4.5vw;
+    margin-bottom: 3vh;
   }
 
   &__quit-buttons {
     display: flex;
-    gap: 40px;
+    gap: 4vw;
     justify-content: center;
   }
 
   &__resources {
     position: absolute;
-    bottom: 30px;
-    right: 20px;
+    bottom: 3vh;
+    right: 2vw;
   }
 
   &__resource-toggle,
@@ -211,8 +230,8 @@ body,
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    width: 70px;
+    gap: 0.5vh;
+    width: calc(40px * var(--icon-scale, 1.5) + 2vw);
 
     &:hover {
       filter: brightness(1.3);
@@ -232,16 +251,15 @@ body,
   &__resource-label,
   &__resource-button-label {
     font-family: 'Grand9K Pixel', monospace;
-    font-size: 12px;
+    font-size: 1.2vw;
     text-align: center;
   }
 
   &__resource-list {
     position: absolute;
     top: 0;
-    right: 78px;
+    right: calc(40px * var(--icon-scale, 1.5) + 3vw);
     display: flex;
-    gap: 8px;
     flex-direction: row-reverse;
     align-items: flex-start;
 
@@ -253,7 +271,7 @@ body,
   &__icon-button {
     position: relative;
     display: inline-block;
-    transform: scale(1.5);
+    transform: scale(var(--icon-scale, 1.5));
     transform-origin: center bottom;
     image-rendering: pixelated;
   }
@@ -266,45 +284,38 @@ body,
 
   &__player-list {
     position: absolute;
-    top: 120px;
-    left: 50px;
-    right: 250px;
-    bottom: 50px;
+    top: 12vh;
+    left: var(--content-margin);
+    right: calc(var(--details-width) + var(--details-gap));
+    bottom: var(--content-margin);
     overflow-y: auto;
     scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
   }
 
   &__player-section {
-    margin-bottom: 20px;
+    margin-bottom: 3vh;
   }
 
   &__player-section-title {
-    font-size: 24px;
+    font-size: 2vw;
     font-weight: bold;
-    margin-bottom: 8px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin-bottom: 1.2vh;
+    padding-bottom: 0.4vh;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.15);
   }
 
   &__player-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18vw, 1fr));
+    gap: 0.4vh 0.8vw;
   }
 
   &__player-entry {
-    background: none;
-    border: none;
     color: white;
     font-family: 'Pixellari', monospace;
-    font-size: 16px;
-    padding: 2px 8px;
+    padding: 0.4vh 0.8vw;
     display: flex;
     flex-direction: column;
-    min-width: 140px;
-
-    &:hover {
-      text-decoration: underline;
-    }
 
     &--ignored {
       color: #666;
@@ -312,17 +323,33 @@ body,
   }
 
   &__player-name {
-    font-size: 16px;
+    font-size: 1.4vw;
+    overflow-wrap: break-word;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   &__player-ping {
-    font-size: 12px;
-    color: #999;
+    font-size: 1vw;
+    color: #777;
+    font-family: 'Grand9K Pixel', monospace;
   }
 
   &__player-rank {
-    font-size: 12px;
+    font-size: 1vw;
     color: #aaa;
+    font-family: 'Grand9K Pixel', monospace;
+
+    &--link {
+      color: #5599ff;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
 
@@ -339,7 +366,7 @@ body,
 @keyframes resource-slide-in {
   from {
     opacity: 0;
-    transform: translateX(60px);
+    transform: translateX(6vw);
   }
   to {
     opacity: 1;
@@ -354,6 +381,6 @@ body,
   }
   to {
     opacity: 0;
-    transform: translateX(60px);
+    transform: translateX(6vw);
   }
 }

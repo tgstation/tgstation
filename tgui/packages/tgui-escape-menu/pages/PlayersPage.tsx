@@ -42,13 +42,17 @@ export function PlayersPage({ serverState, onNavigate, onAction }: Props) {
         {serverState.ignoredOffline.length > 0 && (
           <PlayerSection title="Ignored (Offline)">
             {serverState.ignoredOffline.map((ckey) => (
-              <button
+              <div
                 key={ckey}
                 className="escape-menu__player-entry escape-menu__player-entry--ignored"
-                onClick={() => onAction('toggle_ignore', { ckey })}
               >
-                {ckey}
-              </button>
+                <span
+                  className="escape-menu__player-name"
+                  onClick={() => onAction('toggle_ignore', { ckey })}
+                >
+                  {ckey}
+                </span>
+              </div>
             ))}
           </PlayerSection>
         )}
@@ -92,22 +96,33 @@ function PlayerEntry({
   onToggleIgnore: () => void;
 }) {
   return (
-    <button
+    <div
       className={
         'escape-menu__player-entry' +
         (player.ignored ? ' escape-menu__player-entry--ignored' : '')
       }
-      onClick={onToggleIgnore}
     >
-      <span className="escape-menu__player-name">
+      <span className="escape-menu__player-name" onClick={onToggleIgnore}>
         {player.displayName}
         {player.ping !== undefined && (
           <span className="escape-menu__player-ping"> ({player.ping}ms)</span>
         )}
       </span>
       {player.rank && (
-        <span className="escape-menu__player-rank">{player.rank}</span>
+        <span
+          className={
+            'escape-menu__player-rank' +
+            (player.feedbackLink ? ' escape-menu__player-rank--link' : '')
+          }
+          onClick={
+            player.feedbackLink
+              ? () => Byond.command(`.url ${player.feedbackLink}`)
+              : undefined
+          }
+        >
+          {player.rank}
+        </span>
       )}
-    </button>
+    </div>
   );
 }
