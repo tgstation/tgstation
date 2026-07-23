@@ -557,7 +557,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			continue
 		if(thing.type in rejections) // To limit bag spamming: any given type only complains once
 			continue
-		if(!attempt_insert(thing, user, override = TRUE)) // Note can_be_inserted still makes noise when the answer is no
+		if(!attempt_insert(thing, user, override = TRUE, messages = FALSE)) // Note can_be_inserted still makes noise when the answer is no
 			if(real_location.contents.len >= max_slots)
 				break
 			rejections += thing.type // therefore full bags are still a little spammy
@@ -774,6 +774,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/list/current_contents = holder.contents.Copy()
 	if(length(pick_up | current_contents) == length(current_contents))
 		return
+	if(animated)
+		animate_parent()
+	if(do_rustle && rustle_sound)
+		playsound(parent, rustle_sound, 50, TRUE, -5)
 	parent.balloon_alert(user, "picked up")
 	parent.update_appearance()
 	refresh_views()
