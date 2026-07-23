@@ -21,11 +21,11 @@
 
 /obj/item/reagent_containers/cup/glass/proc/smash(atom/target, atom/thrower, datum/thrownthing/throwingdatum, break_top = FALSE)
 	if(!isGlass)
-		return
+		return FALSE
 	if(QDELING(src) || !target) //Invalid loc
-		return
+		return FALSE
 	if(ismob(thrower) && bartender_check(target, thrower) && throwingdatum)
-		return
+		return FALSE
 	var/splash_target = QDELETED(target) ? target.drop_location() : target
 	var/splash_thrower = ismob(thrower) ? thrower || throwingdatum?.get_thrower() : null
 	splash_reagents(splash_target, splash_thrower, allow_closed_splash = TRUE)
@@ -33,6 +33,7 @@
 	broken.mimic_broken(src, target, break_top)
 	post_smash(target, thrower, throwingdatum, broken)
 	qdel(src)
+	return TRUE
 
 /obj/item/reagent_containers/cup/glass/proc/post_smash(atom/target, atom/thrower, datum/thrownthing/throwingdatum, obj/item/broken_bottle/broken)
 	return
