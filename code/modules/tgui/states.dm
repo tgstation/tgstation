@@ -109,7 +109,7 @@
 
 	var/dist = get_dist(src_object, src)
 	// If the object is obscured or too far away, close it.
-	if (dist > 5 || (viewcheck && !(src_object in view(src, 5))))
+	if (dist > 5 || (viewcheck && !(src_object in view(5, src))))
 		return UI_CLOSE
 	// Open and interact if 1-0 tiles away.
 	if(dist <= 1)
