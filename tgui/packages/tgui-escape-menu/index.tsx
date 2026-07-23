@@ -3,11 +3,7 @@ import './styles/main.scss';
 import { loadMappings, loadStyleSheet } from 'common/assets';
 import { createRoot, type Root } from 'react-dom/client';
 import { assetMap } from './assets';
-import {
-  clearSkipNextResize,
-  EscapeMenu,
-  getSkipNextResize,
-} from './EscapeMenu';
+import { EscapeMenu, isResizeFrozen } from './EscapeMenu';
 
 const ICON_SCALE_BASE_WIDTH = 800;
 
@@ -23,11 +19,7 @@ document.onreadystatechange = () => {
   updateIconScale();
 
   window.addEventListener('resize', () => {
-    if (getSkipNextResize()) {
-      clearSkipNextResize();
-      return;
-    }
-    document.documentElement.style.width = '';
+    if (isResizeFrozen()) return;
     updateIconScale();
   });
 

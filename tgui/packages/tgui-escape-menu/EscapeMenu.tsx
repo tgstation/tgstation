@@ -88,22 +88,23 @@ function sendAction(action: string, payload?: Record<string, unknown>) {
   Byond.sendMessage('action', { action, ...payload });
 }
 
-let skipNextResize = false;
-export function getSkipNextResize() {
-  return skipNextResize;
-}
-export function clearSkipNextResize() {
-  skipNextResize = false;
+let resizeFrozen = false;
+export function isResizeFrozen() {
+  return resizeFrozen;
 }
 
 function openMenu(dispatch: React.Dispatch<Action>) {
-  skipNextResize = true;
+  setTimeout(() => {
+    document.documentElement.style.width = '';
+    resizeFrozen = false;
+  }, 50);
   playOpenSounds();
   sendAction('opened');
   dispatch({ type: 'open' });
 }
 
 function closeMenu(dispatch: React.Dispatch<Action>) {
+  resizeFrozen = true;
   document.documentElement.style.width = `${window.innerWidth}px`;
   Byond.winset('mapwindow.escape_menu', { 'is-visible': false });
   Byond.winset('map', { focus: true });
