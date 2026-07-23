@@ -514,7 +514,7 @@
 	var/list/surroundings = get_surroundings(user)
 	var/list/craftability = list()
 	for(var/datum/crafting_recipe/recipe as anything in get_visible_recipes(user))
-		if(check_tools(user, recipe, surroundings) && check_contents(user, recipe, surroundings))
+		if(check_contents(user, recipe, surroundings) && check_tools(user, recipe, surroundings))
 			craftability["[REF(recipe)]"] = TRUE
 
 	data["craftability"] = craftability
