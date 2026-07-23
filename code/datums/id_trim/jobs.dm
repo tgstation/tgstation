@@ -258,7 +258,7 @@
 		ACCESS_CHANGE_IDS,
 	)
 	job = /datum/job/bridge_assistant
-	honorifics = list("Underling", "Honorary Assistant", "Mate", "Coffeemaker")
+	honorifics = list("Assistant", "Mate")
 	honorific_positions = HONORIFIC_POSITION_FIRST | HONORIFIC_POSITION_LAST | HONORIFIC_POSITION_FIRST_FULL | HONORIFIC_POSITION_NONE
 
 /datum/id_trim/job/captain

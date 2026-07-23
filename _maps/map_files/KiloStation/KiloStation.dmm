@@ -20784,6 +20784,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/iron,
 /area/station/command/meeting_room/council)
 "gHd" = (
@@ -35528,6 +35529,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/iron,
 /area/station/command/meeting_room/council)
 "ljA" = (
@@ -51596,6 +51598,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/iron,
 /area/station/command/meeting_room/council)
 "qAg" = (

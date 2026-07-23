@@ -262,6 +262,7 @@
 		/datum/job/bartender = /obj/item/organ/liver/cybernetic/tier3,
 		/datum/job/bitrunner = /obj/item/organ/eyes/robotic/thermals,
 		/datum/job/botanist = /obj/item/organ/cyberimp/chest/nutriment,
+		/datum/job/bridge_assistant = /obj/item/organ/eyes/robotic/shield,
 		/datum/job/captain = /obj/item/organ/heart/cybernetic/tier3,
 		/datum/job/cargo_technician = /obj/item/organ/stomach/cybernetic/tier2,
 		/datum/job/chaplain = /obj/item/organ/cyberimp/brain/anti_drop,
