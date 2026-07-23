@@ -1,0 +1,4 @@
+author: "Happyowl93"
+delete-after: True
+changes:
+  - bugfix: "you should be able to hit cave spawners with melee items again"
