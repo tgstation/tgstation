@@ -212,12 +212,9 @@
 	if (!user)
 		return FALSE
 
-	if(!isnum(delay))
-		CRASH("do_after was passed a non-number delay: [delay || "null"].")
-	if(isnum(target))
-		CRASH("a do_after created by [user] had a target set as [target] - probably intended to be the time instead.")
-	if(isatom(delay))
-		CRASH("a do_after created by [user] had a timer of [delay] - probably intended to be the target instead.")
+	ASSERT(isnum(delay), "do_after was passed a non-number delay: [delay || "null"].")
+	ASSERT(!isnum(target), "a do_after created by [user] had a target set as [target] - probably intended to be the time instead.")
+	ASSERT(!isatom(delay), "a do_after created by [user] had a timer of [delay] - probably intended to be the target instead.")
 
 	if (delay == 0)
 		return TRUE
