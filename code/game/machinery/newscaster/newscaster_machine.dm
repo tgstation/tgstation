@@ -442,7 +442,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 		if("clearWantedIssue")
 			clear_wanted_issue(user)
-			for(var/obj/machinery/newscaster/other_newscaster in GLOB.allCasters)
+			for(var/obj/machinery/newscaster/other_newscaster as anything in GLOB.allCasters)
 				other_newscaster.update_appearance()
 				return TRUE
 
@@ -634,14 +634,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 /**
  * When a new feed message is made that will alert all newscasters, this causes the newscasters to sent out a spoken message as well as create a sound.
  */
-/obj/machinery/newscaster/proc/news_alert(channel, update_alert = TRUE)
+/obj/machinery/newscaster/proc/news_alert(channel)
 	if(channel)
 		alert = TRUE
-		if(update_alert)
-			say("Breaking news from [channel]!")
-			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 75, TRUE)
-			update_appearance()
-			addtimer(CALLBACK(src, PROC_REF(remove_alert)), ALERT_DELAY, TIMER_UNIQUE|TIMER_OVERRIDE)
+		update_appearance()
+		addtimer(CALLBACK(src, PROC_REF(remove_alert)), ALERT_DELAY, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 	else if(!channel && update_alert)
 		say("Attention! Wanted issue distributed!")
