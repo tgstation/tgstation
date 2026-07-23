@@ -33548,11 +33548,10 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
 "ilx" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/suit_storage_unit/industrial/loader,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "ilG" = (
@@ -77416,6 +77415,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/suit_storage_unit/industrial/loader,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "tbJ" = (
