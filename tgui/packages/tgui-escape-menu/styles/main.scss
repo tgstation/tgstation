@@ -83,6 +83,7 @@ body,
   &__station-name {
     font-size: 5vw;
     font-weight: bold;
+    -webkit-text-stroke: 0.25vw black;
   }
 
   &__details {
@@ -119,6 +120,7 @@ body,
     text-align: left;
     padding: 0.2vh 0.5vw;
     cursor: pointer;
+    -webkit-text-stroke: 0.25vw black;
 
     &:hover {
       text-decoration: underline;
