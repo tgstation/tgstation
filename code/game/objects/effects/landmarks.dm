@@ -254,7 +254,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/bridge_assistant
 	name = "Bridge Assistant"
-	icon_state = "bridge_assistant"
+	icon_state = "Bridge Assistant"
 
 //Antagonist spawns
 

@@ -155,3 +155,10 @@
 			new /obj/item/food/syndicake(src)
 		else
 			new /mob/living/basic/cockroach(src)
+
+/obj/structure/closet/mini_fridge/empty
+	name = "mini-fridge" // its clean now :)
+	desc = "A small contraption designed to imbue a few drinks or snacks with a pleasant chill."
+
+/obj/structure/closet/mini_fridge/empty/PopulateContents() // for filling it with gimmick stuff
+	return

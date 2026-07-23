@@ -305,6 +305,13 @@
 	if(holder.has_reagent(/datum/reagent/consumable/frostoil))
 		holder.remove_reagent(/datum/reagent/consumable/frostoil, 2.5 * metabolization_ratio * seconds_per_tick)
 
+/datum/reagent/consumable/coffee/on_new(data)
+	. = ..()
+	if(!data)
+		return
+	if(!isnull(data["quality"]))
+		quality = data["quality"]
+
 /datum/reagent/consumable/tea
 	name = "Tea"
 	description = "Tasty black tea, it has antioxidants, it's good for you!"

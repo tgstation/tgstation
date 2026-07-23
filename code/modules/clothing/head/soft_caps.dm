@@ -109,11 +109,11 @@ GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", null)
 	soft_type = "black"
 	dog_fashion = null
 
-/obj/item/clothing/head/soft/black/nanotrasen
+/obj/item/clothing/head/soft/nanotrasen
 	name = "nanotrasen black cap"
-	desc = "It's a baseball hat in a tasteless black colour with a NanoTrasen logo imprinted on it."
-	icon_state = "blacksoftnt"
-	soft_type = "blacknt"
+	desc = "It's a baseball hat in a tasteless black colour with a Nanotrasen logo imprinted on it."
+	icon_state = "nanotrasensoft"
+	soft_type = "nanotrasen"
 	dog_fashion = null
 
 /obj/item/clothing/head/soft/rainbow

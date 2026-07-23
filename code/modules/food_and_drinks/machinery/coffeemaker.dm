@@ -429,7 +429,7 @@
 	brewing = FALSE
 	toggle_steam()
 
-/obj/machinery/coffeemaker/proc/brew()
+/obj/machinery/coffeemaker/proc/brew(mob/living/user)
 	power_change()
 	if(!try_brew())
 		return
@@ -669,7 +669,7 @@
 	var/obj/effect/abstract/shared_particle_holder/smoke_particles = add_shared_particles(/particles/smoke/steam/mild, "smoke_impressa")
 	smoke_particles.particles.position = list(-2, 1, 0)
 
-/obj/machinery/coffeemaker/impressa/brew()
+/obj/machinery/coffeemaker/impressa/brew(mob/living/user)
 	power_change()
 	if(!try_brew())
 		return
@@ -698,7 +698,10 @@
 	// fill the rest of the pot with coffee
 	if(coffeepot.reagents.total_volume < 120)
 		var/extra_coffee_amount = 120 - coffeepot.reagents.total_volume
-		coffeepot.reagents.add_reagent(/datum/reagent/consumable/coffee, extra_coffee_amount)
+		var/list/coffee_data = null
+		if(user.job == JOB_BRIDGE_ASSISTANT) // bridge assistants make amazing coffee as intended
+			coffee_data = list("quality" = DRINK_VERYGOOD)
+		coffeepot.reagents.add_reagent(/datum/reagent/consumable/coffee, extra_coffee_amount, coffee_data)
 
 	update_appearance(UPDATE_OVERLAYS)
 

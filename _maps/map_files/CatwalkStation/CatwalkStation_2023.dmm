@@ -8978,6 +8978,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/carpet/executive,
 /area/station/command/meeting_room/council)
 "cpA" = (
@@ -16352,6 +16353,15 @@
 /obj/machinery/camera/motion/directional/west,
 /turf/open/space/openspace,
 /area/space/nearstation)
+"enx" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_blue/filled/line,
+/obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner,
+/obj/item/kirbyplants/photosynthetic,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/command/meeting_room/council)
 "eny" = (
 /obj/structure/table,
 /obj/item/stack/sheet/glass/fifty{
@@ -17016,6 +17026,7 @@
 	},
 /obj/effect/turf_decal/trimline/dark_blue/filled/line,
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner,
+/obj/item/kirbyplants/photosynthetic,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "exY" = (
@@ -31720,19 +31731,6 @@
 /obj/effect/turf_decal/siding/blue/corner{
 	dir = 1
 	},
-/obj/structure/table/wood,
-/obj/item/paper_bin{
-	pixel_x = -4;
-	pixel_y = 10
-	},
-/obj/item/pen{
-	pixel_x = -1;
-	pixel_y = 13
-	},
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = 1;
-	pixel_y = 6
-	},
 /turf/open/floor/carpet/executive,
 /area/station/command/meeting_room/council)
 "itA" = (
@@ -34217,6 +34215,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/holopad,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "jdi" = (
@@ -35538,6 +35537,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/carpet/executive,
 /area/station/command/meeting_room/council)
 "jxt" = (
@@ -36553,6 +36553,7 @@
 "jJH" = (
 /obj/machinery/light/floor,
 /obj/structure/chair/comfy/black,
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/carpet/executive,
 /area/station/command/meeting_room/council)
 "jJP" = (
@@ -45285,7 +45286,6 @@
 	},
 /obj/effect/turf_decal/trimline/dark_blue/filled/end,
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner,
-/obj/item/kirbyplants/photosynthetic,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "lZn" = (
@@ -46382,6 +46382,19 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner,
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner{
 	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/pen{
+	pixel_x = -1;
+	pixel_y = 13
+	},
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = 1;
+	pixel_y = 6
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
@@ -63330,6 +63343,21 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner,
+/obj/structure/table/wood,
+/obj/item/folder/yellow{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/folder/yellow{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/stamp/denied{
+	pixel_x = 6
+	},
+/obj/item/stamp/granted{
+	pixel_x = -4
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "qQG" = (
@@ -72665,7 +72693,11 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner{
 	dir = 8
 	},
-/obj/item/kirbyplants/photosynthetic,
+/obj/structure/table/wood,
+/obj/machinery/coffeemaker/impressa{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "tsb" = (
@@ -78323,9 +78355,6 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner{
 	dir = 8
 	},
-/obj/machinery/vending/coffee{
-	pixel_x = -3
-	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "uOC" = (
@@ -82011,21 +82040,6 @@
 /obj/effect/turf_decal/siding/blue/corner{
 	dir = 4
 	},
-/obj/structure/table/wood,
-/obj/item/folder/yellow{
-	pixel_x = 6;
-	pixel_y = 8
-	},
-/obj/item/folder/yellow{
-	pixel_x = -5;
-	pixel_y = 8
-	},
-/obj/item/stamp/denied{
-	pixel_x = 6
-	},
-/obj/item/stamp/granted{
-	pixel_x = -4
-	},
 /turf/open/floor/carpet/executive,
 /area/station/command/meeting_room/council)
 "vOU" = (
@@ -84599,7 +84613,6 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/machinery/holopad,
 /obj/effect/turf_decal/trimline/dark_blue/filled/line,
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 1
@@ -84608,6 +84621,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner,
+/obj/structure/closet/secure_closet/bridge_assistant,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "wwh" = (
@@ -87049,6 +87063,17 @@
 /turf/open/floor/iron,
 /area/station/science/lab)
 "xdU" = (
+/obj/structure/closet/mini_fridge/empty{
+	pixel_x = 0;
+	pixel_y = 3
+	},
+/obj/item/storage/box/coffeepack,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/sugar{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/condiment/soymilk,
+/obj/item/storage/box/coffeepack/robusta,
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 10
 	},
@@ -87056,7 +87081,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner,
-/obj/effect/spawner/random/vending/colavend,
+/obj/structure/table/wood,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "xdV" = (
@@ -90946,7 +90971,8 @@
 /area/station/ai/satellite/maintenance/storage)
 "yeg" = (
 /obj/structure/table/wood,
-/obj/item/radio/intercom,
+/obj/item/radio/intercom/command,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
 /turf/open/floor/carpet/executive,
 /area/station/command/meeting_room/council)
 "yel" = (
@@ -190137,7 +190163,7 @@ iJn
 hiK
 lSL
 fLs
-azx
+enx
 qVO
 kDc
 gKE

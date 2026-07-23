@@ -31,7 +31,7 @@
 	)
 	rpg_title = "Royal Guard"
 	allow_bureaucratic_error = FALSE
-	job_flags = STATION_JOB_FLAGS
+	job_flags = STATION_JOB_FLAGS | JOB_ANTAG_PROTECTED // idk if i should make them unable to get converted by rev
 	human_authority = JOB_AUTHORITY_NON_HUMANS_ALLOWED
 
 /datum/job/bridge_assistant/after_spawn(mob/living/spawned, client/player_client)
@@ -55,7 +55,7 @@
 	ears = /obj/item/radio/headset/headset_com
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/fingerless
-	head = /obj/item/clothing/head/soft/black/nanotrasen
+	head = /obj/item/clothing/head/soft/nanotrasen
 	shoes = /obj/item/clothing/shoes/laceup
 	l_pocket = /obj/item/gun/energy/e_gun/mini
 	r_pocket = /obj/item/assembly/flash/handheld

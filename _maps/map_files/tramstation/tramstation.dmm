@@ -8288,9 +8288,20 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "bPp" = (
-/obj/machinery/vending/coffee,
-/obj/machinery/status_display/ai/directional/east,
-/turf/open/floor/wood/parquet,
+/obj/structure/table/wood,
+/obj/structure/closet/mini_fridge/empty{
+	pixel_x = 0;
+	pixel_y = 3
+	},
+/obj/item/storage/box/coffeepack,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/sugar{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/condiment/soymilk,
+/obj/item/storage/box/coffeepack/robusta,
+/obj/machinery/status_display/evac/directional/east,
+/turf/open/floor/wood,
 /area/station/command/meeting_room)
 "bPr" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -8528,6 +8539,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "bVs" = (
@@ -13751,6 +13763,10 @@
 	pixel_y = -3
 	},
 /obj/machinery/light/warm/directional/east,
+/obj/item/toy/talking/ai{
+	name = "\improper Nanotrasen-brand toy AI";
+	pixel_y = 6
+	},
 /turf/open/floor/carpet,
 /area/station/command/meeting_room)
 "dFc" = (
@@ -19374,6 +19390,12 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
+"fIF" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/glass,
+/area/station/command/meeting_room)
 "fIH" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -22123,6 +22145,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "gIO" = (
@@ -26837,6 +26860,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/tram/mid)
+"ixz" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/glass,
+/area/station/command/meeting_room)
 "ixC" = (
 /obj/machinery/computer/upload/ai/no_lock{
 	dir = 8
@@ -29255,6 +29284,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "jpd" = (
@@ -39366,9 +39396,9 @@
 /area/station/medical/medbay/central)
 "mDY" = (
 /obj/structure/table/wood,
-/obj/item/toy/talking/ai{
-	name = "\improper Nanotrasen-brand toy AI";
-	pixel_y = 6
+/obj/machinery/coffeemaker/impressa{
+	pixel_x = 2;
+	pixel_y = 3
 	},
 /turf/open/floor/carpet,
 /area/station/command/meeting_room)
@@ -64747,6 +64777,7 @@
 "vxv" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/light/warm/directional/north,
+/obj/structure/closet/secure_closet/bridge_assistant,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "vyo" = (
@@ -155657,7 +155688,7 @@ qyZ
 pGr
 ptq
 lmG
-hHI
+ixz
 gIG
 bxN
 iyQ
@@ -156685,7 +156716,7 @@ qyZ
 oPF
 uWz
 rYL
-hHI
+fIF
 bUT
 aAr
 tkU

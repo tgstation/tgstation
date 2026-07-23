@@ -4968,6 +4968,7 @@
 "bIH" = (
 /obj/structure/chair/comfy/beige,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "bIO" = (
@@ -6057,6 +6058,7 @@
 	pixel_x = 1;
 	pixel_y = 5
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "cdS" = (
@@ -10253,11 +10255,11 @@
 /area/station/service/bar)
 "dDx" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Command Hallway"
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/door/airlock/command/glass{
+	name = "Command Hallway"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "dDE" = (
@@ -13207,6 +13209,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
+"ezu" = (
+/obj/machinery/light_switch{
+	pixel_x = 0;
+	pixel_y = 7
+	},
+/turf/closed/wall,
+/area/station/command/bridge)
 "ezw" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/siding/wood/corner{
@@ -22583,7 +22592,7 @@
 "hQv" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
-	name = "Bridge"
+	name = "Command Hallway"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "bridge-right"
@@ -25435,6 +25444,14 @@
 "iMi" = (
 /obj/structure/table/wood,
 /obj/item/folder/red,
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/pen{
+	pixel_x = -2;
+	pixel_y = 8
+	},
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "iMk" = (
@@ -29513,7 +29530,6 @@
 	c_tag = "Bridge - Council Chamber"
 	},
 /obj/machinery/light/directional/north,
-/obj/machinery/status_display/ai/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -30223,6 +30239,7 @@
 	pixel_x = 4;
 	pixel_y = -3
 	},
+/obj/item/folder/yellow,
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "klK" = (
@@ -33020,6 +33037,7 @@
 /obj/structure/chair/comfy/black,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "ljT" = (
@@ -33679,7 +33697,6 @@
 /obj/item/book/manual/wiki/security_space_law{
 	pixel_y = 3
 	},
-/obj/item/radio/intercom/command/directional/north,
 /obj/item/paper/fluff/jobs/engineering/frequencies,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -37660,7 +37677,10 @@
 /area/station/security/checkpoint/engineering)
 "mRn" = (
 /obj/machinery/airalarm/directional/east,
-/obj/machinery/vending/cigarette,
+/obj/structure/closet/secure_closet/bridge_assistant,
+/obj/effect/turf_decal/trimline/dark_blue/filled/line{
+	dir = 9
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "mRq" = (
@@ -43206,6 +43226,7 @@
 "oLD" = (
 /obj/structure/chair/comfy/beige,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "oLF" = (
@@ -45606,7 +45627,6 @@
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "pCO" = (
-/obj/machinery/holopad,
 /obj/machinery/status_display/evac/directional/north,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
@@ -46276,12 +46296,18 @@
 /area/station/maintenance/solars/starboard/aft)
 "pOK" = (
 /obj/structure/table/wood,
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
+/obj/structure/closet/mini_fridge/empty{
+	pixel_x = 0;
+	pixel_y = 3
 	},
-/obj/item/pen,
-/obj/machinery/light_switch/directional/east,
+/obj/item/storage/box/coffeepack,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/sugar{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/condiment/soymilk,
+/obj/item/storage/box/coffeepack/robusta,
+/obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "pOM" = (
@@ -46759,15 +46785,15 @@
 /area/station/medical/medbay/lobby)
 "pWN" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Command Hallway"
-	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/door/airlock/command/glass{
+	name = "Command Hallway"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
@@ -47975,9 +48001,9 @@
 	name = "Council Chamber Blast Door Control";
 	req_access = list("command")
 	},
-/obj/machinery/vending/coffee{
-	pixel_x = -3
-	},
+/obj/structure/table/wood,
+/obj/item/radio/intercom/command,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "qsV" = (
@@ -55428,13 +55454,13 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/public/glass{
-	name = "Command Hallway"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
+	},
+/obj/machinery/door/airlock/command/glass{
+	name = "Command Hallway"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
@@ -58095,6 +58121,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
+"tOE" = (
+/obj/structure/sign/chalkboard_menu,
+/turf/closed/wall,
+/area/station/command/bridge)
 "tOK" = (
 /obj/structure/rack,
 /obj/item/cane,
@@ -63885,6 +63915,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/structure/chair/office{
+	dir = 8
+	},
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "vKT" = (
@@ -66057,8 +66090,10 @@
 /area/station/command/heads_quarters/rd)
 "wtX" = (
 /obj/structure/table/wood,
-/obj/item/folder/yellow,
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/coffeemaker/impressa{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "wtZ" = (
@@ -67144,6 +67179,7 @@
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "wOS" = (
@@ -68665,9 +68701,6 @@
 /area/station/security/brig)
 "xqL" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Command Hallway"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -68675,6 +68708,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
+	},
+/obj/machinery/door/airlock/command/glass{
+	name = "Command Hallway"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
@@ -97457,7 +97493,7 @@ duI
 duI
 duI
 iqN
-duI
+ezu
 dho
 uag
 aks
@@ -99253,7 +99289,7 @@ dMY
 tTL
 den
 fhD
-duI
+tOE
 jZZ
 ppB
 emY

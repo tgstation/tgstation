@@ -348,12 +348,12 @@
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/flashlight/seclite(src)
 
-/obj/structure/closet/secure_closet/bridge_officer
+/obj/structure/closet/secure_closet/bridge_assistant
 	name = "bridge assistant's locker"
 	icon_state = "ba"
 	req_access = list(ACCESS_COMMAND)
 
-/obj/structure/closet/secure_closet/bridge_officer/PopulateContents()
+/obj/structure/closet/secure_closet/bridge_assistant/PopulateContents()
 	..()
 	new /obj/item/holosign_creator/engineering(src)
 	new /obj/item/storage/bag/construction(src)

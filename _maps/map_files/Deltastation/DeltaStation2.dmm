@@ -17585,10 +17585,14 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "erM" = (
-/obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/east,
+/obj/structure/table/wood,
+/obj/machinery/coffeemaker/impressa{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room/council)
 "erP" = (
@@ -33383,9 +33387,20 @@
 /turf/open/floor/iron/white/side,
 /area/station/science/lobby)
 "ijB" = (
-/obj/machinery/vending/coffee,
-/obj/effect/turf_decal/bot,
+/obj/structure/table/wood,
+/obj/structure/closet/mini_fridge/empty{
+	pixel_x = 0;
+	pixel_y = 3
+	},
+/obj/item/storage/box/coffeepack,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/sugar{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/condiment/soymilk,
+/obj/item/storage/box/coffeepack/robusta,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room/council)
 "ijC" = (
@@ -36796,9 +36811,6 @@
 /area/station/maintenance/port)
 "jaV" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Command Hallway"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -36809,6 +36821,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door/airlock/command/glass{
+	name = "Command Hallway"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
@@ -47700,6 +47715,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room/council)
 "lJl" = (
@@ -66174,9 +66190,8 @@
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hop)
 "qoo" = (
-/obj/structure/table/wood,
-/obj/item/pai_card,
 /obj/structure/sign/nanotrasen/directional/east,
+/obj/structure/closet/secure_closet/bridge_assistant,
 /turf/open/floor/wood,
 /area/station/command/meeting_room/council)
 "qoA" = (
@@ -75564,6 +75579,7 @@
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room/council)
 "sEn" = (
@@ -78518,6 +78534,7 @@
 "tsj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/chair/comfy/brown,
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room/council)
 "tsu" = (
@@ -80398,15 +80415,15 @@
 /area/station/security/prison)
 "tPc" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Command Hallway"
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/door/airlock/command/glass{
+	name = "Command Hallway"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
@@ -90314,6 +90331,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/iron/grimy,
 /area/station/command/meeting_room/council)
 "wms" = (

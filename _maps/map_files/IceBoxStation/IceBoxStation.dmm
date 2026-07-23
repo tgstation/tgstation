@@ -171,6 +171,10 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
+"acT" = (
+/obj/structure/noticeboard/directional/north,
+/turf/open/floor/wood,
+/area/station/command/meeting_room)
 "adf" = (
 /obj/structure/table,
 /obj/machinery/recharger{
@@ -203,6 +207,10 @@
 "adA" = (
 /turf/closed/wall/r_wall,
 /area/icemoon/surface/outdoors/labor_camp)
+"adB" = (
+/obj/structure/sign/chalkboard_menu,
+/turf/closed/wall/r_wall,
+/area/station/command/meeting_room)
 "adD" = (
 /obj/structure/railing/corner{
 	dir = 8
@@ -5862,6 +5870,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room)
 "bEJ" = (
@@ -11440,10 +11449,6 @@
 	dir = 8
 	},
 /area/station/security/brig)
-"dhj" = (
-/obj/machinery/light_switch/directional/north,
-/turf/open/floor/wood,
-/area/station/command/meeting_room)
 "dhq" = (
 /turf/closed/mineral/random/labormineral/ice,
 /area/icemoon/surface/outdoors/labor_camp)
@@ -18000,7 +18005,6 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Bridge Conference Room"
 	},
-/obj/structure/noticeboard/directional/north,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "fby" = (
@@ -20356,6 +20360,13 @@
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/engine_smes)
+"fMw" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/obj/effect/landmark/start/bridge_assistant,
+/turf/open/floor/carpet,
+/area/station/command/meeting_room)
 "fMC" = (
 /obj/structure/table/wood/poker,
 /obj/effect/spawner/random/entertainment/dice{
@@ -32303,6 +32314,13 @@
 /obj/structure/mirror/directional/east,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/locker)
+"jka" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/obj/effect/landmark/start/bridge_assistant,
+/turf/open/floor/carpet,
+/area/station/command/meeting_room)
 "jkn" = (
 /obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron,
@@ -43342,7 +43360,7 @@
 /turf/open/floor/iron/white,
 /area/mine/laborcamp)
 "mqD" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/closet/secure_closet/bridge_assistant,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "mqI" = (
@@ -51251,6 +51269,10 @@
 	pixel_y = 4
 	},
 /obj/structure/table,
+/obj/item/assembly/timer{
+	pixel_x = 11;
+	pixel_y = 3
+	},
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "oyv" = (
@@ -53822,11 +53844,11 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
 "phf" = (
-/obj/item/assembly/timer{
-	pixel_x = -3;
-	pixel_y = 15
-	},
 /obj/structure/table,
+/obj/machinery/coffeemaker/impressa{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "phj" = (
@@ -66225,10 +66247,18 @@
 /turf/open/floor/plating/snowed/smoothed,
 /area/station/maintenance/fore/lesser)
 "sEl" = (
-/obj/structure/table,
-/obj/item/hand_labeler{
-	pixel_y = 2
+/obj/structure/closet/mini_fridge/empty{
+	pixel_x = 0;
+	pixel_y = 3
 	},
+/obj/item/storage/box/coffeepack,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/sugar{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/condiment/soymilk,
+/obj/item/storage/box/coffeepack/robusta,
+/obj/structure/table,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "sEn" = (
@@ -72139,6 +72169,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/commons/storage/mining)
+"unM" = (
+/obj/structure/chair/comfy/black,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/bridge_assistant,
+/turf/open/floor/carpet,
+/area/station/command/meeting_room)
 "unO" = (
 /obj/item/paper_bin{
 	pixel_x = -3;
@@ -73264,11 +73300,11 @@
 /turf/open/floor/iron/large,
 /area/station/medical/treatment_center)
 "uEy" = (
-/obj/machinery/vending/coffee,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room)
 "uEI" = (
@@ -78330,6 +78366,10 @@
 "wfK" = (
 /obj/item/folder/blue,
 /obj/structure/table/wood,
+/obj/item/hand_labeler{
+	pixel_y = 9;
+	pixel_x = -4
+	},
 /turf/open/floor/carpet,
 /area/station/command/meeting_room)
 "wfP" = (
@@ -242814,7 +242854,7 @@ qzy
 adP
 adP
 dxK
-wzk
+acT
 wzk
 wzk
 wzk
@@ -243074,7 +243114,7 @@ dxK
 xVq
 lnk
 pNs
-pNs
+fMw
 ktU
 mqD
 iYb
@@ -243327,9 +243367,9 @@ qWZ
 lvA
 gKU
 aoW
-dxK
+adB
 fbw
-hue
+unM
 hBZ
 eYT
 lLr
@@ -243585,7 +243625,7 @@ qWZ
 wrk
 qWZ
 dxK
-cct
+wzk
 hue
 xit
 wfK
@@ -243842,9 +243882,9 @@ bMZ
 paK
 aVH
 xKJ
-dhj
+cct
 kiL
-tOF
+jka
 tOF
 oyb
 wzk

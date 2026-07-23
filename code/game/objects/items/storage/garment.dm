@@ -181,7 +181,7 @@
 	new /obj/item/clothing/under/trek/command/next(src)
 	new /obj/item/clothing/under/trek/command/voy(src)
 	new /obj/item/clothing/under/trek/command/ent(src)
-	new /obj/item/clothing/head/soft/black/nanotrasen(src)
+	new /obj/item/clothing/head/soft/nanotrasen(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/clothing/shoes/laceup(src)
 
