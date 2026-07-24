@@ -111,14 +111,14 @@
 	// If the object is obscured or too far away, close it.
 	if (dist > 5 || (viewcheck && !(src_object in view(5, src))))
 		return UI_CLOSE
-	// Open and interact if 1-0 tiles away.
-	if(dist <= 1)
-		return UI_INTERACTIVE
-	// View only if 2-3 tiles away.
-	else if(dist <= 2)
+	// Disable if further than 2 tiles
+	if (dist > 2)
+		return UI_DISABLED
+	// Update but block interactions if further than a tile away
+	if (dist > 1)
 		return UI_UPDATE
-	// Disable if 5 tiles away.
-	return UI_DISABLED
+	// Open and interact if 1-0 tiles away.
+	return UI_INTERACTIVE
 
 /mob/living/carbon/human/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE, allow_tk = TRUE)
 	if(allow_tk && dna.check_mutation(/datum/mutation/telekinesis) && tkMaxRangeCheck(src, src_object))
