@@ -154,6 +154,11 @@
 		other_stack = find_other_stack(already_found, TRUE)
 	return TRUE
 
+/obj/item/stack/apply_material_effects(list/materials)
+	. = ..()
+	if(amount)
+		mats_per_unit = SSmaterials.get_material_set_cache(materials, 1/amount)
+
 /obj/item/stack/blend_requirements(atom/movable/grinder, mob/living/user)
 	if(!is_cyborg)
 		return TRUE

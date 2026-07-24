@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 /datum/embedding/rods
 	embed_chance = 50
 
-/obj/item/stack/rods/suicide_act(mob/living/carbon/user)
+/obj/item/stack/rods/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to stuff \the [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!"))//it looks like theyre ur mum
 	return BRUTELOSS
 
@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	)
 
 /obj/item/stack/rods/handle_openspace_click(turf/target, mob/user, list/modifiers)
-	target.attackby(src, user, list2params(modifiers))
+	target.base_item_interaction(user, src, list2params(modifiers))
 
 /obj/item/stack/rods/get_main_recipes()
 	. = ..()

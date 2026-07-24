@@ -59,7 +59,7 @@
 	. += span_notice("Right-click [src] to open the gas reference.")
 	. += span_notice("Alt-click [src] to activate the barometer function.")
 
-/obj/item/analyzer/suicide_act(mob/living/carbon/user)
+/obj/item/analyzer/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!"))
 	return BRUTELOSS
 
@@ -212,10 +212,10 @@
 		if(total_moles > 0)
 			message += span_notice("Moles: [round(total_moles, 0.01)] mol")
 
-			var/list/cached_gases = air.gases
-			for(var/id in cached_gases)
-				var/gas_concentration = cached_gases[id][MOLES]/total_moles
-				message += span_notice("[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(cached_gases[id][MOLES], 0.01)] mol ([round(gas_concentration*100, 0.01)] %)")
+			var/list/cached_gas_name = GAS_META[META_GAS_NAME]
+			for(var/id, amount in air.moles)
+				var/gas_concentration = amount / total_moles
+				message += span_notice("[cached_gas_name[id]]: [round(amount, 0.01)] mol ([round(gas_concentration*100, 0.01)] %)")
 			message += span_notice("Temperature: [round(temperature - T0C,0.01)] &deg;C ([round(temperature, 0.01)] K)")
 			message += span_notice("Volume: [volume] L")
 			message += span_notice("Pressure: [round(pressure, 0.01)] kPa")

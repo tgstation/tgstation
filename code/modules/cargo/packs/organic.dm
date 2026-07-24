@@ -66,7 +66,7 @@
 	contains = list(
 		/obj/item/food/grown/citrus/lime,
 		/obj/item/food/grown/citrus/orange,
-		/obj/item/food/grown/watermelon,
+		/obj/item/food/grown/melonlike/watermelon,
 		/obj/item/food/grown/apple,
 		/obj/item/food/grown/berries,
 		/obj/item/food/grown/citrus/lemon,
@@ -81,7 +81,7 @@
 		/obj/item/food/grown/corn,
 		/obj/item/food/grown/tomato,
 		/obj/item/food/grown/potato,
-		/obj/item/food/grown/carrot,
+		/obj/item/food/grown/carrotlike/carrot,
 		/obj/item/food/grown/mushroom/chanterelle,
 		/obj/item/food/grown/onion,
 		/obj/item/food/grown/pumpkin,

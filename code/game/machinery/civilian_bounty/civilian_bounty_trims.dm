@@ -69,7 +69,9 @@
 			if(prob(50))
 				return /datum/bounty/reagent/chemical_simple
 			return /datum/bounty/reagent/chemical_complex
-		if(CIV_JOB_VIRO)
+		if(CIV_JOB_MED_VIRO)
+			if(prob(75))
+				return pick(subtypesof(/datum/bounty/item/medical))
 			return pick(subtypesof(/datum/bounty/virus))
 		if(CIV_JOB_SCI)
 			if(prob(50))

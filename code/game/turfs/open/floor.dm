@@ -125,34 +125,36 @@
 	W.update_appearance()
 	return W
 
-/turf/open/floor/attackby(obj/item/object, mob/living/user, list/modifiers)
-	if(!object || !user)
-		return TRUE
+/turf/open/floor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(.)
+	if(ITEM_INTERACT_ANY_BLOCKER & .)
 		return .
-	if(overfloor_placed && istype(object, /obj/item/stack/tile))
-		try_replace_tile(object, user, modifiers)
-		return TRUE
-	if(user.combat_mode && istype(object, /obj/item/stack/sheet))
-		var/obj/item/stack/sheet/sheets = object
-		return sheets.on_attack_floor(src, user, modifiers)
-	return FALSE
+
+	if(overfloor_placed && istype(tool, /obj/item/stack/tile))
+		try_replace_tile(tool, user, modifiers)
+		return ITEM_INTERACT_SUCCESS
+
+	if(user.combat_mode && istype(tool, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/sheets = tool
+		if(!sheets.on_attack_floor(src, user, modifiers))
+			return ITEM_INTERACT_BLOCKING
+
+		return ITEM_INTERACT_SUCCESS
 
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
 	if(overfloor_placed && pry_tile(I, user))
 		return TRUE
 
-/turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, list/modifiers)
-	if(T.turf_type == type && T.turf_dir == dir)
+/turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/tile, mob/user, list/modifiers)
+	if(tile.turf_type == type && tile.turf_dir == dir)
 		return
-	var/obj/item/crowbar/CB = user.is_holding_tool_quality(TOOL_CROWBAR)
-	if(!CB)
+	var/obj/item/crowbar/crowbar = user.is_holding_tool_quality(TOOL_CROWBAR)
+	if(!crowbar)
 		return
-	var/turf/open/floor/plating/P = pry_tile(CB, user, TRUE)
-	if(!istype(P))
+	var/turf/open/floor/plating/plating = pry_tile(crowbar, user, TRUE)
+	if(!istype(plating))
 		return
-	P.attackby(T, user, modifiers)
+	plating.base_item_interaction(user, tile, modifiers)
 
 /turf/open/floor/proc/pry_tile(obj/item/I, mob/user, silent = FALSE)
 	I.play_tool_sound(src, 80)

@@ -30,12 +30,11 @@
 	if(!ishuman(wearer) || !wearer.w_uniform)
 		return
 	var/obj/item/clothing/under/undershirt = wearer.w_uniform
-	if(!istype(undershirt) || !LAZYLEN(undershirt.attached_accessories))
+	if(!istype(undershirt))
 		return
-
-	var/obj/item/clothing/accessory/displayed = undershirt.attached_accessories[1]
-	if(displayed.above_suit && undershirt.accessory_overlay)
-		. += undershirt.accessory_overlay
+	for(var/obj/item/clothing/accessory/accessory as anything in undershirt.attached_accessories)
+		if (accessory.above_suit)
+			. += accessory.generate_accessory_overlay(undershirt)
 
 /obj/item/clothing/suit/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()

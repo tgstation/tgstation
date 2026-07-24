@@ -429,11 +429,11 @@
 		// TECHNICALLY you could put non-facehuggers in the child var
 		if(istype(child))
 			if(kill)
-				child.Die()
+				child.die()
 			else
 				for(var/mob/M in range(1,src))
 					if(CanHug(M))
-						child.Leap(M)
+						child.leap_to(M)
 						break
 
 /obj/structure/alien/egg/Exited(atom/movable/gone, direction)

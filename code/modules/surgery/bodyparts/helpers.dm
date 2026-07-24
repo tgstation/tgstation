@@ -106,8 +106,7 @@
 
 
 ///Get the bodypart for whatever hand we have active, Only relevant for carbons
-/mob/proc/get_active_hand()
-	RETURN_TYPE(/obj/item/bodypart)
+/mob/proc/get_active_hand() as /obj/item/bodypart
 	return FALSE
 
 /mob/living/carbon/get_active_hand()

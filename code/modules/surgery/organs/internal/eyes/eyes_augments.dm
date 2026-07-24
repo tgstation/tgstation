@@ -6,6 +6,7 @@
 	failing_desc = "seems to be broken."
 	pupils_name = "apertures"
 	penlight_message = "are cybernetic, click-whirring as they refocus"
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/organ/eyes/robotic/emp_act(severity)
 	. = ..()
@@ -25,6 +26,7 @@
 	eye_color_right = "#2f3032"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	penlight_message = "are low grade cybernetics, poorly compensating for the light"
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/organ/eyes/robotic/basic/emp_act(severity)
 	. = ..()
@@ -47,6 +49,7 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	organ_traits = list(TRAIT_XRAY_VISION)
 	penlight_message = "are replaced by small radiation emitters and detectors"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/organ/eyes/robotic/thermals
 	name = "thermal eyes"
@@ -61,6 +64,7 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	pupils_name = "slit aperatures"
 	penlight_message = "are cybernetic, with vertically slit metalic lenses."
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/organ/eyes/robotic/flashlight
 	name = "flashlight eyes"
@@ -108,6 +112,7 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	pupils_name = "flash shields"
 	penlight_message = "have polarized cybernetic lenses, blocking bright lights"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
 
 /obj/item/organ/eyes/robotic/shield/Initialize(mapload)
 	. = ..()
@@ -127,6 +132,7 @@
 	eye_color_left = "#19191a"
 	eye_color_right = "#19191a"
 	actions_types = list(/datum/action/item_action/organ_action/use, /datum/action/item_action/organ_action/toggle)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	var/max_light_beam_distance = 5
 	var/obj/item/flashlight/eyelight/glow/eye
 	/// base icon state for eye overlays
@@ -399,6 +405,7 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	pupils_name = "aperture clusters"
 	penlight_message = "are metal hemispheres, resembling insect eyes"
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/organ/eyes/robotic/basic/moth
 	name = "basic robotic moth eyes"
@@ -517,6 +524,7 @@
 	penlight_message = "are a wide reinforced faceplate with an inbuilt screen and a multitude of combat sensors"
 	light_reactive = FALSE
 	actions_types = list(/datum/action/item_action/organ_action/use)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 4, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 4)
 	/// Used to detect when unmasked mobs enter range
 	var/datum/proximity_monitor/tacvisor/proximity_monitor
 	/// List of mob refs -> their overlays

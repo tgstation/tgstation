@@ -59,7 +59,7 @@
 
 /obj/vehicle/sealed/mecha/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(. || !user.combat_mode)
 		return
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
@@ -73,26 +73,25 @@
 /obj/vehicle/sealed/mecha/attack_alien(mob/living/user, list/modifiers)
 	log_message("Attack by alien. Attacker - [user].", LOG_MECHA, color="red")
 	playsound(loc, 'sound/items/weapons/slash.ogg', 100, TRUE)
-	attack_generic(user, rand(user.melee_damage_lower, user.melee_damage_upper), BRUTE, MELEE, 0)
+	return attack_generic(user, rand(user.melee_damage_lower, user.melee_damage_upper), BRUTE, MELEE, 0)
 
 /obj/vehicle/sealed/mecha/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	log_message("Attack by simple animal. Attacker - [user].", LOG_MECHA, color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
-		return 0
-	else
-		var/play_soundeffect = 1
-		if(user.environment_smash)
-			play_soundeffect = 0
-			playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-		var/animal_damage = rand(user.melee_damage_lower,user.melee_damage_upper)
-		if(user.obj_damage)
-			animal_damage = user.obj_damage
-		animal_damage = min(animal_damage, 20*user.environment_smash)
-		log_combat(user, src, "attacked")
-		attack_generic(user, animal_damage, user.melee_damage_type, MELEE, play_soundeffect)
-		return 1
+		return FALSE
 
+	var/play_soundeffect = 1
+	if(user.environment_smash)
+		play_soundeffect = 0
+		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+
+	var/animal_damage = rand(user.melee_damage_lower,user.melee_damage_upper)
+	if(user.obj_damage)
+		animal_damage = user.obj_damage
+	animal_damage = min(animal_damage, 20*user.environment_smash)
+	log_combat(user, src, "attacked")
+	return attack_generic(user, animal_damage, user.melee_damage_type, MELEE, play_soundeffect)
 
 /obj/vehicle/sealed/mecha/hulk_damage()
 	return 15
@@ -420,16 +419,18 @@
 	if(servo)
 		stock_parts += servo
 
-	if(length(stock_parts))
-		var/obj/item/stock_parts/part_to_remove = tgui_input_list(user, "Which part to remove?", "Part Removal", stock_parts)
-		if(!(locate(part_to_remove) in contents))
-			return
-		user.put_in_hands(part_to_remove)
-		locate_parts()
-		diag_hud_set_mechcell()
-		tool.play_tool_sound(src)
+	if(!length(stock_parts))
+		balloon_alert(user, "no parts!")
 		return
-	balloon_alert(user, "no parts!")
+
+	var/obj/item/stock_parts/part_to_remove = tgui_input_list(user, "Which part to remove?", "Part Removal", stock_parts)
+	if(!(locate(part_to_remove) in contents))
+		return
+
+	user.put_in_hands(part_to_remove)
+	locate_parts()
+	diag_hud_set_mechcell()
+	tool.play_tool_sound(src)
 
 /obj/vehicle/sealed/mecha/welder_act(mob/living/user, obj/item/W)
 	if(user.combat_mode)
@@ -445,7 +446,7 @@
 		return
 	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
 	audible_message(span_hear("You hear welding."))
-	var/did_the_thing
+	var/did_the_thing = FALSE
 	while(atom_integrity < max_integrity)
 		if(W.use_tool(src, user, 2.5 SECONDS, volume=50))
 			did_the_thing = TRUE
@@ -453,11 +454,11 @@
 			audible_message(span_hear("You hear welding."))
 		else
 			break
+
 	if(did_the_thing)
 		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
 	else
 		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
-
 
 /obj/vehicle/sealed/mecha/proc/full_repair(charge_cell)
 	repair_damage(max_integrity)
@@ -489,62 +490,66 @@
 			visual_effect_icon = ATTACK_EFFECT_MECHFIRE
 		else if(damtype == TOX)
 			visual_effect_icon = ATTACK_EFFECT_MECHTOXIN
-	..()
+	return ..()
 
-
-/obj/vehicle/sealed/mecha/proc/ammo_resupply(obj/item/mecha_ammo/A, mob/user,fail_chat_override = FALSE)
-	if(!A.rounds)
+/obj/vehicle/sealed/mecha/proc/ammo_resupply(obj/item/mecha_ammo/ammo, mob/user,fail_chat_override = FALSE)
+	if(!ammo.rounds)
 		if(!fail_chat_override)
 			balloon_alert(user, "the box is empty!")
 		return FALSE
+
 	var/ammo_needed
 	var/found_gun
+
 	for(var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/gun in flat_equipment)
 		ammo_needed = 0
 
-		if(gun.ammo_type != A.ammo_type)
+		if(gun.ammo_type != ammo.ammo_type)
 			continue
 		found_gun = TRUE
-		if(A.direct_load)
+		if(ammo.direct_load)
 			ammo_needed = initial(gun.projectiles) - gun.projectiles
 		else
 			ammo_needed = gun.projectiles_cache_max - gun.projectiles_cache
 
 		if(!ammo_needed)
 			continue
-		if(ammo_needed < A.rounds)
-			if(A.direct_load)
+
+		if(ammo_needed < ammo.rounds)
+			if(ammo.direct_load)
 				gun.projectiles = gun.projectiles + ammo_needed
 			else
 				gun.projectiles_cache = gun.projectiles_cache + ammo_needed
-			playsound(get_turf(user),A.load_audio,50,TRUE)
-			to_chat(user, span_notice("You add [ammo_needed] [A.ammo_type][ammo_needed > 1?"s":""] to \the [gun]"))
-			A.rounds = A.rounds - ammo_needed
-			if(A.custom_materials)	//Change material content of the ammo box according to the amount of ammo deposited into the weapon
+			playsound(get_turf(user), ammo.load_audio, 50, TRUE)
+			to_chat(user, span_notice("You add [ammo_needed] [ammo.ammo_type][ammo_needed > 1 ? "s" : ""] to \the [gun]"))
+			ammo.rounds = ammo.rounds - ammo_needed
+			if(ammo.custom_materials)	//Change material content of the ammo box according to the amount of ammo deposited into the weapon
 				/// list of materials contained in the ammo box after we put it through the equation so we can stick this list into set_custom_materials()
 				var/list/new_material_content = list()
-				for(var/datum/material/current_material in A.custom_materials)
+				for(var/datum/material/current_material in ammo.custom_materials)
 					if(istype(current_material, /datum/material/iron))	//we can flatten an empty ammo box into a sheet of iron (2000 units) so we have to make sure the box always has this amount at minimum
-						new_material_content[current_material] = (A.custom_materials[current_material] - SHEET_MATERIAL_AMOUNT) * (A.rounds / initial(A.rounds)) + SHEET_MATERIAL_AMOUNT
+						new_material_content[current_material] = (ammo.custom_materials[current_material] - SHEET_MATERIAL_AMOUNT) * (ammo.rounds / initial(ammo.rounds)) + SHEET_MATERIAL_AMOUNT
 					else
-						new_material_content[current_material] = A.custom_materials[current_material] * (A.rounds / initial(A.rounds))
-				A.set_custom_materials(new_material_content)
-			A.update_name()
+						new_material_content[current_material] = ammo.custom_materials[current_material] * (ammo.rounds / initial(ammo.rounds))
+				ammo.set_custom_materials(new_material_content)
+			ammo.update_name()
 			return TRUE
 
-		if(A.direct_load)
-			gun.projectiles = gun.projectiles + A.rounds
+		if(ammo.direct_load)
+			gun.projectiles = gun.projectiles + ammo.rounds
 		else
-			gun.projectiles_cache = gun.projectiles_cache + A.rounds
-		playsound(get_turf(user),A.load_audio,50,TRUE)
-		to_chat(user, span_notice("You add [A.rounds] [A.ammo_type][A.rounds > 1?"s":""] to \the [gun]"))
-		if(A.qdel_on_empty)
-			qdel(A)
+			gun.projectiles_cache = gun.projectiles_cache + ammo.rounds
+
+		playsound(get_turf(user),ammo.load_audio,50,TRUE)
+		to_chat(user, span_notice("You add [ammo.rounds] [ammo.ammo_type][ammo.rounds > 1 ? "s" : ""] to \the [gun]"))
+		if(ammo.qdel_on_empty)
+			qdel(ammo)
 			return TRUE
-		A.rounds = 0
-		A.set_custom_materials(list(/datum/material/iron=SHEET_MATERIAL_AMOUNT))
-		A.update_appearance()
+		ammo.rounds = 0
+		ammo.set_custom_materials(list(/datum/material/iron=SHEET_MATERIAL_AMOUNT))
+		ammo.update_appearance()
 		return TRUE
+
 	if(!fail_chat_override)
 		if(found_gun)
 			balloon_alert(user, "ammo storage is full!")
@@ -558,3 +563,46 @@
 		if(rcd_equip.internal_rcd.install_upgrade(rcd_upgrade, user))
 			return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
+
+
+/obj/vehicle/sealed/mecha/atom_destruction()
+	spark_system?.start()
+	loc.assume_air(cabin_air)
+
+	var/mob/living/silicon/ai/unlucky_ai
+	for(var/mob/living/occupant as anything in occupants)
+		if(!isAI(occupant))
+			mob_exit(occupant, forced = TRUE)
+			if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..
+				occupant.SetSleeping(destruction_sleep_duration)
+			continue
+
+		var/mob/living/silicon/ai/ai = occupant
+		if(ai.linked_core || ai.can_shunt) // we probably shouldnt gib AIs with a core or shunting abilities
+			mob_exit(ai, silent = TRUE, forced = TRUE) // so we dont ghost the AI
+			continue
+
+		unlucky_ai = occupant
+		ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
+		ai.gib(DROP_ALL_REMAINS) //No wreck, no AI to recover
+
+	if(ore_box)
+		INVOKE_ASYNC(ore_box, TYPE_PROC_REF(/obj/structure/ore_box, dump_box_contents))
+
+	if(wreckage)
+		var/obj/structure/mecha_wreckage/wreck = new wreckage(loc, unlucky_ai)
+		for(var/obj/item/mecha_parts/mecha_equipment/equipment in flat_equipment)
+			if(equipment.detachable && prob(30))
+				wreck.crowbar_salvage += equipment
+				equipment.detach(wreck) //detaches from src into wreck
+				equipment.active = TRUE
+			else
+				equipment.detach(loc)
+				qdel(equipment)
+
+		if(cell)
+			wreck.crowbar_salvage += cell
+			cell.forceMove(wreck)
+			cell.use(rand(0, cell.charge), TRUE)
+			cell = null
+	return ..()

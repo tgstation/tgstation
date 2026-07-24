@@ -79,6 +79,24 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_MIND_TEMPORARILY_GONE), PROC_REF(on_mind_temporarily_gone_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_MIND_TEMPORARILY_GONE), PROC_REF(on_mind_temporarily_gone_trait_loss))
 
+	RegisterSignals(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_NIGHT_VISION),
+		SIGNAL_REMOVETRAIT(TRAIT_NIGHT_VISION),
+		SIGNAL_ADDTRAIT(TRAIT_MESON_VISION),
+		SIGNAL_REMOVETRAIT(TRAIT_MESON_VISION),
+		SIGNAL_ADDTRAIT(TRAIT_TRUE_NIGHT_VISION),
+		SIGNAL_REMOVETRAIT(TRAIT_TRUE_NIGHT_VISION),
+		SIGNAL_ADDTRAIT(TRAIT_THERMAL_VISION),
+		SIGNAL_REMOVETRAIT(TRAIT_THERMAL_VISION),
+		SIGNAL_ADDTRAIT(TRAIT_XRAY_VISION),
+		SIGNAL_REMOVETRAIT(TRAIT_XRAY_VISION),
+		SIGNAL_ADDTRAIT(TRAIT_ECHOLOCATOR),
+		SIGNAL_REMOVETRAIT(TRAIT_ECHOLOCATOR),
+	), PROC_REF(update_sight))
+
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_PASSTABLE), SIGNAL_REMOVETRAIT(TRAIT_PASSTABLE)), PROC_REF(on_passtable_trait_toggled))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_PASSWINDOW), SIGNAL_REMOVETRAIT(TRAIT_PASSWINDOW)), PROC_REF(on_passwindow_trait_toggled))
+
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
 	SIGNAL_HANDLER
@@ -341,3 +359,19 @@
 /mob/living/proc/on_mind_temporarily_gone_trait_loss(datum/source)
 	SIGNAL_HANDLER
 	med_hud_set_status()
+
+/// Called when [TRAIT_PASSTABLE] is added/removed to/from the mob.
+/mob/living/proc/on_passtable_trait_toggled(datum/source)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT(src, TRAIT_PASSTABLE))
+		pass_flags |= PASSTABLE
+	else
+		pass_flags &= ~PASSTABLE
+
+/// Called when [TRAIT_PASSWINDOW] is added/removed to/from the mob.
+/mob/living/proc/on_passwindow_trait_toggled(datum/source)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT(src, TRAIT_PASSWINDOW))
+		pass_flags |= PASSWINDOW
+	else
+		pass_flags &= ~PASSWINDOW

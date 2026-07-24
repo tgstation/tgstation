@@ -140,11 +140,12 @@
 	if(!busy)
 		walk_link(AM)
 
-/obj/effect/cross_action/spacetime_dist/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(user.temporarilyRemoveItemFromInventory(W))
-		walk_link(W)
+/obj/effect/cross_action/spacetime_dist/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.temporarilyRemoveItemFromInventory(tool))
+		walk_link(tool)
 	else
 		walk_link(user)
+	return ITEM_INTERACT_SUCCESS
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/cross_action/spacetime_dist/attack_hand(mob/user, list/modifiers)

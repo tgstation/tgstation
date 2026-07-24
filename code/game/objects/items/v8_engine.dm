@@ -41,7 +41,7 @@
 /obj/item/v8_engine/proc/start_learning_recipe(mob/user)
 	if(!user.mind)
 		return
-	if(user.mind.has_crafting_recipe(user = user, potential_recipe = /datum/crafting_recipe/house_edge))
+	if(user.mind.has_crafting_recipe(/datum/crafting_recipe/house_edge))
 		return
 	to_chat(user, span_notice("You peer at the label on the side, reading about some unique modifications that could be made to the engine..."))
 	if(do_after(user, 15 SECONDS, src))
@@ -66,7 +66,7 @@
 	throw_speed = 1
 	armour_penetration = 15
 	hitsound = 'sound/items/car_engine_start.ogg'
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 14, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.8)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 14.1, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
 	/// The number of charges the house edge has accrued through 2-handed hits, to charge a more powerful charge attack.
 	var/fire_charges = 0
 	///Sound played when wielded.

@@ -109,7 +109,7 @@
 	charge.Grant(src)
 
 	// Glass passing is handled by the glass passer component
-	passtable_on(src, type)
+	ADD_TRAIT(src, TRAIT_PASSWINDOW, INNATE_TRAIT)
 
 	// Voidwalker lore is that radio's actually attracted them, so they should be able to listen to it
 	var/obj/item/radio/internal_radio = new /obj/item/radio(src)
@@ -320,7 +320,7 @@
 	var/obj/particles = new /obj/effect/abstract/particle_holder (our_wall, /particles/void_wall)
 
 	balloon_alert(src, "opening window...")
-	if(!do_after(src, 8 SECONDS, our_wall, hidden = TRUE))
+	if(!do_after(src, 8 SECONDS, our_wall, cog_icon = null))
 		qdel(particles)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(!conversions_remaining)

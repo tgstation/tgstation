@@ -86,16 +86,9 @@
 	return ..()
 
 /datum/ai_controller/basic_controller/mad_piano
-	idle_behavior = /datum/idle_behavior/idle_random_walk/mad_piano
+	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/mad_piano.bt.json"
 	max_target_distance = 2
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
-
-/datum/idle_behavior/idle_random_walk/mad_piano
-	walk_chance = 80

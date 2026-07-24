@@ -59,6 +59,7 @@
 	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NO_MAT_REDEMPTION
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/plasma = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/bodybag/bluespace/examine(mob/user)
 	. = ..()
@@ -145,6 +146,7 @@
 	icon = 'icons/obj/medical/bodybag.dmi'
 	icon_state = "stasis_bag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/stasis
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 10, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/bodybag/stasis/deploy_bodybag(mob/user, atom/location)
 	var/obj/structure/closet/body_bag/environmental/stasis/bag = ..()

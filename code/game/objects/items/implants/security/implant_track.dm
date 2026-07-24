@@ -4,6 +4,7 @@
 	actions_types = null
 	implant_flags = IMPLANT_TYPE_SECURITY
 	hud_icon_state = "hud_imp_tracking"
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 	///How long will the implant continue to function after death?
 	var/lifespan_postmortem = 10 MINUTES
