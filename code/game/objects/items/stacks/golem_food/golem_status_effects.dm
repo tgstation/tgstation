@@ -117,7 +117,7 @@
 	owner.remove_filter("[id]_filter")
 	return ..()
 
-/datum/status_effect/golem/get_examine_text()
+/datum/status_effect/golem/get_examine_text(mob/examiner)
 	return span_notice("[owner.p_Their()] body has been augmented with veins of [mineral_name].")
 
 /// Body part overlays applied by golem status effects

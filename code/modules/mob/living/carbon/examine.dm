@@ -42,7 +42,7 @@
 			. += generate_death_examine_text()
 
 	//Status effects
-	var/list/status_examines = get_status_effect_examinations()
+	var/list/status_examines = get_status_effect_examinations(user)
 	if (length(status_examines))
 		. += status_examines
 
@@ -301,11 +301,11 @@
 /**
  * Shows any and all examine text related to any status effects the user has.
  */
-/mob/living/proc/get_status_effect_examinations()
+/mob/living/proc/get_status_effect_examinations(mob/examiner)
 	var/list/examine_list = list()
 
 	for(var/datum/status_effect/effect as anything in status_effects)
-		var/effect_text = effect.get_examine_text()
+		var/effect_text = effect.get_examine_text(examiner)
 		if(!effect_text)
 			continue
 

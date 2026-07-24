@@ -74,7 +74,7 @@
 	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING, TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED), TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
-/datum/status_effect/golem_statued/get_examine_text()
+/datum/status_effect/golem_statued/get_examine_text(mob/examiner)
 	return span_warning("[owner.p_They()] [owner.p_are()] as still as a statue!")
 
 /datum/status_effect/golem_statued/on_remove()

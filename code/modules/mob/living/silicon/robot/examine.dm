@@ -9,7 +9,7 @@
 	var/obj/act_module = get_active_held_item()
 	if(act_module)
 		. += "[p_Theyre()] holding [icon2html(act_module, user)] \a [act_module]."
-	. += get_status_effect_examinations()
+	. += get_status_effect_examinations(user)
 	if (get_brute_loss())
 		if (get_brute_loss() < maxHealth*0.5)
 			. += span_warning("[p_They()] look[p_s()] slightly dented.")

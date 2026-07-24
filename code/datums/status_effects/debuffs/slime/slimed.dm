@@ -111,7 +111,7 @@
 		))
 		to_chat(owner, span_userdanger("[feedback_text] as the layer of slime eats away at you!"))
 
-/datum/status_effect/slimed/get_examine_text()
+/datum/status_effect/slimed/get_examine_text(mob/examiner)
 	return span_warning("[owner.p_They()] [owner.p_are()] covered in bubbling slime!")
 
 #undef MIN_HEALTH
