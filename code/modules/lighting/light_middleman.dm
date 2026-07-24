@@ -10,6 +10,7 @@
 	/// Holds the primary light source
 	var/obj/effect/abstract/light_middleman/primary_intercept
 	/// Exists to hold the cone so children can modify it if they want
+	/// Only created if our parent uses directional lighting
 	var/obj/effect/abstract/light_middleman/cone_intercept
 	/// Are we overriding the light already?
 	var/overriding = FALSE
