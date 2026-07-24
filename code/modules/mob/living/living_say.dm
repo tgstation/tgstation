@@ -307,38 +307,49 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		use_runechat = FALSE
 
 	var/message = ""
-	// if someone is whispering we make an extra type of message that is obfuscated for people out of range
-	// Less than or equal to 0 means normal hearing. More than 0 and less than or equal to eavesdrop_range means
-	// partial hearing. More than eavesdrop_range means no hearing. Exception for GOOD_HEARING trait
-	var/dist = get_dist(speaker, src) - message_range
-	if(dist > 0 && dist <= eavesdrop_range && !HAS_TRAIT(src, TRAIT_GOOD_HEARING))
-		raw_message = stars(raw_message)
 	var/speaker_name = span_name("[message_mods[MODE_SPEAKER_NAME_OVERRIDE] || speaker]")
-	if(message_range != INFINITY && dist > eavesdrop_range && !HAS_TRAIT(src, TRAIT_GOOD_HEARING))
-		// Too far away and don't have good hearing, you can't hear anything
-		if(is_blind() || HAS_TRAIT(speaker, TRAIT_INVISIBLE_MAN)) // Can't see them speak either
+
+	// Infinite range implies something like telecomms, ie something that should never be distance modified
+	if(message_range != INFINITY && !HAS_TRAIT(src, TRAIT_GOOD_HEARING))
+		var/raw_dist = get_dist(speaker, src)
+		// Check for projected whispers, calculate distance from the projected tile if so
+		if(message_mods[WHISPER_MODE])
+			var/turf/in_front = get_step(speaker, speaker.dir)
+			if(in_front && HAS_TRAIT(in_front, TRAIT_TURF_PROJECTS_WHISPERS))
+				raw_dist = min(raw_dist, get_dist(in_front, src))
+
+		// How far we are we outside the message range?
+		var/outside_dist = max(raw_dist - message_range, 0)
+		// Out of message range AND out of eavesdrop range - interrupt message entirely
+		if(outside_dist > eavesdrop_range)
+			// Can't see them speak either. No message
+			if(is_blind() || HAS_TRAIT(speaker, TRAIT_INVISIBLE_MAN))
+				return FALSE
+			// If they're inside of something, probably can't see them speak. No message
+			if(!isturf(speaker.loc))
+				return FALSE
+
+			// But we can still see them speak
+			if(speaker_is_signing)
+				deaf_message = "[speaker_name] [speaker.get_default_say_verb()] something, but the motions are too subtle to make out from afar."
+			// If we can't hear we want to continue to the default deaf message
+			else if(!HAS_TRAIT(src, TRAIT_DEAF))
+				if(isliving(speaker))
+					var/mob/living/living_speaker = speaker
+					var/mouth_hidden = living_speaker.is_mouth_covered() || HAS_TRAIT(living_speaker, TRAIT_FACE_COVERED)
+					if(mouth_hidden && !HAS_TRAIT(src, TRAIT_SEE_MASK_WHISPER)) // Can't see them speak if their mouth is covered or hidden, unless we're an empath
+						return FALSE
+
+				deaf_message = "[speaker_name] [speaker.verb_whisper] something, but you are too far away to hear [speaker.p_them()]."
+
+			if(deaf_message)
+				deaf_type = MSG_VISUAL
+				message = deaf_message
+				return show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
 			return FALSE
-		if(!isturf(speaker.loc)) // If they're inside of something, probably can't see them speak
-			return FALSE
-
-		// But we can still see them speak
-		if(speaker_is_signing)
-			deaf_message = "[speaker_name] [speaker.get_default_say_verb()] something, but the motions are too subtle to make out from afar."
-		else if(!HAS_TRAIT(src, TRAIT_DEAF)) // If we can't hear we want to continue to the default deaf message
-			if(isliving(speaker))
-				var/mob/living/living_speaker = speaker
-				var/mouth_hidden = living_speaker.is_mouth_covered() || HAS_TRAIT(living_speaker, TRAIT_FACE_COVERED)
-				if(mouth_hidden && !HAS_TRAIT(src, TRAIT_SEE_MASK_WHISPER)) // Can't see them speak if their mouth is covered or hidden, unless we're an empath
-					return FALSE
-
-			deaf_message = "[speaker_name] [speaker.verb_whisper] something, but you are too far away to hear [speaker.p_them()]."
-
-		if(deaf_message)
-			deaf_type = MSG_VISUAL
-			message = deaf_message
-			show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
-			return FALSE
-
+		// Out of message range but within eavesdrop range - alter displayed message
+		if(outside_dist > 0)
+			raw_message = stars(raw_message)
 
 	// we need to send this signal before compose_message() is used since other signals need to modify
 	// the raw_message first. After the raw_message is passed through the various signals, it's ready to be formatted
@@ -408,6 +419,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	var/list/in_view = get_hearers_in_view(message_range + whisper_range, source)
 	var/list/listening = get_hearers_in_range(message_range + whisper_range, source)
+
+	if(is_speaker_whispering)
+		var/turf/in_front = get_step(src, dir)
+		if(in_front && HAS_TRAIT(in_front, TRAIT_TURF_PROJECTS_WHISPERS))
+			in_view |= get_hearers_in_view(message_range + whisper_range, in_front)
+			listening |= get_hearers_in_range(message_range + whisper_range, in_front)
 
 	// Pre-process listeners to account for line-of-sight
 	for(var/atom/movable/listening_movable as anything in listening)

@@ -31,18 +31,18 @@
 		return TRUE
 	return pry_tile(I, user) ? TRUE : FALSE
 
-/turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, list/modifiers)
-	if(T.turf_type == type)
+/turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/newtile, mob/user, list/modifiers)
+	if(newtile.turf_type == type)
 		return
 	var/obj/item/tool = user.is_holding_tool_quality(TOOL_SCREWDRIVER)
 	if(!tool)
 		tool = user.is_holding_tool_quality(TOOL_CROWBAR)
 	if(!tool)
 		return
-	var/turf/open/floor/plating/P = pry_tile(tool, user, TRUE)
-	if(!istype(P))
+	var/turf/open/floor/plating/bare_floor = pry_tile(tool, user, TRUE)
+	if(!istype(bare_floor))
 		return
-	P.attackby(T, user, modifiers)
+	bare_floor.base_item_interaction(user, newtile, modifiers)
 
 /turf/open/floor/wood/pry_tile(obj/item/C, mob/user, silent = FALSE)
 	C.play_tool_sound(src, 80)

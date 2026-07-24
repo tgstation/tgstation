@@ -618,3 +618,93 @@
   SmArtKar:
   - bugfix: Fixed the Four Hands wizard perk
   - bugfix: Fixed quick tile replacement
+2026-07-21:
+  CabinetOnFire:
+  - bugfix: Fixes cats getting permanent zoomies after being chased away by a superior
+      male
+  - bugfix: Fixes mechs not qdel'ing when destroyed if they spawn a wreck
+  FalloutFalcon:
+  - qol: per department sorting for character setup matches latejoin menu
+  SmArtKar:
+  - bugfix: Removed unnecessary click delay from window placement
+  lelandkemble:
+  - code_imp: Edible food unit test doesn't check abstract type food, abstract type
+      food doesn't have seeds.
+  timothymtorres:
+  - rscadd: Add water bottles to booze-o-mat non-alcoholic category
+  vinylspiders:
+  - bugfix: peeking into a hilberts hotel room while it gets deleted will now kick
+      you out properly
+  - bugfix: fixed an issue where the lights would stay dark after reloading the same
+      hilberts hotel room
+2026-07-22:
+  CabinetOnFire:
+  - refactor: Ruin loading should now be more robust and should spawn less orphaned
+      genturfs
+  Kashargul:
+  - bugfix: tgui UI testing with more than one test file
+  lelandkemble:
+  - code_imp: converted calls to attackby() to calls to item_interaction()
+  - bugfix: MODsuit drill module manual activation works again
+  - bugfix: you can put c4s on safes
+  vinylspiders:
+  - bugfix: fixed tails and ears not updating on your dummy when changing the pref
+      until you change species or switch characters
+2026-07-23:
+  CabinetOnFire:
+  - rscadd: Monkeys now know how to yakety sax and how to shove people into walls
+  - bugfix: Monkeys no longer trip on monkeys.
+  Happyowl93:
+  - bugfix: you should be able to hit cave spawners with melee items again
+  - bugfix: you can place lattices over ice again.
+  Melbert:
+  - code_imp: Roughly doubled the performance speed of the crafting UI, report anything
+      broken with it
+  PapaMichael:
+  - bugfix: It no longer looks like you have accessories attached after you've removed
+      them.
+  SmArtKar:
+  - bugfix: Fixed negative moles left by gas scrubbers
+  - bugfix: Fixed meteor changelings being killed by defense sats
+  SyncIt21:
+  - bugfix: monkey powder reaction gives multiple monkeys
+  YesterdaysPromise:
+  - bugfix: Plastitanium wall fillings now fill up the walls correctly at rate of
+      1 per wall, and correctly make survival pod walls.
+  lelandkemble:
+  - bugfix: medbots can no longer be thrown, all bots no longer have AA
+  nPocToDark:
+  - qol: Raptor eggs now floor placeable (even in lava). It's now easier to immerse
+      them in lava to accelerate their growth.
+2026-07-24:
+  Aliceee2ch:
+  - spellcheck: Fixed some admin logging messages in canister code.
+  CabinetOnFire:
+  - code_imp: Removes radio's flicking an overlay whenever they receive a message
+      because it took 30~ms per radio message
+  CabinetOnFire, sounds and info by Vorpal-Void:
+  - sound: Some looping sounds (SM, Gravgen, griddle, etc) will now loop more properly
+  Melbert:
+  - rscadd: Whispering while facing a table will project the whisper across the table
+      (allowing anyone on the other side to hear the whisper clearly)
+  - rscdel: Newscasters no longer have tiny 2x2 pixel animation upon receiving a muted
+      alert
+  QuiteLiterallyAnything:
+  - bugfix: If a tree "falls" in zero gravity, it doesn't make a sound.
+  - balance: The sound of tree felling has a bit more range.
+  - bugfix: Tramstation's hidden Syndicate outpost is no longer considered a "vacant
+      room" station area.
+  - map: Tramstation's hidden Syndicate outpost has been given lighting and a bit
+      of detailing.
+  SmArtKar:
+  - bugfix: Fixes hair gradient alpha on ethereals
+  timothymtorres:
+  - rscadd: Add 2 new abilities to Revenant - Vortex and Scatter. These move around
+      (suck or throw) nearby objects and dump the contents if it is close enough to
+      the Revenant and not locked.
+  - rscadd: 'Improve Revenant Defile ability: Alcoholic drinks get replaced with blood.
+      Unpackaged food gets dirty and exposed to germs. Cryo cells and stasis beds
+      eject mobs. Patches, syringes, medipens, pills, bottles, medigels, sprays, DNA
+      injectors, blood bags all lose their identity (name/desc/icon_state). Gas canisters
+      lose their identity (name/desc/icon_state). Lockboxes and crates all lose their
+      identity (name). Locked closets no longer open.'
