@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	///The blood type datum, usually a singleton
 	var/datum/blood_type/blood_type
 	///The type of mutant race the player is if applicable (i.e. potato-man)
-	var/datum/species/species = new /datum/species/human
+	var/datum/species/species = /datum/species/human
 	/// Assoc list of feature keys to their value
 	/// Note if you set these manually, and do not update [unique_features] afterwards, it will likely be reset.
 	var/list/features = list(FEATURE_MUTANT_COLOR = COLOR_WHITE)
@@ -57,9 +57,12 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	/// Weighted list of lethal meltdowns
 	var/static/list/fatal_meltdowns = list()
 
-/datum/dna/New(mob/living/new_holder)
+/datum/dna/New(mob/living/new_holder, datum/species/mob_species)
 	if(istype(new_holder))
 		holder = new_holder
+	if(mob_species)
+		species = mob_species
+	species = new species
 
 /datum/dna/Destroy()
 	if (iscarbon(holder))
@@ -470,8 +473,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			if(allowed_sources)
 				dna.add_mutation(mutation, allowed_sources)
 
-/mob/living/carbon/proc/create_dna()
-	dna = new /datum/dna(src)
+/mob/living/carbon/proc/create_dna(datum/species/species)
+	dna = new /datum/dna(src, species)
 	if(!dna.species)
 		var/rando_race = pick(get_selectable_species())
 		dna.species = new rando_race()
