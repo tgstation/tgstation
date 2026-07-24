@@ -1,0 +1,39 @@
+{
+	"dm_type": "/datum/bt_node/subtree/dog_harassment",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/random_chance",
+	"vars": {
+		"chance": 0.1
+	},
+	"child": {
+		"type": "sequence",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/find_hated_dog_target",
+				"vars": {
+					"target_key": "BB_DOG_HARASS_TARGET",
+					"targeting_strategy": "BB_PET_TARGETING_STRATEGY"
+				}
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+				"vars": {
+					"target_key": "BB_DOG_HARASS_TARGET",
+					"required_dist": 1,
+					"finish_on_arrival": true
+				}
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack/dog",
+				"vars": {
+					"target_key": "BB_DOG_HARASS_TARGET",
+					"targeting_strategy": "BB_PET_TARGETING_STRATEGY",
+					"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+				}
+			}
+		]
+	}
+}

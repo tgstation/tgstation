@@ -131,18 +131,21 @@
 		ink_level = "dangerously high"
 	. += span_notice("Its ink levels look [ink_level].")
 
-/obj/item/airlock_painter/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/toner))
-		if(ink)
-			to_chat(user, span_warning("[src] already contains \a [ink]!"))
-			return
-		if(!user.transferItemToLoc(W, src))
-			return
-		to_chat(user, span_notice("You install [W] into [src]."))
-		ink = W
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-	else
-		return ..()
+/obj/item/airlock_painter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/toner))
+		return NONE
+
+	if(ink)
+		to_chat(user, span_warning("[src] already contains \a [ink]!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You install [tool] into [src]."))
+	ink = tool
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/airlock_painter/click_alt(mob/user)
 	if(!ink)

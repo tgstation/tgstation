@@ -29,7 +29,7 @@
 		to_chat(burrower, span_warning("Couldn't burrow anywhere near the target!"))
 		if(burrower.ai_controller?.ai_status == AI_STATUS_ON)
 			//this is a valid reason to give up on a target
-			burrower.ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+			burrower.ai_controller.clear_blackboard_key(BB_CURRENT_TARGET)
 		return
 
 	if (istype(burrower, /mob/living/basic/mining/bileworm) && !force)
@@ -50,7 +50,7 @@
 		jump_damaged = FALSE
 		RegisterSignal(worm, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 		// Not in an if check direclty to reduce duplicate code
-		var/jump_result = do_after(worm, jump_length, worm, hidden = TRUE, extra_checks = CALLBACK(src, PROC_REF(damage_check)))
+		var/jump_result = do_after(worm, jump_length, worm, cog_icon = null, extra_checks = CALLBACK(src, PROC_REF(damage_check)))
 		UnregisterSignal(worm, COMSIG_ATOM_WAS_ATTACKED)
 		if (worm.icon_state == null)
 			worm.icon_state = old_icon_state

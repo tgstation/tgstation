@@ -329,7 +329,7 @@
 		else
 			to_chat(user, span_notice("<i>You glance at [photo], looking for wires in the pictured blueprints.</i>"))
 
-		if(do_after(user, study_length, holder, interaction_key = STUDY_INTERACTION_KEY, hidden = TRUE))
+		if(do_after(user, study_length, holder, interaction_key = STUDY_INTERACTION_KEY, cog_icon = null))
 			LAZYSET(studied_photos, REF(user.mind), REF(photo))
 		return
 

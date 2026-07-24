@@ -196,8 +196,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VIRUS_RESISTANCE "virus_resistance"
 /// Causes viruses, infected burns, and parasites to spread more effectively and faster, like an inverse of the above.
 #define TRAIT_IMMUNODEFICIENCY "immunodeficiency"
-/// Prevents viruses from curing naturaly
-#define TRAIT_NO_SELF_CURE "noselfcure"
 #define TRAIT_GENELESS "geneless"
 #define TRAIT_PIERCEIMMUNE "pierce_immunity"
 #define TRAIT_NODISMEMBER "dismember_immunity"
@@ -415,7 +413,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_IGNORING_GRAVITY "ignores_gravity"
 /// We have some form of forced gravity acting on us
 #define TRAIT_FORCED_GRAVITY "forced_gravity"
-/// Makes whispers clearly heard from seven tiles away, the full hearing range
+/// Allows the mob to hear whispers as if it were normal speech
 #define TRAIT_GOOD_HEARING "good_hearing"
 /// Allows you to hear speech through walls
 #define TRAIT_XRAY_HEARING "xray_hearing"
@@ -1687,5 +1685,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Mobs with this trait will always have be a priority target for mining mobs
 #define TRAIT_MINING_AGGRO "mining_aggro"
+
+/// Turfs with this trait allow whispers to be projected over it when the whisperer is facing it
+#define TRAIT_TURF_PROJECTS_WHISPERS  "turf_projects_whispers"
 
 // END TRAIT DEFINES
