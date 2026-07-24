@@ -2,6 +2,8 @@
 #define LIGHTING_ON (1<<0)
 ///Is the parent attached to something else, its loc? Then we need to keep an eye of this.
 #define LIGHTING_ATTACHED (1<<1)
+///Do we skip turf luminosity updates entirely?
+#define LIGHTING_IGNORE_LUMINOSITY (1<<2)
 
 #define GET_PARENT (parent_attached_to || parent)
 
@@ -134,6 +136,8 @@
 	if(movable_parent.light_flags & LIGHT_ATTACHED)
 		overlay_lighting_flags |= LIGHTING_ATTACHED
 		set_parent_attached_to(ismovable(movable_parent.loc) ? movable_parent.loc : null)
+	if(movable_parent.light_flags & LIGHT_IGNORE_LUMINOSITY)
+		overlay_lighting_flags |= LIGHTING_IGNORE_LUMINOSITY
 	check_holder()
 	if(movable_parent.light_on)
 		turn_on()
@@ -181,7 +185,7 @@
 
 ///Populates the affected_turfs lazylist, adding to its contents the effects of being near the light.
 /datum/component/overlay_lighting/proc/get_new_turfs()
-	if(!current_holder)
+	if(!current_holder || (overlay_lighting_flags & LIGHTING_IGNORE_LUMINOSITY))
 		return
 	. = list()
 	for(var/turf/lit_turf in view(lumcount_range, get_turf(current_holder)))
@@ -203,12 +207,20 @@
 
 ///Adds the luminosity and source for the affected movable atoms to keep track of their visibility.
 /datum/component/overlay_lighting/proc/add_dynamic_lumi()
+	if (overlay_lighting_flags & LIGHTING_IGNORE_LUMINOSITY)
+		show_to_holder()
+		return
+
 	LAZYSET(current_holder.affected_dynamic_lights, src, lumcount_range + 1)
 	show_to_holder()
 	current_holder.update_dynamic_luminosity()
 
 ///Removes the luminosity and source for the affected movable atoms to keep track of their visibility.
 /datum/component/overlay_lighting/proc/remove_dynamic_lumi()
+	if (overlay_lighting_flags & LIGHTING_IGNORE_LUMINOSITY)
+		hide_from_holder()
+		return
+
 	LAZYREMOVE(current_holder.affected_dynamic_lights, src)
 	hide_from_holder()
 	current_holder.update_dynamic_luminosity()
@@ -457,14 +469,19 @@
 	SIGNAL_HANDLER
 	var/new_flags = source.light_flags
 	var/atom/movable/movable_parent = parent
-	if(!((new_flags ^ old_flags) & LIGHT_ATTACHED))
-		return
 
-	if(new_flags & LIGHT_ATTACHED) // Gained the [LIGHT_ATTACHED] property
+	if ((new_flags & LIGHT_IGNORE_LUMINOSITY) && !(old_flags & LIGHT_IGNORE_LUMINOSITY))
+		overlay_lighting_flags |= LIGHTING_IGNORE_LUMINOSITY
+		clean_old_turfs()
+	else if (!(new_flags & LIGHT_IGNORE_LUMINOSITY) && (old_flags & LIGHT_IGNORE_LUMINOSITY))
+		overlay_lighting_flags &= ~LIGHTING_IGNORE_LUMINOSITY
+		make_luminosity_update()
+
+	if((new_flags & LIGHT_ATTACHED) && !(old_flags & LIGHT_ATTACHED)) // Gained the [LIGHT_ATTACHED] property
 		overlay_lighting_flags |= LIGHTING_ATTACHED
 		if(ismovable(movable_parent.loc))
 			set_parent_attached_to(movable_parent.loc)
-	else // Lost the [LIGHT_ATTACHED] property
+	else if (!(new_flags & LIGHT_ATTACHED) && !(old_flags & LIGHT_ATTACHED)) // Lost the [LIGHT_ATTACHED] property
 		overlay_lighting_flags &= ~LIGHTING_ATTACHED
 		set_parent_attached_to(null)
 
@@ -513,6 +530,8 @@
 		return
 	. = lum_power
 	lum_power = new_lum_power
+	if(overlay_lighting_flags & LIGHTING_IGNORE_LUMINOSITY)
+		return
 	var/difference = . - lum_power
 	for(var/turf/lit_turf as anything in affected_turfs)
 		lit_turf.dynamic_lumcount -= difference
@@ -604,5 +623,6 @@
 
 #undef LIGHTING_ON
 #undef LIGHTING_ATTACHED
+#undef LIGHTING_IGNORE_LUMINOSITY
 #undef GET_PARENT
 #undef SHORT_CAST

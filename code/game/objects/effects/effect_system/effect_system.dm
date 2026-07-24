@@ -13,6 +13,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pass_flags = PASSTABLE | PASSGRILLE
 	anchored = TRUE
+	light_flags = parent_type::light_flags | LIGHT_IGNORE_LUMINOSITY
 
 // Prevents effects from getting registered for SSnewtonian_movement
 /obj/effect/particle_effect/newtonian_move(inertia_angle, instant = FALSE, start_delay = 0, drift_force = 0, controlled_cap = null)

@@ -17,6 +17,7 @@
 	generic_canpass = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	layer = MOB_LAYER
+	light_flags = parent_type::light_flags | LIGHT_IGNORE_LUMINOSITY
 	/// The sound this plays on impact.
 	var/hitsound = 'sound/items/weapons/pierce.ogg'
 	/// Sound played when the projectile hits a wall

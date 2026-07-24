@@ -6,6 +6,7 @@
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = LONG_GLIDE
+	light_flags = parent_type::light_flags | LIGHT_IGNORE_LUMINOSITY
 
 /obj/effect/projectile/singularity_pull(atom/singularity, current_size)
 	return
