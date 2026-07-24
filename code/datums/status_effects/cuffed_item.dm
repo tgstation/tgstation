@@ -107,10 +107,11 @@
 
 ///Called when someone examines the owner twice, so they can know if someone has a cuffed item
 /datum/status_effect/cuffed_item/get_examine_text(mob/examiner)
-	var/message = "There is [cuffed.examine_title(examiner)] bound to [owner.p_their()] [cuffed_to.plaintext_zone] by [cuffs.examine_title(examiner)]."
-	if(isliving(examiner))
-		message += " <i>You could attempt to <a href='byond://?src=[REF(cuffed)];remove_cuffs_item=1'>remove them</a></i>."
-	return span_notice(message)
+	var/handcuff_text = cuffs.examine_title(examiner)
+	if(isliving(examiner) && get_dist(examiner, get_turf(cuffed)) <= 2)
+		handcuff_text = "<a href='byond://?src=[REF(cuffed)];remove_cuffs_item=1'>[handcuff_text]</a>"
+
+	return span_notice("There is [cuffed.examine_title(examiner)] bound to [owner.p_their()] [cuffed_to.plaintext_zone] by [handcuff_text].")
 
 /// What happens if the limb we're cuffed to is removed?
 /datum/status_effect/cuffed_item/proc/cuffed_to_removed(datum/source, mob/living/carbon/owner, special)
@@ -234,19 +235,11 @@
 /datum/status_effect/cuffed_item/proc/cuffed_examine(obj/item/item, mob/user, list/examine_texts)
 	SIGNAL_HANDLER
 
-	var/message = ""
+	var/cuff_text = cuffs.examine_title(user)
+	if(isliving(user) && get_dist(user, get_turf(cuffed)) <= CARBON_EXAMINE_EMBEDDING_MAX_DIST + 1)
+		cuff_text = "<a href='byond://?src=[REF(item)];remove_cuffs_item=1'>[cuff_text]</a>"
 
-	if(user == owner)
-		message = "[item.p_Theyre()] cuffed to your [cuffed_to.plaintext_zone] by \a [cuffs]."
-		if(isliving(user))
-			message += " <i>You can <a href='byond://?src=[REF(item)];remove_cuffs_item=1'>remove them</a></i>."
-
-	else
-		message = "[item.p_Theyre()] cuffed to [owner]'s [cuffed_to.plaintext_zone] by \a [cuffs]."
-		if(isliving(user))
-			message += " <i>You could attempt to <a href='byond://?src=[REF(item)];remove_cuffs_item=1'>remove them</a></i>."
-
-	examine_texts += span_notice(message)
+	examine_texts += span_notice("[item.p_Theyre()] cuffed to [user == owner ? "your" : "[owner]'s"] [cuffed_to.plaintext_zone] by [cuff_text].")
 
 /// This mainly exists as a fallback in the rare case the alert icon is not reachable (too many alerts?). You should be somewhat able to examine items while blind so all good.
 /datum/status_effect/cuffed_item/proc/topic_handler(atom/source, user, href_list)
@@ -276,7 +269,7 @@
 	if(LAZYACCESS(user.do_afters, interaction_key))
 		return FALSE
 
-	if(!(user.mobility_flags & MOBILITY_USE) || (user != owner && !owner.IsReachableBy(user)))
+	if(!(user.mobility_flags & MOBILITY_USE))
 		owner.balloon_alert(user, "can't do it right now!")
 		return FALSE
 

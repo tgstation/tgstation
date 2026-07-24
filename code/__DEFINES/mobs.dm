@@ -1106,6 +1106,8 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 /// Distance which you can see someone's ID card
 /// Short enough that you can inspect over tables (bartender checking age)
 #define ID_EXAMINE_DISTANCE 3
+/// Distance which you can get the href to remove embeds or similar from someone
+#define CARBON_EXAMINE_EMBEDDING_MAX_DIST 4
 
 GLOBAL_LIST_INIT(regal_rat_minion_commands, list(
 	/datum/pet_command/idle,

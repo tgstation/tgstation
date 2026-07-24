@@ -1,6 +1,5 @@
 /// Adds a newline to the examine list if the above entry is not empty and it is not the first element in the list
 #define ADD_NEWLINE_IF_NECESSARY(list) if(length(list) > 0 && list[length(list)]) { list += "" }
-#define CARBON_EXAMINE_EMBEDDING_MAX_DIST 4
 
 /mob/living/carbon/human/get_examine_icon(mob/user)
 	return null
@@ -610,4 +609,3 @@
 	return span_notice("[p_They()] appear[p_s()] to be [age_text].")
 
 #undef ADD_NEWLINE_IF_NECESSARY
-#undef CARBON_EXAMINE_EMBEDDING_MAX_DIST
