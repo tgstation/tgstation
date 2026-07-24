@@ -74,6 +74,8 @@
 		/datum/action/cooldown/spell/aoe/revenant/haunt_object,
 		/datum/action/cooldown/spell/aoe/revenant/malfunction,
 		/datum/action/cooldown/spell/aoe/revenant/overload,
+		/datum/action/cooldown/spell/aoe/revenant/vortex,
+		/datum/action/cooldown/spell/aoe/revenant/vortex/scatter,
 		/datum/action/cooldown/spell/list_target/telepathy/revenant,
 	)
 

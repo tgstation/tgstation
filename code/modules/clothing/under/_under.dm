@@ -389,6 +389,7 @@
 	LAZYREMOVE(attached_accessories, removed)
 	removed.detach(src, update)
 	update_accessory_weight() // BANDASTATION ADD: Accessory holsters
+	update_appearance()
 
 /// Get a list of all accessory overlays
 /obj/item/clothing/under/proc/get_accessory_overlays()
