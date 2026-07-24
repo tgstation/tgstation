@@ -2275,8 +2275,8 @@
 		/datum/reagent/consumable/ethanol/aperitivo = 10
 	)
 	required_ingredients = list(
-		/obj/item/food/drug/opium = 1
-		//TODO: add something like obj/item/food/grown/flower = 1 one you have that kinda subtype done
+		/obj/item/food/drug/opium = 1,
+		/obj/item/food/grown/flower = 1
 	)
 	results=list(
 		/datum/reagent/consumable/ethanol/rubywise_ruin = 50
