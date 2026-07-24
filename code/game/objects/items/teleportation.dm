@@ -208,7 +208,7 @@
 
 	if (teleport_location == PORTAL_LOCATION_DANGEROUS)
 		var/list/dangerous_turfs = list()
-		for(var/turf/dangerous_turf in urange(10, get_turf(src), 1))
+		for(var/turf/dangerous_turf in urange(10, get_turf(src), TRUE))
 			if(dangerous_turf.x > world.maxx - PORTAL_DANGEROUS_EDGE_LIMIT || dangerous_turf.x < PORTAL_DANGEROUS_EDGE_LIMIT)
 				continue //putting them at the edge is dumb
 			if(dangerous_turf.y > world.maxy - PORTAL_DANGEROUS_EDGE_LIMIT || dangerous_turf.y < PORTAL_DANGEROUS_EDGE_LIMIT)
