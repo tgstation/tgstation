@@ -30,6 +30,8 @@
 /datum/status_effect/cuffed_item/on_apply()
 	owner.temporarilyRemoveItemFromInventory(cuffs, force = TRUE)
 	cuffed_to = owner.get_inactive_hand()
+	// NB: This is the only time we init a link without having any other signal registered
+	// This can cause issues due do signal registration order where some stuff gets resolved before the link instead of after the link
 	if(isnull(cuffed_to) || !update_link())
 		owner.put_in_hands(cuffs)
 		qdel(src)
@@ -378,24 +380,47 @@
 	RegisterSignal(beam_effect, COMSIG_QDELETING, PROC_REF(recreate_beam))
 
 /datum/component/chained_together/Destroy()
-	UnregisterSignal(beam_effect, COMSIG_QDELETING)
-	UnregisterSignal(link_effect, COMSIG_QDELETING)
-	UnregisterSignal(tug_effect, COMSIG_QDELETING)
+	if(!isnull(beam_effect))
+		UnregisterSignal(beam_effect, COMSIG_QDELETING)
+	if(!isnull(link_effect))
+		UnregisterSignal(link_effect, COMSIG_QDELETING)
+	if(!isnull(tug_effect))
+		UnregisterSignal(tug_effect, COMSIG_QDELETING)
 	if(!QDELETED(link_effect))
-		QDEL_NULL(link_effect)
+		qdel(link_effect)
 	if(!QDELETED(tug_effect))
-		QDEL_NULL(tug_effect)
+		qdel(tug_effect)
 	if(!QDELETED(beam_effect))
-		QDEL_NULL(beam_effect)
+		qdel(beam_effect)
+
+	beam_effect = null
+	link_effect = null
+	tug_effect = null
 	return ..()
 
-/datum/component/chained_together/proc/recreate_beam(datum/beam/source)
+/datum/component/chained_together/proc/recreate_beam(...)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(beam_effect, COMSIG_QDELETING)
+	if(!isnull(beam_effect))
+		UnregisterSignal(beam_effect, COMSIG_QDELETING)
+		beam_effect = null
+
 	var/atom/movable/movable_parent = parent
+	if(!isturf(movable_parent.loc))
+		RegisterSignal(movable_parent, COMSIG_MOVABLE_MOVED, PROC_REF(check_for_recreate_beam), override = TRUE)
+		return
+
 	beam_effect = movable_parent.Beam(chained_to_weakref.resolve(), "chain", animate = FALSE)
 	RegisterSignal(beam_effect, COMSIG_QDELETING, PROC_REF(recreate_beam))
+
+/datum/component/chained_together/proc/check_for_recreate_beam(atom/movable/source, atom/movable/moved_atom, ...)
+	SIGNAL_HANDLER
+
+	var/atom/movable/movable_parent = parent
+	if(!isturf(movable_parent.loc))
+		return
+	recreate_beam()
+	UnregisterSignal(movable_parent, COMSIG_MOVABLE_MOVED)
 
 /datum/component/chained_together/proc/delete_self(datum/source)
 	SIGNAL_HANDLER
