@@ -1,0 +1,5 @@
+author: "Dmeto"
+delete-after: True
+changes:
+  - qol: "Some museum away mission hints have been tweeked."
+  - bugfix: "The museum away mission should suffer less decompressions now."
