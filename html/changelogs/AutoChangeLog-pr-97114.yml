@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Add 2 new abilities to Revenant - Vortex and Scatter. These move around (suck or throw) nearby objects and dump the contents if it is close enough to the Revenant and not locked."
+  - rscadd: "Improve Revenant Defile ability: Alcoholic drinks get replaced with blood. Unpackaged food gets dirty and exposed to germs. Cryo cells and stasis beds eject mobs. Patches, syringes, medipens, pills, bottles, medigels, sprays, DNA injectors, blood bags all lose their identity (name/desc/icon_state). Gas canisters lose their identity (name/desc/icon_state). Lockboxes and crates all lose their identity (name). Locked closets no longer open."

@@ -1,0 +1,28 @@
+# Renders the diffs and uploads them to filehouse
+name: Behavior tree diff
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  render:
+    name: Render behavior tree diffs
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Render diffs
+        uses: tgstation/BehaviorTreeG@main
+        with:
+          mode: render
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload rendered diffs
+        uses: actions/upload-artifact@v4
+        with:
+          name: bt-diff
+          path: bt-diff-out
+          if-no-files-found: ignore

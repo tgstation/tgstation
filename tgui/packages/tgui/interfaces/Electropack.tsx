@@ -9,8 +9,16 @@ import { toFixed } from 'tgui-core/math';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
+type ElectropackData = {
+  power: boolean;
+  frequency: number;
+  code: number;
+  minFrequency: number;
+  maxFrequency: number;
+};
+
 export const Electropack = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<ElectropackData>();
   const { power, code, frequency, minFrequency, maxFrequency } = data;
   return (
     <Window width={260} height={137}>
@@ -20,27 +28,29 @@ export const Electropack = (props) => {
             <LabeledList.Item label="Power">
               <Button
                 icon={power ? 'power-off' : 'times'}
-                content={power ? 'On' : 'Off'}
                 selected={power}
                 onClick={() => act('power')}
-              />
+              >
+                {power ? 'On' : 'Off'}
+              </Button>
             </LabeledList.Item>
             <LabeledList.Item
               label="Frequency"
               buttons={
                 <Button
                   icon="sync"
-                  content="Reset"
                   onClick={() =>
                     act('reset', {
                       reset: 'freq',
                     })
                   }
-                />
+                >
+                  Reset
+                </Button>
               }
             >
               <NumberInput
-                animate
+                animated
                 tickWhileDragging
                 unit="kHz"
                 step={0.2}
@@ -62,17 +72,18 @@ export const Electropack = (props) => {
               buttons={
                 <Button
                   icon="sync"
-                  content="Reset"
                   onClick={() =>
                     act('reset', {
                       reset: 'code',
                     })
                   }
-                />
+                >
+                  Reset
+                </Button>
               }
             >
               <NumberInput
-                animate
+                animated
                 tickWhileDragging
                 step={1}
                 stepPixelSize={6}
