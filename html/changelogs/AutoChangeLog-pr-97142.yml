@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - bugfix: "The Ghost Menu's Extra View Distance field now remembers your current extra view distance between openings"
