@@ -261,4 +261,4 @@
 
 	/// When less than or equal to  this distance (but not adjacent), this mob can hear parts of distant whispers, but not the entire message.
 	/// When greater than this distance, this mob cannot hear anything of a whisper.
-	var/eavesdrop_range = EAVESDROP_EXTRA_RANGE
+	var/eavesdrop_range = EAVESDROP_RANGE

@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - spellcheck: "Rewrote (almost, if not all) genetic mutation descriptions"
+  - rscadd: "Adds six new mutations"
+  - rscdel: "Several \"extremely niche\" reagents can no longer roll as a medicine allergy, such as changeling adrenaline, muscle stimulant, or virus rations"

@@ -128,8 +128,6 @@
 		affected_human.add_eye_color_right(eye_color_right, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
 	refresh_atom_color_overrides()
 
-	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_cutoff)
-		lighting_cutoff = LIGHTING_CUTOFF_REAL_LOW
 	if(CONFIG_GET(flag/native_fov) && native_fov)
 		affected_human.add_fov_trait(type, native_fov)
 
@@ -532,6 +530,8 @@
 			animate(time = wait_time)
 
 /obj/item/organ/eyes/proc/blink(duration = BLINK_DURATION, restart_animation = TRUE)
+	if(!blink_animation)
+		return
 	var/left_delayed = prob(50)
 	// Storing blink delay so mistimed blinks of lizards don't get cut short
 	var/sync_blinking = synchronized_blinking && (owner.get_organ_loss(ORGAN_SLOT_BRAIN) < BRAIN_DAMAGE_ASYNC_BLINKING)

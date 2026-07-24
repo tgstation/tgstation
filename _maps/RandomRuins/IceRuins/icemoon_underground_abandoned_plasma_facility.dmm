@@ -1523,7 +1523,7 @@
 /turf/open/floor/iron/edge,
 /area/ruin/plasma_facility/commons)
 "AG" = (
-/turf/open/genturf,
+/turf/template_noop,
 /area/icemoon/underground/unexplored/rivers)
 "AT" = (
 /obj/structure/lattice/catwalk,
