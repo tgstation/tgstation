@@ -34,6 +34,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload images and comment
+        if: steps.secrets_set.outputs.SECRETS_ENABLED
         uses: tgstation/BehaviorTreeG@main
         with:
           mode: publish
