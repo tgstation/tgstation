@@ -557,7 +557,7 @@
 	SIGNAL_HANDLER
 
 	if(QDELETED(offer.offered_item))
-		examine_list += span_warning("[source]'s arm appears tensed up, as if [source.p_they()] plan on pulling it back suddenly...")
+		examine_list += span_warning("[source]'s arm appears tensed up, as if [source.p_they()] plan[source.p_s()] on pulling it back suddenly...")
 
 /atom/movable/screen/alert/give/hand
 	screentip_override_text = "Take Hand"
@@ -1162,13 +1162,13 @@
 	if(!.)
 		return
 
-	var/mob/living/carbon/carbon_owner = owner
+	var/mob/living/carbon/human/human_owner = owner
 
-	if(!carbon_owner.can_resist() || !carbon_owner.shoes)
+	if(!human_owner.can_resist() || !human_owner.shoes)
 		return
 
-	carbon_owner.changeNext_move(CLICK_CD_RESIST)
-	carbon_owner.shoes.handle_tying(carbon_owner)
+	human_owner.changeNext_move(CLICK_CD_RESIST)
+	human_owner.shoes.handle_tying(human_owner)
 
 /atom/movable/screen/alert/shoes/untied
 	name = "Untied Shoes"

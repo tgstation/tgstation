@@ -87,7 +87,7 @@
 	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_RED, "size" = 1))
 	addtimer(CALLBACK(living_scanned, TYPE_PROC_REF(/datum, remove_filter), "scan"), 30 SECONDS)
 
-	healthscan(living_owner, living_scanned, 1, TRUE)
+	healthscan(living_owner, living_scanned, SCANNER_VERBOSE, SCANPOWER_ADVANCED)
 
 	owner.playsound_local(get_turf(owner), 'sound/effects/magic/smoke.ogg', 50, TRUE)
 	owner.balloon_alert(owner, "[living_scanned] scanned")

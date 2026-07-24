@@ -51,19 +51,22 @@
 	default_unfasten_wrench(user, tool)
 	return TRUE
 
-/obj/structure/kitchenspike_frame/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/kitchenspike_frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	if(!istype(attacking_item, /obj/item/stack/rods))
-		return ..()
-	var/obj/item/stack/rods/used_rods = attacking_item
-	if(used_rods.get_amount() >= MEATSPIKE_IRONROD_REQUIREMENT)
-		used_rods.use(MEATSPIKE_IRONROD_REQUIREMENT)
-		balloon_alert(user, "meatspike built")
-		var/obj/structure/new_meatspike = new /obj/structure/kitchenspike(loc)
-		transfer_fingerprints_to(new_meatspike)
-		qdel(src)
-		return
-	balloon_alert(user, "[MEATSPIKE_IRONROD_REQUIREMENT] rods needed!")
+	if(!istype(tool, /obj/item/stack/rods))
+		return NONE
+
+	var/obj/item/stack/rods/used_rods = tool
+	if(used_rods.get_amount() < MEATSPIKE_IRONROD_REQUIREMENT)
+		balloon_alert(user, "[MEATSPIKE_IRONROD_REQUIREMENT] rods needed!")
+		return ITEM_INTERACT_BLOCKING
+
+	used_rods.use(MEATSPIKE_IRONROD_REQUIREMENT)
+	var/obj/structure/new_meatspike = new /obj/structure/kitchenspike(loc)
+	new_meatspike.balloon_alert(user, "meatspike built")
+	transfer_fingerprints_to(new_meatspike)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/kitchenspike
 	name = "meat spike"
@@ -151,7 +154,7 @@
 		span_notice("You struggle to break free from [src], exacerbating your wounds! (Stay still for two minutes.)"),\
 		span_hear("You hear a wet squishing noise.."))
 		buckled_mob.adjust_brute_loss(30)
-		if(!do_after(buckled_mob, 2 MINUTES, target = src, hidden = TRUE))
+		if(!do_after(buckled_mob, 2 MINUTES, target = src, cog_icon = null))
 			if(buckled_mob?.buckled)
 				to_chat(buckled_mob, span_warning("You fail to free yourself!"))
 			return

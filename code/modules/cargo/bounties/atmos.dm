@@ -29,7 +29,7 @@
 
 /datum/bounty/item/atmospherics/nitrium_tank
 	name = "Full Tank of Nitrium"
-	description = "The non-human staff of Station 88 has been volunteered to test performance enhancing drugs. Ship them a tank full of Nitrium so they can get started. (20 Moles)"
+	description = "The prisoners of MegaStation 62 have been volunteered to test performance enhancing drugs. Ship them a tank full of Nitrium so they can get started. (20 Moles)"
 	gas_type = /datum/gas/nitrium
 
 /datum/bounty/item/atmospherics/freon_tank

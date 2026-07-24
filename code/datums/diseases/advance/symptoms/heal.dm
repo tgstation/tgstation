@@ -612,9 +612,9 @@
 	desc = "The virus heals damaged tissues in a way that appears threatening to the immune system."
 	severity = 1
 	stealth = -4
-	resistance = 3
-	stage_speed = 3
-	transmittable = 2
+	resistance = 1
+	stage_speed = 0
+	transmittable = -1
 	level = 4
 	base_message_chance = 0
 	symptom_delay_min = 1
@@ -623,7 +623,7 @@
 	power = 2
 
 	threshold_descs = list(
-		"Severity > 1" = "For each point of severity above 1, the healing provided by the virus increases.",
+		"Severity > 1" = "For each point of severity, the healing provided by the virus increases.",
 	)
 	///Increases the healing effect (if active) of the virus by this amount for each severity level above 1
 	var/severity_heal_bonus = 0.25

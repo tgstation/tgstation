@@ -31,23 +31,10 @@
 	var/old_disgust = 0
 
 	//inventory slots
-	var/obj/item/back = null
-	var/obj/item/clothing/mask/wear_mask = null
-	var/obj/item/clothing/neck/wear_neck = null
 	/// Equipped air tank. Never set this manually.
 	var/obj/item/tank/internal = null
 	/// "External" air tank. Never set this manually. Not required to stay directly equipped on the mob (i.e. could be a machine or MOD suit module).
 	var/obj/item/tank/external = null
-	var/obj/item/head = null
-
-	///only used by humans
-	var/obj/item/clothing/gloves = null
-	///only used by humans.
-	var/obj/item/clothing/shoes/shoes = null
-	///only used by humans.
-	var/obj/item/clothing/glasses/glasses = null
-	///only used by humans.
-	var/obj/item/clothing/ears = null
 
 	/// DNA is carbon-only, and ideally you should be accessing it through has_dna(), but you can access it directly if you know you're working with a carbon mob
 	var/datum/dna/dna = null

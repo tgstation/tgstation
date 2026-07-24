@@ -1,33 +1,29 @@
 /// A spellcasting AI which does not move
 /datum/ai_controller/basic_controller/meteor_heart
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/meteor_heart/meteor_heart.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_TARGETLESS_TIME = 0,
+		BB_CURRENT_TARGET_HIDING_LOCATION = null,
 	)
 
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/targeted_mob_ability/ground_spikes,
-		/datum/ai_planning_subtree/use_mob_ability/spine_traps,
-		/datum/ai_planning_subtree/sleep_with_no_target/meteor_heart,
-	)
+/// After enough time with no target, calls deaggro() on the meteor heart to shut down the AI and reset visuals.
+/datum/bt_node/ai_behavior/meteor_heart_deaggro
+	var/deaggro_delay = 10 SECONDS
+	VAR_PRIVATE/timerid
 
-/datum/ai_planning_subtree/targeted_mob_ability/ground_spikes
-	ability_key = BB_METEOR_HEART_GROUND_SPIKES
-	finish_planning = FALSE
+/datum/bt_node/ai_behavior/meteor_heart_deaggro/setup(datum/ai_controller/controller)
+	. = ..()
+	timerid = addtimer(CALLBACK(src, PROC_REF(finish_action), controller, TRUE), deaggro_delay, TIMER_UNIQUE | TIMER_STOPPABLE)
 
-/datum/ai_planning_subtree/use_mob_ability/spine_traps
-	ability_key = BB_METEOR_HEART_SPINE_TRAPS
+/datum/bt_node/ai_behavior/meteor_heart_deaggro/perform(seconds_per_tick, datum/ai_controller/controller)
+	return AI_BEHAVIOR_DELAY
 
-/// After enough time with no target, deaggro and change animation state
-/datum/ai_planning_subtree/sleep_with_no_target/meteor_heart
-	sleep_behaviour = /datum/ai_behavior/sleep_after_targetless_time/meteor_heart
-
-/datum/ai_behavior/sleep_after_targetless_time/meteor_heart
-
-/datum/ai_behavior/sleep_after_targetless_time/meteor_heart/enter_sleep(datum/ai_controller/controller)
+/datum/bt_node/ai_behavior/meteor_heart_deaggro/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	deltimer(timerid)
+	timerid = null
+	if(!succeeded)
+		return
 	var/mob/living/basic/meteor_heart/heart = controller.pawn
-	if (!istype(heart))
-		return ..()
-	heart.deaggro()
+	if(istype(heart))
+		heart.deaggro()

@@ -934,6 +934,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	tox_damage = 0
 	metabolized_traits = list(TRAIT_IMMUNODEFICIENCY)
+	taste_description = "plastic"
 
 /datum/reagent/inverse/krokodil
 	name = "Permonid"

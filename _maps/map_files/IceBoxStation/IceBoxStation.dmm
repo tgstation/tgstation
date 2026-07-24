@@ -65096,6 +65096,7 @@
 	pixel_y = 2
 	},
 /obj/effect/turf_decal/trimline/green/filled/corner,
+/obj/item/storage/pill_bottle/sepsisillin,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "soE" = (
