@@ -1,0 +1,4 @@
+author: "antropod"
+delete-after: True
+changes:
+  - bugfix: "Fix scrubber not updating turfs"

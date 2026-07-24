@@ -13,7 +13,7 @@
 		user,
 		"Enter typepath of an atom you'd like to send with the pod (type \"empty\" to send an empty pod):",
 		"Typepath",
-		"/obj/item/food/grown/harebell",
+		"/obj/item/food/grown/flower/harebell",
 	) as null|text
 
 	if (isnull(attempted_target_path)) //The user pressed "Cancel"

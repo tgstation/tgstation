@@ -386,20 +386,9 @@
 	smoothing_groups = SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_WALLS
 	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_PLASTITANIUM_WALLS
 
-/obj/structure/falsewall/plastitanium
-	name = "wall"
-	desc = "An evil wall of plasma and titanium."
-	fake_icon = 'icons/turf/walls/plastitanium_wall.dmi'
-	icon_state = "plastitanium_wall-open"
-	base_icon_state = "plastitanium_wall"
-	mineral = /obj/item/stack/sheet/mineral/plastitanium
-	walltype = /turf/closed/wall/mineral/plastitanium
-	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_WALLS
-	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_PLASTITANIUM_WALLS
-
 /obj/structure/falsewall/plastitanium/wall_fill
 	mineral = /obj/item/stack/wall_filling/plastitanium/basic
+	mineral_amount = 1
 	walltype = /turf/closed/wall/mineral/plastitanium/wall_fill
 
 /obj/structure/falsewall/plastitanium/darkpod
@@ -409,6 +398,7 @@
 	icon_state = "dark_pod_walls-open"
 	base_icon_state = "dark_pod_walls"
 	mineral = /obj/item/stack/wall_filling/plastitanium/pod
+	mineral_amount = 1
 	walltype = /turf/closed/wall/mineral/plastitanium/darkpod
 	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
@@ -420,6 +410,7 @@
 	icon_state = "red_pod_walls-open"
 	base_icon_state = "red_pod_walls"
 	mineral = /obj/item/stack/wall_filling/plastitanium/redpod
+	mineral_amount = 1
 	walltype = /turf/closed/wall/mineral/plastitanium/redpod
 	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
@@ -431,6 +422,7 @@
 	icon_state = "survival_pod_walls-open"
 	base_icon_state = "survival_pod_walls"
 	mineral = /obj/item/stack/wall_filling/plastitanium/survivalpod
+	mineral_amount = 1
 	walltype = /turf/closed/wall/mineral/plastitanium/survival
 	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD

@@ -5,8 +5,8 @@
 
 /datum/mutation/nervousness
 	name = "Nervousness"
-	desc = "Causes the holder to stutter."
-	instability = NEGATIVE_STABILITY_MINI
+	desc = "The subject gains a nervous stutter."
+	instability = NEGATIVE_STABILITY_NONE
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_danger("You feel nervous.")
 
@@ -16,8 +16,8 @@
 
 /datum/mutation/wacky
 	name = "Wacky"
-	desc = "You are not a clown. You are the entire circus."
-	instability = NEGATIVE_STABILITY_MINI
+	desc = "The subject not only becomes a clown, but instead the entire circus."
+	instability = NEGATIVE_STABILITY_NONE
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_sans(span_notice("You feel an off sensation in your voicebox."))
 	text_lose_indication = span_notice("The off sensation passes.")
@@ -135,7 +135,7 @@
 
 /datum/mutation/mute
 	name = "Mute"
-	desc = "Completely inhibits the vocal section of the brain."
+	desc = "The subject's vocal section of the brain is completely inhibited."
 	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
 	text_gain_indication = span_danger("You feel unable to express yourself at all.")
@@ -154,7 +154,7 @@
 
 /datum/mutation/unintelligible
 	name = "Unintelligible"
-	desc = "Partially inhibits the vocal center of the brain, severely distorting speech."
+	desc = "The subject's vocal section of the brain is partially inhibited, distorting speech."
 	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
 	text_gain_indication = span_danger("You can't seem to form any coherent thoughts!")
@@ -173,8 +173,9 @@
 
 /datum/mutation/swedish
 	name = "Swedish"
-	desc = "A horrible mutation originating from the distant past. Thought to be eradicated after the incident in 2037."
-	instability = NEGATIVE_STABILITY_MINI
+	desc = "A horrible mutation originating from the distant past, thought to be eradicated after the incident in 2037. \
+		The subject's speech becomes difficult to understand, and is often mistaken for a foreign language."
+	instability = NEGATIVE_STABILITY_NONE
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_notice("You feel Swedish, however that works.")
 	text_lose_indication = span_notice("The feeling of Swedishness passes.")
@@ -186,8 +187,9 @@
 
 /datum/mutation/chav
 	name = "Chav"
-	desc = "Unknown"
-	instability = NEGATIVE_STABILITY_MINI
+	desc = "An unknown mutation that causes the subject to speak in a very specific dialect. \
+		The subject's speech becomes difficult to understand, and is often mistaken for a foreign language."
+	instability = NEGATIVE_STABILITY_NONE
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_notice("Ye feel like a reet prat like, innit?")
 	text_lose_indication = span_notice("You no longer feel like being rude and sassy.")
@@ -198,8 +200,9 @@
 
 /datum/mutation/elvis
 	name = "Elvis"
-	desc = "A terrifying mutation named after its 'patient-zero'."
-	instability = NEGATIVE_STABILITY_MINI
+	desc = "A terrifying mutation named after its 'patient-zero'. \
+		The subject begins to speak in strange rhythms, and often breaks into dance."
+	instability = NEGATIVE_STABILITY_NONE
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_notice("You feel pretty good, honeydoll.")
 	text_lose_indication = span_notice("You feel a little less conversation would be great.")
@@ -221,7 +224,7 @@
 
 /datum/mutation/stoner
 	name = "Stoner"
-	desc = "A common mutation that severely decreases intelligence."
+	desc = "The subject's intelligence levels drop significantly, causing them to speak in words that only others on a similar level can understand."
 	quality = NEGATIVE
 	text_gain_indication = span_notice("You feel...totally chill, man!")
 	text_lose_indication = span_notice("You feel like you have a better sense of time.")
@@ -240,8 +243,9 @@
 
 /datum/mutation/medieval
 	name = "Medieval"
-	desc = "A horrible mutation originating from the distant past, thought to have once been a common gene in all of old world Europe."
-	instability = NEGATIVE_STABILITY_MINI
+	desc = "A horrible mutation originating from the distant past, thought to have once been a common gene in all of old Terran \"Europe\". \
+		The subject gains a verbal tick that causes them to speak very particularly."
+	instability = NEGATIVE_STABILITY_NONE
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_notice("You feel like seeking the holy grail!")
 	text_lose_indication = span_notice("You no longer feel like seeking anything.")
@@ -282,8 +286,9 @@
 
 /datum/mutation/piglatin
 	name = "Pig Latin"
-	desc = "Historians say back in the 2020's humanity spoke entirely in this mystical language."
-	instability = NEGATIVE_STABILITY_MINI
+	desc = "Historians say five centuries ago, humanity spoke entirely in this mystical language. \
+		The subject becomes forced to speak in said language, which is often difficult to understand."
+	instability = NEGATIVE_STABILITY_NONE
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_notice("Omethingsay eelsfay offyay.")
 	text_lose_indication = span_notice("The off sensation passes.")

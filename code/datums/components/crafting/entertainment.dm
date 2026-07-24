@@ -50,28 +50,28 @@
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet
 	reqs = list(
-		/obj/item/food/grown/poppy/lily = 2,
-		/obj/item/food/grown/sunflower = 2,
-		/obj/item/food/grown/poppy/geranium = 2,
+		/obj/item/food/grown/flower/poppy/lily = 2,
+		/obj/item/food/grown/flower/sunflower = 2,
+		/obj/item/food/grown/flower/poppy/geranium = 2,
 	)
 	category = CAT_ENTERTAINMENT
 
 /datum/crafting_recipe/sunbouquet
 	name = "Sunflower bouquet"
 	result = /obj/item/bouquet/sunflower
-	reqs = list(/obj/item/food/grown/sunflower = 6)
+	reqs = list(/obj/item/food/grown/flower/sunflower = 6)
 	category = CAT_ENTERTAINMENT
 
 /datum/crafting_recipe/poppybouquet
 	name = "Poppy bouquet"
 	result = /obj/item/bouquet/poppy
-	reqs = list (/obj/item/food/grown/poppy = 6)
+	reqs = list (/obj/item/food/grown/flower/poppy = 6)
 	category = CAT_ENTERTAINMENT
 
 /datum/crafting_recipe/rosebouquet
 	name = "Rose bouquet"
 	result = /obj/item/bouquet/rose
-	reqs = list(/obj/item/food/grown/rose = 6)
+	reqs = list(/obj/item/food/grown/flower/rose = 6)
 	category = CAT_ENTERTAINMENT
 
 /datum/crafting_recipe/spooky_camera
