@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Whispering while facing a table will project the whisper across the table (allowing anyone on the other side to hear the whisper clearly)"

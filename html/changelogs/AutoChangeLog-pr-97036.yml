@@ -1,0 +1,4 @@
+author: "CabinetOnFire, sounds and info by Vorpal-Void"
+delete-after: True
+changes:
+  - sound: "Some looping sounds (SM, Gravgen, griddle, etc) will now loop more properly"

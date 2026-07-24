@@ -413,7 +413,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_IGNORING_GRAVITY "ignores_gravity"
 /// We have some form of forced gravity acting on us
 #define TRAIT_FORCED_GRAVITY "forced_gravity"
-/// Makes whispers clearly heard from seven tiles away, the full hearing range
+/// Allows the mob to hear whispers as if it were normal speech
 #define TRAIT_GOOD_HEARING "good_hearing"
 /// Allows you to hear speech through walls
 #define TRAIT_XRAY_HEARING "xray_hearing"
@@ -1685,5 +1685,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Mobs with this trait will always have be a priority target for mining mobs
 #define TRAIT_MINING_AGGRO "mining_aggro"
+
+/// Turfs with this trait allow whispers to be projected over it when the whisperer is facing it
+#define TRAIT_TURF_PROJECTS_WHISPERS  "turf_projects_whispers"
 
 // END TRAIT DEFINES
