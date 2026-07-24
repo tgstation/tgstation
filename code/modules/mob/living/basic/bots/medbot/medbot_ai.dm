@@ -1,17 +1,18 @@
 #define BOT_PATIENT_PATH_LIMIT 20
+
+/// Find and treat a patient  used by both the speak-mode parallel and the silent fallback branch.
+/datum/bt_node/subtree/medbot_treat_patient
+	behavior_tree_json = "code/modules/mob/living/basic/bots/medbot/medbot_treat_patient.bt.json"
+
+/// Find a patient in hard-crit and announce them on radio.
+/datum/bt_node/subtree/medbot_find_and_announce_crit
+	behavior_tree_json = "code/modules/mob/living/basic/bots/medbot/medbot_find_and_announce_crit.bt.json"
+
 /datum/ai_controller/basic_controller/bot/medbot
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity/pacifist,
-		/datum/ai_planning_subtree/respond_to_summon,
-		/datum/ai_planning_subtree/handle_medbot_speech,
-		/datum/ai_planning_subtree/find_and_hunt_target/patients_in_crit,
-		/datum/ai_planning_subtree/treat_wounded_target,
-		/datum/ai_planning_subtree/salute_authority,
-		/datum/ai_planning_subtree/find_patrol_beacon/medbot,
-	)
+	behavior_tree_json = "code/modules/mob/living/basic/bots/medbot/medbot.bt.json"
 	ai_movement = /datum/ai_movement/jps/bot/medbot
 	reset_keys = list(
-		BB_PATIENT_TARGET,
+		BB_CURRENT_TARGET,
 		BB_BEACON_TARGET,
 		BB_PREVIOUS_BEACON_TARGET,
 		BB_BOT_SUMMON_TARGET,
@@ -21,7 +22,7 @@
 	maximum_length = BOT_PATIENT_PATH_LIMIT
 	max_pathing_attempts = 20
 
-// only AI isnt allowed to move when this flag is set, sentient players can
+// only AI isn't allowed to move when this flag is set, sentient players can
 /datum/ai_movement/jps/bot/medbot/allowed_to_move(datum/move_loop/source)
 	var/datum/ai_controller/controller = source.extra_info
 	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
@@ -33,172 +34,137 @@
 	maximum_length = AI_BOT_PATH_LENGTH
 
 
-/datum/ai_planning_subtree/treat_wounded_target
 
-/datum/ai_planning_subtree/treat_wounded_target/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
-	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
-	if(bot_pawn.medical_mode_flags & MEDBOT_TIPPED_MODE)
-		controller.clear_blackboard_key(BB_PATIENT_TARGET)
+/// Medbot's note_unreachable_target skips blacklisting while stationary, matching the old set_if_can_reach bypass.
+/datum/ai_controller/basic_controller/bot/medbot/note_unreachable_target(atom/target)
+	var/mob/living/basic/bot/medbot/bot_pawn = pawn
+	if(bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE)
 		return
-	var/is_stationary = bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE
-	if(controller.blackboard_key_exists(BB_PATIENT_TARGET))
-		controller.queue_behavior(/datum/ai_behavior/tend_to_patient, BB_PATIENT_TARGET, bot_pawn.heal_threshold, bot_pawn.damage_type_healer, bot_pawn.bot_access_flags, is_stationary)
-		return SUBTREE_RETURN_FINISH_PLANNING
+	return ..()
 
-	controller.queue_behavior(/datum/ai_behavior/find_suitable_patient, BB_PATIENT_TARGET, bot_pawn.heal_threshold, bot_pawn.damage_type_healer, bot_pawn.medical_mode_flags, bot_pawn.bot_access_flags)
+/// Gathers nearby humans as patients; range is clamped to adjacent tiles when the medbot is in stationary mode. I should probably just make this a blackboard thing but I cannot be arsed right now.
+/datum/target_source/oview_single_type/human_mob/medbot_patient
 
-/datum/ai_behavior/find_suitable_patient
-	var/search_range = 7
-	action_cooldown = 2 SECONDS
+/datum/target_source/oview_single_type/human_mob/medbot_patient/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
+	var/mob/living/basic/bot/medbot/bot_pawn = pawn
+	if(bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE)
+		range = 1
+	return ..(pawn, controller, range)
 
-/datum/ai_behavior/find_suitable_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, threshold, heal_type, mode_flags, access_flags)
-	search_range = (mode_flags & MEDBOT_STATIONARY_MODE) ? 1 : initial(search_range)
-	var/list/ignore_keys = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-	for(var/mob/living/carbon/human/treatable_target in oview(search_range, controller.pawn))
-		if(LAZYACCESS(ignore_keys, treatable_target) || treatable_target.stat == DEAD)
-			continue
-		if((access_flags & BOT_COVER_EMAGGED) && treatable_target.stat == CONSCIOUS)
-			controller.set_if_can_reach(key = BB_PATIENT_TARGET, target = treatable_target, distance = BOT_PATIENT_PATH_LIMIT, bypass_add_to_blacklist = (search_range == 1))
-			break
-		if((heal_type == HEAL_ALL_DAMAGE))
-			if(treatable_target.get_total_damage() > threshold)
-				controller.set_if_can_reach(key = BB_PATIENT_TARGET, target = treatable_target, distance = BOT_PATIENT_PATH_LIMIT, bypass_add_to_blacklist = (search_range == 1))
-				break
-			continue
-		if(treatable_target.get_current_damage_of_type(damagetype = heal_type) > threshold)
-			controller.set_if_can_reach(key = BB_PATIENT_TARGET, target = treatable_target, distance = BOT_PATIENT_PATH_LIMIT, bypass_add_to_blacklist = (search_range == 1))
-			break
-
-	if(controller.blackboard_key_exists(BB_PATIENT_TARGET))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	else
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-/datum/ai_behavior/find_suitable_patient/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/// Valid if the patient needs the damage type this medbot heals (or is a conscious target while emagged).
+/datum/targeting_strategy/treatable_patient/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
 	. = ..()
-	if(!succeeded || QDELETED(controller.pawn) ||get_dist(controller.pawn, controller.blackboard[target_key]) <= 1)
+	if(!.)
+		return FALSE
+	var/mob/living/carbon/human/patient = target
+	if(!istype(patient) || patient.stat == DEAD)
+		return FALSE
+	var/mob/living/basic/bot/medbot/bot_pawn = living_mob
+	if((bot_pawn.bot_access_flags & BOT_COVER_EMAGGED) && patient.stat == CONSCIOUS)
+		return TRUE
+	if(bot_pawn.damage_type_healer == HEAL_ALL_DAMAGE)
+		return patient.get_total_damage() > bot_pawn.heal_threshold
+	return patient.get_current_damage_of_type(damagetype = bot_pawn.damage_type_healer) > bot_pawn.heal_threshold
+
+/// Finds a patient to treat, announcing that the bot is on its way when the patient isn't already adjacent.
+/datum/bt_node/ai_behavior/acquire_target/update_interaction_target/medbot_patient
+
+/datum/bt_node/ai_behavior/acquire_target/update_interaction_target/medbot_patient/on_target_found(datum/ai_controller/controller, atom/target, datum/targeting_strategy/strategy)
+	if(QDELETED(controller.pawn) || get_dist(controller.pawn, target) <= 1)
 		return
 	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
 	announcement?.announce(pick(controller.blackboard[BB_WAIT_SPEECH]))
 
-/datum/ai_behavior/tend_to_patient
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
 
-/datum/ai_behavior/tend_to_patient/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return FALSE
-	set_movement_target(controller, target)
 
-/datum/ai_behavior/tend_to_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, threshold, damage_type_healer, access_flags, is_stationary)
+/datum/bt_node/ai_behavior/tend_to_patient
+	var/target_key
+
+/datum/bt_node/ai_behavior/tend_to_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/mob/living/carbon/human/patient = controller.blackboard[target_key]
 	if(QDELETED(patient) || patient.stat == DEAD)
+		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] tend_to_patient: patient gone (deleted=[QDELETED(patient)], stat=[patient?.stat])")
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	if(check_if_healed(patient, threshold, damage_type_healer, access_flags))
+	if(get_dist(controller.pawn, patient) > 1)
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED //We technically failed, but we want to try again so succeed.
+	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
+	if(check_if_healed(patient, bot_pawn.heal_threshold, bot_pawn.damage_type_healer, bot_pawn.bot_access_flags))
+		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[bot_pawn] tend_to_patient: [patient] is fully healed")
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	if(patient.stat >= HARD_CRIT && prob(5))
 		var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
 		announcement?.announce(pick(controller.blackboard[BB_NEAR_DEATH_SPEECH]))
+	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[bot_pawn] healing [patient] (dmg=[patient.get_total_damage()])", get_turf(patient), "Heal")
 	bot_pawn.melee_attack(patient)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-// only clear the target if they get healed
-/datum/ai_behavior/tend_to_patient/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded, target_key, threshold, damage_type_healer, access_flags, is_stationary)
+/datum/bt_node/ai_behavior/tend_to_patient/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded)
 	. = ..()
+	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
+	var/is_stationary = bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE
 	if(!succeeded)
-
 		if(!isnull(target) && !is_stationary)
 			controller.add_to_blacklist(target)
-
 		controller.clear_blackboard_key(target_key)
 		return
-
-	if(QDELETED(target) || !check_if_healed(target, threshold, damage_type_healer, access_flags))
+	if(QDELETED(target) || !check_if_healed(target, bot_pawn.heal_threshold, bot_pawn.damage_type_healer, bot_pawn.bot_access_flags))
 		return
-
 	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
 	announcement?.announce(pick(controller.blackboard[BB_AFTERHEAL_SPEECH]))
 	controller.clear_blackboard_key(target_key)
 
-/datum/ai_behavior/tend_to_patient/proc/check_if_healed(mob/living/carbon/human/patient, threshold, damage_type_healer, access_flags)
+/datum/bt_node/ai_behavior/tend_to_patient/proc/check_if_healed(mob/living/carbon/human/patient, threshold, damage_type_healer, access_flags)
 	if(access_flags & BOT_COVER_EMAGGED)
 		return (patient.stat > CONSCIOUS)
 	var/patient_damage = (damage_type_healer == HEAL_ALL_DAMAGE) ? patient.get_total_damage() : patient.get_current_damage_of_type(damagetype = damage_type_healer)
 	return (patient_damage <= threshold)
 
 
-/datum/ai_planning_subtree/handle_medbot_speech
-	var/speech_chance = 5
 
-/datum/ai_planning_subtree/handle_medbot_speech/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/bt_node/ai_behavior/handle_medbot_speech
+	var/announce_key
+	time_between_perform = 20 SECONDS
+
+/datum/bt_node/ai_behavior/handle_medbot_speech/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
-	//we cant speak!
-	if(!(bot_pawn.medical_mode_flags & MEDBOT_SPEAK_MODE))
-		return
-
 	var/currently_tipped = bot_pawn.medical_mode_flags & MEDBOT_TIPPED_MODE
-	speech_chance = ((bot_pawn.bot_access_flags & BOT_COVER_EMAGGED) || currently_tipped) ? 15 : initial(speech_chance)
-
+	var/speech_chance = ((bot_pawn.bot_access_flags & BOT_COVER_EMAGGED) || currently_tipped) ? 15 : 5
 	if(!SPT_PROB(speech_chance, seconds_per_tick))
-		return
-
-	controller.queue_behavior(/datum/ai_behavior/handle_medbot_speech, BB_ANNOUNCE_ABILITY, bot_pawn.mode, bot_pawn.bot_access_flags, currently_tipped)
-
-/datum/ai_behavior/handle_medbot_speech
-	action_cooldown = 20 SECONDS
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-
-/datum/ai_behavior/handle_medbot_speech/perform(seconds_per_tick, datum/ai_controller/controller, announce_key, mode, cover_flags, currently_tipped)
-	. = ..()
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[announce_key]
 	var/list/speech_to_pick_from
-
 	if(currently_tipped)
 		speech_to_pick_from = controller.blackboard[BB_WORRIED_ANNOUNCEMENTS]
-	else if(cover_flags & BOT_COVER_EMAGGED)
+	else if(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
 		speech_to_pick_from = controller.blackboard[BB_EMAGGED_SPEECH]
-	else if(mode == BOT_IDLE)
+	else if(bot_pawn.mode == BOT_IDLE)
 		speech_to_pick_from = controller.blackboard[BB_IDLE_SPEECH]
 	var/mob/living/living_pawn = controller.pawn
-
 	if(locate(/obj/item/clothing/head/costume/chicken) in living_pawn)
 		speech_to_pick_from += MEDIBOT_VOICED_CHICKEN
-
 	if(!length(speech_to_pick_from))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
 	announcement.announce(pick(speech_to_pick_from))
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_planning_subtree/find_and_hunt_target/patients_in_crit
-	target_key = BB_PATIENT_IN_CRIT
-	hunting_behavior = /datum/ai_behavior/announce_patient
-	finding_behavior = /datum/ai_behavior/find_hunt_target/patient_in_crit
-	hunt_targets = list(/mob/living/carbon/human)
-	finish_planning = FALSE
 
-/datum/ai_planning_subtree/find_and_hunt_target/patients_in_crit/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
-	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
-	if(!(bot_pawn.medical_mode_flags & MEDBOT_DECLARE_CRIT))
-		return
-	return ..()
 
-/datum/ai_behavior/find_hunt_target/patient_in_crit
-
-/datum/ai_behavior/find_hunt_target/patient_in_crit/valid_dinner(mob/living/source, mob/living/carbon/human/patient, radius)
-	if(patient.stat < UNCONSCIOUS || isnull(patient.mind))
+/// Valid if the patient is at least unconscious, has a mind, and is visible  used to announce medical emergencies.
+/datum/targeting_strategy/crit_patient/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
 		return FALSE
-	return can_see(source, patient, radius)
+	var/mob/living/carbon/human/patient = target
+	if(!istype(patient) || patient.stat < UNCONSCIOUS || isnull(patient.mind))
+		return FALSE
+	return can_see(living_mob, patient, vision_range)
 
-/datum/ai_behavior/announce_patient
-	action_cooldown = 3 MINUTES
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+/datum/bt_node/ai_behavior/announce_patient
+	var/target_key
+	time_between_perform = 3 MINUTES
 
-/datum/ai_behavior/announce_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/announce_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/mob/living/living_target = controller.blackboard[target_key]
 	if(QDELETED(living_target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -209,22 +175,8 @@
 	announcement.announce(text_to_announce, controller.blackboard[BB_RADIO_CHANNEL])
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/announce_patient/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/announce_patient/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
-
-/datum/ai_planning_subtree/find_patrol_beacon/medbot
-	///travel towards beacon behavior
-	travel_behavior = /datum/ai_behavior/travel_towards/beacon/medbot
-
-/datum/ai_planning_subtree/find_patrol_beacon/medbot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
-	if(bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE)
-		return
-	return ..()
-
-
-/datum/ai_behavior/travel_towards/beacon/medbot
-	new_movement_type = /datum/ai_movement/jps/bot/medbot/travel_to_beacon
 
 #undef BOT_PATIENT_PATH_LIMIT

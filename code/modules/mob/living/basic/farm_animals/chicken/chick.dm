@@ -81,15 +81,18 @@
 	grow_as = null
 
 /datum/ai_controller/basic_controller/chick
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/chicken/chick.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/chicken),
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SAY =  list("Cherp.", "Cherp?", "Chirrup.", "Cheep!"),
+			BB_EMOTE_HEAR = list("cheeps."),
+			BB_EMOTE_SEE = list("pecks at the ground.","flaps her tiny wings."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/chicken/chick_peep.ogg'),
+			BB_SPEAK_CHANCE = 4,
+		),
 	)
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/look_for_adult,
-	)

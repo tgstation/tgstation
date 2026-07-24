@@ -530,6 +530,8 @@
   - balance: Aggressive healing has much lower stats
   - map: Added sepsisillin pills to virology
   - spellcheck: Clarified the description of aggressive healing
+  Happyowl93:
+  - bugfix: People with missing limb can again use the remaining good one.
   LT3:
   - bugfix: Tram signs only update on signals from their linked tram
   LemonInTheDark:
@@ -541,6 +543,168 @@
       breaching the Atmos pump room.
   TealSeer:
   - bugfix: fixed FaxBond not sending notifications when faxes are received
+  krookodilehunter:
+  - rscadd: Chickens can be picked up and held now! Sprites by mms142
   lelandkemble:
   - rscadd: Added craftable anti-mech tripwires. A mech that foolishly steps on one
       will fall down and be immobilized temporarily. Don't let it fall on you!
+2026-07-18:
+  CabinetOnFire, Iamgoofball, SmartKar, Ben10omintrix:
+  - refactor: Replaces our AI system with behavior trees, porting all datum/ai to
+      it
+  Ghommie:
+  - balance: humanized monkeys (that were born as monkeys) should have their primitive
+      ape brain untouched (not an advanced tool user unless they have the clever trait).
+  Melbert:
+  - rscadd: Adds anomalous lure hook, a fishing hook which accepts (almost) any type
+      of anomaly core, causing unique effects depending on the core used.
+  - rscdel: Material fishing rods no longer innately catch material fish, you need
+      a dimensional anomaly core in an anomalous lure hook to catch material fish
+      now.
+  YesterdaysPromise:
+  - refactor: Podfloors (floors normaly seen in Survival Pods of miners) are now considered
+      a subtype of plastitanium tiles, and thus craftable.
+  - rscadd: To match with plastitanium, pofloors recieved 2 red variants.
+  - rscadd: Plastitanium can now make a new wall-filling item which you can reskin
+      in hand to make regular plastitanium walls, pod walls, as well as added unmarked
+      pod walls ('dark shuttle') and red unmarked pod walls ('dark red shuttle').
+  lelandkemble:
+  - bugfix: Wumborian Fugu floats
+  - bugfix: RCDing space works again
+  nPocToDark:
+  - rscadd: Curse of Ra is back. Now you can buy some pharaon costumes in DeusVend
+      (premium)
+2026-07-19:
+  CabinetOnFire:
+  - bugfix: Some looping sounds no longer runtime when stopping/starting
+  - bugfix: Repairbots fix windows and other things reliably again
+  Fghj240:
+  - spellcheck: changed "possible cure" to "cure" in healthscans to show they can't
+      be wrong
+  - qol: Health analyzer has hover text for disease curing strategies
+  Hatterhat:
+  - qol: The botanical chemical dispenser (as seen on the lifebringer ship) is now
+      also capable of dispensing Enduro Grow and Liquid Earthquake.
+  Kashargul:
+  - bugfix: biome install being skipped after a dependency update
+  QuiteLiterallyAnything:
+  - bugfix: Broken mirrors no longer produce an intact mirror upon deconstruction.
+  SmArtKar:
+  - qol: Watcher gaze visuals no longer flicker if you turn around after the ability
+      has already been activated and is finishing the animation
+  - bugfix: Fixed watcher gaze runtimes
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: kilo genetics now has gene disks and a flesh reshaper
+  nPocToDark:
+  - rscadd: Rabbits, stoats, MOTHROACHES, sheeps, foxes, lizards and penguins now
+      available to growing in cytology growing vats.
+  vinylspiders:
+  - bugfix: species quirk incompatibilities will now update immediately without the
+      need to add/remove a quirk to force a ui update
+  - code_imp: quirks backend improved, it will no longer send full updates constantly
+      and be faster
+  - bugfix: fixed an issue that would cause preview icons to randomly become corrupt
+      or invisible if they met certain criteria
+  - admin: select equipment now just shows one direction of previews, greatly reducing
+      lag
+2026-07-20:
+  Aliceee2ch:
+  - spellcheck: Fixed blastoff misspelling.
+  FalloutFalcon:
+  - admin: Adding music as an admin rebuilds the list THAT round instead of having
+      to wait for the next
+  PapaMichael:
+  - spellcheck: More verbs match their pronouns
+  SmArtKar:
+  - bugfix: Fixed the Four Hands wizard perk
+  - bugfix: Fixed quick tile replacement
+2026-07-21:
+  CabinetOnFire:
+  - bugfix: Fixes cats getting permanent zoomies after being chased away by a superior
+      male
+  - bugfix: Fixes mechs not qdel'ing when destroyed if they spawn a wreck
+  FalloutFalcon:
+  - qol: per department sorting for character setup matches latejoin menu
+  SmArtKar:
+  - bugfix: Removed unnecessary click delay from window placement
+  lelandkemble:
+  - code_imp: Edible food unit test doesn't check abstract type food, abstract type
+      food doesn't have seeds.
+  timothymtorres:
+  - rscadd: Add water bottles to booze-o-mat non-alcoholic category
+  vinylspiders:
+  - bugfix: peeking into a hilberts hotel room while it gets deleted will now kick
+      you out properly
+  - bugfix: fixed an issue where the lights would stay dark after reloading the same
+      hilberts hotel room
+2026-07-22:
+  CabinetOnFire:
+  - refactor: Ruin loading should now be more robust and should spawn less orphaned
+      genturfs
+  Kashargul:
+  - bugfix: tgui UI testing with more than one test file
+  lelandkemble:
+  - code_imp: converted calls to attackby() to calls to item_interaction()
+  - bugfix: MODsuit drill module manual activation works again
+  - bugfix: you can put c4s on safes
+  vinylspiders:
+  - bugfix: fixed tails and ears not updating on your dummy when changing the pref
+      until you change species or switch characters
+2026-07-23:
+  CabinetOnFire:
+  - rscadd: Monkeys now know how to yakety sax and how to shove people into walls
+  - bugfix: Monkeys no longer trip on monkeys.
+  Happyowl93:
+  - bugfix: you should be able to hit cave spawners with melee items again
+  - bugfix: you can place lattices over ice again.
+  Melbert:
+  - code_imp: Roughly doubled the performance speed of the crafting UI, report anything
+      broken with it
+  PapaMichael:
+  - bugfix: It no longer looks like you have accessories attached after you've removed
+      them.
+  SmArtKar:
+  - bugfix: Fixed negative moles left by gas scrubbers
+  - bugfix: Fixed meteor changelings being killed by defense sats
+  SyncIt21:
+  - bugfix: monkey powder reaction gives multiple monkeys
+  YesterdaysPromise:
+  - bugfix: Plastitanium wall fillings now fill up the walls correctly at rate of
+      1 per wall, and correctly make survival pod walls.
+  lelandkemble:
+  - bugfix: medbots can no longer be thrown, all bots no longer have AA
+  nPocToDark:
+  - qol: Raptor eggs now floor placeable (even in lava). It's now easier to immerse
+      them in lava to accelerate their growth.
+2026-07-24:
+  Aliceee2ch:
+  - spellcheck: Fixed some admin logging messages in canister code.
+  CabinetOnFire:
+  - code_imp: Removes radio's flicking an overlay whenever they receive a message
+      because it took 30~ms per radio message
+  CabinetOnFire, sounds and info by Vorpal-Void:
+  - sound: Some looping sounds (SM, Gravgen, griddle, etc) will now loop more properly
+  Melbert:
+  - rscadd: Whispering while facing a table will project the whisper across the table
+      (allowing anyone on the other side to hear the whisper clearly)
+  - rscdel: Newscasters no longer have tiny 2x2 pixel animation upon receiving a muted
+      alert
+  QuiteLiterallyAnything:
+  - bugfix: If a tree "falls" in zero gravity, it doesn't make a sound.
+  - balance: The sound of tree felling has a bit more range.
+  - bugfix: Tramstation's hidden Syndicate outpost is no longer considered a "vacant
+      room" station area.
+  - map: Tramstation's hidden Syndicate outpost has been given lighting and a bit
+      of detailing.
+  SmArtKar:
+  - bugfix: Fixes hair gradient alpha on ethereals
+  timothymtorres:
+  - rscadd: Add 2 new abilities to Revenant - Vortex and Scatter. These move around
+      (suck or throw) nearby objects and dump the contents if it is close enough to
+      the Revenant and not locked.
+  - rscadd: 'Improve Revenant Defile ability: Alcoholic drinks get replaced with blood.
+      Unpackaged food gets dirty and exposed to germs. Cryo cells and stasis beds
+      eject mobs. Patches, syringes, medipens, pills, bottles, medigels, sprays, DNA
+      injectors, blood bags all lose their identity (name/desc/icon_state). Gas canisters
+      lose their identity (name/desc/icon_state). Lockboxes and crates all lose their
+      identity (name). Locked closets no longer open.'

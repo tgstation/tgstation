@@ -85,7 +85,7 @@ function CheckoutItems(props) {
           <Table.Cell>{entry.object}</Table.Cell>
 
           <Table.Cell width={11}>
-            {!!can_send && !!entry.can_be_cancelled ? (
+            {can_send && entry.can_be_cancelled ? (
               <>
                 <Button
                   icon="minus"
