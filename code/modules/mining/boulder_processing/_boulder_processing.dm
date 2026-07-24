@@ -196,11 +196,22 @@
 		return FALSE
 
 	//not a mineral mob
-	if(!istype(rockman) || QDELETED(rockman) || !(rockman.mob_biotypes & MOB_MINERAL))
+	if(!istype(rockman) || QDELETED(rockman))
 		return FALSE
 
-	//Only return true if they are lying down if they can, or are incapacitated otherwise
-	if((rockman.mobility_flags & MOBILITY_LIEDOWN) ? rockman.body_position == LYING_DOWN : IS_DEAD_OR_INCAP(rockman))
+	var/list/bodyparts = rockman.get_bodyparts()
+	if(length(bodyparts)) //Has bodypart, check if any has the BIO_STONE state (we don't check MOB_MINERAL for carbon mobs cuz we don't want to gib plasmamen, just grind golem parts)
+		for(var/obj/item/bodypart/part as anything in bodyparts)
+			if(!(part.biological_state & BIO_STONE))
+				return FALSE
+	else if(!(rockman.mob_biotypes & MOB_MINERAL))
+		return FALSE
+
+	//Only return true if they are lying down or are incapacitated.
+	if(rockman.mobility_flags & MOBILITY_LIEDOWN)
+		if(rockman.body_position == LYING_DOWN)
+			return TRUE
+	else if(IS_DEAD_OR_INCAP(rockman))
 		return TRUE
 
 	return FALSE
@@ -231,6 +242,30 @@
 	PROTECTED_PROC(TRUE)
 
 	Shake(duration = 1 SECONDS)
+	var/list/bodyparts = rockman.get_bodyparts()
+	var/gibbing = TRUE
+	if(length(bodyparts)) //Has bodypart, check if any has the BIO_STONE state and don't just gib them if you can.
+		var/list/deleted_part_names
+		gibbing = FALSE
+		for(var/obj/item/bodypart/part as anything in bodyparts)
+			if(!(part.biological_state & BIO_STONE))
+				continue
+			if(part.body_zone == BODY_ZONE_CHEST) //Ok, so, without a chest, we're pretty much going to be gibbed anyway.
+				gibbing = TRUE
+				break
+			else
+				deleted_part_names += part.name
+				qdel(part) //This calls force_removal() with dismembered set to TRUE
+		if(!gibbing && length(deleted_part_names))
+			var/parts_text = english_list(deleted_part_names)
+			rockman.investigate_log("had [rockman.p_their()] [parts_text] which all had BIO_STONE biological state) destroyed by a [src]", INVESTIGATE_CARGO)
+			rockman.visible_message(span_warning("[rockman] is processed by [src]!"), span_userdanger("Your [parts_text] are shred into bits by [src]!"))
+
+	if(gibbing)
+		gib_mob(rockman)
+
+///Called at the end of main_mob() if they were a bodyparts-less mob or their chest was made of stone...
+/obj/machinery/bouldertech/proc/gib_mob(mob/living/rockman)
 	rockman.visible_message(span_warning("[rockman] is processed by [src]!"), span_userdanger("You get processed into bits by [src]!"))
 	rockman.investigate_log("was gibbed by [src] for having the MOB_MINERAL mob biotype", INVESTIGATE_DEATHS)
 	rockman.gib(DROP_ALL_REMAINS)

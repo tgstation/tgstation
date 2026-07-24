@@ -575,7 +575,7 @@
 
 /datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(HAS_TRAIT(affected_mob, TRAIT_GARLIC_BANEABLE)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
+	if(HAS_TRAIT(affected_mob, TRAIT_UNHOLY_BANEABLE)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
 		if(SPT_PROB(min((current_cycle-1)/2, 12.5), seconds_per_tick))
 			if(HAS_TRAIT(affected_mob, TRAIT_ANOSMIA))
 				to_chat(affected_mob, span_danger("You feel that something is wrong, your strength is leaving you! You can barely think..."))

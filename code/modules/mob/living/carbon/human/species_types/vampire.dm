@@ -157,7 +157,6 @@
 		// future todo : tie nobreath and nohunger to a vampire organ set bonus
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
-		TRAIT_GARLIC_BANEABLE,
 	)
 	COOLDOWN_DECLARE(drain_cooldown)
 

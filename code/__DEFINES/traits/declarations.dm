@@ -1697,8 +1697,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ABDUCTOR_QUICK_SCAN "abductor_quick_scan"
 /// The creature is weak to silver (or any material with the unholy bane property). Namely for vampires.
 #define TRAIT_UNHOLY_BANEABLE "unholy_baneable"
-/// Weak to garlic
-#define TRAIT_GARLIC_BANEABLE "garlic_baneable"
 /// Allows the mob to use the spooky instruments that turn people into spooky scary skeletons, while being immune to them
 #define TRAIT_SPOOKY_INSTRUMENT_PLAYER "spooky_instrument_player"
 /// Allows flypeople to re-ingest what has come out of their mouth.

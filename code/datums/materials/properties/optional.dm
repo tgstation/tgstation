@@ -129,7 +129,7 @@
 	return "unholy creatures' bane"
 
 /datum/material_property/unholy_bane/get_tooltip(value)
-	return "Deals [value * 0.5] to [value * 2] additional burn damage to unholy creatures (vampires namely) on contact"
+	return "Deals [value * 0.5] to [value * 2] additional burn damage to unholy creatures such as vampires (based on material volume) on contact"
 
 /datum/material_property/unholy_bane/attach_to(datum/material/material)
 	. = ..()
