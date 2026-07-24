@@ -29,15 +29,18 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 
 /atom/movable/shuttleRotate(rotation, params)
 	. = ..()
-	//rotate the physical bounds and offsets for multitile atoms too. Owerride base "rotate the pixel offsets" for multitile atoms.
-	//Owerride non zero bound_x, bound_y, pixel_x, pixel_y to zero.
-	//Dont take in account starting bound_x, bound_y, pixel_x, pixel_y.
-	//So it can unintentionally shift physical bounds of things that starts with non zero bound_x, bound_y.
-	if(((bound_height != ICON_SIZE_Y) || (bound_width != ICON_SIZE_X)) && (bound_x == 0) && (bound_y == 0)) //Dont shift things that have non zero bound_x and bound_y, or it move somewhere. Now it BSA and Gateway.
-		pixel_x = dir & (NORTH|EAST) ? -bound_width+ICON_SIZE_X : 0
-		pixel_y = dir & (NORTH|WEST) ? -bound_width+ICON_SIZE_X : 0 //?
-		bound_x = pixel_x
-		bound_y = pixel_y
+	// Dont shift things that have non-zero bound_x and bound_y.
+	if(((bound_height != ICON_SIZE_Y) || (bound_width != ICON_SIZE_X)) && (bound_x == 0) && (bound_y == 0))
+		if(rotation < 0)
+			rotation += 360
+		switch(rotation) // Move the atom such that its one "actual" loc is always its bottom left corner.
+			if(90)
+				y -= (bound_height - ICON_SIZE_Y) / ICON_SIZE_Y
+			if(180)
+				y -= (bound_height - ICON_SIZE_Y) / ICON_SIZE_Y
+				x -= (bound_width - ICON_SIZE_X) / ICON_SIZE_X
+			if(270)
+				x -= (bound_width - ICON_SIZE_X) / ICON_SIZE_X
 
 /************************************Turf rotate procs************************************/
 
