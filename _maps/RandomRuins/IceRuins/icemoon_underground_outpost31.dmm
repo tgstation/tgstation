@@ -442,7 +442,7 @@
 /area/ruin/outpost31/lab)
 "hN" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "hT" = (
 /obj/machinery/light/warm/directional/east,
@@ -512,7 +512,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "jP" = (
 /obj/effect/turf_decal/stripes/line{
@@ -557,7 +557,7 @@
 "kP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "kX" = (
 /obj/effect/turf_decal/siding/wood{
@@ -600,7 +600,7 @@
 /area/ruin/outpost31)
 "lM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "lO" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -762,7 +762,7 @@
 /turf/open/floor/wood,
 /area/ruin/outpost31/crewquarters)
 "oF" = (
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "oJ" = (
 /obj/structure/chair/stool/directional/east,
@@ -849,12 +849,12 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/dim/directional/north,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/outpost31)
 "qI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/item/flashlight/lantern,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/outpost31)
 "qK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
@@ -1048,7 +1048,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "uA" = (
 /obj/structure/cable,
@@ -1071,7 +1071,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "o31a"
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "uR" = (
 /obj/effect/turf_decal/siding/white{
@@ -1084,7 +1084,7 @@
 	name = "winter gear closet"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/outpost31)
 "vU" = (
 /obj/structure/cable,
@@ -1213,7 +1213,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "o31B"
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "yo" = (
 /turf/closed/indestructible/reinforced,
@@ -1254,7 +1254,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/autoname,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "ze" = (
 /obj/structure/table/optable,
@@ -1307,7 +1307,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "zF" = (
 /obj/machinery/duct,
@@ -1338,7 +1338,7 @@
 /obj/structure/barricade/wooden/crude/snow{
 	opacity = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "Ae" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1425,7 +1425,7 @@
 /obj/structure/tank_dispenser/oxygen{
 	oxygentanks = 5
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/outpost31)
 "BI" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1460,7 +1460,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/dim/directional/south,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/outpost31)
 "Ca" = (
 /obj/structure/closet/emcloset,
@@ -1475,7 +1475,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/crowbar,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/ruin/outpost31)
 "Ce" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1746,7 +1746,7 @@
 /obj/machinery/atmospherics/components/unary/airlock_pump{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "HF" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1838,7 +1838,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "Jq" = (
 /obj/effect/spawner/random/entertainment/arcade,
@@ -1891,7 +1891,7 @@
 /obj/structure/closet/preopen{
 	name = "winter gear closet"
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/outpost31)
 "Lk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -1911,7 +1911,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/broken/directional/south,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/outpost31)
 "LA" = (
 /turf/closed/wall,
@@ -1981,7 +1981,7 @@
 /obj/structure/tank_dispenser/oxygen{
 	oxygentanks = 5
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "MO" = (
 /obj/effect/turf_decal/stripes/line{
@@ -2004,7 +2004,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/dim/directional/north,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "MW" = (
 /obj/structure/cable,
@@ -2032,7 +2032,7 @@
 /obj/structure/barricade/wooden/crude/snow{
 	opacity = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "Nl" = (
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -2286,7 +2286,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "o31c"
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "SN" = (
 /obj/machinery/atmospherics/components/unary/passive_vent/layer4{
@@ -2463,7 +2463,7 @@
 	},
 /obj/item/clothing/shoes/winterboots/ice_boots/eva,
 /obj/item/clothing/suit/hooded/wintercoat/eva,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/outpost31)
 "VR" = (
 /obj/structure/closet/crate/bin,
@@ -2498,7 +2498,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "o31B"
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "Wu" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2516,7 +2516,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "o31c"
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/outpost31)
 "WQ" = (
 /turf/template_noop,
@@ -2624,7 +2624,7 @@
 	name = "winter gear closet"
 	},
 /obj/machinery/light/small/dim/directional/north,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/outpost31)
 "Zq" = (
 /obj/structure/window/spawner/directional/east,

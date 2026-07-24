@@ -532,6 +532,8 @@
 			animate(time = wait_time)
 
 /obj/item/organ/eyes/proc/blink(duration = BLINK_DURATION, restart_animation = TRUE)
+	if(!blink_animation)
+		return
 	var/left_delayed = prob(50)
 	// Storing blink delay so mistimed blinks of lizards don't get cut short
 	var/sync_blinking = synchronized_blinking && (owner.get_organ_loss(ORGAN_SLOT_BRAIN) < BRAIN_DAMAGE_ASYNC_BLINKING)

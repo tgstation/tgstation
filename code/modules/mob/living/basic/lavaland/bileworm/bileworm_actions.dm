@@ -29,7 +29,7 @@
 		to_chat(burrower, span_warning("Couldn't burrow anywhere near the target!"))
 		if(burrower.ai_controller?.ai_status == AI_STATUS_ON)
 			//this is a valid reason to give up on a target
-			burrower.ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+			burrower.ai_controller.clear_blackboard_key(BB_CURRENT_TARGET)
 		return
 
 	if (istype(burrower, /mob/living/basic/mining/bileworm) && !force)

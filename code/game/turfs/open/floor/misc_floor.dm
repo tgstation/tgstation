@@ -136,20 +136,6 @@
 /turf/open/floor/circuit/red/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
 
-/turf/open/floor/pod
-	name = "pod floor"
-	icon_state = "podfloor"
-	floor_tile = /obj/item/stack/tile/pod
-
-/turf/open/floor/pod/light
-	icon_state = "podfloor_light"
-	floor_tile = /obj/item/stack/tile/pod/light
-
-/turf/open/floor/pod/dark
-	icon_state = "podfloor_dark"
-	floor_tile = /obj/item/stack/tile/pod/dark
-
-
 /turf/open/floor/noslip
 	name = "high-traction floor"
 	icon_state = "noslip"
