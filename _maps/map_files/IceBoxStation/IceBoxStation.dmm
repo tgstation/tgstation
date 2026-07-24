@@ -171,10 +171,6 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
-"acT" = (
-/obj/structure/noticeboard/directional/north,
-/turf/open/floor/wood,
-/area/station/command/meeting_room)
 "adf" = (
 /obj/structure/table,
 /obj/machinery/recharger{
@@ -207,10 +203,6 @@
 "adA" = (
 /turf/closed/wall/r_wall,
 /area/icemoon/surface/outdoors/labor_camp)
-"adB" = (
-/obj/structure/sign/chalkboard_menu,
-/turf/closed/wall/r_wall,
-/area/station/command/meeting_room)
 "adD" = (
 /obj/structure/railing/corner{
 	dir = 8
@@ -18005,6 +17997,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Bridge Conference Room"
 	},
+/obj/structure/noticeboard/directional/north,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "fby" = (
@@ -56491,6 +56484,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
+"pUm" = (
+/obj/structure/sign/chalkboard_menu/small,
+/turf/closed/wall/r_wall,
+/area/station/command/meeting_room)
 "pUn" = (
 /obj/structure/sink/directional/west,
 /obj/effect/turf_decal/stripes/line{
@@ -64672,6 +64669,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/mine/eva)
+"siK" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Command Hallway"
+	},
+/turf/open/genturf,
+/area/icemoon/underground/unexplored/rivers/deep)
 "sjb" = (
 /turf/closed/wall/r_wall,
 /area/station/cargo/drone_bay)
@@ -121289,7 +121292,7 @@ oSU
 oSU
 oSU
 oSU
-oSU
+siK
 oSU
 oSU
 oSU
@@ -242853,8 +242856,8 @@ bcN
 qzy
 adP
 adP
-dxK
-acT
+pUm
+wzk
 wzk
 wzk
 wzk
@@ -243367,7 +243370,7 @@ qWZ
 lvA
 gKU
 aoW
-adB
+dxK
 fbw
 unM
 hBZ

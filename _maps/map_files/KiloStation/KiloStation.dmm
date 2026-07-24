@@ -3833,7 +3833,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/structure/extinguisher_cabinet/directional/south,
 /obj/structure/sign/poster/random/directional/east,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
@@ -7457,6 +7456,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"cuc" = (
+/obj/structure/sign/chalkboard_menu/small,
+/turf/closed/wall/rust,
+/area/station/command/meeting_room/council)
 "cud" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -14393,6 +14396,7 @@
 /obj/structure/cable,
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/plastic,
 /area/station/hallway/secondary/service)
 "eJk" = (
@@ -26633,10 +26637,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
-"itY" = (
-/obj/structure/sign/chalkboard_menu,
-/turf/closed/wall,
-/area/station/command/meeting_room/council)
 "itZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table/wood,
@@ -30826,6 +30826,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron,
 /area/station/command/meeting_room/council)
 "jJB" = (
@@ -40603,13 +40604,8 @@
 /turf/open/floor/iron/grimy,
 /area/station/security/prison)
 "mRo" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
-	},
-/obj/machinery/coffeemaker/impressa{
-	pixel_x = 2;
-	pixel_y = 3
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room/council)
@@ -56702,21 +56698,15 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "sdd" = (
-/obj/structure/closet/mini_fridge/empty{
-	pixel_x = 0;
-	pixel_y = 3
-	},
-/obj/item/storage/box/coffeepack,
-/obj/item/reagent_containers/condiment/milk,
-/obj/item/reagent_containers/condiment/sugar{
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/condiment/soymilk,
-/obj/item/storage/box/coffeepack/robusta,
+/obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
-/obj/structure/table,
+/obj/machinery/coffeemaker/impressa{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room/council)
 "sde" = (
@@ -73625,11 +73615,22 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/chemistry)
 "xkj" = (
-/obj/structure/filingcabinet/chestdrawer,
-/obj/effect/turf_decal/bot,
+/obj/structure/closet/mini_fridge/empty{
+	pixel_x = 0;
+	pixel_y = 3
+	},
+/obj/item/storage/box/coffeepack,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/sugar{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/condiment/soymilk,
+/obj/item/storage/box/coffeepack/robusta,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room/council)
 "xkp" = (
@@ -104106,7 +104107,7 @@ cXT
 jCm
 sWp
 iUM
-itY
+xjn
 jJx
 ljy
 gHc
@@ -105134,7 +105135,7 @@ xXp
 gZl
 sSN
 bnl
-qyj
+cuc
 xkj
 sdd
 mRo

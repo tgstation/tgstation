@@ -49177,6 +49177,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/wood/tile,
 /area/station/service/minibar)
 "hks" = (
@@ -129651,6 +129652,7 @@
 	},
 /obj/machinery/computer/security/telescreen/vault/directional/west,
 /obj/structure/sign/poster/official/random/directional/south,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "tgA" = (

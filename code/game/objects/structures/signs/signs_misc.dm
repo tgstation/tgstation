@@ -26,6 +26,12 @@
 	icon = 'icons/obj/machines/barsigns.dmi'
 	desc = "85cr for a iced lactose-free caramel frappe?! Who buys that?!"
 
+/obj/structure/sign/chalkboard_menu/small
+	name = "chalkboard coffee menu"
+	icon_state = "chalkboard_menu_small"
+	icon = 'icons/obj/wallmounts.dmi'
+	desc = "The selection of coffee here isn't as extensive as the one on the other sign. Atleast no iced lactose-free caramel frappe."
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/xenobio_guide, 32)
 
 // Tram-mounted statistics plate

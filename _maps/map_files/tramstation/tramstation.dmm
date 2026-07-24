@@ -8300,7 +8300,6 @@
 	},
 /obj/item/reagent_containers/condiment/soymilk,
 /obj/item/storage/box/coffeepack/robusta,
-/obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "bPr" = (
@@ -15890,6 +15889,10 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/security/warden)
+"etR" = (
+/obj/structure/sign/chalkboard_menu/small,
+/turf/closed/wall/r_wall,
+/area/station/command/meeting_room)
 "euC" = (
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
@@ -70439,6 +70442,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
+"xBX" = (
+/obj/machinery/status_display/evac/directional/east,
+/turf/open/floor/carpet,
+/area/station/command/meeting_room)
 "xCc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -157487,10 +157494,10 @@ qyZ
 qyZ
 qyZ
 qyZ
-qyZ
+etR
 uVo
 dEU
-uVo
+xBX
 eVC
 qyZ
 tfX
