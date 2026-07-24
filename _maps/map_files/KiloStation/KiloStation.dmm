@@ -1040,12 +1040,12 @@
 "aoi" = (
 /obj/structure/table/wood/fancy,
 /obj/machinery/light/directional/west,
-/obj/item/food/grown/harebell,
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell,
+/obj/item/food/grown/flower/harebell{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -4599,15 +4599,15 @@
 /area/station/maintenance/fore)
 "bAs" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/food/grown/poppy/geranium{
+/obj/item/food/grown/flower/poppy/geranium{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/food/grown/poppy/geranium{
+/obj/item/food/grown/flower/poppy/geranium{
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/food/grown/poppy/geranium,
+/obj/item/food/grown/flower/poppy/geranium,
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
 /turf/open/floor/iron/dark,
@@ -7360,15 +7360,15 @@
 /area/station/security/prison/mess)
 "csL" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/food/grown/poppy/lily{
+/obj/item/food/grown/flower/poppy/lily{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/food/grown/poppy/lily{
+/obj/item/food/grown/flower/poppy/lily{
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/food/grown/poppy/lily,
+/obj/item/food/grown/flower/poppy/lily,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/monastery)
 "csM" = (
@@ -14324,12 +14324,12 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
-/obj/item/food/grown/harebell,
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell,
+/obj/item/food/grown/flower/harebell{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -16212,15 +16212,15 @@
 /area/station/security/prison/mess)
 "foB" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/food/grown/poppy/geranium{
+/obj/item/food/grown/flower/poppy/geranium{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/food/grown/poppy/geranium{
+/obj/item/food/grown/flower/poppy/geranium{
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/food/grown/poppy/geranium,
+/obj/item/food/grown/flower/poppy/geranium,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "foP" = (
@@ -42996,15 +42996,15 @@
 /area/station/medical/break_room)
 "nGE" = (
 /obj/structure/table/wood/fancy,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/food/grown/poppy,
+/obj/item/food/grown/flower/poppy,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
@@ -44274,15 +44274,15 @@
 "ogM" = (
 /obj/structure/table/wood/fancy,
 /obj/effect/turf_decal/siding/wideplating/dark/corner,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/food/grown/poppy,
+/obj/item/food/grown/flower/poppy,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "ohj" = (
@@ -62097,15 +62097,15 @@
 /area/station/maintenance/port/lesser)
 "tIA" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/food/grown/poppy/lily{
+/obj/item/food/grown/flower/poppy/lily{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/food/grown/poppy/lily{
+/obj/item/food/grown/flower/poppy/lily{
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/food/grown/poppy/lily,
+/obj/item/food/grown/flower/poppy/lily,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/mapping_helpers/apc/cell_5k,
 /obj/structure/cable,

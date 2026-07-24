@@ -957,7 +957,7 @@
 	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/drying/semki
-	reqs = list(/obj/item/food/grown/sunflower = 1)
+	reqs = list(/obj/item/food/grown/flower/sunflower = 1)
 	result = /obj/item/food/semki/healthy
 	meal_category = MEAL_SNACK
 
