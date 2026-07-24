@@ -4,16 +4,25 @@ type Props = {
   serverState: ServerState;
   onNavigate: (page: 'home') => void;
   onAction: (action: string) => void;
+  onClose: () => void;
 };
 
-export function LeaveBodyPage({ serverState, onNavigate, onAction }: Props) {
+export function LeaveBodyPage({
+  serverState,
+  onNavigate,
+  onAction,
+  onClose,
+}: Props) {
   return (
     <>
       <BackButton onClick={() => onNavigate('home')} />
       <div className="escape-menu__leave-body">
         <button
           className="escape-menu__large-button"
-          onClick={() => onAction('suicide')}
+          onClick={() => {
+            onAction('suicide');
+            onClose();
+          }}
         >
           <div className="escape-menu__icon-button">
             <span className="escape-menu-icons96x96 leave-template" />
@@ -29,7 +38,10 @@ export function LeaveBodyPage({ serverState, onNavigate, onAction }: Props) {
         </button>
         <button
           className="escape-menu__large-button"
-          onClick={() => onAction('ghost')}
+          onClick={() => {
+            onAction('ghost');
+            onClose();
+          }}
         >
           <div className="escape-menu__icon-button">
             <span className="escape-menu-icons96x96 leave-template" />

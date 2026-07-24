@@ -15,6 +15,7 @@ type Props = {
   serverState: ServerState;
   onNavigate: (page: 'admin' | 'players' | 'leave_body' | 'quit') => void;
   onAction: (action: string) => void;
+  onClose: () => void;
   showResources: boolean;
   onToggleResources: () => void;
 };
@@ -25,6 +26,7 @@ export function HomePage({
   serverState,
   onNavigate,
   onAction,
+  onClose,
   showResources,
   onToggleResources,
 }: Props) {
@@ -55,11 +57,23 @@ export function HomePage({
           </div>
         </div>
         <div className="escape-menu__buttons">
-          <MenuButton onClick={() => onAction('resume')}>Resume</MenuButton>
-          <MenuButton onClick={() => onAction('character')}>
+          <MenuButton onClick={onClose}>Resume</MenuButton>
+          <MenuButton
+            onClick={() => {
+              onAction('character');
+              onClose();
+            }}
+          >
             Character
           </MenuButton>
-          <MenuButton onClick={() => onAction('settings')}>Settings</MenuButton>
+          <MenuButton
+            onClick={() => {
+              onAction('settings');
+              onClose();
+            }}
+          >
+            Settings
+          </MenuButton>
           <MenuButton onClick={() => onNavigate('players')}>Players</MenuButton>
           <MenuButton
             onClick={() => onNavigate('admin')}

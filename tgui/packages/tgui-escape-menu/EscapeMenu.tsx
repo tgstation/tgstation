@@ -95,10 +95,8 @@ export function isResizeFrozen() {
 
 function openMenu(dispatch: React.Dispatch<Action>) {
   setTimeout(() => {
-    document.documentElement.style.width = '';
-    document.documentElement.style.height = '';
     resizeFrozen = false;
-  }, 50);
+  }, 100);
   playOpenSounds();
   sendAction('opened');
   dispatch({ type: 'open' });
@@ -106,8 +104,6 @@ function openMenu(dispatch: React.Dispatch<Action>) {
 
 function closeMenu(dispatch: React.Dispatch<Action>) {
   resizeFrozen = true;
-  document.documentElement.style.width = `${window.innerWidth}px`;
-  document.documentElement.style.height = `${window.innerHeight}px`;
   Byond.winset('mapwindow.escape_menu', { 'is-visible': false });
   Byond.winset('map', { focus: true });
   playCloseSounds();
@@ -145,24 +141,10 @@ export function EscapeMenu() {
   const navigate = (page: Page) => dispatch({ type: 'navigate', page });
 
   const handleAction = (action: string, payload?: Record<string, unknown>) => {
-    if (action === 'resume') {
-      closeMenu(dispatch);
-      return;
-    }
     sendAction(action, payload);
-    if (
-      [
-        'character',
-        'settings',
-        'create_ticket',
-        'pray',
-        'see_notes',
-        'admin_notice',
-      ].includes(action)
-    ) {
-      closeMenu(dispatch);
-    }
   };
+
+  const handleClose = () => closeMenu(dispatch);
 
   const refocusMap = () => {
     Byond.winset('map', { focus: true });
@@ -178,6 +160,7 @@ export function EscapeMenu() {
             serverState={state.serverState}
             onNavigate={navigate}
             onAction={handleAction}
+            onClose={handleClose}
             showResources={state.showResources}
             onToggleResources={() => dispatch({ type: 'toggleResources' })}
           />
@@ -187,6 +170,7 @@ export function EscapeMenu() {
             serverState={state.serverState}
             onNavigate={navigate}
             onAction={handleAction}
+            onClose={handleClose}
           />
         )}
         {state.page === 'players' && (
@@ -201,6 +185,7 @@ export function EscapeMenu() {
             serverState={state.serverState}
             onNavigate={navigate}
             onAction={handleAction}
+            onClose={handleClose}
           />
         )}
         {state.page === 'quit' && (

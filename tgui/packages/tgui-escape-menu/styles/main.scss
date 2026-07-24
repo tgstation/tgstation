@@ -26,20 +26,20 @@ body,
 
 .Tooltip {
   font-family: 'Pixellari', monospace;
-  transform: translateY(-1.5vh);
+  transform: translateY(-1.5rem);
 }
 
 .escape-menu {
-  --details-width: 25vw;
-  --content-margin: 4vw;
-  --details-gap: 3vw;
+  --details-width: 25rem;
+  --content-margin: 4rem;
+  --details-gap: 3rem;
 
   position: relative;
   width: 100%;
   height: 100%;
   font-family: 'Pixellari', 'Grand9K Pixel', monospace;
   color: white;
-  -webkit-text-stroke: 0.15vw black;
+  -webkit-text-stroke: 0.2rem black;
   paint-order: stroke fill;
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: unset;
@@ -71,28 +71,28 @@ body,
   }
 
   &__title {
-    margin-bottom: 2vh;
+    margin-bottom: 2rem;
   }
 
   &__subtitle {
-    font-size: 1.8vw;
+    font-size: 1.8rem;
     color: #ccc;
-    margin-bottom: 0.4vh;
+    margin-bottom: 0.4rem;
   }
 
   &__station-name {
-    font-size: 5vw;
+    font-size: 5rem;
     font-weight: bold;
-    -webkit-text-stroke: 0.25vw black;
+    -webkit-text-stroke: 0.3rem black;
   }
 
   &__details {
     position: absolute;
-    top: 2vh;
-    right: 2vw;
+    top: 2rem;
+    right: 2rem;
     width: var(--details-width);
     text-align: right;
-    font-size: 1.8vw;
+    font-size: 1.8rem;
     line-height: 1.5;
     color: #ddd;
     z-index: 2;
@@ -101,11 +101,11 @@ body,
   &__buttons {
     display: flex;
     flex-direction: column;
-    gap: 0.4vh;
+    gap: 0.3rem;
 
     &--page {
       position: absolute;
-      top: 20vh;
+      top: 12rem;
       left: var(--content-margin);
     }
   }
@@ -115,12 +115,12 @@ body,
     border: none;
     color: white;
     font-family: 'Pixellari', monospace;
-    font-size: 4.5vw;
+    font-size: 4.5rem;
     font-weight: bold;
     text-align: left;
-    padding: 0.2vh 0.5vw;
+    padding: 0.2rem 0.5rem;
     cursor: pointer;
-    -webkit-text-stroke: 0.25vw black;
+    -webkit-text-stroke: 0.3rem black;
 
     &:hover {
       text-decoration: underline;
@@ -143,26 +143,26 @@ body,
 
   &__back-button {
     position: absolute;
-    top: 5vh;
-    left: 2vw;
+    top: 3rem;
+    left: 2rem;
     background: none;
     border: none;
     color: white;
     font-family: 'Grand9K Pixel', monospace;
-    font-size: 1.4vw;
+    font-size: 1.4rem;
     cursor: pointer;
-    padding: 0.8vh 1.5vw;
+    padding: 0.8rem 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.3vh;
+    gap: 0.3rem;
 
     .escape-menu__icon-button {
       transform: scale(var(--icon-scale, 1.5));
     }
 
     &:hover {
-      filter: brightness(1.3);
+      filter: brightness(1.1);
     }
   }
 
@@ -172,7 +172,7 @@ body,
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
-    gap: 6vw;
+    gap: 6rem;
   }
 
   &__large-button {
@@ -186,15 +186,15 @@ body,
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1vh;
+    gap: 1rem;
 
     &:hover {
-      filter: brightness(1.3);
+      filter: brightness(1.1);
     }
   }
 
   &__large-button-label {
-    font-size: 3vw;
+    font-size: 3rem;
     font-weight: bold;
   }
 
@@ -207,20 +207,20 @@ body,
   }
 
   &__quit-prompt {
-    font-size: 4.5vw;
-    margin-bottom: 3vh;
+    font-size: 4.5rem;
+    margin-bottom: 3rem;
   }
 
   &__quit-buttons {
     display: flex;
-    gap: 4vw;
+    gap: 4rem;
     justify-content: center;
   }
 
   &__resources {
     position: absolute;
-    bottom: 3vh;
-    right: 2vw;
+    bottom: 2rem;
+    right: 2rem;
   }
 
   &__resource-toggle,
@@ -233,11 +233,11 @@ body,
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5vh;
-    width: calc(40px * var(--icon-scale, 1.5) + 2vw);
+    gap: 0.5rem;
+    width: calc(40px * var(--icon-scale, 1.5) + 2rem);
 
     &:hover {
-      filter: brightness(1.3);
+      filter: brightness(1.1);
     }
   }
 
@@ -254,14 +254,14 @@ body,
   &__resource-label,
   &__resource-button-label {
     font-family: 'Grand9K Pixel', monospace;
-    font-size: 1.2vw;
+    font-size: 1.2rem;
     text-align: center;
   }
 
   &__resource-list {
     position: absolute;
     top: 0;
-    right: calc(40px * var(--icon-scale, 1.5) + 3vw);
+    right: calc(40px * var(--icon-scale, 1.5) + 3rem);
     display: flex;
     flex-direction: row-reverse;
     align-items: flex-start;
@@ -296,7 +296,7 @@ body,
 
   &__player-list {
     position: absolute;
-    top: 20vh;
+    top: 12rem;
     left: var(--content-margin);
     right: calc(var(--details-width) + var(--details-gap));
     bottom: var(--content-margin);
@@ -305,27 +305,27 @@ body,
   }
 
   &__player-section {
-    margin-bottom: 3vh;
+    margin-bottom: 2rem;
   }
 
   &__player-section-title {
-    font-size: 3vw;
+    font-size: 3rem;
     font-weight: bold;
-    margin-bottom: 1.2vh;
-    padding-bottom: 0.4vh;
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
     border-bottom: 2px solid rgba(255, 255, 255, 0.15);
   }
 
   &__player-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(18vw, 1fr));
-    gap: 0.4vh 0.8vw;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    gap: 0.4rem 0.8rem;
   }
 
   &__player-entry {
     color: white;
     font-family: 'Pixellari', monospace;
-    padding: 0.4vh 0.8vw;
+    padding: 0.4rem 0.8rem;
     display: flex;
     flex-direction: column;
 
@@ -335,7 +335,7 @@ body,
   }
 
   &__player-name {
-    font-size: 2vw;
+    font-size: 2rem;
     overflow-wrap: break-word;
 
     &:hover {
@@ -345,13 +345,13 @@ body,
   }
 
   &__player-ping {
-    font-size: 1.4vw;
+    font-size: 1.4rem;
     color: #777;
     font-family: 'Grand9K Pixel', monospace;
   }
 
   &__player-rank {
-    font-size: 1.4vw;
+    font-size: 1.4rem;
     color: #aaa;
     font-family: 'Grand9K Pixel', monospace;
 
@@ -380,7 +380,7 @@ body,
 @keyframes resource-slide-in {
   from {
     opacity: 0;
-    transform: translateX(6vw);
+    transform: translateX(6rem);
   }
   to {
     opacity: 1;
@@ -395,6 +395,6 @@ body,
   }
   to {
     opacity: 0;
-    transform: translateX(6vw);
+    transform: translateX(6rem);
   }
 }

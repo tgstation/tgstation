@@ -8,15 +8,24 @@ type Props = {
   };
   onNavigate: (page: 'home') => void;
   onAction: (action: string) => void;
+  onClose: () => void;
 };
 
-export function AdminPage({ serverState, onNavigate, onAction }: Props) {
+export function AdminPage({
+  serverState,
+  onNavigate,
+  onAction,
+  onClose,
+}: Props) {
   return (
     <>
       <BackButton onClick={() => onNavigate('home')} />
       <div className="escape-menu__buttons escape-menu__buttons--page">
         <MenuButton
-          onClick={() => onAction('create_ticket')}
+          onClick={() => {
+            onAction('create_ticket');
+            onClose();
+          }}
           disabled={!serverState.canAdminHelp}
         >
           Create Admin Ticket
@@ -32,12 +41,29 @@ export function AdminPage({ serverState, onNavigate, onAction }: Props) {
         >
           View Latest Ticket
         </MenuButton>
-        <MenuButton onClick={() => onAction('admin_notice')}>
+        <MenuButton
+          onClick={() => {
+            onAction('admin_notice');
+            onClose();
+          }}
+        >
           See Admin Notices
         </MenuButton>
-        <MenuButton onClick={() => onAction('pray')}>Pray</MenuButton>
+        <MenuButton
+          onClick={() => {
+            onAction('pray');
+            onClose();
+          }}
+        >
+          Pray
+        </MenuButton>
         {!!serverState.canSeeNotes && (
-          <MenuButton onClick={() => onAction('see_notes')}>
+          <MenuButton
+            onClick={() => {
+              onAction('see_notes');
+              onClose();
+            }}
+          >
             See Notes
           </MenuButton>
         )}
