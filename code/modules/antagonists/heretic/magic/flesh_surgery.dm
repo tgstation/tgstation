@@ -168,7 +168,7 @@
 	new /obj/effect/temp_visual/cult/sparks(get_turf(to_heal))
 	var/condition = (to_heal.damage > 0) ? "better" : "perfect"
 	caster.visible_message(
-		span_warning("[caster]'s hand glows a brilliant red as [caster.p_they()] restore \the [to_heal] to [condition] condition!"),
+		span_warning("[caster]'s hand glows a brilliant red as [caster.p_they()] restore[caster.p_s()] \the [to_heal] to [condition] condition!"),
 		span_notice("Your hand glows a brilliant red as you restore \the [to_heal] to [condition] condition!"),
 	)
 
@@ -323,12 +323,12 @@
 
 	if(using_on_self)
 		caster.visible_message(
-			span_danger("[caster]'s hand glows a brilliant red as [caster.p_they()] begin[caster.p_es()] forcing [inserted_organ] into [caster.p_their()] [zone_organ_goes_in]!!"),
+			span_danger("[caster]'s hand glows a brilliant red as [caster.p_they()] begin[caster.p_s()] forcing [inserted_organ] into [caster.p_their()] [zone_organ_goes_in]!!"),
 			span_userdanger("You begin forcing [inserted_organ] into your [zone_organ_goes_in]!")
 		)
 	else
 		caster.visible_message(
-			span_danger("[caster]'s hand glows a brilliant red as [caster.p_they()] begin[caster.p_es()] forcing [inserted_organ] into [victim]'s [zone_organ_goes_in]!!"),
+			span_danger("[caster]'s hand glows a brilliant red as [caster.p_they()] begin[caster.p_s()] forcing [inserted_organ] into [victim]'s [zone_organ_goes_in]!!"),
 			span_notice("You begin forcing [inserted_organ] into [victim]'s [zone_organ_goes_in].")
 		)
 

@@ -103,6 +103,7 @@
 		filtered_out.moles[gas_id] += transferred_moles
 		cached_moles[gas_id] -= transferred_moles
 
+	environment.garbage_collect()
 	//Remix the resulting gases
 	air_contents.merge(filtered_out)
 

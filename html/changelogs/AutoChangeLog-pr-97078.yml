@@ -1,0 +1,5 @@
+author: "QuiteLiterallyAnything"
+delete-after: True
+changes:
+  - bugfix: "If a tree \"falls\" in zero gravity, it doesn't make a sound."
+  - balance: "The sound of tree felling has a bit more range."

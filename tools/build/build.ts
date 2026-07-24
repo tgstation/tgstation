@@ -311,9 +311,6 @@ export const BunTarget = new Juke.Target({
 export const BiomeInstallTarget = new Juke.Target({
   dependsOn: [BunTarget],
   inputs: ['package.json', 'bun.lock'],
-  onlyWhen: () => {
-    return Juke.glob('node_modules/@biomejs/**').length === 0;
-  },
   executes: () => {
     return bun('.', 'install');
   },
