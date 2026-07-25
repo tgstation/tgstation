@@ -7,7 +7,7 @@
 /mob/living/silicon/robot/show_laws()
 	if(lawupdate)
 		if (!QDELETED(connected_ai))
-			if(connected_ai.stat != CONSCIOUS || connected_ai.control_disabled)
+			if(IS_UNCONSCIOUS_OR_CRIT(connected_ai) || connected_ai.control_disabled)
 				to_chat(src, span_bold("AI signal lost, unable to sync laws."))
 
 			else

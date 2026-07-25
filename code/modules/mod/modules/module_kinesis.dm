@@ -270,7 +270,7 @@
 		structures, machinery, vehicles, and, thanks to the fruitful efforts of its creators - living beings."
 	complexity = 0
 	prebuilt = TRUE
-	stat_required = CONSCIOUS
+	stat_required = STABLE
 
 /// Admin suit version of kinesis. Can grab anything at any range, may enable phasing through walls.
 /obj/item/mod/module/anomaly_locked/kinesis/admin
@@ -281,7 +281,7 @@
 	grab_range = INFINITY
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0
 	prebuilt = TRUE
-	stat_required = CONSCIOUS
+	stat_required = STABLE
 	/// Does our object phase through stuff?
 	var/phasing = FALSE
 

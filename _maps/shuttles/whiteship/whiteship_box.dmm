@@ -1581,7 +1581,7 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_x = 6;
 	pixel_y = 3
 	},

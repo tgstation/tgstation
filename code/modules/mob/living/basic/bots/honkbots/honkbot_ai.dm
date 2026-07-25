@@ -101,7 +101,7 @@
 	if(!.)
 		return FALSE
 	var/mob/living/target_mob = target
-	if(!isliving(target_mob) || target_mob.stat != CONSCIOUS)
+	if(!isliving(target_mob) || IS_UNCONSCIOUS_OR_CRIT(target_mob))
 		return FALSE
 	if(HAS_TRAIT(target_mob, TRAIT_PERCEIVED_AS_CLOWN))
 		return TRUE
@@ -114,18 +114,26 @@
 	var/target_key
 
 /datum/bt_node/ai_behavior/play_with_clown/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/async_flags = handle_async()
+	if(async_flags)
+		return async_flags
 	var/mob/living/living_target = controller.blackboard[target_key]
 	if(QDELETED(living_target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	if(get_dist(controller.pawn, living_target) > 1)
 		return AI_BEHAVIOR_INSTANT
 	var/mob/living/living_pawn = controller.pawn
-	var/datum/action/honk_ability = controller.blackboard[BB_HONK_ABILITY]
-	honk_ability?.Trigger()
 	living_pawn.manual_emote("celebrates with [living_target]!")
 	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob, emote), "flip")
 	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob, emote), "beep")
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return start_async()
+
+/datum/bt_node/ai_behavior/play_with_clown/perform_async(datum/ai_controller/controller)
+	var/datum/action/honk_ability = controller.blackboard[BB_HONK_ABILITY]
+	var/result = honk_ability?.Trigger()
+	if(!async_still_valid())
+		return
+	finish_async(result ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
 
 /datum/bt_node/ai_behavior/play_with_clown/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded)
 	. = ..()

@@ -138,7 +138,7 @@
 	var/speed_modifier = 1
 	if (!target.owner)
 		speed_modifier = 0.5
-	else if (target.owner.stat < UNCONSCIOUS)
+	else if (!IS_UNCONSCIOUS(target))
 		speed_modifier = 1.5 // yeowch
 
 	var/limb_descriptor = (target.owner ? "[target.owner]'s [target.plaintext_zone]" : target)

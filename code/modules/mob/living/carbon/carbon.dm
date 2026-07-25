@@ -16,7 +16,7 @@
 	. = ..()
 
 	living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS
-
+	real_bodypart_cache.Cut()
 	QDEL_LIST(hand_bodyparts)
 	QDEL_LIST(organs)
 	QDEL_LIST(bodyparts)
@@ -156,7 +156,7 @@
 				span_notice("You attempt to unbuckle yourself... \
 				(This will take around [DisplayTimeText(buckle_cd)] and you must stay still.)"))
 
-	if(!do_after(src, buckle_cd, target = src, timed_action_flags = IGNORE_HELD_ITEM, hidden = TRUE))
+	if(!do_after(src, buckle_cd, target = src, timed_action_flags = IGNORE_HELD_ITEM, cog_icon = null))
 		if(buckled)
 			to_chat(src, span_warning("You fail to unbuckle yourself!"))
 		return
@@ -207,7 +207,7 @@
 	if(!cuff_break)
 		visible_message(span_warning("[src] attempts to remove [cuffs]!"))
 		to_chat(src, span_notice("You attempt to remove [cuffs]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM, hidden = TRUE))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM, cog_icon = null))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to remove [cuffs]!"))
@@ -498,7 +498,7 @@
 		. |= SEE_MOBS
 		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
 
-	if (HAS_TRAIT(src, TRAIT_MINOR_NIGHT_VISION))
+	if(HAS_TRAIT(src, TRAIT_NIGHT_VISION))
 		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_LOW)
 
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
@@ -660,11 +660,6 @@
 
 /mob/living/carbon/set_health(new_value)
 	. = ..()
-	if(. > hardcrit_threshold)
-		if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
-			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
-	else if(health > hardcrit_threshold)
-		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
 	if(CONFIG_GET(flag/near_death_experience))
 		if(. > HEALTH_THRESHOLD_NEARDEATH)
 			if(health <= HEALTH_THRESHOLD_NEARDEATH && !HAS_TRAIT(src, TRAIT_NODEATH))
@@ -680,16 +675,12 @@
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			death()
 			return
-		if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED, AUTOPSY_TRAIT))
-			REMOVE_TRAIT(src, TRAIT_DISSECTED, AUTOPSY_TRAIT)
 		if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
 			set_stat(HARD_CRIT)
-		else if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
-			set_stat(UNCONSCIOUS)
 		else if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
 			set_stat(SOFT_CRIT)
 		else
-			set_stat(CONSCIOUS)
+			set_stat(STABLE)
 	update_damage_hud()
 	update_health_hud()
 	update_stamina_hud()
@@ -883,6 +874,8 @@
 
 	new_bodypart.on_adding(src)
 	bodyparts += new_bodypart
+	if(!IS_STUMP(new_bodypart))
+		real_bodypart_cache[new_bodypart.body_zone] = new_bodypart
 	new_bodypart.update_owner(src)
 
 	// Apply a bodypart effect or merge with an existing one, for stuff like plant limbs regenning in light
@@ -921,6 +914,7 @@
 
 	old_bodypart.on_removal(src)
 	bodyparts -= old_bodypart
+	real_bodypart_cache -= old_bodypart.body_zone
 
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)

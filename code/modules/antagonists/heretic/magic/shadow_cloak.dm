@@ -147,7 +147,7 @@
 	// Register signals to cause effects
 	RegisterSignal(owner, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
 	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(on_body_position_change))
-	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
+	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT), PROC_REF(on_stat_change))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	return TRUE
@@ -164,7 +164,7 @@
 	UnregisterSignal(owner, list(
 		COMSIG_ATOM_DIR_CHANGE,
 		COMSIG_LIVING_SET_BODY_POSITION,
-		COMSIG_MOB_STATCHANGE,
+		SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT),
 		COMSIG_MOB_APPLY_DAMAGE,
 		COMSIG_MOVABLE_MOVED,
 	))
@@ -184,13 +184,12 @@
 	else
 		cloak_image.transform = turn(cloak_image.transform, -90)
 
-/// Signal proc for [COMSIG_MOB_STATCHANGE], going past soft crit will stop the effect
+/// Signal proc for [SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT], falling unconscious (from hard crit or otherwise) will stop the effect
 /datum/status_effect/shadow_cloak/proc/on_stat_change(datum/source, new_stat, old_stat)
 	SIGNAL_HANDLER
 
 	// Going above unconscious will self-delete
-	if(new_stat >= UNCONSCIOUS)
-		qdel(src)
+	qdel(src)
 
 /// Signal proc for [COMSIG_MOB_APPLY_DAMAGE], being damaged past a threshold will roll a chance to stop the effect
 /datum/status_effect/shadow_cloak/proc/on_damaged(datum/source, damage, damagetype, ...)

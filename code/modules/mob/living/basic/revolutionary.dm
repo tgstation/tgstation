@@ -107,6 +107,8 @@
 	shuffle_inplace(causes)
 	desc += span_notice("#[pick(causes)].")
 
+/mob/living/basic/revolutionary/init_unconscious_appearance()
+	add_generic_humanoid_static_appearance()
 
 /obj/effect/mob_spawn/corpse/human/revolutionary
 	name = "Revolutionary"

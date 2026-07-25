@@ -7,6 +7,8 @@
 	var/can_attack_turfs = FALSE
 	/// For if you want your mob to be able to attack dense objects
 	var/can_attack_dense_objects = FALSE
+	/// Set this if using JPS movement, since if we use basic avoidance we should check get_step_to as well
+	var/can_ignore_step = FALSE
 
 /datum/bt_node/ai_behavior/attack_obstructions/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/basic_mob = controller.pawn
@@ -16,8 +18,12 @@
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	var/turf/next_step = get_step_towards(basic_mob, target)
+
 	if(!next_step.is_blocked_turf(exclude_mobs = TRUE, source_atom = controller.pawn))
-		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED // Path clear  let selector fall through to melee
+		if(can_ignore_step)
+			return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED // Path clear  let selector fall through to melee
+		if(get_step_to(controller.pawn, next_step)) //pathing could still fail because byond sucks.
+			return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED // Path clear  let selector fall through to melee
 
 	var/dir_to_next_step = get_dir(basic_mob, next_step)
 	var/list/dirs_to_move = list()
@@ -36,7 +42,8 @@
 /datum/bt_node/ai_behavior/attack_obstructions/proc/attack_in_direction(datum/ai_controller/controller, mob/living/basic/basic_mob, direction)
 	var/turf/next_step = get_step(basic_mob, direction)
 	if(!next_step.is_blocked_turf(exclude_mobs = TRUE, source_atom = controller.pawn))
-		return FALSE
+		if(get_step_to(controller.pawn, next_step)) //pathing could still fail because byond sucks.
+			return FALSE
 
 	for(var/obj/object as anything in next_step.contents)
 		if(!can_smash_object(basic_mob, object))

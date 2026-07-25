@@ -92,7 +92,9 @@
 	if(facial_hair_gradient_style != SPRITE_ACCESSORY_NONE)
 		var/facial_hair_gradient_color = get_hair_gradient_color(GRADIENT_FACIAL_HAIR_KEY)
 		var/image/facial_hair_gradient_overlay = get_gradient_overlay(icon(sprite_accessory.icon, sprite_accessory.icon_state), -HAIR_LAYER, SSaccessories.facial_hair_gradients_list[facial_hair_gradient_style], facial_hair_gradient_color, dropped)
-		. += facial_hair_gradient_overlay
+		facial_hair_gradient_overlay.alpha = facial_hair_alpha
+		facial_hair_overlay.appearance_flags |= KEEP_TOGETHER
+		facial_hair_overlay.overlays += facial_hair_gradient_overlay
 
 	return .
 
@@ -142,7 +144,8 @@
 			var/hair_gradient_color = get_hair_gradient_color(GRADIENT_HAIR_KEY)
 			var/image/hair_gradient_overlay = get_gradient_overlay(base_icon, hair_overlay.layer, SSaccessories.hair_gradients_list[hair_gradient_style], hair_gradient_color, dropped)
 			hair_gradient_overlay.pixel_z = hair_sprite_accessory.y_offset
-			. += hair_gradient_overlay
+			hair_overlay.appearance_flags |= KEEP_TOGETHER
+			hair_overlay.overlays += hair_gradient_overlay
 
 	return .
 
