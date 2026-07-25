@@ -445,6 +445,10 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
+	var/list/return_list = list(new_sight)
+	SEND_SIGNAL(src, COMSIG_CARBON_UPDATE_SIGHT_CUTOFFS, return_list)
+	return return_list[1]
+
 /**
  * Calculates how visually impaired the mob is by their equipment and other factors
  *

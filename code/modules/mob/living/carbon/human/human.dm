@@ -410,8 +410,8 @@
 	return chest?.get_butt_sprite()
 
 /mob/living/carbon/human/get_footprint_sprite()
-	var/obj/item/bodypart/leg/L = get_bodypart(BODY_ZONE_R_LEG) || get_bodypart(BODY_ZONE_L_LEG)
-	return shoes?.footprint_sprite || L?.footprint_sprite
+	var/obj/item/bodypart/leg/leg = get_bodypart(BODY_ZONE_R_LEG) || get_bodypart(BODY_ZONE_L_LEG)
+	return astype(get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes)?.footprint_sprite || leg?.footprint_sprite
 
 #define CHECK_PERMIT(item) (item && item.item_flags & NEEDS_PERMIT)
 

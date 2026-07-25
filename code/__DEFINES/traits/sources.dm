@@ -345,3 +345,6 @@
 
 /// Trait granted from the metabolization of a reagent
 #define METABOLIZATION_TRAIT(type) "metabolize:[type]"
+
+/// Trait from a MODsuit theme
+#define MOD_THEME_TRAIT "mod_theme_trait"
