@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Add Tombstone Escape Shuttle that can be unlocked via a biohazard event. (Blob, zombies, or a severe enough disease)"
+  - map: "Add Tombstone Escape Shuttle that can be unlocked via a biohazard event. (Blob, zombies, or a severe enough disease)"
