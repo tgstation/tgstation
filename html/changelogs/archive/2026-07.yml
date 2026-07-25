@@ -742,3 +742,8 @@
   - refactor: Datumized do_after()s
   antropod:
   - bugfix: Fix scrubber not updating turfs
+  timothymtorres:
+  - rscadd: Add Tombstone Escape Shuttle that can be unlocked via a biohazard event.
+      (Blob, zombies, or a severe enough disease)
+  - map: Add Tombstone Escape Shuttle that can be unlocked via a biohazard event.
+      (Blob, zombies, or a severe enough disease)
