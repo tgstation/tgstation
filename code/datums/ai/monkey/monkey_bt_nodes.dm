@@ -219,7 +219,6 @@
 /// Attacks the target mob; SUCCEEDED when target is gone, FAILED when target goes down (Which lets us flush the fucker instead)
 /datum/bt_node/ai_behavior/monkey_attack_mob
 	var/target_key
-	time_between_perform = CLICK_CD_MELEE
 	/// seconds_per_tick from the perform() that kicked off the current async attack.
 	VAR_PRIVATE/attack_seconds_per_tick = 0
 	/// Weapon snapshot from the perform() that kicked off the current async attack.

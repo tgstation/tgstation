@@ -461,13 +461,6 @@
 
 	return return_list
 
-/datum/component/personal_crafting/proc/is_recipe_available(datum/crafting_recipe/recipe, mob/user)
-	if((recipe.crafting_flags & CRAFT_MUST_BE_LEARNED) && !(recipe.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
-		return FALSE
-	if (recipe.category == CAT_CULT && !IS_CULTIST(user)) // Skip blood cult recipes if not cultist
-		return FALSE
-	return TRUE
-
 /datum/component/personal_crafting/proc/component_ui_interact(atom/movable/screen/craft/image, location, control, params, user)
 	SIGNAL_HANDLER
 
@@ -493,9 +486,7 @@
 
 	var/list/surroundings = get_surroundings(user)
 	var/list/craftability = list()
-	for(var/datum/crafting_recipe/recipe as anything in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes))
-		if(!is_recipe_available(recipe, user))
-			continue
+	for(var/datum/crafting_recipe/recipe as anything in get_visible_recipes(user))
 		if(check_contents(user, recipe, surroundings) && check_tools(user, recipe, surroundings))
 			craftability["[REF(recipe)]"] = TRUE
 
@@ -515,10 +506,7 @@
 		var/mob/living/carbon/carbon = user
 		data["diet"] = carbon.dna.species.get_species_diet()
 
-	for(var/datum/crafting_recipe/recipe as anything in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes))
-		if(!is_recipe_available(recipe, user))
-			continue
-
+	for(var/datum/crafting_recipe/recipe as anything in get_visible_recipes(user))
 		if(recipe.category)
 			data["categories"] |= recipe.category
 
@@ -579,6 +567,17 @@
 	user.investigate_log("crafted [recipe]", INVESTIGATE_CRAFTING)
 	return TRUE
 
+/// Returns a list of crafting recipe datums that are available given current crafting state and the user's learned recipes.
+/datum/component/personal_crafting/proc/get_visible_recipes(mob/user)
+	var/list/recipes_to_show = list()
+	switch(mode)
+		if(COOKING)
+			recipes_to_show += GLOB.cooking_recipes_default
+			recipes_to_show += SANITIZE_LIST(user.mind?.learned_cooking_recipes)
+		if(CRAFTING)
+			recipes_to_show += GLOB.crafting_recipes_default
+			recipes_to_show += SANITIZE_LIST(user.mind?.learned_crafting_recipes)
+	return recipes_to_show
 
 /datum/component/personal_crafting/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -729,22 +728,33 @@
 
 /// proc that teaches user a non-standard crafting recipe
 /datum/mind/proc/teach_crafting_recipe(recipe)
-	if(!learned_recipes)
-		learned_recipes = list()
-	learned_recipes |= recipe
+	if(!ispath(recipe, /datum/crafting_recipe))
+		stack_trace("Non-crafting recipe passed to teach_crafting_recipe")
+		return
+
+	var/learned_cooking = GLOB.cooking_recipes_by_typepath[recipe]
+	if(learned_cooking)
+		LAZYOR(learned_cooking_recipes, learned_cooking)
+		return
+
+	var/learned_crafting = GLOB.crafting_recipes_by_typepath[recipe]
+	if(learned_crafting)
+		LAZYOR(learned_crafting_recipes, learned_crafting)
+		return
+
+	stack_trace("teach_crafting_recipe called with invalid recipe: [recipe || "null"]")
 
 /// proc that makes user forget a specific crafting recipe
 /datum/mind/proc/forget_crafting_recipe(recipe)
-	learned_recipes -= recipe
+	LAZYREMOVE(learned_cooking_recipes, GLOB.cooking_recipes_by_typepath[recipe])
+	LAZYREMOVE(learned_crafting_recipes, GLOB.crafting_recipes_by_typepath[recipe])
 
-/datum/mind/proc/has_crafting_recipe(mob/user, potential_recipe)
-	if(!learned_recipes)
-		return FALSE
-	if(!ispath(potential_recipe, /datum/crafting_recipe))
-		CRASH("Non-crafting recipe passed to has_crafting_recipe")
-	for(var/recipe in user.mind.learned_recipes)
-		if(recipe == potential_recipe)
-			return TRUE
+/datum/mind/proc/has_crafting_recipe(potential_recipe)
+	ASSERT(ispath(potential_recipe, /datum/crafting_recipe), "Non-crafting recipe passed to has_crafting_recipe")
+	if(locate(potential_recipe) in learned_crafting_recipes)
+		return TRUE
+	if(locate(potential_recipe) in learned_cooking_recipes)
+		return TRUE
 	return FALSE
 
 /datum/component/personal_crafting/machine
