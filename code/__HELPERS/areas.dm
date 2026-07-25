@@ -86,6 +86,8 @@
 
 /proc/set_turf_to_area(turf/the_turf, area/new_area, list/area/affected_areas = list())
 	var/area/old_area = the_turf.loc
+	if(old_area == new_area)
+		return
 
 	//keep rack of all areas affected by turf changes
 	affected_areas[old_area.name] = old_area

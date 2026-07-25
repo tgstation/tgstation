@@ -716,13 +716,16 @@
 	if(oldarea != newarea)
 		oldarea.Exited(src, direction)
 
-	if(new_locs) // Same here, only if multi-tile.
-		for(var/atom/entered_loc as anything in (new_locs - old_locs))
-			entered_loc.Entered(src, oldloc, old_locs)
-	else
-		newloc.Entered(src, oldloc, old_locs)
-	if(oldarea != newarea)
-		newarea.Entered(src, oldarea)
+	// The Exited() calls above can have arbitrary side effects (traps, knockback, bump reactions) that move us again before we get here.
+	// If that happened, whatever moved us has already done its own Entered() for wherever we actually ended up
+	if(loc == newloc)
+		if(new_locs) // Same here, only if multi-tile.
+			for(var/atom/entered_loc as anything in (new_locs - old_locs))
+				entered_loc.Entered(src, oldloc, old_locs)
+		else
+			newloc.Entered(src, oldloc, old_locs)
+		if(oldarea != newarea)
+			newarea.Entered(src, oldarea)
 
 	RESOLVE_ACTIVE_MOVEMENT
 

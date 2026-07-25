@@ -507,7 +507,7 @@
 /datum/mood/proc/check_area_mood(datum/source, area/new_area)
 	SIGNAL_HANDLER
 
-	RegisterSignal(new_area, COMSIG_AREA_BEAUTY_UPDATED, PROC_REF(update_beauty), override = TRUE)
+	RegisterSignal(new_area, COMSIG_AREA_BEAUTY_UPDATED, PROC_REF(update_beauty))
 
 	update_beauty(new_area)
 	if (new_area.mood_bonus && (!new_area.mood_trait || HAS_TRAIT(source, new_area.mood_trait)))
