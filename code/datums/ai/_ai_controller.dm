@@ -326,6 +326,7 @@ multiple modular subtrees with behaviors
 		SSai_controllers.ai_controllers_by_zlevel[pawn_turf.z] += src
 
 	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_POSSESSED_PAWN)
+	SEND_SIGNAL(pawn, COMSIG_PAWN_POSSESSED_BY_AI_CONTROLLER, src)
 
 	reset_ai_status()
 	RegisterSignal(pawn, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_changed_z_level))

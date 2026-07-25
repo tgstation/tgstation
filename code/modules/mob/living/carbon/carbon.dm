@@ -16,7 +16,7 @@
 	. = ..()
 
 	living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS
-
+	real_bodypart_cache.Cut()
 	QDEL_LIST(hand_bodyparts)
 	QDEL_LIST(organs)
 	QDEL_LIST(bodyparts)
@@ -883,6 +883,8 @@
 
 	new_bodypart.on_adding(src)
 	bodyparts += new_bodypart
+	if(!IS_STUMP(new_bodypart))
+		real_bodypart_cache[new_bodypart.body_zone] = new_bodypart
 	new_bodypart.update_owner(src)
 
 	// Apply a bodypart effect or merge with an existing one, for stuff like plant limbs regenning in light
@@ -921,6 +923,7 @@
 
 	old_bodypart.on_removal(src)
 	bodyparts -= old_bodypart
+	real_bodypart_cache -= old_bodypart.body_zone
 
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
