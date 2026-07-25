@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Being unconscious conceals the identity of nearby humans/silicons"
+  - refactor: "Refactored how mob's health is tracked, ie being in crit, unconscious, or dead. There is a high chance I missed some niche interactions and suddenly, you can wavedash while asleep, or backflip while in crit, so please report them as you find them."
+  - refactor: "Inverse Penthrite now goes through the proper channels for handing revival, report anything weird with it"
+  - rscdel: "Sign language mobs are no longer immune to forced whisper effects (such as the soft spoken quirk)."

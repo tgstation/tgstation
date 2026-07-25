@@ -88,7 +88,7 @@
 /obj/item/circuit_component/bot_circuit/input_received(datum/port/input/port)
 
 	var/mob/living/shell = parent.shell
-	if(!istype(shell) || shell.stat)
+	if(!istype(shell) || IS_UNCONSCIOUS_OR_CRIT(shell))
 		return
 
 	var/direction

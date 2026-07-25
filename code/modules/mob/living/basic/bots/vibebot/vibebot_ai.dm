@@ -42,7 +42,7 @@
 
 
 /// Valid if the target is a conscious human who's in a bad mood or having a birthday  someone who could use cheering up.
-/datum/targeting_strategy/conscious_human/party_friend/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+/datum/targeting_strategy/capable_human/party_friend/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
 	. = ..()
 	if(!.)
 		return FALSE

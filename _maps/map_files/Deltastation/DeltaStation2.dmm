@@ -18912,8 +18912,8 @@
 /area/station/medical/chemistry)
 "eIf" = (
 /obj/structure/table/wood/fancy,
-/obj/item/food/grown/poppy,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy,
+/obj/item/food/grown/flower/poppy{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -28565,7 +28565,7 @@
 	specialfunctions = 4
 	},
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy/geranium,
+/obj/item/food/grown/flower/poppy/geranium,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "gUU" = (
@@ -41923,12 +41923,12 @@
 	pixel_y = 32
 	},
 /obj/structure/table/wood,
-/obj/item/food/grown/harebell,
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell,
+/obj/item/food/grown/flower/harebell{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -45412,7 +45412,7 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern,
-/obj/item/food/grown/harebell,
+/obj/item/food/grown/flower/harebell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -52161,7 +52161,7 @@
 /area/station/command/heads_quarters/ce)
 "mPo" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy/lily,
+/obj/item/food/grown/flower/poppy/lily,
 /obj/structure/sign/painting/library{
 	pixel_y = -32
 	},
@@ -69878,7 +69878,7 @@
 "rlL" = (
 /obj/item/radio/intercom/directional/south,
 /obj/structure/table/glass,
-/obj/item/food/grown/poppy/geranium,
+/obj/item/food/grown/flower/poppy/geranium,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -76494,8 +76494,8 @@
 /area/station/hallway/secondary/entry)
 "sQp" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy/lily,
-/obj/item/food/grown/poppy/geranium{
+/obj/item/food/grown/flower/poppy/lily,
+/obj/item/food/grown/flower/poppy/geranium{
 	pixel_x = 6;
 	pixel_y = 6
 	},
@@ -98248,15 +98248,15 @@
 /area/station/command/heads_quarters/ce)
 "ylr" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/food/grown/poppy,
+/obj/item/food/grown/flower/poppy,
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,

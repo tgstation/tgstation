@@ -141,7 +141,7 @@
 	for(var/obj/item/I in get_turf(thing))
 		if(!istype(I, thing.type))
 			continue
-		if(!do_after(user, 0.1 SECONDS, user, progress = FALSE))
+		if(!do_after(user, 0.1 SECONDS, user, show_progress = FALSE))
 			break
 		if(bag.atom_storage.attempt_insert(I, user, FALSE))
 			continue

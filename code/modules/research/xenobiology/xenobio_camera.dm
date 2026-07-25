@@ -304,7 +304,7 @@
 		if(user)
 			target_human.balloon_alert(user, "not a monkey!")
 		return FALSE
-	if(target_human.stat < DEAD)
+	if(target_human.stat != DEAD)
 		if(user)
 			target_human.balloon_alert(user, "not dead!")
 		return FALSE

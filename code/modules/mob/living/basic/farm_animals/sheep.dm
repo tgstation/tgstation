@@ -43,6 +43,7 @@
 		item_harvest_sound = 'sound/items/handling/surgery/scalpel1.ogg', \
 	)
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SHEEP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_sacrificed))
 
 /mob/living/basic/sheep/update_overlays()
