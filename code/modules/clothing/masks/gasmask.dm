@@ -500,7 +500,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	if(!choice)
 		return FALSE
 
-	if(src && choice && !M.stat && in_range(M,src))
+	if(src && choice && !IS_UNCONSCIOUS_OR_CRIT(M) && in_range(M,src))
 		icon_state = options[choice]
 		user.update_worn_mask()
 		update_item_action_buttons()

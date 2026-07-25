@@ -33,7 +33,7 @@
 	var/good_kind_of_healing = FALSE
 	var/need_mob_update = FALSE
 	switch(affected_mob.stat)
-		if(CONSCIOUS) //bad
+		if(STABLE) //bad
 			thou_shall_heal = max(death_is_coming/20, 3)
 			need_mob_update += affected_mob.adjust_oxy_loss(2 * metabolization_ratio * seconds_per_tick, TRUE, required_biotype = affected_biotype)
 		if(SOFT_CRIT) //meh convert

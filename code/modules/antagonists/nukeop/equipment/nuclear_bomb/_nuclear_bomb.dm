@@ -130,7 +130,7 @@ GLOBAL_VAR(station_nuke_source)
 			if(istype(tool, /obj/item/nuke_core_container))
 				var/obj/item/nuke_core_container/core_box = tool
 				to_chat(user, span_notice("You start loading the plutonium core into [core_box]..."))
-				if(!do_after(user, 5 SECONDS, target = src, hidden = TRUE))
+				if(!do_after(user, 5 SECONDS, target = src, cog_icon = null))
 					return ITEM_INTERACT_BLOCKING
 
 				if(!core_box.load(core, user))

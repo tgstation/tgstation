@@ -615,3 +615,147 @@
       to wait for the next
   PapaMichael:
   - spellcheck: More verbs match their pronouns
+  SmArtKar:
+  - bugfix: Fixed the Four Hands wizard perk
+  - bugfix: Fixed quick tile replacement
+2026-07-21:
+  CabinetOnFire:
+  - bugfix: Fixes cats getting permanent zoomies after being chased away by a superior
+      male
+  - bugfix: Fixes mechs not qdel'ing when destroyed if they spawn a wreck
+  FalloutFalcon:
+  - qol: per department sorting for character setup matches latejoin menu
+  SmArtKar:
+  - bugfix: Removed unnecessary click delay from window placement
+  lelandkemble:
+  - code_imp: Edible food unit test doesn't check abstract type food, abstract type
+      food doesn't have seeds.
+  timothymtorres:
+  - rscadd: Add water bottles to booze-o-mat non-alcoholic category
+  vinylspiders:
+  - bugfix: peeking into a hilberts hotel room while it gets deleted will now kick
+      you out properly
+  - bugfix: fixed an issue where the lights would stay dark after reloading the same
+      hilberts hotel room
+2026-07-22:
+  CabinetOnFire:
+  - refactor: Ruin loading should now be more robust and should spawn less orphaned
+      genturfs
+  Kashargul:
+  - bugfix: tgui UI testing with more than one test file
+  lelandkemble:
+  - code_imp: converted calls to attackby() to calls to item_interaction()
+  - bugfix: MODsuit drill module manual activation works again
+  - bugfix: you can put c4s on safes
+  vinylspiders:
+  - bugfix: fixed tails and ears not updating on your dummy when changing the pref
+      until you change species or switch characters
+2026-07-23:
+  CabinetOnFire:
+  - rscadd: Monkeys now know how to yakety sax and how to shove people into walls
+  - bugfix: Monkeys no longer trip on monkeys.
+  Happyowl93:
+  - bugfix: you should be able to hit cave spawners with melee items again
+  - bugfix: you can place lattices over ice again.
+  Melbert:
+  - code_imp: Roughly doubled the performance speed of the crafting UI, report anything
+      broken with it
+  PapaMichael:
+  - bugfix: It no longer looks like you have accessories attached after you've removed
+      them.
+  SmArtKar:
+  - bugfix: Fixed negative moles left by gas scrubbers
+  - bugfix: Fixed meteor changelings being killed by defense sats
+  SyncIt21:
+  - bugfix: monkey powder reaction gives multiple monkeys
+  YesterdaysPromise:
+  - bugfix: Plastitanium wall fillings now fill up the walls correctly at rate of
+      1 per wall, and correctly make survival pod walls.
+  lelandkemble:
+  - bugfix: medbots can no longer be thrown, all bots no longer have AA
+  nPocToDark:
+  - qol: Raptor eggs now floor placeable (even in lava). It's now easier to immerse
+      them in lava to accelerate their growth.
+2026-07-24:
+  Aliceee2ch:
+  - spellcheck: Fixed some admin logging messages in canister code.
+  CabinetOnFire:
+  - code_imp: Removes radio's flicking an overlay whenever they receive a message
+      because it took 30~ms per radio message
+  CabinetOnFire, sounds and info by Vorpal-Void:
+  - sound: Some looping sounds (SM, Gravgen, griddle, etc) will now loop more properly
+  Melbert:
+  - rscadd: Whispering while facing a table will project the whisper across the table
+      (allowing anyone on the other side to hear the whisper clearly)
+  - rscdel: Newscasters no longer have tiny 2x2 pixel animation upon receiving a muted
+      alert
+  QuiteLiterallyAnything:
+  - bugfix: If a tree "falls" in zero gravity, it doesn't make a sound.
+  - balance: The sound of tree felling has a bit more range.
+  - bugfix: Tramstation's hidden Syndicate outpost is no longer considered a "vacant
+      room" station area.
+  - map: Tramstation's hidden Syndicate outpost has been given lighting and a bit
+      of detailing.
+  SmArtKar:
+  - bugfix: Fixes hair gradient alpha on ethereals
+  timothymtorres:
+  - rscadd: Add 2 new abilities to Revenant - Vortex and Scatter. These move around
+      (suck or throw) nearby objects and dump the contents if it is close enough to
+      the Revenant and not locked.
+  - rscadd: 'Improve Revenant Defile ability: Alcoholic drinks get replaced with blood.
+      Unpackaged food gets dirty and exposed to germs. Cryo cells and stasis beds
+      eject mobs. Patches, syringes, medipens, pills, bottles, medigels, sprays, DNA
+      injectors, blood bags all lose their identity (name/desc/icon_state). Gas canisters
+      lose their identity (name/desc/icon_state). Lockboxes and crates all lose their
+      identity (name). Locked closets no longer open.'
+2026-07-25:
+  Absolucy:
+  - bugfix: Fixed potential issues when connecting via Wine.
+  Dmeto:
+  - qol: Some museum away mission hints have been tweeked.
+  - bugfix: The museum away mission should suffer less decompressions now.
+  Kryson (Sprites), CabinetOnFire (Code):
+  - rscadd: Adds a new station trait where Pun Pun injects a massive amount of steroids
+  Melbert:
+  - spellcheck: Rewrote (almost, if not all) genetic mutation descriptions
+  - rscadd: Adds six new mutations
+  - rscdel: Several "extremely niche" reagents can no longer roll as a medicine allergy,
+      such as changeling adrenaline, muscle stimulant, or virus rations
+  - code_imp: RPED storage UI only updates when it's done replacing parts rather than
+      part by part, in practice you should see no change
+  - code_imp: Mass pickup also waits to update when it's done picking up, you MIIIGHT
+      notice if you're picking up an especially large amount of things but probably
+      not?
+  - bugfix: Attempting to use the right click menu to input some command (like point)
+      at an entity that you are hallucinating won't spit out a weird broken command
+      in your command bar.
+  - admin: Several verbs no longer show a list of every X in the game world when you
+      enter them via command line or verb panel. They will instead limit themselves
+      to every X in view of your character.
+  - rscadd: Being unconscious conceals the identity of nearby humans/silicons
+  - refactor: Refactored how mob's health is tracked, ie being in crit, unconscious,
+      or dead. There is a high chance I missed some niche interactions and suddenly,
+      you can wavedash while asleep, or backflip while in crit, so please report them
+      as you find them.
+  - refactor: Inverse Penthrite now goes through the proper channels for handing revival,
+      report anything weird with it
+  - rscdel: Sign language mobs are no longer immune to forced whisper effects (such
+      as the soft spoken quirk).
+  PapaMichael:
+  - bugfix: The Ghost Menu's Extra View Distance field now remembers your current
+      extra view distance between openings
+  SmArtKar:
+  - code_imp: Optimized some hot atmos procs
+  - code_imp: Optimized object TGUI code
+  - code_imp: Optimized bodypart code
+  - code_imp: Further optimized crafting UI
+  - code_imp: Optimized damage and wound code
+  SmArtKar, Kapu1178:
+  - refactor: Datumized do_after()s
+  antropod:
+  - bugfix: Fix scrubber not updating turfs
+  timothymtorres:
+  - rscadd: Add Tombstone Escape Shuttle that can be unlocked via a biohazard event.
+      (Blob, zombies, or a severe enough disease)
+  - map: Add Tombstone Escape Shuttle that can be unlocked via a biohazard event.
+      (Blob, zombies, or a severe enough disease)

@@ -18,7 +18,7 @@
 
 /// Proc that children should override with their conditions
 /datum/terror_handler/simple_source/proc/check_condition(seconds_per_tick, terror_buildup)
-	return !HAS_TRAIT(owner, TRAIT_FEARLESS) && !HAS_TRAIT(owner, TRAIT_MIND_TEMPORARILY_GONE) && owner.stat < UNCONSCIOUS
+	return !HAS_TRAIT(owner, TRAIT_FEARLESS) && !HAS_TRAIT(owner, TRAIT_MIND_TEMPORARILY_GONE) && !IS_UNCONSCIOUS(owner)
 
 /// Proc that's called when the effect is first applied, for moodlets and alike
 /datum/terror_handler/simple_source/proc/on_activation(terror_buildup)
