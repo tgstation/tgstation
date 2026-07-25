@@ -163,14 +163,17 @@
 /obj/item/bodypart/head/proc/get_eye_overlays(dropped)
 	. = list()
 
+	if(is_husked == HUSKED_BURN)
+		return .
+
 	var/obj/item/organ/eyes/eyes = locate() in src
 	if(QDELETED(eyes))
 		if(head_flags & HEAD_EYEHOLES)
 			. += get_eyeless_overlay(dropped)
-		return .
 
-	if(head_flags & HEAD_EYESPRITES)
-		. += eyes.generate_body_overlay(src)
+	else
+		if(head_flags & HEAD_EYESPRITES)
+			. += eyes.generate_body_overlay(src)
 
 	return .
 
