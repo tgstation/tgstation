@@ -714,6 +714,8 @@
   Dmeto:
   - qol: Some museum away mission hints have been tweeked.
   - bugfix: The museum away mission should suffer less decompressions now.
+  Kryson (Sprites), CabinetOnFire (Code):
+  - rscadd: Adds a new station trait where Pun Pun injects a massive amount of steroids
   Melbert:
   - spellcheck: Rewrote (almost, if not all) genetic mutation descriptions
   - rscadd: Adds six new mutations
