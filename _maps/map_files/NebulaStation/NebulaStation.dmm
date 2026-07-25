@@ -49177,7 +49177,6 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/wood/tile,
 /area/station/service/minibar)
 "hks" = (
