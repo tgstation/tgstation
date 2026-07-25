@@ -41,16 +41,12 @@
 	. = ..()
 	if(!ishuman(new_ethereal))
 		return
-	set_forced_color(new_ethereal)
 	var/obj/item/organ/heart/ethereal/ethereal_heart = new_ethereal.get_organ_slot(ORGAN_SLOT_HEART)
 	ethereal_heart.set_ethereal_color(new_ethereal.dna.features[FEATURE_MUTANT_COLOR])
 	// Trigger a refresh as lazy attached limbs do not cause those
 	var/datum/status_effect/grouped/bodypart_effect/ethereal_glow/glow_status = new_ethereal.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow)
 	if (!isnull(glow_status))
 		glow_status.refresh_light_color()
-
-/datum/species/ethereal/proc/set_forced_color(mob/living/carbon/human/new_ethereal)
-	return
 
 /datum/species/ethereal/randomize_features()
 	var/list/features = ..()
@@ -166,5 +162,9 @@
 		'sound/mobs/humanoids/ethereal/lustrous_scream_3.ogg',
 	)
 
-/datum/species/ethereal/lustrous/set_forced_color(mob/living/carbon/human/new_ethereal)
-	new_ethereal.dna.features[FEATURE_MUTANT_COLOR] = GLOB.color_list_lustrous[pick(GLOB.color_list_lustrous)] //Picks one of 5 lustrous-specific colors.
+
+
+/datum/species/ethereal/randomize_features()
+	var/list/features = ..()
+	features[FEATURE_MUTANT_COLOR] = GLOB.color_list_lustrous[pick(GLOB.color_list_lustrous)]
+	return features
