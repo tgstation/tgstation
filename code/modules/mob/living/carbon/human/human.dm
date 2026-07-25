@@ -410,8 +410,8 @@
 	return chest?.get_butt_sprite()
 
 /mob/living/carbon/human/get_footprint_sprite()
-	var/obj/item/bodypart/leg/L = get_bodypart(BODY_ZONE_R_LEG) || get_bodypart(BODY_ZONE_L_LEG)
-	return shoes?.footprint_sprite || L?.footprint_sprite
+	var/obj/item/bodypart/leg/leg = get_bodypart(BODY_ZONE_R_LEG) || get_bodypart(BODY_ZONE_L_LEG)
+	return astype(get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes)?.footprint_sprite || leg?.footprint_sprite
 
 #define CHECK_PERMIT(item) (item && item.item_flags & NEEDS_PERMIT)
 
@@ -1095,20 +1095,6 @@
 	if(gloves?.max_heat_protection_temperature >= BURNING_ITEM_MINIMUM_TEMPERATURE)
 		return TRUE
 	return ..()
-
-/mob/living/carbon/human/get_sight_and_cutoffs()
-	. = ..()
-	if(!istype(glasses))
-		return
-	. |= glasses.vision_flags
-	if(glasses.invis_override)
-		set_invis_see(glasses.invis_override)
-	else
-		set_invis_see(min(glasses.invis_view, see_invisible))
-	if(!isnull(glasses.lighting_cutoff))
-		lighting_cutoff = max(lighting_cutoff, glasses.lighting_cutoff)
-	if(length(glasses.color_cutoffs))
-		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, glasses.color_cutoffs)
 
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor
