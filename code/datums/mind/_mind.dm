@@ -69,7 +69,10 @@
 	/// If TRUE, the mob will always be considered "escaped" if they are alive and not exiled.
 	var/force_escaped = FALSE
 
-	var/list/learned_recipes //List of learned recipe TYPES.
+	/// List of crafting recipes learned, references to the singleton datums
+	VAR_FINAL/list/learned_crafting_recipes
+	/// List of cooking recipes learned, references to the singleton datums
+	VAR_FINAL/list/learned_cooking_recipes
 
 	///List of skills the user has received a reward for. Should not be used to keep track of currently known skills. Lazy list because it shouldnt be filled often
 	var/list/skills_rewarded

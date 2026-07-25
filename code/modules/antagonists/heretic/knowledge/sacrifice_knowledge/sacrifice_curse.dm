@@ -58,7 +58,7 @@
 
 /// Experience something you may not enjoy which may also significantly shorten your lifespan
 /datum/status_effect/heretic_curse/proc/experience_the_consequences()
-	if (!COOLDOWN_FINISHED(src, consequence_cooldown) || owner.stat != CONSCIOUS)
+	if (!COOLDOWN_FINISHED(src, consequence_cooldown) || IS_UNCONSCIOUS_OR_CRIT(owner))
 		return
 
 	var/mob/living/carbon/carbon_owner = owner

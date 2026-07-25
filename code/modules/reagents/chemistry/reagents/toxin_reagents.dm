@@ -993,7 +993,7 @@
 		if(3)
 			if(!affected_mob.undergoing_cardiac_arrest() && affected_mob.can_heartattack())
 				affected_mob.set_heartattack(TRUE)
-				if(affected_mob.stat == CONSCIOUS)
+				if(!IS_UNCONSCIOUS_OR_CRIT(affected_mob))
 					affected_mob.visible_message(span_userdanger("[affected_mob] clutches at [affected_mob.p_their()] chest as if [affected_mob.p_their()] heart stopped!"))
 			else
 				affected_mob.losebreath += 10

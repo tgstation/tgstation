@@ -103,22 +103,25 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/syringe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/reagent_containers/syringe/bluespace))
-		balloon_alert(user, "[tool.name] is too big!")
-		return ITEM_INTERACT_BLOCKING
-
 	if(!istype(tool, /obj/item/reagent_containers/syringe))
 		return NONE
+
+	return attempt_insert_syringe(user, tool)
+
+/obj/item/gun/syringe/proc/attempt_insert_syringe(mob/living/user, obj/item/reagent_containers/syringe/syringe)
+	if(istype(syringe, /obj/item/reagent_containers/syringe/bluespace))
+		balloon_alert(user, "[syringe.name] is too big!")
+		return ITEM_INTERACT_BLOCKING
 
 	if(syringes.len >= max_syringes)
 		balloon_alert(user, "it's full!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(!user.transferItemToLoc(tool, src))
+	if(!user.transferItemToLoc(syringe, src))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "[tool.name] loaded")
-	syringes += tool
+	balloon_alert(user, "[syringe.name] loaded")
+	syringes += syringe
 	recharge_newshot()
 	update_appearance()
 	playsound(src, load_sound, 40)

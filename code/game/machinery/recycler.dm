@@ -280,7 +280,7 @@
 	else
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 
-	if(iscarbon(living_mob) && living_mob.stat == CONSCIOUS)
+	if(iscarbon(living_mob) && !IS_UNCONSCIOUS_OR_CRIT(living_mob))
 		living_mob.say("ARRRRRRRRRRRGH!!!", forced= "recycler grinding")
 
 	if(!issilicon(living_mob))

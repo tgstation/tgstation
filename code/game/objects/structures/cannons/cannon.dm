@@ -31,7 +31,7 @@
 
 /obj/structure/cannon/proc/fire()
 	for(var/mob/shaken_mob in urange(10, src))
-		if(shaken_mob.stat == CONSCIOUS)
+		if(!IS_UNCONSCIOUS_OR_CRIT(shaken_mob))
 			shake_camera(shaken_mob, 3, 1)
 
 		playsound(src, fire_sound, 50, TRUE)

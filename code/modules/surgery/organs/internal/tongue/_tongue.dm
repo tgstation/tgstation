@@ -244,7 +244,7 @@
 		if(feedback)
 			owner.balloon_alert(owner, "you can't seem to statue-ize!")
 		return FALSE // permanently bricked
-	if(owner.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
 		if(feedback)
 			owner.balloon_alert(owner, "you're too weak!")
 		return FALSE
@@ -485,7 +485,7 @@
 
 /obj/item/organ/tongue/zombie/on_life(seconds_per_tick)
 	. = ..()
-	if(owner.stat == CONSCIOUS && SPT_PROB(2, seconds_per_tick))
+	if(!IS_UNCONSCIOUS_OR_CRIT(owner) && SPT_PROB(2, seconds_per_tick))
 		playsound(owner, pick(spooks), 50, TRUE, 10)
 
 /obj/item/organ/tongue/alien
