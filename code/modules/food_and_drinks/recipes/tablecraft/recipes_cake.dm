@@ -236,7 +236,7 @@
 	name = "Spaceman's Cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/food/grown/trumpet = 2,
+		/obj/item/food/grown/flower/trumpet = 2,
 		/datum/reagent/consumable/cream = 5,
 		/datum/reagent/consumable/berryjuice = 5
 	)

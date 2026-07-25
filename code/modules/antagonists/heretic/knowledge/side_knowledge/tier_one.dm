@@ -60,7 +60,7 @@
 		Whether it chose the shape for itself, or this is the humor of the sickened mind that conjured this vile implement into being is something best not pondered."
 	required_atoms = list(
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/food/grown/poppy = 1,
+		/obj/item/food/grown/flower/poppy = 1,
 	)
 	result_atoms = list(/obj/item/reagent_containers/cup/phylactery)
 	cost = 1

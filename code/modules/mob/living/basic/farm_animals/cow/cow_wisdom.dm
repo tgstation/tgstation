@@ -42,7 +42,7 @@
 
 ///Give intense wisdom to the attacker if they're being friendly about it
 /mob/living/basic/cow/wisdom/attack_hand(mob/living/carbon/user, list/modifiers)
-	if(!stat && !user.combat_mode)
+	if(!IS_UNCONSCIOUS_OR_CRIT(src) && !user.combat_mode)
 		to_chat(user, span_nicegreen("[src] whispers you some intense wisdoms and then disappears!"))
 		user.mind?.adjust_experience(granted_wisdom, granted_experience)
 		do_smoke(1, src, get_turf(src))

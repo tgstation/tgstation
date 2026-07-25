@@ -206,7 +206,7 @@
 /mob/living/basic/blood_worm/set_stat(new_stat)
 	. = ..()
 
-	if (host && stat != CONSCIOUS)
+	if (host && IS_UNCONSCIOUS_OR_CRIT(src))
 		leave_host()
 
 /mob/living/basic/blood_worm/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)

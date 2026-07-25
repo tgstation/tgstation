@@ -114,7 +114,7 @@
 	if(!is_operational)
 		return UI_CLOSE
 	// if you're knocked out, ie anesthetic... definitely a no-go
-	if(user.stat >= UNCONSCIOUS || HAS_TRAIT(user, TRAIT_KNOCKEDOUT))
+	if(IS_UNCONSCIOUS(user))
 		return UI_CLOSE
 	// the patient itself should be blocked from viewing the computer
 	if(user.body_position == LYING_DOWN)
@@ -170,19 +170,19 @@
 	data["patient"] = list()
 	var/mob/living/patient = table.patient
 
-	switch(patient.stat)
-		if(CONSCIOUS)
-			data["patient"]["stat"] = "Conscious"
-			data["patient"]["statstate"] = "good"
-		if(SOFT_CRIT)
-			data["patient"]["stat"] = "Critical Condition"
-			data["patient"]["statstate"] = "average"
-		if(UNCONSCIOUS, HARD_CRIT)
-			data["patient"]["stat"] = "Unconscious"
-			data["patient"]["statstate"] = "average"
-		if(DEAD)
-			data["patient"]["stat"] = "Dead"
-			data["patient"]["statstate"] = "bad"
+	if(patient.stat == DEAD)
+		data["patient"]["stat"] = "Dead"
+		data["patient"]["statstate"] = "bad"
+	else if (patient.stat == HARD_CRIT || patient.stat == SOFT_CRIT)
+		data["patient"]["stat"] = "Critical"
+		data["patient"]["statstate"] = patient.stat == HARD_CRIT ? "bad" : "average"
+	else if (IS_UNCONSCIOUS(patient))
+		data["patient"]["stat"] = "Unconscious"
+		data["patient"]["statstate"] = "average"
+	else
+		data["patient"]["stat"] = "Stable"
+		data["patient"]["statstate"] = "good"
+
 	data["patient"]["health"] = patient.health
 	data["patient"]["blood_type"] = patient.get_bloodtype()?.name || "UNKNOWN"
 	data["patient"]["maxHealth"] = patient.maxHealth
