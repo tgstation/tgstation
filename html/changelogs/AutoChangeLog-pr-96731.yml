@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "Adjusted the values of ores from the work camp to make a 1000 point sentence closer to a 10 minute brig timer"
-  - map: "Moved some lightbulbs around in the work camp so you can see the bars getting printed"

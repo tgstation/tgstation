@@ -83,6 +83,9 @@
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
 
+	if(severity >= DISEASE_SEVERITY_BIOHAZARD)
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_TOMBSTONE] = TRUE
+
 /// Updates the spread flags set, ensuring signals are updated as necessary
 /datum/disease/proc/update_spread_flags(new_flags)
 	if(spread_flags == new_flags)
@@ -125,7 +128,7 @@
 	var/recovery_prob = 0
 	var/cure_mod
 	var/bad_immune = HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) ? 2 : 1
-	var/is_sleeping = HAS_TRAIT_FROM_ONLY(affected_mob, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(/datum/status_effect/incapacitating/sleeping::id))
+	var/is_sleeping = !!affected_mob.IsSleeping()
 
 	if(required_organ)
 		if(!has_required_infectious_organ(affected_mob, required_organ))
@@ -155,7 +158,7 @@
 	if(SPT_PROB(stage_prob * slowdown * bad_immune, seconds_per_tick))
 		update_stage(min(stage + 1, max_stages))
 
-	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE && !HAS_TRAIT(affected_mob, TRAIT_NO_SELF_CURE))
+	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
 		switch(severity)
 			if(DISEASE_SEVERITY_POSITIVE)
 				if(slowdown < 1 || (!(HAS_TRAIT(affected_mob, TRAIT_NOHUNGER)) && (affected_mob.satiety < DISEASE_SATIETY_THRESHOLD || affected_mob.nutrition < NUTRITION_LEVEL_STARVING)))

@@ -3,6 +3,7 @@
 	desc = "Used with intelliCards containing nonfunctional AIs to restore them to working order."
 	req_access = list(ACCESS_CAPTAIN, ACCESS_ROBOTICS, ACCESS_COMMAND)
 	circuit = /obj/item/circuitboard/computer/aifixer
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/aifixer")
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"
 	light_color = LIGHT_COLOR_PINK
@@ -99,11 +100,11 @@
 	if(!occupier)
 		. += "ai-fixer-empty"
 		return
-	switch(occupier.stat)
-		if(CONSCIOUS)
-			. += "ai-fixer-full"
-		if(UNCONSCIOUS, HARD_CRIT)
-			. += "ai-fixer-404"
+
+	if(occupier.stat == HARD_CRIT || IS_UNCONSCIOUS(occupier))
+		. += "ai-fixer-404"
+	else if(!IS_UNCONSCIOUS_OR_CRIT(occupier))
+		. += "ai-fixer-full"
 
 /obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(!..())

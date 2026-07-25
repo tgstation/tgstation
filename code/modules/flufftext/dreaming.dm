@@ -46,7 +46,7 @@
  */
 
 /mob/living/carbon/proc/dream_sequence(list/dream_fragments, datum/dream/current_dream)
-	if(stat != UNCONSCIOUS || HAS_TRAIT(src, TRAIT_CRITICAL_CONDITION))
+	if(!IS_UNCONSCIOUS(src) || stat >= HARD_CRIT)
 		REMOVE_TRAIT(src, TRAIT_DREAMING, DREAMING_SOURCE)
 		current_dream.OnDreamEnd(src)
 		SEND_SIGNAL(src, COMSIG_END_DREAMING, current_dream)

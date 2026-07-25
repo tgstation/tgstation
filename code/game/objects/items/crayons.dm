@@ -609,7 +609,7 @@
 		return NONE
 
 	var/mob/living/carbon/human/pwned_human = interacting_with
-	if(!(pwned_human.stat == DEAD || HAS_TRAIT(pwned_human, TRAIT_FAKEDEATH)))
+	if(!IS_DEAD_OR_FAKING(pwned_human))
 		return NONE
 
 	interacting_with.balloon_alert(user, "drawing outline...")
@@ -770,6 +770,7 @@
 	name = "spray can"
 	icon_state = "spraycan"
 	worn_icon_state = "spraycan"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 
 	icon_capped = "spraycan_cap"
 	icon_uncapped = "spraycan"

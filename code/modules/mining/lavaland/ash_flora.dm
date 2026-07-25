@@ -241,22 +241,26 @@
 //SNACKS
 
 /obj/item/food/grown/ash_flora
-	name = "mushroom shavings"
-	desc = "Some shavings from a tall mushroom. With enough, might serve as a bowl."
+	name = "unidentified bits of a wierd plant"
+	desc = "What's this? An intruder, is what it is. Tell somebody about this."
 	icon = 'icons/obj/mining_zones/ash_flora.dmi'
 	icon_state = "mushroom_shavings"
 	abstract_type = /obj/item/food/grown/ash_flora
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
-	seed = /obj/item/seeds/lavaland/polypore
-	wine_power = 20
 	foodtypes = VEGETABLES
 
 /obj/item/food/grown/ash_flora/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-4, 4)
 	pixel_y = base_pixel_y + rand(-4, 4)
+
+/obj/item/food/grown/ash_flora/shavings
+	name = "mushroom shavings"
+	desc = "Some shavings from a tall mushroom. With enough, might serve as a bowl."
+	seed = /obj/item/seeds/lavaland/polypore
+	wine_power = 20
 
 /obj/item/food/grown/ash_flora/shavings/grind_results()
 	return list(/datum/reagent/toxin/mushroom_powder = 5)

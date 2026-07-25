@@ -1,0 +1,68 @@
+{
+	"dm_type": "/datum/bt_node/subtree/chief_find_targets",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_SIMPLE_CARRY_ITEM"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/find_deposit_position"
+			}
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list",
+			"vars": {
+				"target_key": "BB_CURRENT_TARGET",
+				"targeting_strategy": "BB_TARGETING_STRATEGY",
+				"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+			}
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets",
+			"vars": {
+				"target_key": "BB_CURRENT_TARGET",
+				"targeting_strategy": "BB_TARGETING_STRATEGY",
+				"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"invert": true,
+				"key": "BB_SIMPLE_CARRY_ITEM"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/find_ore",
+				"vars": {
+					"time_between_perform": "1 SECONDS",
+					"range": 1
+				}
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"invert": true,
+				"key": "BB_MATERIAL_STAND_TARGET"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+				"vars": {
+					"target_key": "BB_MATERIAL_STAND_TARGET",
+					"target_source": "/datum/target_source/oview_single_type/ore_stand",
+					"targeting_strategy": "/datum/targeting_strategy/anything"
+				}
+			}
+		}
+	]
+}

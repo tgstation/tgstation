@@ -63,7 +63,7 @@
 	return
 
 /mob/living/basic/mining/legion_brood/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
-	if (ishuman(target) && target.stat > SOFT_CRIT)
+	if (ishuman(target) && IS_UNCONSCIOUS(target))
 		infest(target)
 		return
 
@@ -112,7 +112,7 @@
 		return
 
 	// Inherit our creator's target and reinforcement requests
-	ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, creator.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+	ai_controller.set_blackboard_key(BB_CURRENT_TARGET, creator.ai_controller.blackboard[BB_CURRENT_TARGET])
 	ai_controller.set_blackboard_key(BB_MINING_MOB_REINFORCEMENTS_REQUESTS, creator.ai_controller.blackboard[BB_MINING_MOB_REINFORCEMENTS_REQUESTS])
 
 /// Reference handling

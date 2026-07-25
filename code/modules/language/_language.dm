@@ -110,19 +110,19 @@
 		most_common_cache.Cut()
 		last_sentence_cache.Cut()
 
-/// Checks whether we should display the language icon to the passed hearer.
-/datum/language/proc/display_icon(atom/movable/hearer)
-	var/understands = hearer.has_language(src.type)
-	if((flags & LANGUAGE_HIDE_ICON_IF_UNDERSTOOD) && understands)
-		return FALSE
-	if((flags & LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD) && !understands)
-		return FALSE
-	return TRUE
+/// Returns what icon to display when speaking this language
+/datum/language/proc/display_icon_type(atom/movable/hearer, list/message_mods)
+	if(hearer.has_language(type))
+		if(flags & LANGUAGE_HIDE_ICON_IF_UNDERSTOOD)
+			return DISPLAY_LANGUAGE_ICON_NONE
 
-/// Returns the icon to display in the chat window when speaking this language.
-/datum/language/proc/get_icon()
-	var/datum/asset/spritesheet_batched/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)
-	return sheet.icon_tag("language-[icon_state]")
+	else
+		if(hearer.has_partial_language(type) || LAZYACCESSASSOC(message_mods, LANGUAGE_MUTUAL_BONUS, type))
+			return DISPLAY_LANGUAGE_ICON_PARTIAL
+		if(flags & LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD)
+			return DISPLAY_LANGUAGE_ICON_NONE
+
+	return DISPLAY_LANGUAGE_ICON_FULL
 
 /// Simple helper for getting a default firstname lastname
 /datum/language/proc/default_name(gender = NEUTER)
@@ -259,12 +259,12 @@
 	var/list/translated_index = list()
 	for(var/word in splittext(input, " "))
 		var/translate_prob = mutual_languages?[type] || 0
-		var/base_word = strip_outer_punctuation(word)
+		var/base_word = strip_outer_punctuation(html_decode(word))
 		if(translate_prob > 0)
-			// the probability of managing to understand a word is based on how common it is (+10%, -15%)
+			// the probability of managing to understand a word is based on how common it is (up to +20%, though -5% for very uncommon words)
 			// 1000 words in the list, so words outside the list are just treated as "the 1250th most common word"
 			var/commonness = GLOB.most_common_words_frequency[LOWER_TEXT(base_word)] || 1250
-			translate_prob += (10 * (1 - (min(commonness, 1250) / 500)))
+			translate_prob += max(20 - (commonness / 1000) * 20, -5)
 			if(prob(translate_prob))
 				scrambled_words += word
 				translated_index += FALSE

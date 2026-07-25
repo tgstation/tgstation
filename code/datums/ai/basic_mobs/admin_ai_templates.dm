@@ -40,9 +40,8 @@
 
 	if (isnull(minimum_stat))
 		var/static/list/stat_types = list(
-			"Conscious" = CONSCIOUS,
+			"Stable" = STABLE,
 			"Soft Crit" = SOFT_CRIT,
-			"Unconscious" = UNCONSCIOUS,
 			"Hard Crit" = HARD_CRIT,
 			"Dead (will probably get stuck punching a corpse forever)" = DEAD,
 		)
@@ -350,14 +349,14 @@
 /// Coward
 /datum/admin_ai_template/fearful
 	name = "Runs Away"
-	minimum_stat = CONSCIOUS
+	minimum_stat = STABLE
 	make_hostile = FALSE
 	controller_type = /datum/ai_controller/basic_controller/simple/simple_fearful
 
 /// Doesn't like violence
 /datum/admin_ai_template/skittish
 	name = "Runs Away From Attackers"
-	minimum_stat = CONSCIOUS
+	minimum_stat = STABLE
 	make_hostile = FALSE
 	controller_type = /datum/ai_controller/basic_controller/simple/simple_skittish
 

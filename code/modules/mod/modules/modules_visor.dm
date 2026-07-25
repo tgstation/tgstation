@@ -28,6 +28,7 @@
 		access data such as patient files in a convenient readout. They say these also let you see behind you."
 	icon_state = "medhud_visor"
 	visor_traits = list(TRAIT_MEDICAL_HUD)
+	custom_materials = list(/datum/material/silver = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
 
 //Diagnostic Visor - Gives you a diagnostic HUD.
 /obj/item/mod/module/visor/diaghud
@@ -37,6 +38,7 @@
 		and integrity of such. They say these also let you see behind you."
 	icon_state = "diaghud_visor"
 	visor_traits = list(TRAIT_DIAGNOSTIC_HUD, TRAIT_BOT_PATH_HUD)
+	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
 
 //Security Visor - Gives you a security HUD.
 /obj/item/mod/module/visor/sechud
@@ -46,6 +48,7 @@
 		and generally know who to shoot. They say these also let you see behind you."
 	icon_state = "sechud_visor"
 	visor_traits = list(TRAIT_SECURITY_HUD)
+	custom_materials = list(/datum/material/titanium = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
 
 //Meson Visor - Gives you meson vision.
 /obj/item/mod/module/visor/meson
@@ -55,6 +58,7 @@
 		through walls, regardless of lighting conditions. They say these also let you see behind you."
 	icon_state = "meson_visor"
 	visor_traits = list(TRAIT_MESON_VISION, TRAIT_MADNESS_IMMUNE)
+	custom_materials = list(/datum/material/uranium = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
 
 //Thermal Visor - Gives you thermal vision.
 /obj/item/mod/module/visor/thermal

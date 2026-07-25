@@ -12,8 +12,6 @@
 	verb_ask = "spittles questioningly"
 	verb_exclaim = "splutters and gurgles"
 	verb_yell = "splutters and gurgles"
-	crusher_loot = /obj/item/crusher_trophy/bileworm_spewlet
-	crusher_drop_chance = 15
 	butcher_results = list(/obj/item/food/meat/slab/bugmeat = 4)
 	guaranteed_butcher_results = list(
 		/obj/effect/gibspawner/generic = 1,

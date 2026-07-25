@@ -162,7 +162,7 @@
 				target.take_overall_damage(40)
 
 		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "[absorbing_iteration]"))
-		if(!do_after(owner, 15 SECONDS, target, hidden = TRUE))
+		if(!do_after(owner, 15 SECONDS, target, cog_icon = null))
 			owner.balloon_alert(owner, "interrupted!")
 			qdel(absorbing_loop)
 			is_absorbing = FALSE

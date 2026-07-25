@@ -12,6 +12,7 @@
 	toxification_probability = 0
 
 	COOLDOWN_DECLARE(survival_cooldown)
+	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 5, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	///Cooldown for the activation of the organ
 	var/survival_cooldown_time = 5 MINUTES
 	///The lightning effect on our mob when the implant is active
@@ -48,7 +49,7 @@
 	add_lightning_overlay(30 SECONDS)
 	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
 	organ_owner.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS|EMP_NO_EXAMINE)
-	RegisterSignal(organ_owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(activate_survival))
+	RegisterSignal(organ_owner, COMSIG_MOB_STATCHANGE, PROC_REF(activate_survival_comsig))
 	RegisterSignal(organ_owner, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 
 /obj/item/organ/heart/cybernetic/anomalock/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
@@ -56,7 +57,7 @@
 	if(!core)
 		return
 	clear_lightning_overlay(organ_owner)
-	UnregisterSignal(organ_owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION))
+	UnregisterSignal(organ_owner, COMSIG_MOB_STATCHANGE)
 	UnregisterSignal(organ_owner, COMSIG_ATOM_EMP_ACT)
 	organ_owner.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS|EMP_NO_EXAMINE)
 	tesla_zap(source = organ_owner, zap_range = 20, power = 2.5e5, cutoff = 1e3)
@@ -110,8 +111,6 @@
 	if(!core)
 		return
 
-	owner.adjust_blood_volume(5 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
-
 	if(owner.health <= owner.crit_threshold)
 		activate_survival(owner)
 
@@ -129,7 +128,12 @@
 	var/obj/item/stock_parts/power_store/cell = pick(batteries)
 	cell.give(cell.max_charge() * 0.1)
 
-///Does a few things to try to help you live whatever you may be going through. Returns TRUE if it activated successfully.
+/obj/item/organ/heart/cybernetic/anomalock/proc/activate_survival_comsig(mob/living/carbon/organ_owner, new_stat, old_stat)
+	SIGNAL_HANDLER
+	if(new_stat == SOFT_CRIT || new_stat == HARD_CRIT)
+		activate_survival(organ_owner)
+
+/// Does a few things to try to help you live whatever you may be going through. Returns TRUE if it activated successfully.
 /obj/item/organ/heart/cybernetic/anomalock/proc/activate_survival(mob/living/carbon/organ_owner)
 	if(!COOLDOWN_FINISHED(src, survival_cooldown))
 		return FALSE
@@ -157,6 +161,7 @@
 	balloon_alert(user, "core installed")
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	add_organ_trait(TRAIT_SHOCKIMMUNE)
+	blood_regeneration_multiplier = 21
 	update_icon_state()
 	return ITEM_INTERACT_SUCCESS
 
@@ -188,6 +193,7 @@
 	. = ..()
 	core = new /obj/item/assembly/signaler/anomaly/flux(src)
 	add_organ_trait(TRAIT_SHOCKIMMUNE)
+	blood_regeneration_multiplier = 21
 	update_icon_state()
 
 /datum/status_effect/voltaic_overdrive
@@ -213,7 +219,6 @@
 	. = ..()
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_organ_lost))
 	owner.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
-	REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
 	owner.reagents.add_reagent(/datum/reagent/medicine/coagulant, 5)
 	owner.add_filter("emp_shield", 2, outline_filter(1, "#639BFF"))
 	to_chat(owner, span_revendanger("You feel a burst of energy! It's do or die!"))

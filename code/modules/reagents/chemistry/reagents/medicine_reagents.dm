@@ -157,7 +157,7 @@
 	if(affected_mob.bodytemperature >= T0C)
 		return
 	var/power = -0.00003 * (affected_mob.bodytemperature ** 2) + 3
-	if(HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT)) //Significantly more effective when unconscious
+	if(IS_UNCONSCIOUS(affected_mob)) //Significantly more effective when unconscious
 		power *= 2
 	var/need_mob_update
 	need_mob_update = affected_mob.adjust_oxy_loss(-1.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
@@ -1999,14 +1999,3 @@
 	if(affected_mob.losebreath >= 1)
 		affected_mob.losebreath -= 1 * metabolization_ratio * seconds_per_tick
 		return UPDATE_MOB_HEALTH
-
-/datum/reagent/medicine/immunosilence
-	name = "ImmunoSilence"
-	description = "Prevents viruses from being naturally cured."
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	metabolized_traits = list(TRAIT_NO_SELF_CURE)
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	ph = 5.5
-	color = "#C8A5DC"
-	taste_description = "plastic"
-	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS

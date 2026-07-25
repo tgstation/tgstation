@@ -1,4 +1,0 @@
-author: "CabinetOnFire"
-delete-after: True
-changes:
-  - bugfix: "C4 no longer renders below floors when placed on floors"

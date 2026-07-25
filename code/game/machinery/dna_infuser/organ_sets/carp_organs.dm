@@ -91,7 +91,7 @@
 
 /obj/item/organ/tongue/carp/on_life(seconds_per_tick)
 	. = ..()
-	if(owner.stat != CONSCIOUS || !prob(0.1))
+	if(IS_UNCONSCIOUS_OR_CRIT(owner) || !prob(0.1))
 		return
 	owner.emote("cough")
 	var/turf/tooth_fairy = get_turf(owner)
@@ -120,6 +120,7 @@
 	greyscale_colors = CARP_COLORS
 	can_smoothen_out = FALSE
 	shade_color = "blue"
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_FERAL_BITER)
 
 	///Timer counting down. When finished, the owner gets a bad moodlet.
 	var/cooldown_timer

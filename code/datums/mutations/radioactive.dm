@@ -1,13 +1,13 @@
 /datum/mutation/radioactive
 	name = "Radioactivity"
-	desc = "A volatile mutation that causes the host to sent out deadly beta radiation. This affects both the hosts and their surroundings."
+	desc = "The subject emits deadly beta radiation, affecting both the host and their surroundings."
 	quality = NEGATIVE
 	text_gain_indication = span_warning("You can feel it in your bones!")
 	instability = NEGATIVE_STABILITY_MAJOR
 	difficulty = 8
 	power_coeff = 1
 	mutation_icon_state = "radiation"
-	offset_location = FULL_BODY
+	offset_location = ENTIRE_BODY
 	/// Weakref to our radiation emitter component
 	var/datum/weakref/radioactivity_source_ref
 

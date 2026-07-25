@@ -195,6 +195,15 @@
 	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)
 
+#ifndef DISABLE_DREAMLUAU
+	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
+	if(!(datum_flags & DF_STATIC_OBJECT))
+		DREAMLUAU_CLEAR_REF_USERDATA(contents)
+		DREAMLUAU_CLEAR_REF_USERDATA(filters)
+		DREAMLUAU_CLEAR_REF_USERDATA(overlays)
+		DREAMLUAU_CLEAR_REF_USERDATA(underlays)
+#endif
+
 	return ..()
 
 /atom/proc/handle_ricochet(obj/projectile/ricocheting_projectile)
@@ -225,7 +234,12 @@
 	if(!mover.generic_canpass)
 		return mover.CanPassThrough(src, REVERSE_DIR(border_dir), .)
 
-/// Returns true or false to allow the mover to move through src
+/**
+ * Returns true or false to allow the mover to move through src
+ * @params
+ * 	mover: The mob trying to move into this atom.
+ * 	border_dir: Typically the direction that mover has in relation to src.
+ */
 /atom/proc/CanAllowThrough(atom/movable/mover, border_dir)
 	SHOULD_CALL_PARENT(TRUE)
 	//SHOULD_BE_PURE(TRUE)

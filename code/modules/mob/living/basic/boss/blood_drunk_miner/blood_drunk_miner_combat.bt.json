@@ -1,0 +1,132 @@
+{
+	"dm_type": "/datum/bt_node/subtree/blood_drunk_miner_combat",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"observer_abort": "BT_ABORT_BOTH",
+		"key": "BB_CURRENT_TARGET"
+	},
+	"child": {
+		"type": "parallel",
+		"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+		"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+		"repeat_secondary": true,
+		"finish_on_primary": true,
+		"children": [
+			{
+				"type": "subplan",
+				"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+				"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+				"children": [
+					{
+						"type": "selector",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
+								"vars": {
+									"target_key": "BB_CURRENT_TARGET"
+								}
+							},
+							{
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/mob_stat_at_least",
+								"vars": {
+									"key": "BB_CURRENT_TARGET"
+								},
+								"child": {
+									"type": "sequence",
+									"children": [
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+											"vars": {
+												"ability_key": "BB_BDM_KINETIC_ACCELERATOR_ABILITY",
+												"target_key": "BB_CURRENT_TARGET",
+												"maximum_distance": 3
+											}
+										},
+										{
+											"type": "selector",
+											"children": [
+												{
+													"type": "leaf",
+													"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+													"vars": {
+														"ability_key": "BB_BDM_TRANSFORM_WEAPON_ABILITY",
+														"target_key": "BB_CURRENT_TARGET"
+													}
+												},
+												{
+													"type": "leaf",
+													"behavior": "/datum/bt_node/ai_behavior/succeed"
+												}
+											]
+										}
+									]
+								}
+							},
+							{
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/is_at_distance",
+								"vars": {
+									"invert": false,
+									"target_key": "BB_CURRENT_TARGET",
+									"min_distance": 3
+								},
+								"child": {
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+									"vars": {
+										"ability_key": "BB_BDM_DASH_ATTACK_ABILITY",
+										"target_key": "BB_CURRENT_TARGET"
+									}
+								}
+							},
+							{
+								"type": "sequence",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"targeting_strategy": "BB_TARGETING_STRATEGY",
+											"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+										}
+									},
+									{
+										"type": "selector",
+										"children": [
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+												"vars": {
+													"ability_key": "BB_BDM_TRANSFORM_WEAPON_ABILITY",
+													"target_key": "BB_CURRENT_TARGET"
+												}
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/succeed"
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+				"vars": {
+					"target_key": "BB_CURRENT_TARGET",
+					"required_dist": 1,
+					"finish_on_arrival": false
+				}
+			}
+		]
+	}
+}

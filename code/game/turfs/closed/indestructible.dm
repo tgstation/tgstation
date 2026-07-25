@@ -5,6 +5,8 @@
 	explosive_resistance = 50
 	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 	turf_flags = IS_SOLID | NO_RUST
+	baseturfs = /turf/open/indestructible/plating
+
 
 /turf/closed/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)
 	return

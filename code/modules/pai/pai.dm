@@ -1,5 +1,4 @@
 /mob/living/silicon/pai
-	can_be_held = TRUE
 	can_buckle_to = FALSE
 	density = FALSE
 	desc = "A generic pAI hard-light holographics emitter."
@@ -203,6 +202,7 @@
 /mob/living/silicon/pai/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/holographic_nature)
+	AddElement(/datum/element/can_be_held)
 	if(istype(loc, /obj/item/modular_computer))
 		give_messenger_ability()
 	START_PROCESSING(SSfastprocess, src)
@@ -272,15 +272,6 @@
 	icon_state = resting ? "[chassis]_rest" : "[chassis]"
 	held_state = "[chassis]"
 	return ..()
-
-/mob/living/silicon/pai/set_stat(new_stat)
-	. = ..()
-	update_stat()
-
-/mob/living/silicon/pai/on_knockedout_trait_loss(datum/source)
-	. = ..()
-	set_stat(CONSCIOUS)
-	update_stat()
 
 /**
  * Resolves the weakref of the pai's master.
