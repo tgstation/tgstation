@@ -475,9 +475,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 /mob/living/carbon/proc/create_dna(datum/species/species)
 	dna = new /datum/dna(src, species)
-	if(!dna.species)
-		var/rando_race = pick(get_selectable_species())
-		dna.species = new rando_race()
 
 //proc used to update the mob's appearance after its dna UI has been changed
 //2025: Im unsure if dna is meant to be living, carbon, or human level.. there's contradicting stuff and bugfixes going back 8 years
