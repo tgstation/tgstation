@@ -38,7 +38,7 @@
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 7.5,
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 7.5,
 		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 10,
-		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 5
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 5,
 	)
 	build_path = /obj/item/ai_module/upgrade/surveillance
 	category = list(
