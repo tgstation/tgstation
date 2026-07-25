@@ -121,7 +121,7 @@
 	return TRUE
 
 /datum/martial_art/cqc/proc/Kick(mob/living/attacker, mob/living/defender)
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(defender))
+	if(IS_UNCONSCIOUS_OR_CRIT(defender))
 		return FALSE
 
 	attacker.do_attack_animation(defender)
@@ -179,7 +179,7 @@
 /datum/martial_art/cqc/proc/Restrain(mob/living/attacker, mob/living/defender)
 	if(restraining_mob?.resolve())
 		return FALSE
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(defender))
+	if(IS_UNCONSCIOUS_OR_CRIT(defender))
 		return FALSE
 
 	log_combat(attacker, defender, "restrained (CQC)")
@@ -198,7 +198,7 @@
 	return TRUE
 
 /datum/martial_art/cqc/proc/Consecutive(mob/living/attacker, mob/living/defender)
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(defender))
+	if(IS_UNCONSCIOUS_OR_CRIT(defender))
 		return FALSE
 
 	attacker.do_attack_animation(defender)
@@ -339,7 +339,7 @@
 		return MARTIAL_ATTACK_SUCCESS
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_DISARM)
-	if(prob(65) && (!IS_UNCONSCIOUS_CRIT_OR_DEAD(defender) || !defender.IsParalyzed() || !restraining_mob?.resolve()))
+	if(prob(65) && (!IS_UNCONSCIOUS_OR_CRIT(defender) || !defender.IsParalyzed() || !restraining_mob?.resolve()))
 		var/obj/item/disarmed_item = defender.get_active_held_item()
 		if(disarmed_item && defender.temporarilyRemoveItemFromInventory(disarmed_item))
 			defender.dropItemToGround(disarmed_item)

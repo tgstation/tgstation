@@ -168,7 +168,7 @@
 	if(.)
 		return
 
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(usr) || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
+	if(IS_UNCONSCIOUS_OR_CRIT(usr) || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 
 	switch(action)

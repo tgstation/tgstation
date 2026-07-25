@@ -69,7 +69,7 @@ GAME_VERB_HIDDEN(/mob/living, suicide, "suicide")
 		to_chat(src, span_warning("You can't commit suicide here! You can ghost if you'd like."))
 		return FALSE
 
-	if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(src))
+	if(!IS_UNCONSCIOUS_OR_CRIT(src))
 		return TRUE
 
 	if(stat == DEAD)

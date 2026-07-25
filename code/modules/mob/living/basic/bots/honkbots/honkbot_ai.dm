@@ -101,7 +101,7 @@
 	if(!.)
 		return FALSE
 	var/mob/living/target_mob = target
-	if(!isliving(target_mob) || IS_UNCONSCIOUS_CRIT_OR_DEAD(target_mob))
+	if(!isliving(target_mob) || IS_UNCONSCIOUS_OR_CRIT(target_mob))
 		return FALSE
 	if(HAS_TRAIT(target_mob, TRAIT_PERCEIVED_AS_CLOWN))
 		return TRUE

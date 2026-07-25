@@ -39,7 +39,7 @@
 		return
 
 	var/mob/living/owner = bci.owner
-	if(!owner || !istype(owner) || !owner.client || IS_UNCONSCIOUS_CRIT_OR_DEAD(owner))
+	if(!owner || !istype(owner) || !owner.client || IS_UNCONSCIOUS_OR_CRIT(owner))
 		return
 
 	if(TIMER_COOLDOWN_RUNNING(parent.shell, COOLDOWN_CIRCUIT_TARGET_INTERCEPT))

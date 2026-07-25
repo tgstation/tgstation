@@ -38,7 +38,7 @@
 	var/target_Theyre = target.p_Theyre()
 	var/target_They_have = "[target.p_They()] [target.p_have()]"
 
-	if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(target))
+	if(!IS_UNCONSCIOUS_OR_CRIT(target))
 		to_chat(src, span_revennotice("[target_Their] soul is too strong to harvest."))
 		if(prob(10))
 			to_chat(target, span_revennotice("You feel as if you are being watched."))
@@ -86,7 +86,7 @@
 		to_chat(src, span_revenwarning("You are not close enough to siphon [target ? "[target]'s" : "[target_their]"] soul. The link has been broken."))
 		return FALSE
 
-	if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(target))
+	if(!IS_UNCONSCIOUS_OR_CRIT(target))
 		to_chat(src, span_revenwarning("[target_Theyre] now powerful enough to fight off your draining!"))
 		to_chat(target, span_bolddanger("You feel something tugging across your body before subsiding.")) //hey, wait a minute...
 		return FALSE

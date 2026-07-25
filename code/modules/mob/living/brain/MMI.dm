@@ -265,7 +265,7 @@
 
 GAME_VERB_SRC_DESC(/obj/item/mmi, Toggle_Listening, usr.loc, "Toggle Listening", "Toggle listening channel on or off.", "MMI")
 
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(brainmob))
+	if(IS_UNCONSCIOUS_OR_CRIT(brainmob))
 		to_chat(brainmob, span_warning("Can't do that while incapacitated or dead!"))
 	if(!radio.is_on())
 		to_chat(brainmob, span_warning("Your radio is disabled!"))

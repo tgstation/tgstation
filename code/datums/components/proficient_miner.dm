@@ -41,7 +41,7 @@
 	var/mob/living/user = null
 	if(isliving(parent))
 		user = parent
-		if(IS_UNCONSCIOUS_CRIT_OR_DEAD(user))
+		if(IS_UNCONSCIOUS_OR_CRIT(user))
 			return
 
 	var/turf/closed/mineral/mineral_wall = target

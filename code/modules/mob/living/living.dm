@@ -1346,7 +1346,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 	if(!istype(target))
 		CRASH("Missing target arg for can_perform_action")
 
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(src))
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		to_chat(src, span_warning("You are not conscious enough for this action!"))
 		return FALSE
 

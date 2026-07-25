@@ -131,7 +131,7 @@
 		return FALSE
 	if(!is_drainable()) // Can is not open
 		return FALSE
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(hungry_pet)) // Parrot deceased
+	if(IS_UNCONSCIOUS_OR_CRIT(hungry_pet)) // Parrot deceased
 		return FALSE
 	if(hungry_pet.mob_biotypes & (MOB_BEAST|MOB_REPTILE|MOB_BUG))
 		return TRUE

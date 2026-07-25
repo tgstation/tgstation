@@ -335,7 +335,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/drop/Click()
-	if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(usr))
+	if(!IS_UNCONSCIOUS_OR_CRIT(usr))
 		usr.dropItemToGround(usr.get_active_held_item())
 
 /atom/movable/screen/combattoggle

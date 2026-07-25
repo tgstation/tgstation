@@ -102,7 +102,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 	if(changeling.true_absorbs < req_absorbs)
 		user.balloon_alert(user, "needs [req_absorbs] absorption\s!")
 		return FALSE
-	if(req_stat < IS_UNCONSCIOUS_CRIT_OR_DEAD(user) || (req_stat == STABLE && IS_UNCONSCIOUS(user)))
+	if(req_stat < IS_UNCONSCIOUS_OR_CRIT(user) || (req_stat == STABLE && IS_UNCONSCIOUS(user)))
 		user.balloon_alert(user, "incapacitated!")
 		return FALSE
 	if(HAS_TRAIT(user, TRAIT_DEATHCOMA) && !ignores_fakedeath)

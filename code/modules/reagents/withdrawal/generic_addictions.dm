@@ -254,7 +254,7 @@
 	if(SPT_PROB(65, seconds_per_tick))
 		return
 
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(affected_carbon))
+	if(IS_UNCONSCIOUS_OR_CRIT(affected_carbon))
 		return
 
 	var/obj/item/organ/organ = pick(affected_carbon.organs)

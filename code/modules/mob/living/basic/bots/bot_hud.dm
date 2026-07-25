@@ -6,7 +6,7 @@
 		set_hud_image_state(DIAG_STAT_HUD, "hudstat")
 		return
 
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(src))
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		set_hud_image_state(DIAG_STAT_HUD, "hudoffline")
 		return
 

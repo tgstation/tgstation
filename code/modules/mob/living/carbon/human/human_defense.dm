@@ -380,7 +380,7 @@
 		//If they can't, they're missing their heart and this would runtime
 		if(undergoing_cardiac_arrest() && can_heartattack() && (shock_damage * siemens_coeff >= 1) && prob(25))
 			var/obj/item/organ/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
-			if(heart.Restart() && !IS_UNCONSCIOUS_CRIT_OR_DEAD(src))
+			if(heart.Restart() && !IS_UNCONSCIOUS_OR_CRIT(src))
 				to_chat(src, span_notice("You feel your heart beating again!"))
 	if (!(flags & SHOCK_NO_HUMAN_ANIM))
 		electrocution_animation(4 SECONDS)

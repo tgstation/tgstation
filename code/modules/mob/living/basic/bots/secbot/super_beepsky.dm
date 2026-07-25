@@ -45,7 +45,7 @@
 /mob/living/basic/bot/secbot/grievous/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
 	SIGNAL_HANDLER
 
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(src))
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		return NONE
 
 	if(!sword_active || !prob(block_chance))

@@ -81,7 +81,7 @@
 	COOLDOWN_START(src, alert_cooldown, time_between_alerts)
 
 	for(var/mob/living/alerted_mob as anything in alerted)
-		if(IS_UNCONSCIOUS_CRIT_OR_DEAD(alerted_mob) || alerted_mob.is_blind())
+		if(IS_UNCONSCIOUS_OR_CRIT(alerted_mob) || alerted_mob.is_blind())
 			continue
 		if(!INCAPACITATED_IGNORING(alerted_mob, INCAPABLE_RESTRAINTS))
 			alerted_mob.face_atom(src)

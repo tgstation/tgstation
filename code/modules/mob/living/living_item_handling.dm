@@ -1,6 +1,6 @@
 // Throwing stuff
 /mob/living/proc/toggle_throw_mode()
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(src))
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		return
 	if(!HAS_TRAIT(src, TRAIT_CAN_THROW_ITEMS))
 		return

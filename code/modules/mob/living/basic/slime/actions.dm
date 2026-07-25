@@ -39,7 +39,7 @@
 
 ///Turns a baby slime into an adult slime
 /datum/action/innate/slime/evolve/Activate()
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(owner))
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
 		if(owner.stat == DEAD)
 			owner.balloon_alert(owner, "dead!")
 		else if(IS_UNCONSCIOUS(owner))
@@ -83,7 +83,7 @@
 ///Splits the slime into multiple children if possible
 /mob/living/basic/slime/proc/reproduce()
 
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(src))
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		if(stat == DEAD)
 			balloon_alert(src, "dead!")
 		else if(IS_UNCONSCIOUS(src))

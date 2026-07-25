@@ -249,7 +249,7 @@ GAME_VERB_DESC(/mob/living/silicon/ai, pick_status_display, "Set AI Status Displ
 
 /mob/living/silicon/ai/get_status_tab_items()
 	. = ..()
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(src))
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		. += "Systems nonfunctional"
 		return
 	. += "System integrity: [(health + 100) * 0.5]%"
@@ -261,7 +261,7 @@ GAME_VERB_DESC(/mob/living/silicon/ai, pick_status_display, "Set AI Status Displ
 		var/robot_status = "Nominal"
 		if(connected_robot.shell)
 			robot_status = "AI SHELL"
-		else if(IS_UNCONSCIOUS_CRIT_OR_DEAD(connected_robot) || !connected_robot.client)
+		else if(IS_UNCONSCIOUS_OR_CRIT(connected_robot) || !connected_robot.client)
 			robot_status = "OFFLINE"
 		else if(!connected_robot.cell || connected_robot.cell.charge <= 0)
 			robot_status = "DEPOWERED"

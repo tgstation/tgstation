@@ -175,7 +175,7 @@
 		to_chat(queen, span_noticealien("You cannot promote a child right now!"))
 		return
 
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(to_promote) || !to_promote.mind || !to_promote.key)
+	if(IS_UNCONSCIOUS_OR_CRIT(to_promote) || !to_promote.mind || !to_promote.key)
 		return
 
 	queen.adjustPlasma(-promotion.promotion_plasma_cost)

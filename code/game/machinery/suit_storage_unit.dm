@@ -585,7 +585,7 @@
 		span_notice("You start kicking against the doors... (this will take about [DisplayTimeText(breakout_time)].)"), \
 		span_hear("You hear a thump from [src]."))
 	if(do_after(user,(breakout_time), target = src))
-		if(!user || IS_UNCONSCIOUS_CRIT_OR_DEAD(user) || user.loc != src )
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src )
 			return
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
 			span_notice("You successfully break out of [src]!"))
@@ -602,7 +602,7 @@
 		dump_inventory_contents()
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
-	if(!state_open && occupant && (user in src) && !IS_UNCONSCIOUS_CRIT_OR_DEAD(user)) // Check they're still here.
+	if(!state_open && occupant && (user in src) && !IS_UNCONSCIOUS_OR_CRIT(user)) // Check they're still here.
 		visible_message(span_notice("You see [user] burst out of [src]!"), \
 			span_notice("You escape the cramped confines of [src]!"))
 		open_machine()

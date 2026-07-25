@@ -71,7 +71,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 	return ..()
 
 /mob/living/carbon/human/species/monkey/punpun/Life(seconds_per_tick = SSMOBS_DT)
-	if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(src) && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(!IS_UNCONSCIOUS_OR_CRIT(src) && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE, FALSE)
 		memory_saved = TRUE
 

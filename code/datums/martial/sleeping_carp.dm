@@ -437,7 +437,7 @@
 	if(!isliving(target))
 		return ..()
 	var/mob/living/carbon/C = target
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(C))
+	if(IS_UNCONSCIOUS_OR_CRIT(C))
 		to_chat(user, span_warning("It would be dishonorable to attack a foe while they cannot retaliate."))
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
@@ -458,7 +458,7 @@
 			H.Paralyze(8 SECONDS)
 		if(H.staminaloss && !H.IsSleeping())
 			var/total_health = (H.health - H.staminaloss)
-			if(total_health <= HEALTH_THRESHOLD_CRIT && !IS_UNCONSCIOUS_CRIT_OR_DEAD(H))
+			if(total_health <= HEALTH_THRESHOLD_CRIT && !IS_UNCONSCIOUS_OR_CRIT(H))
 				H.visible_message(span_warning("[user] delivers a heavy hit to [H]'s head, knocking [H.p_them()] out cold!"), \
 								span_userdanger("You're knocked unconscious by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 				to_chat(user, span_danger("You deliver a heavy hit to [H]'s head, knocking [H.p_them()] out cold!"))

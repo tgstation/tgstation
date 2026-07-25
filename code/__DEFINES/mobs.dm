@@ -1118,7 +1118,7 @@ GLOBAL_LIST_INIT(regal_rat_minion_commands, list(
 /// Checks if the mob is unconscious (or in other words, has [TRAIT_KNOCKEDOUT]) - note dead mobs are considered unconscious
 #define IS_UNCONSCIOUS(mob) (HAS_TRAIT(mob, TRAIT_KNOCKEDOUT))
 /// Checks if the mob is in soft crit, hard crit, dead, or is otherwise unconscious (which hard crit and death apply anyways)
-#define IS_UNCONSCIOUS_CRIT_OR_DEAD(mob) (IS_UNCONSCIOUS(mob) || mob.stat >= SOFT_CRIT)
+#define IS_UNCONSCIOUS_OR_CRIT(mob) (IS_UNCONSCIOUS(mob) || mob.stat >= SOFT_CRIT)
 /// Checks if the mob is unconscious but not dead
 #define IS_UNCONSCIOUS_AND_ALIVE(mob) (IS_UNCONSCIOUS(mob) && mob.stat != DEAD)
 /// Checks if the mob is dead or faking death (via [TRAIT_FAKEDEATH])

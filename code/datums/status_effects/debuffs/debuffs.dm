@@ -884,7 +884,7 @@
 /datum/status_effect/fake_virus/on_apply()
 	if(HAS_TRAIT(owner, TRAIT_VIRUSIMMUNE))
 		return FALSE
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(owner))
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
 		return FALSE
 	return TRUE
 
@@ -989,7 +989,7 @@
 /datum/status_effect/ants/tick(seconds_between_ticks)
 	var/mob/living/carbon/human/victim = owner
 	victim.apply_damage(max(0.1, round((ants_remaining * damage_per_ant), 0.1)) * seconds_between_ticks, BRUTE, spread_damage = TRUE) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
-	if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(victim)) //Makes sure people don't scratch at themselves while they're in a critical condition
+	if(!IS_UNCONSCIOUS_OR_CRIT(victim)) //Makes sure people don't scratch at themselves while they're in a critical condition
 		if(prob(15))
 			switch(rand(1,2))
 				if(1)

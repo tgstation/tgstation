@@ -103,7 +103,7 @@
 
 	if(occupier.stat == HARD_CRIT || IS_UNCONSCIOUS(occupier))
 		. += "ai-fixer-404"
-	else if(!IS_UNCONSCIOUS_CRIT_OR_DEAD(occupier))
+	else if(!IS_UNCONSCIOUS_OR_CRIT(occupier))
 		. += "ai-fixer-full"
 
 /obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)

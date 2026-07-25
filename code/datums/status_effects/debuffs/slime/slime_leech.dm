@@ -44,7 +44,7 @@
 	if(QDELETED(our_slime))
 		qdel(src)
 		return
-	if(IS_UNCONSCIOUS_CRIT_OR_DEAD(our_slime) || !owner)
+	if(IS_UNCONSCIOUS_OR_CRIT(our_slime) || !owner)
 		our_slime.stop_feeding(silent = TRUE)
 		return
 
