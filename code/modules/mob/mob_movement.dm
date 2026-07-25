@@ -4,7 +4,7 @@
  * This is a hidden verb, likely for binding with winset for hotkeys
  */
 GAME_VERB_HIDDEN(/client, drop_item, "drop item")
-	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
+	if(!iscyborg(mob) && !IS_UNCONSCIOUS_OR_CRIT(mob))
 		mob.dropItemToGround(mob.get_active_held_item())
 	return
 /**
@@ -160,7 +160,7 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 		COOLDOWN_START(src, move_delay, 1 SECONDS)
 		to_chat(src, span_warning("You're restrained! You can't move!"))
 		return TRUE
-	return mob.resist_grab(TRUE)
+	return !mob.resist_grab(TRUE)
 
 
 /**

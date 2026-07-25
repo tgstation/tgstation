@@ -67,7 +67,7 @@
 
 /// We got hit by something hot, go into heat mode
 /mob/living/basic/mining/basilisk/proc/heat_up()
-	if (stat != CONSCIOUS || has_status_effect(/datum/status_effect/basilisk_overheat))
+	if (IS_UNCONSCIOUS_OR_CRIT(src) || has_status_effect(/datum/status_effect/basilisk_overheat))
 		return
 	apply_status_effect(/datum/status_effect/basilisk_overheat)
 

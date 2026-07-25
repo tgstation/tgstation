@@ -79,7 +79,7 @@ The console is located at computer/gulag_teleporter.dm
 
 
 /obj/machinery/gulag_teleporter/relaymove(mob/living/user, direction)
-	if(user.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(user))
 		return
 	if(locked)
 		if(message_cooldown <= world.time)
@@ -105,7 +105,7 @@ The console is located at computer/gulag_teleporter.dm
 	)
 
 	if(do_after(user, resist_time, target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src || state_open || !locked)
 			return
 		locked = FALSE
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \

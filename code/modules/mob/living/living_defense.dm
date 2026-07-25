@@ -887,9 +887,10 @@
 		return FALSE
 	if(has_status_effect(/datum/status_effect/hallucination) || has_status_effect(/datum/status_effect/drugginess))
 		return TRUE
-	if(IsSleeping() || IsUnconscious())
+	if(IS_UNCONSCIOUS(src))
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		return TRUE
-	if(mob_mood && mob_mood.sanity < SANITY_UNSTABLE)
+	if(mob_mood?.sanity < SANITY_UNSTABLE)
 		return TRUE
+	return FALSE

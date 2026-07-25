@@ -1066,7 +1066,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!isobserver(to_show) && !display_contents)
 		return FALSE
 
-	if(to_show.active_storage != src && (to_show.stat == CONSCIOUS))
+	if(to_show.active_storage != src && (!IS_UNCONSCIOUS_OR_CRIT(to_show)))
 		for(var/obj/item/thing in real_location)
 			if(thing.on_found(to_show))
 				to_show.active_storage?.hide_contents(to_show)
