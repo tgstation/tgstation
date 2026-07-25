@@ -275,6 +275,7 @@ SUBSYSTEM_DEF(wardrobe)
 
 	var/list/stock_info = preloaded_stock[requested_type]
 	if(!stock_info)
+		stock_miss++
 		miss_map[requested_type]++
 		requested_object = new requested_type(location)
 		return requested_object
@@ -378,11 +379,10 @@ SUBSYSTEM_DEF(wardrobe)
 				STAT_START_STOPWATCH
 				stash_success = SSwardrobe.stash_object(hh)
 				STAT_STOP_STOPWATCH
-				stash_cost += STAT_TIME
 				if(!stash_success)
 					qdel(hh)
+				stash_cost += STAT_TIME
 			} while(FALSE)
-
 			force_stock_wardrobe(attempt_count)
 		type_info += list(list(type_to_test, new_cost, provide_cost, qdel_cost, stash_cost))
 
