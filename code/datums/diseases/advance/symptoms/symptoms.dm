@@ -28,8 +28,8 @@
 	var/suppress_warning = FALSE
 	///Ticks between each activation
 	var/next_activation = 0
-	var/symptom_delay_min = 1
-	var/symptom_delay_max = 1
+	var/symptom_delay = 1 // Measured in seconds, not ticks or life ticks
+	var/delay_variation = 0.25 // Anywhere from -25% to +25%
 	///Can be used to multiply virus effects
 	var/power = 1
 	///A neutered symptom has no effect, and only affects statistics.
@@ -80,7 +80,7 @@
 	if(world.time < next_activation)
 		return FALSE
 	else
-		next_activation = world.time + rand(symptom_delay_min * 10, symptom_delay_max * 10)
+		next_activation = world.time + rand(symptom_delay * (1 - delay_variation) SECONDS, symptom_delay * (1 + delay_variation) SECONDS) * DISEASE_SYMPTOM_FREQUENCY_MODIFIER
 		return TRUE
 
 /datum/symptom/proc/on_stage_change(datum/disease/advance/A)

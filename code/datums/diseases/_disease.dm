@@ -57,6 +57,7 @@
 	var/infectable_biotypes = MOB_ORGANIC //if the disease can spread on organics, synthetics, or undead
 	var/process_dead = FALSE //if this ticks while the host is dead
 	var/copy_type = null //if this is null, copies will use the type of the instance being copied
+	var/half_stage = FALSE // Acts as a counter for half stages
 
 /datum/disease/Destroy()
 	. = ..()
@@ -155,8 +156,12 @@
 	if(stage == max_stages && stage_peaked != TRUE) //mostly a sanity check in case we manually set a virus to max stages
 		stage_peaked = TRUE
 
-	if(SPT_PROB(stage_prob * slowdown * bad_immune, seconds_per_tick))
-		update_stage(min(stage + 1, max_stages))
+	if(SPT_PROB(stage_prob * slowdown * bad_immune * 2, seconds_per_tick))
+		if(half_stage)
+			half_stage = FALSE
+			update_stage(min(stage + 1, max_stages))
+		else if(stage <= max_stages)
+			half_stage = TRUE
 
 	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
 		switch(severity)
