@@ -247,7 +247,7 @@
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "jS" = (
 /obj/effect/spawner/random/trash/mess,
@@ -340,7 +340,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/structure/fans/tiny,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "os" = (
 /obj/structure/rack,
@@ -781,7 +781,7 @@
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "zQ" = (
 /obj/structure/cable,
@@ -826,7 +826,7 @@
 	},
 /obj/machinery/light/small/directional/south,
 /obj/item/reagent_containers/cup/glass/coffee,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "AZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -858,7 +858,7 @@
 	dir = 8
 	},
 /obj/structure/fans/tiny,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "Bu" = (
 /obj/machinery/power/apc/auto_name/directional/north{
@@ -1338,7 +1338,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "TV" = (
 /obj/effect/turf_decal/trimline/yellow/warning{

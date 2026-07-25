@@ -4,7 +4,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "az" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
@@ -110,7 +110,7 @@
 "eg" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/power/port_gen/pacman/pre_loaded,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "ev" = (
 /obj/structure/chair/comfy/shuttle{
@@ -148,7 +148,7 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "fO" = (
 /obj/effect/turf_decal/tile/dark_blue/half{
@@ -197,7 +197,7 @@
 "hW" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/bot/left,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "ie" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
@@ -213,7 +213,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/light/red/dim/directional/south,
 /obj/item/storage/bag/money/vault,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "ip" = (
 /obj/structure/table,
@@ -259,7 +259,7 @@
 	dir = 9
 	},
 /obj/item/melee/chainofcommand,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "jp" = (
 /obj/effect/turf_decal/stripes{
@@ -273,7 +273,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "jX" = (
 /obj/effect/turf_decal/tile/dark/full,
@@ -286,7 +286,7 @@
 	pixel_x = 2
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "kK" = (
 /obj/structure/rack,
@@ -316,14 +316,14 @@
 	id_tag = "pirateportexternal"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "lf" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 5
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "lp" = (
 /obj/effect/turf_decal/stripes,
@@ -333,7 +333,7 @@
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "lE" = (
 /turf/open/floor/iron/grimy,
@@ -359,7 +359,7 @@
 /obj/item/stack/cable_coil/five{
 	pixel_y = -6
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "mA" = (
 /turf/open/floor/iron,
@@ -378,7 +378,7 @@
 /area/shuttle/pirate)
 "mN" = (
 /obj/machinery/loot_locator,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "nk" = (
 /obj/effect/turf_decal/tile/dark_blue/half{
@@ -392,7 +392,7 @@
 /area/shuttle/pirate)
 "nq" = (
 /obj/effect/turf_decal/tile/dark/full,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "nw" = (
 /turf/open/floor/iron/kitchen,
@@ -410,7 +410,7 @@
 	id_tag = "piratestarboardexternal"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "nE" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
@@ -425,13 +425,13 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "nP" = (
 /obj/effect/turf_decal/tile/dark/full,
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/machinery/firealarm/directional/north,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "od" = (
 /obj/effect/turf_decal/tile/dark_blue/half{
@@ -523,7 +523,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "pO" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
@@ -551,10 +551,10 @@
 /obj/structure/reagent_dispensers/fueltank/large,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "qU" = (
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "rf" = (
 /obj/structure/chair/stool/directional/south,
@@ -592,7 +592,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/firealarm/directional/north,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "sr" = (
 /obj/structure/cable,
@@ -652,7 +652,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "tF" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
@@ -697,7 +697,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "uy" = (
 /obj/machinery/chem_dispenser/drinks/fullupgrade{
@@ -713,11 +713,11 @@
 "uC" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/backpack/satchel,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "uJ" = (
 /obj/structure/tank_dispenser,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "vi" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/corner{
@@ -753,19 +753,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "vO" = (
 /obj/effect/turf_decal/bot/right,
 /obj/structure/reagent_dispensers/watertank/high,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "wl" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 9
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "ww" = (
 /obj/item/documents,
@@ -805,7 +805,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "yg" = (
 /obj/structure/chair/stool/directional/east,
@@ -864,7 +864,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot/right,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "Ah" = (
 /obj/structure/railing{
@@ -904,13 +904,13 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "Bl" = (
 /obj/machinery/shuttle_scrambler{
 	name = "Wireless Tax Retrieval Machine"
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "Bq" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
@@ -1007,7 +1007,7 @@
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 6
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "CM" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
@@ -1054,13 +1054,13 @@
 /obj/machinery/computer/piratepad_control{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "Eq" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "Et" = (
 /obj/machinery/power/shuttle_engine/large,
@@ -1070,7 +1070,7 @@
 "EJ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "Fn" = (
 /obj/structure/chair/office{
@@ -1158,7 +1158,7 @@
 	name = "Fallujah firehose";
 	desc = "Someone's got a friend in Syria!"
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "HO" = (
 /obj/structure/cable,
@@ -1200,7 +1200,7 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "IE" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line,
@@ -1283,7 +1283,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "KA" = (
 /obj/structure/chair/comfy/shuttle{
@@ -1316,7 +1316,7 @@
 	name = "Pirate Ship";
 	port_direction = 2
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "KI" = (
 /obj/structure/chair/comfy/shuttle{
@@ -1369,7 +1369,7 @@
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
 /obj/machinery/firealarm/directional/west,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "KZ" = (
 /obj/machinery/door/window/brigdoor/right/directional/east{
@@ -1386,7 +1386,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/pirate)
 "Lf" = (
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "Lo" = (
 /obj/machinery/porta_turret/syndicate/irs{
@@ -1467,7 +1467,7 @@
 	},
 /obj/effect/turf_decal/box/red,
 /obj/effect/decal/cleanable/blood/gibs/old,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "My" = (
 /obj/effect/turf_decal/stripes{
@@ -1543,7 +1543,7 @@
 	id_tag = "pirateportexternal"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "Ot" = (
 /obj/machinery/porta_turret/syndicate/irs{
@@ -1570,7 +1570,7 @@
 	pixel_x = 6;
 	pixel_y = 2
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "PP" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -1590,12 +1590,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "Qc" = (
 /obj/effect/turf_decal/bot/right,
 /obj/machinery/piratepad,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "Qi" = (
 /obj/structure/railing,
@@ -1704,7 +1704,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "SG" = (
 /obj/effect/turf_decal/siding/thinplating_new/corner{
@@ -1714,7 +1714,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "SM" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -1815,7 +1815,7 @@
 /area/shuttle/pirate)
 "VS" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "WA" = (
 /obj/structure/cable,
@@ -1829,7 +1829,7 @@
 	name = "swirlie-inator 3000"
 	},
 /obj/effect/turf_decal/bot_red,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "WR" = (
 /turf/template_noop,
@@ -1837,7 +1837,7 @@
 "WU" = (
 /obj/effect/turf_decal/tile/dark/full,
 /obj/machinery/light/red/directional/east,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "Xr" = (
 /obj/machinery/door/airlock/public/glass{

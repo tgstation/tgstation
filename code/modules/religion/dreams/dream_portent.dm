@@ -131,7 +131,7 @@
 		))
 
 	for(var/datum/antagonist/nightmare/nightmare in GLOB.antagonists)
-		if(nightmare.owner?.current?.stat == CONSCIOUS)
+		if(nightmare.owner?.current?.stat == STABLE)
 			return pick(list(
 				list("you have a terrible nightmare", "filled with indescribable horrors", "leaving you with a lingering sense of dread"),
 				list("you have a terrible nightmare", "filled with visions of your own death", "leaving you with a lingering sense of doom"),
@@ -145,9 +145,9 @@
 			return list("the Blood Geometer, Nar'sie, invades your dream", "her pressence overwhelming and suffocating", "she eyes you greedily")
 
 	for(var/datum/antagonist/heretic/heretic in GLOB.antagonists)
-		if(!heretic.ascended)
+		if(!heretic.ascended || isnull(heretic.owner?.current))
 			continue
-		if(heretic.owner?.current?.stat != CONSCIOUS)
+		if(IS_UNCONSCIOUS_OR_CRIT(heretic.owner.current))
 			return list(
 				"the doors of the Mansus loom ahead of you",
 				"intricately decorated - but cracked, broken, and sealed shut",
@@ -192,7 +192,7 @@
 		return heretic_text
 
 	for(var/datum/antagonist/wizard/wizard in GLOB.antagonists)
-		if(wizard.owner?.current?.stat != CONSCIOUS)
+		if(isnull(wizard.owner?.current) || IS_UNCONSCIOUS_OR_CRIT(wizard.owner.current))
 			return
 		if(wizard.ritual?.times_completed < GRAND_RITUAL_RUNES_WARNING_POTENCY)
 			if(prob(1))
@@ -249,7 +249,7 @@
 			))
 
 	for(var/mob/living/carbon/human/clone as anything in GLOB.human_list)
-		if(clone != dreamer && clone.real_name == dreamer.real_name && clone.stat == CONSCIOUS && prob(50))
+		if(clone != dreamer && clone.real_name == dreamer.real_name && !IS_UNCONSCIOUS_OR_CRIT(clone) && prob(50))
 			return list(
 				"you see yourself",
 				"in a foggy mirror",

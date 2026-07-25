@@ -50,6 +50,27 @@
 	var/forced_mode = FALSE
 	/// crafting flags we ignore when considering a recipe
 	var/ignored_flags = NONE
+	/// Global crafting blacklist. These should be excluded from all crafting recipes no matter what.
+	var/static/list/global_blacklist = typecacheof(list(
+		/obj/item/cautery/augment,
+		/obj/item/cautery/cruel/augment,
+		/obj/item/circular_saw/augment,
+		/obj/item/circular_saw/cruel/augment,
+		/obj/item/crowbar/cyborg,
+		/obj/item/hemostat/augment,
+		/obj/item/hemostat/cruel/augment,
+		/obj/item/multitool/cyborg,
+		/obj/item/retractor/augment,
+		/obj/item/retractor/cruel/augment,
+		/obj/item/scalpel/augment,
+		/obj/item/scalpel/cruel/augment,
+		/obj/item/screwdriver/cyborg,
+		/obj/item/surgicaldrill/augment,
+		/obj/item/surgicaldrill/cruel/augment,
+		/obj/item/weldingtool/largetank/cyborg,
+		/obj/item/wirecutters/cyborg,
+		/obj/item/wrench/cyborg,
+	))
 
 /* This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
@@ -84,7 +105,7 @@
 		// Check we have the appropriate amount available in the contents list
 		for(var/content_item_path in contents)
 			// Right path and not blacklisted
-			if(!ispath(content_item_path, requirement_path) || (content_item_path in recipe.blacklist) || is_type_in_typecache(recipe.global_blacklist, content_item_path))
+			if(!ispath(content_item_path, requirement_path) || (content_item_path in recipe.blacklist))
 				continue
 			// If we are a recipe that is blacklisting its result, make sure we skip that path
 			if(recipe_result && content_item_path == recipe_result)
@@ -96,6 +117,9 @@
 
 		if(needed_amount > 0)
 			return FALSE
+
+		if (!(recipe.crafting_flags & CRAFT_COLLECT_REQUIREMENTS))
+			continue
 
 		// Store the instances of what we will use for recipe.check_requirements() for requirement_path
 		var/list/instances_list = list()
@@ -158,6 +182,13 @@
 		if(isitem(object))
 			var/obj/item/item = object
 			LAZYADDASSOCLIST(.[CONTENTS_INSTANCES], item.type, item)
+			if(item.tool_behaviour)
+				var/current_tool_speed = .[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour]
+				if(current_tool_speed < item.toolspeed)
+					.[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour] = item.toolspeed
+			// Blacklisted items can be tools but not components
+			if(is_type_in_typecache(item.type, global_blacklist))
+				continue
 			if(isstack(item))
 				var/obj/item/stack/stack = item
 				.[CONTENTS_REQS_COUNT][item.type] += stack.amount
@@ -167,10 +198,6 @@
 					var/obj/item/reagent_containers/container = item
 					for(var/datum/reagent/reagent as anything in container.reagents.reagent_list)
 						.[CONTENTS_REQS_COUNT][reagent.type] += reagent.volume
-			if(item.tool_behaviour)
-				var/current_tool_speed = .[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour]
-				if(current_tool_speed < item.toolspeed)
-					.[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour] = item.toolspeed
 		else if (ismachinery(object))
 			LAZYADDASSOCLIST(.[CONTENTS_MACHINERY], object.type, object)
 		else if (isstructure(object))
@@ -461,13 +488,6 @@
 
 	return return_list
 
-/datum/component/personal_crafting/proc/is_recipe_available(datum/crafting_recipe/recipe, mob/user)
-	if((recipe.crafting_flags & CRAFT_MUST_BE_LEARNED) && !(recipe.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
-		return FALSE
-	if (recipe.category == CAT_CULT && !IS_CULTIST(user)) // Skip blood cult recipes if not cultist
-		return FALSE
-	return TRUE
-
 /datum/component/personal_crafting/proc/component_ui_interact(atom/movable/screen/craft/image, location, control, params, user)
 	SIGNAL_HANDLER
 
@@ -493,9 +513,7 @@
 
 	var/list/surroundings = get_surroundings(user)
 	var/list/craftability = list()
-	for(var/datum/crafting_recipe/recipe as anything in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes))
-		if(!is_recipe_available(recipe, user))
-			continue
+	for(var/datum/crafting_recipe/recipe as anything in get_visible_recipes(user))
 		if(check_contents(user, recipe, surroundings) && check_tools(user, recipe, surroundings))
 			craftability["[REF(recipe)]"] = TRUE
 
@@ -515,10 +533,7 @@
 		var/mob/living/carbon/carbon = user
 		data["diet"] = carbon.dna.species.get_species_diet()
 
-	for(var/datum/crafting_recipe/recipe as anything in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes))
-		if(!is_recipe_available(recipe, user))
-			continue
-
+	for(var/datum/crafting_recipe/recipe as anything in get_visible_recipes(user))
 		if(recipe.category)
 			data["categories"] |= recipe.category
 
@@ -579,6 +594,17 @@
 	user.investigate_log("crafted [recipe]", INVESTIGATE_CRAFTING)
 	return TRUE
 
+/// Returns a list of crafting recipe datums that are available given current crafting state and the user's learned recipes.
+/datum/component/personal_crafting/proc/get_visible_recipes(mob/user)
+	var/list/recipes_to_show = list()
+	switch(mode)
+		if(COOKING)
+			recipes_to_show += GLOB.cooking_recipes_default
+			recipes_to_show += SANITIZE_LIST(user.mind?.learned_cooking_recipes)
+		if(CRAFTING)
+			recipes_to_show += GLOB.crafting_recipes_default
+			recipes_to_show += SANITIZE_LIST(user.mind?.learned_crafting_recipes)
+	return recipes_to_show
 
 /datum/component/personal_crafting/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -729,22 +755,33 @@
 
 /// proc that teaches user a non-standard crafting recipe
 /datum/mind/proc/teach_crafting_recipe(recipe)
-	if(!learned_recipes)
-		learned_recipes = list()
-	learned_recipes |= recipe
+	if(!ispath(recipe, /datum/crafting_recipe))
+		stack_trace("Non-crafting recipe passed to teach_crafting_recipe")
+		return
+
+	var/learned_cooking = GLOB.cooking_recipes_by_typepath[recipe]
+	if(learned_cooking)
+		LAZYOR(learned_cooking_recipes, learned_cooking)
+		return
+
+	var/learned_crafting = GLOB.crafting_recipes_by_typepath[recipe]
+	if(learned_crafting)
+		LAZYOR(learned_crafting_recipes, learned_crafting)
+		return
+
+	stack_trace("teach_crafting_recipe called with invalid recipe: [recipe || "null"]")
 
 /// proc that makes user forget a specific crafting recipe
 /datum/mind/proc/forget_crafting_recipe(recipe)
-	learned_recipes -= recipe
+	LAZYREMOVE(learned_cooking_recipes, GLOB.cooking_recipes_by_typepath[recipe])
+	LAZYREMOVE(learned_crafting_recipes, GLOB.crafting_recipes_by_typepath[recipe])
 
-/datum/mind/proc/has_crafting_recipe(mob/user, potential_recipe)
-	if(!learned_recipes)
-		return FALSE
-	if(!ispath(potential_recipe, /datum/crafting_recipe))
-		CRASH("Non-crafting recipe passed to has_crafting_recipe")
-	for(var/recipe in user.mind.learned_recipes)
-		if(recipe == potential_recipe)
-			return TRUE
+/datum/mind/proc/has_crafting_recipe(potential_recipe)
+	ASSERT(ispath(potential_recipe, /datum/crafting_recipe), "Non-crafting recipe passed to has_crafting_recipe")
+	if(locate(potential_recipe) in learned_crafting_recipes)
+		return TRUE
+	if(locate(potential_recipe) in learned_cooking_recipes)
+		return TRUE
 	return FALSE
 
 /datum/component/personal_crafting/machine

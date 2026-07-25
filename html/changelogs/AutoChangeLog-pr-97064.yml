@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Brought down all inventory slots on humans to /obj/item"

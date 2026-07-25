@@ -199,7 +199,7 @@
 			if(pin.pin_removable)
 				. += span_info("[pin] looks like [pin.p_they()] could be removed with some <b>tools</b>.")
 			else
-				. += span_info("[pin] looks like [pin.p_theyre()] firmly locked in, [pin.p_they()] looks impossible to remove.")
+				. += span_info("[pin] looks like [pin.p_theyre()] firmly locked in, [pin.p_they()] look[pin.p_s()] impossible to remove.")
 		else
 			. += "It doesn't have a <b>firing pin</b> installed, and won't fire."
 
@@ -303,7 +303,7 @@
 	if(!isliving(loc))
 		return ..()
 	var/mob/living/holder = loc
-	if(holder.is_holding(src) && holder.stat < UNCONSCIOUS)
+	if(holder.is_holding(src) && !IS_UNCONSCIOUS(holder))
 		to_chat(holder, span_boldwarning("[src] breaks down!"))
 		holder.playsound_local(get_turf(src), 'sound/items/weapons/smash.ogg', 50, TRUE)
 	return ..()

@@ -135,7 +135,7 @@
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
 	required_atoms = list(
 		/mob/living/carbon/human = 1,
-		/obj/item/food/grown/poppy = 1,
+		/obj/item/food/grown/flower/poppy = 1,
 	)
 	limit = 2
 	cost = 2

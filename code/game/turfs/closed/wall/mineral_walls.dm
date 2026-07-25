@@ -304,28 +304,6 @@
 	. = ..()
 	copy_to_turf.transform = transform
 
-/turf/closed/wall/mineral/titanium/survival
-	name = "pod wall"
-	desc = "An easily-compressible wall used for temporary shelter."
-	icon = 'icons/turf/walls/survival_pod_walls.dmi'
-	icon_state = "survival_pod_walls-0"
-	base_icon_state = "survival_pod_walls"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
-	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_TITANIUM_WALLS
-	rust_resistance = RUST_RESISTANCE_TITANIUM
-
-/turf/closed/wall/mineral/titanium/survival/nodiagonal
-	icon = 'icons/turf/walls/survival_pod_walls.dmi'
-	icon_state = "survival_pod_walls-0"
-	base_icon_state = "survival_pod_walls"
-	smoothing_flags = SMOOTH_BITMASK
-	rust_resistance = RUST_RESISTANCE_TITANIUM
-
-/turf/closed/wall/mineral/titanium/survival/pod
-	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
-	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
-	rust_resistance = RUST_RESISTANCE_TITANIUM
-
 /turf/closed/wall/mineral/titanium/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ChangeTurf(/turf/closed/wall/rust)
@@ -349,12 +327,64 @@
 	custom_materials = list(/datum/material/alloy/plastitanium = SHEET_MATERIAL_AMOUNT*2)
 	rust_resistance = RUST_RESISTANCE_TITANIUM
 
+/turf/closed/wall/mineral/plastitanium/wall_fill
+	sheet_type = /obj/item/stack/wall_filling/plastitanium/basic
+	sheet_amount = 1
+
+/turf/closed/wall/mineral/plastitanium/darkpod
+	name = "dark pod wall"
+	desc = "An easily-compressible wall used for temporary shelter."
+	sheet_type = /obj/item/stack/wall_filling/plastitanium/pod
+	sheet_amount = 1
+	icon = 'icons/turf/walls/dark_pod.dmi'
+	icon_state = "dark_pod_walls-0"
+	base_icon_state = "dark_pod_walls"
+	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+	rust_resistance = RUST_RESISTANCE_TITANIUM
+
+/turf/closed/wall/mineral/plastitanium/redpod
+	name = "red pod wall"
+	desc = "An easily-compressible wall used for temporary shelter."
+	sheet_type = /obj/item/stack/wall_filling/plastitanium/redpod
+	sheet_amount = 1
+	icon = 'icons/turf/walls/red_pod.dmi'
+	icon_state = "red_pod_walls-0"
+	base_icon_state = "red_pod_walls"
+	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+	rust_resistance = RUST_RESISTANCE_TITANIUM
+
+/turf/closed/wall/mineral/plastitanium/survival
+	name = "pod wall"
+	desc = "An easily-compressible wall used for temporary shelter."
+	icon = 'icons/turf/walls/survival_pod_walls.dmi'
+	icon_state = "survival_pod_walls-0"
+	base_icon_state = "survival_pod_walls"
+	sheet_type = /obj/item/stack/wall_filling/plastitanium/survivalpod
+	sheet_amount = 1
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
+	smoothing_groups = SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_TITANIUM_WALLS
+	rust_resistance = RUST_RESISTANCE_TITANIUM
+
+/turf/closed/wall/mineral/plastitanium/survival/nodiagonal
+	icon = 'icons/turf/walls/survival_pod_walls.dmi'
+	icon_state = "survival_pod_walls-0"
+	base_icon_state = "survival_pod_walls"
+	smoothing_flags = SMOOTH_BITMASK
+	rust_resistance = RUST_RESISTANCE_TITANIUM
+
+/turf/closed/wall/mineral/plastitanium/survival/pod
+	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+	rust_resistance = RUST_RESISTANCE_TITANIUM
+
 /turf/closed/wall/mineral/plastitanium/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ChangeTurf(/turf/closed/wall/rust)
 		return TRUE
 	return ..()
-
 
 /turf/closed/wall/mineral/plastitanium/nodiagonal
 	icon = MAP_SWITCH('icons/turf/walls/plastitanium_wall.dmi', 'icons/turf/walls/misc_wall.dmi')

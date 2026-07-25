@@ -83,6 +83,9 @@
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
 
+	if(severity >= DISEASE_SEVERITY_BIOHAZARD)
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_TOMBSTONE] = TRUE
+
 /// Updates the spread flags set, ensuring signals are updated as necessary
 /datum/disease/proc/update_spread_flags(new_flags)
 	if(spread_flags == new_flags)
@@ -125,7 +128,7 @@
 	var/recovery_prob = 0
 	var/cure_mod
 	var/bad_immune = HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) ? 2 : 1
-	var/is_sleeping = HAS_TRAIT_FROM_ONLY(affected_mob, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(/datum/status_effect/incapacitating/sleeping::id))
+	var/is_sleeping = !!affected_mob.IsSleeping()
 
 	if(required_organ)
 		if(!has_required_infectious_organ(affected_mob, required_organ))
