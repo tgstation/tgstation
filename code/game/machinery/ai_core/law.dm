@@ -180,6 +180,10 @@
 	ui_interact(user)
 	return ITEM_INTERACT_BLOCKING
 
+/obj/machinery/ai_law_rack/screwdriver_act(mob/living/user, obj/item/tool)
+	ui_interact(user)
+	return ITEM_INTERACT_BLOCKING
+
 /obj/machinery/ai_law_rack/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!istype(tool, /obj/item/multitool) || !istype(tool.buffer, /obj/structure/ai_core))
 		ui_interact(user)
