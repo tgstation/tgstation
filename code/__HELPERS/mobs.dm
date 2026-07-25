@@ -704,7 +704,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 /**
  * Iterates over all mobs that can see the passed movable and adds specific mood events to them based on their personalities.
  *
- * * source: String source for the mood event
+ * * source: The source of the mood event, usually the mob doing something
  * * personality_to_mood: A list mapping personality types to mood event types. Example: list(/datum/personality/chill = /datum/mood_event/chill_guy)
  * * range: The range in which to check for viewers. Default is view range.
  * * additional args may be supplied to pass into the mood event constructor.
