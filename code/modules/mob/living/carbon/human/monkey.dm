@@ -27,7 +27,8 @@
 	equip_to_slot_or_del(helmet, ITEM_SLOT_HEAD)
 	helmet.attack_self(src) // todo encapsulate toggle
 
-GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/punpun)
+/// The one true Pun Pun. Either the bar's monkey mob, or the bar gorilla when the Big Pun Pun trait is active.
+GLOBAL_DATUM(the_one_and_only_punpun, /mob/living)
 
 /mob/living/carbon/human/species/monkey/punpun
 	name = "Pun Pun" //C A N O N
@@ -48,6 +49,10 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 	REGISTER_REQUIRED_MAP_ITEM(1, 1) // pun pun is required on maps.
 	if(mapload && (locate(/datum/station_trait/job/pun_pun) in SSstation.station_traits))
 		new /obj/effect/landmark/start/pun_pun(loc) //Pun Pun is a crewmember, and may late-join.
+		return INITIALIZE_HINT_QDEL
+
+	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_PUN_PUN_GYM_DAY))
+		new /mob/living/basic/gorilla/bar(loc) //gym day get buff get swole
 		return INITIALIZE_HINT_QDEL
 
 	equip_to_slot_or_del(new /obj/item/clothing/under/suit/waiter(src), ITEM_SLOT_ICLOTHING)

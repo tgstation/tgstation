@@ -120,7 +120,7 @@ have ways of interacting with a specific mob and control it.
 	return ..()
 
 /datum/ai_controller/monkey/proc/set_trip_mode(mode = TRUE)
-	var/mob/living/carbon/regressed_monkey = pawn
+	var/mob/living/regressed_monkey = pawn
 	var/brain = regressed_monkey.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(istype(brain, /obj/item/organ/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
 		var/obj/item/organ/brain/primate/monkeybrain = brain
