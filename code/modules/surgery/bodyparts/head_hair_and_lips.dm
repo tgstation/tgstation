@@ -81,6 +81,7 @@
 		var/mutable_appearance/em_block = emissive_blocker(facial_hair_overlay.icon, facial_hair_overlay.icon_state, location, -HAIR_LAYER, alpha = facial_hair_alpha)
 		if (dropped)
 			em_block = image(em_block, dir = SOUTH)
+		worn_face_offset?.apply_offset(em_block)
 		. += em_block
 
 	//Offsets
@@ -146,6 +147,7 @@
 			var/mutable_appearance/em_block = emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, location, -HAIR_LAYER, alpha = hair_alpha)
 			if (dropped)
 				em_block = image(em_block, dir = SOUTH)
+			em_block.pixel_z = hair_sprite_accessory.y_offset
 			. += em_block
 		// Offsets
 		worn_face_offset?.apply_offset(hair_overlay)
