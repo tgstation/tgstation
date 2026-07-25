@@ -736,6 +736,8 @@
 	return !HAS_TRAIT(acquirer, TRAIT_NOHUNGER)
 
 /datum/mutation/limb_regeneration/on_life(seconds_per_tick)
+	if(owner.stat >= HARD_CRIT)
+		return
 	if(!SPT_PROB(5 * (notified_of_ability ? 4 : 1) * (GET_MUTATION_POWER(src) ** 2), seconds_per_tick))
 		return
 
@@ -750,11 +752,11 @@
 		return
 
 	if(owner.nutrition <= nutrition_threshold)
-		if(owner.stat == UNCONSCIOUS && !notified_of_ability)
+		if(IS_UNCONSCIOUS(owner) && !notified_of_ability)
 			to_chat(owner, span_green("You feel a strange tingling, as if your body is trying to do something - though you feel like you could use a meal first."))
 			notified_of_ability = TRUE
 		return
-	if(owner.stat != UNCONSCIOUS)
+	if(!IS_UNCONSCIOUS(owner))
 		if(owner.nutrition > nutrition_threshold && !notified_of_ability)
 			to_chat(owner, span_green("You feel a strange tingling, as if your body is trying to do something - though you feel like you could use a nap first."))
 			notified_of_ability = TRUE
