@@ -1,9 +1,11 @@
 /datum/gizmodes/pie_thrower
 	guaranteed_active_gizmodes = list(
-		/datum/gizpulse/throw_pie/ordinary,
+		/datum/gizpulse/pie_thrower/ordinary,
 	)
 
+/datum/gizpulse/pie_thrower
 
+	var/range = 14
 
 /datum/gizpulse/pie_thrower/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
 	throw_pie(holder)
