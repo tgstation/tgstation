@@ -27,7 +27,7 @@ GLOBAL_DATUM_INIT(not_incapacitated_turf_state, /datum/ui_state/not_incapacitate
 	turf_check = no_turfs
 
 /datum/ui_state/not_incapacitated_state/can_use_topic(src_object, mob/user)
-	if(user.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(user))
 		return UI_CLOSE
 	if(HAS_TRAIT(src, TRAIT_UI_BLOCKED) || user.incapacitated || (turf_check && !isturf(user.loc)))
 		return UI_DISABLED

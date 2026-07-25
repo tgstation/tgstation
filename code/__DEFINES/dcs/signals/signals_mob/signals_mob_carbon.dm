@@ -221,3 +221,5 @@
 #define COMSIG_END_DREAMING "end_dreaming"
 /// From /mob/living/carbon/item_coverage_changed: (added_slots, removed_slots)
 #define COMSIG_CARBON_ITEM_COVERAGE_CHANGED "carbon_item_coverage_changed"
+/// From /mob/living/carbon/proc/get_sight_and_cutoffs(): (list/new_sight_flags)
+#define COMSIG_CARBON_UPDATE_SIGHT_CUTOFFS "carbon_update_sight_cutoffs"

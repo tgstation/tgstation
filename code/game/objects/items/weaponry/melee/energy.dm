@@ -495,7 +495,7 @@
 
 	if(charge <= max_charge)
 		user.balloon_alert(user, "attempting recharge...")
-		if(!do_after(user, charge_time, target = src, extra_checks = CALLBACK(src, PROC_REF(do_jiggle), user), interaction_key = DOAFTER_SOURCE_CHARGING_ESWORD, iconstate = "beat_the_heat"))
+		if(!do_after(user, charge_time, target = src, extra_checks = CALLBACK(src, PROC_REF(do_jiggle), user), interaction_key = DOAFTER_SOURCE_CHARGING_ESWORD, cog_iconstate = "beat_the_heat"))
 			user.balloon_alert(user, "interrupted!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	charge = max_charge
