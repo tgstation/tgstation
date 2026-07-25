@@ -388,10 +388,10 @@
 		L["area"] = get_area_name(body, TRUE)
 		var/stat = "error"
 		switch(body.stat)
-			if(CONSCIOUS)
-				stat = "Conscious"
-			if(SOFT_CRIT to HARD_CRIT) // Also includes UNCONSCIOUS
-				stat = "Unconscious"
+			if(STABLE)
+				stat = "Stable"
+			if(SOFT_CRIT, HARD_CRIT)
+				stat = "Critical"
 			if(DEAD)
 				stat = "Dead"
 		var/occupied
@@ -459,7 +459,7 @@
 	if(dupe.stat == DEAD) //Is it alive?
 		return FALSE
 
-	if(dupe.stat != CONSCIOUS) //Is it awake?
+	if(IS_UNCONSCIOUS_OR_CRIT(dupe)) //Is it awake?
 		return FALSE
 
 	if(dupe.mind && dupe.mind.active) //Is it unoccupied?
@@ -473,7 +473,7 @@
 /datum/action/innate/swap_body/proc/swap_to_dupe(datum/mind/M, mob/living/carbon/human/dupe)
 	if(!can_swap(dupe)) //sanity check
 		return
-	if(M.current.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(M.current))
 		M.current.visible_message(span_notice("[M.current] stops moving and starts staring vacantly into space."),
 			span_notice("You stop moving this body..."))
 	else

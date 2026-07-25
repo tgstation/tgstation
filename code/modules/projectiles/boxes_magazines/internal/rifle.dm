@@ -17,14 +17,23 @@
 	ammo_type = /obj/item/ammo_casing/junk
 	max_ammo = 1
 
+/obj/item/ammo_box/magazine/internal/boltaction/pipegun/empty
+	start_empty = TRUE
+
 /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol
 	name = "pipe pistol internal magazine"
 	max_ammo = 3
+
+/obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol/empty
+	start_empty = TRUE
 
 /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
 	name = "regal pipegun internal magazine"
 	max_ammo = 4
 	ammo_type = /obj/item/ammo_casing/junk/reaper
+
+/obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime/empty
+	start_empty = TRUE
 
 /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol/prime
 	name = "regal pipe pistol internal magazine"
