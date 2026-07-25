@@ -7,29 +7,41 @@
 		"key": "BB_ITEM_TO_STEAL"
 	},
 	"child": {
-		"type": "sequence",
+		"type": "selector",
 		"children": [
 			{
-				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-				"vars": {
-					"target_key": "BB_ITEM_TO_STEAL"
-				}
-			},
-			{
-				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/drag_target",
-				"vars": {
-					"target_key": "BB_ITEM_TO_STEAL"
-				}
-			},
-			{
-				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/copy_bb_key",
-				"vars": {
-					"dest_key": "BB_LAST_STOLEN_ITEM",
-					"source_key": "BB_ITEM_TO_STEAL"
-				}
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "BB_ITEM_TO_STEAL"
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/steal_target",
+						"vars": {
+							"target_key": "BB_ITEM_TO_STEAL"
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/copy_bb_key",
+						"vars": {
+							"dest_key": "BB_LAST_STOLEN_ITEM",
+							"source_key": "BB_ITEM_TO_STEAL"
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/clear_key",
+						"vars": {
+							"key": "BB_ITEM_TO_STEAL"
+						}
+					}
+				]
 			},
 			{
 				"type": "leaf",
