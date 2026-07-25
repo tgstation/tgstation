@@ -321,7 +321,7 @@
 	},
 /area/ruin/powered/shuttle)
 "Sv" = (
-/turf/open/genturf,
+/turf/template_noop,
 /area/icemoon/underground/unexplored/rivers)
 "SJ" = (
 /obj/structure/railing{

@@ -1,15 +1,13 @@
+///A tipped-over mob looks to a nearby person for help, then resigns itself to its fate.
+/datum/bt_node/ai_behavior/tipped_reaction
+	/// Blackboard key holding the mob that tipped us over.
+	var/tipper_key = BB_BASIC_MOB_TIPPER
+	/// Blackboard key holding whether we are still reacting to being tipped.
+	var/reacting_key = BB_BASIC_MOB_TIP_REACTING
 
-///type of tipped reaction that is akin to puppy dog eyes
-/datum/ai_behavior/tipped_reaction
-
-/datum/ai_behavior/tipped_reaction/perform(seconds_per_tick, datum/ai_controller/controller, tipper_key, reacting_key)
+/datum/bt_node/ai_behavior/tipped_reaction/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/carbon/tipper = controller.blackboard[tipper_key]
 
-	// visible part of the visible message
-	var/seen_message = ""
-	// self part of the visible message
-	var/self_message = ""
-	// the mob we're looking to for aid
 	var/mob/living/carbon/savior
 	// look for someone in a radius around us for help. If our original tipper is in range, prioritize them
 	for(var/mob/living/carbon/potential_aid in oview(3, get_turf(controller.pawn)))
@@ -18,6 +16,8 @@
 			break
 		savior = potential_aid
 
+	var/seen_message
+	var/self_message
 	if(prob(75) && savior)
 		var/text = pick("imploringly", "pleadingly", "with a resigned expression")
 		seen_message = "[controller.pawn] looks at [savior] [text]."
@@ -28,7 +28,7 @@
 	controller.pawn.visible_message(span_notice("[seen_message]"), span_notice("[self_message]"))
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/tipped_reaction/finish_action(datum/ai_controller/controller, succeeded, tipper_key, reacting_key)
+/datum/bt_node/ai_behavior/tipped_reaction/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	//I'VE SAID MY PEACE...
 	controller.set_blackboard_key(reacting_key, FALSE)

@@ -1,0 +1,41 @@
+{
+	"dm_type": "/datum/bt_node/subtree/cat_haul_food",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/cat_holding_food",
+	"child": {
+		"type": "decorator",
+		"decorator": "/datum/bt_node/decorator/bb_key_set",
+		"vars": {
+			"key": "BB_KITTEN_TO_FEED",
+			"observer_abort": "BT_ABORT_BOTH"
+		},
+		"child": {
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_FOOD_TO_DELIVER"
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "BB_KITTEN_TO_FEED",
+							"required_dist": 1
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/deliver_food_to_kitten",
+						"vars": {
+							"target_key": "BB_KITTEN_TO_FEED",
+							"food_key": "BB_FOOD_TO_DELIVER"
+						}
+					}
+				]
+			}
+		}
+	}
+}

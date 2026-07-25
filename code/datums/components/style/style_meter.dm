@@ -45,14 +45,14 @@
 	RegisterSignal(interacting_with, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(redirect_multitool))
 	balloon_alert(user, "style meter attached")
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-	if(!iscarbon(interacting_with.loc))
+	if(!ishuman(interacting_with.loc))
 		return .
 
-	var/mob/living/carbon/carbon_wearer = interacting_with.loc
-	if(carbon_wearer.glasses != interacting_with)
+	var/mob/living/carbon/human/human_wearer = interacting_with.loc
+	if(human_wearer.glasses != interacting_with)
 		return .
 
-	start_meter(carbon_wearer)
+	start_meter(human_wearer)
 	return .
 
 /obj/item/style_meter/Moved(atom/old_loc, Dir, momentum_change)
@@ -126,10 +126,10 @@
 	QDEL_NULL(style_meter)
 
 /// Create the style meter component, attach it to our wearer, register other things onto the component.
-/obj/item/style_meter/proc/start_meter(mob/living/carbon/carbon_wearer)
-	style_meter = carbon_wearer.AddComponent(/datum/component/style, multitooled, stored_permanent_multiplier)
+/obj/item/style_meter/proc/start_meter(mob/living/carbon/human/human_wearer)
+	style_meter = human_wearer.AddComponent(/datum/component/style, multitooled, stored_permanent_multiplier)
 	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH, PROC_REF(on_death))
-	RegisterSignal(carbon_wearer, COMSIG_LIVING_ON_VENT_WIN, PROC_REF(on_vent_win))
+	RegisterSignal(human_wearer, COMSIG_LIVING_ON_VENT_WIN, PROC_REF(on_vent_win))
 
 /// On a successful vent tap, adjust permanent multiplier, scaling with vent value.
 /obj/item/style_meter/proc/on_vent_win(datum/source, obj/structure/ore_vent/vent)

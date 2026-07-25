@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - code_imp: "RPED storage UI only updates when it's done replacing parts rather than part by part, in practice you should see no change"
+  - code_imp: "Mass pickup also waits to update when it's done picking up, you MIIIGHT notice if you're picking up an especially large amount of things but probably not?"

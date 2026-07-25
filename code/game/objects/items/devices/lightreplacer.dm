@@ -91,14 +91,8 @@
 		user.balloon_alert(user, "glass inserted")
 		return ITEM_INTERACT_SUCCESS
 
-	if(tool.type == /obj/item/shard) //we don't want to insert plasma, titanium or other types of shards
-		if(!user.temporarilyRemoveItemFromInventory(tool))
-			user.balloon_alert(user, "stuck in your hand!")
-			return ITEM_INTERACT_BLOCKING
-		if(!add_shard(user)) //add_shard will display a message if it created a bulb from the shard so only display message when that does not happen
-			user.balloon_alert(user, "shard inserted")
-		qdel(tool)
-		return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/shard))
+		return attempt_insert_shard(user, tool)
 
 	if(istype(tool, /obj/item/light))
 		var/obj/item/light/light_to_insert = tool
@@ -159,6 +153,20 @@
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE
+
+/obj/item/lightreplacer/proc/attempt_insert_shard(mob/living/user, obj/item/shard/tool)
+	if(tool.type != /obj/item/shard) //we don't want to insert plasma, titanium or other types of shards
+		user.balloon_alert(user, "too impure!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.temporarilyRemoveItemFromInventory(tool))
+		user.balloon_alert(user, "stuck in your hand!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!add_shard(user)) //add_shard will display a message if it created a bulb from the shard so only display message when that does not happen
+		user.balloon_alert(user, "shard inserted")
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/lightreplacer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

@@ -11,7 +11,7 @@
 	/// Timer used to see if you
 	var/reset_clock_timer
 
-/datum/component/ai_target_timer/Initialize(increment_key = BB_BASIC_MOB_HAS_TARGET_TIME, target_key = BB_BASIC_MOB_CURRENT_TARGET)
+/datum/component/ai_target_timer/Initialize(increment_key = BB_BASIC_MOB_HAS_TARGET_TIME, target_key = BB_CURRENT_TARGET)
 	. = ..()
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE

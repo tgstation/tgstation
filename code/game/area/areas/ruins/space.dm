@@ -789,3 +789,23 @@
 //Kilostation
 /area/ruin/space/has_grav/abandoned_warehouse
 	name = "\improper Abandoned Warehouse"
+
+//Syndicate Outpost "ruin" for the station z-level
+/area/ruin/space/has_grav/syndicate_outpost
+	name = "\improper Syndicate Outpost"
+	icon_state = "syndicate_outpost"
+	area_flags = HIDDEN_AREA | EVENT_PROTECTED
+	ambience_index = AMBIENCE_GENERIC
+	// Same as tcommsat
+	ambientsounds = list(
+		'sound/ambience/engineering/ambisin2.ogg',
+		'sound/ambience/misc/signal.ogg',
+		'sound/ambience/misc/signal.ogg',
+		'sound/ambience/general/ambigen9.ogg',
+		'sound/ambience/engineering/ambitech.ogg',
+		'sound/ambience/engineering/ambitech2.ogg',
+		'sound/ambience/engineering/ambitech3.ogg',
+		'sound/ambience/misc/ambimystery.ogg',
+		)
+	flags_1 = NONE // Not dirty
+	skip_minimap_rendering = FALSE
