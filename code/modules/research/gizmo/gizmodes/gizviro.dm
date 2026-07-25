@@ -1,15 +1,9 @@
 /datum/gizmodes/viro_smoke
 	guaranteed_active_gizmodes = list(
-		/datum/gizpulse/pie_thrower/ordinary,
+		/datum/gizpulse/viro_smoke/good,
 	)
 
-/datum/gizpulse/pie_thrower/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
-	throw_pie(holder)
+/datum/gizpulse/viro_smoke/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
+	release_viro_smoke()
 
-	var/obj/item/food/pie/cream/mysterious_pie = new /obj/item/food/pie/cream
-	mysterious_pie.stun_and_blur(holder)
-
-/datum/gizpulse/pie_thrower/proc/throw_pie(atom/movable/holder)
-	var/obj/item/food/pie/cream/mysterious_pie = new /obj/item/food/pie/cream
-	for(var/mob/living/carbon/human/human in urange(range, holder))
-		mysterious_pie.stun_and_blur(human)
+/datum/gizpulse/viro_smoke/proc/release_viro_smoke(atom/movable/holder)
