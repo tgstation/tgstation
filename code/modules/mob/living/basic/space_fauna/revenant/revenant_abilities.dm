@@ -112,55 +112,162 @@
 	reveal_duration = 4 SECONDS
 	stun_duration = 2 SECONDS
 
-/datum/action/cooldown/spell/aoe/revenant/defile/cast_on_thing_in_aoe(turf/victim, mob/living/basic/revenant/caster)
-	for(var/obj/effect/blessing/blessing in victim)
-		qdel(blessing)
-		new /obj/effect/temp_visual/revenant(victim)
+/datum/action/cooldown/spell/aoe/revenant/defile/cast_on_thing_in_aoe(turf/target_turf, mob/living/basic/revenant/caster)
+	/// causes the purple sparks defile animation on the turf
+	var/turf_was_defiled = FALSE
 
-	if(!isplatingturf(victim) && !istype(victim, /turf/open/floor/engine/cult) && isfloorturf(victim) && prob(15))
-		var/turf/open/floor/floor = victim
+	// dispel
+	for(var/obj/effect/blessing/blessing in target_turf)
+		turf_was_defiled = TRUE
+		qdel(blessing)
+	for(var/obj/effect/decal/cleanable/food/salt/salt in target_turf)
+		turf_was_defiled = TRUE
+		qdel(salt)
+
+	// damage
+	if(!isplatingturf(target_turf) && !istype(target_turf, /turf/open/floor/engine/cult) && isfloorturf(target_turf) && prob(15))
+		var/turf/open/floor/floor = target_turf
 		if(floor.overfloor_placed && floor.floor_tile)
 			new floor.floor_tile(floor)
 		floor.broken = 0
 		floor.burnt = 0
 		floor.make_plating(TRUE)
+	for(var/obj/structure/window/window in target_turf)
+		if(window.get_integrity() > REVENANT_DEFILE_MAX_DAMAGE)
+			window.take_damage(rand(REVENANT_DEFILE_MIN_DAMAGE, REVENANT_DEFILE_MAX_DAMAGE))
+		if(window.fulltile)
+			new /obj/effect/temp_visual/revenant/cracks(window.loc)
 
-	if(victim.type == /turf/closed/wall && prob(15) && !HAS_TRAIT(victim, TRAIT_RUSTY))
-		new /obj/effect/temp_visual/revenant(victim)
-		victim.AddElement(/datum/element/rust)
-	if(victim.type == /turf/closed/wall/r_wall && prob(10) && !HAS_TRAIT(victim, TRAIT_RUSTY))
-		new /obj/effect/temp_visual/revenant(victim)
-		victim.AddElement(/datum/element/rust)
-	for(var/obj/machinery/shower/cursed_shower in victim)
-		new /obj/effect/temp_visual/revenant(victim)
+	// rust
+	if(target_turf.type == /turf/closed/wall && prob(15) && !HAS_TRAIT(target_turf, TRAIT_RUSTY))
+		turf_was_defiled = TRUE
+		target_turf.AddElement(/datum/element/rust)
+	if(target_turf.type == /turf/closed/wall/r_wall && prob(10) && !HAS_TRAIT(target_turf, TRAIT_RUSTY))
+		turf_was_defiled = TRUE
+		target_turf.AddElement(/datum/element/rust)
+
+	// alchemy
+	for(var/obj/machinery/shower/cursed_shower in target_turf)
+		turf_was_defiled = TRUE
 		cursed_shower.has_water_reclaimer = FALSE
 		cursed_shower.reagents.remove_all(1, relative=TRUE)
 		cursed_shower.reagents.add_reagent(/datum/reagent/blood, initial(cursed_shower.reagent_capacity))
 		if(prob(50))
 			cursed_shower.intended_on = TRUE
 			cursed_shower.update_actually_on(TRUE)
-	for(var/obj/effect/decal/cleanable/food/salt/salt in victim)
-		new /obj/effect/temp_visual/revenant(victim)
-		qdel(salt)
-	for(var/obj/structure/closet/closet in victim.contents)
+	for(var/obj/item/reagent_containers/cursed_container in target_turf)
+		if(!cursed_container.is_open_container())
+			continue
+		if(!cursed_container.reagents.has_reagent(/datum/reagent/consumable/ethanol, check_subtypes=TRUE))
+			continue
+
+		turf_was_defiled = TRUE
+		var/booze_amount = cursed_container.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol, type_check=REAGENT_PARENT_TYPE)
+		cursed_container.reagents.remove_reagent(/datum/reagent/consumable/ethanol, booze_amount, include_subtypes=TRUE)
+		cursed_container.reagents.add_reagent(/datum/reagent/blood, booze_amount)
+		cursed_container.update_appearance()
+	for(var/obj/item/food/cursed_food in target_turf)
+		if(cursed_food.trash_type)
+			continue // the package protects it
+		var/datum/component/germ_sensitive/germs = cursed_food.GetComponent(/datum/component/germ_sensitive)
+		germs?.expose_to_germs()
+
+	// opening
+	for(var/obj/structure/closet/closet in target_turf.contents)
+		if(closet.locked)
+			continue
+
+		turf_was_defiled = TRUE
 		closet.open()
-	for(var/obj/structure/bodycontainer/corpseholder in victim)
+	for(var/obj/structure/bodycontainer/corpseholder in target_turf)
+		turf_was_defiled = TRUE
 		if(corpseholder.connected.loc == corpseholder)
 			corpseholder.open()
-	for(var/obj/machinery/dna_scannernew/dna in victim)
+	for(var/obj/machinery/dna_scannernew/dna in target_turf)
+		turf_was_defiled = TRUE
 		dna.open_machine()
-	for(var/obj/structure/window/window in victim)
-		if(window.get_integrity() > REVENANT_DEFILE_MAX_DAMAGE)
-			window.take_damage(rand(REVENANT_DEFILE_MIN_DAMAGE, REVENANT_DEFILE_MAX_DAMAGE))
-		if(window.fulltile)
-			new /obj/effect/temp_visual/revenant/cracks(window.loc)
-	for(var/obj/machinery/light/light in victim)
-		light.flicker(rand(3, 5)) //spooky
-	for(var/obj/structure/mirror/mirror in victim)
+	for(var/obj/machinery/cryo_cell/cursed_cryo_cell in target_turf)
+		turf_was_defiled = TRUE
+		cursed_cryo_cell.open_machine()
+	for(var/obj/machinery/stasis/cursed_stasis in target_turf)
+		turf_was_defiled = TRUE
+		cursed_stasis.unbuckle_all_mobs()
+
+	// obscure
+	for(var/obj/item/reagent_containers/applicator/patch/cursed_patch in target_turf)
+		turf_was_defiled = TRUE
+		cursed_patch.name = /obj/item/reagent_containers/applicator/patch::name
+		cursed_patch.desc = /obj/item/reagent_containers/applicator/patch::desc
+		cursed_patch.icon_state = /obj/item/reagent_containers/applicator/patch::icon_state
+		cursed_patch.update_appearance()
+	for(var/obj/item/storage/pill_bottle/cursed_pill_bottle in target_turf)
+		turf_was_defiled = TRUE
+		cursed_pill_bottle.name = /obj/item/storage/pill_bottle::name
+		cursed_pill_bottle.desc = /obj/item/storage/pill_bottle::desc
+	for(var/obj/item/reagent_containers/applicator/pill/cursed_pill in target_turf)
+		turf_was_defiled = TRUE
+		cursed_pill.name = /obj/item/reagent_containers/applicator/pill::name
+		cursed_pill.desc = /obj/item/reagent_containers/applicator/pill::desc
+	for(var/obj/item/reagent_containers/cup/bottle/cursed_bottle in target_turf)
+		turf_was_defiled = TRUE
+		cursed_bottle.name = /obj/item/reagent_containers/cup/bottle::name
+		cursed_bottle.desc = /obj/item/reagent_containers/cup/bottle::desc
+	for(var/obj/item/reagent_containers/syringe/cursed_syringe in target_turf)
+		turf_was_defiled = TRUE
+		cursed_syringe.name = /obj/item/reagent_containers/syringe::name
+		cursed_syringe.desc = /obj/item/reagent_containers/syringe::desc
+	for(var/obj/item/reagent_containers/hypospray/medipen/cursed_medipen in target_turf)
+		turf_was_defiled = TRUE
+		// the default medipen subtype is epinephrine so we need to use generic hardcoded name/desc
+		cursed_medipen.name = "medipen"
+		cursed_medipen.desc = "A rapid and safe way to inject reagents into patients for personnel without advanced medical knowledge."
+	for(var/obj/item/reagent_containers/medigel/cursed_medigel in target_turf)
+		turf_was_defiled = TRUE
+		cursed_medigel.name = /obj/item/reagent_containers/medigel::name
+		cursed_medigel.desc = /obj/item/reagent_containers/medigel::desc
+		cursed_medigel.icon_state = /obj/item/reagent_containers/medigel::icon_state
+		cursed_medigel.update_appearance()
+	for(var/obj/item/reagent_containers/spray/cursed_spray in target_turf)
+		turf_was_defiled = TRUE
+		cursed_spray.name = /obj/item/reagent_containers/spray::name
+		cursed_spray.desc = /obj/item/reagent_containers/spray::desc
+		cursed_spray.icon_state = /obj/item/reagent_containers/spray::icon_state
+		cursed_spray.update_appearance()
+	for(var/obj/item/dnainjector/cursed_dnainjector in target_turf)
+		turf_was_defiled = TRUE
+		cursed_dnainjector.name = /obj/item/dnainjector::name
+		cursed_dnainjector.desc = /obj/item/dnainjector::desc
+	for(var/obj/item/reagent_containers/blood/cursed_blood in target_turf)
+		turf_was_defiled = TRUE
+		cursed_blood.name = /obj/item/reagent_containers/blood::name
+		cursed_blood.desc = /obj/item/reagent_containers/blood::desc
+	for(var/obj/machinery/portable_atmospherics/canister/cursed_canister in target_turf)
+		turf_was_defiled = TRUE
+		cursed_canister.name = /obj/machinery/portable_atmospherics/canister::name
+		cursed_canister.desc = /obj/machinery/portable_atmospherics/canister::desc
+		cursed_canister.icon_state = /obj/machinery/portable_atmospherics/canister::icon_state
+		cursed_canister.base_icon_state = /obj/machinery/portable_atmospherics/canister::icon_state
+		cursed_canister.set_greyscale(/obj/machinery/portable_atmospherics/canister::greyscale_colors, /obj/machinery/portable_atmospherics/canister::greyscale_config)
+		//cursed_canister.update_appearance()
+
+	for(var/obj/item/storage/lockbox/order/cursed_order in target_turf)
+		turf_was_defiled = TRUE
+		cursed_order.name = initial(cursed_order.name) // initial() is fine since we just want to remove the cargo info
+	for(var/obj/structure/closet/crate/cursed_crate in target_turf)
+		turf_was_defiled = TRUE
+		cursed_crate.name = initial(cursed_crate.name)
+
+	// spooky
+	for(var/obj/machinery/light/light in target_turf)
+		light.flicker(rand(3, 5))
+	for(var/obj/structure/mirror/mirror in target_turf)
 		if(istype(mirror, /obj/structure/mirror/magic))
 			continue
-		new /obj/effect/temp_visual/revenant(mirror.loc)
+		turf_was_defiled = TRUE
 		mirror.atom_break("magic")
+
+	if(turf_was_defiled)
+		new /obj/effect/temp_visual/revenant(target_turf)
 
 //Malfunction: Makes bad stuff happen to robots and machines.
 /datum/action/cooldown/spell/aoe/revenant/malfunction
@@ -303,6 +410,49 @@
 		spawn_message = span_revenwarning("[victim] begins to float and twirl into the air as it glows a ghastly purple!"), \
 		despawn_message = span_revenwarning("[victim] falls back to the ground, stationary once more."), \
 	)
+
+//Vortex: Causes storage objects to dump their contents and nearby objects to get sucked into the center
+/datum/action/cooldown/spell/aoe/revenant/vortex
+	name = "Vortex"
+	desc = "Causes nearby objects to dump their contents and get sucked towards your location."
+	button_icon_state = "r_vortex"
+	cooldown_time = 15 SECONDS
+	aoe_radius = 1 // only dump contents close by
+	unlock_amount = 45
+	cast_amount = 30
+	stun_duration = 2 SECONDS
+	reveal_duration = 5 SECONDS
+
+/datum/action/cooldown/spell/aoe/revenant/vortex/cast_on_thing_in_aoe(turf/target_turf, mob/living/basic/revenant/caster)
+	for(var/obj/item/storage/cursed_storage in target_turf)
+		if(cursed_storage.atom_storage?.locked)
+			continue
+
+		cursed_storage.emptyStorage()
+		new /obj/effect/temp_visual/revenant(target_turf)
+
+/datum/action/cooldown/spell/aoe/revenant/vortex/cast(atom/cast_on)
+	movement_effect(cast_on)
+	. = ..()
+
+/datum/action/cooldown/spell/aoe/revenant/vortex/proc/movement_effect(atom/cast_on)
+	goonchem_vortex(get_turf(cast_on), FALSE, 3)
+	playsound(cast_on, 'sound/machines/woosh.ogg', 50, TRUE)
+
+//Vortex: Throws nearby objects away with a large force
+/datum/action/cooldown/spell/aoe/revenant/vortex/scatter
+	name = "Scatter"
+	desc = "Causes nearby objects to dump their contents and get thrown away from your location."
+	button_icon_state = "r_scatter"
+	cooldown_time = 25 SECONDS
+	unlock_amount = 60
+	cast_amount = 55
+	stun_duration = 3 SECONDS
+	reveal_duration = 5 SECONDS
+
+/datum/action/cooldown/spell/aoe/revenant/vortex/scatter/movement_effect(atom/cast_on)
+	goonchem_vortex(get_turf(cast_on), TRUE, 5) // pushing is much stronger than pulling
+	playsound(cast_on, 'sound/machines/hiss.ogg', 50, TRUE)
 
 #undef REVENANT_DEFILE_MIN_DAMAGE
 #undef REVENANT_DEFILE_MAX_DAMAGE

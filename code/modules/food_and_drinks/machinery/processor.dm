@@ -198,10 +198,9 @@
 	processing = FALSE
 	visible_message(span_notice("\The [src] finishes processing."))
 
-/obj/machinery/processor/verb/eject()
-	set name = "Eject Contents"
-	set src in oview(1)
-	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
+GAME_VERB_SRC(/obj/machinery/processor, eject, oview(1), "Eject Contents", null)
+
+	if(IS_UNCONSCIOUS_OR_CRIT(usr) || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	if(!usr.can_perform_action(src))
 		return
@@ -254,7 +253,7 @@
 	for(var/mob/living/basic/slime/slime in range(1,src))
 		if(!slime.IsReachableBy(src)) //don't take slimes behind glass panes or somesuch; also makes it ignore slimes inside the processor
 			continue
-		if(slime.stat)
+		if(IS_UNCONSCIOUS_OR_CRIT(slime))
 			var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(slime)
 			if(!recipe)
 				continue

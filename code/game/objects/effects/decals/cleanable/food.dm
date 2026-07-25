@@ -33,13 +33,18 @@
 	desc = "A sizable pile of table salt. Someone must be upset."
 	icon_state = "salt_pile"
 	var/safepasses = 3 //how many times can this salt pile be passed before dissipating
-
-/obj/effect/decal/cleanable/food/salt/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered)
 	)
+
+/obj/effect/decal/cleanable/food/salt/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
 	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/effect/decal/cleanable/food/salt/Destroy(force)
+	// connect_loc only unregisters via COMSIG_MOVABLE_MOVED, which never fires when the turf we're on gets replaced by ChangeTurf()
+	RemoveElement(/datum/element/connect_loc, loc_connections)
+	return ..()
 
 /obj/effect/decal/cleanable/food/salt/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()

@@ -178,8 +178,6 @@
 	///used for database logging
 	var/last_words
 
-	///whether this can be picked up and held.
-	var/can_be_held = FALSE
 	/// The w_class of the holder when held.
 	var/held_w_class = WEIGHT_CLASS_NORMAL
 	///if it can be held, can it be equipped to any slots? (think pAI's on head)
@@ -263,4 +261,4 @@
 
 	/// When less than or equal to  this distance (but not adjacent), this mob can hear parts of distant whispers, but not the entire message.
 	/// When greater than this distance, this mob cannot hear anything of a whisper.
-	var/eavesdrop_range = EAVESDROP_EXTRA_RANGE
+	var/eavesdrop_range = EAVESDROP_RANGE

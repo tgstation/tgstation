@@ -14,7 +14,7 @@
 	dye_color = DYE_PRISONER
 	icon = 'icons/obj/weapons/restraints.dmi'
 
-/obj/item/restraints/suicide_act(mob/living/carbon/user)
+/obj/item/restraints/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
@@ -353,6 +353,7 @@
 	breakouttime = 45 SECONDS
 	color = null
 	cable_color = null
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/restraints/handcuffs/cable/zipties/on_uncuffed(datum/source, mob/living/wearer)
 	. = ..()
@@ -433,6 +434,7 @@
 	throw_range = 1
 	icon_state = "beartrap"
 	desc = "A trap used to catch bears and other legged creatures."
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT)
 	///If true, the trap is "open" and can trigger.
 	var/armed = FALSE
 	///How much damage the trap deals when triggered.
@@ -460,7 +462,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/attack_self(mob/living/user)
 	. = ..()
-	if(!ishuman(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+	if(!ishuman(user) || IS_UNCONSCIOUS_OR_CRIT(user) || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 
 	playsound(loc, 'sound/items/weapons/handcuffs.ogg', 30, TRUE, -3)
@@ -563,6 +565,7 @@
 	breakouttime = 3 SECONDS
 	item_flags = DROPDEL
 	flags_1 = NONE
+	custom_materials = null // cannot be recycled anyway
 
 /obj/item/restraints/legcuffs/beartrap/energy/Initialize(mapload)
 	. = ..()
@@ -668,7 +671,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 6 SECONDS
 	custom_price = PAYCHECK_COMMAND * 0.35
-	custom_materials = null
+	custom_materials = list(/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/restraints/legcuffs/bola/energy/Initialize(mapload)
 	. = ..()

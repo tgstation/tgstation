@@ -67,7 +67,7 @@
 	reqs = list(
 		/obj/item/food/seaweedsheet = 1,
 		/obj/item/food/boiledrice = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/potato = 1
 	)
 	result = /obj/item/food/vegetariansushiroll

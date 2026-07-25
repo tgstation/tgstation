@@ -9960,10 +9960,7 @@
 /area/station/command/corporate_showroom)
 "csD" = (
 /obj/structure/chair/office,
-/obj/item/radio/intercom/directional/north{
-	frequency = 1423;
-	name = "Interrogation Intercom"
-	},
+/obj/item/radio/intercom/interrogation/outside/directional/north,
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 4
 	},
@@ -18915,8 +18912,8 @@
 /area/station/medical/chemistry)
 "eIf" = (
 /obj/structure/table/wood/fancy,
-/obj/item/food/grown/poppy,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy,
+/obj/item/food/grown/flower/poppy{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -23349,6 +23346,10 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
+/obj/item/storage/pill_bottle/sepsisillin{
+	pixel_x = -6;
+	pixel_y = 2
+	},
 /obj/item/storage/box/syringes,
 /turf/open/floor/iron,
 /area/station/medical/virology)
@@ -25361,7 +25362,7 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
 "gjl" = (
-/obj/machinery/computer/upload/borg{
+/obj/machinery/computer/upload/borg/no_lock{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -28564,7 +28565,7 @@
 	specialfunctions = 4
 	},
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy/geranium,
+/obj/item/food/grown/flower/poppy/geranium,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "gUU" = (
@@ -33547,11 +33548,10 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
 "ilx" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/suit_storage_unit/industrial/loader,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "ilG" = (
@@ -41922,12 +41922,12 @@
 	pixel_y = 32
 	},
 /obj/structure/table/wood,
-/obj/item/food/grown/harebell,
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell,
+/obj/item/food/grown/flower/harebell{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -45411,7 +45411,7 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern,
-/obj/item/food/grown/harebell,
+/obj/item/food/grown/flower/harebell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -51904,7 +51904,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den)
 "mMd" = (
-/obj/machinery/computer/upload/ai{
+/obj/machinery/computer/upload/ai/no_lock{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -52160,7 +52160,7 @@
 /area/station/command/heads_quarters/ce)
 "mPo" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy/lily,
+/obj/item/food/grown/flower/poppy/lily,
 /obj/structure/sign/painting/library{
 	pixel_y = -32
 	},
@@ -69877,7 +69877,7 @@
 "rlL" = (
 /obj/item/radio/intercom/directional/south,
 /obj/structure/table/glass,
-/obj/item/food/grown/poppy/geranium,
+/obj/item/food/grown/flower/poppy/geranium,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -76493,8 +76493,8 @@
 /area/station/hallway/secondary/entry)
 "sQp" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy/lily,
-/obj/item/food/grown/poppy/geranium{
+/obj/item/food/grown/flower/poppy/lily,
+/obj/item/food/grown/flower/poppy/geranium{
 	pixel_x = 6;
 	pixel_y = 6
 	},
@@ -77415,6 +77415,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/suit_storage_unit/industrial/loader,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "tbJ" = (
@@ -78200,12 +78201,7 @@
 	c_tag = "Security - Interrogation";
 	network = list("ss13","interrogation")
 	},
-/obj/item/radio/intercom/directional/south{
-	broadcasting = 1;
-	frequency = 1423;
-	listening = 0;
-	name = "Interrogation Intercom"
-	},
+/obj/item/radio/intercom/interrogation/inside/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
@@ -98252,15 +98248,15 @@
 /area/station/command/heads_quarters/ce)
 "ylr" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/food/grown/poppy,
+/obj/item/food/grown/flower/poppy,
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,

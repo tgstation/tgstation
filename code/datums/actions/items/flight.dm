@@ -60,7 +60,7 @@
 		human_owner.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/shoes)
 		human_owner.AddElement(/datum/element/forced_gravity, 0)
 		SEND_SIGNAL(human_owner, COMSIG_JETBOOTS_ACTIVE, human_owner)
-		passtable_on(human_owner, SHOES_TRAIT)
+		ADD_TRAIT(human_owner, TRAIT_PASSTABLE, SHOES_TRAIT)
 		to_chat(human_owner, span_notice("You click your jet boots together and begin to hover gently above the ground..."))
 		human_owner.set_resting(FALSE, TRUE)
 		human_owner.refresh_gravity()
@@ -79,7 +79,7 @@
 	human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/shoes)
 	human_owner.RemoveElement(/datum/element/forced_gravity, 0)
 	SEND_SIGNAL(human_owner, COMSIG_JETBOOTS_INACTIVE, human_owner)
-	passtable_off(human_owner, SHOES_TRAIT)
+	REMOVE_TRAIT(human_owner, TRAIT_PASSTABLE, SHOES_TRAIT)
 	to_chat(human_owner, span_notice("You're lowered back onto the ground..."))
 	human_owner.refresh_gravity()
 	UnregisterSignal(human_owner, list(COMSIG_LIVING_STATUS_STUN, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_LIVING_STATUS_PARALYZE))
@@ -93,7 +93,7 @@
 /// Largely lifted off of wing's can_fly proc, tailored to the jet boots functionality.
 /datum/action/item_action/toggle_flight/proc/can_fly()
 	var/mob/living/carbon/human/human = owner
-	if(human.stat || human.body_position == LYING_DOWN || isnull(human.client))
+	if(IS_UNCONSCIOUS_OR_CRIT(human) || human.body_position == LYING_DOWN || isnull(human.client))
 		return FALSE
 
 	var/turf/location = get_turf(human)

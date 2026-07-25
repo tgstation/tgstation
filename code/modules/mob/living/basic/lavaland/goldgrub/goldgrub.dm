@@ -93,7 +93,7 @@
 /mob/living/basic/mining/goldgrub/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
 	SIGNAL_HANDLER
 
-	if(stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		return NONE
 
 	/// Reflects PKA/PKC shots and plasma cutter beams, unless they have high armor penetration
@@ -162,6 +162,11 @@
 	if(has_emissive)
 		. += emissive_appearance(icon, "[icon_state]_e", src)
 
+/mob/living/basic/mining/goldgrub/death(gibbed)
+	. = ..()
+	if (!QDELETED(src) && has_emissive)
+		update_appearance(UPDATE_OVERLAYS)
+
 /mob/living/basic/mining/goldgrub/baby
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	name = "goldgrub baby"
@@ -193,7 +198,7 @@
 	)
 
 /mob/living/basic/mining/goldgrub/baby/proc/ready_to_grow()
-	return (stat == CONSCIOUS && !is_jaunting(src))
+	return (!IS_UNCONSCIOUS_OR_CRIT(src) && !is_jaunting(src))
 
 /obj/item/food/egg/green/grub_egg
 	name = "grub egg"

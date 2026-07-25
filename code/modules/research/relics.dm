@@ -401,17 +401,15 @@
 	playsound(user, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	throw_smoke(user)
 
-	// carbons always get a hat at least
-	var/mob/living/carbon/carbonius = user
-	//hat
-	var/obj/item/clothing/head/costume/disguise_hat = roll_costume(ITEM_SLOT_HEAD, HIDEMASK)
-	carbonius.dropItemToGround(carbonius.head)
-	carbonius.equip_to_slot_or_del(disguise_hat, ITEM_SLOT_HEAD)
-	if(!ishuman(carbonius))
+	if(!ishuman(user))
 		to_chat(user, span_notice("You have a peculiar feeling for a moment, but then it passes."))
 		return
 
-	var/mob/living/carbon/human/humerus = carbonius
+	var/mob/living/carbon/human/humerus = user
+	//hat
+	var/obj/item/clothing/head/costume/disguise_hat = roll_costume(ITEM_SLOT_HEAD, HIDEMASK)
+	humerus.dropItemToGround(humerus.head)
+	humerus.equip_to_slot_or_del(disguise_hat, ITEM_SLOT_HEAD)
 	// uniform
 	var/obj/item/clothing/under/costume/disguise_uniform = roll_costume(ITEM_SLOT_ICLOTHING)
 	humerus.dropItemToGround(humerus.w_uniform)

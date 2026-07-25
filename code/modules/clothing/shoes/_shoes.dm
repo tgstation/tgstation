@@ -30,6 +30,10 @@
 	var/datum/weakref/our_alert_ref
 	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
 
+/obj/item/clothing/shoes/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /obj/item/clothing/shoes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	context[SCREENTIP_CONTEXT_ALT_RMB] = "Toggle shoes under uniforms"
@@ -45,7 +49,7 @@
 /datum/armor/clothing_shoes
 	bio = 50
 
-/obj/item/clothing/shoes/suicide_act(mob/living/carbon/user)
+/obj/item/clothing/shoes/suicide_act(mob/living/user)
 	if(prob(50))
 		user.visible_message(span_suicide("[user] begins fastening \the [src] up waaay too tightly! It looks like [user.p_theyre()] trying to commit suicide!"))
 		var/obj/item/bodypart/leg/left = user.get_bodypart(BODY_ZONE_L_LEG)
@@ -207,7 +211,7 @@
 		if(HAS_TRAIT(user, TRAIT_CLUMSY)) // based clowns trained their whole lives for this
 			mod_time *= 0.75
 
-		if(do_after(user, mod_time, target = our_guy, extra_checks = CALLBACK(src, PROC_REF(still_shoed), our_guy), hidden = TRUE))
+		if(do_after(user, mod_time, target = our_guy, extra_checks = CALLBACK(src, PROC_REF(still_shoed), our_guy), cog_icon = null))
 			to_chat(user, span_notice("You [tied ? "un[fasten_verb()]" : "knot"] the [fastening_type] on [loc]'s [src.name]."))
 			if(tied == SHOES_UNTIED)
 				adjust_laces(SHOES_KNOTTED, user)

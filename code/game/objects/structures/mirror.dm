@@ -108,9 +108,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
-/obj/structure/mirror/atom_deconstruct()
-	new /obj/item/wallframe/mirror(loc, 1)
-
 /obj/structure/mirror/proc/display_radial_menu(mob/living/carbon/human/user)
 	if(!can_use_mirror(user))
 		return
@@ -321,6 +318,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 /obj/structure/mirror/atom_deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		new /obj/item/shard(loc)
+	else if(broken)
+		new /obj/item/wallframe/mirror/broken(loc)
 	else
 		new /obj/item/wallframe/mirror(loc)
 
@@ -353,12 +352,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 /obj/item/wallframe/mirror
 	name = "mirror"
-	desc = "An unmounted mirror. Attach it to a wall to use."
+	desc = "An unmounted mirror. Attach it to a wall for use."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2)
 	result_path = /obj/structure/mirror
 	pixel_shift = 28
+
+/obj/item/wallframe/mirror/broken
+	name = "broken mirror"
+	desc = "An unmounted and broken mirror. Attach it to a wall for decor."
+	icon_state = "mirror_broke"
+	result_path = /obj/structure/mirror/broken
 
 /obj/structure/mirror/magic
 	name = "magic mirror"

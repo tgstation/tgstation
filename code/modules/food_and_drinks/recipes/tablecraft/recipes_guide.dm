@@ -18,6 +18,7 @@
 	result = /obj/item/stack/sheet/runed_metal
 	category = CAT_CULT
 	non_craftable = TRUE
+	crafting_flags = parent_type::crafting_flags | CRAFT_MUST_BE_LEARNED
 	steps = list("Use Twisted Construction on plasteel")
 
 /datum/crafting_recipe/constructshell
@@ -25,6 +26,7 @@
 	result = /obj/structure/constructshell
 	category = CAT_CULT
 	non_craftable = TRUE
+	crafting_flags = parent_type::crafting_flags | CRAFT_MUST_BE_LEARNED
 	steps = list("Use Twisted Construction on iron")
 
 // Food reactions
@@ -404,7 +406,7 @@
 	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/knife/watermelonslice
-	reqs = list(/obj/item/food/grown/watermelon = 1)
+	reqs = list(/obj/item/food/grown/melonlike/watermelon = 1)
 	result = /obj/item/food/watermelonslice
 	dish_category = DISH_SALAD
 	meal_category = MEAL_SNACK
@@ -712,12 +714,12 @@
 	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/processor/carrotfries
-	reqs = list(/obj/item/food/grown/carrot = 1)
+	reqs = list(/obj/item/food/grown/carrotlike/carrot = 1)
 	result = /obj/item/food/carrotfries
 	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/processor/roastparsnip
-	reqs = list(/obj/item/food/grown/parsnip = 1)
+	reqs = list(/obj/item/food/grown/carrotlike/parsnip = 1)
 	result = /obj/item/food/roastparsnip
 	meal_category = MEAL_SNACK
 
@@ -955,7 +957,7 @@
 	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/drying/semki
-	reqs = list(/obj/item/food/grown/sunflower = 1)
+	reqs = list(/obj/item/food/grown/flower/sunflower = 1)
 	result = /obj/item/food/semki/healthy
 	meal_category = MEAL_SNACK
 

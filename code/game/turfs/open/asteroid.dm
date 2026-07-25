@@ -62,29 +62,36 @@
 /turf/open/misc/asteroid/ex_act(severity, target)
 	return FALSE
 
-/turf/open/misc/asteroid/attackby(obj/item/attack_item, mob/user, list/modifiers)
+/turf/open/misc/asteroid/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(.)
-		return TRUE
+	if(ITEM_INTERACT_ANY_BLOCKER & .)
+		return .
 
-	if(attack_item.tool_behaviour == TOOL_SHOVEL || attack_item.tool_behaviour == TOOL_MINING)
-		if(!can_dig(user))
-			return TRUE
-
-		if(!isturf(user.loc))
-			return
-
-		balloon_alert(user, "digging...")
-
-		if(attack_item.use_tool(src, user, 4 SECONDS, volume = 50))
-			if(!can_dig(user))
-				return TRUE
-			getDug()
-			SSblackbox.record_feedback("tally", "pick_used_mining", 1, attack_item.type)
-			return TRUE
-	else if(istype(attack_item, /obj/item/storage/bag/ore))
+	if(istype(tool, /obj/item/storage/bag/ore))
 		for(var/obj/item/stack/ore/dropped_ore in src)
-			SEND_SIGNAL(attack_item, COMSIG_ATOM_ATTACKBY, dropped_ore)
+			SEND_SIGNAL(tool, COMSIG_ATOM_ATTACKBY, dropped_ore)
+		return ITEM_INTERACT_SUCCESS
+
+	if(tool.tool_behaviour != TOOL_SHOVEL && tool.tool_behaviour != TOOL_MINING)
+		return . // it still could be SKIP_TO_ATTACK and we don't want to step on that
+
+	if(!can_dig(user))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!isturf(user.loc))
+		return ITEM_INTERACT_BLOCKING
+
+	balloon_alert(user, "digging...")
+
+	if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!can_dig(user))
+		return ITEM_INTERACT_BLOCKING
+
+	getDug()
+	SSblackbox.record_feedback("tally", "pick_used_mining", 1, tool.type)
+	return ITEM_INTERACT_SUCCESS
 
 /// Drops itemstack when dug and changes icon
 /turf/open/misc/asteroid/proc/getDug()
@@ -217,6 +224,10 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	if(cur_flags & NO_RUINS)
 		new_turf.turf_flags |= NO_RUINS
 
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace/normal_atmos
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = FALSE
+
 /turf/open/misc/asteroid/lowpressure
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	baseturfs = /turf/open/misc/asteroid/lowpressure
@@ -234,6 +245,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	floor_variance = 0
 	transform = MAP_SWITCH(TRANSLATE_MATRIX(-8, -8), matrix())
 	smooth_broken = TRUE
+	has_floor_variance = FALSE
 	/// DMI used by unsmoothed turfs for variance
 	var/variant_dmi = null
 	/// Amount of variants this turf has
@@ -259,6 +271,12 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	if(!smoothing_flags)
 		return
 	underlay_appearance.transform = transform
+
+/turf/open/misc/asteroid/basalt/smooth/refill_dug()
+	dug = FALSE
+	broken = FALSE
+	set_smoothed_icon_state(smoothing_junction)
+	update_appearance()
 
 /turf/open/misc/asteroid/basalt/smooth/siderite
 	name = "siderite floor"

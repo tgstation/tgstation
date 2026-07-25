@@ -30,23 +30,27 @@
 	name = "bot assembly"
 	icon_state = "setup_medium_box-open"
 	shell_to_spawn = /obj/structure/bot
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/shell/money_bot
 	name = "money bot assembly"
 	icon_state = "setup_large-open"
 	shell_to_spawn = /obj/structure/money_bot
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/shell/drone
 	name = "drone assembly"
 	icon_state = "setup_medium_med-open"
 	shell_to_spawn = /mob/living/circuit_drone
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/shell/server
 	name = "server assembly"
 	icon_state = "setup_stationary-open"
 	shell_to_spawn = /obj/structure/server
 	screw_delay = 10 SECONDS
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75)
 
 /obj/item/shell/airlock
 	name = "circuit airlock assembly"
@@ -55,20 +59,24 @@
 	shell_to_spawn = /obj/machinery/door/airlock/shell
 	screw_delay = 10 SECONDS
 	w_class = WEIGHT_CLASS_BULKY
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/shell/dispenser
 	name = "circuit dispenser assembly"
 	icon_state = "setup_drone_arms-open"
 	shell_to_spawn = /obj/structure/dispenser_bot
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/shell/bci
 	name = "brain-computer interface assembly"
 	icon_state = "bci-open"
 	shell_to_spawn = /obj/item/organ/cyberimp/bci
 	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/shell/scanner_gate
 	name = "scanner gate assembly"
 	icon = 'icons/obj/machines/scangate.dmi'
 	icon_state = "scangate_black_open"
 	shell_to_spawn = /obj/structure/scanner_gate_shell
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)

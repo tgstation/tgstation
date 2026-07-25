@@ -47,7 +47,7 @@
 
 	for (var/mob/living/player in SSmobs.clients_by_zlevel[our_loc.z])
 		var/turf/player_turf = get_turf(player)
-		if (player.stat || get_dist(player_turf, source) > achievement_range)
+		if (IS_UNCONSCIOUS_OR_CRIT(player) || get_dist(player_turf, source) > achievement_range)
 			continue
 
 		for (var/achievement_type in achievement_types)

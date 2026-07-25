@@ -108,6 +108,9 @@
 		update_appearance()
 		return
 
+	if(controller && (controller?.specific_transport_id != configured_transport_id))
+		return
+
 	if(!controller || !controller.controller_operational || isnull(destination_platform))
 		sign_face = "[base_icon_state]_NIS"
 		sign_color = COLOR_DISPLAY_RED

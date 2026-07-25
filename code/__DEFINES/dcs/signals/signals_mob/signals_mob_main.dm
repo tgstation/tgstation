@@ -188,6 +188,9 @@
 ///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
 #define COMSIG_TRY_STRIP "try_strip"
 	#define COMPONENT_CANT_STRIP (1<<0)
+///Called when a mob's strip menu is attempting to be opened,from base /datum/element/strippable/proc/mouse_drop_onto (datum/source, atom/over, mob/user)
+#define COMSIG_MOB_STRIP_MENU_OPEN "mob_strip_menu_open"
+	#define COMPONENT_BLOCK_STRIP_MENU_OPEN (1<<0)
 ///From /datum/component/face_decal/splat/Initialize()
 #define COMSIG_MOB_HIT_BY_SPLAT "hit_by_splat"
 ///From /obj/item/gun/proc/check_botched()
@@ -291,3 +294,6 @@
 
 ///sent to radio TTS sounds when the volume preference is changed and applied
 #define COMSIG_MOB_TTS_RADIO_VOLUME_PREFERENCE_APPLIED "tts_radio_volume_preference_applied"
+
+///from base of [/datum/component/multiple_lives/proc/respawn]: (mob/respawned_mob, gibbed, lives_left)
+#define COMSIG_ON_MULTIPLE_LIVES_RESPAWN "on_multiple_lives_respawn"

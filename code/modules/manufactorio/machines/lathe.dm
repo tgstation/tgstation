@@ -168,7 +168,7 @@
 		created = design.create_result(drop_location(), materials_needed)
 		if (length(slots_chosen))
 			created.set_material_slots(slots_chosen)
-		split_materials_uniformly(materials_needed, target_object = created)
+		design.transfer_materials(materials_needed, target_object = created)
 
 	if(isitem(created))
 		created.pixel_x = created.base_pixel_x + rand(-6, 6)

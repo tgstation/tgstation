@@ -326,6 +326,7 @@
 	siemens_coefficient = 0
 	strip_delay = 7 SECONDS
 	equip_delay_other = 5 SECONDS
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 10.8)
 
 /datum/armor/balloon_vest
 	melee = 10
@@ -644,6 +645,7 @@
 	. = ..()
 	allowed += list(
 		/obj/item/fireaxe/metal_h2_axe,
+		/obj/item/gun/ballistic/rifle/rebarxbow,
 	)
 
 /datum/armor/armor_elder_atmosian

@@ -128,7 +128,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 // Purple raptors never "fully" grow up, and remain usable as backpacks
 /datum/raptor_color/purple/setup_adult(mob/living/basic/raptor/raptor)
-	raptor.can_be_held = TRUE
+	raptor.update_holdability(TRUE)
 	raptor.density = FALSE
 	raptor.move_resist = MOVE_RESIST_DEFAULT
 	raptor.held_w_class = WEIGHT_CLASS_BULKY
@@ -234,7 +234,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 /obj/item/mob_holder/purple_raptor/proc/can_fly(silent = FALSE)
 	var/mob/living/carbon/human/user = loc
-	if (!istype(user) || user.stat || user.body_position == LYING_DOWN || isnull(user.client))
+	if (!istype(user) || IS_UNCONSCIOUS_OR_CRIT(user) || user.body_position == LYING_DOWN || isnull(user.client))
 		return FALSE
 
 	var/turf/location = get_turf(user)
@@ -281,7 +281,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 		else
 			user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor)
 		user.AddElement(/datum/element/forced_gravity, 0)
-		passtable_on(user, REF(src))
+		ADD_TRAIT(user, TRAIT_PASSTABLE, REF(src))
 		to_chat(user, span_notice("You begin gently hovering above ground as [held_mob] on your back starts furiously flapping [held_mob.p_their()] wings[struggling ? ", struggling to keep you up in the air" : ""]!"))
 		user.set_resting(FALSE, TRUE)
 		user.refresh_gravity()
@@ -297,7 +297,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor/slow)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor)
 	user.RemoveElement(/datum/element/forced_gravity, 0)
-	passtable_off(user, REF(src))
+	REMOVE_TRAIT(user, TRAIT_PASSTABLE, REF(src))
 	to_chat(user, span_notice("You settle gently back onto the ground[struggling ? ", [held_mob] on your back breathing out a sigh of releif" : ""]..."))
 	user.refresh_gravity()
 	STOP_PROCESSING(SSprocessing, src)
@@ -398,7 +398,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	if (istype(target, /mob/living/basic/raptor))
 		return TRUE
 	// Only heal raptors, or critted rider
-	if (target.stat == CONSCIOUS || target.stat == DEAD)
+	if (target.stat == STABLE || target.stat == DEAD)
 		return FALSE
 	return target.buckled == healer
 
