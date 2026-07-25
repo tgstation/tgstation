@@ -251,7 +251,7 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
 				if(type & MSG_VISUAL && is_blind())
 					return FALSE
 	// voice muffling
-	if(stat == UNCONSCIOUS || stat == HARD_CRIT)
+	if(IS_UNCONSCIOUS(src))
 		if(type & MSG_AUDIBLE) //audio
 			to_chat(src, "<I>... You can almost hear something ...</I>")
 		return FALSE
@@ -696,7 +696,7 @@ GAME_VERB(/mob, examinate, "Examine", null, atom/examinify as mob|obj|turf) //It
 	return
 
 /mob/living/handle_eye_contact(mob/living/examined_mob)
-	if(!istype(examined_mob) || src == examined_mob || examined_mob.stat >= UNCONSCIOUS || !client || is_blind())
+	if(!istype(examined_mob) || src == examined_mob || IS_UNCONSCIOUS(examined_mob) || !client || is_blind())
 		return
 
 	var/imagined_eye_contact = FALSE
@@ -1215,6 +1215,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 				search_pda = 0
 
 /mob/proc/update_stat()
+	SIGNAL_HANDLER
 	return
 
 /mob/proc/update_health_hud()

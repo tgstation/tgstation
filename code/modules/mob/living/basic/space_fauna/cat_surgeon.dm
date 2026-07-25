@@ -44,6 +44,9 @@
 	AddElement(/datum/element/death_drops, drop_on_death)
 	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(after_attack))
 
+/mob/living/basic/cat_butcherer/init_unconscious_appearance()
+	add_generic_humanoid_static_appearance()
+
 /mob/living/basic/cat_butcherer/proc/after_attack(mob/living/basic/attacker, atom/target)
 	SIGNAL_HANDLER
 

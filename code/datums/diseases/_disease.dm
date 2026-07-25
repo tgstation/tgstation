@@ -128,7 +128,7 @@
 	var/recovery_prob = 0
 	var/cure_mod
 	var/bad_immune = HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) ? 2 : 1
-	var/is_sleeping = HAS_TRAIT_FROM_ONLY(affected_mob, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(/datum/status_effect/incapacitating/sleeping::id))
+	var/is_sleeping = !!affected_mob.IsSleeping()
 
 	if(required_organ)
 		if(!has_required_infectious_organ(affected_mob, required_organ))

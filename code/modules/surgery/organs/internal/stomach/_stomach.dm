@@ -351,7 +351,7 @@
 			if(SPT_PROB(5, seconds_per_tick))
 				disgusted.adjust_stutter(2 SECONDS)
 				disgusted.adjust_confusion(2 SECONDS)
-			if(SPT_PROB(5, seconds_per_tick) && !disgusted.stat)
+			if(SPT_PROB(5, seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(disgusted))
 				to_chat(disgusted, span_warning("You feel kind of iffy..."))
 			disgusted.adjust_jitter(-6 SECONDS)
 		if(disgust >= DISGUST_LEVEL_VERYGROSS)

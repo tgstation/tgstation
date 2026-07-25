@@ -115,7 +115,7 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/get_able_to_run()
 	var/mob/living/living_pawn = pawn
 
-	if(INCAPACITATED_IGNORING(living_pawn, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS|INCAPABLE_GRAB) || living_pawn.stat > CONSCIOUS)
+	if(INCAPACITATED_IGNORING(living_pawn, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS|INCAPABLE_GRAB))
 		return AI_UNABLE_TO_RUN
 	return ..()
 
@@ -142,7 +142,7 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/proc/on_startpulling(datum/source, atom/movable/puller, state, force)
 	SIGNAL_HANDLER
 	var/mob/living/living_pawn = pawn
-	if(!IS_DEAD_OR_INCAP(living_pawn) && prob(MONKEY_PULL_AGGRO_PROB)) // nuh uh you don't pull me!
+	if(!living_pawn.incapacitated && prob(MONKEY_PULL_AGGRO_PROB)) // nuh uh you don't pull me!
 		retaliate(living_pawn.pulledby)
 		return TRUE
 

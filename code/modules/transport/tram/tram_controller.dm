@@ -504,7 +504,7 @@
 	playsound(source = nav_beacon, soundin = 'sound/vehicles/car_crash.ogg', vol = 100, vary = FALSE, falloff_distance = DEFAULT_TRAM_LENGTH)
 	nav_beacon.audible_message(span_userdanger("You hear metal grinding as the tram comes to a sudden, complete stop!"))
 	for(var/mob/living/tram_passenger in range(DEFAULT_TRAM_LENGTH - 2, nav_beacon))
-		if(tram_passenger.stat != CONSCIOUS)
+		if(IS_UNCONSCIOUS_OR_CRIT(tram_passenger))
 			continue
 		shake_camera(M = tram_passenger, duration = 0.2 SECONDS, strength = 3)
 

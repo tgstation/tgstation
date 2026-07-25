@@ -22,7 +22,7 @@
 		return
 	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(owner_resist))
-	if(!owner.stat)
+	if(!IS_UNCONSCIOUS_OR_CRIT(owner))
 		to_chat(owner, span_userdanger("You become frozen in a cube!"))
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
 	owner.add_overlay(cube)
@@ -42,7 +42,7 @@
 		qdel(src)
 
 /datum/status_effect/freon/on_remove()
-	if(!owner.stat)
+	if(!IS_UNCONSCIOUS_OR_CRIT(owner))
 		to_chat(owner, span_notice("The cube melts!"))
 	owner.cut_overlay(cube)
 	owner.adjust_bodytemperature(100)

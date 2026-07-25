@@ -170,7 +170,7 @@
 	if(!SSticker)
 		return
 	var/mob/M = AM
-	if(HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) || ((isdrone(M) || iscyborg(M)) && M.stat != CONSCIOUS))
+	if(HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) || ((isdrone(M) || iscyborg(M)) && IS_UNCONSCIOUS_OR_CRIT(M)))
 		return
 	bumpopen(M)
 

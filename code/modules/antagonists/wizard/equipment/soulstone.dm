@@ -323,7 +323,7 @@
 				to_chat(user, span_cult("<b>\"This soul is mine.</b></span> <span class='cultlarge'>SACRIFICE THEM!\""))
 				return FALSE
 
-		if(grab_sleeping ? victim.stat == CONSCIOUS : victim.stat != DEAD)
+		if(grab_sleeping ? !IS_UNCONSCIOUS_OR_CRIT(victim) : victim.stat != DEAD)
 			to_chat(user, span_userdanger("Capture failed!"))
 			to_chat(user, span_danger("Kill or maim the victim first!"))
 			return FALSE
