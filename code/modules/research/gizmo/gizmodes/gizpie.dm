@@ -3,6 +3,10 @@
 		/datum/gizpulse/throw_pie,
 	)
 
+	var/mysterious_pie
+
+	var/pie_target
+
 	var/datum/weakref/pie_target
 
 /datum/gizpulse/pie_thrower/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
