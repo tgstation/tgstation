@@ -45,6 +45,8 @@
 	var/cure_color = "green"
 	///A remedied symptom has no effect and contributes to the cure
 	var/remedied = FALSE
+	///Whether or not mobs can gain immunity to this symptom after recovering from a disease with it
+	var/immunity_proof = FALSE
 
 /datum/symptom/New()
 	var/list/S = SSdisease.list_symptoms
@@ -55,9 +57,12 @@
 	CRASH("We couldn't assign an ID!")
 
 ///Called when processing of the advance disease that holds this symptom infects a host and upon each Refresh() of that advance disease.
-/datum/symptom/proc/Start(datum/disease/advance/A)
+/datum/symptom/proc/Start(datum/disease/advance/advanced_disease)
 	if(neutered)
 		return FALSE
+	if(name in advanced_disease.affected_mob.symptom_resistances)
+		symptom_delay_min *= 1.75
+		symptom_delay_max *= 1.75
 	return TRUE
 
 ///Called when the advance disease is going to be deleted or when the advance disease stops processing.

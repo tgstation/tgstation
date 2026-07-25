@@ -502,6 +502,22 @@
 	visibility_flags &= ~HIDDEN_SCANNER
 	affected_mob.med_hud_set_status()
 
+/datum/disease/advance/cure(add_resistance = TRUE)
+	if(severity == DISEASE_SEVERITY_UNCURABLE)
+		return
+	if(add_resistance == TRUE)
+		for(var/datum/symptom/each_symptom as anything in symptoms)
+			if(!each_symptom.neutered && !each_symptom.immunity_proof)
+				LAZYOR(affected_mob.symptom_resistances, each_symptom.name)
+	.=..()
+
+/datum/disease/advance/get_immunity_recovery()
+	var/recovery_bonus = 0
+	for(var/datum/symptom/each_symptom as anything in symptoms)
+		if((each_symptom.name in affected_mob.symptom_resistances) && !each_symptom.neutered)
+			recovery_bonus += DISEASE_SYMPTOM_IMMUNITY_RECOVERY_BONUS
+	return recovery_bonus
+
 /datum/disease/advance/proc/generate_cure_text(cure_count)
 	var/remedies = list()
 	for(var/datum/symptom/each_symptom as anything in symptoms)
