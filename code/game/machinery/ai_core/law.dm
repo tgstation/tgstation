@@ -44,8 +44,8 @@
 	/// First slot is always reserved for core modules
 	VAR_FINAL/list/obj/item/ai_module/ai_modules
 
-	/// If we are welded to the floor
-	var/welded = FALSE
+	/// If we are double secured to the floor
+	var/secured = FALSE
 
 	/// Cooldown between allowing refreshes via ui
 	COOLDOWN_DECLARE(refresh_cooldown)
@@ -57,10 +57,45 @@
 	if(!mapload)
 		log_silicon("\A [name] was created at [loc_name(src)].")
 		message_admins("\A [name] was created at [ADMIN_VERBOSEJMP(src)].")
+	register_context()
 
 /obj/machinery/ai_law_rack/Destroy()
 	ai_modules = null
 	return ..()
+
+/obj/machinery/ai_law_rack/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(held_item?.tool_behaviour == TOOL_WRENCH && !secured)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unfasten" : "Fasten"
+		context[SCREENTIP_CONTEXT_RMB] = context[SCREENTIP_CONTEXT_LMB]
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item?.tool_behaviour == TOOL_WIRECUTTER)
+		context[SCREENTIP_CONTEXT_LMB] = secured ? "Unsecure" : "Secure"
+		context[SCREENTIP_CONTEXT_RMB] = context[SCREENTIP_CONTEXT_LMB]
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item?.tool_behaviour == TOOL_WELDER)
+		context[SCREENTIP_CONTEXT_LMB] = "Weld modules (in UI)"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "Screw modules (in UI)"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item?.tool_behaviour == TOOL_MULTITOOL)
+		context[SCREENTIP_CONTEXT_LMB] = "Repair modules (in UI)"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/multitool))
+		var/obj/item/multitool/tool = held_item
+		if(istype(tool.buffer, /obj/structure/ai_core))
+			context[SCREENTIP_CONTEXT_LMB] = "Link core to rack" // overrides above message
+			. = CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/ai_module))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert module"
+		. = CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/ai_law_rack/base/on_set_is_operational(old_value)
 	var/obj/machinery/ai_law_rack/base/parent_rack = get_parent_rack()
@@ -93,54 +128,62 @@
 	for(var/obj/item/ai_module/installed in ai_modules)
 		installed.forceMove(get_turf(src))
 
+/obj/machinery/ai_law_rack/proc/can_secure_check(mob/living/user)
+	if(!anchored)
+		balloon_alert(user, "fasten it first!")
+		return FALSE
+	if(!is_anchorable_floor(loc))
+		balloon_alert(user, "nothing to secure to!")
+		return FALSE
+	return TRUE
+
 /obj/machinery/ai_law_rack/can_be_unfasten_wrench(mob/living/user, silent)
-	if(welded)
+	if(secured)
 		if(!silent)
-			balloon_alert(user, "unweld it first!")
+			balloon_alert(user, "unsecure it first!")
 		return FAILED_UNFASTEN
 	return ..()
 
 /obj/machinery/ai_law_rack/wrench_act(mob/living/user, obj/item/tool)
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		return ITEM_INTERACT_BLOCKING
-	switch(default_unfasten_wrench(user, tool, 5 SECONDS))
+	switch(default_unfasten_wrench(user, tool, 6 SECONDS))
 		if(CANT_UNFASTEN)
 			return NONE
 		if(FAILED_UNFASTEN)
 			return ITEM_INTERACT_BLOCKING
 		if(SUCCESSFUL_UNFASTEN)
-			balloon_alert(user, anchored ? "fastened" : "unfastened")
+			balloon_alert_to_viewers("[anchored ? "":"un"]fastened")
 			return ITEM_INTERACT_SUCCESS
 
 	return NONE
 
-/obj/machinery/ai_law_rack/proc/can_weld_check(mob/living/user)
-	if(!anchored)
-		balloon_alert(user, "fasten it first!")
-		return FALSE
-	if(!is_anchorable_floor(loc))
-		balloon_alert(user, "nothing to weld to!")
-		return FALSE
-	return TRUE
+/obj/machinery/ai_law_rack/wrench_act_secondary(mob/living/user, obj/item/tool)
+	return wrench_act(user, tool)
 
-/obj/machinery/ai_law_rack/welder_act(mob/living/user, obj/item/tool)
+/obj/machinery/ai_law_rack/wirecutter_act(mob/living/user, obj/item/tool)
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		return ITEM_INTERACT_BLOCKING
-	if(!can_weld_check(user) || !tool.tool_start_check(user, amount = 2, heat_required = HIGH_TEMPERATURE_REQUIRED))
+	if(!can_secure_check(user))
 		return ITEM_INTERACT_BLOCKING
-	if(!tool.use_tool(src, user, 5 SECONDS, volume = 50, amount = 2, extra_checks = CALLBACK(src, PROC_REF(can_weld_check), user)) )
+	balloon_alert_to_viewers("[secured ? "un":""]securing to floor...")
+	if(!tool.use_tool(src, user, 6 SECONDS, volume = 50, extra_checks = CALLBACK(src, PROC_REF(can_secure_check), user)))
 		return ITEM_INTERACT_BLOCKING
-	if(welded)
-		balloon_alert(user, "unwelded")
-		welded = FALSE
-	else
-		balloon_alert(user, "welded")
-		welded = TRUE
+	secured = !secured
+	balloon_alert_to_viewers("[secured ? "":"un"]secured")
 	return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/ai_law_rack/wirecutter_act_secondary(mob/living/user, obj/item/tool)
+	return wirecutter_act(user, tool)
+
+/obj/machinery/ai_law_rack/welder_act(mob/living/user, obj/item/tool)
+	ui_interact(user)
+	return ITEM_INTERACT_BLOCKING
+
 /obj/machinery/ai_law_rack/multitool_act(mob/living/user, obj/item/multitool/tool)
-	if(!istype(tool.buffer, /obj/structure/ai_core))
-		return NONE
+	if(!istype(tool, /obj/item/multitool) || !istype(tool.buffer, /obj/structure/ai_core))
+		ui_interact(user)
+		return ITEM_INTERACT_BLOCKING
 
 	var/obj/structure/ai_core/to_link = tool.buffer
 	to_link.default_link_ref = WEAKREF(src)
@@ -176,18 +219,18 @@
 	var/filled = 0
 	for(var/obj/item/ai_module/module in ai_modules)
 		filled++
-	. += span_info("Otherwise, you can see that [filled] out of [length(ai_modules)] slots are filled with modules.")
+	. += span_info("Otherwise, you can see that [filled] out of [length(ai_modules)] slots are filled.")
 	if(has_core_slot && isnull(get_core_module()))
 		. += span_warning("You also note that the core slot is empty!")
 	if(anchored)
-		. += span_notice("It is anchored[welded ? " and welded" : ", but not welded"] to the floor.")
+		. += span_notice("It is [EXAMINE_HINT("anchored")] to the floor[secured ? " and [EXAMINE_HINT("secured with metal cables")]" : ", but not [EXAMINE_HINT("secured by metal cables")]"].")
 
 /obj/machinery/ai_law_rack/examine_more(mob/user)
 	. = ..()
 	if(isAI(user))
 		return
 	if(!isobserver(user) && get_dist(user, src) > LAW_EXAMINE_RANGE)
-		. += span_warning("You can't quite make out the modules installed on the rack from here.")
+		. += span_warning("You can't quite make out which modules are installed in [src] from here.")
 		return
 	for(var/i in 1 to length(ai_modules))
 		. += get_slot_examine(i)
@@ -382,7 +425,7 @@
 			var/obj/item/welder = user.get_active_held_item()
 			if(welder.tool_behaviour != TOOL_WELDER || DOING_INTERACTION_WITH_TARGET(user, src))
 				return TRUE
-			if(!can_weld_check(user) || !welder.tool_start_check(user, amount = 1, heat_required = HIGH_TEMPERATURE_REQUIRED))
+			if(!welder.tool_start_check(user, amount = 1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 				return TRUE
 			balloon_alert_to_viewers("[ai_modules[module] == MODULE_WELDED ? "un":""]welding slot [index]...")
 			if(!welder.use_tool(src, user, 3 SECONDS, volume = 25, amount = 1))
@@ -984,7 +1027,7 @@
 	var/designation
 	if(mapload)
 		anchored = TRUE
-		welded = TRUE
+		secured = TRUE
 		load_config_law()
 		designation = popleft(core_designations)
 		new /obj/item/paper/law_rack_tutorial(loc)
