@@ -174,11 +174,11 @@
 	LAZYOR(recently_attacked_refs, target_key)
 	addtimer(CALLBACK(src, PROC_REF(remove_attacked_ref), target_key), 30 SECONDS, TIMER_DELETE_ME|TIMER_UNIQUE|TIMER_OVERRIDE)
 
-	if(target.stat == CONSCIOUS && LAZYFIND(recently_attacked_us_refs, target_key))
+	if(target.stat == STABLE && LAZYFIND(recently_attacked_us_refs, target_key))
 		addtimer(CALLBACK(src, PROC_REF(check_crit), target), 0.2 SECONDS, TIMER_DELETE_ME|TIMER_UNIQUE)
 
 /datum/status_effect/heretic_passive/blade/proc/check_crit(mob/living/target)
-	if(QDELETED(target) || target.stat == CONSCIOUS)
+	if(QDELETED(target) || target.stat == STABLE)
 		return
 	recharge_spells()
 
@@ -322,7 +322,7 @@
 		addtimer(CALLBACK(src, PROC_REF(check_crit), target), 0.2 SECONDS, TIMER_DELETE_ME|TIMER_UNIQUE)
 
 /datum/status_effect/heretic_passive/cosmic/proc/check_crit(mob/living/target)
-	if(QDELETED(target) || target.stat == CONSCIOUS)
+	if(QDELETED(target) || target.stat == STABLE)
 		return
 	recharge_spells()
 
@@ -742,7 +742,7 @@
 		addtimer(CALLBACK(src, PROC_REF(check_crit), target), 0.2 SECONDS, TIMER_DELETE_ME|TIMER_UNIQUE)
 
 /datum/status_effect/heretic_passive/void/proc/check_crit(mob/living/target)
-	if(QDELETED(target) || target.stat == CONSCIOUS)
+	if(QDELETED(target) || target.stat == STABLE)
 		return
 	LAZYADD(gained_charges_from, REF(target))
 	addtimer(CALLBACK(src, PROC_REF(remove_gained_from), REF(target)), 5 MINUTES, TIMER_DELETE_ME|TIMER_UNIQUE)
