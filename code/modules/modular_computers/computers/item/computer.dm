@@ -154,11 +154,7 @@
 	install_default_programs()
 	register_context()
 	update_appearance()
-	if(mapload)
-		return INITIALIZE_HINT_LATELOAD
-	else
-		if(SStts.tts_enabled)
-			voice = SStts.computer_voice
+	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/modular_computer/LateInitialize()
 	if(SStts.tts_enabled)
@@ -421,6 +417,15 @@
 		var/response = tgui_alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", list("Yes", "No"))
 		if(response == "Yes")
 			turn_on(user)
+
+/obj/item/modular_computer/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_CONTENTS)
+		return
+
+	if(internal_cell)
+		internal_cell.emp_act(severity)
+		handle_power(1 SECONDS)
 
 /obj/item/modular_computer/emag_act(mob/user, obj/item/card/emag/emag_card, forced)
 	if(!enabled && !forced)
@@ -791,6 +796,7 @@
 	if(looping_sound)
 		soundloop.stop()
 	if(physical && loud)
+		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 		physical.visible_message(span_notice("\The [src] shuts down."))
 	enabled = FALSE
 	update_appearance()

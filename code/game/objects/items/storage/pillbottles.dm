@@ -15,6 +15,7 @@
 	pickup_sound = 'sound/items/handling/pill_bottle_pickup.ogg'
 	drop_sound = 'sound/items/handling/pill_bottle_place.ogg'
 	storage_type = /datum/storage/pillbottle
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.2)
 
 	///Number of pills to spawn
 	VAR_PROTECTED/spawn_count
@@ -204,3 +205,9 @@
 		A warning label reads: <b>Take in moderation</b>."
 	spawn_count = 7
 	spawn_type = /obj/item/reagent_containers/applicator/pill/prescription_stimulant
+
+/obj/item/storage/pill_bottle/sepsisillin
+	name = "bottle of sepsisillin pills"
+	desc = "Contains immune system suppressants, for assisting virology research. Do not confuse with spaceacillin."
+	spawn_count = 7
+	spawn_type = /obj/item/reagent_containers/applicator/pill/sepsisillin

@@ -74,55 +74,39 @@
 
 	return ..()
 
-/obj/item/spellbook/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/spellbook/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// This can be generalized in the future, but for now it stays
-	if(istype(O, /obj/item/antag_spawner/contract))
-		var/datum/spellbook_entry/item/contract/contract_entry = locate() in entries
-		if(!istype(contract_entry))
-			to_chat(user, span_warning("[src] doesn't seem to want to refund [O]."))
-			return
-		if(!contract_entry.can_refund(user, src))
-			to_chat(user, span_warning("You can't refund [src]."))
-			return
-		var/obj/item/antag_spawner/contract/contract = O
-		if(contract.used)
+	var/datum/spellbook_entry/item/spawner_entry
+	var/success_string
+	if(istype(tool, /obj/item/antag_spawner/contract))
+		if(astype(tool, /obj/item/antag_spawner/contract).used)
 			to_chat(user, span_warning("The contract has been used, you can't get your points back now!"))
-			return
+			return ITEM_INTERACT_BLOCKING
+		spawner_entry = locate(/datum/spellbook_entry/item/contract) in entries
+		success_string = "You feed the contract back into the spellbook, refunding your points."
 
-		to_chat(user, span_notice("You feed the contract back into the spellbook, refunding your points."))
-		uses += contract_entry.cost
-		contract_entry.times--
-		qdel(O)
+	if(istype(tool, /obj/item/antag_spawner/slaughter_demon/laughter))
+		spawner_entry = locate(/datum/spellbook_entry/item/hugbottle) in entries
+		success_string = "On second thought, maybe summoning a demon isn't a funny idea. You refund your points."
 
-	else if(istype(O, /obj/item/antag_spawner/slaughter_demon/laughter))
-		var/datum/spellbook_entry/item/hugbottle/demon_entry = locate() in entries
-		if(!istype(demon_entry))
-			to_chat(user, span_warning("[src] doesn't seem to want to refund [O]."))
-			return
-		if(!demon_entry.can_refund(user, src))
-			to_chat(user, span_warning("You can't refund [O]."))
-			return
+	else if(istype(tool, /obj/item/antag_spawner/slaughter_demon))
+		spawner_entry = locate(/datum/spellbook_entry/item/bloodbottle) in entries
+		success_string = "On second thought, maybe summoning a demon is a bad idea. You refund your points."
 
-		to_chat(user, span_notice("On second thought, maybe summoning a demon isn't a funny idea. You refund your points."))
-		uses += demon_entry.cost
-		demon_entry.times--
-		qdel(O)
+	if(isnull(success_string))
+		return NONE
+	if(!istype(spawner_entry)) // No success_string means it isn't a valid item, no spawner entry means the book doesn't have it(somehow)(they had this check before I got here)
+		to_chat(user, span_warning("[src] doesn't seem to want to refund [tool]."))
+		return ITEM_INTERACT_BLOCKING
+	if(!spawner_entry.can_refund(user, src, tool))
+		to_chat(user, span_warning("You can't refund [src]."))
+		return ITEM_INTERACT_BLOCKING
 
-	else if(istype(O, /obj/item/antag_spawner/slaughter_demon))
-		var/datum/spellbook_entry/item/bloodbottle/demon_entry = locate() in entries
-		if(!istype(demon_entry))
-			to_chat(user, span_warning("[src] doesn't seem to want to refund [O]."))
-			return
-		if(!demon_entry.can_refund(user, src))
-			to_chat(user, span_warning("You can't refund [O]."))
-			return
-
-		to_chat(user, span_notice("On second thought, maybe summoning a demon is a bad idea. You refund your points."))
-		uses += demon_entry.cost
-		demon_entry.times--
-		qdel(O)
-
-	return ..()
+	to_chat(user, span_notice(success_string))
+	uses += spawner_entry.cost
+	spawner_entry.times--
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /// Instantiates our list of spellbook entries.
 /obj/item/spellbook/proc/prepare_spells()

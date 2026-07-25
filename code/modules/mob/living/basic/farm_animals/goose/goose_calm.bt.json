@@ -1,0 +1,30 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/goose/calm",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"repeat_secondary_delay": "1 SECONDS",
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "subplan",
+			"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+			"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+			"children": [
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/forage_and_retaliate",
+					"bindings": {
+						"q8w3rtv1": "/datum/bt_node/subtree/forage_for_goose_food",
+						"z4n9bk7p": "/datum/bt_node/subtree/pick_retaliate_target"
+					}
+				}
+			]
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/random_speech_loop"
+		}
+	]
+}

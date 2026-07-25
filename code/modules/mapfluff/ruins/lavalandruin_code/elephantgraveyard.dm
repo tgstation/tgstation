@@ -234,52 +234,56 @@
 	dug_closed = FALSE
 	return TRUE
 
-/obj/structure/closet/crate/grave/tool_interact(obj/item/weapon, mob/living/carbon/user)
+/obj/structure/closet/crate/grave/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	//anything that isn't a shovel does normal stuff to the grave[like putting stuff in]
-	if(weapon.tool_behaviour != TOOL_SHOVEL)
+	if(tool.tool_behaviour != TOOL_SHOVEL)
 		return ..()
 
-	//player is attempting to open/close the grave with a shovel
-	if(!user.combat_mode)
-		user.visible_message(
-			span_notice("[user] Is attempting to [opened ? "close" : "dig open"] [src]."),
-			span_notice("You start [opened ? "closing" : "digging open"] [src]."),
-		)
-		if(!weapon.use_tool(src, user, delay = 15, volume = 40))
-			return TRUE
-
-		var/is_chill_with_robbing = HAS_MIND_TRAIT(user, TRAIT_MORBID) || HAS_PERSONALITY(user, /datum/personality/callous) || HAS_PERSONALITY(user, /datum/personality/misanthropic)
-		if(opened)
-			dug_closed = TRUE
-			close(user)
-		else if(open(user, force = TRUE) && affect_mood)
-			user.add_mood_event("graverobbing", is_chill_with_robbing ? /datum/mood_event/morbid_graverobbing : /datum/mood_event/graverobbing)
-			if(lead_tomb && first_open)
-				if(is_chill_with_robbing)
-					to_chat(user, span_notice("Did someone say something? I'm sure it was nothing."))
-				else
-					user.gain_trauma(/datum/brain_trauma/magic/stalker)
-					to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
-				first_open = FALSE
-
-		return TRUE
 
 	//player is attempting to destroy the open grave with a shovel
-	else
+	if(user.combat_mode)
 		if(!opened)
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 
 		user.visible_message(
 			span_notice("[user] Is attempting to remove [src]."),
 			span_notice("You start removing [src]."),
 		)
-		if(!weapon.use_tool(src, user, delay = 15, volume = 40) || !opened)
-			return TRUE
+		if(!tool.use_tool(src, user, delay = 1.5 SECONDS , volume = 40) || !opened)
+			return ITEM_INTERACT_BLOCKING
 
 		to_chat(user, span_notice("You remove \the [src] completely."))
 		user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 		deconstruct(TRUE)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
+
+	//player is attempting to open/close the grave with a shovel
+	user.visible_message(
+			span_notice("[user] Is attempting to [opened ? "close" : "dig open"] [src]."),
+			span_notice("You start [opened ? "closing" : "digging open"] [src]."),
+	)
+	if(!tool.use_tool(src, user, delay = 1.5 SECONDS, volume = 40))
+		return ITEM_INTERACT_BLOCKING
+
+	var/is_chill_with_robbing = HAS_MIND_TRAIT(user, TRAIT_MORBID) || HAS_PERSONALITY(user, /datum/personality/callous) || HAS_PERSONALITY(user, /datum/personality/misanthropic)
+	if(opened)
+		dug_closed = TRUE
+		close(user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(!open(user, force = TRUE) || !affect_mood)
+		return ITEM_INTERACT_SUCCESS
+
+	user.add_mood_event("graverobbing", is_chill_with_robbing ? /datum/mood_event/morbid_graverobbing : /datum/mood_event/graverobbing)
+	if(lead_tomb && first_open)
+		if(is_chill_with_robbing || !astype(user, /mob/living/carbon)?.gain_trauma(/datum/brain_trauma/magic/stalker))
+			to_chat(user, span_notice("Did someone say something? I'm sure it was nothing."))
+		else
+			to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
+		first_open = FALSE
+
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/structure/closet/crate/grave/container_resist_act(mob/living/user, loc_required = TRUE)
 	if(opened)

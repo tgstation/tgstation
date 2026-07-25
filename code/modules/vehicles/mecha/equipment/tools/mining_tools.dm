@@ -19,6 +19,7 @@
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 0.9
 	mech_flags = EXOSUIT_MODULE_WORKING | EXOSUIT_MODULE_COMBAT
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	var/drill_delay = 7
 	var/drill_level = DRILL_BASIC
 
@@ -228,6 +229,7 @@
 	drill_level = DRILL_HARDENED
 	force = 15
 	toolspeed = 0.7
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 3.25)
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner
 	name = "exosuit mining scanner"
@@ -236,6 +238,7 @@
 	equip_cooldown = 1.5 SECONDS
 	equipment_slot = MECHA_UTILITY
 	mech_flags = EXOSUIT_MODULE_WORKING
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25)
 	var/scanning_time = 0
 	COOLDOWN_DECLARE(area_scan_cooldown)
 

@@ -128,25 +128,29 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	icon_state = template.icon_state
 	return ..()
 
-/obj/item/tcgcard/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/tcgcard))
-		var/obj/item/tcgcard/second_card = item
+/obj/item/tcgcard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/tcgcard))
+		var/obj/item/tcgcard/second_card = tool
 		var/obj/item/tcgcard_deck/new_deck = new /obj/item/tcgcard_deck(drop_location())
 		new_deck.flipped = flipped
 		user.transferItemToLoc(second_card, new_deck)//Start a new pile with both cards, in the order of card placement.
 		user.transferItemToLoc(src, new_deck)
 		new_deck.update_icon_state()
 		user.put_in_hands(new_deck)
-	if(istype(item, /obj/item/tcgcard_deck))
-		var/obj/item/tcgcard_deck/old_deck = item
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/tcgcard_deck))
+		var/obj/item/tcgcard_deck/old_deck = tool
 		if(length(old_deck.contents) >= 30)
 			to_chat(user, span_notice("This pile has too many cards for a regular deck!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		user.transferItemToLoc(src, old_deck)
 		flipped = old_deck.flipped
 		old_deck.update_appearance()
 		update_appearance()
-	return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/tcgcard/proc/check_menu(mob/living/user)
 	if(!istype(user))
@@ -254,16 +258,16 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		return FALSE
 	return TRUE
 
-/obj/item/tcgcard_deck/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(istype(item, /obj/item/tcgcard))
-		if(contents.len >= 30)
-			to_chat(user, span_notice("This pile has too many cards for a regular deck!"))
-			return FALSE
-		var/obj/item/tcgcard/new_card = item
-		new_card.flipped = flipped
-		new_card.forceMove(src)
-
+/obj/item/tcgcard_deck/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/tcgcard))
+		return NONE
+	if(contents.len >= 30)
+		to_chat(user, span_notice("This pile has too many cards for a regular deck!"))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/tcgcard/new_card = tool
+	new_card.flipped = flipped
+	new_card.forceMove(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/tcgcard_deck/attack_self(mob/living/carbon/user)
 	shuffle_deck(user)

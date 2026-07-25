@@ -2,6 +2,7 @@
 /obj/item/implant/sad_trombone
 	name = "sad trombone implant"
 	actions_types = null
+	custom_materials = list(/datum/material/bananium = HALF_SHEET_MATERIAL_AMOUNT)
 
 	/// What do we play when the implantee deathgasps?
 	var/death_noise = 'sound/misc/sadtrombone.ogg'

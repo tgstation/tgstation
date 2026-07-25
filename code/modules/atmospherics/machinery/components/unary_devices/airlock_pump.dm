@@ -182,7 +182,7 @@
 /obj/machinery/atmospherics/components/unary/airlock_pump/process_atmos()
 	if(!on)
 		return
-	if(is_operational)
+	if(!is_operational)
 		stack_trace("Airlock pump on but not operational, it should've been cancelled by on_set_is_operational")
 		stop_cycle(null, unbolt_only = TRUE)
 		return
@@ -605,7 +605,7 @@
 		// unbolt all the doors but don't open them
 		for(var/obj/machinery/door/airlock/airlock as anything in (internal_airlocks + external_airlocks))
 			airlock.unbolt()
-		audible_message(span_notice("[src] whirrs as [p_they()] loses power, disengaging airlock bolts."))
+		audible_message(span_notice("[src] whirrs as [p_they()] lose[p_s()] power, disengaging airlock bolts."))
 		deltimer(emergency_stop_timer)
 		set_on(FALSE)
 
@@ -616,7 +616,7 @@
 		for(var/obj/machinery/door/airlock/airlock as anything in internal_airlocks)
 			if(open_airlock_on_cycle)
 				INVOKE_ASYNC(airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_open))
-		audible_message(span_notice("[src] whirrs as [p_they()] regains power, re-engaging airlock bolts."))
+		audible_message(span_notice("[src] whirrs as [p_they()] regain[p_s()] power, re-engaging airlock bolts."))
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only
 	open_airlock_on_cycle = FALSE

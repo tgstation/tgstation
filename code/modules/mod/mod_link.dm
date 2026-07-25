@@ -143,6 +143,7 @@
 	desc = "An intricate piece of machinery that creates a holographic video call with another MODlink-compatible device. Essentially a video necklace."
 	icon_state = "modlink"
 	actions_types = list(/datum/action/item_action/call_link)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 	/// The installed power cell.
 	var/obj/item/stock_parts/power_store/cell
 	/// The MODlink datum we operate.
@@ -276,8 +277,8 @@
 		call_link(user, mod_link)
 
 /obj/item/clothing/neck/link_scryer/proc/get_user()
-	var/mob/living/carbon/user = loc
-	return istype(user) && user.wear_neck == src ? user : null
+	var/mob/living/user = loc
+	return istype(user) && user.get_item_by_slot(ITEM_SLOT_NECK) == src ? user : null
 
 /obj/item/clothing/neck/link_scryer/proc/can_call()
 	var/mob/living/user = loc
