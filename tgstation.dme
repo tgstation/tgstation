@@ -6507,6 +6507,7 @@
 #include "code\modules\research\gizmo\gizmodes\gizmisc.dm"
 #include "code\modules\research\gizmo\gizmodes\gizmood.dm"
 #include "code\modules\research\gizmo\gizmodes\gizmopper.dm"
+#include "code\modules\research\gizmo\gizmodes\gizpie.dm"
 #include "code\modules\research\gizmo\gizmodes\gizporter.dm"
 #include "code\modules\research\machinery\_production.dm"
 #include "code\modules\research\machinery\circuit_imprinter.dm"
