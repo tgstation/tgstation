@@ -16,31 +16,26 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 		QUEUE_SMOOTH(src)
 
 	//rotate the pixel offsets too.
+	if(rotation < 0)
+		rotation += 360
+
+	var/turntimes = rotation/90
 	if((pixel_x || pixel_y) && (params & ROTATE_OFFSET))
-		if(rotation < 0)
-			rotation += 360
-		for(var/turntimes=rotation/90;turntimes>0;turntimes--)
+		for(turntimes;turntimes>0;turntimes--)
 			var/oldPX = pixel_x
 			var/oldPY = pixel_y
 			pixel_x = oldPY
 			pixel_y = (oldPX*(-1))
 
-/************************************Base /atom/movable proc************************************/
+	if(pixel_w || pixel_z && (params & ROTATE_OFFSET))
+		for(turntimes;turntimes>0;turntimes--)
+			var/oldPW = pixel_w
+			var/oldPZ = pixel_z
+			pixel_w = oldPZ
+			pixel_z = (oldPW*(-1))
 
-/atom/movable/shuttleRotate(rotation, params)
-	. = ..()
-	// Dont shift things that have non-zero bound_x and bound_y.
-	if(((bound_height != ICON_SIZE_Y) || (bound_width != ICON_SIZE_X)) && (bound_x == 0) && (bound_y == 0))
-		if(rotation < 0)
-			rotation += 360
-		switch(rotation) // Move the atom such that its one "actual" loc is always its bottom left corner.
-			if(90)
-				y -= (bound_height - ICON_SIZE_Y) / ICON_SIZE_Y
-			if(180)
-				y -= (bound_height - ICON_SIZE_Y) / ICON_SIZE_Y
-				x -= (bound_width - ICON_SIZE_X) / ICON_SIZE_X
-			if(270)
-				x -= (bound_width - ICON_SIZE_X) / ICON_SIZE_X
+	SEND_SIGNAL(src, COMSIG_SHUTTLE_ROTATE, rotation, params)
+
 
 /************************************Turf rotate procs************************************/
 

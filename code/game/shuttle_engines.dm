@@ -209,6 +209,10 @@
 	bound_height = 64
 	appearance_flags = LONG_GLIDE
 
+/obj/machinery/power/shuttle_engine/large/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/multitile_rotation, pixel_x, pixel_y, pixel_w, pixel_z)
+
 /obj/machinery/power/shuttle_engine/huge
 	name = "engine"
 	icon = 'icons/obj/fluff/3x3.dmi'
@@ -219,6 +223,10 @@
 	bound_width = 96
 	bound_height = 96
 	appearance_flags = LONG_GLIDE
+
+/obj/machinery/power/shuttle_engine/huge/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/multitile_rotation, pixel_x, pixel_y, pixel_w, pixel_z)
 
 #undef ENGINE_UNWRENCHED
 #undef ENGINE_WRENCHED
