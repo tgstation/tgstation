@@ -127,6 +127,6 @@ GLOBAL_LIST_INIT(quirk_chipped_choice, list(
 
 ///Spacer quirk
 GLOBAL_LIST_INIT(spacer_height_choices, list(
-	"Tall" = HUMAN_HEIGHT_TALLER,
 	"Extra Tall" = HUMAN_HEIGHT_TALLEST,
+	"Tall" = HUMAN_HEIGHT_TALLER,
 ))
