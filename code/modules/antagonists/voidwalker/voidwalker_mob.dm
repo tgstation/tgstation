@@ -320,7 +320,7 @@
 	var/obj/particles = new /obj/effect/abstract/particle_holder (our_wall, /particles/void_wall)
 
 	balloon_alert(src, "opening window...")
-	if(!do_after(src, 8 SECONDS, our_wall, hidden = TRUE))
+	if(!do_after(src, 8 SECONDS, our_wall, cog_icon = null))
 		qdel(particles)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(!conversions_remaining)

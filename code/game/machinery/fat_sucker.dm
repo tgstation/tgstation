@@ -80,7 +80,7 @@
 		user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
 			span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
 			span_hear("You hear a metallic creaking from [src]."))
-		if(do_after(user, breakout_time, target = src, hidden = TRUE))
+		if(do_after(user, breakout_time, target = src, cog_icon = null))
 			if(!user || IS_UNCONSCIOUS_CRIT_OR_DEAD(user) || user.loc != src || state_open)
 				return
 			free_exit = TRUE

@@ -1,0 +1,7 @@
+/obj/item/food/grown/poppy/@SUBTYPES : /obj/item/food/grown/flower/poppy/@SUBTYPES{@OLD}
+/obj/item/food/grown/trumpet : /obj/item/food/grown/flower/trumpet{@OLD}
+/obj/item/food/grown/harebell : /obj/item/food/grown/flower/harebell{@OLD}
+/obj/item/food/grown/sunflower : /obj/item/food/grown/flower/sunflower{@OLD}
+/obj/item/food/grown/moonflower : /obj/item/food/grown/flower/moonflower{@OLD}
+/obj/item/food/grown/rose : /obj/item/food/grown/flower/rose{@OLD}
+/obj/item/food/grown/rainbow_flower : /obj/item/food/grown/flower/rainbow_flower{@OLD}

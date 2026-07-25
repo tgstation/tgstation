@@ -106,21 +106,19 @@
 		var/obj/item/machine_remote/remote = item_in_hand
 		if(remote.controlling_machine_or_bot == src_object)
 			return UI_INTERACTIVE
-	// If the object is obscured, close it.
-	if(viewcheck && !(src_object in view(src)))
-		return UI_CLOSE
+
 	var/dist = get_dist(src_object, src)
-	// Open and interact if 1-0 tiles away.
-	if(dist <= 1)
-		return UI_INTERACTIVE
-	// View only if 2-3 tiles away.
-	else if(dist <= 2)
-		return UI_UPDATE
-	// Disable if 5 tiles away.
-	else if(dist <= 5)
+	// If the object is obscured or too far away, close it.
+	if (dist > 5 || (viewcheck && !(src_object in view(5, src))))
+		return UI_CLOSE
+	// Disable if further than 2 tiles
+	if (dist > 2)
 		return UI_DISABLED
-	// Otherwise, we got nothing.
-	return UI_CLOSE
+	// Update but block interactions if further than a tile away
+	if (dist > 1)
+		return UI_UPDATE
+	// Open and interact if 1-0 tiles away.
+	return UI_INTERACTIVE
 
 /mob/living/carbon/human/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE, allow_tk = TRUE)
 	if(allow_tk && dna.check_mutation(/datum/mutation/telekinesis) && tkMaxRangeCheck(src, src_object))

@@ -178,11 +178,11 @@
 	if(!. || !mod.wearer.Adjacent(target))
 		return
 
-	if(!ismineralturf(target) || !isasteroidturf(target))
+	if(!ismineralturf(target) && !isasteroidturf(target))
 		return
 
 	if(drain_power(use_energy_cost))
-		target.attackby(src, mod.wearer)
+		target.base_item_interaction(mod.wearer, src)
 
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER

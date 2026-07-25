@@ -6,24 +6,17 @@
 			"default": "25"
 		}
 	},
-	"type": "decorator",
-	"decorator": "/datum/bt_node/decorator/true_for_time",
-	"vars": {
-		"duration": "5 SECONDS"
-	},
-	"child": {
-		"type": "subplan",
-		"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
-		"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
-		"loop_delay": "IDLE_BEHAVIOR_RATE",
-		"children": [
-			{
-				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
-				"vars": {
-					"walk_chance": "$bf07i8ep"
-				}
+	"type": "subplan",
+	"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+	"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+	"loop_delay": "IDLE_BEHAVIOR_RATE",
+	"children": [
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
+			"vars": {
+				"walk_chance": "$bf07i8ep"
 			}
-		]
-	}
+		}
+	]
 }

@@ -380,7 +380,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 /obj/item/shard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/lightreplacer))
 		var/obj/item/lightreplacer/lightreplacer = tool
-		lightreplacer.attackby(src, user)
+		lightreplacer.attempt_insert_shard(user, src)
 		return ITEM_INTERACT_SUCCESS
 
 	if(!istype(tool, /obj/item/stack/sheet/cloth))

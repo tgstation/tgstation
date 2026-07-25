@@ -376,7 +376,7 @@
 	stoplag(1) // allow the door to process any allow/deny responses first
 	var/do_after_time = rand(delayed_unres_time_lower, delayed_unres_time_upper)
 	ADD_TRAIT(opener, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, REF(src))
-	RegisterSignal(opener, COMSIG_ATOM_PRE_PRESSURE_PUSH, PROC_REF(stop_pressure_during_unres_open))
+	RegisterSignal(opener, COMSIG_ATOM_PRE_PRESSURE_PUSH, PROC_REF(stop_pressure_during_unres_open), override = TRUE)
 	addtimer(CALLBACK(src, PROC_REF(deregister_pressure_push_signal), opener), do_after_time + 0.5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) // extra half-second to be safe, else this is just a guarantee we remove the signal.
 
 	SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open attempt ([type])") // statcollecting on how often people try to use this.

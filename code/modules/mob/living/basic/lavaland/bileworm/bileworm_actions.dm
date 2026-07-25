@@ -50,7 +50,7 @@
 		jump_damaged = FALSE
 		RegisterSignal(worm, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 		// Not in an if check direclty to reduce duplicate code
-		var/jump_result = do_after(worm, jump_length, worm, hidden = TRUE, extra_checks = CALLBACK(src, PROC_REF(damage_check)))
+		var/jump_result = do_after(worm, jump_length, worm, cog_icon = null, extra_checks = CALLBACK(src, PROC_REF(damage_check)))
 		UnregisterSignal(worm, COMSIG_ATOM_WAS_ATTACKED)
 		if (worm.icon_state == null)
 			worm.icon_state = old_icon_state

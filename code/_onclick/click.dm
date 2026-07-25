@@ -27,6 +27,7 @@
 		mod *= effect.nextmove_modifier()
 		adj += effect.nextmove_adjust()
 	next_move = world.time + ((num + adj)*mod)
+	SEND_SIGNAL(src, COMSIG_LIVING_CHANGENEXT_MOVE, next_move, num)
 
 /**
  * Before anything else, defer these calls to a per-mobtype handler.  This allows us to

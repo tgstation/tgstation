@@ -197,7 +197,9 @@
 /area/awaymission/museum)
 "bF" = (
 /obj/effect/mapping_helpers/bombable_wall,
-/turf/closed/indestructible/reinforced,
+/turf/closed/indestructible/reinforced{
+	baseturfs = /turf/open/indestructible/plating
+	},
 /area/awaymission/museum)
 "bG" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -433,6 +435,11 @@
 /obj/structure/fluff/beach_umbrella,
 /turf/open/misc/beach/sand,
 /area/awaymission/museum/mothroachvoid)
+"dA" = (
+/turf/closed/indestructible/reinforced{
+	baseturfs = /turf/open/indestructible/plating
+	},
+/area/awaymission/museum)
 "dF" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue{
@@ -5421,10 +5428,6 @@
 /area/awaymission/museum)
 "Ta" = (
 /obj/machinery/light/directional/west,
-/obj/effect/decal/cleanable/crayon/puzzle/pin{
-	pixel_x = -32;
-	puzzle_id = "museum_right_wing"
-	},
 /turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "Tr" = (
@@ -27539,7 +27542,7 @@ IP
 Zg
 fJ
 FK
-FK
+dA
 zE
 Hs
 eN
@@ -27551,7 +27554,7 @@ aZ
 FO
 FK
 ta
-FK
+FO
 AQ
 FK
 re
@@ -36291,7 +36294,7 @@ FK
 hw
 Be
 XM
-FK
+FO
 dZ
 dZ
 PC
@@ -36548,7 +36551,7 @@ FK
 FK
 FK
 Yd
-FO
+FK
 NO
 dZ
 mn

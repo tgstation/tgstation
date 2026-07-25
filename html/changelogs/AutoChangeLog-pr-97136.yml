@@ -1,4 +1,4 @@
 author: "SmArtKar"
 delete-after: True
 changes:
-  - bugfix: "Fixed the Four Hands wizard perk"
+  - code_imp: "Optimized some hot atmos procs"

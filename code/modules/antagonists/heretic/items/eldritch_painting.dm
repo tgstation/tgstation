@@ -173,8 +173,8 @@
 	)
 	// Poppy and harebell are used in heretic rituals
 	var/list/items_to_spawn = list(
-		/obj/item/food/grown/poppy,
-		/obj/item/food/grown/harebell,
+		/obj/item/food/grown/flower/poppy,
+		/obj/item/food/grown/flower/harebell,
 	)
 
 /obj/structure/sign/painting/eldritch/vines/Initialize(mapload)

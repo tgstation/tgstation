@@ -1,4 +1,4 @@
 author: "SmArtKar"
 delete-after: True
 changes:
-  - bugfix: "Fixed quick tile replacement"
+  - code_imp: "Optimized bodypart code"
