@@ -711,9 +711,17 @@
 2026-07-25:
   Absolucy:
   - bugfix: Fixed potential issues when connecting via Wine.
+  CabinetOnFire:
+  - code_imp: Improved performance of corpse spawners
   Dmeto:
   - qol: Some museum away mission hints have been tweeked.
   - bugfix: The museum away mission should suffer less decompressions now.
+  Ghommie:
+  - balance: Crafted pipe guns and pistols no longer come preloaded with junk shells
+      out of the blue when crafted. As for the regal pipegun, it will instead inherit
+      the junk shells present in the pipegun used to craft it.
+  - balance: The regal condor no longer has a magazine when crafted. I've reduced
+      the amount of items and time needed to craft it to make up for it.
   Kryson (Sprites), CabinetOnFire (Code):
   - rscadd: Adds a new station trait where Pun Pun injects a massive amount of steroids
   Melbert:
@@ -750,8 +758,14 @@
   - code_imp: Optimized bodypart code
   - code_imp: Further optimized crafting UI
   - code_imp: Optimized damage and wound code
+  - refactor: Brought down all inventory slots on humans to /obj/item
   SmArtKar, Kapu1178:
   - refactor: Datumized do_after()s
+  TealSeer:
+  - bugfix: Glasses will always smash when thrown around, not just if thrown by a
+      mob
+  TheRealSpriteMan1337:
+  - map: Moved Loader MODsuit outside of QM's office in DeltaStation
   antropod:
   - bugfix: Fix scrubber not updating turfs
   timothymtorres:
