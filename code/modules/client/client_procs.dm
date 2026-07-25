@@ -403,6 +403,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		add_system_note("Spoofed-BYOND-Version", "Detected as using a spoofed BYOND version.")
 		log_suspicious_login("Failed Login: [key] - Spoofed BYOND version")
 		qdel(src)
+		return
 
 	if (num2text(byond_build) in GLOB.blacklisted_builds)
 		log_access("Failed login: [key] - blacklisted BYOND version")
