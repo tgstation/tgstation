@@ -56,9 +56,8 @@
 	var/turf/target_turf = get_turf(target)
 	if(isnull(target_turf))
 		return
-	var/turf/owner_turf = get_turf(owner)
-	new /obj/effect/temp_visual/mook_dust(owner_turf)
-	playsound(owner_turf, 'sound/items/weapons/thudswoosh.ogg', 25, TRUE)
+	new /obj/effect/temp_visual/mook_dust(get_turf(owner))
+	playsound(owner, 'sound/items/weapons/thudswoosh.ogg', 25, TRUE)
 	playsound(owner, 'sound/mobs/non-humanoids/mook/mook_leap_yell.ogg', 100, TRUE)
 
 	if(!target_turf.is_blocked_turf())
