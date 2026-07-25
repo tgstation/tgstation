@@ -1,0 +1,4 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - bugfix: "Glasses will always smash when thrown around, not just if thrown by a mob"
