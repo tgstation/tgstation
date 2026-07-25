@@ -7,7 +7,7 @@
 
 INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
-/mob/living/carbon/human/dummy/Initialize(mapload)
+/mob/living/carbon/human/dummy/Initialize(mapload, datum/species/species)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_GODMODE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_PREVENT_BLINKING, INNATE_TRAIT)
