@@ -180,17 +180,18 @@
 /datum/status_effect/knocked_out/tick(seconds_between_ticks)
 	owner.adjust_stamina_loss(-3 * seconds_between_ticks)
 
+/// Global list of images that correspond to a mob's unconscious appearance
+GLOBAL_LIST_EMPTY(unconscious_appearances)
+
 /datum/status_effect/knocked_out/proc/show_unconscious_hud(mob/living/source)
 	SIGNAL_HANDLER
-	for(var/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/uncon_aa in GLOB.active_alternate_appearances)
-		if(uncon_aa.target == owner)
-			continue
-		uncon_aa.show_to(owner)
+
+	source.client?.images += (GLOB.unconscious_appearances - source.unconscious_appearance)
 
 /datum/status_effect/knocked_out/proc/hide_unconscious_hud(mob/living/source)
 	SIGNAL_HANDLER
-	for(var/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/uncon_aa in GLOB.active_alternate_appearances)
-		uncon_aa.hide_from(owner, absolute = TRUE)
+
+	source.client?.images -= GLOB.unconscious_appearances
 
 /datum/status_effect/knocked_out/proc/on_mob_statchange(mob/living/source, ...)
 	SIGNAL_HANDLER

@@ -1049,7 +1049,7 @@
 		unbuckle_mob(buckled_mob)
 	do_sparks(5, 0, src)
 
-/mob/living/silicon/robot/init_unconscious_appearance()
+/mob/living/silicon/robot/get_unconscious_appearance()
 	var/image/static_overlay = image('icons/effects/effects.dmi', null, "static_base")
 	static_overlay.blend_mode = BLEND_INSET_OVERLAY
 
@@ -1058,9 +1058,5 @@
 	static_image.overlays += static_overlay
 	static_image.override = TRUE
 	static_image.name = "unknown cyborg"
-	add_alt_appearance(
-		/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity,
-		"[REF(src)]_unconscious",
-		static_image,
-		NONE,
-	)
+
+	return static_image
