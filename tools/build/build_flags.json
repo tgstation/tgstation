@@ -27,7 +27,7 @@
 			"requires": ["TESTING"]
 		},
 		{
-			"id": "force_map",
+			"id": "FORCE_MAP",
 			"define": "FORCE_MAP",
 			"label": "Force map",
 			"category": "Map",
@@ -192,13 +192,13 @@
 	],
 	"presets": [
 		{
-			"id": "low_memory",
+			"id": "LOW_MEMORY",
 			"label": "Low memory mode",
 			"flags": ["SKIP_LAVALAND", "SKIP_SPACE_LEVELS"],
 			"values": { "force_map": "runtimestation" }
 		},
 		{
-			"id": "absolute_minimum",
+			"id": "ABSOLUTE_MINIMUM",
 			"label": "Absolute minimum",
 			"flags": [
 				"SKIP_LAVALAND",
@@ -209,7 +209,7 @@
 			"values": { "force_map": "runtimestation_minimal" }
 		},
 		{
-			"id": "testing",
+			"id": "TESTING",
 			"label": "Testing",
 			"flags": [
 				"TESTING",
@@ -219,7 +219,7 @@
 			]
 		},
 		{
-			"id": "testing_low_memory",
+			"id": "TESTING_LOW_MEMORY",
 			"label": "Testing + low memory mode",
 			"flags": [
 				"SKIP_LAVALAND",
@@ -232,7 +232,7 @@
 			"values": { "force_map": "runtimestation" }
 		},
 		{
-			"id": "map_testing",
+			"id": "MAP_TESTING",
 			"label": "Map testing",
 			"flags": ["TESTING", "MAP_TEST"]
 		}
