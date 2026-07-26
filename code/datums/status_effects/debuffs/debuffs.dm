@@ -155,7 +155,7 @@
 	owner.apply_status_effect(/datum/status_effect/grouped/see_no_names, TRAIT_STATUS_EFFECT(id))
 	owner.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_BLOCK_SECHUD, TRAIT_BLOCK_MEDHUD, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_STATUS_EFFECT(id))
 	owner.update_eyes() // updates eyelids
-	RegisterSignal(owner, COMSIG_MOB_LOGIN, PROC_REF(show_unconscious_hud))
+	RegisterSignal(owner, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(show_unconscious_hud))
 	if(!isnull(owner.client))
 		show_unconscious_hud(owner)
 	return TRUE
@@ -165,7 +165,7 @@
 	owner.remove_status_effect(/datum/status_effect/grouped/see_no_names, TRAIT_STATUS_EFFECT(id))
 	owner.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_BLOCK_SECHUD, TRAIT_BLOCK_MEDHUD, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_STATUS_EFFECT(id))
 	owner.update_eyes() // updates eyelids
-	UnregisterSignal(owner, COMSIG_MOB_LOGIN)
+	UnregisterSignal(owner, COMSIG_MOB_CLIENT_LOGIN)
 	if(!isnull(owner.client))
 		hide_unconscious_hud(owner)
 
