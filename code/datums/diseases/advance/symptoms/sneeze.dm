@@ -30,6 +30,7 @@
 	var/cartoon_sneezing = FALSE //ah, ah, AH, AH-CHOO!!
 	///if FALSE, there is a percentage chance that the mob will emote sneezing while sneeze_cooldown is on cooldown. If TRUE, won't emote again until after the off cooldown sneeze occurs.
 	var/off_cooldown_sneezed = FALSE
+	var/suppress_warning = FALSE
 
 /datum/symptom/sneeze/Start(datum/disease/advance/active_disease)
 	. = ..()

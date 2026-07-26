@@ -26,6 +26,7 @@
 	)
 	var/brain_damage = FALSE
 	var/causes_illiteracy = FALSE
+	var/suppress_warning = FALSE
 
 /datum/symptom/confusion/Start(datum/disease/advance/advanced_disease)
 	. = ..()

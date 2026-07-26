@@ -229,7 +229,7 @@
 	resistance = -2
 	stage_speed = 2
 	transmittable = 1
-	level = 9
+	level = 7
 	required_organ = ORGAN_SLOT_STOMACH
 	threshold_descs = list(
 		"Stealth 3" = "Reduces hunger rate.",
@@ -575,8 +575,6 @@
 	stage_speed = 2
 	transmittable = -3
 	level = 7
-	symptom_delay_min = 1
-	symptom_delay_max = 1
 	passive_message = span_notice("Your skin glows faintly for a moment.")
 	threshold_descs = list(
 		"Resistance 7" = "Increases healing speed.",
@@ -615,7 +613,7 @@
 	resistance = 1
 	stage_speed = 0
 	transmittable = -1
-	level = 9
+	level = 5
 	base_message_chance = 0
 	symptom_cure = null
 	power = 2

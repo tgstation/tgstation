@@ -100,6 +100,7 @@ Bonus
 		"Stage Speed 7" = "Synthesizes Heparin and Lipolicide inside the host, causing increased bleeding and hunger.",
 		"Stealth 5" = "The symptom remains hidden until active.",
 	)
+	var/suppress_warning = FALSE
 
 /datum/symptom/flesh_death/Start(datum/disease/advance/A)
 	. = ..()

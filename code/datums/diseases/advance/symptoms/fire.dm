@@ -27,6 +27,7 @@
 		"Transmission 8" = "Host will spread the virus through skin flakes when bursting into flame.",
 		"Stealth 4" = "The symptom remains hidden until active.",
 	)
+	var/suppress_warning = FALSE
 
 /datum/symptom/fire/Start(datum/disease/advance/A)
 	. = ..()

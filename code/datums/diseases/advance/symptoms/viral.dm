@@ -38,7 +38,7 @@
 	resistance = -3
 	stage_speed = 5
 	transmittable = 3
-	level = 3
+	level = 4
 	symptom_cure = null
 
 /datum/symptom/viralevolution/OnAdd(datum/disease/advance/our_disease)

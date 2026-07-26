@@ -28,6 +28,7 @@
 	)
 	var/scramble_language = FALSE
 	var/datum/language/current_language
+	var/suppress_warning = FALSE
 
 /datum/symptom/voice_change/Start(datum/disease/advance/A)
 	. = ..()

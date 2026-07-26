@@ -26,6 +26,7 @@
 		"Stage Speed 8" = "Causes choking more frequently.",
 		"Stealth 4" = "The symptom remains hidden until active."
 	)
+	var/suppress_warning = FALSE
 
 /datum/symptom/choking/Start(datum/disease/advance/A)
 	. = ..()

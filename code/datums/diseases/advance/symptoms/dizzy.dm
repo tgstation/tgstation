@@ -25,6 +25,7 @@
 		"Transmission 6" = "Also causes druggy vision.",
 		"Stealth 4" = "The symptom remains hidden until active.",
 	)
+	var/suppress_warning = FALSE
 
 /datum/symptom/dizzy/Start(datum/disease/advance/A)
 	. = ..()

@@ -27,6 +27,7 @@
 	)
 	/// At max stage: If FALSE, cause blindness. If TRUE, cause their eyes to fall out.
 	var/remove_eyes = FALSE
+	var/suppress_warning = FALSE
 
 /datum/symptom/visionloss/Start(datum/disease/advance/A)
 	. = ..()
