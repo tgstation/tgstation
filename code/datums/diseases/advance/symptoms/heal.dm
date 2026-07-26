@@ -574,7 +574,7 @@
 	resistance = -2
 	stage_speed = 2
 	transmittable = -3
-	level = 6
+	level = 7
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	passive_message = span_notice("Your skin glows faintly for a moment.")
