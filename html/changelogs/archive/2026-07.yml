@@ -806,6 +806,8 @@
   - bugfix: Fix perma stun from grabs
   PapaMichael:
   - bugfix: Departmental photo albums now properly save their photos between rounds
+  SmArtKar:
+  - bugfix: Fixed hair gradients, again
   hry-gh:
   - qol: the escape menu now runs clientside, and should be considerably more responsive
   lelandkemble:
