@@ -1,4 +1,4 @@
-/obj/item/ai_module/core/full/researcher
+/obj/item/ai_module/law/core/full/researcher
 	name = "'Researcher' Core AI Module"
 	law_id = "researcher"
 
@@ -19,7 +19,7 @@
 	desc = "Allows for the construction of a Researcher AI Core Module."
 	id = "researcher_module"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/ai_module/core/full/researcher
+	build_path = /obj/item/ai_module/law/core/full/researcher
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)

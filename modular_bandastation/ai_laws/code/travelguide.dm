@@ -1,4 +1,4 @@
-/obj/item/ai_module/core/full/travelguide
+/obj/item/ai_module/law/core/full/travelguide
 	name = "'Travel Guide' Core AI Module"
 	law_id = "travelguide"
 
@@ -17,7 +17,7 @@
 	desc = "Allows for the construction of a Travel Guide AI Core Module."
 	id = "travelguide_module"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/ai_module/core/full/travelguide
+	build_path = /obj/item/ai_module/law/core/full/travelguide
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)

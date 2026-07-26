@@ -18,9 +18,6 @@
 	name = "'Safeguard' AI Module"
 	var/targetName = ""
 	laws = list("Охраняйте СУБЪЕКТ. Личности угрожающие СУБЪЕКТУ не считаются членами экипажа и должны быть уничтожены.")
-	lawpos = 4
-
-	var/targetName = ""
 
 /obj/item/ai_module/law/supplied/safeguard/configure(mob/user)
 	. = TRUE

@@ -1,4 +1,4 @@
-/obj/item/ai_module/core/full/clown
+/obj/item/ai_module/law/core/full/clown
 	name = "'Clown' Core AI Module"
 	law_id = "clown"
 
@@ -19,7 +19,7 @@
 	desc = "Allows for the construction of an Clown AI Core Module."
 	id = "clown_module"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/ai_module/core/full/clown
+	build_path = /obj/item/ai_module/law/core/full/clown
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)

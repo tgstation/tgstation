@@ -1,4 +1,4 @@
-/obj/item/ai_module/core/full/druid
+/obj/item/ai_module/law/core/full/druid
 	name = "'Druid' Core AI Module"
 	law_id = "druid"
 
@@ -18,7 +18,7 @@
 	desc = "Allows for the construction of a Druid AI Core Module."
 	id = "druid_module"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/ai_module/core/full/druid
+	build_path = /obj/item/ai_module/law/core/full/druid
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)

@@ -1306,14 +1306,6 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 			bot.show_laws()
 			bot.law_change_counter++
 
-	// Display
-	var/mutable_appearance/screen_overlay = mutable_appearance(icon, screen_state)
-	screen_overlay.layer = FLOAT_LAYER + 0.1
-	screen_overlay.appearance_flags = RESET_COLOR | KEEP_APART
-	. += screen_overlay
-
-	. += emissive_appearance(icon, screen_state, src)//AI glow!
-
 
 // BANDASTATION EDIT START: AI DOOR
 /mob/living/silicon/ai/proc/open_nearest_door(mob/living/target)
