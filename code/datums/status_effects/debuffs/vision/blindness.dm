@@ -50,23 +50,36 @@
 	make_unblind()
 
 /datum/status_effect/grouped/blindness/proc/make_blind(changed_source)
+	SIGNAL_HANDLER
+
+	if(isnull(owner.client))
+		RegisterSignal(owner, COMSIG_MOB_LOGIN, PROC_REF(make_blind_on_login), override = TRUE)
+		return
+
 	// have some extra logic to determine what overlay to use
 	// by default we use the noflicker overlay
 	// but if our one and only source is from "temp blindness", use flicker overlay
 	var/overlay_to_use = /atom/movable/screen/fullscreen/blind/noflicker
 	if(changed_source == /datum/status_effect/temporary_blindness::id && length(sources) == 1)
 		overlay_to_use = /atom/movable/screen/fullscreen/blind
-	owner.overlay_fullscreen(id, overlay_to_use )
+
+	owner.overlay_fullscreen(id, overlay_to_use)
 	// You are blind - at most, able to make out shapes near you
-	owner.add_client_colour(/datum/client_colour/blindness, REF(src))
+	owner.add_client_colour(/datum/client_colour/blindness, id)
+
+/datum/status_effect/grouped/blindness/proc/make_blind_on_login(mob/living/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(owner, COMSIG_MOB_LOGIN)
+	make_blind(source)
 
 /datum/status_effect/grouped/blindness/proc/make_unblind()
 	owner.clear_fullscreen(id)
-	owner.remove_client_colour(REF(src))
+	owner.remove_client_colour(id)
 
 /datum/status_effect/grouped/blindness/on_remove()
 	make_unblind()
 	UnregisterSignal(owner, update_signals)
+	UnregisterSignal(owner, COMSIG_MOB_LOGIN)
 	return ..()
 
 /atom/movable/screen/alert/status_effect/blind
