@@ -155,10 +155,11 @@
 	owner.apply_status_effect(/datum/status_effect/grouped/see_no_names, TRAIT_STATUS_EFFECT(id))
 	owner.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_BLOCK_SECHUD, TRAIT_BLOCK_MEDHUD, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_STATUS_EFFECT(id))
 	owner.update_eyes() // updates eyelids
-	for(var/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/uncon_aa in GLOB.active_alternate_appearances)
-		if(uncon_aa.target == owner)
-			continue
-		uncon_aa.show_to(owner)
+
+	if(isnull(owner.client))
+		RegisterSignal(owner, COMSIG_MOB_LOGIN, PROC_REF(show_unconscious_hud))
+	else
+		show_unconscious_hud(owner)
 	return TRUE
 
 /datum/status_effect/knocked_out/on_remove()
@@ -166,11 +167,28 @@
 	owner.remove_status_effect(/datum/status_effect/grouped/see_no_names, TRAIT_STATUS_EFFECT(id))
 	owner.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_BLOCK_SECHUD, TRAIT_BLOCK_MEDHUD, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_STATUS_EFFECT(id))
 	owner.update_eyes() // updates eyelids
-	for(var/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/uncon_aa in GLOB.active_alternate_appearances)
-		uncon_aa.hide_from(owner, absolute = TRUE)
+
+	if(isnull(owner.client))
+		UnregisterSignal(owner, COMSIG_MOB_LOGIN)
+	else
+		hide_unconscious_hud(owner)
 
 /datum/status_effect/knocked_out/tick(seconds_between_ticks)
 	owner.adjust_stamina_loss(-3 * seconds_between_ticks)
+
+/datum/status_effect/knocked_out/proc/show_unconscious_hud(mob/living/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(owner, COMSIG_MOB_LOGIN)
+	for(var/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/uncon_aa in GLOB.active_alternate_appearances)
+		if(uncon_aa.target == owner)
+			continue
+		uncon_aa.show_to(owner)
+
+/datum/status_effect/knocked_out/proc/hide_unconscious_hud(mob/living/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(owner, COMSIG_MOB_LOGIN)
+	for(var/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/uncon_aa in GLOB.active_alternate_appearances)
+		uncon_aa.hide_from(owner, absolute = TRUE)
 
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
