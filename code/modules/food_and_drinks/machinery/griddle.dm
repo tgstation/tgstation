@@ -110,7 +110,7 @@
 	//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
 	tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
 	tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
-	to_chat(user, span_notice("Вы помещаете [I.declent_ru(ACCUSATIVE)] на [declent_ru(ACCUSATIVE)]."))
+	to_chat(user, span_notice("Вы помещаете [tool.declent_ru(ACCUSATIVE)] на [declent_ru(ACCUSATIVE)]."))
 	AddToGrill(tool, user)
 	return ITEM_INTERACT_SUCCESS
 

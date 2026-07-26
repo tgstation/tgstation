@@ -1165,7 +1165,7 @@
 				physical_part = primary_part_base
 
 			replacer_tool.atom_storage.attempt_insert(physical_part, user, override = TRUE, force = STORAGE_SOFT_LOCKED, messages = FALSE)
-			to_chat(user, span_notice("[capitalize(physical_part.name.declent_ru(NOMINATIVE))] заменяется на [secondary_part_name]."))
+			to_chat(user, span_notice("[capitalize(physical_part.declent_ru(NOMINATIVE))] заменяется на [secondary_part_name]."))
 			shouldplaysound = TRUE //Only play the sound when parts are actually replaced!
 			break
 
