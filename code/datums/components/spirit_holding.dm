@@ -106,7 +106,7 @@
 /datum/component/spirit_holding/proc/bind_the_soule(datum/mind/chosen_spirit, mob/awakener, name_override)
 	bound_spirit = new(parent)
 	chosen_spirit.transfer_to(bound_spirit)
-	bound_spirit.fully_replace_character_name(null, "The spirit of [name_override ? name_override : parent]", log_new_name = TRUE)
+	bound_spirit.fully_replace_character_name(null, "The spirit of [name_override || parent]")
 	bound_spirit.get_language_holder().omnitongue = TRUE //Grants omnitongue
 
 	RegisterSignal(parent, COMSIG_ATOM_RELAYMOVE, PROC_REF(block_buckle_message))
