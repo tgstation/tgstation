@@ -112,12 +112,7 @@
 	return resolved_range
 
 ///Actual behavior for collecting and filtering targets
-/datum/bt_node/ai_behavior/acquire_target/proc/find_and_set_target(
-	datum/ai_controller/controller,
-	datum/targeting_strategy/targeting_strategy,
-	datum/target_priority_strategy/priority_strategy,
-	range,
-)
+/datum/bt_node/ai_behavior/acquire_target/proc/find_and_set_target(datum/ai_controller/controller, datum/targeting_strategy/targeting_strategy, datum/target_priority_strategy/priority_strategy, range)
 	var/mob/living/living_mob = controller.pawn
 	var/datum/target_source/source = GET_TARGET_SOURCE(target_source)
 	if(!source)
@@ -172,14 +167,7 @@
 	return list()
 
 /// Includes a retainable current target in priority-aware reselection even if the target source omitted it.
-/datum/bt_node/ai_behavior/acquire_target/proc/include_current_target(
-	datum/ai_controller/controller,
-	list/candidates,
-	datum/targeting_strategy/strategy,
-	datum/target_priority_strategy/priority_strategy,
-	atom/current_target,
-	range,
-)
+/datum/bt_node/ai_behavior/acquire_target/proc/include_current_target(datum/ai_controller/controller,list/candidates, datum/targeting_strategy/strategy, datum/target_priority_strategy/priority_strategy, atom/current_target, range)
 	if(isnull(priority_strategy) || isnull(current_target) || (current_target in candidates))
 		return candidates
 	if(!strategy.can_keep_target(controller.pawn, current_target, target_loss_distance || range, controller))
@@ -226,12 +214,7 @@
 	return
 
 /// Picks the final target and keeps the current target on policy-defined ties.
-/datum/bt_node/ai_behavior/acquire_target/proc/pick_final_target(
-	datum/ai_controller/controller,
-	list/filtered_targets,
-	datum/target_priority_strategy/priority_strategy,
-	atom/current_target,
-)
+/datum/bt_node/ai_behavior/acquire_target/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets, datum/target_priority_strategy/priority_strategy, atom/current_target)
 	var/atom/selected_target = priority_strategy \
 		? priority_strategy.select_target(controller, filtered_targets) \
 		: pick(filtered_targets)

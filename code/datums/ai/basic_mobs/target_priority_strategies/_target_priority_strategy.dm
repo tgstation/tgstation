@@ -55,7 +55,7 @@
 /datum/target_priority_strategy/prioritize_trait/select_target(datum/ai_controller/controller, list/atom/targets)
 	var/list/priority_targets = list()
 	var/priority_trait = controller.blackboard[trait_key]
-	for(var/atom/target as anything in targets)
+	for(var/atom/target in targets)
 		if(HAS_TRAIT(target, priority_trait))
 			priority_targets += target
 	return ..(controller, length(priority_targets) ? priority_targets : targets)
@@ -63,7 +63,7 @@
 /// Chooses a nonempty target type tier by weight, then randomly chooses a target within that tier.
 /// This prevents a large number of low-priority candidates from drowning out one high-priority candidate.
 /datum/target_priority_strategy/type_weighted
-	/// Blackboard key holding an ordered associative list of target typepaths to tier weights.
+	/// Blackboard key holding an ordered associative list of target typepaths to weights.
 	var/priorities_key = BB_STEAL_TARGET_PRIORITIES
 	/// Blackboard key holding the weight for targets which match no configured type.
 	var/fallback_priority_key = BB_STEAL_FALLBACK_PRIORITY
@@ -73,7 +73,7 @@
 
 /datum/target_priority_strategy/type_weighted/get_target_priority(datum/ai_controller/controller, atom/target)
 	var/list/priorities = controller.blackboard[priorities_key]
-	for(var/priority_type as anything in priorities)
+	for(var/priority_type in priorities)
 		if(matches_priority_type(target, priority_type))
 			return priorities[priority_type]
 	return controller.blackboard[fallback_priority_key] || 1
@@ -111,14 +111,3 @@
 	var/selected_tier = pick_weight(available_weights)
 	var/list/selected_targets = selected_tier == fallback_tier ? fallback_targets : type_buckets[selected_tier]
 	return pick(selected_targets)
-
-/// Stoats treat real nuclear disks and credentials as special cases.
-/datum/target_priority_strategy/type_weighted/stoat_stealing
-
-/datum/target_priority_strategy/type_weighted/stoat_stealing/matches_priority_type(atom/target, priority_type)
-	if(priority_type == /obj/item/disk/nuclear)
-		return istype(target, /obj/item/disk/nuclear) && !istype(target, /obj/item/disk/nuclear/fake)
-	if(priority_type == /obj/item/card/id)
-		var/obj/item/item_target = target
-		return istype(item_target, /obj/item/card/id) || !isnull(item_target?.GetID())
-	return ..()

@@ -103,26 +103,3 @@
 		candidates += item_candidate
 
 	return candidates
-
-/// Gathers ground items plus items a stoat can visibly snatch from a nearby mob's hands or ID slot.
-/datum/target_source/stoat_stealable_items
-
-/datum/target_source/stoat_stealable_items/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
-	var/list/candidates = list()
-	for(var/atom/nearby_atom as anything in oview(range, pawn))
-		if(isitem(nearby_atom))
-			var/obj/item/ground_item = nearby_atom
-			if(isturf(ground_item.loc))
-				candidates += ground_item
-			continue
-		var/mob/living/nearby_mob = nearby_atom
-		if(!istype(nearby_mob))
-			continue
-		for(var/obj/item/held_item in nearby_mob.held_items)
-			if(!(held_item in candidates))
-				candidates += held_item
-		if(ishuman(nearby_mob))
-			var/mob/living/carbon/human/nearby_human = nearby_mob
-			if(nearby_human.wear_id && !(nearby_human.wear_id in candidates))
-				candidates += nearby_human.wear_id
-	return candidates

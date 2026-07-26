@@ -51,7 +51,7 @@
 #define BB_WANTS_TO_COMMIT_THEFT "BB_WANTS_TO_COMMIT_THEFT"
 ///last stolen item
 #define BB_LAST_STOLEN_ITEM "BB_LAST_STOLEN_ITEM"
-/// Ordered associative list of target typepaths to selection weights for theft.
+/// Associative list of target typepaths to selection weights for theft.
 #define BB_STEAL_TARGET_PRIORITIES "BB_steal_target_priorities"
 /// Selection weight for theft targets which do not match a configured priority type.
 #define BB_STEAL_FALLBACK_PRIORITY "BB_steal_fallback_priority"
