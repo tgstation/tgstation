@@ -41,14 +41,14 @@
 				{ "value": "metastation", "label": "MetaStation" },
 				{ "value": "tramstation", "label": "Tramstation" },
 				{ "value": "nebulastation", "label": "NebulaStation" },
-				{ "value": "wawastation", "label": "Wawastation" },
-				{ "value": "catwalkstation", "label": "Catwalk Station (test)" },
+				{ "value": "kilostation", "label": "Kilostation" },
+				{ "value": "catwalkstation", "label": "Catwalk Station" },
 				{ "value": "gateway_test", "label": "Gateway Test (test)" },
 				{ "value": "multiz_debug", "label": "MultiZ Debug (test)" },
 				{ "value": "runtimestation", "label": "Runtime Station (low memory)" },
 				{
 					"value": "runtimestation_minimal",
-					"label": "Minimal Runtime Station. Only works with minimal centcom.",
+					"label": "Minimal Runtime Station. Only works with minimal CentCom.",
 					"requires": ["MINIMAL_CENTCOM", "SKIP_LAVALAND", "SKIP_SPACE_LEVELS"]
 				}
 			]

@@ -18,8 +18,7 @@
 	level = 5
 	severity = 2
 	base_message_chance = 25
-	symptom_delay_min = 25
-	symptom_delay_max = 90
+	symptom_delay = 57.5
 	symptom_cure = /datum/reagent/medicine/psicodine
 	cure_color = "yellow"
 	threshold_descs = list(

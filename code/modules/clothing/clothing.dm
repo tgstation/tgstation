@@ -366,7 +366,7 @@
 	. = ..()
 	if (clothing_flags & THICKMATERIAL)
 		.["thick"] = "Protects from most injections and sprays."
-	if (clothing_flags & CASTING_CLOTHES)
+	if (HAS_TRAIT(src, TRAIT_CASTING_CLOTHING))
 		.["magical"] = "Allows magical beings to cast spells when wearing [src]."
 	if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
 		.["pressure-proof"] = "Protects the wearer from extremely low or high pressure, such as vacuum of space."
