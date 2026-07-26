@@ -119,7 +119,7 @@
 	var/mob/living/parent = weak_parent.resolve()
 	if(isnull(parent) || isnull(parent.ai_controller))
 		return FALSE
-	if(IS_DEAD_OR_INCAP(parent)) // Probably can't hear them if we're dead
+	if(parent.incapacitated) // Probably can't hear them if we're dead
 		return FALSE
 	return TRUE
 

@@ -702,7 +702,7 @@
 	SEND_SIGNAL(computer, COMSIG_MODULAR_PDA_MESSAGE_RECEIVED, signal, fake_job || sender_messenger?.computer.saved_job , sender_name)
 
 	for(var/mob/living/messaged_mob as anything in receievers)
-		if(messaged_mob.stat >= UNCONSCIOUS)
+		if(IS_UNCONSCIOUS(messaged_mob))
 			continue
 		if(!messaged_mob.is_literate())
 			continue

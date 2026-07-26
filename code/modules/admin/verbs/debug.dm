@@ -114,7 +114,7 @@ ADMIN_VERB(cmd_debug_make_powernets, R_DEBUG|R_SERVER, "Make Powernets", "Regene
 	BLACKBOX_LOG_ADMIN_VERB("Make Powernets")
 
 ADMIN_VERB_VISIBILITY(cmd_admin_grantfullaccess, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, "Grant Full Access", "Grant full access to a mob.", ADMIN_CATEGORY_DEBUG, mob/M in world)
+ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, "Grant Full Access", "Grant full access to a mob.", ADMIN_CATEGORY_DEBUG, mob/M)
 	if(!SSticker.HasRoundStarted())
 		tgui_alert(user, "Wait until the game starts")
 		return
@@ -455,7 +455,7 @@ ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, "Test Areas (ALL)", "Tests the areas
 
 	return dresscode
 
-ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, "Rejuvenate", mob/living/M in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, "Rejuvenate", mob/living/M)
 	if(!istype(M))
 		tgui_alert(user,"Cannot revive a ghost")
 		return
@@ -467,10 +467,10 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, "Rejuvenate", mob/li
 	admin_ticket_log(M, msg)
 	BLACKBOX_LOG_ADMIN_VERB("Rejuvenate")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_delete, R_DEBUG|R_SPAWN, "Delete", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/target as obj|mob|turf in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_delete, R_DEBUG|R_SPAWN, "Delete", atom/target as obj|mob|turf)
 	user.admin_delete(target)
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_check_contents, R_ADMIN, "Check Contents", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/mob)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_check_contents, R_ADMIN, "Check Contents", mob/living/mob)
 	var/list/mob_contents = mob.get_contents()
 	for(var/content in mob_contents)
 		to_chat(user, "[content] [ADMIN_VV(content)] [ADMIN_TAG(content)]", confidential = TRUE)
@@ -629,7 +629,7 @@ ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a speci
 			return
 
 	var/len = GLOB.ruin_landmarks.len
-	seedRuins(SSmapping.levels_by_trait(data[2]), max(1, template.cost), data[3], list(ruinname = template))
+	seedRuins(SSmapping.levels_by_trait(data[2]), max(1, template.cost), data[3], list(ruinname = template), immediate_load = TRUE)
 	if (GLOB.ruin_landmarks.len > len)
 		var/obj/effect/landmark/ruin/landmark = GLOB.ruin_landmarks[GLOB.ruin_landmarks.len]
 		log_admin("[key_name(user)] randomly spawned ruin [ruinname] at [COORD(landmark)].")

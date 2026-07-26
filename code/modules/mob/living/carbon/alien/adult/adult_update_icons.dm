@@ -15,7 +15,7 @@
 		else
 			icon_state = "alien[caste]_dead"
 
-	else if((stat == UNCONSCIOUS && !IsSleeping()) || stat == HARD_CRIT || stat == SOFT_CRIT || IsParalyzed())
+	else if(IS_UNCONSCIOUS_OR_CRIT(src) || IsParalyzed())
 		icon_state = "alien[caste]_unconscious"
 	else if(leap_on_click)
 		icon_state = "alien[caste]_pounce"

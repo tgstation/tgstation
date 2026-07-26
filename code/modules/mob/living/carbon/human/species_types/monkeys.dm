@@ -163,6 +163,12 @@
 	SIGNAL_HANDLER
 	if(!tripping || !crossing_mob.combat_mode)
 		return
+	if(crossing_mob.mob_size < MOB_SIZE_HUMAN)
+		return
+	if(ishuman(crossing_mob))
+		var/mob/living/carbon/human/crossing_humie = crossing_mob
+		if(crossing_humie.mob_height <= HUMAN_HEIGHT_SHORTEST)
+			return
 	crossing_mob.knockOver(owner)
 
 /obj/item/organ/brain/primate/get_attacking_limb(mob/living/carbon/human/target)

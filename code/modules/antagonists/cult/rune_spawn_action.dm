@@ -38,48 +38,58 @@
 
 /datum/action/innate/cult/create_rune/Activate()
 	var/turf/T = get_turf(owner)
-	if(turf_check(T))
-		var/chosen_keyword
-		if(initial(rune_type.req_keyword))
-			chosen_keyword = tgui_input_text(owner, "Enter a keyword for the new rune.", "Words of Power", max_length = MAX_NAME_LEN)
-			if(!chosen_keyword || !turf_check(T))
-				return
-	//the outer ring is always the same across all runes
-		var/obj/effect/temp_visual/cult/rune_spawn/R1 = new(T, scribe_time, rune_color)
-	//the rest are not always the same, so we need types for em
-		var/obj/effect/temp_visual/cult/rune_spawn/R2
-		if(ispath(rune_word_type, /obj/effect/temp_visual/cult/rune_spawn))
-			R2 = new rune_word_type(T, scribe_time, rune_color)
-		var/obj/effect/temp_visual/cult/rune_spawn/R3
-		if(ispath(rune_innerring_type, /obj/effect/temp_visual/cult/rune_spawn))
-			R3 = new rune_innerring_type(T, scribe_time, rune_color)
-		var/obj/effect/temp_visual/cult/rune_spawn/R4
-		if(ispath(rune_center_type, /obj/effect/temp_visual/cult/rune_spawn))
-			R4 = new rune_center_type(T, scribe_time, rune_color)
+	if(!turf_check(T))
+		return
+	var/chosen_keyword
+	if(initial(rune_type.req_keyword))
+		chosen_keyword = tgui_input_text(owner, "Enter a keyword for the new rune.", "Words of Power", max_length = MAX_NAME_LEN)
+		if(!chosen_keyword || !turf_check(T))
+			return
+//the outer ring is always the same across all runes
+	var/obj/effect/temp_visual/cult/rune_spawn/R1 = new(T, scribe_time, rune_color)
+//the rest are not always the same, so we need types for em
+	var/obj/effect/temp_visual/cult/rune_spawn/R2
+	if(ispath(rune_word_type, /obj/effect/temp_visual/cult/rune_spawn))
+		R2 = new rune_word_type(T, scribe_time, rune_color)
+	var/obj/effect/temp_visual/cult/rune_spawn/R3
+	if(ispath(rune_innerring_type, /obj/effect/temp_visual/cult/rune_spawn))
+		R3 = new rune_innerring_type(T, scribe_time, rune_color)
+	var/obj/effect/temp_visual/cult/rune_spawn/R4
+	if(ispath(rune_center_type, /obj/effect/temp_visual/cult/rune_spawn))
+		R4 = new rune_center_type(T, scribe_time, rune_color)
 
-		cooldown = base_cooldown + world.time
-		owner.update_mob_action_buttons()
-		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob, update_mob_action_buttons)), base_cooldown + 1)
-		var/list/health
-		if(damage_interrupt && isliving(owner))
-			var/mob/living/L = owner
-			health = list("health" = L.health)
-		var/scribe_mod = scribe_time
-		if(istype(T, /turf/open/floor/engine/cult))
-			scribe_mod *= 0.5
-		playsound(T, 'sound/effects/magic/enter_blood.ogg', 100, FALSE)
-		if(do_after(owner, scribe_mod, target = owner, extra_checks = CALLBACK(owner, TYPE_PROC_REF(/mob, break_do_after_checks), health, action_interrupt)))
-			new rune_type(owner.loc, chosen_keyword)
-		else
-			qdel(R1)
-			if(R2)
-				qdel(R2)
-			if(R3)
-				qdel(R3)
-			if(R4)
-				qdel(R4)
-			cooldown = 0
-			owner.update_mob_action_buttons()
+	cooldown = base_cooldown + world.time
+	owner.update_mob_action_buttons()
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob, update_mob_action_buttons)), base_cooldown + 1)
+	var/list/mob_health = null
+	if(damage_interrupt && isliving(owner))
+		var/mob/living/as_living = owner
+		mob_health = list(as_living.health)
+	var/scribe_mod = scribe_time
+	if(istype(T, /turf/open/floor/engine/cult))
+		scribe_mod *= 0.5
+	playsound(T, 'sound/effects/magic/enter_blood.ogg', 100, FALSE)
+
+	if(do_after(owner, scribe_mod, owner, action_interrupt ? DO_AFTER_CHECK_NEXT_MOVE : NONE, extra_checks = !isnull(mob_health) ? CALLBACK(src, PROC_REF(check_health), owner, mob_health) : null))
+		new rune_type(owner.loc, chosen_keyword)
+		return
+
+	qdel(R1)
+	if(R2)
+		qdel(R2)
+	if(R3)
+		qdel(R3)
+	if(R4)
+		qdel(R4)
+	cooldown = 0
+	owner.update_mob_action_buttons()
+
+/datum/action/innate/cult/create_rune/proc/check_health(mob/living/user, old_health)
+	if(user.health < old_health[1])
+		return FALSE
+
+	old_health[1] = user.health
+	return TRUE
 
 //teleport rune
 /datum/action/innate/cult/create_rune/tele
