@@ -1187,19 +1187,23 @@
 				for(var/atom/left_loc as anything in locs - new_locs)
 					left_loc.Exited(src, movement_dir)
 
-				for(var/atom/entering_loc as anything in new_locs - locs)
-					entering_loc.Entered(src, movement_dir)
+				// The Exited() calls above can have arbitrary side effects that move us again before we get here
+				// Which can lead to duplicated signals
+				if(loc == destination)
+					for(var/atom/entering_loc as anything in new_locs - locs)
+						entering_loc.Entered(src, movement_dir)
 
-				if(old_area && old_area != destarea)
-					destarea.Entered(src, movement_dir)
+					if(old_area && old_area != destarea)
+						destarea.Entered(src, movement_dir)
 			else
 				if(oldloc)
 					oldloc.Exited(src, movement_dir)
 					if(old_area && old_area != destarea)
 						old_area.Exited(src, movement_dir)
-				destination.Entered(src, oldloc)
-				if(destarea && old_area != destarea)
-					destarea.Entered(src, old_area)
+				if(loc == destination)
+					destination.Entered(src, oldloc)
+					if(destarea && old_area != destarea)
+						destarea.Entered(src, old_area)
 
 		. = TRUE
 
