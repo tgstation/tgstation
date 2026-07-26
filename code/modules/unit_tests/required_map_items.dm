@@ -37,17 +37,19 @@
 	expected_types += /obj/item/storage/photo_album/library
 	expected_types += /obj/item/storage/photo_album/prison
 
+	expected_types += /obj/item/storage/photo_album/captain
+	expected_types += /obj/item/storage/photo_album/ce
+	expected_types += /obj/item/storage/photo_album/cmo
+	expected_types += /obj/item/storage/photo_album/hop
+	expected_types += /obj/item/storage/photo_album/hos
+	expected_types += /obj/item/storage/photo_album/qm
+	expected_types += /obj/item/storage/photo_album/rd
+
 /// Types that must never be mapped in.
 /// Anything listed here is expected to be spawned by code instead.
 /datum/unit_test/maptest_required_map_items/proc/setup_banned_types()
-	// head albums come out of their locker, mapping one in makes a second album with the same save
-	banned_types += /obj/item/storage/photo_album/captain
-	banned_types += /obj/item/storage/photo_album/ce
-	banned_types += /obj/item/storage/photo_album/cmo
-	banned_types += /obj/item/storage/photo_album/hop
-	banned_types += /obj/item/storage/photo_album/hos
-	banned_types += /obj/item/storage/photo_album/qm
-	banned_types += /obj/item/storage/photo_album/rd
+// Your typepaths here!
+	return
 
 /datum/unit_test/maptest_required_map_items/Run()
 	setup_expected_types()

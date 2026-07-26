@@ -87,7 +87,7 @@
 
 /obj/item/storage/photo_album/hos/Initialize(mapload)
 	. = ..()
-	REGISTER_REQUIRED_MAP_ITEM(0, 0)
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 /obj/item/storage/photo_album/rd
 	name = "photo album (Research Director)"
@@ -96,7 +96,7 @@
 
 /obj/item/storage/photo_album/rd/Initialize(mapload)
 	. = ..()
-	REGISTER_REQUIRED_MAP_ITEM(0, 0)
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 /obj/item/storage/photo_album/hop
 	name = "photo album (Head of Personnel)"
@@ -105,7 +105,7 @@
 
 /obj/item/storage/photo_album/hop/Initialize(mapload)
 	. = ..()
-	REGISTER_REQUIRED_MAP_ITEM(0, 0)
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 /obj/item/storage/photo_album/captain
 	name = "photo album (Captain)"
@@ -114,7 +114,7 @@
 
 /obj/item/storage/photo_album/captain/Initialize(mapload)
 	. = ..()
-	REGISTER_REQUIRED_MAP_ITEM(0, 0)
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 /obj/item/storage/photo_album/cmo
 	name = "photo album (Chief Medical Officer)"
@@ -123,7 +123,7 @@
 
 /obj/item/storage/photo_album/cmo/Initialize(mapload)
 	. = ..()
-	REGISTER_REQUIRED_MAP_ITEM(0, 0)
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 /obj/item/storage/photo_album/qm
 	name = "photo album (Quartermaster)"
@@ -132,7 +132,7 @@
 
 /obj/item/storage/photo_album/qm/Initialize(mapload)
 	. = ..()
-	REGISTER_REQUIRED_MAP_ITEM(0, 0)
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 /obj/item/storage/photo_album/ce
 	name = "photo album (Chief Engineer)"
@@ -141,7 +141,7 @@
 
 /obj/item/storage/photo_album/ce/Initialize(mapload)
 	. = ..()
-	REGISTER_REQUIRED_MAP_ITEM(0, 0)
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 /obj/item/storage/photo_album/bar
 	name = "photo album (Bar)"
