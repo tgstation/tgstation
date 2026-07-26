@@ -53,7 +53,8 @@ GLOBAL_DATUM_INIT(closet_teleport_controller, /datum/closet_teleport_controller,
 			target.alpha = 200
 			do_sparks(3, FALSE, target)
 
-	visible_atom.visible_message("The items shimmer and fizzle, turning a shade of violet blue.")
+	if(!subtle)
+		visible_atom.visible_message("The items shimmer and fizzle, turning a shade of violet blue.")
 	id_counter++
 	return TRUE
 
@@ -90,6 +91,9 @@ GLOBAL_DATUM_INIT(closet_teleport_controller, /datum/closet_teleport_controller,
 /datum/closet_teleport_controller/proc/use_eigenlinked_atom(atom/object_sent_from, atom/movable/thing_to_send)
 	SIGNAL_HANDLER
 
+	var/tp_flags = SEND_SIGNAL(object_sent_from, COMSIG_CLOSET_TELEPORTER_PRE_SENDING, thing_to_send)
+	if(tp_flags & CLOSET_TELEPORT_BLOCKED)
+		return FALSE
 	var/id = eigen_id[object_sent_from]
 	if(!id)
 		stack_trace("[object_sent_from] attempted to eigenlink to something that didn't have a valid id!")
@@ -106,7 +110,7 @@ GLOBAL_DATUM_INIT(closet_teleport_controller, /datum/closet_teleport_controller,
 	if(!eigen_target)
 		stack_trace("No eigen target set for the eigenstate component!")
 		return FALSE
-	if(check_teleport_valid(thing_to_send, eigen_target, TELEPORT_CHANNEL_QUANTUM))
+	if((tp_flags & CLOSET_TELEPORT_FORCED) || check_teleport_valid(thing_to_send, eigen_target, TELEPORT_CHANNEL_QUANTUM))
 		thing_to_send.forceMove(eigen_target)
 	else
 		if(!subtle)
