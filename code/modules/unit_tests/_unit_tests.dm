@@ -306,6 +306,7 @@
 #include "screenshot_debrain.dm"
 #include "screenshot_digi.dm"
 #include "screenshot_dynamic_human_icons.dm"
+#include "screenshot_hair_gradient.dm"
 #include "screenshot_high_luminosity_eyes.dm"
 #include "screenshot_humanoids.dm"
 #include "screenshot_husk.dm"
