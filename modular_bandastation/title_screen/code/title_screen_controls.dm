@@ -72,11 +72,6 @@ GAME_VERB_DESC(/client, fix_title_screen, "Fix Lobby Screen", "Lobbyscreen broke
 
 	SStitle.show_title_screen_to(src)
 
-/client/open_escape_menu()
-	if(isnewplayer(mob))
-		return
-	. = ..()
-
 /client/proc/validate_job_restrictions()
 	set waitfor = FALSE
 
