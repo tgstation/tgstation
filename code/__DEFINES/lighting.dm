@@ -22,8 +22,6 @@
 #define LIGHT_FROZEN (1<<1)
 /// Does this light ignore inherent offsets? (Pixels, transforms, etc)
 #define LIGHT_IGNORE_OFFSET (1<<2)
-/// Does this light not update turf luminosity? Use this for temporary/frequent visuals only, and only works for overlay lights
-#define LIGHT_IGNORE_LUMINOSITY (1<<3)
 
 #define MINIMUM_USEFUL_LIGHT_RANGE 1.4
 
