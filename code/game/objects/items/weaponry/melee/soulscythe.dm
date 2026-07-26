@@ -67,7 +67,7 @@
 		reset_spin() //resume spinnage
 
 /obj/item/soulscythe/attack_self(mob/user, modifiers)
-	if(using || soul.ckey || soul.stat)
+	if(using || soul.ckey || IS_UNCONSCIOUS_OR_CRIT(soul))
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		balloon_alert(user, "you can't awaken the scythe!")
@@ -266,7 +266,7 @@
 	add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_LAVA_IMMUNE), INNATE_TRAIT)
 
 /mob/living/basic/soulscythe/Life(seconds_per_tick)
-	if(stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(src))
 		adjust_blood_volume(round(1 * seconds_per_tick), maximum = MAX_BLOOD_LEVEL)
 
 /// Special projectile for the soulscythe.

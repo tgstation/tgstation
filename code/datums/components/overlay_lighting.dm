@@ -124,7 +124,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_COLOR, PROC_REF(set_color))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_ON, PROC_REF(on_toggle))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_FLAGS, PROC_REF(on_light_flags_change))
-	RegisterSignal(parent, COMSIG_ATOM_SET_LIGHT_RENDER_SOURCE, PROC_REF(set_light_render_source))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_RENDER_SOURCE, PROC_REF(set_light_render_source))
 	RegisterSignal(parent, COMSIG_ATOM_USED_IN_CRAFT, PROC_REF(on_parent_crafted))
 	RegisterSignal(parent, COMSIG_LIGHT_EATER_QUEUE, PROC_REF(on_light_eater))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_parent_moved))

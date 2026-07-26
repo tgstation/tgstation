@@ -802,7 +802,7 @@
 	var/list/possible_targets = list()
 
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
-		if(!player.client || !player.mind || player.stat != CONSCIOUS)
+		if(!player.client || !player.mind || IS_UNCONSCIOUS_OR_CRIT(player))
 			continue
 		if(!(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 			continue
@@ -1210,6 +1210,16 @@
 
 /datum/dynamic_ruleset/midround/from_living/malf_ai/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/malf_ai)
+	if(!prob(33) || !isAI(candidate.current))
+		return
+	priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", ANNOUNCER_IONSTORM)
+	var/mob/living/silicon/new_malf_ai = candidate.current
+	var/obj/machinery/ai_law_rack/base/rack = new_malf_ai.get_law_rack()
+	rack?.scramble_ai_rack(
+		base_ion_prob = 100,
+		sub_ion_prob = 10,
+		ion_limit = 1,
+	)
 
 /datum/dynamic_ruleset/midround/from_living/malf_ai/can_be_selected()
 	return ..() && !HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI)

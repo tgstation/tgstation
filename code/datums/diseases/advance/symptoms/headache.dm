@@ -17,8 +17,7 @@
 	level = 1
 	severity = 1
 	base_message_chance = 100
-	symptom_delay_min = 15
-	symptom_delay_max = 30
+	symptom_delay = 22.5
 	symptom_cure = /datum/reagent/drug/space_drugs
 	threshold_descs = list(
 		"Stage Speed 6" = "Headaches will cause severe pain, that weakens the host.",
@@ -35,8 +34,7 @@
 	if(A.totalStageSpeed() >= 6) //severe pain
 		power = 2
 	if(A.totalStageSpeed() >= 9) //cluster headaches
-		symptom_delay_min = 30
-		symptom_delay_max = 60
+		symptom_delay = 45
 		power = 3
 
 /datum/symptom/headache/Activate(datum/disease/advance/A)

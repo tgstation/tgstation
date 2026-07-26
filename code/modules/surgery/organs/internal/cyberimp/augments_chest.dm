@@ -88,7 +88,7 @@
 
 /obj/item/organ/cyberimp/chest/reviver/proc/try_heal()
 	if(reviving)
-		if(owner.stat == CONSCIOUS)
+		if(!IS_UNCONSCIOUS_OR_CRIT(owner))
 			COOLDOWN_START(src, reviver_cooldown, revive_cost)
 			reviving = FALSE
 			to_chat(owner, span_notice("Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)]."))
@@ -99,7 +99,7 @@
 	if(!COOLDOWN_FINISHED(src, reviver_cooldown) || HAS_TRAIT(owner, TRAIT_SUICIDED))
 		return
 
-	if(owner.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
 		revive_cost = 0
 		reviving = TRUE
 		to_chat(owner, span_notice("You feel a faint buzzing as your reviver implant starts patching your wounds..."))
@@ -176,7 +176,7 @@
 	if(!istype(human_owner))
 		return
 	human_owner.set_heartattack(FALSE)
-	if(human_owner.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(human_owner))
 		to_chat(human_owner, span_notice("You feel your heart beating again!"))
 
 

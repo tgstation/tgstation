@@ -129,8 +129,10 @@
 #define BB_BASIC_MOB_ESCAPE_TARGET "BB_basic_mob_escape_target"
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"
 #define BB_OBSTACLE_TARGETING_WHITELIST "BB_targeting_whitelist"
-/// Key for the minimum status at which we want to target mobs (does not need to be specified if CONSCIOUS)
+/// Key for the minimum status at which we want to target mobs (does not need to be specified if STABLE)
 #define BB_TARGET_MINIMUM_STAT "BB_target_minimum_stat"
+/// If set, unconscious mobs will be treated as hard crit for the purposes of targeting and attacking. (So you can have a mob fooled by someone sleeping)
+#define BB_TREAT_UNCONSCIOUS_AS_HARDCRIT "BB_treat_unconscious_as_hardcrit"
 /// Flag for whether to target only wounded mobs
 #define BB_TARGET_WOUNDED_ONLY "BB_target_wounded_only"
 /// What typepath the holding object targeting strategy should look for
