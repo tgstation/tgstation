@@ -165,22 +165,23 @@
 	return status
 
 /datum/tgui_who/proc/get_state(mob/user)
-	switch(user.stat)
-		if(CONSCIOUS)
-			return "Живой"
-		if(UNCONSCIOUS)
-			return "Без сознания"
-		if(SOFT_CRIT, HARD_CRIT)
-			return "В крите"
-		if(DEAD)
-			if(isnewplayer(user))
-				return "В лобби"
+	if(user.stat == DEAD)
+		if(isnewplayer(user))
+			return "В лобби"
 
-			if(isobserver(user))
-				var/mob/dead/observer/observer = user
-				if(observer.started_as_observer)
-					return "Наблюдает"
-				return "Мёртв"
+		if(isobserver(user))
+			var/mob/dead/observer/observer = user
+			if(observer.started_as_observer)
+				return "Наблюдает"
+			return "Мёртв"
+
+	if(user.stat >= SOFT_CRIT)
+		return "В крите"
+
+	if(IS_UNCONSCIOUS(user))
+		return "Без сознания"
+
+	return "Живой"
 
 /datum/tgui_who/proc/get_health(mob/living/user)
 	if(!isliving(user))
