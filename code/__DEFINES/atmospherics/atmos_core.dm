@@ -1,11 +1,4 @@
 //LISTMOS
-//indices of values in gas lists.
-///Amount of total moles in said gas mixture
-#define MOLES 1
-///Archived version of MOLES
-#define ARCHIVE 2
-///All gas related variables
-#define GAS_META 3
 ///Gas specific heat per mole
 #define META_GAS_SPECIFIC_HEAT 1
 ///Name of the gas
@@ -22,6 +15,8 @@
 #define META_GAS_FUSION_POWER 7
 ///Short description of the gas.
 #define META_GAS_DESC 8
+///Length of gas meta array
+#define META_GAS_LENGTH 8
 //ATMOS
 //stuff you should probably leave well alone!
 /// kPa*L/(K*mol)
@@ -54,7 +49,7 @@
 /// Molar accuracy to round to
 #define MOLAR_ACCURACY  1E-4
 /// Types of gases (based on gaslist_cache)
-#define GAS_TYPE_COUNT GLOB.gaslist_cache.len
+#define GAS_TYPE_COUNT 20
 /// Maximum error caused by QUANTIZE when removing gas (roughly, in reality around 2 * MOLAR_ACCURACY less)
 #define MAXIMUM_ERROR_GAS_REMOVAL (MOLAR_ACCURACY * GAS_TYPE_COUNT)
 
@@ -182,3 +177,5 @@
 #define ATMOS_PRESSURE_APPROXIMATION_ITERATIONS 20
 /// We deal with big numbers and a lot of math, things are bound to get imprecise. Take this traveller.
 #define ATMOS_PRESSURE_ERROR_TOLERANCE 0.01
+/// Helper function for retrieving gas meta info for use in performace critical places
+#define GAS_META /datum/gas_mixture::gas_meta

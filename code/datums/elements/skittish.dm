@@ -17,7 +17,7 @@
 
 /datum/element/skittish/proc/Bump(mob/living/scooby, atom/target)
 	SIGNAL_HANDLER
-	if(scooby.stat != CONSCIOUS || scooby.move_intent != MOVE_INTENT_RUN)
+	if(IS_UNCONSCIOUS_OR_CRIT(scooby) || scooby.move_intent != MOVE_INTENT_RUN)
 		return
 
 	if(!istype(target, /obj/structure/closet))
@@ -59,3 +59,5 @@
 	closet_turf.visible_message(span_warning("[scooby] dives into [closet]!"))
 	// If you run into a locker, you don't want to run out immediately
 	scooby.Immobilize(0.5 SECONDS)
+
+	return COMPONENT_INTERCEPT_BUMPED

@@ -106,7 +106,7 @@
 				. = ITEM_INTERACT_SUCCESS
 
 /obj/item/mod/control/proc/can_call()
-	return get_charge() && wearer && wearer.stat < DEAD
+	return get_charge() && wearer && wearer.stat != DEAD
 
 /obj/item/mod/control/proc/make_link_visual()
 	return make_link_visual_generic(mod_link, PROC_REF(on_overlay_change))
@@ -143,6 +143,7 @@
 	desc = "An intricate piece of machinery that creates a holographic video call with another MODlink-compatible device. Essentially a video necklace."
 	icon_state = "modlink"
 	actions_types = list(/datum/action/item_action/call_link)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 	/// The installed power cell.
 	var/obj/item/stock_parts/power_store/cell
 	/// The MODlink datum we operate.
@@ -276,12 +277,12 @@
 		call_link(user, mod_link)
 
 /obj/item/clothing/neck/link_scryer/proc/get_user()
-	var/mob/living/carbon/user = loc
-	return istype(user) && user.wear_neck == src ? user : null
+	var/mob/living/user = loc
+	return istype(user) && user.get_item_by_slot(ITEM_SLOT_NECK) == src ? user : null
 
 /obj/item/clothing/neck/link_scryer/proc/can_call()
 	var/mob/living/user = loc
-	return istype(user) && cell?.charge && user.stat < DEAD
+	return istype(user) && cell?.charge && user.stat != DEAD
 
 /obj/item/clothing/neck/link_scryer/proc/make_link_visual()
 	var/mob/living/user = mod_link.get_user_callback.Invoke()

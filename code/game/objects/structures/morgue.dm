@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	update_appearance(UPDATE_ICON)
 
 /obj/structure/bodycontainer/relaymove(mob/living/user, direction)
-	if(user.stat || !isturf(loc))
+	if(IS_UNCONSCIOUS_OR_CRIT(user) || !isturf(loc))
 		return
 	if(locked)
 		if(COOLDOWN_FINISHED(src, breakout_message_cooldown))
@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		span_hear("You hear a metallic creaking from [src]."))
 	if(!do_after(user, BREAKDOWN_TIME, target = src))
 		return
-	if(!user || user.stat != CONSCIOUS || user.loc != src)
+	if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src)
 		return
 	user.visible_message(
 		span_warning("[user] successfully broke out of [src]!"),
@@ -566,16 +566,18 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		to_chat(user, span_warning("That's not connected to anything!"))
 	add_fingerprint(user)
 
-/obj/structure/tray/attackby(obj/P, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(P, /obj/item/riding_offhand))
-		return ..()
+/obj/structure/tray/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/riding_offhand))
+		return NONE
 
-	var/obj/item/riding_offhand/riding_item = P
+	var/obj/item/riding_offhand/riding_item = tool
 	var/mob/living/carried_mob = riding_item.rider
 	if(carried_mob == user) //Piggyback user.
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	user.unbuckle_mob(carried_mob)
 	mouse_drop_receive(carried_mob, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tray/mouse_drop_receive(atom/movable/O as mob|obj, mob/user, params)
 	if(!ismovable(O) || O.anchored || O.loc == user)

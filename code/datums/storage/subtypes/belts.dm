@@ -14,7 +14,6 @@
 ///Medical belt
 /datum/storage/medical_belt
 	max_total_storage = 21
-	exception_max = 1
 
 /datum/storage/medical_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
@@ -76,9 +75,6 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tourniquet,
 		/obj/item/wrench/medical,
-	),
-	exception_hold_list = list(
-		/obj/item/crowbar/power/paramedic,
 	))
 
 ///Security belt
@@ -391,8 +387,8 @@
 		/obj/item/clothing/neck/heretic_focus,
 		/obj/item/codex_cicatrix,
 		/obj/item/eldritch_potion,
-		/obj/item/food/grown/poppy, // Used to regain a Living Heart.
-		/obj/item/food/grown/harebell, // Used to reroll targets
+		/obj/item/food/grown/flower/poppy, // Used to regain a Living Heart.
+		/obj/item/food/grown/flower/harebell, // Used to reroll targets
 		/obj/item/melee/rune_carver,
 		/obj/item/melee/sickly_blade,
 		/obj/item/organ, // Organs are also often used in rituals.

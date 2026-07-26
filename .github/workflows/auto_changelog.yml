@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
-          ref: ${{ github.base_ref }}
+          ref: ${{ github.event.repository.default_branch }}
 
       - name: Generate App Token
         id: app-token-generation

@@ -239,7 +239,7 @@
 		draining_overlay.pixel_y = 16
 		user.add_overlay(draining_overlay)
 
-	if(!do_after(user, drain_speed, src, hidden = TRUE))
+	if(!do_after(user, drain_speed, src, cog_icon = null))
 		being_drained = FALSE
 		loc.balloon_alert(user, "interrupted!")
 		user.cut_overlay(draining_overlay)

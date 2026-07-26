@@ -143,7 +143,9 @@
 #define COMSIG_ITEM_ON_JUICE "on_juice"
 ///from /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers) when an object is used as compost: (mob/user)
 #define COMSIG_ITEM_ON_COMPOSTED "on_composted"
-///Called when an item is dried by a drying rack
+///Called when an item has finished being deied by a drying rack
+#define COMSIG_ITEM_FINISH_DRYING "item_finish_drying"
+///Called after we're done applying the dried status to the item with the dryable element
 #define COMSIG_ITEM_DRIED "item_dried"
 ///from base of obj/item/dropped(): (mob/user)
 #define COMSIG_ITEM_DROPPED "item_drop"
@@ -151,6 +153,8 @@
 #define COMSIG_MOB_DROPPED_ITEM "mob_dropped_item"
 ///from base of obj/item/pickup(): (/mob/taker)
 #define COMSIG_ITEM_PICKUP "item_pickup"
+///from base of mob/put_in_hand(), after forceMove  item is now in the mob's hand: (mob/holder, hand_index)
+#define COMSIG_ITEM_ENTERED_HANDS "item_entered_hands"
 ///from base of obj/item/on_outfit_equip(): (mob/equipper, visuals_only, slot)
 #define COMSIG_ITEM_EQUIPPED_AS_OUTFIT "item_equip_as_outfit"
 ///from base of datum/storage/handle_enter(): (datum/storage/storage)
@@ -679,6 +683,11 @@
 /// From /obj/machinery/vending/dispense(): (obj/item/vended_item)
 #define COMSIG_VENDING_DISPENSED "vending_dispensed"
 
+/// From /obj/machinery/vending/vend(): (mob/user, obj/machinery/vending_machine, obj/item/vended_item)
+#define COMSIG_MOB_VENDING_PURCHASE "mob_vending_purchase"
+	/// Stops the mob from picking up whatevr they just purchased (it just goes to the floor)
+	#define VENDING_NO_PICKUP (1<<0)
+
 /// Sent from /datum/component/reflection when the reflection is updated to the mob reflecting: (atom/movable/reflecting_in, obj/effect/abstract/reflection)
 #define COMSIG_REFLECTION_UPDATED "reflection_updated"
 
@@ -692,3 +701,8 @@
 #define COMSIG_ITEM_PRE_CUFFED_TO_MOB "item_cuffed_to_mob"
 	/// Return to stop the cuffing from happening.
 	#define BLOCK_ITEM_CUFF (1<<0)
+
+/// Sent from /obj/machinery/door/airlock/close, to a movable blocking it from closing: (obj/machinery/door/being_blocked, force_close, force_crush)
+#define COMSIG_MOVABLE_BLOCKING_AIRLOCK "movable_blocking_airlock"
+	/// Forces the airlock to crush whatever's blocking it even if it normally wouldn't
+	#define AIRLOCK_BLOCK_FORCE_CRUSH (1<<0)

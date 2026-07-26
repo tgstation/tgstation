@@ -6,8 +6,6 @@
 	var/atom/result_typepath
 	/// Reagents that should be added to the result
 	var/list/added_reagents
-	/// Whether this is a bad recipe or not. It affects some checks.
-	var/bad_recipe
 
 /datum/element/microwavable/Attach(obj/item/target, microwave_type, list/reagents, bad_recipe = FALSE)
 	. = ..()
@@ -18,12 +16,11 @@
 
 	result_typepath = microwave_type
 	added_reagents = reagents
-	src.bad_recipe = bad_recipe
+	if(!bad_recipe)
+		ADD_TRAIT(target, TRAIT_MICROWAVABLE, REF(src))
+		RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 	RegisterSignal(target, COMSIG_ITEM_MICROWAVE_ACT, PROC_REF(on_microwaved))
-
-	if(!bad_recipe)
-		RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || bad_recipe || !target.custom_materials || isstack(target))
 		return
@@ -57,7 +54,7 @@
 
 	var/efficiency = istype(used_microwave) ? used_microwave.efficiency : 1
 
-	if(IS_EDIBLE(result) && !bad_recipe)
+	if(IS_EDIBLE(result) && HAS_TRAIT(source, TRAIT_MICROWAVABLE))
 		BLACKBOX_LOG_FOOD_MADE(result.type)
 
 		if(istype(source, /obj/item/food) && istype(result, /obj/item/food))
@@ -75,14 +72,14 @@
 		if(added_reagents) // Add any new reagents that should be added
 			result.reagents.add_reagent_list(added_reagents)
 
-	SEND_SIGNAL(result, COMSIG_ITEM_MICROWAVE_COOKED, source, efficiency)
-	SEND_SIGNAL(source, COMSIG_ITEM_MICROWAVE_COOKED_FROM, result, efficiency)
-
-	qdel(source)
+	SEND_SIGNAL(source, COMSIG_ITEM_MICROWAVE_COOKED, result, efficiency)
+	SEND_SIGNAL(result, COMSIG_ITEM_MICROWAVE_COOKED_RESULT, source, efficiency)
 
 	var/recipe_result = COMPONENT_MICROWAVE_SUCCESS
-	if(bad_recipe)
+	if(!HAS_TRAIT(source, TRAIT_MICROWAVABLE))
 		recipe_result |= COMPONENT_MICROWAVE_BAD_RECIPE
+
+	qdel(source)
 
 	if(randomize_pixel_offset && isitem(result))
 		var/obj/item/result_item = result

@@ -6,7 +6,7 @@
 	icon_state = "improvshell"
 	caliber = CALIBER_JUNK
 	projectile_type = /obj/projectile/bullet/junk
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 
 // Junk Shell Spawner; used to spawn in our random shells upon crafting
 
@@ -19,6 +19,7 @@
 		/obj/item/ammo_casing/junk/incendiary = 20,
 		/obj/item/ammo_casing/junk/shock = 20,
 		/obj/item/ammo_casing/junk/hunter = 20,
+		/obj/item/ammo_casing/junk/ants = 20,
 		/obj/item/ammo_casing/junk/phasic = 5,
 		/obj/item/ammo_casing/junk/ripper = 5,
 		/obj/item/ammo_casing/junk/reaper = 1,
@@ -26,6 +27,9 @@
 
 /obj/item/ammo_casing/junk/incendiary
 	projectile_type = /obj/projectile/bullet/incendiary/fire/junk
+
+/obj/item/ammo_casing/junk/ants
+	projectile_type = /obj/projectile/bullet/dart/ants
 
 /obj/item/ammo_casing/junk/phasic
 	projectile_type = /obj/projectile/bullet/junk/phasic

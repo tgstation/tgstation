@@ -34,7 +34,7 @@
 	. = ..()
 
 	GLOB.new_player_list += src
-	add_verb(src, /mob/dead/new_player/proc/reset_menu_hud)
+	ASSIGN_GAME_VERB(src, /mob/dead/new_player, reset_menu_hud)
 
 /mob/dead/new_player/Destroy()
 	GLOB.new_player_list -= src
@@ -193,7 +193,7 @@
 	var/atom/destination = mind.assigned_role.get_latejoin_spawn_point()
 	if(!destination)
 		CRASH("Failed to find a latejoin spawn point.")
-	var/mob/living/character = create_character(destination)
+	var/mob/living/character = create_character(destination, forced_slot = client.prefs.default_slot)
 	if(!character)
 		CRASH("Failed to create a character for latejoin.")
 	transfer_character()
@@ -266,9 +266,19 @@
 		if(!employmentCabinet.virgin)
 			employmentCabinet.addFile(employee)
 
-/// Creates, assigns and returns the new_character to spawn as. Assumes a valid mind.assigned_role exists.
-/mob/dead/new_player/proc/create_character(atom/destination)
+/**
+ * Creates, assigns and returns the new_character to spawn as.
+ * Assumes a valid mind.assigned_role exists.
+ *
+ * * destination - where to spawn the character
+ * * forced_slot - if provided, will load whatever character is in that slot instead of their active slot
+ */
+/mob/dead/new_player/proc/create_character(atom/destination, forced_slot)
 	spawning = TRUE
+
+	var/spawned_slot = isnum(forced_slot) ? forced_slot : LAZYACCESS(client.prefs.job_assigned_profiles, mind.assigned_role.title)
+	if(isnum(spawned_slot) && client.prefs.default_slot != spawned_slot)
+		client.prefs.load_character(spawned_slot) // if this fails, we will simply load their current slot anyways
 
 	mind.active = FALSE //we wish to transfer the key manually
 	var/mob/living/spawning_mob = mind.assigned_role.get_spawn_mob(client, destination)
@@ -356,13 +366,11 @@
 		I.ui_interact(src)
 
 	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
-	add_verb(src, /mob/dead/new_player/proc/open_interview)
+	ASSIGN_GAME_VERB(src, /mob/dead/new_player, open_interview)
 	add_verb(client, /client/verb/fix_tgui_panel)
 
 ///Resets the Lobby Menu HUD, recreating and reassigning it to the new player
-/mob/dead/new_player/proc/reset_menu_hud()
-	set name = "Reset Lobby Menu HUD"
-	set category = "OOC"
+GAME_VERB_PROC(/mob/dead/new_player, reset_menu_hud, "Reset Lobby Menu HUD", "OOC")
 	var/mob/dead/new_player/new_player = usr
 	if(!COOLDOWN_FINISHED(new_player, reset_hud_cooldown))
 		to_chat(new_player, span_warning("You must wait <b>[DisplayTimeText(COOLDOWN_TIMELEFT(new_player, reset_hud_cooldown))]</b> before resetting the Lobby Menu HUD again!"))

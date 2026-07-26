@@ -22,12 +22,20 @@
 	flags_cover = HEADCOVERSEYES|EARS_COVERED
 	flags_inv = HIDEHAIR|HIDEFACE
 	flash_protect = FLASH_PROTECTION_WELDER_SENSITIVE
+	tint = INFINITY
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 	armor_type = /datum/armor/head_helmet_matrix
 	actions_types = list(/datum/action/cooldown/spell/pointed/percept_hallucination)
+	custom_materials = list(
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
+	)
 
 	/// If we have a core or not
 	var/core_installed = FALSE
@@ -95,10 +103,14 @@
 		detach_clothing_traits(additional_clothing_traits)
 		QDEL_LIST(active_components)
 		RemoveElement(/datum/element/wearable_client_colour, /datum/client_colour/perceptomatrix, ITEM_SLOT_HEAD, HELMET_TRAIT, forced = TRUE)
+		tint = INFINITY
+		astype(loc, /mob/living/carbon)?.update_tint()
 		return
 
 	clothing_flags = PERCEPTOMATRIX_ACTIVE_FLAGS
 	attach_clothing_traits(additional_clothing_traits)
+	tint = 0
+	astype(loc, /mob/living/carbon)?.update_tint()
 
 	// When someone makes TRAIT_DEAF an element, or status effect, or whatever, give this item a way to bypass said deafness.
 	// just blocking future instances of deafness isn't what the item is meant to do but there's no proper way to do it otherwise at the moment.

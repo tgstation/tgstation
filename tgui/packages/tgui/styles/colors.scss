@@ -56,3 +56,7 @@ $color-map-keys: map.keys($_gen_map) !default;
 @function fg($color) {
   @return hsl(from $color h s calc(l + var(--adjust-color)));
 }
+
+@function hover($color) {
+  @return hsl(from $color h s calc(l + var(--adjust-hover)));
+}

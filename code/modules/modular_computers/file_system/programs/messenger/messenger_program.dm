@@ -14,7 +14,7 @@
 	size = 0
 	undeletable = TRUE // It comes by default in tablets, can't be downloaded, takes no space and should obviously not be able to be deleted.
 	power_cell_use = NONE
-	program_flags = PROGRAM_HEADER | PROGRAM_RUNS_WITHOUT_POWER | PROGRAM_CIRCUITS_RUN_WHEN_CLOSED
+	program_flags = PROGRAM_HEADER | PROGRAM_CIRCUITS_RUN_WHEN_CLOSED
 	can_run_on_flags = PROGRAM_PDA
 	ui_header = "ntnrc_idle.gif"
 	tgui_id = "NtosMessenger"
@@ -702,7 +702,7 @@
 	SEND_SIGNAL(computer, COMSIG_MODULAR_PDA_MESSAGE_RECEIVED, signal, fake_job || sender_messenger?.computer.saved_job , sender_name)
 
 	for(var/mob/living/messaged_mob as anything in receievers)
-		if(messaged_mob.stat >= UNCONSCIOUS)
+		if(IS_UNCONSCIOUS(messaged_mob))
 			continue
 		if(!messaged_mob.is_literate())
 			continue

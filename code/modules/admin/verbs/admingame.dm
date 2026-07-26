@@ -1,7 +1,7 @@
 ADMIN_VERB(cmd_player_panel, R_ADMIN, "Player Panel", "See all players and their Player Panel.", ADMIN_CATEGORY_GAME)
 	user.holder.player_panel_new()
 
-ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mob/player in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mob/player)
 	log_admin("[key_name(user)] checked the individual player panel for [key_name(player)][isobserver(user.mob)?"":" while in game"].")
 
 	if(!player)
@@ -151,7 +151,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 	user << browse(body, "window=adminplayeropts-[REF(player)];size=550x540")
 	BLACKBOX_LOG_ADMIN_VERB("Player Panel")
 
-ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupants PP", obj/target in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupants PP", obj/target)
 	var/list/options = list()
 
 	// Vehicles
@@ -221,9 +221,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupan
 			SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/show_player_panel, selected_mob)
 		return
 
-/client/proc/cmd_admin_godmode(mob/mob in GLOB.mob_list)
-	set category = "Admin.Game"
-	set name = "Godmode"
+GAME_VERB_PROC(/client, cmd_admin_godmode, "Godmode", "Admin.Game", mob/mob)
 	if(!check_rights(R_ADMIN))
 		return
 

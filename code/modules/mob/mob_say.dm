@@ -1,8 +1,7 @@
 //Speech verbs.
 
 ///what clients use to speak. when you type a message into the chat bar in say mode, this is the first thing that goes off serverside.
-/mob/verb/say_verb(message as text)
-	set name = VERB_SAY
+GAME_VERB(/mob, say_verb, VERB_SAY, null, message as text)
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
@@ -14,8 +13,7 @@
 		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), message), SSspeech_controller)
 
 ///Whisper verb
-/mob/verb/whisper_verb(message as text)
-	set name = VERB_WHISPER
+GAME_VERB(/mob, whisper_verb, VERB_WHISPER, null, message as text)
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
@@ -35,8 +33,7 @@
 	say(message, language = language)
 
 ///The me emote verb
-/mob/verb/me_verb(message as text)
-	set name = VERB_ME
+GAME_VERB(/mob, me_verb, VERB_ME, null, message as text)
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
@@ -212,7 +209,7 @@
 		else if(key == "%" && !mods[MODE_SING])
 			mods[MODE_SING] = TRUE
 		else if(key == ";" && !mods[MODE_HEADSET])
-			if(stat == CONSCIOUS) //necessary indentation so it gets stripped of the semicolon anyway.
+			if(!IS_UNCONSCIOUS_OR_CRIT(src)) //necessary indentation so it gets stripped of the semicolon anyway.
 				mods[MODE_HEADSET] = TRUE
 		else if((key in GLOB.department_radio_prefixes) && length(message) > length(key) + 1 && !mods[RADIO_EXTENSION])
 			mods[RADIO_KEY] = LOWER_TEXT(message[1 + length(key)])

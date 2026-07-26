@@ -11460,7 +11460,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "dhL" = (
-/obj/machinery/computer/upload/ai{
+/obj/machinery/computer/upload/ai/no_lock{
 	dir = 1
 	},
 /obj/machinery/flasher/directional/south{
@@ -14740,14 +14740,14 @@
 /area/station/engineering/supermatter/room)
 "efH" = (
 /obj/structure/table/glass,
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_y = 3
 	},
-/obj/item/food/grown/harebell,
+/obj/item/food/grown/flower/harebell,
 /turf/open/floor/iron/chapel,
 /area/station/service/chapel)
 "efI" = (
@@ -30055,8 +30055,8 @@
 /area/station/maintenance/port/fore)
 "iBi" = (
 /obj/structure/table,
-/obj/item/food/grown/carrot,
-/obj/item/food/grown/carrot{
+/obj/item/food/grown/carrotlike/carrot,
+/obj/item/food/grown/carrotlike/carrot{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -30344,6 +30344,15 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
+"iGu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/brig/upper)
 "iGH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
@@ -35449,12 +35458,12 @@
 "kfl" = (
 /obj/structure/table/wood,
 /obj/item/radio/intercom/directional/south,
-/obj/item/food/grown/poppy,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy,
+/obj/item/food/grown/flower/poppy{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = 5;
 	pixel_y = -2
 	},
@@ -58355,7 +58364,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "qvx" = (
-/obj/item/food/grown/carrot,
+/obj/item/food/grown/carrotlike/carrot,
 /turf/open/misc/asteroid/snow/standard_air,
 /area/station/science/cytology)
 "qvE" = (
@@ -62010,10 +62019,10 @@
 /area/station/cargo/storage)
 "rtF" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/harebell,
+/obj/item/food/grown/flower/harebell,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/radio/intercom/prison/directional/north,
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_y = -3;
 	pixel_x = -2
 	},
@@ -63559,7 +63568,7 @@
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/lobby)
 "rSN" = (
-/obj/machinery/computer/upload/borg{
+/obj/machinery/computer/upload/borg/no_lock{
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/south{
@@ -63828,15 +63837,15 @@
 /obj/structure/table/glass,
 /obj/machinery/light/small/directional/east,
 /obj/machinery/firealarm/directional/east,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = 3;
 	pixel_y = -1
 	},
-/obj/item/food/grown/poppy/geranium{
+/obj/item/food/grown/flower/poppy/geranium{
 	pixel_x = 2;
 	pixel_y = 5
 	},
-/obj/item/food/grown/poppy/lily{
+/obj/item/food/grown/flower/poppy/lily{
 	pixel_x = -2
 	},
 /turf/open/floor/iron,
@@ -65087,6 +65096,7 @@
 	pixel_y = 2
 	},
 /obj/effect/turf_decal/trimline/green/filled/corner,
+/obj/item/storage/pill_bottle/sepsisillin,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "soE" = (
@@ -69985,15 +69995,15 @@
 /area/station/medical/virology)
 "tIw" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_x = 2;
 	pixel_y = 4
 	},
-/obj/item/food/grown/harebell,
+/obj/item/food/grown/flower/harebell,
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
@@ -81071,7 +81081,7 @@
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
 "wVs" = (
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_y = 2
 	},
 /obj/item/storage/photo_album/prison,
@@ -249959,7 +249969,7 @@ krp
 jAc
 oKK
 dAp
-tDk
+iGu
 hdk
 pVL
 bOs

@@ -152,35 +152,35 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	deconstruct(disassembled = TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/barsign/attackby(obj/item/attacking_item, mob/user)
+/obj/machinery/barsign/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 
-	if(istype(attacking_item, /obj/item/blueprints) && !change_area_name)
+	if(istype(tool, /obj/item/blueprints) && !change_area_name)
 		if(!panel_open)
 			balloon_alert(user, "open the panel first!")
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 
 		change_area_name = TRUE
 		balloon_alert(user, "sign registered")
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/stack/cable_coil) && panel_open)
-		var/obj/item/stack/cable_coil/wire = attacking_item
+	if(istype(tool, /obj/item/stack/cable_coil) && panel_open)
+		var/obj/item/stack/cable_coil/wire = tool
 
 		if(atom_integrity >= max_integrity)
 			balloon_alert(user, "doesn't need repairs!")
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 
 		if(!wire.use(2))
 			balloon_alert(user, "need two cables!")
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 
 		balloon_alert(user, "repaired")
 		atom_integrity = max_integrity
 		set_machine_stat(machine_stat & ~BROKEN)
 		update_appearance()
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/machinery/barsign/emp_act(severity)
 	. = ..()

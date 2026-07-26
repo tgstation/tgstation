@@ -351,25 +351,34 @@
 	locked = !locked
 	to_chat(user, span_notice("You [src.locked ? "lock" : "unlock"] the controls."))
 
-/obj/machinery/power/emitter/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(item.GetID())
+/obj/machinery/power/emitter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.GetID())
 		togglelock(user)
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(is_wire_tool(item) && panel_open)
+	if(!panel_open)
+		return NONE
+
+	if(is_wire_tool(tool))
 		wires.interact(user)
-		return
-	if(panel_open && !gun && istype(item,/obj/item/gun/energy))
+		return ITEM_INTERACT_SUCCESS
+
+	if(gun)
+		return NONE
+
+	if(istype(tool, /obj/item/gun/energy))
 		if(diskie)
 			to_chat(user, span_warning("Remove the Diode Disk before inserting a gun."))
-			return
-		if(integrate(item,user))
-			return
-	if(panel_open && !gun && istype(item,/obj/item/emitter_disk))
-		var/obj/item/emitter_disk/config_disk = item
+			return ITEM_INTERACT_BLOCKING
+		if(!integrate(tool,user))
+			return ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/emitter_disk))
+		var/obj/item/emitter_disk/config_disk = tool
 		if(!user.transferItemToLoc(config_disk, src))
 			balloon_alert(user, "stuck in hand!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(diskie)
 			user.put_in_hands(diskie)
 			balloon_alert(user, "disks swapped!")
@@ -385,7 +394,9 @@
 		update_appearance()
 		if(diskie.consumable)
 			qdel(diskie)
-	return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 
 /obj/machinery/power/emitter/proc/integrate(obj/item/gun/energy/energy_gun, mob/user)
@@ -644,6 +655,7 @@
 	consumed_on_removal = FALSE
 	consumable = FALSE
 	laser_color = COLOR_TRUE_BLUE
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/emitter_disk/healing
 	name = "\improper Diode Disk: Bioregenerative"
@@ -652,6 +664,7 @@
 	consumed_on_removal = FALSE
 	consumable = FALSE
 	laser_color = COLOR_YELLOW
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/silver = SMALL_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/emitter_disk/incendiary
 	name = "\improper Diode Disk: Conflagratory"
@@ -660,7 +673,7 @@
 	consumed_on_removal = FALSE
 	consumable = FALSE
 	laser_color = COLOR_RED_LIGHT
-
+	custom_materials = list(/datum/material/plasma = SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/diamond = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/emitter_disk/sanity
 	name = "\improper Diode Disk: Psychosiphoning"
@@ -669,7 +682,7 @@
 	consumed_on_removal = FALSE
 	consumable = FALSE
 	laser_color = COLOR_TONGUE_PINK
-
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/uranium = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/emitter_disk/magnetic
 	name = "\improper Diode Disk: Magnetogenerative"
@@ -678,6 +691,7 @@
 	consumed_on_removal = FALSE
 	consumable = FALSE
 	laser_color = COLOR_SILVER
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/emitter_disk/blast
 	name = "\improper Diode Disk: Hyperconcussive"

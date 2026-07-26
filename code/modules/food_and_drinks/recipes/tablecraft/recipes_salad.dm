@@ -38,7 +38,7 @@
 /datum/crafting_recipe/food/melonfruitbowl
 	name ="Melon fruit bowl"
 	reqs = list(
-		/obj/item/food/grown/watermelon = 1,
+		/obj/item/food/grown/melonlike/watermelon = 1,
 		/obj/item/food/grown/apple = 1,
 		/obj/item/food/grown/citrus/orange = 1,
 		/obj/item/food/grown/citrus/lemon = 1,
@@ -101,7 +101,7 @@
 	name = "Kale salad"
 	reqs = list(
 		/obj/item/reagent_containers/cup/bowl = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/onion_slice/red = 2,
 		/obj/item/food/grown/cabbage = 1,
 		/datum/reagent/consumable/nutriment/fat/oil/olive = 2,
@@ -141,7 +141,7 @@
 	reqs = list(
 		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/grown/cabbage = 2,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/peas = 1,
 		/datum/reagent/consumable/nutriment/fat/oil/olive = 5,
 	)
@@ -159,6 +159,7 @@
 	)
 	result = /obj/item/food/salad/potato_salad
 	dish_category = DISH_SALAD
+	removed_foodtypes = BREAKFAST
 
 /datum/crafting_recipe/food/spinach_fruit_salad
 	name = "Spinach fruit salad"
