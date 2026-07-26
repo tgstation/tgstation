@@ -339,6 +339,9 @@
 	. = ..()
 	do_sparks(1, TRUE, src)
 
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/empty
+	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/empty
+
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol
 	name = "pipe pistol"
 	desc = "It is foolish to think that anyone wearing the grey is incapable of hurting you, simply because they are not baring their teeth."
@@ -362,6 +365,9 @@
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/add_bayonet_point()
 	return
 
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/empty
+	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol/empty
+
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime
 	name = "regal pipegun"
 	desc = "To call this 'regal' is a cruel irony. For the only noteworthy quality of nobility is in how it is wielded to kill. \
@@ -379,6 +385,9 @@
 		/datum/material/cardboard = SHEET_MATERIAL_AMOUNT,
 		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 3,
 	)
+
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime/empty
+	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime/empty
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/prime
 	name = "regal pipe pistol"
