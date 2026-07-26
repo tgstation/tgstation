@@ -1,5 +1,0 @@
-author: "Iajret"
-delete-after: True
-changes:
-  - bugfix: "Defeating Hiero now gives style point multiplier"
-  - bugfix: "Successfully tapping a vent will grant a style point multiplication too, as it was supposed to"

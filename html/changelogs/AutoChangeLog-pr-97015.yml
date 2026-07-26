@@ -1,9 +1,0 @@
-author: "YesterdaysPromise"
-delete-after: True
-changes:
-  - bugfix: "Scythes, shovels, flasks, shears and secutors will now display their worn sprites when in belt/suit storage."
-  - bugfix: "Tiles, circuit components, wands, types of leather and door remotes no longer display missing/incorrect sprites when worn on belt/suit storage."
-  - image: "Added missing metalhydrogen inhand sprite, and fixed the colours of the adamantine one."
-  - image: "Added missing belt/suit storage sprites for all basic material and glass types, flash, shards, light tubes, light bulbs, drapes, and surgery tools which can be put in those slots."
-  - image: "Hatchets, beakers, secutors, shears etc. had their sprites corrected, as despite showing on left side of front-facing sprite, they also showed up on left facing profile (with right side of the body to the front)"
-  - image: "Added unique belt/suit storage sprites for carp, ratvar, and narsie plushies."
