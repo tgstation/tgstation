@@ -23,3 +23,16 @@
 	results = list(/datum/reagent/mutationtoxin/tajaran = 1)
 	required_reagents = list(/datum/reagent/consumable/cream = 1)
 	required_container = /obj/item/slime_extract/green
+
+/datum/reagent/mutationtoxin/skrell
+	name = "Skrell Mutation Toxin"
+	description = "Мутационный токсин для превращения в скрелла."
+	color = "#00bfff"
+	race = /datum/species/skrell
+	taste_description = "соли"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/chemical_reaction/slime/slimeskrell
+	results = list(/datum/reagent/mutationtoxin/skrell = 1)
+	required_reagents = list(/datum/reagent/water/salt = 1)
+	required_container = /obj/item/slime_extract/green
