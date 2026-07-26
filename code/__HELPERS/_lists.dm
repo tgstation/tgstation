@@ -49,7 +49,7 @@
  */
 
 ///Initialize the lazylist
-#define LAZYINITLIST(L) if (!L) { L = list(); }
+#define LAZYINITLIST(L) L ||= list();
 ///If the provided list is empty, set it to null
 #define UNSETEMPTY(L) if (L && !length(L)) L = null
 ///If the provided key -> list is empty, remove it from the list
@@ -59,25 +59,25 @@
 ///Remove an item from the list, set the list to null if empty
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
 ///Add an item to the list, if the list is null it will initialize it
-#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
+#define LAZYADD(L, I) L ||= list(); L += I;
 ///Add an item to the list if not already present, if the list is null it will initialize it
-#define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
+#define LAZYOR(L, I) L ||= list(); L |= I;
 ///Returns the key of the submitted item in the list
 #define LAZYFIND(L, V) (L?.Find(V))
 ///returns L[I] if L exists and I is a valid index of L, runtimes if L is not a list
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 ///Sets the item K to the value V, if the list is null it will initialize it
-#define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
+#define LAZYSET(L, K, V) L ||= list(); L[K] = V;
 ///Sets the length of a lazylist
-#define LAZYSETLEN(L, V) if (!L) { L = list(); } L.len = V;
+#define LAZYSETLEN(L, V) L ||= list(); L.len = V;
 ///Returns the length of the list
 #define LAZYLEN(L) length(L)
 ///Sets a list to null
 #define LAZYNULL(L) L = null
 ///Adds to the item K the value V, if the list is null it will initialize it
-#define LAZYADDASSOC(L, K, V) if(!L) { L = list(); } L[K] += V;
+#define LAZYADDASSOC(L, K, V) L ||= list(); L[K] += V;
 ///This is used to add onto lazy assoc list when the value you're adding is a /list/. This one has extra safety over lazyaddassoc because the value could be null (and thus cant be used to += objects)
-#define LAZYADDASSOCLIST(L, K, V) if(!L) { L = list(); } L[K] += list(V);
+#define LAZYADDASSOCLIST(L, K, V) L ||= list(); L[K] += list(V);
 ///Removes the value V from the item K, if the item K is empty will remove it from the list, if the list is empty will set the list to null
 #define LAZYREMOVEASSOC(L, K, V) if(L?[K]) { L[K] -= V; if(!length(L[K])) L -= K; if(!length(L)) L = null; }
 ///Accesses an associative list, returns null if nothing is found
