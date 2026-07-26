@@ -156,7 +156,7 @@
 	owner.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_BLOCK_SECHUD, TRAIT_BLOCK_MEDHUD, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_STATUS_EFFECT(id))
 	owner.update_eyes() // updates eyelids
 	RegisterSignal(owner, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(show_unconscious_hud))
-	if(GET_CLIENT(owner.client))
+	if(GET_CLIENT(owner))
 		show_unconscious_hud(owner)
 	return TRUE
 
@@ -166,7 +166,7 @@
 	owner.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_BLOCK_SECHUD, TRAIT_BLOCK_MEDHUD, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_STATUS_EFFECT(id))
 	owner.update_eyes() // updates eyelids
 	UnregisterSignal(owner, COMSIG_MOB_CLIENT_LOGIN)
-	if(GET_CLIENT(owner.client))
+	if(GET_CLIENT(owner))
 		hide_unconscious_hud(owner)
 
 /datum/status_effect/knocked_out/tick(seconds_between_ticks)
