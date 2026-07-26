@@ -774,12 +774,18 @@
   - map: Add Tombstone Escape Shuttle that can be unlocked via a biohazard event.
       (Blob, zombies, or a severe enough disease)
 2026-07-26:
+  CabinetOnFire:
+  - code_imp: Adds debug flags that can be selected when building in VS code
   Fghj240:
   - balance: Disease stage speed and advanced disease symptom delay RNG has been reduced
   - balance: Recovering from an advanced disease makes you more resistant to similar
       advanced diseases.
   - spellcheck: Viral adaptation and Viral evolution are always neutered.
   - qol: Spacers can choose their height a little
+  Hatterhat:
+  - spellcheck: Adjusted some descriptions on some rifles (the Sakhno bolt-action,
+      the SKS, the anti-materiel sniper) and nudged extended lore bits to examining
+      twice.
   Melbert:
   - rscadd: The AI and Cyborg upload computers have been replaced with module racks,
       a physical manifestation of AI laws.
@@ -798,3 +804,14 @@
   - rscadd: TGUI "state laws" window
   - refactor: Refactored silicon laws in its entirely, report any oddities
   - bugfix: Fix perma stun from grabs
+  PapaMichael:
+  - bugfix: Departmental photo albums now properly save their photos between rounds
+  hry-gh:
+  - qol: the escape menu now runs clientside, and should be considerably more responsive
+  lelandkemble:
+  - bugfix: the firepit structure that spawns somewhere(probably on icebox) can now
+      be lit
+  - bugfix: you can hit a griddle on combat mode
+  - bugfix: you no longer succeed at digging up a hydroponics tray after failing the
+      do_after()
+  - code_imp: 50 files have been converted from attackby() to item_interaction

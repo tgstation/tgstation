@@ -1,7 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "the firepit structure that spawns somewhere(probably on icebox) can now be lit"
-  - bugfix: "you can hit a griddle on combat mode"
-  - bugfix: "you no longer succeed at digging up a hydroponics tray after failing the do_after()"
-  - code_imp: "50 files have been converted from attackby() to item_interaction"

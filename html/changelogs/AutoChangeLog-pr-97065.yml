@@ -1,4 +1,0 @@
-author: "hry-gh"
-delete-after: True
-changes:
-  - qol: "the escape menu now runs clientside, and should be considerably more responsive"
