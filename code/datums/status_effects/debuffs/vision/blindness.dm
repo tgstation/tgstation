@@ -52,7 +52,7 @@
 /datum/status_effect/grouped/blindness/proc/make_blind(changed_source)
 	SIGNAL_HANDLER
 
-	if(isnull(owner.client))
+	if(!GET_CLIENT(owner))
 		RegisterSignal(owner, COMSIG_MOB_LOGIN, PROC_REF(make_blind_on_login), override = TRUE)
 		return
 
