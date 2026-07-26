@@ -45,7 +45,7 @@
 	if (!istype(parrot_source))
 		return
 
-	if (parrot_source.stat == CONSCIOUS)
+	if (!IS_UNCONSCIOUS_OR_CRIT(parrot_source))
 		var/list/list_of_channels = parrot_source.get_available_channels()
 		parrot_source.say("[list_of_channels ? "[pick(list_of_channels)] " : null]BAWWWWWK LEAVE THE HEADSET BAWKKKKK!", forced = "attempted headset removal")
 

@@ -124,3 +124,9 @@ GLOBAL_LIST_INIT(quirk_chipped_choice, list(
 	"Mast-Angl-Er" = /obj/item/skillchip/master_angler,
 	"Kommand" = /obj/item/skillchip/big_pointer,
 ))
+
+///Spacer quirk
+GLOBAL_LIST_INIT(spacer_height_choices, list(
+	"Extra Tall" = HUMAN_HEIGHT_TALLEST,
+	"Tall" = HUMAN_HEIGHT_TALLER,
+))

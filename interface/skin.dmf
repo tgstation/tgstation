@@ -89,6 +89,15 @@ window "mapwindow"
 		saved-params = ""
 		text = ""
 		align = left
+	elem "escape_menu"
+		type = BROWSER
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = none
+		inner-background-color = transparent
+		is-visible = false
 
 window "info_and_buttons"
 	elem "info_and_buttons"
@@ -137,7 +146,7 @@ window "infobuttons"
 		background-color = none
 		saved-params = "is-checked"
 		text = "Menu"
-		command = "open-escape-menu"
+		command = ".winset \"mapwindow.escape_menu.is-visible=true?mapwindow.escape_menu.is-visible=false:mapwindow.escape_menu.is-visible=true\"\n.output mapwindow.escape_menu:update %7B%22type%22%3A%22toggle%22%2C%22payload%22%3Anull%7D"
 	elem "hotkeys"
 		type = BUTTON
 		pos = 92,5

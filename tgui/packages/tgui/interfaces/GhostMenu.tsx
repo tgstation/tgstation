@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Button,
   Dropdown,
@@ -19,6 +18,7 @@ type Data = {
   lag_switch_on: BooleanLike;
   notification_data: NotificationData[];
   max_extra_view: number;
+  current_extra_view: number;
   body_name: string;
   current_darkness: string;
   darkness_levels: string[];
@@ -166,10 +166,14 @@ const HudSection = (props) => {
 };
 
 const GhostSettingsSection = (props) => {
-  const [viewNumber, setviewNumber] = useState<number>(0);
   const { act, data } = useBackend<Data>();
-  const { current_darkness, darkness_levels, max_extra_view, lag_switch_on } =
-    data;
+  const {
+    current_darkness,
+    darkness_levels,
+    max_extra_view,
+    current_extra_view,
+    lag_switch_on,
+  } = data;
   return (
     <Stack vertical>
       <Stack.Item>
@@ -198,15 +202,14 @@ const GhostSettingsSection = (props) => {
           <NumberInput
             width="30px"
             step={1}
-            value={viewNumber}
+            value={current_extra_view}
             minValue={0}
             maxValue={max_extra_view}
-            onChange={(new_range) => {
-              setviewNumber(new_range);
+            onChange={(new_range) =>
               act('view_range', {
                 new_view_range: new_range,
-              });
-            }}
+              })
+            }
           />
         </Stack.Item>
       )}

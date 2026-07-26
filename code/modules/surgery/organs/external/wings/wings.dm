@@ -147,7 +147,7 @@
 ///Check if still eligible for active flight (wings covered, atmosphere too thin, etc)
 /obj/item/organ/wings/proc/can_fly()
 	var/mob/living/carbon/human/human = owner
-	if(human.stat || human.body_position == LYING_DOWN || isnull(human.client))
+	if(IS_UNCONSCIOUS_OR_CRIT(human) || human.body_position == LYING_DOWN || isnull(human.client))
 		return FALSE
 	if(flight_level < WINGS_AIRWORTHY) //Them wings are useless!
 		return FALSE

@@ -98,7 +98,7 @@
 	robotlander.revive(ADMIN_HEAL_ALL)
 	robotlander.set_connected_ai() //DISCONNECT FROM AI
 	robotlander.laws.clear_inherent_laws()
-	robotlander.laws.set_zeroth_law("THERE CAN BE ONLY ONE")
+	robotlander.laws.set_zeroth_law("THERE CAN BE ONLY ONE", force = TRUE)
 	robotlander.laws.show_laws(robotlander)
 	robotlander.model.transform_to(/obj/item/robot_model/syndicate/kiltborg)
 	sword = locate(/obj/item/claymore/highlander/robot) in robotlander.model.basic_modules

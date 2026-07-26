@@ -38,7 +38,7 @@
 	var/target_Theyre = target.p_Theyre()
 	var/target_They_have = "[target.p_They()] [target.p_have()]"
 
-	if(target.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(target))
 		to_chat(src, span_revennotice("[target_Their] soul is too strong to harvest."))
 		if(prob(10))
 			to_chat(target, span_revennotice("You feel as if you are being watched."))
@@ -86,7 +86,7 @@
 		to_chat(src, span_revenwarning("You are not close enough to siphon [target ? "[target]'s" : "[target_their]"] soul. The link has been broken."))
 		return FALSE
 
-	if(target.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(target))
 		to_chat(src, span_revenwarning("[target_Theyre] now powerful enough to fight off your draining!"))
 		to_chat(target, span_bolddanger("You feel something tugging across your body before subsiding.")) //hey, wait a minute...
 		return FALSE
@@ -95,7 +95,7 @@
 	if(target.stat != DEAD)
 		to_chat(target, span_warning("You feel a horribly unpleasant draining sensation as your grip on life weakens..."))
 	if(target.stat == SOFT_CRIT)
-		target.Stun(46)
+		target.Stun(4.6 SECONDS)
 
 	apply_status_effect(/datum/status_effect/revenant/revealed, 5 SECONDS)
 	apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 5 SECONDS)

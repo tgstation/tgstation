@@ -88,7 +88,7 @@
 	..()
 	var/obj/item/cigarette/cig = H.wear_mask
 	if(istype(cig)) //Some species specfic changes can mess this up (plasmamen)
-		cig.light("")
+		cig.light()
 
 	if(visuals_only)
 		return

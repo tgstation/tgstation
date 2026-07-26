@@ -3,7 +3,7 @@
 	/// Blackboard key holding the mob to check.
 	var/key = null
 	/// Minimum stat value (inclusive) for the condition to pass. Default: CONSCIOUS.
-	var/min_stat = CONSCIOUS
+	var/min_stat = STABLE
 	/// The mob currently being observed. Tracked so we can unregister when the key changes or teardown runs.
 	var/mob/observed_mob = null
 
