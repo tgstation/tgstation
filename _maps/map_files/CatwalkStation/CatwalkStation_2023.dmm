@@ -6020,13 +6020,13 @@
 "bBD" = (
 /obj/machinery/light/directional/north,
 /obj/structure/table/wood,
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_y = 5
 	},
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_y = 5
 	},
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_y = 5
 	},
 /turf/open/floor/iron/chapel{
@@ -22383,7 +22383,7 @@
 /area/station/hallway/primary/central)
 "fUc" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/harebell,
+/obj/item/food/grown/flower/harebell,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard)
 "fUi" = (
@@ -34035,13 +34035,13 @@
 /area/station/commons/dorms)
 "jau" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_y = 2
 	},
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_y = 2
 	},
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_y = 2
 	},
 /turf/open/floor/wood,
@@ -38504,15 +38504,15 @@
 /area/station/service/kitchen)
 "klf" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = -5;
 	pixel_y = 4
 	},
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = -6;
 	pixel_y = -4
 	},
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = 3;
 	pixel_y = 8
 	},
@@ -45043,11 +45043,11 @@
 "lWw" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/table,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = 5
 	},
 /turf/open/openspace,
@@ -69518,7 +69518,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/maintenance/department/medical)
 "sAI" = (
-/obj/item/food/grown/sunflower,
+/obj/item/food/grown/flower/sunflower,
 /turf/open/floor/iron/vaporwave,
 /area/station/maintenance/starboard/aft/upper)
 "sAR" = (
@@ -85010,15 +85010,15 @@
 /area/station/hallway/primary/central)
 "wBz" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_y = 5
 	},
 /obj/machinery/camera/autoname/directional/north,
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_y = 5;
 	pixel_x = 5
 	},
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_y = 5;
 	pixel_x = -5
 	},
@@ -86447,15 +86447,15 @@
 /area/station/commons/storage/tools)
 "wWs" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = -6;
 	pixel_y = 14
 	},
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = 4;
 	pixel_y = 2
 	},
@@ -90364,15 +90364,15 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = -6;
 	pixel_y = 2
 	},
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_y = -12
 	},
 /turf/open/openspace,
@@ -90462,7 +90462,7 @@
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_y = 2
 	},
 /turf/open/floor/plating,

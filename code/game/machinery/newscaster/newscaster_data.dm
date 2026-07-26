@@ -234,8 +234,9 @@ GLOBAL_LIST_EMPTY(request_list)
 		)
 		send2otherserver(html_decode(station_name()), channel_name, "create_news_article", additional_data = payload)
 
-	for(var/obj/machinery/newscaster/caster in GLOB.allCasters)
-		caster.news_alert(channel_name, update_alert)
+	if(update_alert)
+		for(var/obj/machinery/newscaster/caster as anything in GLOB.allCasters)
+			caster.news_alert(channel_name)
 	return new_article
 
 ///Submits a comment on the news network
@@ -259,9 +260,8 @@ GLOBAL_LIST_EMPTY(request_list)
 		wanted_issue.img = picture.picture_image
 		wanted_issue.photo_file = save_photo(picture.picture_image)
 	if(newMessage)
-		for(var/obj/machinery/newscaster/N in GLOB.allCasters)
+		for(var/obj/machinery/newscaster/N as anything in GLOB.allCasters)
 			N.news_alert()
-			N.update_appearance()
 
 /datum/feed_network/proc/delete_wanted()
 	wanted_issue.active = FALSE
@@ -269,7 +269,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	wanted_issue.body = null
 	wanted_issue.scanned_user = null
 	wanted_issue.img = null
-	for(var/obj/machinery/newscaster/updated_newscaster in GLOB.allCasters)
+	for(var/obj/machinery/newscaster/updated_newscaster as anything in GLOB.allCasters)
 		updated_newscaster.update_appearance()
 
 /datum/feed_network/proc/save_photo(icon/photo)

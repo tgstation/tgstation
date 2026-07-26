@@ -89,7 +89,7 @@
 		brainmob.container = src
 		var/fubar_brain = newbrain.suicided || HAS_TRAIT(brainmob, TRAIT_SUICIDED) //brain is from a suicider
 		if(!fubar_brain && !(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death, nor was from a suicider.
-			brainmob.set_stat(CONSCIOUS) //we manually revive the brain mob
+			brainmob.set_stat(STABLE) //we manually revive the brain mob
 		else if(!fubar_brain && newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
 			to_chat(user, span_warning("[src]'s indicator light turns yellow and its brain integrity alarm beeps softly. Perhaps you should check [newbrain] for damage."))
 			playsound(src, 'sound/machines/synth/synth_no.ogg', 5, TRUE)
@@ -155,7 +155,7 @@
 
 	var/fubar_brain = new_brain.suicided || HAS_TRAIT(brainmob, TRAIT_SUICIDED)
 	if(!fubar_brain && !(new_brain.organ_flags & ORGAN_FAILING))
-		brainmob.set_stat(CONSCIOUS)
+		brainmob.set_stat(STABLE)
 
 	brainmob.reset_perspective()
 	brain = new_brain
@@ -265,7 +265,7 @@
 
 GAME_VERB_SRC_DESC(/obj/item/mmi, Toggle_Listening, usr.loc, "Toggle Listening", "Toggle listening channel on or off.", "MMI")
 
-	if(brainmob.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(brainmob))
 		to_chat(brainmob, span_warning("Can't do that while incapacitated or dead!"))
 	if(!radio.is_on())
 		to_chat(brainmob, span_warning("Your radio is disabled!"))

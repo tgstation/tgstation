@@ -96,7 +96,7 @@
 	SIGNAL_HANDLER
 
 	// Pause if we're dead, appear dead, or in stasis
-	if(source.stat == DEAD || HAS_TRAIT(source, TRAIT_DEATHCOMA) || HAS_TRAIT(source, TRAIT_STASIS))
+	if(IS_DEAD_OR_FAKING(source) || HAS_TRAIT(source, TRAIT_STASIS))
 		if(duration == STATUS_EFFECT_PERMANENT)
 			return // Already paused
 

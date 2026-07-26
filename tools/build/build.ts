@@ -168,7 +168,8 @@ export const BehaviorTreeCompilerTarget = new Juke.Target({
     });
   },
   executes: async () => {
-    await Juke.exec('python', ['tools/build_bt.py']);
+    const suffix = process.platform == 'win32' ? '.bat' : '';
+    await Juke.exec(`tools/bootstrap/python${suffix}`, ['tools/build_bt.py']);
   },
 });
 
