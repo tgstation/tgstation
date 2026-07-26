@@ -25,8 +25,6 @@ other types of metals and chemistry for reagents).
 	var/name = "Name"
 	/// Description of the created object
 	var/desc = null
-	/// The ID of the design. Used for quick reference. Alphanumeric, lower-case, no symbols
-	var/id = DESIGN_ID_IGNORE
 	/// Bitflags indicating what machines this design is compatable with. ([IMPRINTER]|[AWAY_IMPRINTER]|[PROTOLATHE]|[AWAY_LATHE]|[AUTOLATHE]|[MECHFAB]|[BIOGENERATOR]|[LIMBGROWER]|[SMELTER])
 	var/build_type = null
 	/// List of materials required to create one unit of the product. Format is (typepath or requirements datum) -> amount

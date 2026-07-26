@@ -9,13 +9,11 @@
 
 /datum/design/material/iron
 	name = "Iron"
-	id = "iron"
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/iron
 
 /datum/design/material/rods
 	name = "Iron Rod"
-	id = "rods"
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/rods
 	category = list(
@@ -25,7 +23,6 @@
 
 /datum/design/material/rglass
 	name = "Reinforced Glass"
-	id = "rglass"
 	build_type = AUTOLATHE | SMELTER | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/rglass

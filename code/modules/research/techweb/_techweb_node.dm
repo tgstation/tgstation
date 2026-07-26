@@ -8,8 +8,6 @@
  * DO NOT REFERENCE OUTSIDE OF SSRESEARCH OR YOU WILL FUCK UP GC.
  */
 /datum/techweb_node
-	/// Internal ID of the node
-	var/id
 	/// The name of the node as it is shown on UIs
 	var/display_name = "Errored Node"
 	/// A description of the node to show on UIs

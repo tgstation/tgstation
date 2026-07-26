@@ -7,10 +7,9 @@
 	}
 
 /datum/techweb_node/alientech //AYYYYYYYYLMAOO tech
-	id = TECHWEB_NODE_ALIENTECH
 	display_name = "Alien Technology"
 	description = "Things used by the greys."
-	prereq_ids = list(TECHWEB_NODE_BLUESPACE_TRAVEL)
+	prereq_ids = list(/datum/techweb_node/bluespace_travel)
 	required_items_to_unlock = list(
 		/obj/item/stack/sheet/mineral/abductor,
 		/obj/item/cautery/alien,
@@ -30,7 +29,7 @@
 		/obj/item/wrench/abductor,
 	)
 	design_ids = list(
-		"alienalloy",
+		/datum/design/alloy/alien,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	hidden = TRUE
@@ -42,17 +41,16 @@ ABDUCTOR_SUBTYPE_UNLOCKS(/datum/techweb_node/alientech)
 	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH] = TRUE
 
 /datum/techweb_node/alien_engi
-	id = TECHWEB_NODE_ALIEN_ENGI
 	display_name = "Alien Engineering"
 	description = "Alien engineering tools"
-	prereq_ids = list(TECHWEB_NODE_ALIENTECH, TECHWEB_NODE_EXP_TOOLS)
+	prereq_ids = list(/datum/techweb_node/alientech, /datum/techweb_node/exp_tools)
 	design_ids = list(
-		"alien_crowbar",
-		"alien_multitool",
-		"alien_screwdriver",
-		"alien_welder",
-		"alien_wirecutters",
-		"alien_wrench",
+		/datum/design/aliencrowbar,
+		/datum/design/alienmultitool,
+		/datum/design/alienscrewdriver,
+		/datum/design/alienwelder,
+		/datum/design/alienwirecutters,
+		/datum/design/alienwrench,
 	)
 	required_items_to_unlock = list(
 		/obj/item/crowbar/abductor,
@@ -71,22 +69,21 @@ ABDUCTOR_SUBTYPE_UNLOCKS(/datum/techweb_node/alientech)
 ABDUCTOR_SUBTYPE_UNLOCKS(/datum/techweb_node/alien_engi)
 
 /datum/techweb_node/alien_surgery
-	id = TECHWEB_NODE_ALIEN_SURGERY
 	display_name = "Alien Surgery"
 	description = "Abductors did nothing wrong."
-	prereq_ids = list(TECHWEB_NODE_ALIENTECH, TECHWEB_NODE_SURGERY_TOOLS)
+	prereq_ids = list(/datum/techweb_node/alientech, /datum/techweb_node/surgery_tools)
 	design_ids = list(
-		"alien_cautery",
-		"alien_drill",
-		"alien_hemostat",
-		"alien_retractor",
-		"alien_saw",
-		"alien_scalpel",
-		"medibot_upgrade_four",
-		"surgery_brainwashing",
-		"surgery_brainwashing_mechanic",
-		"surgery_heal_combo_upgrade_femto",
-		"surgery_zombie",
+		/datum/design/aliencautery,
+		/datum/design/aliendrill,
+		/datum/design/alienhemostat,
+		/datum/design/alienretractor,
+		/datum/design/aliensaw,
+		/datum/design/alienscalpel,
+		/datum/design/medibot_upgrade/tier_four,
+		/datum/design/surgery/brainwashing,
+		/datum/design/surgery/brainwashing/mechanic,
+		/datum/design/surgery/tend_wounds_combo/upgrade/femto,
+		/datum/design/surgery/necrotic_revival,
 	)
 	required_items_to_unlock = list(
 		/obj/item/cautery/alien,
