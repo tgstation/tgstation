@@ -38,7 +38,7 @@
 	//var/target_Theyre = target.p_Theyre() // BANDASTATION REMOVAL
 	//var/target_They_have = "[target.p_They()] [target.p_have()]" // BANDASTATION REMOVAL
 
-	if(target.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(target))
 		to_chat(src, span_revennotice("[capitalize(target.ru_p_them())] душа слишком сильна для поглощения."))
 		if(prob(10))
 			to_chat(target, span_revennotice("Вам кажется, что за вами наблюдают."))
@@ -86,7 +86,7 @@
 		to_chat(src, span_revenwarning("Вы недостаточно близко, чтобы проникнуть в душу [target ? "[target]" : "[target.ru_p_them()]"]. Связь прервана."))
 		return FALSE
 
-	if(target.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(target))
 		to_chat(src, span_revenwarning("[capitalize(target.ru_p_they())] теперь достаточно силён, чтобы противостоять вашему поглощению!"))
 		to_chat(target, span_bolddanger("Вы чувствуете, как что-то тянется по вашему телу, прежде чем утихнуть.")) //hey, wait a minute...
 		return FALSE
@@ -95,7 +95,7 @@
 	if(target.stat != DEAD)
 		to_chat(target, span_warning("Вы испытываете ужасно неприятное ощущение опустошения по мере того, как ваша хватка за жизнь ослабевает..."))
 	if(target.stat == SOFT_CRIT)
-		target.Stun(46)
+		target.Stun(4.6 SECONDS)
 
 	apply_status_effect(/datum/status_effect/revenant/revealed, 5 SECONDS)
 	apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 5 SECONDS)

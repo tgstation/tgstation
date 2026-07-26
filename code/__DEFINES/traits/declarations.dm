@@ -38,6 +38,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_MEDBOT_MANIA "station_trait_medbot_mania"
 #define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
 #define STATION_TRAIT_PREMIUM_INTERNALS "station_trait_premium_internals"
+#define STATION_TRAIT_PUN_PUN_GYM_DAY "station_trait_pun_pun_gym_day"
 #define STATION_TRAIT_RADIOACTIVE_NEBULA "station_trait_radioactive_nebula"
 #define STATION_TRAIT_RANDOM_ARRIVALS "station_trait_random_arrivals"
 #define STATION_TRAIT_REVOLUTIONARY_TRASHING "station_trait_revolutionary_trashing"
@@ -84,8 +85,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Recolored by item/greentext
 #define TRAIT_GREENTEXT_CURSED "greentext_curse"
 #define TRAIT_INCAPACITATED "incapacitated"
-/// In some kind of critical condition. Is able to succumb.
-#define TRAIT_CRITICAL_CONDITION "critical-condition"
 /// Whitelist for mobs that can read or write
 #define TRAIT_LITERATE "literate"
 /// Blacklist for mobs that can't read or write
@@ -93,7 +92,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mute. Can't talk.
 #define TRAIT_MUTE "mute"
 /// Softspoken. Always whisper.
-#define TRAIT_SOFTSPOKEN "softspoken"
+#define TRAIT_FORCE_WHISPER "softspoken"
 /// Gibs on death and slips like ice.
 #define TRAIT_CURSED "cursed"
 /// Emotemute. Can't... emote.
@@ -406,8 +405,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MESON_VISION "meson_vision"
 /// Gives us Night vision
 #define TRAIT_TRUE_NIGHT_VISION "true_night_vision"
-/// Gives us minor night vision
-#define TRAIT_MINOR_NIGHT_VISION "minor_night_vision"
 /// Negates our gravity, letting us move normally on floors in 0-g
 #define TRAIT_NEGATES_GRAVITY "negates_gravity"
 /// We are ignoring gravity
@@ -458,6 +455,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ABDUCTOR_HUD "abductor_hud"
 /// Stop the user from seeing the sechud. Only works for trait handled sechuds.
 #define TRAIT_BLOCK_SECHUD "block_sechud"
+/// Stop the user from seeing the medhud. Only works for trait handled medhuds.
+#define TRAIT_BLOCK_MEDHUD "block_medhud"
 /// for something granting you a diagnostic hud
 #define TRAIT_DIAGNOSTIC_HUD "diag_hud"
 #define TRAIT_BOT_PATH_HUD "bot_path_hud"
@@ -1690,6 +1689,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Mobs with this trait will always have be a priority target for mining mobs
 #define TRAIT_MINING_AGGRO "mining_aggro"
+
+/// Allows the wearer to cast spells that require robes and hats
+#define TRAIT_CASTING_CLOTHING "casting_clothing"
 
 /// Turfs with this trait allow whispers to be projected over it when the whisperer is facing it
 #define TRAIT_TURF_PROJECTS_WHISPERS  "turf_projects_whispers"

@@ -10,7 +10,7 @@
 		hivemind_spans += " big"
 	var/rendered = "<i><span class='[hivemind_spans]'>Связь улья, [span_name("[shown_name]")] <span class='message'>[message_a]</span></span></i>"
 	for(var/mob/player in GLOB.player_list)
-		if(!player.stat && player.hivecheck())
+		if(!IS_UNCONSCIOUS_OR_CRIT(player) && player.hivecheck())
 			to_chat(player, rendered, type = MESSAGE_TYPE_RADIO, avoid_highlighting = player == src)
 			// BANDASTATION ADDITION START - TTS
 			cast_tts(

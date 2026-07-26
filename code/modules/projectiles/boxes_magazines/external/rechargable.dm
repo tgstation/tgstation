@@ -9,7 +9,7 @@
 
 /obj/item/ammo_box/magazine/recharge/update_desc()
 	. = ..()
-	desc = "[initial(desc)] Осталось зарядов: [stored_ammo.len]."
+	desc = "[initial(desc)] Осталось зарядов: [length(stored_ammo)]."
 
 /obj/item/ammo_box/magazine/recharge/update_icon_state()
 	. = ..()

@@ -50,7 +50,7 @@
 	if(!(potential_deacon in religious_tool.buckled_mobs)) //checks one last time if the right corpse is still buckled
 		to_chat(user, span_warning("[potential_deacon.declent_ru(NOMINATIVE)] больше не находится на алтаре!"))
 		return FALSE
-	if(potential_deacon.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(potential_deacon))
 		to_chat(user, span_warning("[potential_deacon.declent_ru(NOMINATIVE)] должен быть в сознании, чтобы сработал ритуал!"))
 		return FALSE
 	if(!potential_deacon.mind)
@@ -72,7 +72,7 @@
 
 ///Helper if the passed possible_deacon is valid to become a deacon or not.
 /datum/religion_rites/deaconize/proc/is_valid_for_deacon(mob/living/carbon/human/possible_deacon, mob/living/user)
-	if(possible_deacon.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(possible_deacon))
 		to_chat(user, span_warning("[possible_deacon.declent_ru(NOMINATIVE)] долж[genderize_ru(possible_deacon, "ен", "на", "но", "ны")] быть жив[genderize_ru(possible_deacon, "", "а", "о", "ы")] и в сознании, чтобы вступить!"))
 		return FALSE
 	if(possible_deacon.mind && possible_deacon.mind.holy_role)

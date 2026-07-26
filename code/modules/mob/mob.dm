@@ -253,7 +253,7 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
 				if(type & MSG_VISUAL && is_blind())
 					return FALSE
 	// voice muffling
-	if(stat == UNCONSCIOUS || stat == HARD_CRIT)
+	if(IS_UNCONSCIOUS(src))
 		if(type & MSG_AUDIBLE) //audio
 			to_chat(src, "<I>... Вы почти слышите что-то ...</I>")
 		return FALSE
@@ -550,7 +550,7 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
  * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
  * for why this isn't atom/verb/examine()
  */
-GAME_VERB(/mob, examinate, "Examine", null, atom/examinify as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
+GAME_VERB(/mob, examinate, "Examine", null, atom/examinify as mob|obj|turf) //It used to be oview(12), but I can't really say why
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(run_examinate), examinify))
 
@@ -558,7 +558,10 @@ GAME_VERB(/mob, examinate, "Examine", null, atom/examinify as mob|obj|turf in vi
 	if(QDELETED(examinify)) // since this can run async we might have had the atom get qdeleted already
 		return
 
-	if(isturf(examinify) && !(sight & SEE_TURFS) && !(examinify in view(client ? client.view : world.view, src)))
+	if(isarea(examinify))
+		return
+
+	if(isturf(examinify) && !(sight & SEE_TURFS) && !(examinify in view(client?.view || world.view, src)))
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
@@ -695,7 +698,7 @@ GAME_VERB(/mob, examinate, "Examine", null, atom/examinify as mob|obj|turf in vi
 	return
 
 /mob/living/handle_eye_contact(mob/living/examined_mob)
-	if(!istype(examined_mob) || src == examined_mob || examined_mob.stat >= UNCONSCIOUS || !client || is_blind())
+	if(!istype(examined_mob) || src == examined_mob || IS_UNCONSCIOUS(examined_mob) || !client || is_blind())
 		return
 
 	var/imagined_eye_contact = FALSE
@@ -1178,7 +1181,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 					obj.update_explanation_text()
 
 	log_mob_tag("TAG: [tag] RENAMED: [key_name(src)]")
-
+	SEND_SIGNAL(src, COMSIG_MOB_FULLY_RENAMED, oldname, newname)
 	return TRUE
 
 ///Updates GLOB.manifest records with new name , see mob/living/carbon/human
@@ -1214,6 +1217,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 				search_pda = 0
 
 /mob/proc/update_stat()
+	SIGNAL_HANDLER
 	return
 
 /mob/proc/update_health_hud()
@@ -1225,6 +1229,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 
 ///Update the lighting plane and sight of this mob (sends COMSIG_MOB_UPDATE_SIGHT)
 /mob/proc/update_sight()
+	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_SIGHT)
 	sync_lighting_plane_cutoff()

@@ -17,22 +17,26 @@
 /obj/item/reagent_containers/cup/glass/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = TRUE)
 	. = ..()
 	if(!.) //if the bottle wasn't caught
-		var/mob/thrower = throwingdatum?.get_thrower()
-		if(!istype(thrower))
-			return
-		smash(hit_atom, thrower, throwingdatum)
+		smash(hit_atom, throwingdatum?.get_thrower(), throwingdatum)
 
-/obj/item/reagent_containers/cup/glass/proc/smash(atom/target, mob/thrower, datum/thrownthing/throwingdatum, break_top = FALSE)
+/obj/item/reagent_containers/cup/glass/proc/smash(atom/target, atom/thrower, datum/thrownthing/throwingdatum, break_top = FALSE)
 	if(!isGlass)
-		return
+		return FALSE
 	if(QDELING(src) || !target) //Invalid loc
-		return
-	if(bartender_check(target, thrower) && throwingdatum)
-		return
-	splash_reagents(QDELETED(target) ? target.drop_location() : target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
-	var/obj/item/broken_bottle/B = new (loc)
-	B.mimic_broken(src, target, break_top)
+		return FALSE
+	if(ismob(thrower) && bartender_check(target, thrower) && throwingdatum)
+		return FALSE
+	var/splash_target = QDELETED(target) ? target.drop_location() : target
+	var/splash_thrower = ismob(thrower) ? thrower : null
+	splash_reagents(splash_target, splash_thrower, allow_closed_splash = TRUE)
+	var/obj/item/broken_bottle/broken = new (loc)
+	broken.mimic_broken(src, target, break_top)
+	post_smash(target, thrower, throwingdatum, broken)
 	qdel(src)
+	return TRUE
+
+/obj/item/reagent_containers/cup/glass/proc/post_smash(atom/target, atom/thrower, datum/thrownthing/throwingdatum, obj/item/broken_bottle/broken)
+	return
 
 /obj/item/reagent_containers/cup/glass/bullet_act(obj/projectile/proj)
 	. = ..()
@@ -371,14 +375,6 @@
 		on_icon_reset = CALLBACK(src, PROC_REF(on_cup_reset)), \
 		base_container_type = /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton, \
 	)
-
-/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/smash(atom/target, mob/thrower, datum/thrownthing/throwingdatum, break_top)
-	if(bartender_check(target, thrower) && throwingdatum)
-		return
-	splash_reagents(QDELETED(target) ? target.drop_location() : target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
-	var/obj/item/broken_bottle/bottle_shard = new(drop_location())
-	bottle_shard.mimic_broken(src, target)
-	qdel(src)
 
 /obj/item/reagent_containers/cup/glass/colocup
 	name = "colo cup"

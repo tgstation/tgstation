@@ -1,7 +1,7 @@
 
 /datum/mutation/breathless
 	name = "Breathless"
-	desc = "A mutation within the skin that allows for filtering and absorption of oxygen from the skin."
+	desc = "The subject's skin filters and absorbs oxygen from the air, removing the need to breathe."
 	text_gain_indication = span_notice("Ваши лёгкие чувствуют себя прекрасно.")
 	text_lose_indication = span_warning("Ваши лёгкие чувствуют себя как обычно.")
 	locked = TRUE
@@ -16,7 +16,7 @@
 
 /datum/mutation/quick
 	name = "Quick"
-	desc = "Мутация мышц ног, которая позволяет им функционировать на 7.5% эффективней, чем обычно."
+	desc = "Мутация мышц ног, которая позволяет субъекту передвигаться быстрее, чем обычно."
 	text_gain_indication = span_notice("Ваши ноги становятся сильнее и быстрее.")
 	text_lose_indication = span_warning("Ваши ноги становятся слабее и медленнее.")
 	locked = TRUE
@@ -31,7 +31,7 @@
 
 /datum/mutation/tough
 	name = "Tough"
-	desc = "A mutation within the epidermis that makes it more resistant to tear."
+	desc = "The subject gains another layer of epidermis which is more resistant to bruise, cut, or tear."
 	text_gain_indication = span_notice("Ваша коже крепнет.")
 	text_lose_indication = span_warning("Ваша кожа снова нормальная.")
 	locked = TRUE
@@ -48,7 +48,7 @@
 
 /datum/mutation/dextrous
 	name = "Dextrous"
-	desc = "A mutation within the nerve system that allows for more responsive and quicker action."
+	desc = "The subject's neurons move faster, allowing for more responsive and quicker action."
 	text_gain_indication = span_notice("Ваши конечности чувствуются более ловкими и отзывчивыми.")
 	text_lose_indication = span_warning("Ваши конечности чувствуются не такими ловкими и отзывчивыми.")
 	locked = TRUE
@@ -63,7 +63,7 @@
 
 /datum/mutation/fire_immunity
 	name = "Fire Immunity"
-	desc = "A mutation within the body that allows it to become nonflammable and withstand higher temperature."
+	desc = "The subject becomes completely nonflammable and can withstand higher temperatures."
 	text_gain_indication = span_notice("Вы чувствуете, что ваше тело может противостоять огню.")
 	text_lose_indication = span_warning("Вы чувствуете, что ваше тело уязвимо для огня.")
 	locked = TRUE
@@ -80,7 +80,7 @@
 
 /datum/mutation/quick_recovery
 	name = "Quick Recovery"
-	desc = "A mutation within the nervous system that allows it to recover from being knocked down."
+	desc = "The subject has fewer nerve endings, allowing them to recover from incapacitation faster."
 	text_gain_indication = span_notice("Вы чувствуете, что вам легче оправиться от падения.")
 	text_lose_indication = span_warning("Вы чувствуете, что восстановление после падения снова является тяжёлой задачей.")
 	locked = TRUE
@@ -95,7 +95,7 @@
 
 /datum/mutation/plasmocile
 	name = "Plasmocile"
-	desc = "A mutation in the lungs that provides it immunity to plasma's toxic nature."
+	desc = "The subject's lungs mutate, gaining immunity to viral agents and the toxic nature of plasma."
 	text_gain_indication = span_notice("Вы чувствуете, что ваши лёгкие более устойчивы к загрязнениям в воздухе.")
 	text_lose_indication = span_warning("Вы чувствуете, что ваши лёгкие менее устойчивы к загрязнениям в воздухе.")
 	locked = TRUE
@@ -137,4 +137,3 @@
 /datum/mutation/plasmocile/proc/remove_buff(obj/item/organ/lungs/our_lungs)
 	our_lungs.plas_breath_dam_min = initial(our_lungs.plas_breath_dam_min)
 	our_lungs.plas_breath_dam_max = initial(our_lungs.plas_breath_dam_max)
-

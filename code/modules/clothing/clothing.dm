@@ -366,7 +366,7 @@
 	. = ..()
 	if (clothing_flags & THICKMATERIAL)
 		.["плотный"] = "Защищает от большинства инъекций и спреев."
-	if (clothing_flags & CASTING_CLOTHES)
+	if (HAS_TRAIT(src, TRAIT_CASTING_CLOTHING))
 		.["магический"] = "Позволяет магическим существам произносить заклинания, пока надет [declent_ru(NOMINATIVE)]."
 	if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
 		.["герметичный"] = "Защищает носителя от чрезвычайно низкого и высокого давления, например как вакуум космоса."

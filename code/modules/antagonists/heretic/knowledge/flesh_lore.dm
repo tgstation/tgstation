@@ -135,7 +135,7 @@
 	gain_text = "Я нашел записи о темном ритуале, незаконченные... но все же я стремился вперед."
 	required_atoms = list(
 		/mob/living/carbon/human = 1,
-		/obj/item/food/grown/poppy = 1,
+		/obj/item/food/grown/flower/poppy = 1,
 	)
 	limit = 2
 	cost = 2

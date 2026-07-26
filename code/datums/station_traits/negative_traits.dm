@@ -229,7 +229,7 @@
 
 /datum/station_trait/revenge_of_pun_pun/proc/arm_monke()
 	SIGNAL_HANDLER
-	var/mob/living/carbon/human/species/monkey/punpun/punpun = GLOB.the_one_and_only_punpun
+	var/mob/living/punpun = GLOB.the_one_and_only_punpun
 	if(!punpun)
 		return
 	var/weapon_type = pick_weight(weapon_types)

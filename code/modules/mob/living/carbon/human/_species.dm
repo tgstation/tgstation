@@ -630,7 +630,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_SUITSTORE)
 			if(HAS_TRAIT(I, TRAIT_NODROP))
 				return FALSE
-			if(!H.wear_suit)
+			var/obj/item/clothing/suit/suit = H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+			if(!istype(suit))
 				if(!disable_warning)
 					to_chat(H, span_warning("Вам нужно сперва надеть костюм, чтобы прикрепить [I.declent_ru(ACCUSATIVE)]!"))
 				return FALSE
@@ -641,7 +642,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if(!disable_warning)
 					to_chat(H, span_warning("[capitalize(I.declent_ru(NOMINATIVE))] имеет слишком большой размер!")) //should be src?
 				return FALSE
-			if( is_type_in_list(I, H.wear_suit.allowed) )
+			if(is_type_in_list(I, suit.allowed))
 				return TRUE
 			return FALSE
 		if(ITEM_SLOT_HANDCUFFED)
@@ -728,13 +729,17 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(SEND_SIGNAL(target, COMSIG_CARBON_PRE_HELP, user, attacker_style) & COMPONENT_BLOCK_HELP_ACT)
 		return TRUE
 
-	if(target.body_position == STANDING_UP || (target.appears_alive() && target.stat != SOFT_CRIT && target.stat != HARD_CRIT))
-		target.help_shake_act(user)
-		if(target != user)
-			log_combat(user, target, "shaken")
+	// if lying down and dead (or faking death) or not stable: cpr
+	// if standing up or stable (and not faking death): shake/hug
+
+	if(target.body_position == LYING_DOWN && (IS_DEAD_OR_FAKING(target) || target.stat != STABLE))
+		user.do_cpr(target)
 		return TRUE
 
-	user.do_cpr(target)
+	target.help_shake_act(user)
+	if(target != user)
+		log_combat(user, target, "shaken")
+	return TRUE
 
 ///This proc handles punching damage. IMPORTANT: Our owner is the TARGET and not the USER in this proc. For whatever reason...
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
@@ -1030,7 +1035,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 
 	// Only stabilise core temp when alive and not in statis
-	if(humi.stat < DEAD && !HAS_TRAIT(humi, TRAIT_STASIS))
+	if(humi.stat != DEAD && !HAS_TRAIT(humi, TRAIT_STASIS))
 		body_temperature_core(humi, seconds_per_tick)
 
 	// These do run in statis
@@ -1201,7 +1206,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		burn_damage = burn_damage * heatmod * humi.physiology.heat_mod * 0.5 * seconds_per_tick
 
 		// 40% for level 3 damage on humans to scream in pain
-		if (humi.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4)
+		if (!IS_UNCONSCIOUS(humi) && (prob(burn_damage) * 10) / 4)
 			INVOKE_ASYNC(humi, TYPE_PROC_REF(/mob, emote), "scream")
 
 		// Apply the damage to all body parts

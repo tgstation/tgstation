@@ -26,7 +26,7 @@
 /mob/living/basic/slime/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 
 	//Lets you feed slimes plasma. Checks before the passthrough force check
-	if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma) && stat == CONSCIOUS)
+	if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma) && !IS_UNCONSCIOUS_OR_CRIT(src))
 		use_sheet(attacking_item, user)
 		return
 

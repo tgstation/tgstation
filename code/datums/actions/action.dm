@@ -179,15 +179,14 @@
 		return FALSE
 	if(action_disabled)
 		return FALSE
-	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
+	if((check_flags & AB_CHECK_CONSCIOUS) && IS_UNCONSCIOUS_OR_CRIT(owner))
 		if (feedback)
-			switch(owner.stat)
-				if(SOFT_CRIT)
-					owner.balloon_alert(owner, "сбит!")
-				if(DEAD)
-					owner.balloon_alert(owner, "мёртв!")
-				else
-					owner.balloon_alert(owner, "без сознания!")
+			if(owner.stat == DEAD)
+				owner.balloon_alert(owner, "мёртв!")
+			else if(IS_UNCONSCIOUS(owner))
+				owner.balloon_alert(owner, "без сознания!")
+			else
+				owner.balloon_alert(owner, "в критическом состоянии")
 		return FALSE
 	if((check_flags & AB_CHECK_HANDS_BLOCKED) && HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
 		if (feedback)

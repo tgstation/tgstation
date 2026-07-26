@@ -199,7 +199,7 @@
 
 	if(flashed.stat == DEAD || issilicon(flashed) || isdrone(flashed))
 		return
-	if(flashed.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(flashed))
 		to_chat(source, span_warning("[flashed.p_They()] должен быть в сознании, прежде чем вы сможете конвертировать [flashed.p_them()]!"))
 		return
 

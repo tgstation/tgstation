@@ -187,7 +187,7 @@
 
 	var/mob/living/carbon/human/victim = coming_with
 
-	if(victim.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(victim))
 		jaunt_turf.visible_message(
 			span_warning("[victim] kicks free of [blood] just before entering it!"),
 			blind_message = span_notice("You hear splashing and struggling."),

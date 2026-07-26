@@ -143,7 +143,7 @@
 	description = "Коммандор Зот страстно влюблён в Коммандора Зену. Отправьте поставкой герании - её любимые цветы, и он с радостью вас вознаградит."
 	reward = CARGO_CRATE_VALUE * 8
 	required_count = 3
-	wanted_types = list(/obj/item/food/grown/poppy/geranium = TRUE)
+	wanted_types = list(/obj/item/food/grown/flower/poppy/geranium = TRUE)
 	include_subtypes = FALSE
 
 /datum/bounty/item/assistant/poppy
@@ -151,7 +151,7 @@
 	description = "Коммандор Зот очень хочет свести с ума офицера безопасности Оливию. Отправьте поставку маков - её любимых цветов, и он вас с радостью вознаградит."
 	reward = CARGO_CRATE_VALUE * 2
 	required_count = 3
-	wanted_types = list(/obj/item/food/grown/poppy = TRUE)
+	wanted_types = list(/obj/item/food/grown/flower/poppy = TRUE)
 	include_subtypes = FALSE
 
 /datum/bounty/item/assistant/potted_plants

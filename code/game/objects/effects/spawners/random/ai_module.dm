@@ -70,11 +70,11 @@
 /obj/effect/spawner/random/aimodule/harmful
 	name = "harmful AI module spawner"
 	loot = list( // These will get the shuttle called
-		/obj/item/ai_module/core/full/antimov,
-		/obj/item/ai_module/core/full/balance,
-		/obj/item/ai_module/core/full/thermurderdynamic,
-		/obj/item/ai_module/core/full/damaged,
-		/obj/item/ai_module/zeroth/onehuman,
-		/obj/item/ai_module/supplied/oxygen,
-		/obj/item/ai_module/core/freeformcore,
+		/obj/item/ai_module/law/core/full/antimov,
+		/obj/item/ai_module/law/core/full/balance,
+		/obj/item/ai_module/law/core/full/thermurderdynamic,
+		/obj/item/ai_module/law/core/full/damaged,
+		/obj/item/ai_module/law/zeroth/onehuman,
+		/obj/item/ai_module/law/supplied/oxygen,
+		/obj/item/ai_module/law/core/freeformcore,
 	)
