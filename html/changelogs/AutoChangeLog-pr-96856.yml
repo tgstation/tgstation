@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - balance: "Crafted pipe guns and pistols no longer come preloaded with junk shells out of the blue when crafted. As for the regal pipegun, it will instead inherit the junk shells present in the pipegun used to craft it."
-  - balance: "The regal condor no longer has a magazine when crafted. I've reduced the amount of items and time needed to craft it to make up for it."
