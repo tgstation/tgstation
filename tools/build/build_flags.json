@@ -42,7 +42,7 @@
 				{ "value": "tramstation", "label": "Tramstation" },
 				{ "value": "nebulastation", "label": "NebulaStation" },
 				{ "value": "wawastation", "label": "Wawastation" },
-				{ "value": "catwalkstation", "label": "Catwalk Station (test)" },
+				{ "value": "catwalkstation", "label": "Catwalk Station" },
 				{ "value": "gateway_test", "label": "Gateway Test (test)" },
 				{ "value": "multiz_debug", "label": "MultiZ Debug (test)" },
 				{ "value": "runtimestation", "label": "Runtime Station (low memory)" },
