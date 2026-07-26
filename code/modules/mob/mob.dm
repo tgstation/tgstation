@@ -1180,7 +1180,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 		log_message("[src] name set to [newname]", LOG_OWNERSHIP)
 
 	log_mob_tag("TAG: [tag] RENAMED: [key_name(src)]")
-
+	SEND_SIGNAL(src, COMSIG_MOB_FULLY_RENAMED, oldname, newname)
 	return TRUE
 
 ///Updates GLOB.manifest records with new name , see mob/living/carbon/human

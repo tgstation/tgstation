@@ -572,7 +572,6 @@
 	if(!pulling)
 		return
 	var/atom/movable/old_pulling = set_pulling(null)
-	setGrabState(GRAB_PASSIVE)
 	SEND_SIGNAL(old_pulling, COMSIG_ATOM_NO_LONGER_PULLED, src)
 	SEND_SIGNAL(src, COMSIG_ATOM_NO_LONGER_PULLING, old_pulling)
 
@@ -589,6 +588,10 @@
 /atom/movable/proc/set_pulling(new_pulling)
 	if(new_pulling == pulling)
 		return FALSE //null signals there was a change, be sure to return FALSE if none happened here.
+
+	if(isnull(new_pulling))
+		setGrabState(GRAB_PASSIVE)
+
 	. = pulling
 	pulling = new_pulling
 

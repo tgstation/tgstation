@@ -205,14 +205,12 @@
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/effect/heretic_influence/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(.)
-		return
-
+/obj/effect/heretic_influence/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// Using a codex will give you two knowledge points for draining.
-	if(drain_influence_with_codex(user, weapon))
-		return TRUE
+	if(drain_influence_with_codex(user, tool))
+		return ITEM_INTERACT_SUCCESS
+
+	return ..()
 
 /obj/effect/heretic_influence/proc/drain_influence_with_codex(mob/user, obj/item/codex_cicatrix/codex)
 	if(!istype(codex) || being_drained)
