@@ -151,9 +151,11 @@
 
 /obj/machinery/conveyor/holodeck
 
-/obj/machinery/conveyor/holodeck/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!user.transferItemToLoc(I, drop_location()))
+/obj/machinery/conveyor/holodeck/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!user.transferItemToLoc(tool, drop_location()))
 		return ..()
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/paper/fluff/holodeck/trek_diploma
 	name = "paper - Starfleet Academy Diploma"

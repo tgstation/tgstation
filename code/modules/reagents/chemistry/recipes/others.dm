@@ -671,7 +671,7 @@
 		var/monkey_cap = CONFIG_GET(number/monkeycap)
 		for(var/_ in 1 to created_volume)
 			if (LAZYLEN(SSmobs.cubemonkeys) < monkey_cap)
-				new /mob/living/carbon/human/species/monkey(location, TRUE)
+				new /mob/living/carbon/human/species/monkey(location, null, TRUE)
 
 /datum/chemical_reaction/angry_monkey
 	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/inverse/bath_salts = 10)
@@ -692,7 +692,7 @@
 		var/monkey_cap = CONFIG_GET(number/monkeycap)
 		for(var/_ in 1 to created_volume)
 			if (LAZYLEN(SSmobs.cubemonkeys) < monkey_cap)
-				new /mob/living/carbon/human/species/monkey/angry(location, TRUE)
+				new /mob/living/carbon/human/species/monkey/angry(location, null, TRUE)
 
 
 //water electrolysis
