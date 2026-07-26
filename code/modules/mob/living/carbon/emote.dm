@@ -5,13 +5,13 @@
 /datum/emote/living/carbon/airguitar
 	key = "airguitar"
 	message = "is strumming the air and headbanging like a safari chimp."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/clap
 	key = "clap"
 	key_third_person = "claps"
 	message = "claps."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	vary = TRUE
 	affected_by_pitch = FALSE
@@ -33,7 +33,7 @@
 	key = "crack"
 	key_third_person = "cracks"
 	message = "cracks their knuckles."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 	cooldown = 6 SECONDS
 	sound = 'sound/mobs/humanoids/human/knuckle_crack/knuckles.ogg'
 
@@ -49,7 +49,7 @@
 	message_mime = "sobs silently."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	vary = TRUE
-	stat_allowed = SOFT_CRIT
+	can_use_flags = EMOTE_CANUSE_SOFTCRIT
 	sounds_by_mobtype = list(
 		/mob/living/carbon/human = list(
 			FEMALE = list(
@@ -74,7 +74,7 @@
 /datum/emote/living/carbon/circle
 	key = "circle"
 	key_third_person = "circles"
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/circle/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -104,7 +104,7 @@
 /datum/emote/living/carbon/noogie
 	key = "noogie"
 	key_third_person = "noogies"
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/noogie/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -120,21 +120,21 @@
 	key_third_person = "rolls"
 	message = "rolls."
 	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/scratch
 	key = "scratch"
 	key_third_person = "scratches"
 	message = "scratches."
 	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/sign
 	key = "sign"
 	key_third_person = "signs"
 	message_param = "signs the number %t."
 	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/sign/select_param(mob/user, params)
 	. = ..()
@@ -146,12 +146,12 @@
 	key_third_person = "signals"
 	message_param = "raises %t fingers."
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/slap
 	key = "slap"
 	key_third_person = "slaps"
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 	cooldown = 3 SECONDS // to prevent endless table slamming
 
 /datum/emote/living/carbon/slap/run_emote(mob/user, params, type_override, intentional)
@@ -167,7 +167,7 @@
 /datum/emote/living/carbon/hand
 	key = "hand"
 	key_third_person = "hands"
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 
 /datum/emote/living/carbon/hand/run_emote(mob/user, params, type_override, intentional)
@@ -186,7 +186,7 @@
 	message = "snaps their fingers."
 	message_param = "snaps their fingers at %t."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 	affected_by_pitch = FALSE
 	sounds_by_mobtype = list(
 		/mob/living/carbon/human = list(
@@ -198,7 +198,7 @@
 /datum/emote/living/carbon/shoesteal
 	key = "shoesteal"
 	key_third_person = "shoesteals"
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 	cooldown = 3 SECONDS
 
 /datum/emote/living/carbon/shoesteal/run_emote(mob/user, params, type_override, intentional)

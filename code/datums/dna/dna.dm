@@ -129,6 +129,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	if(!length(actual_mutation.sources))
 		if(!actual_mutation.on_acquiring(holder))
+			to_chat(holder, span_warning("You feel your genes resisting something."))
 			qdel(actual_mutation)
 			return
 		actual_mutation.setup()

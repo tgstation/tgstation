@@ -49,6 +49,7 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "squeak")
 	AddElement(/datum/element/can_be_held)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOTHROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	add_verb(src, /mob/living/proc/toggle_resting)
 	add_traits(list(TRAIT_MOTH_EMOTES_ALLOWED, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 

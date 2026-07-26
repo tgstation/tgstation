@@ -55,7 +55,7 @@
 	var/final_refund = attack_refund
 	if(QDELETED(attacked) || (attacked.stat == DEAD && last_stat != DEAD)) //The target is dead and we killed them - full refund
 		final_refund = recharged_action.cooldown_time
-	else if(attacked.stat > CONSCIOUS && last_stat == CONSCIOUS) //We knocked the target unconscious - partial refund
+	else if(attacked.stat != STABLE && last_stat == STABLE) //We knocked the target unconscious - partial refund
 		final_refund = crit_refund
 
 	recharged_action.next_use_time -= final_refund

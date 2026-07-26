@@ -164,7 +164,7 @@
 		)
 	target.emote(pick("giggle", "laugh"))
 	target.mob_mood?.adjust_sanity(-10)
-	if(target.stat == CONSCIOUS && target.mob_mood?.sanity >= SANITY_NEUTRAL)
+	if(!IS_UNCONSCIOUS_OR_CRIT(target) && target.mob_mood?.sanity >= SANITY_NEUTRAL)
 		target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 10)
 		return
 	target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 25)
@@ -217,7 +217,7 @@
 	var/amount_of_lunatics = 0
 	var/list/lunatic_candidates = list()
 	for(var/mob/living/carbon/human/crewmate as anything in shuffle(GLOB.human_list))
-		if(QDELETED(crewmate) || isnull(crewmate.client) || isnull(crewmate.mind) || crewmate.stat != CONSCIOUS || crewmate.can_block_magic(MAGIC_RESISTANCE_MIND))
+		if(QDELETED(crewmate) || isnull(crewmate.client) || isnull(crewmate.mind) || IS_UNCONSCIOUS_OR_CRIT(crewmate) || crewmate.can_block_magic(MAGIC_RESISTANCE_MIND))
 			continue
 		var/turf/crewmate_turf = get_turf(crewmate)
 		var/crewmate_z = crewmate_turf?.z
@@ -274,7 +274,7 @@
 
 	for(var/mob/living/carbon/carbon_view in range(7, source))
 		var/carbon_sanity = carbon_view.mob_mood.sanity
-		if(carbon_view.stat != CONSCIOUS)
+		if(IS_UNCONSCIOUS_OR_CRIT(carbon_view))
 			continue
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
 			continue

@@ -18,7 +18,7 @@ export function OrbitTooltip(props: Props) {
   }
 
   const extraInfo = extra?.split(':');
-  const displayHealth = !!health && health >= 0 ? `${health}%` : 'Critical';
+  const displayHealth = health && health >= 0 ? `${health}%` : 'Critical';
   const showAFK = 'client' in item && !item.client;
   const displayJob = realNameDisplay ? mind_job : job;
 

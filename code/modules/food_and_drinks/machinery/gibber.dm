@@ -147,7 +147,7 @@
 
 GAME_VERB_SRC(/obj/machinery/gibber, eject, oview(1), "Empty gibber", null)
 
-	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
+	if (IS_UNCONSCIOUS_OR_CRIT(usr) || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	if(!usr.can_perform_action(src))
 		return

@@ -323,7 +323,6 @@ GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
 // 1. Exterior is mangled: A critical slash or pierce wound on that limb
 // 2. Interior is mangled: At least a severe bone wound on that limb
 // Lack of exterior or interior count as mangled exterior/interior respectively
-// see [/obj/item/bodypart/proc/get_mangled_state] for more information, as well as GLOB.bio_state_anatomy
 #define BODYPART_MANGLED_NONE NONE
 #define BODYPART_MANGLED_INTERIOR (1<<0)
 #define BODYPART_MANGLED_EXTERIOR (1<<1)

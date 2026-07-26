@@ -130,7 +130,7 @@
 /datum/bt_node/ai_behavior/acquire_target/proc/on_no_candidates(datum/ai_controller/controller, atom/current_target, datum/targeting_strategy/strategy, range)
 	if(!target_loss_distance || !current_target)
 		return list()
-	if(strategy.can_keep_target(controller.pawn, current_target, target_loss_distance))
+	if(strategy.can_keep_target(controller.pawn, current_target, target_loss_distance, controller))
 		return list(current_target)
 	return list()
 
@@ -176,6 +176,8 @@
 		if(controller.can_reach_target(candidate, reach_distance, minimum_distance))
 			target = candidate
 			break
+		if(!async_still_valid())
+			return
 		controller.note_unreachable_target(candidate)
 	// If finish_action fired while we were sleeping, bail without touching anything.
 	if(!async_still_valid())

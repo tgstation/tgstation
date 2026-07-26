@@ -117,7 +117,7 @@ const TargetDisplay = (props) => {
   if (!selected || !target) {
     return null;
   }
-  if (!Object.keys(target).length && !!selected) {
+  if (!Object.keys(target).length && selected) {
     return (
       <NoticeBox
         position="absolute"
