@@ -10,6 +10,7 @@
 	lefthand_file = 'icons/mob/inhands/items/tiles_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/tiles_righthand.dmi'
 	icon = 'icons/obj/tiles.dmi'
+	worn_icon_state = null
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 1
 	throwforce = 1
