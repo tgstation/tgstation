@@ -1,0 +1,4 @@
+author: "CabinetOnFire"
+delete-after: True
+changes:
+  - code_imp: "Adds debug flags that can be selected when building in VS code"
