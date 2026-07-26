@@ -16,7 +16,7 @@
 
 	new /atom/movable/lighting_object(null, src)
 
-// Used to get a scaled lumcount.
+/// Used to get a scaled lumcount.
 /turf/proc/get_lumcount(minlum = 0, maxlum = 1)
 	if (!lighting_object)
 		return 1
@@ -36,14 +36,17 @@
 	if (L)
 		totallums += L.lum_r + L.lum_b + L.lum_g
 
-
 	totallums /= 12 // 4 corners, each with 3 channels, get the average.
-
 	totallums = (totallums - minlum) / (maxlum - minlum)
-
-	totallums += dynamic_lumcount
-
+	totallums += get_dynamic_lumcount()
 	return CLAMP01(totallums)
+
+/// Fetches dynamic lumcount from lightsources potentially in view of this turf from our spatial grid
+/turf/proc/get_dynamic_lumcount()
+	. = 0
+	var/datum/spatial_grid_cell/grid_cell = SSspatial_grid.get_cell_of(src)
+	for (var/datum/component/overlay_lighting/light as anything in grid_cell.dynamic_light_sources)
+		. += light.get_lumcount_for(src)
 
 // Returns a boolean whether the turf is on soft lighting.
 // Soft lighting being the threshold at which point the overlay considers
@@ -53,7 +56,7 @@
 	if (!lighting_object)
 		return FALSE
 
-	return !(luminosity || dynamic_lumcount)
+	return !(luminosity || get_dynamic_lumcount())
 
 
 ///Proc to add movable sources of opacity on the turf and let it handle lighting code.
