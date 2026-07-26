@@ -1133,7 +1133,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
  *
  * Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
  */
-/mob/proc/fully_replace_character_name(oldname, newname)
+/mob/proc/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
 	if(!newname)
 		return FALSE
 	if(oldname == newname)
@@ -1175,6 +1175,9 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 				// Only update if this player is a target
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
+
+	else if(log_new_name)
+		log_message("[src] name set to [newname]", LOG_OWNERSHIP)
 
 	log_mob_tag("TAG: [tag] RENAMED: [key_name(src)]")
 
