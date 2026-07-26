@@ -1,5 +1,5 @@
 {
-	"$comment": "Single source of truth for build/debug flags and presets. Edit flags and presets HERE. Consumed by the build-flags picker extension and by tools/build/generate_flag_configs (which regenerates the static fallback launch configs). Every flag's 'define' should be a real -D toggle, i.e. it appears in code/_compile_options.dm or is consumed by tools/build/build.ts (e.g. ALL_TEMPLATES).",
+	"$comment": "Single source of truth for build/debug flags and presets. Edit flags and presets HERE. Consumed by the build-flags picker extension and by tools/build/generate_flag_configs (which regenerates the static fallback launch configs). Every flag should have a fitting define",
 	"version": 1,
 	"categories": ["Map", "Testing", "Debugging", "Performance", "Misc"],
 	"flags": [

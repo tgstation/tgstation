@@ -200,10 +200,7 @@ export const DmTarget = new Juke.Target({
   ],
   outputs: ({ get }) => {
     if (get(DmVersionParameter) || get(DefineParameter).length > 0) {
-      // Always rebuild when a dm version or explicit CLI defines (e.g. from
-      // the TG Build Flags extension) are provided, since Juke's staleness
-      // check only compares file mtimes and has no way to tell that the
-      // defines used for the last build differ from this run's.
+      // Always rebuild when a dm version or explicit CLI defines are provided to ensure juke re-runs
       return [];
     }
     return [`${DME_NAME}.dmb`, `${DME_NAME}.rsc`];
