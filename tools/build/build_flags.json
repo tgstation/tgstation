@@ -48,7 +48,7 @@
 				{ "value": "runtimestation", "label": "Runtime Station (low memory)" },
 				{
 					"value": "runtimestation_minimal",
-					"label": "Minimal Runtime Station. Only works with minimal centcom.",
+					"label": "Minimal Runtime Station. Only works with minimal CentCom.",
 					"requires": ["MINIMAL_CENTCOM", "SKIP_LAVALAND", "SKIP_SPACE_LEVELS"]
 				}
 			]
