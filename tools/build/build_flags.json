@@ -41,7 +41,7 @@
 				{ "value": "metastation", "label": "MetaStation" },
 				{ "value": "tramstation", "label": "Tramstation" },
 				{ "value": "nebulastation", "label": "NebulaStation" },
-				{ "value": "wawastation", "label": "Wawastation" },
+				{ "value": "kilostation", "label": "Kilostation" },
 				{ "value": "catwalkstation", "label": "Catwalk Station" },
 				{ "value": "gateway_test", "label": "Gateway Test (test)" },
 				{ "value": "multiz_debug", "label": "MultiZ Debug (test)" },
