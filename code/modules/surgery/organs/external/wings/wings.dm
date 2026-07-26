@@ -1,6 +1,6 @@
 #define DEFAULT_WING_FORCE 2.25 NEWTONS
 
-///Wing base type. doesn't really do anything
+///Wing base type. can do things :>
 /obj/item/organ/wings
 	name = "wings"
 	desc = "Spread your wings and FLLLLLLLLYYYYY!"
