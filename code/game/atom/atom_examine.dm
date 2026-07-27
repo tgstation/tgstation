@@ -33,7 +33,7 @@
 
 	if(reagents)
 		var/user_sees_reagents = user.can_see_reagents()
-		var/partial_knowledge = HAS_TRAIT(user, TRAIT_REAGENT_SCANNER_WEAK)
+		var/partial_knowledge = HAS_TRAIT(user, TRAIT_REAGENT_SCANNER_WEAK) && !HAS_TRAIT(user, TRAIT_REAGENT_SCANNER)
 		var/unidentified_total = 0
 		var/reagent_sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_EXAMINE, user, ., user_sees_reagents)
 
@@ -49,10 +49,11 @@
 							else
 								. += "&bull; [round(current_reagent.volume, CHEMICAL_VOLUME_ROUNDING)] units of [current_reagent.name]"
 						if(unidentified_total)
-							. += "&bull; [unidentified_total] units of unidentified reagents"
-						if(reagents.is_reacting)
+							. += "&bull; [unidentified_total] units of [span_purple("Unidentified Reagents")]"
+						if(reagents.is_reacting && !partial_knowledge)
 							. += span_warning("It is currently reacting!")
-						. += span_notice("The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.")
+						if(!partial_knowledge)
+							. += span_notice("The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.")
 				else
 					. += "It contains:<br>Nothing."
 			else if(reagents.flags & AMOUNT_VISIBLE)
