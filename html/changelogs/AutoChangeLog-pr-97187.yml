@@ -1,0 +1,5 @@
+author: "tigercat2000"
+delete-after: True
+changes:
+  - bugfix: "ByondUi/TGUI Map elements should never have the small map bug again"
+  - bugfix: "ByondUi/TGUI Map elements will no longer layout incorrectly if you refresh the page in some circumstances"
