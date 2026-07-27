@@ -177,14 +177,7 @@
 	return candidates_with_current
 
 /// Filters the candidate list to valid targets and excludes candidates ranked below a retainable current target.
-/datum/bt_node/ai_behavior/acquire_target/proc/filter_candidates(
-	datum/ai_controller/controller,
-	list/candidates,
-	datum/targeting_strategy/strategy,
-	datum/target_priority_strategy/priority_strategy,
-	atom/current_target,
-	range,
-)
+/datum/bt_node/ai_behavior/acquire_target/proc/filter_candidates(datum/ai_controller/controller, list/candidates, datum/targeting_strategy/strategy, datum/target_priority_strategy/priority_strategy, atom/current_target, range)
 	var/mob/living/pawn = controller.pawn
 	var/list/ignore_list = ignore_list_key ? controller.blackboard[ignore_list_key] : null
 	var/current_priority

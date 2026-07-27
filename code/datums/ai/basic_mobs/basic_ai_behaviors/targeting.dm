@@ -132,12 +132,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 		modify_cooldown(get_cooldown(controller))
 
 /// Preserve the combat query's original first-valid behavior when no optional selection strategy is configured.
-/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/pick_final_target(
-	datum/ai_controller/controller,
-	list/filtered_targets,
-	datum/target_priority_strategy/priority_strategy,
-	atom/current_target,
-)
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/pick_final_target(datum/ai_controller/controller, list/filtered_targets, datum/target_priority_strategy/priority_strategy, atom/current_target)
 	if(!priority_strategy)
 		return filtered_targets[1]
 	return ..()
