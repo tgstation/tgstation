@@ -24,6 +24,7 @@
 		/obj/item/soil_sack = 8,
 		/obj/item/soil_sack/vermaculite = 3,
 		/obj/item/soil_sack/gel = 3,
+		/obj/item/skillchip/botanist = 1,
 	)
 
 	contraband = list(
