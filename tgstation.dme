@@ -1682,6 +1682,7 @@
 #include "code\datums\elements\beauty.dm"
 #include "code\datums\elements\bed_tucking.dm"
 #include "code\datums\elements\befriend_petting.dm"
+#include "code\datums\elements\blessed_turf.dm"
 #include "code\datums\elements\block_area_power_fail.dm"
 #include "code\datums\elements\block_turf_fingerprints.dm"
 #include "code\datums\elements\blocks_explosives.dm"

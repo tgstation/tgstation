@@ -518,10 +518,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(L && (L.flags_1 & INITIALIZED_1))
 		qdel(L)
 
-/turf/proc/Bless()
-	if(locate(/obj/effect/blessing) in src)
-		return
-	new /obj/effect/blessing(src)
+/turf/proc/bless_turf(invisible = FALSE)
+	if(!HAS_TRAIT(src, TRAIT_TURF_BLESSED))
+		AddElement(/datum/element/blessed_turf, invisible)
 
 //////////////////////////////
 //Distance procs

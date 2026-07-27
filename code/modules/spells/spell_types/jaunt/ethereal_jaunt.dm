@@ -220,7 +220,8 @@
 	. = ..()
 	if(!.)
 		return
-	if (locate(/obj/effect/blessing) in .)
+	var/atom/new_loc = .
+	if (HAS_TRAIT(new_loc, TRAIT_TURF_BLESSED))
 		to_chat(user, span_warning("Holy energies block your path!"))
 		return null
 
