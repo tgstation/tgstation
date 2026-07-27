@@ -420,6 +420,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
+/// Lets us scan basic reagents.
+#define TRAIT_REAGENT_SCANNER_WEAK "weak_reagent_scanner"
 /// Lets us scan machine parts and tech unlocks
 #define TRAIT_RESEARCH_SCANNER "research_scanner"
 /// Can weave webs into cloth

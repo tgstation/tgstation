@@ -8,6 +8,7 @@
 	penetrates_skin = NONE
 	ph = 7.4
 	default_container = /obj/item/reagent_containers/blood
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/glass_style/shot_glass/blood
 	required_drink_type = /datum/reagent/blood
@@ -112,6 +113,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	default_container = /obj/item/reagent_containers/cup/glass/waterbottle
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 	var/cooling_temperature = 2
 
 /datum/glass_style/shot_glass/water
@@ -316,6 +318,7 @@
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/holywater
 	metabolized_traits = list(TRAIT_HOLY)
 	COOLDOWN_DECLARE(spell_clear_cd)
+	knowledge_required = REAGENT_IDENTITY_COMPLEX
 
 /datum/glass_style/drinking_glass/holywater
 	required_drink_type = /datum/reagent/water/holywater
@@ -418,6 +421,7 @@
 	taste_description = "emptyiness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_COMPLEX
 
 /datum/reagent/hydrogen_peroxide
 	name = "Hydrogen Peroxide"
@@ -474,6 +478,7 @@
 	ph = 6.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_COMPLEX
 
 /datum/reagent/fuel/unholywater/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -535,6 +540,7 @@
 	overdose_threshold = 150
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_COMPLEX
 
 ///Used for clownery
 /datum/reagent/lube
@@ -978,6 +984,7 @@
 	ph = 9.2//It's acutally a huge range and very dependant on the chemistry but ph is basically a made up var in its implementation anyways
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 
 /datum/reagent/oxygen/expose_turf(turf/open/exposed_turf, reac_volume)
@@ -994,6 +1001,7 @@
 	ph = 5.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/copper/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
@@ -1012,6 +1020,7 @@
 	taste_mult = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/nitrogen/expose_turf(turf/open/exposed_turf, reac_volume)
 	if(istype(exposed_turf))
@@ -1026,6 +1035,7 @@
 	ph = 0.1//Now I'm stuck in a trap of my own design. Maybe I should make -ve phes? (not 0 so I don't get div/0 errors)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/potassium
 	name = "Potassium"
@@ -1034,6 +1044,7 @@
 	taste_description = "sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/mercury
 	name = "Mercury"
@@ -1042,6 +1053,7 @@
 	taste_mult = 0 // apparently tasteless.
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/mercury/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1060,6 +1072,7 @@
 	ph = 4.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/carbon
 	name = "Carbon"
@@ -1069,6 +1082,7 @@
 	ph = 5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/carbon/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -1085,6 +1099,7 @@
 	ph = 7.4
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 
 // You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
@@ -1109,6 +1124,7 @@
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 // You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
 /datum/reagent/fluorine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -1130,6 +1146,7 @@
 	ph = 11.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/phosphorus
 	name = "Phosphorus"
@@ -1139,6 +1156,7 @@
 	ph = 6.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 // Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
 /datum/reagent/phosphorus/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -1154,6 +1172,7 @@
 	ph = 11.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/lithium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1199,6 +1218,7 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	color = "#606060" //pure iron? let's make it violet of course
 	ph = 6
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/gold
 	name = "Gold"
@@ -1313,6 +1333,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	rad_power = 2
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/bluespace
 	name = "Bluespace Dust"
@@ -1349,6 +1370,7 @@
 	taste_description = "metal"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/silicon
 	name = "Silicon"
@@ -1359,6 +1381,7 @@
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/fuel
 	name = "Welding Fuel"
@@ -1372,6 +1395,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/alcohol = 300)
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/glass_style/drinking_glass/fuel
 	required_drink_type = /datum/reagent/fuel
@@ -1625,6 +1649,7 @@
 	ph = 11.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/ammonia/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	// Ammonia is bad ass.
@@ -1643,6 +1668,7 @@
 	ph = 12
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 // This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant. The new trade off is it culls stability.
 /datum/reagent/diethylamine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -1871,6 +1897,7 @@
 	color = COLOR_BLACK // RBG: 0, 0, 0
 	taste_description = "plant food"
 	ph = 3
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 	/// The chance of toxin damage for a mob (heals toxins for MOB_PLANT biotype)
 	var/tox_prob = 0
 
@@ -1993,6 +2020,7 @@
 	ph = 4.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/carpet
 	name = "Carpet"
@@ -2535,6 +2563,7 @@
 	ph = 11.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 // Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
 /datum/reagent/saltpetre/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -2749,6 +2778,7 @@
 	taste_description = "plastic"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/glitter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -3210,6 +3240,7 @@
 	taste_description = "tiny legs scuttling down the back of your throat"
 	metabolization_rate = 5 * REAGENTS_METABOLISM //1u per second
 	ph = 4.6 // Ants contain Formic Acid
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 	/// Number of ticks the ants have been in the person's body
 	var/ant_ticks = 0
 	/// Amount of damage done per tick the ants have been in the person's system

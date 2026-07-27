@@ -13,10 +13,12 @@
 	inverse_chem_val = 0.1
 	inverse_chem = null
 	creation_purity = CONSUMABLE_STANDARD_PURITY
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 	/// How much nutrition this reagent supplies. Look at get_nutriment_factor() for an understanding.
 	var/nutriment_factor = 1
 	/// affects mood, typically higher for mixed drinks with more complex recipes'
 	var/quality = 0
+
 
 /datum/reagent/consumable/New()
 	. = ..()

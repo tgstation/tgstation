@@ -9,6 +9,7 @@
 	config_tag = "BOTANIST"
 
 	outfit = /datum/outfit/job/botanist
+	skillchips = list(/obj/item/skillchip/job/botanist)
 	plasmaman_outfit = /datum/outfit/plasmaman/botany
 
 	paycheck = PAYCHECK_CREW

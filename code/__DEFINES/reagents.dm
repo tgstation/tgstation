@@ -320,3 +320,9 @@
 #define SPARK_ACT_WEAKEN_COMMON (1 << 1)
 /// Chemical threshold that industrial waste needs to start eating floors.
 #define WASTE_REACTION_THRESHOLD 10
+
+// reagent identifying values.
+/// Difficult to identify and requires machinery or specialized knowledge.
+#define REAGENT_IDENTITY_COMPLEX (1 << 0)
+/// Easier to identify and can be identified by skillchip.
+#define REAGENT_IDENTITY_SIMPLE (1 << 1)

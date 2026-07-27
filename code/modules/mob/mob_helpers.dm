@@ -427,7 +427,7 @@
 
 ///Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
-	return stat == DEAD || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
+	return stat == DEAD || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER_WEAK) //Dead guys and silicons can always see reagents
 
 ///Can this mob hold items
 /mob/proc/can_hold_items(obj/item/I)

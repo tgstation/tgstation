@@ -96,6 +96,8 @@
 	var/restaurant_order = /datum/custom_order/reagent/drink
 	/// How we interact with random generators
 	var/randomized_spawns = REAGENT_SPAWN_NO_RANDOM
+	/// Is this reagent easy enough to identify with weak knowledge? Full knowledge is granted with science goggles or the full trait, partial knowledge granted via botanist skillchip.
+	var/knowledge_required = REAGENT_IDENTITY_COMPLEX
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)

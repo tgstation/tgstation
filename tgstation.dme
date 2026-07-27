@@ -5017,6 +5017,7 @@
 #include "code\modules\library\skill_learning\generic_skillchips\self_surgery.dm"
 #include "code\modules\library\skill_learning\generic_skillchips\underwater_basketweaving.dm"
 #include "code\modules\library\skill_learning\job_skillchips\_job.dm"
+#include "code\modules\library\skill_learning\job_skillchips\botanist.dm"
 #include "code\modules\library\skill_learning\job_skillchips\chef.dm"
 #include "code\modules\library\skill_learning\job_skillchips\clown.dm"
 #include "code\modules\library\skill_learning\job_skillchips\detective.dm"

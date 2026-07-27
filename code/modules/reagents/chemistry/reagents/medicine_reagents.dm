@@ -417,6 +417,7 @@
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 	var/healing = 0.5
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -1208,6 +1209,7 @@
 	inverse_chem = /datum/reagent/inverse
 	inverse_chem_val = 0.45
 	metabolized_traits = list(TRAIT_TUMOR_SUPPRESSED) //Having mannitol in you will pause the brain damage from brain tumor (so it heals an even 2 brain damage instead of 1.8)
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1479,6 +1481,7 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/hallucinogens = 90)
 	metabolized_traits = list(TRAIT_PACIFISM)
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1924,6 +1927,7 @@
 	passive_bleed_modifier = 0.8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/glass_style/drinking_glass/banana_peel
 	required_drink_type = /datum/reagent/medicine/coagulant/banana_peel

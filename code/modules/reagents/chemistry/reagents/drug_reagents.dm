@@ -18,6 +18,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/hallucinogens = 60)
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -90,6 +91,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/nicotine = 10)
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 	//Nicotine is used as a pesticide IRL.
 /datum/reagent/drug/nicotine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -509,6 +511,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/hallucinogens = 20)
+	knowledge_required = REAGENT_IDENTITY_SIMPLE
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/psychonaut, seconds_per_tick, metabolization_ratio)
 	. = ..()
