@@ -179,8 +179,7 @@
 	do_attack_animation(destination_turf)
 	manipulator_arm.do_attack_animation(destination_turf)
 
-	if(monkey_resolve.loc != src)
-		monkey_resolve.forceMove(src)
+	restore_monkey_tracking(monkey_resolve)
 
 	if(QDELETED(held_item) || !held_item || (held_item.loc != monkey_resolve && held_item.loc != original_loc))
 		held_object = null
@@ -192,16 +191,13 @@
 	if(held_item.loc == monkey_resolve)
 		held_item.forceMove(original_loc)
 
-	if(destination_task.worker_interaction == WORKER_SINGLE_USE)
-		use_in_progress = FALSE
-		finish_manipulation()
-		return
-
 	use_in_progress = FALSE
-	if(on)
-		addtimer(CALLBACK(src, PROC_REF(try_use_thing), destination_task), BASE_INTERACTION_TIME)
-	else
-		finish_manipulation()
+	current_task = null
+	SStgui.update_uis(src)
+	if(stopping)
+		complete_stopping_task()
+		return
+	schedule_next_cycle()
 
 /obj/machinery/big_manipulator/proc/throw_thing(datum/manipulator_task/cargo/dropoff_base/throw/throw_task)
 	var/drop_turf = throw_task.interaction_turf
@@ -251,10 +247,23 @@
 		do_attack_animation(dest_turf)
 		manipulator_arm.do_attack_animation(dest_turf)
 
-	if(monkey_resolve.loc != src)
-		monkey_resolve.forceMove(src)
+	restore_monkey_tracking(monkey_resolve)
 
 	finish_manipulation()
+
+/// Restores monkey tracking after a temporary move outside src cleared it via Exited.
+/obj/machinery/big_manipulator/proc/restore_monkey_tracking(mob/living/carbon/human/species/monkey/monkey)
+	if(monkey.loc != src)
+		monkey.forceMove(src)
+	if(monkey_worker?.resolve())
+		return
+	monkey_worker = WEAKREF(monkey)
+	manipulator_arm.vis_contents += monkey
+	monkey.add_offsets(
+		type,
+		x_add = 32 + manipulator_arm.calculate_item_offset(TRUE, pixels_to_offset = 16),
+		y_add = 32 + manipulator_arm.calculate_item_offset(FALSE, pixels_to_offset = 16)
+	)
 
 /// Completes the current manipulation action and schedules the next step.
 /obj/machinery/big_manipulator/proc/finish_manipulation()

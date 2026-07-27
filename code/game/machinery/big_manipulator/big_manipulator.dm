@@ -95,6 +95,8 @@
 			new_task = new /datum/manipulator_task/cargo/move(new_turf, manipulator_tier)
 		if(TASK_TYPE_WAIT)
 			new_task = new /datum/manipulator_task/simple/wait()
+		if(TASK_TYPE_STOP)
+			new_task = new /datum/manipulator_task/simple/stop()
 
 	if(QDELETED(new_task))
 		return FALSE
@@ -158,9 +160,6 @@
 			manipulator_arm?.set_greyscale(COLOR_PURPLE)
 
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * BASE_POWER_USAGE * manipulator_tier
-
-	for(var/datum/manipulator_task/cargo/cargo_task in tasks)
-		cargo_task.interaction_priorities = cargo_task.fill_priority_list(manipulator_tier)
 
 /obj/machinery/big_manipulator/examine(mob/user)
 	. = ..()
@@ -499,7 +498,6 @@
 			td["filters_status"] = t.should_use_filters
 			td["item_filters"] = _collect_filter_names(t.atom_filters)
 			td["settings_list"] = _collect_priorities(t.interaction_priorities)
-			td["worker_interaction"] = t.worker_interaction
 			td["worker_use_rmb"] = t.worker_use_rmb
 			td["worker_combat_mode"] = t.worker_combat_mode
 			td["skip_anchored"] = t.skip_anchored
@@ -511,7 +509,6 @@
 			td["filters_status"] = t.should_use_filters
 			td["item_filters"] = _collect_filter_names(t.atom_filters)
 			td["settings_list"] = _collect_priorities(t.interaction_priorities)
-			td["worker_interaction"] = t.worker_interaction
 			td["worker_use_rmb"] = t.worker_use_rmb
 			td["worker_combat_mode"] = t.worker_combat_mode
 			td["skip_anchored"] = t.skip_anchored
@@ -520,6 +517,11 @@
 			td["task_type"] = TASK_TYPE_WAIT
 			var/datum/manipulator_task/simple/wait/t = task
 			td["time"] = t.time_seconds
+
+		else if(istype(task, /datum/manipulator_task/simple/stop))
+			td["task_type"] = TASK_TYPE_STOP
+			var/datum/manipulator_task/simple/stop/t = task
+			td["sub_name"] = t.sub_name
 
 		else if(istype(task, /datum/manipulator_task/cargo/move))
 			td["task_type"] = TASK_TYPE_MOVE
@@ -716,7 +718,6 @@
 			continue
 		tasks += new_task
 
-	process_upgrades()
 	validate_all_tasks()
 	balloon_alert(user, "loaded")
 	SStgui.update_uis(src)
@@ -846,18 +847,6 @@
 			var/datum/manipulator_task/cargo/dropoff_base/throw/cycle_target_task = target_task
 			cycle_target_task.throw_range = cycle_value(cycle_target_task.throw_range, list(1, 2, 3, 4, 5, 6, 7))
 			return TRUE
-
-		if("cycle_worker_interaction")
-			var/list/vals = list(WORKER_NORMAL_USE, WORKER_SINGLE_USE)
-			if(istype(target_task, /datum/manipulator_task/cargo/dropoff_base/use))
-				var/datum/manipulator_task/cargo/dropoff_base/use/cycle_target_task = target_task
-				cycle_target_task.worker_interaction = cycle_value(cycle_target_task.worker_interaction, vals)
-				return TRUE
-			if(istype(target_task, /datum/manipulator_task/cargo/interact))
-				var/datum/manipulator_task/cargo/interact/cycle_target_task = target_task
-				cycle_target_task.worker_interaction = cycle_value(cycle_target_task.worker_interaction, vals)
-				return TRUE
-			return FALSE
 
 		if("toggle_worker_rmb")
 			if(istype(target_task, /datum/manipulator_task/cargo/dropoff_base/use))

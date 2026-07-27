@@ -29,13 +29,14 @@ export interface ManipulatorTask {
   interaction_mode?: string;
   overflow_status?: string;
   throw_range?: number;
-  worker_interaction?: string;
   worker_use_rmb?: BooleanLike;
   worker_combat_mode?: BooleanLike;
   skip_anchored?: BooleanLike;
   // interact only
-  // (worker_interaction, worker_use_rmb, worker_combat_mode, skip_anchored shared with dropoff)
+  // (worker_use_rmb, worker_combat_mode, skip_anchored shared with dropoff)
   time?: number;
+  // stop only
+  sub_name?: string;
 }
 
 export interface ManipulatorData {

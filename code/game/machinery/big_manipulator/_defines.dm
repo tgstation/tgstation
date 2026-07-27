@@ -13,15 +13,11 @@
 #define MAX_SPEED_MULTIPLIER_TIER_3 5
 #define MAX_SPEED_MULTIPLIER_TIER_4 6
 
-#define MAX_TASKS_TIER_1 6
-#define MAX_TASKS_TIER_2 12
-#define MAX_TASKS_TIER_3 24
-#define MAX_TASKS_TIER_4 32
+#define MAX_TASKS_TIER_1 8
+#define MAX_TASKS_TIER_2 16
+#define MAX_TASKS_TIER_3 32
+#define MAX_TASKS_TIER_4 48
 
-
-// How should the worker interact with the point
-#define WORKER_SINGLE_USE "SINGLE TIME"
-#define WORKER_NORMAL_USE "NORMAL"
 
 #define BASE_POWER_USAGE 0.2
 #define BASE_INTERACTION_TIME 0.3 SECONDS
@@ -46,6 +42,7 @@
 #define TASK_TYPE_INTERACT "interact"
 #define TASK_TYPE_MOVE "move"
 #define TASK_TYPE_WAIT "wait"
+#define TASK_TYPE_STOP "stop"
 
 #define TASKING_SEQUENTIAL "Sequential"
 #define TASKING_STRICT "Strict order"

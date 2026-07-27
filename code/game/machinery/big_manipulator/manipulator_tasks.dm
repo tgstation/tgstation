@@ -40,6 +40,36 @@
 		time_seconds = serialized_data["time_seconds"]
 	return
 
+// ===== STOP =====
+
+/datum/manipulator_task/simple/stop
+	name = "stop"
+	var/sub_name = ""
+
+/datum/manipulator_task/simple/stop/New(..., serialized_data)
+	var/static/list/preset_sub_names = list(
+		"while at it.",
+		"and step away.",
+		"in the name of common sense.",
+		"just stop.",
+		"enough of this.",
+	)
+	sub_name = pick(preset_sub_names)
+	if(serialized_data)
+		sub_name = serialized_data["sub_name"] || ""
+	return ..()
+
+/datum/manipulator_task/simple/stop/can_run(obj/machinery/big_manipulator/manipulator)
+	return TRUE
+
+/datum/manipulator_task/simple/stop/run_task(obj/machinery/big_manipulator/manipulator)
+	manipulator.complete_stopping_task()
+
+/datum/manipulator_task/simple/stop/serialize()
+	var/list/data = ..()
+	data["sub_name"] = sub_name
+	return data
+
 // ===== MOVE =====
 
 /datum/manipulator_task/cargo/move
@@ -446,7 +476,6 @@
 
 /datum/manipulator_task/cargo/dropoff_base/use
 	name = "use"
-	var/worker_interaction = WORKER_NORMAL_USE
 	var/worker_combat_mode = FALSE
 	var/worker_use_rmb = FALSE
 	var/skip_anchored = FALSE
@@ -472,7 +501,6 @@
 
 /datum/manipulator_task/cargo/dropoff_base/use/serialize()
 	var/list/data = ..()
-	data["worker_interaction"] = worker_interaction
 	data["worker_combat_mode"] = worker_combat_mode
 	data["worker_use_rmb"] = worker_use_rmb
 	data["skip_anchored"] = skip_anchored
@@ -481,7 +509,6 @@
 /datum/manipulator_task/cargo/dropoff_base/use/New(turf/new_turf, manipulator_tier, serialized_data)
 	..(new_turf, manipulator_tier, serialized_data)
 	if(serialized_data)
-		worker_interaction = serialized_data["worker_interaction"]
 		worker_combat_mode = !!serialized_data["worker_combat_mode"]
 		worker_use_rmb = !!serialized_data["worker_use_rmb"]
 		skip_anchored = !!serialized_data["skip_anchored"]
@@ -494,7 +521,6 @@
 
 /datum/manipulator_task/cargo/interact
 	name = "interact"
-	var/worker_interaction = WORKER_NORMAL_USE
 	var/worker_combat_mode = FALSE
 	var/worker_use_rmb = FALSE
 	var/skip_anchored = FALSE
@@ -521,7 +547,6 @@
 
 /datum/manipulator_task/cargo/interact/serialize()
 	var/list/data = ..()
-	data["worker_interaction"] = worker_interaction
 	data["worker_combat_mode"] = worker_combat_mode
 	data["worker_use_rmb"] = worker_use_rmb
 	data["skip_anchored"] = skip_anchored
@@ -530,7 +555,6 @@
 /datum/manipulator_task/cargo/interact/New(turf/new_turf, manipulator_tier, serialized_data)
 	..(new_turf, manipulator_tier, serialized_data)
 	if(serialized_data)
-		worker_interaction = serialized_data["worker_interaction"]
 		worker_combat_mode = !!serialized_data["worker_combat_mode"]
 		worker_use_rmb = !!serialized_data["worker_use_rmb"]
 		skip_anchored = !!serialized_data["skip_anchored"]

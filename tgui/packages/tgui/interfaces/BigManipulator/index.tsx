@@ -25,6 +25,7 @@ const TASK_TYPE_LABELS: Record<string, string> = {
   interact: 'Interact...',
   move: 'Move...',
   wait: 'Wait...',
+  stop: 'Stop...',
 };
 
 const TASK_TYPE_ICONS: Record<string, string> = {
@@ -35,6 +36,7 @@ const TASK_TYPE_ICONS: Record<string, string> = {
   interact: 'bolt',
   move: 'arrows-alt',
   wait: 'hourglass-half',
+  stop: 'stop-circle',
 };
 
 const TASKING_STRATEGY_ICONS: Record<string, string> = {
@@ -271,12 +273,6 @@ function TaskEditModal(props: TaskEditModalProps) {
                 {(task.task_type === 'use' || isInteract) && (
                   <>
                     <ConfigRow
-                      label="Worker Action"
-                      content={task.worker_interaction ?? '—'}
-                      onClick={() => adjust('cycle_worker_interaction')}
-                      tooltip="Normal / Single use / Empty hand"
-                    />
-                    <ConfigRow
                       label="Alt Click"
                       content={task.worker_use_rmb ? 'TRUE' : 'FALSE'}
                       onClick={() => adjust('toggle_worker_rmb')}
@@ -487,6 +483,7 @@ const TaskList = () => {
                           )}
                           {task.turf && <Box>...{task.task_type === 'move' ? 'to' : 'at'} [{task.turf}]...</Box>}
                           {task.time && <Box>...for {task.time} second{task.time > 1 && "s"}...</Box>}
+                          {task.sub_name && <Box>...{task.sub_name}</Box>}
                         </Box>
                       </Box>
                   </Stack.Item>
