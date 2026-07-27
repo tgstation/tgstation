@@ -87,7 +87,7 @@
 	var/list/fallback_targets = list()
 	for(var/atom/target as anything in targets)
 		var/matched_type
-		for(var/priority_type as anything in priorities)
+		for(var/priority_type in priorities)
 			if(matches_priority_type(target, priority_type))
 				matched_type = priority_type
 				break
@@ -102,7 +102,7 @@
 
 	var/static/fallback_tier = "fallback"
 	var/list/available_weights = list()
-	for(var/priority_type as anything in priorities)
+	for(var/priority_type in priorities)
 		if(length(type_buckets[priority_type]))
 			available_weights[priority_type] = priorities[priority_type]
 	if(length(fallback_targets))
