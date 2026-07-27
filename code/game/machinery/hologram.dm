@@ -556,7 +556,7 @@ Possible to do for anyone motivated enough:
 		hologram.icon = work_off.icon
 		hologram.icon_state = work_off.icon_state
 		hologram.copy_overlays(work_off, TRUE)
-		hologram.makeHologram()
+		hologram.makeHologram(color_override = AI?.ai_holocolor)
 
 		if(AI)
 			AI.eyeobj.setLoc(get_turf(src)) //ensure the AI camera moves to the holopad

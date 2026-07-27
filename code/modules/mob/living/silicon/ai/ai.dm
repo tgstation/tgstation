@@ -634,6 +634,8 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, ai_hologram_change, "Change Hologram
 	if(incapacitated)
 		return
 
+	ai_holocolor = tgui_color_picker(usr, "Choose a color for your hologram", "Hologram Color")
+
 	var/static/list/choices = assoc_to_keys(GLOB.ai_hologram_category_options) + HOLOGRAM_CHOICE_CHARACTER
 	var/choice = tgui_input_list(usr, "What kind of hologram do you want?",	"Customize", choices)
 	if(!choice)
