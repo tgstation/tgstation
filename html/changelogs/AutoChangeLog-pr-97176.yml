@@ -1,5 +1,0 @@
-author: "PapaMichael"
-delete-after: True
-changes:
-  - bugfix: "Bar, Library, and Chapel photo albums can now be found on all stations"
-  - bugfix: "Removed duplicate photo albums from Catwalk and Nebula"

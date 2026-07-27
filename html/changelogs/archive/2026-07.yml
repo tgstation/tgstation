@@ -871,6 +871,9 @@
   - balance: Shadow Cloak is no longer an innate heretic knowledge, but is guaranteed
       to show up for free in the first draft pool (in addition to the three other
       options).
+  PapaMichael:
+  - bugfix: Bar, Library, and Chapel photo albums can now be found on all stations
+  - bugfix: Removed duplicate photo albums from Catwalk and Nebula
   lelandkemble:
   - bugfix: fixed a runtime when deconstructing a bookshelf
   - bugfix: you can now change your mind at the very last second about making a modsuit
