@@ -6,6 +6,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { capitalize } from 'tgui-core/string';
 import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
@@ -16,6 +17,7 @@ type Data = {
   powerStatus: BooleanLike;
   cellPercent: number | null;
   load: BooleanLike;
+  loadName : string | null;
   locked: BooleanLike;
   siliconUser: BooleanLike;
   mode: string;
@@ -36,6 +38,7 @@ const MuleControls = (props) => {
   const { act, data } = useBackend<Data>();
   const {
     load,
+    loadName,
     autoReturn,
     autoPickup,
     reportDelivery,
@@ -146,6 +149,7 @@ export const Mule = (props) => {
     powerStatus,
     cellPercent,
     load,
+    loadName,
     mode,
     modeStatus,
     locked,
@@ -155,7 +159,7 @@ export const Mule = (props) => {
   const mulebotLocked = locked && !siliconUser;
 
   return (
-    <Window width={350} height={500}>
+    <Window width={350} height={540}>
       <Window.Content scrollable>
         <InterfaceLockNoticeBox />
         <Section
@@ -181,21 +185,17 @@ export const Mule = (props) => {
             value={cellPercent ? cellPercent / 100 : 0}
             color={cellPercent ? 'good' : 'bad'}
           />
-          <Stack mt={1}>
+          <Stack mt={1} vertical>
             <Stack.Item grow>
               <LabeledList>
                 <LabeledList.Item label="Mode" color={modeStatus}>
                   {mode}
                 </LabeledList.Item>
-              </LabeledList>
-            </Stack.Item>
-            <Stack.Item grow ml="40%">
-              <LabeledList>
                 <LabeledList.Item
                   label="Load"
                   color={load ? 'good' : 'average'}
                 >
-                  {load || 'None'}
+                  {load ? capitalize(loadName ?? '') : 'None'}
                 </LabeledList.Item>
               </LabeledList>
             </Stack.Item>
