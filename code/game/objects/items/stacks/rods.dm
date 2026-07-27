@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	)
 
 /obj/item/stack/rods/handle_openspace_click(turf/target, mob/user, list/modifiers)
-	target.attackby(src, user, list2params(modifiers))
+	target.base_item_interaction(user, src, list2params(modifiers))
 
 /obj/item/stack/rods/get_main_recipes()
 	. = ..()

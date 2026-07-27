@@ -112,6 +112,8 @@
 #define SHUTTLE_UNLOCK_WABBAJACK "wabbajack"
 // Needs cargo budget to be almost empty to be purchasable.
 #define SHUTTLE_UNLOCK_SCRAPHEAP "scrapheap"
+// Needs biohazard to be triggered - Blob, Zombies, or a Severe Disease
+#define SHUTTLE_UNLOCK_TOMBSTONE "tombstone"
 
 //Shuttle Events
 

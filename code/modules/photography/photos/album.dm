@@ -19,6 +19,9 @@
 	. = ..()
 	if (!SSpersistence.initialized)
 		LAZYADD(SSpersistence.queued_photo_albums, src)
+	else if (!isnull(persistence_id))
+		// Albums might spawn after roundstart (e.g. locker lazyload)
+		persistence_load()
 
 /obj/item/storage/photo_album/Destroy()
 	LAZYREMOVE(SSpersistence.queued_photo_albums, src)

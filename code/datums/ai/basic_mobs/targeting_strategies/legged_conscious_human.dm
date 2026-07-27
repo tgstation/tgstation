@@ -6,7 +6,7 @@
 	if(!.)
 		return FALSE
 	var/mob/living/carbon/human/candidate = target
-	if(!istype(candidate) || candidate.stat != CONSCIOUS)
+	if(!istype(candidate) || IS_UNCONSCIOUS_OR_CRIT(candidate))
 		return FALSE
 	if(isnull(candidate.get_bodypart(BODY_ZONE_R_LEG)) && isnull(candidate.get_bodypart(BODY_ZONE_L_LEG)))
 		return FALSE

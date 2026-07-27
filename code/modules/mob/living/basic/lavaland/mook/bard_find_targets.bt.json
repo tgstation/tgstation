@@ -48,7 +48,7 @@
 			"vars": {
 				"target_key": "BB_MOOK_MUSIC_AUDIENCE",
 				"target_source": "/datum/target_source/near_village_humans",
-				"targeting_strategy": "/datum/targeting_strategy/conscious_human",
+				"targeting_strategy": "/datum/targeting_strategy/capable_human",
 				"time_between_perform": "1 SECONDS"
 			}
 		}

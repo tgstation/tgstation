@@ -66,7 +66,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/send_speech(message_raw, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods, forced, tts_message, list/tts_filter)
 	. = ..()
-	if(stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		return
 	playsound(src, 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
 

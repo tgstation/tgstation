@@ -36,14 +36,15 @@
 	if(cell && cell.charge <= 0)
 		. += span_warning("[p_Their()] battery indicator is blinking red!")
 
+	if(IS_UNCONSCIOUS_AND_ALIVE(src))
+		. += span_warning("[p_They()] do[p_es()]n't seem to be responding.")
+
 	switch(stat)
-		if(CONSCIOUS)
+		if(STABLE)
 			if(shell)
 				. += "[p_They()] appear[p_s()] to be an [deployed ? "active" : "empty"] AI shell."
 			else if(!client)
 				. += "[p_They()] appear[p_s()] to be in stand-by mode." //afk
-		if(SOFT_CRIT, UNCONSCIOUS, HARD_CRIT)
-			. += span_warning("[p_They()] do[p_es()]n't seem to be responding.")
 		if(DEAD)
 			. += span_deadsay("[p_They()] look[p_s()] like its system is corrupted and requires a reset.")
 
