@@ -88,28 +88,6 @@ const MuleControls = (props) => {
           </LabeledList.Item>
         </LabeledList>
       </Section>
-      <Section title="Settings">
-        <Button.Checkbox checked={autoReturn} onClick={() => act('autored')}>
-          Auto-Return
-        </Button.Checkbox>
-        <br />
-        <Button.Checkbox checked={autoPickup} onClick={() => act('autopick')}>
-          Auto-Pickup
-        </Button.Checkbox>
-        <br />
-        <Button.Checkbox checked={reportDelivery} onClick={() => act('report')}>
-          Report-Delivery
-        </Button.Checkbox>
-        <br />
-        {!!allowPossession && (
-          <Button.Checkbox
-            checked={possessionEnabled}
-            onClick={() => act('toggle_personality')}
-          >
-            Download Personality
-          </Button.Checkbox>
-        )}
-      </Section>
       <Section title="Actions">
         <Stack style={{ padding: '0px 30px' }}>
           <Stack.Item grow>
@@ -138,6 +116,28 @@ const MuleControls = (props) => {
             </Button>
           </Stack.Item>
         </Stack>
+      </Section>
+      <Section title="Settings">
+        <Button.Checkbox checked={autoReturn} onClick={() => act('autored')}>
+          Auto-Return
+        </Button.Checkbox>
+        <br />
+        <Button.Checkbox checked={autoPickup} onClick={() => act('autopick')}>
+          Auto-Pickup
+        </Button.Checkbox>
+        <br />
+        <Button.Checkbox checked={reportDelivery} onClick={() => act('report')}>
+          Report-Delivery
+        </Button.Checkbox>
+        <br />
+        {!!allowPossession && (
+          <Button.Checkbox
+            checked={possessionEnabled}
+            onClick={() => act('toggle_personality')}
+          >
+            Download Personality
+          </Button.Checkbox>
+        )}
       </Section>
     </>
   );
