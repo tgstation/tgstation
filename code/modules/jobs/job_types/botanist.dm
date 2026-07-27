@@ -9,7 +9,6 @@
 	config_tag = "BOTANIST"
 
 	outfit = /datum/outfit/job/botanist
-	skillchips = list(/obj/item/skillchip/job/botanist)
 	plasmaman_outfit = /datum/outfit/plasmaman/botany
 
 	paycheck = PAYCHECK_CREW
@@ -45,6 +44,7 @@
 
 	id_trim = /datum/id_trim/job/botanist
 	uniform = /obj/item/clothing/under/rank/civilian/hydroponics
+	skillchips = list(/obj/item/skillchip/job/botanist)
 	suit = /obj/item/clothing/suit/apron
 	suit_store = /obj/item/plant_analyzer
 	belt = /obj/item/modular_computer/pda/botanist
