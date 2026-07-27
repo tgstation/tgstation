@@ -1,6 +1,6 @@
-/// For atoms which rotate with their "actual" loc at their bottom-left corner.
+/// For objects which rotate with their "actual" loc at their bottom-left corner.
 #define MULTI_TILE_ROTATION_NORMAL 1
-/// For atoms which rotate with their "actual" loc disguised as their center through offsets.
+/// For objects which rotate with their "actual" loc disguised as their center through offsets.
 #define MULTI_TILE_ROTATION_CENTRAL 2
 
 // Degrees of rotation associated with the position of our true loc.
@@ -18,7 +18,7 @@
 /// rotations of 0 or 360 do not occur and for every rotation of the anchoring point there is one rotation
 /// which requires no correction. This leads to nine actual possibilities.
 /datum/component/multi_tile_rotation
-	/// The angle (positive = clockwise) to which our loc has been rotated.
+	/// The angle (positive is clockwise) to which our loc has been rotated.
 	var/loc_rotation = LOC_BOTTOMLEFT
 	/// How our parent should rotate
 	var/rotation_type = NONE
@@ -34,7 +34,7 @@
 // In general this component should be added with
 // `AddComponent(/datum/component/multi_tile_rotation, pixel_x, pixel_y, pixel_w, pixel_z)`
 /datum/component/multi_tile_rotation/Initialize(base_x_offset, base_y_offset, base_w_offset, base_z_offset)
-	if(!istype(parent, /atom/movable)) //`ismovable()` is something else entirely
+	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	// if(parent.bound_x != 0 || parent.bound_y != 0)
@@ -64,47 +64,47 @@
 	if(rotation < 0)
 		rotation += 360
 
-	var/atom/movable/movable_parent = parent
-	movable_parent.pixel_x = x_offset
-	movable_parent.pixel_y = y_offset
-	movable_parent.pixel_w = w_offset
-	movable_parent.pixel_z = w_offset
+	var/obj/object_parent = parent
+	object_parent.pixel_x = x_offset
+	object_parent.pixel_y = y_offset
+	object_parent.pixel_w = w_offset
+	object_parent.pixel_z = z_offset
 
 	switch(loc_rotation) // `rotation` of 0 or 360 does not occur
 		if(LOC_BOTTOMLEFT)
 			switch(rotation) // Nonexistant `rotation` of 0 requires no correction
 				if(90)
-					movable_parent.pixel_y -= (movable_parent.bound_height - ICON_SIZE_Y)
+					object_parent.pixel_y -= (object_parent.bound_height - ICON_SIZE_Y)
 				if(180)
-					movable_parent.pixel_y -= (movable_parent.bound_height - ICON_SIZE_Y)
-					movable_parent.pixel_x -= (movable_parent.bound_width - ICON_SIZE_X)
+					object_parent.pixel_y -= (object_parent.bound_height - ICON_SIZE_Y)
+					object_parent.pixel_x -= (object_parent.bound_width - ICON_SIZE_X)
 				if(270)
-					movable_parent.pixel_x -= (movable_parent.bound_width - ICON_SIZE_X)
+					object_parent.pixel_x -= (object_parent.bound_width - ICON_SIZE_X)
 		if(LOC_BOTTOMRIGHT)
 			switch(rotation) // `rotation` of 270 requires no correction
 				if(90)
-					movable_parent.pixel_y -= (movable_parent.bound_height - ICON_SIZE_Y)
-					movable_parent.pixel_x -= (movable_parent.bound_width - ICON_SIZE_X)
+					object_parent.pixel_y -= (object_parent.bound_height - ICON_SIZE_Y)
+					object_parent.pixel_x -= (object_parent.bound_width - ICON_SIZE_X)
 				if(180)
-					movable_parent.pixel_x -= (movable_parent.bound_width - ICON_SIZE_X)
+					object_parent.pixel_x -= (object_parent.bound_width - ICON_SIZE_X)
 		if(LOC_TOPRIGHT)
 			switch(rotation) // `rotation` of 180 requires no correction
 				if(90)
-					movable_parent.pixel_x -= (movable_parent.bound_height - ICON_SIZE_Y)
+					object_parent.pixel_x -= (object_parent.bound_height - ICON_SIZE_Y)
 				if(270)
-					movable_parent.pixel_y -= (movable_parent.bound_height - ICON_SIZE_Y)
+					object_parent.pixel_y -= (object_parent.bound_height - ICON_SIZE_Y)
 		if(LOC_TOPLEFT)
 			switch(rotation) // `rotation` of 90 requires no correction
 				if(180)
-					movable_parent.pixel_y -= (movable_parent.bound_height - ICON_SIZE_Y)
+					object_parent.pixel_y -= (object_parent.bound_height - ICON_SIZE_Y)
 				if(270)
-					movable_parent.pixel_x -= (movable_parent.bound_width - ICON_SIZE_X)
-					movable_parent.pixel_y -= (movable_parent.bound_height - ICON_SIZE_Y)
+					object_parent.pixel_x -= (object_parent.bound_width - ICON_SIZE_X)
+					object_parent.pixel_y -= (object_parent.bound_height - ICON_SIZE_Y)
 
-	movable_parent.bound_y = movable_parent.pixel_y
-	movable_parent.bound_x = movable_parent.pixel_x
+	object_parent.bound_y = object_parent.pixel_y
+	object_parent.bound_x = object_parent.pixel_x
 	// DEBUG ONLY. SHOULD UNDER NO CIRCUMSTANCES BE INCLUDED IN FINAL, POST-DRAFT PR
-	send_to_playing_players("[movable_parent.name] rotated with `loc_rotation` of [loc_rotation] and rotation of [rotation]")
+	send_to_playing_players("[object_parent.name] rotated with `loc_rotation` of [loc_rotation] and rotation of [rotation]")
 	loc_rotation += rotation
 	loc_rotation %= 360
 
