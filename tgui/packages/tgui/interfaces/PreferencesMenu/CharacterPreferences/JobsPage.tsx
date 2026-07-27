@@ -1,4 +1,3 @@
-import { sortBy } from 'es-toolkit';
 import { type PropsWithChildren, type ReactNode, useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import {
@@ -348,7 +347,7 @@ function Department(props: DepartmentProps) {
   const data = useServerPrefs();
   if (!data) return;
 
-  const { departments, jobs, jobs_sorted} = data.jobs;
+  const { departments, jobs, jobs_sorted } = data.jobs;
   const department = departments[name];
 
   // This isn't necessarily a bug, it's like this

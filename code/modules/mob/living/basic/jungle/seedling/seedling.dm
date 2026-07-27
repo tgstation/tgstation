@@ -138,12 +138,12 @@
 	combatant_state = state
 	update_appearance()
 
-/mob/living/basic/seedling/attackby(obj/item/can, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
-	if(istype(can, /obj/item/reagent_containers/cup/watering_can) && isnull(held_can))
-		can.forceMove(src)
-		return
+/mob/living/basic/seedling/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/reagent_containers/cup/watering_can) || held_can)
+		return ..()
 
-	return ..()
+	tool.forceMove(src)
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/basic/seedling/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(istype(arrived, /obj/item/reagent_containers/cup/watering_can))

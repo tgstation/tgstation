@@ -46,7 +46,7 @@ export const StationAlertConsoleContent = (props) => {
                 <Stack.Item grow>
                   <li className="color-average">
                     {alert.name}{' '}
-                    {!!cameraView && alert.sources > 1
+                    {cameraView && alert.sources > 1
                       ? ` (${alert.sources} sources)`
                       : ''}
                   </li>
