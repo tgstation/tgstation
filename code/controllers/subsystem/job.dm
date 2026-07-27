@@ -526,7 +526,7 @@ SUBSYSTEM_DEF(job)
 	job_debug("DO: Handle unrejectable unassigned")
 	//Mop up people who can't leave.
 	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
-		if(!give_priority_job(player)) /// BANDASTATION EDIT - Job Priority Staffing
+		if(!give_random_job(player))
 			if(!assign_role(player, get_job_type(overflow_role))) //If everything is already filled, make them an assistant
 				job_debug("DO: Forced antagonist could not be assigned any random job or the overflow role. divide_occupations failed.")
 				job_debug("---------------------------------------------------")
