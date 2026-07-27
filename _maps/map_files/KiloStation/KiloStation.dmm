@@ -50642,9 +50642,9 @@
 /obj/structure/table,
 /obj/machinery/firealarm/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/ai_module/law/supplied/freeform,
-/obj/item/ai_module/law/supplied/freeform,
-/obj/item/ai_module/law/supplied/freeform,
+/obj/item/ai_module/law/law/supplied/freeform,
+/obj/item/ai_module/law/law/supplied/freeform,
+/obj/item/ai_module/law/law/supplied/freeform,
 /turf/open/floor/iron/dark,
 /area/station/ai/upload/chamber)
 "qiB" = (

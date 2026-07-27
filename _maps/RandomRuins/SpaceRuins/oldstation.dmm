@@ -6843,12 +6843,12 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /obj/machinery/door/window/brigdoor/right/directional/east,
-/obj/item/ai_module/law/core/full/damaged,
-/obj/item/ai_module/law/core/full/maintain{
+/obj/item/ai_module/law/law/core/full/damaged,
+/obj/item/ai_module/law/law/core/full/maintain{
 	pixel_y = 3;
 	pixel_x = 2
 	},
-/obj/item/ai_module/law/core/freeformcore{
+/obj/item/ai_module/law/law/core/freeformcore{
 	pixel_y = -4
 	},
 /turf/open/floor/iron/dark,
@@ -7774,15 +7774,15 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /obj/machinery/door/window/brigdoor/right/directional/east,
-/obj/item/ai_module/law/core/full/asimov{
+/obj/item/ai_module/law/law/core/full/asimov{
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/item/ai_module/law/supplied/freeform{
+/obj/item/ai_module/law/law/supplied/freeform{
 	pixel_y = -4;
 	pixel_x = -4
 	},
-/obj/item/ai_module/law/supplied/freeform{
+/obj/item/ai_module/law/law/supplied/freeform{
 	pixel_y = -2
 	},
 /turf/open/floor/iron/dark,

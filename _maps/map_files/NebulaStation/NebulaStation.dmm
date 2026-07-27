@@ -137692,7 +137692,7 @@
 /area/station/hallway/primary/fore)
 "upF" = (
 /obj/structure/table/reinforced/rglass,
-/obj/item/ai_module/law/supplied/freeform,
+/obj/item/ai_module/law/law/supplied/freeform,
 /obj/machinery/flasher/directional/south{
 	id = "AI"
 	},
@@ -137708,10 +137708,10 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/item/ai_module/law/supplied/freeform{
+/obj/item/ai_module/law/law/supplied/freeform{
 	pixel_y = 3
 	},
-/obj/item/ai_module/law/supplied/freeform{
+/obj/item/ai_module/law/law/supplied/freeform{
 	pixel_y = 2;
 	pixel_x = 3
 	},

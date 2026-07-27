@@ -54314,12 +54314,12 @@
 /obj/machinery/flasher/directional/south{
 	id = "AI"
 	},
-/obj/item/ai_module/law/supplied/freeform,
-/obj/item/ai_module/law/supplied/freeform{
+/obj/item/ai_module/law/law/supplied/freeform,
+/obj/item/ai_module/law/law/supplied/freeform{
 	pixel_y = 4;
 	pixel_x = 2
 	},
-/obj/item/ai_module/law/supplied/freeform{
+/obj/item/ai_module/law/law/supplied/freeform{
 	pixel_y = 5;
 	pixel_x = -2
 	},

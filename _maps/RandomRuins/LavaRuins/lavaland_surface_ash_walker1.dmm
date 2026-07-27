@@ -721,7 +721,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/item/ai_module/combat,
+/obj/item/ai_module/law/combat,
 /turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/unpowered/ash_walkers)
 "oT" = (

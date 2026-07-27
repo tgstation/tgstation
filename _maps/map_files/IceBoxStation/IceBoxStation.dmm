@@ -50053,16 +50053,16 @@
 	c_tag = "AI Upload West";
 	network = list("aiupload")
 	},
-/obj/item/ai_module/law/supplied/freeform{
+/obj/item/ai_module/law/law/supplied/freeform{
 	pixel_y = 1;
 	pixel_x = -2
 	},
 /obj/effect/turf_decal/tile/dark_green,
 /obj/machinery/light/directional/west,
-/obj/item/ai_module/law/supplied/freeform{
+/obj/item/ai_module/law/law/supplied/freeform{
 	pixel_y = 6
 	},
-/obj/item/ai_module/law/supplied/freeform,
+/obj/item/ai_module/law/law/supplied/freeform,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/ai/upload/chamber)
