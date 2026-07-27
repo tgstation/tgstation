@@ -229,7 +229,7 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 	var/action = payload["action"]
 	switch(action)
 		if("opened")
-		 	// BANDASTATION EDIT START: Title screen owns lobby controls
+			// BANDASTATION EDIT START: Title screen owns lobby controls
 			if(isnewplayer(client?.mob))
 				winset(client, SKIN_ESCAPE_MENU, list("is-visible" = "false"))
 				return TRUE
