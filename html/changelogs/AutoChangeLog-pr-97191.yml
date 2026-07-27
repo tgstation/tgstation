@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscdel: "Mobs will no longer log their initial name change (I.e. \"name changed from (nothing) to John Doe\")"
