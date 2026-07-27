@@ -537,6 +537,7 @@
 	. = ..()
 	required_ingredients[/obj/item/food/grown/ghost_chili] = required_ingredients[/obj/item/food/grown/chili]
 	required_ingredients -= /obj/item/food/grown/chili
+	results.Insert(1, /datum/reagent/consumable/nutriment/soup/hotchili/ghost)
 	results[/datum/reagent/consumable/nutriment/soup/hotchili/ghost] = results[/datum/reagent/consumable/nutriment/soup/hotchili]
 	results -= /datum/reagent/consumable/nutriment/soup/hotchili
 
@@ -645,6 +646,7 @@
 	. = ..()
 	required_ingredients[/obj/item/food/grown/ghost_chili] = required_ingredients[/obj/item/food/grown/chili]
 	required_ingredients -= /obj/item/food/grown/chili
+	results.Insert(1, /datum/reagent/consumable/nutriment/soup/chili_sin_carne/ghost)
 	results[/datum/reagent/consumable/nutriment/soup/chili_sin_carne/ghost] = results[/datum/reagent/consumable/nutriment/soup/chili_sin_carne]
 	results -= /datum/reagent/consumable/nutriment/soup/chili_sin_carne
 
