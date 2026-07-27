@@ -366,7 +366,8 @@
 
 /obj/effect/abstract/tank_glass/Initialize(mapload, obj/machinery/atmospherics/components/tank/owner)
 	. = ..()
-	icon = owner.greyscaled_icon
+	if (owner)
+		icon = owner.greyscaled_icon
 
 /obj/effect/abstract/tank_gas_holder
 	appearance_flags = KEEP_TOGETHER | LONG_GLIDE | PIXEL_SCALE | TILE_BOUND
