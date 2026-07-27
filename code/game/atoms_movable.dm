@@ -215,7 +215,6 @@
 		if(OVERLAY_LIGHT_BEAM)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
 
-	// Navmesh: a relevant object spawned directly onto a turf (not via Move) must invalidate it.
 	if(NAV_RELEVANT(src))
 		var/turf/spawn_turf = get_turf(src)
 		if(spawn_turf)
@@ -920,7 +919,7 @@
 		else if(new_turf && !old_turf)
 			SSspatial_grid.enter_cell(src, new_turf)
 
-	// Navmesh: a relevant (dense / pass-flagged) movable changing turfs invalidates both edges.
+	// Shit moving; mark em dirty if relevant
 	if(NAV_RELEVANT(src))
 		if(old_turf)
 			old_turf.nav_dirty()

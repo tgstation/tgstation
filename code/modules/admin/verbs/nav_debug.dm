@@ -1,7 +1,4 @@
-/*
- * Debug tooling for the experimental navmesh: admin verbs to test paths, inspect a turf's baked
- * data, and pre-bake a z-level, plus a simple pawn that walks a nav path and repaths on obstruction.
- */
+/// Navmesh debugging verbs, inspection tools, and a simple path-walking test pawn.
 
 /// Transient marker dropped along a computed nav path.
 /obj/effect/temp_visual/nav_marker
@@ -55,10 +52,7 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 		return
 	var/datum/can_pass_info/info = nav_debug_profile(profile)
 
-	// Rust-side A* over the live navmesh (rust-g's turfmap_pathfinder feature). Synchronous, so a single
-	// before/after TICK_USAGE_REAL snapshot is valid. Wrapped in try/catch because this needs a rust-g
-	// build with turfmap_pathfinder enabled; falls back to reporting "unavailable" against a stock rust-g
-	// DLL instead of crashing the verb.
+	// Run synchronous Rust A* and report unavailable if rust-g lacks turfmap_pathfinder.
 	var/list/rustg_nav_path
 	var/rustg_nav_ms
 	var/rustg_nav_available = TRUE
@@ -70,12 +64,7 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 		rustg_nav_path = list()
 	rustg_nav_ms = TICK_USAGE_TO_MS(rustg_nav_start)
 
-	// A/B comparison against the existing JPS pathfinder (read-only use of the old system). Unlike the
-	// synchronous rust call above, get_path_to yields on SSpathfinder's async queue via UNTIL(),
-	// potentially across several ticks, so TICK_USAGE_REAL/TO_MS can't be taken as a single
-	// before/after snapshot here. We build the pathfind datum ourselves (rather than going through
-	// get_path_to) so we can read back its accumulated compute_time - the sum of its own search_step()
-	// tick usage, which SSpathfinder.fire() tracks regardless of how many ticks the search spans.
+	// Compare against JPS using its accumulated compute_time across async search ticks.
 	var/list/access = info.access || list()
 	var/list/hand_around = list()
 	var/datum/pathfind/jps/legacy_path = new()
@@ -122,13 +111,7 @@ ADMIN_VERB(navmesh_prebake_z, R_DEBUG, "Navmesh: Prebake Z-Level", "Eagerly bake
 	var/count = SSnavmesh.prebake_z(here.z)
 	to_chat(user, span_boldnotice("Prebaked [count] turfs on z[here.z] in [(REALTIMEOFDAY - start_time) / 10]s."))
 
-/*
- * A minimal pawn that walks a nav path to a target and repaths when it gets stuck (something moved
- * into the way, a door refused it). Demonstrates that mobs and access are resolved at execution time,
- * not baked into the mesh. Driven entirely by /datum/move_loop/has_target/navmesh_astar (see
- * code/controllers/subsystem/movement/movement_types_navmesh.dm) rather than any ad-hoc loop of its
- * own - SSmovement handles the ticking, repathing, and obstruction recovery.
- */
+/// Basic mob that walks to its target.
 /mob/living/basic/nav_tester
 	name = "navmesh tester"
 	desc = "A test pawn that walks navmesh paths."
