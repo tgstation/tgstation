@@ -347,8 +347,10 @@
 			active_ui.send_full_update()
 
 /// Same as the normal character name replacement, but updates the contents of the modular interface.
-/mob/living/silicon/fully_replace_character_name(oldname, newname)
+/mob/living/silicon/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
 	. = ..()
+	if(!.)
+		return
 	if(!modularInterface)
 		stack_trace("Silicon [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 		create_modularInterface()

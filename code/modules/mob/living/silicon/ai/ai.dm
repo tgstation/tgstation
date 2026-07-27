@@ -862,16 +862,17 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto
 		create_chat_message(speaker, message_language, raw_message, spans)
 	show_message(rendered, 2)
 
-/mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
-	..()
-	if(oldname != real_name)
-		if(eyeobj)
-			eyeobj.name = "[newname] (AI Eye)"
-			modularInterface.imprint_id(name = real_name)
+/mob/living/silicon/ai/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(eyeobj)
+		eyeobj.name = "[newname] (AI Eye)"
+		modularInterface.imprint_id(name = real_name)
 
-		// Notify Cyborgs
-		for(var/mob/living/silicon/robot/slave as anything in connected_robots)
-			slave.show_laws()
+	// Notify Cyborgs
+	for(var/mob/living/silicon/robot/slave as anything in connected_robots)
+		slave.show_laws()
 
 /datum/action/innate/choose_modules
 	name = "Malfunction Modules"

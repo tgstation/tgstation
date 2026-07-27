@@ -725,11 +725,12 @@
 	update_stat()
 	return TRUE
 
-/mob/living/silicon/robot/fully_replace_character_name(oldname, newname)
+/mob/living/silicon/robot/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
 	. = ..()
 	if(!.)
 		return
-	notify_ai(AI_NOTIFICATION_CYBORG_RENAMED, oldname, newname)
+	if(oldname)
+		notify_ai(AI_NOTIFICATION_CYBORG_RENAMED, oldname, newname)
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
 		modularInterface.imprint_id(name = real_name)
