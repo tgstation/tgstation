@@ -68,12 +68,9 @@
 		icon = I
 	return ..()
 
-/obj/item/photo/suicide_act(mob/living/carbon/human/user)
+/obj/item/photo/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!"))//when you wanna look at photo of waifu one last time before you die...
-	if (!ishuman(user) || user.physique == MALE)
-		playsound(user, 'sound/mobs/humanoids/human/laugh/manlaugh1.ogg', 50, TRUE)//EVERY TIME I DO IT MAKES ME LAUGH
-	else
-		playsound(user, 'sound/mobs/humanoids/human/laugh/womanlaugh.ogg', 50, TRUE)
+	user.emote("laugh", intentional = FALSE, forced = TRUE) // EVERY TIME I DO IT MAKES ME LAUGH
 	return OXYLOSS
 
 /obj/item/photo/attack_self(mob/user)
@@ -119,7 +116,7 @@ GAME_VERB_SRC(/obj/item/photo, rename, usr, "Rename photo", null)
 
 	var/n_name = tgui_input_text(usr, "What would you like to label the photo?", "Photo Labelling", max_length = MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
-	if(n_name && (loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && !usr.incapacitated)
+	if(n_name && (loc == usr || loc.loc && loc.loc == usr) && !IS_UNCONSCIOUS_OR_CRIT(usr) && !usr.incapacitated)
 		name = "photo[(n_name ? "- '[n_name]'" : null)]"
 	add_fingerprint(usr)
 

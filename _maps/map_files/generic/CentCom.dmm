@@ -11690,7 +11690,7 @@
 /obj/item/food/grown/corn,
 /obj/item/food/grown/chili,
 /obj/item/food/grown/chili,
-/obj/item/food/grown/carrot,
+/obj/item/food/grown/carrotlike/carrot,
 /obj/item/food/grown/apple,
 /obj/item/food/grown/ambrosia/vulgaris,
 /obj/machinery/status_display/evac/directional/north,

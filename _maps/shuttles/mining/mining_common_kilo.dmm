@@ -7,73 +7,32 @@
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "c" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/emergency,
-/turf/open/floor/mineral/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/space/basic,
 /area/shuttle/mining)
 "d" = (
-/obj/machinery/computer/shuttle/mining/common,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/mining)
-"e" = (
-/obj/structure/table,
-/obj/item/radio,
-/obj/item/radio/intercom/directional/north,
-/turf/open/floor/mineral/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
 /area/shuttle/mining)
 "f" = (
-/obj/effect/turf_decal/stripes/end{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/yellow,
+/obj/machinery/computer/shuttle/mining/common,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining)
-"g" = (
+"j" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/mining)
-"h" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/mining)
-"j" = (
 /obj/machinery/light/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/structure/sign/nanotrasen/directional/west,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/sign/nanotrasen/directional/west,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/mining)
 "k" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/mining)
-"l" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/binary/valve{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/mining)
-"m" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Lavaland Shuttle Airlock"
 	},
@@ -83,33 +42,20 @@
 	name = "lavaland shuttle";
 	port_direction = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "n" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/mining)
-"o" = (
-/obj/structure/closet/crate,
+/obj/structure/ore_box,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/airalarm/directional/west,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining)
 "p" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating,
-/area/shuttle/mining)
-"q" = (
-/obj/structure/ore_box,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining)
 "r" = (
 /obj/structure/sign/warning/fire,
@@ -122,46 +68,25 @@
 
 (1,1,1) = {"
 a
-a
 b
 a
-b
-a
+d
+r
 a
 "}
 (2,1,1) = {"
-a
 c
 f
 j
 n
-o
-r
-"}
-(3,1,1) = {"
-b
-d
-g
-k
-n
 p
 s
 "}
-(4,1,1) = {"
+(3,1,1) = {"
 a
-e
-h
-l
-n
-q
+b
+k
+b
 r
-"}
-(5,1,1) = {"
-a
-a
-b
-m
-b
-a
 a
 "}

@@ -14,7 +14,7 @@
 	dye_color = DYE_PRISONER
 	icon = 'icons/obj/weapons/restraints.dmi'
 
-/obj/item/restraints/suicide_act(mob/living/carbon/user)
+/obj/item/restraints/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
@@ -462,7 +462,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/attack_self(mob/living/user)
 	. = ..()
-	if(!ishuman(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+	if(!ishuman(user) || IS_UNCONSCIOUS_OR_CRIT(user) || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 
 	playsound(loc, 'sound/items/weapons/handcuffs.ogg', 30, TRUE, -3)

@@ -214,6 +214,8 @@
 	var/list/possible_takers
 	/// The actual item being offered
 	var/obj/item/offered_item
+	///If we should bypass active_hand checks.
+	var/bypass_active_hand = FALSE
 	/// The type of alert given to people when offered, in case you need to override some behavior (like for high-fives)
 	var/give_alert_type = /atom/movable/screen/alert/give
 
@@ -268,7 +270,7 @@
 /// One of our possible takers moved, see if they left us hanging
 /datum/status_effect/offering/proc/check_taker_in_range(mob/living/taker)
 	SIGNAL_HANDLER
-	if(taker.IsReachableBy(owner) || ((owner.pulling == taker) || (taker.pulling == owner)) && !IS_DEAD_OR_INCAP(taker))
+	if(taker.IsReachableBy(owner) || ((owner.pulling == taker) || (taker.pulling == owner)) && !taker.incapacitated)
 		return
 
 	to_chat(taker, span_warning("You moved out of range of [owner]!"))
@@ -279,7 +281,7 @@
 	SIGNAL_HANDLER
 
 	for(var/mob/living/checking_taker as anything in possible_takers)
-		if(!istype(checking_taker) || (!checking_taker.IsReachableBy(owner) && !((owner.pulling == checking_taker) || (checking_taker.pulling == owner))) || IS_DEAD_OR_INCAP(checking_taker))
+		if(!istype(checking_taker) || (!checking_taker.IsReachableBy(owner) && !((owner.pulling == checking_taker) || (checking_taker.pulling == owner))) || checking_taker.incapacitated)
 			remove_candidate(checking_taker)
 
 /// We lost the item, give it up
@@ -294,10 +296,10 @@
  * Returns `TRUE` if the taker is valid as a target for the offering.
  */
 /datum/status_effect/offering/proc/is_taker_elligible(mob/living/taker)
-	return taker.IsReachableBy(owner) && !IS_DEAD_OR_INCAP(taker) && additional_taker_check(taker)
+	return taker.IsReachableBy(owner) && !taker.incapacitated && additional_taker_check(taker)
 
 /**
- * Additional checks added to `CanReach()` and `IS_DEAD_OR_INCAP()` in `is_taker_elligible()`.
+ * Additional checks added to `CanReach()` and `incapacitated` in `is_taker_elligible()`.
  * Should be what you override instead of `is_taker_elligible()`. By default, checks if the
  * taker can hold items.
  *

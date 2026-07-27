@@ -81,7 +81,7 @@
 		return
 	to_chat(user, span_notice("You lean on the back of [container] and start pushing to rip the wrapping around it."))
 	if(do_after(user, 5 SECONDS, target = container))
-		if(!user || user.stat != CONSCIOUS || user.loc != container || container.loc != src)
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != container || container.loc != src)
 			return
 		to_chat(user, span_notice("You successfully removed [container]'s wrapping!"))
 		container.forceMove(loc)

@@ -1,6 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "You can no longer repeatedly put anomaly cores into the anomaly core guns"
-  - bugfix: "A runtime that occured when opening a package with a boxcutter no longer occurs."
-  - code_imp: "30 files have been moved from attackby() to item_interaction()"

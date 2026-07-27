@@ -62,8 +62,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return
 	spans |= speech_span
 	language ||= get_selected_language()
-	if(!message_mods[SAY_MOD_VERB])
-		message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
+	message_mods[SAY_MOD_VERB] ||= say_mod(message, message_mods)
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods, forced = forced)
 
 /// Called when this movable hears a message from a source.
@@ -155,6 +154,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 			listened += hearing_movable
 
 	do_tts_message(tts_message_to_use, message_language, message_mods, tts_filter, listened)
+
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), visible_name = FALSE)
 	//This proc uses [] because it is faster than continually appending strings. Thanks BYOND.
 	//Basic span
@@ -174,8 +174,10 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/languageicon = ""
 	if(!message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		var/datum/language/dialect = GLOB.language_datum_instances[message_language]
-		if(istype(dialect) && dialect.display_icon(src))
-			languageicon = "[dialect.get_icon()] "
+		var/dialect_icon_type = dialect?.display_icon_type(src, message_mods) || DISPLAY_LANGUAGE_ICON_NONE
+		if(dialect_icon_type != DISPLAY_LANGUAGE_ICON_NONE)
+			var/datum/asset/spritesheet_batched/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)
+			languageicon = sheet.icon_tag("language-[dialect.icon_state][dialect_icon_type == DISPLAY_LANGUAGE_ICON_PARTIAL ? "-partial" : ""]") + " "
 
 	// The actual message part.
 	var/messagepart = speaker.generate_messagepart(raw_message, spans, message_mods)

@@ -18,7 +18,7 @@
 	/// Is this T-Ray scanner currently on?
 	var/on = FALSE
 
-/obj/item/t_scanner/suicide_act(mob/living/carbon/user)
+/obj/item/t_scanner/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to emit terahertz-rays into [user.p_their()] brain with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return TOXLOSS
 

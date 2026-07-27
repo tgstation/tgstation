@@ -109,7 +109,7 @@ function OrbitInfo(props) {
   const { name, full_name, health, job } = orbiting;
 
   let department;
-  if ('job' in orbiting && !!job) {
+  if ('job' in orbiting && job) {
     department = getDepartmentByJob(job);
   }
 

@@ -87,7 +87,7 @@
 	return target_plating
 
 /obj/item/stack/tile/handle_openspace_click(turf/target, mob/user, list/modifiers)
-	target.attackby(src, user, list2params(modifiers))
+	target.base_item_interaction(user, src, list2params(modifiers))
 
 //Grass
 /obj/item/stack/tile/grass
@@ -1109,37 +1109,6 @@
 /obj/item/stack/tile/circuit/red/anim
 	turf_type = /turf/open/floor/circuit/red/anim
 	merge_type = /obj/item/stack/tile/circuit/red/anim
-
-//Pod floor
-/obj/item/stack/tile/pod
-	name = "pod floor tile"
-	singular_name = "pod floor tile"
-	desc = "A grooved floor tile."
-	icon_state = "tile_pod"
-	inhand_icon_state = "tile-pod"
-	turf_type = /turf/open/floor/pod
-	merge_type = /obj/item/stack/tile/pod
-	tile_reskin_types = list(
-		/obj/item/stack/tile/pod,
-		/obj/item/stack/tile/pod/light,
-		/obj/item/stack/tile/pod/dark,
-		)
-
-/obj/item/stack/tile/pod/light
-	name = "light pod floor tile"
-	singular_name = "light pod floor tile"
-	desc = "A lightly colored grooved floor tile."
-	icon_state = "tile_podlight"
-	turf_type = /turf/open/floor/pod/light
-	merge_type = /obj/item/stack/tile/pod/light
-
-/obj/item/stack/tile/pod/dark
-	name = "dark pod floor tile"
-	singular_name = "dark pod floor tile"
-	desc = "A darkly colored grooved floor tile."
-	icon_state = "tile_poddark"
-	turf_type = /turf/open/floor/pod/dark
-	merge_type = /obj/item/stack/tile/pod/dark
 
 /obj/item/stack/tile/plastic
 	name = "plastic tile"

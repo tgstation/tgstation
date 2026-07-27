@@ -129,7 +129,7 @@
 		flags_1 &= ~PREVENT_CLICK_UNDER_1
 
 	if(glass)
-		passwindow_on(src, INNATE_TRAIT)
+		pass_flags |= PASSWINDOW
 	//doors only block while dense though so we have to use the proc
 	real_explosion_block = explosion_block
 	update_explosive_block()
@@ -260,7 +260,7 @@
 		return
 	if(ismob(AM))
 		var/mob/B = AM
-		if((isdrone(B) || iscyborg(B)) && B.stat)
+		if((isdrone(B) || iscyborg(B)) && IS_UNCONSCIOUS_OR_CRIT(B))
 			return
 		if(isliving(AM))
 			var/mob/living/M = AM
@@ -379,7 +379,7 @@
 	stoplag(1) // allow the door to process any allow/deny responses first
 	var/do_after_time = rand(delayed_unres_time_lower, delayed_unres_time_upper)
 	ADD_TRAIT(opener, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, REF(src))
-	RegisterSignal(opener, COMSIG_ATOM_PRE_PRESSURE_PUSH, PROC_REF(stop_pressure_during_unres_open))
+	RegisterSignal(opener, COMSIG_ATOM_PRE_PRESSURE_PUSH, PROC_REF(stop_pressure_during_unres_open), override = TRUE)
 	addtimer(CALLBACK(src, PROC_REF(deregister_pressure_push_signal), opener), do_after_time + 0.5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) // extra half-second to be safe, else this is just a guarantee we remove the signal.
 
 	SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open attempt ([type])") // statcollecting on how often people try to use this.
@@ -457,6 +457,7 @@
 		var/obj/item/access_key/key = tool
 		if(!key.attempt_open_door(user, src))
 			return ITEM_INTERACT_BLOCKING
+
 		return ITEM_INTERACT_SUCCESS
 
 	if(!user.combat_mode && istype(tool, /obj/item/fireaxe))

@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Adds an operation to un-widen the chest cavity"
-  - qol: "\"Fix bones\" operation will wipe all surgical states for limbs without skin, acting as an analog to \"Mend incision\" for species like Plasmamen"

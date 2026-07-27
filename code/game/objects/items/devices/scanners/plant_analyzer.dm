@@ -62,7 +62,7 @@
 
 /// When we use the analyzer in hand - try to show the results of the last scan
 /obj/item/plant_analyzer/interact(mob/user)
-	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
+	if(IS_UNCONSCIOUS_OR_CRIT(user) || !user.can_read(src) || user.is_blind())
 		return
 	if(last_scan_data)
 		return ..()
@@ -116,7 +116,7 @@
 		span_notice("You analyze [scanned_mob]'s vitals.")
 		)
 
-	healthscan(user, scanned_mob, advanced = TRUE)
+	healthscan(user, scanned_mob, scanpower = SCANPOWER_ADVANCED)
 	add_fingerprint(user)
 
 /*

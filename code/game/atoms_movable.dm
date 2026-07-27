@@ -275,6 +275,12 @@
 
 	LAZYNULL(client_mobs_in_contents)
 
+#ifndef DISABLE_DREAMLUAU
+	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
+	DREAMLUAU_CLEAR_REF_USERDATA(vis_contents)
+	DREAMLUAU_CLEAR_REF_USERDATA(vis_locs)
+#endif
+
 	. = ..()
 
 	for(var/movable_content in contents)
@@ -570,27 +576,66 @@
 	if(pulled_atom.pulledby)
 		log_combat(pulled_atom, pulled_atom.pulledby, "pulled from", src)
 		pulled_atom.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
-	pulling = pulled_atom
-	pulled_atom.set_pulledby(src)
+	set_pulling(pulled_atom)
 	SEND_SIGNAL(src, COMSIG_ATOM_START_PULL, pulled_atom, state, force)
 	setGrabState(state)
 	if(ismob(pulled_atom))
 		var/mob/pulled_mob = pulled_atom
-		log_combat(src, pulled_mob, "grabbed", addition="passive grab")
+		log_combat(src, pulled_mob, "grabbed", addition = "passive grab")
 		if(!supress_message)
-			pulled_mob.visible_message(span_warning("[src] grabs [pulled_mob] passively."), \
-				span_danger("[src] grabs you passively."))
+			pulled_mob.visible_message(
+				span_warning("[src] grabs [pulled_mob] passively."),
+				span_danger("[src] grabs you passively."),
+			)
+
+
 	return TRUE
 
 /atom/movable/proc/stop_pulling()
 	if(!pulling)
 		return
-	pulling.set_pulledby(null)
-	setGrabState(GRAB_PASSIVE)
-	var/atom/movable/old_pulling = pulling
-	pulling = null
+	var/atom/movable/old_pulling = set_pulling(null)
 	SEND_SIGNAL(old_pulling, COMSIG_ATOM_NO_LONGER_PULLED, src)
 	SEND_SIGNAL(src, COMSIG_ATOM_NO_LONGER_PULLING, old_pulling)
+
+#define PULLED_WHILE_CRIT_TRAIT "pulled_while_softcrit"
+
+/atom/movable/proc/pulled_mob_stat_change(mob/living/pulled_mob, new_stat, ...)
+	SIGNAL_HANDLER
+
+	if(new_stat >= SOFT_CRIT)
+		ADD_TRAIT(pulled_mob, TRAIT_IMMOBILIZED, PULLED_WHILE_CRIT_TRAIT)
+	else
+		REMOVE_TRAIT(pulled_mob, TRAIT_IMMOBILIZED, PULLED_WHILE_CRIT_TRAIT)
+
+/atom/movable/proc/set_pulling(new_pulling)
+	if(new_pulling == pulling)
+		return FALSE //null signals there was a change, be sure to return FALSE if none happened here.
+
+	if(isnull(new_pulling))
+		setGrabState(GRAB_PASSIVE)
+
+	. = pulling
+	pulling = new_pulling
+
+	if(ismovable(.))
+		var/atom/movable/was_pulling = .
+		was_pulling.set_pulledby(null)
+
+	if(ismovable(new_pulling))
+		var/atom/movable/pulled_thing = new_pulling
+		pulled_thing.set_pulledby(src)
+
+	if(ismob(.))
+		var/mob/was_pulled_mob = .
+		UnregisterSignal(was_pulled_mob, COMSIG_MOB_STATCHANGE)
+		REMOVE_TRAIT(was_pulled_mob, TRAIT_IMMOBILIZED, PULLED_WHILE_CRIT_TRAIT)
+
+	if(ismob(pulling))
+		var/mob/pulled_mob = pulling
+		RegisterSignal(pulling, COMSIG_MOB_STATCHANGE, PROC_REF(pulled_mob_stat_change))
+		if(pulled_mob.stat >= SOFT_CRIT)
+			ADD_TRAIT(pulled_mob, TRAIT_IMMOBILIZED, PULLED_WHILE_CRIT_TRAIT)
 
 ///Reports the event of the change in value of the pulledby variable.
 /atom/movable/proc/set_pulledby(new_pulledby)
@@ -599,6 +644,7 @@
 	. = pulledby
 	pulledby = new_pulledby
 
+#undef PULLED_WHILE_CRIT_TRAIT
 
 /atom/movable/proc/Move_Pulled(atom/moving_atom)
 	if(!pulling)
@@ -980,7 +1026,7 @@
 	if(!bumped_atom)
 		CRASH("Bump was called with no argument.")
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, bumped_atom) & COMPONENT_INTERCEPT_BUMPED)
-		return
+		return TRUE
 	. = ..()
 	if(!QDELETED(throwing))
 		throwing.finalize(hit = TRUE, target = bumped_atom)
@@ -1628,6 +1674,10 @@
 /atom/movable/proc/has_language(language, flags_to_check)
 	return get_language_holder().has_language(language, flags_to_check)
 
+/// Checks if atom has the language. If spoken is true, only checks if atom can speak the language.
+/atom/movable/proc/has_partial_language(language)
+	return get_language_holder().has_partial_language(language)
+
 /// Checks if atom can speak the language.
 /atom/movable/proc/can_speak_language(language)
 	return get_language_holder().can_speak_language(language)
@@ -1652,6 +1702,10 @@
 /// Gets a random spoken language, useful for forced speech and such.
 /atom/movable/proc/get_random_spoken_language()
 	return get_language_holder().get_random_spoken_language()
+
+/// Gets a list of all understood languages, excluding any blocked languages
+/atom/movable/proc/get_understood_languages() as /list
+	return get_language_holder().get_understood_languages() || list()
 
 /// Copies all languages into the supplied atom/language holder. Source should be overridden when you
 /// do not want the language overwritten by later atom updates or want to avoid blocked languages.

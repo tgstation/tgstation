@@ -34,6 +34,24 @@
 	outfit = select_outfit()
 	return ..()
 
+/obj/effect/mob_spawn/corpse/human/legioninfested/get_mob_species(mob/mob_possessor, apply_prefs)
+	if(ispath(outfit, /datum/outfit/consumed_miner))
+		return pick_weight(list(
+			/datum/species/human = 70,
+			/datum/species/lizard = 26,
+			/datum/species/fly = 2,
+			/datum/species/plasmaman = 2,
+		))
+	if(ispath(outfit, /datum/outfit/consumed_ashwalker))
+		return /datum/species/lizard/ashwalker
+	if(ispath(outfit, /datum/outfit/consumed_golem))
+		return /datum/species/golem
+	if(ispath(outfit, /datum/outfit/consumed_shadowperson))
+		return /datum/species/shadow
+	if(ispath(outfit, /datum/outfit/consumed_heremoth))
+		return /datum/species/moth
+	return ..()
+
 /obj/effect/mob_spawn/corpse/human/legioninfested/special(mob/living/carbon/human/spawned_human, mob/mob_possessor, apply_prefs)
 	. = ..()
 	var/obj/item/organ/legion_tumour/cancer = new()
@@ -151,13 +169,7 @@
 	if(visuals_only)
 		regular_uniform = TRUE //assume human
 	else
-		var/new_species_type = pick_weight(list(
-			/datum/species/human = 70,
-			/datum/species/lizard = 26,
-			/datum/species/fly = 2,
-			/datum/species/plasmaman = 2,
-		))
-		miner.set_species(new_species_type)
+		var/new_species_type = miner.dna.species.type
 		if(new_species_type != /datum/species/plasmaman)
 			regular_uniform = TRUE
 		else
@@ -207,8 +219,6 @@
 	uniform = /obj/item/clothing/under/costume/gladiator/ash_walker
 
 /datum/outfit/consumed_ashwalker/pre_equip(mob/living/carbon/human/ashwalker, visuals_only = FALSE)
-	if(!visuals_only)
-		ashwalker.set_species(/datum/species/lizard/ashwalker)
 	if(prob(95))
 		head = /obj/item/clothing/head/helmet/gladiator
 	else
@@ -281,8 +291,6 @@
 	//Oops! All randomized!
 
 /datum/outfit/consumed_golem/pre_equip(mob/living/carbon/human/golem, visuals_only = FALSE)
-	if(!visuals_only)
-		golem.set_species(/datum/species/golem)
 	if(prob(30))
 		glasses = pick_weight(list(
 			/obj/item/clothing/glasses/hud/diagnostic = 2,
@@ -367,11 +375,6 @@
 
 	accessory = /obj/item/clothing/accessory/medal/plasma/nobel_science
 
-/datum/outfit/consumed_shadowperson/pre_equip(mob/living/carbon/human/shadowperson, visuals_only = FALSE)
-	if(visuals_only)
-		return
-	shadowperson.set_species(/datum/species/shadow)
-
 /datum/outfit/consumed_cultist
 	name = "Legion-Consumed Cultist"
 	uniform = /obj/item/clothing/under/costume/roman
@@ -392,8 +395,6 @@
 	head = /obj/item/clothing/head/helmet/chaplain/heretic
 
 /datum/outfit/consumed_heremoth/pre_equip(mob/living/carbon/human/moth, visuals_only = FALSE)
-	if(!visuals_only)
-		moth.set_species(/datum/species/moth)
 	if(prob(70))
 		glasses = /obj/item/clothing/glasses/blindfold
 	if(prob(90))

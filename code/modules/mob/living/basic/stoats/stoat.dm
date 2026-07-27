@@ -19,7 +19,6 @@
 	response_help_simple = "pet"
 	verb_say = "chips"
 	verb_ask = "chips curiously"
-	can_be_held = TRUE
 	verb_exclaim = "chips loudly"
 	verb_yell = "chips loudly"
 	faction = list(FACTION_NEUTRAL)
@@ -47,7 +46,9 @@
 	AddComponent(/datum/component/tameable, food_types = eatable_food, tame_chance = 70, bonus_tame_chance = 0)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(eatable_food))
 	AddElement(/datum/element/wears_collar)
+	AddElement(/datum/element/can_be_held)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_STOAT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	if(can_breed)
 		add_breeding_component()
 

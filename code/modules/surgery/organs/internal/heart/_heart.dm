@@ -107,7 +107,7 @@
 /obj/item/organ/heart/proc/is_beating()
 	return beating
 
-/obj/item/organ/heart/get_status_text(advanced, add_tooltips, colored)
+/obj/item/organ/heart/get_status_text(scanpower, add_tooltips, colored)
 	if(owner.has_status_effect(/datum/status_effect/heart_attack))
 		return conditional_tooltip("<font color='#cc3333'>Myocardial Infarction</font>", "Apply defibrillation immediately. Similar electric shocks may work in emergencies.", add_tooltips)
 	if((!beating && !(organ_flags & ORGAN_FAILING) && owner.needs_heart() && owner.stat != DEAD))
@@ -128,7 +128,7 @@
 	// Handle "sudden" heart attack
 	if(!beating || (organ_flags & ORGAN_FAILING))
 		if(owner.can_heartattack() && Stop())
-			if(owner.stat == CONSCIOUS)
+			if(!IS_UNCONSCIOUS_OR_CRIT(owner))
 				owner.visible_message(span_danger("[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!"))
 			to_chat(owner, span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
 		return

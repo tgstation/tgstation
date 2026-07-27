@@ -36,8 +36,10 @@
 	var/datum/cell_tracker/cell_tracker
 	///Should we destroy the datum when the sound is done?
 	var/delete_on_end = FALSE
+	///Do we repeat the sound using sound.repeat?
+	var/repeating = FALSE
 
-/datum/sound_token/New(atom/_source, _sound, _range = 10, _volume = 50, _falloff_exponent = SOUND_FALLOFF_EXPONENT, _falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, _allowed_listeners, _sound_duration_override, _delete_on_end)
+/datum/sound_token/New(atom/_source, _sound, _range = 10, _volume = 50, _falloff_exponent = SOUND_FALLOFF_EXPONENT, _falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, _allowed_listeners, _sound_duration_override, _delete_on_end, _repeating)
 	source = _source
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(source_deleted))
 	RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(source_moved))
@@ -50,6 +52,7 @@
 	sound_duration_override = _sound_duration_override
 	if(_delete_on_end)
 		delete_on_end = _delete_on_end
+	repeating = _repeating
 
 	if(_allowed_listeners)
 		for(var/allowed_mob in _allowed_listeners)
@@ -69,14 +72,16 @@
 /datum/sound_token/Destroy(force, ...)
 	for(var/listener in listeners)
 		remove_listener(listener)
-
 	listeners = null
 	source = null
 	return ..()
 
 ///Lets us update the sound to a new one.
-/datum/sound_token/proc/update_sound(_sound, start_playing = FALSE)
+/datum/sound_token/proc/update_sound(_sound, start_playing = FALSE, _repeating = null)
+	if(!isnull(_repeating))
+		repeating = _repeating
 	sound = sound(_sound)
+	sound.repeat = repeating
 	if(!sound_channel)
 		sound_channel = SSsounds.reserve_sound_channel_for_datum(src)
 	sound.channel = sound_channel
@@ -84,7 +89,7 @@
 	start_time = REALTIMEOFDAY
 	if(start_playing)
 		force_update_all_listeners(FALSE)
-	if(delete_on_end)
+	if(delete_on_end && !repeating)
 		addtimer(CALLBACK(src, PROC_REF(on_sound_ended)), sound_duration, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 
@@ -108,7 +113,7 @@
 		return FALSE
 
 	listeners[listener_mob] = NONE
-	listener_mob.client.sound_tokens += src
+	LAZYOR(listener_mob.sound_tokens, src)
 	if(source != listener_mob) //this is possible...yea... :/
 		RegisterSignal(listener_mob, COMSIG_QDELETING, PROC_REF(listener_deleted))
 	RegisterSignals(listener_mob, list(SIGNAL_ADDTRAIT(TRAIT_DEAF), SIGNAL_REMOVETRAIT(TRAIT_DEAF)), PROC_REF(listener_deafness_update))
@@ -119,9 +124,7 @@
 /datum/sound_token/proc/remove_listener(mob/listener_mob)
 
 	listeners -= listener_mob
-
-	if(listener_mob.client)
-		listener_mob.client.sound_tokens -= src
+	LAZYREMOVE(listener_mob.sound_tokens, src)
 
 	UnregisterSignal(listener_mob, list(COMSIG_QDELETING, SIGNAL_ADDTRAIT(TRAIT_DEAF),SIGNAL_REMOVETRAIT(TRAIT_DEAF)))
 	SEND_SOUND(listener_mob, null_sound)
@@ -253,6 +256,8 @@
 	var/freq_factor = (sound.frequency || 100) / 100
 	var/pitch_factor = (sound.pitch || 100) / 100
 	var/offset = elapsed * freq_factor * pitch_factor
+	if(repeating && sound_duration)
+		offset %= sound_duration
 	return offset
 
 ///Update tracked cells; happens on movement. We need to check if anyone is now out of cell range and kick them out.

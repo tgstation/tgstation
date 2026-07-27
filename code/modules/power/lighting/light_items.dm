@@ -42,7 +42,7 @@
 /obj/item/light/proc/is_intact()
 	return status == LIGHT_OK
 
-/obj/item/light/suicide_act(mob/living/carbon/user)
+/obj/item/light/suicide_act(mob/living/user)
 	if (status == LIGHT_BROKEN)
 		user.visible_message(span_suicide("[user] begins to stab [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	else

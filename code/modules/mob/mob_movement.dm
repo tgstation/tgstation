@@ -4,7 +4,7 @@
  * This is a hidden verb, likely for binding with winset for hotkeys
  */
 GAME_VERB_HIDDEN(/client, drop_item, "drop item")
-	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
+	if(!iscyborg(mob) && !IS_UNCONSCIOUS_OR_CRIT(mob))
 		mob.dropItemToGround(mob.get_active_held_item())
 	return
 /**
@@ -160,7 +160,7 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 		COOLDOWN_START(src, move_delay, 1 SECONDS)
 		to_chat(src, span_warning("You're restrained! You can't move!"))
 		return TRUE
-	return mob.resist_grab(TRUE)
+	return !mob.resist_grab(TRUE)
 
 
 /**
@@ -540,7 +540,7 @@ GAME_VERB_HIDDEN_INSTANT(/client, toggle_walk_run, "toggle-walk-run")
 	if(!can_z_move(UP, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
 		return
 	balloon_alert(src, "moving up...")
-	if(!do_after(src, 1 SECONDS, hidden = TRUE))
+	if(!do_after(src, 1 SECONDS, cog_icon = null))
 		return
 	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move upwards."))
@@ -564,7 +564,7 @@ GAME_VERB_HIDDEN_INSTANT(/client, toggle_walk_run, "toggle-walk-run")
 	if(!can_z_move(DOWN, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
 		return
 	balloon_alert(src, "moving down...")
-	if(!do_after(src, 1 SECONDS, hidden = TRUE))
+	if(!do_after(src, 1 SECONDS, cog_icon = null))
 		return
 	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move down."))
@@ -578,5 +578,5 @@ GAME_VERB_HIDDEN_INSTANT(/client, toggle_walk_run, "toggle-walk-run")
 
 /mob/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
-	if(client?.sound_tokens.len)
+	if(client && LAZYLEN(sound_tokens))
 		SSsound_tokens.clients_needing_update[client] = TRUE

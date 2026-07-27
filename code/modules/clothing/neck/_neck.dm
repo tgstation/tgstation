@@ -148,13 +148,13 @@
 /obj/item/clothing/neck/tie/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	var/mob/living/carbon/human/wearer = loc
-	if(!ishuman(wearer) || !wearer.w_uniform)
+	if(!ishuman(wearer))
 		return
 	var/obj/item/clothing/under/undershirt = wearer.w_uniform
 	if(!istype(undershirt) || !LAZYLEN(undershirt.attached_accessories))
 		return
 	if(alternate_worn_layer)
-		. += undershirt.accessory_overlay
+		. += undershirt.get_accessory_overlays()
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"
@@ -241,7 +241,7 @@
 	. = ..()
 	AddElement(/datum/element/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
-/obj/item/clothing/neck/stethoscope/suicide_act(mob/living/carbon/user)
+/obj/item/clothing/neck/stethoscope/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] won't hear much!"))
 	return OXYLOSS
 
@@ -328,7 +328,7 @@
 				render_list += "<span class='danger ml-1'>You can't feel anything where [target.p_their()] appendix would be.</span>\n"
 				appendix_okay = FALSE
 			else
-				if(appendix.damage > 10 && carbon_patient.stat == CONSCIOUS)
+				if(appendix.damage > 10 && !IS_UNCONSCIOUS_OR_CRIT(carbon_patient))
 					render_list += "<span class='danger ml-1'>[target] screams when you lift your hand from [target.p_their()] appendix!</span>\n"//scream if their appendix is damaged and they're awake
 					target.emote("scream")
 					appendix_okay = FALSE
