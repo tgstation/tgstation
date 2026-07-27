@@ -174,7 +174,7 @@
 	if(ismob(tracked_thing))
 		var/mob/tracked_mob = tracked_thing
 		if(tracked_mob.stat == DEAD)
-			to_chat(owner, span_hierophant("[tracked_mob] is dead. Bring them to a transmutation rune \
+			to_chat(owner, span_mansus("[tracked_mob] is dead. Bring them to a transmutation rune \
 				and invoke \"[sac_knowledge.name]\" to sacrifice them!"))
 
 	StartCooldown()

@@ -95,11 +95,12 @@
 	. = ..()
 	stored_organ = pick_weight(allowed_organs)
 
-/obj/structure/meateor_fluff/flesh_pod/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if (attacking_item.get_sharpness() & SHARP_EDGED)
-		cut_open(user)
-		return
-	return ..()
+/obj/structure/meateor_fluff/flesh_pod/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!(tool.get_sharpness() & SHARP_EDGED))
+		return NONE
+
+	cut_open(user)
+	return ITEM_INTERACT_SUCCESS
 
 /// Cut the pod open and destroy it
 /obj/structure/meateor_fluff/flesh_pod/proc/cut_open(mob/user)
