@@ -68665,7 +68665,7 @@
 /turf/open/floor/iron,
 /area/station/security/interrogation)
 "xAa" = (
-/obj/machinery/computer/upload/ai,
+/obj/machinery/ai_law_rack/base/core,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/circuit/red,
 /area/station/ai/upload/chamber)
