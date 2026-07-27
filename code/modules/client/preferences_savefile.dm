@@ -374,6 +374,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Load prefs
 	job_preferences = save_data?["job_preferences"]
+	job_assigned_profiles = save_data?["job_assigned_profiles"]
 
 	//Quirks
 	all_quirks = save_data?["all_quirks"]
@@ -386,6 +387,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Sanitize
 	randomise = SANITIZE_LIST(randomise)
 	job_preferences = SANITIZE_LIST(job_preferences)
+	job_assigned_profiles = SANITIZE_LIST(job_assigned_profiles)
 	all_quirks = SANITIZE_LIST(all_quirks)
 
 	//Validate job prefs
@@ -432,6 +434,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Write prefs
 	save_data["job_preferences"] = job_preferences
+	save_data["job_assigned_profiles"] = job_assigned_profiles
 
 	//Quirks
 	save_data["all_quirks"] = all_quirks
