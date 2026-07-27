@@ -525,8 +525,8 @@
 
 		else if(istype(task, /datum/manipulator_task/cargo/move))
 			td["task_type"] = TASK_TYPE_MOVE
-			var/datum/manipulator_task/cargo/move/task = task
-			td["turf"] = "[task.offset_dx],[task.offset_dy]"
+			var/datum/manipulator_task/cargo/move/t = task
+			td["turf"] = "[t.offset_dx],[t.offset_dy]"
 
 		tasks_data += list(td)
 
