@@ -47,7 +47,12 @@
 	reaction = /datum/chemical_reaction/food/soup/wingfangchu
 
 /datum/crafting_recipe/food/reaction/soup/hotchili
+	name = "Chili Con Carne (Meat Chili)"
 	reaction = /datum/chemical_reaction/food/soup/hotchili
+
+/datum/crafting_recipe/food/reaction/soup/hotchili/ghost
+	name = "Ghost Chili Con Carne (Meat Chili)"
+	reaction = /datum/chemical_reaction/food/soup/hotchili/ghost
 
 /datum/crafting_recipe/food/reaction/soup/coldchili
 	reaction = /datum/chemical_reaction/food/soup/coldchili
