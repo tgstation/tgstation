@@ -1120,7 +1120,7 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 		return ai_voicechanger.say_name
 	return ..()
 
-/mob/living/silicon/ai/init_unconscious_appearance()
+/mob/living/silicon/ai/get_unconscious_appearance()
 	var/image/static_overlay = image('icons/effects/effects.dmi', null, "static_base")
 	static_overlay.blend_mode = BLEND_INSET_OVERLAY
 
@@ -1129,12 +1129,8 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 	static_image.overlays += static_overlay
 	static_image.override = TRUE
 	static_image.name = "unknown AI"
-	add_alt_appearance(
-		/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity,
-		"[REF(src)]_unconscious",
-		static_image,
-		NONE,
-	)
+
+	return static_image
 
 /mob/living/silicon/ai/proc/set_control_disabled(control_disabled)
 	SEND_SIGNAL(src, COMSIG_SILICON_AI_SET_CONTROL_DISABLED, control_disabled)

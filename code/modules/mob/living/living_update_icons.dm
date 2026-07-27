@@ -55,6 +55,7 @@
 	readjust_atom_huds(animate_time)
 
 	SEND_SIGNAL(src, COMSIG_LIVING_POST_UPDATE_TRANSFORM, resize, lying_angle, is_opposite_angle)
+	unconscious_appearance?.transform = ntransform
 	return TRUE
 
 /mob/living/proc/readjust_atom_huds(animate_time = null)
