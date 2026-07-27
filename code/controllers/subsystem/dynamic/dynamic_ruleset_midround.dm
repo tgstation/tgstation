@@ -92,7 +92,7 @@
 	config_tag = "Heavy Pirates"
 	midround_type = HEAVY_MIDROUND
 	jobban_flag = ROLE_TRAITOR
-	ruleset_flags = RULESET_INVADER
+	ruleset_flags = RULESET_INVADER|RULESET_ADMIN_CONFIGURABLE
 	weight = 3
 	min_pop = 25
 	min_antag_cap = 0 // ship will spawn if there are no ghosts around
