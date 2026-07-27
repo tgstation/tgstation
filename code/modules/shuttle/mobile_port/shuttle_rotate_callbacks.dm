@@ -27,7 +27,7 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 			pixel_x = oldPY
 			pixel_y = (oldPX*(-1))
 
-	if(pixel_w || pixel_z && (params & ROTATE_OFFSET))
+	if((pixel_w || pixel_z) && (params & ROTATE_OFFSET))
 		for(turntimes;turntimes>0;turntimes--)
 			var/oldPW = pixel_w
 			var/oldPZ = pixel_z
