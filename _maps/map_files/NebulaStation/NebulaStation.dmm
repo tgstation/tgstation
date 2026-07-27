@@ -49202,7 +49202,6 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 6
 	},
-/obj/item/storage/photo_album/captain,
 /obj/item/camera,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/heads_quarters/captain)
@@ -107797,6 +107796,7 @@
 	dir = 1
 	},
 /obj/machinery/light/warm/directional/north,
+/obj/item/storage/photo_album/bar,
 /turf/open/floor/iron/dark/small,
 /area/station/service/bar/backroom)
 "pRK" = (

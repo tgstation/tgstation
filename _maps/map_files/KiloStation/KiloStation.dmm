@@ -537,7 +537,12 @@
 "agc" = (
 /obj/structure/table/wood,
 /obj/structure/cable,
-/obj/item/pen/fountain,
+/obj/item/pen/fountain{
+	pixel_x = 4
+	},
+/obj/item/storage/photo_album/chapel{
+	pixel_x = -16
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
@@ -12312,6 +12317,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/item/storage/photo_album/bar,
 /turf/open/floor/iron/dark,
 /area/station/service/bar/backroom)
 "dZk" = (
@@ -73657,7 +73663,7 @@
 /area/station/security/prison)
 "xkP" = (
 /obj/structure/table/wood,
-/obj/item/storage/photo_album{
+/obj/item/storage/photo_album/library{
 	pixel_x = -4;
 	pixel_y = 4
 	},
