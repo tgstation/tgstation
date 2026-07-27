@@ -36,8 +36,8 @@
 
 /datum/asset/simple/namespaced/escape_menu_font
 	assets = list(
-		"Pixellari.ttf" = file("interface/fonts/Pixellari.ttf"),
-		"Grand9K_Pixel.ttf" = file("interface/fonts/Grand9K_Pixel.ttf"),
+		"Pixellari.ttf" = file("interface/fonts/PixCyrillic.ttf"), // BANDASTATION EDIT: cyrillic font
+		"Grand9K_Pixel.ttf" = file("interface/fonts/Grand9K_Pixel_Rus.ttf"), // BANDASTATION EDIT: cyrillic font
 	)
 	parents = list(
 		"fonts.css" = file("tgui/packages/tgui-escape-menu/styles/fonts.css"),

@@ -66,15 +66,19 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 	client = null
 	return ..()
 
+// BANDASTATION EDIT START: Manual send update
 /datum/escape_menu/process(seconds_per_tick)
-	send_update(list(
-		"serverTime" = server_timestamp(format = "hh:mm:ss"),
+	var/list/data = list(
+		"serverTime" = current_server_time(),
 		"shiftTime" = (SSticker.round_start_time == 0) ? "Pre-Game" : round_timestamp(),
 		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
 		"admins" = build_admin_list(),
 		"players" = build_player_list(),
 		"ignoredOffline" = build_ignored_offline(),
-	))
+	)
+	data += build_ticket_state()
+	send_update(data)
+// BANDASTATION EDIT END: Manual send update
 
 /datum/escape_menu/proc/on_client_qdel()
 	SIGNAL_HANDLER
@@ -84,14 +88,13 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 	SIGNAL_HANDLER
 	send_update(list(
 		"canLeaveBody" = isliving(client?.mob),
+		"canOpen" = !isnewplayer(client?.mob), // BANDASTATION EDIT: Title screen owns lobby controls
 	))
 
 /datum/escape_menu/proc/on_verb_change(client/source, list/verbs_changed)
 	SIGNAL_HANDLER
 	if(/client/verb/adminhelp in verbs_changed)
-		send_update(list(
-			"canAdminHelp" = (/client/verb/adminhelp in client?.verbs),
-		))
+		send_update(build_ticket_state()) // BANDASTATION EDIT: Manual send update
 
 /datum/escape_menu/proc/on_station_name_changed()
 	SIGNAL_HANDLER
@@ -105,6 +108,31 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 		"shiftTime" = round_timestamp(),
 		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
 	))
+
+// BANDASTATION EDIT START: Escape menu
+
+/datum/escape_menu/proc/current_server_time()
+	return server_timestamp(format = "hh:mm:ss", ic_time = TRUE, twelve_hour_clock = client?.prefs?.read_preference(/datum/preference/toggle/twelve_hour)) // BANDASTATION EDIT - preserve old ESC menu time display
+
+/datum/escape_menu/proc/get_current_help_ticket()
+	return client?.persistent_client?.current_help_ticket // Ticket manager replaces client.current_ticket
+
+/datum/escape_menu/proc/can_open_admin_ticket()
+	return (/client/verb/adminhelp in client?.verbs) || !isnull(get_current_help_ticket()) // Ticket manager opens existing tickets through adminhelp()
+
+/datum/escape_menu/proc/build_ticket_state()
+	var/datum/help_ticket/current_help_ticket = get_current_help_ticket()
+	return list(
+		"canAdminHelp" = can_open_admin_ticket(),
+		"hasTicketNotification" = !isnull(current_help_ticket) && current_help_ticket.admin_replied,
+	)
+
+/datum/escape_menu/proc/open_admin_ticket()
+	if(!can_open_admin_ticket())
+		return
+	client?.adminhelp()
+
+// BANDASTATION EDIT END: Escape menu
 
 /datum/escape_menu/proc/send_init()
 	var/list/resources = list()
@@ -132,23 +160,26 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 
 	resources += list(list("id" = "changelog", "label" = "Change Log", "tooltip" = "See all changes to the server"))
 
-	window.send_message("init", list(
+	var/list/data = list( // BANDASTATION EDIT: Escape menu
 		"stationName" = station_name(),
 		"roundId" = GLOB.round_id || "Unset",
-		"serverTime" = server_timestamp(format = "hh:mm:ss"),
+		"serverTime" = current_server_time(), // BANDASTATION EDIT: Escape menu
 		"shiftTime" = (SSticker.round_start_time == 0) ? "Pre-Game" : round_timestamp(),
 		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
 		"mapName" = SSmapping.current_map?.return_map_name(webmap_included = TRUE) || "Loading...",
 		"canLeaveBody" = isliving(client?.mob),
-		"canAdminHelp" = (/client/verb/adminhelp in client?.verbs),
+		"canOpen" = !isnewplayer(client?.mob), // BANDASTATION EDIT: Title screen owns lobby controls
 		"canSeeNotes" = CONFIG_GET(flag/see_own_notes),
-		"hasTicketNotification" = !isnull(client?.current_ticket) && !client.current_ticket.player_replied,
 		"admins" = build_admin_list(),
 		"players" = build_player_list(),
 		"ignoredOffline" = build_ignored_offline(),
 		"resources" = resources,
 		"suicideIcon" = GLOB.escape_menu_suicide_icon_base64,
-	))
+	)
+	// BANDASTATION EDIT START: Escape menu
+	data += build_ticket_state()
+	window.send_message("init", data)
+	// BANDASTATION EDIT END: Escape menu
 
 /datum/escape_menu/proc/build_admin_list()
 	var/list/result = list()
@@ -198,10 +229,17 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 	var/action = payload["action"]
 	switch(action)
 		if("opened")
+		 	// BANDASTATION EDIT START: Title screen owns lobby controls
+			if(isnewplayer(client?.mob))
+				winset(client, SKIN_ESCAPE_MENU, list("is-visible" = "false"))
+				return TRUE
+			// BANDASTATION EDIT END: Title screen owns lobby controls
+
 			if(!version_warned && client.byond_build < 1680)
 				to_chat(client, span_warning("Your BYOND version is not up-to-date enough to render the escape menu, please update to 516.1680 or higher."))
 				version_warned = TRUE
 
+			send_update(build_ticket_state()) // BANDASTATION EDIT: Escape menu
 			START_PROCESSING(SSescape_menu, src)
 		if("closed")
 			STOP_PROCESSING(SSescape_menu, src)
@@ -214,11 +252,9 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 			client?.prefs.update_static_data(client?.mob)
 			client?.prefs.ui_interact(client?.mob)
 		if("create_ticket")
-			if(!(/client/verb/adminhelp in client?.verbs))
-				return TRUE
-			client?.adminhelp()
+			open_admin_ticket() // BANDASTATION EDIT: Escape menu
 		if("view_ticket")
-			client?.view_latest_ticket()
+			open_admin_ticket() // BANDASTATION EDIT: Escape menu
 		if("pray")
 			var/datum/keybinding/client/communication/pray/pray_verb = GLOB.keybindings_by_name[/datum/keybinding/client/communication/pray::name]
 			pray_verb.down(client)
