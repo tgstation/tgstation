@@ -28,4 +28,5 @@
 	)
 	time = 0
 	category = CAT_ENTERTAINMENT
+	crafting_flags = CRAFT_SKIP_MATERIALS_PARITY
 #endif
