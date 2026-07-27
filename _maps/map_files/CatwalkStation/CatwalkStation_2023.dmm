@@ -42239,14 +42239,14 @@
 "lkn" = (
 /obj/machinery/flasher/directional/west,
 /obj/structure/table/wood/fancy/black,
-/obj/item/ai_module/law/law/supplied/freeform{
+/obj/item/ai_module/law/supplied/freeform{
 	pixel_y = -3
 	},
-/obj/item/ai_module/law/law/supplied/freeform{
+/obj/item/ai_module/law/supplied/freeform{
 	pixel_x = -2;
 	pixel_y = 1
 	},
-/obj/item/ai_module/law/law/supplied/freeform{
+/obj/item/ai_module/law/supplied/freeform{
 	pixel_y = 4;
 	pixel_x = 2
 	},
@@ -63925,8 +63925,8 @@
 "qXQ" = (
 /obj/effect/decal/cleanable/generic,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/ai_module/law/law/supplied/protect_station,
-/obj/item/ai_module/law/law/supplied/quarantine{
+/obj/item/ai_module/law/supplied/protect_station,
+/obj/item/ai_module/law/supplied/quarantine{
 	pixel_y = 3;
 	pixel_x = 2
 	},
@@ -75066,7 +75066,7 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/item/ai_module/law/law/core/freeformcore{
+/obj/item/ai_module/law/core/freeformcore{
 	pixel_x = 4
 	},
 /turf/open/floor/iron/dark/smooth_large,

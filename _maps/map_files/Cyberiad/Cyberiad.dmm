@@ -94002,12 +94002,8 @@
 "wYY" = (
 /obj/structure/table/wood/fancy/blue,
 /obj/item/ai_module/law/supplied/freeform,
-/obj/item/ai_module/law/reset,
 /obj/machinery/light/directional/west,
 /obj/machinery/status_display/ai/directional/west,
-/obj/item/ai_module/law/reset/purge{
-	pixel_y = 11
-	},
 /turf/open/floor/iron/dark,
 /area/station/ai/upload/chamber)
 "wZf" = (

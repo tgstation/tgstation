@@ -3120,7 +3120,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ai_module/law/law/malf,
+/obj/item/ai_module/combat,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "Ah" = (

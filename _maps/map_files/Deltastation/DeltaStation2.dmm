@@ -67860,16 +67860,16 @@
 /obj/structure/table/reinforced,
 /obj/item/radio/intercom/directional/west,
 /obj/machinery/status_display/evac/directional/south,
-/obj/item/ai_module/law/law/supplied/freeform{
+/obj/item/ai_module/law/supplied/freeform{
 	pixel_y = -1;
 	pixel_x = -1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/ai_module/law/law/supplied/freeform{
+/obj/item/ai_module/law/supplied/freeform{
 	pixel_x = 2;
 	pixel_y = 5
 	},
-/obj/item/ai_module/law/law/supplied/freeform{
+/obj/item/ai_module/law/supplied/freeform{
 	pixel_y = 3
 	},
 /turf/open/floor/iron/dark,
