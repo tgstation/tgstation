@@ -10,7 +10,8 @@
 
 /obj/effect/blessing/Initialize(mapload)
 	. = ..()
-	ASSERT(mapload, "/obj/effect/blessing spawned outside of mapload! Use blessed_turf element instead!")
+	if (!isturf(loc))
+		return INITIALIZE_HINT_QDEL
 	var/turf/our_turf = loc
 	our_turf.AddElement(/datum/element/blessed_turf, invisible)
 	return INITIALIZE_HINT_QDEL
