@@ -836,6 +836,8 @@
       do_after()
   - code_imp: 50 files have been converted from attackby() to item_interaction
 2026-07-27:
+  Aliceee2ch:
+  - image: Added more tools to engi toolbelt overlays.
   Melbert:
   - balance: Heretics no longer need a focus to cast spells.
   - balance: (Almost) all heretic spells are now limited to a number of charges. Once
@@ -869,3 +871,7 @@
   - balance: Shadow Cloak is no longer an innate heretic knowledge, but is guaranteed
       to show up for free in the first draft pool (in addition to the three other
       options).
+  lelandkemble:
+  - bugfix: fixed a runtime when deconstructing a bookshelf
+  - bugfix: you can now change your mind at the very last second about making a modsuit
+  - code_imp: 30 files have been converted from attackby() to item_interaction()
