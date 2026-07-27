@@ -9239,11 +9239,6 @@
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
-"Wr" = (
-/obj/effect/mapping_helpers/blessing/invisible,
-/obj/effect/mapping_helpers/blessing/invisible,
-/turf/open/floor/plating,
-/area/awaymission/caves/heretic_laboratory_clean)
 "Ws" = (
 /obj/structure/fluff/beach_umbrella/science,
 /turf/open/misc/beach/sand,
@@ -23476,7 +23471,7 @@ vk
 vk
 vk
 vk
-Wr
+vk
 xl
 xl
 nd
