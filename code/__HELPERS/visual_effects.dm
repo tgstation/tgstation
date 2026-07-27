@@ -105,6 +105,14 @@
 		var/g = 180
 		var/b = 225
 		if(color_override)
+			var/default_color = rgb(125, 180, 225)
+			var/override_hsv = rgb2hsv(color_override)
+			var/default_hsv = rgb2hsv(default_color)
+
+			default_hsv[1] = override_hsv[1]
+
+			color_override = hsv2rgb(default_hsv)
+
 			var/list/rgb_list = rgb2num(color_override)
 			r = rgb_list[1]
 			g = rgb_list[2]
