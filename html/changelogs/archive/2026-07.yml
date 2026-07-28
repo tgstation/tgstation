@@ -886,6 +886,10 @@
   - bugfix: ByondUi/TGUI Map elements will no longer layout incorrectly if you refresh
       the page in some circumstances
 2026-07-28:
+  ArcaneMusic:
+  - bugfix: Selling organs in cargo once again works properly. As a reminder, Normal
+      human organs sell for 20 credits. The organs of a roundstart human are worth
+      10x as much, however.
   Melbert:
   - code_imp: Slightly changed the logic for blindness and unconscious hud effects,
       report any oddities
