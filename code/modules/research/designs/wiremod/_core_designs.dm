@@ -33,7 +33,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/component
-	name = "Component ( NULL ENTRY )"
+	abstract_type = /datum/design/component
 	desc = "A component that goes into an integrated circuit."
 	build_type = COMPONENT_PRINTER
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)

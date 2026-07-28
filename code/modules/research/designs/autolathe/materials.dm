@@ -1,4 +1,5 @@
 /datum/design/material
+	abstract_type = /datum/design/material
 	build_type = AUTOLATHE
 	category = list(
 		RND_CATEGORY_INITIAL,

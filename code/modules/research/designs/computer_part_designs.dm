@@ -2,6 +2,9 @@
 ///////////Computer Parts///////////////
 ////////////////////////////////////////
 // Data disks
+/datum/design/portabledrive
+	abstract_type = /datum/design/portabledrive
+
 /datum/design/portabledrive/basic
 	name = "Data Disk"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE

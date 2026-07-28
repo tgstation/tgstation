@@ -1,4 +1,5 @@
 /datum/design/component/utility
+	abstract_type = /datum/design/component/utility
 	category = list(
 		RND_CATEGORY_CIRCUITRY_COMPS + RND_SUBCATEGORY_CIRCUITRY_UTILITY_COMPONENTS
 	)

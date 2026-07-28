@@ -338,6 +338,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY //Honestly should have a bridge techfab for this sometime.
 
 /datum/design/board/shuttle
+	abstract_type = /datum/design/board/shuttle
 	build_type = IMPRINTER
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING

@@ -1932,6 +1932,7 @@
 //MODsuit modules
 
 /datum/design/module
+	abstract_type = /datum/design/module
 	name = "MOD Module"
 	build_type = MECHFAB
 	construction_time = 1 SECONDS

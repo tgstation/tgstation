@@ -1,4 +1,5 @@
 /datum/design/component/bci
+	abstract_type = /datum/design/component/bci
 	category = list(
 		RND_CATEGORY_CIRCUITRY_COMPS + RND_SUBCATEGORY_CIRCUITRY_BCI_COMPONENTS
 	)

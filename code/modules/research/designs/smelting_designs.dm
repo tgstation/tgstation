@@ -1,6 +1,7 @@
 ///////SMELTABLE ALLOYS///////
 
 /datum/design/alloy
+	abstract_type = /datum/design/alloy
 	build_type = SMELTER | PROTOLATHE | AWAY_LATHE
 	category = list(
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS

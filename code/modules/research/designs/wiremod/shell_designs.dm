@@ -1,4 +1,5 @@
 /datum/design/wiremod_shell
+	abstract_type = /datum/design/wiremod_shell
 	build_type = COMPONENT_PRINTER
 	category = list(
 		RND_CATEGORY_CIRCUITRY_SHELLS

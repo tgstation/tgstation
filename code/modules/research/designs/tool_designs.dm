@@ -102,6 +102,9 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/rcd_upgrade
+	abstract_type = /datum/design/rcd_upgrade
+
 /datum/design/rcd_upgrade/frames
 	name = "RCD frames designs upgrade"
 	desc = "Adds computer and machine frame designs to the RCD."
@@ -176,6 +179,9 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/rpd_upgrade
+	abstract_type = /datum/design/rpd_upgrade
 
 /datum/design/rpd_upgrade/unwrench
 	name = "RPD unwrenching upgrade"

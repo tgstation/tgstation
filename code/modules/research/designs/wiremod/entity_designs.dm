@@ -1,4 +1,5 @@
 /datum/design/component/entity
+	abstract_type = /datum/design/component/entity
 	category = list(
 		RND_CATEGORY_CIRCUITRY_COMPS + RND_SUBCATEGORY_CIRCUITRY_ENTITY_COMPONENTS
 	)

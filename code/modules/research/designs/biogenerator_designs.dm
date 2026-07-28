@@ -3,6 +3,7 @@
 ///////////////////////////////////
 
 /datum/design/biogen
+	abstract_type = /datum/design/biogen
 	build_type = BIOGENERATOR
 	// biomass doesn't have a sheet type, and the biogenerator isn't meant to churn out unprocessed biomass anyway.
 	inherit_materials = DESIGN_DONT_INHERIT_MATS
