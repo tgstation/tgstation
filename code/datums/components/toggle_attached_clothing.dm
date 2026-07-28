@@ -152,6 +152,8 @@
 /// Display deployed if worn in an outfit
 /datum/component/toggle_attached_clothing/proc/on_parent_equipped_outfit(obj/item/clothing/source, mob/equipper, visuals_only, slot)
 	SIGNAL_HANDLER
+	if(istype(source, /obj/item/clothing/suit/hooded/wintercoat))
+		return
 	create_deployable()
 	toggle_deployable()
 
