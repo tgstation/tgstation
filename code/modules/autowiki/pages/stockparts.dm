@@ -53,7 +53,7 @@
 /datum/autowiki/stock_parts/proc/find_research(datum/design/recipe)
 	for(var/datum/techweb_node/node_type as anything in valid_subtypesof(/datum/techweb_node))
 		var/datum/techweb_node/node = new node_type()
-		if(node.unlocked_designs[recipe.type])
+		if(LAZYACCESS(node.unlocked_designs, recipe.type))
 			return node
 
 /datum/autowiki/stock_parts/proc/create_icon(obj/item/stock_parts/stock_part)
