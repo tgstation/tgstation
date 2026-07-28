@@ -1,0 +1,5 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - balance: "Pirates prioritize spawning their leaders"
+  - admin: "Admins can configure Heavy Pirates"
