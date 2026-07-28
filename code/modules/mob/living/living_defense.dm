@@ -35,6 +35,10 @@
 /mob/living/proc/get_eye_protection()
 	return 0
 
+//this returns a number is subtracted from the severity of incoming emps against this mob.
+/mob/living/proc/get_emp_protection()
+	return emp_protection
+
 ///A easy to use proc to apply both organ damage and temporary deafness at once, so you don't have to get the ears everytime.
 /mob/living/proc/sound_damage(damage, deafen)
 	return
@@ -615,6 +619,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
+	severity += get_emp_protection()
 	for(var/obj/inside in contents)
 		inside.emp_act(severity)
 

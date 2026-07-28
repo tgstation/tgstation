@@ -758,3 +758,8 @@
 	. = ..()
 	for (var/obj/item/clothing/clothing in get_equipped_items())
 		. += clothing.flash_protect
+
+/mob/living/carbon/human/get_emp_protection()
+	. = ..()
+	for(var/obj/item/clothing/each_clothing in get_equipped_items())
+		. += each_clothing.emp_protection
