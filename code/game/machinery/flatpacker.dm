@@ -199,11 +199,9 @@
 		if(as_part.tier > print_tier)
 			print_tier = as_part.tier
 
-	var/list/mat_list
+	var/list/mat_list = SSresearch.item_to_design[comp_type]?[1].materials
 	var/obj/item/null_comp
-	if(!isnull(SSresearch.item_to_design[comp_type]))
-		mat_list = SSresearch.item_to_design[comp_type][1].materials
-	else
+	if(isnull(SSresearch.item_to_design[comp_type]))
 		var/datum/stock_part/part = GLOB.stock_part_datums_per_object[comp_type]
 		if(part)
 			mat_list = part.physical_object_reference.custom_materials

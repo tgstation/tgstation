@@ -54,7 +54,7 @@ export type Design = {
   /**
    * A reference to the design's design datum.
    */
-  id: string;
+  path: string;
 
   /**
    * The categories the design should be present in. Subcategories are
@@ -123,9 +123,9 @@ export type FabricatorData = {
     jobId: number;
 
     /**
-     * The design ID being printed. Available in `super.designs`.
+     * The design path being printed. Available in `super.designs`.
      */
-    designId: string;
+    designPath: string;
 
     /**
      * If `true`, this design is currently being fabricated, and `timeLeft`

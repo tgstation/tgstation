@@ -1,8 +1,8 @@
 /datum/techweb_node/office_equip
-	starting_node = TRUE
 	display_name = "Office Equipment"
 	description = "Nanotrasen's finest in ergonomic office tech, ensuring station admin stays productive and compliant with corporate policies — because even in space, paperwork never stops."
-	design_ids = list(
+	node_flags = parent_type::node_flags | TECHWEB_NODE_STARTER
+	unlocked_designs = list(
 		/datum/design/board/fax,
 		/datum/design/sec_pen,
 		/datum/design/handlabeler,
@@ -44,8 +44,8 @@
 /datum/techweb_node/sanitation
 	display_name = "Advanced Sanitation Technology"
 	description = "Nanotrasen's latest in janitorial tech, making sure the station stays spotless and bear-free."
-	prereq_ids = list(/datum/techweb_node/office_equip)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/office_equip)
+	unlocked_designs = list(
 		/datum/design/advmop,
 		/datum/design/light_replacer,
 		/datum/design/spraybottle,
@@ -62,8 +62,8 @@
 /datum/techweb_node/consoles
 	display_name = "Civilian Consoles"
 	description = "User-friendly consoles for non-technical crew members, enhancing communication and access to essential station information."
-	prereq_ids = list(/datum/techweb_node/office_equip)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/office_equip)
+	unlocked_designs = list(
 		/datum/design/board/comconsole,
 		/datum/design/board/announcement_system,
 		/datum/design/board/cargo,
@@ -94,16 +94,16 @@
 	announce_channels = list(RADIO_CHANNEL_SERVICE)
 
 /datum/techweb_node/consoles/New()
+	. = ..()
 	var/has_monastery = CHECK_MAP_JOB_CHANGE(JOB_CHAPLAIN, "has_monastery")
 	if(has_monastery)
-		design_ids += /datum/design/telescreen_monastery
-	return ..()
+		unlocked_designs += /datum/design/telescreen_monastery
 
 /datum/techweb_node/gaming
 	display_name = "Gaming"
 	description = "For the slackers on the station."
-	prereq_ids = list(/datum/techweb_node/consoles)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/consoles)
+	unlocked_designs = list(
 		/datum/design/board/arcade_battle,
 		/datum/design/board/orion_trail,
 		/datum/design/board/slot_machine,
@@ -113,10 +113,10 @@
 
 // Kitchen root node
 /datum/techweb_node/cafeteria_equip
-	starting_node = TRUE
 	display_name = "Cafeteria Equipment"
 	description = "When standard-issue tubed food no longer satisfies the station crew's appetite..."
-	design_ids = list(
+	node_flags = parent_type::node_flags | TECHWEB_NODE_STARTER
+	unlocked_designs = list(
 		/datum/design/board/griddle,
 		/datum/design/board/microwave,
 		/datum/design/bowl,
@@ -144,8 +144,8 @@
 /datum/techweb_node/food_proc
 	display_name = "Food Processing"
 	description = "Top-tier kitchen appliances from Nanotrasen, designed to keep the crew well-fed and happy."
-	prereq_ids = list(/datum/techweb_node/cafeteria_equip)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/cafeteria_equip)
+	unlocked_designs = list(
 		/datum/design/board/deepfryer,
 		/datum/design/board/oven,
 		/datum/design/board/stove,
@@ -167,10 +167,10 @@
 
 // Fishing root node
 /datum/techweb_node/fishing_equip
-	starting_node = TRUE
 	display_name = "Fishing Equipment"
 	description = "Basic fishing gear tailored for space station environments, perfect for extraterrestrial aquatic pursuits."
-	design_ids = list(
+	node_flags = parent_type::node_flags | TECHWEB_NODE_STARTER
+	unlocked_designs = list(
 		/datum/design/board/fishing_portal_generator,
 		/datum/design/fishing_rod_basic,
 		/datum/design/fish_case,
@@ -180,8 +180,8 @@
 /datum/techweb_node/fishing_equip_adv
 	display_name = "Advanced Fishing Tools"
 	description = "Continuing advancements in fishing technology, incorporating cutting-edge features in space fishing operations. Just don't try this on space carps..."
-	prereq_ids = list(/datum/techweb_node/fishing_equip)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/fishing_equip)
+	unlocked_designs = list(
 		/datum/design/fishing_rod_tech,
 		/datum/design/fishing_gloves,
 		/datum/design/module/fishing_glove,
@@ -197,8 +197,8 @@
 /datum/techweb_node/marine_util
 	display_name = "Marine Utility"
 	description = "Fish are nice to look at and all, but they can be put to use."
-	prereq_ids = list(/datum/techweb_node/fishing_equip_adv)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/fishing_equip_adv)
+	unlocked_designs = list(
 		/datum/design/bioelec_gen,
 		/datum/design/bluespace_reel,
 		/datum/design/fish_genegun,
@@ -210,8 +210,8 @@
 /datum/techweb_node/fishing_anomalous
 	display_name = "Anomalous Fishing"
 	description = "For the truly adventurous fisher, these experimental tools could augment your catches in unpredictable ways."
-	prereq_ids = list(/datum/techweb_node/fishing_equip_adv, /datum/techweb_node/anomaly_research)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/fishing_equip_adv, /datum/techweb_node/anomaly_research)
+	unlocked_designs = list(
 		/datum/design/anomalous_fishing_hook,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)

@@ -592,6 +592,7 @@
 /datum/design/telescreen_monastery/New()
 	var/has_monastery = CHECK_MAP_JOB_CHANGE(JOB_CHAPLAIN, "has_monastery")
 	if(!has_monastery)
+		qdel(src)
 	return ..()
 
 /datum/design/entertainment_radio
@@ -636,4 +637,3 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
-

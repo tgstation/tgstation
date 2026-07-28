@@ -237,12 +237,12 @@ function MaterialSection(props: MaterialSectionProps) {
             onRelease={(amount) => {
               if (material.category === 'material') {
                 act('Release', {
-                  id: material.id,
+                  material_ref: material.id,
                   sheets: amount,
                 });
               } else {
                 act('Smelt', {
-                  id: material.id,
+                  path: material.id,
                   sheets: amount,
                 });
               }

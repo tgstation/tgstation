@@ -1,8 +1,8 @@
 /datum/techweb_node/medbay_equip
-	starting_node = TRUE
 	display_name = "Medbay Equipment"
 	description = "Essential medical tools to patch you up while medbay is still intact."
-	design_ids = list(
+	node_flags = parent_type::node_flags | TECHWEB_NODE_STARTER
+	unlocked_designs = list(
 		/datum/design/beaker,
 		/datum/design/blood_filter,
 		/datum/design/blood_pack,
@@ -45,8 +45,8 @@
 /datum/techweb_node/chem_synthesis
 	display_name = "Chemical Synthesis"
 	description = "Synthesizing complex chemicals from electricity and thin air... Don't ask how..."
-	prereq_ids = list(/datum/techweb_node/medbay_equip)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/medbay_equip)
+	unlocked_designs = list(
 		/datum/design/medical_spray_bottle,
 		/datum/design/inhaler,
 		/datum/design/inhaler_canister,
@@ -70,8 +70,8 @@
 /datum/techweb_node/medbay_equip_adv
 	display_name = "Advanced Medbay Equipment"
 	description = "State-of-the-art medical gear for keeping the crew in one piece — mostly."
-	prereq_ids = list(/datum/techweb_node/chem_synthesis)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/chem_synthesis)
+	unlocked_designs = list(
 		/datum/design/board/chem_mass_spec,
 		/datum/design/crewpinpointer,
 		/datum/design/defibrillator_mount_charging,
@@ -91,8 +91,8 @@
 /datum/techweb_node/cryostasis
 	display_name = "Cryostasis"
 	description = "The result of clown accidentally drinking a chemical, now repurposed for safely preserving crew members in suspended animation."
-	prereq_ids = list(/datum/techweb_node/medbay_equip_adv, /datum/techweb_node/fusion)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/medbay_equip_adv, /datum/techweb_node/fusion)
+	unlocked_designs = list(
 		/datum/design/cryo_grenade,
 		/datum/design/board/cryotube,
 		/datum/design/mech_sleeper,

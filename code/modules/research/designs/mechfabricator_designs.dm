@@ -1535,7 +1535,6 @@
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
 	)
-	search_metadata = "boris"
 
 /datum/design/borg_upgrade_rped
 	name = "Rapid Part Exchange Device Expanded"

@@ -1,8 +1,8 @@
 /datum/techweb_node/robotics
-	starting_node = TRUE
 	display_name = "Robotics"
 	description = "Programmable machines that make our lives lazier."
-	design_ids = list(
+	node_flags = parent_type::node_flags | TECHWEB_NODE_STARTER
+	unlocked_designs = list(
 		/datum/design/board/navbeacon,
 		/datum/design/board/mechfab,
 		/datum/design/paicard,
@@ -11,8 +11,8 @@
 /datum/techweb_node/exodrone
 	display_name = "Exploration Drones"
 	description = "Adapted arcade machines to covertly harness gamers' skills in controlling real drones for practical purposes."
-	prereq_ids = list(/datum/techweb_node/robotics)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/robotics)
+	unlocked_designs = list(
 		/datum/design/board/exodrone_console,
 		/datum/design/board/exodrone_launcher,
 		/datum/design/board/exoscanner,
@@ -24,8 +24,8 @@
 /datum/techweb_node/ai
 	display_name = "Artificial Intelligence"
 	description = "Exploration of AI systems, more intelligent than the entire crew put together."
-	prereq_ids = list(/datum/techweb_node/robotics)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/robotics)
+	unlocked_designs = list(
 		/datum/design/board/aicore,
 		/datum/design/board/aifixer,
 		/datum/design/board/ai_law_rack/broadcaster,
@@ -53,7 +53,7 @@
 /datum/techweb_node/ai/New()
 	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI))
-		design_ids -= list(
+		unlocked_designs -= list(
 			/datum/design/board/aicore,
 			/datum/design/board/aifixer,
 			/datum/design/boris_ai_controller,
@@ -66,8 +66,8 @@
 /datum/techweb_node/ai_laws
 	display_name = "Advanced AI Upgrades"
 	description = "Delving into sophisticated AI directives, with hopes that they won't lead to humanity's extinction."
-	prereq_ids = list(/datum/techweb_node/ai)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/ai)
+	unlocked_designs = list(
 		/datum/design/ai_power_transfer,
 		/datum/design/board/antimov_module,
 		/datum/design/board/asimovpp_module,

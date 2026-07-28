@@ -102,7 +102,6 @@
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY,
 	)
-	autolathe_exportable = FALSE
 
 /datum/design/receiver
 	name = "Modular Receiver"

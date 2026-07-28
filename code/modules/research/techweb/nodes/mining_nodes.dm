@@ -1,8 +1,8 @@
 /datum/techweb_node/material_processing
-	starting_node = TRUE
 	display_name = "Material Processing"
 	description = "Refinement and processing of alloys and ores to enhance their utility and value."
-	design_ids = list(
+	node_flags = parent_type::node_flags | TECHWEB_NODE_STARTER
+	unlocked_designs = list(
 		/datum/design/pickaxe,
 		/datum/design/shovel,
 		/datum/design/conveyor_switch,
@@ -24,8 +24,8 @@
 /datum/techweb_node/mining
 	display_name = "Mining Technology"
 	description = "Development of tools meant to optimize mining operations and resource extraction."
-	prereq_ids = list(/datum/techweb_node/material_processing)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/material_processing)
+	unlocked_designs = list(
 		/datum/design/cargo_express,
 		/datum/design/board/brm,
 		/datum/design/board/smelter,
@@ -51,8 +51,8 @@
 /datum/techweb_node/low_pressure_excavation
 	display_name = "Low-Pressure Excavation"
 	description = "Research of Proto-Kinetic Accelerators (PKAs), pneumatic guns renowned for their exceptional performance in low-pressure environments."
-	prereq_ids = list(/datum/techweb_node/mining, /datum/techweb_node/gas_compression)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/mining, /datum/techweb_node/gas_compression)
+	unlocked_designs = list(
 		/datum/design/damage_mod,
 		/datum/design/range_mod,
 		/datum/design/cooldown_mod,
@@ -69,8 +69,8 @@
 /datum/techweb_node/plasma_mining
 	display_name = "Plasma Beam Mining"
 	description = "Engineers' plasma welders have proven highly effective in mining operations. This led to the development of a mech-mounted variant and an enhanced handheld cutter for miners."
-	prereq_ids = list(/datum/techweb_node/low_pressure_excavation, /datum/techweb_node/plasma_control)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/low_pressure_excavation, /datum/techweb_node/plasma_control)
+	unlocked_designs = list(
 		/datum/design/mech_plasma_cutter,
 		/datum/design/plasmacutter_adv,
 	)
@@ -80,8 +80,8 @@
 /datum/techweb_node/bitrunning
 	display_name = "Bitrunning Technology"
 	description = "Bluespace technology has led to the development of quantum-scale computing, which unlocks the means to materialize atomic structures while executing advanced programs."
-	prereq_ids = list(/datum/techweb_node/gaming, /datum/techweb_node/applied_bluespace)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/gaming, /datum/techweb_node/applied_bluespace)
+	unlocked_designs = list(
 		/datum/design/board/byteforge,
 		/datum/design/board/quantum_console,
 		/datum/design/board/netpod,
@@ -92,8 +92,8 @@
 /datum/techweb_node/mining_adv
 	display_name = "Advanced Mining Technology"
 	description = "High-level mining equipment, pushing the boundaries of efficiency and effectiveness in resource extraction."
-	prereq_ids = list(/datum/techweb_node/plasma_mining)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/plasma_mining)
+	unlocked_designs = list(
 		/datum/design/jackhammer,
 		/datum/design/drill_diamond,
 		/datum/design/mech_diamond_drill,

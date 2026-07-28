@@ -1,8 +1,9 @@
 /datum/techweb_node/syndicate_basic
 	display_name = "Illegal Technology"
 	description = "Dangerous research used to create dangerous objects."
-	prereq_ids = list(/datum/techweb_node/exp_tools, /datum/techweb_node/exotic_ammo)
-	design_ids = list(
+	node_flags = parent_type::node_flags | TECHWEB_NODE_HIDDEN
+	prerequisite_nodes = list(/datum/techweb_node/exp_tools, /datum/techweb_node/exotic_ammo)
+	unlocked_designs = list(
 		/datum/design/board/advanced_camera,
 		/datum/design/ai_cam_upgrade,
 		/datum/design/borg_syndicate_module,
@@ -16,7 +17,6 @@
 		/datum/design/super_pointy_tape,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
-	hidden = TRUE
 
 /datum/techweb_node/syndicate_basic/New() //Crappy way of making syndicate gear decon supported until there's another way.
 	. = ..()
@@ -37,8 +37,8 @@
 /datum/techweb_node/unregulated_bluespace
 	display_name = "Unregulated Bluespace Research"
 	description = "Bluespace technology using unstable or unbalanced procedures, prone to damaging the fabric of bluespace. Outlawed by galactic conventions."
-	prereq_ids = list(/datum/techweb_node/parts_bluespace, /datum/techweb_node/syndicate_basic)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/parts_bluespace, /datum/techweb_node/syndicate_basic)
+	unlocked_designs = list(
 		/datum/design/desynchronizer,
 		/datum/design/beamrifle,
 	)

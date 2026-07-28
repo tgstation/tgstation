@@ -8,7 +8,6 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE //Redundant, there's already an autolathe version.
 
 /datum/design/c38_trac
 	name = "Speed Loader (.38 TRAC) (Less Lethal)"
@@ -208,7 +207,6 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE //Redundant
 
 /datum/design/beanbag_slug/sec
 	desc = "Beanbag slug shotgun shells. Fires a single slug (a beanbag). Less-than-lethal."
@@ -217,7 +215,6 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
 
 /datum/design/shotgun_dart/sec
 	desc = "Dart shotgun shells. Fires a single projectile (a dart). Can be filled with chemicals, \
@@ -227,7 +224,6 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
 
 /datum/design/incendiary_slug/sec
 	desc = "Dart shotgun shells. Fires a single slug. Ignites a target upon hit, \
@@ -237,7 +233,6 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
 
 /datum/design/mag_autorifle
 	name = "WT-550 Autorifle Magazine (4.6x30mm) (Lethal)"
@@ -307,7 +302,6 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
 
 /datum/design/nuclear_gun
 	name = "Advanced Energy Gun Part Kit (Lethal/Nonlethal)"
@@ -319,7 +313,6 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
 
 /datum/design/tele_shield
 	name = "Telescopic Riot Shield"
@@ -331,7 +324,6 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_MELEE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
 
 /datum/design/ballistic_shield
 	name = "Ballistic Shield"
@@ -343,7 +335,6 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_MELEE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
 
 /datum/design/beamrifle
 	name = "Event Horizon Anti-Existential Beam Rifle Part Kit (DOOMSDAY DEVICE)"
@@ -355,7 +346,6 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
 
 /datum/design/rapidsyringe
 	name = "Rapid Syringe Gun"
@@ -378,7 +368,6 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
 
 /datum/design/flora_gun
 	name = "Floral Somatoray"
@@ -445,7 +434,6 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
 
 /datum/design/ioncarbine
 	name = "Ion Carbine Part Kit (Nonlethal/Highly Destructive/Lethal (Silicons))"
@@ -457,7 +445,6 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
 
 /datum/design/wormhole_projector
 	name = "Bluespace Wormhole Projector"
@@ -571,7 +558,6 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
 
 /datum/design/cleric_mace
 	name = "Cleric Mace"

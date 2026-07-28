@@ -1,8 +1,8 @@
 /datum/techweb_node/atmos
-	starting_node = TRUE
 	display_name = "Atmospherics"
 	description = "Maintaining station air and related life support systems."
-	design_ids = list(
+	node_flags = parent_type::node_flags | TECHWEB_NODE_STARTER
+	unlocked_designs = list(
 		/datum/design/board/atmos_control,
 		/datum/design/board/atmosalerts,
 		/datum/design/board/thermomachine,
@@ -24,8 +24,8 @@
 /datum/techweb_node/gas_compression
 	display_name = "Gas Compression"
 	description = "Highly pressurized gases hold potential for unlocking immense energy capabilities."
-	prereq_ids = list(/datum/techweb_node/atmos)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/atmos)
+	unlocked_designs = list(
 		/datum/design/board/tank_compressor,
 		/datum/design/board/pump,
 		/datum/design/emergency_oxygen,
@@ -53,8 +53,8 @@
 /datum/techweb_node/plasma_control
 	display_name = "Controlled Plasma"
 	description = "Experiments with high-pressure gases and electricity resulting in crystallization and controlled plasma reactions."
-	prereq_ids = list(/datum/techweb_node/gas_compression, /datum/techweb_node/energy_manipulation)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/gas_compression, /datum/techweb_node/energy_manipulation)
+	unlocked_designs = list(
 		/datum/design/board/electrolyzer,
 		/datum/design/board/pipe_scrubber,
 		/datum/design/board/pacman,
@@ -69,8 +69,8 @@
 /datum/techweb_node/fusion
 	display_name = "Fusion"
 	description = "Investigating fusion reactor technology to achieve sustainable and efficient energy production through controlled plasma reactions involving noble gases."
-	prereq_ids = list(/datum/techweb_node/plasma_control)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/plasma_control)
+	unlocked_designs = list(
 		/datum/design/board/HFR_core,
 		/datum/design/board/HFR_corner,
 		/datum/design/board/HFR_fuel_input,
@@ -90,8 +90,8 @@
 /datum/techweb_node/exp_tools
 	display_name = "Experimental Tools"
 	description = "Enhances the functionality and versatility of station tools."
-	prereq_ids = list(/datum/techweb_node/fusion)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/fusion)
+	unlocked_designs = list(
 		/datum/design/board/flatpacker,
 		/datum/design/handdrill,
 		/datum/design/exwelder,
@@ -111,8 +111,8 @@
 /datum/techweb_node/rcd_upgrade
 	display_name = "Rapid Construction Device Upgrades"
 	description = "New designs and enhancements for RCD and RPD."
-	prereq_ids = list(/datum/techweb_node/exp_tools, /datum/techweb_node/parts_bluespace)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/exp_tools, /datum/techweb_node/parts_bluespace)
+	unlocked_designs = list(
 		/datum/design/rcd_upgrade/silo_link,
 		/datum/design/rcd_upgrade/anti_interrupt,
 		/datum/design/rcd_upgrade/cooling,

@@ -1,9 +1,9 @@
 /datum/techweb_node/augmentation
-	starting_node = TRUE
 	display_name = "Augmentation"
 	description = "For those who prefer shiny metal over squishy flesh."
-	prereq_ids = list(/datum/techweb_node/robotics)
-	design_ids = list(
+	node_flags = parent_type::node_flags | TECHWEB_NODE_STARTER
+	prerequisite_nodes = list(/datum/techweb_node/robotics)
+	unlocked_designs = list(
 		/datum/design/borg_chest,
 		/datum/design/borg_head,
 		/datum/design/borg_l_arm,
@@ -27,8 +27,8 @@
 /datum/techweb_node/cybernetics
 	display_name = "Cybernetics"
 	description = "Sapient robots with preloaded tool modules and programmable laws."
-	prereq_ids = list(/datum/techweb_node/augmentation)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/augmentation)
+	unlocked_designs = list(
 		/datum/design/board/robocontrol,
 		/datum/design/board/cyborgrecharger,
 		/datum/design/posibrain,
@@ -47,8 +47,8 @@
 /datum/techweb_node/borg_service
 	display_name = "Service Cyborg Upgrades"
 	description = "Let them do the cookin' by the book."
-	prereq_ids = list(/datum/techweb_node/cybernetics)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/cybernetics)
+	unlocked_designs = list(
 		/datum/design/borg_upgrade_rolling_table,
 		/datum/design/borg_upgrade_condiment_synthesizer,
 		/datum/design/borg_upgrade_silicon_knife,
@@ -63,8 +63,8 @@
 /datum/techweb_node/borg_mining
 	display_name = "Mining Cyborg Upgrades"
 	description = "To mine places too dangerous for humans."
-	prereq_ids = list(/datum/techweb_node/cybernetics)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/cybernetics)
+	unlocked_designs = list(
 		/datum/design/borg_upgrade_lavaproof,
 		/datum/design/borg_upgrade_holding,
 		/datum/design/borg_upgrade_diamonddrill,
@@ -75,8 +75,8 @@
 /datum/techweb_node/borg_medical
 	display_name = "Medical Cyborg Upgrades"
 	description = "Let them follow Asimov's First Law."
-	prereq_ids = list(/datum/techweb_node/borg_service, /datum/techweb_node/surgery_adv)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/borg_service, /datum/techweb_node/surgery_adv)
+	unlocked_designs = list(
 		/datum/design/borg_upgrade_pinpointer,
 		/datum/design/borg_upgrade_beaker_app,
 		/datum/design/borg_upgrade_defibrillator,
@@ -92,8 +92,8 @@
 /datum/techweb_node/borg_utility
 	display_name = "Utility Cyborg Upgrades"
 	description = "Let them wipe our floors for us."
-	prereq_ids = list(/datum/techweb_node/borg_service, /datum/techweb_node/sanitation)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/borg_service, /datum/techweb_node/sanitation)
+	unlocked_designs = list(
 		/datum/design/borg_upgrade_advancedmop,
 		/datum/design/borg_upgrade_broomer,
 		/datum/design/borg_upgrade_expand,
@@ -110,13 +110,13 @@
 /datum/techweb_node/borg_utility/New()
 	. = ..()
 	if(!CONFIG_GET(flag/disable_secborg))
-		design_ids += /datum/design/borg_upgrade_disablercooler
+		unlocked_designs += /datum/design/borg_upgrade_disablercooler
 
 /datum/techweb_node/borg_engi
 	display_name = "Engineering Cyborg Upgrades"
 	description = "To slack even more."
-	prereq_ids = list(/datum/techweb_node/borg_mining, /datum/techweb_node/parts_upg)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/borg_mining, /datum/techweb_node/parts_upg)
+	unlocked_designs = list(
 		/datum/design/borg_upgrade_rped,
 		/datum/design/borg_upgrade_engineeringomnitool,
 		/datum/design/borg_upgrade_engineering_app,
@@ -129,8 +129,8 @@
 /datum/techweb_node/passive_implants
 	display_name = "Passive Implants"
 	description = "Implants designed to operate seamlessly without active user input, enhancing various physiological functions or providing continuous benefits."
-	prereq_ids = list(/datum/techweb_node/augmentation)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/augmentation)
+	unlocked_designs = list(
 		/datum/design/board/skill_station,
 		/datum/design/implant_sadtrombone,
 		/datum/design/implant_chem,
@@ -148,8 +148,8 @@
 /datum/techweb_node/cyber/cyber_implants
 	display_name = "Cybernetic Implants"
 	description = "Advanced technological enhancements integrated into the body, offering improved physical capabilities."
-	prereq_ids = list(/datum/techweb_node/passive_implants, /datum/techweb_node/cybernetics)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/passive_implants, /datum/techweb_node/cybernetics)
+	unlocked_designs = list(
 		/datum/design/cyberimp_breather,
 		/datum/design/cyberimp_nutriment,
 		/datum/design/cyberimp_thrusters,
@@ -160,15 +160,15 @@
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber/New()
-	..()
+	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		research_costs[TECHWEB_POINT_TYPE_GENERIC] /= 2
 
 /datum/techweb_node/cyber/combat_implants
 	display_name = "Combat Implants"
 	description = "To make sure that you can wake the f*** up, samurai."
-	prereq_ids = list(/datum/techweb_node/cyber/cyber_implants)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/cyber/cyber_implants)
+	unlocked_designs = list(
 		/datum/design/cyberimp_reviver,
 		/datum/design/cyberimp_antidrop,
 		/datum/design/cyberimp_antistun,
@@ -180,8 +180,8 @@
 /datum/techweb_node/cyber/integrated_toolsets
 	display_name = "Integrated Toolsets"
 	description = "Decades of contraband smuggling by assistants have led to the development of a full toolbox that fits seamlessly into your arm."
-	prereq_ids = list(/datum/techweb_node/cyber/combat_implants, /datum/techweb_node/exp_tools)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/cyber/combat_implants, /datum/techweb_node/exp_tools)
+	unlocked_designs = list(
 		/datum/design/cyberimp_nutriment_plus,
 		/datum/design/cyberimp_surgical,
 		/datum/design/cyberimp_surgery_brain,
@@ -193,8 +193,8 @@
 /datum/techweb_node/cyber/cyber_organs
 	display_name = "Cybernetic Organs"
 	description = "We have the technology to rebuild him."
-	prereq_ids = list(/datum/techweb_node/cybernetics)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/cybernetics)
+	unlocked_designs = list(
 		/datum/design/cybernetic_eyes/improved,
 		/datum/design/cybernetic_eyes/improved/moth,
 		/datum/design/cybernetic_ears_u,
@@ -210,8 +210,8 @@
 /datum/techweb_node/cyber/cyber_organs_upgraded
 	display_name = "Upgraded Cybernetic Organs"
 	description = "We have the technology to upgrade him."
-	prereq_ids = list(/datum/techweb_node/cyber/cyber_organs)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/cyber/cyber_organs)
+	unlocked_designs = list(
 		/datum/design/cyberimp_gloweyes,
 		/datum/design/cyberimp_welding,
 		/datum/design/cyberimp_gloweyes/moth,
@@ -232,8 +232,8 @@
 /datum/techweb_node/cyber/cyber_organs_adv
 	display_name = "Advanced Cybernetic Organs"
 	description = "Cutting-edge cybernetic organs offering enhanced sensory capabilities, making it easier than ever to detect ERP."
-	prereq_ids = list(/datum/techweb_node/cyber/cyber_organs_upgraded, /datum/techweb_node/night_vision)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/cyber/cyber_organs_upgraded, /datum/techweb_node/night_vision)
+	unlocked_designs = list(
 		/datum/design/cybernetic_ears_xray,
 		/datum/design/cybernetic_ears_xray/cat,
 		/datum/design/cyberimp_thermals,

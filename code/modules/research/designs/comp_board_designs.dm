@@ -1,8 +1,7 @@
 ///////////////////Computer Boards///////////////////////////////////
 
 /datum/design/board
-	name = "NULL ENTRY Board"
-	desc = "I promise this doesn't give you syndicate goodies!"
+	abstract_type = /datum/design/board
 	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 

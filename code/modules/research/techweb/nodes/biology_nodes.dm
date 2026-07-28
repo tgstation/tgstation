@@ -1,8 +1,8 @@
 /datum/techweb_node/bio_scan
 	display_name = "Biological Scan"
 	description = "Advanced technology for analyzing patient health and reagent compositions, ensuring precise diagnostics and treatment in the medical bay."
-	prereq_ids = list(/datum/techweb_node/medbay_equip)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/medbay_equip)
+	unlocked_designs = list(
 		/datum/design/healthanalyzer,
 		/datum/design/autopsy_scanner,
 		/datum/design/genescanner,
@@ -18,8 +18,8 @@
 /datum/techweb_node/cytology
 	display_name = "Cytology"
 	description = "Cellular biology research focused on cultivation of limbs and diverse organisms from cells."
-	prereq_ids = list(/datum/techweb_node/bio_scan)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/bio_scan)
+	unlocked_designs = list(
 		/datum/design/board/limbgrower,
 		/datum/design/board/pandemic,
 		/datum/design/board/vatgrower,
@@ -32,8 +32,8 @@
 /datum/techweb_node/xenobiology
 	display_name = "Xenobiology"
 	description = "Exploration of non-human biology, unlocking the secrets of extraterrestrial lifeforms and their unique biological processes."
-	prereq_ids = list(/datum/techweb_node/cytology)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/cytology)
+	unlocked_designs = list(
 		/datum/design/board/xenobiocamera,
 		/datum/design/slime_scanner,
 		/datum/design/limb_disk/ethereal,
@@ -47,8 +47,8 @@
 /datum/techweb_node/gene_engineering
 	display_name = "Gene Engineering"
 	description = "Research into sophisticated DNA manipulation techniques, enabling the modification of human genetic traits to unlock specific abilities and enhancements."
-	prereq_ids = list(/datum/techweb_node/selection, /datum/techweb_node/xenobiology)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/selection, /datum/techweb_node/xenobiology)
+	unlocked_designs = list(
 		/datum/design/board/dnascanner,
 		/datum/design/board/scan_console,
 		/datum/design/dna_disk,
@@ -63,10 +63,10 @@
 
 // Botany root node
 /datum/techweb_node/botany_equip
-	starting_node = TRUE
 	display_name = "Botany Equipment"
 	description = "Essential tools for maintaining onboard gardens, supporting plant growth in the unique environment of the space station."
-	design_ids = list(
+	node_flags = parent_type::node_flags | TECHWEB_NODE_STARTER
+	unlocked_designs = list(
 		/datum/design/board/seed_extractor,
 		/datum/design/plant_analyzer,
 		/datum/design/watering_can,
@@ -79,8 +79,8 @@
 /datum/techweb_node/hydroponics
 	display_name = "Hydroponics"
 	description = "Research into advanced hydroponic systems for efficient and sustainable plant cultivation."
-	prereq_ids = list(/datum/techweb_node/botany_equip, /datum/techweb_node/chem_synthesis)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/botany_equip, /datum/techweb_node/chem_synthesis)
+	unlocked_designs = list(
 		/datum/design/board/biogenerator,
 		/datum/design/board/hydroponics,
 		/datum/design/portaseeder,
@@ -91,8 +91,8 @@
 /datum/techweb_node/selection
 	display_name = "Artificial Selection"
 	description = "Advancement in plant cultivation techniques through artificial selection, enabling precise manipulation of plant DNA."
-	prereq_ids = list(/datum/techweb_node/hydroponics)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/hydroponics)
+	unlocked_designs = list(
 		/datum/design/flora_gun,
 		/datum/design/geneshears,
 	)

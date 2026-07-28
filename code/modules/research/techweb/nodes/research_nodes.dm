@@ -1,8 +1,8 @@
 /datum/techweb_node/fundamental_sci
-	starting_node = TRUE
 	display_name = "Fundamental Science"
 	description = "Establishing the bedrock of scientific understanding, paving the way for deeper exploration and theoretical inquiry."
-	design_ids = list(
+	node_flags = parent_type::node_flags | TECHWEB_NODE_STARTER
+	unlocked_designs = list(
 		/datum/design/board/rdserver,
 		/datum/design/board/rdservercontrol,
 		/datum/design/board/rdconsole,
@@ -21,8 +21,8 @@
 /datum/techweb_node/bluespace_theory
 	display_name = "Bluespace Theory"
 	description = "Basic studies into the mysterious alternate dimension known as bluespace."
-	prereq_ids = list(/datum/techweb_node/fundamental_sci)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/fundamental_sci)
+	unlocked_designs = list(
 		/datum/design/bluespace_crystal,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
@@ -31,8 +31,8 @@
 /datum/techweb_node/applied_bluespace
 	display_name = "Applied Bluespace Research"
 	description = "With a heightened grasp of bluespace dynamics, sophisticated applications and technologies can be devised using data from bluespace crystal analyses."
-	prereq_ids = list(/datum/techweb_node/bluespace_theory)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/bluespace_theory)
+	unlocked_designs = list(
 		/datum/design/board/ore_silo,
 		/datum/design/miningsatchel_holding,
 		/datum/design/board/plumbing_receiver,
@@ -52,8 +52,8 @@
 /datum/techweb_node/bluespace_travel
 	display_name = "Bluespace Travel"
 	description = "Facilitate teleportation methods based on bluespace principles to revolutionize logistical efficiency."
-	prereq_ids = list(/datum/techweb_node/applied_bluespace)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/applied_bluespace)
+	unlocked_designs = list(
 		/datum/design/board/teleconsole,
 		/datum/design/board/teleport_station,
 		/datum/design/board/teleport_hub,
@@ -70,8 +70,8 @@
 /datum/techweb_node/anomaly_research
 	display_name = "Anomaly Research"
 	description = "Delving into the study of mysterious anomalies to investigate methods to refine and harness their unpredictable energies."
-	prereq_ids = list(/datum/techweb_node/applied_bluespace)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/applied_bluespace)
+	unlocked_designs = list(
 		/datum/design/board/anomaly_refinery,
 		/datum/design/anomaly_neutralizer,
 		/datum/design/reactive_armour,
@@ -83,8 +83,8 @@
 /datum/techweb_node/anomaly_shells
 	display_name = "Advanced Anomaly Shells"
 	description = "New shells designed to utilize anomaly cores, maximizing their potential in innovative ways."
-	prereq_ids = list(/datum/techweb_node/anomaly_research)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/anomaly_research)
+	unlocked_designs = list(
 		/datum/design/bag_holding,
 		/datum/design/cybernetic_heart/anomalock,
 		/datum/design/module/mod_storage_holding,

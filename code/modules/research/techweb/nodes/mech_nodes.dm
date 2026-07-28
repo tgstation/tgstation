@@ -1,9 +1,9 @@
 /datum/techweb_node/mech_assembly
-	starting_node = TRUE
 	display_name = "Exosuit Assembly"
 	description = "Development of mechanical exosuits designed to contend with artificial gravity while transporting cargo."
-	prereq_ids = list(/datum/techweb_node/robotics)
-	design_ids = list(
+	node_flags = parent_type::node_flags | TECHWEB_NODE_STARTER
+	prerequisite_nodes = list(/datum/techweb_node/robotics)
+	unlocked_designs = list(
 		/datum/design/board/mechapower,
 		/datum/design/board/mech_recharger,
 		/datum/design/ripley_chassis,
@@ -20,8 +20,8 @@
 /datum/techweb_node/mech_equipment
 	display_name = "Expedition Equipment"
 	description = "Specialized exosuit gear tailored for navigating space and celestial bodies, ensuring durability and functionality in the harshest conditions."
-	prereq_ids = list(/datum/techweb_node/mech_assembly)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/mech_assembly)
+	unlocked_designs = list(
 		/datum/design/board/mechacontrol,
 		/datum/design/board/botpad,
 		/datum/design/botpad_remote,
@@ -39,8 +39,8 @@
 /datum/techweb_node/mech_clown
 	display_name = "Funny Robots"
 	description = "Fueled by laughter."
-	prereq_ids = list(/datum/techweb_node/mech_assembly)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/mech_assembly)
+	unlocked_designs = list(
 		/datum/design/honk_chassis,
 		/datum/design/honk_torso,
 		/datum/design/honk_head,
@@ -63,8 +63,8 @@
 /datum/techweb_node/mech_medical
 	display_name = "Medical Exosuit"
 	description = "Advanced robotic unit equipped with syringe guns and healing beams, revolutionizing medical assistance in hazardous environments."
-	prereq_ids = list(/datum/techweb_node/mech_assembly, /datum/techweb_node/chem_synthesis)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/mech_assembly, /datum/techweb_node/chem_synthesis)
+	unlocked_designs = list(
 		/datum/design/odysseus_chassis,
 		/datum/design/odysseus_torso,
 		/datum/design/odysseus_head,
@@ -82,8 +82,8 @@
 /datum/techweb_node/mech_mining
 	display_name = "Mining Exosuit"
 	description = "Robust exosuit engineered to withstand lava and storms for continuous off-station mining operations."
-	prereq_ids = list(/datum/techweb_node/mech_equipment, /datum/techweb_node/mining)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/mech_equipment, /datum/techweb_node/mining)
+	unlocked_designs = list(
 		/datum/design/clarke_chassis,
 		/datum/design/clarke_torso,
 		/datum/design/clarke_head,
@@ -99,8 +99,8 @@
 /datum/techweb_node/mech_combat
 	display_name = "Combat Exosuits"
 	description = "Modular armor upgrades and specialized equipment for security exosuits."
-	prereq_ids = list(/datum/techweb_node/mech_equipment)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/mech_equipment)
+	unlocked_designs = list(
 		/datum/design/mech_ccw_armor,
 		/datum/design/mech_proj_armor,
 		/datum/design/mech_emp_armor,
@@ -116,8 +116,8 @@
 /datum/techweb_node/mech_assault
 	display_name = "Assault Exosuits"
 	description = "Heavy battle exosuits boasting robust armor but sacrificing speed for enhanced durability."
-	prereq_ids = list(/datum/techweb_node/mech_combat)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/mech_combat)
+	unlocked_designs = list(
 		/datum/design/durand_armor,
 		/datum/design/durand_chassis,
 		/datum/design/durand_torso,
@@ -136,8 +136,8 @@
 /datum/techweb_node/mech_light
 	display_name = "Light Combat Exosuits"
 	description = "Agile combat exosuits equipped with overclocking capabilities for temporary speed boosts, prioritizing speed over durability on the battlefield."
-	prereq_ids = list(/datum/techweb_node/mech_combat)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/mech_combat)
+	unlocked_designs = list(
 		/datum/design/gygax_armor,
 		/datum/design/gygax_chassis,
 		/datum/design/gygax_torso,
@@ -156,8 +156,8 @@
 /datum/techweb_node/mech_heavy
 	display_name = "Heavy Exosuits"
 	description = "Advanced heavy mechanized unit with dual pilot capability, designed for robust battlefield performance and increased tactical versatility."
-	prereq_ids = list(/datum/techweb_node/mech_assault)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/mech_assault)
+	unlocked_designs = list(
 		/datum/design/savannah_ivanov_armor,
 		/datum/design/savannah_ivanov_chassis,
 		/datum/design/savannah_ivanov_torso,
@@ -176,8 +176,8 @@
 /datum/techweb_node/mech_infiltrator
 	display_name = "Infiltration Exosuits"
 	description = "Advanced exosuit with phasing capabilities, allowing it to move through walls and obstacles, ideal for covert and special operations."
-	prereq_ids = list(/datum/techweb_node/mech_light, /datum/techweb_node/anomaly_research)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/mech_light, /datum/techweb_node/anomaly_research)
+	unlocked_designs = list(
 		/datum/design/phazon_armor,
 		/datum/design/phazon_chassis,
 		/datum/design/phazon_torso,
@@ -196,8 +196,8 @@
 /datum/techweb_node/mech_energy_guns
 	display_name = "Exosuit Energy Guns"
 	description = "Scaled-up versions of electric weapons optimized for exosuit deployment."
-	prereq_ids = list(/datum/techweb_node/mech_combat, /datum/techweb_node/electric_weapons)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/mech_combat, /datum/techweb_node/electric_weapons)
+	unlocked_designs = list(
 		/datum/design/mech_laser,
 		/datum/design/mech_laser_heavy,
 		/datum/design/mech_ion,
@@ -210,8 +210,8 @@
 /datum/techweb_node/mech_firearms
 	display_name = "Exosuit Firearms"
 	description = "Mounted ballistic weaponry, enhancing combat capabilities for mechanized units."
-	prereq_ids = list(/datum/techweb_node/mech_energy_guns, /datum/techweb_node/exotic_ammo)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/mech_energy_guns, /datum/techweb_node/exotic_ammo)
+	unlocked_designs = list(
 		/datum/design/mech_lmg,
 		/datum/design/mech_lmg_ammo,
 		/datum/design/mech_scattershot,
@@ -225,8 +225,8 @@
 /datum/techweb_node/mech_heavy_arms
 	display_name = "Heavy Exosuit Firearms"
 	description = "High-impact weaponry integrated into mechs, optimized for maximum firepower."
-	prereq_ids = list(/datum/techweb_node/mech_heavy, /datum/techweb_node/exotic_ammo)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/mech_heavy, /datum/techweb_node/exotic_ammo)
+	unlocked_designs = list(
 		/datum/design/clusterbang_launcher,
 		/datum/design/clusterbang_launcher_ammo,
 		/datum/design/mech_grenade_launcher,
@@ -240,8 +240,8 @@
 /datum/techweb_node/mech_equip_bluespace
 	display_name = "Bluespace Exosuit Equipment"
 	description = "An array of equipment empowered by bluespace, providing unmatched mobility and utility."
-	prereq_ids = list(/datum/techweb_node/mech_infiltrator, /datum/techweb_node/bluespace_travel)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/mech_infiltrator, /datum/techweb_node/bluespace_travel)
+	unlocked_designs = list(
 		/datum/design/mech_gravcatapult,
 		/datum/design/mech_teleporter,
 		/datum/design/mech_wormhole_gen,

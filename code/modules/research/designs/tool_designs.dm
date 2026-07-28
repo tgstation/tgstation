@@ -34,7 +34,6 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-	autolathe_exportable = FALSE
 
 /datum/design/exwelder
 	name = "Experimental Welding Tool"

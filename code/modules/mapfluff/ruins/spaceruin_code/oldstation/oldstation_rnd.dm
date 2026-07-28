@@ -26,7 +26,7 @@
 /obj/machinery/rnd/server/oldstation/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/research_notes) && stored_research)
 		var/obj/item/research_notes/research_notes = tool
-		stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = research_notes.value))
+		stored_research.adjust_points(TECHWEB_POINT_TYPE_GENERIC, research_notes.value)
 		playsound(src, 'sound/machines/copier.ogg', 50, TRUE)
 		qdel(research_notes)
 		return ITEM_INTERACT_SUCCESS

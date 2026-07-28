@@ -1,19 +1,18 @@
 /datum/techweb_node/oldstation_surgery
 	display_name = "Experimental Dissection"
 	description = "Grants access to experimental dissections, which allows generation of research points."
-	prereq_ids = list(/datum/techweb_node/medbay_equip)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/medbay_equip)
+	unlocked_designs = list(
 		/datum/design/surgery/experimental_dissection,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
-	hidden = TRUE
-	show_on_wiki = FALSE
+	node_flags = TECHWEB_NODE_HIDDEN
 
 /datum/techweb_node/surgery
 	display_name = "Improved Wound-Tending"
 	description = "Who would have known being more gentle with a hemostat decreases patient pain?"
-	prereq_ids = list(/datum/techweb_node/medbay_equip)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/medbay_equip)
+	unlocked_designs = list(
 		/datum/design/surgery/tend_wounds_upgrade,
 		/datum/design/medibot_upgrade,
 	)
@@ -23,8 +22,8 @@
 /datum/techweb_node/surgery_adv
 	display_name = "Advanced Surgery"
 	description = "When simple medicine doesn't cut it."
-	prereq_ids = list(/datum/techweb_node/surgery)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/surgery)
+	unlocked_designs = list(
 		/datum/design/board/harvester,
 		/datum/design/medibot_upgrade/tier_two,
 		/datum/design/surgery/tend_wounds_combo,
@@ -40,8 +39,8 @@
 /datum/techweb_node/surgery_exp
 	display_name = "Experimental Surgery"
 	description = "When evolution isn't fast enough."
-	prereq_ids = list(/datum/techweb_node/surgery_adv)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/surgery_adv)
+	unlocked_designs = list(
 		/datum/design/medibot_upgrade/tier_three,
 		/datum/design/surgery/cortex_folding,
 		/datum/design/surgery/cortex_folding/mechanic,
@@ -71,8 +70,8 @@
 /datum/techweb_node/surgery_tools
 	display_name = "Advanced Surgery Tools"
 	description = "Surgical instruments of dual purpose for quick operations."
-	prereq_ids = list(/datum/techweb_node/surgery_exp)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/surgery_exp)
+	unlocked_designs = list(
 		/datum/design/laserscalpel,
 		/datum/design/searingtool,
 		/datum/design/mechanicalpinches,

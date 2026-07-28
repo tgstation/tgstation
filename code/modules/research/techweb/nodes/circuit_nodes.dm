@@ -1,9 +1,9 @@
 /datum/techweb_node/programming
-	starting_node = TRUE
 	display_name = "Programming"
 	description = "Dedicate an entire shift to program a fridge to greet you when opened."
-	prereq_ids = list(/datum/techweb_node/robotics)
-	design_ids = list(
+	node_flags = parent_type::node_flags | TECHWEB_NODE_STARTER
+	prerequisite_nodes = list(/datum/techweb_node/robotics)
+	unlocked_designs = list(
 		/datum/design/board/component_printer,
 		/datum/design/board/module_printer,
 		/datum/design/circuit_multitool,
@@ -93,8 +93,8 @@
 /datum/techweb_node/circuit_shells
 	display_name = "Advanced Circuit Shells"
 	description = "Adding brains to more things."
-	prereq_ids = list(/datum/techweb_node/programming)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/programming)
+	unlocked_designs = list(
 		/datum/design/wiremod_shell/assembly,
 		/datum/design/wiremod_shell/bot,
 		/datum/design/wiremod_shell/controller,
@@ -116,8 +116,8 @@
 /datum/techweb_node/bci
 	display_name = "Brain-Computer Interface"
 	description = "Embedded brain circuits. May occasionally stream Nanotrasen ads in dreams."
-	prereq_ids = list(/datum/techweb_node/circuit_shells, /datum/techweb_node/passive_implants)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/circuit_shells, /datum/techweb_node/passive_implants)
+	unlocked_designs = list(
 		/datum/design/board/bci_implanter,
 		/datum/design/wiremod_shell/bci,
 		/datum/design/component/bci/bar_overlay,
@@ -136,8 +136,8 @@
 /datum/techweb_node/programmed_robot
 	display_name = "Programmed Robot"
 	description = "Grants access to movable shells, allowing for remote operations and pranks."
-	prereq_ids = list(/datum/techweb_node/circuit_shells)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/circuit_shells)
+	unlocked_designs = list(
 		/datum/design/wiremod_shell/drone,
 		/datum/design/component/action/pathfind,
 		/datum/design/component/action/pull,
@@ -147,8 +147,8 @@
 /datum/techweb_node/programmed_server
 	display_name = "Programmed Server"
 	description = "Grants access to a server shell that has a very high capacity for components."
-	prereq_ids = list(/datum/techweb_node/bci)
-	design_ids = list(
+	prerequisite_nodes = list(/datum/techweb_node/bci)
+	unlocked_designs = list(
 		/datum/design/wiremod_shell/server,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
