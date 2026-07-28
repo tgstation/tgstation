@@ -893,3 +893,6 @@
       toxic bees, report anything weird with it
   - rscdel: Mobs will no longer log their initial name change (I.e. "name changed
       from (nothing) to John Doe")
+  PapaMichael:
+  - balance: Pirates prioritize spawning their leaders
+  - admin: Admins can configure Heavy Pirates
