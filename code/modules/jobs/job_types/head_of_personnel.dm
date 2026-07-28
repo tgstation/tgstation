@@ -110,6 +110,8 @@
 		/obj/item/stamp/head/hop,
 		)
 
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/hop
+
 /datum/outfit/job/hop/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(check_holidays(IAN_HOLIDAY))

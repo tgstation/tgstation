@@ -49,6 +49,8 @@
 	ears = /obj/item/radio/headset/headset_cargo
 	l_hand = /obj/item/universal_scanner
 
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/cargo
+
 /datum/outfit/job/cargo_tech/mod
 	name = "Cargo Technician (MODsuit)"
 

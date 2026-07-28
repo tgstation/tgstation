@@ -52,6 +52,8 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/science
 	messenger = /obj/item/storage/backpack/messenger/science
 
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/science
+
 /datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
 	..()
 	try_giving_horrible_tie()

@@ -58,3 +58,5 @@
 
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/medical/chemistry
