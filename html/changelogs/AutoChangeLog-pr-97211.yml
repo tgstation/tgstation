@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - spellcheck: "Renames \"Hot Chili\" to \"Chili Con Carne\""
-  - spellcheck: "Renames \"Cold Chili\" to \"Chili Frio\""
-  - qol: "Chili Con Carne, Chili Sin Carne, Chili Con Carnival, and Chili Frio are now all in the \"Mexican\" cuisine category"
-  - qol: "You can now use ghost chilis in the chili recipes, making \"Ghost Chili Con Carne\" or \"Ghost Chili Sin Carne\"."
