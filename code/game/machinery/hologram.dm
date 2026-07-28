@@ -467,7 +467,7 @@ Possible to do for anyone motivated enough:
 		if(!LAZYLEN(holo_calls))
 			set_can_hear_flags(CAN_HEAR_ACTIVE_HOLOCALLS, FALSE)
 
-	update_appearance(UPDATE_ICON_STATE)
+	update_appearance(UPDATE_ICON_STATE, UPDATE_OVERLAYS)
 	return TRUE
 
 /**
@@ -537,7 +537,7 @@ Possible to do for anyone motivated enough:
 
 	if(ringing != are_ringing)
 		ringing = are_ringing
-		update_appearance(UPDATE_ICON_STATE)
+		update_appearance(UPDATE_ICON_STATE, UPDATE_OVERLAYS)
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user
@@ -606,7 +606,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		set_light(2)
 	else
 		set_light(0)
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/holopad/update_icon_state()
 	if(panel_open)
@@ -621,6 +621,24 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		return ..()
 	icon_state = "[base_icon_state][(total_users || replay_mode) ? 1 : 0]"
 	return ..()
+
+/obj/machinery/holopad/update_overlays()
+	. = ..()
+
+	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
+	var/default_color = COLOR_BLUE_LIGHT
+	if(total_users || replay_mode)
+		var/mutable_appearance/hololine_overlay = mutable_appearance(icon, "holopad1_mask")
+		for(var/mob/living/silicon/ai/AI as anything in masters)
+			if(istype(AI) && AI.ai_holocolor)
+				default_color = AI.ai_holocolor
+				break
+		hololine_overlay.color = default_color
+		. += hololine_overlay
+		. += emissive_appearance(icon, "holopad1_mask", src, alpha = src.alpha)
+	if(ringing)
+		. += mutable_appearance(icon, "holopad_ringing_mask")
+		. += emissive_appearance(icon, "holopad_ringing_mask", src, alpha = src.alpha)
 
 /obj/machinery/holopad/proc/set_holo(datum/owner, obj/effect/overlay/holo_pad_hologram/h)
 	LAZYSET(masters, owner, h)
