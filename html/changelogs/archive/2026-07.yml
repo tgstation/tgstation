@@ -900,3 +900,8 @@
   PapaMichael:
   - balance: Pirates prioritize spawning their leaders
   - admin: Admins can configure Heavy Pirates
+  SmArtKar:
+  - bugfix: Fixed cardboard cutouts having an incorrect assistant sprite
+  - bugfix: Fixed some effects not updating hair when they should
+  lelandkemble:
+  - bugfix: You can place items within bodybags by clicking on them again
