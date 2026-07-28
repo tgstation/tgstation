@@ -164,3 +164,6 @@
 /// From /obj/item/organ/stomach/on_life() : (obj/item/organ/stomach/stomach, mob/living/carbon/owner, seconds_per_tick)
 #define COMSIG_ATOM_STOMACH_DIGESTED "atom_stomach_digested"
 	#define COMPONENT_CANCEL_DIGESTION (1<<0)
+
+/// From /atom/update_offsets(animate) : (new_x, new_y, new_w, new_z, animate)
+#define COMSIG_ATOM_UPDATE_OFFSETS "atom_update_offsets"

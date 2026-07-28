@@ -55,6 +55,7 @@
 #include "code\__DEFINES\assert.dm"
 #include "code\__DEFINES\assets.dm"
 #include "code\__DEFINES\atom_hud.dm"
+#include "code\__DEFINES\atom_offsets.dm"
 #include "code\__DEFINES\basic_mobs.dm"
 #include "code\__DEFINES\basketball.dm"
 #include "code\__DEFINES\bitrunning.dm"

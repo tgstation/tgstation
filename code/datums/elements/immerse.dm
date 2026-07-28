@@ -89,7 +89,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 		var/mob/living/living_mob = movable
 		buckled = living_mob.buckled
 		RegisterSignal(living_mob, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled))
-		RegisterSignal(living_mob, COMSIG_LIVING_UPDATE_OFFSETS, PROC_REF(on_update_offsets))
+		RegisterSignal(living_mob, COMSIG_ATOM_UPDATE_OFFSETS, PROC_REF(on_update_offsets))
 		RegisterSignal(movable, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(on_update_transform))
 
 	RegisterSignal(movable, COMSIG_ATOM_SPIN_ANIMATION, PROC_REF(on_spin_animation))
@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 
 	try_unimmerse(movable, buckled)
 	LAZYREMOVE(attached_turf_contents[source], movable)
-	UnregisterSignal(movable, list(COMSIG_LIVING_SET_BUCKLED, COMSIG_QDELETING, COMSIG_LIVING_UPDATE_OFFSETS, COMSIG_ATOM_SPIN_ANIMATION, COMSIG_LIVING_POST_UPDATE_TRANSFORM))
+	UnregisterSignal(movable, list(COMSIG_LIVING_SET_BUCKLED, COMSIG_QDELETING, COMSIG_ATOM_UPDATE_OFFSETS, COMSIG_ATOM_SPIN_ANIMATION, COMSIG_LIVING_POST_UPDATE_TRANSFORM))
 	REMOVE_TRAIT(movable, TRAIT_IMMERSED, ELEMENT_TRAIT(src))
 
 /// Generate a mask filter mutable to use as render_source for the alpha filter based on provided width, height and immersion state

@@ -622,7 +622,7 @@
 			COMSIG_LIVING_POST_UPDATE_TRANSFORM,
 			COMSIG_MOB_EQUIPPED_ITEM,
 			COMSIG_MOB_UNEQUIPPED_ITEM,
-			COMSIG_LIVING_UPDATE_OFFSETS,
+			COMSIG_ATOM_UPDATE_OFFSETS,
 		))
 	mob_overlays.Cut()
 	direct_view_tracking.Cut()
@@ -674,7 +674,7 @@
 		RegisterSignal(source, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
 		// Lying down/being pushed
 		RegisterSignal(source, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(refresh_overlay))
-		RegisterSignal(source, COMSIG_LIVING_UPDATE_OFFSETS, PROC_REF(refresh_overlay))
+		RegisterSignal(source, COMSIG_ATOM_UPDATE_OFFSETS, PROC_REF(refresh_overlay))
 
 	mob_overlays[source] = make_overlay(source)
 	owner.client?.images |= mob_overlays[source]

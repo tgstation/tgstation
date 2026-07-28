@@ -24,9 +24,3 @@
 #define CAN_HAVE_BLOOD(mob) (mob.living_flags & LIVING_CAN_HAVE_BLOOD)
 /// Queues a blood update for the next life tick for the mob
 #define QUEUE_BLOOD_UPDATE(mob) mob.living_flags |= BLOOD_UPDATE_QUEUED
-
-// Used in living mob offset list for determining pixel offsets
-#define PIXEL_W_OFFSET "w"
-#define PIXEL_X_OFFSET "x"
-#define PIXEL_Y_OFFSET "y"
-#define PIXEL_Z_OFFSET "z"

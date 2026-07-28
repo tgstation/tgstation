@@ -115,6 +115,11 @@
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
 
+	/// Lazylists of pixel offsets this atom is currently using
+	/// Modify this via add_offsets and remove_offsets,
+	/// NOT directly (and definitely avoid modifying offsets directly)
+	VAR_PRIVATE/list/offsets
+
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
 	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
@@ -738,6 +743,7 @@
 	density = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_DENSITY_CHANGED)
 
+// Future TODO: make atoms just set a base pixel using a source
 ///Setter for the `base_pixel_x` variable to append behavior related to its changing.
 /atom/proc/set_base_pixel_x(new_value)
 	if(base_pixel_x == new_value)
@@ -746,6 +752,7 @@
 	base_pixel_x = new_value
 
 	pixel_x = pixel_x + base_pixel_x - .
+	update_offsets()
 
 ///Setter for the `base_pixel_y` variable to append behavior related to its changing.
 /atom/proc/set_base_pixel_y(new_value)
@@ -755,6 +762,7 @@
 	base_pixel_y = new_value
 
 	pixel_y = pixel_y + base_pixel_y - .
+	update_offsets()
 
 // Not a valid operation, turfs and movables handle block differently
 /atom/proc/set_explosion_block(explosion_block)
@@ -1012,3 +1020,121 @@
 /// Logic for adding reskin components goes here. Override for atom-specific reskin setups.
 /atom/proc/setup_reskins()
 	return
+
+/**
+ * Adds an offset to the atom's pixel position.
+ *
+ * * source: The source of the offset, a string
+ * * w_add: pixel_w offset
+ * * x_add: pixel_x offset
+ * * y_add: pixel_y offset
+ * * z_add: pixel_z offset
+ * * animate: If TRUE, the atom will animate to the new position. If FALSE, it will instantly move.
+ */
+/atom/proc/add_offsets(source, w_add, x_add, y_add, z_add, animate = TRUE)
+	LAZYINITLIST(offsets)
+	if(isnum(w_add))
+		LAZYSET(offsets[PIXEL_W_OFFSET], source, w_add)
+	if(isnum(x_add))
+		LAZYSET(offsets[PIXEL_X_OFFSET], source, x_add)
+	if(isnum(y_add))
+		LAZYSET(offsets[PIXEL_Y_OFFSET], source, y_add)
+	if(isnum(z_add))
+		LAZYSET(offsets[PIXEL_Z_OFFSET], source, z_add)
+	update_offsets(animate)
+
+/**
+ * Goes through all pixel adjustments and removes any tied to the passed source.
+ *
+ * * source: The source of the offset to remove
+ * * animate: If TRUE, the atom will animate to the position with any offsets removed. If FALSE, it will instantly move.
+ */
+/atom/proc/remove_offsets(source, animate = TRUE)
+	for(var/offset in offsets)
+		LAZYREMOVE(offsets[offset], source)
+		ASSOC_UNSETEMPTY(offsets, offset)
+	UNSETEMPTY(offsets)
+	update_offsets(animate)
+
+/**
+ * Updates the atom's pixel position according to the offsets.
+ *
+ * * animate: If TRUE, the atom will animate to the new position. If FALSE, it will instantly move.
+ *
+ * Returns TRUE if the atom's position has changed, FALSE otherwise.
+ */
+/atom/proc/update_offsets(animate = FALSE)
+	var/new_w = base_pixel_w
+	var/new_x = base_pixel_x
+	var/new_y = base_pixel_y
+	var/new_z = base_pixel_z
+
+	for(var/offset_key in LAZYACCESS(offsets, PIXEL_W_OFFSET))
+		new_w += offsets[PIXEL_W_OFFSET][offset_key]
+	for(var/offset_key in LAZYACCESS(offsets, PIXEL_X_OFFSET))
+		new_x += offsets[PIXEL_X_OFFSET][offset_key]
+	for(var/offset_key in LAZYACCESS(offsets, PIXEL_Y_OFFSET))
+		new_y += offsets[PIXEL_Y_OFFSET][offset_key]
+	for(var/offset_key in LAZYACCESS(offsets, PIXEL_Z_OFFSET))
+		new_z += offsets[PIXEL_Z_OFFSET][offset_key]
+
+	if(new_w == pixel_w && new_x == pixel_x && new_y == pixel_y && new_z == pixel_z)
+		return FALSE
+
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OFFSETS, new_x, new_y, new_w, new_z, animate)
+
+	if(!animate)
+		pixel_w = new_w
+		pixel_x = new_x
+		pixel_y = new_y
+		pixel_z = new_z
+		return TRUE
+
+	// ensures the floating animation doesn't mess with our animation
+	if(HAS_TRAIT(src, TRAIT_MOVE_FLOATING))
+		ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, UPDATE_OFFSET_TRAIT)
+		addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_NO_FLOATING_ANIM, UPDATE_OFFSET_TRAIT), 0.3 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+	animate(src,
+		pixel_w = new_w,
+		pixel_x = new_x,
+		pixel_y = new_y,
+		pixel_z = new_z,
+		flags = ANIMATION_PARALLEL,
+		time = UPDATE_TRANSFORM_ANIMATION_TIME,
+	)
+	return TRUE
+
+/**
+ * Checks if we are offset by the passed source for the passed pixel.
+ *
+ * * source: The source of the offset
+ * If not supplied, it will report the total offset of the passed pixel.
+ * * pixel: Optional, The pixel to check.
+ * If not supplied, just reports if it's offset by the source at all (returning the first offset found).
+ *
+ * Returns the offset if we are, 0 otherwise.
+ */
+/atom/proc/has_offset(source, pixel)
+	if(isnull(source) && isnull(pixel))
+		stack_trace("has_offset() requires at least one argument.")
+		return 0
+
+	if(isnull(source))
+		if(!length(offsets?[pixel]))
+			return 0
+
+		var/total_found_offset = 0
+		for(var/found_offset in offsets[pixel])
+			total_found_offset += has_offset(found_offset, pixel)
+		return total_found_offset
+
+	if(isnull(pixel))
+		for(var/found_pixel in offsets)
+			var/found_offset = has_offset(source, found_pixel)
+			if(found_offset)
+				return found_offset
+
+		return 0
+
+	return offsets?[pixel]?[source] || 0
