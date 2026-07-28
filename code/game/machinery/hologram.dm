@@ -975,7 +975,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		uid++
 	// Let's GLOW BROTHER! (Doing it like this is the most robust option compared to duped overlays)
 	glow = new(null, src)
-	// We need to counteract the pixel offset to ensure we don't double offset (I hate byond)
 	add_overlay(glow)
 	LAZYADD(update_overlays_on_z, glow)
 
