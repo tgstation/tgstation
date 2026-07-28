@@ -152,14 +152,12 @@ function renderDSMEntry(entry: BookEntry<Disease>) {
               </Box>{' '}
               {entry.desc}
             </Stack.Item>
-            {!!entry.level && (
-              <Stack.Item>
-                <Box inline color="label">
-                  Level:
-                </Box>{' '}
-                {entry.level}
-              </Stack.Item>
-            )}
+            <Stack.Item>
+              <Box inline color="label">
+                Level:
+              </Box>{' '}
+              {entry.level}
+            </Stack.Item>
             {entry.illness !== 'Unidentified' && (
               <Stack.Item>
                 <Box inline color="label">
@@ -249,6 +247,7 @@ export const IDCBook = () => {
       spread_by: disease.spread_by,
       cured_by: disease.cured_by,
       illness: disease.illness,
+      level: disease.level,
     }))
     .sort((a, b) =>
       a.form > b.form ? 1 : a.form < b.form ? -1 : a.name > b.name ? 1 : -1,
