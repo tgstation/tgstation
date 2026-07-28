@@ -10,8 +10,8 @@
  */
 /datum/heretic_knowledge/hunt_and_sacrifice
 	name = "Heartbeat of the Mansus"
-	desc = "Allows you to sacrifice targets to the Mansus by bringing them to a rune in critical (or worse) condition. \
-		If you have no targets, stand on a transmutation rune and invoke it to acquire some."
+	desc = "Allows you to sacrifice targets to the Mansus by bringing them to a rune in critical (or worse) condition."
+	notice = "If you have no targets, stand on a transmutation rune and invoke it to acquire some."
 	required_atoms = list(/mob/living/carbon/human = 1)
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY // Should be at the top
@@ -39,6 +39,7 @@
 		/obj/item/organ/stomach/corrupt,
 		/obj/item/organ/tongue/corrupt,
 	)
+	var/backdoor_sacrifice_attempts = 0
 
 /datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force)
 	heretic_mind = null
@@ -78,6 +79,30 @@
 	if(!LAZYLEN(heretic_datum.sac_targets))
 		atoms += user
 		return TRUE
+
+	if(istype(get_area(loc), /area/centcom/heretic_backdoor))
+		loc.balloon_alert(user, "ritual failed, invalid location!")
+		switch(backdoor_sacrifice_attempts)
+			if(0)
+				to_chat(user, span_mansus("Attempting a sacrifice so close to the gods is risky..."))
+			if(1)
+				to_chat(user, span_mansus("<i>You hear a knocking sound[HAS_TRAIT(user, TRAIT_DEAF) ? ", despite your deafness" : ""]...</i>"))
+			if(2)
+				to_chat(user, span_mansus("<i>The knocking grows louder..."))
+				user.soundbang_act(SOUNDBANG_NORMAL, deafen_pwr = 10 SECONDS, stun_pwr = 1 SECONDS, damage_pwr = 10, ignore_deafness = TRUE)
+			if(3)
+				to_chat(user, span_mansus("<i>The knocking becomes deafening!</i>"))
+				user.soundbang_act(SOUNDBANG_OVERWHELMING, deafen_pwr = 20 SECONDS, stun_pwr = 4 SECONDS, damage_pwr = 20, ignore_deafness = TRUE)
+			if(4)
+				if(begin_sacrifice(user))
+					to_chat(user, span_mansus("<b><i>Your insolence is punished!</i></b>"))
+				else
+					to_chat(user, span_mansus("The knocking stops - but you can't help but feel like you've dodged a bullet, somehow."))
+			if(5 to INFINITY)
+				to_chat(user, span_mansus("You don't think trying it again would provide any more insight..."))
+
+		backdoor_sacrifice_attempts++
+		return FALSE
 
 	// If we have targets, we can check to see if we can do a sacrifice
 	// Let's remove any humans in our atoms list that aren't a sac target
@@ -135,7 +160,7 @@
 
 	if(!length(valid_targets))
 		if(!silent)
-			to_chat(user, span_hierophant_warning("No sacrifice targets could be found!"))
+			to_chat(user, span_mansus("No sacrifice targets could be found!"))
 		return FALSE
 
 	// Now, let's try to get four targets.
@@ -209,6 +234,7 @@
 	var/datum/antagonist/cult/cultist_datum = GET_CULTIST(sacrifice)
 	// Heads give 3 points, cultists give 1 point (and a special reward), normal sacrifices give 2 points.
 	heretic_datum.total_sacrifices++
+	SEND_SIGNAL(heretic_datum, COMSIG_HERETIC_SACRIFICE, sacrifice, (sac_job_flag & JOB_HEAD_OF_STAFF))
 	if((sac_job_flag & JOB_HEAD_OF_STAFF))
 		heretic_datum.adjust_knowledge_points(3)
 		heretic_datum.high_value_sacrifices++
@@ -247,7 +273,7 @@
 
 	// Visible and audible encouragement!
 	to_chat(user, span_big(span_hypnophrase("A servant of the Sanguine Apostate!")))
-	to_chat(user, span_hierophant("Your patrons are rapturous!"))
+	to_chat(user, span_mansus("Your patrons are rapturous!"))
 	playsound(sacrifice, 'sound/effects/magic/disintegrate.ogg', 75, TRUE)
 
 	// Drop all items and splatter them around messily.
@@ -537,7 +563,7 @@
 			composed_return_message += span_green("alive, but with a shattered mind. ")
 
 		composed_return_message += span_notice("You hear a whisper... ")
-		composed_return_message += span_hypnophrase(get_area_name(safe_turf, TRUE))
+		composed_return_message += span_mansus(get_area_name(safe_turf, TRUE))
 		to_chat(heretic_mind.current, composed_return_message)
 
 /**

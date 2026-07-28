@@ -18,8 +18,7 @@
 	level = 6
 	severity = 2
 	base_message_chance = 100
-	symptom_delay_min = 60
-	symptom_delay_max = 120
+	symptom_delay = 90
 	required_organ = ORGAN_SLOT_TONGUE
 	symptom_cure = /datum/reagent/inverse/healing/convermol
 	threshold_descs = list(
@@ -38,8 +37,8 @@
 		suppress_warning = TRUE
 	if(A.totalStageSpeed() >= 7) //faster change of voice
 		base_message_chance = 25
-		symptom_delay_min = 25
-		symptom_delay_max = 85
+		symptom_delay = 55
+		delay_variation = 0.35
 	if(A.totalTransmittable() >= 14) //random language
 		scramble_language = TRUE
 

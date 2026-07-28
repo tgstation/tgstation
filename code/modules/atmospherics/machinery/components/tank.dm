@@ -568,10 +568,14 @@
 		if(TANK_PLATING_UNSECURED)
 			icon_state = "plated_frame"
 
-/obj/structure/tank_frame/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(construction_state == TANK_FRAME && isstack(item) && add_plating(user, item))
-		return
-	return ..()
+/obj/structure/tank_frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(construction_state != TANK_FRAME || !isstack(tool))
+		return ..()
+
+	if(!add_plating(user, tool))
+		return ITEM_INTERACT_BLOCKING
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tank_frame/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

@@ -1,4 +1,4 @@
-/mob/living/carbon/human/Initialize(mapload)
+/mob/living/carbon/human/Initialize(mapload, datum/species/species)
 	ASSIGN_GAME_VERB(src, /mob/living, mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
@@ -10,7 +10,8 @@
 	// Physiology needs to be created before species, as some species modify physiology
 	setup_physiology()
 
-	create_dna()
+
+	create_dna(species)
 	dna.species.create_fresh_body(src)
 	setup_human_dna()
 
@@ -41,10 +42,16 @@
 /mob/living/carbon/human/proc/setup_physiology()
 	physiology = new()
 
+/mob/living/carbon/human/get_unconscious_appearance()
+	return get_generic_humanoid_static_appearance()
+
 /mob/living/carbon/human/proc/setup_mood()
 	if (CONFIG_GET(flag/disable_human_mood))
 		return
 	mob_mood = new /datum/mood(src)
+
+/mob/living/carbon/human/dummy/get_unconscious_appearance()
+	return null
 
 /mob/living/carbon/human/dummy/setup_mood()
 	return
@@ -262,7 +269,7 @@
 				return
 			if(ishuman(human_or_ghost_user))
 				var/mob/living/carbon/human/human_user = human_or_ghost_user
-				if(human_user.stat || human_user == src) //|| !human_user.canmove || human_user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
+				if(IS_UNCONSCIOUS_OR_CRIT(human_user) || human_user == src) //|| !human_user.canmove || human_user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 					return   //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
 			// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
 				var/obj/item/clothing/glasses/hud/security/user_glasses = human_user.glasses
@@ -404,8 +411,8 @@
 	return chest?.get_butt_sprite()
 
 /mob/living/carbon/human/get_footprint_sprite()
-	var/obj/item/bodypart/leg/L = get_bodypart(BODY_ZONE_R_LEG) || get_bodypart(BODY_ZONE_L_LEG)
-	return shoes?.footprint_sprite || L?.footprint_sprite
+	var/obj/item/bodypart/leg/leg = get_bodypart(BODY_ZONE_R_LEG) || get_bodypart(BODY_ZONE_L_LEG)
+	return astype(get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes)?.footprint_sprite || leg?.footprint_sprite
 
 #define CHECK_PERMIT(item) (item && item.item_flags & NEEDS_PERMIT)
 
@@ -514,7 +521,7 @@
 		if (DOING_INTERACTION_WITH_TARGET(src,target))
 			return FALSE
 
-		if (target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))
+		if (IS_DEAD_OR_FAKING(target))
 			balloon_alert(src, "[target.p_they()] [target.p_are()] dead!")
 			return FALSE
 
@@ -875,7 +882,7 @@
 	return ..()
 
 /mob/living/carbon/human/mouse_buckle_handling(mob/living/M, mob/living/user)
-	if(pulling != M || grab_state != GRAB_AGGRESSIVE || stat != CONSCIOUS)
+	if(pulling != M || grab_state != GRAB_AGGRESSIVE || IS_UNCONSCIOUS_OR_CRIT(src))
 		return FALSE
 
 	//If they dragged themselves to you and you're currently aggressively grabbing them try to piggyback
@@ -890,7 +897,7 @@
 
 //src is the user that will be carrying, target is the mob to be carried
 /mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/target)
-	return (istype(target) && target.stat == CONSCIOUS)
+	return (istype(target) && !IS_UNCONSCIOUS_OR_CRIT(target))
 
 /mob/living/carbon/human/proc/can_be_firemanned(mob/living/carbon/target)
 	return ishuman(target) && target.body_position == LYING_DOWN
@@ -1037,10 +1044,8 @@
 	var/race = null
 	var/use_random_name = TRUE
 
-/mob/living/carbon/human/species/create_dna()
-	dna = new /datum/dna(src)
-	if (!isnull(race))
-		dna.species = new race
+/mob/living/carbon/human/species/create_dna(datum/species/species)
+	..(race) //Kind of shit but I'm brainfarting how to do this better right now.
 
 /mob/living/carbon/human/species/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
 	. = ..()
@@ -1089,20 +1094,6 @@
 	if(gloves?.max_heat_protection_temperature >= BURNING_ITEM_MINIMUM_TEMPERATURE)
 		return TRUE
 	return ..()
-
-/mob/living/carbon/human/get_sight_and_cutoffs()
-	. = ..()
-	if(!istype(glasses))
-		return
-	. |= glasses.vision_flags
-	if(glasses.invis_override)
-		set_invis_see(glasses.invis_override)
-	else
-		set_invis_see(min(glasses.invis_view, see_invisible))
-	if(!isnull(glasses.lighting_cutoff))
-		lighting_cutoff = max(lighting_cutoff, glasses.lighting_cutoff)
-	if(length(glasses.color_cutoffs))
-		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, glasses.color_cutoffs)
 
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor

@@ -130,27 +130,27 @@
 
 /datum/loadout_item/head/rose
 	name = "Rose"
-	item_path = /obj/item/food/grown/rose
+	item_path = /obj/item/food/grown/flower/rose
 
 /datum/loadout_item/head/sunflower
 	name = "Sunflower"
-	item_path = /obj/item/food/grown/sunflower
+	item_path = /obj/item/food/grown/flower/sunflower
 
 /datum/loadout_item/head/poppy
 	name = "Poppy"
-	item_path = /obj/item/food/grown/poppy
+	item_path = /obj/item/food/grown/flower/poppy
 
 /datum/loadout_item/head/lily
 	name = "Lily"
-	item_path = /obj/item/food/grown/poppy/lily
+	item_path = /obj/item/food/grown/flower/poppy/lily
 
 /datum/loadout_item/head/geranium
 	name = "Geranium"
-	item_path = /obj/item/food/grown/poppy/geranium
+	item_path = /obj/item/food/grown/flower/poppy/geranium
 
 /datum/loadout_item/head/harebell
 	name = "Harebell"
-	item_path = /obj/item/food/grown/harebell
+	item_path = /obj/item/food/grown/flower/harebell
 
 /datum/loadout_item/head/wig
 	name = "Natural Wig"

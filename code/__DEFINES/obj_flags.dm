@@ -103,18 +103,16 @@
 #define STACKABLE_HELMET_EXEMPT (1<<12)
 /// Prevents plasmamen from igniting when wearing this
 #define PLASMAMAN_PREVENT_IGNITION (1<<13)
-/// Usable as casting clothes by wizards (matters for suits, glasses and headwear)
-#define CASTING_CLOTHES (1<<14)
 ///Moths can't eat the clothing that has this flag.
-#define INEDIBLE_CLOTHING (1<<15)
+#define INEDIBLE_CLOTHING (1<<14)
 /// Headgear/helmet allows internals
-#define HEADINTERNALS (1<<16)
+#define HEADINTERNALS (1<<15)
 /// Prevents masks from getting adjusted from enabling internals
-#define INTERNALS_ADJUST_EXEMPT (1<<17)
+#define INTERNALS_ADJUST_EXEMPT (1<<16)
 /// Indicates that the piece of clothing contributes towards Sleeping Carp's style factor, which determines evasion probabilities. See /datums/martial/sleeping_carp/carp_style_check().
-#define CARP_STYLE_FACTOR (1<<18)
+#define CARP_STYLE_FACTOR (1<<17)
 /// Prevents clothing from losing bodyparts coverage when shredded
-#define NO_ZONE_DISABLING (1<<19)
+#define NO_ZONE_DISABLING (1<<18)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing
