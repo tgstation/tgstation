@@ -33,8 +33,8 @@
 	apply_dynamic_human_appearance(src, outfit, /datum/species/zombie, bloody_slots = ITEM_SLOT_OCLOTHING)
 	AddElement(/datum/element/death_drops, /obj/effect/decal/remains/human)
 
-/mob/living/basic/zombie/init_unconscious_appearance()
-	add_generic_humanoid_static_appearance()
+/mob/living/basic/zombie/get_unconscious_appearance()
+	return get_generic_humanoid_static_appearance()
 
 /mob/living/basic/zombie/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
