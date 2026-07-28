@@ -1448,34 +1448,6 @@
 	turf_type = /turf/open/floor/neo/cyan
 	merge_type = /obj/item/stack/tile/neo/cyan
 
-/obj/item/stack/tile/sandstone
-	name = "sandstone brick tile"
-	icon_state = "tile_sandstone"
-	inhand_icon_state = "tile-hay"
-	mats_per_unit = list(/datum/material/sandstone = HALF_SHEET_MATERIAL_AMOUNT / 2)
-	turf_type = /turf/open/floor/sandstone
-	merge_type = /obj/item/stack/tile/sandstone
-	desc = "A tile made out of sandstone."
-	tile_reskin_types = list(
-		/obj/item/stack/tile/sandstone,
-		/obj/item/stack/tile/sandstone/cobbled,
-		/obj/item/stack/tile/sandstone/tiled,
-	)
-
-/obj/item/stack/tile/sandstone/cobbled
-	name = "cobbled sandstone tile"
-	icon_state = "sandstone_cobbled"
-	singular_name = "sandstone cobbled floor tile"
-	turf_type = /turf/open/floor/sandstone/cobbled
-	merge_type = /obj/item/stack/tile/sandstone/cobbled
-
-/obj/item/stack/tile/sandstone/tiled
-	name = "sandstone brick tile"
-	icon_state = "sandstone_tiled"
-	singular_name = "sandstone brick floor tile"
-	turf_type = /turf/open/floor/sandstone/tiled
-	merge_type = /obj/item/stack/tile/sandstone/tiled
-
 /obj/item/stack/tile/material
 	name = "floor tile"
 	singular_name = "floor tile"

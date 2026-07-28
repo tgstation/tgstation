@@ -93,6 +93,38 @@ GLOBAL_LIST_EMPTY(wall_reskin_lists)
 	if(wall_reskin_types)
 		wall_reskin_types = wall_reskin_list(wall_reskin_types)
 
+/obj/item/stack/wall_filling/sandstone
+	name = "sandstone wall filling"
+	singular_name = "sandstone wall filler"
+	desc = "A filling for a standard sandstone wall."
+	icon_state = "sandbrick-wall-fill"
+	inhand_icon_state = null
+	mats_per_unit = list(/datum/material/sandstone =SHEET_MATERIAL_AMOUNT*2)
+	merge_type = /obj/item/stack/wall_filling/sandstone
+	made_from = /obj/item/stack/sheet/mineral/sandstone
+	wall_reskin_types = list(
+		/obj/item/stack/wall_filling/sandstone/basic,
+		/obj/item/stack/wall_filling/sandstone/ornate,
+		/obj/item/stack/wall_filling/sandstone/basalt,
+	)
+
+/obj/item/stack/wall_filling/sandstone/basic
+	merge_type = /obj/item/stack/wall_filling/sandstone/basic
+
+/obj/item/stack/wall_filling/sandstone/ornate
+	name = "ornate sandstone wall filling"
+	singular_name = "ornate sandstone wall filler"
+	icon_state = "sandornate-wall-fill"
+	desc = "A filling for a ornate sandstone wall. Is someone here building a pyramid or something?"
+	merge_type = /obj/item/stack/wall_filling/sandstone/ornate
+
+/obj/item/stack/wall_filling/sandstone/basalt
+	name = "basalt sandstone wall filling"
+	singular_name = "basalt sandstone wall filler"
+	icon_state = "basaltbrick-wall-fill"
+	desc = "A filling for a basalt wall, made out of sandstone. Not sure how it works, not the weirdest thing you've seen."
+	merge_type = /obj/item/stack/wall_filling/sandstone/basalt
+
 /obj/item/stack/wall_filling/plastitanium
 	name = "plastitanium wall filling"
 	singular_name = "plastitanium wall filler"

@@ -97,6 +97,15 @@
 	sheet_type = /obj/item/stack/wall_filling/sandstone/ornate
 	sheet_amount = 1
 
+/turf/closed/wall/mineral/sandstone/basalt
+	name = "basalt wall"
+	desc = "A wall with basalt plating. The orange is from other colours of sand that make up for it."
+	icon = 'icons/turf/walls/sandbasalt_wall.dmi'
+	icon_state = "sandbasalt_wall-0"
+	base_icon_state = "sandbasalt_wall"
+	sheet_type = /obj/item/stack/wall_filling/sandstone/basalt
+	sheet_amount = 1
+
 /turf/closed/wall/mineral/uranium
 	article = "a"
 	name = "uranium wall"

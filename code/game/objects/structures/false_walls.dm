@@ -326,6 +326,15 @@
 	mineral = /obj/item/stack/wall_filling/sandstone/ornate
 	walltype = /turf/closed/wall/mineral/sandstone/ornate
 
+/obj/structure/falsewall/ornate
+	name = "basalt wall"
+	desc = "A wall with basalt plating. The orange is from other colours of sand that make up for it."
+	fake_icon = 'icons/turf/walls/sandbasalt_wall.dmi'
+	icon_state = "sandbasalt_wall-open"
+	base_icon_state = "sandbasalt_wall"
+	mineral = /obj/item/stack/wall_filling/sandstone/basalt
+	walltype = /turf/closed/wall/mineral/sandstone/basalt
+
 /obj/structure/falsewall/wood
 	name = "wooden wall"
 	desc = "A wall with wooden plating. Stiff."
