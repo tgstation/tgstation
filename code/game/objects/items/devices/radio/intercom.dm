@@ -11,7 +11,7 @@
 	item_flags = NO_BLOOD_ON_ITEM
 
 	overlay_speaker_idle = "intercom_s"
-	overlay_speaker_active = "intercom_receive"
+
 
 	overlay_mic_idle = "intercom_m"
 	overlay_mic_active = null
@@ -299,7 +299,6 @@
 	icon_state = "intercom_syndicate"
 	command = TRUE
 	icon_off = "intercom_syndicate-p"
-	overlay_speaker_active = "intercom_receive_syndicate"
 	special_channels = RADIO_SPECIAL_SYNDIE
 
 // Syndicate intercom that also has freefrange on top of syndicate channel

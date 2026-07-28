@@ -1,0 +1,240 @@
+{
+	"$comment": "Single source of truth for build/debug flags and presets. Edit flags and presets HERE. Consumed by the build-flags picker extension and by tools/build/generate_flag_configs (which regenerates the static fallback launch configs). Every flag should have a fitting define",
+	"version": 1,
+	"categories": ["Map", "Testing", "Debugging", "Performance", "Misc"],
+	"flags": [
+		{
+			"id": "AUTOSTART_GAME",
+			"define": "AUTOSTART_GAME",
+			"label": "Auto Start",
+			"category": "Testing",
+			"description": "Start the game as soon as initializations finish."
+		},
+		{
+			"id": "TESTING",
+			"define": "TESTING",
+			"label": "Testing",
+			"category": "Testing",
+			"description": "Enables testing() debug messages. Also turns on DATUMVAR_DEBUGGING_MODE, atmos/lighting update visualisers and max-share tracking."
+		},
+
+		{
+			"id": "REAGENTS_TESTING",
+			"define": "REAGENTS_TESTING",
+			"label": "Reagents testing",
+			"category": "Testineg",
+			"description": "Debug messages for every reaction step (very spammy). Requires TESTING.",
+			"requires": ["TESTING"]
+		},
+		{
+			"id": "FORCE_MAP",
+			"define": "FORCE_MAP",
+			"label": "Force map",
+			"category": "Map",
+			"type": "select",
+			"valueFormat": "quoted",
+			"description": "Overrides the map loaded at round start.",
+			"options": [
+				{ "value": "", "label": "default" },
+				{ "value": "deltastation", "label": "Delta Station" },
+				{ "value": "icebox", "label": "Ice Box Station" },
+				{ "value": "metastation", "label": "MetaStation" },
+				{ "value": "tramstation", "label": "Tramstation" },
+				{ "value": "nebulastation", "label": "NebulaStation" },
+				{ "value": "kilostation", "label": "Kilostation" },
+				{ "value": "catwalkstation", "label": "Catwalk Station" },
+				{ "value": "gateway_test", "label": "Gateway Test (test)" },
+				{ "value": "multiz_debug", "label": "MultiZ Debug (test)" },
+				{ "value": "runtimestation", "label": "Runtime Station (low memory)" },
+				{
+					"value": "runtimestation_minimal",
+					"label": "Minimal Runtime Station. Only works with minimal CentCom.",
+					"requires": ["MINIMAL_CENTCOM", "SKIP_LAVALAND", "SKIP_SPACE_LEVELS"]
+				}
+			]
+		},
+		{
+			"id": "MAP_TEST",
+			"define": "MAP_TEST",
+			"label": "Map test mode",
+			"category": "Map",
+			"description": "Disables common annoyances (rat spawns, random light breakage) so mappers can test without shenanigans."
+		},
+		{
+			"id": "SKIP_LAVALAND",
+			"define": "SKIP_LAVALAND",
+			"label": "No Lavaland",
+			"category": "Map",
+			"description": "Prevents Lavaland from loading in."
+		},
+		{
+			"id": "SKIP_SPACE_LEVELS",
+			"define": "SKIP_SPACE_LEVELS",
+			"label": "No space ruins",
+			"category": "Map",
+			"description": "Makes no space levels load in."
+		},
+		{
+			"id": "TIMER_DEBUG",
+			"define": "TIMER_DEBUG",
+			"label": "Timer debug",
+			"category": "Debugging",
+			"description": "Compiles full timer debug info. Warning: increases timer creation cost ~5x."
+		},
+		{
+			"id": "REFERENCE_DOING_IT_LIVE",
+			"define": "REFERENCE_DOING_IT_LIVE",
+			"label": "Reference tracking (live)",
+			"category": "Debugging",
+			"description": "Sets up the ref tracker for a live environment, logging hard-deletes to harddels.log. Uses fast reftracking but less accurate."
+		},
+		{
+			"id": "REFERENCE_TRACKING_STANDARD",
+			"define": "REFERENCE_TRACKING_STANDARD",
+			"label": "Reference tracking (standard)",
+			"category": "Debugging",
+			"description": "Local hard-deletion hunting. Spends all its time searching (slower but thorough), logging to harddels.log.",
+			"conflictsWith": ["REFERENCE_DOING_IT_LIVE"]
+		},
+		{
+			"id": "DATUMVAR_DEBUGGING_MODE",
+			"define": "DATUMVAR_DEBUGGING_MODE",
+			"label": "Datum var debugging",
+			"category": "Debugging",
+			"description": "Caches datum vars so you can retrieve them later to see which vars changed. Implied by TESTING."
+		},
+		{
+			"id": "UNIT_TESTS",
+			"define": "UNIT_TESTS",
+			"label": "Unit tests",
+			"category": "Testing",
+			"description": "Runs all unit tests, then shuts down."
+		},
+		{
+			"id": "USE_BYOND_TRACY",
+			"define": "USE_BYOND_TRACY",
+			"label": "byond-tracy profiler",
+			"category": "Performance",
+			"description": "Attempts to load prof.dll/libprof.so on boot for Tracy profiling. You must build byond-tracy yourself look at the guide for info."
+		},
+		{
+			"id": "MC_TAB_TRACY_INFO",
+			"define": "MC_TAB_TRACY_INFO",
+			"label": "byond-tracy MC tab info",
+			"category": "Performance",
+			"description": "Displays byond-tracy's status in the MC tab."
+		},
+		{
+			"id": "PERFORMANCE_TESTS",
+			"define": "PERFORMANCE_TESTS",
+			"label": "Performance tests",
+			"category": "Performance",
+			"description": "Boots, runs world.run_performance_tests(), then shuts down the server."
+		},
+		{
+			"id": "DO_NOT_DEFER_ASSETS",
+			"define": "DO_NOT_DEFER_ASSETS",
+			"label": "Do not defer assets",
+			"category": "Performance",
+			"description": "Generates all assets up front during initialize instead of deferring them when needed."
+		},
+		{
+			"id": "PROFILE_MAPLOAD_INIT_ATOM",
+			"define": "PROFILE_MAPLOAD_INIT_ATOM",
+			"label": "Profile mapload init atom",
+			"category": "Performance",
+			"description": "Profiles atom initialization during map load."
+		},
+		{
+			"id": "DISABLE_DREAMLUAU",
+			"define": "DISABLE_DREAMLUAU",
+			"label": "Disable Dreamluau",
+			"category": "Misc",
+			"description": "Fully disables Dreamluau."
+		},
+		{
+			"id": "VERB_STRESS_TEST",
+			"define": "VERB_STRESS_TEST",
+			"label": "Verb stress test",
+			"category": "Performance",
+			"description": "Forces verb processing into just the 2% of a tick we normally reserve for it, for simulating highpop."
+		},
+		{
+			"id": "FORCE_VERB_OVERTIME",
+			"define": "FORCE_VERB_OVERTIME",
+			"label": "Force verb overtime",
+			"category": "Performance",
+			"description": "Forces all verbs to run into overtime all of the time, negating the reserve 2%.",
+			"requires": ["VERB_STRESS_TEST"]
+		},
+		{
+			"id": "ALL_TEMPLATES",
+			"define": "ALL_TEMPLATES",
+			"label": "All templates",
+			"category": "Map",
+			"description": "Includes all map templates in the build (needed for some map/ruin testing)."
+		},
+		{
+			"id": "ALL_MAPS",
+			"define": "ALL_MAPS",
+			"label": "All maps",
+			"category": "Map",
+			"description": "Includes every station map in the compiled build instead of just the ones referenced dynamically."
+		},
+		{
+			"id": "MINIMAL_CENTCOM",
+			"define": "MINIMAL_CENTCOM",
+			"label": "Minimal CentCom",
+			"category": "Map",
+			"description": "Uses a mini centcom. Required for runtimestation minimal and cant be used without it.",
+			"requiresValues": { "force_map": "runtimestation_minimal" }
+		}
+	],
+	"presets": [
+		{
+			"id": "LOW_MEMORY",
+			"label": "Low memory mode",
+			"flags": ["SKIP_LAVALAND", "SKIP_SPACE_LEVELS"],
+			"values": { "force_map": "runtimestation" }
+		},
+		{
+			"id": "ABSOLUTE_MINIMUM",
+			"label": "Absolute minimum",
+			"flags": [
+				"SKIP_LAVALAND",
+				"SKIP_SPACE_LEVELS",
+				"AUTOSTART_GAME",
+				"MINIMAL_CENTCOM"
+			],
+			"values": { "force_map": "runtimestation_minimal" }
+		},
+		{
+			"id": "TESTING",
+			"label": "Testing",
+			"flags": [
+				"TESTING",
+				"REAGENTS_TESTING",
+				"TIMER_DEBUG",
+				"REFERENCE_DOING_IT_LIVE"
+			]
+		},
+		{
+			"id": "TESTING_LOW_MEMORY",
+			"label": "Testing + low memory mode",
+			"flags": [
+				"SKIP_LAVALAND",
+				"SKIP_SPACE_LEVELS",
+				"TESTING",
+				"REAGENTS_TESTING",
+				"TIMER_DEBUG",
+				"REFERENCE_DOING_IT_LIVE"
+			],
+			"values": { "force_map": "runtimestation" }
+		},
+		{
+			"id": "MAP_TESTING",
+			"label": "Map testing",
+			"flags": ["TESTING", "MAP_TEST"]
+		}
+	]
+}

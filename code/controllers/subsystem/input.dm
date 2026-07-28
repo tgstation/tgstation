@@ -37,7 +37,7 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 		"Any+UP" = "\"KeyUp \[\[*\]\] \[\[map.mouse-pos\]\] \[\[map.size\]\]\"",
 		"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 		"Tab" = "\".winset \\\"input.focus=true?map.focus=true:input.focus=true\\\"\"",
-		"Escape" = "Open-Escape-Menu",
+		"Escape" = "\".winset \\\"[SKIN_ESCAPE_MENU].is-visible=true?[SKIN_ESCAPE_MENU].is-visible=false:[SKIN_ESCAPE_MENU].is-visible=true\\\"\\n.output [SKIN_ESCAPE_MENU]:update [ESCAPE_MENU_TOGGLE_MESSAGE]\\nReset-Held-Keys\"",
 	)
 
 // Badmins just wanna have fun ♪

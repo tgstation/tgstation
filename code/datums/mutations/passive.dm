@@ -1,6 +1,6 @@
 /datum/mutation/biotechcompat
 	name = "Biotech Compatibility"
-	desc = "Subject is more compatibile with biotechnology such as skillchips."
+	desc = "The subject is compatible with biotechnology such as skillchips."
 	quality = POSITIVE
 	instability = POSITIVE_INSTABILITY_MINI
 
@@ -16,7 +16,7 @@
 
 /datum/mutation/clever
 	name = "Clever"
-	desc = "Causes the subject to feel just a little bit smarter. Most effective in specimens with low levels of intelligence."
+	desc = "The subject's intelligence level is raised to that of the average assistant."
 	quality = POSITIVE
 	instability = POSITIVE_INSTABILITY_MODERATE // literally makes you on par with station equipment
 	text_gain_indication = span_danger("You feel a little bit smarter.")

@@ -1,70 +1,144 @@
+/// How far away the magicarp looks for a special spell target
 #define MAGICARP_SPELL_TARGET_SEEK_RANGE 4
+/// How far away the magicarp looks for a regular spell target
+#define MAGICARP_SPELL_ENEMY_SEEK_RANGE 9
 
 /datum/pet_command/use_ability/magicarp
 	pet_ability_key = BB_MAGICARP_SPELL
 
-/datum/ai_planning_subtree/attack_obstacle_in_path/carp
-	attack_behaviour = /datum/ai_behavior/attack_obstructions/carp
+/**
+ * # Carp should flee
+ * Gates the flee/panic-teleport block. A carp flees from its flee target if that target is a feared
+ * fisherman, or if it is otherwise allowed to flee (i.e. it's injured, which clears BB_BASIC_MOB_STOP_FLEEING).
+ */
+/datum/bt_node/decorator/carp_should_flee
+	/// Blackboard key holding the thing we'd run away from
+	var/target_key = BB_BASIC_MOB_FLEE_TARGET
 
-/datum/ai_behavior/attack_obstructions/carp
-	action_cooldown = 1.5 SECONDS
+/datum/bt_node/decorator/carp_should_flee/check_condition(datum/ai_controller/controller)
+	var/atom/flee_from = controller.blackboard[target_key]
+	if(QDELETED(flee_from))
+		return FALSE
+	if(controller.blackboard[BB_CARPS_FEAR_FISHERMAN] && HAS_TRAIT(flee_from, TRAIT_SCARY_FISHERMAN))
+		return TRUE
+	return !controller.blackboard[BB_BASIC_MOB_STOP_FLEEING]
 
-/// As basic attack tree but interrupt if your health gets low or if your spell is off cooldown
-/datum/ai_planning_subtree/basic_melee_attack_subtree/magicarp
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/magicarp
+/datum/bt_node/decorator/carp_should_flee/register_observe_signals(atom/pawn)
+	RegisterSignals(pawn, list(
+		COMSIG_AI_BLACKBOARD_KEY_SET(target_key),
+		COMSIG_AI_BLACKBOARD_KEY_CLEARED(target_key),
+		COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_STOP_FLEEING),
+		COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_BASIC_MOB_STOP_FLEEING),
+	), PROC_REF(on_signal_changed))
+	return TRUE
 
-/// Interrupt your attack chain if: you have a spell, it's not on cooldown, and it has a target
-/datum/ai_behavior/basic_melee_attack/magicarp
-
-/datum/ai_behavior/basic_melee_attack/magicarp/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key, health_ratio_key)
-	var/datum/action/cooldown/using_action = controller.blackboard[BB_MAGICARP_SPELL]
-	if (QDELETED(using_action))
-		return ..()
-	if (!controller.blackboard[BB_MAGICARP_SPELL_SPECIAL_TARGETING] && using_action.IsAvailable())
-		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
-	return ..()
+/datum/bt_node/decorator/carp_should_flee/unregister_observe_signals(atom/pawn)
+	UnregisterSignal(pawn, list(
+		COMSIG_AI_BLACKBOARD_KEY_SET(target_key),
+		COMSIG_AI_BLACKBOARD_KEY_CLEARED(target_key),
+		COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_STOP_FLEEING),
+		COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_BASIC_MOB_STOP_FLEEING),
+	))
 
 /**
- * Find a target for the magicarp's spell
- * This gets weird because different spells want different targeting
- * but I didn't want a new ai controller for every different spell
+ * # Find magicarp spell target
+ * Finds a target for the magicarp's spell. Different spells want different targeting, so rather than make a
+ * controller per spell we branch on BB_MAGICARP_SPELL_SPECIAL_TARGETING here. Only runs if the spell is ready.
  */
-/datum/ai_planning_subtree/find_nearest_magicarp_spell_target
+/datum/bt_node/ai_behavior/find_magicarp_spell_target
+	/// Blackboard key holding the spell we're trying to target
+	var/ability_key = BB_MAGICARP_SPELL
+	/// Blackboard key we store the chosen spell target in
+	var/target_key = BB_MAGICARP_SPELL_TARGET
+	/// Blackboard key holding our targeting strategy for the default case
+	var/targeting_strategy_key = BB_TARGETING_STRATEGY
+	/// Blackboard key describing any special targeting this spell wants
+	var/special_targeting_key = BB_MAGICARP_SPELL_SPECIAL_TARGETING
 
-/datum/ai_planning_subtree/find_nearest_magicarp_spell_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/datum/action/cooldown/using_action = controller.blackboard[BB_MAGICARP_SPELL]
-	if (!using_action?.IsAvailable())
-		return
+/datum/bt_node/ai_behavior/find_magicarp_spell_target/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/datum/action/cooldown/using_action = controller.blackboard[ability_key]
+	if(!using_action?.IsAvailable())
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	var/spell_targeting = controller.blackboard[BB_MAGICARP_SPELL_SPECIAL_TARGETING]
-	if (!spell_targeting)
-		controller.queue_behavior(/datum/ai_behavior/find_potential_targets/nearest/magicarp, BB_MAGICARP_SPELL_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
-		return
+	var/atom/found
+	switch(controller.blackboard[special_targeting_key])
+		if(MAGICARP_SPELL_CORPSES)
+			found = find_friendly_corpse(controller)
+		if(MAGICARP_SPELL_OBJECTS)
+			found = find_animatable(controller)
+		if(MAGICARP_SPELL_WALLS)
+			found = find_nearest_wall(controller)
+		else
+			found = find_nearest_enemy(controller)
 
-	switch(spell_targeting)
-		if (MAGICARP_SPELL_CORPSES)
-			controller.queue_behavior(/datum/ai_behavior/find_and_set/friendly_corpses, BB_MAGICARP_SPELL_TARGET, MAGICARP_SPELL_TARGET_SEEK_RANGE)
-			return
-		if (MAGICARP_SPELL_OBJECTS)
-			controller.queue_behavior(/datum/ai_behavior/find_and_set/animatable, BB_MAGICARP_SPELL_TARGET, MAGICARP_SPELL_TARGET_SEEK_RANGE)
-			return
-		if (MAGICARP_SPELL_WALLS)
-			controller.queue_behavior(/datum/ai_behavior/find_and_set/nearest_wall, BB_MAGICARP_SPELL_TARGET, MAGICARP_SPELL_TARGET_SEEK_RANGE)
-			return
+	if(isnull(found))
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-/// This subtype only exists because if you queue multiple of the same action with different arguments it deletes their stored arguments
-/datum/ai_behavior/find_potential_targets/nearest/magicarp
+	controller.set_blackboard_key(target_key, found)
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/find_potential_targets/nearest/magicarp/pick_final_target(datum/ai_controller/controller, list/enemies_list)
-	for(var/atom/atom as anything in enemies_list)
-		if(HAS_TRAIT(atom, TRAIT_SCARY_FISHERMAN))
-			enemies_list -= atom
-	return ..()
+/// Nearest valid combat target which isn't a scary fisherman (default spell targeting)
+/datum/bt_node/ai_behavior/find_magicarp_spell_target/proc/find_nearest_enemy(datum/ai_controller/controller)
+	var/mob/living/living_pawn = controller.pawn
+	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
+	if(!strategy)
+		return null
+	var/list/candidates = list()
+	for(var/mob/living/candidate in oview(MAGICARP_SPELL_ENEMY_SEEK_RANGE, living_pawn))
+		if(HAS_TRAIT(candidate, TRAIT_SCARY_FISHERMAN))
+			continue
+		if(!strategy.is_valid_target(living_pawn, candidate, MAGICARP_SPELL_ENEMY_SEEK_RANGE, controller))
+			continue
+		candidates += candidate
+	if(!length(candidates))
+		return null
+	return get_closest_atom(/mob/living, candidates, living_pawn)
 
-/// Then use it on that target
-/datum/ai_planning_subtree/targeted_mob_ability/magicarp
-	ability_key = BB_MAGICARP_SPELL
-	target_key = BB_MAGICARP_SPELL_TARGET
-	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/and_clear_target
+/// An object or structure we could animate with a staff of change
+/datum/bt_node/ai_behavior/find_magicarp_spell_target/proc/find_animatable(datum/ai_controller/controller)
+	var/mob/living/living_pawn = controller.pawn
+	var/list/nearby_items = list()
+	for(var/obj/new_friend in oview(MAGICARP_SPELL_TARGET_SEEK_RANGE, living_pawn))
+		if(!isitem(new_friend) && !isstructure(new_friend))
+			continue
+		if(is_type_in_list(new_friend, GLOB.animatable_blacklist))
+			continue
+		if(living_pawn.see_invisible < new_friend.invisibility)
+			continue
+		nearby_items += new_friend
+	if(length(nearby_items))
+		return pick(nearby_items)
+	return null
+
+/// The nearest wall which isn't invulnerable
+/datum/bt_node/ai_behavior/find_magicarp_spell_target/proc/find_nearest_wall(datum/ai_controller/controller)
+	var/mob/living/living_pawn = controller.pawn
+	var/list/nearby_walls = list()
+	for(var/turf/closed/new_wall in oview(MAGICARP_SPELL_TARGET_SEEK_RANGE, living_pawn))
+		if(isindestructiblewall(new_wall))
+			continue
+		nearby_walls += new_wall
+	if(length(nearby_walls))
+		return get_closest_atom(/turf/closed, nearby_walls, living_pawn)
+	return null
+
+/// A corpse who shares our faction, for resurrection spells
+/datum/bt_node/ai_behavior/find_magicarp_spell_target/proc/find_friendly_corpse(datum/ai_controller/controller)
+	var/mob/living/living_pawn = controller.pawn
+	var/list/nearby_bodies = list()
+	for(var/mob/living/dead_pal in oview(MAGICARP_SPELL_TARGET_SEEK_RANGE, living_pawn))
+		if(!isturf(dead_pal.loc))
+			continue
+		if(!dead_pal.stat || dead_pal.health > 0)
+			continue
+		if(living_pawn.see_invisible < dead_pal.invisibility)
+			continue
+		if(!living_pawn.faction_check_atom(dead_pal))
+			continue
+		nearby_bodies += dead_pal
+	if(length(nearby_bodies))
+		return pick(nearby_bodies)
+	return null
 
 #undef MAGICARP_SPELL_TARGET_SEEK_RANGE
+#undef MAGICARP_SPELL_ENEMY_SEEK_RANGE

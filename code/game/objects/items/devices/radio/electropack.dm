@@ -101,6 +101,10 @@
 	data["power"] = on
 	data["frequency"] = frequency
 	data["code"] = code
+	return data
+
+/obj/item/electropack/ui_static_data(mob/user)
+	var/list/data = list()
 	data["minFrequency"] = MIN_FREE_FREQ
 	data["maxFrequency"] = MAX_FREE_FREQ
 	return data

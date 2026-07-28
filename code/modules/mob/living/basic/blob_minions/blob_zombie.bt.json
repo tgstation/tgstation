@@ -1,0 +1,42 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/blob_zombie",
+	"type": "selector",
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity"
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"observer_abort": "BT_ABORT_BOTH",
+				"key": "BB_TRAVEL_DESTINATION"
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "BB_TRAVEL_DESTINATION",
+							"required_dist": 0
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/clear_key",
+						"vars": {
+							"key": "BB_TRAVEL_DESTINATION"
+						}
+					}
+				]
+			}
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/simple_hostile_obstacles_combat"
+		}
+	]
+}

@@ -25,5 +25,8 @@
 	"search.exclude": {
 		"**/node_modules": true
 	},
-	"Lua.diagnostics.enable": false
+	"Lua.diagnostics.enable": false,
+	"ss13BuildFlags.baseTask": "Build All",
+	"ss13BuildFlags.configPath": "tools/build/build_flags.json",
+	"ss13BuildFlags.injectionMode": "cli-args"
 }

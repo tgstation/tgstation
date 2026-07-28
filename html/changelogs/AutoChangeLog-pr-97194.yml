@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "Selling organs in cargo once again works properly. As a reminder, Normal human organs sell for 20 credits. The organs of a roundstart human are worth 10x as much, however."

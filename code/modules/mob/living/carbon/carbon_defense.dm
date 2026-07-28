@@ -2,7 +2,7 @@
 
 /mob/living/carbon/get_eye_protection()
 	. = ..()
-	if(is_blind() && !is_blind_from(list(UNCONSCIOUS_TRAIT, HYPNOCHAIR_TRAIT)))
+	if(is_blind() && !is_blind_from(list(TRAIT_STATUS_EFFECT(/datum/status_effect/knocked_out::id), HYPNOCHAIR_TRAIT)))
 		return INFINITY //For all my homies that can not see in the world
 	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
@@ -84,19 +84,13 @@
 	var/extra_wound_details = ""
 
 	if(weapon.damtype == BRUTE && hit_bodypart.can_dismember())
+		var/has_exterior = (hit_bodypart.bio_status & ANATOMY_EXTERIOR)
+		var/has_interior = (hit_bodypart.bio_status & ANATOMY_INTERIOR)
 
-		var/mangled_state = hit_bodypart.get_mangled_state()
+		var/exterior_ready_to_dismember = (!has_exterior || (hit_bodypart.mangled_state & BODYPART_MANGLED_EXTERIOR))
+		var/interior_ready_to_dismember = (!has_interior || (hit_bodypart.mangled_state & BODYPART_MANGLED_INTERIOR))
 
-		var/bio_status = hit_bodypart.get_bio_state_status()
-
-		var/has_exterior = ((bio_status & ANATOMY_EXTERIOR))
-		var/has_interior = ((bio_status & ANATOMY_INTERIOR))
-
-		var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_EXTERIOR)))
-		var/interior_ready_to_dismember = (!has_interior || ((mangled_state & BODYPART_MANGLED_INTERIOR)))
-
-		var/dismemberable = ((hit_bodypart.dismemberable_by_wound()) || hit_bodypart.dismemberable_by_total_damage())
-		if (dismemberable)
+		if ((exterior_ready_to_dismember && interior_ready_to_dismember) || hit_bodypart.dismemberable_by_total_damage())
 			extra_wound_details = ", threatening to sever it entirely"
 		else if((has_interior && (has_exterior && exterior_ready_to_dismember) && weapon.get_sharpness()))
 			var/bone_text = hit_bodypart.get_internal_description()
@@ -415,7 +409,7 @@
 
 /// Check ourselves to see if we've got any shrapnel, return true if we do. This is a much simpler version of what humans do, we only indicate we're checking ourselves if there's actually shrapnel
 /mob/living/carbon/proc/check_self_for_injuries()
-	if(stat >= UNCONSCIOUS)
+	if(IS_UNCONSCIOUS(src))
 		return
 
 	var/embeds = FALSE
@@ -504,11 +498,15 @@
 * Check to see if we should be passed out from oxyloss
 */
 /mob/living/carbon/proc/check_passout()
+	SIGNAL_HANDLER
+	if(HAS_TRAIT(src, TRAIT_NO_OXYLOSS_PASSOUT))
+		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
+		return
+
 	var/mob_oxyloss = get_oxy_loss()
-	if(mob_oxyloss >= OXYLOSS_PASSOUT_THRESHOLD && !HAS_TRAIT(src, TRAIT_NO_OXYLOSS_PASSOUT))
-		if(!HAS_TRAIT_FROM(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT))
-			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
-	else if(mob_oxyloss < OXYLOSS_PASSOUT_THRESHOLD)
+	if(mob_oxyloss >= OXYLOSS_PASSOUT_THRESHOLD)
+		ADD_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
+	else
 		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
 
 /mob/living/carbon/get_organic_health()
