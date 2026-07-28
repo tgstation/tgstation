@@ -774,12 +774,22 @@
   - map: Add Tombstone Escape Shuttle that can be unlocked via a biohazard event.
       (Blob, zombies, or a severe enough disease)
 2026-07-26:
+  CabinetOnFire:
+  - code_imp: Adds debug flags that can be selected when building in VS code
   Fghj240:
   - balance: Disease stage speed and advanced disease symptom delay RNG has been reduced
   - balance: Recovering from an advanced disease makes you more resistant to similar
       advanced diseases.
   - spellcheck: Viral adaptation and Viral evolution are always neutered.
   - qol: Spacers can choose their height a little
+  Hatterhat:
+  - spellcheck: Adjusted some descriptions on some rifles (the Sakhno bolt-action,
+      the SKS, the anti-materiel sniper) and nudged extended lore bits to examining
+      twice.
+  Iajret:
+  - bugfix: Defeating Hiero now gives style point multiplier
+  - bugfix: Successfully tapping a vent will grant a style point multiplication too,
+      as it was supposed to
   Melbert:
   - rscadd: The AI and Cyborg upload computers have been replaced with module racks,
       a physical manifestation of AI laws.
@@ -798,3 +808,95 @@
   - rscadd: TGUI "state laws" window
   - refactor: Refactored silicon laws in its entirely, report any oddities
   - bugfix: Fix perma stun from grabs
+  PapaMichael:
+  - bugfix: Departmental photo albums now properly save their photos between rounds
+  SmArtKar:
+  - bugfix: Fixed hair gradients, again
+  YesterdaysPromise:
+  - bugfix: Scythes, shovels, flasks, shears and secutors will now display their worn
+      sprites when in belt/suit storage.
+  - bugfix: Tiles, circuit components, wands, types of leather and door remotes no
+      longer display missing/incorrect sprites when worn on belt/suit storage.
+  - image: Added missing metalhydrogen inhand sprite, and fixed the colours of the
+      adamantine one.
+  - image: Added missing belt/suit storage sprites for all basic material and glass
+      types, flash, shards, light tubes, light bulbs, drapes, and surgery tools which
+      can be put in those slots.
+  - image: Hatchets, beakers, secutors, shears etc. had their sprites corrected, as
+      despite showing on left side of front-facing sprite, they also showed up on
+      left facing profile (with right side of the body to the front)
+  - image: Added unique belt/suit storage sprites for carp, ratvar, and narsie plushies.
+  hry-gh:
+  - qol: the escape menu now runs clientside, and should be considerably more responsive
+  lelandkemble:
+  - bugfix: the firepit structure that spawns somewhere(probably on icebox) can now
+      be lit
+  - bugfix: you can hit a griddle on combat mode
+  - bugfix: you no longer succeed at digging up a hydroponics tray after failing the
+      do_after()
+  - code_imp: 50 files have been converted from attackby() to item_interaction
+2026-07-27:
+  Aliceee2ch:
+  - image: Added more tools to engi toolbelt overlays.
+  Melbert:
+  - balance: Heretics no longer need a focus to cast spells.
+  - balance: (Almost) all heretic spells are now limited to a number of charges. Once
+      you are out of charges, you need to replenish them. For some spells, there are
+      special conditions to fulfill to recharge them, but for most of them you must
+      simply complete a condition according to your path (like rusting tiles as rust).
+  - balance: Holywater will purge spell charges from heretics.
+  - balance: '"Amber Focus" is now a tier one side knowledge that slooowwwly replenishes
+      spell charges over time.'
+  - balance: Codex Cicatrix is now a T1 knowledge. Its drain speed has been increased
+      (1.5x slower) as has its draw speed (1.875x slower). Codex Morbus has also seen
+      an increase to drain speed (2x slower) and draw speed (2x slower).
+  - balance: Warren King's Welcome is now a T1 knowedge and has additional effects
+      - restricting nearby airlocks to "heretic" access and granting your ID "heretic"
+      access.
+  - balance: Ash heretics can no longer empower their spells while on fire.
+  - balance: Wolves Among Sheep heretic healing has been reduced by 75% (60 -> 15)
+  - qol: Heretic rituals now use a radial for deciding which to invoke
+  - qol: Tooltips for heretics are now formatted, easier to read
+  - rscadd: Adds a tier two knowledge to heretic, "Unwrap Minds", which allows them
+      to hypnotize someone.
+  - rscadd: Adds a tier one knowledge to heretic, "The Miraculous Mirror", which allow
+      them to change their appearance (including species).
+  - rscadd: Adds a tier three knowledge to heretic, "Keys to the Backdoor", which
+      effectively gives them a pocket dimension accessible via closet to do... things
+      in.
+  - rscadd: Mask of Madness is now a tier three side knowledge, allowing any heretic
+      access to it. Also now requires lit candles.
+  - rscadd: Ash Heretics now have a new main path node, "Nightwatcher's Lantern",
+      which causes negative effects to mobs who are in the light's radius.
+  - balance: Shadow Cloak is no longer an innate heretic knowledge, but is guaranteed
+      to show up for free in the first draft pool (in addition to the three other
+      options).
+  - bugfix: Performing an action with an internal cooldown (like resisting) will no
+      longer cancel timed actions
+  PapaMichael:
+  - bugfix: Bar, Library, and Chapel photo albums can now be found on all stations
+  - bugfix: Removed duplicate photo albums from Catwalk and Nebula
+  lelandkemble:
+  - bugfix: fixed a runtime when deconstructing a bookshelf
+  - bugfix: you can now change your mind at the very last second about making a modsuit
+  - code_imp: 30 files have been converted from attackby() to item_interaction()
+  - bugfix: You can now load printed mech generators
+  tigercat2000:
+  - bugfix: ByondUi/TGUI Map elements should never have the small map bug again
+  - bugfix: ByondUi/TGUI Map elements will no longer layout incorrectly if you refresh
+      the page in some circumstances
+2026-07-28:
+  ArcaneMusic:
+  - bugfix: Selling organs in cargo once again works properly. As a reminder, Normal
+      human organs sell for 20 credits. The organs of a roundstart human are worth
+      10x as much, however.
+  Melbert:
+  - code_imp: Slightly changed the logic for blindness and unconscious hud effects,
+      report any oddities
+  - code_imp: Slightly changed logic for selecting random reagents for stuff like
+      toxic bees, report anything weird with it
+  - rscdel: Mobs will no longer log their initial name change (I.e. "name changed
+      from (nothing) to John Doe")
+  PapaMichael:
+  - balance: Pirates prioritize spawning their leaders
+  - admin: Admins can configure Heavy Pirates

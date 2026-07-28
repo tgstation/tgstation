@@ -10,10 +10,12 @@
 	/// Cooldown for how often we can pull rabbits out of here
 	COOLDOWN_DECLARE(rabbit_cooldown)
 
-/obj/item/clothing/head/hats/tophat/attackby(obj/item/hitby_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(istype(hitby_item, /obj/item/gun/magic/wand))
-		abracadabra(hitby_item, user)
+/obj/item/clothing/head/hats/tophat/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/gun/magic/wand))
+		return ..()
+
+	abracadabra(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/head/hats/tophat/proc/abracadabra(obj/item/hitby_wand, mob/magician)
 	if(!COOLDOWN_FINISHED(src, rabbit_cooldown))
