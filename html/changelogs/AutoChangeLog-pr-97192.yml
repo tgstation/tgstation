@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "Slightly changed logic for selecting random reagents for stuff like toxic bees, report anything weird with it"

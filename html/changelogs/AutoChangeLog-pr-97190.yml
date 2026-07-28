@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "Slightly changed the logic for blindness and unconscious hud effects, report any oddities"

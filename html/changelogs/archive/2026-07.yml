@@ -885,3 +885,11 @@
   - bugfix: ByondUi/TGUI Map elements should never have the small map bug again
   - bugfix: ByondUi/TGUI Map elements will no longer layout incorrectly if you refresh
       the page in some circumstances
+2026-07-28:
+  Melbert:
+  - code_imp: Slightly changed the logic for blindness and unconscious hud effects,
+      report any oddities
+  - code_imp: Slightly changed logic for selecting random reagents for stuff like
+      toxic bees, report anything weird with it
+  - rscdel: Mobs will no longer log their initial name change (I.e. "name changed
+      from (nothing) to John Doe")
