@@ -3,6 +3,7 @@
 	desc = "Something went wrong."
 	icon_state = "sheet-hide"
 	inhand_icon_state = null
+	worn_icon_state = null
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/animalhide
 	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
@@ -224,6 +225,7 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 	desc = "The by-product of mob grinding."
 	singular_name = "leather piece"
 	icon_state = "sheet-leather"
+	worn_icon_state = null
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/leather
 	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
@@ -424,6 +426,7 @@ GLOBAL_LIST_INIT(bear_pelt_recipes, list ( \
 	desc = "This hide was stripped of its hair, but still needs washing and tanning."
 	singular_name = "hairless hide piece"
 	icon_state = "sheet-hairlesshide"
+	worn_icon_state = null
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/hairlesshide
 	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
@@ -439,6 +442,7 @@ GLOBAL_LIST_INIT(bear_pelt_recipes, list ( \
 	desc = "This hide has been cleaned but still needs to be dried."
 	singular_name = "wet hide piece"
 	icon_state = "sheet-wetleather"
+	worn_icon_state = null
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/wethide
 	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'

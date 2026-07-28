@@ -229,7 +229,7 @@
 		for(var/mob/living/inside in src)
 			return tool.interact_with_atom(inside, user, modifiers)
 
-	return NONE
+	return ..()
 
 /obj/structure/closet/body_bag/before_open(mob/living/user, force)
 	if(pinned)

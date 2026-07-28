@@ -43,7 +43,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/opened = FALSE
 	var/welded = FALSE
 	var/locked = FALSE
-	var/large = TRUE
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/breakout_time = 1200
 	var/message_cooldown
@@ -926,7 +925,12 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(user in contents)
 		return ITEM_INTERACT_BLOCKING
 
+
 	if(opened && istype(tool, cutting_tool)) // not all of them take welders
+		if(resistance_flags & INDESTRUCTIBLE)
+			to_chat(user, span_warning("You can't cut [src] apart!"))
+			return ITEM_INTERACT_BLOCKING
+
 		if(!tool.tool_start_check(user, amount=1))
 			return ITEM_INTERACT_BLOCKING
 
