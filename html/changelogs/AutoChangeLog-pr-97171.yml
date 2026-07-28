@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed cardboard cutouts having an incorrect assistant sprite"
+  - bugfix: "Fixed some effects not updating hair when they should"
