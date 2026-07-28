@@ -12,7 +12,7 @@
 	resistance = -2
 	stage_speed = 1
 	transmittable = -3
-	level = 5
+	level = 6
 	symptom_delay = 7.5
 	var/purge_alcohol = FALSE
 	var/trauma_heal_mild = FALSE
@@ -81,7 +81,7 @@
 	resistance = 1
 	stage_speed = -2
 	transmittable = 2
-	level = 4
+	level = 3
 	base_message_chance = 7
 	symptom_delay = 1
 	delay_variation = 0

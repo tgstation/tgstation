@@ -15,7 +15,7 @@
 	resistance = 4
 	stage_speed = 4
 	transmittable = -4
-	level = 5
+	level = 6
 	base_message_chance = 100
 	symptom_delay = 37.5
 	symptom_cure = null

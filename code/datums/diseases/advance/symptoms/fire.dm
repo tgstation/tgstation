@@ -27,6 +27,7 @@
 		"Transmission 8" = "Host will spread the virus through skin flakes when bursting into flame.",
 		"Stealth 4" = "The symptom remains hidden until active.",
 	)
+	var/suppress_warning = FALSE
 
 /datum/symptom/fire/Start(datum/disease/advance/A)
 	. = ..()
@@ -97,7 +98,7 @@ Bonus
 	resistance = -2
 	stage_speed = -2
 	transmittable = -2
-	level = 7
+	level = 9
 	severity = 6
 	base_message_chance = 100
 	symptom_delay = 60

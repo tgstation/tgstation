@@ -13,7 +13,7 @@
 	resistance = -2
 	stage_speed = 1
 	transmittable = 0
-	level = 5
+	level = 3
 	severity = 0
 	symptom_cure = null
 	immunity_proof = TRUE
@@ -41,7 +41,7 @@
 	resistance = 4
 	stage_speed = -2
 	transmittable = 3
-	level = 5
+	level = 3
 	severity = 0
 	symptom_cure = null
 	immunity_proof = TRUE
