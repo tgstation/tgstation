@@ -615,7 +615,6 @@
 	transmittable = -1
 	level = 5
 	base_message_chance = 0
-	symptom_cure = null
 	power = 2
 
 	threshold_descs = list(
@@ -629,4 +628,40 @@
 
 /datum/symptom/heal/aggressive_healing/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	carbon_host.heal_overall_damage(actual_power, actual_power, required_bodytype = healable_bodytypes)
+	return TRUE
+
+/datum/symptom/heal/genetic
+	name = "Genetic Heal"
+	desc = "The virus slowly repairs tissue damage in hosts with stable genetics."
+	stealth = 1
+	resistance = -3
+	stage_speed = -4
+	transmittable = -4
+	level = 9
+	threshold_descs = list(
+		"Resistance 8" = "Doubles healing speed from stable genetics.",
+		"Stage Speed 7" = "Slightly increases healing speed for all hosts without negative genetic stability.",
+	)
+	power = 0
+	var/stability_divisor = 2
+
+/datum/symptom/heal/genetic/Start(datum/disease/advance/our_disease)
+	. = ..()
+	if(!.)
+		return
+	if(our_disease.totalResistance() >= 9)
+		power = 0.2
+	if(our_disease.totalStageSpeed() >= 6)
+		stability_divisor = 1
+
+/datum/symptom/heal/genetic/CanHeal(datum/disease/advance/our_disease)
+	if(!our_disease.affected_mob.has_dna())
+		return power
+	var/dna_stability = our_disease.affected_mob.dna.stability
+	if(dna_stability >= initial(our_disease.affected_mob.dna.stability))
+		return power + (dna_stability- 100) / stability_divisor
+
+/datum/symptom/heal/genetic/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
+	if(carbon_host.heal_overall_damage(actual_power, actual_power, required_bodytype = healable_bodytypes) && prob(5))
+		to_chat(carbon_host, span_notice("Your injuries slowly fade away."))
 	return TRUE
