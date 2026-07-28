@@ -156,7 +156,7 @@
 	else
 		researched_designs[design.type] = TRUE
 
-	for(var/unlocked_by as anything in design.unlocked_by)
+	for(var/unlocked_by in design.unlocked_by)
 		hidden_nodes -= unlocked_by
 
 	SEND_SIGNAL(src, COMSIG_TECHWEB_ADD_DESIGN, design, custom)
