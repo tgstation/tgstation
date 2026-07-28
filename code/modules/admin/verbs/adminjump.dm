@@ -17,6 +17,10 @@ ADMIN_VERB(jump_to_area, R_ADMIN, "Jump To Area", "Jumps to the specified area."
 	message_admins("[key_name_admin(user)] jumped to [AREACOORD(drop_location)]")
 	BLACKBOX_LOG_ADMIN_VERB("Jump To Area")
 
+ADMIN_VERB_AND_CONTEXT_MENU(thunderdome_jump, R_ADMIN, "Escape to Thunderdome", "RUN AWAY!", ADMIN_CATEGORY_GAME)
+	var/area/thunderdome = GLOB.areas_by_type[/area/centcom/tdome/arena]
+	user.mob.abstract_move(thunderdome)
+
 ADMIN_VERB_AND_CONTEXT_MENU(jump_to_turf, R_ADMIN, "Jump To Turf", "Jump to any turf in the game. This will lag your client.", ADMIN_CATEGORY_GAME, turf/locale in world)
 	log_admin("[key_name(user)] jumped to [AREACOORD(locale)]")
 	message_admins("[key_name_admin(user)] jumped to [AREACOORD(locale)]")
