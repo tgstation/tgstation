@@ -79,8 +79,7 @@
 /datum/autowiki/stock_parts/proc/generate_material_list(datum/design/recipe)
 	var/list/materials = list()
 
-	for(var/ingredient_type, amount in recipe.materials)
-		var/datum/material/ingredient = new ingredient_type()
+	for(var/datum/material/ingredient, amount in recipe.materials)
 		materials += "[amount] [ingredient.name]"
 
 	return materials.Join("<br>")
