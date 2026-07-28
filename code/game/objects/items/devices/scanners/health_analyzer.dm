@@ -90,7 +90,7 @@
 		last_scan_text = floor_text
 		return
 
-	if(ispodperson(M) && !scanpower <= SCANPOWER_ADVANCED)
+	if(ispodperson(M) && scanpower < SCANPOWER_ADVANCED)
 		to_chat(user, span_info("[M]'s biological structure is too complex for the health analyzer."))
 		return
 
