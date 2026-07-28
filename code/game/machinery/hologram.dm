@@ -467,7 +467,7 @@ Possible to do for anyone motivated enough:
 		if(!LAZYLEN(holo_calls))
 			set_can_hear_flags(CAN_HEAR_ACTIVE_HOLOCALLS, FALSE)
 
-	update_appearance(UPDATE_ICON_STATE, UPDATE_OVERLAYS)
+	update_appearance()
 	return TRUE
 
 /**
@@ -537,7 +537,7 @@ Possible to do for anyone motivated enough:
 
 	if(ringing != are_ringing)
 		ringing = are_ringing
-		update_appearance(UPDATE_ICON_STATE, UPDATE_OVERLAYS)
+		update_appearance()
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user
@@ -606,7 +606,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		set_light(2)
 	else
 		set_light(0)
-	update_appearance(UPDATE_OVERLAYS)
+	update_appearance()
 
 /obj/machinery/holopad/update_icon_state()
 	if(panel_open)
@@ -625,9 +625,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/holopad/update_overlays()
 	. = ..()
 
-	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
 	var/default_color = COLOR_BLUE_LIGHT
-	if(total_users || replay_mode)
+	if(masters || replay_mode)
 		var/mutable_appearance/hololine_overlay = mutable_appearance(icon, "holopad1_mask")
 		for(var/mob/living/silicon/ai/AI as anything in masters)
 			if(istype(AI) && AI.ai_holocolor)
