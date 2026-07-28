@@ -40,9 +40,9 @@ export function TechwebTechDisk(props) {
     <Section scrollable fill>
       <VirtualList>
         {Object.keys(stored_research)
-          .map((x) => ({ id: x }))
+          .map((x) => ({ path: x }))
           .map((n) => (
-            <TechNode key={n.id} nocontrols node={n as TechwebNode} />
+            <TechNode key={n.path} nocontrols node={n as TechwebNode} />
           ))}
       </VirtualList>
     </Section>
