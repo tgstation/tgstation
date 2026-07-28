@@ -643,7 +643,7 @@
 		"Stage Speed 7" = "Slightly increases healing speed for all hosts without negative genetic stability.",
 	)
 	power = 0
-	var/stability_divisor = 2
+	var/stability_divisor = 25
 
 /datum/symptom/heal/genetic/Start(datum/disease/advance/our_disease)
 	. = ..()
@@ -652,16 +652,16 @@
 	if(our_disease.totalResistance() >= 9)
 		power = 0.2
 	if(our_disease.totalStageSpeed() >= 6)
-		stability_divisor = 1
+		stability_divisor = 12.5
 
 /datum/symptom/heal/genetic/CanHeal(datum/disease/advance/our_disease)
 	if(!our_disease.affected_mob.has_dna())
 		return power
 	var/dna_stability = our_disease.affected_mob.dna.stability
 	if(dna_stability >= initial(our_disease.affected_mob.dna.stability))
-		return power + (dna_stability- 100) / stability_divisor
+		return power + (dna_stability - initial(our_disease.affected_mob.dna.stability)) / stability_divisor
 
 /datum/symptom/heal/genetic/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	if(carbon_host.heal_overall_damage(actual_power, actual_power, required_bodytype = healable_bodytypes) && prob(5))
-		to_chat(carbon_host, span_notice("Your injuries slowly fade away."))
+		to_chat(carbon_host, span_notice("You feel your injuries slowly fading away."))
 	return TRUE
