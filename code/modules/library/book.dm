@@ -420,6 +420,7 @@
 			symptom_data["spread_by"] = "N/A"
 			symptom_data["cured_by"] = symptom_type::symptom_cure::name
 			symptom_data["id"] = symptom_type
+			symptom_data["level"] = symptom_type::level
 			disease_info += list(symptom_data)
 
 		var/list/advanced_virus_info = list(
