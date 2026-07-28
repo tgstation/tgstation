@@ -31,7 +31,7 @@
 	switch(state)
 		if(FRAME_COMPUTER_STATE_EMPTY)
 			if(held_item.tool_behaviour == TOOL_WRENCH)
-				context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]anchor"
+				context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unan" : "An"]chor"
 				return CONTEXTUAL_SCREENTIP_SET
 			else if(anchored && istype(held_item, /obj/item/circuitboard/computer))
 				context[SCREENTIP_CONTEXT_LMB] = "Install board"

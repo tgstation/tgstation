@@ -44,7 +44,6 @@
 						if(reagents.is_reacting)
 							. += span_warning("It is currently reacting!")
 						. += span_notice("The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.")
-
 				else
 					. += "It contains:<br>Nothing."
 			else if(reagents.flags & AMOUNT_VISIBLE)
@@ -53,7 +52,28 @@
 				else
 					. += span_danger("It's empty.")
 
+		if(HAS_TRAIT(user, TRAIT_KEEN_NOSE))
+			var/sniff_text = get_sniff_examine(user)
+			if(sniff_text)
+				. += sniff_text
+
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
+
+/// Returns an examine string describing what the contents of this atom smell like
+/atom/proc/get_sniff_examine(mob/living/carbon/sniffer)
+	if(!istype(sniffer) || HAS_TRAIT(sniffer, TRAIT_ANOSMIA))
+		return
+	if(!is_open_container() || !reagents?.total_volume)
+		return
+	if(!sniffer.is_holding(src))
+		return
+	if(!sniffer.get_bodypart(BODY_ZONE_HEAD)) // Need a nose to smell
+		return
+	if(sniffer.is_mouth_covered())
+		return span_warning("You can't get a whiff of [src] with your face covered.")
+
+	var/smell_message = generate_reagents_taste_message(reagents.reagent_list, sniffer, 10)
+	return span_notice("You catch a whiff of [src]. It smells like [smell_message].")
 
 /**
  * A list of "tags" displayed after atom's description in examine.
@@ -114,7 +134,7 @@
 		return
 	var/mats_list = list()
 	for(var/custom_material in custom_materials)
-		var/datum/material/current_material = GET_MATERIAL_REF(custom_material)
+		var/datum/material/current_material = SSmaterials.get_material(custom_material)
 		mats_list += span_tooltip("It is made out of [current_material.name].", current_material.name)
 	. += "made of [english_list(mats_list)]"
 
@@ -133,6 +153,24 @@
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE_MORE, user, .)
 	SEND_SIGNAL(user, COMSIG_MOB_EXAMINING_MORE, src, .)
+
+	if (!length(custom_materials) || (material_flags & MATERIAL_NO_DESCRIPTORS) || !HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))
+		return
+
+	for (var/datum/material/material as anything in custom_materials)
+		var/list/material_string = list()
+		for (var/prop_id in material.mat_properties)
+			var/datum/material_property/property = SSmaterials.properties[prop_id]
+			var/prop_value = material.get_property(prop_id)
+			if (isnull(prop_value)) // Error?
+				continue
+			var/descriptor = property?.get_descriptor(prop_value)
+			var/tooltip_hint = property?.get_tooltip(prop_value)
+			if (descriptor) // Overriden derivative property?
+				material_string += span_tooltip("[property]: [tooltip_hint]", descriptor)
+
+		if (length(material_string))
+			. += span_info("[capitalize(material.name)] is [english_list(material_string)].")
 
 /**
  * Get the name of this object for examine

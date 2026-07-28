@@ -8,7 +8,7 @@
 #define MAX_CORES_BIOSCRAMBLER 8
 #define MAX_CORES_DIMENSIONAL 8
 #define MAX_CORES_ECTOPLASMIC 8
-#define MAX_CORES_WEATHER 8
+#define MAX_CORES_WEATHER 5
 
 ///Defines for the different types of explosion a flux anomaly can have
 #define FLUX_NO_EMP 0
@@ -20,8 +20,13 @@
 
 /// Blacklist of parts which should not appear when bioscrambled, largely because they will make you look totally fucked up
 GLOBAL_LIST_INIT(bioscrambler_parts_blacklist, typecacheof(list(
-	/obj/item/bodypart/chest/larva,
-	/obj/item/bodypart/head/larva,
+	/obj/item/bodypart/head/psyker,
+	/obj/item/bodypart/arm/left/skeleton/nonfunctional,
+	/obj/item/bodypart/arm/right/skeleton/nonfunctional,
+	/obj/item/bodypart/chest/skeleton/nonfunctional,
+	/obj/item/bodypart/head/skeleton/nonfunctional,
+	/obj/item/bodypart/leg/left/skeleton/nonfunctional,
+	/obj/item/bodypart/leg/right/skeleton/nonfunctional,
 )))
 
 /// Blacklist of organs which should not appear when bioscrambled.
@@ -30,7 +35,6 @@ GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list (
 	/obj/item/organ/pod_hair,
 	/obj/item/organ/spines,
 	/obj/item/organ/wings,
-	/obj/item/organ/wings/functional,
 	/obj/item/organ/alien,
 	/obj/item/organ/brain,
 	/obj/item/organ/body_egg,

@@ -217,8 +217,9 @@
 		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/stock_parts,
 		/obj/item/wallframe/camera,
-		/obj/item/stack/sheet,
 		/obj/item/rcd_ammo,
+	), exception_hold_list = list(
+		/obj/item/stack/sheet,
 		/obj/item/stack/rods,
 	))
 

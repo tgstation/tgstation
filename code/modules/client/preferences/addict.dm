@@ -14,6 +14,7 @@
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "junkie"
 	savefile_identifier = PREFERENCE_CHARACTER
+	should_update_preview = FALSE
 
 /datum/preference/choiced/junkie/init_possible_values()
 	return list("Random") + assoc_to_keys(GLOB.possible_junkie_addictions)
@@ -24,7 +25,7 @@
 /datum/preference/choiced/junkie/is_accessible(datum/preferences/preferences)
 	if (!..())
 		return FALSE
-	return "Junkie" in preferences.all_quirks
+	return /datum/quirk/item_quirk/addict/junkie::name in preferences.all_quirks
 
 /datum/preference/choiced/junkie/apply_to_human(mob/living/carbon/human/target, value)
 	return
@@ -33,6 +34,7 @@
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "smoker"
 	savefile_identifier = PREFERENCE_CHARACTER
+	should_update_preview = FALSE
 
 /datum/preference/choiced/smoker/init_possible_values()
 	return list("Random") + assoc_to_keys(GLOB.possible_smoker_addictions)
@@ -43,7 +45,7 @@
 /datum/preference/choiced/smoker/is_accessible(datum/preferences/preferences)
 	if (!..())
 		return FALSE
-	return "Smoker" in preferences.all_quirks
+	return /datum/quirk/item_quirk/addict/smoker::name in preferences.all_quirks
 
 /datum/preference/choiced/smoker/apply_to_human(mob/living/carbon/human/target, value)
 	return
@@ -52,6 +54,7 @@
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "alcoholic"
 	savefile_identifier = PREFERENCE_CHARACTER
+	should_update_preview = FALSE
 
 /datum/preference/choiced/alcoholic/init_possible_values()
 	return list("Random") + assoc_to_keys(GLOB.possible_alcoholic_addictions)
@@ -62,7 +65,7 @@
 /datum/preference/choiced/alcoholic/is_accessible(datum/preferences/preferences)
 	if (!..())
 		return FALSE
-	return "Alcoholic" in preferences.all_quirks
+	return /datum/quirk/item_quirk/addict/alcoholic::name in preferences.all_quirks
 
 /datum/preference/choiced/alcoholic/apply_to_human(mob/living/carbon/human/target, value)
 	return

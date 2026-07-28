@@ -240,7 +240,7 @@
 	if(duration + bonus_time >= exhaustion_limit)
 		duration = exhaustion_limit
 		to_chat(new_owner, span_userdanger("Your muscles are exhausted! Might be a good idea to sleep..."))
-		new_owner.emote("scream")
+		INVOKE_ASYNC(new_owner, TYPE_PROC_REF(/mob, emote), "scream")
 		return // exhaustion_limit
 
 	return bonus_time
@@ -249,10 +249,10 @@
 	duration += workout_duration(new_owner, bonus_time)
 	return ..()
 
-/datum/status_effect/exercised/refresh(mob/living/new_owner, bonus_time)
-	duration += workout_duration(new_owner, bonus_time)
-	new_owner.clear_mood_event("exercise") // we need to reset the old mood event in case our fitness skill changes
-	new_owner.add_mood_event("exercise", /datum/mood_event/exercise, new_owner.mind.get_skill_level(/datum/skill/athletics))
+/datum/status_effect/exercised/refresh(effect, bonus_time)
+	duration += workout_duration(owner, bonus_time)
+	owner.clear_mood_event("exercise") // we need to reset the old mood event in case our fitness skill changes
+	owner.add_mood_event("exercise", /datum/mood_event/exercise, owner.mind.get_skill_level(/datum/skill/athletics))
 
 /datum/status_effect/exercised/on_apply()
 	if(!owner.mind)
@@ -266,7 +266,7 @@
 /atom/movable/screen/alert/status_effect/exercised
 	name = "Exercise"
 	desc = "You feel well exercised! Sleeping will improve your fitness."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "exercised"
 
 //Hippocratic Oath: Applied when the Rod of Asclepius is activated.
@@ -369,7 +369,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 
 /datum/status_effect/good_music/tick(seconds_between_ticks)
-	if(owner.can_hear())
+	if(!HAS_TRAIT(owner, TRAIT_DEAF))
 		owner.adjust_dizzy(-4 SECONDS)
 		owner.adjust_jitter(-4 SECONDS)
 		owner.adjust_confusion(-1 SECONDS)
@@ -378,7 +378,7 @@
 /atom/movable/screen/alert/status_effect/regenerative_core
 	name = "Regenerative Core Tendrils"
 	desc = "You can move faster than your broken body could normally handle!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_icon = 'icons/obj/medical/organs/mining_organs.dmi'
 	overlay_state = "legion_core_stable"
 
@@ -422,7 +422,7 @@
 /atom/movable/screen/alert/status_effect/lightningorb
 	name = "Lightning Orb"
 	desc = "The speed surges through you!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "lightningorb"
 
 /datum/status_effect/mayhem
@@ -561,7 +561,7 @@
 /atom/movable/screen/alert/status_effect/nest_sustenance
 	name = "Nest Vitalization"
 	desc = "The resin seems to pulsate around you. It seems to be sustaining your vital functions. You feel ill..."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "nest_life"
 
 /**
@@ -641,7 +641,7 @@
 /atom/movable/screen/alert/status_effect/radiation_immunity
 	name = "Radiation shielding"
 	desc = "You're immune to radiation, get settled quick!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "radiation_shield"
 
 /// Throw an alert we're in darkness!! Nightvision can make it hard to tell so this is useful
@@ -673,5 +673,83 @@
 /atom/movable/screen/alert/status_effect/shadow_regeneration
 	name = "Shadow Regeneration"
 	desc = "Bathed in soothing darkness, you will slowly heal yourself"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "lightless"
+
+/// Applies desensitized mood modifier to the mob, carrying between mind transfers
+/datum/status_effect/desensitized
+	id = "desensitized"
+	duration = STATUS_EFFECT_PERMANENT
+	status_type = STATUS_EFFECT_MULTIPLE
+	alert_type = null
+	/// How much to multiply desensitization level by
+	var/magnitude = 1.0
+	/// Effect ID for removal purposes
+	var/effect_id
+
+/datum/status_effect/desensitized/on_creation(mob/living/new_owner, effect_id, magnitude)
+	src.effect_id = effect_id
+	src.magnitude = max(DESENSITIZED_MINIMUM, magnitude)
+	return ..()
+
+/datum/status_effect/desensitized/on_apply()
+	owner.mind?.desensitized_level *= magnitude
+	RegisterSignal(owner, COMSIG_MOB_MIND_TRANSFERRED_INTO, PROC_REF(add_magnitude))
+	RegisterSignal(owner, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, PROC_REF(remove_magnitude))
+	return TRUE
+
+/datum/status_effect/desensitized/on_remove()
+	owner.mind?.desensitized_level /= magnitude
+	UnregisterSignal(owner, list(COMSIG_MOB_MIND_TRANSFERRED_INTO, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF))
+
+/datum/status_effect/desensitized/before_remove(effect_id, magnitude)
+	if(istext(src.effect_id) && istext(effect_id)) // if an id is set, they must match
+		return src.effect_id == effect_id
+	if(isnum(magnitude)) // otherwise if a magnitude is passed, it must match
+		return src.magnitude == magnitude
+	return FALSE
+
+/datum/status_effect/desensitized/proc/add_magnitude(datum/source, mob/living/old_body, datum/mind/swapping)
+	SIGNAL_HANDLER
+	swapping.desensitized_level *= magnitude
+
+/datum/status_effect/desensitized/proc/remove_magnitude(datum/source, mob/living/old_body, datum/mind/swapping)
+	SIGNAL_HANDLER
+	swapping.desensitized_level /= magnitude
+
+//used by the garibaldi cocktail to grant revolutionaries wound resistance and fearlessness
+/datum/status_effect/rev_resilience
+	id = "rev_resilience"
+	duration = 5 SECONDS //gets refreshed by metabolism
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+
+/datum/status_effect/rev_resilience/on_apply()
+	to_chat(owner, span_warning("You feel your revolutionary spirit surging! You feel like nothing the oppressors could throw at you could wound your pride!"))
+	owner.add_traits(list(TRAIT_HARDLY_WOUNDED,TRAIT_ANALGESIA,TRAIT_FEARLESS), TRAIT_STATUS_EFFECT(id))
+	return TRUE
+
+/datum/status_effect/rev_resilience/on_remove()
+	to_chat(owner, span_notice("You feel your surge of revolutionary zeal fade. You hope you don't get shot in the foot..."))
+	owner.remove_traits(list(TRAIT_HARDLY_WOUNDED,TRAIT_ANALGESIA,TRAIT_FEARLESS), TRAIT_STATUS_EFFECT(id))
+
+//status effect granted when taking attack damage while metabolizing synthpax
+/datum/status_effect/synthpax_immunity
+	id = "synthpax_immune"
+	duration = 5 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+
+/datum/status_effect/synthpax_immunity/on_creation(mob/living/new_owner, duration = 5 SECONDS)
+	src.duration = duration
+	return ..()
+
+/datum/status_effect/synthpax_immunity/on_apply()
+	ADD_TRAIT(owner, TRAIT_SYNTHPAX_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, METABOLIZATION_TRAIT(/datum/reagent/pax/peaceborg))
+	return TRUE
+
+/datum/status_effect/synthpax_immunity/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_SYNTHPAX_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	if(owner.reagents.has_reagent(/datum/reagent/pax/peaceborg))
+		ADD_TRAIT(owner, TRAIT_PACIFISM, METABOLIZATION_TRAIT(/datum/reagent/pax/peaceborg))

@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(radio)
 	name = "Radio"
-	flags = SS_NO_FIRE|SS_NO_INIT
+	ss_flags = SS_NO_FIRE|SS_NO_INIT
 
 	var/list/datum/radio_frequency/frequencies = list()
 	var/list/saymodes = list()

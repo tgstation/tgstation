@@ -66,7 +66,7 @@
 		create_gas()
 
 	if(ispath(gas_type, /datum/gas))
-		desc = "[GLOB.meta_gas_info[gas_type][META_GAS_NAME]]. [GLOB.meta_gas_info[gas_type][META_GAS_DESC]]"
+		desc = "[GLOB.meta_gas_info[META_GAS_NAME][gas_type]]. [GLOB.meta_gas_info[META_GAS_DESC][gas_type]]"
 
 	update_window()
 
@@ -308,9 +308,8 @@
 	pressure_limit = 1e14
 
 /obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
-	air_contents.add_gases(/datum/gas/hydrogen, /datum/gas/tritium)
-	air_contents.gases[/datum/gas/hydrogen][MOLES] = 300
-	air_contents.gases[/datum/gas/tritium][MOLES] = 300
+	air_contents.adjust_gas(/datum/gas/hydrogen, 300)
+	air_contents.adjust_gas(/datum/gas/tritium, 300)
 	air_contents.temperature = 10000
 	SSair.start_processing_machine(src)
 
@@ -323,9 +322,8 @@
 	greyscale_colors = "#9fba6c#3d4680"
 
 /obj/machinery/portable_atmospherics/canister/anesthetic_mix/create_gas()
-	air_contents.add_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
-	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (N2O_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.adjust_gas(/datum/gas/oxygen, (O2_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust_gas(/datum/gas/nitrous_oxide, (N2O_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	SSair.start_processing_machine(src)
 
 /**
@@ -335,14 +333,12 @@
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(!gas_type)
 		return
-	air_contents.add_gas(gas_type)
-	air_contents.gases[gas_type][MOLES] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.adjust_gas(gas_type, (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	SSair.start_processing_machine(src)
 
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
-	air_contents.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
-	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.adjust_gas(/datum/gas/oxygen, (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust_gas(/datum/gas/nitrogen, (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	SSair.start_processing_machine(src)
 
 /obj/machinery/portable_atmospherics/canister/update_icon_state()
@@ -416,27 +412,28 @@
 	if(internal_cell)
 		internal_cell.forceMove(drop_location())
 
-/obj/machinery/portable_atmospherics/canister/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/stock_parts/power_store/cell))
-		var/obj/item/stock_parts/power_store/cell/active_cell = item
-		if(!panel_open)
-			balloon_alert(user, "open hatch first!")
-			return TRUE
-		if(!user.transferItemToLoc(active_cell, src))
-			return TRUE
-		if(internal_cell)
-			user.put_in_hands(internal_cell)
-			balloon_alert(user, "you replace the cell")
-		else
-			balloon_alert(user, "you install the cell")
-		internal_cell = active_cell
-		return TRUE
-	return ..()
+/obj/machinery/portable_atmospherics/canister/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
+		return ..()
+
+	var/obj/item/stock_parts/power_store/cell/active_cell = tool
+	if(!panel_open)
+		balloon_alert(user, "open hatch first!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(active_cell, src))
+		return ITEM_INTERACT_BLOCKING
+
+	if(internal_cell)
+		user.put_in_hands(internal_cell)
+		balloon_alert(user, "you replace the cell")
+	else
+		balloon_alert(user, "you install the cell")
+	internal_cell = active_cell
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/portable_atmospherics/canister/screwdriver_act(mob/living/user, obj/item/screwdriver)
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, screwdriver))
-		update_appearance()
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, screwdriver)
 
 /obj/machinery/portable_atmospherics/canister/crowbar_act(mob/living/user, obj/item/tool)
 	if(!panel_open || !internal_cell)
@@ -694,6 +691,7 @@
 /// Opens/closes the canister valve
 /obj/machinery/portable_atmospherics/canister/proc/toggle_valve(mob/user, wire_pulsed = FALSE)
 	valve_open = !valve_open
+	playsound(src, 'sound/effects/valve_opening.ogg', 50, TRUE)
 	if(!valve_open)
 		var/logmsg = "valve was <b>closed</b> by [key_name(user)] [wire_pulsed ? "via wire pulse" : ""], stopping the transfer into \the [holding || "air"].<br>"
 		investigate_log(logmsg, INVESTIGATE_ATMOS)
@@ -712,13 +710,15 @@
 	output += "[key_name(user)] <b>opened</b> a canister[wire_pulsed ? " via wire pulse" : ""] that contains the following:"
 	var/list/admin_output = list()
 	admin_output += "[ADMIN_LOOKUPFLW(user)] <b>opened</b> a canister[wire_pulsed ? " via wire pulse" : ""] that contains the following at [ADMIN_VERBOSEJMP(src)]:"
-	var/list/gases = air_contents.gases
+	var/list/cached_moles = air_contents.moles
+	var/list/cached_gas_name = GAS_META[META_GAS_NAME]
+	var/list/cached_gas_danger = GAS_META[META_GAS_DANGER]
+	var/list/cached_gas_visible = GAS_META[META_GAS_MOLES_VISIBLE]
 	var/danger = FALSE
-	for(var/gas_index in 1 to length(gases))
-		var/list/gas_info = gases[gases[gas_index]]
-		var/list/meta = gas_info[GAS_META]
-		var/name = meta[META_GAS_NAME]
-		var/moles = gas_info[MOLES]
+	for(var/gas_index in 1 to length(cached_moles))
+		var/gas_id = cached_moles[gas_index]
+		var/name = cached_gas_name[gas_id]
+		var/moles = cached_moles[gas_id]
 
 		output += "[name]: [moles] moles."
 		if(gas_index <= 5) //the first five gases added
@@ -726,7 +726,7 @@
 		else if(gas_index == 6) // anddd the warning
 			admin_output += "Too many gases to log. Check investigate log."
 		//if moles_visible is undefined, default to default visibility
-		if(meta[META_GAS_DANGER] && moles > (meta[META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE))
+		if(cached_gas_danger[gas_id] && moles > (cached_gas_visible[gas_id] || MOLES_GAS_VISIBLE))
 			danger = TRUE
 
 	if(danger) //sent to admin's chat if contains dangerous gases
@@ -739,8 +739,8 @@
 /obj/machinery/portable_atmospherics/canister/proc/toggle_shielding(mob/user, wire_pulsed = FALSE)
 	shielding_powered = !shielding_powered
 	SSair.start_processing_machine(src)
-	message_admins("[ADMIN_LOOKUPFLW(user)] turned [shielding_powered ? "on" : "off"] [wire_pulsed ? "via wire pulse" : ""] the [src] powered shielding.")
-	user.investigate_log("turned [shielding_powered ? "on" : "off"] [wire_pulsed ? "via wire pulse" : ""] the [src] powered shielding.", INVESTIGATE_ATMOS)
+	message_admins("[ADMIN_LOOKUPFLW(user)] turned [shielding_powered ? "on" : "off"][wire_pulsed ? " via wire pulse" : ""] \the [src] powered shielding.")
+	user.investigate_log("turned [shielding_powered ? "on" : "off"][wire_pulsed ? " via wire pulse" : ""] \the [src] powered shielding.", INVESTIGATE_ATMOS)
 	update_appearance()
 
 /// Ejects tank from canister, if any
@@ -761,8 +761,8 @@
 		return
 	suppress_reactions = !suppress_reactions
 	SSair.start_processing_machine(src)
-	message_admins("[ADMIN_LOOKUPFLW(user)] turned [suppress_reactions ? "on" : "off"] [wire_pulsed ? "via wire pulse" : ""] the [src] reaction suppression.")
-	user.investigate_log("turned [suppress_reactions ? "on" : "off"] [wire_pulsed ? "via wire pulse" : ""] the [src] reaction suppression.", INVESTIGATE_ATMOS)
+	message_admins("[ADMIN_LOOKUPFLW(user)] turned [suppress_reactions ? "on" : "off"][wire_pulsed ? "via wire pulse" : ""] \the [src] reaction suppression.")
+	user.investigate_log("turned [suppress_reactions ? "on" : "off"][wire_pulsed ? "via wire pulse" : ""] \the [src] reaction suppression.", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/canister/proc/recolor(datum/greyscale_modify_menu/menu)
 	set_greyscale(menu.split_colors, menu.config.type)

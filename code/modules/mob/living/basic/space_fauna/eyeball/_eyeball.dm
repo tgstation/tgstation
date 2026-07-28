@@ -58,7 +58,7 @@
 	grant_actions_by_list(innate_actions)
 
 	AddElement(/datum/element/simple_flying)
-	var/list/food_types = string_list(list(/obj/item/food/grown/carrot))
+	var/list/food_types = string_list(list(/obj/item/food/grown/carrotlike/carrot))
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 100)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	on_hit_overlay = mutable_appearance(icon, "[icon_state]_crying")
@@ -71,7 +71,7 @@
 	if(!proximity_flag)
 		return
 
-	if(istype(attack_target, /obj/item/food/grown/carrot))
+	if(istype(attack_target, /obj/item/food/grown/carrotlike/carrot))
 		adjust_brute_loss(-5)
 		to_chat(src, span_warning("You eat [attack_target]! It restores some health!"))
 		qdel(attack_target)
@@ -96,16 +96,16 @@
 
 /mob/living/basic/eyeball/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 	if(!ishuman(target))
-		return TRUE
+		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 	var/mob/living/carbon/human_target = target
 	var/obj/item/organ/eyes/eyes = human_target.get_organ_slot(ORGAN_SLOT_EYES)
 	if(isnull(eyes) || eyes.damage < 10)
-		return TRUE
+		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 	heal_eye_damage(human_target, eyes)
-	return FALSE
+	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /mob/living/basic/eyeball/proc/heal_eye_damage(mob/living/target, obj/item/organ/eyes/eyes)
 	if(!COOLDOWN_FINISHED(src, eye_healing))
@@ -117,6 +117,7 @@
 	COOLDOWN_START(src, eye_healing, 15 SECONDS)
 
 /mob/living/basic/eyeball/tamed(mob/living/tamer, atom/food)
+	. = ..()
 	spin(spintime = 2 SECONDS, speed = 1)
 	//become passive to the humens
 	APPLY_FACTION_AND_ALLIES_FROM(src, tamer)

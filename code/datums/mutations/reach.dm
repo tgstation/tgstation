@@ -1,19 +1,15 @@
 ///Telekinesis lets you interact with objects from range, and gives you a light blue halo around your head.
 /datum/mutation/telekinesis
 	name = "Telekinesis"
-	desc = "A strange mutation that allows the holder to interact with objects through thought."
+	desc = "The subject gains the ability to interact with objects through thought."
 	quality = POSITIVE
 	difficulty = 18
 	text_gain_indication = span_notice("You feel smarter!")
 	limb_req = BODY_ZONE_HEAD
 	instability = POSITIVE_INSTABILITY_MAJOR
+	mutation_icon_state = "telekinesishead"
 	///Typecache of atoms that TK shouldn't interact with
 	var/static/list/blacklisted_atoms = typecacheof(list(/atom/movable/screen))
-
-/datum/mutation/telekinesis/New(datum/mutation/copymut)
-	..()
-	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER))
 
 /datum/mutation/telekinesis/on_acquiring(mob/living/carbon/human/homan)
 	. = ..()
@@ -27,9 +23,6 @@
 		return
 	UnregisterSignal(homan, COMSIG_MOB_ATTACK_RANGED)
 
-/datum/mutation/telekinesis/get_visual_indicator()
-	return visual_indicators[type][1]
-
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Usually handles stuff like picking up items at range.
 /datum/mutation/telekinesis/proc/on_ranged_attack(mob/source, atom/target)
 	SIGNAL_HANDLER
@@ -41,7 +34,8 @@
 
 /datum/mutation/elastic_arms
 	name = "Elastic Arms"
-	desc = "Subject's arms have become elastic, allowing them to stretch up to a meter away. However, this elasticity makes it difficult to wear gloves, handle complex tasks, or grab large objects."
+	desc = "The subject's arms become elastic, allowing them to stretch up to a meter away. \
+		However, this elasticity makes it difficult to wear gloves, handle complex tasks, or grab large objects."
 	quality = POSITIVE
 	instability = POSITIVE_INSTABILITY_MAJOR
 	text_gain_indication = span_warning("You feel armstrong!")

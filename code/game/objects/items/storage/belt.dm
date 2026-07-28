@@ -16,7 +16,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
 
-/obj/item/storage/belt/suicide_act(mob/living/carbon/user)
+/obj/item/storage/belt/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
@@ -55,23 +55,24 @@
 	preload = TRUE
 
 /obj/item/storage/belt/utility/chief/full/PopulateContents()
-	SSwardrobe.provide_type(/obj/item/screwdriver, src)
-	SSwardrobe.provide_type(/obj/item/wrench, src)
-	SSwardrobe.provide_type(/obj/item/weldingtool/hugetank, src)
-	SSwardrobe.provide_type(/obj/item/crowbar, src)
-	SSwardrobe.provide_type(/obj/item/wirecutters, src)
+	SSwardrobe.provide_type(/obj/item/screwdriver/power, src)
+	SSwardrobe.provide_type(/obj/item/crowbar/power, src)
+	SSwardrobe.provide_type(/obj/item/weldingtool/experimental, src)
 	SSwardrobe.provide_type(/obj/item/multitool, src)
 	SSwardrobe.provide_type(/obj/item/stack/cable_coil, src)
+	SSwardrobe.provide_type(/obj/item/extinguisher/mini, src)
+	SSwardrobe.provide_type(/obj/item/analyzer, src)
+	//much roomier now that we've managed to remove two tools
 
 /obj/item/storage/belt/utility/chief/full/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
-	to_preload += /obj/item/screwdriver
-	to_preload += /obj/item/wrench
-	to_preload += /obj/item/weldingtool/hugetank
-	to_preload += /obj/item/crowbar
-	to_preload += /obj/item/wirecutters
+	to_preload += /obj/item/screwdriver/power
+	to_preload += /obj/item/crowbar/power
+	to_preload += /obj/item/weldingtool/experimental
 	to_preload += /obj/item/multitool
 	to_preload += /obj/item/stack/cable_coil
+	to_preload += /obj/item/extinguisher/mini
+	to_preload += /obj/item/analyzer
 	return to_preload
 
 /obj/item/storage/belt/utility/full/PopulateContents()
@@ -206,9 +207,9 @@
 
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/sensor_device, src)
-	SSwardrobe.provide_type(/obj/item/stack/medical/gauze/twelve, src)
-	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
-	SSwardrobe.provide_type(/obj/item/stack/sticky_tape/surgical, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/wrap/gauze/twelve, src)
+	SSwardrobe.provide_type(/obj/item/tourniquet, src)
+	SSwardrobe.provide_type(/obj/item/bonesetter, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/ammoniated_mercury, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/formaldehyde, src)
@@ -217,9 +218,9 @@
 /obj/item/storage/belt/medical/paramedic/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
 	to_preload += /obj/item/sensor_device
-	to_preload += /obj/item/stack/medical/gauze/twelve
-	to_preload += /obj/item/stack/medical/bone_gel
-	to_preload += /obj/item/stack/sticky_tape/surgical
+	to_preload += /obj/item/stack/medical/wrap/gauze/twelve
+	to_preload += /obj/item/tourniquet
+	to_preload += /obj/item/bonesetter
 	to_preload += /obj/item/reagent_containers/syringe
 	to_preload += /obj/item/reagent_containers/cup/bottle/ammoniated_mercury
 	to_preload += /obj/item/reagent_containers/cup/bottle/formaldehyde
@@ -465,7 +466,8 @@
 	worn_icon_state = "soulstonebelt"
 	storage_type = /datum/storage/wands_belt
 
-/obj/item/storage/belt/wands/full/PopulateContents()
+/// Put some wands in that bad boy
+/obj/item/storage/belt/wands/full/proc/create_wands()
 	new /obj/item/gun/magic/wand/death(src)
 	new /obj/item/gun/magic/wand/resurrection(src)
 	new /obj/item/gun/magic/wand/polymorph(src)
@@ -474,9 +476,95 @@
 	new /obj/item/gun/magic/wand/fireball(src)
 	new /obj/item/gun/magic/wand/shrink(src)
 
+/obj/item/storage/belt/wands/full/PopulateContents()
+	create_wands()
 	for(var/obj/item/gun/magic/wand/W in contents) //All wands in this pack come in the best possible condition
 		W.max_charges = initial(W.max_charges)
 		W.charges = W.max_charges
+
+/// Filled with budget wands instead of cool ones
+/obj/item/storage/belt/wands/full/discount
+	/// Which wands can appear?
+	var/static/list/possible_options = list(
+		/obj/item/gun/magic/wand/animate,
+		/obj/item/gun/magic/wand/babel,
+		/obj/item/gun/magic/wand/bald,
+		/obj/item/gun/magic/wand/door,
+		/obj/item/gun/magic/wand/fireball,
+		/obj/item/gun/magic/wand/freeze,
+		/obj/item/gun/magic/wand/hallucination,
+		/obj/item/gun/magic/wand/levitate,
+		/obj/item/gun/magic/wand/pax,
+		/obj/item/gun/magic/wand/pizza,
+		/obj/item/gun/magic/wand/plague,
+		/obj/item/gun/magic/wand/prank,
+		/obj/item/gun/magic/wand/rebel,
+		/obj/item/gun/magic/wand/repulse,
+		/obj/item/gun/magic/wand/swap,
+		/obj/item/gun/magic/wand/teleport,
+		/obj/item/gun/magic/wand/tentacles,
+		/obj/item/gun/magic/wand/zap,
+	)
+
+/obj/item/storage/belt/wands/full/discount/create_wands()
+	var/list/available_options = possible_options.Copy()
+	for (var/i in 1 to 6)
+		if (!length(available_options))
+			break
+		var/wand_path = pick_n_take(available_options)
+		new wand_path(src)
+
+/// Not a subtype of bandolier because it acts pretty differently
+/obj/item/storage/belt/wand_bandolier
+	name = "wand bandolier"
+	desc = "A bandolier for holding a whole lot of wands. If worn on your suit, swaps expended wands for fresh ones on the fly."
+	icon_state = "bandolier"
+	inhand_icon_state = "bandolier"
+	worn_icon_state = "bandolier"
+	storage_type = /datum/storage/wands_belt
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/belt/wand_bandolier/equipped(mob/user, slot)
+	. = ..()
+	if (!(slot & ITEM_SLOT_SUITSTORE))
+		return
+	ADD_CLOTHING_TRAIT(user, TRAIT_GUNFLIP)
+	RegisterSignal(user, COMSIG_MOB_FIRED_GUN, PROC_REF(on_gun_fired))
+
+/obj/item/storage/belt/wand_bandolier/dropped(mob/user)
+	. = ..()
+	REMOVE_CLOTHING_TRAIT(user, TRAIT_GUNFLIP)
+	UnregisterSignal(user, COMSIG_MOB_FIRED_GUN)
+
+/// After we fire a gun, check if it's a wand. If it is and it's empty, do a swap
+/obj/item/storage/belt/wand_bandolier/proc/on_gun_fired(mob/living/wizard, obj/item/gun/magic/wand/old_wand)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(equip_new_wand), wizard, old_wand)
+
+/obj/item/storage/belt/wand_bandolier/proc/equip_new_wand(mob/living/wizard, obj/item/gun/magic/wand/old_wand)
+	if (!istype(old_wand))
+		return
+	if (!atom_storage.real_location.contents.len) // no other wands
+		return
+	if (old_wand.charges > 1) // It hasn't subtracted yet
+		return
+
+	var/obj/item/fresh_wand
+	for (var/obj/item/gun/magic/wand/checked in atom_storage.real_location.contents)
+		if (checked.charges)
+			fresh_wand = checked
+			break
+	if (!fresh_wand || fresh_wand.on_found())
+		return // Nothing to swap with
+
+	wizard.temporarilyRemoveItemFromInventory(old_wand)
+	if (!wizard.put_in_hands(fresh_wand))
+		return
+	to_chat(wizard, span_notice("You quickly draw [fresh_wand]."))
+	if (atom_storage.attempt_insert(old_wand, wizard))
+		return
+	old_wand.forceMove(wizard.drop_location())
+	to_chat(wizard, span_warning("...and drop [old_wand] on the ground."))
 
 /obj/item/storage/belt/janitor
 	name = "janibelt"
@@ -502,6 +590,11 @@
 	inhand_icon_state = "bandolier"
 	worn_icon_state = "bandolier"
 	storage_type = /datum/storage/bandolier_belt
+
+/obj/item/storage/belt/bandolier/china_lake_extra/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/ammo_casing/a40mm = 12,
+	), src)
 
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
@@ -618,7 +711,7 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/belt/sheath/update_icon_state()
-	icon_state = initial(inhand_icon_state)
+	icon_state = initial(icon_state)
 	inhand_icon_state = initial(inhand_icon_state)
 	worn_icon_state = initial(worn_icon_state)
 	if(contents.len)
@@ -690,8 +783,8 @@
 	RegisterSignal(swordsman, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(counter_attack))
 	swordsman.Immobilize(1 SECONDS)
 	eyed_fool = WEAKREF(cast_on)
-	swordsman.visible_message(span_danger("[swordsman] widens [p_their(swordsman)] stance, [p_their(swordsman)] hand hovering over \the [used_sheath]!"), span_notice("You prepare to counterattack [cast_on]!"))
-	addtimer(CALLBACK(src, PROC_REF(relax), swordsman), 1 SECONDS)
+	swordsman.visible_message(span_danger("[swordsman] widens [swordsman.p_their()] stance, [swordsman.p_their()] hand hovering over \the [used_sheath]!"), span_notice("You prepare to counterattack [cast_on]!"))
+	addtimer(CALLBACK(src, PROC_REF(relax), swordsman, used_sheath), 1 SECONDS)
 	COOLDOWN_START(used_sheath, full_ability_cooldown, 60 SECONDS)
 	unset_ranged_ability(swordsman)
 	return TRUE
@@ -708,7 +801,14 @@
 	var/mob/living/fool = isliving(attackingthing) ? attackingthing : attackingthing.loc
 	if(used_sheath.loc != forward_thinker || fool != eyed_fool.resolve() || !forward_thinker.put_in_active_hand(justicetool))
 		return FAILED_BLOCK
+	do_strike(fool, forward_thinker, justicetool)
+	playsound(forward_thinker, 'sound/items/unsheath.ogg', 50, TRUE)
+	COOLDOWN_RESET(used_sheath, full_ability_cooldown)
+	return SUCCESSFUL_BLOCK
+
+/datum/action/innate/blade_counter/proc/do_strike(mob/living/fool, mob/living/forward_thinker, obj/item/justicetool)
 	var/obj/item/bodypart/offending_hand = fool.get_active_hand()
+	forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [fool.p_their()] attack!"), span_notice("You swiftly draw \the [justicetool] and counter-attack [fool]!"))
 	fool.apply_damage(
 		damage = justicetool.force * COUNTERMULTIPLIER,
 		damagetype = justicetool.damtype,
@@ -720,15 +820,93 @@
 		attack_direction = get_dir(forward_thinker, fool),
 		attacking_item = justicetool,
 	)
-	playsound(forward_thinker, 'sound/items/unsheath.ogg', 50, TRUE)
-	forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack!"), span_notice("You swiftly draw \the [justicetool] and counter-attack [fool]!"))
-	COOLDOWN_RESET(used_sheath, full_ability_cooldown)
-	return SUCCESSFUL_BLOCK
+
+
+/datum/action/innate/blade_counter/proc/relax(mob/living/holder, obj/item/storage/belt/sheath/active_sheath)
+	UnregisterSignal(holder, COMSIG_LIVING_CHECK_BLOCK)
+
+/datum/action/innate/blade_counter/gunpowered
+	name = "Powered Counterattack"
+	desc = "Anticipate an enemy's attack and attempt to strike back, at great risk to yourself. The firing angle requires it be held on your hip."
+
+	/// Whether the currently relevant counterattack succeeded.
+	var/succeeded_attempt = FALSE
+
+/datum/action/innate/blade_counter/gunpowered/do_ability(mob/living/swordsman, mob/living/cast_on)
+	. = ..()
+	succeeded_attempt = FALSE
+
+
+/datum/action/innate/blade_counter/gunpowered/do_strike(mob/living/fool, mob/living/forward_thinker, obj/item/justicetool)
+	if(forward_thinker.get_slot_by_item(target) == ITEM_SLOT_SUITSTORE)
+		return ..()
+	succeeded_attempt = TRUE
+	var/obj/item/bodypart/offending_hand = fool.get_active_hand()
+	var/obj/item/bodypart/risked_hand = forward_thinker.get_active_hand()
+	if(iscarbon(fool) && offending_hand.dismember(BRUTE, FALSE, WOUND_SLASH))
+		forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [fool.p_their()] attack, sending [fool.p_their()] arm flying!"),
+										span_notice("You swiftly draw \the [justicetool] and cut off [fool]'s arm!"))
+	else
+		fool.apply_damage(
+			damage = justicetool.force * COUNTERMULTIPLIER,
+			damagetype = justicetool.damtype,
+			def_zone = offending_hand,
+			blocked = fool.run_armor_check(offending_hand, MELEE, armour_penetration = justicetool.armour_penetration, silent = TRUE),
+			wound_bonus = justicetool.wound_bonus * COUNTERMULTIPLIER,
+			exposed_wound_bonus = justicetool.exposed_wound_bonus * COUNTERMULTIPLIER,
+			sharpness = justicetool.sharpness,
+			attack_direction = get_dir(forward_thinker, fool),
+			attacking_item = justicetool,
+		)
+		forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [fool.p_their()] attack!"),
+										span_notice("You swiftly draw \the [justicetool] and strike them mid-attack!"))
+	if(!IS_ROBOTIC_LIMB(risked_hand))
+		forward_thinker.visible_message(span_danger("[forward_thinker]'s arm is unable to withstand the force of the attack!"),
+										span_danger("You feel a sharp pain as your arm is mutilated by the force of the attack!"))
+		forward_thinker.apply_damage(
+		damage = 50,
+		damagetype = BRUTE,
+		def_zone = risked_hand,
+		wound_bonus = 50,
+		wound_clothing = FALSE,
+	)
+
+
+/datum/action/innate/blade_counter/gunpowered/relax(mob/living/holder, obj/item/storage/belt/sheath/active_sheath)
+	..()
+	if(succeeded_attempt || holder.get_slot_by_item(target) == ITEM_SLOT_SUITSTORE)
+		return
+
+	if(length(active_sheath.contents))
+		var/obj/item/denied_weapon = active_sheath.contents[1]
+		denied_weapon.forceMove(get_turf(holder))
+		denied_weapon.throw_at(pick(RANGE_TURFS(3, denied_weapon)), 3, 3)
+
+	// We can assume that the holder is a carbon, and thus has an actual arm, because they have a belt slot.
+	var/obj/item/bodypart/worthless_hand = holder.get_active_hand()
+	if(!worthless_hand)
+		worthless_hand = holder.get_inactive_hand()
+		if(!worthless_hand)
+			holder.visible_message(span_danger("[holder]'s sheath misfires, sending their blade flying!"),
+									span_danger("Your sheath misfires, sending your blade flying!"))
+			return
+
+	if(IS_ROBOTIC_LIMB(worthless_hand) || !worthless_hand.dismember(BRUTE, FALSE, WOUND_BLUNT))
+		holder.visible_message(span_danger("[holder]'s arm is mutilated as they misfire [holder.p_their()] sheathed blade!"),
+								span_danger("Your arm is mutilated as you fail to safely fire your blade!"))
+		holder.apply_damage(
+			damage = 50,
+			damagetype = BRUTE,
+			def_zone = worthless_hand,
+			wound_bonus = 50,
+			wound_clothing = FALSE,
+		)
+		return
+
+	holder.visible_message(span_danger("[holder]'s arm is violently torn off as they misfire [holder.p_their()] sheathed blade!"),
+							span_danger("Your arm is torn off as you fail to safely fire your blade!"))
 
 #undef COUNTERMULTIPLIER
-
-/datum/action/innate/blade_counter/proc/relax(mob/living/holder)
-	UnregisterSignal(holder, COMSIG_LIVING_CHECK_BLOCK)
 
 /obj/item/storage/belt/sheath/sabre
 	name = "sabre sheath"
@@ -756,6 +934,49 @@
 	storage_type = /datum/storage/gladius_belt
 	stored_blade = /obj/item/claymore/gladius
 
+/obj/item/storage/belt/sheath/katana
+	name = "katana sheath"
+	desc = "A sheath that houses the nimble katana."
+	icon_state = "katana_sheath"
+	inhand_icon_state = "katana_sheath"
+	worn_icon_state = "katana_sheath"
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
+	storage_type = /datum/storage/katana_sheath
+	stored_blade = /obj/item/katana
+
+/obj/item/storage/belt/sheath/katana/empty
+	stored_blade = NONE
+
+/obj/item/storage/belt/sheath/katana/toy
+	action_slots = NONE
+	storage_type = /datum/storage/toy_sheath
+	stored_blade = /obj/item/toy/katana
+
+/obj/item/storage/belt/sheath/katana/toy/empty
+	stored_blade = NONE
+
+/obj/item/storage/belt/sheath/ninja
+	name = "energy katana sheath"
+	desc = "A high tech katana sheath that allows for quick blade movements."
+	icon_state = "ninja_sheath"
+	inhand_icon_state = "ninja_sheath"
+	worn_icon_state = "ninja_sheath"
+	storage_type = /datum/storage/ninja_sheath
+	stored_blade = /obj/item/energy_katana
+
+/obj/item/storage/belt/sheath/hanzo_katana
+	name = "hanzo katana sheath"
+	desc = "A normal black sheath meant to house the legendary hanzo steel."
+	icon_state = "hanzo_sheath"
+	inhand_icon_state = "hanzo_sheath"
+	worn_icon_state = "hanzo_sheath"
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
+	storage_type = /datum/storage/hanzo_sheath
+	stored_blade = /obj/item/nullrod/claymore/katana
+
+/obj/item/storage/belt/sheath/hanzo_katana/empty
+	stored_blade = NONE
+
 /obj/item/storage/belt/plant
 	name = "botanical belt"
 	desc = "A sturdy leather belt used to hold most hydroponics supplies."
@@ -764,3 +985,16 @@
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
 	storage_type = /datum/storage/plant_belt
+
+/obj/item/storage/belt/sheath/sabre/gunpowered
+	name = "modified sabre sheath"
+	desc = "An imitation of a design made by the infamous Cold Space Wind. Has a trigger mechanism to more forcefully draw the blade."
+	icon_state = "gunsheath"
+	actions_types = list(/datum/action/innate/blade_counter/gunpowered)
+	stored_blade = null
+
+/obj/item/storage/belt/sheath/grass_sabre/gunpowered
+	name = "modified sabre sheath"
+	desc = "An imitation of a design grown by the infamous Tiziran Plasma Fire. Has a trigger mechanism to more forcefully draw the blade."
+	icon_state = "grass_gunsheath"
+	actions_types = list(/datum/action/innate/blade_counter/gunpowered)

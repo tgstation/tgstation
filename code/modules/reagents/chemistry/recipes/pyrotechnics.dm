@@ -214,7 +214,7 @@
 /datum/chemical_reaction/thermite
 	results = list(/datum/reagent/thermite = 3)
 	required_reagents = list(/datum/reagent/aluminium = 1, /datum/reagent/iron = 1, /datum/reagent/oxygen = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/emp_pulse
 	required_reagents = list(/datum/reagent/uranium = 1, /datum/reagent/iron = 1, /datum/reagent/aluminium = 1)
@@ -393,12 +393,8 @@
 		return
 	holder.remove_reagent(/datum/reagent/smoke_powder, created_volume * 3)
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/fluid_spread/smoke/chem/S = new
-	S.attach(location)
+	do_chem_smoke(amount = created_volume * 3, holder = holder.my_atom, location = location, carry = holder, silent = FALSE, log = TRUE)
 	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
-	if(S)
-		S.set_up(amount = created_volume * 3, holder = holder.my_atom, location = location, carry = holder, silent = FALSE)
-		S.start(log = TRUE)
 	if(holder?.my_atom)
 		holder.clear_reagents()
 	if (!iscarbon(holder?.my_atom))
@@ -417,12 +413,8 @@
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/fluid_spread/smoke/chem/S = new
-	S.attach(location)
+	do_chem_smoke(amount = created_volume, holder = holder.my_atom, location = location, carry = holder, log = TRUE, silent = FALSE)
 	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
-	if(S)
-		S.set_up(amount = created_volume, holder = holder.my_atom, location = location, carry = holder, silent = FALSE)
-		S.start(log = TRUE)
 	if(holder?.my_atom)
 		holder.clear_reagents()
 	if(holder?.my_atom)
@@ -521,7 +513,7 @@
 /datum/chemical_reaction/cryostylane/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
 	if(holder.chem_temp < CRYOSTYLANE_UNDERHEAT_TEMP)
-		overheated(holder, null, react_vol) //replace null with fix win 2.3 is merged
+		overheated(holder, reaction, react_vol)
 
 //Freezes the area around you!
 /datum/chemical_reaction/cryostylane/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)

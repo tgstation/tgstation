@@ -11,7 +11,7 @@
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5, 10, 15)
 	volume = 15
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1)
 	initial_reagent_flags = TRANSPARENT
 	custom_price = PAYCHECK_CREW * 0.5
 	sharpness = SHARP_POINTY
@@ -33,6 +33,7 @@
 		dart_insert_projectile_icon_state, \
 		CALLBACK(src, PROC_REF(get_dart_var_modifiers))\
 	)
+	RegisterSignal(src, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, PROC_REF(on_mail_unwrap))
 
 /obj/item/reagent_containers/syringe/proc/try_syringe(atom/target, mob/user)
 	if(!target.reagents)
@@ -193,6 +194,15 @@
 		"demolition_mod" = demolition_mod,
 	)
 
+/obj/item/reagent_containers/syringe/proc/on_mail_unwrap(atom/source, mob/living/user, obj/item/mail/traitor/letter)
+	SIGNAL_HANDLER
+	if(!reagents.total_volume || !user.reagents || !user.try_inject(user, user.get_active_hand()))
+		return
+	to_chat(user, span_danger("As you open [letter], you prick yourself on a syringe inside!"))
+	reagents.trans_to(user, min(reagents.total_volume, 5))
+	forceMove(user.loc)
+	return COMPONENT_TRAITOR_MAIL_HANDLED
+
 /datum/embedding/syringe
 	embed_chance = 85
 	fall_chance = 2
@@ -321,6 +331,7 @@
 	volume = 60
 	dart_insert_casing_icon_state = "overlay_syringe_bluespace"
 	dart_insert_projectile_icon_state = "overlay_syringe_bluespace_proj"
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/syringe/piercing
 	name = "piercing syringe"
@@ -335,6 +346,7 @@
 	dart_insert_casing_icon_state = "overlay_syringe_piercing"
 	dart_insert_projectile_icon_state = "overlay_syringe_piercing_proj"
 	embed_type = /datum/embedding/syringe/piercing
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT)
 
 /datum/embedding/syringe/piercing
 	embed_chance = 100

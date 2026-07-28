@@ -10,6 +10,7 @@
  *
  */
 /datum/emote
+	abstract_type = /datum/emote
 	/// What calls the emote.
 	var/key = ""
 	/// This will also call the emote.
@@ -47,7 +48,9 @@
 	/// Trait that is required to use this emote.
 	var/trait_required
 	/// In which state can you use this emote? (Check stat.dm for a full list of them)
-	var/stat_allowed = CONSCIOUS
+	var/stat_allowed = STABLE
+
+	var/can_use_flags = NONE
 	/// Sound to play when emote is called.
 	var/sound
 	/// Does this emote vary in pitch?
@@ -60,12 +63,18 @@
 	var/cooldown = 0.8 SECONDS
 	/// Does this message have a message that can be modified by the user?
 	var/can_message_change = FALSE
-	/// How long is the shared emote cooldown triggered by this emote?
-	var/general_emote_audio_cooldown = 2 SECONDS
-	/// How long is the specific emote cooldown triggered by this emote?
-	var/specific_emote_audio_cooldown = 5 SECONDS
+	/// How long is the shared emote cooldown triggered by this emote when used intentionally?
+	var/manual_general_emote_audio_cooldown = 2 SECONDS
+	/// How long is the specific emote cooldown triggered by this emote when used intentionally?
+	var/manual_specific_emote_audio_cooldown = 5 SECONDS
+	/// How long is the shared emote cooldown triggered by this emote when forced?
+	var/forced_general_emote_audio_cooldown = 2 SECONDS
+	/// How long is the specific emote cooldown triggered by this emote when forced?
+	var/forced_specific_emote_audio_cooldown = 2 SECONDS
 	/// Does this emote's sound ignore walls?
 	var/sound_wall_ignore = FALSE
+	///Does this emote use sound tokens? this means it also ignores walls.
+	var/use_sound_tokens = FALSE
 
 /datum/emote/New()
 	switch(mob_type_allowed_typecache)
@@ -111,15 +120,27 @@
 		user.log_message(msg, LOG_EMOTE)
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, "general_emote_audio_cooldown") && TIMER_COOLDOWN_FINISHED(user, type))
-		TIMER_COOLDOWN_START(user, type, specific_emote_audio_cooldown)
-		TIMER_COOLDOWN_START(user, "general_emote_audio_cooldown", general_emote_audio_cooldown)
+	if(tmp_sound && should_play_sound(user, intentional))
+		if(intentional)
+			if(!TIMER_COOLDOWN_FINISHED(user, MANUAL_GENERAL_EMOTE_AUDIO_COOLDOWN) || !TIMER_COOLDOWN_FINISHED(user, MANUAL_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type)) || !TIMER_COOLDOWN_FINISHED(user, FORCED_GENERAL_EMOTE_AUDIO_COOLDOWN) || !TIMER_COOLDOWN_FINISHED(user, FORCED_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type)))
+				return FALSE
+		else
+			if(!TIMER_COOLDOWN_FINISHED(user, FORCED_GENERAL_EMOTE_AUDIO_COOLDOWN) || !TIMER_COOLDOWN_FINISHED(user, FORCED_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type)))
+				return FALSE
+		TIMER_COOLDOWN_START(user, MANUAL_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type), manual_specific_emote_audio_cooldown)
+		TIMER_COOLDOWN_START(user, MANUAL_GENERAL_EMOTE_AUDIO_COOLDOWN, manual_general_emote_audio_cooldown)
+		TIMER_COOLDOWN_START(user, FORCED_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type), forced_specific_emote_audio_cooldown)
+		TIMER_COOLDOWN_START(user, FORCED_GENERAL_EMOTE_AUDIO_COOLDOWN, forced_general_emote_audio_cooldown)
+
 		var/frequency = null
 		if (affected_by_pitch && SStts.tts_enabled && SStts.pitch_enabled)
-			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH) * (1 + sqrt(abs(user.pitch)) * SIGN(user.pitch) * EMOTE_TTS_PITCH_MULTIPLIER)
+			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH) * (1 + sqrt(abs(user.pitch)) * sign(user.pitch) * EMOTE_TTS_PITCH_MULTIPLIER)
 		else if(vary)
 			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH)
-		playsound(source = user,soundin = tmp_sound,vol = 50, vary = FALSE, ignore_walls = sound_wall_ignore, frequency = frequency)
+		if(use_sound_tokens && sound_wall_ignore)
+			playsoundtoken(source = user, soundin = tmp_sound, range = SOUND_RANGE, volume = 50)
+		else
+			playsound(source = user,soundin = tmp_sound,vol = 50, vary = FALSE, ignore_walls = sound_wall_ignore, frequency = frequency)
 
 
 	var/is_important = running_emote_type & EMOTE_IMPORTANT
@@ -133,7 +154,7 @@
 			if(isnull(viewer.client))
 				continue
 			if(!is_important && viewer != user && (!is_visual || !is_audible))
-				if(is_audible && !viewer.can_hear())
+				if(is_audible && HAS_TRAIT(viewer, TRAIT_DEAF))
 					continue
 				if(is_visual && viewer.is_blind())
 					continue
@@ -340,22 +361,31 @@
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
 	if(status_check && !is_type_in_typecache(user, mob_type_ignore_stat_typecache))
-		if(user.stat > stat_allowed)
-			if(!intentional)
-				return FALSE
-			switch(user.stat)
-				if(SOFT_CRIT)
-					to_chat(user, span_warning("You cannot [key] while in a critical condition!"))
-				if(UNCONSCIOUS, HARD_CRIT)
-					to_chat(user, span_warning("You cannot [key] while unconscious!"))
-				if(DEAD)
-					to_chat(user, span_warning("You cannot [key] while dead!"))
+		if(IS_UNCONSCIOUS(user) && !(can_use_flags & EMOTE_CANUSE_UNCONSCIOUS))
+			if(intentional)
+				to_chat(user, span_warning("You cannot [key] while unconscious!"))
 			return FALSE
-		if(hands_use_check && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-			if(!intentional)
-				return FALSE
-			to_chat(user, span_warning("You cannot use your hands to [key] right now!"))
+		if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) && (can_use_flags & EMOTE_CANUSE_REQUIRE_HANDS))
+			if(intentional)
+				to_chat(user, span_warning("You cannot use your hands to [key] right now!"))
 			return FALSE
+
+		switch(user.stat)
+			if(SOFT_CRIT)
+				if(!(can_use_flags & EMOTE_CANUSE_SOFTCRIT))
+					if(intentional)
+						to_chat(user, span_warning("You cannot [key] while in a critical condition!"))
+					return FALSE
+			if(HARD_CRIT)
+				if(!(can_use_flags & EMOTE_CANUSE_HARDCRIT))
+					if(intentional)
+						to_chat(user, span_warning("You cannot [key] while in a critical condition!"))
+					return FALSE
+			if(DEAD)
+				if(!(can_use_flags & EMOTE_CANUSE_DEAD))
+					if(intentional)
+						to_chat(user, span_warning("You cannot [key] while dead!"))
+					return FALSE
 
 	if(HAS_TRAIT(user, TRAIT_EMOTEMUTE))
 		return FALSE
@@ -405,7 +435,7 @@
 	return TRUE
 
 /mob/manual_emote(text, log_emote = null)
-	if (stat != CONSCIOUS)
+	if (IS_UNCONSCIOUS_OR_CRIT(src))
 		return FALSE
 	if (isnull(log_emote))
 		log_emote = !isnull(client)

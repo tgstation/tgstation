@@ -175,23 +175,22 @@ export function SpawnSearch() {
   // User presses up or down on keyboard
   // Simulates clicking an item
   function handleArrowKey(key: number): void {
-    const len = Object.keys(filteredItems).length - 1;
+    if (!filteredItems.length) return;
+
+    const len = filteredItems.length - 1;
+
     if (key === KEY_DOWN) {
-      if (selected === null || selected === len) {
-        setSelected(0);
-        document!.getElementById('0')?.scrollIntoView();
-      } else {
-        setSelected(selected + 1);
-        document!.getElementById((selected + 1).toString())?.scrollIntoView();
-      }
+      const next = selected >= len ? 0 : selected + 1;
+      setSelected(next);
+      document
+        ?.getElementById(next.toString())
+        ?.scrollIntoView({ behavior: 'smooth' });
     } else if (key === KEY_UP) {
-      if (selected === null || selected === 0) {
-        setSelected(len);
-        document!.getElementById(len.toString())?.scrollIntoView();
-      } else {
-        setSelected(selected - 1);
-        document!.getElementById((selected - 1).toString())?.scrollIntoView();
-      }
+      const prev = selected <= 0 ? len : selected - 1;
+      setSelected(prev);
+      document
+        ?.getElementById(prev.toString())
+        ?.scrollIntoView({ behavior: 'smooth' });
     }
   }
 
@@ -225,7 +224,9 @@ export function SpawnSearch() {
     }
   }
 
-  function handleSelect(selection: AtomTypeData): void {
+  function handleSelect(selection?: AtomTypeData): void {
+    if (!selection) return;
+
     act('spawn', { type: selection.typepath, amount: spawnAmount });
   }
 
@@ -234,7 +235,7 @@ export function SpawnSearch() {
 
     setQuery(newQuery);
     setSelected(0);
-    document!.getElementById('0')?.scrollIntoView();
+    document!.getElementById('0')?.scrollIntoView({ behavior: 'smooth' });
   }
 
   // Grabs the cursor when no search bar is visible.
@@ -287,6 +288,7 @@ export function SpawnSearch() {
                     className="candystripe"
                     color="transparent"
                     fluid
+                    id={index.toString()}
                     key={index}
                     onClick={() => {
                       if (index !== selected) setSelected(index);

@@ -20,7 +20,7 @@
 	contraband = list(
 		/obj/item/toy/balloon/syndicate = 1,
 		/obj/item/gun/ballistic/shotgun/toy/crossbow = 8,
-		/obj/item/toy/katana = 12,
+		/obj/item/storage/belt/sheath/katana/toy = 12,
 		/obj/item/ammo_box/foambox/riot/mini = 20,
 	)
 	premium = list(
@@ -37,3 +37,4 @@
 /obj/item/vending_refill/donksoft
 	machine_name = "Donksoft Toy Vendor"
 	icon_state = "refill_donksoft"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 12.5, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 10, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 5)

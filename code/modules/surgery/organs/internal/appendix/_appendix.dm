@@ -15,6 +15,7 @@
 
 	now_failing = span_warning("An explosion of pain erupts in your lower right abdomen!")
 	now_fixed = span_info("The pain in your abdomen has subsided.")
+	visual = FALSE
 
 	var/inflamation_stage = 0
 
@@ -117,7 +118,7 @@
 	REMOVE_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 	owner.med_hud_set_status()
 
-/obj/item/organ/appendix/get_status_text(advanced, add_tooltips, colored)
+/obj/item/organ/appendix/get_status_text(scanpower, add_tooltips, colored)
 	if(!(organ_flags & ORGAN_FAILING) && inflamation_stage)
 		return conditional_tooltip("<font color='#ff9933'>Inflamed</font>", "Remove surgically.", add_tooltips)
 	return ..()

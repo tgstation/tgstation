@@ -30,7 +30,7 @@
 			msg = "[source.p_Theyre()] fair to middling, enough to be called an \"art object\"."
 		if (0 to BAD_ART)
 			user.add_mood_event("artbad", /datum/mood_event/artbad)
-			msg = "Wow, [source.p_they()] sucks."
+			msg = "Wow, [source.p_they()] suck[source.p_s()]."
 
 	user.visible_message(span_notice("[user] stops and looks intently at [source]."), \
 		span_notice("You appraise [source]... [msg]"))
@@ -60,7 +60,7 @@
 		msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre()]. So [pick("subversive", "revolutionary", "unitizing", "egalitarian")]!"
 	else
 		user.add_mood_event("artbad", /datum/mood_event/artbad)
-		msg = "Wow, [source.p_they()] sucks."
+		msg = "Wow, [source.p_they()] suck[source.p_s()]."
 
 	user.visible_message(span_notice("[user] stops to inspect [source]."), \
 		span_notice("You appraise [source], inspecting the fine craftsmanship of the proletariat... [msg]"))
@@ -72,6 +72,8 @@
 	var/list/haters = list()
 	for(var/hater_department_type in list(/datum/job_department/security, /datum/job_department/command))
 		var/datum/job_department/hater_department = SSjob.get_department_type(hater_department_type)
+		if (isnull(hater_department))
+			continue
 		for(var/datum/job/hater_job as anything in hater_department.department_jobs)
 			haters += hater_job.title
 	var/datum/job/quartermaster/fucking_quartermaster = SSjob.get_job_type(/datum/job/quartermaster)
@@ -82,7 +84,7 @@
 		msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre()]. So [pick("relatable", "down to earth", "true", "real")]!"
 	else
 		user.add_mood_event("artbad", /datum/mood_event/artbad)
-		msg = "Wow, [source.p_they()] sucks."
+		msg = "Wow, [source.p_they()] suck[source.p_s()]."
 
 	user.visible_message(span_notice("[user] stops to inspect [source]."), \
 		span_notice("You appraise [source], inspecting the fine craftsmanship of the proletariat... [msg]"))

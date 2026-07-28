@@ -18,7 +18,7 @@
 
 	var/list/starting_signals = list()
 	var/list/ending_signals = list()
-	for(var/datum/weather/weather_type as anything in typesof(/datum/weather))
+	for(var/datum/weather/weather_type as anything in valid_subtypesof(/datum/weather))
 		starting_signals += COMSIG_WEATHER_TELEGRAPH(weather_type)
 		ending_signals += COMSIG_WEATHER_END(weather_type)
 
@@ -55,7 +55,7 @@
 	else
 		care_about.hide_plane(our_lad)
 
-/datum/component/hide_weather_planes/proc/new_hud_attached(datum/source, datum/hud/new_hud)
+/datum/component/hide_weather_planes/proc/new_hud_attached(datum/source, datum/hud/old_hud, datum/hud/new_hud)
 	SIGNAL_HANDLER
 	attach_hud(new_hud)
 

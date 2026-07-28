@@ -22,7 +22,7 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SEC
 
-	mind_traits = list(SECURITY_MIND_TRAITS)
+	desensitized_base = DESENSITIZED_THRESHOLD
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_DETECTIVE
@@ -88,7 +88,7 @@
 	..()
 	var/obj/item/cigarette/cig = H.wear_mask
 	if(istype(cig)) //Some species specfic changes can mess this up (plasmamen)
-		cig.light("")
+		cig.light()
 
 	if(visuals_only)
 		return

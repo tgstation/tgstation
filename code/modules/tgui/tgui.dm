@@ -287,6 +287,7 @@
 		),
 	)
 	var/data = custom_data || with_data && src_object.ui_data(user)
+	SEND_SIGNAL(src_object, COMSIG_UI_DATA, user, data)
 	if(data)
 		json_data["data"] = data
 	var/static_data = with_static_data && src_object.ui_static_data(user)

@@ -163,6 +163,7 @@
 /// Actually triggers the effects of the action.
 /// Called when the on-screen button is clicked, for example.
 /datum/action/proc/Trigger(mob/clicker, trigger_flags)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!(trigger_flags & TRIGGER_FORCE_AVAILABLE) && !IsAvailable(feedback = TRUE))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, src) & COMPONENT_ACTION_BLOCK_TRIGGER)
@@ -178,9 +179,14 @@
 		return FALSE
 	if(action_disabled)
 		return FALSE
-	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
+	if((check_flags & AB_CHECK_CONSCIOUS) && IS_UNCONSCIOUS_OR_CRIT(owner))
 		if (feedback)
-			owner.balloon_alert(owner, "[owner.stat == DEAD ? "dead" : "unconscious"]!")
+			if(owner.stat == DEAD)
+				owner.balloon_alert(owner, "dead!")
+			else if(IS_UNCONSCIOUS(owner))
+				owner.balloon_alert(owner, "unconscious!")
+			else
+				owner.balloon_alert(owner, "in critical!")
 		return FALSE
 	if((check_flags & AB_CHECK_HANDS_BLOCKED) && HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
 		if (feedback)
@@ -335,6 +341,7 @@
 		current_button.color = rgb(255,255,255,255)
 	else
 		current_button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+	SEND_SIGNAL(src, COMSIG_ACTION_STATUS_UPDATE, current_button, force)
 
 /// Gives our action to the passed viewer.
 /// Puts our action in their actions list and shows them the button.
@@ -352,7 +359,7 @@
 	if(!our_hud || viewers[our_hud]) // There's no point in this if you have no hud in the first place
 		return
 
-	var/atom/movable/screen/movable/action_button/button = create_button()
+	var/atom/movable/screen/movable/action_button/button = create_button(viewer)
 	SetId(button, viewer)
 
 	button.our_hud = our_hud
@@ -372,8 +379,8 @@
 		qdel(button)
 
 /// Creates an action button movable for the passed mob, and returns it.
-/datum/action/proc/create_button()
-	var/atom/movable/screen/movable/action_button/button = new()
+/datum/action/proc/create_button(mob/viewer)
+	var/atom/movable/screen/movable/action_button/button = viewer.hud_used.add_screen_object(/atom/movable/screen/movable/action_button)
 	button.linked_action = src
 	button.allow_observer_click = allow_observer_click
 	build_button_icon(button, ALL, TRUE)

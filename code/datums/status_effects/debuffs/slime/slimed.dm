@@ -6,7 +6,7 @@
 /atom/movable/screen/alert/status_effect/slimed
 	name = "Covered in Slime"
 	desc = "You are covered in slime and it's eating away at you! Click to start cleaning it off, or find a faster way to wash it away!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "slimed"
 	clickable_glow = TRUE
 

@@ -96,7 +96,7 @@
 	if (carried_mob == user) //Piggyback user.
 		return NONE
 
-	INVOKE_ASYNC(src, PROC_REF(riding_offhand_act), user, item)
+	INVOKE_ASYNC(src, PROC_REF(riding_offhand_act), user, item, table)
 	return ITEM_INTERACT_BLOCKING
 
 /// Called when someone clicks on our surface using a fireman's carry
@@ -143,13 +143,13 @@
 		return
 
 	var/passtable_key = REF(user)
-	passtable_on(pushed_mob, passtable_key)
+	ADD_TRAIT(pushed_mob, TRAIT_PASSTABLE, passtable_key)
 	for (var/obj/obj in user.loc.contents)
 		if (!obj.CanAllowThrough(pushed_mob))
 			return
 
 	pushed_mob.Move(table.loc)
-	passtable_off(pushed_mob, passtable_key)
+	REMOVE_TRAIT(pushed_mob, TRAIT_PASSTABLE, passtable_key)
 	if (pushed_mob.loc != table.loc) //Something prevented the tabling
 		return
 

@@ -20,7 +20,7 @@
 	contraband = list(
 		/obj/item/toy/balloon/syndicate = 1,
 		/obj/item/gun/ballistic/shotgun/toy/crossbow/riot = 8,
-		/obj/item/toy/katana = 12,
+		/obj/item/storage/belt/sheath/katana/toy = 12,
 	)
 	premium = list(
 		/obj/item/toy/cards/deck/syndicate = 12,

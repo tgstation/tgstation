@@ -10,16 +10,6 @@
 
 //Command
 
-/obj/item/circuitboard/computer/aiupload
-	name = "AI Upload"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/computer/upload/ai
-
-/obj/item/circuitboard/computer/borgupload
-	name = "Cyborg Upload"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/computer/upload/borg
-
 /obj/item/circuitboard/computer/bsa_control
 	name = "Bluespace Artillery Controls"
 	build_path = /obj/machinery/computer/bsa_control
@@ -313,6 +303,50 @@
 	name = "Slot Machine"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/computer/slot_machine
+	desc = "You can change the theme using a screwdriver."
+	/// List of pickable slot machines
+	var/static/list/slot_themes = list(
+		"Default" = /obj/machinery/computer/slot_machine,
+		"Command" = /obj/machinery/computer/slot_machine/command,
+		"Security" = /obj/machinery/computer/slot_machine/security,
+		"Medical" = /obj/machinery/computer/slot_machine/medical,
+		"Engineering" = /obj/machinery/computer/slot_machine/engineering,
+		"Cargo" = /obj/machinery/computer/slot_machine/cargo,
+		"Service" = /obj/machinery/computer/slot_machine/service,
+		"Science" = /obj/machinery/computer/slot_machine/science,
+		"Clown" = /obj/machinery/computer/slot_machine/clown,
+		"Mime" = /obj/machinery/computer/slot_machine/mime,
+	)
+
+/obj/item/circuitboard/computer/slot_machine/examine(mob/user)
+	. = ..()
+	var/current_theme = "Unknown"
+	for(var/theme_name in slot_themes)
+		if(slot_themes[theme_name] == build_path)
+			current_theme = theme_name
+			break
+	. += span_info("[src] is set to the [current_theme] theme. You can use a screwdriver to reconfigure it.")
+
+/obj/item/circuitboard/computer/slot_machine/screwdriver_act(mob/living/user, obj/item/tool)
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "board mode is broken!")
+		return FALSE
+
+	var/choice = tgui_input_list(user, "Choose a slot machine theme", "Theme Selection", slot_themes)
+	if(isnull(choice))
+		return ITEM_INTERACT_BLOCKING
+	build_path = slot_themes[choice]
+	to_chat(user, span_notice("You set the board to the [choice] theme."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/circuitboard/computer/slot_machine/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+
+	obj_flags |= EMAGGED
+	build_path = /obj/machinery/computer/slot_machine/syndicate
+	balloon_alert(user, "illegal slot machine loaded")
+	return TRUE
 
 /obj/item/circuitboard/computer/swfdoor
 	name = "Magix"
@@ -465,19 +499,21 @@
 	to_chat(user, span_notice("You overload the node announcement chip, forcing every node to be announced on the common channel."))
 	return TRUE
 
-/obj/item/circuitboard/computer/rdconsole/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if (user.combat_mode || !isidcard(attacking_item))
-		return ..()
-	if (check_access(attacking_item))
-		locked = !locked
-		balloon_alert(user, locked ? "locked" : "unlocked")
-		user.visible_message(
-			message = span_notice("\The [user] unlock[user.p_s()] \the [src] with \the [attacking_item]."),
-			self_message = span_notice("You unlock \the [src] with \the [attacking_item]."),
-			blind_message = span_hear("You hear a soft beep."),
-		)
-	else
+/obj/item/circuitboard/computer/rdconsole/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (user.combat_mode || !isidcard(tool))
+		return NONE
+	if (!check_access(tool))
 		balloon_alert(user, "no access!")
+		return ITEM_INTERACT_BLOCKING
+	locked = !locked
+	balloon_alert(user, locked ? "locked" : "unlocked")
+	user.visible_message(
+		span_notice("\The [user] unlock[user.p_s()] \the [src] with \the [tool]."),
+		span_notice("You unlock \the [src] with \the [tool]."),
+		span_hear("You hear a soft beep."),
+	)
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control"
@@ -493,6 +529,7 @@
 	name = "Robotics Control"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/robotics
+	custom_materials = list(/datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/computer/teleporter
 	name = "Teleporter"

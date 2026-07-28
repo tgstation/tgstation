@@ -2,7 +2,6 @@
 /datum/chemical_reaction/slime
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_SLIME
-	required_other = TRUE
 	var/deletes_extract = TRUE
 
 /datum/chemical_reaction/slime/pre_reaction_other_checks(datum/reagents/holder)
@@ -73,6 +72,11 @@
 /datum/chemical_reaction/slime/slimemoth
 	results = list(/datum/reagent/mutationtoxin/moth = 1)
 	required_reagents = list(/datum/reagent/cellulose = 1)
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimeethereal
+	results = list(/datum/reagent/mutationtoxin/ethereal = 1)
+	required_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 1)
 	required_container = /obj/item/slime_extract/green
 
 //Metal

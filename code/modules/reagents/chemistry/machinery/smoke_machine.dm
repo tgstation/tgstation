@@ -30,14 +30,6 @@
 	opacity = FALSE
 	alpha = 100
 
-/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location, datum/reagents/carry, efficiency = 10, silent = FALSE)
-	src.holder = holder
-	src.location = get_turf(location)
-	src.amount = amount
-	if(carry)
-		carry.trans_to(chemholder, 20, copy_only = TRUE)
-		carry.remove_all(amount / efficiency)
-
 /obj/machinery/smoke_machine/Initialize(mapload)
 	create_reagents(REAGENTS_BASE_VOLUME, INJECTABLE)
 
@@ -129,32 +121,28 @@
 		return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/smoke_machine/wrench_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
 	if(on)
 		balloon_alert(user, "turn off first!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(default_unfasten_wrench(user, tool, time = 4 SECONDS) == SUCCESSFUL_UNFASTEN)
 		return ITEM_INTERACT_SUCCESS
 
+	return ITEM_INTERACT_BLOCKING
+
 /obj/machinery/smoke_machine/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
 	if(on)
 		balloon_alert(user, "turn off first!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(default_deconstruction_screwdriver(user, "smoke0-o", "smoke0", tool))
-		update_appearance(UPDATE_ICON_STATE)
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/smoke_machine/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
 	if(on)
 		balloon_alert(user, "turn off first!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/smoke_machine/process()
 	if(!reagents.total_volume || !anchored || !on || !is_operational)
@@ -163,12 +151,14 @@
 		return PROCESS_KILL
 
 	var/turf/location = get_turf(src)
-	if(!(locate(/obj/effect/particle_effect/fluid/smoke) in location))
-		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/smoke = new()
-		smoke.set_up(setting * 3, holder = src, location = location, carry = reagents, efficiency = efficiency)
-		smoke.start()
-		use_energy(active_power_usage * (setting / max_range))
-		update_appearance(UPDATE_ICON_STATE)
+	if(locate(/obj/effect/particle_effect/fluid/smoke) in location)
+		return
+
+	var/smoke_amount = DIAMOND_AREA(setting * 3)
+	do_chem_smoke(amount = smoke_amount, holder = src, location = location, carry = reagents, carry_limit = 20, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/smoke_machine)
+	reagents.remove_all(smoke_amount / efficiency)
+	use_energy(active_power_usage * (setting / max_range))
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/smoke_machine/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

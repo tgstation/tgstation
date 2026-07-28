@@ -15,7 +15,7 @@
 	transparent_protection = HIDEGLOVES | HIDESUITSTORAGE | HIDEJUMPSUIT | HIDESHOES | HIDENECK
 	cold_protection = FULL_BODY
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	allowed = list(/obj/item/melee/sickly_blade, /obj/item/gun/ballistic/rifle/lionhunter)
+	allowed = list(/obj/item/melee/sickly_blade, /obj/item/gun/ballistic/rifle/lionhunter, /obj/item/flashlight/lantern/heretic)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	armor_type = /datum/armor/eldritch_armor
 	clothing_traits = list(TRAIT_HERETIC_AURA_HIDDEN)
@@ -57,16 +57,6 @@
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/on_hood_down(obj/item/clothing/head/hooded/hood)
 	hood_up = FALSE
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/examine(mob/user)
-	. = ..()
-	if(!IS_HERETIC(user))
-		return
-	if(hood_up)
-		return
-
-	// Our hood gains the heretic_focus element.
-	. += span_notice("Allows you to cast heretic spells while the hood is up.")
-
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	name = "ominous hood"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
@@ -79,10 +69,6 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clothing_flags = THICKMATERIAL | PLASMAMAN_PREVENT_IGNITION | SNUG_FIT
 	armor_type = /datum/armor/eldritch_armor
-
-/obj/item/clothing/head/hooded/cult_hoodie/eldritch/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/heretic_focus)
 
 /datum/armor/eldritch_armor
 	melee = 50
@@ -142,7 +128,7 @@
 		return
 	var/mob/living/carbon/victim = user
 	var/iteration = 0
-	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
+	for(var/obj/item/bodypart/limb as anything in victim.get_bodyparts())
 		if(istype(limb, /obj/item/bodypart/head) || istype(limb, /obj/item/bodypart/chest))
 			continue
 		iteration++
@@ -259,7 +245,7 @@
 	if(!length(valid_turfs))
 		var/mob/living/carbon/carbon_target = target
 		if(iscarbon(target))
-			var/obj/item/bodypart/limb = pick(carbon_target.bodyparts)
+			var/obj/item/bodypart/limb = pick(carbon_target.get_bodyparts())
 			limb.force_wound_upwards(/datum/wound/slash/flesh/severe)
 		return
 	throw_blade(pick(valid_turfs), target)
@@ -451,7 +437,7 @@
 		return
 	var/mob/living/carbon/victim = user
 	var/iteration = 0
-	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
+	for(var/obj/item/bodypart/limb as anything in victim.get_bodyparts())
 		iteration++
 		addtimer(CALLBACK(limb, TYPE_PROC_REF(/obj/item/bodypart, force_wound_upwards), /datum/wound/slash/flesh/critical), 1 SECONDS * iteration)
 
@@ -533,8 +519,6 @@
 		TRAIT_PACIFISM,
 		TRAIT_NOHUNGER
 	)
-	/// Hud that gets shown to the wearer, gives a rough estimate of their current brain damage
-	var/atom/movable/screen/moon_health/health_hud
 	/// Boolean if you are brain dead so the sound doesn't spam during the delay
 	var/braindead = FALSE
 	//---- Messages that get sent when someone wearing the moon robes is attacked
@@ -602,6 +586,9 @@
 	RegisterSignal(human_user, COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON, PROC_REF(item_attack_response))
 	signal_registered += COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON
 
+	RegisterSignal(human_user, COMSIG_CARBON_LIMB_DAMAGED, PROC_REF(limb_damage))
+	signal_registered += COMSIG_CARBON_LIMB_DAMAGED
+
 	var/obj/item/organ/brain/our_brain = human_user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!our_brain)
 		return
@@ -621,8 +608,7 @@
 	if(our_brain)
 		REMOVE_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
 	braindead = FALSE
-	if(health_hud in user.hud_used.infodisplay)
-		on_hud_remove(user)
+	on_hud_remove(user)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_apply_modifiers(mob/living/user, damage_mods, damage, damagetype, def_zone, sharpness, attack_direction, attacking_item)
 	SIGNAL_HANDLER
@@ -637,42 +623,45 @@
 	return COMPONENT_IGNORE_CHANGE
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/handle_damage(mob/living/user, damage)
+	if(damage <= 0 || braindead)
+		return
 	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, damage * damage_modifier)
 	check_braindeath(user)
+
+/// Some sources of damage directly damage the limbs, so we have to handle physical damage on the limbs, not just mob-level damage
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/limb_damage(mob/living/user, obj/item/bodypart/part, brute, burn)
+	SIGNAL_HANDLER
+	handle_damage(user, max(brute, 0) + max(burn, 0))
+	return COMPONENT_PREVENT_LIMB_DAMAGE
 
 /// Gives the health HUD to the wearer
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_hud_created(mob/living/carbon/human/wearer)
 	SIGNAL_HANDLER
 	var/datum/hud/original_hud = wearer.hud_used
-	// Remove the old health elements
-	var/list/to_remove = list(/atom/movable/screen/stamina, /atom/movable/screen/healths, /atom/movable/screen/healthdoll/human)
-	for(var/removing in original_hud.infodisplay)
-		if(is_type_in_list(removing, to_remove))
-			original_hud.infodisplay -= removing
-			QDEL_NULL(removing)
+
+	for(var/removing in list(HUD_MOB_STAMINA, HUD_MOB_HEALTH, HUD_MOB_HEALTHDOLL))
+		var/atom/movable/screen/to_remove = original_hud.screen_objects[removing]
+		if (to_remove)
+			to_remove.SetInvisibility(INVISIBILITY_ABSTRACT, type)
 
 	wearer.mob_mood.unmodify_hud()
 	// Add the moon health hud element
-	health_hud = new(null, original_hud)
-	original_hud.infodisplay += health_hud
-	original_hud.show_hud(original_hud.hud_version)
+	original_hud.add_screen_object(/atom/movable/screen/moon_health, HUD_HERETIC_MOON_HEALTH, HUD_GROUP_INFO, update_screen = TRUE)
 	UnregisterSignal(wearer, COMSIG_MOB_HUD_CREATED)
 	signal_registered -= COMSIG_MOB_HUD_CREATED
 
 /// Removes the HUD element from the wearer
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_hud_remove(mob/living/carbon/human/wearer)
 	var/datum/hud/original_hud = wearer.hud_used
-	original_hud.infodisplay -= health_hud
-	QDEL_NULL(health_hud)
+	QDEL_NULL(original_hud.screen_objects[HUD_HERETIC_MOON_HEALTH])
 	// Restore the old health elements
-	var/atom/movable/screen/stamina/stamina_hud = new(null, original_hud)
-	var/atom/movable/screen/healths/old_health_hud = new(null, original_hud)
-	var/atom/movable/screen/healthdoll/human/health_doll_hud = new(null, original_hud)
-	original_hud.infodisplay += stamina_hud
-	original_hud.infodisplay += old_health_hud
-	original_hud.infodisplay += health_doll_hud
+	for(var/restoring in list(HUD_MOB_STAMINA, HUD_MOB_HEALTH, HUD_MOB_HEALTHDOLL))
+		var/atom/movable/screen/to_restore = original_hud.screen_objects[restoring]
+		if (to_restore)
+			to_restore.RemoveInvisibility(type)
+
+	// Updates HUD on its own
 	wearer.mob_mood.modify_hud()
-	original_hud.show_hud(original_hud.hud_version)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/can_mob_unequip(mob/user)
 	if(!ishuman(user))
@@ -851,6 +840,8 @@
 	var/image/object_overlay
 	/// Overlay for the hood object
 	var/image/hood_object_overlay
+	/// Turf we're currently listening to for rust trait gains
+	var/turf/listening_turf
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/Initialize(mapload)
 	. = ..()
@@ -863,6 +854,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/on_robes_gained(mob/living/user)
 	. = ..()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	register_turf_listener(user)
 	rust_overlay = new()
 	rust_overlay.icon = 'icons/mob/clothing/suits/armor.dmi'
 	rust_overlay.render_target = "*rust_overlay_[overlay_id]"
@@ -878,6 +870,9 @@
 	if(.)
 		return
 	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED))
+	if(listening_turf)
+		UnregisterSignal(listening_turf, SIGNAL_ADDTRAIT(TRAIT_RUSTY))
+		listening_turf = null
 	user.vis_contents -= rust_overlay
 	rusted = FALSE
 	set_armor(/datum/armor/eldritch_armor/rust)
@@ -910,14 +905,25 @@
 	victim.vomit(MOB_VOMIT_BLOOD | MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM | MOB_VOMIT_FORCE)
 	victim.spew_organ(rand(4, 6))
 
-/*
- * Signal proc for [COMSIG_MOVABLE_MOVED].
- *
- * Checks if our armor values should be increased on the new turf
- */
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
-	SIGNAL_HANDLER
+/// Keeps our turf rust listener aligned with where the wearer currently stands.
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/register_turf_listener(mob/source)
+	var/turf/new_turf = get_turf(source)
+	if(listening_turf == new_turf)
+		return
+	if(listening_turf)
+		UnregisterSignal(listening_turf, SIGNAL_ADDTRAIT(TRAIT_RUSTY))
+	listening_turf = new_turf
+	if(listening_turf)
+		RegisterSignal(listening_turf, SIGNAL_ADDTRAIT(TRAIT_RUSTY), PROC_REF(on_turf_became_rusty))
 
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/on_turf_became_rusty(turf/source, rust_trait)
+	SIGNAL_HANDLER
+	var/mob/living/wearer = loc
+	if(!isliving(wearer) || !is_equipped(wearer))
+		return
+	update_rust_state(wearer)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/update_rust_state(mob/source)
 	if(source.is_touching_rust())
 		set_armor(/datum/armor/eldritch_armor/rust/on_rust)
 
@@ -945,6 +951,16 @@
 		rusted = FALSE
 		update_rust()
 
+/*
+ * Signal proc for [COMSIG_MOVABLE_MOVED].
+ *
+ * Checks if our armor values should be increased on the new turf
+ */
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
+	SIGNAL_HANDLER
+	register_turf_listener(source)
+	update_rust_state(source)
+
 /// Updates the icon of our overlay and applies the animation
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/update_rust()
 	// Animation + Update the overlay sprite on our armor
@@ -959,7 +975,7 @@
 	add_overlay(object_overlay)
 	hood?.add_overlay(hood_object_overlay)
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	// Should basically catch toggling the hood on/off while standing on rust
 	if(rusted)
@@ -1084,13 +1100,13 @@
 // Void cloak. Turns invisible with the hood up, lets you hide stuff.
 /obj/item/clothing/head/hooded/cult_hoodie/void
 	name = "void hood"
-	icon = 'icons/obj/clothing/head/helmet.dmi'
-	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	desc = "Black like tar, reflecting no light. Runic symbols line the outside. \
 		With each flash you lose comprehension of what you are seeing."
+	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "void_cloak"
 	flags_inv = NONE
-	flags_cover = NONE
+	flags_cover = ALLOW_SURGERY_THROUGH
 	armor_type = /datum/armor/cult_hoodie_void
 
 /datum/armor/cult_hoodie_void
@@ -1190,7 +1206,7 @@
 /// Makes our cloak "invisible". Not the wearer, the cloak itself.
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_invisible()
 	add_traits(list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), REF(src))
-	RemoveElement(/datum/element/heretic_focus)
+	flags_cover |= ALLOW_SURGERY_THROUGH
 
 	if(isliving(loc))
 		loc.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))
@@ -1201,7 +1217,7 @@
 /// Makes our cloak "visible" again.
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_visible()
 	remove_traits(list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), REF(src))
-	AddElement(/datum/element/heretic_focus)
+	flags_cover &= ~ALLOW_SURGERY_THROUGH
 
 	if(isliving(loc))
 		loc.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))

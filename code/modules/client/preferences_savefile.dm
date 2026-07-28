@@ -13,7 +13,7 @@
 /// You do not need to raise this if you are adding new values that have sane defaults.
 /// Only raise this value when changing the meaning/format/name/layout of an existing value
 /// where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 51
+#define SAVEFILE_VERSION_MAX 52
 
 #define IS_DATA_OBSOLETE(version) (version == SAVE_DATA_OBSOLETE)
 #define SHOULD_UPDATE_DATA(version) (version >= SAVE_DATA_NO_ERROR && version < SAVEFILE_VERSION_MAX)
@@ -165,6 +165,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 51)
 		migrate_felinid_feature_keys(save_data)
 
+	if(current_version < 52)
+		migrate_gendered_nonbinary_physique(save_data)
+
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
 	if(!parent)
@@ -181,14 +184,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		if(parent.hotkeys)
 			for(var/hotkeytobind in kb.hotkey_keys)
-				if(hotkeytobind == "Unbound")
+				if(hotkeytobind == UNBOUND_KEY)
 					addedbind = TRUE
 				else if(!length(binds_by_key[hotkeytobind])) //Only bind to the key if nothing else is bound
 					key_bindings[kb.name] |= hotkeytobind
 					addedbind = TRUE
 		else
 			for(var/classickeytobind in kb.classic_keys)
-				if(classickeytobind == "Unbound")
+				if(classickeytobind == UNBOUND_KEY)
 					addedbind = TRUE
 				else if(!length(binds_by_key[classickeytobind])) //Only bind to the key if nothing else is bound
 					key_bindings[kb.name] |= classickeytobind
@@ -196,7 +199,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		if(!addedbind)
 			notadded += kb
-	save_preferences() //Save the players pref so that new keys that were set to Unbound as default are permanently stored
+	save_preferences() //Save the players pref so that new keys that were set to UNBOUND_KEY as default are permanently stored
 	if(length(notadded))
 		addtimer(CALLBACK(src, PROC_REF(announce_conflict), notadded), 5 SECONDS)
 
@@ -334,19 +337,27 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	savefile.save()
 	return TRUE
 
-/datum/preferences/proc/load_character(slot)
+/datum/preferences/proc/load_character(slot = default_slot)
 	SHOULD_NOT_SLEEP(TRUE)
-	if(!slot)
-		slot = default_slot
 	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
+	var/original_default_slot = default_slot
 	if(slot != default_slot)
 		default_slot = slot
 		savefile.set_entry("default_slot", slot)
 
 	var/tree_key = "character[slot]"
 	var/list/save_data = savefile.get_entry(tree_key)
+	if(isnull(save_data)) // This is the case where we have a new character slot being switched to
+		for (var/datum/preference/preference as anything in get_preferences_in_priority_order()) // clear the cache in this case
+			if (preference.savefile_identifier != PREFERENCE_CHARACTER)
+				continue
+			value_cache -= preference.type
+		return FALSE
+
 	var/data_validity_integer = check_savedata_version(save_data)
 	if(IS_DATA_OBSOLETE(data_validity_integer)) //fatal, can't load any data
+		default_slot = original_default_slot
+		savefile.set_entry("default_slot", original_default_slot)
 		return FALSE
 
 	// Read everything into cache
@@ -378,9 +389,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	all_quirks = SANITIZE_LIST(all_quirks)
 
 	//Validate job prefs
-	for(var/j in job_preferences)
-		if(job_preferences[j] != JP_LOW && job_preferences[j] != JP_MEDIUM && job_preferences[j] != JP_HIGH)
-			job_preferences -= j
+	for(var/job, priority in job_preferences)
+		if(priority != JP_LOW && priority != JP_MEDIUM && priority != JP_HIGH)
+			job_preferences -= job
 
 	all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks))
 	validate_quirks()
@@ -434,6 +445,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (!load_character(new_slot))
 		tainted_character_profiles = TRUE
 		randomise_appearance_prefs()
+		all_quirks = list()
+		recently_updated_keys |= /datum/preference/name/real_name
 		save_character()
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)

@@ -1,5 +1,4 @@
 #define SOLAR_GEN_RATE 2500
-#define OCCLUSION_DISTANCE 20
 #define PANEL_Z_OFFSET 13
 #define PANEL_EDGE_Z_OFFSET (PANEL_Z_OFFSET - 2)
 
@@ -17,6 +16,7 @@
 
 
 	var/id
+	/// Tracks if the sun is obscured from the panel by the station (or something else)
 	var/obscured = FALSE
 	///`[0-1]` measure of obscuration -- multipllier against power generation
 	var/sunfrac = 0
@@ -204,29 +204,9 @@
 	if(azimuth_current != azimuth_target)
 		visually_turn(azimuth_target)
 		azimuth_current = azimuth_target
-		occlusion_setup()
+		var/turf/sun_turf = get_turf(src)
+		obscured = isnull(sun_turf) ? TRUE : sun_turf.is_sunlight_blocked()
 		needs_to_update_solar_exposure = TRUE
-
-///trace towards sun to see if we're in shadow
-/obj/machinery/power/solar/proc/occlusion_setup()
-	obscured = TRUE
-
-	var/distance = OCCLUSION_DISTANCE
-	var/target_x = round(sin(SSsun.azimuth), 0.01)
-	var/target_y = round(cos(SSsun.azimuth), 0.01)
-	var/x_hit = x
-	var/y_hit = y
-	var/turf/hit
-
-	for(var/run in 1 to distance)
-		x_hit += target_x
-		y_hit += target_y
-		hit = locate(round(x_hit, 1), round(y_hit, 1), z)
-		if(IS_OPAQUE_TURF(hit))
-			return
-		if(hit.x == 1 || hit.x == world.maxx || hit.y == 1 || hit.y == world.maxy) //edge of the map
-			break
-	obscured = FALSE
 
 ///calculates the fraction of the sunlight that the panel receives
 /obj/machinery/power/solar/proc/update_solar_exposure()
@@ -245,12 +225,9 @@
 	sunfrac = .
 
 /obj/machinery/power/solar/process()
-	if(machine_stat & BROKEN)
-		return
-	// space vines block out sunlight
-	var/obj/structure/spacevine/vine = locate(/obj/structure/spacevine) in loc
-	if(istype(vine) && !(/datum/spacevine_mutation/transparency in vine.mutations))
-		unset_control()
+	// If the turf is sun blocked directly we have no hope of being able to see the sun so don't bother processing
+	// On the other hand if the station is blocking the sun we might we might be able to see it later, so check for that (in update_turn)
+	if((machine_stat & BROKEN) || isnull(loc) || HAS_TRAIT(loc, TRAIT_TURF_SUN_BLOCKED))
 		return
 
 	if(control && (!powernet || control.powernet != powernet))
@@ -289,6 +266,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY // Pretty big!
 	anchored = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.75, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	var/tracker = 0
 	var/glass_type = null
 	var/random_offset = 6 //amount in pixels an unanchored assembly may be offset by
@@ -312,63 +290,34 @@
 		return
 	randomise_offset(anchored ? 0 : random_offset)
 
-/obj/item/solar_assembly/attackby(obj/item/item_used, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/solar_assembly/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/turf/solarturf = get_turf(src)
 
-	if(item_used.tool_behaviour == TOOL_WRENCH && isturf(loc))
-		if(!solarturf.can_have_cabling()) //allows catwalks
-			balloon_alert(user, "can't secure in space!")
-			return
-		for(var/obj/stuff_in_the_way in solarturf) //prevent anchoring on other machinery or solar assemblies
-			if(stuff_in_the_way == src)
-				continue
-			if(istype(stuff_in_the_way, /obj/item/solar_assembly) && stuff_in_the_way.anchored)
-				balloon_alert(user, "secured assembly in the way!")
-				return
-			if((stuff_in_the_way.density) && !(stuff_in_the_way.flags_1 & ON_BORDER_1))
-				balloon_alert(user, "something in the way!")
-				return
-		set_anchored(!anchored)
-		user.visible_message(
-			span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly[anchored ? " into place" : null]."),
-			span_notice("You [anchored ? null : "un"]wrench the solar assembly[anchored ? " into place" : null]."),
-		)
-		item_used.play_tool_sound(src, 75)
-		return TRUE
-
 	if(tracker)
-		if(item_used.tool_behaviour == TOOL_CROWBAR)
-			new /obj/item/electronics/tracker(src.loc)
-			tracker = FALSE
-			update_appearance()
-			user.visible_message(span_notice("[user] takes out the electronics from the solar assembly."), span_notice("You take out the electronics from the solar assembly."))
-			return TRUE
-
 		//prevent construction if something dense's on our tile
 		if(solarturf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
 			balloon_alert(user, "something in the way!")
-			return
-		if(!istype(item_used, /obj/item/stack/sheet/glass))
+			return ITEM_INTERACT_BLOCKING
+		if(!istype(tool, /obj/item/stack/sheet/glass))
 			to_chat(user, span_warning("The tracker only accepts standard, un-reinforced glass."))
-			return
-		var/obj/item/stack/sheet/my_sheet = item_used
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/stack/sheet/my_sheet = tool
 		if(!my_sheet.use(2))
 			to_chat(user, span_warning("You don't have enough glass to complete the tracker."))
-			return
+			return ITEM_INTERACT_BLOCKING
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		user.visible_message(span_notice("[user] places the glass on the solar assembly."),span_notice("You place the glass on the solar assembly."))
 		new /obj/machinery/power/tracker/(get_turf(src), src)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	if(!tracker)
-		if(istype(item_used, /obj/item/electronics/tracker))
-			if(!user.temporarilyRemoveItemFromInventory(item_used))
-				return
-			tracker = TRUE
-			update_appearance()
-			qdel(item_used)
-			user.visible_message(span_notice("[user] inserts the electronics into the solar assembly."), span_notice("You insert the electronics into the solar assembly."))
-			return TRUE
+	if(istype(tool, /obj/item/electronics/tracker))
+		if(!user.temporarilyRemoveItemFromInventory(tool))
+			return ITEM_INTERACT_BLOCKING
+		tracker = TRUE
+		update_appearance()
+		qdel(tool)
+		user.visible_message(span_notice("[user] inserts the electronics into the solar assembly."), span_notice("You insert the electronics into the solar assembly."))
+		return ITEM_INTERACT_SUCCESS
 
 	//make a list of all the glass
 	var/static/list/acceptable_glass_list = typecacheof(list(
@@ -378,23 +327,23 @@
 		/obj/item/stack/sheet/plastitaniumglass,
 	))
 
-	if(!acceptable_glass_list[item_used.type])
+	if(!acceptable_glass_list[tool.type])
 		//items that arent used above, or arent usable glass will make it here.
 		//so we check if its reinfocred glass, or some other item
-		if(istype(item_used, /obj/item/stack/sheet/rglass) || istype(item_used, /obj/item/stack/sheet/plasmarglass))
+		if(istype(tool, /obj/item/stack/sheet/rglass) || istype(tool, /obj/item/stack/sheet/plasmarglass))
 			to_chat(user, span_warning("The solar array will only accept glass or glass alloys that have not been reinforced."))
 		//an else statement can be put here if you want something to happen to all the misc items that make it this far
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	//prevent construction if something dense's on our tile
 	if(solarturf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
 		balloon_alert(user, "something in the way!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(is_glass_sheet(item_used))
+	if(is_glass_sheet(tool))
 		if(!anchored)
 			to_chat(user, span_warning("You need to secure the assembly before you can add glass."))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		var/list/glass_material_to_tier = list(
 	    /datum/material/glass = 1,
@@ -403,10 +352,10 @@
 	    /datum/material/alloy/plastitaniumglass = 4,
 		)
 
-		var/obj/item/stack/sheet/my_sheet = item_used
+		var/obj/item/stack/sheet/my_sheet = tool
 		if(!my_sheet.use(2))
 			to_chat(user, span_warning("You need at least two sheets of glass to complete a solar panel!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		var/datum/material/glass_material = my_sheet.material_type
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
@@ -416,8 +365,43 @@
 		mySolar.material_type = glass_material
 		mySolar.panel.icon_state = "solar_panel_[glass_material.name]"
 		mySolar.panel_edge.icon_state = "solar_panel_[glass_material.name]_edge"
-		return TRUE
-	return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/item/solar_assembly/wrench_act(mob/living/user, obj/item/tool)
+	var/turf/solarturf = get_turf(src)
+	if(!isturf(loc))
+		return NONE
+	if(!solarturf.can_have_cabling()) //allows catwalks
+		balloon_alert(user, "can't secure in space!")
+		return ITEM_INTERACT_BLOCKING
+	for(var/obj/stuff_in_the_way in solarturf) //prevent anchoring on other machinery or solar assemblies
+		if(stuff_in_the_way == src)
+			continue
+		if(istype(stuff_in_the_way, /obj/item/solar_assembly) && stuff_in_the_way.anchored)
+			balloon_alert(user, "secured assembly in the way!")
+			return ITEM_INTERACT_BLOCKING
+		if((stuff_in_the_way.density) && !(stuff_in_the_way.flags_1 & ON_BORDER_1))
+			balloon_alert(user, "something in the way!")
+			return ITEM_INTERACT_BLOCKING
+	set_anchored(!anchored)
+	user.visible_message(
+		span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly[anchored ? " into place" : null]."),
+		span_notice("You [anchored ? null : "un"]wrench the solar assembly[anchored ? " into place" : null]."),
+	)
+	tool.play_tool_sound(src, 75)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/solar_assembly/crowbar_act(mob/living/user, obj/item/tool)
+	if(!tracker)
+		return NONE
+	new /obj/item/electronics/tracker(src.loc)
+	tracker = FALSE
+	update_appearance()
+	user.visible_message(span_notice("[user] takes out the electronics from the solar assembly."), \
+						span_notice("You take out the electronics from the solar assembly."))
+	return ITEM_INTERACT_SUCCESS
 
 //
 // Solar Control Computer
@@ -581,36 +565,31 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/power/solar_control/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(I.use_tool(src, user, 20, volume=50))
-			if (src.machine_stat & BROKEN)
-				to_chat(user, span_notice("The broken glass falls out."))
-				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
-				new /obj/item/shard( src.loc )
-				var/obj/item/circuitboard/computer/solar_control/M = new /obj/item/circuitboard/computer/solar_control( A )
-				for (var/obj/C in src)
-					C.forceMove(drop_location())
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.set_anchored(TRUE)
-				qdel(src)
-			else
-				to_chat(user, span_notice("You disconnect the monitor."))
-				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
-				var/obj/item/circuitboard/computer/solar_control/M = new /obj/item/circuitboard/computer/solar_control( A )
-				for (var/obj/C in src)
-					C.forceMove(drop_location())
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.set_anchored(TRUE)
-				qdel(src)
-	else if(!user.combat_mode && !(I.item_flags & NOBLUDGEON))
-		attack_hand(user)
-	else
+/obj/machinery/power/solar_control/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode || (tool.item_flags & NOBLUDGEON))
 		return ..()
+	attack_hand(user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/power/solar_control/screwdriver_act(mob/living/user, obj/item/tool)
+	if(tool.use_tool(src, user, 20, volume=50))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/structure/frame/computer/new_computer = new /obj/structure/frame/computer(src.loc)
+	if (src.machine_stat & BROKEN)
+		to_chat(user, span_notice("The broken glass falls out."))
+		new /obj/item/shard( src.loc )
+		new_computer.state = 3
+		new_computer.icon_state = "3"
+	else
+		to_chat(user, span_notice("You disconnect the monitor."))
+		new_computer.state = 4
+		new_computer.icon_state = "4"
+	for (var/obj/within in src)
+		within.forceMove(drop_location())
+	new_computer.circuit = new /obj/item/circuitboard/computer/solar_control(new_computer)
+	new_computer.set_anchored(TRUE)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/solar_control/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -663,6 +642,5 @@
 	default_raw_text = "<h1>Welcome</h1><p>At greencorps we love the environment, and space. With this package you are able to help mother nature and produce energy without any usage of fossil fuel or plasma! Singularity energy is dangerous while solar energy is safe, which is why it's better. Now here is how you setup your own solar array.</p><p>You can make a solar panel by wrenching the solar assembly onto a cable node. Adding a glass panel, any non reinforced glass will do, will finish the construction of your solar panel. It is that easy!</p><p>Now after setting up 19 more of these solar panels you will want to create a solar tracker to keep track of our mother nature's gift, the sun. These are the same steps as before except you insert the tracker equipment circuit into the assembly before performing the final step of adding the glass. You now have a tracker! Now the last step is to add a computer to calculate the sun's movements and to send commands to the solar panels to change direction with the sun. Setting up the solar computer is the same as setting up any computer, so you should have no trouble in doing that. You do need to put a wire node under the computer, and the wire needs to be connected to the tracker.</p><p>Congratulations, you should have a working solar array. If you are having trouble, here are some tips. Make sure all solar equipment are on a cable node, even the computer. You can always deconstruct your creations if you make a mistake.</p><p>That's all to it, be safe, be green!</p>"
 
 #undef SOLAR_GEN_RATE
-#undef OCCLUSION_DISTANCE
 #undef PANEL_Z_OFFSET
 #undef PANEL_EDGE_Z_OFFSET

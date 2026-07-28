@@ -32,6 +32,8 @@
 	var/printing_speed = 0.75 SECONDS
 	/// Amount of layers which printed pills will be coated in
 	var/pill_layers = 3
+	/// Current custom transfer amount
+	var/custom_transfer_amount = 15
 
 /obj/machinery/chem_master/Initialize(mapload)
 	create_reagents(100)
@@ -72,7 +74,7 @@
 		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
 		return CONTEXTUAL_SCREENTIP_SET
 	else if(held_item.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""] anchor"
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unan" : "An"]chor"
 		return CONTEXTUAL_SCREENTIP_SET
 	else if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
@@ -178,41 +180,27 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_master/wrench_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
-
-	. = ITEM_INTERACT_BLOCKING
 	if(is_printing)
 		balloon_alert(user, "still printing!")
-		return .
+		return ITEM_INTERACT_BLOCKING
 
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/chem_master/screwdriver_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
-
-	. = ITEM_INTERACT_BLOCKING
 	if(is_printing)
 		balloon_alert(user, "still printing!")
-		return .
+		return ITEM_INTERACT_BLOCKING
 
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		update_appearance(UPDATE_OVERLAYS)
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/chem_master/crowbar_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
-
-	. = ITEM_INTERACT_BLOCKING
 	if(is_printing)
 		balloon_alert(user, "still printing!")
-		return .
+		return ITEM_INTERACT_BLOCKING
 
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /**
  * Insert, remove, replace the existig beaker. Returns TRUE on success.
@@ -295,6 +283,7 @@
 	.["selectedPillDuration"] = pill_layers
 	var/obj/item/held_item = user.get_active_held_item()
 	.["hasBeakerInHand"] = held_item?.is_chem_container() || FALSE
+	.["customTransferAmount"] = custom_transfer_amount
 
 	//contents of source beaker
 	var/list/beaker_data = null
@@ -426,6 +415,18 @@
 			if(container?.can_insert_container(ui.user, src))
 				replace_beaker(ui.user, container)
 
+			return TRUE
+
+		if("setCustomTransfer")
+			var/target = params["target"]
+			if(isnull(target))
+				return FALSE
+
+			target = text2num(target)
+			if(isnull(target))
+				return FALSE
+
+			custom_transfer_amount = clamp(target, 0, beaker.volume)
 			return TRUE
 
 		if("transfer")

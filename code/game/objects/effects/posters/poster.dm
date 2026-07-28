@@ -56,18 +56,19 @@
 	. = ..()
 	. += span_notice("You can booby-trap the poster by using a glass shard on it before you put it up.")
 
-/obj/item/poster/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(I, /obj/item/shard))
-		return ..()
+/obj/item/poster/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/shard))
+		return NONE
 
-	if (locate(/obj/item/shard) in (poster_structure?.contents || contents))
+	if(locate(/obj/item/shard) in (poster_structure?.contents || contents))
 		balloon_alert(user, "already trapped!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(!user.transferItemToLoc(I, src))
-		return
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("You conceal \the [I] inside the rolled up poster."))
+	to_chat(user, span_notice("You conceal \the [tool] inside the rolled up poster."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/poster/interact_with_atom(turf/closed/wall_structure, mob/living/user, list/modifiers)
 	if(!isclosedturf(wall_structure))
@@ -121,7 +122,9 @@
 
 	var/turf/user_drop_location = get_turf(user)
 	if(!do_after(user, PLACE_SPEED, placed_poster, extra_checks = CALLBACK(placed_poster, TYPE_PROC_REF(/obj/structure/sign/poster, snowflake_closed_turf_check), wall_structure)))
-		placed_poster.roll_and_drop(user_drop_location, user)
+		//only put back if the poster wasen't teared off or snipped with a wirecutter during placing
+		if(!QDELETED(placed_poster))
+			placed_poster.roll_and_drop(user_drop_location, user)
 		return ITEM_INTERACT_FAILURE
 
 	placed_poster.find_and_mount_on_atom()

@@ -31,6 +31,7 @@
 	available_items[item.category] -= item.identifier
 	if(!length(available_items[item.category]))
 		available_items -= item.category
+		categories -= item.category
 
 /**
  * Handles buying the item for a market.
@@ -91,7 +92,7 @@
 	name = "Black Market"
 	shipping = list(
 		SHIPPING_METHOD_LTSRBT = 40,
-		SHIPPING_METHOD_LAUNCH = 10,
-		SHIPPING_METHOD_TELEPORT= 75,
+		SHIPPING_METHOD_LAUNCH = 0,
+		SHIPPING_METHOD_TELEPORT = 75,
 	)
 	legal_status = FALSE

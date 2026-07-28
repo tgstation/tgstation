@@ -47,19 +47,13 @@
 	. = ..()
 	ore_box = new(src)
 
-/obj/vehicle/sealed/mecha/clarke/atom_destruction()
-	if(ore_box)
-		INVOKE_ASYNC(ore_box, TYPE_PROC_REF(/obj/structure/ore_box, dump_box_contents))
-	return ..()
-
 /obj/vehicle/sealed/mecha/clarke/generate_actions()
 	. = ..()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_search_ruins)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/clarke_scoop_body)
 
-//Ore Box Controls
-
-///Special equipment for the Clarke mech, handles moving ore without giving the mech a hydraulic clamp and cargo compartment.
+// Ore Box Controls
+/// Special equipment for the Clarke mech, handles moving ore without giving the mech a hydraulic clamp and cargo compartment.
 /obj/item/mecha_parts/mecha_equipment/orebox_manager
 	name = "ore storage module"
 	desc = "An automated ore box management device, complete with a built-in boulder processor."
@@ -121,7 +115,8 @@
 	button_icon_state = "mecha_sleeper_miner"
 
 /datum/action/vehicle/sealed/mecha/clarke_scoop_body/Trigger(mob/clicker, trigger_flags)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/obj/item/mecha_parts/mecha_equipment/sleeper/clarke/sleeper = locate() in chassis
 	var/mob/living/carbon/human/human_target
@@ -140,7 +135,8 @@
 	COOLDOWN_DECLARE(search_cooldown)
 
 /datum/action/vehicle/sealed/mecha/mech_search_ruins/Trigger(mob/clicker, trigger_flags)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return

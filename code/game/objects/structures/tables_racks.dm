@@ -23,13 +23,13 @@
 	pass_flags_self = PASSTABLE | LETPASSTHROW
 	layer = TABLE_LAYER
 	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
-	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	max_integrity = 100
 	integrity_failure = 0.33
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_TABLES
-	var/static/list/turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY, TRAIT_IMMERSE_STOPPED)
+	var/static/list/turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY, TRAIT_IMMERSE_STOPPED, TRAIT_TURF_PROJECTS_WHISPERS)
 	///a bit fucky, I know. but this is needed to get sorted on init smoothing groups stored
 	var/list/on_init_smoothed_vars
 	var/frame = /obj/structure/table_frame
@@ -89,7 +89,7 @@
 		return
 
 	make_climbable()
-	AddElement(/datum/element/give_turf_traits, string_list(turf_traits))
+	AddElement(/datum/element/give_turf_traits, turf_traits)
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	AddElement(/datum/element/table_smash, gentle_push = slam_gently, after_smash_proccall = PROC_REF(after_smash))
 
@@ -455,6 +455,7 @@
 	canSmoothWith = null
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 	/// Lazylist of the items that we have on our surface.
 	var/list/attached_items = null
 	can_flip = FALSE
@@ -833,10 +834,7 @@
 	if(!electrocute_mob(user, cable_node, src, 1, TRUE))
 		return FALSE
 
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(3, TRUE, src)
-	sparks.start()
-
+	do_sparks(3, TRUE, src)
 	return TRUE
 
 /obj/structure/table/bronze
@@ -912,7 +910,7 @@
 	can_flip = FALSE
 	slam_gently = TRUE
 	/// Mob currently lying on the table
-	var/mob/living/carbon/patient = null
+	var/mob/living/patient = null
 	/// Operating computer we're linked to, to sync operations from
 	var/obj/machinery/computer/operating/computer = null
 	/// Tank attached under the table
@@ -1091,7 +1089,8 @@
 
 	set_patient(found_replacement)
 
-/obj/structure/table/optable/proc/set_patient(mob/living/carbon/new_patient)
+/// Updates [var/patient] with out new patient, re-registers surgery related signals, updates UI data for operation computers and vital monitors if those connected.
+/obj/structure/table/optable/proc/set_patient(mob/living/new_patient)
 	if (patient)
 		UnregisterSignal(patient, list(
 			SIGNAL_ADDTRAIT(TRAIT_READY_TO_OPERATE),
@@ -1100,8 +1099,10 @@
 			COMSIG_ATOM_SURGERY_FINISHED,
 			COMSIG_LIVING_UPDATING_SURGERY_STATE,
 		))
-		if (patient.external && patient.external == air_tank)
-			patient.close_externals()
+
+		var/mob/living/carbon/breather_patient = patient
+		if (iscarbon(breather_patient) && breather_patient.external && breather_patient.external == air_tank)
+			breather_patient.close_externals()
 
 	SEND_SIGNAL(src, COMSIG_OPERATING_TABLE_SET_PATIENT, new_patient)
 	patient = new_patient
@@ -1197,8 +1198,10 @@
 	balloon_alert(user, "tank detached")
 	if (air_tank.IsReachableBy(user))
 		user.put_in_hands(air_tank)
-	if (patient?.external && patient.external == air_tank)
-		patient.close_externals()
+
+	var/mob/living/carbon/carbon_patient = patient
+	if (iscarbon(carbon_patient) && carbon_patient?.external && carbon_patient.external == air_tank)
+		carbon_patient.close_externals()
 	air_tank = null
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -1243,14 +1246,20 @@
 	return TRUE
 
 /obj/structure/table/optable/mouse_drop_dragged(atom/over, mob/living/user, src_location, over_location, params)
+
 	if (over != patient || !istype(user) || !IsReachableBy(user) || !user.can_interact_with(src))
+		return
+
+	if(!iscarbon(patient))
+		balloon_alert(user, "no internals connector!")
 		return
 
 	if (!air_tank)
 		balloon_alert(user, "no tank attached!")
 		return
 
-	var/internals = patient.can_breathe_internals()
+	var/mob/living/carbon/carbon_patient = patient
+	var/internals = carbon_patient.can_breathe_internals()
 	if (!internals)
 		balloon_alert(user, "no internals connector!")
 		return
@@ -1261,10 +1270,10 @@
 	if (!do_after(user, 4 SECONDS, patient))
 		return
 
-	if (!air_tank || patient != over || !patient.can_breathe_internals())
+	if (!air_tank || patient != over || !carbon_patient.can_breathe_internals())
 		return
 
-	patient.open_internals(air_tank, is_external = TRUE)
+	carbon_patient.open_internals(air_tank, is_external = TRUE)
 	to_chat(user, span_notice("You connect [src]'s [air_tank] to [patient]'s [internals]."))
 	to_chat(patient, span_userdanger("[user] connects [src]'s [air_tank] to your [internals]!"))
 
@@ -1459,7 +1468,7 @@
 		return
 	building = TRUE
 	to_chat(user, span_notice("You start constructing a rack..."))
-	if(do_after(user, 5 SECONDS, target = user, progress=TRUE))
+	if(do_after(user, 5 SECONDS, target = user))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/obj/structure/rack/R = new /obj/structure/rack(get_turf(src))

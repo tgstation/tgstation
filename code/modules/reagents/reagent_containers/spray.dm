@@ -14,6 +14,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 7
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	var/stream_mode = FALSE //whether we use the more focused mode
 	var/current_range = 3 //the range of tiles the sprayer will reach.
 	var/spray_range = 3 //the range of tiles the sprayer will reach when in spray mode.
@@ -30,6 +31,7 @@
 /obj/item/reagent_containers/spray/Initialize(mapload, vol)
 	. = ..()
 	AddElement(/datum/element/reagents_item_heatable)
+	RegisterSignal(src, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, PROC_REF(on_mail_unwrap))
 
 /obj/item/reagent_containers/spray/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return try_spray(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
@@ -136,10 +138,8 @@
 		current_range = spray_range
 	to_chat(user, span_notice("You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]."))
 
-/obj/item/reagent_containers/spray/verb/empty()
-	set name = "Empty Spray Bottle"
-	set category = "Object"
-	set src in usr
+GAME_VERB_SRC(/obj/item/reagent_containers/spray, empty, usr, "Empty Spray Bottle", null)
+
 	if(usr.incapacitated)
 		return
 	if (tgui_alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", list("Yes", "No")) != "Yes")
@@ -149,6 +149,16 @@
 		reagents.expose(usr.loc)
 		log_combat(usr, usr.loc, "emptied onto", src, addition="which had [reagents.get_reagent_log_string()]")
 		src.reagents.clear_reagents()
+
+/obj/item/reagent_containers/spray/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	SIGNAL_HANDLER
+	if(reagents.total_volume < amount_per_transfer_from_this)
+		return
+	to_chat(user, span_danger("As you open [letter], a mist spritzes out from inside!"))
+	spray(user, user)
+	playsound(user, spray_sound, 50, TRUE, -6)
+	forceMove(user.loc)
+	return COMPONENT_TRAITOR_MAIL_HANDLED
 
 /// Handles updating the spray distance when the reagents change.
 /obj/item/reagent_containers/spray/on_reagent_change(datum/reagents/holder, ...)
@@ -217,11 +227,12 @@
 	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 50)
 	pickup_sound = 'sound/items/handling/pepper_spray/pepper_spray_pick_up.ogg'
 	drop_sound = 'sound/items/handling/pepper_spray/pepper_spray_drop.ogg'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/spray/pepper/empty //for protolathe printing
 	list_reagents = null
 
-/obj/item/reagent_containers/spray/pepper/suicide_act(mob/living/carbon/user)
+/obj/item/reagent_containers/spray/pepper/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins huffing \the [src]! It looks like [user.p_theyre()] getting a dirty high!"))
 	return OXYLOSS
 
@@ -235,11 +246,15 @@
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	amount_per_transfer_from_this = 1
+	initial_reagent_flags = OPENCONTAINER
 	has_variable_transfer_amount = FALSE
 	can_toggle_range = FALSE
 	current_range = 1
 	volume = 10
 	list_reagents = list(/datum/reagent/water = 10)
+
+/obj/item/reagent_containers/spray/waterflower/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash)
+	return ..(hit_atom, throwingdatum, do_splash = FALSE)
 
 ///Subtype used for the lavaland clown ruin.
 /obj/item/reagent_containers/spray/waterflower/superlube
@@ -434,6 +449,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	volume = 100
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/spray/medical/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/med_spray)

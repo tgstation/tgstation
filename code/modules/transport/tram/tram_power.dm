@@ -17,7 +17,7 @@
 
 /obj/machinery/transport/power_rectifier/post_machine_initialize()
 	. = ..()
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(power_tram))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(power_tram))
 	find_platform()
 
 /**

@@ -153,9 +153,7 @@
 
 /obj/effect/temp_visual/falling_rocket/proc/create_explosion()
 	playsound(src, 'sound/items/weapons/minebot_rocket.ogg', 100, FALSE)
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(1, holder = src)
-	smoke.start()
+	do_smoke(1, src, loc)
 	for(var/mob/living/living_target in oview(explosion_radius, src))
 		if(living_target.incorporeal_move)
 			continue
@@ -171,9 +169,7 @@
 /obj/effect/mine/minebot/mineEffect(mob/living/victim)
 	if(!istype(victim))
 		return
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, holder = src)
-	smoke.start()
+	do_smoke(0, src, loc)
 	playsound(src, 'sound/effects/explosion/explosion3.ogg', 100)
 	victim.apply_damage(damage_to_apply)
 

@@ -78,7 +78,7 @@
 
 	if(isgolem(owner))
 		var/mob/living/carbon/golem_owner = owner
-		for (var/obj/item/bodypart/part in golem_owner.bodyparts)
+		for (var/obj/item/bodypart/part in golem_owner.get_bodyparts())
 			// these overlays won't look good on anything but golem limbs
 			if (part.limb_id != SPECIES_GOLEM)
 				continue
@@ -123,7 +123,12 @@
 /// Body part overlays applied by golem status effects
 /datum/bodypart_overlay/simple/golem_overlay
 	icon = 'icons/mob/human/species/golems.dmi'
-	layers = ALL_EXTERNAL_OVERLAYS
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+	)
+	offset_location = ENTIRE_BODY
 	///The bodypart that the overlay is currently applied to
 	var/datum/weakref/attached_bodypart
 
@@ -133,10 +138,8 @@
 	part.add_bodypart_overlay(src, update = FALSE)
 
 /datum/bodypart_overlay/simple/golem_overlay/Destroy(force)
-	var/obj/item/bodypart/referenced_bodypart = attached_bodypart.resolve()
-	if(!referenced_bodypart)
-		return ..()
-	referenced_bodypart.remove_bodypart_overlay(src)
+	var/obj/item/bodypart/referenced_bodypart = attached_bodypart?.resolve()
+	referenced_bodypart?.remove_bodypart_overlay(src)
 	return ..()
 
 /// Freezes hunger for the duration
@@ -307,7 +310,7 @@
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/light_speed)
 
 	var/mob/living/carbon/carbon_owner = owner
-	for (var/obj/item/bodypart/arm/arm in carbon_owner.bodyparts)
+	for (var/obj/item/bodypart/arm/arm in carbon_owner.get_bodyparts())
 		set_arm_fluff(arm)
 	return TRUE
 
@@ -388,7 +391,7 @@
 	var/mob/living/carbon/human/human_owner = owner
 	RegisterSignal(human_owner, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_punched))
 	human_owner.physiology.brute_mod *= brute_modifier
-	for (var/obj/item/bodypart/arm/arm in human_owner.bodyparts)
+	for (var/obj/item/bodypart/arm/arm in human_owner.get_bodyparts())
 		buff_arm(arm)
 
 /// Give mining mobs an extra slap

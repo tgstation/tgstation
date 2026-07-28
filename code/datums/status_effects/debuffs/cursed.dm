@@ -130,7 +130,7 @@
 /// If our owner's stat changes, rapidly surge the damage chance.
 /datum/status_effect/slot_machine_curse/proc/on_stat_changed()
 	SIGNAL_HANDLER
-	if(owner.stat == CONSCIOUS || owner.stat == DEAD) // reset on these two states
+	if(!IS_UNCONSCIOUS_OR_CRIT(owner) || owner.stat == DEAD) // reset on these two states
 		damage_chance = initial(damage_chance)
 		return
 
@@ -178,7 +178,7 @@
 /atom/movable/screen/alert/status_effect/cursed
 	name = "Cursed!"
 	desc = "The brand on your hand reminds you of your greed, yet you seem to be okay otherwise."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "cursed_by_slots"
 
 /atom/movable/screen/alert/status_effect/cursed/update_desc()

@@ -1,5 +1,4 @@
 #define FUNCTIONAL_WING_FORCE 2.25 NEWTONS
-#define FUNCTIONAL_WING_STABILIZATION 4.5 NEWTONS
 
 ///hud action for starting and stopping flight
 /datum/action/innate/flight
@@ -29,7 +28,6 @@
 	food_reagents = list(/datum/reagent/flightpotion = 5)
 
 	var/drift_force = FUNCTIONAL_WING_FORCE
-	var/stabilizer_force = FUNCTIONAL_WING_STABILIZATION
 
 /obj/item/organ/wings/functional/Initialize(mapload)
 	. = ..()
@@ -37,7 +35,6 @@
 		/datum/component/jetpack, \
 		TRUE, \
 		drift_force, \
-		stabilizer_force, \
 		COMSIG_WINGS_OPENED, \
 		COMSIG_WINGS_CLOSED, \
 		null, \
@@ -81,7 +78,7 @@
 ///Check if we're still eligible for flight (wings covered, atmosphere too thin, etc)
 /obj/item/organ/wings/functional/proc/can_fly()
 	var/mob/living/carbon/human/human = owner
-	if(human.stat || human.body_position == LYING_DOWN || isnull(human.client))
+	if(IS_UNCONSCIOUS_OR_CRIT(human) || human.body_position == LYING_DOWN || isnull(human.client))
 		return FALSE
 	//Jumpsuits have tail holes, so it makes sense they have wing holes too
 	if(!cant_hide && (human.obscured_slots & HIDEJUMPSUIT))
@@ -127,7 +124,7 @@
 		human.add_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
 		human.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
 		human.AddElement(/datum/element/forced_gravity, 0)
-		passtable_on(human, SPECIES_FLIGHT_TRAIT)
+		ADD_TRAIT(human, TRAIT_PASSTABLE, SPECIES_FLIGHT_TRAIT)
 		open_wings()
 		to_chat(human, span_notice("You beat your wings and begin to hover gently above the ground..."))
 		human.set_resting(FALSE, TRUE)
@@ -138,7 +135,7 @@
 	human.remove_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
 	human.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
 	human.RemoveElement(/datum/element/forced_gravity, 0)
-	passtable_off(human, SPECIES_FLIGHT_TRAIT)
+	REMOVE_TRAIT(human, TRAIT_PASSTABLE, SPECIES_FLIGHT_TRAIT)
 	to_chat(human, span_notice("You settle gently back onto the ground..."))
 	close_wings()
 	human.refresh_gravity()
@@ -186,7 +183,7 @@
 	feature_key = initial(feature_key)
 	set_appearance_from_name(sprite_datum.name)
 
-/datum/bodypart_overlay/mutant/wings/functional/generate_icon_cache()
+/datum/bodypart_overlay/mutant/wings/functional/icon_render_key(obj/item/bodypart/limb)
 	. = ..()
 	. += wings_open ? "open" : "closed"
 
@@ -245,4 +242,3 @@
 	sprite_accessory_override = /datum/sprite_accessory/wings/slime
 
 #undef FUNCTIONAL_WING_FORCE
-#undef FUNCTIONAL_WING_STABILIZATION

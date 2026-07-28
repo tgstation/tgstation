@@ -40,7 +40,10 @@
 	name = "Multitool"
 	id = "multitool"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
+	materials = list(
+		/datum/material/iron =SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/glass =SMALL_MATERIAL_AMOUNT * 0.2
+		)
 	build_path = /obj/item/multitool
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -65,13 +68,18 @@
 	name = "Rapid Wiring Device"
 	id = "rwd"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*5, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5)
+	//The cable coils don't count toward the total mats of the item to avoid a possible way to generate more iron and glass.
+	transfered_materials = list(
+		/obj/item/rwd/loaded = /obj/item/rwd::custom_materials,
+	)
 	build_path = /obj/item/rwd/loaded
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+	fixed_cost_efficiency = TRUE // The cable coils can be removed and recycled to generate more material than that spent printing it at higher stock part tiers.
 
 /datum/design/analyzer
 	name = "Gas Analyzer"
@@ -184,18 +192,31 @@
 	name = "Toolbox"
 	id = "tool_box"
 	build_type = AUTOLATHE
-	materials = list(MAT_CATEGORY_ITEM_MATERIAL =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material_requirement/solid_material = SMALL_MATERIAL_AMOUNT * 5)
 	build_path = /obj/item/storage/toolbox
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING,
 	)
 
+/datum/design/toolbox/create_result(atom/drop_loc, list/custom_materials, amount)
+	var/obj/item/storage/toolbox/toolbox = ..()
+	if (length(custom_materials) && !istype(custom_materials[1], /datum/material/iron))
+		return toolbox
+
+	// Default and custom material iron toolboxes get a random color assigned rather than being greyscale'd
+	var/toolbox_color = pick("blue", "yellow", "red")
+	toolbox.icon_state = toolbox_color
+	toolbox.inhand_icon_state = "toolbox_[toolbox_color]"
+	toolbox.material_flags &= ~MATERIAL_COLOR
+	toolbox.remove_atom_colour(FIXED_COLOUR_PRIORITY)
+	return toolbox
+
 /datum/design/emergency_oxygen
 	name = "Emergency Oxygen Tank"
 	id = "emergency_oxygen"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/tank/internals/emergency_oxygen/empty
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -550,7 +571,11 @@
 	name = "Laptop Frame"
 	id = "laptop"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+	transfered_materials = list(
+		/obj/item/modular_computer/laptop/buildable = /obj/item/modular_computer/laptop::custom_materials,
+		/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell::custom_materials,
+	)
 	build_path = /obj/item/modular_computer/laptop/buildable
 	category = list(
 		RND_CATEGORY_INITIAL,

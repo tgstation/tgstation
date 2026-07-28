@@ -84,15 +84,16 @@
 	else
 		soundloop.start()
 
-/obj/item/taperecorder/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!mytape && istype(I, /obj/item/tape))
-		if(!user.transferItemToLoc(I,src))
-			return
-		mytape = I
-		balloon_alert(user, "inserted [mytape]")
-		playsound(src, 'sound/items/taperecorder/taperecorder_close.ogg', 50, FALSE)
-		update_appearance()
-
+/obj/item/taperecorder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(mytape || !istype(tool, /obj/item/tape))
+		return NONE
+	if(!user.transferItemToLoc(tool,src))
+		return ITEM_INTERACT_BLOCKING
+	mytape = tool
+	balloon_alert(user, "inserted [mytape]")
+	playsound(src, 'sound/items/taperecorder/taperecorder_close.ogg', 50, FALSE)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/taperecorder/proc/eject(mob/user)
 	if(!mytape)
@@ -125,9 +126,7 @@
 	return FALSE
 
 
-/obj/item/taperecorder/verb/ejectverb()
-	set name = "Eject Tape"
-	set category = "Object"
+GAME_VERB(/obj/item/taperecorder, ejectverb, "Eject Tape", null)
 
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
@@ -135,7 +134,6 @@
 	if(!mytape)
 		balloon_alert(usr, "no tape!")
 		return
-
 	eject(usr)
 
 
@@ -162,9 +160,7 @@
 	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss", NO_TIMEZONE)]\] [speaker.get_voice()]: [raw_message]"
 
 
-/obj/item/taperecorder/verb/record()
-	set name = "Start Recording"
-	set category = "Object"
+GAME_VERB(/obj/item/taperecorder, record, "Start Recording", null)
 
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
@@ -205,9 +201,7 @@
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 
 
-/obj/item/taperecorder/verb/stop()
-	set name = "Stop"
-	set category = "Object"
+GAME_VERB(/obj/item/taperecorder, stop, "Stop", null)
 
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
@@ -226,9 +220,7 @@
 	update_appearance()
 	update_sound()
 
-/obj/item/taperecorder/verb/play()
-	set name = "Play Tape"
-	set category = "Object"
+GAME_VERB(/obj/item/taperecorder, play, "Play Tape", null)
 
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
@@ -299,9 +291,7 @@
 			if("Eject")
 				eject(user)
 
-/obj/item/taperecorder/verb/print_transcript()
-	set name = "Print Transcript"
-	set category = "Object"
+GAME_VERB(/obj/item/taperecorder, print_transcript, "Print Transcript", null)
 
 	var/list/transcribed_info = mytape.storedinfo
 	if(!length(transcribed_info))
@@ -376,7 +366,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.05)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2)
 	force = 1
 	throwforce = 0
 	obj_flags = UNIQUE_RENAME //my mixtape

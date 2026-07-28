@@ -57,7 +57,7 @@
 	if (!istype(attacker))
 		return
 	for (var/mob/living/basic/clown/harbringer in oview(src, 7))
-		harbringer.ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
+		harbringer.ai_controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker, world.time)
 
 /mob/living/basic/clown/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	if(!istype(target, /obj/item/food/grown/banana/bunch))
@@ -481,6 +481,7 @@
 	flick("glutton_mouth", src)
 
 /mob/living/basic/clown/mutant/glutton/tamed(mob/living/tamer, atom/food)
+	. = ..()
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/glutton)
 
@@ -625,6 +626,8 @@
 
 /datum/action/cooldown/exquisite_bunch/Trigger(mob/clicker, trigger_flags, atom/target)
 	if(activating)
+		return
+	if(!IsAvailable(feedback = TRUE))
 		return
 	var/atom/bunch_turf = get_step(owner.loc, owner.dir)
 	if(!bunch_turf)

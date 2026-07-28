@@ -9,7 +9,7 @@
 	/// A memory to grant to killers, if any
 	var/kill_memory_type = null
 	/// Range in which to grant the achievement
-	var/achievement_range = 7
+	var/achievement_range = 12
 	/// Threshold for damage dealt with a crusher to count it as a crusher kill
 	/// If null, then no kill counts as a crusher kill
 	var/crusher_kill_threshold = 0.6
@@ -47,7 +47,7 @@
 
 	for (var/mob/living/player in SSmobs.clients_by_zlevel[our_loc.z])
 		var/turf/player_turf = get_turf(player)
-		if (player.stat || get_dist(player_turf, source) > achievement_range)
+		if (IS_UNCONSCIOUS_OR_CRIT(player) || get_dist(player_turf, source) > achievement_range)
 			continue
 
 		for (var/achievement_type in achievement_types)

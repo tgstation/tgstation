@@ -7,18 +7,16 @@
  */
 /datum/chemical_reaction
 	///Results of the chemical reactions
-	var/list/results = new/list()
+	var/list/results = list()
 	///Required chemicals that are USED in the reaction
-	var/list/required_reagents = new/list()
+	var/list/required_reagents = list()
 	///Required chemicals that must be present in the container but are not USED.
-	var/list/required_catalysts = new/list()
+	var/list/required_catalysts = list()
 
 	/// If required_container will check for the exact type, or will also accept subtypes
 	var/required_container_accepts_subtypes = FALSE
 	/// If required_container_accepts_subtypes is FALSE, the exact type of what container this reaction can take place in. Otherwise, what type including subtypes are acceptable.
 	var/atom/required_container
-	/// Set this to true to call pre_reaction_other_checks() on react and do some more interesting reaction logic
-	var/required_other = FALSE
 
 	///Determines if a chemical reaction can occur inside a mob
 	var/mob_react = TRUE
@@ -47,14 +45,14 @@
 	/// How sharp the pH exponential curve is (to the power of value)
 	var/ph_exponent_factor = 2
 	/// How much the temperature changes per unit of chem used. without REACTION_HEAT_ARBITARY flag the rate of change depends on the holder heat capacity else results are more accurate
-	var/thermic_constant = 50
+	var/thermic_constant = 0
 	/// pH change per 1u reaction
 	var/H_ion_release = 0.01
 	/// Optimal/max rate possible if all conditions are perfect
 	var/rate_up_lim = 30
 	/// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
 	var/purity_min = 0.15
-	/// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
+	/// bitflags for clear conversions; see code/__DEFINES/reagents.dm
 	var/reaction_flags = NONE
 	///Tagging vars
 	///A bitflag var for tagging reagents for the reagent loopup functon
@@ -63,7 +61,7 @@
 ///REACTION PROCS
 
 /**
- * Checks if this reaction can occur. Only is ran if required_other is set to TRUE.
+ * Checks if this reaction can occur.
  */
 /datum/chemical_reaction/proc/pre_reaction_other_checks(datum/reagents/holder)
 	return TRUE
@@ -104,11 +102,7 @@
 	return
 
 /**
- * Stuff that occurs at the end of a reaction. This will proc if the beaker is forced to stop and start again (say for sudden temperature changes).
- * Only procs at the END of reaction
- * If reaction_flags & REACTION_INSTANT then this isn't called
- * if reaction_flags REACTION_CLEAR_IMPURE then the impurity chem is handled here, producing the result in the beaker instead of in a mob
- * Likewise for REACTION_CLEAR_INVERSE the inverse chem is produced at the end of the reaction in the beaker
+ * Stuff that should happen at the end of the reaction. Presently only REACTION_CLEAR_INVERSE is respected here
  * You should be calling ..() if you're writing a child function of this proc otherwise purity methods won't work correctly
  *
  * Proc where the additional magic happens.
@@ -118,37 +112,24 @@
  * * react_volume - volume created across the whole reaction
  */
 /datum/chemical_reaction/proc/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
-	//failed_chem handler
-	var/cached_temp = holder.chem_temp
-	for(var/id in results)
-		var/datum/reagent/reagent = holder.has_reagent(id)
-		if(!reagent)
-			continue
-		//Split like this so it's easier for people to edit this function in a child
-		reaction_clear_check(reagent, holder)
-	holder.chem_temp = cached_temp
-
-/**
- * REACTION_CLEAR handler
- * If the reaction has the REACTION_CLEAR flag, then it will split using purity methods in the beaker instead
- *
- * Arguments:
- * * reagent - the target reagent to convert
- */
-/datum/chemical_reaction/proc/reaction_clear_check(datum/reagent/reagent, datum/reagents/holder)
-	if(!reagent)//Failures can delete R
+	if(!(reaction_flags & REACTION_CLEAR_INVERSE))
 		return
-	if(reaction_flags & (REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE))
-		if(reagent.purity == 1)
-			return
 
-		var/cached_volume = reagent.volume
-		var/cached_purity = reagent.purity
-		if((reaction_flags & REACTION_CLEAR_INVERSE) && reagent.inverse_chem)
-			if(reagent.inverse_chem_val > reagent.purity)
-				holder.remove_reagent(reagent.type, cached_volume, safety = FALSE)
-				holder.add_reagent(reagent.inverse_chem, cached_volume, FALSE, added_purity = reagent.get_inverse_purity(cached_purity))
-				return
+	var/list/inverse_data = list()
+	for(var/datum/reagent/reagent as anything in holder.reagent_list)
+		if(!results[reagent.type] || !reagent.inverse_chem || reagent.purity == 1 || reagent.purity > reagent.inverse_chem_val)
+			continue
+
+		inverse_data += reagent.inverse_chem
+		inverse_data += reagent.volume
+		inverse_data += reagent.get_inverse_purity(reagent.purity)
+		reagent.volume = 0
+
+	holder.update_total()
+
+	var/cached_temp = holder.chem_temp
+	while(inverse_data.len)
+		holder.add_reagent(popleft(inverse_data), popleft(inverse_data), reagtemp = cached_temp, added_purity = popleft(inverse_data))
 
 /**
  * Occurs when a reation is overheated (i.e. past its overheatTemp)
@@ -163,10 +144,9 @@
  * * step_volume_added - how much product (across all products) was added for this single step
  */
 /datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
-	for(var/id in results)
-		var/datum/reagent/reagent = holder.has_reagent(id)
-		if(!reagent)
-			return
+	for(var/datum/reagent/reagent as anything in holder.reagent_list)
+		if(!results[reagent.type])
+			continue
 		reagent.volume *= 0.98 //Slowly lower yield per tick
 	holder.update_total()
 
@@ -305,8 +285,7 @@
 		if (!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
 			message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(our_turf)][inside_msg]. Last Fingerprint: [touch_msg].")
 		log_game("Reagent explosion reaction occurred at [AREACOORD(our_turf)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
-		var/datum/effect_system/reagents_explosion/explosion_system = new()
-		explosion_system.set_up(power, our_turf, flash_fact = flash_factor, flame_fact = flame_factor)
+		var/datum/effect_system/reagents_explosion/explosion_system = new(our_turf, power, flash_fact = flash_factor, flame_fact = flame_factor)
 		explosion_system.start(holder.my_atom)
 
 	if (istype(holder.my_atom, /obj/item/organ/stomach))
@@ -370,7 +349,6 @@
 //Spews out the inverse of the chems in the beaker of the products/reactants only
 /datum/chemical_reaction/proc/explode_invert_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0, clear_products = TRUE, clear_reactants = TRUE, accept_impure = TRUE)
 	var/datum/reagents/invert_reagents = new (2100, NO_REACT)//I think the biggest size we can get is 2100?
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
 	var/sum_volume = 0
 	invert_reagents.my_atom = holder.my_atom //Give the gas a fingerprint
 	for(var/datum/reagent/reagent as anything in holder.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
@@ -386,8 +364,7 @@
 	if(!force_range)
 		force_range = (sum_volume/6) + 3
 	if(invert_reagents.reagent_list)
-		smoke.set_up(force_range, holder = holder.my_atom, location = holder.my_atom, carry = invert_reagents)
-		smoke.start(log = TRUE)
+		do_chem_smoke(force_range, holder.my_atom, holder.my_atom, carry = invert_reagents, log = TRUE)
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)
 		clear_reactants(holder)
@@ -397,7 +374,6 @@
 //Spews out the corrisponding reactions reagents  (products/required) of the beaker in a smokecloud. Doesn't spew catalysts
 /datum/chemical_reaction/proc/explode_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0, clear_products = TRUE, clear_reactants = TRUE)
 	var/datum/reagents/reagents = new/datum/reagents(2100, NO_REACT)//Lets be safe first
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
 	reagents.my_atom = holder.my_atom //fingerprint
 	var/sum_volume = 0
 	for (var/datum/reagent/reagent as anything in holder.reagent_list)
@@ -407,8 +383,7 @@
 	if(!force_range)
 		force_range = (sum_volume/6) + 3
 	if(reagents.reagent_list)
-		smoke.set_up(force_range, holder = holder.my_atom, location = holder.my_atom, carry = reagents)
-		smoke.start(log = TRUE)
+		do_chem_smoke(force_range, holder = holder.my_atom, location = holder.my_atom, carry = reagents, log = TRUE)
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)
 		clear_reactants(holder)

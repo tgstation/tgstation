@@ -103,22 +103,10 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 	return
 
 /datum/action/innate/path_debug/proc/render_path(list/turf/draw_list)
-	if(!length(draw_list))
-		return list()
-
-	var/list/image/turf_images = list()
-	// Render everything but the first and last
-	for(var/i in 1 to (length(draw_list) - 1))
-		var/turf/problem_child = draw_list[i]
-		var/turf/next = draw_list[i + 1]
-		turf_images += render_turf(problem_child, get_dir(problem_child, next))
-
-	return turf_images
+	return SSpathfinder.render_path_images(draw_list)
 
 /datum/action/innate/path_debug/proc/render_turf(turf/draw, direction)
-	var/image/arrow = image('icons/turf/debug.dmi', draw, "arrow", PATH_ARROW_DEBUG_LAYER, direction)
-	SET_PLANE_EXPLICIT(arrow, BALLOON_CHAT_PLANE, draw)
-	return arrow
+	return SSpathfinder.render_path_arrow(draw, direction)
 
 /datum/action/innate/path_debug/jps
 	name = "JPS Test"

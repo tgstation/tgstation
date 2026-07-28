@@ -19,3 +19,39 @@ export function GroupTitle(props: Props) {
     </Stack>
   );
 }
+
+export function SubGroupTitle(props: Props) {
+  const { title } = props;
+
+  return (
+    <Stack>
+      <Stack.Item
+        style={{
+          borderBlockColor: 'label',
+          borderStyle: 'dashed',
+          borderTop: '0',
+          borderRight: '0',
+          borderLeft: '0',
+          borderWidth: '2px',
+        }}
+        mb={0.75}
+        grow
+      />
+      <Stack.Item grow pr={0.5} pl={0.5} italic align="center">
+        {title}
+      </Stack.Item>
+      <Stack.Item
+        style={{
+          borderBlockColor: 'label',
+          borderStyle: 'dashed',
+          borderTop: '0',
+          borderRight: '0',
+          borderLeft: '0',
+          borderWidth: '2px',
+        }}
+        mb={0.75}
+        grow
+      />
+    </Stack>
+  );
+}

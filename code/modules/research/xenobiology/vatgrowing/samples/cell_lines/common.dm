@@ -90,6 +90,71 @@
 	virus_suspectibility = 1
 	resulting_atom = /mob/living/basic/cow/moonicorn
 
+/datum/micro_organism/cell_line/goat
+	desc = "Caprine cells"
+	required_reagents = list(
+	/datum/reagent/consumable/nutriment/protein,
+	/datum/reagent/cellulose
+	)
+
+	supplementary_reagents = list(
+	/datum/reagent/growthserum = 4,
+	/datum/reagent/consumable/nutriment/vitamin = 2,
+	/datum/reagent/barbers_aid = 3
+	)
+
+	suppressive_reagents = list(
+	/datum/reagent/toxin = -2,
+	/datum/reagent/baldium = -2,
+	/datum/reagent/consumable/sugar = -1
+	)
+
+	virus_suspectibility = 1
+	resulting_atom = /mob/living/basic/goat
+
+/datum/micro_organism/cell_line/sheep
+	desc = "Ovis cells"
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/protein,
+		/datum/reagent/consumable/nutriment,
+	)
+
+	supplementary_reagents = list(
+		/datum/reagent/growthserum = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/barbers_aid = 4,
+	)
+
+	suppressive_reagents = list(
+		/datum/reagent/toxin = -1,
+		/datum/reagent/baldium = -3,
+		/datum/reagent/consumable/sugar = -2,
+	)
+
+	virus_suspectibility = 1
+	resulting_atom = /mob/living/basic/sheep
+
+/datum/micro_organism/cell_line/pig
+	desc = "Porcine stem cells"
+	required_reagents = list(
+	/datum/reagent/consumable/nutriment/protein
+	)
+
+	supplementary_reagents = list(
+	/datum/reagent/growthserum = 4,
+	/datum/reagent/consumable/nutriment/vitamin = 2,
+	/datum/reagent/consumable/bbqsauce = 4
+	)
+
+	suppressive_reagents = list(
+	/datum/reagent/toxin = -2,
+	/datum/reagent/toxin/carpotoxin = -2,
+	/datum/reagent/acetone = -1
+	)
+
+	virus_suspectibility = 1
+	resulting_atom = /mob/living/basic/pig
+
 /datum/micro_organism/cell_line/cat
 	desc = "Feliform cells"
 	required_reagents = list(
@@ -147,6 +212,92 @@
 
 	virus_suspectibility = 3
 	resulting_atom = /mob/living/basic/pet/dog/pug
+
+/datum/micro_organism/cell_line/fox
+	desc = "Vulpes cells"
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/protein,
+		/datum/reagent/consumable/liquidgibs,
+	)
+
+	supplementary_reagents = list(
+		/datum/reagent/growthserum = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
+
+	suppressive_reagents = list(
+		/datum/reagent/consumable/garlic = -2,
+		/datum/reagent/consumable/coco = -2,
+		/datum/reagent/consumable/corn_syrup = -2,
+		/datum/reagent/consumable/flour = -3,
+	)
+
+	virus_suspectibility = 1
+	resulting_atom = /mob/living/basic/pet/fox
+
+/datum/micro_organism/cell_line/stoat
+	desc = "Ermine cells"
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/protein,
+		/datum/reagent/consumable/liquidgibs,
+	)
+
+	supplementary_reagents = list(
+		/datum/reagent/consumable/eggyolk = 3,
+		/datum/reagent/consumable/eggwhite = 2,
+		/datum/reagent/growthserum = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
+
+	suppressive_reagents = list(
+		/datum/reagent/consumable/garlic = -2,
+		/datum/reagent/consumable/coco = -2,
+		/datum/reagent/consumable/corn_syrup = -2,
+	)
+
+	virus_suspectibility = 2
+	resulting_atom = /mob/living/basic/stoat
+
+/datum/micro_organism/cell_line/rabbit
+	desc = "Lepus cells"
+	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
+
+	supplementary_reagents = list(
+		/datum/reagent/growthserum = 2,
+		/datum/reagent/consumable/nutriment = 1,
+		/datum/reagent/blood = 2, // we really need a Holy Grenade with this one
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
+
+	suppressive_reagents = list(
+		/datum/reagent/consumable/garlic = -2,
+		/datum/reagent/consumable/tomatojuice = -1,
+		/datum/reagent/consumable/potato_juice = -1,
+		/datum/reagent/consumable/lemonjuice = -1,
+		/datum/reagent/consumable/limejuice = -1,
+	)
+
+	virus_suspectibility = 5
+	resulting_atom = /mob/living/basic/rabbit
+
+/datum/micro_organism/cell_line/mothroach
+	desc = "Lepidoptera cells"
+	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
+
+	supplementary_reagents = list(
+		/datum/reagent/cellulose = 4,
+		/datum/reagent/consumable/nutriment = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
+
+	suppressive_reagents = list(
+		/datum/reagent/toxin/pestkiller = -2,
+		/datum/reagent/consumable/poisonberryjuice = -4,
+		/datum/reagent/consumable/ethanol/bug_spray = -4,
+	)
+
+	virus_suspectibility = 1
+	resulting_atom = /mob/living/basic/mothroach
 
 /datum/micro_organism/cell_line/bear //bears can't really compete directly with more powerful creatures, so i made it possible to grow them real fast.
 	desc = "Ursine cells"
@@ -208,6 +359,25 @@
 	virus_suspectibility = 1
 	resulting_atom = /mob/living/basic/carp/mega
 
+/datum/micro_organism/cell_line/penguin
+	desc = "Spheniscidae cells"
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/protein)
+
+	supplementary_reagents = list(
+		/datum/reagent/water/salt = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+		/datum/reagent/medicine/strange_reagent/fishy_reagent = 10,
+	)
+
+	suppressive_reagents = list(
+		/datum/reagent/toxin/bungotoxin = -6,
+		/datum/reagent/carbondioxide = -3,
+	)
+
+	virus_suspectibility = 1
+	resulting_atom = /mob/living/basic/pet/penguin/baby
+
 /datum/micro_organism/cell_line/snake
 	desc = "Ophidic cells"
 	required_reagents = list(
@@ -226,6 +396,29 @@
 
 	resulting_atom = /mob/living/basic/snake
 
+/datum/micro_organism/cell_line/lizard
+	desc = "Squamata cells"
+	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
+
+	supplementary_reagents = list(
+		/datum/reagent/growthserum = 2,
+		/datum/reagent/consumable/liquidgibs = 2,
+		/datum/reagent/consumable/nutriment = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,	// Mostly similar to mouse supplementary reagents.
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
+		/datum/reagent/consumable/rice = 1,
+		/datum/reagent/consumable/eggyolk = 1,
+	)
+
+	suppressive_reagents = list(
+		/datum/reagent/consumable/corn_syrup = -6,
+		/datum/reagent/consumable/sugar = -3,
+		/datum/reagent/consumable/salt = -3,
+		/datum/reagent/consumable/tomatojuice = -1,
+		/datum/reagent/sulfur = -3, //sulfur repels lizards too.
+	)
+
+	resulting_atom = /mob/living/basic/lizard
 
 ///////////////////////////////////////////
 /// SLIMES, OOZES & BLOBS ///
@@ -468,7 +661,8 @@
 		/datum/reagent/wittel = 10, //stupid rare
 		/datum/reagent/medicine/omnizine/protozine = 5,
 		/datum/reagent/plasma_oxide = 3,
-		/datum/reagent/clf3 = 1)//since this is also chemistry it's worth near nothing
+		/datum/reagent/clf3 = 1,
+	)//since this is also chemistry it's worth near nothing
 
 	suppressive_reagents = list(//generics you would regularly put in a vat kill abberant residue
 		/datum/reagent/consumable/nutriment/peptides = -6,
@@ -482,12 +676,20 @@
 	resulting_atom = pick(/mob/living/basic/creature, /mob/living/basic/migo, /mob/living/basic/blankbody) //i looked myself, pretty much all of them are reasonably strong and somewhat on the same level. except migo is the jackpot and the blank body is whiff.
 	return ..()
 
-/datum/micro_organism/cell_line/clown/fuck_up_growing(obj/machinery/vatgrower/vat)
-	vat.visible_message(span_warning("The biological sample in [vat] seems to have created something horrific!"))
+/datum/micro_organism/cell_line/clown
 
-	var/mob/selected_mob = pick(list(/mob/living/basic/clown/mutant, /mob/living/basic/clown/fleshclown))
+/datum/micro_organism/cell_line/clown/succeed_growing(obj/machinery/vatgrower/vat)
+	if(vat.reagents.has_reagent(/datum/reagent/toxin/mutagen) && prob(CYTO_SHINY_CHANCE))
+		resulting_atom = pick(/mob/living/basic/clown/mutant, /mob/living/basic/clown/fleshclown)
+		vat.visible_message(span_warning("The biological sample in [vat] mutates into something horrific!"))
+	else
+		resulting_atom = initial(resulting_atom)
+	return ..()
 
-	new selected_mob(get_turf(vat))
+/datum/micro_organism/cell_line/clown/New()
+	. = ..()
+	// all clown mutations get a huge boost from mutagen, at the cost of causing occasional mutations
+	supplementary_reagents[/datum/reagent/toxin/mutagen] = 8
 
 /datum/micro_organism/cell_line/clown/bananaclown
 	desc = "Clown bits with banana chunks"
@@ -655,11 +857,15 @@
 	virus_suspectibility = 0
 	resulting_atom = /obj/item/queen_bee/bought
 
-/datum/micro_organism/cell_line/queen_bee/fuck_up_growing(obj/machinery/vatgrower/vat) //we love job hazards
-	vat.visible_message(span_warning("You hear angry buzzing coming from the inside of the vat!"))
-	for(var/i in 1 to 5)
-		new /mob/living/basic/bee(get_turf(vat))
-
+/datum/micro_organism/cell_line/queen_bee/succeed_growing(obj/machinery/vatgrower/vat)
+	if(grow_count % 2) // every other growth cycle spawns a horde of bees insteads
+		resulting_atom_count = 5
+		resulting_atom = /mob/living/basic/bee
+		vat.visible_message(span_warning("You hear angry buzzing coming from the inside of the vat!"))
+	else
+		resulting_atom_count = initial(resulting_atom_count)
+		resulting_atom = initial(resulting_atom)
+	return ..()
 
 /datum/micro_organism/cell_line/butterfly
 	desc = "Papilionoidea cells"

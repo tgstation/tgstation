@@ -23,7 +23,8 @@
 		/datum/job_department/command,
 		)
 
-	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS, SECURITY_MIND_TRAITS)
+	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS)
+	desensitized_base = DESENSITIZED_THRESHOLD
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM, TRAIT_ROYAL_METABOLISM)
 
 	paycheck = PAYCHECK_COMMAND
@@ -48,7 +49,7 @@
 	if(!ishuman(spawned) || !prob(PIG_COP_PROBABILITY))
 		return
 	var/mob/living/carbon/human/piggy = spawned
-	for (var/obj/item/bodypart/ham as anything in piggy.bodyparts)
+	for (var/obj/item/bodypart/ham as anything in piggy.get_bodyparts())
 		// These are string lists
 		ham.butcher_drops = ham.butcher_drops.Copy()
 		for (var/meat_type in ham.butcher_drops)

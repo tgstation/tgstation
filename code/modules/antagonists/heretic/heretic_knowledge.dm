@@ -9,14 +9,18 @@
  *
  */
 /datum/heretic_knowledge
+	/// The abstract parent type of the knowledge, used in determine mutual exclusivity in some cases
+	abstract_type = /datum/heretic_knowledge
 	/// Name of the knowledge, shown to the heretic.
 	var/name = "Basic knowledge"
 	/// Description of the knowledge, shown to the heretic. Describes what it unlocks / does.
 	var/desc = "Basic knowledge of forbidden arts."
+	/// Text describing how you create the thing
+	var/transmute_text = ""
+	/// Big red notices about the knowledge
+	var/notice = ""
 	/// What's shown to the heretic when the knowledge is acquired
 	var/gain_text
-	/// The abstract parent type of the knowledge, used in determine mutual exclusivity in some cases
-	var/datum/heretic_knowledge/abstract_parent_type = /datum/heretic_knowledge
 	/// Assoc list of [typepaths we need] to [amount needed].
 	/// If set, this knowledge allows the heretic to do a ritual on a transmutation rune with the components set.
 	/// If one of the items in the list is a list, it's treated as 'any of these items will work'
@@ -75,6 +79,7 @@
 	on_gain(user, our_heretic)
 	if(is_final_knowledge && !our_heretic.unlimited_blades)
 		our_heretic.disable_blade_breaking()
+	SEND_SIGNAL(our_heretic, COMSIG_HERETIC_RESEARCHED_KNOWLEDGE, src)
 
 /**
  * Called when the knowledge is applied to a mob.
@@ -128,6 +133,12 @@
 /datum/heretic_knowledge/proc/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	return TRUE
 
+/// Used in unit testing to prepare the components for the test
+/datum/heretic_knowledge/proc/prepare_atom_for_ritual_test(atom/what)
+	if(isitem(what))
+		var/obj/item/item = what
+		item.item_flags &= ~ABSTRACT
+
 /**
  * Parses specific items into a more readble form.
  * Can be overriden by knoweldge subtypes.
@@ -135,10 +146,11 @@
 /datum/heretic_knowledge/proc/parse_required_item(atom/item_path, number_of_things)
 	// If we need a human, there is a high likelihood we actually need a (dead) body
 	if(ispath(item_path, /mob/living/carbon/human))
-		return "bod[number_of_things > 1 ? "ies" : "y"]"
+		return "[number_of_things] bod[number_of_things > 1 ? "ies" : "y"]"
 	if(ispath(item_path, /mob/living))
-		return "carcass[number_of_things > 1 ? "es" : ""] of any kind"
-	return "[initial(item_path.name)]\s"
+		return "[number_of_things] carcass[number_of_things > 1 ? "es" : ""] of any kind"
+	return "[number_of_things] [initial(item_path.name)]\s"
+
 /**
  * Called whenever the knowledge's associated ritual is completed successfully.
  *
@@ -191,11 +203,33 @@
  * A knowledge subtype that grants the heretic a certain spell.
  */
 /datum/heretic_knowledge/spell
-	abstract_parent_type = /datum/heretic_knowledge/spell
+	abstract_type = /datum/heretic_knowledge/spell
 	/// Spell path we add to the heretic. Type-path.
-	var/datum/action/action_to_add
+	var/datum/action/cooldown/spell/action_to_add
 	/// The spell we actually created.
-	var/datum/weakref/created_action_ref
+	VAR_FINAL/datum/action/cooldown/spell/created_action_ref
+	/// Used to display charges on the spell's action button, if applicable.
+	VAR_FINAL/mutable_appearance/charge_maptext
+	/// Charge count
+	VAR_FINAL/charges = 1
+	/// Max amount of charges before a heretic needs to recharge by doing the ritual again
+	var/max_charges = 1
+	/// Percent of max charges restored on a successful ritual
+	var/recharge_amount = 1.0
+	/// Percent of max charges restored on completing the path passive
+	var/path_recharge_amount = 0.5
+	/// What percent of the max charges the spell regains periodically while wearing a focus
+	var/focus_recharge_amount = 0.0
+	/// What percent of the max charges the spell loses periodically from consuming holy water
+	var/holywater_drain_amount = 0.0
+	/// When recharged via path passive, if TRUE, we bypass the max_charges cap.
+	var/path_recharge_can_surpass_cap = FALSE
+
+/datum/heretic_knowledge/spell/New()
+	. = ..()
+	charges = max_charges
+	if(max_charges != INFINITY)
+		desc += "<br>Has [max_charges] charge\s[transmute_text ? ", after which you must recharge the spell" : ""]."
 
 /datum/heretic_knowledge/spell/Destroy()
 	QDEL_NULL(created_action_ref)
@@ -205,14 +239,144 @@
 	// Added spells are tracked on the body, and not the mind,
 	// because we handle heretic mind transfers
 	// via the antag datum (on_gain and on_lose).
-	var/datum/action/created_action = created_action_ref?.resolve() || new action_to_add(user)
-	created_action.Grant(user)
-	created_action_ref = WEAKREF(created_action)
+	created_action_ref ||= new action_to_add(src)
+	created_action_ref.Grant(user)
+
+	RegisterSignal(created_action_ref, COMSIG_ACTION_STATUS_UPDATE, PROC_REF(action_update))
+	RegisterSignal(created_action_ref, COMSIG_QDELETING, PROC_REF(action_delete))
+	RegisterSignal(created_action_ref, COMSIG_SPELL_CAN_CAST_CHECK, PROC_REF(spell_check))
+
+	RegisterSignals(user, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(check_charges))
+	if(istype(created_action_ref, /datum/action/cooldown/spell/pointed/projectile))
+		RegisterSignal(user, COMSIG_MOB_SPELL_PROJECTILE, PROC_REF(deduct_charge))
+	else if(istype(created_action_ref, /datum/action/cooldown/spell/touch))
+		RegisterSignal(user, COMSIG_SPELL_TOUCH_SPELL_ACTUALLY_CAST, PROC_REF(deduct_charge))
+	else
+		RegisterSignal(user, COMSIG_MOB_AFTER_SPELL_CAST, PROC_REF(deduct_charge))
+
+	update_charge_counter()
 
 /datum/heretic_knowledge/spell/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	var/datum/action/cooldown/spell/created_action = created_action_ref?.resolve()
-	if(created_action?.owner == user)
-		created_action.Remove(user)
+	if(created_action_ref?.owner == user)
+		created_action_ref.Remove(user)
+
+	UnregisterSignal(user, list(
+		COMSIG_SPELL_CAN_CAST_CHECK,
+		COMSIG_MOB_SPELL_ACTIVATED,
+		COMSIG_MOB_AFTER_SPELL_CAST,
+		COMSIG_MOB_BEFORE_SPELL_CAST,
+		COMSIG_MOB_SPELL_PROJECTILE,
+		COMSIG_SPELL_TOUCH_SPELL_ACTUALLY_CAST,
+	))
+
+/datum/heretic_knowledge/spell/can_be_invoked(datum/antagonist/heretic/invoker)
+	if(!LAZYLEN(required_atoms))
+		return FALSE
+	if(created_action_ref?.owner != invoker.owner?.current)
+		return FALSE
+	if(charges >= max_charges)
+		return FALSE
+	return TRUE
+
+/datum/heretic_knowledge/spell/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	add_charges(ceil(max_charges * recharge_amount))
+	return TRUE
+
+/datum/heretic_knowledge/spell/proc/action_update(datum/action/source, atom/movable/screen/movable/action_button/button, ...)
+	SIGNAL_HANDLER
+
+	if(charge_maptext)
+		button.cut_overlay(charge_maptext)
+
+	if(charges >= 100)
+		return
+	if(source.owner)
+		var/datum/antagonist/heretic/our_heretic = GET_HERETIC(source.owner)
+		if(our_heretic?.ascended)
+			return
+
+	charge_maptext ||= new()
+	charge_maptext.maptext_x = 4
+	charge_maptext.maptext_y = 20
+	charge_maptext.maptext = MAPTEXT("[charges]")
+	button.add_overlay(charge_maptext)
+
+/datum/heretic_knowledge/spell/proc/action_delete(datum/action/source)
+	SIGNAL_HANDLER
+	created_action_ref = null // shouldn't happen...
+
+/datum/heretic_knowledge/spell/proc/spell_check(datum/action/the_spell, feedback)
+	SIGNAL_HANDLER
+
+	if(the_spell != created_action_ref || isnull(the_spell.owner))
+		return NONE
+	if(charges > 0)
+		return NONE
+	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(the_spell.owner)
+	if(our_heretic?.ascended)
+		return NONE
+
+	if(feedback)
+		to_chat(the_spell.owner, span_mansus("You don't have enough charges to cast this spell!"))
+	return SPELL_CANCEL_CAST
+
+/datum/heretic_knowledge/spell/proc/check_charges(mob/living/source, datum/action/cooldown/the_spell)
+	SIGNAL_HANDLER
+
+	if(the_spell != created_action_ref)
+		return NONE
+	if(charges > 0)
+		return NONE
+	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(source)
+	if(our_heretic?.ascended)
+		return NONE
+
+	to_chat(source, span_mansus("You don't have enough charges to cast this spell! [transmute_text]"))
+	return SPELL_CANCEL_CAST
+
+/datum/heretic_knowledge/spell/proc/deduct_charge(mob/living/source, datum/action/cooldown/the_spell)
+	SIGNAL_HANDLER
+
+	if(the_spell != created_action_ref)
+		return
+	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(source)
+	if(our_heretic?.ascended)
+		return
+
+	remove_charges(1)
+
+/// Add a number of charges, optionally bypassing the cap
+/datum/heretic_knowledge/spell/proc/add_charges(num, uncapped = FALSE)
+	if(num <= 0)
+		return FALSE
+
+	var/pre_charge_value = charges
+	if(uncapped)
+		charges += num
+	else
+		charges = min(charges + num, max_charges)
+	update_charge_counter()
+	return charges != pre_charge_value
+
+/// Remove a number of charges (down to 0)
+/datum/heretic_knowledge/spell/proc/remove_charges(num)
+	if(num <= 0)
+		return FALSE
+
+	var/pre_charge_value = charges
+	charges = max(charges - num, 0)
+	update_charge_counter()
+	if(charges <= 0 && created_action_ref.owner?.click_intercept == created_action_ref)
+		created_action_ref.unset_click_ability(created_action_ref.owner, refund_cooldown = FALSE)
+	return charges != pre_charge_value
+
+/datum/heretic_knowledge/spell/proc/update_charge_counter()
+	created_action_ref?.build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/datum/heretic_knowledge/spell/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == NAMEOF(src, charges) || var_name == NAMEOF(src, max_charges))
+		update_charge_counter()
 
 /**
  * A knowledge subtype for knowledge that can only
@@ -220,7 +384,7 @@
  * created at once.
  */
 /datum/heretic_knowledge/limited_amount
-	abstract_parent_type = /datum/heretic_knowledge/limited_amount
+	abstract_type = /datum/heretic_knowledge/limited_amount
 	/// The limit to how many items we can create at once.
 	var/limit = 1
 	/// A list of weakrefs to all items we've created.
@@ -262,7 +426,7 @@
  * and their ascension depends on whichever they chose.
  */
 /datum/heretic_knowledge/limited_amount/starting
-	abstract_parent_type = /datum/heretic_knowledge/limited_amount/starting
+	abstract_type = /datum/heretic_knowledge/limited_amount/starting
 	limit = 2
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 5
@@ -292,7 +456,9 @@
 		our_heretic.heretic_shops[HERETIC_KNOWLEDGE_DRAFT],
 	)
 	SEND_SIGNAL(src, COMSIG_HERETIC_SHOP_SETUP)
-
+	if(our_heretic.give_objectives)
+		our_heretic.forge_primary_objectives()
+		our_heretic.owner.announce_objectives()
 
 /datum/heretic_knowledge/limited_amount/starting/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignals(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_LIONHUNTER_ON_HIT), PROC_REF(on_mansus_grasp))
@@ -362,7 +528,7 @@
  * A heretic can only learn one /blade_upgrade type knowledge.
  */
 /datum/heretic_knowledge/blade_upgrade
-	abstract_parent_type = /datum/heretic_knowledge/blade_upgrade
+	abstract_type = /datum/heretic_knowledge/blade_upgrade
 	cost = 1
 
 /datum/heretic_knowledge/blade_upgrade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -404,14 +570,14 @@
  * Overridable proc that invokes special effects
  * whenever the heretic clicks on someone at range with their heretic blade.
  */
-/datum/heretic_knowledge/blade_upgrade/proc/do_ranged_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+/datum/heretic_knowledge/blade_upgrade/proc/do_ranged_effects(mob/living/source, atom/target, obj/item/melee/sickly_blade/blade)
 	return
 
 /**
  * A knowledge subtype lets the heretic summon a monster with the ritual.
  */
 /datum/heretic_knowledge/summon
-	abstract_parent_type = /datum/heretic_knowledge/summon
+	abstract_type = /datum/heretic_knowledge/summon
 	/// Typepath of a mob to summon when we finish the recipe.
 	var/mob/living/mob_to_summon
 
@@ -431,7 +597,7 @@
 		summoned = mob_to_summon
 	else
 		summoned = new mob_to_summon(loc)
-	summoned.ai_controller?.set_ai_status(AI_STATUS_OFF)
+	summoned.ai_controller?.force_ai_off()
 	// Fade in the summon while the ghost poll is ongoing.
 	// Also don't let them mess with the summon while waiting
 	summoned.alpha = 0
@@ -454,9 +620,12 @@
 
 	summoned.ghostize(FALSE)
 	summoned.PossessByPlayer(chosen_one.key)
+	summoned.ai_controller?.clear_forced_off() //the client keeps the AI off from here; if they disconnect the AI may take back over
 
 	user.log_message("created a [summoned.name], controlled by [key_name(chosen_one)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")
+
+	SEND_SIGNAL(user, COMSIG_HERETIC_SUMMONED_MOB, summoned)
 
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	heretic_monster.set_owner(user.mind)
@@ -475,8 +644,9 @@
 /datum/heretic_knowledge/knowledge_ritual
 	name = "Ritual of Knowledge"
 	desc = "A randomly generated transmutation ritual that rewards knowledge points and can only be completed once."
+	notice = "This can only be completed once."
 	gain_text = "Everything can be a key to unlocking the secrets behind the Gates. I must be wary and wise."
-	abstract_parent_type = /datum/heretic_knowledge/knowledge_ritual
+	abstract_type = /datum/heretic_knowledge/knowledge_ritual
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 10 // A pretty important midgame ritual.
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
@@ -529,15 +699,16 @@
 
 	var/list/requirements_string = list()
 
-	to_chat(user, span_hierophant("The [name] requires the following:"))
+	to_chat(user, span_mansus("The [name] requires the following:"))
 	for(var/obj/item/path as anything in required_atoms)
 		var/amount_needed = required_atoms[path]
 		to_chat(user, span_hypnophrase("[amount_needed] [initial(path.name)]\s..."))
 		requirements_string += "[amount_needed == 1 ? "":"[amount_needed] "][initial(path.name)]\s"
 
-	to_chat(user, span_hierophant("Completing it will reward you [KNOWLEDGE_RITUAL_POINTS] knowledge points. You can check the knowledge in your Researched Knowledge to be reminded."))
+	to_chat(user, span_mansus("Completing it will reward you [KNOWLEDGE_RITUAL_POINTS] knowledge points. You can check the knowledge in your Researched Knowledge to be reminded."))
 
-	desc = "Allows you to transmute [english_list(requirements_string)] for [KNOWLEDGE_RITUAL_POINTS] bonus knowledge points. This can only be completed once."
+	transmute_text = "Transmute [english_list(requirements_string)]."
+	desc = "Rewards you with [KNOWLEDGE_RITUAL_POINTS] bonus knowledge points."
 
 /datum/heretic_knowledge/knowledge_ritual/can_be_invoked(datum/antagonist/heretic/invoker)
 	return !was_completed
@@ -553,7 +724,7 @@
 	to_chat(user, span_boldnotice("[name] completed!"))
 	to_chat(user, span_hypnophrase(span_big("[pick_list(HERETIC_INFLUENCE_FILE, "drain_message")]")))
 	desc += " (Completed!)"
-	log_heretic_knowledge("[key_name(user)] completed a [name] at [gameTimestamp()].")
+	log_heretic_knowledge("[key_name(user)] completed a [name] at [round_timestamp()].")
 	user.add_mob_memory(/datum/memory/heretic_knowledge_ritual)
 	SEND_SIGNAL(our_heretic, COMSIG_HERETIC_PASSIVE_UPGRADE_FINAL)
 	return TRUE
@@ -564,7 +735,7 @@
  * The special final tier of knowledges that unlocks ASCENSION.
  */
 /datum/heretic_knowledge/ultimate
-	abstract_parent_type = /datum/heretic_knowledge/ultimate
+	abstract_type = /datum/heretic_knowledge/ultimate
 	cost = 2
 	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
 	required_atoms = list(/mob/living/carbon/human = 3)
@@ -584,7 +755,7 @@
 		var/list/cost = our_heretic.researched_knowledge[knowledge][HKT_COST]
 		total_points += cost
 
-	log_heretic_knowledge("[key_name(user)] gained knowledge of their final ritual at [gameTimestamp()]. \
+	log_heretic_knowledge("[key_name(user)] gained knowledge of their final ritual at [round_timestamp()]. \
 		They have [length(our_heretic.researched_knowledge)] knowledge nodes researched, totalling [total_points] points \
 		and have sacrificed [our_heretic.total_sacrifices] people ([our_heretic.high_value_sacrifices] of which were high value)")
 
@@ -634,7 +805,7 @@
 		human_user.physiology.burn_mod *= 0.5
 
 	SSblackbox.record_feedback("tally", "heretic_ascended", 1, heretic_datum.heretic_path.route)
-	log_heretic_knowledge("[key_name(user)] completed their final ritual at [gameTimestamp()].")
+	log_heretic_knowledge("[key_name(user)] completed their final ritual at [round_timestamp()].")
 	notify_ghosts(
 		"[user.real_name] has completed an ascension ritual!",
 		source = user,
@@ -654,7 +825,7 @@
 	if(!isnull(ascension_achievement))
 		user.client?.give_award(ascension_achievement, user)
 	heretic_datum.rust_strength = RUST_RESISTANCE_ORGANIC // Ascended heretics can rust whatever they want (below RUST_RESISTANCE_ABSOLUTE)
-	ADD_TRAIT(user, TRAIT_DESENSITIZED, type)
+	user.apply_status_effect(/datum/status_effect/desensitized, type, DESENSITIZED_THRESHOLD * 0.4)
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)

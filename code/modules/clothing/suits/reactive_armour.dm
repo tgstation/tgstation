@@ -4,6 +4,7 @@
 	icon_state = "reactiveoff"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	w_class = WEIGHT_CLASS_BULKY
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/reactive_armor_shell/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
@@ -240,9 +241,7 @@
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 
 /obj/item/clothing/suit/armor/reactive/tesla/cooldown_activation(mob/living/carbon/human/owner)
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(1, 1, src)
-	sparks.start()
+	do_sparks(1, TRUE, src)
 	..()
 
 /obj/item/clothing/suit/armor/reactive/tesla/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -337,9 +336,7 @@
 	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/cooldown_activation(mob/living/carbon/human/owner)
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(1, 1, src)
-	sparks.start()
+	do_sparks(1, TRUE, src)
 	return ..()
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -392,9 +389,7 @@
 		r_legs = typesof(/obj/item/bodypart/leg/right)
 
 /obj/item/clothing/suit/armor/reactive/bioscrambling/cooldown_activation(mob/living/carbon/human/owner)
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(1, 1, src)
-	sparks.start()
+	do_sparks(1, TRUE, src)
 	..()
 
 /obj/item/clothing/suit/armor/reactive/bioscrambling/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -508,8 +503,7 @@
 	owner.visible_message(span_danger("The reactive armor alters the weather around [owner], shielding [owner.p_them()] from [attack_text]!"))
 	playsound(src, 'sound/effects/magic/lightningshock.ogg', 33, TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
-	var/datum/effect_system/steam_spread/steam = new()
-	steam.set_up(10, FALSE, owner.loc)
+	var/datum/effect_system/basic/steam_spread/steam = new(owner.loc, 10, FALSE)
 	steam.start()
 
 	var/list/affected_turfs = list()
@@ -531,8 +525,7 @@
 	owner.visible_message(span_danger("The reactive armor malfunctions, calling down a storm upon [owner.p_them()]!"))
 	playsound(src, 'sound/effects/magic/lightningshock.ogg', 33, TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
-	var/datum/effect_system/steam_spread/steam = new()
-	steam.set_up(2, FALSE, owner.loc)
+	var/datum/effect_system/basic/steam_spread/steam = new(owner.loc, 2, FALSE)
 	steam.start()
 
 	owner.adjust_wet_stacks(10)
@@ -542,7 +535,7 @@
 	shock_turf_windup(owner.loc)
 
 /obj/item/clothing/suit/armor/reactive/weather/proc/shock_turf_windup(turf/target)
-	new /obj/effect/temp_visual/telegraphing/thunderbolt(target)
+	new /obj/effect/temp_visual/telegraphing/circle(target)
 	addtimer(CALLBACK(src, PROC_REF(shock_turf), target), 1 SECONDS)
 
 /obj/item/clothing/suit/armor/reactive/weather/proc/shock_turf(turf/target)

@@ -67,6 +67,14 @@
 	var/reserve_random_channel = FALSE
 	//If we reserve a random sound channel, store the channel number here so we can clean it up later.
 	var/reserved_channel
+	///Whether this looping sound uses sound tokens. This should only be true for sounds that need to update as the source or listeners move. (Generally long or important sounds like grav-gen)
+	var/use_sound_tokens = FALSE
+	///The sound token instance for this looping sound.
+	var/datum/sound_token/sound_token_instance
+	///Opt-out of native sound repeat even if this loop would otherwise qualify for it. Relevant if you need to know timings about when the loop ends for example.
+	var/never_native_repeat = FALSE
+	///Whether we're currently using native sound.repeat instead of re-firing on the SSsound_loops timer.
+	var/native_repeat_active = FALSE
 
 /datum/looping_sound/New(
 	_parent,
@@ -101,14 +109,14 @@
 /datum/looping_sound/proc/start(on_behalf_of)
 	if(on_behalf_of)
 		set_parent(on_behalf_of)
-	if(timer_id)
+	if(timer_id || loop_started)
 		return
 
-	if(!sound_channel && reserve_random_channel)
-		sound_channel = SSsounds.reserve_sound_channel_datumless()
+	if(!use_sound_tokens && !sound_channel && reserve_random_channel)
+		sound_channel = SSsounds.reserve_sound_channel()
 		reserved_channel = sound_channel
-
 	on_start()
+
 
 /**
  * The proc to call to stop the sound loop.
@@ -120,12 +128,14 @@
 	stop_current()
 	if(null_parent)
 		set_parent(null)
-	if(!timer_id)
+	if(!timer_id && !loop_started)
 		return
 	on_stop()
-	deltimer(timer_id, SSsound_loops)
-	timer_id = null
+	if(timer_id)
+		deltimer(timer_id, SSsound_loops)
+		timer_id = null
 	loop_started = FALSE
+	native_repeat_active = FALSE
 
 	if(reserved_channel)
 		sound_channel = null
@@ -135,6 +145,12 @@
 /// The proc that handles starting the actual core sound loop.
 /datum/looping_sound/proc/start_sound_loop()
 	loop_started = TRUE
+	if(can_native_repeat())
+		native_repeat_active = TRUE
+		play(resolve_single_sound(), repeat_sound = TRUE)
+		if(max_loops)
+			timer_id = addtimer(CALLBACK(src, PROC_REF(stop)), mid_length * max_loops, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)
+		return
 	sound_loop()
 	timer_id = addtimer(CALLBACK(src, PROC_REF(sound_loop), world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME, SSsound_loops)
 
@@ -159,6 +175,8 @@
  */
 /datum/looping_sound/proc/set_mid_length(new_mid)
 	mid_length = new_mid
+	if(native_repeat_active) // Native repeat is driven by the sound file's own length, not mid_length
+		return
 	if(!timer_id)
 		return
 	updatetimedelay(timer_id, mid_length + rand(-mid_length_vary, mid_length_vary), timer_subsystem = SSsound_loops)
@@ -169,8 +187,18 @@
  * Arguments:
  * * soundfile - The soundfile we want to play.
  * * volume_override - The volume we want to play the sound at, overriding the `volume` variable.
+ * * repeat_sound - Whether the sound should loop natively via sound.repeat (token path only).
+ * * delete_when_finished - Whether a freshly created sound token should self-delete once the sound ends (token path only).
  */
-/datum/looping_sound/proc/play(soundfile, volume_override)
+/datum/looping_sound/proc/play(soundfile, volume_override, repeat_sound = FALSE, delete_when_finished = FALSE)
+
+	if(use_sound_tokens)
+		if(sound_token_instance)
+			sound_token_instance.set_volume(volume_override || volume, FALSE) // Don't update, we'll do that after
+			sound_token_instance.update_sound(soundfile, TRUE, repeat_sound)
+		else
+			sound_token_instance = new /datum/sound_token(parent, soundfile, SOUND_RANGE + extra_range, volume_override || volume, falloff_exponent, falloff_distance, _delete_on_end = delete_when_finished, _repeating = repeat_sound)
+		return
 	var/sound/sound_to_play = sound(soundfile)
 	sound_to_play.channel = sound_channel || SSsounds.random_available_channel()
 	sound_to_play.volume = volume_override || volume //Use volume as fallback if theres no override
@@ -189,7 +217,6 @@
 			ignore_walls = ignore_walls,
 			falloff_distance = falloff_distance,
 			use_reverb = use_reverb,
-			channel = sound_channel || SSsounds.random_available_channel()
 		)
 
 /// Returns the sound we should now be playing.
@@ -235,6 +262,24 @@
 
 
 
+/// Returns the lone soundfile mid_sounds resolves to, or null if it can pick between more than one file.
+/datum/looping_sound/proc/resolve_single_sound()
+	if(isfile(mid_sounds) || istext(mid_sounds))
+		return mid_sounds
+	if(islist(mid_sounds) && length(mid_sounds) == 1)
+		var/only_sound = mid_sounds[1]
+		if(isfile(only_sound) || istext(only_sound))
+			return only_sound
+	return null
+
+/// Whether this loop qualifies for native sound.repeat instead of re-firing on a timer every mid_length.
+/datum/looping_sound/proc/can_native_repeat()
+	if(!use_sound_tokens || never_native_repeat)
+		return FALSE
+	if(chance || mid_length_vary || each_once || in_order)
+		return FALSE
+	return !!resolve_single_sound()
+
 /// A proc that's there to handle delaying the main sounds if there's a start_sound, and simply starting the sound loop in general.
 /datum/looping_sound/proc/on_start()
 	var/start_wait = 0
@@ -248,6 +293,7 @@
 
 /// Stops sound playing on current channel, if specified
 /datum/looping_sound/proc/stop_current()
+	QDEL_NULL(sound_token_instance)
 	if(!sound_channel || !ismob(parent))
 		return
 	var/mob/mob_parent = parent
@@ -256,7 +302,7 @@
 /// Simple proc that's executed when the looping sound is stopped, so that the `end_sound` can be played, if there's one.
 /datum/looping_sound/proc/on_stop()
 	if(end_sound && loop_started)
-		play(end_sound, end_volume)
+		play(end_sound, end_volume, delete_when_finished = TRUE)
 
 /// A simple proc to change who our parent is set to, also handling registering and unregistering the QDELETING signals on the parent.
 /datum/looping_sound/proc/set_parent(new_parent)
@@ -268,7 +314,7 @@
 
 /// A simple proc that lets us know whether the sounds are currently active or not.
 /datum/looping_sound/proc/is_active()
-	return !!timer_id
+	return loop_started || !!timer_id
 
 /// A simple proc to handle the deletion of the parent, so that it does not force it to hard-delete.
 /datum/looping_sound/proc/handle_parent_del(datum/source)

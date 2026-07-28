@@ -148,7 +148,7 @@
 	if(!can_be_occupant(L))
 		return
 	set_occupant(L)
-	if(stasis_running() && check_nap_violations())
+	if(stasis_running())
 		chill_out(L)
 	update_appearance()
 	L.AddComponentFrom(type, /datum/component/free_operation)
@@ -161,26 +161,21 @@
 	L.RemoveComponentSource(type, /datum/component/free_operation)
 
 /obj/machinery/stasis/process()
-	if(!(occupant && isliving(occupant) && check_nap_violations()))
+	if(!isliving(occupant))
 		update_use_power(IDLE_POWER_USE)
 		return
 	var/mob/living/L_occupant = occupant
 	if(stasis_running())
 		if(!HAS_TRAIT(L_occupant, TRAIT_STASIS))
 			chill_out(L_occupant)
+
 	else if(HAS_TRAIT(L_occupant, TRAIT_STASIS))
 		thaw_them(L_occupant)
 
-/obj/machinery/stasis/screwdriver_act(mob/living/user, obj/item/I)
-	. = ..()
-	. |= default_deconstruction_screwdriver(user, "stasis_maintenance", "stasis", I)
-	update_appearance()
+/obj/machinery/stasis/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
-/obj/machinery/stasis/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
-	return default_deconstruction_crowbar(I) || .
-
-/obj/machinery/stasis/nap_violation(mob/violator)
-	unbuckle_mob(violator, TRUE)
+/obj/machinery/stasis/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
 
 #undef STASIS_TOGGLE_COOLDOWN

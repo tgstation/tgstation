@@ -34,12 +34,12 @@
 	if(!current_display)
 		// Default to "Blue" if no override
 		current_display = "Blue"
-		// Try to identify current display
-		if(ai_user.icon_state)
-			for(var/display_name in GLOB.ai_core_display_screens)
-				if("ai-[LOWER_TEXT(display_name)]" == ai_user.icon_state)
-					current_display = display_name
-					break
+
+	// Try to identify current display
+	for(var/display_name in GLOB.ai_core_display_screens)
+		if(resolve_ai_icon_sync(display_name) == current_display)
+			current_display = display_name
+			break
 
 	data["current_display"] = current_display
 

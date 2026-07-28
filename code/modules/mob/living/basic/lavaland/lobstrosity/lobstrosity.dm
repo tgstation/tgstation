@@ -25,7 +25,6 @@
 		/obj/item/stack/sheet/bone = 2,
 		/obj/item/organ/monster_core/rush_gland = 1,
 	)
-	crusher_loot = /obj/item/crusher_trophy/lobster_claw
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity
 	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/charge
@@ -74,6 +73,7 @@
 	charge.Trigger(target = atom_target)
 
 /mob/living/basic/mining/lobstrosity/tamed(mob/living/tamer, obj/item/food)
+	. = ..()
 	new /obj/effect/temp_visual/heart(loc)
 	/// Pet commands for this mob, however you'll have to tame juvenile lobstrosities to a trained adult one.
 	var/list/pet_commands = list(
@@ -159,7 +159,6 @@
 		/obj/item/stack/sheet/bone = 1,
 		/obj/item/organ/monster_core/rush_gland = 1,
 	)
-	crusher_loot = null
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity/juvenile
 	snip_speed = 6.5 SECONDS
 	charge_type = /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/shrimp
@@ -167,10 +166,9 @@
 	base_fishing_level = SKILL_LEVEL_NOVICE
 	/// What do we become when we grow up?
 	var/mob/living/basic/mining/lobstrosity/grow_type = /mob/living/basic/mining/lobstrosity
-	/// Were we tamed? If yes, tame the mob we become when we grow up too.
-	var/was_tamed = FALSE
 
 /datum/emote/lobstrosity_juvenile
+	abstract_type = /datum/emote/lobstrosity_juvenile
 	mob_type_allowed_typecache = /mob/living/basic/mining/lobstrosity/juvenile
 	mob_type_blacklist_typecache = list()
 
@@ -225,7 +223,6 @@
 
 /mob/living/basic/mining/lobstrosity/juvenile/tamed(mob/living/tamer, obj/item/food)
 	. = ..()
-	was_tamed = TRUE
 	// They are more pettable I guess
 	AddElement(/datum/element/pet_bonus, "chitter")
 	REMOVE_TRAIT(src, TRAIT_MOB_HIDE_HAPPINESS, INNATE_TRAIT)
@@ -236,7 +233,7 @@
 /mob/living/basic/mining/lobstrosity/juvenile/proc/grow_up()
 	var/name_to_use = name == initial(name) ? grow_type::name : name
 	var/mob/living/basic/mining/lobstrosity/grown = change_mob_type(grow_type, get_turf(src), name_to_use)
-	if(was_tamed)
+	if(HAS_TRAIT(src, TRAIT_TAMED))
 		grown.tamed()
 	for(var/friend in ai_controller?.blackboard?[BB_FRIENDS_LIST])
 		grown.befriend(friend)
@@ -273,16 +270,14 @@
 	command_feedback = "growl"
 	pointed_reaction = "and growls"
 	pet_ability_key = BB_TARGETED_ACTION
-	ability_behavior = /datum/ai_behavior/pet_use_ability/then_attack/long_ranged
 
 /datum/pet_command/use_ability/lob_charge/set_command_target(mob/living/parent, atom/target)
 	if (!target)
 		return FALSE
 	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(parent.ai_controller.blackboard[targeting_strategy_key])
-	if(!targeter?.can_attack(parent, target))
+	if(!targeter?.is_valid_target(parent, target))
 		parent.balloon_alert_to_viewers("shakes head!")
 		return FALSE
 	return ..()
 
 /datum/pet_command/use_ability/lob_charge/shrimp
-	ability_behavior = /datum/ai_behavior/pet_use_ability/then_attack/short_ranged

@@ -14,13 +14,24 @@
 /proc/init_crafting_recipes()
 	for(var/datum/crafting_recipe_path as anything in valid_subtypesof(/datum/crafting_recipe))
 		var/datum/crafting_recipe/recipe = new crafting_recipe_path()
+		if(recipe.name == "" || !recipe.result)
+			qdel(recipe)
+			continue
+
 		var/is_cooking = (recipe.category in GLOB.crafting_category_food)
 		recipe.reqs = sort_list(recipe.reqs, GLOBAL_PROC_REF(cmp_crafting_req_priority))
-		if(recipe.name != "" && recipe.result)
-			if(is_cooking)
-				GLOB.cooking_recipes += recipe
-			else
-				GLOB.crafting_recipes += recipe
+
+		if(is_cooking)
+			GLOB.cooking_recipes += recipe
+			GLOB.cooking_recipes_by_typepath[crafting_recipe_path] = recipe
+			if(!(recipe.crafting_flags & CRAFT_MUST_BE_LEARNED))
+				GLOB.cooking_recipes_default += recipe
+
+		else
+			GLOB.crafting_recipes += recipe
+			GLOB.crafting_recipes_by_typepath[crafting_recipe_path] = recipe
+			if(!(recipe.crafting_flags & CRAFT_MUST_BE_LEARNED))
+				GLOB.crafting_recipes_default += recipe
 
 	var/list/global_stack_recipes = list(
 		/obj/item/stack/sheet/glass = GLOB.glass_recipes,
@@ -188,6 +199,7 @@ GLOBAL_LIST_INIT(WALLITEMS_EXTERIOR, typecacheof(list(
 	/obj/machinery/camera,
 	/obj/machinery/light,
 	/obj/structure/light_construct,
+	/obj/structure/sink,
 )))
 
 /// A static typecache of all the money-based items that can be actively used as currency.

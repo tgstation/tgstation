@@ -72,10 +72,11 @@
 		return
 
 	// pick ghost, create AI and transfer
-	var/mob/living/silicon/ai/weak_syndie/new_ai = new /mob/living/silicon/ai/weak_syndie(null, new /datum/ai_laws/syndicate_override, ghost)
+	var/mob/living/silicon/ai/weak_syndie/new_ai = new(null, ghost, /datum/ai_laws/syndicate_override)
 	// create and apply syndie datum
 	var/datum/antagonist/nukeop/nuke_datum = new()
 	nuke_datum.send_to_spawnpoint = FALSE
+	nuke_datum.give_bonus_tc = FALSE
 	new_ai.mind.add_antag_datum(nuke_datum, op_datum.nuke_team)
 	LAZYADD(new_ai.mind.special_roles, "Syndicate AI")
 	new_ai.add_faction(ROLE_SYNDICATE)

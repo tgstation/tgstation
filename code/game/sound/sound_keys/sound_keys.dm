@@ -1143,3 +1143,11 @@
 		'sound/effects/alien/alien_spitacid.ogg',
 		'sound/effects/alien/alien_spitacid2.ogg'
 	)
+
+/datum/sound_effect/void_deflect
+	key = SFX_VOID_DEFLECT
+	file_paths = list(
+		'sound/effects/magic/void_deflect1.ogg',
+		'sound/effects/magic/void_deflect2.ogg',
+		'sound/effects/magic/void_deflect3.ogg',
+	)

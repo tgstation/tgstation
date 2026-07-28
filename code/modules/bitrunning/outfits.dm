@@ -13,7 +13,7 @@
 
 /datum/outfit/echolocator/post_equip(mob/living/carbon/human/user, visuals_only)
 	. = ..()
-	user.psykerize(is_blinding = TRUE)
+	user.psykerize()
 
 
 /datum/outfit/bitductor

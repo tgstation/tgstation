@@ -142,7 +142,7 @@
 		apply_projectile_effects(proj, def_zone, blocked)
 
 /mob/living/proc/apply_projectile_effects(obj/projectile/proj, def_zone, armor_check)
-	apply_damage(
+	var/damage_dealt = apply_damage(
 		damage = proj.damage,
 		damagetype = proj.damage_type,
 		def_zone = def_zone,
@@ -153,6 +153,10 @@
 		attack_direction = get_dir(proj.starting, src),
 		attacking_item = proj,
 	)
+
+	if(proj.damage_type == BRUTE && damage_dealt >= 10 && proj.speed >= 1 && prob(0.1))
+		var/obj/item/organ/brain/a_brain = locate() in get_bodypart(def_zone)
+		a_brain?.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
 
 	apply_effects(
 		stun = proj.stun,
@@ -174,6 +178,10 @@
 
 	if (proj.damage && armor_check < 100)
 		create_projectile_hit_effects(proj, def_zone, armor_check)
+
+	if(proj.fired_from)
+		SEND_SIGNAL(proj.fired_from, COMSIG_PROJECTILE_POST_HIT_LIVING, src, def_zone, armor_check)
+	SEND_SIGNAL(proj, COMSIG_PROJECTILE_SELF_POST_HIT_LIVING, src, def_zone, armor_check)
 
 /mob/living/proc/create_projectile_hit_effects(obj/projectile/proj, def_zone, blocked)
 	if (proj.damage_type != BRUTE)
@@ -217,8 +225,7 @@
 	. = combat_mode
 	combat_mode = new_mode
 	SEND_SIGNAL(src, COMSIG_COMBAT_MODE_TOGGLED)
-	if(hud_used?.action_intent)
-		hud_used.action_intent.update_appearance()
+	hud_used?.screen_objects[HUD_MOB_INTENTS]?.update_appearance()
 	if(silent || !client?.prefs.read_preference(/datum/preference/toggle/sound_combatmode))
 		return
 	if(combat_mode)
@@ -323,13 +330,13 @@
  */
 /mob/living/proc/grab(mob/living/target)
 	if(!istype(target))
-		return FALSE
+		return GRAB_SKIP
 	if(SEND_SIGNAL(src, COMSIG_LIVING_GRAB, target) & (COMPONENT_CANCEL_ATTACK_CHAIN|COMPONENT_SKIP_ATTACK))
-		return FALSE
+		return GRAB_FAILURE
 	if(target.check_block(src, 0, "[src]'s grab", UNARMED_ATTACK))
-		return FALSE
+		return GRAB_FAILURE
 	target.grabbedby(src)
-	return TRUE
+	return GRAB_SUCCESS
 
 /**
  * Called when this mob is grabbed by another mob.
@@ -473,7 +480,7 @@
 	if(.)
 		return TRUE
 
-	if(!combat_mode && HAS_TRAIT(src, TRAIT_READY_TO_OPERATE) && user.perform_surgery(src))
+	if(!user.combat_mode && HAS_TRAIT(src, TRAIT_READY_TO_OPERATE) && user.perform_surgery(src))
 		return TRUE
 
 	return FALSE
@@ -585,7 +592,7 @@
 	shock_damage *= siemens_coeff
 	if((flags & SHOCK_TESLA) && HAS_TRAIT(src, TRAIT_TESLA_SHOCKIMMUNE))
 		return FALSE
-	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
+	if(!(flags & SHOCK_IGNORE_IMMUNITY) && HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
 		return FALSE
 	if(shock_damage < 1)
 		return FALSE
@@ -816,6 +823,9 @@
 				span_userdanger("You[knocked_down ? "'re knocked down" : " resist falling down"] from a shove by [name]!"), span_hear("You hear aggressive shuffling [knocked_down ? "followed by a loud thud!" : ""]"), COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, span_danger("You shove [target.name][knocked_down ? ", knocking [target.p_them()] down" : ""]!"))
 			log_combat(src, target, "shoved", "[knocked_down ? "knocking them down[weapon ? " with [weapon]" : ""]" : ""]")
+			if(ishuman(target))
+				var/mob/living/carbon/human/human_target = target
+				human_target.force_say()
 			return
 
 	if(shove_flags & SHOVE_CAN_KICK_SIDE) //KICK HIM IN THE NUTS
@@ -877,9 +887,10 @@
 		return FALSE
 	if(has_status_effect(/datum/status_effect/hallucination) || has_status_effect(/datum/status_effect/drugginess))
 		return TRUE
-	if(IsSleeping() || IsUnconscious())
+	if(IS_UNCONSCIOUS(src))
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		return TRUE
-	if(mob_mood && mob_mood.sanity < SANITY_UNSTABLE)
+	if(mob_mood?.sanity < SANITY_UNSTABLE)
 		return TRUE
+	return FALSE

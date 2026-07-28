@@ -249,20 +249,17 @@
 	. = ITEM_INTERACT_BLOCKING
 	if(on)
 		balloon_alert(user, "turn off!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(occupant)
 		balloon_alert(user, "occupant inside!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(default_deconstruction_screwdriver(user, "pod-off", "pod-off", tool))
-		update_appearance(UPDATE_ICON)
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/cryo_cell/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
 	if(on)
 		balloon_alert(user, "turn off!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	var/can_crowbar = FALSE
 	if(!state_open && !panel_open && !is_operational) //can pry open
@@ -270,7 +267,7 @@
 	else if(panel_open) //can deconstruct
 		can_crowbar = TRUE
 	if(!can_crowbar)
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	var/obj/machinery/atmospherics/node = internal_connector.gas_connector.nodes[1]
 	var/internal_pressure = 0
@@ -289,15 +286,12 @@
 	if(internal_pressure > 2 * ONE_ATMOSPHERE)
 		to_chat(user, span_warning("As you begin prying \the [src] a gush of air blows in your face... maybe you should reconsider?"))
 		if(!do_after(user, 2 SECONDS, target = src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		unsafe_release = TRUE
 
 	var/deconstruct = FALSE
-	if(!default_pry_open(tool))
-		if(!default_deconstruction_crowbar(tool, custom_deconstruct = TRUE))
-			return
-		else
-			deconstruct = TRUE
+	if(!(default_pry_open(tool) & ITEM_INTERACT_SUCCESS))
+		deconstruct = can_crowbar_deconstruct()
 
 	if(unsafe_release)
 		internal_connector.gas_connector.unsafe_pressure_release(user, internal_pressure)
@@ -451,7 +445,7 @@
 	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
 
 	//check for workable conditions
-	if(!internal_connector.gas_connector.nodes[1] || !air1 || !air1.gases.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
+	if(!internal_connector.gas_connector.nodes[1] || !air1 || !air1.moles.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
 		set_on(FALSE)
 		aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list("EJECTING" = autoeject), src, list(broadcast_channel), "Insufficient Gas")
 		if(autoeject) // Eject if configured.
@@ -527,8 +521,8 @@
 	user.visible_message(span_notice("You see [user] kicking against the glass of [src]!"), \
 		span_notice("You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(CRYO_BREAKOUT_TIME)].)"), \
 		span_hear("You hear a thump from [src]."))
-	if(do_after(user, CRYO_BREAKOUT_TIME, target = src, hidden = TRUE))
-		if(!user || user.stat != CONSCIOUS || user.loc != src )
+	if(do_after(user, CRYO_BREAKOUT_TIME, target = src, cog_icon = null))
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src )
 			return
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
 			span_notice("You successfully break out of [src]!"))
@@ -561,10 +555,10 @@
 		occupant_data["name"] = mob_occupant.name
 		if(mob_occupant.stat == DEAD)
 			occupant_data["stat"] = "Dead"
-		else if (HAS_TRAIT(mob_occupant, TRAIT_KNOCKEDOUT))
+		else if (IS_UNCONSCIOUS(mob_occupant))
 			occupant_data["stat"] = "Unconscious"
 		else
-			occupant_data["stat"] = "Conscious"
+			occupant_data["stat"] = "Stable"
 
 		occupant_data["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
 

@@ -66,6 +66,9 @@
 	///If this paper can be selected as a candidate for a future message in a bottle when spawned outside of mapload. Doesn't affect manually doing that.
 	var/can_become_message_in_bottle = TRUE
 
+	/// Assoc Lazylist of REF()s to mobs that are viewing the paper while holding a writing tool to what that tool's writing implement details are
+	VAR_FINAL/list/writers
+
 /obj/item/paper/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-9, 9)
@@ -87,9 +90,6 @@
 	clear_paper()
 	LAZYREMOVE(SSpersistence.queued_message_bottles, src)
 	return ..()
-
-/obj/item/paper/grind_results()
-	return list(/datum/reagent/cellulose = 3)
 
 /obj/item/paper/custom_fire_overlay()
 	if (!custom_fire_overlay)
@@ -233,9 +233,9 @@
 	if(is_signature)
 		field_text = signature_name
 	else if(is_date)
-		field_text = "[time2text(world.timeofday, "DD/MM", NO_TIMEZONE)]/[CURRENT_STATION_YEAR]"
+		field_text = "[server_timestamp("DD/MM/YYYY", ic_time = TRUE)]"
 	else if(is_time)
-		field_text = time2text(world.timeofday, "hh:mm", NO_TIMEZONE)
+		field_text = round_timestamp()
 
 	var/field_font = is_signature ? SIGNATURE_FONT : font
 
@@ -325,10 +325,7 @@
 		icon_state = initial(icon_state)
 	return ..()
 
-/obj/item/paper/verb/rename()
-	set name = "Rename paper"
-	set category = "Object"
-	set src in usr
+GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 
 	if(!usr.can_read(src) || usr.is_blind() || INCAPACITATED_IGNORING(usr, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB) || (isobserver(usr) && !isAdminGhostAI(usr)))
 		return
@@ -342,7 +339,7 @@
 	var/n_name = tgui_input_text(usr, "Enter a paper label", "Paper Labelling", max_length = MAX_NAME_LEN)
 	if(isnull(n_name) || n_name == "")
 		return
-	if(((loc == usr || istype(loc, /obj/item/clipboard)) && usr.stat == CONSCIOUS))
+	if(((loc == usr || istype(loc, /obj/item/clipboard)) && !IS_UNCONSCIOUS_OR_CRIT(usr)))
 		name = "paper[(n_name ? "- '[n_name]'" : null)]"
 	add_fingerprint(usr)
 	update_static_data()
@@ -418,44 +415,44 @@
 		user.put_in_hands(new_plane)
 	return new_plane
 
-/obj/item/paper/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/item/paper/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// Enable picking paper up by clicking on it with the clipboard or paper bin
-	if(istype(attacking_item, /obj/item/clipboard) || istype(attacking_item, /obj/item/paper_bin))
-		attacking_item.attackby(src, user)
-		return
+	if(istype(tool, /obj/item/clipboard) || istype(tool, /obj/item/paper_bin))
+		tool.item_interaction(user, src)
+		return ITEM_INTERACT_SUCCESS
 
 	// Handle writing items.
-	var/writing_stats = attacking_item.get_writing_implement_details()
+	var/writing_stats = tool.get_writing_implement_details()
 
 	if(!writing_stats)
 		ui_interact(user)
-		return ..()
+		return NONE
 
 	if(writing_stats["interaction_mode"] == MODE_WRITING)
-		if(!user.can_write(attacking_item))
-			return
+		if(!user.can_write(tool))
+			return ITEM_INTERACT_BLOCKING
 		if(get_total_length() >= MAX_PAPER_LENGTH)
 			to_chat(user, span_warning("This sheet of paper is full!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		ui_interact(user)
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	// Handle stamping items.
 	if(writing_stats["interaction_mode"] == MODE_STAMPING)
 		if(!user.can_read(src) || user.is_blind())
 			//The paper's stampable window area is assumed approx 300x400
 			add_stamp(writing_stats["stamp_class"], rand(0, 300), rand(0, 400), rand(0, 360), writing_stats["stamp_icon_state"], stamp_icon = writing_stats["stamp_icon"])
-			user.visible_message(span_notice("[user] blindly stamps [src] with \the [attacking_item]!"))
-			to_chat(user, span_notice("You stamp [src] with \the [attacking_item] the best you can!"))
+			user.visible_message(span_notice("[user] blindly stamps [src] with \the [tool]!"))
+			to_chat(user, span_notice("You stamp [src] with \the [tool] the best you can!"))
 			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 		else
 			to_chat(user, span_notice("You ready your stamp over the paper! "))
 			ui_interact(user)
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	ui_interact(user)
-	return ..()
+	return NONE
 
 /// Secondary right click interaction to quickly stamp things
 /obj/item/paper/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
@@ -507,16 +504,104 @@
 
 /obj/item/paper/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/simple/paper),
+		get_asset_datum(/datum/asset/spritesheet/simple/stamps),
+		get_asset_datum(/datum/asset/simple/logos),
 	)
 
 /obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
+	if(!user.client) //bro stop trying to open UI on AI man ur gonna drive me nuts man comeon man
+		return
 	if(resistance_flags & ON_FIRE)
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
+		/**
+		 * these signals are for checking whether the ui viewer is holding a writing tool.
+		 * (whether they are holding a writing tool matters for the state of the ui)
+		 *
+		 * we have to do this rigamarole, rather than just checking on ui_data calls,
+		 * because if we set this ui to autoupdate, it causes weird rendering issues.
+		 * rather than figure out why those are happening, it was easier to just turn off autoupdate.
+		 */
+		RegisterSignals(user, list(
+			COMSIG_MOB_UNEQUIPPED_ITEM,
+			COMSIG_MOB_EQUIPPED_ITEM,
+			COMSIG_MOB_SWAP_HANDS,
+			COMSIG_MOB_TRANSFORMING_ITEM, // specifically for pens
+		), PROC_REF(viewer_writing_state_change))
+		var/list/writing_info = get_viewer_writing_implement_details(user)
+		if(writing_info)
+			add_writer(user, writing_info, update = FALSE)
+
 		ui = new(user, src, "PaperSheet", name)
 		ui.open()
+		// please see the above comment if you want to re-enable autoupdate
+		ui.set_autoupdate(FALSE)
+
+/obj/item/paper/ui_close(mob/user)
+	. = ..()
+	if(LAZYACCESS(writers, REF(user)))
+		remove_writer(user, update = FALSE)
+	UnregisterSignal(user, list(
+		COMSIG_MOB_UNEQUIPPED_ITEM,
+		COMSIG_MOB_EQUIPPED_ITEM,
+		COMSIG_MOB_SWAP_HANDS,
+		COMSIG_MOB_TRANSFORMING_ITEM,
+	))
+
+/// Generically check if we are holding a writing tool to update our writer status
+/obj/item/paper/proc/viewer_writing_state_change(mob/living/source)
+	SIGNAL_HANDLER
+
+	var/list/writing_info = get_viewer_writing_implement_details(source)
+	if(writing_info)
+		if(!LAZYACCESS(writers, REF(source)))
+			add_writer(source, writing_info)
+
+	else
+		if(LAZYACCESS(writers, REF(source)))
+			remove_writer(source)
+
+/// Add passed mob with passed writing info to the list of writers, then updates their ui
+/obj/item/paper/proc/add_writer(mob/living/user, list/writing_info, update = TRUE)
+	PRIVATE_PROC(TRUE)
+	set waitfor = FALSE
+
+	LAZYSET(writers, REF(user), writing_info)
+	if(update)
+		ui_interact(user)
+
+/// Remove passed mob from the list of writers, then updates their ui
+/obj/item/paper/proc/remove_writer(mob/living/user, update = TRUE)
+	PRIVATE_PROC(TRUE)
+	set waitfor = FALSE
+
+	LAZYREMOVE(writers, REF(user))
+	if(update)
+		ui_interact(user)
+
+/obj/item/paper/proc/get_viewer_writing_implement_details(mob/living/user)
+	if(istype(loc, /obj/structure/noticeboard))
+		var/obj/structure/noticeboard/noticeboard = loc
+		if(!noticeboard.allowed(user))
+			return null
+
+	var/obj/item/holding = user.get_active_held_item()
+	. = holding?.get_writing_implement_details()
+
+	// Use a clipboard's pen, if applicable
+	if(istype(loc, /obj/item/clipboard))
+		var/obj/item/clipboard/clipboard = loc
+		. ||= clipboard.pen?.get_writing_implement_details()
+
+	return .
+
+/obj/item/paper/ui_data(mob/user)
+	var/list/data = list()
+
+	data["held_item_details"] = LAZYACCESS(writers, REF(user))
+
+	return data
 
 /obj/item/paper/ui_static_data(mob/user)
 	var/list/static_data = list()
@@ -532,7 +617,7 @@
 	static_data["default_pen_color"] = COLOR_BLACK
 	static_data["signature_font"] = FOUNTAIN_PEN_FONT
 
-	return static_data;
+	return static_data
 
 /obj/item/paper/proc/convert_to_data()
 	var/list/data = list()
@@ -570,28 +655,6 @@
 		add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
 
 	name = data[LIST_PAPER_NAME]
-
-/obj/item/paper/ui_data(mob/user)
-	var/list/data = list()
-
-	var/obj/item/holding = user.get_active_held_item()
-	// Use a clipboard's pen, if applicable
-	if(istype(loc, /obj/item/clipboard))
-		var/obj/item/clipboard/clipboard = loc
-		// This is just so you can still use a stamp if you're holding one. Otherwise, it'll
-		// use the clipboard's pen, if applicable.
-		if(!istype(holding, /obj/item/stamp) && clipboard.pen)
-			holding = clipboard.pen
-
-	data["held_item_details"] = holding?.get_writing_implement_details()
-
-	// If the paper is on an unwritable noticeboard, clear the held item details so it's read-only.
-	if(istype(loc, /obj/structure/noticeboard))
-		var/obj/structure/noticeboard/noticeboard = loc
-		if(!noticeboard.allowed(user))
-			data["held_item_details"] = null;
-
-	return data
 
 /obj/item/paper/ui_act(action, params, datum/tgui/ui)
 	. = ..()
@@ -632,6 +695,7 @@
 			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 
 			update_appearance()
+			ui.close()
 			update_static_data_for_all_viewers()
 			return TRUE
 		if("add_text")
@@ -787,10 +851,8 @@
 /// Returns the raw contents of the input as html, with **ZERO SANITIZATION**
 /datum/paper_input/proc/to_raw_html()
 	var/final = raw_text
-	if(font)
-		final = "<font face='[font]'>[final]</font>"
-	if(colour)
-		final = "<font color='[colour]'>[final]</font>"
+	if(font || colour)
+		final = "<font[" color='[colour]'"][" face='[font]'"]>[final]</font>"
 	if(bold)
 		final = "<b>[final]</b>"
 	return final

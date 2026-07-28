@@ -321,7 +321,7 @@ export function RecipeContent(props: FullProps) {
                       Complexity: {item.complexity}
                     </Box>
                   )}
-                  {item.foodtypes?.length > 0 && (
+                  {!!item.foodtypes && item.foodtypes.length > 0 && (
                     <Box color="gray" width="104px" lineHeight={1.5} mt={1}>
                       <Divider />
                       {item.foodtypes.map((foodtype) => (

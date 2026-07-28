@@ -52,7 +52,7 @@
 	if(isskeleton(human))
 		return FALSE //undeads are unaffected by the spook-pocalypse.
 	var/bone_amount = 0
-	for(var/obj/item/bodypart/part as anything in human.bodyparts)
+	for(var/obj/item/bodypart/part as anything in human.get_bodyparts())
 		if((part.biological_state & BIO_FLESH_BONE) == BIO_FLESH_BONE)
 			bone_amount++
 	if(bone_amount)
@@ -100,4 +100,4 @@
 	var/skeleton_name = spooked.client ? sanitize_name(tgui_input_text(spooked, "Enter your new skeleton name", "Spookifier", spooked.real_name, MAX_NAME_LEN)) : null
 	if(!skeleton_name)
 		skeleton_name = "\improper spooky skeleton"
-	spooked.fully_replace_character_name(null, skeleton_name)
+	spooked.fully_replace_character_name(null, skeleton_name, log_new_name = TRUE)

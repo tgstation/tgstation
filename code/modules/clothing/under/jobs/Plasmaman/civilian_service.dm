@@ -77,6 +77,7 @@
 	desc = "A cartridge loaded with a compressed extinguisher mix, used to refill the automatic extinguisher on plasma envirosuits."
 	icon_state = "plasmarefill"
 	icon = 'icons/obj/canisters.dmi'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/under/plasmaman/cargo
 	name = "cargo plasma envirosuit"
@@ -176,8 +177,4 @@
 	addtimer(CALLBACK(src, PROC_REF(check_fire_state)), extinguish_cooldown)
 	owner.visible_message(span_warning("[owner]'s suit spews space lube everywhere!"), span_warning("Your suit spews space lube everywhere!"))
 	owner.extinguish_mob()
-	var/datum/effect_system/fluid_spread/foam/foam = new
-	var/datum/reagents/foamreagent = new /datum/reagents(15)
-	foamreagent.add_reagent(/datum/reagent/lube, 15)
-	foam.set_up(4, holder = src, location = get_turf(owner), carry = foamreagent)
-	foam.start() //Truly terrifying.
+	do_foam(4, src, get_turf(owner), /datum/reagent/lube, 15)

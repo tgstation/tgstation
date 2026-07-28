@@ -122,4 +122,4 @@
 
 /datum/orderable_item/mining/grapple_gun
 	purchase_path = /obj/item/grapple_gun
-	cost_per_order = 3000
+	cost_per_order = 1500

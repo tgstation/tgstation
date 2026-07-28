@@ -103,7 +103,7 @@
 /obj/structure/tram/update_overlays(updates = ALL)
 	. = ..()
 	var/ratio = atom_integrity / max_integrity
-	ratio = CEILING(ratio * 4, 1) * 25
+	ratio = ceil(ratio * 4) * 25
 	cut_overlay(damage_overlay)
 	if(ratio > 75)
 		return
@@ -163,53 +163,66 @@
 		update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/tram/attackby_secondary(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
-	switch(state)
-		if(TRAM_SCREWED_TO_FRAME)
-			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
-				user.visible_message(span_notice("[user] begins to unscrew the tram panel from the frame..."),
-				span_notice("You begin to unscrew the tram panel from the frame..."))
-				if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
-					state = TRAM_IN_FRAME
-					to_chat(user, span_notice("The screws come out, and a gap forms around the edge of the pane."))
-					return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-			if(tool.tool_behaviour)
+/obj/structure/tram/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.tool_behaviour)
+		switch(state)
+			if(TRAM_SCREWED_TO_FRAME)
 				to_chat(user, span_warning("The security screws need to be removed first!"))
+				return ITEM_INTERACT_BLOCKING
 
+			if(TRAM_OUT_OF_FRAME)
+				to_chat(user, span_warning("The cabling need to be cut first!"))
+				return ITEM_INTERACT_BLOCKING
+	return NONE
+
+/obj/structure/tram/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	switch(state)
 		if(TRAM_IN_FRAME)
-			if(tool.tool_behaviour == TOOL_CROWBAR)
-				user.visible_message(span_notice("[user] wedges \the [tool] into the tram panel's gap in the frame and starts prying..."),
-				span_notice("You wedge \the [tool] into the tram panel's gap in the frame and start prying..."))
-				if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
-					state = TRAM_OUT_OF_FRAME
-					to_chat(user, span_notice("The panel pops out of the frame, exposing some cabling that look like they can be cut."))
-					return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
-				user.visible_message(span_notice("[user] resecures the tram panel to the frame..."),
-				span_notice("You resecure the tram panel to the frame..."))
-				state = TRAM_SCREWED_TO_FRAME
-				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			user.visible_message(span_notice("[user] wedges \the [tool] into the tram panel's gap in the frame and starts prying..."),
+								span_notice("You wedge \the [tool] into the tram panel's gap in the frame and start prying..."))
+			if(!tool.use_tool(src, user, 1 SECONDS, volume = 50))
+				return ITEM_INTERACT_BLOCKING
+			state = TRAM_OUT_OF_FRAME
+			to_chat(user, span_notice("The panel pops out of the frame, exposing some cabling that look like they can be cut."))
+			return ITEM_INTERACT_SUCCESS
 
 		if(TRAM_OUT_OF_FRAME)
-			if(tool.tool_behaviour == TOOL_WIRECUTTER)
-				user.visible_message(span_notice("[user] starts cutting the connective cabling on \the [src]..."),
-				span_notice("You start cutting the connective cabling on \the [src]"))
-				if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
-					to_chat(user, span_notice("The panels falls out of the way exposing the frame backing."))
-					deconstruct(disassembled = TRUE)
+			user.visible_message(span_notice("[user] snaps the tram panel into place."),
+								span_notice("You snap the tram panel into place."))
+			state = TRAM_IN_FRAME
+			return ITEM_INTERACT_SUCCESS
 
-			if(tool.tool_behaviour == TOOL_CROWBAR)
-				user.visible_message(span_notice("[user] snaps the tram panel into place."),
-				span_notice("You snap the tram panel into place..."))
-				state = TRAM_IN_FRAME
-				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return NONE //Head back to item_interaction_secondary() to get the same message as other unsuitable tools
 
-			if(tool.tool_behaviour)
-				to_chat(user, span_warning("The cabling need to be cut first!"))
+/obj/structure/tram/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	switch(state)
+		if(TRAM_SCREWED_TO_FRAME)
+			user.visible_message(span_notice("[user] begins to unscrew the tram panel from the frame..."),
+								span_notice("You begin to unscrew the tram panel from the frame..."))
+			if(!tool.use_tool(src, user, 1 SECONDS, volume = 50))
+				return ITEM_INTERACT_BLOCKING
+			state = TRAM_IN_FRAME
+			to_chat(user, span_notice("The screws come out, and a gap forms around the edge of the pane."))
+			return ITEM_INTERACT_SUCCESS
 
-	return ..()
+		if(TRAM_IN_FRAME)
+			user.visible_message(span_notice("[user] resecures the tram panel to the frame..."),
+								span_notice("You resecure the tram panel to the frame."))
+			state = TRAM_SCREWED_TO_FRAME
+			return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/structure/tram/wirecutter_act_secondary(mob/living/user, obj/item/tool)
+	if(state != TRAM_OUT_OF_FRAME)
+		return NONE
+	user.visible_message(span_notice("[user] starts cutting the connective cabling on \the [src]..."),
+						span_notice("You start cutting the connective cabling on \the [src]"))
+	if(!tool.use_tool(src, user, 1 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("The panels falls out of the way exposing the frame backing."))
+	deconstruct(disassembled = TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tram/atom_deconstruct(disassembled = TRUE)
 	if(disassembled)
@@ -388,15 +401,17 @@
 	canSmoothWith = SMOOTH_GROUP_WOOD_WALLS
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 
-/obj/structure/tram/alt/wood/attackby(obj/item/W, mob/user)
-	if(W.get_sharpness() && W.force)
-		var/duration = ((4.8 SECONDS) / W.force) * 2 //In seconds, for now.
-		if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/fireaxe))
-			duration /= 4 //Much better with hatchets and axes.
-		if(do_after(user, duration * (1 SECONDS), target=src)) //Into deciseconds.
-			deconstruct(disassembled = FALSE)
-			return
-	return ..()
+/obj/structure/tram/alt/wood/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.get_sharpness() || !tool.force)
+		return NONE
+	var/duration = ((4.8 SECONDS) / tool.force) * 2 //In seconds, for now.
+	if(istype(tool, /obj/item/hatchet) || istype(tool, /obj/item/fireaxe))
+		duration /= 4 //Much better with hatchets and axes.
+	to_chat(user, span_notice("You begin breaking down [src]."))
+	if(!do_after(user, duration * (1 SECONDS), target=src)) //Into deciseconds.
+		return ITEM_INTERACT_BLOCKING
+	deconstruct(disassembled = FALSE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tram/alt/bamboo
 	name = "bamboo tram"
@@ -467,7 +482,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/tram/spoiler/LateInitialize()
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(set_spoiler))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(set_spoiler))
 
 /obj/structure/tram/spoiler/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

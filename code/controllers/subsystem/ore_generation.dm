@@ -20,6 +20,12 @@ SUBSYSTEM_DEF(ore_generation)
 	 * If we call cave_generation more than once, we copy a list from the lists in lists/ores_spawned.dm
 	 */
 	var/list/ore_vent_minerals = list()
+	/// List of ore turfs that want to be randomized
+	var/list/turf/closed/mineral/random/ore_turfs = list()
+	/// Amount of ores by type generated
+	var/list/ores_generated = list()
+	/// Probabilities by type and depth to generate ores
+	var/list/list/list/ore_spread_probabilities = list()
 
 /datum/controller/subsystem/ore_generation/Initialize()
 	/// First, lets sort each ore_vent here based on their distance to the landmark, then we'll assign sizes.
@@ -64,30 +70,6 @@ SUBSYSTEM_DEF(ore_generation)
 			continue //Ya'll already got your minerals.
 		vent.generate_mineral_breakdown(map_loading = TRUE)
 
-
-	/// Handles roundstart logging
-	logger.Log(
-		LOG_CATEGORY_CAVE_GENERATION,
-		"Ore Generation spawned the following ores based on vent proximity",
-		list(
-			"[ORE_WALL_FAR]" = GLOB.post_ore_random["[ORE_WALL_FAR]"],
-			"[ORE_WALL_LOW]" = GLOB.post_ore_random["[ORE_WALL_LOW]"],
-			"[ORE_WALL_MEDIUM]" = GLOB.post_ore_random["[ORE_WALL_MEDIUM]"],
-			"[ORE_WALL_HIGH]" = GLOB.post_ore_random["[ORE_WALL_HIGH]"],
-			"[ORE_WALL_VERY_HIGH]" = GLOB.post_ore_random["[ORE_WALL_VERY_HIGH]"],
-		),
-	)
-	logger.Log(
-		LOG_CATEGORY_CAVE_GENERATION,
-		"Ore Generation spawned the following ores randomly",
-		list(
-			"[ORE_WALL_FAR]" = GLOB.post_ore_manual["[ORE_WALL_FAR]"],
-			"[ORE_WALL_LOW]" = GLOB.post_ore_manual["[ORE_WALL_LOW]"],
-			"[ORE_WALL_MEDIUM]" = GLOB.post_ore_manual["[ORE_WALL_MEDIUM]"],
-			"[ORE_WALL_HIGH]" = GLOB.post_ore_manual["[ORE_WALL_HIGH]"],
-			"[ORE_WALL_VERY_HIGH]" = GLOB.post_ore_manual["[ORE_WALL_VERY_HIGH]"],
-		),
-	)
 	logger.Log(
 		LOG_CATEGORY_CAVE_GENERATION,
 		"Ore Generation spawned the following vent sizes",
@@ -97,7 +79,67 @@ SUBSYSTEM_DEF(ore_generation)
 			"small" = LAZYACCESS(GLOB.ore_vent_sizes, SMALL_VENT_TYPE),
 		),
 	)
+
+	calculate_rock_edges()
+	for (var/turf/closed/mineral/random/rock in ore_turfs) // Typecheck in case they got destroyed
+		rock.randomize_ore()
+
+	calculate_ore_spread()
+
 	return SS_INIT_SUCCESS
+
+/// Generates debug data about ore spread among rock turfs
+/datum/controller/subsystem/ore_generation/proc/calculate_ore_spread()
+	var/list/result = list()
+	var/list/totals = list("chance" = 0, "raw_sum" = 0)
+	var/summary_count = 0
+	for (var/turf/closed/mineral/random/rock_type as anything in ore_spread_probabilities)
+		var/list/rock_data = ore_spread_probabilities[rock_type]
+		var/list/result_rock = list()
+		var/total_count = 0
+		var/total_chance = 0
+		for (var/spread_range in rock_data)
+			var/list/dist_info = rock_data[spread_range]
+			for (var/ore_type in dist_info - list("chance", "count"))
+				if (!result_rock[ore_type])
+					result_rock[ore_type] = 0
+				result_rock[ore_type] += dist_info[ore_type] * dist_info["chance"] / initial(rock_type.mineral_chance) * dist_info["count"]
+			total_count += dist_info["count"]
+			total_chance += dist_info["chance"] * dist_info["count"]
+
+		result_rock["chance"] = total_chance / total_count
+		result_rock["count"] = total_count
+		totals["chance"] += total_chance
+		summary_count += total_count
+		result[rock_type] = result_rock
+
+	for (var/turf/closed/mineral/random/rock_type as anything in result)
+		var/list/rock_data = result[rock_type]
+		var/raw_sum = 0
+		for (var/ore_type in rock_data)
+			if (!ispath(ore_type))
+				continue
+			rock_data[ore_type] /= summary_count
+			raw_sum += rock_data[ore_type]
+			if (!totals[ore_type])
+				totals[ore_type] = 0
+			if (ispath(ore_type, /turf/closed/mineral/gibtonite/volcanic))
+				totals[/turf/closed/mineral/gibtonite/volcanic] += rock_data[ore_type]
+			else
+				totals[ore_type] += rock_data[ore_type]
+		rock_data["raw_sum"] = raw_sum
+		totals["raw_sum"] += raw_sum
+
+	for (var/spawn_type in totals)
+		if (!ispath(spawn_type))
+			continue
+		totals[spawn_type] /= totals["raw_sum"] / 104
+
+	totals["count"] = summary_count
+	if (summary_count > 0)
+		totals["chance"] /= summary_count
+	result["total"] = totals
+	ore_spread_probabilities = result
 
 /datum/controller/subsystem/ore_generation/fire(resumed)
 	available_boulders.Cut() // reset upon new fire.

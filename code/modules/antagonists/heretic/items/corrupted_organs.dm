@@ -251,8 +251,7 @@
 	breather.emote("cough");
 	var/chosen_gas = pick_weight(gas_types)
 	var/datum/gas_mixture/mix_to_spawn = new()
-	mix_to_spawn.add_gas(pick(chosen_gas))
-	mix_to_spawn.gases[chosen_gas][MOLES] = gas_amount
+	mix_to_spawn.adjust_gas(pick(chosen_gas), gas_amount)
 	mix_to_spawn.temperature = breather.bodytemperature
 	log_atmos("[owner] coughed some gas into the air due to their corrupted lungs.", mix_to_spawn)
 	var/turf/open/our_turf = get_turf(breather)
@@ -282,7 +281,7 @@
 
 /obj/item/organ/appendix/corrupt/on_life(seconds_per_tick)
 	. = ..()
-	if (owner.stat != CONSCIOUS || owner.has_reagent(/datum/reagent/water/holywater) || IS_IN_MANSUS(owner) || !SPT_PROB(worm_chance, seconds_per_tick))
+	if (IS_UNCONSCIOUS_OR_CRIT(owner) || owner.has_reagent(/datum/reagent/water/holywater) || IS_IN_MANSUS(owner) || !SPT_PROB(worm_chance, seconds_per_tick))
 		return
 	owner.vomit(MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM, vomit_type = /obj/effect/decal/cleanable/vomit/nebula/worms, distance = 0)
 	owner.Knockdown(0.5 SECONDS)

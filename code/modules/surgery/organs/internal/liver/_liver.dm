@@ -21,6 +21,8 @@
 	cells_minimum = 1
 	cells_maximum = 2
 
+	visual = FALSE
+
 	/// Affects how much damage the liver takes from alcohol
 	var/alcohol_tolerance = ALCOHOL_RATE
 	/// The maximum volume of toxins the liver will ignore
@@ -92,6 +94,8 @@
 			. += span_info("Fatty deposits and sprinkle residue, imply that this is the liver of someone in <em>security</em>.")
 		if(HAS_TRAIT(src, TRAIT_CULINARY_METABOLISM))
 			. += span_info("The high iron content and slight smell of garlic, implies that this is the liver of a <em>cook</em>.")
+		if (HAS_TRAIT(src, TRAIT_BARTENDER_METABOLISM))
+			. += span_info("The decidedly well-used look from periods of prolonged exposure to a wide variety of alcohols, implies that this is the liver of a <em>bartender</em>.")
 		if(HAS_TRAIT(src, TRAIT_COMEDY_METABOLISM))
 			. += span_info("A smell of bananas, a slippery sheen and [span_clown("honking")] when depressed, implies that this is the liver of a <em>clown</em>.")
 		if(HAS_TRAIT(src, TRAIT_MEDICAL_METABOLISM))
@@ -242,6 +246,7 @@
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
 	toxTolerance = 2
 	liver_resistance = 0.9 * LIVER_DEFAULT_TOX_RESISTANCE // -10%
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
 /obj/item/organ/liver/cybernetic/emp_act(severity)
@@ -272,6 +277,7 @@
 	toxTolerance = 10 //can shrug off up to 10u of toxins
 	liver_resistance = 1.5 * LIVER_DEFAULT_TOX_RESISTANCE // +50%
 	emp_vulnerability = 20
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/organ/liver/cybernetic/surplus
 	name = "surplus prosthetic liver"

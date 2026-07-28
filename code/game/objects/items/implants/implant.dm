@@ -6,7 +6,7 @@
 	icon = 'icons/hud/implants.dmi'
 	icon_state = "generic" //Shows up as the action button icon
 	item_flags = ABSTRACT | DROPDEL
-	resistance_flags = INDESTRUCTIBLE
+	resistance_flags = INDESTRUCTIBLE | UNACIDABLE
 	// This gives the user an action button that allows them to activate the implant.
 	// If the implant needs no action button, then null this out.
 	// Or, if you want to add a unique action button, then replace this.
@@ -125,7 +125,7 @@
  * * silent - unused here
  * * special - Set to true if removed by admin panel, should bypass any side effects
  */
-/obj/item/implant/proc/removed(mob/living/source, silent = FALSE, special = 0)
+/obj/item/implant/proc/removed(mob/living/source, silent = FALSE, special = FALSE)
 	moveToNullspace()
 	imp_in = null
 	source.implants -= src
@@ -139,9 +139,9 @@
 	GLOB.tracked_implants -= src
 	return TRUE
 
-/obj/item/implant/Destroy()
+/obj/item/implant/Destroy(force)
 	if(imp_in)
-		removed(imp_in)
+		removed(imp_in, silent = TRUE, special = TRUE)
 	return ..()
 
 /**

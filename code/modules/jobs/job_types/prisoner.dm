@@ -3,7 +3,7 @@
 	description = "Keep yourself occupied in permabrig."
 	faction = FACTION_STATION
 	total_positions = 0
-	spawn_positions = 2
+	spawn_positions = 4
 	supervisors = "the security team"
 	exp_granted_type = EXP_TYPE_CREW
 	paycheck = PAYCHECK_LOWER
@@ -73,7 +73,7 @@
 	var/datum/prisoner_crime/crime = GLOB.prisoner_crimes[crime_name]
 	if (isnull(crime))
 		return
-	var/list/limbs_to_tat = new_prisoner.bodyparts.Copy()
+	var/list/limbs_to_tat = new_prisoner.get_bodyparts()
 	for(var/i in 1 to crime.tattoos)
 		if(!length(SSpersistence.prison_tattoos_to_use) || visuals_only)
 			return

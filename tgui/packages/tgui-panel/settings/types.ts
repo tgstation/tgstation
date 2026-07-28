@@ -18,6 +18,8 @@ export const settingsSchema = z.object({
   theme: z.string(),
   version: z.number(),
   view: viewSchema,
+  websocketEnabled: z.boolean(),
+  websocketServer: z.string(),
 });
 
 export type HighlightSetting = {
@@ -27,6 +29,7 @@ export type HighlightSetting = {
   id: string;
   matchCase: boolean;
   matchWord: boolean;
+  enabled: boolean;
 };
 
 export type HighlightState = {

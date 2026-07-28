@@ -4,7 +4,7 @@ PROCESSING_SUBSYSTEM_DEF(fishing)
 	dependencies = list(
 		/datum/controller/subsystem/atoms,
 	)
-	flags = SS_BACKGROUND
+	ss_flags = SS_BACKGROUND
 	wait = 0.05 SECONDS // If you raise it to 0.1 SECONDS, you better also modify [datum/fish_movement/move_fish()]
 	///A list of cached fish icons
 	var/list/cached_fish_icons

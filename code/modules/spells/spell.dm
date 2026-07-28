@@ -49,7 +49,6 @@
 	overlay_icon_state = "bg_spell_border"
 	active_overlay_icon_state = "bg_spell_border_active_red"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_PHASED
-	panel = "Spells"
 
 	/// The sound played on cast.
 	var/sound = null
@@ -154,6 +153,9 @@
 	if(!owner)
 		CRASH("[type] - can_cast_spell called on a spell without an owner!")
 
+	if(SEND_SIGNAL(src, COMSIG_SPELL_CAN_CAST_CHECK, feedback) & SPELL_CANCEL_CAST)
+		return FALSE
+
 	// Certain spells are not allowed on the centcom zlevel
 	var/turf/caster_turf = get_turf(owner)
 	// Spells which require being on the station
@@ -184,12 +186,11 @@
 
 	if(ishuman(owner))
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
-			var/mob/living/carbon/human/human_owner = owner
-			if(!(human_owner.wear_suit?.clothing_flags & CASTING_CLOTHES) && !ismonkey(human_owner)) // Monkeys don't need robes to cast as they are inherently imbued with power from the banana dimension
+			if(!HAS_TRAIT(owner.get_item_by_slot(ITEM_SLOT_OCLOTHING), TRAIT_CASTING_CLOTHING) && !ismonkey(owner)) // Monkeys don't need robes to cast as they are inherently imbued with power from the banana dimension
 				if(feedback)
 					to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
-			if(!(astype(human_owner.head, /obj/item/clothing)?.clothing_flags & CASTING_CLOTHES) && !(human_owner.glasses?.clothing_flags & CASTING_CLOTHES))
+			if(!HAS_TRAIT(owner.get_item_by_slot(ITEM_SLOT_HEAD), TRAIT_CASTING_CLOTHING) && !HAS_TRAIT(owner.get_item_by_slot(ITEM_SLOT_EYES), TRAIT_CASTING_CLOTHING))
 				if(feedback)
 					to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
 				return FALSE
@@ -204,8 +205,8 @@
 		// Otherwise, we can check for contents if they have wizardly apparel. This isn't *quite* perfect, but it'll do, especially since many of the edge cases (gorilla holding a wizard hat) still more or less make sense.
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
 			var/any_casting = FALSE
-			for(var/obj/item/clothing/item in owner)
-				if(item.clothing_flags & CASTING_CLOTHES)
+			for(var/obj/item/item as anything in owner.get_equipped_items())
+				if(HAS_TRAIT(item, TRAIT_CASTING_CLOTHING))
 					any_casting = TRUE
 					break
 
@@ -311,6 +312,8 @@
 				if(!caster.get_organ_slot(ORGAN_SLOT_TONGUE))
 					invocation(caster)
 					to_chat(caster, span_warning("Your lack of tongue is making it difficult to say the correct words to cast [src]..."))
+					if(caster.click_intercept == src)
+						unset_click_ability(caster, refund_cooldown = TRUE)
 					StartCooldown(2 SECONDS)
 					return SPELL_CANCEL_CAST
 
@@ -322,6 +325,8 @@
 						ignored_mobs = caster,
 					)
 					to_chat(caster, span_warning("You can't position your hands correctly to invoke [src][caster.num_hands > 0 ? "" : ", as you have none"]..."))
+					if(caster.click_intercept == src)
+						unset_click_ability(caster, refund_cooldown = TRUE)
 					StartCooldown(2 SECONDS)
 					return SPELL_CANCEL_CAST
 
@@ -363,9 +368,7 @@
 	if(sparks_amt)
 		do_sparks(sparks_amt, FALSE, get_turf(owner))
 	if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
-		var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
-		smoke.set_up(smoke_amt, holder = owner, location = get_turf(owner))
-		smoke.start()
+		do_smoke(smoke_amt, owner, get_turf(owner))
 
 	// Send signals last in case they delete the spell
 	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)

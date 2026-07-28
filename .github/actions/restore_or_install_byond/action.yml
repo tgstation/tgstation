@@ -29,13 +29,20 @@ runs:
         echo "BYOND_MAJOR=$BYOND_MAJOR" >> $GITHUB_ENV
         echo "BYOND_MINOR=$BYOND_MINOR" >> $GITHUB_ENV
 
+    - name: Install 32-bit libcurl
+      shell: bash
+      run: |
+        sudo dpkg --add-architecture i386
+        sudo apt-get update -qq
+        sudo apt-get install -y --no-install-recommends libcurl4t64:i386
+
     # The use of `actions/cache/restore` and `actions/cache/save` here is deliberate, as we want to
     # save the BYOND install to a cache as early as possible. If we used just `actions/cache`, it
     # would only attempt to save the cache at the end of a job. This ensures that if a workflow run
     # is cancelled, we already have a cache to restore from.
     - name: Restore BYOND cache
       id: restore_byond_cache
-      uses: actions/cache/restore@v4
+      uses: actions/cache/restore@v5
       with:
         path: ~/BYOND
         key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
@@ -45,7 +52,7 @@ runs:
       run: bash tools/ci/install_byond.sh
     - name: Save BYOND cache
       if: ${{ !steps.restore_byond_cache.outputs.cache-hit }}
-      uses: actions/cache/save@v4
+      uses: actions/cache/save@v5
       with:
         path: ~/BYOND
         key: ${{ steps.restore_byond_cache.outputs.cache-primary-key }}

@@ -6,9 +6,9 @@
 	can_elimination_hijack = ELIMINATION_ENABLED
 	suicide_cry = "FOR SCOTLAND!!" // If they manage to lose their no-drop stuff somehow
 	antag_flags = ANTAG_FAKE|ANTAG_SKIP_GLOBAL_LIST
+	desensitized_modifier = DESENSITIZED_THRESHOLD * 0.2
 	/// Traits we apply/remove to our target on-demand.
 	var/static/list/applicable_traits = list(
-		TRAIT_DESENSITIZED,
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
 		TRAIT_NOFIRE,
@@ -98,7 +98,7 @@
 	robotlander.revive(ADMIN_HEAL_ALL)
 	robotlander.set_connected_ai() //DISCONNECT FROM AI
 	robotlander.laws.clear_inherent_laws()
-	robotlander.laws.set_zeroth_law("THERE CAN BE ONLY ONE")
+	robotlander.laws.set_zeroth_law("THERE CAN BE ONLY ONE", force = TRUE)
 	robotlander.laws.show_laws(robotlander)
 	robotlander.model.transform_to(/obj/item/robot_model/syndicate/kiltborg)
 	sword = locate(/obj/item/claymore/highlander/robot) in robotlander.model.basic_modules

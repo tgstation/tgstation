@@ -206,7 +206,7 @@
 		return FALSE
 
 	if (!corrupted)
-		if (!(reagents?.spark_act(check_charge, TRUE) & SPARK_ACT_DESTRUCTIVE))
+		if (!(reagents?.spark_act(check_charge, SPARK_ACT_ENCLOSED) & SPARK_ACT_DESTRUCTIVE))
 			return FALSE
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has triggered a rigged power cell explosion at [AREACOORD(loc)].")
 		usr?.log_message("triggered a rigged power cell explosion", LOG_GAME)

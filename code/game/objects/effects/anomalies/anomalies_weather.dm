@@ -55,7 +55,7 @@
 
 /obj/effect/anomaly/weather/proc/select_weather()
 	return pick(
-		/datum/weather/rain_storm,
+		/datum/weather/particle/rain_storm,
 		/datum/weather/snow_storm,
 		/datum/weather/sand_storm,
 	)
@@ -97,4 +97,4 @@
 	// maybe we can put acid rain in this later?
 	// though it'd feel unfair if it showed up and immediately dumped acid on people.
 	// we would need an even longer telegraphing time for that
-	weather_type = /datum/weather/rain_storm
+	weather_type = /datum/weather/particle/rain_storm

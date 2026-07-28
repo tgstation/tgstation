@@ -25,7 +25,7 @@ export const NtosPortraitPrinter = (props) => {
   const current_portrait_ratio = got_paintings && paintings[listIndex].ratio;
 
   return (
-    <NtosWindow title="Art Galaxy" width={400} height={446}>
+    <NtosWindow title="Art Galaxy" width={400} height={460}>
       <NtosWindow.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -95,34 +95,52 @@ export const NtosPortraitPrinter = (props) => {
             <Stack>
               <Stack.Item grow={3}>
                 <Section height="100%">
-                  <Stack justify="space-between">
-                    <Stack.Item grow={1}>
+                  <Stack justify="space-between" align="center">
+                    <Stack.Item>
                       <Button
                         icon="angle-double-left"
                         disabled={listIndex === 0}
                         onClick={() => setListIndex(0)}
                       />
                     </Stack.Item>
-                    <Stack.Item grow={3}>
+                    <Stack.Item>
                       <Button
                         disabled={listIndex === 0}
                         icon="chevron-left"
                         onClick={() => setListIndex(listIndex - 1)}
                       />
                     </Stack.Item>
-                    <Stack.Item grow={3}>
-                      <Button
-                        icon="check"
-                        content={!is_console ? "View Only" : "Print Portrait"}
-                        disabled={!got_paintings || !is_console}
-                        onClick={() =>
-                          act('select', {
-                            selected: paintings[listIndex].ref,
-                          })
-                        }
-                      />
+                    <Stack.Item grow>
+                      <Stack vertical align="center">
+                        {!!is_console && (
+                          <Stack.Item>
+                            <Button
+                              icon="print"
+                              content="Print Portrait"
+                              disabled={!got_paintings}
+                              onClick={() =>
+                                act('print', {
+                                  selected: paintings[listIndex].ref,
+                                })
+                              }
+                            />
+                          </Stack.Item>
+                        )}
+                        <Stack.Item>
+                          <Button
+                            icon="download"
+                            content="Download"
+                            disabled={!got_paintings}
+                            onClick={() =>
+                              act('download', {
+                                selected: paintings[listIndex].ref,
+                              })
+                            }
+                          />
+                        </Stack.Item>
+                      </Stack>
                     </Stack.Item>
-                    <Stack.Item grow={1}>
+                    <Stack.Item>
                       <Button
                         icon="chevron-right"
                         disabled={listIndex >= paintings.length - 1}

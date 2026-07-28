@@ -15,6 +15,22 @@
 	greyscale_colors = "#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+/obj/item/clothing/accessory/sweatervest
+	name = "sweater vest"
+	desc = "When you're exceptionally you."
+	icon = 'icons/map_icons/clothing/accessory.dmi'
+	icon_state = "/obj/item/clothing/accessory/sweatervest"
+	post_init_icon_state = "sweatervest"
+	inhand_icon_state = "svest"
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	minimize_when_attached = FALSE
+	attachment_slot = NONE
+	greyscale_config = /datum/greyscale_config/sweatervest
+	greyscale_config_worn = /datum/greyscale_config/sweatervest/worn
+	greyscale_colors = "#A52F29"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
 /obj/item/clothing/accessory/vest_sheriff
 	name = "sheriff vest"
 	desc = "Now you just have to pick your favourite deputy."

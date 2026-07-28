@@ -37,6 +37,7 @@
 	var/milked_reagent = /datum/reagent/consumable/milk
 
 /datum/emote/cow
+	abstract_type = /datum/emote/cow
 	mob_type_allowed_typecache = /mob/living/basic/cow
 	mob_type_blacklist_typecache = list()
 
@@ -78,6 +79,7 @@
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15)
 
 /mob/living/basic/cow/tamed(mob/living/tamer, atom/food)
+	. = ..()
 	visible_message("[src] [tame_message] as it seems to bond with [tamer].", "You [self_tame_message], recognizing [tamer] as your new pal.")
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 
@@ -88,7 +90,7 @@
  * tipper - the mob who tipped us
  */
 /mob/living/basic/cow/proc/after_cow_tipped(mob/living/carbon/tipper)
-	addtimer(CALLBACK(src, PROC_REF(set_tip_react_blackboard), tipper), rand(10 SECONDS, 20 SECONDS))
+		addtimer(CALLBACK(src, PROC_REF(set_tip_react_blackboard), tipper), rand(10 SECONDS, 20 SECONDS))
 
 /*
  * We've been waiting long enough, we're going to tell our AI to begin pleading.

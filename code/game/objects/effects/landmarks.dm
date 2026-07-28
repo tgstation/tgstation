@@ -264,35 +264,63 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	GLOB.wizardstart += loc
 	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/start/nukeop
+/// Places to put midround nukeops (normal)
+GLOBAL_LIST_EMPTY(nukeop_base_start)
+/// Places to put midround nukeops (leader)
+GLOBAL_LIST_EMPTY(nukeop_base_leader_start)
+/// Places to put nukeops overwatch agents
+GLOBAL_LIST_EMPTY(nukeop_base_overwatch_start)
+/// Places to spawn nukeops on roundstart
+GLOBAL_LIST_EMPTY(nukeop_elevator_start)
+
+/obj/effect/landmark/start/nukeop_base
 	name = "nukeop"
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "snukeop_spawn"
 
-/obj/effect/landmark/start/nukeop/Initialize(mapload)
+/obj/effect/landmark/start/nukeop_base/Initialize(mapload)
 	..()
-	GLOB.nukeop_start += loc
+	var/list/add_to = get_global_list()
+	add_to += loc
 	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/start/nukeop_leader
+/obj/effect/landmark/start/nukeop_base/proc/get_global_list()
+	return GLOB.nukeop_base_start
+
+/obj/effect/landmark/start/nukeop_base/leader
 	name = "nukeop leader"
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "snukeop_leader_spawn"
 
-/obj/effect/landmark/start/nukeop_leader/Initialize(mapload)
-	..()
-	GLOB.nukeop_leader_start += loc
-	return INITIALIZE_HINT_QDEL
+/obj/effect/landmark/start/nukeop_base/leader/get_global_list()
+	return GLOB.nukeop_base_leader_start
 
-/obj/effect/landmark/start/nukeop_overwatch
+/obj/effect/landmark/start/nukeop_base/overwatch
 	name = "nukeop overwatch"
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "snukeop_leader_spawn"
 
-/obj/effect/landmark/start/nukeop_overwatch/Initialize(mapload)
-	..()
-	GLOB.nukeop_overwatch_start += loc
+/obj/effect/landmark/start/nukeop_base/overwatch/get_global_list()
+	return GLOB.nukeop_base_overwatch_start
+
+/obj/effect/landmark/start/nukeop_elevator
+	name = "nukeop (elevator)"
+	icon = /obj/effect/landmark/start/nukeop_base::icon
+	icon_state = /obj/effect/landmark/start/nukeop_base::icon_state
+
+/obj/effect/landmark/start/nukeop_elevator/Initialize(mapload)
+	. = ..()
+	GLOB.nukeop_elevator_start += loc
 	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/nukeop_elevator
+	icon_state = "x"
+
+/obj/effect/landmark/nukeop_elevator/interior
+	name = "nukeop elevator interior top right corner"
+
+/obj/effect/landmark/nukeop_elevator/exterior
+	name = "nukeop elevator exterior top right corner"
 
 // Must be immediate because players will
 // join before SSatom initializes everything.
@@ -575,6 +603,18 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 		created_joining_mob.forceMove(closet)
 		return created_joining_mob
 	return created_joining_mob
+
+/obj/effect/landmark/flaps_install
+	name = "plastic flaps install point"
+	icon_state = "flap-install"
+
+/obj/effect/landmark/flaps_install/Initialize(mapload)
+	. = ..()
+	GLOB.cargo_shuttle_flaps_landmarks += src
+
+/obj/effect/landmark/flaps_install/Destroy()
+	GLOB.cargo_shuttle_flaps_landmarks -= src
+	return ..()
 
 //Landmark that creates destinations for the navigate verb to path to
 /obj/effect/landmark/navigate_destination

@@ -231,15 +231,15 @@
 	name = "Super Pointy Tape"
 	desc = "An all-purpose super pointy tape roll. The tape is built with hundreds of tiny metal needles, the roll comes with in 5 pieces. When added to items the \
 			item that was taped will embed when thrown at people. Taping people's mouthes with it will hurt them if pulled off by someone else."
-	item = /obj/item/stack/sticky_tape/pointy/super
+	item = /obj/item/stack/medical/wrap/sticky_tape/pointy/super
 	cost = 1
 
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Law Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. \
+			This board bypasses all access restrictions on the console. \
 			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
-	progression_minimum = 30 MINUTES
-	item = /obj/item/ai_module/syndicate
+	item = /obj/item/ai_module/law/syndicate
 	cost = 4
 
 /datum/uplink_item/device_tools/hypnotic_flash

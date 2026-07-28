@@ -6,7 +6,7 @@
 		set_hud_image_state(DIAG_STAT_HUD, "hudstat")
 		return
 
-	if(stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		set_hud_image_state(DIAG_STAT_HUD, "hudoffline")
 		return
 
@@ -32,13 +32,22 @@
 			set_hud_image_state(DIAG_BOT_HUD, "")
 
 ///proc that handles drawing and transforming the bot's path onto diagnostic huds
-/mob/living/basic/bot/proc/generate_bot_path(datum/move_loop/has_target/jps/source)
+/mob/living/basic/bot/proc/generate_bot_path(datum/move_loop/has_target/jps/source, list/path)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(src, COMSIG_MOVELOOP_JPS_FINISHED_PATHING)
 
 	if(isnull(ai_controller))
 		return
+
+	if(!length(path))
+		return
+
+
+	var/atom/move_target = path[path.len]
+	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
+		return
+
 
 	//Removes path images and handles removing hud client images
 	clear_path_hud()
@@ -47,11 +56,6 @@
 
 	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
 	LAZYCLEARLIST(path_images)
-
-
-	var/atom/move_target = ai_controller.current_movement_target
-	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
-		return
 
 	var/list/our_path = source.movement_path
 	if(!length(our_path))
@@ -94,11 +98,6 @@
 	if(client || !length(current_pathed_turfs) || isnull(ai_controller))
 		return
 
-	var/atom/move_target = ai_controller.current_movement_target
-
-	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
-		clear_path_hud()
-
 	var/turf/our_turf = get_turf(src)
 	var/image/target_image = current_pathed_turfs[our_turf]
 	if(target_image)
@@ -106,14 +105,16 @@
 	current_pathed_turfs -= our_turf
 
 ///proc that handles deleting the bot's drawn path when needed
-/mob/living/basic/bot/proc/clear_path_hud()
+/mob/living/basic/bot/proc/clear_path_hud(remove_hud = TRUE)
 	for(var/turf/index as anything in current_pathed_turfs)
 		var/image/our_image = current_pathed_turfs[index]
 		animate(our_image, alpha = 0, time = 0.3 SECONDS)
 		current_pathed_turfs -= index
 
+	if(!remove_hud)
+		return
+
 	// Call hud remove handlers to ensure viewing user client images are removed
 	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC], GLOB.huds[DATA_HUD_BOT_PATH])
 	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
 		hud.remove_atom_from_hud(src)
-

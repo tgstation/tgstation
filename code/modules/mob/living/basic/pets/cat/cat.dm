@@ -24,7 +24,6 @@
 	response_harm_simple = "kick"
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/cat
 	held_state = "cat2"
 	attack_verb_continuous = "claws"
@@ -63,6 +62,7 @@
 	var/datum/callback/post_birth_callback
 
 /datum/emote/cat
+	abstract_type = /datum/emote/cat
 	mob_type_allowed_typecache = /mob/living/basic/pet/cat
 	mob_type_blacklist_typecache = list()
 
@@ -90,6 +90,7 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "purr", /datum/mood_event/pet_animal)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/can_be_held)
 	add_cell_sample()
 	add_verb(src, /mob/living/proc/toggle_resting)
 	add_traits(list(TRAIT_CATLIKE_GRACE, TRAIT_VENTCRAWLER_ALWAYS, TRAIT_WOUND_LICKER, TRAIT_COLORBLIND), INNATE_TRAIT)
@@ -102,21 +103,21 @@
 
 /mob/living/basic/pet/cat/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 
 	if(istype(target, /obj/machinery/oven/range) && can_interact_with_stove)
 		target.attack_hand(src)
-		return FALSE
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 	if(!can_hold_item)
-		return TRUE
+		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 
 	if(!is_type_in_list(target, huntable_items) || held_food)
-		return TRUE
+		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 	var/atom/movable/movable_target = target
 	movable_target.forceMove(src)
-	return FALSE
+	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /mob/living/basic/pet/cat/Exited(atom/movable/gone, direction)
 	. = ..()

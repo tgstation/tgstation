@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(machines)
 	dependencies = list(
 		/datum/controller/subsystem/atoms,
 	)
-	flags = SS_KEEP_TIMING
+	ss_flags = SS_KEEP_TIMING
 	wait = 2 SECONDS
 
 	/// Assosciative list of all machines that exist.

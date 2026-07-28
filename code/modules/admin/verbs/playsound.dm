@@ -46,7 +46,7 @@ ADMIN_VERB(play_local_sound, R_SOUND, "Play Local Sound", "Plays a sound only yo
 	playsound(get_turf(user.mob), sound, volume || 50, FALSE)
 	BLACKBOX_LOG_ADMIN_VERB("Play Local Sound")
 
-ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a sound directly to a mob.", ADMIN_CATEGORY_FUN, sound as sound, mob/target in world)
+ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a sound directly to a mob.", ADMIN_CATEGORY_FUN, sound as sound, mob/target)
 	if(!target)
 		target = input(user, "Choose a mob to play the sound to. Only they will hear it.", "Play Mob Sound") as null|anything in sort_names(GLOB.player_list)
 	if(QDELETED(target))
@@ -140,7 +140,12 @@ GLOBAL_VAR_INIT(web_sound_cooldown, 0)
 		if(credit)
 			to_chat_message += span_notice("<br>[credit]")
 
-		to_chat(world, fieldset_block("Now Playing: [span_bold(music_extra_data["title"])] by [span_bold(music_extra_data["artist"])]", jointext(to_chat_message, ""), "boxed_message"))
+		var/list/recipients = list()
+		for(var/client/client as anything in GLOB.clients)
+			if(client.prefs.read_preference(/datum/preference/numeric/volume/sound_midi) > 0)
+				recipients += client
+		recipients |= user.client
+		to_chat(recipients, fieldset_block("Now Playing: [span_bold(music_extra_data["title"])] by [span_bold(music_extra_data["artist"])]", jointext(to_chat_message, ""), "boxed_message"))
 
 		SSblackbox.record_feedback("nested tally", "played_url", 1, list("[user.ckey]", "[input]"))
 		log_admin("[key_name(user)] played web sound: [input]")

@@ -1,5 +1,7 @@
 ///Delete one of every type, sleep a while, then check to see if anything has gone fucky
 /datum/unit_test/create_and_destroy
+	// Since this unit test takes so damn long, we split it up across all runners
+	test_flags = parent_type::test_flags & ~UNIT_TEST_DEBUG_MAP_ONLY
 	//You absolutely must run after (almost) everything else
 	priority = TEST_CREATE_AND_DESTROY
 
@@ -14,7 +16,37 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	var/original_baseturf_count = length(original_baseturfs)
 
 	GLOB.running_create_and_destroy = TRUE
-	for(var/type_path in typesof(/atom/movable, /turf) - uncreatables) //No areas please
+	var/list/type_paths_to_check = (valid_typesof(/atom/movable) + valid_typesof(/turf)) - uncreatables // No areas please
+
+	// This code is responsible for splitting up create & destroy across multiple integration tests.
+	var/total_amount_to_check = length(type_paths_to_check)
+#ifdef RUNNING_LOCAL_TESTS
+	// not ci? do everything
+	var/start_index = 0
+	var/end_index = total_amount_to_check
+#else
+	var/runner_count = max(length(config.maplist), 1)
+
+	var/split_up_amount = floor(total_amount_to_check / runner_count)
+
+	var/what_map_index_are_we = 1
+	for(var/map_name in config.maplist)
+		if(SSmapping.current_map.map_name == map_name)
+			break
+		what_map_index_are_we++
+
+	var/start_index = (what_map_index_are_we - 1) * split_up_amount
+	// Instead of super trying to make it an equal split, we just give the remainder tests to the final runner
+	var/end_index = (what_map_index_are_we == runner_count) ? total_amount_to_check : start_index + split_up_amount
+#endif
+
+	// +1 because byond's list.Copy() implementation is weird
+	type_paths_to_check = type_paths_to_check.Copy(start_index, end_index + 1)
+
+	log_world("Running create and destroy on [length(type_paths_to_check)] atoms out of the [total_amount_to_check] total")
+	log_world("([start_index + 1] [type_paths_to_check[1]]) - ([end_index] [type_paths_to_check[length(type_paths_to_check)]])")
+
+	for(var/type_path in type_paths_to_check)
 		if(ispath(type_path, /turf))
 			spawn_at.ChangeTurf(type_path)
 			//We change it back to prevent baseturfs stacking and hitting the limit
@@ -27,6 +59,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		else
 			var/atom/creation = new type_path(spawn_at)
 			if(QDELETED(creation))
+				// Same as below
+				creation = null
 				continue
 			//Go all in
 			qdel(creation, force = TRUE)
@@ -49,7 +83,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	var/list/queues_we_care_about = list()
 	// All of em, I want hard deletes too, since we rely on the debug info from them
-	for(var/i in 1 to GC_QUEUE_HARDDELETE)
+	for(var/i in GC_QUEUE_FILTER to GC_QUEUE_HARDDELETE)
 		queues_we_care_about += i
 
 	//Now that we've qdel'd everything, let's sleep until the gc has processed all the shit we care about

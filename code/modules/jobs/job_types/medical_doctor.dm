@@ -15,11 +15,11 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_MED
 
-	mind_traits = list(MEDICAL_MIND_TRAITS)
+	desensitized_base = DESENSITIZED_THRESHOLD
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_MEDICAL_DOCTOR
-	bounty_types = CIV_JOB_MED
+	bounty_types = CIV_JOB_MED_VIRO
 	departments_list = list(
 		/datum/job_department/medical,
 		)

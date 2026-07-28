@@ -2,7 +2,7 @@
 	weighted_open_turf_types = list(/turf/open/misc/asteroid/snow/icemoon = 19, /turf/open/misc/ice/icemoon = 1)
 	weighted_closed_turf_types = list(
 		/turf/closed/mineral/random/snow = 100,
-		/turf/closed/mineral/gibtonite/ice/icemoon = 4,
+		/turf/closed/mineral/gibtonite/ice/icemoon = 2,
 	)
 
 	weighted_mob_spawn_list = list(
@@ -11,7 +11,7 @@
 		/mob/living/basic/mining/lobstrosity = 15,
 		/mob/living/basic/mining/wolf = 50,
 		/obj/effect/spawner/random/lavaland_mob/raptor = 15,
-		/mob/living/simple_animal/hostile/asteroid/polarbear = 30,
+		/mob/living/basic/mining/polarbear = 30,
 		/obj/structure/spawner/ice_moon = 3,
 		/obj/structure/spawner/ice_moon/polarbear = 3,
 	)
@@ -39,10 +39,7 @@
 	weighted_open_turf_types = list(/turf/open/misc/asteroid/snow/icemoon = 1)
 	flora_spawn_chance = 60
 	weighted_mob_spawn_list = null
-	initial_closed_chance = 0
-	birth_limit = 5
-	death_limit = 4
-	smoothing_iterations = 10
+	noise_percent = 100 // Full floor
 
 	feature_spawn_chance = 0.15
 	weighted_feature_spawn_list = list(
@@ -62,7 +59,7 @@
 
 /// Surface snow generator variant for forested station trait, WITH FORESTSSSS
 /datum/map_generator/cave_generator/icemoon/surface/forested
-	initial_closed_chance = 10
+	noise_percent = 65 //Few small rocks, but mostly open floor for the trees to spawn on
 
 	flora_spawn_chance = 80
 	weighted_flora_spawn_list = list(
@@ -80,13 +77,12 @@
 	weighted_mob_spawn_list = list(/mob/living/basic/deer/ice = 99, /mob/living/basic/tree = 1, /obj/effect/spawner/random/lavaland_mob/raptor = 15)
 
 /datum/map_generator/cave_generator/icemoon/surface/rocky
-	initial_closed_chance = 53
 	mob_spawn_chance = 0.5
 
 /datum/map_generator/cave_generator/icemoon/surface/noruins //use this for when you don't want ruins to spawn in a certain area
 
 /datum/map_generator/cave_generator/icemoon/deep
-	weighted_closed_turf_types = list(/turf/closed/mineral/random/snow = 1)
+	weighted_closed_turf_types = list(/turf/closed/mineral/random/snow/underground = 1)
 	weighted_mob_spawn_list = list(
 		SPAWN_MEGAFAUNA = 1,
 		/mob/living/basic/mining/ice_demon = 100,

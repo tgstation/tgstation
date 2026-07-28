@@ -1,7 +1,11 @@
 
+/// Fire all loaded contents at once.
 #define PCANNON_FIREALL 1
+/// First in, Last out.
 #define PCANNON_FILO 2
+/// First in, first out. Default value.
 #define PCANNON_FIFO 3
+
 ///Defines for the pressure strength of the cannon
 #define LOW_PRESSURE 1
 #define MID_PRESSURE 2
@@ -20,28 +24,41 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	armor_type = /datum/armor/item_pneumatic_cannon
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6)
-	var/maxWeightClass = 20 //The max weight of items that can fit into the cannon
-	var/loadedWeightClass = 0 //The weight of items currently in the cannon
-	var/obj/item/tank/internals/tank = null //The gas tank that is drawn from to fire things
-	var/gasPerThrow = 3 //How much gas is drawn from a tank's pressure to fire
-	var/list/loadedItems = list() //The items loaded into the cannon that will be fired out
-	var/pressure_setting = LOW_PRESSURE //How powerful the cannon is - higher pressure = more gas but more powerful throws
-	var/checktank = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.05, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.8)
+	/// The max weight of items that can fit into the cannon
+	var/maxWeightClass = 20
+	/// The weight of items currently in the cannon
+	var/loadedWeightClass = 0
+	/// The gas tank that is drawn from to fire things
+	var/obj/item/tank/internals/tank = null
+	/// How much gas is drawn from a tank's pressure to fire
+	var/gasPerThrow = 3
+	/// The items loaded into the cannon that will be fired out
+	var/list/loadedItems = list()
+	/// How powerful the cannon is - higher pressure = more gas but more powerful throws
+	var/pressure_setting = LOW_PRESSURE
+	/// Additional multiplier that adjusts how much farther thrown objects can travel.
 	var/range_multiplier = 1
-	var/throw_amount = 1 //How many items to throw per fire
+	/// How many items to throw per fire
+	var/throw_amount = 1
+	/// What methodology should be used when firing? See #defines at top of file.
 	var/fire_mode = PCANNON_FIFO
+	/// Allows you to hold down LMB to continuously fire.
 	var/automatic = FALSE
+	/// Determines if a pneumatic cannon needs an air tank to fire. False for things like the pie cannons.
 	var/needs_air = TRUE
+	/// If true, has side effects if fired with the clumsy trait (read: clowns)
 	var/clumsyCheck = TRUE
-	var/list/allowed_typecache //Leave as null to allow all.
+	///Leave as null to allow all. Otherwise whitelists what can be inserted into the cannon.
+	var/list/allowed_typecache
 	var/charge_amount = 1
 	var/charge_ticks = 1
 	var/charge_tick = 0
-	var/charge_type
+	var/atom/charge_type
 	var/selfcharge = FALSE
 	var/fire_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
-	var/spin_item = TRUE //Do the projectiles spin when launched?
+	///Do the projectiles spin when launched?
+	var/spin_item = TRUE
 	trigger_guard = TRIGGER_GUARD_NORMAL
 
 
@@ -86,9 +103,15 @@
 	if(!in_range(user, src))
 		out += span_notice("You'll need to get closer to see any more.")
 		return
-	for(var/obj/item/I in loadedItems)
-		out += span_info("[icon2html(I, user)] It has \a [I] loaded.")
-		CHECK_TICK
+	if(selfcharge)
+		if(length(loadedItems))
+			out += span_info("[icon2html(pick(loadedItems), user)] It has [length(loadedItems)] [charge_type::name] loaded.")
+	else
+		for(var/obj/item/I in loadedItems)
+			out += span_info("[icon2html(I, user)] It has \a [I] loaded.")
+			CHECK_TICK
+	if(!length(loadedItems))
+		out += span_info("The chamber has nothing loaded.")
 	if(tank)
 		out += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it. It could be removed with a <b>screwdriver</b>.")
 	if(needs_air == TRUE)
@@ -109,25 +132,36 @@
 	balloon_alert(user, "output level set to [pressure_setting_to_text(pressure_setting)]")
 	return TRUE
 
-/obj/item/pneumatic_cannon/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/item/pneumatic_cannon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)
-		return ..()
-	if(istype(W, /obj/item/tank/internals))
+		return NONE
+	if(!isitem(tool))
+		return NONE
+
+	if(istype(tool, /obj/item/tank/internals))
 		if(needs_air == FALSE)
-			return
-		if(!tank)
-			var/obj/item/tank/internals/IT = W
-			if(IT.volume <= 3)
-				to_chat(user, span_warning("\The [IT] is too small for \the [src]."))
-				return
-			updateTank(W, 0, user)
-	else if(W.type == type)
+			return ITEM_INTERACT_BLOCKING
+
+		if(tank)
+			return ITEM_INTERACT_BLOCKING
+
+		if(astype(tool, /obj/item/tank/internals).volume <= 3)
+			to_chat(user, span_warning("\The [tool] is too small for \the [src]."))
+			return ITEM_INTERACT_BLOCKING
+
+		updateTank(tool, FALSE, user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(tool.type == type)
 		to_chat(user, span_warning("You're fairly certain that putting a pneumatic cannon inside another pneumatic cannon would cause a spacetime disruption."))
-	else if(loadedWeightClass >= maxWeightClass)
+		return ITEM_INTERACT_BLOCKING
+
+	if(loadedWeightClass >= maxWeightClass)
 		to_chat(user, span_warning("\The [src] can't hold any more items!"))
-	else if(isitem(W))
-		var/obj/item/IW = W
-		load_item(IW, user)
+		return ITEM_INTERACT_BLOCKING
+
+	load_item(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/pneumatic_cannon/proc/can_load_item(obj/item/I, mob/user)
 	if(!istype(I)) //Players can't load non items, this allows for admin varedit inserts.
@@ -165,12 +199,23 @@
 /obj/item/pneumatic_cannon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(user.combat_mode)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
+	if(!pre_fire(user, interacting_with))
+		return NONE
 	Fire(user, interacting_with)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/pneumatic_cannon/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	Fire(user, interacting_with)
 	return ITEM_INTERACT_SUCCESS
+
+/** Checks */
+/obj/item/pneumatic_cannon/proc/pre_fire(mob/living/user, atom/target)
+	if(user.Adjacent(target))
+		if(target in user.contents)
+			return FALSE
+		if(!ismob(target))
+			return FALSE
+	return TRUE
 
 /obj/item/pneumatic_cannon/proc/Fire(mob/living/user, atom/target)
 	if(!istype(user) && !target)
@@ -181,7 +226,7 @@
 	if(!loadedItems || !loadedWeightClass)
 		to_chat(user, span_warning("\The [src] has nothing loaded."))
 		return
-	if(!tank && checktank)
+	if(!tank && needs_air)
 		to_chat(user, span_warning("\The [src] can't fire without a source of gas."))
 		return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
@@ -313,11 +358,9 @@
 	force = 10
 	icon_state = "piecannon"
 	gasPerThrow = 0
-	checktank = FALSE
 	range_multiplier = 3
-	fire_mode = PCANNON_FIFO
 	throw_amount = 1
-	maxWeightClass = 150 //50 pies. :^)
+	maxWeightClass = (/obj/item/food/pie::w_class * 50) //50 pies. :^)
 	needs_air = FALSE
 	clumsyCheck = FALSE
 	var/static/list/pie_typecache = typecacheof(/obj/item/food/pie)
@@ -330,13 +373,13 @@
 	automatic = TRUE
 	selfcharge = TRUE
 	charge_type = /obj/item/food/pie/cream
-	maxWeightClass = 60 //20 pies.
+	maxWeightClass = (/obj/item/food/pie::w_class * 20) //20 pies.
 
 /obj/item/pneumatic_cannon/pie/selfcharge/cyborg
 	name = "low velocity pie cannon"
 	automatic = FALSE
 	charge_type = /obj/item/food/pie/cream/nostun
-	maxWeightClass = 6 //2 pies
+	maxWeightClass = (/obj/item/food/pie::w_class * 2) //2 pies
 	charge_ticks = 2 //4 second/pie
 
 #undef PCANNON_FIREALL

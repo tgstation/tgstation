@@ -54,8 +54,6 @@
 #define LIMB_COLOR_FISH_INFUSION 15
 /// Carp infusion color priority
 #define LIMB_COLOR_CARP_INFUSION 20
-/// Untextured fish suicide color priority
-#define LIMB_COLOR_CS_SOURCE_SUICIDE 30
 /// Base priority for atom colors, gets atom priorities added to it
 #define LIMB_COLOR_ATOM_COLOR 40
 /// Voidwalker effect color priority
@@ -182,3 +180,16 @@ DEFINE_BITFIELD(surgery_state, list(
 #define UNCLAMPED_VESSELS_BLEEDING 1.5
 /// How much blood is lost from clamped vessels or cut organs?
 #define CLAMPED_VESSELS_BLEEDING 0.2
+
+/// Do not draw this bodypart overlay on husks
+#define HUSK_OVERLAY_NONE 0
+/// Draw this overlay on husks but grayscale it
+#define HUSK_OVERLAY_GRAYSCALE 1
+/// Draw this overlay on husks as normal
+#define HUSK_OVERLAY_NORMAL 2
+
+// Limb item categories
+/// Gauze slot, asserted to be wrap items
+#define LIMB_ITEM_GAUZE "gauze"
+/// Tourniquet slot
+#define LIMB_ITEM_TOURNIQUET "tourniquet"

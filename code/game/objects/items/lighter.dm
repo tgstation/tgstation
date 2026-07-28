@@ -38,9 +38,15 @@
 	)
 	/// Whether the lighter starts with fuel
 	var/spawns_with_reagent = TRUE
+	/// Lighting middleman, lets us do a flicker effect
+	var/datum/light_middleman/middleman
 
 /obj/item/lighter/Initialize(mapload)
 	. = ..()
+	if(IS_OVERLAY_LIGHT_SYSTEM(light_system))
+		middleman = new(src, "flashlight")
+		RegisterSignal(middleman, COMSIG_LIGHT_MIDDLEMAN_UPDATED, PROC_REF(light_updated))
+		middleman.being_overriding_light()
 	create_reagents(maximum_fuel, REFILLABLE | DRAINABLE)
 	if(spawns_with_reagent)
 		reagents.add_reagent(/datum/reagent/fuel, maximum_fuel)
@@ -54,6 +60,11 @@
 	)
 	update_appearance()
 
+/obj/item/lighter/Destroy(force)
+	if(!isnull(middleman))
+		QDEL_NULL(middleman)
+	return ..()
+
 /obj/item/lighter/grind_results()
 	return list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/fuel/oil = 5)
 
@@ -63,6 +74,10 @@
 		. += span_warning("It is out of lighter fluid! Refill it with welder fuel.")
 	else
 		. += span_notice("It contains [get_fuel()] units of fuel out of [maximum_fuel].")
+
+/obj/item/lighter/proc/light_updated(datum/source)
+	SIGNAL_HANDLER
+	fire_flicker_middleman(middleman)
 
 /// Destroy the lighter when it's shot by a bullet
 /obj/item/lighter/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
@@ -78,7 +93,7 @@
 		return
 	set_lit(FALSE)
 
-/obj/item/lighter/suicide_act(mob/living/carbon/user)
+/obj/item/lighter/suicide_act(mob/living/user)
 	if (lit)
 		user.visible_message(span_suicide("[user] begins holding \the [src]'s flame up to [user.p_their()] face! It looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
@@ -210,13 +225,13 @@
 	if(cig.lit)
 		to_chat(user, span_warning("\The [cig] is already lit!"))
 	if(target_mob == user)
-		cig.attackby(src, user)
+		cig.attempt_light(user, src)
 		return
 
 	if(fancy)
-		cig.light(span_rose("[user] whips \the [src] out and holds it for [target_mob]. [user.p_Their()] arm is as steady as the unflickering flame [user.p_they()] light[user.p_s()] \the [cig] with."))
+		cig.attempt_light(user, src, span_rose("[user] whips \the [src] out and holds it for [target_mob]. [user.p_Their()] arm is as steady as the unflickering flame [user.p_they()] light[user.p_s()] \the [cig] with."))
 	else
-		cig.light(span_notice("[user] holds \the [src] out for [target_mob], and lights [target_mob.p_their()] [cig.name]."))
+		cig.attempt_light(user, src, span_notice("[user] holds \the [src] out for [target_mob], and lights [target_mob.p_their()] [cig.name]."))
 
 ///Checks if the lighter is able to perform a welding task.
 /obj/item/lighter/tool_use_check(mob/living/user, amount, heat_required)
@@ -245,7 +260,7 @@
 	if(!lit)
 		return FALSE
 
-	if (reagents.spark_act(0, TRUE, banned_reagents = /datum/reagent/fuel) & SPARK_ACT_DESTRUCTIVE)
+	if (reagents.spark_act(0, SPARK_ACT_ENCLOSED, banned_reagents = /datum/reagent/fuel) & SPARK_ACT_DESTRUCTIVE)
 		qdel(src)
 		return FALSE
 

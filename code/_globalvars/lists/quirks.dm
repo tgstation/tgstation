@@ -82,7 +82,9 @@ GLOBAL_LIST_INIT(possible_alcoholic_addictions, list(
 	"Uncle Git's Special Reserve" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/whiskey, "reagent" = /datum/reagent/consumable/ethanol/whiskey),
 	"Breezy Shoals Coconut Rum" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/coconut_rum, "reagent" = /datum/reagent/consumable/ethanol/coconut_rum),
 	"Moonlabor Yūyake" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/yuyake, "reagent" = /datum/reagent/consumable/ethanol/yuyake),
-	"Shu-Kouba Straight Shochu" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/shochu, "reagent" = /datum/reagent/consumable/ethanol/shochu)
+	"Shu-Kouba Straight Shochu" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/shochu, "reagent" = /datum/reagent/consumable/ethanol/shochu),
+	"Camillo Aperitivo Rosso" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/aperitivo, "reagent" = /datum/reagent/consumable/ethanol/aperitivo),
+	"Dalmazia Originale Maraschino Liqueur" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/maraschino, "reagent" = /datum/reagent/consumable/ethanol/maraschino)
 ))
 
 ///Options for Prosthetic Organ
@@ -121,4 +123,10 @@ GLOBAL_LIST_INIT(quirk_chipped_choice, list(
 	"\"Space Station 13: The Musical\"" = /obj/item/skillchip/musical,
 	"Mast-Angl-Er" = /obj/item/skillchip/master_angler,
 	"Kommand" = /obj/item/skillchip/big_pointer,
+))
+
+///Spacer quirk
+GLOBAL_LIST_INIT(spacer_height_choices, list(
+	"Extra Tall" = HUMAN_HEIGHT_TALLEST,
+	"Tall" = HUMAN_HEIGHT_TALLER,
 ))

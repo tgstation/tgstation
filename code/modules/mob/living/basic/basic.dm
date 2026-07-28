@@ -232,21 +232,22 @@
 	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "asleep" : "dead"].")
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
-	if(!early_melee_attack(target, modifiers, ignore_cooldown))
+	var/early_melee_result = early_melee_attack(target, modifiers, ignore_cooldown)
+	if(early_melee_result) //Truthy value means we want to end the chain
+		if(!ignore_cooldown && early_melee_result == BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN)
+			changeNext_move(melee_attack_cooldown)
 		return FALSE
 	var/result = target.attack_basic_mob(src, modifiers)
 	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
-	if(!ignore_cooldown)
-		changeNext_move(melee_attack_cooldown) // Set it again because objects like to fuck with it in attack_basic_mob
+	if(result && !ignore_cooldown) //Only set cooldown if the attack achieved something, which is the case when the value is true-ey. This could definitely be done better but is probably easier once living/simple is gone and we no longer use attack_animal.
+		changeNext_move(melee_attack_cooldown)
 	return result
 
 /mob/living/basic/proc/early_melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	face_atom(target)
-	if(!ignore_cooldown)
-		changeNext_move(melee_attack_cooldown) // Set cooldown early in case it is cancelled
 	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target, Adjacent(target), modifiers) & COMPONENT_HOSTILE_NO_ATTACK)
-		return FALSE //but more importantly return before attack_animal called
-	return TRUE
+		return BASIC_MOB_END_ATTACK_CHAIN //but more importantly return before attack_animal called
+	return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 
 /mob/living/basic/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	melee_attack(attack_target, modifiers)
@@ -293,11 +294,6 @@
 		return
 	return relaydrive(user, direction)
 
-/mob/living/basic/get_status_tab_items()
-	. = ..()
-	. += "Health: [round((health / maxHealth) * 100)]%"
-	. += "Combat Mode: [combat_mode ? "On" : "Off"]"
-
 /mob/living/basic/compare_sentience_type(compare_type)
 	return sentience_type == compare_type
 
@@ -305,32 +301,12 @@
 	adjust_bodytemperature((maximum_survivable_temperature + (fire_handler.stacks * 12)) * 0.5 * seconds_per_tick)
 
 /mob/living/basic/get_fire_overlay(stacks, on_fire)
-	var/fire_icon = "generic_fire"
-	if(!GLOB.fire_appearances[fire_icon])
-		GLOB.fire_appearances[fire_icon] = mutable_appearance(
-			'icons/mob/effects/onfire.dmi',
-			fire_icon,
-			-HIGHEST_LAYER,
-			appearance_flags = RESET_COLOR|KEEP_APART,
-		)
-
-	return GLOB.fire_appearances[fire_icon]
+	return make_generic_fire_overlay()
 
 /mob/living/basic/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
 	. = ..()
 	if (.)
 		update_held_items()
-
-/mob/living/basic/update_held_items()
-	. = ..()
-	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_NOHUD)
-		return
-	var/turf/our_turf = get_turf(src)
-	for(var/obj/item/held in held_items)
-		var/index = get_held_index_of_item(held)
-		SET_PLANE(held, ABOVE_HUD_PLANE, our_turf)
-		held.screen_loc = ui_hand_position(index)
-		client.screen |= held
 
 /mob/living/basic/get_body_temp_heat_damage_limit()
 	return maximum_survivable_temperature
@@ -351,4 +327,3 @@
 		return TRUE
 	else
 		return FALSE
-

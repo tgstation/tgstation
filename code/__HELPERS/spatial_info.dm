@@ -208,11 +208,26 @@
 				. -= target
 				break
 
+/**
+ * Returns a list of mobs who are in hearing range of every radio in the list of radios given
+ */
 /proc/get_hearers_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	for(var/obj/item/radio/radio as anything in radios)
 		. |= get_hearers_in_LOS(radio.canhear_range, radio)
+
+/**
+ * Returns a list of mobs who can hear any of the radios given in the given radio list, indexed by the radio.
+ * More expensive than get_hearers_in_radio_ranges()
+ */
+/proc/get_hearers_in_radio_ranges_track_radios(list/obj/item/radio/radios)
+	. = list()
+	// Returns a list of mobs who can hear any of the radios given in @radios, indexed by the radio. More expensive than get_hearers_in_radio_ranges()
+	for(var/obj/item/radio/radio as anything in radios)
+		var/list/possible_hearers = get_hearers_in_LOS(radio.canhear_range, radio)
+		if(length(possible_hearers))
+			.[radio] = possible_hearers
 
 /// A filter to be applied to get_hearers_in_x, that removes any non-mob hearers, converting them to their relevant mob if one exists (such as dullahan heads).
 /// Modifies input list.
@@ -241,7 +256,7 @@
 		if(Y1 == Y2)
 			return TRUE //Light cannot be blocked on same tile
 		else
-			var/sign = SIGN(Y2-Y1)
+			var/sign = sign(Y2-Y1)
 			Y1 += sign
 			while(Y1 != Y2)
 				current_turf = locate(X1, Y1, Z)
@@ -257,8 +272,8 @@
 		//b = y - mx
 		var/b = (Y1 + PY1/ICON_SIZE_Y - OFFSET_Y) - m*(X1 + PX1/ICON_SIZE_X - OFFSET_X)//In tiles
 
-		var/signX = SIGN(X2-X1)
-		var/signY = SIGN(Y2-Y1)
+		var/signX = sign(X2-X1)
+		var/signY = sign(Y2-Y1)
 		if(X1 < X2)
 			b += m
 		while(X1 != X2 || Y1 != Y2)
@@ -406,7 +421,7 @@
 /// get_hear that only gets turfs so we can use as_anything
 /proc/get_hear_turfs(range, atom/source)
 	var/lum = source.luminosity
-	source.luminosity = 6
+	source.luminosity = range + 2
 	. = list()
 	for(var/turf/turf in view(range, source))
 		. += turf

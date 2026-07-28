@@ -6,7 +6,6 @@
 	button_icon_state = "unsettle"
 	background_icon_state = "bg_void"
 	overlay_icon_state = null
-	panel = null
 	spell_requirements = NONE
 	cooldown_time = 12 SECONDS
 	cast_range = 9
@@ -40,7 +39,7 @@
 
 	RegisterSignals(owner, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_ATTACK_ATOM), PROC_REF(is_combatting))
 
-	if(do_after(owner, stare_time, cast_on, IGNORE_TARGET_LOC_CHANGE | IGNORE_USER_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(check_if_staring), cast_on), hidden = TRUE))
+	if(do_after(owner, stare_time, cast_on, IGNORE_TARGET_LOC_CHANGE | IGNORE_USER_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(check_if_staring), cast_on), cog_icon = null))
 		spookify(cast_on)
 
 	else
@@ -82,7 +81,6 @@
 	background_icon_state = "bg_void"
 	button_icon = 'icons/mob/actions/actions_voidwalker.dmi'
 	button_icon_state = "telepathy"
-	panel = null
 	overlay_icon_state = null
 
 /datum/action/cooldown/spell/list_target/telepathy/voidwalker/sunwalker

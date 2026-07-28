@@ -52,14 +52,6 @@
 /datum/action/cooldown/spell/touch/is_action_active(atom/movable/screen/movable/action_button/current_button)
 	return !!attached_hand
 
-/datum/action/cooldown/spell/touch/set_statpanel_format()
-	. = ..()
-	if(!islist(.))
-		return
-
-	if(attached_hand)
-		.[PANEL_DISPLAY_STATUS] = "ACTIVE"
-
 /datum/action/cooldown/spell/touch/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
@@ -224,6 +216,7 @@
 	else if(!cast_on_hand_hit(hand, victim, caster))
 		return NONE
 
+	SEND_SIGNAL(caster, COMSIG_SPELL_TOUCH_SPELL_ACTUALLY_CAST, src, victim)
 	log_combat(caster, victim, "cast the touch spell [name] on", hand)
 	INVOKE_ASYNC(src, PROC_REF(spell_feedback), caster)
 	caster.do_attack_animation(victim)

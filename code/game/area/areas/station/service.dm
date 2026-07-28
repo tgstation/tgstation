@@ -1,5 +1,6 @@
 /area/station/service
 	airlock_wires = /datum/wires/airlock/service
+	tacmap_color = TACMAP_AREA_SERVICE
 
 /*
 * Bar/Kitchen Areas
@@ -199,27 +200,34 @@
 	name = "\improper Abandoned Garden"
 	icon_state = "abandoned_garden"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	tacmap_color = TACMAP_AREA_MAINTENANCE
 
 /area/station/service/kitchen/abandoned
 	name = "\improper Abandoned Kitchen"
 	icon_state = "abandoned_kitchen"
+	tacmap_color = TACMAP_AREA_MAINTENANCE
 
 /area/station/service/electronic_marketing_den
 	name = "\improper Electronic Marketing Den"
 	icon_state = "abandoned_marketing_den"
+	tacmap_color = TACMAP_AREA_MAINTENANCE
 
 /area/station/service/abandoned_gambling_den
 	name = "\improper Abandoned Gambling Den"
 	icon_state = "abandoned_gambling_den"
+	tacmap_color = TACMAP_AREA_MAINTENANCE
 
 /area/station/service/abandoned_gambling_den/gaming
 	name = "\improper Abandoned Gaming Den"
 	icon_state = "abandoned_gaming_den"
+	tacmap_color = TACMAP_AREA_MAINTENANCE
 
 /area/station/service/theater/abandoned
 	name = "\improper Abandoned Theater"
 	icon_state = "abandoned_theatre"
+	tacmap_color = TACMAP_AREA_MAINTENANCE
 
 /area/station/service/library/abandoned
 	name = "\improper Abandoned Library"
 	icon_state = "abandoned_library"
+	tacmap_color = TACMAP_AREA_MAINTENANCE

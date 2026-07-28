@@ -5,6 +5,7 @@
 	color = "90560B"
 	taste_description = "burning"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/freon/on_mob_metabolize(mob/living/breather)
 	. = ..()
@@ -21,6 +22,7 @@
 	color = "90560B"
 	taste_description = "minty"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_RESISTHEAT)
 
 /datum/reagent/halon/on_mob_metabolize(mob/living/breather)
@@ -38,6 +40,7 @@
 	color = "90560B"
 	taste_description = "rubbery"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/healium/on_mob_end_metabolize(mob/living/breather)
 	. = ..()
@@ -60,6 +63,7 @@
 	color = "90560B"
 	taste_description = "searingly cold"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/hypernoblium/on_mob_life(mob/living/carbon/breather, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -74,7 +78,8 @@
 	taste_description = "sourness"
 	ph = 1.8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-	addiction_types = list(/datum/addiction/stimulants = 14)
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	addiction_types = list(/datum/addiction/stimulants = 50)
 	metabolized_traits = list(TRAIT_SLEEPIMMUNE)
 
 /datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, seconds_per_tick, metabolization_ratio)
@@ -93,6 +98,7 @@
 	taste_description = "burning"
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/nitrium_low_metabolization/on_mob_metabolize(mob/living/breather)
 	. = ..()
@@ -109,10 +115,11 @@
 	color = COLOR_GRAY
 	taste_description = "irradiated air"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/pluoxium/on_mob_life(mob/living/carbon/breather, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(!HAS_TRAIT(breather, TRAIT_KNOCKEDOUT))
+	if(!IS_UNCONSCIOUS(breather))
 		return
 
 	for(var/obj/item/organ/organ_being_healed as anything in breather.organs)
@@ -130,13 +137,12 @@
 	taste_description = "bitter"
 	chemical_flags = REAGENT_NO_RANDOM_RECIPE
 	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // "toxic to all living beings"
-	affected_respiration_type = ALL
 
 /datum/reagent/zauker/on_mob_life(mob/living/breather, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
 	need_mob_update = breather.adjust_brute_loss(6 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += breather.adjust_oxy_loss(1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update += breather.adjust_oxy_loss(1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	need_mob_update += breather.adjust_fire_loss(2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	need_mob_update += breather.adjust_tox_loss(2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)

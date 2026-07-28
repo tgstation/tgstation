@@ -89,6 +89,8 @@ Possible to do for anyone motivated enough:
 	var/secure = FALSE
 	/// If we are currently calling another holopad
 	var/calling = FALSE
+	/// Whether this pad is currently projecting a pointing arrow
+	var/pointing = FALSE
 	///bitfield. used to turn on and off hearing sensitivity depending on if we can act on Hear() at all - meant for lowering the number of unessesary hearable atoms
 	var/can_hear_flags = NONE
 
@@ -141,11 +143,8 @@ Possible to do for anyone motivated enough:
 			new_disk.forceMove(src)
 			disk = new_disk
 
-/obj/machinery/holopad/tutorial/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	return NONE
-
-/obj/machinery/holopad/tutorial/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
-	return NONE
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER)
+	AddElement(/datum/element/tool_blocker, TOOL_CROWBAR)
 
 /obj/machinery/holopad/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
@@ -189,13 +188,13 @@ Possible to do for anyone motivated enough:
 	for(var/datum/holocall/holocall_to_disconnect as anything in holo_calls)
 		holocall_to_disconnect.ConnectionFailure(src)
 
-	for (var/I in masters)
-		clear_holo(I)
-
 	if(replay_mode)
 		replay_stop()
 	if(record_mode)
 		record_stop()
+
+	for (var/I in masters)
+		clear_holo(I)
 
 	QDEL_NULL(disk)
 
@@ -216,6 +215,10 @@ Possible to do for anyone motivated enough:
 	. = ..()
 	if(outgoing_call)
 		outgoing_call.ConnectionFailure(src)
+
+/obj/machinery/holopad/on_deconstruction(dissassembled)
+	disk?.forceMove(drop_location())
+	return ..()
 
 /obj/machinery/holopad/RefreshParts()
 	. = ..()
@@ -258,27 +261,28 @@ Possible to do for anyone motivated enough:
 	if(record_mode)
 		record_stop()
 
-/obj/machinery/holopad/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", item))
-		return
+/obj/machinery/holopad/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
-	if(default_pry_open(item, close_after_pry = TRUE, closed_density = FALSE))
-		return
+/obj/machinery/holopad/crowbar_act(mob/living/user, obj/item/tool)
+	return default_pry_open(user, tool, close_after_pry = TRUE, closed_density = FALSE, deconstruct_on_fail = TRUE)
 
-	if(default_deconstruction_crowbar(item))
-		return
-
-	if(istype(item, /obj/item/disk/holodisk))
+/obj/machinery/holopad/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/disk/holodisk))
 		if(disk)
 			to_chat(user,span_warning("There's already a disk inside [src]!"))
 			return
-		if (!user.transferItemToLoc(item, src))
+		if (!user.transferItemToLoc(tool, src))
 			return
-		to_chat(user,span_notice("You insert [item] into [src]."))
-		disk = item
-		return
+		to_chat(user,span_notice("You insert [tool] into [src]."))
+		disk = tool
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-	return ..()
+/obj/machinery/holopad/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == disk)
+		disk = null
 
 /obj/machinery/holopad/ui_status(mob/user, datum/ui_state/state)
 	if(!is_operational)
@@ -383,7 +387,6 @@ Possible to do for anyone motivated enough:
 		if("disk_eject")
 			if(disk && !replay_mode)
 				disk.forceMove(drop_location())
-				disk = null
 				return TRUE
 		if("replay_mode")
 			if(replay_mode)
@@ -606,6 +609,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	update_appearance()
 
 /obj/machinery/holopad/update_icon_state()
+	if(panel_open)
+		icon_state = "[base_icon_state]_open"
+		return ..()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
 	if(ringing)
 		icon_state = "[base_icon_state]_ringing"
@@ -733,6 +739,43 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		animate(ray, transform = turn(M.Scale(1,sqrt(distx*distx+disty*disty)),newangle),time = 1)
 	else
 		ray.transform = turn(M.Scale(1,sqrt(distx*distx+disty*disty)),newangle)
+
+/// Project a holographic pointing arrow from this holopad toward a target
+/obj/machinery/holopad/proc/holo_point(atom/target, invisibility = 0)
+	if(pointing)
+		return
+	var/turf/pad_turf = get_turf(src)
+	var/turf/target_turf = get_turf(target)
+	if(!pad_turf || !target_turf)
+		return
+	pointing = TRUE
+	var/obj/effect/temp_visual/point/holo/visual = new(pad_turf, invisibility)
+	var/obj/effect/overlay/holoray/ray = new(pad_turf)
+	var/disty = target_turf.y - pad_turf.y
+	var/distx = target_turf.x - pad_turf.x
+	var/distance = sqrt(distx*distx + disty*disty)
+	var/angle
+	if(!disty)
+		angle = (distx >= 0) ? 90 : 270
+	else
+		angle = arctan(distx/disty)
+		if(disty < 0)
+			angle += 180
+		else if(distx < 0)
+			angle += 360
+	var/matrix/M = matrix()
+	ray.transform = turn(M.Scale(1, distance), angle)
+	animate(visual, pixel_x = (target_turf.x - pad_turf.x) * ICON_SIZE_X + target.pixel_x, pixel_y = (target_turf.y - pad_turf.y) * ICON_SIZE_Y + target.pixel_y, time = 1.7, easing = EASE_OUT)
+	set_light(2)
+	icon_state = "[base_icon_state]1"
+	addtimer(CALLBACK(src, PROC_REF(clear_holo_point), ray), 2.5 SECONDS)
+	return visual
+
+/// Called after the holo-point expires to restore the holopad's state
+/obj/machinery/holopad/proc/clear_holo_point(obj/effect/overlay/holoray/ray)
+	qdel(ray)
+	pointing = FALSE
+	SetLightsAndPower()
 
 // RECORDED MESSAGES
 

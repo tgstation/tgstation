@@ -5,10 +5,11 @@
 	icon_state = "mecha_air_tank"
 	equipment_slot = MECHA_UTILITY
 	can_be_toggled = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	///Whether the pressurization should start automatically when the cabin is sealed airtight
 	var/auto_pressurize_on_seal = TRUE
 	///The internal air tank obj of the mech
-	var/obj/machinery/portable_atmospherics/canister/internal_tank
+	var/obj/machinery/portable_atmospherics/canister/mecha/internal_tank
 	///Volume of this air tank
 	var/volume = TANK_STANDARD_VOLUME * 10
 	///Maximum pressure of this air tank
@@ -25,15 +26,17 @@
 	///Target pressure of the pump
 	var/tank_pump_pressure = ONE_ATMOSPHERE
 
+/obj/machinery/portable_atmospherics/canister/mecha
+	custom_materials = null
+
 /obj/item/mecha_parts/mecha_equipment/air_tank/Initialize(mapload)
 	. = ..()
 	internal_tank = new(src)
 	internal_tank.air_contents.volume = volume
 	internal_tank.maximum_pressure = maximum_pressure
 	if(start_full)
-		internal_tank.air_contents.temperature = T20C
-		internal_tank.air_contents.add_gases(/datum/gas/oxygen)
-		internal_tank.air_contents.gases[/datum/gas/oxygen][MOLES] = maximum_pressure * volume / (R_IDEAL_GAS_EQUATION * internal_tank.air_contents.temperature)
+		internal_tank.air_contents.set_temperature(T20C)
+		internal_tank.air_contents.set_gas(/datum/gas/oxygen, maximum_pressure * volume / (R_IDEAL_GAS_EQUATION * internal_tank.air_contents.temperature))
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/Destroy()
 	if(chassis)

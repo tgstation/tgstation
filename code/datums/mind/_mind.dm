@@ -69,7 +69,10 @@
 	/// If TRUE, the mob will always be considered "escaped" if they are alive and not exiled.
 	var/force_escaped = FALSE
 
-	var/list/learned_recipes //List of learned recipe TYPES.
+	/// List of crafting recipes learned, references to the singleton datums
+	VAR_FINAL/list/learned_crafting_recipes
+	/// List of cooking recipes learned, references to the singleton datums
+	VAR_FINAL/list/learned_cooking_recipes
 
 	///List of skills the user has received a reward for. Should not be used to keep track of currently known skills. Lazy list because it shouldnt be filled often
 	var/list/skills_rewarded
@@ -100,6 +103,12 @@
 	var/list/failed_special_equipment
 	/// A list to keep track of which books a person has read (to prevent people from reading the same book again and again for positive mood events)
 	var/list/book_titles_read
+
+	/// How desensitized are we to death - multiplier to magnitude of death moodlet.
+	/// Doesn't go beneath 0.1 (but could go above 1.0 if you really wanted)
+	var/desensitized_level = 1
+	/// Counts how many humanoid deaths we've seen
+	var/deaths_witnessed = 0
 
 /datum/mind/New(_key)
 	key = _key
@@ -211,9 +220,9 @@
 		new_character.client.init_verbs() // re-initialize character specific verbs
 
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFERRED, old_current)
-	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO, old_current)
+	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO, old_current, src)
 	if(!isnull(old_current))
-		SEND_SIGNAL(old_current, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, current)
+		SEND_SIGNAL(old_current, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, current, src)
 
 //I cannot trust you fucks to do this properly
 /datum/mind/proc/set_original_character(new_original_character)
@@ -466,6 +475,7 @@
 			if(G.can_reenter_corpse || even_if_they_cant_reenter)
 				return G
 			break
+	return null
 
 /datum/mind/proc/grab_ghost(force)
 	var/mob/dead/observer/G = get_ghost(even_if_they_cant_reenter = force)
@@ -475,15 +485,19 @@
 
 ///Adds addiction points to the specified addiction
 /datum/mind/proc/add_addiction_points(type, amount)
+	var/last_amount = LAZYACCESS(addiction_points, type) || 0
 	LAZYSET(addiction_points, type, min(LAZYACCESS(addiction_points, type) + amount, MAX_ADDICTION_POINTS))
-	var/datum/addiction/affected_addiction = SSaddiction.all_addictions[type]
-	return affected_addiction.on_gain_addiction_points(src)
+	var/new_amount = LAZYACCESS(addiction_points, type)
+	return GLOB.addictions[type].on_gain_addiction_points(src, new_amount, last_amount)
 
 ///Adds addiction points to the specified addiction
 /datum/mind/proc/remove_addiction_points(type, amount)
+	var/last_amount = LAZYACCESS(addiction_points, type) || 0
 	LAZYSET(addiction_points, type, max(LAZYACCESS(addiction_points, type) - amount, 0))
-	var/datum/addiction/affected_addiction = SSaddiction.all_addictions[type]
-	return affected_addiction.on_lose_addiction_points(src)
+	var/new_amount = LAZYACCESS(addiction_points, type)
+	if(new_amount <= 0)
+		LAZYREMOVE(addiction_points, type)
+	return GLOB.addictions[type].on_lose_addiction_points(src, new_amount, last_amount)
 
 /// Setter for the assigned_role job datum.
 /datum/mind/proc/set_assigned_role(datum/job/new_role)
@@ -543,3 +557,20 @@
 			work_areas += dep.primary_work_area
 
 	return work_areas
+
+/// Called when we witness the death of a humanoid mob.
+/datum/mind/proc/witnessed_death(mob/living/dead_mob)
+	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB) || !ishuman(dead_mob) || (dead_mob.flags_1 & ADMIN_SPAWNED_1))
+		return
+
+	// every humanoid death gives us % resistance to the next one
+	desensitized_level = max(desensitized_level - DESENSITIZED_REDUCTION_PER_DEATH, DESENSITIZED_MINIMUM)
+	deaths_witnessed += 1
+
+	// if you manage to gain 90% resistance to death moodlets in one shift, you get an "achievement"
+	if(deaths_witnessed * DESENSITIZED_REDUCTION_PER_DEATH >= (1.0 - DESENSITIZED_MINIMUM))
+		current.client?.give_award(/datum/award/achievement/misc/desensitized, current)
+
+/// Called when this mob is killed, but not gibbed or dusted
+/datum/mind/proc/experienced_death()
+	witnessed_death(current) // you get desensitized for your own death!

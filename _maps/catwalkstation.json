@@ -19,5 +19,6 @@
 			"Baseturf": "/turf/open/openspace/airless",
 			"Linkage": "Cross"
 		}
-	]
+	],
+	"bonus_weakpoints": 1
 }

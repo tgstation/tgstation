@@ -14,7 +14,7 @@ else
     echo -e "${BLUE}This is likely not intentional, please revert any changes made to it.${NC}"
     echo -e "${BLUE}On the unlikely occurance that you ARE intentionally modifying that file, replace the contents of tools/ci/genesis_call.dme.sha256sum with the following:${NC}"
 
-    sha256sum tools/ci/genesis_call.dme.sha256sum
+    sha256sum code/genesis_call.dme
 
     exit 1
 fi

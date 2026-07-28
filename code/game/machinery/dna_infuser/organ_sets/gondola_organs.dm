@@ -57,6 +57,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	post_init_icon_state = "tongue"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GONDOLA_COLORS
+	speakable_with = FALSE
 	organ_traits = list(TRAIT_MUTE)
 
 /obj/item/organ/tongue/gondola/Initialize(mapload)

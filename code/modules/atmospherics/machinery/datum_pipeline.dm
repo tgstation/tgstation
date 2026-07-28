@@ -254,12 +254,13 @@
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
 
-	var/list/total_gases = list()
-
 	var/volume_sum = 0
 
 	var/static/process_id = 0
-	process_id = (process_id + 1) % (SHORT_REAL_LIMIT - 1)
+	process_id = WRAP_UID(process_id + 1)
+	var/datum/gas_mixture/total_gas_mixture = new
+	var/list/total_cached_moles = total_gas_mixture.moles
+	var/list/cached_specific_heat = GAS_META[META_GAS_SPECIFIC_HEAT]
 
 	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
 		// Ensure we never walk the same mix twice
@@ -271,14 +272,11 @@
 
 		// This is sort of a combined merge + heat_capacity calculation
 
-		var/list/giver_gases = gas_mixture.gases
-		var/heat_capacity = 0
+		var/list/giver_cached_moles = gas_mixture.moles
+		var/heat_capacity = values_dot(giver_cached_moles, cached_specific_heat)
 		//gas transfer
-		for(var/giver_id in giver_gases)
-			var/giver_gas_data = giver_gases[giver_id]
-			ASSERT_GAS_IN_LIST(giver_id, total_gases)
-			total_gases[giver_id][MOLES] += giver_gas_data[MOLES]
-			heat_capacity += giver_gas_data[MOLES] * giver_gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
+		for(var/gas_id, amount in giver_cached_moles)
+			total_cached_moles[gas_id] += amount
 
 		total_heat_capacity += heat_capacity
 		total_thermal_energy += gas_mixture.temperature * heat_capacity
@@ -286,9 +284,8 @@
 	if(volume_sum == 0)
 		return
 
-	var/datum/gas_mixture/total_gas_mixture = new(volume_sum)
+	total_gas_mixture.volume = volume_sum
 	total_gas_mixture.temperature = total_heat_capacity ? (total_thermal_energy / total_heat_capacity) : 0
-	total_gas_mixture.gases = total_gases
 	total_gas_mixture.garbage_collect()
 
 	//Update individual gas_mixtures by volume ratio
@@ -298,9 +295,10 @@
 //--------------------
 // GAS VISUALS STUFF
 //
-// If I could have gotten layer filters to obey the RESET_COLOR appearance flag I would have used that here
-// so that only a single overlay object needs to exist for all pipelines per icon file. It shouldn't be too
-// hard to switch over to that if it becomes possible in the future or some other equivalent feature is added.
+// Gas visuals use direct color + alpha on the gas_visual object rather than
+// a color filter + KEEP_APART.
+// Color filters are expensive.
+// KEEP_APART forces a separate render.
 
 /**
  * Used to create and/or get the gas visual overlay created using the given icon file.
@@ -329,8 +327,8 @@
 
 	var/current_weight = 0
 	var/current_color
-	for(var/datum/gas/gas_path as anything in air.gases)
-		var/gas_weight = air.gases[gas_path][MOLES]
+	for(var/datum/gas/gas_path as anything in air.moles)
+		var/gas_weight = air.moles[gas_path]
 		if(!gas_weight)
 			continue
 		var/gas_color = initial(gas_path.primary_color)
@@ -353,22 +351,11 @@
 		UpdateGasVisuals()
 
 /obj/effect/abstract/gas_visual
-	appearance_flags  = RESET_COLOR | KEEP_APART
+	appearance_flags = RESET_COLOR
 	vis_flags = VIS_INHERIT_ICON_STATE | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
-	var/current_color
-	var/color_filter
-
-/obj/effect/abstract/gas_visual/Initialize(mapload)
-	. = ..()
-	color_filter = filter(type="color", color="white")
-	filters += color_filter
-	color_filter = filters[filters.len]
-	if(current_color)
-		animate(color_filter, color=current_color, time=5)
+	color = COLOR_BLACK
 
 /obj/effect/abstract/gas_visual/proc/ChangeColor(new_color)
-	current_color = new_color
-	if(isnull(color_filter))
-		// Called before init
-		return
-	animate(color_filter, time=5, color=new_color)
+	if(!new_color)
+		new_color = COLOR_BLACK
+	animate(src, color = new_color, time = 0.5 SECONDS)

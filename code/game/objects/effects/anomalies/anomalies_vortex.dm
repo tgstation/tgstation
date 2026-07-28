@@ -19,7 +19,7 @@
 			return //DON'T DELETE YOURSELF GOD DAMN
 		if(!O.anchored)
 			var/mob/living/target = locate() in view(4,src)
-			if(target && !target.stat)
+			if(target && !IS_UNCONSCIOUS_OR_CRIT(target))
 				O.throw_at(target, 7, 5)
 		else
 			SSexplosions.med_mov_atom += O
@@ -64,11 +64,5 @@
 				SSexplosions.lowturf += T
 
 /obj/effect/anomaly/bhole/detonate()
-	new /obj/effect/temp_visual/circle_wave/vortex(get_turf(src))
+	new /obj/effect/temp_visual/circle_wave/vortex/small(get_turf(src))
 	playsound(src, 'sound/effects/hallucinations/far_noise.ogg', vol = 50)
-
-/obj/effect/temp_visual/circle_wave/vortex
-	color = COLOR_BLACK
-	duration = 3 SECONDS
-	amount_to_scale = 4
-

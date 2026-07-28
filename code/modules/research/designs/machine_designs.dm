@@ -1351,6 +1351,7 @@
 	desc = "The circuit for a propulsion engine."
 	id = "propulsion_engine"
 	build_path = /obj/item/circuitboard/machine/engine/propulsion
+	build_type = IMPRINTER
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)

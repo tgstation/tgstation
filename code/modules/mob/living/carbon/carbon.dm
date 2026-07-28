@@ -16,7 +16,7 @@
 	. = ..()
 
 	living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS
-
+	real_bodypart_cache.Cut()
 	QDEL_LIST(hand_bodyparts)
 	QDEL_LIST(organs)
 	QDEL_LIST(bodyparts)
@@ -112,6 +112,22 @@
 		weapon.get_embed().rip_out(usr)
 		return
 
+	if(href_list["remove_tourniquet"])
+		var/obj/item/bodypart/limb = locate(href_list["remove_tourniquet"]) in bodyparts
+		var/mob/living/patient = limb?.owner
+		var/obj/item/tourniquet = LAZYACCESS(limb?.applied_items, LIMB_ITEM_TOURNIQUET)
+		if(QDELETED(limb) || QDELETED(patient) || QDELETED(tourniquet))
+			return
+		balloon_alert_to_viewers("removing tourniquet...")
+		if(!do_after(usr, 4 SECONDS, target = src))
+			return
+		if(QDELETED(limb) || QDELETED(patient) || QDELETED(tourniquet) || limb.owner != patient || tourniquet.loc != limb)
+			return
+
+		balloon_alert_to_viewers("tourniquet removed")
+		usr.put_in_hands(tourniquet)
+		return
+
 	if(href_list["show_paper_note"])
 		var/obj/item/paper/paper_note = locate(href_list["show_paper_note"])
 		if(!paper_note)
@@ -140,7 +156,7 @@
 				span_notice("You attempt to unbuckle yourself... \
 				(This will take around [DisplayTimeText(buckle_cd)] and you must stay still.)"))
 
-	if(!do_after(src, buckle_cd, target = src, timed_action_flags = IGNORE_HELD_ITEM, hidden = TRUE))
+	if(!do_after(src, buckle_cd, target = src, timed_action_flags = IGNORE_HELD_ITEM, cog_icon = null))
 		if(buckled)
 			to_chat(src, span_warning("You fail to unbuckle yourself!"))
 		return
@@ -179,18 +195,19 @@
  * @param {number} breakouttime - The time it takes to break the cuffs. Use SECONDS/MINUTES defines
  * @param {number} cuff_break - Speed multiplier, 0 is default, see _DEFINES\combat.dm
  */
-/mob/living/carbon/proc/cuff_resist(obj/item/cuffs, breakouttime = 1 MINUTES, cuff_break = 0)
+/mob/living/carbon/proc/cuff_resist(obj/item/cuffs, breakouttime = null, cuff_break = 0)
 	if((cuff_break != INSTANT_CUFFBREAK) && (SEND_SIGNAL(src, COMSIG_MOB_REMOVING_CUFFS, cuffs) & COMSIG_MOB_BLOCK_CUFF_REMOVAL))
 		return //The blocking object should sent a fluff-appropriate to_chat about cuff removal being blocked
 	if(cuffs.item_flags & BEING_REMOVED)
 		to_chat(src, span_warning("You're already attempting to remove [cuffs]!"))
 		return
 	cuffs.item_flags |= BEING_REMOVED
-	breakouttime = cuffs.breakouttime
+	if (isnull(breakouttime))
+		breakouttime = cuffs.breakouttime
 	if(!cuff_break)
 		visible_message(span_warning("[src] attempts to remove [cuffs]!"))
 		to_chat(src, span_notice("You attempt to remove [cuffs]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM, hidden = TRUE))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM, cog_icon = null))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to remove [cuffs]!"))
@@ -384,13 +401,14 @@
 		guts.throw_at(throw_target, power, 4, src)
 
 
-/mob/living/carbon/fully_replace_character_name(oldname,newname)
+/mob/living/carbon/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
 	. = ..()
-	if(dna)
-		dna.real_name = real_name
+	if(!.)
+		return
+
+	dna?.real_name = real_name
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
-	if(my_head)
-		my_head.real_name = real_name
+	my_head?.real_name = real_name
 
 
 /mob/living/carbon/set_body_position(new_value)
@@ -409,8 +427,7 @@
 		return
 	var/total_burn = 0
 	var/total_brute = 0
-	for(var/X in bodyparts) //hardcoded to streamline things a bit
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in get_bodyparts())
 		total_brute += (BP.brute_dam * BP.body_damage_coeff)
 		total_burn += (BP.burn_dam * BP.body_damage_coeff)
 	set_health(round(maxHealth - get_oxy_loss() - get_tox_loss() - total_burn - total_brute, DAMAGE_PRECISION))
@@ -460,18 +477,17 @@
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 
-	if(glasses)
-		new_sight |= glasses.vision_flags
-		if(glasses.invis_override)
-			set_invis_see(glasses.invis_override)
-		else
-			set_invis_see(min(glasses.invis_view, see_invisible))
-		if(!isnull(glasses.lighting_cutoff))
-			lighting_cutoff = max(lighting_cutoff, glasses.lighting_cutoff)
-		if(length(glasses.color_cutoffs))
-			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, glasses.color_cutoffs)
+	new_sight |= get_sight_and_cutoffs()
 
+	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
+		new_sight = NONE
 
+	set_sight(new_sight)
+	return ..()
+
+/// Modifies lighting_cutoff/lighting_color_cutoffs/see_invisible and returns additional sight flags to apply
+/mob/living/carbon/proc/get_sight_and_cutoffs()
+	var/new_sight = NONE
 	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
 		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_HIGH)
 
@@ -483,17 +499,19 @@
 		new_sight |= SEE_MOBS
 		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
 
-	if (HAS_TRAIT(src, TRAIT_MINOR_NIGHT_VISION))
+	if(HAS_TRAIT(src, TRAIT_NIGHT_VISION))
 		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_LOW)
 
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
 		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 
-	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-		new_sight = NONE
+	if(HAS_TRAIT(src, TRAIT_ECHOLOCATOR))
+		new_sight |= SEE_MOBS|SEE_TURFS
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_FULLBRIGHT)
 
-	set_sight(new_sight)
-	return ..()
+	var/list/return_list = list(new_sight)
+	SEND_SIGNAL(src, COMSIG_CARBON_UPDATE_SIGHT_CUTOFFS, return_list)
+	return return_list[1]
 
 /**
  * Calculates how visually impaired the mob is by their equipment and other factors
@@ -515,6 +533,10 @@
 	else if(tint >= TINT_DARKENED)
 		cure_blind(EYES_COVERED)
 		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2)
+
+	else if(tint >= TINT_MILD)
+		cure_blind(EYES_COVERED)
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 1)
 
 	else
 		cure_blind(EYES_COVERED)
@@ -616,11 +638,16 @@
 		clear_fullscreen("brute")
 
 /mob/living/carbon/update_health_hud(shown_health_amount)
-	if(!client || !hud_used?.healths)
+	if(!client || !hud_used)
+		return
+
+	var/atom/movable/screen/healths/health_hud = hud_used.screen_objects[HUD_MOB_HEALTH]
+
+	if (!health_hud)
 		return
 
 	if(stat == DEAD)
-		hud_used.healths.icon_state = "health7"
+		health_hud.icon_state = "health7"
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_CARBON_UPDATING_HEALTH_HUD, shown_health_amount) & COMPONENT_OVERRIDE_HEALTH_HUD)
@@ -630,36 +657,14 @@
 		shown_health_amount = health
 
 	if(shown_health_amount >= maxHealth)
-		hud_used.healths.icon_state = "health0"
-
-	else if(shown_health_amount > maxHealth * 0.8)
-		hud_used.healths.icon_state = "health1"
-
-	else if(shown_health_amount > maxHealth * 0.6)
-		hud_used.healths.icon_state = "health2"
-
-	else if(shown_health_amount > maxHealth * 0.4)
-		hud_used.healths.icon_state = "health3"
-
-	else if(shown_health_amount > maxHealth*0.2)
-		hud_used.healths.icon_state = "health4"
-
-	else if(shown_health_amount > 0)
-		hud_used.healths.icon_state = "health5"
-
+		health_hud.icon_state = "health0"
+	else if(shown_health_amount > 0 && maxHealth > 0)
+		health_hud.icon_state = "health[6 - ceil(shown_health_amount / (maxHealth * 0.2))]"
 	else
-		hud_used.healths.icon_state = "health6"
-
-/mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
-	hud_used?.spacesuit?.icon_state = "spacesuit_[cell_state]"
+		health_hud.icon_state = "health6"
 
 /mob/living/carbon/set_health(new_value)
 	. = ..()
-	if(. > hardcrit_threshold)
-		if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
-			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
-	else if(health > hardcrit_threshold)
-		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
 	if(CONFIG_GET(flag/near_death_experience))
 		if(. > HEALTH_THRESHOLD_NEARDEATH)
 			if(health <= HEALTH_THRESHOLD_NEARDEATH && !HAS_TRAIT(src, TRAIT_NODEATH))
@@ -675,16 +680,12 @@
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			death()
 			return
-		if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED, AUTOPSY_TRAIT))
-			REMOVE_TRAIT(src, TRAIT_DISSECTED, AUTOPSY_TRAIT)
 		if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
 			set_stat(HARD_CRIT)
-		else if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
-			set_stat(UNCONSCIOUS)
 		else if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
 			set_stat(SOFT_CRIT)
 		else
-			set_stat(CONSCIOUS)
+			set_stat(STABLE)
 	update_damage_hud()
 	update_health_hud()
 	update_stamina_hud()
@@ -703,7 +704,6 @@
 		clear_mood_event("handcuffed")
 	update_mob_action_buttons() //some of our action buttons might be unusable when we're handcuffed.
 	update_worn_handcuffs()
-	update_hud_handcuffed()
 
 /mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(excess_healing)
@@ -753,7 +753,7 @@
 
 	if(heal_flags & HEAL_LIMBS)
 		regenerate_limbs()
-		for(var/obj/item/bodypart/limb as anything in bodyparts)
+		for(var/obj/item/bodypart/limb as anything in get_bodyparts(include_stumps = TRUE))
 			limb.remove_surgical_state(ALL)
 
 	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ORGANS))
@@ -762,9 +762,8 @@
 	if(heal_flags & HEAL_TRAUMAS)
 		cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 		// Addictions are like traumas
-		if(mind)
-			for(var/addiction_type in subtypesof(/datum/addiction))
-				mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
+		for(var/addiction_type in GLOB.addictions)
+			mind?.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
 
 	if(heal_flags & HEAL_RESTRAINTS)
 		QDEL_NULL(handcuffed)
@@ -784,6 +783,7 @@
 	return ..()
 
 /mob/living/carbon/proc/can_defib()
+	SHOULD_BE_PURE(TRUE)
 	if (HAS_TRAIT(src, TRAIT_SUICIDED))
 		return DEFIB_FAIL_SUICIDE
 
@@ -836,7 +836,7 @@
 	return NONE
 
 /mob/living/carbon/proc/can_defib_client()
-	return (client || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES)
+	return (HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE) || client || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES)
 
 /mob/living/carbon/harvest(mob/living/user)
 	if(QDELETED(src))
@@ -879,6 +879,8 @@
 
 	new_bodypart.on_adding(src)
 	bodyparts += new_bodypart
+	if(!IS_STUMP(new_bodypart))
+		real_bodypart_cache[new_bodypart.body_zone] = new_bodypart
 	new_bodypart.update_owner(src)
 
 	// Apply a bodypart effect or merge with an existing one, for stuff like plant limbs regenning in light
@@ -891,13 +893,15 @@
 
 	switch(new_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
-			set_num_legs(num_legs + 1)
-			if(!new_bodypart.bodypart_disabled)
-				set_usable_legs(usable_legs + 1)
+			if(!IS_STUMP(new_bodypart))
+				set_num_legs(num_legs + 1)
+				if(!new_bodypart.bodypart_disabled)
+					set_usable_legs(usable_legs + 1)
 		if(ARM_LEFT, ARM_RIGHT)
-			set_num_hands(num_hands + 1)
-			if(!new_bodypart.bodypart_disabled)
-				set_usable_hands(usable_hands + 1)
+			if(!IS_STUMP(new_bodypart))
+				set_num_hands(num_hands + 1)
+				if(!new_bodypart.bodypart_disabled)
+					set_usable_hands(usable_hands + 1)
 
 	synchronize_bodytypes()
 	synchronize_bodyshapes()
@@ -915,16 +919,32 @@
 
 	old_bodypart.on_removal(src)
 	bodyparts -= old_bodypart
+	real_bodypart_cache -= old_bodypart.body_zone
 
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
-			set_num_legs(num_legs - 1)
-			if(!old_bodypart.bodypart_disabled)
-				set_usable_legs(usable_legs - 1)
+			if(!IS_STUMP(old_bodypart))
+				set_num_legs(num_legs - 1)
+				if(!old_bodypart.bodypart_disabled)
+					set_usable_legs(usable_legs - 1)
 		if(ARM_LEFT, ARM_RIGHT)
-			set_num_hands(num_hands - 1)
-			if(!old_bodypart.bodypart_disabled)
-				set_usable_hands(usable_hands - 1)
+			if(!IS_STUMP(old_bodypart))
+				set_num_hands(num_hands - 1)
+				if(!old_bodypart.bodypart_disabled)
+					set_usable_hands(usable_hands - 1)
+
+	if(!special && old_bodypart.stump_typepath)
+		if(old_bodypart.type == old_bodypart.stump_typepath)
+			stack_trace("Attempted to replace a stump with a stump")
+		else
+			var/obj/item/bodypart/stump = new old_bodypart.stump_typepath()
+			stump.bodyshape = old_bodypart.bodyshape
+			stump.bodytype = old_bodypart.bodytype
+			stump.add_biostate(old_bodypart.biological_state & ~BIO_JOINTED)
+			if(!stump.try_attach_limb(src, special = TRUE))
+				// the only way this can happen is if the stump is rejected via signal
+				// not much we can do about that besides hope they know what they're doing
+				qdel(stump)
 
 	synchronize_bodytypes()
 	synchronize_bodyshapes()
@@ -932,7 +952,7 @@
 ///Updates the bodypart speed modifier based on our bodyparts.
 /mob/living/carbon/proc/update_bodypart_speed_modifier()
 	var/final_modification = 0
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+	for(var/obj/item/bodypart/leg/bodypart in get_bodyparts())
 		final_modification += bodypart.speed_modifier
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/bodypart, update = TRUE, multiplicative_slowdown = final_modification)
 
@@ -944,7 +964,7 @@
 
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION("", "--- /carbon ---")
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_BODYPART, "Modify bodypart")
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_ORGANS, "Modify organs")
 	VV_DROPDOWN_OPTION(VV_HK_MARTIAL_ART, "Give Martial Arts")
@@ -960,63 +980,78 @@
 	if(href_list[VV_HK_MODIFY_BODYPART])
 		if(!check_rights(R_SPAWN))
 			return
-		var/edit_action = input(usr, "What would you like to do?","Modify Body Part") as null|anything in list("replace","remove")
+
+		var/edit_action = tgui_alert(usr, "What would you like to do?", "Modify Body Part", list("Replace", "Remove"))
 		if(!edit_action)
 			return
+
 		var/list/limb_list = list()
-		if(edit_action == "remove")
-			for(var/obj/item/bodypart/iter_part as anything in bodyparts)
-				limb_list += iter_part.body_zone
-				limb_list -= BODY_ZONE_CHEST
+		if(edit_action == "Remove")
+			for(var/obj/item/bodypart/iter_part as anything in get_bodyparts())
+				var/zone = iter_part.body_zone
+				if (zone != BODY_ZONE_CHEST)
+					limb_list[parse_zone_with_bodypart(zone)] = zone
 		else
-			limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_CHEST)
-		var/result = input(usr, "Please choose which bodypart to [edit_action]","[capitalize(edit_action)] Bodypart") as null|anything in sort_list(limb_list)
-		if(result)
-			var/obj/item/bodypart/part = get_bodypart(result)
-			var/list/limbtypes = list()
-			switch(result)
-				if(BODY_ZONE_CHEST)
-					limbtypes = typesof(/obj/item/bodypart/chest)
-				if(BODY_ZONE_R_ARM)
-					limbtypes = typesof(/obj/item/bodypart/arm/right)
-				if(BODY_ZONE_L_ARM)
-					limbtypes = typesof(/obj/item/bodypart/arm/left)
-				if(BODY_ZONE_HEAD)
-					limbtypes = typesof(/obj/item/bodypart/head)
-				if(BODY_ZONE_L_LEG)
-					limbtypes = typesof(/obj/item/bodypart/leg/left)
-				if(BODY_ZONE_R_LEG)
-					limbtypes = typesof(/obj/item/bodypart/leg/right)
-			switch(edit_action)
-				if("remove")
-					if(part)
-						part.drop_limb()
-						admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [part.plaintext_zone]")
-					else
-						to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
-						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
-				if("replace")
-					var/limb2add = input(usr, "Select a bodypart type to add", "Add/Replace Bodypart") as null|anything in sort_list(limbtypes)
-					var/obj/item/bodypart/new_bp = new limb2add()
-					if(new_bp.replace_limb(src))
-						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [part.type] with [new_bp.type]")
-						qdel(part)
-					else
-						to_chat(usr, "Failed to replace bodypart! They might be incompatible.")
-						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
+			for(var/zone in GLOB.all_body_zones)
+				limb_list[parse_zone(zone)] = zone
+
+		var/result = tgui_input_list(usr, "Please choose which bodypart to [LOWER_TEXT(edit_action)]","[edit_action] Bodypart", sort_list(limb_list))
+		if (!result)
+			return
+
+		result = limb_list[result]
+		var/obj/item/bodypart/part = get_bodypart(result)
+		var/list/limbtypes = list()
+		switch(result)
+			if(BODY_ZONE_CHEST)
+				limbtypes = typesof(/obj/item/bodypart/chest)
+			if(BODY_ZONE_R_ARM)
+				limbtypes = typesof(/obj/item/bodypart/arm/right)
+			if(BODY_ZONE_L_ARM)
+				limbtypes = typesof(/obj/item/bodypart/arm/left)
+			if(BODY_ZONE_HEAD)
+				limbtypes = typesof(/obj/item/bodypart/head)
+			if(BODY_ZONE_L_LEG)
+				limbtypes = typesof(/obj/item/bodypart/leg/left)
+			if(BODY_ZONE_R_LEG)
+				limbtypes = typesof(/obj/item/bodypart/leg/right)
+
+		if(edit_action == "Remove")
+			if(part)
+				part.drop_limb()
+				admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [part.plaintext_zone]")
+			else
+				to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
+				admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
+			return
+
+		var/list/limb_picks = list()
+		for (var/obj/item/bodypart/part_type as anything in sort_list(limbtypes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+			limb_picks[replacetext("[part_type]", "/obj/item/bodypart/", ":")] = part_type
+
+		var/choice = tgui_input_list(usr, "Select a bodypart type to add", "Add/Replace Bodypart", limb_picks)
+		if (!choice)
+			return
+
+		var/limb2add = limb_picks[choice]
+		var/obj/item/bodypart/new_bp = new limb2add()
+		if(new_bp.replace_limb(src))
+			admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [part?.type || "missing limb"] with [new_bp.type]")
+			qdel(part)
+		else
+			to_chat(usr, "Failed to replace bodypart! They might be incompatible.")
+			admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
 
 	if(href_list[VV_HK_MODIFY_ORGANS])
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/manipulate_organs, src)
 
 	if(href_list[VV_HK_MARTIAL_ART])
-		if(!check_rights(NONE))
-			return
 		var/list/artpaths = subtypesof(/datum/martial_art)
 		var/list/artnames = list()
 		for(var/i in artpaths)
 			var/datum/martial_art/M = i
 			artnames[initial(M.name)] = M
-		var/result = input(usr, "Choose the martial art to teach","JUDO CHOP") as null|anything in sort_list(artnames, GLOBAL_PROC_REF(cmp_typepaths_asc))
+		var/result = tgui_input_list(usr, "Choose the martial art to teach", "JUDO CHOP", sort_list(artnames, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		if(!usr)
 			return
 		if(QDELETED(src))
@@ -1030,10 +1065,8 @@
 			message_admins(span_notice("[key_name_admin(usr)] has taught [MA] to [key_name_admin(src)]."))
 
 	if(href_list[VV_HK_GIVE_TRAUMA])
-		if(!check_rights(NONE))
-			return
 		var/list/traumas = subtypesof(/datum/brain_trauma)
-		var/result = input(usr, "Choose the brain trauma to apply","Traumatize") as null|anything in sort_list(traumas, GLOBAL_PROC_REF(cmp_typepaths_asc))
+		var/result = tgui_input_list(usr, "Choose the brain trauma to apply", "Traumatize", sort_list(traumas, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		if(!usr)
 			return
 		if(QDELETED(src))
@@ -1047,8 +1080,6 @@
 			message_admins(span_notice("[key_name_admin(usr)] has traumatized [key_name_admin(src)] with [BT.name]."))
 
 	if(href_list[VV_HK_CURE_TRAUMA])
-		if(!check_rights(NONE))
-			return
 		cure_all_traumas(TRAUMA_RESILIENCE_ABSOLUTE)
 		log_admin("[key_name(usr)] has cured all traumas from [key_name(src)].")
 		message_admins(span_notice("[key_name_admin(usr)] has cured all traumas from [key_name_admin(src)]."))
@@ -1077,7 +1108,7 @@
 /mob/living/carbon/proc/is_bleeding()
 	if(!CAN_HAVE_BLOOD(src))
 		return FALSE
-	for(var/obj/item/bodypart/part as anything in bodyparts)
+	for(var/obj/item/bodypart/part as anything in get_bodyparts())
 		if(part.cached_bleed_rate)
 			return TRUE
 
@@ -1087,7 +1118,7 @@
 		return FALSE
 
 	var/total_bleed_rate = 0
-	for(var/obj/item/bodypart/part as anything in bodyparts)
+	for(var/obj/item/bodypart/part as anything in get_bodyparts())
 		total_bleed_rate += part.cached_bleed_rate
 
 	return total_bleed_rate
@@ -1130,9 +1161,6 @@
 	if (ismecha(loc))
 		return FALSE
 
-	if (wearing_shock_proof_gloves())
-		return FALSE
-
 	if(!get_powernet_info_from_source(power_source))
 		return FALSE
 
@@ -1140,10 +1168,6 @@
 		return FALSE
 
 	return TRUE
-
-/// Returns if the carbon is wearing shock proof gloves
-/mob/living/carbon/proc/wearing_shock_proof_gloves()
-	return gloves?.siemens_coefficient == 0
 
 /// Modifies max_skillchip_count and updates active skillchips
 /mob/living/carbon/proc/adjust_skillchip_complexity_modifier(delta)
@@ -1229,8 +1253,6 @@
 		return TRUE
 	if((acid_power * acid_volume) < ACID_LEVEL_HANDBURN)
 		return TRUE
-	if(gloves?.resistance_flags & (UNACIDABLE | ACID_PROOF))
-		return TRUE
 	return FALSE
 
 /**
@@ -1242,16 +1264,14 @@
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_RESISTHEAT) || HAS_TRAIT(src, TRAIT_RESISTHEATHANDS))
 		return TRUE
-	if(gloves?.max_heat_protection_temperature >= BURNING_ITEM_MINIMUM_TEMPERATURE)
-		return TRUE
 	return FALSE
 
 /// Goes through the organs and bodyparts of the mob and updates their blood_dna_info, in case their blood type has changed (via set_species() or otherwise)
 /mob/living/carbon/proc/update_cached_blood_dna_info()
 	var/list/blood_dna_info = get_blood_dna_list()
-	for(var/obj/item/organ/organ in organs)
+	for(var/obj/item/organ/organ as anything in organs)
 		organ.blood_dna_info = blood_dna_info
-	for(var/obj/item/bodypart/bodypart in bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in get_bodyparts())
 		bodypart.blood_dna_info = blood_dna_info
 
 /// Setter for changing a mob's blood type
@@ -1310,7 +1330,8 @@
 	if(!can_bleed())
 		to_chat(src, span_notice("You get a headache."))
 		return
-	head.adjustBleedStacks(5)
+	var/add_stacks = HAS_TRAIT(src, TRAIT_BLOOD_FOUNTAIN) ? 7 : 5
+	head.adjustBleedStacks(add_stacks)
 	visible_message(span_notice("[src] gets a nosebleed."), span_warning("You get a nosebleed."))
 
 /mob/living/carbon/check_hit_limb_zone_name(hit_zone)
@@ -1324,3 +1345,18 @@
 	if(!CAN_HAVE_BLOOD(src))
 		return
 	return dna?.blood_type
+
+/mob/living/carbon/update_nutrition()
+	. = ..()
+	// Force a weight update in case we're stasis'd and don't tick
+	if (HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY))
+		if (overeatduration >= OVEREAT_TIME_LIMIT)
+			return
+
+		to_chat(src, span_notice("You feel fit again!"))
+		remove_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)
+		return
+
+	if (overeatduration >= OVEREAT_TIME_LIMIT)
+		to_chat(src, span_danger("You suddenly feel blubbery!"))
+		add_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)

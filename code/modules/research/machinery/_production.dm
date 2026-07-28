@@ -58,12 +58,6 @@
 	QDEL_NULL(materials)
 	return ..()
 
-// Stuff for the stripe on the department machines
-/obj/machinery/rnd/production/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	. = ..()
-
-	update_icon(UPDATE_OVERLAYS)
-
 /obj/machinery/rnd/production/update_overlays()
 	. = ..()
 
@@ -216,14 +210,13 @@
  *
  * * path - the design path to check for
  */
-/obj/machinery/rnd/production/proc/build_efficiency(path)
+/obj/machinery/rnd/production/proc/build_efficiency(datum/design/design)
 	PRIVATE_PROC(TRUE)
 	SHOULD_BE_PURE(TRUE)
 
-	if(ispath(path, /obj/item/stack/sheet) || ispath(path, /obj/item/stack/ore/bluespace_crystal))
+	if(ispath(design.build_path, /obj/item/stack) || design.fixed_cost_efficiency)
 		return 1
-	else
-		return efficiency_coeff
+	return efficiency_coeff
 
 /obj/machinery/rnd/production/ui_assets(mob/user)
 	return list(
@@ -249,9 +242,10 @@
 	for(var/datum/design/design in cached_designs)
 		var/cost = list()
 
-		coefficient = build_efficiency(design.build_path)
-		for(var/datum/material/mat in design.materials)
-			cost[mat.name] = OPTIMAL_COST(design.materials[mat] * coefficient)
+		coefficient = build_efficiency(design)
+		for(var/datum/material/mat as anything in design.materials)
+			var/amount = design.materials[mat]
+			cost[mat.name] = OPTIMAL_COST(amount * coefficient)
 
 		var/icon_size = spritesheet.icon_size_id(design.id)
 		designs[design.id] = list(
@@ -335,7 +329,7 @@
 			print_quantity = clamp(print_quantity, 1, 50)
 
 			//efficiency for this design, stacks use exact materials
-			var/coefficient = build_efficiency(design.build_path)
+			var/coefficient = build_efficiency(design)
 
 			//check for materials
 			if(!materials.can_use_resource(user_data = ID_DATA(usr)))
@@ -346,8 +340,8 @@
 
 			//compute power & time to print 1 item
 			var/charge_per_item = 0
-			for(var/material in design.materials)
-				charge_per_item += design.materials[material]
+			for(var/material, amount in design.materials)
+				charge_per_item += amount
 			charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * active_power_usage)
 			var/build_time_per_item = (design.construction_time * design.lathe_time_factor * efficiency_coeff) ** 0.8
 
@@ -355,8 +349,7 @@
 			busy = TRUE
 			SStgui.update_uis(src)
 			print_sound.start()
-			if(production_animation)
-				icon_state = production_animation
+			update_appearance()
 			var/turf/target_location
 			if(drop_direction)
 				target_location = get_step(src, drop_direction)
@@ -418,36 +411,34 @@
 		return
 
 	var/is_stack = ispath(design.build_path, /obj/item/stack)
-	var/list/design_materials = design.materials
-	if(!materials.mat_container.has_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1))
+
+	if(!materials.mat_container.has_materials(design.materials, material_cost_coefficient, is_stack ? items_remaining : 1))
 		say("Unable to continue production, missing materials.")
 		finalize_build()
 		return
-	materials.use_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1, "processed", "[design.name]", user_data = user_data)
+	materials.use_materials(design.materials, material_cost_coefficient, is_stack ? items_remaining : 1, "processed", "[design.name]", user_data = user_data)
 
 	var/atom/movable/created
+	var/number_to_make = 1
 	if(is_stack)
 		var/obj/item/stack/stack_item = initial(design.build_path)
 		var/max_stack_amount = initial(stack_item.max_amount)
-		var/number_to_make = (initial(stack_item.amount) * items_remaining)
+		number_to_make = (initial(stack_item.amount) * items_remaining)
 		while(number_to_make > max_stack_amount)
-			created = new stack_item(null, max_stack_amount) //it's imporant to spawn things in nullspace, since obj's like stacks qdel when they enter a tile/merge with other stacks of the same type, resulting in runtimes.
+			created = design.create_result(target, design.materials, amount = max_stack_amount)
 			if(isitem(created))
 				created.pixel_x = created.base_pixel_x + rand(-6, 6)
 				created.pixel_y = created.base_pixel_y + rand(-6, 6)
-			created.forceMove(target)
 			number_to_make -= max_stack_amount
 
-		created = new stack_item(null, number_to_make)
-	else
-		created = new design.build_path(null)
-		split_materials_uniformly(design_materials, material_cost_coefficient, created)
+	created = design.create_result(target, design.materials, amount = number_to_make)
+	if(design.inherit_materials != DESIGN_DONT_INHERIT_MATS)
+		design.transfer_materials(design.materials, material_cost_coefficient, created)
 
 	if(isitem(created))
 		created.pixel_x = created.base_pixel_x + rand(-6, 6)
 		created.pixel_y = created.base_pixel_y + rand(-6, 6)
 	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[created.type]"))
-	created.forceMove(target)
 
 	if(is_stack)
 		items_remaining = 0
@@ -466,7 +457,7 @@
 	print_sound.stop()
 	busy = FALSE
 	SStgui.update_uis(src)
-	icon_state = initial(icon_state)
+	update_appearance()
 
 /obj/machinery/rnd/production/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
@@ -489,3 +480,10 @@
 	balloon_alert(user, "drop direction reset")
 	drop_direction = 0
 	return CLICK_ACTION_SUCCESS
+
+/obj/machinery/rnd/production/update_icon_state()
+	. = ..()
+	if(busy && production_animation)
+		icon_state = production_animation
+	else if(!panel_open) // use what is set by parent if panel is open
+		icon_state = base_icon_state || initial(icon_state)

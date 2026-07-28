@@ -1,6 +1,3 @@
-// I hate this place
-INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
-
 /atom/movable/screen/plane_master
 	screen_loc = "CENTER"
 	icon_state = "blank"
@@ -64,15 +61,18 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// If this plane master is outside of our visual bounds right now
 	var/is_outside_bounds = FALSE
 
+	/// Has this plane master had its offset made concrete? Avoids modifications/uses that are going to immediately break
+	var/offset_already_updated = FALSE
+
 /atom/movable/screen/plane_master/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset = 0)
 	. = ..()
 	src.offset = offset
 	true_alpha = alpha
 	real_plane = plane
+	update_offset()
 
 	if(!set_home(home))
 		return INITIALIZE_HINT_QDEL
-	update_offset()
 	if(!documentation && !(istype(src, /atom/movable/screen/plane_master) || istype(src, /atom/movable/screen/plane_master/rendering_plate)))
 		stack_trace("Plane master created without a description. Document how your thing works so people will know in future, and we can display it in the debug menu")
 	if(start_hidden)
@@ -109,6 +109,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		render_relay_planes[i] = GET_NEW_PLANE(render_relay_planes[i], offset)
 	if(initial(render_target))
 		render_target = OFFSET_RENDER_TARGET(initial(render_target), offset)
+	offset_already_updated = TRUE
 
 /atom/movable/screen/plane_master/proc/set_alpha(new_alpha)
 	true_alpha = new_alpha

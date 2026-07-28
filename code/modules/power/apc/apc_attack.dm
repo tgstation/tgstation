@@ -155,16 +155,11 @@
 		balloon_alert(user, "it's disabled!")
 	return .
 
-/obj/machinery/power/apc/proc/shock(mob/user, prb)
-	if(!prob(prb))
+/obj/machinery/power/apc/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+	if(isalien(shocking))
 		return FALSE
-	do_sparks(5, TRUE, src)
-	if(isalien(user))
-		return FALSE
-	if(electrocute_mob(user, src, src, 1, TRUE))
-		return TRUE
-	else
-		return FALSE
+	shock_source = src
+	return ..()
 
 #undef ETHEREAL_APC_DRAIN_TIME
 #undef ETHEREAL_APC_POWER_GAIN

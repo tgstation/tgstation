@@ -16,6 +16,7 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_BULKY
 	armor_type = /datum/armor/item_vending_refill
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 	///Name of the vending machine this canister is associated with
 	var/machine_name = "Generic"

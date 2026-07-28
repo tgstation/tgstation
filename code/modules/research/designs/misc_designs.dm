@@ -107,6 +107,10 @@
 	id = "weldingmask"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
+	transfered_materials = list(
+		/obj/item/clothing/mask/gas/welding = /obj/item/clothing/mask/gas/welding::custom_materials,
+		/obj/item/gas_filter = /obj/item/gas_filter::custom_materials,
+	)
 	build_path = /obj/item/clothing/mask/gas/welding
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
@@ -135,7 +139,11 @@
 	desc = "This awesome mug will ensure your coffee never stays cold!"
 	id = "mauna_mug"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
+	transfered_materials = list(
+		/obj/item/reagent_containers/cup/maunamug = /obj/item/reagent_containers/cup/maunamug::custom_materials,
+		/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell::custom_materials,
+	)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
@@ -730,7 +738,7 @@
 	desc = "A royal knight's favorite garments. Can be trimmed by any friendly person."
 	id = "knight_armour"
 	build_type = AUTOLATHE
-	materials = list(MAT_CATEGORY_ITEM_MATERIAL = SHEET_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material_requirement/armor_material = SHEET_MATERIAL_AMOUNT * 5)
 	build_path = /obj/item/clothing/suit/armor/riot/knight/greyscale
 	category = list(RND_CATEGORY_IMPORTED)
 
@@ -739,7 +747,7 @@
 	desc = "A royal knight's favorite hat. If you hold it upside down it's actually a bucket."
 	id = "knight_helmet"
 	build_type = AUTOLATHE
-	materials = list(MAT_CATEGORY_ITEM_MATERIAL = SHEET_MATERIAL_AMOUNT*2.5)
+	materials = list(/datum/material_requirement/armor_material = SHEET_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/clothing/head/helmet/knight/greyscale
 	category = list(RND_CATEGORY_IMPORTED)
 
@@ -825,6 +833,10 @@
 	id = "inspector"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/uranium =SHEET_MATERIAL_AMOUNT)
+	transfered_materials = list(
+		/obj/item/inspector = /obj/item/inspector::custom_materials,
+		/obj/item/stock_parts/power_store/cell/crap = /obj/item/stock_parts/power_store/cell/crap::custom_materials,
+	)
 	build_path = /obj/item/inspector
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
@@ -882,7 +894,7 @@
 	id = "super_sticky_tape"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT * 1.5)
-	build_path = /obj/item/stack/sticky_tape/super
+	build_path = /obj/item/stack/medical/wrap/sticky_tape/super
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
@@ -893,7 +905,7 @@
 	id = "pointy_tape"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/plastic =HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/stack/sticky_tape/pointy
+	build_path = /obj/item/stack/medical/wrap/sticky_tape/pointy
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
@@ -904,7 +916,7 @@
 	id = "super_pointy_tape"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/plastic =SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/stack/sticky_tape/pointy/super
+	build_path = /obj/item/stack/medical/wrap/sticky_tape/pointy/super
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
@@ -1144,7 +1156,7 @@
 	name = "Shuttle Frame Rods"
 	id = "shuttlerods"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/rods/shuttle
 	category = list(
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
@@ -1204,3 +1216,15 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/anomalous_fishing_hook
+	name = "Anomalous Fishing Hook"
+	desc = "A fishing hook with a slot for an anomaly core. Depending on the core inserted, it can have various effects on the rod or the fish caught."
+	id = "anomalous_fishing_hook"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.2)
+	build_path = /obj/item/fishing_hook/anomaly
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE

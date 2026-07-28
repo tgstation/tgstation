@@ -313,11 +313,11 @@
 		return
 	..()
 
-/obj/item/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, list/modifiers, list/attack_modifiers)
-	if(!cover_open && istype(A, accepted_magazine_type))
+/obj/item/gun/ballistic/automatic/l6_saw/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!cover_open && istype(tool, accepted_magazine_type))
 		balloon_alert(user, "open the cover!")
-		return
-	..()
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 // Laser rifle (rechargeable magazine) //
 
@@ -472,7 +472,7 @@
 
 /obj/item/gun/ballistic/automatic/battle_rifle/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(chambered.loaded_projectile && prob(75) && (emp_malfunction || degradation_stage == degradation_stage_max))
-		balloon_alert_to_viewers("*click*")
+		balloon_alert_to_hearers("*click*")
 		playsound(src, dry_fire_sound, dry_fire_sound_volume, TRUE)
 		return
 

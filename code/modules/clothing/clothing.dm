@@ -61,6 +61,9 @@
 	// such that you never actually cared about checking if something is *edible*.
 	var/obj/item/food/clothing/moth_snack
 
+	// Is it freshly laundered
+	var/is_laundered = FALSE
+
 /obj/item/clothing/Initialize(mapload)
 	if(clothing_flags & VOICEBOX_TOGGLABLE)
 		actions_types += list(/datum/action/item_action/toggle_voice_box)
@@ -356,11 +359,14 @@
 	if(get_armor().has_any_armor() || (flags_cover & (HEADCOVERSMOUTH|PEPPERPROOF)) || (clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
 		. += span_notice("It has a <a href='byond://?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
 
+	if(is_laundered)
+		. += "[src] looks crisp and pristine."
+
 /obj/item/clothing/examine_tags(mob/user)
 	. = ..()
 	if (clothing_flags & THICKMATERIAL)
 		.["thick"] = "Protects from most injections and sprays."
-	if (clothing_flags & CASTING_CLOTHES)
+	if (HAS_TRAIT(src, TRAIT_CASTING_CLOTHING))
 		.["magical"] = "Allows magical beings to cast spells when wearing [src]."
 	if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
 		.["pressure-proof"] = "Protects the wearer from extremely low or high pressure, such as vacuum of space."
@@ -402,7 +408,7 @@
 
 		var/datum/armor/armor = get_armor()
 		var/added_damage_header = FALSE
-		for(var/damage_key in ARMOR_LIST_DAMAGE())
+		for(var/damage_key in ARMOR_LIST_DAMAGE)
 			var/rating = armor.get_rating(damage_key)
 			if(!rating)
 				continue
@@ -412,7 +418,7 @@
 			readout += "[armor_to_protection_name(damage_key)] [armor_to_protection_class(rating)]"
 
 		var/added_durability_header = FALSE
-		for(var/durability_key in ARMOR_LIST_DURABILITY())
+		for(var/durability_key in ARMOR_LIST_DURABILITY)
 			var/rating = armor.get_rating(durability_key)
 			if(!rating)
 				continue
@@ -496,13 +502,8 @@
 	if(stubborn_stains) //Just can't make it feel right
 		return
 
-	var/fresh_mood = AddComponent( \
-		/datum/component/onwear_mood, \
-		saved_event_type = /datum/mood_event/fresh_laundry, \
-		examine_string = "[src] looks crisp and pristine.", \
-	)
-
-	QDEL_IN(fresh_mood, 2 MINUTES)
+	is_laundered = TRUE
+	addtimer(VARSET_CALLBACK(src, is_laundered, FALSE), 2 MINUTES)
 
 //This mostly exists so subtypes can call appriopriate update icon calls on the wearer.
 /obj/item/clothing/proc/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
@@ -572,7 +573,7 @@ BLIND     // can't see anything
 	if(!iscarbon(user))
 		return TRUE
 	var/mob/living/carbon/carbon_user = user
-	if(up)
+	if(visor_flags_inv)
 		carbon_user.refresh_obscured()
 	if(visor_vars_to_toggle & VISOR_TINT)
 		carbon_user.update_tint()
@@ -582,7 +583,6 @@ BLIND     // can't see anything
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
 	up = !up
-	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	clothing_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	flags_cover ^= visor_flags_cover
@@ -590,6 +590,7 @@ BLIND     // can't see anything
 		flash_protect ^= initial(flash_protect)
 	if(visor_vars_to_toggle & VISOR_TINT)
 		tint ^= initial(tint)
+	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	update_appearance() //most of the time the sprite changes
 
 /obj/item/clothing/proc/can_use(mob/user)
@@ -645,7 +646,7 @@ BLIND     // can't see anything
 	return ..()
 
 /// Returns a list of overlays with our blood, if we're bloodied
-/obj/item/clothing/proc/get_blood_overlay(blood_state)
+/obj/item/clothing/proc/get_blood_overlay(blood_state, bodyshape = NONE)
 	if (!GET_ATOM_BLOOD_DECAL_LENGTH(src))
 		return
 

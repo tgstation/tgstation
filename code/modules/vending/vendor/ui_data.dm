@@ -7,6 +7,11 @@
 	)
 
 /obj/machinery/vending/ui_interact(mob/user, datum/tgui/ui)
+	if(SEND_SIGNAL(src, COMSIG_VENDING_UI_INTERACT, user, ui) & VENDING_DENIED)
+		if(icon_deny)
+			flick(icon_deny, src)
+		return
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Vending", name)

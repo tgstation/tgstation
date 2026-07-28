@@ -75,7 +75,7 @@
 	for (var/trauma_type in brain_traumas)
 		subject.gain_trauma(trauma_type)
 
-	for (var/obj/item/bodypart/limb as anything in subject.bodyparts)
+	for (var/obj/item/bodypart/limb as anything in subject.get_bodyparts())
 		limb.update_limb(is_creating = TRUE)
 
 	subject.updateappearance(mutcolor_update = TRUE)

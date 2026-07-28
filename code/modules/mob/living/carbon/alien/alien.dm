@@ -43,7 +43,7 @@
 	)
 
 /mob/living/carbon/alien/Initialize(mapload)
-	add_verb(src, /mob/living/proc/mob_sleep)
+	ASSIGN_GAME_VERB(src, /mob/living, mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
 	create_bodyparts() //initialize bodyparts
@@ -200,3 +200,6 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/alien/get_footprint_sprite()
 	return FOOTPRINT_SPRITE_CLAWS
+
+/mob/living/carbon/alien/get_fire_overlay(stacks, on_fire)
+	return make_generic_fire_overlay()

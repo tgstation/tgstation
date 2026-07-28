@@ -18,10 +18,6 @@
 	var/flags
 	///list of reactions currently on going, this is a lazylist for optimisation
 	var/list/datum/equilibrium/reaction_list
-	///cached list of reagents typepaths (not object references), this is a lazylist for optimisation
-	var/list/datum/reagent/previous_reagent_list
-	///If a reaction fails due to temperature or pH, this tracks the required temperature or pH for it to be enabled.
-	var/list/failed_but_capable_reactions
 	///Hard check to see if the reagents is presently reacting
 	var/is_reacting = FALSE
 	///UI lookup stuff
@@ -48,7 +44,6 @@
 	if(is_reacting) //If false, reaction list should be cleaned up
 		force_stop_reacting()
 	QDEL_LAZYLIST(reaction_list)
-	previous_reagent_list = null
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 	my_atom = null
@@ -101,6 +96,9 @@
 
 	if(!IS_FINITE(amount))
 		stack_trace("non finite amount passed to add reagent [amount] [reagent_type]")
+		return FALSE
+
+	if(SEND_SIGNAL(src, COMSIG_REAGENTS_PRE_ADD_REAGENT, reagent_type, amount, reagtemp, data, no_react) & COMPONENT_CANCEL_REAGENT_ADD)
 		return FALSE
 
 	var/datum/reagent/glob_reagent = GLOB.chemical_reagents_list[reagent_type]
@@ -209,10 +207,9 @@
  *
  * * [reagent_type][datum/reagent] - the type of reagent
  * * amount - the volume to remove
- * * safety - if FALSE will initiate reactions upon removing. used for trans_id_to
  * * include_subtypes - if TRUE will remove the specified amount from all subtypes of reagent_type as well
  */
-/datum/reagents/proc/remove_reagent(datum/reagent/reagent_type, amount, safety = TRUE, include_subtypes = FALSE)
+/datum/reagents/proc/remove_reagent(datum/reagent/reagent_type, amount, include_subtypes = FALSE)
 	if(!ispath(reagent_type))
 		stack_trace("invalid reagent passed to remove reagent [reagent_type]")
 		return FALSE
@@ -248,8 +245,6 @@
 
 	//update the holder & handle reactions
 	update_total()
-	if(!safety)
-		handle_reactions()
 
 	return total_removed_amount
 
@@ -294,7 +289,6 @@
 
 		total_removed_amount += remove_amount
 	update_total()
-	handle_reactions()
 
 	return round(total_removed_amount, CHEMICAL_QUANTISATION_LEVEL)
 
@@ -495,7 +489,6 @@
 
 		if(!isnull(target_id))
 			if(reagent.type == target_id)
-				force_stop_reagent_reacting(reagent)
 				transfer_amount = min(amount, reagent.volume)
 			else
 				continue
@@ -537,9 +530,6 @@
 		log_combat(transferred_by, log_target, "transferred reagents to", my_atom, "which had [english_list(transfer_log)]")
 
 	if(!no_react)
-		transfer_reactions(target_holder)
-		if(!copy_only)
-			handle_reactions()
 		target_holder.handle_reactions()
 
 	return total_transfered_amount
@@ -618,7 +608,6 @@
 
 			//removing it and store in a seperate list for processing later
 			cached_reagents -= reagent
-			LAZYREMOVE(previous_reagent_list, reagent.type)
 			deleted_reagents += reagent
 
 			//move pointer back so we don't overflow & decrease length
@@ -792,10 +781,10 @@
  * Call in case of electrical current exposure, rapid heating or blunt force, things that would set off explosives and alike
  * Arguments:
  * * power_charge - If we were triggered from electric current, how much power was dumped into us?
- * * enclosed - Is the reaction happening in an enclosed container or not? Doesn't use reagent holder's flags as it might be called on reagents "exiting" the container
+ * * spark_flags - Set of flags describing the interaction
  * * banned_reagents - List of reagent types which we may want to have custom handling for and should avoid checking in here
  */
-/datum/reagents/proc/spark_act(power_charge, enclosed, list/banned_reagents)
+/datum/reagents/proc/spark_act(power_charge, spark_flags, list/banned_reagents)
 	if (!islist(banned_reagents))
 		banned_reagents = list(banned_reagents)
 	var/result = NONE
@@ -803,7 +792,7 @@
 	for (var/datum/reagent/reagent as anything in reagent_list)
 		if (is_type_in_list(reagent, banned_reagents))
 			continue
-		var/reagent_result = reagent.on_spark_act(power_charge, enclosed)
+		var/reagent_result = reagent.on_spark_act(power_charge, spark_flags)
 		if (!reagent_result)
 			continue
 		result |= (reagent_result & SPARK_ACT_RETURNS)

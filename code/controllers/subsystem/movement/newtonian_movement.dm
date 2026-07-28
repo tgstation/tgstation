@@ -1,7 +1,7 @@
 /// The subsystem is intended to tick things related to space/newtonian movement, such as constant sources of inertia
 MOVEMENT_SUBSYSTEM_DEF(newtonian_movement)
 	name = "Newtonian Movement"
-	flags = SS_NO_INIT|SS_TICKER
+	ss_flags = SS_NO_INIT|SS_TICKER
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/stat_tag = "P" //Used for logging

@@ -3,14 +3,14 @@
 	name = "Cellular Degeneration"
 	max_stages = 5
 	stage_prob = 0.5
-	cure_text = "Rezadone, Mutadone for prolonging, or death."
+	cure_text = /datum/reagent/medicine/rezadone::name + ", abated by " + /datum/reagent/medicine/mutadone::name + ", or death"
 	agent = "Severe Genetic Damage"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	desc = @"If left untreated the subject will [REDACTED]!"
 	severity = "Dangerous!"
 	cures = list(/datum/reagent/medicine/rezadone)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
-	spread_text = "Organic meltdown"
+	spread_text = "None"
 	process_dead = TRUE
 	bypasses_immunity = TRUE
 

@@ -115,11 +115,11 @@
 			new /obj/item/implanter/storage(src) // 8 tc
 
 		if(KIT_HACKER) //L-L--LOOK AT YOU, HACKER
-			new /obj/item/ai_module/syndicate(src) // 4 tc
+			new /obj/item/ai_module/law/syndicate(src) // 4 tc
 			new /obj/item/card/emag(src) // 4 tc
 			new /obj/item/card/emag/doorjack(src) // 3 tc
 			new /obj/item/encryptionkey/binary(src) // 5 tc
-			new /obj/item/ai_module/toy_ai(src) // ~6 tc
+			new /obj/item/ai_module/law/toy_ai(src) // ~6 tc
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/disk/computer/syndicate/camera_app(src) // 1 tc
@@ -212,7 +212,7 @@
 			new /obj/item/toy/cards/deck/syndicate(src) // 1 tc, for poker
 
 		if(KIT_NINJA)
-			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
+			new /obj/item/storage/belt/sheath/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
 			for(var/i in 1 to 6)
 				new /obj/item/throwing_star(src) // 1 tc
@@ -478,7 +478,7 @@
 	new /obj/item/reagent_containers/cup/bottle/polonium(src)
 	new /obj/item/reagent_containers/cup/bottle/venom(src)
 	new /obj/item/reagent_containers/cup/bottle/fentanyl(src)
-	new /obj/item/reagent_containers/cup/bottle/formaldehyde(src)
+	new /obj/item/reagent_containers/cup/bottle/anacea(src)
 	new /obj/item/reagent_containers/cup/bottle/spewium(src)
 	new /obj/item/reagent_containers/cup/bottle/syndol(src)
 	new /obj/item/reagent_containers/cup/bottle/cyanide(src)
@@ -490,6 +490,11 @@
 	new /obj/item/reagent_containers/cup/bottle/curare(src)
 	new /obj/item/reagent_containers/cup/bottle/amanitin(src)
 	new /obj/item/reagent_containers/syringe(src)
+
+/obj/item/storage/box/syndie_kit/carnivorous_blood/PopulateContents()
+	new /obj/item/reagent_containers/cup/bottle/carnivorous_blood(src)
+	new /obj/item/reagent_containers/syringe(src)
+	new /obj/item/food/meat/slab/human(src)
 
 /obj/item/storage/box/syndie_kit/nuke
 	name = "nuke core extraction kit"
@@ -759,6 +764,8 @@
 	new /obj/item/book/manual/nuclear(src) // Very important
 	// The most important part of the kit, the implant that gives them the syndicate faction.
 	new /obj/item/implanter/induction_implant(src)
+	// Tactical map implant so they can see the minimap with the rest of the team.
+	new /obj/item/implanter/tacmap/nuclear(src)
 	// All in all, 6+3+3+2+5+2+4 = ~25 TC of 'miscellaneous' items.
 	// This is a lot of value for 10 TC, but you have to keep in mind that you NEED someone to get this stuff station-side.
 	// Pretty much all of it is a bad deal for reinforcements or yourself as they already have similar or good-enough alternatives.
@@ -798,6 +805,7 @@
 
 	var/datum/antagonist/nukeop/nuke_datum = new()
 	nuke_datum.send_to_spawnpoint = FALSE
+	nuke_datum.give_bonus_tc = FALSE
 	nuke_datum.nukeop_outfit = null
 	human_target.mind?.add_antag_datum(nuke_datum)
 	human_target.add_faction(ROLE_SYNDICATE)

@@ -34,6 +34,7 @@
 	var/list/ponycolors = list("#cc8c5d", "#cc8c5d")
 
 /datum/emote/pony
+	abstract_type = /datum/emote/pony
 	mob_type_allowed_typecache = /mob/living/basic/pony
 	mob_type_blacklist_typecache = list()
 
@@ -59,16 +60,18 @@
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15, unique = unique_tamer)
 
 /mob/living/basic/pony/tamed(mob/living/tamer, atom/food)
+	. = ..()
 	playsound(src, 'sound/mobs/non-humanoids/pony/snort.ogg', 50)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pony)
 	visible_message(span_notice("[src] snorts happily."))
 	new /obj/effect/temp_visual/heart(loc)
-
-	ai_controller.replace_planning_subtrees(list(
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/random_speech/pony/tamed,
-	))
+	var/static/list/tamed_emotes = list(
+		BB_EMOTE_HEAR = list("snorts."),
+		BB_EMOTE_SEE = list("snorts."),
+		BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/pony/snort.ogg'),
+		BB_SPEAK_CHANCE = 3,
+	)
+	ai_controller.override_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, tamed_emotes)
 
 	if(unique_tamer)
 		my_owner = WEAKREF(tamer)
@@ -117,22 +120,24 @@
 
 	whinny_angrily()
 
+/mob/living/basic/pony/get_shove_flags(mob/living/shover, obj/item/weapon)
+	. = ..()
+	. |= SHOVE_CAN_STAGGER
+
 /datum/ai_controller/basic_controller/pony
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/pony.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_HEAR = list("whinnies!"),
+			BB_EMOTE_SEE = list("horses around."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/pony/whinny01.ogg', 'sound/mobs/non-humanoids/pony/whinny02.ogg', 'sound/mobs/non-humanoids/pony/whinny03.ogg'),
+			BB_SPEAK_CHANCE = 3,
+		),
 	)
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/random_speech/pony,
-	)
 
 // A stronger horse is required for our strongest cowboys.
 /mob/living/basic/pony/syndicate

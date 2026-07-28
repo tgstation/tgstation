@@ -60,8 +60,8 @@
 		active = FALSE
 	update_appearance()
 
-/obj/machinery/power/emitter/energycannon/magical/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	return
+/obj/machinery/power/emitter/energycannon/magical/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return NONE
 
 /obj/machinery/power/emitter/energycannon/magical/ex_act(severity)
 	return FALSE
@@ -80,17 +80,13 @@
 
 /obj/structure/table/abductor/wabbajack/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_WRENCH, TOOL_ACT_PRIMARY)
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/table/abductor/wabbajack/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
-
-/obj/structure/table/abductor/wabbajack/screwdriver_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/structure/table/abductor/wabbajack/wrench_act(mob/living/user, obj/item/tool)
-	return NONE
 
 /obj/structure/table/abductor/wabbajack/process()
 	if(isnull(our_statue))
@@ -186,12 +182,8 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_climbed),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
-
-/obj/structure/table/wood/shuttle_bar/screwdriver_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/structure/table/wood/shuttle_bar/wrench_act(mob/living/user, obj/item/tool)
-	return NONE
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER)
+	AddElement(/datum/element/tool_blocker, TOOL_WRENCH)
 
 /obj/structure/table/wood/shuttle_bar/proc/on_climbed(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -257,8 +249,8 @@
 /obj/machinery/scanner_gate/luxury_shuttle/auto_scan(atom/movable/AM)
 	return
 
-/obj/machinery/scanner_gate/luxury_shuttle/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	return
+/obj/machinery/scanner_gate/luxury_shuttle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return NONE
 
 /obj/machinery/scanner_gate/luxury_shuttle/emag_act(mob/user, obj/item/card/emag/emag_card)
 	return FALSE

@@ -101,10 +101,7 @@
 	if(active_dummy)
 		for(var/mob/M in active_dummy)
 			to_chat(M, span_danger("Your chameleon projector deactivates."))
-		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
-		spark_system.set_up(5, 0, src)
-		spark_system.attach(src)
-		spark_system.start()
+		do_sparks(5, FALSE, src, src)
 		eject_all()
 		if(delete_dummy)
 			qdel(active_dummy)

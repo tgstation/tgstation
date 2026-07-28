@@ -17,7 +17,7 @@ export const FUNDAMENTAL_DATA_TYPES = {
         <Input
           placeholder={name}
           value={value}
-          onChange={setValue}
+          onChange={(value) => setValue(value)}
           width="96px"
         />
       </BasicInput>
@@ -121,12 +121,23 @@ export const FUNDAMENTAL_DATA_TYPES = {
             <Input
               placeholder={name}
               value={value}
-              onChange={setValue}
+              onChange={(value) => setValue(value)}
               width="64px"
             />
           </Stack.Item>
         </Stack>
       </BasicInput>
+    );
+  },
+  boolean: (props) => {
+    const { name, value, setValue, color } = props;
+    return (
+      <Stack>
+        <Stack.Item>{name}</Stack.Item>
+        <Stack.Item>
+          <Button.Checkbox checked={value} onClick={() => setValue(!value)} />
+        </Stack.Item>
+      </Stack>
     );
   },
 };

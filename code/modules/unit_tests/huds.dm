@@ -16,3 +16,26 @@
 
 	REMOVE_TRAIT(dummy, TRAIT_SECURITY_HUD, TRAIT_SOURCE_UNIT_TESTS)
 	TEST_ASSERT(!testhud.hud_users_all_z_levels[dummy], "HUD not removed when trait of HUD was removed")
+
+///We're gonna give every HUD type to a mob to see if they are missing action intent/health doll.
+///This destroys the HUD of the mob we're using (but it doesn't matter cause it's a test)
+/datum/unit_test/verify_basic_huds
+
+/datum/unit_test/verify_basic_huds/Run()
+	for(var/mob/living/basic/mobs as anything in subtypesof(/mob/living/basic))
+		if(mobs::abstract_type == mobs)
+			continue
+		var/mob/living/basic/dummy = allocate(mobs)
+		var/mob_hud_type = mobs::hud_type
+		var/datum/hud/initialized_hud = new mob_hud_type(dummy)
+		//mobs that don't use combat mode don't need it.
+		var/atom/movable/screen/action_intent = initialized_hud.screen_objects[HUD_MOB_INTENTS]
+		if(!HAS_TRAIT(dummy, TRAIT_COMBAT_MODE_LOCK) && isnull(action_intent))
+			TEST_FAIL("[dummy] using [initialized_hud.type] does not have an Action Intent.")
+		//Mobs that need a health indicator should have at least a healthdoll or healths.
+		var/atom/movable/screen/healthdoll/healthdoll = initialized_hud.screen_objects[HUD_MOB_HEALTHDOLL]
+		var/atom/movable/screen/healths/healths = initialized_hud.screen_objects[HUD_MOB_HEALTH]
+		if(initialized_hud.needs_health_indicator && isnull(healthdoll) && isnull(healths))
+			TEST_FAIL("[dummy] using [initialized_hud.type] does not have a Health Doll or Health HUD.")
+		//Because we're not setting hud_used, the HUD doesn't delete with the mob, let's clear it here.
+		qdel(initialized_hud)

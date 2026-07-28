@@ -5,6 +5,7 @@
 	actions_types = null
 	implant_flags = IMPLANT_TYPE_SECURITY
 	hud_icon_state = "hud_imp_noteleport"
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 3)
 
 	implant_info = "Automatically activates upon implantation. \
 		Grounds users' bluespace signatures, preventing jaunting and/or teleportation."
@@ -40,9 +41,7 @@
 	to_chat(teleportee, span_holoparasite("You feel yourself teleporting, but are suddenly flung back to where you just were!"))
 
 	teleportee.apply_status_effect(/datum/status_effect/incapacitating/paralyzed, 5 SECONDS)
-	var/datum/effect_system/spark_spread/quantum/spark_system = new()
-	spark_system.set_up(5, TRUE, teleportee)
-	spark_system.start()
+	do_sparks(5, TRUE, teleportee, spark_type = /datum/effect_system/basic/spark_spread/quantum)
 	return TRUE
 
 /// Signal for COMSIG_MOB_PRE_JAUNT that prevents a user from entering a jaunt.
@@ -52,9 +51,7 @@
 	to_chat(jaunter, span_holoparasite("As you attempt to jaunt, you slam directly into the barrier between realities and are sent crashing back into corporeality!"))
 
 	jaunter.apply_status_effect(/datum/status_effect/incapacitating/paralyzed, 5 SECONDS)
-	var/datum/effect_system/spark_spread/quantum/spark_system = new()
-	spark_system.set_up(5, TRUE, jaunter)
-	spark_system.start()
+	do_sparks(5, TRUE, jaunter, spark_type = /datum/effect_system/basic/spark_spread/quantum)
 	return COMPONENT_BLOCK_JAUNT
 
 /obj/item/implantcase/teleport_blocker

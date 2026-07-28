@@ -6,6 +6,7 @@
 		Your ID card will update you as you progress."
 	reward = CARGO_CRATE_VALUE * 5
 	allow_duplicate = TRUE
+	global_exempt = TRUE
 
 	/// Ref to the component applied to the ID card to track movement.
 	VAR_PRIVATE/datum/tracker
@@ -67,6 +68,7 @@
 	start_tracking(id_card)
 
 /datum/bounty/patrol/proc/start_tracking(obj/item/card/id/id_card)
+	contribution |= id_card.registered_account
 	tracker = AddComponent(/datum/component/connect_containers, id_card, list(COMSIG_MOVABLE_MOVED = PROC_REF(on_card_moved)))
 	RegisterSignal(id_card, COMSIG_MOVABLE_MOVED, PROC_REF(on_card_moved))
 

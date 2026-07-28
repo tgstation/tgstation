@@ -130,7 +130,6 @@
 		body.AddComponent( \
 			/datum/component/temporary_body, \
 			old_mind = player.mob.mind, \
-			old_body = player.mob.mind.current, \
 		)
 	body.PossessByPlayer(player.key)
 	ADD_TRAIT(body, TRAIT_CORPSELOCKED, MAFIA_TRAIT)

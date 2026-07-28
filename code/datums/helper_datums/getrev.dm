@@ -41,6 +41,26 @@
 
 	return msg.Join("\n")
 
+/datum/getrev/proc/GetDatabaseCommitSha()
+	. = originmastercommit
+	if (commit == .)
+		return .
+
+	var/gh_url = CONFIG_GET(string/githuburl)
+	if(!gh_url)
+		return .
+
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[gh_url]/commit/[commit]", "", "")
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+
+	if (response.status_code >= 200 && response.status_code < 300)
+		return commit
+
+	return .
+
 /datum/getrev/proc/GetTestMergeInfo(header = TRUE)
 	if(!testmerge.len)
 		return ""
@@ -51,10 +71,7 @@
 		var/details = ": '" + html_encode(tm.title) + "' by " + html_encode(tm.author) + " at commit " + html_encode(copytext_char(cm, 1, 11))
 		. += "<a href=\"[CONFIG_GET(string/githuburl)]/pull/[tm.number]\">#[tm.number][details]</a><br>"
 
-/client/verb/showrevinfo()
-	set category = "OOC"
-	set name = "Show Server Revision"
-	set desc = "Check the current server code revision"
+GAME_VERB_DESC(/client, showrevinfo, "Show Server Revision", "Check the current server code revision", "OOC")
 
 	var/list/msg = list()
 	// Round ID

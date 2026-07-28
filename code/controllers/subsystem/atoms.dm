@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(atoms)
 		/datum/controller/subsystem/mapping,
 		/datum/controller/subsystem/job,
 	)
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	/// A stack of list(source, desired initialized state)
 	/// We read the source of init changes from the last entry, and assert that all changes will come with a reset
@@ -47,7 +47,7 @@ SUBSYSTEM_DEF(atoms)
 
 	// Generate a unique mapload source for this run of InitializeAtoms
 	var/static/uid = 0
-	uid = (uid + 1) % (SHORT_REAL_LIMIT - 1)
+	uid = WRAP_UID(uid + 1)
 	var/source = "subsystem init [uid]"
 	set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, source)
 

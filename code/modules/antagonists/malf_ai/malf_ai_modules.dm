@@ -50,6 +50,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/computer/shuttle,
 		/obj/machinery/computer/emergency_shuttle,
 		/obj/machinery/computer/gateway_control,
+		/obj/machinery/ai_law_rack,
 	)))
 
 GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
@@ -85,6 +86,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/Trigger(mob/clicker, trigger_flags)
 	. = ..()
+	if(!.)
+		return
 	if(auto_use_uses)
 		adjust_uses(-1)
 	if(cooldown_period)
@@ -120,6 +123,9 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	var/name = "generic module"
 	var/category = "generic category"
 	var/description = "generic description"
+	/// Icons for the module picker interface. If icon_state is not set, the interface will attempt to use the active ability's icon.
+	var/icon = 'icons/mob/actions/actions_AI.dmi'
+	var/icon_state = ""
 	var/cost = 5
 	/// Minimum amount of APCs that has to be under the AI's control to purchase this module.
 	var/minimum_apcs = 0
@@ -646,7 +652,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	name = "Robotic Factory (Removes Shunting)"
 	description = "Build a machine anywhere, using expensive nanomachines, that can convert a living human into a loyal cyborg slave when placed inside."
 	cost = 100
-	minimum_apcs = 10 // So you can't speedrun this
 	power_type = /datum/action/innate/ai/place_transformer
 	unlock_text = span_notice("You make contact with Space Amazon and request a robotics factory for delivery.")
 	unlock_sound = 'sound/machines/ping.ogg'
@@ -752,7 +757,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	power_type = /datum/action/innate/ai/break_fire_alarms
 	unlock_text = span_notice("You replace the thermal sensing capabilities of all fire alarms with a manual override, \
 		allowing you to turn them off at will.")
-	unlock_sound = 'sound/machines/fire_alarm/FireAlarm1.ogg'
+	unlock_sound = 'sound/machines/fire_alarm/fire_alarm1.ogg'
 
 /datum/action/innate/ai/break_fire_alarms
 	name = "Override Thermal Sensors"
@@ -845,6 +850,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /datum/ai_module/malf/upgrade/upgrade_cameras
 	name = "Upgrade Camera Network"
 	description = "Install broad-spectrum scanning and electrical redundancy firmware to the camera network, enabling EMP-proofing and light-amplified X-ray vision. Upgrade is done immediately upon purchase." //I <3 pointless technobabble
+	icon = 'icons/obj/machines/camera.dmi'
+	icon_state = "xraycamera"
 	//This used to have motion sensing as well, but testing quickly revealed that giving it to the whole cameranet is PURE HORROR.
 	cost = 35 //Decent price for omniscience!
 	upgrade = TRUE
@@ -882,6 +889,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /datum/ai_module/malf/upgrade/upgrade_turrets
 	name = "AI Turret Upgrade"
 	description = "Improves the power and health of all AI turrets. This effect is permanent. Upgrade is done immediately upon purchase."
+	icon = 'icons/obj/weapons/turrets.dmi'
+	icon_state = "standard_off"
 	cost = 30
 	upgrade = TRUE
 	unlock_text = span_notice("You establish a power diversion to your turrets, upgrading their health and damage.")
@@ -900,6 +909,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	name = "Enhanced Surveillance"
 	description = "Via a combination of hidden microphones and lip reading software, \
 		you are able to use your cameras to listen in on conversations. Upgrade is done immediately upon purchase."
+	icon = 'icons/obj/service/broadcast.dmi'
+	icon_state = "microphone"
 	cost = 30
 	upgrade = TRUE
 	unlock_text = span_notice("OTA firmware distribution complete! Cameras upgraded: Enhanced surveillance package online.")
@@ -915,6 +926,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	description = "Allows you to hack into a mech's onboard computer, shunting all processes into it and ejecting any occupants. \
 		Upgrade is done immediately upon purchase. Do not allow the mech to leave the station's vicinity or allow it to be destroyed. \
 		If your core is destroyed, you will be lose connection with the Doomsday Device and the countdown will cease."
+	icon = 'icons/mob/rideables/mecha.dmi'
+	icon_state = "durand"
 	cost = 30
 	upgrade = TRUE
 	unlock_text = span_notice("Virus package compiled. Select a target mech at any time. <b>You must remain on the station at all times. \
@@ -1096,7 +1109,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		/obj/structure,
 		/obj/item/radio/intercom,
 		/obj/item/modular_computer,
-		/mob/living/simple_animal/bot,
+		/mob/living/basic/bot,
 		/mob/living/silicon,
 	)
 

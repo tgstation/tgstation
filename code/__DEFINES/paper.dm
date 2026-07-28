@@ -1,5 +1,7 @@
 /// Maximimum number of characters that we allow on paper.
 #define MAX_PAPER_LENGTH 5000
+/// Maximimum number of characters that we allow in a book, after unfolding and encoding html.
+#define MAX_BOOK_LENGTH (MAX_PAPER_LENGTH * 2)
 /// Max number of stamps that can be applied to the paper in tgui.
 #define MAX_PAPER_STAMPS 30
 /// Max number of stamp overlays that we'll add to a piece of paper's icon.
@@ -13,9 +15,6 @@
 #define MODE_WRITING 1
 /// Should be able to stamp paper.
 #define MODE_STAMPING 2
-
-#define BARCODE_SCANNER_CHECKIN "check_in"
-#define BARCODE_SCANNER_INVENTORY "inventory"
 
 #define IS_WRITING_UTENSIL(thing) (thing?.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING)
 
@@ -44,3 +43,7 @@
 #define LIST_PAPER_STAMP_X "x"
 #define LIST_PAPER_STAMP_Y "y"
 #define LIST_PAPER_ROTATION "rotation"
+
+///Use in conjunction with `advanced_html` to have underlined text that, when hovered over, will let you see additional text.
+///Would be appreciated if you avoided dotted underlined (and underlined in general) text elsewhere so players don't get confused.
+#define UNDERLINED_HTML_TEXT(text_displayed, revealed_text) "<span title='[revealed_text]' style='border-bottom: 1px dotted;'>[text_displayed]</span>"

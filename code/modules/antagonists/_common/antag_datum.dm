@@ -57,6 +57,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/hardcore_random_bonus = FALSE
 	/// A path to the audio stinger that plays upon gaining this datum.
 	var/stinger_sound
+	/// Multiplicative modifier to the mind's desensitized level when this antagonist is applied. Minimum is 0.1.
+	var/desensitized_modifier = 1.0
 
 	//ANTAG UI
 
@@ -262,6 +264,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		if(type_policy)
 			to_chat(owner.current, type_policy)
 
+	owner.desensitized_level *= max(DESENSITIZED_MINIMUM, desensitized_modifier)
 	apply_innate_effects()
 	give_antag_moodies()
 	RegisterSignal(owner, COMSIG_PRE_MINDSHIELD_IMPLANT, PROC_REF(pre_mindshield))
@@ -320,6 +323,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!owner)
 		CRASH("Antag datum with no owner.")
 
+	owner.desensitized_level /= max(DESENSITIZED_MINIMUM, desensitized_modifier)
 	if(owner.current)
 		remove_innate_effects()
 	clear_antag_moodies()
@@ -339,7 +343,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_REMOVED, src)
 	if(owner.current)
 		SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAGONIST_REMOVED, src)
-	qdel(src)
 
 /**
  * Proc that sends fluff or instructional messages to the player when they are given this antag datum.
@@ -471,7 +474,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/get_admin_commands()
 	. = list()
 
-/// Creates an icon from the preview outfit.
+/// Creates a /datum/universal_icon from the preview outfit.
 /// Custom implementors of `get_preview_icon` should use this, as the
 /// result of `get_preview_icon` is expected to be the completed version.
 /datum/antagonist/proc/render_preview_outfit(datum/outfit/outfit, mob/living/carbon/human/dummy)
@@ -479,34 +482,35 @@ GLOBAL_LIST_EMPTY(antagonists)
 	dummy.equipOutfit(outfit, visuals_only = TRUE)
 	dummy.wear_suit?.update_greyscale()
 	dummy.set_combat_mode(TRUE)
-	var/icon = getFlatIcon(dummy)
+	var/datum/universal_icon/antag_icon = get_flat_uni_icon(dummy)
 
 	// We don't want to qdel the dummy right away, since its items haven't initialized yet.
 	SSatoms.prepare_deletion(dummy)
 
-	return icon
+	return antag_icon
 
-/// Given an icon, will crop it to be consistent of those in the preferences menu.
+/// Given a /datum/universal_icon, will crop it to be consistent of those in the preferences menu.
 /// Not necessary, and in fact will look bad if it's anything other than a human.
-/datum/antagonist/proc/finish_preview_icon(icon/icon)
+/datum/antagonist/proc/finish_preview_icon(datum/universal_icon/antag_icon)
 	// Zoom in on the top of the head and the chest
 	// I have no idea how to do this dynamically.
-	icon.Scale(115, 115)
+	antag_icon.scale(115, 115)
 
 	// This is probably better as a Crop, but I cannot figure it out.
-	icon.Shift(WEST, 8)
-	icon.Shift(SOUTH, 30)
+	antag_icon.shift(WEST, 8)
+	antag_icon.shift(SOUTH, 30)
 
-	icon.Crop(1, 1, ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+	antag_icon.crop(1, 1, ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
-	return icon
+	return antag_icon
 
-/// Returns the icon to show on the preferences menu.
+/// Returns the /datum/universal_icon to shown on the preferences menu.
 /datum/antagonist/proc/get_preview_icon()
 	if (isnull(preview_outfit))
 		return null
 
-	return finish_preview_icon(render_preview_outfit(preview_outfit))
+	var/datum/universal_icon/preview_icon = render_preview_outfit(preview_outfit)
+	return finish_preview_icon(preview_icon)
 
 /datum/antagonist/proc/edit_memory(mob/user)
 	var/new_memo = tgui_input_text(user, "Write a new memory", "Antag Memory", antag_memory, multiline = TRUE)
@@ -623,3 +627,34 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// Return TRUE to prevent the antag's job from handling the respawn
 /datum/antagonist/proc/on_respawn(mob/new_character)
 	return FALSE
+
+/// Dissassociates the antag datum from its owner, without deleting it - allowing one datum and its objectives to be reused for another mind
+/datum/antagonist/proc/store_datum()
+	if(isnull(owner))
+		stack_trace("Tried to store an antagonist datum that already has no owner.")
+		return FALSE
+
+	on_removal()
+	var/datum/team/antag_team = get_team()
+	antag_team?.remove_member(owner)
+	LAZYREMOVE(owner.antag_datums, src)
+	owner = null
+	log_game("[key_name(owner)] has lost antag datum [src] ([type]).")
+	QDEL_NULL(team_hud_ref)
+	return TRUE
+
+/// Reassociates the antag datum with a new mind - allowing one datum and its objectives to be reused for another mind
+/datum/antagonist/proc/restore_datum(datum/mind/new_owner)
+	if(!isnull(owner))
+		stack_trace("Tried to restore an antagonist datum that already has an owner.")
+		return FALSE
+	if(!can_be_owned(new_owner))
+		return FALSE
+
+	owner = new_owner
+	LAZYADD(owner.antag_datums, src)
+	var/datum/team/antag_team = get_team()
+	antag_team?.add_member(new_owner)
+	on_gain()
+	log_game("[key_name(new_owner)] has gained antag datum [src] ([type]).")
+	return TRUE

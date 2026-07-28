@@ -2,11 +2,13 @@
 	name = "quantum console"
 
 	circuit = /obj/item/circuitboard/computer/quantum_console
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/quantum_console")
 	icon_keyboard = "mining"
 	icon_screen = "bitrunning"
 	req_access = list(ACCESS_MINING)
 	/// The server this console is connected to.
 	var/datum/weakref/server_ref
+	keyboard_change_icon = FALSE
 
 /obj/machinery/computer/quantum_console/Initialize(mapload, obj/item/circuitboard/circuit)
 	. = ..()
@@ -76,13 +78,13 @@
 
 	switch(action)
 		if("random_domain")
-			server.cold_boot_map(server.get_random_domain_id())
+			server.cold_boot_map(server.get_random_domain_id(), was_random_selection = TRUE)
 			return TRUE
 		if("refresh")
 			ui.send_full_update()
 			return TRUE
 		if("set_domain")
-			server.cold_boot_map(params["id"])
+			server.cold_boot_map(params["id"], was_random_selection = FALSE)
 			return TRUE
 		if("stop_domain")
 			server.begin_shutdown(usr)

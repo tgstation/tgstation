@@ -78,11 +78,11 @@
 	name = "heart of darkness"
 	desc = "An alien organ that twists and writhes when exposed to light."
 	visual = TRUE
-	icon_state = "demon_heart-on"
-	base_icon_state = "demon_heart"
+	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
+	icon_state = "dark_heart-on"
+	base_icon_state = "dark_heart"
 
 	beat_noise = "the writhing pulses of a fear given form" // evil schmeevil
-	color = COLOR_CRAYON_BLACK
 	decay_factor = 0
 	// No love is to be found in a heart so twisted.
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5)
@@ -92,6 +92,10 @@
 	var/respawn_progress = 0
 	/// The armblade granted to the host of this heart.
 	var/obj/item/light_eater/blade
+
+/obj/item/organ/heart/nightmare/Destroy()
+	QDEL_NULL(blade)
+	return ..()
 
 /obj/item/organ/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
@@ -111,9 +115,11 @@
 
 /obj/item/organ/heart/nightmare/on_mob_insert(mob/living/carbon/heart_owner, special, movement_flags)
 	. = ..()
-	if(special != HEART_SPECIAL_SHADOWIFY)
-		blade = new/obj/item/light_eater
-		heart_owner.put_in_hands(blade)
+	if(special == HEART_SPECIAL_SHADOWIFY)
+		return
+	blade = new /obj/item/light_eater
+	heart_owner.put_in_hands(blade)
+	RegisterSignal(blade, COMSIG_QDELETING, PROC_REF(on_blade_deleted))
 
 /obj/item/organ/heart/nightmare/on_mob_remove(mob/living/carbon/heart_owner, special, movement_flags)
 	. = ..()
@@ -124,6 +130,11 @@
 
 /obj/item/organ/heart/nightmare/Stop()
 	return FALSE
+
+// Happens if the blade was deleted before we were during mob destruction
+/obj/item/organ/heart/nightmare/proc/on_blade_deleted(datum/source)
+	SIGNAL_HANDLER
+	blade = null
 
 /obj/item/organ/heart/nightmare/on_death(seconds_per_tick)
 	if(!owner)

@@ -105,11 +105,11 @@
 
 	if(is_portable)
 		interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
-		passtable_on(src, type)
+		pass_flags |= PASSTABLE
 		RemoveElement(/datum/element/noisy_movement)
 	else
 		interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
-		passtable_off(src, type)
+		pass_flags &= ~PASSTABLE
 		AddElement(/datum/element/noisy_movement)
 
 	update_appearance()
@@ -178,7 +178,7 @@
 		/obj/item/retractor,
 		/obj/item/scalpel,
 		/obj/item/stack/medical/bone_gel,
-		/obj/item/stack/sticky_tape/surgical,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical,
 		/obj/item/surgical_drapes,
 		/obj/item/surgicaldrill,
 	)
@@ -201,7 +201,7 @@
 		/obj/item/retractor/cruel,
 		/obj/item/scalpel/cruel,
 		/obj/item/stack/medical/bone_gel,
-		/obj/item/stack/sticky_tape/surgical,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical,
 		/obj/item/surgical_drapes,
 		/obj/item/surgicaldrill/cruel,
 	)
@@ -221,7 +221,7 @@
 		/obj/item/blood_filter,
 		/obj/item/shears,
 		/obj/item/stack/medical/bone_gel,
-		/obj/item/stack/sticky_tape/surgical,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical,
 		/obj/item/clothing/mask/surgical,
 	)
 

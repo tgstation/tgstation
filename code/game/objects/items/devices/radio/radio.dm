@@ -56,6 +56,8 @@
 	var/subspace_switchable = FALSE
 	/// Frequency lock to stop the user from untuning specialist radios.
 	var/freqlock = RADIO_FREQENCY_UNLOCKED
+	/// Locks the keyslot to prevent removing the encryption key from specialist radios.
+	var/keylock = RADIO_KEYSLOT_UNLOCKED
 	/// If true, broadcasts will be large and BOLD.
 	var/use_command = FALSE
 	/// If true, use_command can be toggled at will.
@@ -77,8 +79,6 @@
 
 	/// overlay when speaker is on
 	var/overlay_speaker_idle = "s_idle"
-	/// overlay when receiving a message
-	var/overlay_speaker_active = "s_active"
 
 	/// overlay when mic is on
 	var/overlay_mic_idle = "m_idle"
@@ -102,7 +102,7 @@
 	. = ..()
 
 	if(ispath(keyslot))
-		keyslot = new keyslot()
+		keyslot = new keyslot(src)
 		recalculateChannels()
 
 	perform_update_icon = FALSE
@@ -369,7 +369,7 @@
 	if(isliving(talking_movable))
 		var/mob/living/talking_living = talking_movable
 		var/volume_modifier = (talking_living.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
-		if(radio_noise && talking_living.can_hear() && volume_modifier && signal.frequency != FREQ_COMMON && !LAZYACCESS(message_mods, MODE_SEQUENTIAL) && COOLDOWN_FINISHED(src, audio_cooldown))
+		if(radio_noise && !HAS_TRAIT(talking_living, TRAIT_DEAF) && volume_modifier && signal.frequency != FREQ_COMMON && !LAZYACCESS(message_mods, MODE_SEQUENTIAL) && COOLDOWN_FINISHED(src, audio_cooldown))
 			COOLDOWN_START(src, audio_cooldown, 0.5 SECONDS)
 			var/sound/radio_noise = sound('sound/items/radio/radio_talk.ogg', volume = volume_modifier)
 			radio_noise.frequency = get_rand_frequency_low_range()
@@ -420,6 +420,8 @@
 			// left hands are odd slots
 			if (idx && (idx % 2) == (message_mods[RADIO_EXTENSION] == MODE_L_HAND))
 				return
+	if (message_mods[MODE_TTS_IDENTIFIER])
+		filtered_mods[MODE_TTS_IDENTIFIER] = message_mods[MODE_TTS_IDENTIFIER]
 	talk_into(speaker, raw_message, spans=spans, language=message_language, message_mods=filtered_mods)
 
 /// Checks if this radio can receive on the given frequency.
@@ -444,13 +446,12 @@
 
 /obj/item/radio/proc/on_receive_message(list/data)
 	SEND_SIGNAL(src, COMSIG_RADIO_RECEIVE_MESSAGE, data)
-	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
-
 	if(!isliving(loc))
 		return
 
 	var/mob/living/holder = loc
 	var/volume_modifier = (holder.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
+
 	if(!radio_noise || HAS_TRAIT(holder, TRAIT_DEAF) || !holder.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
 		return
 	var/list/spans = data["spans"]
@@ -493,7 +494,6 @@
 	data["subspace"] = subspace_transmission
 	data["subspaceSwitchable"] = subspace_switchable
 	data["headset"] = FALSE
-	data["radio_noises"] = (user.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
 
 	return data
 
@@ -502,7 +502,6 @@
 	if(.)
 		return
 
-	var/mob/user = ui.user
 	switch(action)
 		if("frequency")
 			if(freqlock != RADIO_FREQENCY_UNLOCKED)
@@ -553,15 +552,6 @@
 				else
 					recalculateChannels()
 				. = TRUE
-		if("set_radio_volume")
-			if(!user.client)
-				return
-			user.client.prefs.write_preference(GLOB.preference_entries[/datum/preference/numeric/volume/sound_radio_noise], params["volume"])
-			//let them know what it'll sound like
-			//we get their read prefs instead of just taking the params beacuse write_preference is what handles ensuring
-			//there's no href exploits.
-			var/volume_modifier = (user.client.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
-			SEND_SOUND(user, sound('sound/items/radio/radio_receive.ogg', volume = volume_modifier))
 
 /obj/item/radio/examine(mob/user)
 	. = ..()
@@ -599,6 +589,14 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)
+	switch(keylock)
+		if(RADIO_KEYSLOT_LOCKED)
+			to_chat(user, span_warning("The screws locking [src]'s keyslot are stripped, and can't be removed."))
+			return ITEM_INTERACT_BLOCKING
+		if(RADIO_KEYSLOT_EMAGGABLE_LOCK)
+			to_chat(user, span_warning("The screws locking [src]'s keyslot are fastened tight, and likely can't be removed without some kind of magnet..."))
+			return ITEM_INTERACT_BLOCKING
+
 	var/list/removed_keys = remove_keys(user)
 	if(length(removed_keys) > 1)
 		to_chat(user, span_notice("You remove the encryption keys from [src]."))
@@ -631,7 +629,7 @@
 	if(keyslot)
 		loc.balloon_alert(user, "cannot hold a second key!")
 		return ITEM_INTERACT_BLOCKING
-	if(freqlock)
+	if(freqlock || keylock)
 		loc.balloon_alert(user, "keyslot is locked!")
 		return ITEM_INTERACT_BLOCKING
 
@@ -674,7 +672,6 @@
 	icon_state = "walkieian"
 	desc = "A Little-Crew branded toy radio in the shape of a lovable pet. After Little-Crew HQ was hit with a Donksoft Nuke, these have become collector's items!"
 	overlay_speaker_idle = null
-	overlay_speaker_active = null
 	overlay_mic_idle = null
 	overlay_mic_active = null
 
@@ -739,7 +736,7 @@
 	wires?.cut(WIRE_TX)
 
 /obj/item/radio/entertainment/speakers/on_receive_message(list/data)
-	playsound(source = src, soundin = SFX_MUFFLED_SPEECH, vol = 60, extrarange = -4, vary = TRUE, ignore_walls = FALSE)
+	playsound(src, SFX_MUFFLED_SPEECH, 60, TRUE, -4, ignore_walls = FALSE, volume_preference = /datum/preference/numeric/volume/sound_radio_noise)
 
 	return ..()
 
@@ -750,7 +747,6 @@
 	inhand_icon_state = "radio"
 	worn_icon_state = "radio"
 	overlay_speaker_idle = "radio_s_idle"
-	overlay_speaker_active = "radio_s_active"
 	overlay_mic_idle = "radio_m_idle"
 	overlay_mic_active = "radio_m_active"
 

@@ -17,7 +17,6 @@
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL|MOB_SKELETAL
-	inherent_respiration_type = RESPIRATION_PLASMA
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	smoker_lungs = /obj/item/organ/lungs/plasmaman/plasmaman_smoker
 	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
@@ -27,7 +26,6 @@
 	mutantheart = null
 	heatmod = 1.5
 	payday_modifier = 1.0
-	breathid = GAS_PLASMA
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 	species_cookie = /obj/item/reagent_containers/condiment/milk
 	outfit_important_for_life = /datum/outfit/plasmaman
@@ -66,9 +64,6 @@
 		/datum/outfit/syndicate/support = /datum/outfit/syndicate/support/plasmaman,
 		/datum/outfit/syndicate/full/loneop = /datum/outfit/syndicate/full/plasmaman/loneop,
 	)
-
-	/// If the bones themselves are burning clothes won't help you much
-	var/internal_fire = FALSE
 
 /datum/species/plasmaman/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
 	if(job?.plasmaman_outfit)

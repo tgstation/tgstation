@@ -139,25 +139,16 @@
 	calculate_regeneration()
 
 /obj/machinery/modular_shield_generator/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
-
-	if(default_deconstruction_screwdriver(user,"[icon_type]_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]open",
-		"[icon_type]_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]closed",  tool))
-		return TRUE
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/modular_shield_generator/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
+	return default_deconstruction_crowbar(user, tool)
 
-	if(default_deconstruction_crowbar(tool))
-		return TRUE
-
-/obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, list/modifiers)
-
-	if(is_wire_tool(W) && panel_open)
-		wires.interact(user)
-		return TRUE
-
-	return ..()
+/obj/machinery/modular_shield_generator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!panel_open || !is_wire_tool(tool))
+		return NONE
+	wires.interact(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/modular_shield_generator/multitool_act(mob/living/user, obj/item/multitool/multi)
 	multi.set_buffer(src)
@@ -543,10 +534,7 @@
 	return TRUE
 
 /obj/machinery/modular_shield/module/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
-
-	if(default_deconstruction_crowbar(tool))
-		return TRUE
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/modular_shield/module/setDir(new_dir)
 	. = ..()

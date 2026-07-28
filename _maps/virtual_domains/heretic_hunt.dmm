@@ -386,7 +386,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stack/medical/gauze/improvised{
+/obj/item/stack/medical/wrap/gauze/improvised{
 	pixel_y = -2
 	},
 /turf/open/floor/plating,
@@ -573,7 +573,7 @@
 /obj/machinery/defibrillator_mount/directional/west,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/item/stack/medical/gauze/improvised,
+/obj/item/stack/medical/wrap/gauze/improvised,
 /obj/effect/turf_decal/siding/blue{
 	dir = 4
 	},
@@ -1112,7 +1112,7 @@
 "NN" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/table/glass,
-/obj/item/stack/medical/gauze{
+/obj/item/stack/medical/wrap/gauze{
 	pixel_y = 4
 	},
 /obj/effect/turf_decal/siding/blue{
@@ -1152,7 +1152,7 @@
 /obj/effect/turf_decal/siding/blue/end{
 	dir = 1
 	},
-/obj/item/stack/medical/gauze/improvised,
+/obj/item/stack/medical/wrap/gauze/improvised,
 /obj/structure/cable,
 /turf/open/floor/plastic,
 /area/virtual_domain)

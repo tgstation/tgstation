@@ -6,6 +6,7 @@
 	main_feature_name = "Vampire status"
 	should_generate_icons = TRUE
 	relevant_inherent_trait = TRAIT_BLOOD_CLANS
+	should_update_preview = FALSE
 
 /datum/preference/choiced/vampire_status/create_default_value()
 	return "Inoculated" //eh, have em try out the mechanic first

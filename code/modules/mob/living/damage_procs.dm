@@ -122,20 +122,20 @@
  * Simply a wrapper for calling mob adjustXLoss() procs to heal a certain damage type,
  * when you don't know what damage type you're healing exactly.
  */
-/mob/living/proc/heal_damage_type(heal_amount = 0, damagetype = BRUTE)
+/mob/living/proc/heal_damage_type(heal_amount = 0, damagetype = BRUTE, update_health = TRUE)
 	heal_amount = abs(heal_amount) * -1
 
 	switch(damagetype)
 		if(BRUTE)
-			return adjust_brute_loss(heal_amount)
+			return adjust_brute_loss(heal_amount, update_health)
 		if(BURN)
-			return adjust_fire_loss(heal_amount)
+			return adjust_fire_loss(heal_amount, update_health)
 		if(TOX)
-			return adjust_tox_loss(heal_amount)
+			return adjust_tox_loss(heal_amount, update_health)
 		if(OXY)
-			return adjust_oxy_loss(heal_amount)
+			return adjust_oxy_loss(heal_amount, update_health)
 		if(STAMINA)
-			return adjust_stamina_loss(heal_amount)
+			return adjust_stamina_loss(heal_amount, update_health)
 
 /// return the damage amount for the type given
 /**
@@ -303,24 +303,15 @@
 /mob/living/proc/get_oxy_loss()
 	return oxyloss
 
-/mob/living/proc/can_adjust_oxy_loss(amount, forced, required_biotype, required_respiration_type)
-	if(!forced)
-		if(HAS_TRAIT(src, TRAIT_GODMODE))
-			return FALSE
-		if (required_respiration_type)
-			var/obj/item/organ/lungs/affected_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
-			if(isnull(affected_lungs))
-				if(!(mob_respiration_type & required_respiration_type))  // if the mob has no lungs, use mob_respiration_type
-					return FALSE
-			else
-				if(!(affected_lungs.respiration_type & required_respiration_type)) // otherwise use the lungs' respiration_type
-					return FALSE
+/mob/living/proc/can_adjust_oxy_loss(amount, forced, required_biotype)
+	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
+		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_OXY_DAMAGE, OXY, amount, forced) & COMPONENT_IGNORE_CHANGE)
 		return FALSE
 	return TRUE
 
-/mob/living/proc/adjust_oxy_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL, required_respiration_type = ALL)
-	if(!can_adjust_oxy_loss(amount, forced, required_biotype, required_respiration_type))
+/mob/living/proc/adjust_oxy_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
+	if(!can_adjust_oxy_loss(amount, forced, required_biotype))
 		return 0
 	. = oxyloss
 	oxyloss = clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -330,18 +321,10 @@
 	if(updating_health)
 		updatehealth()
 
-/mob/living/proc/set_oxy_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL, required_respiration_type = ALL)
-	if(!forced)
-		if(HAS_TRAIT(src, TRAIT_GODMODE))
-			return FALSE
+/mob/living/proc/set_oxy_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
+	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
+		return FALSE
 
-		var/obj/item/organ/lungs/affected_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
-		if(isnull(affected_lungs))
-			if(!(mob_respiration_type & required_respiration_type))
-				return FALSE
-		else
-			if(!(affected_lungs.respiration_type & required_respiration_type))
-				return FALSE
 	. = oxyloss
 	oxyloss = amount
 	. -= oxyloss
@@ -532,12 +515,14 @@
 		updatehealth()
 
 ///heal up to amount damage, in a given order
-/mob/living/proc/heal_ordered_damage(amount, list/damage_types)
+/mob/living/proc/heal_ordered_damage(amount, list/damage_types, update_health = TRUE)
 	. = 0 //we'll return the amount of damage healed
 	for(var/damagetype in damage_types)
 		var/amount_to_heal = min(abs(amount), get_current_damage_of_type(damagetype)) //heal only up to the amount of damage we have
 		if(amount_to_heal)
-			. += heal_damage_type(amount_to_heal, damagetype)
+			. += heal_damage_type(amount_to_heal, damagetype, FALSE)
 			amount -= amount_to_heal //remove what we healed from our current amount
 		if(!amount)
 			break
+	if(. && update_health)
+		updatehealth()

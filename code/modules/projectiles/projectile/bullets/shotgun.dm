@@ -32,12 +32,19 @@
 	embed_type = null
 
 /obj/projectile/bullet/shotgun_beanbag/a40mm
-	name = "rubber slug"
+	name = "rubber puck"
 	icon_state = "cannonball"
-	damage = 20
-	stamina = 160 //BONK
+	damage = 10
+	stamina = 80 //BONK
+	knockdown = 10
 	wound_bonus = 30
-	weak_against_armour = TRUE
+	ricochets_max = 4
+	ricochet_chance = 100
+	ricochet_decay_chance = 1
+	ricochet_decay_damage = 0.8
+	ricochet_auto_aim_range = 2
+	ricochet_auto_aim_angle = 30
+	ricochet_incidence_leeway = 75
 
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
@@ -100,6 +107,13 @@
 /obj/projectile/bullet/pellet/shotgun_buckshot/milspec
 	name = "milspec buckshot pellet"
 	damage = 7.5
+
+/obj/projectile/bullet/pellet/shotgun_buckshot/milspec/flak
+	name = "titanium ball bearing"
+	damage = 10
+	damage_falloff_tile = -0.5 //much harsher falloff
+	wound_bonus = 0
+	armour_penetration = 20
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubber shot pellet"

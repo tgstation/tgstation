@@ -71,6 +71,7 @@ GLOBAL_LIST_EMPTY(starlight)
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
 	force_no_gravity = TRUE
+	skip_minimap_rendering = TRUE
 
 /turf/open/space/basic
 	icon_state = MAP_SWITCH("space", "space_basic_map")
@@ -126,14 +127,21 @@ GLOBAL_LIST_EMPTY(starlight)
 /turf/open/space/handle_slip()
 	return
 
-/turf/open/space/attackby(obj/item/attacking_item, mob/user, list/modifiers)
-	..()
+/turf/open/space/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(ITEM_INTERACT_ANY_BLOCKER & .)
+		return .
+
 	if(!CanBuildHere())
-		return
-	if(istype(attacking_item, /obj/item/stack/rods))
-		build_with_rods(attacking_item, user)
-	else if(ismetaltile(attacking_item))
-		build_with_floor_tiles(attacking_item, user)
+		return .
+
+	if(istype(tool, /obj/item/stack/rods))
+		build_with_rods(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(ismetaltile(tool))
+		build_with_floor_tiles(tool, user)
+		return ITEM_INTERACT_SUCCESS
 
 /turf/open/space/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return

@@ -10,7 +10,6 @@
 	health = 1
 	maxHealth = 1
 	speed = 1.25
-	can_be_held = TRUE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 
@@ -50,6 +49,7 @@
 	. = ..()
 	AddElement(/datum/element/death_drops, /obj/effect/decal/cleanable/insectguts)
 	AddElement(/datum/element/swabable, cockroach_cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
+	AddElement(/datum/element/can_be_held)
 	AddComponent( \
 		/datum/component/squashable, \
 		squash_chance = 50, \
@@ -111,6 +111,7 @@
 		for(var/mob/living/mob_in_turf in messy_turf)
 			mob_in_turf.visible_message(span_danger("[mob_in_turf] is splattered with blood!"), span_userdanger("You're splattered with blood!"))
 			mob_in_turf.add_blood_DNA(list("Non-human DNA" = random_human_blood_type()))
+			mob_in_turf.add_mood_event("splattered_with_blood", /datum/mood_event/splattered_with_blood)
 			playsound(mob_in_turf, 'sound/effects/splat.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE)
 	return ..()
 
@@ -243,4 +244,3 @@
 	maxHealth = 2
 	minion_path = null
 	gold_core_spawnable = NO_SPAWN
-

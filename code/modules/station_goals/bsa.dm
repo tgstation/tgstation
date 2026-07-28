@@ -11,11 +11,11 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 
 /datum/station_goal/bluespace_cannon/get_report()
 	return list(
-		"<blockquote>Our military presence is inadequate in your sector.",
+		"Our military presence is inadequate in your sector.",
 		"We need you to construct BSA-[rand(1,99)] Artillery position aboard your station.",
 		"",
 		"Base parts are available for shipping via cargo.",
-		"-Nanotrasen Naval Command</blockquote>",
+		"<i>- Nanotrasen Naval Command</i>",
 	).Join("\n")
 
 /datum/station_goal/bluespace_cannon/on_report()
@@ -106,6 +106,9 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	if(!has_space())
 		return "Not enough free space!"
 
+/**
+ * Proc to check if the BSA has the required 10 x 1 block space to deploy.
+ */
 /obj/machinery/bsa/middle/proc/has_space()
 	var/cannon_dir = get_cannon_direction()
 	var/width = 10
@@ -119,9 +122,14 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 			return FALSE
 
 	var/turf/base = get_turf(src)
+	var/blocked = FALSE
 	for(var/turf/T as anything in CORNER_BLOCK_OFFSET(base, width, 3, offset, -1))
 		if(T.density || isspaceturf(T))
-			return FALSE
+			blocked = TRUE
+			new /obj/effect/temp_visual/point(T)
+	if(blocked)
+		return FALSE
+
 	return TRUE
 
 /obj/machinery/bsa/middle/proc/get_cannon_direction()
@@ -368,9 +376,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	if(notice)
 		return null
 	//Totally nanite construction system not an immersion breaking spawning
-	var/datum/effect_system/fluid_spread/smoke/fourth_wall_guard = new
-	fourth_wall_guard.set_up(4, holder = src, location = get_turf(centerpiece))
-	fourth_wall_guard.start()
+	do_smoke(4, get_turf(centerpiece), get_turf(centerpiece))
 	var/obj/machinery/bsa/full/cannon = new(get_turf(centerpiece),centerpiece.get_cannon_direction())
 	QDEL_NULL(centerpiece.front_ref)
 	QDEL_NULL(centerpiece.back_ref)

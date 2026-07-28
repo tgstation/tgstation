@@ -27,13 +27,16 @@
 		return INITIALIZE_HINT_QDEL
 
 	AddElement(/datum/element/floor_loving)
-	AddComponent(/datum/component/spawner, spawn_types = list(spawned_effect), max_spawned = max_spawned, spawn_time = spawn_interval)
+	add_spawner()
 	src.target = target
 	movement = GLOB.move_manager.move_towards(src, chasing = target, delay = move_speed, home = homing, timeout = duration, flags = MOVEMENT_LOOP_START_FAST)
 
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_invalid))
 	if (isliving(target))
 		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_target_invalid))
+
+/obj/effect/temp_visual/effect_trail/proc/add_spawner()
+	AddComponent(/datum/component/spawner, spawn_types = list(spawned_effect), max_spawned = max_spawned, spawn_time = spawn_interval)
 
 /// Destroy ourselves if the target is no longer valid
 /obj/effect/temp_visual/effect_trail/proc/on_target_invalid()

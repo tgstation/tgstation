@@ -212,7 +212,10 @@
 "fm" = (
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted,
+/obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted/tear,
+/obj/item/ammo_box/a40mm/tear_gas,
+/obj/item/ammo_box/a40mm/tear_gas,
+/obj/item/disk/design_disk/tear_gas_40mm,
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/ruin/caravan/freighter3)
 "fy" = (

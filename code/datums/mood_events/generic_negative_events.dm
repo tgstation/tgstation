@@ -305,7 +305,7 @@
 /datum/mood_event/too_slow/add_effects(param)
 	var/people_laughing_at_you = 1 // start with 1 in case they're on the same tile or something
 	for(var/mob/living/carbon/iter_carbon in oview(owner, 7))
-		if(iter_carbon.stat == CONSCIOUS)
+		if(!IS_UNCONSCIOUS_OR_CRIT(iter_carbon))
 			people_laughing_at_you++
 			if(people_laughing_at_you > 7)
 				break
@@ -638,6 +638,8 @@
 		mood_change = 0
 		description = "I just got coated in blood. Fascinating!"
 		return
+	if(IS_DESENSITIZED(owner))
+		mood_change *= 0.5
 
 /datum/mood_event/teetotal_hangover
 	description = "What a disgraceful display! This is what happens when one indulges in alcohol!"
@@ -653,3 +655,8 @@
 	description = "Man, getting jabbed with that thing really sucked."
 	mood_change = -4
 	timeout = 5 MINUTES
+
+/datum/mood_event/gizmo_negative
+	description = "I hear a voice whispering, and I don't like what it says."
+	mood_change = -3
+	timeout = 30 SECONDS

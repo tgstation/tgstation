@@ -3,6 +3,7 @@
 /datum/map_template/shuttle/emergency
 	port_id = "emergency"
 	name = "Base Shuttle Template (Emergency)"
+	prefix = "_maps/shuttles/emergency/"
 	///assoc list of shuttle events to add to this shuttle on spawn (typepath = weight)
 	var/list/events
 	///pick all events instead of random
@@ -47,11 +48,20 @@
 /datum/map_template/shuttle/emergency/construction
 	suffix = "construction"
 	name = "Build your own shuttle kit"
-	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials. Unlocks the ability to buy shuttle engine crates from cargo, which allow you to speed up shuttle transit time."
+	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials."
 	admin_notes = "No brig, no medical facilities."
 	credit_cost = CARGO_CRATE_VALUE * 5
 	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_CE)
 	occupancy_limit = "Flexible"
+
+/datum/map_template/shuttle/emergency/constructionbig
+	suffix = "constructionbig"
+	name = "Build your own CRUISER kit"
+	description = "This is the big brother of the construction kit, with more space for your shuttle-building ideas! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials."
+	admin_notes = "No brig, no medical facilities."
+	credit_cost = CARGO_CRATE_VALUE * 30
+	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_CE)
+	occupancy_limit = "Flexible and more"
 
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
@@ -512,5 +522,17 @@
 
 /datum/map_template/shuttle/emergency/zeta/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH]
+
+/datum/map_template/shuttle/emergency/tombstone
+	suffix = "tombstone"
+	name = "The NTSS Tombstone"
+	description = "Specifically commissioned for cleanups involving bio hazards, zombie outbreaks, or flesh-eating plagues. Features burial plots, reinforced morgue trays, and a crematorium. It's safe, airtight, and ensures you won't bite your coworkers during transit!"
+	admin_notes = "The aft of the ship has a miasma tank behind the curator room. May get released by crew. There are also random spawners in the crypt graves that has a chance to spawn a one use spectral musical instrument."
+	credit_cost = CARGO_CRATE_VALUE * 15
+	occupancy_limit = "40"
+	prerequisites = "This shuttle requires a biohazard outbreak to occur before it can be purchased."
+
+/datum/map_template/shuttle/emergency/tombstone/prerequisites_met()
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_TOMBSTONE]
 
 #undef EMAG_LOCKED_SHUTTLE_COST

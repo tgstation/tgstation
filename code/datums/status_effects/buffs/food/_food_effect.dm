@@ -19,5 +19,5 @@
 /atom/movable/screen/alert/status_effect/food
 	name = "Hand-crafted meal"
 	desc = "Eating it made me feel better."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "food_buff_1"

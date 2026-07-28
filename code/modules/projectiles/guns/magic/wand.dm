@@ -3,6 +3,7 @@
 	desc = "You shouldn't have this."
 	ammo_type = /obj/item/ammo_casing/magic
 	icon_state = "nothingwand"
+	worn_icon = null
 	inhand_icon_state = "wand"
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -19,9 +20,9 @@
 		return ..()
 
 	if(prob(33)) // 33% of the remaining 75% so another 25%
-		max_charges = CEILING(max_charges / 3, 1)
+		max_charges = ceil(max_charges / 3)
 	else
-		max_charges = CEILING(max_charges / 2, 1)
+		max_charges = ceil(max_charges / 2)
 	return ..()
 
 /obj/item/gun/magic/wand/examine(mob/user)
@@ -96,7 +97,7 @@
 	. = ..()
 	if (user.stat == DEAD)
 		return MANUAL_SUICIDE
-	user.visible_message(span_suicide("...but if anything [user.p_they()] look healthier than before."))
+	user.visible_message(span_suicide("...but if anything [user.p_they()] look[user.p_s()] healthier than before."))
 	return SHAME
 
 /obj/item/gun/magic/wand/death/debug
@@ -140,7 +141,7 @@
 	. = ..()
 	if (user.stat == DEAD)
 		return MANUAL_SUICIDE
-	user.visible_message(span_suicide("...but if anything [user.p_they()] look healthier than before."))
+	user.visible_message(span_suicide("...but if anything [user.p_they()] look[user.p_s()] healthier than before."))
 	return SHAME
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing
@@ -195,17 +196,13 @@
 
 /obj/item/gun/magic/wand/teleport/zap_self(mob/living/user, suicide = FALSE)
 	if(do_teleport(user, user, 10, channel = TELEPORT_CHANNEL_MAGIC))
-		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(3, holder = src, location = user.loc)
-		smoke.start()
+		do_smoke(3, src, user.loc)
 		charges--
 	return ..()
 
 /obj/item/gun/magic/wand/teleport/do_suicide(mob/living/user)
 	playsound(loc, fire_sound, 50, TRUE, -1)
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(3, holder = src, location = user.loc)
-	smoke.start()
+	do_smoke(3, src, user.loc)
 	if (!iscarbon(user))
 		return SHAME
 
@@ -247,11 +244,11 @@
 	var/turf/origin = get_turf(user)
 	var/turf/destination = find_safe_turf(extended_safety_checks = TRUE)
 
-	if(do_teleport(user, destination, channel=TELEPORT_CHANNEL_MAGIC))
-		for(var/t in list(origin, destination))
-			var/datum/effect_system/fluid_spread/smoke/smoke = new
-			smoke.set_up(0, holder = src, location = t)
-			smoke.start()
+	if(!do_teleport(user, destination, channel = TELEPORT_CHANNEL_MAGIC))
+		return ..()
+
+	for(var/turf/smoke_turf as anything in list(origin, destination))
+		do_smoke(0, src, smoke_turf)
 	return ..()
 
 /obj/item/gun/magic/wand/safety/do_suicide(mob/living/user)
@@ -326,9 +323,60 @@
 	desc = "It's not just a stick, it's a MAGIC stick?"
 	ammo_type = /obj/item/ammo_casing/magic/nothing
 
+//disabler wand
+/obj/item/gun/magic/wand/disabler
+	name = "wand of non harmful incapasitation"
+	desc = "One of those magic wands you can buy from a costume vendor, this one however is not entirely useless, funny."
+	ammo_type = /obj/item/ammo_casing/energy/disabler/smoothbore
+	self_charging = TRUE
+
+
+//real magic missile wand
+/obj/item/gun/magic/wand/missile
+	name = "wand of MISSILE"
+	desc = "One of those magic wands you can buy from a costume vendor, this one however has a bunch of explosion/missile launcher stickers on it, its also obviously painted red."
+	ammo_type = /obj/item/ammo_casing/rocket/heap
+	color = "#FF0000"
+
+
+//arrow wand
+/obj/item/gun/magic/wand/arrow
+	name = "AWSOME WAND OF BULLET MURDER"
+	desc = "What the fuck? it looks like one of those wands that you buy from the costume vendor but it has a sticker on it that says 'AWSOME WAND OF BULLET MURDER'"
+	ammo_type = /obj/item/ammo_casing/arrow
+
+
+//20mm wand
+/obj/item/gun/magic/wand/anti_tank
+	name = "wand of tank shell"
+	desc = "One of those magic wands you can buy from a costume vendor, this one reaks of gunpowder and has a different aura however, be careful where you aim this"
+	ammo_type = /obj/item/ammo_casing/mm20x138
+	self_charging = TRUE
+
 /obj/item/gun/magic/wand/nothing/do_suicide(mob/living/user)
 	. = ..()
 	return SHAME
+
+// Animating a nothing wand makes it into an animating wand (and also animates it)
+/obj/item/gun/magic/wand/nothing/animate_atom_living(mob/living/owner)
+	var/obj/item/gun/magic/wand/animate/animated_wand = new(loc)
+	animated_wand.charges = charges
+	animated_wand.name = name + "?"
+
+	qdel(src)
+	return animated_wand.animate_atom_living(owner)
+
+/// Also wand of doing fuck all
+/obj/item/gun/magic/wand/nothing/fake_resurrection
+	name = "holy staff"
+	desc = "It's just a fancy staff so that holy clerics and priests look cool. What? You didn't think someone would leave a REAL magic artifact with a snowman out in the cold, did you?"
+	fire_sound = 'sound/effects/magic/staff_healing.ogg'
+	icon_state = "revivewand"
+	base_icon_state = "revivewand"
+	ammo_type = /obj/item/ammo_casing/magic
+
+/obj/item/gun/magic/wand/nothing/fake_resurrection/animate_atom_living(mob/living/owner)
+	return new /mob/living/basic/mimic/copy/ranged(drop_location(), src, owner)
 
 /// Wand of making things small
 /obj/item/gun/magic/wand/shrink

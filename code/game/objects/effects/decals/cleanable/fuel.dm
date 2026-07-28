@@ -82,11 +82,12 @@
 		ignite()
 		log_combat(hit_proj.firer, src, "used [hit_proj] to ignite")
 
-/obj/effect/decal/cleanable/fuel_pool/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(item.ignition_effect(src, user))
-		ignite()
-		log_combat(user, src, "used [item] to ignite")
-	return ..()
+/obj/effect/decal/cleanable/fuel_pool/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.ignition_effect(src, user))
+		return ..()
+	ignite()
+	log_combat(user, src, "used [tool] to ignite")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/effect/decal/cleanable/fuel_pool/proc/on_entered(datum/source, atom/movable/entered_atom)
 	SIGNAL_HANDLER
@@ -99,7 +100,7 @@
 
 	if(isitem(enflammable_atom))
 		var/obj/item/enflamed_item = enflammable_atom
-		if(enflamed_item.get_temperature() > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		if(enflamed_item.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			ignite()
 		return
 	else if(isliving(enflammable_atom))

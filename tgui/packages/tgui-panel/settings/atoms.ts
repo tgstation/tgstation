@@ -17,6 +17,8 @@ export const defaultSettings: SettingsState = {
     visible: false,
     activeTab: SETTINGS_TABS[0].id,
   },
+  websocketEnabled: false,
+  websocketServer: '',
 };
 
 export const defaultHighlightSetting: HighlightSetting = {
@@ -26,6 +28,7 @@ export const defaultHighlightSetting: HighlightSetting = {
   highlightWholeMessage: true,
   matchWord: false,
   matchCase: false,
+  enabled: true,
 };
 
 export const defaultHighlights: HighlightState = {

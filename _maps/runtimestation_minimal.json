@@ -13,7 +13,7 @@
 		"/datum/unit_test/nuke_cinematic",
 		"/datum/unit_test/atmospherics_sanity",
 		"/datum/unit_test/maptest_mapload_space_verification",
-		"/datum/unit_test/modify_fantasy_variable",
-		"/datum/unit_test/create_and_destroy"
-	]
+		"/datum/unit_test/modify_fantasy_variable"
+	],
+	"is_unit_test_map": true
 }

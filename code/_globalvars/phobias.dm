@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	)),
 	"authority" = typecacheof(list(
 		/mob/living/basic/trooper/nanotrasen,
-		/mob/living/simple_animal/bot/secbot,
+		/mob/living/basic/bot/secbot,
 	)),
 	"birds" = typecacheof(list(
 		/mob/living/basic/chick,
@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	"conspiracies" = typecacheof(list(
 		/mob/living/basic/drone,
 		/mob/living/basic/pet/penguin,
-		/mob/living/simple_animal/bot/secbot,
+		/mob/living/basic/bot/secbot,
 	)),
 	"doctors" = typecacheof(list(/mob/living/basic/bot/medbot)),
 	"fish" = typecacheof(list(
@@ -98,9 +98,8 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/drone,
 		/mob/living/silicon/ai,
 		/mob/living/silicon/robot,
-		/mob/living/simple_animal/bot,
 	)),
-	"security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
+	"security" = typecacheof(list(/mob/living/basic/bot/secbot)),
 	"spiders" = typecacheof(list(
 		/mob/living/basic/flesh_spider,
 		/mob/living/basic/mega_arachnid,
@@ -123,7 +122,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/skeleton,
 		/mob/living/basic/wizard,
 		/mob/living/basic/zombie,
-		/mob/living/simple_animal/bot/mulebot/paranormal,
+		/mob/living/basic/bot/mulebot/paranormal,
 		/mob/living/basic/voidwalker,
 	)),
 ))
@@ -174,6 +173,9 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/food/sashimi,
 		/obj/item/highfrequencyblade,
 		/obj/item/katana,
+		/obj/item/storage/belt/sheath/katana,
+		/obj/item/storage/belt/sheath/ninja,
+		/obj/item/storage/belt/sheath/hanzo_katana,
 		/obj/item/nullrod/claymore/katana,
 		/obj/item/nullrod/vibro,
 		/obj/item/reagent_containers/cup/glass/bottle/sake,
@@ -339,7 +341,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/machinery/door/airlock/centcom,
 		/obj/item/clothing/mask/madness_mask,
 		/obj/item/wallframe/painting/eldritch,
-		/obj/item/clothing/neck/heretic_focus/moon_amulet,
+		/obj/item/clothing/neck/moon_amulet,
 		/obj/item/melee/sickly_blade/moon,
 	)),
 	"doctors" = typecacheof(list(
@@ -453,7 +455,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/mmi/posibrain,
 		/obj/item/toy/figure/borg,
 		/obj/item/toy/talking/ai,
-		/obj/machinery/computer/upload,
+		/obj/machinery/ai_law_rack,
 		/obj/machinery/recharge_station,
 		/obj/structure/statue/diamond/ai1,
 		/obj/structure/statue/diamond/ai2,

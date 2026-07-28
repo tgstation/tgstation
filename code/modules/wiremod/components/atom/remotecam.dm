@@ -65,7 +65,7 @@
 	start = add_input_port("Start", PORT_TYPE_SIGNAL)
 	stop = add_input_port("Stop", PORT_TYPE_SIGNAL)
 	if(camera_range_settable)
-		camera_range = add_input_port("Camera Range", PORT_TYPE_NUMBER, default = 0)
+		camera_range = add_input_port("Far Range", PORT_TYPE_BOOLEAN, default = FALSE)
 	network = add_input_port("Network", PORT_TYPE_STRING, default = "ss13")
 
 	if(camera_range_settable)
@@ -189,7 +189,9 @@
 /obj/item/circuit_component/remotecam/proc/update_camera_location(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 	if(current_camera_state && current_cameranet_state)
-		SScameras.update_portable_camera(shell_camera, 0.5 SECONDS)
+		if(!shell_camera?.can_use())
+			return
+		SScameras.camera_moved(shell_camera, get_turf(old_loc), get_turf(shell_camera), 0.5 SECONDS)
 
 /**
  * Add camera from global cameranet
@@ -390,7 +392,7 @@
 		return
 	var/obj/item/organ/cyberimp/bci/bci = shell_parent
 	//If shell is not currently inside a head, or user is currently blind, or user is dead
-	if(!bci.owner || bci.owner.is_blind() || bci.owner.stat >= UNCONSCIOUS)
+	if(!bci.owner || bci.owner.is_blind() || IS_UNCONSCIOUS(bci.owner))
 		close_camera()
 		return
 	var/obj/item/stock_parts/power_store/cell = parent.get_cell()

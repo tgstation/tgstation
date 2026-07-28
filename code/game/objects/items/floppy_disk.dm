@@ -133,7 +133,7 @@
 	read_only = !read_only
 	to_chat(user, span_notice("You flip the write-protect tab to [span_bold("[read_only ? "protected" : "unprotected"]")]."))
 
-/obj/item/disk/click_alt(mob/user)
+/obj/item/disk/click_alt_secondary(mob/user)
 	if(sticker_icon_state != STARTING_STICKER)
 		return CLICK_ACTION_BLOCKING
 
@@ -357,6 +357,21 @@
 /obj/item/delivery/small/floppy/Initialize(mapload)
 	. = ..()
 	new /obj/item/disk/data(src)
+
+/obj/item/disk/manipulator
+	name = "manipulator task disk"
+	desc = "A floppy disk containing manipulator tasks."
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	var/list/tasks_data = list()
+
+/obj/item/disk/manipulator/proc/set_tasks(list/new_tasks_data)
+	if(read_only)
+		return FALSE
+	tasks_data = islist(new_tasks_data) ? new_tasks_data : list()
+	return TRUE
+
+/obj/item/disk/manipulator/proc/get_tasks()
+	return tasks_data?.Copy() || list()
 
 #undef STARTING_STICKER
 #undef MAX_DISK_STACK_SIZE

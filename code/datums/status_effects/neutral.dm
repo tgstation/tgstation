@@ -67,7 +67,7 @@
 /atom/movable/screen/alert/status_effect/in_love
 	name = "In Love"
 	desc = "You feel so wonderfully in love!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "in_love"
 
 /datum/status_effect/in_love
@@ -170,7 +170,7 @@
 /atom/movable/screen/alert/status_effect/heldup
 	name = "Held Up"
 	desc = "Making any sudden moves would probably be a bad idea!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "aimed"
 
 /datum/status_effect/grouped/heldup/on_apply()
@@ -192,7 +192,7 @@
 /atom/movable/screen/alert/status_effect/holdup
 	name = "Holding Up"
 	desc = "You're currently pointing a gun at someone. Click to cancel."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "aimed"
 	clickable_glow = TRUE
 
@@ -214,6 +214,8 @@
 	var/list/possible_takers
 	/// The actual item being offered
 	var/obj/item/offered_item
+	///If we should bypass active_hand checks.
+	var/bypass_active_hand = FALSE
 	/// The type of alert given to people when offered, in case you need to override some behavior (like for high-fives)
 	var/give_alert_type = /atom/movable/screen/alert/give
 
@@ -268,7 +270,7 @@
 /// One of our possible takers moved, see if they left us hanging
 /datum/status_effect/offering/proc/check_taker_in_range(mob/living/taker)
 	SIGNAL_HANDLER
-	if(taker.IsReachableBy(owner) || ((owner.pulling == taker) || (taker.pulling == owner)) && !IS_DEAD_OR_INCAP(taker))
+	if(taker.IsReachableBy(owner) || ((owner.pulling == taker) || (taker.pulling == owner)) && !taker.incapacitated)
 		return
 
 	to_chat(taker, span_warning("You moved out of range of [owner]!"))
@@ -279,7 +281,7 @@
 	SIGNAL_HANDLER
 
 	for(var/mob/living/checking_taker as anything in possible_takers)
-		if(!istype(checking_taker) || (!checking_taker.IsReachableBy(owner) && !((owner.pulling == checking_taker) || (checking_taker.pulling == owner))) || IS_DEAD_OR_INCAP(checking_taker))
+		if(!istype(checking_taker) || (!checking_taker.IsReachableBy(owner) && !((owner.pulling == checking_taker) || (checking_taker.pulling == owner))) || checking_taker.incapacitated)
 			remove_candidate(checking_taker)
 
 /// We lost the item, give it up
@@ -294,10 +296,10 @@
  * Returns `TRUE` if the taker is valid as a target for the offering.
  */
 /datum/status_effect/offering/proc/is_taker_elligible(mob/living/taker)
-	return taker.IsReachableBy(owner) && !IS_DEAD_OR_INCAP(taker) && additional_taker_check(taker)
+	return taker.IsReachableBy(owner) && !taker.incapacitated && additional_taker_check(taker)
 
 /**
- * Additional checks added to `CanReach()` and `IS_DEAD_OR_INCAP()` in `is_taker_elligible()`.
+ * Additional checks added to `CanReach()` and `incapacitated` in `is_taker_elligible()`.
  * Should be what you override instead of `is_taker_elligible()`. By default, checks if the
  * taker can hold items.
  *
@@ -376,7 +378,7 @@
 /atom/movable/screen/alert/status_effect/surrender
 	name = "Surrender"
 	desc = "Looks like you're in trouble now, bud. Click here to surrender. (Warning: You will be incapacitated.)"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "surrender"
 	clickable_glow = TRUE
 
@@ -613,6 +615,30 @@
 	return TRUE
 
 /datum/status_effect/tinlux_light/on_remove()
+	QDEL_NULL(mob_light_obj)
+
+///Makes the mob glow blue and rarely emit nuclear particles
+/datum/status_effect/cherenkov_radiation
+	id = "cherenkov_radiation"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	remove_on_fullheal = TRUE
+	alert_type = null
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
+
+/datum/status_effect/cherenkov_radiation/on_creation(mob/living/new_owner, duration)
+	if(duration)
+		src.duration = duration
+	return ..()
+
+/datum/status_effect/cherenkov_radiation/on_apply()
+	mob_light_obj = owner.mob_light(2, 4, "#33ddff")
+	return TRUE
+
+/datum/status_effect/cherenkov_radiation/tick(seconds_between_ticks)
+	if(prob(3))
+		owner.fire_nuclear_particle()
+
+/datum/status_effect/cherenkov_radiation/on_remove()
 	QDEL_NULL(mob_light_obj)
 
 /datum/status_effect/gutted
@@ -867,3 +893,28 @@
 		owner.add_mood_event("[id]_[moodlet_type]", moodlet_type)
 	else
 		owner.clear_mood_event("[id]_[moodlet_type]")
+
+/datum/status_effect/admin_esp
+	id = "admin_esp"
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+	/// What the mob's see_invisible should be once this status effect is removed
+	VAR_PRIVATE/real_invis_see
+
+/datum/status_effect/admin_esp/on_apply()
+	real_invis_see = owner.see_invisible
+	owner.set_invis_see(SEE_INVISIBLE_ADMIN)
+	RegisterSignal(owner, COMSIG_MOB_SEE_INVIS_CHANGE, PROC_REF(on_invis_changed))
+	return TRUE
+
+/datum/status_effect/admin_esp/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_SEE_INVIS_CHANGE)
+	owner.set_invis_see(real_invis_see) // restore our 'real' invis_see
+
+/// Whenever our invis_see updates from some other source, keep real_invis_see up to date
+/datum/status_effect/admin_esp/proc/on_invis_changed(datum/source, see_invis, old_invis)
+	SIGNAL_HANDLER
+
+	real_invis_see = see_invis

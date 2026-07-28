@@ -1,0 +1,36 @@
+{
+	"dm_type": "/datum/bt_node/subtree/cat_hunt_mice",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/cat_holding_food",
+	"vars": {
+		"invert": true
+	},
+	"child": {
+		"type": "decorator",
+		"decorator": "/datum/bt_node/decorator/bb_key_set",
+		"vars": {
+			"key": "BB_MOUSE_TARGET",
+			"observer_abort": "BT_ABORT_BOTH"
+		},
+		"child": {
+			"type": "sequence",
+			"children": [
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+					"vars": {
+						"target_key": "BB_MOUSE_TARGET",
+						"required_dist": 1
+					}
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/play_with_mouse",
+					"vars": {
+						"target_key": "BB_MOUSE_TARGET"
+					}
+				}
+			]
+		}
+	}
+}

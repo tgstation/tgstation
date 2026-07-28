@@ -359,6 +359,8 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 
 /datum/action/spawn_light/Trigger(mob/clicker, trigger_flags)
 	. = ..()
+	if(!.)
+		return
 	ui_interact(usr)
 
 /datum/action/spawn_light/ui_state(mob/user)

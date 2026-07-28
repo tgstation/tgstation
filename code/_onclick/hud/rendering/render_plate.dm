@@ -72,6 +72,95 @@
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE_BLOOM, offset), blend_override = BLEND_MULTIPLY)
 
+/atom/movable/screen/plane_master/rendering_plate/particle_weather
+	name = "Particle Weather Holder Plate"
+	documentation = "Plane used to render particle weather, masked by WEATHER_MASK_PLANE. \
+		Cannot be a single screen object as it needs to be a planemaster in order to be properly masked by the weather mask."
+	plane = RENDER_PLANE_PARTICLE_WEATHER
+	start_hidden = TRUE
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	// We can actually do this just fine as we do not render anything onto ourselves but our particles
+	add_filter("weather_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(WEATHER_MASK_RENDER_TARGET, offset)))
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/Destroy()
+	SSweather.particle_planemasters -= src
+	return ..()
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(!.)
+		return
+	home.AddComponent(/datum/component/hide_weather_planes, src)
+	RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+	if (home.our_hud)
+		attach_hud(home.our_hud)
+	update_state(home.our_hud?.mymob)
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
+	SIGNAL_HANDLER
+	if (old_hud)
+		UnregisterSignal(old_hud, COMSIG_HUD_Z_CHANGED)
+	attach_hud(new_hud)
+	update_state(new_hud?.mymob)
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/attach_hud(datum/hud/new_hud)
+	RegisterSignal(new_hud, COMSIG_HUD_Z_CHANGED, PROC_REF(z_changed))
+	var/mob/eye = new_hud?.mymob?.client?.eye
+	var/turf/eye_location = get_turf(eye)
+	z_changed(new_hud, eye_location?.z)
+
+/// Updates ourselves based on our mob's preferences state
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/update_state(mob/mymob)
+	SSweather.particle_planemasters -= src
+	vis_contents.Cut()
+
+	if(!istype(mymob) || !mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/particle_weather))
+		return
+
+	SSweather.particle_planemasters += src
+
+	// Lobby HUDs, we don't care about weather during init anyways
+	if(!SSmapping.initialized)
+		return
+
+	var/list/stack_levels = SSmapping.get_connected_levels(get_turf(mymob.client?.eye || mymob))
+	// And add all ongoing weather to ourselves
+	for (var/holder_offset, holder_list in SSweather.particle_holders)
+		for (var/obj/effect/abstract/weather_holder/holder as anything in holder_list)
+			// Only display particles from the same Z-stack as our mob's
+			if (holder.plane == plane && length(holder_list[holder] & stack_levels))
+				vis_contents += holder
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/z_changed(datum/source, new_z)
+	SIGNAL_HANDLER
+
+	if(!SSmapping.initialized)
+		return
+
+	var/list/stack_levels = SSmapping.get_connected_levels(new_z)
+	for (var/holder_offset, holder_list in SSweather.particle_holders)
+		for (var/obj/effect/abstract/weather_holder/holder as anything in holder_list)
+			if (holder.plane != plane)
+				continue
+
+			if (length(holder_list[holder] & stack_levels))
+				vis_contents |= holder
+			else
+				vis_contents -= holder
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/emissive
+	name = "Emissive Particle Weather Holder Plate"
+	documentation = "Secondary particle weather plane for emissive parts of weather, which is additionally rendered onto the emissive plane after being masked."
+	plane = RENDER_PLANE_EMISSIVE_PARTICLE_WEATHER
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/emissive/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	// Render a copy of ourselves onto the emissive plane encoded into the bloom channel
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_PLANE, offset), relay_color = GLOB.emissive_color)
+
 /atom/movable/screen/plane_master/rendering_plate/turf_lighting
 	name = "Turf lighting post-processing plate"
 	documentation = "Used by overlay lighting, and possibly over plates, to mask out turf lighting."
@@ -132,7 +221,7 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_ADD
-	render_relay_planes = list(O_LIGHTING_VISUAL_PLANE)
+	render_relay_planes = list(RENDER_PLANE_O_LIGHTING)
 	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/rendering_plate/emissive_bloom/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
@@ -154,6 +243,35 @@
 	render_target = SPECULAR_MASK_RENDER_TARGET
 	render_relay_planes = list()
 	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/overlay_light
+	name = "Overlight plate"
+	documentation = "Combines overlay lights with emissives.\
+		<br>We draw to the generic lighting plate, do some funky stuff with turf lighting to sort of \"cut out\" a bit of space for ourselves there, and do some junk to speculars"
+	plane = RENDER_PLANE_O_LIGHTING
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	blend_mode = BLEND_ADD
+	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/overlay_light/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	// I'd love for this to be HSL but filters don't work with blend modes
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_TURF_LIGHTING, offset), BLEND_MULTIPLY, relay_color = list(
+		-1, -1, -1, 0,
+		-1, -1, -1, 0,
+		-1, -1, -1, 0,
+		0, 0, 0, OVERLAY_LIGHTING_WEIGHT,
+		1, 1, 1, 0,
+	))
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_SPECULAR, offset), relay_color = list(
+		SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0, 0, 0,
+		0, SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0, 0,
+		0, 0, SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0,
+		0, 0, 0, 1,
+		-SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, 0,
+	))
 
 /atom/movable/screen/plane_master/rendering_plate/specular
 	name = "Specular plate"
@@ -202,6 +320,12 @@
 	add_filter("emissives", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_RENDER_TARGET, offset), flags = MASK_INVERSE))
 	set_light_cutoff(10)
 
+/atom/movable/screen/plane_master/rendering_plate/lighting/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(home)
+		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+		hud_changed(null, null, home.our_hud)
+
 /atom/movable/screen/plane_master/rendering_plate/lighting/show_to(mob/mymob)
 	. = ..()
 	if(!.)
@@ -217,23 +341,20 @@
 	backdrop = mymob.overlay_fullscreen("lighting_backdrop_unlit_[home.key]#[offset]", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
 	SET_PLANE_EXPLICIT(backdrop, PLANE_TO_TRUE(backdrop.plane), src)
 
-	// Sorry, this is a bit annoying
-	// Basically, we only want the lighting plane we can actually see to attempt to render
-	// If we don't our lower plane gets totally overriden by the black void of the upper plane
-	var/datum/hud/hud = home.our_hud
-	// show_to can be called twice successfully with no hide_from call. Ensure no runtimes off the registers from this
-	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change), override = TRUE)
-	offset_change(hud?.current_plane_offset || 0)
 	set_light_cutoff(mymob.lighting_cutoff, mymob.lighting_color_cutoffs)
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/hide_from(mob/oldmob)
 	. = ..()
 	oldmob.clear_fullscreen("lighting_backdrop_lit_[home.key]#[offset]")
 	oldmob.clear_fullscreen("lighting_backdrop_unlit_[home.key]#[offset]")
-	var/datum/hud/hud = home.our_hud
-	if(hud)
-		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+
+/atom/movable/screen/plane_master/rendering_plate/lighting/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
+	SIGNAL_HANDLER
+	if(old_hud)
+		UnregisterSignal(old_hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+	if(new_hud)
+		RegisterSignal(new_hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+	offset_change(new_hud?.current_plane_offset || 0)
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/proc/on_offset_change(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER
@@ -442,26 +563,22 @@
 	plane = RENDER_PLANE_MASTER
 	render_relay_planes = list()
 
-/atom/movable/screen/plane_master/rendering_plate/master/show_to(mob/mymob)
+/atom/movable/screen/plane_master/rendering_plate/master/set_home(datum/plane_master_group/home)
 	. = ..()
-	if(!.)
-		return
-	if(offset == 0)
-		return
 	// Non 0 offset render plates will relay up to the transparent plane above them, assuming they're not on the same z level as their target of course
-	var/datum/hud/hud = home.our_hud
-	// show_to can be called twice successfully with no hide_from call. Ensure no runtimes off the registers from this
-	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change), override = TRUE)
-	offset_change(hud?.current_plane_offset || 0)
-
-/atom/movable/screen/plane_master/rendering_plate/master/hide_from(mob/oldmob)
-	. = ..()
 	if(offset == 0)
 		return
-	var/datum/hud/hud = home.our_hud
-	if(hud)
-		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+	if(home)
+		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+		hud_changed(null, null, home.our_hud)
+
+/atom/movable/screen/plane_master/rendering_plate/master/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
+	SIGNAL_HANDLER
+	if(old_hud)
+		UnregisterSignal(old_hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+	if(new_hud)
+		RegisterSignal(new_hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+	offset_change(new_hud?.current_plane_offset || 0)
 
 /atom/movable/screen/plane_master/rendering_plate/master/proc/on_offset_change(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER
@@ -506,6 +623,8 @@
 /atom/movable/screen/plane_master/proc/add_relay_to(target_plane, blend_override, relay_layer, relay_color)
 	if(get_relay_to(target_plane))
 		return
+	if(!offset_already_updated)
+		CRASH("Attempted to draw a render relay before our offset has been applied, this WILL break")
 	render_relay_planes += target_plane
 	var/client/display_lad = home?.our_hud?.mymob?.canon_client
 	var/atom/movable/render_plane_relay/relay = generate_relay_to(target_plane, show_to = display_lad, blend_override = blend_override, relay_layer = relay_layer)

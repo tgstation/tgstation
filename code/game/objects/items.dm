@@ -6,6 +6,7 @@
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	burning_particles = /particles/smoke/burning/small
 	pass_flags_self = PASSITEM
+	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
 
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
 
@@ -171,6 +172,8 @@
 	var/list/species_exception = null
 	///This is a bitfield that defines what variations exist for bodyparts like Digi legs. See: code\_DEFINES\inventory.dm
 	var/supports_variations_flags = NONE
+	/// This is a bitfield that defines which bodyshapes this item is capable of rendering, used by build_worn_icon()
+	var/bodyshapes_with_variations = NONE
 
 	///Items can by default thrown up to 10 tiles by TK users
 	tk_throw_range = 10
@@ -256,7 +259,7 @@
 
 	// Handle adding item associated actions
 	for(var/path in actions_types)
-		add_item_action(path)
+		INVOKE_ASYNC(src, PROC_REF(add_item_action), path)
 	actions_types = null
 
 	if(force_string)
@@ -365,7 +368,7 @@
 	return TRUE
 
 /obj/item/blob_act(obj/structure/blob/B)
-	if(B && B.loc == loc)
+	if(B && B.loc == loc && !(resistance_flags & INDESTRUCTIBLE))
 		atom_destruction(MELEE)
 
 /**Makes cool stuff happen when you suicide with an item
@@ -398,12 +401,9 @@
 	if(greyscale_config_inhand_right)
 		righthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_right, greyscale_colors)
 
-/obj/item/verb/move_to_top()
-	set name = "Move To Top"
-	set category = "Object"
-	set src in oview(1)
+GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", null)
 
-	if(!isturf(loc) || usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || anchored)
+	if(!isturf(loc) || IS_UNCONSCIOUS_OR_CRIT(usr) || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || anchored)
 		return
 
 	if(isliving(usr))
@@ -423,7 +423,8 @@
 
 	if(item_flags & CRUEL_IMPLEMENT)
 		.[span_red("morbid")] = "It seems quite practical for particularly morbid procedures and experiments."
-
+	if(item_flags & BLUESPACE_INTERFERENCE)
+		.["bluespace-active"] = "It is highly active in bluespace and will cause malfunctions in teleporters."
 	if (siemens_coefficient == 0)
 		.["insulated"] = "It is made from a robust electrical insulator and will block any electricity passing through it!"
 	else if (siemens_coefficient <= 0.5)
@@ -479,10 +480,6 @@
 		research_msg += "None"
 	research_msg += "."
 	return research_msg.Join()
-
-/obj/item/interact(mob/user)
-	add_fingerprint(user)
-	ui_interact(user)
 
 /obj/item/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	add_fingerprint(usr)
@@ -823,10 +820,7 @@
 
 	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self, ignore_equipped, indirect_action = indirect_action)
 
-/obj/item/verb/verb_pickup()
-	set src in oview(1)
-	set category = "Object"
-	set name = "Pick up"
+GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 
 	if(usr.incapacitated || !Adjacent(usr))
 		return
@@ -837,7 +831,7 @@
 			return
 
 	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota
-		usr.UnarmedAttack(src)
+		usr.UnarmedAttack(src, TRUE)
 
 /**
  *This proc is executed when someone clicks the on-screen UI button.
@@ -961,21 +955,18 @@
 		. = SFX_DESECRATION
 
 /// Creates an ignition hotspot if item is lit and located on turf, in mask, or in hand
-/obj/item/proc/open_flame(flame_heat=700)
+/obj/item/proc/open_flame(flame_heat = 700, mob_slots = ITEM_SLOT_MASK|ITEM_SLOT_HANDS)
 	var/turf/location = loc
 	if(ismob(location))
 		var/mob/pyromanic = location
-		var/success = FALSE
-		if(src == pyromanic.get_item_by_slot(ITEM_SLOT_MASK) || (src in pyromanic.held_items))
-			success = TRUE
-		if(success)
+		if((pyromanic.get_slot_by_item(src) & mob_slots))
 			location = get_turf(pyromanic)
 	if(isturf(location))
 		location.hotspot_expose(flame_heat, 5)
 
 /// If an object can successfully be used as a fire starter it will return a message
 /obj/item/proc/ignition_effect(atom/A, mob/user)
-	if(get_temperature())
+	if(get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		. = span_notice("[user] lights [A] with [src].")
 	else
 		. = ""
@@ -1016,14 +1007,26 @@
 	return SEND_SIGNAL(src, COMSIG_ITEM_MICROWAVE_ACT, microwave_source, microwaver, randomize_pixel_offset)
 
 ///Used to check for extra requirements for blending(grinding or juicing) an object
-/obj/item/proc/blend_requirements(obj/machinery/reagentgrinder/R)
+/obj/item/proc/blend_requirements(atom/movable/grinder, mob/living/user)
 	return TRUE
 
 ///Returns a reagent list containing the reagents this item produces when ground up in a grinder
 /obj/item/proc/grind_results()
 	RETURN_TYPE(/list/datum/reagent)
+	if (!length(custom_materials) || (material_flags & MATERIAL_NO_REAGENTS))
+		return null
 
-	return null
+	. = list()
+	for (var/mat_id, amount in custom_materials)
+		var/datum/material/material = SSmaterials.get_material(mat_id)
+		if (!material.material_reagent)
+			continue
+		if (!islist(material.material_reagent))
+			.[material.material_reagent] = .[material.material_reagent] + amount * MATERIAL_REAGENTS_PER_SHEET / SHEET_MATERIAL_AMOUNT
+			continue
+		for (var/reagent_type in material.material_reagent)
+			.[reagent_type] = .[reagent_type] + amount * material.material_reagent[reagent_type] / length(material.material_reagent) * MATERIAL_REAGENTS_PER_SHEET / SHEET_MATERIAL_AMOUNT
+	return .
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_grind()
@@ -1395,7 +1398,7 @@
 				found_mats++
 
 		//if there's glass in it and the glass is more than 60% of the item, then we can shatter it
-		if(custom_materials[GET_MATERIAL_REF(/datum/material/glass)] >= total_material_amount * 0.60)
+		if(custom_materials[SSmaterials.get_material(/datum/material/glass)] >= total_material_amount * 0.60)
 			if(prob(66)) //66% chance to break it
 				// The glass shard that is spawned into the source item
 				var/obj/item/shard/broken_glass = new /obj/item/shard(loc)
@@ -1491,7 +1494,7 @@
  * * taker - the living mob trying to accept the offer
  */
 /obj/item/proc/on_offer_taken(mob/living/offerer, mob/living/taker)
-	if(!(HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS) && HAS_TRAIT(taker, TRAIT_CAN_HOLD_ITEMS)))
+	if(!HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS) && !HAS_TRAIT(src, TRAIT_BORG_GIVE) && HAS_TRAIT(taker, TRAIT_CAN_HOLD_ITEMS))
 		return TRUE // both must be able to hold items for this to make sense
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
@@ -1506,6 +1509,7 @@
 		if(!istype(loc, /turf))
 			return
 		source = loc
+	SEND_SIGNAL(src, COMSIG_ITEM_BEFORE_PICKUP_ANIMATION)
 	var/image/pickup_animation = image(icon = src)
 	SET_PLANE(pickup_animation, GAME_PLANE, source)
 	pickup_animation.transform.Scale(0.75)
@@ -1542,6 +1546,7 @@
 	if(!istype(moving_from))
 		return
 
+	SEND_SIGNAL(src, COMSIG_ITEM_BEFORE_DROP_ANIMATION)
 	var/turf/current_turf = get_turf(src)
 	var/direction = get_dir(moving_from, current_turf)
 	var/from_x = moving_from.base_pixel_x
@@ -1764,7 +1769,7 @@
 /// Common proc used by painting tools like spraycans and palettes that can access the entire 24 bits color space.
 /obj/item/proc/pick_painting_tool_color(mob/user, default_color)
 	var/chosen_color = tgui_color_picker(user, "Pick new color", "[src]", default_color)
-	if(!chosen_color || QDELETED(src) || IS_DEAD_OR_INCAP(user) || !user.is_holding(src))
+	if(!chosen_color || QDELETED(src) || user.incapacitated || !user.is_holding(src))
 		return
 	set_painting_tool_color(chosen_color)
 
@@ -1824,7 +1829,7 @@
 		if(ishuman(target))
 			var/mob/living/carbon/human/victim_human = target
 			if(victim_human.key && !victim_human.client) // AKA braindead
-				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
+				if(!IS_UNCONSCIOUS(victim_human) && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
 					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
 					LAZYADD(victim_human.afk_thefts, new_entry)
 
@@ -1933,9 +1938,9 @@
 			return TRUE
 	return FALSE
 
-/obj/item/apply_main_material_effects(datum/material/main_material, amount, multipier)
+/obj/item/apply_main_material_effects(datum/material/main_material, amount, multiplier)
 	. = ..()
-	if(material_flags & MATERIAL_GREYSCALE)
+	if (material_flags & MATERIAL_GREYSCALE)
 		var/main_mat_type = main_material.type
 		var/worn_path = get_material_greyscale_config(main_mat_type, greyscale_config_worn)
 		var/lefthand_path = get_material_greyscale_config(main_mat_type, greyscale_config_inhand_left)
@@ -1945,8 +1950,16 @@
 			new_inhand_left = lefthand_path,
 			new_inhand_right = righthand_path
 		)
-	if(!main_material.item_sound_override)
+
+	if ((material_flags & MATERIAL_AFFECT_STATISTICS) && !(material_flags & MATERIAL_NO_SLOWDOWN))
+		var/flexibility = main_material.get_property(MATERIAL_FLEXIBILITY)
+		// If the item applies slowdown only when worn, poor flexibility will increase our slowdown
+		if (!(item_flags & SLOWS_WHILE_IN_HAND) && flexibility < 6)
+			slowdown = max(slowdown >= 0 ? 0 : slowdown, slowdown + (flexibility - 6) * 0.025 * multiplier)
+
+	if (!main_material.item_sound_override)
 		return
+
 	hitsound = main_material.item_sound_override
 	usesound = main_material.item_sound_override
 	mob_throw_hit_sound = main_material.item_sound_override
@@ -1954,16 +1967,24 @@
 	pickup_sound = main_material.item_sound_override
 	drop_sound = main_material.item_sound_override
 
-/obj/item/remove_main_material_effects(datum/material/main_material, amount, multipier)
+/obj/item/remove_main_material_effects(datum/material/main_material, amount, multiplier)
 	. = ..()
-	if(material_flags & MATERIAL_GREYSCALE)
+	if (material_flags & MATERIAL_GREYSCALE)
 		set_greyscale(
 			new_worn_config = initial(greyscale_config_worn),
 			new_inhand_left = initial(greyscale_config_inhand_left),
 			new_inhand_right = initial(greyscale_config_inhand_right)
 		)
-	if(!main_material.item_sound_override)
+
+	if ((material_flags & MATERIAL_AFFECT_STATISTICS) && !(material_flags & MATERIAL_NO_SLOWDOWN))
+		var/flexibility = main_material.get_property(MATERIAL_FLEXIBILITY)
+		// If the item applies slowdown only when worn, poor flexibility will increase our slowdown
+		if (!(item_flags & SLOWS_WHILE_IN_HAND) && flexibility < 6)
+			slowdown = min(initial(slowdown), slowdown - (flexibility - 6) * 0.025 * multiplier)
+
+	if (!main_material.item_sound_override)
 		return
+
 	hitsound = initial(hitsound)
 	usesound = initial(usesound)
 	mob_throw_hit_sound = initial(mob_throw_hit_sound)
@@ -1973,15 +1994,147 @@
 
 /obj/item/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || (material_flags & MATERIAL_NO_SLOWDOWN) || !material.added_slowdown)
+	if (!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
-	slowdown += GET_MATERIAL_MODIFIER(material.added_slowdown * mat_amount, multiplier)
+
+	var/siemens_modifier = material.get_property(MATERIAL_INSULATION)
+	// Cannot use the base formula as it would make any item with glass not conduct electricity
+	if (siemens_modifier > 1)
+		siemens_coefficient *= 1 + (siemens_modifier - 1) * multiplier
+	else
+		siemens_coefficient *= max(0, 1 - (1 - siemens_modifier) * multiplier)
+
+	if (siemens_coefficient == 0)
+		obj_flags &= ~CONDUCTS_ELECTRICITY
+
+	if (!(material_flags & MATERIAL_NO_SLOWDOWN))
+		change_material_slowdown(material, mat_amount, multiplier)
 
 /obj/item/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || (material_flags & MATERIAL_NO_SLOWDOWN) || !material.added_slowdown)
+	if (!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
-	slowdown -= GET_MATERIAL_MODIFIER(material.added_slowdown * mat_amount, multiplier)
+
+	var/siemens_modifier = material.get_property(MATERIAL_INSULATION)
+	// Cannot use the base formula as it would make any item with glass not conduct electricity
+	if (siemens_modifier > 1)
+		siemens_coefficient /= 1 + (siemens_modifier - 1) * multiplier
+	else
+		var/used_mult = 1 - (1 - siemens_modifier) * multiplier
+		if (used_mult > 0) // Perfect insulators need to be restored in finalize
+			siemens_coefficient /= used_mult
+
+	if (siemens_coefficient > 0 && (initial(obj_flags) & CONDUCTS_ELECTRICITY) && !(obj_flags & CONDUCTS_ELECTRICITY))
+		obj_flags |= CONDUCTS_ELECTRICITY
+
+	if (!(material_flags & MATERIAL_NO_SLOWDOWN))
+		change_material_slowdown(material, mat_amount, multiplier, removing = TRUE)
+
+/obj/item/proc/change_material_slowdown(datum/material/material, mat_amount, multiplier, removing = FALSE)
+	// Density above 6 adds slowdown, density below 3 can reduce existing slowdown
+	var/density = material.get_property(MATERIAL_DENSITY)
+	var/slowdown_change = 0
+
+	if (density > 6)
+		slowdown_change = (density - 6) * MATERIAL_DENSITY_SLOWDOWN * mat_amount / SHEET_MATERIAL_AMOUNT
+	else if (density < 4)
+		slowdown_change = (4 - density) * -MATERIAL_DENSITY_SLOWDOWN * mat_amount / SHEET_MATERIAL_AMOUNT
+
+	if (!removing)
+		// Slowdown cannot be reduced below 0 if the item slows you down, or at all if the item speeds you up
+		if (slowdown_change)
+			slowdown = max(slowdown >= 0 ? 0 : slowdown, slowdown + slowdown_change * multiplier)
+		return
+
+	if (slowdown_change > 0)
+		slowdown -= slowdown_change * multiplier
+	else if (slowdown_change < 0)
+		// Not guaranteed to be correct if something modified our slowdown buuuut about as good as we can get
+		slowdown = min(initial(slowdown), slowdown - slowdown_change * multiplier)
+
+/obj/item/finalize_remove_material_effects(list/materials)
+	. = ..()
+	if (!(material_flags & MATERIAL_AFFECT_STATISTICS) || initial(siemens_coefficient) == 0 || siemens_coefficient != 0)
+		return
+	// If we were made from an insulator we cannot restore via division
+	siemens_coefficient = initial(siemens_coefficient)
+	if (siemens_coefficient > 0 && (initial(obj_flags) & CONDUCTS_ELECTRICITY) && !(obj_flags & CONDUCTS_ELECTRICITY))
+		obj_flags |= CONDUCTS_ELECTRICITY
+
+/obj/item/change_material_strength(datum/material/material, mat_amount, multiplier, remove = FALSE)
+	var/force_mod = get_material_force_modifier(material)
+	var/throwforce_mod = get_material_throwforce_modifier(material)
+
+	if (!remove)
+		force *= GET_MATERIAL_MODIFIER(force_mod, multiplier)
+		throwforce *= GET_MATERIAL_MODIFIER(throwforce_mod, multiplier)
+	else
+		force /= GET_MATERIAL_MODIFIER(force_mod, multiplier)
+		throwforce /= GET_MATERIAL_MODIFIER(throwforce_mod, multiplier)
+
+/// Returns a force multiplier from a material for a given sharpness
+/obj/item/proc/get_material_force_modifier(datum/material/material, item_sharpness = get_sharpness())
+	var/density = material.get_property(MATERIAL_DENSITY)
+	var/hardness = material.get_property(MATERIAL_HARDNESS)
+	var/flexibility = material.get_property(MATERIAL_FLEXIBILITY)
+	var/force_mod = 1
+	switch (item_sharpness)
+		if (NONE)
+			// Blunt items are really hurt by all the flexing
+			force_mod = (1 + (density - 4) * 0.1) / (1 + flexibility * 0.1)
+
+		if (SHARP_EDGED)
+			// Sharp items don't care about density and need high hardness to get a real bonus, but can tolerate (and benefit from) some flex
+			force_mod = 1 + (hardness - 4) * 0.1
+
+			// Peaks out at 20% at flexibility of 1, drops off up to -80% at 10
+			if (flexibility < 2)
+				force_mod *= 1 + (1 - abs(1 - flexibility)) * 0.2
+			else
+				force_mod *= 1 - (flexibility - 2) * 0.1
+
+		if (SHARP_POINTY)
+			// Pointy items care about both density and hardness
+			force_mod = 1 + MATERIAL_PROPERTY_DIVERGENCE(density, 4, 6) * 0.05 + (hardness - 4) * 0.1
+			// But are not affected by flexibility until higher values, although they don't benefit from it either
+			if (flexibility > 4)
+				force_mod *= (1 - (flexibility - 4) * 0.2)
+
+	// Just for sanity in case something breaks
+	force_mod = round(clamp(force_mod, MATERIAL_MIN_FORCE_MULTIPLIER, MATERIAL_MAX_FORCE_MULTIPLIER), 0.01)
+	return force_mod
+
+/// Returns a force multiplier from a material for a given sharpness
+/obj/item/proc/get_material_throwforce_modifier(datum/material/material, item_sharpness = get_sharpness())
+	var/density = material.get_property(MATERIAL_DENSITY)
+	var/hardness = material.get_property(MATERIAL_HARDNESS)
+	var/flexibility = material.get_property(MATERIAL_FLEXIBILITY)
+	var/throwforce_mod = 1
+	switch (item_sharpness)
+		if (NONE)
+			// Blunt items are really hurt by all the flexing
+			throwforce_mod = 1 + (density - 4) * 0.1 - flexibility * 0.1
+
+		if (SHARP_EDGED)
+			// Sharp items don't care about density and need high hardness to get a real bonus, but can tolerate (and benefit from) some flex
+			throwforce_mod = 1 + (hardness - 4) * 0.1
+
+			// Peaks out at 20% at flexibility of 1, drops off up to -80% at 10
+			if (flexibility < 2)
+				throwforce_mod += (1 - abs(1 - flexibility)) * 0.2
+			else
+				throwforce_mod -= (flexibility - 2) * 0.1
+
+		if (SHARP_POINTY)
+			// Pointy items care about both density and hardness
+			throwforce_mod = 1 + MATERIAL_PROPERTY_DIVERGENCE(density, 4, 6) * 0.05 * 0.05 + (hardness - 4) * 0.1
+			// But are not affected by flexibility until higher values, although they don't benefit from it either
+			if (flexibility > 4)
+				throwforce_mod -= (flexibility - 4) * 0.2
+
+	// Just for sanity in case something breaks
+	throwforce_mod = round(clamp(throwforce_mod, MATERIAL_MIN_FORCE_MULTIPLIER, MATERIAL_MAX_FORCE_MULTIPLIER), 0.01)
+	return throwforce_mod
 
 /**
  * Returns the atom(either itself or an internal module) that will interact/attack the target on behalf of us
@@ -2075,7 +2228,7 @@
 		return FALSE
 
 	if (!istype(target_limb))
-		target_limb = victim.get_bodypart(target_limb) || victim.bodyparts[1]
+		target_limb = victim.get_bodypart(target_limb) || victim.get_bodypart()
 
 	return get_embed()?.embed_into(victim, target_limb)
 

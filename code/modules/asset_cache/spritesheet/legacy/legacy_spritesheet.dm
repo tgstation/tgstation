@@ -10,7 +10,7 @@
 
 /// Deprecated: Use /datum/asset/spritesheet_batched where possible
 /datum/asset/spritesheet
-	_abstract = /datum/asset/spritesheet
+	abstract_type = /datum/asset/spritesheet
 	cross_round_cachable = TRUE
 	var/name
 	/// List of arguments to pass into queuedInsert
@@ -408,7 +408,7 @@
 /// Spritesheet that only uses simple PNGs and CSS keys. See `assets` variable.
 /// Deprecated: Use /datum/asset/spritesheet_batched where possible
 /datum/asset/spritesheet/simple
-	_abstract = /datum/asset/spritesheet/simple
+	abstract_type = /datum/asset/spritesheet/simple
 	/// Associative list of icon keys (CSS class names) -> PNG filepaths (single quote!)
 	/// File paths MUST be PNGs
 	var/list/assets

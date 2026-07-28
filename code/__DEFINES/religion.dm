@@ -68,3 +68,20 @@
 #define RITE_ALLOW_MULTIPLE_PERFORMS (1<<1)
 ///The rite can only be fully performed once, so we'll completely remove it from the rite list afterwards.
 #define RITE_ONE_TIME_USE (1<<2)
+
+///Default prayer type for the pray verb
+#define DEFAULT_PRAYER "PRAYER"
+///Cult prayer type
+#define CULT_PRAYER "CULTIST PRAYER"
+//Heretic prayer type
+#define HERETIC_PRAYER "HERETICAL PRAYER"
+///Chaplain prayer type
+#define CHAPLAIN_PRAYER "CHAPLAIN PRAYER"
+///Spiritual prayer type
+#define SPIRITUAL_PRAYER "SPIRITUAL PRAYER"
+///Evil prayer type
+#define EVIL_PRAYER "EVIL PRAYER"
+///Standard prayer type that santa sees
+#define SANTA_PRAYER "PRAYER"
+///what type of prayer santa sees when someone's bad
+#define SANTA_NAUGHTY_PRAYER "PRAYER (NAUGHTY)"

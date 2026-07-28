@@ -43,6 +43,7 @@
 			seed.prepare_result(src)
 		transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5
 		add_juice()
+	ADD_TRAIT(src, TRAIT_VALID_DNA_INFUSION, INNATE_TRAIT)
 
 /obj/item/grown/Destroy()
 	if(isatom(seed))

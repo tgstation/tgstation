@@ -19,6 +19,9 @@
 	return TRUE
 
 /datum/action/changeling_expel_worm/Trigger(mob/clicker, trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	var/mob/living/basic/blood_worm/invader = locate() in owner.loc
 	to_chat(owner, span_danger("You expel \the [invader] from your body!"))
 	to_chat(invader, span_userdanger("You are forcefully expelled by the body of \the [owner.loc]!"))

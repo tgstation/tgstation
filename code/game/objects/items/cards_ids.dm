@@ -35,7 +35,7 @@
 	///What is our honorific name/title combo to be displayed?
 	var/honorific_title
 
-/obj/item/card/suicide_act(mob/living/carbon/user)
+/obj/item/card/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to swipe [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
@@ -68,6 +68,8 @@
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	armor_type = /datum/armor/card_id
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	item_flags = parent_type::item_flags | NO_MAT_REDEMPTION // A little clemency to the people who fumble and misclick stuff, even if it's already easy enough to destroy one.
 
 	/// The name registered on the card (for example: Dr Bryan See)
 	var/registered_name = null
@@ -171,25 +173,19 @@
 	return ..()
 
 /obj/item/card/id/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
-	if (isitem(old_loc))
-		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-		if (ismob(old_loc.loc))
-			UnregisterSignal(old_loc.loc, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
+	if(isitem(old_loc))
+		unequip_from_item_loc(old_loc)
 	. = ..()
-	if (!isitem(loc))
-		return
-	RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped))
-	RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(on_loc_dropped))
-	if (ismob(loc.loc))
-		var/mob/wearer = loc.loc
-		// Equip chain shenanigans
-		UnregisterSignal(wearer, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
-		on_loc_equipped(loc, wearer, wearer.get_slot_by_item(loc))
+	if(isitem(loc))
+		equip_to_item_loc(loc)
 
 /obj/item/card/id/equipped(mob/user, slot)
 	. = ..()
 	if (slot & ITEM_SLOT_ID)
 		RegisterSignal(user, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
+		if(ishuman(user))
+			var/mob/living/carbon/human/as_human = user
+			as_human.update_visible_name()
 	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
 		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 	if (slot & ITEM_SLOT_POCKETS)
@@ -198,15 +194,12 @@
 
 /obj/item/card/id/dropped(mob/user)
 	UnregisterSignal(user, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
-	return ..()
-
-/obj/item/card/id/equipped(mob/user, slot, initial = FALSE)
-	. = ..()
-	if(!(slot & ITEM_SLOT_ID))
-		return
+	if(isitem(loc))
+		equip_to_item_loc(loc) // "dropped" into an item, like a worn wallet
 	if(ishuman(user))
 		var/mob/living/carbon/human/as_human = user
 		as_human.update_visible_name()
+	return ..()
 
 /obj/item/card/id/dropped(mob/user, silent = FALSE)
 	. = ..()
@@ -219,6 +212,22 @@
 	if(honorifics && honorific_position != HONORIFIC_POSITION_NONE && honorific_title)
 		return honorific_title
 	return registered_name
+
+/// ID card is being equipped to an item (like a pda or wallet)
+/obj/item/card/id/proc/equip_to_item_loc(atom/new_loc)
+	RegisterSignal(new_loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped), override = TRUE)
+	RegisterSignal(new_loc, COMSIG_ITEM_DROPPED, PROC_REF(on_loc_dropped), override = TRUE)
+	if (ismob(new_loc.loc))
+		var/mob/wearer = new_loc.loc
+		// Equip chain shenanigans
+		UnregisterSignal(wearer, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
+		on_loc_equipped(new_loc, wearer, wearer.get_slot_by_item(new_loc))
+
+/// ID card is being unequipped from an item (like a pda or wallet)
+/obj/item/card/id/proc/unequip_from_item_loc(atom/old_loc)
+	UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	if (ismob(old_loc.loc))
+		UnregisterSignal(old_loc.loc, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
 
 /obj/item/card/id/proc/on_loc_equipped(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
@@ -812,7 +821,7 @@
 /obj/item/card/id/click_alt(mob/living/user)
 	if(!alt_click_can_use_id(user))
 		return NONE
-	if (registered_account.being_dumped)
+	if (LAZYLEN(registered_account.being_dumped))
 		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
 		return CLICK_ACTION_SUCCESS
 	if(registered_account.account_debt)
@@ -898,8 +907,8 @@
 	REMOVE_TRAIT(src, TRAIT_NODROP, "psycho")
 	if(user.is_holding(src))
 		user.dropItemToGround(src)
-	for(var/mob/living/carbon/human/viewing_mob in viewers(user, 2))
-		if(viewing_mob.stat || viewing_mob == user)
+	for(var/mob/living/carbon/human/viewing_mob in viewers(2, user))
+		if(IS_UNCONSCIOUS_OR_CRIT(viewing_mob) || viewing_mob == user)
 			continue
 		viewing_mob.say("Is something wrong? [first_name(user.name)]... you're sweating.", forced = "psycho")
 		break
@@ -1179,6 +1188,10 @@
 	/// If this is set, will manually override the trim shown for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
 	var/sechud_icon_state_override = null
 
+	/// A name (eg "Captain") that is "inherent" to this ID card
+	/// If the assigned name matches the inherent name it does not apply the label
+	var/inherent_assigned_name
+
 /obj/item/card/id/advanced/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
@@ -1280,6 +1293,13 @@
 
 	is_intern = FALSE
 	update_label()
+
+/obj/item/card/id/advanced/update_label()
+	if(inherent_assigned_name && registered_name == inherent_assigned_name)
+		name = "[initial(name)][(!assignment || assignment == inherent_assigned_name) ? "" : " ([assignment])"]"
+		return
+
+	return ..()
 
 /obj/item/card/id/advanced/update_overlays()
 	. = ..()
@@ -1383,13 +1403,7 @@
 	registered_name = "Captain"
 	trim = /datum/id_trim/job/captain
 	registered_age = null
-
-/obj/item/card/id/advanced/gold/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
-	if(registered_name == "Captain")
-		name = "[initial(name)][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
-		update_appearance(UPDATE_ICON)
-	else
-		..()
+	inherent_assigned_name = "Captain"
 
 /obj/item/card/id/advanced/centcom
 	name = "\improper CentCom ID"
@@ -1484,14 +1498,7 @@
 	desc = "The spare ID of the Dark Lord himself."
 	registered_name = "Captain"
 	registered_age = null
-
-/obj/item/card/id/advanced/black/syndicate_command/captain_id/syndie_spare/update_label()
-	if(registered_name == "Captain")
-		name = "[initial(name)][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
-		update_appearance(UPDATE_ICON)
-		return
-
-	return ..()
+	inherent_assigned_name = "Captain"
 
 /obj/item/card/id/advanced/debug
 	name = "\improper Debug ID"
@@ -1752,7 +1759,7 @@
 	if(ishuman(interacting_with))
 		interacting_with.balloon_alert(user, "scanning ID card...")
 
-		if(!do_after(user, 2 SECONDS, interacting_with, hidden = TRUE))
+		if(!do_after(user, 2 SECONDS, interacting_with, cog_icon = null))
 			interacting_with.balloon_alert(user, "interrupted!")
 			return ITEM_INTERACT_BLOCKING
 
@@ -1945,22 +1952,6 @@
 		else
 			input_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
 
-	var/change_trim = tgui_alert(user, "Adjust the appearance of your card's trim?", "Modify Trim", list("Yes", "No"))
-	if(!after_input_check(user))
-		return TRUE
-	var/selected_trim_path
-	var/static/list/trim_list
-	if(change_trim == "Yes")
-		trim_list = list()
-		for(var/trim_path in typesof(/datum/id_trim))
-			var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[trim_path]
-			if(trim && trim.trim_state && trim.assignment)
-				var/fake_trim_name = "[trim.assignment] ([trim.trim_state])"
-				trim_list[fake_trim_name] = trim_path
-		selected_trim_path = tgui_input_list(user, "Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", sort_list(trim_list, GLOBAL_PROC_REF(cmp_typepaths_asc)))
-		if(!after_input_check(user))
-			return TRUE
-
 	var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant", max_length = MAX_NAME_LEN)
 	if(!after_input_check(user))
 		return TRUE
@@ -1977,8 +1968,6 @@
 		return
 
 	registered_name = input_name
-	if(selected_trim_path)
-		SSid_access.apply_trim_override(src, trim_list[selected_trim_path])
 	if(target_occupation)
 		assignment = sanitize(target_occupation)
 	if(new_age)
@@ -1992,16 +1981,10 @@
 	to_chat(user, span_notice("You successfully forge the ID card."))
 	user.log_message("forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[trim?.assignment]\".", LOG_GAME)
 
-	if(!ishuman(user))
+	if(!ishuman(user) || registered_account)
 		return
 
 	var/mob/living/carbon/human/owner = user
-	if (!selected_trim_path) // Ensure that even without a trim update, we update user's sechud
-		owner.update_ID_card()
-
-	if (registered_account)
-		return
-
 	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[owner.account_id]"]
 	if(account)
 		set_account(account)

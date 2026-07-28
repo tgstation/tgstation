@@ -115,7 +115,7 @@
 	weight = 5
 	cost = STATION_TRAIT_COST_LOW //Most of maints is literal trash anyway
 	show_in_report = TRUE
-	report_message = "Our workers cleaned out most of the junk in the maintenace areas."
+	report_message = "Our workers cleaned out most of the junk in the maintenance areas."
 	blacklist = list(/datum/station_trait/filled_maint)
 	trait_to_give = STATION_TRAIT_EMPTY_MAINT
 
@@ -141,6 +141,7 @@
 	var/datum/job/picked_job = pick(SSjob.get_valid_overflow_jobs())
 	chosen_job_name = LOWER_TEXT(picked_job.title) // like Chief Engineers vs like chief engineers
 	SSjob.set_overflow_role(picked_job.type)
+	UnregisterSignal(SSjob, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /datum/station_trait/slow_shuttle
 	name = "Slow Shuttle"
@@ -150,9 +151,14 @@
 	report_message = "Due to distance to our supply station, the cargo shuttle will have a slower flight time to your cargo department."
 	blacklist = list(/datum/station_trait/quick_shuttle)
 
-/datum/station_trait/slow_shuttle/on_round_start()
+/datum/station_trait/slow_shuttle/New()
 	. = ..()
+	RegisterSignal(SSshuttle, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(slow_the_shuttle))
+
+/datum/station_trait/slow_shuttle/proc/slow_the_shuttle(datum/source)
+	SIGNAL_HANDLER
 	SSshuttle.supply.callTime *= 1.5
+	UnregisterSignal(SSshuttle, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /datum/station_trait/bot_languages
 	name = "Bot Language Matrix Malfunction"
@@ -223,7 +229,7 @@
 
 /datum/station_trait/revenge_of_pun_pun/proc/arm_monke()
 	SIGNAL_HANDLER
-	var/mob/living/carbon/human/species/monkey/punpun/punpun = GLOB.the_one_and_only_punpun
+	var/mob/living/punpun = GLOB.the_one_and_only_punpun
 	if(!punpun)
 		return
 	var/weapon_type = pick_weight(weapon_types)
@@ -753,5 +759,13 @@
 	show_in_report = TRUE
 	report_message = "Due to a mishap at the Robust Softdrinks Megafactory, some drinks may contain traces of ethanol or psychoactive chemicals."
 	trait_to_give = STATION_TRAIT_SPIKED_DRINKS
+
+/datum/station_trait/structural_weakness
+	name = "Structural Weaknesses"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 5
+	show_in_report = TRUE
+	report_message = "Our station subdivision informed us that this station may have been built with a number of structural weaknesses due to defective construction materials. Be on the lookout for them and try not to let anything explode."
+	trait_to_give = STATION_TRAIT_SPAWN_WEAKPOINTS
 
 #undef GLOW_NEBULA

@@ -40,7 +40,7 @@
 		if(other_screwy_hud.priority > priority)
 			return
 
-	source.hud_used.healths.icon_state = override_icon
+	source.hud_used?.screen_objects[HUD_MOB_HEALTH]?.icon_state = override_icon
 	return COMPONENT_OVERRIDE_HEALTH_HUD
 
 /datum/status_effect/grouped/screwy_hud/fake_dead

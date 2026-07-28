@@ -5,6 +5,7 @@
 	desc = "A .357 bullet casing."
 	caliber = CALIBER_357
 	projectile_type = /obj/projectile/bullet/c357
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3)
 
 /obj/item/ammo_casing/c357/spent
 	projectile_type = null

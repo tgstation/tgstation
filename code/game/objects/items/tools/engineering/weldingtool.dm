@@ -30,7 +30,7 @@
 	toolspeed = 1
 	wound_bonus = 10
 	exposed_wound_bonus = 15
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.3)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2)
 	/// Whether the welding tool is on or off.
 	var/welding = FALSE
 	/// Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
@@ -48,6 +48,8 @@
 
 	var/activation_sound = 'sound/items/tools/welderactivate.ogg'
 	var/deactivation_sound = 'sound/items/tools/welderdeactivate.ogg'
+	/// Lighting middleman, lets us do a flicker effect
+	var/datum/light_middleman/middleman
 
 /datum/armor/item_weldingtool
 	fire = 100
@@ -55,6 +57,10 @@
 
 /obj/item/weldingtool/Initialize(mapload)
 	. = ..()
+	if(IS_OVERLAY_LIGHT_SYSTEM(light_system))
+		middleman = new(src, "flashlight")
+		RegisterSignal(middleman, COMSIG_LIGHT_MIDDLEMAN_UPDATED, PROC_REF(light_updated))
+		middleman.being_overriding_light()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	AddElement(/datum/element/tool_flash, light_range)
 	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
@@ -63,6 +69,10 @@
 	if(starting_fuel)
 		reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_appearance()
+
+/obj/item/weldingtool/Destroy(force)
+	QDEL_NULL(middleman)
+	return ..()
 
 /obj/item/weldingtool/update_icon_state()
 	if(welding)
@@ -76,7 +86,7 @@
 	. = ..()
 	if(change_icons)
 		var/ratio = get_fuel() / max_fuel
-		ratio = CEILING(ratio*4, 1) * 25
+		ratio = ceil(ratio*4) * 25
 		. += "[initial(icon_state)][ratio]"
 	if(welding)
 		. += "[initial(icon_state)]-on"
@@ -112,12 +122,12 @@
 	flamethrower_screwdriver(tool, user)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/weldingtool/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(tool, /obj/item/stack/rods))
-		flamethrower_rods(tool, user)
-	else
-		. = ..()
+/obj/item/weldingtool/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/rods))
+		return NONE
+	flamethrower_rods(tool, user)
 	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/weldingtool/cyborg_unequip(mob/user)
 	if(!isOn())
@@ -144,6 +154,10 @@
 		return NONE
 
 	return try_heal_loop(interacting_with, user)
+
+/obj/item/weldingtool/proc/light_updated(datum/source)
+	SIGNAL_HANDLER
+	fire_flicker_middleman(middleman)
 
 /obj/item/weldingtool/proc/try_heal_loop(atom/interacting_with, mob/living/user, repeating = FALSE)
 	var/mob/living/carbon/human/attacked_humanoid = interacting_with
@@ -184,7 +198,7 @@
 		user.log_message("set [key_name(attacked_mob)] on fire with [src].", LOG_ATTACK)
 
 /obj/item/weldingtool/attack_self(mob/user)
-	if(reagents.spark_act(0, TRUE, banned_reagents = /datum/reagent/fuel) & SPARK_ACT_DESTRUCTIVE)
+	if(reagents.spark_act(0, SPARK_ACT_ENCLOSED, banned_reagents = /datum/reagent/fuel) & SPARK_ACT_DESTRUCTIVE)
 		message_admins("[ADMIN_LOOKUPFLW(user)] activated a rigged welder at [AREACOORD(user)].")
 		user.log_message("activated a rigged welder", LOG_VICTIM)
 		qdel(src)
@@ -247,13 +261,13 @@
 			START_PROCESSING(SSobj, src)
 		else
 			balloon_alert(user, "no fuel!")
-			switched_off(user)
+			switched_off()
 	else
 		playsound(loc, deactivation_sound, 50, TRUE)
-		switched_off(user)
+		switched_off()
 
 /// Switches the welder off
-/obj/item/weldingtool/proc/switched_off(mob/user)
+/obj/item/weldingtool/proc/switched_off()
 	set_welding(FALSE)
 
 	force = 3
@@ -330,7 +344,7 @@
 	icon_state = "indwelder"
 	inhand_icon_state = "indwelder"
 	max_fuel = 40
-	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.6)
 
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()
 	return

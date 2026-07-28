@@ -99,11 +99,11 @@
 /datum/supply_pack/engineering/shuttle_engine
 	name = "Shuttle Engine Crate"
 	desc = "Through advanced bluespace-shenanigans, our engineers have managed to fit an entire \
-		shuttle engine into one tiny little crate."
+		shuttle engine into one tiny little box."
 	cost = CARGO_CRATE_VALUE * 6
-	access = ACCESS_CE
-	access_view = ACCESS_CE
-	contains = list(/obj/machinery/power/shuttle_engine/propulsion/burst)
+	access = ACCESS_ENGINEERING
+	access_view = ACCESS_ENGINEERING
+	contains = list(/obj/item/flatpack/shuttle_engine)
 	crate_name = "shuttle engine crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 

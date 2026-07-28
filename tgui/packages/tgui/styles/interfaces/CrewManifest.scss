@@ -1,28 +1,14 @@
-$department_map: (
-  'Cargo': var(--color-brown),
-  'Command': var(--color-yellow),
-  'Security': var(--color-red),
-  'Engineering': var(--color-orange),
-  'Medical': var(--color-teal),
-  'Misc': var(--color-white),
-  'Science': var(--color-purple),
-  'Service': var(--color-green),
-  'Silicon': var(--color-pink),
-);
-
 .CrewManifest {
-  @each $department-name, $color-value in $department_map {
-    &--#{$department-name} {
+    &--Section {
       .Section {
         &__title {
-          border-color: $color-value;
+          border-color: var(--department-color);
         }
         &__titleText {
-          color: $color-value;
+          color: var(--department-color);
         }
       }
     }
-  }
 
   &__Cell {
     padding: var(--space-s) 0;

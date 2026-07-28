@@ -37,6 +37,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/simple/simple_retaliate
 
 /datum/emote/roro
+	abstract_type = /datum/emote/roro
 	mob_type_allowed_typecache = /mob/living/basic/roro
 	mob_type_blacklist_typecache = list()
 
@@ -54,15 +55,10 @@
 	AddElement(/datum/element/ai_retaliate)
 
 /datum/ai_controller/basic_controller/roro
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/roro.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)

@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/tmp/lighting_corners_initialised = FALSE
 
 	///Our lighting object.
-	var/tmp/datum/lighting_object/lighting_object
+	var/tmp/atom/movable/lighting_object/lighting_object
 	///Lighting Corner datums.
 	var/tmp/datum/lighting_corner/lighting_corner_NE
 	var/tmp/datum/lighting_corner/lighting_corner_SE
@@ -112,6 +112,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	///The typepath we use for lazy fishing on turfs, to save on world init time.
 	var/fish_source
+
+	/// If TRUE, then this turf will be skipped entirely by minimap rendering.
+	var/skip_minimap_rendering = FALSE
 
 
 /turf/vv_edit_var(var_name, new_value)
@@ -177,12 +180,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if (opacity)
 		directional_opacity = ALL_CARDINALS
 
-	// apply materials properly from the default custom_materials value
-	if (!length(custom_materials))
-		set_custom_materials(custom_materials)
-
 	if(uses_integrity)
 		atom_integrity = max_integrity
+
+	// apply materials properly from the default custom_materials value
+	if (length(custom_materials))
+		set_custom_materials(custom_materials)
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -385,37 +388,36 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			falling_mov.pulledby.stop_pulling()
 	return TRUE
 
-/turf/proc/handleRCL(obj/item/rcl/C, mob/user)
-	if(C.loaded)
-		for(var/obj/structure/pipe_cleaner/LC in src)
-			if(!LC.d1 || !LC.d2)
-				LC.handlecable(C, user)
-				return
-		C.loaded.place_turf(src, user)
-		if(C.wiring_gui_menu)
-			C.wiringGuiUpdate(user)
-		C.is_empty(user)
+/turf/proc/handleRCL(obj/item/rcl/rapid_layer, mob/user)
+	if(!rapid_layer.loaded)
+		return
+	lay_pipe_cleaner(rapid_layer.loaded, user)
+	if(rapid_layer.wiring_gui_menu)
+		rapid_layer.wiringGuiUpdate(user)
+	rapid_layer.is_empty(user)
 
-/turf/attackby(obj/item/C, mob/user, list/modifiers, list/attack_modifiers)
-	if(..())
-		return TRUE
-	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/coil = C
+/turf/proc/lay_pipe_cleaner(obj/item/stack/pipe_cleaner_coil/coil, user)
+	for(var/obj/structure/pipe_cleaner/lain_cable in src)
+		if(!lain_cable.d1 || !lain_cable.d2)
+			lain_cable.item_interaction(user, coil)
+			return
+	coil.place_turf(src, user)
+
+/turf/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(can_lay_cable() && istype(tool, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = tool
 		coil.place_turf(src, user)
-		return TRUE
-	else if(can_have_cabling() && istype(C, /obj/item/stack/pipe_cleaner_coil))
-		var/obj/item/stack/pipe_cleaner_coil/coil = C
-		for(var/obj/structure/pipe_cleaner/LC in src)
-			if(!LC.d1 || !LC.d2)
-				LC.attackby(C, user)
-				return
-		coil.place_turf(src, user)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(C, /obj/item/rcl))
-		handleRCL(C, user)
+	if(can_have_cabling() && istype(tool, /obj/item/stack/pipe_cleaner_coil))
+		lay_pipe_cleaner(tool, user)
+		return ITEM_INTERACT_SUCCESS
 
-	return FALSE
+	if(istype(tool, /obj/item/rcl))
+		handleRCL(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 //There's a lot of QDELETED() calls here if someone can figure out how to optimize this but not runtime when something gets deleted by a Bump/CanPass/Cross call, lemme know or go ahead and fix this mess - kevinz000
 /turf/Enter(atom/movable/mover)
@@ -632,10 +634,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Check if the heretic is strong enough to rust this turf, and if so, rusts the turf with an added visual effect.
 /turf/rust_heretic_act(rust_strength = RUST_RESISTANCE_BASIC)
 	if((rust_strength < rust_resistance))
-		return
+		return FALSE
 
 	if (rust_turf(magic = TRUE))
 		new /obj/effect/glowing_rune(src)
+		return TRUE
+	return FALSE
 
 /// Override this to change behaviour when being rusted
 /turf/proc/rust_turf(magic = FALSE)
@@ -786,14 +790,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	inherent_explosive_resistance = explosion_block
 	explosive_resistance += get_explosive_block()
 
-/turf/apply_main_material_effects(datum/material/main_material, amount, multipier)
+/turf/apply_main_material_effects(datum/material/main_material, amount, multiplier)
 	. = ..()
 	if(alpha < 255)
 		ADD_TURF_TRANSPARENCY(src, MATERIAL_SOURCE(main_material))
 		main_material.setup_glow(src)
 	rust_resistance = main_material.mat_rust_resistance
 
-/turf/remove_main_material_effects(datum/material/custom_material, amount, multipier)
+/turf/remove_main_material_effects(datum/material/custom_material, amount, multiplier)
 	. = ..()
 	rust_resistance = initial(rust_resistance)
 	if(alpha == 255)

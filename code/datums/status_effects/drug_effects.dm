@@ -10,7 +10,7 @@
 /atom/movable/screen/alert/status_effect/woozy
 	name = "Woozy"
 	desc = "You feel a bit slower than usual, it seems doing things with your hands takes longer than it usually does."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "woozy"
 
 /datum/status_effect/high_blood_pressure
@@ -37,7 +37,7 @@
 /atom/movable/screen/alert/status_effect/high_blood_pressure
 	name = "High blood pressure"
 	desc = "Your blood pressure is real high right now ... You'd probably bleed like a stuck pig."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "highbloodpressure"
 
 /datum/status_effect/seizure
@@ -53,14 +53,14 @@
 	duration = amplitude
 	owner.set_jitter_if_lower(100 SECONDS)
 	owner.Paralyze(duration)
-	owner.visible_message(span_warning("[owner] drops to the ground as [owner.p_they()] start seizing up."), \
+	owner.visible_message(span_warning("[owner] drops to the ground as [owner.p_they()] start[owner.p_s()] seizing up."), \
 	span_warning("[pick("You can't collect your thoughts...", "You suddenly feel extremely dizzy...", "You can't think straight...","You can't move your face properly anymore...")]"))
 	return TRUE
 
 /atom/movable/screen/alert/status_effect/seizure
 	name = "Seizure"
 	desc = "FJOIWEHUWQEFGYUWDGHUIWHUIDWEHUIFDUWGYSXQHUIODSDBNJKVBNKDML <--- this is you right now"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "paralysis"
 
 /datum/status_effect/stoned

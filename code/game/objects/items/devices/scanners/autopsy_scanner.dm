@@ -11,7 +11,7 @@
 	item_flags = CRUEL_IMPLEMENT
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	custom_price = PAYCHECK_COMMAND
 	sound_vary = TRUE
 	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
@@ -25,7 +25,7 @@
 
 	var/mob/living/scanned = interacting_with
 
-	if(scanned.stat != DEAD && !HAS_TRAIT(scanned, TRAIT_FAKEDEATH)) // good job, you found a loophole
+	if(!IS_DEAD_OR_FAKING(scanned)) // good job, you found a loophole
 		to_chat(user, span_deadsay("[icon2html(src, user)] ERROR! CANNOT SCAN LIVE CADAVERS. PROCURE HEALTH ANALYZER OR TERMINATE PATIENT."))
 		return ITEM_INTERACT_BLOCKING
 
@@ -44,7 +44,7 @@
 	user.visible_message(span_notice("[user] scans [scanned]'s cadaver."))
 	to_chat(user, span_deadsay("[icon2html(src, user)] ANALYZING CADAVER."))
 
-	healthscan(user, scanned, advanced = TRUE)
+	healthscan(user, scanned, scanpower = SCANPOWER_ADVANCED)
 
 	add_fingerprint(user)
 
@@ -54,8 +54,9 @@
 
 	var/obj/item/paper/autopsy_report = new(get_turf(src))
 	autopsy_report.color = "#99ccff"
-	autopsy_report.name = "autopsy report of [scanned] - [station_time_timestamp()])"
-	var/final_report_text = "<center><b>Autopsy report. Time of Autopsy: [station_time_timestamp()]</b></center>"
+	autopsy_report.name = "autopsy report of [scanned] - [server_timestamp(format = "hh:mm", ic_time = TRUE)]"
+	var/final_report_text = "<center><b>Autopsy report</br>\
+		Time of Autopsy: [UNDERLINED_HTML_TEXT("[server_timestamp(format = "hh:mm", ic_time = TRUE)]", "Shift Time: [round_timestamp(format = "hh:mm")]")]</b></center>"
 
 	//A lot of this is extremely similar to /proc/healthscan() - but with different formatting, no color, and some added/removed info
 	//Does not list quirks/exhaustion/how to repair wounds
@@ -146,8 +147,8 @@
 						<td>-</td>\
 						<td><u>Missing</u></td></tr>"
 				continue
-			var/status = organ.get_status_text(advanced = TRUE, add_tooltips = FALSE, colored = FALSE)
-			var/appendix = organ.get_status_appendix(advanced = TRUE, add_tooltips = FALSE)
+			var/status = organ.get_status_text(scanpower = SCANPOWER_ADVANCED, add_tooltips = FALSE, colored = FALSE)
+			var/appendix = organ.get_status_appendix(scanpower = SCANPOWER_ADVANCED, add_tooltips = FALSE)
 			if(!status)
 				status ||= "OK" // otherwise flawless organs have no status reported by default
 			organreport += "<tr>\
@@ -240,7 +241,7 @@
 	autopsy_information += "<b>Coroner's Notes:</b>" //Bottom of the page, anything past here is player-written
 
 	final_report_text += jointext(autopsy_information, "")
-	autopsy_report.add_raw_text(final_report_text)
+	autopsy_report.add_raw_text(final_report_text, advanced_html = TRUE)
 	autopsy_report.update_appearance()
 	user.put_in_hands(autopsy_report)
 	user.balloon_alert(user, "report printed")

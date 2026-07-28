@@ -30,7 +30,7 @@
 /datum/round_event_control/heart_attack/proc/generate_candidates()
 	heart_attack_candidates.Cut()
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list))
-		if(candidate.stat == DEAD || HAS_TRAIT(candidate, TRAIT_CRITICAL_CONDITION) || !candidate.can_heartattack() || (candidate.has_status_effect(/datum/status_effect/heart_attack)) || candidate.undergoing_cardiac_arrest())
+		if(IS_UNCONSCIOUS_OR_CRIT(candidate) || !candidate.can_heartattack() || candidate.has_status_effect(/datum/status_effect/heart_attack) || candidate.undergoing_cardiac_arrest())
 			continue
 		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER))//only crewmembers can get one, a bit unfair for some ghost roles and it wastes the event
 			continue
@@ -64,7 +64,10 @@
  */
 /datum/round_event/heart_attack/proc/attack_heart()
 	var/mob/living/carbon/human/winner = pick_weight(victims)
-	if(winner.has_status_effect(/datum/status_effect/exercised)) //Stuff that should "block" a heart attack rather than just deny eligibility for one goes here.
+	// Our fitness level can potentially block a heart attack outright.
+	var/fitness_protection_probability = winner.mind?.get_skill_modifier(/datum/skill/athletics, SKILL_RANDS_MODIFIER)
+
+	if(prob(fitness_protection_probability * 2)) //Stuff that should "block" a heart attack rather than just deny eligibility for one goes here.
 		winner.visible_message(span_warning("[winner] grunts and clutches their chest for a moment, catching [winner.p_their()] breath."), span_medal("Your chest lurches in pain for a brief moment, which quickly fades. \
 								You feel like you've just avoided a serious health disaster."), span_hear("You hear someone's breathing sharpen for a moment, followed by a sigh of relief."), 4)
 		winner.playsound_local(get_turf(winner), 'sound/effects/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)

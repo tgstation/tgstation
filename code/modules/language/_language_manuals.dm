@@ -45,10 +45,9 @@
 /obj/item/language_manual/proc/use_charge(mob/user)
 	charges--
 	if(!charges)
-		var/turf/T = get_turf(src)
-		T.visible_message(span_warning("The cover and contents of [src] start shifting and changing! It slips out of your hands!"))
-
-		new /obj/item/book/manual/random(T)
+		user.visible_message(span_notice("The cover of [user]'s book start shifting and changing! It falls out of [user.p_their()] hands!"),
+							span_warning("The cover and contents of [src] start shifting and changing! It slips out of your hands!"))
+		new /obj/item/book/manual/random(get_turf(src))
 		qdel(src)
 
 /obj/item/language_manual/codespeak_manual
@@ -62,11 +61,13 @@
 	charges = INFINITY
 
 /obj/item/language_manual/roundstart_species
+	name = "roundstart species language manual"
 
 /obj/item/language_manual/roundstart_species/Initialize(mapload)
 	. = ..()
-	var/list/available_languages = length(GLOB.uncommon_roundstart_languages) ? GLOB.uncommon_roundstart_languages : list(/datum/language/common)
-	language = pick(available_languages)
+	if(!language) //if a language is already set, use it instead.
+		var/list/available_languages = length(GLOB.uncommon_roundstart_languages) ? GLOB.uncommon_roundstart_languages : list(/datum/language/common)
+		language = pick(available_languages)
 	name = "[initial(language.name)] manual"
 	desc = "The book's cover reads: \"[initial(language.name)] for Xenos - Learn common galactic tongues in seconds.\""
 	flavour_text = "you feel empowered with a mastery over [initial(language.name)]"
@@ -84,6 +85,9 @@
 /obj/item/language_manual/roundstart_species/five/Initialize(mapload)
 	. = ..()
 	name = "extended [initial(language.name)] manual"
+
+/obj/item/language_manual/roundstart_species/draconic
+	name = "Draconic manual"
 
 /obj/item/language_manual/piratespeak
 	name = "\improper Captain Pete's Guide to Pirate Lingo"

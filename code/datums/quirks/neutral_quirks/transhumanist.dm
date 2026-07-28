@@ -76,7 +76,7 @@
 	var/organic_bodytypes = 0
 	var/silicon_bodytypes = 0
 	var/other_bodytypes = FALSE
-	for(var/obj/item/bodypart/part as anything in target.bodyparts)
+	for(var/obj/item/bodypart/part as anything in target.get_bodyparts())
 		if(part.bodytype & BODYTYPE_ROBOTIC)
 			silicon_bodytypes += 1
 		else if(part.bodytype & BODYTYPE_ORGANIC)

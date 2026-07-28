@@ -16,6 +16,15 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GENELESS), PROC_REF(on_geneless_trait_gain))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NO_SPLIT_PERSONALITY), PROC_REF(on_no_split_personality_trait_gain))
 
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NO_OXYLOSS_PASSOUT), SIGNAL_REMOVETRAIT(TRAIT_NO_OXYLOSS_PASSOUT)), PROC_REF(check_passout))
+
+	RegisterSignals(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_NOHARDCRIT),
+		SIGNAL_REMOVETRAIT(TRAIT_NOHARDCRIT),
+		SIGNAL_ADDTRAIT(TRAIT_NOSOFTCRIT),
+		SIGNAL_REMOVETRAIT(TRAIT_NOSOFTCRIT),
+	), PROC_REF(update_stat))
+
 /**
  * On gain of TRAIT_AGENDER
  *
@@ -96,7 +105,7 @@
 /mob/living/carbon/proc/on_liverless_metabolism_trait_gain(datum/source)
 	SIGNAL_HANDLER
 
-	for(var/addiction_type in subtypesof(/datum/addiction))
+	for(var/addiction_type in GLOB.addictions)
 		mind?.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
 
 	reagents.end_metabolization(keep_liverless = TRUE)
@@ -141,3 +150,7 @@
 	SIGNAL_HANDLER
 
 	cure_trauma_type(/datum/brain_trauma/severe/split_personality, TRAUMA_LIMIT_ABSOLUTE)
+
+/mob/living/carbon/on_hearing_loss(datum/source)
+	. = ..()
+	breathing_loop.stop()

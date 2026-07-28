@@ -58,9 +58,7 @@
 
 /obj/effect/temp_visual/teleport_abductor/Initialize(mapload)
 	. = ..()
-	var/datum/effect_system/spark_spread/S = new
-	S.set_up(10,0,loc)
-	S.start()
+	do_sparks(10, FALSE, loc)
 
 /obj/effect/temp_visual/teleport_golem
 	name = "bluespace silhouette"

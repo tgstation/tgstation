@@ -4,7 +4,7 @@
  */
 GLOBAL_LIST_INIT(total_ui_len_by_block, populate_total_ui_len_by_block())
 
-GLOBAL_LIST_INIT(standard_mutation_sources, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR, MUTATION_SOURCE_TIMED_INJECTOR))
+GLOBAL_LIST_INIT(standard_mutation_sources, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR))
 
 /proc/populate_total_ui_len_by_block()
 	. = list()
@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	///The blood type datum, usually a singleton
 	var/datum/blood_type/blood_type
 	///The type of mutant race the player is if applicable (i.e. potato-man)
-	var/datum/species/species = new /datum/species/human
+	var/datum/species/species = /datum/species/human
 	/// Assoc list of feature keys to their value
 	/// Note if you set these manually, and do not update [unique_features] afterwards, it will likely be reset.
 	var/list/features = list(FEATURE_MUTANT_COLOR = COLOR_WHITE)
@@ -44,10 +44,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/real_name
 	///All mutations are from now on here
 	var/list/mutations
-	///Temporary changes to the UE
-	var/list/temporary_mutations
-	///For temporary name/ui/ue/blood_type modifications
-	var/list/previous
 	var/mob/living/holder
 	///List of which mutations this carbon has and its assigned block
 	var/mutation_index[DNA_MUTATION_BLOCKS]
@@ -61,9 +57,12 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	/// Weighted list of lethal meltdowns
 	var/static/list/fatal_meltdowns = list()
 
-/datum/dna/New(mob/living/new_holder)
+/datum/dna/New(mob/living/new_holder, datum/species/mob_species)
 	if(istype(new_holder))
 		holder = new_holder
+	if(mob_species)
+		species = mob_species
+	species = new species
 
 /datum/dna/Destroy()
 	if (iscarbon(holder))
@@ -77,8 +76,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	QDEL_NULL(species)
 
 	LAZYNULL(mutations) //This only references mutations, just dereference.
-	LAZYNULL(temporary_mutations) //^
-	LAZYNULL(previous) //^
 
 	return ..()
 
@@ -89,9 +86,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	new_dna.unique_features = unique_features
 	new_dna.features = features.Copy()
 	new_dna.real_name = real_name
-	new_dna.temporary_mutations = LAZYLISTDUPLICATE(temporary_mutations)
-	new_dna.mutation_index = mutation_index
-	new_dna.default_mutation_genes = default_mutation_genes
+	if(transfer_flags & COPY_DNA_SE)
+		new_dna.mutation_index = mutation_index
+		new_dna.default_mutation_genes = default_mutation_genes
 	//if the new DNA has a holder, transform them immediately, otherwise save it
 	if(new_dna.holder)
 		if (iscarbon(new_dna.holder))
@@ -135,6 +132,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	if(!length(actual_mutation.sources))
 		if(!actual_mutation.on_acquiring(holder))
+			to_chat(holder, span_warning("You feel your genes resisting something."))
 			qdel(actual_mutation)
 			return
 		actual_mutation.setup()
@@ -155,7 +153,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/datum/mutation/actual_mutation = get_mutation(mutation_to_remove)
 
 	if(!actual_mutation || !(sources & actual_mutation.sources))
-		return
+		return FALSE
 
 	actual_mutation.sources -= sources
 
@@ -169,6 +167,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		qdel(actual_mutation)
 
 	update_instability(FALSE)
+	return TRUE
 
 /datum/dna/proc/check_mutation(mutation_type)
 	return get_mutation(mutation_type)
@@ -415,10 +414,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	log_mob_tag("TAG: [tag] SPECIES: [key_name(src)] \[[mrace]\]")
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE, replace_missing = TRUE)
-	..()
+	. = ..()
 	if(icon_update)
 		update_body(is_creating = TRUE)
-		update_mutations_overlay()// no lizard with human hulk overlay please.
 
 /mob/proc/has_dna()
 	return
@@ -469,7 +467,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	if(mrace || newfeatures || unique_identity)
 		update_body(is_creating = TRUE)
-		update_mutations_overlay()
 
 	if(LAZYLEN(mutations) && force_transfer_mutations && can_mutate())
 		for(var/datum/mutation/mutation as anything in mutations)
@@ -477,11 +474,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			if(allowed_sources)
 				dna.add_mutation(mutation, allowed_sources)
 
-/mob/living/carbon/proc/create_dna()
-	dna = new /datum/dna(src)
-	if(!dna.species)
-		var/rando_race = pick(get_selectable_species())
-		dna.species = new rando_race()
+/mob/living/carbon/proc/create_dna(datum/species/species)
+	dna = new /datum/dna(src, species)
 
 //proc used to update the mob's appearance after its dna UI has been changed
 //2025: Im unsure if dna is meant to be living, carbon, or human level.. there's contradicting stuff and bugfixes going back 8 years
@@ -507,7 +501,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(icon_update)
 		update_body(is_creating = mutcolor_update)
 	if(mutations_overlay_update)
-		update_mutations_overlay()
+		update_appearance(UPDATE_OVERLAYS)
 
 /mob/proc/domutcheck()
 	return
@@ -519,7 +513,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	for(var/mutation in dna.mutation_index)
 		dna.check_block(mutation)
 
-	update_mutations_overlay()
+	update_appearance(UPDATE_OVERLAYS)
 
 /datum/dna/proc/check_block(mutation_path)
 	var/datum/mutation/mutation = get_mutation(mutation_path)
@@ -619,7 +613,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		return
 	var/datum/mutation/mutation = dna.get_mutation(mutation_path)
 	if(mutation)
-		mutation.scrambled = TRUE
+		mutation.scrambled = FALSE	//set to FALSE to allow easy_random_mutate obtained genes to be saved in DNA consoles
 
 /mob/living/carbon/proc/random_mutate_unique_identity()
 	if(!has_dna())

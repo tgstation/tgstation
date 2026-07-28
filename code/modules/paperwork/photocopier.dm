@@ -62,6 +62,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	desc = "Used to copy important documents and anatomy studies."
 	icon = 'icons/obj/service/library.dmi'
 	icon_state = "photocopier"
+	base_icon_state = "photocopier"
 	density = TRUE
 	power_channel = AREA_USAGE_EQUIP
 	max_integrity = 300
@@ -659,15 +660,15 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	to_chat(user, span_notice("You take [object] out of [src]. [busy ? "The [src] comes to a halt." : ""]"))
 
-/obj/machinery/photocopier/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/machinery/photocopier/update_icon_state()
 	. = ..()
-	if(default_deconstruction_screwdriver(user, "photocopier2", "photocopier", tool))
-		return ITEM_INTERACT_SUCCESS
+	icon_state = panel_open ? "[base_icon_state]2" : base_icon_state
+
+/obj/machinery/photocopier/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/photocopier/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/photocopier/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -881,6 +882,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "tonercartridge"
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.1)
 	var/charges = 5
 	var/max_charges = 5
 
@@ -894,6 +896,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/item/toner/large
 	name = "large toner cartridge"
 	desc = "A hefty cartridge of Nanotrasen ValueBrand toner. Fits photocopiers and autopainters alike."
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 	charges = 25
 	max_charges = 25
 
@@ -903,6 +906,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/item/toner/extreme
 	name = "extremely large toner cartridge"
 	desc = "Why would ANYONE need THIS MUCH TONER?"
+	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 4, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
 	charges = 200
 	max_charges = 200
 

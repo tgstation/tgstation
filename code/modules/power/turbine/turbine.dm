@@ -9,6 +9,7 @@
 	resistance_flags = FIRE_PROOF
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	processing_flags = START_PROCESSING_MANUALLY
+	abstract_type = /obj/machinery/power/turbine
 
 	///The cached efficiency of this turbines installed part
 	var/efficiency = 0
@@ -188,9 +189,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/turbine/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/power/turbine/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING

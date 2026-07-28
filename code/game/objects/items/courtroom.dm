@@ -1,9 +1,9 @@
 // Contains:
-// Gavel Hammer
-// Gavel Block
+// Gavel
+// Sound Block
 
 /obj/item/gavelhammer
-	name = "gavel hammer"
+	name = "gavel"
 	desc = "Order, order! No bombs in my courthouse."
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "gavelhammer"
@@ -26,8 +26,8 @@
 	return BRUTELOSS
 
 /obj/item/gavelblock
-	name = "gavel block"
-	desc = "Smack it with a gavel hammer when the assistants get rowdy."
+	name = "sound block"
+	desc = "Smack it with a gavel when the assistants get rowdy."
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "gavelblock"
 	force = 2
@@ -36,10 +36,10 @@
 	resistance_flags = FLAMMABLE
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 
-/obj/item/gavelblock/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/gavelhammer))
-		playsound(loc, 'sound/items/gavel.ogg', 100, TRUE)
-		user.visible_message(span_warning("[user] strikes [src] with [I]."))
-		user.changeNext_move(CLICK_CD_MELEE)
-	else
-		return ..()
+/obj/item/gavelblock/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/gavelhammer))
+		return NONE
+	playsound(loc, 'sound/items/gavel.ogg', 100, TRUE)
+	user.visible_message(span_warning("[user] strikes [src] with [tool]."))
+	user.changeNext_move(CLICK_CD_MELEE)
+	return ITEM_INTERACT_SUCCESS

@@ -21,7 +21,7 @@
 
 	if(!started)
 		started = TRUE
-		SSweather.run_weather(/datum/weather/rain_storm/wizard)
+		SSweather.run_weather(/datum/weather/particle/rain_storm/wizard)
 
 /datum/round_event/wizard/magical_rain/end()
 	for(var/mob/living/wizard in GLOB.alive_mob_list)

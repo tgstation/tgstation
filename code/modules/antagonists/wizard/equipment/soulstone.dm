@@ -31,6 +31,12 @@
 		RegisterSignal(src, COMSIG_BIBLE_SMACKED, PROC_REF(on_bible_smacked))
 	if(!base_name)
 		base_name = initial(name)
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/mod_core_soul)
+
+	AddElement(
+		/datum/element/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/soulstone/grind_results()
 	return list(/datum/reagent/hauntium = 25, /datum/reagent/silicon = 10) //can be ground into hauntium
@@ -158,43 +164,6 @@
 	. = ..()
 	if(!isliving(user) || isnull(user.mind))
 		return
-	if(!user.mind.has_crafting_recipe(/datum/crafting_recipe/mod_core_soul))
-		. += span_notice("You know... there might be <a href='byond://?src=[REF(src)];learn_soul_core_recipe=1'>alternate uses</a> for something like this.")
-
-/obj/item/soulstone/Topic(href, list/href_list)
-	. = ..()
-
-	if(href_list["learn_soul_core_recipe"])
-		learn_soul_core_recipe(usr)
-
-/obj/item/soulstone/proc/learn_soul_core_recipe(mob/user)
-	if(user.mind?.has_crafting_recipe(/datum/crafting_recipe/mod_core_soul))
-		return
-	if(!soul_core_learning_check(user))
-		return
-	var/list/remarks = list(
-		"You begin brainstorming...",
-		"Are constructs <i>powered</i> by souls?",
-		"Then wouldn't that mean...",
-		"Can that energy be turned into electricity?",
-		"You have an idea...",
-	)
-	for(var/remark in remarks)
-		to_chat(user, span_notice("[remark]"))
-		if(!do_after(
-			user,
-			5 SECONDS,
-			timed_action_flags = IGNORE_USER_LOC_CHANGE | IGNORE_HELD_ITEM,
-			extra_checks = CALLBACK(src, PROC_REF(soul_core_learning_check), user),
-			interaction_key = "soul_core_learn",
-			max_interact_count = 1
-			))
-			return
-	user.mind?.teach_crafting_recipe(/datum/crafting_recipe/mod_core_soul)
-	to_chat(user, span_notice("You learned to craft [/obj/item/mod/core/soul::name]."))
-
-/obj/item/soulstone/proc/soul_core_learning_check(mob/user)
-	return user.is_holding(src) || (user.loc == loc) || (isturf(loc) && user.Adjacent(loc))
 
 /obj/item/soulstone/Destroy() //Stops the shade from being qdel'd immediately and their ghost being sent back to the arrival shuttle.
 	for(var/mob/living/basic/shade/shade in src)
@@ -233,6 +202,11 @@
 		return
 	log_combat(user, M, "captured [M.name]'s soul", src)
 	capture_soul(M, user)
+
+/obj/item/soulstone/suicide_act(mob/living/user)
+	. = ..()
+	user.visible_message(span_suicide("[user] is capturing [user.p_their()] own soul with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	return capture_soul(user, null, TRUE) ? MANUAL_SUICIDE : BRUTELOSS
 
 ///////////////////Options for using captured souls///////////////////////////////////////
 
@@ -315,21 +289,22 @@
 	if(IS_CULTIST(user) || HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) || user.stat == DEAD)
 		. += extra_desc
 
-/obj/structure/constructshell/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(O, /obj/item/soulstone))
-		var/obj/item/soulstone/SS = O
-		if(!IS_CULTIST(user) && !HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) && !SS.theme == THEME_HOLY)
-			to_chat(user, span_danger("An overwhelming feeling of dread comes over you as you attempt to place [SS] into the shell. It would be wise to be rid of this quickly."))
-			if(isliving(user))
-				var/mob/living/living_user = user
-				living_user.set_dizzy_if_lower(1 MINUTES)
-			return
-		if(SS.theme == THEME_HOLY && IS_CULTIST(user))
-			SS.hot_potato(user)
-			return
-		SS.transfer_to_construct(src, user)
-	else
-		return ..()
+/obj/structure/constructshell/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/soulstone))
+		return NONE
+
+	var/obj/item/soulstone/whispering_gem = tool
+	if(!IS_CULTIST(user) && !HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) && whispering_gem.theme != THEME_HOLY)
+		to_chat(user, span_danger("An overwhelming feeling of dread comes over you as you attempt to place [whispering_gem] into the shell. It would be wise to be rid of this quickly."))
+		user.set_dizzy_if_lower(1 MINUTES)
+		return ITEM_INTERACT_BLOCKING
+
+	if(whispering_gem.theme == THEME_HOLY && IS_CULTIST(user))
+		whispering_gem.hot_potato(user)
+		return ITEM_INTERACT_BLOCKING
+
+	whispering_gem.transfer_to_construct(src, user)
+	return ITEM_INTERACT_SUCCESS
 
 /// Procs for moving soul in and out off stone
 
@@ -349,7 +324,7 @@
 				to_chat(user, span_cult("<b>\"This soul is mine.</b></span> <span class='cultlarge'>SACRIFICE THEM!\""))
 				return FALSE
 
-		if(grab_sleeping ? victim.stat == CONSCIOUS : victim.stat != DEAD)
+		if(grab_sleeping ? !IS_UNCONSCIOUS_OR_CRIT(victim) : victim.stat != DEAD)
 			to_chat(user, span_userdanger("Capture failed!"))
 			to_chat(user, span_danger("Kill or maim the victim first!"))
 			return FALSE

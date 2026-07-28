@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 
 /datum/preference_middleware/antags/get_ui_assets()
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/antagonists),
+		get_asset_datum(/datum/asset/spritesheet_batched/antagonists),
 	)
 
 /datum/preference_middleware/antags/proc/set_antags(list/params, mob/user)
@@ -136,14 +136,14 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 	return get_remaining_days(antag_time_limits[checked_antag_flag] || 0)
 
 /// Sprites generated for the antagonists panel
-/datum/asset/spritesheet/antagonists
+/datum/asset/spritesheet_batched/antagonists
 	name = "antagonists"
 	early = TRUE
 
-	/// Mapping of spritesheet keys -> icons
+	/// List of keys -> universal icon datums
 	var/list/antag_icons = list()
 
-/datum/asset/spritesheet/antagonists/create_spritesheets()
+/datum/asset/spritesheet_batched/antagonists/create_spritesheets()
 	var/list/antagonists = GLOB.non_ruleset_antagonists.Copy()
 
 	for (var/datum/dynamic_ruleset/ruleset as anything in subtypesof(/datum/dynamic_ruleset))
@@ -166,10 +166,13 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 
 		if (!isnull(generated_icons[antagonist_type]))
 			antag_icons[spritesheet_key] = generated_icons[antagonist_type]
+			// make sure IconForge also knows to generate this duplicate for the given key
+			// internal caching will prevent double generation of the same icon
+			insert_icon(spritesheet_key, generated_icons[antagonist_type])
 			continue
 
 		var/datum/antagonist/antagonist = new antagonist_type
-		var/icon/preview_icon = antagonist.get_preview_icon()
+		var/datum/universal_icon/preview_icon = antagonist.get_preview_icon()
 
 		if (isnull(preview_icon))
 			continue
@@ -179,11 +182,12 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 		// preview_icons are not scaled at this stage INTENTIONALLY.
 		// If an icon is not prepared to be scaled to that size, it looks really ugly, and this
 		// makes it harder to figure out what size it *actually* is.
-		generated_icons[antagonist_type] = preview_icon
-		antag_icons[spritesheet_key] = preview_icon
 
-	for (var/spritesheet_key in antag_icons)
-		Insert(spritesheet_key, antag_icons[spritesheet_key])
+		// make sure no antagonists are rebuilt
+		generated_icons[antagonist_type] = preview_icon
+		// store for screenshot tests
+		antag_icons[spritesheet_key] = preview_icon
+		insert_icon(spritesheet_key, preview_icon)
 
 /// Serializes an antag name to be used for preferences UI
 /proc/serialize_antag_name(antag_name)

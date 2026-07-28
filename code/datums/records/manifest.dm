@@ -127,7 +127,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		character_appearance = character_appearance,
 		dna_string = record_dna.unique_enzymes,
 		fingerprint = md5(record_dna.unique_identity),
-		gender = person_gender,
+		gender = person.gender,
 		initial_rank = assignment,
 		name = person.real_name,
 		rank = assignment,
@@ -217,7 +217,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 			if(open_slots < 1)
 				continue
 			open += open_slots
-		positions[department.department_name] = list("exceptions" = exceptions, "open" = open)
+		positions[department.department_name] = list("exceptions" = exceptions, "open" = open, "color" = department.ui_color)
 
 	return list(
 		"manifest" = get_manifest(),

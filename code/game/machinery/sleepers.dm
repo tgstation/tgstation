@@ -78,7 +78,7 @@
 	reset_chem_buttons()
 
 /obj/machinery/sleeper/update_icon_state()
-	icon_state = "[base_icon_state][state_open ? "-open" : null]"
+	icon_state = "[base_icon_state][state_open ? "-open" : panel_open ? "-o" : ""]"
 	return ..()
 
 /obj/machinery/sleeper/container_resist_act(mob/living/user)
@@ -121,37 +121,22 @@
 	close_machine(target)
 
 /obj/machinery/sleeper/screwdriver_act(mob/living/user, obj/item/I)
-	. = ..()
 	if(occupant)
 		to_chat(user, span_warning("[src] is currently occupied!"))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	if(state_open)
 		to_chat(user, span_warning("[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!"))
-		return TRUE
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
-		return TRUE
-	return FALSE
+		return ITEM_INTERACT_BLOCKING
+	return default_deconstruction_screwdriver(user, I)
 
 /obj/machinery/sleeper/wrench_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(default_change_direction_wrench(user, I))
-		return TRUE
-	return FALSE
+	return default_change_direction_wrench(user, I)
 
 /obj/machinery/sleeper/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(default_pry_open(I))
-		return TRUE
-	if(default_deconstruction_crowbar(I))
-		return TRUE
-	return FALSE
+	return default_pry_open(user, I, deconstruct_on_fail = TRUE)
 
-/obj/machinery/sleeper/default_pry_open(obj/item/I) //wew
-	. = !(state_open || panel_open) && I.tool_behaviour == TOOL_CROWBAR
-	if(.)
-		I.play_tool_sound(src, 50)
-		visible_message(span_notice("[usr] pries open [src]."), span_notice("You pry open [src]."))
-		open_machine()
+/obj/machinery/sleeper/can_crowbar_pry_open()
+	return !state_open && !panel_open
 
 /obj/machinery/sleeper/ui_state(mob/user)
 	if(!controls_inside)
@@ -178,10 +163,6 @@
 /obj/machinery/sleeper/process()
 	use_energy(idle_power_usage)
 
-/obj/machinery/sleeper/nap_violation(mob/violator)
-	. = ..()
-	open_machine()
-
 /obj/machinery/sleeper/ui_data()
 	var/list/data = list()
 	data["occupied"] = !!occupant
@@ -203,18 +184,32 @@
 	if(mob_occupant)
 		data["occupant"]["name"] = mob_occupant.name
 		switch(mob_occupant.stat)
-			if(CONSCIOUS)
-				data["occupant"]["stat"] = "Conscious"
+			if(STABLE)
+				data["occupant"]["stat"] = "Stable"
 				data["occupant"]["statstate"] = "good"
 			if(SOFT_CRIT)
-				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["stat"] = "Critical"
 				data["occupant"]["statstate"] = "average"
-			if(UNCONSCIOUS, HARD_CRIT)
-				data["occupant"]["stat"] = "Unconscious"
-				data["occupant"]["statstate"] = "average"
+			if(HARD_CRIT)
+				data["occupant"]["stat"] = "Critical"
+				data["occupant"]["statstate"] = "bad"
 			if(DEAD)
 				data["occupant"]["stat"] = "Dead"
 				data["occupant"]["statstate"] = "bad"
+
+		if(mob_occupant.stat == DEAD)
+			data["occupant"]["stat"] = "Dead"
+			data["occupant"]["statstate"] = "bad"
+		else if (mob_occupant.stat == HARD_CRIT || mob_occupant.stat == SOFT_CRIT)
+			data["occupant"]["stat"] = "Critical"
+			data["occupant"]["statstate"] = mob_occupant.stat == HARD_CRIT ? "bad" : "average"
+		else if (IS_UNCONSCIOUS(mob_occupant))
+			data["occupant"]["stat"] = "Unconscious"
+			data["occupant"]["statstate"] = "average"
+		else
+			data["occupant"]["stat"] = "Stable"
+			data["occupant"]["statstate"] = "good"
+
 		data["occupant"]["health"] = mob_occupant.health
 		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
 		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
@@ -243,7 +238,6 @@
 		return
 
 	var/mob/living/mob_occupant = occupant
-	check_nap_violations()
 	switch(action)
 		if("door")
 			if(state_open)

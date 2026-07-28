@@ -69,6 +69,11 @@
 	AddElement(/datum/element/death_drops, /obj/effect/decal/cleanable/blood/gibs/robot_debris/old)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_MINING_AOE_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
+	AddComponent(/datum/component/defaceable, \
+		icon = 'icons/mob/silicon/aibot_faces.dmi', \
+		icon_states = list("minebot" = FALSE, "minebot_highlight" = TRUE), \
+		drawing_of = "a face", \
+	)
 
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/missile_launcher = BB_MINEBOT_MISSILE_ABILITY,
@@ -105,7 +110,7 @@
 
 	for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)
 		. += span_notice("There is \a [modkit] installed, using <b>[modkit.cost]%</b> capacity.")
-	if(ai_controller && ai_controller.ai_status == AI_STATUS_IDLE)
+	if(ai_controller && ai_controller.ai_status == AI_STATUS_OFF && ai_controller.get_expected_ai_status() == AI_STATUS_ON)
 		. += "The [src] appears to be in <b>sleep mode</b>. You can restore normal functions by <b>tapping</b> it."
 
 
@@ -123,17 +128,21 @@
 		user.balloon_alert(user, "successfully repaired!")
 	return TRUE
 
-/mob/living/basic/mining_drone/attackby(obj/item/item_used, mob/user, list/modifiers, list/attack_modifiers)
-	if(item_used.tool_behaviour == TOOL_CROWBAR || istype(item_used, /obj/item/borg/upgrade/modkit))
-		item_used.melee_attack_chain(user, stored_gun, modifiers)
-		return
+/mob/living/basic/mining_drone/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/borg/upgrade/modkit))
+		return ..()
 
-	return ..()
+	tool.melee_attack_chain(user, stored_gun, modifiers)
+	return ITEM_INTERACT_SUCCESS
+
+/mob/living/basic/mining_drone/crowbar_act(mob/living/user, obj/item/tool)
+	tool.melee_attack_chain(user, stored_gun)
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/basic/mining_drone/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(!user.combat_mode)
-		if(ai_controller && ai_controller.ai_status == AI_STATUS_IDLE)
-			ai_controller.set_ai_status(AI_STATUS_ON)
+		if(ai_controller && ai_controller.ai_status == AI_STATUS_OFF)
+			ai_controller.reset_ai_status() //wakes a performance-slept bot, no-op if it is off for a real reason
 		if(LAZYACCESS(modifiers, LEFT_CLICK)) //Lets Right Click be specifically for re-enabling their AI (and avoiding the UI popup), while Left Click simply does both.
 			ui_interact(user)
 		return
@@ -250,13 +259,13 @@
 
 /mob/living/basic/mining_drone/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 
 	if(!istype(target, /mob/living/basic/node_drone))
-		return TRUE
+		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 	repair_node_drone(target)
-	return FALSE
+	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /mob/living/basic/mining_drone/proc/repair_node_drone(mob/living/my_target)
 	do_sparks(5, FALSE, source = my_target)

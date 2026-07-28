@@ -1,6 +1,7 @@
 /obj/machinery/computer/records/medical
 	name = "medical records console"
 	desc = "This can be used to check medical records."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/records/medical")
 	icon_screen = "medcomp"
 	icon_keyboard = "med_key"
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_DETECTIVE, ACCESS_GENETICS)
@@ -8,13 +9,14 @@
 	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/records/medical/syndie
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/records/medical/syndie")
 	icon_keyboard = "syndie_key"
 	req_one_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/computer/records/medical/laptop
 	name = "medical laptop"
 	desc = "A cheap Nanotrasen medical laptop, it functions as a medical records computer. It's bolted to the table."
-	icon_state = "laptop"
+	icon_state = MAP_SWITCH("laptop", "/obj/machinery/computer/records/medical/laptop")
 	icon_screen = "medlaptop"
 	icon_keyboard = "laptop_key"
 	pass_flags = PASSTABLE
@@ -59,6 +61,7 @@
 			major_disabilities = target.major_disabilities_desc,
 			minor_disabilities = target.minor_disabilities_desc,
 			physical_status = target.physical_status,
+			cause_of_death = target.cause_of_death,
 			mental_status = target.mental_status,
 			name = target.name,
 			notes = notes,
@@ -99,7 +102,7 @@
 			if(!content)
 				return FALSE
 
-			var/datum/medical_note/new_note = new(usr.name, content, station_time_timestamp())
+			var/datum/medical_note/new_note = new(usr.name, content, round_timestamp())
 			while(length(target.medical_notes) > 2)
 				target.medical_notes.Cut(1, 2)
 
@@ -123,6 +126,8 @@
 				return FALSE
 
 			target.physical_status = physical_status
+			if(physical_status != PHYSICAL_DECEASED)
+				target.cause_of_death = null
 
 			return TRUE
 
@@ -133,6 +138,13 @@
 
 			target.mental_status = mental_status
 
+			return TRUE
+
+		if("set_cause_of_death")
+			var/death_text = reject_bad_name(params["cause"], allow_numbers = TRUE, max_length = MAX_DESC_LEN, strict = TRUE, cap_after_symbols = FALSE)
+			if(!death_text)
+				return FALSE
+			target.cause_of_death = death_text
 			return TRUE
 
 	return FALSE

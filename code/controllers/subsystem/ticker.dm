@@ -4,8 +4,8 @@
 SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
 	priority = FIRE_PRIORITY_TICKER
-	flags = SS_KEEP_TIMING
-	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
+	ss_flags = SS_KEEP_TIMING
+	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	/// state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/current_state = GAME_STATE_STARTUP
@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(ticker)
 	/// or a "round-ending" event, like summoning Nar'Sie, a blob victory, the nuke going off, etc. ([FORCE_END_ROUND])
 	var/force_ending = END_ROUND_AS_NORMAL
 	/// If TRUE, there is no lobby phase, the game starts immediately.
-	#ifdef ABSOLUTE_MINIMUM
+	#ifdef AUTOSTART_GAME
 	var/start_immediately = TRUE
 	#else
 	var/start_immediately = FALSE
@@ -37,9 +37,6 @@ SUBSYSTEM_DEF(ticker)
 
 	var/timeLeft //pregame timer
 	var/start_at
-
-	var/gametime_offset = 432000 //Deciseconds to add to world.time for station time.
-	var/station_time_rate_multiplier = 12 //factor of station time progressal vs real time.
 
 	/// Num of players, used for pregame stats on statpanel
 	var/totalPlayers = 0
@@ -69,6 +66,8 @@ SUBSYSTEM_DEF(ticker)
 	/// Why an emergency shuttle was called
 	var/emergency_reason
 
+	///The display of how much time is left before a reboot, given to all clients post-game.
+	var/atom/movable/screen/reboot_timer/reboot_hud
 	/// ID of round reboot timer, if it exists
 	var/reboot_timer = null
 
@@ -112,51 +111,28 @@ SUBSYSTEM_DEF(ticker)
 	else
 		set_lobby_music("[global.config.directory]/title_music/sounds/[pick(music)]")
 
-	if(!GLOB.syndicate_code_phrase)
-		GLOB.syndicate_code_phrase = generate_code_phrase(return_list=TRUE)
-
-		var/codewords = jointext(GLOB.syndicate_code_phrase, "|")
-		var/regex/codeword_match = new("([codewords])", "ig")
-
-		GLOB.syndicate_code_phrase_regex = codeword_match
-
-	if(!GLOB.syndicate_code_response)
-		GLOB.syndicate_code_response = generate_code_phrase(return_list=TRUE)
-
-		var/codewords = jointext(GLOB.syndicate_code_response, "|")
-		var/regex/codeword_match = new("([codewords])", "ig")
-
-		GLOB.syndicate_code_response_regex = codeword_match
-
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * (1 SECONDS))
-	round_start_time = start_at // May be changed later, but prevents the time from jumping back when the round actually starts
-	if(CONFIG_GET(flag/randomize_shift_time))
-		gametime_offset = rand(0, 23) * (1 HOURS)
-	else if(CONFIG_GET(flag/shift_time_realtime))
-		gametime_offset = world.timeofday + GLOB.timezoneOffset
-		station_time_rate_multiplier = 1
-	else
-		gametime_offset = (CONFIG_GET(number/shift_time_start_hour) * (1 HOURS))
+
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ticker/fire()
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
 			if(Master.initializations_finished_with_no_players_logged_in)
-				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
+				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * (1 SECONDS))
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, span_notice("<b>Welcome to [station_name()]!</b>"))
 			for(var/channel_tag in CONFIG_GET(str_list/channel_announce_new_game))
 				send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.current_map.map_name]!"), channel_tag)
+
 			current_state = GAME_STATE_PREGAME
 			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
-
 			fire()
 		if(GAME_STATE_PREGAME)
-				//lobby stats for statpanels
+			//lobby stats for statpanels
 			if(isnull(timeLeft))
-				timeLeft = max(0,start_at - world.time)
+				timeLeft = max(0, start_at - world.time)
 			totalPlayers = LAZYLEN(GLOB.new_player_list)
 			totalPlayersReady = 0
 			total_admins_ready = 0
@@ -189,7 +165,7 @@ SUBSYSTEM_DEF(ticker)
 			if(!setup())
 				//setup failed
 				current_state = GAME_STATE_STARTUP
-				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
+				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * (1 SECONDS))
 				timeLeft = null
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
 				SEND_SIGNAL(src, COMSIG_TICKER_ERROR_SETTING_UP)
@@ -203,6 +179,18 @@ SUBSYSTEM_DEF(ticker)
 				toggle_dooc(TRUE)
 				declare_completion(force_ending)
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
+
+		if(GAME_STATE_FINISHED)
+			if(ready_for_reboot)
+				if(isnull(reboot_timer))
+					reboot_hud.maptext = MAPTEXT_PIXELLARI("<center>Server reboot \n\ DELAYED</center>")
+				else
+					reboot_hud.maptext = MAPTEXT_PIXELLARI("<center>Server rebooting in:\n\ [DisplayTimeText(timeleft(SSticker.reboot_timer), 1)]</center>")
+
+/datum/controller/subsystem/ticker/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, login_music))
+		set_lobby_music(var_value, override = TRUE)
+	return ..()
 
 /// Checks if the round should be ending, called every ticker tick
 /datum/controller/subsystem/ticker/proc/check_finished()
@@ -324,7 +312,7 @@ SUBSYSTEM_DEF(ticker)
 		var/arguments = list()
 		if(GLOB.revdata.originmastercommit)
 			to_set += "commit_hash = :commit_hash"
-			arguments["commit_hash"] = GLOB.revdata.originmastercommit
+			arguments["commit_hash"] = GLOB.revdata.GetDatabaseCommitSha()
 		if(to_set.len)
 			arguments["round_id"] = GLOB.round_id
 			var/datum/db_query/query_round_game_mode = SSdbcore.NewQuery(
@@ -383,11 +371,11 @@ SUBSYSTEM_DEF(ticker)
 			if(L.client.inactivity >= GLOB.logout_timer_set) //Connected, but inactive (alt+tabbed or something)
 				msg += "<b>[L.name]</b> ([L.key]), the [L.job] (<font color='#ffcc00'><b>Connected, Inactive</b></font>)\n"
 				failed = TRUE //AFK client
-			if(!failed && L.stat)
+			if(!failed && IS_UNCONSCIOUS_OR_CRIT(L))
 				if(HAS_TRAIT(L, TRAIT_SUICIDED)) //Suicider
 					msg += "<b>[L.name]</b> ([L.key]), the [L.job] ([span_bolddanger("Suicide")])\n"
 					failed = TRUE //Disconnected client
-				if(!failed && (L.stat == UNCONSCIOUS || L.stat == HARD_CRIT))
+				if(!failed && (L.stat == HARD_CRIT))
 					msg += "<b>[L.name]</b> ([L.key]), the [L.job] (Dying)\n"
 					failed = TRUE //Unconscious
 				if(!failed && L.stat == DEAD)
@@ -833,6 +821,8 @@ SUBSYSTEM_DEF(ticker)
 
 	var/start_wait = world.time
 	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2)) //don't wait forever
+	if(!isnull(reboot_timer)) //Override existing reboot timers.
+		deltimer(reboot_timer)
 	reboot_timer = addtimer(CALLBACK(src, PROC_REF(reboot_callback), reason, end_string), delay - (world.time - start_wait), TIMER_STOPPABLE)
 
 
@@ -886,6 +876,10 @@ SUBSYSTEM_DEF(ticker)
 		return
 
 	login_music = new_music
+	//we just overrode the song, let's update everyone.
+	if(override)
+		for(var/mob/dead/new_player/new_player as anything in GLOB.new_player_list)
+			new_player?.client.playtitlemusic()
 
 #undef ROUND_START_MUSIC_LIST
 #undef SS_TICKER_TRAIT

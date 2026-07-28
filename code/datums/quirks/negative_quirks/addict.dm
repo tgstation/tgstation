@@ -3,7 +3,7 @@
 	desc = "You are addicted to something that doesn't exist. Suffer."
 	gain_text = span_danger("You suddenly feel the craving for... something? You're not sure what it is.")
 	medical_record_text = "Patient has a history with SOMETHING but he refuses to tell us what it is."
-	abstract_parent_type = /datum/quirk/item_quirk/addict
+	abstract_type = /datum/quirk/item_quirk/addict
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	no_process_traits = list(TRAIT_LIVERLESS_METABOLISM)
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
@@ -95,16 +95,16 @@
 	associated_typepath = /datum/quirk/item_quirk/addict/junkie
 	customization_options = list(/datum/preference/choiced/junkie)
 
-/datum/quirk/item_quirk/addict/junkie/add_unique(client/client_source)
-
-	var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/junkie)
-	if(addiction && (addiction != "Random"))
-		reagent_type = GLOB.possible_junkie_addictions[addiction]
+/datum/quirk/item_quirk/addict/junkie/add_to_holder(mob/living/new_holder, quirk_transfer = FALSE, client/client_source, unique = TRUE, announce = TRUE)
+	if(!quirk_transfer)
+		var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/junkie)
+		if(addiction && (addiction != "Random"))
+			reagent_type = GLOB.possible_junkie_addictions[addiction]
 	return ..()
 
 /datum/quirk/item_quirk/addict/remove()
 	if(!QDELETED(quirk_holder) && reagent_instance)
-		for(var/addiction_type in subtypesof(/datum/addiction))
+		for(var/addiction_type in GLOB.addictions)
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
 /datum/quirk/item_quirk/addict/smoker

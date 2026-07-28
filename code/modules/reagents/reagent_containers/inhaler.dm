@@ -260,21 +260,11 @@
 
 /obj/item/reagent_containers/inhaler_canister/handle_deconstruct(disassembled)
 	if (!reagents?.total_volume)
+		visible_message(span_warning("[src] breaks open - but is empty!"))
 		return ..()
 
-	var/datum/reagents/smoke_reagents = new/datum/reagents() // Lets be safe first, our own reagents may be qdelled if we get deleted
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/smoke = new()
-	smoke_reagents.my_atom = src
-	for (var/datum/reagent/reagent as anything in reagents.reagent_list)
-		smoke_reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity)
-		reagents.remove_reagent(reagent.type, reagent.volume)
-	if (smoke_reagents.reagent_list)
-		smoke.set_up(1, holder = src, location = get_turf(src), carry = smoke_reagents)
-		smoke.start(log = TRUE)
-		visible_message(span_warning("[src] breaks open and sprays its aerosilized contents everywhere!"))
-	else
-		visible_message(span_warning("[src] breaks open - but is empty!"))
-
+	do_chem_smoke(1, src, get_turf(src), carry = reagents, log = TRUE)
+	visible_message(span_warning("[src] breaks open and sprays its aerosilized contents everywhere!"))
 	return ..()
 
 /obj/item/inhaler/medical

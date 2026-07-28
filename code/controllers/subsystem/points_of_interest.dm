@@ -2,7 +2,7 @@
 SUBSYSTEM_DEF(points_of_interest)
 	name = "Points of Interest"
 
-	flags = SS_NO_FIRE | SS_NO_INIT
+	ss_flags = SS_NO_FIRE | SS_NO_INIT
 
 	/// List of mob POIs. This list is automatically sorted.
 	var/list/datum/point_of_interest/mob_poi/mob_points_of_interest = list()

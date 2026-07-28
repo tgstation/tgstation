@@ -3,14 +3,9 @@
 	race = /datum/species/monkey
 	ai_controller = /datum/ai_controller/monkey
 
-/mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned = FALSE, mob/spawner)
+/mob/living/carbon/human/species/monkey/Initialize(mapload, datum/species/species, cubespawned = FALSE)
 	ADD_TRAIT(src, TRAIT_BORN_MONKEY, INNATE_TRAIT)
 	if (cubespawned)
-		var/cap = CONFIG_GET(number/monkeycap)
-		if (LAZYLEN(SSmobs.cubemonkeys) > cap)
-			if (spawner)
-				to_chat(spawner, span_warning("Bluespace harmonics prevent the spawning of more than [cap] monkeys on the station at one time!"))
-			return INITIALIZE_HINT_QDEL
 		SSmobs.cubemonkeys += src
 	return ..()
 
@@ -21,7 +16,7 @@
 /mob/living/carbon/human/species/monkey/angry
 	ai_controller = /datum/ai_controller/monkey/angry
 
-/mob/living/carbon/human/species/monkey/angry/Initialize(mapload, cubespawned = FALSE, mob/spawner)
+/mob/living/carbon/human/species/monkey/angry/Initialize(mapload, datum/species/species, cubespawned = FALSE)
 	. = ..()
 	if(prob(10))
 		INVOKE_ASYNC(src, PROC_REF(give_ape_escape_helmet))
@@ -32,7 +27,8 @@
 	equip_to_slot_or_del(helmet, ITEM_SLOT_HEAD)
 	helmet.attack_self(src) // todo encapsulate toggle
 
-GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/punpun)
+/// The one true Pun Pun. Either the bar's monkey mob, or the bar gorilla when the Big Pun Pun trait is active.
+GLOBAL_DATUM(the_one_and_only_punpun, /mob/living)
 
 /mob/living/carbon/human/species/monkey/punpun
 	name = "Pun Pun" //C A N O N
@@ -47,7 +43,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 	var/relic_mask
 	var/memory_saved = FALSE
 
-/mob/living/carbon/human/species/monkey/punpun/Initialize(mapload)
+/mob/living/carbon/human/species/monkey/punpun/Initialize(mapload, datum/species/species)
 	. = ..()
 
 	REGISTER_REQUIRED_MAP_ITEM(1, 1) // pun pun is required on maps.
@@ -55,24 +51,23 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 		new /obj/effect/landmark/start/pun_pun(loc) //Pun Pun is a crewmember, and may late-join.
 		return INITIALIZE_HINT_QDEL
 
-	Read_Memory()
+	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_PUN_PUN_GYM_DAY))
+		new /mob/living/basic/gorilla/bar(loc) //gym day get buff get swole
+		return INITIALIZE_HINT_QDEL
+
+	equip_to_slot_or_del(new /obj/item/clothing/under/suit/waiter(src), ITEM_SLOT_ICLOTHING)
+
 	if(!GLOB.the_one_and_only_punpun && mapload)
 		GLOB.the_one_and_only_punpun = src
+		Read_Memory()
+
 	else if(GLOB.the_one_and_only_punpun)
 		ADD_TRAIT(src, TRAIT_DONT_WRITE_MEMORY, INNATE_TRAIT) //faaaaaaake!
 
+	// Everything past here MUST be called AFTER memory has been read
 	give_special_name()
-
-	//These have to be after the parent new to ensure that the monkey
-	//bodyparts are actually created before we try to equip things to
-	//those slots
-	if(ancestor_chain > 1)
-		generate_fake_scars(rand(ancestor_chain, ancestor_chain * 4))
-	if(relic_hat)
-		equip_to_slot_or_del(new relic_hat, ITEM_SLOT_HEAD)
-	if(relic_mask)
-		equip_to_slot_or_del(new relic_mask, ITEM_SLOT_MASK)
-	equip_to_slot_or_del(new /obj/item/clothing/under/suit/waiter(src), ITEM_SLOT_ICLOTHING)
+	give_scars()
+	give_special_equipment()
 
 /mob/living/carbon/human/species/monkey/punpun/Destroy()
 	if(GLOB.the_one_and_only_punpun == src)
@@ -81,7 +76,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 	return ..()
 
 /mob/living/carbon/human/species/monkey/punpun/Life(seconds_per_tick = SSMOBS_DT)
-	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(!IS_UNCONSCIOUS_OR_CRIT(src) && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE, FALSE)
 		memory_saved = TRUE
 
@@ -131,18 +126,33 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 	WRITE_FILE(json_file, json_encode(file_data))
 
 
-/// Gives pun pun a special name based on various factors
+/// Gives pun pun a special name based on various factors such as their past
 /mob/living/carbon/human/species/monkey/punpun/proc/give_special_name()
-	var/name_to_use = name
+	var/name_to_use = initial(name)
 
+#ifndef UNIT_TESTS
 	if(ancestor_name)
 		name_to_use = ancestor_name
 		if(ancestor_chain > 1)
 			name_to_use += " \Roman[ancestor_chain]"
+
 	else if(prob(10))
 		name_to_use = pick(list("Professor Bobo", "Deempisi's Revenge", "Furious George", "King Louie", "Dr. Zaius", "Jimmy Rustles", "Dinner", "Lanky"))
 		if(name_to_use == "Furious George")
 			qdel(ai_controller)
 			ai_controller = new /datum/ai_controller/monkey/angry(src) //hes always mad
+#endif
 
 	fully_replace_character_name(real_name, name_to_use)
+
+/// Gives pun pun scars based on how many times he's died in the past
+/mob/living/carbon/human/species/monkey/punpun/proc/give_scars()
+	if(ancestor_chain > 1)
+		generate_fake_scars(rand(ancestor_chain, ancestor_chain * 4))
+
+/// Gives pun pun special equipment from their past
+/mob/living/carbon/human/species/monkey/punpun/proc/give_special_equipment()
+	if(relic_hat)
+		equip_to_slot_or_del(new relic_hat, ITEM_SLOT_HEAD)
+	if(relic_mask)
+		equip_to_slot_or_del(new relic_mask, ITEM_SLOT_MASK)

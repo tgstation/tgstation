@@ -194,6 +194,7 @@
 	if(QDELETED(I)) // this is here because some ABSTRACT items like slappers and circle hands could be moved from hand to hand then delete, which meant you'd have a null in your hand until you cleared it (say, by dropping it)
 		held_items[hand_index] = null
 		return FALSE
+	SEND_SIGNAL(I, COMSIG_ITEM_ENTERED_HANDS, src, hand_index)
 	return hand_index
 
 //Puts the item into the first available left hand if possible and calls all necessary triggers/updates. returns 1 on success.
@@ -448,8 +449,8 @@
 			item_dropping.forceMove(newloc)
 
 	has_unequipped(item_dropping, silent)
-	SEND_SIGNAL(item_dropping, COMSIG_ITEM_POST_UNEQUIP, force, newloc, no_move, invdrop, silent)
-	SEND_SIGNAL(src, COMSIG_MOB_UNEQUIPPED_ITEM, item_dropping, force, newloc, no_move, invdrop, silent)
+	SEND_SIGNAL(item_dropping, COMSIG_ITEM_POST_UNEQUIP, force, newloc, no_move, invdrop, silent, hand_index)
+	SEND_SIGNAL(src, COMSIG_MOB_UNEQUIPPED_ITEM, item_dropping, force, newloc, no_move, invdrop, silent, hand_index)
 	return TRUE
 
 /**
@@ -644,9 +645,7 @@
 		qdel(item)
 	return FALSE
 
-/mob/verb/quick_equip()
-	set name = "quick-equip"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/mob, quick_equip, "quick-equip")
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_quick_equip)))
 
@@ -675,8 +674,13 @@
 			dropItemToGround(held_items[i])
 	held_items.len = amt
 
-	if(hud_used)
-		hud_used.build_hand_slots()
+	if(!hud_used)
+		return
+
+	hud_used.build_hand_slots(update_hud = TRUE)
+	var/atom/movable/screen/healthdoll/doll = hud_used.screen_objects[HUD_MOB_HEALTHDOLL]
+	if(doll)
+		doll.update_body_zones()
 
 //GetAllContents that is reasonable and not stupid
 /mob/living/proc/get_all_gear(equipment_flags = INCLUDE_ACCESSORIES|INCLUDE_PROSTHETICS, recursive = TRUE)

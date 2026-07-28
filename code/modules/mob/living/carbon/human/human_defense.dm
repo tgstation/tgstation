@@ -13,12 +13,10 @@
 		//If a specific bodypart is targeted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in get_bodyparts())
 		armorval += check_armor(BP, type)
 		organnum++
 	return (armorval/max(organnum, 1))
-
 
 /mob/living/carbon/human/proc/check_armor(obj/item/bodypart/def_zone, damage_type)
 	if(!damage_type)
@@ -140,8 +138,8 @@
 	if(!HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
 		Knockdown(SHOVE_KNOCKDOWN_COLLATERAL, daze_amount = 3 SECONDS)
 	target.visible_message(span_danger("[shover] shoves [target.name] into [name]!"),
-		span_userdanger("You're shoved into [name] by [shover]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-	to_chat(src, span_danger("You shove [target.name] into [name]!"))
+		span_userdanger("You're shoved into [name] by [shover]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, list(shover))
+	to_chat(shover, span_danger("You shove [target.name] into [name]!"))
 	log_combat(shover, target, "shoved", addition = "into [name][weapon ? " with [weapon]" : ""]")
 	return COMSIG_LIVING_SHOVE_HANDLED
 
@@ -331,8 +329,7 @@
 			if(EXPLODE_DEVASTATE)
 				max_limb_loss = 4
 				probability = 50
-		for(var/X in bodyparts)
-			var/obj/item/bodypart/BP = X
+		for(var/obj/item/bodypart/BP as anything in get_bodyparts())
 			if(prob(probability) && !prob(getarmor(BP, BOMB)) && BP.body_zone != BODY_ZONE_HEAD && BP.body_zone != BODY_ZONE_CHEST)
 				BP.receive_damage(INFINITY, wound_bonus = CANT_WOUND) //Capped by proc
 				BP.dismember()
@@ -383,7 +380,7 @@
 		//If they can't, they're missing their heart and this would runtime
 		if(undergoing_cardiac_arrest() && can_heartattack() && (shock_damage * siemens_coeff >= 1) && prob(25))
 			var/obj/item/organ/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
-			if(heart.Restart() && stat == CONSCIOUS)
+			if(heart.Restart() && !IS_UNCONSCIOUS_OR_CRIT(src))
 				to_chat(src, span_notice("You feel your heart beating again!"))
 	if (!(flags & SHOCK_NO_HUMAN_ANIM))
 		electrocution_animation(4 SECONDS)
@@ -508,7 +505,7 @@
 			emote("scream")
 			set_facial_hairstyle("Shaved", update = FALSE)
 			set_hairstyle("Bald") //This calls update_body_parts()
-			ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
+			ADD_TRAIT(affecting, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
 		apply_damage(acidity * damage_mod, BRUTE, affecting)
 		apply_damage(acidity * damage_mod * 2, BURN, affecting)
@@ -549,7 +546,7 @@
 	return ..()
 
 /mob/living/carbon/human/check_self_for_injuries()
-	if(stat >= UNCONSCIOUS)
+	if(IS_UNCONSCIOUS(src))
 		return
 	var/list/combined_msg = list()
 
@@ -557,19 +554,18 @@
 
 	combined_msg += span_notice("<b>You check yourself for injuries.</b>")
 
-	var/list/missing = get_all_limbs()
 
-	for(var/obj/item/bodypart/body_part as anything in bodyparts)
-		missing -= body_part.body_zone
+	for(var/part_zone, body_part_untyped in get_bodyparts_by_zones())
+		var/obj/item/bodypart/body_part = body_part_untyped
+		if(isnull(body_part) || IS_STUMP(body_part))
+			combined_msg += span_boldannounce("&rdsh; Your [parse_zone(body_part?.body_zone || part_zone)] is missing!")
+			continue
 		if(body_part.bodypart_flags & BODYPART_PSEUDOPART) //don't show injury text for fake bodyparts; ie chainsaw arms or synthetic armblades
 			continue
 
 		var/bodypart_report = body_part.check_for_injuries(src)
 		if(bodypart_report)
 			combined_msg += "[span_notice("&rdsh;")] [bodypart_report]"
-
-	for(var/t in missing)
-		combined_msg += span_boldannounce("&rdsh; Your [parse_zone(t)] is missing!")
 
 	var/tox = get_tox_loss() + (disgust / 5) + (HAS_TRAIT(src, TRAIT_SELF_AWARE) ? 0 : (rand(-3, 0) * 5))
 	switch(tox)
@@ -731,3 +727,34 @@
 		if(methods == NONE)
 			return
 	return ..()
+
+
+/mob/living/carbon/human/is_mouth_covered(check_flags = ALL)
+	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & HEADCOVERSMOUTH))
+		return head
+	if((check_flags & ITEM_SLOT_MASK) && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH))
+		return wear_mask
+	return null
+
+/mob/living/carbon/human/is_eyes_covered(check_flags = ALL)
+	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & HEADCOVERSEYES))
+		return head
+	if((check_flags & ITEM_SLOT_MASK) && wear_mask && (wear_mask.flags_cover & MASKCOVERSEYES))
+		return wear_mask
+	if((check_flags & ITEM_SLOT_EYES) && glasses && (glasses.flags_cover & GLASSESCOVERSEYES))
+		return glasses
+	return null
+
+/mob/living/carbon/human/is_pepper_proof(check_flags = ALL)
+	. = ..()
+	if (.)
+		return
+	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & PEPPERPROOF))
+		return head
+	if((check_flags & ITEM_SLOT_MASK) && wear_mask && (wear_mask.flags_cover & PEPPERPROOF))
+		return wear_mask
+
+/mob/living/carbon/human/get_eye_protection()
+	. = ..()
+	for (var/obj/item/clothing/clothing in get_equipped_items())
+		. += clothing.flash_protect

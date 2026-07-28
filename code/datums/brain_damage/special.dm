@@ -400,7 +400,7 @@
 	if(get_dist(owner, beepsky) >= 10 && prob(20))
 		create_securitron()
 
-	if(owner.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
 		if(prob(20))
 			owner.playsound_local(beepsky, 'sound/mobs/non-humanoids/beepsky/iamthelaw.ogg', 50)
 		return
@@ -439,7 +439,7 @@
 		var/beepskys_cry = "Level 10 infraction alert!"
 		to_chat(victim, "[span_name("[name]")] exclaims, \"[span_robot("[beepskys_cry]")]")
 		if(victim.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
-			victim.create_chat_message(src, raw_message = beepskys_cry, spans = list("robotic"))
+			victim.create_chat_message(src, raw_message = beepskys_cry, spans = list(SPAN_ROBOT))
 
 // Used by Veteran Security Advisor job.
 /datum/brain_trauma/special/ptsd
@@ -471,7 +471,7 @@
 	)
 
 /datum/brain_trauma/special/ptsd/on_life(seconds_per_tick)
-	if(owner.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
 		return
 
 	if(!COOLDOWN_FINISHED(src, ptsd_hallucinations))
@@ -483,15 +483,15 @@
 /datum/brain_trauma/special/ptsd/on_gain()
 	owner.add_mood_event("combat_ptsd", /datum/mood_event/desentized)
 	owner.mob_mood?.mood_modifier -= 1 //Basically nothing can change your mood
-	owner.mob_mood?.sanity_level = SANITY_DISTURBED //Makes sanity on a unstable level unless cured
-	ADD_TRAIT(owner, TRAIT_DESENSITIZED, REF(src))
+	owner.mob_mood?.set_sanity(SANITY_DISTURBED, override = TRUE) //Makes sanity on a unstable level unless cured
+	owner.apply_status_effect(/datum/status_effect/desensitized, REF(src), DESENSITIZED_THRESHOLD)
 	. = ..()
 
 /datum/brain_trauma/special/ptsd/on_lose()
 	owner.clear_mood_event("combat_ptsd")
 	owner.mob_mood?.mood_modifier += 1
-	owner.mob_mood?.sanity_level = SANITY_GREAT
-	REMOVE_TRAIT(owner, TRAIT_DESENSITIZED, REF(src))
+	owner.mob_mood?.set_sanity(SANITY_GREAT, override = TRUE)
+	owner.remove_status_effect(/datum/status_effect/desensitized, REF(src))
 	return ..()
 
 /datum/brain_trauma/special/primal_instincts
@@ -515,8 +515,8 @@
 
 	owner.ai_controller = new /datum/ai_controller/monkey(owner)
 	owner.ai_controller.continue_processing_when_client = TRUE
-	owner.ai_controller.can_idle = FALSE
-	owner.ai_controller.set_ai_status(AI_STATUS_OFF)
+	owner.ai_controller.ai_traits |= RUN_WHILE_UNWATCHED
+	owner.ai_controller.force_ai_off()
 
 /datum/brain_trauma/special/primal_instincts/on_lose(silent)
 	. = ..()
@@ -539,14 +539,14 @@
 	owner.grant_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
 	owner.ai_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, prob(75))
 	if(owner.ai_controller.ai_status == AI_STATUS_OFF)
-		owner.ai_controller.set_ai_status(AI_STATUS_ON)
+		owner.ai_controller.clear_forced_off()
 		owner.log_message("became controlled by monkey instincts ([owner.ai_controller.blackboard[BB_MONKEY_AGGRESSIVE] ? "aggressive" : "docile"])", LOG_ATTACK, color = "orange")
 		to_chat(owner, span_warning("You feel the urge to act on your primal instincts..."))
 	// extend original timer if we roll the effect while it's already ongoing
 	addtimer(CALLBACK(src, PROC_REF(primal_instincts_off)), rand(20 SECONDS, 40 SECONDS), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE|TIMER_DELETE_ME)
 
 /datum/brain_trauma/special/primal_instincts/proc/primal_instincts_off()
-	owner.ai_controller.set_ai_status(AI_STATUS_OFF)
+	owner.ai_controller.force_ai_off()
 	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
 	to_chat(owner, span_green("The urge subsides."))
 
@@ -584,7 +584,7 @@
 	)
 
 /datum/brain_trauma/special/axedoration/on_life(seconds_per_tick)
-	if(owner.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
 		return
 
 	if(!GLOB.bridge_axe)
@@ -701,7 +701,7 @@
 	to_chat(owner, span_warning("Should I really leave it here?"))
 	owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
 
-/datum/brain_trauma/special/axedoration/proc/on_examine(mob/source, atom/target, list/examine_strings)
+/datum/brain_trauma/special/axedoration/proc/on_examine(mob/source, atom/target, list/examine_strings, list/examine_overrides)
 	SIGNAL_HANDLER
 	if(!istype(target, /obj/item/fireaxe))
 		return

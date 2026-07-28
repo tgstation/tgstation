@@ -255,6 +255,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	layer = ABOVE_OPEN_TURF_LAYER
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	obj_flags = NONE
 	var/tile_key = "pristine_tile"
 	var/tile_random_sprite_max = 24
 
@@ -264,7 +265,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 
 	var/static/list/give_turf_traits
 	if(!give_turf_traits)
-		give_turf_traits = string_list(list(TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_IMMERSE_STOPPED))
+		give_turf_traits = string_list(list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_IMMERSE_STOPPED))
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 
 /obj/structure/stone_tile/singularity_pull(atom/singularity, current_size)

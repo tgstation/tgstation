@@ -1,5 +1,7 @@
 /// A single reagent
 /datum/reagent
+	abstract_type = /datum/reagent
+
 	/// datums don't have names by default
 	var/name = ""
 	/// nor do they have descriptions
@@ -56,7 +58,13 @@
 	var/burning_temperature = null
 	///How much is consumed when it is burnt per second
 	var/burning_volume = 0.5
-	///Assoc list with key type of addiction this reagent feeds, and value amount of addiction points added per unit of reagent metabolzied (which means * REAGENTS_METABOLISM every life())
+	/**
+	 * Lazyassoc list of [addiction typepath] to [threshold value].
+	 *
+	 * [threshold value] can be interpreted as the number of units that must be consumed before an addiction is formed.
+	 *
+	 * Ex: list(/datum/addiction/stimulants = 50) -> "become addicted to stimulants after metabolizing 50 units of this reagent".
+	 */
 	var/list/addiction_types = null
 	/// The affected organ_flags, if the reagent damages/heals organ damage of an affected mob.
 	/// See "Organ defines for carbon mobs" in /code/_DEFINES/surgery.dm
@@ -67,9 +75,6 @@
 	/// The affected biotype, if the reagent damages/heals toxin damage of an affected mob.
 	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
 	var/affected_biotype = MOB_ORGANIC
-	/// The affected respiration type, if the reagent damages/heals oxygen damage of an affected mob.
-	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
-	var/affected_respiration_type = ALL
 	/// A list of traits to apply while the reagent is being metabolized.
 	var/list/metabolized_traits
 	/// A list of traits to apply while the reagent is in a mob.
@@ -89,13 +94,15 @@
 	var/fallback_icon_state
 	/// When ordered in a restaurant, what custom order do we create?
 	var/restaurant_order = /datum/custom_order/reagent/drink
+	/// How we interact with random generators
+	var/randomized_spawns = REAGENT_SPAWN_NO_RANDOM
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 
 	if(material)
-		material = GET_MATERIAL_REF(material)
+		material = SSmaterials.get_material(material)
 	if(glass_price)
 		AddElement(/datum/element/venue_price, glass_price)
 	if(!mass)
@@ -222,12 +229,12 @@
 /datum/reagent/proc/on_mob_metabolize(mob/living/affected_mob)
 	SHOULD_CALL_PARENT(TRUE)
 	if(metabolized_traits)
-		affected_mob.add_traits(metabolized_traits, "metabolize:[type]")
+		affected_mob.add_traits(metabolized_traits, METABOLIZATION_TRAIT(type))
 
 /// Called when this reagent stops being metabolized by a liver
 /datum/reagent/proc/on_mob_end_metabolize(mob/living/affected_mob, metabolization_ratio)
 	SHOULD_CALL_PARENT(TRUE)
-	REMOVE_TRAITS_IN(affected_mob, "metabolize:[type]")
+	REMOVE_TRAITS_IN(affected_mob, METABOLIZATION_TRAIT(type))
 
 /**
  * Called when a reagent is inside of a mob when they are dead if the reagent has the REAGENT_DEAD_PROCESS flag
@@ -242,9 +249,9 @@
  * Probably shouldn't be called from within a mob's bloodstream, unless you're ready for some very explosive results
  * Arguments:
  * * power_charge - If we were triggered from electric current, how much power was dumped into us?
- * * enclosed - Is the reaction happening in an enclosed container or not? Doesn't use reagent holder's flags as it might be called on reagents "exiting" the container
+ * * spark_flags - Flags specific to the interaction, is it in an enclosed space, should we nerf common reagents, etc.
  */
-/datum/reagent/proc/on_spark_act(power_charge = 0, enclosed = TRUE)
+/datum/reagent/proc/on_spark_act(power_charge = 0, spark_flags = NONE)
 	return NONE
 
 /**

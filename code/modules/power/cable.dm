@@ -132,7 +132,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 ///Clear the linked indicator bitflags
 /obj/structure/cable/proc/disconnect_cable()
-	for(var/check_dir in linked_dirs)
+	for(var/check_dir in GLOB.cardinals)
+		if(!(linked_dirs & check_dir))
+			continue
 		var/inverse = REVERSE_DIR(check_dir)
 		var/turf/check_turf = get_step(loc, check_dir)
 		for(var/obj/structure/cable/other_cable in check_turf)
@@ -267,7 +269,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 		return NONE
 	add_fingerprint(user)
 	to_chat(user, get_power_info())
-	shock(user, 5, 0.2)
+	shock(user, 5, null, 0.2)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/cable/proc/get_power_info()
@@ -277,13 +279,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 		return span_danger("The cable is not powered.")
 
 // shock the user with probability prb
-/obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1)
-	if(!prob(prb))
-		return FALSE
-	if(electrocute_mob(user, powernet, src, siemens_coeff))
-		do_sparks(5, TRUE, src)
-		return TRUE
-	return FALSE
+/obj/structure/cable/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+	shock_source = powernet
+	return ..()
 
 /obj/structure/cable/singularity_pull(atom/singularity, current_size)
 	..()
@@ -653,7 +651,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 /obj/item/stack/cable_coil/proc/try_heal_loop(atom/interacting_with, mob/living/user, repeating = FALSE)
 	var/mob/living/carbon/human/attacked_humanoid = interacting_with
 	var/obj/item/clothing/under/uniform = attacked_humanoid.w_uniform
-	if(uniform?.repair_sensors(user))
+	if(!istype(uniform) || uniform.repair_sensors(user))
 		return ITEM_INTERACT_SUCCESS
 
 	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
@@ -687,11 +685,11 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 //////////////////////////////////////////////
 
 // called when cable_coil is clicked on a turf
-/obj/item/stack/cable_coil/proc/place_turf(turf/T, mob/user, dirnew)
+/obj/item/stack/cable_coil/proc/place_turf(turf/target_turf, mob/user, dirnew)
 	if(!isturf(user.loc))
 		return
 
-	if(!isturf(T) || T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !T.can_have_cabling())
+	if(!isturf(target_turf) || target_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !target_turf.can_have_cabling())
 		to_chat(user, span_warning("You can only lay cables on catwalks and plating!"))
 		return
 
@@ -699,32 +697,31 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 		to_chat(user, span_warning("There is no cable left!"))
 		return
 
-	if(get_dist(T,user) > 1) // Too far
+	if(get_dist(target_turf,user) > 1) // Too far
 		to_chat(user, span_warning("You can't lay cable at a place that far away!"))
 		return
 
-	for(var/obj/structure/cable/C in T)
-		if(C.cable_layer & target_layer)
+	for(var/obj/structure/cable/old_cable in target_turf)
+		if(old_cable.cable_layer & target_layer)
 			to_chat(user, span_warning("There's already a cable at that position!"))
 			return
 
-	var/obj/structure/cable/C = new target_type(T)
+	var/obj/structure/cable/new_cable = new target_type(target_turf)
 
 	//create a new powernet with the cable, if needed it will be merged later
-	var/datum/powernet/PN = new()
-	PN.add_cable(C)
+	var/datum/powernet/new_powernet = new()
+	new_powernet.add_cable(new_cable)
 
 	for(var/dir_check in GLOB.cardinals)
-		C.mergeConnectedNetworks(dir_check) //merge the powernet with adjacents powernets
-	C.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
+		new_cable.mergeConnectedNetworks(dir_check) //merge the powernet with adjacents powernets
+	new_cable.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
 
 	use(1)
 
-	if(C.shock(user, 50))
-		if(prob(50)) //fail
-			C.deconstruct()
+	if(new_cable.powernet.avail && new_cable.shock(user, 50) && prob(50))
+		new_cable.deconstruct()
 
-	return C
+	return new_cable
 
 /obj/item/stack/cable_coil/five
 	amount = 5

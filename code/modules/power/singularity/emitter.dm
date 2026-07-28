@@ -46,7 +46,7 @@
 	///What's the projectile sound?
 	var/projectile_sound = 'sound/items/weapons/emitter.ogg'
 	///Sparks emitted with every shot
-	var/datum/effect_system/spark_spread/sparks
+	var/datum/effect_system/basic/spark_spread/sparks
 	///Stores the type of gun we are using inside the emitter
 	var/obj/item/gun/energy/gun
 	///List of all the properties of the inserted gun
@@ -74,11 +74,11 @@
 			set_anchored(TRUE)
 		connect_to_network()
 
-	sparks = new
+	sparks = new(src, 5, TRUE)
 	sparks.attach(src)
-	sparks.set_up(5, TRUE, src)
 	AddElement(/datum/element/simple_rotation)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/emitter), only_root_path = TRUE))
 
 /obj/machinery/power/emitter/welded/Initialize(mapload)
 	welded = TRUE
@@ -158,6 +158,7 @@
 	var/mutable_appearance/overlay = mutable_appearance(icon, "emitter_overlay")
 	overlay.color = laser_color
 	. += overlay
+	. += emissive_appearance(icon, "emitter_overlay", src, alpha = src.alpha)
 
 /obj/machinery/power/emitter/update_icon_state()
 	if(panel_open)
@@ -190,6 +191,7 @@
 	log_game("[src] turned [active ? "ON" : "OFF"] by [key_name(user)] in [AREACOORD(src)]")
 	investigate_log("turned [active ? "ON" : "OFF"] by [key_name(user)] at [AREACOORD(src)]", INVESTIGATE_ENGINE)
 	update_appearance()
+	SEND_SIGNAL(src, COMSIG_EMITTER_MACHINE_SET_ON, active ? TRUE : FALSE)
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(ismegafauna(user) && anchored)
@@ -268,6 +270,7 @@
 		else
 			fire_delay = rand(minimum_fire_delay,maximum_fire_delay) * fire_rate_mod
 			shot_number = 0
+	SEND_SIGNAL(src, COMSIG_EMITTER_MACHINE_ON_FIRE)
 	return projectile
 
 /obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)
@@ -329,14 +332,10 @@
 		return remove_gun(user)
 	if(panel_open && diskie)
 		return remove_disk(user)
-	default_deconstruction_crowbar(item)
-	return TRUE
+	return default_deconstruction_crowbar(user, item)
 
 /obj/machinery/power/emitter/screwdriver_act(mob/living/user, obj/item/item)
-	if(..())
-		return TRUE
-	default_deconstruction_screwdriver(user, "[base_icon_state]_open", base_icon_state, item)
-	return TRUE
+	return default_deconstruction_screwdriver(user, item)
 
 /// Attempt to toggle the controls lock of the emitter
 /obj/machinery/power/emitter/proc/togglelock(mob/user)
@@ -352,25 +351,34 @@
 	locked = !locked
 	to_chat(user, span_notice("You [src.locked ? "lock" : "unlock"] the controls."))
 
-/obj/machinery/power/emitter/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(item.GetID())
+/obj/machinery/power/emitter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.GetID())
 		togglelock(user)
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(is_wire_tool(item) && panel_open)
+	if(!panel_open)
+		return NONE
+
+	if(is_wire_tool(tool))
 		wires.interact(user)
-		return
-	if(panel_open && !gun && istype(item,/obj/item/gun/energy))
+		return ITEM_INTERACT_SUCCESS
+
+	if(gun)
+		return NONE
+
+	if(istype(tool, /obj/item/gun/energy))
 		if(diskie)
 			to_chat(user, span_warning("Remove the Diode Disk before inserting a gun."))
-			return
-		if(integrate(item,user))
-			return
-	if(panel_open && !gun && istype(item,/obj/item/emitter_disk))
-		var/obj/item/emitter_disk/config_disk = item
+			return ITEM_INTERACT_BLOCKING
+		if(!integrate(tool,user))
+			return ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/emitter_disk))
+		var/obj/item/emitter_disk/config_disk = tool
 		if(!user.transferItemToLoc(config_disk, src))
 			balloon_alert(user, "stuck in hand!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(diskie)
 			user.put_in_hands(diskie)
 			balloon_alert(user, "disks swapped!")
@@ -386,7 +394,9 @@
 		update_appearance()
 		if(diskie.consumable)
 			qdel(diskie)
-	return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 
 /obj/machinery/power/emitter/proc/integrate(obj/item/gun/energy/energy_gun, mob/user)
@@ -645,6 +655,7 @@
 	consumed_on_removal = FALSE
 	consumable = FALSE
 	laser_color = COLOR_TRUE_BLUE
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/emitter_disk/healing
 	name = "\improper Diode Disk: Bioregenerative"
@@ -653,6 +664,7 @@
 	consumed_on_removal = FALSE
 	consumable = FALSE
 	laser_color = COLOR_YELLOW
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/silver = SMALL_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/emitter_disk/incendiary
 	name = "\improper Diode Disk: Conflagratory"
@@ -661,7 +673,7 @@
 	consumed_on_removal = FALSE
 	consumable = FALSE
 	laser_color = COLOR_RED_LIGHT
-
+	custom_materials = list(/datum/material/plasma = SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/diamond = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/emitter_disk/sanity
 	name = "\improper Diode Disk: Psychosiphoning"
@@ -670,7 +682,7 @@
 	consumed_on_removal = FALSE
 	consumable = FALSE
 	laser_color = COLOR_TONGUE_PINK
-
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/uranium = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/emitter_disk/magnetic
 	name = "\improper Diode Disk: Magnetogenerative"
@@ -679,6 +691,7 @@
 	consumed_on_removal = FALSE
 	consumable = FALSE
 	laser_color = COLOR_SILVER
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/emitter_disk/blast
 	name = "\improper Diode Disk: Hyperconcussive"

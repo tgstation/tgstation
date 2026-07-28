@@ -58,21 +58,6 @@
 	// They're here instead of /stack/medical
 	// because sticky tape can be used as a makeshift bandage or splint
 
-	/// Verb used when applying this object to someone
-	var/apply_verb = "applying"
-	/// If set and this used as a splint for a broken bone wound,
-	/// This is used as a multiplier for applicable slowdowns (lower = better) (also for speeding up burn recoveries)
-	var/splint_factor
-	/// Like splint_factor but for burns instead of bone wounds. This is a multiplier used to speed up burn recoveries
-	var/burn_cleanliness_bonus
-	/// How much blood flow this stack can absorb if used as a bandage on a cut wound.
-	/// note that absorption is how much we lower the flow rate, not the raw amount of blood we suck up
-	var/absorption_capacity
-	/// How quickly we lower the blood flow on a cut wound we're bandaging.
-	/// Expected lifetime of this bandage in seconds is thus absorption_capacity/absorption_rate,
-	/// or until the cut heals, whichever comes first
-	var/absorption_rate
-
 	/// Can this stack be used for contruction of girders?
 	var/usable_for_construction = FALSE
 	/// Does this stack require a unique girder in order to make a wall?
@@ -99,18 +84,16 @@
 	if(LAZYLEN(mat_override))
 		mats_per_unit = mat_override
 	if(LAZYLEN(mats_per_unit))
-		mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats_per_unit, mat_amt)
+		mats_per_unit = SSmaterials.get_material_set_cache(mats_per_unit, mat_amt)
 		initialize_materials(mats_per_unit, amount)
 
 	recipes = get_main_recipes().Copy()
 	if(material_type)
-		var/datum/material/what_are_we_made_of = GET_MATERIAL_REF(material_type) //First/main material
-		for(var/category in what_are_we_made_of.categories)
-			switch(category)
-				if(MAT_CATEGORY_BASE_RECIPES)
-					recipes |= SSmaterials.base_stack_recipes.Copy()
-				if(MAT_CATEGORY_RIGID)
-					recipes |= SSmaterials.rigid_stack_recipes.Copy()
+		var/datum/material/our_mat = SSmaterials.get_material(material_type) //First/main material
+		if (our_mat.mat_flags & MATERIAL_BASIC_RECIPES)
+			recipes |= SSmaterials.base_stack_recipes.Copy()
+		if (our_mat.mat_flags & MATERIAL_CLASS_RIGID)
+			recipes |= SSmaterials.rigid_stack_recipes.Copy()
 
 	update_weight()
 	update_appearance()
@@ -127,7 +110,7 @@
 
 /obj/item/stack/update_name(updates)
 	. = ..()
-	maptext = (ismob(loc) || loc?.atom_storage) ? MAPTEXT("<font color='white'>[amount]</font>") : ""
+	maptext = (ismob(loc) || loc?.atom_storage) ? MAPTEXT("<font color='white'>[get_amount()]</font>") : ""
 
 /obj/item/stack/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -171,11 +154,17 @@
 		other_stack = find_other_stack(already_found, TRUE)
 	return TRUE
 
-/obj/item/stack/blend_requirements()
-	if(is_cyborg)
-		to_chat(usr, span_warning("[src] is too integrated into your chassis and can't be ground up!"))
-		return
-	return TRUE
+/obj/item/stack/apply_material_effects(list/materials)
+	. = ..()
+	if(amount)
+		mats_per_unit = SSmaterials.get_material_set_cache(materials, 1/amount)
+
+/obj/item/stack/blend_requirements(atom/movable/grinder, mob/living/user)
+	if(!is_cyborg)
+		return TRUE
+	if (user)
+		to_chat(user, span_warning("[src] is too integrated into your chassis and can't be ground up!"))
+	return FALSE
 
 /obj/item/stack/grind_atom(datum/reagents/target_holder, mob/user)
 	var/current_amount = get_amount()
@@ -194,7 +183,7 @@
 		total_volume += grind_reagents[reagent]
 
 	//compute number of pieces(or sheets) from available_volume
-	var/available_amount = min(current_amount, round(available_volume / total_volume))
+	var/available_amount = ceil(current_amount * min(1, available_volume / total_volume))
 	if(available_amount <= 0)
 		return FALSE
 
@@ -231,12 +220,12 @@
 	if(novariants)
 		return ..()
 	if(amount <= (max_amount * (1/3)))
-		icon_state = initial(icon_state)
+		icon_state = post_init_icon_state || initial(icon_state)
 		return ..()
 	if (amount <= (max_amount * (2/3)))
-		icon_state = "[initial(icon_state)]_2"
+		icon_state = "[post_init_icon_state || initial(icon_state)]_2"
 		return ..()
-	icon_state = "[initial(icon_state)]_3"
+	icon_state = "[post_init_icon_state || initial(icon_state)]_3"
 	return ..()
 
 /obj/item/stack/examine(mob/user)
@@ -477,8 +466,8 @@
 	builder.investigate_log("crafted [recipe.title]", INVESTIGATE_CRAFTING)
 
 	// Apply mat datums
-	if(LAZYLEN(mats_per_unit) && !(recipe.crafting_flags & CRAFT_NO_MATERIALS))
-		var/list/result_mats = mats_per_unit.Copy()
+	if(LAZYLEN(used_stack.mats_per_unit) && !(recipe.crafting_flags & CRAFT_NO_MATERIALS))
+		var/list/result_mats = used_stack.mats_per_unit.Copy()
 		for(var/mat in recipe.removed_mats)
 			var/to_remove = recipe.removed_mats[mat]
 			var/datum/material/ref_mat = locate(mat) in result_mats
@@ -491,8 +480,13 @@
 
 		if(isstack(created))
 			var/obj/item/stack/crafted_stack = created
-			crafted_stack.mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(result_mats)
-			update_custom_materials()
+			if(crafted_stack.amount) // If our stack's been emptied, it means another stack's already eaten it, and that stack'll deal with materials
+				if(recipe.res_amount > 0 && recipe.req_amount != recipe.res_amount)
+					var/scale = recipe.req_amount / recipe.res_amount
+					for(var/mat in result_mats)
+						result_mats[mat] *= scale
+				crafted_stack.mats_per_unit = SSmaterials.get_material_set_cache(result_mats)
+				crafted_stack.update_custom_materials()
 		else
 			created.set_custom_materials(result_mats, recipe.req_amount * multiplier)
 
@@ -587,7 +581,10 @@
 	if(check && is_zero_amount(delete_if_zero = TRUE))
 		return FALSE
 	if(is_cyborg)
-		return source.use_charge(used * cost)
+		if(source.use_charge(used * cost))
+			update_appearance(UPDATE_NAME)
+			return TRUE
+		return FALSE
 	if (amount < used)
 		return FALSE
 	amount -= used
@@ -800,13 +797,14 @@
 	user.put_in_hands(new_stack, merge_stacks = FALSE)
 	return new_stack
 
-/obj/item/stack/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(can_merge(W, inhand = TRUE))
-		var/obj/item/stack/S = W
-		if(merge(S))
-			to_chat(user, span_notice("Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s."))
-	else
-		. = ..()
+/obj/item/stack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!can_merge(tool, inhand = TRUE))
+		return NONE
+	var/obj/item/stack/overtaking_stack = tool
+	if(!merge(overtaking_stack))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("Your [overtaking_stack.name] stack now contains [overtaking_stack.get_amount()] [overtaking_stack.singular_name]\s."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from)
 	add_blood_DNA(GET_ATOM_BLOOD_DNA(from))

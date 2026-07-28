@@ -4,6 +4,7 @@
 /mob/living/basic/boss
 	combat_mode = TRUE
 	status_flags = NONE
+	abstract_type = /mob/living/basic/boss
 	sentience_type = SENTIENCE_BOSS
 	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
 	faction = list(FACTION_MINING, FACTION_BOSS)
@@ -23,6 +24,8 @@
 	/// What crusher trophy/trophies this mob drops, if any
 	/// Should be wrapped in a list for sanity when we pass it to the element.
 	var/list/crusher_loot = null
+	/// Loot dropped on death in normal circumstances
+	var/list/regular_loot = list()
 
 	/// What achievements do we give our defeater?
 	var/list/achievements = null
@@ -40,6 +43,7 @@
 	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE, TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_NO_FLOATING_ANIM), MEGAFAUNA_TRAIT)
 	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/simple_flying)
+	AddElement(/datum/element/death_drops, string_list(regular_loot))
 	handle_crusher_loot()
 	handle_achievements()
 
@@ -73,10 +77,12 @@
 
 /mob/living/basic/boss/early_melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!. || !istype(target))
+	if(. || !istype(target))
 		return
 	if(should_devour(target))
 		devour(target)
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
+	return
 
 /// Determines if this mob is worth devouring
 /mob/living/basic/boss/proc/should_devour(mob/living/victim)

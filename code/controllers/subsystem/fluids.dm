@@ -20,7 +20,7 @@
 SUBSYSTEM_DEF(fluids)
 	name = "Fluid"
 	wait = 0 // Will be autoset to whatever makes the most sense given the spread and effect waits.
-	flags = SS_KEEP_TIMING
+	ss_flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_GAME|RUNLEVEL_POSTGAME
 	priority = FIRE_PRIORITY_FLUIDS
 

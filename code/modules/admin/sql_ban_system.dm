@@ -320,9 +320,9 @@
 		output += "<div class='row'>"
 
 		for(var/datum/job_department/department as anything in SSjob.joinable_departments)
-			var/label_class = department.label_class
+			var/label_class = department.get_label_class()
 			var/department_name = department.department_name
-			output += "<div class='column'><label class='rolegroup [label_class]'><input type='checkbox' name='[label_class]' class='hidden' onClick='header_click_all_checkboxes(this)'> \
+			output += "<div class='column'><label class='rolegroup [label_class]' style='background-color: [department.ui_color];'><input type='checkbox' name='[label_class]' class='hidden' onClick='header_click_all_checkboxes(this)'> \
 			[department_name]</label><div class='content'>"
 			for(var/datum/job/job_datum as anything in department.get_jobban_jobs())
 				if(break_counter > 0 && (break_counter % 3 == 0))
@@ -373,20 +373,27 @@
 				ROLE_MIND_TRANSFER,
 				ROLE_POSIBRAIN,
 				ROLE_SENTIENCE,
+				ROLE_RECOVERED_CREW,
 			),
 			"Antagonist Positions" = list(
 				ROLE_ABDUCTOR,
 				ROLE_ALIEN,
 				ROLE_BLOB,
+				ROLE_BLOOD_WORM,
 				ROLE_BROTHER,
 				ROLE_CHANGELING,
 				ROLE_CULTIST,
+				ROLE_FUGITIVE,
+				ROLE_FUGITIVE_HUNTER,
+				ROLE_GLITCH,
 				ROLE_HERETIC,
 				ROLE_HIVE,
 				ROLE_MALF,
 				ROLE_NINJA,
 				ROLE_OPERATIVE,
+				ROLE_CLOWN_OPERATIVE,
 				ROLE_OVERTHROW,
+				ROLE_PARADOX_CLONE,
 				ROLE_REV,
 				ROLE_REVENANT,
 				ROLE_REV_HEAD,
@@ -395,8 +402,8 @@
 				ROLE_SPY,
 				ROLE_SYNDICATE,
 				ROLE_TRAITOR,
-				ROLE_WIZARD,
 				ROLE_VOIDWALKER,
+				ROLE_WIZARD,
 			),
 		)
 		for(var/department in long_job_lists)

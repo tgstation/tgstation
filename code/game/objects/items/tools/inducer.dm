@@ -4,9 +4,11 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
 	inhand_icon_state = "inducer-engi"
+	inside_belt_icon_state = "inducer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	force = 7
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 	/// Multiplier that determines the speed at which this inducer works at.
 	var/power_transfer_multiplier = 1
@@ -235,6 +237,7 @@
 /obj/item/inducer/sci
 	icon_state = "inducer-sci"
 	inhand_icon_state = "inducer-sci"
+	inside_belt_icon_state = "inducer-sci"
 	desc = "A tool for inductively charging internal power cells. This one has a science color scheme, and is less potent than its engineering counterpart."
 	powerdevice = null
 	opened = TRUE
@@ -242,6 +245,7 @@
 /obj/item/inducer/syndicate
 	icon_state = "inducer-syndi"
 	inhand_icon_state = "inducer-syndi"
+	inside_belt_icon_state = "inducer-syndi"
 	desc = "A tool for inductively charging internal power cells. This one has a suspicious colour scheme, and seems to be rigged to transfer charge at a much faster rate."
 	power_transfer_multiplier = 2 // 2x the base speed
 	powerdevice = /obj/item/stock_parts/power_store/battery/super

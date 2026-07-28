@@ -151,7 +151,7 @@
 	var/id = null
 	var/disable = 0
 	var/last_spark = 0
-	var/datum/effect_system/spark_spread/spark_system
+	var/datum/effect_system/basic/spark_spread/spark_system
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 
@@ -160,8 +160,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 
 /obj/machinery/sparker/Initialize(mapload)
 	. = ..()
-	spark_system = new /datum/effect_system/spark_spread
-	spark_system.set_up(2, 1, src)
+	spark_system = new(2, TRUE, src)
 	spark_system.attach(src)
 	register_context()
 	if(mapload)

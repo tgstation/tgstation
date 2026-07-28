@@ -20,9 +20,7 @@
 	flipped = FALSE
 	..()
 
-/obj/item/clothing/head/soft/verb/flipcap()
-	set category = "Object"
-	set name = "Flip cap"
+GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", null)
 
 	flip(usr)
 

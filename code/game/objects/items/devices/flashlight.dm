@@ -115,7 +115,7 @@
 	attack_self(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/flashlight/suicide_act(mob/living/carbon/human/user)
+/obj/item/flashlight/suicide_act(mob/living/user)
 	if (user.is_blind())
 		user.visible_message(span_suicide("[user] is putting [src] close to [user.p_their()] eyes and turning it on... but [user.p_theyre()] blind!"))
 		return SHAME
@@ -343,6 +343,7 @@
 	light_color = "#CCFFFF"
 	has_closed_handle = FALSE
 	COOLDOWN_DECLARE(holosign_cooldown)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/flashlight/pen/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, holosign_cooldown))
@@ -366,6 +367,7 @@
 	desc = "A high-powered UV penlight intended to help stave off infection in the field on serious burned patients. Probably really bad to look into."
 	icon_state = "penlight_surgical"
 	light_color = LIGHT_COLOR_PURPLE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	/// Our current UV cooldown
 	COOLDOWN_DECLARE(uv_cooldown)
 	/// How long between UV fryings
@@ -400,6 +402,7 @@
 	light_color = "#99ccff"
 	hitsound = 'sound/items/weapons/genhit1.ogg'
 	has_closed_handle = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25)
 
 // the desk lamps are a bit special
 /obj/item/flashlight/lamp
@@ -465,9 +468,15 @@
 		/datum/material/plasma = SMALL_MATERIAL_AMOUNT * 0.5,
 		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.5,
 	)
+	/// Lighting middleman, lets us do a flicker effect
+	var/datum/light_middleman/middleman
 
 /obj/item/flashlight/flare/Initialize(mapload)
 	. = ..()
+	if(IS_OVERLAY_LIGHT_SYSTEM(light_system))
+		middleman = new(src, "flashlight")
+		RegisterSignal(middleman, COMSIG_LIGHT_MIDDLEMAN_UPDATED, PROC_REF(light_updated))
+		middleman.being_overriding_light()
 	if(randomize_fuel)
 		fuel = rand(10 MINUTES, 15 MINUTES)
 	if(light_on)
@@ -486,6 +495,8 @@
 
 /obj/item/flashlight/flare/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	if(middleman)
+		QDEL_NULL(middleman)
 	return ..()
 
 /obj/item/flashlight/flare/afterattack(atom/target, mob/user, click_parameters)
@@ -518,6 +529,10 @@
 	force = initial(force)
 	damtype = initial(damtype)
 	update_brightness()
+
+/obj/item/flashlight/flare/proc/light_updated(datum/source)
+	SIGNAL_HANDLER
+	fire_flicker_middleman(middleman)
 
 /obj/item/flashlight/flare/extinguish()
 	. = ..()
@@ -659,9 +674,8 @@
 	if(get_temperature())
 		if(istype(tool, /obj/item/cigarette))
 			var/obj/item/cigarette/cig = tool
-			if(cig.lit)
+			if(!cig.attempt_light(user, src, ""))
 				return NONE
-			cig.light()
 			if(cig.loc == user)
 				user.visible_message(
 					span_rose("[user] holds [user.p_their()] [cig.name] to [src] and lights it, like a true romantic."),
@@ -1000,13 +1014,13 @@
 		user.visible_message(span_notice("[user] cracks and shakes [src]."), span_notice("You crack and shake [src], turning it on!"))
 		turn_on()
 
-/obj/item/flashlight/glowstick/suicide_act(mob/living/carbon/human/user)
+/obj/item/flashlight/glowstick/suicide_act(mob/living/user)
 	if(!get_fuel())
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but it's empty!"))
 		return SHAME
 	var/obj/item/organ/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
-		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] don't have any!"))
+		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] [user.p_do()]n't have any!"))
 		return SHAME
 	user.visible_message(span_suicide("[user] is squirting [src]'s fluids into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!"))
 	burn_loop(get_fuel())
@@ -1177,10 +1191,8 @@
 /obj/item/flashlight/lamp/space_bubble/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(light_on && istype(tool, /obj/item/cigarette))
-		var/obj/item/cigarette/cig = tool
-		if(cig.lit)
+		if(!astype(tool, /obj/item/cigarette).attempt_light(user, src, "[user] lights up \the [tool] using the burning coming out of the [src]. Damn."))
 			return NONE
-		cig.light(flavor_text = "[user] lights up \the [cig] using the burning coming out of the [src]. Damn.")
 		return ITEM_INTERACT_SUCCESS
 	if(!istype(tool, /obj/item/assembly/signaler/anomaly/pyro) || installed_pyro_core)
 		return NONE
@@ -1197,8 +1209,8 @@
 		return FALSE
 	var/datum/gas_mixture/environment = loc?.return_air()
 	var/affected_pressure = environment.return_pressure()
-	if(!light_on && (affected_pressure < ONE_ATMOSPHERE))
-		user.balloon_alert(user, "no pressure!")
+	if(!light_on && (affected_pressure < ONE_ATMOSPHERE - 1))
+		user.balloon_alert(user, "[affected_pressure < HAZARD_LOW_PRESSURE? "no" : "low"] pressure!")
 		return FALSE
 	. = ..()
 	if(light_on)

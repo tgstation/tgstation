@@ -180,7 +180,7 @@
 			if (!iscarbon(atom_target))
 				return FALSE
 			var/mob/living/carbon/carbon_target = atom_target
-			for(var/obj/item/bodypart/squish_part in carbon_target.bodyparts)
+			for(var/obj/item/bodypart/squish_part in carbon_target.get_bodyparts())
 				var/severity = pick(WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, WOUND_SEVERITY_CRITICAL)
 				if (!carbon_target.cause_wound_of_type_and_severity(WOUND_BLUNT, squish_part, severity, wound_source = "crushed by [src]"))
 					squish_part.receive_damage(brute = 30)
@@ -310,3 +310,9 @@
 	var/matrix/to_turn = turn(transform, -tilted_rotation)
 	animate(src, transform = to_turn, 0.2 SECONDS)
 	tilted_rotation = 0
+
+/obj/machinery/vending/onZImpact(turf/impacted_turf, levels, impact_flags)
+	impact_flags |= ZIMPACT_NO_MESSAGE
+	if(fall_and_crush(impacted_turf, squish_damage, paralyze_time = 6 SECONDS, crush_dir = UP, rotation = pick(90, 270)) & SUCCESSFULLY_FELL_OVER)
+		impact_flags |= ZIMPACT_NO_SPIN
+	return ..()
