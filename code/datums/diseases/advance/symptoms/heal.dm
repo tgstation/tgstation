@@ -631,7 +631,7 @@
 	return TRUE
 
 /datum/symptom/heal/genetic
-	name = "Genetic Heal"
+	name = "Mutated Regeneration"
 	desc = "The virus slowly repairs tissue damage in hosts with stable genetics."
 	stealth = 1
 	resistance = -3
