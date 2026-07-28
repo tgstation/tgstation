@@ -180,14 +180,6 @@
 	build_path = /obj/item/organ/lungs/ethereal
 	category = list(SPECIES_ETHEREAL)
 
-// Intentionally not growable by normal means - for balance conerns.
-/datum/design/ethereal_heart
-	name = "Crystal Core"
-	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/consumable/liquidelectricity/enriched = 20)
-	build_path = /obj/item/organ/heart/ethereal
-	category = list(SPECIES_ETHEREAL)
-
 /datum/design/armblade
 	name = "Arm Blade"
 	build_type = LIMBGROWER
@@ -210,6 +202,7 @@
 		blueprints += new new_design
 
 /datum/design/limb_disk
+	abstract_type = /datum/design/limb_disk
 	name = "Limb Design Disk"
 	desc = "Contains designs for various limbs."
 	build_type = PROTOLATHE
