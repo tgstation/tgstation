@@ -88,7 +88,6 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 	SIGNAL_HANDLER
 	send_update(list(
 		"canLeaveBody" = isliving(client?.mob),
-		"canOpen" = !isnewplayer(client?.mob), // BANDASTATION EDIT: Title screen owns lobby controls
 	))
 
 /datum/escape_menu/proc/on_verb_change(client/source, list/verbs_changed)
@@ -168,7 +167,6 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
 		"mapName" = SSmapping.current_map?.return_map_name(webmap_included = TRUE) || "Loading...",
 		"canLeaveBody" = isliving(client?.mob),
-		"canOpen" = !isnewplayer(client?.mob), // BANDASTATION EDIT: Title screen owns lobby controls
 		"canSeeNotes" = CONFIG_GET(flag/see_own_notes),
 		"admins" = build_admin_list(),
 		"players" = build_player_list(),
@@ -229,12 +227,6 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 	var/action = payload["action"]
 	switch(action)
 		if("opened")
-			// BANDASTATION EDIT START: Title screen owns lobby controls
-			if(isnewplayer(client?.mob))
-				winset(client, SKIN_ESCAPE_MENU, list("is-visible" = "false"))
-				return TRUE
-			// BANDASTATION EDIT END: Title screen owns lobby controls
-
 			if(!version_warned && client.byond_build < 1680)
 				to_chat(client, span_warning("Your BYOND version is not up-to-date enough to render the escape menu, please update to 516.1680 or higher."))
 				version_warned = TRUE
