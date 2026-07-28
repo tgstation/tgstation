@@ -113,6 +113,6 @@ GLOBAL_LIST_INIT(bluespace_crystal_recipes, list ( \
 	new/datum/stack_recipe("bluespace crystal tile", /obj/item/stack/tile/mineral/bluespace, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
 ))
 
-/obj/item/stack/stack/sheet/bluespace_crystal/get_main_recipes()
+/obj/item/stack/sheet/bluespace_crystal/get_main_recipes()
 	. = ..()
 	. += GLOB.bluespace_crystal_recipes
