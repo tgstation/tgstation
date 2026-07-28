@@ -39,19 +39,8 @@
 
 /datum/component/tug_towards/Destroy(force)
 	tugging_to_targets.Cut()
-
-	if(isliving(parent))
-		var/mob/living/living_parent = parent
-		living_parent.remove_offsets(REF(src))
-
-	else
-		animate(
-			parent,
-			pixel_x = -current_tug_offset_x,
-			pixel_y = -current_tug_offset_y,
-			time = 0.2 SECONDS,
-			flags = ANIMATION_RELATIVE
-		)
+	var/atom/atom_parent = parent
+	atom_parent.remove_offsets(REF(src))
 
 	return ..()
 
@@ -131,18 +120,7 @@
 	if (total_tug_x == current_tug_offset_x && total_tug_y == current_tug_offset_y)
 		return
 
-	if(isliving(mob_parent))
-		var/mob/living/living_parent = mob_parent
-		living_parent.add_offsets(REF(src), x_add = total_tug_x, y_add = total_tug_y)
-
-	else
-		animate(
-			atom_parent,
-			pixel_x = -current_tug_offset_x + total_tug_x,
-			pixel_y = -current_tug_offset_y + total_tug_y,
-			time = 0.2 SECONDS,
-			flags = ANIMATION_RELATIVE
-		)
+	atom_parent.add_offsets(REF(src), x_add = total_tug_x, y_add = total_tug_y)
 
 	current_tug_offset_x = total_tug_x
 	current_tug_offset_y = total_tug_y

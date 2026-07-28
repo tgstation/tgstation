@@ -173,12 +173,7 @@
 	var/py = GET_Y_OFFSET(offsets)
 	var/layer = GET_LAYER(offsets, seat.layer)
 
-	if(isliving(seat))
-		var/mob/living/living_seat = seat
-		living_seat.add_offsets(BEING_RIDDEN_SOURCE, x_add = px, y_add = py, animate = animate)
-	else
-		seat.pixel_x = px + seat.base_pixel_x
-		seat.pixel_y = py + seat.base_pixel_y
+	seat.add_offsets(BEING_RIDDEN_SOURCE, x_add = px, y_add = py, animate = animate)
 	seat.layer = layer
 
 /datum/component/riding/proc/update_rider_layer_and_offsets(dir, passindex, mob/living/rider, animate = FALSE)
@@ -255,12 +250,8 @@
 
 /datum/component/riding/proc/restore_parent_layer_and_offsets()
 	var/atom/movable/seat = parent
-	if(isliving(seat))
-		var/mob/living/living_seat = seat
-		living_seat.remove_offsets(BEING_RIDDEN_SOURCE)
-	else
-		seat.pixel_x = seat.base_pixel_x
-		seat.pixel_y = seat.base_pixel_y
+
+	seat.remove_offsets(BEING_RIDDEN_SOURCE)
 	seat.layer = initial(seat.layer)
 
 //MOVEMENT
