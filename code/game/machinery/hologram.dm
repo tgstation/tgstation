@@ -629,6 +629,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/mob/living/silicon/ai/AI = owner
 	if(istype(AI))
 		AI.current = src
+		if(AI.ai_holocolor)
+			var/obj/effect/overlay/holoray/ray = holorays[owner]
+			ray.color = AI.ai_holocolor
 	SetLightsAndPower()
 	update_holoray(owner, get_turf(loc))
 	return TRUE
