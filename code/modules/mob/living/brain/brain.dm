@@ -71,10 +71,12 @@
 		return FALSE
 	return TRUE
 
-/mob/living/brain/fully_replace_character_name(oldname,newname)
-	..()
-	if(stored_dna)
-		stored_dna.real_name = real_name
+/mob/living/brain/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
+	. = ..()
+	if(!.)
+		return
+
+	stored_dna?.real_name = real_name
 
 /mob/living/brain/forceMove(atom/destination)
 	if(container)

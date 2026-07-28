@@ -77,7 +77,7 @@
 	if (!(timed_action_flags & IGNORE_INCAPACITATED))
 		RegisterSignal(user, SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), PROC_REF(on_user_incapacitated))
 
-	if (!(timed_action_flags & DO_AFTER_CHECK_NEXT_MOVE))
+	if (timed_action_flags & DO_AFTER_CHECK_NEXT_MOVE)
 		RegisterSignal(user, COMSIG_LIVING_CHANGENEXT_MOVE, PROC_REF(on_changenext_move))
 
 	if (!(timed_action_flags & IGNORE_HELD_ITEM))

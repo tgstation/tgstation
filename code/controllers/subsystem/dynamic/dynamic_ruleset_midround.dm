@@ -92,7 +92,7 @@
 	config_tag = "Heavy Pirates"
 	midround_type = HEAVY_MIDROUND
 	jobban_flag = ROLE_TRAITOR
-	ruleset_flags = RULESET_INVADER
+	ruleset_flags = RULESET_INVADER|RULESET_ADMIN_CONFIGURABLE
 	weight = 3
 	min_pop = 25
 	min_antag_cap = 0 // ship will spawn if there are no ghosts around
@@ -176,23 +176,31 @@
 	if(!ship.load(T))
 		CRASH("Loading pirate ship failed!")
 
+	//if the pirate has a "leader" type, fill that first
+	var/list/spawners = list()
 	for(var/turf/area_turf as anything in ship.get_affected_turfs(T))
 		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in area_turf)
-			if(candidates.len > 0)
-				var/mob/our_candidate = candidates[1]
-				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
-				candidates -= our_candidate
-				notify_ghosts(
-					"The [chosen_gang.ship_name] has an object of interest: [spawned_mob]!",
-					source = spawned_mob,
-					header = "Pirates!",
-				)
+			if(spawner.is_leader)
+				spawners.Insert(1, spawner)
 			else
-				notify_ghosts(
-					"The [chosen_gang.ship_name] has an object of interest: [spawner]!",
-					source = spawner,
-					header = "Pirate Spawn Here!",
-				)
+				spawners += spawner
+
+	for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner as anything in spawners)
+		if(candidates.len > 0)
+			var/mob/our_candidate = candidates[1]
+			var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
+			candidates -= our_candidate
+			notify_ghosts(
+				"The [chosen_gang.ship_name] has an object of interest: [spawned_mob]!",
+				source = spawned_mob,
+				header = "Pirates!",
+			)
+		else
+			notify_ghosts(
+				"The [chosen_gang.ship_name] has an object of interest: [spawner]!",
+				source = spawner,
+				header = "Pirate Spawn Here!",
+			)
 
 	priority_announce(chosen_gang.arrival_announcement, sender_override = chosen_gang.ship_name)
 
