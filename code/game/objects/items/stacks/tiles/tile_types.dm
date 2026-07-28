@@ -1260,6 +1260,28 @@
 	turf_type = /turf/open/floor/circuit/red/anim
 	merge_type = /obj/item/stack/tile/circuit/red/anim
 
+/obj/item/stack/tile/circuit/ash
+	name = "ornate ash forge tile"
+	singular_name = "ornate ash forge tile"
+	desc = "An ashen, ornate forge tile. Normaly seen in photos of ethereal homeworld's industrial areas."
+	icon_state = "tile_ash"
+	inhand_icon_state = "tile-rcircuit"
+	turf_type = /turf/open/floor/circuit/red
+	merge_type = /obj/item/stack/tile/circuit/red
+	tile_reskin_types = list(
+		/obj/item/stack/tile/circuit/ash,
+		/obj/item/stack/tile/circuit/ash/alt,
+	)
+	mats_per_unit = list(/datum/material/alloy/plastitanium = HALF_SHEET_MATERIAL_AMOUNT / 6)
+
+/obj/item/stack/tile/circuit/ash/alt
+	name = "ash forge tile"
+	singular_name = "ash forge tile"
+	desc = "An ashen forge tile. Normaly seen in photos of ethereal homeworld's industrial areas."
+	icon_state = "tile_ash_alt"
+	turf_type = /turf/open/floor/circuit/ash/alt
+	merge_type = /obj/item/stack/tile/circuit/ash/alt
+
 /obj/item/stack/tile/plastic
 	name = "plastic tile"
 	singular_name = "plastic floor tile"
@@ -1300,7 +1322,7 @@
 	name = "fresh meat tile"
 	singular_name = "fresh meat floor tile"
 	desc = "Fresh from big Barry's builders best barbecue."
-	icon_state = "tile_meat"
+	icon_state = "tile_meat_fresh"
 	turf_type = /turf/open/floor/meat/fresh
 	merge_type = /obj/item/stack/tile/meat/fresh
 
@@ -1448,6 +1470,46 @@
 	turf_type = /turf/open/floor/neo/cyan
 	merge_type = /obj/item/stack/tile/neo/cyan
 
+/obj/item/stack/tile/silvergold
+	name = "silver and gold floor"
+	desc = "Floor made from silver and gold, in scaly pattern. As if just one or the other wasn't lavish enough."
+	icon_state = "blade"
+	singular_name = "silver and gold tile"
+	inhand_icon_state = "tile-silvergold"
+	mats_per_unit = list(/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT / 4, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT / 4)
+	turf_type = /turf/open/floor/silvergold
+	merge_type = /obj/item/stack/tile/silvergold
+	tile_reskin_types = list(
+		/obj/item/stack/tile/silvergold,
+		/obj/item/stack/tile/silvergold/sword,
+		/obj/item/stack/tile/silvergold/void,
+		/obj/item/stack/tile/silvergold/flow,
+	)
+
+/obj/item/stack/tile/silvergold/sword
+	name = "sword tile"
+	singular_name = "sword tile"
+	desc = "Floor made from silver and gold, in scaly pattern, with a sword in the middle."
+	icon_state = "blade_sword"
+	turf_type = /turf/open/floor/silvergold/sword
+	merge_type = /obj/item/stack/tile/silvergold/sword
+
+/obj/item/stack/tile/silvergold/void
+	name = "stars tile"
+	singular_name = "stars tile"
+	desc = "Floor made from silver and gold, picturing stars. As opposed to the actual stars you are surrounded by."
+	icon_state = "void"
+	turf_type = /turf/open/floor/silvergold/void
+	merge_type = /obj/item/stack/tile/silvergold/void
+
+/obj/item/stack/tile/silvergold/flow
+	name = "flowing tile"
+	singular_name = "flowing tile"
+	desc = "Floor made from silver and gold, with a flowing pattern. Silver and gold in balance."
+	icon_state = "flow"
+	turf_type = /turf/open/floor/silvergold/flow
+	merge_type = /obj/item/stack/tile/silvergold/flow
+
 /obj/item/stack/tile/material
 	name = "floor tile"
 	singular_name = "floor tile"
@@ -1525,6 +1587,66 @@
 	turf_type = /turf/open/floor/cult
 	mats_per_unit = list(/datum/material/runedmetal=SMALL_MATERIAL_AMOUNT*5)
 	merge_type = /obj/item/stack/tile/cult
+
+/// Plasteel
+
+/obj/item/stack/tile/plasteel
+	name = "plasteel tile"
+	singular_name = "plasteel floor tile"
+	desc = "Industrial plasteel tiles, tough and reinforced."
+	icon_state = "plasteel"
+	inhand_icon_state = "tile-shuttle"
+	turf_type = /turf/open/floor/mineral/plasteel
+	mats_per_unit = list(/datum/material/alloy/plasteel=SHEET_MATERIAL_AMOUNT*0.25)
+	merge_type = /obj/item/stack/tile/plasteel
+	tile_reskin_types = list(
+		/obj/item/stack/tile/plasteel,
+		/obj/item/stack/tile/plasteel/straight,
+		/obj/item/stack/tile/plasteel/corner,
+		/obj/item/stack/tile/plasteel/block,
+		/obj/item/stack/tile/plasteel/lock,
+		/obj/item/stack/tile/plasteel/tiled,
+		)
+
+/obj/item/stack/tile/plasteel/straight
+	name = "straight plasteel tile"
+	singular_name = "straight plasteel floor tile"
+	desc = "Industrial straight plasteel tiles, tough and reinforced."
+	turf_type = /turf/open/floor/mineral/plasteel/straight
+	icon_state = "plasteel_straight"
+	merge_type = /obj/item/stack/tile/plasteel/straight
+
+/obj/item/stack/tile/plasteel/corner
+	name = "corner plasteel tile"
+	singular_name = "corner plasteel floor tile"
+	desc = "Industrial corner plasteel tiles, tough and reinforced."
+	turf_type = /turf/open/floor/mineral/plasteel/corner
+	icon_state = "plasteel_corner"
+	merge_type = /obj/item/stack/tile/plasteel/corner
+
+/obj/item/stack/tile/plasteel/block
+	name = "blocky plasteel tile"
+	singular_name = "blocky plasteel floor tile"
+	desc = "Blocky plasteel tiles, quite futuristic."
+	turf_type = /turf/open/floor/mineral/plasteel/block
+	icon_state = "block"
+	merge_type = /obj/item/stack/tile/plasteel/block
+
+/obj/item/stack/tile/plasteel/lock
+	name = "locked plasteel tile"
+	singular_name = "locked plasteel floor tile"
+	desc = "Locked plasteel tiles, with a keyhole symbol in the middle. Could be a pawn, though?"
+	turf_type = /turf/open/floor/mineral/plasteel/lock
+	icon_state = "lock"
+	merge_type = /obj/item/stack/tile/plasteel/lock
+
+/obj/item/stack/tile/plasteel/tiled
+	name = "plasteel tiled"
+	singular_name = "tiled plasteel"
+	desc = "Plasteel, tiled."
+	turf_type = /turf/open/floor/mineral/plasteel/tiled
+	icon_state = "plasteel_tiled"
+	merge_type = /obj/item/stack/tile/plasteel/tiled
 
 /// Floor tiles used to test emissive turfs.
 /obj/item/stack/tile/emissive_test

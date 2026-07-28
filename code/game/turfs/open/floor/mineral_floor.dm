@@ -105,6 +105,43 @@
 /turf/open/floor/mineral/silver/moon/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
+//PLASTEEL
+
+/turf/open/floor/mineral/plasteel
+	name = "plasteel floor"
+	icon_state = "plasteel"
+	floor_tile = /obj/item/stack/tile/plasteel
+	custom_materials = list(/datum/material/alloy/plasteel = SMALL_MATERIAL_AMOUNT*5)
+	rust_resistance = RUST_RESISTANCE_TITANIUM
+
+/turf/open/floor/mineral/plasteel/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
+/turf/open/floor/mineral/plasteel/straight
+	name = "straight plasteel floor"
+	icon_state = "plasteel_straight"
+	floor_tile = /obj/item/stack/tile/plasteel/straight
+
+/turf/open/floor/mineral/plasteel/corner
+	name = "corner plasteel floor"
+	icon_state = "plasteel_corner"
+	floor_tile = /obj/item/stack/tile/plasteel/corner
+
+/turf/open/floor/mineral/plasteel/block
+	name = "blocky plasteel floor"
+	icon_state = "block"
+	floor_tile = /obj/item/stack/tile/plasteel/block
+
+/turf/open/floor/mineral/plasteel/lock
+	name = "locked plasteel floor"
+	icon_state = "lock"
+	floor_tile = /obj/item/stack/tile/plasteel/lock
+
+/turf/open/floor/mineral/plasteel/tiled
+	name = "tiled plasteel floor"
+	icon_state = "alienvault"
+	floor_tile = /obj/item/stack/tile/plasteel/tiled
+
 //TITANIUM (shuttle)
 
 /turf/open/floor/mineral/titanium
@@ -116,8 +153,6 @@
 
 /turf/open/floor/mineral/titanium/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
-
-
 
 /turf/open/floor/mineral/titanium/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -505,7 +540,7 @@
 	rust_resistance = RUST_RESISTANCE_BASIC
 	material_flags = NONE
 
-/turf/open/floor/mineral/plasma/tiled
+/turf/open/floor/mineral/glassed/plasma/tiled
 	name = "tiled plasma floor"
 	icon_state = "plasma_tiled"
 	floor_tile = /obj/item/stack/tile/mineral/glassed/plasma/tiled

@@ -317,22 +317,24 @@
 	mineral_amount = 1
 	walltype = /turf/closed/wall/mineral/sandstone/wall_fill
 
-/obj/structure/falsewall/ornate
+/obj/structure/falsewall/sandstone/ornate
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating. Rough."
 	fake_icon = 'icons/turf/walls/sandstone_ornate_wall.dmi'
 	icon_state = "sandstone_ornate_wall-open"
 	base_icon_state = "sandstone_ornate_wall"
 	mineral = /obj/item/stack/wall_filling/sandstone/ornate
+	mineral_amount = 1
 	walltype = /turf/closed/wall/mineral/sandstone/ornate
 
-/obj/structure/falsewall/ornate
+/obj/structure/falsewall/sandstone/basalt
 	name = "basalt wall"
 	desc = "A wall with basalt plating. The orange is from other colours of sand that make up for it."
 	fake_icon = 'icons/turf/walls/sandbasalt_wall.dmi'
 	icon_state = "sandbasalt_wall-open"
 	base_icon_state = "sandbasalt_wall"
 	mineral = /obj/item/stack/wall_filling/sandstone/basalt
+	mineral_amount = 1
 	walltype = /turf/closed/wall/mineral/sandstone/basalt
 
 /obj/structure/falsewall/wood

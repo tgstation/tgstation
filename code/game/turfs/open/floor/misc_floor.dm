@@ -136,6 +136,37 @@
 /turf/open/floor/circuit/red/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
 
+/turf/open/floor/circuit/ash
+	icon_state = "ash"
+	base_icon_state = "ash"
+	light_color = LIGHT_COLOR_INTENSE_RED
+	floor_tile = /obj/item/stack/tile/circuit/ash
+
+/turf/open/floor/circuit/ash/off
+	icon_state = "ash_off"
+	always_off = TRUE
+
+/turf/open/floor/circuit/red/no_power
+	always_off = TRUE
+
+/turf/open/floor/circuit/red/anim
+	icon_state = "ash"
+
+/turf/open/floor/circuit/ash/alt
+	icon_state = "ash_alt"
+	base_icon_state = "ash_alt"
+	floor_tile = /obj/item/stack/tile/circuit/ash/alt
+
+/turf/open/floor/circuit/ash/alt/off
+	icon_state = "ash_alt_off"
+	always_off = TRUE
+
+/turf/open/floor/circuit/red/alt/no_power
+	always_off = TRUE
+
+/turf/open/floor/circuit/red/alt/anim
+	icon_state = "ash_alt"
+
 /turf/open/floor/noslip
 	name = "high-traction floor"
 	icon_state = "noslip"
@@ -259,38 +290,38 @@
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
 /turf/open/floor/bone/corner
-	name = "bone_corner floor"
+	name = "bone corner floor"
 	icon_state = "bone_corner"
 	floor_tile = /obj/item/stack/tile/bone/corner
 
 /turf/open/floor/bone/straight
-	name = "fresh meat floor"
+	name = "bone straight floor"
 	icon_state = "bone_straight"
 	floor_tile = /obj/item/stack/tile/bone/straight
 
 /turf/open/floor/bone/spine
-	name = "fresh meat floor"
+	name = "spine floor"
 	icon_state = "bone_spine"
 	floor_tile = /obj/item/stack/tile/bone/spine
 
 /turf/open/floor/bone/meaty
-	name = "fresh meat floor"
+	name = "meaty bone floor"
 	icon_state = "meatbone_tile"
 	desc = "Spine-crawling, made literal."
 	floor_tile = /obj/item/stack/tile/bone/meaty
 
 /turf/open/floor/bone/meaty/corner
-	name = "fresh meat floor"
+	name = "meaty bone corner floor"
 	icon_state = "meatbone_corner"
 	floor_tile = /obj/item/stack/tile/bone/meaty/corner
 
 /turf/open/floor/bone/meaty/straight
-	name = "fresh meat floor"
+	name = "meaty bone straight floor"
 	icon_state = "meatbone_straight"
 	floor_tile = /obj/item/stack/tile/bone/meaty/straight
 
 /turf/open/floor/bone/meaty/spine
-	name = "fresh meat floor"
+	name = "meaty spine floor"
 	icon_state = "meatbone_spine"
 	floor_tile = /obj/item/stack/tile/bone/meaty/spine
 
@@ -361,18 +392,47 @@
 	desc = "Sandstone tile. Makes you feel quite like a pharoah."
 	icon_state = "sandstone_floor"
 	custom_materials = list(/datum/material/sandstone=SMALL_MATERIAL_AMOUNT*5)
-	floor_tile = /obj/item/stack/tile/sandstone
+	floor_tile = /obj/item/stack/tile/mineral/sandstone
 
 /turf/open/floor/sandstone/cobbled
 	name = "cobbled sandstone floor"
 	icon_state = "sandstone_cobbled"
-	floor_tile = /obj/item/stack/tile/sandstone/cobbled
+	floor_tile = /obj/item/stack/tile/mineral/sandstone/cobbled
 
 /turf/open/floor/sandstone/tiled
 	name = "sandstone tile"
 	icon_state = "sandstonevault"
-	base_icon_state = "sandstonevault"
-	floor_tile = /obj/item/stack/tile/sandstone/tiled
+	floor_tile = /obj/item/stack/tile/mineral/sandstone/tiled
+
+/turf/open/floor/sandstone/basalt
+	name = "basalt brick tile"
+	icon_state = "basaltbrick_floor"
+	floor_tile = /obj/item/stack/tile/mineral/sandstone/basalt
+
+/turf/open/floor/silvergold
+	name = "silver and gold floor"
+	desc = "Floor made from silver and gold, in scaly pattern. As if just one or the other wasn't lavish enough."
+	icon_state = "blade"
+	custom_materials = list(/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT / 4, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT / 4)
+	floor_tile = /obj/item/stack/tile/silvergold
+
+/turf/open/floor/silvergold/sword
+	name = "sword floor"
+	desc = "Floor made from silver and gold, in scaly pattern, with a sword in the middle."
+	icon_state = "blade_sword"
+	floor_tile = /obj/item/stack/tile/silvergold/sword
+
+/turf/open/floor/silvergold/void
+	name = "stars tile"
+	desc = "Floor made from silver and gold, picturing stars. As opposed to the actual stars you are surrounded by."
+	icon_state = "void"
+	floor_tile = /obj/item/stack/tile/silvergold/void
+
+/turf/open/floor/silvergold/flow
+	name = "flowing tile"
+	desc = "Floor made from silver and gold, with a flowing pattern. Silver and gold in balance."
+	icon_state = "flow"
+	floor_tile = /obj/item/stack/tile/silvergold/flow
 
 /turf/open/floor/eighties
 	name = "retro floor"

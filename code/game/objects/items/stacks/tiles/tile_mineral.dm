@@ -281,12 +281,13 @@
 	mineralType = "sandstone"
 	mats_per_unit = list(/datum/material/sandstone = HALF_SHEET_MATERIAL_AMOUNT / 2)
 	turf_type = /turf/open/floor/sandstone
-	merge_type = /obj/item/stack/tile/sandstone
+	merge_type = /obj/item/stack/tile/mineral/sandstone
 	desc = "A tile made out of sandstone."
 	tile_reskin_types = list(
 		/obj/item/stack/tile/mineral/sandstone,
 		/obj/item/stack/tile/mineral/sandstone/cobbled,
 		/obj/item/stack/tile/mineral/sandstone/tiled,
+		/obj/item/stack/tile/mineral/sandstone/basalt,
 	)
 
 /obj/item/stack/tile/mineral/sandstone/cobbled
@@ -302,6 +303,13 @@
 	singular_name = "sandstone brick floor tile"
 	turf_type = /turf/open/floor/sandstone/tiled
 	merge_type = /obj/item/stack/tile/mineral/sandstone/tiled
+
+/obj/item/stack/tile/mineral/sandstone/basalt
+	name = "basalt brick tile"
+	icon_state = "tile_basaltbrick"
+	singular_name = "basalt brick floor tile"
+	turf_type = /turf/open/floor/sandstone/tiled
+	merge_type = /obj/item/stack/tile/mineral/sandstone/basalt
 
 ///glassed variants of bunch of the floors which otherwise might not be the best to walk through.
 
@@ -466,65 +474,6 @@
 	turf_type = /turf/open/floor/mineral/abductor
 	mineralType = "abductor"
 	merge_type = /obj/item/stack/tile/mineral/abductor
-
-/obj/item/stack/tile/mineral/plasteel
-	name = "plasteel tile"
-	singular_name = "plasteel floor tile"
-	desc = "Industrial plasteel tiles, tough and reinforced."
-	icon_state = "plasteel"
-	inhand_icon_state = "tile-shuttle"
-	turf_type = /turf/open/floor/mineral/plasteel
-	mineralType = "titanium"
-	mats_per_unit = list(/datum/material/alloy/plasteel=SHEET_MATERIAL_AMOUNT*0.25)
-	merge_type = /obj/item/stack/tile/mineral/plasteel
-	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/plasteel
-		/obj/item/stack/tile/mineral/plasteel/straight,
-		/obj/item/stack/tile/mineral/plasteel/corner,
-		/obj/item/stack/tile/mineral/plasteel/block,
-		/obj/item/stack/tile/mineral/plasteel/lock,
-		/obj/item/stack/tile/mineral/plasteel/tiled,
-		)
-
-/obj/item/stack/tile/mineral/plasteel/straight
-	name = "straight plasteel tile"
-	singular_name = "straight plasteel floor tile"
-	desc = "Industrial straight plasteel tiles, tough and reinforced."
-	turf_type = /turf/open/floor/mineral/plasteel/straight
-	icon_state = "plasteel_straight"
-	merge_type = /obj/item/stack/tile/mineral/plasteel/straight
-
-/obj/item/stack/tile/mineral/plasteel/corner
-	name = "corner plasteel tile"
-	singular_name = "corner plasteel floor tile"
-	desc = "Industrial corner plasteel tiles, tough and reinforced."
-	turf_type = /turf/open/floor/mineral/plasteel/corner
-	icon_state = "plasteel_corner"
-	merge_type = /obj/item/stack/tile/mineral/plasteel/corner
-
-/obj/item/stack/tile/mineral/plasteel/block
-	name = "blocky plasteel tile"
-	singular_name = "blocky plasteel floor tile"
-	desc = "Blocky plasteel tiles, quite futuristic."
-	turf_type = /turf/open/floor/mineral/plasteel/block
-	icon_state = "block"
-	merge_type = /obj/item/stack/tile/mineral/plasteel/block
-
-/obj/item/stack/tile/mineral/plasteel/lock
-	name = "locked plasteel tile"
-	singular_name = "locked plasteel floor tile"
-	desc = "Locked plasteel tiles, with a keyhole symbol in the middle. Could be a pawn, though?"
-	turf_type = /turf/open/floor/mineral/plasteel/lock
-	icon_state = "lock"
-	merge_type = /obj/item/stack/tile/mineral/plasteel/lock
-
-/obj/item/stack/tile/mineral/plasteel/block
-	name = "blocky plasteel tile"
-	singular_name = "blocky plasteel floor tile"
-	desc = "Blocky plasteel tiles, quite futuristic."
-	turf_type = /turf/open/floor/mineral/plasteel/block
-	icon_state = "block"
-	merge_type = /obj/item/stack/tile/mineral/plasteel/block
 
 /obj/item/stack/tile/mineral/titanium
 	name = "titanium tile"
