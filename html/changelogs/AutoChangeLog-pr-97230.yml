@@ -1,0 +1,4 @@
+author: "kyunkyunkyun"
+delete-after: True
+changes:
+  - bugfix: "Regal condor's magazine now properly accepts .45 instead of 10mm."
