@@ -2241,6 +2241,7 @@
 #include "code\datums\status_effects\debuffs\drugginess.dm"
 #include "code\datums\status_effects\debuffs\drunk.dm"
 #include "code\datums\status_effects\debuffs\fire_stacks.dm"
+#include "code\datums\status_effects\debuffs\firewall.dm"
 #include "code\datums\status_effects\debuffs\genetic_damage.dm"
 #include "code\datums\status_effects\debuffs\hallucination.dm"
 #include "code\datums\status_effects\debuffs\heart_attack.dm"

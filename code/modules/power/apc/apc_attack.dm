@@ -147,7 +147,7 @@
 		return TRUE
 	. = TRUE
 	if(isAI(user) || iscyborg(user))
-		if(aidisabled)
+		if(aidisabled || user.has_status_effect(/datum/status_effect/firewalled))
 			. = FALSE
 		else if(istype(malfai) && !(malfai == user || (user in malfai.connected_robots)))
 			. = FALSE
