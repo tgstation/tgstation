@@ -9,7 +9,7 @@
 		BB_UNREACHABLE_LIST_COOLDOWN = 45 SECONDS,
 	)
 
-	ai_movement = /datum/ai_movement/jps/bot
+	ai_movement = /datum/ai_movement/navmesh_astar/bot
 	max_target_distance = AI_BOT_PATH_LENGTH
 	ai_traits = DEFAULT_AI_FLAGS | RUN_WHILE_UNWATCHED
 	///keys to be reset when the bot is reset

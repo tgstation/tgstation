@@ -5,7 +5,7 @@
 			"blinks its light in appreciation towards",
 		)
 	)
-	ai_movement = /datum/ai_movement/jps/bot/mulebot
+	ai_movement = /datum/ai_movement/navmesh_astar/bot/mulebot
 	max_target_distance = AI_MULEBOT_PATH_LENGTH
 	reset_keys = list(
 		BB_BOT_SUMMON_TARGET,

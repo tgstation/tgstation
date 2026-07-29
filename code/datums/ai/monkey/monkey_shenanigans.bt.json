@@ -36,7 +36,7 @@
 							"target_key": "BB_monkey_current_press_target",
 							"required_dist": 1,
 							"finish_on_arrival": true,
-							"movement_type": "/datum/ai_movement/jps"
+							"movement_type": "/datum/ai_movement/navmesh_astar"
 						}
 					},
 					{
@@ -85,7 +85,7 @@
 								"target_key": "BB_monkey_current_give_target",
 								"required_dist": 1,
 								"finish_on_arrival": true,
-								"movement_type": "/datum/ai_movement/jps"
+								"movement_type": "/datum/ai_movement/navmesh_astar"
 							}
 						},
 						{

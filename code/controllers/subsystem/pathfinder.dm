@@ -64,12 +64,19 @@ SUBSYSTEM_DEF(pathfinder)
 
 /// Initiates a pathfind. Returns true if we're good, FALSE if something's failed
 /datum/controller/subsystem/pathfinder/proc/pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)
-	var/datum/pathfind/jps/path = new()
-	path.setup(requester, access, max_distance, simulated_only, exclude, on_finish, end, mintargetdist, skip_first, diagonal_handling)
-	if(path.start())
-		active_pathing += path
-		return TRUE
-	return FALSE
+	var/turf/start = get_turf(requester)
+	var/turf/goal = get_turf(end)
+	if(!start || !goal)
+		return FALSE
+	var/datum/can_pass_info/pass_info = new(requester, access)
+	var/list/path
+	try
+		path = rustg_turfmap_pathfinder(start, goal, pass_info, NAV_IS_FLYING(pass_info), max_distance, mintargetdist || 0, simulated_only, exclude, diagonal_handling, skip_first)
+	catch
+		return FALSE
+	for(var/datum/callback/finished as anything in on_finish)
+		finished.Invoke(path)
+	return TRUE
 
 /// Initiates a swarmed pathfind. Returns TRUE if we're good, FALSE if something's failed
 /// If a valid pathmap exists for the TARGET turf we'll use that, otherwise we have to build a new one

@@ -154,7 +154,7 @@
 	load_overlay.pixel_y = initial(load.pixel_y) + 11
 	. += load_overlay
 
-/mob/living/basic/bot/mulebot/proc/handle_buzzing(datum/move_loop/has_target/jps/frustrations/source, frustration_counter)
+/mob/living/basic/bot/mulebot/proc/handle_buzzing(datum/move_loop/has_target/navmesh_astar/frustrations/source, frustration_counter)
 	SIGNAL_HANDLER
 
 	update_bot_mode(new_mode = BOT_BLOCKED)

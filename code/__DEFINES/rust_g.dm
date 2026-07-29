@@ -569,10 +569,12 @@
 		CRASH(output["content"])
 
 /**
- * Computes the shortest path between two turfs over a live tgstation-style turfmap, using the
- * `turfmap_pathfinder` byondapi feature. Reads Rust's persistent nav_pass cache (kept in sync by
+ * Computes the shortest path between two turfs over a live tgstation-style navmesh, using the
+ * `turf_pathfinder` byondapi feature. Reads Rust's persistent nav_pass cache (kept in sync by
  * rustg_turfmap_update / rustg_turfmap_bulk_update below), falling back to a live BYOND read + bake
  * only for coords the cache doesn't hold baked.
+ * nav_pass bit 13 is the simulated-turf flag; set it for non-space, simulated turfs whenever data
+ * is published to Rust.
  *
  * Arguments:
  * * start - The turf to path from
@@ -580,12 +582,19 @@
  * * pass_info - The mover's /datum/can_pass_info (or compatible datum exposing pass_flags)
  * * is_flying - TRUE to use the flying nav_pass bits instead of ground
  * * max_range - Chebyshev distance cap from start, in tiles. 0 for unlimited
+ * * min_target_distance - Finish within this Chebyshev distance of end
+ * * simulated_only - TRUE to exclude unsimulated turfs (including space)
+ * * avoid_turf - A turf to exclude, or null
+ * * diagonal_handling - DIAGONAL_DO_NOTHING (0), DIAGONAL_REMOVE_ALL (1), or
+ *   DIAGONAL_REMOVE_CLUNKY (2)
+ * * skip_first - TRUE for a start-exclusive path suitable for immediate movement;
+ *   FALSE for the legacy start-inclusive path
  *
- * Returns a /list of turfs from start to end (exclusive of neither), or an empty list if no path
- * exists.
+ * Returns an ordered /list of turfs, or an empty list if no path exists. The end is the target or
+ * a turf within min_target_distance; skip_first controls whether the starting turf is included.
  */
-#define rustg_turfmap_pathfinder(start, end, pass_info, is_flying, max_range) \
-	RUSTG_CALL(RUST_G, "byond:rustg_turfmap_pathfinder_ffi")(start, end, pass_info, is_flying, max_range)
+#define rustg_turfmap_pathfinder(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first) \
+	RUSTG_CALL(RUST_G, "byond:rustg_turfmap_pathfinder_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first)
 
 /**
  * Pushes a single turf's nav_pass bitfield into Rust's persistent (x, y, z) cache. Call right after a

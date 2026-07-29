@@ -136,7 +136,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
-	ai_movement = /datum/ai_movement/jps
+	ai_movement = /datum/ai_movement/navmesh_astar
 
 /mob/living/basic/statue/frosty
 	name = "Frosty"

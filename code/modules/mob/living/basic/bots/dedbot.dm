@@ -55,7 +55,7 @@
 		BB_TARGET_MINIMUM_STAT = DEAD,
 		BB_AGGRO_RANGE = 2,
 	)
-	ai_movement = /datum/ai_movement/jps/bot
+	ai_movement = /datum/ai_movement/navmesh_astar/bot
 	max_target_distance = AI_BOT_PATH_LENGTH
 	reset_keys = list(
 		BB_BEACON_TARGET,

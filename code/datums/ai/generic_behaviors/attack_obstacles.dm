@@ -7,7 +7,7 @@
 	var/can_attack_turfs = FALSE
 	/// For if you want your mob to be able to attack dense objects
 	var/can_attack_dense_objects = FALSE
-	/// Set this if using JPS movement, since if we use basic avoidance we should check get_step_to as well
+	/// Set this for navmesh A* movement, which already validates the next step.
 	var/can_ignore_step = FALSE
 
 /datum/bt_node/ai_behavior/attack_obstructions/perform(seconds_per_tick, datum/ai_controller/controller)

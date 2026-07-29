@@ -53,7 +53,7 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 	var/rustg_nav_available = TRUE
 	var/rustg_nav_start = TICK_USAGE_REAL
 	try
-		rustg_nav_path = rustg_turfmap_pathfinder(start, goal, info, NAV_IS_FLYING(info), max_range)
+		rustg_nav_path = rustg_turfmap_pathfinder(start, goal, info, NAV_IS_FLYING(info), max_range, 0, TRUE, null, DIAGONAL_REMOVE_CLUNKY, TRUE)
 	catch
 		rustg_nav_available = FALSE
 		rustg_nav_path = list()
@@ -120,6 +120,7 @@ ADMIN_VERB(navmesh_prebake_z, R_DEBUG, "Navmesh: Prebake Z-Level", "Eagerly bake
 		repath_delay = 1 SECONDS,
 		max_path_length = 0,
 		access = list(),
+		skip_first = TRUE,
 	)
 
 ADMIN_VERB(navmesh_spawn_tester, R_DEBUG, "Navmesh: Spawn Tester", "Spawns a pawn that walks a navmesh path to the set goal.", ADMIN_CATEGORY_DEBUG)
