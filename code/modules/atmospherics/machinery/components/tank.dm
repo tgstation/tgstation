@@ -353,11 +353,7 @@
 		gas_visual_overrides[gas] = local_gas
 		new_visuals += local_gas
 
-	// Remove unneeded overlays
-	for(var/obj/effect/overlay/gas/gas as anything in gas_holder.vis_contents - new_visuals)
-		gas_holder.vis_contents -= gas
-
-	gas_holder.vis_contents |= new_visuals
+	gas_holder.vis_contents = new_visuals
 
 /obj/effect/abstract/tank_glass
 	icon = 'icons/obj/pipes_n_cables/stationary_canisters_misc.dmi'
