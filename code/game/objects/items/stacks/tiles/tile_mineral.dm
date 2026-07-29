@@ -141,12 +141,13 @@
 /obj/item/stack/tile/mineral/bananium
 	name = "bananium tile"
 	singular_name = "bananium floor tile"
-	desc = "A slippery tile made out of bananium, HOOOOOOOOONK!"
+	desc = "A non-slippery tile made out of bananium, HOOOOOOOOONK!"
 	icon_state = "tile_bananium"
 	inhand_icon_state = "tile-bananium"
 	turf_type = /turf/open/floor/mineral/bananium
 	mineralType = "bananium"
 	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT*0.25)
+	material_flags = NONE //The slippery comp makes it unpractical for good clown decor. The material tiles should still slip.
 	merge_type = /obj/item/stack/tile/mineral/bananium
 	tile_reskin_types = list(
 		/obj/item/stack/tile/mineral/bananium,
@@ -310,158 +311,6 @@
 	singular_name = "basalt brick floor tile"
 	turf_type = /turf/open/floor/sandstone/tiled
 	merge_type = /obj/item/stack/tile/mineral/sandstone/basalt
-
-///glassed variants of bunch of the floors which otherwise might not be the best to walk through.
-
-/obj/item/stack/tile/mineral/glassed/update_overlays()
-	. = ..()
-	. += mutable_appearance(icon, "tile_glass", layer = src.layer+0.01)
-
-/obj/item/stack/tile/mineral/glassed
-	/// Determines what stack floor type this splits into.
-	var/floorType = null
-	merge_type = /obj/item/stack/tile/mineral/glassed
-
-/obj/item/stack/tile/mineral/glassed/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.tool_behaviour == TOOL_WELDER)
-		if(!floorType)
-			to_chat(user, span_warning("You can split these!"))
-			stack_trace("A glassed mineral tile of type [type] doesn't have its floorType set.")
-			return
-		if(W.use_tool(src, user, 0, volume=40))
-			var/floor_type = text2path("/obj/item/stack/tile/mineral/[floorType]")
-			var/obj/item/stack/tile/mineral/new_item = new floor_type(user.drop_location())
-			user.visible_message(span_notice("[user] split [src] into [new_item] and glass tiles with [W]."), \
-				span_notice("You shaped [src] into [new_item] with [W]."), \
-				span_hear("You hear welding."))
-			var/holding = user.is_holding(src)
-			use(4)
-			if(holding && QDELETED(src))
-				user.put_in_hands(new_item)
-				user.put_in_hands(/obj/item/stack/tile/glass)
-	else
-		return ..()
-
-/obj/item/stack/tile/mineral/glassed/plasma
-	name = "plasma tile"
-	singular_name = "plasma floor tile"
-	desc = "A tile made out of highly flammable plasma, glassed as to prevent the fire from actually getting to it."
-	icon_state = "tile_plasma"
-	inhand_icon_state = "tile-plasma"
-	turf_type = /turf/open/floor/mineral/glassed/plasma
-	floorType = "plasma"
-	mats_per_unit = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT*0.25, /datum/material/glass=SHEET_MATERIAL_AMOUNT*0.25)
-	merge_type = /obj/item/stack/tile/mineral/glassed/plasma
-	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/glassed/plasma,
-		/obj/item/stack/tile/mineral/glassed/plasma/tiled,
-	)
-
-/obj/item/stack/tile/mineral/glassed/plasma/tiled
-	icon_state = "plasma_tiled"
-	floorType = "plasma/tiled"
-	turf_type = /turf/open/floor/mineral/glassed/plasma/tiled
-	merge_type = /obj/item/stack/tile/mineral/glassed/plasma/tiled
-
-/obj/item/stack/tile/mineral/glassed/uranium
-	name = "uranium tile"
-	singular_name = "uranium floor tile"
-	desc = "A tile made out of uranium. Glassed so you won't get irradiated."
-	icon_state = "tile_uranium"
-	inhand_icon_state = "tile-uranium"
-	turf_type = /turf/open/floor/mineral/glassed/uranium
-	floorType = "uranium"
-	mats_per_unit = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT*0.25, /datum/material/glass=SHEET_MATERIAL_AMOUNT*0.25)
-	merge_type = /obj/item/stack/tile/mineral/glassed/uranium
-	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/glassed/uranium,
-		/obj/item/stack/tile/mineral/glassed/uranium/tiled,
-	)
-
-/obj/item/stack/tile/mineral/glassed/uranium/tiled
-	icon_state = "uranium_tiled"
-	floorType = "uranium/tiled"
-	turf_type = /turf/open/floor/mineral/glassed/uranium/tiled
-	merge_type = /obj/item/stack/tile/mineral/glassed/uranium/tiled
-
-/obj/item/stack/tile/mineral/glassed/bananium
-	name = "bananium tile"
-	singular_name = "bananium floor tile"
-	desc = "A glassed, and thus non-slippery tile made out of bananium, HOOOOOOOOONK!"
-	icon_state = "tile_bananium"
-	inhand_icon_state = "tile-bananium"
-	turf_type = /turf/open/floor/mineral/glassed/bananium
-	floorType = "bananium"
-	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT*0.25, /datum/material/glass=SHEET_MATERIAL_AMOUNT*0.25)
-	material_flags = NONE
-	merge_type = /obj/item/stack/tile/mineral/glassed/bananium
-	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/glassed/bananium,
-		/obj/item/stack/tile/mineral/glassed/bananium/tiled,
-	)
-
-/obj/item/stack/tile/mineral/glassed/bananium/tiled
-	icon_state = "bananium_tiled"
-	floorType = "bananium/tiled"
-	turf_type = /turf/open/floor/mineral/glassed/bananium/tiled
-	merge_type = /obj/item/stack/tile/mineral/glassed/bananium/tiled
-
-/obj/item/stack/tile/mineral/glassed/bluespace
-	name = "bluespace tile"
-	singular_name = "bluespace floor tile"
-	desc = "A glassed tile made out of bluespace crystals. Save to walk on even barefoot."
-	icon_state = "tile_bluespace_c"
-	inhand_icon_state = "tile-bluespace"
-	turf_type = /turf/open/floor/mineral/glassed/bluespace
-	floorType = "bluespace"
-	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT*0.25, /datum/material/glass=SHEET_MATERIAL_AMOUNT*0.25)
-	merge_type = /obj/item/stack/tile/mineral/glassed/bluespace
-	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/glassed/bluespace,
-		/obj/item/stack/tile/mineral/glassed/bluespace/tiled,
-	)
-
-/obj/item/stack/tile/mineral/glassed/bluespace/tiled
-	icon_state = "bluespace_c_tiled"
-	floorType = "bluespace/tiled"
-	turf_type = /turf/open/floor/mineral/glassed/bluespace/tiled
-	merge_type = /obj/item/stack/tile/mineral/glassed/bluespace/tiled
-
-/obj/item/stack/tile/mineral/glassed/bluespace/n
-	icon_state = "bluespace_c_n"
-	floorType = "bluespace_n"
-	turf_type = /turf/open/floor/mineral/glassed/bluespace/n
-	merge_type = /obj/item/stack/tile/mineral/glassed/bluespace/n
-
-/obj/item/stack/tile/mineral/glassed/telecrystal
-	name = "telecrystal tile"
-	singular_name = "telecrystal floor tile"
-	desc = "A glassed tile made out of telecrystals. Pretty sure its illegal. But at least its safe to walk on."
-	icon_state = "tile_telecrystal"
-	inhand_icon_state = "tile-telecrystal"
-	turf_type = /turf/open/floor/mineral/glassed/telecrystal
-	mineralType = "telecrystal"
-	mats_per_unit = list(/datum/material/telecrystal=SHEET_MATERIAL_AMOUNT*0.25, /datum/material/glass=SHEET_MATERIAL_AMOUNT*0.25)
-
-	merge_type = /obj/item/stack/tile/mineral/glassed/telecrystal
-	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/glassed/telecrystal,
-		/obj/item/stack/tile/mineral/glassed/telecrystal/tiled,
-	)
-
-/obj/item/stack/tile/mineral/glassed/telecrystal/tiled
-	icon_state = "telecrystal_tiled"
-	floorType = "telecrystal/tiled"
-	turf_type = /turf/open/floor/mineral/glassed/bluespace/tiled
-	merge_type = /obj/item/stack/tile/mineral/glassed/telecrystal/tiled
-
-/obj/item/stack/tile/mineral/glassed/telecrystal/s
-	icon_state = "telecrystal_s"
-	floorType = "telecrystal/s"
-	turf_type = /turf/open/floor/mineral/glassed/telecrystal/s
-	merge_type = /obj/item/stack/tile/mineral/glassed/telecrystal/s
-
-///
 
 /obj/item/stack/tile/mineral/abductor
 	name = "alien floor tile"
