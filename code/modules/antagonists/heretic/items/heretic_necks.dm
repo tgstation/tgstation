@@ -187,7 +187,6 @@
 	on_equip_item(user, user.get_active_held_item(), ITEM_SLOT_HANDS)
 	on_equip_item(user, user.get_inactive_held_item(), ITEM_SLOT_HANDS)
 	ADD_TRAIT(user, TRAIT_THERMAL_VISION, REF(src))
-	user.update_sight()
 	// If the equipper is a moon heretic, we buff their passive
 	var/datum/status_effect/heretic_passive/moon/moon_passive = user.has_status_effect(/datum/status_effect/heretic_passive/moon)
 	moon_passive?.amulet_equipped = TRUE
@@ -199,7 +198,6 @@
 	on_dropped_item(user, user.get_inactive_held_item())
 	UnregisterSignal(user, list(COMSIG_HERETIC_BLADE_ATTACK, COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_DROPPED_ITEM))
 	REMOVE_TRAIT(user, TRAIT_THERMAL_VISION, REF(src))
-	user.update_sight()
 	var/datum/status_effect/heretic_passive/moon/moon_passive = user.has_status_effect(/datum/status_effect/heretic_passive/moon)
 	moon_passive?.amulet_equipped = FALSE
 

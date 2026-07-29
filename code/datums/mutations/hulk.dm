@@ -242,7 +242,7 @@
 	var/turf/T = get_edge_target_turf(the_hulk, the_hulk.dir)
 	if(!isturf(T))
 		return
-	if(!yeeted_person.stat)
+	if(!IS_UNCONSCIOUS_OR_CRIT(yeeted_person))
 		yeeted_person.emote("scream")
 	yeeted_person.throw_at(T, 10, 6, the_hulk, TRUE, TRUE)
 	log_combat(the_hulk, yeeted_person, "has thrown by tail")
@@ -251,7 +251,7 @@
 	name = "Hulk (Magical)"
 	species_allowed = null //yes skeleton/lizard hulk - note that species that dont have skintone changing (like skellies) get custom handling
 	health_req = 0
-	instability = 0
+	instability = NEGATIVE_STABILITY_NONE
 	scream_delay = 2.5 SECONDS // halved to be more annoying (spell doesn't last long anyways)
 	no_recoil = FALSE
 	mutation_traits = list(
@@ -263,7 +263,7 @@
 /datum/mutation/hulk/superhuman
 	name = "Hulk (Super)"
 	health_req = 0
-	instability = 0
+	instability = NEGATIVE_STABILITY_NONE
 	no_recoil = FALSE
 	mutation_traits = list(
 		TRAIT_CHUNKYFINGERS,

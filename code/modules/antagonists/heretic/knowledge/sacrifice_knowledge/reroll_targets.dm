@@ -8,7 +8,7 @@
 		чтобы изменить цели жертвоприношения."
 	gain_text = "Сердце - это принцип, который пребывает и оберегает."
 	required_atoms = list(
-		/obj/item/food/grown/harebell = 1,
+		/obj/item/food/grown/flower/harebell = 1,
 		/obj/item/book = 1,
 		/obj/item/clothing/under = 1,
 	)

@@ -133,7 +133,7 @@ SUBSYSTEM_DEF(mapping)
 	process_teleport_locs() //Sets up the wizard teleport locations
 	preloadTemplates()
 
-#ifndef LOWMEMORYMODE
+#ifndef SKIP_SPACE_LEVELS
 	// Create space ruin levels
 	while (space_levels_so_far < current_map.space_ruin_levels)
 		add_new_zlevel("Ruin Area [space_levels_so_far+1]", ZTRAITS_SPACE)
@@ -487,7 +487,7 @@ Used by the AI doomsday and the self-destruct nuke.
 		query_round_map_name.Execute()
 		qdel(query_round_map_name)
 
-#ifndef LOWMEMORYMODE
+#ifndef SKIP_LAVALAND
 
 	if(current_map.minetype == MINETYPE_LAVALAND)
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)

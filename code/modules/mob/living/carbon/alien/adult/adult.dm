@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 		visible_message(span_danger("[capitalize(declent_ru(NOMINATIVE))] вырывается из хватки [pulledby.declent_ru(GENITIVE)]!"), \
 						span_danger("Вы вырываетесь из хватки [pulledby.declent_ru(GENITIVE)]!"))
 	pulledby.stop_pulling()
-	. = 0
+	return TRUE
 
 /mob/living/carbon/alien/adult/alien_evolve(mob/living/carbon/alien/adult/new_xeno)
 	drop_all_held_items()
@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 /mob/living/carbon/alien/adult/proc/can_consume(atom/movable/poor_soul)
 	if(!isliving(poor_soul) || pulling != poor_soul)
 		return FALSE
-	if(incapacitated || grab_state < GRAB_AGGRESSIVE || stat != CONSCIOUS)
+	if(incapacitated || grab_state < GRAB_AGGRESSIVE)
 		return FALSE
 	if(get_dir(src, poor_soul) != dir) // Gotta face em 4head
 		return FALSE

@@ -122,7 +122,7 @@
 	return FALSE
 
 /datum/martial_art/kaza_ruk/proc/low_sweep(mob/living/attacker, mob/living/defender)
-	if(defender.stat != CONSCIOUS || defender.IsParalyzed())
+	if(IS_UNCONSCIOUS_OR_CRIT(defender) || defender.IsParalyzed())
 		return MARTIAL_ATTACK_INVALID
 	if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
 		return MARTIAL_ATTACK_INVALID // Does 5 damage, so we can't let pacifists leg sweep.

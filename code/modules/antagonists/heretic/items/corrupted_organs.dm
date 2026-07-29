@@ -281,7 +281,7 @@
 
 /obj/item/organ/appendix/corrupt/on_life(seconds_per_tick)
 	. = ..()
-	if (owner.stat != CONSCIOUS || owner.has_reagent(/datum/reagent/water/holywater) || IS_IN_MANSUS(owner) || !SPT_PROB(worm_chance, seconds_per_tick))
+	if (IS_UNCONSCIOUS_OR_CRIT(owner) || owner.has_reagent(/datum/reagent/water/holywater) || IS_IN_MANSUS(owner) || !SPT_PROB(worm_chance, seconds_per_tick))
 		return
 	owner.vomit(MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM, vomit_type = /obj/effect/decal/cleanable/vomit/nebula/worms, distance = 0)
 	owner.Knockdown(0.5 SECONDS)

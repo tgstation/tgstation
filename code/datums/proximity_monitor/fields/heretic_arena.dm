@@ -202,7 +202,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	var/mutable_appearance/crown_overlay
 
 /datum/status_effect/arena_tracker/on_apply()
-	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(on_enter_crit))
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_enter_crit))
 	RegisterSignal(owner, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(on_impact_zone))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_taken))
 	owner.add_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
@@ -217,14 +217,16 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	return TRUE
 
 /datum/status_effect/arena_tracker/on_remove()
-	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_MOB_APPLY_DAMAGE))
+	UnregisterSignal(owner, list(COMSIG_MOB_STATCHANGE, COMSIG_MOB_APPLY_DAMAGE))
 	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
 	owner.cut_overlay(crown_overlay)
 	crown_overlay = null
 
 // If our last attacker is an arena participant, we let them know they've scored a critical hit
-/datum/status_effect/arena_tracker/proc/on_enter_crit(mob/owner)
+/datum/status_effect/arena_tracker/proc/on_enter_crit(mob/owner, new_stat, old_stat)
 	SIGNAL_HANDLER
+	if(new_stat < SOFT_CRIT)
+		return
 	if(!last_attacker)
 		return // Safety check in case they somehow enter crit with *nobody* attacking them
 	var/mob/living/our_attacker = last_attacker.resolve()

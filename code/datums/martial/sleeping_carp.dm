@@ -164,7 +164,7 @@
 	var/grab_log_description = "grabbed"
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
-	if(defender.stat != DEAD && !defender.IsUnconscious() && defender.get_stamina_loss() >= 80) //We put our target to sleep.
+	if(!IS_UNCONSCIOUS(defender) && defender.get_stamina_loss() >= 80) //We put our target to sleep.
 		defender.visible_message(
 			span_danger("[capitalize(attacker.declent_ru(NOMINATIVE))] аккуратно бьёт по нерву на шее [defender.declent_ru(GENITIVE)], вырубая [defender.ru_p_them()]!"),
 			span_userdanger("[capitalize(attacker.declent_ru(NOMINATIVE))] бьёт в какое-то место на вашей шее, выводя вас из сознания!"),
@@ -438,7 +438,7 @@
 	if(!isliving(target))
 		return ..()
 	var/mob/living/carbon/C = target
-	if(C.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(C))
 		to_chat(user, span_warning("Было бы бесчестно нападать на врага, пока он не может отбиться."))
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
@@ -459,7 +459,7 @@
 			H.Paralyze(8 SECONDS)
 		if(H.staminaloss && !H.IsSleeping())
 			var/total_health = (H.health - H.staminaloss)
-			if(total_health <= HEALTH_THRESHOLD_CRIT && !H.stat)
+			if(total_health <= HEALTH_THRESHOLD_CRIT && !IS_UNCONSCIOUS_OR_CRIT(H))
 				H.visible_message(span_warning("[capitalize(user.declent_ru(NOMINATIVE))] наносит сокрушительный удар голове [H.declent_ru(GENITIVE)], вырубая [H.ru_p_them()]!"), \
 								span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] вырубает вас!"), span_hear("Вы слышите противный звук удара по телу!"), null, user)
 				to_chat(user, span_danger("Вы наносите сокрушительный удар голове [H.declent_ru(GENITIVE)], вырубая [H.ru_p_them()]!"))

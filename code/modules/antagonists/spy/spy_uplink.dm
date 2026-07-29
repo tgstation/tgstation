@@ -138,7 +138,7 @@
 		span_notice("Вы начинаете сканировать [stealing.declent_ru(ACCUSATIVE)], приготавливая его к отправке."),
 	)
 
-	if(!do_after(spy, bounty.theft_time, stealing, interaction_key = REF(src), hidden = TRUE))
+	if(!do_after(spy, bounty.theft_time, stealing, interaction_key = REF(src), cog_icon = null))
 		return FALSE
 	if(bounty.claimed)
 		to_chat(spy, span_warning("Ваш аплинк мигает красным: награда за [stealing.declent_ru(ACCUSATIVE)] уже была принята другим шпионом!"))

@@ -164,7 +164,7 @@
 	//THE UNREADY (Applies over ANYTHING else!)
 	if(honorbound_human == target_creature)
 		return TRUE //oh come on now
-	if(target_creature.IsSleeping() || target_creature.IsUnconscious() || HAS_TRAIT(target_creature, TRAIT_RESTRAINED))
+	if(IS_UNCONSCIOUS(target_creature) || HAS_TRAIT(target_creature, TRAIT_RESTRAINED))
 		to_chat(honorbound_human, span_warning("There is no honor in attacking the <b>unready</b>."))
 		return FALSE
 	//THE JUST (Applies over guilt except for med, so you best be careful!)

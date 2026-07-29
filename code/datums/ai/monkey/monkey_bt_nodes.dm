@@ -198,7 +198,7 @@
 				continue
 			if(possible_enemy.has_faction(list(FACTION_MONKEY, FACTION_JUNGLE)) && !controller.blackboard[BB_MONKEY_TARGET_MONKEYS])
 				continue
-			if(IS_DEAD_OR_INCAP(possible_enemy)) // Dont bother, theyre fucked.
+			if(possible_enemy.incapacitated) // Dont bother, theyre fucked.
 				continue
 		valids[possible_enemy] = CEILING(100 / (get_dist(living_pawn, possible_enemy) || 1), 1)
 
@@ -344,7 +344,7 @@
 	for(var/mob/living/carbon/human/human_mob in oview(5, living_pawn))
 		if(istype(human_mob.mind?.assigned_role, /datum/job/bartender))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED // my boss is on duty!
-		if(human_mob.stat != CONSCIOUS || ismonkey(human_mob))
+		if(IS_UNCONSCIOUS_OR_CRIT(human_mob) || ismonkey(human_mob))
 			continue
 		if(!human_mob.get_empty_held_indexes())
 			continue

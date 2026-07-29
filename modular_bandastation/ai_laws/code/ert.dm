@@ -1,4 +1,4 @@
-/obj/item/ai_module/core/full/ert
+/obj/item/ai_module/law/core/full/ert
 	name = "'Ert' Core AI Module"
 	law_id = "ert"
 

@@ -1,4 +1,4 @@
-/obj/item/ai_module/core/full/renter
+/obj/item/ai_module/law/core/full/renter
 	name = "'Renter' Core AI Module"
 	law_id = "renter"
 
@@ -17,7 +17,7 @@
 	desc = "Allows for the construction of an renter AI Core Module."
 	id = "renter_module"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/ai_module/core/full/renter
+	build_path = /obj/item/ai_module/law/core/full/renter
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)

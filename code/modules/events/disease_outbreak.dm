@@ -437,7 +437,7 @@
 	properties["transmittable"] = rand(4,7)
 	spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
 	cure_chance = clamp(10 * (0.94 ** properties["resistance"]), 3.5, 12)
-	stage_prob = max(0.4 * properties["stage_rate"], 1) // 33% faster than regular advanced diseases
+	stage_prob = max(0.4 * properties["stage_rate"], 1) // Faster than regular advanced diseases
 	set_severity(properties["severity"])
 
 	//If we have an advanced (high stage) disease, add it to the name.

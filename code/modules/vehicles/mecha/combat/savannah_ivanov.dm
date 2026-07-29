@@ -231,7 +231,7 @@
 				crushed_victim.adjust_brute_loss(15)
 				continue
 			to_chat(crushed_victim, span_userdanger("[chassis] crashes down on you from above!"))
-			if(crushed_victim.stat != CONSCIOUS)
+			if(IS_UNCONSCIOUS_OR_CRIT(crushed_victim))
 				crushed_victim.investigate_log("has been gibbed by a falling Savannah Ivanov mech.", INVESTIGATE_DEATHS)
 				crushed_victim.gib(DROP_ALL_REMAINS)
 				continue

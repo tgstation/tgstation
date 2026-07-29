@@ -545,7 +545,7 @@
 			H.emote("scream")
 			shock_pulling(45, H)
 			if(H.can_heartattack() && !H.undergoing_cardiac_arrest())
-				if(!H.stat)
+				if(!IS_UNCONSCIOUS_OR_CRIT(H))
 					H.visible_message(span_warning("[H] thrashes wildly, clutching at [H.p_their()] chest!"),
 						span_userdanger("You feel a horrible agony in your chest!"))
 				H.set_heartattack(TRUE)

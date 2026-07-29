@@ -1,4 +1,4 @@
-/obj/item/ai_module/core/full/petrovich
+/obj/item/ai_module/law/core/full/petrovich
 	name = "'P.E.T.R.O.V.I.C.H' Core AI Module"
 	law_id = "petrovich"
 
@@ -18,7 +18,7 @@
 	desc = "Allows for the construction of an Petrovich AI Core Module."
 	id = "petrovich_module"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/ai_module/core/full/petrovich
+	build_path = /obj/item/ai_module/law/core/full/petrovich
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)

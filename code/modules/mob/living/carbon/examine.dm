@@ -24,7 +24,7 @@
 	var/appears_dead = FALSE
 	var/just_sleeping = FALSE
 
-	if(!appears_alive())
+	if(IS_DEAD_OR_FAKING(src))
 		appears_dead = TRUE
 
 		var/obj/item/clothing/glasses/shades = get_item_by_slot(ITEM_SLOT_EYES)
@@ -226,14 +226,13 @@
 				. += "Вокруг [ru_p_theirs()] видно святую ауру."
 				living_user.add_mood_event("religious_comfort", /datum/mood_event/religiously_comforted)
 
-		switch(stat)
-			if(UNCONSCIOUS, HARD_CRIT)
-				. += span_notice("[t_He] не реагирует на [t_him] окружение и, кажется, спит.")
-			if(SOFT_CRIT)
-				. += span_notice("[t_He] едва находится в сознании.")
-			if(CONSCIOUS)
-				if(HAS_TRAIT(src, TRAIT_DUMB))
-					. += "У [ru_p_theirs()] глупое выражение лица."
+		if(IS_UNCONSCIOUS(src))
+			. += span_notice("[t_He] не реагирует на [t_him] окружение и, кажется, спит.")
+		else if(stat == SOFT_CRIT)
+			. += span_notice("[t_He] едва находится в сознании.")
+		else if(HAS_TRAIT(src, TRAIT_DUMB))
+			. += "У [ru_p_theirs()] глупое выражение лица."
+
 		var/obj/item/organ/brain/brain = get_organ_by_type(/obj/item/organ/brain)
 		if(brain && isnull(ai_controller))
 			var/npc_message = ""
@@ -480,7 +479,7 @@
 
 	var/perpname = get_face_name(get_id_name(""))
 	var/title = ""
-	if(perpname && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)) && (user.stat == CONSCIOUS || isobserver(user)) && user != src)
+	if(perpname && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)) && (!IS_UNCONSCIOUS_OR_CRIT(user) || isobserver(user)) && user != src)
 		var/datum/record/crew/target_record = find_record(perpname)
 		if(target_record)
 			. += "Должность: [target_record.rank]"

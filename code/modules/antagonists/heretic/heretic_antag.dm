@@ -571,7 +571,7 @@
 	else
 		drawing_effect = new(target_turf, rune_colour)
 
-	if(!do_after(user, drawing_time, target_turf, extra_checks = additional_checks, hidden = TRUE))
+	if(!do_after(user, drawing_time, target_turf, extra_checks = additional_checks, cog_icon = null))
 		target_turf.balloon_alert(user, "прервано!")
 		new /obj/effect/temp_visual/drawing_heretic_rune/fail(target_turf, rune_colour)
 		qdel(drawing_effect)
@@ -784,7 +784,7 @@
  */
 /datum/antagonist/heretic/proc/passive_influence_gain()
 	adjust_knowledge_points(1)
-	if(owner?.current?.stat <= SOFT_CRIT)
+	if(!IS_UNCONSCIOUS(owner?.current))
 		to_chat(owner.current, "[span_hear("Вы слышите шепот...")] [span_hypnophrase(pick_list(HERETIC_INFLUENCE_FILE, "drain_message"))]")
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer)
 

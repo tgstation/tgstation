@@ -55,7 +55,7 @@
 	to_chat(owner, span_notice("Вы начинаете соединять сознание [linkee.declent_ru(GENITIVE)] со своим..."))
 	to_chat(linkee, span_warning("Вы чувствуете, что ваш разум куда-то тянут... соединяют... переплетают с самой тканью реальности..."))
 
-	if(!do_after(owner, link_time, linkee, hidden = TRUE))
+	if(!do_after(owner, link_time, linkee, cog_icon = null))
 		to_chat(owner, span_warning("Вам не удается связать себя с разумом [linkee.declent_ru(GENITIVE)]."))
 		to_chat(linkee, span_warning("Чужое присутствие покидает ваш разум."))
 		return FALSE

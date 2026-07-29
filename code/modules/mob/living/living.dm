@@ -19,6 +19,7 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 	gravity_setup()
+	init_unconscious_appearance()
 
 /mob/living/prepare_huds()
 	..()
@@ -27,6 +28,10 @@
 /mob/living/proc/prepare_data_huds()
 	med_hud_set_health()
 	med_hud_set_status()
+
+/// Inits the unconscious alt appearance for when other mobs see us while unconscious
+/mob/living/proc/init_unconscious_appearance()
+	return
 
 /mob/living/Destroy()
 	for(var/datum/status_effect/effect as anything in status_effects)
@@ -405,9 +410,7 @@
 		log_combat(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 
-	pulling = AM
-	AM.set_pulledby(src)
-
+	set_pulling(AM)
 	SEND_SIGNAL(src, COMSIG_LIVING_START_PULL, AM, state, force)
 
 	if(!supress_message)
@@ -705,7 +708,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 	if(istype(potential_spine))
 		get_up_time *= potential_spine.athletics_boost_multiplier
 
-	if(!instant && !do_after(src, get_up_time, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP, hidden = TRUE))
+	if(!instant && !do_after(src, get_up_time, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP, cog_icon = null))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
@@ -880,8 +883,9 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 		fully_heal(full_heal_flags)
 
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
+		REMOVE_TRAIT(src, TRAIT_DISSECTED, AUTOPSY_TRAIT)
 		set_suicide(FALSE)
-		set_stat(UNCONSCIOUS) //the mob starts unconscious,
+		set_stat(HARD_CRIT) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
 		if(full_heal_flags & HEAL_ADMIN)
 			get_up(TRUE)
@@ -1015,9 +1019,11 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 /// Checks if we are actually able to ressuscitate this mob.
 /// (We don't want to revive then to have them instantly die again)
 /mob/living/proc/can_be_revived()
-	if(health <= HEALTH_THRESHOLD_DEAD)
-		return FALSE
-	return TRUE
+	if(HAS_TRAIT(src, TRAIT_NODEATH))
+		return TRUE
+	if(health > HEALTH_THRESHOLD_DEAD)
+		return TRUE
+	return FALSE
 
 /mob/living/proc/update_damage_overlays()
 	return
@@ -1156,10 +1162,11 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 			resist_restraints() //trying to remove cuffs.
 
 /mob/proc/resist_grab(moving_resist)
-	return 1 //returning 0 means we successfully broke free
+	return FALSE
 
 /mob/living/resist_grab(moving_resist)
-	. = TRUE
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+		return FALSE
 
 	var/list/grab_stats = list(
 		// Our effective grab state.
@@ -1208,17 +1215,23 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 			to_chat(pulledby, span_warning("[capitalize(declent_ru(NOMINATIVE))] вырывается из вашей хватки!"))
 			log_combat(pulledby, src, "broke grab")
 			pulledby.stop_pulling()
-			return FALSE
-		else
-			adjust_stamina_loss(damage_on_resist_fail) //Do some stamina damage if we fail to resist
-			visible_message(span_danger("[capitalize(declent_ru(NOMINATIVE))] неуспешно пытается вырваться из хватки [pulledby.declent_ru(GENITIVE)]!"), \
-							span_warning("Вы неуспешно пытаетесь вырваться из хватки [pulledby.declent_ru(GENITIVE)]!"), null, null, pulledby)
-			to_chat(pulledby, span_danger("[capitalize(declent_ru(NOMINATIVE))] неуспешно пытается вырваться из вашей хватки!"))
+			return TRUE
+
+		adjust_stamina_loss(damage_on_resist_fail) //Do some stamina damage if we fail to resist
+		visible_message(
+			span_danger("[capitalize(declent_ru(NOMINATIVE))] неуспешно пытается вырваться из хватки [pulledby.declent_ru(GENITIVE)]!"),
+			span_warning("Вы неуспешно пытаетесь вырваться из хватки [pulledby.declent_ru(GENITIVE)]!"),
+			null,
+			null,
+			pulledby,
+		)
+		to_chat(pulledby, span_danger("[capitalize(declent_ru(NOMINATIVE))] неуспешно пытается вырваться из вашей хватки!"))
 		if(moving_resist && client) //we resisted by trying to move
 			client.move_delay = world.time + 4 SECONDS
-	else
-		pulledby.stop_pulling()
 		return FALSE
+
+	pulledby.stop_pulling()
+	return TRUE
 
 /mob/living/proc/resist_buckle()
 	buckled.user_unbuckle_mob(src,src)
@@ -1333,8 +1346,8 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 	if(!istype(target))
 		CRASH("Missing target arg for can_perform_action")
 
-	if(stat != CONSCIOUS)
-		to_chat(src, span_warning("Вы должны быть в сознании!"))
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
+		to_chat(src, span_warning("Вы должны быть дееспособны!"))
 		return FALSE
 
 	if(!(interaction_flags_atom & INTERACT_ATOM_IGNORE_INCAPACITATED))
@@ -1537,10 +1550,10 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 				new_mob.SetInvisibility(INVISIBILITY_NONE)
 				new_mob.job = JOB_CYBORG
 				created_robot.lawupdate = FALSE
-				created_robot.connected_ai = null
+				created_robot.set_connected_ai(null)
 				created_robot.mmi.transfer_identity(src) //Does not transfer key/client.
-				created_robot.clear_inherent_laws(announce = FALSE)
-				created_robot.clear_zeroth_law(announce = FALSE)
+				created_robot.laws.clear_inherent_laws()
+				created_robot.laws.clear_zeroth_law()
 
 		if(WABBAJACK_SLIME)
 			new_mob = new /mob/living/basic/slime/random(loc)
@@ -2393,66 +2406,65 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/set_stat(new_stat)
 	. = ..()
-	if(isnull(.))
+	if(isnull(.) || . == stat)
 		return
 
-	if(. <= UNCONSCIOUS || new_stat >= UNCONSCIOUS)
-		update_eyes()
+	// All the traits associated with any of a mob's stat
+	// Adding any traits below should also be done in here
+	var/list/removed_traits = list(
+		TRAIT_DEAF,
+		TRAIT_FLOORED,
+		TRAIT_HANDS_BLOCKED,
+		TRAIT_INCAPACITATED,
+		TRAIT_KNOCKEDOUT,
+		TRAIT_FORCE_WHISPER,
+	)
+	// All the traits associated with the mob's current stat
+	var/list/added_traits = list()
 
-	switch(.) //Previous stat.
-		if(CONSCIOUS)
-			if(stat >= UNCONSCIOUS)
-				ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-			add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED, TRAIT_FLOORED), STAT_TRAIT)
+	switch(stat) // Current stat
+		if(STABLE)
+			log_combat(src, src, "left crit")
+
 		if(SOFT_CRIT)
-			if(stat >= UNCONSCIOUS)
-				ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT) //adding trait sources should come before removing to avoid unnecessary updates
-			if(pulledby)
-				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
-		if(UNCONSCIOUS)
-			if(stat != HARD_CRIT)
-				cure_blind(UNCONSCIOUS_TRAIT)
-		if(HARD_CRIT)
-			if(stat != UNCONSCIOUS)
-				cure_blind(UNCONSCIOUS_TRAIT)
-			REMOVE_TRAIT(src, TRAIT_DEAF, STAT_TRAIT)
-		if(DEAD)
-			REMOVE_TRAIT(src, TRAIT_DEAF, STAT_TRAIT)
-			remove_from_dead_mob_list()
-			add_to_alive_mob_list()
-	switch(stat) //Current stat.
-		if(CONSCIOUS)
-			if(. >= UNCONSCIOUS)
-				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-			remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_CRITICAL_CONDITION), STAT_TRAIT)
-			log_combat(src, src, "regained consciousness")
-		if(SOFT_CRIT)
-			if(pulledby)
-				ADD_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT) //adding trait sources should come before removing to avoid unnecessary updates
-			if(. >= UNCONSCIOUS)
-				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
 			log_combat(src, src, "entered soft crit")
-		if(UNCONSCIOUS)
-			if(. != HARD_CRIT)
-				become_blind(UNCONSCIOUS_TRAIT)
-			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
-				ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
-			else
-				REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
-			log_combat(src, src, "lost consciousness")
+			added_traits.Add(
+				TRAIT_FLOORED,
+				TRAIT_HANDS_BLOCKED,
+				TRAIT_INCAPACITATED,
+				TRAIT_FORCE_WHISPER,
+			)
+
 		if(HARD_CRIT)
-			if(. != UNCONSCIOUS)
-				become_blind(UNCONSCIOUS_TRAIT)
-			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
-			ADD_TRAIT(src, TRAIT_DEAF, STAT_TRAIT)
 			log_combat(src, src, "entered hard crit")
+			added_traits.Add(
+				TRAIT_DEAF,
+				TRAIT_FLOORED,
+				TRAIT_HANDS_BLOCKED,
+				TRAIT_INCAPACITATED,
+				TRAIT_KNOCKEDOUT,
+			)
+
 		if(DEAD)
-			REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
-			ADD_TRAIT(src, TRAIT_DEAF, STAT_TRAIT)
-			remove_from_alive_mob_list()
-			add_to_dead_mob_list()
 			log_combat(src, src, "died")
+			added_traits.Add(
+				TRAIT_DEAF,
+				TRAIT_FLOORED,
+				TRAIT_HANDS_BLOCKED,
+				TRAIT_INCAPACITATED,
+				TRAIT_KNOCKEDOUT,
+			)
+
+	if(stat == DEAD)
+		remove_from_alive_mob_list()
+		add_to_dead_mob_list()
+	else if(. == DEAD)
+		remove_from_dead_mob_list()
+		add_to_alive_mob_list()
+
+	add_traits(added_traits, STAT_TRAIT)
+	remove_traits(removed_traits - added_traits, STAT_TRAIT)
+	update_succumb_action()
 
 ///Reports the event of the change in value of the buckled variable.
 /mob/living/proc/set_buckled(new_buckled)
@@ -2485,14 +2497,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/set_pulledby(new_pulledby)
 	. = ..()
 	update_incapacitated()
-	if(. == FALSE) //null is a valid value here, we only want to return if FALSE is explicitly passed.
-		return
-	if(pulledby)
-		if(!. && stat == SOFT_CRIT)
-			ADD_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
-	else if(. && stat == SOFT_CRIT)
-		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
-
 
 /// Updates the grab state of the mob and updates movespeed
 /mob/living/setGrabState(newstate)
@@ -3049,3 +3053,17 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		remove_verb(src, /mob/living/verb/pulled)
 	else
 		add_verb(src, /mob/living/verb/pulled)
+
+/// Generic helper to add a static-y humanoid appearance shown to other mobs when unconscious
+/mob/living/proc/add_generic_humanoid_static_appearance()
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/image/static_image = image('icons/effects/effects.dmi', src, "static")
+	static_image.override = TRUE
+	static_image.name = "unknown humanoid"
+	add_alt_appearance(
+		/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity,
+		"[REF(src)]_unconscious",
+		static_image,
+		NONE,
+	)

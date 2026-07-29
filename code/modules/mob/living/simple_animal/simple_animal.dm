@@ -234,7 +234,7 @@
 		if(health <= 0)
 			death()
 		else
-			set_stat(CONSCIOUS)
+			set_stat(STABLE)
 	med_hud_set_status()
 
 /**
@@ -392,7 +392,7 @@
 			return FALSE
 	if (isliving(the_target))
 		var/mob/living/L = the_target
-		if(L.stat != CONSCIOUS)
+		if(IS_UNCONSCIOUS_OR_CRIT(L))
 			return FALSE
 	if (ismecha(the_target))
 		var/obj/vehicle/sealed/mecha/M = the_target
@@ -408,14 +408,14 @@
 	REMOVE_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
-	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
+	if(gender != FEMALE || IS_UNCONSCIOUS_OR_CRIT(src) || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
 		return
 	next_scan_time = world.time + 400
 	var/alone = TRUE
 	var/mob/living/simple_animal/partner
 	var/children = 0
 	for(var/mob/M in view(7, src))
-		if(M.stat != CONSCIOUS) //Check if it's conscious FIRST.
+		if(IS_UNCONSCIOUS_OR_CRIT(M)) //Check if it's conscious FIRST.
 			continue
 		var/is_child = is_type_in_list(M, childtype)
 		if(is_child) //Check for children SECOND.
@@ -532,7 +532,7 @@
 	stop_automated_movement = FALSE
 	if(!isturf(src.loc)) // Are we on a proper turf?
 		return
-	if(stat || resting || buckled) // Are we conscious, upright, and not buckled?
+	if(IS_UNCONSCIOUS_OR_CRIT(src) || resting || buckled) // Are we conscious, upright, and not buckled?
 		return
 	if(!COOLDOWN_FINISHED(src, emote_cooldown)) // Has the cooldown on this ended?
 		return
@@ -548,7 +548,7 @@
 			step(prey, pick(GLOB.cardinals))
 			COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 			return
-		if(!(prey.stat))
+		if(!IS_UNCONSCIOUS_OR_CRIT(prey))
 			manual_emote("chomps [prey]!")
 			prey.death()
 			prey = null

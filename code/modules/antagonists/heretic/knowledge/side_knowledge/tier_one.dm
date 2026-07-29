@@ -60,7 +60,7 @@
 		Выбрала ли она этот облик сама, или же это - шутка больного разума, породившего этот мерзкий артефакт, - вопрос, над которым лучше не задумываться."
 	required_atoms = list(
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/food/grown/poppy = 1,
+		/obj/item/food/grown/flower/poppy = 1,
 	)
 	result_atoms = list(/obj/item/reagent_containers/cup/phylactery)
 	cost = 1

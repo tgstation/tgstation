@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(ticker)
 	/// or a "round-ending" event, like summoning Nar'Sie, a blob victory, the nuke going off, etc. ([FORCE_END_ROUND])
 	var/force_ending = END_ROUND_AS_NORMAL
 	/// If TRUE, there is no lobby phase, the game starts immediately.
-	#ifdef ABSOLUTE_MINIMUM
+	#ifdef AUTOSTART_GAME
 	var/start_immediately = TRUE
 	#else
 	var/start_immediately = FALSE
@@ -372,11 +372,11 @@ SUBSYSTEM_DEF(ticker)
 			if(L.client.inactivity >= GLOB.logout_timer_set) //Connected, but inactive (alt+tabbed or something)
 				failed = TRUE //AFK client
 				builder.add_entry(L.name, L.ckey, L.job, "afk", L.is_antag())
-			if(!failed && L.stat)
+			if(!failed && IS_UNCONSCIOUS_OR_CRIT(L))
 				if(HAS_TRAIT(L, TRAIT_SUICIDED)) //Suicider
 					failed = TRUE //Disconnected client
 					builder.add_entry(L.name, L.ckey, L.job, "suicide", L.is_antag())
-				if(!failed && (L.stat == UNCONSCIOUS || L.stat == HARD_CRIT))
+				if(!failed && (L.stat == HARD_CRIT))
 					failed = TRUE //Unconscious
 					builder.add_entry(L.name, L.ckey, L.job, "dying", L.is_antag())
 				if(!failed && L.stat == DEAD)

@@ -938,7 +938,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	/// And now we'll deal with sneak attack damage modifiers.
 
 	// If our target is also unconscious for some reason, we get even more damage. Coup de grace, motherfucker.
-	if(HAS_TRAIT(living_target, TRAIT_KNOCKEDOUT))
+	if(IS_UNCONSCIOUS(living_target))
 		sneak_attack_dice += roll("1d6")
 		new /obj/effect/temp_visual/crit(get_turf(living_target))
 

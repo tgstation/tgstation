@@ -8489,7 +8489,7 @@
 /area/station/maintenance/department/engine)
 "daz" = (
 /obj/structure/table,
-/obj/item/ai_module/core/full/paladin_devotion,
+/obj/item/ai_module/law/core/full/paladin_devotion,
 /obj/structure/cable,
 /obj/machinery/flasher/directional/south,
 /turf/open/floor/circuit,
@@ -17591,19 +17591,19 @@
 /area/station/maintenance/department/cargo)
 "gho" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_x = -4
 	},
-/obj/item/food/grown/harebell,
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell,
+/obj/item/food/grown/flower/harebell{
 	pixel_x = 4;
 	pixel_y = 6
 	},
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_x = 6
 	},
-/obj/item/food/grown/harebell,
-/obj/item/food/grown/harebell,
+/obj/item/food/grown/flower/harebell,
+/obj/item/food/grown/flower/harebell,
 /turf/open/floor/iron/chapel{
 	dir = 4
 	},
@@ -24984,11 +24984,7 @@
 /area/station/medical/exam_room)
 "iJg" = (
 /obj/structure/table,
-/obj/item/ai_module/reset{
-	pixel_x = 2;
-	pixel_y = 8
-	},
-/obj/item/ai_module/supplied/freeform,
+/obj/item/ai_module/law/supplied/freeform,
 /turf/open/floor/circuit/red,
 /area/station/ai/upload/chamber)
 "iJm" = (
@@ -29948,9 +29944,6 @@
 /obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "High-Risk Modules";
 	req_access = list("captain")
-	},
-/obj/item/ai_module/reset/purge{
-	pixel_y = 11
 	},
 /turf/open/floor/circuit/red,
 /area/station/ai/upload/chamber)
@@ -42423,9 +42416,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "oJQ" = (
-/obj/item/food/grown/poppy,
+/obj/item/food/grown/flower/poppy,
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = -8;
 	pixel_y = 8
 	},
@@ -46705,9 +46698,6 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "qen" = (
-/obj/machinery/computer/upload/borg{
-	dir = 1
-	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/circuit,
@@ -49536,7 +49526,6 @@
 "rdI" = (
 /obj/structure/table,
 /obj/item/aicard,
-/obj/item/ai_module/reset,
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
 /obj/machinery/airalarm/directional/north,
@@ -58953,8 +58942,8 @@
 /area/station/science/robotics/mechbay)
 "uik" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy,
+/obj/item/food/grown/flower/poppy{
 	pixel_x = 8;
 	pixel_y = 8
 	},
@@ -64209,12 +64198,12 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/item/food/grown/poppy,
-/obj/item/food/grown/poppy,
-/obj/item/food/grown/poppy,
-/obj/item/food/grown/poppy,
-/obj/item/food/grown/poppy,
-/obj/item/food/grown/poppy,
+/obj/item/food/grown/flower/poppy,
+/obj/item/food/grown/flower/poppy,
+/obj/item/food/grown/flower/poppy,
+/obj/item/food/grown/flower/poppy,
+/obj/item/food/grown/flower/poppy,
+/obj/item/food/grown/flower/poppy,
 /obj/structure/sign/plaques/kiddie/badger{
 	pixel_x = 32
 	},
@@ -67823,7 +67812,7 @@
 /area/station/hallway/secondary/entry)
 "xla" = (
 /obj/structure/table,
-/obj/item/ai_module/core/full/dungeon_master,
+/obj/item/ai_module/law/core/full/dungeon_master,
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai/upload/chamber)
@@ -68668,7 +68657,7 @@
 /turf/open/floor/iron,
 /area/station/security/interrogation)
 "xAa" = (
-/obj/machinery/computer/upload/ai,
+/obj/machinery/ai_law_rack/base/core,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/circuit/red,
 /area/station/ai/upload/chamber)

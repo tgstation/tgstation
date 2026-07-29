@@ -30364,7 +30364,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "hqp" = (
-/obj/machinery/computer/upload/ai{
+/obj/machinery/ai_law_rack/base/core{
 	dir = 1
 	},
 /obj/machinery/flasher/directional/south{
@@ -43737,7 +43737,7 @@
 /area/station/maintenance/ghetto/fore/starboard)
 "kEI" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/harebell,
+/obj/item/food/grown/flower/harebell,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/mess)
 "kEM" = (
@@ -48320,12 +48320,12 @@
 /area/station/maintenance/ghetto/port/greater)
 "lJL" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/food/grown/poppy,
-/obj/item/food/grown/poppy{
+/obj/item/food/grown/flower/poppy,
+/obj/item/food/grown/flower/poppy{
 	pixel_x = 5;
 	pixel_y = -2
 	},
@@ -54545,12 +54545,12 @@
 /area/station/maintenance/ghetto/starboard)
 "nlt" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell{
 	pixel_x = 2;
 	pixel_y = 4
 	},
-/obj/item/food/grown/harebell,
-/obj/item/food/grown/harebell{
+/obj/item/food/grown/flower/harebell,
+/obj/item/food/grown/flower/harebell{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -68722,9 +68722,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/ghetto)
 "qKH" = (
-/obj/machinery/computer/upload/borg{
-	dir = 1
-	},
 /obj/item/radio/intercom/directional/south{
 	broadcasting = 1;
 	frequency = 1447;
@@ -70771,7 +70768,7 @@
 /obj/structure/table/wood,
 /obj/item/radio/intercom/directional/east,
 /obj/item/storage/fancy/donut_box,
-/obj/item/food/grown/poppy,
+/obj/item/food/grown/flower/poppy,
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
@@ -94004,13 +94001,9 @@
 /area/station/maintenance/ghetto/port/aft)
 "wYY" = (
 /obj/structure/table/wood/fancy/blue,
-/obj/item/ai_module/supplied/freeform,
-/obj/item/ai_module/reset,
+/obj/item/ai_module/law/supplied/freeform,
 /obj/machinery/light/directional/west,
 /obj/machinery/status_display/ai/directional/west,
-/obj/item/ai_module/reset/purge{
-	pixel_y = 11
-	},
 /turf/open/floor/iron/dark,
 /area/station/ai/upload/chamber)
 "wZf" = (

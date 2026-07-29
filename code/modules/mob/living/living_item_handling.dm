@@ -1,6 +1,6 @@
 // Throwing stuff
 /mob/living/proc/toggle_throw_mode()
-	if(stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		return
 	if(!HAS_TRAIT(src, TRAIT_CAN_THROW_ITEMS))
 		return
@@ -135,7 +135,7 @@
 		to_chat(src, span_warning("Вы уже передаёте что-то!"))
 		return
 
-	if(IS_DEAD_OR_INCAP(src))
+	if(src.incapacitated)
 		to_chat(src, span_warning("Вы не можете передать что-то в вашем положении!"))
 		return
 
@@ -157,7 +157,7 @@
 				to_chat(src, span_notice("Вы берёте [offered_item.declent_ru(ACCUSATIVE)] у себя"))
 				return
 
-		if(IS_DEAD_OR_INCAP(offered))
+		if(offered.incapacitated)
 			to_chat(src, span_warning("[capitalize(offered.ru_p_they())] не может ничего взять в текущем состоянии!"))
 			return
 
@@ -192,7 +192,7 @@
  */
 /mob/living/proc/take(mob/living/offerer, obj/item/offered_item, bypass)
 	clear_alert("[offerer]")
-	if(IS_DEAD_OR_INCAP(src))
+	if(src.incapacitated)
 		to_chat(src, span_warning("Вы не можете ничего взять в вашем положении!"))
 		return
 	if(get_dist(src, offerer) > 1)

@@ -41,7 +41,7 @@
 			return
 
 		user.add_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
-		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
+		if(IS_UNCONSCIOUS_OR_CRIT(user) || user.staminaloss >= 90)
 			active = !active
 			to_chat(user, span_notice("Наши мышцы расслабляются, не получая энергии для их укрепления."))
 			user.Paralyze(40)

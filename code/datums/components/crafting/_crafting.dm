@@ -50,6 +50,27 @@
 	var/forced_mode = FALSE
 	/// crafting flags we ignore when considering a recipe
 	var/ignored_flags = NONE
+	/// Global crafting blacklist. These should be excluded from all crafting recipes no matter what.
+	var/static/list/global_blacklist = typecacheof(list(
+		/obj/item/cautery/augment,
+		/obj/item/cautery/cruel/augment,
+		/obj/item/circular_saw/augment,
+		/obj/item/circular_saw/cruel/augment,
+		/obj/item/crowbar/cyborg,
+		/obj/item/hemostat/augment,
+		/obj/item/hemostat/cruel/augment,
+		/obj/item/multitool/cyborg,
+		/obj/item/retractor/augment,
+		/obj/item/retractor/cruel/augment,
+		/obj/item/scalpel/augment,
+		/obj/item/scalpel/cruel/augment,
+		/obj/item/screwdriver/cyborg,
+		/obj/item/surgicaldrill/augment,
+		/obj/item/surgicaldrill/cruel/augment,
+		/obj/item/weldingtool/largetank/cyborg,
+		/obj/item/wirecutters/cyborg,
+		/obj/item/wrench/cyborg,
+	))
 
 /* This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
@@ -84,7 +105,7 @@
 		// Check we have the appropriate amount available in the contents list
 		for(var/content_item_path in contents)
 			// Right path and not blacklisted
-			if(!ispath(content_item_path, requirement_path) || (content_item_path in recipe.blacklist) || is_type_in_typecache(recipe.global_blacklist, content_item_path))
+			if(!ispath(content_item_path, requirement_path) || (content_item_path in recipe.blacklist))
 				continue
 			// If we are a recipe that is blacklisting its result, make sure we skip that path
 			if(recipe_result && content_item_path == recipe_result)
@@ -96,6 +117,9 @@
 
 		if(needed_amount > 0)
 			return FALSE
+
+		if (!(recipe.crafting_flags & CRAFT_COLLECT_REQUIREMENTS))
+			continue
 
 		// Store the instances of what we will use for recipe.check_requirements() for requirement_path
 		var/list/instances_list = list()
@@ -158,6 +182,13 @@
 		if(isitem(object))
 			var/obj/item/item = object
 			LAZYADDASSOCLIST(.[CONTENTS_INSTANCES], item.type, item)
+			if(item.tool_behaviour)
+				var/current_tool_speed = .[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour]
+				if(current_tool_speed < item.toolspeed)
+					.[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour] = item.toolspeed
+			// Blacklisted items can be tools but not components
+			if(is_type_in_typecache(item.type, global_blacklist))
+				continue
 			if(isstack(item))
 				var/obj/item/stack/stack = item
 				.[CONTENTS_REQS_COUNT][item.type] += stack.amount
@@ -167,10 +198,6 @@
 					var/obj/item/reagent_containers/container = item
 					for(var/datum/reagent/reagent as anything in container.reagents.reagent_list)
 						.[CONTENTS_REQS_COUNT][reagent.type] += reagent.volume
-			if(item.tool_behaviour)
-				var/current_tool_speed = .[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour]
-				if(current_tool_speed < item.toolspeed)
-					.[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour] = item.toolspeed
 		else if (ismachinery(object))
 			LAZYADDASSOCLIST(.[CONTENTS_MACHINERY], object.type, object)
 		else if (isstructure(object))

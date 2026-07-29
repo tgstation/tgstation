@@ -59,14 +59,14 @@
 	//Equipment slots
 	var/obj/item/back = null
 	var/obj/item/head = null
-	var/obj/item/clothing/gloves = null
-	var/obj/item/clothing/ears = null
-	var/obj/item/clothing/glasses/glasses = null
-	var/obj/item/clothing/shoes/shoes = null
-	var/obj/item/clothing/neck/wear_neck = null
-	var/obj/item/clothing/mask/wear_mask = null
-	var/obj/item/clothing/wear_suit = null
-	var/obj/item/clothing/w_uniform = null
+	var/obj/item/gloves = null
+	var/obj/item/ears = null
+	var/obj/item/glasses = null
+	var/obj/item/shoes = null
+	var/obj/item/wear_neck = null
+	var/obj/item/wear_mask = null
+	var/obj/item/wear_suit = null
+	var/obj/item/w_uniform = null
 	var/obj/item/belt = null
 	var/obj/item/wear_id = null
 	var/obj/item/r_store = null

@@ -178,30 +178,29 @@
 /datum/brain_trauma/special/obsessed/proc/is_defensive()
 	if(time_spend_creeping >= 20 SECONDS)
 		return TRUE
-	if(obsession.stat >= UNCONSCIOUS)
+	if(IS_UNCONSCIOUS(obsession))
 		return (owner in viewers(7, obsession))
 	return FALSE
 
 /datum/brain_trauma/special/obsessed/proc/do_something_nervous()
-	if(QDELETED(owner) || owner.stat >= UNCONSCIOUS || HAS_TRAIT(owner, TRAIT_FEARLESS))
+	if(QDELETED(owner) || IS_UNCONSCIOUS(owner) || HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
 
-
-	switch(rand(1, 100))
-		if(1 to 40)
-			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), pick("blink", "blink_r"))
-			owner.set_eye_blur_if_lower(20 SECONDS)
-			to_chat(owner, span_userdanger("Вы обильно потеете, и вам трудно сосредоточиться..."))
-		if(41 to 80)
-			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "pale")
-			shake_camera(owner, 15, 1)
-			owner.adjust_stamina_loss(70)
-			to_chat(owner, span_userdanger("Вы чувствуете, как ваше сердце бешено колотится в груди..."))
-		if(81 to 100)
+	switch(rand(1, 10))
+		if(1 to 4)
+			owner.adjust_jitter_up_to(10 SECONDS, 20 SECONDS)
+			owner.adjust_dizzy_up_to(10 SECONDS, 20 SECONDS)
+			to_chat(owner, span_warning("Вы чувствуете себя немного тревожно."))
+		if(5 to 8)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "cough")
-			owner.adjust_dizzy(20 SECONDS)
-			owner.adjust_disgust(5)
-			to_chat(owner, span_userdanger("Вы давитесь и проглатываете немного желчи..."))
+			to_chat(owner, span_warning("Вы прочищаете горло."))
+		if(9)
+			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "laugh")
+			to_chat(owner, span_warning("Вы издаёте нервный смешок."))
+		if(10)
+			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "blink")
+			owner.adjust_eye_blur_up_to(10 SECONDS, 20 SECONDS)
+			to_chat(owner, span_warning("На мгновение вы забываете моргнуть."))
 
 // if the creep examines first, then the obsession examines them, have a 50% chance to possibly blow their cover. wearing a mask avoids this risk
 /datum/brain_trauma/special/obsessed/proc/stare(datum/source, mob/living/examining_mob, triggering_examiner)
