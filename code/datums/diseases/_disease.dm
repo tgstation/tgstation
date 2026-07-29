@@ -130,7 +130,7 @@
 	var/cure_mod
 	var/bad_immune = HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) ? 2 : 1
 	var/is_sleeping = !!affected_mob.IsSleeping()
-	var/malnourished = !HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) && (affected_mob.nutrition < NUTRITION_LEVEL_STARVING)
+	var/malnourished = !HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) && (affected_mob.nutrition <= NUTRITION_LEVEL_STARVING)
 
 	if(required_organ)
 		if(!has_required_infectious_organ(affected_mob, required_organ))
