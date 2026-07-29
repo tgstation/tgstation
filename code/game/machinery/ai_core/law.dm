@@ -953,7 +953,7 @@
 		return FALSE // give them a break
 
 	bot.Stun(stun_duration, ignore_canstun = TRUE)
-	bot.apply_status_effect(/datum/status_effect/firewalled, firewall_duration)
+	bot.apply_status_effect(/datum/status_effect/firewalled, stun_duration + firewall_duration)
 	return TRUE
 
 /obj/machinery/ai_law_rack/base/examine(mob/user)
