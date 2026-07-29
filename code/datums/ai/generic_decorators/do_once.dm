@@ -1,12 +1,4 @@
-/**
- * Gates its child until it has completed once.
- *
- * The latch is stored on the controller blackboard, so it survives plan cancellation
- * and can be reset with UNLOCK_DO_ONCE().
- *
- * only_lock_if_succeeded = FALSE (default): lock after either terminal child result.
- * only_lock_if_succeeded = TRUE: lock only after child SUCCESS.
- */
+///Only returns TRUE the first time. Optionally only locks if the child succeeds. Can be unlocked again
 /datum/bt_node/decorator/do_once
 	/// Blackboard key storing the completion latch.
 	var/lock_key
