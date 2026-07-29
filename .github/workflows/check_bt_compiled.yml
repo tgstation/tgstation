@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - "code/**/*.bt.json"
-      - "code/_generated/behavior_trees/**"
+      - "build/behavior_trees/**"
       - "code/__DEFINES/**"
       - "tools/build_bt.py"
 
