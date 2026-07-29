@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - map: "[Kilostation] Redid lighting over the whole station to be more ambient/moody and less overlit"
+  - map: "[Kilostation] Many small tweaks and nudges, primarily with decals or pipe runs"

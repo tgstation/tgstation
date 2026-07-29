@@ -897,6 +897,17 @@
       toxic bees, report anything weird with it
   - rscdel: Mobs will no longer log their initial name change (I.e. "name changed
       from (nothing) to John Doe")
+  - spellcheck: Renames "Hot Chili" to "Chili Con Carne"
+  - spellcheck: Renames "Cold Chili" to "Chili Frio"
+  - qol: Chili Con Carne, Chili Sin Carne, Chili Con Carnival, and Chili Frio are
+      now all in the "Mexican" cuisine category
+  - qol: You can now use ghost chilis in the chili recipes, making "Ghost Chili Con
+      Carne" or "Ghost Chili Sin Carne".
   PapaMichael:
   - balance: Pirates prioritize spawning their leaders
   - admin: Admins can configure Heavy Pirates
+  SmArtKar:
+  - bugfix: Fixed cardboard cutouts having an incorrect assistant sprite
+  - bugfix: Fixed some effects not updating hair when they should
+  lelandkemble:
+  - bugfix: You can place items within bodybags by clicking on them again
