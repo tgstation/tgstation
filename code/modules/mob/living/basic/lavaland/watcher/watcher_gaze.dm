@@ -92,7 +92,7 @@
 	living_owner.Stun(1.5 SECONDS, ignore_canstun = TRUE)
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/proc/valid_target(mob/living/viewer)
-	if (!istype(viewer) || viewer.stat || viewer == owner)
+	if (!istype(viewer) || IS_UNCONSCIOUS_OR_CRIT(viewer) || viewer == owner)
 		return FALSE
 	if (!(viewer.dir & get_dir(viewer, owner)))
 		return FALSE

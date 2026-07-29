@@ -281,7 +281,7 @@
 		return
 	var/list/targets
 	for(var/mob/living/carbon/target in oview(1, get_turf(src))) //Find adjacent target
-		if (target.stat == CONSCIOUS && target.Adjacent(src))
+		if (!IS_UNCONSCIOUS_OR_CRIT(target) && target.Adjacent(src))
 			LAZYADD(targets, target)
 	var/mob/living/carbon/target = pick(targets)
 	if (!target)

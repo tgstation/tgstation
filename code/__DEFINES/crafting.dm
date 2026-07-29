@@ -37,6 +37,9 @@
 #define CRAFT_IGNORE_DO_AFTER (1<<9)
 /// This craft won't change the materials of the resulting item to match that of the combined components
 #define CRAFT_NO_MATERIALS (1<<10)
+/// This craft will collect items used in the crafting recipe for check_requirements()
+/// Ugly microop but only a few recipes care about this, and we do a lot of work for it
+#define CRAFT_COLLECT_REQUIREMENTS (1<<11)
 
 //Crafting blacklist behaviors
 /// By default, blacklist the result if it's not in reqs

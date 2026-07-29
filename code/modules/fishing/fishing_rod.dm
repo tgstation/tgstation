@@ -500,20 +500,23 @@
 		. += line_overlay
 		. += mutable_appearance(icon_file, "hook_overlay")
 
-/obj/item/fishing_rod/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(slot_check(attacking_item,ROD_SLOT_LINE))
-		use_slot(ROD_SLOT_LINE, user, attacking_item)
+/obj/item/fishing_rod/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(slot_check(tool, ROD_SLOT_LINE))
+		use_slot(ROD_SLOT_LINE, user, tool)
 		SStgui.update_uis(src)
-		return TRUE
-	else if(slot_check(attacking_item,ROD_SLOT_HOOK))
-		use_slot(ROD_SLOT_HOOK, user, attacking_item)
+		return ITEM_INTERACT_SUCCESS
+
+	if(slot_check(tool, ROD_SLOT_HOOK))
+		use_slot(ROD_SLOT_HOOK, user, tool)
 		SStgui.update_uis(src)
-		return TRUE
-	else if(slot_check(attacking_item,ROD_SLOT_BAIT) || istype(attacking_item, /obj/item/bait_can)) //Can click on the fishing rod with bait can directly
-		use_slot(ROD_SLOT_BAIT, user, attacking_item)
+		return ITEM_INTERACT_SUCCESS
+
+	if(slot_check(tool, ROD_SLOT_BAIT) || istype(tool, /obj/item/bait_can)) //Can click on the fishing rod with bait can directly
+		use_slot(ROD_SLOT_BAIT, user, tool)
 		SStgui.update_uis(src)
-		return TRUE
-	. = ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/fishing_rod/ui_data(mob/user)
 	. = ..()

@@ -100,4 +100,4 @@
 	var/skeleton_name = spooked.client ? sanitize_name(tgui_input_text(spooked, "Enter your new skeleton name", "Spookifier", spooked.real_name, MAX_NAME_LEN)) : null
 	if(!skeleton_name)
 		skeleton_name = "\improper spooky skeleton"
-	spooked.fully_replace_character_name(null, skeleton_name)
+	spooked.fully_replace_character_name(null, skeleton_name, log_new_name = TRUE)

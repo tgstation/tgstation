@@ -81,7 +81,7 @@
 #undef BILEWORM_JUMP_FRAMES
 
 /datum/action/cooldown/mob_cooldown/resurface/proc/burrow_again(mob/living/burrower, atom/target)
-	if (!QDELETED(burrower) && !burrower.stat)
+	if (!QDELETED(burrower) && !IS_UNCONSCIOUS_OR_CRIT(burrower))
 		// Burrow immediatelly after being stunned out of the first jump to avoid chainstuns
 		burrow(burrower, target, force = TRUE)
 
@@ -275,7 +275,7 @@
 		to_chat(owner, span_warning("That's not food!"))
 		return
 	var/mob/living/living_target = target_atom
-	if(living_target.stat < UNCONSCIOUS)
+	if(!IS_UNCONSCIOUS(living_target))
 		to_chat(owner, span_warning("No way you're eating that while it's still kicking! It should at least be unconscious first."))
 		return
 	burrow_and_devour(owner, living_target)

@@ -139,23 +139,20 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/say_radio_or_mode = saymode || message_mods[RADIO_EXTENSION]
 	if(say_radio_or_mode)
 		var/mob_stat_limit = GLOB.message_modes_stat_limits[say_radio_or_mode]
-		if(stat > (isnull(mob_stat_limit) ? CONSCIOUS : mob_stat_limit))
+		if(stat > (isnull(mob_stat_limit) ? STABLE : mob_stat_limit))
 			saymode = null
 			message_mods -= RADIO_EXTENSION
 
-	switch(stat)
-		if(SOFT_CRIT)
-			message_mods[WHISPER_MODE] = MODE_WHISPER
-		if(UNCONSCIOUS)
-			return
-		if(HARD_CRIT)
-			if(!message_mods[WHISPER_MODE])
-				return
-		if(DEAD)
-			say_dead(original_message, message_mods[MANNEQUIN_CONTROLLED])
-			return
+	// this is what stops you from talking while dead
+	if(stat == DEAD)
+		say_dead(original_message, message_mods[MANNEQUIN_CONTROLLED])
+		return
 
-	if(HAS_TRAIT(src, TRAIT_SOFTSPOKEN) && !HAS_TRAIT(src, TRAIT_SIGN_LANG)) // softspoken trait only applies to spoken languages
+	// this is what stops you from talking while asleep, and also what allows you to deathgasp in hard crit
+	if(IS_UNCONSCIOUS(src) && (stat != HARD_CRIT || !message_mods[WHISPER_MODE]))
+		return
+
+	if(HAS_TRAIT(src, TRAIT_FORCE_WHISPER))
 		message_mods[WHISPER_MODE] = MODE_WHISPER
 
 	if(client && SSlag_switch.measures[SLOWMODE_SAY] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES) && !forced && src == usr)
@@ -175,6 +172,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(!message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		if(message_mods[WHISPER_MODE] == MODE_WHISPER)
 			message_range = 1
+			// this is where deathgasping is processed
 			if(stat == HARD_CRIT)
 				var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 				// If we cut our message short, abruptly end it with a-..
@@ -223,7 +221,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return
 
 	//Get which verb is prefixed to the message before radio but after most modifications
-	message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
+	message_mods[SAY_MOD_VERB] ||= say_mod(message, message_mods)
 
 	var/identifier = "invalid"
 	var/tts_message_to_use = tts_message || message
@@ -301,7 +299,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	var/speaker_is_signing = HAS_TRAIT(speaker, TRAIT_SIGN_LANG)
 	var/use_runechat = client?.prefs.read_preference(/datum/preference/toggle/enable_runechat)
-	if (stat == UNCONSCIOUS || stat == HARD_CRIT)
+	if (IS_UNCONSCIOUS_AND_ALIVE(src))
 		use_runechat = FALSE
 	else if (!ismob(speaker) && !client?.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs))
 		use_runechat = FALSE
