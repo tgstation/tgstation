@@ -911,3 +911,15 @@
   - bugfix: Fixed some effects not updating hair when they should
   lelandkemble:
   - bugfix: You can place items within bodybags by clicking on them again
+2026-07-29:
+  Justice12354:
+  - bugfix: Reloading your lionhunter's rifle no longer makes your ammo box invisible
+  - bugfix: Nightwatcher's Lantern now costs what it should cost (2 knowledge points)
+  Melbert:
+  - bugfix: Fix slot assigned job saving
+  - map: '[Kilostation] Redid lighting over the whole station to be more ambient/moody
+      and less overlit'
+  - map: '[Kilostation] Many small tweaks and nudges, primarily with decals or pipe
+      runs'
+  SmArtKar:
+  - code_imp: Optimized revenant abilities
