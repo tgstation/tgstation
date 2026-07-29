@@ -625,7 +625,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/holopad/update_overlays()
 	. = ..()
 
-	var/default_color = COLOR_BLUE_LIGHT
+	var/default_color = COLOR_AI_HOLOGRAM_BLUE
 	if(masters || replay_mode)
 		var/mutable_appearance/hololine_overlay = mutable_appearance(icon, "holopad1_mask")
 		for(var/mob/living/silicon/ai/AI as anything in masters)
