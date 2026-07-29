@@ -1,34 +1,14 @@
-/*
- * JPS (Jump Point Search) over the cached navmesh. Structural port of code/__HELPERS/paths/jps.dm,
- * with CAN_STEP swapped for the NAV_CAN_STEP macro (cached bit read instead of LinkBlockedWithAccess).
- * Standalone: no SSpathfinder queue, no tick-chunking, no async callback. Synchronous, like nav_find_path.
- *
- * Why JPS instead of plain A* here: plain grid A* over the navmesh (nav_astar.dm) made every edge
- * check cheap, but on open floor it still visits ~every tile in the search radius, so node-bookkeeping
- * (heap ops, heuristic recompute) dominates and it loses to JPS despite the cache. JPS's jump-scanning
- * skips almost all of those tiles, so pairing it with the cheap cached edge check attacks BOTH costs.
- *
- * Deviation from the original: the original JPS is a /datum/pathfind/jps method set, so unwind_path()
- * can stash the finished path as a side effect on `src` from anywhere in the call stack (lateral scan,
- * diag scan, or a diag's lateral subscan can all set it). This port uses plain procs with no shared
- * datum, so a one-element list `path_box` is threaded through every call instead: path_box[1] is the
- * finished path once found. Every scan checks path_box[1] at loop entry and bails immediately once
- * set, matching the original's `if(path) return` guard.
- */
-
-/// Node datum. No Destroy()/qdel: same reasoning as /datum/nav_node in nav_astar.dm (scoped to one
-/// search, no signals/timers, GC'd when the search's own lists fall out of scope).
+/// Search node for the navmesh JPS implementation.
 /datum/nav_jps_node
 	var/turf/tile
 	var/datum/nav_jps_node/previous_node
 	var/f_value
 	var/heuristic
-	/// Steps taken from start to here (== cost; JPS jumps all cost 1 per tile like cardinal moves).
 	var/number_tiles
-	/// Steps taken from previous_node to here.
 	var/jumps
 	var/turf/node_goal
 
+/// Creates a JPS node and initializes its path cost when possible.
 /datum/nav_jps_node/New(turf/our_tile, datum/nav_jps_node/incoming_previous_node, jumps_taken, turf/incoming_goal)
 	tile = our_tile
 	jumps = jumps_taken
@@ -40,8 +20,8 @@
 		node_goal = previous_node.node_goal
 		heuristic = get_dist_euclidean(tile, node_goal)
 		f_value = number_tiles + heuristic
-	// else: subscan lateral result awaiting update_parent()
 
+/// Reparents a subscan result and recalculates its path cost.
 /datum/nav_jps_node/proc/update_parent(datum/nav_jps_node/new_parent)
 	previous_node = new_parent
 	node_goal = previous_node.node_goal
@@ -50,13 +30,11 @@
 	heuristic = get_dist_euclidean(tile, node_goal)
 	f_value = number_tiles + heuristic
 
+/// Orders JPS nodes by their estimated total path cost.
 /proc/nav_jps_heap_compare(datum/nav_jps_node/a, datum/nav_jps_node/b)
 	return b.f_value - a.f_value
 
-/**
- * Find a path from `start` to `goal` for `pass_info`, using JPS jump-scanning over the cached navmesh.
- * Synchronous, single-z. Returns an ordered list of turfs (start-exclusive), or an empty list.
- */
+/// Finds a synchronous JPS path over cached navmesh edges.
 /proc/nav_jps_find_path(turf/start, turf/goal, datum/can_pass_info/pass_info, max_distance = 30, mintargetdist = 0)
 	if(!start || !goal || !pass_info)
 		return list()
@@ -68,7 +46,6 @@
 	var/is_flying = NAV_IS_FLYING(pass_info)
 	var/datum/heap/open = new /datum/heap(GLOBAL_PROC_REF(nav_jps_heap_compare))
 	var/list/found_turfs = list()
-	/// One-element out-param: path_box[1] becomes the finished path once any scan finds the goal.
 	var/list/path_box = list(null)
 
 	var/datum/nav_jps_node/start_node = new /datum/nav_jps_node(start, null, 0, goal)
@@ -87,11 +64,8 @@
 
 		for(var/scan_direction in list(NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST))
 			nav_jps_diag_scan(current_turf, scan_direction, current_node, goal, mintargetdist, max_distance, is_flying, pass_info, open, found_turfs, path_box)
-
-	// No qdel: nodes hold no signals/timers and every list here is a local about to go out of scope.
 	return path_box[1] || list()
-
-/// Unwinds a found node's previous_node chain (which skips jumped-over tiles) into a full turf list.
+/// Expands a jump-node chain into an ordered turf path.
 /proc/nav_jps_unwind(datum/nav_jps_node/unwind_node)
 	var/list/path = list()
 	var/turf/iter_turf = unwind_node.tile
@@ -106,12 +80,7 @@
 
 	return reverseList(path)
 
-/**
- * Lateral (cardinal) jump scan from original_turf in `heading`. Direct port of jps.dm's
- * lateral_scan_spec, with CAN_STEP -> NAV_CAN_STEP and the found path routed through path_box instead
- * of a datum-level var. Returns a node datum for diagonal-subscan linking, or null; never returns a
- * list (see file header).
- */
+/// Scans cardinally until it reaches a goal, obstacle, or jump point.
 /proc/nav_jps_lateral_scan(turf/original_turf, heading, datum/nav_jps_node/parent_node, turf/goal, mintargetdist, max_distance, is_flying, datum/can_pass_info/pass_info, datum/heap/open, list/found_turfs, list/path_box)
 	var/steps_taken = 0
 	var/turf/current_turf = original_turf
@@ -186,10 +155,7 @@
 				open.insert(newnode)
 			return newnode
 
-/**
- * Diagonal jump scan. Direct port of jps.dm's diag_scan_spec, with CAN_STEP -> NAV_CAN_STEP, the
- * lateral subscan calls routed through nav_jps_lateral_scan, and found paths routed through path_box.
- */
+/// Scans diagonally and schedules forced-neighbour branches.
 /proc/nav_jps_diag_scan(turf/original_turf, heading, datum/nav_jps_node/parent_node, turf/goal, mintargetdist, max_distance, is_flying, datum/can_pass_info/pass_info, datum/heap/open, list/found_turfs, list/path_box)
 	var/steps_taken = 0
 	var/turf/current_turf = original_turf
@@ -286,9 +252,7 @@
 					path_box[1] = nav_jps_unwind(possible_child_node)
 			return
 
-/**
- * Convenience wrapper mirroring get_path_to's shape for A/B benchmarking against JPS and plain nav A*.
- */
+/// Builds passability data and finds a JPS path for a movable.
 /proc/get_nav_jps_path_to(atom/movable/caller_movable, atom/target, max_distance = 30, mintargetdist = 0, list/access = list())
 	if(!caller_movable || !target)
 		return list()

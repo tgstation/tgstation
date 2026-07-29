@@ -60,9 +60,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IGNORE_TURF_PIXEL_OFFSET_1 (1<<17)
 /// This atom does not need to generate its own preview icon for GAGS
 #define NO_NEW_GAGS_PREVIEW_1 (1<<18)
-///This atom should not affect navigation, and does not cause changes in navigation. Useful for mobs and things that move a lot but really should be ignored for navigation
+/// This atom does not affect navmesh baking.
 #define NAV_IRRELEVANT_1 (1<<19)
-///This atom is always baked into the navmesh as a live conditional entry regardless of density (doors), so toggling its density never changes the baked result - skip the nav_dirty() a density change would otherwise trigger
+/// This atom is always a live navmesh blocker, regardless of density.
 #define NAV_ALWAYS_CONDITIONAL_1 (1<<20)
 
 // Update flags for [/atom/proc/update_appearance]
@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_CLEARING (1<<7)
 /// This atom is a pseudo-floor that blocks map generation's checkPlaceAtom() from placing things like trees ontop of it.
 #define TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES (1<<8)
-/// This turf is sitting in SSnavmesh's bake queue awaiting a nav_bake(). See /turf/proc/nav_dirty().
+/// This turf is queued for navmesh baking.
 #define NAV_QUEUED (1<<9)
 
 ////////////////Area flags\\\\\\\\\\\\\\

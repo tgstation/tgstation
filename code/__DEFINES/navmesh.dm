@@ -20,9 +20,10 @@
 /// Movement class selector for a baked bit given a can_pass_info's movement_type.
 #define NAV_CLASS_BIT(pass_info, dir) (((pass_info).movement_type & MOVETYPES_NOT_TOUCHING_GROUND) ? NAV_FLIGHT(dir) : NAV_GROUND(dir))
 
-// --- hot-path query macros ----------------------------------------------------------------------
-// Pathfinding touches these once per neighbour per expanded node, so they (including the rare
-// conditional-entry walk, formerly the nav_edge_cond proc) are inlined to dodge proc call overhead.
+
+
+// Pathfinding touches these once per neighbour per expanded node, so they (including the rarer
+// conditional-entry walk) are inlined to dodge proc call overhead.
 
 /// TRUE if the mover is in a movement class that reads the flight bits. Compute ONCE per search.
 #define NAV_IS_FLYING(pass_info) (((pass_info).movement_type & MOVETYPES_NOT_TOUCHING_GROUND) ? TRUE : FALSE)
@@ -31,13 +32,7 @@
 
 /// Statement macro: ensure a turf's edges are baked before its bits are read.
 #define NAV_ENSURE_BAKED(T) if(isnull((T).nav_pass)) { (T).nav_bake(); }
-
-/// Statement macro: sets `result` TRUE iff a mover can step from an ALREADY-BAKED turf T in cardinal
-/// `dir`. An edge is open iff its movement-class bit is set and, when the edge is conditional, every
-/// blocker entry on it permits the mover (numeric entries are a pass_flags bit-test; atom entries are
-/// evaluated live via CanAStarPass, source-side with the forward dir and dest-side with the reverse
-/// dir, mirroring LinkBlockedWithAccess in code/__HELPERS/paths/path.dm). `is_flying` is the
-/// precomputed NAV_IS_FLYING(pass_info).
+/// Sets result when a baked cardinal edge admits this mover.
 #define NAV_EDGE_OPEN_BAKED(T, dir, is_flying, pass_info, result) \
 	do { \
 		result = ((T).nav_pass & NAV_CLASS_BIT_FAST((dir), (is_flying))) ? TRUE : FALSE; \
@@ -59,15 +54,9 @@
 			} \
 		} \
 	} while(FALSE)
-
-/// Integer octile heuristic scaled to step costs (cardinal 10, diagonal 14).
+/// Octile distance scaled to cardinal and diagonal movement costs.
 #define NAV_HEURISTIC(a, b) (10 * (abs((a).x - (b).x) + abs((a).y - (b).y)) - 6 * min(abs((a).x - (b).x), abs((a).y - (b).y)))
-
-/// Statement macro: sets `result` TRUE iff a diagonal step from ALREADY-BAKED `origin` in composite
-/// `dir` can round the corner, i.e. at least one of the two L-routes is clear (both cardinal hops
-/// traversable). Bakes the midstep turfs as needed. Mirrors the corner rule in LinkBlockedWithAccess
-/// (code/__HELPERS/paths/path.dm) so generated paths are actually walkable. `_nav_mid`/`_nav_edge_ok`
-/// are scratch.
+/// Sets result when either cardinal route around a diagonal corner is open.
 #define NAV_DIAGONAL_OPEN(origin, dir, is_flying, pass_info, result) \
 	do { \
 		result = FALSE; \
@@ -97,16 +86,8 @@
 		} \
 	} while(FALSE)
 
-// --- JPS-over-navmesh step macros ---------------------------------------------------------------
-// These are the navmesh equivalents of jps.dm's CAN_STEP / STEP_NOT_HERE_BUT_THERE / TURF_CANT_WE_CAN.
-// They are DIRECTION-based (the JPS originals pass a pre-stepped `next` turf; here we pass the dir and
-// let nav_can_step read the cached bit). Used only inside /datum/nav_jps procs, which expose `is_flying`
-// and `pass_info` as locals, so the macros reference those names directly like the JPS macros do.
 
-/// Statement macro: sets `result` TRUE iff the mover can step from `cur_turf` in cardinal or diagonal
-/// `dir` to the given `dest` turf, reading cached bits (bakes lazily). Handles space exclusion and
-/// diagonal corner-rounding. Inlined (rather than a /turf/proc) to dodge the proc call in the JPS
-/// inner loop, same reasoning as NAV_DIAGONAL_OPEN above.
+/// Sets result when a cardinal or diagonal step is passable.
 #define NAV_CAN_STEP_TO(cur_turf, dir, dest, result) \
 	do { \
 		result = FALSE; \
@@ -121,9 +102,8 @@
 			} \
 		} \
 	} while(FALSE)
-/// Statement macro: sets `result` TRUE for a forced-neighbour test - we canNOT step `dirA` but we CAN
-/// step `dirB` from cur_turf. `destA` is the already-known destination of `dirA` from cur_turf (e.g. a
-/// cached cardinal neighbour), so that leg skips its get_step(). Short-circuits like the `&&` it replaces.
+
+/// Sets result when the first step is blocked and the second is open.
 #define NAV_STEP_NOT_HERE_BUT_THERE_TO(cur_turf, dirA, destA, dirB, result) \
 	do { \
 		NAV_CAN_STEP_TO((cur_turf), (dirA), (destA), result); \
@@ -133,9 +113,8 @@
 			result = FALSE; \
 		} \
 	} while(FALSE)
-/// Statement macro: sets `result` TRUE for a forced-neighbour test - a border stops our parent reaching
-/// a turf we can reach. `dest_cur` is the already-known destination of `dir_cur` from cur_turf (e.g. a
-/// cached cardinal neighbour), so that leg skips its get_step(). Short-circuits like the `&&` it replaces.
+
+/// Sets result when the parent cannot reach a tile that the current turf can.
 #define NAV_TURF_CANT_WE_CAN_TO(parent_turf, dir_parent, cur_turf, dir_cur, dest_cur, result) \
 	do { \
 		NAV_CAN_STEP_TO((parent_turf), (dir_parent), get_step((parent_turf), (dir_parent)), result); \

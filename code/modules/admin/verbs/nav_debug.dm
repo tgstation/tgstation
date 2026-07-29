@@ -1,6 +1,3 @@
-/// Navmesh debugging verbs, inspection tools, and a simple path-walking test pawn.
-
-/// Transient marker dropped along a computed nav path.
 /obj/effect/temp_visual/nav_marker
 	name = "nav path marker"
 	icon = 'icons/effects/effects.dmi'
@@ -9,11 +6,8 @@
 	duration = 5 SECONDS
 	color = COLOR_CYAN
 	layer = ABOVE_MOB_LAYER
-
-/// Client-stored goal turf for the path-test verb.
 /client/var/turf/nav_debug_goal
-
-/// Build a can_pass_info for the named debug profile.
+/// Builds a passability profile for navmesh debugging.
 /proc/nav_debug_profile(profile)
 	var/datum/can_pass_info/info = new /datum/can_pass_info(null, null, no_id = TRUE)
 	switch(profile)
@@ -51,8 +45,6 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 	if(!profile)
 		return
 	var/datum/can_pass_info/info = nav_debug_profile(profile)
-
-	// Run synchronous Rust A* and report unavailable if rust-g lacks turfmap_pathfinder.
 	var/list/rustg_nav_path
 	var/rustg_nav_ms
 	var/rustg_nav_available = TRUE
@@ -63,13 +55,11 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 		rustg_nav_available = FALSE
 		rustg_nav_path = list()
 	rustg_nav_ms = TICK_USAGE_TO_MS(rustg_nav_start)
-
-	// Compare against JPS using its accumulated compute_time across async search ticks.
 	var/list/access = info.access || list()
 	var/list/hand_around = list()
 	var/datum/pathfind/jps/legacy_path = new()
-	legacy_path.setup(user.mob, access, /*max_distance*/ 0, /*simulated_only*/ TRUE, /*avoid*/ null, \
-		list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around)), goal, /*mintargetdist*/ 0, /*skip_first*/ TRUE, DIAGONAL_REMOVE_CLUNKY)
+	legacy_path.setup(user.mob, access, 0, TRUE, null, \
+		list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around)), goal, 0, TRUE, DIAGONAL_REMOVE_CLUNKY)
 	var/list/jps_path
 	var/jps_ms
 	if(legacy_path.start())
@@ -110,8 +100,6 @@ ADMIN_VERB(navmesh_prebake_z, R_DEBUG, "Navmesh: Prebake Z-Level", "Eagerly bake
 	var/start_time = REALTIMEOFDAY
 	var/count = SSnavmesh.prebake_z(here.z)
 	to_chat(user, span_boldnotice("Prebaked [count] turfs on z[here.z] in [(REALTIMEOFDAY - start_time) / 10]s."))
-
-/// Basic mob that walks to its target.
 /mob/living/basic/nav_tester
 	name = "navmesh tester"
 	desc = "A test pawn that walks navmesh paths."
@@ -120,6 +108,7 @@ ADMIN_VERB(navmesh_prebake_z, R_DEBUG, "Navmesh: Prebake Z-Level", "Eagerly bake
 	maxHealth = 100
 	health = 100
 
+/// Starts the tester moving toward a target over the navmesh.
 /mob/living/basic/nav_tester/proc/set_nav_target(atom/target)
 	GLOB.move_manager.navmesh_astar_move(
 		src,

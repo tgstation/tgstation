@@ -883,7 +883,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/obj/machinery/fishing_portal_generator/portal = tool.buffer
 	return portal.link_fishing_spot(GLOB.preset_fish_sources[fish_source], src, user)
 
-///Marks this turf and any neighbors as dirty and queue them for baking
+/// Invalidates this turf and its neighbours, then queues them for baking.
 /turf/proc/nav_dirty()
 	// Before the subsystem inits nothing is baked
 	if(!SSnavmesh.initialized)
@@ -894,8 +894,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	nav_pass = null
 	nav_blockers = null
 	SSnavmesh.queue_turf_bake(src)
-	// Push a baked-flag-clear value so Rust's turfmap cache rebakes on next lookup instead of serving
-	// the stale still-baked bits it holds until the async re-bake above lands. 0 == baked flag clear.
+	// Clear Rust's baked flag before the asynchronous re-bake.
 	rustg_turfmap_update(x, y, z, 0)
 	for(var/dir in GLOB.cardinals)
 		var/turf/neighbor = get_step(src, dir)
@@ -905,8 +904,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			SSnavmesh.queue_turf_bake(neighbor)
 			rustg_turfmap_update(neighbor.x, neighbor.y, neighbor.z, 0)
 
-///Compute all directions of this turf for pathability. `skip_rust_push` lets the mass prebake path
-///suppress per-turf FFI and bulk-push instead (see /datum/controller/subsystem/navmesh/proc/prebake_z).
+/// Bakes this turf's outgoing edges and publishes them to Rust.
 /turf/proc/nav_bake(skip_rust_push = FALSE)
 	var/packed = NAV_BAKED
 	var/list/blockers = null
@@ -923,15 +921,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	nav_pass = packed
 	nav_blockers = blockers
-	// Keep Rust's turfmap cache in sync with the freshly baked bits. Skipped by the mass prebake, which
-	// bulk-pushes the whole z-level in one FFI call instead.
+	// Mass prebakes publish the completed z-level in one FFI call.
 	if(!skip_rust_push)
 		rustg_turfmap_update(x, y, z, packed)
 
-/*
-* Classifies the outgoing edge from src to dest in direction `dir`, returning the OR of the relevant
-* NAV_* bits for that dir and appending any conditional blocker entries to `edge_blockers`.
-*/
+/// Builds packed passability bits and live blockers for one outgoing edge.
 /turf/proc/nav_evaluate_edge(dir, turf/dest, list/edge_blockers)
 	// --- destination turf itself ---
 	if(dest.density)
@@ -944,10 +938,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(TURF_PATHING_PASS_NO)
 			return NONE
 		if(TURF_PATHING_PASS_PROC)
-			// e.g. openspace: mover-dependent in a way our repless reps can't capture (its CanAStarPass
-			// resolves requester_ref / can_z_move). Store the dest turf as a live conditional entry and
-			// leave both class bits set (the "mover-independent / no wall" baseline). A* walks the entry
-			// with the real mover, which resolves flying-vs-falling correctly.
+			// Evaluate mover-dependent turf passage at pathing time.
 			edge_blockers += dest
 			has_cond = TRUE
 
@@ -989,16 +980,15 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		bits |= NAV_COND(dir)
 	return bits
 
-///Figure out if this is mover-dependent and we need to store the atom or if we just need the bitmask
+/// Stores a static pass-flag mask or a live mover-dependent blocker.
 /turf/proc/nav_classify_atom(atom/movable/blocker, list/edge_blockers)
-	// Whitelisted pure pass-flag gates (tables, grilles) -> store the exact honoured pass_flag as a plain mask, so we can just check it cheaply
+	// Store known pass-flag gates as masks.
 	var/mask = SSnavmesh.mask_whitelist_cache[blocker.type]
 	if(mask)
 		edge_blockers += mask
 		return TRUE
 
-	// Anything mover-dependent: access doors, ALWAYS_PROC atoms, generic pass_flags_self holders,
-	// or an explicit escape-hatch type. Store the atom and evaluate live.
+	// Store mover-dependent blockers for live evaluation.
 	if(istype(blocker, /obj/machinery/door) \
 		|| blocker.can_astar_pass == CANASTARPASS_ALWAYS_PROC \
 		|| (blocker.pass_flags_self & ~NAV_NON_PASS_FLAGS) \

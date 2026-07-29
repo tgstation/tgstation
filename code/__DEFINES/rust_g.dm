@@ -569,7 +569,7 @@
 		CRASH(output["content"])
 
 /**
- * Computes the shortest path between two turfs over a live tgstation-style navmesh, using the
+ * Computes the shortest path between two turfs over a live tgstation-style turfmap, using the
  * `turfmap_pathfinder` byondapi feature. Reads Rust's persistent nav_pass cache (kept in sync by
  * rustg_turfmap_update / rustg_turfmap_bulk_update below), falling back to a live BYOND read + bake
  * only for coords the cache doesn't hold baked.
@@ -581,7 +581,8 @@
  * * is_flying - TRUE to use the flying nav_pass bits instead of ground
  * * max_range - Chebyshev distance cap from start, in tiles. 0 for unlimited
  *
- * Returns a /list of turfs from start to end (exclusive of neither), or an empty list if no path exists.
+ * Returns a /list of turfs from start to end (exclusive of neither), or an empty list if no path
+ * exists.
  */
 #define rustg_turfmap_pathfinder(start, end, pass_info, is_flying, max_range) \
 	RUSTG_CALL(RUST_G, "byond:rustg_turfmap_pathfinder_ffi")(start, end, pass_info, is_flying, max_range)
