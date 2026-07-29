@@ -60,6 +60,9 @@
 /// Called when we've eaten something
 /mob/living/basic/goose/proc/on_gobbled(atom/source, obj/item/food, mob/feeder)
 	SIGNAL_HANDLER
+	// The eaten item isn't always destroyed (see conserve_food), so make sure the AI
+	// forgets about it instead of trying to eat the same swallowed item forever.
+	ai_controller?.clear_blackboard_key(BB_TARGET_FOOD)
 	if (!food.has_material_type(/datum/material/plastic))
 		return NONE
 
