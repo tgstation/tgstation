@@ -81,7 +81,7 @@
 /obj/item/organ/tongue/proc/get_possible_languages()
 	RETURN_TYPE(/list)
 	// This is the default list of languages most humans should be capable of speaking
-	return list(
+	. = list(
 		/datum/language/common,
 		/datum/language/uncommon,
 		/datum/language/spinwarder,
@@ -98,6 +98,8 @@
 		/datum/language/terrum,
 		/datum/language/nekomimetic,
 	)
+	if(languages_native)
+		. |= languages_native
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
