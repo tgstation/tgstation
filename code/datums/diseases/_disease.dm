@@ -167,7 +167,7 @@
 	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
 		switch(severity)
 			if(DISEASE_SEVERITY_POSITIVE)
-				if(slowdown < 1)
+				if(slowdown < 1 || malnourished)
 					cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_POSITIVE)
 				else
 					recovery_prob = 0
@@ -247,6 +247,8 @@
 			var/failure_chance = (1 - get_recovery_failure_chance() / 100)
 			if(SPT_PROB(recovery_prob * failure_chance, seconds_per_tick))
 				if(stage == 1 && prob(cure_chance * DISEASE_FINAL_CURE_CHANCE_MULTIPLIER)) //if we reduce FROM stage == 1, cure the virus - after defeating its cure_chance in a final battle
+					if(severity == DISEASE_SEVERITY_POSITIVE && slowdown < 1)
+						return
 					if(malnourished)
 						if(stage_peaked == FALSE) //if you didn't ride out the virus from its peak, if you're malnourished when it cures, you don't get resistance
 							cure(add_resistance = FALSE)
