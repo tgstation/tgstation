@@ -44,13 +44,16 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 	var/profile = tgui_input_list(user, "Mover profile", "Navmesh", list("baseline", "table+grille", "all-access", "flying"))
 	if(!profile)
 		return
+	var/max_range = tgui_input_number(user, "Maximum path range in tiles (0 = unlimited).", "Navmesh", default = 200, min_value = 0, round_value = TRUE)
+	if(isnull(max_range))
+		return
 	var/datum/can_pass_info/info = nav_debug_profile(profile)
 	var/list/rustg_nav_path
 	var/rustg_nav_ms
 	var/rustg_nav_available = TRUE
 	var/rustg_nav_start = TICK_USAGE_REAL
 	try
-		rustg_nav_path = rustg_turfmap_pathfinder(start, goal, info, NAV_IS_FLYING(info), 200)
+		rustg_nav_path = rustg_turfmap_pathfinder(start, goal, info, NAV_IS_FLYING(info), max_range)
 	catch
 		rustg_nav_available = FALSE
 		rustg_nav_path = list()
@@ -58,7 +61,7 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 	var/list/access = info.access || list()
 	var/list/hand_around = list()
 	var/datum/pathfind/jps/legacy_path = new()
-	legacy_path.setup(user.mob, access, 0, TRUE, null, \
+	legacy_path.setup(user.mob, access, max_range, TRUE, null, \
 		list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around)), goal, 0, TRUE, DIAGONAL_REMOVE_CLUNKY)
 	var/list/jps_path
 	var/jps_ms
@@ -84,7 +87,7 @@ ADMIN_VERB(navmesh_inspect_turf, R_DEBUG, "Navmesh: Inspect Turf", "Prints the b
 		return
 	if(isnull(here.nav_pass))
 		here.nav_bake()
-	var/list/lines = list("Navmesh at [AREACOORD(here)] (nav_pass = [here.nav_pass]):")
+	var/list/lines = list("Navmesh at [AREACOORD(here)] (nav_pass = [here.nav_pass], simulated = !!(here.nav_pass & NAV_SIMULATED)):")
 	for(var/dir in GLOB.cardinals)
 		var/ground = (here.nav_pass & NAV_GROUND(dir)) ? "G" : "-"
 		var/flight = (here.nav_pass & NAV_FLIGHT(dir)) ? "F" : "-"

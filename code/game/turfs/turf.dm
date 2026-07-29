@@ -906,7 +906,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Bakes this turf's outgoing edges and publishes them to Rust.
 /turf/proc/nav_bake(skip_rust_push = FALSE)
-	var/packed = NAV_BAKED
+	var/packed = NAV_BAKED | (SSnavmesh.space_type_cache[type] ? NONE : NAV_SIMULATED)
 	var/list/blockers = null
 
 	for(var/dir in GLOB.cardinals)

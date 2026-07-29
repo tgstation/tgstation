@@ -10,6 +10,8 @@
 /// set once a turf has been baked, so "baked but every edge blocked" (value could be 0) is
 /// distinguishable from null (unbaked). Always OR'd in by nav_bake().
 #define NAV_BAKED        (1 << 12)
+/// set when this turf is simulated (atmos)
+#define NAV_SIMULATED    (1 << 13)
 
 /// pass_flags bits that are NOT passability grants and must be stripped when we build a blocker mask
 #define NAV_NON_PASS_FLAGS (LETPASSTHROW | LETPASSCLICKS)

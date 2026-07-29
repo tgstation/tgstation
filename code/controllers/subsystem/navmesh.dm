@@ -96,8 +96,6 @@ SUBSYSTEM_DEF(navmesh)
 	var/count = 0
 	var/list/rust_batch = list()
 	for(var/turf/baking_turf as anything in Z_TURFS(z_level))
-		if(space_type_cache[baking_turf.type])
-			continue
 		baking_turf.nav_bake(skip_rust_push = TRUE)
 		rust_batch += list(baking_turf.x, baking_turf.y, baking_turf.z, baking_turf.nav_pass)
 		count++
