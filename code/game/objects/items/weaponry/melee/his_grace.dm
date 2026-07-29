@@ -97,7 +97,7 @@
 		INVOKE_ASYNC(src, PROC_REF(awaken), user)
 
 /obj/item/his_grace/attack(mob/living/M, mob/user)
-	if(awakened && M.stat)
+	if(awakened && IS_UNCONSCIOUS_OR_CRIT(M))
 		if(gender == FEMALE)
 			var/dx = M.x - user.x
 			var/dy = M.y - user.y
@@ -176,7 +176,7 @@
 	var/mob/living/L = pick(targets)
 	step_to(src, L)
 	if(Adjacent(L))
-		if(!L.stat)
+		if(!IS_UNCONSCIOUS_OR_CRIT(L))
 			L.visible_message(span_warning("[src] lunges at [L]!"), "<span class='his_grace big bold'>[src] lunges at you!</span>")
 			do_attack_animation(L, null, src)
 			playsound(L, 'sound/items/weapons/smash.ogg', 50, TRUE)

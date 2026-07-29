@@ -31,7 +31,7 @@
 		SSexplosions.medturf += hit_target
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, TRUE)
 	for(var/mob/onlookers_in_range in urange(10, src))
-		if(!onlookers_in_range.stat)
+		if(!IS_UNCONSCIOUS_OR_CRIT(onlookers_in_range))
 			shake_camera(onlookers_in_range, 3, 1)
 	qdel(src)
 

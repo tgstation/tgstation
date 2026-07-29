@@ -186,7 +186,7 @@
 
 /mob/living/basic/bot/cleanbot/examine(mob/user)
 	. = ..()
-	if(ascended && user.stat == CONSCIOUS && user.client)
+	if(ascended && !IS_UNCONSCIOUS_OR_CRIT(user) && user.client)
 		user.client.give_award(/datum/award/achievement/misc/cleanboss, user)
 	if(isnull(weapon))
 		return
@@ -349,3 +349,13 @@
 	name = "Scrubs, MD"
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_JANITOR, ACCESS_MEDICAL)
 	bot_mode_flags = ~(BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED)
+	additional_access = /datum/id_trim/job/janitor/medical_cleanbot
+
+/datum/id_trim/job/janitor/medical_cleanbot
+	minimal_access = list(
+		ACCESS_JANITOR,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_SERVICE,
+		ACCESS_MEDICAL,
+	)

@@ -216,6 +216,7 @@
 	else if(!cast_on_hand_hit(hand, victim, caster))
 		return NONE
 
+	SEND_SIGNAL(caster, COMSIG_SPELL_TOUCH_SPELL_ACTUALLY_CAST, src, victim)
 	log_combat(caster, victim, "cast the touch spell [name] on", hand)
 	INVOKE_ASYNC(src, PROC_REF(spell_feedback), caster)
 	caster.do_attack_animation(victim)

@@ -158,6 +158,6 @@
 	return ..()
 
 /mob/living/keybind_face_direction(direction)
-	if(stat > SOFT_CRIT)
+	if(IS_UNCONSCIOUS(src))
 		return
 	return ..()

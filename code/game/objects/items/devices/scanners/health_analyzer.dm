@@ -160,7 +160,7 @@
 	var/tox_loss = target.get_tox_loss()
 	var/fire_loss = target.get_fire_loss()
 	var/brute_loss = target.get_brute_loss()
-	var/mob_status = (!target.appears_alive() ? span_alert("<b>Deceased</b>") : "<b>[round(target.health / target.maxHealth, 0.01) * 100]% healthy</b>")
+	var/mob_status = (IS_DEAD_OR_FAKING(target) ? span_alert("<b>Deceased</b>") : "<b>[round(target.health / target.maxHealth, 0.01) * 100]% healthy</b>")
 
 	if(HAS_TRAIT(target, TRAIT_FAKEDEATH) && target.stat != DEAD)
 		// if we don't appear to actually be in a "dead state", add fake oxyloss
@@ -465,7 +465,7 @@
 			</span>"
 
 	// Time of death
-	if(target.station_timestamp_timeofdeath && !target.appears_alive())
+	if(target.station_timestamp_timeofdeath && IS_DEAD_OR_FAKING(target))
 		render_list += "<hr>"
 		render_list += "<span class='info ml-1'>Time of Death: [target.station_timestamp_timeofdeath]</span><br>"
 		render_list += "<span class='alert ml-1'><b>Subject died [DisplayTimeText(round(world.time - target.timeofdeath))] ago.</b></span><br>"

@@ -1,6 +1,6 @@
 /datum/mutation/void
 	name = "Void Magnet"
-	desc = "A rare genome that attracts odd forces not usually observed."
+	desc = "The subject attracts odd forces which are not usually observed."
 	quality = MINOR_NEGATIVE //upsides and downsides
 	text_gain_indication = span_notice("You feel a heavy, dull force just beyond the walls watching you.")
 	instability = POSITIVE_INSTABILITY_MODERATE // useful, but has large drawbacks

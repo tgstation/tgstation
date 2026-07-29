@@ -39,6 +39,7 @@
 #define CAN_OVERSLOT "can_overslot"
 #define UNSEALED_MESSAGE "unsealed_message"
 #define SEALED_MESSAGE "sealed_message"
+#define MOD_PART_TRAITS "mod_part_traits"
 
 //Defines used to override MOD clothing's icon and worn icon files in the skin.
 #define MOD_ICON_OVERRIDE "mod_icon_override"
