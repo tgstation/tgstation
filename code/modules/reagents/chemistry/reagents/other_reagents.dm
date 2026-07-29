@@ -3615,11 +3615,6 @@
 	. = ..()
 	if (!(methods & INGEST))
 		return
-	var/age = 6
-	if(ishuman(exposed_mob))
-		var/mob/living/carbon/human/conc_eater = exposed_mob
-		age = conc_eater.age
-	message_admins("[exposed_mob] was forced to eat cement when [exposed_mob.p_they()] [exposed_mob.p_were()] [age]!")
 	exposed_mob.add_mood_event("cement", /datum/mood_event/cement)
 
 /datum/reagent/cement/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)

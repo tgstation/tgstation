@@ -18,10 +18,10 @@
 	girder_type = /obj/structure/grille
 	break_sound = 'sound/effects/break_stone.ogg'
 
-	// Time in decaseconds to fully cure
+	/// Time to fully cure
 	var/time_to_harden = 60 SECONDS
-	// fraction ranging from 0 to 1 -- 0 is fully soft, 1 is fully hardened
-	// don't change this in subtypes unless you want them to spawn in soft on maps
+	/// fraction ranging from 0 to 1 -- 0 is fully soft, 1 is fully hardened
+	/// don't change this in subtypes unless you want them to spawn in soft on maps
 	var/harden_lvl = 1
 
 /turf/closed/wall/concrete/Initialize(mapload)

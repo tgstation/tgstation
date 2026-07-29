@@ -352,6 +352,7 @@
 	access_view = ACCESS_ENGINEERING
 	contains = list(
 		/obj/item/reagent_containers/cup/jerrycan/concrete_mix = 2,
-		/obj/item/reagent_containers/cup/bucket = 1)
+		/obj/item/reagent_containers/cup/bucket = 1,
+	)
 	crate_name = "concrete mix crate"
 	crate_type = /obj/structure/closet/crate/engineering

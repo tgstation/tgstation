@@ -246,19 +246,20 @@
 
 ///Helper for building wall_support on top of desired wall
 /turf/closed/wall/proc/try_build_support(obj/item/I, mob/user)
-	if(isstack(I) && istype(I, /obj/structure/wall_support::rods_type))
-		var/obj/item/stack/rods = I
-		var/amount_needed = /obj/structure/wall_support::rods_amount
-		if(rods.get_amount() < amount_needed)
-			to_chat(user, span_warning("You need at least [amount_needed] rods for that!"))
-			return FALSE
-		to_chat(user, span_notice("You start constructing wall support..."))
-		if(do_after(user, 2 SECONDS, target = src))
-			var/obj/structure/wall_support/WS = new(src)
-			rods.use(amount_needed)
-			rods.transfer_fingerprints_to(WS)
-			to_chat(user, span_notice("You place [WS] on [src]."))
-			return TRUE
+	if(!isstack(I) || !istype(I, /obj/structure/wall_support::rods_type))
+		return FALSE
+	var/obj/item/stack/rods = I
+	var/amount_needed = /obj/structure/wall_support::rods_amount
+	if(rods.get_amount() < amount_needed)
+		to_chat(user, span_warning("You need at least [amount_needed] rods for that!"))
+		return FALSE
+	to_chat(user, span_notice("You start constructing wall support..."))
+	if(do_after(user, 2 SECONDS, target = src))
+		var/obj/structure/wall_support/WS = new(src)
+		rods.use(amount_needed)
+		rods.transfer_fingerprints_to(WS)
+		to_chat(user, span_notice("You place [WS] on [src]."))
+		return TRUE
 	return FALSE
 
 /turf/closed/wall/singularity_pull(atom/singularity, current_size)

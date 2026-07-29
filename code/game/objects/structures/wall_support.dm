@@ -5,7 +5,7 @@
  * (/datum/component/atom_mounted)
 **/
 /obj/structure/wall_support
-	desc = "A temporary support structure for wall-mounted equipment. Allows you safely deconstruct walls."
+	desc = "A temporary support structure for wall-mounted equipment. Allows you to safely deconstruct walls."
 	name = "Wall Support"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "wall_support"
