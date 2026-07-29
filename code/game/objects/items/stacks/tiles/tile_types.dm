@@ -1272,7 +1272,7 @@
 		/obj/item/stack/tile/circuit/ash,
 		/obj/item/stack/tile/circuit/ash/alt,
 	)
-	mats_per_unit = list(/datum/material/alloy/plastitanium = HALF_SHEET_MATERIAL_AMOUNT / 6)
+	mats_per_unit = list(/datum/material/alloy/plastitanium = HALF_SHEET_MATERIAL_AMOUNT / 3)
 
 /obj/item/stack/tile/circuit/ash/alt
 	name = "ash forge tile"
@@ -1801,7 +1801,7 @@
 	turf_type = /turf/open/floor/glass
 	inhand_icon_state = "tile-glass"
 	merge_type = /obj/item/stack/tile/stained_glass
-	mats_per_unit = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT * 0.25, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.075,)
+	mats_per_unit = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT * 0.25, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,)
 
 /obj/item/stack/tile/stained_glass/red
 	name = "red stained glass floor"
