@@ -141,6 +141,9 @@
 		ui = new(user, src, "TurretControl", name)
 		ui.open()
 
+/obj/machinery/turretid/ui_status(mob/user, datum/ui_state/state)
+	return is_ai_locked(user) ? UI_CLOSE : ..()
+
 /obj/machinery/turretid/ui_data(mob/user)
 	var/list/data = list()
 	data["locked"] = locked
@@ -156,6 +159,8 @@
 		return
 
 	var/mob/user = ui.user
+	if(is_ai_locked(user))
+		return
 
 	switch(action)
 		if("lock")
