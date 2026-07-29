@@ -248,7 +248,7 @@
 			if(SPT_PROB(recovery_prob * failure_chance, seconds_per_tick))
 				if(stage == 1 && prob(cure_chance * DISEASE_FINAL_CURE_CHANCE_MULTIPLIER)) //if we reduce FROM stage == 1, cure the virus - after defeating its cure_chance in a final battle
 					if(severity == DISEASE_SEVERITY_POSITIVE && slowdown < 1)
-						return
+						return TRUE
 					if(malnourished)
 						if(stage_peaked == FALSE) //if you didn't ride out the virus from its peak, if you're malnourished when it cures, you don't get resistance
 							cure(add_resistance = FALSE)
