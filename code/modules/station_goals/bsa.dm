@@ -443,7 +443,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	visualizing_position = FALSE
 	visualization_front = null
 	visualization_center = null
-	for(var/obj/effect/bsa_visualization/deployment_visualizer in visualization_effects)
+	for(var/obj/effect/clear_color/green/deployment_visualizer in visualization_effects)
 		qdel(deployment_visualizer)
 
 /obj/machinery/computer/bsa_control/proc/deploy(force=FALSE)
