@@ -104,7 +104,7 @@
 	var/storage_override
 	if(initial(supply_pack.order_flags) & ORDER_GOODY) // We offer goody items inside of briefcases, but regular crates still default to their standard crates.
 		storage_override = /obj/item/storage/briefcase/empty
-	var/obj/container = supply_pack.generate(null, crate_override = (crate_type ? crate_type : storage_override))
+	var/obj/container = supply_pack.generate(null, crate_override = (crate_type || storage_override))
 
 	if(container && istype(container, /obj/structure/closet/crate)) //empty supply packs are a thing! get memed on.
 		var/obj/structure/closet/crate/crate = container
