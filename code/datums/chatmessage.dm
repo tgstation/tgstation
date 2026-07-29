@@ -52,6 +52,8 @@
 	var/animate_lifespan = 0
 	/// Callback to finish_image_generation passed to SSrunechat
 	var/datum/callback/finish_callback
+	/// Runescape chat effect applied to this message
+	var/datum/runechat_effect/rs_effect
 
 /**
  * Constructs a chat message overlay
@@ -64,7 +66,7 @@
  * * extra_classes - Extra classes to apply to the span that holds the text
  * * lifespan - The lifespan of the message in deciseconds
  */
-/datum/chatmessage/New(text, atom/target, mob/owner, datum/language/language, list/extra_classes = list(), lifespan = CHAT_MESSAGE_LIFESPAN, list/message_mods)
+/datum/chatmessage/New(text, atom/target, mob/owner, datum/language/language, list/extra_classes = list(), lifespan = CHAT_MESSAGE_LIFESPAN, list/message_mods, datum/runechat_effect/rs_effect_override = null)
 	. = ..()
 	if (!istype(target))
 		CRASH("Invalid target given for chatmessage")
@@ -72,6 +74,10 @@
 		stack_trace("/datum/chatmessage created with [isnull(owner) ? "null" : "invalid"] mob owner")
 		qdel(src)
 		return
+	// Set pre-parsed runechat effect if provided
+	if(rs_effect_override)
+		rs_effect = rs_effect_override
+
 	INVOKE_ASYNC(src, PROC_REF(generate_image), text, target, owner, language, extra_classes, lifespan, message_mods)
 
 /datum/chatmessage/Destroy()
@@ -146,6 +152,15 @@
 	if(copytext_char(text, -2) == "!!")
 		extra_classes |= SPAN_YELL
 
+	// Check for Runescape chat effect prefixes (e.g. ".rs-rainbow Hello!")
+	var/list/rs_parsed = parse_runechat_effect(text)
+	if(rs_parsed["effect"])
+		rs_effect = rs_parsed["effect"]
+		text = rs_parsed["text"]
+		// Apply static color effects immediately
+		if(istype(rs_effect, /datum/runechat_effect/color))
+			extra_classes |= "rs-colored"
+
 	var/list/prefixes
 	var/chat_color_name_to_use
 
@@ -188,6 +203,12 @@
 
 	// We dim italicized text to make it more distinguishable from regular text
 	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
+
+	// Override color if a static RS effect color is active
+	if(rs_effect)
+		var/rs_color = rs_effect.get_color_string()
+		if(rs_color)
+			tgt_color = rs_color
 
 	// Approximate text height
 	var/complete_text = "<span style='color: [tgt_color]'><span class='center [extra_classes.Join(" ")]'>[owner.apply_message_emphasis(text)]</span></span>"
@@ -289,6 +310,10 @@
 		LAZYADDASSOCLIST(owned_by.seen_messages, message_loc, src)
 		owned_by.images |= message
 
+	// Apply Runescape chat effects after the message is visible
+	if(rs_effect)
+		rs_effect.apply_effect(message, lifespan, owned_by)
+
 	// Fade in
 	animate(message, alpha = 255, time = CHAT_MESSAGE_SPAWN_TIME)
 	var/time_before_fade = lifespan - CHAT_MESSAGE_SPAWN_TIME - CHAT_MESSAGE_EOL_FADE
@@ -320,7 +345,7 @@
  *
  * Arguments:
  * * speaker - The atom who is saying this message
- * * message_language - The language that the message is said in
+ * * message_language - The language that the message was said in
  * * raw_message - The text content of the message
  * * spans - Additional classes to be added to the message
  */
