@@ -12,6 +12,9 @@ modules = ["den.dmm"]
 [rooms.dig]
 modules = ["dig.dmm"]
 
+[rooms.rock]
+modules = ["rock.dmm"]
+
 [rooms.ice]
 modules = ["ice.dmm"]
 
