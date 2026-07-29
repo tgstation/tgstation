@@ -189,7 +189,7 @@
 		else
 			var/list/obj/attachables = get_mountable_objects()
 			for(var/obj/attachable in target)
-				if(is_type_in_list(attachable, attachables))
+				if(is_type_in_list(attachable, attachables) && !QDELING(attachable))
 					attachable_atom = attachable
 					break
 		if(attachable_atom)
