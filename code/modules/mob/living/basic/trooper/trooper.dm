@@ -38,5 +38,5 @@
 		AddElement(/datum/element/death_drops, loot)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SHOE)
 
-/mob/living/basic/trooper/init_unconscious_appearance()
-	add_generic_humanoid_static_appearance()
+/mob/living/basic/trooper/get_unconscious_appearance()
+	return get_generic_humanoid_static_appearance()

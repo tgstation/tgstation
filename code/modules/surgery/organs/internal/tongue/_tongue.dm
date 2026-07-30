@@ -81,7 +81,7 @@
 /obj/item/organ/tongue/proc/get_possible_languages()
 	RETURN_TYPE(/list)
 	// This is the default list of languages most humans should be capable of speaking
-	return list(
+	. = list(
 		/datum/language/common,
 		/datum/language/uncommon,
 		/datum/language/spinwarder,
@@ -98,6 +98,8 @@
 		/datum/language/terrum,
 		/datum/language/nekomimetic,
 	)
+	if(languages_native)
+		. |= languages_native
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
@@ -617,10 +619,6 @@
 	attack_verb_simple = list("shock", "jolt", "zap")
 	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.99,aresample=%SAMPLE_RATE%,volume=0.3 [p0]; [p0][out2] amix=inputs=2"}
 	languages_native = list(/datum/language/voltaic)
-
-// Ethereal tongues can speak all default + voltaic
-/obj/item/organ/tongue/ethereal/get_possible_languages()
-	return ..() + /datum/language/voltaic
 
 /obj/item/organ/tongue/cat
 	name = "felinid tongue"

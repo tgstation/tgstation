@@ -401,13 +401,14 @@
 		guts.throw_at(throw_target, power, 4, src)
 
 
-/mob/living/carbon/fully_replace_character_name(oldname,newname)
+/mob/living/carbon/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
 	. = ..()
-	if(dna)
-		dna.real_name = real_name
+	if(!.)
+		return
+
+	dna?.real_name = real_name
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
-	if(my_head)
-		my_head.real_name = real_name
+	my_head?.real_name = real_name
 
 
 /mob/living/carbon/set_body_position(new_value)
@@ -486,27 +487,31 @@
 
 /// Modifies lighting_cutoff/lighting_color_cutoffs/see_invisible and returns additional sight flags to apply
 /mob/living/carbon/proc/get_sight_and_cutoffs()
-	. = NONE
+	var/new_sight = NONE
 	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
 		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_HIGH)
 
 	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
-		. |= SEE_TURFS
+		new_sight |= SEE_TURFS
 		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
 
 	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
-		. |= SEE_MOBS
+		new_sight |= SEE_MOBS
 		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
 
 	if(HAS_TRAIT(src, TRAIT_NIGHT_VISION))
 		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_LOW)
 
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
-		. |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 
 	if(HAS_TRAIT(src, TRAIT_ECHOLOCATOR))
-		. |= SEE_MOBS|SEE_TURFS
+		new_sight |= SEE_MOBS|SEE_TURFS
 		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_FULLBRIGHT)
+
+	var/list/return_list = list(new_sight)
+	SEND_SIGNAL(src, COMSIG_CARBON_UPDATE_SIGHT_CUTOFFS, return_list)
+	return return_list[1]
 
 /**
  * Calculates how visually impaired the mob is by their equipment and other factors

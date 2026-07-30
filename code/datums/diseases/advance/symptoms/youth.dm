@@ -17,9 +17,9 @@
 	transmittable = -4
 	level = 5
 	base_message_chance = 100
-	symptom_delay_min = 25
-	symptom_delay_max = 50
+	symptom_delay = 37.5
 	symptom_cure = null
+	immunity_proof = TRUE
 
 /datum/symptom/youth/Activate(datum/disease/advance/A)
 	. = ..()

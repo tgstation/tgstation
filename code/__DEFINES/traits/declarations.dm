@@ -1001,8 +1001,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HERETIC_AURA_HIDDEN "heretic_aura_hidden"
 /// This rod was infused by a heretic, making it awesome and improving influence gain
 #define TRAIT_ROD_MANSUS_INFUSED "rod_infused"
-/// Allows heretics to cast their spells.
-#define TRAIT_ALLOW_HERETIC_CASTING "allow_heretic_casting"
 /// Designates a heart as a living heart for a heretic.
 #define TRAIT_LIVING_HEART "living_heart"
 /// Trait given to all participants in a heretic arena
@@ -1684,6 +1682,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Mobs with this trait will always have be a priority target for mining mobs
 #define TRAIT_MINING_AGGRO "mining_aggro"
+
+/// Allows the wearer to cast spells that require robes and hats
+#define TRAIT_CASTING_CLOTHING "casting_clothing"
 
 /// Turfs with this trait allow whispers to be projected over it when the whisperer is facing it
 #define TRAIT_TURF_PROJECTS_WHISPERS  "turf_projects_whispers"

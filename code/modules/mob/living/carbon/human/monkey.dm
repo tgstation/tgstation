@@ -3,7 +3,7 @@
 	race = /datum/species/monkey
 	ai_controller = /datum/ai_controller/monkey
 
-/mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned = FALSE)
+/mob/living/carbon/human/species/monkey/Initialize(mapload, datum/species/species, cubespawned = FALSE)
 	ADD_TRAIT(src, TRAIT_BORN_MONKEY, INNATE_TRAIT)
 	if (cubespawned)
 		SSmobs.cubemonkeys += src
@@ -16,7 +16,7 @@
 /mob/living/carbon/human/species/monkey/angry
 	ai_controller = /datum/ai_controller/monkey/angry
 
-/mob/living/carbon/human/species/monkey/angry/Initialize(mapload, cubespawned = FALSE)
+/mob/living/carbon/human/species/monkey/angry/Initialize(mapload, datum/species/species, cubespawned = FALSE)
 	. = ..()
 	if(prob(10))
 		INVOKE_ASYNC(src, PROC_REF(give_ape_escape_helmet))
@@ -43,7 +43,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living)
 	var/relic_mask
 	var/memory_saved = FALSE
 
-/mob/living/carbon/human/species/monkey/punpun/Initialize(mapload)
+/mob/living/carbon/human/species/monkey/punpun/Initialize(mapload, datum/species/species)
 	. = ..()
 
 	REGISTER_REQUIRED_MAP_ITEM(1, 1) // pun pun is required on maps.

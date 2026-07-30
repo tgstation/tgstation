@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - bugfix: "Point-based bitrunning domains will no longer mysteriously complete themselves on reruns."
