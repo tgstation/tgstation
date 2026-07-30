@@ -42,16 +42,16 @@
 /mob/living/carbon/human/proc/setup_physiology()
 	physiology = new()
 
-/mob/living/carbon/human/init_unconscious_appearance()
-	add_generic_humanoid_static_appearance()
+/mob/living/carbon/human/get_unconscious_appearance()
+	return get_generic_humanoid_static_appearance()
 
 /mob/living/carbon/human/proc/setup_mood()
 	if (CONFIG_GET(flag/disable_human_mood))
 		return
 	mob_mood = new /datum/mood(src)
 
-/mob/living/carbon/human/dummy/init_unconscious_appearance()
-	return
+/mob/living/carbon/human/dummy/get_unconscious_appearance()
+	return null
 
 /mob/living/carbon/human/dummy/setup_mood()
 	return

@@ -725,11 +725,12 @@
 	update_stat()
 	return TRUE
 
-/mob/living/silicon/robot/fully_replace_character_name(oldname, newname)
+/mob/living/silicon/robot/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
 	. = ..()
 	if(!.)
 		return
-	notify_ai(AI_NOTIFICATION_CYBORG_RENAMED, oldname, newname)
+	if(oldname)
+		notify_ai(AI_NOTIFICATION_CYBORG_RENAMED, oldname, newname)
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
 		modularInterface.imprint_id(name = real_name)
@@ -1068,7 +1069,7 @@
 		unbuckle_mob(buckled_mob)
 	do_sparks(5, 0, src)
 
-/mob/living/silicon/robot/init_unconscious_appearance()
+/mob/living/silicon/robot/get_unconscious_appearance()
 	var/image/static_overlay = image('icons/effects/effects.dmi', null, "static_base")
 	static_overlay.blend_mode = BLEND_INSET_OVERLAY
 
@@ -1077,9 +1078,5 @@
 	static_image.overlays += static_overlay
 	static_image.override = TRUE
 	static_image.name = "unknown cyborg"
-	add_alt_appearance(
-		/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity,
-		"[REF(src)]_unconscious",
-		static_image,
-		NONE,
-	)
+
+	return static_image

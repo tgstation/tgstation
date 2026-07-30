@@ -90,6 +90,8 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define BIO_JOINTED (1<<6)
 /// Skin is covered in thick chitin and is resistant to cutting
 #define BIO_CHITIN (1<<7)
+/// Limb is comprised entirely of slime jelly - can be cannibalized by any jelly person with the ability to eat their own limbs to replenish their own slime (blood)
+#define BIO_JELLY (1<<8)
 /// Robotic - can suffer all metal/wired wounds, such as: UNIMPLEMENTED PLEASE UPDATE ONCE SYNTH WOUNDS 9/5/2023 ~Niko
 #define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
 /// Has flesh and bone - See BIO_BONE and BIO_FLESH

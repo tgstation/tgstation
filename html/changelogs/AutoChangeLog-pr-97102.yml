@@ -1,0 +1,7 @@
+author: "mcbalaam"
+delete-after: True
+changes:
+  - bugfix: "The Big Manipulator now uses filters more correctly and spoofs the monkeys location to interact with some machines."
+  - bugfix: "The Big Manipulator now doesn't reset the priorities when upgraded."
+  - rscadd: "The Big Manipulator now knows how to Move (TM) and Stop (TM)."
+  - rscadd: "The Big Manipulator can now interact with turfs properly."

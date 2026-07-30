@@ -885,3 +885,73 @@
   - bugfix: ByondUi/TGUI Map elements should never have the small map bug again
   - bugfix: ByondUi/TGUI Map elements will no longer layout incorrectly if you refresh
       the page in some circumstances
+2026-07-28:
+  ArcaneMusic:
+  - bugfix: Selling organs in cargo once again works properly. As a reminder, Normal
+      human organs sell for 20 credits. The organs of a roundstart human are worth
+      10x as much, however.
+  Melbert:
+  - code_imp: Slightly changed the logic for blindness and unconscious hud effects,
+      report any oddities
+  - code_imp: Slightly changed logic for selecting random reagents for stuff like
+      toxic bees, report anything weird with it
+  - rscdel: Mobs will no longer log their initial name change (I.e. "name changed
+      from (nothing) to John Doe")
+  - spellcheck: Renames "Hot Chili" to "Chili Con Carne"
+  - spellcheck: Renames "Cold Chili" to "Chili Frio"
+  - qol: Chili Con Carne, Chili Sin Carne, Chili Con Carnival, and Chili Frio are
+      now all in the "Mexican" cuisine category
+  - qol: You can now use ghost chilis in the chili recipes, making "Ghost Chili Con
+      Carne" or "Ghost Chili Sin Carne".
+  PapaMichael:
+  - balance: Pirates prioritize spawning their leaders
+  - admin: Admins can configure Heavy Pirates
+  SmArtKar:
+  - bugfix: Fixed cardboard cutouts having an incorrect assistant sprite
+  - bugfix: Fixed some effects not updating hair when they should
+  lelandkemble:
+  - bugfix: You can place items within bodybags by clicking on them again
+2026-07-29:
+  Justice12354:
+  - bugfix: Reloading your lionhunter's rifle no longer makes your ammo box invisible
+  - bugfix: Nightwatcher's Lantern now costs what it should cost (2 knowledge points)
+  Melbert:
+  - bugfix: Fix slot assigned job saving
+  - map: '[Kilostation] Redid lighting over the whole station to be more ambient/moody
+      and less overlit'
+  - map: '[Kilostation] Many small tweaks and nudges, primarily with decals or pipe
+      runs'
+  SmArtKar:
+  - code_imp: Optimized revenant abilities
+  - code_imp: Improves gas tank window performance
+2026-07-30:
+  Absolucy:
+  - bugfix: Jellypeople can speak Slime language again.
+  Aliceee2ch:
+  - bugfix: Bardrobe is now using service budget instead of medical.
+  Fghj240:
+  - qol: IDC-27 contains symptom levels
+  Melbert:
+  - bugfix: Fix heretic transmutation fail text
+  - bugfix: Fix lesser magic mirror (and friends) race selection
+  QuiteLiterallyAnything:
+  - qol: Bluespace Artillery Cannons now indicate the space they will occupy prior
+      to deployment.
+  SmArtKar:
+  - code_imp: Optimized particle lighting
+  Thunder12345:
+  - bugfix: High frequency blades kept in the suit storage slot no longer look outdated.
+  - bugfix: Point-based bitrunning domains will no longer mysteriously complete themselves
+      on reruns.
+  antropod:
+  - rscadd: Added cement and concrete, walls, floors and pavements. Check your crafting
+      guide under category Construction.
+  flleeppyy:
+  - rscadd: you can now have unlimited TGUI windows in preferences
+  hry-gh:
+  - bugfix: escape menu has map feedback links again
+  - bugfix: escape menu does not jump around sometimes when re-opening
+  kyunkyunkyun:
+  - bugfix: You can once again scan pod people's health with advanced/debug health
+      analyzers.
+  - bugfix: Regal condor's magazine now properly accepts .45 instead of 10mm.
