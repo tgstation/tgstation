@@ -64300,6 +64300,7 @@
 /area/station/engineering/atmos)
 "uoW" = (
 /obj/structure/table,
+/obj/item/reagent_containers/spray/dinitrogen_plasmide,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,

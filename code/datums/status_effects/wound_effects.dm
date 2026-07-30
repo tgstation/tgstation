@@ -153,14 +153,14 @@
 /datum/status_effect/limp/quirk/update_limp(datum/source)
 	var/mob/living/carbon/carbon_mob = owner
 	left = carbon_mob.get_bodypart(BODY_ZONE_L_LEG)
-	right = carbon_mob.get_bodypart(BODY_ZONE_R_LEG)	
+	right = carbon_mob.get_bodypart(BODY_ZONE_R_LEG)
 
 	slowdown_left = 0
 	slowdown_right = 0
 	limp_chance_left = 0
 	limp_chance_right = 0
 
-	
+
 	if(left)
 		slowdown_left = 7 //Same as compound fracture
 		limp_chance_left = 70
@@ -168,7 +168,7 @@
 	else if(right)
 		slowdown_right = 7
 		limp_chance_right = 70
-	
+
 
 /////////////////////////
 //////// WOUNDS /////////
@@ -255,3 +255,17 @@
 	id = "thirddeg"
 /datum/status_effect/wound/burn/flesh/critical
 	id = "fourthdeg"
+
+/datum/status_effect/wound/blunt/robotic/moderate
+	id = "loose"
+/datum/status_effect/wound/blunt/robotic/severe
+	id = "unfastening"
+/datum/status_effect/wound/blunt/robotic/critical
+	id = "collapse"
+
+/datum/status_effect/wound/burn/robotic/moderate
+	id = "overheating_moderate"
+/datum/status_effect/wound/burn/robotic/severe
+	id = "overheating_severe"
+/datum/status_effect/wound/burn/robotic/critical
+	id = "overheating_critical"
