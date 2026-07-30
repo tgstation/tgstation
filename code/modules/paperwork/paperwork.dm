@@ -21,6 +21,9 @@
 	throw_range = 1
 	throw_speed = 1
 	layer = MOB_LAYER
+	// Could use a more specific sound since it's a lot of paper (ditto with `/documents`).
+	drop_sound = 'sound/items/handling/paper_drop.ogg'
+	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	///The stamp overlay, used to show that the paperwork is complete without making a bunch of sprites
 	var/mutable_appearance/stamp_overlay
 	///The specific stamp icon to be overlaid on the paperwork
