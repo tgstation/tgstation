@@ -1,4 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes:
-  - bugfix: "High frequency blades kept in the suit storage slot no longer look outdated."

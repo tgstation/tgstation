@@ -1,4 +1,0 @@
-author: "Aliceee2ch"
-delete-after: True
-changes:
-  - bugfix: "Bardrobe is now using service budget instead of medical."

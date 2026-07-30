@@ -924,3 +924,12 @@
   SmArtKar:
   - code_imp: Optimized revenant abilities
   - code_imp: Improves gas tank window performance
+2026-07-30:
+  Aliceee2ch:
+  - bugfix: Bardrobe is now using service budget instead of medical.
+  Thunder12345:
+  - bugfix: High frequency blades kept in the suit storage slot no longer look outdated.
+  kyunkyunkyun:
+  - bugfix: You can once again scan pod people's health with advanced/debug health
+      analyzers.
+  - bugfix: Regal condor's magazine now properly accepts .45 instead of 10mm.

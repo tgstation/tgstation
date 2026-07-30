@@ -1,4 +1,0 @@
-author: "kyunkyunkyun"
-delete-after: True
-changes:
-  - bugfix: "You can once again scan pod people's health with advanced/debug health analyzers."
