@@ -653,16 +653,6 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	default_container = /obj/item/reagent_containers/cup/glass/dry_ramen
 
-/datum/reagent/consumable/nutraslop
-	name = "Nutraslop"
-	description = "Mixture of leftover prison foods served on previous days."
-	nutriment_factor = 5
-	color = "#3E4A00" // rgb: 62, 74, 0
-	taste_description = "your imprisonment"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
-	quality = DRINK_REVOLTING
-
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	affected_mob.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick, 0, affected_mob.get_body_temp_normal())

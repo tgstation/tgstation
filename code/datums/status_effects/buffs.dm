@@ -200,7 +200,7 @@
 		/datum/reagent/consumable/eggwhite = 3 SECONDS,
 		/datum/reagent/consumable/eggyolk = 2 SECONDS,
 		// weak workout food
-		/datum/reagent/consumable/nutraslop = 2 SECONDS, // prison food to bulk up with
+		/datum/reagent/consumable/nutriment/soup/nutraslop = 2 SECONDS, // prison food to bulk up with
 		/datum/reagent/consumable/soymilk = 1 SECONDS, // darn vegans!
 		// time for the bad stuff
 		/datum/reagent/consumable/sugar = -1 SECONDS,

@@ -680,7 +680,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	desc = "A dish full of food slop for your bowl."
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "serving"
-	reagent_id = /datum/reagent/consumable/nutraslop
+	reagent_id = /datum/reagent/consumable/nutriment/soup/nutraslop
 	anchored = TRUE
 
 /obj/structure/reagent_dispensers/servingdish/wrench_act(mob/living/user, obj/item/tool)

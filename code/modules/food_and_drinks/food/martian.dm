@@ -1027,7 +1027,7 @@
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "eigamudo_curry"
 	food_reagents = list(
-		/datum/reagent/consumable/nutraslop = 8,
+		/datum/reagent/consumable/nutriment/soup/nutraslop = 8,
 		/datum/reagent/consumable/capsaicin = 2,
 		/datum/reagent/toxin/slimejelly = 4,
 	)

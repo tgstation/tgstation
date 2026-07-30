@@ -752,7 +752,7 @@
 		/datum/reagent/drug/kronkaine = 4,
 		/datum/reagent/consumable/nutriment/peptides = 3,
 		/datum/reagent/consumable/ethanol/squirt_cider = 2,
-		/datum/reagent/consumable/nutraslop = 2,
+		/datum/reagent/consumable/nutriment/soup/nutraslop = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 		/datum/reagent/toxin/plasma = 1,
 		/datum/reagent/consumable/nutriment/organ_tissue = 1,

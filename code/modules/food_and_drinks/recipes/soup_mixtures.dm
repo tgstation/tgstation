@@ -2265,3 +2265,30 @@
 	resulting_food_path = /obj/item/food/volt_fish
 	ingredient_reagent_multiplier = 0
 	mix_message = "The air fills with a hellish mix of fish and artificial flavouring."
+
+/datum/reagent/consumable/nutriment/soup/nutraslop
+	name = "Nutraslop Soup"
+	description = "Mixture of leftover prison foods served on previous days."
+	nutriment_factor = 5
+	color = "#3E4A00" // rgb: 62, 74, 0
+	data = list("your imprisonment"=1)
+	glass_price = FOOD_PRICE_WORTHLESS
+
+/datum/glass_style/has_foodtype/soup/nutraslop
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/nutraslop
+	icon_state = "nutraslopsoup"
+	drink_type = GROSS
+
+/datum/chemical_reaction/food/soup/nutraslop
+	required_reagents = list(
+		/datum/reagent/water = 30,
+		/datum/reagent/consumable/liquidgibs = 5,
+	)
+	required_ingredients = list(
+		/obj/item/food/badrecipe = 1,
+		/obj/item/food/deadmouse/moldy = 1,
+		/obj/item/food/breadslice/moldy = 1,
+	)
+	results = list(
+		/datum/glass_style/has_foodtype/soup/nutraslop = 30,
+	)
