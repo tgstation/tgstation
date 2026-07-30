@@ -5,6 +5,7 @@
 
 /obj/machinery/rnd/server/oldstation/Initialize(mapload)
 	var/datum/techweb/oldstation_web = locate(/datum/techweb/oldstation) in SSresearch.techwebs
+	oldstation_web ||= new /datum/techweb/oldstation()
 	stored_research = oldstation_web
 	return ..()
 

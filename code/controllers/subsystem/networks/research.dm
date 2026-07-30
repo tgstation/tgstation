@@ -42,10 +42,6 @@ SUBSYSTEM_DEF(research)
 	)
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
 
-	//Aiming for 1.5 hours to max R&D
-	//[88nodes * 5000points/node] / [1.5hr * 90min/hr * 60s/min]
-	//Around 450000 points max???
-
 	/// The global list of raw anomaly types that have been refined, for hard limits.
 	var/list/created_anomaly_types = list()
 	/// The hard limits of cores created for each anomaly type. For faster code lookup without switch statements.
@@ -71,11 +67,7 @@ SUBSYSTEM_DEF(research)
 	initialize_designs()
 	initialize_nodes()
 	initialize_ordnance_experiments()
-
 	new /datum/techweb/science()
-	new /datum/techweb/admin()
-	new /datum/techweb/oldstation()
-
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/research/fire()

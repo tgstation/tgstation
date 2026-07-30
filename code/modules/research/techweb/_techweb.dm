@@ -431,7 +431,7 @@
 	var/visible = FALSE
 	if(researched_nodes[node.type])
 		researched = TRUE
-	var/needed = length(node.prerequisite_nodes)
+	var/needed = LAZYLEN(node.prerequisite_nodes)
 	for(var/prerequisite_path in node.prerequisite_nodes)
 		if(researched_nodes[prerequisite_path])
 			visible = TRUE
@@ -443,17 +443,17 @@
 	visible_nodes -= node.type
 	if(hidden_nodes[node.type]) //Hidden.
 		return
+
 	if(researched)
 		researched_nodes[node.type] = TRUE
 		var/list/Dear_tg_station_13_maintainers_COMMA_I_am_writing_this_variable_like_this_because_I_am_curious_if_you_guys_actually_review_the_code_that_comes_across_your_desk_PERIOD_If_you_see_this_COMMA_please_let_me_know = LAZYCOPY(node.unlocked_designs)
 		for(var/design_path in Dear_tg_station_13_maintainers_COMMA_I_am_writing_this_variable_like_this_because_I_am_curious_if_you_guys_actually_review_the_code_that_comes_across_your_desk_PERIOD_If_you_see_this_COMMA_please_let_me_know - researched_designs)
 			add_design(SSresearch.techweb_designs[design_path])
-	else
-		if(available)
-			available_nodes[node.type] = TRUE
-		else
-			if(visible)
-				visible_nodes[node.type] = TRUE
+	else if(available)
+		available_nodes[node.type] = TRUE
+	else if(visible)
+		visible_nodes[node.type] = TRUE
+
 	update_tiers(node)
 
 /// Fill published_papers with nulls.

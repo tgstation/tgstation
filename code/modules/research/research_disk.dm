@@ -20,4 +20,5 @@
 
 /obj/item/disk/tech_disk/debug/Initialize(mapload)
 	stored_research = locate(/datum/techweb/admin) in SSresearch.techwebs
+	stored_research ||= new /datum/techweb/admin()
 	return ..()
