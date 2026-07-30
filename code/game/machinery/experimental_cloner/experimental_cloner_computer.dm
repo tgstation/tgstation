@@ -21,6 +21,10 @@
 	. = ..()
 	find_connections = mapload
 
+/obj/machinery/computer/experimental_cloner/Destroy(force)
+	QDEL_NULL(stored_record)
+	return ..()
+
 /obj/machinery/computer/experimental_cloner/post_machine_initialize()
 	. = ..()
 	if (find_connections)
