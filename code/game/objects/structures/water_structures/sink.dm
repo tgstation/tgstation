@@ -1,3 +1,8 @@
+/// How long emptying a container into a sink takes, per unit of reagent held.
+#define SINK_EMPTY_TIME_PER_UNIT (0.02 SECONDS)
+/// Emptying a container into a sink never takes longer than this, no matter how full it is.
+#define SINK_EMPTY_TIME_MAX (3 SECONDS)
+
 /obj/structure/sink
 	name = "sink"
 	icon = 'icons/obj/watercloset.dmi'
@@ -64,6 +69,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		context[SCREENTIP_CONTEXT_LMB] = "Wash hands"
 		return CONTEXTUAL_SCREENTIP_SET
 
+	if(can_empty_into_drain(held_item))
+		context[SCREENTIP_CONTEXT_RMB] = "Empty into drain"
+		. = CONTEXTUAL_SCREENTIP_SET
+
 	if(is_reagent_container(held_item) && held_item.is_refillable() && !held_item.reagents.holder_full())
 		context[SCREENTIP_CONTEXT_LMB] = "Fill container"
 		return CONTEXTUAL_SCREENTIP_SET
@@ -89,6 +98,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	if(has_water_reclaimer)
 		. += span_notice("A water recycler is installed. It looks like you could pry it out.")
 	. += span_notice("[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.")
+	. += span_notice("You could [EXAMINE_HINT("right-click")] it with a container to empty it down the drain.")
 
 /obj/structure/sink/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -219,6 +229,65 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 							span_notice("You wash [tool] using [src]."))
 		return ITEM_INTERACT_SUCCESS
 
+/**
+ * Returns TRUE if [tool] is holding liquid that can be tipped out into us.
+ *
+ * Anything you can normally pour or draw liquid out of qualifies. Mops are allowed on top
+ * of that, since they hold reagents without any container flags but wringing one out into
+ * a sink is exactly what you'd expect to be able to do.
+ */
+/obj/structure/sink/proc/can_empty_into_drain(obj/item/tool)
+	if(isnull(tool?.reagents))
+		return FALSE
+	if(tool.is_drawable()) // Covers both DRAWABLE and DRAINABLE holders.
+		return TRUE
+	return istype(tool, /obj/item/mop)
+
+/// Right-clicking with anything that holds liquid tips it out down the drain,
+/// mirroring the left-click interaction that fills containers up.
+/obj/structure/sink/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(!can_empty_into_drain(tool))
+		return ..()
+
+	if(busy)
+		to_chat(user, span_warning("Someone's already washing here!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!tool.reagents.total_volume)
+		balloon_alert(user, "already empty!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/empty_time = min(tool.reagents.total_volume * SINK_EMPTY_TIME_PER_UNIT, SINK_EMPTY_TIME_MAX)
+
+	user.visible_message(
+		span_notice("[user] starts emptying [tool] into [src]."),
+		span_notice("You start emptying [tool] into [src]..."),
+	)
+	playsound(src, 'sound/effects/slosh.ogg', 25, TRUE)
+
+	busy = TRUE
+	if(!do_after(user, empty_time, target = src))
+		busy = FALSE
+		return ITEM_INTERACT_BLOCKING
+	busy = FALSE
+
+	// The container could have been emptied, swapped or dropped while we were pouring.
+	if(QDELETED(tool) || !user.is_holding(tool))
+		return ITEM_INTERACT_BLOCKING
+	if(!tool.reagents.total_volume)
+		balloon_alert(user, "already empty!")
+		return ITEM_INTERACT_BLOCKING
+
+	user.log_message("emptied [tool] ([tool.reagents.get_reagent_log_string()]) into [src] at [AREACOORD(src)].", LOG_GAME)
+	tool.reagents.clear_reagents()
+	playsound(src, 'sound/machines/sink-faucet.ogg', 50)
+
+	user.visible_message(
+		span_notice("[user] empties [tool] into [src]."),
+		span_notice("You empty [tool] into [src], washing its contents down the drain."),
+	)
+	return ITEM_INTERACT_SUCCESS
+
 /obj/structure/sink/wrench_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
 	deconstruct(TRUE)
@@ -307,3 +376,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 /obj/item/wallframe/sinkframe/after_attach(obj/structure/sink/greyscale/attached_to)
 	attached_to.set_custom_materials(custom_materials)
 	attached_to.update_appearance(UPDATE_OVERLAYS)
+
+#undef SINK_EMPTY_TIME_PER_UNIT
+#undef SINK_EMPTY_TIME_MAX
