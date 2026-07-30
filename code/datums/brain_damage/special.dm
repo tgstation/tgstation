@@ -400,7 +400,7 @@
 	if(get_dist(owner, beepsky) >= 10 && prob(20))
 		create_securitron()
 
-	if(owner.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
 		if(prob(20))
 			owner.playsound_local(beepsky, 'sound/mobs/non-humanoids/beepsky/iamthelaw.ogg', 50)
 		return
@@ -471,7 +471,7 @@
 	)
 
 /datum/brain_trauma/special/ptsd/on_life(seconds_per_tick)
-	if(owner.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
 		return
 
 	if(!COOLDOWN_FINISHED(src, ptsd_hallucinations))
@@ -584,7 +584,7 @@
 	)
 
 /datum/brain_trauma/special/axedoration/on_life(seconds_per_tick)
-	if(owner.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
 		return
 
 	if(!GLOB.bridge_axe)

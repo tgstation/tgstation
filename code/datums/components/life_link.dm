@@ -127,7 +127,7 @@
 
 /// Update our vital status on the medical hud
 /datum/component/life_link/proc/update_med_hud_status(mob/living/mob_parent)
-	if(host.stat == DEAD || HAS_TRAIT(host, TRAIT_FAKEDEATH))
+	if(IS_DEAD_OR_FAKING(host))
 		mob_parent.set_hud_image_state(STATUS_HUD, "huddead")
 	else
 		mob_parent.set_hud_image_state(STATUS_HUD, "hudhealthy")

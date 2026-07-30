@@ -21,4 +21,4 @@
 	if(QDELETED(target))
 		controller.clear_blackboard_key(key)
 		return FALSE
-	return mob_pawn.is_holding(target)
+	return !!mob_pawn.is_holding(target)

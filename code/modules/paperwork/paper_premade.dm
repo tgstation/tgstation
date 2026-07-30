@@ -124,7 +124,7 @@
 	<h1>3. Construction</h1>
 	1. Build three machine frames.
 	2. Determine the desired direction you want your artillery to face.
-	3. Leave six spaces in front, four behind.  The artillery cannon finishes itself after the assemblies are aligned.
+	3. Leave five spaces in front, three behind.  The artillery cannon finishes itself after the assemblies are aligned.
 	4. Place the machine frames in a horizontal line.
 	5. Wrench the three machine frames in place.
 	6. Install wires in the three machine frames.
@@ -136,7 +136,7 @@
 	12. Use a screwdriver to fasten the board, install wires and two glass sheets, use screwdriver again to turn on.
 	13. Use a multitool and interact with the generator, then the fusor.
 	14. Use a multitool again to interact with the bore, then the fusor.
-	15. Use the console to finalize construction, make sure there's enough empty space around the BSA for the assembly to commence.
+	15. Use the console to finalize construction. If the console doesn't display any error messages, a faint green hologram will indicate the BSA's position. Reposition if needed.
 	And with that, you are done!
 	<b>Commencing firing protocols requires the access of at least two heads, the console will be locked down until this requirement is met.</b>
 	<b>Always make sure you are certain before attempting to fire the BSA.</b>

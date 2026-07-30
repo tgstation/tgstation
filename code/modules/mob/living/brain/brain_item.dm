@@ -63,7 +63,7 @@
 
 	// Special check for if you're trapped in a body you can't control because it's owned by a ling.
 	if(IS_CHANGELING(brain_owner) && !(movement_flags & NO_ID_TRANSFER))
-		if(brainmob && !(brain_owner.stat == DEAD || (HAS_TRAIT(brain_owner, TRAIT_DEATHCOMA))))
+		if(brainmob && !IS_DEAD_OR_FAKING(brain_owner))
 			to_chat(brainmob, span_danger("You can't feel your body! You're still just a brain!"))
 		forceMove(brain_owner)
 		brain_owner.update_body_parts()
@@ -169,37 +169,40 @@
 		L.mind.transfer_to(brainmob)
 		to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a brain."))
 
-/obj/item/organ/brain/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	user.changeNext_move(CLICK_CD_MELEE)
+/obj/item/organ/brain/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/borg/apparatus/organ_storage))
+		return NONE//Borg organ bags shouldn't be killing brains
 
-	if(istype(item, /obj/item/borg/apparatus/organ_storage))
-		return //Borg organ bags shouldn't be killing brains
-
-	if (check_for_repair(item, user))
-		return TRUE
+	if (check_for_repair(tool, user))
+		return ITEM_INTERACT_SUCCESS
 
 	// Cutting out skill chips.
-	if(length(skillchips) && item.get_sharpness() == SHARP_EDGED)
-		to_chat(user,span_notice("You begin to excise skillchips from [src]."))
-		if(do_after(user, 15 SECONDS, target = src))
-			for(var/chip in skillchips)
-				var/obj/item/skillchip/skillchip = chip
+	if(!length(skillchips) || tool.get_sharpness() != SHARP_EDGED)
+		return NONE
 
-				if(!istype(skillchip))
-					stack_trace("Item of type [skillchip.type] qdel'd from [src] skillchip list.")
-					qdel(skillchip)
-					continue
+	to_chat(user,span_notice("You begin to excise skillchips from [src]."))
+	if(!do_after(user, 15 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
 
-				remove_skillchip(skillchip)
+	for(var/obj/item/skillchip/skillchip as anything in skillchips)
+		if(!istype(skillchip, /obj/item/skillchip))
+			stack_trace("Item of type [skillchip.type] qdel'd from [src] skillchip list.")
+			qdel(skillchip)
+			continue
 
-				if(skillchip.removable)
-					skillchip.forceMove(drop_location())
-					continue
+		remove_skillchip(skillchip)
 
-				qdel(skillchip)
+		if(skillchip.removable)
+			skillchip.forceMove(drop_location())
+			continue
 
-			skillchips = null
-		return
+		qdel(skillchip)
+
+	skillchips = null
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/organ/brain/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+	user.changeNext_move(CLICK_CD_MELEE)
 
 	if(brainmob) //if we aren't trying to heal the brain, pass the attack onto the brainmob.
 		item.attack(brainmob, user) //Oh noooeeeee

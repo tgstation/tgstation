@@ -6,7 +6,7 @@
 		set_hud_image_state(DIAG_STAT_HUD, "hudstat")
 		return
 
-	if(stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		set_hud_image_state(DIAG_STAT_HUD, "hudoffline")
 		return
 
@@ -118,4 +118,3 @@
 	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC], GLOB.huds[DATA_HUD_BOT_PATH])
 	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
 		hud.remove_atom_from_hud(src)
-

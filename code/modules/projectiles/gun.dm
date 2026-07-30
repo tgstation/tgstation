@@ -303,7 +303,7 @@
 	if(!isliving(loc))
 		return ..()
 	var/mob/living/holder = loc
-	if(holder.is_holding(src) && holder.stat < UNCONSCIOUS)
+	if(holder.is_holding(src) && !IS_UNCONSCIOUS(holder))
 		to_chat(holder, span_boldwarning("[src] breaks down!"))
 		holder.playsound_local(get_turf(src), 'sound/items/weapons/smash.ogg', 50, TRUE)
 	return ..()

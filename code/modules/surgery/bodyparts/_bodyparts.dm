@@ -42,6 +42,10 @@
 	var/change_exempt_flags = NONE
 	///Random flags that describe this bodypart
 	var/bodypart_flags = BODYPART_VIRGIN
+	///Does this part have an internal or external anatomy biostate? Assigned on init based on biological_state
+	VAR_FINAL/bio_status = NONE
+	///Mangling state (interior, exterior) of the bodypart
+	var/mangled_state = BODYPART_MANGLED_NONE
 
 	///Whether the bodypart (and the owner) is husked.
 	var/is_husked = FALSE
@@ -266,6 +270,8 @@
 
 	if(IS_ORGANIC_LIMB(src))
 		blood_dna_info = list("Unknown DNA" = get_blood_type(BLOOD_TYPE_O_PLUS))
+
+	set_bio_state_status()
 
 	var/innate_state = NONE
 	if(!LIMB_HAS_SKIN(src))
@@ -731,15 +737,13 @@
 			wounding_type = WOUND_PIERCE
 
 	if(owner) // i tried to modularize the below, but the modifications to wounding_dmg and wounding_type cant be extracted to a proc
-		var/mangled_state = get_mangled_state()
 		var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
-		var/bio_status = get_bio_state_status()
+		var/has_exterior = (bio_status & ANATOMY_EXTERIOR)
+		var/has_interior = (bio_status & ANATOMY_INTERIOR)
 
-		var/has_exterior = ((bio_status & ANATOMY_EXTERIOR))
-		var/has_interior = ((bio_status & ANATOMY_INTERIOR))
-
-		var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_EXTERIOR)))
+		var/exterior_ready_to_dismember = (!has_exterior || (mangled_state & BODYPART_MANGLED_EXTERIOR))
+		var/interior_ready_to_dismember = (!has_interior || (mangled_state & BODYPART_MANGLED_INTERIOR))
 
 		// if we're bone only, all cutting attacks go straight to the bone
 		if(!has_exterior && has_interior)
@@ -758,7 +762,8 @@
 				if(wounding_type == WOUND_PIERCE && !easy_dismember)
 					wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
 				wounding_type = WOUND_BLUNT
-		if ((dismemberable_by_wound() || dismemberable_by_total_damage()) && try_dismember(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus))
+
+		if (((exterior_ready_to_dismember && interior_ready_to_dismember) || dismemberable_by_total_damage()) && try_dismember(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus))
 			return
 		// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
 		if(wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)
@@ -792,11 +797,10 @@
 			owner.updatehealth()
 	return update_bodypart_damage_state()
 
-/// Returns a bitflag using ANATOMY_EXTERIOR or ANATOMY_INTERIOR. Used to determine if we as a whole have a interior or exterior biostate, or both.
-/obj/item/bodypart/proc/get_bio_state_status()
-	SHOULD_BE_PURE(TRUE)
-
-	var/bio_status = NONE
+/// Assigns our bio_status to ANATOMY_EXTERIOR or/and ANATOMY_INTERIOR. Used to determine if we as a whole have a interior or exterior biostate, or both.
+/obj/item/bodypart/proc/set_bio_state_status()
+	if (bio_status)
+		CRASH("set_bio_state_status() called on [src] ([type]) bodypart with bio_status already set! Most likely bio_status was set on the type itself")
 
 	for (var/state in GLOB.bio_state_anatomy)
 		var/flag = text2num(state)
@@ -812,38 +816,26 @@
 		if ((bio_status & ANATOMY_EXTERIOR_AND_INTERIOR) == ANATOMY_EXTERIOR_AND_INTERIOR)
 			break
 
-	return bio_status
-
 /// Returns if our current mangling status allows us to be dismembered. Requires both no exterior/mangled exterior and no interior/mangled interior.
 /obj/item/bodypart/proc/dismemberable_by_wound()
 	SHOULD_BE_PURE(TRUE)
 
-	var/mangled_state = get_mangled_state()
+	var/has_exterior = (bio_status & ANATOMY_EXTERIOR)
+	var/has_interior = (bio_status & ANATOMY_INTERIOR)
 
-	var/bio_status = get_bio_state_status()
-
-	var/has_exterior = ((bio_status & ANATOMY_EXTERIOR))
-	var/has_interior = ((bio_status & ANATOMY_INTERIOR))
-
-	var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_EXTERIOR)))
-	var/interior_ready_to_dismember = (!has_interior || ((mangled_state & BODYPART_MANGLED_INTERIOR)))
+	var/exterior_ready_to_dismember = (!has_exterior || (mangled_state & BODYPART_MANGLED_EXTERIOR))
+	var/interior_ready_to_dismember = (!has_interior || (mangled_state & BODYPART_MANGLED_INTERIOR))
 
 	return (exterior_ready_to_dismember && interior_ready_to_dismember)
 
 /// Returns TRUE if our total percent damage is more or equal to our dismemberable percentage, but FALSE if a wound can cause us to be dismembered.
 /obj/item/bodypart/proc/dismemberable_by_total_damage()
-
 	update_wound_theory()
 
-	var/bio_status = get_bio_state_status()
-
-	var/has_interior = ((bio_status & ANATOMY_INTERIOR))
+	var/has_interior = (bio_status & ANATOMY_INTERIOR)
 	var/can_theoretically_be_dismembered_by_wound = (any_existing_wound_can_mangle_our_interior || (any_existing_wound_can_mangle_our_exterior && has_interior))
 
-	var/wound_dismemberable = dismemberable_by_wound()
-	var/ready_to_use_alternate_formula = (use_alternate_dismemberment_calc_even_if_mangleable || (!wound_dismemberable && !can_theoretically_be_dismembered_by_wound))
-
-	if (ready_to_use_alternate_formula)
+	if (use_alternate_dismemberment_calc_even_if_mangleable || (!dismemberable_by_wound() && !can_theoretically_be_dismembered_by_wound))
 		var/percent_to_total_max = (get_damage() / max_damage)
 		if (percent_to_total_max >= hp_percent_to_dismemberable)
 			return TRUE
@@ -953,7 +945,7 @@
 		if(total_damage < max_damage)
 			last_maxed = FALSE
 		else
-			if(!last_maxed && owner.stat < UNCONSCIOUS)
+			if(!last_maxed && !IS_UNCONSCIOUS(owner))
 				INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "scream")
 			last_maxed = TRUE
 		set_disabled(FALSE, update_limbs) // we only care about the paralysis trait
@@ -962,7 +954,7 @@
 	// we're now dealing solely with limbs that can be disabled through pure damage, AKA robot parts
 	if(total_damage >= max_damage * disabling_threshold_percentage)
 		if(!last_maxed)
-			if(owner.stat < UNCONSCIOUS)
+			if(!IS_UNCONSCIOUS(owner))
 				INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "scream")
 			last_maxed = TRUE
 		set_disabled(TRUE, update_limbs)

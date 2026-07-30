@@ -58,9 +58,20 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isopenspaceturf(A) (is_type_in_typecache(A, GLOB.turfs_openspace))
 
+GLOBAL_LIST_INIT(turfs_snow, typecacheof(list(
+	/turf/open/floor/fake_snow,
+	/turf/open/misc/asteroid/snow,
+	/turf/open/misc/snow
+)))
+
+#define issnowturf(A) (is_type_in_typecache(A, GLOB.turfs_snow))
+
 #define isopenturf(A) (istype(A, /turf/open))
 
 #define isindestructiblefloor(A) (istype(A, /turf/open/indestructible))
+
+/// Can this turf have machines anchored to it
+#define is_anchorable_floor(A) (isfloorturf(A) || isindestructiblefloor(A))
 
 #define isspaceturf(A) (istype(A, /turf/open/space))
 

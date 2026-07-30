@@ -185,6 +185,8 @@ DEFINE_BITFIELD(surgery_state, list(
 #define BIO_CHITIN (1<<7)
 /// the bodypart is made of rocks.
 #define BIO_STONE (1<<8)
+/// Limb is comprised entirely of slime jelly - can be cannibalized by any jelly person with the ability to eat their own limbs to replenish their own slime (blood)
+#define BIO_JELLY (1<<9)
 /// Robotic - can suffer all metal/wired wounds, such as: UNIMPLEMENTED PLEASE UPDATE ONCE SYNTH WOUNDS 9/5/2023 ~Niko
 #define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
 /// Has flesh and bone - See BIO_BONE and BIO_FLESH
