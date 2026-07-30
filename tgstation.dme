@@ -552,6 +552,7 @@
 #include "code\__HELPERS\paths\jps.dm"
 #include "code\__HELPERS\paths\path.dm"
 #include "code\__HELPERS\paths\sssp.dm"
+#include "code\__HELPERS\paths\turfmap.dm"
 #include "code\__HELPERS\sorts\helpers.dm"
 #include "code\__HELPERS\sorts\sort_instance.dm"
 #include "code\_globalvars\_regexes.dm"
