@@ -69,15 +69,15 @@
 /mob/living/basic/living_floor/med_hud_set_status()
 	return
 
-/mob/living/basic/living_floor/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(weapon.tool_behaviour != TOOL_CROWBAR)
-		return ..()
+/mob/living/basic/living_floor/crowbar_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "prying...")
 	playsound(src, 'sound/items/tools/crowbar.ogg', 45, TRUE)
 	if(!do_after(user, 5 SECONDS, src))
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	new /obj/effect/gibspawner/generic(loc)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/basic/living_floor/white
 	icon_state = "white"

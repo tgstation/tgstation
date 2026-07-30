@@ -668,8 +668,10 @@
 			maybe_monkey.vomit(VOMIT_CATEGORY_BLOOD)
 			to_chat(maybe_monkey, span_danger("You vomit out blood, making you feel grossly monkeyish."))
 
-	if (LAZYLEN(SSmobs.cubemonkeys) < CONFIG_GET(number/monkeycap))
-		new /mob/living/carbon/human/species/monkey(location, TRUE)
+		var/monkey_cap = CONFIG_GET(number/monkeycap)
+		for(var/_ in 1 to created_volume)
+			if (LAZYLEN(SSmobs.cubemonkeys) < monkey_cap)
+				new /mob/living/carbon/human/species/monkey(location, null, TRUE)
 
 /datum/chemical_reaction/angry_monkey
 	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/inverse/bath_salts = 10)
@@ -687,8 +689,11 @@
 			maybe_monkey.vomit(VOMIT_CATEGORY_BLOOD)
 			to_chat(maybe_monkey, span_danger("You vomit out blood, making you feel grossly monkeyish."))
 
-	if (LAZYLEN(SSmobs.cubemonkeys) < CONFIG_GET(number/monkeycap))
-		new /mob/living/carbon/human/species/monkey/angry(location, TRUE)
+		var/monkey_cap = CONFIG_GET(number/monkeycap)
+		for(var/_ in 1 to created_volume)
+			if (LAZYLEN(SSmobs.cubemonkeys) < monkey_cap)
+				new /mob/living/carbon/human/species/monkey/angry(location, null, TRUE)
+
 
 //water electrolysis
 /datum/chemical_reaction/electrolysis
@@ -1159,3 +1164,28 @@
 	required_reagents = list(/datum/reagent/consumable/nutriment/protein = 1)
 	required_catalysts = list(/datum/reagent/toxin/carnivorousblood = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
+
+/datum/chemical_reaction/cement
+	results = list(/datum/reagent/cement = 6)
+	required_reagents = list(/datum/reagent/carbon = 2, /datum/reagent/hydrogen = 2, /datum/reagent/oxygen = 2, /datum/reagent/water = 1)
+	required_temp = 400
+	mix_message = "The mixture boils off a grey vapor..."//The water boils off, leaving the cement
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/hexement
+	results = list(/datum/reagent/cement/hexement = 1)
+	required_reagents = list(/datum/reagent/cement = 6, /datum/reagent/stable_plasma = 1)
+	required_temp = 400
+	mix_message = "The mixture rapidly condenses and darkens in color..."
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/pavement
+	results = list(/datum/reagent/cement/pavement = 2)
+	required_reagents = list(/datum/reagent/cement = 1, /datum/reagent/fuel/oil = 1)
+	mix_message = "The mixture mixing suddenly reminds you of cramped urban worlds."
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/quick_concrete
+	results = list(/datum/reagent/concrete = 5)
+	required_reagents = list(/datum/reagent/concrete_mix = 5, /datum/reagent/water = 5)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER

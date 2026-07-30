@@ -93,7 +93,7 @@
 /// Largely lifted off of wing's can_fly proc, tailored to the jet boots functionality.
 /datum/action/item_action/toggle_flight/proc/can_fly()
 	var/mob/living/carbon/human/human = owner
-	if(human.stat || human.body_position == LYING_DOWN || isnull(human.client))
+	if(IS_UNCONSCIOUS_OR_CRIT(human) || human.body_position == LYING_DOWN || isnull(human.client))
 		return FALSE
 
 	var/turf/location = get_turf(human)

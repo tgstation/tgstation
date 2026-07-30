@@ -1,0 +1,4 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - qol: "You can see what bodyparts a piece of clothing with armor covers by examining its tag."

@@ -3,6 +3,7 @@
 	desc = "You shouldn't have this."
 	ammo_type = /obj/item/ammo_casing/magic
 	icon_state = "nothingwand"
+	worn_icon = null
 	inhand_icon_state = "wand"
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -96,7 +97,7 @@
 	. = ..()
 	if (user.stat == DEAD)
 		return MANUAL_SUICIDE
-	user.visible_message(span_suicide("...but if anything [user.p_they()] look healthier than before."))
+	user.visible_message(span_suicide("...but if anything [user.p_they()] look[user.p_s()] healthier than before."))
 	return SHAME
 
 /obj/item/gun/magic/wand/death/debug
@@ -140,7 +141,7 @@
 	. = ..()
 	if (user.stat == DEAD)
 		return MANUAL_SUICIDE
-	user.visible_message(span_suicide("...but if anything [user.p_they()] look healthier than before."))
+	user.visible_message(span_suicide("...but if anything [user.p_they()] look[user.p_s()] healthier than before."))
 	return SHAME
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing

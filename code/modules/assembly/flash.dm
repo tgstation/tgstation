@@ -5,6 +5,7 @@
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production."
 	icon = 'icons/obj/devices/flash.dmi'
 	icon_state = "flash"
+	worn_icon_state = "flash"
 	inhand_icon_state = "flashtool"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
@@ -317,11 +318,11 @@
 	if (.)
 		new /obj/effect/temp_visual/borgflash(get_turf(src))
 
-/obj/item/assembly/flash/cyborg/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	return
+/obj/item/assembly/flash/cyborg/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/assembly/flash/cyborg/screwdriver_act(mob/living/user, obj/item/I)
-	return
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/assembly/flash/memorizer
 	name = "memorizer"

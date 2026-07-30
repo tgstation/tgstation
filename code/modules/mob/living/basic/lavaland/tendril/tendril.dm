@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 		return ..()
 
 	for(var/mob/living/killer in view(7, src))
-		if(killer.stat || !killer.client)
+		if(IS_UNCONSCIOUS_OR_CRIT(killer) || !killer.client)
 			continue
 		killer.client.give_award(/datum/award/score/tendril_score, killer)
 		if (!length(GLOB.tendrils))

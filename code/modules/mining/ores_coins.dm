@@ -172,6 +172,29 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		return TRUE
 	return FALSE
 
+/obj/item/stack/ore/glass/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	. = ..()
+	if (.)
+		return
+
+	if(!target.is_dunkable())
+		return NONE
+
+	var/datum/reagent/cement/cement = target.reagents?.has_reagent(/datum/reagent/cement, check_subtypes=TRUE)
+	if (!cement)
+		return NONE
+
+	var/sand_to_use = min(floor(cement.volume / cement.units_per_aggregate), amount)
+	if (!sand_to_use)
+		to_chat(user, span_warning("You don't have enough [cement.name] to mix with [src]."))
+		return ITEM_INTERACT_BLOCKING
+
+	use(sand_to_use)
+	target.reagents.convert_reagent(cement.type, cement.concrete_type, conversion_volume = sand_to_use * cement.units_per_aggregate)
+	user.visible_message(span_warning("[user] slips something into [target]!"), span_notice("You dissolve [src] in [target]."), null, 2)
+	playsound(target, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
+
 /obj/item/stack/ore/glass/thirty
 	amount = 30
 
@@ -188,6 +211,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	singular_name = "siderite dust pile"
 	mine_experience = 0
 	merge_type = /obj/item/stack/ore/glass/siderite
+
+/obj/item/stack/ore/glass/concrete_powder
+	name = "concrete powder"
+	icon_state = "concrete_powder"
+	singular_name = "concrete powder pile"
+	mine_experience = 0
+	merge_type = /obj/item/stack/ore/glass/concrete_powder
 
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
@@ -350,13 +380,15 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/gibtonite/IsSpecialAssembly()
 	return TRUE
 
-/obj/item/gibtonite/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/assembly_holder) && !rig)
-		var/obj/item/assembly_holder/holder = I
+/obj/item/gibtonite/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/assembly_holder) && !rig)
+		var/obj/item/assembly_holder/holder = tool
 		if(!(locate(/obj/item/assembly/igniter) in holder.assemblies))
-			return ..()
+			return NONE
+
 		if(!user.transferItemToLoc(holder, src))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		add_fingerprint(user)
 		rig = holder
 		holder.master = src
@@ -368,26 +400,34 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		log_bomber(user, "attached [holder] to ", src)
 		attacher = key_name(user)
 		user.balloon_alert_to_viewers("attached rig")
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(I.tool_behaviour == TOOL_WRENCH && rig)
-		rig.on_found()
-		if(QDELETED(src))
-			return
-		user.balloon_alert_to_viewers("detached rig")
-		user.log_message("detached [rig] from [src].", LOG_GAME)
-		user.put_in_hands(rig)
-		return
-
-	if(I.tool_behaviour == TOOL_MINING || istype(I, /obj/item/resonator) || I.force >= 10)
+	if(tool.tool_behaviour == TOOL_MINING || istype(tool, /obj/item/resonator) || tool.force >= 10)
 		GibtoniteReaction(user, "A resonator has primed for detonation a")
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner) || I.tool_behaviour == TOOL_MULTITOOL)
+	if(istype(tool, /obj/item/mining_scanner) || istype(tool, /obj/item/t_scanner/adv_mining_scanner))
 		defuse(user)
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
+
+/obj/item/gibtonite/wrench_act(mob/living/user, obj/item/tool)
+	if(!rig)
+		return NONE
+
+	rig.on_found()
+	if(QDELETED(src))
+		return ITEM_INTERACT_BLOCKING
+
+	user.balloon_alert_to_viewers("detached rig")
+	user.log_message("detached [rig] from [src].", LOG_GAME)
+	user.put_in_hands(rig)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/gibtonite/multitool_act(mob/living/user, obj/item/tool)
+	defuse(user)
+	return ITEM_INTERACT_SUCCESS
 
 /// Stop the reaction and reduce ore explosive power
 /obj/item/gibtonite/proc/defuse(mob/defuser)
@@ -540,22 +580,23 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	. = ..()
 	. += span_info("It's worth [value] [MONEY_NAME_AUTOPURAL(value)].")
 
-/obj/item/coin/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/CC = W
-		if(string_attached)
-			to_chat(user, span_warning("There already is a string attached to this coin!"))
-			return
+/obj/item/coin/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/cable_coil))
+		return NONE
 
-		if (CC.use(1))
-			add_overlay("coin_string_overlay")
-			string_attached = 1
-			to_chat(user, span_notice("You attach a string to the coin."))
-		else
-			to_chat(user, span_warning("You need one length of cable to attach a string to the coin!"))
-			return
-	else
-		..()
+	var/obj/item/stack/cable_coil/string = tool
+	if(string_attached)
+		to_chat(user, span_warning("There already is a string attached to this coin!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!string.use(1))
+		to_chat(user, span_warning("You need one length of cable to attach a string to the coin!"))
+		return ITEM_INTERACT_BLOCKING
+
+	add_overlay("coin_string_overlay")
+	string_attached = TRUE
+	to_chat(user, span_notice("You attach a string to the coin."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/coin/wirecutter_act(mob/living/user, obj/item/I)
 	..()

@@ -71,15 +71,11 @@
 	ghost.log_message("picked a letter on [src], which was \"[planchette]\".", LOG_GAME)
 	COOLDOWN_START(src, next_use, rand(3 SECONDS, 5 SECONDS))
 	lastuser = ghost.ckey
-	for(var/mob/viewer in range(2, src))
-		if(isnull(viewer.client))
-			continue
-		if(viewer.stat != CONSCIOUS && viewer.stat != DEAD) // You gotta be awake or dead to pay the toll
-			continue
-		if(viewer.is_blind())
-			to_chat(viewer, span_hear("You hear a scraping sound..."))
-		else
-			to_chat(viewer, span_notice("The planchette slowly moves... and stops at the letter \"[planchette]\"."))
+	visible_message(
+		message = span_notice("The planchette slowly moves... and stops at the letter \"[planchette]\"."),
+		blind_message = span_hear("You hear a scraping sound..."),
+		vision_distance = 2,
+	)
 
 /obj/structure/spirit_board/proc/spirit_board_checks(mob/ghost)
 	var/cd_penalty = (ghost.ckey == lastuser) ? 1 SECONDS : 0 SECONDS //Give some other people a chance, hog.
@@ -98,7 +94,7 @@
 			if(isnull(player.ckey) || isnull(player.client))
 				continue
 
-			if(player.client?.is_afk() || player.stat != CONSCIOUS || HAS_TRAIT(player, TRAIT_HANDS_BLOCKED))//no playing with braindeads or corpses or handcuffed dudes.
+			if(player.client?.is_afk() || HAS_TRAIT(player, TRAIT_HANDS_BLOCKED))//no playing with braindeads or corpses or handcuffed dudes.
 				to_chat(ghost, span_warning("[player] doesn't seem to be paying attention..."))
 				continue
 

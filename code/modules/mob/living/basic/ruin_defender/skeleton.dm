@@ -54,6 +54,9 @@
 	var/list/foods_list = good_drinks + bad_drinks
 	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, typecacheof(foods_list))
 
+/mob/living/basic/skeleton/get_unconscious_appearance()
+	return get_generic_humanoid_static_appearance()
+
 /mob/living/basic/skeleton/settler
 	name = "undead settler"
 	desc = "The reanimated remains of some poor settler."

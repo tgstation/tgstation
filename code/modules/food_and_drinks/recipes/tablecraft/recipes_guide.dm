@@ -18,6 +18,7 @@
 	result = /obj/item/stack/sheet/runed_metal
 	category = CAT_CULT
 	non_craftable = TRUE
+	crafting_flags = parent_type::crafting_flags | CRAFT_MUST_BE_LEARNED
 	steps = list("Use Twisted Construction on plasteel")
 
 /datum/crafting_recipe/constructshell
@@ -25,7 +26,109 @@
 	result = /obj/structure/constructshell
 	category = CAT_CULT
 	non_craftable = TRUE
+	crafting_flags = parent_type::crafting_flags | CRAFT_MUST_BE_LEARNED
 	steps = list("Use Twisted Construction on iron")
+
+// Things related to cement and concrete
+
+/datum/crafting_recipe/concrete_wall
+	result = /datum/reagent/concrete::wall_type
+	reqs = list(
+		/obj/structure/grille = 1,
+		/datum/reagent/concrete = /datum/reagent/concrete::units_per_wall,
+	)
+	category = CAT_CONSTRUCTION
+	non_craftable = TRUE
+	steps = list("Pour concrete over a grille")
+
+/datum/crafting_recipe/concrete_wall/hexacrete
+	result = /datum/reagent/concrete/hexacrete::wall_type
+	reqs = list(
+		/obj/structure/girder = 1,
+		/datum/reagent/concrete/hexacrete = /datum/reagent/concrete/hexacrete::units_per_wall,
+	)
+	category = CAT_CONSTRUCTION
+	non_craftable = TRUE
+	steps = list("Pour hexacrete over a girder")
+
+/datum/crafting_recipe/concrete_tile
+	result = /turf/open/floor/concrete
+	reqs = list(
+		/turf/open/floor/catwalk_floor = 1,
+		/datum/reagent/concrete = /datum/reagent/concrete::units_per_floor,
+	)
+	category = CAT_CONSTRUCTION
+	non_craftable = TRUE
+	steps = list("Pour concrete onto a catwalk floor")
+
+/datum/crafting_recipe/concrete_tile/tiles
+	result = /turf/open/floor/concrete/tiles
+	reqs = list(
+		/turf/open/floor/concrete = 1,
+		/obj/item/chisel = 1
+	)
+	category = CAT_CONSTRUCTION
+	non_craftable = TRUE
+	steps = list("Form the pattern on a wet tile")
+
+/datum/crafting_recipe/concrete_tile/reinforced
+	result = /turf/open/floor/concrete/reinforced
+	reqs = list(
+		/turf/open/floor/catwalk_floor = 1,
+		/datum/reagent/concrete/hexacrete = /datum/reagent/concrete/hexacrete::units_per_floor,
+	)
+	category = CAT_CONSTRUCTION
+	non_craftable = TRUE
+	steps = list("Pour hexacrete onto a catwalk floor")
+
+/datum/crafting_recipe/concrete_tile/pavement
+	result = /turf/open/floor/concrete/pavement
+	reqs = list(
+		/turf/open/floor/catwalk_floor = 1,
+		/datum/reagent/concrete/pavement = /datum/reagent/concrete/pavement::units_per_floor,
+	)
+	category = CAT_CONSTRUCTION
+	non_craftable = TRUE
+	steps = list("Pour pavement concrete onto a catwalk floor")
+
+/datum/crafting_recipe/concrete
+	result = /datum/reagent/concrete
+	reqs = list(
+		/datum/reagent/cement = /datum/reagent/cement::units_per_aggregate,
+		/obj/item/stack/ore/glass = 1
+	)
+	category = CAT_CONSTRUCTION
+	non_craftable = TRUE
+	steps = list("Add sand to the cement")
+
+/datum/crafting_recipe/concrete/hexacrete
+	result = /datum/reagent/concrete/hexacrete
+	reqs = list(
+		/datum/reagent/cement/hexement = /datum/reagent/cement/hexement::units_per_aggregate,
+		/obj/item/stack/ore/glass = 1
+	)
+	category = CAT_CONSTRUCTION
+	non_craftable = TRUE
+	steps = list("Add sand to the hexement")
+
+/datum/crafting_recipe/concrete/pavement
+	result = /datum/reagent/concrete/pavement
+	reqs = list(
+		/datum/reagent/cement/pavement = /datum/reagent/cement/pavement::units_per_aggregate,
+		/obj/item/stack/ore/glass = 1
+	)
+	category = CAT_CONSTRUCTION
+	non_craftable = TRUE
+	steps = list("Add sand to the road mix")
+
+/datum/crafting_recipe/wall_support
+	result = /obj/structure/wall_support
+	reqs = list(
+		/obj/structure/wall_support::rods_type = /obj/structure/wall_support::rods_amount
+	)
+	category = CAT_CONSTRUCTION
+	non_craftable = TRUE
+	steps = list("Use rods on the wall")
 
 // Food reactions
 
@@ -955,7 +1058,7 @@
 	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/drying/semki
-	reqs = list(/obj/item/food/grown/sunflower = 1)
+	reqs = list(/obj/item/food/grown/flower/sunflower = 1)
 	result = /obj/item/food/semki/healthy
 	meal_category = MEAL_SNACK
 

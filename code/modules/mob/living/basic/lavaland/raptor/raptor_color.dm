@@ -234,7 +234,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 /obj/item/mob_holder/purple_raptor/proc/can_fly(silent = FALSE)
 	var/mob/living/carbon/human/user = loc
-	if (!istype(user) || user.stat || user.body_position == LYING_DOWN || isnull(user.client))
+	if (!istype(user) || IS_UNCONSCIOUS_OR_CRIT(user) || user.body_position == LYING_DOWN || isnull(user.client))
 		return FALSE
 
 	var/turf/location = get_turf(user)
@@ -398,7 +398,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	if (istype(target, /mob/living/basic/raptor))
 		return TRUE
 	// Only heal raptors, or critted rider
-	if (target.stat == CONSCIOUS || target.stat == DEAD)
+	if (target.stat == STABLE || target.stat == DEAD)
 		return FALSE
 	return target.buckled == healer
 

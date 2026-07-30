@@ -763,7 +763,7 @@
 		return
 
 	// Heal the owner and flee whatever might've attacked them
-	if (new_stat == CONSCIOUS || new_stat == DEAD || old_stat != CONSCIOUS || !raptor.ai_controller)
+	if (new_stat == STABLE || new_stat == DEAD || old_stat != STABLE || !raptor.ai_controller)
 		ADD_TRAIT(raptor, TRAIT_AI_PAUSED, REF(src))
 		return
 
@@ -773,7 +773,7 @@
 		raptor.ai_controller.set_blackboard_key(BB_INJURED_RAPTOR, source)
 
 	for (var/mob/living/possible_hostile in view(5, raptor))
-		if (possible_hostile.stat || possible_hostile.invisibility > raptor.see_invisible || source.faction_check_atom(possible_hostile))
+		if (IS_UNCONSCIOUS_OR_CRIT(possible_hostile) || possible_hostile.invisibility > raptor.see_invisible || source.faction_check_atom(possible_hostile))
 			continue
 		raptor.ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEE_TARGET, possible_hostile)
 		break

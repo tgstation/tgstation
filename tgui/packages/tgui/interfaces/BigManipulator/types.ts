@@ -11,6 +11,7 @@ export type TaskType =
   | 'Throw...'
   | 'Use...'
   | 'Interact with...'
+  | 'Move to...'
   | 'Wait for...';
 
 export interface ManipulatorTask {
@@ -21,7 +22,6 @@ export interface ManipulatorTask {
   turf?: string;
   item_filters?: string[];
   filters_status?: BooleanLike;
-  filtering_mode?: number;
   settings_list?: PrioritySettings[];
   // pickup only
   pickup_eagerness?: string;
@@ -29,14 +29,14 @@ export interface ManipulatorTask {
   interaction_mode?: string;
   overflow_status?: string;
   throw_range?: number;
-  worker_interaction?: string;
-  use_post_interaction?: string;
   worker_use_rmb?: BooleanLike;
   worker_combat_mode?: BooleanLike;
   skip_anchored?: BooleanLike;
   // interact only
-  // (worker_interaction, use_post_interaction, worker_use_rmb, worker_combat_mode, skip_anchored shared with dropoff)
+  // (worker_use_rmb, worker_combat_mode, skip_anchored shared with dropoff)
   time?: number;
+  // stop only
+  sub_name?: string;
 }
 
 export interface ManipulatorData {

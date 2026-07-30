@@ -1,4 +1,0 @@
-author: "CabinetOnFire, Iamgoofball, SmartKar, Ben10omintrix"
-delete-after: True
-changes:
-  - refactor: "Replaces our AI system with behavior trees, porting all datum/ai to it"

@@ -78,7 +78,7 @@
 ///Check if we're still eligible for flight (wings covered, atmosphere too thin, etc)
 /obj/item/organ/wings/functional/proc/can_fly()
 	var/mob/living/carbon/human/human = owner
-	if(human.stat || human.body_position == LYING_DOWN || isnull(human.client))
+	if(IS_UNCONSCIOUS_OR_CRIT(human) || human.body_position == LYING_DOWN || isnull(human.client))
 		return FALSE
 	//Jumpsuits have tail holes, so it makes sense they have wing holes too
 	if(!cant_hide && (human.obscured_slots & HIDEJUMPSUIT))
