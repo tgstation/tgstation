@@ -1,0 +1,5 @@
+author: "hry-gh"
+delete-after: True
+changes:
+  - bugfix: "escape menu has map feedback links again"
+  - bugfix: "escape menu does not jump around sometimes when re-opening"
