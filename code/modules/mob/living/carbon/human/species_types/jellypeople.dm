@@ -105,7 +105,7 @@
 		if(IS_STUMP(limb) || limb_zone == BODY_ZONE_CHEST || limb_zone == BODY_ZONE_HEAD)
 			continue
 
-		if(limb.limb_id == target_species.id) // we only want to cannibalize limbs that match our body type, it doesn't make sense to "draw back" a limb that isn't the same type as us, even-less-so an inorganic limb.
+		if(limb.biological_state & BIO_JELLY) // can only cannibalize limbs that are comprised of jelly (this is a last gasp to keep going, let's assume we can't digest out non-jelly limbs)
 			limbs_to_consume += limb_zone
 
 	if(!length(limbs_to_consume))
