@@ -1,0 +1,4 @@
+author: "flleeppyy"
+delete-after: True
+changes:
+  - rscadd: "you can now have unlimited TGUI windows in preferences"
