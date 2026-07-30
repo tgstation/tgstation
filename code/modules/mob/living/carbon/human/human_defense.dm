@@ -380,7 +380,7 @@
 		//If they can't, they're missing their heart and this would runtime
 		if(undergoing_cardiac_arrest() && can_heartattack() && (shock_damage * siemens_coeff >= 1) && prob(25))
 			var/obj/item/organ/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
-			if(heart.Restart() && stat == CONSCIOUS)
+			if(heart.Restart() && !IS_UNCONSCIOUS_OR_CRIT(src))
 				to_chat(src, span_notice("You feel your heart beating again!"))
 	if (!(flags & SHOCK_NO_HUMAN_ANIM))
 		electrocution_animation(4 SECONDS)
@@ -546,7 +546,7 @@
 	return ..()
 
 /mob/living/carbon/human/check_self_for_injuries()
-	if(stat >= UNCONSCIOUS)
+	if(IS_UNCONSCIOUS(src))
 		return
 	var/list/combined_msg = list()
 
@@ -756,10 +756,5 @@
 
 /mob/living/carbon/human/get_eye_protection()
 	. = ..()
-	if(isclothing(head)) // Adds head protection
-		var/obj/item/clothing/helmet = head
-		. += helmet.flash_protect
-	if(isclothing(glasses)) // Glasses
-		. += glasses.flash_protect
-	if(isclothing(wear_mask)) // Mask
-		. += wear_mask.flash_protect
+	for (var/obj/item/clothing/clothing in get_equipped_items())
+		. += clothing.flash_protect

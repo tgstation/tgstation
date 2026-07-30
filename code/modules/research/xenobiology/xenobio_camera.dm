@@ -272,7 +272,7 @@
 		to_chat(user, span_warning("Bluespace harmonics prevent the creation of more than [cap] monkeys on the station at one time!"))
 		return
 
-	var/mob/living/carbon/human/species/monkey/food = new /mob/living/carbon/human/species/monkey(target_turf, TRUE)
+	var/mob/living/carbon/human/species/monkey/food = new /mob/living/carbon/human/species/monkey(target_turf, null, TRUE)
 	if (QDELETED(food))
 		return
 
@@ -304,7 +304,7 @@
 		if(user)
 			target_human.balloon_alert(user, "not a monkey!")
 		return FALSE
-	if(target_human.stat < DEAD)
+	if(target_human.stat != DEAD)
 		if(user)
 			target_human.balloon_alert(user, "not dead!")
 		return FALSE

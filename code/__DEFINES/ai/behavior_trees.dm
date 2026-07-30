@@ -70,3 +70,5 @@
 
 /// pet_command ID to override based on given pet command
 #define SUBPLAN_ID_PET_COMMAND "pet_command"
+/// Lets us override monkey combat behavior
+#define SUBPLAN_ID_MONKEY_COMBAT "monkey_combat"

@@ -130,7 +130,7 @@
 /obj/item/organ/heart/roach/proc/is_blocking(mob/living/carbon/human/blocker, damage_amount, damagetype, attack_direction)
 	if(damage_amount < 5 || damagetype != BRUTE || !attack_direction)
 		return
-	if(!ishuman(blocker) || blocker.stat >= UNCONSCIOUS)
+	if(!ishuman(blocker) || IS_UNCONSCIOUS(blocker))
 		return FALSE
 	// No tactical spinning
 	if(HAS_TRAIT(blocker, TRAIT_SPINNING))

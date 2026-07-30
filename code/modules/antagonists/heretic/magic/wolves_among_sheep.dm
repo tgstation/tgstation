@@ -39,7 +39,6 @@
 	center_turf = get_turf(owner)
 	playsound(center_turf,'sound/machines/airlock/airlockopen.ogg', 750, TRUE)
 	to_transform = list()
-	new /obj/effect/heretic_rune/big(center_turf)
 	addtimer(CALLBACK(src, PROC_REF(create_arena), center_turf), 1 SECONDS)
 	revert_timer = addtimer(CALLBACK(src, PROC_REF(revert_effects)), 61 SECONDS, TIMER_STOPPABLE) // 1 second to spread out, 60 seconds to fight
 
@@ -94,7 +93,7 @@
 
 /// Sets up the proximity monitor which handles things that are within the area and leave once they get someone to crit
 /datum/action/cooldown/spell/wolves_among_sheep/proc/create_arena(turf/target)
-	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION)), PROC_REF(on_caster_crit))
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_caster_crit))
 
 	// This is where most of the funcionality of the spell is
 	ongoing_arena = new /obj/effect/abstract/heretic_arena(target, max_range, 60 SECONDS, owner)
@@ -108,14 +107,16 @@
 	revert_effects()
 
 /// If the caster goes into crit, the arena falls apart right away
-/datum/action/cooldown/spell/wolves_among_sheep/proc/on_caster_crit()
+/datum/action/cooldown/spell/wolves_among_sheep/proc/on_caster_crit(datum/source, new_stat, old_stat)
 	SIGNAL_HANDLER
+	if(new_stat < SOFT_CRIT)
+		return
 	deltimer(revert_timer)
 	revert_effects()
 
 /// Undoes our changes
 /datum/action/cooldown/spell/wolves_among_sheep/proc/revert_effects()
-	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION)))
+	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
 	for(var/iterator in 1 to greatest_dist)
 		var/backwards_iterator = greatest_dist - iterator + 1 //We go backwards
 		if(!to_transform["[backwards_iterator]"])

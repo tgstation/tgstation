@@ -398,23 +398,23 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		if (!length(GLOB.stickybanadminexemptions))
 			restore_stickybans()
 
-	if (byond_version >= 512)
-		if (!byond_build || byond_build < 1386)
-			message_admins(span_adminnotice("[key_name(src)] has been detected as spoofing their byond version. Connection rejected."))
-			add_system_note("Spoofed-Byond-Version", "Detected as using a spoofed byond version.")
-			log_suspicious_login("Failed Login: [key] - Spoofed byond version")
-			qdel(src)
+	if (!byond_build)
+		message_admins(span_adminnotice("[key_name(src)] has been detected as spoofing their BYOND version. Connection rejected."))
+		add_system_note("Spoofed-BYOND-Version", "Detected as using a spoofed BYOND version.")
+		log_suspicious_login("Failed Login: [key] - Spoofed BYOND version")
+		qdel(src)
+		return
 
-		if (num2text(byond_build) in GLOB.blacklisted_builds)
-			log_access("Failed login: [key] - blacklisted byond version")
-			to_chat_immediate(src, span_userdanger("Your version of byond is blacklisted."))
-			to_chat_immediate(src, span_danger("Byond build [byond_build] ([byond_version].[byond_build]) has been blacklisted for the following reason: [GLOB.blacklisted_builds[num2text(byond_build)]]."))
-			to_chat_immediate(src, span_danger("Please download a new version of byond. If [byond_build] is the latest, you can go to <a href=\"https://secure.byond.com/download/build\">BYOND's website</a> to download other versions."))
-			if(connecting_admin)
-				to_chat_immediate(src, "As an admin, you are being allowed to continue using this version, but please consider changing byond versions")
-			else
-				qdel(src)
-				return
+	if (num2text(byond_build) in GLOB.blacklisted_builds)
+		log_access("Failed login: [key] - blacklisted BYOND version")
+		to_chat_immediate(src, span_userdanger("Your version of BYOND is blacklisted."))
+		to_chat_immediate(src, span_danger("BYOND build [byond_build] ([byond_version].[byond_build]) has been blacklisted for the following reason: [GLOB.blacklisted_builds[num2text(byond_build)]]."))
+		to_chat_immediate(src, span_danger("Please download a new version of BYOND. If [byond_build] is the latest, you can go to <a href=\"https://secure.byond.com/download/build\">BYOND's website</a> to download other versions."))
+		if(connecting_admin)
+			to_chat_immediate(src, "As an admin, you are being allowed to continue using this version, but please consider changing BYOND versions.")
+		else
+			qdel(src)
+			return
 
 	if(SSinput.initialized)
 		set_macros()
@@ -434,23 +434,24 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 
 	tgui_say.initialize()
 
+	initialize_escape_menu()
+
 	if(alert_mob_dupe_login && !holder)
 		// Notify admins if the connecting player's CID is configured to be ignored by stickybans
 		if (SSstickyban && (computer_id in SSstickyban.ignored_cids))
 			message_admins("<B>MULTIKEYING: </B></span><span class='notice'>[key_name_admin(src)] Connecting player joined with IGNORED CID [computer_id].")
 			log_admin_private("MULTIKEYING: [key_name(src)] Connecting player joined with IGNORED CID [computer_id].")
-			return
-
-		// If the CID is not ignored, notify the player with the pop-up.
-		var/dupe_login_message = "Your ComputerID has already logged in with another key this round, please log out of this one NOW or risk being banned!"
-		// Notify admins if the connecting player's CID is a duplicate of another player's CID
-		if (alert_admin_multikey)
-			dupe_login_message += "\nAdmins have been informed."
-			message_admins(span_danger("<B>MULTIKEYING: </B></span><span class='notice'>[key_name_admin(src)] has a matching CID+IP with another player and is clearly multikeying. They have been warned to leave the server or risk getting banned."))
-			log_admin_private("MULTIKEYING: [key_name(src)] has a matching CID+IP with another player and is clearly multikeying. They have been warned to leave the server or risk getting banned.")
-		spawn(0.5 SECONDS) //needs to run during world init, do not convert to add timer
-			alert(mob, dupe_login_message) //players get banned if they don't see this message, do not convert to tgui_alert (or even tg_alert) please.
-			to_chat_immediate(mob, span_danger(dupe_login_message))
+		else
+			// If the CID is not ignored, notify the player with the pop-up.
+			var/dupe_login_message = "Your ComputerID has already logged in with another key this round, please log out of this one NOW or risk being banned!"
+			// Notify admins if the connecting player's CID is a duplicate of another player's CID
+			if (alert_admin_multikey)
+				dupe_login_message += "\nAdmins have been informed."
+				message_admins(span_danger("<B>MULTIKEYING: </B></span><span class='notice'>[key_name_admin(src)] has a matching CID+IP with another player and is clearly multikeying. They have been warned to leave the server or risk getting banned."))
+				log_admin_private("MULTIKEYING: [key_name(src)] has a matching CID+IP with another player and is clearly multikeying. They have been warned to leave the server or risk getting banned.")
+			spawn(0.5 SECONDS) //needs to run during world init, do not convert to add timer
+				alert(mob, dupe_login_message) //players get banned if they don't see this message, do not convert to tgui_alert (or even tg_alert) please.
+				to_chat_immediate(mob, span_danger(dupe_login_message))
 
 
 	connection_time = world.time

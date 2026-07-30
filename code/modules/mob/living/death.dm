@@ -187,7 +187,7 @@
 		return
 
 	for(var/mob/living/nearby in viewers(src))
-		if(nearby == src || nearby.stat >= UNCONSCIOUS || nearby.is_blind())
+		if(nearby == src || IS_UNCONSCIOUS(nearby) || nearby.is_blind())
 			continue
 		nearby.add_mood_event("saw_death", /datum/mood_event/conditional/see_death, src, dusted, gibbed)
 		nearby.mind?.witnessed_death(src)

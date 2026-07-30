@@ -60,7 +60,7 @@
 	if(!istype(patient) || patient.stat == DEAD)
 		return FALSE
 	var/mob/living/basic/bot/medbot/bot_pawn = living_mob
-	if((bot_pawn.bot_access_flags & BOT_COVER_EMAGGED) && patient.stat == CONSCIOUS)
+	if((bot_pawn.bot_access_flags & BOT_COVER_EMAGGED) && patient.stat == STABLE)
 		return TRUE
 	if(bot_pawn.damage_type_healer == HEAL_ALL_DAMAGE)
 		return patient.get_total_damage() > bot_pawn.heal_threshold
@@ -116,7 +116,7 @@
 
 /datum/bt_node/ai_behavior/tend_to_patient/proc/check_if_healed(mob/living/carbon/human/patient, threshold, damage_type_healer, access_flags)
 	if(access_flags & BOT_COVER_EMAGGED)
-		return (patient.stat > CONSCIOUS)
+		return (patient.stat != STABLE)
 	var/patient_damage = (damage_type_healer == HEAL_ALL_DAMAGE) ? patient.get_total_damage() : patient.get_current_damage_of_type(damagetype = damage_type_healer)
 	return (patient_damage <= threshold)
 
@@ -156,7 +156,7 @@
 	if(!.)
 		return FALSE
 	var/mob/living/carbon/human/patient = target
-	if(!istype(patient) || patient.stat < UNCONSCIOUS || isnull(patient.mind))
+	if(!istype(patient) || patient.stat < HARD_CRIT || isnull(patient.mind))
 		return FALSE
 	return can_see(living_mob, patient, vision_range)
 
