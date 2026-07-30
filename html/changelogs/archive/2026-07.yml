@@ -927,6 +927,8 @@
 2026-07-30:
   Aliceee2ch:
   - bugfix: Bardrobe is now using service budget instead of medical.
+  SmArtKar:
+  - code_imp: Optimized particle lighting
   Thunder12345:
   - bugfix: High frequency blades kept in the suit storage slot no longer look outdated.
   kyunkyunkyun:
