@@ -160,10 +160,14 @@ export const DmMapsIncludeTarget = new Juke.Target({
 });
 
 export const BehaviorTreeCompilerTarget = new Juke.Target({
-  inputs: ['code/**/*.bt.json', 'code/__DEFINES/**/*.dm'],
+  inputs: [
+    'code/**/*.bt.json',
+    'code/__DEFINES/**/*.dm',
+    'tools/build_bt.py',
+  ],
   outputs: () => {
     return Juke.glob('code/**/*.bt.json').map((file) => {
-      const rel = file.replace(/^code\//, '').replace(/\.bt\.json$/, '');
+      const rel = file.replace(/\.bt\.json$/, '');
       return `build/behavior_trees/${rel}.bt.compiled.json`;
     });
   },
