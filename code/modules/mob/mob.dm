@@ -1316,7 +1316,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 	var/turf/mob_location = get_turf(src)
 	var/area/mob_area = get_area(src)
 
-	if(mob_location.get_lumcount() > light_amount)
+	if(mob_location.check_lumcount(above = light_amount))
 		return TRUE
 	else if(!mob_area.static_lighting)
 		return TRUE

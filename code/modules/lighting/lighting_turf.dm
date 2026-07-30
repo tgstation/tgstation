@@ -21,6 +21,38 @@
 	if (!lighting_object)
 		return 1
 
+	var/totallums = get_static_lumcount(minlum, maxlum)
+	totallums += get_dynamic_lumcount()
+	return CLAMP01(totallums)
+
+/// Optimized get_lumcount for when you only care if the lumcount is above/below a certain value, and not what the actual value is
+/turf/proc/check_lumcount(below = null, above = null)
+	if (!lighting_object)
+		return isnull(above) ? FALSE : TRUE
+
+	var/lums = get_static_lumcount()
+	// Don't go over dynamic lighting if we have enough to clear one of the passed thresholds
+	if (!isnull(below) && lums >= below)
+		return FALSE
+	if (!isnull(above) && lums > above)
+		return TRUE
+
+	var/datum/spatial_grid_cell/grid_cell = SSspatial_grid.get_cell_of(src)
+	for (var/datum/component/overlay_lighting/light as anything in grid_cell.dynamic_light_sources)
+		lums += light.get_lumcount_for(src)
+
+		// Don't iterate more than necessary if we find our value
+		if (!isnull(below) && lums >= below)
+			return FALSE
+		if (!isnull(above) && lums > above)
+			return TRUE
+
+	if (!isnull(below))
+		return TRUE
+	return FALSE
+
+/// Returns lumcount from turf lighting
+/turf/proc/get_static_lumcount(minlum = 0, maxlum = 1)
 	var/totallums = 0
 	var/datum/lighting_corner/L
 	L = lighting_corner_NE
@@ -38,8 +70,6 @@
 
 	totallums /= 12 // 4 corners, each with 3 channels, get the average.
 	totallums = (totallums - minlum) / (maxlum - minlum)
-	totallums += get_dynamic_lumcount()
-	return CLAMP01(totallums)
 
 /// Fetches dynamic lumcount from lightsources potentially in view of this turf from our spatial grid
 /turf/proc/get_dynamic_lumcount()
