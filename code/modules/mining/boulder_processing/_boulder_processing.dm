@@ -211,7 +211,7 @@
 	if(rockman.mobility_flags & MOBILITY_LIEDOWN)
 		if(rockman.body_position == LYING_DOWN)
 			return TRUE
-	else if(IS_DEAD_OR_INCAP(rockman))
+	else if(rockman.incapacitated)
 		return TRUE
 
 	return FALSE
