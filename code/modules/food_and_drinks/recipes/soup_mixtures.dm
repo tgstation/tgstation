@@ -2290,5 +2290,5 @@
 		/obj/item/food/breadslice/moldy = 1,
 	)
 	results = list(
-		/datum/glass_style/has_foodtype/soup/nutraslop = 30,
+		/datum/reagent/consumable/nutriment/soup/nutraslop = 30,
 	)
