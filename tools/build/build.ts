@@ -44,6 +44,20 @@ function getCutterPath() {
 
 const cutter_path = getCutterPath();
 
+const define_params_file = 'data/last_define_params.json'
+
+// Have compilation defines changed since last build?
+function defineParametersChanged(defines: string[]): boolean {
+  const defines_string = JSON.stringify(defines);
+  if(!fs.existsSync(define_params_file)) {
+    fs.writeFileSync(define_params_file, defines_string);
+    return true;
+  }
+  const last_params = fs.readFileSync(define_params_file, { encoding: 'utf8' });
+  fs.writeFileSync(define_params_file, defines_string);
+  return last_params !== defines_string;
+}
+
 export const DefineParameter = new Juke.Parameter({
   type: 'string[]',
   alias: 'D',
@@ -203,8 +217,8 @@ export const DmTarget = new Juke.Target({
     NamedVersionFile,
   ],
   outputs: ({ get }) => {
-    if (get(DmVersionParameter) || get(DefineParameter).length > 0) {
-      // Always rebuild when a dm version or explicit CLI defines are provided to ensure juke re-runs
+    if (get(DmVersionParameter) || defineParametersChanged(get(DefineParameter))) {
+      // Always rebuild when a dm version is provided or CLI defines have changed from last run
       return [];
     }
     return [`${DME_NAME}.dmb`, `${DME_NAME}.rsc`];
