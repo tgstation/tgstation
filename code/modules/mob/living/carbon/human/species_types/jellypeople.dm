@@ -93,7 +93,6 @@
 
 /datum/species/jelly/proc/cannibalize_body(mob/living/carbon/human/target)
 	var/list/limbs_to_consume = list()
-	var/datum/species/target_species = target.dna.species
 
 	for(var/body_zone, untyped_limb in target.get_bodyparts_by_zones())
 		var/obj/item/bodypart/limb = untyped_limb
