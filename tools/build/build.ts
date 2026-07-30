@@ -325,7 +325,7 @@ export const BiomeInstallTarget = new Juke.Target({
 export const TgFontTarget = new Juke.Target({
   dependsOn: [BunTarget],
   inputs: [
-    'tgui/packages/tgfont/**/*.+(js|mjs|svg)',
+    'tgui/packages/tgfont/**/*.+(js|ts|svg)',
     'tgui/packages/tgfont/package.json',
   ],
   outputs: [
