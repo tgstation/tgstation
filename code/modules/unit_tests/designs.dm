@@ -65,7 +65,6 @@
 			// then we still should error because then we either have a missing design_path or redundant build flags
 			if (!(design.build_type & (~techweb.allowed_buildtypes)))
 				all_designs -= design_path
-		qdel(techweb)
 
 	for (var/missing_path in all_designs)
 		TEST_FAIL("Design [missing_path] is not in any of the techweb nodes or tech disks.")
