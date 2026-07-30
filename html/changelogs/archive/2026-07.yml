@@ -933,6 +933,7 @@
   - qol: IDC-27 contains symptom levels
   Melbert:
   - bugfix: Fix heretic transmutation fail text
+  - bugfix: Fix lesser magic mirror (and friends) race selection
   QuiteLiterallyAnything:
   - qol: Bluespace Artillery Cannons now indicate the space they will occupy prior
       to deployment.
@@ -940,9 +941,16 @@
   - code_imp: Optimized particle lighting
   Thunder12345:
   - bugfix: High frequency blades kept in the suit storage slot no longer look outdated.
+  - bugfix: Point-based bitrunning domains will no longer mysteriously complete themselves
+      on reruns.
   antropod:
   - rscadd: Added cement and concrete, walls, floors and pavements. Check your crafting
       guide under category Construction.
+  flleeppyy:
+  - rscadd: you can now have unlimited TGUI windows in preferences
+  hry-gh:
+  - bugfix: escape menu has map feedback links again
+  - bugfix: escape menu does not jump around sometimes when re-opening
   kyunkyunkyun:
   - bugfix: You can once again scan pod people's health with advanced/debug health
       analyzers.
