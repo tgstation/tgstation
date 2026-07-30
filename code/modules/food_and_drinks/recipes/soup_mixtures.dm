@@ -2280,13 +2280,10 @@
 	drink_type = GROSS
 
 /datum/chemical_reaction/food/soup/nutraslop
-	required_reagents = list(
-		/datum/reagent/water = 30,
-		/datum/reagent/consumable/liquidgibs = 5,
-	)
+	required_reagents = list(/datum/reagent/water = 30)
 	required_ingredients = list(
 		/obj/item/food/badrecipe = 1,
-		/obj/item/food/deadmouse/moldy = 1,
+		/obj/item/food/deadmouse = 1,
 		/obj/item/food/breadslice/moldy = 1,
 	)
 	results = list(
