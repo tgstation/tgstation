@@ -382,7 +382,7 @@
 	incompatible_modules = list(/obj/item/mod/module/emp_shield)
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 5)
-	//How much emp protection this module grants to its wearer when fully extended.
+	/// How much emp protection this module grants to its wearer when fully extended.
 	var/protection_factor = EMP_PROTECTION_MODERATE
 
 /obj/item/mod/module/emp_shield/on_install()
