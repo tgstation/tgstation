@@ -1,5 +1,5 @@
 
-/// Starts a movement loop that follows synchronous navmesh A* paths.
+/// Starts a movement loop that follows cooperative navmesh A* paths.
 /datum/move_manager/proc/navmesh_astar_move(moving,
 	chasing,
 	delay,
@@ -48,10 +48,11 @@
 	var/turf/avoid
 	var/skip_first
 	var/diagonal_handling
-	///The mover profile handed to rustg_turfmap_pathfinder(), built from `moving` so pass_flags/movement_type track it live
-	var/datum/can_pass_info/pass_info
 	///The path we're currently following
 	var/list/movement_path
+	///The SSpathfinder job currently producing a path.
+	var/datum/pathfind/turfmap/pathfinding
+	var/is_pathing = FALSE
 	///Cooldown for repathing, prevents spam
 	COOLDOWN_DECLARE(repath_cooldown)
 
@@ -69,7 +70,6 @@
 	// Native paths include the starting turf unless explicitly omitted.
 	src.skip_first = isnull(skip_first) ? TRUE : skip_first
 	src.diagonal_handling = isnull(diagonal_handling) ? DIAGONAL_DO_NOTHING : diagonal_handling
-	pass_info = new /datum/can_pass_info(moving, access)
 	movement_path = initial_path?.Copy()
 
 /// Returns whether another request can reuse this loop.
@@ -82,20 +82,32 @@
 /datum/move_loop/has_target/navmesh_astar/loop_started()
 	. = ..()
 	if(!movement_path)
-		recalculate_path()
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 
 /// Releases the path when movement stops.
 /datum/move_loop/has_target/navmesh_astar/loop_stopped()
 	. = ..()
+	cancel_pathfinding()
 	movement_path = null
 
 /// Releases the mover passability profile.
 /datum/move_loop/has_target/navmesh_astar/Destroy()
-	pass_info = null
+	cancel_pathfinding()
 	avoid = null
 	return ..()
+
+/// Cancels the outstanding native job, if any.
+/datum/move_loop/has_target/navmesh_astar/proc/cancel_pathfinding()
+	if(pathfinding)
+		pathfinding.on_finish = null
+		qdel(pathfinding)
+		pathfinding = null
+	is_pathing = FALSE
+
 /// Rebuilds the path when the repath cooldown permits it.
 /datum/move_loop/has_target/navmesh_astar/proc/recalculate_path()
+	cancel_pathfinding()
+	movement_path = null
 	if(!COOLDOWN_FINISHED(src, repath_cooldown))
 		return
 	var/turf/start = get_turf(moving)
@@ -104,21 +116,25 @@
 		return
 	COOLDOWN_START(src, repath_cooldown, repath_delay)
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_NAVMESH_REPATH)
-	pass_info = new /datum/can_pass_info(moving, access)
-	var/list/result
-	try
-		result = rustg_turfmap_pathfinder(start, goal, pass_info, NAV_IS_FLYING(pass_info), max_path_length, minimum_distance || 0, simulated_only, avoid, diagonal_handling, skip_first)
-	catch
-		return
-	movement_path = result
-	EVLOG_PATH(moving, EVLOG_CATEGORY_NAVMESH, "Planned navmesh A* path", movement_path)
+	pathfinding = SSpathfinder.turfmap_pathfind(moving, target, max_path_length, minimum_distance, access, simulated_only, avoid, skip_first, diagonal_handling, list(CALLBACK(src, PROC_REF(on_finish_pathing))))
+	is_pathing = !!pathfinding
+
+/// Accepts the completed path returned by SSpathfinder.
+/datum/move_loop/has_target/navmesh_astar/proc/on_finish_pathing(list/path)
+	pathfinding = null
+	is_pathing = FALSE
+	movement_path = path || list()
+	if(moving)
+		EVLOG_PATH(moving, EVLOG_CATEGORY_NAVMESH, "Planned navmesh A* path", movement_path)
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_NAVMESH_FINISHED_PATHING, movement_path)
 
 /// Moves one step and replans after an obstruction.
 /datum/move_loop/has_target/navmesh_astar/move()
+	if(is_pathing)
+		return MOVELOOP_NOT_READY
 	if(!length(movement_path))
 		EVLOG_TEXT(moving, EVLOG_CATEGORY_NAVMESH, "Path recalculating due to lack of path")
-		recalculate_path()
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		return MOVELOOP_FAILURE
 
 	var/turf/next_step = movement_path[1]
@@ -130,11 +146,12 @@
 			movement_path.Cut(1, 2)
 	else
 		return handle_move_attempt_failure()
+
 /// Drops a stale path after a blocked movement attempt.
 /datum/move_loop/has_target/navmesh_astar/proc/handle_move_attempt_failure()
 	EVLOG_TEXT(moving, EVLOG_CATEGORY_NAVMESH, "Path recalculating due to obstruction")
 	movement_path = null
-	recalculate_path()
+	INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 	return MOVELOOP_FAILURE
 
 /datum/move_manager/proc/navmesh_frustrations_move(moving, chasing, delay, timeout, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, subsystem, priority, flags, datum/extra_info, initial_path)
@@ -150,13 +167,16 @@
 /datum/move_loop/has_target/navmesh_astar/frustrations/recalculate_path()
 	if(initial_path_drawn && current_frustrations < maximum_frustrations)
 		return
+	return ..()
+
+/datum/move_loop/has_target/navmesh_astar/frustrations/on_finish_pathing(list/path)
 	. = ..()
 	if(length(movement_path))
 		initial_path_drawn = TRUE
 
 /datum/move_loop/has_target/navmesh_astar/frustrations/handle_move_attempt_failure()
 	if(!initial_path_drawn)
-		recalculate_path()
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		return MOVELOOP_FAILURE
 	if(!COOLDOWN_FINISHED(src, frustration_cooldown))
 		return NONE
@@ -165,5 +185,5 @@
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_NAVMESH_FRUSTRATION_INCREMENTED, current_frustrations)
 	if(current_frustrations >= maximum_frustrations)
 		current_frustrations = 0
-		recalculate_path()
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		return MOVELOOP_FAILURE

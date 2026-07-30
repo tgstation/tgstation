@@ -83,6 +83,7 @@ SUBSYSTEM_DEF(navmesh)
 			baking_turf.nav_bake()
 		if(MC_TICK_CHECK)
 			return
+
 /// Queues a dirty turf once for asynchronous baking.
 /datum/controller/subsystem/navmesh/proc/queue_turf_bake(turf/queued_turf)
 	if(queued_turf.turf_flags & NAV_QUEUED)
@@ -91,6 +92,7 @@ SUBSYSTEM_DEF(navmesh)
 	bake_queue += queued_turf
 	if(!can_fire)
 		can_fire = TRUE
+
 /// Bakes and bulk-publishes every non-space turf on a z-level.
 /datum/controller/subsystem/navmesh/proc/prebake_z(z_level)
 	var/count = 0

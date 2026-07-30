@@ -568,46 +568,37 @@
 	else
 		CRASH(output["content"])
 
-/**
- * Computes the shortest path between two turfs over a live tgstation-style navmesh, using the
- * `turf_pathfinder` byondapi feature. Reads Rust's persistent nav_pass cache (kept in sync by
- * rustg_turfmap_update / rustg_turfmap_bulk_update below), falling back to a live BYOND read + bake
- * only for coords the cache doesn't hold baked.
- * nav_pass bit 13 is the simulated-turf flag; set it for non-space, simulated turfs whenever data
- * is published to Rust.
- *
- * Arguments:
- * * start - The turf to path from
- * * end - The turf to path to. Must be on the same z-level as start
- * * pass_info - The mover's /datum/can_pass_info (or compatible datum exposing pass_flags)
- * * is_flying - TRUE to use the flying nav_pass bits instead of ground
- * * max_range - Chebyshev distance cap from start, in tiles. 0 for unlimited
- * * min_target_distance - Finish within this Chebyshev distance of end
- * * simulated_only - TRUE to exclude unsimulated turfs (including space)
- * * avoid_turf - A turf to exclude, or null
- * * diagonal_handling - DIAGONAL_DO_NOTHING (0), DIAGONAL_REMOVE_ALL (1), or
- *   DIAGONAL_REMOVE_CLUNKY (2)
- * * skip_first - TRUE for a start-exclusive path suitable for immediate movement;
- *   FALSE for the legacy start-inclusive path
- *
- * Returns an ordered /list of turfs, or an empty list if no path exists. The end is the target or
- * a turf within min_target_distance; skip_first controls whether the starting turf is included.
- */
+/// Returns a completed turf path for synchronous callers such as get_path_to().
 #define rustg_turfmap_pathfinder(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first) \
 	RUSTG_CALL(RUST_G, "byond:rustg_turfmap_pathfinder_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first)
 
 /**
- * Pushes a single turf's nav_pass bitfield into Rust's persistent (x, y, z) cache. Call right after a
- * turf (re)bakes, and at any site that marks a turf dirty - pushing a value with the baked flag clear
- * is the invalidation signal that makes the next pathfinder lookup rebake instead of trusting stale bits.
+ * Cooperative turfmap A*. Each start/resume call works for about 5ms, then returns a list with
+ * `status` (`in_progress`, `complete`, `no_path`, or `error`), an optional `job_id`, and a final
+ * `path` for complete/no_path results. Cancel abandoned or superseded jobs.
+ *
+ * nav_pass bit 13 is the simulated-turf flag and must be set whenever cached turf data is sent to
+ * Rust. This keeps `simulated_only` entirely Rust-side for baked turfs.
  */
+#define RUSTG_TURFMAP_PATH_IN_PROGRESS "in_progress"
+#define RUSTG_TURFMAP_PATH_COMPLETE "complete"
+#define RUSTG_TURFMAP_PATH_NO_PATH "no_path"
+#define RUSTG_TURFMAP_PATH_ERROR "error"
+
+#define rustg_turfmap_pathfinder_start(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first) \
+	RUSTG_CALL(RUST_G, "byond:rustg_turfmap_pathfinder_start_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first)
+
+/** Resume an in-progress job. Re-supply the current mover pass_info for any newly resolved conditional edges. */
+#define rustg_turfmap_pathfinder_resume(job_id, pass_info) \
+	RUSTG_CALL(RUST_G, "byond:rustg_turfmap_pathfinder_resume_ffi")(job_id, pass_info)
+
+/** Drop an in-progress job immediately. Jobs also expire after 30 seconds without a resume. */
+#define rustg_turfmap_pathfinder_cancel(job_id) \
+	RUSTG_CALL(RUST_G, "byond:rustg_turfmap_pathfinder_cancel_ffi")(job_id)
+
 #define rustg_turfmap_update(x, y, z, nav_pass) \
 	RUSTG_CALL(RUST_G, "byond:rustg_turfmap_update_ffi")(x, y, z, nav_pass)
 
-/**
- * Bulk form of rustg_turfmap_update for z-level-load / round-start floods. `flat_list` is
- * [x1, y1, z1, nav_pass1, x2, y2, z2, nav_pass2, ...]; its length must be a multiple of 4.
- */
 #define rustg_turfmap_bulk_update(flat_list) \
 	RUSTG_CALL(RUST_G, "byond:rustg_turfmap_bulk_update_ffi")(flat_list)
 
@@ -634,4 +625,3 @@
 /// Generates a random version 2 CUID with the given length.
 /// See https://github.com/paralleldrive/cuid2 for specifics on version 2 CUIDs.
 #define rustg_generate_cuid2_length(length) RUSTG_CALL(RUST_G, "cuid2_len")("[length]")
-

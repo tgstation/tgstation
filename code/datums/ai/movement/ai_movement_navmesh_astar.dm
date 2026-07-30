@@ -43,7 +43,7 @@
 	. = ..()
 	var/datum/move_loop/has_target/navmesh_astar/loop = GLOB.move_manager.processing_on(controller.pawn, SSai_movement)
 	if(loop)
-		loop.recalculate_path()
+		INVOKE_ASYNC(loop, TYPE_PROC_REF(/datum/move_loop/has_target/navmesh_astar, recalculate_path))
 
 /datum/ai_movement/navmesh_astar/proc/repath_incoming(datum/move_loop/has_target/navmesh_astar/source)
 	SIGNAL_HANDLER

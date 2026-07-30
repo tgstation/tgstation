@@ -7,6 +7,9 @@ SUBSYSTEM_DEF(pathfinder)
 	var/list/datum/pathfind/active_pathing = list()
 	/// List of pathfind datums being ACTIVELY processed. exists to make subsystem stats readable
 	var/list/datum/pathfind/currentrun = list()
+	/// Cooperative rust-g turfmap jobs, processed like legacy JPS work.
+	var/list/datum/pathfind/turfmap/turfmap_pathing = list()
+	var/list/datum/pathfind/turfmap/current_turfmap_run = list()
 	/// List of uncheccked source_to_map entries
 	var/list/currentmaps = list()
 	/// Assoc list of target turf -> list(/datum/path_map) centered on the turf
@@ -18,7 +21,7 @@ SUBSYSTEM_DEF(pathfinder)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/pathfinder/stat_entry(msg)
-	msg = "P:[length(active_pathing)]"
+	msg = "P:[length(active_pathing)] A:[length(turfmap_pathing)]"
 	return ..()
 
 // This is another one of those subsystems (hey lighting) in which one "Run" means fully processing a queue
@@ -26,6 +29,7 @@ SUBSYSTEM_DEF(pathfinder)
 /datum/controller/subsystem/pathfinder/fire(resumed)
 	if(!resumed)
 		src.currentrun = active_pathing.Copy()
+		src.current_turfmap_run = turfmap_pathing.Copy()
 		src.currentmaps = deep_copy_list(source_to_maps)
 
 	// Dies of sonic speed from caching datum var reads
@@ -44,6 +48,22 @@ SUBSYSTEM_DEF(pathfinder)
 		path.finished()
 		// Next please
 		currentrun.len--
+
+	var/list/datum/pathfind/turfmap/current_turfmap_run = src.current_turfmap_run
+	while(length(current_turfmap_run))
+		var/datum/pathfind/turfmap/path = current_turfmap_run[length(current_turfmap_run)]
+		var/step_start = TICK_USAGE_REAL
+		var/step_ok = path.search_step()
+		path.compute_time += TICK_USAGE_REAL - step_start
+		if(!step_ok)
+			path.early_exit()
+			current_turfmap_run.len--
+			continue
+		if(path.complete)
+			path.finished()
+		current_turfmap_run.len--
+		if(MC_TICK_CHECK)
+			return
 
 	// Go over our existing pathmaps, clear out the ones we aren't using
 	var/list/currentmaps = src.currentmaps
@@ -77,6 +97,107 @@ SUBSYSTEM_DEF(pathfinder)
 	for(var/datum/callback/finished as anything in on_finish)
 		finished.Invoke(path)
 	return TRUE
+
+/// Starts a cooperative native turfmap search and returns its queued job.
+/datum/controller/subsystem/pathfinder/proc/turfmap_pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)
+	var/datum/pathfind/turfmap/path = new()
+	path.setup(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish)
+	if(!path.start())
+		qdel(path)
+		return
+	turfmap_pathing += path
+	return path
+
+/// A rust-g turfmap search advanced one native slice per SSpathfinder fire.
+/datum/pathfind/turfmap
+	var/atom/movable/requester
+	var/turf/end
+	var/minimum_distance
+	var/skip_first
+	var/diagonal_handling
+	var/job_id
+	var/complete = FALSE
+	var/list/path
+
+/datum/pathfind/turfmap/proc/setup(atom/movable/requester, atom/goal, max_distance, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, list/datum/callback/on_finish)
+	src.requester = requester
+	src.end = get_turf(goal)
+	src.max_distance = max_distance
+	src.minimum_distance = minimum_distance || 0
+	src.pass_info = new(requester, access)
+	src.simulated_only = simulated_only
+	src.avoid = avoid
+	src.skip_first = skip_first
+	src.diagonal_handling = diagonal_handling
+	src.on_finish = on_finish
+
+/datum/pathfind/turfmap/start()
+	start = get_turf(requester)
+	. = ..()
+	if(!. || !end || start.z != end.z)
+		return FALSE
+	var/list/result
+	try
+		result = rustg_turfmap_pathfinder_start(start, end, pass_info, NAV_IS_FLYING(pass_info), max_distance, minimum_distance, simulated_only, avoid, diagonal_handling, skip_first)
+	catch
+		return FALSE
+	return handle_result(result)
+
+/datum/pathfind/turfmap/search_step()
+	if(QDELETED(requester) || QDELETED(end))
+		return FALSE
+	if(complete)
+		return TRUE
+	pass_info = new(requester, pass_info.access)
+	var/list/result
+	try
+		result = rustg_turfmap_pathfinder_resume(job_id, pass_info)
+	catch
+		return FALSE
+	return handle_result(result)
+
+/datum/pathfind/turfmap/proc/handle_result(list/result)
+	if(!islist(result))
+		return FALSE
+	switch(result["status"])
+		if(RUSTG_TURFMAP_PATH_IN_PROGRESS)
+			job_id = result["job_id"]
+			return !!job_id
+		if(RUSTG_TURFMAP_PATH_COMPLETE, RUSTG_TURFMAP_PATH_NO_PATH)
+			path = result["path"] || list()
+			complete = TRUE
+			return TRUE
+		if(RUSTG_TURFMAP_PATH_ERROR)
+			path = list()
+			complete = TRUE
+			return TRUE
+	return FALSE
+
+/datum/pathfind/turfmap/finished()
+	if(!length(path))
+		EVLOG_TEXT(requester, EVLOG_CATEGORY_NAVMESH, "No navmesh A* path (pass_flags=[pass_info.pass_flags])")
+	hand_back(path || list())
+	return ..()
+
+/datum/pathfind/turfmap/early_exit()
+	if(job_id)
+		try
+			rustg_turfmap_pathfinder_cancel(job_id)
+		catch
+			job_id = null
+	return ..()
+
+/datum/pathfind/turfmap/Destroy(force)
+	if(job_id && !complete)
+		try
+			rustg_turfmap_pathfinder_cancel(job_id)
+		catch
+			job_id = null
+	SSpathfinder.turfmap_pathing -= src
+	SSpathfinder.current_turfmap_run -= src
+	requester = null
+	end = null
+	return ..()
 
 /// Initiates a swarmed pathfind. Returns TRUE if we're good, FALSE if something's failed
 /// If a valid pathmap exists for the TARGET turf we'll use that, otherwise we have to build a new one
