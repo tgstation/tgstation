@@ -189,17 +189,10 @@
 
 /// Design disks and designs - for adding limbs and organs to the limbgrower.
 /obj/item/disk/design_disk/limbs
+	abstract_type = /obj/item/disk/design_disk/limbs
 	name = "Limb Design Disk"
 	desc = "A disk containing limb and organ designs for a limbgrower."
 	icon_state = "datadisk1"
-	/// List of all limb designs this disk contains.
-	var/list/limb_designs = list()
-
-/obj/item/disk/design_disk/limbs/Initialize(mapload)
-	. = ..()
-	for(var/design in limb_designs)
-		var/datum/design/new_design = design
-		blueprints += new new_design
 
 /datum/design/limb_disk
 	abstract_type = /datum/design/limb_disk
@@ -215,7 +208,7 @@
 
 /obj/item/disk/design_disk/limbs/felinid
 	name = "Felinid Organ Design Disk"
-	limb_designs = list(/datum/design/cat_tail, /datum/design/cat_ears, /datum/design/cat_tongue)
+	blueprints = list(/datum/design/cat_tail, /datum/design/cat_ears, /datum/design/cat_tongue)
 
 /datum/design/limb_disk/felinid
 	name = "Felinid Organ Design Disk"
@@ -224,7 +217,7 @@
 
 /obj/item/disk/design_disk/limbs/lizard
 	name = "Lizard Organ Design Disk"
-	limb_designs = list(/datum/design/lizard_tail, /datum/design/lizard_tongue)
+	blueprints = list(/datum/design/lizard_tail, /datum/design/lizard_tongue)
 
 /datum/design/limb_disk/lizard
 	name = "Lizard Organ Design Disk"
@@ -233,7 +226,7 @@
 
 /obj/item/disk/design_disk/limbs/plasmaman
 	name = "Plasmaman Organ Design Disk"
-	limb_designs = list(/datum/design/plasmaman_stomach, /datum/design/plasmaman_liver, /datum/design/plasmaman_lungs, /datum/design/plasmaman_tongue)
+	blueprints = list(/datum/design/plasmaman_stomach, /datum/design/plasmaman_liver, /datum/design/plasmaman_lungs, /datum/design/plasmaman_tongue)
 
 /datum/design/limb_disk/plasmaman
 	name = "Plasmaman Organ Design Disk"
@@ -242,7 +235,7 @@
 
 /obj/item/disk/design_disk/limbs/ethereal
 	name = "Ethereal Organ Design Disk"
-	limb_designs = list(/datum/design/ethereal_stomach, /datum/design/ethereal_tongue, /datum/design/ethereal_lungs)
+	blueprints = list(/datum/design/ethereal_stomach, /datum/design/ethereal_tongue, /datum/design/ethereal_lungs)
 
 /datum/design/limb_disk/ethereal
 	name = "Ethereal Organ Design Disk"

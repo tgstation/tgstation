@@ -233,10 +233,9 @@ Nothing else in the console has ID requirements.
 			"stored_research" = t_disk.stored_nodes,
 		)
 	if (d_disk)
-		data["d_disk"] = list("blueprints" = list())
-		for (var/datum/design/D in d_disk.blueprints)
-			data["d_disk"]["blueprints"] += D.type
-
+		data["d_disk"] = list(
+			"blueprints" = d_disk.blueprints,
+		)
 
 	// Serialize all nodes to display
 	for(var/node_path, node_tier in stored_research.tiers)
@@ -409,9 +408,8 @@ Nothing else in the console has ID requirements.
 				if(QDELETED(d_disk))
 					say("No design disk inserted!")
 					return TRUE
-				for(var/D in d_disk.blueprints)
-					if(D)
-						stored_research.add_design(D, TRUE)
+				for(var/design_path in d_disk.blueprints)
+					stored_research.add_design(design_path, TRUE)
 				say("Uploading blueprints from disk.")
 				d_disk.on_upload(stored_research, src)
 				return TRUE

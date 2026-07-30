@@ -35,7 +35,7 @@
 /datum/unit_test/design_source
 
 /datum/unit_test/design_source/Run()
-	var/list/all_designs = SSresearch.techweb_designs.Copy()
+	var/list/all_designs = assoc_to_keys(SSresearch.techweb_designs)
 
 	for (var/node_path, _node in SSresearch.techweb_nodes)
 		var/datum/techweb_node/node = _node
@@ -44,8 +44,7 @@
 	// Designs can also be disk-exclusive
 	for (var/obj/item/disk/design_disk/design_disk as anything in subtypesof(/obj/item/disk/design_disk))
 		design_disk = new design_disk()
-		for (var/datum/design/design in design_disk.blueprints)
-			all_designs -= design.type
+		all_designs -= design_disk.blueprints
 		qdel(design_disk)
 
 	for (var/obj/item/disk/surgery/design_disk as anything in subtypesof(/obj/item/disk/surgery))
@@ -58,7 +57,8 @@
 
 	// Or machine-exclusive
 	for (var/datum/techweb/autounlocking/techweb as anything in subtypesof(/datum/techweb/autounlocking))
-		techweb = new techweb()
+		GLOB.autounlock_techwebs[techweb] ||= new techweb()
+		techweb = GLOB.autounlock_techwebs[techweb]
 		for (var/design_path in techweb.researched_designs + techweb.hacked_designs)
 			var/datum/design/design = SSresearch.techweb_designs[design_path]
 			// If we have a design thats supposed to be printable from a protolathe and an autolathe, but only autolathes can print it

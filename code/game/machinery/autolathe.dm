@@ -488,9 +488,8 @@
 		balloon_alert(user, "close the panel first!")
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] begins to load \the [tool] in \the [src]..."),
-		balloon_alert(user, "uploading design..."),
-		span_hear("You hear the chatter of a floppy drive."))
+	user.visible_message(span_notice("[user] begins to load \the [tool] in \the [src]..."), blind_message = span_hear("You hear the chatter of a floppy drive."))
+	balloon_alert(user, "uploading design...")
 	busy = TRUE
 
 	if(!do_after(user, 1.5 SECONDS, target = src))
@@ -501,11 +500,12 @@
 
 	var/obj/item/disk/design_disk/disky = tool
 	var/list/not_imported
-	for(var/datum/design/blueprint in disky.blueprints)
-		if(blueprint.build_type & AUTOLATHE)
-			LAZYSET(imported_designs, blueprint.type, TRUE)
+	for(var/design_path in disky.blueprints)
+		var/datum/design/disk_design = SSresearch.techweb_designs[design_path]
+		if(disk_design.build_type & AUTOLATHE)
+			LAZYSET(imported_designs, design_path, TRUE)
 		else
-			LAZYADD(not_imported, blueprint.name)
+			LAZYADD(not_imported, disk_design.name)
 
 	if(not_imported)
 		to_chat(user, span_warning("The following design[LAZYLEN(not_imported) > 1 ? "s" : ""] couldn't be imported: [english_list(not_imported)]"))

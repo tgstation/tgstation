@@ -156,8 +156,8 @@
 		busy = TRUE
 		var/obj/item/disk/design_disk/limbs/limb_design_disk = tool
 		if(do_after(user, 2 SECONDS, target = src))
-			for(var/datum/design/found_design in limb_design_disk.blueprints)
-				LAZYSET(imported_designs, found_design.type, TRUE)
+			for(var/found_design in limb_design_disk.blueprints)
+				LAZYSET(imported_designs, found_design, TRUE)
 			update_static_data(user)
 		busy = FALSE
 		return ITEM_INTERACT_SUCCESS
