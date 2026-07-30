@@ -81,7 +81,7 @@
 			"have_experiments_done" = stored_research.have_experiments_for_node(node),
 			"tier" = node_tier,
 			"enqueued_by_user" = enqueued_by_user,
-			"discount_boosted" = node.discount_boosted
+			"discount_boosted" = !!stored_research.boosted_nodes[node_path],
 		))
 
 	// Get experiments and serialize them

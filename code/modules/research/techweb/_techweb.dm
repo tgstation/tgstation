@@ -22,8 +22,10 @@
 	var/list/researched_designs = list()
 	/// Custom inserted designs like from disks that should survive recalculation.
 	var/list/custom_designs = list()
-	/// Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.
+	/// Hidden nodes. Used for unhiding nodes when requirements are met by removing the entry of the node. Associative for faster lookup.
 	var/list/hidden_nodes = list()
+	/// A list of nodes that have been boosted. Associative for faster lookup.
+	var/list/boosted_nodes = list()
 	/// List of items already deconstructed for research points, preventing infinite research point generation.
 	var/list/deconstructed_items = list()
 	/// Available research points, type = number
@@ -391,7 +393,7 @@
 	LAZYINITLIST(node.discount_boosts)
 	for(var/point_type, point_amount in point_list) // Essentially applies the greater boost(s) between the newer and any existing.
 		node.discount_boosts[point_type] = max(node.discount_boosts[point_type], point_amount)
-	node.discount_boosted = TRUE
+	boosted_nodes[node.type] = TRUE
 	unhide_node(node)
 	update_node_status(node)
 	return TRUE

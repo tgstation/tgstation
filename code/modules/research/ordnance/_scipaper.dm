@@ -308,7 +308,7 @@
 
 	if(purchasing_techweb.scientific_cooperation[type] < (boost_amount * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER)) // Too expensive
 		return FALSE
-	if((boosting_node.discount_boosted) && (boosting_node.discount_boosts[TECHWEB_POINT_TYPE_GENERIC] >= boost_amount)) // Already bought or we have a bigger discount
+	if(purchasing_techweb.boosted_nodes[node_path] && (boosting_node.discount_boosts[TECHWEB_POINT_TYPE_GENERIC] >= boost_amount)) // Already bought or we have a bigger discount
 		return FALSE
 	if(purchasing_techweb.researched_nodes[node_path])
 		return SCIPAPER_ALREADY_BOUGHT

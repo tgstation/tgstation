@@ -33,10 +33,6 @@
 	/// Boost quantities from non-experiment sources (i.e., toxins papers).
 	/// Indexed by point type to boost amount (with only one boost per point type).
 	var/list/discount_boosts
-	/// Boolean indicating whether or not this node is boosted by non-experiments.
-	/// This will need to be changed to a list of point types boosted if boosts
-	/// should ever need to vary by point type.
-	var/discount_boosted = FALSE
 	/// When this node is completed, allows these experiments to be performed.
 	var/list/experiments_to_unlock
 
@@ -71,10 +67,10 @@
 				if(host.completed_experiments[experiment_type]) //do we have this discount_experiment unlocked?
 					actual_costs[cost_type] -= discount_amount
 
-	if(LAZYLEN(discount_boosts) && discount_boosted) // Boosts should be subservient to experiments.
-		for(var/booster, boost_amount in discount_boosts)
-			if(actual_costs[booster])
-				actual_costs[booster] = max(actual_costs[booster] - boost_amount, 0)
+	if(LAZYLEN(discount_boosts) && host.boosted_nodes[type]) // Boosts should be subservient to experiments.
+		for(var/boost_type, boost_amount in discount_boosts)
+			if(actual_costs[boost_type])
+				actual_costs[boost_type] = max(actual_costs[boost_type] - boost_amount, 0)
 
 	return actual_costs
 
