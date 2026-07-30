@@ -317,14 +317,18 @@
 	/// Add about half this much extra blood regen per second.
 	var/extra_regen = 0.25
 
-	/// Add many extra units of blood per unit of saline.
-	var/dilution_per_unit = 5
-
-	/// Doesn't dilute blood beyond this point.
-	var/dilution_cap = BLOOD_VOLUME_NORMAL
-
 	/// Only supplements blood types that use this restoration chem.
 	var/required_restoration_chem = /datum/reagent/iron
+
+/datum/reagent/medicine/salglu_solution/on_mob_add(mob/living/affected_mob, amount)
+	. = ..()
+	if(affected_mob.get_bloodtype()?.restoration_chem != required_restoration_chem)
+		return
+
+	if(affected_mob.has_status_effect(/datum/status_effect/stacking/saline_glucose_dilution))
+		return
+
+	affected_mob.apply_status_effect(/datum/status_effect/stacking/saline_glucose_dilution)
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
