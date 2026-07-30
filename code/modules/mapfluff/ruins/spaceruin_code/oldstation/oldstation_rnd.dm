@@ -4,8 +4,8 @@
 	req_access = list(ACCESS_AWAY_SCIENCE)
 
 /obj/machinery/rnd/server/oldstation/Initialize(mapload)
-	var/datum/techweb/oldstation_web = locate(/datum/techweb/oldstation) in SSresearch.techwebs
-	oldstation_web ||= new /datum/techweb/oldstation()
+	var/datum/techweb/oldstation/oldstation_web = locate(/datum/techweb/oldstation) in SSresearch.techwebs
+	oldstation_web ||= new()
 	stored_research = oldstation_web
 	return ..()
 

@@ -38,13 +38,6 @@
 	adjust_all_points(INFINITY)
 	hidden_nodes.Cut()
 
-/**
- * Techweb made through tech disks
- * Contains nothing, subtype mostly meant to make it easy for admins to see.
- */
-/datum/techweb/disk
-	id = "D1SK"
-
 GLOBAL_LIST_EMPTY(autounlock_techwebs)
 
 /**

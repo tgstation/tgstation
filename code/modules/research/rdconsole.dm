@@ -229,8 +229,8 @@ Nothing else in the console has ID requirements.
 	)
 
 	if (t_disk)
-		data["t_disk"] = list (
-			"stored_research" = t_disk.stored_research.researched_nodes,
+		data["t_disk"] = list(
+			"stored_research" = t_disk.stored_nodes,
 		)
 	if (d_disk)
 		data["d_disk"] = list("blueprints" = list())
@@ -424,7 +424,7 @@ Nothing else in the console has ID requirements.
 					return TRUE
 				COOLDOWN_START(src, cooldowncopy, 5 SECONDS)
 				say("Uploading technology disk.")
-				t_disk.stored_research.copy_research_to(stored_research)
+				stored_research.absorb_techdisk(t_disk)
 			return TRUE
 
 		//Tech disk-only action.
@@ -437,7 +437,7 @@ Nothing else in the console has ID requirements.
 				return
 			COOLDOWN_START(src, cooldowncopy, 5 SECONDS)
 			say("Downloading to technology disk.")
-			stored_research.copy_research_to(t_disk.stored_research)
+			t_disk.stored_nodes |= stored_research.researched_nodes
 			return TRUE
 
 /obj/machinery/computer/rdconsole/proc/eject_disk(type)

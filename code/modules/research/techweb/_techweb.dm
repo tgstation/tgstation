@@ -12,13 +12,13 @@
 	/// Organization name, used for display
 	var/organization = "Third-Party"
 
-	/// Already unlocked and all designs are now available. Assoc list, id = TRUE
+	/// A list of researched nodes. Associative for faster lookup.
 	var/list/researched_nodes = list()
-	/// Visible nodes, doesn't mean it can be researched. Assoc list, id = TRUE
+	/// Visible nodes, doesn't mean it can be researched. Associative for faster lookup.
 	var/list/visible_nodes = list()
-	/// Nodes that can immediately be researched, all reqs met. assoc list, id = TRUE
+	/// Nodes that can immediately be researched, all reqs met. Associative for faster lookup.
 	var/list/available_nodes = list()
-	/// Designs that are available for use. Assoc list, id = TRUE
+	/// A list of unlocked designs. Associative for faster lookup.
 	var/list/researched_designs = list()
 	/// Custom inserted designs like from disks that should survive recalculation.
 	var/list/custom_designs = list()
@@ -115,15 +115,12 @@
 		new_points[point_type] = point_amount
 	adjust_multiple_points(new_points)
 
-/// Adds our research to another techweb
-/datum/techweb/proc/copy_research_to(datum/techweb/receiver)
-	// We can see it so let them see it too.
-	var/list/our_not_hidden_nodes = get_available_nodes() | get_researched_nodes() | get_visible_nodes()
-	receiver.hidden_nodes -= our_not_hidden_nodes
-	for(var/node_path in researched_nodes - receiver.researched_nodes)
+/// Takes all of the research from a tech disk
+/datum/techweb/proc/absorb_techdisk(obj/item/disk/tech_disk/disk)
+	for(var/node_path in disk.stored_nodes - researched_nodes)
 		CHECK_TICK
-		receiver.research_node(node_path, TRUE, FALSE, FALSE)
-	receiver.recalculate_nodes()
+		research_node(node_path, TRUE, FALSE, FALSE)
+	recalculate_nodes()
 
 /datum/techweb/proc/get_visible_nodes() //The way this is set up is shit but whatever.
 	return visible_nodes - hidden_nodes
