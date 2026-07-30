@@ -1,4 +1,3 @@
-
 /obj/item/disk/tech_disk
 	name = "technology disk"
 	desc = "A disk for storing technology data for further research."

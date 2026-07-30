@@ -11,9 +11,9 @@ SUBSYSTEM_DEF(research)
 	/// An associative list of design typepaths to instances.
 	var/list/techweb_designs = list()
 
-	/// An associative list of item typepaths to a list of design instances that build that item
-	/// e.g: [/obj/item/wrench --> [/datum/design/wrench (instance)...]]
-	var/list/list/datum/design/item_to_design = list()
+	/// An associative list of item typepaths to a list of design typepaths that build that item
+	/// e.g: [/obj/item/wrench --> [/datum/design/wrench...]]
+	var/list/item_to_design = list()
 
 	/// List of all techwebs, generating points or not.
 	/// Autolathes, Mechfabs, and others all have shared techwebs, for example.
@@ -109,7 +109,7 @@ SUBSYSTEM_DEF(research)
 
 		var/build_path = design_path::build_path
 		if(!isnull(build_path))
-			LAZYADD(item_to_design[build_path], new_design)
+			LAZYADD(item_to_design[build_path], design_path)
 
 		techweb_designs[design_path] = new_design
 
