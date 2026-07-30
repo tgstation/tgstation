@@ -466,67 +466,67 @@
 
 		if(istype(task, /datum/manipulator_task/cargo/pickup))
 			td["task_type"] = TASK_TYPE_PICKUP
-			var/datum/manipulator_task/cargo/pickup/t = task
-			td["turf"] = "[t.offset_dx],[t.offset_dy]"
-			td["filters_status"] = t.should_use_filters
-			td["item_filters"] = _collect_filter_names(t.atom_filters)
-			td["settings_list"] = _collect_priorities(t.interaction_priorities)
-			td["pickup_eagerness"] = t.pickup_eagerness
+			var/datum/manipulator_task/cargo/pickup/pickup_task = task
+			td["turf"] = "[pickup_task.offset_dx],[pickup_task.offset_dy]"
+			td["filters_status"] = pickup_task.should_use_filters
+			td["item_filters"] = _collect_filter_names(pickup_task.atom_filters)
+			td["settings_list"] = _collect_priorities(pickup_task.interaction_priorities)
+			td["pickup_eagerness"] = pickup_task.pickup_eagerness
 
 		else if(istype(task, /datum/manipulator_task/cargo/dropoff_base/drop))
 			td["task_type"] = TASK_TYPE_DROP
-			var/datum/manipulator_task/cargo/dropoff_base/drop/t = task
-			td["turf"] = "[t.offset_dx],[t.offset_dy]"
-			td["filters_status"] = t.should_use_filters
-			td["item_filters"] = _collect_filter_names(t.atom_filters)
-			td["settings_list"] = _collect_priorities(t.interaction_priorities)
-			td["overflow_status"] = t.overflow_status
+			var/datum/manipulator_task/cargo/dropoff_base/drop/drop_task = task
+			td["turf"] = "[drop_task.offset_dx],[drop_task.offset_dy]"
+			td["filters_status"] = drop_task.should_use_filters
+			td["item_filters"] = _collect_filter_names(drop_task.atom_filters)
+			td["settings_list"] = _collect_priorities(drop_task.interaction_priorities)
+			td["overflow_status"] = drop_task.overflow_status
 
 		else if(istype(task, /datum/manipulator_task/cargo/dropoff_base/throw))
 			td["task_type"] = TASK_TYPE_THROW
-			var/datum/manipulator_task/cargo/dropoff_base/throw/t = task
-			td["turf"] = "[t.offset_dx],[t.offset_dy]"
-			td["filters_status"] = t.should_use_filters
-			td["item_filters"] = _collect_filter_names(t.atom_filters)
-			td["settings_list"] = _collect_priorities(t.interaction_priorities)
-			td["throw_range"] = t.throw_range
+			var/datum/manipulator_task/cargo/dropoff_base/throw/throw_task = task
+			td["turf"] = "[throw_task.offset_dx],[throw_task.offset_dy]"
+			td["filters_status"] = throw_task.should_use_filters
+			td["item_filters"] = _collect_filter_names(throw_task.atom_filters)
+			td["settings_list"] = _collect_priorities(throw_task.interaction_priorities)
+			td["throw_range"] = throw_task.throw_range
 
 		else if(istype(task, /datum/manipulator_task/cargo/dropoff_base/use))
 			td["task_type"] = TASK_TYPE_USE
-			var/datum/manipulator_task/cargo/dropoff_base/use/t = task
-			td["turf"] = "[t.offset_dx],[t.offset_dy]"
-			td["filters_status"] = t.should_use_filters
-			td["item_filters"] = _collect_filter_names(t.atom_filters)
-			td["settings_list"] = _collect_priorities(t.interaction_priorities)
-			td["worker_use_rmb"] = t.worker_use_rmb
-			td["worker_combat_mode"] = t.worker_combat_mode
-			td["skip_anchored"] = t.skip_anchored
+			var/datum/manipulator_task/cargo/dropoff_base/use/use_task = task
+			td["turf"] = "[use_task.offset_dx],[use_task.offset_dy]"
+			td["filters_status"] = use_task.should_use_filters
+			td["item_filters"] = _collect_filter_names(use_task.atom_filters)
+			td["settings_list"] = _collect_priorities(use_task.interaction_priorities)
+			td["worker_use_rmb"] = use_task.worker_use_rmb
+			td["worker_combat_mode"] = use_task.worker_combat_mode
+			td["skip_anchored"] = use_task.skip_anchored
 
 		else if(istype(task, /datum/manipulator_task/cargo/interact))
 			td["task_type"] = TASK_TYPE_INTERACT
-			var/datum/manipulator_task/cargo/interact/t = task
-			td["turf"] = "[t.offset_dx],[t.offset_dy]"
-			td["filters_status"] = t.should_use_filters
-			td["item_filters"] = _collect_filter_names(t.atom_filters)
-			td["settings_list"] = _collect_priorities(t.interaction_priorities)
-			td["worker_use_rmb"] = t.worker_use_rmb
-			td["worker_combat_mode"] = t.worker_combat_mode
-			td["skip_anchored"] = t.skip_anchored
+			var/datum/manipulator_task/cargo/interact/interact_task = task
+			td["turf"] = "[interact_task.offset_dx],[interact_task.offset_dy]"
+			td["filters_status"] = interact_task.should_use_filters
+			td["item_filters"] = _collect_filter_names(interact_task.atom_filters)
+			td["settings_list"] = _collect_priorities(interact_task.interaction_priorities)
+			td["worker_use_rmb"] = interact_task.worker_use_rmb
+			td["worker_combat_mode"] = interact_task.worker_combat_mode
+			td["skip_anchored"] = interact_task.skip_anchored
 
 		else if(istype(task, /datum/manipulator_task/simple/wait))
 			td["task_type"] = TASK_TYPE_WAIT
-			var/datum/manipulator_task/simple/wait/t = task
-			td["time"] = t.time_seconds
+			var/datum/manipulator_task/simple/wait/wait_task = task
+			td["time"] = wait_task.time_seconds
 
 		else if(istype(task, /datum/manipulator_task/simple/stop))
 			td["task_type"] = TASK_TYPE_STOP
-			var/datum/manipulator_task/simple/stop/t = task
-			td["sub_name"] = t.sub_name
+			var/datum/manipulator_task/simple/stop/stop_task = task
+			td["sub_name"] = stop_task.sub_name
 
 		else if(istype(task, /datum/manipulator_task/cargo/move))
 			td["task_type"] = TASK_TYPE_MOVE
-			var/datum/manipulator_task/cargo/move/t = task
-			td["turf"] = "[t.offset_dx],[t.offset_dy]"
+			var/datum/manipulator_task/cargo/move/move_task = task
+			td["turf"] = "[move_task.offset_dx],[move_task.offset_dy]"
 
 		tasks_data += list(td)
 
