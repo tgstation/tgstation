@@ -46,7 +46,7 @@
 	victim.set_hairstyle("Bald", update = TRUE)
 
 /datum/experimental_cloner_fuckup/bald/is_valid(species_type)
-	return !is_path_in_list(/datum/species/human, /datum/species/ethereal)
+	return is_path_in_list(species_type, list(/datum/species/human, /datum/species/ethereal))
 
 /// Give a brain trauma or two
 /datum/experimental_cloner_fuckup/brain_trauma
