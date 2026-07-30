@@ -124,7 +124,8 @@ SUBSYSTEM_DEF(pathfinder)
 	src.end = get_turf(goal)
 	src.max_distance = max_distance
 	src.minimum_distance = minimum_distance || 0
-	src.pass_info = new(requester, access)
+	// An empty access profile cannot operate even unrestricted airlocks.
+	src.pass_info = new(requester, access, no_id = !length(access))
 	src.simulated_only = simulated_only
 	src.avoid = avoid
 	src.skip_first = skip_first
@@ -148,7 +149,6 @@ SUBSYSTEM_DEF(pathfinder)
 		return FALSE
 	if(complete)
 		return TRUE
-	pass_info = new(requester, pass_info.access)
 	var/list/result
 	try
 		result = rustg_turfmap_pathfinder_resume(job_id, pass_info)
