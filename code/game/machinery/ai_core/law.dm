@@ -537,7 +537,9 @@
 		// Don't add this one if we're replacing a random law later
 		if(!core_sub_ion && prob(base_ion_prob))
 			core.set_ioned(TRUE)
-			core.laws.Insert(1, ion_message || generate_ion_law())
+			var/final_ion_message = ion_message || generate_ion_law()
+			core.laws.Insert(1, final_ion_message)
+			core.laws[final_ion_message] = TRUE
 			ion_message = null
 			log_law_change(null, "ion added law to [src] ([log_status()], text: \"[core.laws[1]]\")")
 			ions_added++
@@ -551,12 +553,14 @@
 		// For supplied laws: Chance the entire supplied law is replaced with a new ion law.
 		// If we had no core law and thus added no ion law, this is guaranteed to replace the first supplied law
 		if(ions_added < ion_limit && (ion_message || (law == core && core_sub_ion) || prob(sub_ion_prob)))
-			var/picked_law = length(law.laws) <= 1 ? 1 : rand(2, length(law.laws))
-			var/replaced_law = law.laws[picked_law]
+			var/picked_law_index = length(law.laws) <= 1 ? 1 : rand(2, length(law.laws))
+			var/replaced_law = law.laws[picked_law_index]
+			var/final_ion_message = ion_message || generate_ion_law()
 			law.set_ioned(TRUE)
-			law.laws[picked_law] = ion_message || generate_ion_law()
+			law.laws[picked_law_index] = final_ion_message
+			law.laws[final_ion_message] = TRUE
 			ion_message = null
-			log_law_change(null, "ion replaced law in [src] ([log_status()], text: \"[replaced_law]\" -> \"[law.laws[picked_law]]\")")
+			log_law_change(null, "ion replaced law in [src] ([log_status()], text: \"[replaced_law]\" -> \"[final_ion_message]\")")
 			ions_added++
 			. = TRUE
 

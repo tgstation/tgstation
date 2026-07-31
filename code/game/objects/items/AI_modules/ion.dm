@@ -14,9 +14,8 @@ CONTAINS:
 
 /obj/item/ai_module/law/core/full/damaged/proc/gen_laws()
 	laws.Cut()
-	laws += generate_ion_law()
-	while(prob(75))
-		laws += generate_ion_law()
+	while(!length(laws) && prob(75))
+		laws[generate_ion_law()] = TRUE
 
 /obj/item/ai_module/law/core/full/damaged/on_rack_install(obj/machinery/ai_law_rack/rack)
 	gen_laws()
@@ -39,11 +38,12 @@ CONTAINS:
 	laws = list("")
 
 /obj/item/ai_module/law/toy_ai/apply_to_combined_lawset(datum/ai_laws/combined_lawset)
-	combined_lawset.add_inherent_law(laws[1], 1)
+	combined_lawset.add_inherent_law(laws[1], 1, ioned = TRUE)
 
 /obj/item/ai_module/law/toy_ai/configure(mob/user)
 	. = TRUE
-	laws[1] = generate_ion_law()
+	laws.Cut()
+	laws[generate_ion_law()] = TRUE
 	to_chat(user, span_notice("You press the button on [src]."))
 	playsound(user, 'sound/machines/click.ogg', 20, TRUE)
 	src.loc.visible_message(span_warning("[icon2html(src, viewers(loc))] [laws[1]]"))

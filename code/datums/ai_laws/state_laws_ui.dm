@@ -29,10 +29,10 @@
 	for(var/law in owner.laws.hacked)
 		law_data += list(law_to_ui_data(law, ion_num(), "hacked"))
 	var/number = 1
-	for(var/law in owner.laws.inherent)
-		law_data += list(law_to_ui_data(law, number++, "core"))
-	for(var/law in owner.laws.supplied)
-		law_data += list(law_to_ui_data(law, number++, "supplied"))
+	for(var/law, is_ioned in owner.laws.inherent)
+		law_data += list(law_to_ui_data(law, is_ioned ? ion_num() : number++, "core"))
+	for(var/law, is_ioned in owner.laws.supplied)
+		law_data += list(law_to_ui_data(law, is_ioned ? ion_num() : number++, "supplied"))
 	return law_data
 
 /datum/state_laws_ui/proc/law_to_ui_data(law_text, law_number, law_type)
