@@ -2284,7 +2284,7 @@
 	required_ingredients = list(
 		/obj/item/food/badrecipe = 1,
 		/obj/item/food/deadmouse = 1,
-		/obj/item/food/breadslice/moldy = 1,
+		/obj/item/food/breadslice = 1,
 	)
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/nutraslop = 30,
