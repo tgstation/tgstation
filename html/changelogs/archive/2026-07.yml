@@ -965,6 +965,8 @@
       in morgue slabs
   QuiteLiterallyAnything:
   - bugfix: Fixed missing texture fish suicide.
+  - bugfix: Stray Syndicate cargo pods now drop with Syndicate-styled crates rather
+      than generic grey ones.
   lelandkemble:
   - bugfix: All slapcrafting recipes now work again
   mcbalaam:
