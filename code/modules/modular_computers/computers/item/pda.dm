@@ -455,3 +455,48 @@
 	if(iscyborg(silicon_owner))
 		var/mob/living/silicon/robot/robo = silicon_owner
 		robo.lamp_color = COLOR_RED //Syndicate likes it red
+
+/obj/item/modular_computer/pda/aura
+	name = "auraphone"
+	icon = 'icons/obj/devices/modular_pda.dmi'
+	icon_state = "pda-aura"
+	icon_state_menu = "menu-aura"
+	post_init_icon_state = null
+	base_icon_state = "pda-aura"
+	greyscale_config = null
+	greyscale_colors = null
+
+	has_light = FALSE //tablet light button actually enables/disables the borg lamp
+	comp_light_luminosity = 0
+	inserted_item = null
+	has_pda_programs = FALSE
+	starting_programs = list(
+		/datum/computer_file/program/messenger,
+	)
+	var/image/note_overlay
+
+/obj/item/modular_computer/pda/aura/turn_on(mob/user, open_ui = TRUE)
+	. = ..()
+	playsound(src, 'sound/machines/auramusic.ogg', 50, TRUE)
+	start_animation()
+
+/obj/item/modular_computer/pda/aura/proc/start_animation()
+	if(!note_overlay)
+		note_overlay = image('icons/effects/particles/notes/note.dmi', src, "note_7")
+		add_overlay(note_overlay)
+
+	base_pixel_x = pixel_x
+	animate(src, pixel_x = base_pixel_x + 2, time = 3, loop = -1)
+	animate(pixel_x = base_pixel_x - 2, time = 6)
+	animate(pixel_x = base_pixel_x, time = 3)
+
+/obj/item/modular_computer/pda/aura/proc/stop_animation()
+	animate(src)
+	if(note_overlay)
+		cut_overlay(note_overlay)
+		note_overlay = null
+	pixel_x = base_pixel_x
+
+/obj/item/modular_computer/pda/aura/shutdown_computer(mob/user)
+	stop_animation()
+	return ..()
