@@ -50,7 +50,7 @@ const define_params_file = 'data/last_define_params.json'
 function defineParametersChanged(defines: string[]): boolean {
   const defines_string = JSON.stringify(defines);
   if(!fs.existsSync(define_params_file)) {
-    const fd = fs.openSync(define_params_file, 'w');
+    const fd = fs.openSync(define_params_file, fs.constants.O_CREAT | fs.constants.O_WRONLY);
     fs.writeSync(fd, defines_string);
     fs.closeSync(fd);
     return true;
