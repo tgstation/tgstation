@@ -42,7 +42,7 @@ jobs:
           MERGE_BRANCH: "merge-upstream"
           CHANGELOG_AUTHOR: "tgstation"
           TRANSLATE_CHANGES: "true"
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ORG_EMPTY_TOKEN: ${{ secrets.ORG_EMPTY_TOKEN }}
           LOG_LEVEL: ${{ runner.debug && 'DEBUG' || 'INFO' }}
         run: |
           git config --global user.email "action@github.com"

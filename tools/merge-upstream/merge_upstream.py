@@ -59,7 +59,7 @@ def check_env():
         "MERGE_BRANCH"
     ]
     if TRANSLATE_CHANGES:
-        required_vars.append("OPENAI_API_KEY")
+        required_vars.append("ORG_EMPTY_TOKEN")
     missing_vars = [var for var in required_vars if not os.getenv(var)]
     if missing_vars:
         logging.error("Missing required environment variables: %s", ", ".join(missing_vars))
@@ -79,7 +79,7 @@ TARGET_BRANCH = os.getenv("TARGET_BRANCH")
 UPSTREAM_REPO = os.getenv("UPSTREAM_REPO")
 UPSTREAM_BRANCH = os.getenv("UPSTREAM_BRANCH")
 MERGE_BRANCH = os.getenv("MERGE_BRANCH")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+ORG_EMPTY_TOKEN = os.getenv("ORG_EMPTY_TOKEN")
 
 
 def run_command(command: str) -> str:
@@ -271,13 +271,16 @@ def translate_changelog(changelog: typing.Dict[int, list[Change]]):
     with open(script_dir.joinpath("translation_context.txt"), encoding="utf-8") as f:
         context = "\n".join(f.readlines()).strip()
 
-    client = OpenAI(api_key=OPENAI_API_KEY)
+    client = OpenAI(
+        api_key=ORG_EMPTY_TOKEN,
+        base_url="https://g4f.space/v1"
+    )
     response: ChatCompletion = client.chat.completions.create(
         messages=[
             {"role": "system", "content": context},
             {"role": "user", "content": text}
         ],
-        model="gpt-5-mini",
+        model="auto",
     )
     translated_text: str | None = response.choices[0].message.content
 
