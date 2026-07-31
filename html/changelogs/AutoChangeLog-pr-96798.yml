@@ -1,6 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "fixed a runtime when deconstructing a bookshelf"
-  - bugfix: "you can now change your mind at the very last second about making a modsuit"
-  - code_imp: "30 files have been converted from attackby() to item_interaction()"

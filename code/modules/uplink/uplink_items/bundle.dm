@@ -37,10 +37,12 @@
 	desc = "A telecrystal in its rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
 	item = /obj/item/stack/telecrystal
 	cost = 1
-	// Don't add telecrystals to the purchase_log since
-	// it's just used to buy more items (including itself!)
-	purchase_log_vis = FALSE
 	purchasable_from = NONE
+
+// Don't add telecrystals to the purchase_log since
+// it's just used to buy more items (including itself!)
+/datum/uplink_item/bundles_tc/telecrystal/log_purchase(atom/spawned_item, datum/uplink_handler/uplink_handler)
+	return
 
 /datum/uplink_item/bundles_tc/bundle_a
 	name = "Syndi-kit Tactical"
@@ -132,7 +134,28 @@
 		"style" = /datum/pod_style/syndicate,
 		"spawn" = surplus_crate,
 	))
-	return source //For log icon
+	return surplus_crate //For log icon
+
+/datum/uplink_item/bundles_tc/surplus/log_purchase(atom/spawned_item, datum/uplink_handler/uplink_handler)
+	. = ..()
+	var/list/entries = list()
+	for(var/obj/item/loot in spawned_item)
+		if(entries[loot.type])
+			var/datum/uplink_purchase_entry/existing_entry = entries[loot.type]
+			existing_entry.amount_purchased += 1
+			continue
+
+		var/datum/uplink_purchase_entry/custom_entry = new()
+		custom_entry.set_item(loot)
+		custom_entry.base_cost = 0
+		custom_entry.spent_cost = 0
+		custom_entry.amount_purchased = 1
+		custom_entry.name = "Surplus Item: [format_text(loot.name)]"
+		custom_entry.desc = "Obtained via surplus crate."
+		entries[loot.type] = custom_entry
+
+	for(var/entry_type, entry_datum in entries)
+		uplink_handler.purchase_log.log_purchase_custom(entry_datum)
 
 /datum/uplink_item/bundles_tc/surplus/united
 	name = "United Surplus Crate"
