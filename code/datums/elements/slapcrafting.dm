@@ -74,7 +74,7 @@
 
 	var/list/result_to_recipe = list()
 
-	var/final_recipe = valid_recipes[1]
+	var/datum/crafting_recipe/final_recipe = valid_recipes[1]
 	var/string_chosen_recipe
 	if(length(valid_recipes) > 1)
 		for(var/datum/crafting_recipe/recipe as anything in valid_recipes)
@@ -92,15 +92,17 @@
 	if(string_chosen_recipe)
 		final_recipe = result_to_recipe[string_chosen_recipe]
 
-	var/datum/crafting_recipe/actual_recipe = GLOB.cooking_recipes_by_typepath[final_recipe] || GLOB.crafting_recipes_by_typepath[final_recipe]
-	if(!actual_recipe)
-		CRASH("Recipe not located in cooking or crafting recipes: [final_recipe]")
+	if(ispath(final_recipe))
+		var/recipe_path = final_recipe
+		final_recipe = GLOB.cooking_recipes_by_typepath[recipe_path] || GLOB.crafting_recipes_by_typepath[recipe_path]
+		if(!final_recipe)
+			CRASH("Recipe not located in cooking or crafting recipes: [recipe_path]")
 
-	var/atom/final_result = initial(actual_recipe.result)
+	var/atom/final_result = initial(final_recipe.result)
 
 	to_chat(user, span_notice("You start crafting \a [initial(final_result.name)]..."))
 
-	var/error_string = craft_sheet.construct_item(user, actual_recipe)
+	var/error_string = craft_sheet.construct_item(user, final_recipe)
 
 	if(istext(error_string))
 		to_chat(user, span_warning("Crafting failed[error_string]"))
