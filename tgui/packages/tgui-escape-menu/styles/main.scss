@@ -98,6 +98,15 @@ body,
     z-index: 2;
   }
 
+  &__details-link {
+    color: #5599ff;
+
+    &:hover {
+      text-decoration: underline;
+      -webkit-text-stroke: 0;
+    }
+  }
+
   &__buttons {
     display: flex;
     flex-direction: column;
