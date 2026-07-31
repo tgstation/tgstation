@@ -4321,7 +4321,7 @@
 	network = list("ss13","medbay")
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
-/turf/open/floor/wood,
+/turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "bxO" = (
 /obj/effect/decal/cleanable/dirt,
@@ -12613,10 +12613,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
-"epd" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
-/area/station/medical/chemistry)
 "epF" = (
 /obj/machinery/chem_master/condimaster{
 	desc = "Used to separate out liquids - useful for purifying botanical extracts. Also dispenses condiments.";
@@ -13157,10 +13153,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/circuit_workshop)
-"eyD" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
-/area/station/medical/chemistry)
 "eyK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -20788,7 +20780,7 @@
 "hjx" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/machinery/status_display/ai/directional/south,
-/turf/open/floor/wood,
+/turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "hjG" = (
 /obj/machinery/door/airlock/maintenance{
@@ -23174,7 +23166,7 @@
 "iaK" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/machinery/light/directional/south,
-/turf/open/floor/wood,
+/turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "iaQ" = (
 /obj/machinery/light/small/directional/east,
@@ -28730,7 +28722,7 @@
 "jOw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
+/turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "jOG" = (
 /obj/effect/turf_decal/plaque{
@@ -43211,9 +43203,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/science/genetics,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
-"oNo" = (
-/turf/open/floor/wood,
-/area/station/medical/chemistry)
 "oNy" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -57912,11 +57901,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
-"tMh" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
-/area/station/medical/chemistry)
 "tMi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -64111,7 +64095,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "vPm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -95462,8 +95446,8 @@ iqz
 bgt
 dkx
 dkx
-epd
-epd
+dkx
+dkx
 jOw
 uqL
 hdk
@@ -95721,8 +95705,8 @@ iqz
 iqz
 iqz
 iqz
-tMh
-oNo
+dVN
+iqz
 iqz
 iqz
 ubF
@@ -95972,14 +95956,14 @@ dbD
 bqX
 ulR
 ffj
-oNo
-oNo
-oNo
+iqz
+iqz
+iqz
 iqz
 wOl
 skx
 bjy
-oNo
+iqz
 tqd
 pbz
 dpl
@@ -96236,7 +96220,7 @@ vfU
 mAb
 mAb
 uYI
-oNo
+iqz
 hjx
 hZV
 hZV
@@ -96750,7 +96734,7 @@ hFD
 mAb
 mAb
 uYI
-oNo
+iqz
 iaK
 hZV
 kkx
@@ -97000,14 +96984,14 @@ sGn
 fvE
 dYG
 iqz
-oNo
-oNo
-oNo
+iqz
+iqz
+iqz
 iqz
 lWd
 cBg
 hbO
-oNo
+iqz
 ogk
 hZV
 daa
@@ -97264,7 +97248,7 @@ uqA
 pCw
 iqz
 jOw
-oNo
+iqz
 fyK
 hZV
 viP
@@ -97519,8 +97503,8 @@ fnc
 bCo
 bCo
 vPf
-eyD
-tMh
+bCo
+dVN
 yij
 jtl
 hZV
