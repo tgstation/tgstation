@@ -1,5 +1,6 @@
 // Verb to toggle restart notifications
-DEFINE_VERB(/client, notify_restart, "Notify Restart", "Notifies you on Discord when the server restarts.", FALSE, "OOC")
+GAME_VERB_DESC(/client, notify_restart, "Notify Restart", "Notifies you on Discord when the server restarts.", "OOC")
+
 	// Safety checks
 	if(!CONFIG_GET(flag/sql_enabled))
 		to_chat(src, span_warning("This feature requires the SQL backend to be running."))

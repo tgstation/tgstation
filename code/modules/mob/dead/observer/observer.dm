@@ -307,11 +307,11 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
 */
-DEFINE_VERB(/mob/living, ghost, "Ghost", "Relinquish your life and enter the land of the dead.", FALSE, "OOC")
+GAME_VERB_DESC(/mob/living, ghost, "Ghost", "Relinquish your life and enter the land of the dead.", "OOC")
 	ghost_yourself()
 
 /mob/living/proc/ghost_yourself()
-	if(stat != CONSCIOUS && stat != DEAD)
+	if(stat != STABLE && stat != DEAD)
 		succumb()
 	if(stat == DEAD)
 		if(!HAS_TRAIT(src, TRAIT_CORPSELOCKED)) //corpse-locked have to confirm with the alert below
@@ -323,7 +323,8 @@ DEFINE_VERB(/mob/living, ghost, "Ghost", "Relinquish your life and enter the lan
 	ghostize(FALSE) // FALSE parameter is so we can never re-enter our body. U ded.
 	return TRUE
 
-DEFINE_VERB(/mob/eye, ghost, "Ghost", "Relinquish your life and enter the land of the dead.", FALSE, "OOC")
+GAME_VERB_DESC(/mob/eye, ghost, "Ghost", "Relinquish your life and enter the land of the dead.", "OOC")
+
 	var/response = tgui_alert(usr, "Are you sure you want to ghost? If you ghost whilst still alive you cannot re-enter your body!", "Confirm Ghost Observe", list("Ghost", "Stay in Body"))
 	if(response != "Ghost")
 		return
@@ -364,7 +365,10 @@ DEFINE_VERB(/mob/eye, ghost, "Ghost", "Relinquish your life and enter the land o
 	if(new_area != ambience_tracked_area)
 		update_ambience_area(new_area)
 
-DEFINE_VERB(/mob/dead/observer, reenter_corpse, "Re-enter Corpse", "", FALSE, "")
+GAME_VERB(/mob/dead/observer, reenter_corpse, "Re-enter Corpse", null)
+
+	if(!client)
+		return
 	if(!mind || QDELETED(mind.current))
 		to_chat(src, span_warning("You have no body."))
 		return
@@ -382,7 +386,8 @@ DEFINE_VERB(/mob/dead/observer, reenter_corpse, "Re-enter Corpse", "", FALSE, ""
 	mind.current.client.init_verbs()
 	return TRUE
 
-DEFINE_VERB(/mob/dead/observer, do_not_resuscitate, "Do Not Resuscitate", "", FALSE, "")
+GAME_VERB(/mob/dead/observer, do_not_resuscitate, "Do Not Resuscitate", null)
+
 	if(!can_reenter_corpse)
 		to_chat(usr, span_warning("You're already stuck out of your body!"))
 		return FALSE
@@ -435,7 +440,8 @@ DEFINE_VERB(/mob/dead/observer, do_not_resuscitate, "Do Not Resuscitate", "", FA
 	if(sound)
 		SEND_SOUND(src, sound(sound))
 
-DEFINE_PROC_VERB(/mob/dead/observer, dead_tele, "Teleport", "Teleport to a location", FALSE, "")
+GAME_VERB(/mob/dead/observer, dead_tele, "Teleport", null)
+
 	if(!isobserver(usr))
 		to_chat(usr, span_warning("Not when you're not dead!"))
 		return
@@ -461,11 +467,12 @@ DEFINE_PROC_VERB(/mob/dead/observer, dead_tele, "Teleport", "Teleport to a locat
 
 	usr.abstract_move(pick(L))
 
-DEFINE_VERB(/mob/dead/observer, follow, "Orbit", "Follow and orbit a mob.", FALSE, "")
+GAME_VERB(/mob/dead/observer, follow, "Orbit", null)
+
 	GLOB.orbit_menu.show(src)
 
-//Moves the ghost instead of just changing the ghosts's eye -Nodrak
-DEFINE_VERB(/mob/dead/observer, jumptomob, "Jump to Mob", "", FALSE, "")
+GAME_VERB(/mob/dead/observer, jumptomob, "Jump to Mob", null) //Moves the ghost instead of just changing the ghosts's eye -Nodrak
+
 	if(!isobserver(usr)) //Make sure they're an observer!
 		return
 
@@ -492,7 +499,8 @@ DEFINE_VERB(/mob/dead/observer, jumptomob, "Jump to Mob", "", FALSE, "")
 	else
 		to_chat(source_mob, span_danger("This mob is not located in the game world."))
 
-DEFINE_VERB(/mob/dead/observer, change_view_range, "View Range", "", FALSE, "")
+GAME_VERB(/mob/dead/observer, change_view_range, "View Range", null)
+
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
 		to_chat(usr, span_notice("That verb is currently globally disabled."))
 		return
@@ -508,12 +516,14 @@ DEFINE_VERB(/mob/dead/observer, change_view_range, "View Range", "", FALSE, "")
 	else
 		client.view_size.resetToDefault()
 
-DEFINE_VERB(/mob/dead/observer, toggle_ghostsee, "Toggle Ghost Vision", "", FALSE, "")
+GAME_VERB(/mob/dead/observer, toggle_ghostsee, "Toggle Ghost Vision", null)
+
 	toggle_ghost_hud_flag(GHOST_VISION)
 	update_sight()
 	to_chat(usr, span_boldnotice("You [(ghost_hud_flags & GHOST_VISION) ? "now" : "no longer"] have ghost vision."))
 
-DEFINE_VERB(/mob/dead/observer, toggle_darkness, "Toggle Darkness", "", FALSE, "")
+GAME_VERB(/mob/dead/observer, toggle_darkness, "Toggle Darkness", null)
+
 	switch(lighting_cutoff)
 		if (LIGHTING_CUTOFF_VISIBLE)
 			lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
@@ -526,10 +536,12 @@ DEFINE_VERB(/mob/dead/observer, toggle_darkness, "Toggle Darkness", "", FALSE, "
 
 	update_sight()
 
-DEFINE_VERB(/mob/dead/observer, view_manifest, "View Crew Manifest", "", FALSE, "")
+GAME_VERB(/mob/dead/observer, view_manifest, "View Crew Manifest", null)
+
 	GLOB.manifest.ui_interact(src)
 
-DEFINE_VERB(/mob/dead/observer, observe, "Observe", "", FALSE, "")
+GAME_VERB(/mob/dead/observer, observe, "Observe", null)
+
 	if(!isobserver(usr) || HAS_TRAIT(src, TRAIT_NO_OBSERVE)) //Make sure they're an observer!
 		return
 
@@ -557,42 +569,48 @@ DEFINE_VERB(/mob/dead/observer, observe, "Observe", "", FALSE, "")
 
 	do_observe(chosen_target)
 
-DEFINE_PROC_VERB(/mob/dead/observer, tray_view, "T-ray scan", "", FALSE, "")
+GAME_VERB(/mob/dead/observer, tray_view, "T-ray scan", null)
+
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
 		to_chat(usr, span_notice("That verb is currently globally disabled."))
 		return
 
 	t_ray_scan(src)
 
-DEFINE_VERB(/mob/dead/observer, toggle_data_huds, "Toggle Sec/Med/Diag HUD", "", FALSE, "")
+GAME_VERB(/mob/dead/observer, toggle_data_huds, "Toggle Sec/Med/Diag HUD", null)
+
 	toggle_ghost_hud_flag(GHOST_DATA_HUDS)
 	if(ghost_hud_flags & GHOST_DATA_HUDS)
 		to_chat(src, span_notice("Data HUDs enabled."))
 	else
 		to_chat(src, span_notice("Data HUDs disabled."))
 
-DEFINE_VERB(/mob/dead/observer, toggle_health_scan, "Toggle Health Scan", "", FALSE, "")
+GAME_VERB(/mob/dead/observer, toggle_health_scan, "Toggle Health Scan", null)
+
 	toggle_ghost_hud_flag(GHOST_HEALTH)
 	if(ghost_hud_flags & GHOST_HEALTH)
 		to_chat(src, span_notice("Health scan enabled."))
 	else
 		to_chat(src, span_notice("Health scan disabled."))
 
-DEFINE_VERB(/mob/dead/observer, toggle_chem_scan, "Toggle Chem Scan", "", FALSE, "")
+GAME_VERB(/mob/dead/observer, toggle_chem_scan, "Toggle Chem Scan", null)
+
 	toggle_ghost_hud_flag(GHOST_CHEM)
 	if(ghost_hud_flags & GHOST_CHEM)
 		to_chat(src, span_notice("Chem scan enabled."))
 	else
 		to_chat(src, span_notice("Chem scan disabled."))
 
-DEFINE_VERB(/mob/dead/observer, toggle_gas_scan, "Toggle Gas Scan", "", FALSE, "")
+GAME_VERB(/mob/dead/observer, toggle_gas_scan, "Toggle Gas Scan", null)
+
 	toggle_ghost_hud_flag(GHOST_GAS)
 	if(ghost_hud_flags & GHOST_GAS)
 		to_chat(src, span_notice("Gas scan enabled."))
 	else
 		to_chat(src, span_notice("Gas scan disabled."))
 
-DEFINE_VERB(/mob/dead/observer, restore_ghost_appearance, "Restore Ghost Character", "", FALSE, "")
+GAME_VERB(/mob/dead/observer, restore_ghost_appearance, "Restore Ghost Character", null)
+
 	set_ghost_appearance()
 	if(client?.prefs)
 		var/real_name = client.prefs.read_preference(/datum/preference/name/real_name)
@@ -651,7 +669,8 @@ DEFINE_VERB(/mob/dead/observer, restore_ghost_appearance, "Restore Ghost Charact
 	if (!isnull(client) && !isnull(client.eye))
 		reset_perspective(null)
 
-DEFINE_VERB(/mob/dead/observer, add_view_range, "Add View Range", "", TRUE, "", input as num)
+GAME_VERB_HIDDEN(/mob/dead/observer, add_view_range, "Add View Range", input as num)
+
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
 		to_chat(usr, span_notice("That verb is currently globally disabled."))
 		return
@@ -949,13 +968,13 @@ DEFINE_VERB(/mob/dead/observer, add_view_range, "Add View Range", "", TRUE, "", 
 			to_chat(G, message)
 	GLOB.observer_default_invisibility = amount
 
-/mob/dead/observer/proc/open_spawners_menu()
+GAME_VERB_PROC(/mob/dead/observer, open_spawners_menu, "Spawners Menu", null)
 	if(!spawners_menu)
 		spawners_menu = new(src)
 
 	spawners_menu.ui_interact(src)
 
-/mob/dead/observer/proc/open_minigames_menu()
+GAME_VERB_PROC(/mob/dead/observer, open_minigames_menu, "Minigames Menu", null)
 	if(!client)
 		return
 	if(!isobserver(src))

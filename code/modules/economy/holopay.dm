@@ -74,60 +74,57 @@
 	linked_card = null
 	return ..()
 
-/obj/structure/holopay/attackby(obj/item/held_item, mob/item_holder, list/modifiers, list/attack_modifiers)
-	var/mob/living/user = item_holder
-	if(!isliving(user))
-		return ..()
+/obj/structure/holopay/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	/// Users can pay with an ID to skip the UI
-	if(isidcard(held_item))
-		if(istype(held_item, /obj/item/card/id/departmental_budget))
+	if(isidcard(tool))
+		if(istype(tool, /obj/item/card/id/departmental_budget))
 			balloon_alert(user, "invalid payment card")
 			to_chat(user, span_warning("You cannot use a departamental card for this."))
-			return FALSE
-		if(force_fee && tgui_alert(item_holder, "This holopay has a [force_fee] [MONEY_SYMBOL] fee. Confirm?", "Holopay Fee", list("Pay", "Cancel")) != "Pay")
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
+		if(force_fee && tgui_alert(user, "This holopay has a [force_fee] [MONEY_SYMBOL] fee. Confirm?", "Holopay Fee", list("Pay", "Cancel")) != "Pay")
+			return ITEM_INTERACT_BLOCKING
 		process_payment(user)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	/// Users can also pay by holochip
-	if(istype(held_item, /obj/item/holochip))
+	if(istype(tool, /obj/item/holochip))
 		/// Account checks
-		var/obj/item/holochip/chip = held_item
+		var/obj/item/holochip/chip = tool
 		if(!chip.credits)
 			balloon_alert(user, "holochip is empty")
 			to_chat(user, span_warning("There doesn't seem to be any [MONEY_NAME] here."))
-			return FALSE
+			return ITEM_INTERACT_BLOCKING
 		/// Charges force fee or uses pay what you want
 		var/cash_deposit = force_fee || tgui_input_number(user, "How much? (Max: [chip.credits])", "Patronage", max_value = chip.credits)
 		/// Exit sanity checks
 		if(!cash_deposit)
-			return TRUE
-		if(QDELETED(held_item) || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-			return FALSE
+			return ITEM_INTERACT_BLOCKING
+		if(QDELETED(tool) || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+			return ITEM_INTERACT_BLOCKING
 		if(!chip.spend(cash_deposit, FALSE))
 			balloon_alert(user, "insufficient [MONEY_NAME]")
 			to_chat(user, span_warning("You don't have enough [MONEY_NAME] to pay with this chip."))
-			return FALSE
+			return ITEM_INTERACT_BLOCKING
 		/// Success: Alert buyer
 		alert_buyer(user, cash_deposit)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	/// Throws errors if they try to use space cash
-	if(istype(held_item, /obj/item/stack/spacecash))
+	if(istype(tool, /obj/item/stack/spacecash))
 		to_chat(user, "What is this, the 2000s? We only take card here.")
-		return TRUE
-	if(istype(held_item, /obj/item/coin))
+		return ITEM_INTERACT_BLOCKING
+	if(istype(tool, /obj/item/coin))
 		to_chat(user, "What is this, the 1800s? We only take card here.")
-		return TRUE
-	return ..()
+		return ITEM_INTERACT_BLOCKING
+	return NONE
 
-/obj/structure/holopay/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/holopay/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	/// Can kill it by right-clicking with ID because it seems useful and intuitive, to me, at least
-	if(!isidcard(weapon))
-		return ..()
-	var/obj/item/card/id/attacking_id = weapon
+	if(!isidcard(tool))
+		return NONE
+	var/obj/item/card/id/attacking_id = tool
 	if(!attacking_id.my_store || attacking_id.my_store != src)
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 	dissipate()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/holopay/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -259,7 +256,7 @@
 	/// Account checks
 	var/obj/item/card/id/id_card
 	id_card = user.get_idcard(TRUE)
-	if(isnull(id_card) || id_card.can_be_used_in_payment(user))
+	if(isnull(id_card) || !id_card.can_be_used_in_payment(user))
 		balloon_alert(user, "invalid account")
 		to_chat(user, span_warning("You don't have a valid account."))
 		return FALSE

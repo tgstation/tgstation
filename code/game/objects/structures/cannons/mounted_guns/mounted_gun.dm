@@ -162,7 +162,7 @@
 /// Perform the contents of the loop, return the amount of time until the next shot
 /obj/structure/mounted_gun/proc/fire_loop(mob/living/user)
 	for(var/mob/shaken_mob in urange(3, src))
-		if(shaken_mob.stat == CONSCIOUS && firing_shakes_camera) //is the mob awake to feel the shaking?
+		if(!IS_UNCONSCIOUS_OR_CRIT(shaken_mob) && firing_shakes_camera) //is the mob awake to feel the shaking?
 			shake_camera(shaken_mob, 3, 1)
 	playsound(src, shots_in_gun > 0 ? fire_sound : last_fire_sound, vol = 50, vary = FALSE, falloff_exponent = 5)
 	fire_gun(user)
@@ -282,11 +282,7 @@
 	fire_delay = 1
 	shot_delay = 2
 	firing_shakes_camera = FALSE
-	custom_materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.25,
-		/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 5,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.29
-	)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.55, /datum/material/bronze = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.45)
 	debris = list(
 		/obj/item/stack/cable_coil = 4,
 		/obj/item/stock_parts/micro_laser = 1,

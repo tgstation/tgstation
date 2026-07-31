@@ -3,8 +3,8 @@
  *
  * This is a hidden verb, likely for binding with winset for hotkeys
  */
-DEFINE_VERB(/client, drop_item, "drop_item", "", TRUE, "")
-	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
+GAME_VERB_HIDDEN(/client, drop_item, "drop item")
+	if(!iscyborg(mob) && !IS_UNCONSCIOUS_OR_CRIT(mob))
 		mob.dropItemToGround(mob.get_active_held_item())
 	return
 /**
@@ -160,7 +160,7 @@ DEFINE_VERB(/client, drop_item, "drop_item", "", TRUE, "")
 		COOLDOWN_START(src, move_delay, 1 SECONDS)
 		to_chat(src, span_warning("You're restrained! You can't move!"))
 		return TRUE
-	return mob.resist_grab(TRUE)
+	return !mob.resist_grab(TRUE)
 
 
 /**
@@ -402,7 +402,8 @@ DEFINE_VERB(/client, drop_item, "drop_item", "", TRUE, "")
  */
 
 ///Hidden verb to cycle through head zone with repeated presses, head - eyes - mouth. Bound to 8
-DEFINE_VERB(/client, body_toggle_head, "body-toggle-head", "", TRUE, "")
+GAME_VERB_HIDDEN(/client, body_toggle_head, "body-toggle-head")
+
 	if(!check_has_body_select())
 		return
 
@@ -419,7 +420,8 @@ DEFINE_VERB(/client, body_toggle_head, "body-toggle-head", "", TRUE, "")
 	selector.set_selected_zone(next_in_line, mob)
 
 ///Hidden verb to target the head, unbound by default.
-DEFINE_VERB(/client, body_head, "body-head", "", TRUE, "")
+GAME_VERB_HIDDEN(/client, body_head, "body-head")
+
 	if(!check_has_body_select())
 		return
 
@@ -427,7 +429,8 @@ DEFINE_VERB(/client, body_head, "body-head", "", TRUE, "")
 	selector.set_selected_zone(BODY_ZONE_HEAD, mob)
 
 ///Hidden verb to target the eyes, bound to 7
-DEFINE_VERB(/client, body_eyes, "body-eyes", "", TRUE, "")
+GAME_VERB_HIDDEN(/client, body_eyes, "body-eyes")
+
 	if(!check_has_body_select())
 		return
 
@@ -435,7 +438,8 @@ DEFINE_VERB(/client, body_eyes, "body-eyes", "", TRUE, "")
 	selector.set_selected_zone(BODY_ZONE_PRECISE_EYES, mob)
 
 ///Hidden verb to target the mouth, bound to 9
-DEFINE_VERB(/client, body_mouth, "body-mouth", "", TRUE, "")
+GAME_VERB_HIDDEN(/client, body_mouth, "body-mouth")
+
 	if(!check_has_body_select())
 		return
 
@@ -443,7 +447,8 @@ DEFINE_VERB(/client, body_mouth, "body-mouth", "", TRUE, "")
 	selector.set_selected_zone(BODY_ZONE_PRECISE_MOUTH, mob)
 
 ///Hidden verb to target the right arm, bound to 4
-DEFINE_VERB(/client, body_r_arm, "body-r-arm", "", TRUE, "")
+GAME_VERB_HIDDEN(/client, body_r_arm, "body-r-arm")
+
 	if(!check_has_body_select())
 		return
 
@@ -451,7 +456,8 @@ DEFINE_VERB(/client, body_r_arm, "body-r-arm", "", TRUE, "")
 	selector.set_selected_zone(BODY_ZONE_R_ARM, mob)
 
 ///Hidden verb to target the chest, bound to 5
-DEFINE_VERB(/client, body_chest, "body-chest", "", TRUE, "")
+GAME_VERB_HIDDEN(/client, body_chest, "body-chest")
+
 	if(!check_has_body_select())
 		return
 
@@ -459,7 +465,8 @@ DEFINE_VERB(/client, body_chest, "body-chest", "", TRUE, "")
 	selector.set_selected_zone(BODY_ZONE_CHEST, mob)
 
 ///Hidden verb to target the left arm, bound to 6
-DEFINE_VERB(/client, body_l_arm, "body-l-arm", "", TRUE, "")
+GAME_VERB_HIDDEN(/client, body_l_arm, "body-l-arm")
+
 	if(!check_has_body_select())
 		return
 
@@ -467,7 +474,8 @@ DEFINE_VERB(/client, body_l_arm, "body-l-arm", "", TRUE, "")
 	selector.set_selected_zone(BODY_ZONE_L_ARM, mob)
 
 ///Hidden verb to target the right leg, bound to 1
-DEFINE_VERB(/client, body_r_leg, "body-r-leg", "", TRUE, "")
+GAME_VERB_HIDDEN(/client, body_r_leg, "body-r-leg")
+
 	if(!check_has_body_select())
 		return
 
@@ -475,7 +483,8 @@ DEFINE_VERB(/client, body_r_leg, "body-r-leg", "", TRUE, "")
 	selector.set_selected_zone(BODY_ZONE_R_LEG, mob)
 
 ///Hidden verb to target the groin, bound to 2
-DEFINE_VERB(/client, body_groin, "body-groin", "", TRUE, "")
+GAME_VERB_HIDDEN(/client, body_groin, "body-groin")
+
 	if(!check_has_body_select())
 		return
 
@@ -483,7 +492,8 @@ DEFINE_VERB(/client, body_groin, "body-groin", "", TRUE, "")
 	selector.set_selected_zone(BODY_ZONE_PRECISE_GROIN, mob)
 
 ///Hidden verb to target the left leg, bound to 3
-DEFINE_VERB(/client, body_l_leg, "body-l-leg", "", TRUE, "")
+GAME_VERB_HIDDEN(/client, body_l_leg, "body-l-leg")
+
 	if(!check_has_body_select())
 		return
 
@@ -491,7 +501,7 @@ DEFINE_VERB(/client, body_l_leg, "body-l-leg", "", TRUE, "")
 	selector.set_selected_zone(BODY_ZONE_L_LEG, mob)
 
 ///Verb to toggle the walk or run status
-DEFINE_INSTANT_VERB(/client, toggle_walk_run, "toggle-walk-run", "", TRUE, "")
+GAME_VERB_HIDDEN_INSTANT(/client, toggle_walk_run, "toggle-walk-run")
 	if(isliving(mob))
 		var/mob/living/user_mob = mob
 		user_mob.toggle_move_intent()
@@ -530,7 +540,7 @@ DEFINE_INSTANT_VERB(/client, toggle_walk_run, "toggle-walk-run", "", TRUE, "")
 	if(!can_z_move(UP, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
 		return
 	balloon_alert(src, "moving up...")
-	if(!do_after(src, 1 SECONDS, hidden = TRUE))
+	if(!do_after(src, 1 SECONDS, cog_icon = null))
 		return
 	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move upwards."))
@@ -554,7 +564,7 @@ DEFINE_INSTANT_VERB(/client, toggle_walk_run, "toggle-walk-run", "", TRUE, "")
 	if(!can_z_move(DOWN, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
 		return
 	balloon_alert(src, "moving down...")
-	if(!do_after(src, 1 SECONDS, hidden = TRUE))
+	if(!do_after(src, 1 SECONDS, cog_icon = null))
 		return
 	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move down."))
@@ -568,5 +578,5 @@ DEFINE_INSTANT_VERB(/client, toggle_walk_run, "toggle-walk-run", "", TRUE, "")
 
 /mob/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
-	if(client?.sound_tokens.len)
+	if(client && LAZYLEN(sound_tokens))
 		SSsound_tokens.clients_needing_update[client] = TRUE

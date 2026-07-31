@@ -1,3 +1,7 @@
+//This represents the amount of materials (both iron and glass that the max_amount of cable would amount to
+#define RWD_MAX_CABLES_MATS (SMALL_MATERIAL_AMOUNT * 0.1 * RWD_MAX_CABLES)
+#define RWD_MAX_CABLES 210
+
 /obj/item/rwd
 	name = "rapid wiring device"
 	desc = "A device used to rapidly lay cable & pick up stray cable pieces laying around."
@@ -12,9 +16,13 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5 - RWD_MAX_CABLES_MATS,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5 - RWD_MAX_CABLES_MATS,
+	)
 
 	/// maximum amount of cable this device can hold
-	var/max_amount = 210
+	var/max_amount = RWD_MAX_CABLES
 	/// current amount of cable in the machine
 	var/current_amount = 0
 	/// are we dual wielding this machine
@@ -27,6 +35,8 @@
 	var/obj/item/stack/cable_coil/cable
 	/// radial menu to select cable layer
 	var/list/radial_menu = null
+
+#undef RWD_MAX_CABLES_MATS
 
 /obj/item/rwd/Initialize(mapload)
 	. = ..()
@@ -118,12 +128,11 @@
 	listeningTo = null
 
 /// for inserting cable into the rwd
-/obj/item/rwd/attackby(obj/item/attacking_item, mob/living/user)
-	if(!istype(attacking_item, /obj/item/stack/cable_coil))
-		return
-	var/obj/item/stack/cable_coil/cable = attacking_item
-	add_cable(user, cable)
-	return TRUE
+/obj/item/rwd/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/cable_coil))
+		return NONE
+	add_cable(user, tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/rwd/click_alt(mob/user)
 	if(!radial_menu)
@@ -251,11 +260,11 @@
 
 /obj/item/rwd/loaded
 	icon_state = "rwd-30-layer2"
-	current_amount = 210
+	current_amount = RWD_MAX_CABLES
 
 /obj/item/rwd/admin
 	name = "admin RWD"
 	max_amount = INFINITY
 	current_amount = INFINITY
 
-
+#undef RWD_MAX_CABLES

@@ -8,7 +8,8 @@
 	/// Images of the path created by navigate().
 	var/list/navigation_images = list()
 
-DEFINE_VERB(/mob/living, navigate, "Navigate", "", TRUE, "")
+GAME_VERB_HIDDEN(/mob/living, navigate, "Navigate")
+
 	if(incapacitated)
 		return
 	if(length(client.navigation_images))

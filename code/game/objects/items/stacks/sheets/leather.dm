@@ -3,6 +3,7 @@
 	desc = "Something went wrong."
 	icon_state = "sheet-hide"
 	inhand_icon_state = null
+	worn_icon_state = null
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/animalhide
 	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
@@ -224,6 +225,7 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 	desc = "The by-product of mob grinding."
 	singular_name = "leather piece"
 	icon_state = "sheet-leather"
+	worn_icon_state = null
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/leather
 	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
@@ -286,26 +288,49 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	drop_sound = 'sound/effects/meatslap.ogg'
 	pickup_sound = 'sound/effects/meatslap.ogg'
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	/// Trophy crafting recipe for this type of sinew
+	var/trophy_type = /datum/crafting_recipe/crusher_trophy/watcher_wing
 
 /obj/item/stack/sheet/sinew/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
-
 	// As bone and sinew have just a little too many recipes for this, we'll just split them up.
 	// Sinew slapcrafting will mostly-sinew recipes, and bones will have mostly-bones recipes.
-	var/static/list/slapcraft_recipe_list = list(\
-		/datum/crafting_recipe/goliathcloak, /datum/crafting_recipe/skilt, /datum/crafting_recipe/drakecloak,\
-		)
-
+	var/list/slapcraft_recipe_list = list(
+		/datum/crafting_recipe/goliathcloak,
+		/datum/crafting_recipe/skilt,
+		/datum/crafting_recipe/drakecloak,
+	)
+	if (trophy_type)
+		slapcraft_recipe_list += trophy_type
 	AddElement(
 		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
+		slapcraft_recipes = string_list(slapcraft_recipe_list),\
 	)
+
+/obj/item/stack/sheet/sinew/icewing
+	name = "icewing watcher sinew"
+	desc = "Ice-cold filaments which presumably came from an icewing watcher's wings."
+	singular_name = "icewing watcher sinew"
+	icon_state = "sinew_icewing"
+	novariants = TRUE
+	merge_type = /obj/item/stack/sheet/sinew/icewing
+	trophy_type = /datum/crafting_recipe/crusher_trophy/icewing_watcher_wing
+
+/obj/item/stack/sheet/sinew/magmawing
+	name = "magmawing watcher sinew"
+	desc = "Fiery filaments which presumably came from a magmawing watcher's wings."
+	singular_name = "magmawing watcher sinew"
+	icon_state = "sinew_magmawing"
+	novariants = TRUE
+	merge_type = /obj/item/stack/sheet/sinew/magmawing
+	trophy_type = /datum/crafting_recipe/crusher_trophy/magmawing_watcher_wing
 
 /obj/item/stack/sheet/sinew/wolf
 	name = "wolf sinew"
 	desc = "Long stringy filaments which came from the insides of a wolf."
 	singular_name = "wolf sinew"
 	merge_type = /obj/item/stack/sheet/sinew/wolf
+	trophy_type = null
 
 GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	new/datum/stack_recipe("sinew restraints", /obj/item/restraints/handcuffs/cable/sinew, 1, crafting_flags = NONE, category = CAT_EQUIPMENT), \
@@ -314,7 +339,6 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 /obj/item/stack/sheet/sinew/get_main_recipes()
 	. = ..()
 	. += GLOB.sinew_recipes
-
 
 /*Plates*/
 /obj/item/stack/sheet/animalhide/goliath_hide
@@ -379,17 +403,17 @@ GLOBAL_LIST_INIT(bear_pelt_recipes, list ( \
 	. += GLOB.bear_pelt_recipes
 
 //Step one - dehairing.
-
-/obj/item/stack/sheet/animalhide/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.get_sharpness())
-		playsound(loc, 'sound/items/weapons/slice.ogg', 50, TRUE, -1)
-		user.visible_message(span_notice("[user] starts cutting hair off \the [src]."), span_notice("You start cutting the hair off \the [src]..."), span_hear("You hear the sound of a knife rubbing against flesh."))
-		if(do_after(user, 5 SECONDS, target = src))
-			to_chat(user, span_notice("You cut the hair from [src.name]."))
-			new /obj/item/stack/sheet/hairlesshide(user.drop_location(), amount)
-			use(amount)
-	else
+/obj/item/stack/sheet/animalhide/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.get_sharpness())
 		return ..()
+	playsound(loc, 'sound/items/weapons/slice.ogg', 50, TRUE, -1)
+	user.visible_message(span_notice("[user] starts cutting hair off \the [src]."), span_notice("You start cutting the hair off \the [src]..."), span_hear("You hear the sound of a knife rubbing against flesh."))
+	if(!do_after(user, 5 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You cut the hair from [src.name]."))
+	new /obj/item/stack/sheet/hairlesshide(user.drop_location(), amount)
+	use(amount)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/sheet/animalhide/examine(mob/user)
 	. = ..()
@@ -402,6 +426,7 @@ GLOBAL_LIST_INIT(bear_pelt_recipes, list ( \
 	desc = "This hide was stripped of its hair, but still needs washing and tanning."
 	singular_name = "hairless hide piece"
 	icon_state = "sheet-hairlesshide"
+	worn_icon_state = null
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/hairlesshide
 	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
@@ -417,6 +442,7 @@ GLOBAL_LIST_INIT(bear_pelt_recipes, list ( \
 	desc = "This hide has been cleaned but still needs to be dried."
 	singular_name = "wet hide piece"
 	icon_state = "sheet-wetleather"
+	worn_icon_state = null
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/wethide
 	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'

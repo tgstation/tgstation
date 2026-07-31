@@ -80,12 +80,11 @@
 	pushed_over = FALSE
 	tacticool = AddComponent(/datum/component/tactical)
 
-/obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/toy/crayon))
-		change_appearance(I, user)
-		return TRUE
-
-	return ..()
+/obj/item/cardboard_cutout/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/toy/crayon))
+		return NONE
+	change_appearance(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/cardboard_cutout/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	. = ..()
@@ -216,7 +215,8 @@
 		applied_appearance = image(fcopy_rsc(getFlatIcon(preview_appearance, no_anim = TRUE)))
 	applied_appearance.plane = cutouts.plane
 	applied_appearance.layer = cutouts.layer
-	cutouts.appearance = applied_appearance
+	var/mutable_appearance/mirror = new(applied_appearance)
+	cutouts.appearance = mirror
 	cutouts.name = get_name()
 	cutouts.desc = applied_desc
 	cutouts.update_appearance() //forces an update on the tactical comp's appearance.

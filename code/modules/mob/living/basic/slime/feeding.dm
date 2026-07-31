@@ -7,9 +7,13 @@
 	if(!isliving(meal)) //sanity check
 		return FALSE
 
-	if(stat != CONSCIOUS)
-		if(!silent)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
+		if(stat == DEAD)
+			balloon_alert(src, "dead!")
+		else if(IS_UNCONSCIOUS(src))
 			balloon_alert(src, "unconscious!")
+		else
+			balloon_alert(src, "in critical!")
 		return FALSE
 
 	if(hunger_disabled)
@@ -91,6 +95,6 @@
 		balloon_alert(src, "feeding stopped")
 	remove_offsets(FEEDING_OFFSET)
 	layer = initial(layer)
-	buckled.unbuckle_mob(src,force=TRUE)
+	INVOKE_ASYNC(buckled, TYPE_PROC_REF(/atom/movable, unbuckle_mob), src, force=TRUE)
 
 #undef FEEDING_OFFSET

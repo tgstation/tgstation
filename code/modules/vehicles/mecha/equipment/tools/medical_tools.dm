@@ -30,6 +30,7 @@
 	energy_drain = 20
 	range = MECHA_MELEE
 	equip_cooldown = 20
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 	/// ref to the patient loaded in the sleeper
 	var/mob/living/carbon/patient
 
@@ -97,10 +98,8 @@
 		return data
 	var/patient_state
 	switch(patient.stat)
-		if(CONSCIOUS)
-			patient_state = "Conscious"
-		if(UNCONSCIOUS)
-			patient_state = "Unconscious"
+		if(STABLE)
+			patient_state = "Stable"
 		if(DEAD)
 			patient_state = "*Dead*"
 		if(SOFT_CRIT, HARD_CRIT)
@@ -213,6 +212,7 @@
 	range = MECHA_MELEE|MECHA_RANGED
 	equip_cooldown = 10
 	energy_drain = 10
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	///Lazylist of syringes that we've picked up
 	var/list/syringes
 	///List of all scanned reagents, starts with epinephrine and multiver

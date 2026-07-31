@@ -1,7 +1,6 @@
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
-DEFINE_VERB(/client, wiki, "wiki", \
-	"Brings you to the Wiki", \
-	TRUE, "")
+GAME_VERB_HIDDEN(/client, wiki, "wiki")
+
 	var/wikiurl = CONFIG_GET(string/wikiurl)
 	if(!wikiurl)
 		to_chat(src, span_danger("The wiki URL is not set in the server configuration."))
@@ -19,35 +18,40 @@ DEFINE_VERB(/client, wiki, "wiki", \
 		output += "?title=Special%3ASearch&profile=default&search=[query]"
 	DIRECT_OUTPUT(src, link(output))
 
-DEFINE_VERB(/client, forum, "forum", "Visit the forum.", TRUE, "")
+GAME_VERB_HIDDEN(/client, forum, "forum")
+
 	var/forumurl = CONFIG_GET(string/forumurl)
 	if(!forumurl)
 		to_chat(src, span_danger("The forum URL is not set in the server configuration."))
 		return
 	DIRECT_OUTPUT(src, link(forumurl))
 
-DEFINE_VERB(/client, rules, "rules", "Show Server Rules.", TRUE, "")
+GAME_VERB_HIDDEN(/client, rules, "rules")
+
 	var/rulesurl = CONFIG_GET(string/rulesurl)
 	if(!rulesurl)
 		to_chat(src, span_danger("The rules URL is not set in the server configuration."))
 		return
 	DIRECT_OUTPUT(src, link(rulesurl))
 
-DEFINE_VERB(/client, github, "github", "Visit Github", TRUE, "")
+GAME_VERB_HIDDEN(/client, github, "github")
+
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(!githuburl)
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
 		return
 	DIRECT_OUTPUT(src, link(githuburl))
 
-DEFINE_VERB(/client, config, "config", "View the server configuration files.", TRUE, "")
+GAME_VERB_HIDDEN(/client, config, "config")
+
 	var/configurl = CONFIG_GET(string/configurl)
 	if(!configurl)
 		to_chat(src, span_danger("The Config URL is not set in the server configuration."))
 		return
 	DIRECT_OUTPUT(src, link(configurl))
 
-DEFINE_VERB(/client, reportissue, "report-issue", "Report an issue", TRUE, "")
+GAME_VERB_DESC(/client, reportissue, "report-issue", "Report an issue", null)
+
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(!githuburl)
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
@@ -88,7 +92,8 @@ DEFINE_VERB(/client, reportissue, "report-issue", "Report an issue", TRUE, "")
 
 	DIRECT_OUTPUT(src, link(jointext(concatable, "")))
 
-DEFINE_VERB(/client, changelog, "Changelog", "", FALSE, "OOC")
+GAME_VERB(/client, changelog, "Changelog", "OOC")
+
 	if(!GLOB.changelog_tgui)
 		GLOB.changelog_tgui = new /datum/changelog()
 
@@ -97,13 +102,15 @@ DEFINE_VERB(/client, changelog, "Changelog", "", FALSE, "OOC")
 		prefs.lastchangelog = GLOB.changelog_hash
 		prefs.save_preferences()
 
-DEFINE_VERB(/client, hotkeys_help, "Hotkeys Help", "", TRUE, "")
+GAME_VERB_HIDDEN(/client, hotkeys_help, "Hotkeys Help")
+
 	if(!GLOB.hotkeys_tgui)
 		GLOB.hotkeys_tgui = new /datum/hotkeys_help()
 
 	GLOB.hotkeys_tgui.ui_interact(mob)
 
-DEFINE_VERB(/client, emote_panel, "Emote Panel", "", TRUE, "")
+GAME_VERB_HIDDEN(/client, emote_panel, "Emote Panel")
+
 	if(!isliving(mob))
 		to_chat(mob, span_notice("You can only use this while you're alive!"))
 		return

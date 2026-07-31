@@ -523,4 +523,16 @@
 /datum/map_template/shuttle/emergency/zeta/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH]
 
+/datum/map_template/shuttle/emergency/tombstone
+	suffix = "tombstone"
+	name = "The NTSS Tombstone"
+	description = "Specifically commissioned for cleanups involving bio hazards, zombie outbreaks, or flesh-eating plagues. Features burial plots, reinforced morgue trays, and a crematorium. It's safe, airtight, and ensures you won't bite your coworkers during transit!"
+	admin_notes = "The aft of the ship has a miasma tank behind the curator room. May get released by crew. There are also random spawners in the crypt graves that has a chance to spawn a one use spectral musical instrument."
+	credit_cost = CARGO_CRATE_VALUE * 15
+	occupancy_limit = "40"
+	prerequisites = "This shuttle requires a biohazard outbreak to occur before it can be purchased."
+
+/datum/map_template/shuttle/emergency/tombstone/prerequisites_met()
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_TOMBSTONE]
+
 #undef EMAG_LOCKED_SHUTTLE_COST

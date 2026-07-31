@@ -792,7 +792,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 
 	new /datum/admin_help(message, user_client, FALSE, urgent)
 
-DEFINE_VERB(/client, no_tgui_adminhelp, "NoTguiAdminhelp", "", TRUE, "", message as message)
+GAME_VERB_HIDDEN(/client, no_tgui_adminhelp, "NoTguiAdminhelp", message as message)
 	if(adminhelptimerid)
 		return
 
@@ -800,11 +800,11 @@ DEFINE_VERB(/client, no_tgui_adminhelp, "NoTguiAdminhelp", "", TRUE, "", message
 
 	GLOB.admin_help_ui_handler.perform_adminhelp(src, message, FALSE)
 
-DEFINE_VERB(/client, adminhelp, "Adminhelp", "", FALSE, "Admin")
+GAME_VERB(/client, adminhelp, "Adminhelp", "Admin")
 	GLOB.admin_help_ui_handler.ui_interact(mob)
 	to_chat(src, span_boldnotice("Adminhelp failing to open or work? <a href='byond://?src=[REF(src)];tguiless_adminhelp=1'>Click here</a>"))
 
-DEFINE_VERB(/client, view_latest_ticket, "View Latest Ticket", "", FALSE, "Admin")
+GAME_VERB(/client, view_latest_ticket, "View Latest Ticket", "Admin")
 	if(!current_ticket)
 		// Check if the client had previous tickets, and show the latest one
 		var/list/prev_tickets = list()

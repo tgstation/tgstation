@@ -1,13 +1,15 @@
 // Admin Verbs in this file are special and cannot use the AVD system for some reason or another.
 
-DEFINE_PROC_VERB(/client, show_verbs, "Adminverbs - Show", "", FALSE, ADMIN_CATEGORY_MAIN)
-	remove_verb(src, /client/proc/show_verbs)
+GAME_VERB_PROC(/client, show_verbs, "Adminverbs - Show", ADMIN_CATEGORY_MAIN)
+
+	UNASSIGN_GAME_VERB(src, /client, show_verbs)
 	add_admin_verbs()
 
 	to_chat(src, span_interface("All of your adminverbs are now visible."), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Show Adminverbs")
 
-DEFINE_PROC_VERB(/client, readmin, "Readmin", "Regain your admin powers.", FALSE, "Admin")
+GAME_VERB_PROC_DESC(/client, readmin, "Readmin", "Regain your admin powers.", "Admin")
+
 	var/datum/admins/A = GLOB.deadmins[ckey]
 
 	if(!A)
@@ -28,6 +30,7 @@ DEFINE_PROC_VERB(/client, readmin, "Readmin", "Regain your admin powers.", FALSE
 	log_admin("[src] re-adminned themselves.")
 	BLACKBOX_LOG_ADMIN_VERB("Readmin")
 
-DEFINE_PROC_VERB(/client, admin_2fa_verify, "Verify Admin", "", FALSE, "Admin")
+GAME_VERB_PROC(/client, admin_2fa_verify, "Verify Admin", "Admin")
+
 	var/datum/admins/admin = GLOB.admin_datums[ckey]
 	admin?.associate(src)

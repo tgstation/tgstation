@@ -315,6 +315,7 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/holywater
 	metabolized_traits = list(TRAIT_HOLY)
+	COOLDOWN_DECLARE(spell_clear_cd)
 
 /datum/glass_style/drinking_glass/holywater
 	required_drink_type = /datum/reagent/water/holywater
@@ -350,14 +351,26 @@
 	affected_mob.adjust_jitter_up_to(2 SECONDS * metabolization_ratio * seconds_per_tick, 20 SECONDS)
 	var/need_mob_update = FALSE
 
-	if(IS_CULTIST(affected_mob))
-		for(var/datum/action/innate/cult/blood_magic/BM in affected_mob.actions)
+	if(COOLDOWN_FINISHED(src, spell_clear_cd))
+		if(IS_CULTIST(affected_mob))
+			for(var/datum/action/innate/cult/blood_magic/BM in affected_mob.actions)
+				var/removed_any = FALSE
+				for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
+					removed_any = TRUE
+					qdel(BS)
+				if(removed_any)
+					to_chat(affected_mob, span_cult_large("Your blood rites falter as holy water scours your body!"))
+					COOLDOWN_START(src, spell_clear_cd, 3 SECONDS)
+
+		if(IS_HERETIC(affected_mob))
+			var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(affected_mob)
 			var/removed_any = FALSE
-			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
-				removed_any = TRUE
-				qdel(BS)
+			for(var/datum/heretic_knowledge/spell/spell in heretic_datum.get_researched_knowledge())
+				if(spell.remove_charges(ceil(spell.max_charges * spell.holywater_drain_amount)))
+					removed_any = TRUE
 			if(removed_any)
-				to_chat(affected_mob, span_cult_large("Your blood rites falter as holy water scours your body!"))
+				to_chat(affected_mob, span_mansus("Your intricate rituals are distrupted by the holy water scouring your body!"))
+				COOLDOWN_START(src, spell_clear_cd, 3 SECONDS)
 
 	if(data["deciseconds_metabolized"] >= (25 SECONDS)) // 10 units
 		affected_mob.adjust_stutter_up_to(2 SECONDS * metabolization_ratio * seconds_per_tick, 20 SECONDS)
@@ -677,6 +690,7 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM //metabolizes to prevent micro-dosage
 	taste_description = "slime"
+	affected_biotype = MOB_ORGANIC|MOB_SKELETAL|MOB_UNDEAD
 	var/race = /datum/species/human
 	var/list/mutationtexts = list( "You don't feel very well." = MUT_MSG_IMMEDIATE,
 									"Your skin feels a bit abnormal." = MUT_MSG_IMMEDIATE,
@@ -3446,7 +3460,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	overdose_threshold = 50 // GLOW GLOW GLOW
-	metabolized_traits = list(TRAIT_MINOR_NIGHT_VISION)
+	metabolized_traits = list(TRAIT_NIGHT_VISION)
 	self_consuming = TRUE
 	/// Fake flashlight we're using to make owner's eyes glow
 	var/obj/item/flashlight/eyelight/glow/glowing
@@ -3526,7 +3540,7 @@
 	name = "Red Luminiscent Fluid"
 	color = COLOR_SOFT_RED
 	// The glow *is* unnatural, so...
-	metabolized_traits = list(TRAIT_MINOR_NIGHT_VISION, TRAIT_UNNATURAL_RED_GLOWY_EYES)
+	metabolized_traits = list(TRAIT_NIGHT_VISION, TRAIT_UNNATURAL_RED_GLOWY_EYES)
 
 /datum/reagent/luminescent_fluid/red/overdose_start(mob/living/affected_mob, metabolization_ratio)
 	. = ..()
@@ -3598,3 +3612,121 @@
 
 	exposed_mob.Stun(4 SECONDS)
 	exposed_mob.petrify(reac_volume * reagent_to_time_conversion)
+
+/datum/reagent/cement
+	name = "Cement"
+	description = "A sophisticated binding agent used to produce concrete."
+	color = "#c4c0bc"
+	taste_description = "cement"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	var/potency = 2
+	var/concrete_type = /datum/reagent/concrete
+	var/units_per_aggregate = 5
+
+/datum/reagent/cement/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	if (!(methods & INGEST))
+		return
+	exposed_mob.add_mood_event("cement", /datum/mood_event/cement)
+
+/datum/reagent/cement/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	var/rate = potency * seconds_per_tick * metabolization_ratio
+	var/need_mob_update = 0
+
+	if(prob(min(current_cycle/2, 5)))
+		need_mob_update += affected_mob.adjust_tox_loss(rate)
+
+	if(prob(min(current_cycle/4, 10)))
+		need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, rate)
+
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH
+
+/datum/reagent/cement/hexement
+	name = "Hexement"
+	description = "An advanced, space-age binding agent used to produce reinforced concrete."
+	color = "#969390"
+	potency = 4
+	concrete_type = /datum/reagent/concrete/hexacrete
+	units_per_aggregate = 2
+
+/datum/reagent/cement/pavement
+	name = "Pavement Cement"
+	description = "A mix of cement and asphalt. Looks less tasty than normal cement."
+	color = "#5c6361"
+	potency = 3
+	concrete_type = /datum/reagent/concrete/pavement
+
+/datum/reagent/concrete
+	name = "Concrete"
+	description = "A mix of cement and aggregate, commonly used as a bulk building material."
+	color = "#a8988a"
+	taste_description = "rocks"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	var/units_per_wall = 10
+	var/units_per_floor = 2
+	var/turf/closed/wall/concrete/wall_type = /turf/closed/wall/concrete
+	var/turf/open/floor/concrete/floor_type = /turf/open/floor/concrete
+
+/datum/reagent/concrete/expose_atom(atom/exposed_atom, reac_volume, methods)
+	. = ..()
+	// VAPOR (foam, spray), TOUCH (splashing) allowed, SMOKE_MACHINE (TOUCH|INHALE) not allowed
+	if(!((methods & (TOUCH|INHALE)) == TOUCH) && !(methods & VAPOR))
+		return
+	var/girder_type = initial(wall_type.girder_type)
+	if(istype(exposed_atom, girder_type))
+		return concify_girder(exposed_atom, volume)
+	if(istype(exposed_atom, /turf/open/floor/catwalk_floor))
+		return concify_catwalk(exposed_atom, volume)
+	return
+
+/datum/reagent/concrete/proc/pour_amount(atom/target, mob/user)
+	if(istype(target, initial(wall_type.girder_type)))
+		return units_per_wall
+	else if(istype(target, /turf/open/floor/catwalk_floor))
+		return units_per_floor
+	return 0
+
+/datum/reagent/concrete/proc/concify_girder(obj/exposed_obj, volume)
+	if(volume < units_per_wall)
+		return FALSE
+	var/turf/open/wall_turf = get_turf(exposed_obj)
+	if(!istype(wall_turf))
+		return FALSE
+	var/turf/closed/wall/concrete/wall = wall_turf.place_on_top(wall_type)
+	exposed_obj.transfer_fingerprints_to(wall)
+	wall.harden_lvl = 0
+	wall.check_harden()
+	qdel(exposed_obj)
+	return TRUE
+
+/datum/reagent/concrete/proc/concify_catwalk(turf/open/floor/catwalk_floor/catwalk, volume)
+	if(volume < units_per_floor)
+		return FALSE
+	var/turf/open/floor/plating = catwalk.make_plating()
+	var/turf/open/floor/concrete/concrete_floor = plating.place_on_top(floor_type, flags=CHANGETURF_INHERIT_AIR)
+	concrete_floor.harden_lvl = 0
+	concrete_floor.check_harden()
+	return TRUE
+
+/datum/reagent/concrete/hexacrete
+	name = "Hexacrete"
+	description = "Made with fortified cement, this mix of binder and aggregate is a useful, sturdy building material."
+	color = "#7b6e60"
+	wall_type = /turf/closed/wall/concrete/reinforced
+	floor_type = /turf/open/floor/concrete/reinforced
+
+/datum/reagent/concrete/pavement
+	name = "Pavement Concrete"
+	description = "Road surface, blacktop, asphalt concrete - whatever you call it, it's the most common material used in constructing runways for ships and roadways for vehicles."
+	color = "#3f4543"
+	floor_type = /turf/open/floor/concrete/pavement
+
+/datum/reagent/concrete_mix
+	name = "Concrete Mix"
+	description = "Pre-made concrete mix. Ideal for lazy engineers."
+	color = "#c4c0bc"
+	taste_description = "chalky concrete"

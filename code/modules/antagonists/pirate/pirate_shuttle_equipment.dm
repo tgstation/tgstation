@@ -220,6 +220,7 @@
 		icon_state = "[base_icon_state]-off"
 
 /obj/machinery/computer/piratepad_control
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/piratepad_control")
 	name = "cargo hold control terminal"
 	///Message to display on the TGUI window.
 	var/status_report = "Ready for delivery."
@@ -442,7 +443,7 @@
 		return pick(head_mobs)
 
 /datum/export/pirate/ransom/get_base_cost(mob/living/carbon/human/ransomee)
-	if(ransomee.stat != CONSCIOUS || !ransomee.mind || HAS_TRAIT(ransomee.mind, TRAIT_HAS_BEEN_KIDNAPPED)) //mint condition only
+	if(IS_UNCONSCIOUS_OR_CRIT(ransomee) || !ransomee.mind || HAS_TRAIT(ransomee.mind, TRAIT_HAS_BEEN_KIDNAPPED)) //mint condition only
 		return 0
 	else if(ransomee.has_faction(FACTION_PIRATE)) //can't ransom your fellow pirates to CentCom!
 		return 0

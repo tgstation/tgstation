@@ -1170,6 +1170,7 @@
 	build_path = /obj/machinery/recharger
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/machine/techfab/department/security
 	name = "\improper Departmental Techfab - Security"
@@ -1714,6 +1715,7 @@
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/micro_laser = 1,
 	)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/machine/refinery
 	name = "Boulder Refinery"
@@ -1725,6 +1727,7 @@
 		/datum/stock_part/matter_bin = 2,
 		/obj/item/reagent_containers/cup/beaker = 1,
 	)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/machine/smelter
 	name = "Boulder Smelter"
@@ -1736,6 +1739,7 @@
 		/datum/stock_part/matter_bin = 2,
 		/obj/item/reagent_containers/cup/beaker = 1,
 	)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/machine/shieldwallgen
 	name = "Shield Wall Generator"
@@ -1890,6 +1894,28 @@
 /obj/item/circuitboard/machine/engine/propulsion
 	name = "Shuttle Engine Propulsion"
 	build_path = /obj/machinery/power/shuttle_engine/propulsion
+
+/obj/item/circuitboard/machine/ai_law_rack
+	name = "Standard Rack"
+	name_extension = "(Module Rack Board)"
+	build_path = /obj/machinery/ai_law_rack/base
+	req_components = list(
+		/datum/stock_part/amplifier = 1,
+		/datum/stock_part/transmitter = 1,
+		/obj/item/stack/cable_coil = 10,
+	)
+
+/obj/item/circuitboard/machine/ai_law_rack/small
+	name = "Portable Rack"
+	build_path = /obj/machinery/ai_law_rack/base/small
+
+/obj/item/circuitboard/machine/ai_law_rack/core
+	name = "Core Rack"
+	build_path = /obj/machinery/ai_law_rack/base/core
+
+/obj/item/circuitboard/machine/ai_law_rack/broadcaster
+	name = "Broadcaster Rack"
+	build_path = /obj/machinery/ai_law_rack/broadcaster
 
 /obj/item/circuitboard/machine/quantum_server
 	name = "Quantum Server"

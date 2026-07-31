@@ -59,7 +59,7 @@
 		//Remove from their hands and put back "into" the tank
 		remove_noz()
 
-DEFINE_VERB(/obj/item/watertank, toggle_mister_verb, "Toggle Mister", "", FALSE, "")
+GAME_VERB(/obj/item/watertank, toggle_mister_verb, "Toggle Mister", null)
 	toggle_mister(usr)
 
 /obj/item/watertank/proc/make_noz()
@@ -89,12 +89,11 @@ DEFINE_VERB(/obj/item/watertank, toggle_mister_verb, "Toggle Mister", "", FALSE,
 	else
 		return ..()
 
-/obj/item/watertank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item == noz)
-		remove_noz()
-		return TRUE
-	else
-		return ..()
+/obj/item/watertank/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool != noz)
+		return NONE
+	remove_noz()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/watertank/dropped(mob/user)
 	..()
@@ -234,6 +233,7 @@ DEFINE_VERB(/obj/item/watertank, toggle_mister_verb, "Toggle Mister", "", FALSE,
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT  // don't put in storage
 	chem = null //holds no chems of its own, it takes from the tank.
+	custom_materials = null
 	var/obj/item/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
@@ -408,7 +408,7 @@ DEFINE_VERB(/obj/item/watertank, toggle_mister_verb, "Toggle Mister", "", FALSE,
 		turn_on()
 
 //Todo : cache these.
-/obj/item/reagent_containers/chemtank/worn_overlays(mutable_appearance/standing, isinhands = FALSE) //apply chemcolor and level
+/obj/item/reagent_containers/chemtank/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE) //apply chemcolor and level
 	. = ..()
 	//inhands + reagent_filling
 	if(isinhands || !reagents.total_volume)

@@ -39,15 +39,15 @@
 	icon_state = "potato_wedges"
 	bite_consumption_mod = 100
 
-/obj/item/food/grown/potato/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.get_sharpness())
-		to_chat(user, span_notice("You cut the potato into wedges with [W]."))
-		var/obj/item/food/grown/potato/wedges/Wedges = new /obj/item/food/grown/potato/wedges
-		remove_item_from_storage(user)
-		qdel(src)
-		user.put_in_hands(Wedges)
-	else
-		return ..()
+/obj/item/food/grown/potato/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.get_sharpness())
+		return NONE
+	to_chat(user, span_notice("You cut the potato into wedges with [tool]."))
+	var/obj/item/food/grown/potato/wedges/slices = new /obj/item/food/grown/potato/wedges
+	remove_item_from_storage(user)
+	qdel(src)
+	user.put_in_hands(slices)
+	return ITEM_INTERACT_SUCCESS
 
 
 // Sweet Potato

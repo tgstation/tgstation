@@ -165,7 +165,7 @@
 	. = ..()
 	if(mode != BOT_BLOCKED)
 		return
-	var/obj/machinery/navbeacon/beacon = ai_controller.current_movement_target
+	var/obj/machinery/navbeacon/beacon = ai_controller.blackboard[BB_CURRENT_MOVEMENT_TARGET]
 	if(!istype(beacon))
 		return
 	var/intended_mode = beacon.location == ai_controller.blackboard[BB_MULEBOT_HOME_BEACON] ? BOT_GO_HOME : BOT_DELIVER

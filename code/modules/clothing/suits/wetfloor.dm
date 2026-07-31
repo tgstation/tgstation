@@ -23,7 +23,7 @@
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
 	)
-	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/suit_caution
 	melee = 5

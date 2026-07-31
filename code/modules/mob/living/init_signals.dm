@@ -43,13 +43,7 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_STASIS), PROC_REF(on_stasis_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_STASIS), PROC_REF(on_stasis_trait_loss))
 
-	RegisterSignals(src, list(
-		SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION),
-		SIGNAL_REMOVETRAIT(TRAIT_CRITICAL_CONDITION),
-
-		SIGNAL_ADDTRAIT(TRAIT_NODEATH),
-		SIGNAL_REMOVETRAIT(TRAIT_NODEATH),
-	), PROC_REF(update_succumb_action))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NODEATH), SIGNAL_REMOVETRAIT(TRAIT_NODEATH)), PROC_REF(on_nodeath))
 
 	RegisterSignal(src, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_movement_type_flag_enabled))
 	RegisterSignal(src, COMSIG_MOVETYPE_FLAG_DISABLED, PROC_REF(on_movement_type_flag_disabled))
@@ -79,17 +73,41 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_MIND_TEMPORARILY_GONE), PROC_REF(on_mind_temporarily_gone_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_MIND_TEMPORARILY_GONE), PROC_REF(on_mind_temporarily_gone_trait_loss))
 
+	RegisterSignals(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_NIGHT_VISION),
+		SIGNAL_REMOVETRAIT(TRAIT_NIGHT_VISION),
+		SIGNAL_ADDTRAIT(TRAIT_MESON_VISION),
+		SIGNAL_REMOVETRAIT(TRAIT_MESON_VISION),
+		SIGNAL_ADDTRAIT(TRAIT_TRUE_NIGHT_VISION),
+		SIGNAL_REMOVETRAIT(TRAIT_TRUE_NIGHT_VISION),
+		SIGNAL_ADDTRAIT(TRAIT_THERMAL_VISION),
+		SIGNAL_REMOVETRAIT(TRAIT_THERMAL_VISION),
+		SIGNAL_ADDTRAIT(TRAIT_XRAY_VISION),
+		SIGNAL_REMOVETRAIT(TRAIT_XRAY_VISION),
+		SIGNAL_ADDTRAIT(TRAIT_ECHOLOCATOR),
+		SIGNAL_REMOVETRAIT(TRAIT_ECHOLOCATOR),
+	), PROC_REF(update_sight))
+
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_PASSTABLE), SIGNAL_REMOVETRAIT(TRAIT_PASSTABLE)), PROC_REF(on_passtable_trait_toggled))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_PASSWINDOW), SIGNAL_REMOVETRAIT(TRAIT_PASSWINDOW)), PROC_REF(on_passwindow_trait_toggled))
+
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
 	SIGNAL_HANDLER
-	if(stat < UNCONSCIOUS)
-		set_stat(UNCONSCIOUS)
+
+	apply_status_effect(/datum/status_effect/knocked_out)
+
+	if(stat <= SOFT_CRIT) // going into hard crit gives a similar log
+		log_combat(src, src, "lost consciousness")
 
 /// Called when [TRAIT_KNOCKEDOUT] is removed from the mob.
 /mob/living/proc/on_knockedout_trait_loss(datum/source)
 	SIGNAL_HANDLER
-	if(stat <= UNCONSCIOUS)
-		update_stat()
+
+	remove_status_effect(/datum/status_effect/knocked_out)
+
+	if(stat <= SOFT_CRIT) // leaving hard crit gives a similar log
+		log_combat(src, src, "regained consciousness")
 
 /// Called when [TRAIT_DEATHCOMA] is added to the mob.
 /mob/living/proc/on_deathcoma_trait_gain(datum/source)
@@ -231,13 +249,18 @@
 	SIGNAL_HANDLER
 	update_incapacitated()
 
+/// Called when [TRAIT_NODEATH] is added or removed from the mob
+/mob/living/proc/on_nodeath()
+	SIGNAL_HANDLER
+	update_succumb_action()
+	update_stat()
+
 /**
  * Called when traits that alter succumbing are added/removed.
  *
  * Will show or hide the succumb alert prompt.
  */
 /mob/living/proc/update_succumb_action()
-	SIGNAL_HANDLER
 	if (CAN_SUCCUMB(src) || HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
 		throw_alert(ALERT_SUCCUMB, /atom/movable/screen/alert/succumb)
 	else
@@ -341,3 +364,19 @@
 /mob/living/proc/on_mind_temporarily_gone_trait_loss(datum/source)
 	SIGNAL_HANDLER
 	med_hud_set_status()
+
+/// Called when [TRAIT_PASSTABLE] is added/removed to/from the mob.
+/mob/living/proc/on_passtable_trait_toggled(datum/source)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT(src, TRAIT_PASSTABLE))
+		pass_flags |= PASSTABLE
+	else
+		pass_flags &= ~PASSTABLE
+
+/// Called when [TRAIT_PASSWINDOW] is added/removed to/from the mob.
+/mob/living/proc/on_passwindow_trait_toggled(datum/source)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT(src, TRAIT_PASSWINDOW))
+		pass_flags |= PASSWINDOW
+	else
+		pass_flags &= ~PASSWINDOW

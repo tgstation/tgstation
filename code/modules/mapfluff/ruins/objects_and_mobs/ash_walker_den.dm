@@ -48,7 +48,7 @@
 	for(var/mob/living/offeredmob in view(src, 1)) //Only for corpse right next to/on same tile
 		if(offeredmob.loc == src)
 			continue //Ashwalker Revive in Progress...
-		if(offeredmob.stat)
+		if(IS_UNCONSCIOUS_OR_CRIT(offeredmob))
 			offeredmob.unequip_everything()
 
 			if(issilicon(offeredmob)) //no advantage to sacrificing borgs...

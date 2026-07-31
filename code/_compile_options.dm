@@ -130,12 +130,6 @@
 #define DISABLE_DREAMLUAU
 #endif
 
-// Since 0.2.0, dreamluau depends on breaking changes made to byondapi in 1674.
-// Get rid of this when BYOND_MINOR is >= 1674 AND we don't have any alternate tests on <1674.
-#if DM_BUILD < 1674
-#define DISABLE_DREAMLUAU
-#endif
-
 // Comment to disable auxcpu's precise cpu usage metrics. Will impact our ability to avoid overtime
 #define USE_AUXCPU
 
@@ -158,14 +152,7 @@
 #endif // 1 to use the default behaviour;
 								// 2 for preloading absolutely everything;
 
-#ifdef LOWMEMORYMODE
-#ifndef ABSOLUTE_MINIMUM
-#define FORCE_MAP "runtimestation"
-#else
-#define FORCE_MAP "runtimestation_minimal"
-#endif
 #define FORCE_MAP_DIRECTORY "_maps"
-#endif
 
 //Additional code for the above flags.
 #ifdef TESTING
@@ -190,6 +177,11 @@
 #define DO_NOT_DEFER_ASSETS
 //Test at full capacity, the extra cost doesn't matter
 #define TIMER_DEBUG
+
+// Checks if unit tests are being run locally or well, not
+#if !defined(CIBUILDING) && !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
+#define RUNNING_LOCAL_TESTS
+#endif
 #endif
 
 #ifdef TGS

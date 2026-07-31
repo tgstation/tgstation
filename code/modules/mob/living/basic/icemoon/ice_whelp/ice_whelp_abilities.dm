@@ -33,7 +33,7 @@
 	owner.Shake(pixelshiftx = 1, pixelshifty = 0, duration = forecast_delay)
 	forecast_overlay.setDir(get_dir(owner, target_turf))
 	owner.add_overlay(forecast_overlay)
-	var/succeeded = do_after(owner, delay = forecast_delay, target = owner, hidden = TRUE)
+	var/succeeded = do_after(owner, delay = forecast_delay, target = owner, cog_icon = null)
 	owner.cut_overlay(forecast_overlay)
 	if (succeeded)
 		playsound(owner.loc, fire_sound, 200, TRUE)

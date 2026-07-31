@@ -11,6 +11,7 @@
 	equip_cooldown = 150
 	energy_drain = STANDARD_CELL_CHARGE
 	range = MECHA_RANGED
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 5)
 	var/teleport_range = 7
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(mob/source, atom/target, list/modifiers)
@@ -32,6 +33,7 @@
 	equip_cooldown = 50
 	energy_drain = 300
 	range = MECHA_RANGED
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(mob/source, atom/target, list/modifiers)
@@ -73,6 +75,7 @@
 	equip_cooldown = 10
 	energy_drain = 100
 	range = MECHA_MELEE|MECHA_RANGED
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	///Which atom we are movable_target onto for
 	var/atom/movable/movable_target
 	///Whether we will throw movable atomstothrow by locking onto them or just throw them back from where we click
@@ -167,6 +170,7 @@
 	desc = "Boosts exosuit armor against melee attacks"
 	icon_state = "mecha_abooster_ccw"
 	armor_mod = /datum/armor/mecha_equipment_ccw_boost
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /datum/armor/mecha_equipment_ccw_boost
 	melee = 20
@@ -176,6 +180,7 @@
 	desc = "Boosts exosuit armor against ranged kinetic and energy projectiles. Completely blocks taser shots."
 	icon_state = "mecha_abooster_proj"
 	armor_mod = /datum/armor/mecha_equipment_ranged_boost
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /datum/armor/mecha_equipment_ranged_boost
 	bullet = 15
@@ -187,6 +192,7 @@
 		exosuit slightly more vulnerable to kinetic blows due to taking up valuable hull cushioning."
 	icon_state = "mecha_abooster_emp"
 	armor_mod = /datum/armor/mecha_equipment_energy_boost
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /datum/armor/mecha_equipment_energy_boost
 	melee = -5
@@ -222,6 +228,7 @@
 	can_be_toggled = TRUE
 	active = FALSE
 	equipment_slot = MECHA_UTILITY
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
 	/// Repaired health per second
 	var/health_boost = 0.5
 	var/icon/droid_overlay
@@ -297,7 +304,10 @@
 	equipment_slot = MECHA_POWER
 	can_be_toggled = TRUE
 	active = FALSE
-	///Type of fuel the generator is using. Is set in generator_init() to add the starting amount of fuel
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+	///Type of fuel the generator is using.
+	var/fuel_type = /obj/item/stack/sheet/mineral/plasma
+	///Actual physical fuel within the generator. Is set in generator_init() to add the starting amount of fuel
 	var/obj/item/stack/sheet/fuel = null
 	///Fuel used per second while idle, not generating, in units
 	var/fuelrate_idle = 0.00625 * SHEET_MATERIAL_AMOUNT
@@ -340,16 +350,16 @@
 		return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/generator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, fuel))
-		load_fuel(tool, user)
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+	if(!istype(tool, fuel_type))
+		return NONE
+	load_fuel(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/mecha_parts/mecha_equipment/generator/process(seconds_per_tick)
 	if(!chassis)
 		active = FALSE
 		return PROCESS_KILL
-	if(fuel.amount <= 0)
+	if(!fuel?.amount)
 		active = FALSE
 		log_message("Deactivated - no fuel.", LOG_MECHA)
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Fuel reserves depleted.")]")
@@ -373,19 +383,28 @@
 		to_chat(user, "[icon2html(src, user)][span_warning("[fuel] traces in target minimal! [inserted_fuel] cannot be used as fuel.")]")
 		return
 	//how much fuel is needed to fill the generator to its max capacity, in units
-	var/units_to_load = max(max_fuel - fuel.amount * SHEET_MATERIAL_AMOUNT, 0)
+	var/units_to_load = isnull(fuel) ? max_fuel : max(max_fuel - fuel.amount * SHEET_MATERIAL_AMOUNT, 0)
 	if(!units_to_load)
 		to_chat(user, "[icon2html(src, user)][span_notice("Unit is full.")]")
 		return
 	//how much new fuel are we inserting, in sheets
 	var/fuel_to_load = min(max(round(units_to_load / SHEET_MATERIAL_AMOUNT), 1), inserted_fuel.amount)
-	fuel.amount += fuel_to_load
+	if(fuel)
+		fuel.amount += fuel_to_load
+	else
+		fuel = new(src, fuel_to_load)
 	inserted_fuel.use(fuel_to_load)
 	to_chat(user, "[icon2html(src, user)][span_notice("[fuel_to_load] unit\s of [fuel] successfully loaded.")]")
 
 ///Introduces the actual fuel type to be used, as well as the starting amount of said fuel
 /obj/item/mecha_parts/mecha_equipment/generator/proc/generator_init()
-	fuel = new /obj/item/stack/sheet/mineral/plasma(src, 1)
+	fuel = new /obj/item/stack/sheet/mineral/plasma(src, 10)
+
+/// Version without the initial fuel
+/obj/item/mecha_parts/mecha_equipment/generator/printed
+
+/obj/item/mecha_parts/mecha_equipment/generator/printed/generator_init()
+	return
 
 /////////////////////////////////////////// THRUSTERS /////////////////////////////////////////////
 
@@ -396,6 +415,7 @@
 	equipment_slot = MECHA_UTILITY
 	can_be_toggled = TRUE
 	active_label = "Thrusters"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 12.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.5)
 	var/effect_type = /obj/effect/particle_effect/sparks
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mecha, attach_right)
@@ -532,6 +552,7 @@
 	icon = 'icons/obj/devices/mecha_equipment.dmi'
 	icon_state = "mecha_camera"
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 2, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2)
 
 /obj/item/mecha_parts/camera_kit/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mech, attach_right)
 	if(mech.chassis_camera)

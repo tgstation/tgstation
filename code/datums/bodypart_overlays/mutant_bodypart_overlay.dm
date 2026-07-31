@@ -40,7 +40,7 @@
 		set_appearance_from_name(feature_name)
 		imprint_on_next_insertion = FALSE
 
-/datum/bodypart_overlay/mutant/get_overlay(layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/mutant/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
 	inherit_color(limb) // If draw_color is not set yet, go ahead and do that
 	return ..()
 
@@ -73,25 +73,24 @@
 	return sprite_datum.icon_state
 
 ///Used to build the final incon state for the sprite
-/datum/bodypart_overlay/mutant/proc/build_icon_state(image_layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/mutant/proc/build_icon_state(layer_index, obj/item/bodypart/limb)
 	PROTECTED_PROC(TRUE)
 	var/gender_key = (sprite_datum.gender_specific && limb?.limb_gender) || "m" // Male is default because sprite accessories are so ancient they predate the concept of not hardcoding gender
 	var/base_state = get_base_icon_state()
-	var/layer_key = mutant_bodyparts_layertext(image_layer)
-	return "[gender_key]_[feature_key]_[base_state]_[layer_key]"
+	return "[gender_key]_[feature_key]_[base_state]_[layer_index]"
 
 ///Get the image we need to draw on the person. Called from get_overlay() which is called from _bodyparts.dm. Limb can be null
-/datum/bodypart_overlay/mutant/get_image(image_layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/mutant/get_image(obj/item/bodypart/limb, layer_index, layer_real)
 	if(!sprite_datum)
 		CRASH("Trying to call get_image() on [type] while it didn't have a sprite_datum. This shouldn't happen, report it as soon as possible.")
 
-	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, build_icon_state(image_layer, limb), layer = image_layer)
+	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, build_icon_state(layer_index, limb), layer = layer_real)
 	if(sprite_datum.center)
 		center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
 
 	return appearance
 
-/datum/bodypart_overlay/mutant/color_image(image/overlay, layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/mutant/color_image(image/overlay, obj/item/bodypart/limb, layer_index)
 	overlay.color = sprite_datum.color_src ? (dye_color || draw_color) : null
 
 /datum/bodypart_overlay/mutant/added_to_limb(obj/item/bodypart/limb)
@@ -119,6 +118,10 @@
 		stack_trace("External organ has no feature list, it will render invisible")
 		return list()
 	return feature_list
+
+/// Used to add special coloring behavior to certain mutant parts.
+/datum/bodypart_overlay/mutant/proc/override_color(obj/item/bodypart/bodypart_owner)
+	CRASH("External organ color set to override with no override proc.")
 
 ///Give the organ its color. Force will override the existing one.
 /datum/bodypart_overlay/mutant/proc/inherit_color(obj/item/bodypart/bodypart_owner, force)

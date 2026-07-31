@@ -164,14 +164,13 @@
 /datum/brain_trauma/special/obsessed/proc/is_defensive()
 	if(time_spend_creeping >= 20 SECONDS)
 		return TRUE
-	if(obsession.stat >= UNCONSCIOUS)
+	if(IS_UNCONSCIOUS(obsession))
 		return (owner in viewers(7, obsession))
 	return FALSE
 
 /datum/brain_trauma/special/obsessed/proc/do_something_nervous()
-	if(QDELETED(owner) || owner.stat >= UNCONSCIOUS || HAS_TRAIT(owner, TRAIT_FEARLESS))
+	if(QDELETED(owner) || IS_UNCONSCIOUS(owner) || HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
-
 
 	switch(rand(1, 10))
 		if(1 to 4)
@@ -220,7 +219,7 @@
 	)
 
 	for(var/datum/mind/crewmember as anything in get_crewmember_minds())
-		if(!ishuman(crewmember.current) || crewmember.current.stat == DEAD || !GET_CLIENT(crewmember.current))
+		if(!ishuman(crewmember.current) || crewmember.current.stat == DEAD || crewmember.current == owner || !GET_CLIENT(crewmember.current))
 			continue
 
 		var/job = crewmember.assigned_role.title

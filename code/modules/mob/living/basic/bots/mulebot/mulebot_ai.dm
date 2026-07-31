@@ -1,4 +1,5 @@
 /datum/ai_controller/basic_controller/bot/mulebot
+	behavior_tree_json = "code/modules/mob/living/basic/bots/mulebot/mulebot.bt.json"
 	blackboard = list(
 		BB_SALUTE_MESSAGES = list(
 			"blinks its light in appreciation towards",
@@ -6,12 +7,6 @@
 	)
 	ai_movement = /datum/ai_movement/jps/bot/mulebot
 	max_target_distance = AI_MULEBOT_PATH_LENGTH
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/respond_to_summon,
-		/datum/ai_planning_subtree/salute_authority,
-		/datum/ai_planning_subtree/attempt_delivery,
-		/datum/ai_planning_subtree/find_delivery_beacon,
-	)
 	reset_keys = list(
 		BB_BOT_SUMMON_TARGET,
 		BB_MULEBOT_DESTINATION_BEACON,
@@ -40,72 +35,15 @@
 	)
 	RegisterSignals(my_bot, content_signals, PROC_REF(update_able_to_run))
 
-/datum/ai_planning_subtree/find_delivery_beacon
-	///what behavior do we use to seek beacons
-	var/find_beacon_behaviour = /datum/ai_behavior/find_delivery_beacon
+/// Loads or unloads cargo at the delivery beacon held in target_key, then heads home or idles.
+/datum/bt_node/ai_behavior/handle_delivery
+	var/target_key
+	time_between_perform = 1 SECONDS
 
-/datum/ai_planning_subtree/find_delivery_beacon/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/basic/bot/mulebot/bot_pawn = controller.pawn
-	if(bot_pawn.wires.is_cut(WIRE_BEACON))
-		return
-
-	if(!controller.blackboard_key_exists(BB_MULEBOT_TRAVEL_TARGET))
-		controller.queue_behavior(find_beacon_behaviour, BB_MULEBOT_TRAVEL_TARGET)
-
-/datum/ai_behavior/find_delivery_beacon
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-
-/datum/ai_behavior/find_delivery_beacon/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	var/mob/living/basic/bot/mulebot/bot_pawn = controller.pawn
-	var/atom/delivery_beacon
-
-	var/beacon_tag = null
-
-	switch(bot_pawn.mode)
-		if(BOT_DELIVER)
-			beacon_tag = controller.blackboard[BB_MULEBOT_DESTINATION_BEACON]
-		if(BOT_GO_HOME)
-			beacon_tag = controller.blackboard[BB_MULEBOT_HOME_BEACON]
-		else
-			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	for(var/obj/machinery/navbeacon/beacon as anything in GLOB.deliverybeacons)
-		if(beacon.location == beacon_tag)
-			delivery_beacon = beacon
-			break
-
-	if(isnull(delivery_beacon))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	controller.set_blackboard_key(BB_MULEBOT_TRAVEL_TARGET, delivery_beacon)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-/datum/ai_behavior/travel_towards/delivery_beacon
-	new_movement_type = /datum/ai_movement/jps/bot/mulebot
-
-/datum/ai_planning_subtree/attempt_delivery
-	///behavior we use to unload crates
-	var/delivery_behaviour = /datum/ai_behavior/handle_delivery
-
-/datum/ai_planning_subtree/attempt_delivery/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(!controller.blackboard_key_exists(BB_MULEBOT_TRAVEL_TARGET))
-		return
-
-	controller.queue_behavior(delivery_behaviour, BB_MULEBOT_TRAVEL_TARGET)
-	return SUBTREE_RETURN_FINISH_PLANNING
-
-/datum/ai_behavior/handle_delivery
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
-
-/datum/ai_behavior/handle_delivery/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return FALSE
-	set_movement_target(controller, target)
-
-/datum/ai_behavior/handle_delivery/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/handle_delivery/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/obj/machinery/navbeacon/beacon = controller.blackboard[target_key]
+	if(QDELETED(beacon))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/mob/living/basic/bot/mulebot/bot_pawn = controller.pawn
 
 	var/load_direction = beacon.codes[NAVBEACON_DELIVERY_DIRECTION] // this will be the load/unload dir

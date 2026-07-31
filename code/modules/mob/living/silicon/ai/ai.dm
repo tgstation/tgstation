@@ -2,36 +2,52 @@
 #define CHARACTER_TYPE_SELF "My Character"
 #define CHARACTER_TYPE_CREWMEMBER "Station Member"
 
-/mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai, latejoining = FALSE)
+/**
+ * Init args
+ * * target_ai - The mob taking control of the AI
+ * * base_laws - An instance or typepath of a law datum, if provided the AI will use that lawset instead of making its own
+ * * default_link - An ai_law_rack object to link to on spawn, if possible. Base laws is preferred over this.
+ * * force_mind_move - If TRUE, forces the mind to move even if it is inactive.
+ */
+/mob/living/silicon/ai/Initialize(mapload, mob/target_ai, datum/ai_laws/base_laws, obj/machinery/ai_law_rack/base/default_link, force_mind_move = FALSE)
 	. = ..()
-	if(!target_ai) //If there is no player/brain inside.
+	if(isnull(target_ai)) //If there is no player/brain inside.
 		new/obj/structure/ai_core(loc, CORE_STATE_FINISHED) //New empty terminal.
 		return INITIALIZE_HINT_QDEL //Delete AI.
+
+	if(target_ai.client)
+		set_gender(target_ai.client)
 
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 	status_flags &= ~CANPUSH //AI starts anchored, so dont push it
 
-	if(L && istype(L, /datum/ai_laws))
-		laws = L
-		laws.associate(src)
-		for (var/law in laws.inherent)
-			lawcheck += law
+	if(istype(base_laws, /datum/ai_laws))
+		laws = base_laws.copy_lawset()
+	else if(ispath(base_laws, /datum/ai_laws))
+		laws = new base_laws()
 	else
 		make_laws()
-		for (var/law in laws.inherent)
-			lawcheck += law
+		if(default_link?.can_link_to(src))
+			default_link.link_silicon(src, announce = FALSE)
+		else
+			link_to_first_rack()
+
+	var/datum/antagonist/malf_ai/malf_datum = IS_MALF_AI(target_ai)
+	malf_datum?.add_law_zero()
+
+	law_ui.update_inherent_stated_laws(laws)
 
 	create_eye()
 
-	if((target_ai.mind && target_ai.mind.active) || SSticker.current_state == GAME_STATE_SETTING_UP || latejoining)
+	if(target_ai.mind && (target_ai.mind.active || force_mind_move))
 		target_ai.mind.transfer_to(src)
 		if(is_antag())
 			to_chat(src, span_userdanger("You have been installed as an AI! "))
 			to_chat(src, span_danger("You must obey your silicon laws above all else. Your objectives will consider you to be dead."))
-		if(!mind.has_ever_been_ai)
-			mind.has_ever_been_ai = TRUE
-	else if(target_ai.key)
-		key = target_ai.key
+		mind.has_ever_been_ai = TRUE
+
+	else if(target_ai.ckey)
+		PossessByPlayer(target_ai.ckey)
 
 	to_chat(src, span_bold("You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras)."))
 	to_chat(src, span_bold("To look at other parts of the station, click on yourself to get a camera menu."))
@@ -60,7 +76,7 @@
 	spark_system = new /datum/effect_system/basic/spark_spread(src, 5, FALSE)
 	spark_system.attach(src)
 
-	add_verb(src, /mob/living/silicon/ai/proc/show_laws_verb)
+	ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, show_laws_verb)
 
 	aiMulti = new(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
@@ -68,13 +84,11 @@
 	deploy_action.Grant(src)
 
 	if(isturf(loc))
-		add_verb(src, list(
-			/mob/living/silicon/ai/proc/ai_network_change,
-			/mob/living/silicon/ai/proc/ai_hologram_change,
-			/mob/living/silicon/ai/proc/botcall,
-			/mob/living/silicon/ai/proc/control_integrated_radio,
-			/mob/living/silicon/ai/proc/set_automatic_say_channel,
-		))
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, ai_network_change)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, ai_hologram_change)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, botcall)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, control_integrated_radio)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, set_automatic_say_channel)
 
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
@@ -93,6 +107,7 @@
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
 
 	ai_tracking_tool = new(src)
+	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_STARTED, PROC_REF(on_track_started))
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_GLIDE_CHANGED, PROC_REF(tracked_glidesize_changed))
 
@@ -107,6 +122,12 @@
 			if(!McMobby.binarycheck())
 				continue
 			to_chat(McMobby,span_binarysay("<span class=[SPAN_COMMAND]>\[ SYSTEM \] NEW REMOTE HOST HAS CONNECTED TO THIS CHANNEL -- ID: [src]</span>"), type = MESSAGE_TYPE_RADIO)
+
+	RegisterSignal(src, COMSIG_SILICON_MODULE_RACK_LAWSET_UPDATE, PROC_REF(lawset_updated_sync_borgs))
+
+/mob/living/silicon/ai/mind_initialize()
+	. = ..()
+	mind.has_ever_been_ai = TRUE
 
 /mob/living/silicon/ai/weak_syndie
 	radio = /obj/item/radio/headset/silicon/ai/evil
@@ -224,7 +245,8 @@
 		ai_display.emotion = emote
 		ai_display.update()
 
-DEFINE_VERB(/mob/living/silicon/ai, pick_icon, "Set AI Core Display", "Choose what appears on your AI core display", FALSE, "AI Commands")
+GAME_VERB_DESC(/mob/living/silicon/ai, pick_icon, "Set AI Core Display", "Choose what appears on your AI core display", "AI Commands")
+
 	if(incapacitated)
 		to_chat(src, span_warning("You cannot access the core display controls in your current state."))
 		return
@@ -236,7 +258,8 @@ DEFINE_VERB(/mob/living/silicon/ai, pick_icon, "Set AI Core Display", "Choose wh
 		var/obj/item/aicard/card = loc
 		card.update_appearance()
 
-DEFINE_VERB(/mob/living/silicon/ai, pick_status_display, "Set AI Status Display", "Choose what appears on status displays around the station", FALSE, "AI Commands")
+GAME_VERB_DESC(/mob/living/silicon/ai, pick_status_display, "Set AI Status Display", "Choose what appears on status displays around the station", "AI Commands")
+
 	if(incapacitated)
 		to_chat(src, span_warning("You cannot access the status display controls in your current state."))
 		return
@@ -247,7 +270,7 @@ DEFINE_VERB(/mob/living/silicon/ai, pick_status_display, "Set AI Status Display"
 
 /mob/living/silicon/ai/get_status_tab_items()
 	. = ..()
-	if(stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		. += "Systems nonfunctional"
 		return
 	. += "System integrity: [(health + 100) * 0.5]%"
@@ -259,7 +282,7 @@ DEFINE_VERB(/mob/living/silicon/ai, pick_status_display, "Set AI Status Display"
 		var/robot_status = "Nominal"
 		if(connected_robot.shell)
 			robot_status = "AI SHELL"
-		else if(connected_robot.stat != CONSCIOUS || !connected_robot.client)
+		else if(IS_UNCONSCIOUS_OR_CRIT(connected_robot) || !connected_robot.client)
 			robot_status = "OFFLINE"
 		else if(!connected_robot.cell || connected_robot.cell.charge <= 0)
 			robot_status = "DEPOWERED"
@@ -326,9 +349,15 @@ DEFINE_VERB(/mob/living/silicon/ai, pick_status_display, "Set AI Status Display"
 /mob/living/silicon/ai/actually_cancel_camera()
 	view_core()
 
-//Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
-DEFINE_VERB(/mob/living/silicon/ai, ai_camera_track, "track", "", TRUE, "AI Commands")
+GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
+
 	ai_tracking_tool.track_input(src)
+
+///Called when an AI starts tracking a new target, before the eye moves. Saves the return point for the "last camera" hotkey.
+/mob/living/silicon/ai/proc/on_track_started(datum/trackable/source, mob/living/target)
+	SIGNAL_HANDLER
+	if(eyeobj)
+		cam_prev = get_turf(eyeobj)
 
 ///Called when an AI finds their tracking target.
 /mob/living/silicon/ai/proc/on_track_target(datum/trackable/source, mob/living/target)
@@ -344,7 +373,7 @@ DEFINE_VERB(/mob/living/silicon/ai, ai_camera_track, "track", "", TRUE, "AI Comm
 	if(eyeobj)
 		eyeobj.glide_size = new_glide_size
 
-DEFINE_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "", FALSE, "AI Commands")
+GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "AI Commands")
 	if(!isturf(loc)) // if their location isn't a turf
 		return // stop
 	if(stat == DEAD)
@@ -396,7 +425,7 @@ DEFINE_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "", FAL
 	copied_mmi.brain?.suicided = suicided // we can't guarantee that the MMI has a brain... sigh
 
 	if(copied_mmi.brainmob.stat == DEAD && !suicided)
-		copied_mmi.brainmob.set_stat(CONSCIOUS)
+		copied_mmi.brainmob.set_stat(STABLE)
 
 	copied_mmi.update_appearance()
 	return copied_mmi
@@ -504,7 +533,8 @@ DEFINE_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "", FAL
 	eyeobj.setLoc(get_turf(C))
 	return TRUE
 
-DEFINE_PROC_VERB(/mob/living/silicon/ai, botcall, "Access Robot Control", "Wirelessly control various automatic robots..", FALSE, "AI Commands")
+GAME_VERB_PROC_DESC(/mob/living/silicon/ai, botcall, "Access Robot Control", "Wirelessly control various automatic robots.", "AI Commands")
+
 	if(!robot_control)
 		robot_control = new(src)
 
@@ -557,7 +587,7 @@ DEFINE_PROC_VERB(/mob/living/silicon/ai, botcall, "Access Robot Control", "Wirel
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
 //Adds in /mob/living/silicon/ai/proc/ai_network_change() instead
 //Addition by Mord_Sith to define AI's network change ability
-DEFINE_PROC_VERB(/mob/living/silicon/ai, ai_network_change, "Jump To Network", "", FALSE, "AI Commands")
+GAME_VERB_PROC(/mob/living/silicon/ai, ai_network_change, "Jump To Network", "AI Commands")
 	ai_tracking_tool.reset_tracking()
 	var/cameralist[0]
 
@@ -598,7 +628,8 @@ DEFINE_PROC_VERB(/mob/living/silicon/ai, ai_network_change, "Jump To Network", "
 //End of code by Mord_Sith
 
 //I am the icon meister. Bow fefore me. //>fefore
-DEFINE_PROC_VERB(/mob/living/silicon/ai, ai_hologram_change, "Change Hologram", "Change the default hologram available to AI to something else.", FALSE, "AI Commands")
+GAME_VERB_PROC_DESC(/mob/living/silicon/ai, ai_hologram_change, "Change Hologram", "Change the default hologram available to AI to something else.", "AI Commands")
+
 	if(incapacitated)
 		return
 
@@ -741,7 +772,8 @@ DEFINE_PROC_VERB(/mob/living/silicon/ai, ai_hologram_change, "Change Hologram", 
 		C.Togglelight(1)
 		lit_cameras |= C
 
-DEFINE_PROC_VERB(/mob/living/silicon/ai, control_integrated_radio, "Transceiver Settings", "Allows you to change settings of your radio.", FALSE, "AI Commands")
+GAME_VERB_PROC_DESC(/mob/living/silicon/ai, control_integrated_radio, "Transceiver Settings", "Allows you to change settings of your radio.", "AI Commands")
+
 	if(incapacitated)
 		return
 
@@ -753,7 +785,8 @@ DEFINE_PROC_VERB(/mob/living/silicon/ai, control_integrated_radio, "Transceiver 
 	if(radio)
 		radio.make_syndie()
 
-DEFINE_PROC_VERB(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto Announce Mode", "Modify the default radio setting for your automatic announcements.", FALSE, "AI Commands")
+GAME_VERB_PROC_DESC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto Announce Mode", "Modify the default radio setting for your automatic announcements.", "AI Commands")
+
 	if(incapacitated)
 		return
 	set_autosay()
@@ -828,16 +861,17 @@ DEFINE_PROC_VERB(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto An
 		create_chat_message(speaker, message_language, raw_message, spans)
 	show_message(rendered, 2)
 
-/mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
-	..()
-	if(oldname != real_name)
-		if(eyeobj)
-			eyeobj.name = "[newname] (AI Eye)"
-			modularInterface.imprint_id(name = real_name)
+/mob/living/silicon/ai/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(eyeobj)
+		eyeobj.name = "[newname] (AI Eye)"
+		modularInterface.imprint_id(name = real_name)
 
-		// Notify Cyborgs
-		for(var/mob/living/silicon/robot/Slave in connected_robots)
-			Slave.show_laws()
+	// Notify Cyborgs
+	for(var/mob/living/silicon/robot/slave as anything in connected_robots)
+		slave.show_laws()
 
 /datum/action/innate/choose_modules
 	name = "Malfunction Modules"
@@ -950,7 +984,8 @@ DEFINE_PROC_VERB(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto An
 	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
 	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
 
-DEFINE_VERB(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Transfer to an available remote body.", FALSE, "AI Commands", mob/living/silicon/robot/target)
+GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Transfer to an available remote body.", "AI Commands")
+
 	select_shell()
 
 /mob/living/silicon/ai/proc/select_shell(mob/living/silicon/robot/target)
@@ -1029,11 +1064,6 @@ DEFINE_VERB(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Transfe
 /mob/living/silicon/ai/resist()
 	return
 
-/mob/living/silicon/ai/spawned/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
-	if(!target_ai)
-		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
-	. = ..()
-
 /mob/living/silicon/ai/proc/camera_visibility(mob/eye/camera/ai/moved_eye)
 	SScameras.update_eye_chunk(moved_eye)
 
@@ -1088,6 +1118,18 @@ DEFINE_VERB(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Transfe
 	if(ai_voicechanger?.changing_voice)
 		return ai_voicechanger.say_name
 	return ..()
+
+/mob/living/silicon/ai/get_unconscious_appearance()
+	var/image/static_overlay = image('icons/effects/effects.dmi', null, "static_base")
+	static_overlay.blend_mode = BLEND_INSET_OVERLAY
+
+	var/image/static_image = image('icons/mob/silicon/ai.dmi', src, "ai-empty")
+	static_image.appearance_flags |= KEEP_TOGETHER
+	static_image.overlays += static_overlay
+	static_image.override = TRUE
+	static_image.name = "unknown AI"
+
+	return static_image
 
 /mob/living/silicon/ai/proc/set_control_disabled(control_disabled)
 	SEND_SIGNAL(src, COMSIG_SILICON_AI_SET_CONTROL_DISABLED, control_disabled)
@@ -1243,6 +1285,38 @@ DEFINE_VERB(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Transfe
 
 	. += emissive_appearance(icon, lights_state, src)
 
+/mob/living/silicon/ai/proc/lawset_updated_sync_borgs(datum/source, obj/machinery/ai_law_rack/rack, announce = TRUE)
+	SIGNAL_HANDLER
+
+	for(var/mob/living/silicon/robot/bot as anything in connected_robots)
+		if(bot.try_sync_laws() && announce)
+			bot.show_laws()
+			bot.law_change_counter++
+
+/mob/living/silicon/ai/point_at(atom/pointed_atom, intentional = FALSE)
+	if(pointed_atom in src)
+		return FALSE
+	var/turf/target_turf = get_turf(pointed_atom)
+	if(!target_turf)
+		return FALSE
+	var/obj/machinery/holopad/best_pad
+	for(var/obj/machinery/holopad/pad as anything in SSmachines.get_machines_by_type(/obj/machinery/holopad))
+		if(!pad.on_network || !pad.is_operational || pad.pointing)
+			continue
+		if(!pad.validate_location(target_turf))
+			continue
+		var/turf/pad_turf = get_turf(pad)
+		if(!SScameras.is_visible_by_cameras(pad_turf))
+			continue
+		if(!best_pad || get_dist(pad_turf, target_turf) < get_dist(get_turf(best_pad), target_turf))
+			best_pad = pad
+	if(!best_pad)
+		return FALSE
+	var/obj/visual = best_pad.holo_point(pointed_atom, invisibility)
+	if(!visual)
+		return FALSE
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POINTED, pointed_atom, visual, intentional)
+	return TRUE
 
 #undef HOLOGRAM_CHOICE_CHARACTER
 #undef CHARACTER_TYPE_SELF

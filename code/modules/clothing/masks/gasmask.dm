@@ -58,10 +58,10 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		LAZYADD(gas_filters, inserted_filter)
 	has_filter = TRUE
 
-/obj/item/clothing/mask/gas/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+/obj/item/clothing/mask/gas/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands && cig)
-		. += cig.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
+		. += cig.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi', bodyshape = bodyshape)
 
 /obj/item/clothing/mask/gas/Destroy()
 	QDEL_LAZYLIST(gas_filters)
@@ -95,11 +95,10 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 			var/mob/wearer = loc
 			wearer.update_worn_mask()
 
-/obj/item/clothing/mask/gas/attackby(obj/item/tool, mob/user)
+/obj/item/clothing/mask/gas/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/valid_wearer = ismob(loc)
 	var/mob/wearer = loc
 	if(istype(tool, /obj/item/cigarette))
-
 		if(max_filters <= 0 || cig)
 			balloon_alert(user, "can't hold that!")
 			return ..()
@@ -115,22 +114,26 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		cig.forceMove(src)
 		if(valid_wearer)
 			wearer.update_worn_mask()
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
 	if(cig)
-		var/cig_attackby = cig.attackby(tool, user)
+		var/cig_interaction = cig.item_interaction(user, tool)
 		if(valid_wearer)
 			wearer.update_worn_mask()
-		return cig_attackby
+		return cig_interaction
+
 	if(!istype(tool, /obj/item/gas_filter))
 		return ..()
+
 	if(LAZYLEN(gas_filters) >= max_filters)
 		return ..()
+
 	if(!user.transferItemToLoc(tool, src))
 		return ..()
+
 	LAZYADD(gas_filters, tool)
 	has_filter = TRUE
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/mask/gas/attack_hand_secondary(mob/user, list/modifiers)
 	if(cig)
@@ -217,7 +220,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	desc = "A gas mask with built-in welding goggles and a face shield. Looks like a skull - clearly designed by a nerd."
 	icon_state = "weldingmask"
 	flash_protect = FLASH_PROTECTION_WELDER
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2, /datum/material/glass=SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.4, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	tint = 2
 	toggle_message = "You pull the visor down."
 	alt_toggle_message = "You push the visor up."
@@ -497,7 +500,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	if(!choice)
 		return FALSE
 
-	if(src && choice && !M.stat && in_range(M,src))
+	if(src && choice && !IS_UNCONSCIOUS_OR_CRIT(M) && in_range(M,src))
 		icon_state = options[choice]
 		user.update_worn_mask()
 		update_item_action_buttons()

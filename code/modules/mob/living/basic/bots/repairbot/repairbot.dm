@@ -9,9 +9,8 @@
 	layer = BELOW_MOB_LAYER
 	anchored = FALSE
 	health = 35
-	can_be_held = TRUE
 	maxHealth = 35
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.8, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	path_image_color = "#80dae7"
 	bot_ui = "RepairBot"
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_ENGINEERING)
@@ -93,16 +92,19 @@
 	our_screwdriver = new(src)
 	our_rods = new(src, our_rods::max_amount)
 	set_color(toolbox_color)
+	AddElement(/datum/element/can_be_held)
 	START_PROCESSING(SSobj, src)
 
 /mob/living/basic/bot/repairbot/proc/set_color(new_color)
 	toolbox_color = new_color
 	update_appearance()
 
-/mob/living/basic/bot/repairbot/attackby(obj/item/potential_stack, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
-	if(!istype(potential_stack, /obj/item/stack))
+/mob/living/basic/bot/repairbot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack))
 		return ..()
-	attempt_merge(potential_stack, user)
+
+	attempt_merge(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/basic/bot/repairbot/proc/attempt_merge(obj/item/stack/potential_stack, mob/living/user)
 	var/static/list/our_contents = list(/obj/item/stack/sheet/iron, /obj/item/stack/sheet/glass, /obj/item/stack/tile, /obj/item/stack/rods)

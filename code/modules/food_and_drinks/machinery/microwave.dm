@@ -696,7 +696,7 @@
 		for(var/mob/living/victim in microwave_contents)
 			if(victim.electrocute_act(shock_damage = 100, source = src, siemens_coeff = 1, flags = SHOCK_NOGLOVES))
 				successful_shock = TRUE
-				if(victim.stat == DEAD) //This is mostly so humans that can_be_held don't get gibbed from one microwave run alone, but mice become burnt messes
+				if(victim.stat == DEAD) //This is mostly so humans that have the can_be_held element don't get gibbed from one microwave run alone, but mice become burnt messes
 					victim.gib()
 					muck()
 		if(successful_shock) //We only want to give feedback once, regardless of how many mobs got shocked
@@ -854,7 +854,7 @@
 		pre_fail()
 		return
 
-	if(!vampire_charge_amount || !length(ingredients) || isnull(cell) || !cell.charge || vampire_charge_amount < 25)
+	if(!vampire_charge_amount || !length(ingredients) || vampire_charge_amount < 25 || (cell_powered && (isnull(cell) || !cell.charge)))
 		vampire_cell = null
 		charge_loop_finish(cooker)
 		return

@@ -44,11 +44,30 @@
 	. = ..()
 	if(heatable)
 		AddElement(/datum/element/reagents_item_heatable)
+	register_context()
 
 /obj/item/reagent_containers/cup/Destroy(force)
 	QDEL_NULL(lid_assembly)
 	QDEL_NULL(attached_cell)
 	return ..()
+
+/obj/item/reagent_containers/cup/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(cell_wired && held_item.tool_behaviour == TOOL_WIRECUTTER)
+		context[SCREENTIP_CONTEXT_LMB] = "Cut wires"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(!can_lid)
+		return
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_ALT_LMB] = lid_assembly ? "Detach assembly" : "Toggle lid"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(isnull(lid_assembly) && istype(held_item, /obj/item/assembly_holder))
+		context[SCREENTIP_CONTEXT_LMB] = "Attach assembly"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(isnull(attached_cell) && !isnull(lid_assembly) && istype(held_item, /obj/item/stock_parts/power_store/cell))
+		context[SCREENTIP_CONTEXT_LMB] = "Attach cell"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/reagent_containers/cup/examine(mob/user)
 	. = ..()
@@ -170,7 +189,38 @@
 	if(isliving(target))
 		return try_drink(target, user)
 
+	if(is_drainable())
+		return pour_concrete(target, user)
+
 	return NONE
+
+/// QoL helper for pouring concrete directly from container just by clicking.
+/// Easier than splashing onto turf or object, but requires a little delay.
+/obj/item/reagent_containers/cup/proc/pour_concrete(atom/target, mob/living/user)
+	var/datum/reagent/concrete/concrete = reagents.has_reagent(/datum/reagent/concrete, check_subtypes=TRUE)
+	if (!concrete)
+		return NONE
+	var/pour_amount = concrete.pour_amount(target, user)
+	if (!pour_amount)
+		return NONE
+	if (concrete.volume < pour_amount)
+		user.balloon_alert(user, "not enough to pour")
+		return ITEM_INTERACT_FAILURE
+	user.balloon_alert(user, "pouring...")
+	user.visible_message(
+		span_notice("[user] starts pouring concrete onto \a [target]."),
+		span_notice("You start pouring concrete onto \a [target]..."),
+	)
+	if (!do_after(user, 1 SECONDS, target=target))
+		user.balloon_alert(user, "interrupted")
+		return ITEM_INTERACT_FAILURE
+	if(concrete.volume < pour_amount) // check if volume has changed during do_after
+		user.balloon_alert(user, "not enough to pour")
+		return ITEM_INTERACT_FAILURE
+	playsound(src, 'sound/effects/slosh.ogg', 25, TRUE)
+	concrete.expose_atom(target, pour_amount, TOUCH)
+	reagents.remove_reagent(concrete.type, pour_amount)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/cup/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
 	. = ..()
@@ -355,6 +405,10 @@
 	update_appearance()
 	return TRUE
 
+/obj/item/reagent_containers/cup/on_found(mob/finder)
+	. = ..()
+	lid_assembly?.on_found(finder)
+
 /obj/item/reagent_containers/cup/Exited(atom/movable/gone, direction)
 	. = ..()
 	if (gone == lid_assembly)
@@ -470,7 +524,7 @@
 		300 units."
 	icon_state = "beakerbluespace"
 	inhand_icon_state = "beaker_bluespace"
-	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/plasma =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
@@ -729,6 +783,7 @@
 	icon_state = "coffeepot"
 	fill_icon_state = "coffeepot"
 	fill_icon_thresholds = list(0, 1, 30, 60, 100)
+	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/cup/coffeepot/bluespace
 	name = "bluespace coffeepot"
@@ -736,6 +791,7 @@
 	volume = 240
 	icon_state = "coffeepot_bluespace"
 	fill_icon_thresholds = null
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 
 ///Test tubes created by chem master and pandemic and placed in racks
 /obj/item/reagent_containers/cup/tube

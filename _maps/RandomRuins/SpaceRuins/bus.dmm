@@ -65,7 +65,7 @@
 	pixel_y = 1;
 	anchored = 1
 	},
-/obj/item/food/grown/watermelon{
+/obj/item/food/grown/melonlike/watermelon{
 	offset_at_init = 0;
 	pixel_z = 17;
 	anchored = 1

@@ -128,6 +128,6 @@
 /**
  * When the popup closes in any way (player or proc call) it calls this.
  */
-DEFINE_VERB(/client, handle_popup_close, "handle_popup_close", "", TRUE, "", window_id as text)
+GAME_VERB_HIDDEN(/client, handle_popup_close, "handle popup close", window_id as text)
 	clear_map("[window_id]_map")
 	SEND_SIGNAL(src, COMSIG_POPUP_CLEARED, window_id)

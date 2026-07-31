@@ -43,6 +43,7 @@
 
 ///abstract path for pipe crafting recipes that set the pipe_type of their results and have other checks as well
 /datum/crafting_recipe/spec_pipe
+	crafting_flags = parent_type::crafting_flags | CRAFT_COLLECT_REQUIREMENTS
 	var/pipe_type
 
 /datum/crafting_recipe/spec_pipe/check_requirements(mob/user, list/collected_requirements)

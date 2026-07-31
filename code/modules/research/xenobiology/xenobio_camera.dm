@@ -31,6 +31,7 @@
 	networks = list(CAMERANET_NETWORK_SS13)
 	circuit = /obj/item/circuitboard/computer/xenobiology
 
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/camera_advanced/xenobio")
 	icon_screen = "slime_comp"
 	icon_keyboard = "rd_key"
 
@@ -266,7 +267,12 @@
 		target_turf.balloon_alert(user, "not enough monkeys")
 		return
 
-	var/mob/living/carbon/human/species/monkey/food = new /mob/living/carbon/human/species/monkey(target_turf, TRUE, user)
+	var/cap = CONFIG_GET(number/monkeycap)
+	if (LAZYLEN(SSmobs.cubemonkeys) >= cap)
+		to_chat(user, span_warning("Bluespace harmonics prevent the creation of more than [cap] monkeys on the station at one time!"))
+		return
+
+	var/mob/living/carbon/human/species/monkey/food = new /mob/living/carbon/human/species/monkey(target_turf, null, TRUE)
 	if (QDELETED(food))
 		return
 
@@ -298,7 +304,7 @@
 		if(user)
 			target_human.balloon_alert(user, "not a monkey!")
 		return FALSE
-	if(target_human.stat < DEAD)
+	if(target_human.stat != DEAD)
 		if(user)
 			target_human.balloon_alert(user, "not dead!")
 		return FALSE

@@ -345,6 +345,18 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Emote only prints to runechat, not to the chat window
 #define EMOTE_RUNECHAT (1<<3)
 
+// Emote usability flags
+/// Emote can be used while unconscious
+#define EMOTE_CANUSE_UNCONSCIOUS (1<<0)
+/// Emote can be used while in soft crit
+#define EMOTE_CANUSE_SOFTCRIT (1<<1)
+/// Emote can be used while in hard crit
+#define EMOTE_CANUSE_HARDCRIT (1<<2)
+/// Emote can be used while dead
+#define EMOTE_CANUSE_DEAD (1<<3)
+/// Emote requires that the user has at least one usable hand
+#define EMOTE_CANUSE_REQUIRE_HANDS (1<<4)
+
 // Flags for the empath component
 /// Can the empath see if a living mob has combat mode on
 #define EMPATH_SEE_COMBAT (1<<0)

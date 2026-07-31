@@ -53,7 +53,7 @@
 	if(!contents.len)
 		return
 	var/obj/item/object_to_eat = contents[1]
-	target.attackby(object_to_eat, user)
+	object_to_eat.melee_attack_chain(user, target)
 	return TRUE //No normal attack
 
 /obj/item/plate/IsContainedAtomAccessible(atom/contained, atom/movable/user)
@@ -117,6 +117,13 @@
 	max_x_offset = 4
 	max_height_offset = 5
 	biggest_w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/plate/iron
+	name = "metal plate"
+	icon_state = "plate_metal"
+	desc = "Holds food, powerful. Good for morale when you're not eating your spaghetti off of a desk. Made from sturdier iron instead of more fragile ceramic."
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5)
+	fragile = FALSE
 
 /obj/item/plate_shard
 	name = "ceramic shard"
