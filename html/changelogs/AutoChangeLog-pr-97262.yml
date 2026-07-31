@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Stasis bodybags don't decay in freezing temperatures, such as those present in morgue slabs"

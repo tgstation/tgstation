@@ -959,8 +959,14 @@
   Fghj240:
   - qol: You can see what bodyparts a piece of clothing with armor covers by examining
       its tag.
+  Melbert:
+  - qol: Surplus crate items show up in roundend report
+  - qol: Stasis bodybags don't decay in freezing temperatures, such as those present
+      in morgue slabs
   QuiteLiterallyAnything:
   - bugfix: Fixed missing texture fish suicide.
+  lelandkemble:
+  - bugfix: All slapcrafting recipes now work again
   mcbalaam:
   - bugfix: The Big Manipulator now uses filters more correctly and spoofs the monkeys
       location to interact with some machines.
