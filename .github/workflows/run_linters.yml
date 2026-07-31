@@ -88,20 +88,13 @@ jobs:
         with:
           list-files: shell
           filters: |
-            tool_edits:
-              - 'tools/maplint/**'
-              - 'tools/mapmerge2/**'
             map_edits:
               - '**.dmm'
 
       - name: Run Map Checks
-        if: steps.linter-setup.conclusion == 'success' && !cancelled() && (steps.map-filter.outputs.tool_edits == 'true' || steps.map-filter.outputs.map_edits == 'true')
+        if: steps.linter-setup.conclusion == 'success' && !cancelled() && steps.map-filter.outputs.map_edits == 'true'
         run: |
-          if [ "${{ steps.map-filter.outputs.tool_edits }}" = "true" ]; then
-            MAPS=$(find . -type f -name "*.dmm")
-          else
-            MAPS="${{ steps.map-filter.outputs.map_edits_files }}"
-          fi
+          MAPS="${{ steps.map-filter.outputs.map_edits_files }}"
 
           tools/bootstrap/python -m mapmerge2.dmm_test $MAPS
           tools/bootstrap/python -m tools.maplint.source $MAPS
