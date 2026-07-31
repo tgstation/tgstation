@@ -277,7 +277,7 @@
 
 	//Make any mob with catlike instincts near the target face the target, with a chance of pouncing (moving) toward it.
 	for(var/mob/living/target_cat in view(1, targloc))
-		if(!HAS_TRAIT(target_cat, TRAIT_CATLIKE_INSTINCT) || target_cat.is_blind() || IS_DEAD_OR_INCAP(target_cat))
+		if(!HAS_TRAIT(target_cat, TRAIT_CATLIKE_INSTINCT) || target_cat.is_blind() || target_cat.incapacitated)
 			continue
 		target_cat.setDir(get_dir(target_cat, targloc)) // kitty always looks at the light
 		if(target_cat.body_position == STANDING_UP)
