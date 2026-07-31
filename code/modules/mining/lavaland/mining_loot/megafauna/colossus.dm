@@ -10,6 +10,18 @@
 	var/base_multiplier = 1
 	spans = list("colossus","yell")
 
+/obj/item/organ/vocal_cords/colossus/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	var/mob/living/silicon/robot/robot = interacting_with
+	if(!istype(robot))
+		return
+	if(!robot.opened)
+		return to_chat(user, span_warning("[robot] must be opened to insert this item."))
+	to_chat(user, span_notice("you insert [src] into [robot]"))
+	var/datum/action/cooldown/spell/voice_of_god/voice = new
+	voice.Grant(robot)
+	qdel(src)
+
 /datum/action/item_action/organ_action/colossus
 	name = "Voice of God"
 	var/obj/item/organ/vocal_cords/colossus/cords = null
