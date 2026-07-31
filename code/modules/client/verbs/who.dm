@@ -67,10 +67,9 @@ GAME_VERB(/client, who, "Who", "OOC")
 	msg += "<b>Total Players: [length(Lines)]</b>"
 	to_chat(src, fieldset_block(span_bold("Current Players"), span_infoplain(msg), "boxed_message"), type = MESSAGE_TYPE_INFO)
 
-<<<<<<< HEAD
-DEFINE_VERB(/client, adminwho, "Adminwho", "", FALSE, "Admin")
-=======
 GAME_VERB(/client, adminwho, "Adminwho", "Admin")
+
+	var/list/lines = list()
 	var/payload_string = generate_adminwho_string()
 	var/header = (payload_string == NO_ADMINS_ONLINE_MESSAGE) ? "No Admins Currently Online" : "Current Admins"
 	lines += span_bold(header)

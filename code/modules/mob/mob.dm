@@ -881,6 +881,9 @@ GAME_VERB(/mob, abandon_mob, "Respawn", "OOC")
  * Sometimes helps if the user is stuck in another perspective or camera
  */
 GAME_VERB(/mob, cancel_camera, "Cancel Camera View", "OOC")
+	actually_cancel_camera()
+
+/mob/proc/actually_cancel_camera()
 	reset_perspective(null)
 
 /**

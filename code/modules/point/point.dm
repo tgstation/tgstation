@@ -106,7 +106,7 @@
  *
  * overridden here and in /mob/dead/observer for different point span classes and sanity checks
  */
-GAME_VERB(/mob, pointed, "Point To", null, atom/A as mob|obj|turf)
+GAME_VERB(/mob, pointed, "Point To", null, atom/pointing_at as mob|obj|turf)
 	do_pointed(pointing_at)
 
 /mob/proc/do_pointed(atom/pointing_at)

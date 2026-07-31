@@ -163,7 +163,7 @@
 	var/list/meowing_list = controller.blackboard[meows_key]
 	if(length(meowing_list))
 		INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/atom/movable, say), pick(meowing_list), forced = "ai_controller")
-	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob/living, _pointed), target)
+	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob/living, do_pointed), target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/beacon_for_food/finish_action(datum/ai_controller/controller, succeeded)
