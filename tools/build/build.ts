@@ -47,16 +47,15 @@ const cutter_path = getCutterPath();
 const define_params_file = 'data/last_define_params.json'
 
 // Have compilation defines changed since last build?
-function defineParametersChanged(defines: string[]): boolean {
+async function defineParametersChanged(defines: string[]): Promise<boolean> {
   const defines_string = JSON.stringify(defines);
-  if(!fs.existsSync(define_params_file)) {
-    const fd = fs.openSync(define_params_file, fs.constants.O_CREAT | fs.constants.O_WRONLY);
-    fs.writeSync(fd, defines_string);
-    fs.closeSync(fd);
+  const params_file = Bun.file(define_params_file);
+  if(!await params_file.exists()) {
+    await params_file.write(defines_string);
     return true;
   }
-  const last_params = fs.readFileSync(define_params_file, { encoding: 'utf8' });
-  fs.writeFileSync(define_params_file, defines_string);
+  const last_params = await params_file.text();
+  await params_file.write(defines_string);
   return last_params !== defines_string;
 }
 
@@ -218,8 +217,8 @@ export const DmTarget = new Juke.Target({
     `${DME_NAME}.dme`,
     NamedVersionFile,
   ],
-  outputs: ({ get }) => {
-    if (get(DmVersionParameter) || defineParametersChanged(get(DefineParameter))) {
+  outputs: async ({ get }) => {
+    if (get(DmVersionParameter) || await defineParametersChanged(get(DefineParameter))) {
       // Always rebuild when a dm version is provided or CLI defines have changed from last run
       return [];
     }
