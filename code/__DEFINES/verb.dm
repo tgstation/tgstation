@@ -1,4 +1,44 @@
 /**
+ * Alright so like, I'm sorry, ok?
+ *
+ * This macro enables us to track the cost of individual verbs, and queue them up if running them would push us into overtime.
+ * The reason we do this is because verbs are not tracked by byond's cpu profiling tools (world.cpu, etc) at all. They're in the profiler, and that's IT.
+ * This is a problem because it means we can't account for them when scheduling work, even if we wanted to. We also have no idea if they push us into overtime or not.
+ * This macro fixes that.
+ * The idea is to shim all verb (or verb like, IE user input so Topic, Click, etc) calls with cost tracking and queuing code, which is what's below.
+ * We define a child proc for the actual verb to call, and use macro magic to make any code after a GAME_VERB**() line actually live in that child proc.
+ * The only reason this file is so messy and has so many variations is we need to shim verb attribute sets too because they have to be inline
+ * with the verb/proc they actually apply to
+ * Anyway the actual profiling is pretty simple, we're using the ability to shim to also detect and ignore sleeps. At that point it's just a matter of measuring
+ * the usage between the start and end of the verb's call, and boom we have the cost.
+ * There's some nuance here, verbs are tracked by name, if we don't want an execution time to "count" for a given verb
+ * we need to "change" that name. Some places also rename verbs based off context (Topic does this), etc.
+ * We need to be careful to only rename BEFORE checking if we need to queue, doing it after just creates unusable junk data (which is rarely something you want)
+**/
+
+/// This is the underlying workhorse. This macro runs the verb we want to execute and tracks its time, assuming thisi s being ran as a verb and all
+#define VERB_QUEUE_OR_FIRE(proc_name, call_on, lookup_method, queue_on) \
+	if(caller) { \
+		proc_name(arglist(args)); \
+	} else { \
+		var/datum/verb_cost_tracker/__store_cost = new /datum/verb_cost_tracker(TICK_USAGE, callee); \
+		if(INTELIGENT_TRY_QUEUE_VERB(HELL_CALLBACK(call_on, lookup_method(proc_name),  args.Copy()), VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, queue_on)) { \
+			__store_cost.name_to_use = "nullified_verb"; \
+			__store_cost.usage_at_end = TICK_USAGE; \
+			__store_cost.finished_on = world.time; \
+			__store_cost.enter_average(); \
+			return; \
+		} \
+		ASYNC { \
+			proc_name(arglist(args)); \
+		} \
+		__store_cost.usage_at_end = TICK_USAGE; \
+		__store_cost.finished_on = world.time; \
+		__store_cost.enter_average(); \
+	}
+
+
+/**
  * Defines a game verb with an associated /datum/verb_metadata.
  *
  * Usage:
@@ -17,13 +57,13 @@
 }; \
 ##owner_type/verb/##verb_path_name(##verb_args) \
 { \
-	set name = ##verb_name; \
-	set desc = ##verb_desc; \
-	set hidden = ##is_hidden; \
-	set popup_menu = ##show_in_context_menu; \
-	set category = ##verb_category; \
-	set instant = ##is_instant; \
-	__gvb_##verb_path_name(arglist(args)); \
+	VERBLIKE_SET(name, ##verb_name); \
+	VERBLIKE_SET(desc, ##verb_desc); \
+	VERBLIKE_SET(hidden, ##is_hidden); \
+	VERBLIKE_SET(popup_menu, ##show_in_context_menu); \
+	VERBLIKE_SET(category, ##verb_category); \
+	VERBLIKE_SET(instant, ##is_instant); \
+	VERB_QUEUE_OR_FIRE(__gvb_##verb_path_name, src, PROC_REF, SSverb_manager); \
 }; \
 ##owner_type/proc/__gvb_##verb_path_name(##verb_args)
 
@@ -50,12 +90,12 @@ _GAME_VERB(owner_type, verb_path_name, verb_name, "", null, FALSE, TRUE, TRUE, #
 }; \
 ##owner_type/proc/##verb_path_name(##verb_args) \
 { \
-	set name = ##verb_name; \
-	set desc = ##verb_desc; \
-	set hidden = ##is_hidden; \
-	set popup_menu = ##show_in_context_menu; \
-	set category = ##verb_category; \
-	__gvb_##verb_path_name(arglist(args)); \
+	VERBLIKE_SET(name, ##verb_name); \
+	VERBLIKE_SET(desc, ##verb_desc); \
+	VERBLIKE_SET(hidden, ##is_hidden); \
+	VERBLIKE_SET(popup_menu, ##show_in_context_menu); \
+	VERBLIKE_SET(category, ##verb_category); \
+	VERB_QUEUE_OR_FIRE(__gvb_##verb_path_name, src, PROC_REF, SSverb_manager); \
 }; \
 ##owner_type/proc/__gvb_##verb_path_name(##verb_args)
 
@@ -76,13 +116,13 @@ _GAME_VERB_PROC(owner_type, verb_path_name, verb_name, verb_desc, verb_category,
 }; \
 ##owner_type/verb/##verb_path_name(##verb_args) \
 { \
-	set name = ##verb_name; \
-	set desc = ##verb_desc; \
-	set hidden = ##is_hidden; \
-	set popup_menu = ##show_in_context_menu; \
-	set category = ##verb_category; \
+	VERBLIKE_SET(name, ##verb_name); \
+	VERBLIKE_SET(desc, ##verb_desc); \
+	VERBLIKE_SET(hidden, ##is_hidden); \
+	VERBLIKE_SET(popup_menu, ##show_in_context_menu); \
+	VERBLIKE_SET(category, ##verb_category); \
 	set src in src_value; \
-	__gvb_##verb_path_name(arglist(args)); \
+	VERB_QUEUE_OR_FIRE(__gvb_##verb_path_name, src, PROC_REF, SSverb_manager); \
 }; \
 ##owner_type/proc/__gvb_##verb_path_name(##verb_args)
 
@@ -103,11 +143,11 @@ _GAME_VERB_SRC(owner_type, verb_path_name, src_value, verb_name, verb_desc, verb
 }; \
 /proc/##verb_path_name(##verb_args) \
 { \
-	set name = ##verb_name; \
-	set desc = ##verb_desc; \
-	set hidden = ##is_hidden; \
-	set category = ##verb_category; \
-	__gvb_##verb_path_name(arglist(args)); \
+	VERBLIKE_SET(name, ##verb_name); \
+	VERBLIKE_SET(desc, ##verb_desc); \
+	VERBLIKE_SET(hidden, ##is_hidden); \
+	VERBLIKE_SET(category, ##verb_category); \
+	VERB_QUEUE_OR_FIRE(__gvb_##verb_path_name, GLOBAL_PROC, GLOBAL_PROC_REF, SSverb_manager); \
 }; \
 /proc/__gvb_##verb_path_name(##verb_args)
 
