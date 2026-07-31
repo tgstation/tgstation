@@ -271,16 +271,13 @@ def translate_changelog(changelog: typing.Dict[int, list[Change]]):
     with open(script_dir.joinpath("translation_context.txt"), encoding="utf-8") as f:
         context = "\n".join(f.readlines()).strip()
 
-    client = OpenAI(
-        base_url="https://models.github.ai/inference",
-        api_key=OPENAI_API_KEY,
-    )
+    client = OpenAI(api_key=OPENAI_API_KEY)
     response: ChatCompletion = client.chat.completions.create(
         messages=[
             {"role": "system", "content": context},
             {"role": "user", "content": text}
         ],
-        model="openai/gpt-4.1-mini",
+        model="gpt-5-mini",
     )
     translated_text: str | None = response.choices[0].message.content
 
