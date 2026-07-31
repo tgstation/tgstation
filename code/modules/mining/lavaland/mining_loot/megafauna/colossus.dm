@@ -14,13 +14,15 @@
 	. = ..()
 	var/mob/living/silicon/robot/robot = interacting_with
 	if(!istype(robot))
-		return
+		return NONE
 	if(!robot.opened)
-		return to_chat(user, span_warning("[robot] must be opened to insert this item."))
+		to_chat(user, span_warning("[robot] must be opened to insert this item."))
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("you insert [src] into [robot]"))
 	var/datum/action/cooldown/spell/voice_of_god/voice = new
 	voice.Grant(robot)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /datum/action/item_action/organ_action/colossus
 	name = "Voice of God"
