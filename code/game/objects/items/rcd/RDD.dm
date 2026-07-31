@@ -149,6 +149,18 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 		list("name" = "Large Plastic Rocks (Alt)", "path" = /obj/structure/decoration/rock/pile/jungle/large/second),
 		list("name" = "Large Plastic Rocks (Alt 2)", "path" = /obj/structure/decoration/rock/pile/jungle/large/third),
 		list("name" = "Large Plastic Rocks (Random)", "path" = /obj/structure/decoration/rock/pile/jungle/large/style_random),
+		list("name" = "Plastic Volcano Pore", "path" = /obj/structure/decoration/rock/volcano/first),
+		list("name" = "Plastic Volcano Pore (Alt)", "path" = /obj/structure/decoration/rock/volcano/second),
+		list("name" = "Plastic Volcano Pore (Alt2)", "path" = /obj/structure/decoration/rock/volcano/third),
+		list("name" = "Plastic Volcano Pore (Alt3)", "path" = /obj/structure/decoration/rock/volcano/fourth),
+		list("name" = "Plastic Volcano Pore (Alt4)", "path" = /obj/structure/decoration/rock/volcano/fifth),
+		list("name" = "Plastic Volcano Pore (Random)", "path" = /obj/structure/decoration/rock/volcano/style_random/),
+	),
+	"Misc" = list(
+		list("name" = "Plastic Glowgrowth Colony", "path" = /obj/structure/decoration/misc/glowgrowth/first),
+		list("name" = "Plastic Glowgrowth Colony (Alt)", "path" = /obj/structure/decoration/misc/glowgrowth/second),
+		list("name" = "Plastic Glowgrowth Colony (Alt2)", "path" = /obj/structure/decoration/misc/glowgrowth/third),
+		list("name" = "Plastic Glowgrowth Colony (Random)", "path" = /obj/structure/decoration/misc/glowgrowth/style_random),
 	),
 ))
 

@@ -607,3 +607,47 @@
 	. = ..()
 	icon_state = "rocks[rand(1, 3)]"
 	update_appearance()
+
+/obj/structure/decoration/rock/volcano
+	name = "plastic volcano pore"
+	desc = "A lovingly painted miniature plastic volcano."
+	icon = /obj/structure/flora/rock/volcano::icon
+	icon_state = /obj/structure/flora/rock/volcano::icon_state
+
+/obj/structure/decoration/rock/volcano/first
+
+/obj/structure/decoration/rock/volcano/second
+	icon_state = "volcano_2"
+
+/obj/structure/decoration/rock/volcano/third
+	icon_state = "volcano_3"
+
+/obj/structure/decoration/rock/volcano/fourth
+	icon_state = "volcano_4"
+
+/obj/structure/decoration/rock/volcano/fifth
+	icon_state = "volcano_5"
+
+/obj/structure/decoration/rock/volcano/style_random/Initialize(mapload)
+	. = ..()
+	icon_state = "volcano_[rand(1, 5)]"
+	update_appearance()
+
+/obj/structure/decoration/misc/glowgrowth
+	name = "plastic glowgrowth colony"
+	desc = "A large plastic immitation of bioluminescent fungi colony. Not so bioluminescent."
+	icon = /obj/structure/flora/ash/glowgrowth::icon
+	icon_state = /obj/structure/flora/ash/glowgrowth::icon_state
+
+/obj/structure/decoration/misc/glowgrowth/first
+
+/obj/structure/decoration/misc/glowgrowth/second
+	icon_state = "glowgrowth2"
+
+/obj/structure/decoration/misc/glowgrowth/third
+	icon_state = "glowgrowth3"
+
+/obj/structure/decoration/misc/glowgrowth/style_random/Initialize(mapload)
+	. = ..()
+	icon_state = "glowgrowth[rand(1, 3)]"
+	update_appearance()
