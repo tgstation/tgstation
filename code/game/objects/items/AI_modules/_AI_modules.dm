@@ -81,12 +81,14 @@
 	. = ..()
 	for(var/law in laws)
 		log_law_change(user, "added law to [rack] ([rack.log_status()], text: [law])")
+		log_silicon("[key_name(user)] has installed [src] with law: [law]")
 
 /// Logs the uninstallation of this module to the law change log and silicon log.
 /obj/item/ai_module/law/log_uninstall(mob/living/user, obj/machinery/ai_law_rack/rack)
 	. = ..()
 	for(var/law in laws)
 		log_law_change(user, "removed law from [rack] ([rack.log_status()], text: [law])")
+		log_silicon("[key_name(user)] has removed [src] with law: [law]")
 
 /obj/item/ai_module/law/examine(mob/user)
 	. = ..()
