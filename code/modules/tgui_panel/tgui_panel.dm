@@ -86,6 +86,7 @@
 				),
 			),
 		))
+		send_player_info()
 		return TRUE
 
 	if(type == "audio/setAdminMusicVolume")
@@ -114,6 +115,19 @@
  */
 /datum/tgui_panel/proc/send_roundrestart()
 	window.send_message("roundrestart")
+
+/**
+ * public
+ *
+ * Sends the client's current job, character and saved character names,
+ * used for conditional chat highlights.
+ */
+/datum/tgui_panel/proc/send_player_info()
+	window.send_message("player/set", list(
+		"job" = client.mob?.mind?.assigned_role?.title,
+		"character" = client.prefs?.read_preference(/datum/preference/name/real_name),
+		"characters" = client.prefs?.create_character_profiles(),
+	))
 
 /**
  * private

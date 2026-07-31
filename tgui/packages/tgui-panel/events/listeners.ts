@@ -9,6 +9,7 @@ import {
   testTelemetryCommand,
 } from '../telemetry/handlers';
 import { handleLoadAssets } from './handlers/assets';
+import { playerSet } from './handlers/player';
 import { roundrestart } from './handlers/roundrestart';
 
 const listeners = {
@@ -17,6 +18,7 @@ const listeners = {
   'audio/playMusic': playMusic,
   'audio/stopMusic': stopMusic,
   'chat/message': chatMessage,
+  'player/set': playerSet,
   'ping/reply': pingReply,
   'ping/soft': pingSoft,
   roundrestart,

@@ -125,6 +125,9 @@
 		//Check if they should have a stat panel, after they deadmined.
 		client.set_stat_panel()
 
+		//Update the chat panel's job/character info for conditional highlights.
+		client.tgui_panel?.send_player_info()
+
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
 	log_mob_tag("TAG: [tag] NEW OWNER: [key_name(src)]")
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
