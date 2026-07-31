@@ -18,7 +18,7 @@ const lawTypeColors = {
 
 type Law = {
   text: string;
-  number: number;
+  number: number | string;
   type: LawType;
 };
 
