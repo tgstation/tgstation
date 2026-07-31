@@ -193,7 +193,6 @@ def parse_map_atom(atom):
     vars = {}
 
     in_string = False
-    in_name = False
     escaping = False
     current_name = ''
     current = ''
