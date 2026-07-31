@@ -18,7 +18,8 @@
 
 	var/text = {"
 		[mob_name] - [job_title]
-		[station_name] - [area_name]
+		[station_name]
+		[area_name]
 		[time_date]
 	"}
 	text = uppertext(text)
