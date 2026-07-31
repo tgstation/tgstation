@@ -143,6 +143,10 @@
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
+	// Always label the clipboard so all of the papers don't have to be taken out.
+	if(istype(tool, /obj/item/hand_labeler))
+		return tool.interact_with_atom(src, user)
+
 	if(top_paper)
 		top_paper.item_interaction(user, user.get_active_held_item())
 		update_appearance()
