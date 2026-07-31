@@ -1,0 +1,52 @@
+/// Displays a typewriter-style spawn text overlay that includes station/area/job name and time
+/client/proc/show_spawn_text_overlay(duration = 5 SECONDS)
+	set waitfor = FALSE
+	if(!mob)
+		return
+
+	var/mob_name = mob.name
+	var/job_title = "Unknown"
+	if(mob.mind && mob.mind.assigned_role)
+		job_title = mob.mind.assigned_role.title
+	else if(mob.job)
+		job_title = mob.job
+
+	var/station_name = station_name()
+	var/area/A = get_area(mob)
+	var/area_name = A ? A.name : "Unknown Location"
+	var/time_date = server_timestamp(format = "YYYY-MM-DD hh:mm:ss", ic_time = TRUE)
+
+	var/text = {"
+		[mob_name] - [job_title]
+		[station_name] - [area_name]
+		[time_date]
+	"}
+	text = uppertext(text)
+
+	var/atom/movable/screen/spawn_text = new()
+	spawn_text.maptext_height = 64
+	spawn_text.maptext_width = 512
+	spawn_text.layer = FLY_LAYER
+	spawn_text.plane = HUD_PLANE
+	spawn_text.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	spawn_text.screen_loc = "LEFT+1,BOTTOM+2"
+
+	screen += spawn_text
+	animate(spawn_text, alpha = 255, time = 1 SECONDS)
+
+	for(var/i = 1 to length_char(text) + 1)
+		if(QDELETED(spawn_text) || !src)
+			return
+		spawn_text.maptext = MAPTEXT_PIXELLARI(copytext_char(text, 1, i))
+		sleep(1)
+
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(fade_spawn_text_overlay), src, spawn_text), duration)
+
+/proc/fade_spawn_text_overlay(client/player_client, atom/movable/screen/spawn_text)
+	if(QDELETED(spawn_text))
+		return
+	animate(spawn_text, alpha = 0, time = 0.5 SECONDS)
+	sleep(5)
+	if(player_client && !QDELETED(spawn_text))
+		player_client.screen -= spawn_text
+	qdel(spawn_text)

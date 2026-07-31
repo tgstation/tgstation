@@ -4084,6 +4084,7 @@
 #include "code\modules\client\preferences.dm"
 #include "code\modules\client\preferences_menu.dm"
 #include "code\modules\client\preferences_savefile.dm"
+#include "code\modules\client\spawn_text_overlay.dm"
 #include "code\modules\client\preferences\_preference.dm"
 #include "code\modules\client\preferences\accessibility.dm"
 #include "code\modules\client\preferences\addict.dm"
