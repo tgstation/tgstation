@@ -1686,8 +1686,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LIZARD_METABOLISM "lizard_metabolism"
 // Has the metabolization quirks of an ethereal
 #define TRAIT_ETHEREAL_METABOLISM "ethereal_metabolism"
-/// Food produced by silver slimes (TRAIT_SILVER_FOOD) won't necessarily gross them out
-#define TRAIT_WITHSTAND_SLIME_FOOD "withstand_slime_food"
 
 /// Mobs with this trait will always have be a priority target for mining mobs
 #define TRAIT_MINING_AGGRO "mining_aggro"

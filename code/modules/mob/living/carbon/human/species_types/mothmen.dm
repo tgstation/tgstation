@@ -10,6 +10,9 @@
 		/obj/item/organ/wings/moth = "Plain",
 		/obj/item/organ/antennae = "Plain",
 	)
+	inherent_traits = list(
+		TRAIT_CLOTH_EATER, //So that moths can still eat cloth even if their stomach is augmented
+	)
 	meat = /obj/item/food/meat/slab/human/mutant/moth
 	mutanttongue = /obj/item/organ/tongue/moth
 	mutanteyes = /obj/item/organ/eyes/moth

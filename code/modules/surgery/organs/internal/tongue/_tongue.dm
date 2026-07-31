@@ -669,7 +669,6 @@
 	disliked_foodtypes = GROSS
 	toxic_foodtypes = NONE
 	languages_native = list(/datum/language/slime)
-	organ_traits = list(TRAIT_WITHSTAND_SLIME_FOOD)
 
 /obj/item/organ/tongue/jelly/get_food_taste_reaction(obj/item/food, foodtypes = NONE)
 	// a silver slime created this? what a delicacy!

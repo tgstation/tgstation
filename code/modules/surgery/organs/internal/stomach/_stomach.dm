@@ -491,7 +491,7 @@
 /obj/item/organ/stomach/moth
 	name = "moth stomach"
 	desc = "An insectoid stomach adapted to the digestion of textile fibers from the get go. It's estimated that a young mothperson will eat 30 times their body weight in cloth \
-		before their stomach fully produces the enzymes required to digest most other matter as well."
+		before their stomach can fully produce the enzymes required to digest other matter as well."
 	icon_state = "spinner-x"
 	organ_traits = list(TRAIT_CLOTH_EATER)
 
