@@ -42,7 +42,7 @@ jobs:
           MERGE_BRANCH: "merge-upstream"
           CHANGELOG_AUTHOR: "tgstation"
           TRANSLATE_CHANGES: "true"
-          ORG_EMPTY_TOKEN: ${{ secrets.ORG_EMPTY_TOKEN }}
+          G4F_API_KEY: ${{ secrets.G4F_API_KEY }}
           LOG_LEVEL: ${{ runner.debug && 'DEBUG' || 'INFO' }}
         run: |
           git config --global user.email "action@github.com"
