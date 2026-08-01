@@ -1,6 +1,5 @@
 // Defines for SSaugury (the subsytem used to let ghosts orbit meteors)
 
-
 // Severity defines. The object with the highest severity
 // at any given time is the one focused upon.
 
