@@ -418,7 +418,7 @@
 		apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
 		return FALSE
 
-	if(locate(/obj/effect/blessing) in step_turf)
+	if(HAS_TRAIT(step_turf, TRAIT_TURF_BLESSED))
 		to_chat(src, span_warning("Holy energies block your path!"))
 		return FALSE
 

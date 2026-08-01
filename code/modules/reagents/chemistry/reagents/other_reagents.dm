@@ -409,7 +409,7 @@
 	if(reac_volume >= 10)
 		for(var/obj/effect/rune/R in exposed_turf)
 			qdel(R)
-	exposed_turf.Bless()
+	exposed_turf.bless_turf()
 
 /datum/reagent/water/hollowwater
 	name = "Hollow Water"
