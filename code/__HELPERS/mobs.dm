@@ -712,7 +712,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
  */
 /proc/add_personality_mood_to_viewers(atom/movable/source, mood_key, list/personality_to_mood, range, ...)
 	for(var/mob/living/nearby in viewers(range, source))
-		if(nearby == source || nearby.stat >= UNCONSCIOUS || nearby.is_blind())
+		if(nearby == source || IS_UNCONSCIOUS(nearby) || nearby.is_blind())
 			continue
 		for(var/personality, moodlet in personality_to_mood)
 			if(HAS_PERSONALITY(nearby, personality))

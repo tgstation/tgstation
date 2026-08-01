@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Attempting to use the right click menu to input some command (like point) at an entity that you are hallucinating won't spit out a weird broken command in your command bar."
-  - admin: "Several verbs no longer show a list of every X in the game world when you enter them via command line or verb panel. They will instead limit themselves to every X in view of your character."

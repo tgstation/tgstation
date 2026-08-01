@@ -392,7 +392,7 @@
 		return
 	var/obj/item/organ/cyberimp/bci/bci = shell_parent
 	//If shell is not currently inside a head, or user is currently blind, or user is dead
-	if(!bci.owner || bci.owner.is_blind() || bci.owner.stat >= UNCONSCIOUS)
+	if(!bci.owner || bci.owner.is_blind() || IS_UNCONSCIOUS(bci.owner))
 		close_camera()
 		return
 	var/obj/item/stock_parts/power_store/cell = parent.get_cell()

@@ -28,7 +28,7 @@
 	return ..()
 
 /datum/terror_handler/phobia_source/proc/can_trigger()
-	return !HAS_TRAIT(owner, TRAIT_FEARLESS) && !HAS_TRAIT(owner, TRAIT_MIND_TEMPORARILY_GONE) && owner.stat < UNCONSCIOUS
+	return !HAS_TRAIT(owner, TRAIT_FEARLESS) && !HAS_TRAIT(owner, TRAIT_MIND_TEMPORARILY_GONE) && !IS_UNCONSCIOUS(owner)
 
 /datum/terror_handler/phobia_source/tick(seconds_per_tick, terror_buildup)
 	. = ..()

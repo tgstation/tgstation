@@ -120,70 +120,88 @@
 			I.forceMove(Tsec)
 	update_appearance()
 
-/obj/structure/bookcase/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(state == BOOKCASE_UNANCHORED)
-		if(attacking_item.tool_behaviour == TOOL_WRENCH)
-			if(attacking_item.use_tool(src, user, 20, volume=50))
-				balloon_alert(user, "wrenched in place")
-				set_anchored(TRUE)
-			return
-
-		if(attacking_item.tool_behaviour == TOOL_CROWBAR)
-			if(attacking_item.use_tool(src, user, 20, volume=50))
-				balloon_alert(user, "pried apart")
-				deconstruct(TRUE)
-			return
-		return ..()
-
+/obj/structure/bookcase/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(state == BOOKCASE_ANCHORED)
-		if(istype(attacking_item, /obj/item/stack/sheet/mineral/wood))
-			var/obj/item/stack/sheet/mineral/wood/W = attacking_item
-			if(W.get_amount() < 2)
-				balloon_alert(user, "not enough wood")
-				return
-			W.use(2)
-			balloon_alert(user, "shelf added")
-			state = BOOKCASE_FINISHED
-			update_appearance()
-			return
+		if(!istype(tool, /obj/item/stack/sheet/mineral/wood))
+			return NONE
+		var/obj/item/stack/sheet/mineral/wood/planks = tool
+		if(planks.get_amount() < 2)
+			balloon_alert(user, "not enough wood")
+			return ITEM_INTERACT_BLOCKING
 
-		if(attacking_item.tool_behaviour == TOOL_WRENCH)
-			attacking_item.play_tool_sound(src, 100)
-			balloon_alert(user, "unwrenched the frame")
-			set_anchored(FALSE)
-			return
-		return ..()
-
-	if(isbook(attacking_item))
-		if(!user.transferItemToLoc(attacking_item, src))
-			return ..()
+		planks.use(2)
+		balloon_alert(user, "shelf added")
+		state = BOOKCASE_FINISHED
 		update_appearance()
-		return
+		return ITEM_INTERACT_SUCCESS
+
+	if(state != BOOKCASE_FINISHED)
+		return NONE
+
+	if(isbook(tool))
+		if(!user.transferItemToLoc(tool, src))
+			return NONE
+
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
 	if(atom_storage)
 		var/found_anything = FALSE
-		for(var/obj/item/T in attacking_item.contents)
+		for(var/obj/item/T in tool.contents)
 			if(istype(T, /obj/item/book) || istype(T, /obj/item/spellbook))
 				atom_storage.attempt_remove(T, src)
 				found_anything = TRUE
 
-		if (found_anything)
-			balloon_alert(user, "emptied into [src]")
-			update_appearance()
-			return
+		if (!found_anything)
+			return ITEM_INTERACT_BLOCKING
 
-	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
-		if(length(contents))
-			balloon_alert(user, "remove the books first")
-			return
-		attacking_item.play_tool_sound(src, 100)
-		balloon_alert(user, "pried the shelf out")
-		new /obj/item/stack/sheet/mineral/wood(drop_location(), 2)
-		state = BOOKCASE_ANCHORED
+		balloon_alert(user, "emptied into [src]")
 		update_appearance()
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
+
+/obj/structure/bookcase/crowbar_act(mob/living/user, obj/item/tool)
+	switch(state)
+		if(BOOKCASE_UNANCHORED)
+			if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
+				return ITEM_INTERACT_BLOCKING
+
+			user.balloon_alert(user, "pried apart")
+			deconstruct(TRUE)
+			return ITEM_INTERACT_SUCCESS
+
+		if(BOOKCASE_FINISHED)
+			if(length(contents))
+				balloon_alert(user, "remove the books first")
+				return ITEM_INTERACT_BLOCKING
+
+			tool.play_tool_sound(src, 100)
+			balloon_alert(user, "pried the shelf out")
+			new /obj/item/stack/sheet/mineral/wood(drop_location(), 2)
+			state = BOOKCASE_ANCHORED
+			update_appearance()
+			return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/structure/bookcase/wrench_act(mob/living/user, obj/item/tool)
+	switch(state)
+		if(BOOKCASE_UNANCHORED)
+			if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
+				return ITEM_INTERACT_BLOCKING
+
+			balloon_alert(user, "wrenched in place")
+			set_anchored(TRUE)
+			return ITEM_INTERACT_SUCCESS
+
+		if(BOOKCASE_ANCHORED)
+			tool.play_tool_sound(src, 100)
+			balloon_alert(user, "unwrenched the frame")
+			set_anchored(FALSE)
+			return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/bookcase/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -196,7 +214,7 @@
 	var/obj/item/book/choice = tgui_input_list(user, "Book to remove from the shelf", "Remove Book", sort_names(contents.Copy()))
 	if(isnull(choice))
 		return
-	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !in_range(loc, user))
+	if(!(user.mobility_flags & MOBILITY_USE) || IS_UNCONSCIOUS_OR_CRIT(user) || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !in_range(loc, user))
 		return
 	if(ishuman(user))
 		if(!user.get_active_held_item())
