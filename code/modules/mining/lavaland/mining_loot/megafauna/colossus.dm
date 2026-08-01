@@ -18,7 +18,7 @@
 	if(!robot.opened)
 		to_chat(user, span_warning("[robot] must be opened to insert this item."))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("you insert [src] into [robot]"))
+	to_chat(user, span_notice("You insert [src] into [robot]."))
 	var/datum/action/cooldown/spell/voice_of_god/voice = new
 	voice.Grant(robot)
 	qdel(src)
