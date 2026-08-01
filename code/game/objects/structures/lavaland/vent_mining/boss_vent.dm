@@ -77,7 +77,7 @@
 /** Debug vent: The one we have for testing.*/
 /obj/structure/ore_vent/debug
 	name = "debug ore vent"
-	desc = "How the hell did you get this?."
+	desc = "How the hell did you get this?"
 	tapped = TRUE
 	discovered = TRUE
 	unique_vent = TRUE

@@ -177,8 +177,7 @@
  */
 /datum/component/spawner/proc/delayed_mob_spawn(turf/picked_spot, mob/chosen_mob_type, atom/spawner)
 	if(!picked_spot)
-		stack_trace("Incorrect parameters for delayed mob spawn!")
-		return
+		CRASH("Incorrect parameters for delayed mob spawn - no picked spot to spawn!")
 
 	var/atom/created = new chosen_mob_type(picked_spot)
 	if(!created)
@@ -197,7 +196,7 @@
 	if(isliving(spawned_mob))
 		var/mob/living/created_mob = spawned_mob
 		created_mob.set_faction(faction)
-		RegisterSignal(created_mob, COMSIG_MOB_STATCHANGE, PROC_REF(mob_stat_changed))
+		RegisterSignal(created_mob, COMSIG_LIVING_DEATH, PROC_REF(mob_death))
 		if(spawner_logic == SPAWN_BY_WAVE_BEHAVIOR)
 			created_mob.adjust_timed_status_effect(60 SECONDS, /datum/status_effect/heads_up)
 
@@ -229,8 +228,6 @@
 	spawned_things -= WEAKREF(source)
 
 /// Called when a mob we spawned dies, remove it from the list and unregister signals
-/datum/component/spawner/proc/mob_stat_changed(mob/living/source)
-	if(source.stat != DEAD)
-		return
+/datum/component/spawner/proc/mob_death(mob/living/source)
 	spawned_things -= WEAKREF(source)
-	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_MOB_STATCHANGE))
+	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))

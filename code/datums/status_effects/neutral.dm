@@ -935,7 +935,7 @@
 	SET_PLANE(arrow_overlay, PLANE_TO_TRUE(arrow_overlay.plane), owner_turf)
 	owner.vis_contents += arrow_overlay
 	RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
-	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 /datum/status_effect/heads_up/on_remove()
 	owner.vis_contents -= arrow_overlay
@@ -946,10 +946,7 @@
 	SIGNAL_HANDLER
 	SET_PLANE(arrow_overlay, PLANE_TO_TRUE(arrow_overlay.plane), new_turf)
 
-/datum/status_effect/heads_up/proc/on_stat_change()
+/// We delete the status effect and visual on mob death.
+/datum/status_effect/heads_up/proc/on_death(mob/living/source)
 	SIGNAL_HANDLER
-	if(!(owner.stat == DEAD))
-		return
 	qdel(src)
-
-
