@@ -35,7 +35,7 @@
 	screen += spawn_text
 	animate(spawn_text, alpha = 255, time = 1 SECONDS)
 
-	for(var/i = 1 to length_char(text) + 1)
+	for(var/i in 1 to length_char(text) + 1)
 		if(QDELETED(spawn_text) || !src)
 			return
 		spawn_text.maptext = MAPTEXT_PIXELLARI(copytext_char(text, 1, i))
