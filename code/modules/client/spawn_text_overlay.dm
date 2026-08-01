@@ -1,8 +1,6 @@
 /// Displays a typewriter-style spawn text overlay that includes station/area/job name and time
 /client/proc/show_spawn_text_overlay(duration = 5 SECONDS)
 	set waitfor = FALSE
-	if(!mob)
-		return
 
 	var/mob_name = mob.name
 	var/job_title = mob.mind?.assigned_role.title || "Unknown"
