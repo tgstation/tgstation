@@ -36,9 +36,9 @@
 		spawn_text.maptext = MAPTEXT_PIXELLARI(copytext_char(text, 1, i))
 		sleep(1)
 
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(fade_spawn_text_overlay), src, spawn_text), duration)
+	addtimer(CALLBACK(src, PROC_REF(fade_spawn_text_overlay), src, spawn_text), duration)
 
-/proc/fade_spawn_text_overlay(client/player_client, atom/movable/screen/spawn_text)
+/client/proc/fade_spawn_text_overlay(client/player_client, atom/movable/screen/spawn_text)
 	if(QDELETED(spawn_text))
 		return
 	animate(spawn_text, alpha = 0, time = 0.5 SECONDS)
