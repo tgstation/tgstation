@@ -24,10 +24,10 @@
 		to_chat(user, span_notice("You are unable to drop [src]."))
 		return ITEM_INTERACT_BLOCKING
 	forceMove(robot)
-	RegisterSignal(robot, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(on_silicon_delete))
+	RegisterSignal(robot, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(on_silicon_decon))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/organ/vocal_cords/colossus/proc/on_silicon_delete()
+/obj/item/organ/vocal_cords/colossus/proc/on_silicon_decon()
 	forceMove(get_turf(loc))
 
 /datum/action/item_action/organ_action/colossus
