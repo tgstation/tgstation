@@ -140,15 +140,15 @@
 	. = ..()
 	if(!. || isnull(owner))
 		return
-
-	var/knockdown_time = AUGGED_LEG_EMP_KNOCKDOWN_TIME
-	if (severity == EMP_HEAVY)
-		knockdown_time *= 2
-	owner.Knockdown(knockdown_time)
-	if(INCAPACITATED_IGNORING(owner, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
-		return
-	to_chat(owner, span_danger("As your [plaintext_zone] unexpectedly malfunctions, it causes you to fall to the ground!"))
-	return
+	if(prob(80 / severity))
+		if(owner.body_position == LYING_DOWN) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
+			to_chat(owner, span_danger("Your [plaintext_zone] suddenly malfunctions!"))
+		else
+			to_chat(owner, span_danger("As your [plaintext_zone] suddenly malfunctions, it causes you to fall to the ground!"))
+		owner.Knockdown(AUGGED_LEG_EMP_KNOCKDOWN_TIME)
+	owner.adjust_staggered(STAGGERED_SLOWDOWN_LENGTH * 3 / severity)
+	owner.client?.move_delay = max(owner.client?.move_delay, world.time)
+	owner.client?.move_delay += 0.6 SECONDS / severity
 
 /obj/item/bodypart/leg/right/robot
 	name = "cyborg right leg"
@@ -196,15 +196,15 @@
 	. = ..()
 	if(!. || isnull(owner))
 		return
-
-	var/knockdown_time = AUGGED_LEG_EMP_KNOCKDOWN_TIME
-	if (severity == EMP_HEAVY)
-		knockdown_time *= 2
-	owner.Knockdown(knockdown_time)
-	if(INCAPACITATED_IGNORING(owner, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
-		return
-	to_chat(owner, span_danger("As your [plaintext_zone] unexpectedly malfunctions, it causes you to fall to the ground!"))
-	return
+	if(prob(80 / severity))
+		if(owner.body_position == LYING_DOWN) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
+			to_chat(owner, span_danger("Your [plaintext_zone] suddenly malfunctions!"))
+		else
+			to_chat(owner, span_danger("As your [plaintext_zone] suddenly malfunctions, it causes you to fall to the ground!"))
+		owner.Knockdown(AUGGED_LEG_EMP_KNOCKDOWN_TIME)
+	owner.adjust_staggered(STAGGERED_SLOWDOWN_LENGTH * 3 / severity)
+	owner.client?.move_delay = max(owner.client?.move_delay, world.time)
+	owner.client?.move_delay += 0.6 SECONDS / severity
 
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
@@ -258,24 +258,11 @@
 	. = ..()
 	if(!. || isnull(owner))
 		return
-
-	var/stun_time = 0
-	var/shift_x = 3
-	var/shift_y = 0
-	var/shake_duration = AUGGED_CHEST_EMP_SHAKE_TIME
-
-	if(severity == EMP_HEAVY)
-		stun_time = AUGGED_CHEST_EMP_STUN_TIME
-
-		shift_x = 5
-		shift_y = 2
-
 	var/damage_percent_to_max = (get_damage() / max_damage)
-	if (stun_time && (damage_percent_to_max >= robotic_emp_paralyze_damage_percent_threshold))
+	if(damage_percent_to_max >= robotic_emp_paralyze_damage_percent_threshold)
 		to_chat(owner, span_danger("Your [plaintext_zone]'s logic boards temporarily become unresponsive!"))
-		owner.Stun(stun_time)
-	owner.Shake(pixelshiftx = shift_x, pixelshifty = shift_y, duration = shake_duration)
-	return
+		owner.Stun(AUGGED_CHEST_EMP_STUN_TIME / severity)
+	owner.adjust_jitter(AUGGED_CHEST_EMP_SHAKE_TIME / severity)
 
 /obj/item/bodypart/chest/robot/get_cell()
 	return cell
@@ -436,22 +423,14 @@
 	if(limb_id == BODYPART_ID_ROBOTIC)
 		. += should_draw_greyscale ? icon_greyscale : icon_static
 
-#define EMP_GLITCH "EMP_GLITCH"
 
 /obj/item/bodypart/head/robot/emp_effect(severity, protection)
 	. = ..()
 	if(!. || isnull(owner))
 		return
-
-	to_chat(owner, span_danger("Your [plaintext_zone]'s optical transponders glitch out and malfunction!"))
-
-	var/glitch_duration = AUGGED_HEAD_EMP_GLITCH_DURATION
-	if (severity == EMP_HEAVY)
-		glitch_duration *= 2
-
-	QDEL_IN(owner.add_client_colour(/datum/client_colour/malfunction, HEAD_TRAIT), glitch_duration)
-
-#undef EMP_GLITCH
+	to_chat(owner, span_danger("Your [plaintext_zone] hurts..."))
+	QDEL_IN(owner.add_client_colour(/datum/client_colour/malfunction, HEAD_TRAIT), (AUGGED_HEAD_EMP_GLITCH_DURATION / severity))
+	owner.adjust_confusion(AUGGED_HEAD_EMP_GLITCH_DURATION / severity)
 
 /obj/item/bodypart/head/robot/Exited(atom/movable/gone, direction)
 	. = ..()

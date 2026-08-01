@@ -233,6 +233,7 @@
 	cooldown_message = span_danger("The tesla capacitors on the reactive tesla armor are still recharging! The armor merely emits some sparks.")
 	emp_message = span_warning("The tesla capacitors beep ominously for a moment.")
 	clothing_traits = list(TRAIT_TESLA_SHOCKIMMUNE)
+	emp_protection = EMP_PROTECTION_MODERATE
 	/// How strong are the zaps we give off?
 	var/zap_power = 2.5e4
 	/// How far to the zaps we give off go?
