@@ -559,7 +559,7 @@
 
 /obj/item/organ/brain/felinid //A bit smaller than average
 	brain_size = 0.8
-	organ_traits = list(
+	variant_traits_added = list(
 		TRAIT_CATLIKE_INSTINCT,
 		TRAIT_WATER_HATER,
 	)

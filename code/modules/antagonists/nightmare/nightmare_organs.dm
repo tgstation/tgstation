@@ -9,7 +9,7 @@
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-x-d"
 	shade_color = "black, somehow"
-	organ_traits = list(TRAIT_NIGHTMARISH)
+	variant_traits_added = list(TRAIT_NIGHTMARISH)
 
 	///Our associated shadow jaunt spell, for all nightmares
 	var/datum/action/cooldown/spell/jaunt/shadow_walk/our_jaunt
