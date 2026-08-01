@@ -1,6 +1,7 @@
 #define BLESSING_APPEARANCE_KEY "blessing"
 /// Attached to blessed turfs, prevents jaunting, revenant movement and cult teleportation
 /datum/element/blessed_turf
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 
 /datum/element/blessed_turf/Attach(datum/target, invisible = FALSE)
 	. = ..()
@@ -8,7 +9,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	var/turf/target_turf = target
-	ADD_TRAIT(target_turf, TRAIT_TURF_BLESSED, REF(src))
+	ADD_TRAIT(target_turf, TRAIT_TURF_BLESSED, ELEMENT_TRAIT(type))
 	RegisterSignal(target_turf, COMSIG_ATOM_INTERCEPT_TELEPORTING, PROC_REF(block_cult_teleport))
 
 	if (invisible)
@@ -23,7 +24,7 @@
 /datum/element/blessed_turf/Detach(datum/source, ...)
 	. = ..()
 	var/turf/target_turf = source
-	REMOVE_TRAIT(target_turf, TRAIT_TURF_BLESSED, REF(src))
+	REMOVE_TRAIT(target_turf, TRAIT_TURF_BLESSED, ELEMENT_TRAIT(type))
 	UnregisterSignal(target_turf, COMSIG_ATOM_INTERCEPT_TELEPORTING)
 	target_turf.remove_alt_appearance(BLESSING_APPEARANCE_KEY)
 
