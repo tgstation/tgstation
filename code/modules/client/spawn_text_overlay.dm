@@ -5,11 +5,7 @@
 		return
 
 	var/mob_name = mob.name
-	var/job_title = "Unknown"
-	if(mob.mind && mob.mind.assigned_role)
-		job_title = mob.mind.assigned_role.title
-	else if(mob.job)
-		job_title = mob.job
+	var/job_title = mob.mind?.assigned_role.title || "Unknown"
 
 	var/station_name = station_name()
 	var/area_name = get_area_name(mob, format_text = TRUE) || "Unknown Location"
