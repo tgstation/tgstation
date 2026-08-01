@@ -1,0 +1,5 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - balance: "robotic limbs, organs, and cybernetic implants have their emp effects scale more closely with emp severity."
+  - balance: "reactive tesla armor, adamantine armor, the mod emp shield module, and tinfoil hats slightly lower the severity of incoming EMPs."
