@@ -184,14 +184,13 @@
 		// > 0 means it's unfilfilled - the ritual has failed, we should tell them why
 		// Lets format the thing they're missing and put it into our list
 		if(islist(req_type))
-			var/list/req_type_list = req_type
 			var/list/req_text_list = list()
-			for(var/possible_type, needed_amount in req_type_list)
+			for(var/possible_type, needed_amount in req_type)
 				req_text_list += ritual.parse_required_item(possible_type, fulfilled_amount)
-			what_are_we_missing += english_list(req_text_list, and_text = "or")
+			what_are_we_missing += english_list(req_text_list, and_text = " or ")
 
 		else
-			what_are_we_missing += ritual.parse_required_item(req_type)
+			what_are_we_missing += ritual.parse_required_item(req_type, fulfilled_amount)
 
 	if(length(what_are_we_missing))
 		// Let them know it screwed up

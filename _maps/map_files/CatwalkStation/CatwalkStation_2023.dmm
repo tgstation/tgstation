@@ -75788,9 +75788,6 @@
 "ujb" = (
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
-"ujd" = (
-/turf/open/floor/plating,
-/area/station/engineering/atmos/upper)
 "ujr" = (
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
 	dir = 8
@@ -205790,7 +205787,7 @@ gtC
 gtC
 gtC
 fHO
-ujd
+unl
 bYd
 bYd
 eaU

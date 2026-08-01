@@ -6,7 +6,7 @@ import rspack, { type StatsOptions } from '@rspack/core';
 export function createStats(verbose: boolean): StatsOptions {
   return {
     assets: verbose,
-    builtAt: verbose,
+    builtAt: false,
     cached: false,
     children: false,
     chunks: false,

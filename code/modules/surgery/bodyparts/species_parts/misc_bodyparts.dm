@@ -85,7 +85,7 @@
 
 ///JELLY
 /obj/item/bodypart/head/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JELLY)
 	limb_id = SPECIES_JELLYPERSON
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
@@ -94,7 +94,7 @@
 	butcher_replacement = null
 
 /obj/item/bodypart/chest/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JELLY)
 	limb_id = SPECIES_JELLYPERSON
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
@@ -106,28 +106,28 @@
 	return icon('icons/mob/butts.dmi', BUTT_SPRITE_SLIME)
 
 /obj/item/bodypart/arm/left/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JELLY)
 	limb_id = SPECIES_JELLYPERSON
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
 	butcher_replacement = null
 
 /obj/item/bodypart/arm/right/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JELLY)
 	limb_id = SPECIES_JELLYPERSON
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
 	butcher_replacement = null
 
 /obj/item/bodypart/leg/left/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JELLY)
 	limb_id = SPECIES_JELLYPERSON
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
 	butcher_replacement = null
 
 /obj/item/bodypart/leg/right/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JELLY)
 	limb_id = SPECIES_JELLYPERSON
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
