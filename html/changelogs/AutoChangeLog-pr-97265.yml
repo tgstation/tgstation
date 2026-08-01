@@ -1,5 +1,0 @@
-author: "flleeppyy"
-delete-after: True
-changes:
-  - bugfix: "the experimental cloner now actually can make you bald (if you're a human or ethereal)."
-  - bugfix: "the experimental cloner now spits flavor and policy text (if there is any) when spawning"

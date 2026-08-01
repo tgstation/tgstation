@@ -4,8 +4,22 @@
       scale more closely with emp severity.
   - balance: reactive tesla armor, adamantine armor, the mod emp shield module, and
       tinfoil hats slightly lower the severity of incoming EMPs.
+  Ghommie:
+  - balance: Bees are now friendly to any plant-like creature for that matter.
+  - balance: Cats will now also follow laser pointers, not just felinids.
+  - balance: The boulder processing machinery can maim any (incapacitated/dead) mob
+      with the mineral biotype, not just golems.
+  - refactor: 'some quirky interactions with specific (non-roundstart) species have
+      been de-hardcoded. An example: peanut butter gets those with abductor brains
+      high rather than just those with the abductor species. Report any oddity with
+      that (the refactor, not the peanut butter...).'
   QuiteLiterallyAnything:
   - bugfix: Fixed Catwalk's upper atmospherics room being exposed to space by default.
   Thunder12345:
   - rscadd: The quantum console now tells bitrunners what grade they've reached on
       completed domains.
+  flleeppyy:
+  - bugfix: the experimental cloner now actually can make you bald (if you're a human
+      or ethereal).
+  - bugfix: the experimental cloner now spits flavor and policy text (if there is
+      any) when spawning

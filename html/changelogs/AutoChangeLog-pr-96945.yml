@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - balance: "The boulder processing machinery can maim any (incapacitated/dead) mob with the mineral biotype, not just golems."
-  - refactor: "some quirky interactions with specific (non-roundstart) species have been de-hardcoded. An example: peanut butter gets those with abductor brains high rather than just those with the abductor species. Report any oddity with that (the refactor, not the peanut butter...)."
