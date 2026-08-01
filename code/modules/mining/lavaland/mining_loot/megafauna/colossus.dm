@@ -11,7 +11,6 @@
 	spans = list("colossus","yell")
 
 /obj/item/organ/vocal_cords/colossus/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	. = ..()
 	var/mob/living/silicon/robot/robot = interacting_with
 	if(!istype(robot))
 		return NONE
