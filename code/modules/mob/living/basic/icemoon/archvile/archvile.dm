@@ -1,6 +1,6 @@
 /mob/living/basic/mining/archvile
-	name = "archvile"
-	desc = "A being of pure hatred, reveling in misery. Channels plasmafires at you, and isn't done with you even if you die."
+	name = "plasmalurch"
+	desc = "A strange, unsteady and gaunt creature that hoards plasma to try and keep warm, using it to fight and to reignite the spark of life on other, deceased creatures."
 	icon = 'icons/mob/simple/icemoon/archvile.dmi'
 	icon_state = "archvile"
 	icon_living = "archvile"
@@ -132,7 +132,7 @@
 	target.revive(HEAL_ARCHVILE)
 
 /datum/action/cooldown/mob_cooldown/archvile_fire
-	name = "Archvile Fire"
+	name = "Plasmalurch Fire"
 	desc = "Light a line in front of you on fire!"
 	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	button_icon_state = "brimdemon_firing"
@@ -204,7 +204,9 @@
 		if(blocked)
 			break
 		playsound(owner, 'sound/effects/fire_puff.ogg', 100, FALSE)
-		new /obj/effect/hotspot(affected_turf, 200, 2000)
+		var/obj/effect/hotspot/hotspot = new /obj/effect/hotspot(affected_turf, 200, 2000)
+		hotspot.add_atom_colour(LIGHT_COLOR_PURPLE, FIXED_COLOUR_PRIORITY)
+		hotspot.set_light_color(LIGHT_COLOR_PURPLE)
 		affected_turf.hotspot_expose(2000, 200, TRUE)
 		for(var/mob/living/hit_mob in affected_turf)
 			hit_mob.adjust_fire_stacks(20)
