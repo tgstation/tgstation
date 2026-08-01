@@ -559,6 +559,10 @@
 
 /obj/item/organ/brain/felinid //A bit smaller than average
 	brain_size = 0.8
+	organ_traits = list(
+		TRAIT_CATLIKE_INSTINCT,
+		TRAIT_WATER_HATER,
+	)
 
 // Sometimes, felinids go a bit haywire and bite people. Based entirely on mania and hunger.
 /obj/item/organ/brain/felinid/get_attacking_limb(mob/living/carbon/human/target)

@@ -1048,8 +1048,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VEGETARIAN "trait_vegetarian"
 #define TRAIT_KEEN_NOSE "keen_nose"
 
-/// This mob always lands on their feet when they fall, for better or for worse.
-#define TRAIT_CATLIKE_GRACE "catlike_grace"
+/// The mob has a variety of catlike behaviors, like landing on their feet when falling or chasing pinpointers.
+#define TRAIT_CATLIKE_INSTINCT "catlike_grace"
 
 ///Won't show up on cameras when they snap a photo.
 #define TRAIT_INVISIBLE_TO_CAMERA "invisible_to_camera"
@@ -1679,6 +1679,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Makes the owner immune from the pacification from synthpax
 #define TRAIT_SYNTHPAX_IMMUNE "synthpax_immune"
+/// Allow the owner to eat cloth
+#define TRAIT_CLOTH_EATER "cloth_eater"
+/// Has the metabolization quirks of a lizardperson
+#define TRAIT_LIZARD_METABOLISM "lizard_metabolism"
+// Has the metabolization quirks of an ethereal
+#define TRAIT_ETHEREAL_METABOLISM "ethereal_metabolism"
 
 /// Mobs with this trait will always have be a priority target for mining mobs
 #define TRAIT_MINING_AGGRO "mining_aggro"

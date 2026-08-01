@@ -1146,6 +1146,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	SEND_SIGNAL(src, COMSIG_BODYPART_UPDATED, dropping_limb, is_creating)
+	if(owner)
+		SEND_SIGNAL(owner, COMSIG_CARBON_BODYPART_UPDATED, src, dropping_limb, is_creating)
 
 	if(IS_ORGANIC_LIMB(src))
 		// Try to add a cached blood type data, we must do it in here because for some reason DNA gets initialized AFTER the mob's limbs are created.

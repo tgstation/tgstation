@@ -106,7 +106,7 @@
 		qdel(src)
 
 /obj/item/clothing/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(user.combat_mode || !ismoth(target) || ispickedupmob(src))
+	if(user.combat_mode || !HAS_TRAIT(user, TRAIT_CLOTH_EATER) || ispickedupmob(src))
 		return ..()
 	if((clothing_flags & INEDIBLE_CLOTHING) || (resistance_flags & INDESTRUCTIBLE))
 		return ..()

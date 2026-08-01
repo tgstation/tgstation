@@ -5,24 +5,6 @@
 #define BEE_RESOURCE_HONEYCOMB_COST 100 //The amount of bee_resources for a new honeycomb to be produced, percentage cost 1-100
 #define BEE_RESOURCE_NEW_BEE_COST 50 //The amount of bee_resources for a new bee to be produced, percentage cost 1-100
 
-
-
-/mob/proc/bee_friendly()
-	return 0
-
-
-
-/mob/living/carbon/human/bee_friendly()
-	if(ispodperson(src)) //bees pollinate plants, duh.
-		return 1
-	if (wear_suit && head && isclothing(wear_suit) && isclothing(head))
-		var/obj/item/clothing/suit = wear_suit
-		var/obj/item/clothing/hat = head
-		if (suit.clothing_flags & hat.clothing_flags & THICKMATERIAL)
-			return 1
-	return 0
-
-
 /obj/structure/beebox
 	name = "apiary"
 	desc = "Dr. Miles Manners is just your average wasp-themed super hero by day, but by night he becomes DR. BEES!"
@@ -37,11 +19,9 @@
 	var/list/honey_frames = list()
 	var/bee_resources = 0
 
-
 /obj/structure/beebox/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
-
 
 /obj/structure/beebox/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -50,7 +30,6 @@
 	QDEL_LIST(honey_frames)
 	QDEL_LIST(honeycombs)
 	return ..()
-
 
 //Premade apiaries can spawn with a random reagent
 /obj/structure/beebox/premade
@@ -192,7 +171,7 @@
 
 	return NONE
 
-/obj/structure/beebox/interact(mob/user)
+/obj/structure/beebox/interact(mob/living/user)
 	. = ..()
 	if(!user.bee_friendly())
 		//Time to get stung!

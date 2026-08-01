@@ -661,7 +661,7 @@ Behavior that's still missing from this component that original food items had t
 		food_quality += quality
 
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
-		if(!isjellyperson(eater)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks
+		if(!(eater.mob_biotypes & MOB_SLIME)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks
 			return TOXIC_FOOD_QUALITY_THRESHOLD
 		food_quality += LIKED_FOOD_QUALITY_CHANGE
 

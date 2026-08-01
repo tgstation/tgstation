@@ -393,6 +393,12 @@
 
 		owner.reagents.convert_reagent(reagent.type, convert_into, ethanol_conversion)
 
+/obj/item/organ/liver/lizard
+	name = "saurian liver"
+	desc = "A liver that has mutated at some point in the past to allow the quasi-carnivore, proto-lizardfolk to metabolize plant nutrients from Tizira's xenoflora. \
+		Researchers believe this to be what ultimately allowed the lizardpeople to thrive as a species."
+	organ_traits = list(TRAIT_LIZARD_METABOLISM)
+
 #undef LIVER_DEFAULT_TOX_TOLERANCE
 #undef LIVER_DEFAULT_TOX_RESISTANCE
 #undef LIVER_FAILURE_STAGE_SECONDS

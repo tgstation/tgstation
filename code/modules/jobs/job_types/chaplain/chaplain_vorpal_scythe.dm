@@ -141,7 +141,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 		death_knell_speed_mod *= 1.5 //Staminacritting someone who's jittering (from, say, a stun baton) won't give you enough time to slice their head off, but staminacritting someone who isn't jittering will
 	if(empowerment == SCYTHE_EMPOWERED) //That said, if heads are already rolling, why stop here?
 		death_knell_speed_mod *= 0.5
-	if(ispodperson(potential_reaping) || ismonkey(potential_reaping)) //And if they're a podperson or monkey, they can just die.
+	if((potential_reaping.mob_biotypes & MOB_PLANT) || ismonkey(potential_reaping)) //And if they're a podperson/mushperson or monkey, they can just die.
 		death_knell_speed_mod *= 0.5
 
 	log_combat(user, potential_reaping, "prepared to use [src] to decapitate")

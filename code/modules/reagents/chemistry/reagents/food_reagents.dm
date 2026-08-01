@@ -1038,7 +1038,7 @@
 
 /datum/reagent/consumable/liquidelectricity/enriched/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(isethereal(affected_mob))
+	if(HAS_TRAIT(affected_mob, TRAIT_ETHEREAL_METABOLISM))
 		affected_mob.adjust_blood_volume(1 * seconds_per_tick)
 	else if(SPT_PROB(10, seconds_per_tick)) //lmao at the newbs who eat energy bars
 		affected_mob.electrocute_act(rand(5,10), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
