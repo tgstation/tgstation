@@ -289,21 +289,22 @@
 	if(IS_CULTIST(user) || HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) || user.stat == DEAD)
 		. += extra_desc
 
-/obj/structure/constructshell/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(O, /obj/item/soulstone))
-		var/obj/item/soulstone/SS = O
-		if(!IS_CULTIST(user) && !HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) && !SS.theme == THEME_HOLY)
-			to_chat(user, span_danger("An overwhelming feeling of dread comes over you as you attempt to place [SS] into the shell. It would be wise to be rid of this quickly."))
-			if(isliving(user))
-				var/mob/living/living_user = user
-				living_user.set_dizzy_if_lower(1 MINUTES)
-			return
-		if(SS.theme == THEME_HOLY && IS_CULTIST(user))
-			SS.hot_potato(user)
-			return
-		SS.transfer_to_construct(src, user)
-	else
-		return ..()
+/obj/structure/constructshell/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/soulstone))
+		return NONE
+
+	var/obj/item/soulstone/whispering_gem = tool
+	if(!IS_CULTIST(user) && !HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) && whispering_gem.theme != THEME_HOLY)
+		to_chat(user, span_danger("An overwhelming feeling of dread comes over you as you attempt to place [whispering_gem] into the shell. It would be wise to be rid of this quickly."))
+		user.set_dizzy_if_lower(1 MINUTES)
+		return ITEM_INTERACT_BLOCKING
+
+	if(whispering_gem.theme == THEME_HOLY && IS_CULTIST(user))
+		whispering_gem.hot_potato(user)
+		return ITEM_INTERACT_BLOCKING
+
+	whispering_gem.transfer_to_construct(src, user)
+	return ITEM_INTERACT_SUCCESS
 
 /// Procs for moving soul in and out off stone
 
@@ -323,7 +324,7 @@
 				to_chat(user, span_cult("<b>\"This soul is mine.</b></span> <span class='cultlarge'>SACRIFICE THEM!\""))
 				return FALSE
 
-		if(grab_sleeping ? victim.stat == CONSCIOUS : victim.stat != DEAD)
+		if(grab_sleeping ? !IS_UNCONSCIOUS_OR_CRIT(victim) : victim.stat != DEAD)
 			to_chat(user, span_userdanger("Capture failed!"))
 			to_chat(user, span_danger("Kill or maim the victim first!"))
 			return FALSE

@@ -194,7 +194,6 @@
 
 /datum/deathmatch_modifier/xray/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	ADD_TRAIT(player, TRAIT_XRAY_VISION, DEATHMATCH_TRAIT)
-	player.update_sight()
 
 /datum/deathmatch_modifier/thermal
 	name = "Thermal Vision"
@@ -203,7 +202,6 @@
 
 /datum/deathmatch_modifier/thermal/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	ADD_TRAIT(player, TRAIT_THERMAL_VISION, DEATHMATCH_TRAIT)
-	player.update_sight()
 
 /datum/deathmatch_modifier/regen
 	name = "Health Regen"

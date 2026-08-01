@@ -271,10 +271,14 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/portable_atmospherics/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/tank))
-		return replace_tank(user, FALSE, item)
-	return ..()
+/obj/machinery/portable_atmospherics/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/tank))
+		return NONE
+
+	if(!replace_tank(user, FALSE, tool))
+		return ITEM_INTERACT_BLOCKING
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/portable_atmospherics/wrench_act(mob/living/user, obj/item/wrench)
 	if(machine_stat & BROKEN)

@@ -18,7 +18,7 @@
 	if(!ishuman(the_target) || LAZYACCESS(my_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], the_target))
 		return FALSE
 	var/mob/living/carbon/human/human_target = the_target
-	if(human_target.handcuffed || human_target.stat != CONSCIOUS)
+	if(human_target.handcuffed || IS_UNCONSCIOUS_OR_CRIT(human_target))
 		return FALSE
 	if(locate(human_target) in my_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
 		return TRUE

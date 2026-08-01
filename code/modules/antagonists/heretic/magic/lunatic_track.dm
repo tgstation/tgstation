@@ -24,7 +24,7 @@
 	owner.balloon_alert(owner, get_balloon_message(ascended_heretic))
 
 	if(ascended_heretic.stat == DEAD)
-		to_chat(owner, span_hierophant("[ascended_heretic] is dead. Weep for the lie has struck out."))
+		to_chat(owner, span_mansus("[ascended_heretic] is dead. Weep for the lie has struck out."))
 
 	StartCooldown()
 	return TRUE

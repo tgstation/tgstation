@@ -90,7 +90,7 @@
 		last_scan_text = floor_text
 		return
 
-	if(ispodperson(M) && !scanpower <= SCANPOWER_ADVANCED)
+	if(ispodperson(M) && scanpower < SCANPOWER_ADVANCED)
 		to_chat(user, span_info("[M]'s biological structure is too complex for the health analyzer."))
 		return
 
@@ -160,7 +160,7 @@
 	var/tox_loss = target.get_tox_loss()
 	var/fire_loss = target.get_fire_loss()
 	var/brute_loss = target.get_brute_loss()
-	var/mob_status = (!target.appears_alive() ? span_alert("<b>Deceased</b>") : "<b>[round(target.health / target.maxHealth, 0.01) * 100]% healthy</b>")
+	var/mob_status = (IS_DEAD_OR_FAKING(target) ? span_alert("<b>Deceased</b>") : "<b>[round(target.health / target.maxHealth, 0.01) * 100]% healthy</b>")
 
 	if(HAS_TRAIT(target, TRAIT_FAKEDEATH) && target.stat != DEAD)
 		// if we don't appear to actually be in a "dead state", add fake oxyloss
@@ -456,16 +456,16 @@
 		else
 			cure_text = disease.cure_text
 		render_list += "<span class='alert ml-1'>\
-			<b>Warning: [disease.form] detected</b><br>\
+			[conditional_tooltip("<b>Warning: [disease.form] detected</b>", "Supply listed cure or [/datum/reagent/medicine/spaceacillin::name], or treat with food and rest.", tochat)]<br>\
 			<div class='ml-2'>\
 			Name: [disease.name].<br>\
 			Type: [disease.spread_text].<br>\
 			Stage: [disease.stage]/[disease.max_stages].<br>\
-			Possible Cure: [cure_text]</div>\
+			Cure: [cure_text]</div>\
 			</span>"
 
 	// Time of death
-	if(target.station_timestamp_timeofdeath && !target.appears_alive())
+	if(target.station_timestamp_timeofdeath && IS_DEAD_OR_FAKING(target))
 		render_list += "<hr>"
 		render_list += "<span class='info ml-1'>Time of Death: [target.station_timestamp_timeofdeath]</span><br>"
 		render_list += "<span class='alert ml-1'><b>Subject died [DisplayTimeText(round(world.time - target.timeofdeath))] ago.</b></span><br>"
@@ -817,7 +817,7 @@
 				var/datum/disease/advance/advanced_disease = disease
 				disease_cure = advanced_disease.generate_cure_text(1)
 			render += "<span class='alert ml-1'><b>Warning: [disease.form] detected</b><br>\
-			<div class='ml-2'>Name: [disease.name].<br>Type: [disease.spread_text].<br>Stage: [disease.stage]/[disease.max_stages].<br>Possible Cure: [disease_cure]</div>\
+			<div class='ml-2'>Name: [disease.name].<br>Type: [disease.spread_text].<br>Stage: [disease.stage]/[disease.max_stages].<br>Cure: [disease_cure]</div>\
 			</span>"
 
 	if(!length(render))

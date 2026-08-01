@@ -17,6 +17,8 @@
 	allow_custom_character = GHOSTROLE_TAKE_PREFS_APPEARANCE
 	///Rank of the pirate on the ship, it's used in generating pirate names!
 	var/rank = "Deserter"
+	///Leader spawners are filled before the rest of the crew.
+	var/is_leader = FALSE
 	///Path of the structure we spawn after creating a pirate.
 	var/fluff_spawn = /obj/structure/showcase/machinery/oldpod/used
 
@@ -44,6 +46,7 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/captain
 	rank = "Renegade Leader"
 	outfit = /datum/outfit/pirate/space/captain
+	is_leader = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/gunner
 	rank = "Rogue"
@@ -64,6 +67,7 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/captain
 	rank = "Captain"
 	outfit = /datum/outfit/pirate/captain/skeleton
+	is_leader = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/gunner
 	rank = "Gunner"
@@ -94,6 +98,7 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/captain
 	rank = "Old-guard"
 	outfit = /datum/outfit/pirate/silverscale/captain
+	is_leader = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/gunner
 	rank = "Top-drawer"
@@ -125,6 +130,7 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/interdyne/senior
 	rank = "Pharmacist Director"
 	outfit = /datum/outfit/pirate/interdyne/captain
+	is_leader = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/interdyne/junior
 	rank = "Pharmacist"
@@ -173,6 +179,7 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/irs/auditor
 	rank = "Head Auditor"
 	outfit = /datum/outfit/pirate/irs/auditor
+	is_leader = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous
 	name = "lustrous crystal"
@@ -192,6 +199,7 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous/captain
 	rank = "Radiant"
 	outfit = /datum/outfit/pirate/lustrous/captain
+	is_leader = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous/gunner
 	rank = "Coruscant"
@@ -220,6 +228,7 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord
 	rank = "Warlord"
 	outfit = /datum/outfit/pirate/medieval/warlord
+	is_leader = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord/special(mob/living/carbon/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()

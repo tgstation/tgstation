@@ -134,12 +134,12 @@
 	for(var/obj/item/assembly/assembly as anything in assemblies)
 		assembly.attack_hand(user, modifiers) // Note override in assembly.dm to prevent side effects here
 
-/obj/item/assembly_holder/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(isassembly(weapon))
-		try_add_assembly(weapon, user)
-		return
+/obj/item/assembly_holder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isassembly(tool))
+		return NONE
 
-	return ..()
+	try_add_assembly(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/item/assembly_holder/screwdriver_act(mob/user, obj/item/tool)

@@ -326,7 +326,7 @@
 
 	var/mob/living/carbon/carbon_victim = interacting_with
 	//Handcuffed or unconscious
-	if(istype(carbon_victim) && (carbon_victim.handcuffed || carbon_victim.stat != CONSCIOUS))
+	if(istype(carbon_victim) && (carbon_victim.handcuffed || IS_UNCONSCIOUS_OR_CRIT(carbon_victim)))
 		user.do_attack_animation(carbon_victim)
 		if(!puzzle_imprison(carbon_victim))
 			to_chat(user, span_warning("[src] does nothing."))

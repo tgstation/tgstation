@@ -26,9 +26,9 @@
 	/// Similar to req_dna, but only gained from absorbing, not DNA sting
 	var/req_absorbs = 0
 	/// Maximum stat before the ability is blocked.
-	/// For example, `UNCONSCIOUS` prevents it from being used when in hard crit or dead,
-	/// while `DEAD` allows the ability to be used on any stat values.
-	var/req_stat = CONSCIOUS
+	/// For example, `STABLE` can only be used while not in crit, and
+	/// `DEAD` allows the ability to be used on any stat values.
+	var/req_stat = STABLE
 	/// usable when the changeling is in death coma
 	var/ignores_fakedeath = FALSE
 	/// used by a few powers that toggle
@@ -102,7 +102,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 	if(changeling.true_absorbs < req_absorbs)
 		user.balloon_alert(user, "needs [req_absorbs] absorption\s!")
 		return FALSE
-	if(req_stat < user.stat)
+	if(req_stat < IS_UNCONSCIOUS_OR_CRIT(user) || (req_stat == STABLE && IS_UNCONSCIOUS(user)))
 		user.balloon_alert(user, "incapacitated!")
 		return FALSE
 	if(HAS_TRAIT(user, TRAIT_DEATHCOMA) && !ignores_fakedeath)

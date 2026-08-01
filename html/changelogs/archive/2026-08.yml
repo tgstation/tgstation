@@ -1,0 +1,3 @@
+2026-08-01:
+  QuiteLiterallyAnything:
+  - bugfix: Fixed Catwalk's upper atmospherics room being exposed to space by default.

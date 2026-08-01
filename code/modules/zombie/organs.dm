@@ -90,7 +90,7 @@
 		// mindless zombies are nerfed a bit to encourage infecting real players instead of random morgue bodies
 		target.set_species(isnull(target.mind) ? /datum/species/zombie/infectious/mindless : /datum/species/zombie/infectious)
 
-	var/stand_up = (target.stat == DEAD) || (target.stat == UNCONSCIOUS)
+	var/stand_up = IS_UNCONSCIOUS(target)
 
 	//Fully heal the zombie's damage the first time they rise
 	if(!target.heal_and_revive(0, span_danger("[target] suddenly convulses, as [target.p_they()][stand_up ? " stagger to [target.p_their()] feet and" : ""] gain a ravenous hunger in [target.p_their()] eyes!")))
@@ -112,6 +112,7 @@
 		after_assumed_control = CALLBACK(src, PROC_REF(after_ghost_control)), \
 		joinable_mobs_title = "Zombies", \
 	))
+	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_TOMBSTONE] = TRUE
 
 /obj/item/organ/zombie_infection/proc/check_ghost_control_eligibility(mob/candidate)
 	if(QDELETED(src) || QDELETED(owner))

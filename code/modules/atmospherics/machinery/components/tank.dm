@@ -31,9 +31,6 @@
 	greyscale_colors = "#ffffff"
 	var/overlay_greyscale_config = /datum/greyscale_config/stationary_canister_overlays
 
-	///The image showing the gases inside of the tank
-	var/image/window
-
 	/// The open node directions of the tank, assuming that the tank is facing NORTH.
 	var/open_ports = NONE
 	/// The volume of the gas mixture
@@ -67,6 +64,12 @@
 	var/merger_id = "stationary_tanks"
 	/// The typecache of types which are allowed to merge internal storage
 	var/static/list/merger_typecache
+	/// Cached GAGS icon for our window
+	var/icon/greyscaled_icon = null
+	/// Holder for our gas overlays used to alpha mask them
+	var/obj/effect/abstract/tank_gas_holder/gas_holder = null
+	/// Window glass visual rendered ontop of gases
+	var/obj/effect/abstract/tank_glass/window_glass = null
 
 /obj/machinery/atmospherics/components/tank/Initialize(mapload)
 	. = ..()
@@ -83,6 +86,12 @@
 
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/atmospherics/components/tank)
+
+	greyscaled_icon = SSgreyscale.GetColoredIconByType(overlay_greyscale_config, greyscale_colors)
+	gas_holder = new(src)
+	window_glass = new(src, src)
+	vis_contents += window_glass
+	vis_contents += gas_holder
 
 	AddComponent(/datum/component/gas_leaker, leak_rate = 0.05)
 	AddElement(/datum/element/volatile_gas_storage)
@@ -116,6 +125,8 @@
 	GetMergeGroup(merger_id, merger_typecache)
 
 /obj/machinery/atmospherics/components/tank/Destroy()
+	QDEL_NULL(window_glass)
+	QDEL_NULL(gas_holder)
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
@@ -307,6 +318,7 @@
 
 /obj/machinery/atmospherics/components/tank/update_overlays()
 	. = ..()
+	. += mutable_appearance(greyscaled_icon, "window-bg")
 	if(!initialize_directions)
 		return
 	for(var/dir in GLOB.cardinals)
@@ -314,34 +326,52 @@
 			. += knob_overlays["[dir]"]
 
 /obj/machinery/atmospherics/components/tank/update_greyscale()
-	. = ..()
-	refresh_window()
+	greyscaled_icon = SSgreyscale.GetColoredIconByType(overlay_greyscale_config, greyscale_colors)
+	window_glass?.icon = greyscaled_icon
+	return ..()
 
 /obj/machinery/atmospherics/components/tank/proc/refresh_window()
-	cut_overlay(window)
+	if(!gas_holder) // Not created in init yet
+		return
 
 	if(!air_contents)
-		window = null
+		gas_holder.vis_contents.Cut()
 		return
-	var/icon/greyscaled_icon = SSgreyscale.GetColoredIconByType(overlay_greyscale_config, greyscale_colors)
 
-	window = image(greyscaled_icon, icon_state = "window-bg", layer = FLOAT_LAYER)
+	var/list/air_visuals = air_contents.return_visuals(get_turf(src))
+	var/static/list/gas_visual_overrides = list()
+	var/list/new_visuals = list()
+	// For those who come after, we need to map existing gas visuals to tank-specific versions which are VIS_INHERIT_ID | VIS_INHERIT_PLANE
+	// due to BYOND tomfuckery, as INHERIT_ID is not enough on its own and only that is passed down. I hate this too, sorry.
+	for(var/obj/effect/overlay/gas/gas as anything in air_visuals)
+		if (gas_visual_overrides[gas])
+			new_visuals += gas_visual_overrides[gas]
+			continue
 
-	var/static/alpha_filter
-	if(!alpha_filter) // Gotta do this separate since the icon may not be correct at world init
-		alpha_filter = filter(type="alpha", icon = icon('icons/obj/pipes_n_cables/stationary_canisters_misc.dmi', "window-bg"))
+		var/obj/effect/overlay/gas/local_gas = new(gas.icon_state, gas.alpha, gas.plane_offset)
+		local_gas.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_PLANE
+		gas_visual_overrides[gas] = local_gas
+		new_visuals += local_gas
 
-	var/list/new_underlays = list()
-	for(var/obj/effect/overlay/gas/gas as anything in air_contents.return_visuals(get_turf(src)))
-		var/image/new_underlay = image(gas.icon, icon_state = gas.icon_state, layer = FLOAT_LAYER)
-		new_underlay.filters = alpha_filter
-		new_underlays += new_underlay
+	gas_holder.vis_contents = new_visuals
 
-	var/image/foreground = image(greyscaled_icon, icon_state = "window-fg", layer = FLOAT_LAYER)
-	foreground.underlays = new_underlays
-	window.overlays = list(foreground)
+/obj/effect/abstract/tank_glass
+	icon = 'icons/obj/pipes_n_cables/stationary_canisters_misc.dmi'
+	icon_state = "window-fg"
+	vis_flags = VIS_INHERIT_PLANE | VIS_INHERIT_LAYER | VIS_INHERIT_ID
 
-	add_overlay(window)
+/obj/effect/abstract/tank_glass/Initialize(mapload, obj/machinery/atmospherics/components/tank/owner)
+	. = ..()
+	if (owner)
+		icon = owner.greyscaled_icon
+
+/obj/effect/abstract/tank_gas_holder
+	appearance_flags = KEEP_TOGETHER | LONG_GLIDE | PIXEL_SCALE | TILE_BOUND
+	vis_flags = VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
+
+/obj/effect/abstract/tank_gas_holder/Initialize(mapload)
+	. = ..()
+	add_filter("tank_gas_holder", 1, alpha_mask_filter(icon = icon('icons/obj/pipes_n_cables/stationary_canisters_misc.dmi', "window-bg")))
 
 ///////////////////////////////////////////////////////////////////
 // Tool interactions
@@ -568,10 +598,14 @@
 		if(TANK_PLATING_UNSECURED)
 			icon_state = "plated_frame"
 
-/obj/structure/tank_frame/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(construction_state == TANK_FRAME && isstack(item) && add_plating(user, item))
-		return
-	return ..()
+/obj/structure/tank_frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(construction_state != TANK_FRAME || !isstack(tool))
+		return ..()
+
+	if(!add_plating(user, tool))
+		return ITEM_INTERACT_BLOCKING
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tank_frame/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

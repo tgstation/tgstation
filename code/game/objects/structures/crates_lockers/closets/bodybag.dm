@@ -229,7 +229,7 @@
 		for(var/mob/living/inside in src)
 			return tool.interact_with_atom(inside, user, modifiers)
 
-	return NONE
+	return ..()
 
 /obj/structure/closet/body_bag/before_open(mob/living/user, force)
 	if(pinned)
@@ -360,7 +360,7 @@
 		span_notice("You start wriggling, attempting to loosen [src]'s buckles... (this will take about [DisplayTimeText(breakout_time)].)"), \
 		span_hear("You hear straining cloth from [src]."))
 	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || !cinched )
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src || opened || !cinched )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
 		user.visible_message(span_danger("[user] successfully broke out of [src]!"),
@@ -573,8 +573,9 @@
 	if(SPT_PROB(2 * (seconds_freezing / 60), seconds_per_tick))
 		freezing.Unconscious(1 SECONDS)
 
-	// Bout two minutes of time
-	take_damage(max_integrity * 0.004 * seconds_per_tick, sound_effect = FALSE)
+	if(loc?.return_air()?.return_temperature() > T0C)
+		// Bout two minutes of time
+		take_damage(max_integrity * 0.004 * seconds_per_tick, sound_effect = FALSE)
 
 /obj/structure/closet/body_bag/environmental/stasis/after_open(mob/living/user, force = FALSE)
 	. = ..()
@@ -639,7 +640,7 @@
 		user.show_message("You fail to break out of [src]!", MSG_VISUAL)
 
 /obj/structure/closet/body_bag/environmental/stasis/proc/breakout_checks(mob/living/user)
-	if(QDELETED(user) || user.stat != CONSCIOUS || user.loc != src || opened)
+	if(QDELETED(user) || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src || opened)
 		return FALSE
 	return TRUE
 

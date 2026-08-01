@@ -277,13 +277,16 @@
 
 /obj/item/dullahan_relay/Hear(atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
+	if(isnull(owner))
+		return FALSE
+
 	var/dist = get_dist(speaker, src) - message_range
-	if(dist > 0 && dist <= EAVESDROP_EXTRA_RANGE)
-		raw_message = stars(raw_message)
-	if(message_range != INFINITY && dist > EAVESDROP_EXTRA_RANGE)
-		return FALSE
-	if(!owner)
-		return FALSE
+	if(message_range != INFINITY)
+		if(dist > EAVESDROP_RANGE)
+			return FALSE
+		if(dist > 0)
+			raw_message = stars(raw_message)
+
 	return owner.Hear(speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, message_mods, message_range = INFINITY)
 
 ///Stops dullahans from gibbing when regenerating limbs

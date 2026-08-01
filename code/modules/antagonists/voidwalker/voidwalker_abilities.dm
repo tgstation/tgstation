@@ -39,7 +39,7 @@
 
 	RegisterSignals(owner, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_ATTACK_ATOM), PROC_REF(is_combatting))
 
-	if(do_after(owner, stare_time, cast_on, IGNORE_TARGET_LOC_CHANGE | IGNORE_USER_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(check_if_staring), cast_on), hidden = TRUE))
+	if(do_after(owner, stare_time, cast_on, IGNORE_TARGET_LOC_CHANGE | IGNORE_USER_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(check_if_staring), cast_on), cog_icon = null))
 		spookify(cast_on)
 
 	else

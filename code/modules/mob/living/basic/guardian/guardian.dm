@@ -177,7 +177,7 @@
 		to_chat(src, span_warning("Invalid name, please try again."))
 		return guardian_rename()
 	to_chat(src, span_notice("Your new name [span_name(new_name)] anchors itself in your mind."))
-	fully_replace_character_name(null, new_name)
+	fully_replace_character_name(null, new_name, log_new_name = TRUE)
 
 /// Picks a random name as a suggestion
 /mob/living/basic/guardian/proc/generate_random_name()
@@ -311,7 +311,7 @@
 		return
 	to_chat(summoner, span_bolddanger("[name] is under attack! You take damage!"))
 	summoner.visible_message(span_bolddanger("Blood sprays from [summoner] as [src] takes damage!"))
-	if(summoner.stat == UNCONSCIOUS || summoner.stat == HARD_CRIT)
+	if(summoner.stat >= HARD_CRIT)
 		to_chat(summoner, span_bolddanger("Your head pounds, you can't take the strain of sustaining [src] in this condition!"))
 		summoner.adjust_organ_loss(ORGAN_SLOT_BRAIN, amount * 0.5)
 

@@ -18,8 +18,7 @@
 	level = 6
 	severity = 5
 	base_message_chance = 20
-	symptom_delay_min = 20
-	symptom_delay_max = 75
+	symptom_delay = 47.5
 	symptom_cure = /datum/reagent/medicine/leporazine // See, this one's tricky. You gotta convince them you don't have fever or chills in the same virus.
 	var/infective = FALSE
 	threshold_descs = list(
@@ -101,8 +100,7 @@ Bonus
 	level = 7
 	severity = 6
 	base_message_chance = 100
-	symptom_delay_min = 30
-	symptom_delay_max = 90
+	symptom_delay = 60
 	symptom_cure = /datum/reagent/consumable/frostoil
 	cure_color = "red"
 	var/chems = FALSE
@@ -119,8 +117,7 @@ Bonus
 		return
 	if(A.totalResistance() >= 9) //intense but sporadic effect
 		power = 2
-		symptom_delay_min = 50
-		symptom_delay_max = 140
+		symptom_delay = 95
 	if(A.totalStageSpeed() >= 8) //serious boom when wet
 		explosion_power = 2
 	if(A.totalTransmittable() >= 8) //extra chemicals

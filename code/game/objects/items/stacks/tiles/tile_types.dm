@@ -10,6 +10,7 @@
 	lefthand_file = 'icons/mob/inhands/items/tiles_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/tiles_righthand.dmi'
 	icon = 'icons/obj/tiles.dmi'
+	worn_icon_state = null
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 1
 	throwforce = 1
@@ -87,7 +88,7 @@
 	return target_plating
 
 /obj/item/stack/tile/handle_openspace_click(turf/target, mob/user, list/modifiers)
-	target.attackby(src, user, list2params(modifiers))
+	target.base_item_interaction(user, src, list2params(modifiers))
 
 //Grass
 /obj/item/stack/tile/grass
