@@ -586,8 +586,24 @@
 	desc = "A piece of juicy meat found in an ayy lmao's head."
 	icon_state = "brain-x"
 	brain_size = 1.3
-	variant_traits_added = list(TRAIT_REMOTE_TASTING)
+	variant_traits_added = list(TRAIT_REMOTE_TASTING, TRAIT_ABDUCTOR_KNOWLEDGE)
 	shade_color = "grey"
+
+/obj/item/organ/brain/abductor/on_mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
+	. = ..()
+	RegisterSignal(brain_owner, COMSIG_MOB_REAGENT_TICK, PROC_REF(handle_peanut_butter))
+
+/obj/item/organ/brain/abductor/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	UnregisterSignal(organ_owner, COMSIG_MOB_REAGENT_TICK)
+
+/obj/item/organ/brain/abductor/proc/handle_peanut_butter(mob/living/carbon/organ_owner, datum/reagent/reagent, seconds_per_tick, metabolization_ratio)
+	SIGNAL_HANDLER
+	if(!istype(reagent, /datum/reagent/consumable/peanut_butter))
+		return
+	organ_owner.add_mood_event("ET_pieces", /datum/mood_event/et_pieces, reagent.name)
+	organ_owner.set_drugginess_if_lower(15 SECONDS * metabolization_ratio * seconds_per_tick)
+
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 

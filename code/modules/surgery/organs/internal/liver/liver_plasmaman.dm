@@ -10,7 +10,7 @@
 	organ_traits = list(TRAIT_PLASMA_LOVER_METABOLISM)
 	milk_burn_healing = 0
 
-/obj/item/organ/liver/bone/plasmaman/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick)
+/obj/item/organ/liver/bone/plasmaman/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, metabolization_rate)
 	. = ..()
 	// parent returned COMSIG_MOB_STOP_REAGENT_TICK or we are failing
 	if((. & COMSIG_MOB_STOP_REAGENT_TICK) || (organ_flags & ORGAN_FAILING))

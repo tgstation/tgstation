@@ -83,7 +83,7 @@
  *
  * NOTE: If you return COMSIG_MOB_STOP_REAGENT_TICK, that reagent will not be removed like normal! You must handle it manually.
  **/
-/obj/item/organ/liver/proc/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick)
+/obj/item/organ/liver/proc/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, metabolization_rate)
 	SIGNAL_HANDLER
 
 /obj/item/organ/liver/examine(mob/user)

@@ -328,14 +328,13 @@
 			)
 			add_mood_event("vomit", /datum/mood_event/vomitself)
 		distance = 0
-	else
-		if(message)
-			visible_message(
-				span_danger("[src] throws up!"),
-				span_userdanger("You throw up!"),
-			)
-			if(!isflyperson(src))
-				add_mood_event("vomit", /datum/mood_event/vomit)
+	else if(message)
+		visible_message(
+			span_danger("[src] throws up!"),
+			span_userdanger("You throw up!"),
+		)
+		if(!HAS_TRAIT(src, TRAIT_VOMIT_SLURPER))
+			add_mood_event("vomit", /datum/mood_event/vomit)
 
 	if(stun)
 		var/stun_time = 8 SECONDS

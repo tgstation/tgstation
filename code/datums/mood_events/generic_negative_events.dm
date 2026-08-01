@@ -623,18 +623,12 @@
 	mood_change = -4
 	timeout = 4 MINUTES
 
-/datum/mood_event/splattered_with_blood/can_effect_mob(datum/mood/home, mob/living/who, ...)
-	if(isvampire(who))
-		return FALSE
-
-	return ..()
-
 /datum/mood_event/splattered_with_blood/add_effects(...)
 	if(HAS_TRAIT(owner, TRAIT_CULT_HALO))
 		mood_change = 2
 		description = "Blood, blood! The Geometer will be pleased."
 		return
-	if(HAS_TRAIT(owner, TRAIT_MORBID) || HAS_TRAIT(owner, TRAIT_EVIL))
+	if(HAS_TRAIT(owner, TRAIT_MORBID) || HAS_TRAIT(owner, TRAIT_EVIL) || HAS_TRAIT(owner, TRAIT_DRINKS_BLOOD))
 		mood_change = 0
 		description = "I just got coated in blood. Fascinating!"
 		return

@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(allergy_reagent_blacklist, typecacheof(list(
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_allergy, allergy_string = allergy_string)
 	to_chat(quirk_holder, span_boldnotice("You are allergic to <i>[allergy_string]</i> - make sure not to consume any of these!"))
 
-/datum/quirk/item_quirk/allergic/proc/block_metab(mob/living/carbon/source, datum/reagent/chem, seconds_per_tick)
+/datum/quirk/item_quirk/allergic/proc/block_metab(mob/living/carbon/source, datum/reagent/chem, seconds_per_tick, metabolization_ratio)
 	SIGNAL_HANDLER
 
 	if(!is_type_in_list(chem, allergies))

@@ -57,6 +57,7 @@
 		post_tipped_callback = CALLBACK(src, PROC_REF(after_cow_tipped)))
 	AddElement(/datum/element/pet_bonus, "moo")
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COW, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	ADD_TRAIT(src, TRAIT_ABDUCTOR_QUICK_SCAN, INNATE_TRAIT) //cow ufo abduction ahaha
 	setup_udder()
 	setup_eating()
 	. = ..()

@@ -77,7 +77,7 @@
 	if(isobj(source) && !isstack(source) && (source.material_flags & MATERIAL_AFFECT_STATISTICS))
 		source.RemoveElement(/datum/element/can_shatter, shard_type, round(mat_amount / SHEET_MATERIAL_AMOUNT * multiplier), SFX_SHATTER)
 
-/// Has no special properties. Could be good against vampires in the future perhaps.
+/// Gives weapons an edge against vampires and possibly other mobs with the UNHOLY_BANEABLE trait.
 /datum/material/silver
 	name = "silver"
 	desc = "A precious metal known for being hated by oversized bats and dogs."
@@ -91,7 +91,7 @@
 		MATERIAL_ELECTRICAL = 9,
 		MATERIAL_THERMAL = 4,
 		MATERIAL_CHEMICAL = 4,
-		MATERIAL_VAMPIRES_BANE = 8,
+		MATERIAL_UNHOLY_BANE = 8,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	ore_type = /obj/item/stack/ore/silver
