@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - refactor: "Refactored blessing into an element/trait combo rather than an object"

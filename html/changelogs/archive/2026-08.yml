@@ -15,6 +15,8 @@
       that (the refactor, not the peanut butter...).'
   QuiteLiterallyAnything:
   - bugfix: Fixed Catwalk's upper atmospherics room being exposed to space by default.
+  SmArtKar:
+  - refactor: Refactored blessing into an element/trait combo rather than an object
   Thunder12345:
   - rscadd: The quantum console now tells bitrunners what grade they've reached on
       completed domains.
