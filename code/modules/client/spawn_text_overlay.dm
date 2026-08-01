@@ -12,8 +12,7 @@
 		job_title = mob.job
 
 	var/station_name = station_name()
-	var/area/A = get_area(mob)
-	var/area_name = A ? A.name : "Unknown Location"
+	var/area_name = get_area_name(mob, format_text = TRUE) || "Unknown Location"
 	var/time_date = server_timestamp(format = "YYYY-MM-DD hh:mm:ss", ic_time = TRUE)
 
 	var/text = {"
