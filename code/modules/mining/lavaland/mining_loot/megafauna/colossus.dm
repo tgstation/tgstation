@@ -20,8 +20,15 @@
 	to_chat(user, span_notice("You insert [src] into [robot]."))
 	var/datum/action/cooldown/spell/voice_of_god/voice = new
 	voice.Grant(robot)
-	qdel(src)
+	if(!user.dropItemToGround(src, TRUE, TRUE))
+		to_chat(user, span_notice("You are unable to drop [src]."))
+		return ITEM_INTERACT_BLOCKING
+	forceMove(robot)
+	RegisterSignal(robot, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(on_silicon_delete))
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/organ/vocal_cords/colossus/proc/on_silicon_delete()
+	forceMove(get_turf(loc))
 
 /datum/action/item_action/organ_action/colossus
 	name = "Voice of God"
