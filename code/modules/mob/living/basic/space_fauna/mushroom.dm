@@ -59,6 +59,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mushroom,
 		BB_TARGET_MINIMUM_STAT = DEAD,
+		BB_TARGET_MAXIMUM_STAT = STABLE,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

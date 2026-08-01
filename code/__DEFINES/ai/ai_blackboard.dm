@@ -131,6 +131,8 @@
 #define BB_OBSTACLE_TARGETING_WHITELIST "BB_targeting_whitelist"
 /// Key for the minimum status at which we want to target mobs (does not need to be specified if STABLE)
 #define BB_TARGET_MINIMUM_STAT "BB_target_minimum_stat"
+/// Key for the minimum status at which we want to target mobs (does not need to be specified if STABLE)
+#define BB_TARGET_MAXIMUM_STAT "BB_target_maximum_stat"
 /// If set, unconscious mobs will be treated as hard crit for the purposes of targeting and attacking. (So you can have a mob fooled by someone sleeping)
 #define BB_TREAT_UNCONSCIOUS_AS_HARDCRIT "BB_treat_unconscious_as_hardcrit"
 /// Flag for whether to target only wounded mobs
@@ -143,6 +145,9 @@
 
 /// whether we can have fuck
 #define BB_FUCKS "can we fuck?"
+
+/// Have we done our aggro sound yet?
+#define BB_AGGRO_SOUND "BB_aggro_sound"
 
 /// Minimum range to keep target within
 #define BB_RANGED_SKIRMISH_MIN_DISTANCE "BB_ranged_skirmish_min_distance"
@@ -296,3 +301,12 @@
 #define BB_BASIC_MOB_ENRAGE "BB_enraged"
 ///Previous melee cooldown
 #define BB_BASIC_MOB_PREVIOUS_MELEE_COOLDOWN "BB_previous_melee_cooldown"
+
+#define BB_ARCHVILE_REZ_MINIMUM_STAT "BB_archvile_rez_minimum_stat"
+#define BB_ARCHVILE_REZ "BB_archvile_rez"
+#define BB_ARCHVILE_REZ_TARGET "BB_archvile_rez_target"
+#define BB_ARCHVILE_REZ_HIDING_LOCATION "BB_archvile_rez_hiding_location"
+#define BB_ARCHVILE_FIRE "BB_archvile_fire"
+#define BB_STANDOFF_DISTANCE_MAX "BB_standoff_distance_max"
+#define BB_STANDOFF_DISTANCE_MIN "BB_standoff_distance_min"
+#define BB_ARCHVILE_REZ_STRATEGY "BB_archvile_rez_strategy"

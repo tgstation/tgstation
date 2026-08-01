@@ -89,7 +89,7 @@
 			drop_immediately = del_on_death,\
 		)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	add_traits(list(TRAIT_NO_TELEPORT), MEGAFAUNA_TRAIT)
+	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_NO_ARCHVILE_REVIVE), MEGAFAUNA_TRAIT)
 	grant_actions_by_list(attack_action_types)
 
 /mob/living/simple_animal/hostile/megafauna/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)

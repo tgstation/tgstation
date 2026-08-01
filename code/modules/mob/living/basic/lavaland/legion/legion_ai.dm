@@ -5,6 +5,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/legion,
 		BB_TARGET_PRIORITY_STRATEGY = /datum/target_priority_strategy/mining,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_TARGET_MAXIMUM_STAT = STABLE,
 		BB_AGGRO_RANGE = 5, // Unobservant
 		BB_RANGED_SKIRMISH_MIN_DISTANCE = 4,
 		BB_RANGED_SKIRMISH_MAX_DISTANCE = 6,
@@ -18,6 +19,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/legion,
 		BB_TARGET_PRIORITY_STRATEGY = /datum/target_priority_strategy/mining/low_node_priority,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_TARGET_MAXIMUM_STAT = STABLE,
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
 

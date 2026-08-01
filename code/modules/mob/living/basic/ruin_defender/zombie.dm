@@ -72,6 +72,7 @@
 	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/zombie.bt.json"
 	blackboard = list(
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_TARGET_MAXIMUM_STAT = STABLE,
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_SPEAK_LINES = list(
 			BB_EMOTE_HEAR = list("groans.", "moans.", "grunts."),

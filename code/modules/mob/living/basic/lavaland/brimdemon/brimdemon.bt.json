@@ -50,7 +50,7 @@
 													},
 													{
 														"type": "leaf",
-														"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability/brimbeam",
+														"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability/cardinal",
 														"vars": {
 															"ability_key": "BB_TARGETED_ACTION",
 															"target_key": "BB_CURRENT_TARGET",

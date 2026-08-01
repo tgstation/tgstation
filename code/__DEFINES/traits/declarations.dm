@@ -1689,4 +1689,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Turfs with this trait allow whispers to be projected over it when the whisperer is facing it
 #define TRAIT_TURF_PROJECTS_WHISPERS  "turf_projects_whispers"
 
+/// Mobs with this trait can't be revived by Archviles.
+#define TRAIT_NO_ARCHVILE_REVIVE "no_archvile_revive"
+
 // END TRAIT DEFINES

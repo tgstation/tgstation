@@ -13,6 +13,8 @@
 	var/custom_faction_check = FALSE
 	/// Blackboard key containing the minimum stat of a living mob to target
 	var/minimum_stat_key = BB_TARGET_MINIMUM_STAT
+	/// Blackboard key containing the maximum stat of a living mob to target
+	var/maximum_stat_key = BB_TARGET_MAXIMUM_STAT
 	/// If this blackboard key is TRUE, makes us only target wounded mobs
 	var/target_wounded_key
 
@@ -59,6 +61,8 @@
 				checked_stat = max(checked_stat, HARD_CRIT)
 
 			if(checked_stat > our_controller.blackboard[minimum_stat_key])
+				return FALSE
+			if(checked_stat < our_controller.blackboard[maximum_stat_key])
 				return FALSE
 			if(target_wounded_key && our_controller.blackboard[target_wounded_key] && living_target.health == living_target.maxHealth)
 				return FALSE

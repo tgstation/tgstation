@@ -2,6 +2,7 @@
 	behavior_tree_json = "code/modules/mob/living/basic/boss/thing/thing_boss.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/no_gutted_mobs,
+		BB_TARGET_MAXIMUM_STAT = STABLE,
 		BB_TARGET_MINIMUM_STAT = DEAD, // Will attack dead ungutted mobs
 		BB_THETHING_MELEEMODE = TRUE, //Whether we are using our melee abilities right now
 		BB_THETHING_NOAOE = TRUE, // Restricts us to only melee abilities

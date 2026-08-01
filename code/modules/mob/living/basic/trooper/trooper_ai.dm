@@ -3,6 +3,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_TARGET_MAXIMUM_STAT = STABLE,
 		BB_REINFORCEMENTS_SAY = "411 in progress, requesting backup!"
 	)
 
@@ -12,6 +13,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_TARGET_MAXIMUM_STAT = STABLE,
 		BB_REINFORCEMENTS_SAY = "411 in progress, requesting backup!",
 		BB_CALLS_REINFORCEMENTS = TRUE,
 	)
@@ -21,6 +23,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_TARGET_MAXIMUM_STAT = STABLE,
 		BB_REINFORCEMENTS_SAY = "411 in progress, requesting backup!",
 		BB_CALLS_REINFORCEMENTS = TRUE
 	)
@@ -34,6 +37,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_TARGET_MAXIMUM_STAT = STABLE,
 		BB_REINFORCEMENTS_SAY = "411 in progress, requesting backup!",
 		BB_RANGED_SKIRMISH_MIN_DISTANCE = 3,
 		BB_RANGED_SKIRMISH_MAX_DISTANCE = 4
@@ -46,6 +50,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_TARGET_MAXIMUM_STAT = STABLE,
 		BB_REINFORCEMENTS_SAY = "411 in progress, requesting backup!",
 		BB_RANGED_SKIRMISH_MIN_DISTANCE = 2,
 		BB_RANGED_SKIRMISH_MAX_DISTANCE = 3
@@ -57,6 +62,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_TARGET_MAXIMUM_STAT = STABLE,
 		BB_REINFORCEMENTS_SAY = "411 in progress, requesting backup!",
 		BB_CALLS_REINFORCEMENTS = TRUE
 	)
@@ -66,6 +72,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_TARGET_MAXIMUM_STAT = STABLE,
 		BB_REINFORCEMENTS_SAY = "411 in progress, requesting backup!",
 		BB_RANGED_SKIRMISH_MIN_DISTANCE = 2,
 		BB_RANGED_SKIRMISH_MAX_DISTANCE = 3

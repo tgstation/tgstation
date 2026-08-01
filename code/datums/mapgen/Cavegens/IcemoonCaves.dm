@@ -10,6 +10,7 @@
 		/mob/living/basic/mining/legion/snow = 50,
 		/mob/living/basic/mining/lobstrosity = 15,
 		/mob/living/basic/mining/wolf = 50,
+		/mob/living/basic/mining/archvile = 5,
 		/obj/effect/spawner/random/lavaland_mob/raptor = 15,
 		/mob/living/basic/mining/polarbear = 30,
 		/obj/structure/spawner/ice_moon = 3,
@@ -88,6 +89,7 @@
 		/mob/living/basic/mining/ice_demon = 100,
 		/mob/living/basic/mining/ice_whelp = 60,
 		/mob/living/basic/mining/legion/snow = 100,
+		/mob/living/basic/mining/archvile = 5,
 		/obj/effect/spawner/random/lavaland_mob/raptor = 25,
 
 		/obj/structure/spawner/ice_moon/demonic_portal = 6,

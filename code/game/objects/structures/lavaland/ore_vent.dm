@@ -682,6 +682,7 @@
 		/mob/living/basic/mining/legion/snow/spawner_made,
 		/mob/living/basic/mining/wolf,
 		/mob/living/basic/mining/polarbear,
+		/mob/living/basic/mining/archvile,
 	)
 	ore_vent_options = list(
 		SMALL_VENT_TYPE,
@@ -695,6 +696,7 @@
 		/mob/living/basic/mining/ice_demon,
 		/mob/living/basic/mining/wolf,
 		/mob/living/basic/mining/polarbear,
+		/mob/living/basic/mining/archvile,
 	)
 	ore_vent_options = list(
 		SMALL_VENT_TYPE = 3,

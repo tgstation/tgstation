@@ -53,6 +53,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = DEAD,
+		BB_TARGET_MAXIMUM_STAT = STABLE,
 		BB_AGGRO_RANGE = 2,
 	)
 	ai_movement = /datum/ai_movement/jps/bot
