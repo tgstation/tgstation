@@ -295,5 +295,8 @@
 ///sent to radio TTS sounds when the volume preference is changed and applied
 #define COMSIG_MOB_TTS_RADIO_VOLUME_PREFERENCE_APPLIED "tts_radio_volume_preference_applied"
 
+/// Sent when a mob's name is fullyrenamed (oldname(can be null), newname)
+#define COMSIG_MOB_FULLY_RENAMED "mob_fully_renamed"
+
 ///from base of [/datum/component/multiple_lives/proc/respawn]: (mob/respawned_mob, gibbed, lives_left)
 #define COMSIG_ON_MULTIPLE_LIVES_RESPAWN "on_multiple_lives_respawn"

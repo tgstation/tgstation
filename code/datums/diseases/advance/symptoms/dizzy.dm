@@ -18,8 +18,7 @@
 	level = 4
 	severity = 2
 	base_message_chance = 50
-	symptom_delay_min = 15
-	symptom_delay_max = 30
+	symptom_delay = 22.5
 	symptom_cure = /datum/reagent/medicine/haloperidol
 	cure_color = "yellow"
 	threshold_descs = list(

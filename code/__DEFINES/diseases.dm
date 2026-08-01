@@ -110,7 +110,9 @@ DEFINE_BITFIELD(spread_flags, list(
 /// Symptom Offset Duration - number of cycles over which sleeping/having spaceacillin or a slowdown effect can prevent symptoms appearing
 //// Set to maximum # of cycles you want to be able to offset symptoms. Scales down linearly over time.
 #define DISEASE_SYMPTOM_OFFSET_DURATION 200
-
 /// Symptom Frequency Modifier
 //// Raise to make symptoms fire less frequently, lower to make them fire more frequently. Keep at 0 or above.
 #define DISEASE_SYMPTOM_FREQUENCY_MODIFIER 1
+/// Symptom Immunity Recovery Bonus
+/// Raise to make recovering from similar diseases more harshly affect future similar ones (like smallpox and cowpox)
+#define DISEASE_SYMPTOM_IMMUNITY_RECOVERY_BONUS 1.5

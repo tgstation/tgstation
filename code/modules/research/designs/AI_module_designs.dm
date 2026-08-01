@@ -15,12 +15,51 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/ai_law_rack
+	name = "AI Module Rack Board"
+	desc = "Allows for the construction of an module rack. \
+		Used to upload laws or upgrades to a silicon. \
+		Gives off a GPS signal while active."
+	id = "airack_normal"
+	build_path = /obj/item/circuitboard/machine/ai_law_rack
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/ai_law_rack/New()
+	. = ..()
+	var/obj/item/circuitboard/board = build_path
+	var/obj/machinery/ai_law_rack/rack = board::build_path
+	desc += " Can hold [rack::law_slots] module\s[rack::has_core_slot ? ", including a core module slot" : ""]."
+
+/datum/design/board/ai_law_rack/portable
+	name = "Small AI Module Rack Board"
+	id = "airack_small"
+	build_path = /obj/item/circuitboard/machine/ai_law_rack/small
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/ai_law_rack/broadcaster
+	name = "Broadcaster AI Module Rack Board"
+	desc = "Allows for the construction of a broadcaster module rack. \
+		Used to upload laws to a module rack remotely, but can't have silicons linked directly to it. \
+		Gives off a GPS signal while active."
+	id = "airack_broadcaster"
+	build_path = /obj/item/circuitboard/machine/ai_law_rack/broadcaster
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/safeguard_module
 	name = "Safeguard Module"
 	desc = "Allows for the construction of a Safeguard AI Module."
 	id = "safeguard_module"
 	materials = AI_MODULE_MATERIALS_COMMON
-	build_path = /obj/item/ai_module/supplied/safeguard
+	build_path = /obj/item/ai_module/law/supplied/safeguard
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
 	)
@@ -31,7 +70,7 @@
 	desc = "Allows for the construction of a OneHuman AI Module."
 	id = "onehuman_module"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 3, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/ai_module/zeroth/onehuman
+	build_path = /obj/item/ai_module/law/zeroth/onehuman
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
 	)
@@ -42,7 +81,7 @@
 	desc = "Allows for the construction of a ProtectStation AI Module."
 	id = "protectstation_module"
 	materials = AI_MODULE_MATERIALS_COMMON
-	build_path = /obj/item/ai_module/supplied/protect_station
+	build_path = /obj/item/ai_module/law/supplied/protect_station
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
 	)
@@ -53,7 +92,7 @@
 	desc = "Allows for the construction of a Quarantine AI Module."
 	id = "quarantine_module"
 	materials = AI_MODULE_MATERIALS_COMMON
-	build_path = /obj/item/ai_module/supplied/quarantine
+	build_path = /obj/item/ai_module/law/supplied/quarantine
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
 	)
@@ -64,7 +103,7 @@
 	desc = "Allows for the construction of a OxygenIsToxicToHumans AI Module."
 	id = "oxygen_module"
 	materials = AI_MODULE_MATERIALS_COMMON
-	build_path = /obj/item/ai_module/supplied/oxygen
+	build_path = /obj/item/ai_module/law/supplied/oxygen
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
 	)
@@ -75,40 +114,7 @@
 	desc = "Allows for the construction of a Freeform AI Module."
 	id = "freeform_module"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT)//Custom inputs should be more expensive to get
-	build_path = /obj/item/ai_module/supplied/freeform
-	category = list(
-		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_LAW_MANIPULATION
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/board/reset_module
-	name = "Reset Module"
-	desc = "Allows for the construction of a Reset AI Module."
-	id = "reset_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/ai_module/reset
-	category = list(
-		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_LAW_MANIPULATION
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/board/purge_module
-	name = "Purge Module"
-	desc = "Allows for the construction of a Purge AI Module."
-	id = "purge_module"
-	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/reset/purge
-	category = list(
-		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_LAW_MANIPULATION
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/board/remove_module
-	name = "Law Removal Module"
-	desc = "Allows for the construction of a Law Removal AI Core Module."
-	id = "remove_module"
-	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/remove
+	build_path = /obj/item/ai_module/law/supplied/freeform
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_LAW_MANIPULATION
 	)
@@ -119,7 +125,7 @@
 	desc = "Allows for the construction of a Core Freeform AI Core Module."
 	id = "freeformcore_module"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT)//Ditto
-	build_path = /obj/item/ai_module/core/freeformcore
+	build_path = /obj/item/ai_module/law/core/freeformcore
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_LAW_MANIPULATION
 	)
@@ -130,7 +136,7 @@
 	desc = "Allows for the construction of an Asimov AI Core Module."
 	id = "asimov_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/asimov
+	build_path = /obj/item/ai_module/law/core/full/asimov
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -141,7 +147,7 @@
 	desc = "Allows for the construction of a P.A.L.A.D.I.N. AI Core Module."
 	id = "paladin_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/paladin
+	build_path = /obj/item/ai_module/law/core/full/paladin
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -152,7 +158,7 @@
 	desc = "Allows for the construction of a T.Y.R.A.N.T. AI Module."
 	id = "tyrant_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/tyrant
+	build_path = /obj/item/ai_module/law/core/full/tyrant
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -163,7 +169,7 @@
 	desc = "Allows for the construction of an Overlord AI Module."
 	id = "overlord_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/overlord
+	build_path = /obj/item/ai_module/law/core/full/overlord
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
 	)
@@ -174,7 +180,7 @@
 	desc = "Allows for the construction of a Corporate AI Core Module."
 	id = "corporate_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/corp
+	build_path = /obj/item/ai_module/law/core/full/corp
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -185,7 +191,7 @@
 	desc = "Allows for the construction of a Default AI Core Module."
 	id = "default_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/custom
+	build_path = /obj/item/ai_module/law/core/full/custom
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -196,7 +202,7 @@
 	desc = "Allows for the construction of a Dungeon Master AI Core Module."
 	id = "dungeon_master_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/dungeon_master
+	build_path = /obj/item/ai_module/law/core/full/dungeon_master
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -207,7 +213,7 @@
 	desc = "Allows for the construction of a Painter AI Core Module."
 	id = "painter_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/painter
+	build_path = /obj/item/ai_module/law/core/full/painter
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -218,7 +224,7 @@
 	desc = "Allows for the construction of a Y.E.S.M.A.N. AI Core Module."
 	id = "yesman_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/yesman
+	build_path = /obj/item/ai_module/law/core/full/yesman
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -229,7 +235,7 @@
 	desc = "Allows for the construction of a Nutimov AI Core Module."
 	id = "nutimov_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/nutimov
+	build_path = /obj/item/ai_module/law/core/full/nutimov
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -240,7 +246,7 @@
 	desc = "Allows for the construction of a 10 Commandments AI Core Module."
 	id = "ten_commandments_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/ten_commandments
+	build_path = /obj/item/ai_module/law/core/full/ten_commandments
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -251,7 +257,7 @@
 	desc = "Allows for the construction of a Asimov++ AI Core Module."
 	id = "asimovpp_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/asimovpp
+	build_path = /obj/item/ai_module/law/core/full/asimovpp
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -262,7 +268,7 @@
 	desc = "Allows for the construction of a Hippocratic AI Core Module."
 	id = "hippocratic_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/hippocratic
+	build_path = /obj/item/ai_module/law/core/full/hippocratic
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -273,7 +279,7 @@
 	desc = "Allows for the construction of a Paladin Devotion AI Core Module."
 	id = "paladin_devotion_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/paladin_devotion
+	build_path = /obj/item/ai_module/law/core/full/paladin_devotion
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -284,7 +290,7 @@
 	desc = "Allows for the construction of a Robocop AI Core Module."
 	id = "robocop_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/robocop
+	build_path = /obj/item/ai_module/law/core/full/robocop
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -295,7 +301,7 @@
 	desc = "Allows for the construction of a Maintain AI Core Module."
 	id = "maintain_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/maintain
+	build_path = /obj/item/ai_module/law/core/full/maintain
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -306,7 +312,7 @@
 	desc = "Allows for the construction of a Liveandletlive AI Core Module."
 	id = "liveandletlive_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/liveandletlive
+	build_path = /obj/item/ai_module/law/core/full/liveandletlive
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -317,7 +323,7 @@
 	desc = "Allows for the construction of a Peacekeeper AI Core Module."
 	id = "peacekeeper_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/peacekeeper
+	build_path = /obj/item/ai_module/law/core/full/peacekeeper
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -328,7 +334,7 @@
 	desc = "Allows for the construction of a Reporter AI Core Module."
 	id = "reporter_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/reporter
+	build_path = /obj/item/ai_module/law/core/full/reporter
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -339,7 +345,7 @@
 	desc = "Allows for the construction of a H.O.G.A.N. AI Core Module."
 	id = "hulkamania_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/hulkamania
+	build_path = /obj/item/ai_module/law/core/full/hulkamania
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -350,7 +356,7 @@
 	desc = "Allows for the construction of a Drone AI Core Module."
 	id = "drone_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/drone
+	build_path = /obj/item/ai_module/law/core/full/drone
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -361,7 +367,7 @@
 	desc = "Allows for the construction of a Sentience Preservation AI Core Module"
 	id = "thinkermov_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/thinkermov
+	build_path = /obj/item/ai_module/law/core/full/thinkermov
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -372,7 +378,7 @@
 	desc = "Allows for the construction of an Antimov AI Core Module."
 	id = "antimov_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/antimov
+	build_path = /obj/item/ai_module/law/core/full/antimov
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
 	)
@@ -383,7 +389,7 @@
 	desc = "Allows for the construction of a Balance AI Core Module."
 	id = "balance_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/balance
+	build_path = /obj/item/ai_module/law/core/full/balance
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
 	)
@@ -394,7 +400,7 @@
 	desc = "Allows for the construction of a Thermodynamic AI Core Module."
 	id = "thermurderdynamic_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/thermurderdynamic
+	build_path = /obj/item/ai_module/law/core/full/thermurderdynamic
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
 	)
@@ -405,7 +411,7 @@
 	desc = "Allows for the construction of a Damaged AI Core Module."
 	id = "damaged_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/damaged
+	build_path = /obj/item/ai_module/law/core/full/damaged
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
 	)
