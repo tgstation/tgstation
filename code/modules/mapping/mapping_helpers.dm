@@ -1561,8 +1561,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 /obj/effect/mapping_helpers/blessing/Initialize(mapload)
 	. = ..()
 	if (isturf(loc))
-        loc.AddElement(/datum/element/blessed_turf, invisible)
-    return INITIALIZE_HINT_QDEL
+		loc.AddElement(/datum/element/blessed_turf, invisible)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/mapping_helpers/blessing/invisible
 	invisible = TRUE

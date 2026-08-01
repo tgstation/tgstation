@@ -1,7 +1,6 @@
 #define BLESSING_APPEARANCE_KEY "blessing"
 /// Attached to blessed turfs, prevents jaunting, revenant movement and cult teleportation
 /datum/element/blessed_turf
-	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 
 /datum/element/blessed_turf/Attach(datum/target, invisible = FALSE)
 	. = ..()
