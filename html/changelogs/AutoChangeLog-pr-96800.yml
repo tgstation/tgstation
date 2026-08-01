@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "Roughly doubled the performance speed of the crafting UI, report anything broken with it"

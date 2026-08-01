@@ -1,6 +1,6 @@
 /datum/mutation/antenna
 	name = "Antenna"
-	desc = "The affected person sprouts an antenna. This is known to allow them to access common radio channels passively."
+	desc = "The subject sprouts an antenna, which is known to allow them to access common radio channels without any external devices."
 	quality = POSITIVE
 	text_gain_indication = span_notice("You feel an antenna sprout from your forehead.")
 	text_lose_indication = span_notice("Your antenna shrinks back down.")
@@ -37,7 +37,7 @@
 
 /datum/mutation/mindreader
 	name = "Mind Reader"
-	desc = "The affected person can look into the recent memories of others."
+	desc = "The subject can look into the recent memories of others."
 	quality = POSITIVE
 	text_gain_indication = span_notice("You hear distant voices at the corners of your mind.")
 	text_lose_indication = span_notice("The distant voices fade.")
@@ -144,7 +144,7 @@
 	INVOKE_ASYNC(src, PROC_REF(read_mind), examiner, examining)
 
 /datum/action/cooldown/spell/pointed/mindread/proc/read_mind(mob/living/examiner, mob/living/examined)
-	if(examined.stat >= UNCONSCIOUS || isnull(examined.mind) || (examined.mob_biotypes & MOB_ROBOTIC))
+	if(IS_UNCONSCIOUS(examined) || isnull(examined.mind) || (examined.mob_biotypes & MOB_ROBOTIC))
 		return
 
 	var/antimagic = examined.can_block_magic(antimagic_flags, charge_cost = 0)

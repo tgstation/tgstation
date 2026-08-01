@@ -99,7 +99,7 @@
 	if((no_ticking_condition || is_polled) && child_active)
 		child_ticked = TRUE
 		result = child.tick(controller, seconds_per_tick)
-	else if(check_condition(controller) == invert)
+	else if(!!check_condition(controller) == invert)
 		result = BT_FAILURE
 	else
 		child_ticked = TRUE
@@ -125,7 +125,6 @@
 
 /**
  * Override to implement custom condition logic.
- * Return TRUE to allow child.tick() to proceed, FALSE to return BT_FAILURE immediately.
  */
 /datum/bt_node/decorator/proc/check_condition(datum/ai_controller/controller)
 	return TRUE
@@ -135,7 +134,7 @@
  * Return TRUE if the decorator's condition would pass, FALSE otherwise.
  */
 /datum/bt_node/decorator/proc/evaluate_for_observer(datum/ai_controller/controller)
-	return check_condition(controller) != invert
+	return !!check_condition(controller) != invert
 
 /**
  * Called by the controller's observer handler when a watched blackboard key changes.

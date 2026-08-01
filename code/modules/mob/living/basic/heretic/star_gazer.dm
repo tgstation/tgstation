@@ -364,7 +364,7 @@
 				if(victim == our_master?.resolve())
 					continue
 				var/mob/living/living_victim = victim
-				if(living_victim.stat > CONSCIOUS)
+				if(living_victim.stat != STABLE)
 					playsound(living_victim, 'sound/effects/supermatter.ogg', 80, TRUE)
 					living_victim.visible_message(
 						span_danger("You see [living_victim] engulfed in the scorching wrath of the cosmos. \

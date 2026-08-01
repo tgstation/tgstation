@@ -83,6 +83,9 @@
 	else
 		new /obj/item/stack/sheet/bone(src)
 
+/turf/open/misc/asteroid/basalt/wasteland/station
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+
 //***Oil well puddles.
 /obj/structure/sink/oil_well //You're not going to enjoy bathing in this...
 	name = "oil well"

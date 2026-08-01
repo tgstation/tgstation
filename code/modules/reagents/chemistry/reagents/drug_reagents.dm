@@ -849,7 +849,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	kronkaine_fiend.remove_actionspeed_modifier(/datum/actionspeed_modifier/kronkaine)
 	kronkaine_fiend.sound_environment_override = NONE
 	//Stop the rapid heartneats, we make sure we are not in crit as to not mess with the heartbeats from organ/heart.
-	if(!kronkaine_fiend.stat)
+	if(!IS_UNCONSCIOUS_OR_CRIT(kronkaine_fiend))
 		kronkaine_fiend.stop_sound_channel(CHANNEL_HEARTBEAT)
 
 /datum/reagent/drug/kronkaine/expose_mob(mob/living/carbon/druggo, methods, trans_volume, show_message, touch_protection)

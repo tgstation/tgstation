@@ -35,17 +35,21 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/statue/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/structure/statue/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
-			return FALSE
-		user.balloon_alert(user, "slicing apart...")
-		if(W.use_tool(src, user, 40, volume=50))
-			deconstruct(TRUE)
-		return
 	return ..()
 
+/obj/structure/statue/welder_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	if(!tool.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
+		return ITEM_INTERACT_BLOCKING
+
+	user.balloon_alert(user, "slicing apart...")
+	if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/statue/atom_deconstruct(disassembled = TRUE)
 	var/amount_mod = disassembled ? 0 : -2
@@ -371,6 +375,10 @@ Moving interrupts
 		prepared_block.set_target(interacting_with, user)
 		return ITEM_INTERACT_SUCCESS
 
+	else if(istype(interacting_with, /turf/open/floor/concrete))
+		var/turf/open/floor/concrete/concrete_floor = interacting_with
+		return concrete_floor.handle_shape(user)
+
 	return NONE
 
 // We aim at something distant.
@@ -394,7 +402,7 @@ Moving interrupts
 
 	var/datum/progressbar/total_progress_bar = new(user, sculpting_time, prepared_block)
 	while(remaining_time > 0 && !interrupted)
-		if(do_after(user, sculpting_period, target = prepared_block, progress = FALSE))
+		if(do_after(user, sculpting_period, target = prepared_block, show_progress = FALSE))
 			var/time_delay = !(remaining_time % SCULPT_SOUND_INCREMENT)
 			if(time_delay)
 				playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)

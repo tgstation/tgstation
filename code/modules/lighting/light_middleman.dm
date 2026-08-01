@@ -10,6 +10,7 @@
 	/// Holds the primary light source
 	var/obj/effect/abstract/light_middleman/primary_intercept
 	/// Exists to hold the cone so children can modify it if they want
+	/// Only created if our parent uses directional lighting
 	var/obj/effect/abstract/light_middleman/cone_intercept
 	/// Are we overriding the light already?
 	var/overriding = FALSE
@@ -24,12 +25,14 @@
 		stack_trace("Warning, becuase overlay lights are basically never used on turfs, since they don't move,\
 			vis contents replacement has not yet been implemented for them (see changeturf for why this is needed)!")
 	src.parent = parent
-	primary_intercept = new()
-	cone_intercept = new()
 	var/static/uuid = 0
 	uuid = WRAP_UID(uuid + 1)
+	primary_intercept = new()
 	primary_intercept.render_target = "*[unique_string]_[uuid]_target"
-	cone_intercept.render_target = "[primary_intercept.render_target]_cone" // made to mirror how overlay lights work
+	// Cone is only needed for directional lights
+	if (IS_OVERLAY_CONE_LIGHT_SYSTEM(parent.light_system))
+		cone_intercept = new()
+		cone_intercept.render_target = "[primary_intercept.render_target]_cone" // made to mirror how overlay lights work
 
 /datum/light_middleman/Destroy(force)
 	stop_overriding_light()
@@ -74,34 +77,38 @@
 	// how we make sure we're in the client's view
 	light_holder.vis_contents += primary_intercept
 	// Avoids unneeded effects clientside
-	if(IS_OVERLAY_CONE_LIGHT_SYSTEM(parent.light_system))
+	if(!isnull(cone_intercept))
 		light_holder.vis_contents += cone_intercept
 
 	old_holder = WEAKREF(light_holder)
 
 	var/old_target = primary_intercept.render_target
-	var/old_cone_target = cone_intercept.render_target
 	// This will halt any animations we have ongoing so if you care about that you've gotta react to it properly
 	primary_intercept.appearance = visible_mask
-	cone_intercept.appearance = cone
 	// set ourselves up to render back onto the visible mask
 	primary_intercept.render_source = ""
 	primary_intercept.render_target = old_target
-	cone_intercept.render_source = ""
-	cone_intercept.render_target = old_cone_target
 	// Dir is important I'm told
 	primary_intercept.vis_flags |= VIS_INHERIT_DIR
-	cone_intercept.vis_flags |= VIS_INHERIT_DIR
 	// Will double apply, here we go gang
 	primary_intercept.transform = null
-	cone_intercept.transform = null
 	primary_intercept.color = null
-	cone_intercept.color = null
 	primary_intercept.alpha = 255
-	cone_intercept.alpha = 255
 	// Sometimes can be BLEND_SUBTRACT, we don't want that
 	primary_intercept.blend_mode = BLEND_ADD
-	cone_intercept.blend_mode = BLEND_ADD
+
+	// Same stuff as above for cone intercept if we are a directional system
+	if (!isnull(cone_intercept))
+		var/old_cone_target = cone_intercept.render_target
+		cone_intercept.appearance = cone
+		cone_intercept.render_source = ""
+		cone_intercept.render_target = old_cone_target
+		cone_intercept.vis_flags |= VIS_INHERIT_DIR
+		cone_intercept.transform = null
+		cone_intercept.color = null
+		cone_intercept.alpha = 255
+		cone_intercept.blend_mode = BLEND_ADD
+
 	/// Allows users to hook into a refresh so they can remake their modifications to our intercepts
 	SEND_SIGNAL(src, COMSIG_LIGHT_MIDDLEMAN_UPDATED)
 
@@ -146,6 +153,9 @@
 		animate(alpha = 235, time = first_time[2])
 		animate(alpha = 255, time = first_time[3], easing = CUBIC_EASING|EASE_OUT)
 		animate(alpha = 255, time = first_time[4])
+
+	if (isnull(cone_light))
+		return
 
 	// I'd really love to do both these in the same loop but parallel animations are the devil from the bible
 	// I don't think any of these are directional but just in case
