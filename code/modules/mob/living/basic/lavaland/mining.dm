@@ -98,7 +98,7 @@
 			if(pain_stun)
 				Shake(2, 0, pain_stun, pain_stun * 0.5)
 				Stun(pain_stun)
-	if(!isashwalker(attacker) || !has_faction(FACTION_ASHWALKER))
+	if(!has_faction(FACTION_ASHWALKER) || !astype(attacker, /mob/living)?.has_faction(FACTION_ASHWALKER))
 		return
 	remove_faction(FACTION_ASHWALKER)
 
