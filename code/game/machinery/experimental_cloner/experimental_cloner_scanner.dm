@@ -31,6 +31,10 @@
 	. = ..()
 	soundloop = new (src)
 
+/obj/machinery/experimental_cloner_scanner/Destroy(force)
+	QDEL_NULL(soundloop)
+	return ..()
+
 /// Scan the occupant, eventually producing a [/datum/experimental_cloning_record]. Returns FALSE if unsuccessful.
 /obj/machinery/experimental_cloner_scanner/proc/start_scan()
 	if (machine_stat & BROKEN || machine_stat & NOPOWER || isnull(occupant))
