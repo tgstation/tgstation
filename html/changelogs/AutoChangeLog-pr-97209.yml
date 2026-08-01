@@ -1,4 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes:
-  - rscadd: "The quantum console now tells bitrunners what grade they've reached on completed domains."
