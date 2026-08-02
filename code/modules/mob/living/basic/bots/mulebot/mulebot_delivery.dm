@@ -154,4 +154,4 @@
 
 	animate(pickup, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 0.3 SECONDS, transform = animation_matrix, easing = CUBIC_EASING)
 	animate(animated_load, alpha = 0, transform = matrix().Scale(0.7), time = 0.1 SECONDS)
-	animate(src, time = 0.1 SECONDS, pixel_y = 2, delay = 0.1 SECONDS, easing = QUAD_EASING)
+	animate(src, time = 0.1 SECONDS, pixel_y = 0, delay = 0.1 SECONDS, easing = QUAD_EASING)
