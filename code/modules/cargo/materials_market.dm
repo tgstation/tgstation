@@ -385,9 +385,9 @@
 	visible_message(span_warning("\The [src] becomes liquid!"))
 	fluid = TRUE
 
-/// Updates the value of the stock block, for examine, and for sale value.
+/// Updates the value of the stock block, for examine, and for sale value. Export value becomes equal to the stock market value of that material.
 /obj/item/stock_block/proc/update_value()
-	export_value = SSstock_market.materials_prices[custom_materials[1]]
+	export_value = SSstock_market.materials_prices[src.custom_materials[1].type]
 	return export_value
 
 #undef MAX_STACK_LIMIT
