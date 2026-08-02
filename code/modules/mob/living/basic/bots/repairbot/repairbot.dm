@@ -99,10 +99,12 @@
 	toolbox_color = new_color
 	update_appearance()
 
-/mob/living/basic/bot/repairbot/attackby(obj/item/potential_stack, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
-	if(!istype(potential_stack, /obj/item/stack))
+/mob/living/basic/bot/repairbot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack))
 		return ..()
-	attempt_merge(potential_stack, user)
+
+	attempt_merge(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/basic/bot/repairbot/proc/attempt_merge(obj/item/stack/potential_stack, mob/living/user)
 	var/static/list/our_contents = list(/obj/item/stack/sheet/iron, /obj/item/stack/sheet/glass, /obj/item/stack/tile, /obj/item/stack/rods)

@@ -62,6 +62,8 @@
 
 /// From /obj/item/bodypart/proc/update_limb(): (dropping_limb, is_creating)
 #define COMSIG_BODYPART_UPDATED "bodypart_updated"
+/// Also from /obj/item/bodypart/proc/update_limb(), sent to the mob: (dropping_limb, is_creating)
+#define COMSIG_CARBON_BODYPART_UPDATED "carbon_bodypart_updated"
 /// From /datum/component/butchering/create_replacement_limb(): (replacement limb)
 #define COMSIG_BODYPART_BUTCHERED "bodypart_butchered"
 

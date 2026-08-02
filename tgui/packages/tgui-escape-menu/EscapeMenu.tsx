@@ -8,6 +8,7 @@ import { HomePage } from './pages/HomePage';
 import { LeaveBodyPage } from './pages/LeaveBodyPage';
 import { PlayersPage } from './pages/PlayersPage';
 import { QuitPage } from './pages/QuitPage';
+import { updateScaling } from './scaling';
 
 type Page = 'home' | 'admin' | 'players' | 'leave_body' | 'quit';
 
@@ -25,6 +26,7 @@ export type ServerState = {
   stationName: string;
   roundId: string;
   mapName: string;
+  mapFeedbackLink: string | null;
   serverTime: string;
   shiftTime: string;
   timeDilation: string;
@@ -96,6 +98,7 @@ export function isResizeFrozen() {
 function openMenu(dispatch: React.Dispatch<Action>) {
   setTimeout(() => {
     resizeFrozen = false;
+    updateScaling();
   }, 100);
   playOpenSounds();
   sendAction('opened');
@@ -202,7 +205,19 @@ function Details({ serverState }: { serverState: ServerState }) {
       <div>Round ID: {serverState.roundId || 'Unset'}</div>
       <div>Server Time: {serverState.serverTime}</div>
       <div>Shift Time: {serverState.shiftTime}</div>
-      <div>Map: {serverState.mapName || 'Loading...'}</div>
+      <div>
+        Map:{' '}
+        {serverState.mapFeedbackLink ? (
+          <span
+            className="escape-menu__details-link"
+            onClick={() => Byond.command(`.url ${serverState.mapFeedbackLink}`)}
+          >
+            {serverState.mapName || 'Loading...'}
+          </span>
+        ) : (
+          serverState.mapName || 'Loading...'
+        )}
+      </div>
       <div>Time Dilation: {serverState.timeDilation}%</div>
     </div>
   );
