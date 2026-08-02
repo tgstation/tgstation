@@ -25,3 +25,7 @@
       or ethereal).
   - bugfix: the experimental cloner now spits flavor and policy text (if there is
       any) when spawning
+2026-08-02:
+  Ghommie:
+  - bugfix: Felinids (and nightmares) can once again use more complex objects, unlike
+      monkeys.
