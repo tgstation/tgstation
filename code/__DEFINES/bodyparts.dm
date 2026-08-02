@@ -37,13 +37,13 @@
 #define AUGGED_LIMB_EMP_PARALYZE_TIME 3 SECONDS
 
 /// When hit by an EMP, the time an augged leg will be knocked down for.
-#define AUGGED_LEG_EMP_KNOCKDOWN_TIME 3 SECONDS
+#define AUGGED_LEG_EMP_KNOCKDOWN_TIME 5 SECONDS
 /// When hit by an EMP, the time a augged chest will cause a hardstun for if its above the damage threshold.
 #define AUGGED_CHEST_EMP_STUN_TIME 3 SECONDS
-/// When hit by an EMP, the time an augged chest will cause the mob to shake() for.
-#define AUGGED_CHEST_EMP_SHAKE_TIME 5 SECONDS
+/// When hit by an EMP, the time an augged chest will cause the mob to jitter for.
+#define AUGGED_CHEST_EMP_SHAKE_TIME 6 SECONDS
 /// When hit by an EMP, the time an augged head will make vision fucky for.
-#define AUGGED_HEAD_EMP_GLITCH_DURATION 6 SECONDS
+#define AUGGED_HEAD_EMP_GLITCH_DURATION 3.5 SECONDS
 
 // Color priorities for bodyparts
 /// Abductor team recoloring priority

@@ -165,7 +165,8 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 		"serverTime" = current_server_time(), // BANDASTATION EDIT: Escape menu
 		"shiftTime" = (SSticker.round_start_time == 0) ? "Pre-Game" : round_timestamp(),
 		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
-		"mapName" = SSmapping.current_map?.return_map_name(webmap_included = TRUE) || "Loading...",
+		"mapName" = SSmapping.current_map?.map_name || "Loading...",
+		"mapFeedbackLink" = SSmapping.current_map?.feedback_link,
 		"canLeaveBody" = isliving(client?.mob),
 		"canSeeNotes" = CONFIG_GET(flag/see_own_notes),
 		"admins" = build_admin_list(),

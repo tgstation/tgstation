@@ -24,12 +24,24 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	action_to_add = /datum/action/cooldown/spell/touch/mansus_grasp
 	cost = 0
 	is_starting_knowledge = TRUE
+	max_charges = 8
+	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.125
+	transmute_text = "Поглощение влияний и завершение жертвоприношений перезаряжает заклинание."
 
 // Heretics can enhance their fishing rods to fish better - fishing content.
 // Lasts until successfully fishing something up.
 /datum/heretic_knowledge/spell/basic/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	..()
+	. = ..()
 	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
+	RegisterSignal(our_heretic, COMSIG_HERETIC_INFLUENCE_DRAINED, PROC_REF(on_influence_tap))
+	RegisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE, PROC_REF(on_sacrifice))
+
+/datum/heretic_knowledge/spell/basic/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST)
+	UnregisterSignal(our_heretic, COMSIG_HERETIC_INFLUENCE_DRAINED)
+	UnregisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE)
 
 /datum/heretic_knowledge/spell/basic/proc/on_grasp_cast(mob/living/carbon/cast_on, datum/action/cooldown/spell/touch/touch_spell)
 	SIGNAL_HANDLER
@@ -58,6 +70,14 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		REMOVE_TRAIT(item, TRAIT_ROD_MANSUS_INFUSED, REF(item))
 		item.difficulty_modifier += 20
 
+/datum/heretic_knowledge/spell/basic/proc/on_influence_tap(...)
+	SIGNAL_HANDLER
+	add_charges(max_charges)
+
+/datum/heretic_knowledge/spell/basic/proc/on_sacrifice(...)
+	SIGNAL_HANDLER
+	add_charges(max_charges)
+
 /**
  * The Living Heart heretic knowledge.
  *
@@ -66,10 +86,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/living_heart
 	name = "Живое сердце"
-	desc = "Дарует вам «Живое сердце», позволяющее отслеживать жертвенные цели. \
-		Если вы потеряете сердце, вы можете трансмутировать мак и лужу крови, \
-		чтобы пробудить свое сердце в Живое сердце. Если ваше сердце кибернетическое, \
-		вы не сможете возродить его."
+	desc = "Дарует вам «Живое сердце», позволяющее отслеживать жертвенные цели."
+	transmute_text = "Если вы потеряете сердце, трансмутируйте мак и лужу крови, \
+		чтобы пробудить свое сердце в Живое сердце."
 	required_atoms = list(
 		/obj/effect/decal/cleanable/blood = 1,
 		/obj/item/food/grown/flower/poppy = 1,
@@ -80,6 +99,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "living_heart"
 	research_tree_icon_frame = 1
+	notice = "Если ваше сердце кибернетическое, вы не сможете пробудить его."
 
 /datum/heretic_knowledge/living_heart/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -111,10 +131,11 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 	if(where_to_put_our_heart)
 		where_to_put_our_heart.AddComponent(/datum/component/living_heart)
-		desc = "Дарует вам «Живое сердце», привязанное к вашему [where_to_put_our_heart.name], позволяя отслеживать жертвенные цели. \
-			Если вы потеряете [where_to_put_our_heart.ru_p_own(ACCUSATIVE)] [where_to_put_our_heart.declent_ru(ACCUSATIVE)], вы можете трансмутировать мак и лужу крови, \
+		desc = "Дарует вам «Живое сердце», привязанное к вашему [where_to_put_our_heart.name], позволяя отслеживать жертвенные цели."
+		transmute_text = "Если вы потеряете [where_to_put_our_heart.ru_p_own(ACCUSATIVE)] [where_to_put_our_heart.declent_ru(ACCUSATIVE)], трансмутируйте мак и лужу крови, \
 			чтобы пробудить [where_to_put_our_heart.ru_p_own(ACCUSATIVE)] [where_to_put_our_heart.declent_ru(ACCUSATIVE)] в Живое сердце. \
 			Если [where_to_put_our_heart.ru_p_yours()] [where_to_put_our_heart.declent_ru(NOMINATIVE)] кибернетическое, ритуал будет невозможен!"
+
 
 	else
 		to_chat(user, span_boldnotice("У вас нет сердца или каких-либо органов грудной клетки, если на то пошло. Вы не получили Живое сердце из-за этого."))
@@ -173,41 +194,15 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 	return TRUE
 
-/**
- * Allows the heretic to craft a spell focus.
- * They require a focus to cast advanced spells.
- */
-/datum/heretic_knowledge/amber_focus
-	name = "Янтарный фокусировщик"
-	desc = "Позволяет трансмутировать лист стекла и пару глаз, чтобы создать Янтарную фокусировку. \
-		Для того чтобы произносить более сложные заклинания, необходимо носить фокусировку."
-	required_atoms = list(
-		/obj/item/organ/eyes = 1,
-		/obj/item/stack/sheet/glass = 1,
-	)
-	result_atoms = list(/obj/item/clothing/neck/heretic_focus)
-	cost = 0
-	priority = MAX_KNOWLEDGE_PRIORITY - 2 // Not as important as making a heart or sacrificing, but important enough.
-	is_starting_knowledge = TRUE
-	research_tree_icon_path = 'icons/obj/clothing/neck.dmi'
-	research_tree_icon_state = "eldritch_necklace"
-
-/datum/heretic_knowledge/spell/cloak_of_shadows
-	name = "Покров Тени"
-	desc = "Дарует вам заклинание «Покров Тени». Это заклинание полностью скрывает вашу личность в фиолетовой дымке \
-		на три минуты, помогая вам сохранять секретность. Для наложения заклинания требуется фокусировка."
-	action_to_add = /datum/action/cooldown/spell/shadow_cloak
-	cost = 0
-	is_starting_knowledge = TRUE
-
 /datum/heretic_knowledge/feast_of_owls
 	name = "Пир для Сов"
-	desc = "Позволяет вам пройти ритуал, который дает вам 5 очков знаний, но не даёт возможности совершить вознесение. Это можно сделать только один раз и эффект нельзя отменить."
+	desc = "Позволяет пройти ритуал, который даёт 5 очков знаний, но лишает возможности совершить вознесение."
 	gain_text = "Под мягким сиянием безрассудства скрывается Зверь, крадущийся в ночи. Я выведу его на свет и позволю ему предстать предо мной. Он насытится моими амбициями и оставит после себя знания."
 	is_starting_knowledge = TRUE
 	required_atoms = list()
 	research_tree_icon_path = 'icons/mob/actions/actions_animal.dmi'
 	research_tree_icon_state = "god_transmit"
+	notice = "Это можно сделать только один раз, и эффект нельзя отменить."
 	/// amount of research points granted
 	var/reward = 5
 

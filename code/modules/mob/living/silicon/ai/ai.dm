@@ -872,16 +872,17 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto
 		create_chat_message(speaker, message_language, raw_message, spans)
 	show_message(rendered, 2)
 
-/mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
-	..()
-	if(oldname != real_name)
-		if(eyeobj)
-			eyeobj.name = "[newname] (AI Eye)"
-			modularInterface.imprint_id(name = real_name)
+/mob/living/silicon/ai/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(eyeobj)
+		eyeobj.name = "[newname] (AI Eye)"
+		modularInterface.imprint_id(name = real_name)
 
-		// Notify Cyborgs
-		for(var/mob/living/silicon/robot/slave as anything in connected_robots)
-			slave.show_laws()
+	// Notify Cyborgs
+	for(var/mob/living/silicon/robot/slave as anything in connected_robots)
+		slave.show_laws()
 
 /datum/action/innate/choose_modules
 	name = "Malfunction Modules"
@@ -1129,7 +1130,7 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 		return ai_voicechanger.say_name
 	return ..()
 
-/mob/living/silicon/ai/init_unconscious_appearance()
+/mob/living/silicon/ai/get_unconscious_appearance()
 	var/image/static_overlay = image('icons/effects/effects.dmi', null, "static_base")
 	static_overlay.blend_mode = BLEND_INSET_OVERLAY
 
@@ -1138,12 +1139,8 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 	static_image.overlays += static_overlay
 	static_image.override = TRUE
 	static_image.name = "unknown AI"
-	add_alt_appearance(
-		/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity,
-		"[REF(src)]_unconscious",
-		static_image,
-		NONE,
-	)
+
+	return static_image
 
 /mob/living/silicon/ai/proc/set_control_disabled(control_disabled)
 	SEND_SIGNAL(src, COMSIG_SILICON_AI_SET_CONTROL_DISABLED, control_disabled)

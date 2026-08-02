@@ -24,7 +24,7 @@
 	owner.balloon_alert(owner, get_balloon_message(ascended_heretic))
 
 	if(ascended_heretic.stat == DEAD)
-		to_chat(owner, span_hierophant("[capitalize(ascended_heretic.declent_ru(NOMINATIVE))] мертв. Плачьте, ведь ложь вырвалась наружу."))
+		to_chat(owner, span_mansus("[capitalize(ascended_heretic.declent_ru(NOMINATIVE))] мертв. Плачьте, ведь ложь вырвалась наружу."))
 
 	StartCooldown()
 	return TRUE

@@ -504,6 +504,7 @@
 	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
 	custom_price = PAYCHECK_COMMAND * 2
 	icon = 'icons/obj/drinks/bottles.dmi'
+	worn_icon_state = "flask"
 	icon_state = "flask"
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
 	volume = 60
@@ -512,12 +513,14 @@
 /obj/item/reagent_containers/cup/glass/flask/gold
 	name = "captain's flask"
 	desc = "A gold flask belonging to the captain."
+	worn_icon_state = "flask_gold"
 	icon_state = "flask_gold"
 	custom_materials = list(/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 
 /obj/item/reagent_containers/cup/glass/flask/det
 	name = "detective's flask"
 	desc = "The detective's only true friend."
+	worn_icon_state = "detflask"
 	icon_state = "detflask"
 	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 30)
 

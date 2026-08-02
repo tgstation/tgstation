@@ -210,7 +210,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	icon_state = "[base_icon_state]"
 	return
 
-/obj/item/mmi/posibrain/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/mmi/posibrain/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/mmi/posibrain/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
 /obj/item/mmi/posibrain/add_mmi_overlay()

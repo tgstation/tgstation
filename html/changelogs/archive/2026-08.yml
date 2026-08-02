@@ -1,0 +1,11 @@
+2026-08-01:
+  Fghj240:
+  - balance: robotic limbs, organs, and cybernetic implants have their emp effects
+      scale more closely with emp severity.
+  - balance: reactive tesla armor, adamantine armor, the mod emp shield module, and
+      tinfoil hats slightly lower the severity of incoming EMPs.
+  QuiteLiterallyAnything:
+  - bugfix: Fixed Catwalk's upper atmospherics room being exposed to space by default.
+  Thunder12345:
+  - rscadd: The quantum console now tells bitrunners what grade they've reached on
+      completed domains.

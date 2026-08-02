@@ -447,8 +447,3 @@
 /datum/crafting_recipe/food/reaction/soup/cheese_porridge
 	reaction = /datum/chemical_reaction/food/soup/cheese_porridge
 	cuisine_category = CUISINE_MOTHIC
-
-/datum/crafting_recipe/food/reaction/soup/chili_sin_carne
-	name = "Chili Sin Carne (Vegetarian Chili)"
-	reaction = /datum/chemical_reaction/food/soup/chili_sin_carne
-	cuisine_category = CUISINE_MOTHIC

@@ -159,12 +159,22 @@
 	var/list/knowledge_info = researched_knowledge[knowledge]
 	if(islist(knowledge_info))
 		var/datum/heretic_knowledge/knowledge_instance = knowledge_info[HKT_INSTANCE]
-
 		knowledge_data["desc"] = knowledge_instance.desc
+		knowledge_data["info"] = knowledge_instance.transmute_text
+		knowledge_data["notice"] = knowledge_instance.notice
+
 	else
 		knowledge_data["desc"] = initial(knowledge.desc)
-	return knowledge_data
+		knowledge_data["info"] = initial(knowledge.transmute_text)
+		knowledge_data["notice"] = initial(knowledge.notice)
 
+	if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
+		var/ascension_check = can_ascend()
+		if(ascension_check != HERETIC_CAN_ASCEND)
+			knowledge_data["disabled"] = TRUE
+			knowledge_data["notice"] += "<br>[ascension_check]"
+
+	return knowledge_data
 
 /datum/antagonist/heretic/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -215,15 +225,6 @@
 		if(!(knowledge_info[HKT_ID] in researchable_knowledges))
 			continue
 		var/list/knowledge_data = get_knowledge_data(knowledge_path, heretic_tree, FALSE)
-
-		// Final knowledge can't be learned until all objectives are complete.
-		if(ispath(knowledge_path, /datum/heretic_knowledge/ultimate))
-			var/ascension_check = can_ascend()
-			if(ascension_check != HERETIC_CAN_ASCEND)
-				knowledge_data["disabled"] = TRUE
-				knowledge_data["tooltip"] = ascension_check
-
-
 		var/depth = knowledge_data[HKT_DEPTH]
 
 		while(depth > length(tree_data))
@@ -385,7 +386,6 @@
 
 	ADD_TRAIT(our_mob, TRAIT_MANSUS_TOUCHED, REF(src))
 	RegisterSignal(our_mob, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
-	RegisterSignals(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(on_spell_cast))
 	RegisterSignal(our_mob, COMSIG_USER_ITEM_INTERACTION, PROC_REF(on_item_use))
 	RegisterSignal(our_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(after_fully_healed))
 	RegisterSignal(our_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_heretic_examine))
@@ -411,8 +411,6 @@
 	UnregisterSignal(
 		our_mob,
 		list(
-			COMSIG_MOB_BEFORE_SPELL_CAST,
-			COMSIG_MOB_SPELL_ACTIVATED,
 			COMSIG_USER_ITEM_INTERACTION,
 			COMSIG_LIVING_POST_FULLY_HEAL,
 			COMSIG_LIVING_CULT_SACRIFICED,
@@ -479,31 +477,6 @@
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path][HKT_INSTANCE]
 		knowledge.on_lose(old_body, src)
 		knowledge.on_gain(new_body, src)
-
-/*
- * Signal proc for [COMSIG_MOB_BEFORE_SPELL_CAST] and [COMSIG_MOB_SPELL_ACTIVATED].
- *
- * Checks if our heretic has [TRAIT_ALLOW_HERETIC_CASTING] or is ascended.
- * If so, allow them to cast like normal.
- * If not, cancel the cast, and returns [SPELL_CANCEL_CAST].
- */
-/datum/antagonist/heretic/proc/on_spell_cast(mob/living/source, datum/action/cooldown/spell/spell)
-	SIGNAL_HANDLER
-
-	// Heretic spells are of the forbidden school, otherwise we don't care
-	if(spell.school != SCHOOL_FORBIDDEN)
-		return
-
-	// If we've got the trait, we don't care
-	if(HAS_TRAIT(source, TRAIT_ALLOW_HERETIC_CASTING))
-		return
-	// All powerful, don't care
-	if(ascended)
-		return
-
-	// We shouldn't be able to cast this! Cancel it.
-	source.balloon_alert(source, "нужна фокусировка!")
-	return SPELL_CANCEL_CAST
 
 /*
  * Signal proc for [COMSIG_USER_ITEM_INTERACTION].
@@ -785,7 +758,7 @@
 /datum/antagonist/heretic/proc/passive_influence_gain()
 	adjust_knowledge_points(1)
 	if(!IS_UNCONSCIOUS(owner?.current))
-		to_chat(owner.current, "[span_hear("Вы слышите шепот...")] [span_hypnophrase(pick_list(HERETIC_INFLUENCE_FILE, "drain_message"))]")
+		to_chat(owner.current, "[span_hear("Вы слышите шепот...")] [span_mansus(pick_list(HERETIC_INFLUENCE_FILE, "drain_message"))]")
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer)
 
 /datum/antagonist/heretic/proc/adjust_knowledge_points(amount, update = TRUE)
@@ -932,7 +905,7 @@
 
 	var/mob/living/pawn = owner.current
 	pawn.equip_to_slot_if_possible(new /obj/item/clothing/neck/heretic_focus(get_turf(pawn)), ITEM_SLOT_NECK, TRUE, TRUE)
-	to_chat(pawn, span_hypnophrase("Мансус даровал вам фокусировку."))
+	to_chat(pawn, span_mansus("Мансус даровал вам фокусировку."))
 
 /datum/antagonist/heretic/antag_panel_data()
 	var/list/string_of_knowledge = list()
@@ -956,7 +929,7 @@
 			. += " - <b>[target.real_name]</b>, the [target.mind?.assigned_role?.title || "human"].<br>"
 
 	else
-		. += "<i>None!</i><br>"
+		. += "<i>Нет!</i><br>"
 	. += "<br>"
 
 /datum/antagonist/heretic/proc/purchase_knowledge(datum/heretic_knowledge/knowledge_type, category = HERETIC_KNOWLEDGE_TREE, update = TRUE)
@@ -1029,6 +1002,26 @@
 	return researchable_knowledge
 
 /**
+ * Get a list of all knowledge datums that we've researched.
+ */
+/datum/antagonist/heretic/proc/get_researched_knowledge()
+	var/list/knowledge_list = list()
+	for(var/knowledge_type in researched_knowledge)
+		knowledge_list += researched_knowledge[knowledge_type][HKT_INSTANCE]
+	return knowledge_list
+
+/**
+ * Get a list of all knowledge datums that we've researched in a specific category.
+ */
+/datum/antagonist/heretic/proc/get_researched_knowledge_by_category(category_type)
+	var/list/knowledge_list = list()
+	for(var/knowledge_type in researched_knowledge)
+		if(researched_knowledge[knowledge_type][HKT_CATEGORY] == category_type)
+			knowledge_list += researched_knowledge[knowledge_type][HKT_INSTANCE]
+	return knowledge_list
+
+
+/**
  * Check if the wanted type-path is in the list of research knowledge.
  */
 /datum/antagonist/heretic/proc/get_knowledge(wanted)
@@ -1058,9 +1051,9 @@
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path][HKT_INSTANCE]
 		if(!knowledge.can_be_invoked(src))
 			continue
-		rituals[knowledge.name] = knowledge
+		rituals += knowledge
 
-	return sortTim(rituals, GLOBAL_PROC_REF(cmp_heretic_knowledge), associative = TRUE)
+	return sortTim(rituals, GLOBAL_PROC_REF(cmp_heretic_knowledge))
 
 /**
  * Checks to see if our heretic can ccurrently ascend.

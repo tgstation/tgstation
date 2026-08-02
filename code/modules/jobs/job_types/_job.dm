@@ -575,7 +575,7 @@
 			dna.species.roundstart_changed = TRUE
 
 		if(GLOB.current_anonymous_theme)
-			fully_replace_character_name(null, GLOB.current_anonymous_theme.anonymous_name(src))
+			fully_replace_character_name(null, GLOB.current_anonymous_theme.anonymous_name(src), log_new_name = TRUE)
 	else
 		var/is_antag = (player_client.mob.mind in GLOB.pre_setup_antags)
 		if(require_human)

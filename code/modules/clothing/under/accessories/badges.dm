@@ -211,6 +211,10 @@
 	preview_name = "Lesbian Pride"
 	new_icon_state = "pride_lesbian"
 
+/datum/atom_skin/pride_pin/mlm
+	preview_name = "Gay Pride"
+	new_icon_state = "pride_gay"
+
 /obj/item/clothing/accessory/pride
 	name = "pride pin"
 	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored holographic pin to show off your pride, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"

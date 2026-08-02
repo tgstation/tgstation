@@ -38,6 +38,10 @@
 	var/atom/admin_override_turf
 	///Admin setable override to spawn a specific cargo pack type
 	var/admin_override_contents
+	/// Set to use a crate of a specific type irregardless of supply pack.
+	var/crate_type
+	/// Set to TRUE to emag the launched crate rather than just unlocking it.
+	var/emag_crate = FALSE
 
 /datum/round_event/stray_cargo/announce(fake)
 	if(fake)
@@ -100,12 +104,15 @@
 	var/storage_override
 	if(initial(supply_pack.order_flags) & ORDER_GOODY) // We offer goody items inside of briefcases, but regular crates still default to their standard crates.
 		storage_override = /obj/item/storage/briefcase/empty
-	var/obj/container = supply_pack.generate(null, crate_override = storage_override)
+	var/obj/container = supply_pack.generate(null, crate_override = (crate_type || storage_override))
 
 	if(container && istype(container, /obj/structure/closet/crate)) //empty supply packs are a thing! get memed on.
 		var/obj/structure/closet/crate/crate = container
-		crate.locked = FALSE //Unlock secure crates
-		crate.update_appearance()
+		if(emag_crate)
+			crate.emag_act() // `emag_act()` already calls `update_appeance()`
+		else
+			crate.locked = FALSE //Unlock secure crates
+			crate.update_appearance()
 	var/obj/structure/closet/supplypod/pod = make_pod()
 	var/obj/effect/pod_landingzone/landing_marker = new(landing_zone, pod, container)
 	var/static/mutable_appearance/target_appearance = mutable_appearance('icons/obj/supplypods_32x32.dmi', "LZ")
@@ -191,6 +198,8 @@
 
 /datum/round_event/stray_cargo/syndicate
 	possible_pack_types = list(/datum/supply_pack/misc/syndicate)
+	crate_type = /obj/structure/closet/crate/secure/syndicate
+	emag_crate = TRUE
 
 ///Apply the syndicate pod skin
 /datum/round_event/stray_cargo/syndicate/make_pod()

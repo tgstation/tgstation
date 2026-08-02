@@ -48,10 +48,11 @@
 	ascension = /datum/heretic_knowledge/ultimate/cosmic_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_cosmic
-	name = "Вечные врата"
+	name = "Вечные Врата"
 	desc = "Открывает перед вами Путь Космоса. \
-		Позволяет трансмутировать лист плазмы и нож в Космический клинок. \
+		Позволяет создать Космический клинок. \
 		Одновременно можно иметь только два."
+	transmute_text = "Трансмутируйте лист плазмы и нож."
 	gain_text = "Туманность появилась в небе, ее пламенное рождение озарило меня. Это было начало великой трансценденции"
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -81,6 +82,7 @@
 	action_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 2
 	drafting_tier = 5
+	max_charges = INFINITY
 
 /datum/heretic_knowledge/spell/star_blast
 	name = "Звёздный взрыв"
@@ -89,11 +91,16 @@
 	gain_text = "С каждой новой жертвой, как никогда ранее четко, слышу я слова Зверя, стоящего за мной."
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
 	cost = 2
+	max_charges = 4
+	path_recharge_amount = 0.5
+	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
 
 /datum/heretic_knowledge/armor/cosmic
 	name = "Плащ сотканный из звёзд"
-	desc = "Позволяет трансмутировать стол (или костюм), маску и лист плазмы в Сотканный из звёзд плащ, дающий защиту от космического пространства, а также способность левитировать по желанию. \
+	desc = "Позволяет создать Сотканный из звёзд плащ, дающий защиту от космического пространства, а также способность левитировать по желанию. \
 			Действует как фокусировка, пока надет капюшон."
+	transmute_text = "Трансмутируйте стол (или комбинезон), маску и лист плазмы."
 	gain_text = "Подобно сияющим нитям, сияли звезды, соединяясь в шелковистую форму развевающегося плаща, который одновременно окутывает и обнажает мои плечи. \
 				Глаза Зверя смотрят на меня и сквозь меня."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic)
@@ -114,6 +121,10 @@
 		Теперь мои вены изучали странное фиолетовое сияние: Зверь знает, что я превзойду их ожидания."
 	action_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 2
+	max_charges = 4
+	path_recharge_amount = 0.5
+	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Космический клинок"
@@ -214,11 +225,13 @@
 	action_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
 	cost = 2
 	is_final_knowledge = TRUE
+	max_charges = 2
+	path_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
 
 /datum/heretic_knowledge/ultimate/cosmic_final
 	name = "Дар Создателей"
 	desc = "Ритуал вознесения Пути Космоса. \
-		Для завершения ритуала принесите 3 трупа с «Меткой звезды» к руне трансмутации. \
 		После завершения вы станете обладателем Звездочета. \
 		Вы сможете управлять Звездочетом с помощью Альт-Клик. \
 		Вы также можете отдавать ему команды с помощью речи. \
@@ -226,6 +239,7 @@
 		Звездочет обладает аурой, которая исцеляет вас и наносит урон противникам. \
 		«Касание Звезды» теперь может телепортировать вас к Звездочету, когда активируется в вашей руке. \
 		Заклинание «Космическая экспансия» и ваши клинки также значительно усилены."
+	transmute_text = "Трансмутируйте три трупа с «Меткой звезды» на них."
 	gain_text = "Зверь протянул руку, я ухватился за нее, и он притянул меня к себе. Их тело возвышалось надо моим, но также казалось настолько крохотными и слабым после всех их историй в моей голове. \
 		Я прижался к ним, они защитят меня, и я защищаю их. \
 		Я закрыл глаза, прижавшись головой к их телу. Я был в безопасности. \
@@ -314,14 +328,14 @@
 
 	var/mob/living/to_reset = bad_dog.resolve()
 
-	to_chat(owner, span_hierophant("Вы предлагаете изменить личность [to_reset]..."))
+	to_chat(owner, span_mansus("Вы предлагаете изменить личность [to_reset]..."))
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Хотите ли вы играть за [span_danger("[owner.real_name]")] [span_notice(to_reset.name)]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, alert_pic = to_reset, jump_target = owner, role_name_text = to_reset.name, amount_to_pick = 1)
 	if(isnull(chosen_one))
-		to_chat(owner, span_hierophant("Ваш запрос о смене личности [to_reset], судя по всему, был отклонён... Похоже пока придётся мириться с этим."))
+		to_chat(owner, span_mansus("Ваш запрос о смене личности [to_reset], судя по всему, был отклонён... Похоже пока придётся мириться с этим."))
 		StartCooldown()
 		return FALSE
-	to_chat(to_reset, span_hierophant("Ваш призыватель перезагрузил вас, и вашим телом завладел призрак. Похоже, он был не очень доволен вашими действиями."))
-	to_chat(owner, span_hierophant("Разум [to_reset] изменился, чтобы лучше подходить вам."))
+	to_chat(to_reset, span_mansus("Ваш призыватель перезагрузил вас, и вашим телом завладел призрак. Похоже, он был не очень доволен вашими действиями."))
+	to_chat(owner, span_mansus("Разум [to_reset] изменился, чтобы лучше подходить вам."))
 	message_admins("[key_name_admin(chosen_one)] взял контроль над ([ADMIN_LOOKUPFLW(to_reset)])")
 	to_reset.ghostize(FALSE)
 	to_reset.PossessByPlayer(chosen_one.key)

@@ -71,6 +71,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 	desc = "Sheets of cold metal with shifting inscriptions writ upon them."
 	singular_name = "runed metal sheet"
 	icon_state = "sheet-runed"
+	worn_icon_state = "sheet-runed"
 	inhand_icon_state = "sheet-runed"
 	icon = 'icons/obj/stack_objects.dmi'
 	mats_per_unit = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT)
