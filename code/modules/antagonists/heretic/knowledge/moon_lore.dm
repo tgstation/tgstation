@@ -191,6 +191,7 @@
 		Постановщик указал вверх, и тусклый свет правды осветил нас еще больше."
 	notice = "Количество зарядов, полученных от применения Амулетов Лунного Света, не ограничено."
 
+	action_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
 	cost = 2
 	research_tree_icon_frame = 5
 	is_final_knowledge = TRUE
