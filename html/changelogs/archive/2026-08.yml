@@ -26,8 +26,14 @@
   - bugfix: the experimental cloner now spits flavor and policy text (if there is
       any) when spawning
 2026-08-02:
+  Aliceee2ch:
+  - qol: Winter coats were added into loadout.
+  - spellcheck: Capitalizes some of the other suits in loadout menu.
   Ghommie:
   - bugfix: Felinids (and nightmares) can once again use more complex objects, unlike
       monkeys.
   JohnFulpWillard:
   - spellcheck: Cargo bounty list printout now has a slightly better UI.
+  necromanceranne:
+  - qol: You can punch a goliath to death. This isn't recommended. But if you are
+      committed enough, you are welcome to do so.
