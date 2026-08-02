@@ -6,14 +6,6 @@
 
 /datum/loadout_item/suit
 	abstract_type = /datum/loadout_item/suit
-	var/list/job_coat_paths
-
-/datum/loadout_item/suit/proc/get_path(mob/living/carbon/human/wearer)
-	if(job_coat_paths?.len)
-		var/datum/job/job = SSjob.get_job(wearer.job)
-		if(job && job_coat_paths[job.type])
-			return job_coat_paths[job.type]
-	return item_path
 
 /datum/loadout_item/suit/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE)
 	if(outfit.suit)
