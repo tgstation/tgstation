@@ -1,13 +1,13 @@
 /**
- * This movement datum follows paths produced by navmesh A*.
+ * This movement datum follows paths produced by navmap A*.
  */
-/datum/ai_movement/navmesh_astar
+/datum/ai_movement/navmap_astar
 	max_pathing_attempts = 20
 	var/maximum_length = AI_MAX_PATH_LENGTH
 	///how we deal with diagonal movement, whether we try to avoid them or follow through with them
 	var/diagonal_flags = DIAGONAL_REMOVE_CLUNKY
 
-/datum/ai_movement/navmesh_astar/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance, delay_override)
+/datum/ai_movement/navmap_astar/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance, delay_override)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -18,13 +18,13 @@
 
 	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move))
-	RegisterSignal(loop, COMSIG_MOVELOOP_NAVMESH_REPATH, PROC_REF(repath_incoming))
+	RegisterSignal(loop, COMSIG_MOVELOOP_NAVMAP_REPATH, PROC_REF(repath_incoming))
 
 	return loop
 
 
-/datum/ai_movement/navmesh_astar/proc/setup_moveloop(datum/ai_controller/controller, atom/current_movement_target, atom/movable/moving, delay, min_distance)
-	var/datum/move_loop/has_target/navmesh_astar/loop = GLOB.move_manager.navmesh_astar_move(moving,
+/datum/ai_movement/navmap_astar/proc/setup_moveloop(datum/ai_controller/controller, atom/current_movement_target, atom/movable/moving, delay, min_distance)
+	var/datum/move_loop/has_target/navmap_astar/loop = GLOB.move_manager.navmap_astar_move(moving,
 		current_movement_target,
 		delay,
 		repath_delay = 0.1 SECONDS,
@@ -39,46 +39,46 @@
 	)
 	return loop
 
-/datum/ai_movement/navmesh_astar/update_movement_target(datum/ai_controller/controller, atom/new_target)
+/datum/ai_movement/navmap_astar/update_movement_target(datum/ai_controller/controller, atom/new_target)
 	. = ..()
-	var/datum/move_loop/has_target/navmesh_astar/loop = GLOB.move_manager.processing_on(controller.pawn, SSai_movement)
+	var/datum/move_loop/has_target/navmap_astar/loop = GLOB.move_manager.processing_on(controller.pawn, SSai_movement)
 	if(loop)
-		INVOKE_ASYNC(loop, TYPE_PROC_REF(/datum/move_loop/has_target/navmesh_astar, recalculate_path))
+		INVOKE_ASYNC(loop, TYPE_PROC_REF(/datum/move_loop/has_target/navmap_astar, recalculate_path))
 
-/datum/ai_movement/navmesh_astar/proc/repath_incoming(datum/move_loop/has_target/navmesh_astar/source)
+/datum/ai_movement/navmap_astar/proc/repath_incoming(datum/move_loop/has_target/navmap_astar/source)
 	SIGNAL_HANDLER
 	var/datum/ai_controller/controller = source.extra_info
 
 	source.access = controller.get_access()
 	// minimum_distance was set at loop creation; no need to update it on repath
 
-/datum/ai_movement/navmesh_astar/bot
+/datum/ai_movement/navmap_astar/bot
 	max_pathing_attempts = 8
 	maximum_length = 25
 	diagonal_flags = DIAGONAL_REMOVE_ALL
 
-/datum/ai_movement/navmesh_astar/bot/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance, delay_override)
+/datum/ai_movement/navmap_astar/bot/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance, delay_override)
 	var/datum/move_loop/loop = ..()
 	var/atom/our_pawn = controller.pawn
 	if(isnull(our_pawn))
 		return null
-	our_pawn.RegisterSignal(loop, COMSIG_MOVELOOP_NAVMESH_FINISHED_PATHING, TYPE_PROC_REF(/mob/living/basic/bot, generate_bot_path))
+	our_pawn.RegisterSignal(loop, COMSIG_MOVELOOP_NAVMAP_FINISHED_PATHING, TYPE_PROC_REF(/mob/living/basic/bot, generate_bot_path))
 	return loop
 
-/datum/ai_movement/navmesh_astar/bot/summon
+/datum/ai_movement/navmap_astar/bot/summon
 		maximum_length = AI_BOT_PATH_LENGTH
 
-/datum/ai_movement/navmesh_astar/bot/travel_to_beacon
+/datum/ai_movement/navmap_astar/bot/travel_to_beacon
 	maximum_length = AI_BOT_PATH_LENGTH
 	max_pathing_attempts = 10
 
 
-/datum/ai_movement/navmesh_astar/bot/mulebot
+/datum/ai_movement/navmap_astar/bot/mulebot
 	max_pathing_attempts = 10
 	maximum_length = AI_MULEBOT_PATH_LENGTH
 
-/datum/ai_movement/navmesh_astar/bot/mulebot/setup_moveloop(datum/ai_controller/controller, atom/current_movement_target, atom/movable/moving, delay, min_distance)
-	var/datum/move_loop/has_target/navmesh_astar/frustrations/loop = GLOB.move_manager.navmesh_frustrations_move(moving,
+/datum/ai_movement/navmap_astar/bot/mulebot/setup_moveloop(datum/ai_controller/controller, atom/current_movement_target, atom/movable/moving, delay, min_distance)
+	var/datum/move_loop/has_target/navmap_astar/frustrations/loop = GLOB.move_manager.navmap_frustrations_move(moving,
 		current_movement_target,
 		delay,
 		repath_delay = 0.5 SECONDS,
@@ -93,7 +93,7 @@
 	)
 	return loop
 
-/datum/ai_movement/navmesh_astar/bot/mulebot/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
+/datum/ai_movement/navmap_astar/bot/mulebot/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
 	var/datum/move_loop/loop = ..()
 	var/atom/our_pawn = controller.pawn
-	our_pawn.RegisterSignal(loop, COMSIG_MOVELOOP_NAVMESH_FRUSTRATION_INCREMENTED, TYPE_PROC_REF(/mob/living/basic/bot/mulebot, handle_buzzing))
+	our_pawn.RegisterSignal(loop, COMSIG_MOVELOOP_NAVMAP_FRUSTRATION_INCREMENTED, TYPE_PROC_REF(/mob/living/basic/bot/mulebot, handle_buzzing))

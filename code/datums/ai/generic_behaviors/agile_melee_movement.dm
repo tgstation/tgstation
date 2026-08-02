@@ -21,7 +21,7 @@
 	var/jitter_chance = 100
 	/// time to stay planted until after a hit. Makes it a bit more fair to fight against.
 	var/wait_after_attack = 0.3 SECONDS
-	/// If true, repath when a movable target moves. This only works with navmesh movement.
+	/// If true, repath when a movable target moves. This only works with navmap movement.
 	var/update_movement_for_moving_target = FALSE
 	/// Set by on_movement_failed() when the movement system gives up pathing.
 	VAR_FINAL/movement_failed = FALSE
@@ -94,7 +94,7 @@
 	controller.change_ai_movement_type(initial(controller.ai_movement))
 	return ..()
 
-/// Starts tracking target movement when enabled. Navmesh-only: other movement datums cannot repath an active route.
+/// Starts tracking target movement when enabled. Navmap-only: other movement datums cannot repath an active route.
 /datum/bt_node/ai_behavior/agile_melee_movement/proc/track_moving_target(atom/target = null)
 	if(tracked_movable_target)
 		UnregisterSignal(tracked_movable_target, COMSIG_MOVABLE_MOVED)
@@ -107,7 +107,7 @@
 /datum/bt_node/ai_behavior/agile_melee_movement/proc/on_tracked_target_moved(atom/movable/source)
 	SIGNAL_HANDLER
 	var/datum/ai_controller/controller = owning_controller
-	if(!istype(controller?.ai_movement, /datum/ai_movement/navmesh_astar) || controller.ai_movement.moving_controllers[controller] != source)
+	if(!istype(controller?.ai_movement, /datum/ai_movement/navmap_astar) || controller.ai_movement.moving_controllers[controller] != source)
 		return
 	controller.ai_movement.update_movement_target(controller, source)
 

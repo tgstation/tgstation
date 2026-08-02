@@ -1,5 +1,5 @@
-SUBSYSTEM_DEF(navmesh)
-	name = "Navmesh"
+SUBSYSTEM_DEF(navmap)
+	name = "Navmap"
 	ss_flags = SS_BACKGROUND
 	dependencies = list(
 		/datum/controller/subsystem/mapping,
@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(navmesh)
 	var/list/space_type_cache
 
 /// Initializes bake representatives, blocker caches, and existing z-level data.
-/datum/controller/subsystem/navmesh/Initialize()
+/datum/controller/subsystem/navmap/Initialize()
 	ground_rep = new /datum/can_pass_info(null, null, no_id = TRUE)
 	ground_rep.movement_type = GROUND
 
@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(navmesh)
 
 	return SS_INIT_SUCCESS
 /// Enables automatic dirtying for a newly relevant z-level.
-/datum/controller/subsystem/navmesh/proc/on_new_zlevel(datum/source, datum/space_level/new_level)
+/datum/controller/subsystem/navmap/proc/on_new_zlevel(datum/source, datum/space_level/new_level)
 	SIGNAL_HANDLER
 	for(var/trait in auto_dirty_ztraits)
 		if(new_level.traits[trait])
@@ -60,13 +60,13 @@ SUBSYSTEM_DEF(navmesh)
 			return
 
 /// Reports the number of turfs waiting to bake.
-/datum/controller/subsystem/navmesh/stat_entry(msg)
+/datum/controller/subsystem/navmap/stat_entry(msg)
 	var/pending = length(bake_queue) + max(length(currentrun) - currentrun_index + 1, 0)
 	msg = "Dirty:[pending]"
 	return ..()
 
 /// Bakes queued turfs until the tick budget is exhausted.
-/datum/controller/subsystem/navmesh/fire(resumed)
+/datum/controller/subsystem/navmap/fire(resumed)
 	if(currentrun_index > length(currentrun))
 		if(!length(bake_queue))
 			can_fire = FALSE
@@ -85,7 +85,7 @@ SUBSYSTEM_DEF(navmesh)
 			return
 
 /// Queues a dirty turf once for asynchronous baking.
-/datum/controller/subsystem/navmesh/proc/queue_turf_bake(turf/queued_turf)
+/datum/controller/subsystem/navmap/proc/queue_turf_bake(turf/queued_turf)
 	if(queued_turf.turf_flags & NAV_QUEUED)
 		return
 	queued_turf.turf_flags |= NAV_QUEUED
@@ -94,7 +94,7 @@ SUBSYSTEM_DEF(navmesh)
 		can_fire = TRUE
 
 /// Bakes and bulk-publishes every non-space turf on a z-level.
-/datum/controller/subsystem/navmesh/proc/prebake_z(z_level)
+/datum/controller/subsystem/navmap/proc/prebake_z(z_level)
 	var/count = 0
 	var/list/rust_batch = list()
 	for(var/turf/baking_turf as anything in Z_TURFS(z_level))
@@ -103,5 +103,5 @@ SUBSYSTEM_DEF(navmesh)
 		count++
 		CHECK_TICK
 	if(length(rust_batch))
-		rustg_turfmap_bulk_update(rust_batch)
+		rustg_navmap_bulk_update(rust_batch)
 	return count

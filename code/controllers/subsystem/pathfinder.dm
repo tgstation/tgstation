@@ -7,9 +7,9 @@ SUBSYSTEM_DEF(pathfinder)
 	var/list/datum/pathfind/active_pathing = list()
 	/// List of pathfind datums being ACTIVELY processed. exists to make subsystem stats readable
 	var/list/datum/pathfind/currentrun = list()
-	/// Cooperative rust-g turfmap jobs, processed like legacy JPS work.
-	var/list/datum/pathfind/turfmap/turfmap_pathing = list()
-	var/list/datum/pathfind/turfmap/current_turfmap_run = list()
+	/// Cooperative rust-g navmap jobs, processed like legacy JPS work.
+	var/list/datum/pathfind/navmap/navmap_pathing = list()
+	var/list/datum/pathfind/navmap/current_navmap_run = list()
 	/// List of uncheccked source_to_map entries
 	var/list/currentmaps = list()
 	/// Assoc list of target turf -> list(/datum/path_map) centered on the turf
@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(pathfinder)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/pathfinder/stat_entry(msg)
-	msg = "P:[length(active_pathing)] A:[length(turfmap_pathing)]"
+	msg = "P:[length(active_pathing)] A:[length(navmap_pathing)]"
 	return ..()
 
 // This is another one of those subsystems (hey lighting) in which one "Run" means fully processing a queue
@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(pathfinder)
 /datum/controller/subsystem/pathfinder/fire(resumed)
 	if(!resumed)
 		src.currentrun = active_pathing.Copy()
-		src.current_turfmap_run = turfmap_pathing.Copy()
+		src.current_navmap_run = navmap_pathing.Copy()
 		src.currentmaps = deep_copy_list(source_to_maps)
 
 	// Dies of sonic speed from caching datum var reads
@@ -49,19 +49,19 @@ SUBSYSTEM_DEF(pathfinder)
 		// Next please
 		currentrun.len--
 
-	var/list/datum/pathfind/turfmap/current_turfmap_run = src.current_turfmap_run
-	while(length(current_turfmap_run))
-		var/datum/pathfind/turfmap/path = current_turfmap_run[length(current_turfmap_run)]
+	var/list/datum/pathfind/navmap/current_navmap_run = src.current_navmap_run
+	while(length(current_navmap_run))
+		var/datum/pathfind/navmap/path = current_navmap_run[length(current_navmap_run)]
 		var/step_start = TICK_USAGE_REAL
 		var/step_ok = path.search_step()
 		path.compute_time += TICK_USAGE_REAL - step_start
 		if(!step_ok)
 			path.early_exit()
-			current_turfmap_run.len--
+			current_navmap_run.len--
 			continue
 		if(path.complete)
 			path.finished()
-		current_turfmap_run.len--
+		current_navmap_run.len--
 		if(MC_TICK_CHECK)
 			return
 
@@ -91,21 +91,21 @@ SUBSYSTEM_DEF(pathfinder)
 	var/datum/can_pass_info/pass_info = new(requester, access)
 	var/list/path
 	try
-		path = rustg_turfmap_pathfinder(start, goal, pass_info, NAV_IS_FLYING(pass_info), max_distance, mintargetdist || 0, simulated_only, exclude, diagonal_handling, skip_first)
+		path = rustg_navmap_pathfinder(start, goal, pass_info, NAV_IS_FLYING(pass_info), max_distance, mintargetdist || 0, simulated_only, exclude, diagonal_handling, skip_first)
 	catch
 		return FALSE
 	for(var/datum/callback/finished as anything in on_finish)
 		finished.Invoke(path)
 	return TRUE
 
-/// Starts a cooperative native turfmap search and returns its queued job.
-/datum/controller/subsystem/pathfinder/proc/turfmap_pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)
-	var/datum/pathfind/turfmap/path = new()
+/// Starts a cooperative native navmap search and returns its queued job.
+/datum/controller/subsystem/pathfinder/proc/navmap_pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)
+	var/datum/pathfind/navmap/path = new()
 	path.setup(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish)
 	if(!path.start())
 		qdel(path)
 		return
-	turfmap_pathing += path
+	navmap_pathing += path
 	return path
 
 /// Initiates a swarmed pathfind. Returns TRUE if we're good, FALSE if something's failed

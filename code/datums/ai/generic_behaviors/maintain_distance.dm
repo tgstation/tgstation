@@ -10,7 +10,7 @@
 	var/max_dist_key = BB_RANGED_SKIRMISH_MAX_DISTANCE
 	/// Movement type to use while approaching a target that's too far. Null falls back to the controller's default movement type. Reset on finish.
 	var/approach_movement_type = null
-	/// If true, repath when a movable target moves. This only works with navmesh movement.
+	/// If true, repath when a movable target moves. This only works with navmap movement.
 	var/update_movement_for_moving_target = FALSE
 	/// Movable target whose movement signal we are following.
 	VAR_PRIVATE/atom/movable/tracked_movable_target
@@ -61,7 +61,7 @@
 	controller.change_ai_movement_type(initial(controller.ai_movement))
 	return ..()
 
-/// Starts tracking target movement when enabled. Navmesh-only: other movement datums cannot repath an active route.
+/// Starts tracking target movement when enabled. Navmap-only: other movement datums cannot repath an active route.
 /datum/bt_node/ai_behavior/maintain_distance/proc/track_moving_target(atom/target = null)
 	if(tracked_movable_target)
 		UnregisterSignal(tracked_movable_target, COMSIG_MOVABLE_MOVED)
@@ -74,7 +74,7 @@
 /datum/bt_node/ai_behavior/maintain_distance/proc/on_tracked_target_moved(atom/movable/source)
 	SIGNAL_HANDLER
 	var/datum/ai_controller/controller = owning_controller
-	if(!istype(controller?.ai_movement, /datum/ai_movement/navmesh_astar) || controller.ai_movement.moving_controllers[controller] != source)
+	if(!istype(controller?.ai_movement, /datum/ai_movement/navmap_astar) || controller.ai_movement.moving_controllers[controller] != source)
 		return
 	controller.ai_movement.update_movement_target(controller, source)
 

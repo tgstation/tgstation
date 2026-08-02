@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// Turf bitflags, see code/__DEFINES/flags.dm
 	var/turf_flags = NONE
 
-	/// Packed navmesh passability bits. null = unbaked / dirty. See code/__DEFINES/navmesh.dm for layout.
+	/// Packed navmap passability bits. null = unbaked / dirty. See code/__DEFINES/navmap.dm for layout.
 	var/nav_pass = null
 	/// Lazy assoc: "[dir]" -> flat list of conditional blocker entries (numbers = pass_flags masks,
 	/// atom refs = evaluated live via CanAStarPass). Only present on turfs with conditional edges.
@@ -748,7 +748,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(density)
 		explosive_resistance += get_explosive_block()
 
-	// Navmesh: a density toggle changes our own edges.
+	// Navmap: a density toggle changes our own edges.
 	nav_dirty()
 
 /// Wrapper around inherent_explosive_resistance
@@ -886,27 +886,27 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Invalidates this turf and its neighbours, then queues them for baking.
 /turf/proc/nav_dirty()
 	// Before the subsystem inits nothing is baked
-	if(!SSnavmesh.initialized)
+	if(!SSnavmap.initialized)
 		return
 	// Only auto-update important z-levels
-	if(!SSnavmesh.auto_dirty_zlevels["[z]"])
+	if(!SSnavmap.auto_dirty_zlevels["[z]"])
 		return
 	nav_pass = null
 	nav_blockers = null
-	SSnavmesh.queue_turf_bake(src)
+	SSnavmap.queue_turf_bake(src)
 	// Clear Rust's baked flag before the asynchronous re-bake.
-	rustg_turfmap_update(x, y, z, 0)
+	rustg_navmap_update(x, y, z, 0)
 	for(var/dir in GLOB.cardinals)
 		var/turf/neighbor = get_step(src, dir)
 		if(neighbor)
 			neighbor.nav_pass = null
 			neighbor.nav_blockers = null
-			SSnavmesh.queue_turf_bake(neighbor)
-			rustg_turfmap_update(neighbor.x, neighbor.y, neighbor.z, 0)
+			SSnavmap.queue_turf_bake(neighbor)
+			rustg_navmap_update(neighbor.x, neighbor.y, neighbor.z, 0)
 
 /// Bakes this turf's outgoing edges and publishes them to Rust.
 /turf/proc/nav_bake(skip_rust_push = FALSE)
-	var/packed = NAV_BAKED | (SSnavmesh.space_type_cache[type] ? NONE : NAV_SIMULATED)
+	var/packed = NAV_BAKED | (SSnavmap.space_type_cache[type] ? NONE : NAV_SIMULATED)
 	var/list/blockers = null
 
 	for(var/dir in GLOB.cardinals)
@@ -923,7 +923,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	nav_blockers = blockers
 	// Mass prebakes publish the completed z-level in one FFI call.
 	if(!skip_rust_push)
-		rustg_turfmap_update(x, y, z, packed)
+		rustg_navmap_update(x, y, z, packed)
 
 /// Builds packed passability bits and live blockers for one outgoing edge.
 /turf/proc/nav_evaluate_edge(dir, turf/dest, list/edge_blockers)
@@ -944,16 +944,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	// border objects :(
 	for(var/obj/border in src)
-		if(!SSnavmesh.border_blocker_cache[border.type])
+		if(!SSnavmap.border_blocker_cache[border.type])
 			continue
 		if(!border.density && border.can_astar_pass == CANASTARPASS_DENSITY)
 			continue
 		if(nav_classify_atom(border, edge_blockers))
 			has_cond = TRUE
 		else
-			if(ground_ok && !border.CanAStarPass(dir, SSnavmesh.ground_rep))
+			if(ground_ok && !border.CanAStarPass(dir, SSnavmap.ground_rep))
 				ground_ok = FALSE
-			if(flight_ok && !border.CanAStarPass(dir, SSnavmesh.flying_rep))
+			if(flight_ok && !border.CanAStarPass(dir, SSnavmap.flying_rep))
 				flight_ok = FALSE
 
 	// destination contents (reverse dir)
@@ -966,9 +966,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(nav_classify_atom(iter_object, edge_blockers))
 			has_cond = TRUE
 		else
-			if(ground_ok && !iter_object.CanAStarPass(reverse, SSnavmesh.ground_rep))
+			if(ground_ok && !iter_object.CanAStarPass(reverse, SSnavmap.ground_rep))
 				ground_ok = FALSE
-			if(flight_ok && !iter_object.CanAStarPass(reverse, SSnavmesh.flying_rep))
+			if(flight_ok && !iter_object.CanAStarPass(reverse, SSnavmap.flying_rep))
 				flight_ok = FALSE
 
 	var/bits = NONE
@@ -983,7 +983,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Stores a static pass-flag mask or a live mover-dependent blocker.
 /turf/proc/nav_classify_atom(atom/movable/blocker, list/edge_blockers)
 	// Store known pass-flag gates as masks.
-	var/mask = SSnavmesh.mask_whitelist_cache[blocker.type]
+	var/mask = SSnavmap.mask_whitelist_cache[blocker.type]
 	if(mask)
 		edge_blockers += mask
 		return TRUE
@@ -992,7 +992,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(istype(blocker, /obj/machinery/door) \
 		|| blocker.can_astar_pass == CANASTARPASS_ALWAYS_PROC \
 		|| (blocker.pass_flags_self & ~NAV_NON_PASS_FLAGS) \
-		|| SSnavmesh.force_conditional_cache[blocker.type])
+		|| SSnavmap.force_conditional_cache[blocker.type])
 		edge_blockers += blocker
 		return TRUE
 

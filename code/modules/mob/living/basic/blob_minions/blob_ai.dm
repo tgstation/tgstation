@@ -1,6 +1,6 @@
 /**
  * Extremely simple AI, this isn't a very smart boy
- * It uses navmesh A* because simple avoidance cannot path through blobs.
+ * It uses navmap A* because simple avoidance cannot path through blobs.
  */
 /datum/ai_controller/basic_controller/blobbernaut
 	behavior_tree_json = "code/modules/mob/living/basic/blob_minions/blobbernaut.bt.json"
@@ -9,7 +9,7 @@
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
-	ai_movement = /datum/ai_movement/navmesh_astar
+	ai_movement = /datum/ai_movement/navmap_astar
 
 /**
  * Move to a point designated by the overmind, otherwise just slap people nearby
@@ -21,7 +21,7 @@
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
-	ai_movement = /datum/ai_movement/navmesh_astar
+	ai_movement = /datum/ai_movement/navmap_astar
 
 /**
  * As blob zombie but will prioritise attacking corpses to zombify them
@@ -33,4 +33,4 @@
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
-	ai_movement = /datum/ai_movement/navmesh_astar
+	ai_movement = /datum/ai_movement/navmap_astar
