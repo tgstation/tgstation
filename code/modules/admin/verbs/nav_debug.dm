@@ -138,7 +138,8 @@ ADMIN_VERB(navmap_inspect_turf, R_DEBUG, "Navmap: Inspect Turf", "Prints the bak
 	if(isnull(here.nav_pass))
 		here.nav_bake()
 	var/simulated = !!(here.nav_pass & NAV_SIMULATED)
-	var/list/lines = list("Navmap at [AREACOORD(here)] (nav_pass = [here.nav_pass], simulated = [simulated ? \"TRUE\" : \"FALSE\"]):")
+	var/simulated_text = simulated ? "TRUE" : "FALSE"
+	var/list/lines = list("Navmap at [AREACOORD(here)] (nav_pass = [here.nav_pass], simulated = [simulated_text]):")
 	for(var/dir in GLOB.cardinals)
 		var/ground = (here.nav_pass & NAV_GROUND(dir)) ? "Pass" : "Blocked"
 		var/flight = (here.nav_pass & NAV_FLIGHT(dir)) ? "Pass" : "Blocked"

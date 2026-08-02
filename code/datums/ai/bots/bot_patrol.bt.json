@@ -34,7 +34,8 @@
 										"vars": {
 											"target_key": "BB_BEACON_TARGET",
 											"required_dist": 0,
-											"finish_on_arrival": true
+											"finish_on_arrival": true,
+											"movement_type": "/datum/ai_movement/navmap_astar/bot/travel_to_beacon"
 										}
 									},
 									{
