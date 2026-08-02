@@ -128,7 +128,7 @@ Then the player gets the profit from selling his own wasted time.
 
 /datum/export/New()
 	..()
-	original_export_types = export_types.Copy()
+	original_export_types = export_types?.Copy()
 	export_types = typecacheof(export_types, only_root_path = !include_subtypes)
 	exclude_types = typecacheof(exclude_types)
 
