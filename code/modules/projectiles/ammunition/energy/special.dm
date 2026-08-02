@@ -5,6 +5,11 @@
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 	muzzle_flash_color = LIGHT_COLOR_BLUE
 
+/obj/item/ammo_casing/energy/ion/weak
+	select_name = "directed ion"
+	projectile_type = /obj/projectile/ion/weak
+	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE)
+
 /obj/item/ammo_casing/energy/ion/hos
 	projectile_type = /obj/projectile/ion/weak
 	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE * 1.2)

@@ -110,6 +110,11 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SECURITY)
+	unlocks_packs = TRUE
+	unlocked_packs = list(
+		/datum/supply_pack/security/armory/laser/temperature,
+		/datum/supply_pack/security/armory/laser/ion,
+	)
 
 /datum/techweb_node/beam_weapons
 	id = TECHWEB_NODE_BEAM_WEAPONS
@@ -124,3 +129,8 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SECURITY)
+	unlocks_packs = TRUE
+	unlocked_packs = list(
+		/datum/supply_pack/security/armory/laser/xray,
+		/datum/supply_pack/security/armory/energy/advanced,
+	)

@@ -18,6 +18,10 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	hidden = TRUE
+	unlocks_packs = TRUE
+	unlocked_packs = list(
+		/datum/supply_pack/imports/crossbow,
+	)
 
 /datum/techweb_node/syndicate_basic/New() //Crappy way of making syndicate gear decon supported until there's another way.
 	. = ..()

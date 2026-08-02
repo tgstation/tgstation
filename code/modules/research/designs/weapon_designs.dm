@@ -43,7 +43,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c38_iceblox
-	name = "Speed Loader (.38 Iceblox) (Lethal/Very Lethal (Lizardpeople))"
+	name = "Speed Loader (.38 Iceblox) (Lethal/Very Lethal (Tiziran/Slimes))"
 	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
 	id = "c38_iceblox"
 	build_type = PROTOLATHE | AWAY_LATHE
@@ -151,7 +151,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c38_iceblox_mag
-	name = "Magazine (.38 Iceblox) (Lethal/Very Lethal (Lizardpeople))"
+	name = "Magazine (.38 Iceblox) (Lethal/Very Lethal (Tiziran/Slimes))"
 	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Iceblox bullets contain a cryogenic payload."
 	id = "c38_iceblox_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
@@ -198,7 +198,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c38_flare_mag
-	name = "Magazine (.38 Flare) (VERY Lethal)"
+	name = "Magazine (.38 Flare) (VERY Lethal (Nightmares))"
 	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Flare casings launch a concentrated particle beam towards a target, lighting them up for everyone to see."
 	id = "c38_flare_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
@@ -335,17 +335,11 @@
 	autolathe_exportable = FALSE
 
 /datum/design/nuclear_gun
-	name = "Advanced Energy Gun Part Kit (Lethal/Nonlethal)"
-	desc = "The kit for an energy gun with an experimental miniaturized reactor."
+	name = "Advanced Energy Gun (Lethal/Nonlethal)"
+	desc = "An energy gun with an internal microbreeder reactor. Totally safe! We're sure of it."
 	id = "nuclear_gun"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/uranium =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/titanium =HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/weaponcrafting/gunkit/nuclear
-	category = list(
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
+	research_icon = 'icons/obj/weapons/guns/energy.dmi'
+	research_icon_state = "nucgun"
 
 /datum/design/tele_shield
 	name = "Telescopic Riot Shield"
@@ -399,17 +393,11 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL //uwu
 
 /datum/design/temp_gun
-	name = "Temperature Gun Part Kit (Less Lethal/Very Lethal (Lizardpeople))"
-	desc = "A gun that shoots temperature bullet energythings to change temperature."//Change it if you want
+	name = "Temperature Fluctuator (Less Lethal/Very Lethal (Tiziran/Slimes))"
+	desc = "An energy gun that raises or lowers the temperature of anything it shoots. How does it do it? We don't know! Thermodynamics can get bent!"
 	id = "temp_gun"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.5)
-	build_path = /obj/item/weaponcrafting/gunkit/temperature
-	category = list(
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
+	research_icon = 'icons/obj/weapons/guns/energy.dmi'
+	research_icon_state = "freezegun"
 
 /datum/design/flora_gun
 	name = "Floral Somatoray"
@@ -472,30 +460,18 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/xray
-	name = "X-ray Laser Gun Part Kit (Lethal)"
-	desc = "Not quite as menacing as it sounds"
+	name = "Type 6 X-ray Laser Gun (Lethal)"
+	desc = "An energy weapon that fires lasers that can shoot targets through literally any barricade."
 	id = "xray_laser"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/gold =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT * 2, /datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/titanium =SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/weaponcrafting/gunkit/xray
-	category = list(
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
+	research_icon = 'icons/obj/weapons/guns/energy.dmi'
+	research_icon_state = "xray"
 
 /datum/design/ioncarbine
-	name = "Ion Carbine Part Kit (Nonlethal/Highly Destructive/Lethal (Silicons))"
-	desc = "How to Dismantle a Cyborg: The Gun."
+	name = "Type E Ion Carbine (Nonlethal/Highly Destructive/Lethal (Silicons))"
+	desc = "An energy weapon that fires ionized particles. Disrupts electronics, and extremely hazardous to silicon-based lifeforms."
 	id = "ioncarbine"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 3, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 4, /datum/material/uranium =SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/weaponcrafting/gunkit/ion
-	category = list(
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
+	research_icon = 'icons/obj/weapons/guns/energy.dmi'
+	research_icon_state = "ioncarbine"
 
 /datum/design/wormhole_projector
 	name = "Bluespace Wormhole Projector"
@@ -609,17 +585,11 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/largecrossbow
-	name = "Energy Crossbow Part Kit (Less Lethal/Contraband)"
-	desc = "A kit to reverse-engineer a proto-kinetic accelerator into an energy crossbow, favored by syndicate infiltration teams and carp hunters."
+	name = "Energy Crossbow (Less Lethal/Contraband)"
+	desc = "Practically identical to the mini energy crossbow favoured by the Syndicate, but with none of the subtly."
 	id = "largecrossbow"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
-	build_path = /obj/item/weaponcrafting/gunkit/ebow
-	category = list(
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
+	research_icon = 'icons/obj/weapons/guns/energy.dmi'
+	research_icon_state = "crossbowlarge"
 
 /datum/design/cleric_mace
 	name = "Cleric Mace"

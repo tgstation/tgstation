@@ -1,6 +1,7 @@
 /obj/item/gun/energy/ionrifle
-	name = "ion rifle"
-	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
+	name = "\improper Type E ion projector"
+	desc = "The Type E Ion Delivery System, developed by Nanotrasen. Delivers a blast of ionizing energy that scatters from a point of impact, disrupting electrical devices. \
+		Entirely harmless to most carbon-based lifeforms, but ruthlessly lethal to mechanized entities and silicon-based lifeforms. Or anyone with a pacemaker."
 	icon_state = "ionrifle"
 	inhand_icon_state = null //so the human update icon uses the icon_state instead.
 	worn_icon_state = null
@@ -24,10 +25,15 @@
 		overlay_y = 9)
 
 /obj/item/gun/energy/ionrifle/carbine
-	name = "ion carbine"
-	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
+	name = "\improper Type E/R ion projector carbine"
+	desc = "The burst fire Type E/R Ion Delivery System, developed by Nanotrasen. Practically identical to the much large rifle variant of the ion projector, \
+		but capable of burst fire and contained in a smaller frame. Typically viewed as a superior design thanks to increased portability and volume of fire."
 	icon_state = "ioncarbine"
 	worn_icon_state = "gun"
+	burst_size = 2
+	fire_delay = 2
+	projectile_speed_multiplier = 1.5
+	ammo_type = list(/obj/item/ammo_casing/energy/ion/weak)
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BELT
 
@@ -335,7 +341,7 @@
 	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/gun/energy/temperature
-	name = "temperature gun"
+	name = "temperature fluctuator"
 	icon_state = "freezegun"
 	desc = "A gun that changes temperatures. Comes with a collapsible stock."
 	w_class = WEIGHT_CLASS_NORMAL
@@ -345,12 +351,12 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/gun/energy/temperature/security
-	name = "security temperature gun"
+	name = "security temperature fluctuator"
 	desc = "A weapon that can only be used to its full potential by the truly robust."
 	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/temperature/freeze
-	name = "cryogenic temperature gun"
+	name = "cryolator"
 	desc = "A gun that reduces temperatures. Only for those with ice in their veins."
 	pin = /obj/item/firing_pin
 	ammo_type = list(/obj/item/ammo_casing/energy/temp)

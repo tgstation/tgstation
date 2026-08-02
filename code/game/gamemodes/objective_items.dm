@@ -824,7 +824,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	return add_item_to_steal(src, /obj/item/gun/ballistic/shotgun/riot)
 
 /datum/objective_item/steal/spy/temp_gun
-	name = "security's temperature gun"
+	name = "security's temperature fluctuator"
 	targetitem = /obj/item/gun/energy/temperature/security
 	excludefromjob = list(
 		JOB_DETECTIVE,
@@ -835,7 +835,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	)
 	exists_on_map = TRUE
 	difficulty = 2 // lowered for the meme
-	steal_hint = "Security's TRUSTY temperature gun, found in the station's Armory."
+	steal_hint = "Security's TRUSTY temperature fluctuator, found in the station's Armory."
 
 /obj/item/gun/energy/temperature/security/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/energy/temperature/security)

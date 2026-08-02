@@ -20,18 +20,6 @@
 /obj/item/gun/energy/recharge/kinetic_accelerator/add_bayonet_point()
 	AddComponent(/datum/component/bayonet_attachable, offset_x = 20, offset_y = 12)
 
-/obj/item/gun/energy/recharge/kinetic_accelerator/Initialize(mapload)
-	. = ..()
-	// Only actual KAs can be converted
-	if(type != /obj/item/gun/energy/recharge/kinetic_accelerator)
-		return
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ebow)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-	)
-
 /obj/item/gun/energy/recharge/kinetic_accelerator/apply_fantasy_bonuses(bonus)
 	. = ..()
 	max_mod_capacity = modify_fantasy_variable("max_mod_capacity", max_mod_capacity, bonus * 10)

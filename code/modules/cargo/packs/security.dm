@@ -243,7 +243,7 @@
 /datum/supply_pack/security/armory/laser
 	name = "Type 5 Laser Gun Crate"
 	desc = "Contains three Type 5 laser guns, developed by Nanotrasen. For when the going gets tough, you get going with the \
-		Type 5 Heat Delivery System. As developed by Nanotrasen."
+		Type 5 Heat Delivery System."
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/gun/energy/laser = 3)
 	crate_name = "\improper Type 5 laser crate"
@@ -410,3 +410,37 @@
 	access_view = ACCESS_SECURITY
 	contains = list(/obj/item/blood_worm_tester = 4)
 	crate_name = "hemoparasite testing crate"
+
+// Unlockable Packs //
+
+/datum/supply_pack/security/armory/laser/xray
+	name = "Type 6 X-ray Laser Gun Crate"
+	desc = "Contains three Type 6 X-ray laser guns, developed by Nanotrasen. They can run, but they can't hide from the \
+		Type 6 Heat Delivery System."
+	order_flags = ORDER_SPECIAL
+	contains = list(/obj/item/gun/energy/laser/xray = 3)
+	crate_name = "\improper Type 6 x-ray laser gun crate"
+
+/datum/supply_pack/security/armory/energy/advanced
+	name = "Advanced Energy Guns Crate"
+	desc = "Contains three advanced Energy Guns, capable of firing both nonlethal and lethal blasts of light. \
+		Automatically recharges over time, but might malfunction if exposed to an electromagnetic pulse."
+	order_flags = ORDER_SPECIAL
+	contains = list(/obj/item/gun/energy/e_gun/nuclear = 3)
+	crate_name = "advanced energy gun crate"
+
+/datum/supply_pack/security/armory/laser/ion
+	name = "Type E/R Ion Projector Carbine Crate"
+	desc = "Contains three ion projector carbines, developed by Nanotrasen. A counter-electronic weapon employed against \
+		silicon-based lifeforms, mechanized vehicles or to disrupt electrical devices. More compact and faster \
+		firing than the rifle variant."
+	order_flags = ORDER_SPECIAL
+	contains = list(/obj/item/gun/energy/ionrifle/carbine = 3)
+	crate_name = "\improper Type E/R ion projector crate"
+
+/datum/supply_pack/security/armory/laser/temperature
+	name = "Temperature Fluctuator Crate"
+	desc = "Contains three temperature fluctuators. Able to rapidly increase or decrease the temperature of a target."
+	order_flags = ORDER_SPECIAL
+	contains = list(/obj/item/gun/energy/temperature/security = 3)
+	crate_name = "temperature fluctuator crate"

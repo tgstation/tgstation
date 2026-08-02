@@ -43,7 +43,7 @@
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /datum/supply_pack/imports/duct_spider
-	name = "Duct Spider Crate"
+	name = "Duct Spider Crate :)"
 	desc = "Awww! Straight from the Australicus sector to your station's ventilation system!"
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/mob/living/basic/spider/maintenance)
@@ -52,7 +52,7 @@
 	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
 
 /datum/supply_pack/imports/duct_spider/dangerous
-	name = "Duct Spider Crate?"
+	name = "Duct Spider Crate :("
 	desc = "Wait, is this the right crate? It has a frowny face, what does that mean?"
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/mob/living/basic/spider/giant/hunter)
@@ -406,3 +406,14 @@
 	contains = list(/obj/item/clothing/shoes/bhop/rocket/jet)
 	crate_name = "nuVoid Jet Boots Crate"
 	crate_type = /obj/structure/closet/crate/goldcrate
+
+// Unlockable Packs //
+
+/datum/supply_pack/imports/crossbow
+	name = "Energy Crossbow Crate"
+	desc = "(*!&@#NOT SURE HOW YOU FOUND THIS CHANNEL, BUT WE DON'T REALLY CARE EITHER. GIVE THEM HELL, PAL. ONE ENERGY CROSSBOW. \
+		JUST LIKE THE ONES THAT AGENTS USE! BUT UH, A BIT BIGGER. IT'S FINE! WORKS LIKE A CHARM.#@*$"
+	cost = CARGO_CRATE_VALUE * 10
+	order_flags = ORDER_SPECIAL
+	contains = list(/obj/item/gun/energy/recharge/ebow/large = 1)
+	crate_name = "\improper energy crossbow crate"
