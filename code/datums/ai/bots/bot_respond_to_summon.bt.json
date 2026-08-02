@@ -14,7 +14,8 @@
 				"vars": {
 					"target_key": "BB_BOT_SUMMON_TARGET",
 					"required_dist": 0,
-					"finish_on_arrival": true
+					"finish_on_arrival": true,
+					"movement_type": "/datum/ai_movement/navmesh_astar/bot/summon"
 				}
 			},
 			{

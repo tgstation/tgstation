@@ -65,6 +65,9 @@
 	our_pawn.RegisterSignal(loop, COMSIG_MOVELOOP_NAVMESH_FINISHED_PATHING, TYPE_PROC_REF(/mob/living/basic/bot, generate_bot_path))
 	return loop
 
+/datum/ai_movement/navmesh_astar/bot/summon
+		maximum_length = AI_BOT_PATH_LENGTH
+
 /datum/ai_movement/navmesh_astar/bot/travel_to_beacon
 	maximum_length = AI_BOT_PATH_LENGTH
 	max_pathing_attempts = 10
