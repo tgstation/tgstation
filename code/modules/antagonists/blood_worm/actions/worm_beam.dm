@@ -1,4 +1,4 @@
-/datum/action/cooldown/mob_cooldown/blood_worm/blood_beam
+// /datum/action/cooldown/mob_cooldown/blood_worm/blood_beam
 
 	name = "Blood beam"
 	desc = "Unleash a barrage of hot acid blood energies in the targeted direction."
