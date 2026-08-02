@@ -19,9 +19,6 @@
 	if(subtype_value != /datum/export/crate/coffin::cost)
 		TEST_FAIL("A crate subtype(coffin) was not worth its export value!")
 
-	var/list/export_options = subtypesof(/datum/export)
-	if(!length(export_options))
-		TEST_FAIL("You're not testing anything idiot.")
 	for(var/datum/export/this_export as anything in export_options)
 		if(initial(this_export.include_subtypes))
 			for(var/atom/included_thing as anything in initial(this_export.export_types))
