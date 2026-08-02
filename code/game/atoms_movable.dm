@@ -231,7 +231,7 @@
 			our_turf.nav_dirty()
 
 /atom/movable/Destroy(force)
-	// Navmap: a relevant object leaving the world invalidates its turf.
+	//Update the navmap if the destroyed thing was nav relevant : )
 	if(NAV_RELEVANT(src))
 		var/turf/our_turf = get_turf(src)
 		if(our_turf)

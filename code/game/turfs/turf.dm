@@ -927,7 +927,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Builds packed passability bits and live blockers for one outgoing edge.
 /turf/proc/nav_evaluate_edge(dir, turf/dest, list/edge_blockers)
-	// --- destination turf itself ---
 	if(dest.density)
 		return NONE // hard blocked, nobody passes
 	// Baseline class passability of the destination turf, before contents.
@@ -988,7 +987,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		edge_blockers += mask
 		return TRUE
 
-	// Store mover-dependent blockers for live evaluation.
+	// Store mover-dependent blockers for live evaluation. (Rust calls back into these via byond API)
 	if(istype(blocker, /obj/machinery/door) \
 		|| blocker.can_astar_pass == CANASTARPASS_ALWAYS_PROC \
 		|| (blocker.pass_flags_self & ~NAV_NON_PASS_FLAGS) \
