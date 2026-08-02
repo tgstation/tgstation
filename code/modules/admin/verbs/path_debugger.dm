@@ -7,6 +7,7 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 	var/datum/admins/owner
 	var/datum/action/innate/path_debug/jps/jps_debug
 	var/datum/action/innate/path_debug/sssp/sssp_debug
+	var/datum/action/innate/path_debug/navmap/navmap_debug
 
 /datum/pathfind_debug/New(datum/admins/owner)
 	src.owner = owner
@@ -15,6 +16,7 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 /datum/pathfind_debug/Destroy(force)
 	QDEL_NULL(jps_debug)
 	QDEL_NULL(sssp_debug)
+	QDEL_NULL(navmap_debug)
 	return ..()
 
 /datum/pathfind_debug/proc/hook_client()
@@ -22,10 +24,13 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 		return
 	QDEL_NULL(jps_debug)
 	QDEL_NULL(sssp_debug)
+	QDEL_NULL(navmap_debug)
 	jps_debug = new
 	jps_debug.Grant(owner.owner.mob)
 	sssp_debug = new()
 	sssp_debug.Grant(owner.owner.mob)
+	navmap_debug = new()
+	navmap_debug.Grant(owner.owner.mob)
 	RegisterSignal(owner.owner.mob, COMSIG_MOB_LOGOUT, PROC_REF(on_logout))
 
 /datum/pathfind_debug/proc/on_logout(mob/logging_out)
@@ -248,4 +253,59 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 /datum/action/innate/path_debug/sssp/run_the_path(atom/movable/middle_man)
 	middle_man.forceMove(source_turf)
 	shown_map = get_sssp(middle_man, max_distance, list(), allowed_on_space, blacklisted_turf)
+	update_visuals()
+
+/datum/action/innate/path_debug/navmap
+	name = "Navmap Test"
+	button_icon = 'icons/turf/debug.dmi'
+	button_icon_state = "jps"
+
+	var/turf/source_turf
+	var/turf/target_turf
+	var/max_distance
+	var/profile
+	var/list/turf/display_turfs
+
+/datum/action/innate/path_debug/navmap/Activate()
+	. = ..()
+	max_distance = tgui_input_number(owner, "How far should we be allowed to try and path", "Navmap Max Distance", min_value = 1, default = 30)
+	profile = tgui_input_list(owner, "Mover profile", "Navmap", list("baseline", "table+grille", "all-access", "flying"))
+
+/datum/action/innate/path_debug/navmap/Deactivate()
+	source_turf = null
+	target_turf = null
+	display_turfs = list()
+	return ..()
+
+/datum/action/innate/path_debug/navmap/left_clicked(turf/clicked_on)
+	source_turf = clicked_on
+	display_turfs = list()
+
+/datum/action/innate/path_debug/navmap/right_clicked(turf/clicked_on)
+	target_turf = clicked_on
+	display_turfs = list()
+
+/datum/action/innate/path_debug/navmap/build_visuals()
+	. = ..()
+	if(source_turf)
+		var/image/start = image('icons/turf/debug.dmi', source_turf, "start", PATH_DEBUG_LAYER)
+		SET_PLANE_EXPLICIT(start, BALLOON_CHAT_PLANE, source_turf)
+		display_images += start
+	if(target_turf)
+		var/image/end = image('icons/turf/debug.dmi', target_turf, "end", PATH_DEBUG_LAYER)
+		SET_PLANE_EXPLICIT(end, BALLOON_CHAT_PLANE, target_turf)
+		display_images += end
+	display_images += render_path(display_turfs)
+
+/datum/action/innate/path_debug/navmap/path_ready()
+	return source_turf && target_turf && profile && max_distance
+
+/datum/action/innate/path_debug/navmap/run_the_path(atom/movable/middle_man)
+	var/datum/can_pass_info/info = nav_debug_profile(profile, owner)
+	var/list/path
+	try
+		path = rustg_navmap_pathfinder(source_turf, target_turf, info, NAV_IS_FLYING(info), max_distance, 0, TRUE, null, DIAGONAL_DO_NOTHING, FALSE)
+	catch
+		path = list()
+	display_turfs = islist(path) ? path : list()
 	update_visuals()

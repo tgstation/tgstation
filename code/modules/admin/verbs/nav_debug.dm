@@ -137,13 +137,14 @@ ADMIN_VERB(navmap_inspect_turf, R_DEBUG, "Navmap: Inspect Turf", "Prints the bak
 		return
 	if(isnull(here.nav_pass))
 		here.nav_bake()
-	var/list/lines = list("Navmap at [AREACOORD(here)] (nav_pass = [here.nav_pass], simulated = !!(here.nav_pass & NAV_SIMULATED)):")
+	var/simulated = !!(here.nav_pass & NAV_SIMULATED)
+	var/list/lines = list("Navmap at [AREACOORD(here)] (nav_pass = [here.nav_pass], simulated = [simulated ? \"TRUE\" : \"FALSE\"]):")
 	for(var/dir in GLOB.cardinals)
-		var/ground = (here.nav_pass & NAV_GROUND(dir)) ? "G" : "-"
-		var/flight = (here.nav_pass & NAV_FLIGHT(dir)) ? "F" : "-"
-		var/cond = (here.nav_pass & NAV_COND(dir)) ? "C" : "-"
+		var/ground = (here.nav_pass & NAV_GROUND(dir)) ? "Pass" : "Blocked"
+		var/flight = (here.nav_pass & NAV_FLIGHT(dir)) ? "Pass" : "Blocked"
+		var/conditional = (here.nav_pass & NAV_COND(dir)) ? "Yes" : "No"
 		var/entries = here.nav_blockers?["[dir]"]
-		lines += "  [dir2text(dir)]: [ground][flight][cond][length(entries) ? " entries=[json_encode(entries)]" : ""]"
+		lines += "  [dir2text(dir)]: Ground: [ground], Flying: [flight], Conditional: [conditional][length(entries) ? " (blockers: [json_encode(entries)])" : ""]"
 	to_chat(user, span_notice(jointext(lines, "\n")))
 
 ADMIN_VERB(navmap_prebake_z, R_DEBUG, "Navmap: Prebake Z-Level", "Eagerly bakes every turf on your current z-level.", ADMIN_CATEGORY_DEBUG)
@@ -153,33 +154,3 @@ ADMIN_VERB(navmap_prebake_z, R_DEBUG, "Navmap: Prebake Z-Level", "Eagerly bakes 
 	var/start_time = REALTIMEOFDAY
 	var/count = SSnavmap.prebake_z(here.z)
 	to_chat(user, span_boldnotice("Prebaked [count] turfs on z[here.z] in [(REALTIMEOFDAY - start_time) / 10]s."))
-
-/mob/living/basic/nav_tester
-	name = "navmap tester"
-	desc = "A test pawn that walks navmap paths."
-	icon = 'icons/mob/simple/animal.dmi'
-	icon_state = "mouse_gray"
-	maxHealth = 100
-	health = 100
-
-/// Starts the tester moving toward a target over the navmap.
-/mob/living/basic/nav_tester/proc/set_nav_target(atom/target)
-	GLOB.move_manager.navmap_astar_move(
-		src,
-		target,
-		delay = 2,
-		repath_delay = 1 SECONDS,
-		max_path_length = 0,
-		access = list(),
-		skip_first = TRUE,
-	)
-
-ADMIN_VERB(navmap_spawn_tester, R_DEBUG, "Navmap: Spawn Tester", "Spawns a pawn that walks a navmap path to the set goal.", ADMIN_CATEGORY_DEBUG)
-	var/turf/here = get_turf(user.mob)
-	var/turf/goal = user.nav_debug_goal
-	if(!here || !goal)
-		to_chat(user, span_warning("Set a goal first (Navmap: Set Goal)."))
-		return
-	var/mob/living/basic/nav_tester/pawn = new(here)
-	pawn.set_nav_target(goal)
-	to_chat(user, span_notice("Spawned a navmap tester heading for [AREACOORD(goal)]."))
