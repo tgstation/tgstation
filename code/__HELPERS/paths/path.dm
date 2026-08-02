@@ -79,7 +79,7 @@
 	// We use += here to behave nicely with lists
 	return_list += LIST_VALUE_WRAP_LISTS(hand_back)
 
-/// The datum used to handle the JPS pathfinding, completely self-contained
+/// The datum used to handle the JPS/navmap pathfinding, completely self-contained
 /datum/pathfind
 	/// The turf we started at
 	var/turf/start

@@ -425,6 +425,36 @@
 #define rustg_log_write(fname, text, format) RUSTG_CALL(RUST_G, "log_write")(fname, text, format)
 /proc/rustg_log_close_all() return RUSTG_CALL(RUST_G, "log_close_all")()
 
+/**
+ *  Navmap A*. Each start/resume call works for about 5ms, then returns a list with
+ * `status` (`in_progress`, `complete`, `no_path`, or `error`), an optional `job_id`, and a final
+ * `path` for complete/no_path results. Cancel abandoned or superseded jobs.
+ *
+ */
+
+/**
+ * Synchronous call to the pathfinder, Use this sparingly if you REALLY need immediate results. If you run this on long distances it could take too long.
+ */
+#define rustg_navmap_pathfinder(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first) \
+	RUSTG_CALL(RUST_G, "byond:rustg_navmap_pathfinder_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first)
+
+#define rustg_navmap_pathfinder_start(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first) \
+	RUSTG_CALL(RUST_G, "byond:rustg_navmap_pathfinder_start_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first)
+
+/** Resume an in-progress job. Re-supply the current mover pass_info for any newly resolved conditional edges. */
+#define rustg_navmap_pathfinder_resume(job_id, pass_info) \
+	RUSTG_CALL(RUST_G, "byond:rustg_navmap_pathfinder_resume_ffi")(job_id, pass_info)
+
+/** Drop an in-progress job immediately. Jobs also expire after 30 seconds without a resume. */
+#define rustg_navmap_pathfinder_cancel(job_id) \
+	RUSTG_CALL(RUST_G, "byond:rustg_navmap_pathfinder_cancel_ffi")(job_id)
+
+#define rustg_navmap_update(x, y, z, nav_pass) \
+	RUSTG_CALL(RUST_G, "byond:rustg_navmap_update_ffi")(x, y, z, nav_pass)
+
+#define rustg_navmap_bulk_update(flat_list) \
+	RUSTG_CALL(RUST_G, "byond:rustg_navmap_bulk_update_ffi")(flat_list)
+
 #define rustg_noise_get_at_coordinates(seed, x, y) RUSTG_CALL(RUST_G, "noise_get_at_coordinates")(seed, x, y)
 
 /**
@@ -568,44 +598,6 @@
 	else
 		CRASH(output["content"])
 
-/**
- * Cooperative navmap A*. Each start/resume call works for about 5ms, then returns a list with
- * `status` (`in_progress`, `complete`, `no_path`, or `error`), an optional `job_id`, and a final
- * `path` for complete/no_path results. Cancel abandoned or superseded jobs.
- *
- * nav_pass bit 13 is the simulated-turf flag and must be set whenever cached turf data is sent to
- * Rust. This keeps `simulated_only` entirely Rust-side for baked turfs.
- */
-
-#define RUSTG_NAVMAP_PATH_IN_PROGRESS "in_progress"
-#define RUSTG_NAVMAP_PATH_COMPLETE "complete"
-#define RUSTG_NAVMAP_PATH_NO_PATH "no_path"
-#define RUSTG_NAVMAP_PATH_ERROR "error"
-
-/**
- * Blocking compatibility wrapper. Returns the final turf list directly; use only for callers that
- * require synchronous behavior. AI movement should use the cooperative start/resume API below.
- */
-#define rustg_navmap_pathfinder(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first) \
-	RUSTG_CALL(RUST_G, "byond:rustg_navmap_pathfinder_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first)
-
-#define rustg_navmap_pathfinder_start(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first) \
-	RUSTG_CALL(RUST_G, "byond:rustg_navmap_pathfinder_start_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first)
-
-/** Resume an in-progress job. Re-supply the current mover pass_info for any newly resolved conditional edges. */
-#define rustg_navmap_pathfinder_resume(job_id, pass_info) \
-	RUSTG_CALL(RUST_G, "byond:rustg_navmap_pathfinder_resume_ffi")(job_id, pass_info)
-
-/** Drop an in-progress job immediately. Jobs also expire after 30 seconds without a resume. */
-#define rustg_navmap_pathfinder_cancel(job_id) \
-	RUSTG_CALL(RUST_G, "byond:rustg_navmap_pathfinder_cancel_ffi")(job_id)
-
-#define rustg_navmap_update(x, y, z, nav_pass) \
-	RUSTG_CALL(RUST_G, "byond:rustg_navmap_update_ffi")(x, y, z, nav_pass)
-
-#define rustg_navmap_bulk_update(flat_list) \
-	RUSTG_CALL(RUST_G, "byond:rustg_navmap_bulk_update_ffi")(flat_list)
-
 #define rustg_url_encode(text) RUSTG_CALL(RUST_G, "url_encode")("[text]")
 #define rustg_url_decode(text) RUSTG_CALL(RUST_G, "url_decode")(text)
 
@@ -629,3 +621,4 @@
 /// Generates a random version 2 CUID with the given length.
 /// See https://github.com/paralleldrive/cuid2 for specifics on version 2 CUIDs.
 #define rustg_generate_cuid2_length(length) RUSTG_CALL(RUST_G, "cuid2_len")("[length]")
+

@@ -1,11 +1,4 @@
-/obj/effect/temp_visual/nav_marker
-	name = "nav path marker"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "sniper_zoom"
-	randomdir = FALSE
-	duration = 5 SECONDS
-	color = COLOR_CYAN
-	layer = ABOVE_MOB_LAYER
+
 /client/var/turf/nav_debug_goal
 /// Builds a passability profile for navmap debugging.
 /proc/nav_debug_profile(profile, mob/requester)
@@ -76,60 +69,8 @@ ADMIN_VERB(navmap_run_path, R_DEBUG, "Navmap: Run Path", "Paths from your turf t
 		jps_path = list()
 		jps_ms = 0
 
-	for(var/turf/step as anything in rustg_nav_path)
-		new /obj/effect/temp_visual/nav_marker(step)
-
 	to_chat(user, span_boldnotice("JPS (OLD): [length(jps_path) ? "[length(jps_path)] steps" : "NO PATH"] in [jps_ms]ms. \
 		Rust A*: [rustg_nav_available ? "[length(rustg_nav_path) ? "[length(rustg_nav_path)] steps" : "NO PATH"] in [rustg_nav_ms]ms" : "unavailable (rust-g missing navmap_pathfinder)"]"))
-
-ADMIN_VERB(navmap_run_cooperative_path, R_DEBUG, "Navmap: Test Cooperative A*", "Runs the time-sliced rust-g navmap pathfinder to the set goal.", ADMIN_CATEGORY_DEBUG)
-	var/turf/start = get_turf(user.mob)
-	var/turf/goal = user.nav_debug_goal
-	if(!start || !goal)
-		to_chat(user, span_warning("Set a goal first (Navmap: Set Goal)."))
-		return
-	if(start.z != goal.z)
-		to_chat(user, span_warning("Start and goal are on different z-levels; navmap is single-z."))
-		return
-	var/profile = tgui_input_list(user, "Mover profile", "Navmap", list("baseline", "table+grille", "all-access", "flying"))
-	if(!profile)
-		return
-	var/max_range = tgui_input_number(user, "Maximum path range in tiles (0 = unlimited).", "Navmap", default = 200, min_value = 0, round_value = TRUE)
-	if(isnull(max_range))
-		return
-	var/datum/can_pass_info/info = nav_debug_profile(profile, user.mob)
-	var/list/result
-	try
-		result = rustg_navmap_pathfinder_start(start, goal, info, NAV_IS_FLYING(info), max_range, 0, TRUE, null, DIAGONAL_REMOVE_CLUNKY, TRUE)
-	catch
-		to_chat(user, span_warning("Cooperative navmap A* is unavailable in the loaded rust-g."))
-		return
-	var/slices = 1
-	while(islist(result) && result["status"] == RUSTG_NAVMAP_PATH_IN_PROGRESS)
-		var/job_id = result["job_id"]
-		if(!job_id)
-			break
-		sleep(world.tick_lag)
-		slices++
-		try
-			result = rustg_navmap_pathfinder_resume(job_id, info)
-		catch
-			to_chat(user, span_warning("Cooperative navmap A* failed while resuming."))
-			return
-	if(!islist(result))
-		to_chat(user, span_warning("Cooperative navmap A* returned an invalid result."))
-		return
-	var/status = result["status"]
-	var/list/path = result["path"]
-	for(var/turf/step as anything in path)
-		new /obj/effect/temp_visual/nav_marker(step)
-	if(status == RUSTG_NAVMAP_PATH_COMPLETE)
-		to_chat(user, span_boldnotice("Cooperative Rust A*: [length(path)] steps in [slices] slices."))
-	else if(status == RUSTG_NAVMAP_PATH_NO_PATH)
-		to_chat(user, span_warning("Cooperative Rust A*: no path after [slices] slices."))
-	else
-		var/error_message = result["error"] || "unexpected status ([status])"
-		to_chat(user, span_warning("Cooperative Rust A*: [error_message]."))
 
 ADMIN_VERB(navmap_inspect_turf, R_DEBUG, "Navmap: Inspect Turf", "Prints the baked navmap data for your current turf.", ADMIN_CATEGORY_DEBUG)
 	var/turf/here = get_turf(user.mob)

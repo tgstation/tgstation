@@ -38,7 +38,7 @@
 ///bypass canceling our actions on set_ai_status()
 #define AI_PREVENT_CANCEL_ACTIONS (1<<2)
 
-///For JPS pathing, the maximum length of a path we'll try to generate. Should be modularized depending on what we're doing later on
+///For navmap pathing, the maximum length of a path we'll try to generate. Should be modularized depending on what we're doing later on
 #define AI_MAX_PATH_LENGTH 30 // 30 is possibly overkill since by default we lose interest after 14 tiles of distance, but this gives wiggle room for weaving around obstacles
 #define AI_BOT_PATH_LENGTH 200
 #define AI_MULEBOT_PATH_LENGTH 200 //we making a pilgramage sometimes...
