@@ -39,6 +39,7 @@
 	destroy_on_removal = FALSE,
 	parent_icon_state_suffix = "",
 	down_overlay_state_suffix = "",
+	auto_deploy_on_outfit_equip = TRUE,
 	datum/callback/pre_creation_check,
 	datum/callback/on_created,
 	datum/callback/on_deployed,
@@ -54,6 +55,7 @@
 	src.destroy_on_removal = destroy_on_removal
 	src.parent_icon_state_suffix = parent_icon_state_suffix
 	src.down_overlay_state_suffix = down_overlay_state_suffix
+	src.auto_deploy_on_outfit_equip = auto_deploy_on_outfit_equip
 	src.pre_creation_check = pre_creation_check
 	src.on_created = on_created
 	src.on_deployed = on_deployed
@@ -152,7 +154,7 @@
 /// Display deployed if worn in an outfit
 /datum/component/toggle_attached_clothing/proc/on_parent_equipped_outfit(obj/item/clothing/source, mob/equipper, visuals_only, slot)
 	SIGNAL_HANDLER
-	if(istype(source, /obj/item/clothing/suit/hooded/wintercoat))
+	if (!auto_deploy_on_outfit_equip)
 		return
 	create_deployable()
 	toggle_deployable()
