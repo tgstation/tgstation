@@ -25,8 +25,6 @@
 	var/obj/item/assembly/signaler/anomaly/core
 	///Accepted types of anomaly cores.
 	var/required_anomaly = /obj/item/assembly/signaler/anomaly/flux
-	///If this one starts with a core in.
-	var/prebuilt = FALSE
 	///If the core is removable once socketed.
 	var/core_removable = TRUE
 
