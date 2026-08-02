@@ -11,6 +11,8 @@
 		/datum/gizpulse/radiation_pulse = 1,
 	)
 
+    var/gizmo_machine
+
 /datum/gizpulse/material_eatter
 
 /datum/gizpulse/material_eatter/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
