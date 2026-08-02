@@ -8,7 +8,7 @@
  * Wall will get the hole on third application.
  * Can be fixed using a welder
  */
-/datum/component/hole_wall
+// /datum/component/hole_wall
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
 	var/current_stage = HOLED_WALL_INITIAL
