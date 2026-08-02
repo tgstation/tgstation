@@ -408,14 +408,13 @@
 		science_department_bank_account?.adjust_money(SSeconomy.techweb_bounty)
 		log_message += ", gaining [SSeconomy.techweb_bounty] to [science_department_bank_account] for it."
 
-	if(node.unlocks_packs)
-		for(var/datum/supply_pack/potential_pack in node.unlocked_packs)
-			var/datum/supply_pack/unlockable_pack = SSshuttle.supply_packs[potential_pack]
-			if(isnull(unlockable_pack)) // can happen for packs with dynamic IDs
-				CRASH("Failed to find supply pack [potential_pack] for techweb node [type]") 
-			if(!(unlockable_pack.order_flags & ORDER_SPECIAL) // otherwise they show up by default
-				CRASH("Supply pack [potential_pack] lacks ORDER_SPECIAL")
-			unlockable_pack.order_flags |= ORDER_SPECIAL_ENABLED
+	for(var/datum/supply_pack/potential_pack as anything in node.unlocked_packs)
+		var/datum/supply_pack/unlockable_pack = SSshuttle.supply_packs[potential_pack]
+		if(isnull(unlockable_pack)) // can happen for packs with dynamic IDs
+			CRASH("Failed to find supply pack [potential_pack] for techweb node [type]")
+		if(!(unlockable_pack.order_flags & ORDER_SPECIAL)) // otherwise they show up by default
+			CRASH("Supply pack [potential_pack] lacks ORDER_SPECIAL")
+		unlockable_pack.order_flags |= ORDER_SPECIAL_ENABLED
 
 	// Avoid logging the same 300+ lines at the beginning of every round
 	if (MC_RUNNING())
