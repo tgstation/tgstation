@@ -1,4 +1,4 @@
-/// Queues and manages JPS pathfinding steps
+/// Queues and manages JPS/navmap pathfinding steps
 SUBSYSTEM_DEF(pathfinder)
 	name = "Pathfinder"
 	priority = FIRE_PRIORITY_PATHFINDING
@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(pathfinder)
 	var/list/datum/pathfind/active_pathing = list()
 	/// List of pathfind datums being ACTIVELY processed. exists to make subsystem stats readable
 	var/list/datum/pathfind/currentrun = list()
-	/// Cooperative rust-g navmap jobs, processed like legacy JPS work.
+	/// Async rust-g navmap jobs.
 	var/list/datum/pathfind/navmap/navmap_pathing = list()
 	var/list/datum/pathfind/navmap/current_navmap_run = list()
 	/// List of uncheccked source_to_map entries
@@ -98,7 +98,7 @@ SUBSYSTEM_DEF(pathfinder)
 		finished.Invoke(path)
 	return TRUE
 
-/// Starts a cooperative native navmap search and returns its queued job.
+/// Starts a async navmap pathfinding job and returns the queued job.
 /datum/controller/subsystem/pathfinder/proc/navmap_pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)
 	var/datum/pathfind/navmap/path = new()
 	path.setup(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish)

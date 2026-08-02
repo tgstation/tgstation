@@ -50,7 +50,6 @@
 	var/datum/ai_controller/controller = source.extra_info
 
 	source.access = controller.get_access()
-	// minimum_distance was set at loop creation; no need to update it on repath
 
 /datum/ai_movement/navmap_astar/bot
 	max_pathing_attempts = 8

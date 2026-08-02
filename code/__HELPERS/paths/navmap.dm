@@ -23,7 +23,7 @@
 	src.on_finish = on_finish
 
 /datum/pathfind/navmap/start()
-	start = get_turf(requester)
+	start = get_turf(requester) //start needs to be set
 	. = ..()
 	if(!. || !end || start.z != end.z)
 		return FALSE

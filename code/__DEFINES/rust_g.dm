@@ -432,6 +432,12 @@
  *
  */
 
+// Status values returned by async navmap pathfinder jobs.
+#define RUSTG_NAVMAP_PATH_IN_PROGRESS "in_progress"
+#define RUSTG_NAVMAP_PATH_COMPLETE "complete"
+#define RUSTG_NAVMAP_PATH_NO_PATH "no_path"
+#define RUSTG_NAVMAP_PATH_ERROR "error"
+
 /**
  * Synchronous call to the pathfinder, Use this sparingly if you REALLY need immediate results. If you run this on long distances it could take too long.
  */

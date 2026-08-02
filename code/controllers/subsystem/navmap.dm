@@ -51,6 +51,7 @@ SUBSYSTEM_DEF(navmap)
 	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, PROC_REF(on_new_zlevel))
 
 	return SS_INIT_SUCCESS
+
 /// Enables automatic dirtying for a newly relevant z-level.
 /datum/controller/subsystem/navmap/proc/on_new_zlevel(datum/source, datum/space_level/new_level)
 	SIGNAL_HANDLER

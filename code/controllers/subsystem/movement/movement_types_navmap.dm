@@ -1,5 +1,5 @@
 
-/// Starts a movement loop that follows cooperative navmap A* paths.
+/// Starts a movement loop that follows async navmap A* paths.
 /datum/move_manager/proc/navmap_astar_move(moving,
 	chasing,
 	delay,
@@ -110,7 +110,7 @@
 
 /// Rebuilds the path when the repath cooldown permits it.
 /datum/move_loop/has_target/navmap_astar/proc/recalculate_path()
-	// Preserve an in-flight search and usable path. A moving target otherwise repeatedly cancels
+	// Preserve an active search and usable path. A moving target otherwise repeatedly cancels
 	// its own search before a result is returned; one follow-up search is enough to catch up.
 	if(is_pathing || !COOLDOWN_FINISHED(src, repath_cooldown))
 		repath_pending = TRUE

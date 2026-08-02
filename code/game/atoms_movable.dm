@@ -220,11 +220,9 @@
 		if(spawn_turf)
 			spawn_turf.nav_dirty()
 
-///Setter for the `density` variable to append behavior related to its changing.
 /atom/movable/set_density(new_value)
-	var/old_density = density
 	. = ..()
-	if(old_density == density)
+	if(isnull(.)) //no change
 		return
 
 	if(!(flags_1 & (NAV_IRRELEVANT_1 | NAV_ALWAYS_CONDITIONAL_1)))
