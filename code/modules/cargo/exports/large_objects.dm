@@ -26,7 +26,6 @@
 	unit_name = "ore box"
 	export_types = list(/obj/structure/ore_box)
 	exclude_types = list()
-	// exclude_types = list()
 
 /datum/export/crate/wood
 	cost = CARGO_CRATE_VALUE * 0.48
