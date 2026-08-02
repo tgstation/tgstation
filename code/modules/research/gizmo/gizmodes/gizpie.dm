@@ -2,6 +2,7 @@
 // 2 possible - mode with real creampie, which is stunning
 // or fake pie, which only do your face cream pied
 // Low chances for stun cream pie?
+// throwing the pie at the nearest target
 /datum/gizmodes/pie_thrower
 	guaranteed_active_gizmodes = list(
 		/datum/gizpulse/pie_thrower/ordinary,
@@ -9,7 +10,7 @@
 
 /datum/gizpulse/pie_thrower
 
-	var/range = 14
+	var/range = 3
 
 /datum/gizpulse/pie_thrower/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
 	throw_pie(holder)
