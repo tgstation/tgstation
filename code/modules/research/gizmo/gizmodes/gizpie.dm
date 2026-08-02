@@ -1,3 +1,7 @@
+// Gizmode mode, which throws pie, when activating
+// 2 possible - mode with real creampie, which is stunning
+// or fake pie, which only do your face cream pied
+// Low chances for stun cream pie?
 /datum/gizmodes/pie_thrower
 	guaranteed_active_gizmodes = list(
 		/datum/gizpulse/pie_thrower/ordinary,
