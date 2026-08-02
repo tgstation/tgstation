@@ -11,7 +11,8 @@
 		/datum/gizpulse/radiation_pulse = 1,
 	)
 
-    var/gizmo_machine
+    // reference to gizmo machinery object itself, to use it like a target\turf, to which materials are pulled
+    var/gizmo_machine = controller.gizmo
 
 /datum/gizpulse/material_eatter
 
