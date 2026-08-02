@@ -159,7 +159,7 @@
 	if(isnull(core))
 		balloon_alert(user, "no core!")
 		return ITEM_INTERACT_BLOCKING
-	if(!core_removable)
+	if((organ_flags & ORGAN_FAILING) || !core_removable)
 		balloon_alert(user, "can't remove core!")
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "removing core...")
