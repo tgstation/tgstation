@@ -31,6 +31,8 @@
 	var/datum/callback/on_deployed
 	/// Optional callback triggered before we hide our equipment, before as we may delete it afterwards
 	var/datum/callback/on_removed
+	/// If TRUE, automatically deploys the hood
+	var/auto_deploy_on_outfit_equip = TRUE
 
 /datum/component/toggle_attached_clothing/Initialize(
 	deployable_type,
