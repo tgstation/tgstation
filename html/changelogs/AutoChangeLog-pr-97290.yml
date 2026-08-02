@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - spellcheck: "Cargo bounty list printout now has a slightly better UI."
