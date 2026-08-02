@@ -14,3 +14,6 @@
 /datum/gizpulse/material_eatter
 
 /datum/gizpulse/material_eatter/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
+    nearest_input_object = gizmo.find_the_nearest_object_of_the_material()
+
+/datum/gizpulse/pie_thrower/proc/find_the_nearest_object_of_the_material(atom/movable/holder)
