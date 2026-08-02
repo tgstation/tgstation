@@ -1,3 +1,6 @@
+// Releasing the cloud of smoke.. with virus
+// High weighst for good virus, low weights for bad
+// very low for very bad
 /datum/gizmodes/viro_smoke
 	guaranteed_active_gizmodes = list(
 		/datum/gizpulse/viro_smoke/good,
