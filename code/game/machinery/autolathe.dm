@@ -512,7 +512,7 @@
 	for(var/datum/design/blueprint as anything in disky.blueprints)
 		if(!blueprint)
 			continue
-		if(blueprint.build_type & AUTOLATHE)
+		if(blueprint.build_type & (AUTOLATHE|PROTOLATHE))
 			imported_designs[blueprint.id] = TRUE
 		else
 			LAZYADD(not_imported, blueprint.name)

@@ -426,6 +426,21 @@ Nothing else in the console has ID requirements.
 			if(!COOLDOWN_FINISHED(src, cooldowncopy)) // prevents MC hang
 				say("Servers busy!")
 				return
+			if(params["type"] == RND_DESIGN_DISK)
+				if(QDELETED(d_disk))
+					say("No design disk inserted!")
+					return
+				COOLDOWN_START(src, cooldowncopy, 5 SECONDS)
+				for(var/design_id in stored_research.researched_designs)
+					var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+					if(!(design.build_type & (AUTOLATHE|PROTOLATHE)))
+						continue
+					if(design in d_disk.blueprints)
+						continue
+					d_disk.blueprints += design
+				say("Downloading to design disk.")
+				return TRUE
+
 			if(QDELETED(t_disk))
 				say("No tech disk inserted!")
 				return

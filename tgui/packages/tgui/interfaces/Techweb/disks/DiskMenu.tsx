@@ -35,8 +35,11 @@ export function TechwebDiskMenu(props: Props) {
             </Tabs>
           </Flex.Item>
           <Flex.Item align="center">
-            {diskType === 'tech' && (
-              <Button icon="save" onClick={() => act('loadTech')}>
+            {(diskType === 'tech' || diskType === 'design') && (
+              <Button
+                icon="save"
+                onClick={() => act('loadTech', { type: diskType })}
+              >
                 Web &rarr; Disk
               </Button>
             )}
@@ -61,7 +64,13 @@ export function TechwebDiskMenu(props: Props) {
           </Flex.Item>
         </Flex>
       </Flex.Item>
-      <Flex.Item grow className="Techweb__OverviewNodes">
+      <Flex.Item
+        grow
+        className="Techweb__OverviewNodes"
+        style={{
+          overflowY: 'auto',
+        }}
+      >
         <DiskContent />
       </Flex.Item>
     </Flex>
