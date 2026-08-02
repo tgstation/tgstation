@@ -11,10 +11,8 @@
 	simple_treat_text = "If on the <b>chest</b>, <b>walk</b>, <b>grasp it</b>, <b>splint</b>, <b>rest</b> or <b>buckle yourself</b> to something to reduce movement effects. \
 	Afterwards, repair with surgery."
 
-	homemade_treat_text = "The metal can be made <b>malleable</b> by repeated application of a welder, to a <b>moderate burn</b>. Afterwards, a <b>plunger</b> can reset the metal, \
-	as can <b>percussive maintenance</b>. After the metal is reset, if <b>unable to screw/wrench</b>, <b>bone gel</b> can, over time, secure inner components at risk of <b>corrossion</b>. \
-	Alternatively, <b>crowbar</b> the limb open to expose the internals - this will make it <b>easier</b> to re-secure them, but has a <b>high risk</b> of <b>shocking</b> you, \
-	so use insulated gloves. This will <b>cripple the limb</b>, so use it only as a last resort!"
+	homemade_treat_text = "The metal can be made <b>malleable</b> by repeated harmful application of any heated instrument until it carries a <b>moderate burn</b>. Afterwards, a <b>crowbar</b> can reset the metal, \
+	reducing the severity of the wound."
 
 	interaction_efficiency_penalty = 2.5
 	limp_slowdown = 7
@@ -50,9 +48,19 @@
 	a_or_from = "a"
 
 	/// Has the first stage of our treatment been completed?
-	var/superstructure_remedied = FALSE
+	VAR_FINAL/reset = FALSE
 
 /datum/wound_pregen_data/blunt_metal/superstructure
 	abstract = FALSE
 	wound_path_to_generate = /datum/wound/blunt/robotic/secures_internals/critical
 	threshold_minimum = 125
+
+/datum/wound/blunt/robotic/critical/limb_malleable()
+	return
+
+/datum/wound/blunt/robotic/critical/treat(obj/item/item, mob/user)
+	if(limb.get_wound(series = WOUND_SERIES_METAL_BURN_OVERHEAT, severity = WOUND_SEVERITY_MODERATE) && item.tool_behaviour == TOOL_CROWBAR)
+		return bend_metal(item, user)
+	return ..()
+
+/datum/wound/blunt/robotic/critical/bend_metal(obj/item/item, mob/bender)

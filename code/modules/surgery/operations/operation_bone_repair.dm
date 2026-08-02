@@ -345,11 +345,11 @@
 	return image(/obj/item/crowbar)
 
 /datum/surgery_operation/limb/realign_superstructure/all_required_strings()
-	return list("the limb must have a [lowertext(/datum/wound/blunt/robotic/critical::name)].") + ..()
+	return list("the limb must have a [lowertext(/datum/wound/blunt/robotic/critical::name)]") + ..()
 
 /datum/surgery_operation/limb/realign_superstructure/state_check(obj/item/bodypart/limb)
 	var/datum/wound/blunt/robotic/critical/fracture = locate() in limb.wounds
-	if(isnull(fracture))
+	if(isnull(fracture) || fracture.reset)
 		return FALSE
 	return TRUE
 
@@ -365,7 +365,7 @@
 
 /datum/surgery_operation/limb/realign_superstructure/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/datum/wound/blunt/bone/critical/fracture = locate() in limb.wounds
-	fracture?.superstructure_remedied = TRUE
+	fracture?.reset = TRUE
 
 	display_results(
 		surgeon,
@@ -387,15 +387,15 @@
 
 /datum/surgery_operation/limb/repair_superstructure/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	. = ..()
-	for(var/datum/wound/blunt/bone/critical/bone_wound in limb.wounds)
+	for(var/datum/wound/blunt/robotic/critical/bone_wound in limb.wounds)
 		if(HAS_TRAIT(bone_wound, TRAIT_WOUND_SCANNED))
 			. *= 0.5
 
 /datum/surgery_operation/limb/repair_superstructure/get_default_radial_image()
-	return image(/obj/item/stack/medical/bone_gel)
+	return image(/obj/item/weldingtool)
 
 /datum/surgery_operation/limb/repair_superstructure/all_required_strings()
-	return list("the limb's compound fracture has been reset") + ..()
+	return list("the limb's [lowertext(/datum/wound/blunt/robotic/critical::name)] has been realigned") + ..()
 
 /datum/surgery_operation/limb/repair_superstructure/state_check(obj/item/bodypart/limb)
 	var/datum/wound/blunt/bone/critical/fracture = locate() in limb.wounds
@@ -407,19 +407,19 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to repair the fracture in [FORMAT_LIMB_OWNER(limb)]..."),
-		span_notice("[surgeon] begins to repair the fracture in [FORMAT_LIMB_OWNER(limb)] with [tool]."),
-		span_notice("[surgeon] begins to repair the fracture in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("You begin to repair the shell of [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to repair the shell of [FORMAT_LIMB_OWNER(limb)] with [tool]."),
+		span_notice("[surgeon] begins to repair the shell of [FORMAT_LIMB_OWNER(limb)]."),
 	)
-	display_pain(limb.owner, "The aching pain in your [limb.plaintext_zone] is overwhelming!")
+	display_pain(limb.owner, "Sparks fly from your [limb.plaintext_zone]!")
 
 /datum/surgery_operation/limb/repair_superstructure/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	var/datum/wound/blunt/bone/critical/fracture = locate() in limb.wounds
+	var/datum/wound/blunt/robotic/critical/fracture = locate() in limb.wounds
 	qdel(fracture)
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully repair the fracture in [FORMAT_LIMB_OWNER(limb)]."),
-		span_notice("[surgeon] successfully repairs the fracture in [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
-		span_notice("[surgeon] successfully repairs the fracture in [FORMAT_LIMB_OWNER(limb)]!"),
+		span_notice("You successfully repair the shell of [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully repairs the shell of [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
+		span_notice("[surgeon] successfully repairs the shell of [FORMAT_LIMB_OWNER(limb)]!"),
 	)
