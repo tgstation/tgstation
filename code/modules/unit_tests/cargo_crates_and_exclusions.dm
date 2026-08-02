@@ -1,4 +1,9 @@
-
+/**
+ * For this test, we check a few baseline requirements for cargo to work properly:
+ * Do default crates sell for the value of a crate? (CARGO_CRATE_VALUE)
+ * Do subtypes sell for their initial cost?
+ * And, are there any export datums where their included types explicitly include an excluded type? This will result in a valid thing, not having any export value at all.
+ */
 /datum/unit_test/cargo_crates_and_exclusions
 
 /datum/unit_test/cargo_crates_and_exclusions/Run()
