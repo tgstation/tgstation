@@ -19,13 +19,12 @@
 	if(subtype_value != /datum/export/crate/coffin::cost)
 		TEST_FAIL("A crate subtype(coffin) was not worth its export value!")
 
-	for(var/export in subtypesof(/datum/export))
-		var/datum/export/this_export = export
+	for(var/datum/export/this_export as anything in GLOB.exports_list)
 		if(this_export.include_subtypes)
-			for(var/atom/included_thing in this_export.export_types)
-				if(is_type_in_list(included_thing, this_export.exclude_types))
+			for(var/atom/included_thing as anything in this_export.export_types)
+				if(is_path_in_list(included_thing, this_export.exclude_types))
 					TEST_FAIL("Export datum [this_export] includes a type that it explicitly excludes.")
-		else
-			for(var/atom/included_thing in this_export.export_types)
-				if(this_export.exclude_types[included_thing])
-					TEST_FAIL("Export datum [this_export] includes a type that it explicitly excludes.")
+			continue
+		for(var/atom/included_thing as anything in this_export.export_types)
+			if(this_export.exclude_types[included_thing])
+				TEST_FAIL("Export datum [this_export] includes a type that it explicitly excludes.")
