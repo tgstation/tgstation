@@ -21,6 +21,8 @@
 	var/jitter_chance = 100
 	/// time to stay planted until after a hit. Makes it a bit more fair to fight against.
 	var/wait_after_attack = 0.3 SECONDS
+	/// If true, repath when a movable target moves. This only works with navmesh movement.
+	var/update_movement_for_moving_target = FALSE
 	/// Set by on_movement_failed() when the movement system gives up pathing.
 	VAR_FINAL/movement_failed = FALSE
 	/// Which AGILE_MELEE_MODE_ we drove movement with last tick, so we only tear the moveloop down when it flips.
@@ -29,6 +31,8 @@
 	VAR_PRIVATE/last_next_move = 0
 	/// When we can move post attack
 	VAR_PRIVATE/hold_until = 0
+	/// Movable target whose movement signal we are following.
+	VAR_PRIVATE/atom/movable/tracked_movable_target
 
 /datum/bt_node/ai_behavior/agile_melee_movement/setup(datum/ai_controller/controller)
 	var/atom/target = controller.blackboard[target_key]
@@ -38,6 +42,7 @@
 		var/mob/living/living_pawn = controller.pawn
 		last_next_move = living_pawn.next_move
 	RegisterSignal(controller.pawn, COMSIG_MOB_AI_MOVEMENT_FAILED, PROC_REF(on_movement_failed))
+	track_moving_target(target)
 	return TRUE
 
 /datum/bt_node/ai_behavior/agile_melee_movement/proc/on_movement_failed(atom/source)
@@ -51,6 +56,8 @@
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+	if(target != tracked_movable_target)
+		track_moving_target(target)
 
 	var/mob/pawn = controller.pawn
 	var/distance = get_dist(pawn, target)
@@ -78,6 +85,7 @@
 
 /datum/bt_node/ai_behavior/agile_melee_movement/finish_action(datum/ai_controller/controller, succeeded)
 	UnregisterSignal(controller.pawn, COMSIG_MOB_AI_MOVEMENT_FAILED)
+	track_moving_target()
 	movement_failed = FALSE
 	current_mode = AGILE_MELEE_MODE_NONE
 	last_next_move = 0
@@ -85,6 +93,23 @@
 	controller.ai_movement.stop_moving_towards(controller)
 	controller.change_ai_movement_type(initial(controller.ai_movement))
 	return ..()
+
+/// Starts tracking target movement when enabled. Navmesh-only: other movement datums cannot repath an active route.
+/datum/bt_node/ai_behavior/agile_melee_movement/proc/track_moving_target(atom/target = null)
+	if(tracked_movable_target)
+		UnregisterSignal(tracked_movable_target, COMSIG_MOVABLE_MOVED)
+		tracked_movable_target = null
+	if(!update_movement_for_moving_target || !ismovable(target))
+		return
+	tracked_movable_target = target
+	RegisterSignal(tracked_movable_target, COMSIG_MOVABLE_MOVED, PROC_REF(on_tracked_target_moved))
+
+/datum/bt_node/ai_behavior/agile_melee_movement/proc/on_tracked_target_moved(atom/movable/source)
+	SIGNAL_HANDLER
+	var/datum/ai_controller/controller = owning_controller
+	if(!istype(controller?.ai_movement, /datum/ai_movement/navmesh_astar) || controller.ai_movement.moving_controllers[controller] != source)
+		return
+	controller.ai_movement.update_movement_target(controller, source)
 
 /// Whether our melee attack is off cooldown, meaning it's worth being adjacent right now.
 /datum/bt_node/ai_behavior/agile_melee_movement/proc/can_swing(mob/pawn)

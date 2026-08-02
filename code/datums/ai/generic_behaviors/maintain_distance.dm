@@ -10,12 +10,17 @@
 	var/max_dist_key = BB_RANGED_SKIRMISH_MAX_DISTANCE
 	/// Movement type to use while approaching a target that's too far. Null falls back to the controller's default movement type. Reset on finish.
 	var/approach_movement_type = null
+	/// If true, repath when a movable target moves. This only works with navmesh movement.
+	var/update_movement_for_moving_target = FALSE
+	/// Movable target whose movement signal we are following.
+	VAR_PRIVATE/atom/movable/tracked_movable_target
 
 /datum/bt_node/ai_behavior/maintain_distance/setup(datum/ai_controller/controller)
 	var/atom/target = controller.blackboard[target_key]
 	if(!isliving(target) || !can_see(controller.pawn, target, 10))
 		return FALSE
 	RegisterSignal(controller.pawn, COMSIG_MOB_AI_MOVEMENT_FAILED, PROC_REF(on_movement_failed))
+	track_moving_target(target)
 	return TRUE
 
 /datum/bt_node/ai_behavior/maintain_distance/proc/on_movement_failed(atom/source)
@@ -28,6 +33,8 @@
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return AI_BEHAVIOR_FAILED
+	if(target != tracked_movable_target)
+		track_moving_target(target)
 
 
 	var/minimum_distance = controller.blackboard[min_dist_key] || 4
@@ -48,10 +55,28 @@
 
 /datum/bt_node/ai_behavior/maintain_distance/finish_action(datum/ai_controller/controller, succeeded)
 	UnregisterSignal(controller.pawn, COMSIG_MOB_AI_MOVEMENT_FAILED)
+	track_moving_target()
 	movement_failed = FALSE
 	controller.ai_movement.stop_moving_towards(controller)
 	controller.change_ai_movement_type(initial(controller.ai_movement))
 	return ..()
+
+/// Starts tracking target movement when enabled. Navmesh-only: other movement datums cannot repath an active route.
+/datum/bt_node/ai_behavior/maintain_distance/proc/track_moving_target(atom/target = null)
+	if(tracked_movable_target)
+		UnregisterSignal(tracked_movable_target, COMSIG_MOVABLE_MOVED)
+		tracked_movable_target = null
+	if(!update_movement_for_moving_target || !ismovable(target))
+		return
+	tracked_movable_target = target
+	RegisterSignal(tracked_movable_target, COMSIG_MOVABLE_MOVED, PROC_REF(on_tracked_target_moved))
+
+/datum/bt_node/ai_behavior/maintain_distance/proc/on_tracked_target_moved(atom/movable/source)
+	SIGNAL_HANDLER
+	var/datum/ai_controller/controller = owning_controller
+	if(!istype(controller?.ai_movement, /datum/ai_movement/navmesh_astar) || controller.ai_movement.moving_controllers[controller] != source)
+		return
+	controller.ai_movement.update_movement_target(controller, source)
 
 /// Steps one tile away from target using backstep avoidance, falling back to shuffled directions if blocked.
 /datum/bt_node/ai_behavior/maintain_distance/proc/retreat(datum/ai_controller/controller, atom/target, minimum_distance)

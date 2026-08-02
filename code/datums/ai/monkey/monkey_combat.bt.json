@@ -175,7 +175,8 @@
 								"behavior": "/datum/bt_node/ai_behavior/agile_melee_movement",
 								"vars": {
 									"target_key": "BB_CURRENT_TARGET",
-									"standoff_max": 4
+									"standoff_max": 4,
+									"update_movement_for_moving_target": true
 								}
 							}
 						]

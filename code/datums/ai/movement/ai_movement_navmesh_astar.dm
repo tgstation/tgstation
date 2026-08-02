@@ -27,7 +27,7 @@
 	var/datum/move_loop/has_target/navmesh_astar/loop = GLOB.move_manager.navmesh_astar_move(moving,
 		current_movement_target,
 		delay,
-		repath_delay = 0.5 SECONDS,
+		repath_delay = 0.1 SECONDS,
 		simulated_only = !HAS_TRAIT(controller.pawn, TRAIT_SPACEWALK),
 		max_path_length = maximum_length,
 		minimum_distance = min_distance,

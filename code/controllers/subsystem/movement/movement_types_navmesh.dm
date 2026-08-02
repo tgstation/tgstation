@@ -55,6 +55,8 @@
 	var/is_pathing = FALSE
 	///Cooldown for repathing, prevents spam
 	COOLDOWN_DECLARE(repath_cooldown)
+	/// A target update arrived while a path was being generated or repathing was rate-limited.
+	var/repath_pending = FALSE
 
 /// Stores pathing options and creates the mover's passability profile.
 /datum/move_loop/has_target/navmesh_astar/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, list/initial_path)
@@ -88,11 +90,13 @@
 /datum/move_loop/has_target/navmesh_astar/loop_stopped()
 	. = ..()
 	cancel_pathfinding()
+	repath_pending = FALSE
 	movement_path = null
 
 /// Releases the mover passability profile.
 /datum/move_loop/has_target/navmesh_astar/Destroy()
 	cancel_pathfinding()
+	repath_pending = FALSE
 	avoid = null
 	return ..()
 
@@ -106,10 +110,13 @@
 
 /// Rebuilds the path when the repath cooldown permits it.
 /datum/move_loop/has_target/navmesh_astar/proc/recalculate_path()
-	cancel_pathfinding()
-	movement_path = null
-	if(!COOLDOWN_FINISHED(src, repath_cooldown))
+	// Preserve an in-flight search and usable path. A moving target otherwise repeatedly cancels
+	// its own search before a result is returned; one follow-up search is enough to catch up.
+	if(is_pathing || !COOLDOWN_FINISHED(src, repath_cooldown))
+		repath_pending = TRUE
 		return
+	repath_pending = FALSE
+	movement_path = null
 	var/turf/start = get_turf(moving)
 	var/turf/goal = get_turf(target)
 	if(!start || !goal || start.z != goal.z)
@@ -127,6 +134,8 @@
 	if(moving)
 		EVLOG_PATH(moving, EVLOG_CATEGORY_NAVMESH, "Planned navmesh A* path", movement_path)
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_NAVMESH_FINISHED_PATHING, movement_path)
+	if(repath_pending && COOLDOWN_FINISHED(src, repath_cooldown))
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 
 /// Moves one step and replans after an obstruction.
 /datum/move_loop/has_target/navmesh_astar/move()
