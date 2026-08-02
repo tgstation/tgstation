@@ -93,7 +93,7 @@
 	AddElement(/datum/element/can_be_held)
 	add_cell_sample()
 	add_verb(src, /mob/living/proc/toggle_resting)
-	add_traits(list(TRAIT_CATLIKE_GRACE, TRAIT_VENTCRAWLER_ALWAYS, TRAIT_WOUND_LICKER, TRAIT_COLORBLIND), INNATE_TRAIT)
+	add_traits(list(TRAIT_CATLIKE_INSTINCT, TRAIT_VENTCRAWLER_ALWAYS, TRAIT_WOUND_LICKER, TRAIT_COLORBLIND), INNATE_TRAIT)
 	ai_controller.set_blackboard_key(BB_HUNTABLE_PREY, typecacheof(huntable_items))
 	if(can_breed)
 		add_breeding_component()

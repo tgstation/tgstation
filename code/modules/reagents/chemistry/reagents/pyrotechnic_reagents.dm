@@ -476,7 +476,7 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
-	if(!isjellyperson(affected_mob)) //everyone but jellypeople get shocked as normal.
+	if(!(affected_mob.mob_biotypes & MOB_SLIME)) //everyone but jellypeople get shocked as normal.
 		return ..()
 	affected_mob.AdjustAllImmobility(-20  * metabolization_ratio * seconds_per_tick)
 	if(affected_mob.adjust_stamina_loss(-5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
