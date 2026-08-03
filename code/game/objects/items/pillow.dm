@@ -66,7 +66,7 @@
 	last_fighter = user
 	playsound(user, hit_sound, 80) //the basic 50 vol is barely audible
 
-/obj/item/pillow/attack_secondary(mob/living/carbon/victim, mob/living/user, params)
+/obj/item/pillow/attack_secondary(mob/living/carbon/victim, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(victim))
 		return
@@ -74,10 +74,11 @@
 		return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_notice("You can't bring yourself to harm [victim]"))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if((victim.body_position == LYING_DOWN) || ((user.grab_state >= GRAB_AGGRESSIVE) && (user.pulling == victim)))
 		user.visible_message("[user] starts to smother [victim]", span_notice("You begin smothering [victim]"), vision_distance = COMBAT_MESSAGE_RANGE)
 		INVOKE_ASYNC(src, PROC_REF(smothering), user, victim)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/pillow/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!bricked && istype(tool, /obj/item/stack/sheet/mineral/sandstone))
