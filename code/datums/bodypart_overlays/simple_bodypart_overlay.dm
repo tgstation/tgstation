@@ -36,6 +36,7 @@
 	icon_state = "soul_pending_eyes"
 	layers = EXTERNAL_FRONT
 
+// Its animation of grow of the blood worm head of ahead of the head of the host
 /datum/bodypart_overlay/simple/growth_blood_worm_head
 
 	icon = 'icons/mob/human/species/misc/bodypart_overlay_simple.dmi'
