@@ -31,6 +31,9 @@
     // sound for more drasticall effect
     gizmo.make_some_horrifien_sounds()
 
+    // Sending the hooked spessman into the... Gizmo room
+    Gizmo.put_victim_inside(who_was_eatten)
+
     // sending the man into... Gizmo?
     Gizmo_insideness.lazy_load()
 
