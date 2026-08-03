@@ -34,6 +34,7 @@
 		force_wielded = 10, \
 	)
 	AddElement(/datum/element/disarm_attack)
+	RegisterSignal(src, COMSIG_ITEM_CAN_DISARM_ATTACK, PROC_REF(can_disarm_attack))
 
 	var/static/list/slapcraft_recipe_list = list(\
 		/datum/crafting_recipe/pillow_suit, /datum/crafting_recipe/pillow_hood,\
@@ -47,6 +48,11 @@
 /obj/item/pillow/Destroy(force)
 	. = ..()
 	QDEL_NULL(pillow_trophy)
+
+/obj/item/pillow/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, message)
+	SIGNAL_HANDLER
+	if(victim.body_position == LYING_DOWN || (user.grab_state >= GRAB_AGGRESSIVE && user.pulling == victim))
+		return COMPONENT_BLOCK_ITEM_DISARM_ATTACK
 
 /obj/item/pillow/attack(mob/living/carbon/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
