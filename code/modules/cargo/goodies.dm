@@ -460,10 +460,10 @@
 	name = "Boombox tape (Rock)"
 	desc = "A classic rock track by George Patel, 'Bainrock'. Requires a boombox to play."
 	cost = PAYCHECK_CREW * 4
-	contains = list(/obj/item/tape/music/rock)
+	contains = list(/obj/item/music_tape/rock)
 
 /datum/supply_pack/goody/hiphop_tape
 	name = "Boombox tape (HipHop)"
 	desc = "A trendy hiphop track by F'norkiz Gamma, 'Groovepad'. Requires a boombox to play."
 	cost = PAYCHECK_CREW * 4
-	contains = list(/obj/item/tape/music/hiphop)
+	contains = list(/obj/item/music_tape/hiphop)

@@ -87,8 +87,8 @@
 /obj/item/taperecorder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(mytape || !istype(tool, /obj/item/tape))
 		return NONE
-	if(istype(tool, /obj/item/tape/music))
-		balloon_alert(user, "can't play!")
+	if(istype(tool, /obj/item/music_tape))
+		balloon_alert(user, "won't fit!")
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool,src))
 		return ITEM_INTERACT_BLOCKING

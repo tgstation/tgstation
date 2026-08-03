@@ -266,3 +266,5 @@ sound/music/boombox/groovepad-hiphop.ogg by Cloud10 -- https://freesound.org/peo
 sound/music/boombox/frankyboomer-jazz.ogg by Cloud10 -- https://freesound.org/people/FrankyBoomer/sounds/261100/ -- License: Creative Commons 0
     Volume adjustment and cleanup for looping by ArcaneMusic
 
+sound/music/boombox/bubblegum-pop.ogg by Seth_makes_sounds -- https://freesound.org/people/Seth_Makes_Sounds/sounds/686610/ -- License: Creative Commons 0
+    Volume tweak and trimming by ArcaneMusic

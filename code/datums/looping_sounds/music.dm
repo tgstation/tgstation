@@ -3,7 +3,7 @@
 	mid_sounds = list(
 		'sound/music/boombox/industrial-crush.ogg' = 1,
 	)
-	mid_length = 31.6 SECONDS
+	mid_length = 31.0 SECONDS
 	volume = 30
 	vary = FALSE
 	use_reverb = FALSE
@@ -32,6 +32,13 @@
 	)
 	mid_length = 58.3 SECONDS
 	volume = 60
+
+/datum/looping_sound/boombox/pop
+	mid_sounds = list(
+		'sound/music/boombox/bubblegum-pop.ogg' = 1,
+	)
+	mid_length = 117.0 SECONDS
+	volume = 40
 
 /** Elevator music */
 /datum/looping_sound/local_forecast
