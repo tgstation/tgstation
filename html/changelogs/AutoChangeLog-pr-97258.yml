@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - balance: "Malf AI hacked APCs no longer fully drain their own cells, instead draining from the powernet"

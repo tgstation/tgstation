@@ -66,5 +66,8 @@
   Swan:
   - code_imp: Made it so the round start timer starts precisely at the value specified
       in configs
+  lelandkemble:
+  - balance: Malf AI hacked APCs no longer fully drain their own cells, instead draining
+      from the powernet
   timothymtorres:
   - rscadd: Add spawn text overlay when a player spawns. (excludes observers)
