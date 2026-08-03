@@ -66,7 +66,6 @@
 	return structured_args
 
 /datum/verb_arg_metadata/New(name, arg_type, type_path, source, list/options)
-	. = ..()
 	src.name = name
 	src.arg_type = arg_type
 	src.type_path = type_path

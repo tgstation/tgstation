@@ -1131,18 +1131,13 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
  *
  * Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
  */
-/mob/proc/fully_replace_character_name(oldname, newname)
+/mob/proc/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
 	if(!newname)
-		log_message("[src] failed name change from [oldname] as no new name was specified", LOG_OWNERSHIP)
 		return FALSE
 	if(oldname == newname)
-		log_message("[src] failed name change as the new name was the same as the old one: [oldname]", LOG_OWNERSHIP)
 		return FALSE
 	if(!istext(newname) && !isnull(newname))
-		stack_trace("[src] attempted to change its name from [oldname] to the non string value [newname]")
 		return FALSE
-
-	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 
 	log_played_names(
 		ckey,
@@ -1164,6 +1159,8 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 			) //Just in case the mind is unsynced at the moment.
 
 	if(oldname)
+		log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
+
 		//update the datacore records! This is goig to be a bit costly.
 		replace_records_name(oldname,newname)
 
@@ -1176,7 +1173,11 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
 
+	else if(log_new_name)
+		log_message("[src] name set to [newname]", LOG_OWNERSHIP)
+
 	log_mob_tag("TAG: [tag] RENAMED: [key_name(src)]")
+	SEND_SIGNAL(src, COMSIG_MOB_FULLY_RENAMED, oldname, newname)
 
 	return TRUE
 
@@ -1213,6 +1214,7 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 				search_pda = 0
 
 /mob/proc/update_stat()
+	SIGNAL_HANDLER
 	return
 
 /mob/proc/update_health_hud()
@@ -1224,6 +1226,7 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 
 ///Update the lighting plane and sight of this mob (sends COMSIG_MOB_UPDATE_SIGHT)
 /mob/proc/update_sight()
+	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_SIGHT)
 	sync_lighting_plane_cutoff()
