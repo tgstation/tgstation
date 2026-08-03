@@ -32,9 +32,25 @@
 	song_name = "Groovepad"
 
 /obj/item/tape/music/jazz
+	desc = "A special tape that holds music. Wait, this one has jazz on it? You don't see that much anymore..."
 	icon_state = "tape_yellow"
 	song_inside = /datum/looping_sound/boombox/jazz
 	song_name = "Franky's Gonna Boom"
+
+/obj/item/tape/music/jazz/Initialize(mapload)
+	. = ..()
+	add_deep_lore()
+
+/obj/item/tape/music/jazz/add_deep_lore()
+	AddElement(/datum/element/examine_lore, \
+		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
+		lore = "Jazz is, by technicality, completely legal in the spinward sector. After all, sounds\
+			tend not to be the sort of thing that a major corporation can police particularly effectively.\
+			Freeform Jazz, on the other hand, had taken on a scandalous identity in the late 2590s, following\
+			a legendary crime spree by freeform jazz musician and criminal mastermind [span_bold("Rezz 'The Tips' C'thoni")].\
+			In an attemptt to prevent a repeat of what happened on Rhozz Alpha, which we ALL remember,\
+			TerraGov and a multinational coalition of planets deemed Freeform Jazz to be heavily sanctioned."
+	)
 
 // This exists mostly for testing
 /obj/item/storage/box/music_tapes

@@ -3,7 +3,7 @@
 	mid_sounds = list(
 		'sound/music/boombox/industrial-crush.ogg' = 1,
 	)
-	mid_length = 31.9 SECONDS
+	mid_length = 31.6 SECONDS
 	volume = 30
 	vary = FALSE
 	use_reverb = FALSE
@@ -17,7 +17,7 @@
 		'sound/music/boombox/bainmack-rock.ogg' = 1,
 	)
 	mid_length = 40.3 SECONDS
-	volume = 30
+	volume = 40
 
 /datum/looping_sound/boombox/hiphop
 	mid_sounds = list(
@@ -31,7 +31,7 @@
 		'sound/music/boombox/frankyboomer-jazz.ogg' = 1,
 	)
 	mid_length = 58.3 SECONDS
-	volume = 30
+	volume = 60
 
 /** Elevator music */
 /datum/looping_sound/local_forecast
