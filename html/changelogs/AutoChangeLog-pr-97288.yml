@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - rscadd: "You can now make text highlights only apply for specific characters or specific jobs"
