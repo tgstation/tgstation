@@ -398,7 +398,7 @@
 		.["sterile"] = "Increases the speed at which reagents are administered to others by [round((1/NITRILE_GLOVES_MULTIPLIER-1)*100, 1)]%."
 	if(TRAIT_FAST_CUFFING in clothing_traits)
 		.["secure"] = "Increases the speed at which you apply restraints."
-	if(emp_protection >= EMP_PROTECTION_NONE)
+	if(emp_protection > EMP_PROTECTION_NONE)
 		.["emp resistant"] = "Reduces the effects of incoming electromagnetic pulses on the wearer."
 
 /obj/item/clothing/examine_descriptor(mob/user)
