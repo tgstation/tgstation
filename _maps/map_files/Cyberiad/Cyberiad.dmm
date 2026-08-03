@@ -35100,6 +35100,7 @@
 "ixF" = (
 /obj/structure/table/wood,
 /obj/machinery/light/small/directional/south,
+/obj/item/storage/photo_album/bar,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "ixJ" = (
@@ -80304,6 +80305,7 @@
 /obj/machinery/light/directional/east,
 /obj/structure/table/wood,
 /obj/item/flashlight/flare/candle,
+/obj/item/storage/photo_album/chapel,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "tDb" = (

@@ -250,15 +250,11 @@ def main() -> int:
             repo_root = Path(sys.argv[idx + 1]).resolve()
 
     generated_dir = repo_root / 'build' / 'behavior_trees'
-    code_dir = repo_root / 'code'
     generated_dir.mkdir(parents=True, exist_ok=True)
 
     print('Parsing DM defines...')
     defines = parse_defines(repo_root)
     print(f'  Resolved {len(defines)} defines.')
-
-    bt_files = sorted(repo_root.glob('code/**/*.bt.json'))
-    print(f'Found {len(bt_files)} .bt.json source files.')
 
     errors = 0
     dirty = 0
@@ -267,50 +263,57 @@ def main() -> int:
     produced: dict[Path, Path] = {}
     generated_paths: set[Path] = set()
 
-    for src_path in bt_files:
-        # The compiled file mirrors the source path relative to code/, so trees that share a basename dont fucking break.
-        rel = src_path.relative_to(code_dir).as_posix()  # "datums/ai/dog/dog.bt.json"
-        tree_name = rel[:-len('.json')]                   # "datums/ai/dog/dog.bt"
-        compiled_path = generated_dir / f'{tree_name}.compiled.json'
+    code_dirs = [
+        repo_root / 'code',
+    ]
 
-        prior = produced.get(compiled_path)
-        if prior is not None:
-            print(
-                f'ERROR: {src_path.relative_to(repo_root)} and {prior.relative_to(repo_root)} '
-                f'both compile to {compiled_path.relative_to(repo_root)}',
-                file=sys.stderr,
-            )
-            errors += 1
-            continue
-        produced[compiled_path] = src_path
-        generated_paths.add(compiled_path)
+    for code_dir in code_dirs:
+        bt_files = sorted(code_dir.glob('**/*.bt.json'))
+        print(f'Found {len(bt_files)} .bt.json source files in {code_dir}')
+        for src_path in bt_files:
+            # The compiled file mirrors the source path relative to the repo root, so trees that share a basename dont fucking break.
+            rel = src_path.relative_to(repo_root).as_posix()  # "code/datums/ai/dog/dog.bt.json"
+            tree_name = rel[:-len('.json')]                   # "code/datums/ai/dog/dog.bt"
+            compiled_path = generated_dir / f'{tree_name}.compiled.json'
 
-        # compile json
-        try:
-            src_json = json.loads(src_path.read_text(encoding='utf-8'))
-        except Exception as exc:
-            print(f'ERROR reading {src_path.relative_to(repo_root)}: {exc}', file=sys.stderr)
-            errors += 1
-            continue
+            prior = produced.get(compiled_path)
+            if prior is not None:
+                print(
+                    f'ERROR: {src_path.relative_to(repo_root)} and {prior.relative_to(repo_root)} '
+                    f'both compile to {compiled_path.relative_to(repo_root)}',
+                    file=sys.stderr,
+                )
+                errors += 1
+                continue
+            produced[compiled_path] = src_path
+            generated_paths.add(compiled_path)
 
-        try:
-            compiled = compile_node(src_json, defines)
-        except Exception as exc:
-            print(f'ERROR compiling {src_path.relative_to(repo_root)}: {exc}', file=sys.stderr)
-            errors += 1
-            continue
+            # compile json
+            try:
+                src_json = json.loads(src_path.read_text(encoding='utf-8'))
+            except Exception as exc:
+                print(f'ERROR reading {src_path.relative_to(repo_root)}: {exc}', file=sys.stderr)
+                errors += 1
+                continue
 
-        compiled_text = json.dumps(compiled, separators=(',', ':')) + '\n'
+            try:
+                compiled = compile_node(src_json, defines)
+            except Exception as exc:
+                print(f'ERROR compiling {src_path.relative_to(repo_root)}: {exc}', file=sys.stderr)
+                errors += 1
+                continue
 
-        # either write or check depending on flag
-        if check_mode:
-            existing = compiled_path.read_text(encoding='utf-8', newline='') if compiled_path.exists() else ''
-            if existing != compiled_text:
-                print(f'OUT OF DATE: {compiled_path.relative_to(repo_root)}', file=sys.stderr)
-                dirty += 1
-        else:
-            compiled_path.parent.mkdir(parents=True, exist_ok=True)
-            compiled_path.write_text(compiled_text, encoding='utf-8', newline='')
+            compiled_text = json.dumps(compiled, separators=(',', ':')) + '\n'
+
+            # either write or check depending on flag
+            if check_mode:
+                existing = compiled_path.read_text(encoding='utf-8', newline='') if compiled_path.exists() else ''
+                if existing != compiled_text:
+                    print(f'OUT OF DATE: {compiled_path.relative_to(repo_root)}', file=sys.stderr)
+                    dirty += 1
+            else:
+                compiled_path.parent.mkdir(parents=True, exist_ok=True)
+                compiled_path.write_text(compiled_text, encoding='utf-8', newline='')
 
     # Remove stale compiled files that no longer correspond to a source tree —
     stale = [p for p in generated_dir.rglob('*.compiled.json') if p not in generated_paths]

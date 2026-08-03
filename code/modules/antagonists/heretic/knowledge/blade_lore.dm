@@ -53,8 +53,9 @@
 /datum/heretic_knowledge/limited_amount/starting/base_blade
 	name = "Совершенство Остроты"
 	desc = "Открывает перед вами Путь клинков. \
-		Позволяет трансмутировать нож с одним слитком серебра или титаниума для создания Закалённого клинка. \
+		Позволяет создавать Закалённый клинок. \
 		Одновременно можно иметь не более четырех."
+	transmute_text = "Трансмутируйте нож и слиток серебра или титана."
 	gain_text = "Наши великие предки ковали мечи и практиковали спарринги накануне великих сражений."
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -101,6 +102,9 @@
 	gain_text = "В шквале смертей он обрел мир внутри себя. Несмотря на неодолимые шансы, он ступал вперед."
 	action_to_add = /datum/action/cooldown/spell/realignment
 	cost = 2
+	max_charges = 3
+	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.16
 
 /// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
 #define BLOOD_FLOW_PER_SEVEIRTY -1
@@ -174,9 +178,10 @@
 
 /datum/heretic_knowledge/armor/blade
 	name = "Разбитые доспехи"
-	desc = "Позволяет трансмутировать стол (или костюм), маску и лист титана или серебра для создания Разбитых доспехов. \
-			Обеспечивает устойчивость к ударам дубинкой и изоляцию от электричества при ношении. \
-			Выступает в роли фокуса, находясь в капюшоне."
+	desc = "Создайте Разбитые доспехи. \
+			Они обеспечивают устойчивость к ударам дубинкой и изоляцию от электричества при ношении. \
+			Выступают в роли фокуса, находясь в капюшоне."
+	transmute_text = "Трансмутируйте стол (или комбинезон), маску и лист титана или серебра."
 	gain_text = "Разносящаяся эхом во все стороны какофония насилия окружает меня. \
 				Даже после того, как стальной панцирь Чемпиона был разорван, каждая его часть по-прежнему жаждет предназначения, стремясь перехватить невидимых или воображаемых нападающих."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/blade)
@@ -201,6 +206,28 @@
 	cost = 2
 	action_to_add = /datum/action/cooldown/spell/wolves_among_sheep
 	is_final_knowledge = TRUE
+	max_charges = 4
+	path_recharge_amount = 0.0
+	holywater_drain_amount = 0.25
+	transmute_text = "Вы получаете один заряд за каждое завершённое жертвоприношение. \
+		Вы также получите заряд, если во время действия заклинания доведёте как минимум трёх бойцов до критического состояния. \
+		Одновременно можно иметь не больше четырёх зарядов."
+
+/datum/heretic_knowledge/spell/wolves_among_sheep/New()
+	. = ..()
+	charges = 1 // start with one, can go up to four
+
+/datum/heretic_knowledge/spell/wolves_among_sheep/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE, PROC_REF(on_sacrifice))
+
+/datum/heretic_knowledge/spell/wolves_among_sheep/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE)
+
+/datum/heretic_knowledge/spell/wolves_among_sheep/proc/on_sacrifice(datum/source, mob/living/sacrifice, high_value)
+	SIGNAL_HANDLER
+	add_charges(1)
 
 /datum/heretic_knowledge/blade_upgrade/blade
 	name = "Усиление клинков"
@@ -305,18 +332,39 @@
 		в цель, нанося урон и вызывая кровотечение."
 	gain_text = "Не раздумывая, я взял нож павшего солдата и со всей силы метнул. Моя меткость оказалась верна! \
 		Чемпион Растерзаний улыбнулся их первому вкусу агонии, и кивнув, их клинки стали моими собственными."
+	required_atoms = list(/obj/item/knife = 1)
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 2
+	max_charges = 6
+	recharge_amount = 0.5
+	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.16
+	transmute_text = "Можно вручную перезарядить, завершив ритуал с ножом. Это восстановит половину максимальных зарядов заклинания."
+
+/datum/heretic_knowledge/spell/furious_steel/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOB_BLADE_BARRIER_TRIGGERED, PROC_REF(blade_barrier_triggered))
+
+/datum/heretic_knowledge/spell/furious_steel/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_BLADE_BARRIER_TRIGGERED)
+
+/datum/heretic_knowledge/spell/furious_steel/proc/blade_barrier_triggered(mob/living/target, datum/status_effect/barrier)
+	SIGNAL_HANDLER
+
+	var/datum/action/cooldown/spell/pointed/projectile/furious_steel/spell = created_action_ref
+	if(spell?.blade_effect == barrier)
+		remove_charges(1)
 
 /datum/heretic_knowledge/ultimate/blade_final
 	name = "Серебряный Вихрь"
 	desc = "Ритуал вознесения Пути клинков. \
-		Принесите 3 безголовых или со сломанным черепом трупа к руне трансмутации, чтобы завершить ритуал. \
 		После завершения вы будете окружены постоянно восстанавливающимися вращающимися лезвиями. \
 		Эти клинки защищают вас от всех атак, но расходуются при использовании. \
 		Ваше заклинание «Ярость Стали» также будет перезаряжаться быстрее. \
 		Кроме того, вы становитесь мастером боя, получая полный иммунитет к ранам и возможность снимать короткие оглушения. \
 		Ваши Закаленные клинки наносят бонусный урон и исцеляют вас при атаке на часть нанесенного урона."
+	transmute_text = "Трансмутируйте три трупа без головы или со сломанным черепом."
 	gain_text = "Чемпион Растерзаний освобожден! Я стану воссоединенным клинком, и с моими более великими амбициями, \
 		МНЕ НЕТ РАВНЫХ! ВИХРЬ ИЗ СТАЛИ И СЕРЕБРА НАДВИГАЕТСЯ НА НАС! УЗРИТЕ МОЁ ВОЗНЕСЕНИЕ!"
 

@@ -41,7 +41,7 @@
 	knowledge_tier2 = /datum/heretic_knowledge/spell/fire_blast
 	guaranteed_side_tier2 = /datum/heretic_knowledge/rifle
 	robes = /datum/heretic_knowledge/armor/ash
-	knowledge_tier3 = /datum/heretic_knowledge/mad_mask
+	knowledge_tier3 = /datum/heretic_knowledge/nightwatchers_lantern
 	guaranteed_side_tier3 = /datum/heretic_knowledge/summon/ashy
 	blade = /datum/heretic_knowledge/blade_upgrade/ash
 	knowledge_tier4 = /datum/heretic_knowledge/spell/flame_birth
@@ -50,8 +50,8 @@
 /datum/heretic_knowledge/limited_amount/starting/base_ash
 	name = "Секрет Ночного Дозорного"
 	desc = "Открывает перед вами путь пепла. \
-		Позволяет трансмутировать спичку и нож в Пепельный клинок. \
 		Одновременно можно иметь только два."
+	transmute_text = "Трансмутируйте спичку и нож."
 	gain_text = "Городская стража знает своих дозорных. Если вы спросите их ночью, они могут рассказать вам о пепельном фонаре."
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -89,31 +89,36 @@
 
 /datum/heretic_knowledge/spell/ash_passage
 	name = "Пепельный проход"
-	desc = "Дарует вам «Пепельный проход» - заклинание, которое позволяет вам исчезнуть из реальности и переместиться на небольшое расстояние, пройдя сквозь любые стены. \
-			При усиленном заклинании избавит вас от оглушения и оков, а также увеличит радиус действия."
+	desc = "Дарует вам «Пепельный проход» - заклинание, которое позволяет вам исчезнуть из реальности и переместиться на небольшое расстояние, пройдя сквозь любые стены."
 	gain_text = "Он знал, как ходить между мирами."
 
 	action_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
 	cost = 2
 	drafting_tier = 5
+	max_charges = 6
+	focus_recharge_amount = 0.15
+	holywater_drain_amount = 0.15
 
 /datum/heretic_knowledge/spell/fire_blast
 	name = "Взрыв вулкана"
 	desc = "Дарует вам «Взрыв вулкана» - заклинание, которое после короткой зарядки выстреливает лучом энергии \
 		в ближайшего врага, поджигая и обжигая его. Если они не потушат себя, \
-		луч продолжит движение к другой цели. \
-		При усилении не имеет зарядки и выстреливает большим количеством пламени."
+		луч продолжит движение к другой цели."
 	gain_text = "Ни один огонь не был достаточно горячим, чтобы разжечь их. Ни один огонь не был достаточно ярким, чтобы спасти их. Ни один огонь не вечен."
 	action_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
 	cost = 2
 	research_tree_icon_frame = 7
+	max_charges = 3
+	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.16
 
 /datum/heretic_knowledge/armor/ash
 	name = "Выжженная мантия"
-	desc = "Позволяет трансмутировать стол (или костюм), маску и спичку, чтобы создать Выжженную мантию. \
+	desc = "Создайте Выжженную мантию. \
 		Она обеспечивает полную защиту от огня и способна пассивно генерировать больше огненных зарядов. \
 		Когда у вас будет достаточно огня, вы сможете использовать усиленные версии своих пепельных заклинаний. \
 		Позволяет фокусироваться, находясь в капюшоне."
+	transmute_text = "Трансмутируйте стол (или комбинезон), маску и спичку."
 	gain_text = "Стражи остаются там, где упали, и исчезают из виду. \
 			И всё же ветер, гуляющий по городу, зовёт их обратно на службу, в воздух поднимается пыль, а силуэт павшего растворяется в дымке."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/ash)
@@ -124,29 +129,41 @@
 		/obj/item/match = 1,
 	)
 
-/datum/heretic_knowledge/mad_mask
-	name = "Маска Безумия"
-	desc = "Позволяет трансмутировать любую маску, четыре свечи, станбатон и печень, чтобы создать маску Безумия. \
-		Маска вселяет страх в язычников, которые становятся ее свидетелями, вызывая у них потерю стамины, галлюцинации и безумие. \
-		Его также можно насильно надеть на язычника, чтобы он не смог его снять..."
-	gain_text = "Ночной Дозорный был потерян. Так считал Дозор. И все же он ходил по миру, незамеченный массами."
+/datum/heretic_knowledge/nightwatchers_lantern
+	name = "Фонарь Ночного Дозорного"
+	desc = "Создаёт пылающий фонарь. \
+		Пылающий фонарь - яркий источник света, который повреждает глаза и со временем сбивает с толку тех, кто слишком долго смотрит на него. \
+		Эффект слабее для тех, кто носит защиту глаз, и сильнее, если пылающий фонарь - единственный ближайший источник света."
+	transmute_text = "Трансмутируйте лампу, фонарь или фонарик службы безопасности, пару глаз, вспышку и четыре зажжённые свечи."
+	gain_text = "Ночной Дозорный не выходил во тьму. Это было глупо, даже Дозор знал это. \
+		Его фонарь горел светом, способным обжечь солнце."
+	cost = 2
+	result_atoms = list(/obj/item/flashlight/lantern/heretic)
 	required_atoms = list(
-		/obj/item/organ/liver = 1,
-		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
-		/obj/item/clothing/mask = 1,
+		list(/obj/item/flashlight/lamp, /obj/item/flashlight/lantern, /obj/item/flashlight/seclite) = 1,
+		/obj/item/organ/eyes = 1,
+		/obj/item/assembly/flash = 1,
 		/obj/item/flashlight/flare/candle = 4,
 	)
-	result_atoms = list(/obj/item/clothing/mask/madness_mask)
-	cost = 2
-	research_tree_icon_path = 'icons/obj/clothing/masks.dmi'
-	research_tree_icon_state = "mad_mask"
+	research_tree_icon_path = 'icons/obj/lighting.dmi'
+	research_tree_icon_state = "lantern"
+
+/datum/heretic_knowledge/nightwatchers_lantern/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	for(var/obj/item/flashlight/flare/candle/candle in atoms)
+		if(!candle.light_on)
+			atoms -= candle
+
+/datum/heretic_knowledge/nightwatchers_lantern/prepare_atom_for_ritual_test(atom/what)
+	. = ..()
+	if(istype(what, /obj/item/flashlight/flare/candle))
+		what.set_light_on(TRUE)
 
 /datum/heretic_knowledge/blade_upgrade/ash
 	name = "Огненный клинок"
 	desc = "Ваш клинок теперь поджигает врагов при атаке."
 	gain_text = "Он вернулся, с клинком в руке, он размахивал и размахивал, когда пепел падал с неба. \
 		Его город, люди, за которыми он поклялся наблюдать... и он наблюдал, пока все они сгорали дотла."
-
 
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_ash"
@@ -169,16 +186,19 @@
 	cost = 2
 	research_tree_icon_frame = 5
 	is_final_knowledge = TRUE
+	max_charges = 3
+	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.16
 
 /datum/heretic_knowledge/ultimate/ash_final
 	name = "Ритуал Пепельного Лорда"
 	desc = "Ритуал вознесения Пути пепла. \
-		Принесите 3 горящих трупа или хаска к руне трансмутации, чтобы завершить ритуал. \
 		После завершения вы становитесь предвестником пламени и получаете две способности. \
 		«Каскад», который вызывает массивное, растущее огненное кольцо вокруг вас, \
 		и «Клятва пламени», заставляющая вас пассивно создавать кольцо пламени, во время передвижения. \
 		Некоторые известные заклинания пепла также будут усилены. \
 		У вас также появится иммунитет к огню, космосу и подобным опасностям окружающей среды."
+	transmute_text = "Трансмутируйте 3 горящих трупа или хаска."
 	gain_text = "Дозор мертв, и Ночной Дозорный сгорел вместе с ним. И все же его огонь горит вечно, \
 		ибо он принес человечеству обряд! Его взгляд продолжается, и теперь я един с пламенем, \
 		УЗРИТЕ МОЕ ВОЗНЕСЕНИЕ, ПЕПЕЛЬНЫЙ ФОНАРЬ ВОСПЛАМЕНИТСЯ ВНОВЬ!"

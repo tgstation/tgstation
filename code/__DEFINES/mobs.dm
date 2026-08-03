@@ -555,6 +555,14 @@
 #define EAR_PROTECTION_FULL INFINITY
 
 /**
+ * EMP protection
+ * These values are additive to determine your overall emp protection
+ */
+#define EMP_PROTECTION_NONE 0
+#define EMP_PROTECTION_MODERATE 1
+#define EMP_PROTECTION_HIGH 2
+
+/**
  * Soundbang defines
  * These values are used as argument to determine the strength of the soundbang_act call
  */

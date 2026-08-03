@@ -354,6 +354,7 @@
 		return
 
 	for(var/mob/living/miner in range(7, src)) //Give the miners who are near the vent points and xp.
+		SEND_SIGNAL(miner, COMSIG_LIVING_ON_VENT_WIN, src)
 		var/obj/item/card/id/user_id_card = miner.get_idcard(TRUE)
 		if(miner.stat <= SOFT_CRIT)
 			miner.mind?.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)

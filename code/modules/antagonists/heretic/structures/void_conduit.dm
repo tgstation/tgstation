@@ -1,26 +1,3 @@
-/datum/action/cooldown/spell/conjure/void_conduit
-	name = "Поток Пустоты"
-	desc = "Открывает врата в Пустоту, испускающие неприрывные импульсы, повреждающие окна и воздушные шлюзы, \
-		накладывая на язычников «Холод Пустоты» \
-		Затронутый еретик вместо этого получает сопротивление низкому давлению."
-	background_icon_state = "bg_heretic"
-	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/mob/actions/actions_ecult.dmi'
-	button_icon_state = "void_rift"
-
-	cooldown_time = 1 MINUTES
-
-	sound = null
-	school = SCHOOL_FORBIDDEN
-	invocation = "MBR'C' TH' V''D!"
-	invocation_type = INVOCATION_SHOUT
-	spell_requirements = NONE
-
-	summon_radius = 0
-	summon_type = list(/obj/structure/void_conduit)
-	summon_respects_density = TRUE
-	summon_respects_prev_spawn_points = TRUE
-
 /obj/structure/void_conduit
 	name = "Поток Пустоты"
 	desc = "Открытые врата, ведущие в Пустоту. Высвобождает импульсы, от которых вы не хотели бы пострадать."
@@ -124,3 +101,14 @@
 
 /datum/status_effect/void_conduit/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, TRAIT_STATUS_EFFECT(id))
+
+/obj/effect/temp_visual/void_conduit_opening
+	icon = /obj/structure/void_conduit::icon
+	icon_state = /obj/structure/void_conduit::icon_state
+	duration = 5 SECONDS
+
+/obj/effect/temp_visual/void_conduit_opening/Initialize(mapload)
+	. = ..()
+	transform = transform.Scale(0.1)
+	alpha = 0
+	animate(src, time = 5 SECONDS, transform = transform.Scale(1), alpha = /obj/structure/void_conduit::alpha)

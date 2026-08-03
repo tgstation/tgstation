@@ -19,7 +19,9 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 	gravity_setup()
-	init_unconscious_appearance()
+	unconscious_appearance = get_unconscious_appearance()
+	if(!isnull(unconscious_appearance))
+		GLOB.unconscious_appearances += unconscious_appearance
 
 /mob/living/prepare_huds()
 	..()
@@ -29,9 +31,9 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
-/// Inits the unconscious alt appearance for when other mobs see us while unconscious
-/mob/living/proc/init_unconscious_appearance()
-	return
+/// Returns the appearance other mobs see instead of us while unconscious
+/mob/living/proc/get_unconscious_appearance()
+	return null
 
 /mob/living/Destroy()
 	for(var/datum/status_effect/effect as anything in status_effects)
@@ -53,6 +55,14 @@
 		QDEL_LIST(imaginary_group)
 	QDEL_LAZYLIST(diseases)
 	QDEL_LAZYLIST(quirks)
+
+	if(!isnull(unconscious_appearance))
+		// Not super necessary strictly speaking but just in case
+		for(var/client/player as anything in GLOB.clients)
+			player?.images -= unconscious_appearance
+		GLOB.unconscious_appearances -= unconscious_appearance
+		unconscious_appearance = null
+
 	return ..()
 
 /mob/living/onZImpact(turf/impacted_turf, levels, impact_flags = NONE)
@@ -2925,7 +2935,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/mob/living/basic/guardian/summoned_guardian = new picked_type(src, picked_theme)
 	summoned_guardian.set_summoner(src, different_person = TRUE)
 	if(picked_name)
-		summoned_guardian.fully_replace_character_name(null, picked_name)
+		summoned_guardian.fully_replace_character_name(null, picked_name, log_new_name = TRUE)
 	if(picked_color)
 		summoned_guardian.set_guardian_colour(picked_color)
 	summoned_guardian.PossessByPlayer(guardian_client?.key)
@@ -3054,16 +3064,12 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	else
 		add_verb(src, /mob/living/verb/pulled)
 
-/// Generic helper to add a static-y humanoid appearance shown to other mobs when unconscious
-/mob/living/proc/add_generic_humanoid_static_appearance()
+/// Generic helper to return a static-y humanoid appearance shown to other mobs when unconscious
+/mob/living/proc/get_generic_humanoid_static_appearance()
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/image/static_image = image('icons/effects/effects.dmi', src, "static")
 	static_image.override = TRUE
 	static_image.name = "unknown humanoid"
-	add_alt_appearance(
-		/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity,
-		"[REF(src)]_unconscious",
-		static_image,
-		NONE,
-	)
+
+	return static_image

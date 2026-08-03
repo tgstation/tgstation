@@ -54,8 +54,9 @@
 /datum/heretic_knowledge/limited_amount/starting/base_moon
 	name = "Лунная тропа"
 	desc = "Открывает перед вами Путь Луны. \
-		Позволяет трансмутировать 2 листа стекла и нож в Лунный клинок. \
+		Позволяет создать Лунный клинок. \
 		Одновременно можно иметь только два."
+	transmute_text = "Трансмутируйте 2 листа стекла и нож."
 	gain_text = "Под лунным светом смех отдается эхом."
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -96,14 +97,19 @@
 
 	action_to_add = /datum/action/cooldown/spell/pointed/mind_gate
 	cost = 2
+	max_charges = 6
+	path_recharge_amount = 0.33
+	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.33
 
 /datum/heretic_knowledge/moon_amulet
 	name = "Лунный амулет"
-	desc = "Позволяет трансмутировать 2 листа стекла, сердце и галстук, чтобы создать Лунный амулет. \
+	desc = "Позволяет создать Лунный амулет. \
 			Если предметом пользуется человек с слабым рассудком, то он становятся берсерком, нападающим на всех подряд; \
 			если рассудок недостаточно низок, то он начнет постепенно убывать. \
 			Ношение этого предмета дарует вам способность видеть язычников сквозь стены, а ваши клинки сделает безвредными - они будут калечить разум жертв. \
 			Предоставляет термальное зрение и удваивает регенерацию мозга еретика Луны при ношении."
+	transmute_text = "Трансмутируйте 2 листа стекла, сердца и галстук."
 	gain_text = "Во главе парада стоял он, луна сгустилась в единную массу, отражение души."
 
 	required_atoms = list(
@@ -111,7 +117,7 @@
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/clothing/neck/tie = 1,
 	)
-	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulet)
+	result_atoms = list(/obj/item/clothing/neck/moon_amulet)
 	cost = 2
 
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
@@ -119,11 +125,13 @@
 	research_tree_icon_frame = 9
 
 /datum/heretic_knowledge/armor/moon
-	desc = "Позволяет преобразовать стол (или костюм), маску и два листа стекла для создания Блистательного облачения, эта роба сделает носителя невосприимчивым к эффектам оглушения, преобразует все виды повреждений в урон мозгу, а также пацифицируя носителя, лишая его возможности пользоваться дальнобойным оружием (Лунные клинки обходят пацифизм). \
+	desc = "Позволяет создать Блистательноге облачение, эта роба сделает носителя невосприимчивым к эффектам оглушения, преобразует все виды повреждений в урон мозгу, а также пацифицируя носителя, лишая его возможности пользоваться дальнобойным оружием (Лунные клинки обходят пацифизм). \
 			Действует как фокусировка, пока надет капюшон."
 	gain_text = "Струи света и веселья струились из каждой складки этого великолепного наряда. \
 				Труппа кружилась радужными каскадами, ослепляя зрителей истиной, которую они искали. \
 				Купаясь в свете, я наблюдал, как обретаю себя."
+	notice = "Несмотря на пацифистический эффект робы, вы всё еще можете использовать Лунные клинки при условии, что вы так же носите Амулет Лунного Света."
+	transmute_text = "Трансмутируйте стол (или комбинезон), маску и два листа стекла."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon)
 	research_tree_icon_state = "moon_armor"
 	required_atoms = list(
@@ -138,8 +146,14 @@
 		при попадании которого, цель присоединяется к параду, и начинает страдать от галюцинаций."
 	gain_text = "Музыка, словно отражение души, завораживала их, ведя их за собой, как мотыльков ведет за собой пламя."
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
+	notice = "Количество зарядов, полученных от применения Амулетов Лунного Света, не ограничено."
 	cost = 2
 	drafting_tier = 5
+	max_charges = 4
+	path_recharge_amount = 0.25
+	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
+	path_recharge_can_surpass_cap = TRUE
 
 /datum/heretic_knowledge/blade_upgrade/moon
 	name = "Лунный клинок"
@@ -175,23 +189,28 @@
 			Если значение их рассудка достаточно низкое, цель сойдет с ума, лишившись половины имевшегося рассудка."
 	gain_text = "Взял его за руку, мы поднялись, и те, кто видел правду, поднялись вместе с нами. \
 		Постановщик указал вверх, и тусклый свет правды осветил нас еще больше."
+	notice = "Количество зарядов, полученных от применения Амулетов Лунного Света, не ограничено."
 
 	action_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
 	cost = 2
-
 	research_tree_icon_frame = 5
 	is_final_knowledge = TRUE
+	max_charges = 2
+	path_recharge_amount = 0.25
+	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
+	path_recharge_can_surpass_cap = TRUE
 
 /datum/heretic_knowledge/ultimate/moon_final
 	name = "Последний Акт"
 	desc = "Ритуал вознесения Пути луны. \
-		Принесите 3 трупа с более чем 50 урона мозгу на руну трансмутации, чтобы завершить ритуал \
 		При завершении, вы становитесь предвестником безумия и получаете ауру пассивного снижения рассудка, \
 		а члены экипажа с достаточно низким рассудком станут аколитами. \
 		Одна пятая экипажа превратится в аколитов и будет следовать вашим приказам, также они получат Moonlight Amulet"
 	gain_text = "Мы нырнули вниз, к толпе, его душа отделилась в поисках более великой авантюры, \
 		туда, откуда Постановщик начал парад, и я продолжу его до самой кончины солнца \
 		УЗРИТЕ МОЕ ВОЗНЕСЕНИЕ, ЛУНА УЛЫБНЕТСЯ РАЗ И НАВСЕГДА!"
+	transmute_text = "Трансмутируйте три трупа с более чем 50 урона мозгу."
 
 	ascension_achievement = /datum/award/achievement/misc/moon_ascension
 	announcement_text = "%SPOOKY% Смейтесь, ибо Постановщик %NAME% вознесся! \
@@ -251,7 +270,7 @@
 
 	var/datum/antagonist/lunatic/lunatic = convertee.mind.add_antag_datum(/datum/antagonist/lunatic)
 	lunatic.set_master(user.mind, user)
-	var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet = new(convertee.drop_location())
+	var/obj/item/clothing/neck/moon_amulet/amulet = new(convertee.drop_location())
 	var/static/list/slots = list(
 		LOCATION_NECK,
 		LOCATION_HANDS,
