@@ -44,6 +44,8 @@
   - qol: The Mulebot now has more visual feedback when items are being loaded onto
       them.
   - sound: Mulebots now have sound effects when loading and unloading.
+  - bugfix: EMP resistance is only tagged when examined on actually EMP resistant
+      clothing.
   Melbert:
   - admin: Law text is in silicon log again
   - bugfix: Some personalities like Empathetic or Misanthropic no longer react to
@@ -51,12 +53,21 @@
   - map: '[Kilo] Remapped Atmospherics entirely'
   - map: '[Kilo] Touched up Engineering (re-arranged some equipment, tables, piping,
       decals, signage, etc.)'
+  - qol: Bitrunner domain names are no longer hidden until you upgrade the server
+      stock parts. Distantly unaffordable domains still have their names hidden.
   PapaMichael:
   - bugfix: AI Holopads no longer leak unknown languages in runechat
   - rscadd: You can now make text highlights only apply for specific characters or
       specific jobs
+  - rscdel: Removed commendations from public logs. Your admirer is now truly anonymous
+  QuiteLiterallyAnything:
+  - bugfix: Clicking on a piece of paper with a folder no longer forces you to read
+      that paper.
   Swan:
   - code_imp: Made it so the round start timer starts precisely at the value specified
       in configs
+  lelandkemble:
+  - balance: Malf AI hacked APCs no longer fully drain their own cells, instead draining
+      from the powernet
   timothymtorres:
   - rscadd: Add spawn text overlay when a player spawns. (excludes observers)
