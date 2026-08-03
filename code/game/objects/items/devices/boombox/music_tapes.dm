@@ -48,8 +48,9 @@
 			tend not to be the sort of thing that a major corporation can police particularly effectively.\
 			Freeform Jazz, on the other hand, had taken on a scandalous identity in the late 2590s, following\
 			a legendary crime spree by freeform jazz musician and criminal mastermind [span_bold("Rezz 'The Tips' C'thoni")].\
-			In an attemptt to prevent a repeat of what happened on Rhozz Alpha, which we ALL remember,\
-			TerraGov and a multinational coalition of planets deemed Freeform Jazz to be heavily sanctioned."
+			In an attempt to prevent a repeat of what happened on Rhozz Alpha, which we ALL remember,\
+			TerraGov and a multinational coalition of planets deemed Freeform Jazz to be an active threat to public safety.\
+			The more free the jazz, the more serious the crime."
 	)
 
 // This exists mostly for testing
