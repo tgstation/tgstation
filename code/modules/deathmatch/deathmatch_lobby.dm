@@ -76,9 +76,8 @@
 
 /datum/deathmatch_lobby/proc/find_spawns_and_start_delay(datum/lazy_template/source, list/atoms)
 	SIGNAL_HANDLER
-	for(var/thing in atoms)
-		if(istype(thing, /obj/effect/landmark/deathmatch_player_spawn))
-			player_spawns += thing
+	for(var/obj/effect/landmark/deathmatch_player_spawn/spawn_point in atoms)
+		player_spawns += spawn_point
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
 	map.template_in_use = FALSE
