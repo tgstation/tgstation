@@ -97,7 +97,7 @@
 	name = "icewing watcher wing"
 	desc = "A carefully preserved frozen wing from an icewing watcher. Suitable as a trophy for a kinetic crusher."
 	icon_state = "ice_wing"
-	bonus_value = 2
+	bonus_value = 1
 	denied_type = /obj/item/crusher_trophy/ice_wing
 	wildhunter_drops = list(/obj/item/stack/sheet/sinew/icewing = 3)
 	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 6, /datum/material/bone = SHEET_MATERIAL_AMOUNT * 3)
