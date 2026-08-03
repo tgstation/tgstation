@@ -38,6 +38,8 @@
   - qol: You can punch a goliath to death. This isn't recommended. But if you are
       committed enough, you are welcome to do so.
 2026-08-03:
+  Aliceee2ch:
+  - bugfix: Soaps have different price in cargo now.
   ArcaneMusic:
   - qol: Tweaked the TGUi on the mulebot in order to read the name of the loaded item
       more easily.
