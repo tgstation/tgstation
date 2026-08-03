@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Bitrunner domain names are no longer hidden until you upgrade the server stock parts. Distantly unaffordable domains still have their names hidden."

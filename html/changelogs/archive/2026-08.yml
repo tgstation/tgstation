@@ -51,6 +51,8 @@
   - map: '[Kilo] Remapped Atmospherics entirely'
   - map: '[Kilo] Touched up Engineering (re-arranged some equipment, tables, piping,
       decals, signage, etc.)'
+  - qol: Bitrunner domain names are no longer hidden until you upgrade the server
+      stock parts. Distantly unaffordable domains still have their names hidden.
   PapaMichael:
   - bugfix: AI Holopads no longer leak unknown languages in runechat
   - rscadd: You can now make text highlights only apply for specific characters or
