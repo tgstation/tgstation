@@ -323,7 +323,7 @@
 			continue
 		players[player_key]["loadout"] = loadouts[1]
 
-	for(var/datum/deathmatch_modifier/modifier_path in modifiers)
+	for(var/datum/deathmatch_modifier/modifier_path as anything in modifiers)
 		GLOB.deathmatch_game.modifiers[modifier_path].on_map_changed(src)
 
 /datum/deathmatch_lobby/proc/clear_reservation()
@@ -553,7 +553,7 @@
 	if(!mod_menu_open)
 		return modifier_list
 
-	for(var/datum/deathmatch_modifier/modifier_path in GLOB.deathmatch_game.modifiers)
+	for(var/datum/deathmatch_modifier/modifier_path as anything in GLOB.deathmatch_game.modifiers)
 		var/datum/deathmatch_modifier/mod = GLOB.deathmatch_game.modifiers[modifier_path]
 
 		UNTYPED_LIST_ADD(modifier_list, list(
