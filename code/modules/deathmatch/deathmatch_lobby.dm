@@ -91,8 +91,8 @@
 		playing = FALSE
 		return FALSE
 
-	for(var/modpath in modifiers)
-		GLOB.deathmatch_game.modifiers[modpath].on_start_game(src)
+	for(var/datum/deathmatch_modifier/modifier_path as anything in modifiers)
+		GLOB.deathmatch_game.modifiers[modifier_path].on_start_game(src)
 
 	for (var/key in players)
 		var/mob/dead/observer/observer = players[key]["mob"]
@@ -119,8 +119,8 @@
 	announce(span_reallybig("GO!"))
 	if(length(modifiers))
 		var/list/modifier_names = list()
-		for(var/datum/deathmatch_modifier/modifier as anything in modifiers)
-			modifier_names += uppertext(initial(modifier.name))
+		for(var/datum/deathmatch_modifier/modifier_path as anything in modifiers)
+			modifier_names += uppertext(initial(modifier_path.name))
 		announce(span_boldnicegreen("THIS MATCH MODIFIERS: [english_list(modifier_names, and_text = " ,")]."))
 	return TRUE
 
@@ -150,8 +150,8 @@
 	new_player.PossessByPlayer(ckey)
 	players_info["mob"] = new_player
 
-	for(var/datum/deathmatch_modifier/modifier as anything in modifiers)
-		GLOB.deathmatch_game.modifiers[modifier].apply(new_player, src)
+	for(var/datum/deathmatch_modifier/modifier_path as anything in modifiers)
+		GLOB.deathmatch_game.modifiers[modifier_path].apply(new_player, src)
 
 	// register death handling.
 	register_player_signals(new_player)
@@ -193,8 +193,8 @@
 		loser.ghostize(can_reenter_corpse = FALSE)
 		qdel(loser)
 
-	for(var/datum/deathmatch_modifier/modifier in modifiers)
-		GLOB.deathmatch_game.modifiers[modifier].on_end_game(src)
+	for(var/datum/deathmatch_modifier/modifier_path as anything in modifiers)
+		GLOB.deathmatch_game.modifiers[modifier_path].on_end_game(src)
 
 	clear_reservation()
 	GLOB.deathmatch_game.remove_lobby(host)
@@ -323,8 +323,8 @@
 			continue
 		players[player_key]["loadout"] = loadouts[1]
 
-	for(var/deathmatch_mod in modifiers)
-		GLOB.deathmatch_game.modifiers[deathmatch_mod].on_map_changed(src)
+	for(var/datum/deathmatch_modifier/modifier_path in modifiers)
+		GLOB.deathmatch_game.modifiers[modifier_path].on_map_changed(src)
 
 /datum/deathmatch_lobby/proc/clear_reservation()
 	if(isnull(location) || isnull(map))
@@ -393,8 +393,8 @@
 
 	if(length(modifiers))
 		var/list/mod_names = list()
-		for(var/datum/deathmatch_modifier/modpath as anything in modifiers)
-			mod_names += modpath::name
+		for(var/datum/deathmatch_modifier/modifier_path as anything in modifiers)
+			mod_names += modifier_path::name
 		data["active_mods"] = "Selected modifiers: [english_list(mod_names)]"
 
 	if(is_player && !isnull(players[user.ckey]["loadout"]))
@@ -553,8 +553,8 @@
 	if(!mod_menu_open)
 		return modifier_list
 
-	for(var/modpath in GLOB.deathmatch_game.modifiers)
-		var/datum/deathmatch_modifier/mod = GLOB.deathmatch_game.modifiers[modpath]
+	for(var/datum/deathmatch_modifier/modifier_path in GLOB.deathmatch_game.modifiers)
+		var/datum/deathmatch_modifier/mod = GLOB.deathmatch_game.modifiers[modifier_path]
 
 		UNTYPED_LIST_ADD(modifier_list, list(
 			"name" = mod.name,
