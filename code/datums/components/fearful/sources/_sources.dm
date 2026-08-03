@@ -82,11 +82,8 @@
 	meson_negated = FALSE
 
 /datum/terror_handler/simple_source/nyctophobia/terrified/tick(seconds_per_tick, terror_buildup)
-	. = ..()
-	if(. > 0)
-		. *= 3
-
-	else if (terror_buildup == 0)
+	. = ..() * 3
+	if (terror_buildup == 0 && . <= 0)
 		owner.RemoveComponentSource("terrified", /datum/component/fearful)
 
 /// Makes the owner afraid of being stuck in closets, crates, mechs, etc
