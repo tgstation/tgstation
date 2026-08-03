@@ -1,6 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - qol: "Tweaked the TGUi on the mulebot in order to read the name of the loaded item more easily."
-  - qol: "The Mulebot now has more visual feedback when items are being loaded onto them."
-  - sound: "Mulebots now have sound effects when loading and unloading."
