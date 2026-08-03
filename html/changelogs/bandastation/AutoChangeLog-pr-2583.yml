@@ -1,5 +1,0 @@
-author: "hotsosi"
-delete-after: True
-changes:
-  - rscadd: "Добавлен новый виртуальный домен \"Водный сплав\"."
-  - map: "Добавлена карта water_grot и rock safehouse для битрана."
