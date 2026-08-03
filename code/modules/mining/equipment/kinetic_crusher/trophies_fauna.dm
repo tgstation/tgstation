@@ -10,7 +10,7 @@
 	denied_type = /obj/item/crusher_trophy/watcher_wing
 	trophy_id = TROPHY_WATCHER
 	bonus_value = 5
-	wildhunter_drops = list(/obj/item/stack/sheet/sinew = 7)
+	wildhunter_drops = list(/obj/item/stack/sheet/sinew = 5)
 	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 10, /datum/material/bone = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/crusher_trophy/watcher_wing/effect_desc()
