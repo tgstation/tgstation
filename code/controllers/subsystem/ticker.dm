@@ -111,6 +111,8 @@ SUBSYSTEM_DEF(ticker)
 	else
 		set_lobby_music("[global.config.directory]/title_music/sounds/[pick(music)]")
 
+	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * (1 SECONDS))
+
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ticker/fire()
