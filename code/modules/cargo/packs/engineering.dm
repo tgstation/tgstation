@@ -145,6 +145,7 @@
 	contains = list(/obj/machinery/portable_atmospherics/scrubber/huge/movable/cargo)
 	crate_name = "huge portable scrubber crate"
 	crate_type = /obj/structure/closet/crate/large
+	custom_crate = TRUE
 
 /datum/supply_pack/engineering/space_heater
 	name = "Space Heater Crate"

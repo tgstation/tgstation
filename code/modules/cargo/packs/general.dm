@@ -36,6 +36,7 @@
 	crate_name = "bicycle crate"
 	crate_type = /obj/structure/closet/crate/large
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
+	custom_crate = TRUE
 
 /datum/supply_pack/misc/bigband
 	name = "Big Band Instrument Collection"

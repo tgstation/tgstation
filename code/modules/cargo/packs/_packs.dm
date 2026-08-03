@@ -32,6 +32,8 @@
 	/// Various properties for cargo order mostly used to determine which consoles can see it
 	var/order_flags = NONE
 
+	var/custom_crate = FALSE
+
 /datum/supply_pack/New()
 	id = type
 
@@ -58,7 +60,7 @@
  */
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	var/obj/structure/closet/crate/C
-	if(paying_account)
+	if(paying_account && !custom_crate)
 		C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
 		C.name = "[crate_name || C.name] - Purchased by [paying_account.account_holder]"
 	else if(!crate_type && !crate_override)
@@ -67,11 +69,10 @@
 		var/obj/unique_container = new crate_override(A)
 		fill(unique_container)
 		return unique_container
-
 	else
 		C = new crate_type(A)
-		if(crate_name)
-			C.name = crate_name
+		C.name = "[crate_name || C.name][paying_account ? " - Purchased by [paying_account.account_holder]" : ""]"
+
 	if(access)
 		C.req_access = list(access)
 	if(access_any)
