@@ -1,12 +1,13 @@
 // gizmo mode about
 // when activation, its launching the meet hook(like traitor chef) into the most close target
 // then victim is drastically pulled into the gizmo, Gizmo eats the poor spessman(like bileworms)
-// When victim was got into Gizmo, Gizmo is shaking and producing horryfull sounds
-// And like.. do something with victim... like changing the organ, for first pulse, but can like, make people bald, or even heal them?
-// After some time, its doing the same, what xeno queen do, its threw out the victim out of the itself, with same sound, and mb without acid
+// When victim was got into Gizmo, the Victim got into some kinda of the room
+// Victim can go around and eventually go out
+// When Victim is trying to get out, Gizmo will threw him out like a Xeno Queen, but with no acid, maybe with machine oil? Its machine afterwards!
 /datum/gizmodes/man_eatter
     guaranteed_active_gizmodes = list(
-		/datum/gizpulse/pie_thrower/ordinary,
+		/datum/gizpulse/man_eatter/gizmo_insideness,
+        /datum/gizpulse/man_eatter/gizmo_dungeon,
 	)
 
 /datum/gizpulse/man_eatter
@@ -30,8 +31,8 @@
     // sound for more drasticall effect
     gizmo.make_some_horrifien_sounds()
 
-    // inserting new random organ
-    insert_new_gizmo_strange_organ(who_was_eatten)
+    // sending the man into... Gizmo?
+    Gizmo_insideness.lazy_load()
 
     // threw out victim
     gizmo.throw_out_man(who_was_eatten)
