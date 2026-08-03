@@ -12,6 +12,13 @@
 	mood_change = -12
 	event_flags = MOOD_EVENT_FEAR
 
+/datum/mood_event/on_fire/add_effects(...)
+	if(owner.has_quirk(/datum/quirk/pyromania))
+		mood_change *= 0.25
+		description = "This might be a bit too much fire."
+	else if(owner.has_quirk(/datum/quirk/pyrophobia))
+		mood_change *= 1.5
+
 /datum/mood_event/suffocation
 	description = "CAN'T... BREATHE..."
 	mood_change = -12
