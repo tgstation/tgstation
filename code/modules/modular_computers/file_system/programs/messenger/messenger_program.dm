@@ -14,7 +14,7 @@
 	size = 0
 	undeletable = TRUE // It comes by default in tablets, can't be downloaded, takes no space and should obviously not be able to be deleted.
 	power_cell_use = NONE
-	program_flags = PROGRAM_HEADER | PROGRAM_CIRCUITS_RUN_WHEN_CLOSED
+	program_flags = PROGRAM_CIRCUITS_RUN_WHEN_CLOSED
 	can_run_on_flags = PROGRAM_PDA
 	ui_header = "ntnrc_idle.gif"
 	tgui_id = "NtosMessenger"
@@ -79,7 +79,7 @@
 	viewing_messages_of = null
 
 /datum/computer_file/program/messenger/Destroy(force)
-	if(!QDELETED(computer))
+	if(!QDELETED(computer) && !force)
 		stack_trace("Attempted to qdel messenger of [computer] without qdeling computer, this will cause problems later")
 	remove_messenger(src)
 	return ..()

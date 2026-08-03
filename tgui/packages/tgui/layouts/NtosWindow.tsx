@@ -36,6 +36,12 @@ export type NTOSData = {
   show_imprint: BooleanLike;
 };
 
+enum alert_relevancies {
+  ALERT_RELEVANCY_SAFE,
+  ALERT_RELEVANCY_WARN,
+  ALERT_RELEVANCY_PERTINENT,
+}
+
 type Program = {
   alert: BooleanLike;
   desc: string;
@@ -64,6 +70,9 @@ export const NtosWindow = (props) => {
     PC_programheaders = [],
     PC_showexitprogram,
     PC_lowpower_mode,
+    alert_style,
+    alert_color,
+    alert_name,
   } = data;
 
   return (
@@ -89,6 +98,22 @@ export const NtosWindow = (props) => {
             </Box>
           </div>
           <div className="NtosHeader__right">
+            <Box
+              inline
+              mr={1}
+              className={
+                alert_style === alert_relevancies.ALERT_RELEVANCY_PERTINENT
+                  ? 'alertIndicator alertBlink'
+                  : 'alertIndicator'
+              }
+              textColor={
+                alert_style === alert_relevancies.ALERT_RELEVANCY_SAFE
+                  ? '#0000000'
+                  : alert_color
+              }
+            >
+              {alert_name}
+            </Box>
             {PC_programheaders.map((header) => (
               <Box key={header.icon} inline mr={1}>
                 <img

@@ -5,7 +5,7 @@
 	program_open_overlay = "generic"
 	undeletable = TRUE
 	size = 0
-	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_HEADER
+	program_flags = PROGRAM_ON_NTNET_STORE
 	tgui_id = "NtosThemeConfigure"
 	program_icon = "paint-roller"
 

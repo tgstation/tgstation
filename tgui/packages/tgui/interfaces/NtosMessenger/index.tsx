@@ -1,6 +1,7 @@
 import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import {
+  BlockQuote,
   Box,
   Button,
   Dimmer,
@@ -94,11 +95,13 @@ const AccessDeniedScreen = (props: any) => {
     <Stack fill vertical>
       <Stack.Item>
         <Section>
-          <Stack vertical textAlign="center">
-            <Box bold>
-              <Icon name="address-card" />
-              SpaceMessenger V6.5.3
-            </Box>
+          <Stack>
+            <Stack.Item>
+              <Box bold>
+                <Icon name="address-card" />
+                SpaceMessenger V7.0.1
+              </Box>
+            </Stack.Item>
           </Stack>
         </Section>
       </Stack.Item>
@@ -198,24 +201,31 @@ const ContactsScreen = (props: any) => {
     <Stack fill vertical>
       <Stack.Item>
         <Section>
-          <Stack vertical textAlign="center">
-            <Box bold>
-              <Icon name="address-card" mr={1} />
-              SpaceMessenger V6.5.4
-            </Box>
-            <Box italic opacity={0.3} mt={1}>
-              Bringing you spy-proof communications since 2467.
-            </Box>
-            <Divider hidden />
+          <Stack vertical>
+            <Stack.Item>
+              <Stack>
+                <Stack.Item>
+                  {' '}
+                  <Icon name="address-card" mr={1} />
+                  SpaceMessenger V7.2
+                </Stack.Item>
+                <Stack.Item>
+                  <BlockQuote>
+                    Bringing you spy-proof communications since 2467.
+                  </BlockQuote>
+                </Stack.Item>
+              </Stack>
+            </Stack.Item>
+            <Divider />
             <Box>
-              <Button
+              <Button.Checkbox
                 icon="bell"
                 disabled={!alert_able}
-                content={
-                  alert_able && !alert_silenced ? 'Ringer: On' : 'Ringer: Off'
-                }
+                checked={alert_able && !alert_silenced}
                 onClick={() => act('PDA_toggleAlerts')}
-              />
+              >
+                Ringer
+              </Button.Checkbox>
               <Button
                 icon="address-card"
                 content={
@@ -275,14 +285,6 @@ const ContactsScreen = (props: any) => {
       )}
       <Stack.Item grow={2}>
         <Stack vertical fill>
-          <Section>
-            <Stack>
-              <Box m={0.5}>
-                <Icon name="address-card" mr={1} />
-                Detected Messengers
-              </Box>
-            </Stack>
-          </Section>
           <Section fill scrollable>
             <Stack vertical pb={1} fill>
               {messengerButtons.length === 0 && (
