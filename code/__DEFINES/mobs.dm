@@ -232,7 +232,7 @@
 #define BODYPART_ID_MEAT "meat"
 #define BODYPART_ID_PEG "peg"
 #define BODYPART_ID_BONE "bone"
-#define BODYPART_ID_BLOOD_WORM "blood_worm"
+#define BODYPART_ID_BLOOD_WORM "blood_worm" // we are using it for blood worm head
 
 
 //See: datum/species/var/digitigrade_customization

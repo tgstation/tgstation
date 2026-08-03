@@ -452,7 +452,6 @@
 
 /mob/living/basic/blood_worm/adult/Initialize(mapload)
 	. = ..()
-
 	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE, hole_making_time = 10 SECONDS)
 
 /mob/living/basic/blood_worm/hatchling/polymorph
