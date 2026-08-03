@@ -1,0 +1,42 @@
+2026-08-01:
+  Fghj240:
+  - balance: robotic limbs, organs, and cybernetic implants have their emp effects
+      scale more closely with emp severity.
+  - balance: reactive tesla armor, adamantine armor, the mod emp shield module, and
+      tinfoil hats slightly lower the severity of incoming EMPs.
+  Ghommie:
+  - balance: Bees are now friendly to any plant-like creature for that matter.
+  - balance: Cats will now also follow laser pointers, not just felinids.
+  - balance: The boulder processing machinery can maim any (incapacitated/dead) mob
+      with the mineral biotype, not just golems.
+  - refactor: 'some quirky interactions with specific (non-roundstart) species have
+      been de-hardcoded. An example: peanut butter gets those with abductor brains
+      high rather than just those with the abductor species. Report any oddity with
+      that (the refactor, not the peanut butter...).'
+  QuiteLiterallyAnything:
+  - bugfix: Fixed Catwalk's upper atmospherics room being exposed to space by default.
+  SmArtKar:
+  - refactor: Refactored blessing into an element/trait combo rather than an object
+  Thunder12345:
+  - rscadd: The quantum console now tells bitrunners what grade they've reached on
+      completed domains.
+  flleeppyy:
+  - bugfix: the experimental cloner now actually can make you bald (if you're a human
+      or ethereal).
+  - bugfix: the experimental cloner now spits flavor and policy text (if there is
+      any) when spawning
+2026-08-02:
+  Aliceee2ch:
+  - qol: Winter coats were added into loadout.
+  - spellcheck: Capitalizes some of the other suits in loadout menu.
+  Ghommie:
+  - bugfix: Felinids (and nightmares) can once again use more complex objects, unlike
+      monkeys.
+  JohnFulpWillard:
+  - spellcheck: Cargo bounty list printout now has a slightly better UI.
+  necromanceranne:
+  - qol: You can punch a goliath to death. This isn't recommended. But if you are
+      committed enough, you are welcome to do so.
+2026-08-03:
+  PapaMichael:
+  - bugfix: AI Holopads no longer leak unknown languages in runechat

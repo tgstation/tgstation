@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Add spawn text overlay when a player spawns. (excludes observers)"

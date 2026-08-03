@@ -37,16 +37,21 @@
 	///Flags this race must have to be selectable with this type of mirror.
 	var/race_flags = MIRROR_MAGIC
 	///List of all Races that can be chosen, decided by its Initialize.
-	var/list/selectable_races = list()
-
-/obj/structure/mirror/Destroy()
-	mirror_options = null
-	selectable_races = null
-	return ..()
+	var/list/selectable_races
 
 /obj/structure/mirror/proc/update_choices()
 	for(var/i in mirror_options)
 		mirror_options[i] = icon('icons/hud/radial.dmi', i)
+
+	if(CHANGE_RACE in mirror_options)
+		selectable_races = list()
+		for(var/datum/species/species_type as anything in get_species_pool())
+			if(!race_flags || (species_type::changesource_flags & race_flags))
+				selectable_races[species_type::name] = species_type
+		selectable_races = sort_list(selectable_races)
+
+	else
+		selectable_races = null
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
@@ -73,6 +78,10 @@
 	if(!isliving(target) || HAS_TRAIT(target, TRAIT_NO_MIRROR_REFLECTION))
 		return FALSE
 	return TRUE
+
+/// Returns a list species typepaths to use for the mirror. This pool is then filtered by flags.
+/obj/structure/mirror/proc/get_species_pool()
+	return subtypesof(/datum/species)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
@@ -380,16 +389,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	deconstructable = FALSE
 	cursable = FALSE
 
-/obj/structure/mirror/magic/Initialize(mapload)
-	. = ..()
-
-	if(length(selectable_races))
-		return
-	for(var/datum/species/species_type as anything in subtypesof(/datum/species))
-		if(initial(species_type.changesource_flags) & race_flags)
-			selectable_races[initial(species_type.name)] = species_type
-	selectable_races = sort_list(selectable_races)
-
 /obj/structure/mirror/magic/change_beard(mob/living/carbon/human/beard_dresser) // magical mirrors do nothing but give you the damn beard
 	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", SSaccessories.facial_hairstyles_list)
 	if(isnull(new_style) || !can_use_mirror(beard_dresser))
@@ -428,11 +427,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	race_changer.add_traits(list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER), SPECIES_TRAIT)
 
 /obj/structure/mirror/magic/lesser
+	race_flags = NONE
 
-/obj/structure/mirror/magic/lesser/Initialize(mapload)
-	// Roundstart species don't have a flag, so it has to be set on Initialize.
-	selectable_races = get_selectable_species().Copy()
-	return ..()
+/obj/structure/mirror/magic/lesser/get_species_pool()
+	var/list/race_list = list()
+	for(var/species_id in get_selectable_species())
+		race_list += GLOB.species_list[species_id]
+	return race_list
 
 /obj/structure/mirror/magic/lesser/heretic
 	name = "miraculous mirror"
@@ -480,7 +481,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 			user.set_facial_hairstyle(random_facial_hairstyle(user.gender))
 		if(CHANGE_RACE)
 			to_chat(user, span_hypnophrase("The body - no, the body is all wrong - [pick("I must become anew", "I need to be different", "I want to be something else")]..."))
-			var/list/options = selectable_races.Copy() - user.dna.species.type
+			var/list/options = assoc_to_values(selectable_races) - user.dna.species.type
 			var/datum/species/newrace = GLOB.species_prototypes[pick(options)]
 			on_species_change(user, newrace)
 			user.set_species(newrace.type, icon_update = FALSE)
