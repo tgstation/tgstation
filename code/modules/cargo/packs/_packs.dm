@@ -72,6 +72,11 @@
 	else
 		C = new crate_type(A)
 		C.name = "[crate_name || C.name][paying_account ? " - Purchased by [paying_account.account_holder]" : ""]"
+		if(paying_account)
+			if(istype(paying_account, /datum/bank_account/department))
+				C.AddComponent(/datum/component/locked_to_account, null, paying_account)
+			else
+				C.AddComponent(/datum/component/locked_to_account, paying_account)
 
 	if(access)
 		C.req_access = list(access)
