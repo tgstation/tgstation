@@ -13,8 +13,7 @@
 	stage_speed = 1
 	transmittable = -3
 	level = 5
-	symptom_delay_min = 5
-	symptom_delay_max = 10
+	symptom_delay = 7.5
 	var/purge_alcohol = FALSE
 	var/trauma_heal_mild = FALSE
 	var/trauma_heal_severe = FALSE
@@ -84,8 +83,8 @@
 	transmittable = 2
 	level = 4
 	base_message_chance = 7
-	symptom_delay_min = 1
-	symptom_delay_max = 1
+	symptom_delay = 1
+	delay_variation = 0
 
 /datum/symptom/sensory_restoration/Activate(datum/disease/advance/advanced_disease)
 	. = ..()

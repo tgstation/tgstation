@@ -61,7 +61,6 @@
 	if(!sense_of_taste)
 		add_organ_trait(TRAIT_AGEUSIA)
 
-
 /obj/item/organ/tongue/examine(mob/user)
 	. = ..()
 	if(HAS_MIND_TRAIT(user, TRAIT_ENTRAILS_READER)|| isobserver(user))
@@ -84,7 +83,7 @@
 /obj/item/organ/tongue/proc/get_possible_languages()
 	RETURN_TYPE(/list)
 	// This is the default list of languages most humans should be capable of speaking
-	return list(
+	. = list(
 		/datum/language/common,
 		/datum/language/uncommon,
 		/datum/language/spinwarder,
@@ -101,6 +100,8 @@
 		/datum/language/terrum,
 		/datum/language/nekomimetic,
 	)
+	if(languages_native)
+		. |= languages_native
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
@@ -382,6 +383,7 @@
 	desc = "A mysterious structure that allows for instant communication between users. Pretty impressive until you need to eat something."
 	icon_state = "tongueayylmao"
 	say_mod = "gibbers"
+	organ_traits = list(TRAIT_HIDE_THINKING_INDICATOR)
 	sense_of_taste = FALSE
 	modifies_speech = TRUE
 	var/mothership
@@ -668,10 +670,6 @@
 		),
 		/datum/emote/living/carbon/hiss::key = 'sound/mobs/humanoids/ethereal/ethereal_hiss.ogg',
 	)
-
-// Ethereal tongues can speak all default + voltaic
-/obj/item/organ/tongue/ethereal/get_possible_languages()
-	return ..() + /datum/language/voltaic
 
 /obj/item/organ/tongue/ethereal/lustrous
 	//lustrous screams.

@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(ticker)
 	/// or a "round-ending" event, like summoning Nar'Sie, a blob victory, the nuke going off, etc. ([FORCE_END_ROUND])
 	var/force_ending = END_ROUND_AS_NORMAL
 	/// If TRUE, there is no lobby phase, the game starts immediately.
-	#ifdef ABSOLUTE_MINIMUM
+	#ifdef AUTOSTART_GAME
 	var/start_immediately = TRUE
 	#else
 	var/start_immediately = FALSE
@@ -110,8 +110,6 @@ SUBSYSTEM_DEF(ticker)
 		set_lobby_music(pick(music))
 	else
 		set_lobby_music("[global.config.directory]/title_music/sounds/[pick(music)]")
-
-	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * (1 SECONDS))
 
 	return SS_INIT_SUCCESS
 
@@ -587,6 +585,8 @@ SUBSYSTEM_DEF(ticker)
 				var/atom/movable/screen/splash/fade_out = new(null, null, living.client, TRUE)
 				fade_out.fade(TRUE)
 				living.client.init_verbs()
+				living.client.show_spawn_text_overlay()
+
 			livings += living
 	if(livings.len)
 		addtimer(CALLBACK(src, PROC_REF(release_characters), livings), 3 SECONDS, TIMER_CLIENT_TIME)

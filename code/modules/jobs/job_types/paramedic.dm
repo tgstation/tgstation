@@ -68,6 +68,8 @@
 	chameleon_extras = /obj/item/gun/syringe
 	pda_slot = ITEM_SLOT_LPOCKET
 
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/medical/paramedic
+
 /datum/outfit/job/doctor/mod
 	name = "Paramedic (MODsuit)"
 

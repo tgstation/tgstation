@@ -305,7 +305,9 @@
 	can_be_toggled = TRUE
 	active = FALSE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
-	///Type of fuel the generator is using. Is set in generator_init() to add the starting amount of fuel
+	///Type of fuel the generator is using.
+	var/fuel_type = /obj/item/stack/sheet/mineral/plasma
+	///Actual physical fuel within the generator. Is set in generator_init() to add the starting amount of fuel
 	var/obj/item/stack/sheet/fuel = null
 	///Fuel used per second while idle, not generating, in units
 	var/fuelrate_idle = 0.00625 * SHEET_MATERIAL_AMOUNT
@@ -348,16 +350,16 @@
 		return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/generator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, fuel))
-		load_fuel(tool, user)
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+	if(!istype(tool, fuel_type))
+		return NONE
+	load_fuel(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/mecha_parts/mecha_equipment/generator/process(seconds_per_tick)
 	if(!chassis)
 		active = FALSE
 		return PROCESS_KILL
-	if(fuel.amount <= 0)
+	if(!fuel?.amount)
 		active = FALSE
 		log_message("Deactivated - no fuel.", LOG_MECHA)
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Fuel reserves depleted.")]")
@@ -381,13 +383,16 @@
 		to_chat(user, "[icon2html(src, user)][span_warning("[fuel] traces in target minimal! [inserted_fuel] cannot be used as fuel.")]")
 		return
 	//how much fuel is needed to fill the generator to its max capacity, in units
-	var/units_to_load = max(max_fuel - fuel.amount * SHEET_MATERIAL_AMOUNT, 0)
+	var/units_to_load = isnull(fuel) ? max_fuel : max(max_fuel - fuel.amount * SHEET_MATERIAL_AMOUNT, 0)
 	if(!units_to_load)
 		to_chat(user, "[icon2html(src, user)][span_notice("Unit is full.")]")
 		return
 	//how much new fuel are we inserting, in sheets
 	var/fuel_to_load = min(max(round(units_to_load / SHEET_MATERIAL_AMOUNT), 1), inserted_fuel.amount)
-	fuel.amount += fuel_to_load
+	if(fuel)
+		fuel.amount += fuel_to_load
+	else
+		fuel = new(src, fuel_to_load)
 	inserted_fuel.use(fuel_to_load)
 	to_chat(user, "[icon2html(src, user)][span_notice("[fuel_to_load] unit\s of [fuel] successfully loaded.")]")
 
@@ -398,7 +403,7 @@
 /// Version without the initial fuel
 /obj/item/mecha_parts/mecha_equipment/generator/printed
 
-/obj/item/mecha_parts/mecha_equipment/generator/generator_init()
+/obj/item/mecha_parts/mecha_equipment/generator/printed/generator_init()
 	return
 
 /////////////////////////////////////////// THRUSTERS /////////////////////////////////////////////

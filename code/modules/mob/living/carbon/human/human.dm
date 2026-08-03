@@ -1,4 +1,4 @@
-/mob/living/carbon/human/Initialize(mapload)
+/mob/living/carbon/human/Initialize(mapload, datum/species/species)
 	ASSIGN_GAME_VERB(src, /mob/living, mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
@@ -10,7 +10,8 @@
 	// Physiology needs to be created before species, as some species modify physiology
 	setup_physiology()
 
-	create_dna()
+
+	create_dna(species)
 	dna.species.create_fresh_body(src)
 	setup_human_dna()
 
@@ -41,16 +42,16 @@
 /mob/living/carbon/human/proc/setup_physiology()
 	physiology = new()
 
-/mob/living/carbon/human/init_unconscious_appearance()
-	add_generic_humanoid_static_appearance()
+/mob/living/carbon/human/get_unconscious_appearance()
+	return get_generic_humanoid_static_appearance()
 
 /mob/living/carbon/human/proc/setup_mood()
 	if (CONFIG_GET(flag/disable_human_mood))
 		return
 	mob_mood = new /datum/mood(src)
 
-/mob/living/carbon/human/dummy/init_unconscious_appearance()
-	return
+/mob/living/carbon/human/dummy/get_unconscious_appearance()
+	return null
 
 /mob/living/carbon/human/dummy/setup_mood()
 	return
@@ -1042,10 +1043,8 @@
 	var/race = null
 	var/use_random_name = TRUE
 
-/mob/living/carbon/human/species/create_dna()
-	dna = new /datum/dna(src)
-	if (!isnull(race))
-		dna.species = new race
+/mob/living/carbon/human/species/create_dna(datum/species/species)
+	..(race) //Kind of shit but I'm brainfarting how to do this better right now.
 
 /mob/living/carbon/human/species/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
 	. = ..()
