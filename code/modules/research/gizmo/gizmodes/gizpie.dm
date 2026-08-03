@@ -14,6 +14,8 @@
 
 	var/range = 3
 
+	var/mysterious_pie = /obj/item/food/pie/cream
+
 /datum/gizpulse/pie_thrower/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
 	throw_pie(holder)
 
@@ -26,3 +28,9 @@
 		mysterious_pie.stun_and_blur(human)
 
 /datum/gizpulse/pie_thrower/ordinary
+
+/datum/gizpulse/pie_thrower/floar
+
+/datum/gizpulse/pie_thrower/no_stun_pie
+
+	var/mysterious_pie = /obj/item/food/pie/cream/nostun
