@@ -1,3 +1,6 @@
+// Blood worm head, which can be retracted
+// More social sign, then a actual ability
+// But who is more dangerous, the few, with a leader, or the many, but without one?
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head
 
 	name = "Worm head"
