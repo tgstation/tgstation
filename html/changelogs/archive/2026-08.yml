@@ -37,3 +37,6 @@
   necromanceranne:
   - qol: You can punch a goliath to death. This isn't recommended. But if you are
       committed enough, you are welcome to do so.
+2026-08-03:
+  PapaMichael:
+  - bugfix: AI Holopads no longer leak unknown languages in runechat
