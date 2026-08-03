@@ -505,13 +505,13 @@
 			return TRUE
 
 		if("toggle_modifier")
-			var/datum/deathmatch_modifier/modpath = text2path(params["modpath"])
-			if(!ispath(modpath))
+			var/datum/deathmatch_modifier/modifier_path = text2path(params["modpath"])
+			if(!ispath(modifier_path))
 				return TRUE
 			if(usr.ckey != host && !check_rights(R_ADMIN))
 				return TRUE
-			var/datum/deathmatch_modifier/chosen_modifier = GLOB.deathmatch_game.modifiers[modpath]
-			if(modpath in modifiers)
+			var/datum/deathmatch_modifier/chosen_modifier = GLOB.deathmatch_game.modifiers[modifier_path]
+			if(modifier_path in modifiers)
 				unselect_modifier(chosen_modifier)
 				return TRUE
 			if(chosen_modifier.selectable(src))
@@ -559,8 +559,8 @@
 		UNTYPED_LIST_ADD(modifier_list, list(
 			"name" = mod.name,
 			"desc" = mod.description,
-			"modpath" = "[modpath]",
-			"selected" = (modpath in modifiers),
+			"modpath" = "[modifier_path]",
+			"selected" = (modifier_path in modifiers),
 			"selectable" = is_host && mod.selectable(src),
 		))
 
