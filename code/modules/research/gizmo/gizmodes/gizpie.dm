@@ -6,6 +6,8 @@
 /datum/gizmodes/pie_thrower
 	guaranteed_active_gizmodes = list(
 		/datum/gizpulse/pie_thrower/ordinary,
+		/datum/gizpulse/pie_thrower/floar,
+		/datum/gizpulse/pie_thrower/no_stun_pie,
 	)
 
 /datum/gizpulse/pie_thrower
