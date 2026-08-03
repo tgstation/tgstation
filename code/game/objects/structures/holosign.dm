@@ -106,7 +106,7 @@
 
 	if(iscarbon(mover))
 		var/mob/living/carbon/moving_carbon = mover
-		if(moving_carbon.stat) // Lets not prevent dragging unconscious/dead people.
+		if(IS_UNCONSCIOUS_OR_CRIT(moving_carbon)) // Lets not prevent dragging unconscious/dead people.
 			return TRUE
 		if(allow_walk && moving_carbon.move_intent == MOVE_INTENT_WALK)
 			return TRUE
@@ -166,7 +166,7 @@
 	. = ..()
 	if(iscarbon(mover))
 		var/mob/living/carbon/C = mover
-		if(C.stat) // Lets not prevent dragging unconscious/dead people.
+		if(IS_UNCONSCIOUS_OR_CRIT(C)) // Lets not prevent dragging unconscious/dead people.
 			return TRUE
 		if(allow_walk && C.move_intent != MOVE_INTENT_WALK)
 			return FALSE

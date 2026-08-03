@@ -152,8 +152,9 @@
 	if(!crowbar)
 		return
 	var/turf/open/floor/plating/plating = pry_tile(crowbar, user, TRUE)
-	if(istype(plating))
-		tile.melee_attack_chain(user, plating, modifiers)
+	if(!istype(plating))
+		return
+	plating.base_item_interaction(user, tile, modifiers)
 
 /turf/open/floor/proc/pry_tile(obj/item/I, mob/user, silent = FALSE)
 	I.play_tool_sound(src, 80)

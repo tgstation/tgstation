@@ -451,7 +451,7 @@
 /mob/living/carbon/proc/handle_blood(seconds_per_tick)
 	return
 
-/mob/living/carbon/reagent_tick(datum/reagent/chem, seconds_per_tick)
+/mob/living/carbon/reagent_tick(datum/reagent/chem, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(. & COMSIG_MOB_STOP_REAGENT_TICK)
 		return

@@ -50,7 +50,7 @@
 	key_third_person = "bows"
 	message = "bows."
 	message_param = "bows to %t."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/burp
 	key = "burp"
@@ -70,7 +70,7 @@
 	key = "cross"
 	key_third_person = "crosses"
 	message = "crosses their arms."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/chuckle
 	key = "chuckle"
@@ -95,7 +95,7 @@
 	key = "dance"
 	key_third_person = "dances"
 	message = "dances around happily."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/deathgasp
 	key = "deathgasp"
@@ -109,7 +109,7 @@
 	message_animal_or_basic = "stops moving..."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_IMPORTANT
 	cooldown = (15 SECONDS)
-	stat_allowed = HARD_CRIT
+	can_use_flags = EMOTE_CANUSE_UNCONSCIOUS | EMOTE_CANUSE_HARDCRIT | EMOTE_CANUSE_SOFTCRIT
 
 /datum/emote/living/deathgasp/run_emote(mob/living/user, params, type_override, intentional)
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
@@ -148,7 +148,7 @@
 	key = "flap"
 	key_third_person = "flaps"
 	message = "flaps their wings."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 	var/wing_time = 0.35 SECONDS
 
 /datum/emote/living/flap/run_emote(mob/user, params, type_override, intentional)
@@ -180,7 +180,7 @@
 	key_third_person = "aflaps"
 	name = "flap (Angry)"
 	message = "flaps their wings ANGRILY!"
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 	wing_time = 10
 
 /datum/emote/living/frown
@@ -201,7 +201,7 @@
 	message = "gasps!"
 	message_mime = "gasps silently!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	stat_allowed = HARD_CRIT
+	can_use_flags = EMOTE_CANUSE_UNCONSCIOUS | EMOTE_CANUSE_HARDCRIT | EMOTE_CANUSE_SOFTCRIT
 
 /datum/emote/living/gasp/get_sound(mob/living/user)
 	if(HAS_MIND_TRAIT(user, TRAIT_MIMING))
@@ -228,7 +228,7 @@
 	message = "gasps in shock!"
 	message_mime = "gasps in silent shock!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	stat_allowed = SOFT_CRIT
+	can_use_flags = EMOTE_CANUSE_SOFTCRIT
 
 /datum/emote/living/giggle
 	key = "giggle"
@@ -519,7 +519,7 @@
 	message = "snores."
 	message_mime = "sleeps soundly."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	stat_allowed = UNCONSCIOUS
+	can_use_flags = EMOTE_CANUSE_UNCONSCIOUS
 
 // eventually we want to give species their own "snoring" sounds
 /datum/emote/living/snore/get_sound(mob/living/carbon/human/user)
@@ -663,7 +663,7 @@
 	var/propagation_distance = user.client ? 5 : 2 // mindless mobs are less able to spread yawns
 
 	for(var/mob/living/iter_living in view(user, propagation_distance))
-		if(IS_DEAD_OR_INCAP(iter_living) || TIMER_COOLDOWN_RUNNING(iter_living, COOLDOWN_YAWN_PROPAGATION))
+		if(iter_living.incapacitated || TIMER_COOLDOWN_RUNNING(iter_living, COOLDOWN_YAWN_PROPAGATION))
 			continue
 
 		var/dist_between = get_dist(user, iter_living)

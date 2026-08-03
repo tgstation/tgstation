@@ -335,7 +335,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/drop/Click()
-	if(usr.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(usr))
 		usr.dropItemToGround(usr.get_active_held_item())
 
 /atom/movable/screen/combattoggle
@@ -600,14 +600,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	SetInvisibility(INVISIBILITY_ABSTRACT, INVISIBILITY_SOURCE_SLEEP_HUD_BUTTON)
 
 /atom/movable/screen/sleep/Click()
-	if(!isliving(usr) || HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
+	if(!isliving(usr) || IS_UNCONSCIOUS(usr))
 		return
 	if(!usr.client?.prefs.read_preference(/datum/preference/toggle/remove_double_click))
 		flick("[base_icon_state]_flick", src)
 		return
 
 	var/tgui_answer = tgui_alert(usr, "You sure you want to sleep for a while?", "Sleeping", list("Yes", "No"))
-	if(tgui_answer == "Yes" && !HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
+	if(tgui_answer == "Yes" && !IS_UNCONSCIOUS(usr))
 		var/mob/living/L = usr
 		L.Sleeping(400)
 

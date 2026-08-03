@@ -150,7 +150,7 @@
 	if (host.wear_suit?.breakouttime)
 		something_to_melt = TRUE
 		melted_something |= melt_restraints_in_slot(host, ITEM_SLOT_OCLOTHING)
-	if (host.shoes?.tied == SHOES_KNOTTED)
+	if (astype(host.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes)?.tied == SHOES_KNOTTED)
 		something_to_melt = TRUE
 		melted_something |= melt_restraints_in_slot(host, ITEM_SLOT_FEET)
 	if (istype(host.loc, /obj/structure/closet))

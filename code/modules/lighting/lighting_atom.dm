@@ -171,7 +171,7 @@
 		return
 	. = light_render_source
 	light_render_source = new_source
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_RENDER_SOURCE, .)
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_RENDER_SOURCE, .)
 	return .
 
 // procs that only apply to COMPLEX_LIGHT

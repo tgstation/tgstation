@@ -27,6 +27,11 @@
 	crawled_areas = list()
 	remaining_areas = list()
 
+	// early-init events can destroy pipes, queuing the surviving neighbors for a pipenet rebuild. the rebuild normally happens
+	// on the next SSair.fire(), but this test can run before that fire cycle occurs, racing against it.
+	while(length(SSair.rebuild_queue) || length(SSair.expansion_queue))
+		SSair.process_rebuilds()
+
 	for(var/obj/effect/landmark/atmospheric_sanity/start_area/start_marker in GLOB.landmarks_list)
 		var/area/starting_area = get_area(start_marker)
 		if(starting_area in starting_areas)

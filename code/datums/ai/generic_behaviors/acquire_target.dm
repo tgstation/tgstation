@@ -176,6 +176,8 @@
 		if(controller.can_reach_target(candidate, reach_distance, minimum_distance))
 			target = candidate
 			break
+		if(!async_still_valid())
+			return
 		controller.note_unreachable_target(candidate)
 	// If finish_action fired while we were sleeping, bail without touching anything.
 	if(!async_still_valid())

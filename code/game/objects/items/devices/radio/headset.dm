@@ -38,7 +38,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 	// headset is too small to display overlays
 	overlay_speaker_idle = null
-	overlay_speaker_active = null
 	overlay_mic_idle = null
 	overlay_mic_active = null
 

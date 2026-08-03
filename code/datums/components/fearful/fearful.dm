@@ -128,7 +128,7 @@
 /datum/component/fearful/proc/on_examine(mob/living/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if (source.stat >= UNCONSCIOUS)
+	if (IS_UNCONSCIOUS(source))
 		return
 
 	if(terror_buildup >= TERROR_BUILDUP_HEART_ATTACK)
@@ -148,7 +148,7 @@
 	if(hugger == parent)
 		return
 
-	if(isnightmare(hugger))
+	if(HAS_TRAIT(hugger, TRAIT_NIGHTMARISH))
 		var/lit_tiles = 0
 		var/unlit_tiles = 0
 

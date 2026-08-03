@@ -87,7 +87,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	if(ismonkey(target) && !target.mind) //Don't empower from hitting monkeys. Hit a corgi or something, I don't know.
 		return ..()
 
-	if(target.stat < DEAD && target != user)
+	if(target.stat != DEAD && target != user)
 		scythe_empowerment(SCYTHE_SATED)
 
 	return ..()
@@ -135,13 +135,13 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	var/death_knell_speed_mod = 1
 
 	potential_reaping.visible_message(span_danger("[user] begins to raise [src] above [potential_reaping]'s [head_name]."), span_userdanger("[user] begins to raise [src], aiming to slice off your [head_name]!"))
-	if(potential_reaping.stat >= UNCONSCIOUS || HAS_TRAIT(potential_reaping, TRAIT_INCAPACITATED)) //if the victim is incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly behead
+	if(IS_UNCONSCIOUS(potential_reaping) || HAS_TRAIT(potential_reaping, TRAIT_INCAPACITATED)) //if the victim is incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly behead
 		death_knell_speed_mod *= 0.5
 	if(potential_reaping.stat != DEAD && potential_reaping.has_status_effect(/datum/status_effect/jitter)) //jittering will make it harder to perform the death knell, even if they're still
 		death_knell_speed_mod *= 1.5 //Staminacritting someone who's jittering (from, say, a stun baton) won't give you enough time to slice their head off, but staminacritting someone who isn't jittering will
 	if(empowerment == SCYTHE_EMPOWERED) //That said, if heads are already rolling, why stop here?
 		death_knell_speed_mod *= 0.5
-	if(ispodperson(potential_reaping) || ismonkey(potential_reaping)) //And if they're a podperson or monkey, they can just die.
+	if((potential_reaping.mob_biotypes & MOB_PLANT) || ismonkey(potential_reaping)) //And if they're a podperson/mushperson or monkey, they can just die.
 		death_knell_speed_mod *= 0.5
 
 	log_combat(user, potential_reaping, "prepared to use [src] to decapitate")

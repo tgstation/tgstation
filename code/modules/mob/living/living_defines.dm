@@ -190,6 +190,7 @@
 	/// list of all diseases in a mob
 	var/list/diseases
 	var/list/disease_resistances
+	var/list/symptom_resistances
 
 	///Whether the mob is slowed down when dragging another prone mob
 	var/slowed_by_drag = TRUE
@@ -261,4 +262,10 @@
 
 	/// When less than or equal to  this distance (but not adjacent), this mob can hear parts of distant whispers, but not the entire message.
 	/// When greater than this distance, this mob cannot hear anything of a whisper.
-	var/eavesdrop_range = EAVESDROP_EXTRA_RANGE
+	var/eavesdrop_range = EAVESDROP_RANGE
+
+	/// Reference to the unconscious appearance image that appears in place of the mob to other knocked out mobs
+	VAR_FINAL/image/unconscious_appearance
+
+	/// Reduces the effects of EMPs, does NOT negate them even at very high numbers
+	var/emp_protection = EMP_PROTECTION_NONE

@@ -8,7 +8,7 @@
 	armor_type = /datum/armor/head_wizard
 	strip_delay = 5 SECONDS
 	equip_delay_other = 5 SECONDS
-	clothing_flags = SNUG_FIT | CASTING_CLOTHES
+	clothing_flags = SNUG_FIT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
 	///How much this hat affects fishing difficulty
@@ -16,6 +16,7 @@
 
 /obj/item/clothing/head/wizard/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_CASTING_CLOTHING, INNATE_TRAIT)
 	AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier) //A wizard always practices his casting (ba dum tsh)
 
 /datum/armor/head_wizard
@@ -123,13 +124,13 @@
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 5 SECONDS
 	equip_delay_other = 5 SECONDS
-	clothing_flags = CASTING_CLOTHES
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	///How much this robe affects fishing difficulty
 	var/fishing_modifier = -7
 
 /obj/item/clothing/suit/wizrobe/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_CASTING_CLOTHING, INNATE_TRAIT)
 	AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier) //A wizard always practices his casting (ba dum tsh)
 
 /datum/armor/suit_wizrobe

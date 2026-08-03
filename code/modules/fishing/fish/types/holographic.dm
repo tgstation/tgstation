@@ -37,7 +37,7 @@
 		QDEL_IN(src, 3 SECONDS)
 
 /obj/item/fish/holo/suicide_act(mob/living/user)
-	visible_message(span_suicide("[user] swallows [src] whole! It looks like [user.p_theyre()] trying to derez [user.p_them()]selves!"))
+	visible_message(span_suicide("[user] swallows [src] whole! It looks like [user.p_theyre()] trying to derez [user.p_themselves()]!"))
 	var/area/station/holodeck/holo_area = get_area(src)
 	if(!istype(holo_area))
 		user.dust(just_ash = TRUE, drop_items = TRUE)
@@ -115,14 +115,16 @@
 	if(!iscarbon(user))
 		return ..()
 
+	visible_message(span_suicide("[user] slaps the [name] to their skin, causing it to slide under and meld in! It looks like [user.p_theyre()] trying to 0xF800F8 0x000000 [user.p_themselves()]!"))
 	for(var/obj/item/bodypart/limb in user.get_bodyparts())
-		limb.add_bodypart_overlay(/datum/bodypart_texture/checkered, update = FALSE)
+		limb.add_bodypart_texture(/datum/bodypart_texture/checkered, update = FALSE)
 
 	var/obj/item/bodypart/head/head = user.get_bodypart(BODY_ZONE_HEAD)
 	if(!isnull(head))
 		head.head_flags &= ~HEAD_EYESPRITES
 	user.update_body()
-	return ..()
+	qdel(src)
+	return TOXLOSS
 
 /obj/item/fish/holo/halffish
 	name = "holographic half-fish"

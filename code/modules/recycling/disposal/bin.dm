@@ -202,13 +202,14 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 /// Handles stuffing a grabbed mob into the disposal
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
 	var/ventcrawler = HAS_TRAIT(user, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(user, TRAIT_VENTCRAWLER_NUDE)
-	if(!iscarbon(user) && !ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
-		if (iscyborg(user))
-			var/mob/living/silicon/robot/borg = user
-			if (!borg.model || !borg.model.canDispose)
+	if(user == target) //we didn't check this before even though we're asserting here whether we can put ourself in, bruh.
+		if(!iscarbon(user) && !ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
+			if (iscyborg(user))
+				var/mob/living/silicon/robot/borg = user
+				if (!borg.model || !borg.model.canDispose)
+					return FALSE
+			else
 				return FALSE
-		else
-			return FALSE
 	if(!isturf(user.loc)) //No magically doing it from inside closets
 		return FALSE
 	if(target.buckled || target.has_buckled_mobs())

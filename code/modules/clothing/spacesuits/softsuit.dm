@@ -53,19 +53,19 @@
 	. = ..()
 	. += span_notice("You can start constructing a critter sized mecha with a [span_bold("cyborg leg")].")
 
-/obj/item/clothing/head/helmet/space/eva/attackby(obj/item/attacked_with, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(.)
-		return
-	if(!istype(attacked_with, /obj/item/bodypart/leg/left/robot) && !istype(attacked_with, /obj/item/bodypart/leg/right/robot))
-		return
+/obj/item/clothing/head/helmet/space/eva/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/bodypart/leg/left/robot) && !istype(tool, /obj/item/bodypart/leg/right/robot))
+		return ..()
+
 	if(ismob(loc))
 		user.balloon_alert(user, "drop the helmet first!")
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	user.balloon_alert(user, "leg attached")
 	new /obj/item/bot_assembly/vim(loc)
-	qdel(attacked_with)
+	qdel(tool)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 	//Emergency suit
 /obj/item/clothing/head/helmet/space/fragile

@@ -850,7 +850,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/result = NONE
 
 	if(patient)
-		was_sleeping = (patient.stat != DEAD && HAS_TRAIT(patient, TRAIT_KNOCKEDOUT))
+		was_sleeping = IS_UNCONSCIOUS_AND_ALIVE(patient)
 		update_surgery_mood(patient, SURGERY_STATE_STARTED)
 		SEND_SIGNAL(patient, COMSIG_ATOM_SURGERY_STARTED, src, operating_on, tool)
 
@@ -1018,7 +1018,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	// Create a probability to ignore the pain based on drunkenness level
 	var/drunken_ignorance_probability = clamp(drunken_patient, 0, 90)
 
-	if(target.stat >= UNCONSCIOUS || HAS_TRAIT(target, TRAIT_KNOCKEDOUT))
+	if(IS_UNCONSCIOUS(target))
 		return
 	if(HAS_TRAIT(target, TRAIT_ANALGESIA) || drunken_patient && prob(drunken_ignorance_probability))
 		to_chat(target, span_notice("You feel a dull, numb sensation as your body is surgically operated on."))
@@ -1082,7 +1082,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(HAS_TRAIT(patient, TRAIT_ANALGESIA) || prob(drunk_ignore_prob))
 		patient.clear_mood_event(SURGERY_MOOD_CATEGORY) //incase they gained the trait mid-surgery (or became drunk). has the added side effect that if someone has a bad surgical memory/mood and gets drunk & goes back to surgery, they'll forget they hated it, which is kinda funny imo.
 		return
-	if(patient.stat >= UNCONSCIOUS)
+	if(IS_UNCONSCIOUS(patient))
 		var/datum/mood_event/surgery/target_mood_event = patient.mob_mood?.mood_events[SURGERY_MOOD_CATEGORY]
 		if(!target_mood_event || target_mood_event.surgery_completed) //don't give sleeping mobs trauma. that said, if they fell asleep mid-surgery after already getting the bad mood, lets make sure they wake up to a (hopefully) happy memory.
 			return

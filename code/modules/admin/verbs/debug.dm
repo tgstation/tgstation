@@ -480,11 +480,11 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, "Rejuvenate", /mob/l
 	admin_ticket_log(M, msg)
 	BLACKBOX_LOG_ADMIN_VERB("Rejuvenate")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_delete, R_DEBUG|R_SPAWN, "Delete", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, /atom)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_delete, R_DEBUG|R_SPAWN, "Delete", /atom)
 	VERB_ARG_TYPED(target, VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_TURF, VERB_ARG_SOURCE_WORLD, /atom)
 	user.admin_delete(target)
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_check_contents, R_ADMIN, "Check Contents", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, /mob/living)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_check_contents, R_ADMIN, "Check Contents", /mob/living)
 	VERB_ARG_TYPED(mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob/living)
 	var/list/mob_contents = mob.get_contents()
 	for(var/content in mob_contents)
@@ -645,7 +645,7 @@ ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a speci
 			return
 
 	var/len = GLOB.ruin_landmarks.len
-	seedRuins(SSmapping.levels_by_trait(data[2]), max(1, template.cost), data[3], list(ruinname = template))
+	seedRuins(SSmapping.levels_by_trait(data[2]), max(1, template.cost), data[3], list(ruinname = template), immediate_load = TRUE)
 	if (GLOB.ruin_landmarks.len > len)
 		var/obj/effect/landmark/ruin/landmark = GLOB.ruin_landmarks[GLOB.ruin_landmarks.len]
 		log_admin("[key_name(user)] randomly spawned ruin [ruinname] at [COORD(landmark)].")

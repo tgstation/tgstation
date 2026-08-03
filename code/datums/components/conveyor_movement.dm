@@ -24,7 +24,7 @@
 	source.delay = speed //We use the default delay
 	if(living_parent)
 		var/mob/living/moving_mob = parent
-		if((moving_mob.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) && !moving_mob.stat)
+		if((moving_mob.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) && !IS_UNCONSCIOUS_OR_CRIT(moving_mob))
 			return MOVELOOP_SKIP_STEP
 	var/atom/movable/moving_parent = parent
 	if(moving_parent.anchored || !moving_parent.has_gravity())

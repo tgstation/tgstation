@@ -56,10 +56,18 @@
 				"type": "sequence",
 				"children": [
 					{
-						"type": "subtree",
-						"subtype": "/datum/bt_node/subtree/run_away_from_target",
-						"bindings": {
-							"byk9gqj4": "BB_BASIC_MOB_FLEE_TARGET"
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/true_for_time",
+						"vars": {
+							"duration": "3 SECONDS",
+							"succeed_on_timeout": true
+						},
+						"child": {
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/run_away_from_target",
+							"bindings": {
+								"byk9gqj4": "BB_BASIC_MOB_FLEE_TARGET"
+							}
 						}
 					},
 					{

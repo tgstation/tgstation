@@ -8,6 +8,7 @@
 		"anturk.dmi-editor",
 		"esbenp.prettier-vscode",
 		"biomejs.biome",
+		"ss13.ss13buildflags",
 		"BehaviorTreeG.behaviortreeg"
 	]
 }

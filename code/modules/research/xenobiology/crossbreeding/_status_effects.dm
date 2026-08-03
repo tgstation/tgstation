@@ -159,7 +159,7 @@
 	return ..()
 
 /datum/status_effect/slime_clone/tick(seconds_between_ticks)
-	if(!istype(clone) || clone.stat != CONSCIOUS)
+	if(!istype(clone) || IS_UNCONSCIOUS_OR_CRIT(clone))
 		owner.remove_status_effect(src)
 
 /datum/status_effect/slime_clone/on_remove()
@@ -366,7 +366,7 @@
 	duration = 30 SECONDS
 
 /datum/status_effect/lovecookie/tick(seconds_between_ticks)
-	if(owner.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
 		return
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner

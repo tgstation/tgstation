@@ -78,10 +78,11 @@
 	set_overlay_hair_color(facial_hair_overlay, facial_hair_color)
 	// Emissive blocker
 	if(blocks_emissive != EMISSIVE_BLOCK_NONE)
-		var/mutable_appearance/em_block = emissive_blocker(facial_hair_overlay.icon, facial_hair_overlay.icon_state, location, alpha = facial_hair_alpha)
+		var/mutable_appearance/em_block = emissive_blocker(facial_hair_overlay.icon, facial_hair_overlay.icon_state, location, -HAIR_LAYER, alpha = facial_hair_alpha)
 		if (dropped)
 			em_block = image(em_block, dir = SOUTH)
-		facial_hair_overlay.overlays += em_block
+		worn_face_offset?.apply_offset(em_block)
+		. += em_block
 
 	//Offsets
 	worn_face_offset?.apply_offset(facial_hair_overlay)
@@ -89,11 +90,25 @@
 
 	//Gradients
 	var/facial_hair_gradient_style = get_hair_gradient_style(GRADIENT_FACIAL_HAIR_KEY)
-	if(facial_hair_gradient_style != SPRITE_ACCESSORY_NONE)
-		var/facial_hair_gradient_color = get_hair_gradient_color(GRADIENT_FACIAL_HAIR_KEY)
-		var/image/facial_hair_gradient_overlay = get_gradient_overlay(icon(sprite_accessory.icon, sprite_accessory.icon_state), -HAIR_LAYER, SSaccessories.facial_hair_gradients_list[facial_hair_gradient_style], facial_hair_gradient_color, dropped)
-		. += facial_hair_gradient_overlay
+	if(facial_hair_gradient_style == SPRITE_ACCESSORY_NONE)
+		return .
 
+	var/facial_hair_gradient_color = get_hair_gradient_color(GRADIENT_FACIAL_HAIR_KEY)
+	var/image/facial_hair_gradient_overlay = get_gradient_overlay(icon(sprite_accessory.icon, sprite_accessory.icon_state), -HAIR_LAYER, SSaccessories.facial_hair_gradients_list[facial_hair_gradient_style], facial_hair_gradient_color, dropped)
+	if (facial_hair_alpha == 255)
+		. += facial_hair_gradient_overlay
+		return .
+
+	// If we have a gradient and hair alpha, we need to merge them into a single appearance by having a shared KEEP_TOGETHER holder
+	// since adding our gradient as an overlay would cause it to get colored
+	. -= facial_hair_overlay
+	facial_hair_overlay.alpha = 255
+	var/image/shared_holder = image(layer = -HAIR_LAYER, dir = image_dir)
+	shared_holder.alpha = facial_hair_alpha
+	shared_holder.appearance_flags |= KEEP_TOGETHER
+	shared_holder.overlays += facial_hair_overlay
+	shared_holder.overlays += facial_hair_gradient_overlay
+	. += shared_holder
 	return .
 
 /// Used in constructing the hair overlays - handles just the hair on top of the head
@@ -129,21 +144,34 @@
 		hair_overlay.pixel_z = hair_sprite_accessory.y_offset
 		// Emissive blocker
 		if(blocks_emissive != EMISSIVE_BLOCK_NONE)
-			var/mutable_appearance/em_block = emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, location, alpha = hair_alpha)
+			var/mutable_appearance/em_block = emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, location, -HAIR_LAYER, alpha = hair_alpha)
 			if (dropped)
 				em_block = image(em_block, dir = SOUTH)
-			hair_overlay.overlays += em_block
+			em_block.pixel_z = hair_sprite_accessory.y_offset
+			. += em_block
 		// Offsets
 		worn_face_offset?.apply_offset(hair_overlay)
 		. += hair_overlay
 		// Gradients
 		var/hair_gradient_style = get_hair_gradient_style(GRADIENT_HAIR_KEY)
-		if(hair_gradient_style != SPRITE_ACCESSORY_NONE)
-			var/hair_gradient_color = get_hair_gradient_color(GRADIENT_HAIR_KEY)
-			var/image/hair_gradient_overlay = get_gradient_overlay(base_icon, hair_overlay.layer, SSaccessories.hair_gradients_list[hair_gradient_style], hair_gradient_color, dropped)
-			hair_gradient_overlay.pixel_z = hair_sprite_accessory.y_offset
-			. += hair_gradient_overlay
+		if(hair_gradient_style == SPRITE_ACCESSORY_NONE)
+			continue
 
+		var/hair_gradient_color = get_hair_gradient_color(GRADIENT_HAIR_KEY)
+		var/image/hair_gradient_overlay = get_gradient_overlay(base_icon, hair_overlay.layer, SSaccessories.hair_gradients_list[hair_gradient_style], hair_gradient_color, dropped)
+		hair_gradient_overlay.pixel_z = hair_sprite_accessory.y_offset
+		if (hair_alpha == 255)
+			. += hair_gradient_overlay
+			continue
+
+		. -= hair_overlay
+		hair_overlay.alpha = 255
+		var/image/shared_holder = image(layer = -HAIR_LAYER, dir = image_dir)
+		shared_holder.alpha = facial_hair_alpha
+		shared_holder.appearance_flags |= KEEP_TOGETHER
+		shared_holder.overlays += hair_overlay
+		shared_holder.overlays += hair_gradient_overlay
+		. += shared_holder
 	return .
 
 /// Helper for setting hair color of an overlay appropriately

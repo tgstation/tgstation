@@ -12,7 +12,7 @@
 	. = ..()
 	if((. & EMP_PROTECT_SELF) || !owner)
 		return
-	if(prob(10 * severity))
+	if(prob(100 / severity))
 		return
 	to_chat(owner, span_warning("Static obfuscates your vision!"))
 	owner.flash_act(visual = 1)
@@ -570,7 +570,7 @@
 	var/mutable_appearance/visor_overlay = mutable_appearance(eye_icon, eye_icon_state, -EYES_LAYER)
 	var/list/eye_overlays = list(visor_overlay)
 	var/mob/living/carbon/human/parent = limb.owner
-	if (parent && parent.appears_alive() && !HAS_TRAIT(parent, TRAIT_KNOCKEDOUT))
+	if (parent && !IS_DEAD_OR_FAKING(parent) && !IS_UNCONSCIOUS(parent))
 		var/mutable_appearance/display_overlay = mutable_appearance(eye_icon, "[eye_icon_state]_[LOWER_TEXT(visor_display)]", -EYES_LAYER)
 		eye_overlays += display_overlay
 		if(!(parent.obscured_slots & HIDEEYES))
