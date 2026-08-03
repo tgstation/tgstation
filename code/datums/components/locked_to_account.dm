@@ -15,8 +15,8 @@
 	src.department_account = department_account
 
 /datum/component/locked_to_account/InheritComponent(datum/component/locked_to_account/new_comp, i_am_original, datum/bank_account/buyer_account, datum/bank_account/department/department_account)
-    src.buyer_account = buyer_account
-    src.department_account = department_account
+	src.buyer_account = buyer_account
+	src.department_account = department_account
 
 /datum/component/locked_to_account/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
