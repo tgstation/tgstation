@@ -85,7 +85,7 @@ GLOBAL_VAR(round_default_lawset)
 		switch(CONFIG_GET(number/default_laws))
 			if(CONFIG_ASIMOV)
 				law_weights -= AI_LAWS_ASIMOV
-			if(CONFIG_CUSTOM)
+			if(CONFIG_SPECIFIED)
 				law_weights -= specified_law_ids
 
 	while(!lawtype && law_weights.len)
