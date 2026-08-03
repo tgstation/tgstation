@@ -1,5 +1,5 @@
 /obj/item/boombox
-	name = "\a boombox"
+	name = "\proper Nanomusic boombox"
 	desc = "Never quit making all that racket with this booming box."
 	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "boombox"
