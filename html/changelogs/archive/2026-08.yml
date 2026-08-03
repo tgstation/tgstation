@@ -55,6 +55,7 @@
   - bugfix: AI Holopads no longer leak unknown languages in runechat
   - rscadd: You can now make text highlights only apply for specific characters or
       specific jobs
+  - rscdel: Removed commendations from public logs. Your admirer is now truly anonymous
   Swan:
   - code_imp: Made it so the round start timer starts precisely at the value specified
       in configs
