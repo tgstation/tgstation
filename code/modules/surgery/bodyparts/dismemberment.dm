@@ -266,7 +266,7 @@
 
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special, lazy)
 	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special, lazy)
-	new_limb_owner.add_bodypart(src)
+	new_limb_owner.add_bodypart(src, special, lazy)
 
 	if(!lazy)
 		LAZYREMOVE(new_limb_owner.body_zone_dismembered_by, body_zone)

@@ -102,7 +102,15 @@
 /mob/living/basic/revenant/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	add_traits(list(TRAIT_COMBAT_MODE_LOCK, TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_SEE_BLESSED_TILES, TRAIT_IGNORE_ELEVATION), INNATE_TRAIT)
+	add_traits(list(
+		TRAIT_COMBAT_MODE_LOCK,
+		TRAIT_SPACEWALK,
+		TRAIT_SIXTHSENSE,
+		TRAIT_FREE_HYPERSPACE_MOVEMENT,
+		TRAIT_SEE_BLESSED_TILES,
+		TRAIT_IGNORE_ELEVATION,
+		TRAIT_GHOSTLY_MOB,
+	), INNATE_TRAIT)
 
 	grant_actions_by_list(abilities)
 
@@ -410,7 +418,7 @@
 		apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
 		return FALSE
 
-	if(locate(/obj/effect/blessing) in step_turf)
+	if(HAS_TRAIT(step_turf, TRAIT_TURF_BLESSED))
 		to_chat(src, span_warning("Holy energies block your path!"))
 		return FALSE
 

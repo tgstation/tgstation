@@ -26,7 +26,7 @@
 		if(target_species.fixed_mut_color)
 			species_color = target_species.fixed_mut_color
 		else
-			species_color = target.dna.features["mcolor"]
+			species_color = target.dna.features[FEATURE_MUTANT_COLOR]
 	else
 		skin_tone = ""
 		species_color = ""
@@ -46,17 +46,17 @@
 /// Returns a list of all hair/facial hair related overlays, or alternatively the debrained overlay if applicable
 /obj/item/bodypart/head/proc/get_hair_overlays(dropped)
 	. = list()
-	var/hair_hidden = is_husked || is_invisible || (owner?.obscured_slots & HIDEHAIR)
-	var/facial_hair_hidden = is_husked || is_invisible || (owner?.obscured_slots & HIDEFACIALHAIR)
+	if(is_invisible)
+		return .
 
-	if(!facial_hair_hidden && (head_flags & HEAD_FACIAL_HAIR))
+	if(!is_husked && !(owner?.obscured_slots & HIDEFACIALHAIR) && (head_flags & HEAD_FACIAL_HAIR))
 		. += get_base_facial_hair_overlays(dropped)
 
-	if(!hair_hidden)
+	if(is_husked != HUSKED_BURN && !(owner?.obscured_slots & HIDEHAIR))
 		var/obj/item/organ/brain/brain = locate() in src
 		if(QDELETED(brain) && (head_flags & HEAD_DEBRAIN))
 			. += get_debrain_overlay(dropped)
-		else if(head_flags & HEAD_HAIR)
+		else if(!is_husked && (head_flags & HEAD_HAIR))
 			. += get_base_hair_overlays(dropped)
 
 	return .
@@ -188,14 +188,17 @@
 /obj/item/bodypart/head/proc/get_eye_overlays(dropped)
 	. = list()
 
+	if(is_husked == HUSKED_BURN)
+		return .
+
 	var/obj/item/organ/eyes/eyes = locate() in src
 	if(QDELETED(eyes))
 		if(head_flags & HEAD_EYEHOLES)
 			. += get_eyeless_overlay(dropped)
-		return .
 
-	if(head_flags & HEAD_EYESPRITES)
-		. += eyes.generate_body_overlay(src)
+	else
+		if(head_flags & HEAD_EYESPRITES)
+			. += eyes.generate_body_overlay(src)
 
 	return .
 
