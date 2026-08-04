@@ -1222,6 +1222,31 @@
 	owner.remove_filter("designated_target")
 	REMOVE_TRAIT(owner, TRAIT_DESIGNATED_TARGET, id)
 
+/datum/status_effect/shadowspeak
+	id = "forced_shadowspeak"
+	alert_type = null
+	remove_on_fullheal = FALSE //Ideally, the fullheal will remove whatever's causing the status effect in the first place.
+	var/shadowspeak_chance
+
+/datum/status_effect/shadowspeak/on_creation(mob/living/new_owner, shadowspeak_chance)
+	src.shadowspeak_chance = shadowspeak_chance
+	return ..()
+
+/datum/status_effect/shadowspeak/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(on_spoken))
+
+/datum/status_effect/shadowspeak/on_remove()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+
+/// When the mob speaks, sometimes put it in a different language
+/datum/status_effect/shadowspeak/proc/on_spoken(mob/living/new_owner, list/speech_args)
+	SIGNAL_HANDLER
+	if (new_owner.has_reagent(/datum/reagent/water/holywater) || prob(shadowspeak_chance))
+		return
+	speech_args[SPEECH_LANGUAGE] = /datum/language/shadowtongue
+
 #undef HEALING_SLEEP_DEFAULT
 #undef HEALING_SLEEP_ORGAN_MULTIPLIER
 #undef SLEEP_QUALITY_WORKOUT_MULTIPLER

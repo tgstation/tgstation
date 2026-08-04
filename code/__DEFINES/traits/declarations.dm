@@ -1231,6 +1231,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait for if you've recently had a Last Word cocktail
 #define TRAIT_HAD_LAST_WORD "had_last_word"
 
+/// Trait for if you've recently had a Footsoldier's Razor cocktail
+#define TRAIT_HAD_FOOTSOLDIERS_RAZOR "had_footsoldiers_razor"
+
 /// Whether bots will salute this mob.
 #define TRAIT_COMMISSIONED "commissioned"
 

@@ -3504,9 +3504,22 @@
 	boozepwr = 40
 	color = "#1DA7DD"
 	quality = DRINK_FANTASTIC
+	overdose_threshold = 100 //requires making multiple batches, and ensures that you can't really do this accidentally.
 	taste_description = "all that's in a flame alongside fire"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/watchmans_nightcap/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	.= ..()
+	//TODO: add flashlight eyes here
+
+/datum/reagent/consumable/ethanol/watchmans_nightcap/overdose_start(mob/living/drinker, metabolization_ratio)
+	. = ..()
+	//TODO: add OD effect here
+
+/datum/reagent/consumable/ethanol/watchmans_nightcap/overdose_process(mob/living/drinker, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	//TODO: add purge effect here, probably?
 
 //Blade
 /datum/reagent/consumable/ethanol/footsoldiers_razor
@@ -3518,6 +3531,21 @@
 	taste_description = "bitterness seasoned by blood"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/last_word/expose_mob(mob/living/drinker, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	//Causes drinkers to injure themselves when first sipping with a 6 minute cooldown.
+	if(!(methods & INGEST) || !iscarbon(drinker) || HAS_TRAIT(drinker, TRAIT_HAD_FOOTSOLDIERS_RAZOR))
+		return
+
+	ADD_TRAIT(drinker, TRAIT_HAD_FOOTSOLDIERS_RAZOR, type)
+	to_chat(drinker, span_notice("You cut your lip on something sharp!"))
+	//TODO: add bleeding effect and brute damage here
+	addtimer(TRAIT_CALLBACK_REMOVE(drinker, TRAIT_HAD_FOOTSOLDIERS_RAZOR, type), 300 SECONDS)
+
+/datum/reagent/consumable/ethanol/watchmans_nightcap/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	.= ..()
+	//TODO: Add wound resistance and such here
 
 //Cosmos
 /datum/reagent/consumable/ethanol/farstar_amrita
@@ -3551,6 +3579,16 @@
 	taste_description = "your tongue splitting, then splitting again"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/openthroat_draught/on_mob_add(mob/living/drinker)
+	.=..()
+	drinker.grant_all_languages(source = LANGUAGE_DRINK)
+	drinker.apply_status_effect(/datum/status_effect/shadowspeak, 60) //same effect as the tongue corrupted organ
+
+/datum/reagent/consumable/ethanol/openthroat_draught/on_mob_delete(mob/living/drinker)
+	.=..()
+	drinker.remove_all_languages(source = LANGUAGE_DRINK)
+	drinker.apply_status_effect(/datum/status_effect/shadowspeak)
 
 //Moon
 /datum/reagent/consumable/ethanol/lunacy
