@@ -177,7 +177,7 @@
 
 /obj/projectile/bullet/pea/on_hit(mob/living/carbon/target, blocked = 0, pierce_hit)
 	if(istype(target) && blocked != 100)
-		if(iszombie(target)) // https://www.youtube.com/watch?v=ssZoq1eUK-s
+		if(target.has_status_effect(/datum/status_effect/zombie)) // https://www.youtube.com/watch?v=ssZoq1eUK-s
 			target.adjust_brute_loss(15)
 		if(target.can_inject(target_zone = def_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 			..()

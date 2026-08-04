@@ -148,7 +148,7 @@
 	if(hugger == parent)
 		return
 
-	if(isnightmare(hugger))
+	if(HAS_TRAIT(hugger, TRAIT_NIGHTMARISH))
 		var/lit_tiles = 0
 		var/unlit_tiles = 0
 

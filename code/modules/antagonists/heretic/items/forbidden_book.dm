@@ -41,6 +41,9 @@
 	if(.)
 		return
 
+	if(book_open)
+		return
+
 	open_animation()
 	update_weight_class(WEIGHT_CLASS_NORMAL)
 	addtimer(CALLBACK(src, PROC_REF(close_book)), 30 SECONDS)

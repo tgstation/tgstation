@@ -67,7 +67,8 @@
 	vary = FALSE
 
 /datum/emote/living/carbon/human/screech/get_sound(mob/living/carbon/human/user)
-	return user.dna.species.get_scream_sound(user)
+	var/datum/emote/scream_emote = GLOB.emote_list[/datum/emote/living/scream::key][1]
+	return scream_emote.get_sound(user)
 
 /datum/emote/living/carbon/human/pale
 	key = "pale"

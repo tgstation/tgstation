@@ -61,6 +61,7 @@
 	RegisterSignal(new_ethereal, COMSIG_ATOM_SABOTEUR_ACT, PROC_REF(hit_by_saboteur))
 	RegisterSignal(new_ethereal, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(new_ethereal, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(refresh_light_color))
+	RegisterSignal(new_ethereal, COMSIG_CARBON_BODYPART_UPDATED, PROC_REF(update_bodypart_color))
 	ethereal_light = new_ethereal.mob_light(light_type = /obj/effect/dummy/lighting_obj/moblight/species)
 	refresh_light_color(new_ethereal)
 
@@ -78,6 +79,7 @@
 		COMSIG_ATOM_SABOTEUR_ACT,
 		COMSIG_LIGHT_EATER_ACT,
 		COMSIG_LIVING_HEALTH_UPDATE,
+		COMSIG_CARBON_BODYPART_UPDATED,
 	))
 	QDEL_NULL(ethereal_light)
 	return ..()
@@ -122,6 +124,12 @@
 		ethereal.set_facial_haircolor(dead_color, override = TRUE, update = FALSE)
 		ethereal.set_haircolor(dead_color, override = TRUE, update = FALSE)
 		ethereal.update_body()
+
+/datum/species/ethereal/proc/update_bodypart_color(datum/source, obj/item/bodypart/part, dropping_limb, is_creating)
+	SIGNAL_HANDLER
+	if(part.limb_id != SPECIES_ETHEREAL)
+		return
+	part.species_color = current_color
 
 /datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/source, severity, protection)
 	SIGNAL_HANDLER
@@ -231,16 +239,6 @@
 
 	return features
 
-/datum/species/ethereal/get_scream_sound(mob/living/carbon/human/ethereal)
-	return pick(
-		'sound/mobs/humanoids/ethereal/ethereal_scream_1.ogg',
-		'sound/mobs/humanoids/ethereal/ethereal_scream_2.ogg',
-		'sound/mobs/humanoids/ethereal/ethereal_scream_3.ogg',
-	)
-
-/datum/species/ethereal/get_hiss_sound(mob/living/carbon/human/ethereal)
-	return 'sound/mobs/humanoids/ethereal/ethereal_hiss.ogg'
-
 /datum/species/ethereal/get_physical_attributes()
 	return "Ethereals process electricity as their power supply, not food, and are somewhat resistant to it.\
 		They do so via their crystal core, their equivalent of a human heart, which will also encase them in a reviving crystal if they die.\
@@ -302,6 +300,7 @@
 	id = SPECIES_ETHEREAL_LUSTROUS
 	examine_limb_id = SPECIES_ETHEREAL
 	mutantbrain = /obj/item/organ/brain/lustrous
+	mutanttongue = /obj/item/organ/tongue/ethereal/lustrous
 	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
@@ -324,13 +323,6 @@
 /datum/species/ethereal/lustrous/get_physical_attributes()
 	return "Lustrous are what remains of an Ethereal after freebasing esoteric drugs. \
 		They are pressure immune, virus immune, can see bluespace tears in reality, and have a really weird scream. They remain vulnerable to physical damage."
-
-/datum/species/ethereal/lustrous/get_scream_sound(mob/living/carbon/human/ethereal)
-	return pick(
-		'sound/mobs/humanoids/ethereal/lustrous_scream_1.ogg',
-		'sound/mobs/humanoids/ethereal/lustrous_scream_2.ogg',
-		'sound/mobs/humanoids/ethereal/lustrous_scream_3.ogg',
-	)
 
 /datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load, regenerate_icons)
 	..()

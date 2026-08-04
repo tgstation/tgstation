@@ -4,14 +4,14 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "af" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "ah" = (
@@ -32,7 +32,7 @@
 "al" = (
 /obj/item/radio/intercom/mi13/directional/north,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "am" = (
@@ -110,12 +110,12 @@
 "aB" = (
 /obj/item/kirbyplants/organic/plant10,
 /obj/effect/turf_decal/tile/green,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "aC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "aD" = (
@@ -175,7 +175,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "aR" = (
@@ -217,14 +217,14 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "be" = (
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "bf" = (
@@ -262,14 +262,14 @@
 /obj/structure/bed/double{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "bt" = (
 /obj/effect/turf_decal/tile/bar/anticorner/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "bu" = (
@@ -282,7 +282,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "by" = (
@@ -317,7 +317,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "bJ" = (
 /obj/machinery/light/directional/north,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "bK" = (
@@ -379,7 +379,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "ck" = (
@@ -465,7 +465,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "cK" = (
 /obj/effect/turf_decal/tile/bar/anticorner/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "cL" = (
@@ -476,7 +476,7 @@
 /obj/effect/turf_decal/tile/bar/anticorner/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "cO" = (
@@ -516,7 +516,7 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "cX" = (
@@ -531,7 +531,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "dd" = (
@@ -555,7 +555,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/bar/fourcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "dk" = (
@@ -585,12 +585,12 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "dr" = (
 /obj/structure/table,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "du" = (
@@ -604,7 +604,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "dw" = (
 /obj/machinery/light/directional/west,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "dy" = (
@@ -633,7 +633,7 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "dF" = (
@@ -664,7 +664,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "dO" = (
@@ -707,7 +707,7 @@
 /area/awaymission/beach/heretic)
 "dY" = (
 /obj/structure/bookcase/random,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "eg" = (
@@ -831,7 +831,7 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "eQ" = (
@@ -846,7 +846,7 @@
 	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/tile/bar/half/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "eT" = (
@@ -859,7 +859,7 @@
 "eW" = (
 /obj/structure/table,
 /obj/item/ammo_box/magazine/m7mm,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "eY" = (
@@ -916,7 +916,7 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "fo" = (
@@ -936,7 +936,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "fu" = (
@@ -1052,7 +1052,7 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "fP" = (
@@ -1081,7 +1081,7 @@
 /obj/effect/turf_decal/tile/bar/anticorner/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "fW" = (
@@ -1143,7 +1143,7 @@
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "gi" = (
@@ -1260,7 +1260,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar/fourcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "gK" = (
@@ -1279,7 +1279,7 @@
 	id = "crematoriumchapel";
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
 "gQ" = (
@@ -1296,7 +1296,7 @@
 	dir = 1
 	},
 /obj/structure/door_assembly/door_assembly_highsecurity,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "gT" = (
@@ -1323,7 +1323,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "gY" = (
@@ -1566,7 +1566,7 @@
 /obj/effect/turf_decal/tile/dark{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "ij" = (
@@ -1641,7 +1641,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/dark_green/fourcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "iF" = (
@@ -1695,7 +1695,7 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "iO" = (
@@ -1711,7 +1711,7 @@
 "iQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/awaymission/caves/heretic_laboratory)
 "iR" = (
@@ -1734,7 +1734,7 @@
 	pixel_x = 17;
 	pixel_y = 0
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "iW" = (
@@ -1765,7 +1765,7 @@
 /obj/effect/turf_decal/tile/bar/anticorner/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "jc" = (
@@ -1775,7 +1775,7 @@
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "je" = (
@@ -1877,7 +1877,7 @@
 "jO" = (
 /obj/machinery/vending/medical,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "jP" = (
@@ -1913,7 +1913,7 @@
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "jX" = (
@@ -2066,7 +2066,7 @@
 "kO" = (
 /obj/structure/table,
 /obj/item/fake_items/l6_saw,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "kQ" = (
@@ -2144,14 +2144,14 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "lt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/directional/east,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "lu" = (
@@ -2166,7 +2166,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/bar/fourcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "lz" = (
@@ -2209,7 +2209,7 @@
 "lH" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/effect/mapping_helpers/damaged_window,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "lJ" = (
@@ -2219,14 +2219,14 @@
 /obj/effect/turf_decal/tile/dark{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "lK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "lL" = (
@@ -2241,7 +2241,7 @@
 "lV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "lW" = (
@@ -2267,7 +2267,7 @@
 /obj/structure/bed/double,
 /obj/effect/spawner/random/bedsheet/double,
 /obj/effect/turf_decal/tile/bar/anticorner/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "lZ" = (
@@ -2388,7 +2388,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "mJ" = (
 /obj/machinery/suit_storage_unit/open,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "mL" = (
@@ -2399,7 +2399,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "mM" = (
@@ -2492,7 +2492,7 @@
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "nj" = (
@@ -2538,7 +2538,7 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/mi13/directional/west,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "ny" = (
@@ -2552,7 +2552,7 @@
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "nD" = (
@@ -2627,7 +2627,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "nR" = (
@@ -2730,7 +2730,7 @@
 /obj/machinery/light/floor,
 /obj/machinery/light/directional/east,
 /obj/structure/bed/double,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "os" = (
@@ -2755,7 +2755,7 @@
 /obj/structure/rack,
 /obj/item/gun/energy/disabler/smg,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "oC" = (
@@ -2766,7 +2766,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "oF" = (
@@ -2788,7 +2788,7 @@
 /obj/effect/turf_decal/tile/dark_green/half{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "oN" = (
@@ -2813,7 +2813,7 @@
 "oQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "oS" = (
@@ -2961,7 +2961,7 @@
 /obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "pv" = (
@@ -3034,12 +3034,12 @@
 /area/awaymission/caves/heretic_laboratory)
 "pJ" = (
 /mob/living/basic/bot/cleanbot,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "pL" = (
 /obj/machinery/light/directional/south,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "pN" = (
@@ -3079,7 +3079,7 @@
 /area/awaymission/caves/heretic_laboratory_clean)
 "pW" = (
 /obj/structure/table,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "pX" = (
@@ -3100,7 +3100,7 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "qc" = (
@@ -3110,13 +3110,13 @@
 /obj/effect/turf_decal/tile/dark_green/half{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "qe" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/effect/spawner/random/heretic_gateway,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "qg" = (
@@ -3236,7 +3236,7 @@
 "qL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "qM" = (
@@ -3280,7 +3280,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "qW" = (
@@ -3303,7 +3303,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "rc" = (
@@ -3315,7 +3315,7 @@
 /area/awaymission/beach/heretic)
 "rf" = (
 /obj/machinery/light/directional/west,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "rh" = (
@@ -3364,13 +3364,13 @@
 /obj/structure/bed/double,
 /obj/effect/spawner/random/bedsheet/double,
 /obj/effect/turf_decal/tile/dark_green/anticorner/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "ry" = (
 /obj/structure/table,
 /obj/item/book/bible,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "rA" = (
@@ -3532,7 +3532,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/bar/half/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "sp" = (
@@ -3657,7 +3657,7 @@
 /obj/effect/turf_decal/tile/dark_green/half{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "sZ" = (
@@ -3665,7 +3665,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "ta" = (
@@ -3710,7 +3710,7 @@
 /area/awaymission/beach/heretic)
 "tl" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "tm" = (
@@ -3733,7 +3733,7 @@
 /area/awaymission/beach/heretic)
 "ts" = (
 /obj/machinery/light/directional/west,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "ty" = (
@@ -3800,7 +3800,7 @@
 /turf/open/water/beach,
 /area/awaymission/beach/heretic)
 "tS" = (
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "tT" = (
@@ -3834,7 +3834,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar/fourcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "uc" = (
@@ -3873,7 +3873,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "ul" = (
@@ -4003,7 +4003,7 @@
 "uQ" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/dark_green/half/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "uR" = (
@@ -4061,7 +4061,7 @@
 /area/awaymission/beach/heretic)
 "vf" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "vj" = (
@@ -4070,7 +4070,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/caves/heretic_laboratory)
 "vk" = (
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
 "vm" = (
@@ -4133,7 +4133,7 @@
 	pixel_y = 4
 	},
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "vw" = (
@@ -4292,7 +4292,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "ws" = (
@@ -4329,7 +4329,7 @@
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "wz" = (
@@ -4351,7 +4351,7 @@
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "wE" = (
@@ -4386,7 +4386,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "wJ" = (
@@ -4463,7 +4463,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "wY" = (
@@ -4504,7 +4504,7 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "xd" = (
@@ -4527,7 +4527,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "xk" = (
@@ -4549,7 +4549,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "xn" = (
@@ -4649,7 +4649,7 @@
 /obj/structure/bed/double{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "xJ" = (
@@ -4688,7 +4688,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "xQ" = (
@@ -4703,7 +4703,7 @@
 "xT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "xW" = (
@@ -4740,7 +4740,7 @@
 /obj/item/ammo_box/magazine/lahtimagazine{
 	anchored = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "ye" = (
@@ -4845,7 +4845,7 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "yJ" = (
@@ -4875,7 +4875,7 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/mi13/directional/west,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "yN" = (
@@ -4930,7 +4930,7 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "zb" = (
@@ -4995,7 +4995,7 @@
 /area/awaymission/beach/heretic)
 "zE" = (
 /obj/structure/bookcase/random,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "zF" = (
@@ -5167,7 +5167,7 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "AD" = (
@@ -5177,7 +5177,7 @@
 "AG" = (
 /obj/structure/bookcase/random,
 /obj/machinery/light/directional/east,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "AI" = (
@@ -5187,7 +5187,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "AJ" = (
@@ -5231,7 +5231,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "AR" = (
@@ -5343,7 +5343,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/bar/half/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "By" = (
@@ -5375,7 +5375,7 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "BS" = (
@@ -5383,7 +5383,7 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "BU" = (
@@ -5439,7 +5439,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "Cm" = (
 /mob/living/basic/heretic_summon/stalker,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Cn" = (
@@ -5482,7 +5482,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/dark_green/fourcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Cy" = (
@@ -5528,7 +5528,7 @@
 /area/awaymission/beach/heretic)
 "CG" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "CI" = (
@@ -5561,7 +5561,7 @@
 /turf/open/floor/asphalt,
 /area/awaymission/beach/heretic)
 "CT" = (
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "CU" = (
@@ -5583,7 +5583,7 @@
 /area/awaymission/beach/heretic)
 "CX" = (
 /obj/machinery/light/directional/east,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "CZ" = (
@@ -5596,7 +5596,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Dc" = (
@@ -5617,7 +5617,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "Di" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Dj" = (
@@ -5653,7 +5653,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Dt" = (
@@ -5694,20 +5694,20 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/bar/fourcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "DC" = (
 /obj/structure/bookcase/random,
 /obj/machinery/light/directional/west,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "DG" = (
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "DJ" = (
@@ -5748,7 +5748,7 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 6
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/awaymission/caves/heretic_laboratory)
 "DX" = (
@@ -5765,7 +5765,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "DZ" = (
@@ -5787,7 +5787,7 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "Ec" = (
@@ -5831,7 +5831,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Es" = (
@@ -5975,7 +5975,7 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Fa" = (
@@ -6032,7 +6032,7 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "Fn" = (
@@ -6040,7 +6040,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Fr" = (
@@ -6088,13 +6088,13 @@
 /obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "FC" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/bar/half/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "FD" = (
@@ -6102,7 +6102,7 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "FF" = (
@@ -6118,7 +6118,7 @@
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/tile/bar,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "FM" = (
@@ -6146,7 +6146,7 @@
 "FR" = (
 /obj/machinery/recharge_station,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "FS" = (
@@ -6186,7 +6186,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Ga" = (
@@ -6216,7 +6216,7 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "Gg" = (
@@ -6256,7 +6256,7 @@
 /area/awaymission/beach/heretic)
 "Gp" = (
 /mob/living/basic/bot/medbot/mysterious,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Gq" = (
@@ -6272,7 +6272,7 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Gu" = (
@@ -6303,7 +6303,7 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Gz" = (
@@ -6326,12 +6326,12 @@
 "GE" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "GF" = (
 /obj/structure/dresser,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "GH" = (
@@ -6405,12 +6405,12 @@
 /obj/effect/turf_decal/tile/bar/anticorner/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "GZ" = (
 /obj/structure/rack,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Hb" = (
@@ -6420,7 +6420,7 @@
 /obj/structure/table,
 /obj/machinery/light/directional/east,
 /obj/item/ammo_box/magazine/m7mm,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Hf" = (
@@ -6487,7 +6487,7 @@
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Hr" = (
@@ -6543,7 +6543,7 @@
 /turf/open/floor/plating,
 /area/awaymission/beach/heretic)
 "HC" = (
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/awaymission/caves/heretic_laboratory)
 "HF" = (
@@ -6559,7 +6559,7 @@
 /area/awaymission/beach/heretic)
 "HJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "HL" = (
@@ -6626,7 +6626,7 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "Ib" = (
@@ -6681,7 +6681,7 @@
 /area/awaymission/beach/heretic)
 "Ik" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Il" = (
@@ -6699,7 +6699,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Io" = (
@@ -6760,7 +6760,7 @@
 /obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "IF" = (
@@ -6774,7 +6774,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/dark_green/fourcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "II" = (
@@ -6832,7 +6832,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "IZ" = (
 /obj/effect/turf_decal/tile/green/half/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Ja" = (
@@ -6846,7 +6846,7 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Jf" = (
@@ -6880,7 +6880,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Jp" = (
@@ -6919,7 +6919,7 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "JA" = (
@@ -7000,12 +7000,12 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "JR" = (
 /obj/effect/turf_decal/tile/dark_green/half/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "JS" = (
@@ -7042,7 +7042,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "JY" = (
@@ -7055,7 +7055,7 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Kb" = (
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Kd" = (
@@ -7127,7 +7127,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Ku" = (
@@ -7237,7 +7237,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "Le" = (
 /obj/structure/table,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Lf" = (
@@ -7258,7 +7258,7 @@
 	},
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/stripes/corner,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Ln" = (
@@ -7279,7 +7279,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Lv" = (
@@ -7304,7 +7304,7 @@
 /obj/effect/turf_decal/tile/dark_green/half{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "LC" = (
@@ -7350,7 +7350,7 @@
 	pixel_y = 6
 	},
 /obj/structure/bed/double,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Ma" = (
@@ -7400,7 +7400,7 @@
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Ml" = (
@@ -7409,7 +7409,7 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/awaymission/caves/heretic_laboratory)
 "Mn" = (
@@ -7502,7 +7502,7 @@
 "ML" = (
 /obj/structure/bookcase/random,
 /obj/machinery/light/directional/west,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "MP" = (
@@ -7522,7 +7522,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "MT" = (
@@ -7540,7 +7540,7 @@
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "MX" = (
@@ -7551,14 +7551,14 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "MY" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Na" = (
@@ -7569,7 +7569,7 @@
 /obj/machinery/door/airlock/security{
 	name = "Armory"
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Nc" = (
@@ -7589,7 +7589,7 @@
 /area/awaymission/beach/heretic)
 "Nj" = (
 /obj/machinery/light/directional/west,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Nm" = (
@@ -7648,7 +7648,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "NB" = (
@@ -7675,7 +7675,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /mob/living/basic/migo,
 /obj/effect/turf_decal/tile/bar/fourcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "NO" = (
@@ -7772,7 +7772,7 @@
 	dir = 8
 	},
 /obj/structure/sign/poster/contraband/free_tonto/directional/west,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Oq" = (
@@ -7787,7 +7787,7 @@
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Ow" = (
@@ -7798,7 +7798,7 @@
 /obj/effect/turf_decal/tile/dark_green/half{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Oz" = (
@@ -7900,7 +7900,7 @@
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Pa" = (
@@ -7928,13 +7928,13 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Pc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/awaymission/caves/heretic_laboratory)
 "Ph" = (
@@ -7958,7 +7958,7 @@
 /area/awaymission/caves/heretic_laboratory_clean)
 "Pq" = (
 /obj/machinery/vending/sustenance,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Pw" = (
@@ -8000,7 +8000,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /mob/living/basic/faithless,
 /obj/effect/turf_decal/tile/bar/fourcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "PF" = (
@@ -8032,7 +8032,7 @@
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/west,
 /obj/structure/flora/bush/jungle/c/style_random,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/misc/grass/jungle,
 /area/awaymission/caves/heretic_laboratory)
 "PN" = (
@@ -8140,7 +8140,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/dark_green/fourcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Qn" = (
@@ -8165,7 +8165,7 @@
 /obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Qx" = (
@@ -8201,7 +8201,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "QF" = (
@@ -8235,7 +8235,7 @@
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "QM" = (
@@ -8346,7 +8346,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "Rv" = (
 /obj/effect/turf_decal/tile/bar/fourcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Rw" = (
@@ -8376,7 +8376,7 @@
 /obj/effect/turf_decal/tile/bar/anticorner/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "RE" = (
@@ -8418,7 +8418,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "RR" = (
@@ -8469,7 +8469,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Sb" = (
@@ -8528,7 +8528,7 @@
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /obj/structure/sign/poster/contraband/blood_geometer/directional/north,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
@@ -8551,7 +8551,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/dark_green/half/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Su" = (
@@ -8582,7 +8582,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "SI" = (
@@ -8649,7 +8649,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Td" = (
@@ -8672,7 +8672,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Ti" = (
@@ -8724,12 +8724,12 @@
 /area/awaymission/caves/heretic_laboratory)
 "Ts" = (
 /obj/effect/turf_decal/tile/bar/half/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "TA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "TB" = (
@@ -8743,7 +8743,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/bar/fourcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "TF" = (
@@ -8753,7 +8753,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "TG" = (
 /obj/machinery/light/directional/east,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "TH" = (
@@ -8789,7 +8789,7 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "TN" = (
@@ -8826,7 +8826,7 @@
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Ua" = (
@@ -8854,7 +8854,7 @@
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Uj" = (
@@ -8877,13 +8877,13 @@
 /area/awaymission/caves/heretic_laboratory)
 "Uo" = (
 /obj/machinery/light/directional/east,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Up" = (
 /obj/machinery/vending/security,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Uq" = (
@@ -8904,7 +8904,7 @@
 /obj/item/kirbyplants/fern,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/green/half/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "UA" = (
@@ -8933,7 +8933,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/armory/disablers,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "UF" = (
@@ -8954,7 +8954,7 @@
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "UK" = (
@@ -9000,7 +9000,7 @@
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "UX" = (
@@ -9034,7 +9034,7 @@
 /obj/effect/turf_decal/tile/dark{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Vi" = (
@@ -9053,12 +9053,12 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Vn" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Vr" = (
@@ -9083,7 +9083,7 @@
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
 "VA" = (
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "VB" = (
@@ -9120,7 +9120,7 @@
 /obj/item/fake_items/lahti_l39{
 	pixel_x = 16
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "VI" = (
@@ -9173,7 +9173,7 @@
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "VZ" = (
@@ -9208,7 +9208,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/caves/heretic_laboratory)
 "Wj" = (
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Wk" = (
@@ -9226,7 +9226,7 @@
 	dir = 4
 	},
 /obj/structure/sign/poster/contraband/clown/directional/east,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Wn" = (
@@ -9237,11 +9237,6 @@
 /obj/machinery/power/rtg/lavaland,
 /obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
-/turf/open/floor/plating,
-/area/awaymission/caves/heretic_laboratory_clean)
-"Wr" = (
-/obj/effect/blessing/invisible,
-/obj/effect/blessing/invisible,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Ws" = (
@@ -9336,7 +9331,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "WN" = (
 /obj/item/radio/intercom/mi13/directional/east,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "WO" = (
@@ -9346,7 +9341,7 @@
 "WP" = (
 /obj/machinery/door/airlock/hatch,
 /obj/structure/holosign/barrier/atmos/sturdy,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
 "WR" = (
@@ -9381,7 +9376,7 @@
 /obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
 	dir = 4
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Xa" = (
@@ -9433,7 +9428,7 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Xm" = (
@@ -9504,7 +9499,7 @@
 /area/awaymission/caves/heretic_laboratory)
 "XC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "XI" = (
@@ -9539,7 +9534,7 @@
 	dir = 4
 	},
 /obj/item/radio/intercom/mi13/directional/east,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "XR" = (
@@ -9547,7 +9542,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/bar/half/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "XS" = (
@@ -9588,7 +9583,7 @@
 "Yb" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/bar/half/contrasted,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Yc" = (
@@ -9631,7 +9626,7 @@
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/south,
 /obj/structure/flora/bush/jungle/c/style_random,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/misc/grass/jungle,
 /area/awaymission/caves/heretic_laboratory)
 "Yn" = (
@@ -9673,7 +9668,7 @@
 /obj/item/ammo_box/magazine/lahtimagazine{
 	anchored = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Yv" = (
@@ -9697,7 +9692,7 @@
 /obj/effect/turf_decal/tile/bar/half/contrasted{
 	dir = 1
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Yy" = (
@@ -9856,7 +9851,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Zy" = (
@@ -9867,7 +9862,7 @@
 "ZD" = (
 /obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "ZG" = (
@@ -9891,7 +9886,7 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/mi13/directional/west,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "ZL" = (
@@ -9929,7 +9924,7 @@
 	pixel_y = 4
 	},
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "ZV" = (
@@ -9957,7 +9952,7 @@
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/west,
 /obj/structure/flora/bush/jungle/c/style_random,
-/obj/effect/blessing/invisible,
+/obj/effect/mapping_helpers/blessing/invisible,
 /turf/open/misc/grass/jungle,
 /area/awaymission/caves/heretic_laboratory)
 
@@ -23476,7 +23471,7 @@ vk
 vk
 vk
 vk
-Wr
+vk
 xl
 xl
 nd
