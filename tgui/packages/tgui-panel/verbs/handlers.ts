@@ -1,18 +1,18 @@
 import { store } from '../events/store';
 import {
-  type AdminTarget,
-  type AdminVerb,
   adminTargetsAtom,
   adminVerbsAtom,
   focusCommandBarAtom,
+  type Target,
   typepathsAtom,
+  type Verb,
 } from './atoms';
 
-export function handleVerbsInit(payload: { verbs: AdminVerb[] }) {
+export function handleVerbsInit(payload: { verbs: Verb[] }) {
   store.set(adminVerbsAtom, payload.verbs || []);
 }
 
-export function handleAddVerbs(payload: { verbs: AdminVerb[] }) {
+export function handleAddVerbs(payload: { verbs: Verb[] }) {
   const current = store.get(adminVerbsAtom);
   const newVerbs = payload.verbs || [];
   const existingNames = new Set(current.map((v) => v.name));
@@ -25,10 +25,13 @@ export function handleAddVerbs(payload: { verbs: AdminVerb[] }) {
 export function handleRemoveVerbs(payload: { names: string[] }) {
   const current = store.get(adminVerbsAtom);
   const toRemove = new Set(payload.names || []);
-  store.set(adminVerbsAtom, current.filter((v) => !toRemove.has(v.name)));
+  store.set(
+    adminVerbsAtom,
+    current.filter((v) => !toRemove.has(v.name)),
+  );
 }
 
-export function handleTargets(payload: { targets: AdminTarget[] }) {
+export function handleTargets(payload: { targets: Target[] }) {
   store.set(adminTargetsAtom, payload.targets || []);
 }
 

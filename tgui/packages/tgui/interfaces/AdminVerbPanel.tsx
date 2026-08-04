@@ -63,10 +63,12 @@ const ARG_MOB = 1 << 5;
 const ARG_OBJ = 1 << 6;
 const ARG_TURF = 1 << 7;
 const ARG_AREA = 1 << 8;
+const ARG_DATUM = 1 << 9;
+const ARG_ATOM = 1 << 10;
 const ARG_TYPEPATH = 1 << 11;
 
 const ARG_ENTITY =
-  ARG_MOB | ARG_OBJ | ARG_TURF | ARG_AREA | (1 << 9) | (1 << 10);
+  ARG_MOB | ARG_OBJ | ARG_TURF | ARG_AREA | ARG_DATUM | ARG_ATOM;
 const ARG_SOURCE_LIST = 'list';
 const ARG_PRIMITIVE =
   ARG_TEXT | ARG_NUM | ARG_MESSAGE | ARG_SOUND | ARG_ICON | ARG_TYPEPATH;

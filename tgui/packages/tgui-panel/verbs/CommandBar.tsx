@@ -1,11 +1,11 @@
 import { useAtomValue } from 'jotai';
 import { type KeyboardEvent, useEffect, useRef, useState } from 'react';
 import {
-  type AdminVerb,
   adminTargetsAtom,
   adminVerbsAtom,
   focusCommandBarAtom,
   typepathsAtom,
+  type Verb,
   type VerbArg,
 } from './atoms';
 
@@ -92,11 +92,7 @@ function isInQuotedArg(raw: string): boolean {
   return inQuote;
 }
 
-function serializeInput(
-  verb: AdminVerb,
-  filled: string[],
-  suffix = '',
-): string {
+function serializeInput(verb: Verb, filled: string[], suffix = ''): string {
   const kebab = toKebab(verb.name);
   if (filled.length === 0) return kebab + suffix;
   const parts = filled.map((a, i) => {
@@ -125,7 +121,7 @@ const MODE_COLORS: Record<Mode, string> = {
 };
 
 type SuggestionState = {
-  verbSuggestions: AdminVerb[];
+  verbSuggestions: Verb[];
   typepathSuggestions: string[];
   targetSuggestions: { name: string; ref: string }[];
   listSuggestions: string[];
@@ -134,7 +130,7 @@ type SuggestionState = {
 
 function useSuggestions(
   input: string,
-  selectedVerb: AdminVerb | null,
+  selectedVerb: Verb | null,
   currentArg: VerbArg | null,
   currentToken: string,
 ): SuggestionState {
@@ -146,11 +142,11 @@ function useSuggestions(
   const isCurrentEntity = currentArg ? isEntityArg(currentArg) : false;
   const isCurrentList = currentArg ? isListArg(currentArg) : false;
 
-  const verbSuggestions: AdminVerb[] = (() => {
+  const verbSuggestions: Verb[] = (() => {
     if (selectedVerb || input.length === 0) return [];
     const query = input.toLowerCase();
-    const prefix: AdminVerb[] = [];
-    const substring: AdminVerb[] = [];
+    const prefix: Verb[] = [];
+    const substring: Verb[] = [];
     for (const v of verbs) {
       if (!v.name) continue;
       const kebab = toKebab(v.name).toLowerCase();
@@ -218,7 +214,7 @@ export function CommandBar() {
   const focusSignal = useAtomValue(focusCommandBarAtom);
   const [input, setInput] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [selectedVerb, setSelectedVerb] = useState<AdminVerb | null>(null);
+  const [selectedVerb, setSelectedVerb] = useState<Verb | null>(null);
   const [filledArgs, setFilledArgs] = useState<string[]>([]);
   const [lastTypepathRequest, setLastTypepathRequest] = useState('');
   const [mode, setMode] = useState<Mode>('Command');
@@ -290,7 +286,7 @@ export function CommandBar() {
     inputRef.current?.focus();
   };
 
-  const selectVerb = (verb: AdminVerb) => {
+  const selectVerb = (verb: Verb) => {
     setSelectedVerb(verb);
     setFilledArgs([]);
     setSelectedIndex(0);

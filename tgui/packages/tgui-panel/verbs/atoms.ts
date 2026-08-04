@@ -7,18 +7,18 @@ export type VerbArg = {
   options?: string[];
 };
 
-export type AdminVerb = {
+export type Verb = {
   type: string;
   name: string;
   args: VerbArg[];
 };
 
-export type AdminTarget = {
+export type Target = {
   name: string;
   ref: string;
 };
 
-export const adminVerbsAtom = atom<AdminVerb[]>([]);
-export const adminTargetsAtom = atom<AdminTarget[]>([]);
+export const adminVerbsAtom = atom<Verb[]>([]);
+export const adminTargetsAtom = atom<Target[]>([]);
 export const typepathsAtom = atom<string[]>([]);
 export const focusCommandBarAtom = atom<number>(0);

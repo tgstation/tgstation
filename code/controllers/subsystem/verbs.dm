@@ -71,7 +71,6 @@ SUBSYSTEM_DEF(verbs)
 		"args" = arg_data,
 	)
 
-	// Check game verbs first, then admin verbs
 	var/datum/verb_metadata/meta = verbs_by_verb_path[verb_path]
 	if(meta)
 		entry["type"] = "[meta.verb_path]"

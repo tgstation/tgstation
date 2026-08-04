@@ -133,7 +133,7 @@
 			return TRUE
 		if(!(verb_path in client.verbs) && !(client.mob && (verb_path in client.mob.verbs)))
 			return TRUE
-		// Check game verbs first, then admin verbs
+
 		var/list/arg_list
 		var/datum/verb_metadata/meta = SSverbs.verbs_by_verb_path[verb_path]
 		if(meta)
