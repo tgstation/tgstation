@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Zombie is no longer a distinct \"species\" (except High-Functioning Zombie on Halloween), meaning Lizards, Moths, and Ethereals can now become Zombies and will keep (some/most of) their identifying features"
-  - rscadd: "Impure Krokodil also no longer changes your species, now just making you a zombie husk with none of the \"upsides\""
-  - rscadd: "Zombies are now husks mechanically, which ultimately shouldn't change much"
-  - rscdel: "Androids and other undead creatures can no longer become zombies from Romerol (previously, only Golems, Skeletons, and Plasmamen were immune to it)"
-  - refactor: "Refactored butchering, report any weirdness in amount and type of meat gained"

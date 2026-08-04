@@ -1,5 +1,0 @@
-author: "hry-gh"
-delete-after: True
-changes:
-  - qol: "added chat messages when your chat storage has been reset"
-  - bugfix: "if you've not been playing for awhile and came back, your chat storage may have been reset. this should no longer happen"

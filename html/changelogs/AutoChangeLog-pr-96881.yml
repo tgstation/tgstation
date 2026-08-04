@@ -1,7 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - sound: "human (vocal) emote sounds are no longer dictated by the species directly, but the tongue of your spaceman. Having a lizard tongue will make you scream, laugh and death-gasp like a lizardperson, even if you are not. This may also give a few species emote sounds that hardly fit their themes... rather than have no sound at all."
-  - rscadd: "included a few preexisting emote sounds to subtypes like the robot voicebox and alien tongues."
-  - rscadd: "Wearing a monkey mask will change the sound of screams to monkey screeches."
-  - rscadd: "Wearing a pair of kitty ears will let you perform cat emotes."

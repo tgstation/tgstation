@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "MULEs don't run people over if buckled, pulled, or thrown"

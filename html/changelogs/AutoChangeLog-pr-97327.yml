@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - bugfix: "Stock blocks now properly show their sale value after they've become liquid, and been examined."
