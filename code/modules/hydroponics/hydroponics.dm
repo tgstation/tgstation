@@ -331,7 +331,7 @@
 
 //Photosynthesis/////////////////////////////////////////////////////////
 			// Lack of light hurts non-mushrooms
-			if(astype(loc, /turf)?.check_lumcount(below = is_fungus ? 0.2 : 0.4))
+			if(astype(loc, /turf)?.check_lumcount_below(is_fungus ? 0.2 : 0.4))
 				adjust_plant_health((is_fungus ? -1 : -2) / rating)
 
 //Water//////////////////////////////////////////////////////////////////

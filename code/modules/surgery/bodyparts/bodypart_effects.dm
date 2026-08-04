@@ -125,7 +125,7 @@
 
 	var/bodypart_coefficient = GET_BODYPART_COEFFICIENT(bodyparts)
 
-	if (!owner_turf.check_lumcount(below = SHADOW_SPECIES_LIGHT_THRESHOLD))
+	if (!owner_turf.check_lumcount_below(SHADOW_SPECIES_LIGHT_THRESHOLD))
 		owner.take_overall_damage(brute = 1 * bodypart_coefficient, burn = 1 * bodypart_coefficient, required_bodytype = BODYTYPE_SHADOW)
 		return
 

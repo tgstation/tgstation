@@ -185,13 +185,6 @@
 	for (var/datum/spatial_grid_cell/grid_cell as anything in SSspatial_grid.get_cells_in_range(holder_turf, lumcount_range))
 		GRID_CELL_ASSOC_SET(grid_cell.dynamic_light_sources, src, lum_power)
 
-/datum/component/overlay_lighting/proc/get_lumcount_for(turf/target_turf)
-	if (get_dist(target_turf, current_holder) > lumcount_range)
-		return 0
-	var/turf/holder_turf = get_turf(current_holder)
-	if (target_turf in view(lumcount_range, holder_turf))
-		return lum_power
-
 /// Clears the old affected cells and populates the new ones.
 /datum/component/overlay_lighting/proc/make_luminosity_update(atom/old_loc)
 	if(old_loc)

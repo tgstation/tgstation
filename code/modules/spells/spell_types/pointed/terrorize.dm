@@ -23,7 +23,7 @@
 	var/unlit_tiles = 0
 
 	for(var/turf/open/turf_to_check in range(1, cast_on)) //We have to use range for this because fully darkened tiles get blocked by view()'s visibility checks
-		if(turf_to_check.check_lumcount(above = 0.2))
+		if(turf_to_check.check_lumcount_above(0.2))
 			lit_tiles++
 		else
 			unlit_tiles++

@@ -55,7 +55,7 @@
 	var/unlit_tiles = 0
 
 	for (var/turf/open/turf_to_check in range(1, owner))
-		if (turf_to_check.check_lumcount(above = LIGHTING_TILE_IS_DARK))
+		if (turf_to_check.check_lumcount_above(LIGHTING_TILE_IS_DARK))
 			lit_tiles++
 		else
 			unlit_tiles++

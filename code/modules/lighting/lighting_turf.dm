@@ -25,30 +25,36 @@
 	totallums += get_dynamic_lumcount()
 	return CLAMP01(totallums)
 
-/// Optimized get_lumcount for when you only care if the lumcount is above/below a certain value, and not what the actual value is
-/turf/proc/check_lumcount(below = null, above = null)
+// Kyler was worried about cost of having these use assoc args, so they're split ~smartkar
+// Also easier to use this way
+/// Optimized get_lumcount for when you only care if the lumcount is below a certain value, and not what the actual value is
+/turf/proc/check_lumcount_below(value)
 	if (!lighting_object)
-		return isnull(above) ? FALSE : TRUE
+		return FALSE
 
 	var/lums = get_static_lumcount()
-	// Don't go over dynamic lighting if we have enough to clear one of the passed thresholds
-	if (!isnull(below) && lums >= below)
+	if (lums >= value)
 		return FALSE
-	if (!isnull(above) && lums > above)
-		return TRUE
 
-	var/datum/spatial_grid_cell/grid_cell = SSspatial_grid.get_cell_of(src)
-	for (var/datum/component/overlay_lighting/light as anything in grid_cell.dynamic_light_sources)
-		lums += light.get_lumcount_for(src)
-
-		// Don't iterate more than necessary if we find our value
-		if (!isnull(below) && lums >= below)
+	for (var/datum/component/overlay_lighting/light as anything in collect_dynamic_lightsources())
+		lums += light.lum_power
+		if (lums >= value)
 			return FALSE
-		if (!isnull(above) && lums > above)
-			return TRUE
+	return TRUE
 
-	if (!isnull(below))
+/// Optimized get_lumcount for when you only care if the lumcount is above a certain value, and not what the actual value is
+/turf/proc/check_lumcount_above(value)
+	if (!lighting_object)
 		return TRUE
+
+	var/lums = get_static_lumcount()
+	if (lums > value)
+		return TRUE
+
+	for (var/datum/component/overlay_lighting/light as anything in collect_dynamic_lightsources())
+		lums += light.lum_power
+		if (lums > value)
+			return TRUE
 	return FALSE
 
 /// Returns lumcount from turf lighting
@@ -74,9 +80,34 @@
 /// Fetches dynamic lumcount from lightsources potentially in view of this turf from our spatial grid
 /turf/proc/get_dynamic_lumcount()
 	. = 0
+	for (var/datum/component/overlay_lighting/light as anything in collect_dynamic_lightsources())
+		. += light.lum_power
+
+// You've heard of oranges_ear, prepare for oranges_eye
+/// Uses the same optimization via viewers() that get_hearers_in_view does by allocating oranges ears to overlay lights
+/// And collecting viewers rather than checking view() for each one of them
+/turf/proc/collect_dynamic_lightsources()
+	. = list()
+
 	var/datum/spatial_grid_cell/grid_cell = SSspatial_grid.get_cell_of(src)
+	var/list/light_sources = list()
+	var/furthest_range = 0
 	for (var/datum/component/overlay_lighting/light as anything in grid_cell.dynamic_light_sources)
-		. += light.get_lumcount_for(src)
+		furthest_range = max(furthest_range, light.lumcount_range)
+		if (isnull(light_sources[light.current_holder]))
+			light_sources[light.current_holder] = light
+		else if (islist(light_sources[light.current_holder]))
+			light_sources[light.current_holder] |= light
+		else
+			light_sources[light.current_holder] = list(light_sources[light.current_holder], light)
+
+	var/list/assigned_oranges_ears = SSspatial_grid.assign_oranges_ears(light_sources)
+	for(var/mob/oranges_ear/ear in hearers(furthest_range, src))
+		for (var/atom/glowie as anything in ear.references)
+			. += light_sources[glowie]
+
+	for(var/mob/oranges_ear/remaining_ear as anything in assigned_oranges_ears)
+		remaining_ear.unassign()
 
 // Returns a boolean whether the turf is on soft lighting.
 // Soft lighting being the threshold at which point the overlay considers
