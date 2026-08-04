@@ -4,8 +4,8 @@
 	plural_form = "Lizardfolk"
 	id = SPECIES_LIZARD
 	inherent_traits = list(
-		TRAIT_MUTANT_COLORS,
 		TRAIT_COLD_BLOODED,
+		TRAIT_MUTANT_COLORS,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	body_markings = list(
@@ -173,6 +173,7 @@ Lizard subspecies: ASHWALKERS
 	mutantlungs = /obj/item/organ/lungs/lavaland
 	mutantbrain = /obj/item/organ/brain/primitive
 	inherent_traits = list(
+		TRAIT_COLD_BLOODED,
 		TRAIT_MUTANT_COLORS,
 		TRAIT_VIRUSIMMUNE,
 	)
@@ -201,6 +202,7 @@ Lizard subspecies: SILVER SCALED
 	id = SPECIES_LIZARD_SILVER
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	inherent_traits = list(
+		TRAIT_COLD_BLOODED,
 		TRAIT_HOLY,
 		TRAIT_NOBREATH,
 		TRAIT_PIERCEIMMUNE,
