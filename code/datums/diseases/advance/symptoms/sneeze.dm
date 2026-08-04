@@ -16,8 +16,8 @@
 	transmittable = 4
 	level = 1
 	severity = 1
-	symptom_delay_min = 5
-	symptom_delay_max = 35
+	symptom_delay = 20
+	delay_variation = 0.4
 	required_organ = ORGAN_SLOT_LUNGS
 	threshold_descs = list(
 		"Transmission 9" = "Increases sneezing range, spreading the virus over 6 meter cone instead of over a 4 meter cone.",

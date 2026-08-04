@@ -33,6 +33,9 @@
 		return FALSE
 	return isliving(cast_on)
 
+/datum/action/cooldown/spell/shadow_cloak/is_action_active(atom/movable/screen/movable/action_button/current_button)
+	return !!active_cloak
+
 /datum/action/cooldown/spell/shadow_cloak/before_cast(mob/living/cast_on)
 	. = ..()
 	sound = pick(
@@ -49,7 +52,7 @@
 /datum/action/cooldown/spell/shadow_cloak/cast(mob/living/cast_on)
 	. = ..()
 	if(active_cloak)
-		var/new_cd = max((uncloak_time - timeleft(uncloak_timer)) / 3, cooldown_time)
+		var/new_cd = max((uncloak_time - timeleft(uncloak_timer)), cooldown_time)
 		uncloak_mob(cast_on)
 		StartCooldown(new_cd)
 
@@ -63,7 +66,7 @@
 		return
 
 	uncloak_mob(cast_on)
-	StartCooldown(uncloak_timer / 3)
+	StartCooldown(uncloak_timer)
 
 /datum/action/cooldown/spell/shadow_cloak/proc/cloak_mob(mob/living/cast_on)
 	playsound(cast_on, 'sound/effects/chemistry/ahaha.ogg', 50, TRUE, -1, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.5)
@@ -74,7 +77,6 @@
 
 	active_cloak = cast_on.apply_status_effect(/datum/status_effect/shadow_cloak)
 	RegisterSignal(active_cloak, COMSIG_QDELETING, PROC_REF(on_early_cloak_loss))
-	RegisterSignal(cast_on, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 
 /datum/action/cooldown/spell/shadow_cloak/proc/uncloak_mob(mob/living/cast_on, show_message = TRUE)
 	if(!QDELETED(active_cloak))
@@ -82,7 +84,6 @@
 		qdel(active_cloak)
 	active_cloak = null
 
-	UnregisterSignal(cast_on, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
 	playsound(cast_on, 'sound/effects/curse/curseattack.ogg', 50)
 	if(show_message)
 		cast_on.visible_message(
@@ -108,18 +109,7 @@
 	removed.Knockdown(0.5 SECONDS)
 	removed.add_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak/early_remove)
 	addtimer(CALLBACK(removed, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/shadow_cloak/early_remove), 2 MINUTES, TIMER_UNIQUE|TIMER_OVERRIDE)
-	StartCooldown(uncloak_time * 2/3)
-
-/// Signal proc for [SIGNAL_REMOVETRAIT] via [TRAIT_ALLOW_HERETIC_CASTING], losing our focus midcast will throw us out.
-/datum/action/cooldown/spell/shadow_cloak/proc/on_focus_lost(mob/living/source)
-	SIGNAL_HANDLER
-
-	uncloak_mob(source, show_message = FALSE)
-	source.visible_message(
-		span_warning("[source] suddenly appears from the shadows!"),
-		span_userdanger("As you lose your focus, you are pulled out of the shadows!"),
-	)
-	StartCooldown(uncloak_time / 3)
+	StartCooldown(uncloak_time)
 
 /// Shadow cloak effect. Conceals the owner in a cloud of purple smoke, making them unidentifiable.
 /// Also comes with some other buffs and debuffs - faster movespeed, slower actionspeed, etc.

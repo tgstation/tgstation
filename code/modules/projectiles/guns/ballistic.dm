@@ -165,15 +165,51 @@
 	update_appearance()
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_reload))
 
-/obj/item/gun/ballistic/Destroy()
-	QDEL_NULL(magazine)
-	QDEL_NULL(suppressor)
-	return ..()
+/obj/item/gun/ballistic/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
+	var/replace_chamber = TRUE
+	var/replace_magazine = !magazine || !(magazine.item_flags & ABSTRACT) //don't replace abstract magazines
+	for(var/obj/item/gun/ballistic/gun in components)
+		if(gun.magazine?.item_flags & ABSTRACT) //we cannot insert an internal magazine into the new gun, so we insert the individual casings instead.
+			for(var/i in 1 to length(gun.magazine.stored_ammo))
+				var/obj/item/ammo_casing/round = gun.magazine.get_round()
+				if(!magazine.give_round(round))
+					round.forceMove(drop_location())
+		else if(gun.magazine && istype(gun.magazine, accepted_magazine_type)) //insert the new magazine into the gun
+			var/obj/item/ammo_box/magazine/new_magazine = gun.magazine //hold onto the reference since magazine is set to null once ejected
+			qdel(magazine)
+			new_magazine.forceMove(src)
+			magazine = new_magazine
+			replace_magazine = FALSE
+		else if(gun.magazine) //the magazine cannot be replaced
+			gun.magazine.forceMove(drop_location()) //drop the magazine on the floor so it doesn't get deleted alongside the gun components.
+		else if(replace_magazine && istype(gun.accepted_magazine_type, accepted_magazine_type)) //the gun we used for crafting lacked a magazine so this one should as well
+			qdel(magazine)
+
+		if(!gun.chambered)
+			continue
+
+		var/obj/item/ammo_casing/round = gun.chambered //hold onto the reference since chambered is set to null once the casing is ejected
+		if(!magazine?.is_compatible_round(round) || !replace_chamber)
+			round.forceMove(drop_location())
+			continue
+		qdel(chambered) //nulled when moved to null
+		round.forceMove(src)
+		chambered = round
+		replace_chamber = FALSE
+
+	update_appearance()
 
 /obj/item/gun/ballistic/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == suppressor)
 		clear_suppressor()
+	if(gone == magazine)
+		if(!QDELETED(magazine))
+			magazine.update_appearance()
+		magazine = null
+		if(!QDELETED(src))
+			update_appearance()
 
 /obj/item/gun/ballistic/add_weapon_description()
 	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_ballistic))
@@ -487,21 +523,16 @@
 		playsound(src, eject_sound, eject_sound_volume, eject_sound_vary)
 	else
 		playsound(src, eject_empty_sound, eject_sound_volume, eject_sound_vary)
-	magazine.forceMove(drop_location())
 	var/obj/item/ammo_box/magazine/old_mag = magazine
+	magazine.forceMove(drop_location())
 	if (tac_load)
 		if (insert_magazine(user, tac_load, FALSE))
 			balloon_alert(user, "[magazine_wording] swapped")
 		else
 			to_chat(user, span_warning("You dropped the old [magazine_wording], but the new one doesn't fit. How embarassing."))
-			magazine = null
-	else
-		magazine = null
 	user.put_in_hands(old_mag)
-	old_mag.update_appearance()
 	if (display_message)
 		balloon_alert(user, "[magazine_wording] unloaded")
-	update_appearance()
 
 /obj/item/gun/ballistic/can_shoot()
 	return chambered?.loaded_projectile
@@ -611,8 +642,6 @@
 	update_appearance()
 
 /obj/item/gun/ballistic/clear_suppressor()
-	if(!can_unsuppress)
-		return
 	suppressed = SUPPRESSED_NONE
 	if(suppressor)
 		update_weight_class(w_class - suppressor.w_class)
@@ -873,7 +902,6 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(!internal_magazine && magazine) //if a magazine is attached to the weapon, we remove it and throw it aside
 		magazine.forceMove(drop_location())
 		magazine.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), 1, 1)
-		magazine = null
 		update_icon() //updating the sprite of weapons without a magazine
 	if(!isnull(chambered)) //if there is a cartridge in the chamber, we remove it
 		rack()

@@ -630,7 +630,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_SUITSTORE)
 			if(HAS_TRAIT(I, TRAIT_NODROP))
 				return FALSE
-			if(!H.wear_suit)
+			var/obj/item/clothing/suit/suit = H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+			if(!istype(suit))
 				if(!disable_warning)
 					to_chat(H, span_warning("You need a suit before you can attach this [I.name]!"))
 				return FALSE
@@ -641,7 +642,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if(!disable_warning)
 					to_chat(H, span_warning("\The [I] is too big to attach!")) //should be src?
 				return FALSE
-			if( is_type_in_list(I, H.wear_suit.allowed) )
+			if(is_type_in_list(I, suit.allowed))
 				return TRUE
 			return FALSE
 		if(ITEM_SLOT_HANDCUFFED)

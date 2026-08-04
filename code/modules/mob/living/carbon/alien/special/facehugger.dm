@@ -165,7 +165,7 @@
 		return FALSE
 
 	if(target.wear_mask)
-		var/obj/item/clothing/worn_mask = target.wear_mask
+		var/obj/item/worn_mask = target.wear_mask
 		if(target.dropItemToGround(worn_mask))
 			target.visible_message(span_danger("[src] tears [worn_mask] off of [target]'s face!"), \
 								span_userdanger("[src] tears [worn_mask] off of your face!"))

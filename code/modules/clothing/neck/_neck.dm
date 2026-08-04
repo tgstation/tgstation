@@ -148,7 +148,7 @@
 /obj/item/clothing/neck/tie/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	var/mob/living/carbon/human/wearer = loc
-	if(!ishuman(wearer) || !wearer.w_uniform)
+	if(!ishuman(wearer))
 		return
 	var/obj/item/clothing/under/undershirt = wearer.w_uniform
 	if(!istype(undershirt) || !LAZYLEN(undershirt.attached_accessories))

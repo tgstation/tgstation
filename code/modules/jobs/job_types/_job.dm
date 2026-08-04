@@ -517,7 +517,7 @@
 	var/mob/living/spawn_instance
 	if(ispath(spawn_type, /mob/living/silicon/ai))
 		// This is unfortunately necessary because of snowflake AI init code. To be refactored.
-		spawn_instance = new spawn_type(get_turf(spawn_point), null, player_client.mob, TRUE)
+		spawn_instance = new spawn_type(get_turf(spawn_point), player_client.mob, null, null, TRUE)
 	else
 		spawn_instance = spawn_point.JoinPlayerHere(spawn_type, TRUE)
 	spawn_instance.apply_prefs_job(player_client, src)
@@ -574,7 +574,7 @@
 			dna.species.roundstart_changed = TRUE
 
 		if(GLOB.current_anonymous_theme)
-			fully_replace_character_name(null, GLOB.current_anonymous_theme.anonymous_name(src))
+			fully_replace_character_name(null, GLOB.current_anonymous_theme.anonymous_name(src), log_new_name = TRUE)
 	else
 		var/is_antag = (player_client.mob.mind in GLOB.pre_setup_antags)
 		if(require_human)
