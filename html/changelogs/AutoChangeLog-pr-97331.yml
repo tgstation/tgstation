@@ -1,0 +1,5 @@
+author: "QuiteLiterallyAnything"
+delete-after: True
+changes:
+  - qol: "Microwaves now emphasize that they lack power if PDA charging is attempted with an empty microwave cell."
+  - bugfix: "Rechargers no longer spam the \"finished charging\" message when done charging PDAs."
