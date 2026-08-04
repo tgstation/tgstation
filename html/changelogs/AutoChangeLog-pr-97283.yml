@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Ion laws have gibberish numbers again"
+  - rscdel: "AIs can no longer have two laws with the exact same text."
