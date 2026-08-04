@@ -1,4 +1,17 @@
 import { storage } from 'common/storage';
+import {
+  ARG_SOURCE_LIST,
+  ARG_TYPE_ENTITY,
+  ARG_TYPE_MESSAGE,
+  ARG_TYPE_MOB,
+  ARG_TYPE_NUM,
+  ARG_TYPE_PRIMITIVE,
+  ARG_TYPE_SOUND,
+  ARG_TYPE_TEXT,
+  ARG_TYPE_TYPEPATH,
+  isEntityArg,
+  isTypepathArg,
+} from 'common/verb-constants';
 import { useCallback, useEffect, useState } from 'react';
 import {
   Box,
@@ -54,34 +67,12 @@ type Data = {
   typepaths?: TypepathData;
 };
 
-const ARG_TEXT = 1 << 0;
-const ARG_NUM = 1 << 1;
-const ARG_MESSAGE = 1 << 2;
-const ARG_SOUND = 1 << 3;
-const ARG_ICON = 1 << 4;
-const ARG_MOB = 1 << 5;
-const ARG_OBJ = 1 << 6;
-const ARG_TURF = 1 << 7;
-const ARG_AREA = 1 << 8;
-const ARG_DATUM = 1 << 9;
-const ARG_ATOM = 1 << 10;
-const ARG_TYPEPATH = 1 << 11;
-
-const ARG_ENTITY =
-  ARG_MOB | ARG_OBJ | ARG_TURF | ARG_AREA | ARG_DATUM | ARG_ATOM;
-const ARG_SOURCE_LIST = 'list';
-const ARG_PRIMITIVE =
-  ARG_TEXT | ARG_NUM | ARG_MESSAGE | ARG_SOUND | ARG_ICON | ARG_TYPEPATH;
-
 function isPickableEntityArg(arg: VerbArgument): boolean {
-  return (
-    (arg.arg_type & ARG_ENTITY) !== 0 &&
-    (arg.source === 'world' || arg.source === 'view')
-  );
+  return isEntityArg(arg) && (arg.source === 'world' || arg.source === 'view');
 }
 
 function isPrimitiveArg(arg: VerbArgument): boolean {
-  return (arg.arg_type & ARG_PRIMITIVE) !== 0;
+  return (arg.arg_type & ARG_TYPE_PRIMITIVE) !== 0;
 }
 
 export function AdminVerbPanel() {
@@ -188,13 +179,15 @@ export function AdminVerbPanel() {
     setArgValues({});
     setSelectedTarget(null);
     act('select_verb', { verb_type: verb.type });
-    if (verb.arguments.some((a) => a.arg_type & ARG_TYPEPATH)) {
+    if (verb.arguments.some(isTypepathArg)) {
       act('request_typepaths', { parent: '/datum' });
     }
   };
 
   const entityArg = selectedVerb?.arguments.find(isPickableEntityArg) ?? null;
-  const isMobList = entityArg ? (entityArg.arg_type & ARG_MOB) !== 0 : false;
+  const isMobList = entityArg
+    ? (entityArg.arg_type & ARG_TYPE_MOB) !== 0
+    : false;
 
   const invokeVerb = () => {
     if (!selectedVerb) return;
@@ -525,7 +518,9 @@ export function AdminVerbPanel() {
                         <Stack.Item
                           key={arg.name}
                           grow={
-                            (arg.arg_type & ARG_TYPEPATH) !== 0 ? 1 : undefined
+                            (arg.arg_type & ARG_TYPE_TYPEPATH) !== 0
+                              ? 1
+                              : undefined
                           }
                         >
                           <ArgInput
@@ -560,7 +555,7 @@ type ArgInputProps = {
 function ArgInput(props: ArgInputProps) {
   const { arg, value, onChange } = props;
 
-  if (arg.arg_type & ARG_NUM) {
+  if (arg.arg_type & ARG_TYPE_NUM) {
     return (
       <Stack align="center">
         <Stack.Item basis="100px">{arg.name}</Stack.Item>
@@ -574,7 +569,7 @@ function ArgInput(props: ArgInputProps) {
       </Stack>
     );
   }
-  if (arg.arg_type & ARG_MESSAGE) {
+  if (arg.arg_type & ARG_TYPE_MESSAGE) {
     return (
       <Stack vertical>
         <Stack.Item>{arg.name}</Stack.Item>
@@ -604,12 +599,12 @@ function ArgInput(props: ArgInputProps) {
       </Stack>
     );
   }
-  if (arg.arg_type & ARG_TYPEPATH) {
+  if (arg.arg_type & ARG_TYPE_TYPEPATH) {
     return (
       <TypepathInput arg={arg} value={value as string} onChange={onChange} />
     );
   }
-  if (arg.arg_type & ARG_TEXT) {
+  if (arg.arg_type & ARG_TYPE_TEXT) {
     return (
       <Stack align="center">
         <Stack.Item basis="100px">{arg.name}</Stack.Item>
@@ -624,7 +619,7 @@ function ArgInput(props: ArgInputProps) {
       </Stack>
     );
   }
-  if (arg.arg_type & ARG_SOUND) {
+  if (arg.arg_type & ARG_TYPE_SOUND) {
     return (
       <Stack align="center">
         <Stack.Item basis="100px">{arg.name}</Stack.Item>

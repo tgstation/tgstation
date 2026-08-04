@@ -1,10 +1,8 @@
+import type { VerbArgBase } from 'common/verb-constants';
 import { atom } from 'jotai';
 
-export type VerbArg = {
+export type VerbArg = VerbArgBase & {
   name: string;
-  arg_type: number;
-  source: string | null;
-  options?: string[];
 };
 
 export type Verb = {

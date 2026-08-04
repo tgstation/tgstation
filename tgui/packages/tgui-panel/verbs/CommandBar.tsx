@@ -1,5 +1,12 @@
+import {
+  isEntityArg,
+  isListArg,
+  isTextArg,
+  isTypepathArg,
+} from 'common/verb-constants';
 import { useAtomValue } from 'jotai';
 import { type KeyboardEvent, useEffect, useRef, useState } from 'react';
+
 import {
   adminTargetsAtom,
   adminVerbsAtom,
@@ -9,48 +16,8 @@ import {
   type VerbArg,
 } from './atoms';
 
-const ARG_TYPE_TEXT = 1 << 0;
-const ARG_TYPE_NUM = 1 << 1;
-const ARG_TYPE_MESSAGE = 1 << 2;
-const ARG_TYPE_MOB = 1 << 5;
-const ARG_TYPE_OBJ = 1 << 6;
-const ARG_TYPE_TURF = 1 << 7;
-const ARG_TYPE_AREA = 1 << 8;
-const ARG_TYPE_DATUM = 1 << 9;
-const ARG_TYPE_ATOM = 1 << 10;
-const ARG_TYPE_TYPEPATH = 1 << 11;
-const ARG_TYPE_ENTITY =
-  ARG_TYPE_MOB |
-  ARG_TYPE_OBJ |
-  ARG_TYPE_TURF |
-  ARG_TYPE_AREA |
-  ARG_TYPE_DATUM |
-  ARG_TYPE_ATOM;
-
-const ARG_SOURCE_LIST = 'list';
-
 function toKebab(name: string): string {
   return name.replaceAll(' ', '-');
-}
-
-function isTypepathArg(arg: VerbArg): boolean {
-  return (arg.arg_type & ARG_TYPE_TYPEPATH) !== 0;
-}
-
-function isEntityArg(arg: VerbArg): boolean {
-  return (arg.arg_type & ARG_TYPE_ENTITY) !== 0;
-}
-
-function isTextArg(arg: VerbArg): boolean {
-  return (arg.arg_type & (ARG_TYPE_TEXT | ARG_TYPE_MESSAGE)) !== 0;
-}
-
-function isListArg(arg: VerbArg): boolean {
-  return (
-    arg.source === ARG_SOURCE_LIST &&
-    Array.isArray(arg.options) &&
-    arg.options.length > 0
-  );
 }
 
 function parseArgs(raw: string): string[] {
