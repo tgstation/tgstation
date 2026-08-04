@@ -15,7 +15,7 @@
 /// Used to update the to_state list to the passed ai law's inherent laws
 /// Call this when changing the AI's lawset entirely
 /datum/state_laws_ui/proc/update_inherent_stated_laws(datum/ai_laws/laws)
-	to_state = laws.inherent.Copy()
+	to_state = assoc_to_values(laws.inherent)
 
 /datum/state_laws_ui/Destroy()
 	owner = null
@@ -29,10 +29,10 @@
 	for(var/law in owner.laws.hacked)
 		law_data += list(law_to_ui_data(law, ion_num(), "hacked"))
 	var/number = 1
-	for(var/law in owner.laws.inherent)
-		law_data += list(law_to_ui_data(law, number++, "core"))
-	for(var/law in owner.laws.supplied)
-		law_data += list(law_to_ui_data(law, number++, "supplied"))
+	for(var/law, is_ioned in owner.laws.inherent)
+		law_data += list(law_to_ui_data(law, is_ioned ? ion_num() : number++, "core"))
+	for(var/law, is_ioned in owner.laws.supplied)
+		law_data += list(law_to_ui_data(law, is_ioned ? ion_num() : number++, "supplied"))
 	return law_data
 
 /datum/state_laws_ui/proc/law_to_ui_data(law_text, law_number, law_type)
@@ -106,25 +106,24 @@
 		owner.say("[owner.radiomod] 0. [lawcache_zeroth]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE, SAY_MOD_VERB = "states"))
 		sleep(1 SECONDS)
 
-	for (var/index in 1 to length(lawcache_hacked))
-		var/law = lawcache_hacked[index]
+	for (var/law in lawcache_hacked)
 		if (force_all_laws || (law in to_state_cached))
 			owner.say("[owner.radiomod] [ion_num()]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE, SAY_MOD_VERB = "states"))
 			sleep(1 SECONDS)
 
 	var/number = 1
-	for (var/index in 1 to length(lawcache_inherent))
-		var/law = lawcache_inherent[index]
-		if (force_all_laws || (law in to_state_cached))
-			owner.say("[owner.radiomod] [number]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE, SAY_MOD_VERB = "states"))
-			number++
+	for (var/law_text, is_ioned in lawcache_inherent)
+		if (force_all_laws || (law_text in to_state_cached))
+			owner.say("[owner.radiomod] [is_ioned ? ion_num() : number]. [law_text]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE, SAY_MOD_VERB = "states"))
+			if(!is_ioned)
+				number++
 			sleep(1 SECONDS)
 
-	for (var/index in 1 to length(lawcache_supplied))
-		var/law = lawcache_supplied[index]
-		if (force_all_laws || (law in to_state_cached))
-			owner.say("[owner.radiomod] [number]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE, SAY_MOD_VERB = "states"))
-			number++
+	for (var/law_text, is_ioned in lawcache_supplied)
+		if (force_all_laws || (law_text in to_state_cached))
+			owner.say("[owner.radiomod] [is_ioned ? ion_num() : number]. [law_text]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE, SAY_MOD_VERB = "states"))
+			if(!is_ioned)
+				number++
 			sleep(1 SECONDS)
 
 	addtimer(VARSET_CALLBACK(src, locked, FALSE), 3 SECONDS)
