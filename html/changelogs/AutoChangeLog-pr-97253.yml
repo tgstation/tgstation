@@ -1,0 +1,4 @@
+author: "xPokee, UvvU"
+delete-after: True
+changes:
+  - bugfix: "Recoloring clothing items via 'Edit Color as Matrix' will now properly reflect when the clothing item is worn."
