@@ -60,23 +60,19 @@
  */
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	var/obj/structure/closet/crate/C
-	if(paying_account && !custom_crate)
-		C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
-		C.name = "[crate_name || C.name] - Purchased by [paying_account.account_holder]"
-	else if(!crate_type && !crate_override)
-		CRASH("tried to generate a supply pack without a valid crate type")
-	else if(crate_override)
+
+	if(crate_override)
 		var/obj/unique_container = new crate_override(A)
 		fill(unique_container)
 		return unique_container
-	else
-		C = new crate_type(A)
-		C.name = "[crate_name || C.name][paying_account ? " - Purchased by [paying_account.account_holder]" : ""]"
-		if(paying_account)
-			if(istype(paying_account, /datum/bank_account/department))
-				C.AddComponent(/datum/component/locked_to_account, null, paying_account)
-			else
-				C.AddComponent(/datum/component/locked_to_account, paying_account)
+
+	if(!crate_type)
+		CRASH("tried to generate a supply pack without a valid crate type")
+
+	C = new crate_type(A)
+	C.name = "[crate_name || C.name][paying_account ? " - Purchased by [paying_account.account_holder]" : ""]"
+	if(paying_account) // adds component for locking the crate so only the buyer (or their department) can open it
+		C.AddComponent(/datum/component/locked_to_account, paying_account)
 
 	if(access)
 		C.req_access = list(access)
