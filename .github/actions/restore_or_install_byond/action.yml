@@ -30,6 +30,8 @@ runs:
         echo "BYOND_MINOR=$BYOND_MINOR" >> $GITHUB_ENV
 
     - name: Install 32-bit libcurl
+      # Only required in 516.1664+
+      if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664
       shell: bash
       run: |
         sudo dpkg --add-architecture i386
