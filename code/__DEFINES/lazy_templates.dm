@@ -14,4 +14,5 @@
 	"Abductor Ships" = LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS, \
 	"Heretic Sacrifice Level" = LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE, \
 	"Voidwalker Void" = LAZY_TEMPLATE_KEY_VOIDWALKER_VOID, \
+	"Gizmo Insidness" = LAZY_TEMPLATE_KEY_GIZMO_INSIDNESS, \
 )

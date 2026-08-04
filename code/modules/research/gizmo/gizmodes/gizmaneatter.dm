@@ -35,7 +35,7 @@
     Gizmo.put_victim_inside(who_was_eatten)
 
     // sending the man into... Gizmo?
-    Gizmo_insideness.lazy_load()
+    Gizmo_insideness.lazy_load(LAZY_TEMPLATE_KEY_GIZMO_INSIDNESS)
 
     // threw out victim
     gizmo.throw_out_man(who_was_eatten)
