@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Bonus biotypes from dna infusions shouldn't be lost on species change as long as you have enough infused organs."
