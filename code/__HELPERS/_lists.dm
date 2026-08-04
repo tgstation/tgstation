@@ -105,6 +105,10 @@
 	} else { \
 		lazylist.Insert(index, value); \
 	}
+/// Returns the smallest element in the lazy list, or default if the list is null
+#define LAZYMAX(lazylist, default) (isnull(lazylist) ? default : max(lazylist))
+/// Returns the largest element in the lazy list, or default if the list is null
+#define LAZYMIN(lazylist, default) (isnull(lazylist) ? default : min(lazylist))
 
 ///Ensures the length of a list is at least I, prefilling it with V if needed. if V is a proc call, it is repeated for each new index so that list() can just make a new list for each item.
 #define LISTASSERTLEN(L, I, V...) \

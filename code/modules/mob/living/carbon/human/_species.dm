@@ -1033,7 +1033,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 
 	// Only stabilise core temp when alive and not in statis
-	if(humi.stat != DEAD && !HAS_TRAIT(humi, TRAIT_STASIS))
+	if(humi.stat != DEAD && !HAS_TRAIT(humi, TRAIT_STASIS) && !HAS_TRAIT(humi, TRAIT_COLD_BLOODED))
 		body_temperature_core(humi, seconds_per_tick)
 
 	// These do run in statis
@@ -1344,13 +1344,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 //  Stun  //
 ////////////
 
-/datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
+/datum/species/proc/spec_stun(mob/living/carbon/human/H, amount)
 	if((H.movement_type & FLYING) && !H.buckled)
 		var/obj/item/organ/wings/functional/wings = H.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 		if(wings)
 			wings.toggle_flight(H)
 			wings.fly_slip(H)
-	. = stunmod * H.physiology.stun_mod * amount
+	. = min(stunmod * H.physiology.stun_mod * amount, LAZYMIN(H.physiology.max_stun_len, INFINITY))
 
 /datum/species/proc/negates_gravity(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)

@@ -235,8 +235,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LIVERLESS_METABOLISM "liverless_metabolism"
 /// This carbon can't be overdosed by chems
 #define TRAIT_OVERDOSEIMMUNE "overdose_immune"
-/// Humans with this trait cannot be turned into zombies
-#define TRAIT_NO_ZOMBIFY "no_zombify"
 /// Carbons with this trait can't have their DNA copied by diseases nor changelings
 #define TRAIT_NO_DNA_COPY "no_dna_copy"
 /// Carbons with this trait can't have their DNA scrambled by genetics or a disease retrovirus.
@@ -1694,6 +1692,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Mobs with this trait will always have be a priority target for mining mobs
 #define TRAIT_MINING_AGGRO "mining_aggro"
+
+/// Mob does not regulate core temperature
+#define TRAIT_COLD_BLOODED "cold_blooded"
+
+/// Mob is always considered dead when checking objectives
+#define TRAIT_NEVER_CONSIDERED_ALIVE "never_considered_alive"
 
 /// Don't show the thinking indicator and therefore the typing indicator when we are about to type something...
 #define TRAIT_HIDE_THINKING_INDICATOR "hide_thinking_indicator"
