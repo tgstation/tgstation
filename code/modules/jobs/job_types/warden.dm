@@ -73,3 +73,5 @@
 
 	box = /obj/item/storage/box/survival/security
 	implants = list(/obj/item/implant/mindshield)
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/security

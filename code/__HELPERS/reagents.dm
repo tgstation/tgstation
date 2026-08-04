@@ -162,15 +162,21 @@
 		input_reagent = get_chem_id(input_reagent)
 	return input_reagent
 
-///Returns a random reagent object, with the option to blacklist reagents.
-/proc/get_random_reagent_id(randomization_flags = REAGENT_SPAWN_RANDOM_PRODUCERS, list/blacklist, list/whitelist)
+///
+/**
+ * Returns a random reagent object, with the option to blacklist reagents.
+ *
+ * * randomization_flags - Flags to filter the reagents by. Default is REAGENT_SPAWN_RANDOM_PRODUCERS.
+ * * blacklist - Optional, a list of reagent typepaths to exclude from the random selection.
+ * Subtypes of the listed reagents are not explicitly included.
+ * If not provided, defaults to an empty list.
+ * * whitelist - Optional, a list of reagent typepaths to include in the random selection.
+ * Subtypes of the listed reagents are not explicitly included.
+ * If not provided, defaults to all reagent subtypes.
+ */
+/proc/get_random_reagent_id(randomization_flags = REAGENT_SPAWN_RANDOM_PRODUCERS, list/blacklist = list(), list/whitelist = subtypesof(/datum/reagent))
 	var/list/reagent_list_to_process = list()
-
-	whitelist ||= subtypesof(/datum/reagent)
-
-	for(var/datum/reagent/reagent_path as anything in whitelist)
-		if(is_path_in_list(reagent_path, blacklist))
-			continue
+	for(var/datum/reagent/reagent_path as anything in whitelist - blacklist)
 		if(reagent_path::randomized_spawns & randomization_flags)
 			reagent_list_to_process += reagent_path
 	return pick(reagent_list_to_process)

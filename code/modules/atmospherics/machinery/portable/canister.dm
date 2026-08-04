@@ -412,22 +412,25 @@
 	if(internal_cell)
 		internal_cell.forceMove(drop_location())
 
-/obj/machinery/portable_atmospherics/canister/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/stock_parts/power_store/cell))
-		var/obj/item/stock_parts/power_store/cell/active_cell = item
-		if(!panel_open)
-			balloon_alert(user, "open hatch first!")
-			return TRUE
-		if(!user.transferItemToLoc(active_cell, src))
-			return TRUE
-		if(internal_cell)
-			user.put_in_hands(internal_cell)
-			balloon_alert(user, "you replace the cell")
-		else
-			balloon_alert(user, "you install the cell")
-		internal_cell = active_cell
-		return TRUE
-	return ..()
+/obj/machinery/portable_atmospherics/canister/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
+		return ..()
+
+	var/obj/item/stock_parts/power_store/cell/active_cell = tool
+	if(!panel_open)
+		balloon_alert(user, "open hatch first!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(active_cell, src))
+		return ITEM_INTERACT_BLOCKING
+
+	if(internal_cell)
+		user.put_in_hands(internal_cell)
+		balloon_alert(user, "you replace the cell")
+	else
+		balloon_alert(user, "you install the cell")
+	internal_cell = active_cell
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/portable_atmospherics/canister/screwdriver_act(mob/living/user, obj/item/screwdriver)
 	return default_deconstruction_screwdriver(user, screwdriver)

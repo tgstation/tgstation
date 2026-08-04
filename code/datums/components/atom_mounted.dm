@@ -49,7 +49,7 @@
 	var/reload = FALSE
 
 	//For special effects where we explicitly want to preserve objects after change
-	if(flags & CHANGETURF_INHERIT_MOUNTS)
+	if(flags & CHANGETURF_INHERIT_MOUNTS || locate(/obj/structure/wall_support) in source)
 		reload = TRUE
 	//if we transforming from open to open turf we can skip deconstruction under some conditions
 	else if(isopenturf(source) && ispath(path, /turf/open))
@@ -73,7 +73,12 @@
 	SIGNAL_HANDLER
 	PRIVATE_PROC(TRUE)
 
-	drop_wallmount()
+	if (istype(source, /obj/structure/wall_support))
+		var/obj/target = parent
+		if(!target.find_and_mount_on_atom())
+			drop_wallmount()
+	else
+		drop_wallmount()
 
 /// If we get dragged from our wall (by a singulo for instance) we should deconstruct
 /datum/component/atom_mounted/proc/on_move(datum/source, atom/old_loc, dir, forced, list/old_locs)
@@ -148,6 +153,7 @@
 		/obj/structure/window,
 		/obj/structure/fence,
 		/obj/structure/falsewall,
+		/obj/structure/wall_support,
 	)
 
 	return attachables
@@ -183,7 +189,7 @@
 		else
 			var/list/obj/attachables = get_mountable_objects()
 			for(var/obj/attachable in target)
-				if(is_type_in_list(attachable, attachables))
+				if(is_type_in_list(attachable, attachables) && !QDELING(attachable))
 					attachable_atom = attachable
 					break
 		if(attachable_atom)

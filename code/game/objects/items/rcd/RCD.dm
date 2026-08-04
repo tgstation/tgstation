@@ -8,6 +8,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	worn_icon_state = "RCD"
+	inside_belt_icon_state = "rcd"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_premium_price = PAYCHECK_COMMAND * 2
@@ -515,6 +516,7 @@
 	desc = "A reverse-engineered RCD with black market upgrades that allow this device to deconstruct reinforced walls. Property of Donk Co."
 	icon_state = "ircd"
 	inhand_icon_state = "ircd"
+	inside_belt_icon_state = "ircd"
 	energyfactor = 0.066 * STANDARD_CELL_CHARGE
 	canRturf = TRUE
 
@@ -529,6 +531,7 @@
 	desc = "A higher-end model of the rapid construction device, prefitted with improved cooling and disruption prevention. Provided to the chief engineer."
 	icon_state = "cercd"
 	inhand_icon_state = "cercd"
+	inside_belt_icon_state = "cercd"
 	construction_upgrades = RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
 	matter = 160
 

@@ -85,6 +85,8 @@
 		)
 	implants = list(/obj/item/implant/mindshield)
 
+	wintercoat = /obj/item/clothing/suit/armor/hos/trenchcoat/winter
+
 /datum/outfit/job/hos/mod
 	name = "Head of Security (MODsuit)"
 

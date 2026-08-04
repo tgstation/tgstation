@@ -8,7 +8,7 @@
 */
 /datum/symptom/undead_adaptation
 	name = "Necrotic Metabolism"
-	desc = "The virus is able to thrive and act even within dead hosts."
+	desc = "The virus is able to thrive and act even within dead hosts. Has no effects on its own."
 	stealth = 2
 	resistance = -2
 	stage_speed = 1
@@ -16,6 +16,7 @@
 	level = 5
 	severity = 0
 	symptom_cure = null
+	immunity_proof = TRUE
 
 /datum/symptom/undead_adaptation/OnAdd(datum/disease/advance/A)
 	A.process_dead = TRUE
@@ -35,7 +36,7 @@
 */
 /datum/symptom/inorganic_adaptation
 	name = "Inorganic Biology"
-	desc = "The virus can survive and replicate even in an inorganic environment, increasing its resistance and infection rate."
+	desc = "The virus can survive and replicate even in an inorganic environment, increasing its resistance and infection rate. Has no effects on its own."
 	stealth = -1
 	resistance = 4
 	stage_speed = -2
@@ -43,6 +44,7 @@
 	level = 5
 	severity = 0
 	symptom_cure = null
+	immunity_proof = TRUE
 
 /datum/symptom/inorganic_adaptation/OnAdd(datum/disease/advance/A)
 	A.infectable_biotypes |= MOB_MINERAL | MOB_ROBOTIC // Plasmamen, golems, and androids.

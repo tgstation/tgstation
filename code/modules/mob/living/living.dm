@@ -19,7 +19,9 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 	gravity_setup()
-	init_unconscious_appearance()
+	unconscious_appearance = get_unconscious_appearance()
+	if(!isnull(unconscious_appearance))
+		GLOB.unconscious_appearances += unconscious_appearance
 
 /mob/living/prepare_huds()
 	..()
@@ -29,9 +31,9 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
-/// Inits the unconscious alt appearance for when other mobs see us while unconscious
-/mob/living/proc/init_unconscious_appearance()
-	return
+/// Returns the appearance other mobs see instead of us while unconscious
+/mob/living/proc/get_unconscious_appearance()
+	return null
 
 /mob/living/Destroy()
 	for(var/datum/status_effect/effect as anything in status_effects)
@@ -53,6 +55,14 @@
 		QDEL_LIST(imaginary_group)
 	QDEL_LAZYLIST(diseases)
 	QDEL_LAZYLIST(quirks)
+
+	if(!isnull(unconscious_appearance))
+		// Not super necessary strictly speaking but just in case
+		for(var/client/player as anything in GLOB.clients)
+			player?.images -= unconscious_appearance
+		GLOB.unconscious_appearances -= unconscious_appearance
+		unconscious_appearance = null
+
 	return ..()
 
 /mob/living/onZImpact(turf/impacted_turf, levels, impact_flags = NONE)
@@ -83,7 +93,7 @@
 	if(levels <= 1 && can_help_themselves)
 		var/obj/item/organ/wings/gliders = get_organ_by_type(/obj/item/organ/wings)
 		if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
-			var/graceful_landing = HAS_TRAIT(src, TRAIT_CATLIKE_GRACE)
+			var/graceful_landing = HAS_TRAIT(src, TRAIT_CATLIKE_INSTINCT)
 
 			if(graceful_landing)
 				add_movespeed_modifier(/datum/movespeed_modifier/landed_on_feet)
@@ -102,7 +112,7 @@
 	// Smaller mobs with catlike grace can ignore damage (EG: cats)
 	var/small_surface_area = mob_size <= MOB_SIZE_SMALL
 	var/skip_knockdown = FALSE
-	if(HAS_TRAIT(src, TRAIT_CATLIKE_GRACE) && (small_surface_area || usable_legs >= 2) && body_position == STANDING_UP && can_help_themselves)
+	if(HAS_TRAIT(src, TRAIT_CATLIKE_INSTINCT) && (small_surface_area || usable_legs >= 2) && body_position == STANDING_UP && can_help_themselves)
 		. |= ZIMPACT_NO_MESSAGE|ZIMPACT_NO_SPIN
 		skip_knockdown = TRUE
 		if(small_surface_area)
@@ -1550,10 +1560,10 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 				new_mob.SetInvisibility(INVISIBILITY_NONE)
 				new_mob.job = JOB_CYBORG
 				created_robot.lawupdate = FALSE
-				created_robot.connected_ai = null
+				created_robot.set_connected_ai(null)
 				created_robot.mmi.transfer_identity(src) //Does not transfer key/client.
-				created_robot.clear_inherent_laws(announce = FALSE)
-				created_robot.clear_zeroth_law(announce = FALSE)
+				created_robot.laws.clear_inherent_laws()
+				created_robot.laws.clear_zeroth_law()
 
 		if(WABBAJACK_SLIME)
 			new_mob = new /mob/living/basic/slime/random(loc)
@@ -2919,7 +2929,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/mob/living/basic/guardian/summoned_guardian = new picked_type(src, picked_theme)
 	summoned_guardian.set_summoner(src, different_person = TRUE)
 	if(picked_name)
-		summoned_guardian.fully_replace_character_name(null, picked_name)
+		summoned_guardian.fully_replace_character_name(null, picked_name, log_new_name = TRUE)
 	if(picked_color)
 		summoned_guardian.set_guardian_colour(picked_color)
 	summoned_guardian.PossessByPlayer(guardian_client?.key)
@@ -3004,6 +3014,17 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	return span_notice("You'd estimate [p_their()] fitness level at about [our_fitness_level]. [comparative_fitness <= 0.33 ? "Pathetic." : ""]")
 
+/// Check if bees are not hostile to us
+/mob/living/proc/bee_friendly()
+	if(mob_biotypes & MOB_PLANT)
+		return TRUE
+	var/obj/item/clothing/suit = get_item_by_slot(ITEM_SLOT_OCLOTHING)
+	var/obj/item/clothing/hat = get_item_by_slot(ITEM_SLOT_HEAD)
+	if(!istype(suit) || !istype(hat))
+		return FALSE
+	if(suit.clothing_flags & hat.clothing_flags & THICKMATERIAL)
+		return TRUE
+
 ///Performs the aftereffects of blocking a projectile.
 /mob/living/proc/block_projectile_effects()
 	var/static/list/icon/blocking_overlay
@@ -3048,16 +3069,12 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	else
 		add_verb(src, /mob/living/verb/pulled)
 
-/// Generic helper to add a static-y humanoid appearance shown to other mobs when unconscious
-/mob/living/proc/add_generic_humanoid_static_appearance()
+/// Generic helper to return a static-y humanoid appearance shown to other mobs when unconscious
+/mob/living/proc/get_generic_humanoid_static_appearance()
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/image/static_image = image('icons/effects/effects.dmi', src, "static")
 	static_image.override = TRUE
 	static_image.name = "unknown humanoid"
-	add_alt_appearance(
-		/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity,
-		"[REF(src)]_unconscious",
-		static_image,
-		NONE,
-	)
+
+	return static_image

@@ -6,6 +6,7 @@
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_PLANT_SAFE,
+		TRAIT_REQUIRED_ADV_HEALTH_SCANNER,
 	)
 	mutant_organs = list(
 		/obj/item/organ/pod_hair = "None",

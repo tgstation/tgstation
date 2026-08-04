@@ -155,22 +155,50 @@
 	owner.apply_status_effect(/datum/status_effect/grouped/see_no_names, TRAIT_STATUS_EFFECT(id))
 	owner.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_BLOCK_SECHUD, TRAIT_BLOCK_MEDHUD, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_STATUS_EFFECT(id))
 	owner.update_eyes() // updates eyelids
-	for(var/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/uncon_aa in GLOB.active_alternate_appearances)
-		if(uncon_aa.target == owner)
-			continue
-		uncon_aa.show_to(owner)
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_mob_statchange))
+	RegisterSignal(owner, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(show_unconscious_hud))
+	if(GET_CLIENT(owner)) // let's not waste time giving the hud to non-player characters
+		show_unconscious_hud(owner)
 	return TRUE
+
+/datum/status_effect/knocked_out/on_creation(mob/living/new_owner, ...)
+	. = ..()
+	if(!.)
+		return
+	if(owner.stat == DEAD)
+		stop_ticking()
 
 /datum/status_effect/knocked_out/on_remove()
 	owner.cure_blind(TRAIT_STATUS_EFFECT(id))
 	owner.remove_status_effect(/datum/status_effect/grouped/see_no_names, TRAIT_STATUS_EFFECT(id))
 	owner.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_BLOCK_SECHUD, TRAIT_BLOCK_MEDHUD, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_STATUS_EFFECT(id))
 	owner.update_eyes() // updates eyelids
-	for(var/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity/uncon_aa in GLOB.active_alternate_appearances)
-		uncon_aa.hide_from(owner, absolute = TRUE)
+	UnregisterSignal(owner, list(COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOB_STATCHANGE))
+	if(GET_CLIENT(owner))
+		hide_unconscious_hud(owner)
 
 /datum/status_effect/knocked_out/tick(seconds_between_ticks)
 	owner.adjust_stamina_loss(-3 * seconds_between_ticks)
+
+/// Global list of images that correspond to a mob's unconscious appearance
+GLOBAL_LIST_EMPTY(unconscious_appearances)
+
+/datum/status_effect/knocked_out/proc/show_unconscious_hud(mob/living/source)
+	SIGNAL_HANDLER
+
+	source.client?.images += (GLOB.unconscious_appearances - source.unconscious_appearance)
+
+/datum/status_effect/knocked_out/proc/hide_unconscious_hud(mob/living/source)
+	SIGNAL_HANDLER
+
+	source.client?.images -= GLOB.unconscious_appearances
+
+/datum/status_effect/knocked_out/proc/on_mob_statchange(mob/living/source, ...)
+	SIGNAL_HANDLER
+	if(owner.stat == DEAD)
+		stop_ticking()
+	else
+		start_ticking()
 
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
@@ -185,18 +213,21 @@
 	. = ..()
 	if(!.)
 		return
-	if(HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
-		tick_interval = STATUS_EFFECT_NO_TICK
-	else
+	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
 		ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), PROC_REF(on_owner_insomniac))
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE), PROC_REF(on_owner_sleepy))
 
+/datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	if(!.)
+		return
+	if(HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
+		stop_ticking()
+
 /datum/status_effect/incapacitating/sleeping/on_remove()
 	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE)))
-	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
-		REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
-		tick_interval = initial(tick_interval)
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/incapacitating/sleeping/try_force_say()
@@ -207,13 +238,13 @@
 /datum/status_effect/incapacitating/sleeping/proc/on_owner_insomniac(mob/living/source)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
-	tick_interval = STATUS_EFFECT_NO_TICK
+	stop_ticking()
 
 ///If the mob has the TRAIT_SLEEPIMMUNE but somehow looses it we make him sleep and restart the tick()
 /datum/status_effect/incapacitating/sleeping/proc/on_owner_sleepy(mob/living/source)
 	SIGNAL_HANDLER
 	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
-	tick_interval = initial(tick_interval)
+	start_ticking()
 
 /datum/status_effect/incapacitating/sleeping/tick(seconds_between_ticks)
 	if(owner.maxHealth)

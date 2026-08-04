@@ -1146,6 +1146,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	SEND_SIGNAL(src, COMSIG_BODYPART_UPDATED, dropping_limb, is_creating)
+	if(owner)
+		SEND_SIGNAL(owner, COMSIG_CARBON_BODYPART_UPDATED, src, dropping_limb, is_creating)
 
 	if(IS_ORGANIC_LIMB(src))
 		// Try to add a cached blood type data, we must do it in here because for some reason DNA gets initialized AFTER the mob's limbs are created.
@@ -1863,6 +1865,8 @@
 
 /// Returns the generic description of our BIO_INTERNAL feature(s), prioritizing certain ones over others. Returns error on failure.
 /obj/item/bodypart/proc/get_internal_description()
+	if(biological_state & BIO_STONE)
+		return "bedrock"
 	if (biological_state & BIO_BONE)
 		return "bone"
 	if (biological_state & BIO_METAL)
