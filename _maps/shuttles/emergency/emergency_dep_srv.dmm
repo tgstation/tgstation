@@ -1,12 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aJ" = (
-/obj/machinery/door/window/left/directional/east{
-	name = "Mass Driver";
-	req_access = list("chapel_office")
-	},
 /obj/machinery/mass_driver{
 	dir = 8;
 	id = "shuttlechapelgun"
+	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Mass Driver";
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -50,7 +50,6 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cD" = (
-/obj/structure/window/spawner/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -59,9 +58,7 @@
 /turf/open/floor/wood/large,
 /area/shuttle/escape)
 "cQ" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "cZ" = (
@@ -86,9 +83,20 @@
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood/large,
 /area/shuttle/escape)
+"dI" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/item/shovel/spade,
+/obj/item/wrench,
+/obj/item/reagent_containers/cup/watering_can,
+/obj/item/cultivator,
+/obj/item/wirecutters,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "dM" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "dV" = (
@@ -96,6 +104,18 @@
 	name = "Emergency Recovery Airlock"
 	},
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"eh" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/green/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/camera/autoname/directional/south,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "eo" = (
 /obj/machinery/computer/emergency_shuttle,
@@ -133,12 +153,10 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "fC" = (
-/obj/structure/chair/stool/directional/west,
-/obj/item/toy/crayon/spraycan{
-	pixel_x = -12;
-	pixel_y = 10
-	},
-/turf/open/floor/wood,
+/obj/effect/turf_decal/tile/bar,
+/obj/machinery/deepfryer,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "fO" = (
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
@@ -177,7 +195,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "ho" = (
-/obj/structure/bookcase/random/reference,
+/obj/structure/bookcase/random/adult,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "ht" = (
@@ -189,11 +207,8 @@
 "hu" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	pixel_x = -28;
-	pixel_y = 0;
-	id = "shuttlechapelgun"
-	},
+/obj/structure/closet/crate/coffin,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "hG" = (
@@ -204,10 +219,8 @@
 	},
 /area/shuttle/escape)
 "hI" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron,
+/obj/effect/turf_decal/tile/bar,
+/turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "hO" = (
 /obj/structure/window/spawner/directional/south,
@@ -220,10 +233,13 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "hV" = (
-/obj/structure/closet/l3closet/janitor,
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "im" = (
@@ -237,10 +253,8 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "iq" = (
-/obj/structure/chair/pew/left,
-/turf/open/floor/iron/chapel{
-	dir = 9
-	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/wood,
 /area/shuttle/escape)
 "iy" = (
 /obj/effect/turf_decal/siding/wood{
@@ -248,6 +262,11 @@
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood/large,
+/area/shuttle/escape)
+"ka" = (
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "km" = (
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -267,6 +286,13 @@
 "kD" = (
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"kG" = (
+/obj/structure/chair/pew/left,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/chapel{
+	dir = 9
+	},
 /area/shuttle/escape)
 "kH" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -345,8 +371,29 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ok" = (
-/obj/structure/closet/crate/coffin,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/table,
+/obj/item/food/grown/flower/harebell{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/food/grown/flower/harebell{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/food/grown/flower/harebell{
+	pixel_x = 7;
+	pixel_y = 0
+	},
+/obj/item/food/grown/flower/harebell{
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/obj/item/food/grown/flower/harebell{
+	pixel_x = -3;
+	pixel_y = -1
+	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "on" = (
@@ -356,11 +403,16 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "oG" = (
-/obj/structure/bookcase/random/reference,
-/obj/effect/turf_decal/siding/wood{
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "oU" = (
 /obj/effect/turf_decal/siding/wood{
@@ -384,6 +436,17 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
+"pH" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green/opposingcorners{
+	dir = 1
+	},
+/obj/structure/sink/directional/east,
+/obj/effect/turf_decal/box/corners,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "pN" = (
 /obj/structure/table,
 /obj/item/storage/cans/sixsoda,
@@ -400,11 +463,18 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ro" = (
-/obj/vehicle/ridden/janicart,
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
-	dir = 8
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/right/directional/south{
+	name = "Hydroponics Window";
+	req_access = list("hydroponics")
 	},
-/turf/open/floor/iron,
+/obj/machinery/door/window/left/directional/north{
+	name = "Kitchen Window";
+	req_access = list("kitchen")
+	},
+/obj/structure/window/spawner/directional/west,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "rr" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -423,17 +493,26 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"sJ" = (
+/obj/machinery/door/airlock{
+	name = "Custodial Closet"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/service/janitor,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "sQ" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/machinery/griddle,
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "sR" = (
-/obj/structure/bookcase/random/adult,
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
+/obj/structure/closet/crate/coffin,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/window/left/directional/east{
+	name = "Coffins Storage";
+	req_access = list("chapel_office")
 	},
-/turf/open/floor/wood,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "tE" = (
 /obj/structure/table/reinforced,
@@ -444,31 +523,21 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ub" = (
-/obj/machinery/skill_station,
-/turf/open/floor/wood,
+/obj/structure/closet/crate/coffin,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "uo" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "up" = (
-/obj/structure/table,
-/obj/item/grenade/chem_grenade/cleaner{
-	pixel_x = 7;
-	pixel_y = 11
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
-/obj/item/grenade/chem_grenade/cleaner{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = 2;
-	pixel_y = 5
-	},
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
-	dir = 4
-	},
-/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "uK" = (
@@ -499,9 +568,8 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "vz" = (
-/obj/structure/chair/wood{
-	dir = 1
-	},
+/obj/structure/chair/wood,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "vY" = (
@@ -532,19 +600,18 @@
 	},
 /area/shuttle/escape)
 "xO" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/table,
-/obj/machinery/microwave,
-/turf/open/floor/iron/cafeteria,
+/obj/machinery/vending/hydroseeds,
+/obj/structure/window/spawner/directional/south,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "yk" = (
-/obj/machinery/camera/autoname/directional/west{
-	pixel_x = 0;
-	base_pixel_y = -23;
-	pixel_y = -23
-	},
 /obj/machinery/light/directional/west,
-/turf/open/floor/carpet/red,
+/turf/open/floor/wood,
 /area/shuttle/escape)
 "ym" = (
 /obj/effect/turf_decal/siding/wood,
@@ -566,14 +633,24 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape/brig)
+"zf" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
 "zJ" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "Aj" = (
-/obj/machinery/wall_healer/free/directional/east{
-	use_power = 0
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
 	},
-/turf/open/floor/wood,
+/obj/structure/reagent_dispensers/plumbed,
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "AE" = (
 /obj/machinery/suit_storage_unit/standard_unit,
@@ -596,11 +673,31 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"Be" = (
+/obj/machinery/seed_extractor,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "Bg" = (
 /turf/closed/wall/r_wall/plastitanium/nodiagonal,
 /area/shuttle/escape)
+"BG" = (
+/obj/machinery/wall_healer/free/directional/west{
+	use_power = 0
+	},
+/obj/machinery/skill_station,
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "BV" = (
 /obj/structure/table/wood,
+/obj/item/toy/crayon/spraycan{
+	pixel_x = -7;
+	pixel_y = 14
+	},
 /obj/item/flashlight/lamp/green{
 	pixel_x = 1;
 	pixel_y = 5
@@ -639,14 +736,18 @@
 	},
 /area/shuttle/escape)
 "DL" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/table,
-/obj/item/food/dough{
-	desc = "A piece of raw dough, that waited until shuttle arrive on shuttle and chef made out of this nice meal. It waited for hours, and look at the walking crew and waits for its time. If its was able to speak it would say something like: 'HEY! PAY ATTENTION TO ME!' But nobody cares about that dough and its just repose and rotting. If you paid your attention, please make burger out of this, or just throw at trash bin."
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
 	},
-/obj/item/kitchen/rollingpin,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/cafeteria,
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "Ef" = (
 /obj/effect/turf_decal/siding/wood/end{
@@ -671,11 +772,12 @@
 /turf/open/floor/wood/large,
 /area/shuttle/escape)
 "EQ" = (
-/obj/machinery/door/window/right/directional/east{
-	name = "Coffin Storage";
-	req_access = list("chapel_office")
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	pixel_x = -27;
+	pixel_y = -28;
+	id = "shuttlechapelgun"
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ER" = (
@@ -684,18 +786,32 @@
 	},
 /area/shuttle/escape)
 "EW" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/grimy,
+/obj/machinery/biogenerator{
+	biomass = 100
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Fe" = (
 /obj/structure/chair/wood,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Fu" = (
-/obj/structure/mop_bucket/janitorialcart{
-	dir = 4
+/obj/effect/turf_decal/trimline/purple/filled/end,
+/obj/item/grenade/chem_grenade/cleaner{
+	pixel_x = 5;
+	pixel_y = 12
 	},
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted,
+/obj/item/grenade/chem_grenade/cleaner{
+	pixel_x = 13;
+	pixel_y = 10
+	},
+/obj/item/grenade/chem_grenade/cleaner{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/machinery/light/small/directional/south,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Fz" = (
@@ -767,9 +883,11 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "In" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/machinery/deepfryer,
-/turf/open/floor/iron/cafeteria,
+/obj/machinery/door/airlock/hydroponics/glass{
+	name = "Hydroponics"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/service/hydroponics,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "IE" = (
 /turf/open/floor/iron/grimy,
@@ -805,22 +923,8 @@
 /area/shuttle/escape)
 "Ke" = (
 /obj/structure/table,
-/obj/item/storage/box/lights/mixed{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/obj/item/storage/bag/trash{
-	pixel_x = 3;
-	pixel_y = 9
-	},
-/obj/item/key/janitor,
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 1
-	},
-/obj/structure/extinguisher_cabinet/directional/north,
-/obj/machinery/camera/autoname/directional/north,
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron,
+/obj/machinery/microwave,
+/turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "Kp" = (
 /obj/effect/turf_decal/siding/wood,
@@ -883,8 +987,11 @@
 /turf/open/floor/wood/large,
 /area/shuttle/escape)
 "Ni" = (
-/obj/structure/extinguisher_cabinet/directional/west,
-/turf/open/floor/wood,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "Nm" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -900,10 +1007,17 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "NS" = (
-/obj/machinery/door/airlock{
-	name = "Custodial Closet"
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/all/service/janitor,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/box/corners,
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Oe" = (
@@ -923,6 +1037,10 @@
 	},
 /obj/structure/table/optable,
 /obj/machinery/vitals_reader/directional/east,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"OH" = (
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "OL" = (
@@ -981,6 +1099,15 @@
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
+"Qr" = (
+/obj/machinery/vending/hydronutrients,
+/obj/structure/window/spawner/directional/south,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "Qt" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -997,11 +1124,24 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "QC" = (
-/obj/structure/closet/crate/coffin,
-/obj/structure/window/spawner/directional/north,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/dark,
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/item/reagent_containers/cup/watering_can,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/box,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"QS" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/chapel,
+/area/shuttle/escape)
+"Rs" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/table,
+/obj/item/food/dough{
+	desc = "A piece of raw dough, that waited until shuttle arrive on shuttle and chef made out of this nice meal. It waited for hours, and look at the walking crew and waits for its time. If its was able to speak it would say something like: 'HEY! PAY ATTENTION TO ME!' But nobody cares about that dough and its just repose and rotting. If you paid your attention, please make burger out of this, or just throw at trash bin."
+	},
+/obj/item/kitchen/rollingpin,
+/turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "Rv" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -1025,8 +1165,27 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "SQ" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/wood,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/table,
+/obj/item/food/grown/flower/poppy,
+/obj/item/food/grown/flower/poppy,
+/obj/item/food/grown/flower/poppy{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/item/food/grown/flower/poppy{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/food/grown/flower/poppy{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/item/food/grown/flower/poppy{
+	pixel_x = -6;
+	pixel_y = -9
+	},
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Th" = (
 /obj/machinery/computer/records/security,
@@ -1036,9 +1195,17 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Tt" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted{
+/obj/effect/turf_decal/trimline/purple/filled/end{
+	dir = 1
+	},
+/obj/structure/mop_bucket/janitorialcart{
 	dir = 4
 	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 9;
+	pixel_y = -5
+	},
+/obj/item/mop,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "TL" = (
@@ -1062,6 +1229,20 @@
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"UE" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "UW" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -1072,7 +1253,16 @@
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "Vf" = (
-/turf/open/floor/iron/chapel,
+/obj/machinery/door/window/right/directional/south{
+	name = "Hydroponics Room";
+	req_access = list("hydroponics")
+	},
+/obj/effect/turf_decal/arrows,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "Vu" = (
 /obj/structure/table/reinforced,
@@ -1117,9 +1307,16 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Xe" = (
-/obj/structure/closet/crate/coffin,
-/obj/structure/window/spawner/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/table,
+/obj/item/food/grown/flower/poppy/lily{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/food/grown/flower/poppy/geranium{
+	pixel_x = -3;
+	pixel_y = -2
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Xs" = (
@@ -1187,6 +1384,19 @@
 /obj/machinery/oven/range,
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
+"ZI" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"ZR" = (
+/obj/machinery/camera/autoname/directional/west{
+	pixel_x = 0;
+	base_pixel_y = -23;
+	pixel_y = -23
+	},
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 Jl
@@ -1203,12 +1413,15 @@ qf
 Pu
 zJ
 qf
-qf
+zJ
 qf
 zJ
 qB
 qf
 qB
+zJ
+qf
+qf
 zJ
 oi
 rr
@@ -1230,12 +1443,15 @@ bl
 sz
 Hk
 bL
-iq
+kG
 ht
 hG
 xN
 Zo
 DB
+cD
+ub
+sR
 hu
 aJ
 zJ
@@ -1264,6 +1480,9 @@ VG
 AH
 ER
 cD
+cD
+cD
+cD
 EQ
 qf
 km
@@ -1284,12 +1503,15 @@ IE
 IE
 IE
 df
-EW
+IE
 IE
 IE
 HO
 XY
 xN
+ka
+ZI
+SQ
 Xe
 ok
 qf
@@ -1316,9 +1538,12 @@ zJ
 zJ
 rr
 Ze
-Vf
-QC
-ok
+QS
+rr
+zJ
+qf
+qf
+zJ
 zJ
 km
 gR
@@ -1343,9 +1568,12 @@ pB
 Zv
 zJ
 zJ
+In
+zJ
+pH
 NS
-zJ
-zJ
+NS
+oG
 zJ
 YH
 YH
@@ -1369,13 +1597,16 @@ lP
 hc
 sQ
 zJ
+Be
+cj
+Qr
 hV
-hI
-ro
+cj
+cj
+Ni
 qf
 km
 gR
-Jl
 "}
 (8,1,1) = {"
 qf
@@ -1393,16 +1624,19 @@ mE
 JP
 we
 lP
-hc
-xO
-zJ
 Ke
+Rs
+EW
+dI
 cj
+Vf
+hV
+QC
 dM
+UE
 qf
 km
 gR
-Jl
 "}
 (9,1,1) = {"
 qf
@@ -1421,15 +1655,18 @@ JP
 UW
 lP
 hc
-DL
-zJ
+hI
+ro
 up
-Tt
-Fu
+cj
+xO
+hV
+cj
+cj
+Ni
 qf
 km
 gR
-Jl
 "}
 (10,1,1) = {"
 qf
@@ -1448,12 +1685,15 @@ JP
 we
 Rv
 IL
+fC
+zJ
+zJ
 In
 zJ
-zJ
-NS
-zJ
-zJ
+Aj
+DL
+DL
+eh
 zJ
 YH
 YH
@@ -1477,10 +1717,13 @@ OL
 zJ
 zJ
 rr
-ub
-sz
-Ni
-Dy
+BG
+iq
+rr
+zJ
+qf
+qf
+zJ
 zJ
 km
 gR
@@ -1501,13 +1744,16 @@ gI
 gI
 gI
 gI
-yk
-gI
+ZR
+zf
 Zk
 sz
 sz
 sz
-fC
+yk
+sz
+OH
+Dy
 qf
 km
 gR
@@ -1527,10 +1773,13 @@ RY
 hO
 eM
 ym
-sR
+rr
+zJ
+sJ
+rr
 cQ
-oG
-cQ
+kD
+sz
 Dq
 fS
 Qt
@@ -1554,13 +1803,16 @@ LH
 vi
 PK
 Kp
-kD
+zJ
+Tt
+Fu
+zJ
 vz
 ho
-Aj
+sz
 wt
 RK
-SQ
+sz
 gj
 zJ
 km
@@ -1581,12 +1833,15 @@ qf
 zJ
 zJ
 qf
-qf
-qf
-zJ
 zJ
 qf
 zJ
+zJ
+qf
+qf
+zJ
+qf
+qf
 zJ
 zJ
 rr

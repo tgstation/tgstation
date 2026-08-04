@@ -563,7 +563,7 @@
 	Surprisingly, it isn't broken."
 	admin_notes = "Just a shuttle with maintenance room instead of storage."
 	credit_cost = CARGO_CRATE_VALUE * 5.5
-	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_HOP)
+	who_can_purchase = list(ACCESS_CAPTAIN)
 	department_type = /datum/job_department/assistant
 	department_name = DEPARTMENT_ASSISTANT
 	occupancy_limit = "Fine for a bunch of assistans."
@@ -575,7 +575,7 @@
 	so we installed supermatter shard and solar panels in their personal shuttle."
 	admin_notes = "Has inactive supermatter shard, axe, insuls, free engi vending machines and electrified grilles, if engineers powers the shuttle."
 	credit_cost = CARGO_CRATE_VALUE * 15.5
-	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_CE)
+	who_can_purchase = list(ACCESS_CAPTAIN)
 	department_type = /datum/job_department/engineering
 	department_name = DEPARTMENT_ENGINEERING
 	occupancy_limit = "20"
@@ -587,7 +587,7 @@
 	so they decided to please the surgeons who perform heart operations and launched medical shuttle with a treating center, virology and chemistry lab."
 	admin_notes = "Has functioning pharmacy and virology."
 	credit_cost = CARGO_CRATE_VALUE * 12
-	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_CMO)
+	who_can_purchase = list(ACCESS_CAPTAIN)
 	department_type = /datum/job_department/medical
 	department_name = DEPARTMENT_MEDICAL
 	occupancy_limit = "30 lives bodies and 1 dead body."
@@ -599,7 +599,7 @@
 	Luckily, xenobiology has been sent to hard labor, so we doesn't built for them anything."
 	admin_notes = "Has random gizmo, experimentor and functional R&D lab."
 	credit_cost = CARGO_CRATE_VALUE * 10
-	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_RD)
+	who_can_purchase = list(ACCESS_CAPTAIN)
 	department_type = /datum/job_department/science
 	department_name = DEPARTMENT_SCIENCE
 	occupancy_limit = "50"
@@ -611,7 +611,7 @@
 	He was a very good man, until he died at the hands of a traitor."
 	admin_notes = "Has 2 prison cells and 1 holding cell."
 	credit_cost = CARGO_CRATE_VALUE * 16
-	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_HOS)
+	who_can_purchase = list(ACCESS_CAPTAIN)
 	department_type = /datum/job_department/security
 	department_name = DEPARTMENT_SECURITY
 	occupancy_limit = "40 freedom people and 5 in prison people."
@@ -622,7 +622,7 @@
 	description = "Shuttle is built solely for bar hopping and has no tool storage or medbay."
 	admin_notes = "Shuttle is spacious, but many important things for a shuttle are missing."
 	credit_cost = CARGO_CRATE_VALUE * 8
-	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_HOP)
+	who_can_purchase = list(ACCESS_CAPTAIN)
 	department_type = /datum/job_department/service
 	department_name = DEPARTMENT_SERVICE
 	occupancy_limit = "30"
@@ -634,7 +634,7 @@
 	Don't worry, every single one of the separatists has already been jailed. Project was that good, that we made that for public sale."
 	admin_notes = "Has unloaded rocket launcher and express suply console."
 	credit_cost = CARGO_CRATE_VALUE * 9.5
-	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_QM)
+	who_can_purchase = list(ACCESS_CAPTAIN)
 	department_type = /datum/job_department/cargo
 	department_name = DEPARTMENT_CARGO
 	occupancy_limit = "40"
