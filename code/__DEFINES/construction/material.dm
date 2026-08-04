@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 #define MATERIAL_FLAMMABILITY "flammability"
 #define MATERIAL_RADIOACTIVITY "radioactivity"
 #define MATERIAL_FIRESTACKER "firestacker"
-#define MATERIAL_VAMPIRES_BANE "vampires_bane"
+#define MATERIAL_UNHOLY_BANE "unholy_bane"
 #define MATERIAL_TELEPORTING "teleporting"
 #define MATERIAL_PENETRATING "penetrating"
 

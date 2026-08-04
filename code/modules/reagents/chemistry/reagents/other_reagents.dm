@@ -409,7 +409,7 @@
 	if(reac_volume >= 10)
 		for(var/obj/effect/rune/R in exposed_turf)
 			qdel(R)
-	exposed_turf.Bless()
+	exposed_turf.bless_turf()
 
 /datum/reagent/water/hollowwater
 	name = "Hollow Water"
@@ -802,7 +802,7 @@
 	if(!ishuman(affected_mob))
 		return ..()
 	var/mob/living/carbon/affected_human = affected_mob
-	if(isjellyperson(affected_human))
+	if(affected_human.mob_biotypes & MOB_SLIME)
 		var/datum/species/species_type = pick(subtypesof(race))
 		affected_human.set_species(species_type)
 		holder.del_reagent(type)
@@ -3353,7 +3353,7 @@
 
 /datum/reagent/brimdust/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_fire_loss((ispodperson(affected_mob) ? -1 : 1 * seconds_per_tick), updating_health = FALSE))
+	if(affected_mob.adjust_fire_loss((affected_mob.mob_biotypes & MOB_PLANT) ? -1 : 1 * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/brimdust/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
