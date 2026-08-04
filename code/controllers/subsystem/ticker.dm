@@ -35,9 +35,12 @@ SUBSYSTEM_DEF(ticker)
 	var/tipped = FALSE //Did we broadcast the tip of the day yet?
 	var/selected_tip // What will be the tip of the day?
 
-	/// Time left until the round starts
+	/// Time left until the round starts after all subsystems initialize
 	var/timeLeft = 120 SECONDS
-	/// value used to initialize `timeLeft` when the master subsystem finishes initializing
+	/// value used to initialize `timeLeft` when the master subsystem finishes initializing. 
+	/// We do this to allow for the timer to be set manually before all subsystems initialize, 
+	/// while also making sure that when the timer does start, it does so at the value we have set.
+	/// This is set to the config value when SSticker initializes, so setting this only makes sense after that point.
 	var/start_at = 120 SECONDS
 
 	/// Num of players, used for pregame stats on statpanel
