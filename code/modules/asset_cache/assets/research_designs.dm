@@ -63,4 +63,5 @@
 		insert_icon(get_design_id(path), uni_icon(icon_file, icon_state, transform=transform))
 
 /datum/asset/spritesheet_batched/research_designs/proc/get_design_id(design_path)
-	return replacetext(replacetext("[design_path]", "/datum/design/", ""), "/", "_")
+	var/static/base_path_len = length("/datum/design/")
+	return replacetext(splicetext("[design_path]", 1, base_path_len), "/", "_")

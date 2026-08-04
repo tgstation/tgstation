@@ -87,7 +87,8 @@ other types of metals and chemistry for reagents).
 
 /datum/design/New()
 	. = ..()
-	asset_id = replacetext(replacetext("[type]", "/datum/design/", ""), "/", "_")
+	var/static/base_path_len = length("/datum/design/")
+	asset_id = replacetext(splicetext("[type]", 1, base_path_len), "/", "_")
 
 	var/list/temp_list = list()
 	// Go through all of our materials, get the subsystem instance, and then replace the list.
