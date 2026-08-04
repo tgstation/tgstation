@@ -323,15 +323,15 @@
 	message = "glows brightly!"
 	emote_type = EMOTE_VISIBLE
 
-/datum/emote/living/carbon/human/glow/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
-	if(!isethereal(user))
+/datum/emote/living/carbon/human/glow/can_run_emote(mob/living/carbon/human/user, status_check = TRUE, intentional, params)
+	if(!user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow))
 		return FALSE
 	return ..()
 
 /datum/emote/living/carbon/human/glow/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
 	. = ..()
-	var/datum/species/ethereal/goober = user.dna.species
-	goober.handle_glow_emote(user, 1.75, 1.2)
+	var/datum/status_effect/grouped/bodypart_effect/ethereal_glow/glow = user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow)
+	glow.handle_glow_emote(1.75, 1.2)
 
 /datum/emote/living/carbon/human/flare
 	key = "flare"
@@ -340,15 +340,15 @@
 	emote_type = EMOTE_VISIBLE
 	sound = 'sound/mobs/humanoids/ethereal/ethereal_hiss.ogg'
 
-/datum/emote/living/carbon/human/flare/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
-	if(!isethereal(user))
+/datum/emote/living/carbon/human/flare/can_run_emote(mob/living/carbon/human/user, status_check = TRUE, intentional, params)
+	if(!user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow))
 		return FALSE
 	return ..()
 
 /datum/emote/living/carbon/human/flare/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
 	. = ..()
-	var/datum/species/ethereal/goober = user.dna.species
-	goober.handle_glow_emote(user, 12, 6, flare = TRUE, duration = 2 SECONDS, flare_time = 10 SECONDS)
+	var/datum/status_effect/grouped/bodypart_effect/ethereal_glow/glow = user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow)
+	glow.handle_glow_emote(12, 6, flare = TRUE, duration = 2 SECONDS, flare_time = 10 SECONDS)
 
 /datum/emote/living/carbon/human/flicker
 	key = "flicker"
@@ -358,11 +358,11 @@
 	sound = 'sound/effects/sparks/sparks4.ogg'
 
 /datum/emote/living/carbon/human/flicker/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
-	if(!isethereal(user))
+	if(!user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow))
 		return FALSE
 	return ..()
 
 /datum/emote/living/carbon/human/flicker/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
 	. = ..()
-	var/datum/species/ethereal/goober = user.dna.species
-	goober.start_flicker(user)
+	var/datum/status_effect/grouped/bodypart_effect/ethereal_glow/glow = user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow)
+	glow.start_flicker()

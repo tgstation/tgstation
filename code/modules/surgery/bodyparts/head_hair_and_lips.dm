@@ -26,7 +26,7 @@
 		if(target_species.fixed_mut_color)
 			species_color = target_species.fixed_mut_color
 		else
-			species_color = target.dna.features["mcolor"]
+			species_color = target.dna.features[FEATURE_MUTANT_COLOR]
 	else
 		skin_tone = ""
 		species_color = ""
