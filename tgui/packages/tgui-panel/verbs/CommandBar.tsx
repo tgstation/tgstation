@@ -346,13 +346,7 @@ export function CommandBar() {
 
   const hasNoInput = () => {
     if (!selectedVerb && !input) return true;
-    if (
-      mode !== 'Command' &&
-      selectedVerb &&
-      parsedArgs.length <= filledArgs.length &&
-      !currentToken
-    )
-      return true;
+    if (mode !== 'Command' && selectedVerb && !currentToken) return true;
     return false;
   };
 
@@ -568,6 +562,7 @@ export function CommandBar() {
       <button
         className="CommandBar__mode-button"
         onClick={cycleMode}
+        onMouseDown={(e) => e.preventDefault()}
         type="button"
         style={{ color: MODE_COLORS[mode] }}
       >

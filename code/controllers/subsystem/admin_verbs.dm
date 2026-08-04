@@ -85,13 +85,15 @@ SUBSYSTEM_DEF(admin_verbs)
 	if(state)
 		admin_visibility_flags[admin.ckey] |= list(flag)
 		assosciate_admin(admin)
-		return
+	else
+		admin_visibility_flags[admin.ckey] -= list(flag)
+		for(var/datum/admin_verb/verb_singleton as anything in admin_verbs_by_visibility_flag[flag])
+			verb_singleton.unassign_from_client(admin)
+		admin.init_verbs()
 
-	admin_visibility_flags[admin.ckey] -= list(flag)
-	// they lost the flag, iterate over verbs with that flag and yoink em
-	for(var/datum/admin_verb/verb_singleton as anything in admin_verbs_by_visibility_flag[flag])
-		verb_singleton.unassign_from_client(admin)
-	admin.init_verbs()
+	if(admin.admin_verb_panel)
+		var/datum/tgui/ui = SStgui.get_open_ui(admin.mob, admin.admin_verb_panel)
+		ui?.send_full_update()
 
 /datum/controller/subsystem/admin_verbs/proc/dynamic_invoke_verb(client/admin, datum/admin_verb/verb_type, ...)
 	if(IsAdminAdvancedProcCall())
