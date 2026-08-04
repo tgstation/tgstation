@@ -97,7 +97,6 @@
 		return
 	return ..()
 
-
 /mob/living/carbon/human/Topic(href, href_list)
 
 	if(href_list["see_id"])
@@ -1172,6 +1171,3 @@
 
 /mob/living/carbon/human/species/zombie
 	race = /datum/species/zombie
-
-/mob/living/carbon/human/species/zombie/infectious
-	race = /datum/species/zombie/infectious

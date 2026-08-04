@@ -17,8 +17,25 @@
 	var/voice_override
 	/// If set to true, activates the radio effect on TTS. Used for sec hailers, but other masks can utilize it for their own vocal effect.
 	var/use_radio_beeps_tts = FALSE
-	/// The unique sound effect of dying while wearing this
-	var/unique_death
+	/// A list of sound overrides for emotes, which can play when the mask is worn on the mask slot
+	var/list/emote_sounds
+
+/obj/item/clothing/mask/equipped(mob/living/equipper, slot)
+	. = ..()
+	if (!(slot & ITEM_SLOT_MASK))
+		return
+	for(var/key in emote_sounds)
+		RegisterSignal(equipper, COMSIG_MOB_EMOTE_SOUND(key), PROC_REF(get_emote_sound))
+
+/obj/item/clothing/mask/dropped(mob/living/dropper)
+	. = ..()
+	for(var/key in emote_sounds)
+		UnregisterSignal(dropper, COMSIG_MOB_EMOTE_SOUND(key))
+
+/obj/item/clothing/mask/proc/get_emote_sound(mob/living/source, key, list/sounds)
+	SIGNAL_HANDLER
+	var/sound_override = get_emote_sound_from_list(emote_sounds[key], source)
+	sounds[sound_override] = EMOTE_SOUND_MASK
 
 /obj/item/clothing/mask/attack_self(mob/user)
 	if((clothing_flags & VOICEBOX_TOGGLABLE))
