@@ -112,8 +112,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/fixed_mut_color = ""
 	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
 	var/inert_mutation = /datum/mutation/dwarfism
-	///Used to set the mob's death_sound upon species change
-	var/death_sound
 	///Special sound for grabbing
 	var/grab_sound
 	/// A path to an outfit that is important for species life e.g. plasmaman outfit
@@ -1400,42 +1398,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /// Given a human, will adjust it before taking a picture for the preferences UI.
 /// This should create a CONSISTENT result, so the icons don't randomly change.
 /datum/species/proc/prepare_human_for_preview(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' scream sound.
-/datum/species/proc/get_scream_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' cry sound.
-/datum/species/proc/get_cry_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' sigh sound.
-/datum/species/proc/get_sigh_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' sniff sound.
-/datum/species/proc/get_sniff_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' cough sound.
-/datum/species/proc/get_cough_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' laugh sound
-/datum/species/proc/get_laugh_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' sneeze sound.
-/datum/species/proc/get_sneeze_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' snore sound.
-/datum/species/proc/get_snore_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' hiss sound
-/datum/species/proc/get_hiss_sound(mob/living/carbon/human/human)
 	return
 
 /// Returns a list of all organ typepaths this species probably has

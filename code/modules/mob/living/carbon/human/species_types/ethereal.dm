@@ -239,16 +239,6 @@
 
 	return features
 
-/datum/species/ethereal/get_scream_sound(mob/living/carbon/human/ethereal)
-	return pick(
-		'sound/mobs/humanoids/ethereal/ethereal_scream_1.ogg',
-		'sound/mobs/humanoids/ethereal/ethereal_scream_2.ogg',
-		'sound/mobs/humanoids/ethereal/ethereal_scream_3.ogg',
-	)
-
-/datum/species/ethereal/get_hiss_sound(mob/living/carbon/human/ethereal)
-	return 'sound/mobs/humanoids/ethereal/ethereal_hiss.ogg'
-
 /datum/species/ethereal/get_physical_attributes()
 	return "Ethereals process electricity as their power supply, not food, and are somewhat resistant to it.\
 		They do so via their crystal core, their equivalent of a human heart, which will also encase them in a reviving crystal if they die.\
@@ -310,6 +300,7 @@
 	id = SPECIES_ETHEREAL_LUSTROUS
 	examine_limb_id = SPECIES_ETHEREAL
 	mutantbrain = /obj/item/organ/brain/lustrous
+	mutanttongue = /obj/item/organ/tongue/ethereal/lustrous
 	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
@@ -332,13 +323,6 @@
 /datum/species/ethereal/lustrous/get_physical_attributes()
 	return "Lustrous are what remains of an Ethereal after freebasing esoteric drugs. \
 		They are pressure immune, virus immune, can see bluespace tears in reality, and have a really weird scream. They remain vulnerable to physical damage."
-
-/datum/species/ethereal/lustrous/get_scream_sound(mob/living/carbon/human/ethereal)
-	return pick(
-		'sound/mobs/humanoids/ethereal/lustrous_scream_1.ogg',
-		'sound/mobs/humanoids/ethereal/lustrous_scream_2.ogg',
-		'sound/mobs/humanoids/ethereal/lustrous_scream_3.ogg',
-	)
 
 /datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load, regenerate_icons)
 	..()

@@ -96,6 +96,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CURSED "cursed"
 /// Emotemute. Can't... emote.
 #define TRAIT_EMOTEMUTE "emotemute"
+/// Mobs with this trait are allowed to use silicon emotes
+#define TRAIT_SILICON_EMOTES_ALLOWED "silicon_emotes_allowed"
+/// Mobs with this trait are allowed to use cat emotes
+#define TRAIT_CAT_EMOTES_ALLOWED "cat_emotes_allowed"
+/// Mobs with this trait are allowed to use moth emotes
+#define TRAIT_MOTH_EMOTES_ALLOWED "moth_emotes_allowed"
 #define TRAIT_DEAF "deaf"
 #define TRAIT_FAT "fat"
 /// If you are fat, you no longer get the slowdown from it
@@ -333,8 +339,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EXAMINE_FITNESS "reveal_power_level"
 /// These mobs have particularly hygienic tongues
 #define TRAIT_WOUND_LICKER "wound_licker"
-/// Mobs with this trait are allowed to use silicon emotes
-#define TRAIT_SILICON_EMOTES_ALLOWED "silicon_emotes_allowed"
 /// Mobs with this trait can tell when other mobs whisper even if their mouth is covered. They still can't tell what was whispered though.
 #define TRAIT_SEE_MASK_WHISPER "see_mask_whisper"
 
