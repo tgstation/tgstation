@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Add Ark Escape Shuttle that can be unlocked when the station's DNA vault goal is achieved."
+  - map: "Add Ark Escape Shuttle that can be unlocked when the station's DNA vault goal is achieved."

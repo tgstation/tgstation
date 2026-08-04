@@ -297,6 +297,7 @@ GLOBAL_LIST_EMPTY(sfx_datum_by_key)
 #define SFX_HARD_HAT_DROP "hard_hat_drop"
 #define SFX_HARD_HAT_EQUIP "hard_hat_equip"
 #define SFX_ALIEN_SPIT_ACID "alien_split_acid"
+#define SFX_HEAVY_DROP "heavy_drop"
 
 // Standard is 44.1khz
 #define MIN_EMOTE_PITCH 40000

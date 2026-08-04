@@ -2373,8 +2373,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/turf/check_turf = get_step_multiz(src, direction == DOWN ? NONE : direction)
 	if(!get_step_multiz(src, direction)) //We are at the edge z-level.
 		to_chat(src, span_warning("There's nothing interesting there."))
-		return
-	else if(!istransparentturf(check_turf)) //There is no turf we can look through above us
+		return null
+	if(!istransparentturf(check_turf) && !HAS_TRAIT(src, TRAIT_XRAY_VISION)) //There is no turf we can look through above us
 		var/turf/front_hole = get_step(check_turf, dir)
 		if(istransparentturf(front_hole))
 			check_turf = front_hole
@@ -2385,7 +2385,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 					break
 		if(!istransparentturf(check_turf))
 			to_chat(src, span_warning("You can't see through the floor [direction == DOWN ? "below" : "above"] you."))
-			return
+			return null
 	return direction == DOWN ? get_step_multiz(check_turf, DOWN) : check_turf
 
 /**

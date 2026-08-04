@@ -416,8 +416,8 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 	return new_plane
 
 /obj/item/paper/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	// Enable picking paper up by clicking on it with the clipboard or paper bin
-	if(istype(tool, /obj/item/clipboard) || istype(tool, /obj/item/paper_bin))
+	// Enable picking paper up by clicking on it with a clipboard, paper bin, or folder
+	if(istype(tool, /obj/item/clipboard) || istype(tool, /obj/item/paper_bin) || istype(tool, /obj/item/folder))
 		tool.item_interaction(user, src)
 		return ITEM_INTERACT_SUCCESS
 

@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Lowered the sounds coming from the escape menu."
