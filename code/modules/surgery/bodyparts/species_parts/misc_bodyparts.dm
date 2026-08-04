@@ -174,46 +174,6 @@
 /obj/item/bodypart/leg/right/jelly/luminescent
 	limb_id = SPECIES_LUMINESCENT
 
-///ZOMBIE
-/obj/item/bodypart/head/zombie
-	limb_id = SPECIES_ZOMBIE
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-	head_flags = HEAD_EYESPRITES|HEAD_DEBRAIN
-	can_dismember = TRUE
-
-/obj/item/bodypart/chest/zombie
-	limb_id = SPECIES_ZOMBIE
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-	wing_types = null
-
-/obj/item/bodypart/arm/left/zombie
-	limb_id = SPECIES_ZOMBIE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/arm/right/zombie
-	limb_id = SPECIES_ZOMBIE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/leg/left/zombie
-	limb_id = SPECIES_ZOMBIE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/leg/right/zombie
-	limb_id = SPECIES_ZOMBIE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/leg/left/zombie/infectious
-	limb_id = SPECIES_ZOMBIE
-	should_draw_greyscale = FALSE
-	speed_modifier = 0.5 //braaaaains
-
-/obj/item/bodypart/leg/right/zombie/infectious
-	limb_id = SPECIES_ZOMBIE
-	should_draw_greyscale = FALSE
-	speed_modifier = 0.5 //braaaaains
-
 ///PODPEOPLE
 /obj/item/bodypart/head/pod
 	limb_id = SPECIES_PODPERSON

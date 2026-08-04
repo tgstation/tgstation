@@ -1,0 +1,4 @@
+author: "Aliceee2ch"
+delete-after: True
+changes:
+  - refactor: "Refactored private orders to use component and spawn respective crates, instead of specific one. This should fix potential issues, e.g where order is tied to custom crate (like stasis crate turtles!!!)"

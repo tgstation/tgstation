@@ -140,14 +140,14 @@
 	if(current_cycle != 36 || creation_purity > 0.6)
 		return
 
-	if(istype(affected_mob.dna.species, /datum/species/human/krokodil_addict))
+	if(HAS_TRAIT(affected_mob, TRAIT_HUSK))
 		return
 
 	to_chat(affected_mob, span_userdanger("Your skin falls off easily!"))
 	var/mob/living/carbon/human/affected_human = affected_mob
 	affected_human.set_facial_hairstyle("Shaved", update = FALSE)
 	affected_human.set_hairstyle("Bald", update = FALSE)
-	affected_mob.set_species(/datum/species/human/krokodil_addict)
+	affected_mob.become_husk(/datum/status_effect/zombie::id)
 
 	if(affected_mob.adjust_brute_loss(25, updating_health = FALSE, required_bodytype = affected_bodytype)) // holy shit your skin just FELL THE FUCK OFF
 		return UPDATE_MOB_HEALTH
