@@ -224,9 +224,6 @@
 #define SPECIES_SNAIL "snail"
 #define SPECIES_VAMPIRE "vampire"
 #define SPECIES_ZOMBIE "zombie"
-#define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
-#define SPECIES_ZOMBIE_INFECTIOUS_MINDLESS "mindless_memezombie"
-#define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 #define SPECIES_VOIDWALKER "voidwalker"
 
 // Like species IDs, but not specifically attached a species.
