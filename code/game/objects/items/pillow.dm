@@ -49,9 +49,12 @@
 	. = ..()
 	QDEL_NULL(pillow_trophy)
 
+/obj/item/pillow/proc/can_smother(mob/living/victim, mob/living/user)
+	return (victim.body_position == LYING_DOWN || (user.grab_state >= GRAB_AGGRESSIVE && user.pulling == victim))
+
 /obj/item/pillow/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, message)
 	SIGNAL_HANDLER
-	if(victim.body_position == LYING_DOWN || (user.grab_state >= GRAB_AGGRESSIVE && user.pulling == victim))
+	if(can_smother(victim, user))
 		return COMPONENT_BLOCK_ITEM_DISARM_ATTACK
 
 /obj/item/pillow/attack(mob/living/carbon/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -75,7 +78,7 @@
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_notice("You can't bring yourself to harm [victim]"))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if((victim.body_position == LYING_DOWN) || ((user.grab_state >= GRAB_AGGRESSIVE) && (user.pulling == victim)))
+	if(can_smother(victim, user))
 		user.visible_message("[user] starts to smother [victim]!", span_notice("You begin smothering [victim]!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		INVOKE_ASYNC(src, PROC_REF(smothering), user, victim)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -154,7 +157,7 @@
 /// Smothers the victim while the do_after succeeds and the victim is laying down or being strangled
 /obj/item/pillow/proc/smothering(mob/living/carbon/user, mob/living/carbon/victim)
 	while(victim)
-		if((victim.body_position != LYING_DOWN) && ((user.grab_state < GRAB_AGGRESSIVE) || (user.pulling != victim)))
+		if(!can_smother(victim, user))
 			break
 		if(!do_after(user, 1 SECONDS, victim))
 			break
