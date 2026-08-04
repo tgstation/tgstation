@@ -1499,11 +1499,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	icon_state = "basic_mob_flammable"
 	flag_to_give = FLAMMABLE_MOB
 
-/obj/effect/mapping_helpers/basic_mob_flags/immune_to_fists
-	name = "Basic mob immune to fists flag helper"
-	icon_state = "basic_mob_immune_to_fists"
-	flag_to_give = IMMUNE_TO_FISTS
-
 /obj/effect/mapping_helpers/basic_mob_flags/immune_to_getting_wet
 	name = "Basic mob immune to getting wet flag helper"
 	icon_state = "basic_mob_immune_to_getting_wet"
