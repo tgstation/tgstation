@@ -3531,21 +3531,28 @@
 	taste_description = "bitterness seasoned by blood"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_FEARLESS, TRAIT_ANALGESIA, TRAIT_STIMULATED, TRAIT_HARDLY_WOUNDED)
 
-/datum/reagent/consumable/ethanol/last_word/expose_mob(mob/living/drinker, methods, reac_volume, show_message, touch_protection)
+/datum/reagent/consumable/ethanol/footsoldiers_razor/expose_mob(mob/living/drinker, methods, reac_volume, show_message, touch_protection)
 	. = ..()
-	//Causes drinkers to injure themselves when first sipping with a 6 minute cooldown.
+	//Causes drinkers to injure themselves when first sipping with a 1 minute cooldown.
 	if(!(methods & INGEST) || !iscarbon(drinker) || HAS_TRAIT(drinker, TRAIT_HAD_FOOTSOLDIERS_RAZOR))
 		return
 
 	ADD_TRAIT(drinker, TRAIT_HAD_FOOTSOLDIERS_RAZOR, type)
-	to_chat(drinker, span_notice("You cut your lip on something sharp!"))
-	//TODO: add bleeding effect and brute damage here
-	addtimer(TRAIT_CALLBACK_REMOVE(drinker, TRAIT_HAD_FOOTSOLDIERS_RAZOR, type), 300 SECONDS)
+	to_chat(drinker, span_warning("You cut your lip on something sharp!"))
+	SEND_SOUND(drinker, sound('sound/items/weapons/slice.ogg', volume=50))
+	drinker.bleed(5)
+	drinker.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
+	addtimer(TRAIT_CALLBACK_REMOVE(drinker, TRAIT_HAD_FOOTSOLDIERS_RAZOR, type), 60 SECONDS)
 
-/datum/reagent/consumable/ethanol/watchmans_nightcap/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+/datum/reagent/consumable/ethanol/footsoldiers_razor/on_mob_add(mob/living/drinker)
+	.=..()
+	drinker.crit_threshold -= 20
+
+/datum/reagent/consumable/ethanol/footsoldiers_razor/on_mob_delete(mob/living/drinker)
 	.= ..()
-	//TODO: Add wound resistance and such here
+	drinker.crit_threshold += 20
 
 //Cosmos
 /datum/reagent/consumable/ethanol/farstar_amrita
