@@ -59,7 +59,7 @@
 		return multitool_act(user, tool)
 
 	var/obj/item/bodypart/targeted_part = owner.get_bodypart(user.zone_selected)
-	if(!(targeted_part && targeted_part.bodytype == BODYTYPE_ROBOTIC))
+	if(isnull(targeted_part) || targeted_part.bodytype != BODYTYPE_ROBOTIC)
 		return multitool_act(user, tool)
 
 	if(HAS_TRAIT(targeted_part, TRAIT_READY_TO_OPERATE))
