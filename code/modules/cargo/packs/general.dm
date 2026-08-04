@@ -37,7 +37,6 @@
 	crate_type = /obj/structure/closet/crate/large
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
-
 /datum/supply_pack/misc/bigband
 	name = "Big Band Instrument Collection"
 	desc = "Get your sad station movin' and groovin' with this fine collection! \

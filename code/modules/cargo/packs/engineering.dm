@@ -146,7 +146,6 @@
 	crate_name = "huge portable scrubber crate"
 	crate_type = /obj/structure/closet/crate/large
 
-
 /datum/supply_pack/engineering/space_heater
 	name = "Space Heater Crate"
 	desc = "A dual purpose heater/cooler for when things are too chilly/toasty."

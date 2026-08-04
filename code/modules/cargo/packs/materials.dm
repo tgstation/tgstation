@@ -46,7 +46,6 @@
 	crate_name = "foam tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
-
 /datum/supply_pack/materials/fueltank
 	name = "Fuel Tank Crate"
 	desc = "Contains a welding fuel tank. Caution, highly flammable."
@@ -54,7 +53,6 @@
 	contains = list(/obj/structure/reagent_dispensers/fueltank)
 	crate_name = "fuel tank crate"
 	crate_type = /obj/structure/closet/crate/large
-
 
 /datum/supply_pack/materials/hightankfuel
 	name = "Large Fuel Tank Crate"
@@ -65,7 +63,6 @@
 	crate_name = "high-capacity fuel tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
-
 /datum/supply_pack/materials/watertank
 	name = "Water Tank Crate"
 	desc = "Contains a tank of dihydrogen monoxide... sounds dangerous."
@@ -74,13 +71,11 @@
 	crate_name = "water tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
-
 /datum/supply_pack/materials/gas_canisters
 	cost = CARGO_CRATE_VALUE * 0.05
 	contains = list(/obj/machinery/portable_atmospherics/canister)
 	crate_type = /obj/structure/closet/crate/large
 	test_ignored = TRUE
-
 
 /datum/supply_pack/materials/gas_canisters/generate_supply_packs()
 	var/list/canister_packs = list()

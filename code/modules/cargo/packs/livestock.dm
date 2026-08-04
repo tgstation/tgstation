@@ -2,7 +2,6 @@
 	group = "Livestock"
 	crate_type = /obj/structure/closet/crate/critter
 
-
 /datum/supply_pack/critter/stasis
 	crate_type = /obj/structure/closet/crate/critter/stasis
 

@@ -273,7 +273,6 @@
 	crate_name = "biker kit"
 	crate_type = /obj/structure/closet/crate/large
 
-
 /datum/supply_pack/imports/abandoned
 	name = "Abandoned Crate"
 	desc = "...wait, how did this get here?"
