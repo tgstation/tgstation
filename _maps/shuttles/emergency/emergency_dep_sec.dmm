@@ -633,10 +633,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/plastitanium/pod/redlight,
 /area/shuttle/escape)
-"vY" = (
-/turf/template_noop,
-/area/space,
-/area/template_noop)
 "we" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -1606,5 +1602,5 @@ qf
 zJ
 zJ
 zJ
-vY
+Jl
 "}

@@ -1404,12 +1404,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"UE" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
-/turf/open/floor/catwalk_floor/titanium,
-/area/shuttle/escape)
 "UW" = (
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -1424,12 +1418,6 @@
 /obj/structure/sign/warning/secure_area/directional/east,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"Xe" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "Xs" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1599,7 +1587,7 @@ kO
 zJ
 zJ
 zJ
-Xe
+MD
 zJ
 KV
 xn
@@ -1683,7 +1671,7 @@ qB
 xN
 uY
 zJ
-UE
+kD
 km
 gR
 "}
