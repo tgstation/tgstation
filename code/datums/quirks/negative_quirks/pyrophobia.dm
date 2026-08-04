@@ -11,7 +11,11 @@
 
 /datum/quirk/pyrophobia/add(client/client_source)
 	. = ..()
-	quirk_holder.AddComponentFrom(type, /datum/component/fearful, list(/datum/terror_handler/simple_source/pyrophobia))
+	quirk_holder.AddComponentFrom(type, /datum/component/fearful, list( \
+		/datum/terror_handler/force_stop_drop_roll, \
+		/datum/terror_handler/is_stop_drop_rolling, \
+		/datum/terror_handler/simple_source/pyrophobia, \
+	))
 
 /datum/quirk/pyrophobia/remove()
 	. = ..()

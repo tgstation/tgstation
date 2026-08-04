@@ -199,3 +199,11 @@
 
 	if(istype(hallucination, /datum/hallucination/fire))
 		fire_hallucination_weakref = WEAKREF(hallucination)
+
+/// While stop drop and rolling you lose a tiny bit of terror
+/datum/terror_handler/is_stop_drop_rolling
+
+/datum/terror_handler/is_stop_drop_rolling/tick(seconds_per_tick, terror_buildup)
+	if (owner.has_status_effect(/datum/status_effect/stop_drop_roll))
+		return -0.1 * TERROR_BUILDUP_PASSIVE_DECREASE * seconds_per_tick // reduces terror a bit because you think it's helping!
+	return 0
