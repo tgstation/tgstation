@@ -2,6 +2,7 @@ import { store } from '../events/store';
 import {
   adminTargetsAtom,
   adminVerbsAtom,
+  clearCommandBarAtom,
   focusCommandBarAtom,
   type Target,
   typepathsAtom,
@@ -41,4 +42,8 @@ export function handleTypepaths(payload: { paths: string[] }) {
 
 export function handleFocusCommandBar() {
   store.set(focusCommandBarAtom, (n) => n + 1);
+}
+
+export function handleClearCommandBar() {
+  store.set(clearCommandBarAtom, (n) => n + 1);
 }

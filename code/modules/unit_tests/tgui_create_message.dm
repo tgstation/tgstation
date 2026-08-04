@@ -33,3 +33,10 @@
 /datum/unit_test/tgui_panel_focus_message/Run()
 	var/expected = TGUI_CREATE_MESSAGE("verbs/focus", null)
 	TEST_ASSERT_EQUAL(expected, TGUI_PANEL_FOCUS_MESSAGE, "TGUI_PANEL_FOCUS_MESSAGE doesn't match TGUI_CREATE_MESSAGE(\"verbs/focus\", null)")
+
+/// Test that TGUI_PANEL_CLEAR_MESSAGE matches what TGUI_CREATE_MESSAGE would produce
+/datum/unit_test/tgui_panel_clear_message
+
+/datum/unit_test/tgui_panel_clear_message/Run()
+	var/expected = TGUI_CREATE_MESSAGE("verbs/clear", null)
+	TEST_ASSERT_EQUAL(expected, TGUI_PANEL_CLEAR_MESSAGE, "TGUI_PANEL_CLEAR_MESSAGE doesn't match TGUI_CREATE_MESSAGE(\"verbs/clear\", null)")

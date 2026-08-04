@@ -10,6 +10,7 @@ import { type KeyboardEvent, useEffect, useRef, useState } from 'react';
 import {
   adminTargetsAtom,
   adminVerbsAtom,
+  clearCommandBarAtom,
   focusCommandBarAtom,
   typepathsAtom,
   type Verb,
@@ -179,6 +180,7 @@ function useSuggestions(
 export function CommandBar() {
   const verbs = useAtomValue(adminVerbsAtom);
   const focusSignal = useAtomValue(focusCommandBarAtom);
+  const clearSignal = useAtomValue(clearCommandBarAtom);
   const [input, setInput] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedVerb, setSelectedVerb] = useState<Verb | null>(null);
@@ -222,6 +224,16 @@ export function CommandBar() {
       inputRef.current?.focus();
     }
   }, [focusSignal]);
+
+  useEffect(() => {
+    if (clearSignal > 0) {
+      if (mode !== 'Command') {
+        enterChatMode(mode);
+      } else {
+        resetState();
+      }
+    }
+  }, [clearSignal]);
 
   const resetState = () => {
     setInput('');
@@ -307,12 +319,6 @@ export function CommandBar() {
     }
   };
 
-  const hasNoInput = () => {
-    if (!selectedVerb && !input) return true;
-    if (mode !== 'Command' && selectedVerb && !currentToken) return true;
-    return false;
-  };
-
   const selectCurrentSuggestion = (): boolean => {
     if (!selectedVerb && verbSuggestions.length > 0) {
       selectVerb(verbSuggestions[selectedIndex]);
@@ -365,10 +371,8 @@ export function CommandBar() {
         return;
       case 'Tab':
         e.preventDefault();
-        if (hasNoInput()) {
+        if (!hasSuggestions || !selectCurrentSuggestion()) {
           blurToMap();
-        } else {
-          selectCurrentSuggestion();
         }
         return;
       case 'Enter': {
@@ -406,11 +410,12 @@ export function CommandBar() {
     if (selectedVerb) {
       const verbPrefix = `${toKebab(selectedVerb.name)} `;
       if (!value.startsWith(verbPrefix)) {
+        if (mode !== 'Command') {
+          enterChatMode(mode);
+          return;
+        }
         setSelectedVerb(null);
         setFilledArgs([]);
-        if (mode !== 'Command') {
-          setMode('Command');
-        }
         value = value.split(' ')[0] || '';
       }
     }
