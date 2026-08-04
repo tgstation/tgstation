@@ -111,6 +111,8 @@
       with an empty microwave cell.
   - bugfix: Rechargers no longer spam the "finished charging" message when done charging
       PDAs.
+  SmArtKar:
+  - refactor: Refactored ethereals to use limb statuses instead of species code
   hry-gh:
   - qol: added chat messages when your chat storage has been reset
   - bugfix: if you've not been playing for awhile and came back, your chat storage
