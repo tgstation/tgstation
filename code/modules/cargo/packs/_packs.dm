@@ -32,8 +32,6 @@
 	/// Various properties for cargo order mostly used to determine which consoles can see it
 	var/order_flags = NONE
 
-	var/custom_crate = FALSE
-
 /datum/supply_pack/New()
 	id = type
 

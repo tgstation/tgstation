@@ -272,7 +272,7 @@
 	)//so you can properly #cargoniabikergang
 	crate_name = "biker kit"
 	crate_type = /obj/structure/closet/crate/large
-	custom_crate = TRUE
+
 
 /datum/supply_pack/imports/abandoned
 	name = "Abandoned Crate"

@@ -52,7 +52,7 @@
 				)
 	crate_name = "janitorial cart crate"
 	crate_type = /obj/structure/closet/crate/large
-	custom_crate = TRUE
+
 
 /datum/supply_pack/service/janitor/janitank
 	name = "Janitor Backpack Crate"
@@ -72,7 +72,7 @@
 	contains = list(/mob/living/basic/bot/mulebot)
 	crate_name = "\improper MULEbot Crate"
 	crate_type = /obj/structure/closet/crate/large
-	custom_crate = TRUE
+
 
 /datum/supply_pack/service/party
 	name = "Party Equipment"
@@ -286,7 +286,7 @@
 	crate_name = "coffeemaker crate"
 	crate_type = /obj/structure/closet/crate/large
 	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
-	custom_crate = TRUE
+
 
 /// Spare bar sign wallmount
 /datum/supply_pack/service/bar_sign

@@ -155,7 +155,7 @@
 	access = ACCESS_MEDICAL
 	contains = list(/obj/machinery/iv_drip/saline)
 	crate_type = /obj/structure/closet/crate/large
-	custom_crate = TRUE
+
 
 /datum/supply_pack/medical/virus
 	name = "Virus Crate"
