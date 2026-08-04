@@ -289,6 +289,8 @@
 	tile_reskin_types = list(
 		/obj/item/stack/tile/basalt,
 		/obj/item/stack/tile/basalt/sand,
+		/obj/item/stack/tile/basalt/redsand,
+		/obj/item/stack/tile/basalt/moonsand,
 	)
 /obj/item/stack/tile/basalt/sand
 	name = "sand tile"
@@ -298,6 +300,24 @@
 	inhand_icon_state = "tile-hay"
 	turf_type = /turf/open/floor/fakesand
 	merge_type = /obj/item/stack/tile/basalt/sand
+
+/obj/item/stack/tile/basalt/redsand
+	name = "red sand tile"
+	singular_name = "red sand floor tile"
+	desc = "Artificially made red sand tile."
+	icon_state = "tile_redsand"
+	inhand_icon_state = "tile-meat"
+	turf_type = /turf/open/floor/fakesand/red
+	merge_type = /obj/item/stack/tile/basalt/redsand
+
+/obj/item/stack/tile/basalt/moonsand
+	name = "moon sand tile"
+	singular_name = "moon sand floor tile"
+	desc = "Artificially made moon sand tile."
+	icon_state = "tile_moonsand"
+	inhand_icon_state = "tile-silver"
+	turf_type = /turf/open/floor/fakesand/moon
+	merge_type = /obj/item/stack/tile/basalt/moonsand
 
 //Carpets
 /obj/item/stack/tile/carpet

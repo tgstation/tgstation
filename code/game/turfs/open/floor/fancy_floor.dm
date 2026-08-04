@@ -316,6 +316,7 @@
 	desc = "Safely recreated turf for your desertplanet-scaping."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
+	var/base_icon = "asteroid"
 	floor_tile = /obj/item/stack/tile/basalt/sand
 	flags_1 = NONE
 	bullet_bounce_sound = null
@@ -329,7 +330,38 @@
 	. = ..()
 	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass, 2, worm_chance = 0)
 	if(prob(15))
-		icon_state = "asteroid[rand(0, 12)]"
+		icon_state = "[base_icon][rand(0, 12)]"
+
+/turf/open/floor/fakesand/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/cultivator/rake))
+		return NONE
+	icon_state = "[base_icon]_raked"
+	dir = turn(dir, 45)
+
+	user.visible_message(
+		span_notice("[user] rakes the [name]."),
+		span_notice("You rake the [name]."),
+	)
+
+	playsound(src, 'sound/effects/shovel_dig.ogg', 50, TRUE)
+
+	return ITEM_INTERACT_SUCCESS
+
+/turf/open/floor/fakesand/red
+	name = "aesthetic red sand flooring"
+	desc = "Safely recreated turf for your mars-scaping."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "ironsand"
+	base_icon = "ironsand"
+	floor_tile = /obj/item/stack/tile/basalt/redsand
+
+/turf/open/floor/fakesand/moon
+	name = "aesthetic moon sand flooring"
+	desc = "Safely recreated turf for your moon-scaping."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "moon"
+	base_icon = "moon"
+	floor_tile = /obj/item/stack/tile/basalt/moonsand
 
 /turf/open/floor/carpet
 	name = "carpet"
