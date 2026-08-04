@@ -169,7 +169,7 @@
 "gS" = (
 /obj/machinery/door/airlock/freezer{
 	name = "Restroom";
-	id = "shuttletoilet"
+	id_tag = "shuttletoilet"
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
