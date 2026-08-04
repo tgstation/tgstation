@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "In addition to being stunned, AIs are blocked from using certain machines like APCs and turrets for a period after their core laws are changed (or if their rack is destroyed or leaves the z-level)."
