@@ -1,5 +1,0 @@
-author: "CabinetOnFire"
-delete-after: True
-changes:
-  - rscadd: "Stoats are now better thieves, and know whats funniest to steal"
-  - refactor: "Targetting behaviors now allow for a priority strategy to determine what the best thing to target is from a list of candidates."
