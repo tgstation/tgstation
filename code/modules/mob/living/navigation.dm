@@ -19,7 +19,7 @@ GAME_VERB_HIDDEN(/mob/living, navigate, "Navigate")
 		balloon_alert(src, "navigation path removed")
 		return
 	if(navigating)
-		balloon_alert(src, "wait for current navigation to finish!")
+		balloon_alert(src, "busy navigating!")
 		return
 	if(!COOLDOWN_FINISHED(src, navigate_cooldown))
 		balloon_alert(src, "navigation on cooldown!")
