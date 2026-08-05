@@ -18,7 +18,8 @@
 			data["modeStatus"] = "average"
 		if(BOT_NO_ROUTE)
 			data["modeStatus"] = "bad"
-	data["load"] = get_load_name()
+	data["load"] = !!load 
+	data["loadName"] = get_load_name()
 	data["destination"] =  ai_controller.blackboard[BB_MULEBOT_DESTINATION_BEACON]
 	data["homeDestination"] = ai_controller.blackboard[BB_MULEBOT_HOME_BEACON]
 	data["destinationsList"] = GLOB.deliverybeacontags

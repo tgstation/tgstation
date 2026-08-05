@@ -17,6 +17,7 @@
 	if(!container?.mecha && (!container || container.immobilize)) //Unless inside a mecha, brains are rather helpless.
 		add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NEVER_CONSIDERED_ALIVE, INNATE_TRAIT)
 
 /mob/living/brain/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	var/obj/item/organ/brain/brain_loc = loc
@@ -71,10 +72,12 @@
 		return FALSE
 	return TRUE
 
-/mob/living/brain/fully_replace_character_name(oldname,newname)
-	..()
-	if(stored_dna)
-		stored_dna.real_name = real_name
+/mob/living/brain/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
+	. = ..()
+	if(!.)
+		return
+
+	stored_dna?.real_name = real_name
 
 /mob/living/brain/forceMove(atom/destination)
 	if(container)

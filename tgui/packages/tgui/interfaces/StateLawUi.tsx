@@ -1,5 +1,5 @@
 import { BlockQuote, Button, Flex, Section, Stack } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -18,7 +18,7 @@ const lawTypeColors = {
 
 type Law = {
   text: string;
-  number: number;
+  number: number | string;
   type: LawType;
 };
 
@@ -53,30 +53,26 @@ export const StateLawUi = () => {
                 <BlockQuote>No laws available!</BlockQuote>
               </Stack.Item>
             ) : (
-              <>
-                {all_laws.map((law, index) => (
-                  <Stack.Item key={index} className="candystripe">
-                    <Flex align="center" p={0.5}>
-                      <Flex.Item mr={0.5}>
-                        <Button.Checkbox
-                          iconSize={2}
-                          checked={stated_laws.includes(law.text)}
-                          onClick={() =>
-                            act('toggle_stated', { law: law.text })
-                          }
-                        />
-                      </Flex.Item>
-                      <Flex.Item grow={1}>
-                        <BlockQuote
-                          textColor={lawTypeColors[law.type] || 'green'}
-                        >
-                          {law.number}. {law.text}
-                        </BlockQuote>
-                      </Flex.Item>
-                    </Flex>
-                  </Stack.Item>
-                ))}
-              </>
+              all_laws.map((law, index) => (
+                <Stack.Item key={index} className="candystripe">
+                  <Flex align="center" p={0.5}>
+                    <Flex.Item mr={0.5}>
+                      <Button.Checkbox
+                        iconSize={2}
+                        checked={stated_laws.includes(law.text)}
+                        onClick={() => act('toggle_stated', { law: law.text })}
+                      />
+                    </Flex.Item>
+                    <Flex.Item grow={1}>
+                      <BlockQuote
+                        textColor={lawTypeColors[law.type] || 'green'}
+                      >
+                        {law.number}. {law.text}
+                      </BlockQuote>
+                    </Flex.Item>
+                  </Flex>
+                </Stack.Item>
+              ))
             )}
           </Stack>
         </Section>
