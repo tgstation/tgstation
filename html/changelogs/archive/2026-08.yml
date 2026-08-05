@@ -149,6 +149,8 @@
   TealSeer:
   - bugfix: fixed VV panel erroneously displaying certain lists as full of bitfields
   - bugfix: fixed R&D console showing extraneous fields for unprintable designs
+  mcbalaam:
+  - bugfix: Big Manipulator now correctly respects filters
   timothymtorres:
   - rscadd: Add Ark Escape Shuttle that can be unlocked when the station's DNA vault
       goal is achieved.
