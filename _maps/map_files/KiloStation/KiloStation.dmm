@@ -8652,9 +8652,6 @@
 	pixel_y = 38;
 	req_access = list("qm")
 	},
-/obj/machinery/keycard_auth/wall_mounted/directional/east{
-	pixel_y = 26
-	},
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/qm)
 "cRW" = (
@@ -29509,7 +29506,10 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/security/upper)
 "jhD" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch/directional/south{
+	pixel_y = -24;
+	pixel_x = -7
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -29518,6 +29518,11 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/button/door/directional/south{
+	pixel_x = 8;
+	id = "cargolobbylockdown";
+	name = "Cargo Lobby Lockdown"
+	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "jhH" = (
@@ -44400,6 +44405,10 @@
 	pixel_y = -1
 	},
 /obj/item/stamp/granted,
+/obj/machinery/keycard_auth{
+	pixel_x = 0;
+	pixel_y = 9
+	},
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/qm)
 "nTC" = (
@@ -73423,6 +73432,16 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "wTU" = (
+/obj/machinery/button/door/directional/east{
+	pixel_y = -8;
+	name = "Cargo Lockdown Shutters";
+	id = "cargolockdown"
+	},
+/obj/machinery/button/door/directional/east{
+	pixel_y = -8;
+	name = "Cargo Lockdown Shutters";
+	id = "cargolockdown"
+	},
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/qm)
 "wUi" = (
