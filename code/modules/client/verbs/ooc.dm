@@ -64,7 +64,7 @@ GAME_VERB(/client, ooc, VERB_OOC, null, msg as text)
 			return
 		if(findtext(msg, "byond://"))
 			to_chat(src, span_boldannounce("Advertising other servers is not allowed."))
-			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
+			log_admin_private("[key_name(src)] has attempted to advertise in OOC: [msg]")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 

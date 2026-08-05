@@ -56,7 +56,7 @@
 	if(!real_bans_only && !C && CONFIG_GET(flag/usewhitelist))
 		if(!check_whitelist(ckey))
 			if (admin)
-				log_admin("The admin [ckey] has been allowed to bypass the whitelist")
+				log_admin_private("The admin [ckey] has been allowed to bypass the whitelist")
 				if (message)
 					message_admins(span_adminnotice("The admin [ckey] has been allowed to bypass the whitelist"))
 					addclientmessage(ckey,span_adminnotice("You have been allowed to bypass the whitelist"))
@@ -94,12 +94,12 @@
 				if(admin)
 					if(text2num(i["applies_to_admins"]))
 						var/msg = "Admin [ckey] is admin banned, and has been disallowed access."
-						log_admin(msg)
+						log_admin_private(msg)
 						if (message)
 							message_admins(msg)
 					else
 						var/msg = "Admin [ckey] has been allowed to bypass a matching non-admin ban on [ckey(i["key"])] [i["ip"]]-[i["computerid"]]."
-						log_admin(msg)
+						log_admin_private(msg)
 						if (message)
 							message_admins(msg)
 							addclientmessage(ckey,span_adminnotice("Admin [ckey] has been allowed to bypass a matching non-admin ban on [i["key"]] [i["ip"]]-[i["computerid"]]."))
@@ -234,7 +234,7 @@
 		//ie, ones where the "apply to this game only" checkbox is not checked (defaults to not checked)
 		//So it's safe to let admins walk thru host/sticky bans here
 		if (admin)
-			log_admin("The admin [ckey] has been allowed to bypass a matching host/sticky ban on [bannedckey]")
+			log_admin_private("The admin [ckey] has been allowed to bypass a matching host/sticky ban on [bannedckey]")
 			if (message)
 				message_admins(span_adminnotice("The admin [ckey] has been allowed to bypass a matching host/sticky ban on [bannedckey]"))
 				addclientmessage(ckey,span_adminnotice("You have been allowed to bypass a matching host/sticky ban on [bannedckey]"))
