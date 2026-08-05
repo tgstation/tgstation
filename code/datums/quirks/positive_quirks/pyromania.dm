@@ -15,6 +15,10 @@
 	/// CD before we attempt to start a fire with our lighter
 	COOLDOWN_DECLARE(start_fire_cd)
 
+/datum/quirk/pyromania/post_add()
+	var/pyro_policy = get_policy("[type]") || "Please note that your [LOWER_TEXT(name)] does NOT give you any additional right to spread fires."
+	to_chat(quirk_holder, span_info(pyro_policy))
+
 /datum/quirk/pyromania/add(client/client_source)
 	. = ..()
 	var/mob/living/carbon/human/human_holder = quirk_holder
