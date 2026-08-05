@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - bugfix: "fixed VV panel erroneously displaying certain lists as full of bitfields"

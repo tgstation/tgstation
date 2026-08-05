@@ -1,4 +1,0 @@
-author: "FalloutFalcon"
-delete-after: True
-changes:
-  - code_imp: "Fixes infinite loop caused by zmoving while having a looped chain of grabbed mobs"

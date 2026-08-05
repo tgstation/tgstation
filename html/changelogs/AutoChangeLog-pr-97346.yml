@@ -1,5 +1,0 @@
-author: "PapaMichael"
-delete-after: True
-changes:
-  - bugfix: "Beepsky won't try to arrest everyone ever after having been punched one time"
-  - bugfix: "Beepsky properly assigns threat level again"

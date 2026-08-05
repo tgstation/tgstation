@@ -1,4 +1,0 @@
-author: "QuiteLiterallyAnything"
-delete-after: True
-changes:
-  - bugfix: "Surgery on robotic ethereal limbs is no longer broken by multitool charge checking."

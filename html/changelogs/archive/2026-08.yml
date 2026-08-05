@@ -126,3 +126,34 @@
   - qol: added chat messages when your chat storage has been reset
   - bugfix: if you've not been playing for awhile and came back, your chat storage
       may have been reset. this should no longer happen
+2026-08-05:
+  Aliceee2ch:
+  - refactor: Refactored private orders to use component and spawn respective crates,
+      instead of specific one. This should fix potential issues, e.g where order is
+      tied to custom crate (like stasis crate turtles!!!)
+  FalloutFalcon:
+  - code_imp: Fixes infinite loop caused by zmoving while having a looped chain of
+      grabbed mobs
+  JohnFulpWillard:
+  - qol: Lowered the sounds coming from the escape menu.
+  Melbert:
+  - rscadd: X-ray vision lets you look vertically through the floor or ceiling on
+      multi-z maps
+  PapaMichael:
+  - bugfix: Beepsky won't try to arrest everyone ever after having been punched one
+      time
+  - bugfix: Beepsky properly assigns threat level again
+  QuiteLiterallyAnything:
+  - bugfix: Surgery on robotic ethereal limbs is no longer broken by multitool charge
+      checking.
+  TealSeer:
+  - bugfix: fixed VV panel erroneously displaying certain lists as full of bitfields
+  - bugfix: fixed R&D console showing extraneous fields for unprintable designs
+  timothymtorres:
+  - rscadd: Add Ark Escape Shuttle that can be unlocked when the station's DNA vault
+      goal is achieved.
+  - map: Add Ark Escape Shuttle that can be unlocked when the station's DNA vault
+      goal is achieved.
+  xPokee, UvvU:
+  - bugfix: Recoloring clothing items via 'Edit Color as Matrix' will now properly
+      reflect when the clothing item is worn.
