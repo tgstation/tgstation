@@ -59091,15 +59091,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"szZ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "sAm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -66616,6 +66607,9 @@
 	id = "Secure Storage";
 	name = "Secure Storage Toggle";
 	req_access = list("engine_equip")
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -112049,7 +112043,7 @@ bOw
 uPz
 utC
 etp
-szZ
+tiz
 dsx
 tWf
 wVP
