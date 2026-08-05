@@ -1,7 +1,6 @@
 import { storage } from 'common/storage';
 import {
   ARG_SOURCE_LIST,
-  ARG_TYPE_ENTITY,
   ARG_TYPE_MESSAGE,
   ARG_TYPE_MOB,
   ARG_TYPE_NUM,
