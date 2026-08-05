@@ -78,6 +78,10 @@
   - spellcheck: fixed typo on the disabler SMG goody from the console.
   - bugfix: Stock blocks now properly show their sale value after they've become liquid,
       and been examined.
+  CabinetOnFire:
+  - rscadd: Stoats are now better thieves, and know whats funniest to steal
+  - refactor: Targetting behaviors now allow for a priority strategy to determine
+      what the best thing to target is from a list of candidates.
   Ghommie:
   - bugfix: Bonus biotypes from dna infusions shouldn't be lost on species change
       as long as you have enough infused organs.
@@ -104,6 +108,11 @@
   - refactor: Refactored butchering, report any weirdness in amount and type of meat
       gained
   - bugfix: MULEs don't run people over if buckled, pulled, or thrown
+  - balance: In addition to being stunned, AIs are blocked from using certain machines
+      like APCs and turrets for a period after their core laws are changed (or if
+      their rack is destroyed or leaves the z-level).
+  - qol: Ion laws have gibberish numbers again
+  - rscdel: AIs can no longer have two laws with the exact same text.
   PapaMichael:
   - bugfix: Fixed some issues with medical records display in the PDA app and in paperwork
   QuiteLiterallyAnything:
@@ -111,7 +120,40 @@
       with an empty microwave cell.
   - bugfix: Rechargers no longer spam the "finished charging" message when done charging
       PDAs.
+  SmArtKar:
+  - refactor: Refactored ethereals to use limb statuses instead of species code
   hry-gh:
   - qol: added chat messages when your chat storage has been reset
   - bugfix: if you've not been playing for awhile and came back, your chat storage
       may have been reset. this should no longer happen
+2026-08-05:
+  Aliceee2ch:
+  - refactor: Refactored private orders to use component and spawn respective crates,
+      instead of specific one. This should fix potential issues, e.g where order is
+      tied to custom crate (like stasis crate turtles!!!)
+  FalloutFalcon:
+  - code_imp: Fixes infinite loop caused by zmoving while having a looped chain of
+      grabbed mobs
+  JohnFulpWillard:
+  - qol: Lowered the sounds coming from the escape menu.
+  Melbert:
+  - rscadd: X-ray vision lets you look vertically through the floor or ceiling on
+      multi-z maps
+  PapaMichael:
+  - bugfix: Beepsky won't try to arrest everyone ever after having been punched one
+      time
+  - bugfix: Beepsky properly assigns threat level again
+  QuiteLiterallyAnything:
+  - bugfix: Surgery on robotic ethereal limbs is no longer broken by multitool charge
+      checking.
+  TealSeer:
+  - bugfix: fixed VV panel erroneously displaying certain lists as full of bitfields
+  - bugfix: fixed R&D console showing extraneous fields for unprintable designs
+  timothymtorres:
+  - rscadd: Add Ark Escape Shuttle that can be unlocked when the station's DNA vault
+      goal is achieved.
+  - map: Add Ark Escape Shuttle that can be unlocked when the station's DNA vault
+      goal is achieved.
+  xPokee, UvvU:
+  - bugfix: Recoloring clothing items via 'Edit Color as Matrix' will now properly
+      reflect when the clothing item is worn.

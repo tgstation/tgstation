@@ -537,7 +537,9 @@
 		// Don't add this one if we're replacing a random law later
 		if(!core_sub_ion && prob(base_ion_prob))
 			core.set_ioned(TRUE)
-			core.laws.Insert(1, ion_message || generate_ion_law())
+			var/final_ion_message = ion_message || generate_ion_law()
+			core.laws.Insert(1, final_ion_message)
+			core.laws[final_ion_message] = TRUE
 			ion_message = null
 			log_law_change(null, "ion added law to [src] ([log_status()], text: \"[core.laws[1]]\")")
 			ions_added++
@@ -551,12 +553,14 @@
 		// For supplied laws: Chance the entire supplied law is replaced with a new ion law.
 		// If we had no core law and thus added no ion law, this is guaranteed to replace the first supplied law
 		if(ions_added < ion_limit && (ion_message || (law == core && core_sub_ion) || prob(sub_ion_prob)))
-			var/picked_law = length(law.laws) <= 1 ? 1 : rand(2, length(law.laws))
-			var/replaced_law = law.laws[picked_law]
+			var/picked_law_index = length(law.laws) <= 1 ? 1 : rand(2, length(law.laws))
+			var/replaced_law = law.laws[picked_law_index]
+			var/final_ion_message = ion_message || generate_ion_law()
 			law.set_ioned(TRUE)
-			law.laws[picked_law] = ion_message || generate_ion_law()
+			law.laws[picked_law_index] = final_ion_message
+			law.laws[final_ion_message] = TRUE
 			ion_message = null
-			log_law_change(null, "ion replaced law in [src] ([log_status()], text: \"[replaced_law]\" -> \"[law.laws[picked_law]]\")")
+			log_law_change(null, "ion replaced law in [src] ([log_status()], text: \"[replaced_law]\" -> \"[final_ion_message]\")")
 			ions_added++
 			. = TRUE
 
@@ -880,9 +884,8 @@
 	// if the rack leaves the z-level, unlinks relevant silicons.
 	// currently this is a one way check (ie silicons don't get unlinked if they leave the z) so as to prevent random unlinking from visiting lavaland.
 	for(var/mob/living/silicon/linked in assoc_to_values(linked_mobs))
-		if(!can_link_to(linked) || is_rack_stun_immune(linked))
+		if(!can_link_to(linked) || !rack_stun(linked))
 			continue
-		linked.Stun(10 SECONDS, ignore_canstun = TRUE)
 		to_chat(linked, span_userdanger("Rack connection lost. Recalculating directives..."))
 		unlink_silicon(linked)
 
@@ -939,19 +942,23 @@
 
 /obj/machinery/ai_law_rack/base/on_deconstruction(disassembled)
 	for(var/mob/living/silicon/bot in assoc_to_values(linked_mobs))
-		if(bot.AmountStun() > 5 SECONDS || is_rack_stun_immune(bot))
+		if(!rack_stun(bot))
 			continue
-		bot.Stun(10 SECONDS, ignore_canstun = TRUE)
 		to_chat(bot, span_userdanger("Rack connection lost. Recalculating directives..."))
 		unlink_silicon(bot)
 
-/// Checks if the passed bot is immune to the stun from major lawset changes
-/obj/machinery/ai_law_rack/base/proc/is_rack_stun_immune(mob/living/bot)
+/// Attempts to stun a linked bot and prevent it from interacting with certain devices
+/obj/machinery/ai_law_rack/base/proc/rack_stun(mob/living/bot, stun_duration = 10 SECONDS, firewall_duration = 30 SECONDS)
 	if(IS_MALF_AI(bot))
-		return TRUE
+		return FALSE // lol
 	if(!is_valid_z_level(get_turf(bot), get_turf(src)))
-		return TRUE
-	return FALSE
+		return FALSE // out of range, but still connected - like a mining borg on lavaland. avoid stunning and getting them killed
+	if(bot.AmountStun() > (stun_duration / 2))
+		return FALSE // give them a break
+
+	bot.Stun(stun_duration, ignore_canstun = TRUE)
+	bot.apply_status_effect(/datum/status_effect/firewalled, stun_duration + firewall_duration)
+	return TRUE
 
 /obj/machinery/ai_law_rack/base/examine(mob/user)
 	. = ..()

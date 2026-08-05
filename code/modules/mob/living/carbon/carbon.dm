@@ -873,7 +873,7 @@
 	hand_bodyparts[lost_hand.held_index] = null
 
 ///Proc to hook behavior on bodypart additions. Do not directly call. You're looking for [/obj/item/bodypart/proc/try_attach_limb()].
-/mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
+/mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart, special, lazy)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	new_bodypart.on_adding(src)
@@ -884,7 +884,7 @@
 
 	// Apply a bodypart effect or merge with an existing one, for stuff like plant limbs regenning in light
 	for(var/datum/status_effect/grouped/bodypart_effect/effect_type as anything in new_bodypart.bodypart_effects)
-		apply_status_effect(effect_type, type, new_bodypart)
+		apply_status_effect(effect_type, type, new_bodypart, special, lazy)
 
 	// Tell the organs in the bodyparts that we are in a mob again
 	for(var/obj/item/organ/organ in new_bodypart)
