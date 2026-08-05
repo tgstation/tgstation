@@ -3608,6 +3608,14 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/ethanol/lunacy/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	.= ..()
+	if(HAS_TRAIT(drinker, TRAIT_HALLUCINATION_IMMUNE))
+		return
+
+	drinker.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "delusion/preset/moon hallucination caused by Lunacy cocktail", duration = 4 SECONDS)
+	drinker.adjust_hallucinations_up_to(4 SECONDS * metabolization_ratio * seconds_per_tick, 10 SECONDS)
+
 //Rust
 /datum/reagent/consumable/ethanol/entropic_brew
 	name = "Entropic Brew"
