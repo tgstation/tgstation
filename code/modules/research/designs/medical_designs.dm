@@ -959,7 +959,7 @@
 
 /datum/design/cybernetic_heart/anomalock
 	name = "Voltaic Combat Cyberheart"
-	desc =/obj/item/organ/heart/cybernetic/anomalock::desc
+	desc = /obj/item/organ/heart/cybernetic/anomalock::desc
 	id = "cybernetic_heart_anomalock"
 	construction_time = 5 SECONDS
 	materials = list(
