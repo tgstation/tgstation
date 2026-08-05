@@ -1,0 +1,4 @@
+author: "IWantSomeFish"
+delete-after: True
+changes:
+  - bugfix: "Изящная трость теперь работает с чертой \"Limper\"."
