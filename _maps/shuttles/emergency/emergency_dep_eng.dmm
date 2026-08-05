@@ -211,6 +211,7 @@
 	},
 /obj/machinery/vending/engivend,
 /obj/machinery/light/small/directional/east,
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "km" = (
@@ -724,14 +725,16 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "uQ" = (
-/obj/structure/fireaxecabinet/directional/north,
-/turf/open/floor/catwalk_floor/titanium,
+/obj/machinery/status_display/ai/directional/south,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "uY" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
+/obj/structure/cable,
+/obj/machinery/power/emitter/welded{
+	dir = 1
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "vn" = (
 /obj/structure/cable,
@@ -825,7 +828,6 @@
 	filter_type = list(/datum/gas/nitrogen);
 	dir = 8
 	},
-/obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "yk" = (
@@ -843,10 +845,8 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "ym" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium,
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "yy" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
@@ -856,6 +856,10 @@
 /obj/machinery/light/directional/south,
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"yI" = (
+/obj/structure/cable,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "yP" = (
 /obj/machinery/power/turbine/core_rotor{
@@ -917,7 +921,6 @@
 /obj/machinery/atmospherics/components/trinary/filter/critical{
 	dir = 8
 	},
-/obj/machinery/status_display/ai/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "zO" = (
@@ -1664,6 +1667,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /obj/machinery/light/directional/south,
+/obj/structure/fireaxecabinet/directional/south,
 /turf/open/floor/catwalk_floor/titanium,
 /area/shuttle/escape)
 "Oa" = (
@@ -2017,7 +2021,8 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Zq" = (
-/turf/open/floor/catwalk_floor/titanium,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ZH" = (
 /obj/structure/lattice,
@@ -2144,7 +2149,7 @@ Up
 wM
 na
 hc
-KV
+yI
 zJ
 zJ
 kD
@@ -2169,9 +2174,9 @@ mw
 nU
 In
 zN
+uQ
 zJ
-ym
-ym
+Zq
 kD
 cT
 km
@@ -2194,8 +2199,8 @@ we
 Fo
 cZ
 qB
+uY
 zJ
-uQ
 Zq
 NJ
 zJ
@@ -2219,9 +2224,9 @@ kY
 Af
 CG
 xU
+ym
 zJ
-uY
-uY
+Zq
 kD
 vK
 km
