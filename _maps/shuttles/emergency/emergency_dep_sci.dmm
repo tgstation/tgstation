@@ -1506,9 +1506,9 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 9
 	},
-/obj/machinery/computer/atmos_control{
-	dir = 8;
-	atmos_chambers = list("shuttle_burnchamber" = "Burn Chamber")
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("shuttle_burnchamber" = "Burn Chamber");
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -2659,7 +2659,7 @@ Zf
 Zf
 Ys
 FZ
-xN
+AQ
 AQ
 AQ
 AQ
