@@ -1467,7 +1467,6 @@
 		/datum/reagent/water = 40,
 		/datum/reagent/consumable/vinegar = 8,
 		/datum/reagent/blood = 8,
-		/datum/reagent/consumable/ice = 4,
 	)
 	required_ingredients = list(
 		/obj/item/food/tiziran_sausage = 1,
