@@ -8646,12 +8646,6 @@
 /obj/machinery/modular_computer/preset/id{
 	dir = 1
 	},
-/obj/machinery/button/door/directional/east{
-	id = "qmprivacy";
-	name = "Privacy Shutters Control";
-	pixel_y = 38;
-	req_access = list("qm")
-	},
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/qm)
 "cRW" = (
@@ -10312,8 +10306,8 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -52478,7 +52472,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -63440,20 +63434,6 @@
 	name = "Ore Redemtion Window";
 	req_access = list("mineral_storeroom")
 	},
-/obj/machinery/door/window/right/directional/east{
-	name = "Cargo Security Window";
-	req_access = list("shipping")
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 8;
-	name = "Cargo Lobby Lockdown Shutters";
-	id = "cargolobbylockdown"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 8;
-	name = "Cargo Lockdown Shutters";
-	id = "cargolockdown"
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	name = "Cargo Lobby Lockdown Shutters";
@@ -70975,6 +70955,15 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/service/bar/atrium)
+"wiI" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "qmprivacy";
+	name = "Privacy Shutters";
+	dir = 4
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/qm)
 "wiM" = (
 /obj/structure/cable,
 /obj/structure/table,
@@ -73435,6 +73424,12 @@
 	pixel_y = -8;
 	name = "Cargo Lockdown Shutters";
 	id = "cargolockdown"
+	},
+/obj/machinery/button/door/directional/east{
+	id = "qmprivacy";
+	name = "Privacy Shutters Control";
+	pixel_y = 0;
+	req_access = list("qm")
 	},
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/qm)
@@ -117647,7 +117642,7 @@ wtt
 cQR
 nfY
 nfY
-quX
+wiI
 quX
 nfY
 lmO
