@@ -8646,6 +8646,11 @@
 /obj/machinery/modular_computer/preset/id{
 	dir = 1
 	},
+/obj/machinery/button/door/directional/east{
+	id = "qmprivacy";
+	pixel_y = 38;
+	req_access = list("qm")
+	},
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/qm)
 "cRW" = (
@@ -20552,7 +20557,8 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/machinery/light_switch/directional/north{
-	pixel_x = 14
+	pixel_x = 13;
+	pixel_y = 26
 	},
 /obj/machinery/camera/directional/north{
 	c_tag = "Quartermaster's Office";
@@ -20560,6 +20566,12 @@
 	network = list("ss13","qm")
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/button/door/directional/north{
+	pixel_x = 13;
+	pixel_y = 37;
+	id = "cargolockdown";
+	name = "Cargo Lockdown"
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/qm)
 "gEI" = (
@@ -70955,15 +70967,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/service/bar/atrium)
-"wiI" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "qmprivacy";
-	name = "Privacy Shutters";
-	dir = 4
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/command/heads_quarters/qm)
 "wiM" = (
 /obj/structure/cable,
 /obj/structure/table,
@@ -73415,22 +73418,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "wTU" = (
-/obj/machinery/button/door/directional/east{
-	pixel_y = -8;
-	name = "Cargo Lockdown Shutters";
-	id = "cargolockdown"
-	},
-/obj/machinery/button/door/directional/east{
-	pixel_y = -8;
-	name = "Cargo Lockdown Shutters";
-	id = "cargolockdown"
-	},
-/obj/machinery/button/door/directional/east{
-	id = "qmprivacy";
-	name = "Privacy Shutters Control";
-	pixel_y = 0;
-	req_access = list("qm")
-	},
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/qm)
 "wUi" = (
@@ -117642,7 +117629,7 @@ wtt
 cQR
 nfY
 nfY
-wiI
+quX
 quX
 nfY
 lmO
