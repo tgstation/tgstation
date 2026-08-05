@@ -2799,7 +2799,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/lazarus_revive(mob/living/reviver, malfunctioning)
 	revive(HEAL_ALL)
 	if (IS_BLOODWORM(src))
-		to_chat(reviver, span_userdanger("The [src] resists the control of the injector!"))
+		to_chat(reviver, span_userdanger("[src] resists the control of the injector!"))
 		return
 	add_faction(FACTION_NEUTRAL)
 	if (!malfunctioning)
