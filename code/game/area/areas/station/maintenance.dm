@@ -80,6 +80,10 @@
 	name = "Cargo Maintenance"
 	icon_state = "maint_cargo"
 
+/area/station/maintenance/department/cargo/lesser
+	name = "Lesser Cargo Maintenance"
+	icon_state = "maint_cargo"
+
 /area/station/maintenance/department/bridge
 	name = "Bridge Maintenance"
 	icon_state = "maint_bridge"
@@ -420,3 +424,7 @@
 /area/station/maintenance/floor4/starboard/aft
 	name = "\improper 4th Floor Aft Starboard Maint"
 	icon_state = "maintaft"
+
+/area/station/maintenance/abandoned_security
+	name = "Abandoned Security Office"
+	icon_state = "aband_sec"
