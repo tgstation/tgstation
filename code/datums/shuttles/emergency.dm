@@ -596,8 +596,8 @@
 	suffix = "dep_sci"
 	name = "Science Emergency Shuttle"
 	description = "We're so fed up with scientists that we built a separate shuttle for them. \
-	Luckily, xenobiology has been sent to hard labor, so we doesn't built for them anything."
-	admin_notes = "Has random gizmo, experimentor and functional R&D lab."
+	We took real asteroid to build up ordnance lab and extension to xenobiology."
+	admin_notes = "Has functional R&D."
 	credit_cost = CARGO_CRATE_VALUE * 10
 	who_can_purchase = list(ACCESS_CAPTAIN)
 	department_type = /datum/job_department/science

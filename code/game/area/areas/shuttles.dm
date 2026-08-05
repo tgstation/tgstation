@@ -196,6 +196,9 @@
 /area/shuttle/escape/tombstone
 	ambience_index = AMBIENCE_SPOOKY
 
+/area/shuttle/escape/xenobio
+	name = "Escape Shuttle Xenobiology"
+
 /area/shuttle/transport
 	name = "Transport Shuttle"
 

@@ -1331,7 +1331,7 @@
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
 	pixel_x = 0;
-	pixel_y = 9
+	pixel_y = 3
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -1569,7 +1569,7 @@ Zv
 zJ
 zJ
 In
-zJ
+rr
 pH
 NS
 NS
@@ -1686,10 +1686,10 @@ we
 Rv
 IL
 fC
-zJ
+rr
 zJ
 In
-zJ
+rr
 Aj
 DL
 DL
