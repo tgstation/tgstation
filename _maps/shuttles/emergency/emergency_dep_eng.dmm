@@ -1416,6 +1416,9 @@
 	},
 /obj/machinery/light/small/directional/east,
 /obj/machinery/camera/autoname/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "IE" = (
@@ -1528,7 +1531,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/wall_healer/free/directional/south,
+/obj/machinery/wall_healer/free/directional/south{
+	use_power = 0
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "KV" = (
@@ -1853,9 +1858,11 @@
 	dir = 1
 	},
 /obj/machinery/duct,
-/obj/machinery/wall_healer/free/directional/north,
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
+	},
+/obj/machinery/wall_healer/free/directional/north{
+	use_power = 0
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
