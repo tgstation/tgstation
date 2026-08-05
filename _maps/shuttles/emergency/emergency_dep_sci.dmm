@@ -1528,7 +1528,7 @@
 /area/shuttle/escape)
 "JT" = (
 /obj/machinery/door/airlock/research/glass{
-	name = "Xenobiology lab"
+	name = "Xenobiology Lab"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
 /obj/effect/turf_decal/tile/red/opposingcorners,
@@ -2659,7 +2659,7 @@ Zf
 Zf
 Ys
 FZ
-AQ
+xN
 AQ
 AQ
 AQ
