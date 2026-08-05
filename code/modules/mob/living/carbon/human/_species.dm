@@ -1089,7 +1089,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Changes to the skin temperature based on the area
 	var/area_skin_diff = area_temp - humi.bodytemperature
 	if(!humi.on_fire || area_skin_diff > 0)
-		// change rate of 0.05 speed as area temp has large impact on the surface
+		// change rate of 0.05 as area temp has large impact on the surface
 		var/area_skin_change = get_temp_change_amount(area_skin_diff, BODYTEMP_AREA_SKIN_CHANGE_RATE * seconds_per_tick)
 
 		// We need to apply the thermal protection of the clothing when applying area to surface change
