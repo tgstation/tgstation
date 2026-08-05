@@ -584,7 +584,7 @@
 	suffix = "dep_eng"
 	name = "Engineering Emergency Shuttle"
 	description = "According to the engineers, the laws of physics reports that the shuttle cannot fly without energy, \
-	so we installed supermatter shard and solar panels in their personal shuttle."
+	so we installed supermatter shard and atmos shuttle with turbine and mixing chamber."
 	admin_notes = "Has inactive supermatter shard, axe, insuls, free engi vending machines and electrified grilles, if engineers powers the shuttle."
 	credit_cost = CARGO_CRATE_VALUE * 15.5
 	who_can_purchase = list(ACCESS_CAPTAIN)
