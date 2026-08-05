@@ -70,7 +70,7 @@
 	return ..()
 
 /datum/status_effect/dream_projection/get_examine_text()
-	return "[owner.p_They()] are in a deep slumber, yet [owner.p_their()] eyes show a distant look, as if [owner.p_they()] are somewhere far away..."
+	return "[owner.p_They()] [owner.p_are()] in a deep slumber, yet [owner.p_their()] eyes show a distant look, as if [owner.p_they()] [owner.p_are()] somewhere far away..."
 
 /datum/status_effect/dream_projection/on_apply()
 	if(!owner.SetSleeping(20 SECONDS))

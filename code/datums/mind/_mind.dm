@@ -69,7 +69,10 @@
 	/// If TRUE, the mob will always be considered "escaped" if they are alive and not exiled.
 	var/force_escaped = FALSE
 
-	var/list/learned_recipes //List of learned recipe TYPES.
+	/// List of crafting recipes learned, references to the singleton datums
+	VAR_FINAL/list/learned_crafting_recipes
+	/// List of cooking recipes learned, references to the singleton datums
+	VAR_FINAL/list/learned_cooking_recipes
 
 	///List of skills the user has received a reward for. Should not be used to keep track of currently known skills. Lazy list because it shouldnt be filled often
 	var/list/skills_rewarded
@@ -506,6 +509,7 @@
 	assigned_role = new_role
 	if(!isnull(current))
 		SEND_SIGNAL(current, COMSIG_MOB_MIND_SET_ROLE, new_role)
+		current.client?.tgui_panel?.send_player_info()
 
 ///Sets your holy role, giving/taking away traits related to if you're gaining/losing it.
 /datum/mind/proc/set_holy_role(new_holy_role)

@@ -1,16 +1,41 @@
-#define GET_AI_BEHAVIOR(behavior_type) SSai_behaviors.ai_behaviors[behavior_type]
-#define GET_TARGETING_STRATEGY(targeting_type) SSai_behaviors.targeting_strategies[targeting_type]
-#define GET_TARGET_PRIORITY_STRATEGY(targeting_type) SSai_behaviors.target_priority_strategies[targeting_type]
+#define GET_TARGETING_STRATEGY(targeting_type) SSai_controllers.targeting_strategies[targeting_type]
+#define GET_TARGET_PRIORITY_STRATEGY(targeting_type) SSai_controllers.target_priority_strategies[targeting_type]
+#define GET_TARGET_SOURCE(source_type) SSai_controllers.target_sources[source_type]
+/// Clears the blackboard latch used by a [/datum/bt_node/decorator/do_once].
+#define UNLOCK_DO_ONCE(controller, lock_key) ##controller.clear_blackboard_key(lock_key)
+
+/**
+ * Returns TRUE if the target should be rejected based on factions.
+ * Inlined faction check for targeting strategies but with less proc overhead.
+ * Strategies with fully custom faction logic set custom_faction_check and override faction_check() instead.
+ */
+#define TARGETING_FACTION_CHECK(strategy, controller, living_mob, the_target) \
+	(((strategy).ignore_faction || (controller).blackboard[BB_ALWAYS_IGNORE_FACTION] || (controller).blackboard[BB_TEMPORARILY_IGNORE_FACTION]) \
+		? (strategy).invert_faction_check \
+		: ((living_mob).faction_check_atom((the_target), exact_match = (strategy).check_factions_exactly) \
+			? !(strategy).invert_faction_check \
+			: (strategy).invert_faction_check))
+
+// Revalidation modes for /datum/bt_node/ai_behavior/acquire_target
+/// If a target is already set, validate it via is_valid_target before searching. Replace if invalid.
+#define TARGET_REVALIDATE 1
+/// If a target is already set, return SUCCESS immediately without re-checking.
+#define TARGET_KEEP_IF_SET 2
+/// Always run the full candidate search, ignoring any existing target.
+#define TARGET_ALWAYS_SEARCH 3
+/// Revalidate an existing target, and only search for a replacement while it remains valid if a target priority strategy is configured.
+#define TARGET_RESELECT_WITH_SELECTION 4
+
 #define HAS_AI_CONTROLLER_TYPE(thing, type) istype(thing?.ai_controller, type)
 
 //AI controller flags
 //If you add a new status, be sure to add it to the ai_controllers subsystem's ai_controllers_by_status list.
-///The AI is currently active.
+///The AI is currently active, and is planned by the high priority subsystem.
 #define AI_STATUS_ON "ai_on"
-///The AI is currently offline for any reason.
+///The AI is currently active, but is planned by the low priority (background) subsystem.
+#define AI_STATUS_ON_LOW "ai_on_low"
+///The AI is not running. Cancels any active plans if set.
 #define AI_STATUS_OFF "ai_off"
-///The AI is currently in idle mode.
-#define AI_STATUS_IDLE "ai_idle"
 
 //Flags returned by get_able_to_run()
 ///pauses AI processing
@@ -43,16 +68,6 @@
 
 #define AI_BEHAVIOR_INSTANT (NONE)
 
-///Does this task require movement from the AI before it can be performed?
-#define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)
-///Does this require the current_movement_target to be adjacent and in reach?
-#define AI_BEHAVIOR_REQUIRE_REACH (1<<1)
-///Does this task let you perform the action while you move closer? (Things like moving and shooting)
-#define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<2)
-///Does finishing this task not null the current movement target?
-#define AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH (1<<3)
-///Does this behavior NOT block planning?
-#define AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION (1<<4)
 
 ///AI flags
 /// Don't move if being pulled
@@ -65,18 +80,15 @@
 #define CAN_ACT_IN_STASIS (1<<3)
 /// Continue processing while aggressively grabbed
 #define CAN_ACT_WHILE_GRABBED (1<<4)
+/// Keeps planning on low prio when unwatched
+#define RUN_WHILE_UNWATCHED (1<<5)
+/// Always plans at high priority. Only works with RUN_WHILE_UNWATCHED
+#define ALWAYS_HIGH_PRIORITY (1<<6)
 
 /// Flags we expect for most AI controllers
 #define DEFAULT_AI_FLAGS (PAUSE_DURING_DO_AFTER | CAN_ACT_WHILE_GRABBED)
 /// Flags for passive mobs that are easy to push around
 #define PASSIVE_AI_FLAGS (PAUSE_DURING_DO_AFTER | STOP_MOVING_WHEN_PULLED)
-
-//Base Subtree defines
-
-///This subtree should cancel any further planning, (Including from other subtrees)
-#define SUBTREE_RETURN_FINISH_PLANNING 1
-
-//Generic subtree defines
 
 /// default search range (tiles, passed to oview) when using find_and_set
 #define SEARCH_TACTIC_DEFAULT_RANGE 7
@@ -84,8 +96,6 @@
 #define RESIST_SUBTREE_PROB 50
 ///macro for whether it's appropriate to resist right now, used by resist subtree
 #define SHOULD_RESIST(source) (source.on_fire || source.buckled || HAS_TRAIT(source, TRAIT_RESTRAINED) || (source.pulledby && source.pulledby.grab_state > GRAB_PASSIVE))
-///macro for whether the pawn can act, used generally to prevent some horrifying ai disasters
-#define IS_DEAD_OR_INCAP(source) (source.incapacitated || source.stat)
 
 GLOBAL_LIST_INIT(all_radial_directions, list(
 	"NORTH" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH),
@@ -97,3 +107,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 	"WEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = WEST),
 	"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTHWEST)
 ))
+
+
+///Use this if you dont want a controller to show up in the sidebar (e.g. when its a class that just sets BB keys)
+#define ABSTRACT_AI_CLASS "Abstract"

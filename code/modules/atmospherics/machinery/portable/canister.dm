@@ -412,22 +412,25 @@
 	if(internal_cell)
 		internal_cell.forceMove(drop_location())
 
-/obj/machinery/portable_atmospherics/canister/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/stock_parts/power_store/cell))
-		var/obj/item/stock_parts/power_store/cell/active_cell = item
-		if(!panel_open)
-			balloon_alert(user, "open hatch first!")
-			return TRUE
-		if(!user.transferItemToLoc(active_cell, src))
-			return TRUE
-		if(internal_cell)
-			user.put_in_hands(internal_cell)
-			balloon_alert(user, "you replace the cell")
-		else
-			balloon_alert(user, "you install the cell")
-		internal_cell = active_cell
-		return TRUE
-	return ..()
+/obj/machinery/portable_atmospherics/canister/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
+		return ..()
+
+	var/obj/item/stock_parts/power_store/cell/active_cell = tool
+	if(!panel_open)
+		balloon_alert(user, "open hatch first!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(active_cell, src))
+		return ITEM_INTERACT_BLOCKING
+
+	if(internal_cell)
+		user.put_in_hands(internal_cell)
+		balloon_alert(user, "you replace the cell")
+	else
+		balloon_alert(user, "you install the cell")
+	internal_cell = active_cell
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/portable_atmospherics/canister/screwdriver_act(mob/living/user, obj/item/screwdriver)
 	return default_deconstruction_screwdriver(user, screwdriver)
@@ -736,8 +739,8 @@
 /obj/machinery/portable_atmospherics/canister/proc/toggle_shielding(mob/user, wire_pulsed = FALSE)
 	shielding_powered = !shielding_powered
 	SSair.start_processing_machine(src)
-	message_admins("[ADMIN_LOOKUPFLW(user)] turned [shielding_powered ? "on" : "off"] [wire_pulsed ? "via wire pulse" : ""] the [src] powered shielding.")
-	user.investigate_log("turned [shielding_powered ? "on" : "off"] [wire_pulsed ? "via wire pulse" : ""] the [src] powered shielding.", INVESTIGATE_ATMOS)
+	message_admins("[ADMIN_LOOKUPFLW(user)] turned [shielding_powered ? "on" : "off"][wire_pulsed ? " via wire pulse" : ""] \the [src] powered shielding.")
+	user.investigate_log("turned [shielding_powered ? "on" : "off"][wire_pulsed ? " via wire pulse" : ""] \the [src] powered shielding.", INVESTIGATE_ATMOS)
 	update_appearance()
 
 /// Ejects tank from canister, if any
@@ -758,8 +761,8 @@
 		return
 	suppress_reactions = !suppress_reactions
 	SSair.start_processing_machine(src)
-	message_admins("[ADMIN_LOOKUPFLW(user)] turned [suppress_reactions ? "on" : "off"] [wire_pulsed ? "via wire pulse" : ""] the [src] reaction suppression.")
-	user.investigate_log("turned [suppress_reactions ? "on" : "off"] [wire_pulsed ? "via wire pulse" : ""] the [src] reaction suppression.", INVESTIGATE_ATMOS)
+	message_admins("[ADMIN_LOOKUPFLW(user)] turned [suppress_reactions ? "on" : "off"][wire_pulsed ? "via wire pulse" : ""] \the [src] reaction suppression.")
+	user.investigate_log("turned [suppress_reactions ? "on" : "off"][wire_pulsed ? "via wire pulse" : ""] \the [src] reaction suppression.", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/canister/proc/recolor(datum/greyscale_modify_menu/menu)
 	set_greyscale(menu.split_colors, menu.config.type)

@@ -44,6 +44,21 @@ function getCutterPath() {
 
 const cutter_path = getCutterPath();
 
+const define_params_file = 'data/last_define_params.json'
+
+// Have compilation defines changed since last build?
+async function defineParametersChanged(defines: string[]): Promise<boolean> {
+  const defines_string = JSON.stringify(defines);
+  const params_file = Bun.file(define_params_file);
+  if(!await params_file.exists()) {
+    await params_file.write(defines_string);
+    return true;
+  }
+  const last_params = await params_file.text();
+  await params_file.write(defines_string);
+  return last_params !== defines_string;
+}
+
 export const DefineParameter = new Juke.Parameter({
   type: 'string[]',
   alias: 'D',
@@ -159,6 +174,24 @@ export const DmMapsIncludeTarget = new Juke.Target({
   },
 });
 
+export const BehaviorTreeCompilerTarget = new Juke.Target({
+  inputs: [
+    'code/**/*.bt.json',
+    'code/__DEFINES/**/*.dm',
+    'tools/build_bt.py',
+  ],
+  outputs: () => {
+    return Juke.glob('code/**/*.bt.json').map((file) => {
+      const rel = file.replace(/\.bt\.json$/, '');
+      return `build/behavior_trees/${rel}.bt.compiled.json`;
+    });
+  },
+  executes: async () => {
+    const suffix = process.platform == 'win32' ? '.bat' : '';
+    await Juke.exec(`tools/bootstrap/python${suffix}`, ['tools/build_bt.py']);
+  },
+});
+
 export const DmTarget = new Juke.Target({
   parameters: [
     DefineParameter,
@@ -170,6 +203,7 @@ export const DmTarget = new Juke.Target({
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_TEMPLATES') && DmMapsIncludeTarget,
     !get(SkipIconCutter) && IconCutterTarget,
+    BehaviorTreeCompilerTarget,
   ],
   inputs: [
     '_maps/map_files/generic/**',
@@ -183,9 +217,10 @@ export const DmTarget = new Juke.Target({
     `${DME_NAME}.dme`,
     NamedVersionFile,
   ],
-  outputs: ({ get }) => {
-    if (get(DmVersionParameter)) {
-      return []; // Always rebuild when dm version is provided
+  outputs: async ({ get }) => {
+    if (get(DmVersionParameter) || await defineParametersChanged(get(DefineParameter))) {
+      // Always rebuild when a dm version is provided or CLI defines have changed from last run
+      return [];
     }
     return [`${DME_NAME}.dmb`, `${DME_NAME}.rsc`];
   },
@@ -297,9 +332,6 @@ export const BunTarget = new Juke.Target({
 export const BiomeInstallTarget = new Juke.Target({
   dependsOn: [BunTarget],
   inputs: ['package.json', 'bun.lock'],
-  onlyWhen: () => {
-    return Juke.glob('node_modules/@biomejs/**').length === 0;
-  },
   executes: () => {
     return bun('.', 'install');
   },
@@ -308,7 +340,7 @@ export const BiomeInstallTarget = new Juke.Target({
 export const TgFontTarget = new Juke.Target({
   dependsOn: [BunTarget],
   inputs: [
-    'tgui/packages/tgfont/**/*.+(js|mjs|svg)',
+    'tgui/packages/tgfont/**/*.+(js|ts|svg)',
     'tgui/packages/tgfont/package.json',
   ],
   outputs: [

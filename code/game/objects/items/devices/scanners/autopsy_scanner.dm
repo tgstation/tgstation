@@ -25,7 +25,7 @@
 
 	var/mob/living/scanned = interacting_with
 
-	if(scanned.stat != DEAD && !HAS_TRAIT(scanned, TRAIT_FAKEDEATH)) // good job, you found a loophole
+	if(!IS_DEAD_OR_FAKING(scanned)) // good job, you found a loophole
 		to_chat(user, span_deadsay("[icon2html(src, user)] ERROR! CANNOT SCAN LIVE CADAVERS. PROCURE HEALTH ANALYZER OR TERMINATE PATIENT."))
 		return ITEM_INTERACT_BLOCKING
 
@@ -44,7 +44,7 @@
 	user.visible_message(span_notice("[user] scans [scanned]'s cadaver."))
 	to_chat(user, span_deadsay("[icon2html(src, user)] ANALYZING CADAVER."))
 
-	healthscan(user, scanned, advanced = TRUE)
+	healthscan(user, scanned, scanpower = SCANPOWER_ADVANCED)
 
 	add_fingerprint(user)
 
@@ -147,8 +147,8 @@
 						<td>-</td>\
 						<td><u>Missing</u></td></tr>"
 				continue
-			var/status = organ.get_status_text(advanced = TRUE, add_tooltips = FALSE, colored = FALSE)
-			var/appendix = organ.get_status_appendix(advanced = TRUE, add_tooltips = FALSE)
+			var/status = organ.get_status_text(scanpower = SCANPOWER_ADVANCED, add_tooltips = FALSE, colored = FALSE)
+			var/appendix = organ.get_status_appendix(scanpower = SCANPOWER_ADVANCED, add_tooltips = FALSE)
 			if(!status)
 				status ||= "OK" // otherwise flawless organs have no status reported by default
 			organreport += "<tr>\
@@ -193,6 +193,8 @@
 			autopsy_information += "Desiccation, commonly caused by Changelings.</br>"
 		else if(HAS_TRAIT_FROM(scanned, TRAIT_HUSK, SKELETON_TRAIT))
 			autopsy_information += "Stripped flesh.</br>"
+		else if(HAS_TRAIT_FROM(scanned, TRAIT_HUSK, /datum/status_effect/zombie::id))
+			autopsy_information += "Zombification.</br>"
 		else if(!HAS_TRAIT_FROM(scanned, TRAIT_HUSK, BURN)) // prioritize showing unknown causes over burns
 			autopsy_information += "Unknown causes.</br>"
 		else

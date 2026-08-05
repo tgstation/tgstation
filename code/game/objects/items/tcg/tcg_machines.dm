@@ -24,27 +24,28 @@
 	var/summon_offset_x = 0
 	var/summon_offset_y = 1
 
-/obj/machinery/trading_card_holder/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/tcgcard) && current_summon == null)
-		current_card = I
-		card_template = current_card.extract_datum()
-		if(card_template.cardtype == "Creature")
-			if(!user.transferItemToLoc(current_card, src))
-				return
-			to_chat(user, span_notice("You put the [current_card] card in [src]."))
-			icon_state = "card_holder_active"
-			update_appearance()
-			current_summon = new(locate(x + summon_offset_x, y + summon_offset_y, z))
-			current_summon.template = card_template
-			current_summon.card_ref = current_card
-			current_summon.team_color = team_color
-			current_summon.load_model()
-		else
-			to_chat(user, span_notice("The [src] smartly rejects the non-creature card."))
-			current_card = null
-			return ..()
-	else
-		return ..()
+/obj/machinery/trading_card_holder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/tcgcard) || current_summon)
+		return NONE
+	current_card = tool
+	card_template = current_card.extract_datum()
+	if(card_template.cardtype != "Creature")
+		to_chat(user, span_notice("The [src] smartly rejects the non-creature card."))
+		current_card = null
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(current_card, src))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You put the [current_card] card in [src]."))
+	icon_state = "card_holder_active"
+	update_appearance()
+	current_summon = new(locate(x + summon_offset_x, y + summon_offset_y, z))
+	current_summon.template = card_template
+	current_summon.card_ref = current_card
+	current_summon.team_color = team_color
+	current_summon.load_model()
+	return ITEM_INTERACT_SUCCESS
 
 GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 

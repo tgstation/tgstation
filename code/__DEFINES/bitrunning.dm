@@ -4,6 +4,13 @@
 #define BITRUNNER_COST_HIGH 3
 #define BITRUNNER_COST_EXTREME 20
 
+#define BITRUNNING_GRADE_NONE "None"
+#define BITRUNNING_GRADE_D "D"
+#define BITRUNNING_GRADE_C "C"
+#define BITRUNNING_GRADE_B "B"
+#define BITRUNNING_GRADE_A "A"
+#define BITRUNNING_GRADE_S "S"
+
 /// Yay you did it
 #define BITRUNNER_REWARD_MIN 1
 /// You faced some decent odds

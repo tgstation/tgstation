@@ -90,7 +90,7 @@
 	comms.implant(src)
 	assign_access()
 
-/mob/living/basic/mining_drone/set_combat_mode(new_mode, silent = TRUE)
+/mob/living/basic/mining_drone/set_combat_mode(new_mode, silent = TRUE, force = FALSE)
 	. = ..()
 	icon_state = combat_mode ? "mining_drone_offense" : "mining_drone"
 	balloon_alert(src, "now [combat_mode ? "attacking" : "collecting"]")
@@ -110,7 +110,7 @@
 
 	for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)
 		. += span_notice("There is \a [modkit] installed, using <b>[modkit.cost]%</b> capacity.")
-	if(ai_controller && ai_controller.ai_status == AI_STATUS_IDLE)
+	if(ai_controller && ai_controller.ai_status == AI_STATUS_OFF && ai_controller.get_expected_ai_status() == AI_STATUS_ON)
 		. += "The [src] appears to be in <b>sleep mode</b>. You can restore normal functions by <b>tapping</b> it."
 
 
@@ -128,17 +128,21 @@
 		user.balloon_alert(user, "successfully repaired!")
 	return TRUE
 
-/mob/living/basic/mining_drone/attackby(obj/item/item_used, mob/user, list/modifiers, list/attack_modifiers)
-	if(item_used.tool_behaviour == TOOL_CROWBAR || istype(item_used, /obj/item/borg/upgrade/modkit))
-		item_used.melee_attack_chain(user, stored_gun, modifiers)
-		return
+/mob/living/basic/mining_drone/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/borg/upgrade/modkit))
+		return ..()
 
-	return ..()
+	tool.melee_attack_chain(user, stored_gun, modifiers)
+	return ITEM_INTERACT_SUCCESS
+
+/mob/living/basic/mining_drone/crowbar_act(mob/living/user, obj/item/tool)
+	tool.melee_attack_chain(user, stored_gun)
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/basic/mining_drone/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(!user.combat_mode)
-		if(ai_controller && ai_controller.ai_status == AI_STATUS_IDLE)
-			ai_controller.set_ai_status(AI_STATUS_ON)
+		if(ai_controller && ai_controller.ai_status == AI_STATUS_OFF)
+			ai_controller.reset_ai_status() //wakes a performance-slept bot, no-op if it is off for a real reason
 		if(LAZYACCESS(modifiers, LEFT_CLICK)) //Lets Right Click be specifically for re-enabling their AI (and avoiding the UI popup), while Left Click simply does both.
 			ui_interact(user)
 		return

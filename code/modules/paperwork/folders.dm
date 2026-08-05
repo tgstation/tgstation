@@ -95,16 +95,10 @@
 
 /obj/item/folder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(is_type_in_typecache(tool, folder_insertables))
-		return insertables_act(user, tool)
+		return interact_with_insertables(tool, user)
 	if(tool.tool_behaviour == TOOL_KNIFE || tool.tool_behaviour == TOOL_WIRECUTTER)
 		return sharp_thing_act(user, tool)
 	return NONE
-
-/obj/item/folder/proc/insertables_act(mob/living/user, obj/item/tool)
-	if(!user.transferItemToLoc(tool, src, silent = FALSE))
-		return ITEM_INTERACT_BLOCKING
-	update_appearance()
-	return ITEM_INTERACT_SUCCESS
 
 /obj/item/folder/nameformat(input, user)
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
@@ -133,7 +127,9 @@
 		interacting_with.do_pickup_animation(src)
 		interacting_with.forceMove(src)
 
-	playsound(src, interacting_with.pickup_sound, PICKUP_SOUND_VOLUME, interacting_with.sound_vary, ignore_walls = FALSE)
+	if(interacting_with.pickup_sound)
+		playsound(src, interacting_with.pickup_sound, PICKUP_SOUND_VOLUME, interacting_with.sound_vary, ignore_walls = FALSE)
+
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -168,7 +164,7 @@
 	if(.)
 		return
 
-	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
+	if(IS_UNCONSCIOUS_OR_CRIT(usr) || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 
 	switch(action)

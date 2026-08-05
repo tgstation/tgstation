@@ -8,6 +8,10 @@
 	clean_type = CLEAN_TYPE_BLOOD
 	color = BLOOD_COLOR_RED
 
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered)
+	)
+
 	/// Amount of blood, in units, in this decal
 	/// Spent when drying or making footprints
 	var/bloodiness = BLOOD_AMOUNT_PER_DECAL
@@ -64,16 +68,15 @@
 		total_dry_time = drying_time
 		START_PROCESSING(SSblood_drying, src)
 
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered)
-	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 	if (bloodiness || GET_ATOM_BLOOD_DECAL_LENGTH(src))
 		update_appearance()
 
-/obj/effect/decal/cleanable/blood/Destroy()
+/obj/effect/decal/cleanable/blood/Destroy(force)
 	STOP_PROCESSING(SSblood_drying, src)
+	// connect_loc only unregisters via COMSIG_MOVABLE_MOVED, which never fires when the turf we're on gets replaced by ChangeTurf()
+	RemoveElement(/datum/element/connect_loc, loc_connections)
 	return ..()
 
 /// Returns the default blood type for this decal for maploaded decals

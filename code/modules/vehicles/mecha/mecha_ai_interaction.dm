@@ -95,7 +95,7 @@
 				return
 			if(AI.deployed_shell) //Recall AI if shelled so it can be checked for a client
 				AI.disconnect_shell()
-			if(AI.stat || !AI.client)
+			if(IS_UNCONSCIOUS_OR_CRIT(AI) || !AI.client)
 				to_chat(user, span_warning("[AI.name] is currently unresponsive, and cannot be uploaded."))
 				return
 			if((LAZYLEN(occupants) >= max_occupants) || dna_lock) //Normal AIs cannot steal mechs!

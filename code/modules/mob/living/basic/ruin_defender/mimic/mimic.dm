@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	lock = new
 	lock.Grant(src)
 	ADD_TRAIT(src, TRAIT_AI_PAUSED, INNATE_TRAIT)
-	ai_controller?.set_ai_status(AI_STATUS_OFF) //start inert, let gullible people pull us into cargo or something and then go nuts when opened
+	ai_controller?.force_ai_off() //start inert, let gullible people pull us into cargo or something and then go nuts when opened
 	if(mapload) //eat shit
 		for(var/obj/item/item in loc)
 			item.forceMove(src)
@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		return FALSE
 	visible_message(span_danger("[src] starts to move!"))
 	REMOVE_TRAIT(src, TRAIT_AI_PAUSED, INNATE_TRAIT)
-	ai_controller.set_ai_status(AI_STATUS_ON)
+	ai_controller.clear_forced_off()
 	if(length(contents))
 		locked = TRUE //if this was a crate with loot then we dont want people to just leftclick it to open it then bait it somewhere and steal its loot
 	return TRUE
@@ -287,7 +287,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	. = ..()
 	if(!.) //dead or deleted
 		return
-	if(idledamage && !ckey && !ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET]) //Objects eventually revert to normal if no one is around to terrorize
+	if(idledamage && !ckey && !ai_controller?.blackboard[BB_CURRENT_TARGET]) //Objects eventually revert to normal if no one is around to terrorize
 		adjust_brute_loss(0.5 * seconds_per_tick)
 	for(var/mob/living/victim in contents) //a fix for animated statues from the flesh to stone spell
 		death()
@@ -391,10 +391,10 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 			// do we have nothing chambered/chambered is spent AND we have no mag or our mag is empty
 			if(!ballistic.chambered?.loaded_projectile && magazine_useless(gun)) // ran out of ammo
 				ai_controller?.set_blackboard_key(BB_GUNMIMIC_GUN_EMPTY, TRUE) //BANZAIIIIIIII
-				ai_controller?.CancelActions()
+				ai_controller?.cancel_current_plan()
 		else //if we cant fire we probably like ran out of energy or magic charges or whatever the hell idk
 			ai_controller?.set_blackboard_key(BB_GUNMIMIC_GUN_EMPTY, TRUE)
-			ai_controller?.CancelActions() // Stop our firing behavior so we can plan melee
+			ai_controller?.cancel_current_plan() // Stop our firing behavior so we can plan melee
 	else
 		ai_controller?.set_blackboard_key(BB_GUNMIMIC_GUN_EMPTY, FALSE)
 	gun.fire_gun(target, user = src, flag = FALSE, params = modifiers) //still make like a cool click click sound if trying to fire empty

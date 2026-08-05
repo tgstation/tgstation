@@ -8,8 +8,8 @@
 	transmittable = 0
 	level = 0 //not obtainable
 	base_message_chance = 20 //here used for the overlays
-	symptom_delay_min = 1
-	symptom_delay_max = 1
+	symptom_delay = 1
+	delay_variation = 0
 	var/passive_message = "" //random message to infected but not actively healing people
 	var/healable_bodytypes = BODYTYPE_ORGANIC // What types of body parts we can heal
 
@@ -366,7 +366,7 @@
 	if(living_host.IsSleeping())
 		return power * 0.25 //Voluntary unconsciousness yields lower healing.
 	switch(living_host.stat)
-		if(UNCONSCIOUS, HARD_CRIT)
+		if(HARD_CRIT)
 			return power * 0.9
 		if(SOFT_CRIT)
 			return power * 0.5
@@ -575,8 +575,6 @@
 	stage_speed = 2
 	transmittable = -3
 	level = 6
-	symptom_delay_min = 1
-	symptom_delay_max = 1
 	passive_message = span_notice("Your skin glows faintly for a moment.")
 	threshold_descs = list(
 		"Resistance 7" = "Increases healing speed.",
@@ -612,18 +610,16 @@
 	desc = "The virus heals damaged tissues in a way that appears threatening to the immune system."
 	severity = 1
 	stealth = -4
-	resistance = 3
-	stage_speed = 3
-	transmittable = 2
+	resistance = 1
+	stage_speed = 0
+	transmittable = -1
 	level = 4
 	base_message_chance = 0
-	symptom_delay_min = 1
-	symptom_delay_max = 1
 	symptom_cure = null
 	power = 2
 
 	threshold_descs = list(
-		"Severity > 1" = "For each point of severity above 1, the healing provided by the virus increases.",
+		"Severity > 1" = "For each point of severity, the healing provided by the virus increases.",
 	)
 	///Increases the healing effect (if active) of the virus by this amount for each severity level above 1
 	var/severity_heal_bonus = 0.25

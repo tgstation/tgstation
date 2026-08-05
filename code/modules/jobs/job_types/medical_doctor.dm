@@ -19,7 +19,7 @@
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_MEDICAL_DOCTOR
-	bounty_types = CIV_JOB_MED
+	bounty_types = CIV_JOB_MED_VIRO
 	departments_list = list(
 		/datum/job_department/medical,
 		)
@@ -60,3 +60,5 @@
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
 	skillchips = list(/obj/item/skillchip/entrails_reader)
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/medical

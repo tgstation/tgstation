@@ -1,6 +1,6 @@
 /datum/mutation/olfaction
 	name = "Transcendent Olfaction"
-	desc = "Your sense of smell is comparable to that of a canine."
+	desc = "The subject's sense of smell is comparable to that of a canine."
 	quality = POSITIVE
 	difficulty = 12
 	text_gain_indication = span_notice("Smells begin to make more sense...")

@@ -1689,7 +1689,7 @@
 /area/shuttle/escape)
 "AF" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/harebell,
+/obj/item/food/grown/flower/harebell,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "AG" = (
@@ -2831,7 +2831,7 @@
 /area/shuttle/escape)
 "PD" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy,
+/obj/item/food/grown/flower/poppy,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "PJ" = (
@@ -3038,8 +3038,8 @@
 /area/shuttle/escape)
 "Sc" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy,
-/obj/item/food/grown/harebell,
+/obj/item/food/grown/flower/poppy,
+/obj/item/food/grown/flower/harebell,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Se" = (

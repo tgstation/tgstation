@@ -169,3 +169,7 @@
 #define RADIO_SPECIAL_CENTCOM (1<<1)
 ///Bitflag for if a headset can use the binary radio channel
 #define RADIO_SPECIAL_BINARY (1<<2)
+
+/// Past this amount of compression, the resulting gibberish will actually
+/// replace characters, making it even harder to understand.
+#define COMPRESSION_REPLACE_CHARACTER_THRESHOLD 30

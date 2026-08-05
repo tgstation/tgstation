@@ -7,6 +7,7 @@ MAP_CONFIG=${2:-""}
 echo Testing $MAP
 
 tools/deploy.sh ci_test
+
 mkdir -p ci_test/config
 mkdir -p ci_test/data
 

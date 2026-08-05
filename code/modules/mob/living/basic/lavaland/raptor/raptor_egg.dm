@@ -17,6 +17,7 @@
 
 /obj/item/food/egg/raptor_egg/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/floor_placeable)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/food/egg/raptor_egg/Destroy()

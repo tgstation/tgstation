@@ -10,7 +10,7 @@
 
 /datum/terror_handler/jittering/tick(seconds_per_tick, terror_buildup)
 	. = ..()
-	if (owner.stat >= UNCONSCIOUS)
+	if (IS_UNCONSCIOUS(owner))
 		return
 
 	if (terror_buildup < TERROR_BUILDUP_FEAR)
@@ -39,7 +39,7 @@
 
 /datum/terror_handler/stuttering/tick(seconds_per_tick, terror_buildup)
 	. = ..()
-	if (owner.stat >= UNCONSCIOUS)
+	if (IS_UNCONSCIOUS(owner))
 		return
 
 	if (terror_buildup < TERROR_BUILDUP_FEAR)
@@ -56,7 +56,7 @@
 
 /datum/terror_handler/heart_problems/tick(seconds_per_tick, terror_buildup)
 	. = ..()
-	if (owner.stat >= UNCONSCIOUS)
+	if (IS_UNCONSCIOUS(owner))
 		return
 
 	if (terror_buildup < TERROR_BUILDUP_FEAR)
@@ -90,7 +90,7 @@
 
 /datum/terror_handler/vomiting/tick(seconds_per_tick, terror_buildup)
 	. = ..()
-	if (owner.stat >= UNCONSCIOUS)
+	if (IS_UNCONSCIOUS(owner))
 		return
 
 	if (terror_buildup < TERROR_BUILDUP_TERROR)
@@ -126,7 +126,7 @@
 
 /datum/terror_handler/panic/tick(seconds_per_tick, terror_buildup)
 	. = ..()
-	if (owner.stat >= UNCONSCIOUS)
+	if (IS_UNCONSCIOUS(owner))
 		stop_panic_attack()
 		active = FALSE
 		owner.remove_fov_trait(type, FOV_270_DEGREES)
@@ -176,7 +176,7 @@
 
 /datum/terror_handler/startle/tick(seconds_per_tick, terror_buildup)
 	. = ..()
-	if (owner.stat >= UNCONSCIOUS || !COOLDOWN_FINISHED(src, startle_cd))
+	if (IS_UNCONSCIOUS(owner) || !COOLDOWN_FINISHED(src, startle_cd))
 		return
 
 	if (terror_buildup < TERROR_BUILDUP_FEAR || terror_buildup - component.last_tick_buildup < TERROR_STARTLE_MINIMUM_DIFFERENCE)

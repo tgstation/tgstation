@@ -53,10 +53,10 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/supply)
 "h" = (
-/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/turf/closed/wall/mineral/plastitanium/survival/nodiagonal,
 /area/shuttle/supply)
 "i" = (
-/turf/closed/wall/mineral/titanium/survival,
+/turf/closed/wall/mineral/plastitanium/survival,
 /area/shuttle/supply)
 "j" = (
 /obj/machinery/conveyor{

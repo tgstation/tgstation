@@ -7,7 +7,7 @@
 /obj/effect/turf_decal/siding/red{
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "bi" = (
 /obj/machinery/computer/shuttle/hunter{
@@ -41,13 +41,13 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/reagent_dispensers/fueltank,
 /obj/item/weldingtool/largetank,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "cM" = (
 /obj/effect/turf_decal/siding/red/corner{
 	dir = 1
 	},
-/turf/closed/wall/mineral/titanium/survival,
+/turf/closed/wall/mineral/plastitanium/survival,
 /area/shuttle/hunter/russian)
 "cU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -75,7 +75,7 @@
 	},
 /obj/effect/turf_decal/bot_red,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "gp" = (
 /obj/machinery/airalarm/directional/east,
@@ -88,7 +88,7 @@
 /obj/effect/turf_decal/siding/red{
 	dir = 10
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "gv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -103,7 +103,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/fugitive_capture,
 /obj/structure/sign/poster/contraband/bountyhunters/directional/west,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "ho" = (
 /obj/effect/decal/cleanable/dirt,
@@ -122,7 +122,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/vodka,
 /obj/item/crowbar/large/old,
 /obj/item/lighter/greyscale,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "iV" = (
 /turf/template_noop,
@@ -153,7 +153,7 @@
 	pixel_y = 2
 	},
 /obj/item/lighter,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "lS" = (
 /obj/machinery/computer/crew/syndie{
@@ -177,7 +177,7 @@
 /obj/item/ammo_box/speedloader/strilka310,
 /obj/item/ammo_box/speedloader/strilka310,
 /obj/item/ammo_box/speedloader/strilka310,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "qF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -186,7 +186,7 @@
 /obj/effect/turf_decal/siding/red,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/meter,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "rB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -197,7 +197,7 @@
 	name = "Cockpit Access"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/hunter/russian)
 "sR" = (
 /obj/structure/cable,
@@ -206,7 +206,7 @@
 	},
 /obj/effect/turf_decal/siding/red,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "tj" = (
 /turf/open/floor/mineral/plastitanium,
@@ -220,7 +220,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/hunter/russian)
 "uT" = (
 /obj/machinery/suit_storage_unit/standard_unit{
@@ -228,7 +228,7 @@
 	storage_type = /obj/item/tank/internals/oxygen/yellow
 	},
 /obj/effect/turf_decal/siding/red,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "vZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -247,21 +247,21 @@
 	pixel_x = 5;
 	pixel_y = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "wF" = (
 /obj/effect/turf_decal/bot_red,
 /obj/effect/turf_decal/siding/red,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mob_spawn/ghost_role/human/fugitive/russian/leader,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "xd" = (
 /obj/effect/turf_decal/siding/red{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "xf" = (
 /obj/machinery/door/airlock/security/glass{
@@ -272,7 +272,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/hunter/russian)
 "xE" = (
 /obj/machinery/door/airlock/security/glass{
@@ -283,13 +283,13 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/hunter/russian)
 "yo" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/mecha_wreckage/ripley,
 /obj/item/book/manual/ripley_build_and_repair,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "yp" = (
 /obj/structure/chair/comfy/shuttle{
@@ -304,7 +304,7 @@
 	},
 /obj/effect/turf_decal/bot_red,
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "zk" = (
 /obj/machinery/door/airlock/external/glass/ruin{
@@ -316,7 +316,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/hunter/russian)
 "zQ" = (
 /obj/machinery/atmospherics/components/tank/air,
@@ -357,13 +357,13 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "Dr" = (
 /obj/effect/turf_decal/siding/red/corner{
 	dir = 8
 	},
-/turf/closed/wall/mineral/titanium/survival,
+/turf/closed/wall/mineral/plastitanium/survival,
 /area/shuttle/hunter/russian)
 "Du" = (
 /obj/effect/decal/cleanable/dirt,
@@ -400,7 +400,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/crowbar,
 /obj/item/crowbar,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "Ej" = (
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -414,7 +414,7 @@
 	dir = 9
 	},
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "EK" = (
 /obj/machinery/power/shuttle_engine/heater{
@@ -451,7 +451,7 @@
 "GF" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/fugitive_locator,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "IV" = (
 /obj/structure/table,
@@ -473,7 +473,7 @@
 	dir = 9
 	},
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "Jh" = (
 /obj/effect/turf_decal/stripes/line,
@@ -513,18 +513,18 @@
 	},
 /obj/effect/turf_decal/siding/red,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "LD" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/kitchenspike,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "LQ" = (
 /obj/effect/turf_decal/siding/red,
 /obj/effect/decal/cleanable/generic,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "LT" = (
 /obj/machinery/door/airlock/security/glass{
@@ -536,14 +536,14 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/hunter/russian)
 "LW" = (
 /obj/effect/spawner/structure/window/survival_pod,
 /turf/open/floor/plating,
 /area/shuttle/hunter/russian)
 "Me" = (
-/turf/closed/wall/mineral/titanium/survival,
+/turf/closed/wall/mineral/plastitanium/survival,
 /area/shuttle/hunter/russian)
 "MO" = (
 /obj/effect/turf_decal/siding/red{
@@ -552,7 +552,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "Nk" = (
 /obj/machinery/door/airlock/external/glass/ruin{
@@ -573,7 +573,7 @@
 	name = "Cargo Hold Access"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/hunter/russian)
 "Se" = (
 /obj/effect/turf_decal/stripes/line{
@@ -590,7 +590,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "Th" = (
 /obj/effect/mob_spawn/ghost_role/human/fugitive/russian{
@@ -599,7 +599,7 @@
 /obj/effect/turf_decal/bot_red,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/kss13/directional/south,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "Uu" = (
 /obj/effect/turf_decal/siding/red{
@@ -613,7 +613,7 @@
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/speedloader/strilka310,
 /obj/item/crowbar,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "UD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -643,7 +643,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/hunter/russian)
 "VA" = (
 /obj/machinery/light/small/directional/west,
@@ -651,7 +651,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/structure/sign/poster/contraband/communist_state/directional/west,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "WG" = (
 /obj/structure/cable,
@@ -673,7 +673,7 @@
 /obj/item/storage/medkit/ancient,
 /obj/item/storage/medkit/ancient,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/hunter/russian)
 "XW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{

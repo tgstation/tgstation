@@ -92,7 +92,7 @@
 /obj/effect/fun_balloon/sentience/effect()
 	var/list/bodies = list()
 	for(var/mob/living/possessable in range(effect_range, get_turf(src)))
-		if (!possessable.ckey && possessable.stat == CONSCIOUS) // Only assign ghosts to living, non-occupied mobs!
+		if (!possessable.ckey && !IS_UNCONSCIOUS_OR_CRIT(possessable)) // Only assign ghosts to living, non-occupied mobs!
 			bodies += possessable
 
 	var/list/candidates = SSpolling.poll_ghosts_for_targets(

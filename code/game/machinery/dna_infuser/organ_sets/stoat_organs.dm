@@ -58,7 +58,7 @@
 	return SUCCESSFUL_BLOCK
 
 /datum/status_effect/organ_set_bonus/stoat/proc/is_dangerous_mob(mob/living/target)
-	if(target.stat >= UNCONSCIOUS)
+	if(IS_UNCONSCIOUS(target))
 		return FALSE
 	if(istype(target, /mob/living/basic/stoat))
 		return owner.gender == MALE && target.gender == MALE // other stoats are ENEMIES if we are both males
@@ -72,7 +72,7 @@
 	return FALSE
 
 /datum/status_effect/organ_set_bonus/stoat/proc/is_friendly_mob(mob/living/target)
-	if(target.stat >= UNCONSCIOUS)
+	if(IS_UNCONSCIOUS(target))
 		return FALSE
 	if(istype(target, /mob/living/basic/stoat))
 		return owner.gender != MALE || target.gender != MALE

@@ -1,6 +1,13 @@
 /// Middleware to handle quirks
 /datum/preference_middleware/quirks
-	var/tainted = FALSE
+	/// Used to track whether or not we need to update changes in ui_data
+	var/tainted = TRUE
+	/// Remember what the last species we chose was, to avoid having to validate quirks again
+	var/previous_species_value
+	/// The current selected quirks, saved so we can cheaply resend them in ui_data only when necessary, without having to use expensive update_static_data() calls
+	var/list/cached_selected_quirks
+	/// The current species compatibility, saved so we can cheaply resend them in ui_data only when necessary, without having to use expensive update_static_data() calls
+	var/list/cached_species_compatibility
 
 	action_delegations = list(
 		"give_quirk" = PROC_REF(give_quirk),
@@ -28,9 +35,11 @@
 		return TRUE
 
 /datum/preference_middleware/quirks/post_set_preference(mob/user, preference, value)
-	if(preference != "species")
+	if(preference != "species" || value == previous_species_value)
 		return
+
 	tainted = TRUE
+	previous_species_value = value
 	preferences.validate_quirks()
 
 /datum/preference_middleware/quirks/proc/get_species_compatibility()
@@ -47,19 +56,20 @@
 
 	var/list/data = list()
 
-	data["selected_quirks"] = get_selected_quirks()
 	data["default_quirk_balance"] = SSquirks.default_quirk_points
-	data["species_disallowed_quirks"] = get_species_compatibility()
 
 	return data
 
 /datum/preference_middleware/quirks/get_ui_data(mob/user)
 	var/list/data = list()
 
-	if (tainted)
+	if (tainted || isnull(cached_selected_quirks)) // if one of these is null, both are null
 		tainted = FALSE
-		data["selected_quirks"] = get_selected_quirks()
-		data["species_disallowed_quirks"] = get_species_compatibility()
+		cached_selected_quirks = get_selected_quirks()
+		cached_species_compatibility = get_species_compatibility()
+
+	data["selected_quirks"] = cached_selected_quirks
+	data["species_disallowed_quirks"] = cached_species_compatibility
 
 	return data
 
@@ -96,7 +106,7 @@
 
 /datum/preference_middleware/quirks/on_new_character(mob/user)
 	tainted = TRUE
-	preferences.update_static_data(user, always_instant = TRUE)
+	previous_species_value = null
 
 /datum/preference_middleware/quirks/proc/give_quirk(list/params, mob/user)
 	var/quirk_name = params["quirk"]
@@ -107,12 +117,13 @@
 		// If the client is sending an invalid give_quirk, that means that
 		// something went wrong with the client prediction, so we should
 		// catch it back up to speed.
+		tainted = TRUE
 		preferences.update_static_data(user, always_instant = TRUE)
 		return TRUE
 
 	preferences.all_quirks = new_quirks
+	tainted = TRUE
 	preferences.character_preview_view?.update_body()
-	preferences.update_static_data(user, always_instant = TRUE)
 
 	return TRUE
 
@@ -127,12 +138,13 @@
 		// If the client is sending an invalid remove_quirk, that means that
 		// something went wrong with the client prediction, so we should
 		// catch it back up to speed.
+		tainted = TRUE
 		preferences.update_static_data(user, always_instant = TRUE)
 		return TRUE
 
 	preferences.all_quirks = new_quirks
+	tainted = TRUE
 	preferences.character_preview_view?.update_body()
-	preferences.update_static_data(user, always_instant = TRUE)
 
 	return TRUE
 

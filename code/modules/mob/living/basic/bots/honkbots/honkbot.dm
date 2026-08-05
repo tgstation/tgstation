@@ -55,7 +55,7 @@
 	return honkbot_sounds
 
 /mob/living/basic/bot/secbot/honkbot/proc/pre_slip()
-	return (prob(70) && ai_controller?.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+	return (prob(70) && ai_controller?.blackboard_key_exists(BB_CURRENT_TARGET))
 
 /mob/living/basic/bot/secbot/honkbot/proc/post_slip()
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/basic/bot, speak), HONKBOT_VOICED_HONK_SAD)

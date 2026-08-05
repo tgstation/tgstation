@@ -109,7 +109,7 @@
 
 /datum/brain_trauma/magic/stalker/on_life(seconds_per_tick)
 	// Dead and unconscious people are not interesting to the psychic stalker.
-	if(owner.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
 		return
 
 	// Not even nullspace will keep it at bay.

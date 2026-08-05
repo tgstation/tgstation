@@ -32,6 +32,8 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	var/allow_exotic_faxes = FALSE
 	/// This is where the dispatch and reception history for each fax is stored.
 	var/list/fax_history = list()
+	/// Lazy assoc list of (FaxBond ref string = FaxBond weakref) connected to us
+	var/list/fax_listeners
 	/// List of types which should always be allowed to be faxed
 	var/static/list/allowed_types = list(
 		/obj/item/canvas,
@@ -441,6 +443,36 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	history_add("Receive", sender_name)
 	addtimer(CALLBACK(src, PROC_REF(vend_item), loaded), 1.9 SECONDS)
 	SEND_SIGNAL(src, COMSIG_FAX_MESSAGE_RECEIVED, sender_name)
+	if(LAZYLEN(fax_listeners))
+		alert_listeners(sender_name)
+
+/**
+ * Called when a fax is received, iterates through subscribed Faxbonds and notifies them.
+ * Arguments:
+ * * sender_name - Name of fax sender, used in the PDA message.
+*/
+/obj/machinery/fax/proc/alert_listeners(sender_name)
+	set waitfor = FALSE
+
+	var/list/targets = list()
+	for(var/refstring, weakref in fax_listeners)
+		var/datum/weakref/app_ref = weakref
+		var/datum/computer_file/program/faxbond/app = app_ref?.resolve()
+		if(!app || app.connected_faxes[fax_id]["muted"])
+			continue
+		var/datum/computer_file/program/messenger/messenger = locate() in app.computer.stored_files
+		if(messenger)
+			targets += messenger
+	if(!length(targets))
+		return
+	var/datum/signal/subspace/messaging/tablet_message/signal = new(src, list(
+		"fakename" = "Fax Notificator",
+		"fakejob" = "PDA Program",
+		"message" = "Your fax [fax_name] has received a new message from [sender_name]",
+		"targets" = targets,
+		"automated" = TRUE
+	))
+	signal.send_to_receivers()
 
 /**
  * Procedure for animating an object entering or leaving the fax machine.

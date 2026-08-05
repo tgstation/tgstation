@@ -399,7 +399,6 @@
 
 		if(new_key == old_key)
 			new_limbs += limb_icon_cache[new_key]
-
 		else
 			if(body_zone == BODY_ZONE_HEAD)
 				head_update = TRUE
@@ -419,7 +418,8 @@
 
 	apply_overlay(BODYPARTS_LAYER)
 	// for legacy support, head changes triggers an eye/hair update
-	if(head_update)
+	// also run hair/eyes update on mob creation and other forced data updates to apply any custom changes made
+	if(head_update || update_limb_data)
 		update_eyes()
 		update_hair()
 
@@ -485,7 +485,7 @@
 		. += limb_gender
 	. += limb_id
 	. += husk_type
-	. += "husk"
+	. += is_husked == HUSKED_ZOMBIE ? "zombie_husk" : "burn_husk"
 	. += body_zone
 	if(is_invisible)
 		. += "invisible"

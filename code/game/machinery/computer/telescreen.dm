@@ -101,7 +101,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 		return UI_CLOSE
 	if(!isliving(user))
 		return isAdminGhostAI(user) ? UI_INTERACTIVE : UI_UPDATE
-	if(user.stat >= SOFT_CRIT)
+	if(user.incapacitated)
 		return UI_UPDATE
 
 	var/can_range = FALSE
@@ -141,9 +141,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	else
 		if(!can_see(watcher, src, 7))
 			return FALSE
-	if(watcher.is_blind())
-		return FALSE
-	if(!isobserver(watcher) && watcher.stat >= UNCONSCIOUS)
+	if(watcher.is_blind() || IS_UNCONSCIOUS(watcher))
 		return FALSE
 	return TRUE
 
@@ -571,4 +569,3 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/monaster
 /obj/item/wallframe/telescreen/monastery
 	name = "monastery telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/monastery
-

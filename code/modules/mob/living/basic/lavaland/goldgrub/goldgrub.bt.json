@@ -1,0 +1,238 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/goldgrub",
+	"type": "selector",
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/pawn_buckled_to_obj",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/resist"
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/pawn_grabbed_by_enemy",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/resist"
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/pawn_is_restrained",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/resist"
+					}
+				}
+			]
+		},
+		{
+			"type": "subtree",
+			"subtype": "",
+			"override_id": "SUBPLAN_ID_PET_COMMAND"
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/dig_away_from_danger"
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"observer_abort": "BT_ABORT_BOTH",
+				"key": "BB_CURRENT_TARGET"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/burrow_through_ground"
+			}
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"observer_abort": "BT_ABORT_BOTH",
+								"key": "BB_CURRENT_TARGET"
+							},
+							"child": {
+								"type": "subtree",
+								"subtype": "/datum/bt_node/subtree/run_away_from_target"
+							}
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/grub_eat_target",
+							"bindings": {
+								"b6t594ql": "BB_BOULDER_TARGET",
+								"bj13tsp3": "BB_BOULDER_TARGET",
+								"bjwb8dxm": "BB_BOULDER_TARGETBB_BOULDER_TARGET"
+							}
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/grub_eat_target",
+							"bindings": {
+								"b6t594ql": "BB_ORE_TARGET",
+								"bj13tsp3": "BB_ORE_TARGET",
+								"bjwb8dxm": "BB_ORE_TARGET"
+							}
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/grub_eat_target",
+							"bindings": {
+								"b6t594ql": "BB_VENT_TARGET",
+								"bj13tsp3": "BB_VENT_TARGET",
+								"bjwb8dxm": "BB_VENT_TARGET"
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"observer_abort": "BT_ABORT_BOTH",
+								"key": "BB_TARGET_MINERAL_WALL"
+							},
+							"child": {
+								"type": "sequence",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"vars": {
+											"target_key": "BB_TARGET_MINERAL_WALL"
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/set_bb_cooldown",
+										"vars": {
+											"cooldown_key": "BB_MINING_COOLDOWN",
+											"cooldown_duration": "4 SECONDS"
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/mine_wall",
+										"vars": {
+											"target_key": "BB_TARGET_MINERAL_WALL"
+										}
+									}
+								]
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"key": "BB_LOW_PRIORITY_HUNTING_TARGET",
+								"observer_abort": "BT_ABORT_BOTH"
+							},
+							"child": {
+								"type": "sequence",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"vars": {
+											"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": true
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/grab_target",
+										"vars": {
+											"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET"
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/clear_key",
+										"vars": {
+											"key": "BB_LOW_PRIORITY_HUNTING_TARGET"
+										}
+									}
+								]
+							}
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/random_walk"
+						}
+					]
+				},
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets",
+							"vars": {
+								"target_key": "BB_CURRENT_TARGET",
+								"targeting_strategy": "BB_TARGETING_STRATEGY",
+								"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/find_ore"
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/find_boulder"
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/find_ore_vent"
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+							"vars": {
+								"cooldown_key": "BB_MINING_COOLDOWN"
+							},
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/find_mineral_wall",
+								"vars": {
+									"target_key": "BB_TARGET_MINERAL_WALL"
+								}
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/find_grub_egg"
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -159,6 +159,9 @@
 		update_appearance()
 		return
 
+	if(controller && (controller?.specific_transport_id != specific_transport_id))
+		return
+
 	if(isnull(controller) || !controller.controller_operational)
 		icon_screen = "[base_icon_state]_broken"
 		update_appearance()

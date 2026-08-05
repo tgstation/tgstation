@@ -18,8 +18,7 @@ and your disease can spread via people walking on vomit.
 	level = 3
 	severity = 3
 	base_message_chance = 100
-	symptom_delay_min = 25
-	symptom_delay_max = 80
+	symptom_delay = 52.5
 	required_organ = ORGAN_SLOT_STOMACH
 	symptom_cure = /datum/reagent/medicine/ondansetron
 	cure_color = "yellow"

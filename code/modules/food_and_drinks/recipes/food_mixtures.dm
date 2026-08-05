@@ -80,7 +80,6 @@
 	temp_exponent_factor = 1
 	optimal_ph_min = 2
 	optimal_ph_max = 10
-	thermic_constant = 0
 	H_ion_release = 0
 	reaction_tags = REACTION_TAG_FOOD | REACTION_TAG_EASY
 
@@ -127,7 +126,7 @@
 	if(!lastkey)
 		return
 	var/mob/living/user = get_mob_by_ckey(lastkey)
-	if(!istype(user) || user.stat || !is_in_sight(user, holder.my_atom))
+	if(!istype(user) || IS_UNCONSCIOUS_OR_CRIT(user) || !is_in_sight(user, holder.my_atom))
 		return
 	user.add_mood_event("why_on_earth_are_you_making_chocolate_pudding", /datum/mood_event/lost_control_of_life)
 

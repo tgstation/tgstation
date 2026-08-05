@@ -1,3 +1,6 @@
+#define TTS_REQUEST_REF "ref"
+#define TTS_REQUEST_EXPIRE "expiry_time"
+
 SUBSYSTEM_DEF(tts)
 	name = "Text To Speech"
 	wait = 0.05 SECONDS
@@ -276,10 +279,8 @@ SUBSYSTEM_DEF(tts)
 		var/datum/http_response/radio_blips_response = current_request.request_blips_radio.into_response()
 		var/datum/http_response/radio_gibberish_response = current_request.request_radio_gibberish.into_response()
 		if(current_request.requests_errored())
-			if(queued_radio_messages[identifier])
-				queued_radio_messages.Remove(identifier)
-			if(queued_radio_messages_compression[identifier])
-				queued_radio_messages_compression.Remove(identifier)
+			queued_radio_messages -= identifier
+			queued_radio_messages_compression -= identifier
 			current_request.timed_out = TRUE
 			log_tts("TTS HTTP request errored | Normal: [normal_response.error] | Blips: [blips_response.error] | Radio: [radio_response.error] | Radio Blips: [radio_blips_response.error] | Radio Gibberish [radio_gibberish_response.error]", list(
 				"normal" = normal_response,
@@ -299,8 +300,6 @@ SUBSYSTEM_DEF(tts)
 			current_request.audio_length_blips_radio = text2num(radio_blips_response.headers["audio-length"]) * 10 || 0
 		if(length(radio_gibberish_response.headers) && radio_gibberish_response.headers.Find("audio-length"))
 			current_request.audio_length_radio_gibberish = text2num(radio_gibberish_response.headers["audio-length"]) * 10
-			if(!current_request.audio_length_radio_gibberish)
-				current_request.audio_length_radio_gibberish = 0
 		current_request.audio_file = "tmp/tts/[identifier].ogg"
 		current_request.audio_file_blips = "tmp/tts/[identifier]_blips.ogg" // We aren't as concerned about the audio length for blips as we are with actual speech
 		current_request.audio_file_radio = "tmp/tts/[identifier]_radio.ogg"
@@ -334,21 +333,17 @@ SUBSYSTEM_DEF(tts)
 
 		// For example, if a TTS message plays for more than 7 seconds, which is our current timeout limit,
 		// then the next TTS message would be unable to play.
-		var/timeout_start = current_target.when_to_play
-		if(!timeout_start)
-			// In the normal case, we just set timeout to start_time as it means we aren't waiting on
-			// a TTS message to finish playing
-			timeout_start = current_target.start_time
+		// In the normal case, we just set timeout to start_time as it means we aren't waiting on
+		// a TTS message to finish playing
+		var/timeout_start = current_target.when_to_play || current_target.start_time
 
 		var/timeout = timeout_start + message_timeout
 		// Here, we check if the request has timed out or not.
 		// If current_target.timed_out is set to TRUE, it means the request failed in some way
 		// and there is no TTS audio file to play.
 		if(timeout < world.time || current_target.timed_out)
-			if(queued_radio_messages[current_target.identifier])
-				queued_radio_messages.Remove(current_target.identifier)
-			if(queued_radio_messages_compression[current_target.identifier])
-				queued_radio_messages_compression.Remove(current_target.identifier)
+			queued_radio_messages -= current_target.identifier
+			queued_radio_messages_compression -= current_target.identifier
 			SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
 			continue
 
@@ -367,11 +362,28 @@ SUBSYSTEM_DEF(tts)
 					audio_file = new(current_target.audio_file)
 					SEND_SOUND(current_target.target, audio_file)
 				SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
+
 			else if(current_target.when_to_play < world.time)
 				audio_file = new(current_target.audio_file)
 				audio_file_blips = new(current_target.audio_file_blips)
-				play_tts(tts_target, current_target.listeners, audio_file, audio_file_blips, current_target.language, current_target.message_range, current_target.volume_offset, FALSE, null, current_target.audio_length, current_target.audio_length_blips)
-				completed_tts_messages[current_target.identifier] = list("ref" = current_target, "expiry_time" = world.time + 300)
+				play_tts(
+					target = tts_target,
+					listeners = current_target.listeners,
+					audio = audio_file,
+					audio_blips = audio_file_blips,
+					language = current_target.language,
+					range = current_target.message_range,
+					volume_offset = current_target.volume_offset,
+					ignore_observers = FALSE,
+					source_speaker = null,
+					audio_length = current_target.audio_length,
+					audio_length_blips = current_target.audio_length_blips
+				)
+				completed_tts_messages[current_target.identifier] = list(
+					TTS_REQUEST_REF = current_target,
+					TTS_REQUEST_EXPIRE = world.time + 30 SECONDS,
+				)
+
 				if(length(data) != 1)
 					var/datum/tts_request/next_target = data[2]
 					next_target.when_to_play = world.time + current_target.audio_length
@@ -384,43 +396,50 @@ SUBSYSTEM_DEF(tts)
 					queued_tts_messages[tts_target] += arbritrary_delay
 				SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
 
-	for(var/identifier in queued_radio_messages)
+	for(var/identifier, radio_list in queued_radio_messages)
 		if(MC_TICK_CHECK)
 			return
-		if(completed_tts_messages[identifier])
-			var/list/all_radios = queued_radio_messages[identifier]
-			for(var/radio in all_radios)
-				var/list/hearers = all_radios[radio]
-				if(!istext(radio) && isweakref(radio))
-					var/datum/weakref/weakref = radio
-					var/obj/radio_obj = weakref?.resolve()
-					if(radio_obj && QDELETED(radio_obj))
-						queued_radio_messages[identifier].Remove(radio)
-						queued_radio_messages_compression[identifier].Remove(radio)
-						continue
+		if(!completed_tts_messages[identifier])
+			continue
 
-				var/datum/tts_request/tts_request = completed_tts_messages[identifier]["ref"]
-				var/sound/audio_file
-				var/sound/audio_file_blips
-				if(queued_radio_messages_compression[identifier] > 30)
-					audio_file = new(tts_request.audio_file_radio_gibberish)
-				else
-					audio_file = new(tts_request.audio_file_radio)
-				audio_file_blips = new(tts_request.audio_file_blips_radio)
-				play_tts(radio == TTS_GHOST_RADIO ? null : radio, hearers, audio_file, audio_file_blips, tts_request.language, INFINITY, tts_request.volume_offset, ignore_observers = TRUE, source_speaker = tts_request.target, audio_length = tts_request.audio_length_radio, audio_length_blips = tts_request.audio_length_blips_radio, volume_preference = /datum/preference/numeric/volume/sound_tts_radio_volume, volume_signal = COMSIG_MOB_TTS_RADIO_VOLUME_PREFERENCE_APPLIED)
-			queued_radio_messages.Remove(identifier)
-			completed_tts_messages.Remove(identifier)
-			queued_radio_messages_compression.Remove(identifier)
+		for(var/radio, hearer_list in radio_list)
+			if(isweakref(radio))
+				var/datum/weakref/weakref = radio
+				var/obj/radio_obj = weakref.resolve()
+				if(QDELETED(radio_obj))
+					queued_radio_messages[identifier] -= radio
+					continue
+
+			var/datum/tts_request/tts_request = completed_tts_messages[identifier][TTS_REQUEST_REF]
+			var/sound/audio_file = new( \
+				queued_radio_messages_compression[identifier] > COMPRESSION_REPLACE_CHARACTER_THRESHOLD \
+					? tts_request.audio_file_radio_gibberish \
+					: tts_request.audio_file_radio \
+			)
+			var/sound/audio_file_blips = new(tts_request.audio_file_blips_radio)
+			play_tts(
+				target = radio == TTS_GHOST_RADIO ? null : radio,
+				listeners = hearer_list,
+				audio = audio_file,
+				audio_blips = audio_file_blips,
+				language = tts_request.language,
+				range = INFINITY,
+				volume_offset = tts_request.volume_offset,
+				ignore_observers = TRUE,
+				source_speaker = tts_request.target,
+				audio_length = tts_request.audio_length_radio,
+				audio_length_blips = tts_request.audio_length_blips_radio,
+				volume_preference = /datum/preference/numeric/volume/sound_tts_radio_volume,
+				volume_signal = COMSIG_MOB_TTS_RADIO_VOLUME_PREFERENCE_APPLIED,
+			)
+
+		clear_radio_message(identifier)
 
 	for(var/identifier, request in completed_tts_messages)
-		if(MC_TICK_CHECK)
-			return
-		if (completed_tts_messages[identifier]["expiry_time"] >= world.time + 300)
-			completed_tts_messages[identifier]["ref"] = null
-			completed_tts_messages[identifier] = null
-			completed_tts_messages.Remove(identifier)
-			queued_radio_messages.Remove(identifier)
-			queued_radio_messages_compression.Remove(identifier)
+		if (world.time < completed_tts_messages[identifier][TTS_REQUEST_EXPIRE])
+			continue
+
+		clear_radio_message(identifier)
 
 #undef TTS_ARBRITRARY_DELAY
 
@@ -473,6 +492,12 @@ SUBSYSTEM_DEF(tts)
 		in_process_http_messages += current_request
 	else
 		queued_http_messages.insert(current_request)
+
+/datum/controller/subsystem/tts/proc/clear_radio_message(identifier)
+	completed_tts_messages[identifier] -= TTS_REQUEST_REF // don't stick around
+	completed_tts_messages -= identifier
+	queued_radio_messages -= identifier
+	queued_radio_messages_compression -= identifier
 
 /// Helper to get a random TTS voice for a certain gender. Passing no gender just results in a random voice.
 /datum/controller/subsystem/tts/proc/random_tts_voice(gender = NEUTER)
@@ -632,32 +657,33 @@ SUBSYSTEM_DEF(tts)
 	else
 		return request.is_complete() && request_blips.is_complete() && request_blips_radio.is_complete() && request_radio.is_complete() && request_radio_gibberish.is_complete()
 
-/proc/filter_tts_listeners(list/listeners, radio_frequency = null)
-	if(!SStts.tts_enabled || !listeners)
-		return
+#undef TTS_REQUEST_REF
+#undef TTS_REQUEST_EXPIRE
 
-	if(isweakref(listeners))
-		listeners = list(listeners)
-	var/list/filtered_listeners = list()
+/**
+ * Checks if the passed mob can hear radio TTS
+ *
+ * * hearer - The mob to check if they can hear radio TTS
+ * * radio_frequency - The frequency of the radio TTS message
+ */
+/proc/can_hear_radio_tts(mob/hearer, radio_frequency)
+	if(!SStts.tts_enabled)
+		return FALSE
 
-	for(var/datum/weakref/listener as anything in listeners)
-		if(!isweakref(listener))
-			continue
-		var/mob/possible_listener = listener?.resolve()
-		if(!ismob(possible_listener) || !possible_listener.client)
-			continue
-		var/tts_pref = possible_listener.client?.prefs.read_preference(/datum/preference/choiced/sound_tts)
-		var/radio_tts_pref = possible_listener.client?.prefs.read_preference(/datum/preference/choiced/sound_tts_radio)
-		if(tts_pref == TTS_SOUND_OFF)
-			continue
-		if(isliving(possible_listener) && (possible_listener.stat >= UNCONSCIOUS || HAS_TRAIT(possible_listener, TRAIT_DEAF)))
-			continue
-		if(radio_tts_pref == TTS_SOUND_NO_RADIO)
-			continue
-		if(radio_tts_pref == TTS_SOUND_DEPARTMENTAL_RADIO && radio_frequency == FREQ_COMMON) // don't give them the full common firehose if they turned it off
-			continue
-		filtered_listeners += listener
+	if(HAS_TRAIT(hearer, TRAIT_DEAF))
+		return FALSE
 
-	return filtered_listeners
+	var/tts_pref = hearer.client?.prefs.read_preference(/datum/preference/choiced/sound_tts) || TTS_SOUND_OFF
+	if(tts_pref == TTS_SOUND_OFF)
+		return FALSE
+
+	var/radio_tts_pref = hearer.client?.prefs.read_preference(/datum/preference/choiced/sound_tts_radio) || TTS_SOUND_NO_RADIO
+	switch(radio_tts_pref)
+		if(TTS_SOUND_NO_RADIO)
+			return FALSE
+		if(TTS_SOUND_DEPARTMENTAL_RADIO) // don't give them the full common firehose if they turned it off
+			return radio_frequency != FREQ_COMMON
+
+	return TRUE
 
 #undef SHIFT_DATA_ARRAY
