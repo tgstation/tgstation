@@ -16,6 +16,11 @@
 
 	var/mob/living/carbon/gizmo_flesh
 
+	// Gizmo hook
+	var/obj/projectile/hook/gizmo_hook
+
+	var/angle_of_target
+
 /datum/gizpulse/man_eatter/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
 	var/obj/item/organ/stomach/alien/gizmo_stomach = new()
 	gizmo_flesh.Insert(gizmo_stomach, special = True)
@@ -26,7 +31,11 @@
 
     // launch meet hook like traitor chef from gizmo
     // to choosen target
-    gizmo.launch_meet_hook(target)
+
+
+	targe.count_angle()
+
+	gizmo_hook.fire(angle_of_target)
 
 
 /datum/gizpulse/man_eatter/proc/nomnom_man(atom/movable/holder)
