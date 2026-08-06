@@ -160,6 +160,11 @@
   - bugfix: Recoloring clothing items via 'Edit Color as Matrix' will now properly
       reflect when the clothing item is worn.
 2026-08-06:
+  Odairu:
+  - bugfix: Unique AI properly removes law weight for default laws on the specified
+      lawset config option
+  - rscadd: AIs can pick the color of their hologram.
+  - bugfix: holo ray on holograms no longer shows twice
   YesterdaysPromise:
   - bugfix: Walls now remember what kind of grider was used to build them to return
       to upon deconstruction.

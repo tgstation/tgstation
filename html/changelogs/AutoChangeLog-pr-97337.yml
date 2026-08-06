@@ -1,4 +1,0 @@
-author: "Odairu"
-delete-after: True
-changes:
-  - bugfix: "Unique AI properly removes law weight for default laws on the specified lawset config option"
