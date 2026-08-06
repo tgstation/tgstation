@@ -187,6 +187,8 @@
   Wisemonster:
   - balance: The electrodistruptive diode disk has been moved from energy manipulation
       research to experimental tools research
+  - spellcheck: Removed "portable" from the portable chem dispenser board (it was
+      just a normal dispensor anyways)
   YesterdaysPromise:
   - bugfix: Walls now remember what kind of grider was used to build them to return
       to upon deconstruction.
