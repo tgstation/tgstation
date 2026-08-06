@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Dropping or throwing a bug will no longer say that it uncurled several times"

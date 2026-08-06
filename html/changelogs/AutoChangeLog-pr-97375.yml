@@ -1,5 +1,0 @@
-author: "rkz/Tsar-Salat"
-delete-after: True
-changes:
-  - bugfix: "manually aimed emitters now fire where you clicked instead of snapping to the direction they face"
-  - bugfix: "fixes a 4 year old projectile code bug that mirrored the angle across the diagonal"
