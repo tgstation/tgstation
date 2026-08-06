@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "birdboat will no longer try to eat everything in sight at all times, in exchange their range for noticing food has been increased..."
