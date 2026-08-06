@@ -6,6 +6,7 @@
 		/obj/item/shockpaddles = 1,
 		/obj/item/melee/touch_attack/shock = 1,
 		/obj/item/melee/baton/security = 1.33,
+		/obj/item/melee/baton/abductor = 1.33,
 		/obj/item/gun/energy = 1.67,
 	)
 	operation_flags = OPERATION_MORBID | OPERATION_NOTABLE
