@@ -1,4 +1,0 @@
-author: "QuiteLiterallyAnything"
-delete-after: True
-changes:
-  - bugfix: "Clicking on a piece of paper with a folder no longer forces you to read that paper."

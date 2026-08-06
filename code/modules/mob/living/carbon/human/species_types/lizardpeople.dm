@@ -4,6 +4,7 @@
 	plural_form = "Lizardfolk"
 	id = SPECIES_LIZARD
 	inherent_traits = list(
+		TRAIT_COLD_BLOODED,
 		TRAIT_MUTANT_COLORS,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
@@ -30,7 +31,6 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/carbon/lizard
 	exotic_bloodtype = BLOOD_TYPE_LIZARD
 	inert_mutation = /datum/mutation/firebreath
-	death_sound = 'sound/mobs/humanoids/lizard/deathsound.ogg'
 	species_language_holder = /datum/language_holder/lizard
 	digitigrade_customization = DIGITIGRADE_OPTIONAL
 
@@ -47,80 +47,10 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard,
 	)
 
-/// Lizards are cold blooded and do not stabilize body temperature naturally
-/datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick)
-	return
-
 /datum/species/lizard/randomize_features()
 	var/list/features = ..()
 	features[FEATURE_LIZARD_MARKINGS] = pick(SSaccessories.feature_list[FEATURE_LIZARD_MARKINGS])
 	return features
-
-/datum/species/lizard/get_scream_sound(mob/living/carbon/human/lizard)
-	return pick(
-		'sound/mobs/humanoids/lizard/lizard_scream_1.ogg',
-		'sound/mobs/humanoids/lizard/lizard_scream_2.ogg',
-		'sound/mobs/humanoids/lizard/lizard_scream_3.ogg',
-	)
-
-/datum/species/lizard/get_cough_sound(mob/living/carbon/human/lizard)
-	if(lizard.physique == FEMALE)
-		return pick(
-			'sound/mobs/humanoids/human/cough/female_cough1.ogg',
-			'sound/mobs/humanoids/human/cough/female_cough2.ogg',
-			'sound/mobs/humanoids/human/cough/female_cough3.ogg',
-			'sound/mobs/humanoids/human/cough/female_cough4.ogg',
-			'sound/mobs/humanoids/human/cough/female_cough5.ogg',
-			'sound/mobs/humanoids/human/cough/female_cough6.ogg',
-		)
-	return pick(
-		'sound/mobs/humanoids/human/cough/male_cough1.ogg',
-		'sound/mobs/humanoids/human/cough/male_cough2.ogg',
-		'sound/mobs/humanoids/human/cough/male_cough3.ogg',
-		'sound/mobs/humanoids/human/cough/male_cough4.ogg',
-		'sound/mobs/humanoids/human/cough/male_cough5.ogg',
-		'sound/mobs/humanoids/human/cough/male_cough6.ogg',
-	)
-
-
-/datum/species/lizard/get_cry_sound(mob/living/carbon/human/lizard)
-	if(lizard.physique == FEMALE)
-		return pick(
-			'sound/mobs/humanoids/human/cry/female_cry1.ogg',
-			'sound/mobs/humanoids/human/cry/female_cry2.ogg',
-		)
-	return pick(
-		'sound/mobs/humanoids/human/cry/male_cry1.ogg',
-		'sound/mobs/humanoids/human/cry/male_cry2.ogg',
-		'sound/mobs/humanoids/human/cry/male_cry3.ogg',
-	)
-
-
-/datum/species/lizard/get_sneeze_sound(mob/living/carbon/human/lizard)
-	if(lizard.physique == FEMALE)
-		return 'sound/mobs/humanoids/human/sneeze/female_sneeze1.ogg'
-	return 'sound/mobs/humanoids/human/sneeze/male_sneeze1.ogg'
-
-/datum/species/lizard/get_laugh_sound(mob/living/carbon/human/lizard)
-	return 'sound/mobs/humanoids/lizard/lizard_laugh1.ogg'
-
-/datum/species/lizard/get_sigh_sound(mob/living/carbon/human/lizard)
-	if(lizard.physique == FEMALE)
-		return SFX_FEMALE_SIGH
-	return SFX_MALE_SIGH
-
-/datum/species/lizard/get_sniff_sound(mob/living/carbon/human/lizard)
-	if(lizard.physique == FEMALE)
-		return 'sound/mobs/humanoids/human/sniff/female_sniff.ogg'
-	return 'sound/mobs/humanoids/human/sniff/male_sniff.ogg'
-
-/datum/species/lizard/get_snore_sound(mob/living/carbon/human/lizard)
-	if(lizard.physique == FEMALE)
-		return SFX_SNORE_FEMALE
-	return SFX_SNORE_MALE
-
-/datum/species/lizard/get_hiss_sound(mob/living/carbon/human/lizard)
-	return 'sound/mobs/humanoids/lizard/lizard_hiss.ogg'
 
 /datum/species/lizard/get_physical_attributes()
 	return "Lizardpeople can withstand slightly higher temperatures than most species, but they are very vulnerable to the cold \
@@ -176,6 +106,7 @@ Lizard subspecies: ASHWALKERS
 	mutantlungs = /obj/item/organ/lungs/lavaland
 	mutantbrain = /obj/item/organ/brain/primitive
 	inherent_traits = list(
+		TRAIT_COLD_BLOODED,
 		TRAIT_MUTANT_COLORS,
 		TRAIT_VIRUSIMMUNE,
 	)
@@ -204,6 +135,7 @@ Lizard subspecies: SILVER SCALED
 	id = SPECIES_LIZARD_SILVER
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	inherent_traits = list(
+		TRAIT_COLD_BLOODED,
 		TRAIT_HOLY,
 		TRAIT_NOBREATH,
 		TRAIT_PIERCEIMMUNE,
