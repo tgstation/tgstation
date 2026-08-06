@@ -1431,9 +1431,8 @@
 /area/shuttle/escape)
 "LO" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/bot_white/left,
-/obj/structure/closet/crate/goldcrate/stocked,
 /obj/machinery/light/directional/east,
+/obj/effect/turf_decal/bot_white/left,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Mc" = (
@@ -1477,8 +1476,8 @@
 /area/shuttle/escape)
 "Nz" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/bot_white/left,
-/obj/structure/closet/crate/silvercrate,
+/obj/structure/closet/crate/goldcrate/stocked,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "NA" = (
@@ -1544,6 +1543,12 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
+/area/shuttle/escape)
+"OV" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/closet/crate/silvercrate,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Pl" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -2377,7 +2382,7 @@ xN
 RK
 RK
 ma
-ma
+OV
 kn
 cl
 vY
