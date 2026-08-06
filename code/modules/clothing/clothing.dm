@@ -106,7 +106,7 @@
 		qdel(src)
 
 /obj/item/clothing/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(user.combat_mode || !ismoth(target) || ispickedupmob(src))
+	if(user.combat_mode || !HAS_TRAIT(user, TRAIT_CLOTH_EATER) || ispickedupmob(src))
 		return ..()
 	if((clothing_flags & INEDIBLE_CLOTHING) || (resistance_flags & INDESTRUCTIBLE))
 		return ..()
@@ -398,7 +398,7 @@
 		.["sterile"] = "Increases the speed at which reagents are administered to others by [round((1/NITRILE_GLOVES_MULTIPLIER-1)*100, 1)]%."
 	if(TRAIT_FAST_CUFFING in clothing_traits)
 		.["secure"] = "Increases the speed at which you apply restraints."
-	if(emp_protection >= EMP_PROTECTION_NONE)
+	if(emp_protection > EMP_PROTECTION_NONE)
 		.["emp resistant"] = "Reduces the effects of incoming electromagnetic pulses on the wearer."
 
 /obj/item/clothing/examine_descriptor(mob/user)

@@ -86,6 +86,8 @@
 	skillchips = list(/obj/item/skillchip/job/engineer)
 	pda_slot = ITEM_SLOT_LPOCKET
 
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/engineering/ce
+
 /datum/outfit/job/ce/mod
 	name = "Chief Engineer (MODsuit)"
 

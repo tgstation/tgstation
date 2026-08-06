@@ -20,6 +20,9 @@
 	layer = MOB_LAYER
 	pressure_resistance = 2
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	// Could use a more specific sound since it's a lot of paper (ditto with `/paperwork`).
+	drop_sound = 'sound/items/handling/paper_drop.ogg'
+	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 
 ///Nanotrasen documents
 /obj/item/documents/nanotrasen

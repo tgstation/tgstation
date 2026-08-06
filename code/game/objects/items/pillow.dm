@@ -34,6 +34,7 @@
 		force_wielded = 10, \
 	)
 	AddElement(/datum/element/disarm_attack)
+	RegisterSignal(src, COMSIG_ITEM_CAN_DISARM_ATTACK, PROC_REF(can_disarm_attack))
 
 	var/static/list/slapcraft_recipe_list = list(\
 		/datum/crafting_recipe/pillow_suit, /datum/crafting_recipe/pillow_hood,\
@@ -48,6 +49,14 @@
 	. = ..()
 	QDEL_NULL(pillow_trophy)
 
+/obj/item/pillow/proc/can_smother(mob/living/victim, mob/living/user)
+	return (victim.body_position == LYING_DOWN || (user.grab_state >= GRAB_AGGRESSIVE && user.pulling == victim))
+
+/obj/item/pillow/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, message)
+	SIGNAL_HANDLER
+	if(can_smother(victim, user))
+		return COMPONENT_BLOCK_ITEM_DISARM_ATTACK
+
 /obj/item/pillow/attack(mob/living/carbon/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!iscarbon(target_mob))
@@ -60,7 +69,7 @@
 	last_fighter = user
 	playsound(user, hit_sound, 80) //the basic 50 vol is barely audible
 
-/obj/item/pillow/attack_secondary(mob/living/carbon/victim, mob/living/user, params)
+/obj/item/pillow/attack_secondary(mob/living/carbon/victim, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(victim))
 		return
@@ -68,10 +77,11 @@
 		return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_notice("You can't bring yourself to harm [victim]"))
-		return
-	if((victim.body_position == LYING_DOWN) || ((user.grab_state >= GRAB_AGGRESSIVE) && (user.pulling == victim)))
-		user.visible_message("[user] starts to smother [victim]", span_notice("You begin smothering [victim]"), vision_distance = COMBAT_MESSAGE_RANGE)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(can_smother(victim, user))
+		user.visible_message("[user] starts to smother [victim]!", span_notice("You begin smothering [victim]!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		INVOKE_ASYNC(src, PROC_REF(smothering), user, victim)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/pillow/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!bricked && istype(tool, /obj/item/stack/sheet/mineral/sandstone))
@@ -147,7 +157,7 @@
 /// Smothers the victim while the do_after succeeds and the victim is laying down or being strangled
 /obj/item/pillow/proc/smothering(mob/living/carbon/user, mob/living/carbon/victim)
 	while(victim)
-		if((victim.body_position != LYING_DOWN) && ((user.grab_state < GRAB_AGGRESSIVE) || (user.pulling != victim)))
+		if(!can_smother(victim, user))
 			break
 		if(!do_after(user, 1 SECONDS, victim))
 			break

@@ -48,6 +48,8 @@
 // Color priorities for bodyparts
 /// Abductor team recoloring priority
 #define LIMB_COLOR_AYYLMAO 5
+/// Ethereal bodypart effect (emag, flicker) color priority
+#define LIMB_COLOR_ETHEREAL 7
 /// Hulk effect color priority
 #define LIMB_COLOR_HULK 10
 /// Fish infusion color priority
@@ -163,6 +165,41 @@ DEFINE_BITFIELD(surgery_state, list(
 /// Surgery states flipped on automatically if the bodypart lacks vessels
 #define VESSELLESS_SURGERY_STATES (SURGERY_VESSELS_CLAMPED|SURGERY_ORGANS_CUT)
 
+// ~biology defines
+// What kind of biology a limb has, and what wounds it can suffer
+/// Has absolutely fucking nothing, no wounds
+#define BIO_INORGANIC NONE
+/// Has bone - allows the victim to suffer T2-T3 bone blunt wounds
+#define BIO_BONE (1<<0)
+/// Has flesh - allows the victim to suffer fleshy slash pierce and burn wounds
+#define BIO_FLESH (1<<1)
+/// Has metal - allows the victim to suffer robotic blunt and burn wounds
+#define BIO_METAL (1<<2)
+/// Has wood - should probably be able to catch on fire, or something
+#define BIO_WOOD (1<<3)
+/// Is wired internally - allows the victim to suffer electrical wounds (robotic T1-T3 slash/pierce)
+#define BIO_WIRED (1<<4)
+/// Has bloodflow - can suffer bleeding wounds and can bleed
+#define BIO_BLOODED (1<<5)
+/// Is connected by a joint - can suffer T1 bone blunt wounds (dislocation)
+#define BIO_JOINTED (1<<6)
+/// Skin is covered in thick chitin and is resistant to cutting
+#define BIO_CHITIN (1<<7)
+/// the bodypart is made of rocks.
+#define BIO_STONE (1<<8)
+/// Limb is comprised entirely of slime jelly - can be cannibalized by any jelly person with the ability to eat their own limbs to replenish their own slime (blood)
+#define BIO_JELLY (1<<9)
+/// Robotic - can suffer all metal/wired wounds, such as: UNIMPLEMENTED PLEASE UPDATE ONCE SYNTH WOUNDS 9/5/2023 ~Niko
+#define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
+/// Has flesh and bone - See BIO_BONE and BIO_FLESH
+#define BIO_FLESH_BONE (BIO_BONE|BIO_FLESH)
+/// Standard humanoid - can bleed and suffer all flesh/bone wounds, such as: T1-3 slash/pierce/burn/blunt, except dislocations. Think human heads/chests
+#define BIO_STANDARD_UNJOINTED (BIO_FLESH_BONE|BIO_BLOODED)
+/// Standard humanoid limbs - can bleed and suffer all flesh/bone wounds, such as: T1-3 slash/pierce/burn/blunt. Can also bleed, and be dislocated. Think human arms and legs
+#define BIO_STANDARD_JOINTED (BIO_STANDARD_UNJOINTED|BIO_JOINTED)
+/// Xenomorph limbs (xenos are immune to wounds anyhow)
+#define BIO_STANDARD_ALIEN (BIO_CHITIN|BIO_BONE|BIO_BLOODED|BIO_JOINTED)
+
 /// Biological state that has some kind of skin that can be cut.
 #define BIOSTATE_HAS_SKIN (BIO_FLESH|BIO_METAL|BIO_CHITIN)
 /// Checks if a bodypart lacks both flesh and metal, meaning it has no skin to cut.
@@ -193,3 +230,6 @@ DEFINE_BITFIELD(surgery_state, list(
 #define LIMB_ITEM_GAUZE "gauze"
 /// Tourniquet slot
 #define LIMB_ITEM_TOURNIQUET "tourniquet"
+
+/// For scaling the effectiveness of certain effects to the total bodypart count
+#define GET_BODYPART_COEFFICIENT(X) round(X.len / BODYPARTS_DEFAULT_MAXIMUM , 0.1)
