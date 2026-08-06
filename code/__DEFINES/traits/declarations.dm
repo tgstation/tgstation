@@ -1049,9 +1049,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_STRONG_STOMACH "strong_stomach"
 #define TRAIT_VEGETARIAN "trait_vegetarian"
 #define TRAIT_KEEN_NOSE "keen_nose"
-// BANDASTATION ADDITION: Limp Quirk
-#define TRAIT_LIMP "trait_limp"
-// BANDASTATION ADDITION: END
 
 /// This mob always lands on their feet when they fall, for better or for worse.
 #define TRAIT_CATLIKE_GRACE "catlike_grace"
