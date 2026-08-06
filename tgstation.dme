@@ -1826,6 +1826,7 @@
 #include "code\datums\elements\reagents_item_heatable.dm"
 #include "code\datums\elements\regal_rat_minion.dm"
 #include "code\datums\elements\relay_attackers.dm"
+#include "code\datums\elements\revenant_receptacle.dm"
 #include "code\datums\elements\ridable.dm"
 #include "code\datums\elements\rotation.dm"
 #include "code\datums\elements\rust.dm"

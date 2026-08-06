@@ -64,10 +64,13 @@
 		update_signals = list(COMSIG_ATOM_BREAK), \
 		check_reflect_signals = list(SIGNAL_ADDTRAIT(TRAIT_NO_MIRROR_REFLECTION), SIGNAL_REMOVETRAIT(TRAIT_NO_MIRROR_REFLECTION)), \
 	)
+	if(cursable)
+		if(prob(ROUNDSTART_CURSED_CHANCE) && mapload)
+			AddComponent(/datum/component/revenant_prison, create_on_release = TRUE)
+		else
+			AddElement(/datum/element/revenant_receptacle)
 	if(mapload)
 		find_and_mount_on_atom()
-		if(prob(ROUNDSTART_CURSED_CHANCE) && cursable)
-			AddComponent(/datum/component/revenant_prison, create_on_release = TRUE)
 	update_choices()
 	register_context()
 
