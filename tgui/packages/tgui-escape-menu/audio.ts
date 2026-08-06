@@ -10,7 +10,7 @@ function playOneShot(name: string) {
   const url = getAssetUrl(name);
   if (!url) return;
   const audio = new Audio(url);
-  audio.volume = 0.8;
+  audio.volume = 0.6;
   audio.play().catch(() => {});
 }
 

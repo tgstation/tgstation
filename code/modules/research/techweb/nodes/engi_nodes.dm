@@ -172,7 +172,6 @@
 		/datum/design/welding_goggles,
 		/datum/design/tray_goggles,
 		/datum/design/geiger,
-		/datum/design/diode_disk_stamina
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_ENGINEERING)

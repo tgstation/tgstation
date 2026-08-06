@@ -3,6 +3,7 @@
 	name = "wings"
 	desc = "Spread your wings and FLLLLLLLLYYYYY!"
 
+	gender = PLURAL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_EXTERNAL_WINGS
 

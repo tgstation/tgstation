@@ -54,6 +54,17 @@
 /obj/item/organ/stomach/ethereal/proc/on_multitool_act(atom/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
 
+	// Checks to ensure we're not doing surgery on a robotic part.
+	if(!owner)
+		return multitool_act(user, tool)
+
+	var/obj/item/bodypart/targeted_part = owner.get_bodypart(user.zone_selected)
+	if(isnull(targeted_part) || targeted_part.bodytype != BODYTYPE_ROBOTIC)
+		return multitool_act(user, tool)
+
+	if(HAS_TRAIT(targeted_part, TRAIT_READY_TO_OPERATE))
+		return
+
 	return multitool_act(user, tool)
 
 /obj/item/organ/stomach/ethereal/multitool_act(mob/living/user, obj/item/tool)
