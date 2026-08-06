@@ -1,4 +1,0 @@
-author: "YesterdaysPromise"
-delete-after: True
-changes:
-  - bugfix: "Walls now remember what kind of grider was used to build them to return to upon deconstruction."

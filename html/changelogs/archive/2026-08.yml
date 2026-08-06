@@ -159,3 +159,10 @@
   xPokee, UvvU:
   - bugfix: Recoloring clothing items via 'Edit Color as Matrix' will now properly
       reflect when the clothing item is worn.
+2026-08-06:
+  YesterdaysPromise:
+  - bugfix: Walls now remember what kind of grider was used to build them to return
+      to upon deconstruction.
+  levels0:
+  - spellcheck: shifting fragments now tastes like egg yolk
+  - spellcheck: removed the lies about reflective blob being weaker than strong blob
