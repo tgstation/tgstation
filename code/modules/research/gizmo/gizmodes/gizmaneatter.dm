@@ -14,7 +14,7 @@
 
     var/mob/living/who_was_eatten
 
-	var/mob/living/carbon/gizmo_flesh =
+	var/mob/living/carbon/gizmo_flesh
 
 /datum/gizpulse/man_eatter/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
 	var/obj/item/organ/stomach/alien/gizmo_stomach = new()
