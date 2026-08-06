@@ -16,6 +16,9 @@
 
 /// Merge a bodypart into the effect
 /datum/status_effect/grouped/bodypart_effect/proc/add_bodypart(obj/item/bodypart/bodypart, special, lazy)
+	if(bodypart in bodyparts)
+		return FALSE
+
 	RegisterSignal(bodypart, COMSIG_BODYPART_REMOVED, PROC_REF(on_bodypart_removed))
 	RegisterSignal(bodypart, COMSIG_QDELETING, PROC_REF(on_bodypart_destroyed))
 
@@ -24,9 +27,11 @@
 	if(!is_active && bodyparts.len >= minimum_bodyparts)
 		activate()
 
+	return TRUE
+
 /// Remove a bodypart from the effect. Deleting = TRUE is used during clean-up phase
 /datum/status_effect/grouped/bodypart_effect/proc/remove_bodypart(mob/living/carbon/old_owner, obj/item/bodypart/bodypart, deleting)
-	UnregisterSignal(bodypart, COMSIG_BODYPART_REMOVED)
+	UnregisterSignal(bodypart, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING))
 
 	bodyparts.Remove(bodypart)
 
