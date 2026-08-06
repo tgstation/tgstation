@@ -19,6 +19,10 @@
 
 /obj/item/organ/heart/ethereal/Initialize(mapload)
 	. = ..()
+	set_ethereal_color(ethereal_color)
+
+/obj/item/organ/heart/ethereal/proc/set_ethereal_color(new_color)
+	ethereal_color = new_color
 	add_atom_colour(ethereal_color, FIXED_COLOUR_PRIORITY)
 	update_appearance()
 

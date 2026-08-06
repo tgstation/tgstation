@@ -127,7 +127,7 @@
 	contains = list(/obj/item/gun/energy/laser/soul)
 
 /datum/supply_pack/goody/smg_single
-	name = "Disabler SMG Single_Pack"
+	name = "Disabler SMG Single Pack"
 	desc = "Contains one disabler SMG, capable of rapidly firing weak disabler beams."
 	cost = PAYCHECK_COMMAND * 6
 	access_view = ACCESS_WEAPONS

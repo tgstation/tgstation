@@ -46,6 +46,8 @@
 	var/toxic_foodtypes = TOXIC //human tastes are default
 	/// Whether this tongue modifies speech via signal
 	var/modifies_speech = FALSE
+	/// List of emote keys and sounds for overriding sounds from emotes
+	VAR_PROTECTED/emote_sounds
 
 /obj/item/organ/tongue/Initialize(mapload)
 	. = ..()
@@ -136,7 +138,8 @@
 
 /obj/item/organ/tongue/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
-
+	for(var/key in emote_sounds)
+		RegisterSignal(receiver, COMSIG_MOB_EMOTE_SOUND(key), PROC_REF(get_tongue_emote_sound))
 	if(modifies_speech)
 		RegisterSignal(receiver, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	receiver.voice_filter = voice_filter
@@ -151,6 +154,8 @@
 	. = ..()
 
 	temp_say_mod = ""
+	for(var/key in emote_sounds)
+		UnregisterSignal(organ_owner, COMSIG_MOB_EMOTE_SOUND(key))
 	UnregisterSignal(organ_owner, COMSIG_MOB_SAY)
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(organ_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
@@ -176,6 +181,11 @@
 	// No effect
 	return ""
 
+/obj/item/organ/tongue/proc/get_tongue_emote_sound(datum/source, key, list/sounds)
+	SIGNAL_HANDLER
+	var/sound_override = get_emote_sound_from_list(emote_sounds[key], owner)
+	sounds[sound_override] = EMOTE_SOUND_TONGUE
+
 /obj/item/organ/tongue/lizard
 	name = "forked tongue"
 	desc = "A thin and long muscle typically found in reptilian races, apparently moonlights as a nose."
@@ -187,6 +197,16 @@
 	liked_foodtypes = GORE | MEAT | SEAFOOD | NUTS | BUGS
 	disliked_foodtypes = GRAIN | DAIRY | CLOTH | GROSS
 	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.9,aresample=%SAMPLE_RATE%,atempo=1/0.9,aformat=channel_layouts=mono,volume=0.2 [p0]; [out2] asetrate=%SAMPLE_RATE%*1.1,aresample=%SAMPLE_RATE%,atempo=1/1.1,aformat=channel_layouts=mono,volume=0.2[p2]; [p0][0][p2] amix=inputs=3"}
+	emote_sounds = list(
+		/datum/emote/living/scream::key = list(
+			'sound/mobs/humanoids/lizard/lizard_scream_1.ogg',
+			'sound/mobs/humanoids/lizard/lizard_scream_2.ogg',
+			'sound/mobs/humanoids/lizard/lizard_scream_3.ogg',
+		),
+		/datum/emote/living/carbon/hiss::key = 'sound/mobs/humanoids/lizard/lizard_hiss.ogg',
+		/datum/emote/living/laugh::key = 'sound/mobs/humanoids/lizard/lizard_laugh1.ogg',
+		/datum/emote/living/deathgasp::key = 'sound/mobs/humanoids/lizard/deathsound.ogg',
+	)
 	var/static/list/speech_replacements = list(
 		new /regex("s+", "g") = "sss",
 		new /regex("S+", "g") = "SSS",
@@ -421,6 +441,13 @@
 	taste_sensitivity = 32
 	liked_foodtypes = GROSS | MEAT | RAW | GORE
 	disliked_foodtypes = NONE
+	emote_sounds = list(
+		/datum/emote/living/scream::key = list(
+			'sound/effects/hallucinations/veryfar_noise.ogg',
+			'sound/effects/hallucinations/wail.ogg',
+			'sound/effects/hallucinations/far_noise.ogg',
+		),
+	)
 	// List of english words that translate to zombie phrases
 	var/static/list/english_to_zombie = list()
 	/// Spooky growls we sometimes play while alive
@@ -489,7 +516,7 @@
 /obj/item/organ/tongue/zombie/on_life(seconds_per_tick)
 	. = ..()
 	if(!IS_UNCONSCIOUS_OR_CRIT(owner) && SPT_PROB(2, seconds_per_tick))
-		playsound(owner, pick(spooks), 50, TRUE, 10)
+		playsoundtoken(owner, pick(spooks), 50, TRUE, 10)
 
 /obj/item/organ/tongue/alien
 	name = "alien tongue"
@@ -499,6 +526,11 @@
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
 	modifies_speech = TRUE // not really, they just hiss
 	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.8,aresample=%SAMPLE_RATE%,atempo=1/0.8,aformat=channel_layouts=mono [p0]; [out2] asetrate=%SAMPLE_RATE%*1.2,aresample=%SAMPLE_RATE%,atempo=1/1.2,aformat=channel_layouts=mono[p2]; [p0][0][p2] amix=inputs=3"}
+	emote_sounds = list(
+		/datum/emote/living/deathgasp::key = 'sound/mobs/non-humanoids/hiss/hiss6.ogg',
+		/datum/emote/living/carbon/hiss::key = SFX_HISS,
+		/datum/emote/living/scream::key = 'sound/mobs/non-humanoids/hiss/hiss5.ogg',
+	)
 
 // Aliens can only speak alien and a few other languages.
 /obj/item/organ/tongue/alien/get_possible_languages()
@@ -557,6 +589,13 @@
 	liked_foodtypes = VEGETABLES
 	disliked_foodtypes = FRUIT | CLOTH
 	languages_native = list(/datum/language/calcic)
+	emote_sounds = list(
+		/datum/emote/living/scream::key = list(
+			'sound/mobs/humanoids/plasmaman/plasmeme_scream_1.ogg',
+			'sound/mobs/humanoids/plasmaman/plasmeme_scream_2.ogg',
+			'sound/mobs/humanoids/plasmaman/plasmeme_scream_3.ogg',
+		),
+	)
 
 /obj/item/organ/tongue/robot
 	name = "robotic voicebox"
@@ -571,6 +610,9 @@
 	taste_sensitivity = 25 // not as good as an organic tongue
 	organ_traits = list(TRAIT_SILICON_EMOTES_ALLOWED)
 	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
+	emote_sounds = list(
+		/datum/emote/living/deathgasp::key = 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg',
+	)
 
 /obj/item/organ/tongue/robot/could_speak_language(datum/language/language_path)
 	return TRUE // THE MAGIC OF ELECTRONICS
@@ -620,6 +662,25 @@
 	attack_verb_simple = list("shock", "jolt", "zap")
 	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.99,aresample=%SAMPLE_RATE%,volume=0.3 [p0]; [p0][out2] amix=inputs=2"}
 	languages_native = list(/datum/language/voltaic)
+	emote_sounds = list(
+		/datum/emote/living/scream::key = list(
+			'sound/mobs/humanoids/ethereal/ethereal_scream_1.ogg',
+			'sound/mobs/humanoids/ethereal/ethereal_scream_2.ogg',
+			'sound/mobs/humanoids/ethereal/ethereal_scream_3.ogg',
+		),
+		/datum/emote/living/carbon/hiss::key = 'sound/mobs/humanoids/ethereal/ethereal_hiss.ogg',
+	)
+
+/obj/item/organ/tongue/ethereal/lustrous
+	//lustrous screams.
+	emote_sounds = list(
+		/datum/emote/living/scream::key = list(
+			'sound/mobs/humanoids/ethereal/lustrous_scream_1.ogg',
+			'sound/mobs/humanoids/ethereal/lustrous_scream_2.ogg',
+			'sound/mobs/humanoids/ethereal/lustrous_scream_3.ogg',
+		),
+		/datum/emote/living/carbon/hiss::key = 'sound/mobs/humanoids/ethereal/ethereal_hiss.ogg',
+	)
 
 /obj/item/organ/tongue/cat
 	name = "felinid tongue"
@@ -627,9 +688,12 @@
 	say_mod = "meows"
 	liked_foodtypes = SEAFOOD | ORANGES | BUGS | GORE
 	disliked_foodtypes = GROSS | CLOTH | RAW
-	organ_traits = list(TRAIT_WOUND_LICKER, TRAIT_FISH_EATER, TRAIT_CARPOTOXIN_IMMUNE)
+	organ_traits = list(TRAIT_WOUND_LICKER, TRAIT_FISH_EATER, TRAIT_CARPOTOXIN_IMMUNE, TRAIT_CAT_EMOTES_ALLOWED)
 	languages_native = list(/datum/language/nekomimetic)
 	actions_types = list(/datum/action/item_action/organ_action/go_feral)
+	emote_sounds = list(
+		/datum/emote/living/carbon/hiss::key = 'sound/mobs/humanoids/felinid/felinid_hiss.ogg',
+	)
 	var/feral_mode = FALSE
 
 /obj/item/organ/tongue/cat/on_bodypart_insert(obj/item/bodypart/head)
@@ -682,6 +746,9 @@
 	liked_foodtypes = MEAT | FRUIT | BUGS
 	disliked_foodtypes = CLOTH
 	languages_native = list(/datum/language/monkey)
+	emote_sounds = list(
+		/datum/emote/living/scream::key = SFX_SCREECH,
+	)
 
 /obj/item/organ/tongue/moth
 	name = "moth tongue"
@@ -691,6 +758,12 @@
 	disliked_foodtypes = FRUIT | GROSS | BUGS | GORE
 	toxic_foodtypes = MEAT | RAW | SEAFOOD
 	languages_native = list(/datum/language/moffic)
+	organ_traits = list(TRAIT_MOTH_EMOTES_ALLOWED)
+	emote_sounds = list(
+		/datum/emote/living/scream::key = 'sound/mobs/humanoids/moth/scream_moth.ogg',
+		/datum/emote/living/laugh::key = 'sound/mobs/humanoids/moth/moth_laugh1.ogg',
+		/datum/emote/living/deathgasp::key = 'sound/mobs/humanoids/moth/moth_death.ogg',
+	)
 
 /obj/item/organ/tongue/mush
 	name = "mush-tongue-room"
@@ -721,3 +794,12 @@
 	disliked_foodtypes = NONE //you don't care for much else besides stone
 	toxic_foodtypes = NONE //you can eat fucking uranium
 	languages_native = list(/datum/language/terrum)
+
+/obj/item/organ/tongue/shadow
+	name = "shadow tongue"
+	color = COLOR_ALMOST_BLACK
+	languages_native = list(/datum/language/shadowtongue)
+	say_mod = "wails"
+	emote_sounds = list(
+		/datum/emote/living/scream::key = 'sound/mobs/humanoids/shadow/shadow_wail.ogg',
+	)
