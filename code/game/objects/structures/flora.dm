@@ -119,16 +119,16 @@
 			damage_amount *= 4
 	return ..()
 
-/obj/structure/flora/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/flora/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, ignore_walls = TRUE)
 	var/use_default_sound = TRUE //Because I don't wanna do unnecessary bitflag checks in a single if statement, while also allowing for multiple sounds to be played
 	if(flora_flags & FLORA_HERBAL)
-		playsound(src, SFX_CRUNCHY_BUSH_WHACK, 50, vary = FALSE)
+		playsound(src, SFX_CRUNCHY_BUSH_WHACK, 50, vary = FALSE, ignore_walls = ignore_walls)
 		use_default_sound = FALSE
 	if(flora_flags & FLORA_WOODEN)
-		playsound(src, SFX_TREE_CHOP, 50, vary = FALSE)
+		playsound(src, SFX_TREE_CHOP, 50, vary = FALSE, ignore_walls = ignore_walls)
 		use_default_sound = FALSE
 	if(flora_flags & FLORA_STONE)
-		playsound(src, SFX_ROCK_TAP, 50, vary = FALSE)
+		playsound(src, SFX_ROCK_TAP, 50, vary = FALSE, ignore_walls = ignore_walls)
 		use_default_sound = FALSE
 	if(use_default_sound)
 		return ..()

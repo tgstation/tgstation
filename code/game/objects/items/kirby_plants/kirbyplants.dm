@@ -90,6 +90,13 @@
 
 	return plant_states
 
+/obj/item/kirbyplants/proc/wither()
+	if(dead)
+		return
+
+	dead = TRUE
+	update_appearance()
+
 /obj/item/kirbyplants/random
 	icon = 'icons/obj/fluff/flora/_flora.dmi'
 	icon_state = "random_plant"
