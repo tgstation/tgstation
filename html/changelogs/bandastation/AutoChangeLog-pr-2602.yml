@@ -1,0 +1,4 @@
+author: "IWantSomeFish"
+delete-after: True
+changes:
+  - rscdel: "Модульная черта \"Limp\" удалена из игры."
