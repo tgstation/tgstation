@@ -32,8 +32,7 @@
     // launch meet hook like traitor chef from gizmo
     // to choosen target
 
-
-	targe.count_angle()
+	angle_of_target = get_angle(holder, target)
 
 	gizmo_hook.fire(angle_of_target)
 
