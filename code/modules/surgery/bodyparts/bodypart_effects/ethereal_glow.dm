@@ -35,7 +35,7 @@
 
 /datum/status_effect/grouped/bodypart_effect/ethereal_glow/add_bodypart(obj/item/bodypart/bodypart, special, lazy)
 	. = ..()
-	if (. && !lazy)
+	if (!lazy)
 		refresh_light_color()
 
 /datum/status_effect/grouped/bodypart_effect/ethereal_glow/on_remove()
