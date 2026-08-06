@@ -1,0 +1,5 @@
+author: "Odairu"
+delete-after: True
+changes:
+  - rscadd: "AIs can pick the color of their hologram."
+  - bugfix: "holo ray on holograms no longer shows twice"
