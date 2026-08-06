@@ -35,9 +35,6 @@
 		mutantears = /obj/item/organ/ears
 	return ..()
 
-/datum/species/human/felinid/get_hiss_sound(mob/living/carbon/human/felinid)
-	return 'sound/mobs/humanoids/felinid/felinid_hiss.ogg'
-
 /proc/mass_purrbation()
 	for(var/mob in GLOB.human_list)
 		purrbation_apply(mob)

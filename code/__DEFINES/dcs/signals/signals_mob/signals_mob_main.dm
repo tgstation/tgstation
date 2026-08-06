@@ -161,6 +161,11 @@
 	#define COMPONENT_EMOTE_COOLDOWN_BYPASS (1<<0)
 ///from /mob/living/emote(): ()
 #define COMSIG_MOB_EMOTE "mob_emote"
+///from base of datum/emote/get_sound(): (key, list/sounds)
+#define COMSIG_MOB_EMOTE_SOUND(key) "mob_emote_sound_[key]"
+	#define EMOTE_SOUND_TONGUE 1
+	#define EMOTE_SOUND_MASK 2
+	#define EMOTE_SOUND_STATUS_EFFECT 3
 ///from base of mob/swap_hand(): (obj/item/currently_held_item)
 #define COMSIG_MOB_SWAPPING_HANDS "mob_swapping_hands"
 	#define COMPONENT_BLOCK_SWAP (1<<0)
