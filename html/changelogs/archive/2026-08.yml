@@ -160,6 +160,16 @@
   - bugfix: Recoloring clothing items via 'Edit Color as Matrix' will now properly
       reflect when the clothing item is worn.
 2026-08-06:
+  Jacquerel:
+  - balance: Mobs spawning on Lavaland should be further spaced apart
+  - balance: Lavaland mobs are no longer guaranteed to respawn during a spawn, so
+      the map will refill more gradually
+  Melbert:
+  - rscadd: '"Pyromania", a 6 point positive quirk that gives you resistance to damage
+      from overheating (not direct fire damage) and positive moodlets from nearby
+      flames.'
+  - rscadd: '"Pyrophobia", a 3 point negative quirk that gives you a phobia triggered
+      by nearby flames (and god forbid you catch on fire yourself)'
   Odairu:
   - bugfix: Unique AI properly removes law weight for default laws on the specified
       lawset config option
@@ -174,6 +184,9 @@
   - bugfix: Fixed lobstrocities doing nothing
   TealSeer:
   - bugfix: fixed trying to pillow smother someone in a grab pushing them away instead
+  Wisemonster:
+  - balance: The electrodistruptive diode disk has been moved from energy manipulation
+      research to experimental tools research
   YesterdaysPromise:
   - bugfix: Walls now remember what kind of grider was used to build them to return
       to upon deconstruction.
@@ -184,6 +197,9 @@
   levels0:
   - spellcheck: shifting fragments now tastes like egg yolk
   - spellcheck: removed the lies about reflective blob being weaker than strong blob
+  nPocToDark:
+  - rscadd: Added a lavaland volcano and lavanald fungal colony to Rapid Decoration
+      Device
   rkz/Tsar-Salat:
   - bugfix: manually aimed emitters now fire where you clicked instead of snapping
       to the direction they face
