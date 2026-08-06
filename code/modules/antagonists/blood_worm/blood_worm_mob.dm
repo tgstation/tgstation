@@ -269,6 +269,12 @@
 	. = ..()
 	icon_state = "invade-[effect_name]"
 
+/mob/living/basic/bloodworm/lazarus_revive(mob/living/reviver, malfunctioning)
+	revive(HEAL_ALL)
+	if (IS_BLOODWORM(src)) //checks to see if this isn't just a poly'd bloodwormm
+		to_chat(reviver, span_userdanger("[src] resists the control of the injector!"))
+		return
+
 /mob/living/basic/blood_worm/hatchling
 	name = "hatchling blood worm"
 	desc = "A freshly hatched blood worm. It looks hungry and weak, requiring blood to grow further."
