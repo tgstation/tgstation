@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(augury)
 
 	for(var/doombringer in doombringers)
 		var/datum/doom = doombringer
-		if(!doom || QDELETED(doom))
+		if(QDELETED(doom))
 			doombringers -= doom
 			continue
 		var/threat = doombringers[doom]
