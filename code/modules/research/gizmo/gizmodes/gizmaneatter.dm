@@ -12,9 +12,13 @@
 
 /datum/gizpulse/man_eatter
 
-    var/who_was_eatten
+    var/mob/living/who_was_eatten
+
+	var/mob/living/carbon/gizmo_flesh =
 
 /datum/gizpulse/man_eatter/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
+	var/obj/item/organ/stomach/alien/gizmo_stomach = new()
+	gizmo_flesh.Insert(gizmo_stomach, special = True)
 
 
 /datum/gizpulse/man_eatter/proc/eat_man(atom/movable/holder)
