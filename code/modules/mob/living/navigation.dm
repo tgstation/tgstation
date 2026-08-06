@@ -1,6 +1,8 @@
 #define MAX_NAVIGATE_RANGE 125
 
 /mob/living
+	/// Are we currently pathfinding for the navigate verb?
+	var/navigating = FALSE
 	/// Cooldown of the navigate() verb.
 	COOLDOWN_DECLARE(navigate_cooldown)
 
@@ -15,6 +17,9 @@ GAME_VERB_HIDDEN(/mob/living, navigate, "Navigate")
 	if(length(client.navigation_images))
 		addtimer(CALLBACK(src, PROC_REF(cut_navigation)), world.tick_lag)
 		balloon_alert(src, "navigation path removed")
+		return
+	if(navigating)
+		balloon_alert(src, "busy navigating!")
 		return
 	if(!COOLDOWN_FINISHED(src, navigate_cooldown))
 		balloon_alert(src, "navigation on cooldown!")
@@ -68,10 +73,18 @@ GAME_VERB_HIDDEN(/mob/living, navigate, "Navigate")
 		finding_zchange = TRUE
 
 	if(!isatom(navigate_target))
-		stack_trace("Navigate target ([navigate_target]) is not an atom, somehow.")
-		return
+		CRASH("Navigate target ([navigate_target]) is not an atom, somehow.")
 
-	var/list/path = get_path_to(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 1, access = get_access(), skip_first = FALSE)
+	navigating = TRUE
+	var/datum/callback/await = list(CALLBACK(src, PROC_REF(finish_navigation), navigate_target, finding_zchange))
+	if(!SSpathfinder.pathfind(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 1, access = get_access(), skip_first = FALSE, on_finish = await))
+		navigating = FALSE
+		balloon_alert(src, "failed to begin navigation!")
+
+/mob/living/proc/finish_navigation(turf/navigate_target, finding_zchange, list/path)
+	navigating = FALSE
+	if(!client)
+		return
 	if(!length(path))
 		balloon_alert(src, "no valid path with current access!")
 		return
