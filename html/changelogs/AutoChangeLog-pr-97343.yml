@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "Mobs spawning on Lavaland should be further spaced apart"
+  - balance: "Lavaland mobs are no longer guaranteed to respawn during a spawn, so the map will refill more gradually"
