@@ -1,0 +1,5 @@
+author: "Seefaaa"
+delete-after: True
+changes:
+  - bugfix: "SS13.unregister_signal now actually detaches a signal's callback once its last handler has been removed."
+  - bugfix: "HandlerGroup.register_once now fires only once, instead of on every send of the signal."
