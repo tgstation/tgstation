@@ -6,6 +6,8 @@ SUBSYSTEM_DEF(augury)
 	var/list/watchers = list()
 	var/list/doombringers = list()
 
+	/// Associative list of observers given action to a boolean
+	/// indicating whether or not they have been given action.
 	var/list/observers_given_action = list()
 
 /datum/controller/subsystem/augury/stat_entry(msg)
@@ -42,12 +44,11 @@ SUBSYSTEM_DEF(augury)
 				augury_action.Grant(i)
 				observers_given_action[i] = TRUE
 	else
-		for(var/i in observers_given_action)
-			if(observers_given_action[i] && isobserver(i))
-				var/mob/dead/observer/observer_given_action = i
-				for(var/datum/action/innate/augury/augury_action in observer_given_action.actions)
+		for(var/mob/dead/observer/key, value in observers_given_action)
+			if(value && isobserver(key))
+				for(var/datum/action/innate/augury/augury_action in key.actions)
 					qdel(augury_action)
-			observers_given_action -= i
+			observers_given_action -= key
 
 	for(var/watcher in watchers)
 		if(!watcher)
