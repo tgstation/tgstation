@@ -55,10 +55,12 @@
 	apply_wibbly_filters(reflection)
 
 /datum/component/revenant_prison/proc/on_parent_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
 	if(istype(parent, /obj/structure/mirror))
 		examine_list += span_revenwarning("The reflection is shifting and distorted.")
 
 /datum/component/revenant_prison/proc/on_parent_qdeleting(obj/source, force)
+	SIGNAL_HANDLER
 	if(force || !propagate)
 		return
 	for(var/obj/new_home in view(source.drop_location(), SEARCH_RADIUS))
