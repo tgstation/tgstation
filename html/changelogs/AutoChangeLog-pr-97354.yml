@@ -1,0 +1,4 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - bugfix: "fixed trying to pillow smother someone in a grab pushing them away instead"
