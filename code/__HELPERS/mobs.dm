@@ -704,16 +704,34 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 /**
  * Iterates over all mobs that can see the passed movable and adds specific mood events to them based on their personalities.
  *
- * * source: String source for the mood event
+ * * source: The source of the mood event, usually the mob doing something
+ * * mood_key: String source for the mood event
  * * personality_to_mood: A list mapping personality types to mood event types. Example: list(/datum/personality/chill = /datum/mood_event/chill_guy)
  * * range: The range in which to check for viewers. Default is view range.
  * * additional args may be supplied to pass into the mood event constructor.
  */
 /proc/add_personality_mood_to_viewers(atom/movable/source, mood_key, list/personality_to_mood, range, ...)
 	for(var/mob/living/nearby in viewers(range, source))
-		if(IS_UNCONSCIOUS(nearby) || nearby.is_blind())
+		if(nearby == source || IS_UNCONSCIOUS(nearby) || nearby.is_blind())
 			continue
-		for(var/personality in personality_to_mood)
+		for(var/personality, moodlet in personality_to_mood)
 			if(HAS_PERSONALITY(nearby, personality))
-				nearby.add_mood_event(arglist( list("[mood_key]_[personality]", personality_to_mood[personality]) + args.Copy(4) ))
+				nearby.add_mood_event(arglist( list("[mood_key]_[personality]", moodlet) + args.Copy(4) ))
 				break
+
+///Gets an emote sound from a specific list of sounds. Supports lists and genders. Used by emote datums for default sounds, and tongues, masks etc. for overrides.
+/proc/get_emote_sound_from_list(sound, mob/living/user)
+	if(islist(sound))
+		var/list/sounds = sound
+		var/list/possible_sounds = sounds.Copy()
+		var/gender = astype(user, /mob/living/carbon/human)?.physique || user.gender
+		if(gender in possible_sounds)
+			possible_sounds = possible_sounds[gender]
+			if(!islist(possible_sounds))
+				return possible_sounds //it's a single sound
+		else
+			possible_sounds -= list(MALE, FEMALE, PLURAL, NEUTER)
+			if(!length(possible_sounds))
+				return null
+		sound = pick(possible_sounds)
+	return sound

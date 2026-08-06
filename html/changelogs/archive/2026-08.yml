@@ -1,0 +1,207 @@
+2026-08-01:
+  Fghj240:
+  - balance: robotic limbs, organs, and cybernetic implants have their emp effects
+      scale more closely with emp severity.
+  - balance: reactive tesla armor, adamantine armor, the mod emp shield module, and
+      tinfoil hats slightly lower the severity of incoming EMPs.
+  Ghommie:
+  - balance: Bees are now friendly to any plant-like creature for that matter.
+  - balance: Cats will now also follow laser pointers, not just felinids.
+  - balance: The boulder processing machinery can maim any (incapacitated/dead) mob
+      with the mineral biotype, not just golems.
+  - refactor: 'some quirky interactions with specific (non-roundstart) species have
+      been de-hardcoded. An example: peanut butter gets those with abductor brains
+      high rather than just those with the abductor species. Report any oddity with
+      that (the refactor, not the peanut butter...).'
+  QuiteLiterallyAnything:
+  - bugfix: Fixed Catwalk's upper atmospherics room being exposed to space by default.
+  SmArtKar:
+  - refactor: Refactored blessing into an element/trait combo rather than an object
+  Thunder12345:
+  - rscadd: The quantum console now tells bitrunners what grade they've reached on
+      completed domains.
+  flleeppyy:
+  - bugfix: the experimental cloner now actually can make you bald (if you're a human
+      or ethereal).
+  - bugfix: the experimental cloner now spits flavor and policy text (if there is
+      any) when spawning
+2026-08-02:
+  Aliceee2ch:
+  - qol: Winter coats were added into loadout.
+  - spellcheck: Capitalizes some of the other suits in loadout menu.
+  Ghommie:
+  - bugfix: Felinids (and nightmares) can once again use more complex objects, unlike
+      monkeys.
+  JohnFulpWillard:
+  - spellcheck: Cargo bounty list printout now has a slightly better UI.
+  necromanceranne:
+  - qol: You can punch a goliath to death. This isn't recommended. But if you are
+      committed enough, you are welcome to do so.
+2026-08-03:
+  Aliceee2ch:
+  - bugfix: Soaps have different price in cargo now.
+  ArcaneMusic:
+  - qol: Tweaked the TGUi on the mulebot in order to read the name of the loaded item
+      more easily.
+  - qol: The Mulebot now has more visual feedback when items are being loaded onto
+      them.
+  - sound: Mulebots now have sound effects when loading and unloading.
+  - bugfix: EMP resistance is only tagged when examined on actually EMP resistant
+      clothing.
+  Melbert:
+  - admin: Law text is in silicon log again
+  - bugfix: Some personalities like Empathetic or Misanthropic no longer react to
+      their own mood changing
+  - map: '[Kilo] Remapped Atmospherics entirely'
+  - map: '[Kilo] Touched up Engineering (re-arranged some equipment, tables, piping,
+      decals, signage, etc.)'
+  - qol: Bitrunner domain names are no longer hidden until you upgrade the server
+      stock parts. Distantly unaffordable domains still have their names hidden.
+  PapaMichael:
+  - bugfix: AI Holopads no longer leak unknown languages in runechat
+  - rscadd: You can now make text highlights only apply for specific characters or
+      specific jobs
+  - rscdel: Removed commendations from public logs. Your admirer is now truly anonymous
+  QuiteLiterallyAnything:
+  - bugfix: Clicking on a piece of paper with a folder no longer forces you to read
+      that paper.
+  Swan:
+  - code_imp: Made it so the round start timer starts precisely at the value specified
+      in configs
+  lelandkemble:
+  - balance: Malf AI hacked APCs no longer fully drain their own cells, instead draining
+      from the powernet
+  timothymtorres:
+  - rscadd: Add spawn text overlay when a player spawns. (excludes observers)
+2026-08-04:
+  ArcaneMusic:
+  - spellcheck: fixed typo on the disabler SMG goody from the console.
+  - bugfix: Stock blocks now properly show their sale value after they've become liquid,
+      and been examined.
+  CabinetOnFire:
+  - rscadd: Stoats are now better thieves, and know whats funniest to steal
+  - refactor: Targetting behaviors now allow for a priority strategy to determine
+      what the best thing to target is from a list of candidates.
+  Ghommie:
+  - bugfix: Bonus biotypes from dna infusions shouldn't be lost on species change
+      as long as you have enough infused organs.
+  - sound: human (vocal) emote sounds are no longer dictated by the species directly,
+      but the tongue of your spaceman. Having a lizard tongue will make you scream,
+      laugh and death-gasp like a lizardperson, even if you are not. This may also
+      give a few species emote sounds that hardly fit their themes... rather than
+      have no sound at all.
+  - rscadd: included a few preexisting emote sounds to subtypes like the robot voicebox
+      and alien tongues.
+  - rscadd: Wearing a monkey mask will change the sound of screams to monkey screeches.
+  - rscadd: Wearing a pair of kitty ears will let you perform cat emotes.
+  Melbert:
+  - spellcheck: Regeneration chat messages read better
+  - rscadd: Zombie is no longer a distinct "species" (except High-Functioning Zombie
+      on Halloween), meaning Lizards, Moths, and Ethereals can now become Zombies
+      and will keep (some/most of) their identifying features
+  - rscadd: Impure Krokodil also no longer changes your species, now just making you
+      a zombie husk with none of the "upsides"
+  - rscadd: Zombies are now husks mechanically, which ultimately shouldn't change
+      much
+  - rscdel: Androids and other undead creatures can no longer become zombies from
+      Romerol (previously, only Golems, Skeletons, and Plasmamen were immune to it)
+  - refactor: Refactored butchering, report any weirdness in amount and type of meat
+      gained
+  - bugfix: MULEs don't run people over if buckled, pulled, or thrown
+  - balance: In addition to being stunned, AIs are blocked from using certain machines
+      like APCs and turrets for a period after their core laws are changed (or if
+      their rack is destroyed or leaves the z-level).
+  - qol: Ion laws have gibberish numbers again
+  - rscdel: AIs can no longer have two laws with the exact same text.
+  PapaMichael:
+  - bugfix: Fixed some issues with medical records display in the PDA app and in paperwork
+  QuiteLiterallyAnything:
+  - qol: Microwaves now emphasize that they lack power if PDA charging is attempted
+      with an empty microwave cell.
+  - bugfix: Rechargers no longer spam the "finished charging" message when done charging
+      PDAs.
+  SmArtKar:
+  - refactor: Refactored ethereals to use limb statuses instead of species code
+  hry-gh:
+  - qol: added chat messages when your chat storage has been reset
+  - bugfix: if you've not been playing for awhile and came back, your chat storage
+      may have been reset. this should no longer happen
+2026-08-05:
+  Aliceee2ch:
+  - refactor: Refactored private orders to use component and spawn respective crates,
+      instead of specific one. This should fix potential issues, e.g where order is
+      tied to custom crate (like stasis crate turtles!!!)
+  FalloutFalcon:
+  - code_imp: Fixes infinite loop caused by zmoving while having a looped chain of
+      grabbed mobs
+  JohnFulpWillard:
+  - qol: Lowered the sounds coming from the escape menu.
+  Melbert:
+  - rscadd: X-ray vision lets you look vertically through the floor or ceiling on
+      multi-z maps
+  PapaMichael:
+  - bugfix: Beepsky won't try to arrest everyone ever after having been punched one
+      time
+  - bugfix: Beepsky properly assigns threat level again
+  QuiteLiterallyAnything:
+  - bugfix: Surgery on robotic ethereal limbs is no longer broken by multitool charge
+      checking.
+  TealSeer:
+  - bugfix: fixed VV panel erroneously displaying certain lists as full of bitfields
+  - bugfix: fixed R&D console showing extraneous fields for unprintable designs
+  mcbalaam:
+  - bugfix: Big Manipulator now correctly respects filters
+  timothymtorres:
+  - rscadd: Add Ark Escape Shuttle that can be unlocked when the station's DNA vault
+      goal is achieved.
+  - map: Add Ark Escape Shuttle that can be unlocked when the station's DNA vault
+      goal is achieved.
+  xPokee, UvvU:
+  - bugfix: Recoloring clothing items via 'Edit Color as Matrix' will now properly
+      reflect when the clothing item is worn.
+2026-08-06:
+  Jacquerel:
+  - balance: Mobs spawning on Lavaland should be further spaced apart
+  - balance: Lavaland mobs are no longer guaranteed to respawn during a spawn, so
+      the map will refill more gradually
+  Melbert:
+  - rscadd: '"Pyromania", a 6 point positive quirk that gives you resistance to damage
+      from overheating (not direct fire damage) and positive moodlets from nearby
+      flames.'
+  - rscadd: '"Pyrophobia", a 3 point negative quirk that gives you a phobia triggered
+      by nearby flames (and god forbid you catch on fire yourself)'
+  Odairu:
+  - bugfix: Unique AI properly removes law weight for default laws on the specified
+      lawset config option
+  - rscadd: AIs can pick the color of their hologram.
+  - bugfix: holo ray on holograms no longer shows twice
+  Seefaaa:
+  - bugfix: SS13.unregister_signal now actually detaches a signal's callback once
+      its last handler has been removed.
+  - bugfix: HandlerGroup.register_once now fires only once, instead of on every send
+      of the signal.
+  SmArtKar:
+  - bugfix: Fixed lobstrocities doing nothing
+  TealSeer:
+  - bugfix: fixed trying to pillow smother someone in a grab pushing them away instead
+  Wisemonster:
+  - balance: The electrodistruptive diode disk has been moved from energy manipulation
+      research to experimental tools research
+  YesterdaysPromise:
+  - bugfix: Walls now remember what kind of grider was used to build them to return
+      to upon deconstruction.
+  lelandkemble:
+  - bugfix: Slimepeople blushing shows an overlay now
+  - bugfix: Dropping or throwing a bug will no longer say that it uncurled several
+      times
+  levels0:
+  - spellcheck: shifting fragments now tastes like egg yolk
+  - spellcheck: removed the lies about reflective blob being weaker than strong blob
+  nPocToDark:
+  - rscadd: Added a lavaland volcano and lavanald fungal colony to Rapid Decoration
+      Device
+  rkz/Tsar-Salat:
+  - bugfix: manually aimed emitters now fire where you clicked instead of snapping
+      to the direction they face
+  - bugfix: fixes a 4 year old projectile code bug that mirrored the angle across
+      the diagonal

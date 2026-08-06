@@ -189,7 +189,38 @@
 	if(isliving(target))
 		return try_drink(target, user)
 
+	if(is_drainable())
+		return pour_concrete(target, user)
+
 	return NONE
+
+/// QoL helper for pouring concrete directly from container just by clicking.
+/// Easier than splashing onto turf or object, but requires a little delay.
+/obj/item/reagent_containers/cup/proc/pour_concrete(atom/target, mob/living/user)
+	var/datum/reagent/concrete/concrete = reagents.has_reagent(/datum/reagent/concrete, check_subtypes=TRUE)
+	if (!concrete)
+		return NONE
+	var/pour_amount = concrete.pour_amount(target, user)
+	if (!pour_amount)
+		return NONE
+	if (concrete.volume < pour_amount)
+		user.balloon_alert(user, "not enough to pour")
+		return ITEM_INTERACT_FAILURE
+	user.balloon_alert(user, "pouring...")
+	user.visible_message(
+		span_notice("[user] starts pouring concrete onto \a [target]."),
+		span_notice("You start pouring concrete onto \a [target]..."),
+	)
+	if (!do_after(user, 1 SECONDS, target=target))
+		user.balloon_alert(user, "interrupted")
+		return ITEM_INTERACT_FAILURE
+	if(concrete.volume < pour_amount) // check if volume has changed during do_after
+		user.balloon_alert(user, "not enough to pour")
+		return ITEM_INTERACT_FAILURE
+	playsound(src, 'sound/effects/slosh.ogg', 25, TRUE)
+	concrete.expose_atom(target, pour_amount, TOUCH)
+	reagents.remove_reagent(concrete.type, pour_amount)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/cup/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
 	. = ..()
