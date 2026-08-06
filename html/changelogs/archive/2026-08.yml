@@ -149,6 +149,8 @@
   TealSeer:
   - bugfix: fixed VV panel erroneously displaying certain lists as full of bitfields
   - bugfix: fixed R&D console showing extraneous fields for unprintable designs
+  mcbalaam:
+  - bugfix: Big Manipulator now correctly respects filters
   timothymtorres:
   - rscadd: Add Ark Escape Shuttle that can be unlocked when the station's DNA vault
       goal is achieved.
@@ -157,3 +159,33 @@
   xPokee, UvvU:
   - bugfix: Recoloring clothing items via 'Edit Color as Matrix' will now properly
       reflect when the clothing item is worn.
+2026-08-06:
+  Odairu:
+  - bugfix: Unique AI properly removes law weight for default laws on the specified
+      lawset config option
+  - rscadd: AIs can pick the color of their hologram.
+  - bugfix: holo ray on holograms no longer shows twice
+  Seefaaa:
+  - bugfix: SS13.unregister_signal now actually detaches a signal's callback once
+      its last handler has been removed.
+  - bugfix: HandlerGroup.register_once now fires only once, instead of on every send
+      of the signal.
+  SmArtKar:
+  - bugfix: Fixed lobstrocities doing nothing
+  TealSeer:
+  - bugfix: fixed trying to pillow smother someone in a grab pushing them away instead
+  YesterdaysPromise:
+  - bugfix: Walls now remember what kind of grider was used to build them to return
+      to upon deconstruction.
+  lelandkemble:
+  - bugfix: Slimepeople blushing shows an overlay now
+  - bugfix: Dropping or throwing a bug will no longer say that it uncurled several
+      times
+  levels0:
+  - spellcheck: shifting fragments now tastes like egg yolk
+  - spellcheck: removed the lies about reflective blob being weaker than strong blob
+  rkz/Tsar-Salat:
+  - bugfix: manually aimed emitters now fire where you clicked instead of snapping
+      to the direction they face
+  - bugfix: fixes a 4 year old projectile code bug that mirrored the angle across
+      the diagonal
