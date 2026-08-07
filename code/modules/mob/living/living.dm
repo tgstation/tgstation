@@ -3029,7 +3029,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * Called if a plant-like mob is withered by cult magic.
  * Should return FALSE if the plant isn't hit.
  */
-/mob/living/proc/cult_wither(stamina_loss)
+/mob/living/proc/cult_wither(stamina_damage)
 	// Evil plant mobs which in some way embody the notion of blood.
 	var/static/list/evil_blood_plants = typecacheof(list(
 		/mob/living/basic/venus_human_trap,
@@ -3044,13 +3044,16 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(can_block_magic(MAGIC_RESISTANCE_HOLY, 0))
 		return FALSE
 
-	if(!get_stamina_loss()) // If at full stamina
-		adjust_stamina_loss(stamina_loss)
+	// Don't do any stamina damage if it would stun.
+	// This could be thrown off by modifiers, but that's the point of modifiers (I think).
+	if(get_stamina_loss() + stamina_damage < max_stamina)
+		adjust_stamina_loss(stamina_damage)
 		playsound_local(src, pick(GLOB.creepy_ambience), 25)
 		visible_message(span_warning("[src] hunches over."),
 			span_cult_large("\"You will wilt now, sapling.\""),
 			span_warning("You hear a lowering rustle."))
 		return TRUE
+	return FALSE
 
 ///Performs the aftereffects of blocking a projectile.
 /mob/living/proc/block_projectile_effects()
