@@ -48,7 +48,11 @@
 	if(length(positional_args) && length(arguments))
 		for(var/i in 1 to min(length(positional_args), length(arguments)))
 			var/datum/verb_arg_metadata/arg = arguments[i]
-			structured_args[arg.name] = positional_args[i]
+			var/key = positional_args[i]
+			if(istext(key) && !isnull(positional_args[key]))
+				structured_args[arg.name] = positional_args[key]
+			else
+				structured_args[arg.name] = key
 
 	if(!isnull(context_target) && length(arguments))
 		for(var/datum/verb_arg_metadata/arg in arguments)

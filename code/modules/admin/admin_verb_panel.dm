@@ -130,7 +130,9 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 			for(var/key in raw_args)
 				var/value = raw_args[key]
 				if(istext(value))
-					value = locate(value)
+					var/located = locate(value)
+					if(located)
+						value = located
 				structured_args[key] = value
 			SSadmin_verbs.dynamic_invoke_verb(owner, verb_type, structured_args)
 			return TRUE
