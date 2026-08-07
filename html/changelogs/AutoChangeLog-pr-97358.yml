@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "\"Pyromania\", a 6 point positive quirk that gives you resistance to damage from overheating (not direct fire damage) and positive moodlets from nearby flames."
-  - rscadd: "\"Pyrophobia\", a 3 point negative quirk that gives you a phobia triggered by nearby flames (and god forbid you catch on fire yourself)"
