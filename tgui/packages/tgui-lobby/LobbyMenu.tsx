@@ -220,6 +220,8 @@ export function LobbyMenu() {
   const [tvActive, setTvActive] = useState(true);
   const shutterRef = useRef<HTMLDivElement>(null);
 
+  const ss = state.serverState;
+
   useEffect(() => {
     Byond.subscribeTo('init', (payload: ServerState) => {
       dispatch({ type: 'serverInit', payload });
@@ -230,17 +232,16 @@ export function LobbyMenu() {
     });
   }, []);
 
-  const ss = state.serverState;
-  if (!ss) {
-    return null;
-  }
-
   useEffect(() => {
     document.documentElement.style.setProperty(
       '--lobby-bg',
-      ss.transparent ? 'transparent' : '#000',
+      ss?.transparent ? 'transparent' : '#000',
     );
-  }, [ss.transparent]);
+  }, [ss?.transparent]);
+
+  if (!ss) {
+    return null;
+  }
 
   const backgroundStyle = ss.transparent
     ? undefined
