@@ -388,8 +388,6 @@ export function CommandBar() {
           } else {
             selectVerb(verb);
           }
-        } else if (selectCurrentSuggestion()) {
-          // handled
         } else if (selectedVerb) {
           invokeVerb();
         }
