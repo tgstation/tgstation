@@ -3623,9 +3623,40 @@
 	boozepwr = 40
 	color = "#B7410E"
 	quality = DRINK_FANTASTIC
+	overdose_threshold = 44 //if you can chug a full glass without vomiting, you become immune. Around 5u is metabolized as the stomach does it's thing, so this is set to 44u instead of 50.
 	taste_description = "the end of everything"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/entropic_brew/expose_turf(turf/exposed_turf, reac_volume)
+	. = ..()
+	exposed_turf.rust_heretic_act(RUST_RESISTANCE_BASIC)
+
+/datum/reagent/consumable/ethanol/entropic_brew/on_mob_add(mob/living/carbon/drinker)
+	RegisterSignal(drinker, COMSIG_CARBON_VOMITED, PROC_REF(on_vomit))
+
+/datum/reagent/consumable/ethanol/entropic_brew/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	if(HAS_TRAIT(drinker, TRAIT_APATHETIC)) //if already apathetic, doesn't cause vomiting and rapidly drains disgust
+		drinker.adjust_disgust(-20 * metabolization_ratio * seconds_per_tick)
+		return
+
+	drinker.adjust_disgust(10 * metabolization_ratio * seconds_per_tick)
+
+/datum/reagent/consumable/ethanol/entropic_brew/proc/on_vomit(mob/living/carbon/drinker, distance, force)
+	SIGNAL_HANDLER
+	//if you vomit with this in your system, you rust the tile beneath you. Note, this still applies even when you're apathetic if you vomit due to non-disgust related reasons.
+	var/atom/tile = get_turf(drinker)
+	if(isnull(tile))
+		return
+	tile.rust_heretic_act()
+
+/datum/reagent/consumable/ethanol/entropic_brew/overdose_start(mob/living/drinker, metabolization_ratio)
+	to_chat(drinker, span_boldwarning("You feel something inside you break as the feeling of illness recedes. In the face of the inevitability of decay, your troubles seem quaint."))
+	drinker.add_traits(list(TRAIT_STRONG_STOMACH,TRAIT_APATHETIC), type)
+
+/datum/reagent/consumable/ethanol/entropic_brew/on_mob_delete(mob/living/carbon/drinker, metabolization_ratio)
+	drinker.remove_traits(list(TRAIT_STRONG_STOMACH,TRAIT_APATHETIC), type)
+	UnregisterSignal(drinker, COMSIG_CARBON_VOMITED, PROC_REF(on_vomit))
 
 //Void
 /datum/reagent/consumable/ethanol/emptiest_glass
