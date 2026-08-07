@@ -67,6 +67,8 @@ jobs:
         #the regex here does not filter out non-numbers because error messages about no input are less helpful then error messages about bad input (which includes the bad input)
         run: |
           echo "max_required_byond_client=$(grep -Ev '^[[:blank:]]{0,}#{1,}|^[[:blank:]]{0,}$' .github/max_required_byond_client.txt | tail -n1)" >> $GITHUB_OUTPUT
+      - name: Set up BYOND cache
+        uses: ./.github/actions/restore_or_install_byond
       - name: Set up required build versions
         id: setup_required_build_versions
         run: |
