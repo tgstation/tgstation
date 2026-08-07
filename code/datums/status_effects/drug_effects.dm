@@ -95,6 +95,7 @@
 	desc = "Cannabis is impairing your speed, motor skills, and mental cognition."
 	icon_state = "stoned"
 
+/// The amount taken away from saline's blood volume multiplier per second, from its base of 5x.
 #define SALINE_GLUCOSE_STACK_DILUTION 0.02
 
 /// Status effect that determines the mob's current saline blood replacement effect. The effect begins at 5 blood per 1 saline and gradually decreases to 1 over the course of ~3 1/2 minutes.
@@ -127,7 +128,7 @@
 	if(owner.has_reagent(/datum/reagent/medicine/salglu_solution))
 		if(owner.stat != DEAD)
 			add_stacks(seconds_between_ticks)
-		linked_alert.desc = "Saline-Glucose Solution is supporting your bloodstream, but it is losing its effectiveness over time."
+		linked_alert.desc = initial(linked_alert.desc)
 		return
 	linked_alert.desc = "Saline-Glucose Solution was supporting your bloodstream, and you are now recovering."
 	return ..() // Parent is stack decay, only decay while blood is pure
