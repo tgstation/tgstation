@@ -295,7 +295,7 @@ window "inputwindow"
 	elem "input"
 		type = INPUT
 		pos = 0,0
-		size = 480x20
+		size = 480x25
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-default = true
@@ -315,7 +315,7 @@ window "inputbuttons"
 	elem "saybutton"
 		type = BUTTON
 		pos = 0,0
-		size = 40x20
+		size = 40x25
 		anchor1 = 0,0
 		anchor2 = 25,100
 		font-size = 4
@@ -328,7 +328,7 @@ window "inputbuttons"
 	elem "whisperbutton"
 		type = BUTTON
 		pos = 40,0
-		size = 40x20
+		size = 40x25
 		anchor1 = 25,0
 		anchor2 = 50,100
 		font-size = 4
@@ -341,7 +341,7 @@ window "inputbuttons"
 	elem "mebutton"
 		type = BUTTON
 		pos = 80,0
-		size = 40x20
+		size = 40x25
 		anchor1 = 50,0
 		anchor2 = 75,100
 		font-size = 4
@@ -354,7 +354,7 @@ window "inputbuttons"
 	elem "oocbutton"
 		type = BUTTON
 		pos = 120,0
-		size = 40x20
+		size = 40x25
 		anchor1 = 75,0
 		anchor2 = 100,100
 		font-size = 4
