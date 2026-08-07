@@ -1,4 +1,0 @@
-author: "Metek"
-delete-after: True
-changes:
-  - refactor: "Thanks to cutting edge technological advances, check_breath() calculations have been optimized by approximately 41% ( using alist() instead of list() )"
