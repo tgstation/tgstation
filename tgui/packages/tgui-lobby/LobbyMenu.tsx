@@ -233,10 +233,10 @@ export function LobbyMenu() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.style.setProperty(
-      '--lobby-bg',
-      ss?.transparent ? 'transparent' : '#000',
-    );
+    const bg = ss?.transparent ? 'transparent' : '#000';
+    document.documentElement.style.setProperty('--lobby-bg', bg);
+    document.documentElement.style.backgroundColor = bg;
+    document.body.style.backgroundColor = bg;
   }, [ss?.transparent]);
 
   if (!ss) {
@@ -530,18 +530,20 @@ export function LobbyMenu() {
             }
           >
             <Tooltip content={trait.description} position="bottom">
-              <SpriteButton
-                spriteClass="lobby-icons24x24"
-                iconState={trait.iconState}
-                onClick={() => sendAction('sign_up', { ref: trait.ref })}
-              >
-                {trait.overlays.map((overlay) => (
-                  <span
-                    key={overlay}
-                    className={`lobby-icons24x24 ${overlay} lobby__trait-overlay`}
-                  />
-                ))}
-              </SpriteButton>
+              <div>
+                <SpriteButton
+                  spriteClass="lobby-icons24x24"
+                  iconState={trait.iconState}
+                  onClick={() => sendAction('sign_up', { ref: trait.ref })}
+                >
+                  {trait.overlays.map((overlay) => (
+                    <span
+                      key={overlay}
+                      className={`lobby-icons24x24 ${overlay} lobby__trait-overlay`}
+                    />
+                  ))}
+                </SpriteButton>
+              </div>
             </Tooltip>
           </div>
         ))}
