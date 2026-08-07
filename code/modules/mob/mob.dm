@@ -567,7 +567,7 @@ GAME_VERB(/mob, examinate, "Examine", null, atom/examinify as mob|obj|turf) //It
 	if(is_blind()) //blind people see things differently (through touch)
 		if(!blind_examine_check(examinify))
 			return
-	else if(examine_turf && !(examine_turf.luminosity || examine_turf.dynamic_lumcount) && \
+	else if(examine_turf && !(examine_turf.luminosity || examine_turf.get_dynamic_lumcount()) && \
 		get_dist(src, examine_turf) > 1 && \
 		!has_nightvision()) // If you aren't blind, it's in darkness (that you can't see) and farther then next to you
 		return
@@ -1316,7 +1316,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 	var/turf/mob_location = get_turf(src)
 	var/area/mob_area = get_area(src)
 
-	if(mob_location.get_lumcount() > light_amount)
+	if(mob_location.check_lumcount_above(light_amount))
 		return TRUE
 	else if(!mob_area.static_lighting)
 		return TRUE
