@@ -417,8 +417,9 @@
 	return TRUE
 
 /// Returns a list of movables that should also be affected when src moves through zlevels, and src.
-/atom/movable/proc/get_z_move_affected(z_move_flags)
-	. = list(src)
+/atom/movable/proc/get_z_move_affected(z_move_flags, list/returning_list = list())
+	. = returning_list
+	. |= src
 	if(buckled_mobs)
 		. |= buckled_mobs
 	if(!(z_move_flags & ZMOVE_INCLUDE_PULLED))
@@ -426,15 +427,11 @@
 	for(var/mob/living/buckled as anything in buckled_mobs)
 		if(buckled.pulling)
 			. |= buckled.pulling
-	if(pulling)
-		. |= pulling
-		if (pulling.buckled_mobs)
-			. |= pulling.buckled_mobs
-
-		//makes conga lines work with ladders and flying up and down; checks if the guy you are pulling is pulling someone,
-		//then uses recursion to run the same function again
-		if (pulling.pulling)
-			. |= pulling.pulling.get_z_move_affected(z_move_flags)
+	//makes conga lines work with ladders and flying up and down; checks if the guy you are pulling is pulling someone,
+	//then uses recursion to run the same function again
+	//we pass in the list from this proc to ensure we dont reach an infinite loop due to mobs grabbed in a loop or two mobs grabing eachother.
+	if(pulling && !(pulling in .))
+		. |= pulling.get_z_move_affected(z_move_flags, .)
 
 /**
  * Checks if the destination turf is elegible for z movement from the start turf to a given direction and returns it if so.

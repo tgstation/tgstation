@@ -62,7 +62,7 @@
 		if (DMESSENGER)
 			return /obj/item/storage/backpack/messenger/med
 
-/datum/preference/choiced/backpack/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/backpack/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	target.backpack = value
 
 /// Jumpsuit preference
@@ -90,7 +90,7 @@
 		if (PREF_SKIRT)
 			return /obj/item/clothing/under/color/jumpskirt/grey
 
-/datum/preference/choiced/jumpsuit/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/jumpsuit/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	target.jumpsuit_style = value
 
 /// Socks preference
@@ -118,7 +118,7 @@
 
 	return generate_underwear_icon(SSaccessories.socks_list[value], lower_half)
 
-/datum/preference/choiced/socks/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/socks/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	target.socks = value
 
 /// Undershirt preference
@@ -167,7 +167,7 @@
 	icon_with_undershirt.scale(32, 32)
 	return icon_with_undershirt
 
-/datum/preference/choiced/undershirt/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/undershirt/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	target.undershirt = value
 
 /// Underwear preference
@@ -196,7 +196,7 @@
 
 	return generate_underwear_icon(SSaccessories.underwear_list[value], lower_half, COLOR_ALMOST_BLACK)
 
-/datum/preference/choiced/underwear/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/underwear/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	target.underwear = value
 
 /datum/preference/choiced/underwear/is_accessible(datum/preferences/preferences)

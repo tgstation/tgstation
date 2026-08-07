@@ -22,7 +22,7 @@
 		to_chat(user, span_warning("Вы не хотите причинть вред [declent_ru(DATIVE)]!"))
 		return TRUE
 	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
-	var/damage = (basic_mob_flags & IMMUNE_TO_FISTS) ? 0 : rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
+	var/damage = rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
 	if(check_block(user, damage, "удар [user.declent_ru(GENITIVE)]", UNARMED_ATTACK, 0, BRUTE))
 		return
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)

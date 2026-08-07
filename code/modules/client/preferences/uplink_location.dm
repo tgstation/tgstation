@@ -23,5 +23,5 @@
 /datum/preference/choiced/uplink_location/create_default_value()
 	return UPLINK_PDA
 
-/datum/preference/choiced/uplink_location/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/uplink_location/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return

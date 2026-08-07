@@ -93,7 +93,7 @@
 	if(levels <= 1 && can_help_themselves)
 		var/obj/item/organ/wings/gliders = get_organ_by_type(/obj/item/organ/wings)
 		if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
-			var/graceful_landing = HAS_TRAIT(src, TRAIT_CATLIKE_GRACE)
+			var/graceful_landing = HAS_TRAIT(src, TRAIT_CATLIKE_INSTINCT)
 
 			if(graceful_landing)
 				add_movespeed_modifier(/datum/movespeed_modifier/landed_on_feet)
@@ -112,7 +112,7 @@
 	// Smaller mobs with catlike grace can ignore damage (EG: cats)
 	var/small_surface_area = mob_size <= MOB_SIZE_SMALL
 	var/skip_knockdown = FALSE
-	if(HAS_TRAIT(src, TRAIT_CATLIKE_GRACE) && (small_surface_area || usable_legs >= 2) && body_position == STANDING_UP && can_help_themselves)
+	if(HAS_TRAIT(src, TRAIT_CATLIKE_INSTINCT) && (small_surface_area || usable_legs >= 2) && body_position == STANDING_UP && can_help_themselves)
 		. |= ZIMPACT_NO_MESSAGE|ZIMPACT_NO_SPIN
 		skip_knockdown = TRUE
 		if(small_surface_area)
@@ -2377,8 +2377,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/turf/check_turf = get_step_multiz(src, direction == DOWN ? NONE : direction)
 	if(!get_step_multiz(src, direction)) //We are at the edge z-level.
 		to_chat(src, span_warning("Сверху нет ничего интересного."))
-		return
-	else if(!istransparentturf(check_turf)) //There is no turf we can look through above us
+		return null
+	if(!istransparentturf(check_turf) && !HAS_TRAIT(src, TRAIT_XRAY_VISION)) //There is no turf we can look through above us
 		var/turf/front_hole = get_step(check_turf, dir)
 		if(istransparentturf(front_hole))
 			check_turf = front_hole
@@ -2389,7 +2389,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 					break
 		if(!istransparentturf(check_turf))
 			to_chat(src, span_warning("Вы не можете смотреть через пол [direction == DOWN ? "под" : "над"] вами."))
-			return
+			return null
 	return direction == DOWN ? get_step_multiz(check_turf, DOWN) : check_turf
 
 /**
@@ -3019,6 +3019,17 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return "[span_notice("Вы оцениваете, что [ru_p_them()] примерный уровень фитнеса равен...")] [span_boldwarning("Что?!? [our_fitness_level]???")]"
 
 	return span_notice("Вы оцениваете, что [ru_p_them()] примерный уровень фитнеса равен [our_fitness_level]. [comparative_fitness <= 0.33 ? "Жалость." : ""]")
+
+/// Check if bees are not hostile to us
+/mob/living/proc/bee_friendly()
+	if(mob_biotypes & MOB_PLANT)
+		return TRUE
+	var/obj/item/clothing/suit = get_item_by_slot(ITEM_SLOT_OCLOTHING)
+	var/obj/item/clothing/hat = get_item_by_slot(ITEM_SLOT_HEAD)
+	if(!istype(suit) || !istype(hat))
+		return FALSE
+	if(suit.clothing_flags & hat.clothing_flags & THICKMATERIAL)
+		return TRUE
 
 ///Performs the aftereffects of blocking a projectile.
 /mob/living/proc/block_projectile_effects()

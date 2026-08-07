@@ -30,7 +30,7 @@ end
 
 -- Clears all the signals that have been registered on this HandlerGroup when a specific signal is sent on a datum.
 function HandlerGroup:clear_on(datum, signal, func)
-	SS13.register_signal(datum, signal, function(...)
+	self:register_signal(datum, signal, function(...)
 		if func then
 			func(...)
 		end

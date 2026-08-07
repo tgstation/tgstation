@@ -142,7 +142,7 @@
 		return
 
 	var/obj/item/held_item = obj_resolve
-	var/atom/type_to_use = destination_task.find_type_priority(destination_task.skip_anchored)
+	var/atom/type_to_use = destination_task.find_type_priority(destination_task.skip_anchored, TRUE)
 
 	if(isnull(type_to_use))
 		use_in_progress = FALSE
@@ -221,7 +221,7 @@
 		finish_manipulation()
 		return
 
-	var/atom/type_to_use = destination_task.find_type_priority(destination_task.skip_anchored)
+	var/atom/type_to_use = destination_task.find_type_priority(destination_task.skip_anchored, TRUE)
 	if(isnull(type_to_use))
 		finish_manipulation()
 		return

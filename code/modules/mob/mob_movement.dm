@@ -243,7 +243,7 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 				if(stepTurf.turf_flags & NOJAUNT)
 					to_chat(L, span_warning("Какая-то странная аура не дает вам прохода."))
 					return
-				if(locate(/obj/effect/blessing) in stepTurf)
+				if(HAS_TRAIT(stepTurf, TRAIT_TURF_BLESSED))
 					to_chat(L, span_warning("Святая энергия блокирует вам проход!"))
 					return
 

@@ -396,3 +396,6 @@
 
 /// From /mob/living/changeNext_move() : (next_move, delay)
 #define COMSIG_LIVING_CHANGENEXT_MOVE "living_changenext_move"
+
+/// From /mob/living/proc/cause_hallucination(): (datum/hallucination)
+#define COMSIG_LIVING_HALLUCINATING "living_hallucinating"

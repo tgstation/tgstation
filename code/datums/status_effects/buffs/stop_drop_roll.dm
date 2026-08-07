@@ -3,8 +3,14 @@
 	alert_type = null
 	tick_interval = 0.8 SECONDS
 	processing_speed = STATUS_EFFECT_PRIORITY
+	/// If FALSE the rolling is cancelled if we are immobilized
+	var/ignore_immobilize = FALSE
 	/// bar updates depending on how "on fire" you are
 	VAR_FINAL/datum/progressbar/bar
+
+/datum/status_effect/stop_drop_roll/on_creation(mob/living/new_owner, ignore_immobilize = FALSE)
+	src.ignore_immobilize = ignore_immobilize
+	return ..()
 
 /datum/status_effect/stop_drop_roll/on_apply()
 	if(!iscarbon(owner))
@@ -44,7 +50,7 @@
 	reduce_firestacks(0.25)
 
 /datum/status_effect/stop_drop_roll/tick(seconds_between_ticks)
-	if(HAS_TRAIT(owner, TRAIT_IMMOBILIZED) || HAS_TRAIT(owner, TRAIT_INCAPACITATED))
+	if((!ignore_immobilize && HAS_TRAIT(owner, TRAIT_IMMOBILIZED)) || HAS_TRAIT(owner, TRAIT_INCAPACITATED))
 		qdel(src)
 		return
 

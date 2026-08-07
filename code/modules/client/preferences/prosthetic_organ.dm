@@ -19,6 +19,6 @@
 
 // 	return "Prosthetic Organ" in preferences.all_quirks
 
-// /datum/preference/choiced/prosthetic_organ/apply_to_human(mob/living/carbon/human/target, value)
+// /datum/preference/choiced/prosthetic_organ/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 // 	return
 // // BANDASTATION REMOVAL END - Feat: Augmentations

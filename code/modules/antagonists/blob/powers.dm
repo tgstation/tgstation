@@ -166,7 +166,7 @@
 	if(!can_buy(BLOB_UPGRADE_REFLECTOR_COST))
 		return
 
-	to_chat(src, span_warning("You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced integrity."))
+	to_chat(src, span_warning("You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced resistance to explosions."))
 	shield = shield.change_to(/obj/structure/blob/shield/reflective, src)
 	shield.balloon_alert(src, "upgraded to [shield.name]!")
 
