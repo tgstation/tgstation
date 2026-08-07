@@ -80,78 +80,34 @@
 
 	COOLDOWN_START(src, corruption_cooldown, corruption_cooldown_duration)
 
-/// Negatively affects plants on `target_turf`, because Nar'Sie is not the Geometer of Sap.
+/// Destroys or otherwise harms plants on `target_turf`, because Nar'Sie is not the Geometer of Sap.
 /obj/structure/destructible/cult/pylon/proc/wither_plants(turf/target_turf)
 	// If this is TRUE then we do a flash of light and a sound at the end.
 	var/hit_something = FALSE
+
+	// Flora structures
 	for(var/obj/structure/flora/plant in target_turf)
-		var/static/list/unwitherables = typecacheof(list(
-			/obj/structure/flora/rock,
-			/obj/structure/flora/tree/dead,
-		))
-		if(is_type_in_typecache(plant, unwitherables))
-			continue
+		hit_something = plant.cult_wither(plant.max_integrity / PYLON_PLANT_LETHALITY)
 
-		var/damage = plant.max_integrity / PYLON_PLANT_LETHALITY
-		// The plant will leave no produce behind ONLY if the pylon deals the final blow.
-		if(plant.get_integrity() - damage <= 0)
-			plant.harvested = TRUE
-
-		plant.play_attack_sound(ignore_walls = FALSE)
-		plant.visible_message(span_cult("[plant] shrivels as an air of crimson envelops it."),
-			blind_message = span_warning("You hear a violent and decaying rustle."))
-		plant.take_damage(damage, BRUTE, sound_effect = FALSE, armour_penetration = 100)
-		hit_something = TRUE
-
+	// Hydroponics plants
 	for(var/obj/machinery/hydroponics/plant_tray in target_turf)
-		if(plant_tray.plant_status == HYDROTRAY_NO_PLANT || plant_tray.plant_status == HYDROTRAY_PLANT_DEAD)
-			continue
-		var/obj/item/seeds/tray_seed = plant_tray.myseed
+		hit_something = plant_tray.cult_wither(-(plant_tray.plant_health / PYLON_PLANT_LETHALITY) - 15)
 
-		if(plant_tray.reagents.has_reagent(/datum/reagent/blood, 1))
-			if(plant_tray.pestlevel)
-				// Blood promotes pests and pylons kill them for health. It's a very evil arrangement.
-				plant_tray.visible_message(span_cult("A faint scarlet courses through [tray_seed.plantname]."),
-					blind_message = span_warning("A chorus of chittering quickly rises and falls silent."),
-					vision_distance = COMBAT_MESSAGE_RANGE)
-				plant_tray.adjust_pestlevel(-plant_tray.pestlevel)
-				plant_tray.adjust_plant_health(2 * plant_tray.pestlevel)
-				hit_something = TRUE // It hits the worms
-			continue
+	// Plant mobs
+	for(var/mob/living/plant_mob in target_turf)
+		hit_something = plant_mob.cult_wither(plant_mob.max_stamina / PYLON_PLANT_LETHALITY)
 
-		if(istype(tray_seed, /obj/item/seeds/watermelon/holy))
-			plant_tray.flash_lighting_fx(2, 2, COLOR_VIVID_YELLOW, 0.5 SECONDS)
-			plant_tray.visible_message(span_warning("The [tray_seed.plantname] glow against an air of encroaching crimson."))
-			continue
-
-		plant_tray.adjust_plant_health(-(plant_tray.plant_health / PYLON_PLANT_LETHALITY) - 25)
-		hit_something = TRUE
-
-	for(var/mob/living/carbon/human/species/pod/podperson in target_turf)
-		if(IS_CULTIST(podperson))
-			continue
-
-		if(podperson.can_block_magic(MAGIC_RESISTANCE_HOLY, 0))
-			continue
-
-		podperson.playsound_local(podperson, pick(GLOB.creepy_ambience), 25)
-		podperson.visible_message(span_warning("[podperson] hunches over."),
-			span_cult_large("\"You will wilt now, sapling.\""),
-			span_warning("You hear a lowering rustle."))
-		podperson.adjust_stamina_loss(50)
-		hit_something = TRUE
-
+	// Kudzu
 	for(var/obj/structure/spacevine/kudzu in range(1, target_turf))
 		kudzu.Destroy()
 		hit_something = TRUE
 
+	// Potted kirbyplants
 	for(var/obj/item/kirbyplants/potted_plant in target_turf)
-		if(potted_plant.dead)
-			continue
-
-		potted_plant.wither()
+		potted_plant.cult_wither()
 		hit_something = TRUE
 
+	// Effects on hit
 	if(hit_something)
 		target_turf.flash_lighting_fx(1.5, 2, COLOR_SOFT_RED, 0.5 SECONDS)
 		playsound(target_turf, SFX_SEAR, 20, ignore_walls = FALSE)

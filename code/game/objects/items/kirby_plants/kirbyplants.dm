@@ -90,12 +90,20 @@
 
 	return plant_states
 
-/obj/item/kirbyplants/proc/wither()
+/**
+ * Called if a kirbyplant is withered by cult magic.
+ * Should return FALSE if a kirbyplant isn't hit.
+ */
+/obj/item/kirbyplants/proc/cult_wither()
 	if(dead)
-		return
+		return FALSE
 
+	playsound(src, SFX_CRUNCHY_BUSH_WHACK, 50, vary = FALSE, ignore_walls = FALSE)
+	visible_message(span_cult("In a single flash of scarlet [src] is ripped apart!"),
+		blind_message = span_warning("In one instant you hear a singular crunching of many branches."))
 	dead = TRUE
 	update_appearance()
+	return TRUE
 
 /obj/item/kirbyplants/random
 	icon = 'icons/obj/fluff/flora/_flora.dmi'

@@ -279,6 +279,28 @@
 	var/matrix/M = matrix(transform)
 	transform = M.Turn(-previous_rotation)
 
+/**
+ * Called if the flora is withered by cult magic.
+ * Should return FALSE if the flora isn't hit.
+ */
+/obj/structure/flora/proc/cult_wither(damage)
+	var/static/list/unwitherables = typecacheof(list(
+			/obj/structure/flora/rock,
+			/obj/structure/flora/tree/dead,
+	))
+	if(is_type_in_typecache(src, unwitherables))
+		return FALSE
+
+	// If this flora isn't indestructible and the damage would destroy it...
+	if(!(resistance_flags & INDESTRUCTIBLE) && ((get_integrity() - damage) <= 0 ))
+		harvested = TRUE // ...don't leave anything behind upon destruction.
+
+	visible_message(span_cult("[src] shrivels as an air of crimson envelops it."),
+		blind_message = span_warning("You hear a violent and decaying rustle."))
+	play_attack_sound(ignore_walls = FALSE)
+	take_damage(damage, BRUTE, sound_effect = FALSE, armour_penetration = 100)
+	return TRUE
+
 /obj/structure/flora/atom_deconstruct(disassembled = TRUE)
 	if(harvested)
 		return ..()

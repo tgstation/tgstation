@@ -824,6 +824,39 @@
 	update_appearance()
 
 /**
+ * Called if the tray is withered by cult magic.
+ * Should return FALSE if the plant isn't hit.
+ */
+/obj/machinery/hydroponics/proc/cult_wither(damage)
+	if(plant_status == HYDROTRAY_NO_PLANT)
+		return FALSE
+
+	if(plant_status == HYDROTRAY_PLANT_DEAD)
+		set_seed(null) // Clears out the tray (or soil)
+		return TRUE
+
+	if(reagents.has_reagent(/datum/reagent/blood, 1))
+		// Blood promotes pests and cult magic kills them for health. It's a very evil arrangement.
+		visible_message(span_cult("A faint scarlet courses through the [myseed.plantname]."),
+			blind_message = span_warning("A chorus of chittering quickly rises and falls silent."),
+			vision_distance = COMBAT_MESSAGE_RANGE)
+		if(pestlevel)
+			adjust_pestlevel(-pestlevel)
+			adjust_plant_health(2 * pestlevel)
+		return TRUE
+
+	if(istype(myseed, /obj/item/seeds/watermelon/holy))
+		flash_lighting_fx(2, 2, COLOR_VIVID_YELLOW, 0.5 SECONDS)
+		visible_message(span_warning("The [myseed.plantname] glow against an air of encroaching crimson."),
+			blind_message = span_warning("You notice an almost imperceptible chanting."))
+		return FALSE
+
+	visible_message(span_cult("The [myseed.plantname] shrivels as an air of crimson envelops it."),
+		blind_message = span_warning("You hear a violent and decaying rustle."))
+	adjust_plant_health(damage)
+	return TRUE
+
+/**
  * Plant Death Proc.
  * Cleans up various stats for the plant upon death, including pests, harvestability, and plant health.
  */

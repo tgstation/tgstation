@@ -3025,6 +3025,33 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(suit.clothing_flags & hat.clothing_flags & THICKMATERIAL)
 		return TRUE
 
+/**
+ * Called if the mob is withered by cult magic.
+ * Should return FALSE if the plant isn't hit.
+ */
+/mob/living/proc/cult_wither(stamina_loss)
+	// Evil plant mobs which in some way embody the notion of blood.
+	var/static/list/evil_blood_plants = typecacheof(list(
+		/mob/living/basic/venus_human_trap,
+		/mob/living/basic/killer_tomato,
+	))
+	if(!(mob_biotypes & MOB_PLANT) || is_type_in_typecache(src, evil_blood_plants))
+		return FALSE
+
+	if(IS_CULTIST(src))
+		return FALSE
+
+	if(can_block_magic(MAGIC_RESISTANCE_HOLY, 0))
+		return FALSE
+
+	if(!get_stamina_loss()) // If at full stamina
+		adjust_stamina_loss(stamina_loss)
+		playsound_local(src, pick(GLOB.creepy_ambience), 25)
+		visible_message(span_warning("[src] hunches over."),
+			span_cult_large("\"You will wilt now, sapling.\""),
+			span_warning("You hear a lowering rustle."))
+		return TRUE
+
 ///Performs the aftereffects of blocking a projectile.
 /mob/living/proc/block_projectile_effects()
 	var/static/list/icon/blocking_overlay
