@@ -21,20 +21,20 @@ SUBSYSTEM_DEF(verbs)
 		if(meta.verb_path)
 			verbs_by_verb_path[meta.verb_path] = meta
 
-/datum/controller/subsystem/verbs/proc/invoke(target, datum/verb_metadata/verb_type, caller, ...)
+/datum/controller/subsystem/verbs/proc/invoke(target, datum/verb_metadata/verb_type, invoker, ...)
 	var/datum/verb_metadata/meta = verbs_by_type[verb_type]
 	if(isnull(meta))
 		CRASH("Attempted to invoke unknown verb '[verb_type]'.")
 	var/list/invoke_args = args.Copy(4)
-	if(caller)
-		usr = caller
+	if(invoker)
+		usr = invoker
 	call(target, meta.body_path)(arglist(invoke_args))
 
-/datum/controller/subsystem/verbs/proc/invoke_verb(target, verb_path, list/positional_args, caller)
+/datum/controller/subsystem/verbs/proc/invoke_verb(target, verb_path, list/positional_args, invoker)
 	var/datum/verb_metadata/meta = verbs_by_verb_path[verb_path]
 	if(isnull(meta))
 		CRASH("invoke_verb called for '[verb_path]' with no metadata registered")
-	var/resolved_caller = caller || target
+	var/resolved_caller = invoker || target
 	var/client/user_client
 	if(istype(resolved_caller, /client))
 		user_client = resolved_caller
@@ -48,8 +48,8 @@ SUBSYSTEM_DEF(verbs)
 	if(isnull(structured_args))
 		return
 
-	if(caller)
-		usr = caller
+	if(invoker)
+		usr = invoker
 	call(target, meta.body_path)(structured_args)
 
 /datum/controller/subsystem/verbs/proc/assign_verb(target, datum/verb_metadata/verb_type)

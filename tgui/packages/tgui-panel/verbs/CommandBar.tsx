@@ -410,10 +410,6 @@ export function CommandBar() {
     if (selectedVerb) {
       const verbPrefix = `${toKebab(selectedVerb.name)} `;
       if (!value.startsWith(verbPrefix)) {
-        if (mode !== 'Command') {
-          enterChatMode(mode);
-          return;
-        }
         setSelectedVerb(null);
         setFilledArgs([]);
         value = value.split(' ')[0] || '';
