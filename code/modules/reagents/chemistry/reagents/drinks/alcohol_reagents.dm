@@ -3656,7 +3656,7 @@
 
 /datum/reagent/consumable/ethanol/entropic_brew/on_mob_delete(mob/living/carbon/drinker, metabolization_ratio)
 	drinker.remove_traits(list(TRAIT_STRONG_STOMACH,TRAIT_APATHETIC), type)
-	UnregisterSignal(drinker, COMSIG_CARBON_VOMITED, PROC_REF(on_vomit))
+	UnregisterSignal(drinker, COMSIG_CARBON_VOMITED)
 
 //Void
 /datum/reagent/consumable/ethanol/emptiest_glass
