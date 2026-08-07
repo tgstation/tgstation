@@ -24,7 +24,8 @@ body,
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: var(--lobby-bg, #000);
+  background: var(--lobby-bg, #000) !important;
+  background-color: var(--lobby-bg, #000) !important;
 }
 
 * {
