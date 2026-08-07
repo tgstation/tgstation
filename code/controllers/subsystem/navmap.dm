@@ -97,12 +97,12 @@ SUBSYSTEM_DEF(navmap)
 /// Bakes and bulk-publishes every non-space turf on a z-level.
 /datum/controller/subsystem/navmap/proc/prebake_z(z_level)
 	var/count = 0
-	var/list/rust_batch = list()
+	var/list/navmap_batch = list()
 	for(var/turf/baking_turf as anything in Z_TURFS(z_level))
-		baking_turf.nav_bake(skip_rust_push = TRUE)
-		rust_batch += list(baking_turf.x, baking_turf.y, baking_turf.z, baking_turf.nav_pass)
+		baking_turf.nav_bake(skip_navmap_push = TRUE)
+		navmap_batch += list(baking_turf.x, baking_turf.y, baking_turf.z, baking_turf.nav_pass)
 		count++
 		CHECK_TICK
-	if(length(rust_batch))
-		rustg_navmap_bulk_update(rust_batch)
+	if(length(navmap_batch))
+		navmap_pathfinder_bulk_update(navmap_batch)
 	return count

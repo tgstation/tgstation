@@ -302,10 +302,6 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 
 /datum/action/innate/path_debug/navmap/run_the_path(atom/movable/middle_man)
 	var/datum/can_pass_info/info = nav_debug_profile(profile, owner)
-	var/list/path
-	try
-		path = rustg_navmap_pathfinder(source_turf, target_turf, info, NAV_IS_FLYING(info), max_distance, 0, TRUE, null, DIAGONAL_DO_NOTHING, FALSE)
-	catch
-		path = list()
+	var/list/path = navmap_pathfinder_blocking(middle_man, source_turf, target_turf, info, max_distance, 0, TRUE, null, DIAGONAL_DO_NOTHING, FALSE)
 	display_turfs = islist(path) ? path : list()
 	update_visuals()

@@ -82,21 +82,26 @@ SUBSYSTEM_DEF(pathfinder)
 
 		currentmaps.len--
 
-/// Initiates a pathfind. Returns true if we're good, FALSE if something's failed
+/// Initiates a pathfind. Returns true if we're good, FALSE if something's failed.
+/// Uses the DLL if available, else, we cry and use our fallback.
 /datum/controller/subsystem/pathfinder/proc/pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)
 	var/turf/start = get_turf(requester)
 	var/turf/goal = get_turf(end)
 	if(!start || !goal)
 		return FALSE
 	var/datum/can_pass_info/pass_info = new(requester, access)
-	var/list/path
-	try
-		path = rustg_navmap_pathfinder(start, goal, pass_info, NAV_IS_FLYING(pass_info), max_distance, mintargetdist || 0, simulated_only, exclude, diagonal_handling, skip_first)
-	catch
-		return FALSE
-	for(var/datum/callback/finished as anything in on_finish)
-		finished.Invoke(path)
-	return TRUE
+	if(navmap_pathfinder_available())
+		var/list/path
+		try
+			path = navmap_pathfinder(start, goal, pass_info, NAV_IS_FLYING(pass_info), max_distance, mintargetdist || 0, simulated_only, exclude, diagonal_handling, skip_first)
+			for(var/datum/callback/finished as anything in on_finish)
+				finished.Invoke(path)
+			return TRUE
+		catch
+			navmap_pathfinder_mark_unavailable()
+
+	var/datum/pathfind/navmap/fallback_path = navmap_pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish)
+	return !!fallback_path
 
 /// Starts a async navmap pathfinding job and returns the queued job.
 /datum/controller/subsystem/pathfinder/proc/navmap_pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)

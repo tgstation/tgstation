@@ -42,16 +42,21 @@ ADMIN_VERB(navmap_run_path, R_DEBUG, "Navmap: Run Path", "Paths from your turf t
 	if(isnull(max_range))
 		return
 	var/datum/can_pass_info/info = nav_debug_profile(profile, user.mob)
-	var/list/rustg_nav_path
-	var/rustg_nav_ms
-	var/rustg_nav_available = TRUE
-	var/rustg_nav_start = TICK_USAGE_REAL
-	try
-		rustg_nav_path = rustg_navmap_pathfinder(start, goal, info, NAV_IS_FLYING(info), max_range, 0, TRUE, null, DIAGONAL_REMOVE_CLUNKY, TRUE)
-	catch
-		rustg_nav_available = FALSE
-		rustg_nav_path = list()
-	rustg_nav_ms = TICK_USAGE_TO_MS(rustg_nav_start)
+	var/list/dll_path
+	var/dll_ms
+	var/dll_available = navmap_pathfinder_available()
+	if(dll_available)
+		var/dll_start = TICK_USAGE_REAL
+		try
+			dll_path = navmap_pathfinder(start, goal, info, NAV_IS_FLYING(info), max_range, 0, TRUE, null, DIAGONAL_REMOVE_CLUNKY, TRUE)
+		catch
+			navmap_pathfinder_mark_unavailable()
+			dll_available = FALSE
+		dll_ms = TICK_USAGE_TO_MS(dll_start)
+
+	var/dm_start = TICK_USAGE_REAL
+	var/list/dm_path = navmap_pathfinder_blocking(user.mob, start, goal, info, max_range, 0, TRUE, null, DIAGONAL_REMOVE_CLUNKY, TRUE, TRUE)
+	var/dm_ms = TICK_USAGE_TO_MS(dm_start)
 	var/list/access = info.access || list()
 	var/list/hand_around = list()
 	var/datum/pathfind/jps/legacy_path = new()
@@ -70,7 +75,8 @@ ADMIN_VERB(navmap_run_path, R_DEBUG, "Navmap: Run Path", "Paths from your turf t
 		jps_ms = 0
 
 	to_chat(user, span_boldnotice("JPS (OLD): [length(jps_path) ? "[length(jps_path)] steps" : "NO PATH"] in [jps_ms]ms. \
-		Rust A*: [rustg_nav_available ? "[length(rustg_nav_path) ? "[length(rustg_nav_path)] steps" : "NO PATH"] in [rustg_nav_ms]ms" : "unavailable (rust-g missing navmap_pathfinder)"]"))
+		Navmap A* DLL: [dll_available ? "[length(dll_path) ? "[length(dll_path)] steps" : "NO PATH"] in [dll_ms]ms" : "unavailable"]. \
+		DM implementation: [length(dm_path) ? "[length(dm_path)] steps" : "NO PATH"] in [dm_ms]ms"))
 
 ADMIN_VERB(navmap_inspect_turf, R_DEBUG, "Navmap: Inspect Turf", "Prints the baked navmap data for your current turf.", ADMIN_CATEGORY_DEBUG)
 	var/turf/here = get_turf(user.mob)

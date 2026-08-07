@@ -895,18 +895,18 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	nav_pass = null
 	nav_blockers = null
 	SSnavmap.queue_turf_bake(src)
-	// Clear Rust's baked flag before the asynchronous re-bake.
-	rustg_navmap_update(x, y, z, 0)
+	// Clear the navmap DLL's baked flag before the asynchronous re-bake.
+	navmap_pathfinder_update(x, y, z, 0)
 	for(var/dir in GLOB.cardinals)
 		var/turf/neighbor = get_step(src, dir)
 		if(neighbor)
 			neighbor.nav_pass = null
 			neighbor.nav_blockers = null
 			SSnavmap.queue_turf_bake(neighbor)
-			rustg_navmap_update(neighbor.x, neighbor.y, neighbor.z, 0)
+			navmap_pathfinder_update(neighbor.x, neighbor.y, neighbor.z, 0)
 
-/// Bakes this turf's outgoing edges and publishes them to Rust.
-/turf/proc/nav_bake(skip_rust_push = FALSE)
+/// Bakes this turf's outgoing edges and publishes them to the DLL navmap cache.
+/turf/proc/nav_bake(skip_navmap_push = FALSE)
 	var/packed = NAV_BAKED | (SSnavmap.space_type_cache[type] ? NONE : NAV_SIMULATED)
 	var/list/blockers = null
 
@@ -922,9 +922,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	nav_pass = packed
 	nav_blockers = blockers
-	// Mass prebakes publish the completed z-level in one FFI call.
-	if(!skip_rust_push)
-		rustg_navmap_update(x, y, z, packed)
+	// Mass prebakes publish the completed z-level in one FFI call when the DLL is present.
+	if(!skip_navmap_push)
+		navmap_pathfinder_update(x, y, z, packed)
 
 /// Builds packed passability bits and live blockers for one outgoing edge.
 /turf/proc/nav_evaluate_edge(dir, turf/dest, list/edge_blockers)
@@ -988,7 +988,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		edge_blockers += mask
 		return TRUE
 
-	// Store mover-dependent blockers for live evaluation. (Rust calls back into these via byond API)
+	// Store mover-dependent blockers for live evaluation. (The DLL calls back into these via byond API.)
 	if(istype(blocker, /obj/machinery/door) \
 		|| blocker.can_astar_pass == CANASTARPASS_ALWAYS_PROC \
 		|| (blocker.pass_flags_self & ~NAV_NON_PASS_FLAGS) \
