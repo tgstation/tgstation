@@ -46,13 +46,14 @@
 		positional_args -= VERB_ARG_CONTEXT_TARGET_KEY
 
 	if(length(positional_args) && length(arguments))
-		for(var/i in 1 to min(length(positional_args), length(arguments)))
-			var/datum/verb_arg_metadata/arg = arguments[i]
-			var/key = positional_args[i]
-			if(istext(key) && !isnull(positional_args[key]))
-				structured_args[arg.name] = positional_args[key]
-			else
-				structured_args[arg.name] = key
+		if(istype(positional_args, /alist))
+			for(var/datum/verb_arg_metadata/arg in arguments)
+				if(!isnull(positional_args[arg.name]))
+					structured_args[arg.name] = positional_args[arg.name]
+		else
+			for(var/i in 1 to min(length(positional_args), length(arguments)))
+				var/datum/verb_arg_metadata/arg = arguments[i]
+				structured_args[arg.name] = positional_args[i]
 
 	if(!isnull(context_target) && length(arguments))
 		for(var/datum/verb_arg_metadata/arg in arguments)
