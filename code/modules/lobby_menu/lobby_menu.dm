@@ -1,4 +1,5 @@
 GLOBAL_LIST_EMPTY(lobby_menus)
+GLOBAL_VAR(lobby_background_transparent)
 
 #define LOBBY_TITLE_ASSET_NAME "lobby_title_screen.png"
 GLOBAL_VAR(lobby_title_asset_registered)
@@ -21,12 +22,16 @@ GLOBAL_VAR(lobby_title_asset_registered)
 		return
 	lobby_menu = new(src)
 
-/client/verb/toggle_new_lobby_menu()
-	set name = "Toggle New Lobby Menu"
-	set category = "Debug"
-	if(lobby_menu)
-		var/currently_visible = winget(src, "mapwindow.lobby_menu", "is-visible") == "true"
-		winset(src, "mapwindow.lobby_menu", "is-visible=[!currently_visible]")
+/client/verb/toggle_lobby_transparency()
+	set name = "Toggle Lobby Transparency"
+	set category = "Admin"
+	if(!holder)
+		return
+	GLOB.lobby_background_transparent = !GLOB.lobby_background_transparent
+	for(var/datum/lobby_menu/menu as anything in GLOB.lobby_menus)
+		menu.set_transparency(GLOB.lobby_background_transparent)
+	to_chat(src, span_adminnotice("Lobby background [GLOB.lobby_background_transparent ? "transparent" : "opaque"]."))
+	log_admin("[key_name(src)] toggled lobby transparency [GLOB.lobby_background_transparent ? "on" : "off"].")
 
 /datum/lobby_menu
 	var/client/client
@@ -57,6 +62,8 @@ GLOBAL_VAR(lobby_title_asset_registered)
 	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
 
 	GLOB.lobby_menus += src
+	if(GLOB.lobby_background_transparent)
+		winset(client, "mapwindow.lobby_menu", "background-color=none;inner-background-color=transparent")
 	update_visibility()
 	send_init()
 
@@ -67,6 +74,14 @@ GLOBAL_VAR(lobby_title_asset_registered)
 	window = null
 	client = null
 	return ..()
+
+/// Toggle the browser element between opaque and transparent background
+/datum/lobby_menu/proc/set_transparency(transparent)
+	if(transparent)
+		winset(client, "mapwindow.lobby_menu", "background-color=none;inner-background-color=transparent")
+	else
+		winset(client, "mapwindow.lobby_menu", "background-color=;inner-background-color=")
+	send_update(list("transparent" = transparent))
 
 /datum/lobby_menu/process(seconds_per_tick)
 	send_update(list(
@@ -189,6 +204,7 @@ GLOBAL_VAR(lobby_title_asset_registered)
 		"hasNewPoll" = FALSE,
 		"canPoll" = !is_guest_key(client?.key) && SSdbcore.Connect(),
 		"overflowJob" = null,
+		"transparent" = GLOB.lobby_background_transparent,
 	))
 
 	// Async poll check

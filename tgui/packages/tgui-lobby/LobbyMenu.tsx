@@ -33,6 +33,7 @@ export type ServerState = {
   canPoll: boolean;
   overflowJob: string | null;
   traitFeedback: string | null;
+  transparent: boolean;
 };
 
 type LobbyState = {
@@ -189,8 +190,6 @@ function SpriteButton({
   );
 }
 
-// --- Trait feedback toast ---
-
 function TraitFeedback({ text }: { text: string }) {
   const [visible, setVisible] = useState(true);
 
@@ -218,6 +217,7 @@ const EASE_IN = 'cubic-bezier(0.32, 0, 0.67, 0)';
 export function LobbyMenu() {
   const [state, dispatch] = useReducer(lobbyReducer, DEFAULT_STATE);
   const [animating, setAnimating] = useState(false);
+  const [tvActive, setTvActive] = useState(true);
   const shutterRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -235,13 +235,22 @@ export function LobbyMenu() {
     return null;
   }
 
-  const backgroundStyle = ss.titleImageUrl
-    ? {
-        backgroundImage: `url(${ss.titleImageUrl})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }
-    : undefined;
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      '--lobby-bg',
+      ss.transparent ? 'transparent' : '#000',
+    );
+  }, [ss.transparent]);
+
+  const backgroundStyle = ss.transparent
+    ? undefined
+    : ss.titleImageUrl
+      ? {
+          backgroundImage: `url(${ss.titleImageUrl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }
+      : undefined;
 
   const collapsed = state.isCollapsed;
   const blipEnabled = ss.gamePhase === 'pregame' || ss.gamePhase === 'startup';
@@ -252,14 +261,12 @@ export function LobbyMenu() {
     blipState = ss.isReady ? 'ready_blip_ready' : 'ready_blip_not_ready';
   }
 
-  // Compute the shutter travel distance from CSS --icon-scale
   function getShutterDistance(): number {
     const scale = parseFloat(
       getComputedStyle(document.documentElement).getPropertyValue(
         '--icon-scale',
       ) || '1',
     );
-    // 143px at native scale = shutter travel distance
     return 143 * scale;
   }
 
@@ -271,6 +278,7 @@ export function LobbyMenu() {
 
     if (!collapsed) {
       playCollapseSound();
+      setTvActive(false);
 
       if (shutter) {
         const dist = getShutterDistance();
@@ -337,12 +345,14 @@ export function LobbyMenu() {
 
         for (const a of shutter.getAnimations()) a.cancel();
       }
+
+      // Turn TV back on after fully expanded
+      setTvActive(true);
     }
 
     setAnimating(false);
   }
 
-  // Info TV text
   const roundStarted = ss.gamePhase === 'playing';
   const postgame = ss.gamePhase === 'postgame';
   let tvLines: string[];
@@ -369,16 +379,17 @@ export function LobbyMenu() {
   }
 
   return (
-    <div className="lobby" style={backgroundStyle}>
+    <div
+      className={`lobby ${ss.transparent ? 'lobby--transparent' : ''}`}
+      style={backgroundStyle}
+    >
       <div className="lobby__anchor">
-        {/* Background panel */}
         <div
           className={`lobby__el lobby__el--bg ${collapsed ? 'lobby__el--collapse-up' : ''}`}
         >
           <span className="lobby-icons151x123 background lobby__sprite" />
         </div>
 
-        {/* Ready button (pregame) */}
         {!!ss.canReady && (
           <div
             className={`lobby__el lobby__el--ready ${collapsed ? 'lobby__el--collapse-up' : ''}`}
@@ -391,7 +402,6 @@ export function LobbyMenu() {
           </div>
         )}
 
-        {/* Join Game button (round started) */}
         {!!ss.canJoin && (
           <div
             className={`lobby__el lobby__el--join ${collapsed ? 'lobby__el--collapse-up' : ''}`}
@@ -404,7 +414,6 @@ export function LobbyMenu() {
           </div>
         )}
 
-        {/* Observe */}
         <div
           className={`lobby__el lobby__el--observe ${collapsed ? 'lobby__el--collapse-up' : ''}`}
         >
@@ -416,7 +425,6 @@ export function LobbyMenu() {
           />
         </div>
 
-        {/* Character Setup */}
         <div
           className={`lobby__el lobby__el--character ${collapsed ? 'lobby__el--collapse-up' : ''}`}
         >
@@ -428,12 +436,10 @@ export function LobbyMenu() {
           />
         </div>
 
-        {/* Shutter — animated via JS Web Animations API */}
         <div className="lobby__el lobby__el--shutter" ref={shutterRef}>
           <span className="lobby-icons175x130 shutter lobby__sprite" />
         </div>
 
-        {/* Collapse/Expand button — moves less than other elements */}
         <div
           className={`lobby__el lobby__el--collapse ${collapsed ? 'lobby__el--collapse-slide' : ''}`}
         >
@@ -452,7 +458,6 @@ export function LobbyMenu() {
           </button>
         </div>
 
-        {/* Bottom buttons */}
         <div
           className={`lobby__el lobby__el--bottom-poll ${collapsed ? 'lobby__el--collapse-up' : ''}`}
         >
@@ -500,7 +505,6 @@ export function LobbyMenu() {
           />
         </div>
 
-        {/* Start Now — localhost only */}
         {!!ss.isLocalhost && (
           <div
             className={`lobby__el lobby__el--start-now ${collapsed ? 'lobby__el--collapse-up' : ''}`}
@@ -513,7 +517,6 @@ export function LobbyMenu() {
           </div>
         )}
 
-        {/* Station trait sign-up buttons */}
         {ss.stationTraits.map((trait, i) => (
           <div
             key={trait.ref}
@@ -542,21 +545,21 @@ export function LobbyMenu() {
           </div>
         ))}
 
-        {/* Trait feedback toast */}
         {!!ss.traitFeedback && <TraitFeedback text={ss.traitFeedback} />}
       </div>
 
-      {/* Info TV — positioned from the right edge */}
       <div className={`lobby__tv ${collapsed ? 'lobby__tv--collapsed' : ''}`}>
         <div className="info-tv">
           <span className="lobby-icons128x96 tv-newplayer info-tv__layer" />
           <span className="lobby-icons128x96 tv-newplayer_overlay info-tv__layer info-tv__overlay" />
-          <div className="info-tv__text">
-            {tvLines.map((line, i) => (
-              <div key={i}>{line}</div>
-            ))}
-          </div>
-          {!collapsed && (
+          {tvActive && (
+            <div className="info-tv__text">
+              {tvLines.map((line, i) => (
+                <div key={i}>{line}</div>
+              ))}
+            </div>
+          )}
+          {tvActive && !collapsed && (
             <>
               {assetMap['static_base.png'] && (
                 <img

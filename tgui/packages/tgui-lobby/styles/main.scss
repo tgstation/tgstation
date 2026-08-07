@@ -24,7 +24,7 @@ body,
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: #000;
+  background: var(--lobby-bg, #000);
 }
 
 * {
@@ -42,6 +42,10 @@ body,
   image-rendering: pixelated;
   background-color: #000;
   background-repeat: no-repeat;
+
+  &--transparent {
+    background: transparent !important;
+  }
 }
 
 .lobby__anchor {
@@ -87,7 +91,7 @@ body,
 .lobby__el--collapse {
   top: 10.25rem;
   left: -6.75rem;
-  z-index: 2;
+  z-index: 1;
 }
 
 .lobby__el--bottom-poll {
@@ -317,10 +321,11 @@ body,
     left: 0;
     width: calc(128px * var(--icon-scale, 1));
     height: calc(96px * var(--icon-scale, 1));
-    opacity: 0.08;
+    opacity: 0.15;
     z-index: 3;
     pointer-events: none;
     image-rendering: pixelated;
+    mix-blend-mode: overlay;
   }
 
   &__scanlines {
