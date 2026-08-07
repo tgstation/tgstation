@@ -262,15 +262,6 @@ export function LobbyMenu() {
     blipState = ss.isReady ? 'ready_blip_ready' : 'ready_blip_not_ready';
   }
 
-  function getShutterDistance(): number {
-    const scale = parseFloat(
-      getComputedStyle(document.documentElement).getPropertyValue(
-        '--icon-scale',
-      ) || '1',
-    );
-    return 143 * scale;
-  }
-
   async function handleToggleCollapse() {
     if (animating) return;
     setAnimating(true);
@@ -282,7 +273,7 @@ export function LobbyMenu() {
       setTvActive(false);
 
       if (shutter) {
-        const dist = getShutterDistance();
+        const dist = 143;
 
         await shutter.animate(
           [
@@ -315,7 +306,7 @@ export function LobbyMenu() {
       playExpandSound();
 
       if (shutter) {
-        const dist = getShutterDistance();
+        const dist = 143;
 
         shutter.animate(
           [
@@ -331,7 +322,7 @@ export function LobbyMenu() {
       await new Promise((r) => setTimeout(r, SHUTTER_MOVE_MS));
 
       if (shutter) {
-        const dist = getShutterDistance();
+        const dist = 143;
 
         await new Promise((r) => setTimeout(r, SHUTTER_WAIT_MS));
 
