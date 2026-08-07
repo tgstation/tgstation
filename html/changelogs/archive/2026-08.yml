@@ -215,6 +215,11 @@
       have been optimized by approximately 41% ( using alist() instead of list() )
   SmArtKar:
   - refactor: Rewrote dynamic lighting lumcount to use spatial-grid based requests
+  hry-gh:
+  - refactor: the backend for verbs has been changed ... again, please report any
+      issues on the bug tracker
+  - qol: the command bar is now a bit prettier, and also autocompletes things like
+      typepaths and mob targets (primarily useful for admins)
   vinylspiders:
   - bugfix: birdboat will no longer try to eat everything in sight at all times, in
       exchange their range for noticing food has been increased...

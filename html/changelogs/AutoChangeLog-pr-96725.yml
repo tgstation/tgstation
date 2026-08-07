@@ -1,5 +1,0 @@
-author: "hry-gh"
-delete-after: True
-changes:
-  - refactor: "the backend for verbs has been changed ... again, please report any issues on the bug tracker"
-  - qol: "the command bar is now a bit prettier, and also autocompletes things like typepaths and mob targets (primarily useful for admins)"
