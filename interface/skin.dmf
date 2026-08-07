@@ -369,7 +369,7 @@ window "output_legacy"
 	elem "output_legacy"
 		type = MAIN
 		pos = 0,0
-		size = 640x456
+		size = 640x475
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
@@ -377,7 +377,7 @@ window "output_legacy"
     elem "output_and_input_legacy"
         type = CHILD
         pos = 0,0
-        size = 640x456
+        size = 640x475
         anchor1 = 0,0
         anchor2 = 100,100
         saved-params = "splitter"
@@ -390,14 +390,14 @@ window "output_legacy_pane"
     elem "output_legacy_pane"
         type = MAIN
         pos = 0,0
-        size = 640x456
+        size = 640x475
         anchor1 = -1,-1
         anchor2 = -1,-1
         is-pane = true
 	elem "output"
 		type = OUTPUT
 		pos = 0,0
-		size = 640x456
+		size = 640x475
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-default = true
@@ -407,7 +407,7 @@ window "output_browser"
 	elem "output_browser"
 		type = MAIN
 		pos = 0,0
-		size = 640x456
+		size = 640x475
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
@@ -415,7 +415,7 @@ window "output_browser"
 	elem "browseroutput"
 		type = BROWSER
 		pos = 0,0
-		size = 640x456
+		size = 640x475
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = ""
