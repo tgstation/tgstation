@@ -28,15 +28,16 @@ SUBSYSTEM_DEF(verbs)
 	var/list/invoke_args = args.Copy(3)
 	call(target, meta.body_path)(arglist(invoke_args))
 
-/datum/controller/subsystem/verbs/proc/invoke_verb(target, verb_path, list/positional_args)
+/datum/controller/subsystem/verbs/proc/invoke_verb(target, verb_path, list/positional_args, caller)
 	var/datum/verb_metadata/meta = verbs_by_verb_path[verb_path]
 	if(isnull(meta))
 		CRASH("invoke_verb called for '[verb_path]' with no metadata registered")
+	var/resolved_caller = caller || target
 	var/client/user_client
-	if(istype(target, /client))
-		user_client = target
-	else if(ismob(target))
-		var/mob/mob_target = target
+	if(istype(resolved_caller, /client))
+		user_client = resolved_caller
+	else if(ismob(resolved_caller))
+		var/mob/mob_target = resolved_caller
 		user_client = mob_target.client
 	if(!user_client)
 		return
@@ -44,6 +45,9 @@ SUBSYSTEM_DEF(verbs)
 	var/list/structured_args = ____collect_verb_args(user_client, meta.name, meta.arguments, positional_args)
 	if(isnull(structured_args))
 		return
+
+	if(caller)
+		usr = caller
 	call(target, meta.body_path)(structured_args)
 
 /datum/controller/subsystem/verbs/proc/assign_verb(target, datum/verb_metadata/verb_type)

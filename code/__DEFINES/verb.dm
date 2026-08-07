@@ -26,7 +26,7 @@
 	set popup_menu = ##show_in_context_menu; \
 	set category = ##verb_category; \
 	set instant = ##is_instant; \
-	INVOKE_ASYNC(SSverbs, TYPE_PROC_REF(/datum/controller/subsystem/verbs, invoke_verb), src, ##owner_type/verb/##verb_path_name, args); \
+	INVOKE_ASYNC(SSverbs, TYPE_PROC_REF(/datum/controller/subsystem/verbs, invoke_verb), src, ##owner_type/verb/##verb_path_name, args, usr); \
 }; \
 ##owner_type/proc/__gvb_##verb_path_name(list/structured_args)
 
@@ -52,8 +52,8 @@ _GAME_VERB(owner_type, verb_path_name, verb_name, verb_desc, verb_category, TRUE
 	set hidden = FALSE; \
 	set popup_menu = TRUE; \
 	set category = ##verb_category; \
-	if(__context_target) { var/list/__args = args.Copy(); __args += list(VERB_ARG_CONTEXT_TARGET_KEY = __context_target); INVOKE_ASYNC(SSverbs, TYPE_PROC_REF(/datum/controller/subsystem/verbs, invoke_verb), src, ##owner_type/verb/##verb_path_name, __args); } \
-	else { INVOKE_ASYNC(SSverbs, TYPE_PROC_REF(/datum/controller/subsystem/verbs, invoke_verb), src, ##owner_type/verb/##verb_path_name, args); }; \
+	if(__context_target) { var/list/__args = args.Copy(); __args += list(VERB_ARG_CONTEXT_TARGET_KEY = __context_target); INVOKE_ASYNC(SSverbs, TYPE_PROC_REF(/datum/controller/subsystem/verbs, invoke_verb), src, ##owner_type/verb/##verb_path_name, __args, usr); } \
+	else { INVOKE_ASYNC(SSverbs, TYPE_PROC_REF(/datum/controller/subsystem/verbs, invoke_verb), src, ##owner_type/verb/##verb_path_name, args, usr); }; \
 }; \
 ##owner_type/proc/__gvb_##verb_path_name(list/structured_args)
 
@@ -106,7 +106,7 @@ _GAME_VERB_NATIVE(owner_type, verb_path_name, verb_name, verb_category, TRUE, ##
 	set hidden = ##is_hidden; \
 	set popup_menu = ##show_in_context_menu; \
 	set category = ##verb_category; \
-	INVOKE_ASYNC(SSverbs, TYPE_PROC_REF(/datum/controller/subsystem/verbs, invoke_verb), src, ##owner_type/proc/##verb_path_name, args); \
+	INVOKE_ASYNC(SSverbs, TYPE_PROC_REF(/datum/controller/subsystem/verbs, invoke_verb), src, ##owner_type/proc/##verb_path_name, args, usr); \
 }; \
 ##owner_type/proc/__gvb_##verb_path_name(list/structured_args)
 
@@ -133,7 +133,7 @@ _GAME_VERB_PROC(owner_type, verb_path_name, verb_name, verb_desc, verb_category,
 	set popup_menu = ##show_in_context_menu; \
 	set category = ##verb_category; \
 	set src in src_value; \
-	INVOKE_ASYNC(SSverbs, TYPE_PROC_REF(/datum/controller/subsystem/verbs, invoke_verb), src, ##owner_type/verb/##verb_path_name, args); \
+	INVOKE_ASYNC(SSverbs, TYPE_PROC_REF(/datum/controller/subsystem/verbs, invoke_verb), src, ##owner_type/verb/##verb_path_name, args, usr); \
 }; \
 ##owner_type/proc/__gvb_##verb_path_name(list/structured_args)
 
