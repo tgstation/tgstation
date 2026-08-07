@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer, useState } from 'react';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { Tooltip } from 'tgui-core/components';
 import { assetMap } from './assets';
 import { playCollapseSound, playExpandSound, playSelectSound } from './audio';
@@ -43,7 +43,7 @@ type LobbyState = {
 type LobbyAction =
   | { type: 'serverInit'; payload: ServerState }
   | { type: 'serverUpdate'; payload: Partial<ServerState> }
-  | { type: 'toggleCollapse' };
+  | { type: 'setCollapsed'; collapsed: boolean };
 
 const DEFAULT_STATE: LobbyState = {
   isCollapsed: false,
@@ -60,8 +60,8 @@ function lobbyReducer(state: LobbyState, action: LobbyAction): LobbyState {
         ...state,
         serverState: { ...state.serverState, ...action.payload },
       };
-    case 'toggleCollapse':
-      return { ...state, isCollapsed: !state.isCollapsed };
+    case 'setCollapsed':
+      return { ...state, isCollapsed: action.collapsed };
     default:
       return state;
   }
@@ -71,16 +71,8 @@ function sendAction(action: string, payload?: Record<string, unknown>) {
   Byond.sendMessage('action', { action, ...payload });
 }
 
-/**
- * Plays an APNG once by mounting a fresh <img> on click.
- * The APNG is saved with loop=1 so the browser plays it once
- * and holds the last frame. A counter-keyed remount ensures
- * each click restarts from frame 0.
- */
-/**
- * Uses ImageDecoder to determine the total duration of an APNG,
- * then unmounts the <img> after that exact duration.
- */
+// --- APNG flick system ---
+
 async function getApngDuration(url: string): Promise<number> {
   try {
     const res = await fetch(url);
@@ -90,12 +82,13 @@ async function getApngDuration(url: string): Promise<number> {
     let total = 0;
     for (let i = 0; i < decoder.tracks.selectedTrack!.frameCount; i++) {
       const result = await decoder.decode({ frameIndex: i });
-      total += result.image.duration! / 1000; // microseconds → ms
+      total += result.image.duration! / 1000;
+      result.image.close();
     }
     decoder.close();
     return total;
   } catch {
-    return 300; // fallback
+    return 300;
   }
 }
 
@@ -111,13 +104,10 @@ function getCachedDuration(url: string): Promise<number> {
   return p;
 }
 
-/**
- * Preload an APNG into a blob URL and pre-decode its duration.
- */
 function preloadApng(assetKey: string) {
   const url = assetMap[assetKey];
   if (!url || blobCache.has(assetKey)) return;
-  blobCache.set(assetKey, url); // placeholder to prevent duplicate fetches
+  blobCache.set(assetKey, url);
   fetch(url)
     .then((r) => r.blob())
     .then((blob) => {
@@ -136,7 +126,6 @@ function useFlick(assetKey: string): [() => void, React.ReactNode] {
   const [count, setCount] = useState(0);
   const [activeUrl, setActiveUrl] = useState<string | null>(null);
 
-  // Preload on first render so it's cached when clicked
   useEffect(() => {
     preloadApng(assetKey);
   }, [assetKey]);
@@ -144,7 +133,6 @@ function useFlick(assetKey: string): [() => void, React.ReactNode] {
   const trigger = useCallback(() => {
     const url = getPreloadedUrl(assetKey);
     if (!url) return;
-    // Capture the URL at click time so it doesn't change if state updates mid-animation
     setActiveUrl(url);
     setCount((c) => c + 1);
     getCachedDuration(url).then((ms) => {
@@ -159,10 +147,8 @@ function useFlick(assetKey: string): [() => void, React.ReactNode] {
   return [trigger, element];
 }
 
-/**
- * Sprite button using spritesheet CSS classes.
- * On click, plays the APNG pressed animation once (like BYOND flick()).
- */
+// --- Sprite button ---
+
 function SpriteButton({
   spriteClass,
   iconState,
@@ -176,7 +162,6 @@ function SpriteButton({
   enabled?: boolean;
   onClick?: React.MouseEventHandler;
   children?: React.ReactNode;
-  /** Override the APNG asset key for the pressed state */
   pressedKey?: string;
 }) {
   const displayState = enabled ? iconState : `${iconState}_disabled`;
@@ -195,17 +180,17 @@ function SpriteButton({
       disabled={!enabled}
     >
       <span className={`${spriteClass} ${displayState} sprite-btn__normal`} />
-      <span className={`${spriteClass} ${iconState}_highlighted sprite-btn__hover`} />
+      <span
+        className={`${spriteClass} ${iconState}_highlighted sprite-btn__hover`}
+      />
       {flickElement}
       {children}
     </button>
   );
 }
 
-/**
- * Brief floating text feedback after clicking a trait button.
- * Mimics BYOND's balloon_alert — shows text that fades out.
- */
+// --- Trait feedback toast ---
+
 function TraitFeedback({ text }: { text: string }) {
   const [visible, setVisible] = useState(true);
 
@@ -224,9 +209,16 @@ function TraitFeedback({ text }: { text: string }) {
   );
 }
 
+// --- Shutter animation timing ---
+const SHUTTER_MOVE_MS = 400;
+const SHUTTER_WAIT_MS = 200;
+const EASE_OUT = 'cubic-bezier(0.33, 1, 0.68, 1)';
+const EASE_IN = 'cubic-bezier(0.32, 0, 0.67, 0)';
+
 export function LobbyMenu() {
   const [state, dispatch] = useReducer(lobbyReducer, DEFAULT_STATE);
-  const [shutterCount, setShutterCount] = useState(0);
+  const [animating, setAnimating] = useState(false);
+  const shutterRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     Byond.subscribeTo('init', (payload: ServerState) => {
@@ -258,6 +250,86 @@ export function LobbyMenu() {
   let blipState = 'ready_blip_disabled';
   if (blipEnabled) {
     blipState = ss.isReady ? 'ready_blip_ready' : 'ready_blip_not_ready';
+  }
+
+  // Compute the shutter travel distance from CSS --icon-scale
+  function getShutterDistance(): number {
+    const scale = parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue('--icon-scale') || '1',
+    );
+    // 143px at native scale = shutter travel distance
+    return 143 * scale;
+  }
+
+  async function handleToggleCollapse() {
+    if (animating) return;
+    setAnimating(true);
+
+    const shutter = shutterRef.current;
+
+    if (!collapsed) {
+      // COLLAPSING
+      playCollapseSound();
+
+      // Phase 1: Shutter slides down
+      if (shutter) {
+        const dist = getShutterDistance();
+        await shutter.animate(
+          [
+            { transform: 'translateY(0)' },
+            { transform: `translateY(${dist}px)` },
+          ],
+          { duration: SHUTTER_MOVE_MS, easing: EASE_OUT, fill: 'forwards' },
+        ).finished;
+
+        // Pause while shutter is down
+        await new Promise((r) => setTimeout(r, SHUTTER_WAIT_MS));
+      }
+
+      // Phase 2: Set collapsed — CSS transitions slide everything up
+      // The shutter returns to home simultaneously via its own transition
+      if (shutter) {
+        for (const a of shutter.getAnimations()) a.cancel();
+      }
+      dispatch({ type: 'setCollapsed', collapsed: true });
+    } else {
+      // EXPANDING
+      playExpandSound();
+
+      // Phase 1: Unset collapsed — CSS transitions slide everything down
+      dispatch({ type: 'setCollapsed', collapsed: false });
+
+      // Wait for the slide-down to finish
+      await new Promise((r) => setTimeout(r, SHUTTER_MOVE_MS));
+
+      // Phase 2: Shutter sweeps down and back up
+      if (shutter) {
+        const dist = getShutterDistance();
+        // Down
+        await shutter.animate(
+          [
+            { transform: 'translateY(0)' },
+            { transform: `translateY(${dist}px)` },
+          ],
+          { duration: SHUTTER_MOVE_MS, easing: EASE_OUT, fill: 'forwards' },
+        ).finished;
+
+        await new Promise((r) => setTimeout(r, SHUTTER_WAIT_MS));
+
+        // Back up
+        await shutter.animate(
+          [
+            { transform: `translateY(${dist}px)` },
+            { transform: 'translateY(0)' },
+          ],
+          { duration: SHUTTER_MOVE_MS, easing: EASE_IN, fill: 'forwards' },
+        ).finished;
+
+        for (const a of shutter.getAnimations()) a.cancel();
+      }
+    }
+
+    setAnimating(false);
   }
 
   // Info TV text
@@ -333,24 +405,17 @@ export function LobbyMenu() {
           />
         </div>
 
-        {/* Shutter */}
-        <div className="lobby__el lobby__el--shutter" key={shutterCount}>
-          <span className="lobby-icons175x130 shutter lobby__sprite lobby__shutter-sprite" />
+        {/* Shutter — animated via JS Web Animations API */}
+        <div className="lobby__el lobby__el--shutter" ref={shutterRef}>
+          <span className="lobby-icons175x130 shutter lobby__sprite" />
         </div>
 
-        {/* Collapse/Expand button */}
+        {/* Collapse/Expand button — moves less than other elements */}
         <div className={`lobby__el lobby__el--collapse ${collapsed ? 'lobby__el--collapse-slide' : ''}`}>
           <button
             className="sprite-btn sprite-btn--no-press"
-            onClick={() => {
-              if (collapsed) {
-                playExpandSound();
-              } else {
-                playCollapseSound();
-              }
-              setShutterCount((c) => c + 1);
-              dispatch({ type: 'toggleCollapse' });
-            }}
+            onClick={handleToggleCollapse}
+            disabled={animating}
           >
             <span className={`lobby-icons26x66 ${collapseIcon} sprite-btn__normal`} />
             <span className={`lobby-icons26x66 ${collapseIcon}_highlighted sprite-btn__hover`} />

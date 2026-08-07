@@ -11,7 +11,6 @@
   transform: translateY(-1.5rem);
 }
 
-// Timing constants matching the DM shutter animation
 $move-dur: 0.4s;
 $wait-dur: 0.2s;
 $ease-out: cubic-bezier(0.33, 1, 0.68, 1);
@@ -36,9 +35,6 @@ body,
   image-rendering: pixelated;
 }
 
-// ============================================================
-// Root — full viewport with title screen background
-// ============================================================
 .lobby {
   position: relative;
   width: 100%;
@@ -48,9 +44,6 @@ body,
   background-repeat: no-repeat;
 }
 
-// ============================================================
-// Anchor — BYOND's (TOP, CENTER) reference point.
-// ============================================================
 .lobby__anchor {
   position: absolute;
   top: 0;
@@ -61,24 +54,18 @@ body,
   position: absolute;
 }
 
-// ============================================================
-// Element positions — BYOND px offsets ÷ 8 = rem
-// ============================================================
-
 .lobby__el--bg {
   top: 0;
   left: -7.625rem;
   z-index: 1;
 }
 
-// Ready button: BYOND "TOP:-8,CENTER:-65" — 160px wide
 .lobby__el--ready {
   top: 1rem;
   left: -8.125rem;
   z-index: 3;
 }
 
-// Join button: BYOND "TOP:-13,CENTER:-58" — 145px wide
 .lobby__el--join {
   top: 1.625rem;
   left: -7.25rem;
@@ -103,8 +90,6 @@ body,
   z-index: 2;
 }
 
-// Bottom buttons — higher z so shutter passes behind them,
-// but they still collapse with the main menu
 .lobby__el--bottom-poll {
   top: 15.25rem;
   left: -3.25rem;
@@ -129,46 +114,11 @@ body,
   z-index: 6;
 }
 
-// Shutter — starts off-screen above, slides down and back up
 .lobby__el--shutter {
-  // Home position: BYOND screen_loc "TOP:+143,CENTER:-73"
-  // +143 means 143px ABOVE the top edge (off-screen)
   top: -17.875rem;
   left: -9.125rem;
   z-index: 5;
   pointer-events: none;
-}
-
-.lobby__shutter-sprite {
-  animation: shutter-sweep 1s linear forwards;
-}
-
-// Each leg handles its own easing via individual keyframe segments.
-// Down: 0-40% (ease-out), Hold: 40-60%, Up: 60-100% (ease-in)
-// Using linear on the animation and baking easing into the keyframes
-// via intermediate steps to approximate the cubic curves.
-@keyframes shutter-sweep {
-  0% {
-    transform: translateY(0) scale(var(--icon-scale, 1));
-  }
-  // Ease-out down
-  20% {
-    transform: translateY(14rem) scale(var(--icon-scale, 1));
-  }
-  40% {
-    transform: translateY(17.875rem) scale(var(--icon-scale, 1));
-  }
-  // Hold
-  60% {
-    transform: translateY(17.875rem) scale(var(--icon-scale, 1));
-  }
-  // Ease-in up
-  80% {
-    transform: translateY(3.875rem) scale(var(--icon-scale, 1));
-  }
-  100% {
-    transform: translateY(0) scale(var(--icon-scale, 1));
-  }
 }
 
 .lobby__el--start-now {
@@ -177,21 +127,12 @@ body,
   z-index: 3;
 }
 
-
-// Station trait buttons
 .lobby__el--trait {
   top: calc(5rem + var(--trait-row) * 3.375rem);
   left: calc(-10.625rem - var(--trait-col) * 3.375rem);
   z-index: 3;
 }
 
-// ============================================================
-// Collapse animations
-// ============================================================
-
-// Slide up — used by main buttons, bottom buttons, background, start now, traits
-// Delay matches the shutter reaching the bottom (0.4s down + 0.2s hold = 0.6s)
-// then buttons slide up over 0.4s in sync with the shutter returning
 .lobby__el--collapse-up {
   transition: transform $move-dur $ease-in;
   transition-delay: ($move-dur + $wait-dur);
@@ -202,17 +143,12 @@ body,
   transition: transform $move-dur $ease-out;
 }
 
-// Collapse button slides up less (stays partially visible at screen edge)
 .lobby__el--collapse-slide {
   transition: transform $move-dur $ease-in;
   transition-delay: ($move-dur + $wait-dur);
   transform: translateY(-16.75rem);
 }
 
-
-// ============================================================
-// Sprite-based button
-// ============================================================
 .sprite-btn {
   display: block;
   background: none;
@@ -243,7 +179,6 @@ body,
     opacity: 0;
   }
 
-  // Pressed APNG — mounted on click by useFlick(), covers normal+hover
   &__pressed {
     position: absolute;
     top: 0;
@@ -269,7 +204,6 @@ body,
   transform-origin: top left;
 }
 
-// Ready blip overlay on collapse button
 .lobby__blip {
   position: absolute;
   top: 0;
@@ -279,27 +213,20 @@ body,
   pointer-events: none;
 }
 
-// ============================================================
-// Info TV — anchored from the right edge of the viewport
-// BYOND: "EAST-3,CENTER:140" = 3 tiles from right, 140px above center
-// ============================================================
 .lobby__tv {
   position: absolute;
   right: 0;
-  // 140px above viewport center — in BYOND Y-up coords
   top: calc(50% - 26rem);
   z-index: 3;
   transition: transform $move-dur $ease-out;
 
   &--collapsed {
-    // Slides right off-screen in sync with shutter return
     transition: transform $move-dur $ease-in;
     transition-delay: ($move-dur + $wait-dur);
     transform: translateX(18.25rem);
   }
 }
 
-// Trait feedback toast — brief floating text like balloon_alert
 .lobby__trait-feedback {
   top: 3rem;
   left: -14rem;
@@ -328,7 +255,6 @@ body,
   }
 }
 
-// Station trait overlays — layered on top of the signup button
 .lobby__trait-overlay {
   position: absolute;
   top: 0;
@@ -339,7 +265,6 @@ body,
   z-index: 1;
 }
 
-// New poll overlay — sits directly on top of the poll button
 .lobby__badge {
   position: absolute;
   top: 0;
@@ -350,17 +275,9 @@ body,
   z-index: 1;
 }
 
-// ============================================================
-// Info TV
-// ============================================================
-// The TV sprite is 128x96 native pixels.
-// The screen area within it is roughly 80x55 pixels,
-// offset about 12px from left and 5px from top.
 .info-tv {
   position: relative;
   display: inline-block;
-  // Set explicit dimensions based on the sprite's scaled size
-  // so children can be positioned/clipped relative to it
   width: calc(128px * var(--icon-scale, 1));
   height: calc(96px * var(--icon-scale, 1));
 
@@ -379,7 +296,6 @@ body,
 
   &__text {
     position: absolute;
-    // Positioned within the screen area of the TV
     top: calc(28px * var(--icon-scale, 1));
     left: calc(14px * var(--icon-scale, 1));
     width: calc(80px * var(--icon-scale, 1));
@@ -398,7 +314,6 @@ body,
     justify-content: center;
   }
 
-  // Animated static noise — APNG extracted from the original DMI
   &__static {
     position: absolute;
     top: 0;
@@ -411,10 +326,6 @@ body,
     image-rendering: pixelated;
   }
 
-  // Animated scanline APNG — extracted from newplayer_scanline.dmi (94x55)
-  // DM: pixel_x = 5, pixel_y = 12 (BYOND Y-up, relative to TV bottom-left)
-  // CSS: top = TV_height(96) - scanline_height(55) - pixel_y(12) = 29px
-  //      left = pixel_x(5) = 5px
   &__scanlines {
     position: absolute;
     top: calc(29px * var(--icon-scale, 1));
@@ -427,4 +338,3 @@ body,
     image-rendering: pixelated;
   }
 }
-
