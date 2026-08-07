@@ -259,6 +259,11 @@ body,
   }
 }
 
+.lobby__trait-wrapper {
+  width: calc(24px * var(--icon-scale, 1));
+  height: calc(24px * var(--icon-scale, 1));
+}
+
 .lobby__trait-overlay {
   position: absolute;
   top: 0;

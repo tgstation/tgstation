@@ -530,7 +530,7 @@ export function LobbyMenu() {
             }
           >
             <Tooltip content={trait.description} position="left">
-              <div>
+              <div className="lobby__trait-wrapper">
                 <SpriteButton
                   spriteClass="lobby-icons24x24"
                   iconState={trait.iconState}
