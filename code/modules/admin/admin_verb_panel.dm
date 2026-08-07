@@ -123,22 +123,17 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 			var/verb_type = text2path(params["verb_type"])
 			if(!verb_type)
 				return
-			var/datum/admin_verb/verb = SSadmin_verbs.admin_verbs_by_type[verb_type]
-			if(!verb)
-				return
 			var/list/raw_args = params["args"]
 			if(!islist(raw_args))
 				raw_args = list()
-			var/list/resolved_args = list()
-			for(var/datum/verb_arg_metadata/meta in verb.arguments)
-				if(!(meta.name in raw_args))
-					continue
-				var/value = raw_args[meta.name]
+			var/alist/resolved_args = alist()
+			for(var/key in raw_args)
+				var/value = raw_args[key]
 				if(istext(value))
 					var/located = locate(value)
 					if(located)
 						value = located
-				resolved_args += list(value)
+				resolved_args[key] = value
 			SSadmin_verbs.dynamic_invoke_verb(owner, verb_type, resolved_args)
 			return TRUE
 		if("request_typepaths")

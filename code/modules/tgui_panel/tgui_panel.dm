@@ -185,7 +185,7 @@
 /datum/tgui_panel/proc/resolve_invoke_args(list/raw_args, list/arg_metadata)
 	if(!islist(raw_args))
 		raw_args = list()
-	var/list/resolved = list()
+	var/alist/resolved = alist()
 	for(var/datum/verb_arg_metadata/meta in arg_metadata)
 		if(!(meta.name in raw_args))
 			continue
@@ -196,7 +196,7 @@
 			var/located = locate(value)
 			if(located)
 				value = located
-		resolved += list(value)
+		resolved[meta.name] = value
 	return resolved
 
 /datum/tgui_panel/proc/resolve_verb_target(verb_path)
