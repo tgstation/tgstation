@@ -31,7 +31,6 @@ else
 	shuttle_map_files="-r --include=_maps/shuttles/**.dmm"
 	code_x_515="-r --include=code/**/!(__byond_version_compat).dm"
 fi
-
 echo -e "${BLUE}Using grep provider at $(which $grep)${NC}"
 
 part=0
@@ -158,10 +157,17 @@ if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' "${code_files[@]}"; then
 	st=1
 fi;
 
+<<<<<<< HEAD
+part "manual verblike definition"
+if $grep '\tset\s*(name|desc|category|hidden|popup_menu|instant|invisibility)\s*=\s*(.*)\s' "${code_files[@]}" "-g '!tools/"; then
+	echo
+	echo -e "${RED}ERROR: Found a manual verblike attribute set. Verbs are shimmed, use DEFINE_VERB() instead, or if this absolutely has to be manually defined, wrap it in UNLINT().${NC}"
+=======
 part "manual verb definition"
 if $grep '\tset\s*(name|desc|category|hidden|popup_menu|instant)\s*=\s*(.*)\s' "${code_files[@]}" -g '!code/__DEFINES/**' -g '!code/__HELPERS/**' -g '!tools/**'; then
 	echo
 	echo -e "${RED}ERROR: Found a manual verb attribute set. Use GAME_VERB() or ADMIN_VERB() instead.${NC}"
+>>>>>>> 5f093a8cfbbe269b15bc73535f230909218e38d6
 	st=1
 fi;
 

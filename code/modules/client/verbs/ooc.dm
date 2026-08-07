@@ -1,6 +1,7 @@
 GLOBAL_VAR_INIT(OOC_COLOR, null)//If this is null, use the CSS for OOC. Otherwise, use a custom colour.
 GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
+//Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 ///talking in OOC uses this
 GAME_VERB(/client, ooc, VERB_OOC, null, msg as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems

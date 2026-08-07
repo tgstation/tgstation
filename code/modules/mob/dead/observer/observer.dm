@@ -79,6 +79,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 /mob/dead/observer/Initialize(mapload)
 	set_invisibility(GLOB.observer_default_invisibility)
+
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
 	else
@@ -305,7 +306,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
 */
 GAME_VERB_DESC(/mob/living, ghost, "Ghost", "Relinquish your life and enter the land of the dead.", "OOC")
+	ghost_yourself()
 
+/mob/living/proc/ghost_yourself()
 	if(stat != STABLE && stat != DEAD)
 		succumb()
 	if(stat == DEAD)
@@ -749,11 +752,11 @@ GAME_VERB_HIDDEN(/mob/dead/observer, add_view_range, "Add View Range", input as 
 	target.set_faction(list(FACTION_NEUTRAL))
 	return TRUE
 
-/mob/dead/observer/_pointed(atom/pointed_at)
+/mob/dead/observer/do_pointed(atom/pointing_at)
 	if(!..())
 		return FALSE
 
-	visible_message(span_deadsay("<b>[src]</b> points to [pointed_at]."))
+	visible_message(span_deadsay("<b>[src]</b> points to [pointing_at]."))
 
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/mouse_drop_dragged(atom/over, mob/user)

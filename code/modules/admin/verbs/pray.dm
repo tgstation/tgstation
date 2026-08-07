@@ -37,14 +37,14 @@ GAME_VERB(/mob, pray, VERB_PRAY, null, message as text)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_SEND_PRAYER, src, message, prayer_type, cross, deities)
 
 
-	var/msg_tmp = message
+	var/message_tmp = message
 	GLOB.requests.pray(src.client, message, src.job == JOB_CHAPLAIN)
 	message = span_adminnotice("[icon2html(cross, GLOB.admins)]<b><font color=[GLOB.prayer_type_to_font_color[prayer_type]]>[prayer_type][length(deities) ? " (to [english_list(deities)])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [span_linkify(message)]")
 	message = custom_boxed_message(GLOB.prayer_type_to_message_box[prayer_type], message)
 	for(var/client/C in GLOB.admins)
 		if(get_chat_toggles(C) & CHAT_PRAYER)
 			to_chat(C, message, type = MESSAGE_TYPE_PRAYER, confidential = TRUE)
-	to_chat(src, span_info("You pray to the gods: \"[msg_tmp]\""), confidential = TRUE)
+	to_chat(src, span_info("You pray to the gods: \"[message_tmp]\""), confidential = TRUE)
 
 	BLACKBOX_LOG_ADMIN_VERB("Prayer")
 

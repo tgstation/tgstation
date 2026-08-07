@@ -37,5 +37,5 @@
 	if(isnull(cmd))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/atom/movable, say), pick(cmd.speech_commands), forced = "controller")
-	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob, _pointed), target)
+	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob,do_pointed), target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

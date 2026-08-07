@@ -373,7 +373,6 @@
 
 	return style_factor_points
 
-/// Verb added to humans who learn the art of the sleeping carp.
 /datum/martial_art/the_sleeping_carp/get_style_help()
 	. = list()
 

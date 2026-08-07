@@ -208,8 +208,8 @@ GAME_VERB(/obj/item/taperecorder, stop, "Stop", null)
 		return
 
 	if(recording)
-		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 		balloon_alert(usr, "stopped recording")
+		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 		recording = FALSE
 		lose_hearing_sensitivity()
 	else if(playing)

@@ -254,7 +254,6 @@ GAME_VERB_DESC(/mob/living/silicon/ai, pick_icon, "Set AI Core Display", "Choose
 	if(!core_display_picker)
 		core_display_picker = new(src)
 	core_display_picker.ui_interact(src)
-
 	if(istype(loc, /obj/item/aicard))
 		var/obj/item/aicard/card = loc
 		card.update_appearance()
@@ -347,7 +346,7 @@ GAME_VERB_DESC(/mob/living/silicon/ai, pick_status_display, "Set AI Status Displ
 	else
 		return SScameras.is_visible_by_cameras(target_turf)
 
-/mob/living/silicon/ai/cancel_camera()
+/mob/living/silicon/ai/actually_cancel_camera()
 	view_core()
 
 GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass

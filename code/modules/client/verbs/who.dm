@@ -72,7 +72,6 @@ GAME_VERB(/client, adminwho, "Adminwho", "Admin")
 	var/list/lines = list()
 	var/payload_string = generate_adminwho_string()
 	var/header = (payload_string == NO_ADMINS_ONLINE_MESSAGE) ? "No Admins Currently Online" : "Current Admins"
-
 	lines += span_bold(header)
 	lines += payload_string
 

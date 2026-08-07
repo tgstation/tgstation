@@ -53,7 +53,11 @@
 	add_verb(src, /mob/living/proc/toggle_resting)
 	add_traits(list(TRAIT_MOTH_EMOTES_ALLOWED, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 
-/mob/living/basic/mothroach/toggle_resting()
+/mob/living/basic/mothroach/update_resting()
+	. = ..()
+	update_appearance()
+
+/mob/living/basic/mothroach/update_icon_state()
 	. = ..()
 	if(stat == DEAD)
 		return
@@ -61,7 +65,6 @@
 		icon_state = "[icon_living]_rest"
 	else
 		icon_state = "[icon_living]"
-	regenerate_icons()
 
 /mob/living/basic/mothroach/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()

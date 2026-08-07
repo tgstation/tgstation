@@ -540,13 +540,9 @@ GAME_VERB(/mob/living, pulled, "Pull", null, atom/movable/thing_pulled as mob|ob
 	update_pull_hud_icon()
 
 //same as above
-/mob/living/pointed(atom/A)
+/mob/living/do_pointed(atom/pointing_at)
 	if(INCAPACITATED_IGNORING(src, INCAPABLE_RESTRAINTS))
 		return FALSE
-
-	return ..()
-
-/mob/living/_pointed(atom/pointing_at)
 	if(!..())
 		return FALSE
 	log_message("points at [pointing_at]", LOG_EMOTE)

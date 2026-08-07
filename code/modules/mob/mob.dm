@@ -197,7 +197,7 @@
 		set_hud_image_active(hud, update_huds = FALSE) //by default everything is active. but dont add it to huds to keep control.
 
 /**
- * Some kind of debug verb that gives atmosphere environment details
+ * Some kind of debug verb that gives atmosphere environment details. Sovl
  */
 GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
 
@@ -541,6 +541,7 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
 	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
 	return TRUE
 
+//It used to be oview(12), but I can't really say why
 /**
  * Examine a mob
  *
@@ -790,7 +791,7 @@ GAME_VERB(/mob, examinate, "Examine", null, atom/examinify as mob|obj|turf) //It
 /mob/proc/mode()
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_mode)))
 
-///proc version to finish /mob/verb/mode() execution. used in case the proc needs to be queued for the tick after its first called
+///proc version to finish /mob/proc/mode() execution. used in case the proc needs to be queued for the tick after its first called
 /mob/proc/execute_mode()
 	if(ismecha(loc))
 		return
@@ -880,6 +881,9 @@ GAME_VERB(/mob, abandon_mob, "Respawn", "OOC")
  * Sometimes helps if the user is stuck in another perspective or camera
  */
 GAME_VERB(/mob, cancel_camera, "Cancel Camera View", "OOC")
+	actually_cancel_camera()
+
+/mob/proc/actually_cancel_camera()
 	reset_perspective(null)
 
 /**
@@ -952,7 +956,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 	if(selected_hand != active_hand_index)
 		swap_hand(selected_hand)
 
-	// _queue_verb requires a client, so when we don't have it (AI controlled mob) we don't use it
+	// _queue_verb_callback requires a client, so when we don't have it (AI controlled mob) we don't use it
 	client ? mode() : execute_mode()
 
 /mob/proc/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //For sec bot threat assessment
