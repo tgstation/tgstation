@@ -157,8 +157,8 @@ SUBSYSTEM_DEF(spatial_grid)
 	waiting_to_add_by_type[exclusive_type] -= movable_to_remove
 
 	// We need to check if this movable is inside the other queues
-	for(var/type in waiting_to_add_by_type)
-		if(movable_to_remove in waiting_to_add_by_type[type])
+	for(var/type, queue in waiting_to_add_by_type)
+		if(movable_to_remove in queue)
 			return
 
 	UnregisterSignal(movable_to_remove, COMSIG_QDELETING)
