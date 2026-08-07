@@ -429,7 +429,7 @@
 /obj/item/borg/upgrade/modkit/cooldown/proc/get_recharge_time(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
 	var/new_recharge_time = initial(KA.recharge_time)
 	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
-		if(istype(modkit_upgrade, /obj/item/borg/upgrade/modkit/cooldown))
+		if(istype(modkit_upgrade, src))
 			new_recharge_time += modkit_upgrade.modifier
 
 	return new_recharge_time
