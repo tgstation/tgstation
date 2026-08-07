@@ -89,6 +89,13 @@ window "mapwindow"
 		saved-params = ""
 		text = ""
 		align = left
+	elem "lobby_menu"
+		type = BROWSER
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		is-visible = false
 	elem "escape_menu"
 		type = BROWSER
 		pos = 0,0

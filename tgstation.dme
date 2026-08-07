@@ -4511,6 +4511,8 @@
 #include "code\modules\escape_menu\dimmer.dm"
 #include "code\modules\escape_menu\escape_menu.dm"
 #include "code\modules\escape_menu\subsystem.dm"
+#include "code\modules\lobby_menu\lobby_menu.dm"
+#include "code\modules\lobby_menu\subsystem.dm"
 #include "code\modules\events\_event.dm"
 #include "code\modules\events\_event_admin_setup.dm"
 #include "code\modules\events\aurora_caelus.dm"
