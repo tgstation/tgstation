@@ -255,7 +255,9 @@ export function LobbyMenu() {
   // Compute the shutter travel distance from CSS --icon-scale
   function getShutterDistance(): number {
     const scale = parseFloat(
-      getComputedStyle(document.documentElement).getPropertyValue('--icon-scale') || '1',
+      getComputedStyle(document.documentElement).getPropertyValue(
+        '--icon-scale',
+      ) || '1',
     );
     // 143px at native scale = shutter travel distance
     return 143 * scale;
@@ -268,12 +270,11 @@ export function LobbyMenu() {
     const shutter = shutterRef.current;
 
     if (!collapsed) {
-      // COLLAPSING
       playCollapseSound();
 
-      // Phase 1: Shutter slides down
       if (shutter) {
         const dist = getShutterDistance();
+
         await shutter.animate(
           [
             { transform: 'translateY(0)' },
@@ -282,41 +283,50 @@ export function LobbyMenu() {
           { duration: SHUTTER_MOVE_MS, easing: EASE_OUT, fill: 'forwards' },
         ).finished;
 
-        // Pause while shutter is down
         await new Promise((r) => setTimeout(r, SHUTTER_WAIT_MS));
+
+        for (const a of shutter.getAnimations()) a.cancel();
+        shutter.animate(
+          [
+            { transform: `translateY(${dist}px)` },
+            { transform: 'translateY(0)' },
+          ],
+          { duration: SHUTTER_MOVE_MS, easing: EASE_IN, fill: 'forwards' },
+        );
       }
 
-      // Phase 2: Set collapsed — CSS transitions slide everything up
-      // The shutter returns to home simultaneously via its own transition
+      dispatch({ type: 'setCollapsed', collapsed: true });
+
+      await new Promise((r) => setTimeout(r, SHUTTER_MOVE_MS));
       if (shutter) {
         for (const a of shutter.getAnimations()) a.cancel();
       }
-      dispatch({ type: 'setCollapsed', collapsed: true });
     } else {
       // EXPANDING
       playExpandSound();
 
-      // Phase 1: Unset collapsed — CSS transitions slide everything down
-      dispatch({ type: 'setCollapsed', collapsed: false });
-
-      // Wait for the slide-down to finish
-      await new Promise((r) => setTimeout(r, SHUTTER_MOVE_MS));
-
-      // Phase 2: Shutter sweeps down and back up
       if (shutter) {
         const dist = getShutterDistance();
-        // Down
-        await shutter.animate(
+
+        shutter.animate(
           [
             { transform: 'translateY(0)' },
             { transform: `translateY(${dist}px)` },
           ],
           { duration: SHUTTER_MOVE_MS, easing: EASE_OUT, fill: 'forwards' },
-        ).finished;
+        );
+      }
+
+      dispatch({ type: 'setCollapsed', collapsed: false });
+
+      await new Promise((r) => setTimeout(r, SHUTTER_MOVE_MS));
+
+      if (shutter) {
+        const dist = getShutterDistance();
 
         await new Promise((r) => setTimeout(r, SHUTTER_WAIT_MS));
 
-        // Back up
+        for (const a of shutter.getAnimations()) a.cancel();
         await shutter.animate(
           [
             { transform: `translateY(${dist}px)` },
@@ -352,20 +362,27 @@ export function LobbyMenu() {
       `${ss.adminReadyCount} / ${ss.adminCount} admins ready`,
     ];
   } else {
-    tvLines = [ss.countdown, `${ss.playerCount} player${ss.playerCount !== 1 ? 's' : ''}`];
+    tvLines = [
+      ss.countdown,
+      `${ss.playerCount} player${ss.playerCount !== 1 ? 's' : ''}`,
+    ];
   }
 
   return (
     <div className="lobby" style={backgroundStyle}>
       <div className="lobby__anchor">
         {/* Background panel */}
-        <div className={`lobby__el lobby__el--bg ${collapsed ? 'lobby__el--collapse-up' : ''}`}>
+        <div
+          className={`lobby__el lobby__el--bg ${collapsed ? 'lobby__el--collapse-up' : ''}`}
+        >
           <span className="lobby-icons151x123 background lobby__sprite" />
         </div>
 
         {/* Ready button (pregame) */}
         {!!ss.canReady && (
-          <div className={`lobby__el lobby__el--ready ${collapsed ? 'lobby__el--collapse-up' : ''}`}>
+          <div
+            className={`lobby__el lobby__el--ready ${collapsed ? 'lobby__el--collapse-up' : ''}`}
+          >
             <SpriteButton
               spriteClass="lobby-icons160x28"
               iconState={ss.isReady ? 'ready' : 'not_ready'}
@@ -376,7 +393,9 @@ export function LobbyMenu() {
 
         {/* Join Game button (round started) */}
         {!!ss.canJoin && (
-          <div className={`lobby__el lobby__el--join ${collapsed ? 'lobby__el--collapse-up' : ''}`}>
+          <div
+            className={`lobby__el lobby__el--join ${collapsed ? 'lobby__el--collapse-up' : ''}`}
+          >
             <SpriteButton
               spriteClass="lobby-icons145x21"
               iconState="join_game"
@@ -386,7 +405,9 @@ export function LobbyMenu() {
         )}
 
         {/* Observe */}
-        <div className={`lobby__el lobby__el--observe ${collapsed ? 'lobby__el--collapse-up' : ''}`}>
+        <div
+          className={`lobby__el lobby__el--observe ${collapsed ? 'lobby__el--collapse-up' : ''}`}
+        >
           <SpriteButton
             spriteClass="lobby-icons139x22"
             iconState="observe"
@@ -396,7 +417,9 @@ export function LobbyMenu() {
         </div>
 
         {/* Character Setup */}
-        <div className={`lobby__el lobby__el--character ${collapsed ? 'lobby__el--collapse-up' : ''}`}>
+        <div
+          className={`lobby__el lobby__el--character ${collapsed ? 'lobby__el--collapse-up' : ''}`}
+        >
           <SpriteButton
             spriteClass="lobby-icons139x37"
             iconState="character_setup"
@@ -411,20 +434,28 @@ export function LobbyMenu() {
         </div>
 
         {/* Collapse/Expand button — moves less than other elements */}
-        <div className={`lobby__el lobby__el--collapse ${collapsed ? 'lobby__el--collapse-slide' : ''}`}>
+        <div
+          className={`lobby__el lobby__el--collapse ${collapsed ? 'lobby__el--collapse-slide' : ''}`}
+        >
           <button
             className="sprite-btn sprite-btn--no-press"
             onClick={handleToggleCollapse}
             disabled={animating}
           >
-            <span className={`lobby-icons26x66 ${collapseIcon} sprite-btn__normal`} />
-            <span className={`lobby-icons26x66 ${collapseIcon}_highlighted sprite-btn__hover`} />
+            <span
+              className={`lobby-icons26x66 ${collapseIcon} sprite-btn__normal`}
+            />
+            <span
+              className={`lobby-icons26x66 ${collapseIcon}_highlighted sprite-btn__hover`}
+            />
             <span className={`lobby-icons26x66 ${blipState} lobby__blip`} />
           </button>
         </div>
 
         {/* Bottom buttons */}
-        <div className={`lobby__el lobby__el--bottom-poll ${collapsed ? 'lobby__el--collapse-up' : ''}`}>
+        <div
+          className={`lobby__el lobby__el--bottom-poll ${collapsed ? 'lobby__el--collapse-up' : ''}`}
+        >
           <SpriteButton
             spriteClass="lobby-icons24x24"
             iconState="bottom-poll"
@@ -437,7 +468,9 @@ export function LobbyMenu() {
             )}
           </SpriteButton>
         </div>
-        <div className={`lobby__el lobby__el--bottom-manifest ${collapsed ? 'lobby__el--collapse-up' : ''}`}>
+        <div
+          className={`lobby__el lobby__el--bottom-manifest ${collapsed ? 'lobby__el--collapse-up' : ''}`}
+        >
           <SpriteButton
             spriteClass="lobby-icons24x24"
             iconState="bottom-crew_manifest"
@@ -445,7 +478,9 @@ export function LobbyMenu() {
             onClick={() => sendAction('crew_manifest')}
           />
         </div>
-        <div className={`lobby__el lobby__el--bottom-settings ${collapsed ? 'lobby__el--collapse-up' : ''}`}>
+        <div
+          className={`lobby__el lobby__el--bottom-settings ${collapsed ? 'lobby__el--collapse-up' : ''}`}
+        >
           <SpriteButton
             spriteClass="lobby-icons24x24"
             iconState="bottom-settings"
@@ -454,7 +489,9 @@ export function LobbyMenu() {
             onClick={() => sendAction('settings')}
           />
         </div>
-        <div className={`lobby__el lobby__el--bottom-changelog ${collapsed ? 'lobby__el--collapse-up' : ''}`}>
+        <div
+          className={`lobby__el lobby__el--bottom-changelog ${collapsed ? 'lobby__el--collapse-up' : ''}`}
+        >
           <SpriteButton
             spriteClass="lobby-icons24x24"
             iconState="bottom-changelog"
@@ -465,7 +502,9 @@ export function LobbyMenu() {
 
         {/* Start Now — localhost only */}
         {!!ss.isLocalhost && (
-          <div className={`lobby__el lobby__el--start-now ${collapsed ? 'lobby__el--collapse-up' : ''}`}>
+          <div
+            className={`lobby__el lobby__el--start-now ${collapsed ? 'lobby__el--collapse-up' : ''}`}
+          >
             <SpriteButton
               spriteClass="lobby-icons138x48"
               iconState="start_now"
@@ -479,10 +518,12 @@ export function LobbyMenu() {
           <div
             key={trait.ref}
             className={`lobby__el lobby__el--trait ${collapsed ? 'lobby__el--collapse-up' : ''}`}
-            style={{
-              '--trait-col': Math.floor(i / 3),
-              '--trait-row': i % 3,
-            } as React.CSSProperties}
+            style={
+              {
+                '--trait-col': Math.floor(i / 3),
+                '--trait-row': i % 3,
+              } as React.CSSProperties
+            }
           >
             <Tooltip content={trait.description} position="bottom">
               <SpriteButton
@@ -502,9 +543,7 @@ export function LobbyMenu() {
         ))}
 
         {/* Trait feedback toast */}
-        {!!ss.traitFeedback && (
-          <TraitFeedback text={ss.traitFeedback} />
-        )}
+        {!!ss.traitFeedback && <TraitFeedback text={ss.traitFeedback} />}
       </div>
 
       {/* Info TV — positioned from the right edge */}

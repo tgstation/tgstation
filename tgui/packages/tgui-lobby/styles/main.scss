@@ -135,7 +135,6 @@ body,
 
 .lobby__el--collapse-up {
   transition: transform $move-dur $ease-in;
-  transition-delay: ($move-dur + $wait-dur);
   transform: translateY(-18.25rem);
 }
 
@@ -145,7 +144,6 @@ body,
 
 .lobby__el--collapse-slide {
   transition: transform $move-dur $ease-in;
-  transition-delay: ($move-dur + $wait-dur);
   transform: translateY(-16.75rem);
 }
 
@@ -222,7 +220,6 @@ body,
 
   &--collapsed {
     transition: transform $move-dur $ease-in;
-    transition-delay: ($move-dur + $wait-dur);
     transform: translateX(18.25rem);
   }
 }
