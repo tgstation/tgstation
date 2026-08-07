@@ -380,9 +380,11 @@ window "output_legacy"
         size = 640x456
         anchor1 = 0,0
         anchor2 = 100,100
+        saved-params = "splitter"
         left = "output_legacy_pane"
         right = "input_buttons"
-        split = 97.5
+        splitter = 97.5
+        show-splitter = false
 
 window "output_legacy_pane"
     elem "output_legacy_pane"
