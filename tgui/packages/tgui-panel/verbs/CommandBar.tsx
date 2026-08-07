@@ -73,7 +73,6 @@ function serializeInput(verb: Verb, filled: string[], suffix = ''): string {
 function suffixForArg(arg: VerbArg | undefined): string {
   if (!arg) return '';
   if (isTextArg(arg)) return ' "';
-  if (isTypepathArg(arg)) return ' /';
   return ' ';
 }
 
@@ -272,10 +271,7 @@ export function CommandBar() {
     setLastTypepathRequest('');
     setInput(serializeInput(verb, [], suffixForArg(verb.args[0])));
     const firstArg = verb.args[0];
-    if (firstArg && isTypepathArg(firstArg)) {
-      Byond.sendMessage('verbs/request_typepaths', { parent: '/datum' });
-      setLastTypepathRequest('/');
-    } else if (firstArg && isEntityArg(firstArg)) {
+    if (firstArg && isEntityArg(firstArg)) {
       Byond.sendMessage('verbs/request_targets', { verb_type: verb.type });
     }
   };
@@ -439,11 +435,15 @@ export function CommandBar() {
           filledArgs.join(' ').length +
           (filledArgs.length > 0 ? 1 : 0),
       );
-      if (token.endsWith('/') && token !== lastTypepathRequest) {
-        setLastTypepathRequest(token);
-        Byond.sendMessage('verbs/request_typepaths', {
-          parent: token.slice(0, -1) || '/datum',
-        });
+      const lastSlash = token.lastIndexOf('/');
+      if (lastSlash >= 0) {
+        const parentPrefix = token.slice(0, lastSlash + 1);
+        if (parentPrefix !== lastTypepathRequest) {
+          setLastTypepathRequest(parentPrefix);
+          Byond.sendMessage('verbs/request_typepaths', {
+            parent: token.slice(0, lastSlash) || '/datum',
+          });
+        }
       }
     }
   };
