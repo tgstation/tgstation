@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - refactor: "Rewrote dynamic lighting lumcount to use spatial-grid based requests"

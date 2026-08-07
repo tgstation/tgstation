@@ -213,6 +213,8 @@
   Metek:
   - refactor: Thanks to cutting edge technological advances, check_breath() calculations
       have been optimized by approximately 41% ( using alist() instead of list() )
+  SmArtKar:
+  - refactor: Rewrote dynamic lighting lumcount to use spatial-grid based requests
   vinylspiders:
   - bugfix: birdboat will no longer try to eat everything in sight at all times, in
       exchange their range for noticing food has been increased...
