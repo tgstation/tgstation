@@ -92,7 +92,7 @@
 
 /**
  * Called if a kirbyplant is withered by cult magic.
- * Should return FALSE if a kirbyplant isn't hit.
+ * Should return FALSE if the kirbyplant isn't hit.
  */
 /obj/item/kirbyplants/proc/cult_wither()
 	if(dead)

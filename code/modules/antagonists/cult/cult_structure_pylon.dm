@@ -104,8 +104,7 @@
 
 	// Potted kirbyplants
 	for(var/obj/item/kirbyplants/potted_plant in target_turf)
-		potted_plant.cult_wither()
-		hit_something = TRUE
+		hit_something = potted_plant.cult_wither()
 
 	// Effects on hit
 	if(hit_something)

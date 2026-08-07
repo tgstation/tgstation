@@ -3026,7 +3026,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return TRUE
 
 /**
- * Called if the mob is withered by cult magic.
+ * Called if a plant-like mob is withered by cult magic.
  * Should return FALSE if the plant isn't hit.
  */
 /mob/living/proc/cult_wither(stamina_loss)
