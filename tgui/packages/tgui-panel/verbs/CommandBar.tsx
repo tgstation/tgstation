@@ -129,12 +129,10 @@ function useSuggestions(
   })();
 
   const typepathSuggestions =
-    selectedVerb && isCurrentTypepath
+    selectedVerb && isCurrentTypepath && currentToken.startsWith('/')
       ? typepaths
-          .filter(
-            (p) =>
-              currentToken.length === 0 ||
-              p.toLowerCase().startsWith(currentToken.toLowerCase()),
+          .filter((p) =>
+            p.toLowerCase().startsWith(currentToken.toLowerCase()),
           )
           .slice(0, 8)
       : [];
