@@ -271,7 +271,7 @@ body,
   transform: scale(var(--icon-scale, 1));
   transform-origin: top left;
   pointer-events: none;
-  z-index: 1;
+  z-index: 3;
 }
 
 .lobby__badge {
