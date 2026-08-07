@@ -8,7 +8,10 @@
 
 .Tooltip {
   font-family: 'Pixellari', monospace;
-  transform: translateY(-1.5rem);
+}
+
+.Floating {
+  z-index: 100;
 }
 
 $move-dur: 0.4s;

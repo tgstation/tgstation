@@ -529,7 +529,7 @@ export function LobbyMenu() {
               } as React.CSSProperties
             }
           >
-            <Tooltip content={trait.description} position="bottom">
+            <Tooltip content={trait.description} position="left">
               <div>
                 <SpriteButton
                   spriteClass="lobby-icons24x24"
