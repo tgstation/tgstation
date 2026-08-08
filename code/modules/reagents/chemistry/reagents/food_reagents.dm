@@ -1041,6 +1041,12 @@
 	if(isnull(LAZYACCESS(data, BLOOD_DATA_ENRICHED_ETHEREAL)))
 		LAZYSET(data, BLOOD_DATA_ENRICHED_ETHEREAL, TRUE)
 
+/datum/reagent/consumable/liquidelectricity/on_merge(list/mix_data, amount)
+	. = ..()
+	// Inherits the incoming reagent's enriched state if it's greater in volume
+	if(amount > volume)
+		LAZYSET(data, BLOOD_DATA_ENRICHED_ETHEREAL, LAZYACCESS(mix_data, BLOOD_DATA_ENRICHED_ETHEREAL))
+
 /datum/reagent/consumable/liquidelectricity/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	. = ..()
 	if(!LAZYACCESS(data, BLOOD_DATA_ENRICHED_ETHEREAL))
