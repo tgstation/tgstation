@@ -451,22 +451,30 @@ export function CommandBar() {
         }
         if (!selectedVerb && verbSuggestions.length > 0) {
           e.preventDefault();
+          if (selectedIndex > 0) {
+            selectVerb(verbSuggestions[selectedIndex]);
+            return;
+          }
+          const query = input.toLowerCase();
           const exactMatch = verbSuggestions.find(
-            (v) => toKebab(v.name).toLowerCase() === input.toLowerCase(),
+            (v) => toKebab(v.name).toLowerCase() === query,
           );
           if (exactMatch) {
             selectVerb(exactMatch);
-          } else if (verbSuggestions.length === 1) {
-            selectVerb(verbSuggestions[0]);
-          } else {
-            const query = input.toLowerCase();
-            const prefixMatches = verbSuggestions
-              .map((v) => toKebab(v.name).toLowerCase())
-              .filter((k) => k.startsWith(query));
-            if (prefixMatches.length === 0) return;
-            let common = prefixMatches[0];
-            for (let i = 1; i < prefixMatches.length; i++) {
-              while (!prefixMatches[i].startsWith(common)) {
+            return;
+          }
+          const prefixMatches = verbSuggestions.filter((v) =>
+            toKebab(v.name).toLowerCase().startsWith(query),
+          );
+          if (prefixMatches.length === 1) {
+            selectVerb(prefixMatches[0]);
+          } else if (prefixMatches.length > 1) {
+            const kebabs = prefixMatches.map((v) =>
+              toKebab(v.name).toLowerCase(),
+            );
+            let common = kebabs[0];
+            for (let i = 1; i < kebabs.length; i++) {
+              while (!kebabs[i].startsWith(common)) {
                 common = common.slice(0, -1);
               }
             }
