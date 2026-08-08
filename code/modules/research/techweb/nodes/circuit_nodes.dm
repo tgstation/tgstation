@@ -74,6 +74,7 @@
 		/datum/design/component/action/speech,
 		/datum/design/component/list/split,
 		/datum/design/component/string/contains,
+		/datum/design/component/string/replace,
 		/datum/design/component/tempsensor,
 		/datum/design/component/string/textcase,
 		/datum/design/component/utility/timepiece,

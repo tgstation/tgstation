@@ -26,7 +26,7 @@
 
 /// Remove a bodypart from the effect. Deleting = TRUE is used during clean-up phase
 /datum/status_effect/grouped/bodypart_effect/proc/remove_bodypart(mob/living/carbon/old_owner, obj/item/bodypart/bodypart, deleting)
-	UnregisterSignal(bodypart, COMSIG_BODYPART_REMOVED)
+	UnregisterSignal(bodypart, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING))
 
 	bodyparts.Remove(bodypart)
 
