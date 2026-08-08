@@ -375,10 +375,10 @@ SUBSYSTEM_DEF(air)
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
-		var/turf/open/T = currentrun[currentrun.len]
+		// currentrun is a list of turfs; we don't assign it to a variable here
+		// because this is an extremely hot proc and we want to avoid the overhead of creating a new variable for every turf
+		currentrun[currentrun.len]?.process_cell(fire_count)
 		currentrun.len--
-		if (T)
-			T.process_cell(fire_count)
 		if (MC_TICK_CHECK)
 			return
 
