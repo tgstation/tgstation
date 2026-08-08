@@ -223,3 +223,24 @@
   vinylspiders:
   - bugfix: birdboat will no longer try to eat everything in sight at all times, in
       exchange their range for noticing food has been increased...
+2026-08-08:
+  Gboster-0:
+  - code_imp: fixed chasms ignoring lattices on top of them in some scenario's, creating
+      a lot of runtimes
+  JohnFulpWillard:
+  - code_imp: Converted Changelog to typescript.
+  LT3:
+  - bugfix: Players on Icebox should now take cold damage when naked outside
+  Melbert:
+  - rscdel: Voltaic heart no longer grants EMP immunity, though is still EMP immune
+      itself.
+  - rscdel: Voltaic heart no longer deletes itself if you remove it, though it is
+      still otherwise rendered unusable.
+  PapaMichael:
+  - bugfix: You are now able to rip manifests off of all locked cargo crates
+  hry-gh:
+  - bugfix: fixes tgui say, among other things, not working
+  lelandkemble:
+  - bugfix: Resetting a crate's access no longer repeatedly appends the new authority
+      to the description
+  - bugfix: The relic power that charges items charges items

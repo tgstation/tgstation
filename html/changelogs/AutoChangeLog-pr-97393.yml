@@ -1,4 +1,0 @@
-author: "PapaMichael"
-delete-after: True
-changes:
-  - bugfix: "You are now able to rip manifests off of all locked cargo crates"
