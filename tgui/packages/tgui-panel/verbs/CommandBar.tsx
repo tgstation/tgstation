@@ -396,11 +396,12 @@ export function CommandBar() {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     switch (e.key) {
       case 'ArrowDown':
-        if (e.ctrlKey) {
+        if (hasSuggestions) {
           e.preventDefault();
-          if (hasSuggestions) {
-            setSelectedIndex((i) => Math.min(i + 1, allSuggestions.length - 1));
-          } else if (historyIndex > 0) {
+          setSelectedIndex((i) => Math.min(i + 1, allSuggestions.length - 1));
+        } else if (e.ctrlKey) {
+          e.preventDefault();
+          if (historyIndex > 0) {
             const newIndex = historyIndex - 1;
             setHistoryIndex(newIndex);
             restoreFromHistory(historyRef.current[newIndex]);
@@ -414,11 +415,12 @@ export function CommandBar() {
         }
         return;
       case 'ArrowUp':
-        if (e.ctrlKey) {
+        if (hasSuggestions) {
           e.preventDefault();
-          if (hasSuggestions) {
-            setSelectedIndex((i) => Math.max(i - 1, 0));
-          } else if (historyIndex < historyRef.current.length - 1) {
+          setSelectedIndex((i) => Math.max(i - 1, 0));
+        } else if (e.ctrlKey) {
+          e.preventDefault();
+          if (historyIndex < historyRef.current.length - 1) {
             const newIndex = historyIndex + 1;
             setHistoryIndex(newIndex);
             restoreFromHistory(historyRef.current[newIndex]);
@@ -442,9 +444,25 @@ export function CommandBar() {
         return;
       case ' ':
         if (inQuotedArg) return;
-        e.preventDefault();
         if (!selectedVerb && verbSuggestions.length > 0) {
-          selectVerb(verbSuggestions[selectedIndex]);
+          e.preventDefault();
+          if (verbSuggestions.length === 1) {
+            selectVerb(verbSuggestions[0]);
+          } else {
+            const kebabs = verbSuggestions.map((v) =>
+              toKebab(v.name).toLowerCase(),
+            );
+            let prefix = kebabs[0];
+            for (let i = 1; i < kebabs.length; i++) {
+              while (!kebabs[i].startsWith(prefix)) {
+                prefix = prefix.slice(0, -1);
+              }
+            }
+            if (prefix.length > input.length) {
+              setInput(prefix);
+              setSelectedIndex(0);
+            }
+          }
         }
         return;
       case 'Tab':
