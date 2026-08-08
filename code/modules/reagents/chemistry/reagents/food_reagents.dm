@@ -1074,7 +1074,7 @@
 /datum/reagent/consumable/liquidelectricity/proc/grown_in_plant(datum/source, obj/item/seeds/our_seeds, obj/item/our_plant)
 	SIGNAL_HANDLER
 
-	LAZYSET(data, BLOOD_DATA_ENRICHED_ETHEREAL, !!our_seed.get_gene(/datum/plant_gene/trait/cell_charge))
+	LAZYSET(data, BLOOD_DATA_ENRICHED_ETHEREAL, !!our_seeds.get_gene(/datum/plant_gene/trait/cell_charge))
 
 /datum/reagent/consumable/astrotame
 	name = "Astrotame"
