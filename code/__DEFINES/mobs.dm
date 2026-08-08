@@ -53,6 +53,7 @@
 #define BLOOD_TYPE_XENO "X*"
 #define BLOOD_TYPE_H2O "H2O"
 #define BLOOD_TYPE_SNAIL "S"
+#define BLOOD_TYPE_OTHER "Other" // for medical records only if none of the "standard" bloodtypes matches the patient.
 
 /// all selectable blood types for medical records
 GLOBAL_LIST_INIT(medical_record_blood_types, list(
@@ -64,18 +65,9 @@ GLOBAL_LIST_INIT(medical_record_blood_types, list(
 	BLOOD_TYPE_AB_MINUS,
 	BLOOD_TYPE_O_PLUS,
 	BLOOD_TYPE_O_MINUS,
-	BLOOD_TYPE_UNIVERSAL,
 	BLOOD_TYPE_LIZARD,
-	BLOOD_TYPE_VAMPIRE,
-	BLOOD_TYPE_ANIMAL,
 	BLOOD_TYPE_ETHEREAL,
-	BLOOD_TYPE_TOX,
-	BLOOD_TYPE_OIL,
-	BLOOD_TYPE_MEAT,
-	BLOOD_TYPE_CLOWN,
-	BLOOD_TYPE_XENO,
-	BLOOD_TYPE_H2O,
-	BLOOD_TYPE_SNAIL,
+	BLOOD_TYPE_OTHER,
 ))
 
 // Blood exposure behavior flag defines
