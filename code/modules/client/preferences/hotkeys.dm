@@ -5,4 +5,5 @@
 
 /datum/preference/toggle/hotkeys/apply_to_client(client/client, value)
 	client.hotkeys = value
-	client.tgui_panel?.send_hotkey_mode()
+	if(istype(client))
+		client.tgui_panel?.send_hotkey_mode()
