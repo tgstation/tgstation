@@ -31,7 +31,7 @@
 		return
 
 	MODIFY_PHYSIOLOGY(quirk_holder, PHYS_COEFF_HEAT, 1 / damage_mod)
-	human_holder.clear_mood_event("pyromania_fire")
+	quirk_holder.clear_mood_event("pyromania_fire")
 
 /datum/quirk/pyromania/process(seconds_per_tick)
 	var/fire_size = quirk_holder.count_nearby_fire_sources()

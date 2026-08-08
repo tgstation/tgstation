@@ -107,7 +107,7 @@
 		return FALSE
 
 	var/mob/living/carbon/human/new_zombie = owner
-	RegisterSignal(was_zombie, COMSIG_HUMAN_SPEC_STUN, PROC_REF(on_spec_stun))
+	RegisterSignal(new_zombie, COMSIG_HUMAN_SPEC_STUN, PROC_REF(on_spec_stun))
 	if(!isnull(movespeed_mod))
 		new_zombie.add_movespeed_modifier(movespeed_mod)
 	MODIFY_PHYSIOLOGY(new_zombie, STAMINA, stamina_modifier) // Zombie stam resist
