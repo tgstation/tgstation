@@ -444,6 +444,11 @@ export function CommandBar() {
         return;
       case ' ':
         if (inQuotedArg) return;
+        if (selectedVerb && hasSuggestions) {
+          e.preventDefault();
+          selectCurrentSuggestion();
+          return;
+        }
         if (!selectedVerb && verbSuggestions.length > 0) {
           e.preventDefault();
           if (verbSuggestions.length === 1) {
