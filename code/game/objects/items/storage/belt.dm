@@ -976,11 +976,10 @@
 
 /obj/item/storage/belt/sheath/hanzo_katana/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_STORED_ITEM, PROC_REF(on_insert))
-	RegisterSignal(src, COMSIG_ATOM_REMOVED_ITEM, PROC_REF(on_remove))
+	RegisterSignal(src, COMSIG_ATOM_REMOVED_ITEM, PROC_REF(on_katana_remove))
 
-/obj/item/storage/belt/sheath/hanzo_katana/proc/on_katana_insert(atom/source, atom/movable/arrived)
-	SIGNAL_HANDLER
+/obj/item/storage/belt/sheath/hanzo_katana/post_resheath(atom/source, atom/movable/arrived)
+	. = ..()
 	AddElement(/datum/element/nullrod_core)
 
 /obj/item/storage/belt/sheath/hanzo_katana/proc/on_katana_remove(atom/source, atom/movable/gone, direction)

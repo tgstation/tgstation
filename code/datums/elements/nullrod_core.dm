@@ -25,9 +25,7 @@
 	ADD_TRAIT(target, TRAIT_NULLROD_ITEM, ELEMENT_TRAIT(type))
 
 	attached_components[target] = list(am, remover, tracker, bane_comp)
-
-	if(ismob(target.loc))
-		am.register_antimagic_signals(target.loc)
+	am.register_antimagic_signals(target.loc)
 
 	if(!PERFORM_ALL_TESTS(focus_only/nullrod_variants) || !chaplain_spawnable)
 		return
