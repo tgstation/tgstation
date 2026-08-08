@@ -451,7 +451,12 @@ export function CommandBar() {
         }
         if (!selectedVerb && verbSuggestions.length > 0) {
           e.preventDefault();
-          if (verbSuggestions.length === 1) {
+          const exactMatch = verbSuggestions.find(
+            (v) => toKebab(v.name).toLowerCase() === input.toLowerCase(),
+          );
+          if (exactMatch) {
+            selectVerb(exactMatch);
+          } else if (verbSuggestions.length === 1) {
             selectVerb(verbSuggestions[0]);
           } else {
             const query = input.toLowerCase();
