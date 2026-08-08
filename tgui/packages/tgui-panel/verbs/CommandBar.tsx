@@ -396,10 +396,7 @@ export function CommandBar() {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     switch (e.key) {
       case 'ArrowDown':
-        if (hasSuggestions) {
-          e.preventDefault();
-          setSelectedIndex((i) => Math.min(i + 1, allSuggestions.length - 1));
-        } else if (e.ctrlKey) {
+        if (e.ctrlKey) {
           e.preventDefault();
           if (historyIndex > 0) {
             const newIndex = historyIndex - 1;
@@ -409,22 +406,25 @@ export function CommandBar() {
             setHistoryIndex(-1);
             resetState();
           }
+        } else if (hasSuggestions) {
+          e.preventDefault();
+          setSelectedIndex((i) => Math.min(i + 1, allSuggestions.length - 1));
         } else if (!hotkeys) {
           e.preventDefault();
           forwardKeyDown('South');
         }
         return;
       case 'ArrowUp':
-        if (hasSuggestions) {
-          e.preventDefault();
-          setSelectedIndex((i) => Math.max(i - 1, 0));
-        } else if (e.ctrlKey) {
+        if (e.ctrlKey) {
           e.preventDefault();
           if (historyIndex < historyRef.current.length - 1) {
             const newIndex = historyIndex + 1;
             setHistoryIndex(newIndex);
             restoreFromHistory(historyRef.current[newIndex]);
           }
+        } else if (hasSuggestions) {
+          e.preventDefault();
+          setSelectedIndex((i) => Math.max(i - 1, 0));
         } else if (!hotkeys) {
           e.preventDefault();
           forwardKeyDown('North');
