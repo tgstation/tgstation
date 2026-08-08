@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Gluon frag grenades now output radiation, like they've been trying and failing to do for at least 4 years."
