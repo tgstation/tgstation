@@ -974,6 +974,19 @@
 	storage_type = /datum/storage/hanzo_sheath
 	stored_blade = /obj/item/nullrod/claymore/katana
 
+/obj/item/storage/belt/sheath/hanzo_katana/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_STORED_ITEM, PROC_REF(on_insert))
+	RegisterSignal(src, COMSIG_ATOM_REMOVED_ITEM, PROC_REF(on_remove))
+
+/obj/item/storage/belt/sheath/hanzo_katana/proc/on_katana_insert(atom/source, atom/movable/arrived)
+	SIGNAL_HANDLER
+	AddElement(/datum/element/nullrod_core)
+
+/obj/item/storage/belt/sheath/hanzo_katana/proc/on_katana_remove(atom/source, atom/movable/gone, direction)
+	SIGNAL_HANDLER
+	RemoveElement(/datum/element/nullrod_core)
+
 /obj/item/storage/belt/sheath/hanzo_katana/empty
 	stored_blade = NONE
 

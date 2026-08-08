@@ -1,6 +1,8 @@
 ///Proxy element that attaches components, elements and traits that are common to more or less all nullrods.
 /datum/element/nullrod_core
 
+	var/list/attached_components = list()
+
 /**
  * Called when the element is added to a datum. If the 'chaplain_spawnable' arg is TRUE and unit testing is enabled,
  * we check that the target is actually in the nullrod_variants global list
@@ -10,23 +12,39 @@
 	if(!istype(target))
 		return ELEMENT_INCOMPATIBLE
 
-	target.AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
-	target.AddComponent(/datum/component/effect_remover, \
+	var/datum/component/anti_magic/am = target.AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
+	var/datum/component/effect_remover/remover = target.AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
 		success_forcesay = rune_remove_line, \
 		tip_text = "Clear rune", \
 		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed), target), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
-	target.AddComponent(/datum/component/cult_kill_tracker)
-	target.AddComponent(/datum/component/bane, affected_biotypes = MOB_SPIRIT, added_damage = 25)
+	var/datum/component/cult_kill_tracker/tracker = target.AddComponent(/datum/component/cult_kill_tracker)
+	var/datum/component/bane/bane_comp = target.AddComponent(/datum/component/bane, affected_biotypes = MOB_SPIRIT, added_damage = 25)
 	ADD_TRAIT(target, TRAIT_NULLROD_ITEM, ELEMENT_TRAIT(type))
+
+	attached_components[target] = list(am, remover, tracker, bane_comp)
+
+	if(ismob(target.loc))
+		am.register_antimagic_signals(target.loc)
 
 	if(!PERFORM_ALL_TESTS(focus_only/nullrod_variants) || !chaplain_spawnable)
 		return
 
 	if(!GLOB.nullrod_variants[target.type])
 		stack_trace("[target.type] is absent from the nullrod_variants global list. Please include it.")
+
+
+/datum/element/nullrod_core/Detach(obj/item/target)
+	var/list/refs = attached_components[target]
+	if(refs)
+		for(var/datum/component/comp as anything in refs)
+			qdel(comp)
+		attached_components -= target
+
+	REMOVE_TRAIT(target, TRAIT_NULLROD_ITEM, ELEMENT_TRAIT(type))
+	return ..()
 
 /// Callback for effect remover, invoked when a cult rune is cleared
 /datum/element/nullrod_core/proc/on_cult_rune_removed(obj/item/nullrod, obj/effect/target, mob/living/user)
