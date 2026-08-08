@@ -621,12 +621,12 @@
 	name = "Security Emergency Shuttle"
 	description = "Created in honor of the Security Officer, who saved head of CC Representative. \
 	He was a very good man, until he died at the hands of a traitor."
-	admin_notes = "Has 2 prison cells and 1 holding cell."
+	admin_notes = "Has 2 prison cells, 1 holding cell and permabrig instead of seating area."
 	credit_cost = CARGO_CRATE_VALUE * 16
 	who_can_purchase = list(ACCESS_CAPTAIN)
 	department_type = /datum/job_department/security
 	department_name = DEPARTMENT_SECURITY
-	occupancy_limit = "40 freedom people and 5 in prison people."
+	occupancy_limit = "40 in prison crew and 10 freedom crew."
 
 /datum/map_template/shuttle/emergency/departmental/service
 	suffix = "dep_srv"
