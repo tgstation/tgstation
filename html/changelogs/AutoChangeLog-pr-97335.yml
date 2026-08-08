@@ -1,0 +1,4 @@
+author: "levels0"
+delete-after: True
+changes:
+  - bugfix: "distributed neurons blob zombies no longer cost twice as much as they should"
