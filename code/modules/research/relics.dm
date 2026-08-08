@@ -351,8 +351,9 @@
 		return
 	while(length(chargeable_items) && recharges)
 		recharges--
-		var/obj/item/to_charge_base = pick_n_take(chargeable_items)
+		var/obj/item/to_charge_base = pick(chargeable_items)
 		var/obj/item/stock_parts/power_store/to_charge = chargeable_items[to_charge_base]
+		chargeable_items.Remove(to_charge_base)
 		to_charge.charge = to_charge.maxcharge
 		to_charge_base.update_appearance(UPDATE_ICON|UPDATE_OVERLAYS)
 		to_chat(user, span_notice("[to_charge_base] feels energized!"))

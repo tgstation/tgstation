@@ -116,16 +116,25 @@
 /obj/effect/spawner/random/proc/make_item(spawn_loc, type_path_to_make)
 	return new type_path_to_make(spawn_loc)
 
-///If the spawner has a spawn_scatter_radius set, this creates a list of nearby turfs available that are in view and have an unblocked line to them.
-/obj/effect/spawner/random/proc/get_spawn_locations(radius)
+/**
+ *  If the spawner has a spawn_scatter_radius set, this creates a list of nearby turfs available that are in view and have an unblocked line to them.
+ *
+ * radius - The scatter radius to search within.
+ * ignore_groundless - If TRUE, allows spawning on groundless turfs like lava, water, or open space even if there isn't a turf below it.
+ **/
+/obj/effect/spawner/random/proc/get_spawn_locations(radius, ignore_groundless = FALSE)
 	var/list/scatter_locations = list()
 
 	if(!radius)
 		return scatter_locations
 
 	for(var/turf/turf_in_view in view(radius, get_turf(src)))
-		if(isclosedturf(turf_in_view) || (isgroundlessturf(turf_in_view) && !GET_TURF_BELOW(turf_in_view)))
+		if(isclosedturf(turf_in_view))
 			continue
+
+		if(!ignore_groundless && isgroundlessturf(turf_in_view) && !GET_TURF_BELOW(turf_in_view))
+			continue
+
 		if(!has_unblocked_line(turf_in_view))
 			continue
 

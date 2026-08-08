@@ -1,4 +1,0 @@
-author: "PapaMichael"
-delete-after: True
-changes:
-  - bugfix: "AI Holopads no longer leak unknown languages in runechat"
