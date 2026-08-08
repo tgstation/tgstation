@@ -63,16 +63,17 @@
 	var/static/list/traits_to_apply = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_ASHSTORM_IMMUNE,
+		TRAIT_BRAWLING_KNOCKDOWN_BLOCKED,
+		TRAIT_FENCE_CLIMBER,
 		TRAIT_LITERATE,
 		TRAIT_MADNESS_IMMUNE,
 		TRAIT_MARTIAL_ARTS_IMMUNE,
+		TRAIT_NEVER_CONSIDERED_ALIVE,
 		TRAIT_NOFIRE_SPREAD,
-		TRAIT_BRAWLING_KNOCKDOWN_BLOCKED,
-		TRAIT_FENCE_CLIMBER,
-		TRAIT_SILICON_ACCESS,
-		TRAIT_REAGENT_SCANNER,
-		TRAIT_UNOBSERVANT,
 		TRAIT_NO_SLIP_ALL,
+		TRAIT_REAGENT_SCANNER,
+		TRAIT_SILICON_ACCESS,
+		TRAIT_UNOBSERVANT,
 	)
 
 	add_traits(traits_to_apply, ROUNDSTART_TRAIT)
@@ -347,8 +348,10 @@
 			active_ui.send_full_update()
 
 /// Same as the normal character name replacement, but updates the contents of the modular interface.
-/mob/living/silicon/fully_replace_character_name(oldname, newname)
+/mob/living/silicon/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
 	. = ..()
+	if(!.)
+		return
 	if(!modularInterface)
 		stack_trace("Silicon [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 		create_modularInterface()

@@ -67439,6 +67439,7 @@
 /obj/item/stack/spacecash/c100,
 /obj/machinery/airalarm/directional/north,
 /obj/item/gun/ballistic/shotgun/doublebarrel,
+/obj/item/storage/photo_album/bar,
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
 "wwj" = (

@@ -193,6 +193,8 @@
 			autopsy_information += "Desiccation, commonly caused by Changelings.</br>"
 		else if(HAS_TRAIT_FROM(scanned, TRAIT_HUSK, SKELETON_TRAIT))
 			autopsy_information += "Stripped flesh.</br>"
+		else if(HAS_TRAIT_FROM(scanned, TRAIT_HUSK, /datum/status_effect/zombie::id))
+			autopsy_information += "Zombification.</br>"
 		else if(!HAS_TRAIT_FROM(scanned, TRAIT_HUSK, BURN)) // prioritize showing unknown causes over burns
 			autopsy_information += "Unknown causes.</br>"
 		else

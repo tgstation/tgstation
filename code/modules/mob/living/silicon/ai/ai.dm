@@ -634,6 +634,15 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, ai_hologram_change, "Change Hologram
 	if(incapacitated)
 		return
 
+	ai_holocolor = tgui_color_picker(usr, "Choose a color for your hologram", "Hologram Color")
+	if(ai_holocolor)
+		var/ai_holo_hsv = rgb2hsv(ai_holocolor)
+		var/default_hsv = rgb2hsv(COLOR_AI_HOLOGRAM_BLUE)
+
+		default_hsv[1] = ai_holo_hsv[1]
+
+		ai_holocolor = hsv2rgb(default_hsv)
+
 	var/static/list/choices = assoc_to_keys(GLOB.ai_hologram_category_options) + HOLOGRAM_CHOICE_CHARACTER
 	var/choice = tgui_input_list(usr, "What kind of hologram do you want?",	"Customize", choices)
 	if(!choice)
@@ -859,19 +868,20 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto
 	var/rendered = "<i><span class='game say'>[start][span_name("[hrefpart][namepart] ([jobpart])</a> ")]<span class='message'>[treated_message]</span></span></i>"
 
 	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
-		create_chat_message(speaker, message_language, raw_message, spans)
+		create_chat_message(speaker, message_language, raw_translation, spans)
 	show_message(rendered, 2)
 
-/mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
-	..()
-	if(oldname != real_name)
-		if(eyeobj)
-			eyeobj.name = "[newname] (AI Eye)"
-			modularInterface.imprint_id(name = real_name)
+/mob/living/silicon/ai/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(eyeobj)
+		eyeobj.name = "[newname] (AI Eye)"
+		modularInterface.imprint_id(name = real_name)
 
-		// Notify Cyborgs
-		for(var/mob/living/silicon/robot/slave as anything in connected_robots)
-			slave.show_laws()
+	// Notify Cyborgs
+	for(var/mob/living/silicon/robot/slave as anything in connected_robots)
+		slave.show_laws()
 
 /datum/action/innate/choose_modules
 	name = "Malfunction Modules"
@@ -1119,7 +1129,7 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 		return ai_voicechanger.say_name
 	return ..()
 
-/mob/living/silicon/ai/init_unconscious_appearance()
+/mob/living/silicon/ai/get_unconscious_appearance()
 	var/image/static_overlay = image('icons/effects/effects.dmi', null, "static_base")
 	static_overlay.blend_mode = BLEND_INSET_OVERLAY
 
@@ -1128,12 +1138,8 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 	static_image.overlays += static_overlay
 	static_image.override = TRUE
 	static_image.name = "unknown AI"
-	add_alt_appearance(
-		/datum/atom_hud/alternate_appearance/basic/unconscious_obscurity,
-		"[REF(src)]_unconscious",
-		static_image,
-		NONE,
-	)
+
+	return static_image
 
 /mob/living/silicon/ai/proc/set_control_disabled(control_disabled)
 	SEND_SIGNAL(src, COMSIG_SILICON_AI_SET_CONTROL_DISABLED, control_disabled)

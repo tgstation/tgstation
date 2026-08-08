@@ -63,8 +63,8 @@
 /// Key storing bindable parameter declarations in a compiled subtree descriptor
 #define BT_DESC_BINDINGS "__bindings"
 
-/// Resolves the compiled JSON path from a behavior tree's source JSON path (e.g. "code/datums/ai/dog/dog.bt.json" -> "build/behavior_trees/datums/ai/dog/dog.bt.compiled.json").
-#define BT_COMPILED_PATH(json_path) (replacetext(replacetext(json_path, "code/", "build/behavior_trees/"), ".json", ".compiled.json"))
+/// Resolves the compiled JSON path from a behavior tree's source JSON path (e.g. "code/datums/ai/dog/dog.bt.json" -> "build/behavior_trees/code/datums/ai/dog/dog.bt.compiled.json").
+#define BT_COMPILED_PATH(json_path) (replacetext("build/behavior_trees/" + json_path, ".json", ".compiled.json"))
 
 // Runtime subtree IDs. Can be used to override trees at runtime
 
