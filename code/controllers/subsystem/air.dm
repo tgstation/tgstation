@@ -377,7 +377,7 @@ SUBSYSTEM_DEF(air)
 	while(currentrun.len)
 		// currentrun is a list of turfs; we don't assign it to a variable here
 		// because this is an extremely hot proc and we want to avoid the overhead of creating a new variable for every turf
-		currentrun[currentrun.len]?.process_cell(fire_count)
+		UNLINT(currentrun[currentrun.len]?.process_cell(fire_count))
 		currentrun.len--
 		if (MC_TICK_CHECK)
 			return
