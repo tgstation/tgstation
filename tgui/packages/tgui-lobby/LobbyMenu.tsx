@@ -148,8 +148,6 @@ function useFlick(assetKey: string): [() => void, React.ReactNode] {
   return [trigger, element];
 }
 
-// --- Sprite button ---
-
 function SpriteButton({
   spriteClass,
   iconState,
@@ -168,6 +166,15 @@ function SpriteButton({
   const displayState = enabled ? iconState : `${iconState}_disabled`;
   const key = pressedKey ?? iconState;
   const [triggerFlick, flickElement] = useFlick(`${key}_pressed.png`);
+  const [triggerEnabled, enabledElement] = useFlick(`${iconState}_enabled.png`);
+  const prevEnabled = useRef(enabled);
+
+  useEffect(() => {
+    if (enabled && !prevEnabled.current) {
+      triggerEnabled();
+    }
+    prevEnabled.current = enabled;
+  }, [enabled, triggerEnabled]);
 
   return (
     <button
@@ -185,6 +192,7 @@ function SpriteButton({
         className={`${spriteClass} ${iconState}_highlighted sprite-btn__hover`}
       />
       {flickElement}
+      {enabledElement}
       {children}
     </button>
   );
@@ -208,7 +216,6 @@ function TraitFeedback({ text }: { text: string }) {
   );
 }
 
-// --- Shutter animation timing ---
 const SHUTTER_MOVE_MS = 400;
 const SHUTTER_WAIT_MS = 200;
 const EASE_OUT = 'cubic-bezier(0.33, 1, 0.68, 1)';
@@ -302,7 +309,6 @@ export function LobbyMenu() {
         for (const a of shutter.getAnimations()) a.cancel();
       }
     } else {
-      // EXPANDING
       playExpandSound();
 
       if (shutter) {
@@ -338,7 +344,6 @@ export function LobbyMenu() {
         for (const a of shutter.getAnimations()) a.cancel();
       }
 
-      // Turn TV back on after fully expanded
       setTvActive(true);
     }
 

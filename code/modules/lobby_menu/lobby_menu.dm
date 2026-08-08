@@ -36,6 +36,8 @@ GLOBAL_VAR(lobby_title_asset_registered)
 /datum/lobby_menu
 	var/client/client
 	var/datum/tgui_window/window
+	/// Whether we've already registered for asset subsystem init signals
+	var/assets_signals_registered = FALSE
 
 /datum/lobby_menu/New(client/client)
 	src.client = client
@@ -60,6 +62,7 @@ GLOBAL_VAR(lobby_title_asset_registered)
 	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(on_ticker_setting_up))
 	RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, PROC_REF(on_ticker_error_setting_up))
 	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
+	RegisterSignals(SSdcs, list(COMSIG_GLOB_LOBBY_TRAIT_ADDED, COMSIG_GLOB_LOBBY_TRAIT_REMOVED), PROC_REF(on_traits_changed))
 
 	GLOB.lobby_menus += src
 	if(GLOB.lobby_background_transparent)
@@ -91,7 +94,6 @@ GLOBAL_VAR(lobby_title_asset_registered)
 		"adminReadyCount" = SSticker.total_admins_ready,
 		"adminCount" = length(GLOB.admins),
 		"shiftTime" = (SSticker.round_start_time == 0) ? "Pre-Game" : round_timestamp(),
-		"stationTraits" = get_station_traits(),
 	))
 
 /datum/lobby_menu/proc/on_client_qdel()
@@ -141,8 +143,11 @@ GLOBAL_VAR(lobby_title_asset_registered)
 		"gamePhase" = "playing",
 		"canReady" = FALSE,
 		"canJoin" = TRUE,
-		"stationTraits" = get_station_traits(),
 	))
+
+/datum/lobby_menu/proc/on_traits_changed()
+	SIGNAL_HANDLER
+	send_update(list("stationTraits" = get_station_traits()))
 
 /datum/lobby_menu/proc/get_game_phase()
 	switch(SSticker.current_state)
@@ -210,16 +215,21 @@ GLOBAL_VAR(lobby_title_asset_registered)
 	// Async poll check
 	check_new_polls()
 
-	// Check if assets aren't ready yet and register for when they are
-	if(SSearly_assets.initialized != INITIALIZATION_INNEW_REGULAR && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)
-		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(on_assets_ready))
-		RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(on_assets_ready))
+	if(!assets_signals_registered)
+		if(SSearly_assets.initialized != INITIALIZATION_INNEW_REGULAR)
+			RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(on_assets_ready))
+			assets_signals_registered = TRUE
 
-/datum/lobby_menu/proc/on_assets_ready()
+		if(SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)
+			RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(on_assets_ready))
+			assets_signals_registered = TRUE
+
+/datum/lobby_menu/proc/on_assets_ready(datum/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
-	UnregisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE)
-	send_update(list("assetsReady" = TRUE))
+	UnregisterSignal(source, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+
+	if(SSearly_assets.initialized == INITIALIZATION_INNEW_REGULAR || SSatoms.initialized == INITIALIZATION_INNEW_REGULAR)
+		send_update(list("assetsReady" = TRUE))
 
 /datum/lobby_menu/proc/check_new_polls()
 	set waitfor = FALSE

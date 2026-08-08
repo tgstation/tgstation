@@ -41,14 +41,18 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 
 	if(sign_up_button)
 		GLOB.lobby_station_traits += src
+		SEND_SIGNAL(SSdcs, COMSIG_GLOB_LOBBY_TRAIT_ADDED)
 	if(trait_processes)
 		START_PROCESSING(SSstation, src)
 	if(trait_to_give)
 		ADD_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
 
 /datum/station_trait/Destroy()
+	var/had_button = sign_up_button
 	SSstation.station_traits -= src
 	GLOB.lobby_station_traits -= src
+	if(had_button)
+		SEND_SIGNAL(SSdcs, COMSIG_GLOB_LOBBY_TRAIT_REMOVED)
 	REMOVE_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
 	return ..()
 

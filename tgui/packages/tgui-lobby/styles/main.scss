@@ -152,6 +152,11 @@ body,
   position: relative;
   cursor: pointer;
 
+  &__normal,
+  &__hover {
+    display: block;
+  }
+
   &__hover {
     position: absolute;
     top: 0;
