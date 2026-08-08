@@ -47,7 +47,6 @@
 
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
-	icon_state = "infernoshot"
 	damage = 20
 
 /obj/projectile/bullet/incendiary/shotgun/no_trail
