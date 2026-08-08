@@ -817,7 +817,7 @@
 /obj/structure/closet/syndicate,
 /obj/structure/cable,
 /obj/effect/spawner/random/exotic/brutus,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "nm" = (
 /obj/machinery/vending/cigarette/syndicate,
@@ -2517,7 +2517,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/random/exotic/brutus,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "NZ" = (
 /obj/structure/broken_flooring/plating/directional/east,
@@ -3099,7 +3099,7 @@
 	},
 /obj/item/kirbyplants/random,
 /obj/effect/spawner/random/exotic/brutus,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "YW" = (
 /obj/effect/turf_decal/tile/bar{
