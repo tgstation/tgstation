@@ -421,7 +421,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
  * * temp_diff (required) The difference between two temperatures
  * * change_rate (optional)(Default: 0.06) The rate of range multiplier
  */
-/proc/get_temp_change_amount(temp_diff, change_rate = 0.06)
+/proc/get_temp_change_amount(temp_diff, change_rate = BODYTEMP_STANDARD_CHANGE_RATE)
 	if(temp_diff < 0)
 		return -(BODYTEMP_AUTORECOVERY_DIVISOR / 2) * log(1 - (temp_diff * change_rate))
 	return (BODYTEMP_AUTORECOVERY_DIVISOR / 2) * log(1 + (temp_diff * change_rate))
