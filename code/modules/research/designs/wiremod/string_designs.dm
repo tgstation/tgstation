@@ -26,5 +26,4 @@
 
 /datum/design/component/string/replace
 	name = "String Replace Component"
-	id = "comp_string_replace"
 	build_path = /obj/item/circuit_component/compare/contains/replace
