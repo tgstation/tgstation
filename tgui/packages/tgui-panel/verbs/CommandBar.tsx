@@ -498,6 +498,8 @@ export function CommandBar() {
           } else {
             selectVerb(verb);
           }
+        } else if (selectedVerb && hasSuggestions) {
+          selectCurrentSuggestion();
         } else if (selectedVerb) {
           invokeVerb();
         }
