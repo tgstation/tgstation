@@ -1058,7 +1058,9 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/computer/security/telescreen/interrogation/directional/south{
+/obj/machinery/computer/security/telescreen{
+	pixel_x = 0;
+	pixel_y = -32;
 	network = list("shuttle_interrogation")
 	},
 /turf/open/floor/mineral/plastitanium/pod/redlight,
