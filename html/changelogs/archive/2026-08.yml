@@ -227,6 +227,8 @@
   Gboster-0:
   - code_imp: fixed chasms ignoring lattices on top of them in some scenario's, creating
       a lot of runtimes
+  Ghommie:
+  - rscadd: Added a replace text circuit component.
   JohnFulpWillard:
   - code_imp: Converted Changelog to typescript.
   LT3:
