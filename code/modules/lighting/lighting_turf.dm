@@ -76,6 +76,7 @@
 
 	totallums /= 12 // 4 corners, each with 3 channels, get the average.
 	totallums = (totallums - minlum) / (maxlum - minlum)
+	return totallums
 
 /// Fetches dynamic lumcount from lightsources potentially in view of this turf from our spatial grid
 /turf/proc/get_dynamic_lumcount()
