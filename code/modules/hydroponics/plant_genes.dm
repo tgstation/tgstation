@@ -329,7 +329,6 @@
 		RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, PROC_REF(zap_target))
 
 	RegisterSignal(our_plant, COMSIG_FOOD_EATEN, PROC_REF(recharge_cells))
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_HARVEST, PROC_REF(enrich_liquid_electricity))
 
 /*
  * Zaps the target with a stunning shock.
@@ -374,13 +373,6 @@
 			batteries_recharged = TRUE
 	if(batteries_recharged)
 		to_chat(eater, span_notice("Your batteries are recharged!"))
-
-/// Any liquid electricity present in the plant on harvest is enriched
-/datum/plant_gene/trait/cell_charge/proc/enrich_liquid_electricity(obj/item/our_plant, obj/item/seeds/our_seed)
-	SIGNAL_HANDLER
-
-	for(var/datum/reagent/consumable/liquidelectricity/liquid_elec in our_plant.reagents?.reagent_list)
-		LAZYSET(liquid_elec.data, BLOOD_DATA_ENRICHED_ETHEREAL, TRUE)
 
 /*
  * Makes the plant glow. Makes the plant in tray glow, too.

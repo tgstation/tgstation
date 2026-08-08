@@ -49,7 +49,7 @@
 	return list("[blood_type] type blood" = 1)
 
 /// All blood grown in plants defaults to O-
-/datum/reagent/blood/proc/grown_in_plant(datum/source, obj/item/seeds, obj/item/plant)
+/datum/reagent/blood/proc/grown_in_plant(datum/source, obj/item/seeds/our_seeds, obj/item/our_plant)
 	SIGNAL_HANDLER
 
 	LAZYSET(data, BLOOD_DATA_TYPE, get_blood_type(BLOOD_TYPE_O_MINUS))

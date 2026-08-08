@@ -123,12 +123,12 @@
 	data = taste_amounts
 
 /// Inherits all the tastes of plants that we are grown in
-/datum/reagent/consumable/nutriment/proc/grown_in_plant(datum/source, obj/item/seeds, obj/item/plant)
+/datum/reagent/consumable/nutriment/proc/grown_in_plant(datum/source, obj/item/seeds/our_seeds, obj/item/our_plant)
 	SIGNAL_HANDLER
 
-	if(!istype(plant, /obj/item/food/grown))
+	if(!istype(our_plant, /obj/item/food/grown))
 		return
-	var/obj/item/food/grown/plant_food = plant
+	var/obj/item/food/grown/plant_food = our_plant
 	data = counterlist_normalise(LAZYCOPY(plant_food.tastes))
 
 /datum/reagent/consumable/nutriment/get_taste_description(mob/living/taster)
@@ -1036,6 +1036,7 @@
 
 /datum/reagent/consumable/liquidelectricity/on_new(new_data)
 	. = ..()
+	RegisterSignal(src, COMSIG_REAGENT_GROWN_IN_PLANT, PROC_REF(grown_in_plant))
 	// Defaults to "enriched" state if data does not say otherwise
 	if(isnull(LAZYACCESS(data, BLOOD_DATA_ENRICHED_ETHEREAL)))
 		LAZYSET(data, BLOOD_DATA_ENRICHED_ETHEREAL, TRUE)
@@ -1062,6 +1063,12 @@
 	else if(SPT_PROB(10, seconds_per_tick)) //lmao at the newbs who eat energy bars
 		affected_mob.electrocute_act(rand(5, 10), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
 		playsound(affected_mob, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+
+/// Liquid Electricity in plants is unenriched unless the plant has the relevant gene
+/datum/reagent/consumable/liquidelectricity/proc/grown_in_plant(datum/source, obj/item/seeds/our_seeds, obj/item/our_plant)
+	SIGNAL_HANDLER
+
+	LAZYSET(data, BLOOD_DATA_ENRICHED_ETHEREAL, !!our_seed.get_gene(/datum/plant_gene/trait/cell_charge))
 
 /datum/reagent/consumable/astrotame
 	name = "Astrotame"
