@@ -249,6 +249,22 @@ export function CommandBar() {
     setHistoryIndex(-1);
   };
 
+  const restoreFromHistory = (entry: string) => {
+    const firstSpace = entry.indexOf(' ');
+    const verbName = firstSpace >= 0 ? entry.slice(0, firstSpace) : entry;
+    const verb = verbs.find((v) => toKebab(v.name) === verbName);
+    if (verb) {
+      setSelectedVerb(verb);
+      const argPart = entry.slice(toKebab(verb.name).length + 1);
+      setFilledArgs(parseArgs(argPart));
+    } else {
+      setSelectedVerb(null);
+      setFilledArgs([]);
+    }
+    setSelectedIndex(0);
+    setInput(entry);
+  };
+
   const resetState = () => {
     setInput('');
     setSelectedVerb(null);
@@ -387,10 +403,10 @@ export function CommandBar() {
           } else if (historyIndex > 0) {
             const newIndex = historyIndex - 1;
             setHistoryIndex(newIndex);
-            handleChange(historyRef.current[newIndex]);
+            restoreFromHistory(historyRef.current[newIndex]);
           } else if (historyIndex === 0) {
             setHistoryIndex(-1);
-            handleChange('');
+            resetState();
           }
         } else if (!hotkeys) {
           e.preventDefault();
@@ -405,7 +421,7 @@ export function CommandBar() {
           } else if (historyIndex < historyRef.current.length - 1) {
             const newIndex = historyIndex + 1;
             setHistoryIndex(newIndex);
-            handleChange(historyRef.current[newIndex]);
+            restoreFromHistory(historyRef.current[newIndex]);
           }
         } else if (!hotkeys) {
           e.preventDefault();
@@ -478,7 +494,6 @@ export function CommandBar() {
   };
 
   const handleChange = (value: string) => {
-    setHistoryIndex(-1);
     if (!selectedVerb) {
       value = value.replaceAll(' ', '');
     }
@@ -599,7 +614,10 @@ export function CommandBar() {
           type="text"
           value={input}
           placeholder={placeholder}
-          onChange={(e) => handleChange(e.target.value)}
+          onChange={(e) => {
+            setHistoryIndex(-1);
+            handleChange(e.target.value);
+          }}
           onKeyDown={handleKeyDown}
           onKeyUp={handleKeyUp}
         />
