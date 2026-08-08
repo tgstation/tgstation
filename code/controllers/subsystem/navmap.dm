@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(navmap)
 	var/list/mask_whitelist_cache
 	var/list/force_conditional_cache
 	var/list/auto_dirty_ztraits = list(ZTRAIT_STATION, ZTRAIT_MINING)
-	var/list/auto_dirty_zlevels = list()
+	var/alist/auto_dirty_zlevels = alist()
 	var/list/space_type_cache
 
 /// Initializes bake representatives, blocker caches, and existing z-level data.
@@ -47,7 +47,7 @@ SUBSYSTEM_DEF(navmap)
 		prebake_z(z)
 
 	for(var/z in SSmapping.levels_by_any_trait(auto_dirty_ztraits))
-		auto_dirty_zlevels["[z]"] = TRUE
+		auto_dirty_zlevels[z] = TRUE
 	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, PROC_REF(on_new_zlevel))
 
 	return SS_INIT_SUCCESS
@@ -57,7 +57,7 @@ SUBSYSTEM_DEF(navmap)
 	SIGNAL_HANDLER
 	for(var/trait in auto_dirty_ztraits)
 		if(new_level.traits[trait])
-			auto_dirty_zlevels["[new_level.z_value]"] = TRUE
+			auto_dirty_zlevels[new_level.z_value] = TRUE
 			return
 
 /// Reports the number of turfs waiting to bake.

@@ -18,6 +18,14 @@
 			info.movement_type = GROUND
 	return info
 
+/// Returns a before/after timer that remains valid when a measured call crosses a tick boundary.
+/proc/nav_debug_timer_start()
+	return list(world.time, TICK_USAGE_REAL)
+
+/proc/nav_debug_timer_ms(list/timer)
+	var/ticks_elapsed = round((world.time - timer[1]) / world.tick_lag)
+	return TICK_DELTA_TO_MS((ticks_elapsed * 100) + TICK_USAGE_REAL - timer[2])
+
 ADMIN_VERB(navmap_set_goal, R_DEBUG, "Navmap: Set Goal", "Marks your current turf as the navmap path goal.", ADMIN_CATEGORY_DEBUG)
 	var/turf/goal = get_turf(user.mob)
 	if(!goal)
@@ -46,33 +54,41 @@ ADMIN_VERB(navmap_run_path, R_DEBUG, "Navmap: Run Path", "Paths from your turf t
 	var/dll_ms
 	var/dll_available = navmap_pathfinder_available()
 	if(dll_available)
-		var/dll_start = TICK_USAGE_REAL
+		var/list/dll_timer = nav_debug_timer_start()
 		try
 			dll_path = navmap_pathfinder(start, goal, info, NAV_IS_FLYING(info), max_range, 0, TRUE, null, DIAGONAL_REMOVE_CLUNKY, TRUE)
 		catch
 			navmap_pathfinder_mark_unavailable()
 			dll_available = FALSE
-		dll_ms = TICK_USAGE_TO_MS(dll_start)
+		dll_ms = nav_debug_timer_ms(dll_timer)
 
-	var/dm_start = TICK_USAGE_REAL
-	var/list/dm_path = navmap_pathfinder_blocking(user.mob, start, goal, info, max_range, 0, TRUE, null, DIAGONAL_REMOVE_CLUNKY, TRUE, TRUE)
-	var/dm_ms = TICK_USAGE_TO_MS(dm_start)
+	var/dm_start = nav_debug_timer_start()
+	var/list/dm_path = navmap_pathfinder_blocking(user.mob, start, goal, info, max_range, 0, TRUE, null, DIAGONAL_REMOVE_CLUNKY, skip_first = TRUE, use_dm_implementation = TRUE, allow_tick_yield = FALSE)
+	var/dm_ms = nav_debug_timer_ms(dm_start)
+
 	var/list/access = info.access || list()
 	var/list/hand_around = list()
+	var/list/jps_timer = nav_debug_timer_start()
 	var/datum/pathfind/jps/legacy_path = new()
 	legacy_path.setup(user.mob, access, max_range, TRUE, null, \
 		list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around)), goal, 0, TRUE, DIAGONAL_REMOVE_CLUNKY)
+	// setup() normally builds the profile from the requester. Reuse the selected
+	// navmap profile so flying and pass-flag comparisons measure the same mover.
+	legacy_path.pass_info = info
 	var/list/jps_path
-	var/jps_ms
 	if(legacy_path.start())
-		SSpathfinder.active_pathing += legacy_path
-		UNTIL(length(hand_around))
+		// Drive the legacy search directly so the timer excludes subsystem queueing and tick waits.
+		while(!legacy_path.path && !legacy_path.open.is_empty())
+			if(!legacy_path.search_step())
+				legacy_path.early_exit()
+				break
+		if(!QDELETED(legacy_path))
+			legacy_path.finished()
 		jps_path = islist(hand_around[1]) ? hand_around[1] : list()
-		jps_ms = TICK_DELTA_TO_MS(legacy_path.compute_time)
 	else
 		qdel(legacy_path)
 		jps_path = list()
-		jps_ms = 0
+	var/jps_ms = nav_debug_timer_ms(jps_timer)
 
 	to_chat(user, span_boldnotice("JPS (OLD): [length(jps_path) ? "[length(jps_path)] steps" : "NO PATH"] in [jps_ms]ms. \
 		Navmap A* DLL: [dll_available ? "[length(dll_path) ? "[length(dll_path)] steps" : "NO PATH"] in [dll_ms]ms" : "unavailable"]. \

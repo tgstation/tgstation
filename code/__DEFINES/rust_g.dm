@@ -14,7 +14,7 @@
 // Default automatic RUST_G detection.
 // On Windows, looks in the standard places for `rust_g.dll`.
 // On Linux, looks in `.`, `$LD_LIBRARY_PATH`, and `~/.byond/bin` for either of
-// `librust_g.so` (preferred)ss or `rust_g` (old).
+// `librust_g.so` (preferred) or `rust_g` (old).
 
 /* This comment bypasses grep checks */ /var/__rust_g
 

@@ -890,7 +890,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(!SSnavmap.initialized)
 		return
 	// Only auto-update important z-levels
-	if(!SSnavmap.auto_dirty_zlevels["[z]"])
+	if(!SSnavmap.auto_dirty_zlevels[z])
 		return
 	nav_pass = null
 	nav_blockers = null

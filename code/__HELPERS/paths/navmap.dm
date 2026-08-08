@@ -1,54 +1,228 @@
-/// Synchronous fallback node. The heap stores the lowest f-value first.
-/datum/navmap_fallback_node
+/// DM navmap JPS node. The heap stores the lowest f-value first.
+/datum/navmap_jps_node
 	var/turf/tile
-	var/cost
 	var/f_value
-	var/sequence
+	var/datum/navmap_jps_node/previous_node
+	var/heuristic
+	var/number_tiles
+	var/jumps
+	var/turf/node_goal
 
-/datum/navmap_fallback_node/New(turf/our_tile, incoming_cost, incoming_f_value, incoming_sequence)
+/datum/navmap_jps_node/New(turf/our_tile, datum/navmap_jps_node/incoming_previous_node, incoming_jumps, turf/incoming_goal)
 	tile = our_tile
-	cost = incoming_cost
-	f_value = incoming_f_value
-	sequence = incoming_sequence
+	jumps = incoming_jumps
+	if(incoming_goal)
+		node_goal = incoming_goal
+	else if(incoming_previous_node)
+		previous_node = incoming_previous_node
+		number_tiles = previous_node.number_tiles + jumps
+		node_goal = previous_node.node_goal
+		heuristic = get_dist_euclidean(tile, node_goal)
+		f_value = number_tiles + heuristic
 
-/proc/NavmapFallbackPathWeightCompare(datum/navmap_fallback_node/a, datum/navmap_fallback_node/b)
-	if(a.f_value != b.f_value)
-		return b.f_value - a.f_value
-	return b.sequence - a.sequence
+/datum/navmap_jps_node/Destroy(force)
+	previous_node = null
+	return ..()
 
-/// Returns the two possible cardinal routes for a diagonal. Bit 1 is north/south first,
-/// bit 2 is east/west first.
-/proc/navmap_fallback_diagonal_routes(turf/source, direction, is_flying, datum/can_pass_info/pass_info, datum/pathfind/navmap/search)
-	var/turf/destination = get_step(source, direction)
-	if(!destination || !search.fallback_can_occupy(destination))
-		return NONE
+/// The navmap_jps heap stores the lowest f-value first, with older entries winning ties.
+#define NAVMAP_JPS_NODE_BEFORE(a, b) ((a).f_value < (b).f_value)
 
-	var/north_south = direction & (NORTH|SOUTH)
-	var/east_west = direction & (EAST|WEST)
-	var/routes = NONE
-	var/edge_open
-	var/turf/middle
-	var/list/middle_info
+#define NAVMAP_JPS_MAKE_START_NODE(TILE, RESULT) \
+	RESULT = new /datum/navmap_jps_node((TILE), null, 0, (src).end)
 
-	NAV_EDGE_OPEN_BAKED(source, north_south, is_flying, pass_info, edge_open)
-	if(edge_open)
-		middle = get_step(source, north_south)
-		if(middle && search.fallback_can_occupy(middle))
-			middle_info = search.fallback_resolve_turf(middle)
-			if(middle_info && (middle_info["open_edges"] & east_west))
-				routes |= 1
+#define NAVMAP_JPS_MAKE_NODE(TILE, PARENT, JUMPS, RESULT) \
+	RESULT = new /datum/navmap_jps_node((TILE), (PARENT), (JUMPS))
 
-	NAV_EDGE_OPEN_BAKED(source, east_west, is_flying, pass_info, edge_open)
-	if(edge_open)
-		middle = get_step(source, east_west)
-		if(middle && search.fallback_can_occupy(middle))
-			middle_info = search.fallback_resolve_turf(middle)
-			if(middle_info && (middle_info["open_edges"] & north_south))
-				routes |= 2
+// nav_pass already contains the cached directional bits. Use those bits directly and only
+// walk nav_blockers when the edge was classified as conditional, preserving live blocker checks.
+// The caller owns the turf variables so the hot scan does not repeatedly assign source/destination
+// temporaries inside this macro.
+#define NAVMAP_JPS_DESTINATION_OPEN(DESTINATION) \
+	((DESTINATION) && !(DESTINATION).density && (DESTINATION) != avoid \
+		&& (!simulated_only || !SSpathfinder.space_type_cache[(DESTINATION).type]))
 
-	return routes
+#define NAVMAP_JPS_TURF_OPEN(TILE, RESULT) \
+	RESULT = NAVMAP_JPS_DESTINATION_OPEN(TILE)
 
-/// A path datum used by both the navmap DLL and the DM fallback.
+#define NAVMAP_JPS_CAN_CARDINAL_BAKED(SOURCE, DESTINATION, DIRECTION, RESULT) \
+	do { \
+		RESULT = FALSE; \
+		if(NAVMAP_JPS_DESTINATION_OPEN(DESTINATION)) { \
+			NAV_EDGE_OPEN_BAKED((SOURCE), (DIRECTION), is_flying, pass_info, RESULT); \
+		} \
+	} while(FALSE)
+
+#define NAVMAP_JPS_CAN_CARDINAL(SOURCE, DESTINATION, DIRECTION, RESULT) \
+	do { \
+		RESULT = FALSE; \
+		if(NAVMAP_JPS_DESTINATION_OPEN(DESTINATION)) { \
+			NAV_ENSURE_BAKED((SOURCE)); \
+			NAV_EDGE_OPEN_BAKED((SOURCE), (DIRECTION), is_flying, pass_info, RESULT); \
+		} \
+	} while(FALSE)
+
+#define NAVMAP_JPS_CAN_DIAGONAL_BAKED(SOURCE, DESTINATION, DIRECTION, RESULT) \
+	do { \
+		RESULT = FALSE; \
+		if(NAVMAP_JPS_DESTINATION_OPEN(DESTINATION)) { \
+			NAV_DIAGONAL_OPEN((SOURCE), (DIRECTION), is_flying, pass_info, RESULT); \
+		} \
+	} while(FALSE)
+
+#define NAVMAP_JPS_CAN_DIAGONAL(SOURCE, DESTINATION, DIRECTION, RESULT) \
+	do { \
+		RESULT = FALSE; \
+		if(NAVMAP_JPS_DESTINATION_OPEN(DESTINATION)) { \
+			NAV_ENSURE_BAKED((SOURCE)); \
+			NAV_DIAGONAL_OPEN((SOURCE), (DIRECTION), is_flying, pass_info, RESULT); \
+		} \
+	} while(FALSE)
+
+// For a cardinal scan, a side is forced when either the side step is blocked or
+// the side turf cannot continue with us, but the matching diagonal is open.
+// Grouping those two cases means the diagonal is evaluated at most once.
+#define NAVMAP_JPS_LATERAL_SIDE_FORCED(CURRENT, SIDE_DIRECTION, HEADING, DIAGONAL_DIRECTION, RESULT) \
+	do { \
+		var/turf/_navjps_lsf_side = get_step((CURRENT), (SIDE_DIRECTION)); \
+		var/_navjps_lsf_side_open; \
+		NAVMAP_JPS_CAN_CARDINAL_BAKED((CURRENT), _navjps_lsf_side, (SIDE_DIRECTION), _navjps_lsf_side_open); \
+		var/_navjps_lsf_continues = FALSE; \
+		if(_navjps_lsf_side_open) { \
+			var/turf/_navjps_lsf_forward = get_step(_navjps_lsf_side, (HEADING)); \
+			NAVMAP_JPS_CAN_CARDINAL(_navjps_lsf_side, _navjps_lsf_forward, (HEADING), _navjps_lsf_continues); \
+		} \
+		RESULT = FALSE; \
+		if(!_navjps_lsf_side_open || !_navjps_lsf_continues) { \
+			var/turf/_navjps_lsf_diagonal = get_step((CURRENT), (DIAGONAL_DIRECTION)); \
+			NAVMAP_JPS_CAN_DIAGONAL_BAKED((CURRENT), _navjps_lsf_diagonal, (DIAGONAL_DIRECTION), RESULT); \
+		} \
+	} while(FALSE)
+
+// For a diagonal scan, each forced-neighbour pair shares the current cardinal
+// step. If that step is open we only need to test the lagging edge; otherwise we
+// only need to test the outward diagonal.
+#define NAVMAP_JPS_DIAGONAL_SIDE_FORCED(LAG, CURRENT, SIDE_DIRECTION, OUTWARD_DIAGONAL, LAG_DIRECTION, RESULT) \
+	do { \
+		var/turf/_navjps_dsf_side = get_step((CURRENT), (SIDE_DIRECTION)); \
+		var/_navjps_dsf_side_open; \
+		NAVMAP_JPS_CAN_CARDINAL_BAKED((CURRENT), _navjps_dsf_side, (SIDE_DIRECTION), _navjps_dsf_side_open); \
+		if(_navjps_dsf_side_open) { \
+			var/turf/_navjps_dsf_lag_destination = get_step((LAG), (LAG_DIRECTION)); \
+			var/_navjps_dsf_lag_open; \
+			NAVMAP_JPS_CAN_CARDINAL_BAKED((LAG), _navjps_dsf_lag_destination, (LAG_DIRECTION), _navjps_dsf_lag_open); \
+			RESULT = !_navjps_dsf_lag_open; \
+		} else { \
+			var/turf/_navjps_dsf_diagonal = get_step((CURRENT), (OUTWARD_DIAGONAL)); \
+			NAVMAP_JPS_CAN_DIAGONAL_BAKED((CURRENT), _navjps_dsf_diagonal, (OUTWARD_DIAGONAL), RESULT); \
+		} \
+	} while(FALSE)
+
+#define NAVMAP_JPS_LATERAL_FORCED(CURRENT, HEADING, RESULT) \
+	do { \
+		RESULT = FALSE; \
+		NAV_ENSURE_BAKED((CURRENT)); \
+		switch(HEADING) { \
+			if(NORTH) { \
+				NAVMAP_JPS_LATERAL_SIDE_FORCED((CURRENT), WEST, NORTH, NORTHWEST, RESULT); \
+				if(!RESULT) { NAVMAP_JPS_LATERAL_SIDE_FORCED((CURRENT), EAST, NORTH, NORTHEAST, RESULT); } \
+			} \
+			if(SOUTH) { \
+				NAVMAP_JPS_LATERAL_SIDE_FORCED((CURRENT), WEST, SOUTH, SOUTHWEST, RESULT); \
+				if(!RESULT) { NAVMAP_JPS_LATERAL_SIDE_FORCED((CURRENT), EAST, SOUTH, SOUTHEAST, RESULT); } \
+			} \
+			if(EAST) { \
+				NAVMAP_JPS_LATERAL_SIDE_FORCED((CURRENT), NORTH, EAST, NORTHEAST, RESULT); \
+				if(!RESULT) { NAVMAP_JPS_LATERAL_SIDE_FORCED((CURRENT), SOUTH, EAST, SOUTHEAST, RESULT); } \
+			} \
+			if(WEST) { \
+				NAVMAP_JPS_LATERAL_SIDE_FORCED((CURRENT), NORTH, WEST, NORTHWEST, RESULT); \
+				if(!RESULT) { NAVMAP_JPS_LATERAL_SIDE_FORCED((CURRENT), SOUTH, WEST, SOUTHWEST, RESULT); } \
+			} \
+		} \
+	} while(FALSE)
+
+#define NAVMAP_JPS_DIAGONAL_FORCED(LAG, CURRENT, HEADING, RESULT) \
+	do { \
+		RESULT = FALSE; \
+		NAV_ENSURE_BAKED((LAG)); \
+		NAV_ENSURE_BAKED((CURRENT)); \
+		switch(HEADING) { \
+			if(NORTHWEST) { \
+				NAVMAP_JPS_DIAGONAL_SIDE_FORCED((LAG), (CURRENT), EAST, NORTHEAST, NORTH, RESULT); \
+				if(!RESULT) { NAVMAP_JPS_DIAGONAL_SIDE_FORCED((LAG), (CURRENT), SOUTH, SOUTHWEST, WEST, RESULT); } \
+			} \
+			if(NORTHEAST) { \
+				NAVMAP_JPS_DIAGONAL_SIDE_FORCED((LAG), (CURRENT), WEST, NORTHWEST, NORTH, RESULT); \
+				if(!RESULT) { NAVMAP_JPS_DIAGONAL_SIDE_FORCED((LAG), (CURRENT), SOUTH, SOUTHEAST, EAST, RESULT); } \
+			} \
+			if(SOUTHWEST) { \
+				NAVMAP_JPS_DIAGONAL_SIDE_FORCED((LAG), (CURRENT), EAST, SOUTHEAST, SOUTH, RESULT); \
+				if(!RESULT) { NAVMAP_JPS_DIAGONAL_SIDE_FORCED((LAG), (CURRENT), NORTH, NORTHWEST, WEST, RESULT); } \
+			} \
+			if(SOUTHEAST) { \
+				NAVMAP_JPS_DIAGONAL_SIDE_FORCED((LAG), (CURRENT), WEST, SOUTHWEST, SOUTH, RESULT); \
+				if(!RESULT) { NAVMAP_JPS_DIAGONAL_SIDE_FORCED((LAG), (CURRENT), NORTH, NORTHEAST, EAST, RESULT); } \
+			} \
+		} \
+	} while(FALSE)
+
+#define NAVMAP_JPS_REACHED(TILE, RESULT) \
+	do { \
+		RESULT = ((TILE) == end); \
+		if(!RESULT && minimum_distance && get_dist((TILE), end) <= minimum_distance && !diagonally_blocked((TILE), end)) { \
+			RESULT = TRUE; \
+		} \
+	} while(FALSE)
+
+#define NAVMAP_JPS_HEAP_INSERT(OPEN_LIST, NODE) \
+	do { \
+		(OPEN_LIST) += (NODE); \
+		var/_navhi_index = (OPEN_LIST).len; \
+		while(_navhi_index > 1) { \
+			var/_navhi_parent = _navhi_index >> 1; \
+			if(!NAVMAP_JPS_NODE_BEFORE((OPEN_LIST)[_navhi_index], (OPEN_LIST)[_navhi_parent])) { \
+				break; \
+			} \
+			(OPEN_LIST).Swap(_navhi_index, _navhi_parent); \
+			_navhi_index = _navhi_parent; \
+		} \
+	} while(FALSE)
+
+#define NAVMAP_JPS_HEAP_POP(OPEN_LIST, RESULT) \
+	do { \
+		RESULT = null; \
+		var/_navhp_length = (OPEN_LIST).len; \
+		if(_navhp_length) { \
+			RESULT = (OPEN_LIST)[1]; \
+			if(_navhp_length == 1) { \
+				(OPEN_LIST).len = 0; \
+			} else { \
+				var/_navhp_last_node = (OPEN_LIST)[_navhp_length]; \
+				(OPEN_LIST).len--; \
+				(OPEN_LIST)[1] = _navhp_last_node; \
+				var/_navhp_index = 1; \
+				var/_navhp_last_index = _navhp_length - 1; \
+				while(TRUE) { \
+					var/_navhp_left_child = _navhp_index * 2; \
+					if(_navhp_left_child > _navhp_last_index) { \
+						break; \
+					} \
+					var/_navhp_better_child = _navhp_left_child; \
+					var/_navhp_right_child = _navhp_left_child + 1; \
+					if(_navhp_right_child <= _navhp_last_index && NAVMAP_JPS_NODE_BEFORE((OPEN_LIST)[_navhp_right_child], (OPEN_LIST)[_navhp_left_child])) { \
+						_navhp_better_child = _navhp_right_child; \
+					} \
+					if(!NAVMAP_JPS_NODE_BEFORE((OPEN_LIST)[_navhp_better_child], (OPEN_LIST)[_navhp_index])) { \
+						break; \
+					} \
+					(OPEN_LIST).Swap(_navhp_index, _navhp_better_child); \
+					_navhp_index = _navhp_better_child; \
+				} \
+			} \
+		} \
+	} while(FALSE)
+
+/// A path datum used by both the navmap DLL and the DM navmap_jps.
 /datum/pathfind/navmap
 	var/atom/movable/requester
 	var/turf/end
@@ -60,14 +234,12 @@
 	var/list/path
 	var/force_dm = FALSE
 	var/use_native = FALSE
+	var/allow_tick_yield = TRUE
 
-	// DM fallback state. Each search has its own terrain and conditional-edge cache.
-	var/datum/heap/fallback_open
-	var/list/fallback_terrain
-	var/list/fallback_costs
-	var/list/fallback_previous
-	var/list/fallback_closed
-	var/fallback_sequence = 0
+	// DM navmap_jps state. Static directional bits come from nav_pass; conditional blockers are checked live.
+	var/list/navmap_jps_open
+	var/list/navmap_jps_found
+	var/navmap_jps_is_flying = FALSE
 
 /datum/pathfind/navmap/proc/setup(atom/movable/requester, atom/goal, max_distance, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, list/datum/callback/on_finish)
 	var/datum/can_pass_info/info = new /datum/can_pass_info(requester, access, no_id = !length(access))
@@ -93,7 +265,7 @@
 
 	use_native = !force_dm && navmap_pathfinder_available()
 	if(!use_native)
-		fallback_initialize()
+		navmap_jps_initialize()
 		return TRUE
 
 	var/list/result
@@ -102,7 +274,7 @@
 	catch
 		navmap_pathfinder_mark_unavailable()
 		use_native = FALSE
-		fallback_initialize()
+		navmap_jps_initialize()
 		return TRUE
 	return handle_result(result)
 
@@ -112,7 +284,7 @@
 	if(complete)
 		return TRUE
 	if(!use_native)
-		return fallback_search_step()
+		return navmap_jps_search_step()
 
 	var/list/result
 	try
@@ -123,8 +295,8 @@
 		navmap_pathfinder_mark_unavailable()
 		use_native = FALSE
 		job_id = null
-		fallback_initialize()
-		return fallback_search_step()
+		navmap_jps_initialize()
+		return navmap_jps_search_step()
 	return handle_result(result)
 
 /datum/pathfind/navmap/proc/handle_result(list/result)
@@ -144,141 +316,212 @@
 			return TRUE
 	return FALSE
 
-/datum/pathfind/navmap/proc/fallback_initialize()
-	fallback_open = new /datum/heap(/proc/NavmapFallbackPathWeightCompare)
-	fallback_terrain = list()
-	fallback_costs = list()
-	fallback_previous = list()
-	fallback_closed = list()
-	fallback_sequence = 0
+/datum/pathfind/navmap/proc/navmap_jps_initialize()
+	navmap_jps_open = list()
+	navmap_jps_found = list()
+	navmap_jps_is_flying = NAV_IS_FLYING(pass_info)
+	var/simulated_only = src.simulated_only
+	var/turf/avoid = src.avoid
 	path = null
 	complete = FALSE
-	if(start == avoid || (max_distance && get_dist(start, end) > max_distance + minimum_distance) || !fallback_can_occupy(start))
+	var/start_distance = get_dist(start, end)
+	if(start == end || start == avoid || (max_distance && start_distance > max_distance + minimum_distance))
 		path = list()
 		complete = TRUE
 		return
-	fallback_push(start, 0)
+	var/start_open
+	NAVMAP_JPS_TURF_OPEN(start, start_open)
+	if(!start_open)
+		path = list()
+		complete = TRUE
+		return
+	navmap_jps_found[start] = TRUE
+	var/datum/navmap_jps_node/start_node
+	NAVMAP_JPS_MAKE_START_NODE(start, start_node)
+	NAVMAP_JPS_HEAP_INSERT(navmap_jps_open, start_node)
 
-/datum/pathfind/navmap/proc/fallback_resolve_turf(turf/tile)
-	if(!tile || tile.z != start.z)
-		return null
-	var/list/cached = fallback_terrain[tile]
-	if(cached)
-		return cached
+/datum/pathfind/navmap/proc/navmap_jps_reconstruct(datum/navmap_jps_node/goal_node)
+	var/datum/can_pass_info/pass_info = src.pass_info
+	var/is_flying = navmap_jps_is_flying
+	var/simulated_only = src.simulated_only
+	var/turf/avoid = src.avoid
+	var/list/reversed_path = list(goal_node.tile)
+	var/turf/current = goal_node.tile
+	var/datum/navmap_jps_node/current_node = goal_node
+	while(current_node.previous_node)
+		var/direction = get_dir(current, current_node.previous_node.tile)
+		for(var/i in 1 to current_node.jumps)
+			current = get_step(current, direction)
+			reversed_path += current
+		current_node = current_node.previous_node
 
-	NAV_ENSURE_BAKED(tile)
-	if(isnull(tile.nav_pass) || !(tile.nav_pass & NAV_BAKED))
-		return null
+	var/list/final_path = reverseList(reversed_path)
 
-	var/open_edges = NONE
-	var/edge_open
-	for(var/direction in GLOB.cardinals)
-		NAV_EDGE_OPEN_BAKED(tile, direction, NAV_IS_FLYING(pass_info), pass_info, edge_open)
-		if(edge_open)
-			open_edges |= direction
-
-	cached = list(
-		"open_edges" = open_edges,
-		"simulated" = !!(tile.nav_pass & NAV_SIMULATED),
-	)
-	fallback_terrain[tile] = cached
-	return cached
-
-/datum/pathfind/navmap/proc/fallback_can_occupy(turf/tile)
-	if(!tile || tile.z != start.z || tile == avoid)
-		return FALSE
-	if(max_distance && get_dist(start, tile) > max_distance)
-		return FALSE
-	if(simulated_only && SSpathfinder.space_type_cache[tile.type])
-		return FALSE
-	var/list/info = fallback_resolve_turf(tile)
-	return info && (!simulated_only || info["simulated"])
-
-/datum/pathfind/navmap/proc/fallback_can_step(turf/source, turf/destination, direction)
-	if(!source || !destination || !fallback_can_occupy(destination))
-		return FALSE
-	if(direction & (direction - 1))
-		return !!navmap_fallback_diagonal_routes(source, direction, NAV_IS_FLYING(pass_info), pass_info, src)
-	var/list/source_info = fallback_resolve_turf(source)
-	return source_info && (source_info["open_edges"] & direction)
-
-/datum/pathfind/navmap/proc/fallback_push(turf/tile, cost)
-	fallback_costs[tile] = cost
-	fallback_sequence++
-	var/dx = abs(tile.x - end.x)
-	var/dy = abs(tile.y - end.y)
-	dx = max(dx - minimum_distance, 0)
-	dy = max(dy - minimum_distance, 0)
-	var/heuristic = 14 * min(dx, dy) + 10 * abs(dx - dy)
-	fallback_open.insert(new /datum/navmap_fallback_node(tile, cost, cost + heuristic, fallback_sequence))
-
-/datum/pathfind/navmap/proc/fallback_reconstruct(turf/goal_tile)
-	var/list/reversed = list(goal_tile)
-	var/turf/current = goal_tile
-	while(current != start)
-		current = fallback_previous[current]
-		if(!current)
-			path = list()
-			complete = TRUE
-			return
-		reversed += current
-
-	var/list/nodes = reverseList(reversed)
-	var/list/final_path = list(nodes[1])
-	for(var/i in 1 to (length(nodes) - 1))
-		var/turf/from = nodes[i]
-		var/turf/next_turf = nodes[i + 1]
-		var/direction = get_dir(from, next_turf)
-		if(direction & (direction - 1))
-			var/routes = navmap_fallback_diagonal_routes(from, direction, NAV_IS_FLYING(pass_info), pass_info, src)
+	var/list/expanded_path = list(final_path[1])
+	for(var/i in 1 to (length(final_path) - 1))
+		var/turf/from = final_path[i]
+		var/turf/next_turf = final_path[i + 1]
+		var/step_direction = get_dir(from, next_turf)
+		if(step_direction & (step_direction - 1))
+			var/vertical_direction = step_direction & (NORTH|SOUTH)
+			var/turf/vertical_turf = get_step(from, vertical_direction)
+			var/vertical_open
+			NAVMAP_JPS_CAN_CARDINAL(from, vertical_turf, vertical_direction, vertical_open)
 			if(diagonal_handling == DIAGONAL_REMOVE_ALL)
-				if(routes & 1)
-					final_path += get_step(from, direction & (NORTH|SOUTH))
-				else if(routes & 2)
-					final_path += get_step(from, direction & (EAST|WEST))
+				if(vertical_open)
+					expanded_path += get_step(from, step_direction & (NORTH|SOUTH))
 				else
-					path = list()
-					complete = TRUE
-					return
-			else if(diagonal_handling == DIAGONAL_REMOVE_CLUNKY && !(routes & 1) && (routes & 2))
-				final_path += get_step(from, direction & (EAST|WEST))
-		final_path += next_turf
+					expanded_path += get_step(from, step_direction & (EAST|WEST))
+			else if(diagonal_handling == DIAGONAL_REMOVE_CLUNKY && !vertical_open)
+				expanded_path += get_step(from, step_direction & (EAST|WEST))
+		expanded_path += next_turf
 
-	if(skip_first && length(final_path))
-		final_path.Cut(1, 2)
-	path = final_path
+	if(skip_first && length(expanded_path))
+		expanded_path.Cut(1, 2)
+	path = expanded_path
 	complete = TRUE
 
-/datum/pathfind/navmap/proc/fallback_consider(turf/current, direction, movement_cost)
-	var/turf/next = get_step(current, direction)
-	if(!fallback_can_step(current, next, direction))
-		return
-	var/next_cost = fallback_costs[current] + movement_cost
-	if(!isnull(fallback_costs[next]) && next_cost >= fallback_costs[next])
-		return
-	fallback_previous[next] = current
-	fallback_closed[next] = FALSE
-	fallback_push(next, next_cost)
+/datum/pathfind/navmap/proc/navmap_jps_lateral_scan(turf/original_turf, heading, datum/navmap_jps_node/parent_node = null)
+	var/steps_taken = 0
+	var/turf/current_turf = original_turf
+	var/turf/lag_turf = original_turf
+	var/datum/can_pass_info/pass_info = src.pass_info
+	var/is_flying = navmap_jps_is_flying
+	var/simulated_only = src.simulated_only
+	var/turf/avoid = src.avoid
+	var/list/found_turfs = navmap_jps_found
+	var/list/open = navmap_jps_open
 
-/datum/pathfind/navmap/proc/fallback_search_step()
-	while(!fallback_open.is_empty())
-		var/datum/navmap_fallback_node/current_node = fallback_open.pop()
+	while(TRUE)
+		if(path)
+			return null
+		lag_turf = current_turf
+		current_turf = get_step(current_turf, heading)
+		steps_taken++
+		if(!current_turf)
+			return null
+		var/step_open
+		NAVMAP_JPS_CAN_CARDINAL(lag_turf, current_turf, heading, step_open)
+		if(!step_open)
+			return null
+
+		var/reached
+		NAVMAP_JPS_REACHED(current_turf, reached)
+		if(reached)
+			found_turfs[current_turf] = TRUE
+			var/datum/navmap_jps_node/final_node
+			NAVMAP_JPS_MAKE_NODE(current_turf, parent_node, steps_taken, final_node)
+			if(parent_node)
+				navmap_jps_reconstruct(final_node)
+			return final_node
+		if(found_turfs[current_turf])
+			return null
+		found_turfs[current_turf] = TRUE
+
+		if(max_distance && parent_node && parent_node.number_tiles + steps_taken > max_distance)
+			return null
+
+		var/forced
+		NAVMAP_JPS_LATERAL_FORCED(current_turf, heading, forced)
+		if(forced)
+			var/datum/navmap_jps_node/new_node
+			NAVMAP_JPS_MAKE_NODE(current_turf, parent_node, steps_taken, new_node)
+			if(parent_node)
+				NAVMAP_JPS_HEAP_INSERT(open, new_node)
+			return new_node
+
+/datum/pathfind/navmap/proc/navmap_jps_diagonal_scan(turf/original_turf, heading, datum/navmap_jps_node/parent_node)
+	var/steps_taken = 0
+	var/turf/current_turf = original_turf
+	var/turf/lag_turf = original_turf
+	var/datum/can_pass_info/pass_info = src.pass_info
+	var/is_flying = navmap_jps_is_flying
+	var/simulated_only = src.simulated_only
+	var/turf/avoid = src.avoid
+	var/list/found_turfs = navmap_jps_found
+	var/list/open = navmap_jps_open
+
+	while(TRUE)
+		if(path)
+			return
+		lag_turf = current_turf
+		current_turf = get_step(current_turf, heading)
+		steps_taken++
+		if(!current_turf)
+			return
+		var/step_open
+		NAVMAP_JPS_CAN_DIAGONAL(lag_turf, current_turf, heading, step_open)
+		if(!step_open)
+			return
+
+		var/reached
+		NAVMAP_JPS_REACHED(current_turf, reached)
+		if(reached)
+			found_turfs[current_turf] = TRUE
+			var/datum/navmap_jps_node/final_node
+			NAVMAP_JPS_MAKE_NODE(current_turf, parent_node, steps_taken, final_node)
+			navmap_jps_reconstruct(final_node)
+			return
+		if(found_turfs[current_turf])
+			return
+		found_turfs[current_turf] = TRUE
+
+		if(max_distance && parent_node.number_tiles + steps_taken > max_distance)
+			return
+
+		var/interesting
+		NAVMAP_JPS_DIAGONAL_FORCED(lag_turf, current_turf, heading, interesting)
+		var/datum/navmap_jps_node/possible_child_node
+		if(!interesting)
+			switch(heading)
+				if(NORTHWEST)
+					possible_child_node = navmap_jps_lateral_scan(current_turf, WEST) || navmap_jps_lateral_scan(current_turf, NORTH)
+				if(NORTHEAST)
+					possible_child_node = navmap_jps_lateral_scan(current_turf, EAST) || navmap_jps_lateral_scan(current_turf, NORTH)
+				if(SOUTHWEST)
+					possible_child_node = navmap_jps_lateral_scan(current_turf, SOUTH) || navmap_jps_lateral_scan(current_turf, WEST)
+				if(SOUTHEAST)
+					possible_child_node = navmap_jps_lateral_scan(current_turf, SOUTH) || navmap_jps_lateral_scan(current_turf, EAST)
+
+		if(interesting || possible_child_node)
+			var/datum/navmap_jps_node/new_node
+			NAVMAP_JPS_MAKE_NODE(current_turf, parent_node, steps_taken, new_node)
+			NAVMAP_JPS_HEAP_INSERT(open, new_node)
+			if(possible_child_node)
+				possible_child_node.previous_node = new_node
+				possible_child_node.node_goal = new_node.node_goal
+				possible_child_node.jumps = get_dist(possible_child_node.tile, new_node.tile)
+				possible_child_node.number_tiles = new_node.number_tiles + possible_child_node.jumps
+				possible_child_node.heuristic = get_dist_euclidean(possible_child_node.tile, possible_child_node.node_goal)
+				possible_child_node.f_value = possible_child_node.number_tiles + possible_child_node.heuristic
+				NAVMAP_JPS_HEAP_INSERT(open, possible_child_node)
+				var/child_reached
+				NAVMAP_JPS_REACHED(possible_child_node.tile, child_reached)
+				if(child_reached)
+					navmap_jps_reconstruct(possible_child_node)
+			return
+
+/datum/pathfind/navmap/proc/navmap_jps_search_step()
+	var/list/open = navmap_jps_open
+	while(open.len)
+		var/datum/navmap_jps_node/current_node
+		NAVMAP_JPS_HEAP_POP(open, current_node)
 		if(isnull(current_node))
 			break
-		if(fallback_costs[current_node.tile] != current_node.cost || fallback_closed[current_node.tile])
-			continue
-		fallback_closed[current_node.tile] = TRUE
 
-		if(get_dist(current_node.tile, end) <= minimum_distance)
-			fallback_reconstruct(current_node.tile)
+		navmap_jps_lateral_scan(current_node.tile, NORTH, current_node)
+		navmap_jps_lateral_scan(current_node.tile, SOUTH, current_node)
+		navmap_jps_lateral_scan(current_node.tile, EAST, current_node)
+		navmap_jps_lateral_scan(current_node.tile, WEST, current_node)
+		navmap_jps_diagonal_scan(current_node.tile, NORTHEAST, current_node)
+		navmap_jps_diagonal_scan(current_node.tile, NORTHWEST, current_node)
+		navmap_jps_diagonal_scan(current_node.tile, SOUTHEAST, current_node)
+		navmap_jps_diagonal_scan(current_node.tile, SOUTHWEST, current_node)
+		if(path)
 			return TRUE
 
-		for(var/direction in GLOB.cardinals)
-			fallback_consider(current_node.tile, direction, 10)
-		for(var/direction in GLOB.diagonals)
-			fallback_consider(current_node.tile, direction, 14)
-
-		CHECK_TICK
+		if(allow_tick_yield)
+			CHECK_TICK
 
 	path = list()
 	complete = TRUE
@@ -286,7 +529,7 @@
 
 /datum/pathfind/navmap/finished()
 	if(!length(path))
-		EVLOG_TEXT(requester, EVLOG_CATEGORY_NAVMAP, "No navmap A* path (pass_flags=[pass_info.pass_flags])")
+		EVLOG_TEXT(requester, EVLOG_CATEGORY_NAVMAP, "No navmap path (pass_flags=[pass_info.pass_flags])")
 	hand_back(path || list())
 	return ..()
 
@@ -306,18 +549,17 @@
 		catch
 			navmap_pathfinder_mark_unavailable()
 	job_id = null
-	QDEL_NULL(fallback_open)
-	fallback_terrain = null
-	fallback_costs = null
-	fallback_previous = null
-	fallback_closed = null
+	for(var/datum/navmap_jps_node/node as anything in navmap_jps_open)
+		qdel(node)
+	navmap_jps_open = null
+	navmap_jps_found = null
 	SSpathfinder.navmap_pathing -= src
 	SSpathfinder.current_navmap_run -= src
 	requester = null
 	end = null
 	return ..()
 
-/proc/navmap_pathfinder_blocking(atom/movable/requester, turf/start_turf, turf/end_turf, datum/can_pass_info/pass_info, max_distance, minimum_distance, simulated_only, turf/avoid, diagonal_handling, skip_first, use_dm_implementation = FALSE)
+/proc/navmap_pathfinder_blocking(atom/movable/requester, turf/start_turf, turf/end_turf, datum/can_pass_info/pass_info, max_distance, minimum_distance, simulated_only, turf/avoid, diagonal_handling, skip_first, use_dm_implementation = FALSE, allow_tick_yield = TRUE)
 	if(!use_dm_implementation && navmap_pathfinder_available())
 		try
 			return navmap_pathfinder(start_turf, end_turf, pass_info, NAV_IS_FLYING(pass_info), max_distance, minimum_distance, simulated_only, avoid, diagonal_handling, skip_first)
@@ -326,6 +568,7 @@
 
 	var/datum/pathfind/navmap/search = new()
 	search.force_dm = TRUE
+	search.allow_tick_yield = allow_tick_yield
 	search.setup_with_pass_info(requester, end_turf, max_distance, minimum_distance, pass_info, simulated_only, avoid, skip_first, diagonal_handling)
 	if(!search.start())
 		qdel(search)
@@ -334,7 +577,8 @@
 		if(!search.search_step())
 			search.early_exit()
 			return list()
-		CHECK_TICK
+		if(allow_tick_yield)
+			CHECK_TICK
 	var/list/result = search.path ? search.path.Copy() : list()
 	qdel(search)
 	return result

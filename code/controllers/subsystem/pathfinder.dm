@@ -36,9 +36,7 @@ SUBSYSTEM_DEF(pathfinder)
 	var/list/currentrun = src.currentrun
 	while(length(currentrun))
 		var/datum/pathfind/path = currentrun[length(currentrun)]
-		var/step_start = TICK_USAGE_REAL
 		var/step_ok = path.search_step()
-		path.compute_time += TICK_USAGE_REAL - step_start
 		if(!step_ok) // Something's wrong
 			path.early_exit()
 			currentrun.len--
@@ -52,9 +50,7 @@ SUBSYSTEM_DEF(pathfinder)
 	var/list/datum/pathfind/navmap/current_navmap_run = src.current_navmap_run
 	while(length(current_navmap_run))
 		var/datum/pathfind/navmap/path = current_navmap_run[length(current_navmap_run)]
-		var/step_start = TICK_USAGE_REAL
 		var/step_ok = path.search_step()
-		path.compute_time += TICK_USAGE_REAL - step_start
 		if(!step_ok)
 			path.early_exit()
 			current_navmap_run.len--
@@ -83,7 +79,7 @@ SUBSYSTEM_DEF(pathfinder)
 		currentmaps.len--
 
 /// Initiates a pathfind. Returns true if we're good, FALSE if something's failed.
-/// Uses the DLL if available, else, we cry and use our fallback.
+/// Uses the DLL if available, otherwise uses the DM navmap JPS implementation.
 /datum/controller/subsystem/pathfinder/proc/pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)
 	var/turf/start = get_turf(requester)
 	var/turf/goal = get_turf(end)
@@ -100,8 +96,8 @@ SUBSYSTEM_DEF(pathfinder)
 		catch
 			navmap_pathfinder_mark_unavailable()
 
-	var/datum/pathfind/navmap/fallback_path = navmap_pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish)
-	return !!fallback_path
+	var/datum/pathfind/navmap/navmap_jps_path = navmap_pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish)
+	return !!navmap_jps_path
 
 /// Starts a async navmap pathfinding job and returns the queued job.
 /datum/controller/subsystem/pathfinder/proc/navmap_pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)
