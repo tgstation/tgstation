@@ -535,4 +535,16 @@
 /datum/map_template/shuttle/emergency/tombstone/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_TOMBSTONE]
 
+/datum/map_template/shuttle/emergency/ark
+	suffix = "ark"
+	name = "The Ark"
+	description = "A specialized mobile zoo and research transport. The main passenger lounges are built directly alongside containment cells housing various friendly, exotic, and hostile alien specimens."
+	prerequisites = "You will need to obtain all samples for the station's DNA Vault goal."
+	admin_notes = "Packed with various fauna, including hostile and passive exotic mobs in enclosures."
+	credit_cost = CARGO_CRATE_VALUE * 25
+	occupancy_limit = "70"
+
+/datum/map_template/shuttle/emergency/ark/prerequisites_met()
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ARK]
+
 #undef EMAG_LOCKED_SHUTTLE_COST

@@ -129,6 +129,7 @@
 		to_chat(human, span_notice("You beat your wings and begin to hover gently above the ground..."))
 		human.set_resting(FALSE, TRUE)
 		human.refresh_gravity()
+		RegisterSignal(human, COMSIG_HUMAN_SPEC_STUN, PROC_REF(on_spec_stun))
 		return
 
 	MODIFY_PHYSIOLOGY(human, PHYS_COEFF_STUN, 0.5)
@@ -139,6 +140,14 @@
 	to_chat(human, span_notice("You settle gently back onto the ground..."))
 	close_wings()
 	human.refresh_gravity()
+	UnregisterSignal(human, COMSIG_HUMAN_SPEC_STUN)
+
+/obj/item/organ/wings/functional/proc/on_spec_stun(datum/source, list/amount)
+	SIGNAL_HANDLER
+	if(owner.buckled)
+		return
+	toggle_flight(owner)
+	INVOKE_ASYNC(src, PROC_REF(fly_slip), owner)
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/wings/functional/proc/open_wings()

@@ -62,6 +62,8 @@
 
 /// From /obj/item/bodypart/proc/update_limb(): (dropping_limb, is_creating)
 #define COMSIG_BODYPART_UPDATED "bodypart_updated"
+/// Also from /obj/item/bodypart/proc/update_limb(), sent to the mob: (dropping_limb, is_creating)
+#define COMSIG_CARBON_BODYPART_UPDATED "carbon_bodypart_updated"
 /// From /datum/component/butchering/create_replacement_limb(): (replacement limb)
 #define COMSIG_BODYPART_BUTCHERED "bodypart_butchered"
 
@@ -147,6 +149,9 @@
 	#define VISIBLE_NAME_FORCED 3
 ///from /mob/living/carbon/human/get_id_name; only returns if the mob has TRAIT_UNKNOWN and it's being overridden: (identity)
 #define COMSIG_HUMAN_GET_FORCED_NAME "human_get_forced_name"
+
+///from /mob/living/carbon/human/spec_stun(): (list/amount)
+#define COMSIG_HUMAN_SPEC_STUN "human_spec_stun"
 
 // Mob transformation signals
 ///Called when a human turns into a monkey, from /mob/living/carbon/proc/finish_monkeyize()

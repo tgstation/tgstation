@@ -94,7 +94,7 @@
 	var/icon/husk_icon = new(main_image.icon)
 	husk_icon.ColorTone(HUSK_COLOR_TONE)
 	main_image.icon = husk_icon
-	main_image.color = limb.husk_color
+	main_image.color = limb.draw_color
 	return main_image
 
 /**

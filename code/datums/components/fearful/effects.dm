@@ -1,5 +1,6 @@
 // Terror effect handlers
 
+/// Macro to scale a base value from 0x to ?x based on the current terror level, clamped to the base value
 #define FEAR_SCALING(base, min, max) clamp(base * (terror_buildup - min) / (max - min), 0, base)
 
 /// Causes mild jittering, scaling with current terror level
@@ -213,5 +214,28 @@
 
 /datum/terror_handler/startle/proc/speed_up()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/spooked)
+
+/// Forces you to stop, drop, and roll when on fire and sufficiently panicked
+/datum/terror_handler/force_stop_drop_roll
+	handler_type = TERROR_HANDLER_EFFECT
+
+/datum/terror_handler/force_stop_drop_roll/tick(seconds_per_tick, terror_buildup)
+	if (terror_buildup < TERROR_BUILDUP_FEAR || !owner.on_fire || !owner.can_resist())
+		return 0
+
+	if (!SPT_PROB(5 + FEAR_SCALING(10, TERROR_BUILDUP_FEAR, TERROR_BUILDUP_MAXIMUM), seconds_per_tick)) // 5% to 15% chance
+		return 0
+
+	// basically forces you to stop, drop, and roll, and prevents you from cancelling it
+	var/forced_roll_duration = FEAR_SCALING(67.5 SECONDS, TERROR_BUILDUP_FEAR, TERROR_BUILDUP_MAXIMUM)
+	owner.Immobilize(forced_roll_duration)
+	owner.Knockdown(forced_roll_duration)
+	if(owner.has_status_effect(/datum/status_effect/stop_drop_roll))
+		to_chat(owner, span_warning("You panic, and focus everything into rolling the fire out!"))
+	else
+		to_chat(owner, span_warning("You panic and immediately drop to the ground, trying to roll the fire out!"))
+		owner.apply_status_effect(/datum/status_effect/stop_drop_roll, TRUE)
+
+	return -1 * TERROR_BUILDUP_PASSIVE_DECREASE // + immediate terror decrease because you think it's helping!
 
 #undef FEAR_SCALING

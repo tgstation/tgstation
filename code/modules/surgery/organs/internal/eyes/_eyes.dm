@@ -317,7 +317,7 @@
 	if(my_head.owner && !(my_head.owner.obscured_slots & HIDEEYES))
 		overlays += get_emissive_overlays(eye_left, eye_right, my_head)
 
-	if(my_head.head_flags & HEAD_EYECOLOR)
+	if((my_head.head_flags & HEAD_EYECOLOR) && my_head.is_husked != HUSKED_ZOMBIE)
 		eye_right.color = my_head.owner?.get_right_eye_color() || eye_color_right
 		eye_left.color = my_head.owner?.get_left_eye_color() || eye_color_left
 		var/list/eyelids = get_eyelid_overlays(eye_left, eye_right, my_head)

@@ -94,7 +94,7 @@
 	if(levels <= 1 && can_help_themselves)
 		var/obj/item/organ/wings/gliders = get_organ_by_type(/obj/item/organ/wings)
 		if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
-			var/graceful_landing = HAS_TRAIT(src, TRAIT_CATLIKE_GRACE)
+			var/graceful_landing = HAS_TRAIT(src, TRAIT_CATLIKE_INSTINCT)
 
 			if(graceful_landing)
 				add_movespeed_modifier(/datum/movespeed_modifier/landed_on_feet)
@@ -113,7 +113,7 @@
 	// Smaller mobs with catlike grace can ignore damage (EG: cats)
 	var/small_surface_area = mob_size <= MOB_SIZE_SMALL
 	var/skip_knockdown = FALSE
-	if(HAS_TRAIT(src, TRAIT_CATLIKE_GRACE) && (small_surface_area || usable_legs >= 2) && body_position == STANDING_UP && can_help_themselves)
+	if(HAS_TRAIT(src, TRAIT_CATLIKE_INSTINCT) && (small_surface_area || usable_legs >= 2) && body_position == STANDING_UP && can_help_themselves)
 		. |= ZIMPACT_NO_MESSAGE|ZIMPACT_NO_SPIN
 		skip_knockdown = TRUE
 		if(small_surface_area)
@@ -529,7 +529,8 @@
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
-GAME_VERB(/mob/living, pulled, "Pull", null, atom/movable/thing_pulled as mob|obj in oview(1))
+GAME_VERB_CONTEXT(/mob/living, pulled, "Pull", "", null, /atom/movable)
+	VERB_ARG_TYPED(thing_pulled, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_VIEW, /atom/movable)
 	if(istype(thing_pulled) && Adjacent(thing_pulled))
 		start_pulling(thing_pulled)
 
@@ -553,7 +554,8 @@ GAME_VERB(/mob/living, pulled, "Pull", null, atom/movable/thing_pulled as mob|ob
 	log_message("points at [pointing_at]", LOG_EMOTE)
 	visible_message(span_infoplain("[span_name("[src]")] points at [pointing_at]."), span_notice("You point at [pointing_at]."))
 
-GAME_VERB_HIDDEN(/mob/living, succumb, "succumb", whispered as num|null)
+GAME_VERB_HIDDEN(/mob/living, succumb, "succumb")
+	VERB_ARG(whispered, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
 	if (!CAN_SUCCUMB(src))
 		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
 			if(whispered)
@@ -2374,8 +2376,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/turf/check_turf = get_step_multiz(src, direction == DOWN ? NONE : direction)
 	if(!get_step_multiz(src, direction)) //We are at the edge z-level.
 		to_chat(src, span_warning("There's nothing interesting there."))
-		return
-	else if(!istransparentturf(check_turf)) //There is no turf we can look through above us
+		return null
+	if(!istransparentturf(check_turf) && !HAS_TRAIT(src, TRAIT_XRAY_VISION)) //There is no turf we can look through above us
 		var/turf/front_hole = get_step(check_turf, dir)
 		if(istransparentturf(front_hole))
 			check_turf = front_hole
@@ -2386,7 +2388,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 					break
 		if(!istransparentturf(check_turf))
 			to_chat(src, span_warning("You can't see through the floor [direction == DOWN ? "below" : "above"] you."))
-			return
+			return null
 	return direction == DOWN ? get_step_multiz(check_turf, DOWN) : check_turf
 
 /**
@@ -3014,6 +3016,17 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return "[span_notice("You'd estimate [p_their()] fitness level at about...")] [span_boldwarning("What?!? [our_fitness_level]???")]"
 
 	return span_notice("You'd estimate [p_their()] fitness level at about [our_fitness_level]. [comparative_fitness <= 0.33 ? "Pathetic." : ""]")
+
+/// Check if bees are not hostile to us
+/mob/living/proc/bee_friendly()
+	if(mob_biotypes & MOB_PLANT)
+		return TRUE
+	var/obj/item/clothing/suit = get_item_by_slot(ITEM_SLOT_OCLOTHING)
+	var/obj/item/clothing/hat = get_item_by_slot(ITEM_SLOT_HEAD)
+	if(!istype(suit) || !istype(hat))
+		return FALSE
+	if(suit.clothing_flags & hat.clothing_flags & THICKMATERIAL)
+		return TRUE
 
 ///Performs the aftereffects of blocking a projectile.
 /mob/living/proc/block_projectile_effects()

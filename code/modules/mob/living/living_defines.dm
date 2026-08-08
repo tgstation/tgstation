@@ -273,3 +273,6 @@
 
 	/// Reference to the unconscious appearance image that appears in place of the mob to other knocked out mobs
 	VAR_FINAL/image/unconscious_appearance
+
+	/// Reduces the effects of EMPs, does NOT negate them even at very high numbers
+	var/emp_protection = EMP_PROTECTION_NONE
