@@ -237,12 +237,12 @@
 	var/allow_tick_yield = TRUE
 
 	// DM navmap_jps state. Static directional bits come from nav_pass; conditional blockers are checked live.
-	var/list/navmap_jps_open
+	var/list/datum/navmap_jps_node/navmap_jps_open
 	var/list/navmap_jps_found
 	var/navmap_jps_is_flying = FALSE
 
 /datum/pathfind/navmap/proc/setup(atom/movable/requester, atom/goal, max_distance, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, list/datum/callback/on_finish)
-	var/datum/can_pass_info/info = new /datum/can_pass_info(requester, access, no_id = !length(access))
+	var/datum/can_pass_info/info = new /datum/can_pass_info(requester, access)
 	setup_with_pass_info(requester, goal, max_distance, minimum_distance, info, simulated_only, avoid, skip_first, diagonal_handling, on_finish)
 
 /datum/pathfind/navmap/proc/setup_with_pass_info(atom/movable/requester, atom/goal, max_distance, minimum_distance, datum/can_pass_info/pass_info, simulated_only, turf/avoid, skip_first, diagonal_handling, list/datum/callback/on_finish)
@@ -381,7 +381,7 @@
 	var/simulated_only = src.simulated_only
 	var/turf/avoid = src.avoid
 	var/list/found_turfs = navmap_jps_found
-	var/list/open = navmap_jps_open
+	var/list/datum/navmap_jps_node/open = navmap_jps_open
 
 	while(TRUE)
 		if(path)
@@ -430,7 +430,7 @@
 	var/simulated_only = src.simulated_only
 	var/turf/avoid = src.avoid
 	var/list/found_turfs = navmap_jps_found
-	var/list/open = navmap_jps_open
+	var/list/datum/navmap_jps_node/open = navmap_jps_open
 
 	while(TRUE)
 		if(path)
@@ -493,7 +493,7 @@
 			return
 
 /datum/pathfind/navmap/proc/navmap_jps_search_step()
-	var/list/open = navmap_jps_open
+	var/list/datum/navmap_jps_node/open = navmap_jps_open
 	while(open.len)
 		var/datum/navmap_jps_node/current_node
 		NAVMAP_JPS_HEAP_POP(open, current_node)
