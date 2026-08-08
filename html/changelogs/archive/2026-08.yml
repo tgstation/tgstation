@@ -246,3 +246,6 @@
   - bugfix: Resetting a crate's access no longer repeatedly appends the new authority
       to the description
   - bugfix: The relic power that charges items charges items
+  levels0:
+  - bugfix: distributed neurons blob zombies no longer cost twice as much as they
+      should
