@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Resetting a crate's access no longer repeatedly appends the new authority to the description"

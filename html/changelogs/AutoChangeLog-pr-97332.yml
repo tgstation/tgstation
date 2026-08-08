@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscdel: "Voltaic heart no longer grants EMP immunity, though is still EMP immune itself."
-  - rscdel: "Voltaic heart no longer deletes itself if you remove it, though it is still otherwise rendered unusable."
