@@ -456,27 +456,20 @@ export function CommandBar() {
             return;
           }
           const query = input.toLowerCase();
-          const exactMatch = verbSuggestions.find(
-            (v) => toKebab(v.name).toLowerCase() === query,
-          );
-          if (exactMatch) {
-            selectVerb(exactMatch);
-            return;
-          }
           const prefixMatches = verbSuggestions.filter((v) =>
             toKebab(v.name).toLowerCase().startsWith(query),
           );
           if (prefixMatches.length === 1) {
             selectVerb(prefixMatches[0]);
-          } else if (prefixMatches.length > 1) {
+            return;
+          }
+          if (prefixMatches.length > 1) {
             const kebabs = prefixMatches.map((v) =>
               toKebab(v.name).toLowerCase(),
             );
             let common = kebabs[0];
-            for (let i = 1; i < kebabs.length; i++) {
-              while (!kebabs[i].startsWith(common)) {
-                common = common.slice(0, -1);
-              }
+            for (const k of kebabs) {
+              while (!k.startsWith(common)) common = common.slice(0, -1);
             }
             if (common.length > input.length) {
               setInput(common);
