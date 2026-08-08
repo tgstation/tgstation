@@ -94,7 +94,9 @@ SUBSYSTEM_DEF(pathfinder)
 				finished.Invoke(path)
 			return TRUE
 		catch
-			navmap_pathfinder_mark_unavailable()
+			for(var/datum/callback/finished as anything in on_finish)
+				finished.Invoke(list())
+			return TRUE
 
 	var/datum/pathfind/navmap/navmap_jps_path = navmap_pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish)
 	return !!navmap_jps_path

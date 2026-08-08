@@ -272,10 +272,7 @@
 	try
 		result = navmap_pathfinder_start(start, end, pass_info, NAV_IS_FLYING(pass_info), max_distance, minimum_distance, simulated_only, avoid, diagonal_handling, skip_first)
 	catch
-		navmap_pathfinder_mark_unavailable()
-		use_native = FALSE
-		navmap_jps_initialize()
-		return TRUE
+		return FALSE
 	return handle_result(result)
 
 /datum/pathfind/navmap/search_step()
@@ -290,13 +287,7 @@
 	try
 		result = navmap_pathfinder_resume(job_id, pass_info)
 	catch
-		// A DLL can disappear or fail to load after the initial probe. Restart this
-		// search in DM rather than dropping the movement request.
-		navmap_pathfinder_mark_unavailable()
-		use_native = FALSE
-		job_id = null
-		navmap_jps_initialize()
-		return navmap_jps_search_step()
+		return FALSE
 	return handle_result(result)
 
 /datum/pathfind/navmap/proc/handle_result(list/result)
@@ -538,7 +529,7 @@
 		try
 			navmap_pathfinder_cancel(job_id)
 		catch
-			navmap_pathfinder_mark_unavailable()
+			job_id = null
 	job_id = null
 	return ..()
 
@@ -547,7 +538,7 @@
 		try
 			navmap_pathfinder_cancel(job_id)
 		catch
-			navmap_pathfinder_mark_unavailable()
+			job_id = null
 	job_id = null
 	for(var/datum/navmap_jps_node/node as anything in navmap_jps_open)
 		qdel(node)
@@ -564,7 +555,7 @@
 		try
 			return navmap_pathfinder(start_turf, end_turf, pass_info, NAV_IS_FLYING(pass_info), max_distance, minimum_distance, simulated_only, avoid, diagonal_handling, skip_first)
 		catch
-			navmap_pathfinder_mark_unavailable()
+			return list()
 
 	var/datum/pathfind/navmap/search = new()
 	search.force_dm = TRUE

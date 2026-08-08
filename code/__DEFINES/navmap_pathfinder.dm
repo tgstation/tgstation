@@ -66,9 +66,6 @@
 // repeated call_ext errors from the game.
 /var/__navmap_pathfinder_available = null
 
-/proc/navmap_pathfinder_mark_unavailable()
-	__navmap_pathfinder_available = FALSE
-
 /proc/navmap_pathfinder_available()
 	if(!isnull(__navmap_pathfinder_available))
 		return __navmap_pathfinder_available
@@ -84,7 +81,7 @@
 	try
 		navmap_update(x, y, z, nav_pass)
 	catch
-		navmap_pathfinder_mark_unavailable()
+		return
 
 /proc/navmap_pathfinder_bulk_update(list/flat_list)
 	if(!length(flat_list) || !navmap_pathfinder_available())
@@ -92,4 +89,4 @@
 	try
 		navmap_bulk_update(flat_list)
 	catch
-		navmap_pathfinder_mark_unavailable()
+		return

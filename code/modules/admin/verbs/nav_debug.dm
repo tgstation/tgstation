@@ -1,3 +1,21 @@
+/// Builds a passability profile for navmap debugging.
+/proc/nav_debug_profile(profile, mob/requester)
+	var/list/access = requester?.get_access()
+	var/datum/can_pass_info/info = new /datum/can_pass_info(requester, access)
+	switch(profile)
+		if("flying")
+			info.movement_type = FLYING
+		if("table+grille")
+			info.movement_type = GROUND
+			info.pass_flags = PASSTABLE | PASSGRILLE
+		if("all-access")
+			info.movement_type = GROUND
+			info.no_id = FALSE
+			info.access = SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL))
+		else // "baseline"
+			info.movement_type = GROUND
+	return info
+
 ADMIN_VERB(navmap_inspect_turf, R_DEBUG, "Navmap: Inspect Turf", "Prints the baked navmap data for your current turf.", ADMIN_CATEGORY_DEBUG)
 	var/turf/here = get_turf(user.mob)
 	if(!here)
