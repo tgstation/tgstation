@@ -449,17 +449,19 @@ export function CommandBar() {
           if (verbSuggestions.length === 1) {
             selectVerb(verbSuggestions[0]);
           } else {
-            const kebabs = verbSuggestions.map((v) =>
-              toKebab(v.name).toLowerCase(),
-            );
-            let prefix = kebabs[0];
-            for (let i = 1; i < kebabs.length; i++) {
-              while (!kebabs[i].startsWith(prefix)) {
-                prefix = prefix.slice(0, -1);
+            const query = input.toLowerCase();
+            const prefixMatches = verbSuggestions
+              .map((v) => toKebab(v.name).toLowerCase())
+              .filter((k) => k.startsWith(query));
+            if (prefixMatches.length === 0) return;
+            let common = prefixMatches[0];
+            for (let i = 1; i < prefixMatches.length; i++) {
+              while (!prefixMatches[i].startsWith(common)) {
+                common = common.slice(0, -1);
               }
             }
-            if (prefix.length > input.length) {
-              setInput(prefix);
+            if (common.length > input.length) {
+              setInput(common);
               setSelectedIndex(0);
             }
           }
