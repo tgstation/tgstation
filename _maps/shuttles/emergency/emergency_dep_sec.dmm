@@ -691,19 +691,6 @@
 /obj/item/phone,
 /turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/escape)
-"pc" = (
-/obj/machinery/door/window/brigdoor/left/directional/south{
-	req_access = list("security");
-	name = "Evidence Storage"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/effect/turf_decal/stripes/red/line{
-	dir = 5
-	},
-/turf/open/floor/mineral/plastitanium/pod/redlight,
-/area/shuttle/escape)
 "ps" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1169,10 +1156,6 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ER" = (
-/obj/machinery/door/window/brigdoor/right/directional/south{
-	req_access = list("security");
-	name = "Evidence Storage"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -1618,6 +1601,10 @@
 	name = "evidence closet 2"
 	},
 /obj/effect/turf_decal/stripes/white/line,
+/obj/machinery/door/window/brigdoor/right/directional/north{
+	name = "Evidence Storage";
+	req_access = list("security")
+	},
 /turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/escape)
 "Xs" = (
@@ -1650,6 +1637,10 @@
 	name = "evidence closet 1"
 	},
 /obj/effect/turf_decal/stripes/white/line,
+/obj/machinery/door/window/brigdoor/left/directional/north{
+	name = "Evidence Storage";
+	req_access = list("security")
+	},
 /turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/escape)
 "YH" = (
@@ -1757,7 +1748,7 @@ gS
 BZ
 wM
 zr
-pc
+fv
 YA
 zJ
 KV
