@@ -461,7 +461,7 @@
 "jn" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Interrogation room";
-	network = list("ss13",  "shuttle_interrogation")
+	network = list("ss13",  "interrogation")
 	},
 /obj/structure/table,
 /obj/item/flashlight/lamp{
@@ -1058,11 +1058,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/computer/security/telescreen{
-	pixel_x = 0;
-	pixel_y = -32;
-	network = list("shuttle_interrogation")
-	},
+/obj/machinery/computer/security/telescreen/interrogation/directional/south,
 /turf/open/floor/mineral/plastitanium/pod/redlight,
 /area/shuttle/escape)
 "BV" = (
