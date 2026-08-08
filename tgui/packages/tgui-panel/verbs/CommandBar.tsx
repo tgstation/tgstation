@@ -12,6 +12,7 @@ import {
   adminVerbsAtom,
   clearCommandBarAtom,
   focusCommandBarAtom,
+  hotkeysAtom,
   typepathsAtom,
   type Verb,
   type VerbArg,
@@ -131,9 +132,7 @@ function useSuggestions(
   const typepathSuggestions =
     selectedVerb && isCurrentTypepath && currentToken.startsWith('/')
       ? typepaths
-          .filter((p) =>
-            p.toLowerCase().startsWith(currentToken.toLowerCase()),
-          )
+          .filter((p) => p.toLowerCase().startsWith(currentToken.toLowerCase()))
           .slice(0, 8)
       : [];
 
@@ -178,6 +177,7 @@ export function CommandBar() {
   const verbs = useAtomValue(adminVerbsAtom);
   const focusSignal = useAtomValue(focusCommandBarAtom);
   const clearSignal = useAtomValue(clearCommandBarAtom);
+  const hotkeys = useAtomValue(hotkeysAtom);
   const [input, setInput] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedVerb, setSelectedVerb] = useState<Verb | null>(null);
@@ -185,6 +185,8 @@ export function CommandBar() {
   const [lastTypepathRequest, setLastTypepathRequest] = useState('');
   const [mode, setMode] = useState<Mode>('Command');
   const inputRef = useRef<HTMLInputElement>(null);
+  const historyRef = useRef<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
 
   const verbArgs = selectedVerb?.args || [];
   const currentArgIndex = selectedVerb ? filledArgs.length : -1;
@@ -223,6 +225,12 @@ export function CommandBar() {
   }, [focusSignal]);
 
   useEffect(() => {
+    if (!hotkeys) {
+      inputRef.current?.focus();
+    }
+  }, [hotkeys]);
+
+  useEffect(() => {
     if (clearSignal > 0) {
       if (mode !== 'Command') {
         enterChatMode(mode);
@@ -231,6 +239,15 @@ export function CommandBar() {
       }
     }
   }, [clearSignal]);
+
+  const pushHistory = (entry: string) => {
+    const history = historyRef.current;
+    if (entry && history[0] !== entry) {
+      history.unshift(entry);
+      if (history.length > 10) history.pop();
+    }
+    setHistoryIndex(-1);
+  };
 
   const resetState = () => {
     setInput('');
@@ -302,6 +319,7 @@ export function CommandBar() {
       }
       argValues[verbArgs[i].name] = val;
     }
+    pushHistory(input);
     Byond.sendMessage('verbs/invoke', {
       verb_type: selectedVerb.type,
       args: argValues,
@@ -335,7 +353,22 @@ export function CommandBar() {
     return false;
   };
 
+  const heldKeysRef = useRef<Set<string>>(new Set());
+
+  const forwardKeyDown = (key: string) => {
+    if (heldKeysRef.current.has(key)) return;
+    heldKeysRef.current.add(key);
+    Byond.command(`KeyDown "${key}" 0 0 0 0`);
+  };
+
+  const forwardKeyUp = (key: string) => {
+    if (!heldKeysRef.current.has(key)) return;
+    heldKeysRef.current.delete(key);
+    Byond.command(`KeyUp "${key}" 0 0 0 0`);
+  };
+
   const blurToMap = () => {
+    if (!hotkeys) return;
     inputRef.current?.blur();
     Byond.winset('map', { focus: true });
   };
@@ -347,14 +380,49 @@ export function CommandBar() {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     switch (e.key) {
       case 'ArrowDown':
-        if (!hasSuggestions) return;
-        e.preventDefault();
-        setSelectedIndex((i) => Math.min(i + 1, allSuggestions.length - 1));
+        if (e.ctrlKey) {
+          e.preventDefault();
+          if (hasSuggestions) {
+            setSelectedIndex((i) => Math.min(i + 1, allSuggestions.length - 1));
+          } else if (historyIndex > 0) {
+            const newIndex = historyIndex - 1;
+            setHistoryIndex(newIndex);
+            handleChange(historyRef.current[newIndex]);
+          } else if (historyIndex === 0) {
+            setHistoryIndex(-1);
+            handleChange('');
+          }
+        } else if (!hotkeys) {
+          e.preventDefault();
+          forwardKeyDown('South');
+        }
         return;
       case 'ArrowUp':
-        if (!hasSuggestions) return;
-        e.preventDefault();
-        setSelectedIndex((i) => Math.max(i - 1, 0));
+        if (e.ctrlKey) {
+          e.preventDefault();
+          if (hasSuggestions) {
+            setSelectedIndex((i) => Math.max(i - 1, 0));
+          } else if (historyIndex < historyRef.current.length - 1) {
+            const newIndex = historyIndex + 1;
+            setHistoryIndex(newIndex);
+            handleChange(historyRef.current[newIndex]);
+          }
+        } else if (!hotkeys) {
+          e.preventDefault();
+          forwardKeyDown('North');
+        }
+        return;
+      case 'ArrowLeft':
+        if (!hotkeys && !e.ctrlKey) {
+          e.preventDefault();
+          forwardKeyDown('West');
+        }
+        return;
+      case 'ArrowRight':
+        if (!hotkeys && !e.ctrlKey) {
+          e.preventDefault();
+          forwardKeyDown('East');
+        }
         return;
       case ' ':
         if (inQuotedArg) return;
@@ -374,6 +442,7 @@ export function CommandBar() {
         if (!selectedVerb && verbSuggestions.length > 0) {
           const verb = verbSuggestions[selectedIndex];
           if (verb.args.length === 0) {
+            pushHistory(input);
             Byond.sendMessage('verbs/invoke', {
               verb_type: verb.type,
               args: {},
@@ -394,7 +463,22 @@ export function CommandBar() {
     }
   };
 
+  const ARROW_TO_BYOND: Record<string, string> = {
+    ArrowUp: 'North',
+    ArrowDown: 'South',
+    ArrowLeft: 'West',
+    ArrowRight: 'East',
+  };
+
+  const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
+    const byondKey = ARROW_TO_BYOND[e.key];
+    if (byondKey) {
+      forwardKeyUp(byondKey);
+    }
+  };
+
   const handleChange = (value: string) => {
+    setHistoryIndex(-1);
     if (!selectedVerb) {
       value = value.replaceAll(' ', '');
     }
@@ -517,6 +601,7 @@ export function CommandBar() {
           placeholder={placeholder}
           onChange={(e) => handleChange(e.target.value)}
           onKeyDown={handleKeyDown}
+          onKeyUp={handleKeyUp}
         />
       </div>
       <button

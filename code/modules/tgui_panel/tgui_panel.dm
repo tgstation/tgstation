@@ -87,6 +87,7 @@
 			),
 		))
 		send_player_info()
+		send_hotkey_mode()
 		return TRUE
 
 	if(type == "audio/setAdminMusicVolume")
@@ -255,3 +256,6 @@
 			"assets" = webroot_asset_urls,
 		)
 	window.send_message("metadata", metadata)
+
+/datum/tgui_panel/proc/send_hotkey_mode()
+	window.send_message("verbs/hotkey_mode", list("hotkeys" = client.hotkeys))
