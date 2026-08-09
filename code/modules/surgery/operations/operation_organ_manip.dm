@@ -262,9 +262,8 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		// Formats the text as "inserts the banana" or "inserts lungs"
-		span_notice("You successfully insert [isorgan(tool) ? tool.name : tool] into [FORMAT_LIMB_OWNER(limb)]."),
-		span_notice("[surgeon] successfully inserts [isorgan(tool) ? tool.name : tool] into [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("You successfully insert [tool] into [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully inserts [tool] into [FORMAT_LIMB_OWNER(limb)]."),
 		span_notice("[surgeon] successfully inserts something into [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "Your [limb.plaintext_zone] throbs with pain as your new [organ.name] comes to life!")
