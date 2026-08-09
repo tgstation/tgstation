@@ -1,3 +1,5 @@
+/// Applied to an organ, makes it take on the appearance of an item
+/// If the item <-> organ relationship is broken, the organ will be destroyed
 /datum/component/arbitrary_item_organ
 	/// The item our organ is representing
 	var/obj/item/base_item
@@ -39,7 +41,7 @@
 	qdel(parent)
 
 /// Any attempt to heal the organ should damage cap it again
-/datum/component/arbitrary_item_organ/proc/break_again(obj/item/organ/organ, damage_amount)
+/datum/component/arbitrary_item_organ/proc/break_again(obj/item/organ/organ, damage_amount, ...)
 	SIGNAL_HANDLER
 	if(damage_amount < INFINITY)
 		organ.apply_organ_damage(INFINITY)

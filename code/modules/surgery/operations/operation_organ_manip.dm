@@ -191,8 +191,7 @@
 			display_results(
 				surgeon,
 				limb.owner,
-				// Formats the text as "removes the banana" or "removes lungs"
-				span_notice("You begin to remove [(organ.organ_flags & ORGAN_FAKE) ? organ : organ.name] from [FORMAT_LIMB_OWNER(limb)]..."),
+				span_notice("You begin to remove [organ] from [FORMAT_LIMB_OWNER(limb)]..."),
 				span_notice("[surgeon] begins to remove [(organ.organ_flags & ORGAN_FAKE) ? organ : organ.name] from [limb.owner || limb]."),
 				span_notice("[surgeon] begins to remove something from [limb.owner || limb]."),
 			)
@@ -202,8 +201,7 @@
 			display_results(
 				surgeon,
 				limb.owner,
-				// Formats the text as "inserts the banana" or "inserts lungs"
-				span_notice("You begin to insert [isorgan(tool) ? tool.name : tool] into [FORMAT_LIMB_OWNER(limb)]..."),
+				span_notice("You begin to insert [tool] into [FORMAT_LIMB_OWNER(limb)]..."),
 				span_notice("[surgeon] begins to insert [isorgan(tool) ? tool.name : tool] into [limb.owner || limb]."),
 				span_notice("[surgeon] begins to insert something into [limb.owner || limb]."),
 			)
@@ -224,9 +222,8 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		// Formats the text as "extracts the banana" or "extracts lungs"
-		span_notice("You successfully extract [(organ.organ_flags & ORGAN_FAKE) ? organ : organ.name] from [FORMAT_LIMB_OWNER(limb)]."),
-		span_notice("[surgeon] successfully extracts [(organ.organ_flags & ORGAN_FAKE) ? organ : organ.name] from [FORMAT_LIMB_OWNER(limb)]!"),
+		span_notice("You successfully extract [organ] from [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully extracts [organ] from [FORMAT_LIMB_OWNER(limb)]!"),
 		span_notice("[surgeon] successfully extracts something from [FORMAT_LIMB_OWNER(limb)]!"),
 	)
 	display_pain(limb.owner, "Your [limb.plaintext_zone] throbs with pain, you can't feel your [organ.name] anymore!")
