@@ -72,8 +72,6 @@ function sendAction(action: string, payload?: Record<string, unknown>) {
   Byond.sendMessage('action', { action, ...payload });
 }
 
-// --- APNG flick system ---
-
 async function getApngDuration(url: string): Promise<number> {
   try {
     const res = await fetch(url);
@@ -216,10 +214,17 @@ function TraitFeedback({ text }: { text: string }) {
   );
 }
 
+const SHUTTER_TRAVEL_PX = 143;
 const SHUTTER_MOVE_MS = 400;
 const SHUTTER_WAIT_MS = 200;
 const EASE_OUT = 'cubic-bezier(0.33, 1, 0.68, 1)';
 const EASE_IN = 'cubic-bezier(0.32, 0, 0.67, 0)';
+
+function getLobbyScale(): number {
+  return parseFloat(
+    document.documentElement.style.getPropertyValue('--lobby-scale') || '1',
+  );
+}
 
 export function LobbyMenu() {
   const [state, dispatch] = useReducer(lobbyReducer, DEFAULT_STATE);
@@ -280,7 +285,7 @@ export function LobbyMenu() {
       setTvActive(false);
 
       if (shutter) {
-        const dist = 143;
+        const dist = SHUTTER_TRAVEL_PX * getLobbyScale();
 
         await shutter.animate(
           [
@@ -312,7 +317,7 @@ export function LobbyMenu() {
       playExpandSound();
 
       if (shutter) {
-        const dist = 143;
+        const dist = SHUTTER_TRAVEL_PX * getLobbyScale();
 
         shutter.animate(
           [
@@ -328,7 +333,7 @@ export function LobbyMenu() {
       await new Promise((r) => setTimeout(r, SHUTTER_MOVE_MS));
 
       if (shutter) {
-        const dist = 143;
+        const dist = SHUTTER_TRAVEL_PX * getLobbyScale();
 
         await new Promise((r) => setTimeout(r, SHUTTER_WAIT_MS));
 
