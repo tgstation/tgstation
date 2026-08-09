@@ -52,6 +52,14 @@
 		return null
 	return name
 
+/// Default stuff included in this blood type's blood data
+/// Return a list of key/value pairs for blood data, or null if no additional default data
+/datum/blood_type/proc/get_default_blood_data()
+	return list(
+		BLOOD_DATA_TYPE = src,
+		BLOOD_DATA_DNA = dna_string,
+	)
+
 /// Returns blood color or color matrix
 /// Useful when you want to have a blood color with values out of normal hex bounds for that acidic look
 /// set dynamic to TRUE to redo the matrix each time (e.g. for clown blood dynamically shifting each time)
@@ -253,10 +261,13 @@
 	color = /datum/reagent/consumable/liquidelectricity::color
 	reagent_type = /datum/reagent/consumable/liquidelectricity
 
+/datum/blood_type/ethereal/get_default_blood_data()
+	. = ..()
+	// Unenriched by default to prevent Ethereals from going crazy with syringe guns
+	.[BLOOD_DATA_ENRICHED_ETHEREAL] = FALSE
+
 /datum/blood_type/ethereal/get_emissive_alpha(atom/source, is_worn = FALSE)
-	if (is_worn)
-		return 102
-	return 125
+	return is_worn ? 102 : 125
 
 /datum/blood_type/ethereal/set_up_blood(obj/effect/decal/cleanable/blood/blood, new_splat = FALSE)
 	. = ..()
