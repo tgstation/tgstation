@@ -53,22 +53,30 @@
 #define BLOOD_TYPE_XENO "X*"
 #define BLOOD_TYPE_H2O "H2O"
 #define BLOOD_TYPE_SNAIL "S"
-#define BLOOD_TYPE_OTHER "Other" // for medical records only if none of the "standard" bloodtypes matches the patient.
 
-/// all selectable blood types for medical records
-GLOBAL_LIST_INIT(medical_record_blood_types, list(
-	BLOOD_TYPE_A_PLUS,
-	BLOOD_TYPE_A_MINUS,
-	BLOOD_TYPE_B_PLUS,
-	BLOOD_TYPE_B_MINUS,
-	BLOOD_TYPE_AB_PLUS,
-	BLOOD_TYPE_AB_MINUS,
-	BLOOD_TYPE_O_PLUS,
-	BLOOD_TYPE_O_MINUS,
-	BLOOD_TYPE_LIZARD,
-	BLOOD_TYPE_ETHEREAL,
-	BLOOD_TYPE_OTHER,
-))
+GLOBAL_LIST_EMPTY(roundstart_blood_types)
+
+/// gets a list of all blood types available to roundstart species for use in medical records
+/proc/get_roundstart_blood_types()
+	. = list()
+	for(var/species_type in subtypesof(/datum/species))
+		var/datum/species/species = GLOB.species_prototypes[species_type]
+		if(!species.check_roundstart_eligible())
+			continue
+		if(species.exotic_bloodtype)
+			. |= species.exotic_bloodtype
+		else
+			. |= list(
+				BLOOD_TYPE_A_PLUS,
+				BLOOD_TYPE_A_MINUS,
+				BLOOD_TYPE_B_PLUS,
+				BLOOD_TYPE_B_MINUS,
+				BLOOD_TYPE_AB_PLUS,
+				BLOOD_TYPE_AB_MINUS,
+				BLOOD_TYPE_O_PLUS,
+				BLOOD_TYPE_O_MINUS,
+			)
+	. |= "Other"
 
 // Blood exposure behavior flag defines
 /// Add our DNA to turfs/mobs/items, does not correlate with adding decals/overlays

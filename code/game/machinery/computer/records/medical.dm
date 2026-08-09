@@ -81,7 +81,7 @@
 	data["max_age"] = AGE_MAX
 	data["physical_statuses"] = PHYSICAL_STATUSES
 	data["mental_statuses"] = MENTAL_STATUSES
-	data["blood_types"] = GLOB.medical_record_blood_types
+	data["blood_types"] = get_roundstart_blood_types()
 	return data
 
 /obj/machinery/computer/records/medical/ui_act(action, list/params, datum/tgui/ui)
@@ -150,7 +150,7 @@
 
 		if("set_blood_type")
 			var/blood_type = params["blood_type"]
-			if(!blood_type || !(blood_type in GLOB.medical_record_blood_types))
+			if(!blood_type || !(blood_type in get_roundstart_blood_types()))
 				return FALSE
 
 			target.blood_type = blood_type
@@ -164,7 +164,7 @@
 		return FALSE
 
 	target.age = 18
-	target.blood_type = pick(GLOB.medical_record_blood_types)
+	target.blood_type = pick(get_roundstart_blood_types())
 	target.dna_string = "Unknown"
 	target.gender = "Unknown"
 	target.major_disabilities = ""
