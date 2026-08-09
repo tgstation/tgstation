@@ -1,4 +1,4 @@
-/// Queues and manages JPS/navmap pathfinding steps
+/// Queues and manages navmap pathfinding steps
 SUBSYSTEM_DEF(pathfinder)
 	name = "Pathfinder"
 	priority = FIRE_PRIORITY_PATHFINDING
@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(pathfinder)
 		currentmaps.len--
 
 /// Initiates a pathfind. Returns true if we're good, FALSE if something's failed.
-/// Uses the DLL if available, otherwise uses the DM navmap JPS implementation.
+/// Uses the DLL if available, otherwise uses the DM navmap A* implementation.
 /datum/controller/subsystem/pathfinder/proc/pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)
 	var/turf/start = get_turf(requester)
 	var/turf/goal = get_turf(end)
@@ -98,8 +98,8 @@ SUBSYSTEM_DEF(pathfinder)
 				finished.Invoke(list())
 			return TRUE
 
-	var/datum/pathfind/navmap/navmap_jps_path = navmap_pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish)
-	return !!navmap_jps_path
+	var/datum/pathfind/navmap/astar_path = navmap_pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish)
+	return !!astar_path
 
 /// Starts a async navmap pathfinding job and returns the queued job.
 /datum/controller/subsystem/pathfinder/proc/navmap_pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)
