@@ -162,21 +162,30 @@
 /datum/design/ethereal_stomach
 	name = "Biological Battery"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/consumable/liquidelectricity/enriched = 20)
+	reagents_list = list(
+		/datum/reagent/medicine/c2/synthflesh = 10,
+		/datum/reagent/consumable/liquidelectricity = 20,
+	)
 	build_path = /obj/item/organ/stomach/ethereal
 	category = list(SPECIES_ETHEREAL)
 
 /datum/design/ethereal_tongue
 	name = "Electrical Discharger"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/consumable/liquidelectricity/enriched = 20)
+	reagents_list = list(
+		/datum/reagent/medicine/c2/synthflesh = 10,
+		/datum/reagent/consumable/liquidelectricity = 20,
+	)
 	build_path = /obj/item/organ/tongue/ethereal
 	category = list(SPECIES_ETHEREAL)
 
 /datum/design/ethereal_lungs
 	name = "Aeration Reticulum"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/consumable/liquidelectricity/enriched = 20)
+	reagents_list = list(
+		/datum/reagent/medicine/c2/synthflesh = 10,
+		/datum/reagent/consumable/liquidelectricity = 20,
+	)
 	build_path = /obj/item/organ/lungs/ethereal
 	category = list(SPECIES_ETHEREAL)
 

@@ -438,9 +438,7 @@
 	if (!blood_type || !can_bleed())
 		return
 
-	var/blood_data = list()
-	blood_data["blood_type"] = blood_type
-	blood_data["blood_DNA"] = blood_type.dna_string
+	var/list/blood_data = blood_type.get_default_blood_data()
 
 	if (reagents)
 		var/list/temp_chem = list()
@@ -499,7 +497,7 @@
 	blood_data["gender"] = gender
 	blood_data["real_name"] = real_name
 	if (dna)
-		blood_data["blood_DNA"] = dna.unique_enzymes
+		blood_data[BLOOD_DATA_DNA] = dna.unique_enzymes
 		blood_data["features"] = dna.features
 
 	blood_data["quirks"] = list()

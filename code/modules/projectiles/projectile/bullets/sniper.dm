@@ -54,6 +54,7 @@
 
 /obj/projectile/bullet/p50/incendiary
 	name =".50 BMG incendiary bullet"
+	icon_state = "infernoshot"
 	damage_type = BURN
 	paralyze = 0
 	dismemberment = 0

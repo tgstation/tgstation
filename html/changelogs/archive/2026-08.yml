@@ -250,12 +250,22 @@
   - bugfix: distributed neurons blob zombies no longer cost twice as much as they
       should
 2026-08-09:
+  Aliceee2ch:
+  - bugfix: Removed AI tracking beacon from Ripley subcategory.
+  ArcaneMusic:
+  - code_imp: We now unit test to confirm that crates, and crate subtypes sell for
+      their expected value. Also checks for exports whose export_type is explicitly
+      called out in excluded types.
+  - bugfix: Coffins and various crate subtypes now sell again. For the first time
+      in 4 years.
   JohnFulpWillard:
   - bugfix: Legacy chat's command bar works nicely again.
   LT3:
   - bugfix: Tram controls now work properly after deconstruction/reconstruction
   - bugfix: Tram control circuitboards now remember their tram ID, change it with
       a multitool
+  PapaMichael:
+  - bugfix: Runtime no longer looks calico when held in-hand.
   QuiteLiterallyAnything:
   - bugfix: The academy gateway's immovable rod will no longer constantly show itself
       to ghosts.
@@ -263,6 +273,11 @@
   SmArtKar:
   - bugfix: Fixed paper being unreadable and other light-based interactions being
       broken
+  - bugfix: OverFlayer should now correctly display weather related planes
+  Swan:
+  - bugfix: Fixes round lobby timers not working at all.
+  - bugfix: Fixes the lobby time not being precise when joining a freshly started,
+      empty server
   lelandkemble:
   - bugfix: Gluon frag grenades now output radiation, like they've been trying and
       failing to do for at least 4 years.
