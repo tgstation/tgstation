@@ -1217,7 +1217,7 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 	SIGNAL_HANDLER
 	return
 
-/mob/proc/update_health_hud()
+/mob/proc/update_health_hud(healthpercent)
 	return
 
 /// Changes the stamina HUD based on new information

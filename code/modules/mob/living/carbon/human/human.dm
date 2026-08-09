@@ -689,7 +689,7 @@
 	if(locked_record)
 		locked_record.name = newname
 
-/mob/living/carbon/human/update_health_hud()
+/mob/living/carbon/human/update_health_hud(healthpercent)
 	if(!client || !hud_used)
 		return
 	// Updates the health bar, also sends signal

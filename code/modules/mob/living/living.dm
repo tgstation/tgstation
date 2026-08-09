@@ -834,9 +834,10 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 	update_stamina()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
-/mob/living/update_health_hud()
+/mob/living/update_health_hud(healthpercent)
 	var/severity = 0
-	var/healthpercent = (health/maxHealth) * 100
+	if(!healthpercent)
+		healthpercent = (health/maxHealth) * 100
 	var/atom/movable/screen/healthdoll/living/livingdoll = hud_used?.screen_objects[HUD_MOB_HEALTHDOLL]
 	if(istype(livingdoll)) //to really put you in the boots of a simplemob
 		switch(healthpercent)
