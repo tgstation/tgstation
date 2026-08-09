@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(augury)
 				observers_given_action[i] = TRUE
 	else
 		for(var/mob/dead/observer/key, value in observers_given_action)
-			if(value && isobserver(key))
+			if(value)
 				for(var/datum/action/innate/augury/augury_action in key.actions)
 					qdel(augury_action)
 			observers_given_action -= key
