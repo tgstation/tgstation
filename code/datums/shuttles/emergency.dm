@@ -571,9 +571,8 @@
 /datum/map_template/shuttle/emergency/departmental/civil
 	suffix = "dep_civ"
 	name = "Assistants Emergency Shuttle"
-	description = "A shuttle designed to satisfy assistants' wishes. Has Maintenance Room, instead of Storage. \
-	Surprisingly, it isn't broken."
-	admin_notes = "Just a shuttle with maintenance room instead of storage."
+	description = "A shuttle designed to satisfy assistants' wishes. Converted into Maintenance Rooms."
+	admin_notes = "Maintenance Shuttle."
 	credit_cost = CARGO_CRATE_VALUE * 5.5
 	who_can_purchase = list(ACCESS_CAPTAIN)
 	department_type = /datum/job_department/assistant
