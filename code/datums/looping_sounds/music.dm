@@ -9,7 +9,7 @@
 	use_reverb = FALSE
 	sound_channel = CHANNEL_JUKEBOX
 	extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
-	falloff_exponent = 6
+	falloff_exponent = 1
 	use_sound_tokens = TRUE
 
 /datum/looping_sound/boombox/rock
