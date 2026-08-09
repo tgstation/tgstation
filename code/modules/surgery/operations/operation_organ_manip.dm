@@ -192,7 +192,7 @@
 				surgeon,
 				limb.owner,
 				span_notice("You begin to remove [organ] from [FORMAT_LIMB_OWNER(limb)]..."),
-				span_notice("[surgeon] begins to remove [(organ.organ_flags & ORGAN_FAKE) ? organ : organ.name] from [limb.owner || limb]."),
+				span_notice("[surgeon] begins to remove [organ] from [limb.owner || limb]."),
 				span_notice("[surgeon] begins to remove something from [limb.owner || limb]."),
 			)
 			display_pain(limb.owner, "You feel a tugging sensation in your [limb.plaintext_zone]!")
