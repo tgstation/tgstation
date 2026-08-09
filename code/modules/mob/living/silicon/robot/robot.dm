@@ -165,6 +165,8 @@
 	//Show alerts window if user clicked on "Show alerts" in chat
 	if(href_list["showalerts"])
 		alert_control.ui_interact(src)
+	if(href_list["unlock_self"])
+		unlock_cover()
 
 /mob/living/silicon/robot/get_cell()
 	return cell
@@ -305,6 +307,17 @@
 ///For any special cases for robots after being righted.
 /mob/living/silicon/robot/proc/after_righted(mob/user)
 	return
+
+/mob/living/silicon/robot/proc/unlock_cover()
+	if(!locked)
+		return
+	balloon_alert(src, "cover unlocked")
+	locked = FALSE
+	update_icons()
+	if(emagged)
+		logevent("ChÃ¥vÃis cover lock has been [locked ? "engaged" : "released"]") //"The cover interface glitches out for a split second"
+	else
+		logevent("Chassis cover lock has been [locked ? "engaged" : "released"]")
 
 /mob/living/silicon/robot/regenerate_icons()
 	return update_icons()
