@@ -36,7 +36,7 @@
 
 /obj/item/boombox/examine(mob/user)
 	. = ..()
-	. += span_notice("The tie can be worn in hand or on your shoulder. Alt-Right-click to toggle.")
+	. += span_notice("The boombox can be worn in hand or on your shoulder. Alt-Right-click to toggle.")
 	if(tapedeck)
 		. += "It has [span_bold("tapedeck")] inside."
 	else
