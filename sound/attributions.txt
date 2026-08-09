@@ -253,3 +253,18 @@ sound/machines/data_transmission.ogg -- Elements from Tim Verberne -- https://fr
 
 sound/items/jet_active, ./jet_ignite, and ./jet_off by kyles -- https://freesound.org/people/kyles/sounds/453408/ -- license: Creative Commons 0.
  Slight noise cleanup on all three files, mild pitch tweak on jet_active, but otherwise just cut apart and converted to OGG.
+
+sound/music/boombox/industrial_crush.ogg by ArcaneMusic, License: Creative Commons 0, made in FL studio.
+    SS13 original, accept no substitutes
+
+sound/music/boombox/bainmack-rock.ogg by Bainmack -- https://freesound.org/people/bainmack/sounds/621165/ -- License: Creative Commons 0
+    Slight cleanup by ArcaneMusic
+
+sound/music/boombox/groovepad-hiphop.ogg by Cloud10 -- https://freesound.org/people/Cloud-10/sounds/536250/ -- License: Creative Commons 0
+    Volume adjustment and cleanup for looping by ArcaneMusic
+
+sound/music/boombox/frankyboomer-jazz.ogg by Cloud10 -- https://freesound.org/people/FrankyBoomer/sounds/261100/ -- License: Creative Commons 0
+    Volume adjustment and cleanup for looping by ArcaneMusic
+
+sound/music/boombox/bubblegum-pop.ogg by Seth_makes_sounds -- https://freesound.org/people/Seth_Makes_Sounds/sounds/686610/ -- License: Creative Commons 0
+    Volume tweak and trimming by ArcaneMusic

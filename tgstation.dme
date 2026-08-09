@@ -2869,6 +2869,8 @@
 #include "code\game\objects\items\devices\taperecorder.dm"
 #include "code\game\objects\items\devices\traitordevices.dm"
 #include "code\game\objects\items\devices\transfer_valve.dm"
+#include "code\game\objects\items\devices\boombox\boombox.dm"
+#include "code\game\objects\items\devices\boombox\music_tapes.dm"
 #include "code\game\objects\items\devices\radio\electropack.dm"
 #include "code\game\objects\items\devices\radio\encryptionkey.dm"
 #include "code\game\objects\items\devices\radio\headset.dm"
