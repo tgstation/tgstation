@@ -36717,12 +36717,11 @@
 "iZt" = (
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm/directional/west,
-/obj/item/reagent_containers/cup/beaker/large,
-/obj/item/reagent_containers/cup/beaker,
-/obj/item/reagent_containers/dropper,
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "iZw" = (
@@ -40536,11 +40535,17 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "jUo" = (
-/obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /obj/item/radio/intercom/directional/north,
+/obj/structure/table/reinforced,
+/obj/item/folder{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/folder/white,
+/obj/item/pen,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "jUx" = (
@@ -53682,12 +53687,18 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "nlK" = (
-/obj/machinery/rnd/production/protolathe/department/science,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /obj/structure/sign/departments/science/alt/directional/east,
 /obj/machinery/digital_clock/directional/north,
+/obj/structure/table/reinforced,
+/obj/item/experi_scanner{
+	pixel_x = -4
+	},
+/obj/item/experi_scanner{
+	pixel_x = 4
+	},
 /turf/open/floor/iron,
 /area/station/science/lab)
 "nlS" = (
@@ -60594,14 +60605,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
 "oZz" = (
-/obj/structure/table/reinforced,
-/obj/item/experi_scanner{
-	pixel_x = 4
-	},
-/obj/item/experi_scanner{
-	pixel_x = -4
-	},
 /obj/effect/turf_decal/siding/purple/end,
+/obj/machinery/rnd/production/protolathe/department/science,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "oZL" = (
@@ -66772,7 +66777,6 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/lawoffice)
 "qvK" = (
-/obj/machinery/rnd/production/circuit_imprinter/department/science,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -66790,6 +66794,10 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker,
+/obj/item/reagent_containers/dropper,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "qvW" = (
@@ -78291,7 +78299,6 @@
 	},
 /area/station/medical/morgue)
 "tpg" = (
-/obj/structure/table/reinforced,
 /obj/machinery/button/door/directional/north{
 	id = "rndlab1";
 	name = "Desk Shutters"
@@ -78299,12 +78306,7 @@
 /obj/effect/turf_decal/siding/purple/end{
 	dir = 1
 	},
-/obj/item/folder{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/folder/white,
-/obj/item/pen,
+/obj/machinery/rnd/destructive_analyzer,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "tpr" = (
@@ -79096,15 +79098,13 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos/hfr_room)
 "tzc" = (
-/obj/structure/table/reinforced,
-/obj/machinery/cell_charger,
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
-/obj/item/stock_parts/power_store/cell/high,
+/obj/machinery/rnd/production/circuit_imprinter/department/science,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "tzf" = (
