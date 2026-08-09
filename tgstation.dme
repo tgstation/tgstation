@@ -1255,6 +1255,7 @@
 #include "code\datums\components\appearance_on_aggro.dm"
 #include "code\datums\components\aquarium.dm"
 #include "code\datums\components\aquarium_content.dm"
+#include "code\datums\components\arbitrary_item_organ.dm"
 #include "code\datums\components\area_based_godmode.dm"
 #include "code\datums\components\area_sound_manager.dm"
 #include "code\datums\components\areabound.dm"

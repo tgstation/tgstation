@@ -264,6 +264,8 @@
 	limb.owner?.synchronize_bodytypes()
 	limb.owner?.synchronize_bodyshapes()
 
+	SEND_SIGNAL(src, COMSIG_ORGAN_BODYPART_REMOVED, limb)
+
 	if(!bodypart_overlay)
 		return
 
@@ -278,6 +280,8 @@
 		get_greyscale_color_from_draw_color()
 	else
 		color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
+
+
 
 ///Here we define how draw_color from the bodypart overlay sets the greyscale colors of organs that use GAGS
 /obj/item/organ/proc/get_greyscale_color_from_draw_color()
