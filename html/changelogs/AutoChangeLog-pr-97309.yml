@@ -1,0 +1,5 @@
+author: "QuiteLiterallyAnything"
+delete-after: True
+changes:
+  - bugfix: "The academy gateway's immovable rod will no longer constantly show itself to ghosts."
+  - code_imp: "The augury subsystem has been cleaned up."
