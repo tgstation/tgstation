@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Tram controls now work properly after deconstruction/reconstruction"
-  - bugfix: "Tram control circuitboards now remember their tram ID, change it with a multitool"

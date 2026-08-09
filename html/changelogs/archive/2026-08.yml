@@ -252,6 +252,18 @@
 2026-08-09:
   JohnFulpWillard:
   - bugfix: Legacy chat's command bar works nicely again.
+  LT3:
+  - bugfix: Tram controls now work properly after deconstruction/reconstruction
+  - bugfix: Tram control circuitboards now remember their tram ID, change it with
+      a multitool
+  QuiteLiterallyAnything:
+  - bugfix: The academy gateway's immovable rod will no longer constantly show itself
+      to ghosts.
+  - code_imp: The augury subsystem has been cleaned up.
+  SmArtKar:
+  - bugfix: Fixed paper being unreadable and other light-based interactions being
+      broken
   lelandkemble:
   - bugfix: Gluon frag grenades now output radiation, like they've been trying and
       failing to do for at least 4 years.
+  - balance: Conveyor belts don't rotate you
