@@ -90,7 +90,7 @@
 	flags_inv = HIDEGLOVES | HIDEJUMPSUIT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	resistance_flags = NONE
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/hooded/cultrobes/hardened/Initialize(mapload)
 	. = ..()
@@ -172,7 +172,7 @@
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	flash_protect = FLASH_PROTECTION_WELDER
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	resistance_flags = NONE
+	resistance_flags = FIRE_PROOF
 
 /**
  * Shielded armor

@@ -130,6 +130,7 @@ Slimecrossing Armor
 	item_flags = IMMUTABLE_SLOW
 	slowdown = 4
 	emp_protection = EMP_PROTECTION_MODERATE
+	resistance_flags = FIRE_PROOF
 	var/hit_reflect_chance = 40
 
 /obj/item/clothing/suit/armor/heavy/adamantine/Initialize(mapload)

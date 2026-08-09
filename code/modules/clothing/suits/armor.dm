@@ -12,7 +12,6 @@
 	strip_delay = 6 SECONDS
 	equip_delay_other = 4 SECONDS
 	max_integrity = 250
-	resistance_flags = NONE
 	armor_type = /datum/armor/suit_armor
 
 /datum/armor/suit_armor
@@ -145,6 +144,7 @@
 	icon_state = "cuirass"
 	inhand_icon_state = "armor"
 	dog_fashion = null
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/armor/vest/cuirass/Initialize(mapload)
 	. = ..()
@@ -205,7 +205,6 @@
 	cold_protection = CHEST|GROIN|ARMS|HANDS
 	heat_protection = CHEST|GROIN|ARMS|HANDS
 	strip_delay = 7 SECONDS
-	resistance_flags = FLAMMABLE
 	dog_fashion = null
 
 /obj/item/clothing/suit/armor/vest/warden/alt
@@ -222,7 +221,6 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS|HANDS
 	heat_protection = CHEST|GROIN|ARMS|HANDS
-	resistance_flags = FLAMMABLE
 	dog_fashion = null
 
 /obj/item/clothing/suit/armor/vest/secjacket/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
@@ -402,7 +400,6 @@
 	name = "detective's flak vest"
 	desc = "An armored vest with a detective's badge on it."
 	icon_state = "detective-armor"
-	resistance_flags = FLAMMABLE
 	dog_fashion = null
 
 /obj/item/clothing/suit/armor/vest/det_suit/Initialize(mapload)
@@ -526,13 +523,15 @@
 	desc = "A classic suit of plate armour, highly effective at stopping melee attacks."
 	icon_state = "knight_green"
 	inhand_icon_state = null
+	resistance_flags = FIRE_PROOF
 	allowed = list(
 		/obj/item/banner,
 		/obj/item/claymore,
 		/obj/item/nullrod,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
-		)
+	)
+
 /obj/item/clothing/suit/armor/riot/knight/init_rustle_component()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
 
@@ -574,7 +573,6 @@
 	strip_delay = 6 SECONDS
 	equip_delay_other = 4 SECONDS
 	max_integrity = 200
-	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/vest_durathread
 	dog_fashion = null
 
@@ -640,6 +638,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/armor/elder_atmosian/Initialize(mapload)
 	. = ..()
@@ -747,6 +746,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	clothing_flags = THICKMATERIAL
 	slowdown = 0.8
+	resistance_flags = FIRE_PROOF
 
 /datum/armor/armor_warlord
 	melee = 70
