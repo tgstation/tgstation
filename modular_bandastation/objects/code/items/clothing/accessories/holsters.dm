@@ -16,6 +16,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	above_suit = FALSE
 	icon_state_is_worn = FALSE
+	attachment_slot = NONE
 	var/check_covering = TRUE
 
 /obj/item/clothing/accessory/holster/proc/PopulateContents()

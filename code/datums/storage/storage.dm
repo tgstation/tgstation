@@ -128,6 +128,8 @@
 
 	/// Switch this off if you want to handle click_alt in the parent atom
 	var/click_alt_open = TRUE
+	// BANDASTATION ADD: Fix for inheritance of accessory storage name by uniform
+	var/obj/item/clothing/accessory/storage_source
 
 	/// Stops updates from being called on insert or remove, useful for mass insertions/removals - just don't forget to update it manually afterwards
 	VAR_FINAL/block_insert_remove_updates = FALSE
@@ -584,6 +586,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * * override - skip feedback, only do animation check
  */
 /datum/storage/proc/item_insertion_feedback(mob/user, obj/item/thing, override = FALSE)
+	var/atom/name_source = parent
+	if(storage_source)
+		name_source = storage_source
 	if(animated)
 		animate_parent()
 
@@ -597,11 +602,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		playsound(parent, rustle_sound, 50, rustle_vary, -5)
 
 	if(!silent_for_user)
-		to_chat(user, span_notice("Вы помещаете [thing.declent_ru(ACCUSATIVE)] [insert_preposition] [parent.declent_ru(ACCUSATIVE)]."))
+		to_chat(user, span_notice("Вы помещаете [thing.declent_ru(ACCUSATIVE)] [insert_preposition] [name_source.declent_ru(ACCUSATIVE)]."))
 
 	for(var/mob/viewing in oviewers(user))
 		if(in_range(user, viewing) || (thing?.w_class >= WEIGHT_CLASS_NORMAL))
-			viewing.show_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] помещает [thing.declent_ru(ACCUSATIVE)] [insert_preposition] [parent.declent_ru(ACCUSATIVE)]."), MSG_VISUAL)
+			viewing.show_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] помещает [thing.declent_ru(ACCUSATIVE)] [insert_preposition] [name_source.declent_ru(ACCUSATIVE)]."), MSG_VISUAL)
 
 
 /**
@@ -850,6 +855,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * @param mob/user the user who is dumping the contents
  */
 /datum/storage/proc/dump_content_at(atom/dest_object, dump_loc, mob/user)
+	var/atom/name_source = parent
+	if(storage_source)
+		name_source = storage_source
 	if(locked)
 		user.balloon_alert(user, "закрыто!")
 		return
@@ -861,7 +869,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	// Storage to storage transfer is instant
 	if(dest_object.atom_storage)
-		to_chat(user, span_notice("Вы вытряхиваете содержимое [parent.declent_ru(GENITIVE)] в [dest_object.declent_ru(ACCUSATIVE)]."))
+		to_chat(user, span_notice("Вы вытряхиваете содержимое [name_source.declent_ru(GENITIVE)] в [dest_object.declent_ru(ACCUSATIVE)]."))
 
 		if(do_rustle && rustle_sound)
 			playsound(parent, rustle_sound, 50, TRUE, -5)
@@ -873,7 +881,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	// Storage to loc transfer requires a do_after
-	to_chat(user, span_notice("Вы начинаете вытряхивать [parent.declent_ru(NOMINATIVE)] на [dest_object.declent_ru(NOMINATIVE)]..."))
+	to_chat(user, span_notice("Вы начинаете вытряхивать [name_source.declent_ru(NOMINATIVE)] на [dest_object.declent_ru(NOMINATIVE)]..."))
 	if(!do_after(user, 2 SECONDS, target = dest_object))
 		return
 
@@ -959,6 +967,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /// Opens the storage to the mob, showing them the contents to their UI.
 /datum/storage/proc/open_storage(mob/living/to_show)
+	var/atom/name_source = parent
+	if(storage_source)
+		name_source = storage_source
 	if(isobserver(to_show))
 		show_contents(to_show)
 		return FALSE
@@ -985,8 +996,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			INVOKE_ASYNC(src, PROC_REF(put_in_hands_async), to_show, to_remove)
 			if(!silent)
 				to_show.visible_message(
-					span_warning("[to_show] достаёт [to_remove.declent_ru(NOMINATIVE)] из [parent.declent_ru(GENITIVE)]!"),
-					span_notice("Вы достаёте [to_remove.declent_ru(NOMINATIVE)] из [parent.declent_ru(GENITIVE)]."),
+					span_warning("[to_show] достаёт [to_remove.declent_ru(NOMINATIVE)] из [name_source.declent_ru(GENITIVE)]!"),
+					span_notice("Вы достаёте [to_remove.declent_ru(NOMINATIVE)] из [name_source.declent_ru(GENITIVE)]."),
 				)
 			return TRUE
 
@@ -1196,6 +1207,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /// Signal proc for [COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED] to drop items out of our storage if they're suddenly too heavy.
 /datum/storage/proc/contents_changed_w_class(datum/source, obj/item/changed, old_w_class, new_w_class)
 	SIGNAL_HANDLER
+	var/atom/name_source = parent
+	if(storage_source)
+		name_source = storage_source
 
 	// If old weight already overloaded the storage, don't drop the item out just in case we're inside of a premade box
 	if(new_w_class <= max_specific_storage && (get_total_weight() <= max_total_storage || get_total_weight() - new_w_class + old_w_class > max_total_storage))
@@ -1204,7 +1218,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!attempt_remove(changed, parent.drop_location()))
 		return
 
-	changed.visible_message(span_warning("[changed.declent_ru(NOMINATIVE)] выпадает из [parent.declent_ru(GENITIVE)]!"), vision_distance = COMBAT_MESSAGE_RANGE)
+	changed.visible_message(span_warning("[changed.declent_ru(NOMINATIVE)] выпадает из [name_source.declent_ru(GENITIVE)]!"), vision_distance = COMBAT_MESSAGE_RANGE)
 
 ///Assign a new value to the locked variable. If it's higher than NOT_LOCKED, close the UIs and update the appearance of the parent.
 /datum/storage/proc/set_locked(new_locked)

@@ -343,18 +343,21 @@
 
 	if(atom_storage)
 		var/list/how_cool_are_your_threads = list("<span class='notice'>")
+		var/atom/name_source = src
+		if(atom_storage.storage_source)
+			name_source = atom_storage.storage_source
 		if(atom_storage.attack_hand_interact)
-			how_cool_are_your_threads += "Хранилище [declent_ru(GENITIVE)] открывается при нажатии.\n"
+			how_cool_are_your_threads += "Хранилище [name_source.declent_ru(GENITIVE)] открывается при нажатии.\n"
 		else
-			how_cool_are_your_threads += "Хранилище [declent_ru(GENITIVE)] открывается при перетаскивании на себя.\n"
+			how_cool_are_your_threads += "Хранилище [name_source.declent_ru(GENITIVE)] открывается при перетаскивании на себя.\n"
 		if (atom_storage.can_hold?.len) // If pocket type can hold anything, vs only specific items
-			how_cool_are_your_threads += "[capitalize(declent_ru(NOMINATIVE))] [genderize_ru(gender, "может", "может", "может", "могут")] хранить [atom_storage.max_slots] <a href='byond://?src=[REF(src)];show_valid_pocket_items=1'>предмета</a>.\n"
+			how_cool_are_your_threads += "[capitalize(name_source.declent_ru(NOMINATIVE))] [genderize_ru(gender, "может", "может", "может", "могут")] хранить [atom_storage.max_slots] <a href='byond://?src=[REF(src)];show_valid_pocket_items=1'>предмета</a>.\n"
 		else
-			how_cool_are_your_threads += "[capitalize(declent_ru(NOMINATIVE))] [genderize_ru(gender, "может", "может", "может", "могут")] хранить [atom_storage.max_slots] предмета размером [weight_class_to_text(atom_storage.max_specific_storage)] или меньше.\n"
+			how_cool_are_your_threads += "[capitalize(name_source.declent_ru(NOMINATIVE))] [genderize_ru(gender, "может", "может", "может", "могут")] хранить [atom_storage.max_slots] предмета размером [weight_class_to_text(atom_storage.max_specific_storage)] или меньше.\n"
 		if(atom_storage.quickdraw)
-			how_cool_are_your_threads += "Вы можете достать предмет из [declent_ru(GENITIVE)], используя ПКМ.\n"
+			how_cool_are_your_threads += "Вы можете достать предмет из [name_source.declent_ru(GENITIVE)], используя ПКМ.\n"
 		if(atom_storage.silent)
-			how_cool_are_your_threads += "Вы можете положить или достать предмет из [declent_ru(GENITIVE)], не издавая шума.\n"
+			how_cool_are_your_threads += "Вы можете положить или достать предмет из [name_source.declent_ru(GENITIVE)], не издавая шума.\n"
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
 

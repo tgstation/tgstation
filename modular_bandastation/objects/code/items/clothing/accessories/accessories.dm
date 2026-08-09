@@ -12,6 +12,7 @@
 	icon_state = "webbing"
 	worn_icon = 'modular_bandastation/objects/icons/onbody/webbings.dmi'
 	worn_icon_state = "webbing"
+	attachment_slot = NONE
 	w_class = WEIGHT_CLASS_BULKY
 
 /datum/storage/pockets/ammo_webbing

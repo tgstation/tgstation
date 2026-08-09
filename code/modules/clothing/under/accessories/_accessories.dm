@@ -78,6 +78,9 @@
 	if(atom_storage)
 		atom_storage.close_all()
 		attach_to.clone_storage(atom_storage)
+		// BANDASTATION ADD BEGIN: Fix for inheritance of accessory storage name by uniform
+		attach_to.atom_storage.storage_source = src
+		//BANDASTATION ADD ENDED
 		attach_to.atom_storage.set_real_location(src)
 		attach_to.atom_storage.do_rustle = TRUE // it's on the suit now
 
