@@ -135,8 +135,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 /// Update archived versions of variables
 /datum/gas_mixture/proc/archive()
-	// This proc is insanely hot so we can override values from moles_archive with ones from moles using a binary OR instead of normal iteration
-	moles_archive = moles | moles_archive
+	moles_archive = moles.Copy()
 	temperature_archived = temperature
 
 ///Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise
