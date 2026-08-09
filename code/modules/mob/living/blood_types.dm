@@ -22,10 +22,9 @@
 
 /datum/blood_type/New()
 	. = ..()
-	id = name
 	compatible_types |= type_key()
-	if (!desc)
-		desc = reagent_type::description
+	id ||= name
+	desc ||= reagent_type::description
 
 /datum/blood_type/Destroy(force)
 	if(!force)
@@ -396,13 +395,13 @@
 	abstract_type = /datum/blood_type/random_chemical
 
 /datum/blood_type/random_chemical/New(datum/reagent/reagent)
+	abstract_type = null
+	id = reagent
 	name = initial(reagent.name)
 	desc = initial(reagent.description)
-	. = ..()
-	id = type_key()
 	color = initial(reagent.color)
 	reagent_type = reagent
-	abstract_type = null
+	return ..()
 
 /datum/blood_type/random_chemical/type_key()
 	return reagent_type
