@@ -48,11 +48,19 @@
 	/// Trait that is required to use this emote.
 	var/trait_required
 	/// In which state can you use this emote? (Check stat.dm for a full list of them)
-	var/stat_allowed = CONSCIOUS
-	/// Sound to play when emote is called.
+	var/stat_allowed = STABLE
+
+	var/can_use_flags = NONE
+	/// A single, default sound to play if nothing else overrides this
 	var/sound
+	/// A more indepth list of sounds to play, ordered by mob type. Takes precedence over [sound]
+	var/list/sounds_by_mobtype
 	/// Does this emote vary in pitch?
 	var/vary = FALSE
+	/// The volume of the sound
+	var/sound_volume = 50
+	/// Does this emote's sound ignore walls?
+	var/sound_wall_ignore = FALSE
 	/// If this emote's sound is affected by TTS pitch
 	var/affected_by_pitch = TRUE
 	/// Can only code call this event instead of the player.
@@ -61,12 +69,17 @@
 	var/cooldown = 0.8 SECONDS
 	/// Does this message have a message that can be modified by the user?
 	var/can_message_change = FALSE
-	/// How long is the shared emote cooldown triggered by this emote?
-	var/general_emote_audio_cooldown = 2 SECONDS
-	/// How long is the specific emote cooldown triggered by this emote?
-	var/specific_emote_audio_cooldown = 5 SECONDS
-	/// Does this emote's sound ignore walls?
-	var/sound_wall_ignore = FALSE
+	/// How long is the shared emote cooldown triggered by this emote when used intentionally?
+	var/manual_general_emote_audio_cooldown = 2 SECONDS
+	/// How long is the specific emote cooldown triggered by this emote when used intentionally?
+	var/manual_specific_emote_audio_cooldown = 5 SECONDS
+	/// How long is the shared emote cooldown triggered by this emote when forced?
+	var/forced_general_emote_audio_cooldown = 2 SECONDS
+	/// How long is the specific emote cooldown triggered by this emote when forced?
+	var/forced_specific_emote_audio_cooldown = 2 SECONDS
+	/// The volume of the sound
+	///Does this emote use sound tokens? this means it also ignores walls.
+	var/use_sound_tokens = FALSE
 
 /datum/emote/New()
 	switch(mob_type_allowed_typecache)
@@ -112,15 +125,27 @@
 		user.log_message(msg, LOG_EMOTE)
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, "general_emote_audio_cooldown") && TIMER_COOLDOWN_FINISHED(user, type))
-		TIMER_COOLDOWN_START(user, type, specific_emote_audio_cooldown)
-		TIMER_COOLDOWN_START(user, "general_emote_audio_cooldown", general_emote_audio_cooldown)
+	if(tmp_sound && should_play_sound(user, intentional))
+		if(intentional)
+			if(!TIMER_COOLDOWN_FINISHED(user, MANUAL_GENERAL_EMOTE_AUDIO_COOLDOWN) || !TIMER_COOLDOWN_FINISHED(user, MANUAL_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type)) || !TIMER_COOLDOWN_FINISHED(user, FORCED_GENERAL_EMOTE_AUDIO_COOLDOWN) || !TIMER_COOLDOWN_FINISHED(user, FORCED_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type)))
+				return FALSE
+		else
+			if(!TIMER_COOLDOWN_FINISHED(user, FORCED_GENERAL_EMOTE_AUDIO_COOLDOWN) || !TIMER_COOLDOWN_FINISHED(user, FORCED_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type)))
+				return FALSE
+		TIMER_COOLDOWN_START(user, MANUAL_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type), manual_specific_emote_audio_cooldown)
+		TIMER_COOLDOWN_START(user, MANUAL_GENERAL_EMOTE_AUDIO_COOLDOWN, manual_general_emote_audio_cooldown)
+		TIMER_COOLDOWN_START(user, FORCED_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type), forced_specific_emote_audio_cooldown)
+		TIMER_COOLDOWN_START(user, FORCED_GENERAL_EMOTE_AUDIO_COOLDOWN, forced_general_emote_audio_cooldown)
+
 		var/frequency = null
 		if (affected_by_pitch && SStts.tts_enabled && SStts.pitch_enabled)
 			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH) * (1 + sqrt(abs(user.pitch)) * sign(user.pitch) * EMOTE_TTS_PITCH_MULTIPLIER)
 		else if(vary)
 			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH)
-		playsound(source = user,soundin = tmp_sound,vol = 50, vary = FALSE, ignore_walls = sound_wall_ignore, frequency = frequency)
+		if(use_sound_tokens && sound_wall_ignore)
+			playsoundtoken(source = user, soundin = tmp_sound, range = SOUND_RANGE, volume = sound_volume)
+		else
+			playsound(source = user,soundin = tmp_sound,vol = sound_volume, vary = FALSE, ignore_walls = sound_wall_ignore, frequency = frequency)
 
 
 	var/is_important = running_emote_type & EMOTE_IMPORTANT
@@ -242,7 +267,21 @@
  * Returns the sound that will be made while sending the emote.
  */
 /datum/emote/proc/get_sound(mob/living/user)
-	return sound //by default just return this var.
+	var/list/comsig_sounds = list()
+	SEND_SIGNAL(user, COMSIG_MOB_EMOTE_SOUND(key), key, comsig_sounds)
+	if(length(comsig_sounds))
+		var/chosen_sound
+		var/highest_priority = 0
+		for(var/candidate in comsig_sounds)
+			var/priority = comsig_sounds[candidate]
+			if(priority > highest_priority)
+				highest_priority = priority
+				chosen_sound = candidate
+		return chosen_sound
+	var/sound_or_sounds = is_type_in_list(user,  sounds_by_mobtype, zebra = TRUE)
+	if(sound_or_sounds)
+		return get_emote_sound_from_list(sound_or_sounds, user)
+	return sound
 
 /**
  * To get the flags visible/audible messages for ran by the emote.
@@ -341,22 +380,31 @@
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
 	if(status_check && !is_type_in_typecache(user, mob_type_ignore_stat_typecache))
-		if(user.stat > stat_allowed)
-			if(!intentional)
-				return FALSE
-			switch(user.stat)
-				if(SOFT_CRIT)
-					to_chat(user, span_warning("You cannot [key] while in a critical condition!"))
-				if(UNCONSCIOUS, HARD_CRIT)
-					to_chat(user, span_warning("You cannot [key] while unconscious!"))
-				if(DEAD)
-					to_chat(user, span_warning("You cannot [key] while dead!"))
+		if(IS_UNCONSCIOUS(user) && !(can_use_flags & EMOTE_CANUSE_UNCONSCIOUS))
+			if(intentional)
+				to_chat(user, span_warning("You cannot [key] while unconscious!"))
 			return FALSE
-		if(hands_use_check && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-			if(!intentional)
-				return FALSE
-			to_chat(user, span_warning("You cannot use your hands to [key] right now!"))
+		if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) && (can_use_flags & EMOTE_CANUSE_REQUIRE_HANDS))
+			if(intentional)
+				to_chat(user, span_warning("You cannot use your hands to [key] right now!"))
 			return FALSE
+
+		switch(user.stat)
+			if(SOFT_CRIT)
+				if(!(can_use_flags & EMOTE_CANUSE_SOFTCRIT))
+					if(intentional)
+						to_chat(user, span_warning("You cannot [key] while in a critical condition!"))
+					return FALSE
+			if(HARD_CRIT)
+				if(!(can_use_flags & EMOTE_CANUSE_HARDCRIT))
+					if(intentional)
+						to_chat(user, span_warning("You cannot [key] while in a critical condition!"))
+					return FALSE
+			if(DEAD)
+				if(!(can_use_flags & EMOTE_CANUSE_DEAD))
+					if(intentional)
+						to_chat(user, span_warning("You cannot [key] while dead!"))
+					return FALSE
 
 	if(HAS_TRAIT(user, TRAIT_EMOTEMUTE))
 		return FALSE
@@ -374,14 +422,10 @@
  */
 /datum/emote/proc/should_play_sound(mob/user, intentional = FALSE)
 	if(emote_type & EMOTE_AUDIBLE && !hands_use_check)
-		if(HAS_TRAIT(user, TRAIT_MUTE))
+		if(HAS_TRAIT(user, TRAIT_MUTE) || HAS_MIND_TRAIT(user, TRAIT_MIMING))
 			return FALSE
-		if(ishuman(user))
-			var/mob/living/carbon/human/loud_mouth = user
-			if(HAS_MIND_TRAIT(loud_mouth, TRAIT_MIMING)) // vow of silence prevents outloud noises
-				return FALSE
-			if(!loud_mouth.get_organ_slot(ORGAN_SLOT_TONGUE))
-				return FALSE
+		if(iscarbon(user) && !user.get_organ_slot(ORGAN_SLOT_TONGUE))
+			return FALSE
 
 	if(only_forced_audio && intentional)
 		return FALSE
@@ -406,7 +450,7 @@
 	return TRUE
 
 /mob/manual_emote(text, log_emote = null)
-	if (stat != CONSCIOUS)
+	if (IS_UNCONSCIOUS_OR_CRIT(src))
 		return FALSE
 	if (isnull(log_emote))
 		log_emote = !isnull(client)

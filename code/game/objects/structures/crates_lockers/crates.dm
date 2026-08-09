@@ -111,10 +111,9 @@
 		. += lid
 
 /obj/structure/closet/crate/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	tear_manifest(user)
+	if(tear_manifest(user))
+		return TRUE
+	return ..()
 
 /obj/structure/closet/crate/after_open(mob/living/user, force)
 	. = ..()
@@ -147,12 +146,12 @@
 
 	UnregisterSignal(src, COMSIG_CLOSET_CONTENTS_INITIALIZED)
 
-///Removes the supply manifest from the closet
+///Removes the supply manifest from the closet, returning TRUE if one was torn off
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	var/obj/item/paper/fluff/jobs/cargo/manifest/our_manifest = manifest?.resolve()
 	if(QDELETED(our_manifest))
 		manifest = null
-		return
+		return FALSE
 	if(user)
 		to_chat(user, span_notice("You tear the manifest off of [src]."))
 	playsound(src, 'sound/items/poster/poster_ripped.ogg', 75, TRUE)
@@ -162,6 +161,7 @@
 		user.put_in_hands(our_manifest)
 	manifest = null
 	update_appearance()
+	return TRUE
 
 /obj/structure/closet/crate/preopen
 	opened = TRUE
@@ -236,10 +236,16 @@
 	base_icon_state = "medicalcrate"
 
 /obj/structure/closet/crate/deforest
-	name = "deforest medical crate"
+	name = "\improper DeForest Medical crate"
 	desc = "A DeForest brand crate of medical supplies."
 	icon_state = "deforest"
 	base_icon_state = "deforest"
+
+/obj/structure/closet/crate/interdyne_normal
+	name = "\improper Interdyne Pharmaceutics crate"
+	desc = "An Interdyne Pharmaceutics brand crate. Probably contains helpful chemicals? Hopefully contains helpful chemicals."
+	icon_state = "interdynecrate"
+	base_icon_state = "interdynecrate"
 
 /obj/structure/closet/crate/medical/department
 	icon_state = "medical"
@@ -444,13 +450,13 @@
 	icon_state = "gold"
 	base_icon_state = "gold"
 
-/obj/structure/closet/crate/goldcrate/PopulateContents()
+//subtype that comes with roundstart items.
+/obj/structure/closet/crate/goldcrate/stocked/PopulateContents()
 	..()
 	new /obj/item/storage/belt/champion(src)
 
-/obj/structure/closet/crate/goldcrate/populate_contents_immediate()
+/obj/structure/closet/crate/goldcrate/stocked/populate_contents_immediate()
 	. = ..()
-
 	for(var/i in 1 to 3)
 		new /obj/item/stack/sheet/mineral/gold(src, 1, FALSE)
 

@@ -24,7 +24,7 @@
 /// Used for preferences that rely on body setup being finalized.
 #define PREFERENCE_PRORITY_LATE_BODY_TYPE 7
 
-/// Equpping items based on preferences.
+/// Equipping items based on preferences.
 /// Should happen after species and body type to make sure it looks right.
 /// Mostly redundant, but a safety net for saving/loading.
 #define PREFERENCE_PRIORITY_LOADOUT 8
@@ -228,7 +228,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Apply this preference onto the given human.
 /// Must be overriden by subtypes.
 /// Called when the savefile_identifier == PREFERENCE_CHARACTER.
-/datum/preference/proc/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/proc/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("`apply_to_human()` was not implemented for [type]!")
@@ -483,7 +483,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/choiced/species_feature/create_default_value()
 	return get_consistent_feature_entry(get_accessory_list())
 
-/datum/preference/choiced/species_feature/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/species_feature/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	target.dna.features[feature_key] = value
 
 /// Returns what acessory list to draw from

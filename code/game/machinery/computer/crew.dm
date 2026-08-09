@@ -6,6 +6,7 @@
 /obj/machinery/computer/crew
 	name = "crew monitoring console"
 	desc = "Used to monitor active health sensors built into most of the crew's uniforms."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/crew")
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/crew
@@ -74,6 +75,7 @@
 	records.set_output(new_table)
 
 /obj/machinery/computer/crew/syndie
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/crew/syndie")
 	icon_keyboard = "syndie_key"
 
 /obj/machinery/computer/crew/ui_interact(mob/user)
@@ -260,7 +262,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			entry["life_status"] = tracked_living_mob.stat
 		else if (sensor_mode == SENSOR_LIVING)
 			// binary sensors should only report alive or dead
-			entry["life_status"] = (tracked_living_mob.stat == DEAD) ? DEAD : CONSCIOUS
+			entry["life_status"] = (tracked_living_mob.stat == DEAD) ? DEAD : STABLE
 
 		// Damage
 		if (sensor_mode >= SENSOR_VITALS)

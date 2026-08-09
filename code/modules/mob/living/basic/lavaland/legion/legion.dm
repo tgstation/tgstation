@@ -23,7 +23,6 @@
 	speak_emote = list("gurgles")
 	attack_sound = 'sound/items/weapons/pierce.ogg'
 	throw_blocked_message = "bounces harmlessly off of"
-	crusher_loot = /obj/item/crusher_trophy/legion_skull
 	death_message = "wails in chorus and dissolves into quivering flesh."
 	ai_controller = /datum/ai_controller/basic_controller/legion
 	/// What kind of mob do we spawn?
@@ -75,7 +74,7 @@
 /mob/living/basic/mining/legion/update_overlays()
 	. = ..()
 	if (stat != DEAD && has_emissive) // Shouldn't really happen but just in case
-		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_BLOOM)
 
 /// Put a corpse in this guy
 /mob/living/basic/mining/legion/proc/consume(mob/living/carbon/human/consumed)
@@ -142,9 +141,7 @@
 	maxHealth = 60
 	health = 60
 	speed = 2
-	crusher_drop_chance = 20
 	corpse_type = /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf
-
 
 /// Like a Legion but larger and spawns regular Legions, not currently used anywhere and very soulful
 /mob/living/basic/mining/legion/large

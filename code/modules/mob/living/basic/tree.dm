@@ -66,10 +66,10 @@
 	if(!isopenturf(loc))
 		return
 	var/turf/open/our_turf = src.loc
-	if(!our_turf.air || !our_turf.air.gases[/datum/gas/carbon_dioxide])
+	if(!our_turf.air || !our_turf.air.moles[/datum/gas/carbon_dioxide])
 		return
 	var/datum/gas_mixture/our_air = our_turf.air
-	var/co2 = our_air.gases[/datum/gas/carbon_dioxide][MOLES]
+	var/co2 = our_air.moles[/datum/gas/carbon_dioxide]
 	if(co2 > 0 && SPT_PROB(13, seconds_per_tick))
 		var/amt = min(co2, 9)
 		our_air.adjust_gas(/datum/gas/carbon_dioxide, -amt)
@@ -100,15 +100,13 @@
 		)
 
 /datum/ai_controller/basic_controller/tree
+	behavior_tree_json = "code/modules/mob/living/basic/tree.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SEE = list("photosynthesizes angrily."),
+			BB_SPEAK_CHANCE = 3,
+		),
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/random_speech/tree,
-	)

@@ -152,7 +152,7 @@
 		return
 
 	if(!istype(inserted_core) || !istype(inserted_bomb))
-		end_test("ERROR: Missing equpment. Items ejected.")
+		end_test("ERROR: Missing equipment. Items ejected.")
 		return
 
 	if(!inserted_bomb?.tank_one || !inserted_bomb?.tank_two || !(tank_to_target == inserted_bomb?.tank_one || tank_to_target == inserted_bomb?.tank_two))

@@ -6,6 +6,7 @@
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/circuit)
 	cooldown_time = 0.5 SECONDS
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 	/// A reference to the shell component, used to access the shell and its attached circuit
 	var/datum/component/shell/shell

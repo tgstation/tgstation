@@ -18,6 +18,7 @@
 	incompatible_modules = list(/obj/item/mod/module/pathfinder)
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	allow_flags = list(MODULE_ALLOW_INACTIVE|MODULE_ALLOW_UNWORN)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT)
 	/// The pathfinding implant.
 	var/obj/item/implant/mod/implant
 	/// Whether the implant has been used or not
@@ -196,6 +197,7 @@
 	desc = "Lets you recall a MODsuit to you at any time."
 	actions_types = list(/datum/action/item_action/mod_recall)
 	allow_multiple = TRUE // Surgrey is annoying if you loose your MOD
+	custom_materials = null
 	/// The pathfinder module we are linked to.
 	var/obj/item/mod/module/pathfinder/module
 	implant_info = "Activated manually. Allows for the recall of a Modular Outerwear Device by the implant owner at any time."

@@ -63,18 +63,48 @@
 	LAZYINITLIST(buckled_mobs)
 	. = ..()
 
-/obj/structure/guillotine/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/sheet/plasteel))
-		to_chat(user, span_notice("You start repairing the guillotine with the plasteel..."))
-		if(blade_sharpness<10)
-			if(do_after(user,100,target=user))
-				blade_sharpness = min(10,blade_sharpness+3)
-				I.use(1)
-				to_chat(user, span_notice("You repair the guillotine with the plasteel."))
-			else
-				to_chat(user, span_notice("You stop repairing the guillotine with the plasteel."))
-		else
+/obj/structure/guillotine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stack/sheet/plasteel))
+		if(blade_sharpness == GUILLOTINE_BLADE_MAX_SHARP)
 			to_chat(user, span_warning("The guillotine is already fully repaired!"))
+			return ITEM_INTERACT_BLOCKING
+
+		to_chat(user, span_notice("You start repairing the guillotine with the plasteel..."))
+		if(!do_after(user, 100, target = user))
+			to_chat(user, span_notice("You stop repairing the guillotine with the plasteel."))
+			return ITEM_INTERACT_BLOCKING
+
+		blade_sharpness = min(GUILLOTINE_BLADE_MAX_SHARP, blade_sharpness+3)
+		tool.use(1)
+		to_chat(user, span_notice("You repair the guillotine with the plasteel."))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/sharpener))
+		add_fingerprint(user)
+		if (blade_status == GUILLOTINE_BLADE_SHARPENING)
+			return ITEM_INTERACT_BLOCKING
+
+		if (blade_status != GUILLOTINE_BLADE_RAISED)
+			to_chat(user, span_warning("You need to raise the blade in order to sharpen it!"))
+			return ITEM_INTERACT_BLOCKING
+
+		if (blade_sharpness == GUILLOTINE_BLADE_MAX_SHARP)
+			to_chat(user, span_warning("The blade is sharp enough!"))
+			return ITEM_INTERACT_BLOCKING
+
+		blade_status = GUILLOTINE_BLADE_SHARPENING
+		if(!do_after(user, 0.7 SECONDS, target = src))
+			blade_status = GUILLOTINE_BLADE_RAISED
+			return ITEM_INTERACT_BLOCKING
+
+		blade_status = GUILLOTINE_BLADE_RAISED
+		user.visible_message(span_notice("[user] sharpens the large blade of the guillotine."),
+			                 span_notice("You sharpen the large blade of the guillotine."))
+		blade_sharpness += 1
+		playsound(src, 'sound/items/unsheath.ogg', 100, TRUE)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/guillotine/examine(mob/user)
 	. = ..()
@@ -188,34 +218,6 @@
 
 	blade_status = GUILLOTINE_BLADE_DROPPED
 	icon_state = "guillotine"
-
-/obj/structure/guillotine/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if (istype(W, /obj/item/sharpener))
-		add_fingerprint(user)
-		if (blade_status == GUILLOTINE_BLADE_SHARPENING)
-			return
-
-		if (blade_status == GUILLOTINE_BLADE_RAISED)
-			if (blade_sharpness < GUILLOTINE_BLADE_MAX_SHARP)
-				blade_status = GUILLOTINE_BLADE_SHARPENING
-				if(do_after(user, 0.7 SECONDS, target = src))
-					blade_status = GUILLOTINE_BLADE_RAISED
-					user.visible_message(span_notice("[user] sharpens the large blade of the guillotine."),
-						                 span_notice("You sharpen the large blade of the guillotine."))
-					blade_sharpness += 1
-					playsound(src, 'sound/items/unsheath.ogg', 100, TRUE)
-					return
-				else
-					blade_status = GUILLOTINE_BLADE_RAISED
-					return
-			else
-				to_chat(user, span_warning("The blade is sharp enough!"))
-				return
-		else
-			to_chat(user, span_warning("You need to raise the blade in order to sharpen it!"))
-			return
-	else
-		return ..()
 
 /obj/structure/guillotine/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if (!anchored)

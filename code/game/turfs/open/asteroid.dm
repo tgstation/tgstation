@@ -62,29 +62,36 @@
 /turf/open/misc/asteroid/ex_act(severity, target)
 	return FALSE
 
-/turf/open/misc/asteroid/attackby(obj/item/attack_item, mob/user, list/modifiers)
+/turf/open/misc/asteroid/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(.)
-		return TRUE
+	if(ITEM_INTERACT_ANY_BLOCKER & .)
+		return .
 
-	if(attack_item.tool_behaviour == TOOL_SHOVEL || attack_item.tool_behaviour == TOOL_MINING)
-		if(!can_dig(user))
-			return TRUE
-
-		if(!isturf(user.loc))
-			return
-
-		balloon_alert(user, "digging...")
-
-		if(attack_item.use_tool(src, user, 4 SECONDS, volume = 50))
-			if(!can_dig(user))
-				return TRUE
-			getDug()
-			SSblackbox.record_feedback("tally", "pick_used_mining", 1, attack_item.type)
-			return TRUE
-	else if(istype(attack_item, /obj/item/storage/bag/ore))
+	if(istype(tool, /obj/item/storage/bag/ore))
 		for(var/obj/item/stack/ore/dropped_ore in src)
-			SEND_SIGNAL(attack_item, COMSIG_ATOM_ATTACKBY, dropped_ore)
+			SEND_SIGNAL(tool, COMSIG_ATOM_ATTACKBY, dropped_ore)
+		return ITEM_INTERACT_SUCCESS
+
+	if(tool.tool_behaviour != TOOL_SHOVEL && tool.tool_behaviour != TOOL_MINING)
+		return . // it still could be SKIP_TO_ATTACK and we don't want to step on that
+
+	if(!can_dig(user))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!isturf(user.loc))
+		return ITEM_INTERACT_BLOCKING
+
+	balloon_alert(user, "digging...")
+
+	if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!can_dig(user))
+		return ITEM_INTERACT_BLOCKING
+
+	getDug()
+	SSblackbox.record_feedback("tally", "pick_used_mining", 1, tool.type)
+	return ITEM_INTERACT_SUCCESS
 
 /// Drops itemstack when dug and changes icon
 /turf/open/misc/asteroid/proc/getDug()
@@ -140,6 +147,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	base_icon_state = "basalt"
 	floor_variance = 15
 	dig_result = /obj/item/stack/ore/glass/basalt
+	smoothing_groups = SMOOTH_GROUP_FLOOR_BASALT
 
 /turf/open/misc/asteroid/basalt/getDug()
 	. = ..()
@@ -181,6 +189,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
+	skip_minimap_rendering = TRUE
 
 /// Used for the lavaland icemoon ruin.
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
@@ -215,6 +224,10 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	if(cur_flags & NO_RUINS)
 		new_turf.turf_flags |= NO_RUINS
 
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace/normal_atmos
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = FALSE
+
 /turf/open/misc/asteroid/lowpressure
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	baseturfs = /turf/open/misc/asteroid/lowpressure
@@ -231,6 +244,8 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	layer = MID_TURF_LAYER
 	floor_variance = 0
 	transform = MAP_SWITCH(TRANSLATE_MATRIX(-8, -8), matrix())
+	smooth_broken = TRUE
+	has_floor_variance = FALSE
 	/// DMI used by unsmoothed turfs for variance
 	var/variant_dmi = null
 	/// Amount of variants this turf has
@@ -257,6 +272,12 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 		return
 	underlay_appearance.transform = transform
 
+/turf/open/misc/asteroid/basalt/smooth/refill_dug()
+	dug = FALSE
+	broken = FALSE
+	set_smoothed_icon_state(smoothing_junction)
+	update_appearance()
+
 /turf/open/misc/asteroid/basalt/smooth/siderite
 	name = "siderite floor"
 	baseturfs = /turf/open/misc/asteroid/basalt/smooth/siderite
@@ -267,7 +288,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	base_icon_state = "siderite"
 	layer = HIGH_TURF_LAYER
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_SIDERITE
-	canSmoothWith = SMOOTH_GROUP_FLOOR_SIDERITE + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_FLOOR_LAVA + SMOOTH_GROUP_FLOOR_WATER_LAVALAND + SMOOTH_GROUP_FLOOR_SIDERITE + SMOOTH_GROUP_CLOSED_TURFS
 	dig_result = /obj/item/stack/ore/glass/siderite
 
 /turf/open/misc/asteroid/basalt/smooth/siderite/lava_land_surface
@@ -287,7 +308,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	icon_state = "shale-255"
 	base_icon_state = "shale"
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_SHALE
-	canSmoothWith = SMOOTH_GROUP_FLOOR_SHALE + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_FLOOR_LAVA + SMOOTH_GROUP_FLOOR_WATER_LAVALAND + SMOOTH_GROUP_FLOOR_SHALE + SMOOTH_GROUP_CLOSED_TURFS
 
 /turf/open/misc/asteroid/basalt/smooth/shale/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -392,6 +413,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	baseturfs = /turf/open/openspace/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	slowdown = 0
+	skip_minimap_rendering = TRUE
 
 /// Exact subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
 /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
@@ -468,6 +490,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	base_icon_state = "moon"
 	floor_variance = 40
 	dig_result = /obj/item/stack/ore/glass/basalt
+	initial_gas_mix = MOONBASE19_ATMOS
 
 /turf/open/misc/asteroid/moon/dug //When you want one of these to be already dug.
 	dug = TRUE

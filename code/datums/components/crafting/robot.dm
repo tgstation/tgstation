@@ -120,7 +120,7 @@
 
 /datum/crafting_recipe/vim
 	name = "Vim"
-	result = /obj/vehicle/sealed/car/vim
+	result = /obj/vehicle/sealed/mecha/vim
 	reqs = list(
 		/obj/item/clothing/head/helmet/space/eva = 1,
 		/obj/item/bodypart/leg/left/robot = 1,

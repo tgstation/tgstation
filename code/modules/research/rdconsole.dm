@@ -19,6 +19,7 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole
 	name = "R&D Console"
 	desc = "A console used to interface with R&D tools."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/rdconsole")
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
 	circuit = /obj/item/circuitboard/computer/rdconsole
@@ -189,6 +190,7 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/ui_assets(mob/user)
 	return list(
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
 		get_asset_datum(/datum/asset/spritesheet_batched/research_designs),
 	)
 
@@ -243,7 +245,8 @@ Nothing else in the console has ID requirements.
 			"can_unlock" = stored_research.can_unlock_node(n),
 			"have_experiments_done" = stored_research.have_experiments_for_node(n),
 			"tier" = stored_research.tiers[n.id],
-			"enqueued_by_user" = enqueued_by_user
+			"enqueued_by_user" = enqueued_by_user,
+			"discount_boosted" = n.discount_boosted
 		))
 
 	// Get experiments and serialize them
@@ -305,6 +308,8 @@ Nothing else in the console has ID requirements.
 			node_cache[compressed_id]["required_experiments"] = node.required_experiments
 		if (LAZYLEN(node.discount_experiments))
 			node_cache[compressed_id]["discount_experiments"] = node.discount_experiments
+		if (LAZYLEN(node.discount_boosts))
+			node_cache[compressed_id]["discount_boosts"] = node.discount_boosts
 
 	// Build design cache
 	var/design_cache = list()
@@ -314,8 +319,17 @@ Nothing else in the console has ID requirements.
 		var/datum/design/design = SSresearch.techweb_designs[design_id] || SSresearch.error_design
 		var/compressed_id = "[compress_id(design.id)]"
 		var/size = spritesheet.icon_size_id(design.id)
+
+		var/cost = list()
+		var/list/materials = design.materials
+		for(var/datum/material/mat in materials)
+			cost[mat.name] = OPTIMAL_COST(materials[mat])
+
 		design_cache[compressed_id] = list(
 			design.name,
+			cost,
+			design.build_type,
+			design.departmental_flags,
 			"[size == size32x32 ? "" : "[size] "][design.id]"
 		)
 
@@ -324,10 +338,23 @@ Nothing else in the console has ID requirements.
 	for (var/id in id_cache)
 		flat_id_cache += id
 
+	var/list/department_flags = list()
+	for (var/datum/job_department/department as anything in subtypesof(/datum/job_department))
+		if (department::department_bitflags)
+			department_flags["[department::department_bitflags]"] = department::department_name
+
+	// Don't pass away flags as those are irrelevant to the station
+	var/list/build_types = GLOB.build_types_to_string.Copy()
+	build_types -= "[AWAY_IMPRINTER]"
+	build_types -= "[AWAY_LATHE]"
+
 	.["static_data"] = list(
 		"node_cache" = node_cache,
 		"design_cache" = design_cache,
 		"id_cache" = flat_id_cache,
+		"SHEET_MATERIAL_AMOUNT" = SHEET_MATERIAL_AMOUNT,
+		"build_types" = build_types,
+		"department_flags" = department_flags,
 	)
 
 /obj/machinery/computer/rdconsole/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

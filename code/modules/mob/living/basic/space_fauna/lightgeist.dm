@@ -41,18 +41,14 @@
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
 	obj_damage = 0
+	pull_force = MOVE_FORCE_NONE
 	environment_smash = ENVIRONMENT_SMASH_NONE
 
 	ai_controller = /datum/ai_controller/basic_controller/lightgeist
 
 /mob/living/basic/lightgeist/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_MEDICAL_HUD, INNATE_TRAIT)
-
-	remove_verb(src, /mob/living/verb/pulled)
-	remove_verb(src, /mob/verb/me_verb)
-
+	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_MEDICAL_HUD, TRAIT_EMOTEMUTE), INNATE_TRAIT)
 	AddElement(/datum/element/simple_flying)
 	AddComponent(\
 		/datum/component/healing_touch,\
@@ -75,18 +71,13 @@
 		death()
 
 /datum/ai_controller/basic_controller/lightgeist
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/lightgeist.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/lightgeist,
 	)
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree, // We heal things by attacking them
-	)
 
 /// Attack only mobs who have damage that we can heal, I think this is specific enough not to be a generic type
 /datum/targeting_strategy/lightgeist
@@ -95,7 +86,7 @@
 	/// Type of limb we can heal
 	var/required_bodytype = BODYTYPE_ORGANIC
 
-/datum/targeting_strategy/lightgeist/can_attack(mob/living/living_mob, mob/living/target, vision_range)
+/datum/targeting_strategy/lightgeist/is_valid_target(mob/living/living_mob, mob/living/target, vision_range, datum/ai_controller/controller = null)
 	if (!isliving(target) || target.stat == DEAD)
 		return FALSE
 	if (!(heal_biotypes & target.mob_biotypes))

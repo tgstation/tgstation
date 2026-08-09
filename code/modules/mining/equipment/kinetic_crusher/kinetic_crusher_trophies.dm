@@ -7,14 +7,14 @@
 	desc = "A strange spike with no usage."
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "tail_spike"
-	/// if it has a bonus effect, this is how much that effect is
+	/// If it has a bonus effect, this is how much that effect is
 	var/bonus_value = 10
-	/// id of the trophy to be sent by the signal
+	/// ID of the trophy to be sent by the signal
 	var/trophy_id
-	/// what type of trophies will block this trophy from being added, must be overriden
+	/// What type of trophies will block this trophy from being added, must be overriden
 	var/denied_type = /obj/item/crusher_trophy
-	/// what item will drop if you cut it with wildhunter's knife
-	var/wildhunter_drop = null
+	/// What items will drop if you cut it with wildhunter's knife
+	var/list/wildhunter_drops = null
 
 /obj/item/crusher_trophy/examine(mob/living/user)
 	. = ..()
@@ -32,7 +32,7 @@
 			to_chat(user, span_warning("You can't seem to attach [src] to [crusher]. Maybe remove a few trophies?"))
 			return FALSE
 	if(!user.transferItemToLoc(src, crusher))
-		return
+		return FALSE
 	crusher.trophies += src
 	to_chat(user, span_notice("You attach [src] to [crusher]."))
 	return TRUE
@@ -57,9 +57,13 @@
 /obj/item/crusher_trophy/proc/on_projectile_hit_mineral(turf/closed/mineral, mob/living/user) //the target and the user
 	return
 
+/// Does an effect when a mark is applied
+/obj/item/crusher_trophy/proc/on_mark_applied(mob/living/target, mob/living/user, datum/status_effect/crusher_mark)
+	return
+
 /// Does an effect when you hit a mob that is marked via the projectile
 /// Returns additional damage for detonation
-/obj/item/crusher_trophy/proc/on_mark_detonation(mob/living/target, mob/living/user) //the target and the user
+/obj/item/crusher_trophy/proc/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc) //the target and the user
 	SHOULD_CALL_PARENT(TRUE)
 	//if we dont have a set id, use the typepath as identifier
 	SEND_SIGNAL(target, COMSIG_MOB_TROPHY_ACTIVATED(trophy_id || type), src, user)

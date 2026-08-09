@@ -45,6 +45,7 @@
 /obj/machinery/computer/vaultcontroller
 	name = "vault controller"
 	desc = "It seems to be powering and controlling the vault locks."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/vaultcontroller")
 	icon_screen = "power"
 	icon_keyboard = "power_key"
 	light_color = LIGHT_COLOR_DIM_YELLOW

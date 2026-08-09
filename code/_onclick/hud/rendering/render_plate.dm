@@ -72,6 +72,95 @@
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE_BLOOM, offset), blend_override = BLEND_MULTIPLY)
 
+/atom/movable/screen/plane_master/rendering_plate/particle_weather
+	name = "Particle Weather Holder Plate"
+	documentation = "Plane used to render particle weather, masked by WEATHER_MASK_PLANE. \
+		Cannot be a single screen object as it needs to be a planemaster in order to be properly masked by the weather mask."
+	plane = RENDER_PLANE_PARTICLE_WEATHER
+	start_hidden = TRUE
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	// We can actually do this just fine as we do not render anything onto ourselves but our particles
+	add_filter("weather_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(WEATHER_MASK_RENDER_TARGET, offset)))
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/Destroy()
+	SSweather.particle_planemasters -= src
+	return ..()
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(!.)
+		return
+	home.AddComponent(/datum/component/hide_weather_planes, src)
+	RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+	if (home.our_hud)
+		attach_hud(home.our_hud)
+	update_state(home.our_hud?.mymob)
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
+	SIGNAL_HANDLER
+	if (old_hud)
+		UnregisterSignal(old_hud, COMSIG_HUD_Z_CHANGED)
+	attach_hud(new_hud)
+	update_state(new_hud?.mymob)
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/attach_hud(datum/hud/new_hud)
+	RegisterSignal(new_hud, COMSIG_HUD_Z_CHANGED, PROC_REF(z_changed))
+	var/mob/eye = new_hud?.mymob?.client?.eye
+	var/turf/eye_location = get_turf(eye)
+	z_changed(new_hud, eye_location?.z)
+
+/// Updates ourselves based on our mob's preferences state
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/update_state(mob/mymob)
+	SSweather.particle_planemasters -= src
+	vis_contents.Cut()
+
+	if(!istype(mymob) || !mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/particle_weather))
+		return
+
+	SSweather.particle_planemasters += src
+
+	// Lobby HUDs, we don't care about weather during init anyways
+	if(!SSmapping.initialized)
+		return
+
+	var/list/stack_levels = SSmapping.get_connected_levels(get_turf(mymob.client?.eye || mymob))
+	// And add all ongoing weather to ourselves
+	for (var/holder_offset, holder_list in SSweather.particle_holders)
+		for (var/obj/effect/abstract/weather_holder/holder as anything in holder_list)
+			// Only display particles from the same Z-stack as our mob's
+			if (holder.plane == plane && length(holder_list[holder] & stack_levels))
+				vis_contents += holder
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/z_changed(datum/source, new_z)
+	SIGNAL_HANDLER
+
+	if(!SSmapping.initialized)
+		return
+
+	var/list/stack_levels = SSmapping.get_connected_levels(new_z)
+	for (var/holder_offset, holder_list in SSweather.particle_holders)
+		for (var/obj/effect/abstract/weather_holder/holder as anything in holder_list)
+			if (holder.plane != plane)
+				continue
+
+			if (length(holder_list[holder] & stack_levels))
+				vis_contents |= holder
+			else
+				vis_contents -= holder
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/emissive
+	name = "Emissive Particle Weather Holder Plate"
+	documentation = "Secondary particle weather plane for emissive parts of weather, which is additionally rendered onto the emissive plane after being masked."
+	plane = RENDER_PLANE_EMISSIVE_PARTICLE_WEATHER
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/emissive/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	// Render a copy of ourselves onto the emissive plane encoded into the bloom channel
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_PLANE, offset), relay_color = GLOB.emissive_color)
+
 /atom/movable/screen/plane_master/rendering_plate/turf_lighting
 	name = "Turf lighting post-processing plate"
 	documentation = "Used by overlay lighting, and possibly over plates, to mask out turf lighting."

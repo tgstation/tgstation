@@ -1,4 +1,4 @@
-#define MAX_ARTIFACT_ROLL_CHANCE 10
+#define ARTIFACT_ROLL_CHANCE 7
 #define MINERAL_TYPE_OPTIONS_RANDOM 4
 #define OVERLAY_OFFSET_START 0
 #define OVERLAY_OFFSET_EACH 5
@@ -72,7 +72,7 @@
 	/// What base icon_state do we use for this vent's boulders?
 	var/boulder_icon_state = "boulder"
 	/// Percent chance that this vent will produce an artifact boulder.
-	var/artifact_chance = 0
+	var/artifact_chance = ARTIFACT_ROLL_CHANCE
 	/// We use a cooldown to prevent the wave defense from being started multiple times.
 	COOLDOWN_DECLARE(wave_cooldown)
 	/// We use a cooldown to prevent players from tapping boulders rapidly from vents.
@@ -107,17 +107,16 @@
 		SSore_generation.processed_vents -= src
 	return ..()
 
-/obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(.)
-		return TRUE
-	if(!is_type_in_list(attacking_item, scanning_equipment))
-		return TRUE
+/obj/structure/ore_vent/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!is_type_in_list(tool, scanning_equipment))
+		return NONE
+
 	if(tapped)
 		balloon_alert_to_viewers("vent tapped!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
+
 	scan_and_confirm(user)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ore_vent/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -161,6 +160,8 @@
 				. += span_notice("This vent produces [span_bold("large")] boulders containing [ore_string]")
 	else
 		. += span_notice("This vent can be scanned with a [span_bold("Mining Scanner")].")
+	if(artifact_chance)
+		. += span_notice("This vent has a low chance to produce an [span_bold("artifact boulder.")] These may contain rare minerals or strange artifacts.")
 
 /obj/structure/ore_vent/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(is_type_in_list(held_item, scanning_equipment))
@@ -250,20 +251,20 @@
 		for(var/turf/rock in oview(i))
 
 			if(istype(rock, /turf/closed/mineral)) //Solid wall checks: Mine out the wall, but start skipping more as we move farther away.
-				if(prob(50 + (i * 8)))
+				if(prob((i * 15) - 25))
 					continue
 				var/turf/closed/mineral/drillable = rock
 				drillable.gets_drilled(user)
-				if(prob(50))
+				if(prob(15))
 					new /obj/effect/decal/cleanable/rubble(rock) // Only throw rubble when we actually mine something, and not all the time.
 				continue //skip the rest of the checks
 
-			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // Open rock floors: make rubble decals occasionally.
+			if(istype(rock, /turf/open/misc/asteroid) && prob(10)) // Open rock floors: make rubble decals occasionally.
 				new /obj/effect/decal/cleanable/rubble(rock)
 				continue
 
 			if(istype(rock, /turf/open/lava)) // Lava turfs, skip as we get farther away, otherwise produce a boulder and make it a platform, lasting the whole wave.
-				if(prob(30 + (i * 8))) // We want to skip these less than the mining walls, since lava is more common to deal with.
+				if(prob((i * 15) - 35)) // We want to skip these less than the mining walls, since lava is more common to deal with.
 					continue
 
 				var/obj/item/boulder/produced = produce_boulder(FALSE)
@@ -353,6 +354,7 @@
 		return
 
 	for(var/mob/living/miner in range(7, src)) //Give the miners who are near the vent points and xp.
+		SEND_SIGNAL(miner, COMSIG_LIVING_ON_VENT_WIN, src)
 		var/obj/item/card/id/user_id_card = miner.get_idcard(TRUE)
 		if(miner.stat <= SOFT_CRIT)
 			miner.mind?.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)
@@ -526,6 +528,11 @@
 		var/atom/movable/flick_visual/visual = flick_overlay_view(mutable_appearance('icons/effects/vent_overlays.dmi', selected_mat.name), 4.5 SECONDS)
 		animate(visual, alpha = 0, time = 4.5 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
 
+	if(artifact_chance)
+		var/atom/movable/flick_visual/rare = flick_overlay_view(mutable_appearance('icons/effects/vent_overlays.dmi', "rare_ore"), 4.5 SECONDS)
+		animate(rare, alpha = 0, time = 4.5 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
+
+
 /**
  * Here is where we handle producing a new boulder, based on the qualities of this ore vent.
  * Returns the boulder produced.
@@ -541,13 +548,14 @@
 	//produce the boulder
 	var/obj/item/boulder/new_rock
 	if(prob(artifact_chance))
-		new_rock = new /obj/item/boulder/artifact(loc)
+		var/picked_artifact = pick(typesof(/obj/item/boulder/artifact))
+		new_rock = new picked_artifact(loc)
 	else
 		new_rock = new /obj/item/boulder(loc)
 	Shake(duration = 1.5 SECONDS)
 
 	//decorate the boulder with materials
-	var/list/mats_list = list()
+	var/list/mats_list = new_rock.custom_materials?.Copy() || list()
 	for(var/iteration in 1 to MINERALS_PER_BOULDER)
 		var/datum/material/material = pick_weight(mineral_breakdown)
 		mats_list[material] += ore_quantity_function(iteration)
@@ -646,6 +654,10 @@
 		/datum/material/glass = 1,
 	)
 
+/obj/structure/ore_vent/starter_resources/Initialize(mapload)
+	. = ..()
+	generate_description()
+
 /obj/structure/ore_vent/random
 	// Todo: determine if we need a boulder_size default thats unique from the override performed in vent_size_setup.
 
@@ -654,10 +666,13 @@
 	if(!unique_vent && !mapload)
 		generate_mineral_breakdown(map_loading = mapload) //Default to random mineral breakdowns, unless this is a unique vent or we're still setting up default vent distribution.
 		generate_description()
-	artifact_chance = rand(0, MAX_ARTIFACT_ROLL_CHANCE)
 	if(!mapload)
 		vent_size_setup(random = TRUE) // We only do this here specific to random distribution ore vents, and within mapload we handle this manually within SSore_generation.
 
+/obj/structure/ore_vent/random/LateInitialize()
+	. = ..()
+	if(!length(mineral_breakdown))
+		CRASH("We generated an ore vent, and after init, it had no mineral breakdown!")
 
 /obj/structure/ore_vent/random/icebox //The one that shows up on the top level of icebox
 	icon_state = "ore_vent_ice"
@@ -666,7 +681,7 @@
 		/mob/living/basic/mining/lobstrosity,
 		/mob/living/basic/mining/legion/snow/spawner_made,
 		/mob/living/basic/mining/wolf,
-		/mob/living/simple_animal/hostile/asteroid/polarbear,
+		/mob/living/basic/mining/polarbear,
 	)
 	ore_vent_options = list(
 		SMALL_VENT_TYPE,
@@ -679,7 +694,7 @@
 		/mob/living/basic/mining/legion/snow/spawner_made,
 		/mob/living/basic/mining/ice_demon,
 		/mob/living/basic/mining/wolf,
-		/mob/living/simple_animal/hostile/asteroid/polarbear,
+		/mob/living/basic/mining/polarbear,
 	)
 	ore_vent_options = list(
 		SMALL_VENT_TYPE = 3,
@@ -700,9 +715,9 @@
 		/datum/material/titanium = 1,
 		/datum/material/silver = 1,
 		/datum/material/gold = 1,
-		/datum/material/diamond = 1,
+		/datum/material/diamond = 0.1,
 		/datum/material/uranium = 1,
-		/datum/material/bluespace = 1,
+		/datum/material/bluespace = 0.1,
 		/datum/material/plastic = 1,
 	)
 	defending_mobs = list(
@@ -785,6 +800,7 @@
 	var/value = tgui_input_number(user, "What weight should it have?", "ore pickweight", 1, 100, 1)
 	mineral_breakdown[choice] = value
 	balloon_alert_to_viewers("weighting of [value] added")
+	generate_description()
 
 /obj/structure/ore_vent/debug/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -807,7 +823,7 @@
 	GLOB.mining_center += loc
 	return INITIALIZE_HINT_QDEL
 
-#undef MAX_ARTIFACT_ROLL_CHANCE
+#undef ARTIFACT_ROLL_CHANCE
 #undef MINERAL_TYPE_OPTIONS_RANDOM
 #undef OVERLAY_OFFSET_START
 #undef OVERLAY_OFFSET_EACH

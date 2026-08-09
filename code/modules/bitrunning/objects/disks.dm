@@ -205,7 +205,7 @@
 	name = "bitrunning gear: proto-kinetic crusher mods"
 	selectable_items = list(
 		/obj/item/crusher_trophy/watcher_wing,
-		/obj/item/crusher_trophy/blaster_tubes/magma_wing,
+		/obj/item/crusher_trophy/magma_wing,
 		/obj/item/crusher_trophy/legion_skull,
 		/obj/item/crusher_trophy/wolf_ear,
 	)
@@ -213,7 +213,7 @@
 /obj/item/disk/bitrunning/item/pkc_mods/premium
 	name = "bitrunning gear: premium proto-kinetic crusher mods"
 	selectable_items = list(
-		/obj/item/crusher_trophy/watcher_wing/ice_wing,
+		/obj/item/crusher_trophy/ice_wing,
 		/obj/item/crusher_trophy/blaster_tubes,
 		/obj/item/crusher_trophy/miner_eye,
 		/obj/item/crusher_trophy/tail_spike,

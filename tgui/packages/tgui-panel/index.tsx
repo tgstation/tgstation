@@ -14,6 +14,7 @@ import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { App } from './app';
 import { bus } from './events/listeners';
 import { setupPanelFocusHacks } from './panelFocus';
+import { wsSend } from './websocket/helpers';
 
 const root = createRoot(document.getElementById('react-root')!);
 
@@ -38,15 +39,17 @@ function setupApp() {
   render(<App />);
 
   // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => bus.dispatch({ type, payload }));
+  Byond.subscribe((type, payload) => {
+    bus.dispatch({ type, payload });
+    wsSend({ type, payload });
+  });
 
   // Unhide the panel
   Byond.winset('output_selector.legacy_output_selector', {
     left: 'output_browser',
   });
 
-  // Resize the panel to match the non-browser output
-  Byond.winget('output').then((output: { size: string }) => {
+  Byond.winget('output_browser').then((output: { size: string }) => {
     Byond.winset('browseroutput', {
       size: output.size,
     });

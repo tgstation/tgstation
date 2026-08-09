@@ -48,6 +48,7 @@
 		pixel_y += round((cos(angle_override)+16*cos(angle_override)*2), 1)
 
 /obj/effect/abstract/projectile_lighting
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/abstract/projectile_lighting/Initialize(mapload, color, range, intensity)
 	. = ..()

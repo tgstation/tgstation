@@ -129,23 +129,26 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_CARPET_SIMPLE_NEON_PINK_NODOTS S_TURF(51) //![turf/open/floor/carpet/neon/simple/pink/nodots]
 #define SMOOTH_GROUP_BAMBOO_FLOOR S_TURF(52) //![/turf/open/floor/bamboo]
 #define SMOOTH_GROUP_FLOOR_WATER_LAVALAND S_TURF(53) //![/turf/open/water/lavaland_atmos/basalt]
-#define SMOOTH_GROUP_FLOOR_SIDERITE S_TURF(54) ///turf/open/misc/grass
-#define SMOOTH_GROUP_FLOOR_SHALE S_TURF(55) ///turf/open/misc/grass
+#define SMOOTH_GROUP_FLOOR_SIDERITE S_TURF(54) //![/turf/open/misc/asteroid/basalt/smooth/siderite]
+#define SMOOTH_GROUP_FLOOR_SHALE S_TURF(55) //![/turf/open/misc/asteroid/basalt/smooth/shale]
+#define SMOOTH_GROUP_FLOOR_BASALT S_TURF(56) //![/turf/open/misc/asteroid/basalt]
+#define SMOOTH_GROUP_FLOOR_HEXACRETE S_TURF(57) ///turf/open/floor/concrete
 
-#define SMOOTH_GROUP_CLOSED_TURFS S_TURF(56) ///turf/closed
-#define SMOOTH_GROUP_MATERIAL_WALLS S_TURF(57) ///turf/closed/wall/material
-#define SMOOTH_GROUP_SYNDICATE_WALLS S_TURF(58) ///turf/closed/wall/r_wall/plastitanium/syndicate, /turf/closed/indestructible/syndicate
-#define SMOOTH_GROUP_HOTEL_WALLS S_TURF(59) ///turf/closed/indestructible/hotelwall
-#define SMOOTH_GROUP_MINERAL_WALLS S_TURF(60) ///turf/closed/mineral, /turf/closed/indestructible
-#define SMOOTH_GROUP_RED_ROCK_WALLS S_TURF(61) ///turf/closed/mineral/asteroid, /turf/closed/mineral/random/stationside/asteroid
-#define SMOOTH_GROUP_SHALE_WALLS S_TURF(62) ///turf/closed/mineral/random/volcanic/shale
-#define SMOOTH_GROUP_BOSS_WALLS S_TURF(63) ///turf/closed/indestructible/riveted/boss
-#define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(64) ///turf/closed/wall/mineral/titanium/survival
-#define SMOOTH_GROUP_TURF_OPEN_CLIFF S_TURF(65) ///turf/open/cliff
-#define SMOOTH_GROUP_HIEROPHANT S_TURF(66) ///turf/closed/indestructible/riveted/hierophant
-#define SMOOTH_GROUP_PLASTINUM_WALLS S_TURF(67) ///turf/closed/indestructible/riveted/plastinum
+#define SMOOTH_GROUP_CLOSED_TURFS S_TURF(58) ///turf/closed
+#define SMOOTH_GROUP_MATERIAL_WALLS S_TURF(59) ///turf/closed/wall/material
+#define SMOOTH_GROUP_SYNDICATE_WALLS S_TURF(60) ///turf/closed/wall/r_wall/plastitanium/syndicate, /turf/closed/indestructible/syndicate
+#define SMOOTH_GROUP_HOTEL_WALLS S_TURF(61) ///turf/closed/indestructible/hotelwall
+#define SMOOTH_GROUP_MINERAL_WALLS S_TURF(62) ///turf/closed/mineral, /turf/closed/indestructible
+#define SMOOTH_GROUP_RED_ROCK_WALLS S_TURF(63) ///turf/closed/mineral/asteroid, /turf/closed/mineral/random/stationside/asteroid
+#define SMOOTH_GROUP_SHALE_WALLS S_TURF(64) ///turf/closed/mineral/random/volcanic/shale
+#define SMOOTH_GROUP_BOSS_WALLS S_TURF(65) ///turf/closed/indestructible/riveted/boss
+#define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(66) ///turf/closed/wall/mineral/titanium/survival
+#define SMOOTH_GROUP_TURF_OPEN_CLIFF S_TURF(67) ///turf/open/cliff
+#define SMOOTH_GROUP_HIEROPHANT S_TURF(68) ///turf/closed/indestructible/riveted/hierophant
+#define SMOOTH_GROUP_PLASTINUM_WALLS S_TURF(69) ///turf/closed/indestructible/riveted/plastinum
 
-#define MAX_S_TURF 67 //Always match this value with the one above it.
+
+#define MAX_S_TURF 69 //Always match this value with the one above it.
 
 #define S_OBJ(num) ("-" + #num + ",")
 /* /obj included */
@@ -163,9 +166,10 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_ABDUCTOR_WALLS S_OBJ(11) ///turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor
 #define SMOOTH_GROUP_TITANIUM_WALLS S_OBJ(12) ///turf/closed/wall/mineral/titanium, /obj/structure/falsewall/titanium
 #define SMOOTH_GROUP_PLASTITANIUM_WALLS S_OBJ(14) ///turf/closed/wall/mineral/plastitanium, /obj/structure/falsewall/plastitanium
-#define SMOOTH_GROUP_SURVIVAL_TITANIUM_POD S_OBJ(15) ///turf/closed/wall/mineral/titanium/survival/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/reinforced/shuttle/survival_pod
+#define SMOOTH_GROUP_SURVIVAL_TITANIUM_POD S_OBJ(15) ///turf/closed/wall/mineral/plastitanium/survival/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/reinforced/shuttle/survival_pod
 #define SMOOTH_GROUP_HIERO_WALL S_OBJ(16) ///obj/effect/temp_visual/elite_tumor_wall, /obj/effect/temp_visual/hierophant/wall
 #define SMOOTH_GROUP_BAMBOO_WALLS S_OBJ(17) //![/turf/closed/wall/mineral/bamboo, /obj/structure/falsewall/bamboo]
+#define SMOOTH_GROUP_CONCRETE_WALLS S_OBJ(18) ///turf/closed/wall/concrete
 
 #define SMOOTH_GROUP_PAPERFRAME S_OBJ(21) ///obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
 

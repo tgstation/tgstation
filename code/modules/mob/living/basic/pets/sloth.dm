@@ -10,7 +10,6 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 	speak_emote = list("yawns")
 
-	can_be_held = TRUE
 	held_state = "sloth"
 
 	response_help_continuous = "pets"
@@ -53,6 +52,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	AddElement(/datum/element/pet_bonus, "ssmile")
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/can_be_held)
 	AddComponent(/datum/component/tree_climber)
 
 	if(!mapload || !isnull(GLOB.cargo_sloth) || !is_station_level(z))
@@ -86,23 +86,16 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 /// They're really passive in game, so they just wanna get away if you start smacking them. No trees in space from them to use for clawing your eyes out, but they will try if desperate.
 /datum/ai_controller/basic_controller/sloth
+	behavior_tree_json = "code/modules/mob/living/basic/pets/sloth.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_HEAR = list("snores.", "yawns."),
+			BB_EMOTE_SEE = list("dozes off.", "looks around sleepily."),
+			BB_SPEAK_CHANCE = 1,
+		),
 	)
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate/to_flee,
-		/datum/ai_planning_subtree/flee_target/from_flee_key,
-		/datum/ai_planning_subtree/climb_trees,
-		/datum/ai_planning_subtree/random_speech/sloth,
-	)
-
-/datum/ai_planning_subtree/random_speech/sloth
-	speech_chance = 1
-	emote_hear = list("snores.", "yawns.")
-	emote_see = list("dozes off.", "looks around sleepily.")

@@ -3,19 +3,19 @@
 // /datum/atom_hud expects these to be unique
 // these need to be strings in order to make them associative lists
 
-/// dead, alive, sick, health status
-#define HEALTH_HUD "1"
 /// a simple line rounding the mob's number health
+#define HEALTH_HUD "1"
+/// dead, alive, sick, health status
 #define STATUS_HUD "2"
 /// the job asigned to your ID
 #define ID_HUD "3"
 /// wanted, released, parroled, security status
 #define WANTED_HUD "4"
-/// loyality implant
+/// shows loyalty implant if we have one
 #define IMPLOYAL_HUD "5"
-/// chemical implant
+/// shows implant type installed
 #define IMPSEC_FIRST_HUD "6"
-/// tracking implant
+/// shows implant type installed if we have multiple. most recently implanted.
 #define IMPSEC_SECOND_HUD "7"
 /// Silicon/Mech/Circuit Status
 #define DIAG_STAT_HUD "8"
@@ -38,9 +38,9 @@
 #define AI_DETECT_HUD "17"
 /// Displays launchpads' targeting reticle
 #define DIAG_LAUNCHPAD_HUD "18"
-//for antag huds. these are used at the /mob level
+/// for antag huds. these are used at the /mob level
 #define ANTAG_HUD "19"
-// for fans to identify pins
+/// for fans to identify pins
 #define FAN_HUD "20"
 /// Mech camera HUD
 #define DIAG_CAMERA_HUD "21"
@@ -48,8 +48,6 @@
 #define MALF_APC_HUD "22"
 /// Blood volume bar, visible to blood worms
 #define BLOOD_HUD "23"
-/// Big Manipulator interaction point HUDs
-#define BIG_MANIP_HUD "24"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior

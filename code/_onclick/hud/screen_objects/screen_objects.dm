@@ -94,7 +94,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	RegisterSignal(hud, COMSIG_QDELETING, PROC_REF(on_hud_delete))
 
 /// Returns the mob this is being displayed to, if any
-/atom/movable/screen/proc/get_mob()
+/atom/movable/screen/proc/get_mob() as /mob
 	return hud?.mymob
 
 /atom/movable/screen/proc/on_hud_delete(datum/source)
@@ -219,10 +219,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 
 /atom/movable/screen/inventory/MouseEntered(location, control, params)
 	. = ..()
-	add_overlays()
+	if (usr == hud?.mymob)
+		add_overlays()
 
 /atom/movable/screen/inventory/MouseExited()
 	..()
+	if (usr != hud?.mymob)
+		return
 	cut_overlay(object_overlay)
 	QDEL_NULL(object_overlay)
 
@@ -332,7 +335,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/drop/Click()
-	if(usr.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(usr))
 		usr.dropItemToGround(usr.get_active_held_item())
 
 /atom/movable/screen/combattoggle
@@ -396,8 +399,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	var/vertical = FALSE
 
 /atom/movable/screen/floor_changer/Click(location,control,params)
-	var/list/modifiers = params2list(params)
+	var/mob/living/user = get_mob()
+	if(usr != user)
+		return
 
+	var/list/modifiers = params2list(params)
 	var/mouse_position
 
 	if(vertical)
@@ -406,10 +412,23 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 		mouse_position = text2num(LAZYACCESS(modifiers, ICON_X))
 
 	if(mouse_position > 16)
-		usr.up()
+		//non-living can't RMB anyway, but just a precaution.
+		if(LAZYACCESS(modifiers, RIGHT_CLICK) && isliving(user))
+			if(user.looking_vertically == UP)
+				user.end_look()
+			else
+				user.look_up()
+			return
+		hud.mymob.up()
 		return
 
-	usr.down()
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) && isliving(user))
+		if(user.looking_vertically == DOWN)
+			user.end_look()
+		else
+			user.look_down()
+		return
+	hud.mymob.down()
 	return
 
 /atom/movable/screen/floor_changer/vertical
@@ -581,14 +600,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	SetInvisibility(INVISIBILITY_ABSTRACT, INVISIBILITY_SOURCE_SLEEP_HUD_BUTTON)
 
 /atom/movable/screen/sleep/Click()
-	if(!isliving(usr) || HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
+	if(!isliving(usr) || IS_UNCONSCIOUS(usr))
 		return
 	if(!usr.client?.prefs.read_preference(/datum/preference/toggle/remove_double_click))
 		flick("[base_icon_state]_flick", src)
 		return
 
 	var/tgui_answer = tgui_alert(usr, "You sure you want to sleep for a while?", "Sleeping", list("Yes", "No"))
-	if(tgui_answer == "Yes" && !HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
+	if(tgui_answer == "Yes" && !IS_UNCONSCIOUS(usr))
 		var/mob/living/L = usr
 		L.Sleeping(400)
 
@@ -955,6 +974,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	var/list/current_animated = LAZYLISTDUPLICATE(animated_zones)
 
 	for(var/part_zone, body_part_untyped in owner.get_bodyparts_by_zones())
+		// I hate that we "allow" support for more than 2 hands in the codebase
+		if(!limbs[part_zone])
+			continue
 		var/icon_key = 0
 		var/obj/item/bodypart/body_part = body_part_untyped
 		var/list/overridable_key = list(icon_key)

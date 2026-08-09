@@ -68,7 +68,7 @@
 	RegisterSignals(parent, GLOB.movement_type_removetrait_signals, PROC_REF(on_movement_type_trait_loss))
 	RegisterSignal(parent, COMSIG_SUPERMATTER_CONSUMED, PROC_REF(on_entered_supermatter))
 	switch(other_unbuckle)
-		if(CAN_FORCE_UNBUCKLE)
+		if(CANNOT_FORCE_UNBUCKLE)
 			RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(block_unbuckle))
 		if(CAN_DISARM_UNBUCKLE)
 			RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(block_unbuckle))
@@ -399,7 +399,7 @@
 		return
 
 	rider.visible_message(
-		span_warning("As [disarmer] shoves [rider] around, [rider.p_they()] lose [rider.p_their()] [pick("balance", "grip", "hold")] and fall off [parent]!"),
+		span_warning("As [disarmer] shoves [rider] around, [rider.p_they()] lose[rider.p_s()] [rider.p_their()] [pick("balance", "grip", "hold")] and fall[rider.p_s()] off [parent]!"),
 		span_warning("As [disarmer] shoves you around, you lose your [pick("balance", "grip", "hold")] and fall off [parent]!")
 	)
 	if(rider.is_blind())

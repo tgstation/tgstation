@@ -131,7 +131,7 @@
 			var/list/spawn_params = list(
 				"selected_atom" = selected_atom,
 				"offset" = params["offset"],
-				"atom_dir" = text2num(params["dir"]) || 1,
+				"atom_dir" = text2num(params["atom_dir"]) || 1,
 				"atom_amount" = text2num(params["atom_amount"]) || 1,
 				"atom_name" = params["atom_name"],
 				"where_target_type" = params["where_target_type"] || WHERE_FLOOR_BELOW_MOB,

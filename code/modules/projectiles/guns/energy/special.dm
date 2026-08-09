@@ -46,6 +46,7 @@
 	ammo_x_offset = 1
 	selfcharge = 1
 	gun_flags = NOT_A_REAL_GUN
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/uranium = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/gun/energy/meteorgun
 	name = "meteor gun"
@@ -100,6 +101,7 @@
 	usesound = list('sound/items/tools/welder.ogg', 'sound/items/tools/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 4)
 
 /obj/item/gun/energy/plasmacutter/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
@@ -195,6 +197,7 @@
 	inhand_icon_state = "adv_plasmacutter"
 	force = 15
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/plasma = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
 
 #define AMMO_SELECT_BLUE 1
 #define AMMO_SELECT_ORANGE 2
@@ -209,6 +212,7 @@
 	icon_state = "wormhole_projector"
 	base_icon_state = "wormhole_projector"
 	automatic_charge_overlays = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT)
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/firing_core = FALSE
@@ -218,13 +222,17 @@
 	. = ..()
 	. += span_notice("<b>Left-click</b> to fire blue wormholes and <b><font color=orange>right-click</font></b> to fire orange wormholes.")
 
-/obj/item/gun/energy/wormhole_projector/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/assembly/signaler/anomaly/bluespace))
-		to_chat(user, span_notice("You insert [C] into the wormhole projector and the weapon gently hums to life."))
-		firing_core = TRUE
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		qdel(C)
-		return
+/obj/item/gun/energy/wormhole_projector/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/assembly/signaler/anomaly/bluespace))
+		return NONE
+	if(firing_core)
+		user.balloon_alert(user, "already has a core!")
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You insert [tool] into the wormhole projector and the weapon gently hums to life."))
+	firing_core = TRUE
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/energy/wormhole_projector/can_shoot()
 	if(!firing_core)
@@ -355,18 +363,29 @@
 	inhand_icon_state = "gravity_gun"
 	icon_state = "gravity_gun"
 	automatic_charge_overlays = FALSE
+	custom_materials = list(
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 6,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 1.5,
+	)
 	var/power = 4
 	var/firing_core = FALSE
 	gun_flags = NOT_A_REAL_GUN
 
-/obj/item/gun/energy/gravity_gun/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/assembly/signaler/anomaly/grav))
-		to_chat(user, span_notice("You insert [C] into the gravitational manipulator and the weapon gently hums to life."))
-		firing_core = TRUE
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		qdel(C)
-		return
-	return ..()
+/obj/item/gun/energy/gravity_gun/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/assembly/signaler/anomaly/grav))
+		return NONE
+	if(firing_core)
+		user.balloon_alert(user, "already has a core!")
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You insert [tool] into the gravitational manipulator and the weapon gently hums to life."))
+	firing_core = TRUE
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/energy/gravity_gun/can_shoot()
 	if(!firing_core)

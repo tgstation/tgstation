@@ -22,7 +22,6 @@
 			determin_ph_range = R.determin_ph_range,
 			H_ion_release = R.H_ion_release,
 			purity_min = R.purity_min,
-			results = R.results,
 			required_container = R.required_container
 		)
 

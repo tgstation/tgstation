@@ -5,8 +5,8 @@
  */
 /datum/religion_rites/deaconize
 	name = "Deaconize"
-	desc = "Converts someone to your sect. They must be willing, so the first invocation will instead prompt them to join. \
-		They will gain the same holy abilities as you, this is a one-time use so make sure they are worthy!"
+	desc = "Converts someone to your sect. They must be willing, so the first invocation will only prompt them to join. \
+		They will gain the same holy abilities as you. This is a one-time use rite, so make sure they are worthy!"
 	ritual_length = 30 SECONDS
 	ritual_invocations = list(
 		"A good, honorable person has been brought here by faith ...",
@@ -41,7 +41,7 @@
 	//no one invited or this is not the invited person
 	if(!potential_deacon || (possible_deacon != potential_deacon))
 		INVOKE_ASYNC(src, PROC_REF(invite_deacon), possible_deacon)
-		to_chat(user, span_notice("They have been offered the oppertunity to join our ranks. Wait for them to decide and try again."))
+		to_chat(user, span_notice("They have been offered the opportunity to join our ranks. Wait for them to decide and try again."))
 		return FALSE
 	return ..()
 
@@ -50,7 +50,7 @@
 	if(!(potential_deacon in religious_tool.buckled_mobs)) //checks one last time if the right corpse is still buckled
 		to_chat(user, span_warning("[potential_deacon] is no longer on the altar!"))
 		return FALSE
-	if(potential_deacon.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(potential_deacon))
 		to_chat(user, span_warning("[potential_deacon] has to be conscious for the rite to work!"))
 		return FALSE
 	if(!potential_deacon.mind)
@@ -64,7 +64,7 @@
 	var/datum/brain_trauma/special/honorbound/honor = user.has_trauma_type(/datum/brain_trauma/special/honorbound)
 	if(honor && (potential_deacon in honor.guilty))
 		honor.guilty -= potential_deacon
-	to_chat(user, span_notice("[GLOB.deity] has bound [potential_deacon] to the code! They are now a holy role! (albeit the lowest level of such)"))
+	to_chat(user, span_notice("[GLOB.deity] has bound [potential_deacon] to the code! They are now a holy role (albeit the lowest level of such)!"))
 	potential_deacon.mind.set_holy_role(HOLY_ROLE_DEACON)
 	GLOB.religious_sect.on_conversion(potential_deacon)
 	playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
@@ -72,7 +72,7 @@
 
 ///Helper if the passed possible_deacon is valid to become a deacon or not.
 /datum/religion_rites/deaconize/proc/is_valid_for_deacon(mob/living/carbon/human/possible_deacon, mob/living/user)
-	if(possible_deacon.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(possible_deacon))
 		to_chat(user, span_warning("[possible_deacon] needs to be alive and conscious to join!"))
 		return FALSE
 	if(possible_deacon.mind && possible_deacon.mind.holy_role)
@@ -85,7 +85,7 @@
  * If they accept, the deaconize rite can now recruit them instead of just offering more invites.
  */
 /datum/religion_rites/deaconize/proc/invite_deacon(mob/living/carbon/human/invited)
-	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be expected to follow the Chaplain's order.", "Invitation", list("Yes", "No"), 60 SECONDS)
+	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be expected to follow the chaplain's order.", "Invitation", list("Yes", "No"), 60 SECONDS)
 	if(ask != "Yes")
 		return
 	potential_deacon = invited

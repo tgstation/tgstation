@@ -27,6 +27,10 @@
 	src.image_name = image_name
 	set_source(source_photo_or_painting)
 
+/datum/computer_file/image/Destroy(force)
+	source_photo_or_painting = null
+	return ..()
+
 /datum/computer_file/image/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
 	. = ..()
 	assign_path()

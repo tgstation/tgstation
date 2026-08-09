@@ -66,6 +66,7 @@
 /mob/proc/update_held_items()
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_HELD_ITEMS)
+	hud_used?.update_inventory_slot(ITEM_SLOT_HANDS)
 
 ///Updates the mask overlay & HUD element.
 /mob/proc/update_worn_mask()

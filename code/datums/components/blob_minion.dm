@@ -74,7 +74,6 @@
 	var/mob/living/living_parent = parent
 	living_parent.add_faction(ROLE_BLOB)
 	ADD_TRAIT(parent, TRAIT_BLOB_ALLY, REF(src))
-	remove_verb(parent, /mob/living/verb/pulled) // No dragging people into the blob
 	RegisterSignal(parent, COMSIG_MOB_MIND_INITIALIZED, PROC_REF(on_mind_init))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, PROC_REF(on_update_appearance))
 	RegisterSignal(parent, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(on_update_status_tab))
@@ -98,7 +97,6 @@
 	living_parent.pass_flags &= ~PASSBLOB
 	living_parent.remove_faction(ROLE_BLOB)
 	REMOVE_TRAIT(parent, TRAIT_BLOB_ALLY, REF(src))
-	add_verb(parent, /mob/living/verb/pulled)
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_BLOB_ACT,
 		COMSIG_ATOM_FIRE_ACT,

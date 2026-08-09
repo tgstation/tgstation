@@ -284,7 +284,7 @@
 	if(!isnull(throwforce_on))
 		source.throwforce = throwforce_off
 	if(!isnull(throw_speed_on))
-		source.throw_speed = throwforce_off
+		source.throw_speed = throw_speed_off
 
 	if(LAZYLEN(attack_verb_continuous_on))
 		source.attack_verb_continuous = attack_verb_continuous_off

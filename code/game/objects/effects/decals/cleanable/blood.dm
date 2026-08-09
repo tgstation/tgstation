@@ -8,6 +8,10 @@
 	clean_type = CLEAN_TYPE_BLOOD
 	color = BLOOD_COLOR_RED
 
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered)
+	)
+
 	/// Amount of blood, in units, in this decal
 	/// Spent when drying or making footprints
 	var/bloodiness = BLOOD_AMOUNT_PER_DECAL
@@ -50,6 +54,8 @@
 				can_hold_viruses = TRUE
 				break
 	. = ..(diseases = can_hold_viruses ? diseases : null)
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	if(islist(blood_or_dna))
 		add_blood_DNA(blood_or_dna)
 	else if(istype(blood_or_dna, /datum/blood_type))
@@ -62,16 +68,15 @@
 		total_dry_time = drying_time
 		START_PROCESSING(SSblood_drying, src)
 
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered)
-	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 	if (bloodiness || GET_ATOM_BLOOD_DECAL_LENGTH(src))
 		update_appearance()
 
-/obj/effect/decal/cleanable/blood/Destroy()
+/obj/effect/decal/cleanable/blood/Destroy(force)
 	STOP_PROCESSING(SSblood_drying, src)
+	// connect_loc only unregisters via COMSIG_MOVABLE_MOVED, which never fires when the turf we're on gets replaced by ChangeTurf()
+	RemoveElement(/datum/element/connect_loc, loc_connections)
 	return ..()
 
 /// Returns the default blood type for this decal for maploaded decals
@@ -134,7 +139,9 @@
 	create_reagents(round(bloodiness * BLOOD_TO_UNITS_MULTIPLIER, CHEMICAL_VOLUME_ROUNDING))
 	var/num_reagents = length(reagents_to_add)
 	for(var/reagent_type in reagents_to_add)
-		reagents.add_reagent(reagent_type, round(bloodiness * BLOOD_TO_UNITS_MULTIPLIER / num_reagents, CHEMICAL_VOLUME_ROUNDING))
+		reagents.add_reagent(reagent_type = reagent_type,
+							amount = round(bloodiness * BLOOD_TO_UNITS_MULTIPLIER / num_reagents, CHEMICAL_VOLUME_ROUNDING),
+							data = ispath(reagent_type, /datum/reagent/blood) ? list(BLOOD_DATA_DNA = pick(blood_DNA)) : null)
 	return reagents
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/merger)
@@ -540,13 +547,7 @@
 /obj/effect/decal/cleanable/blood/gibs/lazy_init_reagents()
 	if (reagents)
 		return reagents
-
-	if (!decal_reagent)
-		return
-
-	create_reagents(reagent_amount)
-	reagents.add_reagent(decal_reagent, reagent_amount)
-	return reagents
+	return init_reagents(decal_reagent, reagent_amount)
 
 /obj/effect/decal/cleanable/blood/gibs/update_overlays()
 	. = ..()

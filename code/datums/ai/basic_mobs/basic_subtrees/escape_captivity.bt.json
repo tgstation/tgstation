@@ -1,0 +1,82 @@
+{
+	"dm_type": "/datum/bt_node/subtree/escape_captivity",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/pawn_buckled_to_obj",
+			"vars": {
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+			},
+			"child": {
+				"type": "selector",
+				"children": [
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/buckle_target_dangerous",
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/break_out_of_object/from_bb",
+							"vars": {
+								"target_key": "BB_BASIC_MOB_ESCAPE_TARGET"
+							}
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/resist"
+					}
+				]
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/pawn_contained_in_obj",
+			"vars": {
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+			},
+			"child": {
+				"type": "selector",
+				"children": [
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/container_attackable",
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/break_out_of_object/from_bb",
+							"vars": {
+								"target_key": "BB_BASIC_MOB_ESCAPE_TARGET"
+							}
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/resist"
+					}
+				]
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/pawn_grabbed_by_enemy",
+			"vars": {
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/resist"
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/pawn_is_restrained",
+			"vars": {
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/resist"
+			}
+		}
+	]
+}

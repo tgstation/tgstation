@@ -131,19 +131,16 @@ By design, d1 is the smallest direction and d2 is the highest
 //   - Wirecutters : cut it duh !
 //   - pipe cleaner coil : merge pipe cleaners
 //
-/obj/structure/pipe_cleaner/proc/handlecable(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WIRECUTTER)
-		cut_pipe_cleaner(user)
-		return
-
-	else if(istype(W, /obj/item/stack/pipe_cleaner_coil))
-		var/obj/item/stack/pipe_cleaner_coil/coil = W
-		if (coil.get_amount() < 1)
-			to_chat(user, span_warning("Not enough pipe cleaner!"))
-			return
-		coil.pipe_cleaner_join(src, user)
-
+/obj/structure/pipe_cleaner/proc/handlecable(obj/item/tool, mob/user, params)
 	add_fingerprint(user)
+	if(!istype(tool, /obj/item/stack/pipe_cleaner_coil))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/stack/pipe_cleaner_coil/coil = tool
+	if (coil.get_amount() < 1)
+		to_chat(user, span_warning("Not enough pipe cleaner!"))
+		return ITEM_INTERACT_BLOCKING
+	coil.pipe_cleaner_join(src, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/pipe_cleaner/proc/cut_pipe_cleaner(mob/user)
 	user.visible_message(span_notice("[user] pulls up the pipe cleaner."), span_notice("You pull up the pipe cleaner."))
@@ -151,8 +148,12 @@ By design, d1 is the smallest direction and d2 is the highest
 	investigate_log("was pulled up by [key_name(usr)] in [AREACOORD(src)]", INVESTIGATE_WIRES)
 	deconstruct()
 
-/obj/structure/pipe_cleaner/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	handlecable(W, user, modifiers)
+/obj/structure/pipe_cleaner/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return handlecable(tool, user, modifiers)
+
+/obj/structure/pipe_cleaner/wirecutter_act(mob/living/user, obj/item/tool)
+	cut_pipe_cleaner(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/pipe_cleaner/singularity_pull(atom/singularity, current_size)
 	..()

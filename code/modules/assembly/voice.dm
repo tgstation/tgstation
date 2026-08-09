@@ -49,7 +49,7 @@
 	else
 		if(check_activation(speaker, raw_message))
 			send_pulse()
-	return TRUE
+	return HEAR_HEARD | HEAR_UNDERSTOOD
 
 /obj/item/assembly/voice/proc/record_speech(atom/movable/speaker, raw_message, datum/language/message_language)
 	switch(mode)

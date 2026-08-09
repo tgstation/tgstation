@@ -36,9 +36,13 @@
 	var/speech_span
 	///Are we moving with inertia? Mostly used as an optimization
 	var/inertia_moving = FALSE
-	///Multiplier for inertia based movement in space
-	var/inertia_move_multiplier = 1
-	///Object "weight", higher weight reduces acceleration applied to the object
+	/// Multiplies speed the movable drifts when unaffected by gravity.
+	/// "Passive" is used for referring "base drift speed" - only the smaller of the two are used.
+	var/inertia_move_multiplier_passive = 1
+	/// Multiplies speed the movable drifts when unaffected by gravity.
+	/// "Active" is used for referring to things boosting our drift speed, like jetpacks - only the smaller of the two are used.
+	var/inertia_move_multiplier_active = 1
+	/// Object "weight", higher weight reduces acceleration applied to the object
 	var/inertia_force_weight = 1
 	///The last time we pushed off something
 	///This is a hack to get around dumb him him me scenarios
@@ -108,6 +112,12 @@
 
 	/// The pitch adjustment that this movable uses when speaking.
 	var/pitch = 0
+
+	/// The base set of blips to use for blip calculation.
+	var/blip_base = "male"
+
+	/// The blip variant to use for blip calculation.
+	var/blip_number = "1"
 
 	/// Datum that keeps all data related to zero-g drifting and handles related code/comsigs
 	var/datum/drift_handler/drift_handler
@@ -407,8 +417,9 @@
 	return TRUE
 
 /// Returns a list of movables that should also be affected when src moves through zlevels, and src.
-/atom/movable/proc/get_z_move_affected(z_move_flags)
-	. = list(src)
+/atom/movable/proc/get_z_move_affected(z_move_flags, list/returning_list = list())
+	. = returning_list
+	. |= src
 	if(buckled_mobs)
 		. |= buckled_mobs
 	if(!(z_move_flags & ZMOVE_INCLUDE_PULLED))
@@ -416,15 +427,11 @@
 	for(var/mob/living/buckled as anything in buckled_mobs)
 		if(buckled.pulling)
 			. |= buckled.pulling
-	if(pulling)
-		. |= pulling
-		if (pulling.buckled_mobs)
-			. |= pulling.buckled_mobs
-
-		//makes conga lines work with ladders and flying up and down; checks if the guy you are pulling is pulling someone,
-		//then uses recursion to run the same function again
-		if (pulling.pulling)
-			. |= pulling.pulling.get_z_move_affected(z_move_flags)
+	//makes conga lines work with ladders and flying up and down; checks if the guy you are pulling is pulling someone,
+	//then uses recursion to run the same function again
+	//we pass in the list from this proc to ensure we dont reach an infinite loop due to mobs grabbed in a loop or two mobs grabing eachother.
+	if(pulling && !(pulling in .))
+		. |= pulling.get_z_move_affected(z_move_flags, .)
 
 /**
  * Checks if the destination turf is elegible for z movement from the start turf to a given direction and returns it if so.
@@ -543,27 +550,66 @@
 	if(pulled_atom.pulledby)
 		log_combat(pulled_atom, pulled_atom.pulledby, "pulled from", src)
 		pulled_atom.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
-	pulling = pulled_atom
-	pulled_atom.set_pulledby(src)
+	set_pulling(pulled_atom)
 	SEND_SIGNAL(src, COMSIG_ATOM_START_PULL, pulled_atom, state, force)
 	setGrabState(state)
 	if(ismob(pulled_atom))
 		var/mob/pulled_mob = pulled_atom
-		log_combat(src, pulled_mob, "grabbed", addition="passive grab")
+		log_combat(src, pulled_mob, "grabbed", addition = "passive grab")
 		if(!supress_message)
-			pulled_mob.visible_message(span_warning("[src] grabs [pulled_mob] passively."), \
-				span_danger("[src] grabs you passively."))
+			pulled_mob.visible_message(
+				span_warning("[src] grabs [pulled_mob] passively."),
+				span_danger("[src] grabs you passively."),
+			)
+
+
 	return TRUE
 
 /atom/movable/proc/stop_pulling()
 	if(!pulling)
 		return
-	pulling.set_pulledby(null)
-	setGrabState(GRAB_PASSIVE)
-	var/atom/movable/old_pulling = pulling
-	pulling = null
+	var/atom/movable/old_pulling = set_pulling(null)
 	SEND_SIGNAL(old_pulling, COMSIG_ATOM_NO_LONGER_PULLED, src)
 	SEND_SIGNAL(src, COMSIG_ATOM_NO_LONGER_PULLING, old_pulling)
+
+#define PULLED_WHILE_CRIT_TRAIT "pulled_while_softcrit"
+
+/atom/movable/proc/pulled_mob_stat_change(mob/living/pulled_mob, new_stat, ...)
+	SIGNAL_HANDLER
+
+	if(new_stat >= SOFT_CRIT)
+		ADD_TRAIT(pulled_mob, TRAIT_IMMOBILIZED, PULLED_WHILE_CRIT_TRAIT)
+	else
+		REMOVE_TRAIT(pulled_mob, TRAIT_IMMOBILIZED, PULLED_WHILE_CRIT_TRAIT)
+
+/atom/movable/proc/set_pulling(new_pulling)
+	if(new_pulling == pulling)
+		return FALSE //null signals there was a change, be sure to return FALSE if none happened here.
+
+	if(isnull(new_pulling))
+		setGrabState(GRAB_PASSIVE)
+
+	. = pulling
+	pulling = new_pulling
+
+	if(ismovable(.))
+		var/atom/movable/was_pulling = .
+		was_pulling.set_pulledby(null)
+
+	if(ismovable(new_pulling))
+		var/atom/movable/pulled_thing = new_pulling
+		pulled_thing.set_pulledby(src)
+
+	if(ismob(.))
+		var/mob/was_pulled_mob = .
+		UnregisterSignal(was_pulled_mob, COMSIG_MOB_STATCHANGE)
+		REMOVE_TRAIT(was_pulled_mob, TRAIT_IMMOBILIZED, PULLED_WHILE_CRIT_TRAIT)
+
+	if(ismob(pulling))
+		var/mob/pulled_mob = pulling
+		RegisterSignal(pulling, COMSIG_MOB_STATCHANGE, PROC_REF(pulled_mob_stat_change))
+		if(pulled_mob.stat >= SOFT_CRIT)
+			ADD_TRAIT(pulled_mob, TRAIT_IMMOBILIZED, PULLED_WHILE_CRIT_TRAIT)
 
 ///Reports the event of the change in value of the pulledby variable.
 /atom/movable/proc/set_pulledby(new_pulledby)
@@ -572,6 +618,7 @@
 	. = pulledby
 	pulledby = new_pulledby
 
+#undef PULLED_WHILE_CRIT_TRAIT
 
 /atom/movable/proc/Move_Pulled(atom/moving_atom)
 	if(!pulling)
@@ -946,7 +993,7 @@
 	if(!bumped_atom)
 		CRASH("Bump was called with no argument.")
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, bumped_atom) & COMPONENT_INTERCEPT_BUMPED)
-		return
+		return TRUE
 	. = ..()
 	if(!QDELETED(throwing))
 		throwing.finalize(hit = TRUE, target = bumped_atom)
@@ -1594,6 +1641,10 @@
 /atom/movable/proc/has_language(language, flags_to_check)
 	return get_language_holder().has_language(language, flags_to_check)
 
+/// Checks if atom has the language. If spoken is true, only checks if atom can speak the language.
+/atom/movable/proc/has_partial_language(language)
+	return get_language_holder().has_partial_language(language)
+
 /// Checks if atom can speak the language.
 /atom/movable/proc/can_speak_language(language)
 	return get_language_holder().can_speak_language(language)
@@ -1618,6 +1669,10 @@
 /// Gets a random spoken language, useful for forced speech and such.
 /atom/movable/proc/get_random_spoken_language()
 	return get_language_holder().get_random_spoken_language()
+
+/// Gets a list of all understood languages, excluding any blocked languages
+/atom/movable/proc/get_understood_languages() as /list
+	return get_language_holder().get_understood_languages() || list()
 
 /// Copies all languages into the supplied atom/language holder. Source should be overridden when you
 /// do not want the language overwritten by later atom updates or want to avoid blocked languages.
@@ -1734,6 +1789,8 @@
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_PARTICLES, "Edit Particles")
 	VV_DROPDOWN_OPTION(VV_HK_DEADCHAT_PLAYS, "Start/Stop Deadchat Plays")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
+	if(SStts.tts_enabled)
+		VV_DROPDOWN_OPTION(VV_HK_SET_TTS_VOICE, "Modify TTS Voice")
 
 /atom/movable/vv_do_topic(list/href_list)
 	. = ..()
@@ -1789,6 +1846,14 @@
 		to_chat(usr, span_notice("Deadchat now control [src]."))
 		log_admin("[key_name(usr)] has added deadchat control to [src]")
 		message_admins(span_notice("[key_name(usr)] has added deadchat control to [src]"))
+
+	if(href_list[VV_HK_SET_TTS_VOICE])
+		var/chosen_voice = tgui_input_list(usr, "Choose a voice to use.", "Choose a voice.", SStts.available_speakers)
+		if(!chosen_voice)
+			return
+		voice = chosen_voice
+		log_admin("[key_name(usr)] has set [src]'s voice as [chosen_voice].")
+		message_admins(span_notice("[key_name(usr)] has set [src]'s voice as [chosen_voice]."))
 
 /**
 * A wrapper for setDir that should only be able to fail by living mobs.

@@ -12,7 +12,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.05, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.8)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.05, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
 	resistance_flags = FIRE_PROOF
 	trigger_guard = TRIGGER_GUARD_NORMAL
 	light_system = OVERLAY_LIGHT
@@ -230,8 +230,8 @@
 	var/datum/gas_mixture/tank_mix = ptank.return_air()
 	var/datum/gas_mixture/air_transfer = tank_mix.remove_ratio(release_amount)
 
-	if(air_transfer.gases[/datum/gas/plasma])
-		var/moles = air_transfer.gases[/datum/gas/plasma][MOLES] * 5 //Suffering
+	if(air_transfer.moles[/datum/gas/plasma])
+		var/moles = air_transfer.moles[/datum/gas/plasma] * 5 //Suffering
 		air_transfer.set_gas(/datum/gas/plasma, moles)
 	target.assume_air(air_transfer)
 	//Burn it based on transferred gas
@@ -263,6 +263,7 @@
 
 /obj/item/flamethrower/full
 	create_full = TRUE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/flamethrower/full/tank
 	create_with_tank = TRUE

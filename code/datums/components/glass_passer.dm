@@ -14,7 +14,7 @@
 
 /datum/component/glass_passer/RegisterWithParent()
 	if(!pass_time)
-		passwindow_on(parent, type)
+		ADD_TRAIT(parent, TRAIT_PASSWINDOW, type)
 	else
 		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(bumped))
 
@@ -27,7 +27,7 @@
 
 /datum/component/glass_passer/UnregisterFromParent()
 	if(parent)
-		passwindow_off(parent, type)
+		REMOVE_TRAIT(parent, TRAIT_PASSWINDOW, type)
 
 /datum/component/glass_passer/proc/on_cross_over(mob/passer, atom/crosser)
 	SIGNAL_HANDLER
@@ -72,6 +72,6 @@
 /datum/component/glass_passer/proc/phase_through_glass(mob/living/owner, atom/bumpee)
 	if(!do_after(owner, pass_time, bumpee))
 		return
-	passwindow_on(owner, type)
+	ADD_TRAIT(owner, TRAIT_PASSWINDOW, type)
 	try_move_adjacent(owner, get_dir(owner, bumpee))
-	passwindow_off(owner, type)
+	REMOVE_TRAIT(owner, TRAIT_PASSWINDOW, type)

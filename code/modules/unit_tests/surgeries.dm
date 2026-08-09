@@ -348,3 +348,34 @@
 	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_SKIN_OPEN), "Surgical state for skin open was incorrectly removed upon wound healing")
 	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_VESSELS_UNCLAMPED), "Surgical state for unclamped vessels was incorrectly removed upon wound healing")
 	TEST_ASSERT(!LIMB_HAS_SURGERY_STATE(chest, SURGERY_BONE_DRILLED), "Surgical state for bone drilled was not correctly removed upon wound healing")
+
+/// Makes sure surgery returns the correct implement
+/datum/unit_test/surgery_implement
+
+/datum/unit_test/surgery_implement/Run()
+	var/datum/surgery_operation/limb/incise_skin/surgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
+
+	// Tests scalpel which matches via tool behavior type
+	var/obj/item/scalpel/scalpel = EASY_ALLOCATE()
+	var/scalpel_quality = UNLINT(surgery.get_tool_quality(scalpel))
+	TEST_ASSERT_EQUAL(scalpel_quality, surgery.implements[TOOL_SCALPEL], "Incise skin surgery did not return the correct tool quality for a scalpel, which is the expected tool")
+
+	// Tests retractor which doesn't match via tool behavior type or item type
+	var/obj/item/retractor/retractor = EASY_ALLOCATE()
+	var/retractor_quality = UNLINT(surgery.get_tool_quality(retractor))
+	TEST_ASSERT_EQUAL(retractor_quality, 0, "Incise skin surgery returned a non-zero tool quality for a retractor, which is not a valid implement for this surgery")
+
+	// Tests knife which matches via item type
+	var/obj/item/knife/knife = EASY_ALLOCATE()
+	var/knife_quality = UNLINT(surgery.get_tool_quality(knife))
+	TEST_ASSERT_EQUAL(knife_quality, surgery.implements[/obj/item/knife], "Incise skin surgery did not return the correct tool quality for a knife, which is a bespoke scalpel substitute")
+
+	// Tests claymore which matches via tool check
+	var/obj/item/claymore/claymore = EASY_ALLOCATE()
+	var/claymore_quality = UNLINT(surgery.get_tool_quality(claymore))
+	TEST_ASSERT_EQUAL(claymore_quality, surgery.implements[/obj/item], "Incise skin surgery did not return the correct tool quality for a claymore, which is a generic scalpel substitute")
+
+	// Tests a random item (pillow) which fails via tool check
+	var/obj/item/pillow/pillow = EASY_ALLOCATE()
+	var/pillow_quality = UNLINT(surgery.get_tool_quality(pillow))
+	TEST_ASSERT_EQUAL(pillow_quality, 0, "Incise skin surgery returned a non-zero tool quality for a pillow, which is not a valid generic scalpel substitute")

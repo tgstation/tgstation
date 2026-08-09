@@ -196,24 +196,28 @@
 	return TRUE
 
 
-/obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-
-	if(is_wire_tool(I) && open_panel)
+/obj/machinery/syndicatebomb/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(is_wire_tool(tool) && open_panel)
 		wires.interact(user)
+		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(I, /obj/item/bombcore))
-		if(!payload)
-			if(!user.transferItemToLoc(I, src))
-				return
-			payload = I
-			to_chat(user, span_notice("You place [payload] into [src]."))
-		else
+	if(istype(tool, /obj/item/bombcore))
+		if(payload)
 			to_chat(user, span_warning("[payload] is already loaded into [src]! You'll have to remove it first."))
-	else
-		var/old_integ = atom_integrity
-		. = ..()
-		if((old_integ > atom_integrity) && active && (payload in src))
-			to_chat(user, span_warning("That seems like a really bad idea..."))
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		payload = tool
+		to_chat(user, span_notice("You place [payload] into [src]."))
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/machinery/syndicatebomb/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	var/old_integ = atom_integrity
+	. = ..()
+	if((old_integ > atom_integrity) && active && payload)
+		to_chat(user, span_warning("That seems like a really bad idea..."))
 
 /obj/machinery/syndicatebomb/interact(mob/user)
 	wires.interact(user)
@@ -554,23 +558,26 @@
 
 	playsound(loc, 'sound/effects/bamf.ogg', 75, TRUE, 5)
 
-/obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(I.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)
-		I.play_tool_sound(src)
-		for (var/obj/item/B in beakers)
-			B.forceMove(drop_location())
-			beakers -= B
-		return
-	else if(istype(I, /obj/item/reagent_containers/cup/beaker) || istype(I, /obj/item/reagent_containers/cup/bottle))
-		if(beakers.len < max_beakers)
-			if(!user.transferItemToLoc(I, src))
-				return
-			beakers += I
-			to_chat(user, span_notice("You load [src] with [I]."))
-		else
-			to_chat(user, span_warning("[I] won't fit! \The [src] can only hold up to [max_beakers] containers."))
-			return
-	..()
+/obj/item/bombcore/chemical/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/reagent_containers/cup/beaker) && !istype(tool, /obj/item/reagent_containers/cup/bottle))
+		return NONE
+	if(beakers.len >= max_beakers)
+		to_chat(user, span_warning("[tool] won't fit! \The [src] can only hold up to [max_beakers] containers."))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	beakers += tool
+	to_chat(user, span_notice("You load [src] with [tool]."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/bombcore/chemical/crowbar_act(mob/living/user, obj/item/tool)
+	if(!beakers.len)
+		return NONE
+	tool.play_tool_sound(src)
+	for (var/obj/item/beaker in beakers)
+		beaker.forceMove(drop_location())
+		beakers -= beaker
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/bombcore/chemical/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	// Using different grenade casings, causes the payload to have different properties.

@@ -33,7 +33,7 @@
 	uses--
 
 	carbon_imp_in.uncuff()
-	var/obj/item/clothing/shoes/shoes = carbon_imp_in.shoes
+	var/obj/item/clothing/shoes/shoes = carbon_imp_in.get_item_by_slot(ITEM_SLOT_FEET)
 	if(istype(shoes) && shoes.tied == SHOES_KNOTTED)
 		shoes.adjust_laces(SHOES_TIED, carbon_imp_in)
 
@@ -45,7 +45,7 @@
 	if(implanted_in.handcuffed || implanted_in.legcuffed)
 		return TRUE
 
-	var/obj/item/clothing/shoes/shoes = implanted_in.shoes
+	var/obj/item/clothing/shoes/shoes = implanted_in.get_item_by_slot(ITEM_SLOT_FEET)
 	if(istype(shoes) && shoes.tied == SHOES_KNOTTED)
 		return TRUE
 

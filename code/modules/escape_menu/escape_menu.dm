@@ -1,176 +1,266 @@
+GLOBAL_VAR(escape_menu_suicide_icon_base64)
+
+/proc/generate_escape_menu_suicide_icon()
+	set waitfor = FALSE
+	if(!isnull(GLOB.escape_menu_suicide_icon_base64))
+		return
+	GLOB.escape_menu_suicide_icon_base64 = ""
+	UNTIL(MC_RUNNING(SSatoms.init_stage))
+	var/mob/living/carbon/human/consistent/clown = new
+	clown.equipOutfit(/datum/outfit/job/clown)
+	var/icon/clown_icon = getFlatIcon(clown)
+	clown_icon.Turn(90)
+	qdel(clown)
+	GLOB.escape_menu_suicide_icon_base64 = icon2base64(clown_icon)
+	for(var/datum/escape_menu/menu as anything in GLOB.escape_menus)
+		menu.send_update(list("suicideIcon" = GLOB.escape_menu_suicide_icon_base64))
+
 GLOBAL_LIST_EMPTY(escape_menus)
 
-/// Opens the escape menu.
-/// Verb, hardcoded to Escape, set in the client skin.
-/client/verb/open_escape_menu()
-	set name = "Open Escape Menu"
-	set hidden = TRUE
+/client/var/datum/escape_menu/escape_menu
 
-	var/current_escape_menu = GLOB.escape_menus[ckey]
-	if (!isnull(current_escape_menu))
-		qdel(current_escape_menu)
-		return
+/client/proc/initialize_escape_menu()
+	set waitfor = FALSE
+	sleep(3 SECONDS)
+	generate_escape_menu_suicide_icon()
+	escape_menu = new(src)
 
+GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 	reset_held_keys()
 
-	new /datum/escape_menu(src)
-
-#define PAGE_HOME "PAGE_HOME"
-#define PAGE_ADMIN "ADMIN_PAGE"
-#define PAGE_LEAVE_BODY "PAGE_LEAVE_BODY"
-#define PAGE_QUIT_GAME "PAGE_QUIT_GAME"
-
 /datum/escape_menu
-	/// The client that owns this escape menu
 	var/client/client
-	/// A weakref to the hud this escape menu currently applies to
-	var/datum/weakref/our_hud_ref
-	/// The details at the top right that persists through all screens, showing round info.
-	var/atom/movable/screen/escape_menu/details/detail_screen
+	var/datum/tgui_window/window
 
-	VAR_PRIVATE
-		ckey
-
-		static/atom/movable/screen/fullscreen/dimmer/dim_screen
-
-		datum/screen_object_holder/base_holder
-		datum/screen_object_holder/page_holder
-
-		atom/movable/plane_master_controller/plane_master_controller
-
-		list/resource_panels
-		show_resources = FALSE
-		menu_page = PAGE_HOME
+	/// If we've already notified the user that their BYOND version is not cool with transparent browsers
+	var/version_warned
 
 /datum/escape_menu/New(client/client)
-	ASSERT(!(client.ckey in GLOB.escape_menus))
-
-	ckey = client?.ckey
 	src.client = client
-	refresh_hud()
-
-	base_holder = new(client)
-	if(isnull(dim_screen))
-		dim_screen = new()
-	detail_screen = new()
-	detail_screen.update_text(client)
-	populate_base_ui()
-
-	page_holder = new(client)
-	show_page()
+	window = new(client, "escape_menu")
+	window.is_browser = TRUE
+	window.initialize(
+		strict_mode = TRUE,
+		inline_css = file("tgui/public/tgui-escape-menu.bundle.css"),
+		inline_js = file("tgui/public/tgui-escape-menu.bundle.js"),
+	)
+	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/escape_menu_font))
+	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/escape_menu_sounds))
+	window.send_asset(get_asset_datum(/datum/asset/spritesheet/escape_menu_icons))
+	window.subscribe(src, PROC_REF(on_message))
 
 	RegisterSignal(client, COMSIG_QDELETING, PROC_REF(on_client_qdel))
 	RegisterSignal(client, COMSIG_CLIENT_MOB_LOGIN, PROC_REF(on_client_mob_login))
+	RegisterSignals(client, list(COMSIG_CLIENT_VERB_ADDED, COMSIG_CLIENT_VERB_REMOVED), PROC_REF(on_verb_change))
+	RegisterSignal(SSdcs, COMSIG_GLOB_STATION_NAME_CHANGED, PROC_REF(on_station_name_changed))
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
 
-	SEND_SOUND(client, 'sound/misc/escape_menu/esc_open.ogg')
-	var/sound/esc_middle = sound('sound/misc/escape_menu/esc_middle.ogg', repeat = FALSE, channel = CHANNEL_ESCAPEMENU, volume = 80)
-	SEND_SOUND(client, esc_middle)
-
-	if (!isnull(ckey))
-		GLOB.escape_menus[ckey] = src
-
-	START_PROCESSING(SSescape_menu, src)
+	GLOB.escape_menus += src
+	send_init()
 
 /datum/escape_menu/Destroy(force)
+	GLOB.escape_menus -= src
 	STOP_PROCESSING(SSescape_menu, src)
-	QDEL_NULL(base_holder)
-	QDEL_NULL(page_holder)
-	resource_panels = null // list contents were already qdeled in QDEL_NULL(page_holder), so we can safely null this
-
-	var/datum/our_hud = our_hud_ref?.resolve()
-	if(our_hud)
-		REMOVE_TRAIT(our_hud, TRAIT_ESCAPE_MENU_OPEN, ref(src))
-
-	GLOB.escape_menus -= ckey
-
-	var/sound/esc_clear = sound(null, repeat = FALSE, channel = CHANNEL_ESCAPEMENU) //yes, I'm doing it like this with a null, no its absolutely intentional, cuts off the sound right as needed.
-	SEND_SOUND(client, esc_clear)
-	SEND_SOUND(client, 'sound/misc/escape_menu/esc_close.ogg')
+	window?.unsubscribe(src)
+	window = null
 	client = null
-
 	return ..()
 
 /datum/escape_menu/process(seconds_per_tick)
-	detail_screen.update_text(client)
+	send_update(list(
+		"serverTime" = server_timestamp(format = "hh:mm:ss"),
+		"shiftTime" = (SSticker.round_start_time == 0) ? "Pre-Game" : round_timestamp(),
+		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
+		"admins" = build_admin_list(),
+		"players" = build_player_list(),
+		"ignoredOffline" = build_ignored_offline(),
+	))
 
 /datum/escape_menu/proc/on_client_qdel()
 	SIGNAL_HANDLER
-	PRIVATE_PROC(TRUE)
-
 	qdel(src)
 
 /datum/escape_menu/proc/on_client_mob_login()
 	SIGNAL_HANDLER
-	PRIVATE_PROC(TRUE)
+	send_update(list(
+		"canLeaveBody" = isliving(client?.mob),
+	))
 
-	if (menu_page != PAGE_HOME)
-		qdel(src)
-	else
-		// Otherwise our client just switched bodies, let's update our hud
-		refresh_hud()
+/datum/escape_menu/proc/on_verb_change(client/source, list/verbs_changed)
+	SIGNAL_HANDLER
+	if(/client/verb/adminhelp in verbs_changed)
+		send_update(list(
+			"canAdminHelp" = (/client/verb/adminhelp in client?.verbs),
+		))
 
-/datum/escape_menu/proc/refresh_hud()
-	var/datum/old_hud = our_hud_ref?.resolve()
-	if(old_hud)
-		REMOVE_TRAIT(old_hud, TRAIT_ESCAPE_MENU_OPEN, ref(src))
+/datum/escape_menu/proc/on_station_name_changed()
+	SIGNAL_HANDLER
+	send_update(list(
+		"stationName" = station_name(),
+	))
 
-	var/datum/new_hud = client.mob?.hud_used
-	our_hud_ref = WEAKREF(new_hud)
-	if(new_hud)
-		ADD_TRAIT(new_hud, TRAIT_ESCAPE_MENU_OPEN, ref(src))
+/datum/escape_menu/proc/on_round_start()
+	SIGNAL_HANDLER
+	send_update(list(
+		"shiftTime" = round_timestamp(),
+		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
+	))
 
-/datum/escape_menu/proc/show_page()
-	PRIVATE_PROC(TRUE)
+/datum/escape_menu/proc/send_init()
+	var/list/resources = list()
 
-	page_holder.clear()
+	var/githuburl = CONFIG_GET(string/githuburl)
+	if(githuburl)
+		resources += list(list("id" = "bug", "label" = "Report Bug", "tooltip" = "Report a bug/issue"))
+		resources += list(list("id" = "github", "label" = "Github", "tooltip" = "Open the repository for the game"))
 
-	switch (menu_page)
-		if (PAGE_HOME)
-			show_home_page()
-		if (PAGE_ADMIN)
-			show_admin_page()
-		if (PAGE_LEAVE_BODY)
-			show_leave_body_page()
-		if(PAGE_QUIT_GAME)
-			show_quit_game_page()
-		else
-			CRASH("Unknown escape menu page: [menu_page]")
+	var/forumurl = CONFIG_GET(string/forumurl)
+	if(forumurl)
+		resources += list(list("id" = "forums", "label" = "Forums", "tooltip" = "Visit the server's forums"))
 
-/datum/escape_menu/proc/populate_base_ui()
-	PRIVATE_PROC(TRUE)
+	var/rulesurl = CONFIG_GET(string/rulesurl)
+	if(rulesurl)
+		resources += list(list("id" = "rules", "label" = "Rules", "tooltip" = "View the server rules"))
 
-	base_holder.give_protected_screen_object(dim_screen)
-	base_holder.give_screen_object(detail_screen)
+	var/wikiurl = CONFIG_GET(string/wikiurl)
+	if(wikiurl)
+		resources += list(list("id" = "wiki", "label" = "Wiki", "tooltip" = "See the wiki for the game"))
 
-/datum/escape_menu/proc/open_home_page()
-	PRIVATE_PROC(TRUE)
+	var/configurl = CONFIG_GET(string/configurl)
+	if(configurl)
+		resources += list(list("id" = "config", "label" = "Config", "tooltip" = "View the server configuration files"))
 
-	menu_page = PAGE_HOME
-	show_page()
+	resources += list(list("id" = "changelog", "label" = "Change Log", "tooltip" = "See all changes to the server"))
 
-/datum/escape_menu/proc/open_admin_page()
-	PRIVATE_PROC(TRUE)
+	window.send_message("init", list(
+		"stationName" = station_name(),
+		"roundId" = GLOB.round_id || "Unset",
+		"serverTime" = server_timestamp(format = "hh:mm:ss"),
+		"shiftTime" = (SSticker.round_start_time == 0) ? "Pre-Game" : round_timestamp(),
+		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
+		"mapName" = SSmapping.current_map?.map_name || "Loading...",
+		"mapFeedbackLink" = SSmapping.current_map?.feedback_link,
+		"canLeaveBody" = isliving(client?.mob),
+		"canAdminHelp" = (/client/verb/adminhelp in client?.verbs),
+		"canSeeNotes" = CONFIG_GET(flag/see_own_notes),
+		"hasTicketNotification" = !isnull(client?.current_ticket) && !client.current_ticket.player_replied,
+		"admins" = build_admin_list(),
+		"players" = build_player_list(),
+		"ignoredOffline" = build_ignored_offline(),
+		"resources" = resources,
+		"suicideIcon" = GLOB.escape_menu_suicide_icon_base64,
+	))
 
-	menu_page = PAGE_ADMIN
-	show_page()
+/datum/escape_menu/proc/build_admin_list()
+	var/list/result = list()
+	for(var/client/admin as anything in GLOB.admins)
+		result += list(list(
+			"ckey" = admin.ckey,
+			"displayName" = admin.holder?.fakekey || admin.ckey,
+			"rank" = admin.holder?.rank_names(),
+			"feedbackLink" = admin.holder?.feedback_link(),
+			"ping" = round(admin.avgping, 1),
+			"ignored" = (admin.ckey in client?.prefs?.ignoring),
+			"isSelf" = (admin.ckey == client?.ckey),
+		))
+	return result
 
-/datum/escape_menu/proc/open_leave_body()
-	PRIVATE_PROC(TRUE)
+/datum/escape_menu/proc/build_player_list()
+	var/list/result = list()
+	for(var/client/player as anything in GLOB.clients - GLOB.admins)
+		result += list(list(
+			"ckey" = player.ckey,
+			"displayName" = player.ckey,
+			"ping" = round(player.avgping, 1),
+			"ignored" = (player.ckey in client?.prefs?.ignoring),
+			"isSelf" = (player.ckey == client?.ckey),
+		))
+	return result
 
-	menu_page = PAGE_LEAVE_BODY
-	show_page()
+/datum/escape_menu/proc/build_ignored_offline()
+	var/list/result = list()
+	if(client?.prefs?.ignoring)
+		for(var/ignored_key in client.prefs.ignoring)
+			if(!(ignored_key in GLOB.directory))
+				result += ignored_key
+	return result
 
-/datum/escape_menu/proc/quit_game_prompt()
-	PRIVATE_PROC(TRUE)
+/datum/escape_menu/proc/send_update(list/data)
+	window.send_message("state", data)
 
-	menu_page = PAGE_QUIT_GAME
-	show_page()
+/datum/escape_menu/proc/on_message(type, payload, href_list)
+	if(type == "ready")
+		send_init()
+		return TRUE
 
-/atom/movable/screen/escape_menu
-	plane = ESCAPE_MENU_PLANE
-	clear_with_screen = FALSE
+	if(type != "action")
+		return FALSE
 
-#undef PAGE_HOME
-#undef PAGE_ADMIN
-#undef PAGE_LEAVE_BODY
-#undef PAGE_QUIT_GAME
+	var/action = payload["action"]
+	switch(action)
+		if("opened")
+			if(!version_warned && client.byond_build < 1680)
+				to_chat(client, span_warning("Your BYOND version is not up-to-date enough to render the escape menu, please update to 516.1680 or higher."))
+				version_warned = TRUE
+
+			START_PROCESSING(SSescape_menu, src)
+		if("closed")
+			STOP_PROCESSING(SSescape_menu, src)
+		if("character")
+			client?.prefs.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
+			client?.prefs.update_static_data(client?.mob)
+			client?.prefs.ui_interact(client?.mob)
+		if("settings")
+			client?.prefs.current_window = PREFERENCE_TAB_GAME_PREFERENCES
+			client?.prefs.update_static_data(client?.mob)
+			client?.prefs.ui_interact(client?.mob)
+		if("create_ticket")
+			if(!(/client/verb/adminhelp in client?.verbs))
+				return TRUE
+			client?.adminhelp()
+		if("view_ticket")
+			client?.view_latest_ticket()
+		if("pray")
+			var/datum/keybinding/client/communication/pray/pray_verb = GLOB.keybindings_by_name[/datum/keybinding/client/communication/pray::name]
+			pray_verb.down(client)
+		if("see_notes")
+			if(!CONFIG_GET(flag/see_own_notes))
+				to_chat(client.mob, span_notice("Seeing notes has been disabled on this server."))
+				return TRUE
+			browse_messages(null, client.ckey, null, TRUE)
+		if("ghost")
+			var/mob/living/living_user = client?.mob
+			living_user?.ghost()
+		if("suicide")
+			var/mob/living/carbon/human/human_user = client?.mob
+			human_user?.suicide()
+		if("quit")
+			winset(usr, null, list("command"=".quit"))
+		if("resource_bug")
+			client?.reportissue()
+		if("resource_github")
+			client?.github()
+		if("resource_forums")
+			client?.forum()
+		if("resource_rules")
+			client?.rules()
+		if("resource_wiki")
+			client?.wiki()
+		if("resource_config")
+			client?.config()
+		if("resource_changelog")
+			client?.changelog()
+		if("admin_notice")
+			client?.admin_notice()
+		if("toggle_ignore")
+			var/ckey = payload["ckey"]
+			if(!ckey || ckey == client?.ckey)
+				return TRUE
+			if(ckey in client?.prefs?.ignoring)
+				client.prefs.ignoring -= ckey
+			else
+				LAZYADD(client.prefs.ignoring, ckey)
+			client.prefs.save_preferences()
+			to_chat(client, span_notice("[ckey] has been [(ckey in client.prefs.ignoring) ? "" : "un"]ignored in OOC."))
+
+	return TRUE

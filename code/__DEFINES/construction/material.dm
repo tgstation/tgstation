@@ -26,7 +26,7 @@
 #define MATERIAL_SILO_STORED (1 << 0)
 /// This material can be used in basic recipes, such as chairs/toilets/tiles
 #define MATERIAL_BASIC_RECIPES (1 << 1)
-/// This material counts as a rigid enough solid to be used to craft tough objects like carving blocks or air tanks
+/// This material counts as a rigid enough solid to be used to craft tough objects like air tanks
 #define MATERIAL_CLASS_RIGID (1 << 2)
 /// The opposite of rigid, this means that the material cannot hold a solid form (like sand) and cannot be used in item crafting
 #define MATERIAL_CLASS_AMORPHOUS (1 << 3)
@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 #define MATERIAL_FLAMMABILITY "flammability"
 #define MATERIAL_RADIOACTIVITY "radioactivity"
 #define MATERIAL_FIRESTACKER "firestacker"
-#define MATERIAL_VAMPIRES_BANE "vampires_bane"
+#define MATERIAL_UNHOLY_BANE "unholy_bane"
 #define MATERIAL_TELEPORTING "teleporting"
 #define MATERIAL_PENETRATING "penetrating"
 

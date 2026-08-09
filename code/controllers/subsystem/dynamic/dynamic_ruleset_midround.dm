@@ -92,7 +92,7 @@
 	config_tag = "Heavy Pirates"
 	midround_type = HEAVY_MIDROUND
 	jobban_flag = ROLE_TRAITOR
-	ruleset_flags = RULESET_INVADER
+	ruleset_flags = RULESET_INVADER|RULESET_ADMIN_CONFIGURABLE
 	weight = 3
 	min_pop = 25
 	min_antag_cap = 0 // ship will spawn if there are no ghosts around
@@ -176,23 +176,31 @@
 	if(!ship.load(T))
 		CRASH("Loading pirate ship failed!")
 
+	//if the pirate has a "leader" type, fill that first
+	var/list/spawners = list()
 	for(var/turf/area_turf as anything in ship.get_affected_turfs(T))
 		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in area_turf)
-			if(candidates.len > 0)
-				var/mob/our_candidate = candidates[1]
-				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
-				candidates -= our_candidate
-				notify_ghosts(
-					"The [chosen_gang.ship_name] has an object of interest: [spawned_mob]!",
-					source = spawned_mob,
-					header = "Pirates!",
-				)
+			if(spawner.is_leader)
+				spawners.Insert(1, spawner)
 			else
-				notify_ghosts(
-					"The [chosen_gang.ship_name] has an object of interest: [spawner]!",
-					source = spawner,
-					header = "Pirate Spawn Here!",
-				)
+				spawners += spawner
+
+	for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner as anything in spawners)
+		if(candidates.len > 0)
+			var/mob/our_candidate = candidates[1]
+			var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
+			candidates -= our_candidate
+			notify_ghosts(
+				"The [chosen_gang.ship_name] has an object of interest: [spawned_mob]!",
+				source = spawned_mob,
+				header = "Pirates!",
+			)
+		else
+			notify_ghosts(
+				"The [chosen_gang.ship_name] has an object of interest: [spawner]!",
+				source = spawner,
+				header = "Pirate Spawn Here!",
+			)
 
 	priority_announce(chosen_gang.arrival_announcement, sender_override = chosen_gang.ship_name)
 
@@ -230,11 +238,8 @@
 	if(isnull(body))
 		return
 	candidate.transfer_to(body, force_key_move = TRUE) // yoinks the candidate's client
-	if(ishuman(body))
-		var/mob/living/carbon/human/human_body = body
-		body.client?.prefs.safe_transfer_prefs_to(body)
-		human_body.dna.remove_all_mutations()
-		human_body.dna.update_dna_identity()
+	if(ishuman(body) && apply_prefs_to_body(body))
+		on_prefs_applied(body)
 
 /**
  * Handles making the body for the candidate
@@ -261,6 +266,24 @@
 		alert_pic = signup_atom_appearance,
 		role_name_text = readable_poll_role,
 	)
+
+/**
+ * Handles prepping the body with the candidate's prefs
+ *
+ * Applies prefs to a given body. Usually that's what you want, but sometimes you don't, in which case you can override this proc.
+ * Returns TRUE if prefs were applied
+ */
+/datum/dynamic_ruleset/midround/from_ghosts/proc/apply_prefs_to_body(mob/living/carbon/human/body)
+	body.client?.prefs.safe_transfer_prefs_to(body)
+	body.dna.remove_all_mutations()
+	body.dna.update_dna_identity()
+	return TRUE
+
+/**
+ * Handles anything extra you want to happen after applying prefs
+ */
+/datum/dynamic_ruleset/midround/from_ghosts/proc/on_prefs_applied(mob/living/carbon/human/body)
+	return
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard
 	name = "Wizard"
@@ -512,6 +535,9 @@
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/item/light_eater
 
+/datum/dynamic_ruleset/midround/from_ghosts/nightmare/apply_prefs_to_body(mob/living/carbon/human/body)
+	return FALSE
+
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/can_be_selected()
 	return ..() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
 
@@ -715,23 +741,50 @@
 	preview_antag_datum = /datum/antagonist/paradox_clone
 	midround_type = LIGHT_MIDROUND
 	pref_flag = ROLE_PARADOX_CLONE
-	ruleset_flags = RULESET_INVADER
+	ruleset_flags = RULESET_INVADER|RULESET_ADMIN_CONFIGURABLE
 	weight = 5
 	min_pop = 10
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/effect/bluespace_stream
 	/// Chance of getting another clone for the price of free
 	var/bonus_clone_chance = 20
+	/// Weakref to the crewmember we picked to clone, chosen before the ghost poll so it can name them
+	var/datum/weakref/clone_target_ref
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/New(list/dynamic_config)
 	. = ..()
 	max_antag_cap += prob(bonus_clone_chance)
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/can_be_selected()
+	if(clone_target_ref && isnull(clone_target_ref.resolve())) // our chosen original was deleted while we were polling, bail
+		return FALSE
 	return ..() && !isnull(find_clone()) && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
 
+#define RANDOM_CLONE_TARGET "Random"
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/configure_ruleset(mob/admin)
+	var/list/admin_pool = list("[RULESET_CONFIG_CANCEL]" = TRUE, "[RANDOM_CLONE_TARGET]" = TRUE)
+	for(var/mob/living/carbon/human/target as anything in find_clone_candidates())
+		admin_pool["[target.real_name], the [target.mind.assigned_role.title]"] = target
+	var/picked = tgui_input_list(admin, "Select a crewmember to clone", "Clone Target", admin_pool)
+	if(!picked || picked == RULESET_CONFIG_CANCEL)
+		return RULESET_CONFIG_CANCEL
+	if(picked != RANDOM_CLONE_TARGET)
+		clone_target_ref = WEAKREF(admin_pool[picked])
+	return null
+
+#undef RANDOM_CLONE_TARGET
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/collect_candidates()
+	var/mob/living/carbon/human/original = clone_target_ref?.resolve() || find_clone()
+	if(isnull(original))
+		return list()
+	clone_target_ref = WEAKREF(original)
+	candidate_role = "clone of [original.real_name] ([original.mind.assigned_role.title])"
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/create_execute_args()
-	return list(find_clone())
+	return list(clone_target_ref.resolve())
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/create_ruleset_body()
 	return // handled by assign_role() entirely
@@ -747,18 +800,23 @@
 	bad_version.put_in_hands(new /obj/item/storage/toolbox/mechanical()) //so they dont get stuck in maints
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/proc/find_clone()
+	var/list/possible_targets = find_clone_candidates()
+	if(length(possible_targets))
+		return pick(possible_targets)
+	return null
+
+/// Returns every crewmember currently valid to be cloned
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/proc/find_clone_candidates()
 	var/list/possible_targets = list()
 
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
-		if(!player.client || !player.mind || player.stat != CONSCIOUS)
+		if(!player.client || !player.mind || IS_UNCONSCIOUS_OR_CRIT(player))
 			continue
 		if(!(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 			continue
 		possible_targets += player
 
-	if(length(possible_targets))
-		return pick(possible_targets)
-	return null
+	return possible_targets
 
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker
 	name = "Voidwalker"
@@ -1032,7 +1090,7 @@
 	candidate_role = "Slaughter Demon"
 	// preview_antag_datum = /datum/antagonist/slaughter // Doesn't actually have its own pref
 	midround_type = HEAVY_MIDROUND
-	jobban_flag = ROLE_ALIEN
+	jobban_flag = ROLE_SENTIENCE
 	ruleset_flags = RULESET_INVADER
 	weight = 0
 	min_pop = 20
@@ -1160,6 +1218,16 @@
 
 /datum/dynamic_ruleset/midround/from_living/malf_ai/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/malf_ai)
+	if(!prob(33) || !isAI(candidate.current))
+		return
+	priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", ANNOUNCER_IONSTORM)
+	var/mob/living/silicon/new_malf_ai = candidate.current
+	var/obj/machinery/ai_law_rack/base/rack = new_malf_ai.get_law_rack()
+	rack?.scramble_ai_rack(
+		base_ion_prob = 100,
+		sub_ion_prob = 10,
+		ion_limit = 1,
+	)
 
 /datum/dynamic_ruleset/midround/from_living/malf_ai/can_be_selected()
 	return ..() && !HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI)

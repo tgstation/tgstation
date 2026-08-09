@@ -49,7 +49,13 @@
 /obj/item/clothing/shoes/clown_shoes/jester
 	name = "jester shoes"
 	desc = "A court jester's shoes, updated with modern squeaking technology."
-	icon_state = "jester_shoes"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	icon_state = "/obj/item/clothing/shoes/clown_shoes/jester"
+	post_init_icon_state = "jester_map"
+	greyscale_config = /datum/greyscale_config/jester_shoes
+	greyscale_config_worn = /datum/greyscale_config/jester_shoes/worn
+	greyscale_colors = "#E10000#E1E100"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/clown_shoes/meown_shoes
 	name = "meown shoes"

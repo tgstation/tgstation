@@ -83,22 +83,14 @@
 	single_use = FALSE
 
 /datum/ai_controller/basic_controller/supermatter_spider
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/supermatter_spider.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_HEAR = list("clinks.", "clanks."),
+			BB_EMOTE_SEE = list("vibrates."),
+			BB_SPEAK_CHANCE = 7,
+		),
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/random_speech/supermatter_spider,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
-
-/datum/ai_planning_subtree/random_speech/supermatter_spider
-	speech_chance = 7
-	emote_hear = list("clinks", "clanks")
-	emote_see = list("vibrates")

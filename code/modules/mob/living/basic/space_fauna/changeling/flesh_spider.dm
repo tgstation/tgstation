@@ -19,7 +19,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 4, STAMINA = 1, OXY = 1)
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = NONE
-	speed = -0.1
+	speed = 0.2
 	maxHealth = 90
 	health = 90
 	melee_damage_lower = 15
@@ -61,7 +61,7 @@
 	)
 	AddComponent(\
 		/datum/component/regenerator,\
-		regeneration_delay = 4 SECONDS,\
+		regeneration_delay = 3 SECONDS,\
 		brute_per_second = maxHealth / 6,\
 		outline_colour = COLOR_PINK,\
 	)

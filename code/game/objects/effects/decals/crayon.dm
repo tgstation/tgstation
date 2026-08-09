@@ -68,7 +68,7 @@
 	if(ishuman(outlined_atom))
 		//humans are special, we want to exclude things like wounds so the outline isn't animated.
 		var/mob/living/carbon/human/human_outline = outlined_atom
-		add_overlay(human_outline.get_overlays_copy(list(WOUND_LAYER, HALO_LAYER)))
+		add_overlay(human_outline.get_overlays_copy(list(WOUND_LAYER)))
 	else
 		icon = outlined_atom.icon
 		icon_state = outlined_atom.icon_state

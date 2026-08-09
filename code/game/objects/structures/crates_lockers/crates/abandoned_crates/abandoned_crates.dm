@@ -188,6 +188,12 @@
 
 	return ITEM_INTERACT_SUCCESS
 
+/obj/structure/closet/crate/secure/loot/multitool_act_secondary(mob/living/user, obj/item/tool)
+	if(!locked)
+		return
+	attack_hand(user)
+	return ITEM_INTERACT_SUCCESS
+
 /// Implements bulls and cows algorithm to compare guess against actual code
 /obj/structure/closet/crate/secure/loot/proc/bulls_and_cows(guess)
 	var/bulls = 0

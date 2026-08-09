@@ -84,10 +84,7 @@
 /datum/quirk/item_quirk/asthma/proc/on_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
 
-	if (quirk_holder.stat == DEAD)
-		return
-
-	if (HAS_TRAIT(quirk_holder, TRAIT_STASIS) || HAS_TRAIT(quirk_holder, TRAIT_NO_TRANSFORM))
+	if (quirk_holder.stat == DEAD || HAS_TRAIT(quirk_holder, TRAIT_STASIS))
 		return
 
 	var/obj/item/organ/lungs/holder_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)

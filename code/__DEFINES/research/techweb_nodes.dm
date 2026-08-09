@@ -44,6 +44,7 @@
 #define TECHWEB_NODE_EXP_TOOLS "exp_tools"
 #define TECHWEB_NODE_EXPLOSIVES "explosives"
 #define TECHWEB_NODE_EXTREME_OFFICE "extreme_office"
+#define TECHWEB_NODE_FISHING_ANOMALOUS "fishing_anomalous"
 #define TECHWEB_NODE_FISHING_EQUIP "fishing_equip"
 #define TECHWEB_NODE_FISHING_EQUIP_ADV "fishing_equip_adv"
 #define TECHWEB_NODE_FOOD_PROC "food_proc"

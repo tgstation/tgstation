@@ -74,6 +74,7 @@
 /obj/machinery/computer/dna_console
 	name = "DNA Console"
 	desc = "From here you can research mysteries of the DNA!"
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/dna_console")
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
 	density = TRUE
@@ -181,53 +182,53 @@
 		genetic_damage_pulse()
 		return
 
-/obj/machinery/computer/dna_console/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/computer/dna_console/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// Store chromosomes in the console if there's room
-	if (istype(item, /obj/item/chromosome))
-		item.forceMove(src)
-		stored_chromosomes += item
-		to_chat(user, span_notice("You insert [item]."))
-		return
+	if (istype(tool, /obj/item/chromosome))
+		tool.forceMove(src)
+		stored_chromosomes += tool
+		to_chat(user, span_notice("You insert [tool]."))
+		return ITEM_INTERACT_SUCCESS
 
 	// Insert data disk if console disk slot is empty
 	// Swap data disk if there is one already a disk in the console
-	if (istype(item, /obj/item/disk/data)) //INSERT SOME DISKETTES
+	if (istype(tool, /obj/item/disk/data)) //INSERT SOME DISKETTES
 		// Insert disk into DNA Console
-		if (!user.transferItemToLoc(item,src))
-			return
+		if (!user.transferItemToLoc(tool,src))
+			return ITEM_INTERACT_BLOCKING
 		// If insertion was successful and there's already a diskette in the console, eject the old one.
 		if(diskette)
 			eject_disk(user)
 		// Set the new diskette.
-		diskette = item
-		to_chat(user, span_notice("You insert [item]."))
-		return
+		diskette = tool
+		to_chat(user, span_notice("You insert [tool]."))
+		return ITEM_INTERACT_SUCCESS
 
 	// Recycle non-activator used injectors
 	// Turn activator used injectors (aka research injectors) to chromosomes
-	if(istype(item, /obj/item/dnainjector/activator))
-		var/obj/item/dnainjector/activator/activator = item
-		if(activator.used)
-			if(activator.research && activator.filled)
-				if(prob(60))
-					var/c_typepath = generate_chromosome()
-					var/obj/item/chromosome/CM = new c_typepath (src)
-					stored_chromosomes += CM
-					to_chat(user,span_notice("[capitalize(CM.name)] added to storage."))
-				else
-					to_chat(user, span_notice("There was not enough genetic data to extract a viable chromosome."))
-			if(activator.crispr_charge)
-				crispr_charges++
-				to_chat(user, span_notice("CRISPR charge added."))
-			qdel(item)
-			to_chat(user,span_notice("Recycled [item]."))
-			return
-		else
+	if(istype(tool, /obj/item/dnainjector/activator))
+		var/obj/item/dnainjector/activator/activator = tool
+		if(!activator.used)
 			//recycle unused activators
-			qdel(item)
-			to_chat(user, span_notice("Recycled unused [item]."))
-			return
-	return ..()
+			qdel(tool)
+			to_chat(user, span_notice("Recycled unused [tool]."))
+			return ITEM_INTERACT_SUCCESS
+		if(activator.research && activator.filled)
+			if(prob(60))
+				var/c_typepath = generate_chromosome()
+				var/obj/item/chromosome/CM = new c_typepath (src)
+				stored_chromosomes += CM
+				to_chat(user,span_notice("[capitalize(CM.name)] added to storage."))
+			else
+				to_chat(user, span_notice("There was not enough genetic data to extract a viable chromosome."))
+		if(activator.crispr_charge)
+			crispr_charges++
+			to_chat(user, span_notice("CRISPR charge added."))
+		qdel(tool)
+		to_chat(user,span_notice("Recycled [tool]."))
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/machinery/computer/dna_console/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
@@ -404,6 +405,17 @@
 	//data["advInjectors"] = tgui_advinjector_mutations
 	data["storage"]["injector"] = tgui_advinjector_mutations
 	data["maxAdvInjectors"] = max_injector_selections
+
+	data["heldScannerBuffer"] = null
+	for(var/obj/item/sequence_scanner/scanner in user.held_items) //We got one or more scanners in our hands, lets get the data from them.
+		if(!LAZYLEN(scanner.buffer))
+			continue
+		var/list/scanner_data = list()
+		for(var/mutation_type in scanner.buffer)
+			var/datum/mutation/mutation = GET_INITIALIZED_MUTATION(mutation_type)
+			if(mutation)
+				scanner_data[mutation.alias] = scanner.buffer[mutation_type]
+		data["heldScannerBuffer"] = scanner_data
 
 	return data
 
@@ -829,7 +841,7 @@
 
 			// Create a new DNA Injector and add the appropriate mutations to it
 			var/obj/item/dnainjector/activator/injector = new /obj/item/dnainjector/activator(loc)
-			injector.add_mutations += mutation.make_copy()
+			LAZYADD(injector.add_mutations, mutation.make_copy())
 
 			var/is_activator = text2num(params["is_activator"])
 
@@ -1303,93 +1315,19 @@
 		//  number later
 		// params["type"] - Type of injector to create
 		//  Expected results:
-		//   "ue" - Unique Enzyme, changes name and blood type
+		//  "ue" - Unique Enzyme, changes name and blood type
 		//  "ui" - Unique Identity, changes looks
 		//  "uf" - Unique Features, changes mutant bodyparts and mutcolors
 		//  "mixed" - Combination of both ue and ui
 		if("makeup_injector")
 			if(!COOLDOWN_FINISHED(src, enzyme_copy_timer))
 				return
-			// Convert the index to a number and clamp within the array range, then
-			//  copy the data from the disk to that buffer
-			var/buffer_index = text2num(params["index"])
-			buffer_index = clamp(buffer_index, 1, NUMBER_OF_BUFFERS)
-			var/list/buffer_slot = genetic_makeup_buffer[buffer_index]
-
-			// GUARD CHECK - This shouldn't be possible to execute this on a null
-			//  buffer. Unexpected resut
-			if(!istype(buffer_slot))
+			// Convert the index to a number and clamp within the array range, then copy the data from the disk to that buffer
+			var/buffer_index = clamp(text2num(params["index"]), 1, NUMBER_OF_BUFFERS)
+			if(!make_cosmetic_dna_injector(dna_injector_type_to_flag(params["type"]), genetic_makeup_buffer[buffer_index]))
+				to_chat(usr, span_warning("Genetic data corrupted, unable to create injector."))
 				return
-
-			var/type = params["type"]
-			var/obj/item/dnainjector/timed/I
-
-			switch(type)
-				if("ui")
-					// GUARD CHECK - There's currently no way to save partial genetic data.
-					//  However, if this is the case, we can't make a complete injector and
-					//  this catches that edge case
-					if(!buffer_slot["UI"])
-						to_chat(usr,span_warning("Genetic data corrupted, unable to create injector."))
-						return
-
-					I = new /obj/item/dnainjector/timed(loc)
-					I.fields = list("UI"=buffer_slot["UI"])
-
-					// If there is a connected scanner, we can use its upgrades to reduce
-					//  the genetic damage generated by this injector
-					if(scanner_operational())
-						I.damage_coeff = connected_scanner.damage_coeff
-				if("ue")
-					// GUARD CHECK - There's currently no way to save partial genetic data.
-					//  However, if this is the case, we can't make a complete injector and
-					//  this catches that edge case
-					if(!buffer_slot["name"] || !buffer_slot["UE"] || !buffer_slot["blood_type"])
-						to_chat(usr,span_warning("Genetic data corrupted, unable to create injector."))
-						return
-
-					I = new /obj/item/dnainjector/timed(loc)
-					I.fields = list("name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "blood_type"=buffer_slot["blood_type"])
-
-					// If there is a connected scanner, we can use its upgrades to reduce
-					//  the genetic damage generated by this injector
-					if(scanner_operational())
-						I.damage_coeff = connected_scanner.damage_coeff
-				if("uf")
-					// GUARD CHECK - There's currently no way to save partial genetic data.
-					//  However, if this is the case, we can't make a complete injector and
-					//  this catches that edge case
-					if(!buffer_slot["name"] || !buffer_slot["UF"] || !buffer_slot["blood_type"])
-						to_chat(usr,span_warning("Genetic data corrupted, unable to create injector."))
-						return
-
-					I = new /obj/item/dnainjector/timed(loc)
-					I.fields = list("name"=buffer_slot["name"], "UF"=buffer_slot["UF"])
-
-					// If there is a connected scanner, we can use its upgrades to reduce
-					//  the genetic damage generated by this injector
-					if(scanner_operational())
-						I.damage_coeff = connected_scanner.damage_coeff
-				if("mixed")
-					// GUARD CHECK - There's currently no way to save partial genetic data.
-					//  However, if this is the case, we can't make a complete injector and
-					//  this catches that edge case
-					if(!buffer_slot["UI"] || !buffer_slot["name"] || !buffer_slot["UE"] || !buffer_slot["UF"] || !buffer_slot["blood_type"])
-						to_chat(usr,span_warning("Genetic data corrupted, unable to create injector."))
-						return
-
-					I = new /obj/item/dnainjector/timed(loc)
-					I.fields = list("UI"=buffer_slot["UI"],"name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "UF"=buffer_slot["UF"], "blood_type"=buffer_slot["blood_type"])
-
-					// If there is a connected scanner, we can use its upgrades to reduce
-					//  the genetic damage generated by this injector
-					if(scanner_operational())
-						I.damage_coeff = connected_scanner.damage_coeff
-
-			// If we successfully created an injector, don't forget to set the new
-			//  ready timer.
-			if(I)
-				injector_ready = world.time + MISC_INJECTOR_TIMEOUT
+			injector_ready = world.time + MISC_INJECTOR_TIMEOUT
 			if(connected_scanner)
 				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
@@ -1579,7 +1517,7 @@
 			//  new injector
 			var/total_stability = 0
 			for(var/datum/mutation/mutation as anything in injector_selection[inj_name])
-				injector.add_mutations += mutation.make_copy()
+				LAZYADD(injector.add_mutations, mutation.make_copy())
 				total_stability += mutation.instability
 
 			// Force apply any mutations, this is functionality similar to mutators
@@ -1785,11 +1723,89 @@
 			return TRUE
 
 	return FALSE
+
 /**
  * Checks if there is a connected DNA Scanner that is operational
  */
 /obj/machinery/computer/dna_console/proc/scanner_operational()
 	return connected_scanner?.is_operational
+
+/**
+ * Gets the damage coefficient of the connected DNA Scanner, or 1 if there isn't an operational one
+ */
+/obj/machinery/computer/dna_console/proc/get_injector_damage_coeff()
+	if(scanner_operational())
+		return connected_scanner.damage_coeff
+	return 1
+
+/// Copy UI to the dna injector
+#define DNA_INJECTOR_FLAG_UI (1<<0)
+/// Copy UE to the dna injector
+#define DNA_INJECTOR_FLAG_UE (1<<1)
+/// Copy UF to the dna injector
+#define DNA_INJECTOR_FLAG_UF (1<<2)
+/// Copy name to the dna injector
+#define DNA_INJECTOR_FLAG_NAME (1<<3)
+/// Copy blood type to the dna injector
+#define DNA_INJECTOR_FLAG_BLOOD (1<<4)
+
+/**
+ * Converts a string (from tgui) to a series of flags determine what we should put in a DNA Injector
+ */
+/obj/machinery/computer/dna_console/proc/dna_injector_type_to_flag(injector_type)
+	switch(injector_type)
+		if("ui")
+			return DNA_INJECTOR_FLAG_UI
+		if("ue")
+			return DNA_INJECTOR_FLAG_UE | DNA_INJECTOR_FLAG_NAME | DNA_INJECTOR_FLAG_BLOOD
+		if("uf")
+			return DNA_INJECTOR_FLAG_UF | DNA_INJECTOR_FLAG_NAME
+		if("mixed")
+			return ALL
+	return NONE
+
+/**
+ * Pass an injector flag and a genetic makeup buffer slot to create a DNA Injector
+ */
+/obj/machinery/computer/dna_console/proc/make_cosmetic_dna_injector(dna_flag, list/buffer_slot = list())
+	if(!dna_flag || !length(buffer_slot))
+		return FALSE
+
+	var/datum/dna/stored_dna = new()
+
+	if(dna_flag & DNA_INJECTOR_FLAG_NAME)
+		if(!buffer_slot["name"])
+			return FALSE
+		stored_dna.real_name = buffer_slot["name"]
+
+	if(dna_flag & DNA_INJECTOR_FLAG_BLOOD)
+		if(!buffer_slot["blood_type"])
+			return FALSE
+		stored_dna.blood_type = buffer_slot["blood_type"]
+
+	if(dna_flag & DNA_INJECTOR_FLAG_UI)
+		if(!buffer_slot["UI"])
+			return FALSE
+		stored_dna.unique_identity = buffer_slot["UI"]
+
+	if(dna_flag & DNA_INJECTOR_FLAG_UE)
+		if(!buffer_slot["UE"])
+			return FALSE
+		stored_dna.unique_enzymes = buffer_slot["UE"]
+
+	if(dna_flag & DNA_INJECTOR_FLAG_UF)
+		if(!buffer_slot["UF"])
+			return FALSE
+		stored_dna.unique_features = buffer_slot["UF"]
+
+	new /obj/item/dnainjector/timed(loc, stored_dna, get_injector_damage_coeff())
+	return TRUE
+
+#undef DNA_INJECTOR_FLAG_UI
+#undef DNA_INJECTOR_FLAG_UE
+#undef DNA_INJECTOR_FLAG_UF
+#undef DNA_INJECTOR_FLAG_NAME
+#undef DNA_INJECTOR_FLAG_BLOOD
 
 /**
  * Checks if there is a valid DNA Scanner occupant for genetic modification

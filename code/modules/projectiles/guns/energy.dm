@@ -103,6 +103,7 @@
 	if(cell && resistance_flags & INDESTRUCTIBLE)
 		cell.resistance_flags |= INDESTRUCTIBLE
 	cell.resistance_flags |= BOMB_PROOF
+	cell.custom_materials = null //do not give printed energy guns more mats than they already have.
 	update_ammo_types()
 	recharge_newshot(TRUE)
 	if(selfcharge)
@@ -208,7 +209,6 @@
 				var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
 				if(robot.cell.use(shot.e_cost)) //Take power from the borg...
 					cell.give(shot.e_cost) //... to recharge the shot
-					return ..()
 
 	if(!chambered)
 		var/obj/item/ammo_casing/energy/AC = ammo_type[select]

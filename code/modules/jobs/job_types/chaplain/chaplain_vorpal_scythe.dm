@@ -79,18 +79,15 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 /obj/item/vorpalscythe/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/nullrod_core, chaplain_spawnable = FALSE, rune_remove_line = "TO DUST WITH YE!! AWAY!!") // The implant is the actual item the chappie can select
-	AddComponent(
-		/datum/component/butchering, \
-		speed = 3 SECONDS, \
-		effectiveness = 125, \
-	)
-	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE) //also good at killing plants
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_PLANT, damage_multiplier = 1.5) //also good at killing plants
+	AddComponent(/datum/component/butchering, speed = 3 SECONDS, effectiveness = 125)
+	AddComponent(/datum/component/walking_aid)
 
 /obj/item/vorpalscythe/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(ismonkey(target) && !target.mind) //Don't empower from hitting monkeys. Hit a corgi or something, I don't know.
 		return ..()
 
-	if(target.stat < DEAD && target != user)
+	if(target.stat != DEAD && target != user)
 		scythe_empowerment(SCYTHE_SATED)
 
 	return ..()
@@ -138,13 +135,13 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	var/death_knell_speed_mod = 1
 
 	potential_reaping.visible_message(span_danger("[user] begins to raise [src] above [potential_reaping]'s [head_name]."), span_userdanger("[user] begins to raise [src], aiming to slice off your [head_name]!"))
-	if(potential_reaping.stat >= UNCONSCIOUS || HAS_TRAIT(potential_reaping, TRAIT_INCAPACITATED)) //if the victim is incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly behead
+	if(IS_UNCONSCIOUS(potential_reaping) || HAS_TRAIT(potential_reaping, TRAIT_INCAPACITATED)) //if the victim is incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly behead
 		death_knell_speed_mod *= 0.5
 	if(potential_reaping.stat != DEAD && potential_reaping.has_status_effect(/datum/status_effect/jitter)) //jittering will make it harder to perform the death knell, even if they're still
 		death_knell_speed_mod *= 1.5 //Staminacritting someone who's jittering (from, say, a stun baton) won't give you enough time to slice their head off, but staminacritting someone who isn't jittering will
 	if(empowerment == SCYTHE_EMPOWERED) //That said, if heads are already rolling, why stop here?
 		death_knell_speed_mod *= 0.5
-	if(ispodperson(potential_reaping) || ismonkey(potential_reaping)) //And if they're a podperson or monkey, they can just die.
+	if((potential_reaping.mob_biotypes & MOB_PLANT) || ismonkey(potential_reaping)) //And if they're a podperson/mushperson or monkey, they can just die.
 		death_knell_speed_mod *= 0.5
 
 	log_combat(user, potential_reaping, "prepared to use [src] to decapitate")
@@ -176,12 +173,12 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	//Determines if we are entitled to setting/resetting our timer.
 	//Only reset SCYTHE_EMPOWERED with an empowerment that would grant that.
 	//Only reset SCTHE_SATED if hitting at least simple mobs or nonmonkey carbons.
-	var/allow_timer_set = FALSE
 
-	if(empowerment < potential_empowerment || empowerment == potential_empowerment) //Reset the timer only if our potential empowerment is equivalent or stronger than our current empowerment
-		allow_timer_set = TRUE
+	if(empowerment > potential_empowerment) //If the new is weaker than the old, don't reset the timer and don't change our power
+		return
+
 	empowerment = potential_empowerment
-	if(potential_empowerment != SCYTHE_WEAK && allow_timer_set) //And finally, if the empowerment was improved and wasn't too weak to get an empowerment, we set/reset our timer
+	if(potential_empowerment != SCYTHE_WEAK) //And finally, if it wasn't too weak to get an empowerment, we set/reset our timer
 		addtimer(CALLBACK(src, PROC_REF(scythe_empowerment_end)), (4 MINUTES / empowerment), TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/item/vorpalscythe/proc/scythe_empowerment_end()

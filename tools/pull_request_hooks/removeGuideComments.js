@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from 'node:fs';
 
 const REGEX_COMMENT = /<!--.+?-->/g;
 
@@ -6,13 +6,13 @@ const REGEX_COMMENT = /<!--.+?-->/g;
 const comments = [];
 
 for (const match of fs
-  .readFileSync(".github/PULL_REQUEST_TEMPLATE.md", { encoding: "utf8" })
+  .readFileSync('.github/PULL_REQUEST_TEMPLATE.md', { encoding: 'utf8' })
   .matchAll(REGEX_COMMENT)) {
   comments.push(match[0]);
 }
 
 function escapeRegex(string) {
-  return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+  return string.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
 export async function removeGuideComments({ github, context }) {
@@ -25,7 +25,7 @@ export async function removeGuideComments({ github, context }) {
   ).data.body;
 
   if (!originalBody) {
-    console.log("PR body is empty, skipping...");
+    console.log('PR body is empty, skipping...');
     return;
   }
 
@@ -33,8 +33,8 @@ export async function removeGuideComments({ github, context }) {
 
   for (const comment of comments) {
     newBody = newBody.replace(
-      new RegExp(`^\\s*${escapeRegex(comment)}\\s*`, "gm"),
-      "\n",
+      new RegExp(`^\\s*${escapeRegex(comment)}\\s*`, 'gm'),
+      '\n',
     );
   }
 

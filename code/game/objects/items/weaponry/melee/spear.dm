@@ -70,6 +70,7 @@
 		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
+	AddComponent(/datum/component/walking_aid)
 	add_headpike_component()
 	update_appearance()
 
@@ -90,7 +91,7 @@
 		worn_icon_state = null
 	return ..()
 
-/obj/item/spear/suicide_act(mob/living/carbon/user)
+/obj/item/spear/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if (!do_after(user, 4 SECONDS, target = src))
 		return SHAME
@@ -160,7 +161,7 @@
 	tip_overlay.color = tip_material.color
 	. += tip_overlay
 
-/obj/item/spear/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+/obj/item/spear/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if (icon_prefix != SPEAR_CUSTOM_TIP_PREFIX || !isinhands)
 		return
@@ -339,7 +340,7 @@
 		set_explosive(nade)
 	return ..()
 
-/obj/item/spear/explosive/suicide_act(mob/living/carbon/user)
+/obj/item/spear/explosive/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	user.say("[war_cry]", forced="spear warcry")
 	explosive.forceMove(user)
@@ -396,7 +397,7 @@
 	var/mob/living/stabbed = target
 	if(istype(stabbed, /mob/living/basic/illusion))
 		return
-	if(stabbed.stat == CONSCIOUS && prob(50))
+	if(!IS_UNCONSCIOUS_OR_CRIT(stabbed) && prob(50))
 		var/mob/living/basic/illusion/fake_clone = new(user.loc)
 		fake_clone.full_setup(user, target_mob = stabbed, life = 10 SECONDS, hp = user.health / 2.5, damage = 12, replicate = 30)
 
@@ -462,7 +463,7 @@
 
 /obj/item/spear/dragonator/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 0, added_damage = 80, requires_combat_mode = FALSE) //For killing really big monsters.
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_MINING, added_damage = 80) //For killing really big monsters.
 
 /*
  * Untreated Giantslayer , needs to be thrown into lava

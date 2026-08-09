@@ -1,7 +1,9 @@
 /// Ashies get lower priorities than humans
 #define AGGRO_PRIORITY_ASHWALKER 1
+/// Basicmobs have slightly less priority so that miners are targeted over their raptors
+#define AGGRO_PRIORITY_BASICMOB 3
 /// Everyone by default
-#define AGGRO_PRIORITY_HUMAN 2
+#define AGGRO_PRIORITY_HUMAN 5
 /// Mobs who have attacked someone in our view recently
 #define AGGRO_PRIORITY_MINER 8
 /// NODE drone priority
@@ -34,20 +36,22 @@
 	// Check if they've recently attacked any of our friends, if so - increase their priority by 1 for each attack in the past [retaliate_aggro_memory] seconds
 	var/list/allies_shitlist = controller.blackboard[BB_MINING_MOB_REINFORCEMENTS_REQUESTS]
 	var/list/target_requests = allies_shitlist?[target]
-	if (!target_requests)
-		return target.has_faction(FACTION_ASHWALKER) ? AGGRO_PRIORITY_ASHWALKER : AGGRO_PRIORITY_HUMAN
-
 	var/aggro_boost = 0
-	var/total_requests = length(target_requests)
-	// Goes end-to-start because we do not care about requests older than [retaliate_aggro_memory]
-	for (var/i in 1 to total_requests)
-		var/request_time = target_requests[total_requests - i + 1]
-		if (request_time + retaliate_aggro_memory < world.time)
-			break
-		aggro_boost += 1
+	if (target_requests)
+		var/total_requests = length(target_requests)
+		// Goes end-to-start because we do not care about requests older than [retaliate_aggro_memory]
+		for (var/i in 1 to total_requests)
+			var/request_time = target_requests[total_requests - i + 1]
+			if (request_time + retaliate_aggro_memory < world.time)
+				break
+			aggro_boost += 1
 
-	if (aggro_boost)
+	if (aggro_boost || HAS_TRAIT(target, TRAIT_MINING_AGGRO))
 		return AGGRO_PRIORITY_MINER + aggro_boost
+
+	if (isbasicmob(target))
+		return AGGRO_PRIORITY_BASICMOB
+
 	return target.has_faction(FACTION_ASHWALKER) ? AGGRO_PRIORITY_ASHWALKER : AGGRO_PRIORITY_HUMAN
 
 /datum/target_priority_strategy/mining/select_target(datum/ai_controller/controller, list/atom/targets)
@@ -72,11 +76,19 @@
 
 	return pick(lucky_fella)
 
+/datum/target_priority_strategy/mining/can_replace_target(datum/ai_controller/controller, atom/current_target, atom/candidate)
+	var/current_priority = get_target_priority(controller, current_target)
+	var/candidate_priority = get_target_priority(controller, candidate)
+	if(candidate_priority != current_priority)
+		return candidate_priority > current_priority
+	return get_dist(controller.pawn, candidate) < get_dist(controller.pawn, current_target)
+
 /datum/target_priority_strategy/mining/low_node_priority
 	// Higher than normal humans but will instantly pivot towards anyone who attacks or attacked mobs in our vicinity
 	node_priority = AGGRO_PRIORITY_NODE_LOW_PRIO
 
 #undef AGGRO_PRIORITY_ASHWALKER
+#undef AGGRO_PRIORITY_BASICMOB
 #undef AGGRO_PRIORITY_HUMAN
 #undef AGGRO_PRIORITY_MINER
 #undef AGGRO_PRIORITY_NODE

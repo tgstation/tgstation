@@ -8,8 +8,8 @@
 	var/abduct_created = FALSE
 	lock_override = TRUE
 
-	icon = 'icons/obj/antags/abductor.dmi'
-	icon_state = "camera"
+	icon = MAP_SWITCH('icons/obj/antags/abductor.dmi', 'icons/obj/fluff/map_previews.dmi')
+	icon_state = MAP_SWITCH("camera", "/obj/machinery/computer/camera_advanced/abductor")
 	icon_keyboard = null
 	icon_screen = null
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF

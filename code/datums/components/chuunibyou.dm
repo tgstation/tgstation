@@ -97,6 +97,7 @@
 
 	casting_spell = FALSE
 	if(!COOLDOWN_FINISHED(src, heal_cooldown))
+		to_chat(source, span_danger("Your chuuni powers are on cooldown! You fail to heal!"))
 		return
 	COOLDOWN_START(src, heal_cooldown, CHUUNIBYOU_COOLDOWN_TIME)
 

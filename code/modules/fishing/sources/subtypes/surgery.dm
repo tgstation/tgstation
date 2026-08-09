@@ -10,6 +10,7 @@
 	fishing_difficulty = -10
 	//The range for waiting is also a bit narrower, so it cannot take as few as 3 seconds or as many as 25 to snatch an organ.
 	wait_time_range = list(6 SECONDS, 12 SECONDS)
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_NONE
 
 /datum/fish_source/surgery/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot, obj/item/fishing_rod/used_rod)
 	if(reward_path != FISHING_RANDOM_ORGAN)

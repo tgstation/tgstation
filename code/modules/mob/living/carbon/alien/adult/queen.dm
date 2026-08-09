@@ -83,7 +83,7 @@
 		/datum/action/cooldown/alien/promote,
 	)
 	grant_actions_by_list(innate_actions)
-
+	add_movespeed_mod_immunities(type, /datum/movespeed_modifier/tail_dragger)
 	return ..()
 
 /mob/living/carbon/alien/adult/royal/queen/set_name()
@@ -175,7 +175,7 @@
 		to_chat(queen, span_noticealien("You cannot promote a child right now!"))
 		return
 
-	if(to_promote.stat != CONSCIOUS || !to_promote.mind || !to_promote.key)
+	if(IS_UNCONSCIOUS_OR_CRIT(to_promote) || !to_promote.mind || !to_promote.key)
 		return
 
 	queen.adjustPlasma(-promotion.promotion_plasma_cost)

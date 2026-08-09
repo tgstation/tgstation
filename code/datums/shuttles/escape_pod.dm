@@ -1,5 +1,6 @@
 /datum/map_template/shuttle/escape_pod
 	port_id = "escape_pod"
+	prefix = "_maps/shuttles/escape_pod/"
 	who_can_purchase = null
 
 /datum/map_template/shuttle/escape_pod/default

@@ -79,7 +79,7 @@
 
 /datum/religion_rites/synthconversion
 	name = "Synthetic Conversion"
-	desc = "Convert a human-esque individual into a (superior) Android. Buckle a human to convert them, otherwise it will convert you."
+	desc = "Convert a humanoid individual into a (superior) android. Buckle a human to convert them, otherwise this rite will convert you."
 	ritual_length = 30 SECONDS
 	ritual_invocations = list("By the inner workings of our god ...",
 						"... We call upon you, in the face of adversity ...",
@@ -202,8 +202,8 @@
 	. = ..()
 
 /datum/religion_rites/greed/vendatray
-	name = "Purchase Vend-a-tray"
-	desc = "Summons a Vend-a-tray. You can use it to sell items!"
+	name = "Purchase Vend-A-Tray"
+	desc = "Summons a vend-a-tray. You can use it to sell items!"
 	invoke_msg = "I need a vend-a-tray to make some more money!"
 	money_cost = 300
 
@@ -234,8 +234,8 @@
 	desc = "Begin your metamorphasis into a being more fit for Maintenance."
 	ritual_length = 10 SECONDS
 	ritual_invocations = list("I abandon the world ...",
-	"... to become one with the deep.",
-	"My form will become twisted ...")
+	"... to become one with the deep ...",
+	"... My form will become twisted ...")
 	invoke_msg = "... but my smile I will keep!"
 	favor_cost = 150 //150u of organic slurry
 
@@ -325,7 +325,7 @@
 
 /datum/religion_rites/ritual_totem
 	name = "Create Ritual Totem"
-	desc = "Creates a Ritual Totem, a portable tool for performing rites on the go. Requires wood. Can only be picked up by the holy."
+	desc = "Creates a ritual totem, a portable tool for performing rites on the go. Requires wood. Can only be picked up by the holy."
 	favor_cost = 100
 	invoke_msg = "Padala!!"
 	///the food that will be molded, only one per rite
@@ -335,7 +335,7 @@
 	for(var/obj/item/stack/sheet/mineral/wood/could_totem in get_turf(religious_tool))
 		converted = could_totem //totemify this o great one
 		return ..()
-	to_chat(user, span_warning("You need at least 1 wood to do this!"))
+	to_chat(user, span_warning("You need a piece of wood to do this!"))
 	return FALSE
 
 /datum/religion_rites/ritual_totem/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -418,7 +418,7 @@
 
 /datum/religion_rites/ceremonial_weapon
 	name = "Forge Ceremonial Gear"
-	desc = "Turn some material into ceremonial gear. Ceremonial blades are weak outside of sparring, and are quite heavy to lug around."
+	desc = "Turn some material into ceremonial gear. Ceremonial blades are weak outside of sparring and quite heavy to lug around."
 	ritual_length = 10 SECONDS
 	invoke_msg = "Weapons in your name! Battles with your blood!"
 	favor_cost = 0
@@ -443,7 +443,7 @@
 	if(not_rigid)
 		to_chat(user, span_warning("[not_rigid] is not suitable for being made into gear!"))
 	else
-		to_chat(user, span_warning("You need at least 5 sheets of a rigid material that can be made into gear!"))
+		to_chat(user, span_warning("You need at least five sheets of a rigid material to make gear!"))
 	return FALSE
 
 /datum/religion_rites/ceremonial_weapon/invoke_effect(mob/living/user, atom/movable/religious_tool)

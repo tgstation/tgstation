@@ -66,21 +66,24 @@
 
 	var/turf/epicentre = get_turf(src)
 	if(isopenturf(epicentre))
-		scrub(epicentre.return_air())
+		if(scrub(epicentre.return_air()))
+			epicentre.air_update_turf(FALSE, FALSE)
 	for(var/turf/open/openturf as anything in epicentre.get_atmos_adjacent_turfs(alldir = TRUE))
-		scrub(openturf.return_air())
+		if(scrub(openturf.return_air()))
+			openturf.air_update_turf(FALSE, FALSE)
 	return ..()
 
 /**
  * Called in process_atmos(), handles the scrubbing of the given gas_mixture
  * Arguments:
  * * mixture: the gas mixture to be scrubbed
+ * Returns: TRUE if anything was scrubbed, FALSE otherwise
  */
 /obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/environment)
 	if(air_contents.return_pressure() >= overpressure_m * ONE_ATMOSPHERE)
-		return
+		return FALSE
 
-	var/list/env_gases = environment.gases
+	var/list/cached_moles = environment.moles
 
 	//contains all of the gas we're sucking out of the tile, gets put into our parent pipenet
 	var/datum/gas_mixture/filtered_out = new
@@ -91,24 +94,22 @@
 	var/removal_ratio =  min(1, volume_rate / environment.volume)
 
 	var/total_moles_to_remove = 0
-	for(var/gas in scrubbing & env_gases)
-		total_moles_to_remove += env_gases[gas][MOLES]
+	for(var/gas_id, value in cached_moles & scrubbing)
+		total_moles_to_remove += value
 
-	if(total_moles_to_remove == 0)//sometimes this gets non gc'd values
-		environment.garbage_collect()
+	if(!total_moles_to_remove)//no gases to remove
 		return FALSE
 
-	for(var/gas in scrubbing & env_gases)
-		filtered_out.add_gas(gas)
-		var/transferred_moles = max(QUANTIZE(env_gases[gas][MOLES] * removal_ratio * (env_gases[gas][MOLES] / total_moles_to_remove)), min(MOLAR_ACCURACY*1000, env_gases[gas][MOLES]))
+	for(var/gas_id, value in cached_moles & scrubbing)
+		var/transferred_moles = max(QUANTIZE(value * removal_ratio * (value / total_moles_to_remove)), min(MOLAR_ACCURACY*1000, value))
 
-		filtered_out.adjust_gas(gas, transferred_moles)
-		environment.adjust_gas(gas, -transferred_moles)
+		filtered_out.moles[gas_id] += transferred_moles
+		cached_moles[gas_id] -= transferred_moles
 
 	environment.garbage_collect()
-
 	//Remix the resulting gases
 	air_contents.merge(filtered_out)
+	return TRUE
 
 /obj/machinery/portable_atmospherics/scrubber/emp_act(severity)
 	. = ..()
@@ -137,9 +138,13 @@
 	data["reactionSuppressionEnabled"] = !!suppress_reactions
 
 	data["filterTypes"] = list()
-	for(var/path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[path]
-		data["filterTypes"] += list(list("gasId" = gas[META_GAS_ID], "gasName" = gas[META_GAS_NAME], "enabled" = (path in scrubbing)))
+	var/cached_gas_info = GLOB.meta_gas_info
+	for(var/path in cached_gas_info[META_GAS_ID])
+		data["filterTypes"] += list(list(
+			"gasId" = cached_gas_info[META_GAS_ID][path],
+			"gasName" = cached_gas_info[META_GAS_NAME][path],
+			"enabled" = (path in scrubbing)
+		))
 
 	if(holding)
 		data["holding"] = list()
@@ -229,7 +234,8 @@
 	if(!holding)
 		var/turf/T = get_turf(src)
 		for(var/turf/AT in T.get_atmos_adjacent_turfs(alldir = TRUE))
-			scrub(AT.return_air())
+			if(scrub(AT.return_air()))
+				AT.air_update_turf(FALSE, FALSE)
 
 	return ..()
 

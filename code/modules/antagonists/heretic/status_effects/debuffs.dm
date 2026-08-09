@@ -312,7 +312,7 @@
 	tick_interval = 10 SECONDS
 
 /datum/status_effect/eldritch_painting/weeping/on_tick(seconds_between_ticks)
-	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
+	if(IS_UNCONSCIOUS(owner))
 		return
 
 	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping status effect")

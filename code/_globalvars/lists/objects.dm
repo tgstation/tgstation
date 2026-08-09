@@ -35,11 +35,19 @@ GLOBAL_LIST_EMPTY(item_to_design_list)
 
 /// Global list of all non-cooking related crafting recipes.
 GLOBAL_LIST_EMPTY(crafting_recipes)
+/// Global list of all non-cooking related crafting recipes that don't need to be learned
+GLOBAL_LIST_EMPTY(crafting_recipes_default)
+/// Global list of all non-cooking related crafting recipes, indexed by their typepath.
+GLOBAL_LIST_EMPTY(crafting_recipes_by_typepath)
 /// This is a global list of typepaths, these typepaths are atoms or reagents that are associated with crafting recipes.
 /// This includes stuff like recipe components and results.
 GLOBAL_LIST_EMPTY(crafting_recipes_atoms)
 /// Global list of all cooking related crafting recipes.
 GLOBAL_LIST_EMPTY(cooking_recipes)
+/// Global list of all cooking related crafting recipes that don't need to be learned
+GLOBAL_LIST_EMPTY(cooking_recipes_default)
+/// Global list of all cooking related crafting recipes, indexed by their typepath.
+GLOBAL_LIST_EMPTY(cooking_recipes_by_typepath)
 /// This is a global list of typepaths, these typepaths are atoms or reagents that are associated with cooking recipes.
 /// This includes stuff like recipe components and results.
 GLOBAL_LIST_EMPTY(cooking_recipes_atoms)

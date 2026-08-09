@@ -37,3 +37,4 @@
 /obj/item/vending_refill/donksoft
 	machine_name = "Donksoft Toy Vendor"
 	icon_state = "refill_donksoft"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 12.5, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 10, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 5)

@@ -175,11 +175,14 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 				return
 			dialog = null
 			var/uid = params["uid"]
-			var/new_file_name = params["name"]
+			var/new_file_name = trim(params["name"], MAX_MESSAGE_LEN)
 			var/saving_to_disk = params["onDisk"]
 			var/datum/computer_file/new_file_type = text2path(params["typepath"])
 			var/extension = new_file_type::filetype
 			var/datum/computer_file/existing_file
+			if(!length(new_file_name))
+				dialog = list("type" = "error", "message" = "No name specified.")
+				return TRUE
 			if(saving_to_disk)
 				if(!computer.inserted_disk)
 					dialog = list("type" = "error", "message" = "[new_file_name] - The disk has been removed.")
@@ -207,6 +210,12 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 						)
 				else
 					INVOKE_ASYNC(src, PROC_REF(write_to_file), user, existing_file)
+				return TRUE
+			if(is_ic_filtered_for_pdas(new_file_name) || is_soft_ic_filtered_for_pdas(new_file_name))
+				dialog = list("type" = "error", "message" = "The entered file name violates company policy.")
+				return TRUE
+			if(!filter_illegal_filename_chars(new_file_name))
+				dialog = list("type" = "error", "message" = "[new_file_name] - File names cannot include the following characters. \n \\ / : * ? \" < > |")
 				return TRUE
 			INVOKE_ASYNC(src, PROC_REF(save_file), user, new_file_name, new_file_type, saving_to_disk && computer.inserted_disk)
 			return TRUE
@@ -283,7 +292,7 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 
 /datum/computer_file/program/nanopaint/proc/save_file(mob/user, name, file_type, obj/item/disk/computer/target_disk)
 	var/datum/computer_file/file = new file_type()
-	file.filename = reject_bad_name(name, allow_numbers = TRUE, cap_after_symbols = FALSE, cap_at_start = FALSE)
+	file.filename = name
 	var/file_stored
 	if(target_disk)
 		file_stored = target_disk.add_file(file)

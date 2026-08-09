@@ -6,6 +6,7 @@
 	icon_state = "310-casing"
 	caliber = CALIBER_STRILKA310
 	projectile_type = /obj/projectile/bullet/strilka310
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3)
 
 /obj/item/ammo_casing/strilka310/Initialize(mapload)
 	. = ..()
@@ -56,6 +57,7 @@
 	name = "40mm rubber shell"
 	desc = "A cased rubber puck. The big brother of the beanbag slug. Made for stopping someone dead in their tracks."
 	projectile_type = /obj/projectile/bullet/shotgun_beanbag/a40mm
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2)
 
 /obj/item/ammo_casing/a40mm/flak
 	name = "40mm titanium flak shell"
@@ -74,6 +76,7 @@
 	desc = "A cased tear gas grenade that can only be activated once fired out of a ballistic grenade launcher. Spreads a large amount of tear gas into the air upon impact. \
 		Great for suppressing riots, protests and birthday parties!"
 	projectile_type = /obj/projectile/bullet/a40mm/tear_gas
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 2)
 
 /obj/item/disk/design_disk/tear_gas_40mm
 	name = "40mm riot suppression grenade shells design disk"
@@ -110,6 +113,8 @@
 	icon_state = "rod_jagged"
 	base_icon_state = "rod_jagged"
 	projectile_type = /obj/projectile/bullet/rebar/syndie
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT)
+
 
 /obj/item/ammo_casing/rebar/zaukerite
 	name = "zaukerite sliver"

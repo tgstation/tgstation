@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - config: "Maintenance Drone laws and flavortext can be modified by the server config"

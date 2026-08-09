@@ -40,35 +40,39 @@
 	new T(loc)
 	return INITIALIZE_HINT_QDEL
 
-/obj/item/reagent_containers/cup/soda_cans/suicide_act(mob/living/carbon/human/H)
+/obj/item/reagent_containers/cup/soda_cans/suicide_act(mob/living/user)
 	if(!reagents.total_volume)
-		H.visible_message(span_warning("[H] is trying to take a big sip from [src]... The can is empty!"))
+		user.visible_message(span_warning("[user] is trying to take a big sip from [src]... The can is empty!"))
 		return SHAME
 	if(!is_drainable())
-		open_soda(H)
+		open_soda(user)
 		sleep(1 SECONDS)
-	H.visible_message(span_suicide("[H] takes a big sip from [src]! It looks like [H.p_theyre()] trying to commit suicide!"))
-	playsound(H,'sound/items/drink.ogg', 80, TRUE)
-	reagents.trans_to(H, src.reagents.total_volume, transferred_by = H) //a big sip
+	user.visible_message(span_suicide("[user] takes a big sip from [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	playsound(user,'sound/items/drink.ogg', 80, TRUE)
+	reagents.trans_to(user, src.reagents.total_volume, transferred_by = user) //a big sip
 	sleep(0.5 SECONDS)
-	H.say(pick(
+	user.say(pick(
 		"Now, Outbomb Cuban Pete, THAT was a game.",
 		"All these new fangled arcade games are too slow. I prefer the classics.",
 		"They don't make 'em like Orion Trail anymore.",
 		"You know what they say. Worst day of spess carp fishing is better than the best day at work.",
 		"They don't make 'em like good old-fashioned singularity engines anymore.",
 	))
-	if(H.age >= 30)
-		H.Stun(50)
-		sleep(5 SECONDS)
-		playsound(H,'sound/items/drink.ogg', 80, TRUE)
-		H.say(pick(
-			"Another day, another dollar.",
-			"I wonder if I should hold?",
-			"Diversifying is for young'ns.",
-			"Yeap, times were good back then.",
-		))
-		return MANUAL_SUICIDE_NONLETHAL
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/drinker = user
+		if (drinker.age >= 30)
+			drinker.Stun(50)
+			sleep(5 SECONDS)
+			playsound(drinker,'sound/items/drink.ogg', 80, TRUE)
+			drinker.say(pick(
+				"Another day, another dollar.",
+				"I wonder if I should hold?",
+				"Diversifying is for young'ns.",
+				"Yeap, times were good back then.",
+			))
+			return MANUAL_SUICIDE_NONLETHAL
+
 	sleep(2 SECONDS) //dramatic pause
 	return TOXLOSS
 

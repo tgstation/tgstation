@@ -205,7 +205,7 @@ GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
 					DoSearchVar(element_in_list, "[container_name] -> [element_in_list] (list)", search_time, recursion_count + 1)
 			//Check normal entrys
 			else if(element_in_list == src)
-				#ifdef REFERENCE_TRACKING_DEBUG
+#ifdef REFERENCE_TRACKING_DEBUG
 				if(SSgarbage.should_save_refs)
 					if(!found_refs)
 						found_refs = list()
@@ -213,9 +213,9 @@ GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
 					continue
 				else
 					log_reftracker("Found [type] [text_ref(src)] in list [container_name].")
-				#else
+#else
 				log_reftracker("Found [type] [text_ref(src)] in list [container_name].")
-				#endif
+#endif
 
 				// This is dumb as hell I'm sorry
 				// I don't want the garbage subsystem to count as a ref for the purposes of this number

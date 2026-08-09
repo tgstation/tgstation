@@ -95,7 +95,7 @@
 		begin_processing()
 
 /obj/machinery/recharge_station/relaymove(mob/living/user, direction)
-	if(user.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(user))
 		return
 	open_machine()
 
@@ -108,7 +108,7 @@
 			open_machine()
 
 /obj/machinery/recharge_station/screwdriver_act(mob/living/user, obj/item/tool)
-	return state_open ? NONE : default_deconstruction_screwdriver(user, tool)
+	return state_open ? default_deconstruction_screwdriver(user, tool) : NONE
 
 /obj/machinery/recharge_station/crowbar_act(mob/living/user, obj/item/tool)
 	return default_pry_open(user, tool, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE, deconstruct_on_fail = TRUE)

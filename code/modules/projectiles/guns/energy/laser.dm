@@ -11,8 +11,6 @@
 
 /obj/item/gun/energy/laser/Initialize(mapload)
 	. = ..()
-	add_deep_lore()
-
 	// Only regular lasguns can be slapcrafted
 	if(type != /obj/item/gun/energy/laser)
 		return
@@ -305,7 +303,7 @@
 
 // Laser Gun
 
-/obj/item/gun/energy/laser/proc/add_deep_lore()
+/obj/item/gun/energy/laser/add_deep_lore()
 	AddElement(/datum/element/examine_lore, \
 		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
 		lore = "The NT Type 5 Heat Delivery System (sometimes referred to as the HDS-5 in promotional material) is what truly put Nanotrasen \

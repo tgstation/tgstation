@@ -47,7 +47,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/unexplored)
 "l" = (
-/turf/closed/indestructible/rock/snow/ice/ore,
+/turf/closed/indestructible/rock/snow/ore,
 /area/icemoon/underground/explored)
 "m" = (
 /obj/effect/decal/cleanable/blood,
@@ -161,7 +161,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "I" = (
-/turf/closed/indestructible/rock/snow/ice/ore,
+/turf/closed/indestructible/rock/snow/ore,
 /area/icemoon/underground/unexplored)
 "J" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -238,7 +238,7 @@
 /area/icemoon/underground/explored)
 "S" = (
 /obj/structure/flora/grass/brown/style_random,
-/turf/closed/indestructible/rock/snow/ice/ore,
+/turf/closed/indestructible/rock/snow/ore,
 /area/icemoon/underground/explored)
 "T" = (
 /obj/structure/flora/rock/pile/icy/style_3,

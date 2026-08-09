@@ -32,7 +32,7 @@
 	electrocution_skeleton_anim.appearance_flags |= RESET_COLOR|KEEP_APART
 	if(ishuman(hallucinator))
 		var/mob/living/carbon/human/human_hallucinator = hallucinator
-		human_hallucinator.apply_height_filters(electrocution_skeleton_anim)
+		human_hallucinator.apply_height(electrocution_skeleton_anim, ENTIRE_BODY)
 
 	SET_PLANE_EXPLICIT(shock_image, ABOVE_GAME_PLANE, hallucinator)
 	SET_PLANE_EXPLICIT(electrocution_skeleton_anim, ABOVE_GAME_PLANE, hallucinator)

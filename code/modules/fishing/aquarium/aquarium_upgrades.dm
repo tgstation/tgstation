@@ -33,6 +33,7 @@
 	desc = "All the required components to allow an aquarium to harness energy bioelectric fish."
 	icon_state = "bioelec_kit"
 	upgrade_to_type = /obj/structure/aquarium/bioelec_gen
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT)
 
 /obj/structure/aquarium/bioelec_gen
 	name = "bioelectricity generator"
@@ -65,6 +66,7 @@
 	icon_state = "bluespace_kit"
 	upgrade_from_type = /obj/item/fish_tank
 	upgrade_to_type = /obj/item/fish_tank/bluespace
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 3, /datum/material/titanium = SMALL_MATERIAL_AMOUNT)
 
 /obj/item/fish_tank/bluespace
 	name = "bluespace fish tank"

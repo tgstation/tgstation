@@ -102,6 +102,7 @@
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	initial_language_holder = /datum/language_holder/speaking_machine
 	armor_type = /datum/armor/obj_machinery
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 	///see code/__DEFINES/stat.dm
 	var/machine_stat = NONE
@@ -185,12 +186,15 @@
 	if(occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
 
-	if((resistance_flags & INDESTRUCTIBLE) && component_parts){ // This is needed to prevent indestructible machinery still blowing up. If an explosion occurs on the same tile as the indestructible machinery without the PREVENT_CONTENTS_EXPLOSION_1 flag, /datum/controller/subsystem/explosions/proc/propagate_blastwave will call ex_act on all movable atoms inside the machine, including the circuit board and component parts. However, if those parts get deleted, the entire machine gets deleted, allowing for INDESTRUCTIBLE machines to be destroyed. (See #62164 for more info)
+	if((resistance_flags & INDESTRUCTIBLE) && component_parts) // This is needed to prevent indestructible machinery still blowing up. If an explosion occurs on the same tile as the indestructible machinery without the PREVENT_CONTENTS_EXPLOSION_1 flag, /datum/controller/subsystem/explosions/proc/propagate_blastwave will call ex_act on all movable atoms inside the machine, including the circuit board and component parts. However, if those parts get deleted, the entire machine gets deleted, allowing for INDESTRUCTIBLE machines to be destroyed. (See #62164 for more info)
 		flags_1 |= PREVENT_CONTENTS_EXPLOSION_1
-	}
+
+	if(critical_machine)
+		AddElement(/datum/element/block_area_power_fail)
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_MACHINES_GLITCHED) && mapload)
 		randomize_language_if_on_station()
+
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_MACHINE, src)
 
 	return INITIALIZE_HINT_LATELOAD
@@ -1097,6 +1101,9 @@
 	var/list/part_list = replacer_tool.get_sorted_parts(ignore_stacks = TRUE)
 	if(!part_list.len)
 		return FALSE
+
+	replacer_tool.atom_storage.block_insert_remove_updates = TRUE
+	var/update_storage = FALSE
 	for(var/primary_part_base in component_parts)
 		//we exchanged all we could time to bail
 		if(!part_list.len)
@@ -1129,41 +1136,48 @@
 				// If it's rigged or corrupted, max the charge. Then explode it.
 				if(checked_cell.try_explode(max_charge = TRUE))
 					break
-			if(secondary_part.get_part_rating() > current_rating)
-				//store name of part incase we qdel it below
-				var/secondary_part_name = secondary_part.name
-				if(replacer_tool.atom_storage.attempt_remove(secondary_part, src))
-					if (istype(primary_part_base, /datum/stock_part))
-						var/stock_part_datum = GLOB.stock_part_datums_per_object[secondary_part.type]
-						if (isnull(stock_part_datum))
-							CRASH("[secondary_part] ([secondary_part.type]) did not have a stock part datum (was trying to find [primary_part_base])")
-						component_parts += stock_part_datum
-						part_list -= secondary_part //have to manually remove cause we are no longer refering replacer_tool.contents
-						qdel(secondary_part)
-					else
-						component_parts += secondary_part
-						secondary_part.forceMove(src)
-						part_list -= secondary_part //have to manually remove cause we are no longer refering replacer_tool.contents
-
-				component_parts -= primary_part_base
-
-				var/obj/physical_part
+			if(secondary_part.get_part_rating() <= current_rating)
+				continue
+			//store name of part incase we qdel it below
+			var/secondary_part_name = secondary_part.name
+			if(replacer_tool.atom_storage.attempt_remove(secondary_part, src, silent = TRUE, visual_updates = FALSE))
+				update_storage = TRUE
 				if (istype(primary_part_base, /datum/stock_part))
-					var/datum/stock_part/stock_part_datum = primary_part_base
-					var/physical_object_type = stock_part_datum.physical_object_type
-					physical_part = new physical_object_type
+					var/stock_part_datum = GLOB.stock_part_datums_per_object[secondary_part.type]
+					if (isnull(stock_part_datum))
+						CRASH("[secondary_part] ([secondary_part.type]) did not have a stock part datum (was trying to find [primary_part_base])")
+					component_parts += stock_part_datum
+					part_list -= secondary_part //have to manually remove cause we are no longer refering replacer_tool.contents
+					qdel(secondary_part)
 				else
-					physical_part = primary_part_base
+					component_parts += secondary_part
+					secondary_part.forceMove(src)
+					part_list -= secondary_part //have to manually remove cause we are no longer refering replacer_tool.contents
 
-				replacer_tool.atom_storage.attempt_insert(physical_part, user, TRUE, force = STORAGE_SOFT_LOCKED)
-				to_chat(user, span_notice("[capitalize(physical_part.name)] replaced with [secondary_part_name]."))
-				shouldplaysound = TRUE //Only play the sound when parts are actually replaced!
-				break
+			component_parts -= primary_part_base
+
+			var/obj/physical_part
+			if (istype(primary_part_base, /datum/stock_part))
+				var/datum/stock_part/stock_part_datum = primary_part_base
+				var/physical_object_type = stock_part_datum.physical_object_type
+				physical_part = new physical_object_type
+			else
+				physical_part = primary_part_base
+
+			replacer_tool.atom_storage.attempt_insert(physical_part, user, override = TRUE, force = STORAGE_SOFT_LOCKED, messages = FALSE)
+			to_chat(user, span_notice("[capitalize(physical_part.name)] replaced with [secondary_part_name]."))
+			shouldplaysound = TRUE //Only play the sound when parts are actually replaced!
+			break
 
 	RefreshParts()
 
 	if(shouldplaysound)
 		replacer_tool.play_rped_effect()
+	if(update_storage)
+		replacer_tool.atom_storage.refresh_views()
+		replacer_tool.update_appearance()
+	replacer_tool.atom_storage.block_insert_remove_updates = FALSE
+
 	return TRUE
 
 /obj/machinery/proc/display_parts(mob/user)
@@ -1279,6 +1293,7 @@
 /obj/machinery/rust_heretic_act(rust_strength)
 	var/damage = 500 + rust_strength * 200
 	take_damage(damage, BRUTE, BOMB, 1)
+	return TRUE
 
 /obj/machinery/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, occupant))
@@ -1289,8 +1304,18 @@
 		set_machine_stat(vval)
 		datum_flags |= DF_VAR_EDITED
 		return TRUE
+	if(vname == NAMEOF(src, critical_machine))
+		if(critical_machine == !!vval) // boolean cast in case a badmin tries to set it to 2 for some reason
+			return FALSE
+		critical_machine = !!vval
+		if(critical_machine)
+			AddElement(/datum/element/block_area_power_fail)
+		else
+			RemoveElement(/datum/element/block_area_power_fail)
+		datum_flags |= DF_VAR_EDITED
+		return TRUE
 
-	return ..()
+	. = ..()
 
 /**
  * Alerts the AI that a hack is in progress.

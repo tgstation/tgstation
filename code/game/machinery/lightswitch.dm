@@ -15,6 +15,10 @@
 	var/light_on_range = 1
 	/// Should this lightswitch automatically rename itself to match the area it's in?
 	var/autoname = TRUE
+	/// The sound the light makes when it's turned on
+	var/sound_on = 'sound/items/weapons/magin.ogg'
+	/// The sound the light makes when it's turned off
+	var/sound_off = 'sound/items/weapons/magout.ogg'
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 
@@ -73,6 +77,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()
+	playsound(src, area.lightswitch ? sound_off : sound_on, 40, TRUE)
 	set_lights(!area.lightswitch)
 
 /obj/machinery/light_switch/screwdriver_act(mob/living/user, obj/item/tool)

@@ -1,5 +1,5 @@
-import { strict as assert } from "node:assert";
-import { parseChangelog } from "./changelogParser.js";
+import { strict as assert } from 'node:assert';
+import { parseChangelog } from './changelogParser.js';
 
 // Basic test
 const basicChangelog = parseChangelog(`
@@ -9,10 +9,10 @@ const basicChangelog = parseChangelog(`
 	/:cl:
 `);
 
-assert.equal(basicChangelog.author, "DenverCoder9");
+assert.equal(basicChangelog.author, 'DenverCoder9');
 assert.equal(basicChangelog.changes.length, 1);
-assert.equal(basicChangelog.changes[0].type.changelogKey, "rscadd");
-assert.equal(basicChangelog.changes[0].description, "Adds new stuff");
+assert.equal(basicChangelog.changes[0].type.changelogKey, 'rscadd');
+assert.equal(basicChangelog.changes[0].description, 'Adds new stuff');
 
 // Case-insensitivity test
 const mixedCaseChangelog = parseChangelog(`
@@ -22,10 +22,10 @@ const mixedCaseChangelog = parseChangelog(`
     /:cl:
 `);
 
-assert.equal(mixedCaseChangelog.author, "DenverCoder9");
+assert.equal(mixedCaseChangelog.author, 'DenverCoder9');
 assert.equal(mixedCaseChangelog.changes.length, 1);
-assert.equal(mixedCaseChangelog.changes[0].type.changelogKey, "rscadd");
-assert.equal(mixedCaseChangelog.changes[0].description, "Adds new stuff");
+assert.equal(mixedCaseChangelog.changes[0].type.changelogKey, 'rscadd');
+assert.equal(mixedCaseChangelog.changes[0].description, 'Adds new stuff');
 
 // Multi-line test
 const multiLineChangelog = parseChangelog(`
@@ -38,10 +38,10 @@ const multiLineChangelog = parseChangelog(`
 
 assert.equal(multiLineChangelog.author, undefined);
 assert.equal(multiLineChangelog.changes.length, 1);
-assert.equal(multiLineChangelog.changes[0].type.changelogKey, "rscadd");
+assert.equal(multiLineChangelog.changes[0].type.changelogKey, 'rscadd');
 assert.equal(
   multiLineChangelog.changes[0].description,
-  "Adds new stuff\nto the game",
+  'Adds new stuff\nto the game',
 );
 
 // Placeholders
@@ -70,8 +70,8 @@ const noCloseChangelog = parseChangelog(`
 `);
 
 assert.equal(noCloseChangelog.changes.length, 1);
-assert.equal(noCloseChangelog.changes[0].type.changelogKey, "rscadd");
-assert.equal(noCloseChangelog.changes[0].description, "Adds new stuff");
+assert.equal(noCloseChangelog.changes[0].type.changelogKey, 'rscadd');
+assert.equal(noCloseChangelog.changes[0].description, 'Adds new stuff');
 
 // :cl: with arbitrary text
 

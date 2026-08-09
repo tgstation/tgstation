@@ -3,15 +3,15 @@
 /turf/closed/indestructible,
 /area/misc/testroom)
 "m" = (
-/turf/open/floor/iron,
+/turf/open/indestructible,
 /area/misc/testroom)
 "r" = (
 /obj/effect/landmark/unit_test_top_right,
-/turf/open/floor/iron,
+/turf/open/indestructible,
 /area/misc/testroom)
 "L" = (
 /obj/effect/landmark/unit_test_bottom_left,
-/turf/open/floor/iron,
+/turf/open/indestructible,
 /area/misc/testroom)
 
 (1,1,1) = {"

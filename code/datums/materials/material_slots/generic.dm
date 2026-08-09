@@ -61,7 +61,7 @@
 /datum/material_slot/weapon_head/proc/on_throw_impact(obj/item/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)
 	SIGNAL_HANDLER
 	if (!caught && !isliving(hit_atom))
-		affect_throw_impact(source, hit_atom, astype(throwing_datum.thrower.resolve(), /mob/living))
+		affect_throw_impact(source, hit_atom, astype(throwing_datum.thrower?.resolve(), /mob/living))
 
 /datum/material_slot/weapon_head/proc/on_item_attack(obj/item/source, atom/movable/target, mob/living/user)
 	SIGNAL_HANDLER
@@ -89,7 +89,7 @@
 		if (!skin_contact)
 			break
 
-	affect_throw_impact(source, target, astype(throwing_datum.thrower.resolve(), /mob/living), def_zone, !!skin_contact)
+	affect_throw_impact(source, target, astype(throwing_datum.thrower?.resolve(), /mob/living), def_zone, !!skin_contact)
 
 /datum/material_slot/weapon_head/proc/affect_target(obj/item/source, atom/target, mob/living/user, def_zone, skin_contact = TRUE)
 	var/datum/material/source_mat = source.get_material_from_slot(type)
@@ -185,7 +185,7 @@
 /datum/material_slot/handle/proc/on_throw_impact(obj/item/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)
 	SIGNAL_HANDLER
 	if (caught)
-		affect_user(source, hit_atom, astype(throwing_datum.thrower.resolve(), /mob/living))
+		affect_user(source, hit_atom, astype(throwing_datum.thrower?.resolve(), /mob/living))
 
 /datum/material_slot/handle/proc/affect_user(obj/item/source, mob/living/user, mob/living/initiator)
 	var/datum/material/source_mat = source.get_material_from_slot(type)

@@ -41,7 +41,7 @@
 	victim.Knockdown(5 SECONDS)
 
 	// If someone's already cursed, don't try to give them another
-	if(istype(victim.back, /obj/item/storage/backpack/duffelbag/cursed))
+	if(istype(victim.get_item_by_slot(ITEM_SLOT_BACK), /obj/item/storage/backpack/duffelbag/cursed))
 		to_chat(caster, span_warning("The burden of [victim]'s duffel bag becomes too much, shoving them to the floor!"))
 		to_chat(victim, span_warning("The weight of this bag becomes overburdening!"))
 		return TRUE
@@ -57,7 +57,7 @@
 	conjured_duffel.forceMove(victim)
 
 	// Put it on their back first
-	if(victim.dropItemToGround(victim.back))
+	if(victim.dropItemToGround(victim.get_item_by_slot(ITEM_SLOT_BACK)))
 		victim.equip_to_slot_if_possible(conjured_duffel, ITEM_SLOT_BACK, TRUE, TRUE)
 		return TRUE
 

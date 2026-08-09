@@ -1,6 +1,7 @@
 /// Ensures we do not leave genturfs sitting around post work
 /// They serve as notice to the mapper and have no functionality, but it's good to make note of it here
 /datum/unit_test/orphaned_genturf
+	test_flags = UNIT_TEST_MAP_TEST
 
 /datum/unit_test/orphaned_genturf/Run()
 	for(var/turf/open/genturf/orphaned in ALL_TURFS())

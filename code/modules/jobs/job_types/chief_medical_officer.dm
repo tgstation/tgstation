@@ -31,7 +31,7 @@
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM, TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER
-	bounty_types = CIV_JOB_MED
+	bounty_types = CIV_JOB_MED_VIRO
 
 	mail_goodies = list(
 		/obj/effect/spawner/random/medical/organs = 10,
@@ -82,6 +82,8 @@
 		/obj/item/stamp/head/cmo,
 		)
 	skillchips = list(/obj/item/skillchip/entrails_reader)
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/medical/cmo
 
 /datum/outfit/job/cmo/mod
 	name = "Chief Medical Officer (MODsuit)"

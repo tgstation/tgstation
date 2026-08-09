@@ -26,6 +26,14 @@
 /// from datum/tgui/get_payload(user, list/data)
 #define COMSIG_UI_DATA "ui_data"
 
+/// fired on a datum when event-logger tracking is enabled on it [/datum/proc/enable_evlogging]: ()
+#define COMSIG_EVLOGGING_ENABLED "evlogging_enabled"
+/// fired on a datum when event-logger tracking is disabled on it [/datum/proc/disable_evlogging]: ()
+#define COMSIG_EVLOGGING_DISABLED "evlogging_disabled"
+
+/// fired on the source datum whenever an event is added for it in the event logger: (/datum/event_logger_track/track, list/event_data)
+#define COMSIG_EVLOG_EVENT_ADDED "evlog_event_added"
+
 /// fires on the target datum when an element is attached to it (/datum/element)
 #define COMSIG_ELEMENT_ATTACH "element_attach"
 /// fires on the target datum when an element is detached from it (/datum/element)

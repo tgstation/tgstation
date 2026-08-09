@@ -11,7 +11,8 @@ SUBSYSTEM_DEF(minor_mapping)
 	var/list/vermin_chances = list(
 		/mob/living/basic/mouse = 72,
 		/mob/living/basic/snail = 16,
-		/mob/living/basic/stoat = 10,
+		/mob/living/basic/stoat = 7,
+		/mob/living/basic/stoat/kit = 3,
 		/mob/living/basic/regal_rat/controlled = 2,
 	)
 

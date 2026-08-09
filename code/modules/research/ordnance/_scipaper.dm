@@ -289,6 +289,14 @@
 	/// Associative list of which technology the partner might be able to boost and by how much.
 	var/list/boostable_nodes = list()
 
+/datum/scientific_partner/New()
+	. = ..()
+	// Convey boosts to their associated nodes so that they can then be passed
+	// to techweb UIs as static data.
+	for(var/node_id in boostable_nodes)
+		var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)
+		node.discount_boosts[TECHWEB_POINT_TYPE_GENERIC] = boostable_nodes[node_id]
+
 /datum/scientific_partner/proc/purchase_boost(datum/techweb/purchasing_techweb, datum/techweb_node/node)
 	var/possible_boost = allowed_to_boost(purchasing_techweb, node.id)
 	if(!possible_boost)
@@ -301,9 +309,10 @@
 	return TRUE
 
 /datum/scientific_partner/proc/allowed_to_boost(datum/techweb/purchasing_techweb, node_id)
+	var/datum/techweb_node/boosting_node = SSresearch.techweb_node_by_id(node_id)
 	if(purchasing_techweb.scientific_cooperation[type] < (boostable_nodes[node_id] * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER)) // Too expensive
 		return FALSE
-	if((TECHWEB_POINT_TYPE_GENERIC in purchasing_techweb.boosted_nodes[node_id]) && (purchasing_techweb.boosted_nodes[node_id][TECHWEB_POINT_TYPE_GENERIC] >= boostable_nodes[node_id])) // Already bought or we have a bigger discount
+	if((boosting_node.discount_boosted) && (boosting_node.discount_boosts[TECHWEB_POINT_TYPE_GENERIC] >= boostable_nodes[node_id])) // Already bought or we have a bigger discount
 		return FALSE
 	if(node_id in purchasing_techweb.researched_nodes)
 		return SCIPAPER_ALREADY_BOUGHT

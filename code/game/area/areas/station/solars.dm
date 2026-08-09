@@ -77,6 +77,7 @@
 /area/station/maintenance/solars
 	name = "Solar Maintenance"
 	icon_state = "yellow"
+	tacmap_color = TACMAP_AREA_ENGINEERING
 
 /area/station/maintenance/solars/port
 	name = "Port Solar Maintenance"

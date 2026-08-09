@@ -46,6 +46,8 @@
 	/// The sound this obj makes when something is unbuckled from it
 	var/unbuckle_sound = null
 
+	var/generate_map_preview = FALSE
+
 	uses_integrity = TRUE
 
 /obj/vv_edit_var(vname, vval)
@@ -275,8 +277,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /// If we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
 /obj/proc/can_be_unfasten_wrench(mob/user, silent)
-	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
-		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
+	if(!is_anchorable_floor(loc) && !anchored)
+		if(!silent)
+			to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
 		return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
@@ -357,6 +360,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /// Returns modifier to how much damage this object does to a target considered vulnerable to "demolition" (other objects, robots, etc)
 /obj/proc/get_demolition_modifier(obj/target)
+	if(HAS_TRAIT(target, TRAIT_IGNORE_DEMOLITION))
+		return 1
 	if(HAS_TRAIT(target, TRAIT_INVERTED_DEMOLITION))
 		return (1 / demolition_mod)
 	return demolition_mod

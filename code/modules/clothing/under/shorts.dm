@@ -11,6 +11,7 @@
 	body_parts_covered = GROIN
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	supports_variations_flags = NONE
+	bodyshapes_with_variations = NONE
 	can_adjust = FALSE
 	species_exception = list(/datum/species/golem)
 	flags_1 = IS_PLAYER_COLORABLE_1

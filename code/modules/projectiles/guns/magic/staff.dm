@@ -11,6 +11,10 @@
 	/// If FALSE, only wizards or survivalists can use the staff to its full potential - If TRUE, anyone can
 	var/allow_intruder_use = FALSE
 
+/obj/item/gun/magic/staff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/walking_aid)
+
 /obj/item/gun/magic/staff/proc/is_wizard_or_friend(mob/user)
 	if(!HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) && !allow_intruder_use)
 		return FALSE
@@ -99,7 +103,7 @@
 		var/obj/item/my_thing = pop(my_shit)
 		user.dropItemToGround(my_thing)
 		var/mob/living/angry_thing = my_thing.animate_atom_living()
-		angry_thing.ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, user)
+		angry_thing.ai_controller?.set_blackboard_key(BB_CURRENT_TARGET, user)
 		angry_thing.ai_controller?.set_blackboard_key(BB_TARGET_MINIMUM_STAT, HARD_CRIT)
 		angry_thing.ai_controller?.ai_interact(user, combat_mode = TRUE)
 		user.apply_damage(35, BRUTE, forced = TRUE) // Mimics are not actually very strong so we pretend that it just bit us so we die faster, at least 3 charges & worn items should do it
@@ -107,7 +111,7 @@
 
 	if (QDELETED(user))
 		return MANUAL_SUICIDE
-	if (user.stat == CONSCIOUS)
+	if (!IS_UNCONSCIOUS_OR_CRIT(user))
 		return SHAME
 	if (user.stat != DEAD)
 		user.death() // If you got put into crit by the mobs we'll finish you off
@@ -213,7 +217,7 @@
 		/obj/projectile/magic/spellblade,
 		/obj/projectile/magic/swap,
 		/obj/projectile/magic/teleport,
-		/obj/projectile/magic/tentacle,
+		/obj/projectile/magic/tentacle_staff,
 		/obj/projectile/magic/wipe,
 		/obj/projectile/temp/chill
 	)
@@ -331,7 +335,7 @@
 	user.AddComponent(\
 		/datum/component/face_decal/splat,\
 		icon_state = "creampie",\
-		layers = EXTERNAL_FRONT,\
+		layers = list(EXTERNAL_FRONT = BODY_FRONT_LAYER),\
 	)
 	return SHAME
 

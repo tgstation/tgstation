@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 /obj/structure/spawner/ice_moon/polarbear
 	max_mobs = 1
 	spawn_time = 60 SECONDS
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/polarbear)
+	mob_types = list(/mob/living/basic/mining/polarbear)
 	mob_gps_id = "BR" // bear
 
 /obj/structure/spawner/ice_moon/polarbear/clear_rock()

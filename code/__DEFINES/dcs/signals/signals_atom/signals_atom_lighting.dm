@@ -56,3 +56,8 @@
 #define COMSIG_ATOM_OVERLAY_LIGHT_REMOVED "atom_overlay_light_removed"
 ///Above, but send to the holder of the light instead of the light source itself: (atom/movable/light_source)
 #define COMSIG_ATOM_HOLDER_OVERLAY_LIGHT_REMOVED "atom_holder_overlay_light_removed"
+
+/// Called when a light fixture is broken, from base of [/obj/machinery/light/break_light_tube]: (was_ok)
+#define COMSIG_LIGHT_FIXTURE_BROKEN "light_fixture_broken"
+/// Called when a light fixture is toggled on or off, from base of [/obj/machinery/light/toggle_light]: (new_status)
+#define COMSIG_LIGHT_FIXTURE_TOGGLED "light_fixture_toggled"

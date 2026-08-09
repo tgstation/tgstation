@@ -101,7 +101,6 @@
 	var/antimagic_flags = MAGIC_RESISTANCE
 	var/obj/effect/cross_action/spacetime_dist/linked_dist
 	var/busy = FALSE
-	var/sound
 	var/walks_left = 50 //prevents the game from hanging in extreme cases (such as minigun fire)
 
 /obj/effect/cross_action/singularity_act()
@@ -133,7 +132,7 @@
 	busy = TRUE
 	flick("purplesparkles", src)
 	AM.forceMove(get_turf(src))
-	playsound(get_turf(src),sound,70,FALSE)
+	playsound(src, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	busy = FALSE
 
 /obj/effect/cross_action/spacetime_dist/proc/on_entered(datum/source, atom/movable/AM)
@@ -141,11 +140,12 @@
 	if(!busy)
 		walk_link(AM)
 
-/obj/effect/cross_action/spacetime_dist/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(user.temporarilyRemoveItemFromInventory(W))
-		walk_link(W)
+/obj/effect/cross_action/spacetime_dist/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.temporarilyRemoveItemFromInventory(tool))
+		walk_link(tool)
 	else
 		walk_link(user)
+	return ITEM_INTERACT_SUCCESS
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/cross_action/spacetime_dist/attack_hand(mob/user, list/modifiers)

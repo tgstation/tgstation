@@ -16,6 +16,7 @@
 	overlay_state_active = "module_kinesis_on"
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
 	required_slots = list(ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	/// Range of the knesis grab.
 	var/grab_range = 8
 	/// Time between us hitting objects with kinesis.
@@ -269,7 +270,7 @@
 		structures, machinery, vehicles, and, thanks to the fruitful efforts of its creators - living beings."
 	complexity = 0
 	prebuilt = TRUE
-	stat_required = CONSCIOUS
+	stat_required = STABLE
 
 /// Admin suit version of kinesis. Can grab anything at any range, may enable phasing through walls.
 /obj/item/mod/module/anomaly_locked/kinesis/admin
@@ -280,7 +281,7 @@
 	grab_range = INFINITY
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0
 	prebuilt = TRUE
-	stat_required = CONSCIOUS
+	stat_required = STABLE
 	/// Does our object phase through stuff?
 	var/phasing = FALSE
 

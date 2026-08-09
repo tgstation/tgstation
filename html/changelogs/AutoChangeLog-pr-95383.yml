@@ -1,6 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - rscadd: "Reorganized the UI around the game; the title bar has been removed in favor of the old info buttons (top right of the screen), which now has some new buttons for you."
-  - rscadd: "The Status Panel is now able to be retracted with one of the infobuttons."
-  - qol: "You can now go directly to your hotkey settings from your hotkeys help page."

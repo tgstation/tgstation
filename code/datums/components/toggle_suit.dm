@@ -5,8 +5,8 @@
 /datum/component/toggle_icon
 	/// Whether the icon is toggled
 	var/toggled = FALSE
-	/// The base icon state we do operations on.
-	var/base_icon_state
+	/// The inferred base icon state we do operations on, in case the atom doesn't have one set or if it becomes null or something.
+	var/inferred_base_icon_state
 	/// The noun of what was "toggled" displayed to the user. EX: "Toggled the item's [buttons]"
 	var/toggle_noun
 
@@ -18,7 +18,7 @@
 	atom_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 	src.toggle_noun = toggle_noun
-	src.base_icon_state = atom_parent.base_icon_state || atom_parent.post_init_icon_state || atom_parent.icon_state
+	src.inferred_base_icon_state = atom_parent.post_init_icon_state || atom_parent.icon_state
 
 /datum/component/toggle_icon/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_click_alt))
@@ -88,10 +88,12 @@
 	source.balloon_alert(user, "toggled [toggle_noun]")
 
 	toggled = !toggled
+
+	var/icon_state_to_use = source.base_icon_state || inferred_base_icon_state
 	if(toggled)
-		source.icon_state = "[base_icon_state]_t"
+		source.icon_state = "[icon_state_to_use]_t"
 	else
-		source.icon_state = base_icon_state
+		source.icon_state = icon_state_to_use
 
 	if(isitem(source))
 		var/obj/item/item_source = source

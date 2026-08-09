@@ -70,7 +70,7 @@
 	// If the tile uses holiday colors, apply them here
 	if(use_holiday_colors)
 
-		var/custom_color = request_station_colors(src, pattern) || request_holiday_colors(src, pattern)
+		var/custom_color = request_decoration_colors(src, pattern)
 		if(custom_color)
 			color = custom_color
 			alpha = DECAL_ALPHA

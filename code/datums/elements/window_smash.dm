@@ -11,7 +11,7 @@
 		return ELEMENT_INCOMPATIBLE
 	var/mob/living/living_target = target
 	RegisterSignal(living_target, COMSIG_MOVABLE_MOVED, PROC_REF(flying_window_smash))
-	passwindow_on(target, TRAM_PASSENGER_TRAIT)
+	ADD_TRAIT(target, TRAIT_PASSWINDOW, TRAM_PASSENGER_TRAIT)
 	addtimer(CALLBACK(src, PROC_REF(Detach), living_target), duration)
 
 /// Smash any windows that the mob is flying through
@@ -29,5 +29,5 @@
 
 /datum/element/window_smashing/Detach(datum/source)
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
-	passwindow_off(source, TRAM_PASSENGER_TRAIT)
+	REMOVE_TRAIT(source, TRAIT_PASSWINDOW, TRAM_PASSENGER_TRAIT)
 	return ..()

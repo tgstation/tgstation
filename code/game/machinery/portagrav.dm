@@ -88,7 +88,7 @@
 
 /obj/machinery/power/portagrav/update_icon_state()
 	. = ..()
-	icon_state = panel_open ? "[base_icon_state]-o" : base_icon_state
+	icon_state = panel_open ? "[base_icon_state]_o" : base_icon_state
 
 /obj/machinery/power/portagrav/screwdriver_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_screwdriver(user, tool)

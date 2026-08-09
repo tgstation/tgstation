@@ -40,6 +40,11 @@
 	hud_possible = list(ANTAG_HUD)
 	sight = SEE_TURFS | SEE_MOBS
 
+	//purplish tint night vision because the voidwalker is purple
+	lighting_cutoff_red = 30
+	lighting_cutoff_green = 15
+	lighting_cutoff_blue = 30
+
 	/// Color of our regen outline
 	var/regenerate_colour = COLOR_GRAY
 
@@ -104,7 +109,7 @@
 	charge.Grant(src)
 
 	// Glass passing is handled by the glass passer component
-	passtable_on(src, type)
+	ADD_TRAIT(src, TRAIT_PASSWINDOW, INNATE_TRAIT)
 
 	// Voidwalker lore is that radio's actually attracted them, so they should be able to listen to it
 	var/obj/item/radio/internal_radio = new /obj/item/radio(src)
@@ -220,7 +225,7 @@
 		victim.balloon_alert(src, "is dead!")
 		return FALSE
 
-	if(victim.stat == CONSCIOUS) //we're still beating them up!!
+	if(!IS_UNCONSCIOUS_OR_CRIT(victim)) //we're still beating them up!!
 		return TRUE
 
 	if(!istype(get_turf(victim), home_turf) && !(locate(kidnapping_decal) in get_turf(victim)))
@@ -315,7 +320,7 @@
 	var/obj/particles = new /obj/effect/abstract/particle_holder (our_wall, /particles/void_wall)
 
 	balloon_alert(src, "opening window...")
-	if(!do_after(src, 8 SECONDS, our_wall, hidden = TRUE))
+	if(!do_after(src, 8 SECONDS, our_wall, cog_icon = null))
 		qdel(particles)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(!conversions_remaining)

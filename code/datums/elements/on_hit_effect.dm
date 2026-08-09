@@ -16,6 +16,8 @@
 		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(item_afterattack))
 	else if(isanimal_or_basicmob(target))
 		RegisterSignal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(hostile_attackingtarget))
+	else if(ishuman(target))
+		RegisterSignal(target, COMSIG_HUMAN_PUNCHED, PROC_REF(human_punched))
 	else if(isprojectile(target))
 		RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_projectile_self_hit))
 	else
@@ -45,6 +47,12 @@
 		return
 
 	on_hit(attacker, attacker, target, attacker.zone_selected)
+
+
+/datum/element/on_hit_effect/proc/human_punched(mob/living/carbon/human/attacker, mob/living/carbon/human/target, damage, damage_type, obj/item/bodypart/hit, ...)
+	SIGNAL_HANDLER
+
+	on_hit(attacker, attacker, target, hit.body_zone)
 
 /datum/element/on_hit_effect/proc/on_projectile_hit(datum/fired_from, atom/movable/firer, atom/target, angle, body_zone)
 	SIGNAL_HANDLER

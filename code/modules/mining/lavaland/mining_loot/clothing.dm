@@ -140,5 +140,5 @@
 		return NONE
 	if(!ismineralturf(rocks) && !isasteroidturf(rocks))
 		return NONE
-	rocks.attackby(src, user)
+	INVOKE_ASYNC(src, PROC_REF(melee_attack_chain), user, rocks)
 	return COMPONENT_CANCEL_ATTACK_CHAIN

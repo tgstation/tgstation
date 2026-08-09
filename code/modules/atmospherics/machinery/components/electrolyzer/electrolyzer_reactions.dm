@@ -37,13 +37,13 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
  */
 /datum/electrolyzer_reaction/proc/reaction_check(datum/gas_mixture/air_mixture, list/electrolyzer_args = list())
 	var/temp = air_mixture.temperature
-	var/list/cached_gases = air_mixture.gases
+	var/list/cached_moles = air_mixture.moles
 	if((requirements["MIN_TEMP"] && temp < requirements["MIN_TEMP"]) || (requirements["MAX_TEMP"] && temp > requirements["MAX_TEMP"]))
 		return FALSE
 	for(var/id in requirements)
 		if (id == "MIN_TEMP" || id == "MAX_TEMP")
 			continue
-		if(!cached_gases[id] || cached_gases[id][MOLES] < requirements[id])
+		if(cached_moles[id] < requirements[id])
 			return FALSE
 	return TRUE
 
@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 
 	var/old_heat_capacity = air_mixture.heat_capacity()
 
-	var/proportion = min(air_mixture.gases[/datum/gas/water_vapor][MOLES] * INVERSE(2), (2.5 * (working_power ** 2)))
+	var/proportion = min(air_mixture.moles[/datum/gas/water_vapor] * INVERSE(2), (2.5 * (working_power ** 2)))
 	air_mixture.adjust_gas(/datum/gas/water_vapor, -proportion * 2)
 	air_mixture.adjust_gas(/datum/gas/oxygen, proportion)
 	air_mixture.adjust_gas(/datum/gas/hydrogen, proportion * 2)
@@ -94,17 +94,16 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 /datum/electrolyzer_reaction/nob_conversion/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
 	/// The supermatter zap power_level.
 	var/supermatter_power = electrolyzer_args[ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER]
-	var/list/cached_gases = air_mixture.gases
+	var/list/cached_moles = air_mixture.moles
 	var/old_heat_capacity = air_mixture.heat_capacity()
 	air_mixture.assert_gases(/datum/gas/hypernoblium, /datum/gas/antinoblium)
-	var/list/hypernoblium = cached_gases[/datum/gas/hypernoblium]
-	var/list/antinoblium = cached_gases[/datum/gas/antinoblium]
-	var/electrolysed = hypernoblium[MOLES] * clamp(supermatter_power - POWER_PENALTY_THRESHOLD, 0, CRITICAL_POWER_PENALTY_THRESHOLD - POWER_PENALTY_THRESHOLD) / (CRITICAL_POWER_PENALTY_THRESHOLD - POWER_PENALTY_THRESHOLD)
+	var/electrolysed = cached_moles[/datum/gas/hypernoblium] * clamp(supermatter_power - POWER_PENALTY_THRESHOLD, 0, CRITICAL_POWER_PENALTY_THRESHOLD - POWER_PENALTY_THRESHOLD) / (CRITICAL_POWER_PENALTY_THRESHOLD - POWER_PENALTY_THRESHOLD)
 
 	air_mixture.adjust_gas(/datum/gas/hypernoblium, -electrolysed)
 	air_mixture.adjust_gas(/datum/gas/antinoblium, electrolysed)
 
-	var/new_heat_capacity = old_heat_capacity + electrolysed * (antinoblium[GAS_META][META_GAS_SPECIFIC_HEAT] - hypernoblium[GAS_META][META_GAS_SPECIFIC_HEAT])
+	var/list/cached_specific_heat = GAS_META[META_GAS_SPECIFIC_HEAT]
+	var/new_heat_capacity = old_heat_capacity + electrolysed * (cached_specific_heat[/datum/gas/antinoblium] - cached_specific_heat[/datum/gas/hypernoblium])
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air_mixture.temperature = max(air_mixture.temperature * old_heat_capacity / new_heat_capacity, TCMB)
 
@@ -127,7 +126,8 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 /datum/electrolyzer_reaction/halon_generation/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
 	var/old_heat_capacity = air_mixture.heat_capacity()
 	air_mixture.assert_gases(/datum/gas/bz, /datum/gas/oxygen, /datum/gas/halon)
-	var/reaction_efficency = min(air_mixture.gases[/datum/gas/bz][MOLES] * (1 - NUM_E ** (-0.5 * air_mixture.temperature * working_power / FIRE_MINIMUM_TEMPERATURE_TO_EXIST)), air_mixture.gases[/datum/gas/bz][MOLES])
+	var/bz_moles = air_mixture.moles[/datum/gas/bz]
+	var/reaction_efficency = min(bz_moles * (1 - NUM_E ** (-0.5 * air_mixture.temperature * working_power / FIRE_MINIMUM_TEMPERATURE_TO_EXIST)), bz_moles)
 
 	air_mixture.adjust_gas(/datum/gas/bz, -reaction_efficency)
 	air_mixture.adjust_gas(/datum/gas/oxygen, reaction_efficency * 0.2)

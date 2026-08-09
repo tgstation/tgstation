@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "Cooldown modkits and AOE modkits now work as intended. Cooldowns make the gun shoot faster, and AOE modkits will make the gun slightly slower, regardless of the order they're installed in."

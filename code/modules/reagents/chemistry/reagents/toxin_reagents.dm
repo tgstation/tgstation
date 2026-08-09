@@ -233,7 +233,7 @@
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(!HAS_TRAIT(affected_mob, TRAIT_NOBREATH))
-		affected_mob.adjust_oxy_loss(2.5 * normalise_creation_purity() * metabolization_ratio * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		affected_mob.adjust_oxy_loss(2.5 * normalise_creation_purity() * metabolization_ratio * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		affected_mob.losebreath += 1 * normalise_creation_purity() * metabolization_ratio * seconds_per_tick
 		. = UPDATE_MOB_HEALTH
 		if(SPT_PROB(10, seconds_per_tick))
@@ -250,6 +250,54 @@
 /datum/reagent/toxin/lexorin/proc/block_breath(mob/living/source)
 	SIGNAL_HANDLER
 	return COMSIG_CARBON_BLOCK_BREATH
+
+/datum/reagent/toxin/carnivorousblood
+	name = "Carnivorous Blood"
+	description = "An Interdyne-developed biological agent that consumes any blood similar to the blood it was trained on."
+	color ="#C80000"
+	toxpwr = 0
+	taste_description = "carbonated blood"
+	ph = 7.4
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_DEAD_PROCESS
+	self_consuming = TRUE
+	// Will hold up to three DNA unique enzymes
+	data = list()
+
+/datum/reagent/toxin/carnivorousblood/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	if(methods & INHALE)
+		data = list() // Being vaporized is generally undesirable for living creatures
+
+/datum/reagent/toxin/carnivorousblood/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(!CAN_HAVE_BLOOD(affected_mob) || affected_mob.blood_volume == 0)
+		affected_mob.reagents.remove_reagent(/datum/reagent/toxin/carnivorousblood, volume)
+		return
+	var/multiplier = 1
+	if(affected_mob.stat == DEAD)
+		multiplier *= 2
+	if(affected_mob.dna.unique_enzymes in data)
+		multiplier *= 3
+	affected_mob.adjust_blood_volume(-2 * multiplier * seconds_per_tick)
+	if(SPT_PROB(10, seconds_per_tick))
+		to_chat(affected_mob, span_danger("Your blood is writhing in your veins!"))
+		if(SPT_PROB(25, seconds_per_tick))
+			affected_mob.emote("scream")
+	return UPDATE_MOB_HEALTH
+
+/datum/reagent/toxin/carnivorousblood/on_merge(list/mix_data, amount)
+	. = ..()
+	feed_dna_list(mix_data)
+
+/// Given a list of DNA keys, adds new keys up to the limit of three distinct sequences.
+/datum/reagent/toxin/carnivorousblood/proc/feed_dna_list(list/adding_list)
+	for(var/dna in adding_list)
+		if(data.len >= 3)
+			return
+		if(dna in data)
+			continue
+		data += dna
 
 /datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
@@ -323,7 +371,7 @@
 /datum/reagent/toxin/zombiepowder/proc/zombify(mob/living/holder_mob)
 	PRIVATE_PROC(TRUE)
 
-	holder_mob.adjust_oxy_loss(0.25, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	holder_mob.adjust_oxy_loss(0.25, FALSE, required_biotype = affected_biotype)
 	if((data?["method"] & (INGEST|INHALE)) && holder_mob.stat != DEAD)
 		holder_mob.apply_status_effect(/datum/status_effect/reagent_effect/fakedeath, type)
 
@@ -368,7 +416,7 @@
 
 /datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_oxy_loss(0.5 * metabolization_ratio * seconds_per_tick, FALSE, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
+	if(affected_mob.adjust_oxy_loss(0.5 * metabolization_ratio * seconds_per_tick, FALSE, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/mindbreaker
@@ -448,12 +496,12 @@
 		if(exposed_mob.adjust_tox_loss(damage * 20, required_biotype = affected_biotype))
 			return
 
-	if(!(methods & VAPOR) || !iscarbon(exposed_mob))
+	if(!(methods & VAPOR) || !ishuman(exposed_mob))
 		return
 
-	var/mob/living/carbon/exposed_carbon = exposed_mob
-	if(!exposed_carbon.wear_mask)
-		exposed_carbon.adjust_tox_loss(damage, required_biotype = affected_biotype)
+	var/mob/living/carbon/human/exposed_human = exposed_mob
+	if(!exposed_human.wear_mask)
+		exposed_human.adjust_tox_loss(damage, required_biotype = affected_biotype)
 
 /datum/reagent/toxin/plantbgone/weedkiller
 	name = "Weed Killer"
@@ -758,7 +806,7 @@
 	. = ..()
 	var/heal = 4 * metabolization_ratio * seconds_per_tick
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_oxy_loss(heal, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update = affected_mob.adjust_oxy_loss(heal, updating_health = FALSE, required_biotype = affected_biotype)
 	need_mob_update += affected_mob.adjust_brute_loss(heal, updating_health = FALSE, required_bodytype = affected_bodytype)
 	need_mob_update += affected_mob.adjust_tox_loss(heal, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
@@ -940,16 +988,16 @@
 			affected_mob.Paralyze(60)
 		if(2)
 			affected_mob.losebreath += 10
-			affected_mob.adjust_oxy_loss(2 * rand(5,25) * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			affected_mob.adjust_oxy_loss(2 * rand(5,25) * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 			need_mob_update = TRUE
 		if(3)
 			if(!affected_mob.undergoing_cardiac_arrest() && affected_mob.can_heartattack())
 				affected_mob.set_heartattack(TRUE)
-				if(affected_mob.stat == CONSCIOUS)
+				if(!IS_UNCONSCIOUS_OR_CRIT(affected_mob))
 					affected_mob.visible_message(span_userdanger("[affected_mob] clutches at [affected_mob.p_their()] chest as if [affected_mob.p_their()] heart stopped!"))
 			else
 				affected_mob.losebreath += 10
-				need_mob_update = affected_mob.adjust_oxy_loss(rand(5,25), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+				need_mob_update = affected_mob.adjust_oxy_loss(rand(5,25), updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -1110,7 +1158,7 @@
 	. = ..()
 	if(current_cycle > 11)
 		affected_mob.Paralyze(240 * metabolization_ratio * seconds_per_tick)
-	if(affected_mob.adjust_oxy_loss(2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
+	if(affected_mob.adjust_oxy_loss(2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/heparin //Based on a real-life anticoagulant. I'm not a doctor, so this won't be realistic.
@@ -1326,7 +1374,7 @@
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/affected_mob)
 	. = ..()
-	affected_mob.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
+	INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/atom/movable, say), "oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1453,8 +1501,8 @@
 		toxpwr = 0
 		liver_tolerance_multiplier = 0
 		silent_toxin = TRUE
-		remove_paralysis()
-		need_mob_update += affected_mob.adjust_oxy_loss(-3.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		remove_paralysis(affected_mob)
+		need_mob_update += affected_mob.adjust_oxy_loss(-3.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		need_mob_update = affected_mob.adjust_tox_loss(-3.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		need_mob_update += affected_mob.adjust_brute_loss(-6 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += affected_mob.adjust_fire_loss(-6.75 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
@@ -1592,7 +1640,7 @@
 	. = ..()
 	var/merged_total = amount + volume
 	if(merged_total >= CRITICAL_CAPACITY)
-		spew_waste(round(volume / WASTE_REACTION_THRESHOLD*2)) //Sure as HELL can't store it.
+		spew_waste(round(volume / WASTE_REACTION_THRESHOLD * 2)) //Sure as HELL can't store it.
 		var/atom/container = holder.my_atom
 		var/damage_mult = 1
 		if(ismachinery(container))

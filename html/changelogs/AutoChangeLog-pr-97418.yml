@@ -1,0 +1,6 @@
+author: "hry-gh"
+delete-after: True
+changes:
+  - bugfix: "classic hotkey mode will work when focused on the input bar"
+  - bugfix: "you can navigate recently input commands with ctrl+up/down again"
+  - bugfix: "pressing space in the input autocompletes to the next shared verb name prefix"

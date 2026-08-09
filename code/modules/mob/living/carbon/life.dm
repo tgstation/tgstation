@@ -13,6 +13,9 @@
 
 	if(HAS_TRAIT(src, TRAIT_STASIS))
 		. = ..()
+		if(QDELETED(src))
+			return
+
 		reagents?.handle_stasis_chems(src, seconds_per_tick)
 	else
 		//Reagent processing needs to come before breathing, to prevent edge cases.
@@ -30,9 +33,6 @@
 			for(var/key in mind?.addiction_points)
 				GLOB.addictions[key].process_addiction(src, seconds_per_tick)
 			handle_brain_damage(seconds_per_tick)
-
-	if(stat != DEAD)
-		handle_bodyparts(seconds_per_tick)
 
 	if(stat != DEAD)
 		return TRUE
@@ -83,20 +83,19 @@
 	if(lungs?.organ_flags & ORGAN_FAILING)
 		losebreath++
 	else if(!get_organ_slot(ORGAN_SLOT_BREATHING_TUBE))
-		if(health <= HEALTH_THRESHOLD_FULLCRIT || pulledby?.grab_state >= GRAB_KILL)
+		if(stat == HARD_CRIT || pulledby?.grab_state >= GRAB_KILL)
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
-		else if(health <= crit_threshold)
+		else if(stat == SOFT_CRIT)
 			losebreath += 0.25 //You're having trouble breathing in soft crit, so you'll miss a breath one in four times
 
 	//Suffocate
 	if(losebreath >= 1) //You've missed a breath, take oxy damage
 		losebreath--
-		if(prob(10))
-			emote("gasp")
 		if(isobj(loc))
 			var/obj/loc_as_obj = loc
 			loc_as_obj.handle_internal_lifeform(src,0)
+
 	else
 		//Breathe from internal
 		breath = get_breath_from_internal(BREATH_VOLUME)
@@ -164,7 +163,7 @@
 	breath.assert_gases(/datum/gas/bz, /datum/gas/carbon_dioxide, /datum/gas/freon, /datum/gas/plasma, /datum/gas/pluoxium, /datum/gas/miasma, /datum/gas/nitrous_oxide, /datum/gas/nitrium, /datum/gas/oxygen)
 
 	/// The list of gases in the breath.
-	var/list/breath_gases = breath.gases
+	var/list/breath_moles = breath.moles
 	/// Indicates if there are moles of gas in the breath.
 	var/has_moles = breath.total_moles() != 0
 
@@ -209,16 +208,16 @@
 	if(has_moles)
 		// Breath has more than 0 moles of gas.
 		// Partial pressures of "main gases".
-		pluoxium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES])
-		o2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES] + (PLUOXIUM_PROPORTION * pluoxium_pp))
-		plasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/plasma][MOLES])
-		co2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/carbon_dioxide][MOLES])
+		pluoxium_pp = breath.get_breath_partial_pressure(breath_moles[/datum/gas/pluoxium])
+		o2_pp = breath.get_breath_partial_pressure(breath_moles[/datum/gas/oxygen] + (PLUOXIUM_PROPORTION * pluoxium_pp))
+		plasma_pp = breath.get_breath_partial_pressure(breath_moles[/datum/gas/plasma])
+		co2_pp = breath.get_breath_partial_pressure(breath_moles[/datum/gas/carbon_dioxide])
 		// Partial pressures of "trace" gases.
-		bz_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/bz][MOLES])
-		freon_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/freon][MOLES])
-		miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
-		n2o_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrous_oxide][MOLES])
-		nitrium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrium][MOLES])
+		bz_pp = breath.get_breath_partial_pressure(breath_moles[/datum/gas/bz])
+		freon_pp = breath.get_breath_partial_pressure(breath_moles[/datum/gas/freon])
+		miasma_pp = breath.get_breath_partial_pressure(breath_moles[/datum/gas/miasma])
+		n2o_pp = breath.get_breath_partial_pressure(breath_moles[/datum/gas/nitrous_oxide])
+		nitrium_pp = breath.get_breath_partial_pressure(breath_moles[/datum/gas/nitrium])
 
 	// Breath has 0 moles of gas.
 	else if(can_breathe_vacuum)
@@ -236,7 +235,7 @@
 	// Behaves like Oxygen with 8X efficacy, but metabolizes into a reagent.
 	if(pluoxium_pp)
 		// Inhale Pluoxium. Exhale nothing.
-		breath_gases[/datum/gas/pluoxium][MOLES] = 0
+		breath_moles[/datum/gas/pluoxium] = 0
 		// Metabolize to reagent.
 		if(pluoxium_pp > gas_stimulation_min)
 			var/existing = reagents.get_reagent_amount(/datum/reagent/pluoxium)
@@ -248,7 +247,7 @@
 	// Minimum Oxygen effects. "Too little oxygen!"
 	if(!can_breathe_vacuum && (o2_pp < safe_oxygen_min))
 		// Breathe insufficient amount of O2.
-		oxygen_used = handle_suffocation(o2_pp, safe_oxygen_min, breath_gases[/datum/gas/oxygen][MOLES])
+		oxygen_used = handle_suffocation(o2_pp, safe_oxygen_min, breath_moles[/datum/gas/oxygen])
 		if(!HAS_TRAIT(src, TRAIT_ANOSMIA))
 			throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 	else
@@ -257,14 +256,14 @@
 		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		if(o2_pp)
 			// Inhale O2.
-			oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
+			oxygen_used = breath_moles[/datum/gas/oxygen]
 			// Heal mob if not in crit.
 			if(health >= crit_threshold)
 				adjust_oxy_loss(-5)
 	// Exhale equivalent amount of CO2.
 	if(o2_pp)
-		breath_gases[/datum/gas/oxygen][MOLES] -= oxygen_used
-		breath_gases[/datum/gas/carbon_dioxide][MOLES] += oxygen_used
+		breath_moles[/datum/gas/oxygen] -= oxygen_used
+		breath_moles[/datum/gas/carbon_dioxide] += oxygen_used
 
 	//-- CARBON DIOXIDE --//
 	// Maximum CO2 effects. "Too much CO2!"
@@ -294,7 +293,7 @@
 	// Maximum Plasma effects. "Too much Plasma!"
 	if(plasma_pp > safe_plas_max)
 		// Plasma side-effects.
-		var/ratio = (breath_gases[/datum/gas/plasma][MOLES] / safe_plas_max) * 10
+		var/ratio = (breath_moles[/datum/gas/plasma] / safe_plas_max) * 10
 		adjust_tox_loss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 		if(!HAS_TRAIT(src, TRAIT_ANOSMIA))
 			throw_alert(ALERT_TOO_MUCH_PLASMA, /atom/movable/screen/alert/too_much_plas)
@@ -452,7 +451,7 @@
 /mob/living/carbon/proc/handle_blood(seconds_per_tick)
 	return
 
-/mob/living/carbon/reagent_tick(datum/reagent/chem, seconds_per_tick)
+/mob/living/carbon/reagent_tick(datum/reagent/chem, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(. & COMSIG_MOB_STOP_REAGENT_TICK)
 		return
@@ -493,17 +492,13 @@
 			// A simple weighted average that simplifies down to "total synth volume / total blood volume" i.e. "how much of our blood is synthetic"
 			AddComponent(/datum/component/synth_blood, (added_synth_volume + existing_synth_volume) / (blood_added + cached_blood_volume))
 
-	if(chem.data?["blood_type"])
-		var/datum/blood_type/donor_type = chem.data["blood_type"]
+	if(chem.data?[BLOOD_DATA_TYPE])
+		var/datum/blood_type/donor_type = chem.data[BLOOD_DATA_TYPE]
 		if(!(donor_type.type_key() in blood_type.compatible_types))
 			reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			return COMPONENT_NO_EXPOSE_REAGENTS
 
 	return COMPONENT_NO_EXPOSE_REAGENTS
-
-/mob/living/carbon/proc/handle_bodyparts(seconds_per_tick)
-	for(var/obj/item/bodypart/limb as anything in get_bodyparts(include_stumps = TRUE))
-		. |= limb.on_life(seconds_per_tick)
 
 /mob/living/carbon/proc/handle_organs(seconds_per_tick)
 	if(stat == DEAD)
@@ -526,48 +521,20 @@
 		if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
 			organ.on_life(seconds_per_tick)
 
-/mob/living/carbon/handle_diseases(seconds_per_tick)
-	for(var/datum/disease/disease as anything in diseases)
-		if(QDELETED(disease)) //Got cured/deleted while the loop was still going.
-			continue
-		if(stat != DEAD || disease.process_dead)
-			disease.stage_act(seconds_per_tick)
+/**
+ * Returns a multiplier representing how effectively this mob can regenerate blood
+ *
+ * A return value of 0 means the mob cannot regenerate blood at all. (missing heart or the heart has stopped or is failing)
+ * Mobs that do not require a heart always return 1, as their blood regeneration is unaffected by heart status.
+ */
+/mob/living/carbon/proc/get_heart_blood_regeneration_multiplier()
+	if(!needs_heart())
+		return 1
+	var/obj/item/organ/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
+	if(isnull(heart))
+		return 0
 
-/mob/living/carbon/handle_mutations(time_since_irradiated, seconds_per_tick)
-	if(!LAZYLEN(dna?.temporary_mutations))
-		return
-
-	for(var/mut, mut_data in dna.temporary_mutations)
-		if(mut_data < world.time)
-			if(!LAZYLEN(dna.previous))
-				continue
-			if(mut == UI_CHANGED)
-				if(dna.previous["UI"])
-					dna.unique_identity = merge_text(dna.unique_identity,dna.previous["UI"])
-					updateappearance(mutations_overlay_update=1)
-					dna.previous.Remove("UI")
-				LAZYREMOVE(dna.temporary_mutations, mut)
-				continue
-			if(mut == UF_CHANGED)
-				if(dna.previous["UF"])
-					dna.unique_features = merge_text(dna.unique_features,dna.previous["UF"])
-					updateappearance(mutcolor_update=1, mutations_overlay_update=1)
-					dna.previous.Remove("UF")
-				LAZYREMOVE(dna.temporary_mutations, mut)
-				continue
-			if(mut == UE_CHANGED)
-				if(dna.previous["name"])
-					real_name = dna.previous["name"]
-					name = real_name
-					dna.previous.Remove("name")
-				if(dna.previous["UE"])
-					dna.unique_enzymes = dna.previous["UE"]
-					dna.previous.Remove("UE")
-				if(dna.previous["blood_type"])
-					set_blood_type(dna.previous["blood_type"])
-					dna.previous.Remove("blood_type")
-				LAZYREMOVE(dna.temporary_mutations, mut)
-				continue
+	return heart.get_blood_regeneration_multiplier()
 
 /**
  * Handles calling metabolization for dead people.

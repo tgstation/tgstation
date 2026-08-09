@@ -12,7 +12,7 @@
 	return ..()
 
 /datum/hallucination/eyes_in_dark/start()
-	if(!hallucinator.client || hallucinator.stat >= UNCONSCIOUS)
+	if(!hallucinator.client || IS_UNCONSCIOUS(hallucinator))
 		return FALSE
 
 	if(hallucinator.lighting_cutoff >= 2.5)
@@ -20,7 +20,7 @@
 
 	var/list/valid = list()
 	for(var/turf/open/nearby in view(hallucinator))
-		if(nearby.get_lumcount() > LIGHTING_TILE_IS_DARK)
+		if(nearby.check_lumcount_above(LIGHTING_TILE_IS_DARK))
 			continue
 		valid += nearby
 
@@ -82,7 +82,7 @@
 /obj/effect/abstract/floating_eyes/process(seconds_per_tick)
 	var/turf/below_us = get_turf(src)
 	var/mob/seer = seer_ref?.resolve()
-	if(below_us.get_lumcount() > LIGHTING_TILE_IS_DARK || seer?.lighting_cutoff >= 2.5 || get_dist(seer, src) <= 1)
+	if(below_us.check_lumcount_above(LIGHTING_TILE_IS_DARK) || seer?.lighting_cutoff >= 2.5 || get_dist(seer, src) <= 1)
 		graceful_delete()
 
 /obj/effect/abstract/floating_eyes/proc/graceful_delete()

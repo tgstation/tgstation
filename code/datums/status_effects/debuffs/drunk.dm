@@ -22,7 +22,7 @@
 
 /datum/status_effect/inebriated/get_examine_text()
 	// Dead people don't look drunk
-	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_FAKEDEATH))
+	if(IS_DEAD_OR_FAKING(owner))
 		return null
 
 	// Having your face covered conceals your drunkness
@@ -105,6 +105,7 @@
 	owner.add_mood_event(id, /datum/mood_event/drunk, drunk_value)
 	owner.clear_mood_event("[id]_after")
 	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, PROC_REF(drunk_gun_fired))
+	RegisterSignal(owner, COMSIG_MOVABLE_GRABBED_RESISTING, PROC_REF(grabbed_resisting))
 
 /datum/status_effect/inebriated/drunk/on_remove()
 	clear_effects()
@@ -125,6 +126,7 @@
 		owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
 
 	UnregisterSignal(owner, COMSIG_MOB_FIRED_GUN)
+	UnregisterSignal(owner, COMSIG_MOVABLE_GRABBED_RESISTING)
 	REMOVE_TRAIT(owner, TRAIT_FEARLESS, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/inebriated/drunk/proc/drunk_gun_fired(datum/source, obj/item/gun/gun, atom/firing_at, params, zone, bonus_spread_values)
@@ -137,6 +139,15 @@
 	if(istype(gun, /obj/item/gun/grenadelauncher) || istype(gun, /obj/item/gun/ballistic/revolver/grenadelauncher))
 		return
 	bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += (drunk_value * 0.5)
+
+/datum/status_effect/inebriated/drunk/proc/grabbed_resisting(datum/source, mob/living/grabbed, list/grab_stats)
+	SIGNAL_HANDLER
+
+	if(!HAS_TRAIT(owner, TRAIT_DRUNKEN_BRAWLER))
+		return
+
+	grab_stats[GRAB_STAT_EFFECTIVE_STATE] += 1
+	grab_stats[GRAB_STAT_FAIL_DAMAGE] += clamp((owner.get_fire_loss() + owner.get_brute_loss()) / 10, 3, 20)
 
 /datum/status_effect/inebriated/drunk/set_drunk_value(set_to)
 	. = ..()
@@ -197,14 +208,14 @@
 	// Over 81, we will gain constant toxloss
 	if(drunk_value >= 81)
 		owner.adjust_tox_loss(1)
-		if(owner.stat == CONSCIOUS && prob(5))
+		if(!IS_UNCONSCIOUS_OR_CRIT(owner) && prob(5))
 			to_chat(owner, span_warning("Maybe you should lie down for a bit..."))
 
 	// Over 91, we gain even more toxloss, brain damage, and have a chance of dropping into a long sleep
 	if(drunk_value >= 91)
 		owner.adjust_tox_loss(1)
 		owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.4)
-		if(owner.stat == CONSCIOUS)
+		if(!IS_UNCONSCIOUS_OR_CRIT(owner))
 			attempt_to_blackout()
 
 	// And finally, over 100 - let's be honest, you shouldn't be alive by now.

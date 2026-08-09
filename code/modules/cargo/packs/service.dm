@@ -68,7 +68,7 @@
 	desc = "Pink-haired Quartermaster not doing her job? Replace her with this tireless worker, today! \
 		Contains one MULEbot."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/mob/living/simple_animal/bot/mulebot)
+	contains = list(/mob/living/basic/bot/mulebot)
 	crate_name = "\improper MULEbot Crate"
 	crate_type = /obj/structure/closet/crate/large
 

@@ -87,7 +87,7 @@
 /area/misc/hilbertshotel)
 "s" = (
 /obj/structure/table/wood/fancy,
-/obj/item/food/grown/poppy,
+/obj/item/food/grown/flower/poppy,
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)
 "t" = (

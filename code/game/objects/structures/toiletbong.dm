@@ -6,7 +6,7 @@
 	base_icon_state = "toiletbong"
 	density = FALSE
 	anchored = TRUE
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.05, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.8)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
 	var/smokeradius = 1
 	var/mutable_appearance/weed_overlay
 
@@ -110,8 +110,3 @@
 	if (emag_card)
 		to_chat(user, span_boldwarning("The [emag_card] falls into the toilet. You fish it back out. Looks like you broke the toilet."))
 	return TRUE
-
-/obj/structure/toiletbong/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/card/emag))
-		return
-	return ..()

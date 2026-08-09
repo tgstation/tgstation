@@ -77,10 +77,7 @@
 
 	// we might have some lingering blinking eyes
 	var/obj/item/bodypart/head/head = source.get_bodypart(BODY_ZONE_HEAD)
-	if(head)
-		var/soul_eyes = locate(/datum/bodypart_overlay/simple/soul_pending_eyes) in head.bodypart_overlays
-		if(soul_eyes)
-			head.remove_bodypart_overlay(soul_eyes)
+	head?.remove_bodypart_overlay(/datum/bodypart_overlay/simple/soul_pending_eyes)
 
 	prepare_brain(removed_brain)
 
@@ -177,7 +174,7 @@
 	UnregisterSignal(parent_mob, COMSIG_LIVING_GHOSTROLE_INFO)
 
 // Block formaldehyde from being metabolized, Coroner QoL
-/datum/component/ghostrole_on_revive/proc/block_formaldehyde_metabolism(mob/living/source, datum/reagent/chem)
+/datum/component/ghostrole_on_revive/proc/block_formaldehyde_metabolism(mob/living/source, datum/reagent/chem, seconds_per_tick, metabolization_ratio)
 	SIGNAL_HANDLER
 
 	if(istype(chem, /datum/reagent/toxin/formaldehyde))
