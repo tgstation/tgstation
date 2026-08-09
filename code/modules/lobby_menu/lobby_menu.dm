@@ -22,16 +22,12 @@ GLOBAL_VAR(lobby_title_asset_registered)
 		return
 	lobby_menu = new(src)
 
-/client/verb/toggle_lobby_transparency()
-	set name = "Toggle Lobby Transparency"
-	set category = "Admin"
-	if(!holder)
-		return
+ADMIN_VERB(toggle_lobby_transparency, R_ADMIN, "Toggle Lobby Transparency", "Toggles the lobby background between opaque and transparent.", ADMIN_CATEGORY_MAIN)
 	GLOB.lobby_background_transparent = !GLOB.lobby_background_transparent
 	for(var/datum/lobby_menu/menu as anything in GLOB.lobby_menus)
 		menu.set_transparency(GLOB.lobby_background_transparent)
-	to_chat(src, span_adminnotice("Lobby background [GLOB.lobby_background_transparent ? "transparent" : "opaque"]."))
-	log_admin("[key_name(src)] toggled lobby transparency [GLOB.lobby_background_transparent ? "on" : "off"].")
+	to_chat(user, span_adminnotice("Lobby background [GLOB.lobby_background_transparent ? "transparent" : "opaque"]."))
+	log_admin("[key_name(user)] toggled lobby transparency [GLOB.lobby_background_transparent ? "on" : "off"].")
 
 /datum/lobby_menu
 	var/client/client
@@ -361,3 +357,5 @@ GLOBAL_VAR(lobby_title_asset_registered)
 			))
 
 	return TRUE
+
+#undef LOBBY_TITLE_ASSET_NAME
