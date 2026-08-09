@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - code_imp: "We now unit test to confirm that crates, and crate subtypes sell for their expected value. Also checks for exports whose export_type is explicitly called out in excluded types."
-  - bugfix: "Coffins and various crate subtypes now sell again. For the first time in 4 years."
