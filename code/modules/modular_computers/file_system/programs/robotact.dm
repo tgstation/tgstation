@@ -136,7 +136,8 @@
 
 	switch(action)
 		if("coverunlock")
-			cyborg.unlock_cover()
+			if(cyborg.locked)
+				cyborg.toggle_cover()
 
 		if("lawchannel")
 			cyborg.set_autosay()
