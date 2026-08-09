@@ -3668,6 +3668,31 @@
 	taste_description = "an absence"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/list/col_filter_muted = list(0.7,0.15,0.15,0, 0.15,0.7,0.15,0, 0.15,0.15,0.7,0, 0,0,0,1, 0,0,0,0)
+
+/datum/reagent/consumable/ethanol/emptiest_glass/on_mob_metabolize(mob/living/carbon/drinker)
+	var/atom/movable/plane_master_controller/game_plane_master_controller = drinker.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	game_plane_master_controller.add_filter("emptiest_glass_filter", 10, color_matrix_filter(COLOR_MATRIX_IDENTITY))
+
+	for(var/filter in game_plane_master_controller.get_filters("emptiest_glass_filter"))
+		animate(filter, color = col_filter_muted, 5 SECONDS, CIRCULAR_EASING) //I have no clue if this is the right way to do this, but it works.
+
+/datum/reagent/consumable/ethanol/emptiest_glass/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	var/turf/drinker_turf = get_turf(drinker)
+	drinker_turf.TakeTemperature(-10)
+
+	if(SPT_PROB(2.5, seconds_per_tick))
+		to_chat(drinker, span_warning("[pick("You feel cold.", "You feel empty.")]"))
+		drinker.emote(pick("pale","shiver"))
+		if(prob(20)) //very low chance to apply void chill
+			drinker.playsound_local(drinker, 'sound/music/antag/heretic/VoidsEmbrace_short.ogg', 50) //technically this can overlap, but the chances of that happening are extremely low (and it doesn't even sound that bad)
+			drinker.apply_status_effect(/datum/status_effect/void_chill, 1)
+			to_chat(drinker, span_warning("You hear a distant song..."))
+
+/datum/reagent/consumable/ethanol/emptiest_glass/on_mob_end_metabolize(mob/living/carbon/drinker)
+	var/atom/movable/plane_master_controller/game_plane_master_controller = drinker.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	game_plane_master_controller.remove_filter("emptiest_glass_filter")
 
 #undef ALCOHOL_EXPONENT
 #undef ALCOHOL_THRESHOLD_MODIFIER
