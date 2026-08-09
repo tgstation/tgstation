@@ -918,7 +918,7 @@ Byond.subscribeTo('add_status_tab', () => {
 });
 
 Byond.subscribeTo('remove_status_tab', () => {
-  defaultTab = 'Admin';
+  defaultTab = 'OOC';
   removePermanentTab('Status');
   if (current_tab == 'Status') {
     tab_change(defaultTab);
