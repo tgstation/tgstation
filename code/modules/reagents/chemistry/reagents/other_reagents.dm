@@ -26,7 +26,7 @@
 	. = ..()
 	// If we were artificially created without blood data, we still want to have the blood_reagent element for exposure effects
 	if(!istype(data) || !data["blood_type"])
-		AddElement(/datum/element/blood_reagent, null, get_blood_type(BLOOD_TYPE_UNIVERSAL))
+		AddElement(/datum/element/blood_reagent, null, get_blood_type(/datum/blood_type/universal))
 		return
 
 	var/datum/blood_type/blood_type = data["blood_type"]
