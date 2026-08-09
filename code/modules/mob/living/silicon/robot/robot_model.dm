@@ -121,7 +121,7 @@
 /obj/item/robot_model/proc/remove_module(obj/item/removed_module)
 	if(isstack(removed_module))
 		var/obj/item/stack/sheet_module = removed_module
-		LAZYREMOVE(removed_module.source.linked_modules, sheet_module)
+		LAZYREMOVE(sheet_module.source.linked_modules, sheet_module)
 	basic_modules -= removed_module
 	modules -= removed_module
 	emag_modules -= removed_module
