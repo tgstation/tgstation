@@ -195,7 +195,7 @@
 	hits = 2
 	hitpwr = EXPLODE_LIGHT
 	meteorsound = 'sound/items/dodgeball.ogg'
-	threat = 1
+	threat = SEVERITY_SAND
 
 /obj/effect/meteor/sand/make_debris()
 	return //We drop NOTHING
@@ -224,13 +224,13 @@
 	hitpwr = EXPLODE_LIGHT
 	meteorsound = 'sound/items/weapons/gun/smg/shot.ogg'
 	meteordrop = list(/obj/item/stack/ore/glass)
-	threat = 1
+	threat = SEVERITY_DUST
 
 //Medium-sized
 /obj/effect/meteor/medium
 	name = "meteor"
 	dropamt = 3
-	threat = 5
+	threat = SEVERITY_MEDIUM_METEOR
 
 /obj/effect/meteor/medium/meteor_effect()
 	..()
@@ -243,7 +243,7 @@
 	hits = 6
 	heavy = TRUE
 	dropamt = 4
-	threat = 10
+	threat = SEVERITY_BIG_METEOR
 
 /obj/effect/meteor/big/meteor_effect()
 	..()
@@ -258,7 +258,7 @@
 	heavy = TRUE
 	meteorsound = 'sound/effects/bamf.ogg'
 	meteordrop = list(/obj/item/stack/ore/plasma)
-	threat = 20
+	threat = SEVERITY_FLAMING_METEOR
 	signature = "thermal"
 
 /obj/effect/meteor/flaming/meteor_effect()
@@ -273,7 +273,7 @@
 	heavy = TRUE
 	hits = 9
 	meteordrop = list(/obj/item/stack/ore/uranium)
-	threat = 35
+	threat = SEVERITY_IRRADIATED_METEOR
 	signature = "radiation"
 
 /obj/effect/meteor/irradiated/meteor_effect()
@@ -291,7 +291,7 @@
 	hits = 9
 	heavy = TRUE
 	meteorsound = 'sound/effects/break_stone.ogg'
-	threat = 25
+	threat = SEVERITY_CLUSTER_METEOR
 	signature = "ordnance"
 	///Number of fragmentation meteors to be spawned
 	var/cluster_count = 8
@@ -323,7 +323,7 @@
 	meteorsound = 'sound/mobs/humanoids/ethereal/ethereal_revive_fail.ogg'
 	meteordrop = list(/mob/living/basic/carp)
 	dropamt = 1
-	threat = 5
+	threat = SEVERITY_FROZEN_CARP
 	signature = "fishing and trawling"
 
 /obj/effect/meteor/carp/Initialize(mapload)
@@ -339,7 +339,7 @@
 	dropamt = 3
 	hits = 12
 	meteordrop = list(/obj/item/stack/ore/bluespace_crystal)
-	threat = 15
+	threat = SEVERITY_BLUESPACE_METEOR
 	signature = "bluespace flux"
 
 /obj/effect/meteor/bluespace/Bump(atom/bumped_atom)
@@ -355,7 +355,7 @@
 	hits = 175 //Honks everything, including space tiles. Depending on the angle/how much stuff it hits, there's a fair chance that it will spare the station from the actual explosion
 	meteordrop = list(/obj/item/stack/ore/bananium)
 	meteorsound = 'sound/items/bikehorn.ogg'
-	threat = 15
+	threat = SEVERITY_BANANIUM_METEOR
 	movement_type = PHASING
 	signature = "comedy"
 
@@ -377,7 +377,7 @@
 	desc = "It radiates with captive energy, ready to be let loose upon the world."
 	icon_state = "bluespace"
 	hits = 6
-	threat = 10
+	threat = SEVERITY_EMP_METEOR
 	signature = "electromagnetic interference"
 
 /obj/effect/meteor/emp/Move()
@@ -400,7 +400,7 @@
 	meteorsound = 'sound/effects/blob/blobattack.ogg'
 	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/appendix)
 	var/meteorgibs = /obj/effect/gibspawner/generic
-	threat = 2
+	threat = SEVERITY_MEATY_ORE
 	signature = "culinary material"
 
 /obj/effect/meteor/meaty/setup_extra_drops()
@@ -443,7 +443,7 @@
 	heavy = TRUE
 	meteorsound = 'sound/effects/bamf.ogg'
 	meteordrop = list(/obj/item/stack/ore/plasma)
-	threat = 50
+	threat = SEVERITY_TUNGSKA_METEOR
 	signature = "armageddon"
 
 /obj/effect/meteor/tunguska/Move()
@@ -469,7 +469,7 @@
 	heavy = TRUE
 	dropamt = 1
 	meteordrop = list(/obj/item/clothing/head/utility/hardhat/pumpkinhead, /obj/item/food/grown/pumpkin)
-	threat = 100
+	threat = SEVERITY_PUMPKING
 
 /obj/effect/meteor/pumpkin/Initialize(mapload)
 	. = ..()
