@@ -234,7 +234,7 @@
 
 /// Universal accepts all blood types, but not all blood types accept universal
 /datum/blood_type/universal
-	name = "Universal"
+	name = "U"
 	desc = /datum/blood_type/human::desc
 
 /datum/blood_type/universal/New()
