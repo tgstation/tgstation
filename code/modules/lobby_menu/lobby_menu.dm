@@ -212,7 +212,6 @@ GLOBAL_VAR(lobby_title_asset_registered)
 		"transparent" = GLOB.lobby_background_transparent,
 	))
 
-	// Async poll check
 	check_new_polls()
 
 	if(!assets_signals_registered)
