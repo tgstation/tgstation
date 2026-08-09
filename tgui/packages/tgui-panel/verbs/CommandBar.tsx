@@ -409,7 +409,7 @@ export function CommandBar() {
         } else if (hasSuggestions) {
           e.preventDefault();
           setSelectedIndex((i) => Math.min(i + 1, allSuggestions.length - 1));
-        } else if (!hotkeys) {
+        } else {
           e.preventDefault();
           forwardKeyDown('South');
         }
@@ -425,19 +425,19 @@ export function CommandBar() {
         } else if (hasSuggestions) {
           e.preventDefault();
           setSelectedIndex((i) => Math.max(i - 1, 0));
-        } else if (!hotkeys) {
+        } else {
           e.preventDefault();
           forwardKeyDown('North');
         }
         return;
       case 'ArrowLeft':
-        if (!hotkeys && !e.ctrlKey) {
+        if (!e.ctrlKey) {
           e.preventDefault();
           forwardKeyDown('West');
         }
         return;
       case 'ArrowRight':
-        if (!hotkeys && !e.ctrlKey) {
+        if (!e.ctrlKey) {
           e.preventDefault();
           forwardKeyDown('East');
         }
