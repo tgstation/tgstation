@@ -77,13 +77,13 @@ function suffixForArg(arg: VerbArg | undefined): string {
   return ' ';
 }
 
-const MODES = ['Command', 'Say', 'Whisper', 'Me', 'OOC'] as const;
+const MODES = ['Command', 'Say', 'Me', 'OOC'] as const;
 type Mode = (typeof MODES)[number];
 
 const MODE_COLORS: Record<Mode, string> = {
   Command: '#888',
   Say: '#a3d977',
-  Whisper: '#a89ccc',
+
   Me: '#d4a44a',
   OOC: '#6cb6ff',
 };
