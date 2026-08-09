@@ -15,7 +15,7 @@
 	base_item.forceMove(parent)
 
 	var/obj/item/organ/organ = parent
-	organ.organ_flags |= ORGAN_FAKE|ORGAN_PROMINENT
+	organ.organ_flags |= ORGAN_FAKE|ORGAN_PROMINENT|ORGAN_HAZARDOUS
 	organ.organ_flags &= ~ORGAN_ORGANIC
 	organ.apply_organ_damage(INFINITY)
 	organ.name = base_item.name
