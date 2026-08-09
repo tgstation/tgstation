@@ -249,3 +249,9 @@
   levels0:
   - bugfix: distributed neurons blob zombies no longer cost twice as much as they
       should
+2026-08-09:
+  JohnFulpWillard:
+  - bugfix: Legacy chat's command bar works nicely again.
+  lelandkemble:
+  - bugfix: Gluon frag grenades now output radiation, like they've been trying and
+      failing to do for at least 4 years.
