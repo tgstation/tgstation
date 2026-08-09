@@ -561,6 +561,10 @@
 /// Returns the blood_type datum that corresponds to the string id key in GLOB.blood_types
 /proc/get_blood_type(id)
 	RETURN_TYPE(/datum/blood_type)
+	if(ispath(id, /datum/blood_type))
+		var/datum/blood_type/bloodtype_type = id
+		return GLOB.blood_types[bloodtype_type::name]
+
 	return GLOB.blood_types[id]
 
 /// Returns the hex color string, or a color matrix, of a given blood_type datum given an assoc list of blood_DNA e.g. ("Unknown Blood Type", "*X")

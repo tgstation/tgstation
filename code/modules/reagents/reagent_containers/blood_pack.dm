@@ -7,7 +7,7 @@
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC
 	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
-	var/blood_type = null
+	var/datum/blood_type/blood_type
 	var/labeled = FALSE
 
 /obj/item/reagent_containers/blood/Initialize(mapload, vol)
@@ -24,7 +24,7 @@
 /obj/item/reagent_containers/blood/update_name(updates)
 	. = ..()
 	if(!labeled)
-		name = "blood pack[blood_type ? " - [blood_type]" : ""]"
+		name = "blood pack[blood_type ? " - [blood_type::name]" : ""]"
 
 /obj/item/reagent_containers/blood/random
 	icon_state = "random_bloodpack"
