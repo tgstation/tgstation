@@ -1,0 +1,5 @@
+author: "Swan"
+delete-after: True
+changes:
+  - bugfix: "Fixes round lobby timers not working at all."
+  - bugfix: "Fixes the lobby time not being precise when joining a freshly started, empty server"
