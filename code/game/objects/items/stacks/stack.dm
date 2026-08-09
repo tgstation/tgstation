@@ -106,6 +106,9 @@
 
 /obj/item/stack/Destroy()
 	mats_per_unit = null
+	if(source)
+		LAZYREMOVE(source.linked_modules, src)
+		source = null
 	return ..()
 
 /obj/item/stack/update_name(updates)
