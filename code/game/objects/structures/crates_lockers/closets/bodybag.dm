@@ -573,8 +573,9 @@
 	if(SPT_PROB(2 * (seconds_freezing / 60), seconds_per_tick))
 		freezing.Unconscious(1 SECONDS)
 
-	// Bout two minutes of time
-	take_damage(max_integrity * 0.004 * seconds_per_tick, sound_effect = FALSE)
+	if(loc?.return_air()?.return_temperature() > T0C)
+		// Bout two minutes of time
+		take_damage(max_integrity * 0.004 * seconds_per_tick, sound_effect = FALSE)
 
 /obj/structure/closet/body_bag/environmental/stasis/after_open(mob/living/user, force = FALSE)
 	. = ..()

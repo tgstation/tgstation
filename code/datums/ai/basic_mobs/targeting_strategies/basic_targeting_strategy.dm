@@ -95,8 +95,8 @@
 		return target.loc
 	return null
 
-/datum/targeting_strategy/basic/can_keep_target(mob/living/living_mob, atom/target, range)
-	return can_see(living_mob, target, range)
+/datum/targeting_strategy/basic/can_keep_target(mob/living/living_mob, atom/target, range, datum/ai_controller/controller = null)
+	return is_valid_target(living_mob, target, range, controller)
 
 /// Returns true if the mob and target share factions.
 /// Slow path for subtypes with custom_faction_check set; everything else uses TARGETING_FACTION_CHECK directly

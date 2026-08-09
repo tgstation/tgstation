@@ -33,6 +33,8 @@
 	var/stun_mod = 1
 	/// Multiplied aplpied to just knockdowns, stacks with above multiplicatively
 	var/knockdown_mod = 1
+	/// Lazylen of caps to maximum stun length in seconds - the smallest cap will be used
+	var/list/max_stun_len
 
 	/// Modifier to amount of blood lost when bleeding (both on life ticks and from flat bleed calls)
 	var/bleed_mod = 1

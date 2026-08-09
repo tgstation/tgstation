@@ -382,14 +382,22 @@
 	incompatible_modules = list(/obj/item/mod/module/emp_shield)
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 5)
+	/// How much emp protection this module grants to its wearer when fully extended.
+	var/protection_factor = EMP_PROTECTION_MODERATE
 
 /obj/item/mod/module/emp_shield/on_install()
 	. = ..()
 	mod.AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
+	var/list/all_parts = mod.get_parts()
+	for(var/obj/item/clothing/mod_part as anything in all_parts)
+		mod_part.emp_protection += protection_factor/all_parts.len
 
 /obj/item/mod/module/emp_shield/on_uninstall(deleting = FALSE)
 	. = ..()
 	mod.RemoveElement(/datum/element/empprotection, EMP_PROTECT_ALL)
+	var/list/all_parts = mod.get_parts()
+	for(var/obj/item/clothing/mod_part as anything in all_parts)
+		mod_part.emp_protection -= protection_factor/all_parts.len
 
 /obj/item/mod/module/emp_shield/advanced
 	name = "MOD advanced EMP shield module"
@@ -590,7 +598,7 @@
 			temperature_setting = clamp(value + T0C, min_temp, max_temp)
 
 /obj/item/mod/module/thermal_regulator/on_active_process(seconds_per_tick)
-	mod.wearer.adjust_bodytemperature(get_temp_change_amount((temperature_setting - mod.wearer.bodytemperature), 0.08 * seconds_per_tick))
+	mod.wearer.adjust_bodytemperature(get_temp_change_amount((temperature_setting - mod.wearer.bodytemperature), BODYTEMP_SUIT_CHANGE_RATE * seconds_per_tick))
 
 ///DNA Lock - Prevents people without the set DNA from activating the suit.
 /obj/item/mod/module/dna_lock
