@@ -1463,6 +1463,7 @@
 	drink_type = MEAT | VEGETABLES | GORE
 
 /datum/chemical_reaction/food/soup/black_broth
+	required_temp = 350
 	required_reagents = list(
 		/datum/reagent/water = 40,
 		/datum/reagent/consumable/vinegar = 8,
