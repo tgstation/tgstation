@@ -23,6 +23,8 @@
 	var/toggle_message
 	///chat message when the visor is toggled up.
 	var/alt_toggle_message
+	/// What level of emp protection item has
+	var/emp_protection = EMP_PROTECTION_NONE
 
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
@@ -104,7 +106,7 @@
 		qdel(src)
 
 /obj/item/clothing/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(user.combat_mode || !ismoth(target) || ispickedupmob(src))
+	if(user.combat_mode || !HAS_TRAIT(user, TRAIT_CLOTH_EATER) || ispickedupmob(src))
 		return ..()
 	if((clothing_flags & INEDIBLE_CLOTHING) || (resistance_flags & INDESTRUCTIBLE))
 		return ..()
@@ -366,7 +368,7 @@
 	. = ..()
 	if (clothing_flags & THICKMATERIAL)
 		.["thick"] = "Protects from most injections and sprays."
-	if (clothing_flags & CASTING_CLOTHES)
+	if (HAS_TRAIT(src, TRAIT_CASTING_CLOTHING))
 		.["magical"] = "Allows magical beings to cast spells when wearing [src]."
 	if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
 		.["pressure-proof"] = "Protects the wearer from extremely low or high pressure, such as vacuum of space."
@@ -396,6 +398,8 @@
 		.["sterile"] = "Increases the speed at which reagents are administered to others by [round((1/NITRILE_GLOVES_MULTIPLIER-1)*100, 1)]%."
 	if(TRAIT_FAST_CUFFING in clothing_traits)
 		.["secure"] = "Increases the speed at which you apply restraints."
+	if(emp_protection > EMP_PROTECTION_NONE)
+		.["emp resistant"] = "Reduces the effects of incoming electromagnetic pulses on the wearer."
 
 /obj/item/clothing/examine_descriptor(mob/user)
 	return "clothing"
@@ -437,21 +441,23 @@
 				readout += "<b><u>COVERAGE</u></b>"
 				readout += "It will block [english_list(things_blocked)]."
 
+		var/list/parts_covered = list()
+		if(body_parts_covered & HEAD)
+			parts_covered += "head"
+		if(body_parts_covered & CHEST)
+			parts_covered += "torso"
+		if(body_parts_covered & (ARMS|HANDS))
+			parts_covered += "arms"
+		if(body_parts_covered & (LEGS|FEET))
+			parts_covered += "legs"
+		if(length(parts_covered))
+			readout += "It covers the wearer's [english_list(parts_covered)]."
+
 		if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
-			var/list/parts_covered = list()
 			var/output_string = "It"
 			if(!(clothing_flags & STOPSPRESSUREDAMAGE))
 				output_string = "When sealed, it"
-			if(body_parts_covered & HEAD)
-				parts_covered += "head"
-			if(body_parts_covered & CHEST)
-				parts_covered += "torso"
-			if(body_parts_covered & (ARMS|HANDS))
-				parts_covered += "arms"
-			if(body_parts_covered & (LEGS|FEET))
-				parts_covered += "legs"
-			if(length(parts_covered))
-				readout += "[output_string] will protect the wearer's [english_list(parts_covered)] from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
+			readout += "[output_string] will protect the wearer's bodyparts that it covers from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
 
 		var/heat_prot
 		switch (max_heat_protection_temperature)

@@ -8,6 +8,8 @@
 #define HAUNTED_ITEM_AGGRO_ADDITION 2
 ///how far a cursed item will still try to chase a target
 #define CURSED_VIEW_RANGE 7
+///Max number of throws per attack sequence before giving up on the current target
+#define HAUNTED_MAX_THROW_ATTEMPTS 4
 
 #define BB_TO_HAUNT_LIST "BB_to_haunt_list"
 ///Actual mob the item is haunting at the moment

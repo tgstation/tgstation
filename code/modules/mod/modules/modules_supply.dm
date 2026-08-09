@@ -67,7 +67,7 @@
 		if(!check_crate_pickup(picked_crate))
 			return
 		playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
-		if(!do_after(mod.wearer, load_time, target = target))
+		if(!do_after(mod.wearer, load_time, target))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
 		if(!check_crate_pickup(picked_crate))
@@ -76,22 +76,27 @@
 		picked_crate.forceMove(src)
 		balloon_alert(mod.wearer, "picked up crate")
 		drain_power(use_energy_cost)
-	else if(length(stored_crates))
+		return
+
+	if(length(stored_crates))
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.is_blocked_turf())
 			return
 		playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
-		if(!do_after(mod.wearer, load_time, target = target))
+		if(!do_after(mod.wearer, load_time, target))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
 		if(target_turf.is_blocked_turf())
 			return
 		var/atom/movable/dropped_crate = pop(stored_crates)
+		if(!dropped_crate)
+			return
 		dropped_crate.forceMove(target_turf)
 		balloon_alert(mod.wearer, "dropped [dropped_crate]")
 		drain_power(use_energy_cost)
-	else
-		balloon_alert(mod.wearer, "invalid target!")
+		return
+
+	balloon_alert(mod.wearer, "invalid target!")
 
 /obj/item/mod/module/clamp/on_part_deactivation(deleting = FALSE)
 	if(deleting)
@@ -178,11 +183,11 @@
 	if(!. || !mod.wearer.Adjacent(target))
 		return
 
-	if(!ismineralturf(target) || !isasteroidturf(target))
+	if(!ismineralturf(target) && !isasteroidturf(target))
 		return
 
 	if(drain_power(use_energy_cost))
-		target.attackby(src, mod.wearer)
+		target.base_item_interaction(mod.wearer, src)
 
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER
@@ -727,7 +732,7 @@
 
 /obj/item/mod/module/sphere_transform/proc/on_statchange(datum/source)
 	SIGNAL_HANDLER
-	if(mod.wearer.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(mod.wearer))
 		deactivate()
 
 /obj/projectile/bullet/mining_missile

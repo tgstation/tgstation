@@ -140,7 +140,7 @@
 /// Returns true if target is a valid target
 /datum/component/lock_on_cursor/proc/can_target(atom/target)
 	var/mob/mob_target = target
-	return is_type_in_typecache(target, target_typecache) && !(ismob(target) && mob_target.stat != CONSCIOUS) && !immune_weakrefs[WEAKREF(target)]
+	return is_type_in_typecache(target, target_typecache) && !(ismob(target) && IS_UNCONSCIOUS_OR_CRIT(mob_target)) && !immune_weakrefs[WEAKREF(target)]
 
 /// Returns the nearest targets to the current cursor position
 /datum/component/lock_on_cursor/proc/get_nearest()

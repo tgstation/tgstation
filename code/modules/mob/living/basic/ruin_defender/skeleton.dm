@@ -50,9 +50,12 @@
 		AddElement(/datum/element/death_drops, loot)
 	AddElement(/datum/element/basic_eating, heal_amt = 50, drinking = TRUE, food_types = good_drinks)
 	AddElement(/datum/element/basic_eating, heal_amt = 0, damage_amount = 25, damage_type = BURN, drinking = TRUE, food_types = bad_drinks)
-	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
+	add_traits(list(TRAIT_SPOOKY_INSTRUMENT_PLAYER, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
 	var/list/foods_list = good_drinks + bad_drinks
 	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, typecacheof(foods_list))
+
+/mob/living/basic/skeleton/get_unconscious_appearance()
+	return get_generic_humanoid_static_appearance()
 
 /mob/living/basic/skeleton/settler
 	name = "undead settler"
@@ -161,20 +164,11 @@
 
 /// Skeletons mostly just beat people to death, but they'll also find and drink milk.
 /datum/ai_controller/basic_controller/skeleton
+	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/skeleton.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
-		BB_EMOTE_KEY = "rattles",
 		BB_EMOTE_CHANCE = 20,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/run_emote,
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)

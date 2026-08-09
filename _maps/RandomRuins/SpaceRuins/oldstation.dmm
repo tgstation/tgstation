@@ -517,15 +517,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
-"cz" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/table,
-/obj/machinery/door/window/brigdoor/right/directional/east,
-/obj/item/circuitboard/computer/borgupload/no_lock,
-/turf/open/floor/iron/dark,
-/area/ruin/space/ancientstation/delta/ai)
 "cA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -1233,6 +1224,14 @@
 	amount = 25
 	},
 /obj/machinery/light/small/broken/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
+"fC" = (
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg/burst,
+/obj/item/stock_parts/subspace/transmitter,
+/obj/item/circuitboard/machine/ai_law_rack,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "fE" = (
@@ -2669,6 +2668,12 @@
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
+"ma" = (
+/obj/machinery/shower/directional/west{
+	has_water_reclaimer = 0
+	},
+/turf/open/floor/mineral/plastitanium/pod/dark,
+/area/ruin/space/ancientstation/delta/biolab)
 "mb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3356,12 +3361,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
-"pB" = (
-/obj/effect/decal/cleanable/blood/oil,
-/obj/structure/alien/weeds,
-/obj/machinery/light/small/broken/directional/west,
-/turf/open/floor/iron/dark,
-/area/ruin/space/ancientstation/delta/ai)
 "pD" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -5101,12 +5100,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
-"BR" = (
-/obj/machinery/shower/directional/west{
-	has_water_reclaimer = 0
-	},
-/turf/open/floor/pod/dark,
-/area/ruin/space/ancientstation/delta/biolab)
 "BS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
@@ -5273,6 +5266,20 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
+"Dd" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/structure/alien/weeds,
+/obj/machinery/light/small/broken/directional/west,
+/obj/item/stack/cable_coil{
+	pixel_y = -2;
+	pixel_x = -2
+	},
+/obj/item/stock_parts/subspace/amplifier{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "Df" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
@@ -5949,12 +5956,6 @@
 	dir = 8
 	},
 /area/ruin/space/ancientstation/delta/biolab)
-"HP" = (
-/obj/effect/decal/cleanable/blood/gibs/robot_debris,
-/obj/structure/alien/weeds,
-/obj/structure/alien/egg/burst,
-/turf/open/floor/iron/dark,
-/area/ruin/space/ancientstation/delta/ai)
 "HQ" = (
 /obj/structure/transit_tube{
 	dir = 4
@@ -6798,15 +6799,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/ancientstation/delta/proto)
-"MC" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/table,
-/obj/machinery/door/window/brigdoor/right/directional/east,
-/obj/item/circuitboard/computer/aiupload/no_lock,
-/turf/open/floor/iron/dark,
-/area/ruin/space/ancientstation/delta/ai)
 "MH" = (
 /obj/structure/girder/displaced,
 /turf/open/floor/plating/airless,
@@ -6845,6 +6837,22 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
+"MO" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/table,
+/obj/machinery/door/window/brigdoor/right/directional/east,
+/obj/item/ai_module/law/core/full/damaged,
+/obj/item/ai_module/law/core/full/maintain{
+	pixel_y = 3;
+	pixel_x = 2
+	},
+/obj/item/ai_module/law/core/freeformcore{
+	pixel_y = -4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "MP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/filingcabinet/chestdrawer{
@@ -7760,6 +7768,25 @@
 	dir = 4
 	},
 /area/ruin/space/ancientstation/delta/biolab)
+"Tl" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/table,
+/obj/machinery/door/window/brigdoor/right/directional/east,
+/obj/item/ai_module/law/core/full/asimov{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/ai_module/law/supplied/freeform{
+	pixel_y = -4;
+	pixel_x = -4
+	},
+/obj/item/ai_module/law/supplied/freeform{
+	pixel_y = -2
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "Tm" = (
 /obj/machinery/power/port_gen/pacman/super{
 	name = "\improper emergency power generator"
@@ -14376,8 +14403,8 @@ Wb
 NS
 dT
 nG
-MC
-cz
+Tl
+MO
 ad
 ad
 aa
@@ -15229,8 +15256,8 @@ aa
 aa
 aa
 ad
-HP
-pB
+fC
+Dd
 lq
 ag
 gk
@@ -15314,7 +15341,7 @@ wK
 UH
 ae
 GX
-BR
+ma
 AT
 rp
 vy

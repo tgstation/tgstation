@@ -13,7 +13,7 @@
 	if(!tool.use_tool(src, user, 0, volume=40))
 		return ITEM_INTERACT_BLOCKING
 	var/sheet_type = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
-	var/obj/item/stack/sheet/mineral/new_item = new sheet_type(user.loc)
+	var/obj/item/stack/sheet/mineral/new_item = new sheet_type(user.drop_location())
 	user.visible_message(span_notice("[user] shaped [src] into [new_item] with [tool]."), \
 						span_notice("You shaped [src] into [new_item] with [tool]."), \
 						span_hear("You hear welding."))
@@ -210,6 +210,11 @@
 	tile_reskin_types = list(
 		/obj/item/stack/tile/mineral/plastitanium,
 		/obj/item/stack/tile/mineral/plastitanium/red,
+		/obj/item/stack/tile/mineral/plastitanium/pod,
+		/obj/item/stack/tile/mineral/plastitanium/pod/light,
+		/obj/item/stack/tile/mineral/plastitanium/pod/dark,
+		/obj/item/stack/tile/mineral/plastitanium/pod/red,
+		/obj/item/stack/tile/mineral/plastitanium/pod/redlight,
 		)
 
 /obj/item/stack/tile/mineral/plastitanium/red
@@ -219,6 +224,47 @@
 	turf_type = /turf/open/floor/mineral/plastitanium/red
 	icon_state = "tile_plastitanium_red"
 	merge_type = /obj/item/stack/tile/mineral/plastitanium/red
+
+/obj/item/stack/tile/mineral/plastitanium/pod
+	name = "pod floor tile"
+	singular_name = "pod floor tile"
+	desc = "A grooved floor tile."
+	icon_state = "tile_pod"
+	inhand_icon_state = "tile-pod"
+	turf_type = /turf/open/floor/mineral/plastitanium/pod
+	merge_type = /obj/item/stack/tile/mineral/plastitanium/pod
+
+/obj/item/stack/tile/mineral/plastitanium/pod/light
+	name = "light pod floor tile"
+	singular_name = "light pod floor tile"
+	desc = "A lightly colored grooved floor tile."
+	icon_state = "tile_podlight"
+	turf_type = /turf/open/floor/mineral/plastitanium/pod/light
+	merge_type = /obj/item/stack/tile/mineral/plastitanium/pod/light
+
+/obj/item/stack/tile/mineral/plastitanium/pod/dark
+	name = "dark pod floor tile"
+	singular_name = "dark pod floor tile"
+	desc = "A darkly colored grooved floor tile."
+	icon_state = "tile_poddark"
+	turf_type = /turf/open/floor/mineral/plastitanium/pod/dark
+	merge_type = /obj/item/stack/tile/mineral/plastitanium/pod/dark
+
+/obj/item/stack/tile/mineral/plastitanium/pod/red
+	name = "red pod floor tile"
+	singular_name = "dark pod floor tile"
+	desc = "A red colored grooved floor tile."
+	icon_state = "tile_pod_red"
+	turf_type = /turf/open/floor/mineral/plastitanium/pod/red
+	merge_type = /obj/item/stack/tile/mineral/plastitanium/pod/red
+
+/obj/item/stack/tile/mineral/plastitanium/pod/redlight
+	name = "light red pod floor tile"
+	singular_name = "light red pod floor tile"
+	desc = "A light red colored grooved floor tile."
+	icon_state = "tile_podlight_red"
+	turf_type = /turf/open/floor/mineral/plastitanium/pod/redlight
+	merge_type = /obj/item/stack/tile/mineral/plastitanium/pod/redlight
 
 /obj/item/stack/tile/mineral/snow
 	name = "snow tile"

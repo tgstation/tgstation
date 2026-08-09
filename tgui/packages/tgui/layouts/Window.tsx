@@ -14,6 +14,7 @@ import {
 } from 'react';
 import { type Box, KeyListener } from 'tgui-core/components';
 import { UI_DISABLED, UI_INTERACTIVE } from 'tgui-core/constants';
+import { globalEvents } from 'tgui-core/events';
 import { KEY_ALT } from 'tgui-core/keycodes';
 import { type BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
@@ -88,6 +89,9 @@ export function Window(props: Props) {
         Byond.winset(Byond.windowId, {
           'is-visible': true,
         });
+        Byond.sendMessage('visible');
+        globalEvents.emit('window-geometry-finished');
+
         logger.log('set to visible');
       };
 

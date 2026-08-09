@@ -81,7 +81,8 @@
 		return
 	if(should_devour(target))
 		devour(target)
-	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
+	return
 
 /// Determines if this mob is worth devouring
 /mob/living/basic/boss/proc/should_devour(mob/living/victim)

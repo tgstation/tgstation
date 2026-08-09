@@ -25,7 +25,7 @@
 	))
 	desc += " DISCLAIMER: The offer will expire once the creature is returned to the station."
 	if(humie_mob)
-		desc += "[mob.p_they(TRUE)] may be delivered handcuffed, for safety of course."
+		desc += "[mob.p_They()] may be delivered handcuffed, for safety of course."
 
 	price = new_price
 	RegisterSignal(mob, COMSIG_LIVING_RETURN_FROM_CAPTURE, PROC_REF(on_return_from_capture))
@@ -57,7 +57,7 @@
 /datum/market_item/hostage/spawn_item(loc, datum/market_purchase/purchase)
 	var/mob/living/mob = item
 	UnregisterSignal(mob, COMSIG_LIVING_RETURN_FROM_CAPTURE)
-	if(!mob.IsUnconscious())
+	if(!IS_UNCONSCIOUS(mob))
 		to_chat(mob, span_boldnicegreen("You have been <u>bought</u> back to the station. Be grateful to whoever got you out of the holding facility early."))
 	if(!ishuman(item))
 		return ..()

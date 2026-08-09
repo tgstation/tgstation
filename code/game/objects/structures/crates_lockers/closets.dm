@@ -43,7 +43,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/opened = FALSE
 	var/welded = FALSE
 	var/locked = FALSE
-	var/large = TRUE
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/breakout_time = 1200
 	var/message_cooldown
@@ -768,10 +767,10 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			if("Personal") //only the player who swiped their id has access.
 				id_card = WEAKREF(card)
 				name = "[card.registered_name]'s locker"
-				desc += " It has been ID locked to [card.registered_name]."
+				desc = initial(desc) + " It has been ID locked to [card.registered_name]."
 			if("Job") //anyone who has the same access permissions as this id has access. Does NOT apply to the whole department.
 				name = "[card.assignment]'s locker"
-				desc += " It has been access locked to [card.assignment]s."
+				desc = initial(desc) + " It has been access locked to [card.assignment]s."
 				set_access(card.GetAccess())
 			if("None") //free for all
 				name = initial(name)
@@ -926,7 +925,12 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(user in contents)
 		return ITEM_INTERACT_BLOCKING
 
+
 	if(opened && istype(tool, cutting_tool)) // not all of them take welders
+		if(resistance_flags & INDESTRUCTIBLE)
+			to_chat(user, span_warning("You can't cut [src] apart!"))
+			return ITEM_INTERACT_BLOCKING
+
 		if(!tool.tool_start_check(user, amount=1))
 			return ITEM_INTERACT_BLOCKING
 
@@ -1018,7 +1022,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		O.forceMove(T)
 
 /obj/structure/closet/relaymove(mob/living/user, direction)
-	if(user.stat || !isturf(loc))
+	if(IS_UNCONSCIOUS_OR_CRIT(user) || !isturf(loc))
 		return
 	if(locked)
 		if(message_cooldown <= world.time)
@@ -1103,7 +1107,7 @@ GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "Toggle Open", nu
 	addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 1 SECONDS)
 
 	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || (loc_required && (user.loc != src)) || opened || (!locked && !welded) )
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || (loc_required && (user.loc != src)) || opened || (!locked && !welded) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
 		user.visible_message(span_danger("[user] successfully broke out of [src]!"),

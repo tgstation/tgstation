@@ -23,7 +23,7 @@
 /datum/element/simple_flying/proc/on_stat_change(mob/living/target, new_stat)
 	SIGNAL_HANDLER
 
-	if(new_stat == CONSCIOUS)
+	if(new_stat == STABLE)
 		ADD_TRAIT(target, TRAIT_MOVE_FLYING, ELEMENT_TRAIT(type))
 	else
 		REMOVE_TRAIT(target, TRAIT_MOVE_FLYING, ELEMENT_TRAIT(type))

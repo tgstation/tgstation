@@ -42,6 +42,8 @@
 	skillchips = list(/obj/item/skillchip/job/janitor, /obj/item/skillchip/disposals)
 	backpack_contents = list(/obj/item/access_key)
 
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/janitor
+
 /datum/outfit/job/janitor/pre_equip(mob/living/carbon/human/human_equipper, visuals_only)
 	. = ..()
 	if(check_holidays(GARBAGEDAY))

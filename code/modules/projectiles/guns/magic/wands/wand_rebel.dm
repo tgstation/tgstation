@@ -71,5 +71,5 @@
 	var/mob/living/bully = animate_item.animate_atom_living(firer)
 	if (!bully.ai_controller)
 		return
-	bully.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, victim)
+	bully.ai_controller.set_blackboard_key(BB_CURRENT_TARGET, victim)
 	bully.ai_controller.ai_interact(victim, combat_mode = TRUE)

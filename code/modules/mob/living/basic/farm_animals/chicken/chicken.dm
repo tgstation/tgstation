@@ -94,17 +94,18 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 		)
 
 /datum/ai_controller/basic_controller/chicken
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/chicken/chicken.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SAY = list("Cluck!", "BWAAAAARK BWAK BWAK BWAK!", "Bwaak bwak."),
+			BB_EMOTE_HEAR = list("clucks.", "croons."),
+			BB_EMOTE_SEE = list("pecks at the ground.", "flaps her wings viciously."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/chicken/clucks.ogg', 'sound/mobs/non-humanoids/chicken/bagawk.ogg'),
+			BB_SPEAK_CHANCE = 15,
+		),
 	)
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/random_speech/chicken,
-	)
 

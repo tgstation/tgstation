@@ -163,7 +163,7 @@
 	INVOKE_ASYNC(src, PROC_REF(handle_move), user)
 
 /obj/item/storage/bag/ore/proc/handle_move(mob/living/user)
-	if(user.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(user))
 		return
 	var/turf/tile = get_turf(user)
 	var/obj/structure/ore_box/box = null

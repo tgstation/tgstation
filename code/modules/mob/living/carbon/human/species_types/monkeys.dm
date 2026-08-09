@@ -54,13 +54,6 @@
 		return TRUE
 	return ..()
 
-/datum/species/monkey/get_scream_sound(mob/living/carbon/human/monkey)
-	return get_sfx(SFX_SCREECH)
-
-/datum/species/monkey/get_hiss_sound(mob/living/carbon/human/monkey)
-	return 'sound/mobs/humanoids/human/hiss/human_hiss.ogg'
-	// we're both great apes, or something..
-
 /datum/species/monkey/get_physical_attributes()
 	return "Monkeys are slippery, can crawl into vents, and are more dextrous than humans.. but only when stealing things. \
 		Natural monkeys cannot operate machinery or most tools with their paws, but unusually clever monkeys or those that were once something else can."
@@ -123,6 +116,12 @@
 	/// Will this monkey stumble if they are crossed by a simple mob or a carbon in combat mode? Toggable by monkeys with clients, and is messed automatically set to true by monkey AI.
 	var/tripping = TRUE
 
+/obj/item/organ/brain/primate/get_replaceability(obj/item/organ/new_organ_type, obj/item/organ/expected_organ_type, datum/species/old_species, replace_current = TRUE)
+	///Real monkeys retain their ape brains when humanized (further species change can override it). If old_species is null,
+	if(HAS_TRAIT(owner, TRAIT_BORN_MONKEY) && (!old_species || istype(old_species, /datum/species/monkey)))
+		return FALSE
+	return ..()
+
 /datum/action/item_action/organ_action/toggle_trip
 	name = "Toggle Tripping"
 	button_icon = 'icons/mob/actions/actions_changeling.dmi'
@@ -157,6 +156,12 @@
 	SIGNAL_HANDLER
 	if(!tripping || !crossing_mob.combat_mode)
 		return
+	if(crossing_mob.mob_size < MOB_SIZE_HUMAN)
+		return
+	if(ishuman(crossing_mob))
+		var/mob/living/carbon/human/crossing_humie = crossing_mob
+		if(crossing_humie.mob_height <= HUMAN_HEIGHT_SHORTEST)
+			return
 	crossing_mob.knockOver(owner)
 
 /obj/item/organ/brain/primate/get_attacking_limb(mob/living/carbon/human/target)

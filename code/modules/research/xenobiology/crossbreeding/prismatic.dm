@@ -116,7 +116,7 @@ Prismatic extracts:
 
 /obj/item/slimecross/prismatic/rainbow/attack_self(mob/user)
 	var/newcolor = tgui_color_picker(user, "Choose the slime color:", "Color change", paintcolor)
-	if(user.get_active_held_item() != src || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+	if(user.get_active_held_item() != src || IS_UNCONSCIOUS_OR_CRIT(user) || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 	if(!newcolor)
 		return

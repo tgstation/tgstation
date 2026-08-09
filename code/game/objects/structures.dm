@@ -60,6 +60,7 @@
 
 /obj/structure/rust_heretic_act()
 	take_damage(500, BRUTE, "melee", 1)
+	return TRUE
 
 /obj/structure/zap_act(power, zap_flags)
 	if(zap_flags & ZAP_OBJ_DAMAGE)

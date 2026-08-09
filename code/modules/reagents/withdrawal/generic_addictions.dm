@@ -134,19 +134,14 @@
 	if(!ishuman(affected_carbon))
 		return
 	to_chat(affected_carbon, span_warning("You feel yourself adapt to the darkness."))
-	var/mob/living/carbon/human/affected_human = affected_carbon
-	var/obj/item/organ/eyes/empowered_eyes = affected_human.get_organ_by_type(/obj/item/organ/eyes)
-	if(empowered_eyes)
-		ADD_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
-		empowered_eyes?.refresh()
+	ADD_TRAIT(affected_carbon, TRAIT_NIGHT_VISION, type)
 
 /datum/addiction/maintenance_drugs/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, seconds_per_tick)
 	if(!ishuman(affected_carbon))
 		return
 	var/mob/living/carbon/human/affected_human = affected_carbon
 	var/turf/T = get_turf(affected_human)
-	var/lums = T.get_lumcount()
-	if(lums > 0.5)
+	if(T.check_lumcount_above(0.5))
 		affected_human.add_mood_event("too_bright", /datum/mood_event/bright_light)
 		affected_human.adjust_dizzy_up_to(6 SECONDS, 80 SECONDS)
 		affected_human.adjust_confusion_up_to(0.5 SECONDS * seconds_per_tick, 20 SECONDS)
@@ -162,12 +157,7 @@
 		tongue.liked_foodtypes = initial(tongue.liked_foodtypes)
 		tongue.disliked_foodtypes = initial(tongue.disliked_foodtypes)
 		tongue.toxic_foodtypes = initial(tongue.toxic_foodtypes)
-	if(!ishuman(affected_carbon))
-		return
-	var/mob/living/carbon/human/affected_human = affected_carbon
-	REMOVE_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
-	var/obj/item/organ/eyes/eyes = affected_human.get_organ_by_type(/obj/item/organ/eyes)
-	eyes?.refresh()
+	REMOVE_TRAIT(affected_carbon, TRAIT_NIGHT_VISION, type)
 
 ///Makes you a hypochondriac - I'd like to call it hypochondria, but "I could use some hypochondria" doesn't work
 /datum/addiction/medicine
@@ -263,7 +253,7 @@
 	if(SPT_PROB(65, seconds_per_tick))
 		return
 
-	if(affected_carbon.stat >= SOFT_CRIT)
+	if(IS_UNCONSCIOUS_OR_CRIT(affected_carbon))
 		return
 
 	var/obj/item/organ/organ = pick(affected_carbon.organs)

@@ -13,12 +13,14 @@
 
 /obj/effect/meteor/meaty/changeling/Initialize(mapload, turf/target)
 	. = ..()
-
 	landing_target = target
+
+/obj/effect/meteor/meaty/changeling/Destroy()
+	landing_target = null
+	return ..()
 
 /obj/effect/meteor/meaty/changeling/meteor_effect()
 	..()
-
 	for(var/atom/movable/child in contents)
 		child.forceMove(get_turf(src))
 
@@ -27,10 +29,11 @@
 
 /obj/effect/meteor/meaty/changeling/shield_defense(obj/machinery/satellite/meteor_shield/defender)
 	landing_target = defender
+	yeet_changeling()
 	return TRUE
 
-//If the meteor misses the station and deletes itself, we make absolutely sure the changeling reaches the station.
-/obj/effect/meteor/meaty/changeling/moved_off_z()
+/// Eject changeling onto whatever turf we're aiming at
+/obj/effect/meteor/meaty/changeling/proc/yeet_changeling()
 	if(!landing_target)
 		//If our destination turf is gone for some reason, we chuck them at the observer_start landmark (usually at the center of the station) as a last resort.
 		landing_target = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
@@ -41,6 +44,9 @@
 		changeling.visible_message(span_warning("[changeling] is launched out from inside of \the [src]!"), span_changeling("Sensing that something is terribly wrong, we forcibly eject ourselves from \the [src]!"))
 		playsound(changeling, 'sound/effects/splat.ogg', 50, pressure_affected = FALSE)
 
+//If the meteor misses the station and deletes itself, we make absolutely sure the changeling reaches the station.
+/obj/effect/meteor/meaty/changeling/moved_off_z()
+	yeet_changeling()
 	return ..()
 
 /obj/effect/meteor/meaty/changeling/check_examine_award(mob/user) //We don't want this to be a free achievement that comes with the role.

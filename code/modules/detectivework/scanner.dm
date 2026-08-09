@@ -22,7 +22,7 @@
 
 /obj/item/detective_scanner/interact(mob/user)
 	. = ..()
-	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
+	if(IS_UNCONSCIOUS_OR_CRIT(user) || !user.can_read(src) || user.is_blind())
 		return ITEM_INTERACT_BLOCKING
 	ui_interact(user)
 	return ITEM_INTERACT_SUCCESS

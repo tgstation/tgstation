@@ -57,6 +57,7 @@
 	var/infectable_biotypes = MOB_ORGANIC //if the disease can spread on organics, synthetics, or undead
 	var/process_dead = FALSE //if this ticks while the host is dead
 	var/copy_type = null //if this is null, copies will use the type of the instance being copied
+	var/half_stage = FALSE // Acts as a counter for half stages
 
 /datum/disease/Destroy()
 	. = ..()
@@ -82,6 +83,9 @@
 
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
+
+	if(severity >= DISEASE_SEVERITY_BIOHAZARD)
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_TOMBSTONE] = TRUE
 
 /// Updates the spread flags set, ensuring signals are updated as necessary
 /datum/disease/proc/update_spread_flags(new_flags)
@@ -125,7 +129,7 @@
 	var/recovery_prob = 0
 	var/cure_mod
 	var/bad_immune = HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) ? 2 : 1
-	var/is_sleeping = HAS_TRAIT_FROM_ONLY(affected_mob, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(/datum/status_effect/incapacitating/sleeping::id))
+	var/is_sleeping = !!affected_mob.IsSleeping()
 
 	if(required_organ)
 		if(!has_required_infectious_organ(affected_mob, required_organ))
@@ -152,8 +156,12 @@
 	if(stage == max_stages && stage_peaked != TRUE) //mostly a sanity check in case we manually set a virus to max stages
 		stage_peaked = TRUE
 
-	if(SPT_PROB(stage_prob * slowdown * bad_immune, seconds_per_tick))
-		update_stage(min(stage + 1, max_stages))
+	if(SPT_PROB(stage_prob * slowdown * bad_immune * 2, seconds_per_tick))
+		if(half_stage)
+			half_stage = FALSE
+			update_stage(min(stage + 1, max_stages))
+		else if(stage <= max_stages)
+			half_stage = TRUE
 
 	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
 		switch(severity)
@@ -206,9 +214,11 @@
 				if(SANITY_LEVEL_INSANE)
 					recovery_prob += -0.4
 
+		recovery_prob += get_immunity_recovery()
+
 		if((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) || !(affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING)) && is_sleeping) //resting starved won't help, but resting helps
 			var/turf/rest_turf = get_turf(affected_mob)
-			var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
+			var/is_sleeping_in_darkness = !rest_turf.check_lumcount_above(LIGHTING_TILE_IS_DARK)
 
 			if(affected_mob.is_blind_from(EYES_COVERED) || is_sleeping_in_darkness)
 				recovery_prob += DISEASE_GOOD_SLEEPING_RECOVERY_BONUS
@@ -411,6 +421,10 @@
 
 	if(SPT_PROB(infectivity * 4, seconds_per_tick))
 		airborne_spread()
+
+// Increases natural recovery based on prior immunities
+/datum/disease/proc/get_immunity_recovery()
+	return 0
 
 //Use this to compare severities
 /proc/get_disease_severity_value(severity)

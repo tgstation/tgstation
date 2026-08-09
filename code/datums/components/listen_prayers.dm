@@ -43,7 +43,7 @@
 /datum/component/listen_prayers/proc/on_sent_prayer(source, mob/praying, message, prayer_type, symbol, list/deities_that_listened)
 	SIGNAL_HANDLER
 	var/datum/mind/mind = parent
-	if(!mind.current || mind.current.stat >= UNCONSCIOUS || !mind.current.client) //You can't hear prayers if unconscious or disconnected
+	if(!mind.current || !mind.current.client || IS_UNCONSCIOUS(mind.current)) //You can't hear prayers if unconscious or disconnected
 		return
 	if(!isliving(praying) || praying.stat == DEAD)
 		return FALSE //I don't see any reason in hell to why dead people should be allowed into this. This isn't a knockoff TRAIT_SIXTHSENSE.

@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	update_appearance(UPDATE_ICON)
 
 /obj/structure/bodycontainer/relaymove(mob/living/user, direction)
-	if(user.stat || !isturf(loc))
+	if(IS_UNCONSCIOUS_OR_CRIT(user) || !isturf(loc))
 		return
 	if(locked)
 		if(COOLDOWN_FINISHED(src, breakout_message_cooldown))
@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		span_hear("You hear a metallic creaking from [src]."))
 	if(!do_after(user, BREAKDOWN_TIME, target = src))
 		return
-	if(!user || user.stat != CONSCIOUS || user.loc != src)
+	if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src)
 		return
 	user.visible_message(
 		span_warning("[user] successfully broke out of [src]!"),

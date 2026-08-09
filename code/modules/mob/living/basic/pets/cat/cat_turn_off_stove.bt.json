@@ -1,0 +1,30 @@
+{
+	"dm_type": "/datum/bt_node/subtree/cat_turn_off_stove",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"key": "BB_STOVE_TARGET",
+		"observer_abort": "BT_ABORT_BOTH"
+	},
+	"child": {
+		"type": "sequence",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+				"vars": {
+					"target_key": "BB_STOVE_TARGET",
+					"required_dist": 1
+				}
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/hunt_target/interact_with_target",
+				"vars": {
+					"target_key": "BB_STOVE_TARGET",
+					"always_reset_target": true
+				}
+			}
+		]
+	}
+}

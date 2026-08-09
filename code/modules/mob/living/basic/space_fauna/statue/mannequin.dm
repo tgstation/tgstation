@@ -30,42 +30,13 @@
 		. += mutable_appearance(hat::worn_icon, hat::worn_icon_state || hat::post_init_icon_state || hat::icon_state)
 
 /datum/ai_controller/basic_controller/stares_at_people
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/statue/stares_at_people.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_AGGRO_RANGE = 6,
 	)
 
 	ai_movement = /datum/ai_movement/dumb
-	idle_behavior = null
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/face_target_or_face_initial, // we be creepy and all
-	)
-
-/datum/ai_planning_subtree/face_target_or_face_initial
-
-/datum/ai_planning_subtree/face_target_or_face_initial/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(isnull(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]))
-		return
-	var/mob/living/we = controller.pawn
-	controller.blackboard[BB_STARTING_DIRECTION] = we.dir
-	controller.queue_behavior(/datum/ai_behavior/face_target_or_face_initial, BB_BASIC_MOB_CURRENT_TARGET)
-
-/datum/ai_behavior/face_target_or_face_initial
-
-/datum/ai_behavior/face_target_or_face_initial/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	var/atom/movable/target = controller.blackboard[target_key]
-	return ismovable(target) && isturf(target.loc) && ismob(controller.pawn)
-
-/datum/ai_behavior/face_target_or_face_initial/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	var/atom/movable/target = controller.blackboard[target_key]
-	var/mob/living/we = controller.pawn
-	if(isnull(target) || get_dist(we, target) > 8)
-		we.dir = controller.blackboard[BB_STARTING_DIRECTION]
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	we.face_atom(target)
-	return AI_BEHAVIOR_DELAY
 
 /mob/living/basic/statue/mannequin/suspicious
 	name = "mannequin?"
@@ -75,17 +46,9 @@
 	ai_controller = /datum/ai_controller/basic_controller/suspicious_mannequin
 
 /datum/ai_controller/basic_controller/suspicious_mannequin
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/statue/suspicious_mannequin.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_AGGRO_RANGE = 14,
-		BB_EMOTE_KEY = "scream", //spooky
 	)
 
-	ai_movement = /datum/ai_movement/jps //threat
-	idle_behavior = null
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity/pacifist,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/run_emote,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
+	ai_movement = /datum/ai_movement/basic_avoidance

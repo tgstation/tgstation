@@ -203,14 +203,16 @@
 	var/turf/open/us = loc
 	if(!istype(us))
 		return
-	scrub(us)
+	if(scrub(us))
+		us.air_update_turf(FALSE, FALSE)
 	if(widenet)
 		if(COOLDOWN_FINISHED(src, check_turfs_cooldown))
 			check_turfs()
 			COOLDOWN_START(src, check_turfs_cooldown, 2 SECONDS)
 
 		for(var/turf/tile in adjacent_turfs)
-			scrub(tile)
+			if (scrub(tile))
+				tile.air_update_turf(FALSE, FALSE)
 	return TRUE
 
 ///filtered gases at or below this amount automatically get removed from the mix

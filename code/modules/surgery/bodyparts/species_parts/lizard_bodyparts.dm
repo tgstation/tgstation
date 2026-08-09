@@ -1,3 +1,5 @@
+#define LIZARD_ZOMBIE_COLOR "#508556" // slightly greyer than normal because lizard blood is green
+
 /obj/item/bodypart/head/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
@@ -5,12 +7,14 @@
 	head_flags = HEAD_LIPS|HEAD_EYESPRITES|HEAD_EYECOLOR|HEAD_EYEHOLES|HEAD_DEBRAIN
 	// lizardshave many teeth
 	teeth_count = 72
+	zombie_color = LIZARD_ZOMBIE_COLOR
 
 /obj/item/bodypart/chest/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 	is_dimorphic = TRUE
 	wing_types = list(/obj/item/organ/wings/functional/dragon)
+	zombie_color = LIZARD_ZOMBIE_COLOR
 
 /obj/item/bodypart/chest/lizard/get_butt_sprite()
 	return icon('icons/mob/butts.dmi', BUTT_SPRITE_LIZARD)
@@ -25,6 +29,7 @@
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
+	zombie_color = LIZARD_ZOMBIE_COLOR
 
 /obj/item/bodypart/arm/right/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
@@ -36,6 +41,7 @@
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
+	zombie_color = LIZARD_ZOMBIE_COLOR
 
 /obj/item/bodypart/arm/left/lizard/ashwalker
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
@@ -46,6 +52,7 @@
 /obj/item/bodypart/leg/left/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
+	zombie_color = LIZARD_ZOMBIE_COLOR
 	///Whether this leg can be digitigrade or plantigrade depending on the relative dna feature
 	var/digitigrade_conversion = TRUE
 
@@ -59,6 +66,7 @@
 	limb_id = SPECIES_LIZARD
 	///Whether this leg can be digitigrade or plantigrade depending on the relative dna feature
 	var/digitigrade_conversion = TRUE
+	zombie_color = LIZARD_ZOMBIE_COLOR
 
 /obj/item/bodypart/leg/right/lizard/Initialize(mapload)
 	. = ..()
@@ -84,3 +92,5 @@
 /obj/item/bodypart/leg/right/lizard/digitigrade/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/digitigrade_limb, "[initial(limb_id)]_[BODYPART_ID_DIGITIGRADE]", limb_id)
+
+#undef LIZARD_ZOMBIE_COLOR

@@ -38,6 +38,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_MEDBOT_MANIA "station_trait_medbot_mania"
 #define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
 #define STATION_TRAIT_PREMIUM_INTERNALS "station_trait_premium_internals"
+#define STATION_TRAIT_PUN_PUN_GYM_DAY "station_trait_pun_pun_gym_day"
 #define STATION_TRAIT_RADIOACTIVE_NEBULA "station_trait_radioactive_nebula"
 #define STATION_TRAIT_RANDOM_ARRIVALS "station_trait_random_arrivals"
 #define STATION_TRAIT_REVOLUTIONARY_TRASHING "station_trait_revolutionary_trashing"
@@ -83,8 +84,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Recolored by item/greentext
 #define TRAIT_GREENTEXT_CURSED "greentext_curse"
 #define TRAIT_INCAPACITATED "incapacitated"
-/// In some kind of critical condition. Is able to succumb.
-#define TRAIT_CRITICAL_CONDITION "critical-condition"
 /// Whitelist for mobs that can read or write
 #define TRAIT_LITERATE "literate"
 /// Blacklist for mobs that can't read or write
@@ -92,11 +91,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mute. Can't talk.
 #define TRAIT_MUTE "mute"
 /// Softspoken. Always whisper.
-#define TRAIT_SOFTSPOKEN "softspoken"
+#define TRAIT_FORCE_WHISPER "softspoken"
 /// Gibs on death and slips like ice.
 #define TRAIT_CURSED "cursed"
 /// Emotemute. Can't... emote.
 #define TRAIT_EMOTEMUTE "emotemute"
+/// Mobs with this trait are allowed to use silicon emotes
+#define TRAIT_SILICON_EMOTES_ALLOWED "silicon_emotes_allowed"
+/// Mobs with this trait are allowed to use cat emotes
+#define TRAIT_CAT_EMOTES_ALLOWED "cat_emotes_allowed"
+/// Mobs with this trait are allowed to use moth emotes
+#define TRAIT_MOTH_EMOTES_ALLOWED "moth_emotes_allowed"
 #define TRAIT_DEAF "deaf"
 #define TRAIT_FAT "fat"
 /// If you are fat, you no longer get the slowdown from it
@@ -230,8 +235,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LIVERLESS_METABOLISM "liverless_metabolism"
 /// This carbon can't be overdosed by chems
 #define TRAIT_OVERDOSEIMMUNE "overdose_immune"
-/// Humans with this trait cannot be turned into zombies
-#define TRAIT_NO_ZOMBIFY "no_zombify"
 /// Carbons with this trait can't have their DNA copied by diseases nor changelings
 #define TRAIT_NO_DNA_COPY "no_dna_copy"
 /// Carbons with this trait can't have their DNA scrambled by genetics or a disease retrovirus.
@@ -334,8 +337,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EXAMINE_FITNESS "reveal_power_level"
 /// These mobs have particularly hygienic tongues
 #define TRAIT_WOUND_LICKER "wound_licker"
-/// Mobs with this trait are allowed to use silicon emotes
-#define TRAIT_SILICON_EMOTES_ALLOWED "silicon_emotes_allowed"
 /// Mobs with this trait can tell when other mobs whisper even if their mouth is covered. They still can't tell what was whispered though.
 #define TRAIT_SEE_MASK_WHISPER "see_mask_whisper"
 
@@ -405,15 +406,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MESON_VISION "meson_vision"
 /// Gives us Night vision
 #define TRAIT_TRUE_NIGHT_VISION "true_night_vision"
-/// Gives us minor night vision
-#define TRAIT_MINOR_NIGHT_VISION "minor_night_vision"
 /// Negates our gravity, letting us move normally on floors in 0-g
 #define TRAIT_NEGATES_GRAVITY "negates_gravity"
 /// We are ignoring gravity
 #define TRAIT_IGNORING_GRAVITY "ignores_gravity"
 /// We have some form of forced gravity acting on us
 #define TRAIT_FORCED_GRAVITY "forced_gravity"
-/// Makes whispers clearly heard from seven tiles away, the full hearing range
+/// Allows the mob to hear whispers as if it were normal speech
 #define TRAIT_GOOD_HEARING "good_hearing"
 /// Allows you to hear speech through walls
 #define TRAIT_XRAY_HEARING "xray_hearing"
@@ -457,6 +456,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ABDUCTOR_HUD "abductor_hud"
 /// Stop the user from seeing the sechud. Only works for trait handled sechuds.
 #define TRAIT_BLOCK_SECHUD "block_sechud"
+/// Stop the user from seeing the medhud. Only works for trait handled medhuds.
+#define TRAIT_BLOCK_MEDHUD "block_medhud"
 /// for something granting you a diagnostic hud
 #define TRAIT_DIAGNOSTIC_HUD "diag_hud"
 #define TRAIT_BOT_PATH_HUD "bot_path_hud"
@@ -839,6 +840,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_IMMERSE_STOPPED "immerse_stopped"
 /// The effects of hyperspace drift are blocked when the tile has this trait
 #define TRAIT_HYPERSPACE_STOPPED "hyperspace_stopped"
+/// This turf is blessed and blocks jaunts/revenants/cult TPs
+#define TRAIT_TURF_BLESSED "turf_blessed"
 
 ///Turf slowdown will be ignored when this trait is added to a turf.
 #define TRAIT_TURF_IGNORE_SLOWDOWN "turf_ignore_slowdown"
@@ -1002,8 +1005,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HERETIC_AURA_HIDDEN "heretic_aura_hidden"
 /// This rod was infused by a heretic, making it awesome and improving influence gain
 #define TRAIT_ROD_MANSUS_INFUSED "rod_infused"
-/// Allows heretics to cast their spells.
-#define TRAIT_ALLOW_HERETIC_CASTING "allow_heretic_casting"
 /// Designates a heart as a living heart for a heretic.
 #define TRAIT_LIVING_HEART "living_heart"
 /// Trait given to all participants in a heretic arena
@@ -1051,8 +1052,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VEGETARIAN "trait_vegetarian"
 #define TRAIT_KEEN_NOSE "keen_nose"
 
-/// This mob always lands on their feet when they fall, for better or for worse.
-#define TRAIT_CATLIKE_GRACE "catlike_grace"
+/// The mob has a variety of catlike behaviors, like landing on their feet when falling or chasing pinpointers.
+#define TRAIT_CATLIKE_INSTINCT "catlike_grace"
 
 ///Won't show up on cameras when they snap a photo.
 #define TRAIT_INVISIBLE_TO_CAMERA "invisible_to_camera"
@@ -1682,8 +1683,46 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Makes the owner immune from the pacification from synthpax
 #define TRAIT_SYNTHPAX_IMMUNE "synthpax_immune"
+/// Allow the owner to eat cloth
+#define TRAIT_CLOTH_EATER "cloth_eater"
+/// Has the metabolization quirks of a lizardperson
+#define TRAIT_LIZARD_METABOLISM "lizard_metabolism"
+// Has the metabolization quirks of an ethereal
+#define TRAIT_ETHEREAL_METABOLISM "ethereal_metabolism"
 
 /// Mobs with this trait will always have be a priority target for mining mobs
 #define TRAIT_MINING_AGGRO "mining_aggro"
+
+/// Mob does not regulate core temperature
+#define TRAIT_COLD_BLOODED "cold_blooded"
+
+/// Mob is always considered dead when checking objectives
+#define TRAIT_NEVER_CONSIDERED_ALIVE "never_considered_alive"
+
+/// Don't show the thinking indicator and therefore the typing indicator when we are about to type something...
+#define TRAIT_HIDE_THINKING_INDICATOR "hide_thinking_indicator"
+
+// species-specific traits, used in place of deprecable is_species() checks. Feel free to use them for other things as well
+#define TRAIT_NIGHTMARISH "nightmarish"
+/// Allow the mob to utilize most but not all abductor equipment. Complemented by TRAIT_ABDUCTOR_KNOWLEDGE for the antagonists.
+#define TRAIT_ABDUCTOR_KNOWLEDGE "abductor_knowledge"
+/// Allow the mob to be instantly scanned at a distance with the abductor scanner gizmo. FOr abductors and cows.
+#define TRAIT_ABDUCTOR_QUICK_SCAN "abductor_quick_scan"
+/// The creature is weak to silver (or any material with the unholy bane property). Namely for vampires.
+#define TRAIT_UNHOLY_BANEABLE "unholy_baneable"
+/// Allows the mob to use the spooky instruments that turn people into spooky scary skeletons, while being immune to them
+#define TRAIT_SPOOKY_INSTRUMENT_PLAYER "spooky_instrument_player"
+/// Allows flypeople to re-ingest what has come out of their mouth.
+#define TRAIT_VOMIT_SLURPER "vomit_slurper"
+/// It looks, sounds and smells like a ghost.
+#define TRAIT_GHOSTLY_MOB "ghostly_mob"
+/// It requires an advanced health analyzer to be health-scanned.
+#define TRAIT_REQUIRED_ADV_HEALTH_SCANNER "require_adv_health_scanner"
+
+/// Allows the wearer to cast spells that require robes and hats
+#define TRAIT_CASTING_CLOTHING "casting_clothing"
+
+/// Turfs with this trait allow whispers to be projected over it when the whisperer is facing it
+#define TRAIT_TURF_PROJECTS_WHISPERS  "turf_projects_whispers"
 
 // END TRAIT DEFINES
