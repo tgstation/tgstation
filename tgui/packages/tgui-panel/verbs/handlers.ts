@@ -4,6 +4,7 @@ import {
   adminVerbsAtom,
   clearCommandBarAtom,
   focusCommandBarAtom,
+  hotkeysAtom,
   type Target,
   typepathsAtom,
   type Verb,
@@ -46,4 +47,10 @@ export function handleFocusCommandBar() {
 
 export function handleClearCommandBar() {
   store.set(clearCommandBarAtom, (n) => n + 1);
+}
+
+export function handleHotkeyMode(payload: { hotkeys?: number }) {
+  if (payload.hotkeys != null) {
+    store.set(hotkeysAtom, !!payload.hotkeys);
+  }
 }
