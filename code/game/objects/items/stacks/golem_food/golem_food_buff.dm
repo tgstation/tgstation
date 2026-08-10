@@ -55,32 +55,32 @@
 
 /datum/golem_food_buff/silver
 	status_effect = /datum/status_effect/golem/silver
-	nutrition = 3
+	nutrition = 4
 	added_info = "If consumed this mineral will repel the supernatural, affording you resistance to mystical effects."
 
 /datum/golem_food_buff/plasma
 	status_effect = /datum/status_effect/golem/plasma
-	nutrition = 5
+	nutrition = 6
 	added_info = "If consumed this mineral will allow you to absorb heat and convert it into power."
 
 /datum/golem_food_buff/plasteel
 	status_effect = /datum/status_effect/golem/plasteel
-	nutrition = 6.5
+	nutrition = 7
 	added_info = "If consumed this mineral will harden you against the hazards of space."
 
 /datum/golem_food_buff/gold
 	status_effect = /datum/status_effect/golem/gold
-	nutrition = 4
+	nutrition = 5
 	added_info = "If consumed this mineral will grant you a shiny coating which reflects projectiles."
 
 /datum/golem_food_buff/diamond
 	status_effect = /datum/status_effect/golem/diamond
-	nutrition = 8
+	nutrition = 9
 	added_info = "If consumed this mineral will reflact light around you, making you faster and harder to see."
 
 /datum/golem_food_buff/titanium
 	status_effect = /datum/status_effect/golem/titanium
-	nutrition = 4
+	nutrition = 5
 	added_info = "If consumed this mineral will make you tougher and punch harder."
 
 /datum/golem_food_buff/bananium
