@@ -83,7 +83,6 @@
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "golem_ship.dmm"
 	allow_duplicates = FALSE
-	always_place = TRUE
 
 /datum/map_template/ruin/lavaland/gaia
 	name = "Lava-Ruin Patch of Eden"
