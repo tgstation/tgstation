@@ -12,4 +12,5 @@
 /datum/gizpulse/gizmo_virus/proc/release_gizmo_virus(atom/movable/holder)
 
 /datum/gizpulse/gizmo_virus/unique_gizmo_virus
-	virus = ...
+	// here the holder for unique gizmo virus, gizmo virus itself needs to be done
+	// virus = ...
