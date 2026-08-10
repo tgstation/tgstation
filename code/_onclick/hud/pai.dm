@@ -4,6 +4,7 @@
 
 /datum/hud/pai/initialize_screen_objects()
 	. = ..()
+	add_screen_object(/atom/movable/screen/healthdoll/living, HUD_MOB_HEALTHDOLL, HUD_GROUP_INFO)
 	add_screen_object(/atom/movable/screen/language_menu, HUD_MOB_LANGUAGE_MENU, ui_style, ui_pai_language_menu)
 	add_screen_object(/atom/movable/screen/navigate, HUD_MOB_NAVIGATE_MENU, ui_style, ui_pai_navigate_menu)
 	add_screen_object(/atom/movable/screen/memories, HUD_MOB_MEMORIES, HUD_GROUP_STATIC, ui_style, ui_pai_memories_menu)

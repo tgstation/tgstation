@@ -213,6 +213,108 @@
   Metek:
   - refactor: Thanks to cutting edge technological advances, check_breath() calculations
       have been optimized by approximately 41% ( using alist() instead of list() )
+  SmArtKar:
+  - refactor: Rewrote dynamic lighting lumcount to use spatial-grid based requests
+  hry-gh:
+  - refactor: the backend for verbs has been changed ... again, please report any
+      issues on the bug tracker
+  - qol: the command bar is now a bit prettier, and also autocompletes things like
+      typepaths and mob targets (primarily useful for admins)
   vinylspiders:
   - bugfix: birdboat will no longer try to eat everything in sight at all times, in
       exchange their range for noticing food has been increased...
+2026-08-08:
+  Gboster-0:
+  - code_imp: fixed chasms ignoring lattices on top of them in some scenario's, creating
+      a lot of runtimes
+  Ghommie:
+  - rscadd: Added a replace text circuit component.
+  JohnFulpWillard:
+  - code_imp: Converted Changelog to typescript.
+  LT3:
+  - bugfix: Players on Icebox should now take cold damage when naked outside
+  Melbert:
+  - rscdel: Voltaic heart no longer grants EMP immunity, though is still EMP immune
+      itself.
+  - rscdel: Voltaic heart no longer deletes itself if you remove it, though it is
+      still otherwise rendered unusable.
+  PapaMichael:
+  - bugfix: You are now able to rip manifests off of all locked cargo crates
+  hry-gh:
+  - bugfix: fixes tgui say, among other things, not working
+  lelandkemble:
+  - bugfix: Resetting a crate's access no longer repeatedly appends the new authority
+      to the description
+  - bugfix: The relic power that charges items charges items
+  levels0:
+  - bugfix: distributed neurons blob zombies no longer cost twice as much as they
+      should
+2026-08-09:
+  Aliceee2ch:
+  - bugfix: Removed AI tracking beacon from Ripley subcategory.
+  ArcaneMusic:
+  - code_imp: We now unit test to confirm that crates, and crate subtypes sell for
+      their expected value. Also checks for exports whose export_type is explicitly
+      called out in excluded types.
+  - bugfix: Coffins and various crate subtypes now sell again. For the first time
+      in 4 years.
+  JohnFulpWillard:
+  - bugfix: Legacy chat's command bar works nicely again.
+  LT3:
+  - bugfix: Tram controls now work properly after deconstruction/reconstruction
+  - bugfix: Tram control circuitboards now remember their tram ID, change it with
+      a multitool
+  PapaMichael:
+  - bugfix: Runtime no longer looks calico when held in-hand.
+  QuiteLiterallyAnything:
+  - bugfix: The academy gateway's immovable rod will no longer constantly show itself
+      to ghosts.
+  - code_imp: The augury subsystem has been cleaned up.
+  SmArtKar:
+  - bugfix: Fixed paper being unreadable and other light-based interactions being
+      broken
+  - bugfix: OverFlayer should now correctly display weather related planes
+  Swan:
+  - bugfix: Fixes round lobby timers not working at all.
+  - bugfix: Fixes the lobby time not being precise when joining a freshly started,
+      empty server
+  lelandkemble:
+  - bugfix: Gluon frag grenades now output radiation, like they've been trying and
+      failing to do for at least 4 years.
+  - balance: Conveyor belts don't rotate you
+2026-08-10:
+  ArcaneMusic:
+  - bugfix: Cooldown modkits and AOE modkits now work as intended. Cooldowns make
+      the gun shoot faster, and AOE modkits will make the gun slightly slower, regardless
+      of the order they're installed in.
+  ArrisFairburne:
+  - image: most ballistics bullets have a flashy look to them, which aids readability
+  Fabian272:
+  - bugfix: Black broth no longer requires ice to make.
+  JohnFulpWillard:
+  - bugfix: Borg sheet numbers now updates properly between items sharing the same
+      material type.
+  - qol: pAIs now have a health hud instead of it being tucked away in the stat panel.
+  - bugfix: Health HUDs exact HP % text now update as you heal/injure.
+  Melbert:
+  - rscdel: Deleted "Enriched Liquid Electricity". It's now just "Liquid Electricity",
+      though it can still be enriched to shock people. Ethereal blood is still un-enriched.
+      Some recipes may still demand enriched Liquid Electricity.
+  - rscadd: Botany plants producing Liquid Electricity now produce un-enriched Liquid
+      Electricity unless the plant has Electrical Activity.
+  - rscadd: Jupiter Cups now have Electrical Activity by default, in order to produce
+      enriched Liquid Electricity.
+  - refactor: Refactored the way botany plants set up their reagents. Report any oddities,
+      particularly with traits that activate on harvest (like auto-distilling composition),
+      their tastes, or with special reagents (like blood or vitamins).
+  - rscadd: You can use food items in place of some organs for "organ manipulation"...It
+      won't work, but y'know, you can do it
+  - qol: Organ manipulation will cancel mid operation if it suddenly becomes invalid,
+      rather than allow it to continue
+  PapaMichael:
+  - config: Maintenance Drone laws and flavortext can be modified by the server config
+  hry-gh:
+  - bugfix: classic hotkey mode will work when focused on the input bar
+  - bugfix: you can navigate recently input commands with ctrl+up/down again
+  - bugfix: pressing space in the input autocompletes to the next shared verb name
+      prefix

@@ -201,8 +201,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	if(HAS_TRAIT(rod, TRAIT_ROD_IGNORE_ENVIRONMENT))
 		return
 	var/turf/turf = get_turf(location)
-	var/light_amount = turf?.get_lumcount()
-	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
+	if(turf?.check_lumcount_above(SHADOW_SPECIES_LIGHT_THRESHOLD))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 
 /datum/fish_trait/nocturnal/apply_to_fish(obj/item/fish/fish, initial = TRUE)
@@ -218,8 +217,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	if(!source.loc || (!HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM) && !isturf(source.loc)))
 		return
 	var/turf/turf = get_turf(source)
-	var/light_amount = turf.get_lumcount()
-	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
+	if(turf.check_lumcount_above(SHADOW_SPECIES_LIGHT_THRESHOLD))
 		source.damage_fish(0.5 * seconds_per_tick)
 
 /datum/fish_trait/nocturnal/apply_to_mob(mob/living/basic/mob)
@@ -237,9 +235,8 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	var/turf/our_turf = mob.loc
 	if(!isturf(our_turf))
 		return
-	var/light_amount = our_turf.get_lumcount()
 
-	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
+	if (our_turf.check_lumcount_below(SHADOW_SPECIES_LIGHT_THRESHOLD)) //heal in the dark
 		mob.apply_status_effect(/datum/status_effect/shadow/regeneration)
 
 /datum/fish_trait/heavy
