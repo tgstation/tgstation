@@ -30,7 +30,7 @@
 
 /obj/item/food/grown/apple/Initialize(mapload)
 	. = ..()
-	if(prob(99))
+	if(prob(10))
 		appleworm = new() // There is a worm in this apple!
 		appleworm.forceMove(src)
 		tastes = list("apple" = 1, "worms" = 2)
