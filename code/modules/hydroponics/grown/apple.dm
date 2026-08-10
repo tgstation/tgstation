@@ -24,6 +24,40 @@
 	foodtypes = FRUIT
 	tastes = list("apple" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/hcider
+	var/wormy = FALSE // Do we have a worm?
+	var/found_worm = FALSE // Do we know about the worm?
+	var/obj/item/food/bait/worm/appleworm // Worm.
+
+/obj/item/food/grown/apple/Initialize(mapload)
+	. = ..()
+	if(prob(99))
+		appleworm = new() // There is a worm in this apple!
+		appleworm.forceMove(src)
+		tastes = list("apple" = 1, "worms" = 2)
+		var/datum/component/edible/ediblecomponent = src.GetComponent(/datum/component/edible)
+		if(ediblecomponent)
+			ediblecomponent.foodtypes |= (GROSS | MEAT | BUGS)
+		wormy = TRUE
+
+/obj/item/food/grown/apple/examine(mob/user)
+	. = ..()
+	if(!found_worm && !isobserver(user) && wormy)
+		balloon_alert(user, "there is a hole in this apple!")
+		found_worm = TRUE
+		desc = "It's a little piece of Eden. Serpent not included, contains a worm as a replacement."
+
+/obj/item/food/grown/apple/attack_self(mob/user)
+	if(wormy)
+		balloon_alert(user, "pulling out worm...")
+		if(!do_after(user, 5 SECONDS, target = src))
+			return
+		appleworm.forceMove(drop_location())
+		wormy = FALSE
+		tastes = list("apple" = 1)
+		var/datum/component/edible/ediblecomponent = src.GetComponent(/datum/component/edible)
+		if(ediblecomponent)
+			ediblecomponent.foodtypes &= ~(GROSS | MEAT | BUGS)
+		desc = "It's a little piece of Eden. The [pick("serpent", "worm", "extra protein", "friendly neighbor")] is gone."
 
 /obj/item/food/grown/apple/juice_typepath()
 	return /datum/reagent/consumable/applejuice
