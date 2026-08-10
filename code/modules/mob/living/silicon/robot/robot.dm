@@ -270,16 +270,6 @@
 	else
 		ion_trail.stop()
 
-/mob/living/silicon/robot/get_status_tab_items()
-	. = ..()
-	if(cell)
-		. += "Charge Left: [display_energy(cell.charge)]/[display_energy(cell.maxcharge)]"
-	else
-		. += "No Cell Inserted!"
-
-	if(connected_ai)
-		. += "Master AI: [connected_ai.name]"
-
 /mob/living/silicon/robot/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
 	SIGNAL_HANDLER
 	queueAlarm("--- [alarm_type] alarm detected in [source_area.name]!", alarm_type)

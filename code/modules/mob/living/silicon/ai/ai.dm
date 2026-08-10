@@ -271,6 +271,11 @@ GAME_VERB_DESC(/mob/living/silicon/ai, pick_status_display, "Set AI Status Displ
 
 /mob/living/silicon/ai/get_status_tab_items()
 	. = ..()
+	var/list/law_list = list("Obey these laws:")
+	law_list += laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
+	for(var/laws_followed in law_list)
+		. += laws_followed
+
 	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		. += "Systems nonfunctional"
 		return
