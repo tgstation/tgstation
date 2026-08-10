@@ -137,7 +137,7 @@
 	var/mob/living/carbon/human/dummy/consistent/brother1 = new
 	var/mob/living/carbon/human/dummy/consistent/brother2 = new
 
-	brother1.dna.features[FEATURE_ETHEREAL_COLOR] = GLOB.color_list_ethereal["Faint Red"]
+	brother1.dna.features[FEATURE_MUTANT_COLOR] = GLOB.color_list_ethereal["Faint Red"]
 	brother1.set_species(/datum/species/ethereal)
 
 	brother2.dna.features[FEATURE_MOTH_ANTENNAE] = "Plain"

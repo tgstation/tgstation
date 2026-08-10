@@ -86,16 +86,25 @@ jobs:
         id: map-filter
         uses: dorny/paths-filter@v4
         with:
+          list-files: shell
           filters: |
-            run_maps:
-              - '**.dmm'
+            tool_edits:
               - 'tools/maplint/**'
               - 'tools/mapmerge2/**'
+            map_edits:
+              - '**.dmm'
+
       - name: Run Map Checks
-        if: steps.linter-setup.conclusion == 'success' && !cancelled() && steps.map-filter.outputs.run_maps == 'true'
+        if: steps.linter-setup.conclusion == 'success' && !cancelled() && (steps.map-filter.outputs.tool_edits == 'true' || steps.map-filter.outputs.map_edits == 'true')
         run: |
-          tools/bootstrap/python -m mapmerge2.dmm_test
-          tools/bootstrap/python -m tools.maplint.source
+          if [ "${{ steps.map-filter.outputs.tool_edits }}" = "true" ]; then
+            MAPS=$(find . -type f -name "*.dmm")
+          else
+            MAPS="${{ steps.map-filter.outputs.map_edits_files }}"
+          fi
+
+          tools/bootstrap/python -m mapmerge2.dmm_test $MAPS
+          tools/bootstrap/python -m tools.maplint.source $MAPS
       - name: Check Cutter
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/bootstrap/python -m tools.icon_cutter.check
