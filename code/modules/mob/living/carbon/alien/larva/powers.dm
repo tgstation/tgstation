@@ -29,7 +29,18 @@
 	name = "Evolve"
 	desc = "Evolve into a higher alien caste."
 	button_icon_state = "alien_evolve_larva"
+	transparent_when_unavailable = FALSE
 	plasma_cost = 0
+
+/datum/action/cooldown/alien/larva_evolve/create_button(mob/viewer)
+	var/atom/movable/screen/movable/action_button/button = ..()
+	button.maptext_x = 2
+	return button
+
+/datum/action/cooldown/alien/larva_evolve/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
+	. = ..()
+	var/mob/living/carbon/alien/larva/larva_owner = owner
+	button.maptext = MAPTEXT_TINY_UNICODE("[(larva_owner.amount_grown / XENOMORPH_MAX_GROWTH) * 100]%")
 
 /datum/action/cooldown/alien/larva_evolve/IsAvailable(feedback = FALSE)
 	. = ..()
@@ -41,7 +52,7 @@
 	var/mob/living/carbon/alien/larva/larva = owner
 	if(larva.handcuffed || larva.legcuffed) // Cuffing larvas ? Eh ?
 		return FALSE
-	if(larva.amount_grown < larva.max_grown)
+	if(larva.amount_grown < XENOMORPH_MAX_GROWTH)
 		return FALSE
 	if(larva.movement_type & VENTCRAWLING)
 		return FALSE
