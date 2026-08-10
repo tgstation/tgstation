@@ -5,7 +5,7 @@
 	icon_state = "archvile"
 	icon_living = "archvile"
 	icon_dead = "archvile_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_MINING
+	mob_biotypes = MOB_ORGANIC|MOB_MINING|MOB_SPECIAL
 
 	friendly_verb_continuous = "growls at"
 	friendly_verb_simple = "growl at"
@@ -34,21 +34,21 @@
 	pull_force = MOVE_FORCE_VERY_STRONG
 	butcher_results = list(/obj/item/stack/sheet/mineral/plasma = 3, /obj/item/stack/sheet/bone = 2)
 	crusher_loot = null
-
-	var/datum/action/cooldown/mob_cooldown/archvile_rez/resurrect
-	var/datum/action/cooldown/mob_cooldown/archvile_fire/fire_attack
 	ai_controller = /datum/ai_controller/basic_controller/archvile
-	idle_sound = 'sound/effects/nightmare_reappear.ogg'
+	idle_sound = 'sound/mobs/non-humanoids/archvile/idle.ogg'
 	pain_sound = 'sound/mobs/non-humanoids/archvile/pain.ogg'
 	aggro_sound = 'sound/mobs/non-humanoids/archvile/aggro.ogg'
 	death_sound = 'sound/mobs/non-humanoids/archvile/death.ogg'
 	pain_chance = 10
 	pain_stun = 0.2 SECONDS
 
+	var/datum/action/cooldown/mob_cooldown/archvile_rez/resurrect
+	var/datum/action/cooldown/mob_cooldown/archvile_fire/fire_attack
+
 /mob/living/basic/mining/archvile/Initialize(mapload)
 	. = ..()
 
-	add_traits(list(TRAIT_SPACEWALK, TRAIT_SNOWSTORM_IMMUNE, TRAIT_NO_ARCHVILE_REVIVE), INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	resurrect = new(src)
 	resurrect.Grant(src)
@@ -109,7 +109,7 @@
 	if(living_target.stat != DEAD)
 		to_chat(owner, span_warning("You can't revive that which isn't dead!"))
 		return
-	if(HAS_TRAIT(living_target, TRAIT_NO_ARCHVILE_REVIVE))
+	if(living_target.mob_biotypes & MOB_SPECIAL)
 		to_chat(owner, span_warning("That's too powerful for you to revive!"))
 		return
 	if (istype(owner, /mob/living/basic/mining/archvile))
@@ -126,7 +126,7 @@
 	StartCooldown()
 
 /datum/action/cooldown/mob_cooldown/archvile_rez/proc/revive_mob(mob/living/archvile, mob/living/target)
-	playsound(target, 'sound/effects/goresplat.ogg', 100)
+	playsound(target, 'sound/mobs/non-humanoids/archvile/revive.ogg', 100)
 	to_chat(target, span_userdanger("You are brought back to life by [archvile]!"))
 	archvile.visible_message(span_warning("[archvile] resurrects [target]!"))
 	target.revive(HEAL_ARCHVILE)

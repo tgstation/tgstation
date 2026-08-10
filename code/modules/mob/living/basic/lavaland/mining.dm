@@ -26,14 +26,6 @@
 	var/kill_count = TRUE
 	/// What sound do we play when we idle while activated?
 	var/idle_sound
-	/// What sound do we play when we get hurt?
-	var/pain_sound
-	/// What channel should our pain sound be on? To restart the sound if it gets hit again.
-	var/pain_channel
-	/// What's our chance of performing pain responses?
-	var/pain_chance = 0
-	/// Should we be stunned on pain? If so, for how long?
-	var/pain_stun = null
 	/// What sound do we play when we aggro on someone?
 	var/aggro_sound
 
@@ -54,8 +46,6 @@
 			drop_mod = crusher_drop_chance,\
 			drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
 		)
-	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
-	RegisterSignals(src, list(COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_TARGET), COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_CURRENT_TARGET)), PROC_REF(on_aggro))
 	// We add this to ensure that mobs will actually receive the above signal, as some will lack AI
 	// handling for retaliation and attack special cases
 	AddElement(/datum/element/relay_attackers)
@@ -87,21 +77,6 @@
 		minimum_thrown_force = 20,\
 		throw_blocked_message = throw_blocked_message,\
 	)
-
-/mob/living/basic/mining/proc/on_attacked(datum/source, atom/attacker, attack_flags)
-	SIGNAL_HANDLER
-	if(attack_flags & ATTACKER_DAMAGING_ATTACK)
-		if(pain_chance && prob(pain_chance))
-			if(!pain_channel)
-				pain_channel = SSsounds.reserve_sound_channel()
-			playsound(src, pain_sound, 100, FALSE, channel = pain_channel) // todo: add channel specification to sound tokens, use them here
-			if(pain_stun)
-				Shake(2, 0, pain_stun, pain_stun * 0.5)
-				Stun(pain_stun)
-	if(!has_faction(FACTION_ASHWALKER) || !astype(attacker, /mob/living)?.has_faction(FACTION_ASHWALKER))
-		return
-	remove_faction(FACTION_ASHWALKER)
-
 
 /datum/emote/living/mining
 	mob_type_allowed_typecache = list(/mob/living/basic/mining)

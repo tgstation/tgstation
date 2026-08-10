@@ -253,3 +253,5 @@ sound/machines/data_transmission.ogg -- Elements from Tim Verberne -- https://fr
 
 sound/items/jet_active, ./jet_ignite, and ./jet_off by kyles -- https://freesound.org/people/kyles/sounds/453408/ -- license: Creative Commons 0.
  Slight noise cleanup on all three files, mild pitch tweak on jet_active, but otherwise just cut apart and converted to OGG.
+
+sound/mobs/non-humanoids/archvile, all contained .oggs made by MoonDeLaAxel at the FreeDoom team who approved re-use of their sound effects under CC-BY-SA 3.0 for /tg/station.
