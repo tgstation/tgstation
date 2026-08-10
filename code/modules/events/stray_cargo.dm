@@ -73,6 +73,13 @@
 
 ///Spawns a random supply pack, puts it in a pod, and spawns it on a random tile of the selected area
 /datum/round_event/stray_cargo/start()
+	var/turf/landing_zone = get_landing_zone()
+	var/obj/structure/closet/supplypod/pod = make_pod()
+	var/obj/container = get_contents()
+	send_pod(landing_zone, pod, container)
+
+///Selects a place for the pod to land in
+/datum/round_event/stray_cargo/proc/get_landing_zone()
 	var/list/turf/valid_turfs = get_area_turfs(impact_area)
 	//Only target non-dense turfs to prevent wall-embedded pods
 	for(var/i in valid_turfs)
@@ -84,6 +91,15 @@
 		landing_zone = admin_override_turf
 	else
 		landing_zone = pick(valid_turfs)
+	return landing_zone
+
+///Handles the creation of the pod, in case it needs to be modified beforehand
+/datum/round_event/stray_cargo/proc/make_pod()
+	var/obj/structure/closet/supplypod/S = new
+	return S
+
+///Generates the contents of the pod
+/datum/round_event/stray_cargo/proc/get_contents()
 	var/pack_type
 	if(admin_override_contents)
 		pack_type = admin_override_contents
@@ -104,8 +120,8 @@
 	var/storage_override
 	if(initial(supply_pack.order_flags) & ORDER_GOODY) // We offer goody items inside of briefcases, but regular crates still default to their standard crates.
 		storage_override = /obj/item/storage/briefcase/empty
-	var/obj/container = supply_pack.generate(null, crate_override = (crate_type || storage_override))
 
+	var/obj/container = supply_pack.generate(null, crate_override = (crate_type || storage_override))
 	if(container && istype(container, /obj/structure/closet/crate)) //empty supply packs are a thing! get memed on.
 		var/obj/structure/closet/crate/crate = container
 		if(emag_crate)
@@ -113,15 +129,12 @@
 		else
 			crate.locked = FALSE //Unlock secure crates
 			crate.update_appearance()
-	var/obj/structure/closet/supplypod/pod = make_pod()
+	return container
+
+/datum/round_event/stray_cargo/proc/send_pod(landing_zone, pod, container)
 	var/obj/effect/pod_landingzone/landing_marker = new(landing_zone, pod, container)
 	var/static/mutable_appearance/target_appearance = mutable_appearance('icons/obj/supplypods_32x32.dmi', "LZ")
 	notify_ghosts("[control.name] has summoned a supply crate!", source = get_turf(landing_marker), header = "Cargo Inbound", alert_overlay = target_appearance)
-
-///Handles the creation of the pod, in case it needs to be modified beforehand
-/datum/round_event/stray_cargo/proc/make_pod()
-	var/obj/structure/closet/supplypod/S = new
-	return S
 
 ///Picks an area that wouldn't risk critical damage if hit by a pod explosion
 /datum/round_event/stray_cargo/proc/find_event_area()
