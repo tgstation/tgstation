@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - code_imp: "Some primarily admin-only procs that transform a mob into another mob are now all doing the same thing."
