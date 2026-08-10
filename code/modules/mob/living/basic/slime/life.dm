@@ -64,7 +64,7 @@
 		if(amount_grown < SLIME_EVOLUTION_THRESHOLD)
 			adjust_nutrition(-2.5 * seconds_per_tick)
 			amount_grown++
-			var/atom/movable/screen/slime_growth/growth_hud = hud_used.screen_objects[HUD_MOB_SLIME_GROWTH]
+			var/atom/movable/screen/slime_growth/growth_hud = hud_used?.screen_objects[HUD_MOB_SLIME_GROWTH]
 			growth_hud?.update_maptext(src)
 
 		if(powerlevel < SLIME_MAX_POWER && SPT_PROB(30-powerlevel*2, seconds_per_tick))
@@ -78,5 +78,5 @@
 ///Given a number to adjust by, changes our powerlevel and updates our HUD to show the right number.
 /mob/living/basic/slime/proc/adjust_power_level(to_adjust)
 	powerlevel = clamp(powerlevel + to_adjust, SLIME_MIN_POWER, SLIME_MAX_POWER)
-	var/atom/movable/screen/slime_power/power_hud = hud_used.screen_objects[HUD_MOB_SLIME_POWER]
+	var/atom/movable/screen/slime_power/power_hud = hud_used?.screen_objects[HUD_MOB_SLIME_POWER]
 	power_hud?.update_maptext(src)

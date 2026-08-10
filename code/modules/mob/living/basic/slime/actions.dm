@@ -66,7 +66,7 @@
 	slime_owner.regenerate_icons()
 
 	slime_owner.amount_grown = 0
-	var/atom/movable/screen/slime_growth/growth_hud = slime_owner.hud_used.screen_objects[HUD_MOB_SLIME_GROWTH]
+	var/atom/movable/screen/slime_growth/growth_hud = slime_owner.hud_used?.screen_objects[HUD_MOB_SLIME_GROWTH]
 	growth_hud?.update_maptext(slime_owner)
 
 //Reproduction
@@ -144,7 +144,7 @@
 		if(ckey) // Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 			baby.set_nutrition(new_nutrition)
 		baby.powerlevel = new_powerlevel
-		var/atom/movable/screen/slime_power/power_hud = baby.hud_used.screen_objects[HUD_MOB_SLIME_POWER]
+		var/atom/movable/screen/slime_power/power_hud = baby.hud_used?.screen_objects[HUD_MOB_SLIME_POWER]
 		power_hud?.update_maptext(baby)
 		if(mutation_chance)
 			baby.mutation_chance = clamp(mutation_chance + rand(-5, 5), 0, 100)
@@ -154,7 +154,7 @@
 	set_life_stage(SLIME_LIFE_STAGE_BABY)
 	set_slime_type(get_random_mutation())
 	amount_grown = 0
-	var/atom/movable/screen/slime_growth/growth_hud = hud_used.screen_objects[HUD_MOB_SLIME_GROWTH]
+	var/atom/movable/screen/slime_growth/growth_hud = hud_used?.screen_objects[HUD_MOB_SLIME_GROWTH]
 	growth_hud?.update_maptext(src)
 	mutator_used = FALSE
 
