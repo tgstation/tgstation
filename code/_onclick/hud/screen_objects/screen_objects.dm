@@ -1356,24 +1356,24 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 
 /atom/movable/screen/slime_power
 	name = "Power Level"
-	desc = "How long you've been been overfed. At 10 you gain the ability to grow or reproduce."
+	desc = "How much electricity they are generating, the higher this is, the stronger your attacks are."
 	icon_state = "blood_display"
 	screen_loc = ui_blooddisplay
 	maptext_x = 1
 	maptext_y = 8
 
-/atom/movable/screen/slime_growth/Click(location, control, params)
+/atom/movable/screen/slime_power/Click(location, control, params)
 	. = ..()
-	to_chat(usr, span_notice("Shows you how long you've been been overfed. At 10 you gain the ability to grow or reproduce."))
+	to_chat(usr, span_notice("Shows you how much electricity they are generating, the higher this is, the stronger your attacks are."))
 
-/atom/movable/screen/slime_growth/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/slime_power/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	update_maptext(hud_owner?.mymob)
 
-/atom/movable/screen/slime_growth/proc/update_maptext(mob/living/basic/slime/slime_owner)
+/atom/movable/screen/slime_power/proc/update_maptext(mob/living/basic/slime/slime_owner)
 	if(isnull(slime_owner))
 		return
-	maptext = FORMAT_XENOBIO_HUD_MAPTEXT("[slime_owner.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]")
+	maptext = FORMAT_XENOBIO_HUD_MAPTEXT("[slime_owner.powerlevel]/[SLIME_MAX_POWER]")
 
 /// Used to show how many monkeys & slimes are in the console
 /atom/movable/screen/xenobio_console
