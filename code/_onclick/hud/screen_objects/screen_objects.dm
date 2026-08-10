@@ -1172,7 +1172,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	if(!istype(hungry))
 		return
 
-	if(HAS_TRAIT(hungry, TRAIT_NOHUNGER) || !hungry.get_organ_slot(ORGAN_SLOT_STOMACH))
+	if(HAS_TRAIT(hungry, TRAIT_NOHUNGER) || (ishuman(hungry) && !hungry.get_organ_slot(ORGAN_SLOT_STOMACH)))
 		fullness = NUTRITION_LEVEL_FED
 		state = HUNGER_STATE_FINE
 		return

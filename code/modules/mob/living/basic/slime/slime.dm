@@ -10,6 +10,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	gender = NEUTER
 	faction = list(FACTION_SLIME, FACTION_NEUTRAL)
+	hud_type = /datum/hud/living/slime
 
 	icon_living = "grey-baby"
 	icon_dead = "grey-baby-dead"
@@ -182,6 +183,8 @@
 	. = ..()
 	nutrition = min(nutrition, SLIME_MAX_NUTRITION)
 
+/mob/living/basic/slime/get_fullness(only_consumable)
+	return round((nutrition / SLIME_MAX_NUTRITION) * NUTRITION_LEVEL_FAT)
 
 /mob/living/basic/slime/update_name()
 	///Checks if the slime has a generic name, in the format of baby/adult slime (123)
