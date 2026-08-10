@@ -1,4 +1,0 @@
-author: "Gboster-0"
-delete-after: True
-changes:
-  - bugfix: "if a headset starts with a 2nd key in it, it will have that key inside of itself instead of in nullspace (this has no gameplay effect)"
