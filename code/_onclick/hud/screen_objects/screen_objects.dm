@@ -1333,27 +1333,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 #define FORMAT_XENOBIO_HUD_MAPTEXT(text_to_use) MAPTEXT_SPESSFONT("<span style='color: [COLOR_WHITE]; text-align: center; line-height: 1.9; '>[text_to_use]</span>")
 #define POTION_DROP_SPEED 5 DECISECONDS
 
-/atom/movable/screen/slime_growth
-	name = "Slime Level"
-	desc = "How long you've been been overfed. At 10 you gain the ability to grow or reproduce."
-	icon_state = "blood_display"
-	screen_loc = ui_blooddisplay
-	maptext_x = 1
-	maptext_y = 8
-
-/atom/movable/screen/slime_growth/Click(location, control, params)
-	. = ..()
-	to_chat(usr, span_notice("Shows you how long you've been been overfed. At 10 you gain the ability to grow or reproduce."))
-
-/atom/movable/screen/slime_growth/Initialize(mapload, datum/hud/hud_owner)
-	. = ..()
-	update_maptext(hud_owner?.mymob)
-
-/atom/movable/screen/slime_growth/proc/update_maptext(mob/living/basic/slime/slime_owner)
-	if(isnull(slime_owner))
-		return
-	maptext = FORMAT_XENOBIO_HUD_MAPTEXT("[slime_owner.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]")
-
 /atom/movable/screen/slime_power
 	name = "Power Level"
 	desc = "How much electricity they are generating, the higher this is, the stronger your attacks are."

@@ -3,12 +3,18 @@
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
+	transparent_when_unavailable = FALSE
 	///Does the ability require a specific slime lifestage?
 	var/life_stage_required
 	///Does the ability requires the slime to hit max growth?
 	var/needs_growth = FALSE
 	///Does the ability cost nutrition?
 	var/nutrition_cost = 0
+
+/datum/action/innate/slime/create_button(mob/viewer)
+	var/atom/movable/screen/movable/action_button/button = ..()
+	button.maptext_x = 2
+	return button
 
 /datum/action/innate/slime/IsAvailable(feedback = FALSE)
 	. = ..()
@@ -36,6 +42,14 @@
 	life_stage_required = SLIME_LIFE_STAGE_BABY
 	needs_growth = TRUE
 	nutrition_cost = SLIME_EVOLUTION_COST
+
+/datum/action/innate/slime/evolve/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
+	. = ..()
+	var/mob/living/basic/slime/slime_owner = owner
+	if(!isnull(life_stage_required) && slime_owner.life_stage != life_stage_required)
+		button.maptext = ""
+		return
+	button.maptext = MAPTEXT_TINY_UNICODE("[slime_owner.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]")
 
 ///Turns a baby slime into an adult slime
 /datum/action/innate/slime/evolve/Activate()
@@ -66,8 +80,6 @@
 	slime_owner.regenerate_icons()
 
 	slime_owner.amount_grown = 0
-	var/atom/movable/screen/slime_growth/growth_hud = slime_owner.hud_used?.screen_objects[HUD_MOB_SLIME_GROWTH]
-	growth_hud?.update_maptext(slime_owner)
 
 //Reproduction
 
@@ -77,6 +89,14 @@
 	desc = "This will make you split into four slimes."
 	life_stage_required = SLIME_LIFE_STAGE_ADULT
 	needs_growth = TRUE
+
+/datum/action/innate/slime/reproduce/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
+	. = ..()
+	var/mob/living/basic/slime/slime_owner = owner
+	if(!isnull(life_stage_required) && slime_owner.life_stage != life_stage_required)
+		button.maptext = ""
+		return
+	button.maptext = MAPTEXT_TINY_UNICODE("[slime_owner.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]")
 
 /datum/action/innate/slime/reproduce/Activate()
 	var/mob/living/basic/slime/slime_owner = owner
@@ -154,8 +174,6 @@
 	set_life_stage(SLIME_LIFE_STAGE_BABY)
 	set_slime_type(get_random_mutation())
 	amount_grown = 0
-	var/atom/movable/screen/slime_growth/growth_hud = hud_used?.screen_objects[HUD_MOB_SLIME_GROWTH]
-	growth_hud?.update_maptext(src)
 	mutator_used = FALSE
 
 /mob/living/basic/slime/proc/get_random_mutation()
