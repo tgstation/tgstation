@@ -1,4 +1,14 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/recharge_station,
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "an" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -7,10 +17,13 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aJ" = (
-/obj/machinery/rnd/production/circuit_imprinter/department/science,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/computer/operating{
+	dir = 1
+	},
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aU" = (
@@ -71,14 +84,12 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cl" = (
-/obj/structure/table,
-/obj/item/storage/belt/utility/full,
-/obj/item/assembly/flash/handheld,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/machinery/light/directional/west,
+/obj/machinery/rnd/production/circuit_imprinter/department/science,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "cm" = (
@@ -185,8 +196,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "fy" = (
-/obj/machinery/computer/operating,
-/turf/open/floor/iron,
+/turf/open/floor/iron/recharge_floor,
 /area/shuttle/escape)
 "fC" = (
 /obj/machinery/door/airlock/titanium{
@@ -602,8 +612,14 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "oi" = (
-/obj/effect/turf_decal/bot,
-/obj/item/robot_suit/prebuilt,
+/obj/machinery/mech_bay_recharge_port{
+	dir = 8
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/box/corners,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "oj" = (
@@ -886,10 +902,11 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "vk" = (
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
 /obj/machinery/camera/autoname/directional/south,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "vr" = (
@@ -916,10 +933,12 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape/xenobio)
 "vY" = (
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
 /obj/machinery/light/directional/north,
+/obj/item/robot_suit/prebuilt,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "we" = (
@@ -1404,8 +1423,13 @@
 /turf/open/floor/iron/large,
 /area/shuttle/escape)
 "He" = (
-/obj/structure/table/optable,
-/obj/effect/spawner/surgery_tray/full,
+/obj/machinery/computer/mech_bay_power_console,
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Hl" = (
@@ -1713,6 +1737,11 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"OO" = (
+/obj/effect/spawner/surgery_tray/full,
+/obj/structure/table/optable,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "Pl" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/air_sensor{
@@ -1825,24 +1854,32 @@
 /area/shuttle/escape)
 "Th" = (
 /obj/structure/table,
-/obj/item/stack/sheet/glass/fifty{
-	pixel_x = 6;
-	pixel_y = 11
-	},
 /obj/item/stack/sheet/plasteel{
 	amount = 10;
 	pixel_x = -6;
 	pixel_y = 9
 	},
 /obj/item/stack/sheet/iron/fifty{
-	pixel_x = 2;
-	pixel_y = 4
+	pixel_x = -8;
+	pixel_y = 7
 	},
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = -10;
+	pixel_y = 5
+	},
+/obj/item/storage/belt/utility/full,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Tm" = (
-/obj/effect/turf_decal/bot,
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/recharge_station,
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/box/corners,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "TL" = (
@@ -2357,7 +2394,7 @@ gR
 kn
 Th
 Kp
-Kp
+OO
 xN
 OE
 Ze
@@ -2415,7 +2452,7 @@ gR
 xN
 fy
 Kp
-Kp
+aa
 xN
 KV
 iF
