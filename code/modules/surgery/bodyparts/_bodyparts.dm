@@ -20,6 +20,9 @@
 	var/husk_type = "humanoid"
 	///The color to multiply the greyscaled husk sprites by. Can be null. Old husk sprite chest color is #A6A6A6
 	var/husk_color = "#A6A6A6"
+	/// The color to multiply the zombie husk sprites by.
+	var/zombie_color = "#006009"
+
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	/// The mob that "owns" this limb
 	/// DO NOT MODIFY DIRECTLY. Use update_owner()
@@ -48,7 +51,7 @@
 	var/mangled_state = BODYPART_MANGLED_NONE
 
 	///Whether the bodypart (and the owner) is husked.
-	var/is_husked = FALSE
+	var/is_husked = NONE
 	///Whether the bodypart (and the owner) is invisible through invisibleman trait.
 	var/is_invisible = FALSE
 	///The ID of a species used to generate the icon. Needs to match the icon_state portion in the limbs file!
@@ -226,9 +229,9 @@
 	var/list/bodypart_effects
 	/// The cached info about the blood this organ belongs to, set during on_removal()
 	var/list/blood_dna_info
-	/// What items we drop whenever we're butchered
-	/// If unset, the bodyparot cannot be butchered
-	var/list/butcher_drops = null
+	/// Lazy assoc list of [item type] = [amount] that we drop when butchered.
+	/// Overrides whatever we would drop normally based on our species datum.
+	var/list/butcher_drops_override
 	/// What skeleton limb, if any, we replace ourselves with when butchered?
 	var/obj/item/bodypart/butcher_replacement = null
 	/// How much meat do we add to butcher_drops when automatically generating them from our species datum?
@@ -284,11 +287,6 @@
 		add_surgical_state(innate_state)
 
 	name = "[limb_id] [parse_zone(body_zone)]"
-	// There's a lot of bodyparts in the world, and we don't need to have separate drops on each and every one of them
-	var/list/drop_results = get_butcher_drops()
-	if (length(drop_results))
-		butcher_drops = string_list(drop_results)
-		butcher_drop_cache[type] = butcher_drops
 	update_limb(TRUE)
 	update_icon_dropped()
 	refresh_bleed_rate()
@@ -332,17 +330,19 @@
 		return FALSE
 	return  ..()
 
-/// Returns an assoc list of items dropped when the limb is butchered
-/// force - Force an update of drops ignoring the cache
-/obj/item/bodypart/proc/get_butcher_drops(force = FALSE)
-	if(!isnull(butcher_drops) && !force)
-		return butcher_drops
-	if (butcher_drop_cache[type] && !force)
-		return butcher_drop_cache[type]
-	var/datum/species/species = GLOB.species_list[species_id || limb_id]
-	if (!species || !species.meat || !base_meat_amount)
+/// Returns a lazy assoc list of items dropped when the limb is butchered
+/obj/item/bodypart/proc/get_butcher_drops()
+	var/meat_to_spawn = max(base_meat_amount, values_sum(butcher_drops_override))
+	if(meat_to_spawn <= 0)
 		return null
-	return list(species.meat = base_meat_amount)
+	if(is_husked == HUSKED_ZOMBIE)
+		return list(/obj/item/food/meat/slab/human/mutant/zombie = meat_to_spawn)
+	if(length(butcher_drops_override))
+		return butcher_drops_override
+	var/datum/species/species = GLOB.species_list[species_id || limb_id]
+	if (!isnull(species?.meat))
+		return list(species.meat = meat_to_spawn)
+	return null
 
 /obj/item/bodypart/proc/on_forced_removal(atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
@@ -1160,13 +1160,13 @@
 			bodypart_flags &= ~BODYPART_VIRGIN
 		if(!(bodypart_flags & BODYPART_UNHUSKABLE) && owner && HAS_TRAIT(owner, TRAIT_HUSK))
 			dmg_overlay_type = "" //no damage overlay shown when husked
-			is_husked = TRUE
+			is_husked = HAS_TRAIT_FROM_ONLY(owner, TRAIT_HUSK, /datum/status_effect/zombie::id) ? HUSKED_ZOMBIE : HUSKED_BURN
 		else if(owner && HAS_TRAIT(owner, TRAIT_INVISIBLE_MAN))
 			dmg_overlay_type = "" //no damage overlay shown when invisible since the wounds themselves are invisible.
 			is_invisible = TRUE
 		else
 			dmg_overlay_type = initial(dmg_overlay_type)
-			is_husked = FALSE
+			is_husked = NONE
 			is_invisible = FALSE
 
 	update_draw_color()
@@ -1325,19 +1325,6 @@
 		if(burnstate)
 			. += image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, dir = SOUTH)
 
-	if(is_husked)
-		. += huskify_image(thing_to_husk = limb)
-		if(aux)
-			. += huskify_image(thing_to_husk = aux)
-		draw_color = husk_color
-	else
-		update_draw_color()
-
-	if(draw_color)
-		limb.color = "[draw_color]"
-		if(aux_zone)
-			aux.color = "[draw_color]"
-
 	var/atom/location = loc || owner || src
 	if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 		var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, layer = limb.layer, alpha = limb.alpha)
@@ -1362,6 +1349,19 @@
 			if (dropped)
 				aux_em = image(aux_em, dir = SOUTH)
 			. += aux_em
+
+	if(is_husked)
+		. += huskify_image(thing_to_husk = limb)
+		if(aux)
+			. += huskify_image(thing_to_husk = aux)
+		draw_color = is_husked == HUSKED_ZOMBIE ? zombie_color : husk_color
+	else
+		update_draw_color()
+
+	if(draw_color)
+		limb.color = "[draw_color]"
+		if(aux_zone)
+			aux.color = "[draw_color]"
 
 	// No need to handle leg layering if dropped, we only face south anyways
 	if(!dropped && ((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG)))
@@ -1409,17 +1409,44 @@
 	SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
 	return .
 
+/**
+ * Takes in an image and greyscales it to later be recolored to look like a husk
+ *
+ * Then returns a separate image/MA that is the blood overlay for the husk
+ * May return multiple if the blood overlay has an emissive associated
+ */
 /obj/item/bodypart/proc/huskify_image(image/thing_to_husk)
 	var/icon/husk_icon = new(thing_to_husk.icon)
 	husk_icon.ColorTone(HUSK_COLOR_TONE)
 	thing_to_husk.icon = husk_icon
-	var/mutable_appearance/husk_blood = mutable_appearance(icon_husk, "[husk_type]_husk_[body_zone]", appearance_flags = RESET_COLOR)
-	// BLEND_INSET_OVERLAY on KEEP_TOGETHER atoms masks itself with the atom, so we cannot add this as an overlay to our limb to have it automatically mask
+
+	var/mutable_appearance/husk_blood = mutable_appearance(icon_husk, "[husk_type]_husk_[body_zone]", thing_to_husk.layer, appearance_flags = RESET_COLOR)
+	. = list(husk_blood)
+
+	// BLEND_INSET_OVERLAY on KEEP_TOGETHER atoms masks itself with the atom,
+	// so we cannot add this as an overlay to our limb to have it automatically mask
 	husk_blood.blend_mode = BLEND_INSET_OVERLAY
 	husk_blood.dir = thing_to_husk.dir
-	husk_blood.layer = thing_to_husk.layer
-	husk_blood.color = LAZYLEN(blood_dna_info) ? get_color_from_blood_list(blood_dna_info) : BLOOD_COLOR_RED
-	return husk_blood
+
+	if(!LAZYLEN(blood_dna_info))
+		husk_blood.color = BLOOD_COLOR_RED
+		return .
+
+	husk_blood.color = get_color_from_blood_list(blood_dna_info)
+
+	var/average_emissive_alpha = 0
+	for(var/dna, blood_type in blood_dna_info)
+		average_emissive_alpha += astype(blood_type, /datum/blood_type)?.get_emissive_alpha(src)
+
+	if(!average_emissive_alpha)
+		return .
+
+	average_emissive_alpha /= LAZYLEN(blood_dna_info)
+	var/mutable_appearance/husk_blood_em = emissive_appearance(husk_blood.icon, husk_blood.icon_state, loc || owner || src, husk_blood.layer, average_emissive_alpha)
+	husk_blood_em.blend_mode = BLEND_INSET_OVERLAY
+	husk_blood_em.dir = husk_blood.dir
+	. += husk_blood_em
+	return .
 
 /**
  * Adds a bodypart overlay to the limb

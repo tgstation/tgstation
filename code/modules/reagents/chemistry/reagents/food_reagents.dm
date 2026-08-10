@@ -85,6 +85,8 @@
 /datum/reagent/consumable/nutriment/on_new(list/supplied_data)
 	. = ..()
 	if(!data)
+		if(carry_food_tastes)
+			RegisterSignal(src, COMSIG_REAGENT_GROWN_IN_PLANT, PROC_REF(grown_in_plant))
 		return
 	// taste data can sometimes be ("salt" = 3, "chips" = 1)
 	// and we want it to be in the form ("salt" = 0.75, "chips" = 0.25)
@@ -119,6 +121,15 @@
 	counterlist_normalise(taste_amounts)
 
 	data = taste_amounts
+
+/// Inherits all the tastes of plants that we are grown in
+/datum/reagent/consumable/nutriment/proc/grown_in_plant(datum/source, obj/item/seeds/our_seeds, obj/item/our_plant)
+	SIGNAL_HANDLER
+
+	if(!istype(our_plant, /obj/item/food/grown))
+		return
+	var/obj/item/food/grown/plant_food = our_plant
+	data = counterlist_normalise(LAZYCOPY(plant_food.tastes))
 
 /datum/reagent/consumable/nutriment/get_taste_description(mob/living/taster)
 	if(length(data))
@@ -1023,26 +1034,47 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-/datum/reagent/consumable/liquidelectricity/enriched
-	name = "Enriched Liquid Electricity"
-
-/datum/reagent/consumable/liquidelectricity/enriched/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
+/datum/reagent/consumable/liquidelectricity/on_new(new_data)
 	. = ..()
-	if(!(methods & (INGEST|INJECT|PATCH|INHALE)) || !iscarbon(exposed_mob))
+	RegisterSignal(src, COMSIG_REAGENT_GROWN_IN_PLANT, PROC_REF(grown_in_plant))
+	// Defaults to "enriched" state if data does not say otherwise
+	if(isnull(LAZYACCESS(data, BLOOD_DATA_ENRICHED_ETHEREAL)))
+		LAZYSET(data, BLOOD_DATA_ENRICHED_ETHEREAL, TRUE)
+
+/datum/reagent/consumable/liquidelectricity/on_merge(list/mix_data, amount)
+	. = ..()
+	// Inherits the incoming reagent's enriched state if it's greater in volume
+	if(amount > volume)
+		LAZYSET(data, BLOOD_DATA_ENRICHED_ETHEREAL, LAZYACCESS(mix_data, BLOOD_DATA_ENRICHED_ETHEREAL))
+
+/datum/reagent/consumable/liquidelectricity/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
+	. = ..()
+	if(!LAZYACCESS(data, BLOOD_DATA_ENRICHED_ETHEREAL))
+		return
+	if(!(methods & (INGEST|INJECT|PATCH|INHALE)))
 		return
 
-	var/mob/living/carbon/exposed_carbon = exposed_mob
-	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/ethereal/stomach = exposed_mob.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
 		stomach.adjust_charge(reac_volume * 30 * ETHEREAL_DISCHARGE_RATE)
 
-/datum/reagent/consumable/liquidelectricity/enriched/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+/datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
+	if(!LAZYACCESS(data, BLOOD_DATA_ENRICHED_ETHEREAL))
+		return
+
 	if(HAS_TRAIT(affected_mob, TRAIT_ETHEREAL_METABOLISM))
 		affected_mob.adjust_blood_volume(1 * seconds_per_tick)
+
 	else if(SPT_PROB(10, seconds_per_tick)) //lmao at the newbs who eat energy bars
-		affected_mob.electrocute_act(rand(5,10), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
+		affected_mob.electrocute_act(rand(5, 10), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
 		playsound(affected_mob, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+
+/// Liquid Electricity in plants is unenriched unless the plant has the relevant gene
+/datum/reagent/consumable/liquidelectricity/proc/grown_in_plant(datum/source, obj/item/seeds/our_seeds, obj/item/our_plant)
+	SIGNAL_HANDLER
+
+	LAZYSET(data, BLOOD_DATA_ENRICHED_ETHEREAL, !!our_seeds.get_gene(/datum/plant_gene/trait/cell_charge))
 
 /datum/reagent/consumable/astrotame
 	name = "Astrotame"
@@ -1377,4 +1409,3 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	default_container = /obj/item/reagent_containers/condiment/pack/beef_flavour
-

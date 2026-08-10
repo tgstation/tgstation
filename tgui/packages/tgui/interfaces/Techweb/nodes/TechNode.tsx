@@ -212,39 +212,44 @@ export function TechNode(props: Props) {
             asset={['', design_cache[k].class]}
             tooltip={
               <Stack vertical>
-                <Stack.Item mt={0.3} ml={0.3}>
+                <Stack.Item mt={0.3} ml={0.3} mb={0.3}>
                   {design_cache[k].name}
                 </Stack.Item>
-                <Stack.Item mt={-2} mb={-2} ml={-3}>
-                  <ul>
-                    <li>
-                      {Object.keys(build_types)
-                        .filter((key) => design_cache[k].build_types & +key)
-                        .map((key) => build_types[key])
-                        .join(', ')}
-                    </li>
-                    {!!Object.keys(department_flags).find(
-                      (key) => !(+key & design_cache[k].department_flags),
-                    ) && (
-                      <li>
-                        {Object.keys(department_flags)
-                          .filter(
-                            (key) => design_cache[k].department_flags & +key,
-                          )
-                          .map((key) => department_flags[key])
-                          .join(', ')}
-                      </li>
-                    )}
-                  </ul>
-                </Stack.Item>
-                <Stack.Divider />
-                <Stack.Item mt={-1}>
-                  <MaterialCostSequence
-                    design={design_cache[k]}
-                    amount={1}
-                    SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
-                  />
-                </Stack.Item>
+                {design_cache[k].build_types !== null && (
+                  <>
+                    <Stack.Item mt={-2} mb={-2} ml={-3}>
+                      <ul>
+                        <li>
+                          {Object.keys(build_types)
+                            .filter((key) => design_cache[k].build_types & +key)
+                            .map((key) => build_types[key])
+                            .join(', ')}
+                        </li>
+                        {!!Object.keys(department_flags).find(
+                          (key) => !(+key & design_cache[k].department_flags),
+                        ) && (
+                          <li>
+                            {Object.keys(department_flags)
+                              .filter(
+                                (key) =>
+                                  design_cache[k].department_flags & +key,
+                              )
+                              .map((key) => department_flags[key])
+                              .join(', ')}
+                          </li>
+                        )}
+                      </ul>
+                    </Stack.Item>
+                    <Stack.Divider />
+                    <Stack.Item mt={-1}>
+                      <MaterialCostSequence
+                        design={design_cache[k]}
+                        amount={1}
+                        SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+                      />
+                    </Stack.Item>
+                  </>
+                )}
               </Stack>
             }
             tooltipPosition={i % 15 < 7 ? 'right' : 'left'}

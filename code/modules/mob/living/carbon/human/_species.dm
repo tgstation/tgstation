@@ -112,8 +112,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/fixed_mut_color = ""
 	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
 	var/inert_mutation = /datum/mutation/dwarfism
-	///Used to set the mob's death_sound upon species change
-	var/death_sound
 	///Special sound for grabbing
 	var/grab_sound
 	/// A path to an outfit that is important for species life e.g. plasmaman outfit
@@ -364,7 +362,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	human_who_gained_species.living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS //Don't call update_body_parts() for every single bodypart overlay added.
 
 	// Drop the items the new species can't wear
-	human_who_gained_species.mob_biotypes = inherent_biotypes
+	human_who_gained_species.mob_biotypes |= inherent_biotypes
 	human_who_gained_species.butcher_results = knife_butcher_results?.Copy()
 
 	//update body zones to match what they are supposed to have
@@ -439,6 +437,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	human.living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS //Don't call update_body_parts() for every single bodypart overlay removed.
 	human.butcher_results = null
+	human.mob_biotypes &= ~inherent_biotypes
 	for(var/trait in inherent_traits)
 		REMOVE_TRAIT(human, trait, SPECIES_TRAIT)
 
@@ -1035,7 +1034,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 
 	// Only stabilise core temp when alive and not in statis
-	if(humi.stat != DEAD && !HAS_TRAIT(humi, TRAIT_STASIS))
+	if(humi.stat != DEAD && !HAS_TRAIT(humi, TRAIT_STASIS) && !HAS_TRAIT(humi, TRAIT_COLD_BLOODED))
 		body_temperature_core(humi, seconds_per_tick)
 
 	// These do run in statis
@@ -1054,7 +1053,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * humi (required) The mob we will stabilize
  */
 /datum/species/proc/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick)
-	var/natural_change = get_temp_change_amount(humi.get_body_temp_normal() - humi.coretemperature, 0.06 * seconds_per_tick)
+	var/natural_change = get_temp_change_amount(humi.get_body_temp_normal() - humi.coretemperature, BODYTEMP_CORE_CHANGE_RATE * seconds_per_tick)
 	humi.adjust_coretemperature(humi.metabolism_efficiency * natural_change)
 
 /**
@@ -1071,8 +1070,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	// change the core based on the skin temp
 	var/skin_core_diff = humi.bodytemperature - humi.coretemperature
-	// change rate of 0.04 per second to be slightly below area to skin change rate and still have a solid curve
-	var/skin_core_change = get_temp_change_amount(skin_core_diff, 0.04 * seconds_per_tick)
+	// change rate of slightly below area to skin change rate and still having a solid curve
+	var/skin_core_change = get_temp_change_amount(skin_core_diff, BODYTEMP_SKIN_CORE_CHANGE_RATE * seconds_per_tick)
 
 	humi.adjust_coretemperature(skin_core_change)
 
@@ -1090,8 +1089,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Changes to the skin temperature based on the area
 	var/area_skin_diff = area_temp - humi.bodytemperature
 	if(!humi.on_fire || area_skin_diff > 0)
-		// change rate of 0.05 as area temp has large impact on the surface
-		var/area_skin_change = get_temp_change_amount(area_skin_diff, 0.05 * seconds_per_tick)
+		// change rate near full speed as area temp has large impact on the surface
+		var/area_skin_change = get_temp_change_amount(area_skin_diff, BODYTEMP_AREA_SKIN_CHANGE_RATE * seconds_per_tick)
 
 		// We need to apply the thermal protection of the clothing when applying area to surface change
 		// If the core bodytemp goes over the normal body temp you are overheating and becom sweaty
@@ -1109,8 +1108,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!humi.on_fire)
 		// Get the changes to the skin from the core temp
 		var/core_skin_diff = humi.coretemperature - humi.bodytemperature
-		// change rate of 0.045 to reflect temp back to the skin at the slight higher rate then core to skin
-		var/core_skin_change = (1 + thermal_protection) * get_temp_change_amount(core_skin_diff, 0.045 * seconds_per_tick)
+		// change rate to reflect temp back to the skin at a slightly higher rate than skin to core
+		var/core_skin_change = (1 + thermal_protection) * get_temp_change_amount(core_skin_diff, BODYTEMP_CORE_SKIN_CHANGE_RATE * seconds_per_tick)
 
 		// We do not want to over shoot after using protection
 		if(core_skin_diff > 0)
@@ -1346,13 +1345,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 //  Stun  //
 ////////////
 
-/datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
+/datum/species/proc/spec_stun(mob/living/carbon/human/H, amount)
 	if((H.movement_type & FLYING) && !H.buckled)
 		var/obj/item/organ/wings/functional/wings = H.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 		if(wings)
 			wings.toggle_flight(H)
 			wings.fly_slip(H)
-	. = stunmod * H.physiology.stun_mod * amount
+	. = min(stunmod * H.physiology.stun_mod * amount, LAZYMIN(H.physiology.max_stun_len, INFINITY))
 
 /datum/species/proc/negates_gravity(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
@@ -1400,42 +1399,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /// Given a human, will adjust it before taking a picture for the preferences UI.
 /// This should create a CONSISTENT result, so the icons don't randomly change.
 /datum/species/proc/prepare_human_for_preview(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' scream sound.
-/datum/species/proc/get_scream_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' cry sound.
-/datum/species/proc/get_cry_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' sigh sound.
-/datum/species/proc/get_sigh_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' sniff sound.
-/datum/species/proc/get_sniff_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' cough sound.
-/datum/species/proc/get_cough_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' laugh sound
-/datum/species/proc/get_laugh_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' sneeze sound.
-/datum/species/proc/get_sneeze_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' snore sound.
-/datum/species/proc/get_snore_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' hiss sound
-/datum/species/proc/get_hiss_sound(mob/living/carbon/human/human)
 	return
 
 /// Returns a list of all organ typepaths this species probably has

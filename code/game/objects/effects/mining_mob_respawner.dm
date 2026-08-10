@@ -13,6 +13,8 @@
 	var/min_delay = 1 SECONDS
 	/// Max time from storm to spawn a mob
 	var/max_delay = 10 SECONDS
+	/// Chance to respawn a mob
+	var/respawn_chance = 30
 	/// Our currently spawned mob
 	var/datum/weakref/our_mob
 	/// Weighted list of things we can spawn
@@ -106,7 +108,9 @@
 /obj/effect/mining_mob_respawner/proc/on_storm_event()
 	SIGNAL_HANDLER
 	var/mob/living/resolved = our_mob?.resolve()
-	if (!resolved || resolved.stat == DEAD)
+	if (resolved && resolved.stat != DEAD)
+		return
+	if (prob(respawn_chance))
 		addtimer(CALLBACK(src, PROC_REF(make_mob)), rand(min_delay, max_delay), TIMER_DELETE_ME)
 
 /// Play an awesome animation

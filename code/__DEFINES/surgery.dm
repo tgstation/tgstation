@@ -80,6 +80,12 @@
 ///Bodypart does not get replaced during set_species()
 #define BP_BLOCK_CHANGE_SPECIES (1<<0)
 
+// is_husked values
+/// Husked from burns
+#define HUSKED_BURN 1
+/// Husked from zombification
+#define HUSKED_ZOMBIE 2
+
 // Flags for the head_flags var on /obj/item/bodypart/head
 /// Head can have hair
 #define HEAD_HAIR (1<<0)

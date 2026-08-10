@@ -246,13 +246,13 @@ There are a handful of procs preferences can use to act on their own:
 /// Apply this preference onto the given human.
 /// Must be overriden by subtypes.
 /// Called when the savefile_identifier == PREFERENCE_CHARACTER.
-/datum/preference/proc/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/proc/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 ```
 
 For example, `/datum/preference/numeric/age` contains:
 
 ```dm
-/datum/preference/numeric/age/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/numeric/age/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	target.age = value
 ```
 

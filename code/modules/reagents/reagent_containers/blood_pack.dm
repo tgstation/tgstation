@@ -15,7 +15,9 @@
 	if (!blood_type)
 		return
 	var/datum/blood_type/bloodtype = get_blood_type(blood_type)
-	reagents.add_reagent(bloodtype.reagent_type, volume, list("blood_type" = bloodtype, "blood_DNA" = bloodtype.dna_string, BLOOD_DATA_SYNTH_CONTENT = 1), creation_callback = CALLBACK(src, PROC_REF(on_blood_created)))
+	var/list/blood_data = bloodtype.get_default_blood_data() | list(BLOOD_DATA_SYNTH_CONTENT = 1)
+
+	reagents.add_reagent(bloodtype.reagent_type, volume, blood_data, creation_callback = CALLBACK(src, PROC_REF(on_blood_created)))
 
 /obj/item/reagent_containers/blood/proc/on_blood_created(datum/reagent/new_blood)
 	new_blood.AddElement(/datum/element/blood_reagent, null, get_blood_type(blood_type))
