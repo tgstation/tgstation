@@ -66,6 +66,8 @@
 	slime_owner.regenerate_icons()
 
 	slime_owner.amount_grown = 0
+	var/atom/movable/screen/slime_growth/growth = slime_owner.hud_used.screen_objects[HUD_MOB_SLIME_GROWTH]
+	growth?.update_maptext(slime_owner)
 
 //Reproduction
 
@@ -150,6 +152,8 @@
 	set_life_stage(SLIME_LIFE_STAGE_BABY)
 	set_slime_type(get_random_mutation())
 	amount_grown = 0
+	var/atom/movable/screen/slime_growth/growth = hud_used.screen_objects[HUD_MOB_SLIME_GROWTH]
+	growth?.update_maptext(src)
 	mutator_used = FALSE
 
 /mob/living/basic/slime/proc/get_random_mutation()
