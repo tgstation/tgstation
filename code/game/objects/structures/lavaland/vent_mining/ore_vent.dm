@@ -295,9 +295,11 @@
 		spawner_logic = SPAWN_BY_WAVE_BEHAVIOR, \
 		max_waves = wave_timer, \
 		effect = /obj/effect/temp_visual/dust_cloud, \
+		sound_effect = 'sound/effects/node_drilling.ogg', \
 		spawn_windup = 0.9 SECONDS, \
+		linked_mob = node, \
 	)
-	COOLDOWN_START(src, wave_cooldown, INFINITY) //Basically forever, or until all waves are completed.
+	COOLDOWN_START(src, wave_cooldown, INFINITY)
 	RegisterSignal(src, COMSIG_VENT_WAVE_CONCLUDED, PROC_REF(handle_wave_conclusion))
 	update_appearance(UPDATE_ICON_STATE)
 
@@ -317,7 +319,6 @@
 	//happens in COMSIG_QDELETING
 	if(QDELETED(node) || node.stat == DEAD)
 		initiate_wave_loss(loss_message = "\the [src] creaks and groans as the mining attempt fails, and the vent closes back up.")
-
 		return
 
 	//happens in COMSIG_MOVABLE_MOVED
@@ -335,6 +336,7 @@
 	playsound(src, 'sound/effects/rock/rock_break.ogg', 50)
 	update_appearance(UPDATE_ICON_STATE)
 	reset_drone(success = FALSE)
+	reset_cooldown(src, wave_cooldown)
 
 /**
  * Handles winning the event, gives everyone a payout and start boulder production
@@ -346,7 +348,7 @@
 		log_game("Ore vent [key_name_and_tag(src)] was tapped")
 		SSblackbox.record_feedback("tally", "ore_vent_completed", 1, type)
 		balloon_alert_to_viewers("vent tapped!")
-
+	playsound(node, 'sound/effects/node_victory.ogg', 40, TRUE)
 	update_appearance(UPDATE_ICON_STATE)
 	add_tapped_visual()
 	qdel(GetComponent(/datum/component/gps))

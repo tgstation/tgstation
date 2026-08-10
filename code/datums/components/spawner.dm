@@ -28,6 +28,8 @@
 
 	/// Visual Effect to spawn before the mobs spawn in that location.
 	var/obj/effect/temp_visual/effect
+	/// Audio path to play when spawning new mobs.
+	var/sound_effect
 	/// How long of a pause do we use between the effect spawning, and the mob spawning.
 	var/spawn_windup
 
@@ -37,6 +39,8 @@
 	var/max_waves
 	/// Number of waves of mobs that have been spawned. Only tracked with SPAWN_BY_WAVE_BEHAVIOR.
 	var/completed_waves = 0
+	/// Reference a mob that should it die, we'll stop the spawner component from functioning.
+	var/mob/linked_mob
 
 	COOLDOWN_DECLARE(spawn_delay)
 
@@ -55,7 +59,9 @@
 	spawner_logic = SPAWN_CONTINUOUS_BEHAVIOR,
 	max_waves = 1,
 	effect = null,
-	spawn_windup = 0.5 SECONDS
+	sound_effect = null,
+	spawn_windup = 0.5 SECONDS,
+	linked_mob = null
 )
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -73,6 +79,7 @@
 	src.max_spawn_types_per_attempt = max_spawn_types_per_attempt
 	src.spawn_distance = spawn_distance
 	src.spawn_distance_exclude = spawn_distance_exclude
+	src.linked_mob = linked_mob
 	// If set, doesn't instantly spawn a creature when the spawner component is applied.
 	if(initial_spawn_delay)
 		COOLDOWN_START(src, spawn_delay, spawn_time)
@@ -82,8 +89,11 @@
 	src.effect = effect
 	if(effect)
 		src.spawn_windup = spawn_windup
+	src.sound_effect = sound_effect
 
-	RegisterSignals(parent, list(COMSIG_QDELETING, COMSIG_SPAWNER_STOPPED), PROC_REF(stop_spawning))
+	RegisterSignals(parent, list(COMSIG_QDELETING), PROC_REF(stop_spawning))
+	if(linked_mob)
+		RegisterSignals(linked_mob, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(stop_spawning))
 	START_PROCESSING((spawn_time < 2 SECONDS ? SSfastprocess : SSprocessing), src)
 
 /datum/component/spawner/process()
@@ -92,9 +102,10 @@
 /// Stop spawning mobs
 /datum/component/spawner/proc/stop_spawning(force)
 	SIGNAL_HANDLER
-
 	STOP_PROCESSING(SSprocessing, src)
 	spawned_things = list()
+	SEND_SIGNAL(parent, COMSIG_VENT_WAVE_CONCLUDED)
+	qdel(src)
 
 /// Determine if we can spawn a mob based on the current spawn logic.
 /datum/component/spawner/proc/check_spawn_availability(mobs_spawned)
@@ -111,7 +122,6 @@
 				return FALSE
 			if(completed_waves >= max_waves)
 				stop_spawning()
-				SEND_SIGNAL(parent, COMSIG_VENT_WAVE_CONCLUDED)
 				return FALSE
 			completed_waves++
 			var/atom/spawner_atom = parent
@@ -147,6 +157,8 @@
 
 			if(created)
 				setup_spawned_mob(created, spawner)
+	if(sound_effect)
+		playsound(parent, sound_effect, 40)
 
 /**
  * This proc determines the tile that a spawner will place a mob on.
@@ -230,4 +242,5 @@
 /// Called when a mob we spawned dies, remove it from the list and unregister signals
 /datum/component/spawner/proc/mob_death(mob/living/source)
 	spawned_things -= WEAKREF(source)
+	source.remove_status_effect(/datum/status_effect/heads_up)
 	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))

@@ -59,8 +59,7 @@
 
 /mob/living/basic/node_drone/Destroy()
 	if(attached_vent)
-		SEND_SIGNAL(attached_vent, COMSIG_SPAWNER_STOPPED)
-		attached_vent.node = null //clean our reference to the vent both ways.
+		attached_vent.node = null
 		attached_vent = null
 	return ..()
 

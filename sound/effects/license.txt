@@ -17,3 +17,10 @@ https://freesound.org/people/lolamadeus/sounds/179341/, -- License: Creative Com
 https://freesound.org/people/fthrll/sounds/522200/, -- License: Creative Commons 0
 https://freesound.org/people/Hankof/sounds/655630/, -- License: Creative Commons 0
 }
+
+node_drilling.ogg was made using:
+https://freesound.org/people/jedg/sounds/505826/  -- License: Creative Commons 0
+Trimmed and effects added by ArcaneMusic.
+
+node_victory.ogg was made by ArcaneMusic
+FL-studio, Flex Plugin. -- License: Creative Commons 0
