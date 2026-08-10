@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "pAIs now have a health hud instead of it being tucked away in the stat panel."
-  - bugfix: "Health HUDs exact HP % text now update as you heal/injure."

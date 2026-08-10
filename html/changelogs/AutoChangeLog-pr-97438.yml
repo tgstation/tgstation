@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Borg sheet numbers now updates properly between items sharing the same material type."

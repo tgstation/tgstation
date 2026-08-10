@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "You can use food items in place of some organs for \"organ manipulation\"...It won't work, but y'know, you can do it"
-  - qol: "Organ manipulation will cancel mid operation if it suddenly becomes invalid, rather than allow it to continue"
