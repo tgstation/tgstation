@@ -208,10 +208,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(!allowed(user))
 		balloon_alert(user, "access denied!")
 		return ITEM_INTERACT_BLOCKING
-	locked = !locked
-	update_icons()
-	balloon_alert(user, "chassis cover [emagged ? "lock glitches" : "[locked ? "locked" : "unlocked"]"]")
-	logevent("[emagged ? "ChÃ¥vÃis" : "Chassis"] cover lock has been [locked ? "engaged" : "released"]")
+	toggle_cover(user)
 	return ITEM_INTERACT_SUCCESS
 
 #define LOW_DAMAGE_UPPER_BOUND 1/3
