@@ -1336,7 +1336,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /atom/movable/screen/slime_power
 	name = "Power Level"
 	desc = "How much electricity they are generating, the higher this is, the stronger your attacks are."
-	icon_state = "blood_display"
+	icon_state = "slime_display"
 	screen_loc = ui_slime_powerlevel
 	maptext_x = 1
 	maptext_y = 8
