@@ -282,3 +282,30 @@
   - bugfix: Gluon frag grenades now output radiation, like they've been trying and
       failing to do for at least 4 years.
   - balance: Conveyor belts don't rotate you
+2026-08-10:
+  ArcaneMusic:
+  - bugfix: Cooldown modkits and AOE modkits now work as intended. Cooldowns make
+      the gun shoot faster, and AOE modkits will make the gun slightly slower, regardless
+      of the order they're installed in.
+  ArrisFairburne:
+  - image: most ballistics bullets have a flashy look to them, which aids readability
+  Fabian272:
+  - bugfix: Black broth no longer requires ice to make.
+  Melbert:
+  - rscdel: Deleted "Enriched Liquid Electricity". It's now just "Liquid Electricity",
+      though it can still be enriched to shock people. Ethereal blood is still un-enriched.
+      Some recipes may still demand enriched Liquid Electricity.
+  - rscadd: Botany plants producing Liquid Electricity now produce un-enriched Liquid
+      Electricity unless the plant has Electrical Activity.
+  - rscadd: Jupiter Cups now have Electrical Activity by default, in order to produce
+      enriched Liquid Electricity.
+  - refactor: Refactored the way botany plants set up their reagents. Report any oddities,
+      particularly with traits that activate on harvest (like auto-distilling composition),
+      their tastes, or with special reagents (like blood or vitamins).
+  PapaMichael:
+  - config: Maintenance Drone laws and flavortext can be modified by the server config
+  hry-gh:
+  - bugfix: classic hotkey mode will work when focused on the input bar
+  - bugfix: you can navigate recently input commands with ctrl+up/down again
+  - bugfix: pressing space in the input autocompletes to the next shared verb name
+      prefix
