@@ -3576,6 +3576,18 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/ethanol/rubywise_ruin/on_mob_add(mob/living/drinker)
+	if(HAS_TRAIT(drinker, TRAIT_NOHUNGER))
+		return
+	drinker.add_traits(list(TRAIT_VORACIOUS,TRAIT_FLESH_PECKISH), type)
+
+/datum/reagent/consumable/ethanol/rubywise_ruin/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	if(SPT_PROB(2.5, seconds_per_tick))
+		drinker.emote("drool")
+
+/datum/reagent/consumable/ethanol/rubywise_ruin/on_mob_delete(mob/living/drinker)
+	drinker.remove_traits(list(TRAIT_VORACIOUS,TRAIT_FLESH_PECKISH), type)
+
 //Lock
 /datum/reagent/consumable/ethanol/openthroat_draught
 	name = "Open-Throat Draught"

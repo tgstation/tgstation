@@ -1427,6 +1427,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait used by the /obj/item/wallframe/painting/eldritch/desire status effect to change their preferences of what they eat
 #define TRAIT_FLESH_DESIRE "flesh_desire"
 
+///Softer version of the above trait which just adds the same preferences as flesh desire without also making everything else toxic
+#define TRAIT_FLESH_PECKISH "flesh_peckish"
+
 ///Trait granted by janitor skillchip, allows communication with cleanbots
 #define TRAIT_CLEANBOT_WHISPERER "cleanbot_whisperer"
 

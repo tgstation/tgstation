@@ -98,6 +98,8 @@
 	. = tongue.liked_foodtypes
 	if(HAS_TRAIT(src, TRAIT_VEGETARIAN))
 		. &= ~MEAT
+	if(HAS_TRAIT(src, TRAIT_FLESH_PECKISH))
+		. |= GORE | MEAT
 
 /**
  * Gets food flags that this mob dislikes
