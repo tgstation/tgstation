@@ -39,17 +39,9 @@ ADMIN_VERB(toggle_lobby_transparency, R_ADMIN, "Toggle Lobby Transparency", "Tog
 	src.client = client
 	window = new(client, "lobby_menu")
 	window.is_browser = TRUE
-	window.initialize(
-		strict_mode = TRUE,
-		inline_css = file("tgui/public/tgui-lobby.bundle.css"),
-		inline_js = file("tgui/public/tgui-lobby.bundle.js"),
-	)
-	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/lobby_menu_font))
-	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/lobby_menu_sounds))
-	window.send_asset(get_asset_datum(/datum/asset/spritesheet/lobby_menu_icons))
-	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/lobby_menu_animated))
-	// Send the title screen image as a named asset
-	SSassets.transport.send_assets(client, LOBBY_TITLE_ASSET_NAME)
+
+	create_browser(GLOB.lobby_background_transparent)
+	initialize_browser()
 	window.subscribe(src, PROC_REF(on_message))
 
 	RegisterSignal(client, COMSIG_QDELETING, PROC_REF(on_client_qdel))
@@ -61,10 +53,36 @@ ADMIN_VERB(toggle_lobby_transparency, R_ADMIN, "Toggle Lobby Transparency", "Tog
 	RegisterSignals(SSdcs, list(COMSIG_GLOB_LOBBY_TRAIT_ADDED, COMSIG_GLOB_LOBBY_TRAIT_REMOVED), PROC_REF(on_traits_changed))
 
 	GLOB.lobby_menus += src
-	if(GLOB.lobby_background_transparent)
-		winset(client, SKIN_LOBBY_MENU, "background-color=none;inner-background-color=transparent")
 	update_visibility()
 	send_init()
+
+/// Creates the lobby_menu browser element in the appropriate parent window.
+/// When transparent, it lives in map_screen overlaying the map.
+/// When opaque, it lives in lobby_screen (swapped via the CHILD selector).
+/datum/lobby_menu/proc/create_browser(transparent = FALSE)
+	// Remove existing browser element
+	winset(client, "lobby_menu", list("parent" = ""))
+
+	if(transparent)
+		winset(client, "lobby_menu", list(
+			"parent" = SKIN_MAP_SCREEN,
+			"type" = "BROWSER",
+			"pos" = "0,0",
+			"size" = "640x480",
+			"anchor1" = "0,0",
+			"anchor2" = "100,100",
+			"background-color" = "none",
+			"inner-background-color" = "transparent",
+		))
+	else
+		winset(client, "lobby_menu", list(
+			"parent" = SKIN_LOBBY_SCREEN,
+			"type" = "BROWSER",
+			"pos" = "0,0",
+			"size" = "640x480",
+			"anchor1" = "0,0",
+			"anchor2" = "100,100",
+		))
 
 /datum/lobby_menu/Destroy(force)
 	GLOB.lobby_menus -= src
@@ -74,13 +92,26 @@ ADMIN_VERB(toggle_lobby_transparency, R_ADMIN, "Toggle Lobby Transparency", "Tog
 	client = null
 	return ..()
 
-/// Toggle the browser element between opaque and transparent background
+/// Loads the bundle, sends assets, and pushes initial state into the browser.
+/datum/lobby_menu/proc/initialize_browser()
+	window.initialize(
+		strict_mode = TRUE,
+		inline_css = file("tgui/public/tgui-lobby.bundle.css"),
+		inline_js = file("tgui/public/tgui-lobby.bundle.js"),
+	)
+	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/lobby_menu_font))
+	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/lobby_menu_sounds))
+	window.send_asset(get_asset_datum(/datum/asset/spritesheet/lobby_menu_icons))
+	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/lobby_menu_animated))
+	SSassets.transport.send_assets(client, LOBBY_TITLE_ASSET_NAME)
+
+/// Toggle the lobby browser between opaque (own pane) and transparent (overlaying map).
+/// Recreates the browser element in the appropriate parent and reinitializes it.
 /datum/lobby_menu/proc/set_transparency(transparent)
-	if(transparent)
-		winset(client, SKIN_LOBBY_MENU, "background-color=none;inner-background-color=transparent")
-	else
-		winset(client, SKIN_LOBBY_MENU, "background-color=;inner-background-color=")
-	send_update(list("transparent" = transparent))
+	create_browser(transparent)
+	initialize_browser()
+	update_visibility()
+	send_init()
 
 /datum/lobby_menu/process(seconds_per_tick)
 	send_update(list(
@@ -103,7 +134,13 @@ ADMIN_VERB(toggle_lobby_transparency, R_ADMIN, "Toggle Lobby Transparency", "Tog
 /// Swaps between the lobby screen and the map screen based on whether the client's mob is a new_player
 /datum/lobby_menu/proc/update_visibility()
 	var/should_show = istype(client?.mob, /mob/dead/new_player) && !client.interviewee
-	winset(client, SKIN_MAP_LOBBY_SELECTOR, "left=[should_show ? "lobby_screen" : "map_screen"]")
+	if(GLOB.lobby_background_transparent)
+		// In transparent mode the browser overlays the map, selector always shows map_screen
+		winset(client, SKIN_MAP_LOBBY_SELECTOR, "left=[SKIN_MAP_SCREEN]")
+		winset(client, "lobby_menu", "is-visible=[should_show]")
+	else
+		// In opaque mode, swap the CHILD selector between lobby_screen and map_screen
+		winset(client, SKIN_MAP_LOBBY_SELECTOR, "left=[should_show ? SKIN_LOBBY_SCREEN : SKIN_MAP_SCREEN]")
 	if(should_show)
 		START_PROCESSING(SSlobby_menu, src)
 		send_init()

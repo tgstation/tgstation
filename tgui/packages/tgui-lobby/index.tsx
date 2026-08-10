@@ -27,6 +27,12 @@ document.onreadystatechange = () => {
     setTimeout(focusMap);
   });
 
+  Byond.winget('mapwindow.map_lobby_selector').then(
+    (info: { size: string }) => {
+      Byond.winset('lobby_menu', { size: info.size });
+    },
+  );
+
   if (!reactRoot) {
     const root = document.getElementById('react-root');
     reactRoot = createRoot(root!);

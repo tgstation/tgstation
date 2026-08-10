@@ -124,12 +124,6 @@ window "lobby_screen"
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		is-pane = true
-	elem "lobby_menu"
-		type = BROWSER
-		pos = 0,0
-		size = 640x480
-		anchor1 = 0,0
-		anchor2 = 100,100
 
 window "info_and_buttons"
 	elem "info_and_buttons"
