@@ -1337,22 +1337,32 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	name = "Power Level"
 	desc = "How much electricity they are generating, the higher this is, the stronger your attacks are."
 	icon_state = "slime_display"
+	base_icon_state = "slime_display"
 	screen_loc = ui_slime_powerlevel
 	maptext_x = 1
 	maptext_y = 8
 
 /atom/movable/screen/slime_power/Click(location, control, params)
 	. = ..()
-	to_chat(usr, span_notice("Shows you how much electricity they are generating, the higher this is, the stronger your attacks are."))
+	to_chat(usr, span_notice("Shows you how much electricity they are generating, the higher this is, the higher chance you will strike with overwhelming electrical force."))
 
 /atom/movable/screen/slime_power/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	update_maptext(hud_owner?.mymob)
+	update_maptext()
 
-/atom/movable/screen/slime_power/proc/update_maptext(mob/living/basic/slime/slime_owner)
-	if(isnull(slime_owner))
+/atom/movable/screen/slime_power/update_icon_state()
+	. = ..()
+	icon_state = base_icon_state
+	var/mob/living/basic/slime/slime_owner = hud.mymob
+	if(istype(slime_owner) && slime_owner.powerlevel >= 7)
+		icon_state += "_shock"
+
+/atom/movable/screen/slime_power/proc/update_maptext()
+	var/mob/living/basic/slime/slime_owner = hud.mymob
+	if(!istype(slime_owner))
 		return
 	maptext = FORMAT_XENOBIO_HUD_MAPTEXT("[slime_owner.powerlevel]/[SLIME_MAX_POWER]")
+	update_appearance(UPDATE_ICON)
 
 /// Used to show how many monkeys & slimes are in the console
 /atom/movable/screen/xenobio_console

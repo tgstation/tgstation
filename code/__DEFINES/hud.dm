@@ -390,6 +390,7 @@
 #define ui_blobbernaut_overmind_health "EAST-1:28,CENTER+0:19"
 
 //Slimes
+#define ui_slime_hunger "EAST-1:30,CENTER:8"
 #define ui_slime_powerlevel "EAST-1:28,CENTER-2:18"
 
 // Defines relating to action button positions

@@ -77,4 +77,4 @@
 /mob/living/basic/slime/proc/adjust_power_level(to_adjust)
 	powerlevel = clamp(powerlevel + to_adjust, SLIME_MIN_POWER, SLIME_MAX_POWER)
 	var/atom/movable/screen/slime_power/power_hud = hud_used?.screen_objects[HUD_MOB_SLIME_POWER]
-	power_hud?.update_maptext(src)
+	power_hud?.update_maptext()

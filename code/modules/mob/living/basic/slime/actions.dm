@@ -165,7 +165,7 @@
 			baby.set_nutrition(new_nutrition)
 		baby.powerlevel = new_powerlevel
 		var/atom/movable/screen/slime_power/power_hud = baby.hud_used?.screen_objects[HUD_MOB_SLIME_POWER]
-		power_hud?.update_maptext(baby)
+		power_hud?.update_maptext()
 		if(mutation_chance)
 			baby.mutation_chance = clamp(mutation_chance + rand(-5, 5), 0, 100)
 		else
