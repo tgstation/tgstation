@@ -62,7 +62,7 @@ ADMIN_VERB(toggle_lobby_transparency, R_ADMIN, "Toggle Lobby Transparency", "Tog
 
 	GLOB.lobby_menus += src
 	if(GLOB.lobby_background_transparent)
-		winset(client, "mapwindow.lobby_menu", "background-color=none;inner-background-color=transparent")
+		winset(client, SKIN_LOBBY_MENU, "background-color=none;inner-background-color=transparent")
 	update_visibility()
 	send_init()
 
@@ -77,9 +77,9 @@ ADMIN_VERB(toggle_lobby_transparency, R_ADMIN, "Toggle Lobby Transparency", "Tog
 /// Toggle the browser element between opaque and transparent background
 /datum/lobby_menu/proc/set_transparency(transparent)
 	if(transparent)
-		winset(client, "mapwindow.lobby_menu", "background-color=none;inner-background-color=transparent")
+		winset(client, SKIN_LOBBY_MENU, "background-color=none;inner-background-color=transparent")
 	else
-		winset(client, "mapwindow.lobby_menu", "background-color=;inner-background-color=")
+		winset(client, SKIN_LOBBY_MENU, "background-color=;inner-background-color=")
 	send_update(list("transparent" = transparent))
 
 /datum/lobby_menu/process(seconds_per_tick)
@@ -100,10 +100,10 @@ ADMIN_VERB(toggle_lobby_transparency, R_ADMIN, "Toggle Lobby Transparency", "Tog
 	SIGNAL_HANDLER
 	update_visibility()
 
-/// Shows or hides the lobby browser based on whether the client's mob is a new_player
+/// Swaps between the lobby screen and the map screen based on whether the client's mob is a new_player
 /datum/lobby_menu/proc/update_visibility()
 	var/should_show = istype(client?.mob, /mob/dead/new_player) && !client.interviewee
-	winset(client, "mapwindow.lobby_menu", "is-visible=[should_show]")
+	winset(client, SKIN_MAP_LOBBY_SELECTOR, "left=[should_show ? "lobby_screen" : "map_screen"]")
 	if(should_show)
 		START_PROCESSING(SSlobby_menu, src)
 		send_init()

@@ -2,6 +2,8 @@ import './styles/main.scss';
 
 import { loadMappings, loadStyleSheet } from 'common/assets';
 import { createRoot, type Root } from 'react-dom/client';
+import { focusMap } from 'tgui/focus';
+import { globalEvents } from 'tgui-core/events';
 import { assetMap } from './assets';
 import { LobbyMenu } from './LobbyMenu';
 import { updateScaling } from './scaling';
@@ -15,6 +17,14 @@ document.onreadystatechange = () => {
 
   window.addEventListener('resize', () => {
     updateScaling();
+  });
+
+  globalEvents.on('keydown', (key) => {
+    if (key.isModifierKey()) return;
+    setTimeout(focusMap);
+  });
+  window.addEventListener('mouseup', () => {
+    setTimeout(focusMap);
   });
 
   if (!reactRoot) {
