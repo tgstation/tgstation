@@ -238,11 +238,11 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "gI" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
 /obj/machinery/light/directional/east,
 /obj/machinery/status_display/evac/directional/east,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "gR" = (
@@ -256,10 +256,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "hc" = (
-/obj/structure/window/spawner/directional/west,
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
+/obj/structure/bodycontainer/morgue/beeper_off,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ht" = (
@@ -288,10 +285,8 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "iq" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
 /obj/machinery/light/directional/west,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "km" = (
@@ -312,11 +307,11 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "kH" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/light/directional/east,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ls" = (
@@ -477,8 +472,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "we" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
+/obj/structure/bed/medical/anchored{
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -661,11 +656,8 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "Gx" = (
-/obj/effect/turf_decal/tile/blue/anticorner{
-	dir = 4
-	},
 /obj/structure/sign/departments/medbay/alt/directional/east,
-/turf/open/floor/mineral/titanium/white,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "GT" = (
 /obj/structure/chair/comfy{
@@ -687,8 +679,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "HO" = (
-/obj/structure/window/spawner/directional/east,
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/bodycontainer/morgue/beeper_off{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -703,18 +694,16 @@
 	},
 /area/shuttle/escape)
 "In" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
 /obj/machinery/wall_healer/free/directional/east,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Iq" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
 /obj/item/radio/intercom/directional/west,
 /obj/machinery/light/directional/west,
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "IE" = (
@@ -776,7 +765,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "LH" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/bodycontainer/morgue/beeper_off{
+	dir = 2
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "MD" = (
@@ -812,14 +803,15 @@
 /turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/escape)
 "Pu" = (
-/obj/structure/bodycontainer/morgue,
 /obj/machinery/light/small/directional/south,
+/obj/structure/bodycontainer/crematorium{
+	dir = 8;
+	id = "shuttle_crematorium"
+	},
 /turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/escape)
 "Qn" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
+/obj/structure/bed/medical/anchored,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Rv" = (
@@ -884,6 +876,7 @@
 /area/shuttle/escape)
 "Vf" = (
 /obj/machinery/light/small/directional/north,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/escape)
 "Xe" = (
@@ -891,7 +884,10 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Xs" = (
-/obj/item/radio/intercom/directional/south,
+/obj/machinery/button/crematorium{
+	id = "shuttle_crematorium";
+	pixel_y = -26
+	},
 /turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/escape)
 "Xx" = (
@@ -1016,7 +1012,7 @@ sD
 sD
 sD
 kn
-Rv
+xO
 wM
 wM
 wM
@@ -1088,7 +1084,7 @@ xO
 xO
 UC
 xO
-Rv
+xO
 wM
 wM
 wM
