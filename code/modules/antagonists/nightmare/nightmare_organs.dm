@@ -41,9 +41,7 @@
 	var/turf/owner_turf = owner.loc
 	if(!isturf(owner_turf))
 		return
-	var/light_amount = owner_turf.get_lumcount()
-
-	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //dodge in the dark
+	if (owner_turf.check_lumcount_below(SHADOW_SPECIES_LIGHT_THRESHOLD)) //dodge in the dark
 		owner.apply_status_effect(/datum/status_effect/shadow/nightmare)
 
 /datum/status_effect/shadow/nightmare
@@ -140,12 +138,13 @@
 /obj/item/organ/heart/nightmare/on_death(seconds_per_tick)
 	if(!owner)
 		return
-	var/turf/T = get_turf(owner)
-	if(istype(T))
-		var/light_amount = T.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+
+	var/turf/owner_turf = get_turf(owner)
+	if(istype(owner_turf))
+		if(owner_turf.check_lumcount_below(SHADOW_SPECIES_LIGHT_THRESHOLD))
 			respawn_progress += seconds_per_tick SECONDS
 			playsound(owner, 'sound/effects/singlebeat.ogg', 40, TRUE)
+
 	if(respawn_progress < HEART_RESPAWN_THRESHHOLD)
 		return
 
