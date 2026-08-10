@@ -40,7 +40,8 @@ ADMIN_VERB(toggle_lobby_transparency, R_ADMIN, "Toggle Lobby Transparency", "Tog
 	window = new(client, "lobby_menu")
 	window.is_browser = TRUE
 
-	create_browser(GLOB.lobby_background_transparent)
+	var/transparent = GLOB.lobby_background_transparent && !client.prefs?.read_preference(/datum/preference/toggle/disable_lobby_transparency)
+	create_browser(transparent)
 	initialize_browser()
 	window.subscribe(src, PROC_REF(on_message))
 
@@ -108,10 +109,14 @@ ADMIN_VERB(toggle_lobby_transparency, R_ADMIN, "Toggle Lobby Transparency", "Tog
 /// Toggle the lobby browser between opaque (own pane) and transparent (overlaying map).
 /// Recreates the browser element in the appropriate parent and reinitializes it.
 /datum/lobby_menu/proc/set_transparency(transparent)
+	if(transparent && client?.prefs?.read_preference(/datum/preference/toggle/disable_lobby_transparency))
+		return
 	create_browser(transparent)
 	initialize_browser()
 	update_visibility()
 	send_init()
+	if(transparent)
+		to_chat(client, span_notice("An admin has made the lobby background transparent. You can now see the map behind the lobby menu. You can disable this in your game preferences."))
 
 /datum/lobby_menu/process(seconds_per_tick)
 	send_update(list(
