@@ -148,16 +148,16 @@
 	owner.pass_flags |= PASSGRILLE
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/walking_through_grille)
 
-	var/mob/living/carbon/carbon_owner = astype(owner, /mob/living/carbon)
-	carbon_owner?.dna.species.update_no_equip_flags(owner, ALL)
+	var/mob/living/carbon/carbon_owner = owner
+	carbon_owner.dna.species.update_no_equip_flags(owner, ALL)
 
 /datum/status_effect/grouped/bodypart_effect/slime_passgrille/proc/clear_passgrille()
 	owner.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_UNDENSE, TRAIT_PULL_BLOCKED, TRAIT_UI_BLOCKED), TRAIT_STATUS_EFFECT(id))
 	owner.pass_flags &= ~PASSGRILLE
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/walking_through_grille)
 
-	var/mob/living/carbon/carbon_owner = astype(owner, /mob/living/carbon)
-	carbon_owner?.dna.species.update_no_equip_flags(owner, initial(carbon_owner?.dna.species.no_equip_flags))
+	var/mob/living/carbon/carbon_owner = owner
+	carbon_owner.dna.species.update_no_equip_flags(owner, initial(carbon_owner.dna.species.no_equip_flags))
 
 /datum/movespeed_modifier/walking_through_grille
 	id = "walking_through_grille"
