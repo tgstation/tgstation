@@ -20,6 +20,8 @@
 	var/list/result = ..()
 	var/obj/machinery/hydroponics/tray = loc
 	var/worm_chance = tray.pestlevel
+	if(tray.current_soil == /obj/machinery/hydroponics/soil/worm)
+		worm_chance = 80 // Wormy soil isn't good for apples probably
 	for(var/obj/item/food/grown/apple/applum in result)
 		if(prob(worm_chance))
 			applum.appleworm = new(applum) // There is a worm in this apple!
