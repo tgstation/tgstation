@@ -24,9 +24,12 @@
 	foodtypes = FRUIT
 	tastes = list("apple" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/hcider
-	var/wormy = FALSE // Do we have a worm?
-	var/found_worm = FALSE // Do we know about the worm?
-	var/obj/item/food/bait/worm/appleworm // Worm.
+	/// Do we have a worm?
+	var/wormy = FALSE
+	/// Do we know about the worm?
+	var/found_worm = FALSE
+	/// The worm in question
+	var/obj/item/food/bait/worm/appleworm
 
 /obj/item/food/grown/apple/Initialize(mapload)
 	. = ..()
