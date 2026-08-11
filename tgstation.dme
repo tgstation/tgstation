@@ -3536,6 +3536,7 @@
 #include "code\modules\antagonists\blood_worm\blood_worm_tester.dm"
 #include "code\modules\antagonists\blood_worm\blood_worm_text_feedback.dm"
 #include "code\modules\antagonists\blood_worm\actions\_base_action.dm"
+#include "code\modules\antagonists\blood_worm\actions\bloodworm_info.dm"
 #include "code\modules\antagonists\blood_worm\actions\cocoon.dm"
 #include "code\modules\antagonists\blood_worm\actions\inject_blood.dm"
 #include "code\modules\antagonists\blood_worm\actions\invade_corpse.dm"

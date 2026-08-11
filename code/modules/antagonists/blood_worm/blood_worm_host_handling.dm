@@ -25,6 +25,9 @@
 	client?.set_stat_panel()
 	RegisterSignal(host, COMSIG_MOB_EXAMINING, PROC_REF(on_host_examining))
 
+	var/atom/movable/screen/alert/bloodworm_info/info_alert = host.throw_alert(ALERT_BLOODWORM_INFO, /atom/movable/screen/alert/bloodworm_info)
+	info_alert.worm_owner = src
+
 	START_PROCESSING(SSfastprocess, src)
 
 	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE, TRAIT_EMOTEMUTE), BLOOD_WORM_HOST_TRAIT)
@@ -135,6 +138,7 @@
 	sync_health(already_ejecting = TRUE)
 
 	host.hud_used?.remove_screen_object(HUD_MOB_BLOOD_LEVEL)
+	host.clear_alert(ALERT_BLOODWORM_INFO)
 
 	host.set_blood_volume(0)
 

@@ -111,6 +111,8 @@
 
 	/// Boolean. If TRUE, the Click() proc will attempt to Click() on the master first if there is a master.
 	var/click_master = TRUE
+	///Boolean on whether we'll show a tooltip when you hover over the alert.
+	var/has_tooltip = TRUE
 
 	///If set true, instead of using the default icon file for screen alerts, it will use the hud's ui style
 	var/use_user_hud_icon = USER_HUD_STYLE_IGNORE
@@ -131,7 +133,7 @@
 
 /atom/movable/screen/alert/MouseEntered(location,control,params)
 	. = ..()
-	if(!QDELETED(src))
+	if(!QDELETED(src) && has_tooltip)
 		openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
 
 /atom/movable/screen/alert/MouseExited()
