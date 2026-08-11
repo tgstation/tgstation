@@ -37,6 +37,7 @@
 		var/datum/component/edible/ediblecomponent = IS_EDIBLE(src)
 		if(ediblecomponent)
 			ediblecomponent.foodtypes |= (GROSS | MEAT | BUGS)
+		return
 
 /obj/item/food/grown/apple/examine(mob/user)
 	. = ..()
