@@ -54,7 +54,7 @@
 		appleworm.forceMove(drop_location())
 		wormy = FALSE
 		tastes = list("apple" = 1)
-		var/datum/component/edible/ediblecomponent = src.GetComponent(/datum/component/edible)
+		var/datum/component/edible/ediblecomponent = IS_EDIBLE(src)
 		if(ediblecomponent)
 			ediblecomponent.foodtypes &= ~(GROSS | MEAT | BUGS)
 		desc = "It's a little piece of Eden. The [pick("serpent", "worm", "extra protein", "friendly neighbor")] is gone."
