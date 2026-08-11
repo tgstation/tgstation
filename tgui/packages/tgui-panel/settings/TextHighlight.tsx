@@ -1,5 +1,5 @@
 import { useAtomValue } from 'jotai';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import {
   Box,
   Button,
@@ -100,6 +100,7 @@ function TextHighlightSetting(props) {
   } = highlightSettingById[id];
   const currentCharacter = useAtomValue(currentCharacterAtom);
   const characterProfiles = useAtomValue(characterProfilesAtom);
+  const jobsPopover = useRef<{ close: () => void }>(null);
   const jobCount = jobFilter.split(',').filter((str) => str.trim()).length;
 
   // Known characters plus any selected names no longer in the save slots,
@@ -250,6 +251,7 @@ function TextHighlightSetting(props) {
             </Box>
           </Floating>
           <Floating
+            ref={jobsPopover}
             placement="bottom-start"
             contentClasses="Dropdown__menu--wrapper"
             contentStyles={{ width: '20em' }}
@@ -265,6 +267,13 @@ function TextHighlightSetting(props) {
                       jobFilter: value,
                     })
                   }
+                  onEnter={(value) => {
+                    updateHighlight({
+                      id,
+                      jobFilter: value,
+                    });
+                    jobsPopover.current?.close();
+                  }}
                 />
               </div>
             }
