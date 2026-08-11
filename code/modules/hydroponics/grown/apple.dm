@@ -44,6 +44,7 @@
 		balloon_alert(user, "there is a hole in this apple!")
 		found_worm = TRUE
 		desc = "It's a little piece of Eden. Serpent not included, contains a worm as a replacement."
+		return
 
 /obj/item/food/grown/apple/attack_self(mob/user)
 	if(appleworm)
@@ -57,6 +58,7 @@
 		if(ediblecomponent)
 			ediblecomponent.foodtypes &= ~(GROSS | MEAT | BUGS)
 		desc = "It's a little piece of Eden. The [pick("serpent", "worm", "extra protein", "friendly neighbor")] is gone."
+		return
 
 /obj/item/food/grown/apple/juice_typepath()
 	return /datum/reagent/consumable/applejuice
