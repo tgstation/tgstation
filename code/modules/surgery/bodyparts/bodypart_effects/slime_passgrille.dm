@@ -49,6 +49,9 @@
 		COMSIG_MOVABLE_BUMP,
 		COMSIG_MOVABLE_MOVED,
 	))
+	if(QDELING(owner))
+		return
+
 	if(owner.pass_flags & PASSGRILLE)
 		clear_passgrille()
 	if(try_spit_out())
