@@ -2,7 +2,7 @@
 #define HOLDING_MODULE_CHECK_CONFIRMED 2
 
 /obj/item/mod/module/storage/holding
-	name = "MOD storage module of holding"
+	name = "\improper MOD storage module of holding"
 	desc = "A prototype storage module utilizing the power of anomalous bluespace phenomena \
 		to store copious amounts of matter. Unfortunately, it suffers from the same drawbacks as its standalone counterpart, \
 		including <b>tearing catastrophic rifts in reality</b> when nested inside bluespace pockets produced through similar means."
