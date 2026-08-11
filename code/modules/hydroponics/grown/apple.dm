@@ -29,7 +29,7 @@
 	/// The worm in question
 	var/obj/item/food/bait/worm/appleworm
 	/// Chance for a worm
-	var/worm_chance = 100
+	var/worm_chance = 10
 
 /obj/item/food/grown/apple/Initialize(mapload)
 	. = ..()
