@@ -102,8 +102,7 @@
 
 ///Handles the creation of the pod, in case it needs to be modified beforehand
 /datum/round_event/stray_cargo/proc/make_pod()
-	var/obj/structure/closet/supplypod/S = new
-	return S
+	return new /obj/structure/closet/supplypod
 
 ///Generates the contents of the pod
 /datum/round_event/stray_cargo/proc/get_contents()
