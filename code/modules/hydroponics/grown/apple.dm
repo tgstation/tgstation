@@ -61,6 +61,11 @@
 		desc = "It's a little piece of Eden. The [pick("serpent", "worm", "extra protein", "friendly neighbor")] is gone."
 		return
 
+/obj/item/food/candy/bronx/proc/on_consume(mob/living/eater)
+	if(ishuman(eater))
+		to_chat(eater, span_alert("That apple was wormy!"))
+		return
+
 /obj/item/food/grown/apple/juice_typepath()
 	return /datum/reagent/consumable/applejuice
 
