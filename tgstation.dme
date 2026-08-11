@@ -6741,6 +6741,7 @@
 #include "code\modules\surgery\bodyparts\bodypart_effects\nyxosynthesis.dm"
 #include "code\modules\surgery\bodyparts\bodypart_effects\photosynthesis.dm"
 #include "code\modules\surgery\bodyparts\bodypart_effects\plasma_based.dm"
+#include "code\modules\surgery\bodyparts\bodypart_effects\slime_passgrille.dm"
 #include "code\modules\surgery\bodyparts\species_parts\android_parts.dm"
 #include "code\modules\surgery\bodyparts\species_parts\ethereal_bodyparts.dm"
 #include "code\modules\surgery\bodyparts\species_parts\ghost_bodyparts.dm"
