@@ -67,7 +67,7 @@
 		return
 
 /obj/item/food/grown/apple/proc/on_consume(mob/living/eater)
-	if(ishuman(eater))
+	if(ishuman(eater) && appleworm)
 		to_chat(eater, span_alert("That apple was wormy!"))
 		return
 
