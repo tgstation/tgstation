@@ -10,6 +10,7 @@ import {
   testTelemetryCommand,
 } from '../telemetry/handlers';
 import { handleLoadAssets } from './handlers/assets';
+import { playerSet } from './handlers/player';
 import { roundrestart } from './handlers/roundrestart';
 
 const listeners = {
@@ -20,6 +21,7 @@ const listeners = {
   'chat/message': chatMessage,
   'emotes/setList': emotes.setEmotesList, // BANDASTATION ADDITON: Emote panel
   'emotes/toggle': emotes.toggleEmotes, // BANDASTATION ADDITON: Emote panel
+  'player/set': playerSet,
   'ping/reply': pingReply,
   'ping/soft': pingSoft,
   roundrestart,

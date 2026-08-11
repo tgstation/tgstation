@@ -112,8 +112,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/fixed_mut_color = ""
 	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
 	var/inert_mutation = /datum/mutation/dwarfism
-	///Used to set the mob's death_sound upon species change
-	var/death_sound
 	///Special sound for grabbing
 	var/grab_sound
 	/// A path to an outfit that is important for species life e.g. plasmaman outfit
@@ -364,7 +362,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	human_who_gained_species.living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS //Don't call update_body_parts() for every single bodypart overlay added.
 
 	// Drop the items the new species can't wear
-	human_who_gained_species.mob_biotypes = inherent_biotypes
+	human_who_gained_species.mob_biotypes |= inherent_biotypes
 	human_who_gained_species.butcher_results = knife_butcher_results?.Copy()
 
 	//update body zones to match what they are supposed to have
@@ -439,6 +437,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	human.living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS //Don't call update_body_parts() for every single bodypart overlay removed.
 	human.butcher_results = null
+	human.mob_biotypes &= ~inherent_biotypes
 	for(var/trait in inherent_traits)
 		REMOVE_TRAIT(human, trait, SPECIES_TRAIT)
 
@@ -1035,7 +1034,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 
 	// Only stabilise core temp when alive and not in statis
-	if(humi.stat != DEAD && !HAS_TRAIT(humi, TRAIT_STASIS))
+	if(humi.stat != DEAD && !HAS_TRAIT(humi, TRAIT_STASIS) && !HAS_TRAIT(humi, TRAIT_COLD_BLOODED))
 		body_temperature_core(humi, seconds_per_tick)
 
 	// These do run in statis
@@ -1346,13 +1345,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 //  Stun  //
 ////////////
 
-/datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
+/datum/species/proc/spec_stun(mob/living/carbon/human/H, amount)
 	if((H.movement_type & FLYING) && !H.buckled)
 		var/obj/item/organ/wings/functional/wings = H.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 		if(wings)
 			wings.toggle_flight(H)
 			wings.fly_slip(H)
-	. = stunmod * H.physiology.stun_mod * amount
+	. = min(stunmod * H.physiology.stun_mod * amount, LAZYMIN(H.physiology.max_stun_len, INFINITY))
 
 /datum/species/proc/negates_gravity(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
@@ -1400,42 +1399,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /// Given a human, will adjust it before taking a picture for the preferences UI.
 /// This should create a CONSISTENT result, so the icons don't randomly change.
 /datum/species/proc/prepare_human_for_preview(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' scream sound.
-/datum/species/proc/get_scream_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' cry sound.
-/datum/species/proc/get_cry_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' sigh sound.
-/datum/species/proc/get_sigh_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' sniff sound.
-/datum/species/proc/get_sniff_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' cough sound.
-/datum/species/proc/get_cough_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' laugh sound
-/datum/species/proc/get_laugh_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' sneeze sound.
-/datum/species/proc/get_sneeze_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' snore sound.
-/datum/species/proc/get_snore_sound(mob/living/carbon/human/human)
-	return
-
-/// Returns the species' hiss sound
-/datum/species/proc/get_hiss_sound(mob/living/carbon/human/human)
 	return
 
 /// Returns a list of all organ typepaths this species probably has

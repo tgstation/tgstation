@@ -29,6 +29,8 @@ GLOBAL_LIST_INIT(bitfields, generate_bitfields())
 
 /// Returns null if no such field exists, a list of all matching flags by name otherwise
 /proc/get_matching_bitflags(var_name, value)
+	if(isnum(var_name))
+		return null
 	var/list/valid_bitflags = get_valid_bitflags(var_name)
 	if(!length(valid_bitflags))
 		return null

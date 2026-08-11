@@ -55,3 +55,5 @@
 	l_hand = /obj/item/clipboard
 
 	chameleon_extras = /obj/item/stamp/head/qm
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/cargo/qm

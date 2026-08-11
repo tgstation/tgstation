@@ -1,80 +1,73 @@
-/datum/species/tajaran/get_scream_sound(mob/living/carbon/human/tajaran)
-	if(tajaran.physique == FEMALE)
-		return 'modular_bandastation/emote_panel/audio/tajaran/tajaran_scream.ogg'
-	return 'modular_bandastation/emote_panel/audio/tajaran/tajaran_scream.ogg'
-
-/datum/species/tajaran/get_sigh_sound(mob/living/carbon/human/tajaran)
-	if(tajaran.physique == FEMALE)
-		return pick(
-			'sound/mobs/humanoids/human/sigh/female_sigh1.ogg',
-			'sound/mobs/humanoids/human/sigh/female_sigh2.ogg',
-			'sound/mobs/humanoids/human/sigh/female_sigh3.ogg',
-		)
-	return pick(
-		'sound/mobs/humanoids/human/sigh/male_sigh1.ogg',
-		'sound/mobs/humanoids/human/sigh/male_sigh2.ogg',
-		'sound/mobs/humanoids/human/sigh/male_sigh3.ogg',
-	)
-
-/datum/species/tajaran/get_cough_sound(mob/living/carbon/human/tajaran)
-	if(tajaran.physique == FEMALE)
-		return pick(
-			'sound/mobs/humanoids/human/cough/female_cough1.ogg',
-			'sound/mobs/humanoids/human/cough/female_cough2.ogg',
-			'sound/mobs/humanoids/human/cough/female_cough3.ogg',
-			'sound/mobs/humanoids/human/cough/female_cough4.ogg',
-			'sound/mobs/humanoids/human/cough/female_cough5.ogg',
-			'sound/mobs/humanoids/human/cough/female_cough6.ogg',
-		)
-	return pick(
-		'sound/mobs/humanoids/human/cough/male_cough1.ogg',
-		'sound/mobs/humanoids/human/cough/male_cough2.ogg',
-		'sound/mobs/humanoids/human/cough/male_cough3.ogg',
-		'sound/mobs/humanoids/human/cough/male_cough4.ogg',
-		'sound/mobs/humanoids/human/cough/male_cough5.ogg',
-		'sound/mobs/humanoids/human/cough/male_cough6.ogg',
-	)
-
-/datum/species/tajaran/get_cry_sound(mob/living/carbon/human/tajaran)
-	if(tajaran.physique == FEMALE)
-		return pick(
-			'sound/mobs/humanoids/human/cry/female_cry1.ogg',
-			'sound/mobs/humanoids/human/cry/female_cry2.ogg',
-			'modular_bandastation/emote_panel/audio/human/female/cry_female_1.ogg',
-			'modular_bandastation/emote_panel/audio/human/female/cry_female_2.ogg',
-			'modular_bandastation/emote_panel/audio/human/female/cry_female_3.ogg',
-		)
-	return pick(
-		'sound/mobs/humanoids/human/cry/male_cry1.ogg',
-		'sound/mobs/humanoids/human/cry/male_cry2.ogg',
-		'sound/mobs/humanoids/human/cry/male_cry3.ogg',
-		'modular_bandastation/emote_panel/audio/human/male/cry_male_1.ogg',
-		'modular_bandastation/emote_panel/audio/human/male/cry_male_2.ogg',
-	)
-
-/datum/species/tajaran/get_sneeze_sound(mob/living/carbon/human/tajaran)
-	if(tajaran.physique == FEMALE)
-		return pick(
-			'modular_bandastation/emote_panel/audio/tajaran/tajaran_sneeze_female1.ogg',
-			'modular_bandastation/emote_panel/audio/tajaran/tajaran_sneeze_female2.ogg',
-		)
-	return 'modular_bandastation/emote_panel/audio/tajaran/tajaran_sneeze_male.ogg'
-
-/datum/species/tajaran/get_laugh_sound(mob/living/carbon/human/tajaran)
-	if(!ishuman(tajaran))
-		return
-	if(tajaran.physique == FEMALE)
-		return pick(
-			'sound/mobs/humanoids/human/laugh/womanlaugh.ogg',
-			'modular_bandastation/emote_panel/audio/human/female/laugh_female_1.ogg',
-			'modular_bandastation/emote_panel/audio/human/female/laugh_female_2.ogg',
-			'modular_bandastation/emote_panel/audio/human/female/laugh_female_3.ogg',
-		)
-	return pick(
-		'sound/mobs/humanoids/human/laugh/manlaugh1.ogg',
-		'sound/mobs/humanoids/human/laugh/manlaugh2.ogg',
-		'modular_bandastation/emote_panel/audio/human/male/laugh_male_1.ogg',
-		'modular_bandastation/emote_panel/audio/human/male/laugh_male_2.ogg',
+/obj/item/organ/tongue/tajaran
+	emote_sounds = list(
+		/datum/emote/living/scream::key = 'modular_bandastation/emote_panel/audio/tajaran/tajaran_scream.ogg',
+		/datum/emote/living/sigh::key = list(
+			FEMALE = list(
+				'sound/mobs/humanoids/human/sigh/female_sigh1.ogg',
+				'sound/mobs/humanoids/human/sigh/female_sigh2.ogg',
+				'sound/mobs/humanoids/human/sigh/female_sigh3.ogg',
+			),
+			MALE = list(
+				'sound/mobs/humanoids/human/sigh/male_sigh1.ogg',
+				'sound/mobs/humanoids/human/sigh/male_sigh2.ogg',
+				'sound/mobs/humanoids/human/sigh/male_sigh3.ogg',
+			),
+		),
+		/datum/emote/living/cough::key = list(
+			FEMALE = list(
+				'sound/mobs/humanoids/human/cough/female_cough1.ogg',
+				'sound/mobs/humanoids/human/cough/female_cough2.ogg',
+				'sound/mobs/humanoids/human/cough/female_cough3.ogg',
+				'sound/mobs/humanoids/human/cough/female_cough4.ogg',
+				'sound/mobs/humanoids/human/cough/female_cough5.ogg',
+				'sound/mobs/humanoids/human/cough/female_cough6.ogg',
+			),
+			MALE = list(
+				'sound/mobs/humanoids/human/cough/male_cough1.ogg',
+				'sound/mobs/humanoids/human/cough/male_cough2.ogg',
+				'sound/mobs/humanoids/human/cough/male_cough3.ogg',
+				'sound/mobs/humanoids/human/cough/male_cough4.ogg',
+				'sound/mobs/humanoids/human/cough/male_cough5.ogg',
+				'sound/mobs/humanoids/human/cough/male_cough6.ogg',
+			),
+		),
+		/datum/emote/living/carbon/cry::key = list(
+			FEMALE = list(
+				'sound/mobs/humanoids/human/cry/female_cry1.ogg',
+				'sound/mobs/humanoids/human/cry/female_cry2.ogg',
+				'modular_bandastation/emote_panel/audio/human/female/cry_female_1.ogg',
+				'modular_bandastation/emote_panel/audio/human/female/cry_female_2.ogg',
+				'modular_bandastation/emote_panel/audio/human/female/cry_female_3.ogg',
+			),
+			MALE = list(
+				'sound/mobs/humanoids/human/cry/male_cry1.ogg',
+				'sound/mobs/humanoids/human/cry/male_cry2.ogg',
+				'sound/mobs/humanoids/human/cry/male_cry3.ogg',
+				'modular_bandastation/emote_panel/audio/human/male/cry_male_1.ogg',
+				'modular_bandastation/emote_panel/audio/human/male/cry_male_2.ogg',
+			),
+		),
+		/datum/emote/living/sneeze::key = list(
+			FEMALE = list(
+				'modular_bandastation/emote_panel/audio/tajaran/tajaran_sneeze_female1.ogg',
+				'modular_bandastation/emote_panel/audio/tajaran/tajaran_sneeze_female2.ogg',
+			),
+			MALE = 'modular_bandastation/emote_panel/audio/tajaran/tajaran_sneeze_male.ogg',
+		),
+		/datum/emote/living/laugh::key = list(
+			FEMALE = list(
+				'sound/mobs/humanoids/human/laugh/womanlaugh.ogg',
+				'modular_bandastation/emote_panel/audio/human/female/laugh_female_1.ogg',
+				'modular_bandastation/emote_panel/audio/human/female/laugh_female_2.ogg',
+				'modular_bandastation/emote_panel/audio/human/female/laugh_female_3.ogg',
+			),
+			MALE = list(
+				'sound/mobs/humanoids/human/laugh/manlaugh1.ogg',
+				'sound/mobs/humanoids/human/laugh/manlaugh2.ogg',
+				'modular_bandastation/emote_panel/audio/human/male/laugh_male_1.ogg',
+				'modular_bandastation/emote_panel/audio/human/male/laugh_male_2.ogg',
+			),
+		),
 	)
 
 // MARK: Emotes

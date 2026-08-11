@@ -115,7 +115,10 @@
 
 /obj/vehicle/sealed/mecha/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
 	// Determine our potential to shoot through the mech and into the cockpit, hitting the pilot
-	var/kill_the_meat = clamp(hitting_projectile.armour_penetration - get_armor_rating(hitting_projectile.armor_flag), 0, 100)
+	var/kill_the_meat = hitting_projectile.armour_penetration
+	if(hitting_projectile.armor_flag)
+		kill_the_meat -= get_armor_rating(hitting_projectile.armor_flag)
+	kill_the_meat = clamp(kill_the_meat, 0, 100)
 	// Allows bullets to hit the pilot of open-canopy mechs, or if the bullet penetrates to the pilot, or the bullet can pass through structures
 	if (!LAZYLEN(occupants) || (mecha_flags & SILICON_PILOT))
 		return ..()

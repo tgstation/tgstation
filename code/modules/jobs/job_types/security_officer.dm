@@ -59,18 +59,10 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 /datum/job/security_officer/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
-	if(!ishuman(spawned) || !prob(PIG_COP_PROBABILITY))
+	if(!prob(PIG_COP_PROBABILITY))
 		return
-	var/mob/living/carbon/human/piggy = spawned
-	for (var/obj/item/bodypart/ham as anything in piggy.get_bodyparts())
-		// These are string lists
-		ham.butcher_drops = ham.butcher_drops.Copy()
-		for (var/meat_type in ham.butcher_drops)
-			if (!ispath(meat_type, /obj/item/food/meat/slab))
-				continue
-			ham.butcher_drops[/obj/item/food/meat/slab/pig] = ham.butcher_drops[meat_type]
-			ham.butcher_drops -= meat_type
-		ham.butcher_drops = string_list(ham.butcher_drops)
+	for (var/obj/item/bodypart/ham as anything in spawned.get_bodyparts())
+		ham.butcher_drops_override = list(/obj/item/food/meat/slab/pig = ham.base_meat_amount)
 
 /datum/job/security_officer/after_roundstart_spawn(mob/living/spawning, client/player_client)
 	. = ..()
@@ -258,6 +250,8 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		)
 		//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
 	implants = list(/obj/item/implant/mindshield)
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/security
 
 /datum/outfit/job/security/mod
 	name = "Security Officer (MODsuit)"

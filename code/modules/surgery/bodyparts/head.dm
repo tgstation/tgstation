@@ -85,7 +85,7 @@
 	var/datum/hair_mask/species_hair_mask = null // BANDASTATION ADD — маска для отображения ушей кастомных рас поверх причёсок
 
 	/// Can this head be dismembered normally?
-	VAR_PROTECTED/can_dismember = FALSE
+	var/can_dismember = FALSE
 
 /obj/item/bodypart/head/Initialize(mapload)
 	. = ..()
@@ -100,15 +100,12 @@
 	QDEL_NULL(worn_face_offset)
 	return ..()
 
-/obj/item/bodypart/head/get_butcher_drops(force = FALSE)
-	if(!isnull(butcher_drops) && !force)
-		return butcher_drops
-	if (butcher_drop_cache[type] && !force)
-		return butcher_drop_cache[type]
+/obj/item/bodypart/head/get_butcher_drops()
+	. = ..()
 	var/datum/species/species = GLOB.species_list[species_id || limb_id]
-	if (!species || !species.skinned_type)
-		return null
-	return list(species.skinned_type = 1)
+	if (!isnull(species?.skinned_type))
+		. ||= list()
+		.[species.skinned_type] = 1
 
 /obj/item/bodypart/head/animate_atom_living(mob/living/owner)
 	var/mob/living/basic/animated = ..()
@@ -178,7 +175,7 @@
 	. = ..()
 	if(isnull(owner))
 		return
-	if(is_husked)
+	if(is_husked && is_husked != HUSKED_ZOMBIE)
 		ADD_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)
 	else
 		REMOVE_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)

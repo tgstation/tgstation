@@ -96,14 +96,16 @@ export const NtosRecords = (props) => {
               <br />
               Тип крови: {record.bloodtype}
               <br />
-              Незначительные нарушения: {record.mi_dis}
-              <br />
-              Основные нарушения: {record.ma_dis}
-              <br />
+              Незначительные нарушения:
+              {record.mi_dis?.split('<br>').map((entry, index) => (
+                <Box key={index}>&#8226; {entry}</Box>
+              ))}
+              Основные нарушения:
+              {record.ma_dis?.split('<br>').map((entry, index) => (
+                <Box key={index}>&#8226; {entry}</Box>
+              ))}
               <br />
               Заметки: {record.notes}
-              <br />
-              Заметки. Продолжение: {record.cnotes}
             </Section>
           ))}
       </NtosWindow.Content>

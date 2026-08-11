@@ -488,6 +488,13 @@
 	metabolism_efficiency = 0.025 //very bad
 	organ_traits = list(TRAIT_NOHUNGER)
 
+/obj/item/organ/stomach/moth
+	name = "moth stomach"
+	desc = "An insectoid stomach adapted to the digestion of textile fibers from the get go. It's estimated that a young mothperson will eat 30 times their body weight in cloth \
+		before their stomach can fully produce the enzymes required to digest other matter as well."
+	icon_state = "spinner-x"
+	organ_traits = list(TRAIT_CLOTH_EATER)
+
 /obj/item/organ/stomach/bone/plasmaman
 	name = "digestive crystal"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
