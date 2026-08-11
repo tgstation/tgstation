@@ -34,7 +34,7 @@
 
 /datum/action/cooldown/alien/larva_evolve/create_button(mob/viewer)
 	var/atom/movable/screen/movable/action_button/button = ..()
-	button.maptext_x = 2
+	button.maptext_x = 1
 	return button
 
 /datum/action/cooldown/alien/larva_evolve/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
