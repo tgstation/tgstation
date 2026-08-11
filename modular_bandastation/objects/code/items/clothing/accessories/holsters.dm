@@ -30,13 +30,13 @@
 	. = ..()
 
 	if(istype(I, /obj/item/gun))
-		playsound(src, 'modular_bandastation/weapon/sound/ranged/holster_getting.ogg', 50, TRUE)
+		playsound(src, 'modular_bandastation/weapon/sound/ranged/holsterin.ogg', 25, TRUE)
 
 /obj/item/clothing/accessory/holster/Exited(atom/movable/I)
 	. = ..()
 
 	if(istype(I, /obj/item/gun))
-		playsound(src, 'modular_bandastation/weapon/sound/ranged/holster_putting.ogg', 50, TRUE)
+		playsound(src, 'modular_bandastation/weapon/sound/ranged/holsterout.ogg', 25, TRUE)
 
 /obj/item/clothing/accessory/holster/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
 	. = ..()
