@@ -1,16 +1,19 @@
-// nav_pass is a packed int on /turf. null means its never been baked before. Cardinal dir values (1/2/4/8)
-// are used directly as bit groups so we can index by dir with no lookup.
+// nav_pass is a packed int on /turf. null means its never been baked before. Direction values
+// (cardinals 1/2/4/8, UP/DOWN 16/32) are used directly as bit groups so no lookup is needed.
 
-/// bits 0-3: a baseline GROUND mover can traverse the outgoing edge in this dir
+/// GROUND edge bits: horizontal cardinal directions are bits 0-3 and UP/DOWN are bits 4-5.
 #define NAV_GROUND(dir)  (dir)
-/// bits 4-7: a baseline FLYING mover can traverse the outgoing edge in this dir
-#define NAV_FLIGHT(dir)  ((dir) << 4)
-/// bits 8-11: this outgoing edge has per-mover conditional blockers (walk nav_blockers["[dir]"])
-#define NAV_COND(dir)    ((dir) << 8)
-/// set once a turf has been baked.
-#define NAV_BAKED        (1 << 12)
-/// set when this turf is simulated (atmos)
-#define NAV_SIMULATED    (1 << 13)
+
+/// FLYING edge bits: horizontal cardinal directions are bits 6-9 and UP/DOWN are bits 10-11.
+#define NAV_FLIGHT(dir)  ((dir) << 6)
+
+/// CONDITIONAL edge bits: horizontal cardinal directions are bits 12-15 and UP/DOWN are bits 16-17.
+#define NAV_COND(dir)    ((dir) << 12)
+
+/// set once a turf has been baked (bit 18).
+#define NAV_BAKED        (1 << 18)
+/// set when this turf is simulated (atmos) (bit 19).
+#define NAV_SIMULATED    (1 << 19)
 
 /// pass_flags bits that are NOT passability grants and must be stripped when we build a blocker mask
 #define NAV_NON_PASS_FLAGS (LETPASSTHROW | LETPASSCLICKS)

@@ -25,12 +25,17 @@ ADMIN_VERB(navmap_inspect_turf, R_DEBUG, "Navmap: Inspect Turf", "Prints the bak
 	var/simulated = !!(here.nav_pass & NAV_SIMULATED)
 	var/simulated_text = simulated ? "TRUE" : "FALSE"
 	var/list/lines = list("Navmap at [AREACOORD(here)] (nav_pass = [here.nav_pass], simulated = [simulated_text]):")
-	for(var/dir in GLOB.cardinals)
+	for(var/dir in list(NORTH, SOUTH, EAST, WEST, UP, DOWN))
+		var/direction_name = dir2text(dir)
+		if(dir == UP)
+			direction_name = "up"
+		else if(dir == DOWN)
+			direction_name = "down"
 		var/ground = (here.nav_pass & NAV_GROUND(dir)) ? "Pass" : "Blocked"
 		var/flight = (here.nav_pass & NAV_FLIGHT(dir)) ? "Pass" : "Blocked"
 		var/conditional = (here.nav_pass & NAV_COND(dir)) ? "Yes" : "No"
 		var/entries = here.nav_blockers?["[dir]"]
-		lines += "  [dir2text(dir)]: Ground: [ground], Flying: [flight], Conditional: [conditional][length(entries) ? " (blockers: [json_encode(entries)])" : ""]"
+		lines += "  [direction_name]: Ground: [ground], Flying: [flight], Conditional: [conditional][length(entries) ? " (blockers: [json_encode(entries)])" : ""]"
 	to_chat(user, span_notice(jointext(lines, "\n")))
 
 ADMIN_VERB(navmap_prebake_z, R_DEBUG, "Navmap: Prebake Z-Level", "Eagerly bakes every turf on your current z-level.", ADMIN_CATEGORY_DEBUG)
@@ -40,3 +45,19 @@ ADMIN_VERB(navmap_prebake_z, R_DEBUG, "Navmap: Prebake Z-Level", "Eagerly bakes 
 	var/start_time = REALTIMEOFDAY
 	var/count = SSnavmap.prebake_z(here.z)
 	to_chat(user, span_boldnotice("Prebaked [count] turfs on z[here.z] in [(REALTIMEOFDAY - start_time) / 10]s."))
+
+ADMIN_VERB(navmap_test_mobs_to_admin, R_DEBUG, "Navmap: Move Test Mobs Here", "Forces all spawned navmap test mobs to path to you.", ADMIN_CATEGORY_DEBUG)
+	var/mob/target = user.mob
+	if(!target || !get_turf(target))
+		return
+
+	var/moved_count = 0
+	for(var/mob/living/basic/navmap_test/test_mob in GLOB.mob_list)
+		if(test_mob == target || QDELETED(test_mob) || test_mob.stat == DEAD)
+			continue
+		if(test_mob.path_to(target))
+			moved_count++
+
+	var/plural = moved_count == 1 ? "" : "s"
+	to_chat(user, span_notice("Started navmap pathing for [moved_count] test mob[plural]."))
+	BLACKBOX_LOG_ADMIN_VERB("Move Navmap Test Mobs Here")

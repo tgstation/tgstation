@@ -4,6 +4,7 @@
 /datum/ai_movement/navmap_astar
 	max_pathing_attempts = 20
 	var/maximum_length = AI_MAX_PATH_LENGTH
+	var/allow_multiz = FALSE
 	///how we deal with diagonal movement, whether we try to avoid them or follow through with them
 	var/diagonal_flags = DIAGONAL_REMOVE_CLUNKY
 
@@ -35,6 +36,8 @@
 		subsystem = SSai_movement,
 		skip_first = TRUE,
 		diagonal_handling = diagonal_flags,
+		allow_multiz = allow_multiz,
+		max_path_cost = allow_multiz ? maximum_length * 10 : 0,
 		extra_info = controller,
 	)
 	return loop
@@ -55,6 +58,10 @@
 	max_pathing_attempts = 8
 	maximum_length = 25
 	diagonal_flags = DIAGONAL_REMOVE_ALL
+	allow_multiz = TRUE
+
+/datum/ai_movement/navmap_astar/monkey
+	allow_multiz = TRUE
 
 /datum/ai_movement/navmap_astar/bot/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance, delay_override)
 	var/datum/move_loop/loop = ..()

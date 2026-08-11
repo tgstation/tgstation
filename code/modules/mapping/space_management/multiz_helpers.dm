@@ -1,4 +1,5 @@
 /proc/get_step_multiz(ref, dir)
+	RETURN_TYPE(/turf)
 	var/turf/us = get_turf(ref)
 	if(dir & UP)
 		dir &= ~UP

@@ -904,6 +904,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			neighbor.nav_blockers = null
 			SSnavmap.queue_turf_bake(neighbor)
 			navmap_pathfinder_update(neighbor.x, neighbor.y, neighbor.z, 0)
+	for(var/dir in list(UP, DOWN))
+		var/turf/neighbor = get_step_multiz(src, dir)
+		if(neighbor)
+			neighbor.nav_pass = null
+			SSnavmap.queue_turf_bake(neighbor)
+			navmap_pathfinder_update(neighbor.x, neighbor.y, neighbor.z, 0)
 
 /// Bakes this turf's outgoing edges and publishes them to the DLL navmap cache.
 /turf/proc/nav_bake(skip_navmap_push = FALSE)
@@ -919,6 +925,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(length(edge_blockers))
 			LAZYINITLIST(blockers)
 			blockers["[dir]"] = edge_blockers
+
+	// Raw vertical edges are intentionally available only to flying movers. Their
+	// destination remains at the same x/y on the adjacent mapped layer.
+	for(var/dir in list(UP, DOWN))
+		var/turf/dest = get_step_multiz(src, dir)
+		if(!dest || !zPassOut(dir) || !dest.zPassIn(dir))
+			continue
+		packed |= NAV_FLIGHT(dir)
 
 	nav_pass = packed
 	nav_blockers = blockers

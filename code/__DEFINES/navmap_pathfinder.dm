@@ -40,13 +40,14 @@
 #define NAVMAP_PATH_COMPLETE "complete"
 #define NAVMAP_PATH_NO_PATH "no_path"
 #define NAVMAP_PATH_ERROR "error"
+#define NAVMAP_PATH_STALE_TOPOLOGY "stale_topology"
 
 /** Synchronous call. Use this sparingly for long distances. */
-#define navmap_pathfinder(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first) \
-	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_pathfinder_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first)
+#define navmap_pathfinder(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost) \
+	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_pathfinder_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost)
 
-#define navmap_pathfinder_start(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first) \
-	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_pathfinder_start_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first)
+#define navmap_pathfinder_start(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost) \
+	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_pathfinder_start_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost)
 
 /** Resume an in-progress job. Re-supply the current mover pass_info. */
 #define navmap_pathfinder_resume(job_id, pass_info) \
@@ -62,6 +63,12 @@
 #define navmap_bulk_update(flat_list) \
 	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_bulk_update_ffi")(flat_list)
 
+#define navmap_topology_update(generation, flat_list) \
+	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_topology_update_ffi")(generation, flat_list)
+
+#define navmap_links_update(flat_list) \
+	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_links_update_ffi")(flat_list)
+
 // Cache the extension probe so a missing or unloadable library does not produce
 // repeated call_ext errors from the game.
 /var/__navmap_pathfinder_available = null
@@ -69,10 +76,13 @@
 /proc/navmap_pathfinder_available()
 	if(!isnull(__navmap_pathfinder_available))
 		return __navmap_pathfinder_available
+	var/version
 	try
-		__navmap_pathfinder_available = !!navmap_pathfinder_get_version()
+		version = navmap_pathfinder_get_version()
 	catch
 		__navmap_pathfinder_available = FALSE
+		return FALSE
+	__navmap_pathfinder_available = !!version
 	return __navmap_pathfinder_available
 
 /proc/navmap_pathfinder_update(x, y, z, nav_pass)
@@ -90,3 +100,33 @@
 		navmap_bulk_update(flat_list)
 	catch
 		return
+
+/proc/navmap_pathfinder_topology_update(generation, list/flat_list)
+	if(!navmap_pathfinder_available())
+		return FALSE
+	var/result
+	try
+		result = navmap_topology_update(generation, flat_list)
+	catch
+		return FALSE
+	var/success = isnum(result) && result == length(flat_list) / 3
+	return success
+
+/proc/navmap_pathfinder_links_update(list/flat_list)
+	if(!navmap_pathfinder_available())
+		return FALSE
+	var/result
+	try
+		result = navmap_links_update(flat_list)
+	catch
+		return FALSE
+	var/success = isnum(result) && result == length(flat_list) / 8
+	return success
+
+/proc/navmap_pathfinder_state()
+	if(!navmap_pathfinder_available())
+		return null
+	try
+		return NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_pathfinder_state_ffi")()
+	catch
+		return null
