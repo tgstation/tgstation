@@ -132,9 +132,12 @@ SUBSYSTEM_DEF(economy)
 /// Pick X amount of random exports to boost in price for the tick
 /datum/controller/subsystem/economy/proc/update_boosted_exports()
 	boosted_exports.Cut()
+	// Don't randomize export values during unit tests or we'll get flakies
+#ifndef UNIT_TESTS
 	var/list/valid_exports = valid_typesof(/datum/export)
 	for (var/i in 1 to rand(EXPORT_BOOST_MIN_AMOUNT, EXPORT_BOOST_MAX_AMOUNT))
 		boosted_exports += pick_n_take(valid_exports)
+#endif
 
 /**
  * Departmental income payments are kept static and linear for every department, and paid out once every 5 minutes, as determined by MAX_GRANT_DPT.
