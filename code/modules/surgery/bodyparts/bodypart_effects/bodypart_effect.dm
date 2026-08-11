@@ -88,9 +88,8 @@
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		remove_bodypart(bodypart.owner, bodypart, deleting = TRUE)
 
-// This should be redundant given on_remove, but this is juuuust in case.
+// This should be redundant given on_remove, but there are a few edge cases where it gets skipped, so this is a safety net
 /datum/status_effect/grouped/bodypart_effect/Destroy()
-	. = ..()
-	if(length(bodyparts))
-		stack_trace("Bodypart effect qdel'd with bodyparts still tracked (should have been handled in on_remove)")
-		bodyparts.Cut()
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		remove_bodypart(bodypart.owner, bodypart, deleting = TRUE)
+	return ..()
