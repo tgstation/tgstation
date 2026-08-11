@@ -61,7 +61,7 @@
 		desc = "It's a little piece of Eden. The [pick("serpent", "worm", "extra protein", "friendly neighbor")] is gone."
 		return
 
-/obj/item/food/candy/bronx/proc/on_consume(mob/living/eater)
+/obj/item/food/grown/apple/proc/on_consume(mob/living/eater)
 	if(ishuman(eater))
 		to_chat(eater, span_alert("That apple was wormy!"))
 		return
