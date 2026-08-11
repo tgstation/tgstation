@@ -21,9 +21,9 @@
 	spawn_text.maptext_height = 64
 	spawn_text.maptext_width = 512
 	spawn_text.layer = FLY_LAYER
-	spawn_text.plane = HUD_PLANE
+	spawn_text.plane = FULLSCREEN_PLANE
 	spawn_text.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	spawn_text.screen_loc = "LEFT+1,BOTTOM+2"
+	spawn_text.screen_loc = "LEFT+1,TOP-3"
 
 	screen += spawn_text
 	animate(spawn_text, alpha = 255, time = 1 SECONDS)

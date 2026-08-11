@@ -165,6 +165,8 @@
 	//Show alerts window if user clicked on "Show alerts" in chat
 	if(href_list["showalerts"])
 		alert_control.ui_interact(src)
+	if(locked && href_list["unlock_self"])
+		toggle_cover()
 
 /mob/living/silicon/robot/get_cell()
 	return cell
@@ -305,6 +307,15 @@
 ///For any special cases for robots after being righted.
 /mob/living/silicon/robot/proc/after_righted(mob/user)
 	return
+
+///Toggles the Cyborg's cover lock, user is provided only if it's someone else doing it (not the borg itself)
+/mob/living/silicon/robot/proc/toggle_cover(mob/user)
+	locked = !locked
+	balloon_alert(src, "cover [locked ? "locked" : "unlocked"]")
+	update_icons()
+	if(user)
+		balloon_alert(user, "chassis cover [emagged ? "lock glitches" : "[locked ? "locked" : "unlocked"]"]")
+	logevent("[emagged ? "ChÃ¥vÃis" : "Chassis"] cover lock has been [locked ? "engaged" : "released"]")
 
 /mob/living/silicon/robot/regenerate_icons()
 	return update_icons()

@@ -136,6 +136,7 @@
 
 /obj/projectile/bullet/c357
 	name = ".357 bullet"
+	icon_state = "bullet"
 	damage = 60
 	wound_bonus = -30
 

@@ -11,15 +11,29 @@
 	RETURN_TYPE(/datum/blood_type)
 	return get_blood_type(pick_weight(
 		list(
-			BLOOD_TYPE_O_MINUS = 4,
-			BLOOD_TYPE_O_PLUS = 36,
-			BLOOD_TYPE_A_MINUS = 3,
-			BLOOD_TYPE_A_PLUS = 28,
-			BLOOD_TYPE_B_MINUS= 1,
-			BLOOD_TYPE_B_PLUS = 20,
-			BLOOD_TYPE_AB_MINUS = 1,
-			BLOOD_TYPE_AB_PLUS = 5,
+			/datum/blood_type/human/o_minus = 4,
+			/datum/blood_type/human/o_plus = 36,
+			/datum/blood_type/human/a_minus = 3,
+			/datum/blood_type/human/a_plus = 28,
+			/datum/blood_type/human/b_minus = 1,
+			/datum/blood_type/human/b_plus = 20,
+			/datum/blood_type/human/ab_minus = 1,
+			/datum/blood_type/human/ab_plus = 5,
 		)))
+
+/proc/get_roundstart_blood_types()
+	var/static/list/cached_blood_types
+	if(length(cached_blood_types))
+		return cached_blood_types
+
+	cached_blood_types = list()
+	cached_blood_types |= subtypesof(/datum/blood_type/human)
+	for(var/species_id in get_selectable_species())
+		var/datum/species/species_type = GLOB.species_list[species_id]
+		if(species_type::exotic_bloodtype)
+			cached_blood_types |= species_type::exotic_bloodtype
+
+	return cached_blood_types
 
 /proc/random_eye_color()
 	switch(pick(20;"brown",20;"hazel",20;"grey",15;"blue",15;"green",1;"amber",1;"albino"))
@@ -421,7 +435,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
  * * temp_diff (required) The difference between two temperatures
  * * change_rate (optional)(Default: 0.06) The rate of range multiplier
  */
-/proc/get_temp_change_amount(temp_diff, change_rate = 0.06)
+/proc/get_temp_change_amount(temp_diff, change_rate = BODYTEMP_STANDARD_CHANGE_RATE)
 	if(temp_diff < 0)
 		return -(BODYTEMP_AUTORECOVERY_DIVISOR / 2) * log(1 - (temp_diff * change_rate))
 	return (BODYTEMP_AUTORECOVERY_DIVISOR / 2) * log(1 + (temp_diff * change_rate))

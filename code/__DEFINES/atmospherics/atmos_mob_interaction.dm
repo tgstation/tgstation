@@ -55,6 +55,18 @@
 #define BODYTEMP_AUTORECOVERY_DIVISOR 28
 /// Minimum amount of kelvin moved toward 310K per tick. So long as abs(310.15 - bodytemp) is more than 50.
 #define BODYTEMP_AUTORECOVERY_MINIMUM 3
+/// The multiplier that sets the speed when adjusting the difference between two body temperatures.
+#define BODYTEMP_STANDARD_CHANGE_RATE 0.06
+/// The multiplier that sets the speed for body core temperature to normalize towards default.
+#define BODYTEMP_CORE_CHANGE_RATE (BODYTEMP_STANDARD_CHANGE_RATE * 0.25)
+/// Rate of body heat transfer from skin to core
+#define BODYTEMP_SKIN_CORE_CHANGE_RATE (BODYTEMP_STANDARD_CHANGE_RATE * 0.65)
+/// Rate of body heat transfer from core to skin
+#define BODYTEMP_CORE_SKIN_CHANGE_RATE (BODYTEMP_STANDARD_CHANGE_RATE * 0.75)
+/// Rate of body heat transfer from area to skin
+#define BODYTEMP_AREA_SKIN_CHANGE_RATE (BODYTEMP_STANDARD_CHANGE_RATE * 0.85)
+/// Rate of body heat transfer by space suits
+#define BODYTEMP_SUIT_CHANGE_RATE (BODYTEMP_STANDARD_CHANGE_RATE * 1.35)
 ///Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
 #define BODYTEMP_COLD_DIVISOR 15
 /// Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
