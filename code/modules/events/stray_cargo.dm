@@ -58,7 +58,7 @@
 */
 /datum/round_event/stray_cargo/setup()
 	start_when = rand(lower_bound_wait_time , upper_bound_wait_time)
-	set_impact_area()
+	impact_area = get_impact_area()
 	var/list/turf_test = get_area_turfs(impact_area)
 	if(!turf_test.len)
 		CRASH("Stray Cargo Pod : No valid turfs found for [impact_area] - [impact_area.type]")
@@ -70,12 +70,12 @@
 			if(initial(pack_type.order_flags) & ORDER_SPECIAL)
 				stray_spawnable_supply_packs -= pack
 
-/datum/round_event/stray_cargo/proc/set_impact_area()
+/datum/round_event/stray_cargo/proc/get_impact_area()
 	if(admin_override_turf)
-		impact_area = get_area(admin_override_turf)
+		. = get_area(admin_override_turf)
 	else
-		impact_area = find_event_area()
-	if(!impact_area)
+		. = find_event_area()
+	if(isnull(.))
 		CRASH("No valid areas for cargo pod found.")
 
 ///Spawns a random supply pack, puts it in a pod, and spawns it on a random tile of the selected area
