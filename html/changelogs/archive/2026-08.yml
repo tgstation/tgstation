@@ -334,3 +334,6 @@
   lelandkemble:
   - code_imp: Some primarily admin-only procs that transform a mob into another mob
       are now all doing the same thing.
+  timothymtorres:
+  - bugfix: Fix spawn text appearing over HUD. Move spawn text to the top left of
+      the screen

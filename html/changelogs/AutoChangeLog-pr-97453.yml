@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Fix spawn text appearing over HUD. Move spawn text to the top left of the screen"
