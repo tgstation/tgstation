@@ -28,7 +28,7 @@
 	var/found_worm = FALSE
 	/// The worm in question
 	var/obj/item/food/bait/worm/appleworm
-	/// Default for a worm (if the apple is not harvested)
+	/// Chance for a worm
 	var/worm_chance = 10
 
 /obj/item/food/grown/apple/Initialize(mapload)
@@ -38,7 +38,9 @@
 /obj/item/food/grown/apple/proc/try_make_wormy(datum/source, obj/item/seeds/our_seed)
 	SIGNAL_HANDLER
 
-	// TODO some shenanigans to find the tray and replace worm_chance with tray's pests here
+	if(our_seed)
+		var/obj/machinery/hydroponics/tray = our_seed.loc
+		worm_chance = tray.pestlevel // max 10%
 
 	if(prob(worm_chance))
 		appleworm = new(src) // There is a worm in this apple!
