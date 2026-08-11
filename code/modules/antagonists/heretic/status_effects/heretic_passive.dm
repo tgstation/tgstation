@@ -113,8 +113,8 @@
 /datum/status_effect/heretic_passive/ash/tick(seconds_between_ticks)
 	. = ..()
 	var/seconds_gained = 0
-	for(var/mob/living/nearby_guy in view(owner, 3))
-		if(!nearby_guy.on_fire || nearby_guy.stat == DEAD || nearby_guy == owner)
+	for(var/mob/living/nearby_guy in oview(owner, 3))
+		if(nearby_guy.stat == DEAD || !nearby_guy.on_fire)
 			continue
 		if(ismonkey(nearby_guy) && isnull(nearby_guy.mind))
 			continue
@@ -712,8 +712,6 @@
 	)
 	/// Tracks total seconds nearby mobs are exposed to cold temperature, used to determine when to recharge spells
 	VAR_PRIVATE/seconds_of_cold = 0
-	/// Threshold for what counts as cold temperature, used to determine when to recharge spells
-	VAR_PRIVATE/cold_threshold = T0C - 20
 
 /datum/status_effect/heretic_passive/void/on_apply()
 	. = ..()
@@ -734,8 +732,9 @@
 /datum/status_effect/heretic_passive/void/tick(seconds_between_ticks)
 	. = ..()
 	var/seconds_gained = 0
-	for(var/mob/living/nearby_guy in view(owner, 4))
-		if(nearby_guy.bodytemperature <= cold_threshold || nearby_guy.stat == DEAD || nearby_guy == owner)
+	for(var/mob/living/nearby_guy in oview(owner, 4))
+		// -75c required - easily achievable with void chill but can also be achieved via spacing (even on icebox)
+		if(nearby_guy.stat == DEAD || nearby_guy.bodytemperature > T0C - 75)
 			continue
 		if(ismonkey(nearby_guy) && isnull(nearby_guy.mind))
 			continue
