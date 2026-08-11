@@ -15,12 +15,8 @@ AI_SECRETARY_MODEL gpt-oss:20b-cloud
 ## SS Central
 #SS_CENTRAL_URL http://127.0.0.1:8000/v1
 #SS_CENTRAL_TOKEN 12345678
-#SERVER_TYPE default
+
 #FORCE_DISCORD_VERIFICATION
-## Entry from the general config.txt
-## New behavior - enabled PANIC_BUNKER_INTERVIEW allows only whitelisted players to play, passing interview gives a year long whitelist
-#USEWHITELIST
-#PANIC_BUNKER_INTERVIEW
 
 ## A minimum amount of security required on roundstart
 ## If there is less security than this value, a percent of roundstart threat will be pushed to midround

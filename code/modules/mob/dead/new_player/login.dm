@@ -15,14 +15,13 @@
 		mind.set_current(src)
 
 	// Check if user should be added to interview queue
+	// BANDASTATION ADDITION - START
 	if (!client.holder && CONFIG_GET(flag/panic_bunker) && CONFIG_GET(flag/panic_bunker_interview) && !(client.ckey in GLOB.interviews.approved_ckeys))
 		var/required_living_minutes = CONFIG_GET(number/panic_bunker_living)
-		var/living_minutes = client.get_exp_living(TRUE)
-		if (required_living_minutes >= living_minutes)
-			client.interviewee = TRUE
+		if (required_living_minutes >= client.get_exp_living(TRUE))
+			if (!SScentral.can_run() || !SScentral.is_player_whitelisted(ckey))
+				client.interviewee = TRUE
 
-	// BANDASTATION ADDITION - START
-	check_whitelist_or_make_interviewee()
 	SStitle.show_title_screen_to(client)
 	// BANDASTATION ADDITION - END
 	. = ..()

@@ -181,8 +181,13 @@ IPINTEL_REJECT_BAD
 ## byond membership starts at $10 for 3 months, so to use the webclient to evade, they would have sink 10 bucks in each evade.
 #WEBCLIENT_ONLY_BYOND_MEMBERS
 
-## Set to prevent anyone but those ckeys listed in config/whitelist.txt and config/admins.txt from joining your server
+## Set to prevent anyone but whitelisted ckeys from joining the server.
+## Connection attempts from non-whitelisted ckeys will be rejected.
+## Requires SS Central whitelist integration (SERVER_TYPE configured).
 #USEWHITELIST
+## Uncomment to enable SS Central whitelist integration.
+## Empty value or "default" means no integration and will end with every player being not whitelisted.
+#SERVER_TYPE default
 
 ## The address shown for the game server in the TGS check command
 # PUBLIC_ADDRESS ss13.example.com:2506
@@ -334,6 +339,7 @@ NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 
 ## Uncomment to enable the interview system for players who are below the living hour requirement instead of explicitly blocking them from the server
 ## Note this requires the PANIC_BUNKER to be enabled to do anything.
+## Players bypass the interview if they have enough PANIC_BUNKER_LIVING playtime OR are whitelisted.
 #PANIC_BUNKER_INTERVIEW
 
 ## If a player connects during a bunker with less then or this amount of living time (Minutes), we deny the connection
