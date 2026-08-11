@@ -37,7 +37,7 @@
 		appleworm = new() // There is a worm in this apple!
 		appleworm.forceMove(src)
 		tastes = list("apple" = 1, "worms" = 2)
-		var/datum/component/edible/ediblecomponent = src.GetComponent(/datum/component/edible)
+		var/datum/component/edible/ediblecomponent = IS_EDIBLE(src)
 		if(ediblecomponent)
 			ediblecomponent.foodtypes |= (GROSS | MEAT | BUGS)
 		wormy = TRUE
