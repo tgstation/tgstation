@@ -103,7 +103,7 @@
 
 /datum/status_effect/grouped/bodypart_effect/slime_passgrille/proc/spit_out(in_direction)
 	// intentionally uses range over range_turfs to get closest turfs first
-	for(var/turf/nearby_open_turf in range(3, get_step(owner, in_direction)))
+	for(var/turf/open/nearby_open_turf in range(2, get_step(owner, in_direction)))
 		if(nearby_open_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = owner))
 			continue
 		owner.forceMove(nearby_open_turf)
