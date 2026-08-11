@@ -67,7 +67,7 @@
 		return
 	ediblecomponent.foodtypes &= ~(GROSS | MEAT | BUGS)
 
-/obj/item/food/grown/apple/on_consume(mob/living/eater)
+/obj/item/food/grown/apple/proc/on_consume(mob/living/eater)
 	if(!ishuman(eater) && !appleworm)
 		return
 	to_chat(eater, span_alert("That apple was wormy!"))
