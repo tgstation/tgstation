@@ -42,6 +42,10 @@
 	var/crate_type
 	/// Set to TRUE to emag the launched crate rather than just unlocking it.
 	var/emag_crate = FALSE
+	/// Upper bound of how many random seconds to wait before dropping the pod (replaces start_when)
+	var/upper_bound_wait_time = 40
+	/// Lower bound of how many random seconds to wait before dropping the pod (replaces start_when)
+	var/lower_bound_wait_time = 20
 
 /datum/round_event/stray_cargo/announce(fake)
 	if(fake)
@@ -53,7 +57,7 @@
 * Also randomizes the start timer
 */
 /datum/round_event/stray_cargo/setup()
-	start_when = rand(20, 40)
+	start_when = rand(lower_bound_wait_time , upper_bound_wait_time)
 	set_impact_area()
 	var/list/turf_test = get_area_turfs(impact_area)
 	if(!turf_test.len)
@@ -134,8 +138,12 @@
 			crate.update_appearance()
 	return container
 
+///Sends the pod to the given location, containing the container
 /datum/round_event/stray_cargo/proc/send_pod(landing_zone, pod, container)
 	var/obj/effect/pod_landingzone/landing_marker = new(landing_zone, pod, container)
+	create_ghost_notification(landing_marker)
+
+/datum/round_event/stray_cargo/proc/create_ghost_notification(landing_marker)
 	var/static/mutable_appearance/target_appearance = mutable_appearance('icons/obj/supplypods_32x32.dmi', "LZ")
 	notify_ghosts("[control.name] has summoned a supply crate!", source = get_turf(landing_marker), header = "Cargo Inbound", alert_overlay = target_appearance)
 
