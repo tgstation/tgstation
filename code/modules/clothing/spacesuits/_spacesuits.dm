@@ -180,7 +180,7 @@
 
 	// If we got here, it means thermals are on, the cell is in and the cell has
 	// just had enough charge subtracted from it to power the thermal regulator
-	user.adjust_bodytemperature(get_temp_change_amount((temperature_setting - user.bodytemperature), 0.08 * seconds_per_tick))
+	user.adjust_bodytemperature(get_temp_change_amount((temperature_setting - user.bodytemperature), BODYTEMP_SUIT_CHANGE_RATE * seconds_per_tick))
 	update_hud_icon(user)
 
 // Clean up the cell on destroy

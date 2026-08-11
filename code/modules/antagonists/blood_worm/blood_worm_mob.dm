@@ -271,6 +271,14 @@
 	. = ..()
 	icon_state = "invade-[effect_name]"
 
+/mob/living/basic/blood_worm/lazarus_revive(mob/living/reviver, malfunctioning)
+	if(!IS_BLOODWORM(src)) //checks to see if this isn't just a poly'd bloodworm
+		return ..()
+
+	revive(HEAL_ALL)
+	to_chat(reviver, span_userdanger("[src] resists the control of the injector!"))
+	balloon_alert(reviver, "can't control!")
+
 /mob/living/basic/blood_worm/hatchling
 	name = "hatchling blood worm"
 	desc = "Только что вылупившаяся личинка кровяного червя. Она выглядит голодной и слабой. Для дальнейшего роста требуется кровь."

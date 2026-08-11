@@ -119,6 +119,8 @@ Then the player gets the profit from selling his own wasted time.
 	var/include_subtypes = TRUE
 	/// Types excluded from export
 	var/list/exclude_types = list()
+	/// A list consisting of the original export times, without any subtypes adjusted via include_subtypes
+	var/list/original_export_types = list()
 	/// Set to false if the cost shouldn't be determinable by an export scanner
 	var/scannable = TRUE
 	/// Export market that this export applies to. Defaults to EXPORT_MARKET_STATION for items sold to the standard supply shuttle, replacements exist for pirates, etc.
@@ -126,6 +128,7 @@ Then the player gets the profit from selling his own wasted time.
 
 /datum/export/New()
 	..()
+	original_export_types = export_types?.Copy()
 	export_types = typecacheof(export_types, only_root_path = !include_subtypes)
 	exclude_types = typecacheof(exclude_types)
 

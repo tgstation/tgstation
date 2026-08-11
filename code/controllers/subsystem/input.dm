@@ -35,8 +35,8 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 	macro_set = list(
 		"Any" = "\"KeyDown \[\[*\]\] \[\[map.mouse-pos\]\] \[\[map.size\]\]\"",
 		"Any+UP" = "\"KeyUp \[\[*\]\] \[\[map.mouse-pos\]\] \[\[map.size\]\]\"",
-		"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
-		"Tab" = "\".winset \\\"input.focus=true?map.focus=true:input.focus=true\\\"\"",
+		"Back" = "\".output output_browser.browseroutput:update [TGUI_PANEL_CLEAR_MESSAGE]\\n.winset \\\"input.text=\\\"\\\"\\\"\"",
+		"Tab" = "\".output output_browser.browseroutput:update [TGUI_PANEL_FOCUS_MESSAGE]\\n.winset \\\"output_browser.browseroutput.focus=true?map.focus=true:output_browser.browseroutput.focus=true\\\"\"",
 		"Escape" = "\".winset \\\"[SKIN_ESCAPE_MENU].is-visible=true?[SKIN_ESCAPE_MENU].is-visible=false:[SKIN_ESCAPE_MENU].is-visible=true\\\"\\n.output [SKIN_ESCAPE_MENU]:update [ESCAPE_MENU_TOGGLE_MESSAGE]\\nReset-Held-Keys\"",
 	)
 

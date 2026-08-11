@@ -17,7 +17,7 @@
 		if(atmos_sensitive && !is_safe_turf(spawn_turf))
 			continue
 
-		if(require_darkness && spawn_turf.get_lumcount() > UNLIT_AREA_BRIGHTNESS)
+		if(require_darkness && spawn_turf.check_lumcount_above(UNLIT_AREA_BRIGHTNESS))
 			continue
 
 		possible_spawns += spawn_turf

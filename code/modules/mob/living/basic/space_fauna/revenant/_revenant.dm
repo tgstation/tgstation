@@ -188,7 +188,7 @@
 	. += "Неиспользованная эссенция: [essence_excess] УЭ"
 	. += "Идеальных душ похищено: [perfectsouls]"
 
-/mob/living/basic/revenant/update_health_hud()
+/mob/living/basic/revenant/update_health_hud(healthpercent)
 	if(isnull(hud_used))
 		return
 

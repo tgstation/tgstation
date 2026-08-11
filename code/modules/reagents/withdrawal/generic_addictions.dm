@@ -141,8 +141,7 @@
 		return
 	var/mob/living/carbon/human/affected_human = affected_carbon
 	var/turf/T = get_turf(affected_human)
-	var/lums = T.get_lumcount()
-	if(lums > 0.5)
+	if(T.check_lumcount_above(0.5))
 		affected_human.add_mood_event("too_bright", /datum/mood_event/bright_light)
 		affected_human.adjust_dizzy_up_to(6 SECONDS, 80 SECONDS)
 		affected_human.adjust_confusion_up_to(0.5 SECONDS * seconds_per_tick, 20 SECONDS)

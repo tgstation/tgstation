@@ -106,6 +106,9 @@
 
 /obj/item/stack/Destroy()
 	mats_per_unit = null
+	if(source)
+		LAZYREMOVE(source.linked_modules, src)
+		source = null
 	return ..()
 
 /obj/item/stack/update_name(updates)
@@ -582,7 +585,9 @@
 		return FALSE
 	if(is_cyborg)
 		if(source.use_charge(used * cost))
-			update_appearance(UPDATE_NAME)
+			//this will include us
+			for(var/obj/item/stack/modules as anything in source.linked_modules)
+				modules.update_appearance(UPDATE_NAME)
 			return TRUE
 		return FALSE
 	if (amount < used)

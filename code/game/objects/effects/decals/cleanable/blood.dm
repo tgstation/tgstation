@@ -141,7 +141,7 @@
 	for(var/reagent_type in reagents_to_add)
 		reagents.add_reagent(reagent_type = reagent_type,
 							amount = round(bloodiness * BLOOD_TO_UNITS_MULTIPLIER / num_reagents, CHEMICAL_VOLUME_ROUNDING),
-							data = ispath(reagent_type, /datum/reagent/blood) ? list("blood_DNA" = pick(blood_DNA)) : null)
+							data = ispath(reagent_type, /datum/reagent/blood) ? list(BLOOD_DATA_DNA = pick(blood_DNA)) : null)
 	return reagents
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/merger)
