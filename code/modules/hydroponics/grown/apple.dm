@@ -51,26 +51,26 @@
 		balloon_alert(user, "there is a hole in this [src.name]!")
 		found_worm = TRUE
 		desc = "It's a little piece of Eden. Serpent not included, contains a worm as a replacement."
-		return
 
 /obj/item/food/grown/apple/attack_self(mob/user)
-	if(appleworm)
-		balloon_alert(user, "pulling out [appleworm.name]...")
-		if(!do_after(user, 5 SECONDS, target = src))
-			return
-		appleworm.forceMove(drop_location())
-		appleworm = null
-		tastes = list("apple" = 1)
-		var/datum/component/edible/ediblecomponent = IS_EDIBLE(src)
-		if(ediblecomponent)
-			ediblecomponent.foodtypes &= ~(GROSS | MEAT | BUGS)
-		desc = "It's a little piece of Eden. The [pick("serpent", "worm", "extra protein", "friendly neighbor")] is gone."
+	if(!appleworm)
 		return
+	balloon_alert(user, "pulling out [appleworm.name]...")
+	if(!do_after(user, 5 SECONDS, target = src))
+		return
+	appleworm.forceMove(drop_location())
+	appleworm = null
+	tastes = list("apple" = 1)
+	var/datum/component/edible/ediblecomponent = IS_EDIBLE(src)
+	desc = "It's a little piece of Eden. The [pick("serpent", "worm", "extra protein", "friendly neighbor")] is gone."
+	if(!ediblecomponent)
+		return
+	ediblecomponent.foodtypes &= ~(GROSS | MEAT | BUGS)
 
-/obj/item/food/grown/apple/proc/on_consume(mob/living/eater)
-	if(ishuman(eater) && appleworm)
-		to_chat(eater, span_alert("That apple was wormy!"))
+/obj/item/food/grown/apple/on_consume(mob/living/eater)
+	if(!ishuman(eater) && !appleworm)
 		return
+	to_chat(eater, span_alert("That apple was wormy!"))
 
 /obj/item/food/grown/apple/juice_typepath()
 	return /datum/reagent/consumable/applejuice
