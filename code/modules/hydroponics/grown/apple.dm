@@ -28,10 +28,19 @@
 	var/found_worm = FALSE
 	/// The worm in question
 	var/obj/item/food/bait/worm/appleworm
+	/// Default for a worm (if the apple is not harvested)
+	var/worm_chance = 10
 
 /obj/item/food/grown/apple/Initialize(mapload)
 	. = ..()
-	if(prob(10))
+	RegisterSignal(src, COMSIG_PLANT_ON_HARVEST, PROC_REF(try_make_wormy))
+
+/obj/item/food/grown/apple/proc/try_make_wormy(datum/source, obj/item/seeds/our_seed)
+	SIGNAL_HANDLER
+
+	// TODO some shenanigans to find the tray and replace worm_chance with tray's pests here
+
+	if(prob(worm_chance))
 		appleworm = new(src) // There is a worm in this apple!
 		tastes = list("apple" = 1, "worms" = 2)
 		var/datum/component/edible/ediblecomponent = IS_EDIBLE(src)
@@ -42,7 +51,7 @@
 /obj/item/food/grown/apple/examine(mob/user)
 	. = ..()
 	if(!found_worm && !isobserver(user) && appleworm)
-		balloon_alert(user, "there is a hole in this apple!")
+		balloon_alert(user, "there is a hole in this [src.name]!")
 		found_worm = TRUE
 		desc = "It's a little piece of Eden. Serpent not included, contains a worm as a replacement."
 		return
