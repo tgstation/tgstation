@@ -29,18 +29,12 @@
 	/// The worm in question
 	var/obj/item/food/bait/worm/appleworm
 	/// Chance for a worm
-	var/worm_chance
+	var/worm_chance = 100
 
 /obj/item/food/grown/apple/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_PLANT_ON_HARVEST, PROC_REF(try_make_wormy))
 
-/obj/item/food/grown/apple/proc/try_make_wormy(datum/source, obj/item/seeds/our_seed)
-	SIGNAL_HANDLER
-
-	if(our_seed)
-		var/obj/machinery/hydroponics/tray = our_seed.loc
-		worm_chance = tray.pestlevel // max 10%
+	// TODO: Replace static worm chance with tray's pest level 1 pest to 1% (max 10)
 
 	if(prob(worm_chance))
 		appleworm = new(src) // There is a worm in this apple!
