@@ -24,7 +24,9 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
 	. = ..()
 	var/mob/living/basic/blood_worm/worm = owner
-	button.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: center'>[round((worm.get_consumed_blood() / total_blood_required) * 100, 0.1)]%</span>")
+	var/percentage_shown = "[round((worm.get_consumed_blood() / total_blood_required) * 100, 0.1)]"
+	button.maptext_x = (length(percentage_shown) >= 3) ? 0 : 1
+	button.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: center'>[percentage_shown]%</span>")
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/Grant(mob/granted_to)
 	. = ..()
