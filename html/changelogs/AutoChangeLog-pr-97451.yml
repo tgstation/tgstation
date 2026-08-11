@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Gizmos pulsed by assembies give feedback sounds"
+  - qol: "Gizmo feedback alerts are shown to all nearby mobs, rather than just the pulser"
