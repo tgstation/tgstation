@@ -29,7 +29,7 @@
 	species_cookie = /obj/item/food/meat/slab
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/carbon/lizard
-	exotic_bloodtype = BLOOD_TYPE_LIZARD
+	exotic_bloodtype = /datum/blood_type/lizard
 	inert_mutation = /datum/mutation/firebreath
 	species_language_holder = /datum/language_holder/lizard
 	digitigrade_customization = DIGITIGRADE_OPTIONAL

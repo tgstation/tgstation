@@ -68,7 +68,7 @@
 
 /mob/living/basic/clown/get_bloodtype()
 	if (check_holidays(APRIL_FOOLS))
-		return get_blood_type(BLOOD_TYPE_CLOWN)
+		return get_blood_type(/datum/blood_type/clown)
 	return ..()
 
 /mob/living/basic/clown/lube
