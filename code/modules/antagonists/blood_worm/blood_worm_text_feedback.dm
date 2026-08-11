@@ -63,7 +63,10 @@
 
 	result += span_notice("[target.p_They()] [target.p_have()] [rounded_volume] unit[rounded_volume == 1 ? "" : "s"] of blood[growth_string]. [target.p_Their()] blood is <b>[synth_string]</b> synthetic.")
 
-/mob/living/basic/blood_worm/proc/get_special_status_tab_items()
+/mob/living/basic/blood_worm/proc/get_info_title()
+	. = "Worm Health: [round((health / maxHealth) * 100)]%"
+
+/mob/living/basic/blood_worm/proc/get_info_desc()
 	. = "Blood Consumed<br/>"
 	. += "- Normal: [ceil(consumed_normal_blood)]u<br/>"
 	. += "- Synthetic: [ceil(consumed_synth_blood)]u (MAX: [maximum_synth_blood]u)<br/>"
