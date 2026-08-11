@@ -40,7 +40,9 @@
 /datum/action/cooldown/alien/larva_evolve/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
 	. = ..()
 	var/mob/living/carbon/alien/larva/larva_owner = owner
-	button.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: center'>[round((larva_owner.amount_grown / XENOMORPH_MAX_GROWTH) * 100, 0.1)]%</span>")
+	var/percentage_shown = "[round((larva_owner.amount_grown / XENOMORPH_MAX_GROWTH) * 100, 0.1)]"
+	button.maptext_x = (length(percentage_shown) >= 3) ? 0 : 1
+	button.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: center'>[percentage_shown]%</span>")
 
 /datum/action/cooldown/alien/larva_evolve/IsAvailable(feedback = FALSE)
 	. = ..()
