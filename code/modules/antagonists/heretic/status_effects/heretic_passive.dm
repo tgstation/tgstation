@@ -391,7 +391,7 @@
 /// Any time you take a bite of something, if it's meat or gory (probably an organ) you will heal some damage
 /datum/status_effect/heretic_passive/flesh/proc/on_eat(mob/eater, atom/food, foodtypes)
 	SIGNAL_HANDLER
-	if(foodtypes & MEAT || GORE) //All edible organs are gory, but not all of them are meat (podpeople, fishpeople.) If someone adds edible non-meat, non-gory organs, then I guess back to the drawing board.
+	if(foodtypes & (MEAT | GORE)) //All edible organs are gory, but not all of them are meat (podpeople, fishpeople.) If someone adds edible non-meat, non-gory organs, then I guess back to the drawing board.
 		heal_glutton()
 
 /datum/status_effect/heretic_passive/flesh/proc/heal_glutton()
