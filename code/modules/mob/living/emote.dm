@@ -120,6 +120,13 @@
 	var/custom_message = user.death_message
 	if(custom_message)
 		message_animal_or_basic = custom_message
+
+	if(user.has_quirk(/datum/quirk/death_mimicry))
+		if(TIMER_COOLDOWN_FINISHED(user, COOLDOWN_DEATHGASP))
+			ADD_TRAIT(user, TRAIT_FAKEDEATH, QUIRK_TRAIT)
+			addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_FAKEDEATH, QUIRK_TRAIT), 5 SECONDS)
+			TIMER_COOLDOWN_START(user, COOLDOWN_DEATHGASP, cooldown * 4)
+
 	. = ..()
 	message_animal_or_basic = initial(message_animal_or_basic)
 
