@@ -88,7 +88,7 @@
 	return TRUE
 
 /mob/living/basic/alien/get_bloodtype()
-	return get_blood_type(BLOOD_TYPE_XENO)
+	return get_blood_type(/datum/blood_type/xeno)
 
 /mob/living/basic/alien/get_gibs_type(drop_bitflags = NONE)
 	if(drop_bitflags & DROP_BODYPARTS)
