@@ -10509,7 +10509,6 @@
 	},
 /obj/structure/fireaxecabinet/mechremoval/directional/north,
 /obj/machinery/light/directional/north,
-/obj/item/mecha_parts/core,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "cAZ" = (

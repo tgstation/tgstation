@@ -102,13 +102,6 @@ required_map = "DeltaStation2.dmm"
 coordinates = [183, 185, 1]
 trait_name = "Station"
 
-[templates.deltastation_robo_mech_core]
-map_files = ["deltastation_robo_mech_core.dmm"]
-directory = "_maps/bandastation/automapper/templates/deltastation/"
-required_map = "DeltaStation2.dmm"
-coordinates = [122, 111, 1]
-trait_name = "Station"
-
 [templates.deltastation_rd_photocopier]
 map_files = ["deltastation_rd_photocopier.dmm"]
 directory = "_maps/bandastation/automapper/templates/deltastation/"
@@ -234,13 +227,6 @@ map_files = ["metastation_rat_disposal.dmm"]
 directory = "_maps/bandastation/automapper/templates/metastation/"
 required_map = "MetaStation.dmm"
 coordinates = [70, 177, 1]
-trait_name = "Station"
-
-[templates.metastation_robo_mech_core]
-map_files = ["metastation_robo_mech_core.dmm"]
-directory = "_maps/bandastation/automapper/templates/metastation/"
-required_map = "MetaStation.dmm"
-coordinates = [110, 96, 1]
 trait_name = "Station"
 
 [templates.metastation_ce_photocopier]
@@ -391,13 +377,6 @@ required_map = "IceBoxStation.dmm"
 coordinates = [73, 141, 2]
 trait_name = "Station"
 
-[templates.iceboxstation_robo_mech_core]
-map_files = ["iceboxstation_robo_mech_core.dmm"]
-directory = "_maps/bandastation/automapper/templates/iceboxstation/"
-required_map = "IceBoxStation.dmm"
-coordinates = [177, 120, 3]
-trait_name = "Station"
-
 [templates.iceboxstation_cmo_photocopier]
 map_files = ["iceboxstation_cmo_photocopier.dmm"]
 directory = "_maps/bandastation/automapper/templates/iceboxstation/"
@@ -546,13 +525,6 @@ required_map = "tramstation.dmm"
 coordinates = [187, 133, 1]
 trait_name = "Station"
 
-[templates.tramstation_robo_mech_core]
-map_files = ["tramstation_robo_mech_core.dmm"]
-directory = "_maps/bandastation/automapper/templates/tramstation/"
-required_map = "tramstation.dmm"
-coordinates = [169, 102, 2]
-trait_name = "Station"
-
 [templates.tramstation_hos_photocopier]
 map_files = ["tramstation_hos_photocopier.dmm"]
 directory = "_maps/bandastation/automapper/templates/tramstation/"
@@ -686,13 +658,6 @@ map_files = ["nebulastation_library_galactic_map.dmm"]
 directory = "_maps/bandastation/automapper/templates/nebulastation/"
 required_map = "NebulaStation.dmm"
 coordinates = [99, 127, 1]
-trait_name = "Station"
-
-[templates.nebulastation_robo_mech_core]
-map_files = ["nebulastation_robo_mech_core.dmm"]
-directory = "_maps/bandastation/automapper/templates/nebulastation/"
-required_map = "NebulaStation.dmm"
-coordinates = [134, 151, 2]
 trait_name = "Station"
 
 [templates.nebulastation_meeting_room]
@@ -841,13 +806,6 @@ map_files = ["wawastation_stasis.dmm"]
 directory = "_maps/bandastation/automapper/templates/wawastation/"
 required_map = "wawastation.dmm"
 coordinates = [58, 71, 1]
-trait_name = "Station"
-
-[templates.wawastation_robo_core]
-map_files = ["wawastation_robo_core.dmm"]
-directory = "_maps/bandastation/automapper/templates/wawastation/"
-required_map = "wawastation.dmm"
-coordinates = [133, 105, 1]
 trait_name = "Station"
 
 [templates.wawastation_zoo]
