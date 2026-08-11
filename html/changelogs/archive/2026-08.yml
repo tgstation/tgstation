@@ -323,3 +323,14 @@
   - bugfix: you can navigate recently input commands with ctrl+up/down again
   - bugfix: pressing space in the input autocompletes to the next shared verb name
       prefix
+2026-08-11:
+  JohnFulpWillard:
+  - qol: Borgs can now unlock their cover in their self-examine text.
+  PapaMichael:
+  - bugfix: The enter key now closes the job text-highlight field
+  Wisemonster:
+  - bugfix: Antag Bloodworms can't be hypno'd with lazarus injectors
+  - code_imp: Added a IS_BLOODWORM check
+  lelandkemble:
+  - code_imp: Some primarily admin-only procs that transform a mob into another mob
+      are now all doing the same thing.
