@@ -29,7 +29,7 @@
 	/// The worm in question
 	var/obj/item/food/bait/worm/appleworm
 	/// Chance for a worm
-	var/worm_chance = 10
+	var/worm_chance
 
 /obj/item/food/grown/apple/Initialize(mapload)
 	. = ..()
@@ -60,7 +60,7 @@
 
 /obj/item/food/grown/apple/attack_self(mob/user)
 	if(appleworm)
-		balloon_alert(user, "pulling out worm...")
+		balloon_alert(user, "pulling out [appleworm.name]...")
 		if(!do_after(user, 5 SECONDS, target = src))
 			return
 		appleworm.forceMove(drop_location())
