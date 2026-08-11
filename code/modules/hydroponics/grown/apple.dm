@@ -16,6 +16,19 @@
 	mutatelist = list(/obj/item/seeds/apple/gold)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
+/obj/item/seeds/apple/harvest(mob/user)
+	var/list/result = ..()
+	var/obj/machinery/hydroponics/tray = loc
+	var/worm_chance = tray.pestlevel
+	for(var/obj/item/food/grown/apple/applum in result)
+		if(prob(worm_chance))
+			applum.appleworm = new(applum) // There is a worm in this apple!
+			applum.tastes = list("apple" = 1, "worms" = 2)
+			applum.ediblecomponent = IS_EDIBLE(applum)
+			if(applum.ediblecomponent)
+				applum.ediblecomponent.foodtypes |= (GROSS | MEAT | BUGS)
+		return
+
 /obj/item/food/grown/apple
 	seed = /obj/item/seeds/apple
 	name = "apple"
@@ -28,21 +41,8 @@
 	var/found_worm = FALSE
 	/// The worm in question
 	var/obj/item/food/bait/worm/appleworm
-	/// Chance for a worm
-	var/worm_chance = 10
-
-/obj/item/food/grown/apple/Initialize(mapload)
-	. = ..()
-
-	// TODO: Replace static worm chance with tray's pest level 1 pest to 1% (max 10)
-
-	if(prob(worm_chance))
-		appleworm = new(src) // There is a worm in this apple!
-		tastes = list("apple" = 1, "worms" = 2)
-		var/datum/component/edible/ediblecomponent = IS_EDIBLE(src)
-		if(ediblecomponent)
-			ediblecomponent.foodtypes |= (GROSS | MEAT | BUGS)
-		return
+	/// Our edible component
+	var/datum/component/edible/ediblecomponent
 
 /obj/item/food/grown/apple/examine(mob/user)
 	. = ..()
