@@ -262,11 +262,11 @@
 	if(!greyscale_config && greyscale_colors && (greyscale_config_worn || greyscale_config_belt || greyscale_config_inhand_right || greyscale_config_inhand_left || greyscale_config_onfloor))
 		update_greyscale()
 
+	. = ..()
+
 	// Add element for swapping icon to onfloor_icon and back
 	if (onflooricon)
 		AddElement(/datum/element/dynamic_item_icon)
-
-	. = ..()
 
 	// Handle adding item associated actions
 	for(var/path in actions_types)
