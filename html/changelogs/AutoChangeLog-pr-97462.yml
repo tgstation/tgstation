@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - qol: "Added an examine hint on clogged vents that tells you about using a plunger on it"
