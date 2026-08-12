@@ -44,8 +44,8 @@
 
 /datum/component/revenant_prison/proc/on_residue_reform(obj/source)
 	SIGNAL_HANDLER
-	if(!release_revenant(cause = "ectoplasm reforming"))
-		return COMPONENT_RESIDUE_REFORM_FAIL
+	if(release_revenant(cause = "ectoplasm reforming"))
+		return COMPONENT_RESIDUE_REFORM_SUCCESS
 
 /datum/component/revenant_prison/proc/release_revenant(cause)
 	if(create_on_release)

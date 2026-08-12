@@ -36,8 +36,8 @@
 
 // Called when revenant residue is starting to reform
 #define COMSIG_RESIDUE_REFORM "residue_reform"
-	// Couldn't reform for some reason
-	#define COMPONENT_RESIDUE_REFORM_FAIL (1 << 0)
+	// Reform successful
+	#define COMPONENT_RESIDUE_REFORM_SUCCESS (1 << 0)
 
 // Called when revenant residue is dispersed
 #define COMSIG_RESIDUE_DISPERSE "residue_disperse"
