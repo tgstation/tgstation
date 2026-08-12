@@ -1,0 +1,6 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - balance: "Crusher trophies are now small and can be stowed in explorer webbings"
+  - balance: "Crusher trophies are slightly cheaper to craft"
+  - balance: "Icewing trophy backstep distance reduced from 2 to 1 to be less disorienting"
