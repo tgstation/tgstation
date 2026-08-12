@@ -35,7 +35,7 @@
 	possible_transfer_amounts = list(20, 50, 100, 200)
 	amount_per_transfer_from_this = 50
 	initial_reagent_flags = REFILLABLE | DRAINABLE
-	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 	w_class = WEIGHT_CLASS_BULKY
 	custom_price = PAYCHECK_LOWER * 8
 	fill_icon_thresholds = null
@@ -250,7 +250,7 @@
 	desc = "A nice pan for all your frying needs. Sizzle sizzle."
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "frying_pan"
-	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 1.5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5)
 	custom_price = PAYCHECK_LOWER * 8
 	sound_vary = TRUE
 	pickup_sound = SFX_POT_PICKUP
@@ -406,4 +406,5 @@
 	desc = "Despite its namesake, its mostly just used for frying."
 	icon_state = "small_pot"
 	max_items = 5
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 	custom_price = PAYCHECK_LOWER * 20
