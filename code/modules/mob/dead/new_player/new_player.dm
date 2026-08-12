@@ -18,8 +18,6 @@
 	var/ineligible_for_roles = FALSE
 	/// Used to track if the player's jobs menu sent a message saying it successfully mounted.
 	var/jobs_menu_mounted = FALSE
-	///Cooldown for the Reset Lobby Menu HUD verb
-	COOLDOWN_DECLARE(reset_hud_cooldown)
 
 /mob/dead/new_player/Initialize(mapload)
 	if(client && SSticker.state == GAME_STATE_STARTUP)
@@ -373,20 +371,6 @@
 	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
 	ASSIGN_GAME_VERB(src, /mob/dead/new_player, open_interview)
 	add_verb(client, /client/verb/fix_tgui_panel)
-
-///Resets the Lobby Menu HUD, recreating and reassigning it to the new player
-GAME_VERB_PROC(/mob/dead/new_player, reset_menu_hud, "Reset Lobby Menu HUD", "OOC")
-	var/mob/dead/new_player/new_player = usr
-	if(!COOLDOWN_FINISHED(new_player, reset_hud_cooldown))
-		to_chat(new_player, span_warning("You must wait <b>[DisplayTimeText(COOLDOWN_TIMELEFT(new_player, reset_hud_cooldown))]</b> before resetting the Lobby Menu HUD again!"))
-		return
-	if(!new_player?.client)
-		return
-	COOLDOWN_START(new_player, reset_hud_cooldown, RESET_HUD_INTERVAL)
-	qdel(new_player.hud_used)
-	create_mob_hud()
-	to_chat(new_player, span_info("Lobby Menu HUD reset. You may reset the HUD again in <b>[DisplayTimeText(RESET_HUD_INTERVAL)]</b>."))
-	hud_used.show_hud(hud_used.hud_version)
 
 ///Auto deadmins an admin when they click to toggle the ready button or join game button in the menu
 /mob/dead/new_player/proc/auto_deadmin_on_ready_or_latejoin()
