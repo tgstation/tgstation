@@ -219,22 +219,20 @@ const ContactsScreen = (props: any) => {
             <Divider />
             <Box>
               <Button.Checkbox
-                icon="bell"
                 disabled={!alert_able}
                 checked={alert_able && !alert_silenced}
                 onClick={() => act('PDA_toggleAlerts')}
+                color="default"
               >
                 Ringer
               </Button.Checkbox>
-              <Button
-                icon="address-card"
-                content={
-                  sending_and_receiving
-                    ? 'Send / Receive: On'
-                    : 'Send / Receive: Off'
-                }
+              <Button.Checkbox
+                checked={sending_and_receiving}
                 onClick={() => act('PDA_toggleSendingAndReceiving')}
-              />
+                color="default"
+              >
+                Online
+              </Button.Checkbox>
               <Button
                 icon="bell"
                 content="Set Ringtone"
@@ -246,12 +244,13 @@ const ContactsScreen = (props: any) => {
                 onClick={() => act('PDA_changeSortStyle')}
               />
               {!!virus_attach && (
-                <Button
-                  icon="bug"
+                <Button.Checkbox
                   color="bad"
-                  content={`Attach Virus: ${sending_virus ? 'Yes' : 'No'}`}
                   onClick={() => act('PDA_toggleVirus')}
-                />
+                  checked={sending_virus}
+                >
+                  Attach Virus
+                </Button.Checkbox>
               )}
             </Box>
           </Stack>

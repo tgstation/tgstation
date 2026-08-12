@@ -33,10 +33,7 @@ export const NtosMain = (props) => {
       z
     >
       <NtosWindow.Content scrollable>
-        {Boolean(
-          removable_media.length ||
-            programs.some((program) => program.header_program),
-        ) && (
+        {programs.some((program) => program.header_program) && (
           <Section>
             <Stack>
               {filtered_programs.map((app) => (
@@ -53,68 +50,75 @@ export const NtosMain = (props) => {
                 </Stack.Item>
               ))}
             </Stack>
-            <Stack>
-              {removable_media.map((device) => (
-                <Stack.Item key={device} mt={1}>
+          </Section>
+        )}
+        <Section>
+          <Stack>
+            {removable_media.length ? (
+              removable_media.map((device) => (
+                <Stack.Item key={device}>
                   <Button
-                    fluid
                     icon="eject"
                     content={device}
                     onClick={() => act('PC_Eject_Disk', { name: device })}
-                    disabled={!device}
                   />
                 </Stack.Item>
-              ))}
-            </Stack>
-          </Section>
-        )}
-        <Section
-          title="Details"
-          buttons={
-            <>
-              {!!has_light && (
-                <>
-                  <Button onClick={() => act('PC_light_color')}>
-                    <ColorBox
-                      style={{
-                        position: 'relative',
-                        marginTop: '3px',
-                        marginBottom: '-3px',
-                        marginRight: '-2px',
-                        marginLeft: '-2px',
-                      }}
-                      color={comp_light_color}
-                    />
-                  </Button>
-                  <Button
-                    icon="lightbulb"
-                    color={light_on && 'good'}
-                    selected={light_on}
-                    onClick={() => act('PC_toggle_light')}
-                  />
-                </>
-              )}
+              ))
+            ) : (
+              <Stack.Item>
+                <Button icon="eject" content="Eject Disk" disabled />
+              </Stack.Item>
+            )}
+            <Stack.Item>
+              <Button
+                disabled={!has_light}
+                onClick={() => act('PC_light_color')}
+              >
+                <ColorBox
+                  style={{
+                    position: 'relative',
+                    marginTop: '3px',
+                    marginBottom: '-3px',
+                    marginRight: '-2px',
+                    marginLeft: '-2px',
+                  }}
+                  color={comp_light_color}
+                />
+              </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                icon="lightbulb"
+                color={has_light && light_on && 'good'}
+                selected={has_light && light_on}
+                disabled={!has_light}
+                onClick={() => act('PC_toggle_light')}
+              />
+            </Stack.Item>
+            <Stack.Item>
               <Button
                 icon="eject"
                 content="Eject ID"
                 disabled={!proposed_login.IDInserted}
                 onClick={() => act('PC_Eject_Disk', { name: 'ID' })}
               />
-              {!!show_imprint && (
-                <Button
-                  icon="dna"
-                  content="Link ID"
-                  disabled={
-                    !proposed_login.IDName ||
-                    (proposed_login.IDName === login.IDName &&
-                      proposed_login.IDJob === login.IDJob)
-                  }
-                  onClick={() => act('PC_Imprint_ID', { name: 'ID' })}
-                />
-              )}
-            </>
-          }
-        >
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                icon="dna"
+                content="Sync"
+                disabled={
+                  !show_imprint ||
+                  !proposed_login.IDName ||
+                  (proposed_login.IDName === login.IDName &&
+                    proposed_login.IDJob === login.IDJob)
+                }
+                onClick={() => act('PC_Imprint_ID', { name: 'ID' })}
+              />
+            </Stack.Item>
+          </Stack>
+        </Section>
+        <Section>
           <Table>
             <Table.Row>
               ID Name:{' '}
