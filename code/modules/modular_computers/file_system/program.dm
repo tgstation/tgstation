@@ -8,7 +8,7 @@
 	/// (PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_PDA)
 	var/can_run_on_flags = PROGRAM_ALL
 	/// Program-specific bitflags that tells the ModPC what the app is able to do special.
-	/// (PROGRAM_REQUIRES_NTNET|PROGRAM_ON_NTNET_STORE|PROGRAM_ON_SYNDINET_STORE|PROGRAM_UNIQUE_COPY|PROGRAM_HEADER)
+	/// (PROGRAM_REQUIRES_NTNET|PROGRAM_ON_NTNET_STORE|PROGRAM_ON_SYNDINET_STORE|PROGRAM_UNIQUE_COPY)
 	var/program_flags = PROGRAM_ON_NTNET_STORE
 	///How much power running this program costs.
 	var/power_cell_use = PROGRAM_BASIC_CELL_USE
@@ -242,7 +242,7 @@
 ///Sends the running program to the background/idle threads. Header programs can't be minimized and will kill instead.
 /datum/computer_file/program/proc/background_program(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
-	if(program_flags & PROGRAM_HEADER || length(computer.idle_threads) > computer.max_idle_programs)
+	if(length(computer.idle_threads) > computer.max_idle_programs)
 		return kill_program()
 
 	computer.idle_threads.Add(src)

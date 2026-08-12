@@ -24,10 +24,8 @@
 #define PROGRAM_ON_SYNDINET_STORE (1<<2)
 ///The program is unique and will delete itself upon being transferred to ensure only one copy exists.
 #define PROGRAM_UNIQUE_COPY (1<<3)
-///The program is a header and will show up at the top of the ModPC's UI.
-#define PROGRAM_HEADER (1<<4)
 ///The circuit ports of this program can be triggered even if the program is not open
-#define PROGRAM_CIRCUITS_RUN_WHEN_CLOSED (1<<5)
+#define PROGRAM_CIRCUITS_RUN_WHEN_CLOSED (1<<4)
 
 //Program categories
 #define PROGRAM_CATEGORY_DEVICE "Device Tools"

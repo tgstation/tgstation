@@ -18,9 +18,6 @@ export const NtosMain = (props) => {
     proposed_login,
     pai,
   } = data;
-  const filtered_programs = programs.filter(
-    (program) => program.header_program,
-  );
 
   return (
     <NtosWindow
@@ -33,25 +30,6 @@ export const NtosMain = (props) => {
       z
     >
       <NtosWindow.Content scrollable>
-        {programs.some((program) => program.header_program) && (
-          <Section>
-            <Stack>
-              {filtered_programs.map((app) => (
-                <Stack.Item key={app.name}>
-                  <Button
-                    content={app.desc}
-                    icon={app.icon}
-                    onClick={() =>
-                      act('PC_runprogram', {
-                        name: app.name,
-                      })
-                    }
-                  />
-                </Stack.Item>
-              ))}
-            </Stack>
-          </Section>
-        )}
         <Section>
           <Stack>
             {removable_media.length ? (
@@ -184,14 +162,11 @@ const ProgramsTable = (props) => {
   const { act, data } = useBackend<NTOSData>();
   const { programs = [] } = data;
   // add the program filename to this list to have it excluded from the main menu program list table
-  const filtered_programs = programs.filter(
-    (program) => !program.header_program,
-  );
 
   return (
     <Section title="Programs">
       <Table>
-        {filtered_programs.map((program) => (
+        {programs.map((program) => (
           <Table.Row key={program.name}>
             <Table.Cell>
               <Button
