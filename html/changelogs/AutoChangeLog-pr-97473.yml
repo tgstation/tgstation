@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - bugfix: "revenants should far less frequently be rendered vulnerable for far longer than they should be"
