@@ -258,11 +258,11 @@
 
 	force = 13
 
-	///How many things fit on this plate?
+	///How many things fit on this pan?
 	var/max_items = 3
-	///The offset from side to side the food items can have on the plate
+	///The offset from side to side the food items can have on the pan
 	var/max_x_offset = 4
-	///The max height offset the food can reach on the plate
+	///The max height offset the food can reach on the pan
 	var/max_height_offset = 5
 	///Offset of where the click is calculated from, due to how food is positioned in their DMIs.
 	var/placement_offset = -15
@@ -341,13 +341,13 @@
 	item_to_pan.pixel_y = 0
 
 	update_appearance()
-	// If the incoming item is the same weight class as the plate, bump us up a class
+	// If the incoming item is the same weight class as the pan, bump us up a class
 	if(item_to_pan.w_class == w_class)
 		update_weight_class(w_class + 1)
 
 	update_grill_audio()
 
-///This proc cleans up any signals on the item when it is removed from a plate, and ensures it has the correct state again.
+///This proc cleans up any signals on the item when it is removed from a pan, and ensures it has the correct state again.
 /obj/item/frying_pan/proc/ItemRemovedFromPan(obj/item/removed_item)
 	removed_item.vis_flags &= ~VIS_INHERIT_PLANE
 	vis_contents -= removed_item
@@ -375,7 +375,7 @@
 
 	update_grill_audio()
 
-///This proc is called by signals that remove the food from the plate.
+///This proc is called by signals that remove the food from the pan.
 /obj/item/frying_pan/proc/ItemMoved(obj/item/moved_item, atom/OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
 	ItemRemovedFromPan(moved_item)
