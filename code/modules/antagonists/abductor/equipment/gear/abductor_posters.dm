@@ -12,7 +12,7 @@
 	poster_item_icon_state = "rolled_abductor"
 
 /obj/structure/sign/poster/abductor/tear_poster(mob/user)
-	if(!isabductor(user))
+	if(!HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_KNOWLEDGE))
 		balloon_alert(user, "it won't budge!")
 		return
 	return ..()

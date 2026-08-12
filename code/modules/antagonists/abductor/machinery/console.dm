@@ -72,7 +72,7 @@
 			TeleporterSend()
 
 /obj/machinery/abductor/console/ui_status(mob/user, datum/ui_state/state)
-	if(!isabductor(user) && !isobserver(user))
+	if(!HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_KNOWLEDGE) && !isobserver(user))
 		return UI_CLOSE
 	return ..()
 

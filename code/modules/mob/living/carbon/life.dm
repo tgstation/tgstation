@@ -451,7 +451,7 @@
 /mob/living/carbon/proc/handle_blood(seconds_per_tick)
 	return
 
-/mob/living/carbon/reagent_tick(datum/reagent/chem, seconds_per_tick)
+/mob/living/carbon/reagent_tick(datum/reagent/chem, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(. & COMSIG_MOB_STOP_REAGENT_TICK)
 		return
@@ -492,8 +492,8 @@
 			// A simple weighted average that simplifies down to "total synth volume / total blood volume" i.e. "how much of our blood is synthetic"
 			AddComponent(/datum/component/synth_blood, (added_synth_volume + existing_synth_volume) / (blood_added + cached_blood_volume))
 
-	if(chem.data?["blood_type"])
-		var/datum/blood_type/donor_type = chem.data["blood_type"]
+	if(chem.data?[BLOOD_DATA_TYPE])
+		var/datum/blood_type/donor_type = chem.data[BLOOD_DATA_TYPE]
 		if(!(donor_type.type_key() in blood_type.compatible_types))
 			reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			return COMPONENT_NO_EXPOSE_REAGENTS

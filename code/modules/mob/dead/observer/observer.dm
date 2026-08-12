@@ -148,9 +148,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	toggle_ghost_hud_flag(GHOST_VISION | GHOST_DATA_HUDS)
 
 	SSpoints_of_interest.make_point_of_interest(src)
-	ADD_TRAIT(src, TRAIT_HEAR_THROUGH_DARKNESS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_GOOD_HEARING, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_DETECT_STORM, INNATE_TRAIT)
+	add_traits(list(TRAIT_HEAR_THROUGH_DARKNESS, TRAIT_GOOD_HEARING, TRAIT_DETECT_STORM, TRAIT_GHOSTLY_MOB), INNATE_TRAIT)
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
@@ -666,7 +664,8 @@ GAME_VERB(/mob/dead/observer, restore_ghost_appearance, "Restore Ghost Character
 	if (!isnull(client) && !isnull(client.eye))
 		reset_perspective(null)
 
-GAME_VERB_HIDDEN(/mob/dead/observer, add_view_range, "Add View Range", input as num)
+GAME_VERB_HIDDEN(/mob/dead/observer, add_view_range, "Add View Range")
+	VERB_ARG(input, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
 
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
 		to_chat(usr, span_notice("That verb is currently globally disabled."))

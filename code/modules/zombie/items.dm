@@ -36,10 +36,6 @@
 	if(!target.get_bodypart(BODY_ZONE_HEAD))
 		return
 
-	if(HAS_TRAIT(target, TRAIT_NO_ZOMBIFY))
-		// cannot infect any TRAIT_NO_ZOMBIFY human
-		return
-
 	// spaceacillin has a 75% chance to block infection
 	if(HAS_TRAIT(target, TRAIT_VIRUS_RESISTANCE) && !HAS_TRAIT(target, TRAIT_IMMUNODEFICIENCY) && prob(75))
 		return

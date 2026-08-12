@@ -347,6 +347,7 @@
 	var/satchel = /obj/item/storage/backpack/satchel
 	var/duffelbag = /obj/item/storage/backpack/duffelbag
 	var/messenger = /obj/item/storage/backpack/messenger
+	var/wintercoat = /obj/item/clothing/suit/hooded/wintercoat
 
 	var/pda_slot = ITEM_SLOT_BELT
 
@@ -648,6 +649,7 @@
 /datum/job/proc/after_latejoin_spawn(mob/living/spawning)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, src, spawning)
+	spawning.client.show_spawn_text_overlay()
 
 /// Called when a mob that has this job is admin respawned
 /datum/job/proc/on_respawn(mob/new_character)

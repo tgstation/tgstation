@@ -75,7 +75,7 @@
 
 	if(SEND_SIGNAL(teleatom, COMSIG_MOVABLE_TELEPORTING, destination, channel))
 		return FALSE
-	if(SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORTING, channel, curturf))
+	if(SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORTING, channel, curturf) & COMPONENT_INTERCEPT_TELEPORT)
 		return FALSE
 
 	if(isobserver(teleatom))

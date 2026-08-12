@@ -44,7 +44,7 @@
 /datum/status_effect/proc/on_creation(mob/living/new_owner, ...)
 	if(new_owner)
 		owner = new_owner
-	if(QDELETED(owner) || !on_apply())
+	if(QDELETED(owner) || !on_apply(arglist(args.Copy(2))))
 		qdel(src)
 		return
 	if(owner)
