@@ -305,7 +305,7 @@
 		return ITEM_INTERACT_BLOCKING
 	tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -max_x_offset, max_x_offset)
 	tool.pixel_y = min(text2num(LAZYACCESS(modifiers, ICON_Y)) + placement_offset, max_height_offset)
-	to_chat(user, span_notice("You place [tool] on [src]."))
+	balloon_alert("you place [tool]")
 	add_to_pan(tool, user)
 	return ITEM_INTERACT_SUCCESS
 
