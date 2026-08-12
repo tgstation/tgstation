@@ -355,6 +355,9 @@
 #define CRYSTALIZE_STAGE_ENCROACHING 300 //In switches
 #define CRYSTALIZE_STAGE_SMALL 600 //Because they're not static
 
+///Max growth for a xeno larva to evolve into a regular xeno. This is used as % based.
+#define XENOMORPH_MAX_GROWTH 100
+
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
 
