@@ -43,6 +43,8 @@
 #define ORGAN_MUTANT (1<<15)
 /// The organ has been chomped or otherwise rendered unusable.
 #define ORGAN_UNUSABLE (1<<16)
+/// Used for organs that aren't really real organs, but holders for stuff and whatnot
+#define ORGAN_FAKE (1<<17)
 
 /// Organ flags that correspond to bodytypes
 #define ORGAN_TYPE_FLAGS (ORGAN_ORGANIC | ORGAN_ROBOTIC | ORGAN_MINERAL | ORGAN_GHOST)

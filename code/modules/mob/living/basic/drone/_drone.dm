@@ -53,7 +53,7 @@
 	/// Stored drone color, restored when unhacked
 	var/colour = "grey"
 	var/list/drone_overlays[DRONE_TOTAL_LAYERS]
-	/// Drone laws announced on spawn
+	/// Drone laws announced on spawn, can be overridden for regular drones via config/drone_laws.txt
 	var/laws = \
 	"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
@@ -104,6 +104,7 @@
 /mob/living/basic/drone/Initialize(mapload)
 	. = ..()
 	GLOB.drones_list += src
+	laws = get_default_laws()
 	AddElement(/datum/element/dextrous, hud_type = hud_type)
 	AddComponent(/datum/component/basic_inhands, y_offset = getItemPixelShiftY())
 	AddComponent(/datum/component/simple_access, SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)))
@@ -156,6 +157,19 @@
 
 	AddElement(/datum/element/can_be_held)
 
+/mob/living/basic/drone/proc/get_default_laws()
+	var/base_laws = /mob/living/basic/drone::laws
+	if(initial(laws) != base_laws) //subtype lawset, the config doesn't apply
+		return initial(laws)
+	var/list/lines = list()
+	for(var/line in world.file2list("[global.config.directory]/drone_laws.txt"))
+		if(!line)
+			continue
+		if(findtextEx(line, "#", 1, 2))
+			continue
+		lines += "[length(lines) + 1]. [line]"
+	return length(lines) ? jointext(lines, "\n") : base_laws
+
 /mob/living/basic/drone/med_hud_set_health()
 	set_hud_image_state(DIAG_HUD, "huddiag[RoundDiagBar(health/maxHealth)]")
 
@@ -182,8 +196,9 @@
 		return FALSE
 	check_laws()
 
-	if(flavortext)
-		to_chat(src, "[flavortext]")
+	var/flavor = get_policy("[type]") || flavortext
+	if(flavor)
+		to_chat(src, "[flavor]")
 
 	if(!picked)
 		pickVisualAppearance()
