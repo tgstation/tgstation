@@ -53,7 +53,7 @@
 /obj/item/ectoplasm/revenant/proc/reform()
 	if(QDELETED(src) || inert)
 		return
-	if(!SEND_SIGNAL(src, COMSIG_RESIDUE_REFORM) & COMPONENT_RESIDUE_REFORM_SUCCESS)
+	if(!(SEND_SIGNAL(src, COMSIG_RESIDUE_REFORM) & COMPONENT_RESIDUE_REFORM_SUCCESS))
 		inert = TRUE
 		return
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")
