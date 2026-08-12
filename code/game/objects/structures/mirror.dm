@@ -64,10 +64,13 @@
 		update_signals = list(COMSIG_ATOM_BREAK), \
 		check_reflect_signals = list(SIGNAL_ADDTRAIT(TRAIT_NO_MIRROR_REFLECTION), SIGNAL_REMOVETRAIT(TRAIT_NO_MIRROR_REFLECTION)), \
 	)
+	if(cursable)
+		if(mapload && prob(ROUNDSTART_CURSED_CHANCE))
+			AddComponent(/datum/component/revenant_prison, create_on_release = TRUE)
+		else
+			ADD_TRAIT(src, TRAIT_COZY_REVENANT_HOME, INNATE_TRAIT)
 	if(mapload)
 		find_and_mount_on_atom()
-		if(prob(ROUNDSTART_CURSED_CHANCE) && cursable)
-			AddComponent(/datum/component/revenant_prison, create_on_release = TRUE)
 	update_choices()
 	register_context()
 
