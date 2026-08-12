@@ -1335,7 +1335,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 
 /atom/movable/screen/slime_power
 	name = "Power Level"
-	desc = "How much electricity they are generating, the higher this is, the stronger your attacks are."
+	desc = "How much electricity they are generating. The higher this is, the stronger your attacks are."
 	icon_state = "slime_display"
 	base_icon_state = "slime_display"
 	screen_loc = ui_slime_powerlevel
@@ -1344,7 +1344,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 
 /atom/movable/screen/slime_power/Click(location, control, params)
 	. = ..()
-	to_chat(usr, span_notice("Shows you how much electricity they are generating, the higher this is, the higher chance you will strike with overwhelming electrical force."))
+	to_chat(usr, span_notice("Shows you how much electricity they are generating. The higher this is, the higher chance you will strike with overwhelming electrical force."))
 
 /atom/movable/screen/slime_power/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
