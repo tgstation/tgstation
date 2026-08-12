@@ -212,6 +212,7 @@
 #include "hydroponics_harvest.dm"
 #include "hydroponics_self_mutations.dm"
 #include "hydroponics_validate_genes.dm"
+#include "icon_onfloors.dm"
 #include "icon_state.dm"
 #include "icon_state_inhand.dm"
 #include "icon_state_worn.dm"

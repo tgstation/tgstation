@@ -268,6 +268,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 			new_greyscale_args["new_inhand_left"] = initial(target_type.greyscale_config_inhand_left)
 		if(initial(target_type.greyscale_config_inhand_right))
 			new_greyscale_args["new_inhand_right"] = initial(target_type.greyscale_config_inhand_right)
+		if(initial(target_type.greyscale_config_onfloor))
+			new_greyscale_args["new_onfloor_config"] = initial(target_type.greyscale_config_onfloor)
 
 		if(new_greyscale_args.len)
 			new_greyscale_args["colors"] = initial(target_type.greyscale_colors) || COLOR_WHITE

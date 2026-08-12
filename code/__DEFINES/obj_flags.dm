@@ -70,6 +70,8 @@
 #define WEAPON_DESCRIPTION_INITIALIZED (1<<21)
 /// If an item causes bluespace interference when teleported with.
 #define BLUESPACE_INTERFERENCE (1<<22)
+/// If the item has an onfloor element and is current on the floor/active
+#define ACTIVE_ONFLOOR_ICON (1<<23)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

@@ -42,6 +42,8 @@
 			allowed_configs += "[initial(item.greyscale_config_inhand_left)]"
 		if(initial(item.greyscale_config_inhand_right))
 			allowed_configs += "[initial(item.greyscale_config_inhand_right)]"
+		if(initial(item.greyscale_config_onfloor))
+			allowed_configs += "[initial(item.greyscale_config_onfloor)]"
 
 	var/datum/greyscale_modify_menu/spray_paint/menu = new(
 		target, user, allowed_configs, CALLBACK(src, PROC_REF(recolor), user, can, target),

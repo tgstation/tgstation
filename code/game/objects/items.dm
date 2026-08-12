@@ -35,6 +35,12 @@
 	var/icon/worn_icon
 	///Icon state for mob worn overlays, if null the normal icon_state will be used.
 	var/worn_icon_state
+
+	///Icon file for onfloor icon. Adds element if defined.
+	var/icon/onflooricon
+	///Icon state for onfloor icon, if null the normal icon_state will be used.
+	var/onflooricon_state
+
 	///Icon state for the belt overlay, if null the normal icon_state will be used.
 	var/inside_belt_icon_state
 	///Forced mob worn layer instead of the standard preferred size.
@@ -47,6 +53,7 @@
 	var/greyscale_config_inhand_right
 	///The config type to use for greyscaled belt overlays. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_belt
+	var/greyscale_config_onfloor
 
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
 
@@ -252,8 +259,12 @@
 	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
 		AddComponent(/datum/component/butchering, speed = 8 SECONDS * toolspeed)
 
-	if(!greyscale_config && greyscale_colors && (greyscale_config_worn || greyscale_config_belt || greyscale_config_inhand_right || greyscale_config_inhand_left))
+	if(!greyscale_config && greyscale_colors && (greyscale_config_worn || greyscale_config_belt || greyscale_config_inhand_right || greyscale_config_inhand_left || greyscale_config_onfloor))
 		update_greyscale()
+
+	// Add element for swapping icon to onfloor_icon and back
+	if (onflooricon)
+		AddElement(/datum/element/dynamic_item_icon)
 
 	. = ..()
 
@@ -380,13 +391,15 @@
 /obj/item/proc/suicide_act(mob/living/user)
 	return
 
-/obj/item/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
+/obj/item/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right, new_onfloor_config)
 	if(new_worn_config)
 		greyscale_config_worn = new_worn_config
 	if(new_inhand_left)
 		greyscale_config_inhand_left = new_inhand_left
 	if(new_inhand_right)
 		greyscale_config_inhand_right = new_inhand_right
+	if(new_onfloor_config)
+		greyscale_config_onfloor = new_onfloor_config
 	return ..()
 
 /// Checks if this atom uses the GAGS system and if so updates the worn and inhand icons
@@ -400,6 +413,8 @@
 		lefthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_left, greyscale_colors)
 	if(greyscale_config_inhand_right)
 		righthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_right, greyscale_colors)
+	if(greyscale_config_onfloor)
+		onflooricon = SSgreyscale.GetColoredIconByType(greyscale_config_onfloor, greyscale_colors)
 
 GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", null)
 

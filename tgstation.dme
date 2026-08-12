@@ -1738,6 +1738,7 @@
 #include "code\datums\elements\drag_activation.dm"
 #include "code\datums\elements\drag_pickup.dm"
 #include "code\datums\elements\dryable.dm"
+#include "code\datums\elements\dynamic_item_icon.dm"
 #include "code\datums\elements\earhealing.dm"
 #include "code\datums\elements\easily_fragmented.dm"
 #include "code\datums\elements\easy_ignite.dm"
