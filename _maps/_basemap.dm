@@ -1,6 +1,3 @@
-// Cant really be a build flag as this is a mapping thing.
-//#define SHOW_INVENTORY_ICONS //uncomment this to make mapping software use inventory icons rather then world icons
-
 #ifndef MINIMAL_CENTCOM
 #include "map_files\generic\CentCom.dmm"
 #else
