@@ -310,10 +310,13 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/frying_pan/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	if(.)
+		return .
 	if(!iscarbon(target))
-		return
+		return .
 	if(!contents.len)
-		return
+		return .
 	var/obj/item/object_to_eat = contents[1]
 	object_to_eat.melee_attack_chain(user, target)
 	return TRUE //No normal attack
