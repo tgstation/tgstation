@@ -13,16 +13,18 @@
 /// Component managing shuttle rotation behavior for multi-tile objects.
 ///
 /// As per DM documentation on `locs`: "The loc var can be thought of as an anchor point. . ."
-/// Effectively, shuttles rotate the anchoring point for their pixel offsets every time they move.
-/// This leads to about sixteen or so *theoretical* ways for a multi-tile object to rotate. In *practice*,
-/// rotations of 0 or 360 do not occur and for every rotation of the anchoring point there is one rotation
+/// Effectively, shuttles rotate the anchoring point for object icons every time they move. With four
+/// possible shuttle directions and four possible rotations of a multi-tile atom's true loc, there are
+/// about sixteen or so *theoretical* ways for a multi-tile atom to rotate. In *practice*, rotations of
+/// 0 or 360 do not occur, and for every rotation of the anchoring point there is one shuttle rotation
 /// which requires no correction. This leads to nine actual possibilities.
 /datum/component/multi_tile_rotation
-	/// The angle (positive is clockwise) to which our loc has been rotated.
+	/// The angle (positive is clockwise) to which our loc has been rotated
 	var/loc_rotation = LOC_BOTTOMLEFT
 	/// How our parent should rotate
 	var/rotation_type = NONE
-	// The pixel offsets of our parent upon this components addition
+	// The pixel offsets of our parent upon this components addition.
+	// These alone are preserved by the component as the atom's default offsets.
 	var/x_offset = 0
 	var/y_offset = 0
 	var/w_offset = 0
@@ -33,19 +35,16 @@
 
 // In general this component should be added with
 // `AddComponent(/datum/component/multi_tile_rotation, pixel_x, pixel_y, pixel_w, pixel_z)`
-/datum/component/multi_tile_rotation/Initialize(base_x_offset, base_y_offset, base_w_offset, base_z_offset)
+/datum/component/multi_tile_rotation/Initialize(default_x_offset, default_y_offset, default_w_offset, default_z_offset)
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	// if(parent.bound_x != 0 || parent.bound_y != 0)
-	// 	return COMPONENT_INCOMPATIBLE
-
-	if(base_x_offset || base_y_offset || base_w_offset || base_z_offset)
+	if(default_x_offset || default_y_offset || default_w_offset || default_z_offset)
 		rotation_type = MULTI_TILE_ROTATION_CENTRAL
-		x_offset = base_x_offset
-		y_offset = base_y_offset
-		w_offset = base_w_offset
-		z_offset = base_z_offset
+		x_offset = default_x_offset
+		y_offset = default_y_offset
+		w_offset = default_w_offset
+		z_offset = default_z_offset
 	else
 		rotation_type = MULTI_TILE_ROTATION_NORMAL
 
@@ -74,32 +73,32 @@
 		if(LOC_BOTTOMLEFT)
 			switch(rotation) // Nonexistant `rotation` of 0 requires no correction
 				if(90)
-					object_parent.pixel_y -= (object_parent.bound_height - ICON_SIZE_Y)
+					move_parent_down(object_parent)
 				if(180)
-					object_parent.pixel_y -= (object_parent.bound_height - ICON_SIZE_Y)
-					object_parent.pixel_x -= (object_parent.bound_width - ICON_SIZE_X)
+					move_parent_down(object_parent)
+					move_parent_left(object_parent)
 				if(270)
-					object_parent.pixel_x -= (object_parent.bound_width - ICON_SIZE_X)
+					move_parent_left(object_parent)
 		if(LOC_BOTTOMRIGHT)
 			switch(rotation) // `rotation` of 270 requires no correction
 				if(90)
-					object_parent.pixel_y -= (object_parent.bound_height - ICON_SIZE_Y)
-					object_parent.pixel_x -= (object_parent.bound_width - ICON_SIZE_X)
+					move_parent_down(object_parent)
+					move_parent_left(object_parent)
 				if(180)
-					object_parent.pixel_x -= (object_parent.bound_width - ICON_SIZE_X)
+					move_parent_left(object_parent)
 		if(LOC_TOPRIGHT)
 			switch(rotation) // `rotation` of 180 requires no correction
 				if(90)
-					object_parent.pixel_x -= (object_parent.bound_height - ICON_SIZE_Y)
+					move_parent_left(object_parent)
 				if(270)
-					object_parent.pixel_y -= (object_parent.bound_height - ICON_SIZE_Y)
+					move_parent_down(object_parent)
 		if(LOC_TOPLEFT)
 			switch(rotation) // `rotation` of 90 requires no correction
 				if(180)
-					object_parent.pixel_y -= (object_parent.bound_height - ICON_SIZE_Y)
+					move_parent_down(object_parent)
 				if(270)
-					object_parent.pixel_x -= (object_parent.bound_width - ICON_SIZE_X)
-					object_parent.pixel_y -= (object_parent.bound_height - ICON_SIZE_Y)
+					move_parent_left(object_parent)
+					move_parent_down(object_parent)
 
 	object_parent.bound_y = object_parent.pixel_y
 	object_parent.bound_x = object_parent.pixel_x
@@ -107,6 +106,14 @@
 	send_to_playing_players("[object_parent.name] rotated with `loc_rotation` of [loc_rotation] and rotation of [rotation]")
 	loc_rotation += rotation
 	loc_rotation %= 360
+
+// The following two procs visually offset our parent by its height/width. Since the anchoring point
+// always remains in the area where the object should appear, one respective ICON_SIZE is subtracted.
+/datum/component/multi_tile_rotation/proc/move_parent_down(obj/object_parent)
+	object_parent.pixel_y -= object_parent.bound_height - ICON_SIZE_Y
+
+/datum/component/multi_tile_rotation/proc/move_parent_left(obj/object_parent)
+	object_parent.pixel_x -= object_parent.bound_width - ICON_SIZE_X
 
 #undef MULTI_TILE_ROTATION_NORMAL
 #undef MULTI_TILE_ROTATION_CENTRAL
